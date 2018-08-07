@@ -34,9 +34,9 @@ namespace OpenTK.Graphics.OpenGL4
     public enum PixelTexGenMode
     {
         /// <summary>
-        /// Original was GL_NONE = 0
+        /// Original was GL_NONE = 0x0
         /// </summary>
-        None = 0,
+        None = 0x0,
 
         /// <summary>
         /// Original was GL_RGB = 0x1907
@@ -56,7 +56,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_LUMINANCE_ALPHA = 0x190A
         /// </summary>
-        LuminanceAlpha = 0x190a,
+        LuminanceAlpha = 0x190A,
 
         /// <summary>
         /// Original was GL_PIXEL_TEX_GEN_ALPHA_REPLACE_SGIX = 0x8187
@@ -76,6 +76,6 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_PIXEL_TEX_GEN_ALPHA_MS_SGIX = 0x818A
         /// </summary>
-        PixelTexGenAlphaMSSgix = 0x818a
+        PixelTexGenAlphaMSSgix = 0x818A
     }
 }

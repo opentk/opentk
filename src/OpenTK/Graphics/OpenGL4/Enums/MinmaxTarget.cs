@@ -36,6 +36,6 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_MINMAX = 0x802E
         /// </summary>
-        Minmax = 0x802e
+        Minmax = 0x802E
     }
 }

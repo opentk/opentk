@@ -29,13 +29,13 @@
 namespace OpenTK.Graphics.OpenGL4
 {
     /// <summary>
-    /// Used in GL.VertexAttribLFormat and GL.VertexAttribLPointer.
+    /// Used in GL.VertexAttribLPointer and GL.VertexAttribLFormat.
     /// </summary>
     public enum VertexAttribDoubleType
     {
         /// <summary>
         /// Original was GL_DOUBLE = 0x140A
         /// </summary>
-        Double = 0x140a
+        Double = 0x140A
     }
 }

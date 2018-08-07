@@ -36,227 +36,227 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_MULTISAMPLE = 0x809D
         /// </summary>
-        Multisample = 0x809d,
+        Multisample = 0x809D,
 
         /// <summary>
         /// Original was GL_SAMPLE_ALPHA_TO_COVERAGE = 0x809E
         /// </summary>
-        SampleAlphaToCoverage = 0x809e,
+        SampleAlphaToCoverage = 0x809E,
 
         /// <summary>
         /// Original was GL_SAMPLE_ALPHA_TO_ONE = 0x809F
         /// </summary>
-        SampleAlphaToOne = 0x809f,
+        SampleAlphaToOne = 0x809F,
 
         /// <summary>
         /// Original was GL_SAMPLE_COVERAGE = 0x80A0
         /// </summary>
-        SampleCoverage = 0x80a0,
+        SampleCoverage = 0x80A0,
 
         /// <summary>
         /// Original was GL_SAMPLE_BUFFERS = 0x80A8
         /// </summary>
-        SampleBuffers = 0x80a8,
+        SampleBuffers = 0x80A8,
 
         /// <summary>
         /// Original was GL_SAMPLES = 0x80A9
         /// </summary>
-        Samples = 0x80a9,
+        Samples = 0x80A9,
 
         /// <summary>
         /// Original was GL_SAMPLE_COVERAGE_VALUE = 0x80AA
         /// </summary>
-        SampleCoverageValue = 0x80aa,
+        SampleCoverageValue = 0x80AA,
 
         /// <summary>
         /// Original was GL_SAMPLE_COVERAGE_INVERT = 0x80AB
         /// </summary>
-        SampleCoverageInvert = 0x80ab,
+        SampleCoverageInvert = 0x80AB,
 
         /// <summary>
         /// Original was GL_CLAMP_TO_BORDER = 0x812D
         /// </summary>
-        ClampToBorder = 0x812d,
+        ClampToBorder = 0x812D,
 
         /// <summary>
         /// Original was GL_TEXTURE0 = 0x84C0
         /// </summary>
-        Texture0 = 0x84c0,
+        Texture0 = 0x84C0,
 
         /// <summary>
         /// Original was GL_TEXTURE1 = 0x84C1
         /// </summary>
-        Texture1 = 0x84c1,
+        Texture1 = 0x84C1,
 
         /// <summary>
         /// Original was GL_TEXTURE2 = 0x84C2
         /// </summary>
-        Texture2 = 0x84c2,
+        Texture2 = 0x84C2,
 
         /// <summary>
         /// Original was GL_TEXTURE3 = 0x84C3
         /// </summary>
-        Texture3 = 0x84c3,
+        Texture3 = 0x84C3,
 
         /// <summary>
         /// Original was GL_TEXTURE4 = 0x84C4
         /// </summary>
-        Texture4 = 0x84c4,
+        Texture4 = 0x84C4,
 
         /// <summary>
         /// Original was GL_TEXTURE5 = 0x84C5
         /// </summary>
-        Texture5 = 0x84c5,
+        Texture5 = 0x84C5,
 
         /// <summary>
         /// Original was GL_TEXTURE6 = 0x84C6
         /// </summary>
-        Texture6 = 0x84c6,
+        Texture6 = 0x84C6,
 
         /// <summary>
         /// Original was GL_TEXTURE7 = 0x84C7
         /// </summary>
-        Texture7 = 0x84c7,
+        Texture7 = 0x84C7,
 
         /// <summary>
         /// Original was GL_TEXTURE8 = 0x84C8
         /// </summary>
-        Texture8 = 0x84c8,
+        Texture8 = 0x84C8,
 
         /// <summary>
         /// Original was GL_TEXTURE9 = 0x84C9
         /// </summary>
-        Texture9 = 0x84c9,
+        Texture9 = 0x84C9,
 
         /// <summary>
         /// Original was GL_TEXTURE10 = 0x84CA
         /// </summary>
-        Texture10 = 0x84ca,
+        Texture10 = 0x84CA,
 
         /// <summary>
         /// Original was GL_TEXTURE11 = 0x84CB
         /// </summary>
-        Texture11 = 0x84cb,
+        Texture11 = 0x84CB,
 
         /// <summary>
         /// Original was GL_TEXTURE12 = 0x84CC
         /// </summary>
-        Texture12 = 0x84cc,
+        Texture12 = 0x84CC,
 
         /// <summary>
         /// Original was GL_TEXTURE13 = 0x84CD
         /// </summary>
-        Texture13 = 0x84cd,
+        Texture13 = 0x84CD,
 
         /// <summary>
         /// Original was GL_TEXTURE14 = 0x84CE
         /// </summary>
-        Texture14 = 0x84ce,
+        Texture14 = 0x84CE,
 
         /// <summary>
         /// Original was GL_TEXTURE15 = 0x84CF
         /// </summary>
-        Texture15 = 0x84cf,
+        Texture15 = 0x84CF,
 
         /// <summary>
         /// Original was GL_TEXTURE16 = 0x84D0
         /// </summary>
-        Texture16 = 0x84d0,
+        Texture16 = 0x84D0,
 
         /// <summary>
         /// Original was GL_TEXTURE17 = 0x84D1
         /// </summary>
-        Texture17 = 0x84d1,
+        Texture17 = 0x84D1,
 
         /// <summary>
         /// Original was GL_TEXTURE18 = 0x84D2
         /// </summary>
-        Texture18 = 0x84d2,
+        Texture18 = 0x84D2,
 
         /// <summary>
         /// Original was GL_TEXTURE19 = 0x84D3
         /// </summary>
-        Texture19 = 0x84d3,
+        Texture19 = 0x84D3,
 
         /// <summary>
         /// Original was GL_TEXTURE20 = 0x84D4
         /// </summary>
-        Texture20 = 0x84d4,
+        Texture20 = 0x84D4,
 
         /// <summary>
         /// Original was GL_TEXTURE21 = 0x84D5
         /// </summary>
-        Texture21 = 0x84d5,
+        Texture21 = 0x84D5,
 
         /// <summary>
         /// Original was GL_TEXTURE22 = 0x84D6
         /// </summary>
-        Texture22 = 0x84d6,
+        Texture22 = 0x84D6,
 
         /// <summary>
         /// Original was GL_TEXTURE23 = 0x84D7
         /// </summary>
-        Texture23 = 0x84d7,
+        Texture23 = 0x84D7,
 
         /// <summary>
         /// Original was GL_TEXTURE24 = 0x84D8
         /// </summary>
-        Texture24 = 0x84d8,
+        Texture24 = 0x84D8,
 
         /// <summary>
         /// Original was GL_TEXTURE25 = 0x84D9
         /// </summary>
-        Texture25 = 0x84d9,
+        Texture25 = 0x84D9,
 
         /// <summary>
         /// Original was GL_TEXTURE26 = 0x84DA
         /// </summary>
-        Texture26 = 0x84da,
+        Texture26 = 0x84DA,
 
         /// <summary>
         /// Original was GL_TEXTURE27 = 0x84DB
         /// </summary>
-        Texture27 = 0x84db,
+        Texture27 = 0x84DB,
 
         /// <summary>
         /// Original was GL_TEXTURE28 = 0x84DC
         /// </summary>
-        Texture28 = 0x84dc,
+        Texture28 = 0x84DC,
 
         /// <summary>
         /// Original was GL_TEXTURE29 = 0x84DD
         /// </summary>
-        Texture29 = 0x84dd,
+        Texture29 = 0x84DD,
 
         /// <summary>
         /// Original was GL_TEXTURE30 = 0x84DE
         /// </summary>
-        Texture30 = 0x84de,
+        Texture30 = 0x84DE,
 
         /// <summary>
         /// Original was GL_TEXTURE31 = 0x84DF
         /// </summary>
-        Texture31 = 0x84df,
+        Texture31 = 0x84DF,
 
         /// <summary>
         /// Original was GL_ACTIVE_TEXTURE = 0x84E0
         /// </summary>
-        ActiveTexture = 0x84e0,
+        ActiveTexture = 0x84E0,
 
         /// <summary>
         /// Original was GL_COMPRESSED_RGB = 0x84ED
         /// </summary>
-        CompressedRgb = 0x84ed,
+        CompressedRgb = 0x84ED,
 
         /// <summary>
         /// Original was GL_COMPRESSED_RGBA = 0x84EE
         /// </summary>
-        CompressedRgba = 0x84ee,
+        CompressedRgba = 0x84EE,
 
         /// <summary>
         /// Original was GL_TEXTURE_COMPRESSION_HINT = 0x84EF
         /// </summary>
-        TextureCompressionHint = 0x84ef,
+        TextureCompressionHint = 0x84EF,
 
         /// <summary>
         /// Original was GL_TEXTURE_CUBE_MAP = 0x8513
@@ -296,36 +296,36 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_TEXTURE_CUBE_MAP_NEGATIVE_Z = 0x851A
         /// </summary>
-        TextureCubeMapNegativeZ = 0x851a,
+        TextureCubeMapNegativeZ = 0x851A,
 
         /// <summary>
         /// Original was GL_PROXY_TEXTURE_CUBE_MAP = 0x851B
         /// </summary>
-        ProxyTextureCubeMap = 0x851b,
+        ProxyTextureCubeMap = 0x851B,
 
         /// <summary>
         /// Original was GL_MAX_CUBE_MAP_TEXTURE_SIZE = 0x851C
         /// </summary>
-        MaxCubeMapTextureSize = 0x851c,
+        MaxCubeMapTextureSize = 0x851C,
 
         /// <summary>
         /// Original was GL_TEXTURE_COMPRESSED_IMAGE_SIZE = 0x86A0
         /// </summary>
-        TextureCompressedImageSize = 0x86a0,
+        TextureCompressedImageSize = 0x86A0,
 
         /// <summary>
         /// Original was GL_TEXTURE_COMPRESSED = 0x86A1
         /// </summary>
-        TextureCompressed = 0x86a1,
+        TextureCompressed = 0x86A1,
 
         /// <summary>
         /// Original was GL_NUM_COMPRESSED_TEXTURE_FORMATS = 0x86A2
         /// </summary>
-        NumCompressedTextureFormats = 0x86a2,
+        NumCompressedTextureFormats = 0x86A2,
 
         /// <summary>
         /// Original was GL_COMPRESSED_TEXTURE_FORMATS = 0x86A3
         /// </summary>
-        CompressedTextureFormats = 0x86a3
+        CompressedTextureFormats = 0x86A3
     }
 }

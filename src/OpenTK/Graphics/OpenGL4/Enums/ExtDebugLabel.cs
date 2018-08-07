@@ -29,34 +29,34 @@
 namespace OpenTK.Graphics.OpenGL4
 {
     /// <summary>
-    /// Used in GL.Ext.GetObjectLabel and GL.Ext.LabelObject.
+    /// Used in GL.EXT.GetObjectLabel and GL.EXT.LabelObject.
     /// </summary>
     public enum ExtDebugLabel
     {
         /// <summary>
         /// Original was GL_SAMPLER = 0x82E6
         /// </summary>
-        Sampler = 0x82e6,
+        Sampler = 0x82E6,
 
         /// <summary>
         /// Original was GL_PROGRAM_PIPELINE_OBJECT_EXT = 0x8A4F
         /// </summary>
-        ProgramPipelineObjectExt = 0x8a4f,
+        ProgramPipelineObjectExt = 0x8A4F,
 
         /// <summary>
         /// Original was GL_PROGRAM_OBJECT_EXT = 0x8B40
         /// </summary>
-        ProgramObjectExt = 0x8b40,
+        ProgramObjectExt = 0x8B40,
 
         /// <summary>
         /// Original was GL_SHADER_OBJECT_EXT = 0x8B48
         /// </summary>
-        ShaderObjectExt = 0x8b48,
+        ShaderObjectExt = 0x8B48,
 
         /// <summary>
         /// Original was GL_TRANSFORM_FEEDBACK = 0x8E22
         /// </summary>
-        TransformFeedback = 0x8e22,
+        TransformFeedback = 0x8E22,
 
         /// <summary>
         /// Original was GL_BUFFER_OBJECT_EXT = 0x9151

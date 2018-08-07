@@ -36,56 +36,56 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_UNIFORM_BLOCK_REFERENCED_BY_TESS_CONTROL_SHADER = 0x84F0
         /// </summary>
-        UniformBlockReferencedByTessControlShader = 0x84f0,
+        UniformBlockReferencedByTessControlShader = 0x84F0,
 
         /// <summary>
         /// Original was GL_UNIFORM_BLOCK_REFERENCED_BY_TESS_EVALUATION_SHADER = 0x84F1
         /// </summary>
-        UniformBlockReferencedByTessEvaluationShader = 0x84f1,
+        UniformBlockReferencedByTessEvaluationShader = 0x84F1,
 
         /// <summary>
         /// Original was GL_UNIFORM_BLOCK_BINDING = 0x8A3F
         /// </summary>
-        UniformBlockBinding = 0x8a3f,
+        UniformBlockBinding = 0x8A3F,
 
         /// <summary>
         /// Original was GL_UNIFORM_BLOCK_DATA_SIZE = 0x8A40
         /// </summary>
-        UniformBlockDataSize = 0x8a40,
+        UniformBlockDataSize = 0x8A40,
 
         /// <summary>
         /// Original was GL_UNIFORM_BLOCK_NAME_LENGTH = 0x8A41
         /// </summary>
-        UniformBlockNameLength = 0x8a41,
+        UniformBlockNameLength = 0x8A41,
 
         /// <summary>
         /// Original was GL_UNIFORM_BLOCK_ACTIVE_UNIFORMS = 0x8A42
         /// </summary>
-        UniformBlockActiveUniforms = 0x8a42,
+        UniformBlockActiveUniforms = 0x8A42,
 
         /// <summary>
         /// Original was GL_UNIFORM_BLOCK_ACTIVE_UNIFORM_INDICES = 0x8A43
         /// </summary>
-        UniformBlockActiveUniformIndices = 0x8a43,
+        UniformBlockActiveUniformIndices = 0x8A43,
 
         /// <summary>
         /// Original was GL_UNIFORM_BLOCK_REFERENCED_BY_VERTEX_SHADER = 0x8A44
         /// </summary>
-        UniformBlockReferencedByVertexShader = 0x8a44,
+        UniformBlockReferencedByVertexShader = 0x8A44,
 
         /// <summary>
         /// Original was GL_UNIFORM_BLOCK_REFERENCED_BY_GEOMETRY_SHADER = 0x8A45
         /// </summary>
-        UniformBlockReferencedByGeometryShader = 0x8a45,
+        UniformBlockReferencedByGeometryShader = 0x8A45,
 
         /// <summary>
         /// Original was GL_UNIFORM_BLOCK_REFERENCED_BY_FRAGMENT_SHADER = 0x8A46
         /// </summary>
-        UniformBlockReferencedByFragmentShader = 0x8a46,
+        UniformBlockReferencedByFragmentShader = 0x8A46,
 
         /// <summary>
         /// Original was GL_UNIFORM_BLOCK_REFERENCED_BY_COMPUTE_SHADER = 0x90EC
         /// </summary>
-        UniformBlockReferencedByComputeShader = 0x90ec
+        UniformBlockReferencedByComputeShader = 0x90EC
     }
 }

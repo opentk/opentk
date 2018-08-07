@@ -96,22 +96,22 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_MAX_CONVOLUTION_WIDTH = 0x801A
         /// </summary>
-        MaxConvolutionWidth = 0x801a,
+        MaxConvolutionWidth = 0x801A,
 
         /// <summary>
         /// Original was GL_MAX_CONVOLUTION_WIDTH_EXT = 0x801A
         /// </summary>
-        MaxConvolutionWidthExt = 0x801a,
+        MaxConvolutionWidthExt = 0x801A,
 
         /// <summary>
         /// Original was GL_MAX_CONVOLUTION_HEIGHT = 0x801B
         /// </summary>
-        MaxConvolutionHeight = 0x801b,
+        MaxConvolutionHeight = 0x801B,
 
         /// <summary>
         /// Original was GL_MAX_CONVOLUTION_HEIGHT_EXT = 0x801B
         /// </summary>
-        MaxConvolutionHeightExt = 0x801b,
+        MaxConvolutionHeightExt = 0x801B,
 
         /// <summary>
         /// Original was GL_CONVOLUTION_BORDER_COLOR = 0x8154

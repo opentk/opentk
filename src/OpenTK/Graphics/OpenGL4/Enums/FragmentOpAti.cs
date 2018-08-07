@@ -76,16 +76,16 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_CND_ATI = 0x896A
         /// </summary>
-        CndAti = 0x896a,
+        CndAti = 0x896A,
 
         /// <summary>
         /// Original was GL_CND0_ATI = 0x896B
         /// </summary>
-        Cnd0Ati = 0x896b,
+        Cnd0Ati = 0x896B,
 
         /// <summary>
         /// Original was GL_DOT2_ADD_ATI = 0x896C
         /// </summary>
-        Dot2AddAti = 0x896c
+        Dot2AddAti = 0x896C
     }
 }

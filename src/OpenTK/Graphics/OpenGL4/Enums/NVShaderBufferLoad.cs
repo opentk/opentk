@@ -29,23 +29,23 @@
 namespace OpenTK.Graphics.OpenGL4
 {
     /// <summary>
-    /// Used in GL.NV.IsBufferResident and GL.NV.MakeBufferNonResident, as well as 2 other functions.
+    /// Used in GL.NV.MakeBufferNonResident and GL.NV.MakeBufferResident, as well as 3 other functions.
     /// </summary>
     public enum NVShaderBufferLoad
     {
         /// <summary>
         /// Original was GL_BUFFER_GPU_ADDRESS_NV = 0x8F1D
         /// </summary>
-        BufferGpuAddressNV = 0x8f1d,
+        BufferGpuAddressNV = 0x8F1D,
 
         /// <summary>
         /// Original was GL_GPU_ADDRESS_NV = 0x8F34
         /// </summary>
-        GpuAddressNV = 0x8f34,
+        GpuAddressNV = 0x8F34,
 
         /// <summary>
         /// Original was GL_MAX_SHADER_BUFFER_ADDRESS_NV = 0x8F35
         /// </summary>
-        MaxShaderBufferAddressNV = 0x8f35
+        MaxShaderBufferAddressNV = 0x8F35
     }
 }

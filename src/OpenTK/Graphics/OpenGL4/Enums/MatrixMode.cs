@@ -29,7 +29,7 @@
 namespace OpenTK.Graphics.OpenGL4
 {
     /// <summary>
-    /// Used in GL.Ext.MatrixFrustum and GL.Ext.MatrixLoad, as well as 10 other functions.
+    /// Used in GL.EXT.MatrixLoadIdentity and GL.EXT.MatrixPop, as well as 10 other functions.
     /// </summary>
     public enum MatrixMode
     {
@@ -41,11 +41,6 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_TEXTURE = 0x1702
         /// </summary>
-        Texture = 0x1702,
-
-        /// <summary>
-        /// Original was GL_COLOR = 0x1800
-        /// </summary>
-        Color = 0x1800
+        Texture = 0x1702
     }
 }

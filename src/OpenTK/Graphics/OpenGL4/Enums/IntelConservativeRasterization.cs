@@ -36,6 +36,6 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_CONSERVATIVE_RASTERIZATION_INTEL = 0x83FE
         /// </summary>
-        ConservativeRasterizationIntel = 0x83fe
+        ConservativeRasterizationIntel = 0x83FE
     }
 }

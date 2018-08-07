@@ -46,31 +46,21 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_EYE_DISTANCE_TO_POINT_SGIS = 0x81F0
         /// </summary>
-        EyeDistanceToPointSgis = 0x81f0,
+        EyeDistanceToPointSgis = 0x81F0,
 
         /// <summary>
         /// Original was GL_OBJECT_DISTANCE_TO_POINT_SGIS = 0x81F1
         /// </summary>
-        ObjectDistanceToPointSgis = 0x81f1,
+        ObjectDistanceToPointSgis = 0x81F1,
 
         /// <summary>
         /// Original was GL_EYE_DISTANCE_TO_LINE_SGIS = 0x81F2
         /// </summary>
-        EyeDistanceToLineSgis = 0x81f2,
+        EyeDistanceToLineSgis = 0x81F2,
 
         /// <summary>
         /// Original was GL_OBJECT_DISTANCE_TO_LINE_SGIS = 0x81F3
         /// </summary>
-        ObjectDistanceToLineSgis = 0x81f3,
-
-        /// <summary>
-        /// Original was GL_NORMAL_MAP = 0x8511
-        /// </summary>
-        NormalMap = 0x8511,
-
-        /// <summary>
-        /// Original was GL_REFLECTION_MAP = 0x8512
-        /// </summary>
-        ReflectionMap = 0x8512
+        ObjectDistanceToLineSgis = 0x81F3
     }
 }

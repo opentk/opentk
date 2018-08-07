@@ -34,48 +34,48 @@ namespace OpenTK.Graphics.OpenGL4
     public enum PathTransformType
     {
         /// <summary>
-        /// Original was GL_NONE = 0
+        /// Original was GL_NONE = 0x0
         /// </summary>
-        None = 0,
+        None = 0x0,
 
         /// <summary>
-        /// Original was GL_TRANSLATE_X_NV = 0x908E
+        /// Original was GL_TRANSLATE_XNV = 0x908E
         /// </summary>
-        TranslateXnv = 0x908e,
+        TranslateXNV = 0x908E,
 
         /// <summary>
-        /// Original was GL_TRANSLATE_Y_NV = 0x908F
+        /// Original was GL_TRANSLATE_YNV = 0x908F
         /// </summary>
-        TranslateYnv = 0x908f,
+        TranslateYNV = 0x908F,
 
         /// <summary>
-        /// Original was GL_TRANSLATE_2D_NV = 0x9090
+        /// Original was GL_TRANSLATE2_DNV = 0x9090
         /// </summary>
-        Translate2Dnv = 0x9090,
+        Translate2DNV = 0x9090,
 
         /// <summary>
-        /// Original was GL_TRANSLATE_3D_NV = 0x9091
+        /// Original was GL_TRANSLATE3_DNV = 0x9091
         /// </summary>
-        Translate3Dnv = 0x9091,
+        Translate3DNV = 0x9091,
 
         /// <summary>
-        /// Original was GL_AFFINE_2D_NV = 0x9092
+        /// Original was GL_AFFINE2_DNV = 0x9092
         /// </summary>
-        Affine2Dnv = 0x9092,
+        Affine2DNV = 0x9092,
 
         /// <summary>
-        /// Original was GL_AFFINE_3D_NV = 0x9094
+        /// Original was GL_AFFINE3_DNV = 0x9094
         /// </summary>
-        Affine3Dnv = 0x9094,
+        Affine3DNV = 0x9094,
 
         /// <summary>
-        /// Original was GL_TRANSPOSE_AFFINE_2D_NV = 0x9096
+        /// Original was GL_TRANSPOSE_AFFINE2_DNV = 0x9096
         /// </summary>
-        TransposeAffine2Dnv = 0x9096,
+        TransposeAffine2DNV = 0x9096,
 
         /// <summary>
-        /// Original was GL_TRANSPOSE_AFFINE_3D_NV = 0x9098
+        /// Original was GL_TRANSPOSE_AFFINE3_DNV = 0x9098
         /// </summary>
-        TransposeAffine3Dnv = 0x9098
+        TransposeAffine3DNV = 0x9098
     }
 }

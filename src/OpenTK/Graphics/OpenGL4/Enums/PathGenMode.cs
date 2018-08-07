@@ -29,18 +29,18 @@
 namespace OpenTK.Graphics.OpenGL4
 {
     /// <summary>
-    /// Used in GL.NV.GetPathColorGen and GL.NV.GetPathTexGen, as well as 3 other functions.
+    /// Used in GL.NV.PathFogGen and GL.NV.GetPathColorGen, as well as 3 other functions.
     /// </summary>
     public enum PathGenMode
     {
         /// <summary>
-        /// Original was GL_NONE = 0
+        /// Original was GL_NONE = 0x0
         /// </summary>
-        None = 0,
+        None = 0x0,
 
         /// <summary>
         /// Original was GL_PATH_OBJECT_BOUNDING_BOX_NV = 0x908A
         /// </summary>
-        PathObjectBoundingBoxNV = 0x908a
+        PathObjectBoundingBoxNV = 0x908A
     }
 }

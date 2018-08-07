@@ -36,21 +36,21 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_COMPRESSED_RGBA_BPTC_UNORM_ARB = 0x8E8C
         /// </summary>
-        CompressedRgbaBptcUnormArb = 0x8e8c,
+        CompressedRgbaBptcUnormArb = 0x8E8C,
 
         /// <summary>
         /// Original was GL_COMPRESSED_SRGB_ALPHA_BPTC_UNORM_ARB = 0x8E8D
         /// </summary>
-        CompressedSrgbAlphaBptcUnormArb = 0x8e8d,
+        CompressedSrgbAlphaBptcUnormArb = 0x8E8D,
 
         /// <summary>
         /// Original was GL_COMPRESSED_RGB_BPTC_SIGNED_FLOAT_ARB = 0x8E8E
         /// </summary>
-        CompressedRgbBptcSignedFloatArb = 0x8e8e,
+        CompressedRgbBptcSignedFloatArb = 0x8E8E,
 
         /// <summary>
         /// Original was GL_COMPRESSED_RGB_BPTC_UNSIGNED_FLOAT_ARB = 0x8E8F
         /// </summary>
-        CompressedRgbBptcUnsignedFloatArb = 0x8e8f
+        CompressedRgbBptcUnsignedFloatArb = 0x8E8F
     }
 }

@@ -36,7 +36,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_INVERT = 0x150A
         /// </summary>
-        Invert = 0x150a,
+        Invert = 0x150A,
 
         /// <summary>
         /// Original was GL_PATH_FILL_MODE_NV = 0x9080

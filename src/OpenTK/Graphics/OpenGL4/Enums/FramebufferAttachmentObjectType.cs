@@ -34,9 +34,9 @@ namespace OpenTK.Graphics.OpenGL4
     public enum FramebufferAttachmentObjectType
     {
         /// <summary>
-        /// Original was GL_NONE = 0
+        /// Original was GL_NONE = 0x0
         /// </summary>
-        None = 0,
+        None = 0x0,
 
         /// <summary>
         /// Original was GL_TEXTURE = 0x1702
@@ -51,6 +51,6 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_RENDERBUFFER = 0x8D41
         /// </summary>
-        Renderbuffer = 0x8d41
+        Renderbuffer = 0x8D41
     }
 }

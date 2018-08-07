@@ -36,81 +36,81 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_PIXEL_PACK_BUFFER = 0x88EB
         /// </summary>
-        PixelPackBuffer = 0x88eb,
+        PixelPackBuffer = 0x88EB,
 
         /// <summary>
         /// Original was GL_PIXEL_UNPACK_BUFFER = 0x88EC
         /// </summary>
-        PixelUnpackBuffer = 0x88ec,
+        PixelUnpackBuffer = 0x88EC,
 
         /// <summary>
         /// Original was GL_PIXEL_PACK_BUFFER_BINDING = 0x88ED
         /// </summary>
-        PixelPackBufferBinding = 0x88ed,
+        PixelPackBufferBinding = 0x88ED,
 
         /// <summary>
         /// Original was GL_PIXEL_UNPACK_BUFFER_BINDING = 0x88EF
         /// </summary>
-        PixelUnpackBufferBinding = 0x88ef,
+        PixelUnpackBufferBinding = 0x88EF,
 
         /// <summary>
-        /// Original was GL_FLOAT_MAT2x3 = 0x8B65
+        /// Original was GL_FLOAT_MAT2X3 = 0x8B65
         /// </summary>
-        FloatMat2x3 = 0x8b65,
+        FloatMat2x3 = 0x8B65,
 
         /// <summary>
-        /// Original was GL_FLOAT_MAT2x4 = 0x8B66
+        /// Original was GL_FLOAT_MAT2X4 = 0x8B66
         /// </summary>
-        FloatMat2x4 = 0x8b66,
+        FloatMat2x4 = 0x8B66,
 
         /// <summary>
-        /// Original was GL_FLOAT_MAT3x2 = 0x8B67
+        /// Original was GL_FLOAT_MAT3X2 = 0x8B67
         /// </summary>
-        FloatMat3x2 = 0x8b67,
+        FloatMat3x2 = 0x8B67,
 
         /// <summary>
-        /// Original was GL_FLOAT_MAT3x4 = 0x8B68
+        /// Original was GL_FLOAT_MAT3X4 = 0x8B68
         /// </summary>
-        FloatMat3x4 = 0x8b68,
+        FloatMat3x4 = 0x8B68,
 
         /// <summary>
-        /// Original was GL_FLOAT_MAT4x2 = 0x8B69
+        /// Original was GL_FLOAT_MAT4X2 = 0x8B69
         /// </summary>
-        FloatMat4x2 = 0x8b69,
+        FloatMat4x2 = 0x8B69,
 
         /// <summary>
-        /// Original was GL_FLOAT_MAT4x3 = 0x8B6A
+        /// Original was GL_FLOAT_MAT4X3 = 0x8B6A
         /// </summary>
-        FloatMat4x3 = 0x8b6a,
+        FloatMat4x3 = 0x8B6A,
 
         /// <summary>
         /// Original was GL_SRGB = 0x8C40
         /// </summary>
-        Srgb = 0x8c40,
+        Srgb = 0x8C40,
 
         /// <summary>
         /// Original was GL_SRGB8 = 0x8C41
         /// </summary>
-        Srgb8 = 0x8c41,
+        Srgb8 = 0x8C41,
 
         /// <summary>
         /// Original was GL_SRGB_ALPHA = 0x8C42
         /// </summary>
-        SrgbAlpha = 0x8c42,
+        SrgbAlpha = 0x8C42,
 
         /// <summary>
         /// Original was GL_SRGB8_ALPHA8 = 0x8C43
         /// </summary>
-        Srgb8Alpha8 = 0x8c43,
+        Srgb8Alpha8 = 0x8C43,
 
         /// <summary>
         /// Original was GL_COMPRESSED_SRGB = 0x8C48
         /// </summary>
-        CompressedSrgb = 0x8c48,
+        CompressedSrgb = 0x8C48,
 
         /// <summary>
         /// Original was GL_COMPRESSED_SRGB_ALPHA = 0x8C49
         /// </summary>
-        CompressedSrgbAlpha = 0x8c49
+        CompressedSrgbAlpha = 0x8C49
     }
 }

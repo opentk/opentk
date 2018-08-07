@@ -29,14 +29,14 @@
 namespace OpenTK.Graphics.OpenGL4
 {
     /// <summary>
-    /// Used in GL.BeginQuery and GL.BeginQueryIndexed, as well as 5 other functions.
+    /// Used in GL.EndQuery and GL.BeginQuery, as well as 5 other functions.
     /// </summary>
     public enum QueryTarget
     {
         /// <summary>
         /// Original was GL_TIME_ELAPSED = 0x88BF
         /// </summary>
-        TimeElapsed = 0x88bf,
+        TimeElapsed = 0x88BF,
 
         /// <summary>
         /// Original was GL_SAMPLES_PASSED = 0x8914
@@ -46,26 +46,21 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_ANY_SAMPLES_PASSED = 0x8C2F
         /// </summary>
-        AnySamplesPassed = 0x8c2f,
+        AnySamplesPassed = 0x8C2F,
 
         /// <summary>
         /// Original was GL_PRIMITIVES_GENERATED = 0x8C87
         /// </summary>
-        PrimitivesGenerated = 0x8c87,
+        PrimitivesGenerated = 0x8C87,
 
         /// <summary>
         /// Original was GL_TRANSFORM_FEEDBACK_PRIMITIVES_WRITTEN = 0x8C88
         /// </summary>
-        TransformFeedbackPrimitivesWritten = 0x8c88,
+        TransformFeedbackPrimitivesWritten = 0x8C88,
 
         /// <summary>
         /// Original was GL_ANY_SAMPLES_PASSED_CONSERVATIVE = 0x8D6A
         /// </summary>
-        AnySamplesPassedConservative = 0x8d6a,
-
-        /// <summary>
-        /// Original was GL_TIMESTAMP = 0x8E28
-        /// </summary>
-        Timestamp = 0x8e28
+        AnySamplesPassedConservative = 0x8D6A
     }
 }

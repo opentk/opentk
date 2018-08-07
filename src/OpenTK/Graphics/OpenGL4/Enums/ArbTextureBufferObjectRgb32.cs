@@ -41,11 +41,11 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_RGB32UI = 0x8D71
         /// </summary>
-        Rgb32ui = 0x8d71,
+        Rgb32ui = 0x8D71,
 
         /// <summary>
         /// Original was GL_RGB32I = 0x8D83
         /// </summary>
-        Rgb32i = 0x8d83
+        Rgb32i = 0x8D83
     }
 }

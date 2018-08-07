@@ -39,13 +39,13 @@ namespace OpenTK.Graphics.OpenGL4
         WarpSizeNV = 0x9339,
 
         /// <summary>
-        /// Original was GL_WARPS_PER_SM_NV = 0x933A
+        /// Original was GL_WARPS_PER_SMNV = 0x933A
         /// </summary>
-        WarpsPerSmnv = 0x933a,
+        WarpsPerSMNV = 0x933A,
 
         /// <summary>
         /// Original was GL_SM_COUNT_NV = 0x933B
         /// </summary>
-        SMCountNV = 0x933b
+        SMCountNV = 0x933B
     }
 }

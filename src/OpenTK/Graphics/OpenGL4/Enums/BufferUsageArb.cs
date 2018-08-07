@@ -29,53 +29,53 @@
 namespace OpenTK.Graphics.OpenGL4
 {
     /// <summary>
-    /// Not used directly.
+    /// Used in GL.BufferData.
     /// </summary>
     public enum BufferUsageArb
     {
         /// <summary>
         /// Original was GL_STREAM_DRAW = 0x88E0
         /// </summary>
-        StreamDraw = 0x88e0,
+        StreamDraw = 0x88E0,
 
         /// <summary>
         /// Original was GL_STREAM_READ = 0x88E1
         /// </summary>
-        StreamRead = 0x88e1,
+        StreamRead = 0x88E1,
 
         /// <summary>
         /// Original was GL_STREAM_COPY = 0x88E2
         /// </summary>
-        StreamCopy = 0x88e2,
+        StreamCopy = 0x88E2,
 
         /// <summary>
         /// Original was GL_STATIC_DRAW = 0x88E4
         /// </summary>
-        StaticDraw = 0x88e4,
+        StaticDraw = 0x88E4,
 
         /// <summary>
         /// Original was GL_STATIC_READ = 0x88E5
         /// </summary>
-        StaticRead = 0x88e5,
+        StaticRead = 0x88E5,
 
         /// <summary>
         /// Original was GL_STATIC_COPY = 0x88E6
         /// </summary>
-        StaticCopy = 0x88e6,
+        StaticCopy = 0x88E6,
 
         /// <summary>
         /// Original was GL_DYNAMIC_DRAW = 0x88E8
         /// </summary>
-        DynamicDraw = 0x88e8,
+        DynamicDraw = 0x88E8,
 
         /// <summary>
         /// Original was GL_DYNAMIC_READ = 0x88E9
         /// </summary>
-        DynamicRead = 0x88e9,
+        DynamicRead = 0x88E9,
 
         /// <summary>
         /// Original was GL_DYNAMIC_COPY = 0x88EA
         /// </summary>
-        DynamicCopy = 0x88ea
+        DynamicCopy = 0x88EA
     }
 }

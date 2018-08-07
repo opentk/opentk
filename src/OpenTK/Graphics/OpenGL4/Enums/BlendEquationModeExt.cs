@@ -29,7 +29,7 @@
 namespace OpenTK.Graphics.OpenGL4
 {
     /// <summary>
-    /// Used in GL.Arb.BlendEquationSeparate.
+    /// Not used directly.
     /// </summary>
     public enum BlendEquationModeExt
     {
@@ -56,22 +56,22 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_FUNC_SUBTRACT = 0x800A
         /// </summary>
-        FuncSubtract = 0x800a,
+        FuncSubtract = 0x800A,
 
         /// <summary>
         /// Original was GL_FUNC_SUBTRACT_EXT = 0x800A
         /// </summary>
-        FuncSubtractExt = 0x800a,
+        FuncSubtractExt = 0x800A,
 
         /// <summary>
         /// Original was GL_FUNC_REVERSE_SUBTRACT = 0x800B
         /// </summary>
-        FuncReverseSubtract = 0x800b,
+        FuncReverseSubtract = 0x800B,
 
         /// <summary>
         /// Original was GL_FUNC_REVERSE_SUBTRACT_EXT = 0x800B
         /// </summary>
-        FuncReverseSubtractExt = 0x800b,
+        FuncReverseSubtractExt = 0x800B,
 
         /// <summary>
         /// Original was GL_ALPHA_MIN_SGIX = 0x8320

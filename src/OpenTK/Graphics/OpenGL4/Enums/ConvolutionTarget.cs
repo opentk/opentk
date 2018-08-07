@@ -29,23 +29,18 @@
 namespace OpenTK.Graphics.OpenGL4
 {
     /// <summary>
-    /// Used in GL.Arb.GetnConvolutionFilter and GL.ConvolutionFilter1D, as well as 7 other functions.
+    /// Used in GL.GetConvolutionFilter and GL.ConvolutionFilter1D, as well as 7 other functions.
     /// </summary>
     public enum ConvolutionTarget
     {
         /// <summary>
-        /// Original was GL_CONVOLUTION_1D = 0x8010
+        /// Original was GL_CONVOLUTION1_D = 0x8010
         /// </summary>
         Convolution1D = 0x8010,
 
         /// <summary>
-        /// Original was GL_CONVOLUTION_2D = 0x8011
+        /// Original was GL_CONVOLUTION2_D = 0x8011
         /// </summary>
-        Convolution2D = 0x8011,
-
-        /// <summary>
-        /// Original was GL_SEPARABLE_2D = 0x8012
-        /// </summary>
-        Separable2D = 0x8012
+        Convolution2D = 0x8011
     }
 }

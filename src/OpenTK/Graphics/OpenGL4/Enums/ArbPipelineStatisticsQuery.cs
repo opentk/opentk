@@ -36,56 +36,56 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_VERTICES_SUBMITTED_ARB = 0x82EE
         /// </summary>
-        VerticesSubmittedArb = 0x82ee,
+        VerticesSubmittedArb = 0x82EE,
 
         /// <summary>
         /// Original was GL_PRIMITIVES_SUBMITTED_ARB = 0x82EF
         /// </summary>
-        PrimitivesSubmittedArb = 0x82ef,
+        PrimitivesSubmittedArb = 0x82EF,
 
         /// <summary>
         /// Original was GL_VERTEX_SHADER_INVOCATIONS_ARB = 0x82F0
         /// </summary>
-        VertexShaderInvocationsArb = 0x82f0,
+        VertexShaderInvocationsArb = 0x82F0,
 
         /// <summary>
         /// Original was GL_TESS_CONTROL_SHADER_PATCHES_ARB = 0x82F1
         /// </summary>
-        TessControlShaderPatchesArb = 0x82f1,
+        TessControlShaderPatchesArb = 0x82F1,
 
         /// <summary>
         /// Original was GL_TESS_EVALUATION_SHADER_INVOCATIONS_ARB = 0x82F2
         /// </summary>
-        TessEvaluationShaderInvocationsArb = 0x82f2,
+        TessEvaluationShaderInvocationsArb = 0x82F2,
 
         /// <summary>
         /// Original was GL_GEOMETRY_SHADER_PRIMITIVES_EMITTED_ARB = 0x82F3
         /// </summary>
-        GeometryShaderPrimitivesEmittedArb = 0x82f3,
+        GeometryShaderPrimitivesEmittedArb = 0x82F3,
 
         /// <summary>
         /// Original was GL_FRAGMENT_SHADER_INVOCATIONS_ARB = 0x82F4
         /// </summary>
-        FragmentShaderInvocationsArb = 0x82f4,
+        FragmentShaderInvocationsArb = 0x82F4,
 
         /// <summary>
         /// Original was GL_COMPUTE_SHADER_INVOCATIONS_ARB = 0x82F5
         /// </summary>
-        ComputeShaderInvocationsArb = 0x82f5,
+        ComputeShaderInvocationsArb = 0x82F5,
 
         /// <summary>
         /// Original was GL_CLIPPING_INPUT_PRIMITIVES_ARB = 0x82F6
         /// </summary>
-        ClippingInputPrimitivesArb = 0x82f6,
+        ClippingInputPrimitivesArb = 0x82F6,
 
         /// <summary>
         /// Original was GL_CLIPPING_OUTPUT_PRIMITIVES_ARB = 0x82F7
         /// </summary>
-        ClippingOutputPrimitivesArb = 0x82f7,
+        ClippingOutputPrimitivesArb = 0x82F7,
 
         /// <summary>
         /// Original was GL_GEOMETRY_SHADER_INVOCATIONS = 0x887F
         /// </summary>
-        GeometryShaderInvocations = 0x887f
+        GeometryShaderInvocations = 0x887F
     }
 }

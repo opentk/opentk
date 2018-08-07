@@ -29,28 +29,28 @@
 namespace OpenTK.Graphics.OpenGL4
 {
     /// <summary>
-    /// Used in GL.Ext.GetMultiTexGen and GL.Ext.MultiTexGend, as well as 1 other function.
+    /// Used in GL.EXT.GetMultiTexGen and GL.EXT.MultiTexGend, as well as 1 other function.
     /// </summary>
     public enum TextureGenParameter
     {
         /// <summary>
         /// Original was GL_EYE_POINT_SGIS = 0x81F4
         /// </summary>
-        EyePointSgis = 0x81f4,
+        EyePointSgis = 0x81F4,
 
         /// <summary>
         /// Original was GL_OBJECT_POINT_SGIS = 0x81F5
         /// </summary>
-        ObjectPointSgis = 0x81f5,
+        ObjectPointSgis = 0x81F5,
 
         /// <summary>
         /// Original was GL_EYE_LINE_SGIS = 0x81F6
         /// </summary>
-        EyeLineSgis = 0x81f6,
+        EyeLineSgis = 0x81F6,
 
         /// <summary>
         /// Original was GL_OBJECT_LINE_SGIS = 0x81F7
         /// </summary>
-        ObjectLineSgis = 0x81f7
+        ObjectLineSgis = 0x81F7
     }
 }

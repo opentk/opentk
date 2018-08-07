@@ -29,133 +29,133 @@
 namespace OpenTK.Graphics.OpenGL4
 {
     /// <summary>
-    /// Used in GL.NV.IndexFormat and GL.NV.NormalFormat, as well as 3 other functions.
+    /// Used in GL.NV.BufferAddressRange and GL.NV.ColorFormat, as well as 7 other functions.
     /// </summary>
     public enum NVVertexBufferUnifiedMemory
     {
         /// <summary>
         /// Original was GL_VERTEX_ATTRIB_ARRAY_UNIFIED_NV = 0x8F1E
         /// </summary>
-        VertexAttribArrayUnifiedNV = 0x8f1e,
+        VertexAttribArrayUnifiedNV = 0x8F1E,
 
         /// <summary>
         /// Original was GL_ELEMENT_ARRAY_UNIFIED_NV = 0x8F1F
         /// </summary>
-        ElementArrayUnifiedNV = 0x8f1f,
+        ElementArrayUnifiedNV = 0x8F1F,
 
         /// <summary>
         /// Original was GL_VERTEX_ATTRIB_ARRAY_ADDRESS_NV = 0x8F20
         /// </summary>
-        VertexAttribArrayAddressNV = 0x8f20,
+        VertexAttribArrayAddressNV = 0x8F20,
 
         /// <summary>
         /// Original was GL_VERTEX_ARRAY_ADDRESS_NV = 0x8F21
         /// </summary>
-        VertexArrayAddressNV = 0x8f21,
+        VertexArrayAddressNV = 0x8F21,
 
         /// <summary>
         /// Original was GL_NORMAL_ARRAY_ADDRESS_NV = 0x8F22
         /// </summary>
-        NormalArrayAddressNV = 0x8f22,
+        NormalArrayAddressNV = 0x8F22,
 
         /// <summary>
         /// Original was GL_COLOR_ARRAY_ADDRESS_NV = 0x8F23
         /// </summary>
-        ColorArrayAddressNV = 0x8f23,
+        ColorArrayAddressNV = 0x8F23,
 
         /// <summary>
         /// Original was GL_INDEX_ARRAY_ADDRESS_NV = 0x8F24
         /// </summary>
-        IndexArrayAddressNV = 0x8f24,
+        IndexArrayAddressNV = 0x8F24,
 
         /// <summary>
         /// Original was GL_TEXTURE_COORD_ARRAY_ADDRESS_NV = 0x8F25
         /// </summary>
-        TextureCoordArrayAddressNV = 0x8f25,
+        TextureCoordArrayAddressNV = 0x8F25,
 
         /// <summary>
         /// Original was GL_EDGE_FLAG_ARRAY_ADDRESS_NV = 0x8F26
         /// </summary>
-        EdgeFlagArrayAddressNV = 0x8f26,
+        EdgeFlagArrayAddressNV = 0x8F26,
 
         /// <summary>
         /// Original was GL_SECONDARY_COLOR_ARRAY_ADDRESS_NV = 0x8F27
         /// </summary>
-        SecondaryColorArrayAddressNV = 0x8f27,
+        SecondaryColorArrayAddressNV = 0x8F27,
 
         /// <summary>
         /// Original was GL_FOG_COORD_ARRAY_ADDRESS_NV = 0x8F28
         /// </summary>
-        FogCoordArrayAddressNV = 0x8f28,
+        FogCoordArrayAddressNV = 0x8F28,
 
         /// <summary>
         /// Original was GL_ELEMENT_ARRAY_ADDRESS_NV = 0x8F29
         /// </summary>
-        ElementArrayAddressNV = 0x8f29,
+        ElementArrayAddressNV = 0x8F29,
 
         /// <summary>
         /// Original was GL_VERTEX_ATTRIB_ARRAY_LENGTH_NV = 0x8F2A
         /// </summary>
-        VertexAttribArrayLengthNV = 0x8f2a,
+        VertexAttribArrayLengthNV = 0x8F2A,
 
         /// <summary>
         /// Original was GL_VERTEX_ARRAY_LENGTH_NV = 0x8F2B
         /// </summary>
-        VertexArrayLengthNV = 0x8f2b,
+        VertexArrayLengthNV = 0x8F2B,
 
         /// <summary>
         /// Original was GL_NORMAL_ARRAY_LENGTH_NV = 0x8F2C
         /// </summary>
-        NormalArrayLengthNV = 0x8f2c,
+        NormalArrayLengthNV = 0x8F2C,
 
         /// <summary>
         /// Original was GL_COLOR_ARRAY_LENGTH_NV = 0x8F2D
         /// </summary>
-        ColorArrayLengthNV = 0x8f2d,
+        ColorArrayLengthNV = 0x8F2D,
 
         /// <summary>
         /// Original was GL_INDEX_ARRAY_LENGTH_NV = 0x8F2E
         /// </summary>
-        IndexArrayLengthNV = 0x8f2e,
+        IndexArrayLengthNV = 0x8F2E,
 
         /// <summary>
         /// Original was GL_TEXTURE_COORD_ARRAY_LENGTH_NV = 0x8F2F
         /// </summary>
-        TextureCoordArrayLengthNV = 0x8f2f,
+        TextureCoordArrayLengthNV = 0x8F2F,
 
         /// <summary>
         /// Original was GL_EDGE_FLAG_ARRAY_LENGTH_NV = 0x8F30
         /// </summary>
-        EdgeFlagArrayLengthNV = 0x8f30,
+        EdgeFlagArrayLengthNV = 0x8F30,
 
         /// <summary>
         /// Original was GL_SECONDARY_COLOR_ARRAY_LENGTH_NV = 0x8F31
         /// </summary>
-        SecondaryColorArrayLengthNV = 0x8f31,
+        SecondaryColorArrayLengthNV = 0x8F31,
 
         /// <summary>
         /// Original was GL_FOG_COORD_ARRAY_LENGTH_NV = 0x8F32
         /// </summary>
-        FogCoordArrayLengthNV = 0x8f32,
+        FogCoordArrayLengthNV = 0x8F32,
 
         /// <summary>
         /// Original was GL_ELEMENT_ARRAY_LENGTH_NV = 0x8F33
         /// </summary>
-        ElementArrayLengthNV = 0x8f33,
+        ElementArrayLengthNV = 0x8F33,
 
         /// <summary>
         /// Original was GL_DRAW_INDIRECT_UNIFIED_NV = 0x8F40
         /// </summary>
-        DrawIndirectUnifiedNV = 0x8f40,
+        DrawIndirectUnifiedNV = 0x8F40,
 
         /// <summary>
         /// Original was GL_DRAW_INDIRECT_ADDRESS_NV = 0x8F41
         /// </summary>
-        DrawIndirectAddressNV = 0x8f41,
+        DrawIndirectAddressNV = 0x8F41,
 
         /// <summary>
         /// Original was GL_DRAW_INDIRECT_LENGTH_NV = 0x8F42
         /// </summary>
-        DrawIndirectLengthNV = 0x8f42
+        DrawIndirectLengthNV = 0x8F42
     }
 }

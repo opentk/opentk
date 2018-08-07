@@ -34,23 +34,23 @@ namespace OpenTK.Graphics.OpenGL4
     public enum AppleRgb422
     {
         /// <summary>
-        /// Original was GL_UNSIGNED_SHORT_8_8_APPLE = 0x85BA
+        /// Original was GL_UNSIGNED_SHORT88_APPLE = 0x85BA
         /// </summary>
-        UnsignedShort88Apple = 0x85ba,
+        UnsignedShort88Apple = 0x85BA,
 
         /// <summary>
-        /// Original was GL_UNSIGNED_SHORT_8_8_REV_APPLE = 0x85BB
+        /// Original was GL_UNSIGNED_SHORT88_REV_APPLE = 0x85BB
         /// </summary>
-        UnsignedShort88RevApple = 0x85bb,
+        UnsignedShort88RevApple = 0x85BB,
 
         /// <summary>
-        /// Original was GL_RGB_422_APPLE = 0x8A1F
+        /// Original was GL_RGB422_APPLE = 0x8A1F
         /// </summary>
-        Rgb422Apple = 0x8a1f,
+        Rgb422Apple = 0x8A1F,
 
         /// <summary>
-        /// Original was GL_RGB_RAW_422_APPLE = 0x8A51
+        /// Original was GL_RGB_RAW422_APPLE = 0x8A51
         /// </summary>
-        RgbRaw422Apple = 0x8a51
+        RgbRaw422Apple = 0x8A51
     }
 }

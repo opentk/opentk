@@ -29,7 +29,7 @@
 namespace OpenTK.Graphics.OpenGL4
 {
     /// <summary>
-    /// Used in GL.Ext.VertexArrayVertexAttribIOffset and GL.NV.GetVertexAttribL.
+    /// Used in GL.EXT.VertexArrayVertexAttribIOffset.
     /// </summary>
     public enum VertexAttribEnum
     {
@@ -61,21 +61,21 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_VERTEX_ATTRIB_ARRAY_NORMALIZED = 0x886A
         /// </summary>
-        VertexAttribArrayNormalized = 0x886a,
+        VertexAttribArrayNormalized = 0x886A,
 
         /// <summary>
         /// Original was GL_VERTEX_ATTRIB_ARRAY_BUFFER_BINDING = 0x889F
         /// </summary>
-        VertexAttribArrayBufferBinding = 0x889f,
+        VertexAttribArrayBufferBinding = 0x889F,
 
         /// <summary>
         /// Original was GL_VERTEX_ATTRIB_ARRAY_INTEGER = 0x88FD
         /// </summary>
-        VertexAttribArrayInteger = 0x88fd,
+        VertexAttribArrayInteger = 0x88FD,
 
         /// <summary>
         /// Original was GL_VERTEX_ATTRIB_ARRAY_DIVISOR = 0x88FE
         /// </summary>
-        VertexAttribArrayDivisor = 0x88fe
+        VertexAttribArrayDivisor = 0x88FE
     }
 }

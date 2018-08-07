@@ -41,16 +41,6 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_FOG_FUNC_SGIS = 0x812A
         /// </summary>
-        FogFuncSgis = 0x812a,
-
-        /// <summary>
-        /// Original was GL_FOG_COORD = 0x8451
-        /// </summary>
-        FogCoord = 0x8451,
-
-        /// <summary>
-        /// Original was GL_FRAGMENT_DEPTH = 0x8452
-        /// </summary>
-        FragmentDepth = 0x8452
+        FogFuncSgis = 0x812A
     }
 }

@@ -29,7 +29,7 @@
 namespace OpenTK.Graphics.OpenGL4
 {
     /// <summary>
-    /// Used in GL.NamedRenderbufferStorage and GL.NamedRenderbufferStorageMultisample, as well as 4 other functions.
+    /// Used in GL.RenderbufferStorage and GL.RenderbufferStorageMultisample, as well as 4 other functions.
     /// </summary>
     public enum RenderbufferStorage
     {
@@ -41,12 +41,12 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_R3_G3_B2 = 0x2A10
         /// </summary>
-        R3G3B2 = 0x2a10,
+        R3G3B2 = 0x2A10,
 
         /// <summary>
         /// Original was GL_RGB4 = 0x804F
         /// </summary>
-        Rgb4 = 0x804f,
+        Rgb4 = 0x804F,
 
         /// <summary>
         /// Original was GL_RGB5 = 0x8050
@@ -96,27 +96,27 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_RGBA12 = 0x805A
         /// </summary>
-        Rgba12 = 0x805a,
+        Rgba12 = 0x805A,
 
         /// <summary>
         /// Original was GL_RGBA16 = 0x805B
         /// </summary>
-        Rgba16 = 0x805b,
+        Rgba16 = 0x805B,
 
         /// <summary>
-        /// Original was GL_DEPTH_COMPONENT16 = 0x81a5
+        /// Original was GL_DEPTH_COMPONENT16 = 0x81A5
         /// </summary>
-        DepthComponent16 = 0x81a5,
+        DepthComponent16 = 0x81A5,
 
         /// <summary>
-        /// Original was GL_DEPTH_COMPONENT24 = 0x81a6
+        /// Original was GL_DEPTH_COMPONENT24 = 0x81A6
         /// </summary>
-        DepthComponent24 = 0x81a6,
+        DepthComponent24 = 0x81A6,
 
         /// <summary>
-        /// Original was GL_DEPTH_COMPONENT32 = 0x81a7
+        /// Original was GL_DEPTH_COMPONENT32 = 0x81A7
         /// </summary>
-        DepthComponent32 = 0x81a7,
+        DepthComponent32 = 0x81A7,
 
         /// <summary>
         /// Original was GL_R8 = 0x8229
@@ -126,32 +126,32 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_R16 = 0x822A
         /// </summary>
-        R16 = 0x822a,
+        R16 = 0x822A,
 
         /// <summary>
         /// Original was GL_RG8 = 0x822B
         /// </summary>
-        RG8 = 0x822b,
+        RG8 = 0x822B,
 
         /// <summary>
         /// Original was GL_RG16 = 0x822C
         /// </summary>
-        RG16 = 0x822c,
+        RG16 = 0x822C,
 
         /// <summary>
         /// Original was GL_R16F = 0x822D
         /// </summary>
-        R16f = 0x822d,
+        R16f = 0x822D,
 
         /// <summary>
         /// Original was GL_R32F = 0x822E
         /// </summary>
-        R32f = 0x822e,
+        R32f = 0x822E,
 
         /// <summary>
         /// Original was GL_RG16F = 0x822F
         /// </summary>
-        RG16f = 0x822f,
+        RG16f = 0x822F,
 
         /// <summary>
         /// Original was GL_RG32F = 0x8230
@@ -206,22 +206,22 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_RG16UI = 0x823A
         /// </summary>
-        RG16ui = 0x823a,
+        RG16ui = 0x823A,
 
         /// <summary>
         /// Original was GL_RG32I = 0x823B
         /// </summary>
-        RG32i = 0x823b,
+        RG32i = 0x823B,
 
         /// <summary>
         /// Original was GL_RG32UI = 0x823C
         /// </summary>
-        RG32ui = 0x823c,
+        RG32ui = 0x823C,
 
         /// <summary>
         /// Original was GL_DEPTH_STENCIL = 0x84F9
         /// </summary>
-        DepthStencil = 0x84f9,
+        DepthStencil = 0x84F9,
 
         /// <summary>
         /// Original was GL_RGBA32F = 0x8814
@@ -236,151 +236,151 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_RGBA16F = 0x881A
         /// </summary>
-        Rgba16f = 0x881a,
+        Rgba16f = 0x881A,
 
         /// <summary>
         /// Original was GL_RGB16F = 0x881B
         /// </summary>
-        Rgb16f = 0x881b,
+        Rgb16f = 0x881B,
 
         /// <summary>
         /// Original was GL_DEPTH24_STENCIL8 = 0x88F0
         /// </summary>
-        Depth24Stencil8 = 0x88f0,
+        Depth24Stencil8 = 0x88F0,
 
         /// <summary>
         /// Original was GL_R11F_G11F_B10F = 0x8C3A
         /// </summary>
-        R11fG11fB10f = 0x8c3a,
+        R11fG11fB10f = 0x8C3A,
 
         /// <summary>
         /// Original was GL_RGB9_E5 = 0x8C3D
         /// </summary>
-        Rgb9E5 = 0x8c3d,
+        Rgb9E5 = 0x8C3D,
 
         /// <summary>
         /// Original was GL_SRGB8 = 0x8C41
         /// </summary>
-        Srgb8 = 0x8c41,
+        Srgb8 = 0x8C41,
 
         /// <summary>
         /// Original was GL_SRGB8_ALPHA8 = 0x8C43
         /// </summary>
-        Srgb8Alpha8 = 0x8c43,
+        Srgb8Alpha8 = 0x8C43,
 
         /// <summary>
         /// Original was GL_DEPTH_COMPONENT32F = 0x8CAC
         /// </summary>
-        DepthComponent32f = 0x8cac,
+        DepthComponent32f = 0x8CAC,
 
         /// <summary>
         /// Original was GL_DEPTH32F_STENCIL8 = 0x8CAD
         /// </summary>
-        Depth32fStencil8 = 0x8cad,
+        Depth32fStencil8 = 0x8CAD,
 
         /// <summary>
         /// Original was GL_STENCIL_INDEX1 = 0x8D46
         /// </summary>
-        StencilIndex1 = 0x8d46,
+        StencilIndex1 = 0x8D46,
 
         /// <summary>
         /// Original was GL_STENCIL_INDEX1_EXT = 0x8D46
         /// </summary>
-        StencilIndex1Ext = 0x8d46,
+        StencilIndex1Ext = 0x8D46,
 
         /// <summary>
         /// Original was GL_STENCIL_INDEX4 = 0x8D47
         /// </summary>
-        StencilIndex4 = 0x8d47,
+        StencilIndex4 = 0x8D47,
 
         /// <summary>
         /// Original was GL_STENCIL_INDEX4_EXT = 0x8D47
         /// </summary>
-        StencilIndex4Ext = 0x8d47,
+        StencilIndex4Ext = 0x8D47,
 
         /// <summary>
         /// Original was GL_STENCIL_INDEX8 = 0x8D48
         /// </summary>
-        StencilIndex8 = 0x8d48,
+        StencilIndex8 = 0x8D48,
 
         /// <summary>
         /// Original was GL_STENCIL_INDEX8_EXT = 0x8D48
         /// </summary>
-        StencilIndex8Ext = 0x8d48,
+        StencilIndex8Ext = 0x8D48,
 
         /// <summary>
         /// Original was GL_STENCIL_INDEX16 = 0x8D49
         /// </summary>
-        StencilIndex16 = 0x8d49,
+        StencilIndex16 = 0x8D49,
 
         /// <summary>
         /// Original was GL_STENCIL_INDEX16_EXT = 0x8D49
         /// </summary>
-        StencilIndex16Ext = 0x8d49,
+        StencilIndex16Ext = 0x8D49,
 
         /// <summary>
         /// Original was GL_RGBA32UI = 0x8D70
         /// </summary>
-        Rgba32ui = 0x8d70,
+        Rgba32ui = 0x8D70,
 
         /// <summary>
         /// Original was GL_RGB32UI = 0x8D71
         /// </summary>
-        Rgb32ui = 0x8d71,
+        Rgb32ui = 0x8D71,
 
         /// <summary>
         /// Original was GL_RGBA16UI = 0x8D76
         /// </summary>
-        Rgba16ui = 0x8d76,
+        Rgba16ui = 0x8D76,
 
         /// <summary>
         /// Original was GL_RGB16UI = 0x8D77
         /// </summary>
-        Rgb16ui = 0x8d77,
+        Rgb16ui = 0x8D77,
 
         /// <summary>
         /// Original was GL_RGBA8UI = 0x8D7C
         /// </summary>
-        Rgba8ui = 0x8d7c,
+        Rgba8ui = 0x8D7C,
 
         /// <summary>
         /// Original was GL_RGB8UI = 0x8D7D
         /// </summary>
-        Rgb8ui = 0x8d7d,
+        Rgb8ui = 0x8D7D,
 
         /// <summary>
         /// Original was GL_RGBA32I = 0x8D82
         /// </summary>
-        Rgba32i = 0x8d82,
+        Rgba32i = 0x8D82,
 
         /// <summary>
         /// Original was GL_RGB32I = 0x8D83
         /// </summary>
-        Rgb32i = 0x8d83,
+        Rgb32i = 0x8D83,
 
         /// <summary>
         /// Original was GL_RGBA16I = 0x8D88
         /// </summary>
-        Rgba16i = 0x8d88,
+        Rgba16i = 0x8D88,
 
         /// <summary>
         /// Original was GL_RGB16I = 0x8D89
         /// </summary>
-        Rgb16i = 0x8d89,
+        Rgb16i = 0x8D89,
 
         /// <summary>
         /// Original was GL_RGBA8I = 0x8D8E
         /// </summary>
-        Rgba8i = 0x8d8e,
+        Rgba8i = 0x8D8E,
 
         /// <summary>
         /// Original was GL_RGB8I = 0x8D8F
         /// </summary>
-        Rgb8i = 0x8d8f,
+        Rgb8i = 0x8D8F,
 
         /// <summary>
         /// Original was GL_RGB10_A2UI = 0x906F
         /// </summary>
-        Rgb10A2ui = 0x906f
+        Rgb10A2ui = 0x906F
     }
 }

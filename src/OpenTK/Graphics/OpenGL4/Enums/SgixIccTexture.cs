@@ -86,11 +86,11 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_INTENSITY16_ICC_SGIX = 0x846A
         /// </summary>
-        Intensity16IccSgix = 0x846a,
+        Intensity16IccSgix = 0x846A,
 
         /// <summary>
         /// Original was GL_LUMINANCE16_ALPHA8_ICC_SGIX = 0x846B
         /// </summary>
-        Luminance16Alpha8IccSgix = 0x846b
+        Luminance16Alpha8IccSgix = 0x846B
     }
 }

@@ -36,41 +36,41 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_QUERY_WAIT = 0x8E13
         /// </summary>
-        QueryWait = 0x8e13,
+        QueryWait = 0x8E13,
 
         /// <summary>
         /// Original was GL_QUERY_NO_WAIT = 0x8E14
         /// </summary>
-        QueryNoWait = 0x8e14,
+        QueryNoWait = 0x8E14,
 
         /// <summary>
         /// Original was GL_QUERY_BY_REGION_WAIT = 0x8E15
         /// </summary>
-        QueryByRegionWait = 0x8e15,
+        QueryByRegionWait = 0x8E15,
 
         /// <summary>
         /// Original was GL_QUERY_BY_REGION_NO_WAIT = 0x8E16
         /// </summary>
-        QueryByRegionNoWait = 0x8e16,
+        QueryByRegionNoWait = 0x8E16,
 
         /// <summary>
         /// Original was GL_QUERY_WAIT_INVERTED = 0x8E17
         /// </summary>
-        QueryWaitInverted = 0x8e17,
+        QueryWaitInverted = 0x8E17,
 
         /// <summary>
         /// Original was GL_QUERY_NO_WAIT_INVERTED = 0x8E18
         /// </summary>
-        QueryNoWaitInverted = 0x8e18,
+        QueryNoWaitInverted = 0x8E18,
 
         /// <summary>
         /// Original was GL_QUERY_BY_REGION_WAIT_INVERTED = 0x8E19
         /// </summary>
-        QueryByRegionWaitInverted = 0x8e19,
+        QueryByRegionWaitInverted = 0x8E19,
 
         /// <summary>
         /// Original was GL_QUERY_BY_REGION_NO_WAIT_INVERTED = 0x8E1A
         /// </summary>
-        QueryByRegionNoWaitInverted = 0x8e1a
+        QueryByRegionNoWaitInverted = 0x8E1A
     }
 }

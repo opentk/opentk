@@ -36,11 +36,11 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_COLOR_TABLE_SCALE = 0x80D6
         /// </summary>
-        ColorTableScale = 0x80d6,
+        ColorTableScale = 0x80D6,
 
         /// <summary>
         /// Original was GL_COLOR_TABLE_BIAS = 0x80D7
         /// </summary>
-        ColorTableBias = 0x80d7
+        ColorTableBias = 0x80D7
     }
 }

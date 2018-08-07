@@ -36,41 +36,41 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_INT64_ARB = 0x140E
         /// </summary>
-        Int64Arb = 0x140e,
+        Int64Arb = 0x140E,
 
         /// <summary>
         /// Original was GL_UNSIGNED_INT64_ARB = 0x140F
         /// </summary>
-        UnsignedInt64Arb = 0x140f,
+        UnsignedInt64Arb = 0x140F,
 
         /// <summary>
         /// Original was GL_INT64_VEC2_ARB = 0x8FE9
         /// </summary>
-        Int64Vec2Arb = 0x8fe9,
+        Int64Vec2Arb = 0x8FE9,
 
         /// <summary>
         /// Original was GL_INT64_VEC3_ARB = 0x8FEA
         /// </summary>
-        Int64Vec3Arb = 0x8fea,
+        Int64Vec3Arb = 0x8FEA,
 
         /// <summary>
         /// Original was GL_INT64_VEC4_ARB = 0x8FEB
         /// </summary>
-        Int64Vec4Arb = 0x8feb,
+        Int64Vec4Arb = 0x8FEB,
 
         /// <summary>
         /// Original was GL_UNSIGNED_INT64_VEC2_ARB = 0x8FF5
         /// </summary>
-        UnsignedInt64Vec2Arb = 0x8ff5,
+        UnsignedInt64Vec2Arb = 0x8FF5,
 
         /// <summary>
         /// Original was GL_UNSIGNED_INT64_VEC3_ARB = 0x8FF6
         /// </summary>
-        UnsignedInt64Vec3Arb = 0x8ff6,
+        UnsignedInt64Vec3Arb = 0x8FF6,
 
         /// <summary>
         /// Original was GL_UNSIGNED_INT64_VEC4_ARB = 0x8FF7
         /// </summary>
-        UnsignedInt64Vec4Arb = 0x8ff7
+        UnsignedInt64Vec4Arb = 0x8FF7
     }
 }

@@ -29,7 +29,7 @@
 namespace OpenTK.Graphics.OpenGL4
 {
     /// <summary>
-    /// Used in GL.GetHistogramParameter.
+    /// Not used directly.
     /// </summary>
     public enum GetHistogramParameterPNameExt
     {
@@ -37,6 +37,11 @@ namespace OpenTK.Graphics.OpenGL4
         /// Original was GL_HISTOGRAM_WIDTH = 0x8026
         /// </summary>
         HistogramWidth = 0x8026,
+
+        /// <summary>
+        /// Original was GL_HISTOGRAM_WIDTH_EXT = 0x8026
+        /// </summary>
+        HistogramWidthExt = 0x8026,
 
         /// <summary>
         /// Original was GL_HISTOGRAM_WIDTH_EXT = 0x8026
@@ -54,9 +59,19 @@ namespace OpenTK.Graphics.OpenGL4
         HistogramFormatExt = 0x8027,
 
         /// <summary>
+        /// Original was GL_HISTOGRAM_FORMAT_EXT = 0x8027
+        /// </summary>
+        HistogramFormatExt = 0x8027,
+
+        /// <summary>
         /// Original was GL_HISTOGRAM_RED_SIZE = 0x8028
         /// </summary>
         HistogramRedSize = 0x8028,
+
+        /// <summary>
+        /// Original was GL_HISTOGRAM_RED_SIZE_EXT = 0x8028
+        /// </summary>
+        HistogramRedSizeExt = 0x8028,
 
         /// <summary>
         /// Original was GL_HISTOGRAM_RED_SIZE_EXT = 0x8028
@@ -74,43 +89,68 @@ namespace OpenTK.Graphics.OpenGL4
         HistogramGreenSizeExt = 0x8029,
 
         /// <summary>
+        /// Original was GL_HISTOGRAM_GREEN_SIZE_EXT = 0x8029
+        /// </summary>
+        HistogramGreenSizeExt = 0x8029,
+
+        /// <summary>
         /// Original was GL_HISTOGRAM_BLUE_SIZE = 0x802A
         /// </summary>
-        HistogramBlueSize = 0x802a,
+        HistogramBlueSize = 0x802A,
 
         /// <summary>
         /// Original was GL_HISTOGRAM_BLUE_SIZE_EXT = 0x802A
         /// </summary>
-        HistogramBlueSizeExt = 0x802a,
+        HistogramBlueSizeExt = 0x802A,
+
+        /// <summary>
+        /// Original was GL_HISTOGRAM_BLUE_SIZE_EXT = 0x802A
+        /// </summary>
+        HistogramBlueSizeExt = 0x802A,
 
         /// <summary>
         /// Original was GL_HISTOGRAM_ALPHA_SIZE = 0x802B
         /// </summary>
-        HistogramAlphaSize = 0x802b,
+        HistogramAlphaSize = 0x802B,
 
         /// <summary>
         /// Original was GL_HISTOGRAM_ALPHA_SIZE_EXT = 0x802B
         /// </summary>
-        HistogramAlphaSizeExt = 0x802b,
+        HistogramAlphaSizeExt = 0x802B,
+
+        /// <summary>
+        /// Original was GL_HISTOGRAM_ALPHA_SIZE_EXT = 0x802B
+        /// </summary>
+        HistogramAlphaSizeExt = 0x802B,
 
         /// <summary>
         /// Original was GL_HISTOGRAM_LUMINANCE_SIZE = 0x802C
         /// </summary>
-        HistogramLuminanceSize = 0x802c,
+        HistogramLuminanceSize = 0x802C,
 
         /// <summary>
         /// Original was GL_HISTOGRAM_LUMINANCE_SIZE_EXT = 0x802C
         /// </summary>
-        HistogramLuminanceSizeExt = 0x802c,
+        HistogramLuminanceSizeExt = 0x802C,
+
+        /// <summary>
+        /// Original was GL_HISTOGRAM_LUMINANCE_SIZE_EXT = 0x802C
+        /// </summary>
+        HistogramLuminanceSizeExt = 0x802C,
 
         /// <summary>
         /// Original was GL_HISTOGRAM_SINK = 0x802D
         /// </summary>
-        HistogramSink = 0x802d,
+        HistogramSink = 0x802D,
 
         /// <summary>
         /// Original was GL_HISTOGRAM_SINK_EXT = 0x802D
         /// </summary>
-        HistogramSinkExt = 0x802d
+        HistogramSinkExt = 0x802D,
+
+        /// <summary>
+        /// Original was GL_HISTOGRAM_SINK_EXT = 0x802D
+        /// </summary>
+        HistogramSinkExt = 0x802D
     }
 }

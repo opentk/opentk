@@ -29,7 +29,7 @@
 namespace OpenTK.Graphics.OpenGL4
 {
     /// <summary>
-    /// Used in GL.Ext.GetNamedFramebufferAttachmentParameter.
+    /// Used in GL.EXT.GetNamedFramebufferAttachmentParameter.
     /// </summary>
     public enum FramebufferAttachmentParameterName
     {
@@ -76,26 +76,31 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_FRAMEBUFFER_ATTACHMENT_OBJECT_NAME = 0x8CD1
         /// </summary>
-        FramebufferAttachmentObjectName = 0x8cd1,
+        FramebufferAttachmentObjectName = 0x8CD1,
+
+        /// <summary>
+        /// Original was GL_FRAMEBUFFER_ATTACHMENT_OBJECT_NAME = 0x8CD1
+        /// </summary>
+        FramebufferAttachmentObjectName = 0x8CD1,
 
         /// <summary>
         /// Original was GL_FRAMEBUFFER_ATTACHMENT_TEXTURE_LEVEL = 0x8CD2
         /// </summary>
-        FramebufferAttachmentTextureLevel = 0x8cd2,
+        FramebufferAttachmentTextureLevel = 0x8CD2,
 
         /// <summary>
         /// Original was GL_FRAMEBUFFER_ATTACHMENT_TEXTURE_CUBE_MAP_FACE = 0x8CD3
         /// </summary>
-        FramebufferAttachmentTextureCubeMapFace = 0x8cd3,
+        FramebufferAttachmentTextureCubeMapFace = 0x8CD3,
 
         /// <summary>
         /// Original was GL_FRAMEBUFFER_ATTACHMENT_TEXTURE_LAYER = 0x8CD4
         /// </summary>
-        FramebufferAttachmentTextureLayer = 0x8cd4,
+        FramebufferAttachmentTextureLayer = 0x8CD4,
 
         /// <summary>
         /// Original was GL_FRAMEBUFFER_ATTACHMENT_LAYERED = 0x8DA7
         /// </summary>
-        FramebufferAttachmentLayered = 0x8da7
+        FramebufferAttachmentLayered = 0x8DA7
     }
 }

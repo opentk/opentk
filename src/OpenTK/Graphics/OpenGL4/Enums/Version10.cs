@@ -34,529 +34,534 @@ namespace OpenTK.Graphics.OpenGL4
     public enum Version10
     {
         /// <summary>
-        /// Original was GL_FALSE = 0
+        /// Original was GL_FALSE = 0x0
         /// </summary>
-        False = 0,
+        False = 0x0,
 
         /// <summary>
-        /// Original was GL_NO_ERROR = 0
+        /// Original was GL_NO_ERROR = 0x0
         /// </summary>
-        NoError = 0,
+        NoError = 0x0,
 
         /// <summary>
-        /// Original was GL_NONE = 0
+        /// Original was GL_NONE = 0x0
         /// </summary>
-        None = 0,
+        None = 0x0,
 
         /// <summary>
-        /// Original was GL_ZERO = 0
+        /// Original was GL_POINTS = 0x0
         /// </summary>
-        Zero = 0,
+        Points = 0x0,
 
         /// <summary>
-        /// Original was GL_POINTS = 0x0000
+        /// Original was GL_ZERO = 0x0
         /// </summary>
-        Points = 0x0000,
+        Zero = 0x0,
 
         /// <summary>
-        /// Original was GL_DEPTH_BUFFER_BIT = 0x00000100
+        /// Original was GL_LINES = 0x1
         /// </summary>
-        DepthBufferBit = 0x00000100,
+        Lines = 0x1,
 
         /// <summary>
-        /// Original was GL_STENCIL_BUFFER_BIT = 0x00000400
+        /// Original was GL_ONE = 0x1
         /// </summary>
-        StencilBufferBit = 0x00000400,
+        One = 0x1,
 
         /// <summary>
-        /// Original was GL_COLOR_BUFFER_BIT = 0x00004000
+        /// Original was GL_TRUE = 0x1
         /// </summary>
-        ColorBufferBit = 0x00004000,
+        True = 0x1,
 
         /// <summary>
-        /// Original was GL_LINES = 0x0001
+        /// Original was GL_LINE_LOOP = 0x2
         /// </summary>
-        Lines = 0x0001,
+        LineLoop = 0x2,
 
         /// <summary>
-        /// Original was GL_LINE_LOOP = 0x0002
+        /// Original was GL_LINE_STRIP = 0x3
         /// </summary>
-        LineLoop = 0x0002,
+        LineStrip = 0x3,
 
         /// <summary>
-        /// Original was GL_LINE_STRIP = 0x0003
+        /// Original was GL_TRIANGLES = 0x4
         /// </summary>
-        LineStrip = 0x0003,
+        Triangles = 0x4,
 
         /// <summary>
-        /// Original was GL_TRIANGLES = 0x0004
+        /// Original was GL_TRIANGLE_STRIP = 0x5
         /// </summary>
-        Triangles = 0x0004,
+        TriangleStrip = 0x5,
 
         /// <summary>
-        /// Original was GL_TRIANGLE_STRIP = 0x0005
+        /// Original was GL_TRIANGLE_FAN = 0x6
         /// </summary>
-        TriangleStrip = 0x0005,
+        TriangleFan = 0x6,
 
         /// <summary>
-        /// Original was GL_TRIANGLE_FAN = 0x0006
+        /// Original was GL_DEPTH_BUFFER_BIT = 0x100
         /// </summary>
-        TriangleFan = 0x0006,
+        DepthBufferBit = 0x100,
 
         /// <summary>
-        /// Original was GL_NEVER = 0x0200
+        /// Original was GL_NEVER = 0x200
         /// </summary>
-        Never = 0x0200,
+        Never = 0x200,
 
         /// <summary>
-        /// Original was GL_LESS = 0x0201
+        /// Original was GL_LESS = 0x201
         /// </summary>
-        Less = 0x0201,
+        Less = 0x201,
 
         /// <summary>
-        /// Original was GL_EQUAL = 0x0202
+        /// Original was GL_EQUAL = 0x202
         /// </summary>
-        Equal = 0x0202,
+        Equal = 0x202,
 
         /// <summary>
-        /// Original was GL_LEQUAL = 0x0203
+        /// Original was GL_LEQUAL = 0x203
         /// </summary>
-        Lequal = 0x0203,
+        Lequal = 0x203,
 
         /// <summary>
-        /// Original was GL_GREATER = 0x0204
+        /// Original was GL_GREATER = 0x204
         /// </summary>
-        Greater = 0x0204,
+        Greater = 0x204,
 
         /// <summary>
-        /// Original was GL_NOTEQUAL = 0x0205
+        /// Original was GL_NOTEQUAL = 0x205
         /// </summary>
-        Notequal = 0x0205,
+        Notequal = 0x205,
 
         /// <summary>
-        /// Original was GL_GEQUAL = 0x0206
+        /// Original was GL_GEQUAL = 0x206
         /// </summary>
-        Gequal = 0x0206,
+        Gequal = 0x206,
 
         /// <summary>
-        /// Original was GL_ALWAYS = 0x0207
+        /// Original was GL_ALWAYS = 0x207
         /// </summary>
-        Always = 0x0207,
+        Always = 0x207,
 
         /// <summary>
-        /// Original was GL_SRC_COLOR = 0x0300
+        /// Original was GL_SRC_COLOR = 0x300
         /// </summary>
-        SrcColor = 0x0300,
+        SrcColor = 0x300,
 
         /// <summary>
-        /// Original was GL_ONE_MINUS_SRC_COLOR = 0x0301
+        /// Original was GL_ONE_MINUS_SRC_COLOR = 0x301
         /// </summary>
-        OneMinusSrcColor = 0x0301,
+        OneMinusSrcColor = 0x301,
 
         /// <summary>
-        /// Original was GL_SRC_ALPHA = 0x0302
+        /// Original was GL_SRC_ALPHA = 0x302
         /// </summary>
-        SrcAlpha = 0x0302,
+        SrcAlpha = 0x302,
 
         /// <summary>
-        /// Original was GL_ONE_MINUS_SRC_ALPHA = 0x0303
+        /// Original was GL_ONE_MINUS_SRC_ALPHA = 0x303
         /// </summary>
-        OneMinusSrcAlpha = 0x0303,
+        OneMinusSrcAlpha = 0x303,
 
         /// <summary>
-        /// Original was GL_DST_ALPHA = 0x0304
+        /// Original was GL_DST_ALPHA = 0x304
         /// </summary>
-        DstAlpha = 0x0304,
+        DstAlpha = 0x304,
 
         /// <summary>
-        /// Original was GL_ONE_MINUS_DST_ALPHA = 0x0305
+        /// Original was GL_ONE_MINUS_DST_ALPHA = 0x305
         /// </summary>
-        OneMinusDstAlpha = 0x0305,
+        OneMinusDstAlpha = 0x305,
 
         /// <summary>
-        /// Original was GL_DST_COLOR = 0x0306
+        /// Original was GL_DST_COLOR = 0x306
         /// </summary>
-        DstColor = 0x0306,
+        DstColor = 0x306,
 
         /// <summary>
-        /// Original was GL_ONE_MINUS_DST_COLOR = 0x0307
+        /// Original was GL_ONE_MINUS_DST_COLOR = 0x307
         /// </summary>
-        OneMinusDstColor = 0x0307,
+        OneMinusDstColor = 0x307,
 
         /// <summary>
-        /// Original was GL_SRC_ALPHA_SATURATE = 0x0308
+        /// Original was GL_SRC_ALPHA_SATURATE = 0x308
         /// </summary>
-        SrcAlphaSaturate = 0x0308,
+        SrcAlphaSaturate = 0x308,
 
         /// <summary>
-        /// Original was GL_FRONT_LEFT = 0x0400
+        /// Original was GL_FRONT_LEFT = 0x400
         /// </summary>
-        FrontLeft = 0x0400,
+        FrontLeft = 0x400,
 
         /// <summary>
-        /// Original was GL_FRONT_RIGHT = 0x0401
+        /// Original was GL_STENCIL_BUFFER_BIT = 0x400
         /// </summary>
-        FrontRight = 0x0401,
+        StencilBufferBit = 0x400,
 
         /// <summary>
-        /// Original was GL_BACK_LEFT = 0x0402
+        /// Original was GL_FRONT_RIGHT = 0x401
         /// </summary>
-        BackLeft = 0x0402,
+        FrontRight = 0x401,
 
         /// <summary>
-        /// Original was GL_BACK_RIGHT = 0x0403
+        /// Original was GL_BACK_LEFT = 0x402
         /// </summary>
-        BackRight = 0x0403,
+        BackLeft = 0x402,
 
         /// <summary>
-        /// Original was GL_FRONT = 0x0404
+        /// Original was GL_BACK_RIGHT = 0x403
         /// </summary>
-        Front = 0x0404,
+        BackRight = 0x403,
 
         /// <summary>
-        /// Original was GL_BACK = 0x0405
+        /// Original was GL_FRONT = 0x404
         /// </summary>
-        Back = 0x0405,
+        Front = 0x404,
 
         /// <summary>
-        /// Original was GL_LEFT = 0x0406
+        /// Original was GL_BACK = 0x405
         /// </summary>
-        Left = 0x0406,
+        Back = 0x405,
 
         /// <summary>
-        /// Original was GL_RIGHT = 0x0407
+        /// Original was GL_LEFT = 0x406
         /// </summary>
-        Right = 0x0407,
+        Left = 0x406,
 
         /// <summary>
-        /// Original was GL_FRONT_AND_BACK = 0x0408
+        /// Original was GL_RIGHT = 0x407
         /// </summary>
-        FrontAndBack = 0x0408,
+        Right = 0x407,
 
         /// <summary>
-        /// Original was GL_INVALID_ENUM = 0x0500
+        /// Original was GL_FRONT_AND_BACK = 0x408
         /// </summary>
-        InvalidEnum = 0x0500,
+        FrontAndBack = 0x408,
 
         /// <summary>
-        /// Original was GL_INVALID_VALUE = 0x0501
+        /// Original was GL_INVALID_ENUM = 0x500
         /// </summary>
-        InvalidValue = 0x0501,
+        InvalidEnum = 0x500,
 
         /// <summary>
-        /// Original was GL_INVALID_OPERATION = 0x0502
+        /// Original was GL_INVALID_VALUE = 0x501
         /// </summary>
-        InvalidOperation = 0x0502,
+        InvalidValue = 0x501,
 
         /// <summary>
-        /// Original was GL_OUT_OF_MEMORY = 0x0505
+        /// Original was GL_INVALID_OPERATION = 0x502
         /// </summary>
-        OutOfMemory = 0x0505,
+        InvalidOperation = 0x502,
 
         /// <summary>
-        /// Original was GL_CW = 0x0900
+        /// Original was GL_OUT_OF_MEMORY = 0x505
         /// </summary>
-        CW = 0x0900,
+        OutOfMemory = 0x505,
 
         /// <summary>
-        /// Original was GL_CCW = 0x0901
+        /// Original was GL_CW = 0x900
         /// </summary>
-        Ccw = 0x0901,
+        CW = 0x900,
 
         /// <summary>
-        /// Original was GL_POINT_SIZE = 0x0B11
+        /// Original was GL_CCW = 0x901
         /// </summary>
-        PointSize = 0x0b11,
+        Ccw = 0x901,
 
         /// <summary>
-        /// Original was GL_POINT_SIZE_RANGE = 0x0B12
+        /// Original was GL_POINT_SIZE = 0xB11
         /// </summary>
-        PointSizeRange = 0x0b12,
+        PointSize = 0xB11,
 
         /// <summary>
-        /// Original was GL_POINT_SIZE_GRANULARITY = 0x0B13
+        /// Original was GL_POINT_SIZE_RANGE = 0xB12
         /// </summary>
-        PointSizeGranularity = 0x0b13,
+        PointSizeRange = 0xB12,
 
         /// <summary>
-        /// Original was GL_LINE_SMOOTH = 0x0B20
+        /// Original was GL_POINT_SIZE_GRANULARITY = 0xB13
         /// </summary>
-        LineSmooth = 0x0b20,
+        PointSizeGranularity = 0xB13,
 
         /// <summary>
-        /// Original was GL_LINE_WIDTH = 0x0B21
+        /// Original was GL_LINE_SMOOTH = 0xB20
         /// </summary>
-        LineWidth = 0x0b21,
+        LineSmooth = 0xB20,
 
         /// <summary>
-        /// Original was GL_LINE_WIDTH_RANGE = 0x0B22
+        /// Original was GL_LINE_WIDTH = 0xB21
         /// </summary>
-        LineWidthRange = 0x0b22,
+        LineWidth = 0xB21,
 
         /// <summary>
-        /// Original was GL_LINE_WIDTH_GRANULARITY = 0x0B23
+        /// Original was GL_LINE_WIDTH_RANGE = 0xB22
         /// </summary>
-        LineWidthGranularity = 0x0b23,
+        LineWidthRange = 0xB22,
 
         /// <summary>
-        /// Original was GL_POLYGON_MODE = 0x0B40
+        /// Original was GL_LINE_WIDTH_GRANULARITY = 0xB23
         /// </summary>
-        PolygonMode = 0x0b40,
+        LineWidthGranularity = 0xB23,
 
         /// <summary>
-        /// Original was GL_POLYGON_SMOOTH = 0x0B41
+        /// Original was GL_POLYGON_MODE = 0xB40
         /// </summary>
-        PolygonSmooth = 0x0b41,
+        PolygonMode = 0xB40,
 
         /// <summary>
-        /// Original was GL_CULL_FACE = 0x0B44
+        /// Original was GL_POLYGON_SMOOTH = 0xB41
         /// </summary>
-        CullFace = 0x0b44,
+        PolygonSmooth = 0xB41,
 
         /// <summary>
-        /// Original was GL_CULL_FACE_MODE = 0x0B45
+        /// Original was GL_CULL_FACE = 0xB44
         /// </summary>
-        CullFaceMode = 0x0b45,
+        CullFace = 0xB44,
 
         /// <summary>
-        /// Original was GL_FRONT_FACE = 0x0B46
+        /// Original was GL_CULL_FACE_MODE = 0xB45
         /// </summary>
-        FrontFace = 0x0b46,
+        CullFaceMode = 0xB45,
 
         /// <summary>
-        /// Original was GL_DEPTH_RANGE = 0x0B70
+        /// Original was GL_FRONT_FACE = 0xB46
         /// </summary>
-        DepthRange = 0x0b70,
+        FrontFace = 0xB46,
 
         /// <summary>
-        /// Original was GL_DEPTH_TEST = 0x0B71
+        /// Original was GL_DEPTH_RANGE = 0xB70
         /// </summary>
-        DepthTest = 0x0b71,
+        DepthRange = 0xB70,
 
         /// <summary>
-        /// Original was GL_DEPTH_WRITEMASK = 0x0B72
+        /// Original was GL_DEPTH_TEST = 0xB71
         /// </summary>
-        DepthWritemask = 0x0b72,
+        DepthTest = 0xB71,
 
         /// <summary>
-        /// Original was GL_DEPTH_CLEAR_VALUE = 0x0B73
+        /// Original was GL_DEPTH_WRITEMASK = 0xB72
         /// </summary>
-        DepthClearValue = 0x0b73,
+        DepthWritemask = 0xB72,
 
         /// <summary>
-        /// Original was GL_DEPTH_FUNC = 0x0B74
+        /// Original was GL_DEPTH_CLEAR_VALUE = 0xB73
         /// </summary>
-        DepthFunc = 0x0b74,
+        DepthClearValue = 0xB73,
 
         /// <summary>
-        /// Original was GL_STENCIL_TEST = 0x0B90
+        /// Original was GL_DEPTH_FUNC = 0xB74
         /// </summary>
-        StencilTest = 0x0b90,
+        DepthFunc = 0xB74,
 
         /// <summary>
-        /// Original was GL_STENCIL_CLEAR_VALUE = 0x0B91
+        /// Original was GL_STENCIL_TEST = 0xB90
         /// </summary>
-        StencilClearValue = 0x0b91,
+        StencilTest = 0xB90,
 
         /// <summary>
-        /// Original was GL_STENCIL_FUNC = 0x0B92
+        /// Original was GL_STENCIL_CLEAR_VALUE = 0xB91
         /// </summary>
-        StencilFunc = 0x0b92,
+        StencilClearValue = 0xB91,
 
         /// <summary>
-        /// Original was GL_STENCIL_VALUE_MASK = 0x0B93
+        /// Original was GL_STENCIL_FUNC = 0xB92
         /// </summary>
-        StencilValueMask = 0x0b93,
+        StencilFunc = 0xB92,
 
         /// <summary>
-        /// Original was GL_STENCIL_FAIL = 0x0B94
+        /// Original was GL_STENCIL_VALUE_MASK = 0xB93
         /// </summary>
-        StencilFail = 0x0b94,
+        StencilValueMask = 0xB93,
 
         /// <summary>
-        /// Original was GL_STENCIL_PASS_DEPTH_FAIL = 0x0B95
+        /// Original was GL_STENCIL_FAIL = 0xB94
         /// </summary>
-        StencilPassDepthFail = 0x0b95,
+        StencilFail = 0xB94,
 
         /// <summary>
-        /// Original was GL_STENCIL_PASS_DEPTH_PASS = 0x0B96
+        /// Original was GL_STENCIL_PASS_DEPTH_FAIL = 0xB95
         /// </summary>
-        StencilPassDepthPass = 0x0b96,
+        StencilPassDepthFail = 0xB95,
 
         /// <summary>
-        /// Original was GL_STENCIL_REF = 0x0B97
+        /// Original was GL_STENCIL_PASS_DEPTH_PASS = 0xB96
         /// </summary>
-        StencilRef = 0x0b97,
+        StencilPassDepthPass = 0xB96,
 
         /// <summary>
-        /// Original was GL_STENCIL_WRITEMASK = 0x0B98
+        /// Original was GL_STENCIL_REF = 0xB97
         /// </summary>
-        StencilWritemask = 0x0b98,
+        StencilRef = 0xB97,
 
         /// <summary>
-        /// Original was GL_VIEWPORT = 0x0BA2
+        /// Original was GL_STENCIL_WRITEMASK = 0xB98
         /// </summary>
-        Viewport = 0x0ba2,
+        StencilWritemask = 0xB98,
 
         /// <summary>
-        /// Original was GL_DITHER = 0x0BD0
+        /// Original was GL_VIEWPORT = 0xBA2
         /// </summary>
-        Dither = 0x0bd0,
+        Viewport = 0xBA2,
 
         /// <summary>
-        /// Original was GL_BLEND_DST = 0x0BE0
+        /// Original was GL_DITHER = 0xBD0
         /// </summary>
-        BlendDst = 0x0be0,
+        Dither = 0xBD0,
 
         /// <summary>
-        /// Original was GL_BLEND_SRC = 0x0BE1
+        /// Original was GL_BLEND_DST = 0xBE0
         /// </summary>
-        BlendSrc = 0x0be1,
+        BlendDst = 0xBE0,
 
         /// <summary>
-        /// Original was GL_BLEND = 0x0BE2
+        /// Original was GL_BLEND_SRC = 0xBE1
         /// </summary>
-        Blend = 0x0be2,
+        BlendSrc = 0xBE1,
 
         /// <summary>
-        /// Original was GL_LOGIC_OP_MODE = 0x0BF0
+        /// Original was GL_BLEND = 0xBE2
         /// </summary>
-        LogicOpMode = 0x0bf0,
+        Blend = 0xBE2,
 
         /// <summary>
-        /// Original was GL_DRAW_BUFFER = 0x0C01
+        /// Original was GL_LOGIC_OP_MODE = 0xBF0
         /// </summary>
-        DrawBuffer = 0x0c01,
+        LogicOpMode = 0xBF0,
 
         /// <summary>
-        /// Original was GL_READ_BUFFER = 0x0C02
+        /// Original was GL_DRAW_BUFFER = 0xC01
         /// </summary>
-        ReadBuffer = 0x0c02,
+        DrawBuffer = 0xC01,
 
         /// <summary>
-        /// Original was GL_SCISSOR_BOX = 0x0C10
+        /// Original was GL_READ_BUFFER = 0xC02
         /// </summary>
-        ScissorBox = 0x0c10,
+        ReadBuffer = 0xC02,
 
         /// <summary>
-        /// Original was GL_SCISSOR_TEST = 0x0C11
+        /// Original was GL_SCISSOR_BOX = 0xC10
         /// </summary>
-        ScissorTest = 0x0c11,
+        ScissorBox = 0xC10,
 
         /// <summary>
-        /// Original was GL_COLOR_CLEAR_VALUE = 0x0C22
+        /// Original was GL_SCISSOR_TEST = 0xC11
         /// </summary>
-        ColorClearValue = 0x0c22,
+        ScissorTest = 0xC11,
 
         /// <summary>
-        /// Original was GL_COLOR_WRITEMASK = 0x0C23
+        /// Original was GL_COLOR_CLEAR_VALUE = 0xC22
         /// </summary>
-        ColorWritemask = 0x0c23,
+        ColorClearValue = 0xC22,
 
         /// <summary>
-        /// Original was GL_DOUBLEBUFFER = 0x0C32
+        /// Original was GL_COLOR_WRITEMASK = 0xC23
         /// </summary>
-        Doublebuffer = 0x0c32,
+        ColorWritemask = 0xC23,
 
         /// <summary>
-        /// Original was GL_STEREO = 0x0C33
+        /// Original was GL_DOUBLEBUFFER = 0xC32
         /// </summary>
-        Stereo = 0x0c33,
+        Doublebuffer = 0xC32,
 
         /// <summary>
-        /// Original was GL_LINE_SMOOTH_HINT = 0x0C52
+        /// Original was GL_STEREO = 0xC33
         /// </summary>
-        LineSmoothHint = 0x0c52,
+        Stereo = 0xC33,
 
         /// <summary>
-        /// Original was GL_POLYGON_SMOOTH_HINT = 0x0C53
+        /// Original was GL_LINE_SMOOTH_HINT = 0xC52
         /// </summary>
-        PolygonSmoothHint = 0x0c53,
+        LineSmoothHint = 0xC52,
 
         /// <summary>
-        /// Original was GL_UNPACK_SWAP_BYTES = 0x0CF0
+        /// Original was GL_POLYGON_SMOOTH_HINT = 0xC53
         /// </summary>
-        UnpackSwapBytes = 0x0cf0,
+        PolygonSmoothHint = 0xC53,
 
         /// <summary>
-        /// Original was GL_UNPACK_LSB_FIRST = 0x0CF1
+        /// Original was GL_UNPACK_SWAP_BYTES = 0xCF0
         /// </summary>
-        UnpackLsbFirst = 0x0cf1,
+        UnpackSwapBytes = 0xCF0,
 
         /// <summary>
-        /// Original was GL_UNPACK_ROW_LENGTH = 0x0CF2
+        /// Original was GL_UNPACK_LSB_FIRST = 0xCF1
         /// </summary>
-        UnpackRowLength = 0x0cf2,
+        UnpackLsbFirst = 0xCF1,
 
         /// <summary>
-        /// Original was GL_UNPACK_SKIP_ROWS = 0x0CF3
+        /// Original was GL_UNPACK_ROW_LENGTH = 0xCF2
         /// </summary>
-        UnpackSkipRows = 0x0cf3,
+        UnpackRowLength = 0xCF2,
 
         /// <summary>
-        /// Original was GL_UNPACK_SKIP_PIXELS = 0x0CF4
+        /// Original was GL_UNPACK_SKIP_ROWS = 0xCF3
         /// </summary>
-        UnpackSkipPixels = 0x0cf4,
+        UnpackSkipRows = 0xCF3,
 
         /// <summary>
-        /// Original was GL_UNPACK_ALIGNMENT = 0x0CF5
+        /// Original was GL_UNPACK_SKIP_PIXELS = 0xCF4
         /// </summary>
-        UnpackAlignment = 0x0cf5,
+        UnpackSkipPixels = 0xCF4,
 
         /// <summary>
-        /// Original was GL_PACK_SWAP_BYTES = 0x0D00
+        /// Original was GL_UNPACK_ALIGNMENT = 0xCF5
         /// </summary>
-        PackSwapBytes = 0x0d00,
+        UnpackAlignment = 0xCF5,
 
         /// <summary>
-        /// Original was GL_PACK_LSB_FIRST = 0x0D01
+        /// Original was GL_PACK_SWAP_BYTES = 0xD00
         /// </summary>
-        PackLsbFirst = 0x0d01,
+        PackSwapBytes = 0xD00,
 
         /// <summary>
-        /// Original was GL_PACK_ROW_LENGTH = 0x0D02
+        /// Original was GL_PACK_LSB_FIRST = 0xD01
         /// </summary>
-        PackRowLength = 0x0d02,
+        PackLsbFirst = 0xD01,
 
         /// <summary>
-        /// Original was GL_PACK_SKIP_ROWS = 0x0D03
+        /// Original was GL_PACK_ROW_LENGTH = 0xD02
         /// </summary>
-        PackSkipRows = 0x0d03,
+        PackRowLength = 0xD02,
 
         /// <summary>
-        /// Original was GL_PACK_SKIP_PIXELS = 0x0D04
+        /// Original was GL_PACK_SKIP_ROWS = 0xD03
         /// </summary>
-        PackSkipPixels = 0x0d04,
+        PackSkipRows = 0xD03,
 
         /// <summary>
-        /// Original was GL_PACK_ALIGNMENT = 0x0D05
+        /// Original was GL_PACK_SKIP_PIXELS = 0xD04
         /// </summary>
-        PackAlignment = 0x0d05,
+        PackSkipPixels = 0xD04,
 
         /// <summary>
-        /// Original was GL_MAX_TEXTURE_SIZE = 0x0D33
+        /// Original was GL_PACK_ALIGNMENT = 0xD05
         /// </summary>
-        MaxTextureSize = 0x0d33,
+        PackAlignment = 0xD05,
 
         /// <summary>
-        /// Original was GL_MAX_VIEWPORT_DIMS = 0x0D3A
+        /// Original was GL_MAX_TEXTURE_SIZE = 0xD33
         /// </summary>
-        MaxViewportDims = 0x0d3a,
+        MaxTextureSize = 0xD33,
 
         /// <summary>
-        /// Original was GL_SUBPIXEL_BITS = 0x0D50
+        /// Original was GL_MAX_VIEWPORT_DIMS = 0xD3A
         /// </summary>
-        SubpixelBits = 0x0d50,
+        MaxViewportDims = 0xD3A,
 
         /// <summary>
-        /// Original was GL_TEXTURE_1D = 0x0DE0
+        /// Original was GL_SUBPIXEL_BITS = 0xD50
         /// </summary>
-        Texture1D = 0x0de0,
+        SubpixelBits = 0xD50,
 
         /// <summary>
-        /// Original was GL_TEXTURE_2D = 0x0DE1
+        /// Original was GL_TEXTURE1_D = 0xDE0
         /// </summary>
-        Texture2D = 0x0de1,
+        Texture1D = 0xDE0,
+
+        /// <summary>
+        /// Original was GL_TEXTURE2_D = 0xDE1
+        /// </summary>
+        Texture2D = 0xDE1,
 
         /// <summary>
         /// Original was GL_TEXTURE_WIDTH = 0x1000
@@ -676,32 +681,32 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_INVERT = 0x150A
         /// </summary>
-        Invert = 0x150a,
+        Invert = 0x150A,
 
         /// <summary>
         /// Original was GL_OR_REVERSE = 0x150B
         /// </summary>
-        OrReverse = 0x150b,
+        OrReverse = 0x150B,
 
         /// <summary>
         /// Original was GL_COPY_INVERTED = 0x150C
         /// </summary>
-        CopyInverted = 0x150c,
+        CopyInverted = 0x150C,
 
         /// <summary>
         /// Original was GL_OR_INVERTED = 0x150D
         /// </summary>
-        OrInverted = 0x150d,
+        OrInverted = 0x150D,
 
         /// <summary>
         /// Original was GL_NAND = 0x150E
         /// </summary>
-        Nand = 0x150e,
+        Nand = 0x150E,
 
         /// <summary>
         /// Original was GL_SET = 0x150F
         /// </summary>
-        Set = 0x150f,
+        Set = 0x150F,
 
         /// <summary>
         /// Original was GL_TEXTURE = 0x1702
@@ -766,57 +771,57 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_POINT = 0x1B00
         /// </summary>
-        Point = 0x1b00,
+        Point = 0x1B00,
 
         /// <summary>
         /// Original was GL_LINE = 0x1B01
         /// </summary>
-        Line = 0x1b01,
+        Line = 0x1B01,
 
         /// <summary>
         /// Original was GL_FILL = 0x1B02
         /// </summary>
-        Fill = 0x1b02,
+        Fill = 0x1B02,
 
         /// <summary>
         /// Original was GL_KEEP = 0x1E00
         /// </summary>
-        Keep = 0x1e00,
+        Keep = 0x1E00,
 
         /// <summary>
         /// Original was GL_REPLACE = 0x1E01
         /// </summary>
-        Replace = 0x1e01,
+        Replace = 0x1E01,
 
         /// <summary>
         /// Original was GL_INCR = 0x1E02
         /// </summary>
-        Incr = 0x1e02,
+        Incr = 0x1E02,
 
         /// <summary>
         /// Original was GL_DECR = 0x1E03
         /// </summary>
-        Decr = 0x1e03,
+        Decr = 0x1E03,
 
         /// <summary>
         /// Original was GL_VENDOR = 0x1F00
         /// </summary>
-        Vendor = 0x1f00,
+        Vendor = 0x1F00,
 
         /// <summary>
         /// Original was GL_RENDERER = 0x1F01
         /// </summary>
-        Renderer = 0x1f01,
+        Renderer = 0x1F01,
 
         /// <summary>
         /// Original was GL_VERSION = 0x1F02
         /// </summary>
-        Version = 0x1f02,
+        Version = 0x1F02,
 
         /// <summary>
         /// Original was GL_EXTENSIONS = 0x1F03
         /// </summary>
-        Extensions = 0x1f03,
+        Extensions = 0x1F03,
 
         /// <summary>
         /// Original was GL_NEAREST = 0x2600
@@ -874,13 +879,8 @@ namespace OpenTK.Graphics.OpenGL4
         Repeat = 0x2901,
 
         /// <summary>
-        /// Original was GL_ONE = 1
+        /// Original was GL_COLOR_BUFFER_BIT = 0x4000
         /// </summary>
-        One = 1,
-
-        /// <summary>
-        /// Original was GL_TRUE = 1
-        /// </summary>
-        True = 1
+        ColorBufferBit = 0x4000
     }
 }

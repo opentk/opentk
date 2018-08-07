@@ -29,13 +29,13 @@
 namespace OpenTK.Graphics.OpenGL4
 {
     /// <summary>
-    /// Not used directly.
+    /// Used in GL.GetBufferPointer.
     /// </summary>
     public enum BufferPointerNameArb
     {
         /// <summary>
         /// Original was GL_BUFFER_MAP_POINTER = 0x88BD
         /// </summary>
-        BufferMapPointer = 0x88bd
+        BufferMapPointer = 0x88BD
     }
 }

@@ -29,7 +29,7 @@
 namespace OpenTK.Graphics.OpenGL4
 {
     /// <summary>
-    /// Used in GL.Arb.DebugMessageControl and GL.Arb.DebugMessageInsert, as well as 6 other functions.
+    /// Used in GL.ARB.DebugMessageControl and GL.KHR.DebugMessageControl, as well as 6 other functions.
     /// </summary>
     public enum DebugSeverity
     {
@@ -37,11 +37,6 @@ namespace OpenTK.Graphics.OpenGL4
         /// Original was GL_DONT_CARE = 0x1100
         /// </summary>
         DontCare = 0x1100,
-
-        /// <summary>
-        /// Original was GL_DEBUG_SEVERITY_NOTIFICATION = 0x826B
-        /// </summary>
-        DebugSeverityNotification = 0x826b,
 
         /// <summary>
         /// Original was GL_DEBUG_SEVERITY_HIGH = 0x9146

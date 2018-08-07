@@ -49,27 +49,27 @@ namespace OpenTK.Graphics.OpenGL4
         HandleTypeOpaqueWin32KmtExt = 0x9588,
 
         /// <summary>
-        /// Original was GL_HANDLE_TYPE_D3D12_TILEPOOL_EXT = 0x9589
+        /// Original was GL_HANDLE_TYPE_D3_D12_TILEPOOL_EXT = 0x9589
         /// </summary>
         HandleTypeD3D12TilepoolExt = 0x9589,
 
         /// <summary>
-        /// Original was GL_HANDLE_TYPE_D3D12_RESOURCE_EXT = 0x958A
+        /// Original was GL_HANDLE_TYPE_D3_D12_RESOURCE_EXT = 0x958A
         /// </summary>
-        HandleTypeD3D12ResourceExt = 0x958a,
+        HandleTypeD3D12ResourceExt = 0x958A,
 
         /// <summary>
-        /// Original was GL_HANDLE_TYPE_D3D11_IMAGE_EXT = 0x958B
+        /// Original was GL_HANDLE_TYPE_D3_D11_IMAGE_EXT = 0x958B
         /// </summary>
-        HandleTypeD3D11ImageExt = 0x958b,
+        HandleTypeD3D11ImageExt = 0x958B,
 
         /// <summary>
-        /// Original was GL_HANDLE_TYPE_D3D11_IMAGE_KMT_EXT = 0x958C
+        /// Original was GL_HANDLE_TYPE_D3_D11_IMAGE_KMT_EXT = 0x958C
         /// </summary>
-        HandleTypeD3D11ImageKmtExt = 0x958c,
+        HandleTypeD3D11ImageKmtExt = 0x958C,
 
         /// <summary>
-        /// Original was GL_HANDLE_TYPE_D3D12_FENCE_EXT = 0x9594
+        /// Original was GL_HANDLE_TYPE_D3_D12_FENCE_EXT = 0x9594
         /// </summary>
         HandleTypeD3D12FenceExt = 0x9594
     }

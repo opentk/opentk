@@ -34,18 +34,18 @@ namespace OpenTK.Graphics.OpenGL4
     public enum TextureEnvModeScale
     {
         /// <summary>
-        /// Original was GL_ONE = 1
+        /// Original was GL_ONE = 0x1
         /// </summary>
-        One = 1,
+        One = 0x1,
 
         /// <summary>
-        /// Original was GL_TWO = 2
+        /// Original was GL_TWO = 0x2
         /// </summary>
-        Two = 2,
+        Two = 0x2,
 
         /// <summary>
-        /// Original was GL_FOUR = 4
+        /// Original was GL_FOUR = 0x4
         /// </summary>
-        Four = 4
+        Four = 0x4
     }
 }

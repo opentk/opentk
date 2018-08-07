@@ -36,6 +36,6 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_VERTEX_ATTRIB_ARRAY_DIVISOR_ARB = 0x88FE
         /// </summary>
-        VertexAttribArrayDivisorArb = 0x88fe
+        VertexAttribArrayDivisorArb = 0x88FE
     }
 }

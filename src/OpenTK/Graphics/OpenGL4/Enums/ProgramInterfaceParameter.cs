@@ -36,21 +36,21 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_ACTIVE_RESOURCES = 0x92F5
         /// </summary>
-        ActiveResources = 0x92f5,
+        ActiveResources = 0x92F5,
 
         /// <summary>
         /// Original was GL_MAX_NAME_LENGTH = 0x92F6
         /// </summary>
-        MaxNameLength = 0x92f6,
+        MaxNameLength = 0x92F6,
 
         /// <summary>
         /// Original was GL_MAX_NUM_ACTIVE_VARIABLES = 0x92F7
         /// </summary>
-        MaxNumActiveVariables = 0x92f7,
+        MaxNumActiveVariables = 0x92F7,
 
         /// <summary>
         /// Original was GL_MAX_NUM_COMPATIBLE_SUBROUTINES = 0x92F8
         /// </summary>
-        MaxNumCompatibleSubroutines = 0x92f8
+        MaxNumCompatibleSubroutines = 0x92F8
     }
 }

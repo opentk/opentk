@@ -36,17 +36,17 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_PRIMITIVE_RESTART_FIXED_INDEX = 0x8D69
         /// </summary>
-        PrimitiveRestartFixedIndex = 0x8d69,
+        PrimitiveRestartFixedIndex = 0x8D69,
 
         /// <summary>
         /// Original was GL_ANY_SAMPLES_PASSED_CONSERVATIVE = 0x8D6A
         /// </summary>
-        AnySamplesPassedConservative = 0x8d6a,
+        AnySamplesPassedConservative = 0x8D6A,
 
         /// <summary>
         /// Original was GL_MAX_ELEMENT_INDEX = 0x8D6B
         /// </summary>
-        MaxElementIndex = 0x8d6b,
+        MaxElementIndex = 0x8D6B,
 
         /// <summary>
         /// Original was GL_COMPRESSED_R11_EAC = 0x9270

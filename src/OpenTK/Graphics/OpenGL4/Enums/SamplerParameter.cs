@@ -34,63 +34,63 @@ namespace OpenTK.Graphics.OpenGL4
     public enum SamplerParameter
     {
         /// <summary>
-        /// Original was GL_ = 0x1004
+        /// Original was GL_TEXTURE_BORDER_COLOR = 0x1004
         /// </summary>
         TextureBorderColor = 0x1004,
 
         /// <summary>
-        /// Original was GL_ = 0x2800
+        /// Original was GL_TEXTURE_MAG_FILTER = 0x2800
         /// </summary>
         TextureMagFilter = 0x2800,
 
         /// <summary>
-        /// Original was GL_ = 0x2801
+        /// Original was GL_TEXTURE_MIN_FILTER = 0x2801
         /// </summary>
         TextureMinFilter = 0x2801,
 
         /// <summary>
-        /// Original was GL_ = 0x2802
+        /// Original was GL_TEXTURE_WRAP_S = 0x2802
         /// </summary>
         TextureWrapS = 0x2802,
 
         /// <summary>
-        /// Original was GL_ = 0x2803
+        /// Original was GL_TEXTURE_WRAP_T = 0x2803
         /// </summary>
         TextureWrapT = 0x2803,
 
         /// <summary>
-        /// Original was GL_ = 0x8072
+        /// Original was GL_TEXTURE_WRAP_R = 0x8072
         /// </summary>
         TextureWrapR = 0x8072,
 
         /// <summary>
-        /// Original was GL_ = 0x813A
+        /// Original was GL_TEXTURE_MIN_LOD = 0x813A
         /// </summary>
-        TextureMinLod = 0x813a,
+        TextureMinLod = 0x813A,
 
         /// <summary>
-        /// Original was GL_ = 0x813B
+        /// Original was GL_TEXTURE_MAX_LOD = 0x813B
         /// </summary>
-        TextureMaxLod = 0x813b,
+        TextureMaxLod = 0x813B,
 
         /// <summary>
-        /// Original was GL_ = 0x84FE
+        /// Original was GL_TEXTURE_MAX_ANISOTROPY_EXT = 0x84FE
         /// </summary>
-        TextureMaxAnisotropyExt = 0x84fe,
+        TextureMaxAnisotropyExt = 0x84FE,
 
         /// <summary>
-        /// Original was GL_ = 0x8501
+        /// Original was GL_TEXTURE_LOD_BIAS = 0x8501
         /// </summary>
         TextureLodBias = 0x8501,
 
         /// <summary>
-        /// Original was GL_ = 0x884C
+        /// Original was GL_TEXTURE_COMPARE_MODE = 0x884C
         /// </summary>
-        TextureCompareMode = 0x884c,
+        TextureCompareMode = 0x884C,
 
         /// <summary>
-        /// Original was GL_ = 0x884D
+        /// Original was GL_TEXTURE_COMPARE_FUNC = 0x884D
         /// </summary>
-        TextureCompareFunc = 0x884d
+        TextureCompareFunc = 0x884D
     }
 }

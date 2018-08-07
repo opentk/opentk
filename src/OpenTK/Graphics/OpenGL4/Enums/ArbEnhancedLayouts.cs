@@ -36,21 +36,21 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_TRANSFORM_FEEDBACK_BUFFER = 0x8C8E
         /// </summary>
-        TransformFeedbackBuffer = 0x8c8e,
+        TransformFeedbackBuffer = 0x8C8E,
 
         /// <summary>
         /// Original was GL_LOCATION_COMPONENT = 0x934A
         /// </summary>
-        LocationComponent = 0x934a,
+        LocationComponent = 0x934A,
 
         /// <summary>
         /// Original was GL_TRANSFORM_FEEDBACK_BUFFER_INDEX = 0x934B
         /// </summary>
-        TransformFeedbackBufferIndex = 0x934b,
+        TransformFeedbackBufferIndex = 0x934B,
 
         /// <summary>
         /// Original was GL_TRANSFORM_FEEDBACK_BUFFER_STRIDE = 0x934C
         /// </summary>
-        TransformFeedbackBufferStride = 0x934c
+        TransformFeedbackBufferStride = 0x934C
     }
 }

@@ -36,6 +36,6 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_SAMPLE_POSITION = 0x8E50
         /// </summary>
-        SamplePosition = 0x8e50
+        SamplePosition = 0x8E50
     }
 }

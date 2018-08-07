@@ -76,22 +76,22 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_FRAGMENT_LIGHT0_SGIX = 0x840C
         /// </summary>
-        FragmentLight0Sgix = 0x840c,
+        FragmentLight0Sgix = 0x840C,
 
         /// <summary>
         /// Original was GL_FRAGMENT_LIGHT1_SGIX = 0x840D
         /// </summary>
-        FragmentLight1Sgix = 0x840d,
+        FragmentLight1Sgix = 0x840D,
 
         /// <summary>
         /// Original was GL_FRAGMENT_LIGHT2_SGIX = 0x840E
         /// </summary>
-        FragmentLight2Sgix = 0x840e,
+        FragmentLight2Sgix = 0x840E,
 
         /// <summary>
         /// Original was GL_FRAGMENT_LIGHT3_SGIX = 0x840F
         /// </summary>
-        FragmentLight3Sgix = 0x840f,
+        FragmentLight3Sgix = 0x840F,
 
         /// <summary>
         /// Original was GL_FRAGMENT_LIGHT4_SGIX = 0x8410

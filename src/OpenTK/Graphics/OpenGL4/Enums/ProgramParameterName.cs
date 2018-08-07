@@ -29,7 +29,7 @@
 namespace OpenTK.Graphics.OpenGL4
 {
     /// <summary>
-    /// Used in GL.ProgramParameter.
+    /// Not used directly.
     /// </summary>
     public enum ProgramParameterName
     {

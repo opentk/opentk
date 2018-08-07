@@ -29,7 +29,7 @@
 namespace OpenTK.Graphics.OpenGL4
 {
     /// <summary>
-    /// Used in GL.GetQueryIndexed and GL.GetQuery.
+    /// Used in GL.GetQuery and GL.GetQueryIndexed.
     /// </summary>
     public enum GetQueryParam
     {

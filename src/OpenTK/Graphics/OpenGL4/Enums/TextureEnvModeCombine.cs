@@ -34,43 +34,8 @@ namespace OpenTK.Graphics.OpenGL4
     public enum TextureEnvModeCombine
     {
         /// <summary>
-        /// Original was GL_ADD = 0x0104
-        /// </summary>
-        Add = 0x0104,
-
-        /// <summary>
         /// Original was GL_REPLACE = 0x1E01
         /// </summary>
-        Replace = 0x1e01,
-
-        /// <summary>
-        /// Original was GL_MODULATE = 0x2100
-        /// </summary>
-        Modulate = 0x2100,
-
-        /// <summary>
-        /// Original was GL_SUBTRACT = 0x84E7
-        /// </summary>
-        Subtract = 0x84e7,
-
-        /// <summary>
-        /// Original was GL_ADD_SIGNED = 0x8574
-        /// </summary>
-        AddSigned = 0x8574,
-
-        /// <summary>
-        /// Original was GL_INTERPOLATE = 0x8575
-        /// </summary>
-        Interpolate = 0x8575,
-
-        /// <summary>
-        /// Original was GL_DOT3_RGB = 0x86AE
-        /// </summary>
-        Dot3Rgb = 0x86ae,
-
-        /// <summary>
-        /// Original was GL_DOT3_RGBA = 0x86AF
-        /// </summary>
-        Dot3Rgba = 0x86af
+        Replace = 0x1E01
     }
 }

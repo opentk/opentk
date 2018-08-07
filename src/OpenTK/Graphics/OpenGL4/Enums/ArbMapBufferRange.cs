@@ -34,33 +34,33 @@ namespace OpenTK.Graphics.OpenGL4
     public enum ArbMapBufferRange
     {
         /// <summary>
-        /// Original was GL_MAP_READ_BIT = 0x0001
+        /// Original was GL_MAP_READ_BIT = 0x1
         /// </summary>
-        MapReadBit = 0x0001,
+        MapReadBit = 0x1,
 
         /// <summary>
-        /// Original was GL_MAP_WRITE_BIT = 0x0002
+        /// Original was GL_MAP_WRITE_BIT = 0x2
         /// </summary>
-        MapWriteBit = 0x0002,
+        MapWriteBit = 0x2,
 
         /// <summary>
-        /// Original was GL_MAP_INVALIDATE_RANGE_BIT = 0x0004
+        /// Original was GL_MAP_INVALIDATE_RANGE_BIT = 0x4
         /// </summary>
-        MapInvalidateRangeBit = 0x0004,
+        MapInvalidateRangeBit = 0x4,
 
         /// <summary>
-        /// Original was GL_MAP_INVALIDATE_BUFFER_BIT = 0x0008
+        /// Original was GL_MAP_INVALIDATE_BUFFER_BIT = 0x8
         /// </summary>
-        MapInvalidateBufferBit = 0x0008,
+        MapInvalidateBufferBit = 0x8,
 
         /// <summary>
-        /// Original was GL_MAP_FLUSH_EXPLICIT_BIT = 0x0010
+        /// Original was GL_MAP_FLUSH_EXPLICIT_BIT = 0x10
         /// </summary>
-        MapFlushExplicitBit = 0x0010,
+        MapFlushExplicitBit = 0x10,
 
         /// <summary>
-        /// Original was GL_MAP_UNSYNCHRONIZED_BIT = 0x0020
+        /// Original was GL_MAP_UNSYNCHRONIZED_BIT = 0x20
         /// </summary>
-        MapUnsynchronizedBit = 0x0020
+        MapUnsynchronizedBit = 0x20
     }
 }

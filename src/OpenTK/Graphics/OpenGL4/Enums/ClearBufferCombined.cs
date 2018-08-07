@@ -36,6 +36,6 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_DEPTH_STENCIL = 0x84F9
         /// </summary>
-        DepthStencil = 0x84f9
+        DepthStencil = 0x84F9
     }
 }

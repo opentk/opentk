@@ -41,31 +41,31 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_TEXTURE_BINDING_CUBE_MAP_ARRAY_ARB = 0x900A
         /// </summary>
-        TextureBindingCubeMapArrayArb = 0x900a,
+        TextureBindingCubeMapArrayArb = 0x900A,
 
         /// <summary>
         /// Original was GL_PROXY_TEXTURE_CUBE_MAP_ARRAY_ARB = 0x900B
         /// </summary>
-        ProxyTextureCubeMapArrayArb = 0x900b,
+        ProxyTextureCubeMapArrayArb = 0x900B,
 
         /// <summary>
         /// Original was GL_SAMPLER_CUBE_MAP_ARRAY_ARB = 0x900C
         /// </summary>
-        SamplerCubeMapArrayArb = 0x900c,
+        SamplerCubeMapArrayArb = 0x900C,
 
         /// <summary>
         /// Original was GL_SAMPLER_CUBE_MAP_ARRAY_SHADOW_ARB = 0x900D
         /// </summary>
-        SamplerCubeMapArrayShadowArb = 0x900d,
+        SamplerCubeMapArrayShadowArb = 0x900D,
 
         /// <summary>
         /// Original was GL_INT_SAMPLER_CUBE_MAP_ARRAY_ARB = 0x900E
         /// </summary>
-        IntSamplerCubeMapArrayArb = 0x900e,
+        IntSamplerCubeMapArrayArb = 0x900E,
 
         /// <summary>
         /// Original was GL_UNSIGNED_INT_SAMPLER_CUBE_MAP_ARRAY_ARB = 0x900F
         /// </summary>
-        UnsignedIntSamplerCubeMapArrayArb = 0x900f
+        UnsignedIntSamplerCubeMapArrayArb = 0x900F
     }
 }

@@ -36,11 +36,11 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_FACTOR_MIN_AMD = 0x901C
         /// </summary>
-        FactorMinAmd = 0x901c,
+        FactorMinAmd = 0x901C,
 
         /// <summary>
         /// Original was GL_FACTOR_MAX_AMD = 0x901D
         /// </summary>
-        FactorMaxAmd = 0x901d
+        FactorMaxAmd = 0x901D
     }
 }

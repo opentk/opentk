@@ -29,17 +29,17 @@
 namespace OpenTK.Graphics.OpenGL4
 {
     /// <summary>
-    /// Used in GL.Arb.GetnSeparableFilter and GL.GetnSeparableFilter, as well as 2 other functions.
+    /// Not used directly.
     /// </summary>
     public enum SeparableTargetExt
     {
         /// <summary>
-        /// Original was GL_SEPARABLE_2D = 0x8012
+        /// Original was GL_SEPARABLE2_D = 0x8012
         /// </summary>
         Separable2D = 0x8012,
 
         /// <summary>
-        /// Original was GL_SEPARABLE_2D_EXT = 0x8012
+        /// Original was GL_SEPARABLE2_D_EXT = 0x8012
         /// </summary>
         Separable2DExt = 0x8012
     }

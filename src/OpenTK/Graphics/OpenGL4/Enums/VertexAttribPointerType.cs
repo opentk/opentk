@@ -29,7 +29,7 @@
 namespace OpenTK.Graphics.OpenGL4
 {
     /// <summary>
-    /// Used in GL.VertexAttribPointer and GL.Ext.VertexArrayVertexAttribOffset.
+    /// Used in GL.EXT.VertexArrayVertexAttribOffset.
     /// </summary>
     public enum VertexAttribPointerType
     {
@@ -71,31 +71,31 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_DOUBLE = 0x140A
         /// </summary>
-        Double = 0x140a,
+        Double = 0x140A,
 
         /// <summary>
         /// Original was GL_HALF_FLOAT = 0x140B
         /// </summary>
-        HalfFloat = 0x140b,
+        HalfFloat = 0x140B,
 
         /// <summary>
         /// Original was GL_FIXED = 0x140C
         /// </summary>
-        Fixed = 0x140c,
+        Fixed = 0x140C,
 
         /// <summary>
-        /// Original was GL_UNSIGNED_INT_2_10_10_10_REV = 0x8368
+        /// Original was GL_UNSIGNED_INT2101010_REV = 0x8368
         /// </summary>
         UnsignedInt2101010Rev = 0x8368,
 
         /// <summary>
-        /// Original was GL_UNSIGNED_INT_10F_11F_11F_REV = 0x8C3B
+        /// Original was GL_UNSIGNED_INT10F11F11F_REV = 0x8C3B
         /// </summary>
-        UnsignedInt10f11f11fRev = 0x8c3b,
+        UnsignedInt10f11f11fRev = 0x8C3B,
 
         /// <summary>
-        /// Original was GL_INT_2_10_10_10_REV = 0x8D9F
+        /// Original was GL_INT2101010_REV = 0x8D9F
         /// </summary>
-        Int2101010Rev = 0x8d9f
+        Int2101010Rev = 0x8D9F
     }
 }

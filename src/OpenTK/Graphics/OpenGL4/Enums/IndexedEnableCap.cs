@@ -29,18 +29,18 @@
 namespace OpenTK.Graphics.OpenGL4
 {
     /// <summary>
-    /// Used in GL.Disable and GL.Enable, as well as 4 other functions.
+    /// Used in GL.Enable and GL.Disable, as well as 4 other functions.
     /// </summary>
     public enum IndexedEnableCap
     {
         /// <summary>
-        /// Original was GL_BLEND = 0x0BE2
+        /// Original was GL_BLEND = 0xBE2
         /// </summary>
-        Blend = 0x0be2,
+        Blend = 0xBE2,
 
         /// <summary>
-        /// Original was GL_SCISSOR_TEST = 0x0C11
+        /// Original was GL_SCISSOR_TEST = 0xC11
         /// </summary>
-        ScissorTest = 0x0c11
+        ScissorTest = 0xC11
     }
 }

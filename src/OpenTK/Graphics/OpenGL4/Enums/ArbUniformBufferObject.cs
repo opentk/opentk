@@ -36,166 +36,166 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_UNIFORM_BUFFER = 0x8A11
         /// </summary>
-        UniformBuffer = 0x8a11,
+        UniformBuffer = 0x8A11,
 
         /// <summary>
         /// Original was GL_UNIFORM_BUFFER_BINDING = 0x8A28
         /// </summary>
-        UniformBufferBinding = 0x8a28,
+        UniformBufferBinding = 0x8A28,
 
         /// <summary>
         /// Original was GL_UNIFORM_BUFFER_START = 0x8A29
         /// </summary>
-        UniformBufferStart = 0x8a29,
+        UniformBufferStart = 0x8A29,
 
         /// <summary>
         /// Original was GL_UNIFORM_BUFFER_SIZE = 0x8A2A
         /// </summary>
-        UniformBufferSize = 0x8a2a,
+        UniformBufferSize = 0x8A2A,
 
         /// <summary>
         /// Original was GL_MAX_VERTEX_UNIFORM_BLOCKS = 0x8A2B
         /// </summary>
-        MaxVertexUniformBlocks = 0x8a2b,
+        MaxVertexUniformBlocks = 0x8A2B,
 
         /// <summary>
         /// Original was GL_MAX_GEOMETRY_UNIFORM_BLOCKS = 0x8A2C
         /// </summary>
-        MaxGeometryUniformBlocks = 0x8a2c,
+        MaxGeometryUniformBlocks = 0x8A2C,
 
         /// <summary>
         /// Original was GL_MAX_FRAGMENT_UNIFORM_BLOCKS = 0x8A2D
         /// </summary>
-        MaxFragmentUniformBlocks = 0x8a2d,
+        MaxFragmentUniformBlocks = 0x8A2D,
 
         /// <summary>
         /// Original was GL_MAX_COMBINED_UNIFORM_BLOCKS = 0x8A2E
         /// </summary>
-        MaxCombinedUniformBlocks = 0x8a2e,
+        MaxCombinedUniformBlocks = 0x8A2E,
 
         /// <summary>
         /// Original was GL_MAX_UNIFORM_BUFFER_BINDINGS = 0x8A2F
         /// </summary>
-        MaxUniformBufferBindings = 0x8a2f,
+        MaxUniformBufferBindings = 0x8A2F,
 
         /// <summary>
         /// Original was GL_MAX_UNIFORM_BLOCK_SIZE = 0x8A30
         /// </summary>
-        MaxUniformBlockSize = 0x8a30,
+        MaxUniformBlockSize = 0x8A30,
 
         /// <summary>
         /// Original was GL_MAX_COMBINED_VERTEX_UNIFORM_COMPONENTS = 0x8A31
         /// </summary>
-        MaxCombinedVertexUniformComponents = 0x8a31,
+        MaxCombinedVertexUniformComponents = 0x8A31,
 
         /// <summary>
         /// Original was GL_MAX_COMBINED_GEOMETRY_UNIFORM_COMPONENTS = 0x8A32
         /// </summary>
-        MaxCombinedGeometryUniformComponents = 0x8a32,
+        MaxCombinedGeometryUniformComponents = 0x8A32,
 
         /// <summary>
         /// Original was GL_MAX_COMBINED_FRAGMENT_UNIFORM_COMPONENTS = 0x8A33
         /// </summary>
-        MaxCombinedFragmentUniformComponents = 0x8a33,
+        MaxCombinedFragmentUniformComponents = 0x8A33,
 
         /// <summary>
         /// Original was GL_UNIFORM_BUFFER_OFFSET_ALIGNMENT = 0x8A34
         /// </summary>
-        UniformBufferOffsetAlignment = 0x8a34,
+        UniformBufferOffsetAlignment = 0x8A34,
 
         /// <summary>
         /// Original was GL_ACTIVE_UNIFORM_BLOCK_MAX_NAME_LENGTH = 0x8A35
         /// </summary>
-        ActiveUniformBlockMaxNameLength = 0x8a35,
+        ActiveUniformBlockMaxNameLength = 0x8A35,
 
         /// <summary>
         /// Original was GL_ACTIVE_UNIFORM_BLOCKS = 0x8A36
         /// </summary>
-        ActiveUniformBlocks = 0x8a36,
+        ActiveUniformBlocks = 0x8A36,
 
         /// <summary>
         /// Original was GL_UNIFORM_TYPE = 0x8A37
         /// </summary>
-        UniformType = 0x8a37,
+        UniformType = 0x8A37,
 
         /// <summary>
         /// Original was GL_UNIFORM_SIZE = 0x8A38
         /// </summary>
-        UniformSize = 0x8a38,
+        UniformSize = 0x8A38,
 
         /// <summary>
         /// Original was GL_UNIFORM_NAME_LENGTH = 0x8A39
         /// </summary>
-        UniformNameLength = 0x8a39,
+        UniformNameLength = 0x8A39,
 
         /// <summary>
         /// Original was GL_UNIFORM_BLOCK_INDEX = 0x8A3A
         /// </summary>
-        UniformBlockIndex = 0x8a3a,
+        UniformBlockIndex = 0x8A3A,
 
         /// <summary>
         /// Original was GL_UNIFORM_OFFSET = 0x8A3B
         /// </summary>
-        UniformOffset = 0x8a3b,
+        UniformOffset = 0x8A3B,
 
         /// <summary>
         /// Original was GL_UNIFORM_ARRAY_STRIDE = 0x8A3C
         /// </summary>
-        UniformArrayStride = 0x8a3c,
+        UniformArrayStride = 0x8A3C,
 
         /// <summary>
         /// Original was GL_UNIFORM_MATRIX_STRIDE = 0x8A3D
         /// </summary>
-        UniformMatrixStride = 0x8a3d,
+        UniformMatrixStride = 0x8A3D,
 
         /// <summary>
         /// Original was GL_UNIFORM_IS_ROW_MAJOR = 0x8A3E
         /// </summary>
-        UniformIsRowMajor = 0x8a3e,
+        UniformIsRowMajor = 0x8A3E,
 
         /// <summary>
         /// Original was GL_UNIFORM_BLOCK_BINDING = 0x8A3F
         /// </summary>
-        UniformBlockBinding = 0x8a3f,
+        UniformBlockBinding = 0x8A3F,
 
         /// <summary>
         /// Original was GL_UNIFORM_BLOCK_DATA_SIZE = 0x8A40
         /// </summary>
-        UniformBlockDataSize = 0x8a40,
+        UniformBlockDataSize = 0x8A40,
 
         /// <summary>
         /// Original was GL_UNIFORM_BLOCK_NAME_LENGTH = 0x8A41
         /// </summary>
-        UniformBlockNameLength = 0x8a41,
+        UniformBlockNameLength = 0x8A41,
 
         /// <summary>
         /// Original was GL_UNIFORM_BLOCK_ACTIVE_UNIFORMS = 0x8A42
         /// </summary>
-        UniformBlockActiveUniforms = 0x8a42,
+        UniformBlockActiveUniforms = 0x8A42,
 
         /// <summary>
         /// Original was GL_UNIFORM_BLOCK_ACTIVE_UNIFORM_INDICES = 0x8A43
         /// </summary>
-        UniformBlockActiveUniformIndices = 0x8a43,
+        UniformBlockActiveUniformIndices = 0x8A43,
 
         /// <summary>
         /// Original was GL_UNIFORM_BLOCK_REFERENCED_BY_VERTEX_SHADER = 0x8A44
         /// </summary>
-        UniformBlockReferencedByVertexShader = 0x8a44,
+        UniformBlockReferencedByVertexShader = 0x8A44,
 
         /// <summary>
         /// Original was GL_UNIFORM_BLOCK_REFERENCED_BY_GEOMETRY_SHADER = 0x8A45
         /// </summary>
-        UniformBlockReferencedByGeometryShader = 0x8a45,
+        UniformBlockReferencedByGeometryShader = 0x8A45,
 
         /// <summary>
         /// Original was GL_UNIFORM_BLOCK_REFERENCED_BY_FRAGMENT_SHADER = 0x8A46
         /// </summary>
-        UniformBlockReferencedByFragmentShader = 0x8a46,
+        UniformBlockReferencedByFragmentShader = 0x8A46,
 
         /// <summary>
         /// Original was GL_INVALID_INDEX = 0xFFFFFFFF
         /// </summary>
-        InvalidIndex = unchecked((int)0xffffffff)
+        InvalidIndex = unchecked((int)0xFFFFFFFF)
     }
 }

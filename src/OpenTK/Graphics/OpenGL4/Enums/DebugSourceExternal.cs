@@ -41,6 +41,6 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_DEBUG_SOURCE_APPLICATION = 0x824A
         /// </summary>
-        DebugSourceApplication = 0x824a
+        DebugSourceApplication = 0x824A
     }
 }

@@ -37,83 +37,83 @@ namespace OpenTK.Graphics.OpenGL4
     public enum BufferAccessMask
     {
         /// <summary>
-        /// Original was GL_MAP_READ_BIT = 0x0001
+        /// Original was GL_MAP_READ_BIT = 0x1
         /// </summary>
-        MapReadBit = 0x0001,
+        MapReadBit = 0x1,
 
         /// <summary>
-        /// Original was GL_MAP_READ_BIT_EXT = 0x0001
+        /// Original was GL_MAP_READ_BIT_EXT = 0x1
         /// </summary>
-        MapReadBitExt = 0x0001,
+        MapReadBitExt = 0x1,
 
         /// <summary>
-        /// Original was GL_MAP_WRITE_BIT = 0x0002
+        /// Original was GL_MAP_WRITE_BIT = 0x2
         /// </summary>
-        MapWriteBit = 0x0002,
+        MapWriteBit = 0x2,
 
         /// <summary>
-        /// Original was GL_MAP_WRITE_BIT_EXT = 0x0002
+        /// Original was GL_MAP_WRITE_BIT_EXT = 0x2
         /// </summary>
-        MapWriteBitExt = 0x0002,
+        MapWriteBitExt = 0x2,
 
         /// <summary>
-        /// Original was GL_MAP_INVALIDATE_RANGE_BIT = 0x0004
+        /// Original was GL_MAP_INVALIDATE_RANGE_BIT = 0x4
         /// </summary>
-        MapInvalidateRangeBit = 0x0004,
+        MapInvalidateRangeBit = 0x4,
 
         /// <summary>
-        /// Original was GL_MAP_INVALIDATE_RANGE_BIT_EXT = 0x0004
+        /// Original was GL_MAP_INVALIDATE_RANGE_BIT_EXT = 0x4
         /// </summary>
-        MapInvalidateRangeBitExt = 0x0004,
+        MapInvalidateRangeBitExt = 0x4,
 
         /// <summary>
-        /// Original was GL_MAP_INVALIDATE_BUFFER_BIT = 0x0008
+        /// Original was GL_MAP_INVALIDATE_BUFFER_BIT = 0x8
         /// </summary>
-        MapInvalidateBufferBit = 0x0008,
+        MapInvalidateBufferBit = 0x8,
 
         /// <summary>
-        /// Original was GL_MAP_INVALIDATE_BUFFER_BIT_EXT = 0x0008
+        /// Original was GL_MAP_INVALIDATE_BUFFER_BIT_EXT = 0x8
         /// </summary>
-        MapInvalidateBufferBitExt = 0x0008,
+        MapInvalidateBufferBitExt = 0x8,
 
         /// <summary>
-        /// Original was GL_MAP_FLUSH_EXPLICIT_BIT = 0x0010
+        /// Original was GL_MAP_FLUSH_EXPLICIT_BIT = 0x10
         /// </summary>
-        MapFlushExplicitBit = 0x0010,
+        MapFlushExplicitBit = 0x10,
 
         /// <summary>
-        /// Original was GL_MAP_FLUSH_EXPLICIT_BIT_EXT = 0x0010
+        /// Original was GL_MAP_FLUSH_EXPLICIT_BIT_EXT = 0x10
         /// </summary>
-        MapFlushExplicitBitExt = 0x0010,
+        MapFlushExplicitBitExt = 0x10,
 
         /// <summary>
-        /// Original was GL_MAP_UNSYNCHRONIZED_BIT = 0x0020
+        /// Original was GL_MAP_UNSYNCHRONIZED_BIT = 0x20
         /// </summary>
-        MapUnsynchronizedBit = 0x0020,
+        MapUnsynchronizedBit = 0x20,
 
         /// <summary>
-        /// Original was GL_MAP_UNSYNCHRONIZED_BIT_EXT = 0x0020
+        /// Original was GL_MAP_UNSYNCHRONIZED_BIT_EXT = 0x20
         /// </summary>
-        MapUnsynchronizedBitExt = 0x0020,
+        MapUnsynchronizedBitExt = 0x20,
 
         /// <summary>
-        /// Original was GL_MAP_PERSISTENT_BIT = 0x0040
+        /// Original was GL_MAP_PERSISTENT_BIT = 0x40
         /// </summary>
-        MapPersistentBit = 0x0040,
+        MapPersistentBit = 0x40,
 
         /// <summary>
-        /// Original was GL_MAP_PERSISTENT_BIT_EXT = 0x0040
+        /// Original was GL_MAP_PERSISTENT_BIT_EXT = 0x40
         /// </summary>
-        MapPersistentBitExt = 0x0040,
+        MapPersistentBitExt = 0x40,
 
         /// <summary>
-        /// Original was GL_MAP_COHERENT_BIT = 0x0080
+        /// Original was GL_MAP_COHERENT_BIT = 0x80
         /// </summary>
-        MapCoherentBit = 0x0080,
+        MapCoherentBit = 0x80,
 
         /// <summary>
-        /// Original was GL_MAP_COHERENT_BIT_EXT = 0x0080
+        /// Original was GL_MAP_COHERENT_BIT_EXT = 0x80
         /// </summary>
-        MapCoherentBitExt = 0x0080
+        MapCoherentBitExt = 0x80
     }
 }

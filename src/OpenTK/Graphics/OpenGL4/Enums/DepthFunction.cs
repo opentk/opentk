@@ -29,48 +29,48 @@
 namespace OpenTK.Graphics.OpenGL4
 {
     /// <summary>
-    /// Used in GL.DepthFunc and GL.NV.PathCoverDepthFunc.
+    /// Used in GL.NV.PathCoverDepthFunc and GL.DepthFunc.
     /// </summary>
     public enum DepthFunction
     {
         /// <summary>
-        /// Original was GL_NEVER = 0x0200
+        /// Original was GL_NEVER = 0x200
         /// </summary>
-        Never = 0x0200,
+        Never = 0x200,
 
         /// <summary>
-        /// Original was GL_LESS = 0x0201
+        /// Original was GL_LESS = 0x201
         /// </summary>
-        Less = 0x0201,
+        Less = 0x201,
 
         /// <summary>
-        /// Original was GL_EQUAL = 0x0202
+        /// Original was GL_EQUAL = 0x202
         /// </summary>
-        Equal = 0x0202,
+        Equal = 0x202,
 
         /// <summary>
-        /// Original was GL_LEQUAL = 0x0203
+        /// Original was GL_LEQUAL = 0x203
         /// </summary>
-        Lequal = 0x0203,
+        Lequal = 0x203,
 
         /// <summary>
-        /// Original was GL_GREATER = 0x0204
+        /// Original was GL_GREATER = 0x204
         /// </summary>
-        Greater = 0x0204,
+        Greater = 0x204,
 
         /// <summary>
-        /// Original was GL_NOTEQUAL = 0x0205
+        /// Original was GL_NOTEQUAL = 0x205
         /// </summary>
-        Notequal = 0x0205,
+        Notequal = 0x205,
 
         /// <summary>
-        /// Original was GL_GEQUAL = 0x0206
+        /// Original was GL_GEQUAL = 0x206
         /// </summary>
-        Gequal = 0x0206,
+        Gequal = 0x206,
 
         /// <summary>
-        /// Original was GL_ALWAYS = 0x0207
+        /// Original was GL_ALWAYS = 0x207
         /// </summary>
-        Always = 0x0207
+        Always = 0x207
     }
 }

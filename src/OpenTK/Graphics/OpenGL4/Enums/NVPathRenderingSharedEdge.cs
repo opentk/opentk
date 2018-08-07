@@ -36,6 +36,6 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_SHARED_EDGE_NV = 0xC0
         /// </summary>
-        SharedEdgeNV = 0xc0
+        SharedEdgeNV = 0xC0
     }
 }

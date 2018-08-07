@@ -36,16 +36,16 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_VIEWPORT_POSITION_W_SCALE_NV = 0x937C
         /// </summary>
-        ViewportPositionWScaleNV = 0x937c,
+        ViewportPositionWScaleNV = 0x937C,
 
         /// <summary>
         /// Original was GL_VIEWPORT_POSITION_W_SCALE_X_COEFF_NV = 0x937D
         /// </summary>
-        ViewportPositionWScaleXCoeffNV = 0x937d,
+        ViewportPositionWScaleXCoeffNV = 0x937D,
 
         /// <summary>
         /// Original was GL_VIEWPORT_POSITION_W_SCALE_Y_COEFF_NV = 0x937E
         /// </summary>
-        ViewportPositionWScaleYCoeffNV = 0x937e
+        ViewportPositionWScaleYCoeffNV = 0x937E
     }
 }

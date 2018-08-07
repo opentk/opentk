@@ -29,7 +29,7 @@
 namespace OpenTK.Graphics.OpenGL4
 {
     /// <summary>
-    /// Used in GL.Arb.DrawElementsInstanced and GL.Arb.MultiDrawElementsIndirectCount, as well as 15 other functions.
+    /// Used in GL.DrawElementsIndirect and GL.ARB.DrawElementsInstanced, as well as 15 other functions.
     /// </summary>
     public enum DrawElementsType
     {

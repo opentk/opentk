@@ -29,13 +29,13 @@
 namespace OpenTK.Graphics.OpenGL4
 {
     /// <summary>
-    /// Used in GL.Arb.MakeImageHandleResident.
+    /// Used in GL.ARB.MakeImageHandleResident.
     /// </summary>
     public enum ArbBindlessTexture
     {
         /// <summary>
         /// Original was GL_UNSIGNED_INT64_ARB = 0x140F
         /// </summary>
-        UnsignedInt64Arb = 0x140f
+        UnsignedInt64Arb = 0x140F
     }
 }

@@ -34,119 +34,119 @@ namespace OpenTK.Graphics.OpenGL4
     public enum PixelStoreParameter
     {
         /// <summary>
-        /// Original was GL_UNPACK_SWAP_BYTES = 0x0CF0
+        /// Original was GL_UNPACK_SWAP_BYTES = 0xCF0
         /// </summary>
-        UnpackSwapBytes = 0x0cf0,
+        UnpackSwapBytes = 0xCF0,
 
         /// <summary>
-        /// Original was GL_UNPACK_LSB_FIRST = 0x0CF1
+        /// Original was GL_UNPACK_LSB_FIRST = 0xCF1
         /// </summary>
-        UnpackLsbFirst = 0x0cf1,
+        UnpackLsbFirst = 0xCF1,
 
         /// <summary>
-        /// Original was GL_UNPACK_ROW_LENGTH = 0x0CF2
+        /// Original was GL_UNPACK_ROW_LENGTH = 0xCF2
         /// </summary>
-        UnpackRowLength = 0x0cf2,
+        UnpackRowLength = 0xCF2,
 
         /// <summary>
-        /// Original was GL_UNPACK_ROW_LENGTH_EXT = 0x0CF2
+        /// Original was GL_UNPACK_ROW_LENGTH_EXT = 0xCF2
         /// </summary>
-        UnpackRowLengthExt = 0x0cf2,
+        UnpackRowLengthExt = 0xCF2,
 
         /// <summary>
-        /// Original was GL_UNPACK_SKIP_ROWS = 0x0CF3
+        /// Original was GL_UNPACK_SKIP_ROWS = 0xCF3
         /// </summary>
-        UnpackSkipRows = 0x0cf3,
+        UnpackSkipRows = 0xCF3,
 
         /// <summary>
-        /// Original was GL_UNPACK_SKIP_ROWS_EXT = 0x0CF3
+        /// Original was GL_UNPACK_SKIP_ROWS_EXT = 0xCF3
         /// </summary>
-        UnpackSkipRowsExt = 0x0cf3,
+        UnpackSkipRowsExt = 0xCF3,
 
         /// <summary>
-        /// Original was GL_UNPACK_SKIP_PIXELS = 0x0CF4
+        /// Original was GL_UNPACK_SKIP_PIXELS = 0xCF4
         /// </summary>
-        UnpackSkipPixels = 0x0cf4,
+        UnpackSkipPixels = 0xCF4,
 
         /// <summary>
-        /// Original was GL_UNPACK_SKIP_PIXELS_EXT = 0x0CF4
+        /// Original was GL_UNPACK_SKIP_PIXELS_EXT = 0xCF4
         /// </summary>
-        UnpackSkipPixelsExt = 0x0cf4,
+        UnpackSkipPixelsExt = 0xCF4,
 
         /// <summary>
-        /// Original was GL_UNPACK_ALIGNMENT = 0x0CF5
+        /// Original was GL_UNPACK_ALIGNMENT = 0xCF5
         /// </summary>
-        UnpackAlignment = 0x0cf5,
+        UnpackAlignment = 0xCF5,
 
         /// <summary>
-        /// Original was GL_PACK_SWAP_BYTES = 0x0D00
+        /// Original was GL_PACK_SWAP_BYTES = 0xD00
         /// </summary>
-        PackSwapBytes = 0x0d00,
+        PackSwapBytes = 0xD00,
 
         /// <summary>
-        /// Original was GL_PACK_LSB_FIRST = 0x0D01
+        /// Original was GL_PACK_LSB_FIRST = 0xD01
         /// </summary>
-        PackLsbFirst = 0x0d01,
+        PackLsbFirst = 0xD01,
 
         /// <summary>
-        /// Original was GL_PACK_ROW_LENGTH = 0x0D02
+        /// Original was GL_PACK_ROW_LENGTH = 0xD02
         /// </summary>
-        PackRowLength = 0x0d02,
+        PackRowLength = 0xD02,
 
         /// <summary>
-        /// Original was GL_PACK_SKIP_ROWS = 0x0D03
+        /// Original was GL_PACK_SKIP_ROWS = 0xD03
         /// </summary>
-        PackSkipRows = 0x0d03,
+        PackSkipRows = 0xD03,
 
         /// <summary>
-        /// Original was GL_PACK_SKIP_PIXELS = 0x0D04
+        /// Original was GL_PACK_SKIP_PIXELS = 0xD04
         /// </summary>
-        PackSkipPixels = 0x0d04,
+        PackSkipPixels = 0xD04,
 
         /// <summary>
-        /// Original was GL_PACK_ALIGNMENT = 0x0D05
+        /// Original was GL_PACK_ALIGNMENT = 0xD05
         /// </summary>
-        PackAlignment = 0x0d05,
+        PackAlignment = 0xD05,
 
         /// <summary>
         /// Original was GL_PACK_SKIP_IMAGES = 0x806B
         /// </summary>
-        PackSkipImages = 0x806b,
+        PackSkipImages = 0x806B,
 
         /// <summary>
         /// Original was GL_PACK_SKIP_IMAGES_EXT = 0x806B
         /// </summary>
-        PackSkipImagesExt = 0x806b,
+        PackSkipImagesExt = 0x806B,
 
         /// <summary>
         /// Original was GL_PACK_IMAGE_HEIGHT = 0x806C
         /// </summary>
-        PackImageHeight = 0x806c,
+        PackImageHeight = 0x806C,
 
         /// <summary>
         /// Original was GL_PACK_IMAGE_HEIGHT_EXT = 0x806C
         /// </summary>
-        PackImageHeightExt = 0x806c,
+        PackImageHeightExt = 0x806C,
 
         /// <summary>
         /// Original was GL_UNPACK_SKIP_IMAGES = 0x806D
         /// </summary>
-        UnpackSkipImages = 0x806d,
+        UnpackSkipImages = 0x806D,
 
         /// <summary>
         /// Original was GL_UNPACK_SKIP_IMAGES_EXT = 0x806D
         /// </summary>
-        UnpackSkipImagesExt = 0x806d,
+        UnpackSkipImagesExt = 0x806D,
 
         /// <summary>
         /// Original was GL_UNPACK_IMAGE_HEIGHT = 0x806E
         /// </summary>
-        UnpackImageHeight = 0x806e,
+        UnpackImageHeight = 0x806E,
 
         /// <summary>
         /// Original was GL_UNPACK_IMAGE_HEIGHT_EXT = 0x806E
         /// </summary>
-        UnpackImageHeightExt = 0x806e,
+        UnpackImageHeightExt = 0x806E,
 
         /// <summary>
         /// Original was GL_PACK_SKIP_VOLUMES_SGIS = 0x8130
@@ -201,22 +201,22 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_PACK_RESAMPLE_SGIX = 0x842E
         /// </summary>
-        PackResampleSgix = 0x842e,
+        PackResampleSgix = 0x842E,
 
         /// <summary>
         /// Original was GL_UNPACK_RESAMPLE_SGIX = 0x842F
         /// </summary>
-        UnpackResampleSgix = 0x842f,
+        UnpackResampleSgix = 0x842F,
 
         /// <summary>
         /// Original was GL_PACK_SUBSAMPLE_RATE_SGIX = 0x85A0
         /// </summary>
-        PackSubsampleRateSgix = 0x85a0,
+        PackSubsampleRateSgix = 0x85A0,
 
         /// <summary>
         /// Original was GL_UNPACK_SUBSAMPLE_RATE_SGIX = 0x85A1
         /// </summary>
-        UnpackSubsampleRateSgix = 0x85a1,
+        UnpackSubsampleRateSgix = 0x85A1,
 
         /// <summary>
         /// Original was GL_PACK_RESAMPLE_OML = 0x8984
@@ -226,46 +226,6 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_UNPACK_RESAMPLE_OML = 0x8985
         /// </summary>
-        UnpackResampleOml = 0x8985,
-
-        /// <summary>
-        /// Original was GL_UNPACK_COMPRESSED_BLOCK_WIDTH = 0x9127
-        /// </summary>
-        UnpackCompressedBlockWidth = 0x9127,
-
-        /// <summary>
-        /// Original was GL_UNPACK_COMPRESSED_BLOCK_HEIGHT = 0x9128
-        /// </summary>
-        UnpackCompressedBlockHeight = 0x9128,
-
-        /// <summary>
-        /// Original was GL_UNPACK_COMPRESSED_BLOCK_DEPTH = 0x9129
-        /// </summary>
-        UnpackCompressedBlockDepth = 0x9129,
-
-        /// <summary>
-        /// Original was GL_UNPACK_COMPRESSED_BLOCK_SIZE = 0x912A
-        /// </summary>
-        UnpackCompressedBlockSize = 0x912a,
-
-        /// <summary>
-        /// Original was GL_PACK_COMPRESSED_BLOCK_WIDTH = 0x912B
-        /// </summary>
-        PackCompressedBlockWidth = 0x912b,
-
-        /// <summary>
-        /// Original was GL_PACK_COMPRESSED_BLOCK_HEIGHT = 0x912C
-        /// </summary>
-        PackCompressedBlockHeight = 0x912c,
-
-        /// <summary>
-        /// Original was GL_PACK_COMPRESSED_BLOCK_DEPTH = 0x912D
-        /// </summary>
-        PackCompressedBlockDepth = 0x912d,
-
-        /// <summary>
-        /// Original was GL_PACK_COMPRESSED_BLOCK_SIZE = 0x912E
-        /// </summary>
-        PackCompressedBlockSize = 0x912e
+        UnpackResampleOml = 0x8985
     }
 }

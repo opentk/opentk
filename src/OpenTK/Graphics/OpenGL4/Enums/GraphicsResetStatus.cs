@@ -34,9 +34,9 @@ namespace OpenTK.Graphics.OpenGL4
     public enum GraphicsResetStatus
     {
         /// <summary>
-        /// Original was GL_NO_ERROR = 0
+        /// Original was GL_NO_ERROR = 0x0
         /// </summary>
-        NoError = 0,
+        NoError = 0x0,
 
         /// <summary>
         /// Original was GL_GUILTY_CONTEXT_RESET = 0x8253

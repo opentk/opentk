@@ -36,6 +36,6 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_HALF_FLOAT = 0x140B
         /// </summary>
-        HalfFloat = 0x140b
+        HalfFloat = 0x140B
     }
 }

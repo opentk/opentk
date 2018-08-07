@@ -36,11 +36,11 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_LOWER_LEFT = 0x8CA1
         /// </summary>
-        LowerLeft = 0x8ca1,
+        LowerLeft = 0x8CA1,
 
         /// <summary>
         /// Original was GL_UPPER_LEFT = 0x8CA2
         /// </summary>
-        UpperLeft = 0x8ca2
+        UpperLeft = 0x8CA2
     }
 }

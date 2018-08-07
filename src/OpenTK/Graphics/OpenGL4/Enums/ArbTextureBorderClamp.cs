@@ -36,6 +36,6 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_CLAMP_TO_BORDER_ARB = 0x812D
         /// </summary>
-        ClampToBorderArb = 0x812d
+        ClampToBorderArb = 0x812D
     }
 }

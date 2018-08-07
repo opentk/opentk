@@ -34,8 +34,8 @@ namespace OpenTK.Graphics.OpenGL4
     public enum FramebufferFetchNoncoherent
     {
         /// <summary>
-        /// Original was GL_FRAMEBUFFER_FETCH_NONCOHERENT_QCOM = 0x96A2
+        /// Original was GL_FRAMEBUFFER_FETCH_NONCOHERENT_Q_COM = 0x96A2
         /// </summary>
-        FramebufferFetchNoncoherentQCom = 0x96a2
+        FramebufferFetchNoncoherentQCom = 0x96A2
     }
 }

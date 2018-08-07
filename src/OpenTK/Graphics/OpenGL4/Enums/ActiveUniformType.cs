@@ -51,322 +51,322 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_DOUBLE = 0x140A
         /// </summary>
-        Double = 0x140a,
+        Double = 0x140A,
 
         /// <summary>
         /// Original was GL_FLOAT_VEC2 = 0x8B50
         /// </summary>
-        FloatVec2 = 0x8b50,
+        FloatVec2 = 0x8B50,
 
         /// <summary>
         /// Original was GL_FLOAT_VEC3 = 0x8B51
         /// </summary>
-        FloatVec3 = 0x8b51,
+        FloatVec3 = 0x8B51,
 
         /// <summary>
         /// Original was GL_FLOAT_VEC4 = 0x8B52
         /// </summary>
-        FloatVec4 = 0x8b52,
+        FloatVec4 = 0x8B52,
 
         /// <summary>
         /// Original was GL_INT_VEC2 = 0x8B53
         /// </summary>
-        IntVec2 = 0x8b53,
+        IntVec2 = 0x8B53,
 
         /// <summary>
         /// Original was GL_INT_VEC3 = 0x8B54
         /// </summary>
-        IntVec3 = 0x8b54,
+        IntVec3 = 0x8B54,
 
         /// <summary>
         /// Original was GL_INT_VEC4 = 0x8B55
         /// </summary>
-        IntVec4 = 0x8b55,
+        IntVec4 = 0x8B55,
 
         /// <summary>
         /// Original was GL_BOOL = 0x8B56
         /// </summary>
-        Bool = 0x8b56,
+        Bool = 0x8B56,
 
         /// <summary>
         /// Original was GL_BOOL_VEC2 = 0x8B57
         /// </summary>
-        BoolVec2 = 0x8b57,
+        BoolVec2 = 0x8B57,
 
         /// <summary>
         /// Original was GL_BOOL_VEC3 = 0x8B58
         /// </summary>
-        BoolVec3 = 0x8b58,
+        BoolVec3 = 0x8B58,
 
         /// <summary>
         /// Original was GL_BOOL_VEC4 = 0x8B59
         /// </summary>
-        BoolVec4 = 0x8b59,
+        BoolVec4 = 0x8B59,
 
         /// <summary>
         /// Original was GL_FLOAT_MAT2 = 0x8B5A
         /// </summary>
-        FloatMat2 = 0x8b5a,
+        FloatMat2 = 0x8B5A,
 
         /// <summary>
         /// Original was GL_FLOAT_MAT3 = 0x8B5B
         /// </summary>
-        FloatMat3 = 0x8b5b,
+        FloatMat3 = 0x8B5B,
 
         /// <summary>
         /// Original was GL_FLOAT_MAT4 = 0x8B5C
         /// </summary>
-        FloatMat4 = 0x8b5c,
+        FloatMat4 = 0x8B5C,
 
         /// <summary>
-        /// Original was GL_SAMPLER_1D = 0x8B5D
+        /// Original was GL_SAMPLER1_D = 0x8B5D
         /// </summary>
-        Sampler1D = 0x8b5d,
+        Sampler1D = 0x8B5D,
 
         /// <summary>
-        /// Original was GL_SAMPLER_2D = 0x8B5E
+        /// Original was GL_SAMPLER2_D = 0x8B5E
         /// </summary>
-        Sampler2D = 0x8b5e,
+        Sampler2D = 0x8B5E,
 
         /// <summary>
-        /// Original was GL_SAMPLER_3D = 0x8B5F
+        /// Original was GL_SAMPLER3_D = 0x8B5F
         /// </summary>
-        Sampler3D = 0x8b5f,
+        Sampler3D = 0x8B5F,
 
         /// <summary>
         /// Original was GL_SAMPLER_CUBE = 0x8B60
         /// </summary>
-        SamplerCube = 0x8b60,
+        SamplerCube = 0x8B60,
 
         /// <summary>
-        /// Original was GL_SAMPLER_1D_SHADOW = 0x8B61
+        /// Original was GL_SAMPLER1_D_SHADOW = 0x8B61
         /// </summary>
-        Sampler1DShadow = 0x8b61,
+        Sampler1DShadow = 0x8B61,
 
         /// <summary>
-        /// Original was GL_SAMPLER_2D_SHADOW = 0x8B62
+        /// Original was GL_SAMPLER2_D_SHADOW = 0x8B62
         /// </summary>
-        Sampler2DShadow = 0x8b62,
+        Sampler2DShadow = 0x8B62,
 
         /// <summary>
-        /// Original was GL_SAMPLER_2D_RECT = 0x8B63
+        /// Original was GL_SAMPLER2_D_RECT = 0x8B63
         /// </summary>
-        Sampler2DRect = 0x8b63,
+        Sampler2DRect = 0x8B63,
 
         /// <summary>
-        /// Original was GL_SAMPLER_2D_RECT_SHADOW = 0x8B64
+        /// Original was GL_SAMPLER2_D_RECT_SHADOW = 0x8B64
         /// </summary>
-        Sampler2DRectShadow = 0x8b64,
+        Sampler2DRectShadow = 0x8B64,
 
         /// <summary>
-        /// Original was GL_FLOAT_MAT2x3 = 0x8B65
+        /// Original was GL_FLOAT_MAT2X3 = 0x8B65
         /// </summary>
-        FloatMat2x3 = 0x8b65,
+        FloatMat2x3 = 0x8B65,
 
         /// <summary>
-        /// Original was GL_FLOAT_MAT2x4 = 0x8B66
+        /// Original was GL_FLOAT_MAT2X4 = 0x8B66
         /// </summary>
-        FloatMat2x4 = 0x8b66,
+        FloatMat2x4 = 0x8B66,
 
         /// <summary>
-        /// Original was GL_FLOAT_MAT3x2 = 0x8B67
+        /// Original was GL_FLOAT_MAT3X2 = 0x8B67
         /// </summary>
-        FloatMat3x2 = 0x8b67,
+        FloatMat3x2 = 0x8B67,
 
         /// <summary>
-        /// Original was GL_FLOAT_MAT3x4 = 0x8B68
+        /// Original was GL_FLOAT_MAT3X4 = 0x8B68
         /// </summary>
-        FloatMat3x4 = 0x8b68,
+        FloatMat3x4 = 0x8B68,
 
         /// <summary>
-        /// Original was GL_FLOAT_MAT4x2 = 0x8B69
+        /// Original was GL_FLOAT_MAT4X2 = 0x8B69
         /// </summary>
-        FloatMat4x2 = 0x8b69,
+        FloatMat4x2 = 0x8B69,
 
         /// <summary>
-        /// Original was GL_FLOAT_MAT4x3 = 0x8B6A
+        /// Original was GL_FLOAT_MAT4X3 = 0x8B6A
         /// </summary>
-        FloatMat4x3 = 0x8b6a,
+        FloatMat4x3 = 0x8B6A,
 
         /// <summary>
-        /// Original was GL_SAMPLER_1D_ARRAY = 0x8DC0
+        /// Original was GL_SAMPLER1_D_ARRAY = 0x8DC0
         /// </summary>
-        Sampler1DArray = 0x8dc0,
+        Sampler1DArray = 0x8DC0,
 
         /// <summary>
-        /// Original was GL_SAMPLER_2D_ARRAY = 0x8DC1
+        /// Original was GL_SAMPLER2_D_ARRAY = 0x8DC1
         /// </summary>
-        Sampler2DArray = 0x8dc1,
+        Sampler2DArray = 0x8DC1,
 
         /// <summary>
         /// Original was GL_SAMPLER_BUFFER = 0x8DC2
         /// </summary>
-        SamplerBuffer = 0x8dc2,
+        SamplerBuffer = 0x8DC2,
 
         /// <summary>
-        /// Original was GL_SAMPLER_1D_ARRAY_SHADOW = 0x8DC3
+        /// Original was GL_SAMPLER1_D_ARRAY_SHADOW = 0x8DC3
         /// </summary>
-        Sampler1DArrayShadow = 0x8dc3,
+        Sampler1DArrayShadow = 0x8DC3,
 
         /// <summary>
-        /// Original was GL_SAMPLER_2D_ARRAY_SHADOW = 0x8DC4
+        /// Original was GL_SAMPLER2_D_ARRAY_SHADOW = 0x8DC4
         /// </summary>
-        Sampler2DArrayShadow = 0x8dc4,
+        Sampler2DArrayShadow = 0x8DC4,
 
         /// <summary>
         /// Original was GL_SAMPLER_CUBE_SHADOW = 0x8DC5
         /// </summary>
-        SamplerCubeShadow = 0x8dc5,
+        SamplerCubeShadow = 0x8DC5,
 
         /// <summary>
         /// Original was GL_UNSIGNED_INT_VEC2 = 0x8DC6
         /// </summary>
-        UnsignedIntVec2 = 0x8dc6,
+        UnsignedIntVec2 = 0x8DC6,
 
         /// <summary>
         /// Original was GL_UNSIGNED_INT_VEC3 = 0x8DC7
         /// </summary>
-        UnsignedIntVec3 = 0x8dc7,
+        UnsignedIntVec3 = 0x8DC7,
 
         /// <summary>
         /// Original was GL_UNSIGNED_INT_VEC4 = 0x8DC8
         /// </summary>
-        UnsignedIntVec4 = 0x8dc8,
+        UnsignedIntVec4 = 0x8DC8,
 
         /// <summary>
-        /// Original was GL_INT_SAMPLER_1D = 0x8DC9
+        /// Original was GL_INT_SAMPLER1_D = 0x8DC9
         /// </summary>
-        IntSampler1D = 0x8dc9,
+        IntSampler1D = 0x8DC9,
 
         /// <summary>
-        /// Original was GL_INT_SAMPLER_2D = 0x8DCA
+        /// Original was GL_INT_SAMPLER2_D = 0x8DCA
         /// </summary>
-        IntSampler2D = 0x8dca,
+        IntSampler2D = 0x8DCA,
 
         /// <summary>
-        /// Original was GL_INT_SAMPLER_3D = 0x8DCB
+        /// Original was GL_INT_SAMPLER3_D = 0x8DCB
         /// </summary>
-        IntSampler3D = 0x8dcb,
+        IntSampler3D = 0x8DCB,
 
         /// <summary>
         /// Original was GL_INT_SAMPLER_CUBE = 0x8DCC
         /// </summary>
-        IntSamplerCube = 0x8dcc,
+        IntSamplerCube = 0x8DCC,
 
         /// <summary>
-        /// Original was GL_INT_SAMPLER_2D_RECT = 0x8DCD
+        /// Original was GL_INT_SAMPLER2_D_RECT = 0x8DCD
         /// </summary>
-        IntSampler2DRect = 0x8dcd,
+        IntSampler2DRect = 0x8DCD,
 
         /// <summary>
-        /// Original was GL_INT_SAMPLER_1D_ARRAY = 0x8DCE
+        /// Original was GL_INT_SAMPLER1_D_ARRAY = 0x8DCE
         /// </summary>
-        IntSampler1DArray = 0x8dce,
+        IntSampler1DArray = 0x8DCE,
 
         /// <summary>
-        /// Original was GL_INT_SAMPLER_2D_ARRAY = 0x8DCF
+        /// Original was GL_INT_SAMPLER2_D_ARRAY = 0x8DCF
         /// </summary>
-        IntSampler2DArray = 0x8dcf,
+        IntSampler2DArray = 0x8DCF,
 
         /// <summary>
         /// Original was GL_INT_SAMPLER_BUFFER = 0x8DD0
         /// </summary>
-        IntSamplerBuffer = 0x8dd0,
+        IntSamplerBuffer = 0x8DD0,
 
         /// <summary>
-        /// Original was GL_UNSIGNED_INT_SAMPLER_1D = 0x8DD1
+        /// Original was GL_UNSIGNED_INT_SAMPLER1_D = 0x8DD1
         /// </summary>
-        UnsignedIntSampler1D = 0x8dd1,
+        UnsignedIntSampler1D = 0x8DD1,
 
         /// <summary>
-        /// Original was GL_UNSIGNED_INT_SAMPLER_2D = 0x8DD2
+        /// Original was GL_UNSIGNED_INT_SAMPLER2_D = 0x8DD2
         /// </summary>
-        UnsignedIntSampler2D = 0x8dd2,
+        UnsignedIntSampler2D = 0x8DD2,
 
         /// <summary>
-        /// Original was GL_UNSIGNED_INT_SAMPLER_3D = 0x8DD3
+        /// Original was GL_UNSIGNED_INT_SAMPLER3_D = 0x8DD3
         /// </summary>
-        UnsignedIntSampler3D = 0x8dd3,
+        UnsignedIntSampler3D = 0x8DD3,
 
         /// <summary>
         /// Original was GL_UNSIGNED_INT_SAMPLER_CUBE = 0x8DD4
         /// </summary>
-        UnsignedIntSamplerCube = 0x8dd4,
+        UnsignedIntSamplerCube = 0x8DD4,
 
         /// <summary>
-        /// Original was GL_UNSIGNED_INT_SAMPLER_2D_RECT = 0x8DD5
+        /// Original was GL_UNSIGNED_INT_SAMPLER2_D_RECT = 0x8DD5
         /// </summary>
-        UnsignedIntSampler2DRect = 0x8dd5,
+        UnsignedIntSampler2DRect = 0x8DD5,
 
         /// <summary>
-        /// Original was GL_UNSIGNED_INT_SAMPLER_1D_ARRAY = 0x8DD6
+        /// Original was GL_UNSIGNED_INT_SAMPLER1_D_ARRAY = 0x8DD6
         /// </summary>
-        UnsignedIntSampler1DArray = 0x8dd6,
+        UnsignedIntSampler1DArray = 0x8DD6,
 
         /// <summary>
-        /// Original was GL_UNSIGNED_INT_SAMPLER_2D_ARRAY = 0x8DD7
+        /// Original was GL_UNSIGNED_INT_SAMPLER2_D_ARRAY = 0x8DD7
         /// </summary>
-        UnsignedIntSampler2DArray = 0x8dd7,
+        UnsignedIntSampler2DArray = 0x8DD7,
 
         /// <summary>
         /// Original was GL_UNSIGNED_INT_SAMPLER_BUFFER = 0x8DD8
         /// </summary>
-        UnsignedIntSamplerBuffer = 0x8dd8,
+        UnsignedIntSamplerBuffer = 0x8DD8,
 
         /// <summary>
         /// Original was GL_DOUBLE_VEC2 = 0x8FFC
         /// </summary>
-        DoubleVec2 = 0x8ffc,
+        DoubleVec2 = 0x8FFC,
 
         /// <summary>
         /// Original was GL_DOUBLE_VEC3 = 0x8FFD
         /// </summary>
-        DoubleVec3 = 0x8ffd,
+        DoubleVec3 = 0x8FFD,
 
         /// <summary>
         /// Original was GL_DOUBLE_VEC4 = 0x8FFE
         /// </summary>
-        DoubleVec4 = 0x8ffe,
+        DoubleVec4 = 0x8FFE,
 
         /// <summary>
         /// Original was GL_SAMPLER_CUBE_MAP_ARRAY = 0x900C
         /// </summary>
-        SamplerCubeMapArray = 0x900c,
+        SamplerCubeMapArray = 0x900C,
 
         /// <summary>
         /// Original was GL_SAMPLER_CUBE_MAP_ARRAY_SHADOW = 0x900D
         /// </summary>
-        SamplerCubeMapArrayShadow = 0x900d,
+        SamplerCubeMapArrayShadow = 0x900D,
 
         /// <summary>
         /// Original was GL_INT_SAMPLER_CUBE_MAP_ARRAY = 0x900E
         /// </summary>
-        IntSamplerCubeMapArray = 0x900e,
+        IntSamplerCubeMapArray = 0x900E,
 
         /// <summary>
         /// Original was GL_UNSIGNED_INT_SAMPLER_CUBE_MAP_ARRAY = 0x900F
         /// </summary>
-        UnsignedIntSamplerCubeMapArray = 0x900f,
+        UnsignedIntSamplerCubeMapArray = 0x900F,
 
         /// <summary>
-        /// Original was GL_IMAGE_1D = 0x904C
+        /// Original was GL_IMAGE1_D = 0x904C
         /// </summary>
-        Image1D = 0x904c,
+        Image1D = 0x904C,
 
         /// <summary>
-        /// Original was GL_IMAGE_2D = 0x904D
+        /// Original was GL_IMAGE2_D = 0x904D
         /// </summary>
-        Image2D = 0x904d,
+        Image2D = 0x904D,
 
         /// <summary>
-        /// Original was GL_IMAGE_3D = 0x904E
+        /// Original was GL_IMAGE3_D = 0x904E
         /// </summary>
-        Image3D = 0x904e,
+        Image3D = 0x904E,
 
         /// <summary>
-        /// Original was GL_IMAGE_2D_RECT = 0x904F
+        /// Original was GL_IMAGE2_D_RECT = 0x904F
         /// </summary>
-        Image2DRect = 0x904f,
+        Image2DRect = 0x904F,
 
         /// <summary>
         /// Original was GL_IMAGE_CUBE = 0x9050
@@ -379,12 +379,12 @@ namespace OpenTK.Graphics.OpenGL4
         ImageBuffer = 0x9051,
 
         /// <summary>
-        /// Original was GL_IMAGE_1D_ARRAY = 0x9052
+        /// Original was GL_IMAGE1_D_ARRAY = 0x9052
         /// </summary>
         Image1DArray = 0x9052,
 
         /// <summary>
-        /// Original was GL_IMAGE_2D_ARRAY = 0x9053
+        /// Original was GL_IMAGE2_D_ARRAY = 0x9053
         /// </summary>
         Image2DArray = 0x9053,
 
@@ -394,87 +394,87 @@ namespace OpenTK.Graphics.OpenGL4
         ImageCubeMapArray = 0x9054,
 
         /// <summary>
-        /// Original was GL_IMAGE_2D_MULTISAMPLE = 0x9055
+        /// Original was GL_IMAGE2_D_MULTISAMPLE = 0x9055
         /// </summary>
         Image2DMultisample = 0x9055,
 
         /// <summary>
-        /// Original was GL_IMAGE_2D_MULTISAMPLE_ARRAY = 0x9056
+        /// Original was GL_IMAGE2_D_MULTISAMPLE_ARRAY = 0x9056
         /// </summary>
         Image2DMultisampleArray = 0x9056,
 
         /// <summary>
-        /// Original was GL_INT_IMAGE_1D = 0x9057
+        /// Original was GL_INT_IMAGE1_D = 0x9057
         /// </summary>
         IntImage1D = 0x9057,
 
         /// <summary>
-        /// Original was GL_INT_IMAGE_2D = 0x9058
+        /// Original was GL_INT_IMAGE2_D = 0x9058
         /// </summary>
         IntImage2D = 0x9058,
 
         /// <summary>
-        /// Original was GL_INT_IMAGE_3D = 0x9059
+        /// Original was GL_INT_IMAGE3_D = 0x9059
         /// </summary>
         IntImage3D = 0x9059,
 
         /// <summary>
-        /// Original was GL_INT_IMAGE_2D_RECT = 0x905A
+        /// Original was GL_INT_IMAGE2_D_RECT = 0x905A
         /// </summary>
-        IntImage2DRect = 0x905a,
+        IntImage2DRect = 0x905A,
 
         /// <summary>
         /// Original was GL_INT_IMAGE_CUBE = 0x905B
         /// </summary>
-        IntImageCube = 0x905b,
+        IntImageCube = 0x905B,
 
         /// <summary>
         /// Original was GL_INT_IMAGE_BUFFER = 0x905C
         /// </summary>
-        IntImageBuffer = 0x905c,
+        IntImageBuffer = 0x905C,
 
         /// <summary>
-        /// Original was GL_INT_IMAGE_1D_ARRAY = 0x905D
+        /// Original was GL_INT_IMAGE1_D_ARRAY = 0x905D
         /// </summary>
-        IntImage1DArray = 0x905d,
+        IntImage1DArray = 0x905D,
 
         /// <summary>
-        /// Original was GL_INT_IMAGE_2D_ARRAY = 0x905E
+        /// Original was GL_INT_IMAGE2_D_ARRAY = 0x905E
         /// </summary>
-        IntImage2DArray = 0x905e,
+        IntImage2DArray = 0x905E,
 
         /// <summary>
         /// Original was GL_INT_IMAGE_CUBE_MAP_ARRAY = 0x905F
         /// </summary>
-        IntImageCubeMapArray = 0x905f,
+        IntImageCubeMapArray = 0x905F,
 
         /// <summary>
-        /// Original was GL_INT_IMAGE_2D_MULTISAMPLE = 0x9060
+        /// Original was GL_INT_IMAGE2_D_MULTISAMPLE = 0x9060
         /// </summary>
         IntImage2DMultisample = 0x9060,
 
         /// <summary>
-        /// Original was GL_INT_IMAGE_2D_MULTISAMPLE_ARRAY = 0x9061
+        /// Original was GL_INT_IMAGE2_D_MULTISAMPLE_ARRAY = 0x9061
         /// </summary>
         IntImage2DMultisampleArray = 0x9061,
 
         /// <summary>
-        /// Original was GL_UNSIGNED_INT_IMAGE_1D = 0x9062
+        /// Original was GL_UNSIGNED_INT_IMAGE1_D = 0x9062
         /// </summary>
         UnsignedIntImage1D = 0x9062,
 
         /// <summary>
-        /// Original was GL_UNSIGNED_INT_IMAGE_2D = 0x9063
+        /// Original was GL_UNSIGNED_INT_IMAGE2_D = 0x9063
         /// </summary>
         UnsignedIntImage2D = 0x9063,
 
         /// <summary>
-        /// Original was GL_UNSIGNED_INT_IMAGE_3D = 0x9064
+        /// Original was GL_UNSIGNED_INT_IMAGE3_D = 0x9064
         /// </summary>
         UnsignedIntImage3D = 0x9064,
 
         /// <summary>
-        /// Original was GL_UNSIGNED_INT_IMAGE_2D_RECT = 0x9065
+        /// Original was GL_UNSIGNED_INT_IMAGE2_D_RECT = 0x9065
         /// </summary>
         UnsignedIntImage2DRect = 0x9065,
 
@@ -489,63 +489,63 @@ namespace OpenTK.Graphics.OpenGL4
         UnsignedIntImageBuffer = 0x9067,
 
         /// <summary>
-        /// Original was GL_UNSIGNED_INT_IMAGE_1D_ARRAY = 0x9068
+        /// Original was GL_UNSIGNED_INT_IMAGE1_D_ARRAY = 0x9068
         /// </summary>
         UnsignedIntImage1DArray = 0x9068,
 
         /// <summary>
-        /// Original was GL_UNSIGNED_INT_IMAGE_2D_ARRAY = 0x9069
+        /// Original was GL_UNSIGNED_INT_IMAGE2_D_ARRAY = 0x9069
         /// </summary>
         UnsignedIntImage2DArray = 0x9069,
 
         /// <summary>
         /// Original was GL_UNSIGNED_INT_IMAGE_CUBE_MAP_ARRAY = 0x906A
         /// </summary>
-        UnsignedIntImageCubeMapArray = 0x906a,
+        UnsignedIntImageCubeMapArray = 0x906A,
 
         /// <summary>
-        /// Original was GL_UNSIGNED_INT_IMAGE_2D_MULTISAMPLE = 0x906B
+        /// Original was GL_UNSIGNED_INT_IMAGE2_D_MULTISAMPLE = 0x906B
         /// </summary>
-        UnsignedIntImage2DMultisample = 0x906b,
+        UnsignedIntImage2DMultisample = 0x906B,
 
         /// <summary>
-        /// Original was GL_UNSIGNED_INT_IMAGE_2D_MULTISAMPLE_ARRAY = 0x906C
+        /// Original was GL_UNSIGNED_INT_IMAGE2_D_MULTISAMPLE_ARRAY = 0x906C
         /// </summary>
-        UnsignedIntImage2DMultisampleArray = 0x906c,
+        UnsignedIntImage2DMultisampleArray = 0x906C,
 
         /// <summary>
-        /// Original was GL_SAMPLER_2D_MULTISAMPLE = 0x9108
+        /// Original was GL_SAMPLER2_D_MULTISAMPLE = 0x9108
         /// </summary>
         Sampler2DMultisample = 0x9108,
 
         /// <summary>
-        /// Original was GL_INT_SAMPLER_2D_MULTISAMPLE = 0x9109
+        /// Original was GL_INT_SAMPLER2_D_MULTISAMPLE = 0x9109
         /// </summary>
         IntSampler2DMultisample = 0x9109,
 
         /// <summary>
-        /// Original was GL_UNSIGNED_INT_SAMPLER_2D_MULTISAMPLE = 0x910A
+        /// Original was GL_UNSIGNED_INT_SAMPLER2_D_MULTISAMPLE = 0x910A
         /// </summary>
-        UnsignedIntSampler2DMultisample = 0x910a,
+        UnsignedIntSampler2DMultisample = 0x910A,
 
         /// <summary>
-        /// Original was GL_SAMPLER_2D_MULTISAMPLE_ARRAY = 0x910B
+        /// Original was GL_SAMPLER2_D_MULTISAMPLE_ARRAY = 0x910B
         /// </summary>
-        Sampler2DMultisampleArray = 0x910b,
+        Sampler2DMultisampleArray = 0x910B,
 
         /// <summary>
-        /// Original was GL_INT_SAMPLER_2D_MULTISAMPLE_ARRAY = 0x910C
+        /// Original was GL_INT_SAMPLER2_D_MULTISAMPLE_ARRAY = 0x910C
         /// </summary>
-        IntSampler2DMultisampleArray = 0x910c,
+        IntSampler2DMultisampleArray = 0x910C,
 
         /// <summary>
-        /// Original was GL_UNSIGNED_INT_SAMPLER_2D_MULTISAMPLE_ARRAY = 0x910D
+        /// Original was GL_UNSIGNED_INT_SAMPLER2_D_MULTISAMPLE_ARRAY = 0x910D
         /// </summary>
-        UnsignedIntSampler2DMultisampleArray = 0x910d,
+        UnsignedIntSampler2DMultisampleArray = 0x910D,
 
         /// <summary>
         /// Original was GL_UNSIGNED_INT_ATOMIC_COUNTER = 0x92DB
         /// </summary>
-        UnsignedIntAtomicCounter = 0x92db
+        UnsignedIntAtomicCounter = 0x92DB
     }
 }

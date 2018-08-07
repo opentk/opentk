@@ -34,28 +34,28 @@ namespace OpenTK.Graphics.OpenGL4
     public enum LightModelParameter
     {
         /// <summary>
-        /// Original was GL_LIGHT_MODEL_LOCAL_VIEWER = 0x0B51
+        /// Original was GL_LIGHT_MODEL_LOCAL_VIEWER = 0xB51
         /// </summary>
-        LightModelLocalViewer = 0x0b51,
+        LightModelLocalViewer = 0xB51,
 
         /// <summary>
-        /// Original was GL_LIGHT_MODEL_TWO_SIDE = 0x0B52
+        /// Original was GL_LIGHT_MODEL_TWO_SIDE = 0xB52
         /// </summary>
-        LightModelTwoSide = 0x0b52,
+        LightModelTwoSide = 0xB52,
 
         /// <summary>
-        /// Original was GL_LIGHT_MODEL_AMBIENT = 0x0B53
+        /// Original was GL_LIGHT_MODEL_AMBIENT = 0xB53
         /// </summary>
-        LightModelAmbient = 0x0b53,
+        LightModelAmbient = 0xB53,
 
         /// <summary>
         /// Original was GL_LIGHT_MODEL_COLOR_CONTROL = 0x81F8
         /// </summary>
-        LightModelColorControl = 0x81f8,
+        LightModelColorControl = 0x81F8,
 
         /// <summary>
         /// Original was GL_LIGHT_MODEL_COLOR_CONTROL_EXT = 0x81F8
         /// </summary>
-        LightModelColorControlExt = 0x81f8
+        LightModelColorControlExt = 0x81F8
     }
 }

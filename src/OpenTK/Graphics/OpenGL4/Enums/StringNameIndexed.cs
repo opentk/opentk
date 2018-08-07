@@ -36,11 +36,11 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_EXTENSIONS = 0x1F03
         /// </summary>
-        Extensions = 0x1f03,
+        Extensions = 0x1F03,
 
         /// <summary>
         /// Original was GL_SHADING_LANGUAGE_VERSION = 0x8B8C
         /// </summary>
-        ShadingLanguageVersion = 0x8b8c
+        ShadingLanguageVersion = 0x8B8C
     }
 }

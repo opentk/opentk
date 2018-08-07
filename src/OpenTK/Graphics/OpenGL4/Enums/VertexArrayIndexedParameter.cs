@@ -36,7 +36,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_VERTEX_ATTRIB_RELATIVE_OFFSET = 0x82D5
         /// </summary>
-        VertexAttribRelativeOffset = 0x82d5,
+        VertexAttribRelativeOffset = 0x82D5,
 
         /// <summary>
         /// Original was GL_VERTEX_ATTRIB_ARRAY_ENABLED = 0x8622
@@ -61,21 +61,21 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_VERTEX_ATTRIB_ARRAY_LONG = 0x874E
         /// </summary>
-        VertexAttribArrayLong = 0x874e,
+        VertexAttribArrayLong = 0x874E,
 
         /// <summary>
         /// Original was GL_VERTEX_ATTRIB_ARRAY_NORMALIZED = 0x886A
         /// </summary>
-        VertexAttribArrayNormalized = 0x886a,
+        VertexAttribArrayNormalized = 0x886A,
 
         /// <summary>
         /// Original was GL_VERTEX_ATTRIB_ARRAY_INTEGER = 0x88FD
         /// </summary>
-        VertexAttribArrayInteger = 0x88fd,
+        VertexAttribArrayInteger = 0x88FD,
 
         /// <summary>
         /// Original was GL_VERTEX_ATTRIB_ARRAY_DIVISOR = 0x88FE
         /// </summary>
-        VertexAttribArrayDivisor = 0x88fe
+        VertexAttribArrayDivisor = 0x88FE
     }
 }

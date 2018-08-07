@@ -29,7 +29,7 @@
 namespace OpenTK.Graphics.OpenGL4
 {
     /// <summary>
-    /// Not used directly.
+    /// Used in GL.NV.GetBufferParameter and GL.GetBufferParameter.
     /// </summary>
     public enum BufferParameterNameArb
     {
@@ -46,11 +46,11 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_BUFFER_ACCESS = 0x88BB
         /// </summary>
-        BufferAccess = 0x88bb,
+        BufferAccess = 0x88BB,
 
         /// <summary>
         /// Original was GL_BUFFER_MAPPED = 0x88BC
         /// </summary>
-        BufferMapped = 0x88bc
+        BufferMapped = 0x88BC
     }
 }

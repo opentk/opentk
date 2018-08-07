@@ -36,52 +36,52 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_NUM_COMPATIBLE_SUBROUTINES = 0x8E4A
         /// </summary>
-        NumCompatibleSubroutines = 0x8e4a,
+        NumCompatibleSubroutines = 0x8E4A,
 
         /// <summary>
         /// Original was GL_COMPATIBLE_SUBROUTINES = 0x8E4B
         /// </summary>
-        CompatibleSubroutines = 0x8e4b,
+        CompatibleSubroutines = 0x8E4B,
 
         /// <summary>
         /// Original was GL_IS_PER_PATCH = 0x92E7
         /// </summary>
-        IsPerPatch = 0x92e7,
+        IsPerPatch = 0x92E7,
 
         /// <summary>
         /// Original was GL_NAME_LENGTH = 0x92F9
         /// </summary>
-        NameLength = 0x92f9,
+        NameLength = 0x92F9,
 
         /// <summary>
         /// Original was GL_TYPE = 0x92FA
         /// </summary>
-        Type = 0x92fa,
+        Type = 0x92FA,
 
         /// <summary>
         /// Original was GL_ARRAY_SIZE = 0x92FB
         /// </summary>
-        ArraySize = 0x92fb,
+        ArraySize = 0x92FB,
 
         /// <summary>
         /// Original was GL_OFFSET = 0x92FC
         /// </summary>
-        Offset = 0x92fc,
+        Offset = 0x92FC,
 
         /// <summary>
         /// Original was GL_BLOCK_INDEX = 0x92FD
         /// </summary>
-        BlockIndex = 0x92fd,
+        BlockIndex = 0x92FD,
 
         /// <summary>
         /// Original was GL_ARRAY_STRIDE = 0x92FE
         /// </summary>
-        ArrayStride = 0x92fe,
+        ArrayStride = 0x92FE,
 
         /// <summary>
         /// Original was GL_MATRIX_STRIDE = 0x92FF
         /// </summary>
-        MatrixStride = 0x92ff,
+        MatrixStride = 0x92FF,
 
         /// <summary>
         /// Original was GL_IS_ROW_MAJOR = 0x9300
@@ -136,41 +136,41 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_REFERENCED_BY_FRAGMENT_SHADER = 0x930A
         /// </summary>
-        ReferencedByFragmentShader = 0x930a,
+        ReferencedByFragmentShader = 0x930A,
 
         /// <summary>
         /// Original was GL_TOP_LEVEL_ARRAY_SIZE = 0x930C
         /// </summary>
-        TopLevelArraySize = 0x930c,
+        TopLevelArraySize = 0x930C,
 
         /// <summary>
         /// Original was GL_TOP_LEVEL_ARRAY_STRIDE = 0x930D
         /// </summary>
-        TopLevelArrayStride = 0x930d,
+        TopLevelArrayStride = 0x930D,
 
         /// <summary>
         /// Original was GL_LOCATION = 0x930E
         /// </summary>
-        Location = 0x930e,
+        Location = 0x930E,
 
         /// <summary>
         /// Original was GL_LOCATION_INDEX = 0x930F
         /// </summary>
-        LocationIndex = 0x930f,
+        LocationIndex = 0x930F,
 
         /// <summary>
         /// Original was GL_LOCATION_COMPONENT = 0x934A
         /// </summary>
-        LocationComponent = 0x934a,
+        LocationComponent = 0x934A,
 
         /// <summary>
         /// Original was GL_TRANSFORM_FEEDBACK_BUFFER_INDEX = 0x934B
         /// </summary>
-        TransformFeedbackBufferIndex = 0x934b,
+        TransformFeedbackBufferIndex = 0x934B,
 
         /// <summary>
         /// Original was GL_TRANSFORM_FEEDBACK_BUFFER_STRIDE = 0x934C
         /// </summary>
-        TransformFeedbackBufferStride = 0x934c
+        TransformFeedbackBufferStride = 0x934C
     }
 }

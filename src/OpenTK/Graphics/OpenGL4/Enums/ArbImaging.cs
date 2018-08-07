@@ -81,25 +81,25 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_FUNC_SUBTRACT = 0x800A
         /// </summary>
-        FuncSubtract = 0x800a,
+        FuncSubtract = 0x800A,
 
         /// <summary>
         /// Original was GL_FUNC_REVERSE_SUBTRACT = 0x800B
         /// </summary>
-        FuncReverseSubtract = 0x800b,
+        FuncReverseSubtract = 0x800B,
 
         /// <summary>
-        /// Original was GL_CONVOLUTION_1D = 0x8010
+        /// Original was GL_CONVOLUTION1_D = 0x8010
         /// </summary>
         Convolution1D = 0x8010,
 
         /// <summary>
-        /// Original was GL_CONVOLUTION_2D = 0x8011
+        /// Original was GL_CONVOLUTION2_D = 0x8011
         /// </summary>
         Convolution2D = 0x8011,
 
         /// <summary>
-        /// Original was GL_SEPARABLE_2D = 0x8012
+        /// Original was GL_SEPARABLE2_D = 0x8012
         /// </summary>
         Separable2D = 0x8012,
 
@@ -141,32 +141,32 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_MAX_CONVOLUTION_WIDTH = 0x801A
         /// </summary>
-        MaxConvolutionWidth = 0x801a,
+        MaxConvolutionWidth = 0x801A,
 
         /// <summary>
         /// Original was GL_MAX_CONVOLUTION_HEIGHT = 0x801B
         /// </summary>
-        MaxConvolutionHeight = 0x801b,
+        MaxConvolutionHeight = 0x801B,
 
         /// <summary>
         /// Original was GL_POST_CONVOLUTION_RED_SCALE = 0x801C
         /// </summary>
-        PostConvolutionRedScale = 0x801c,
+        PostConvolutionRedScale = 0x801C,
 
         /// <summary>
         /// Original was GL_POST_CONVOLUTION_GREEN_SCALE = 0x801D
         /// </summary>
-        PostConvolutionGreenScale = 0x801d,
+        PostConvolutionGreenScale = 0x801D,
 
         /// <summary>
         /// Original was GL_POST_CONVOLUTION_BLUE_SCALE = 0x801E
         /// </summary>
-        PostConvolutionBlueScale = 0x801e,
+        PostConvolutionBlueScale = 0x801E,
 
         /// <summary>
         /// Original was GL_POST_CONVOLUTION_ALPHA_SCALE = 0x801F
         /// </summary>
-        PostConvolutionAlphaScale = 0x801f,
+        PostConvolutionAlphaScale = 0x801F,
 
         /// <summary>
         /// Original was GL_POST_CONVOLUTION_RED_BIAS = 0x8020
@@ -221,32 +221,32 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_HISTOGRAM_BLUE_SIZE = 0x802A
         /// </summary>
-        HistogramBlueSize = 0x802a,
+        HistogramBlueSize = 0x802A,
 
         /// <summary>
         /// Original was GL_HISTOGRAM_ALPHA_SIZE = 0x802B
         /// </summary>
-        HistogramAlphaSize = 0x802b,
+        HistogramAlphaSize = 0x802B,
 
         /// <summary>
         /// Original was GL_HISTOGRAM_LUMINANCE_SIZE = 0x802C
         /// </summary>
-        HistogramLuminanceSize = 0x802c,
+        HistogramLuminanceSize = 0x802C,
 
         /// <summary>
         /// Original was GL_HISTOGRAM_SINK = 0x802D
         /// </summary>
-        HistogramSink = 0x802d,
+        HistogramSink = 0x802D,
 
         /// <summary>
         /// Original was GL_MINMAX = 0x802E
         /// </summary>
-        Minmax = 0x802e,
+        Minmax = 0x802E,
 
         /// <summary>
         /// Original was GL_MINMAX_FORMAT = 0x802F
         /// </summary>
-        MinmaxFormat = 0x802f,
+        MinmaxFormat = 0x802F,
 
         /// <summary>
         /// Original was GL_MINMAX_SINK = 0x8030
@@ -261,137 +261,137 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_COLOR_MATRIX = 0x80B1
         /// </summary>
-        ColorMatrix = 0x80b1,
+        ColorMatrix = 0x80B1,
 
         /// <summary>
         /// Original was GL_COLOR_MATRIX_STACK_DEPTH = 0x80B2
         /// </summary>
-        ColorMatrixStackDepth = 0x80b2,
+        ColorMatrixStackDepth = 0x80B2,
 
         /// <summary>
         /// Original was GL_MAX_COLOR_MATRIX_STACK_DEPTH = 0x80B3
         /// </summary>
-        MaxColorMatrixStackDepth = 0x80b3,
+        MaxColorMatrixStackDepth = 0x80B3,
 
         /// <summary>
         /// Original was GL_POST_COLOR_MATRIX_RED_SCALE = 0x80B4
         /// </summary>
-        PostColorMatrixRedScale = 0x80b4,
+        PostColorMatrixRedScale = 0x80B4,
 
         /// <summary>
         /// Original was GL_POST_COLOR_MATRIX_GREEN_SCALE = 0x80B5
         /// </summary>
-        PostColorMatrixGreenScale = 0x80b5,
+        PostColorMatrixGreenScale = 0x80B5,
 
         /// <summary>
         /// Original was GL_POST_COLOR_MATRIX_BLUE_SCALE = 0x80B6
         /// </summary>
-        PostColorMatrixBlueScale = 0x80b6,
+        PostColorMatrixBlueScale = 0x80B6,
 
         /// <summary>
         /// Original was GL_POST_COLOR_MATRIX_ALPHA_SCALE = 0x80B7
         /// </summary>
-        PostColorMatrixAlphaScale = 0x80b7,
+        PostColorMatrixAlphaScale = 0x80B7,
 
         /// <summary>
         /// Original was GL_POST_COLOR_MATRIX_RED_BIAS = 0x80B8
         /// </summary>
-        PostColorMatrixRedBias = 0x80b8,
+        PostColorMatrixRedBias = 0x80B8,
 
         /// <summary>
         /// Original was GL_POST_COLOR_MATRIX_GREEN_BIAS = 0x80B9
         /// </summary>
-        PostColorMatrixGreenBias = 0x80b9,
+        PostColorMatrixGreenBias = 0x80B9,
 
         /// <summary>
         /// Original was GL_POST_COLOR_MATRIX_BLUE_BIAS = 0x80BA
         /// </summary>
-        PostColorMatrixBlueBias = 0x80ba,
+        PostColorMatrixBlueBias = 0x80BA,
 
         /// <summary>
         /// Original was GL_POST_COLOR_MATRIX_ALPHA_BIAS = 0x80BB
         /// </summary>
-        PostColorMatrixAlphaBias = 0x80bb,
+        PostColorMatrixAlphaBias = 0x80BB,
 
         /// <summary>
         /// Original was GL_COLOR_TABLE = 0x80D0
         /// </summary>
-        ColorTable = 0x80d0,
+        ColorTable = 0x80D0,
 
         /// <summary>
         /// Original was GL_POST_CONVOLUTION_COLOR_TABLE = 0x80D1
         /// </summary>
-        PostConvolutionColorTable = 0x80d1,
+        PostConvolutionColorTable = 0x80D1,
 
         /// <summary>
         /// Original was GL_POST_COLOR_MATRIX_COLOR_TABLE = 0x80D2
         /// </summary>
-        PostColorMatrixColorTable = 0x80d2,
+        PostColorMatrixColorTable = 0x80D2,
 
         /// <summary>
         /// Original was GL_PROXY_COLOR_TABLE = 0x80D3
         /// </summary>
-        ProxyColorTable = 0x80d3,
+        ProxyColorTable = 0x80D3,
 
         /// <summary>
         /// Original was GL_PROXY_POST_CONVOLUTION_COLOR_TABLE = 0x80D4
         /// </summary>
-        ProxyPostConvolutionColorTable = 0x80d4,
+        ProxyPostConvolutionColorTable = 0x80D4,
 
         /// <summary>
         /// Original was GL_PROXY_POST_COLOR_MATRIX_COLOR_TABLE = 0x80D5
         /// </summary>
-        ProxyPostColorMatrixColorTable = 0x80d5,
+        ProxyPostColorMatrixColorTable = 0x80D5,
 
         /// <summary>
         /// Original was GL_COLOR_TABLE_SCALE = 0x80D6
         /// </summary>
-        ColorTableScale = 0x80d6,
+        ColorTableScale = 0x80D6,
 
         /// <summary>
         /// Original was GL_COLOR_TABLE_BIAS = 0x80D7
         /// </summary>
-        ColorTableBias = 0x80d7,
+        ColorTableBias = 0x80D7,
 
         /// <summary>
         /// Original was GL_COLOR_TABLE_FORMAT = 0x80D8
         /// </summary>
-        ColorTableFormat = 0x80d8,
+        ColorTableFormat = 0x80D8,
 
         /// <summary>
         /// Original was GL_COLOR_TABLE_WIDTH = 0x80D9
         /// </summary>
-        ColorTableWidth = 0x80d9,
+        ColorTableWidth = 0x80D9,
 
         /// <summary>
         /// Original was GL_COLOR_TABLE_RED_SIZE = 0x80DA
         /// </summary>
-        ColorTableRedSize = 0x80da,
+        ColorTableRedSize = 0x80DA,
 
         /// <summary>
         /// Original was GL_COLOR_TABLE_GREEN_SIZE = 0x80DB
         /// </summary>
-        ColorTableGreenSize = 0x80db,
+        ColorTableGreenSize = 0x80DB,
 
         /// <summary>
         /// Original was GL_COLOR_TABLE_BLUE_SIZE = 0x80DC
         /// </summary>
-        ColorTableBlueSize = 0x80dc,
+        ColorTableBlueSize = 0x80DC,
 
         /// <summary>
         /// Original was GL_COLOR_TABLE_ALPHA_SIZE = 0x80DD
         /// </summary>
-        ColorTableAlphaSize = 0x80dd,
+        ColorTableAlphaSize = 0x80DD,
 
         /// <summary>
         /// Original was GL_COLOR_TABLE_LUMINANCE_SIZE = 0x80DE
         /// </summary>
-        ColorTableLuminanceSize = 0x80de,
+        ColorTableLuminanceSize = 0x80DE,
 
         /// <summary>
         /// Original was GL_COLOR_TABLE_INTENSITY_SIZE = 0x80DF
         /// </summary>
-        ColorTableIntensitySize = 0x80df,
+        ColorTableIntensitySize = 0x80DF,
 
         /// <summary>
         /// Original was GL_CONSTANT_BORDER = 0x8151

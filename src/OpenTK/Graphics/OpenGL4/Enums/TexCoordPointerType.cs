@@ -29,7 +29,7 @@
 namespace OpenTK.Graphics.OpenGL4
 {
     /// <summary>
-    /// Used in GL.Ext.MultiTexCoordPointer and GL.Ext.VertexArrayMultiTexCoordOffset, as well as 1 other function.
+    /// Used in GL.EXT.MultiTexCoordPointer and GL.EXT.VertexArrayTexCoordOffset, as well as 1 other function.
     /// </summary>
     public enum TexCoordPointerType
     {
@@ -51,21 +51,6 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_DOUBLE = 0x140A
         /// </summary>
-        Double = 0x140a,
-
-        /// <summary>
-        /// Original was GL_HALF_FLOAT = 0x140B
-        /// </summary>
-        HalfFloat = 0x140b,
-
-        /// <summary>
-        /// Original was GL_UNSIGNED_INT_2_10_10_10_REV = 0x8368
-        /// </summary>
-        UnsignedInt2101010Rev = 0x8368,
-
-        /// <summary>
-        /// Original was GL_INT_2_10_10_10_REV = 0x8D9F
-        /// </summary>
-        Int2101010Rev = 0x8d9f
+        Double = 0x140A
     }
 }

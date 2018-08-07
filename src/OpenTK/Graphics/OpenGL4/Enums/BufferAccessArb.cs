@@ -36,16 +36,16 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_READ_ONLY = 0x88B8
         /// </summary>
-        ReadOnly = 0x88b8,
+        ReadOnly = 0x88B8,
 
         /// <summary>
         /// Original was GL_WRITE_ONLY = 0x88B9
         /// </summary>
-        WriteOnly = 0x88b9,
+        WriteOnly = 0x88B9,
 
         /// <summary>
         /// Original was GL_READ_WRITE = 0x88BA
         /// </summary>
-        ReadWrite = 0x88ba
+        ReadWrite = 0x88BA
     }
 }

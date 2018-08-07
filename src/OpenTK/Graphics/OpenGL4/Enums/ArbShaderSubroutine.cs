@@ -36,56 +36,56 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_UNIFORM_SIZE = 0x8A38
         /// </summary>
-        UniformSize = 0x8a38,
+        UniformSize = 0x8A38,
 
         /// <summary>
         /// Original was GL_UNIFORM_NAME_LENGTH = 0x8A39
         /// </summary>
-        UniformNameLength = 0x8a39,
+        UniformNameLength = 0x8A39,
 
         /// <summary>
         /// Original was GL_ACTIVE_SUBROUTINES = 0x8DE5
         /// </summary>
-        ActiveSubroutines = 0x8de5,
+        ActiveSubroutines = 0x8DE5,
 
         /// <summary>
         /// Original was GL_ACTIVE_SUBROUTINE_UNIFORMS = 0x8DE6
         /// </summary>
-        ActiveSubroutineUniforms = 0x8de6,
+        ActiveSubroutineUniforms = 0x8DE6,
 
         /// <summary>
         /// Original was GL_MAX_SUBROUTINES = 0x8DE7
         /// </summary>
-        MaxSubroutines = 0x8de7,
+        MaxSubroutines = 0x8DE7,
 
         /// <summary>
         /// Original was GL_MAX_SUBROUTINE_UNIFORM_LOCATIONS = 0x8DE8
         /// </summary>
-        MaxSubroutineUniformLocations = 0x8de8,
+        MaxSubroutineUniformLocations = 0x8DE8,
 
         /// <summary>
         /// Original was GL_ACTIVE_SUBROUTINE_UNIFORM_LOCATIONS = 0x8E47
         /// </summary>
-        ActiveSubroutineUniformLocations = 0x8e47,
+        ActiveSubroutineUniformLocations = 0x8E47,
 
         /// <summary>
         /// Original was GL_ACTIVE_SUBROUTINE_MAX_LENGTH = 0x8E48
         /// </summary>
-        ActiveSubroutineMaxLength = 0x8e48,
+        ActiveSubroutineMaxLength = 0x8E48,
 
         /// <summary>
         /// Original was GL_ACTIVE_SUBROUTINE_UNIFORM_MAX_LENGTH = 0x8E49
         /// </summary>
-        ActiveSubroutineUniformMaxLength = 0x8e49,
+        ActiveSubroutineUniformMaxLength = 0x8E49,
 
         /// <summary>
         /// Original was GL_NUM_COMPATIBLE_SUBROUTINES = 0x8E4A
         /// </summary>
-        NumCompatibleSubroutines = 0x8e4a,
+        NumCompatibleSubroutines = 0x8E4A,
 
         /// <summary>
         /// Original was GL_COMPATIBLE_SUBROUTINES = 0x8E4B
         /// </summary>
-        CompatibleSubroutines = 0x8e4b
+        CompatibleSubroutines = 0x8E4B
     }
 }

@@ -36,11 +36,11 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_TRANSFORM_FEEDBACK_PAUSED = 0x8E23
         /// </summary>
-        TransformFeedbackPaused = 0x8e23,
+        TransformFeedbackPaused = 0x8E23,
 
         /// <summary>
         /// Original was GL_TRANSFORM_FEEDBACK_ACTIVE = 0x8E24
         /// </summary>
-        TransformFeedbackActive = 0x8e24
+        TransformFeedbackActive = 0x8E24
     }
 }

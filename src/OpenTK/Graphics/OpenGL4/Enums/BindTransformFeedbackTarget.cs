@@ -36,6 +36,6 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_TRANSFORM_FEEDBACK = 0x8E22
         /// </summary>
-        TransformFeedback = 0x8e22
+        TransformFeedback = 0x8E22
     }
 }

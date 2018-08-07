@@ -37,84 +37,24 @@ namespace OpenTK.Graphics.OpenGL4
     public enum PathMetricMask
     {
         /// <summary>
-        /// Original was GL_FONT_X_MIN_BOUNDS_BIT_NV = 0x00010000
+        /// Original was GL_GLYPH_WIDTH_BIT_NV = 0x1
         /// </summary>
-        FontXMinBoundsBitNV = 0x00010000,
+        GlyphWidthBitNV = 0x1,
 
         /// <summary>
-        /// Original was GL_FONT_Y_MIN_BOUNDS_BIT_NV = 0x00020000
+        /// Original was GL_GLYPH_HEIGHT_BIT_NV = 0x2
         /// </summary>
-        FontYMinBoundsBitNV = 0x00020000,
+        GlyphHeightBitNV = 0x2,
 
         /// <summary>
-        /// Original was GL_FONT_X_MAX_BOUNDS_BIT_NV = 0x00040000
+        /// Original was GL_GLYPH_HORIZONTAL_BEARING_X_BIT_NV = 0x4
         /// </summary>
-        FontXMaxBoundsBitNV = 0x00040000,
+        GlyphHorizontalBearingXBitNV = 0x4,
 
         /// <summary>
-        /// Original was GL_FONT_Y_MAX_BOUNDS_BIT_NV = 0x00080000
+        /// Original was GL_GLYPH_HORIZONTAL_BEARING_Y_BIT_NV = 0x8
         /// </summary>
-        FontYMaxBoundsBitNV = 0x00080000,
-
-        /// <summary>
-        /// Original was GL_FONT_UNITS_PER_EM_BIT_NV = 0x00100000
-        /// </summary>
-        FontUnitsPerEMBitNV = 0x00100000,
-
-        /// <summary>
-        /// Original was GL_FONT_ASCENDER_BIT_NV = 0x00200000
-        /// </summary>
-        FontAscenderBitNV = 0x00200000,
-
-        /// <summary>
-        /// Original was GL_FONT_DESCENDER_BIT_NV = 0x00400000
-        /// </summary>
-        FontDescenderBitNV = 0x00400000,
-
-        /// <summary>
-        /// Original was GL_FONT_HEIGHT_BIT_NV = 0x00800000
-        /// </summary>
-        FontHeightBitNV = 0x00800000,
-
-        /// <summary>
-        /// Original was GL_GLYPH_WIDTH_BIT_NV = 0x01
-        /// </summary>
-        GlyphWidthBitNV = 0x01,
-
-        /// <summary>
-        /// Original was GL_FONT_MAX_ADVANCE_WIDTH_BIT_NV = 0x01000000
-        /// </summary>
-        FontMaxAdvanceWidthBitNV = 0x01000000,
-
-        /// <summary>
-        /// Original was GL_GLYPH_HEIGHT_BIT_NV = 0x02
-        /// </summary>
-        GlyphHeightBitNV = 0x02,
-
-        /// <summary>
-        /// Original was GL_FONT_MAX_ADVANCE_HEIGHT_BIT_NV = 0x02000000
-        /// </summary>
-        FontMaxAdvanceHeightBitNV = 0x02000000,
-
-        /// <summary>
-        /// Original was GL_GLYPH_HORIZONTAL_BEARING_X_BIT_NV = 0x04
-        /// </summary>
-        GlyphHorizontalBearingXBitNV = 0x04,
-
-        /// <summary>
-        /// Original was GL_FONT_UNDERLINE_POSITION_BIT_NV = 0x04000000
-        /// </summary>
-        FontUnderlinePositionBitNV = 0x04000000,
-
-        /// <summary>
-        /// Original was GL_GLYPH_HORIZONTAL_BEARING_Y_BIT_NV = 0x08
-        /// </summary>
-        GlyphHorizontalBearingYBitNV = 0x08,
-
-        /// <summary>
-        /// Original was GL_FONT_UNDERLINE_THICKNESS_BIT_NV = 0x08000000
-        /// </summary>
-        FontUnderlineThicknessBitNV = 0x08000000,
+        GlyphHorizontalBearingYBitNV = 0x8,
 
         /// <summary>
         /// Original was GL_GLYPH_HORIZONTAL_BEARING_ADVANCE_BIT_NV = 0x10
@@ -122,24 +62,9 @@ namespace OpenTK.Graphics.OpenGL4
         GlyphHorizontalBearingAdvanceBitNV = 0x10,
 
         /// <summary>
-        /// Original was GL_GLYPH_HAS_KERNING_BIT_NV = 0x100
-        /// </summary>
-        GlyphHasKerningBitNV = 0x100,
-
-        /// <summary>
-        /// Original was GL_FONT_HAS_KERNING_BIT_NV = 0x10000000
-        /// </summary>
-        FontHasKerningBitNV = 0x10000000,
-
-        /// <summary>
         /// Original was GL_GLYPH_VERTICAL_BEARING_X_BIT_NV = 0x20
         /// </summary>
         GlyphVerticalBearingXBitNV = 0x20,
-
-        /// <summary>
-        /// Original was GL_FONT_NUM_GLYPH_INDICES_BIT_NV = 0x20000000
-        /// </summary>
-        FontNumGlyphIndicesBitNV = 0x20000000,
 
         /// <summary>
         /// Original was GL_GLYPH_VERTICAL_BEARING_Y_BIT_NV = 0x40
@@ -149,6 +74,81 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_GLYPH_VERTICAL_BEARING_ADVANCE_BIT_NV = 0x80
         /// </summary>
-        GlyphVerticalBearingAdvanceBitNV = 0x80
+        GlyphVerticalBearingAdvanceBitNV = 0x80,
+
+        /// <summary>
+        /// Original was GL_GLYPH_HAS_KERNING_BIT_NV = 0x100
+        /// </summary>
+        GlyphHasKerningBitNV = 0x100,
+
+        /// <summary>
+        /// Original was GL_FONT_X_MIN_BOUNDS_BIT_NV = 0x10000
+        /// </summary>
+        FontXMinBoundsBitNV = 0x10000,
+
+        /// <summary>
+        /// Original was GL_FONT_Y_MIN_BOUNDS_BIT_NV = 0x20000
+        /// </summary>
+        FontYMinBoundsBitNV = 0x20000,
+
+        /// <summary>
+        /// Original was GL_FONT_X_MAX_BOUNDS_BIT_NV = 0x40000
+        /// </summary>
+        FontXMaxBoundsBitNV = 0x40000,
+
+        /// <summary>
+        /// Original was GL_FONT_Y_MAX_BOUNDS_BIT_NV = 0x80000
+        /// </summary>
+        FontYMaxBoundsBitNV = 0x80000,
+
+        /// <summary>
+        /// Original was GL_FONT_UNITS_PER_EM_BIT_NV = 0x100000
+        /// </summary>
+        FontUnitsPerEMBitNV = 0x100000,
+
+        /// <summary>
+        /// Original was GL_FONT_ASCENDER_BIT_NV = 0x200000
+        /// </summary>
+        FontAscenderBitNV = 0x200000,
+
+        /// <summary>
+        /// Original was GL_FONT_DESCENDER_BIT_NV = 0x400000
+        /// </summary>
+        FontDescenderBitNV = 0x400000,
+
+        /// <summary>
+        /// Original was GL_FONT_HEIGHT_BIT_NV = 0x800000
+        /// </summary>
+        FontHeightBitNV = 0x800000,
+
+        /// <summary>
+        /// Original was GL_FONT_MAX_ADVANCE_WIDTH_BIT_NV = 0x1000000
+        /// </summary>
+        FontMaxAdvanceWidthBitNV = 0x1000000,
+
+        /// <summary>
+        /// Original was GL_FONT_MAX_ADVANCE_HEIGHT_BIT_NV = 0x2000000
+        /// </summary>
+        FontMaxAdvanceHeightBitNV = 0x2000000,
+
+        /// <summary>
+        /// Original was GL_FONT_UNDERLINE_POSITION_BIT_NV = 0x4000000
+        /// </summary>
+        FontUnderlinePositionBitNV = 0x4000000,
+
+        /// <summary>
+        /// Original was GL_FONT_UNDERLINE_THICKNESS_BIT_NV = 0x8000000
+        /// </summary>
+        FontUnderlineThicknessBitNV = 0x8000000,
+
+        /// <summary>
+        /// Original was GL_FONT_HAS_KERNING_BIT_NV = 0x10000000
+        /// </summary>
+        FontHasKerningBitNV = 0x10000000,
+
+        /// <summary>
+        /// Original was GL_FONT_NUM_GLYPH_INDICES_BIT_NV = 0x20000000
+        /// </summary>
+        FontNumGlyphIndicesBitNV = 0x20000000
     }
 }

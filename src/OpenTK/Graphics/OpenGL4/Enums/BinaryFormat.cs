@@ -29,7 +29,7 @@
 namespace OpenTK.Graphics.OpenGL4
 {
     /// <summary>
-    /// Used in GL.GetProgramBinary and GL.ProgramBinary, as well as 1 other function.
+    /// Used in GL.ShaderBinary and GL.ProgramBinary, as well as 1 other function.
     /// </summary>
     public enum BinaryFormat
     {

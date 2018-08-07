@@ -34,28 +34,13 @@ namespace OpenTK.Graphics.OpenGL4
     public enum PointParameterName
     {
         /// <summary>
-        /// Original was GL_POINT_SIZE_MIN = 0x8126
-        /// </summary>
-        PointSizeMin = 0x8126,
-
-        /// <summary>
-        /// Original was GL_POINT_SIZE_MAX = 0x8127
-        /// </summary>
-        PointSizeMax = 0x8127,
-
-        /// <summary>
         /// Original was GL_POINT_FADE_THRESHOLD_SIZE = 0x8128
         /// </summary>
         PointFadeThresholdSize = 0x8128,
 
         /// <summary>
-        /// Original was GL_POINT_DISTANCE_ATTENUATION = 0x8129
-        /// </summary>
-        PointDistanceAttenuation = 0x8129,
-
-        /// <summary>
         /// Original was GL_POINT_SPRITE_COORD_ORIGIN = 0x8CA0
         /// </summary>
-        PointSpriteCoordOrigin = 0x8ca0
+        PointSpriteCoordOrigin = 0x8CA0
     }
 }

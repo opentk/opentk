@@ -36,6 +36,6 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_DOUBLE = 0x140A
         /// </summary>
-        Double = 0x140a
+        Double = 0x140A
     }
 }

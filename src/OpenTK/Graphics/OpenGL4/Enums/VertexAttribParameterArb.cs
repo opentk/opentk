@@ -29,7 +29,7 @@
 namespace OpenTK.Graphics.OpenGL4
 {
     /// <summary>
-    /// Used in GL.Arb.GetVertexAttribL.
+    /// Used in GL.GetVertexAttrib and GL.NV.GetVertexAttribL, as well as 2 other functions.
     /// </summary>
     public enum VertexAttribParameterArb
     {
@@ -61,11 +61,11 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_ARRAY_NORMALIZED = 0x886A
         /// </summary>
-        ArrayNormalized = 0x886a,
+        ArrayNormalized = 0x886A,
 
         /// <summary>
         /// Original was GL_ARRAY_DIVISOR = 0x88FE
         /// </summary>
-        ArrayDivisor = 0x88fe
+        ArrayDivisor = 0x88FE
     }
 }

@@ -36,11 +36,11 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_SAMPLE_SHADING_ARB = 0x8C36
         /// </summary>
-        SampleShadingArb = 0x8c36,
+        SampleShadingArb = 0x8C36,
 
         /// <summary>
         /// Original was GL_MIN_SAMPLE_SHADING_VALUE_ARB = 0x8C37
         /// </summary>
-        MinSampleShadingValueArb = 0x8c37
+        MinSampleShadingValueArb = 0x8C37
     }
 }

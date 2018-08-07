@@ -29,23 +29,23 @@
 namespace OpenTK.Graphics.OpenGL4
 {
     /// <summary>
-    /// Used in GL.NV.PathGlyphIndexArray and GL.NV.PathGlyphIndexRange, as well as 2 other functions.
+    /// Used in GL.NV.PathGlyphRange and GL.NV.PathGlyph, as well as 2 other functions.
     /// </summary>
     public enum PathFontStyle
     {
         /// <summary>
-        /// Original was GL_NONE = 0
+        /// Original was GL_NONE = 0x0
         /// </summary>
-        None = 0,
+        None = 0x0,
 
         /// <summary>
-        /// Original was GL_BOLD_BIT_NV = 0x01
+        /// Original was GL_BOLD_BIT_NV = 0x1
         /// </summary>
-        BoldBitNV = 0x01,
+        BoldBitNV = 0x1,
 
         /// <summary>
-        /// Original was GL_ITALIC_BIT_NV = 0x02
+        /// Original was GL_ITALIC_BIT_NV = 0x2
         /// </summary>
-        ItalicBitNV = 0x02
+        ItalicBitNV = 0x2
     }
 }

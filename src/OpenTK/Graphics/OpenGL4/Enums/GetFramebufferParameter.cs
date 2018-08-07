@@ -29,39 +29,39 @@
 namespace OpenTK.Graphics.OpenGL4
 {
     /// <summary>
-    /// Used in GL.Ext.GetFramebufferParameter and GL.Ext.GetNamedFramebufferParameter.
+    /// Used in GL.EXT.GetFramebufferParameter and GL.EXT.GetNamedFramebufferParameter.
     /// </summary>
     public enum GetFramebufferParameter
     {
         /// <summary>
-        /// Original was GL_DOUBLEBUFFER = 0x0C32
+        /// Original was GL_DOUBLEBUFFER = 0xC32
         /// </summary>
-        Doublebuffer = 0x0c32,
+        Doublebuffer = 0xC32,
 
         /// <summary>
-        /// Original was GL_STEREO = 0x0C33
+        /// Original was GL_STEREO = 0xC33
         /// </summary>
-        Stereo = 0x0c33,
+        Stereo = 0xC33,
 
         /// <summary>
         /// Original was GL_SAMPLE_BUFFERS = 0x80A8
         /// </summary>
-        SampleBuffers = 0x80a8,
+        SampleBuffers = 0x80A8,
 
         /// <summary>
         /// Original was GL_SAMPLES = 0x80A9
         /// </summary>
-        Samples = 0x80a9,
+        Samples = 0x80A9,
 
         /// <summary>
         /// Original was GL_IMPLEMENTATION_COLOR_READ_TYPE = 0x8B9A
         /// </summary>
-        ImplementationColorReadType = 0x8b9a,
+        ImplementationColorReadType = 0x8B9A,
 
         /// <summary>
         /// Original was GL_IMPLEMENTATION_COLOR_READ_FORMAT = 0x8B9B
         /// </summary>
-        ImplementationColorReadFormat = 0x8b9b,
+        ImplementationColorReadFormat = 0x8B9B,
 
         /// <summary>
         /// Original was GL_FRAMEBUFFER_DEFAULT_WIDTH = 0x9310

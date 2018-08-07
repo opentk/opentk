@@ -34,13 +34,13 @@ namespace OpenTK.Graphics.OpenGL4
     public enum LightEnvModeSgix
     {
         /// <summary>
-        /// Original was GL_ADD = 0x0104
+        /// Original was GL_ADD = 0x104
         /// </summary>
-        Add = 0x0104,
+        Add = 0x104,
 
         /// <summary>
         /// Original was GL_REPLACE = 0x1E01
         /// </summary>
-        Replace = 0x1e01
+        Replace = 0x1E01
     }
 }

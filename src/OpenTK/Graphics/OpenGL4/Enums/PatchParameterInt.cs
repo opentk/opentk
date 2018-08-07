@@ -36,6 +36,6 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_PATCH_VERTICES = 0x8E72
         /// </summary>
-        PatchVertices = 0x8e72
+        PatchVertices = 0x8E72
     }
 }

@@ -29,99 +29,99 @@
 namespace OpenTK.Graphics.OpenGL4
 {
     /// <summary>
-    /// Used in GL.Arb.GetnMap and GL.GetnMap.
+    /// Used in GL.ARB.GetnMap and GL.GetnMap.
     /// </summary>
     public enum MapTarget
     {
         /// <summary>
-        /// Original was GL_MAP1_COLOR_4 = 0x0D90
+        /// Original was GL_MAP1_COLOR4 = 0xD90
         /// </summary>
-        Map1Color4 = 0x0d90,
+        Map1Color4 = 0xD90,
 
         /// <summary>
-        /// Original was GL_MAP1_INDEX = 0x0D91
+        /// Original was GL_MAP1_INDEX = 0xD91
         /// </summary>
-        Map1Index = 0x0d91,
+        Map1Index = 0xD91,
 
         /// <summary>
-        /// Original was GL_MAP1_NORMAL = 0x0D92
+        /// Original was GL_MAP1_NORMAL = 0xD92
         /// </summary>
-        Map1Normal = 0x0d92,
+        Map1Normal = 0xD92,
 
         /// <summary>
-        /// Original was GL_MAP1_TEXTURE_COORD_1 = 0x0D93
+        /// Original was GL_MAP1_TEXTURE_COORD1 = 0xD93
         /// </summary>
-        Map1TextureCoord1 = 0x0d93,
+        Map1TextureCoord1 = 0xD93,
 
         /// <summary>
-        /// Original was GL_MAP1_TEXTURE_COORD_2 = 0x0D94
+        /// Original was GL_MAP1_TEXTURE_COORD2 = 0xD94
         /// </summary>
-        Map1TextureCoord2 = 0x0d94,
+        Map1TextureCoord2 = 0xD94,
 
         /// <summary>
-        /// Original was GL_MAP1_TEXTURE_COORD_3 = 0x0D95
+        /// Original was GL_MAP1_TEXTURE_COORD3 = 0xD95
         /// </summary>
-        Map1TextureCoord3 = 0x0d95,
+        Map1TextureCoord3 = 0xD95,
 
         /// <summary>
-        /// Original was GL_MAP1_TEXTURE_COORD_4 = 0x0D96
+        /// Original was GL_MAP1_TEXTURE_COORD4 = 0xD96
         /// </summary>
-        Map1TextureCoord4 = 0x0d96,
+        Map1TextureCoord4 = 0xD96,
 
         /// <summary>
-        /// Original was GL_MAP1_VERTEX_3 = 0x0D97
+        /// Original was GL_MAP1_VERTEX3 = 0xD97
         /// </summary>
-        Map1Vertex3 = 0x0d97,
+        Map1Vertex3 = 0xD97,
 
         /// <summary>
-        /// Original was GL_MAP1_VERTEX_4 = 0x0D98
+        /// Original was GL_MAP1_VERTEX4 = 0xD98
         /// </summary>
-        Map1Vertex4 = 0x0d98,
+        Map1Vertex4 = 0xD98,
 
         /// <summary>
-        /// Original was GL_MAP2_COLOR_4 = 0x0DB0
+        /// Original was GL_MAP2_COLOR4 = 0xDB0
         /// </summary>
-        Map2Color4 = 0x0db0,
+        Map2Color4 = 0xDB0,
 
         /// <summary>
-        /// Original was GL_MAP2_INDEX = 0x0DB1
+        /// Original was GL_MAP2_INDEX = 0xDB1
         /// </summary>
-        Map2Index = 0x0db1,
+        Map2Index = 0xDB1,
 
         /// <summary>
-        /// Original was GL_MAP2_NORMAL = 0x0DB2
+        /// Original was GL_MAP2_NORMAL = 0xDB2
         /// </summary>
-        Map2Normal = 0x0db2,
+        Map2Normal = 0xDB2,
 
         /// <summary>
-        /// Original was GL_MAP2_TEXTURE_COORD_1 = 0x0DB3
+        /// Original was GL_MAP2_TEXTURE_COORD1 = 0xDB3
         /// </summary>
-        Map2TextureCoord1 = 0x0db3,
+        Map2TextureCoord1 = 0xDB3,
 
         /// <summary>
-        /// Original was GL_MAP2_TEXTURE_COORD_2 = 0x0DB4
+        /// Original was GL_MAP2_TEXTURE_COORD2 = 0xDB4
         /// </summary>
-        Map2TextureCoord2 = 0x0db4,
+        Map2TextureCoord2 = 0xDB4,
 
         /// <summary>
-        /// Original was GL_MAP2_TEXTURE_COORD_3 = 0x0DB5
+        /// Original was GL_MAP2_TEXTURE_COORD3 = 0xDB5
         /// </summary>
-        Map2TextureCoord3 = 0x0db5,
+        Map2TextureCoord3 = 0xDB5,
 
         /// <summary>
-        /// Original was GL_MAP2_TEXTURE_COORD_4 = 0x0DB6
+        /// Original was GL_MAP2_TEXTURE_COORD4 = 0xDB6
         /// </summary>
-        Map2TextureCoord4 = 0x0db6,
+        Map2TextureCoord4 = 0xDB6,
 
         /// <summary>
-        /// Original was GL_MAP2_VERTEX_3 = 0x0DB7
+        /// Original was GL_MAP2_VERTEX3 = 0xDB7
         /// </summary>
-        Map2Vertex3 = 0x0db7,
+        Map2Vertex3 = 0xDB7,
 
         /// <summary>
-        /// Original was GL_MAP2_VERTEX_4 = 0x0DB8
+        /// Original was GL_MAP2_VERTEX4 = 0xDB8
         /// </summary>
-        Map2Vertex4 = 0x0db8,
+        Map2Vertex4 = 0xDB8,
 
         /// <summary>
         /// Original was GL_GEOMETRY_DEFORMATION_SGIX = 0x8194

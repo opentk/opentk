@@ -91,16 +91,16 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_NEAREST_CLIPMAP_NEAREST_SGIX = 0x844D
         /// </summary>
-        NearestClipmapNearestSgix = 0x844d,
+        NearestClipmapNearestSgix = 0x844D,
 
         /// <summary>
         /// Original was GL_NEAREST_CLIPMAP_LINEAR_SGIX = 0x844E
         /// </summary>
-        NearestClipmapLinearSgix = 0x844e,
+        NearestClipmapLinearSgix = 0x844E,
 
         /// <summary>
         /// Original was GL_LINEAR_CLIPMAP_NEAREST_SGIX = 0x844F
         /// </summary>
-        LinearClipmapNearestSgix = 0x844f
+        LinearClipmapNearestSgix = 0x844F
     }
 }

@@ -36,11 +36,6 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_RENDERBUFFER = 0x8D41
         /// </summary>
-        Renderbuffer = 0x8d41,
-
-        /// <summary>
-        /// Original was GL_RENDERBUFFER_EXT = 0x8D41
-        /// </summary>
-        RenderbufferExt = 0x8d41
+        Renderbuffer = 0x8D41
     }
 }

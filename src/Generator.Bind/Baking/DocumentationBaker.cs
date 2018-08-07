@@ -344,7 +344,14 @@ namespace Bind.Baking
                 if (typeName is null || _apiProfile.Enumerations.All(e => e.Name != typeName))
                 {
                     var containingEnum = _apiProfile.FindContainingEnumeration(translatedName);
-                    typeName = containingEnum.Name;
+                    if (containingEnum is null)
+                    {
+                        typeName = "Unknown";
+                    }
+                    else
+                    {
+                        typeName = containingEnum.Name;
+                    }
 
                     Debug.WriteLine
                     (

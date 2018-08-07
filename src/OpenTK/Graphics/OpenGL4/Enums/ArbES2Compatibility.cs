@@ -36,81 +36,81 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_FIXED = 0x140C
         /// </summary>
-        Fixed = 0x140c,
+        Fixed = 0x140C,
 
         /// <summary>
         /// Original was GL_IMPLEMENTATION_COLOR_READ_TYPE = 0x8B9A
         /// </summary>
-        ImplementationColorReadType = 0x8b9a,
+        ImplementationColorReadType = 0x8B9A,
 
         /// <summary>
         /// Original was GL_IMPLEMENTATION_COLOR_READ_FORMAT = 0x8B9B
         /// </summary>
-        ImplementationColorReadFormat = 0x8b9b,
+        ImplementationColorReadFormat = 0x8B9B,
 
         /// <summary>
         /// Original was GL_RGB565 = 0x8D62
         /// </summary>
-        Rgb565 = 0x8d62,
+        Rgb565 = 0x8D62,
 
         /// <summary>
         /// Original was GL_LOW_FLOAT = 0x8DF0
         /// </summary>
-        LowFloat = 0x8df0,
+        LowFloat = 0x8DF0,
 
         /// <summary>
         /// Original was GL_MEDIUM_FLOAT = 0x8DF1
         /// </summary>
-        MediumFloat = 0x8df1,
+        MediumFloat = 0x8DF1,
 
         /// <summary>
         /// Original was GL_HIGH_FLOAT = 0x8DF2
         /// </summary>
-        HighFloat = 0x8df2,
+        HighFloat = 0x8DF2,
 
         /// <summary>
         /// Original was GL_LOW_INT = 0x8DF3
         /// </summary>
-        LowInt = 0x8df3,
+        LowInt = 0x8DF3,
 
         /// <summary>
         /// Original was GL_MEDIUM_INT = 0x8DF4
         /// </summary>
-        MediumInt = 0x8df4,
+        MediumInt = 0x8DF4,
 
         /// <summary>
         /// Original was GL_HIGH_INT = 0x8DF5
         /// </summary>
-        HighInt = 0x8df5,
+        HighInt = 0x8DF5,
 
         /// <summary>
         /// Original was GL_SHADER_BINARY_FORMATS = 0x8DF8
         /// </summary>
-        ShaderBinaryFormats = 0x8df8,
+        ShaderBinaryFormats = 0x8DF8,
 
         /// <summary>
         /// Original was GL_NUM_SHADER_BINARY_FORMATS = 0x8DF9
         /// </summary>
-        NumShaderBinaryFormats = 0x8df9,
+        NumShaderBinaryFormats = 0x8DF9,
 
         /// <summary>
         /// Original was GL_SHADER_COMPILER = 0x8DFA
         /// </summary>
-        ShaderCompiler = 0x8dfa,
+        ShaderCompiler = 0x8DFA,
 
         /// <summary>
         /// Original was GL_MAX_VERTEX_UNIFORM_VECTORS = 0x8DFB
         /// </summary>
-        MaxVertexUniformVectors = 0x8dfb,
+        MaxVertexUniformVectors = 0x8DFB,
 
         /// <summary>
         /// Original was GL_MAX_VARYING_VECTORS = 0x8DFC
         /// </summary>
-        MaxVaryingVectors = 0x8dfc,
+        MaxVaryingVectors = 0x8DFC,
 
         /// <summary>
         /// Original was GL_MAX_FRAGMENT_UNIFORM_VECTORS = 0x8DFD
         /// </summary>
-        MaxFragmentUniformVectors = 0x8dfd
+        MaxFragmentUniformVectors = 0x8DFD
     }
 }

@@ -29,109 +29,104 @@
 namespace OpenTK.Graphics.OpenGL4
 {
     /// <summary>
-    /// Used in GL.Arb.FramebufferTextureFace and GL.Arb.GetnCompressedTexImage, as well as 96 other functions.
+    /// Used in GL.EXT.GenerateMultiTexMipmap and GL.EXT.BindMultiTexture, as well as 96 other functions.
     /// </summary>
     public enum TextureTarget
     {
         /// <summary>
-        /// Original was GL_TEXTURE_1D = 0x0DE0
+        /// Original was GL_TEXTURE1_D = 0xDE0
         /// </summary>
-        Texture1D = 0x0de0,
+        Texture1D = 0xDE0,
 
         /// <summary>
-        /// Original was GL_TEXTURE_2D = 0x0DE1
+        /// Original was GL_TEXTURE2_D = 0xDE1
         /// </summary>
-        Texture2D = 0x0de1,
+        Texture2D = 0xDE1,
 
         /// <summary>
-        /// Original was GL_PROXY_TEXTURE_1D = 0x8063
+        /// Original was GL_PROXY_TEXTURE1_D = 0x8063
         /// </summary>
         ProxyTexture1D = 0x8063,
 
         /// <summary>
-        /// Original was GL_PROXY_TEXTURE_1D_EXT = 0x8063
+        /// Original was GL_PROXY_TEXTURE1_D_EXT = 0x8063
         /// </summary>
         ProxyTexture1DExt = 0x8063,
 
         /// <summary>
-        /// Original was GL_PROXY_TEXTURE_2D = 0x8064
+        /// Original was GL_PROXY_TEXTURE2_D = 0x8064
         /// </summary>
         ProxyTexture2D = 0x8064,
 
         /// <summary>
-        /// Original was GL_PROXY_TEXTURE_2D_EXT = 0x8064
+        /// Original was GL_PROXY_TEXTURE2_D_EXT = 0x8064
         /// </summary>
         ProxyTexture2DExt = 0x8064,
 
         /// <summary>
-        /// Original was GL_TEXTURE_3D = 0x806F
+        /// Original was GL_TEXTURE3_D = 0x806F
         /// </summary>
-        Texture3D = 0x806f,
+        Texture3D = 0x806F,
 
         /// <summary>
-        /// Original was GL_TEXTURE_3D_EXT = 0x806F
+        /// Original was GL_TEXTURE3_D_EXT = 0x806F
         /// </summary>
-        Texture3DExt = 0x806f,
+        Texture3DExt = 0x806F,
 
         /// <summary>
-        /// Original was GL_TEXTURE_3D_OES = 0x806F
+        /// Original was GL_TEXTURE3_D_OES = 0x806F
         /// </summary>
-        Texture3DOes = 0x806f,
+        Texture3DOes = 0x806F,
 
         /// <summary>
-        /// Original was GL_PROXY_TEXTURE_3D = 0x8070
+        /// Original was GL_PROXY_TEXTURE3_D = 0x8070
         /// </summary>
         ProxyTexture3D = 0x8070,
 
         /// <summary>
-        /// Original was GL_PROXY_TEXTURE_3D_EXT = 0x8070
+        /// Original was GL_PROXY_TEXTURE3_D_EXT = 0x8070
         /// </summary>
         ProxyTexture3DExt = 0x8070,
 
         /// <summary>
-        /// Original was GL_DETAIL_TEXTURE_2D_SGIS = 0x8095
+        /// Original was GL_DETAIL_TEXTURE2_D_SGIS = 0x8095
         /// </summary>
         DetailTexture2DSgis = 0x8095,
 
         /// <summary>
-        /// Original was GL_TEXTURE_4D_SGIS = 0x8134
+        /// Original was GL_TEXTURE4_D_SGIS = 0x8134
         /// </summary>
         Texture4DSgis = 0x8134,
 
         /// <summary>
-        /// Original was GL_PROXY_TEXTURE_4D_SGIS = 0x8135
+        /// Original was GL_PROXY_TEXTURE4_D_SGIS = 0x8135
         /// </summary>
         ProxyTexture4DSgis = 0x8135,
 
         /// <summary>
         /// Original was GL_TEXTURE_RECTANGLE = 0x84F5
         /// </summary>
-        TextureRectangle = 0x84f5,
+        TextureRectangle = 0x84F5,
 
         /// <summary>
         /// Original was GL_PROXY_TEXTURE_RECTANGLE = 0x84F7
         /// </summary>
-        ProxyTextureRectangle = 0x84f7,
+        ProxyTextureRectangle = 0x84F7,
 
         /// <summary>
         /// Original was GL_PROXY_TEXTURE_RECTANGLE_ARB = 0x84F7
         /// </summary>
-        ProxyTextureRectangleArb = 0x84f7,
+        ProxyTextureRectangleArb = 0x84F7,
 
         /// <summary>
         /// Original was GL_PROXY_TEXTURE_RECTANGLE_NV = 0x84F7
         /// </summary>
-        ProxyTextureRectangleNV = 0x84f7,
+        ProxyTextureRectangleNV = 0x84F7,
 
         /// <summary>
         /// Original was GL_TEXTURE_CUBE_MAP = 0x8513
         /// </summary>
         TextureCubeMap = 0x8513,
-
-        /// <summary>
-        /// Original was GL_TEXTURE_BINDING_CUBE_MAP = 0x8514
-        /// </summary>
-        TextureBindingCubeMap = 0x8514,
 
         /// <summary>
         /// Original was GL_TEXTURE_CUBE_MAP_POSITIVE_X = 0x8515
@@ -161,57 +156,52 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_TEXTURE_CUBE_MAP_NEGATIVE_Z = 0x851A
         /// </summary>
-        TextureCubeMapNegativeZ = 0x851a,
+        TextureCubeMapNegativeZ = 0x851A,
 
         /// <summary>
         /// Original was GL_PROXY_TEXTURE_CUBE_MAP = 0x851B
         /// </summary>
-        ProxyTextureCubeMap = 0x851b,
+        ProxyTextureCubeMap = 0x851B,
 
         /// <summary>
         /// Original was GL_PROXY_TEXTURE_CUBE_MAP_ARB = 0x851B
         /// </summary>
-        ProxyTextureCubeMapArb = 0x851b,
+        ProxyTextureCubeMapArb = 0x851B,
 
         /// <summary>
         /// Original was GL_PROXY_TEXTURE_CUBE_MAP_EXT = 0x851B
         /// </summary>
-        ProxyTextureCubeMapExt = 0x851b,
+        ProxyTextureCubeMapExt = 0x851B,
 
         /// <summary>
-        /// Original was GL_TEXTURE_1D_ARRAY = 0x8C18
+        /// Original was GL_TEXTURE1_D_ARRAY = 0x8C18
         /// </summary>
-        Texture1DArray = 0x8c18,
+        Texture1DArray = 0x8C18,
 
         /// <summary>
-        /// Original was GL_PROXY_TEXTURE_1D_ARRAY = 0x8C19
+        /// Original was GL_PROXY_TEXTURE1_D_ARRAY = 0x8C19
         /// </summary>
-        ProxyTexture1DArray = 0x8c19,
+        ProxyTexture1DArray = 0x8C19,
 
         /// <summary>
-        /// Original was GL_PROXY_TEXTURE_1D_ARRAY_EXT = 0x8C19
+        /// Original was GL_PROXY_TEXTURE1_D_ARRAY_EXT = 0x8C19
         /// </summary>
-        ProxyTexture1DArrayExt = 0x8c19,
+        ProxyTexture1DArrayExt = 0x8C19,
 
         /// <summary>
-        /// Original was GL_TEXTURE_2D_ARRAY = 0x8C1A
+        /// Original was GL_TEXTURE2_D_ARRAY = 0x8C1A
         /// </summary>
-        Texture2DArray = 0x8c1a,
+        Texture2DArray = 0x8C1A,
 
         /// <summary>
-        /// Original was GL_PROXY_TEXTURE_2D_ARRAY = 0x8C1B
+        /// Original was GL_PROXY_TEXTURE2_D_ARRAY = 0x8C1B
         /// </summary>
-        ProxyTexture2DArray = 0x8c1b,
+        ProxyTexture2DArray = 0x8C1B,
 
         /// <summary>
-        /// Original was GL_PROXY_TEXTURE_2D_ARRAY_EXT = 0x8C1B
+        /// Original was GL_PROXY_TEXTURE2_D_ARRAY_EXT = 0x8C1B
         /// </summary>
-        ProxyTexture2DArrayExt = 0x8c1b,
-
-        /// <summary>
-        /// Original was GL_TEXTURE_BUFFER = 0x8C2A
-        /// </summary>
-        TextureBuffer = 0x8c2a,
+        ProxyTexture2DArrayExt = 0x8C1B,
 
         /// <summary>
         /// Original was GL_TEXTURE_CUBE_MAP_ARRAY = 0x9009
@@ -236,30 +226,30 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_PROXY_TEXTURE_CUBE_MAP_ARRAY = 0x900B
         /// </summary>
-        ProxyTextureCubeMapArray = 0x900b,
+        ProxyTextureCubeMapArray = 0x900B,
 
         /// <summary>
         /// Original was GL_PROXY_TEXTURE_CUBE_MAP_ARRAY_ARB = 0x900B
         /// </summary>
-        ProxyTextureCubeMapArrayArb = 0x900b,
+        ProxyTextureCubeMapArrayArb = 0x900B,
 
         /// <summary>
-        /// Original was GL_TEXTURE_2D_MULTISAMPLE = 0x9100
+        /// Original was GL_TEXTURE2_D_MULTISAMPLE = 0x9100
         /// </summary>
         Texture2DMultisample = 0x9100,
 
         /// <summary>
-        /// Original was GL_PROXY_TEXTURE_2D_MULTISAMPLE = 0x9101
+        /// Original was GL_PROXY_TEXTURE2_D_MULTISAMPLE = 0x9101
         /// </summary>
         ProxyTexture2DMultisample = 0x9101,
 
         /// <summary>
-        /// Original was GL_TEXTURE_2D_MULTISAMPLE_ARRAY = 0x9102
+        /// Original was GL_TEXTURE2_D_MULTISAMPLE_ARRAY = 0x9102
         /// </summary>
         Texture2DMultisampleArray = 0x9102,
 
         /// <summary>
-        /// Original was GL_PROXY_TEXTURE_2D_MULTISAMPLE_ARRAY = 0x9103
+        /// Original was GL_PROXY_TEXTURE2_D_MULTISAMPLE_ARRAY = 0x9103
         /// </summary>
         ProxyTexture2DMultisampleArray = 0x9103
     }

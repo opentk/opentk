@@ -34,28 +34,33 @@ namespace OpenTK.Graphics.OpenGL4
     public enum KhrContextFlushControl
     {
         /// <summary>
-        /// Original was GL_NONE = 0
+        /// Original was GL_NONE = 0x0
         /// </summary>
-        None = 0,
+        None = 0x0,
+
+        /// <summary>
+        /// Original was GL_NONE = 0x0
+        /// </summary>
+        None = 0x0,
 
         /// <summary>
         /// Original was GL_CONTEXT_RELEASE_BEHAVIOR = 0x82FB
         /// </summary>
-        ContextReleaseBehavior = 0x82fb,
+        ContextReleaseBehavior = 0x82FB,
 
         /// <summary>
         /// Original was GL_CONTEXT_RELEASE_BEHAVIOR_KHR = 0x82FB
         /// </summary>
-        ContextReleaseBehaviorKhr = 0x82fb,
+        ContextReleaseBehaviorKhr = 0x82FB,
 
         /// <summary>
         /// Original was GL_CONTEXT_RELEASE_BEHAVIOR_FLUSH = 0x82FC
         /// </summary>
-        ContextReleaseBehaviorFlush = 0x82fc,
+        ContextReleaseBehaviorFlush = 0x82FC,
 
         /// <summary>
         /// Original was GL_CONTEXT_RELEASE_BEHAVIOR_FLUSH_KHR = 0x82FC
         /// </summary>
-        ContextReleaseBehaviorFlushKhr = 0x82fc
+        ContextReleaseBehaviorFlushKhr = 0x82FC
     }
 }

@@ -36,6 +36,6 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_DEPTH_STENCIL_TEXTURE_MODE = 0x90EA
         /// </summary>
-        DepthStencilTextureMode = 0x90ea
+        DepthStencilTextureMode = 0x90EA
     }
 }

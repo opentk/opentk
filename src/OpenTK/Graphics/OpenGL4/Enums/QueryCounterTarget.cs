@@ -36,6 +36,6 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_TIMESTAMP = 0x8E28
         /// </summary>
-        Timestamp = 0x8e28
+        Timestamp = 0x8E28
     }
 }

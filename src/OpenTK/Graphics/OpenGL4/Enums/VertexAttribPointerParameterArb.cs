@@ -29,7 +29,7 @@
 namespace OpenTK.Graphics.OpenGL4
 {
     /// <summary>
-    /// Not used directly.
+    /// Used in GL.GetVertexAttribPointer.
     /// </summary>
     public enum VertexAttribPointerParameterArb
     {

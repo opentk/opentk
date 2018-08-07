@@ -36,7 +36,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_PRIMITIVE_BOUNDING_BOX_ARB = 0x92BE
         /// </summary>
-        PrimitiveBoundingBoxArb = 0x92be,
+        PrimitiveBoundingBoxArb = 0x92BE,
 
         /// <summary>
         /// Original was GL_MULTISAMPLE_LINE_WIDTH_RANGE_ARB = 0x9381

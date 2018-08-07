@@ -46,11 +46,11 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_NUM_PROGRAM_BINARY_FORMATS = 0x87FE
         /// </summary>
-        NumProgramBinaryFormats = 0x87fe,
+        NumProgramBinaryFormats = 0x87FE,
 
         /// <summary>
         /// Original was GL_PROGRAM_BINARY_FORMATS = 0x87FF
         /// </summary>
-        ProgramBinaryFormats = 0x87ff
+        ProgramBinaryFormats = 0x87FF
     }
 }

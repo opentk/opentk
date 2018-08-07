@@ -34,18 +34,13 @@ namespace OpenTK.Graphics.OpenGL4
     public enum TextureCompareMode
     {
         /// <summary>
-        /// Original was GL_NONE = 0
+        /// Original was GL_NONE = 0x0
         /// </summary>
-        None = 0,
-
-        /// <summary>
-        /// Original was GL_COMPARE_R_TO_TEXTURE = 0x884E
-        /// </summary>
-        CompareRToTexture = 0x884e,
+        None = 0x0,
 
         /// <summary>
         /// Original was GL_COMPARE_REF_TO_TEXTURE = 0x884E
         /// </summary>
-        CompareRefToTexture = 0x884e
+        CompareRefToTexture = 0x884E
     }
 }

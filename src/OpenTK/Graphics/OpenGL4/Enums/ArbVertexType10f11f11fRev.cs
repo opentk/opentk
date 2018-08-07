@@ -34,8 +34,8 @@ namespace OpenTK.Graphics.OpenGL4
     public enum ArbVertexType10f11f11fRev
     {
         /// <summary>
-        /// Original was GL_UNSIGNED_INT_10F_11F_11F_REV = 0x8C3B
+        /// Original was GL_UNSIGNED_INT10F11F11F_REV = 0x8C3B
         /// </summary>
-        UnsignedInt10f11f11fRev = 0x8c3b
+        UnsignedInt10f11f11fRev = 0x8C3B
     }
 }

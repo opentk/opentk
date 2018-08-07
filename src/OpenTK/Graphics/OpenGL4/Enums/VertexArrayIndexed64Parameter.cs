@@ -36,6 +36,6 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_VERTEX_BINDING_OFFSET = 0x82D7
         /// </summary>
-        VertexBindingOffset = 0x82d7
+        VertexBindingOffset = 0x82D7
     }
 }

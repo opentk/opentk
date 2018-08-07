@@ -41,6 +41,6 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_PROTECTED_MEMORY_OBJECT_EXT = 0x959B
         /// </summary>
-        ProtectedMemoryObjectExt = 0x959b
+        ProtectedMemoryObjectExt = 0x959B
     }
 }

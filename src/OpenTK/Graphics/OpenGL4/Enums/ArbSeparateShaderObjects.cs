@@ -34,29 +34,29 @@ namespace OpenTK.Graphics.OpenGL4
     public enum ArbSeparateShaderObjects
     {
         /// <summary>
-        /// Original was GL_VERTEX_SHADER_BIT = 0x00000001
+        /// Original was GL_VERTEX_SHADER_BIT = 0x1
         /// </summary>
-        VertexShaderBit = 0x00000001,
+        VertexShaderBit = 0x1,
 
         /// <summary>
-        /// Original was GL_FRAGMENT_SHADER_BIT = 0x00000002
+        /// Original was GL_FRAGMENT_SHADER_BIT = 0x2
         /// </summary>
-        FragmentShaderBit = 0x00000002,
+        FragmentShaderBit = 0x2,
 
         /// <summary>
-        /// Original was GL_GEOMETRY_SHADER_BIT = 0x00000004
+        /// Original was GL_GEOMETRY_SHADER_BIT = 0x4
         /// </summary>
-        GeometryShaderBit = 0x00000004,
+        GeometryShaderBit = 0x4,
 
         /// <summary>
-        /// Original was GL_TESS_CONTROL_SHADER_BIT = 0x00000008
+        /// Original was GL_TESS_CONTROL_SHADER_BIT = 0x8
         /// </summary>
-        TessControlShaderBit = 0x00000008,
+        TessControlShaderBit = 0x8,
 
         /// <summary>
-        /// Original was GL_TESS_EVALUATION_SHADER_BIT = 0x00000010
+        /// Original was GL_TESS_EVALUATION_SHADER_BIT = 0x10
         /// </summary>
-        TessEvaluationShaderBit = 0x00000010,
+        TessEvaluationShaderBit = 0x10,
 
         /// <summary>
         /// Original was GL_PROGRAM_SEPARABLE = 0x8258
@@ -71,11 +71,11 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_PROGRAM_PIPELINE_BINDING = 0x825A
         /// </summary>
-        ProgramPipelineBinding = 0x825a,
+        ProgramPipelineBinding = 0x825A,
 
         /// <summary>
         /// Original was GL_ALL_SHADER_BITS = 0xFFFFFFFF
         /// </summary>
-        AllShaderBits = unchecked((int)0xffffffff)
+        AllShaderBits = unchecked((int)0xFFFFFFFF)
     }
 }

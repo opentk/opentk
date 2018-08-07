@@ -34,114 +34,114 @@ namespace OpenTK.Graphics.OpenGL4
     public enum PixelTransferParameter
     {
         /// <summary>
-        /// Original was GL_MAP_COLOR = 0x0D10
+        /// Original was GL_MAP_COLOR = 0xD10
         /// </summary>
-        MapColor = 0x0d10,
+        MapColor = 0xD10,
 
         /// <summary>
-        /// Original was GL_MAP_STENCIL = 0x0D11
+        /// Original was GL_MAP_STENCIL = 0xD11
         /// </summary>
-        MapStencil = 0x0d11,
+        MapStencil = 0xD11,
 
         /// <summary>
-        /// Original was GL_INDEX_SHIFT = 0x0D12
+        /// Original was GL_INDEX_SHIFT = 0xD12
         /// </summary>
-        IndexShift = 0x0d12,
+        IndexShift = 0xD12,
 
         /// <summary>
-        /// Original was GL_INDEX_OFFSET = 0x0D13
+        /// Original was GL_INDEX_OFFSET = 0xD13
         /// </summary>
-        IndexOffset = 0x0d13,
+        IndexOffset = 0xD13,
 
         /// <summary>
-        /// Original was GL_RED_SCALE = 0x0D14
+        /// Original was GL_RED_SCALE = 0xD14
         /// </summary>
-        RedScale = 0x0d14,
+        RedScale = 0xD14,
 
         /// <summary>
-        /// Original was GL_RED_BIAS = 0x0D15
+        /// Original was GL_RED_BIAS = 0xD15
         /// </summary>
-        RedBias = 0x0d15,
+        RedBias = 0xD15,
 
         /// <summary>
-        /// Original was GL_GREEN_SCALE = 0x0D18
+        /// Original was GL_GREEN_SCALE = 0xD18
         /// </summary>
-        GreenScale = 0x0d18,
+        GreenScale = 0xD18,
 
         /// <summary>
-        /// Original was GL_GREEN_BIAS = 0x0D19
+        /// Original was GL_GREEN_BIAS = 0xD19
         /// </summary>
-        GreenBias = 0x0d19,
+        GreenBias = 0xD19,
 
         /// <summary>
-        /// Original was GL_BLUE_SCALE = 0x0D1A
+        /// Original was GL_BLUE_SCALE = 0xD1A
         /// </summary>
-        BlueScale = 0x0d1a,
+        BlueScale = 0xD1A,
 
         /// <summary>
-        /// Original was GL_BLUE_BIAS = 0x0D1B
+        /// Original was GL_BLUE_BIAS = 0xD1B
         /// </summary>
-        BlueBias = 0x0d1b,
+        BlueBias = 0xD1B,
 
         /// <summary>
-        /// Original was GL_ALPHA_SCALE = 0x0D1C
+        /// Original was GL_ALPHA_SCALE = 0xD1C
         /// </summary>
-        AlphaScale = 0x0d1c,
+        AlphaScale = 0xD1C,
 
         /// <summary>
-        /// Original was GL_ALPHA_BIAS = 0x0D1D
+        /// Original was GL_ALPHA_BIAS = 0xD1D
         /// </summary>
-        AlphaBias = 0x0d1d,
+        AlphaBias = 0xD1D,
 
         /// <summary>
-        /// Original was GL_DEPTH_SCALE = 0x0D1E
+        /// Original was GL_DEPTH_SCALE = 0xD1E
         /// </summary>
-        DepthScale = 0x0d1e,
+        DepthScale = 0xD1E,
 
         /// <summary>
-        /// Original was GL_DEPTH_BIAS = 0x0D1F
+        /// Original was GL_DEPTH_BIAS = 0xD1F
         /// </summary>
-        DepthBias = 0x0d1f,
+        DepthBias = 0xD1F,
 
         /// <summary>
         /// Original was GL_POST_CONVOLUTION_RED_SCALE = 0x801C
         /// </summary>
-        PostConvolutionRedScale = 0x801c,
+        PostConvolutionRedScale = 0x801C,
 
         /// <summary>
         /// Original was GL_POST_CONVOLUTION_RED_SCALE_EXT = 0x801C
         /// </summary>
-        PostConvolutionRedScaleExt = 0x801c,
+        PostConvolutionRedScaleExt = 0x801C,
 
         /// <summary>
         /// Original was GL_POST_CONVOLUTION_GREEN_SCALE = 0x801D
         /// </summary>
-        PostConvolutionGreenScale = 0x801d,
+        PostConvolutionGreenScale = 0x801D,
 
         /// <summary>
         /// Original was GL_POST_CONVOLUTION_GREEN_SCALE_EXT = 0x801D
         /// </summary>
-        PostConvolutionGreenScaleExt = 0x801d,
+        PostConvolutionGreenScaleExt = 0x801D,
 
         /// <summary>
         /// Original was GL_POST_CONVOLUTION_BLUE_SCALE = 0x801E
         /// </summary>
-        PostConvolutionBlueScale = 0x801e,
+        PostConvolutionBlueScale = 0x801E,
 
         /// <summary>
         /// Original was GL_POST_CONVOLUTION_BLUE_SCALE_EXT = 0x801E
         /// </summary>
-        PostConvolutionBlueScaleExt = 0x801e,
+        PostConvolutionBlueScaleExt = 0x801E,
 
         /// <summary>
         /// Original was GL_POST_CONVOLUTION_ALPHA_SCALE = 0x801F
         /// </summary>
-        PostConvolutionAlphaScale = 0x801f,
+        PostConvolutionAlphaScale = 0x801F,
 
         /// <summary>
         /// Original was GL_POST_CONVOLUTION_ALPHA_SCALE_EXT = 0x801F
         /// </summary>
-        PostConvolutionAlphaScaleExt = 0x801f,
+        PostConvolutionAlphaScaleExt = 0x801F,
 
         /// <summary>
         /// Original was GL_POST_CONVOLUTION_RED_BIAS = 0x8020
@@ -186,81 +186,81 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_POST_COLOR_MATRIX_RED_SCALE = 0x80B4
         /// </summary>
-        PostColorMatrixRedScale = 0x80b4,
+        PostColorMatrixRedScale = 0x80B4,
 
         /// <summary>
         /// Original was GL_POST_COLOR_MATRIX_RED_SCALE_SGI = 0x80B4
         /// </summary>
-        PostColorMatrixRedScaleSgi = 0x80b4,
+        PostColorMatrixRedScaleSgi = 0x80B4,
 
         /// <summary>
         /// Original was GL_POST_COLOR_MATRIX_GREEN_SCALE = 0x80B5
         /// </summary>
-        PostColorMatrixGreenScale = 0x80b5,
+        PostColorMatrixGreenScale = 0x80B5,
 
         /// <summary>
         /// Original was GL_POST_COLOR_MATRIX_GREEN_SCALE_SGI = 0x80B5
         /// </summary>
-        PostColorMatrixGreenScaleSgi = 0x80b5,
+        PostColorMatrixGreenScaleSgi = 0x80B5,
 
         /// <summary>
         /// Original was GL_POST_COLOR_MATRIX_BLUE_SCALE = 0x80B6
         /// </summary>
-        PostColorMatrixBlueScale = 0x80b6,
+        PostColorMatrixBlueScale = 0x80B6,
 
         /// <summary>
         /// Original was GL_POST_COLOR_MATRIX_BLUE_SCALE_SGI = 0x80B6
         /// </summary>
-        PostColorMatrixBlueScaleSgi = 0x80b6,
+        PostColorMatrixBlueScaleSgi = 0x80B6,
 
         /// <summary>
         /// Original was GL_POST_COLOR_MATRIX_ALPHA_SCALE = 0x80B7
         /// </summary>
-        PostColorMatrixAlphaScale = 0x80b7,
+        PostColorMatrixAlphaScale = 0x80B7,
 
         /// <summary>
         /// Original was GL_POST_COLOR_MATRIX_ALPHA_SCALE_SGI = 0x80B7
         /// </summary>
-        PostColorMatrixAlphaScaleSgi = 0x80b7,
+        PostColorMatrixAlphaScaleSgi = 0x80B7,
 
         /// <summary>
         /// Original was GL_POST_COLOR_MATRIX_RED_BIAS = 0x80B8
         /// </summary>
-        PostColorMatrixRedBias = 0x80b8,
+        PostColorMatrixRedBias = 0x80B8,
 
         /// <summary>
         /// Original was GL_POST_COLOR_MATRIX_RED_BIAS_SGI = 0x80B8
         /// </summary>
-        PostColorMatrixRedBiasSgi = 0x80b8,
+        PostColorMatrixRedBiasSgi = 0x80B8,
 
         /// <summary>
         /// Original was GL_POST_COLOR_MATRIX_GREEN_BIAS = 0x80B9
         /// </summary>
-        PostColorMatrixGreenBias = 0x80b9,
+        PostColorMatrixGreenBias = 0x80B9,
 
         /// <summary>
         /// Original was GL_POST_COLOR_MATRIX_GREEN_BIAS_SGI = 0x80B9
         /// </summary>
-        PostColorMatrixGreenBiasSgi = 0x80b9,
+        PostColorMatrixGreenBiasSgi = 0x80B9,
 
         /// <summary>
         /// Original was GL_POST_COLOR_MATRIX_BLUE_BIAS = 0x80BA
         /// </summary>
-        PostColorMatrixBlueBias = 0x80ba,
+        PostColorMatrixBlueBias = 0x80BA,
 
         /// <summary>
         /// Original was GL_POST_COLOR_MATRIX_BLUE_BIAS_SGI = 0x80BA
         /// </summary>
-        PostColorMatrixBlueBiasSgi = 0x80ba,
+        PostColorMatrixBlueBiasSgi = 0x80BA,
 
         /// <summary>
         /// Original was GL_POST_COLOR_MATRIX_ALPHA_BIAS = 0x80BB
         /// </summary>
-        PostColorMatrixAlphaBias = 0x80bb,
+        PostColorMatrixAlphaBias = 0x80BB,
 
         /// <summary>
         /// Original was GL_POST_COLOR_MATRIX_ALPHA_BIAS_SGI = 0x80BB
         /// </summary>
-        PostColorMatrixAlphaBiasSgi = 0x80bb
+        PostColorMatrixAlphaBiasSgi = 0x80BB
     }
 }

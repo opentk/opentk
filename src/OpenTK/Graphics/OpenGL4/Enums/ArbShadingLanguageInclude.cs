@@ -29,23 +29,23 @@
 namespace OpenTK.Graphics.OpenGL4
 {
     /// <summary>
-    /// Used in GL.Arb.GetNamedString and GL.Arb.NamedString.
+    /// Used in GL.ARB.GetNamedString and GL.ARB.NamedString.
     /// </summary>
     public enum ArbShadingLanguageInclude
     {
         /// <summary>
         /// Original was GL_SHADER_INCLUDE_ARB = 0x8DAE
         /// </summary>
-        ShaderIncludeArb = 0x8dae,
+        ShaderIncludeArb = 0x8DAE,
 
         /// <summary>
         /// Original was GL_NAMED_STRING_LENGTH_ARB = 0x8DE9
         /// </summary>
-        NamedStringLengthArb = 0x8de9,
+        NamedStringLengthArb = 0x8DE9,
 
         /// <summary>
         /// Original was GL_NAMED_STRING_TYPE_ARB = 0x8DEA
         /// </summary>
-        NamedStringTypeArb = 0x8dea
+        NamedStringTypeArb = 0x8DEA
     }
 }

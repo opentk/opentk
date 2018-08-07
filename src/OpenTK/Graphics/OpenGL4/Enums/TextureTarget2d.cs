@@ -34,24 +34,24 @@ namespace OpenTK.Graphics.OpenGL4
     public enum TextureTarget2d
     {
         /// <summary>
-        /// Original was GL_TEXTURE_2D = 0x0DE1
+        /// Original was GL_TEXTURE2_D = 0xDE1
         /// </summary>
-        Texture2D = 0x0de1,
+        Texture2D = 0xDE1,
 
         /// <summary>
-        /// Original was GL_PROXY_TEXTURE_2D = 0x8064
+        /// Original was GL_PROXY_TEXTURE2_D = 0x8064
         /// </summary>
         ProxyTexture2D = 0x8064,
 
         /// <summary>
         /// Original was GL_TEXTURE_RECTANGLE = 0x84F5
         /// </summary>
-        TextureRectangle = 0x84f5,
+        TextureRectangle = 0x84F5,
 
         /// <summary>
         /// Original was GL_PROXY_TEXTURE_RECTANGLE = 0x84F7
         /// </summary>
-        ProxyTextureRectangle = 0x84f7,
+        ProxyTextureRectangle = 0x84F7,
 
         /// <summary>
         /// Original was GL_TEXTURE_CUBE_MAP = 0x8513
@@ -61,16 +61,16 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_PROXY_TEXTURE_CUBE_MAP = 0x851B
         /// </summary>
-        ProxyTextureCubeMap = 0x851b,
+        ProxyTextureCubeMap = 0x851B,
 
         /// <summary>
-        /// Original was GL_TEXTURE_1D_ARRAY = 0x8C18
+        /// Original was GL_TEXTURE1_D_ARRAY = 0x8C18
         /// </summary>
-        Texture1DArray = 0x8c18,
+        Texture1DArray = 0x8C18,
 
         /// <summary>
-        /// Original was GL_PROXY_TEXTURE_1D_ARRAY = 0x8C19
+        /// Original was GL_PROXY_TEXTURE1_D_ARRAY = 0x8C19
         /// </summary>
-        ProxyTexture1DArray = 0x8c19
+        ProxyTexture1DArray = 0x8C19
     }
 }

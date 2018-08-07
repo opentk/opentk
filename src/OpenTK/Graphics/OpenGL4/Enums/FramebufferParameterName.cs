@@ -29,105 +29,10 @@
 namespace OpenTK.Graphics.OpenGL4
 {
     /// <summary>
-    /// Used in GL.GetFramebufferAttachmentParameter and GL.GetNamedFramebufferAttachmentParameter.
+    /// Used in GL.EXT.NamedFramebufferParameter and GL.GetFramebufferAttachmentParameter, as well as 1 other function.
     /// </summary>
     public enum FramebufferParameterName
     {
-        /// <summary>
-        /// Original was GL_FRAMEBUFFER_ATTACHMENT_COLOR_ENCODING = 0x8210
-        /// </summary>
-        FramebufferAttachmentColorEncoding = 0x8210,
-
-        /// <summary>
-        /// Original was GL_FRAMEBUFFER_ATTACHMENT_COMPONENT_TYPE = 0x8211
-        /// </summary>
-        FramebufferAttachmentComponentType = 0x8211,
-
-        /// <summary>
-        /// Original was GL_FRAMEBUFFER_ATTACHMENT_RED_SIZE = 0x8212
-        /// </summary>
-        FramebufferAttachmentRedSize = 0x8212,
-
-        /// <summary>
-        /// Original was GL_FRAMEBUFFER_ATTACHMENT_GREEN_SIZE = 0x8213
-        /// </summary>
-        FramebufferAttachmentGreenSize = 0x8213,
-
-        /// <summary>
-        /// Original was GL_FRAMEBUFFER_ATTACHMENT_BLUE_SIZE = 0x8214
-        /// </summary>
-        FramebufferAttachmentBlueSize = 0x8214,
-
-        /// <summary>
-        /// Original was GL_FRAMEBUFFER_ATTACHMENT_ALPHA_SIZE = 0x8215
-        /// </summary>
-        FramebufferAttachmentAlphaSize = 0x8215,
-
-        /// <summary>
-        /// Original was GL_FRAMEBUFFER_ATTACHMENT_DEPTH_SIZE = 0x8216
-        /// </summary>
-        FramebufferAttachmentDepthSize = 0x8216,
-
-        /// <summary>
-        /// Original was GL_FRAMEBUFFER_ATTACHMENT_STENCIL_SIZE = 0x8217
-        /// </summary>
-        FramebufferAttachmentStencilSize = 0x8217,
-
-        /// <summary>
-        /// Original was GL_FRAMEBUFFER_ATTACHMENT_OBJECT_TYPE = 0x8CD0
-        /// </summary>
-        FramebufferAttachmentObjectType = 0x8cd0,
-
-        /// <summary>
-        /// Original was GL_FRAMEBUFFER_ATTACHMENT_OBJECT_TYPE_EXT = 0x8CD0
-        /// </summary>
-        FramebufferAttachmentObjectTypeExt = 0x8cd0,
-
-        /// <summary>
-        /// Original was GL_FRAMEBUFFER_ATTACHMENT_OBJECT_NAME = 0x8CD1
-        /// </summary>
-        FramebufferAttachmentObjectName = 0x8cd1,
-
-        /// <summary>
-        /// Original was GL_FRAMEBUFFER_ATTACHMENT_OBJECT_NAME_EXT = 0x8CD1
-        /// </summary>
-        FramebufferAttachmentObjectNameExt = 0x8cd1,
-
-        /// <summary>
-        /// Original was GL_FRAMEBUFFER_ATTACHMENT_TEXTURE_LEVEL = 0x8CD2
-        /// </summary>
-        FramebufferAttachmentTextureLevel = 0x8cd2,
-
-        /// <summary>
-        /// Original was GL_FRAMEBUFFER_ATTACHMENT_TEXTURE_LEVEL_EXT = 0x8CD2
-        /// </summary>
-        FramebufferAttachmentTextureLevelExt = 0x8cd2,
-
-        /// <summary>
-        /// Original was GL_FRAMEBUFFER_ATTACHMENT_TEXTURE_CUBE_MAP_FACE = 0x8CD3
-        /// </summary>
-        FramebufferAttachmentTextureCubeMapFace = 0x8cd3,
-
-        /// <summary>
-        /// Original was GL_FRAMEBUFFER_ATTACHMENT_TEXTURE_CUBE_MAP_FACE_EXT = 0x8CD3
-        /// </summary>
-        FramebufferAttachmentTextureCubeMapFaceExt = 0x8cd3,
-
-        /// <summary>
-        /// Original was GL_FRAMEBUFFER_ATTACHMENT_TEXTURE_3D_ZOFFSET_EXT = 0x8CD4
-        /// </summary>
-        FramebufferAttachmentTexture3DZoffsetExt = 0x8cd4,
-
-        /// <summary>
-        /// Original was GL_FRAMEBUFFER_ATTACHMENT_TEXTURE_LAYER = 0x8CD4
-        /// </summary>
-        FramebufferAttachmentTextureLayer = 0x8cd4,
-
-        /// <summary>
-        /// Original was GL_FRAMEBUFFER_ATTACHMENT_LAYERED = 0x8DA7
-        /// </summary>
-        FramebufferAttachmentLayered = 0x8da7,
-
         /// <summary>
         /// Original was GL_FRAMEBUFFER_DEFAULT_WIDTH = 0x9310
         /// </summary>

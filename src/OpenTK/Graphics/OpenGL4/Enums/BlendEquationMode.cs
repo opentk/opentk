@@ -29,7 +29,7 @@
 namespace OpenTK.Graphics.OpenGL4
 {
     /// <summary>
-    /// Used in GL.Arb.BlendEquation and GL.BlendEquation, as well as 1 other function.
+    /// Used in GL.BlendEquationSeparate and GL.BlendEquation, as well as 1 other function.
     /// </summary>
     public enum BlendEquationMode
     {
@@ -51,11 +51,11 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_FUNC_SUBTRACT = 0x800A
         /// </summary>
-        FuncSubtract = 0x800a,
+        FuncSubtract = 0x800A,
 
         /// <summary>
         /// Original was GL_FUNC_REVERSE_SUBTRACT = 0x800B
         /// </summary>
-        FuncReverseSubtract = 0x800b
+        FuncReverseSubtract = 0x800B
     }
 }

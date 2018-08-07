@@ -36,6 +36,6 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_TEXTURE_IMMUTABLE_FORMAT = 0x912F
         /// </summary>
-        TextureImmutableFormat = 0x912f
+        TextureImmutableFormat = 0x912F
     }
 }

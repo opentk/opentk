@@ -88,7 +88,7 @@ namespace Bind.XML.Signatures
         /// </summary>
         /// <param name="tokenName">The name of the token.</param>
         /// <returns>The enumeration that contains the token.</returns>
-        [NotNull]
+        [CanBeNull]
         public EnumerationSignature FindContainingEnumeration(string tokenName)
         {
             var candidates = Enumerations
@@ -111,7 +111,7 @@ namespace Bind.XML.Signatures
 
             if (!candidates.Any())
             {
-                throw new ArgumentException("Couldn't find the given token.", nameof(tokenName));
+                return null;
             }
 
             return candidates.First();

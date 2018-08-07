@@ -36,11 +36,11 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_PARAMETER_BUFFER_ARB = 0x80EE
         /// </summary>
-        ParameterBufferArb = 0x80ee,
+        ParameterBufferArb = 0x80EE,
 
         /// <summary>
         /// Original was GL_PARAMETER_BUFFER_BINDING_ARB = 0x80EF
         /// </summary>
-        ParameterBufferBindingArb = 0x80ef
+        ParameterBufferBindingArb = 0x80EF
     }
 }

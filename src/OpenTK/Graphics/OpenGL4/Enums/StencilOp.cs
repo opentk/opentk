@@ -34,43 +34,33 @@ namespace OpenTK.Graphics.OpenGL4
     public enum StencilOp
     {
         /// <summary>
-        /// Original was GL_ZERO = 0
+        /// Original was GL_ZERO = 0x0
         /// </summary>
-        Zero = 0,
+        Zero = 0x0,
 
         /// <summary>
         /// Original was GL_INVERT = 0x150A
         /// </summary>
-        Invert = 0x150a,
+        Invert = 0x150A,
 
         /// <summary>
         /// Original was GL_KEEP = 0x1E00
         /// </summary>
-        Keep = 0x1e00,
+        Keep = 0x1E00,
 
         /// <summary>
         /// Original was GL_REPLACE = 0x1E01
         /// </summary>
-        Replace = 0x1e01,
+        Replace = 0x1E01,
 
         /// <summary>
         /// Original was GL_INCR = 0x1E02
         /// </summary>
-        Incr = 0x1e02,
+        Incr = 0x1E02,
 
         /// <summary>
         /// Original was GL_DECR = 0x1E03
         /// </summary>
-        Decr = 0x1e03,
-
-        /// <summary>
-        /// Original was GL_INCR_WRAP = 0x8507
-        /// </summary>
-        IncrWrap = 0x8507,
-
-        /// <summary>
-        /// Original was GL_DECR_WRAP = 0x8508
-        /// </summary>
-        DecrWrap = 0x8508
+        Decr = 0x1E03
     }
 }

@@ -29,14 +29,14 @@
 namespace OpenTK.Graphics.OpenGL4
 {
     /// <summary>
-    /// Used in GL.NV.CoverageModulation.
+    /// Not used directly.
     /// </summary>
     public enum ColorComponent
     {
         /// <summary>
-        /// Original was GL_NONE = 0
+        /// Original was GL_NONE = 0x0
         /// </summary>
-        None = 0,
+        None = 0x0,
 
         /// <summary>
         /// Original was GL_ALPHA = 0x1906

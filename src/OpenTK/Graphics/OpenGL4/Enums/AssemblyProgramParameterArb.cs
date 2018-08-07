@@ -29,7 +29,7 @@
 namespace OpenTK.Graphics.OpenGL4
 {
     /// <summary>
-    /// Used in GL.Arb.ProgramParameter and GL.Ext.ProgramParameter.
+    /// Used in GL.ProgramParameter.
     /// </summary>
     public enum AssemblyProgramParameterArb
     {
@@ -81,32 +81,32 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_PROGRAM_NATIVE_TEX_INDIRECTIONS_ARB = 0x880A
         /// </summary>
-        ProgramNativeTexIndirectionsArb = 0x880a,
+        ProgramNativeTexIndirectionsArb = 0x880A,
 
         /// <summary>
         /// Original was GL_MAX_PROGRAM_ALU_INSTRUCTIONS_ARB = 0x880B
         /// </summary>
-        MaxProgramAluInstructionsArb = 0x880b,
+        MaxProgramAluInstructionsArb = 0x880B,
 
         /// <summary>
         /// Original was GL_MAX_PROGRAM_TEX_INSTRUCTIONS_ARB = 0x880C
         /// </summary>
-        MaxProgramTexInstructionsArb = 0x880c,
+        MaxProgramTexInstructionsArb = 0x880C,
 
         /// <summary>
         /// Original was GL_MAX_PROGRAM_TEX_INDIRECTIONS_ARB = 0x880D
         /// </summary>
-        MaxProgramTexIndirectionsArb = 0x880d,
+        MaxProgramTexIndirectionsArb = 0x880D,
 
         /// <summary>
         /// Original was GL_MAX_PROGRAM_NATIVE_ALU_INSTRUCTIONS_ARB = 0x880E
         /// </summary>
-        MaxProgramNativeAluInstructionsArb = 0x880e,
+        MaxProgramNativeAluInstructionsArb = 0x880E,
 
         /// <summary>
         /// Original was GL_MAX_PROGRAM_NATIVE_TEX_INSTRUCTIONS_ARB = 0x880F
         /// </summary>
-        MaxProgramNativeTexInstructionsArb = 0x880f,
+        MaxProgramNativeTexInstructionsArb = 0x880F,
 
         /// <summary>
         /// Original was GL_MAX_PROGRAM_NATIVE_TEX_INDIRECTIONS_ARB = 0x8810
@@ -121,117 +121,117 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_PROGRAM_INSTRUCTION = 0x88A0
         /// </summary>
-        ProgramInstruction = 0x88a0,
+        ProgramInstruction = 0x88A0,
 
         /// <summary>
         /// Original was GL_MAX_PROGRAM_INSTRUCTIONS = 0x88A1
         /// </summary>
-        MaxProgramInstructions = 0x88a1,
+        MaxProgramInstructions = 0x88A1,
 
         /// <summary>
         /// Original was GL_PROGRAM_NATIVE_INSTRUCTIONS = 0x88A2
         /// </summary>
-        ProgramNativeInstructions = 0x88a2,
+        ProgramNativeInstructions = 0x88A2,
 
         /// <summary>
         /// Original was GL_MAX_PROGRAM_NATIVE_INSTRUCTIONS = 0x88A3
         /// </summary>
-        MaxProgramNativeInstructions = 0x88a3,
+        MaxProgramNativeInstructions = 0x88A3,
 
         /// <summary>
         /// Original was GL_PROGRAM_TEMPORARIES = 0x88A4
         /// </summary>
-        ProgramTemporaries = 0x88a4,
+        ProgramTemporaries = 0x88A4,
 
         /// <summary>
         /// Original was GL_MAX_PROGRAM_TEMPORARIES = 0x88A5
         /// </summary>
-        MaxProgramTemporaries = 0x88a5,
+        MaxProgramTemporaries = 0x88A5,
 
         /// <summary>
         /// Original was GL_PROGRAM_NATIVE_TEMPORARIES = 0x88A6
         /// </summary>
-        ProgramNativeTemporaries = 0x88a6,
+        ProgramNativeTemporaries = 0x88A6,
 
         /// <summary>
         /// Original was GL_MAX_PROGRAM_NATIVE_TEMPORARIES = 0x88A7
         /// </summary>
-        MaxProgramNativeTemporaries = 0x88a7,
+        MaxProgramNativeTemporaries = 0x88A7,
 
         /// <summary>
         /// Original was GL_PROGRAM_PARAMETERS = 0x88A8
         /// </summary>
-        ProgramParameters = 0x88a8,
+        ProgramParameters = 0x88A8,
 
         /// <summary>
         /// Original was GL_MAX_PROGRAM_PARAMETERS = 0x88A9
         /// </summary>
-        MaxProgramParameters = 0x88a9,
+        MaxProgramParameters = 0x88A9,
 
         /// <summary>
         /// Original was GL_PROGRAM_NATIVE_PARAMETERS = 0x88AA
         /// </summary>
-        ProgramNativeParameters = 0x88aa,
+        ProgramNativeParameters = 0x88AA,
 
         /// <summary>
         /// Original was GL_MAX_PROGRAM_NATIVE_PARAMETERS = 0x88AB
         /// </summary>
-        MaxProgramNativeParameters = 0x88ab,
+        MaxProgramNativeParameters = 0x88AB,
 
         /// <summary>
         /// Original was GL_PROGRAM_ATTRIBS = 0x88AC
         /// </summary>
-        ProgramAttribs = 0x88ac,
+        ProgramAttribs = 0x88AC,
 
         /// <summary>
         /// Original was GL_MAX_PROGRAM_ATTRIBS = 0x88AD
         /// </summary>
-        MaxProgramAttribs = 0x88ad,
+        MaxProgramAttribs = 0x88AD,
 
         /// <summary>
         /// Original was GL_PROGRAM_NATIVE_ATTRIBS = 0x88AE
         /// </summary>
-        ProgramNativeAttribs = 0x88ae,
+        ProgramNativeAttribs = 0x88AE,
 
         /// <summary>
         /// Original was GL_MAX_PROGRAM_NATIVE_ATTRIBS = 0x88AF
         /// </summary>
-        MaxProgramNativeAttribs = 0x88af,
+        MaxProgramNativeAttribs = 0x88AF,
 
         /// <summary>
         /// Original was GL_PROGRAM_ADDRESS_REGISTERS = 0x88B0
         /// </summary>
-        ProgramAddressRegisters = 0x88b0,
+        ProgramAddressRegisters = 0x88B0,
 
         /// <summary>
         /// Original was GL_MAX_PROGRAM_ADDRESS_REGISTERS = 0x88B1
         /// </summary>
-        MaxProgramAddressRegisters = 0x88b1,
+        MaxProgramAddressRegisters = 0x88B1,
 
         /// <summary>
         /// Original was GL_PROGRAM_NATIVE_ADDRESS_REGISTERS = 0x88B2
         /// </summary>
-        ProgramNativeAddressRegisters = 0x88b2,
+        ProgramNativeAddressRegisters = 0x88B2,
 
         /// <summary>
         /// Original was GL_MAX_PROGRAM_NATIVE_ADDRESS_REGISTERS = 0x88B3
         /// </summary>
-        MaxProgramNativeAddressRegisters = 0x88b3,
+        MaxProgramNativeAddressRegisters = 0x88B3,
 
         /// <summary>
         /// Original was GL_MAX_PROGRAM_LOCAL_PARAMETERS = 0x88B4
         /// </summary>
-        MaxProgramLocalParameters = 0x88b4,
+        MaxProgramLocalParameters = 0x88B4,
 
         /// <summary>
         /// Original was GL_MAX_PROGRAM_ENV_PARAMETERS = 0x88B5
         /// </summary>
-        MaxProgramEnvParameters = 0x88b5,
+        MaxProgramEnvParameters = 0x88B5,
 
         /// <summary>
         /// Original was GL_PROGRAM_UNDER_NATIVE_LIMITS = 0x88B6
         /// </summary>
-        ProgramUnderNativeLimits = 0x88b6,
+        ProgramUnderNativeLimits = 0x88B6,
 
         /// <summary>
         /// Original was GL_GEOMETRY_VERTICES_OUT = 0x8916

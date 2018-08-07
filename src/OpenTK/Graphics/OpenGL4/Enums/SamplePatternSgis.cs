@@ -34,73 +34,73 @@ namespace OpenTK.Graphics.OpenGL4
     public enum SamplePatternSgis
     {
         /// <summary>
-        /// Original was GL_1PASS_EXT = 0x80A1
+        /// Original was GL_C1_PASS_EXT = 0x80A1
         /// </summary>
-        C1PassExt = 0x80a1,
+        C1PassExt = 0x80A1,
 
         /// <summary>
-        /// Original was GL_1PASS_SGIS = 0x80A1
+        /// Original was GL_C1_PASS_SGIS = 0x80A1
         /// </summary>
-        C1PassSgis = 0x80a1,
+        C1PassSgis = 0x80A1,
 
         /// <summary>
-        /// Original was GL_2PASS_0_EXT = 0x80A2
+        /// Original was GL_C2_PASS0_EXT = 0x80A2
         /// </summary>
-        C2Pass0Ext = 0x80a2,
+        C2Pass0Ext = 0x80A2,
 
         /// <summary>
-        /// Original was GL_2PASS_0_SGIS = 0x80A2
+        /// Original was GL_C2_PASS0_SGIS = 0x80A2
         /// </summary>
-        C2Pass0Sgis = 0x80a2,
+        C2Pass0Sgis = 0x80A2,
 
         /// <summary>
-        /// Original was GL_2PASS_1_EXT = 0x80A3
+        /// Original was GL_C2_PASS1_EXT = 0x80A3
         /// </summary>
-        C2Pass1Ext = 0x80a3,
+        C2Pass1Ext = 0x80A3,
 
         /// <summary>
-        /// Original was GL_2PASS_1_SGIS = 0x80A3
+        /// Original was GL_C2_PASS1_SGIS = 0x80A3
         /// </summary>
-        C2Pass1Sgis = 0x80a3,
+        C2Pass1Sgis = 0x80A3,
 
         /// <summary>
-        /// Original was GL_4PASS_0_EXT = 0x80A4
+        /// Original was GL_C4_PASS0_EXT = 0x80A4
         /// </summary>
-        C4Pass0Ext = 0x80a4,
+        C4Pass0Ext = 0x80A4,
 
         /// <summary>
-        /// Original was GL_4PASS_0_SGIS = 0x80A4
+        /// Original was GL_C4_PASS0_SGIS = 0x80A4
         /// </summary>
-        C4Pass0Sgis = 0x80a4,
+        C4Pass0Sgis = 0x80A4,
 
         /// <summary>
-        /// Original was GL_4PASS_1_EXT = 0x80A5
+        /// Original was GL_C4_PASS1_EXT = 0x80A5
         /// </summary>
-        C4Pass1Ext = 0x80a5,
+        C4Pass1Ext = 0x80A5,
 
         /// <summary>
-        /// Original was GL_4PASS_1_SGIS = 0x80A5
+        /// Original was GL_C4_PASS1_SGIS = 0x80A5
         /// </summary>
-        C4Pass1Sgis = 0x80a5,
+        C4Pass1Sgis = 0x80A5,
 
         /// <summary>
-        /// Original was GL_4PASS_2_EXT = 0x80A6
+        /// Original was GL_C4_PASS2_EXT = 0x80A6
         /// </summary>
-        C4Pass2Ext = 0x80a6,
+        C4Pass2Ext = 0x80A6,
 
         /// <summary>
-        /// Original was GL_4PASS_2_SGIS = 0x80A6
+        /// Original was GL_C4_PASS2_SGIS = 0x80A6
         /// </summary>
-        C4Pass2Sgis = 0x80a6,
+        C4Pass2Sgis = 0x80A6,
 
         /// <summary>
-        /// Original was GL_4PASS_3_EXT = 0x80A7
+        /// Original was GL_C4_PASS3_EXT = 0x80A7
         /// </summary>
-        C4Pass3Ext = 0x80a7,
+        C4Pass3Ext = 0x80A7,
 
         /// <summary>
-        /// Original was GL_4PASS_3_SGIS = 0x80A7
+        /// Original was GL_C4_PASS3_SGIS = 0x80A7
         /// </summary>
-        C4Pass3Sgis = 0x80a7
+        C4Pass3Sgis = 0x80A7
     }
 }

@@ -29,7 +29,7 @@
 namespace OpenTK.Graphics.OpenGL4
 {
     /// <summary>
-    /// Used in GL.Arb.GetnHistogram and GL.GetHistogram, as well as 4 other functions.
+    /// Not used directly.
     /// </summary>
     public enum HistogramTargetExt
     {
@@ -39,9 +39,19 @@ namespace OpenTK.Graphics.OpenGL4
         Histogram = 0x8024,
 
         /// <summary>
+        /// Original was GL_HISTOGRAM = 0x8024
+        /// </summary>
+        Histogram = 0x8024,
+
+        /// <summary>
         /// Original was GL_HISTOGRAM_EXT = 0x8024
         /// </summary>
         HistogramExt = 0x8024,
+
+        /// <summary>
+        /// Original was GL_PROXY_HISTOGRAM = 0x8025
+        /// </summary>
+        ProxyHistogram = 0x8025,
 
         /// <summary>
         /// Original was GL_PROXY_HISTOGRAM = 0x8025

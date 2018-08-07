@@ -36,11 +36,11 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_TRANSFORM_FEEDBACK_OVERFLOW_ARB = 0x82EC
         /// </summary>
-        TransformFeedbackOverflowArb = 0x82ec,
+        TransformFeedbackOverflowArb = 0x82EC,
 
         /// <summary>
         /// Original was GL_TRANSFORM_FEEDBACK_STREAM_OVERFLOW_ARB = 0x82ED
         /// </summary>
-        TransformFeedbackStreamOverflowArb = 0x82ed
+        TransformFeedbackStreamOverflowArb = 0x82ED
     }
 }

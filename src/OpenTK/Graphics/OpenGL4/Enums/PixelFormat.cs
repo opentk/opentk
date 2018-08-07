@@ -29,7 +29,7 @@
 namespace OpenTK.Graphics.OpenGL4
 {
     /// <summary>
-    /// Used in GL.Arb.GetImageHandle and GL.Arb.GetnColorTable, as well as 72 other functions.
+    /// Used in GL.GetColorTable and GL.GetConvolutionFilter, as well as 72 other functions.
     /// </summary>
     public enum PixelFormat
     {
@@ -42,11 +42,6 @@ namespace OpenTK.Graphics.OpenGL4
         /// Original was GL_UNSIGNED_INT = 0x1405
         /// </summary>
         UnsignedInt = 0x1405,
-
-        /// <summary>
-        /// Original was GL_COLOR_INDEX = 0x1900
-        /// </summary>
-        ColorIndex = 0x1900,
 
         /// <summary>
         /// Original was GL_STENCIL_INDEX = 0x1901
@@ -94,16 +89,6 @@ namespace OpenTK.Graphics.OpenGL4
         Rgba = 0x1908,
 
         /// <summary>
-        /// Original was GL_LUMINANCE = 0x1909
-        /// </summary>
-        Luminance = 0x1909,
-
-        /// <summary>
-        /// Original was GL_LUMINANCE_ALPHA = 0x190A
-        /// </summary>
-        LuminanceAlpha = 0x190a,
-
-        /// <summary>
         /// Original was GL_ABGR_EXT = 0x8000
         /// </summary>
         AbgrExt = 0x8000,
@@ -111,111 +96,21 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_CMYK_EXT = 0x800C
         /// </summary>
-        CmykExt = 0x800c,
+        CmykExt = 0x800C,
 
         /// <summary>
         /// Original was GL_CMYKA_EXT = 0x800D
         /// </summary>
-        CmykaExt = 0x800d,
+        CmykaExt = 0x800D,
 
         /// <summary>
-        /// Original was GL_BGR = 0x80E0
+        /// Original was GL_YCRCB422_SGIX = 0x81BB
         /// </summary>
-        Bgr = 0x80e0,
+        Ycrcb422Sgix = 0x81BB,
 
         /// <summary>
-        /// Original was GL_BGRA = 0x80E1
+        /// Original was GL_YCRCB444_SGIX = 0x81BC
         /// </summary>
-        Bgra = 0x80e1,
-
-        /// <summary>
-        /// Original was GL_YCRCB_422_SGIX = 0x81BB
-        /// </summary>
-        Ycrcb422Sgix = 0x81bb,
-
-        /// <summary>
-        /// Original was GL_YCRCB_444_SGIX = 0x81BC
-        /// </summary>
-        Ycrcb444Sgix = 0x81bc,
-
-        /// <summary>
-        /// Original was GL_RG = 0x8227
-        /// </summary>
-        RG = 0x8227,
-
-        /// <summary>
-        /// Original was GL_RG_INTEGER = 0x8228
-        /// </summary>
-        RGInteger = 0x8228,
-
-        /// <summary>
-        /// Original was GL_R5_G6_B5_ICC_SGIX = 0x8466
-        /// </summary>
-        R5G6B5IccSgix = 0x8466,
-
-        /// <summary>
-        /// Original was GL_R5_G6_B5_A8_ICC_SGIX = 0x8467
-        /// </summary>
-        R5G6B5A8IccSgix = 0x8467,
-
-        /// <summary>
-        /// Original was GL_ALPHA16_ICC_SGIX = 0x8468
-        /// </summary>
-        Alpha16IccSgix = 0x8468,
-
-        /// <summary>
-        /// Original was GL_LUMINANCE16_ICC_SGIX = 0x8469
-        /// </summary>
-        Luminance16IccSgix = 0x8469,
-
-        /// <summary>
-        /// Original was GL_LUMINANCE16_ALPHA8_ICC_SGIX = 0x846B
-        /// </summary>
-        Luminance16Alpha8IccSgix = 0x846b,
-
-        /// <summary>
-        /// Original was GL_DEPTH_STENCIL = 0x84F9
-        /// </summary>
-        DepthStencil = 0x84f9,
-
-        /// <summary>
-        /// Original was GL_RED_INTEGER = 0x8D94
-        /// </summary>
-        RedInteger = 0x8d94,
-
-        /// <summary>
-        /// Original was GL_GREEN_INTEGER = 0x8D95
-        /// </summary>
-        GreenInteger = 0x8d95,
-
-        /// <summary>
-        /// Original was GL_BLUE_INTEGER = 0x8D96
-        /// </summary>
-        BlueInteger = 0x8d96,
-
-        /// <summary>
-        /// Original was GL_ALPHA_INTEGER = 0x8D97
-        /// </summary>
-        AlphaInteger = 0x8d97,
-
-        /// <summary>
-        /// Original was GL_RGB_INTEGER = 0x8D98
-        /// </summary>
-        RgbInteger = 0x8d98,
-
-        /// <summary>
-        /// Original was GL_RGBA_INTEGER = 0x8D99
-        /// </summary>
-        RgbaInteger = 0x8d99,
-
-        /// <summary>
-        /// Original was GL_BGR_INTEGER = 0x8D9A
-        /// </summary>
-        BgrInteger = 0x8d9a,
-
-        /// <summary>
-        /// Original was GL_BGRA_INTEGER = 0x8D9B
-        /// </summary>
-        BgraInteger = 0x8d9b
+        Ycrcb444Sgix = 0x81BC
     }
 }

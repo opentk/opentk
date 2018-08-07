@@ -29,23 +29,28 @@
 namespace OpenTK.Graphics.OpenGL4
 {
     /// <summary>
-    /// Not used directly.
+    /// Used in GL.NV.ConservativeRasterParameter.
     /// </summary>
     public enum NVConservativeRasterPreSnapTriangles
     {
         /// <summary>
         /// Original was GL_CONSERVATIVE_RASTER_MODE_NV = 0x954D
         /// </summary>
-        ConservativeRasterModeNV = 0x954d,
+        ConservativeRasterModeNV = 0x954D,
+
+        /// <summary>
+        /// Original was GL_CONSERVATIVE_RASTER_MODE_NV = 0x954D
+        /// </summary>
+        ConservativeRasterModeNV = 0x954D,
 
         /// <summary>
         /// Original was GL_CONSERVATIVE_RASTER_MODE_POST_SNAP_NV = 0x954E
         /// </summary>
-        ConservativeRasterModePostSnapNV = 0x954e,
+        ConservativeRasterModePostSnapNV = 0x954E,
 
         /// <summary>
         /// Original was GL_CONSERVATIVE_RASTER_MODE_PRE_SNAP_TRIANGLES_NV = 0x954F
         /// </summary>
-        ConservativeRasterModePreSnapTrianglesNV = 0x954f
+        ConservativeRasterModePreSnapTrianglesNV = 0x954F
     }
 }

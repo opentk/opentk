@@ -34,9 +34,9 @@ namespace OpenTK.Graphics.OpenGL4
     public enum Version11
     {
         /// <summary>
-        /// Original was GL_COLOR_LOGIC_OP = 0x0BF2
+        /// Original was GL_COLOR_LOGIC_OP = 0xBF2
         /// </summary>
-        ColorLogicOp = 0x0bf2,
+        ColorLogicOp = 0xBF2,
 
         /// <summary>
         /// Original was GL_TEXTURE_INTERNAL_FORMAT = 0x1003
@@ -46,27 +46,27 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_DOUBLE = 0x140A
         /// </summary>
-        Double = 0x140a,
+        Double = 0x140A,
 
         /// <summary>
         /// Original was GL_POLYGON_OFFSET_UNITS = 0x2A00
         /// </summary>
-        PolygonOffsetUnits = 0x2a00,
+        PolygonOffsetUnits = 0x2A00,
 
         /// <summary>
         /// Original was GL_POLYGON_OFFSET_POINT = 0x2A01
         /// </summary>
-        PolygonOffsetPoint = 0x2a01,
+        PolygonOffsetPoint = 0x2A01,
 
         /// <summary>
         /// Original was GL_POLYGON_OFFSET_LINE = 0x2A02
         /// </summary>
-        PolygonOffsetLine = 0x2a02,
+        PolygonOffsetLine = 0x2A02,
 
         /// <summary>
         /// Original was GL_R3_G3_B2 = 0x2A10
         /// </summary>
-        R3G3B2 = 0x2a10,
+        R3G3B2 = 0x2A10,
 
         /// <summary>
         /// Original was GL_POLYGON_OFFSET_FILL = 0x8037
@@ -81,7 +81,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_RGB4 = 0x804F
         /// </summary>
-        Rgb4 = 0x804f,
+        Rgb4 = 0x804F,
 
         /// <summary>
         /// Original was GL_RGB5 = 0x8050
@@ -136,50 +136,50 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_RGBA12 = 0x805A
         /// </summary>
-        Rgba12 = 0x805a,
+        Rgba12 = 0x805A,
 
         /// <summary>
         /// Original was GL_RGBA16 = 0x805B
         /// </summary>
-        Rgba16 = 0x805b,
+        Rgba16 = 0x805B,
 
         /// <summary>
         /// Original was GL_TEXTURE_RED_SIZE = 0x805C
         /// </summary>
-        TextureRedSize = 0x805c,
+        TextureRedSize = 0x805C,
 
         /// <summary>
         /// Original was GL_TEXTURE_GREEN_SIZE = 0x805D
         /// </summary>
-        TextureGreenSize = 0x805d,
+        TextureGreenSize = 0x805D,
 
         /// <summary>
         /// Original was GL_TEXTURE_BLUE_SIZE = 0x805E
         /// </summary>
-        TextureBlueSize = 0x805e,
+        TextureBlueSize = 0x805E,
 
         /// <summary>
         /// Original was GL_TEXTURE_ALPHA_SIZE = 0x805F
         /// </summary>
-        TextureAlphaSize = 0x805f,
+        TextureAlphaSize = 0x805F,
 
         /// <summary>
-        /// Original was GL_PROXY_TEXTURE_1D = 0x8063
+        /// Original was GL_PROXY_TEXTURE1_D = 0x8063
         /// </summary>
         ProxyTexture1D = 0x8063,
 
         /// <summary>
-        /// Original was GL_PROXY_TEXTURE_2D = 0x8064
+        /// Original was GL_PROXY_TEXTURE2_D = 0x8064
         /// </summary>
         ProxyTexture2D = 0x8064,
 
         /// <summary>
-        /// Original was GL_TEXTURE_BINDING_1D = 0x8068
+        /// Original was GL_TEXTURE_BINDING1_D = 0x8068
         /// </summary>
         TextureBinding1D = 0x8068,
 
         /// <summary>
-        /// Original was GL_TEXTURE_BINDING_2D = 0x8069
+        /// Original was GL_TEXTURE_BINDING2_D = 0x8069
         /// </summary>
         TextureBinding2D = 0x8069
     }

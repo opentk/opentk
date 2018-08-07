@@ -36,51 +36,51 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_COLOR_TABLE_SCALE = 0x80D6
         /// </summary>
-        ColorTableScale = 0x80d6,
+        ColorTableScale = 0x80D6,
 
         /// <summary>
         /// Original was GL_COLOR_TABLE_BIAS = 0x80D7
         /// </summary>
-        ColorTableBias = 0x80d7,
+        ColorTableBias = 0x80D7,
 
         /// <summary>
         /// Original was GL_COLOR_TABLE_FORMAT = 0x80D8
         /// </summary>
-        ColorTableFormat = 0x80d8,
+        ColorTableFormat = 0x80D8,
 
         /// <summary>
         /// Original was GL_COLOR_TABLE_WIDTH = 0x80D9
         /// </summary>
-        ColorTableWidth = 0x80d9,
+        ColorTableWidth = 0x80D9,
 
         /// <summary>
         /// Original was GL_COLOR_TABLE_RED_SIZE = 0x80DA
         /// </summary>
-        ColorTableRedSize = 0x80da,
+        ColorTableRedSize = 0x80DA,
 
         /// <summary>
         /// Original was GL_COLOR_TABLE_GREEN_SIZE = 0x80DB
         /// </summary>
-        ColorTableGreenSize = 0x80db,
+        ColorTableGreenSize = 0x80DB,
 
         /// <summary>
         /// Original was GL_COLOR_TABLE_BLUE_SIZE = 0x80DC
         /// </summary>
-        ColorTableBlueSize = 0x80dc,
+        ColorTableBlueSize = 0x80DC,
 
         /// <summary>
         /// Original was GL_COLOR_TABLE_ALPHA_SIZE = 0x80DD
         /// </summary>
-        ColorTableAlphaSize = 0x80dd,
+        ColorTableAlphaSize = 0x80DD,
 
         /// <summary>
         /// Original was GL_COLOR_TABLE_LUMINANCE_SIZE = 0x80DE
         /// </summary>
-        ColorTableLuminanceSize = 0x80de,
+        ColorTableLuminanceSize = 0x80DE,
 
         /// <summary>
         /// Original was GL_COLOR_TABLE_INTENSITY_SIZE = 0x80DF
         /// </summary>
-        ColorTableIntensitySize = 0x80df
+        ColorTableIntensitySize = 0x80DF
     }
 }

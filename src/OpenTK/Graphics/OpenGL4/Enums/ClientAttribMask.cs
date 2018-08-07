@@ -31,7 +31,7 @@ using System;
 namespace OpenTK.Graphics.OpenGL4
 {
     /// <summary>
-    /// Used in GL.Ext.ClientAttribDefault and GL.Ext.PushClientAttribDefault.
+    /// Used in GL.EXT.ClientAttribDefault and GL.EXT.PushClientAttribDefault.
     /// </summary>
     [Flags]
     public enum ClientAttribMask

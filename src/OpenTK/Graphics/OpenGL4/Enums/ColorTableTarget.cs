@@ -29,38 +29,23 @@
 namespace OpenTK.Graphics.OpenGL4
 {
     /// <summary>
-    /// Used in GL.Arb.GetnColorTable and GL.ColorSubTable, as well as 7 other functions.
+    /// Used in GL.GetColorTable and GL.ColorSubTable, as well as 7 other functions.
     /// </summary>
     public enum ColorTableTarget
     {
         /// <summary>
         /// Original was GL_COLOR_TABLE = 0x80D0
         /// </summary>
-        ColorTable = 0x80d0,
+        ColorTable = 0x80D0,
 
         /// <summary>
         /// Original was GL_POST_CONVOLUTION_COLOR_TABLE = 0x80D1
         /// </summary>
-        PostConvolutionColorTable = 0x80d1,
+        PostConvolutionColorTable = 0x80D1,
 
         /// <summary>
         /// Original was GL_POST_COLOR_MATRIX_COLOR_TABLE = 0x80D2
         /// </summary>
-        PostColorMatrixColorTable = 0x80d2,
-
-        /// <summary>
-        /// Original was GL_PROXY_COLOR_TABLE = 0x80D3
-        /// </summary>
-        ProxyColorTable = 0x80d3,
-
-        /// <summary>
-        /// Original was GL_PROXY_POST_CONVOLUTION_COLOR_TABLE = 0x80D4
-        /// </summary>
-        ProxyPostConvolutionColorTable = 0x80d4,
-
-        /// <summary>
-        /// Original was GL_PROXY_POST_COLOR_MATRIX_COLOR_TABLE = 0x80D5
-        /// </summary>
-        ProxyPostColorMatrixColorTable = 0x80d5
+        PostColorMatrixColorTable = 0x80D2
     }
 }

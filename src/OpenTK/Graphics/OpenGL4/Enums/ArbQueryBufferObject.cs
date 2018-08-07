@@ -34,9 +34,9 @@ namespace OpenTK.Graphics.OpenGL4
     public enum ArbQueryBufferObject
     {
         /// <summary>
-        /// Original was GL_QUERY_BUFFER_BARRIER_BIT = 0x00008000
+        /// Original was GL_QUERY_BUFFER_BARRIER_BIT = 0x8000
         /// </summary>
-        QueryBufferBarrierBit = 0x00008000,
+        QueryBufferBarrierBit = 0x8000,
 
         /// <summary>
         /// Original was GL_QUERY_BUFFER = 0x9192

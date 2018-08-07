@@ -29,18 +29,9 @@
 namespace OpenTK.Graphics.OpenGL4
 {
     /// <summary>
-    /// Used in GL.Ext.GetMultiTexEnv and GL.Ext.MultiTexEnv.
+    /// Used in GL.EXT.GetMultiTexEnv and GL.EXT.MultiTexEnv.
     /// </summary>
     public enum TextureEnvTarget
     {
-        /// <summary>
-        /// Original was GL_TEXTURE_FILTER_CONTROL = 0x8500
-        /// </summary>
-        TextureFilterControl = 0x8500,
-
-        /// <summary>
-        /// Original was GL_POINT_SPRITE = 0x8861
-        /// </summary>
-        PointSprite = 0x8861
     }
 }

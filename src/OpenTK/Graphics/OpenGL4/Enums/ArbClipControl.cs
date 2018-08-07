@@ -36,31 +36,31 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_LOWER_LEFT = 0x8CA1
         /// </summary>
-        LowerLeft = 0x8ca1,
+        LowerLeft = 0x8CA1,
 
         /// <summary>
         /// Original was GL_UPPER_LEFT = 0x8CA2
         /// </summary>
-        UpperLeft = 0x8ca2,
+        UpperLeft = 0x8CA2,
 
         /// <summary>
         /// Original was GL_CLIP_ORIGIN = 0x935C
         /// </summary>
-        ClipOrigin = 0x935c,
+        ClipOrigin = 0x935C,
 
         /// <summary>
         /// Original was GL_CLIP_DEPTH_MODE = 0x935D
         /// </summary>
-        ClipDepthMode = 0x935d,
+        ClipDepthMode = 0x935D,
 
         /// <summary>
         /// Original was GL_NEGATIVE_ONE_TO_ONE = 0x935E
         /// </summary>
-        NegativeOneToOne = 0x935e,
+        NegativeOneToOne = 0x935E,
 
         /// <summary>
         /// Original was GL_ZERO_TO_ONE = 0x935F
         /// </summary>
-        ZeroToOne = 0x935f
+        ZeroToOne = 0x935F
     }
 }

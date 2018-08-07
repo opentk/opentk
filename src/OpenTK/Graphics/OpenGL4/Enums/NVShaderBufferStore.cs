@@ -34,18 +34,18 @@ namespace OpenTK.Graphics.OpenGL4
     public enum NVShaderBufferStore
     {
         /// <summary>
-        /// Original was GL_SHADER_GLOBAL_ACCESS_BARRIER_BIT_NV = 0x00000010
+        /// Original was GL_SHADER_GLOBAL_ACCESS_BARRIER_BIT_NV = 0x10
         /// </summary>
-        ShaderGlobalAccessBarrierBitNV = 0x00000010,
+        ShaderGlobalAccessBarrierBitNV = 0x10,
 
         /// <summary>
         /// Original was GL_WRITE_ONLY = 0x88B9
         /// </summary>
-        WriteOnly = 0x88b9,
+        WriteOnly = 0x88B9,
 
         /// <summary>
         /// Original was GL_READ_WRITE = 0x88BA
         /// </summary>
-        ReadWrite = 0x88ba
+        ReadWrite = 0x88BA
     }
 }

@@ -29,7 +29,7 @@
 namespace OpenTK.Graphics.OpenGL4
 {
     /// <summary>
-    /// Used in GL.FramebufferParameter and GL.GetFramebufferParameter, as well as 3 other functions.
+    /// Used in GL.FramebufferParameter and GL.GetFramebufferParameter, as well as 2 other functions.
     /// </summary>
     public enum FramebufferDefaultParameter
     {

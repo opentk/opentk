@@ -41,21 +41,21 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_SRC1_COLOR = 0x88F9
         /// </summary>
-        Src1Color = 0x88f9,
+        Src1Color = 0x88F9,
 
         /// <summary>
         /// Original was GL_ONE_MINUS_SRC1_COLOR = 0x88FA
         /// </summary>
-        OneMinusSrc1Color = 0x88fa,
+        OneMinusSrc1Color = 0x88FA,
 
         /// <summary>
         /// Original was GL_ONE_MINUS_SRC1_ALPHA = 0x88FB
         /// </summary>
-        OneMinusSrc1Alpha = 0x88fb,
+        OneMinusSrc1Alpha = 0x88FB,
 
         /// <summary>
         /// Original was GL_MAX_DUAL_SOURCE_DRAW_BUFFERS = 0x88FC
         /// </summary>
-        MaxDualSourceDrawBuffers = 0x88fc
+        MaxDualSourceDrawBuffers = 0x88FC
     }
 }

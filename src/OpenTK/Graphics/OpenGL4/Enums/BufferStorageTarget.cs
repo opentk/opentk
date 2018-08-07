@@ -46,52 +46,52 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_PIXEL_PACK_BUFFER = 0x88EB
         /// </summary>
-        PixelPackBuffer = 0x88eb,
+        PixelPackBuffer = 0x88EB,
 
         /// <summary>
         /// Original was GL_PIXEL_UNPACK_BUFFER = 0x88EC
         /// </summary>
-        PixelUnpackBuffer = 0x88ec,
+        PixelUnpackBuffer = 0x88EC,
 
         /// <summary>
         /// Original was GL_UNIFORM_BUFFER = 0x8A11
         /// </summary>
-        UniformBuffer = 0x8a11,
+        UniformBuffer = 0x8A11,
 
         /// <summary>
         /// Original was GL_TEXTURE_BUFFER = 0x8C2A
         /// </summary>
-        TextureBuffer = 0x8c2a,
+        TextureBuffer = 0x8C2A,
 
         /// <summary>
         /// Original was GL_TRANSFORM_FEEDBACK_BUFFER = 0x8C8E
         /// </summary>
-        TransformFeedbackBuffer = 0x8c8e,
+        TransformFeedbackBuffer = 0x8C8E,
 
         /// <summary>
         /// Original was GL_COPY_READ_BUFFER = 0x8F36
         /// </summary>
-        CopyReadBuffer = 0x8f36,
+        CopyReadBuffer = 0x8F36,
 
         /// <summary>
         /// Original was GL_COPY_WRITE_BUFFER = 0x8F37
         /// </summary>
-        CopyWriteBuffer = 0x8f37,
+        CopyWriteBuffer = 0x8F37,
 
         /// <summary>
         /// Original was GL_DRAW_INDIRECT_BUFFER = 0x8F3F
         /// </summary>
-        DrawIndirectBuffer = 0x8f3f,
+        DrawIndirectBuffer = 0x8F3F,
 
         /// <summary>
         /// Original was GL_SHADER_STORAGE_BUFFER = 0x90D2
         /// </summary>
-        ShaderStorageBuffer = 0x90d2,
+        ShaderStorageBuffer = 0x90D2,
 
         /// <summary>
         /// Original was GL_DISPATCH_INDIRECT_BUFFER = 0x90EE
         /// </summary>
-        DispatchIndirectBuffer = 0x90ee,
+        DispatchIndirectBuffer = 0x90EE,
 
         /// <summary>
         /// Original was GL_QUERY_BUFFER = 0x9192
@@ -101,6 +101,6 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_ATOMIC_COUNTER_BUFFER = 0x92C0
         /// </summary>
-        AtomicCounterBuffer = 0x92c0
+        AtomicCounterBuffer = 0x92C0
     }
 }

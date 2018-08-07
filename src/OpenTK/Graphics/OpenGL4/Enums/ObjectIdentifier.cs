@@ -29,7 +29,7 @@
 namespace OpenTK.Graphics.OpenGL4
 {
     /// <summary>
-    /// Used in GL.Khr.ObjectLabel.
+    /// Used in GL.KHR.ObjectLabel.
     /// </summary>
     public enum ObjectIdentifier
     {
@@ -46,46 +46,46 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_BUFFER = 0x82E0
         /// </summary>
-        Buffer = 0x82e0,
+        Buffer = 0x82E0,
 
         /// <summary>
         /// Original was GL_SHADER = 0x82E1
         /// </summary>
-        Shader = 0x82e1,
+        Shader = 0x82E1,
 
         /// <summary>
         /// Original was GL_PROGRAM = 0x82E2
         /// </summary>
-        Program = 0x82e2,
+        Program = 0x82E2,
 
         /// <summary>
         /// Original was GL_QUERY = 0x82E3
         /// </summary>
-        Query = 0x82e3,
+        Query = 0x82E3,
 
         /// <summary>
         /// Original was GL_PROGRAM_PIPELINE = 0x82E4
         /// </summary>
-        ProgramPipeline = 0x82e4,
+        ProgramPipeline = 0x82E4,
 
         /// <summary>
         /// Original was GL_SAMPLER = 0x82E6
         /// </summary>
-        Sampler = 0x82e6,
+        Sampler = 0x82E6,
 
         /// <summary>
         /// Original was GL_FRAMEBUFFER = 0x8D40
         /// </summary>
-        Framebuffer = 0x8d40,
+        Framebuffer = 0x8D40,
 
         /// <summary>
         /// Original was GL_RENDERBUFFER = 0x8D41
         /// </summary>
-        Renderbuffer = 0x8d41,
+        Renderbuffer = 0x8D41,
 
         /// <summary>
         /// Original was GL_TRANSFORM_FEEDBACK = 0x8E22
         /// </summary>
-        TransformFeedback = 0x8e22
+        TransformFeedback = 0x8E22
     }
 }

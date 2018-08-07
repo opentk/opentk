@@ -34,22 +34,22 @@ namespace OpenTK.Graphics.OpenGL4
     public enum TextureTargetMultisample
     {
         /// <summary>
-        /// Original was GL_TEXTURE_2D_MULTISAMPLE = 0x9100
+        /// Original was GL_TEXTURE2_D_MULTISAMPLE = 0x9100
         /// </summary>
         Texture2DMultisample = 0x9100,
 
         /// <summary>
-        /// Original was GL_PROXY_TEXTURE_2D_MULTISAMPLE = 0x9101
+        /// Original was GL_PROXY_TEXTURE2_D_MULTISAMPLE = 0x9101
         /// </summary>
         ProxyTexture2DMultisample = 0x9101,
 
         /// <summary>
-        /// Original was GL_TEXTURE_2D_MULTISAMPLE_ARRAY = 0x9102
+        /// Original was GL_TEXTURE2_D_MULTISAMPLE_ARRAY = 0x9102
         /// </summary>
         Texture2DMultisampleArray = 0x9102,
 
         /// <summary>
-        /// Original was GL_PROXY_TEXTURE_2D_MULTISAMPLE_ARRAY = 0x9103
+        /// Original was GL_PROXY_TEXTURE2_D_MULTISAMPLE_ARRAY = 0x9103
         /// </summary>
         ProxyTexture2DMultisampleArray = 0x9103
     }

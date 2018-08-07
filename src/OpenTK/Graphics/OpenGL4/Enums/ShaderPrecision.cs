@@ -36,31 +36,31 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_LOW_FLOAT = 0x8DF0
         /// </summary>
-        LowFloat = 0x8df0,
+        LowFloat = 0x8DF0,
 
         /// <summary>
         /// Original was GL_MEDIUM_FLOAT = 0x8DF1
         /// </summary>
-        MediumFloat = 0x8df1,
+        MediumFloat = 0x8DF1,
 
         /// <summary>
         /// Original was GL_HIGH_FLOAT = 0x8DF2
         /// </summary>
-        HighFloat = 0x8df2,
+        HighFloat = 0x8DF2,
 
         /// <summary>
         /// Original was GL_LOW_INT = 0x8DF3
         /// </summary>
-        LowInt = 0x8df3,
+        LowInt = 0x8DF3,
 
         /// <summary>
         /// Original was GL_MEDIUM_INT = 0x8DF4
         /// </summary>
-        MediumInt = 0x8df4,
+        MediumInt = 0x8DF4,
 
         /// <summary>
         /// Original was GL_HIGH_INT = 0x8DF5
         /// </summary>
-        HighInt = 0x8df5
+        HighInt = 0x8DF5
     }
 }

@@ -29,19 +29,29 @@
 namespace OpenTK.Graphics.OpenGL4
 {
     /// <summary>
-    /// Used in GL.GetMinmaxParameter.
+    /// Not used directly.
     /// </summary>
     public enum GetMinmaxParameterPNameExt
     {
         /// <summary>
         /// Original was GL_MINMAX_FORMAT = 0x802F
         /// </summary>
-        MinmaxFormat = 0x802f,
+        MinmaxFormat = 0x802F,
+
+        /// <summary>
+        /// Original was GL_MINMAX_FORMAT = 0x802F
+        /// </summary>
+        MinmaxFormat = 0x802F,
 
         /// <summary>
         /// Original was GL_MINMAX_FORMAT_EXT = 0x802F
         /// </summary>
-        MinmaxFormatExt = 0x802f,
+        MinmaxFormatExt = 0x802F,
+
+        /// <summary>
+        /// Original was GL_MINMAX_SINK = 0x8030
+        /// </summary>
+        MinmaxSink = 0x8030,
 
         /// <summary>
         /// Original was GL_MINMAX_SINK = 0x8030

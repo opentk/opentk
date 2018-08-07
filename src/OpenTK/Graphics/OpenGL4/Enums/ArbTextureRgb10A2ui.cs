@@ -36,6 +36,6 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_RGB10_A2UI = 0x906F
         /// </summary>
-        Rgb10A2ui = 0x906f
+        Rgb10A2ui = 0x906F
     }
 }

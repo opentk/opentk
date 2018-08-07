@@ -36,7 +36,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_BUFFER_IMMUTABLE_STORAGE = 0x821F
         /// </summary>
-        BufferImmutableStorage = 0x821f,
+        BufferImmutableStorage = 0x821F,
 
         /// <summary>
         /// Original was GL_BUFFER_STORAGE_FLAGS = 0x8220
@@ -56,17 +56,17 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_BUFFER_ACCESS = 0x88BB
         /// </summary>
-        BufferAccess = 0x88bb,
+        BufferAccess = 0x88BB,
 
         /// <summary>
         /// Original was GL_BUFFER_MAPPED = 0x88BC
         /// </summary>
-        BufferMapped = 0x88bc,
+        BufferMapped = 0x88BC,
 
         /// <summary>
         /// Original was GL_BUFFER_ACCESS_FLAGS = 0x911F
         /// </summary>
-        BufferAccessFlags = 0x911f,
+        BufferAccessFlags = 0x911F,
 
         /// <summary>
         /// Original was GL_BUFFER_MAP_LENGTH = 0x9120

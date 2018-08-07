@@ -37,13 +37,13 @@ namespace OpenTK.Graphics.OpenGL4
     public enum ContextProfileMask
     {
         /// <summary>
-        /// Original was GL_CONTEXT_CORE_PROFILE_BIT = 0x00000001
+        /// Original was GL_CONTEXT_CORE_PROFILE_BIT = 0x1
         /// </summary>
-        ContextCoreProfileBit = 0x00000001,
+        ContextCoreProfileBit = 0x1,
 
         /// <summary>
-        /// Original was GL_CONTEXT_COMPATIBILITY_PROFILE_BIT = 0x00000002
+        /// Original was GL_CONTEXT_COMPATIBILITY_PROFILE_BIT = 0x2
         /// </summary>
-        ContextCompatibilityProfileBit = 0x00000002
+        ContextCompatibilityProfileBit = 0x2
     }
 }

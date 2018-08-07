@@ -36,26 +36,26 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_TEXTURE_SWIZZLE_R = 0x8E42
         /// </summary>
-        TextureSwizzleR = 0x8e42,
+        TextureSwizzleR = 0x8E42,
 
         /// <summary>
         /// Original was GL_TEXTURE_SWIZZLE_G = 0x8E43
         /// </summary>
-        TextureSwizzleG = 0x8e43,
+        TextureSwizzleG = 0x8E43,
 
         /// <summary>
         /// Original was GL_TEXTURE_SWIZZLE_B = 0x8E44
         /// </summary>
-        TextureSwizzleB = 0x8e44,
+        TextureSwizzleB = 0x8E44,
 
         /// <summary>
         /// Original was GL_TEXTURE_SWIZZLE_A = 0x8E45
         /// </summary>
-        TextureSwizzleA = 0x8e45,
+        TextureSwizzleA = 0x8E45,
 
         /// <summary>
         /// Original was GL_TEXTURE_SWIZZLE_RGBA = 0x8E46
         /// </summary>
-        TextureSwizzleRgba = 0x8e46
+        TextureSwizzleRgba = 0x8E46
     }
 }

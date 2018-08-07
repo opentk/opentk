@@ -29,43 +29,38 @@
 namespace OpenTK.Graphics.OpenGL4
 {
     /// <summary>
-    /// Used in GL.NV.DrawCommandsAddres and GL.NV.DrawCommands.
+    /// Not used directly.
     /// </summary>
     public enum BasicPrimitiveType
     {
         /// <summary>
-        /// Original was GL_POINTS = 0x0000
+        /// Original was GL_POINTS = 0x0
         /// </summary>
-        Points = 0x0000,
+        Points = 0x0,
 
         /// <summary>
-        /// Original was GL_LINES = 0x0001
+        /// Original was GL_LINES = 0x1
         /// </summary>
-        Lines = 0x0001,
+        Lines = 0x1,
 
         /// <summary>
-        /// Original was GL_TRIANGLES = 0x0004
+        /// Original was GL_TRIANGLES = 0x4
         /// </summary>
-        Triangles = 0x0004,
+        Triangles = 0x4,
 
         /// <summary>
-        /// Original was GL_QUADS = 0x0007
+        /// Original was GL_LINES_ADJACENCY = 0xA
         /// </summary>
-        Quads = 0x0007,
+        LinesAdjacency = 0xA,
 
         /// <summary>
-        /// Original was GL_LINES_ADJACENCY = 0x000A
+        /// Original was GL_TRIANGLES_ADJACENCY = 0xC
         /// </summary>
-        LinesAdjacency = 0x000a,
+        TrianglesAdjacency = 0xC,
 
         /// <summary>
-        /// Original was GL_TRIANGLES_ADJACENCY = 0x000C
+        /// Original was GL_PATCHES = 0xE
         /// </summary>
-        TrianglesAdjacency = 0x000c,
-
-        /// <summary>
-        /// Original was GL_PATCHES = 0x000E
-        /// </summary>
-        Patches = 0x000e
+        Patches = 0xE
     }
 }

@@ -36,16 +36,16 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_TEXTURE_SRGB_DECODE_EXT = 0x8A48
         /// </summary>
-        TextureSrgbDecodeExt = 0x8a48,
+        TextureSrgbDecodeExt = 0x8A48,
 
         /// <summary>
         /// Original was GL_DECODE_EXT = 0x8A49
         /// </summary>
-        DecodeExt = 0x8a49,
+        DecodeExt = 0x8A49,
 
         /// <summary>
         /// Original was GL_SKIP_DECODE_EXT = 0x8A4A
         /// </summary>
-        SkipDecodeExt = 0x8a4a
+        SkipDecodeExt = 0x8A4A
     }
 }

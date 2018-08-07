@@ -29,103 +29,103 @@
 namespace OpenTK.Graphics.OpenGL4
 {
     /// <summary>
-    /// Used in GL.NV.StateCapture.
+    /// Used in GL.NV.DrawCommandsAddres and GL.NV.DrawCommands, as well as 2 other functions.
     /// </summary>
     public enum NVCommandList
     {
         /// <summary>
-        /// Original was GL_TERMINATE_SEQUENCE_COMMAND_NV = 0x0000
+        /// Original was GL_TERMINATE_SEQUENCE_COMMAND_NV = 0x0
         /// </summary>
-        TerminateSequenceCommandNV = 0x0000,
+        TerminateSequenceCommandNV = 0x0,
 
         /// <summary>
-        /// Original was GL_NOP_COMMAND_NV = 0x0001
+        /// Original was GL_NOP_COMMAND_NV = 0x1
         /// </summary>
-        NopCommandNV = 0x0001,
+        NopCommandNV = 0x1,
 
         /// <summary>
-        /// Original was GL_DRAW_ELEMENTS_COMMAND_NV = 0x0002
+        /// Original was GL_DRAW_ELEMENTS_COMMAND_NV = 0x2
         /// </summary>
-        DrawElementsCommandNV = 0x0002,
+        DrawElementsCommandNV = 0x2,
 
         /// <summary>
-        /// Original was GL_DRAW_ARRAYS_COMMAND_NV = 0x0003
+        /// Original was GL_DRAW_ARRAYS_COMMAND_NV = 0x3
         /// </summary>
-        DrawArraysCommandNV = 0x0003,
+        DrawArraysCommandNV = 0x3,
 
         /// <summary>
-        /// Original was GL_DRAW_ELEMENTS_STRIP_COMMAND_NV = 0x0004
+        /// Original was GL_DRAW_ELEMENTS_STRIP_COMMAND_NV = 0x4
         /// </summary>
-        DrawElementsStripCommandNV = 0x0004,
+        DrawElementsStripCommandNV = 0x4,
 
         /// <summary>
-        /// Original was GL_DRAW_ARRAYS_STRIP_COMMAND_NV = 0x0005
+        /// Original was GL_DRAW_ARRAYS_STRIP_COMMAND_NV = 0x5
         /// </summary>
-        DrawArraysStripCommandNV = 0x0005,
+        DrawArraysStripCommandNV = 0x5,
 
         /// <summary>
-        /// Original was GL_DRAW_ELEMENTS_INSTANCED_COMMAND_NV = 0x0006
+        /// Original was GL_DRAW_ELEMENTS_INSTANCED_COMMAND_NV = 0x6
         /// </summary>
-        DrawElementsInstancedCommandNV = 0x0006,
+        DrawElementsInstancedCommandNV = 0x6,
 
         /// <summary>
-        /// Original was GL_DRAW_ARRAYS_INSTANCED_COMMAND_NV = 0x0007
+        /// Original was GL_DRAW_ARRAYS_INSTANCED_COMMAND_NV = 0x7
         /// </summary>
-        DrawArraysInstancedCommandNV = 0x0007,
+        DrawArraysInstancedCommandNV = 0x7,
 
         /// <summary>
-        /// Original was GL_ELEMENT_ADDRESS_COMMAND_NV = 0x0008
+        /// Original was GL_ELEMENT_ADDRESS_COMMAND_NV = 0x8
         /// </summary>
-        ElementAddressCommandNV = 0x0008,
+        ElementAddressCommandNV = 0x8,
 
         /// <summary>
-        /// Original was GL_ATTRIBUTE_ADDRESS_COMMAND_NV = 0x0009
+        /// Original was GL_ATTRIBUTE_ADDRESS_COMMAND_NV = 0x9
         /// </summary>
-        AttributeAddressCommandNV = 0x0009,
+        AttributeAddressCommandNV = 0x9,
 
         /// <summary>
-        /// Original was GL_UNIFORM_ADDRESS_COMMAND_NV = 0x000A
+        /// Original was GL_UNIFORM_ADDRESS_COMMAND_NV = 0xA
         /// </summary>
-        UniformAddressCommandNV = 0x000a,
+        UniformAddressCommandNV = 0xA,
 
         /// <summary>
-        /// Original was GL_BLEND_COLOR_COMMAND_NV = 0x000B
+        /// Original was GL_BLEND_COLOR_COMMAND_NV = 0xB
         /// </summary>
-        BlendColorCommandNV = 0x000b,
+        BlendColorCommandNV = 0xB,
 
         /// <summary>
-        /// Original was GL_STENCIL_REF_COMMAND_NV = 0x000C
+        /// Original was GL_STENCIL_REF_COMMAND_NV = 0xC
         /// </summary>
-        StencilRefCommandNV = 0x000c,
+        StencilRefCommandNV = 0xC,
 
         /// <summary>
-        /// Original was GL_LINE_WIDTH_COMMAND_NV = 0x000D
+        /// Original was GL_LINE_WIDTH_COMMAND_NV = 0xD
         /// </summary>
-        LineWidthCommandNV = 0x000d,
+        LineWidthCommandNV = 0xD,
 
         /// <summary>
-        /// Original was GL_POLYGON_OFFSET_COMMAND_NV = 0x000E
+        /// Original was GL_POLYGON_OFFSET_COMMAND_NV = 0xE
         /// </summary>
-        PolygonOffsetCommandNV = 0x000e,
+        PolygonOffsetCommandNV = 0xE,
 
         /// <summary>
-        /// Original was GL_ALPHA_REF_COMMAND_NV = 0x000F
+        /// Original was GL_ALPHA_REF_COMMAND_NV = 0xF
         /// </summary>
-        AlphaRefCommandNV = 0x000f,
+        AlphaRefCommandNV = 0xF,
 
         /// <summary>
-        /// Original was GL_VIEWPORT_COMMAND_NV = 0x0010
+        /// Original was GL_VIEWPORT_COMMAND_NV = 0x10
         /// </summary>
-        ViewportCommandNV = 0x0010,
+        ViewportCommandNV = 0x10,
 
         /// <summary>
-        /// Original was GL_SCISSOR_COMMAND_NV = 0x0011
+        /// Original was GL_SCISSOR_COMMAND_NV = 0x11
         /// </summary>
-        ScissorCommandNV = 0x0011,
+        ScissorCommandNV = 0x11,
 
         /// <summary>
-        /// Original was GL_FRONT_FACE_COMMAND_NV = 0x0012
+        /// Original was GL_FRONT_FACE_COMMAND_NV = 0x12
         /// </summary>
-        FrontFaceCommandNV = 0x0012
+        FrontFaceCommandNV = 0x12
     }
 }

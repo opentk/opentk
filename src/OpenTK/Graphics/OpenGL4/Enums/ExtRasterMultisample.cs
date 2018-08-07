@@ -51,16 +51,16 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_RASTER_FIXED_SAMPLE_LOCATIONS_EXT = 0x932A
         /// </summary>
-        RasterFixedSampleLocationsExt = 0x932a,
+        RasterFixedSampleLocationsExt = 0x932A,
 
         /// <summary>
         /// Original was GL_MULTISAMPLE_RASTERIZATION_ALLOWED_EXT = 0x932B
         /// </summary>
-        MultisampleRasterizationAllowedExt = 0x932b,
+        MultisampleRasterizationAllowedExt = 0x932B,
 
         /// <summary>
         /// Original was GL_EFFECTIVE_RASTER_SAMPLES_EXT = 0x932C
         /// </summary>
-        EffectiveRasterSamplesExt = 0x932c
+        EffectiveRasterSamplesExt = 0x932C
     }
 }

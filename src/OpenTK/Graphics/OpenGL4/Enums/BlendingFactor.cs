@@ -29,59 +29,74 @@
 namespace OpenTK.Graphics.OpenGL4
 {
     /// <summary>
-    /// Used in GL.Arb.BlendFunc and GL.Arb.BlendFuncSeparate, as well as 1 other function.
+    /// Used in GL.BlendFunc and GL.ARB.BlendFunc, as well as 1 other function.
     /// </summary>
     public enum BlendingFactor
     {
         /// <summary>
-        /// Original was GL_ZERO = 0
+        /// Original was GL_ZERO = 0x0
         /// </summary>
-        Zero = 0,
+        Zero = 0x0,
 
         /// <summary>
-        /// Original was GL_SRC_COLOR = 0x0300
+        /// Original was GL_ONE = 0x1
         /// </summary>
-        SrcColor = 0x0300,
+        One = 0x1,
 
         /// <summary>
-        /// Original was GL_ONE_MINUS_SRC_COLOR = 0x0301
+        /// Original was GL_SRC_COLOR = 0x300
         /// </summary>
-        OneMinusSrcColor = 0x0301,
+        SrcColor = 0x300,
 
         /// <summary>
-        /// Original was GL_SRC_ALPHA = 0x0302
+        /// Original was GL_ONE_MINUS_SRC_COLOR = 0x301
         /// </summary>
-        SrcAlpha = 0x0302,
+        OneMinusSrcColor = 0x301,
 
         /// <summary>
-        /// Original was GL_ONE_MINUS_SRC_ALPHA = 0x0303
+        /// Original was GL_ONE_MINUS_SRC_COLOR = 0x301
         /// </summary>
-        OneMinusSrcAlpha = 0x0303,
+        OneMinusSrcColor = 0x301,
 
         /// <summary>
-        /// Original was GL_DST_ALPHA = 0x0304
+        /// Original was GL_SRC_ALPHA = 0x302
         /// </summary>
-        DstAlpha = 0x0304,
+        SrcAlpha = 0x302,
 
         /// <summary>
-        /// Original was GL_ONE_MINUS_DST_ALPHA = 0x0305
+        /// Original was GL_ONE_MINUS_SRC_ALPHA = 0x303
         /// </summary>
-        OneMinusDstAlpha = 0x0305,
+        OneMinusSrcAlpha = 0x303,
 
         /// <summary>
-        /// Original was GL_DST_COLOR = 0x0306
+        /// Original was GL_ONE_MINUS_SRC_ALPHA = 0x303
         /// </summary>
-        DstColor = 0x0306,
+        OneMinusSrcAlpha = 0x303,
 
         /// <summary>
-        /// Original was GL_ONE_MINUS_DST_COLOR = 0x0307
+        /// Original was GL_DST_ALPHA = 0x304
         /// </summary>
-        OneMinusDstColor = 0x0307,
+        DstAlpha = 0x304,
 
         /// <summary>
-        /// Original was GL_SRC_ALPHA_SATURATE = 0x0308
+        /// Original was GL_ONE_MINUS_DST_ALPHA = 0x305
         /// </summary>
-        SrcAlphaSaturate = 0x0308,
+        OneMinusDstAlpha = 0x305,
+
+        /// <summary>
+        /// Original was GL_DST_COLOR = 0x306
+        /// </summary>
+        DstColor = 0x306,
+
+        /// <summary>
+        /// Original was GL_ONE_MINUS_DST_COLOR = 0x307
+        /// </summary>
+        OneMinusDstColor = 0x307,
+
+        /// <summary>
+        /// Original was GL_SRC_ALPHA_SATURATE = 0x308
+        /// </summary>
+        SrcAlphaSaturate = 0x308,
 
         /// <summary>
         /// Original was GL_CONSTANT_COLOR = 0x8001
@@ -111,11 +126,6 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_SRC1_COLOR = 0x88F9
         /// </summary>
-        Src1Color = 0x88f9,
-
-        /// <summary>
-        /// Original was GL_ONE = 1
-        /// </summary>
-        One = 1
+        Src1Color = 0x88F9
     }
 }

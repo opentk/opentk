@@ -36,11 +36,11 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_MAX_SHADER_COMPILER_THREADS_ARB = 0x91B0
         /// </summary>
-        MaxShaderCompilerThreadsArb = 0x91b0,
+        MaxShaderCompilerThreadsArb = 0x91B0,
 
         /// <summary>
         /// Original was GL_COMPLETION_STATUS_ARB = 0x91B1
         /// </summary>
-        CompletionStatusArb = 0x91b1
+        CompletionStatusArb = 0x91B1
     }
 }

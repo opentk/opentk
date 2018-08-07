@@ -34,18 +34,18 @@ namespace OpenTK.Graphics.OpenGL4
     public enum ColorMaterialFace
     {
         /// <summary>
-        /// Original was GL_FRONT = 0x0404
+        /// Original was GL_FRONT = 0x404
         /// </summary>
-        Front = 0x0404,
+        Front = 0x404,
 
         /// <summary>
-        /// Original was GL_BACK = 0x0405
+        /// Original was GL_BACK = 0x405
         /// </summary>
-        Back = 0x0405,
+        Back = 0x405,
 
         /// <summary>
-        /// Original was GL_FRONT_AND_BACK = 0x0408
+        /// Original was GL_FRONT_AND_BACK = 0x408
         /// </summary>
-        FrontAndBack = 0x0408
+        FrontAndBack = 0x408
     }
 }

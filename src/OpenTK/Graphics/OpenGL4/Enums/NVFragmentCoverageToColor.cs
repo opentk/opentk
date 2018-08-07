@@ -36,11 +36,11 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_FRAGMENT_COVERAGE_TO_COLOR_NV = 0x92DD
         /// </summary>
-        FragmentCoverageToColorNV = 0x92dd,
+        FragmentCoverageToColorNV = 0x92DD,
 
         /// <summary>
         /// Original was GL_FRAGMENT_COVERAGE_COLOR_NV = 0x92DE
         /// </summary>
-        FragmentCoverageColorNV = 0x92de
+        FragmentCoverageColorNV = 0x92DE
     }
 }

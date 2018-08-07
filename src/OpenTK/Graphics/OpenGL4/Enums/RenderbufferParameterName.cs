@@ -29,103 +29,58 @@
 namespace OpenTK.Graphics.OpenGL4
 {
     /// <summary>
-    /// Used in GL.GetNamedRenderbufferParameter and GL.GetRenderbufferParameter, as well as 1 other function.
+    /// Used in GL.EXT.GetNamedRenderbufferParameter and GL.GetRenderbufferParameter, as well as 1 other function.
     /// </summary>
     public enum RenderbufferParameterName
     {
         /// <summary>
         /// Original was GL_RENDERBUFFER_SAMPLES = 0x8CAB
         /// </summary>
-        RenderbufferSamples = 0x8cab,
+        RenderbufferSamples = 0x8CAB,
 
         /// <summary>
         /// Original was GL_RENDERBUFFER_WIDTH = 0x8D42
         /// </summary>
-        RenderbufferWidth = 0x8d42,
-
-        /// <summary>
-        /// Original was GL_RENDERBUFFER_WIDTH_EXT = 0x8D42
-        /// </summary>
-        RenderbufferWidthExt = 0x8d42,
+        RenderbufferWidth = 0x8D42,
 
         /// <summary>
         /// Original was GL_RENDERBUFFER_HEIGHT = 0x8D43
         /// </summary>
-        RenderbufferHeight = 0x8d43,
-
-        /// <summary>
-        /// Original was GL_RENDERBUFFER_HEIGHT_EXT = 0x8D43
-        /// </summary>
-        RenderbufferHeightExt = 0x8d43,
+        RenderbufferHeight = 0x8D43,
 
         /// <summary>
         /// Original was GL_RENDERBUFFER_INTERNAL_FORMAT = 0x8D44
         /// </summary>
-        RenderbufferInternalFormat = 0x8d44,
-
-        /// <summary>
-        /// Original was GL_RENDERBUFFER_INTERNAL_FORMAT_EXT = 0x8D44
-        /// </summary>
-        RenderbufferInternalFormatExt = 0x8d44,
+        RenderbufferInternalFormat = 0x8D44,
 
         /// <summary>
         /// Original was GL_RENDERBUFFER_RED_SIZE = 0x8D50
         /// </summary>
-        RenderbufferRedSize = 0x8d50,
-
-        /// <summary>
-        /// Original was GL_RENDERBUFFER_RED_SIZE_EXT = 0x8D50
-        /// </summary>
-        RenderbufferRedSizeExt = 0x8d50,
+        RenderbufferRedSize = 0x8D50,
 
         /// <summary>
         /// Original was GL_RENDERBUFFER_GREEN_SIZE = 0x8D51
         /// </summary>
-        RenderbufferGreenSize = 0x8d51,
-
-        /// <summary>
-        /// Original was GL_RENDERBUFFER_GREEN_SIZE_EXT = 0x8D51
-        /// </summary>
-        RenderbufferGreenSizeExt = 0x8d51,
+        RenderbufferGreenSize = 0x8D51,
 
         /// <summary>
         /// Original was GL_RENDERBUFFER_BLUE_SIZE = 0x8D52
         /// </summary>
-        RenderbufferBlueSize = 0x8d52,
-
-        /// <summary>
-        /// Original was GL_RENDERBUFFER_BLUE_SIZE_EXT = 0x8D52
-        /// </summary>
-        RenderbufferBlueSizeExt = 0x8d52,
+        RenderbufferBlueSize = 0x8D52,
 
         /// <summary>
         /// Original was GL_RENDERBUFFER_ALPHA_SIZE = 0x8D53
         /// </summary>
-        RenderbufferAlphaSize = 0x8d53,
-
-        /// <summary>
-        /// Original was GL_RENDERBUFFER_ALPHA_SIZE_EXT = 0x8D53
-        /// </summary>
-        RenderbufferAlphaSizeExt = 0x8d53,
+        RenderbufferAlphaSize = 0x8D53,
 
         /// <summary>
         /// Original was GL_RENDERBUFFER_DEPTH_SIZE = 0x8D54
         /// </summary>
-        RenderbufferDepthSize = 0x8d54,
-
-        /// <summary>
-        /// Original was GL_RENDERBUFFER_DEPTH_SIZE_EXT = 0x8D54
-        /// </summary>
-        RenderbufferDepthSizeExt = 0x8d54,
+        RenderbufferDepthSize = 0x8D54,
 
         /// <summary>
         /// Original was GL_RENDERBUFFER_STENCIL_SIZE = 0x8D55
         /// </summary>
-        RenderbufferStencilSize = 0x8d55,
-
-        /// <summary>
-        /// Original was GL_RENDERBUFFER_STENCIL_SIZE_EXT = 0x8D55
-        /// </summary>
-        RenderbufferStencilSizeExt = 0x8d55
+        RenderbufferStencilSize = 0x8D55
     }
 }

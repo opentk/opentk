@@ -29,7 +29,7 @@
 namespace OpenTK.Graphics.OpenGL4
 {
     /// <summary>
-    /// Used in GL.Ext.VertexArrayFogCoordOffset.
+    /// Used in GL.EXT.VertexArrayFogCoordOffset.
     /// </summary>
     public enum FogPointerType
     {
@@ -41,11 +41,11 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_DOUBLE = 0x140A
         /// </summary>
-        Double = 0x140a,
+        Double = 0x140A,
 
         /// <summary>
         /// Original was GL_HALF_FLOAT = 0x140B
         /// </summary>
-        HalfFloat = 0x140b
+        HalfFloat = 0x140B
     }
 }

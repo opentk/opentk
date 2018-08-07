@@ -34,7 +34,7 @@ namespace OpenTK.Graphics.OpenGL4
     public enum SemaphoreParameterName
     {
         /// <summary>
-        /// Original was GL_D3D12_FENCE_VALUE_EXT = 0x9595
+        /// Original was GL_D3_D12_FENCE_VALUE_EXT = 0x9595
         /// </summary>
         D3D12FenceValueExt = 0x9595
     }

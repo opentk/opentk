@@ -34,9 +34,9 @@ namespace OpenTK.Graphics.OpenGL4
     public enum ArbComputeShader
     {
         /// <summary>
-        /// Original was GL_COMPUTE_SHADER_BIT = 0x00000020
+        /// Original was GL_COMPUTE_SHADER_BIT = 0x20
         /// </summary>
-        ComputeShaderBit = 0x00000020,
+        ComputeShaderBit = 0x20,
 
         /// <summary>
         /// Original was GL_MAX_COMPUTE_SHARED_MEMORY_SIZE = 0x8262
@@ -71,56 +71,56 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_MAX_COMPUTE_WORK_GROUP_INVOCATIONS = 0x90EB
         /// </summary>
-        MaxComputeWorkGroupInvocations = 0x90eb,
+        MaxComputeWorkGroupInvocations = 0x90EB,
 
         /// <summary>
         /// Original was GL_UNIFORM_BLOCK_REFERENCED_BY_COMPUTE_SHADER = 0x90EC
         /// </summary>
-        UniformBlockReferencedByComputeShader = 0x90ec,
+        UniformBlockReferencedByComputeShader = 0x90EC,
 
         /// <summary>
         /// Original was GL_ATOMIC_COUNTER_BUFFER_REFERENCED_BY_COMPUTE_SHADER = 0x90ED
         /// </summary>
-        AtomicCounterBufferReferencedByComputeShader = 0x90ed,
+        AtomicCounterBufferReferencedByComputeShader = 0x90ED,
 
         /// <summary>
         /// Original was GL_DISPATCH_INDIRECT_BUFFER = 0x90EE
         /// </summary>
-        DispatchIndirectBuffer = 0x90ee,
+        DispatchIndirectBuffer = 0x90EE,
 
         /// <summary>
         /// Original was GL_DISPATCH_INDIRECT_BUFFER_BINDING = 0x90EF
         /// </summary>
-        DispatchIndirectBufferBinding = 0x90ef,
+        DispatchIndirectBufferBinding = 0x90EF,
 
         /// <summary>
         /// Original was GL_COMPUTE_SHADER = 0x91B9
         /// </summary>
-        ComputeShader = 0x91b9,
+        ComputeShader = 0x91B9,
 
         /// <summary>
         /// Original was GL_MAX_COMPUTE_UNIFORM_BLOCKS = 0x91BB
         /// </summary>
-        MaxComputeUniformBlocks = 0x91bb,
+        MaxComputeUniformBlocks = 0x91BB,
 
         /// <summary>
         /// Original was GL_MAX_COMPUTE_TEXTURE_IMAGE_UNITS = 0x91BC
         /// </summary>
-        MaxComputeTextureImageUnits = 0x91bc,
+        MaxComputeTextureImageUnits = 0x91BC,
 
         /// <summary>
         /// Original was GL_MAX_COMPUTE_IMAGE_UNIFORMS = 0x91BD
         /// </summary>
-        MaxComputeImageUniforms = 0x91bd,
+        MaxComputeImageUniforms = 0x91BD,
 
         /// <summary>
         /// Original was GL_MAX_COMPUTE_WORK_GROUP_COUNT = 0x91BE
         /// </summary>
-        MaxComputeWorkGroupCount = 0x91be,
+        MaxComputeWorkGroupCount = 0x91BE,
 
         /// <summary>
         /// Original was GL_MAX_COMPUTE_WORK_GROUP_SIZE = 0x91BF
         /// </summary>
-        MaxComputeWorkGroupSize = 0x91bf
+        MaxComputeWorkGroupSize = 0x91BF
     }
 }

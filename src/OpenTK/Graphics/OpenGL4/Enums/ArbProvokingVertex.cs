@@ -36,21 +36,21 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_QUADS_FOLLOW_PROVOKING_VERTEX_CONVENTION = 0x8E4C
         /// </summary>
-        QuadsFollowProvokingVertexConvention = 0x8e4c,
+        QuadsFollowProvokingVertexConvention = 0x8E4C,
 
         /// <summary>
         /// Original was GL_FIRST_VERTEX_CONVENTION = 0x8E4D
         /// </summary>
-        FirstVertexConvention = 0x8e4d,
+        FirstVertexConvention = 0x8E4D,
 
         /// <summary>
         /// Original was GL_LAST_VERTEX_CONVENTION = 0x8E4E
         /// </summary>
-        LastVertexConvention = 0x8e4e,
+        LastVertexConvention = 0x8E4E,
 
         /// <summary>
         /// Original was GL_PROVOKING_VERTEX = 0x8E4F
         /// </summary>
-        ProvokingVertex = 0x8e4f
+        ProvokingVertex = 0x8E4F
     }
 }

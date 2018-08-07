@@ -36,26 +36,26 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_TEXTURE_VIEW_MIN_LEVEL = 0x82DB
         /// </summary>
-        TextureViewMinLevel = 0x82db,
+        TextureViewMinLevel = 0x82DB,
 
         /// <summary>
         /// Original was GL_TEXTURE_VIEW_NUM_LEVELS = 0x82DC
         /// </summary>
-        TextureViewNumLevels = 0x82dc,
+        TextureViewNumLevels = 0x82DC,
 
         /// <summary>
         /// Original was GL_TEXTURE_VIEW_MIN_LAYER = 0x82DD
         /// </summary>
-        TextureViewMinLayer = 0x82dd,
+        TextureViewMinLayer = 0x82DD,
 
         /// <summary>
         /// Original was GL_TEXTURE_VIEW_NUM_LAYERS = 0x82DE
         /// </summary>
-        TextureViewNumLayers = 0x82de,
+        TextureViewNumLayers = 0x82DE,
 
         /// <summary>
         /// Original was GL_TEXTURE_IMMUTABLE_LEVELS = 0x82DF
         /// </summary>
-        TextureImmutableLevels = 0x82df
+        TextureImmutableLevels = 0x82DF
     }
 }

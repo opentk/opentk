@@ -34,13 +34,13 @@ namespace OpenTK.Graphics.OpenGL4
     public enum Boolean
     {
         /// <summary>
-        /// Original was GL_FALSE = 0
+        /// Original was GL_FALSE = 0x0
         /// </summary>
-        False = 0,
+        False = 0x0,
 
         /// <summary>
-        /// Original was GL_TRUE = 1
+        /// Original was GL_TRUE = 0x1
         /// </summary>
-        True = 1
+        True = 0x1
     }
 }

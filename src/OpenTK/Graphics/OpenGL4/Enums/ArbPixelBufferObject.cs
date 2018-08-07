@@ -36,21 +36,21 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_PIXEL_PACK_BUFFER_ARB = 0x88EB
         /// </summary>
-        PixelPackBufferArb = 0x88eb,
+        PixelPackBufferArb = 0x88EB,
 
         /// <summary>
         /// Original was GL_PIXEL_UNPACK_BUFFER_ARB = 0x88EC
         /// </summary>
-        PixelUnpackBufferArb = 0x88ec,
+        PixelUnpackBufferArb = 0x88EC,
 
         /// <summary>
         /// Original was GL_PIXEL_PACK_BUFFER_BINDING_ARB = 0x88ED
         /// </summary>
-        PixelPackBufferBindingArb = 0x88ed,
+        PixelPackBufferBindingArb = 0x88ED,
 
         /// <summary>
         /// Original was GL_PIXEL_UNPACK_BUFFER_BINDING_ARB = 0x88EF
         /// </summary>
-        PixelUnpackBufferBindingArb = 0x88ef
+        PixelUnpackBufferBindingArb = 0x88EF
     }
 }

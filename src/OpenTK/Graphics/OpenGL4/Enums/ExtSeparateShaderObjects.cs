@@ -29,19 +29,19 @@
 namespace OpenTK.Graphics.OpenGL4
 {
     /// <summary>
-    /// Used in GL.Ext.UseShaderProgram.
+    /// Used in GL.EXT.UseShaderProgram.
     /// </summary>
     public enum ExtSeparateShaderObjects
     {
         /// <summary>
-        /// Original was GL_VERTEX_SHADER_BIT_EXT = 0x00000001
+        /// Original was GL_VERTEX_SHADER_BIT_EXT = 0x1
         /// </summary>
-        VertexShaderBitExt = 0x00000001,
+        VertexShaderBitExt = 0x1,
 
         /// <summary>
-        /// Original was GL_FRAGMENT_SHADER_BIT_EXT = 0x00000002
+        /// Original was GL_FRAGMENT_SHADER_BIT_EXT = 0x2
         /// </summary>
-        FragmentShaderBitExt = 0x00000002,
+        FragmentShaderBitExt = 0x2,
 
         /// <summary>
         /// Original was GL_PROGRAM_SEPARABLE_EXT = 0x8258
@@ -51,11 +51,11 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_PROGRAM_PIPELINE_BINDING_EXT = 0x825A
         /// </summary>
-        ProgramPipelineBindingExt = 0x825a,
+        ProgramPipelineBindingExt = 0x825A,
 
         /// <summary>
         /// Original was GL_ALL_SHADER_BITS_EXT = 0xFFFFFFFF
         /// </summary>
-        AllShaderBitsExt = unchecked((int)0xffffffff)
+        AllShaderBitsExt = unchecked((int)0xFFFFFFFF)
     }
 }

@@ -51,26 +51,26 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_UNPACK_COMPRESSED_BLOCK_SIZE = 0x912A
         /// </summary>
-        UnpackCompressedBlockSize = 0x912a,
+        UnpackCompressedBlockSize = 0x912A,
 
         /// <summary>
         /// Original was GL_PACK_COMPRESSED_BLOCK_WIDTH = 0x912B
         /// </summary>
-        PackCompressedBlockWidth = 0x912b,
+        PackCompressedBlockWidth = 0x912B,
 
         /// <summary>
         /// Original was GL_PACK_COMPRESSED_BLOCK_HEIGHT = 0x912C
         /// </summary>
-        PackCompressedBlockHeight = 0x912c,
+        PackCompressedBlockHeight = 0x912C,
 
         /// <summary>
         /// Original was GL_PACK_COMPRESSED_BLOCK_DEPTH = 0x912D
         /// </summary>
-        PackCompressedBlockDepth = 0x912d,
+        PackCompressedBlockDepth = 0x912D,
 
         /// <summary>
         /// Original was GL_PACK_COMPRESSED_BLOCK_SIZE = 0x912E
         /// </summary>
-        PackCompressedBlockSize = 0x912e
+        PackCompressedBlockSize = 0x912E
     }
 }

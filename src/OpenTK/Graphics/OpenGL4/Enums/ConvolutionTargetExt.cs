@@ -34,22 +34,22 @@ namespace OpenTK.Graphics.OpenGL4
     public enum ConvolutionTargetExt
     {
         /// <summary>
-        /// Original was GL_CONVOLUTION_1D = 0x8010
+        /// Original was GL_CONVOLUTION1_D = 0x8010
         /// </summary>
         Convolution1D = 0x8010,
 
         /// <summary>
-        /// Original was GL_CONVOLUTION_1D_EXT = 0x8010
+        /// Original was GL_CONVOLUTION1_D_EXT = 0x8010
         /// </summary>
         Convolution1DExt = 0x8010,
 
         /// <summary>
-        /// Original was GL_CONVOLUTION_2D = 0x8011
+        /// Original was GL_CONVOLUTION2_D = 0x8011
         /// </summary>
         Convolution2D = 0x8011,
 
         /// <summary>
-        /// Original was GL_CONVOLUTION_2D_EXT = 0x8011
+        /// Original was GL_CONVOLUTION2_D_EXT = 0x8011
         /// </summary>
         Convolution2DExt = 0x8011
     }

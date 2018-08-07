@@ -29,28 +29,28 @@
 namespace OpenTK.Graphics.OpenGL4
 {
     /// <summary>
-    /// Used in GL.BindBufferBase and GL.BindBufferRange, as well as 2 other functions.
+    /// Used in GL.BindBufferRange and GL.BindBufferBase, as well as 2 other functions.
     /// </summary>
     public enum BufferRangeTarget
     {
         /// <summary>
         /// Original was GL_UNIFORM_BUFFER = 0x8A11
         /// </summary>
-        UniformBuffer = 0x8a11,
+        UniformBuffer = 0x8A11,
 
         /// <summary>
         /// Original was GL_TRANSFORM_FEEDBACK_BUFFER = 0x8C8E
         /// </summary>
-        TransformFeedbackBuffer = 0x8c8e,
+        TransformFeedbackBuffer = 0x8C8E,
 
         /// <summary>
         /// Original was GL_SHADER_STORAGE_BUFFER = 0x90D2
         /// </summary>
-        ShaderStorageBuffer = 0x90d2,
+        ShaderStorageBuffer = 0x90D2,
 
         /// <summary>
         /// Original was GL_ATOMIC_COUNTER_BUFFER = 0x92C0
         /// </summary>
-        AtomicCounterBuffer = 0x92c0
+        AtomicCounterBuffer = 0x92C0
     }
 }

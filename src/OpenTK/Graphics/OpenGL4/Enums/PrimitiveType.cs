@@ -29,123 +29,123 @@
 namespace OpenTK.Graphics.OpenGL4
 {
     /// <summary>
-    /// Used in GL.Arb.DrawArraysInstanced and GL.Arb.DrawElementsInstanced, as well as 32 other functions.
+    /// Used in GL.DrawElementsIndirect and GL.DrawArraysIndirect, as well as 32 other functions.
     /// </summary>
     public enum PrimitiveType
     {
         /// <summary>
-        /// Original was GL_POINTS = 0x0000
+        /// Original was GL_POINTS = 0x0
         /// </summary>
-        Points = 0x0000,
+        Points = 0x0,
 
         /// <summary>
-        /// Original was GL_LINES = 0x0001
+        /// Original was GL_LINES = 0x1
         /// </summary>
-        Lines = 0x0001,
+        Lines = 0x1,
 
         /// <summary>
-        /// Original was GL_LINE_LOOP = 0x0002
+        /// Original was GL_LINE_LOOP = 0x2
         /// </summary>
-        LineLoop = 0x0002,
+        LineLoop = 0x2,
 
         /// <summary>
-        /// Original was GL_LINE_STRIP = 0x0003
+        /// Original was GL_LINE_STRIP = 0x3
         /// </summary>
-        LineStrip = 0x0003,
+        LineStrip = 0x3,
 
         /// <summary>
-        /// Original was GL_TRIANGLES = 0x0004
+        /// Original was GL_TRIANGLES = 0x4
         /// </summary>
-        Triangles = 0x0004,
+        Triangles = 0x4,
 
         /// <summary>
-        /// Original was GL_TRIANGLE_STRIP = 0x0005
+        /// Original was GL_TRIANGLE_STRIP = 0x5
         /// </summary>
-        TriangleStrip = 0x0005,
+        TriangleStrip = 0x5,
 
         /// <summary>
-        /// Original was GL_TRIANGLE_FAN = 0x0006
+        /// Original was GL_TRIANGLE_FAN = 0x6
         /// </summary>
-        TriangleFan = 0x0006,
+        TriangleFan = 0x6,
 
         /// <summary>
-        /// Original was GL_QUADS = 0x0007
+        /// Original was GL_QUADS = 0x7
         /// </summary>
-        Quads = 0x0007,
+        Quads = 0x7,
 
         /// <summary>
-        /// Original was GL_QUADS_EXT = 0x0007
+        /// Original was GL_QUADS_EXT = 0x7
         /// </summary>
-        QuadsExt = 0x0007,
+        QuadsExt = 0x7,
 
         /// <summary>
-        /// Original was GL_LINES_ADJACENCY = 0x000A
+        /// Original was GL_LINES_ADJACENCY = 0xA
         /// </summary>
-        LinesAdjacency = 0x000a,
+        LinesAdjacency = 0xA,
 
         /// <summary>
-        /// Original was GL_LINES_ADJACENCY_ARB = 0x000A
+        /// Original was GL_LINES_ADJACENCY_ARB = 0xA
         /// </summary>
-        LinesAdjacencyArb = 0x000a,
+        LinesAdjacencyArb = 0xA,
 
         /// <summary>
-        /// Original was GL_LINES_ADJACENCY_EXT = 0x000A
+        /// Original was GL_LINES_ADJACENCY_EXT = 0xA
         /// </summary>
-        LinesAdjacencyExt = 0x000a,
+        LinesAdjacencyExt = 0xA,
 
         /// <summary>
-        /// Original was GL_LINE_STRIP_ADJACENCY = 0x000B
+        /// Original was GL_LINE_STRIP_ADJACENCY = 0xB
         /// </summary>
-        LineStripAdjacency = 0x000b,
+        LineStripAdjacency = 0xB,
 
         /// <summary>
-        /// Original was GL_LINE_STRIP_ADJACENCY_ARB = 0x000B
+        /// Original was GL_LINE_STRIP_ADJACENCY_ARB = 0xB
         /// </summary>
-        LineStripAdjacencyArb = 0x000b,
+        LineStripAdjacencyArb = 0xB,
 
         /// <summary>
-        /// Original was GL_LINE_STRIP_ADJACENCY_EXT = 0x000B
+        /// Original was GL_LINE_STRIP_ADJACENCY_EXT = 0xB
         /// </summary>
-        LineStripAdjacencyExt = 0x000b,
+        LineStripAdjacencyExt = 0xB,
 
         /// <summary>
-        /// Original was GL_TRIANGLES_ADJACENCY = 0x000C
+        /// Original was GL_TRIANGLES_ADJACENCY = 0xC
         /// </summary>
-        TrianglesAdjacency = 0x000c,
+        TrianglesAdjacency = 0xC,
 
         /// <summary>
-        /// Original was GL_TRIANGLES_ADJACENCY_ARB = 0x000C
+        /// Original was GL_TRIANGLES_ADJACENCY_ARB = 0xC
         /// </summary>
-        TrianglesAdjacencyArb = 0x000c,
+        TrianglesAdjacencyArb = 0xC,
 
         /// <summary>
-        /// Original was GL_TRIANGLES_ADJACENCY_EXT = 0x000C
+        /// Original was GL_TRIANGLES_ADJACENCY_EXT = 0xC
         /// </summary>
-        TrianglesAdjacencyExt = 0x000c,
+        TrianglesAdjacencyExt = 0xC,
 
         /// <summary>
-        /// Original was GL_TRIANGLE_STRIP_ADJACENCY = 0x000D
+        /// Original was GL_TRIANGLE_STRIP_ADJACENCY = 0xD
         /// </summary>
-        TriangleStripAdjacency = 0x000d,
+        TriangleStripAdjacency = 0xD,
 
         /// <summary>
-        /// Original was GL_TRIANGLE_STRIP_ADJACENCY_ARB = 0x000D
+        /// Original was GL_TRIANGLE_STRIP_ADJACENCY_ARB = 0xD
         /// </summary>
-        TriangleStripAdjacencyArb = 0x000d,
+        TriangleStripAdjacencyArb = 0xD,
 
         /// <summary>
-        /// Original was GL_TRIANGLE_STRIP_ADJACENCY_EXT = 0x000D
+        /// Original was GL_TRIANGLE_STRIP_ADJACENCY_EXT = 0xD
         /// </summary>
-        TriangleStripAdjacencyExt = 0x000d,
+        TriangleStripAdjacencyExt = 0xD,
 
         /// <summary>
-        /// Original was GL_PATCHES = 0x000E
+        /// Original was GL_PATCHES = 0xE
         /// </summary>
-        Patches = 0x000e,
+        Patches = 0xE,
 
         /// <summary>
-        /// Original was GL_PATCHES_EXT = 0x000E
+        /// Original was GL_PATCHES_EXT = 0xE
         /// </summary>
-        PatchesExt = 0x000e
+        PatchesExt = 0xE
     }
 }

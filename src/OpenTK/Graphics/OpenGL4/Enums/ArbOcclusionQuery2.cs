@@ -36,6 +36,6 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_ANY_SAMPLES_PASSED = 0x8C2F
         /// </summary>
-        AnySamplesPassed = 0x8c2f
+        AnySamplesPassed = 0x8C2F
     }
 }

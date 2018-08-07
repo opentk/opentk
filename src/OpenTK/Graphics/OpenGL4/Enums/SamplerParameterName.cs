@@ -29,7 +29,7 @@
 namespace OpenTK.Graphics.OpenGL4
 {
     /// <summary>
-    /// Used in GL.GetSamplerParameter and GL.GetSamplerParameterI, as well as 2 other functions.
+    /// Used in GL.GetSamplerParameterI and GL.SamplerParameter, as well as 2 other functions.
     /// </summary>
     public enum SamplerParameterName
     {
@@ -66,31 +66,21 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_TEXTURE_MIN_LOD = 0x813A
         /// </summary>
-        TextureMinLod = 0x813a,
+        TextureMinLod = 0x813A,
 
         /// <summary>
         /// Original was GL_TEXTURE_MAX_LOD = 0x813B
         /// </summary>
-        TextureMaxLod = 0x813b,
-
-        /// <summary>
-        /// Original was GL_ = 0x84FE
-        /// </summary>
-        TextureMaxAnisotropyExt = 0x84fe,
-
-        /// <summary>
-        /// Original was GL_ = 0x8501
-        /// </summary>
-        TextureLodBias = 0x8501,
+        TextureMaxLod = 0x813B,
 
         /// <summary>
         /// Original was GL_TEXTURE_COMPARE_MODE = 0x884C
         /// </summary>
-        TextureCompareMode = 0x884c,
+        TextureCompareMode = 0x884C,
 
         /// <summary>
         /// Original was GL_TEXTURE_COMPARE_FUNC = 0x884D
         /// </summary>
-        TextureCompareFunc = 0x884d
+        TextureCompareFunc = 0x884D
     }
 }

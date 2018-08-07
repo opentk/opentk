@@ -34,8 +34,8 @@ namespace OpenTK.Graphics.OpenGL4
     public enum KhrNoError
     {
         /// <summary>
-        /// Original was GL_CONTEXT_FLAG_NO_ERROR_BIT_KHR = 0x00000008
+        /// Original was GL_CONTEXT_FLAG_NO_ERROR_BIT_KHR = 0x8
         /// </summary>
-        ContextFlagNoErrorBitKhr = 0x00000008
+        ContextFlagNoErrorBitKhr = 0x8
     }
 }

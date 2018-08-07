@@ -34,29 +34,34 @@ namespace OpenTK.Graphics.OpenGL4
     public enum Version45
     {
         /// <summary>
-        /// Original was GL_NO_ERROR = 0
+        /// Original was GL_NO_ERROR = 0x0
         /// </summary>
-        NoError = 0,
+        NoError = 0x0,
 
         /// <summary>
-        /// Original was GL_NONE = 0
+        /// Original was GL_NONE = 0x0
         /// </summary>
-        None = 0,
+        None = 0x0,
 
         /// <summary>
-        /// Original was GL_CONTEXT_FLAG_ROBUST_ACCESS_BIT = 0x00000004
+        /// Original was GL_CONTEXT_FLAG_ROBUST_ACCESS_BIT = 0x4
         /// </summary>
-        ContextFlagRobustAccessBit = 0x00000004,
+        ContextFlagRobustAccessBit = 0x4,
 
         /// <summary>
-        /// Original was GL_BACK = 0x0405
+        /// Original was GL_BACK = 0x405
         /// </summary>
-        Back = 0x0405,
+        Back = 0x405,
 
         /// <summary>
-        /// Original was GL_CONTEXT_LOST = 0x0507
+        /// Original was GL_CONTEXT_LOST = 0x507
         /// </summary>
-        ContextLost = 0x0507,
+        ContextLost = 0x507,
+
+        /// <summary>
+        /// Original was GL_CONTEXT_LOST = 0x507
+        /// </summary>
+        ContextLost = 0x507,
 
         /// <summary>
         /// Original was GL_TEXTURE_TARGET = 0x1006
@@ -64,19 +69,19 @@ namespace OpenTK.Graphics.OpenGL4
         TextureTarget = 0x1006,
 
         /// <summary>
-        /// Original was GL_TEXTURE_BINDING_1D = 0x8068
+        /// Original was GL_TEXTURE_BINDING1_D = 0x8068
         /// </summary>
         TextureBinding1D = 0x8068,
 
         /// <summary>
-        /// Original was GL_TEXTURE_BINDING_2D = 0x8069
+        /// Original was GL_TEXTURE_BINDING2_D = 0x8069
         /// </summary>
         TextureBinding2D = 0x8069,
 
         /// <summary>
-        /// Original was GL_TEXTURE_BINDING_3D = 0x806A
+        /// Original was GL_TEXTURE_BINDING3_D = 0x806A
         /// </summary>
-        TextureBinding3D = 0x806a,
+        TextureBinding3D = 0x806A,
 
         /// <summary>
         /// Original was GL_LOSE_CONTEXT_ON_RESET = 0x8252
@@ -111,32 +116,32 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_QUERY_TARGET = 0x82EA
         /// </summary>
-        QueryTarget = 0x82ea,
+        QueryTarget = 0x82EA,
 
         /// <summary>
         /// Original was GL_MAX_CULL_DISTANCES = 0x82F9
         /// </summary>
-        MaxCullDistances = 0x82f9,
+        MaxCullDistances = 0x82F9,
 
         /// <summary>
         /// Original was GL_MAX_COMBINED_CLIP_AND_CULL_DISTANCES = 0x82FA
         /// </summary>
-        MaxCombinedClipAndCullDistances = 0x82fa,
+        MaxCombinedClipAndCullDistances = 0x82FA,
 
         /// <summary>
         /// Original was GL_CONTEXT_RELEASE_BEHAVIOR = 0x82FB
         /// </summary>
-        ContextReleaseBehavior = 0x82fb,
+        ContextReleaseBehavior = 0x82FB,
 
         /// <summary>
         /// Original was GL_CONTEXT_RELEASE_BEHAVIOR_FLUSH = 0x82FC
         /// </summary>
-        ContextReleaseBehaviorFlush = 0x82fc,
+        ContextReleaseBehaviorFlush = 0x82FC,
 
         /// <summary>
         /// Original was GL_TEXTURE_BINDING_RECTANGLE = 0x84F6
         /// </summary>
-        TextureBindingRectangle = 0x84f6,
+        TextureBindingRectangle = 0x84F6,
 
         /// <summary>
         /// Original was GL_TEXTURE_BINDING_CUBE_MAP = 0x8514
@@ -144,83 +149,83 @@ namespace OpenTK.Graphics.OpenGL4
         TextureBindingCubeMap = 0x8514,
 
         /// <summary>
-        /// Original was GL_TEXTURE_BINDING_1D_ARRAY = 0x8C1C
+        /// Original was GL_TEXTURE_BINDING1_D_ARRAY = 0x8C1C
         /// </summary>
-        TextureBinding1DArray = 0x8c1c,
+        TextureBinding1DArray = 0x8C1C,
 
         /// <summary>
-        /// Original was GL_TEXTURE_BINDING_2D_ARRAY = 0x8C1D
+        /// Original was GL_TEXTURE_BINDING2_D_ARRAY = 0x8C1D
         /// </summary>
-        TextureBinding2DArray = 0x8c1d,
+        TextureBinding2DArray = 0x8C1D,
 
         /// <summary>
         /// Original was GL_TEXTURE_BINDING_BUFFER = 0x8C2C
         /// </summary>
-        TextureBindingBuffer = 0x8c2c,
+        TextureBindingBuffer = 0x8C2C,
 
         /// <summary>
         /// Original was GL_LOWER_LEFT = 0x8CA1
         /// </summary>
-        LowerLeft = 0x8ca1,
+        LowerLeft = 0x8CA1,
 
         /// <summary>
         /// Original was GL_UPPER_LEFT = 0x8CA2
         /// </summary>
-        UpperLeft = 0x8ca2,
+        UpperLeft = 0x8CA2,
 
         /// <summary>
         /// Original was GL_QUERY_WAIT_INVERTED = 0x8E17
         /// </summary>
-        QueryWaitInverted = 0x8e17,
+        QueryWaitInverted = 0x8E17,
 
         /// <summary>
         /// Original was GL_QUERY_NO_WAIT_INVERTED = 0x8E18
         /// </summary>
-        QueryNoWaitInverted = 0x8e18,
+        QueryNoWaitInverted = 0x8E18,
 
         /// <summary>
         /// Original was GL_QUERY_BY_REGION_WAIT_INVERTED = 0x8E19
         /// </summary>
-        QueryByRegionWaitInverted = 0x8e19,
+        QueryByRegionWaitInverted = 0x8E19,
 
         /// <summary>
         /// Original was GL_QUERY_BY_REGION_NO_WAIT_INVERTED = 0x8E1A
         /// </summary>
-        QueryByRegionNoWaitInverted = 0x8e1a,
+        QueryByRegionNoWaitInverted = 0x8E1A,
 
         /// <summary>
         /// Original was GL_TEXTURE_BINDING_CUBE_MAP_ARRAY = 0x900A
         /// </summary>
-        TextureBindingCubeMapArray = 0x900a,
+        TextureBindingCubeMapArray = 0x900A,
 
         /// <summary>
-        /// Original was GL_TEXTURE_BINDING_2D_MULTISAMPLE = 0x9104
+        /// Original was GL_TEXTURE_BINDING2_D_MULTISAMPLE = 0x9104
         /// </summary>
         TextureBinding2DMultisample = 0x9104,
 
         /// <summary>
-        /// Original was GL_TEXTURE_BINDING_2D_MULTISAMPLE_ARRAY = 0x9105
+        /// Original was GL_TEXTURE_BINDING2_D_MULTISAMPLE_ARRAY = 0x9105
         /// </summary>
         TextureBinding2DMultisampleArray = 0x9105,
 
         /// <summary>
         /// Original was GL_CLIP_ORIGIN = 0x935C
         /// </summary>
-        ClipOrigin = 0x935c,
+        ClipOrigin = 0x935C,
 
         /// <summary>
         /// Original was GL_CLIP_DEPTH_MODE = 0x935D
         /// </summary>
-        ClipDepthMode = 0x935d,
+        ClipDepthMode = 0x935D,
 
         /// <summary>
         /// Original was GL_NEGATIVE_ONE_TO_ONE = 0x935E
         /// </summary>
-        NegativeOneToOne = 0x935e,
+        NegativeOneToOne = 0x935E,
 
         /// <summary>
         /// Original was GL_ZERO_TO_ONE = 0x935F
         /// </summary>
-        ZeroToOne = 0x935f
+        ZeroToOne = 0x935F
     }
 }

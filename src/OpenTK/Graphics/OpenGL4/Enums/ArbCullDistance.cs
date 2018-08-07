@@ -36,11 +36,11 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_MAX_CULL_DISTANCES = 0x82F9
         /// </summary>
-        MaxCullDistances = 0x82f9,
+        MaxCullDistances = 0x82F9,
 
         /// <summary>
         /// Original was GL_MAX_COMBINED_CLIP_AND_CULL_DISTANCES = 0x82FA
         /// </summary>
-        MaxCombinedClipAndCullDistances = 0x82fa
+        MaxCombinedClipAndCullDistances = 0x82FA
     }
 }

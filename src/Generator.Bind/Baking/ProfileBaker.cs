@@ -79,12 +79,16 @@ namespace Bind.Baking
             // Perform the second resolution pass over the override enumerations
             ResolveEnumerationOverrides(coalescedOverrides, coalescedProfile);
 
+            var enumerationTranslator = new ProfileEnumerationTranslator();
+
             // Translate profile identifiers and types names
             var translatedProfile = new ProfileFunctionTranslator().Translate(coalescedProfile);
-            translatedProfile = new ProfileEnumerationTranslator().Translate(translatedProfile);
+            translatedProfile = enumerationTranslator.Translate(translatedProfile);
+
+            var translatedOverrides = enumerationTranslator.Translate(coalescedOverrides);
 
             // Apply profile overrides
-            var overridenProfile = ApplyOverridesToProfile(translatedProfile, coalescedOverrides);
+            var overridenProfile = ApplyOverridesToProfile(translatedProfile, translatedOverrides);
 
             return overridenProfile;
         }

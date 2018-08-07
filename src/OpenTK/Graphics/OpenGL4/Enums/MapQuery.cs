@@ -29,23 +29,23 @@
 namespace OpenTK.Graphics.OpenGL4
 {
     /// <summary>
-    /// Used in GL.Arb.GetnMap and GL.GetnMap.
+    /// Used in GL.ARB.GetnMap and GL.GetnMap.
     /// </summary>
     public enum MapQuery
     {
         /// <summary>
-        /// Original was GL_COEFF = 0x0A00
+        /// Original was GL_COEFF = 0xA00
         /// </summary>
-        Coeff = 0x0a00,
+        Coeff = 0xA00,
 
         /// <summary>
-        /// Original was GL_ORDER = 0x0A01
+        /// Original was GL_ORDER = 0xA01
         /// </summary>
-        Order = 0x0a01,
+        Order = 0xA01,
 
         /// <summary>
-        /// Original was GL_DOMAIN = 0x0A02
+        /// Original was GL_DOMAIN = 0xA02
         /// </summary>
-        Domain = 0x0a02
+        Domain = 0xA02
     }
 }

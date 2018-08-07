@@ -36,7 +36,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_QUERY_TARGET = 0x82EA
         /// </summary>
-        QueryTarget = 0x82ea,
+        QueryTarget = 0x82EA,
 
         /// <summary>
         /// Original was GL_QUERY_RESULT = 0x8866

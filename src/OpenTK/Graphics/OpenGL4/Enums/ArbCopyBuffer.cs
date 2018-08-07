@@ -36,11 +36,11 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_COPY_READ_BUFFER = 0x8F36
         /// </summary>
-        CopyReadBuffer = 0x8f36,
+        CopyReadBuffer = 0x8F36,
 
         /// <summary>
         /// Original was GL_COPY_WRITE_BUFFER = 0x8F37
         /// </summary>
-        CopyWriteBuffer = 0x8f37
+        CopyWriteBuffer = 0x8F37
     }
 }

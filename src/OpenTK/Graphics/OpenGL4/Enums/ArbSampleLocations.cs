@@ -36,22 +36,22 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_SAMPLE_LOCATION_ARB = 0x8E50
         /// </summary>
-        SampleLocationArb = 0x8e50,
+        SampleLocationArb = 0x8E50,
 
         /// <summary>
         /// Original was GL_SAMPLE_LOCATION_SUBPIXEL_BITS_ARB = 0x933D
         /// </summary>
-        SampleLocationSubpixelBitsArb = 0x933d,
+        SampleLocationSubpixelBitsArb = 0x933D,
 
         /// <summary>
         /// Original was GL_SAMPLE_LOCATION_PIXEL_GRID_WIDTH_ARB = 0x933E
         /// </summary>
-        SampleLocationPixelGridWidthArb = 0x933e,
+        SampleLocationPixelGridWidthArb = 0x933E,
 
         /// <summary>
         /// Original was GL_SAMPLE_LOCATION_PIXEL_GRID_HEIGHT_ARB = 0x933F
         /// </summary>
-        SampleLocationPixelGridHeightArb = 0x933f,
+        SampleLocationPixelGridHeightArb = 0x933F,
 
         /// <summary>
         /// Original was GL_PROGRAMMABLE_SAMPLE_LOCATION_TABLE_SIZE_ARB = 0x9340

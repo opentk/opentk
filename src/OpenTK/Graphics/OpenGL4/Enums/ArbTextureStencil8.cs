@@ -41,6 +41,6 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_STENCIL_INDEX8 = 0x8D48
         /// </summary>
-        StencilIndex8 = 0x8d48
+        StencilIndex8 = 0x8D48
     }
 }

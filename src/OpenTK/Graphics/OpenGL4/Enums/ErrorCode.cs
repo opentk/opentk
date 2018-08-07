@@ -34,49 +34,44 @@ namespace OpenTK.Graphics.OpenGL4
     public enum ErrorCode
     {
         /// <summary>
-        /// Original was GL_NO_ERROR = 0
+        /// Original was GL_NO_ERROR = 0x0
         /// </summary>
-        NoError = 0,
+        NoError = 0x0,
 
         /// <summary>
-        /// Original was GL_INVALID_ENUM = 0x0500
+        /// Original was GL_INVALID_ENUM = 0x500
         /// </summary>
-        InvalidEnum = 0x0500,
+        InvalidEnum = 0x500,
 
         /// <summary>
-        /// Original was GL_INVALID_VALUE = 0x0501
+        /// Original was GL_INVALID_VALUE = 0x501
         /// </summary>
-        InvalidValue = 0x0501,
+        InvalidValue = 0x501,
 
         /// <summary>
-        /// Original was GL_INVALID_OPERATION = 0x0502
+        /// Original was GL_INVALID_OPERATION = 0x502
         /// </summary>
-        InvalidOperation = 0x0502,
+        InvalidOperation = 0x502,
 
         /// <summary>
-        /// Original was GL_OUT_OF_MEMORY = 0x0505
+        /// Original was GL_OUT_OF_MEMORY = 0x505
         /// </summary>
-        OutOfMemory = 0x0505,
+        OutOfMemory = 0x505,
 
         /// <summary>
-        /// Original was GL_INVALID_FRAMEBUFFER_OPERATION = 0x0506
+        /// Original was GL_INVALID_FRAMEBUFFER_OPERATION = 0x506
         /// </summary>
-        InvalidFramebufferOperation = 0x0506,
+        InvalidFramebufferOperation = 0x506,
 
         /// <summary>
-        /// Original was GL_INVALID_FRAMEBUFFER_OPERATION_EXT = 0x0506
+        /// Original was GL_INVALID_FRAMEBUFFER_OPERATION_EXT = 0x506
         /// </summary>
-        InvalidFramebufferOperationExt = 0x0506,
+        InvalidFramebufferOperationExt = 0x506,
 
         /// <summary>
-        /// Original was GL_INVALID_FRAMEBUFFER_OPERATION_OES = 0x0506
+        /// Original was GL_INVALID_FRAMEBUFFER_OPERATION_OES = 0x506
         /// </summary>
-        InvalidFramebufferOperationOes = 0x0506,
-
-        /// <summary>
-        /// Original was GL_CONTEXT_LOST = 0x0507
-        /// </summary>
-        ContextLost = 0x0507,
+        InvalidFramebufferOperationOes = 0x506,
 
         /// <summary>
         /// Original was GL_TABLE_TOO_LARGE = 0x8031

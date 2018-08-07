@@ -36,6 +36,6 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_FRAMEBUFFER_SRGB = 0x8DB9
         /// </summary>
-        FramebufferSrgb = 0x8db9
+        FramebufferSrgb = 0x8DB9
     }
 }

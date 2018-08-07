@@ -51,156 +51,156 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_DOUBLE = 0x140A
         /// </summary>
-        Double = 0x140a,
+        Double = 0x140A,
 
         /// <summary>
         /// Original was GL_FLOAT_VEC2 = 0x8B50
         /// </summary>
-        FloatVec2 = 0x8b50,
+        FloatVec2 = 0x8B50,
 
         /// <summary>
         /// Original was GL_FLOAT_VEC3 = 0x8B51
         /// </summary>
-        FloatVec3 = 0x8b51,
+        FloatVec3 = 0x8B51,
 
         /// <summary>
         /// Original was GL_FLOAT_VEC4 = 0x8B52
         /// </summary>
-        FloatVec4 = 0x8b52,
+        FloatVec4 = 0x8B52,
 
         /// <summary>
         /// Original was GL_INT_VEC2 = 0x8B53
         /// </summary>
-        IntVec2 = 0x8b53,
+        IntVec2 = 0x8B53,
 
         /// <summary>
         /// Original was GL_INT_VEC3 = 0x8B54
         /// </summary>
-        IntVec3 = 0x8b54,
+        IntVec3 = 0x8B54,
 
         /// <summary>
         /// Original was GL_INT_VEC4 = 0x8B55
         /// </summary>
-        IntVec4 = 0x8b55,
+        IntVec4 = 0x8B55,
 
         /// <summary>
         /// Original was GL_FLOAT_MAT2 = 0x8B5A
         /// </summary>
-        FloatMat2 = 0x8b5a,
+        FloatMat2 = 0x8B5A,
 
         /// <summary>
         /// Original was GL_FLOAT_MAT3 = 0x8B5B
         /// </summary>
-        FloatMat3 = 0x8b5b,
+        FloatMat3 = 0x8B5B,
 
         /// <summary>
         /// Original was GL_FLOAT_MAT4 = 0x8B5C
         /// </summary>
-        FloatMat4 = 0x8b5c,
+        FloatMat4 = 0x8B5C,
 
         /// <summary>
-        /// Original was GL_FLOAT_MAT2x3 = 0x8B65
+        /// Original was GL_FLOAT_MAT2X3 = 0x8B65
         /// </summary>
-        FloatMat2x3 = 0x8b65,
+        FloatMat2x3 = 0x8B65,
 
         /// <summary>
-        /// Original was GL_FLOAT_MAT2x4 = 0x8B66
+        /// Original was GL_FLOAT_MAT2X4 = 0x8B66
         /// </summary>
-        FloatMat2x4 = 0x8b66,
+        FloatMat2x4 = 0x8B66,
 
         /// <summary>
-        /// Original was GL_FLOAT_MAT3x2 = 0x8B67
+        /// Original was GL_FLOAT_MAT3X2 = 0x8B67
         /// </summary>
-        FloatMat3x2 = 0x8b67,
+        FloatMat3x2 = 0x8B67,
 
         /// <summary>
-        /// Original was GL_FLOAT_MAT3x4 = 0x8B68
+        /// Original was GL_FLOAT_MAT3X4 = 0x8B68
         /// </summary>
-        FloatMat3x4 = 0x8b68,
+        FloatMat3x4 = 0x8B68,
 
         /// <summary>
-        /// Original was GL_FLOAT_MAT4x2 = 0x8B69
+        /// Original was GL_FLOAT_MAT4X2 = 0x8B69
         /// </summary>
-        FloatMat4x2 = 0x8b69,
+        FloatMat4x2 = 0x8B69,
 
         /// <summary>
-        /// Original was GL_FLOAT_MAT4x3 = 0x8B6A
+        /// Original was GL_FLOAT_MAT4X3 = 0x8B6A
         /// </summary>
-        FloatMat4x3 = 0x8b6a,
+        FloatMat4x3 = 0x8B6A,
 
         /// <summary>
         /// Original was GL_UNSIGNED_INT_VEC2 = 0x8DC6
         /// </summary>
-        UnsignedIntVec2 = 0x8dc6,
+        UnsignedIntVec2 = 0x8DC6,
 
         /// <summary>
         /// Original was GL_UNSIGNED_INT_VEC3 = 0x8DC7
         /// </summary>
-        UnsignedIntVec3 = 0x8dc7,
+        UnsignedIntVec3 = 0x8DC7,
 
         /// <summary>
         /// Original was GL_UNSIGNED_INT_VEC4 = 0x8DC8
         /// </summary>
-        UnsignedIntVec4 = 0x8dc8,
+        UnsignedIntVec4 = 0x8DC8,
 
         /// <summary>
         /// Original was GL_DOUBLE_MAT2 = 0x8F46
         /// </summary>
-        DoubleMat2 = 0x8f46,
+        DoubleMat2 = 0x8F46,
 
         /// <summary>
         /// Original was GL_DOUBLE_MAT3 = 0x8F47
         /// </summary>
-        DoubleMat3 = 0x8f47,
+        DoubleMat3 = 0x8F47,
 
         /// <summary>
         /// Original was GL_DOUBLE_MAT4 = 0x8F48
         /// </summary>
-        DoubleMat4 = 0x8f48,
+        DoubleMat4 = 0x8F48,
 
         /// <summary>
-        /// Original was GL_DOUBLE_MAT2x3 = 0x8F49
+        /// Original was GL_DOUBLE_MAT2X3 = 0x8F49
         /// </summary>
-        DoubleMat2x3 = 0x8f49,
+        DoubleMat2x3 = 0x8F49,
 
         /// <summary>
-        /// Original was GL_DOUBLE_MAT2x4 = 0x8F4A
+        /// Original was GL_DOUBLE_MAT2X4 = 0x8F4A
         /// </summary>
-        DoubleMat2x4 = 0x8f4a,
+        DoubleMat2x4 = 0x8F4A,
 
         /// <summary>
-        /// Original was GL_DOUBLE_MAT3x2 = 0x8F4B
+        /// Original was GL_DOUBLE_MAT3X2 = 0x8F4B
         /// </summary>
-        DoubleMat3x2 = 0x8f4b,
+        DoubleMat3x2 = 0x8F4B,
 
         /// <summary>
-        /// Original was GL_DOUBLE_MAT3x4 = 0x8F4C
+        /// Original was GL_DOUBLE_MAT3X4 = 0x8F4C
         /// </summary>
-        DoubleMat3x4 = 0x8f4c,
+        DoubleMat3x4 = 0x8F4C,
 
         /// <summary>
-        /// Original was GL_DOUBLE_MAT4x2 = 0x8F4D
+        /// Original was GL_DOUBLE_MAT4X2 = 0x8F4D
         /// </summary>
-        DoubleMat4x2 = 0x8f4d,
+        DoubleMat4x2 = 0x8F4D,
 
         /// <summary>
-        /// Original was GL_DOUBLE_MAT4x3 = 0x8F4E
+        /// Original was GL_DOUBLE_MAT4X3 = 0x8F4E
         /// </summary>
-        DoubleMat4x3 = 0x8f4e,
+        DoubleMat4x3 = 0x8F4E,
 
         /// <summary>
         /// Original was GL_DOUBLE_VEC2 = 0x8FFC
         /// </summary>
-        DoubleVec2 = 0x8ffc,
+        DoubleVec2 = 0x8FFC,
 
         /// <summary>
         /// Original was GL_DOUBLE_VEC3 = 0x8FFD
         /// </summary>
-        DoubleVec3 = 0x8ffd,
+        DoubleVec3 = 0x8FFD,
 
         /// <summary>
         /// Original was GL_DOUBLE_VEC4 = 0x8FFE
         /// </summary>
-        DoubleVec4 = 0x8ffe
+        DoubleVec4 = 0x8FFE
     }
 }

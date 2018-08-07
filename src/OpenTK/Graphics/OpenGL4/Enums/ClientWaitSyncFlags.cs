@@ -34,13 +34,13 @@ namespace OpenTK.Graphics.OpenGL4
     public enum ClientWaitSyncFlags
     {
         /// <summary>
-        /// Original was GL_NONE = 0
+        /// Original was GL_NONE = 0x0
         /// </summary>
-        None = 0,
+        None = 0x0,
 
         /// <summary>
-        /// Original was GL_SYNC_FLUSH_COMMANDS_BIT = 0x00000001
+        /// Original was GL_SYNC_FLUSH_COMMANDS_BIT = 0x1
         /// </summary>
-        SyncFlushCommandsBit = 0x00000001
+        SyncFlushCommandsBit = 0x1
     }
 }

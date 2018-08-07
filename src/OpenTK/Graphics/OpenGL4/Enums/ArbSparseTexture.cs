@@ -29,7 +29,7 @@
 namespace OpenTK.Graphics.OpenGL4
 {
     /// <summary>
-    /// Used in GL.Arb.TexPageCommitment.
+    /// Used in GL.ARB.TexPageCommitment.
     /// </summary>
     public enum ArbSparseTexture
     {
@@ -54,38 +54,38 @@ namespace OpenTK.Graphics.OpenGL4
         MaxSparseTextureSizeArb = 0x9198,
 
         /// <summary>
-        /// Original was GL_MAX_SPARSE_3D_TEXTURE_SIZE_ARB = 0x9199
+        /// Original was GL_MAX_SPARSE3_D_TEXTURE_SIZE_ARB = 0x9199
         /// </summary>
         MaxSparse3DTextureSizeArb = 0x9199,
 
         /// <summary>
         /// Original was GL_MAX_SPARSE_ARRAY_TEXTURE_LAYERS_ARB = 0x919A
         /// </summary>
-        MaxSparseArrayTextureLayersArb = 0x919a,
+        MaxSparseArrayTextureLayersArb = 0x919A,
 
         /// <summary>
         /// Original was GL_TEXTURE_SPARSE_ARB = 0x91A6
         /// </summary>
-        TextureSparseArb = 0x91a6,
+        TextureSparseArb = 0x91A6,
 
         /// <summary>
         /// Original was GL_VIRTUAL_PAGE_SIZE_INDEX_ARB = 0x91A7
         /// </summary>
-        VirtualPageSizeIndexArb = 0x91a7,
+        VirtualPageSizeIndexArb = 0x91A7,
 
         /// <summary>
         /// Original was GL_NUM_VIRTUAL_PAGE_SIZES_ARB = 0x91A8
         /// </summary>
-        NumVirtualPageSizesArb = 0x91a8,
+        NumVirtualPageSizesArb = 0x91A8,
 
         /// <summary>
         /// Original was GL_SPARSE_TEXTURE_FULL_ARRAY_CUBE_MIPMAPS_ARB = 0x91A9
         /// </summary>
-        SparseTextureFullArrayCubeMipmapsArb = 0x91a9,
+        SparseTextureFullArrayCubeMipmapsArb = 0x91A9,
 
         /// <summary>
         /// Original was GL_NUM_SPARSE_LEVELS_ARB = 0x91AA
         /// </summary>
-        NumSparseLevelsArb = 0x91aa
+        NumSparseLevelsArb = 0x91AA
     }
 }

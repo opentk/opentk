@@ -36,21 +36,21 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_RENDERBUFFER_COVERAGE_SAMPLES_NV = 0x8CAB
         /// </summary>
-        RenderbufferCoverageSamplesNV = 0x8cab,
+        RenderbufferCoverageSamplesNV = 0x8CAB,
 
         /// <summary>
         /// Original was GL_RENDERBUFFER_COLOR_SAMPLES_NV = 0x8E10
         /// </summary>
-        RenderbufferColorSamplesNV = 0x8e10,
+        RenderbufferColorSamplesNV = 0x8E10,
 
         /// <summary>
         /// Original was GL_MAX_MULTISAMPLE_COVERAGE_MODES_NV = 0x8E11
         /// </summary>
-        MaxMultisampleCoverageModesNV = 0x8e11,
+        MaxMultisampleCoverageModesNV = 0x8E11,
 
         /// <summary>
         /// Original was GL_MULTISAMPLE_COVERAGE_MODES_NV = 0x8E12
         /// </summary>
-        MultisampleCoverageModesNV = 0x8e12
+        MultisampleCoverageModesNV = 0x8E12
     }
 }

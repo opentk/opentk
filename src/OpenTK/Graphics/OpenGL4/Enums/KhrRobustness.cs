@@ -34,19 +34,24 @@ namespace OpenTK.Graphics.OpenGL4
     public enum KhrRobustness
     {
         /// <summary>
-        /// Original was GL_NO_ERROR = 0
+        /// Original was GL_NO_ERROR = 0x0
         /// </summary>
-        NoError = 0,
+        NoError = 0x0,
 
         /// <summary>
-        /// Original was GL_CONTEXT_LOST = 0x0507
+        /// Original was GL_NO_ERROR = 0x0
         /// </summary>
-        ContextLost = 0x0507,
+        NoError = 0x0,
 
         /// <summary>
-        /// Original was GL_CONTEXT_LOST_KHR = 0x0507
+        /// Original was GL_CONTEXT_LOST = 0x507
         /// </summary>
-        ContextLostKhr = 0x0507,
+        ContextLost = 0x507,
+
+        /// <summary>
+        /// Original was GL_CONTEXT_LOST_KHR = 0x507
+        /// </summary>
+        ContextLostKhr = 0x507,
 
         /// <summary>
         /// Original was GL_LOSE_CONTEXT_ON_RESET = 0x8252
@@ -111,11 +116,11 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_CONTEXT_ROBUST_ACCESS = 0x90F3
         /// </summary>
-        ContextRobustAccess = 0x90f3,
+        ContextRobustAccess = 0x90F3,
 
         /// <summary>
         /// Original was GL_CONTEXT_ROBUST_ACCESS_KHR = 0x90F3
         /// </summary>
-        ContextRobustAccessKhr = 0x90f3
+        ContextRobustAccessKhr = 0x90F3
     }
 }

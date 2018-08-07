@@ -29,23 +29,23 @@
 namespace OpenTK.Graphics.OpenGL4
 {
     /// <summary>
-    /// Used in GL.Ext.TextureStorage1D and GL.Ext.TextureStorage2D, as well as 7 other functions.
+    /// Used in GL.EXT.GetDouble and GL.EXT.GetDoubleIndexed, as well as 14 other functions.
     /// </summary>
     public enum ExtDirectStateAccess
     {
         /// <summary>
         /// Original was GL_PROGRAM_MATRIX_EXT = 0x8E2D
         /// </summary>
-        ProgramMatrixExt = 0x8e2d,
+        ProgramMatrixExt = 0x8E2D,
 
         /// <summary>
         /// Original was GL_TRANSPOSE_PROGRAM_MATRIX_EXT = 0x8E2E
         /// </summary>
-        TransposeProgramMatrixExt = 0x8e2e,
+        TransposeProgramMatrixExt = 0x8E2E,
 
         /// <summary>
         /// Original was GL_PROGRAM_MATRIX_STACK_DEPTH_EXT = 0x8E2F
         /// </summary>
-        ProgramMatrixStackDepthExt = 0x8e2f
+        ProgramMatrixStackDepthExt = 0x8E2F
     }
 }

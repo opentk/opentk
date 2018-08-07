@@ -29,7 +29,7 @@
 namespace OpenTK.Graphics.OpenGL4
 {
     /// <summary>
-    /// Used in GL.ConvolutionParameter and GL.GetConvolutionParameter.
+    /// Not used directly.
     /// </summary>
     public enum ConvolutionParameterExt
     {

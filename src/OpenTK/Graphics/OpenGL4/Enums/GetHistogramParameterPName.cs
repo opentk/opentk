@@ -56,21 +56,21 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_HISTOGRAM_BLUE_SIZE = 0x802A
         /// </summary>
-        HistogramBlueSize = 0x802a,
+        HistogramBlueSize = 0x802A,
 
         /// <summary>
         /// Original was GL_HISTOGRAM_ALPHA_SIZE = 0x802B
         /// </summary>
-        HistogramAlphaSize = 0x802b,
+        HistogramAlphaSize = 0x802B,
 
         /// <summary>
         /// Original was GL_HISTOGRAM_LUMINANCE_SIZE = 0x802C
         /// </summary>
-        HistogramLuminanceSize = 0x802c,
+        HistogramLuminanceSize = 0x802C,
 
         /// <summary>
         /// Original was GL_HISTOGRAM_SINK = 0x802D
         /// </summary>
-        HistogramSink = 0x802d
+        HistogramSink = 0x802D
     }
 }

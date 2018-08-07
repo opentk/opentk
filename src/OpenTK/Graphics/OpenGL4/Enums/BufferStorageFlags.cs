@@ -34,38 +34,38 @@ namespace OpenTK.Graphics.OpenGL4
     public enum BufferStorageFlags
     {
         /// <summary>
-        /// Original was GL_NONE = 0
+        /// Original was GL_NONE = 0x0
         /// </summary>
-        None = 0,
+        None = 0x0,
 
         /// <summary>
-        /// Original was GL_MAP_READ_BIT = 0x0001
+        /// Original was GL_MAP_READ_BIT = 0x1
         /// </summary>
-        MapReadBit = 0x0001,
+        MapReadBit = 0x1,
 
         /// <summary>
-        /// Original was GL_MAP_WRITE_BIT = 0x0002
+        /// Original was GL_MAP_WRITE_BIT = 0x2
         /// </summary>
-        MapWriteBit = 0x0002,
+        MapWriteBit = 0x2,
 
         /// <summary>
-        /// Original was GL_MAP_PERSISTENT_BIT = 0x0040
+        /// Original was GL_MAP_PERSISTENT_BIT = 0x40
         /// </summary>
-        MapPersistentBit = 0x0040,
+        MapPersistentBit = 0x40,
 
         /// <summary>
-        /// Original was GL_MAP_COHERENT_BIT = 0x0080
+        /// Original was GL_MAP_COHERENT_BIT = 0x80
         /// </summary>
-        MapCoherentBit = 0x0080,
+        MapCoherentBit = 0x80,
 
         /// <summary>
-        /// Original was GL_DYNAMIC_STORAGE_BIT = 0x0100
+        /// Original was GL_DYNAMIC_STORAGE_BIT = 0x100
         /// </summary>
-        DynamicStorageBit = 0x0100,
+        DynamicStorageBit = 0x100,
 
         /// <summary>
-        /// Original was GL_CLIENT_STORAGE_BIT = 0x0200
+        /// Original was GL_CLIENT_STORAGE_BIT = 0x200
         /// </summary>
-        ClientStorageBit = 0x0200
+        ClientStorageBit = 0x200
     }
 }

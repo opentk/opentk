@@ -36,36 +36,36 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_VERTEX_ATTRIB_BINDING = 0x82D4
         /// </summary>
-        VertexAttribBinding = 0x82d4,
+        VertexAttribBinding = 0x82D4,
 
         /// <summary>
         /// Original was GL_VERTEX_ATTRIB_RELATIVE_OFFSET = 0x82D5
         /// </summary>
-        VertexAttribRelativeOffset = 0x82d5,
+        VertexAttribRelativeOffset = 0x82D5,
 
         /// <summary>
         /// Original was GL_VERTEX_BINDING_DIVISOR = 0x82D6
         /// </summary>
-        VertexBindingDivisor = 0x82d6,
+        VertexBindingDivisor = 0x82D6,
 
         /// <summary>
         /// Original was GL_VERTEX_BINDING_OFFSET = 0x82D7
         /// </summary>
-        VertexBindingOffset = 0x82d7,
+        VertexBindingOffset = 0x82D7,
 
         /// <summary>
         /// Original was GL_VERTEX_BINDING_STRIDE = 0x82D8
         /// </summary>
-        VertexBindingStride = 0x82d8,
+        VertexBindingStride = 0x82D8,
 
         /// <summary>
         /// Original was GL_MAX_VERTEX_ATTRIB_RELATIVE_OFFSET = 0x82D9
         /// </summary>
-        MaxVertexAttribRelativeOffset = 0x82d9,
+        MaxVertexAttribRelativeOffset = 0x82D9,
 
         /// <summary>
         /// Original was GL_MAX_VERTEX_ATTRIB_BINDINGS = 0x82DA
         /// </summary>
-        MaxVertexAttribBindings = 0x82da
+        MaxVertexAttribBindings = 0x82DA
     }
 }

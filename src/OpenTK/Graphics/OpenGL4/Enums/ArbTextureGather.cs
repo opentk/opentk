@@ -36,16 +36,16 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_MIN_PROGRAM_TEXTURE_GATHER_OFFSET_ARB = 0x8E5E
         /// </summary>
-        MinProgramTextureGatherOffsetArb = 0x8e5e,
+        MinProgramTextureGatherOffsetArb = 0x8E5E,
 
         /// <summary>
         /// Original was GL_MAX_PROGRAM_TEXTURE_GATHER_OFFSET_ARB = 0x8E5F
         /// </summary>
-        MaxProgramTextureGatherOffsetArb = 0x8e5f,
+        MaxProgramTextureGatherOffsetArb = 0x8E5F,
 
         /// <summary>
         /// Original was GL_MAX_PROGRAM_TEXTURE_GATHER_COMPONENTS_ARB = 0x8F9F
         /// </summary>
-        MaxProgramTextureGatherComponentsArb = 0x8f9f
+        MaxProgramTextureGatherComponentsArb = 0x8F9F
     }
 }

@@ -36,6 +36,6 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_TEXTURE_BUFFER = 0x8C2A
         /// </summary>
-        TextureBuffer = 0x8c2a
+        TextureBuffer = 0x8C2A
     }
 }

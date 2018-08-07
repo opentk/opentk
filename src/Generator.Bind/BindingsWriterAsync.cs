@@ -570,8 +570,11 @@ namespace Bind
                     await WriteLicenseAsync(sw);
                     await sw.WriteLineNoTabsAsync();
 
-                    await sw.WriteLineAsync("using System;");
-                    await sw.WriteLineNoTabsAsync();
+                    if (enumeration.IsFlagEnum)
+                    {
+                        await sw.WriteLineAsync("using System;");
+                        await sw.WriteLineNoTabsAsync();
+                    }
 
                     await sw.WriteLineAsync("// ReSharper disable InconsistentNaming");
                     await sw.WriteLineAsync("#pragma warning disable SA1139 // Use literal suffix notation instead of casting");
@@ -613,11 +616,11 @@ namespace Bind
         {
             // Make sure everything is sorted. This will avoid random changes between
             // consecutive runs of the program.
-            tokens = tokens.OrderBy(c => c.Name).ToList();
+            tokens = tokens.OrderBy(c => c.Value).ThenBy(c => c.Name).ToList();
 
             foreach (var token in tokens)
             {
-                string valueString = $"0x{token.Value:X}";
+                var valueString = $"0x{token.Value:X}";
 
                 await sw.WriteLineAsync("/// <summary>");
                 var originalTokenName = $"{_generatorSettings.ConstantPrefix}{token.Name.Underscore().ToUpperInvariant()}";
@@ -680,7 +683,7 @@ namespace Bind
             string licenseContents;
             using (var fs = File.OpenText(licenseFilePath))
             {
-                licenseContents = await fs.ReadToEndAsync();
+                licenseContents = (await fs.ReadToEndAsync()).TrimEnd();
             }
 
             await sw.WriteLineAsync(licenseContents);

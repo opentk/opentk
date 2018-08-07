@@ -34,13 +34,13 @@ namespace OpenTK.Graphics.OpenGL4
     public enum FrontFaceDirection
     {
         /// <summary>
-        /// Original was GL_CW = 0x0900
+        /// Original was GL_CW = 0x900
         /// </summary>
-        CW = 0x0900,
+        CW = 0x900,
 
         /// <summary>
-        /// Original was GL_CCW = 0x0901
+        /// Original was GL_CCW = 0x901
         /// </summary>
-        Ccw = 0x0901
+        Ccw = 0x901
     }
 }

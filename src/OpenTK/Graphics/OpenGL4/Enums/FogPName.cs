@@ -34,28 +34,28 @@ namespace OpenTK.Graphics.OpenGL4
     public enum FogPName
     {
         /// <summary>
-        /// Original was GL_FOG_INDEX = 0x0B61
+        /// Original was GL_FOG_INDEX = 0xB61
         /// </summary>
-        FogIndex = 0x0b61,
+        FogIndex = 0xB61,
 
         /// <summary>
-        /// Original was GL_FOG_DENSITY = 0x0B62
+        /// Original was GL_FOG_DENSITY = 0xB62
         /// </summary>
-        FogDensity = 0x0b62,
+        FogDensity = 0xB62,
 
         /// <summary>
-        /// Original was GL_FOG_START = 0x0B63
+        /// Original was GL_FOG_START = 0xB63
         /// </summary>
-        FogStart = 0x0b63,
+        FogStart = 0xB63,
 
         /// <summary>
-        /// Original was GL_FOG_END = 0x0B64
+        /// Original was GL_FOG_END = 0xB64
         /// </summary>
-        FogEnd = 0x0b64,
+        FogEnd = 0xB64,
 
         /// <summary>
-        /// Original was GL_FOG_MODE = 0x0B65
+        /// Original was GL_FOG_MODE = 0xB65
         /// </summary>
-        FogMode = 0x0b65
+        FogMode = 0xB65
     }
 }

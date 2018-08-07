@@ -29,49 +29,29 @@
 namespace OpenTK.Graphics.OpenGL4
 {
     /// <summary>
-    /// Used in GL.GetBoolean and GL.GetDouble, as well as 4 other functions.
+    /// Used in GL.GetBoolean and GL.GetInteger, as well as 4 other functions.
     /// </summary>
     public enum GetIndexedPName
     {
         /// <summary>
-        /// Original was GL_DEPTH_RANGE = 0x0B70
-        /// </summary>
-        DepthRange = 0x0b70,
-
-        /// <summary>
-        /// Original was GL_VIEWPORT = 0x0BA2
-        /// </summary>
-        Viewport = 0x0ba2,
-
-        /// <summary>
-        /// Original was GL_SCISSOR_BOX = 0x0C10
-        /// </summary>
-        ScissorBox = 0x0c10,
-
-        /// <summary>
-        /// Original was GL_COLOR_WRITEMASK = 0x0C23
-        /// </summary>
-        ColorWritemask = 0x0c23,
-
-        /// <summary>
-        /// Original was GL_TEXTURE_BINDING_1D = 0x8068
+        /// Original was GL_TEXTURE_BINDING1_D = 0x8068
         /// </summary>
         TextureBinding1D = 0x8068,
 
         /// <summary>
-        /// Original was GL_TEXTURE_BINDING_2D = 0x8069
+        /// Original was GL_TEXTURE_BINDING2_D = 0x8069
         /// </summary>
         TextureBinding2D = 0x8069,
 
         /// <summary>
-        /// Original was GL_TEXTURE_BINDING_3D = 0x806A
+        /// Original was GL_TEXTURE_BINDING3_D = 0x806A
         /// </summary>
-        TextureBinding3D = 0x806a,
+        TextureBinding3D = 0x806A,
 
         /// <summary>
         /// Original was GL_TEXTURE_BINDING_RECTANGLE = 0x84F6
         /// </summary>
-        TextureBindingRectangle = 0x84f6,
+        TextureBindingRectangle = 0x84F6,
 
         /// <summary>
         /// Original was GL_TEXTURE_BINDING_CUBE_MAP = 0x8514
@@ -79,58 +59,23 @@ namespace OpenTK.Graphics.OpenGL4
         TextureBindingCubeMap = 0x8514,
 
         /// <summary>
-        /// Original was GL_UNIFORM_BUFFER_BINDING = 0x8A28
+        /// Original was GL_TEXTURE_BINDING1_D_ARRAY = 0x8C1C
         /// </summary>
-        UniformBufferBinding = 0x8a28,
+        TextureBinding1DArray = 0x8C1C,
 
         /// <summary>
-        /// Original was GL_UNIFORM_BUFFER_START = 0x8A29
+        /// Original was GL_TEXTURE_BINDING2_D_ARRAY = 0x8C1D
         /// </summary>
-        UniformBufferStart = 0x8a29,
-
-        /// <summary>
-        /// Original was GL_UNIFORM_BUFFER_SIZE = 0x8A2A
-        /// </summary>
-        UniformBufferSize = 0x8a2a,
-
-        /// <summary>
-        /// Original was GL_TEXTURE_BINDING_1D_ARRAY = 0x8C1C
-        /// </summary>
-        TextureBinding1DArray = 0x8c1c,
-
-        /// <summary>
-        /// Original was GL_TEXTURE_BINDING_2D_ARRAY = 0x8C1D
-        /// </summary>
-        TextureBinding2DArray = 0x8c1d,
+        TextureBinding2DArray = 0x8C1D,
 
         /// <summary>
         /// Original was GL_TEXTURE_BINDING_BUFFER = 0x8C2C
         /// </summary>
-        TextureBindingBuffer = 0x8c2c,
-
-        /// <summary>
-        /// Original was GL_TRANSFORM_FEEDBACK_BUFFER_START = 0x8C84
-        /// </summary>
-        TransformFeedbackBufferStart = 0x8c84,
-
-        /// <summary>
-        /// Original was GL_TRANSFORM_FEEDBACK_BUFFER_SIZE = 0x8C85
-        /// </summary>
-        TransformFeedbackBufferSize = 0x8c85,
-
-        /// <summary>
-        /// Original was GL_TRANSFORM_FEEDBACK_BUFFER_BINDING = 0x8C8F
-        /// </summary>
-        TransformFeedbackBufferBinding = 0x8c8f,
-
-        /// <summary>
-        /// Original was GL_SAMPLE_MASK_VALUE = 0x8E52
-        /// </summary>
-        SampleMaskValue = 0x8e52,
+        TextureBindingBuffer = 0x8C2C,
 
         /// <summary>
         /// Original was GL_TEXTURE_BINDING_CUBE_MAP_ARRAY = 0x900A
         /// </summary>
-        TextureBindingCubeMapArray = 0x900a
+        TextureBindingCubeMapArray = 0x900A
     }
 }

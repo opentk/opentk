@@ -36,71 +36,71 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_TEXTURE_COLOR_TABLE_SGI = 0x80BC
         /// </summary>
-        TextureColorTableSgi = 0x80bc,
+        TextureColorTableSgi = 0x80BC,
 
         /// <summary>
         /// Original was GL_PROXY_TEXTURE_COLOR_TABLE_SGI = 0x80BD
         /// </summary>
-        ProxyTextureColorTableSgi = 0x80bd,
+        ProxyTextureColorTableSgi = 0x80BD,
 
         /// <summary>
         /// Original was GL_COLOR_TABLE = 0x80D0
         /// </summary>
-        ColorTable = 0x80d0,
+        ColorTable = 0x80D0,
 
         /// <summary>
         /// Original was GL_COLOR_TABLE_SGI = 0x80D0
         /// </summary>
-        ColorTableSgi = 0x80d0,
+        ColorTableSgi = 0x80D0,
 
         /// <summary>
         /// Original was GL_POST_CONVOLUTION_COLOR_TABLE = 0x80D1
         /// </summary>
-        PostConvolutionColorTable = 0x80d1,
+        PostConvolutionColorTable = 0x80D1,
 
         /// <summary>
         /// Original was GL_POST_CONVOLUTION_COLOR_TABLE_SGI = 0x80D1
         /// </summary>
-        PostConvolutionColorTableSgi = 0x80d1,
+        PostConvolutionColorTableSgi = 0x80D1,
 
         /// <summary>
         /// Original was GL_POST_COLOR_MATRIX_COLOR_TABLE = 0x80D2
         /// </summary>
-        PostColorMatrixColorTable = 0x80d2,
+        PostColorMatrixColorTable = 0x80D2,
 
         /// <summary>
         /// Original was GL_POST_COLOR_MATRIX_COLOR_TABLE_SGI = 0x80D2
         /// </summary>
-        PostColorMatrixColorTableSgi = 0x80d2,
+        PostColorMatrixColorTableSgi = 0x80D2,
 
         /// <summary>
         /// Original was GL_PROXY_COLOR_TABLE = 0x80D3
         /// </summary>
-        ProxyColorTable = 0x80d3,
+        ProxyColorTable = 0x80D3,
 
         /// <summary>
         /// Original was GL_PROXY_COLOR_TABLE_SGI = 0x80D3
         /// </summary>
-        ProxyColorTableSgi = 0x80d3,
+        ProxyColorTableSgi = 0x80D3,
 
         /// <summary>
         /// Original was GL_PROXY_POST_CONVOLUTION_COLOR_TABLE = 0x80D4
         /// </summary>
-        ProxyPostConvolutionColorTable = 0x80d4,
+        ProxyPostConvolutionColorTable = 0x80D4,
 
         /// <summary>
         /// Original was GL_PROXY_POST_CONVOLUTION_COLOR_TABLE_SGI = 0x80D4
         /// </summary>
-        ProxyPostConvolutionColorTableSgi = 0x80d4,
+        ProxyPostConvolutionColorTableSgi = 0x80D4,
 
         /// <summary>
         /// Original was GL_PROXY_POST_COLOR_MATRIX_COLOR_TABLE = 0x80D5
         /// </summary>
-        ProxyPostColorMatrixColorTable = 0x80d5,
+        ProxyPostColorMatrixColorTable = 0x80D5,
 
         /// <summary>
         /// Original was GL_PROXY_POST_COLOR_MATRIX_COLOR_TABLE_SGI = 0x80D5
         /// </summary>
-        ProxyPostColorMatrixColorTableSgi = 0x80d5
+        ProxyPostColorMatrixColorTableSgi = 0x80D5
     }
 }

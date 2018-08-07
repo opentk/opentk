@@ -36,50 +36,50 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_SAMPLE_POSITION = 0x8E50
         /// </summary>
-        SamplePosition = 0x8e50,
+        SamplePosition = 0x8E50,
 
         /// <summary>
         /// Original was GL_SAMPLE_MASK = 0x8E51
         /// </summary>
-        SampleMask = 0x8e51,
+        SampleMask = 0x8E51,
 
         /// <summary>
         /// Original was GL_SAMPLE_MASK_VALUE = 0x8E52
         /// </summary>
-        SampleMaskValue = 0x8e52,
+        SampleMaskValue = 0x8E52,
 
         /// <summary>
         /// Original was GL_MAX_SAMPLE_MASK_WORDS = 0x8E59
         /// </summary>
-        MaxSampleMaskWords = 0x8e59,
+        MaxSampleMaskWords = 0x8E59,
 
         /// <summary>
-        /// Original was GL_TEXTURE_2D_MULTISAMPLE = 0x9100
+        /// Original was GL_TEXTURE2_D_MULTISAMPLE = 0x9100
         /// </summary>
         Texture2DMultisample = 0x9100,
 
         /// <summary>
-        /// Original was GL_PROXY_TEXTURE_2D_MULTISAMPLE = 0x9101
+        /// Original was GL_PROXY_TEXTURE2_D_MULTISAMPLE = 0x9101
         /// </summary>
         ProxyTexture2DMultisample = 0x9101,
 
         /// <summary>
-        /// Original was GL_TEXTURE_2D_MULTISAMPLE_ARRAY = 0x9102
+        /// Original was GL_TEXTURE2_D_MULTISAMPLE_ARRAY = 0x9102
         /// </summary>
         Texture2DMultisampleArray = 0x9102,
 
         /// <summary>
-        /// Original was GL_PROXY_TEXTURE_2D_MULTISAMPLE_ARRAY = 0x9103
+        /// Original was GL_PROXY_TEXTURE2_D_MULTISAMPLE_ARRAY = 0x9103
         /// </summary>
         ProxyTexture2DMultisampleArray = 0x9103,
 
         /// <summary>
-        /// Original was GL_TEXTURE_BINDING_2D_MULTISAMPLE = 0x9104
+        /// Original was GL_TEXTURE_BINDING2_D_MULTISAMPLE = 0x9104
         /// </summary>
         TextureBinding2DMultisample = 0x9104,
 
         /// <summary>
-        /// Original was GL_TEXTURE_BINDING_2D_MULTISAMPLE_ARRAY = 0x9105
+        /// Original was GL_TEXTURE_BINDING2_D_MULTISAMPLE_ARRAY = 0x9105
         /// </summary>
         TextureBinding2DMultisampleArray = 0x9105,
 
@@ -94,44 +94,44 @@ namespace OpenTK.Graphics.OpenGL4
         TextureFixedSampleLocations = 0x9107,
 
         /// <summary>
-        /// Original was GL_SAMPLER_2D_MULTISAMPLE = 0x9108
+        /// Original was GL_SAMPLER2_D_MULTISAMPLE = 0x9108
         /// </summary>
         Sampler2DMultisample = 0x9108,
 
         /// <summary>
-        /// Original was GL_INT_SAMPLER_2D_MULTISAMPLE = 0x9109
+        /// Original was GL_INT_SAMPLER2_D_MULTISAMPLE = 0x9109
         /// </summary>
         IntSampler2DMultisample = 0x9109,
 
         /// <summary>
-        /// Original was GL_UNSIGNED_INT_SAMPLER_2D_MULTISAMPLE = 0x910A
+        /// Original was GL_UNSIGNED_INT_SAMPLER2_D_MULTISAMPLE = 0x910A
         /// </summary>
-        UnsignedIntSampler2DMultisample = 0x910a,
+        UnsignedIntSampler2DMultisample = 0x910A,
 
         /// <summary>
-        /// Original was GL_SAMPLER_2D_MULTISAMPLE_ARRAY = 0x910B
+        /// Original was GL_SAMPLER2_D_MULTISAMPLE_ARRAY = 0x910B
         /// </summary>
-        Sampler2DMultisampleArray = 0x910b,
+        Sampler2DMultisampleArray = 0x910B,
 
         /// <summary>
-        /// Original was GL_INT_SAMPLER_2D_MULTISAMPLE_ARRAY = 0x910C
+        /// Original was GL_INT_SAMPLER2_D_MULTISAMPLE_ARRAY = 0x910C
         /// </summary>
-        IntSampler2DMultisampleArray = 0x910c,
+        IntSampler2DMultisampleArray = 0x910C,
 
         /// <summary>
-        /// Original was GL_UNSIGNED_INT_SAMPLER_2D_MULTISAMPLE_ARRAY = 0x910D
+        /// Original was GL_UNSIGNED_INT_SAMPLER2_D_MULTISAMPLE_ARRAY = 0x910D
         /// </summary>
-        UnsignedIntSampler2DMultisampleArray = 0x910d,
+        UnsignedIntSampler2DMultisampleArray = 0x910D,
 
         /// <summary>
         /// Original was GL_MAX_COLOR_TEXTURE_SAMPLES = 0x910E
         /// </summary>
-        MaxColorTextureSamples = 0x910e,
+        MaxColorTextureSamples = 0x910E,
 
         /// <summary>
         /// Original was GL_MAX_DEPTH_TEXTURE_SAMPLES = 0x910F
         /// </summary>
-        MaxDepthTextureSamples = 0x910f,
+        MaxDepthTextureSamples = 0x910F,
 
         /// <summary>
         /// Original was GL_MAX_INTEGER_SAMPLES = 0x9110

@@ -36,15 +36,15 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_RENDERBUFFER = 0x8D41
         /// </summary>
-        Renderbuffer = 0x8d41,
+        Renderbuffer = 0x8D41,
 
         /// <summary>
-        /// Original was GL_TEXTURE_2D_MULTISAMPLE = 0x9100
+        /// Original was GL_TEXTURE2_D_MULTISAMPLE = 0x9100
         /// </summary>
         Texture2DMultisample = 0x9100,
 
         /// <summary>
-        /// Original was GL_TEXTURE_2D_MULTISAMPLE_ARRAY = 0x9102
+        /// Original was GL_TEXTURE2_D_MULTISAMPLE_ARRAY = 0x9102
         /// </summary>
         Texture2DMultisampleArray = 0x9102,
 
@@ -54,14 +54,14 @@ namespace OpenTK.Graphics.OpenGL4
         MultisamplesNV = 0x9371,
 
         /// <summary>
-        /// Original was GL_SUPERSAMPLE_SCALE_X_NV = 0x9372
+        /// Original was GL_SUPERSAMPLE_SCALE_XNV = 0x9372
         /// </summary>
-        SupersampleScaleXnv = 0x9372,
+        SupersampleScaleXNV = 0x9372,
 
         /// <summary>
-        /// Original was GL_SUPERSAMPLE_SCALE_Y_NV = 0x9373
+        /// Original was GL_SUPERSAMPLE_SCALE_YNV = 0x9373
         /// </summary>
-        SupersampleScaleYnv = 0x9373,
+        SupersampleScaleYNV = 0x9373,
 
         /// <summary>
         /// Original was GL_CONFORMANT_NV = 0x9374

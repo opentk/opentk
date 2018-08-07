@@ -86,31 +86,31 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_INVERT = 0x150A
         /// </summary>
-        Invert = 0x150a,
+        Invert = 0x150A,
 
         /// <summary>
         /// Original was GL_OR_REVERSE = 0x150B
         /// </summary>
-        OrReverse = 0x150b,
+        OrReverse = 0x150B,
 
         /// <summary>
         /// Original was GL_COPY_INVERTED = 0x150C
         /// </summary>
-        CopyInverted = 0x150c,
+        CopyInverted = 0x150C,
 
         /// <summary>
         /// Original was GL_OR_INVERTED = 0x150D
         /// </summary>
-        OrInverted = 0x150d,
+        OrInverted = 0x150D,
 
         /// <summary>
         /// Original was GL_NAND = 0x150E
         /// </summary>
-        Nand = 0x150e,
+        Nand = 0x150E,
 
         /// <summary>
         /// Original was GL_SET = 0x150F
         /// </summary>
-        Set = 0x150f
+        Set = 0x150F
     }
 }

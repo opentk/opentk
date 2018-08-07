@@ -34,19 +34,14 @@ namespace OpenTK.Graphics.OpenGL4
     public enum TextureEnvMode
     {
         /// <summary>
-        /// Original was GL_ADD = 0x0104
+        /// Original was GL_ADD = 0x104
         /// </summary>
-        Add = 0x0104,
+        Add = 0x104,
 
         /// <summary>
-        /// Original was GL_BLEND = 0x0BE2
+        /// Original was GL_BLEND = 0xBE2
         /// </summary>
-        Blend = 0x0be2,
-
-        /// <summary>
-        /// Original was GL_REPLACE = 0x1E01
-        /// </summary>
-        Replace = 0x1e01,
+        Blend = 0xBE2,
 
         /// <summary>
         /// Original was GL_MODULATE = 0x2100
@@ -61,11 +56,6 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_TEXTURE_ENV_BIAS_SGIX = 0x80BE
         /// </summary>
-        TextureEnvBiasSgix = 0x80be,
-
-        /// <summary>
-        /// Original was GL_COMBINE = 0x8570
-        /// </summary>
-        Combine = 0x8570
+        TextureEnvBiasSgix = 0x80BE
     }
 }

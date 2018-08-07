@@ -31,89 +31,89 @@ using System;
 namespace OpenTK.Graphics.OpenGL4
 {
     /// <summary>
-    /// Used in GL.Ext.UseProgramStages.
+    /// Used in GL.EXT.UseProgramStages.
     /// </summary>
     [Flags]
     public enum UseProgramStageMask
     {
         /// <summary>
-        /// Original was GL_VERTEX_SHADER_BIT = 0x00000001
+        /// Original was GL_VERTEX_SHADER_BIT = 0x1
         /// </summary>
-        VertexShaderBit = 0x00000001,
+        VertexShaderBit = 0x1,
 
         /// <summary>
-        /// Original was GL_VERTEX_SHADER_BIT_EXT = 0x00000001
+        /// Original was GL_VERTEX_SHADER_BIT_EXT = 0x1
         /// </summary>
-        VertexShaderBitExt = 0x00000001,
+        VertexShaderBitExt = 0x1,
 
         /// <summary>
-        /// Original was GL_FRAGMENT_SHADER_BIT = 0x00000002
+        /// Original was GL_FRAGMENT_SHADER_BIT = 0x2
         /// </summary>
-        FragmentShaderBit = 0x00000002,
+        FragmentShaderBit = 0x2,
 
         /// <summary>
-        /// Original was GL_FRAGMENT_SHADER_BIT_EXT = 0x00000002
+        /// Original was GL_FRAGMENT_SHADER_BIT_EXT = 0x2
         /// </summary>
-        FragmentShaderBitExt = 0x00000002,
+        FragmentShaderBitExt = 0x2,
 
         /// <summary>
-        /// Original was GL_GEOMETRY_SHADER_BIT = 0x00000004
+        /// Original was GL_GEOMETRY_SHADER_BIT = 0x4
         /// </summary>
-        GeometryShaderBit = 0x00000004,
+        GeometryShaderBit = 0x4,
 
         /// <summary>
-        /// Original was GL_GEOMETRY_SHADER_BIT_EXT = 0x00000004
+        /// Original was GL_GEOMETRY_SHADER_BIT_EXT = 0x4
         /// </summary>
-        GeometryShaderBitExt = 0x00000004,
+        GeometryShaderBitExt = 0x4,
 
         /// <summary>
-        /// Original was GL_GEOMETRY_SHADER_BIT_OES = 0x00000004
+        /// Original was GL_GEOMETRY_SHADER_BIT_OES = 0x4
         /// </summary>
-        GeometryShaderBitOes = 0x00000004,
+        GeometryShaderBitOes = 0x4,
 
         /// <summary>
-        /// Original was GL_TESS_CONTROL_SHADER_BIT = 0x00000008
+        /// Original was GL_TESS_CONTROL_SHADER_BIT = 0x8
         /// </summary>
-        TessControlShaderBit = 0x00000008,
+        TessControlShaderBit = 0x8,
 
         /// <summary>
-        /// Original was GL_TESS_CONTROL_SHADER_BIT_EXT = 0x00000008
+        /// Original was GL_TESS_CONTROL_SHADER_BIT_EXT = 0x8
         /// </summary>
-        TessControlShaderBitExt = 0x00000008,
+        TessControlShaderBitExt = 0x8,
 
         /// <summary>
-        /// Original was GL_TESS_CONTROL_SHADER_BIT_OES = 0x00000008
+        /// Original was GL_TESS_CONTROL_SHADER_BIT_OES = 0x8
         /// </summary>
-        TessControlShaderBitOes = 0x00000008,
+        TessControlShaderBitOes = 0x8,
 
         /// <summary>
-        /// Original was GL_TESS_EVALUATION_SHADER_BIT = 0x00000010
+        /// Original was GL_TESS_EVALUATION_SHADER_BIT = 0x10
         /// </summary>
-        TessEvaluationShaderBit = 0x00000010,
+        TessEvaluationShaderBit = 0x10,
 
         /// <summary>
-        /// Original was GL_TESS_EVALUATION_SHADER_BIT_EXT = 0x00000010
+        /// Original was GL_TESS_EVALUATION_SHADER_BIT_EXT = 0x10
         /// </summary>
-        TessEvaluationShaderBitExt = 0x00000010,
+        TessEvaluationShaderBitExt = 0x10,
 
         /// <summary>
-        /// Original was GL_TESS_EVALUATION_SHADER_BIT_OES = 0x00000010
+        /// Original was GL_TESS_EVALUATION_SHADER_BIT_OES = 0x10
         /// </summary>
-        TessEvaluationShaderBitOes = 0x00000010,
+        TessEvaluationShaderBitOes = 0x10,
 
         /// <summary>
-        /// Original was GL_COMPUTE_SHADER_BIT = 0x00000020
+        /// Original was GL_COMPUTE_SHADER_BIT = 0x20
         /// </summary>
-        ComputeShaderBit = 0x00000020,
+        ComputeShaderBit = 0x20,
 
         /// <summary>
         /// Original was GL_ALL_SHADER_BITS = 0xFFFFFFFF
         /// </summary>
-        AllShaderBits = unchecked((int)0xffffffff),
+        AllShaderBits = unchecked((int)0xFFFFFFFF),
 
         /// <summary>
         /// Original was GL_ALL_SHADER_BITS_EXT = 0xFFFFFFFF
         /// </summary>
-        AllShaderBitsExt = unchecked((int)0xffffffff)
+        AllShaderBitsExt = unchecked((int)0xFFFFFFFF)
     }
 }

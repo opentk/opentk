@@ -34,18 +34,8 @@ namespace OpenTK.Graphics.OpenGL4
     public enum ClampColorTarget
     {
         /// <summary>
-        /// Original was GL_CLAMP_VERTEX_COLOR = 0x891A
-        /// </summary>
-        ClampVertexColor = 0x891a,
-
-        /// <summary>
-        /// Original was GL_CLAMP_FRAGMENT_COLOR = 0x891B
-        /// </summary>
-        ClampFragmentColor = 0x891b,
-
-        /// <summary>
         /// Original was GL_CLAMP_READ_COLOR = 0x891C
         /// </summary>
-        ClampReadColor = 0x891c
+        ClampReadColor = 0x891C
     }
 }

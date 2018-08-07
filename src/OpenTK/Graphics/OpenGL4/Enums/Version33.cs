@@ -36,32 +36,32 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_TIME_ELAPSED = 0x88BF
         /// </summary>
-        TimeElapsed = 0x88bf,
+        TimeElapsed = 0x88BF,
 
         /// <summary>
         /// Original was GL_SRC1_COLOR = 0x88F9
         /// </summary>
-        Src1Color = 0x88f9,
+        Src1Color = 0x88F9,
 
         /// <summary>
         /// Original was GL_ONE_MINUS_SRC1_COLOR = 0x88FA
         /// </summary>
-        OneMinusSrc1Color = 0x88fa,
+        OneMinusSrc1Color = 0x88FA,
 
         /// <summary>
         /// Original was GL_ONE_MINUS_SRC1_ALPHA = 0x88FB
         /// </summary>
-        OneMinusSrc1Alpha = 0x88fb,
+        OneMinusSrc1Alpha = 0x88FB,
 
         /// <summary>
         /// Original was GL_MAX_DUAL_SOURCE_DRAW_BUFFERS = 0x88FC
         /// </summary>
-        MaxDualSourceDrawBuffers = 0x88fc,
+        MaxDualSourceDrawBuffers = 0x88FC,
 
         /// <summary>
         /// Original was GL_VERTEX_ATTRIB_ARRAY_DIVISOR = 0x88FE
         /// </summary>
-        VertexAttribArrayDivisor = 0x88fe,
+        VertexAttribArrayDivisor = 0x88FE,
 
         /// <summary>
         /// Original was GL_SAMPLER_BINDING = 0x8919
@@ -71,46 +71,46 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_ANY_SAMPLES_PASSED = 0x8C2F
         /// </summary>
-        AnySamplesPassed = 0x8c2f,
+        AnySamplesPassed = 0x8C2F,
 
         /// <summary>
-        /// Original was GL_INT_2_10_10_10_REV = 0x8D9F
+        /// Original was GL_INT2101010_REV = 0x8D9F
         /// </summary>
-        Int2101010Rev = 0x8d9f,
+        Int2101010Rev = 0x8D9F,
 
         /// <summary>
         /// Original was GL_TIMESTAMP = 0x8E28
         /// </summary>
-        Timestamp = 0x8e28,
+        Timestamp = 0x8E28,
 
         /// <summary>
         /// Original was GL_TEXTURE_SWIZZLE_R = 0x8E42
         /// </summary>
-        TextureSwizzleR = 0x8e42,
+        TextureSwizzleR = 0x8E42,
 
         /// <summary>
         /// Original was GL_TEXTURE_SWIZZLE_G = 0x8E43
         /// </summary>
-        TextureSwizzleG = 0x8e43,
+        TextureSwizzleG = 0x8E43,
 
         /// <summary>
         /// Original was GL_TEXTURE_SWIZZLE_B = 0x8E44
         /// </summary>
-        TextureSwizzleB = 0x8e44,
+        TextureSwizzleB = 0x8E44,
 
         /// <summary>
         /// Original was GL_TEXTURE_SWIZZLE_A = 0x8E45
         /// </summary>
-        TextureSwizzleA = 0x8e45,
+        TextureSwizzleA = 0x8E45,
 
         /// <summary>
         /// Original was GL_TEXTURE_SWIZZLE_RGBA = 0x8E46
         /// </summary>
-        TextureSwizzleRgba = 0x8e46,
+        TextureSwizzleRgba = 0x8E46,
 
         /// <summary>
         /// Original was GL_RGB10_A2UI = 0x906F
         /// </summary>
-        Rgb10A2ui = 0x906f
+        Rgb10A2ui = 0x906F
     }
 }

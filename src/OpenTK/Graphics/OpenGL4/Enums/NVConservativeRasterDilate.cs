@@ -29,7 +29,7 @@
 namespace OpenTK.Graphics.OpenGL4
 {
     /// <summary>
-    /// Not used directly.
+    /// Used in GL.NV.ConservativeRasterParameter.
     /// </summary>
     public enum NVConservativeRasterDilate
     {
@@ -41,11 +41,11 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_CONSERVATIVE_RASTER_DILATE_RANGE_NV = 0x937A
         /// </summary>
-        ConservativeRasterDilateRangeNV = 0x937a,
+        ConservativeRasterDilateRangeNV = 0x937A,
 
         /// <summary>
         /// Original was GL_CONSERVATIVE_RASTER_DILATE_GRANULARITY_NV = 0x937B
         /// </summary>
-        ConservativeRasterDilateGranularityNV = 0x937b
+        ConservativeRasterDilateGranularityNV = 0x937B
     }
 }

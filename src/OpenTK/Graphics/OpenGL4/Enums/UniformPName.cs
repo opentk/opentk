@@ -36,46 +36,46 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_UNIFORM_TYPE = 0x8A37
         /// </summary>
-        UniformType = 0x8a37,
+        UniformType = 0x8A37,
 
         /// <summary>
         /// Original was GL_UNIFORM_SIZE = 0x8A38
         /// </summary>
-        UniformSize = 0x8a38,
+        UniformSize = 0x8A38,
 
         /// <summary>
         /// Original was GL_UNIFORM_NAME_LENGTH = 0x8A39
         /// </summary>
-        UniformNameLength = 0x8a39,
+        UniformNameLength = 0x8A39,
 
         /// <summary>
         /// Original was GL_UNIFORM_BLOCK_INDEX = 0x8A3A
         /// </summary>
-        UniformBlockIndex = 0x8a3a,
+        UniformBlockIndex = 0x8A3A,
 
         /// <summary>
         /// Original was GL_UNIFORM_OFFSET = 0x8A3B
         /// </summary>
-        UniformOffset = 0x8a3b,
+        UniformOffset = 0x8A3B,
 
         /// <summary>
         /// Original was GL_UNIFORM_ARRAY_STRIDE = 0x8A3C
         /// </summary>
-        UniformArrayStride = 0x8a3c,
+        UniformArrayStride = 0x8A3C,
 
         /// <summary>
         /// Original was GL_UNIFORM_MATRIX_STRIDE = 0x8A3D
         /// </summary>
-        UniformMatrixStride = 0x8a3d,
+        UniformMatrixStride = 0x8A3D,
 
         /// <summary>
         /// Original was GL_UNIFORM_IS_ROW_MAJOR = 0x8A3E
         /// </summary>
-        UniformIsRowMajor = 0x8a3e,
+        UniformIsRowMajor = 0x8A3E,
 
         /// <summary>
         /// Original was GL_UNIFORM_ATOMIC_COUNTER_BUFFER_INDEX = 0x92DA
         /// </summary>
-        UniformAtomicCounterBufferIndex = 0x92da
+        UniformAtomicCounterBufferIndex = 0x92DA
     }
 }

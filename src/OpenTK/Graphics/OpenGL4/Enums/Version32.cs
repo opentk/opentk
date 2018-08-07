@@ -34,39 +34,44 @@ namespace OpenTK.Graphics.OpenGL4
     public enum Version32
     {
         /// <summary>
-        /// Original was GL_CONTEXT_CORE_PROFILE_BIT = 0x00000001
+        /// Original was GL_TIMEOUT_IGNORED = 0xFFFFFFFFFFFFFFFF
         /// </summary>
-        ContextCoreProfileBit = 0x00000001,
+        TimeoutIgnored = unchecked((int)0xFFFFFFFFFFFFFFFF),
 
         /// <summary>
-        /// Original was GL_SYNC_FLUSH_COMMANDS_BIT = 0x00000001
+        /// Original was GL_CONTEXT_CORE_PROFILE_BIT = 0x1
         /// </summary>
-        SyncFlushCommandsBit = 0x00000001,
+        ContextCoreProfileBit = 0x1,
 
         /// <summary>
-        /// Original was GL_CONTEXT_COMPATIBILITY_PROFILE_BIT = 0x00000002
+        /// Original was GL_SYNC_FLUSH_COMMANDS_BIT = 0x1
         /// </summary>
-        ContextCompatibilityProfileBit = 0x00000002,
+        SyncFlushCommandsBit = 0x1,
 
         /// <summary>
-        /// Original was GL_LINES_ADJACENCY = 0x000A
+        /// Original was GL_CONTEXT_COMPATIBILITY_PROFILE_BIT = 0x2
         /// </summary>
-        LinesAdjacency = 0x000a,
+        ContextCompatibilityProfileBit = 0x2,
 
         /// <summary>
-        /// Original was GL_LINE_STRIP_ADJACENCY = 0x000B
+        /// Original was GL_LINES_ADJACENCY = 0xA
         /// </summary>
-        LineStripAdjacency = 0x000b,
+        LinesAdjacency = 0xA,
 
         /// <summary>
-        /// Original was GL_TRIANGLES_ADJACENCY = 0x000C
+        /// Original was GL_LINE_STRIP_ADJACENCY = 0xB
         /// </summary>
-        TrianglesAdjacency = 0x000c,
+        LineStripAdjacency = 0xB,
 
         /// <summary>
-        /// Original was GL_TRIANGLE_STRIP_ADJACENCY = 0x000D
+        /// Original was GL_TRIANGLES_ADJACENCY = 0xC
         /// </summary>
-        TriangleStripAdjacency = 0x000d,
+        TrianglesAdjacency = 0xC,
+
+        /// <summary>
+        /// Original was GL_TRIANGLE_STRIP_ADJACENCY = 0xD
+        /// </summary>
+        TriangleStripAdjacency = 0xD,
 
         /// <summary>
         /// Original was GL_PROGRAM_POINT_SIZE = 0x8642
@@ -76,12 +81,12 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_DEPTH_CLAMP = 0x864F
         /// </summary>
-        DepthClamp = 0x864f,
+        DepthClamp = 0x864F,
 
         /// <summary>
         /// Original was GL_TEXTURE_CUBE_MAP_SEAMLESS = 0x884F
         /// </summary>
-        TextureCubeMapSeamless = 0x884f,
+        TextureCubeMapSeamless = 0x884F,
 
         /// <summary>
         /// Original was GL_GEOMETRY_VERTICES_OUT = 0x8916
@@ -101,105 +106,105 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_MAX_GEOMETRY_TEXTURE_IMAGE_UNITS = 0x8C29
         /// </summary>
-        MaxGeometryTextureImageUnits = 0x8c29,
+        MaxGeometryTextureImageUnits = 0x8C29,
 
         /// <summary>
         /// Original was GL_FRAMEBUFFER_ATTACHMENT_LAYERED = 0x8DA7
         /// </summary>
-        FramebufferAttachmentLayered = 0x8da7,
+        FramebufferAttachmentLayered = 0x8DA7,
 
         /// <summary>
         /// Original was GL_FRAMEBUFFER_INCOMPLETE_LAYER_TARGETS = 0x8DA8
         /// </summary>
-        FramebufferIncompleteLayerTargets = 0x8da8,
+        FramebufferIncompleteLayerTargets = 0x8DA8,
 
         /// <summary>
         /// Original was GL_GEOMETRY_SHADER = 0x8DD9
         /// </summary>
-        GeometryShader = 0x8dd9,
+        GeometryShader = 0x8DD9,
 
         /// <summary>
         /// Original was GL_MAX_GEOMETRY_UNIFORM_COMPONENTS = 0x8DDF
         /// </summary>
-        MaxGeometryUniformComponents = 0x8ddf,
+        MaxGeometryUniformComponents = 0x8DDF,
 
         /// <summary>
         /// Original was GL_MAX_GEOMETRY_OUTPUT_VERTICES = 0x8DE0
         /// </summary>
-        MaxGeometryOutputVertices = 0x8de0,
+        MaxGeometryOutputVertices = 0x8DE0,
 
         /// <summary>
         /// Original was GL_MAX_GEOMETRY_TOTAL_OUTPUT_COMPONENTS = 0x8DE1
         /// </summary>
-        MaxGeometryTotalOutputComponents = 0x8de1,
+        MaxGeometryTotalOutputComponents = 0x8DE1,
 
         /// <summary>
         /// Original was GL_QUADS_FOLLOW_PROVOKING_VERTEX_CONVENTION = 0x8E4C
         /// </summary>
-        QuadsFollowProvokingVertexConvention = 0x8e4c,
+        QuadsFollowProvokingVertexConvention = 0x8E4C,
 
         /// <summary>
         /// Original was GL_FIRST_VERTEX_CONVENTION = 0x8E4D
         /// </summary>
-        FirstVertexConvention = 0x8e4d,
+        FirstVertexConvention = 0x8E4D,
 
         /// <summary>
         /// Original was GL_LAST_VERTEX_CONVENTION = 0x8E4E
         /// </summary>
-        LastVertexConvention = 0x8e4e,
+        LastVertexConvention = 0x8E4E,
 
         /// <summary>
         /// Original was GL_PROVOKING_VERTEX = 0x8E4F
         /// </summary>
-        ProvokingVertex = 0x8e4f,
+        ProvokingVertex = 0x8E4F,
 
         /// <summary>
         /// Original was GL_SAMPLE_POSITION = 0x8E50
         /// </summary>
-        SamplePosition = 0x8e50,
+        SamplePosition = 0x8E50,
 
         /// <summary>
         /// Original was GL_SAMPLE_MASK = 0x8E51
         /// </summary>
-        SampleMask = 0x8e51,
+        SampleMask = 0x8E51,
 
         /// <summary>
         /// Original was GL_SAMPLE_MASK_VALUE = 0x8E52
         /// </summary>
-        SampleMaskValue = 0x8e52,
+        SampleMaskValue = 0x8E52,
 
         /// <summary>
         /// Original was GL_MAX_SAMPLE_MASK_WORDS = 0x8E59
         /// </summary>
-        MaxSampleMaskWords = 0x8e59,
+        MaxSampleMaskWords = 0x8E59,
 
         /// <summary>
-        /// Original was GL_TEXTURE_2D_MULTISAMPLE = 0x9100
+        /// Original was GL_TEXTURE2_D_MULTISAMPLE = 0x9100
         /// </summary>
         Texture2DMultisample = 0x9100,
 
         /// <summary>
-        /// Original was GL_PROXY_TEXTURE_2D_MULTISAMPLE = 0x9101
+        /// Original was GL_PROXY_TEXTURE2_D_MULTISAMPLE = 0x9101
         /// </summary>
         ProxyTexture2DMultisample = 0x9101,
 
         /// <summary>
-        /// Original was GL_TEXTURE_2D_MULTISAMPLE_ARRAY = 0x9102
+        /// Original was GL_TEXTURE2_D_MULTISAMPLE_ARRAY = 0x9102
         /// </summary>
         Texture2DMultisampleArray = 0x9102,
 
         /// <summary>
-        /// Original was GL_PROXY_TEXTURE_2D_MULTISAMPLE_ARRAY = 0x9103
+        /// Original was GL_PROXY_TEXTURE2_D_MULTISAMPLE_ARRAY = 0x9103
         /// </summary>
         ProxyTexture2DMultisampleArray = 0x9103,
 
         /// <summary>
-        /// Original was GL_TEXTURE_BINDING_2D_MULTISAMPLE = 0x9104
+        /// Original was GL_TEXTURE_BINDING2_D_MULTISAMPLE = 0x9104
         /// </summary>
         TextureBinding2DMultisample = 0x9104,
 
         /// <summary>
-        /// Original was GL_TEXTURE_BINDING_2D_MULTISAMPLE_ARRAY = 0x9105
+        /// Original was GL_TEXTURE_BINDING2_D_MULTISAMPLE_ARRAY = 0x9105
         /// </summary>
         TextureBinding2DMultisampleArray = 0x9105,
 
@@ -214,44 +219,44 @@ namespace OpenTK.Graphics.OpenGL4
         TextureFixedSampleLocations = 0x9107,
 
         /// <summary>
-        /// Original was GL_SAMPLER_2D_MULTISAMPLE = 0x9108
+        /// Original was GL_SAMPLER2_D_MULTISAMPLE = 0x9108
         /// </summary>
         Sampler2DMultisample = 0x9108,
 
         /// <summary>
-        /// Original was GL_INT_SAMPLER_2D_MULTISAMPLE = 0x9109
+        /// Original was GL_INT_SAMPLER2_D_MULTISAMPLE = 0x9109
         /// </summary>
         IntSampler2DMultisample = 0x9109,
 
         /// <summary>
-        /// Original was GL_UNSIGNED_INT_SAMPLER_2D_MULTISAMPLE = 0x910A
+        /// Original was GL_UNSIGNED_INT_SAMPLER2_D_MULTISAMPLE = 0x910A
         /// </summary>
-        UnsignedIntSampler2DMultisample = 0x910a,
+        UnsignedIntSampler2DMultisample = 0x910A,
 
         /// <summary>
-        /// Original was GL_SAMPLER_2D_MULTISAMPLE_ARRAY = 0x910B
+        /// Original was GL_SAMPLER2_D_MULTISAMPLE_ARRAY = 0x910B
         /// </summary>
-        Sampler2DMultisampleArray = 0x910b,
+        Sampler2DMultisampleArray = 0x910B,
 
         /// <summary>
-        /// Original was GL_INT_SAMPLER_2D_MULTISAMPLE_ARRAY = 0x910C
+        /// Original was GL_INT_SAMPLER2_D_MULTISAMPLE_ARRAY = 0x910C
         /// </summary>
-        IntSampler2DMultisampleArray = 0x910c,
+        IntSampler2DMultisampleArray = 0x910C,
 
         /// <summary>
-        /// Original was GL_UNSIGNED_INT_SAMPLER_2D_MULTISAMPLE_ARRAY = 0x910D
+        /// Original was GL_UNSIGNED_INT_SAMPLER2_D_MULTISAMPLE_ARRAY = 0x910D
         /// </summary>
-        UnsignedIntSampler2DMultisampleArray = 0x910d,
+        UnsignedIntSampler2DMultisampleArray = 0x910D,
 
         /// <summary>
         /// Original was GL_MAX_COLOR_TEXTURE_SAMPLES = 0x910E
         /// </summary>
-        MaxColorTextureSamples = 0x910e,
+        MaxColorTextureSamples = 0x910E,
 
         /// <summary>
         /// Original was GL_MAX_DEPTH_TEXTURE_SAMPLES = 0x910F
         /// </summary>
-        MaxDepthTextureSamples = 0x910f,
+        MaxDepthTextureSamples = 0x910F,
 
         /// <summary>
         /// Original was GL_MAX_INTEGER_SAMPLES = 0x9110
@@ -306,22 +311,22 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_ALREADY_SIGNALED = 0x911A
         /// </summary>
-        AlreadySignaled = 0x911a,
+        AlreadySignaled = 0x911A,
 
         /// <summary>
         /// Original was GL_TIMEOUT_EXPIRED = 0x911B
         /// </summary>
-        TimeoutExpired = 0x911b,
+        TimeoutExpired = 0x911B,
 
         /// <summary>
         /// Original was GL_CONDITION_SATISFIED = 0x911C
         /// </summary>
-        ConditionSatisfied = 0x911c,
+        ConditionSatisfied = 0x911C,
 
         /// <summary>
         /// Original was GL_WAIT_FAILED = 0x911D
         /// </summary>
-        WaitFailed = 0x911d,
+        WaitFailed = 0x911D,
 
         /// <summary>
         /// Original was GL_MAX_VERTEX_OUTPUT_COMPONENTS = 0x9122
@@ -346,11 +351,6 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_CONTEXT_PROFILE_MASK = 0x9126
         /// </summary>
-        ContextProfileMask = 0x9126,
-
-        /// <summary>
-        /// Original was GL_TIMEOUT_IGNORED = 0xFFFFFFFFFFFFFFFF
-        /// </summary>
-        TimeoutIgnored = unchecked((int)0xffffffffffffffff)
+        ContextProfileMask = 0x9126
     }
 }

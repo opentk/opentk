@@ -34,63 +34,63 @@ namespace OpenTK.Graphics.OpenGL4
     public enum NVViewportSwizzle
     {
         /// <summary>
-        /// Original was GL_VIEWPORT_SWIZZLE_POSITIVE_X_NV = 0x9350
+        /// Original was GL_VIEWPORT_SWIZZLE_POSITIVE_XNV = 0x9350
         /// </summary>
-        ViewportSwizzlePositiveXnv = 0x9350,
+        ViewportSwizzlePositiveXNV = 0x9350,
 
         /// <summary>
-        /// Original was GL_VIEWPORT_SWIZZLE_NEGATIVE_X_NV = 0x9351
+        /// Original was GL_VIEWPORT_SWIZZLE_NEGATIVE_XNV = 0x9351
         /// </summary>
-        ViewportSwizzleNegativeXnv = 0x9351,
+        ViewportSwizzleNegativeXNV = 0x9351,
 
         /// <summary>
-        /// Original was GL_VIEWPORT_SWIZZLE_POSITIVE_Y_NV = 0x9352
+        /// Original was GL_VIEWPORT_SWIZZLE_POSITIVE_YNV = 0x9352
         /// </summary>
-        ViewportSwizzlePositiveYnv = 0x9352,
+        ViewportSwizzlePositiveYNV = 0x9352,
 
         /// <summary>
-        /// Original was GL_VIEWPORT_SWIZZLE_NEGATIVE_Y_NV = 0x9353
+        /// Original was GL_VIEWPORT_SWIZZLE_NEGATIVE_YNV = 0x9353
         /// </summary>
-        ViewportSwizzleNegativeYnv = 0x9353,
+        ViewportSwizzleNegativeYNV = 0x9353,
 
         /// <summary>
-        /// Original was GL_VIEWPORT_SWIZZLE_POSITIVE_Z_NV = 0x9354
+        /// Original was GL_VIEWPORT_SWIZZLE_POSITIVE_ZNV = 0x9354
         /// </summary>
-        ViewportSwizzlePositiveZnv = 0x9354,
+        ViewportSwizzlePositiveZNV = 0x9354,
 
         /// <summary>
-        /// Original was GL_VIEWPORT_SWIZZLE_NEGATIVE_Z_NV = 0x9355
+        /// Original was GL_VIEWPORT_SWIZZLE_NEGATIVE_ZNV = 0x9355
         /// </summary>
-        ViewportSwizzleNegativeZnv = 0x9355,
+        ViewportSwizzleNegativeZNV = 0x9355,
 
         /// <summary>
-        /// Original was GL_VIEWPORT_SWIZZLE_POSITIVE_W_NV = 0x9356
+        /// Original was GL_VIEWPORT_SWIZZLE_POSITIVE_WNV = 0x9356
         /// </summary>
-        ViewportSwizzlePositiveWnv = 0x9356,
+        ViewportSwizzlePositiveWNV = 0x9356,
 
         /// <summary>
-        /// Original was GL_VIEWPORT_SWIZZLE_NEGATIVE_W_NV = 0x9357
+        /// Original was GL_VIEWPORT_SWIZZLE_NEGATIVE_WNV = 0x9357
         /// </summary>
-        ViewportSwizzleNegativeWnv = 0x9357,
+        ViewportSwizzleNegativeWNV = 0x9357,
 
         /// <summary>
-        /// Original was GL_VIEWPORT_SWIZZLE_X_NV = 0x9358
+        /// Original was GL_VIEWPORT_SWIZZLE_XNV = 0x9358
         /// </summary>
-        ViewportSwizzleXnv = 0x9358,
+        ViewportSwizzleXNV = 0x9358,
 
         /// <summary>
-        /// Original was GL_VIEWPORT_SWIZZLE_Y_NV = 0x9359
+        /// Original was GL_VIEWPORT_SWIZZLE_YNV = 0x9359
         /// </summary>
-        ViewportSwizzleYnv = 0x9359,
+        ViewportSwizzleYNV = 0x9359,
 
         /// <summary>
-        /// Original was GL_VIEWPORT_SWIZZLE_Z_NV = 0x935A
+        /// Original was GL_VIEWPORT_SWIZZLE_ZNV = 0x935A
         /// </summary>
-        ViewportSwizzleZnv = 0x935a,
+        ViewportSwizzleZNV = 0x935A,
 
         /// <summary>
-        /// Original was GL_VIEWPORT_SWIZZLE_W_NV = 0x935B
+        /// Original was GL_VIEWPORT_SWIZZLE_WNV = 0x935B
         /// </summary>
-        ViewportSwizzleWnv = 0x935b
+        ViewportSwizzleWNV = 0x935B
     }
 }

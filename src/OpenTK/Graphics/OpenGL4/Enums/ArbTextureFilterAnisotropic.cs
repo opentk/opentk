@@ -36,11 +36,11 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_TEXTURE_MAX_ANISOTROPY = 0x84FE
         /// </summary>
-        TextureMaxAnisotropy = 0x84fe,
+        TextureMaxAnisotropy = 0x84FE,
 
         /// <summary>
         /// Original was GL_MAX_TEXTURE_MAX_ANISOTROPY = 0x84FF
         /// </summary>
-        MaxTextureMaxAnisotropy = 0x84ff
+        MaxTextureMaxAnisotropy = 0x84FF
     }
 }

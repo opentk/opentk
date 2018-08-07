@@ -36,106 +36,101 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_TRANSFORM_FEEDBACK_BUFFER = 0x8C8E
         /// </summary>
-        TransformFeedbackBuffer = 0x8c8e,
-
-        /// <summary>
-        /// Original was GL_ATOMIC_COUNTER_BUFFER = 0x92C0
-        /// </summary>
-        AtomicCounterBuffer = 0x92c0,
+        TransformFeedbackBuffer = 0x8C8E,
 
         /// <summary>
         /// Original was GL_UNIFORM = 0x92E1
         /// </summary>
-        Uniform = 0x92e1,
+        Uniform = 0x92E1,
 
         /// <summary>
         /// Original was GL_UNIFORM_BLOCK = 0x92E2
         /// </summary>
-        UniformBlock = 0x92e2,
+        UniformBlock = 0x92E2,
 
         /// <summary>
         /// Original was GL_PROGRAM_INPUT = 0x92E3
         /// </summary>
-        ProgramInput = 0x92e3,
+        ProgramInput = 0x92E3,
 
         /// <summary>
         /// Original was GL_PROGRAM_OUTPUT = 0x92E4
         /// </summary>
-        ProgramOutput = 0x92e4,
+        ProgramOutput = 0x92E4,
 
         /// <summary>
         /// Original was GL_BUFFER_VARIABLE = 0x92E5
         /// </summary>
-        BufferVariable = 0x92e5,
+        BufferVariable = 0x92E5,
 
         /// <summary>
         /// Original was GL_SHADER_STORAGE_BLOCK = 0x92E6
         /// </summary>
-        ShaderStorageBlock = 0x92e6,
+        ShaderStorageBlock = 0x92E6,
 
         /// <summary>
         /// Original was GL_VERTEX_SUBROUTINE = 0x92E8
         /// </summary>
-        VertexSubroutine = 0x92e8,
+        VertexSubroutine = 0x92E8,
 
         /// <summary>
         /// Original was GL_TESS_CONTROL_SUBROUTINE = 0x92E9
         /// </summary>
-        TessControlSubroutine = 0x92e9,
+        TessControlSubroutine = 0x92E9,
 
         /// <summary>
         /// Original was GL_TESS_EVALUATION_SUBROUTINE = 0x92EA
         /// </summary>
-        TessEvaluationSubroutine = 0x92ea,
+        TessEvaluationSubroutine = 0x92EA,
 
         /// <summary>
         /// Original was GL_GEOMETRY_SUBROUTINE = 0x92EB
         /// </summary>
-        GeometrySubroutine = 0x92eb,
+        GeometrySubroutine = 0x92EB,
 
         /// <summary>
         /// Original was GL_FRAGMENT_SUBROUTINE = 0x92EC
         /// </summary>
-        FragmentSubroutine = 0x92ec,
+        FragmentSubroutine = 0x92EC,
 
         /// <summary>
         /// Original was GL_COMPUTE_SUBROUTINE = 0x92ED
         /// </summary>
-        ComputeSubroutine = 0x92ed,
+        ComputeSubroutine = 0x92ED,
 
         /// <summary>
         /// Original was GL_VERTEX_SUBROUTINE_UNIFORM = 0x92EE
         /// </summary>
-        VertexSubroutineUniform = 0x92ee,
+        VertexSubroutineUniform = 0x92EE,
 
         /// <summary>
         /// Original was GL_TESS_CONTROL_SUBROUTINE_UNIFORM = 0x92EF
         /// </summary>
-        TessControlSubroutineUniform = 0x92ef,
+        TessControlSubroutineUniform = 0x92EF,
 
         /// <summary>
         /// Original was GL_TESS_EVALUATION_SUBROUTINE_UNIFORM = 0x92F0
         /// </summary>
-        TessEvaluationSubroutineUniform = 0x92f0,
+        TessEvaluationSubroutineUniform = 0x92F0,
 
         /// <summary>
         /// Original was GL_GEOMETRY_SUBROUTINE_UNIFORM = 0x92F1
         /// </summary>
-        GeometrySubroutineUniform = 0x92f1,
+        GeometrySubroutineUniform = 0x92F1,
 
         /// <summary>
         /// Original was GL_FRAGMENT_SUBROUTINE_UNIFORM = 0x92F2
         /// </summary>
-        FragmentSubroutineUniform = 0x92f2,
+        FragmentSubroutineUniform = 0x92F2,
 
         /// <summary>
         /// Original was GL_COMPUTE_SUBROUTINE_UNIFORM = 0x92F3
         /// </summary>
-        ComputeSubroutineUniform = 0x92f3,
+        ComputeSubroutineUniform = 0x92F3,
 
         /// <summary>
         /// Original was GL_TRANSFORM_FEEDBACK_VARYING = 0x92F4
         /// </summary>
-        TransformFeedbackVarying = 0x92f4
+        TransformFeedbackVarying = 0x92F4
     }
 }

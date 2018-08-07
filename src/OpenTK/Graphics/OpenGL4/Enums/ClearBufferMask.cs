@@ -31,39 +31,34 @@ using System;
 namespace OpenTK.Graphics.OpenGL4
 {
     /// <summary>
-    /// Used in GL.BlitFramebuffer and GL.BlitNamedFramebuffer, as well as 1 other function.
+    /// Used in GL.Clear and GL.BlitFramebuffer, as well as 1 other function.
     /// </summary>
     [Flags]
     public enum ClearBufferMask
     {
         /// <summary>
-        /// Original was GL_NONE = 0
+        /// Original was GL_DEPTH_BUFFER_BIT = 0x100
         /// </summary>
-        None = 0,
+        DepthBufferBit = 0x100,
 
         /// <summary>
-        /// Original was GL_DEPTH_BUFFER_BIT = 0x00000100
+        /// Original was GL_ACCUM_BUFFER_BIT = 0x200
         /// </summary>
-        DepthBufferBit = 0x00000100,
+        AccumBufferBit = 0x200,
 
         /// <summary>
-        /// Original was GL_ACCUM_BUFFER_BIT = 0x00000200
+        /// Original was GL_STENCIL_BUFFER_BIT = 0x400
         /// </summary>
-        AccumBufferBit = 0x00000200,
+        StencilBufferBit = 0x400,
 
         /// <summary>
-        /// Original was GL_STENCIL_BUFFER_BIT = 0x00000400
+        /// Original was GL_COLOR_BUFFER_BIT = 0x4000
         /// </summary>
-        StencilBufferBit = 0x00000400,
+        ColorBufferBit = 0x4000,
 
         /// <summary>
-        /// Original was GL_COLOR_BUFFER_BIT = 0x00004000
+        /// Original was GL_COVERAGE_BUFFER_BIT_NV = 0x8000
         /// </summary>
-        ColorBufferBit = 0x00004000,
-
-        /// <summary>
-        /// Original was GL_COVERAGE_BUFFER_BIT_NV = 0x00008000
-        /// </summary>
-        CoverageBufferBitNV = 0x00008000
+        CoverageBufferBitNV = 0x8000
     }
 }

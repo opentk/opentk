@@ -34,8 +34,8 @@ namespace OpenTK.Graphics.OpenGL4
     public enum ArbES31Compatibility
     {
         /// <summary>
-        /// Original was GL_BACK = 0x0405
+        /// Original was GL_BACK = 0x405
         /// </summary>
-        Back = 0x0405
+        Back = 0x405
     }
 }

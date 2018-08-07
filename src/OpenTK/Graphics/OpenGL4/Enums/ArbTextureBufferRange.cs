@@ -36,16 +36,16 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_TEXTURE_BUFFER_OFFSET = 0x919D
         /// </summary>
-        TextureBufferOffset = 0x919d,
+        TextureBufferOffset = 0x919D,
 
         /// <summary>
         /// Original was GL_TEXTURE_BUFFER_SIZE = 0x919E
         /// </summary>
-        TextureBufferSize = 0x919e,
+        TextureBufferSize = 0x919E,
 
         /// <summary>
         /// Original was GL_TEXTURE_BUFFER_OFFSET_ALIGNMENT = 0x919F
         /// </summary>
-        TextureBufferOffsetAlignment = 0x919f
+        TextureBufferOffsetAlignment = 0x919F
     }
 }

@@ -36,11 +36,11 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_TIME_ELAPSED = 0x88BF
         /// </summary>
-        TimeElapsed = 0x88bf,
+        TimeElapsed = 0x88BF,
 
         /// <summary>
         /// Original was GL_TIMESTAMP = 0x8E28
         /// </summary>
-        Timestamp = 0x8e28
+        Timestamp = 0x8E28
     }
 }

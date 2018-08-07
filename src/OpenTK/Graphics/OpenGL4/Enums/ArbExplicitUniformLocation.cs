@@ -36,6 +36,6 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_MAX_UNIFORM_LOCATIONS = 0x826E
         /// </summary>
-        MaxUniformLocations = 0x826e
+        MaxUniformLocations = 0x826E
     }
 }

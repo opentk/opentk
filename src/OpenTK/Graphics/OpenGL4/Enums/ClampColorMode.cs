@@ -34,18 +34,18 @@ namespace OpenTK.Graphics.OpenGL4
     public enum ClampColorMode
     {
         /// <summary>
-        /// Original was GL_FALSE = 0
+        /// Original was GL_FALSE = 0x0
         /// </summary>
-        False = 0,
+        False = 0x0,
+
+        /// <summary>
+        /// Original was GL_TRUE = 0x1
+        /// </summary>
+        True = 0x1,
 
         /// <summary>
         /// Original was GL_FIXED_ONLY = 0x891D
         /// </summary>
-        FixedOnly = 0x891d,
-
-        /// <summary>
-        /// Original was GL_TRUE = 1
-        /// </summary>
-        True = 1
+        FixedOnly = 0x891D
     }
 }

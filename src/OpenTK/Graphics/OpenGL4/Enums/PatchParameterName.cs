@@ -36,16 +36,16 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_PATCH_VERTICES = 0x8E72
         /// </summary>
-        PatchVertices = 0x8e72,
+        PatchVertices = 0x8E72,
 
         /// <summary>
         /// Original was GL_PATCH_DEFAULT_INNER_LEVEL = 0x8E73
         /// </summary>
-        PatchDefaultInnerLevel = 0x8e73,
+        PatchDefaultInnerLevel = 0x8E73,
 
         /// <summary>
         /// Original was GL_PATCH_DEFAULT_OUTER_LEVEL = 0x8E74
         /// </summary>
-        PatchDefaultOuterLevel = 0x8e74
+        PatchDefaultOuterLevel = 0x8E74
     }
 }

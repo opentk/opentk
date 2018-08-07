@@ -29,10 +29,30 @@
 namespace OpenTK.Graphics.OpenGL4
 {
     /// <summary>
-    /// Used in GL.ClearBufferData and GL.ClearBufferSubData, as well as 10 other functions.
+    /// Used in GL.ClearBufferData and GL.TexImage1D, as well as 10 other functions.
     /// </summary>
     public enum PixelInternalFormat
     {
+        /// <summary>
+        /// Original was GL_ONE = 0x1
+        /// </summary>
+        One = 0x1,
+
+        /// <summary>
+        /// Original was GL_TWO = 0x2
+        /// </summary>
+        Two = 0x2,
+
+        /// <summary>
+        /// Original was GL_THREE = 0x3
+        /// </summary>
+        Three = 0x3,
+
+        /// <summary>
+        /// Original was GL_FOUR = 0x4
+        /// </summary>
+        Four = 0x4,
+
         /// <summary>
         /// Original was GL_DEPTH_COMPONENT = 0x1902
         /// </summary>
@@ -54,29 +74,19 @@ namespace OpenTK.Graphics.OpenGL4
         Rgba = 0x1908,
 
         /// <summary>
-        /// Original was GL_LUMINANCE = 0x1909
-        /// </summary>
-        Luminance = 0x1909,
-
-        /// <summary>
-        /// Original was GL_LUMINANCE_ALPHA = 0x190A
-        /// </summary>
-        LuminanceAlpha = 0x190a,
-
-        /// <summary>
         /// Original was GL_R3_G3_B2 = 0x2A10
         /// </summary>
-        R3G3B2 = 0x2a10,
+        R3G3B2 = 0x2A10,
 
         /// <summary>
         /// Original was GL_RGB2_EXT = 0x804E
         /// </summary>
-        Rgb2Ext = 0x804e,
+        Rgb2Ext = 0x804E,
 
         /// <summary>
         /// Original was GL_RGB4 = 0x804F
         /// </summary>
-        Rgb4 = 0x804f,
+        Rgb4 = 0x804F,
 
         /// <summary>
         /// Original was GL_RGB5 = 0x8050
@@ -131,12 +141,12 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_RGBA12 = 0x805A
         /// </summary>
-        Rgba12 = 0x805a,
+        Rgba12 = 0x805A,
 
         /// <summary>
         /// Original was GL_RGBA16 = 0x805B
         /// </summary>
-        Rgba16 = 0x805b,
+        Rgba16 = 0x805B,
 
         /// <summary>
         /// Original was GL_DUAL_ALPHA4_SGIS = 0x8110
@@ -191,32 +201,32 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_DUAL_INTENSITY12_SGIS = 0x811A
         /// </summary>
-        DualIntensity12Sgis = 0x811a,
+        DualIntensity12Sgis = 0x811A,
 
         /// <summary>
         /// Original was GL_DUAL_INTENSITY16_SGIS = 0x811B
         /// </summary>
-        DualIntensity16Sgis = 0x811b,
+        DualIntensity16Sgis = 0x811B,
 
         /// <summary>
         /// Original was GL_DUAL_LUMINANCE_ALPHA4_SGIS = 0x811C
         /// </summary>
-        DualLuminanceAlpha4Sgis = 0x811c,
+        DualLuminanceAlpha4Sgis = 0x811C,
 
         /// <summary>
         /// Original was GL_DUAL_LUMINANCE_ALPHA8_SGIS = 0x811D
         /// </summary>
-        DualLuminanceAlpha8Sgis = 0x811d,
+        DualLuminanceAlpha8Sgis = 0x811D,
 
         /// <summary>
         /// Original was GL_QUAD_ALPHA4_SGIS = 0x811E
         /// </summary>
-        QuadAlpha4Sgis = 0x811e,
+        QuadAlpha4Sgis = 0x811E,
 
         /// <summary>
         /// Original was GL_QUAD_ALPHA8_SGIS = 0x811F
         /// </summary>
-        QuadAlpha8Sgis = 0x811f,
+        QuadAlpha8Sgis = 0x811F,
 
         /// <summary>
         /// Original was GL_QUAD_LUMINANCE4_SGIS = 0x8120
@@ -239,34 +249,34 @@ namespace OpenTK.Graphics.OpenGL4
         QuadIntensity8Sgis = 0x8123,
 
         /// <summary>
+        /// Original was GL_DEPTH_COMPONENT16 = 0x81A5
+        /// </summary>
+        DepthComponent16 = 0x81A5,
+
+        /// <summary>
         /// Original was GL_DEPTH_COMPONENT16_SGIX = 0x81A5
         /// </summary>
-        DepthComponent16Sgix = 0x81a5,
+        DepthComponent16Sgix = 0x81A5,
+
+        /// <summary>
+        /// Original was GL_DEPTH_COMPONENT24 = 0x81A6
+        /// </summary>
+        DepthComponent24 = 0x81A6,
 
         /// <summary>
         /// Original was GL_DEPTH_COMPONENT24_SGIX = 0x81A6
         /// </summary>
-        DepthComponent24Sgix = 0x81a6,
+        DepthComponent24Sgix = 0x81A6,
+
+        /// <summary>
+        /// Original was GL_DEPTH_COMPONENT32 = 0x81A7
+        /// </summary>
+        DepthComponent32 = 0x81A7,
 
         /// <summary>
         /// Original was GL_DEPTH_COMPONENT32_SGIX = 0x81A7
         /// </summary>
-        DepthComponent32Sgix = 0x81a7,
-
-        /// <summary>
-        /// Original was GL_DEPTH_COMPONENT16 = 0x81a5
-        /// </summary>
-        DepthComponent16 = 0x81a5,
-
-        /// <summary>
-        /// Original was GL_DEPTH_COMPONENT24 = 0x81a6
-        /// </summary>
-        DepthComponent24 = 0x81a6,
-
-        /// <summary>
-        /// Original was GL_DEPTH_COMPONENT32 = 0x81a7
-        /// </summary>
-        DepthComponent32 = 0x81a7,
+        DepthComponent32Sgix = 0x81A7,
 
         /// <summary>
         /// Original was GL_COMPRESSED_RED = 0x8225
@@ -286,32 +296,32 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_R16 = 0x822A
         /// </summary>
-        R16 = 0x822a,
+        R16 = 0x822A,
 
         /// <summary>
         /// Original was GL_RG8 = 0x822B
         /// </summary>
-        RG8 = 0x822b,
+        RG8 = 0x822B,
 
         /// <summary>
         /// Original was GL_RG16 = 0x822C
         /// </summary>
-        RG16 = 0x822c,
+        RG16 = 0x822C,
 
         /// <summary>
         /// Original was GL_R16F = 0x822D
         /// </summary>
-        R16f = 0x822d,
+        R16f = 0x822D,
 
         /// <summary>
         /// Original was GL_R32F = 0x822E
         /// </summary>
-        R32f = 0x822e,
+        R32f = 0x822E,
 
         /// <summary>
         /// Original was GL_RG16F = 0x822F
         /// </summary>
-        RG16f = 0x822f,
+        RG16f = 0x822F,
 
         /// <summary>
         /// Original was GL_RG32F = 0x8230
@@ -366,37 +376,37 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_RG16UI = 0x823A
         /// </summary>
-        RG16ui = 0x823a,
+        RG16ui = 0x823A,
 
         /// <summary>
         /// Original was GL_RG32I = 0x823B
         /// </summary>
-        RG32i = 0x823b,
+        RG32i = 0x823B,
 
         /// <summary>
         /// Original was GL_RG32UI = 0x823C
         /// </summary>
-        RG32ui = 0x823c,
+        RG32ui = 0x823C,
 
         /// <summary>
-        /// Original was GL_COMPRESSED_RGB_S3TC_DXT1_EXT = 0x83F0
+        /// Original was GL_COMPRESSED_RGB_S3_TC_DXT1_EXT = 0x83F0
         /// </summary>
-        CompressedRgbS3TCDxt1Ext = 0x83f0,
+        CompressedRgbS3TCDxt1Ext = 0x83F0,
 
         /// <summary>
-        /// Original was GL_COMPRESSED_RGBA_S3TC_DXT1_EXT = 0x83F1
+        /// Original was GL_COMPRESSED_RGBA_S3_TC_DXT1_EXT = 0x83F1
         /// </summary>
-        CompressedRgbaS3TCDxt1Ext = 0x83f1,
+        CompressedRgbaS3TCDxt1Ext = 0x83F1,
 
         /// <summary>
-        /// Original was GL_COMPRESSED_RGBA_S3TC_DXT3_EXT = 0x83F2
+        /// Original was GL_COMPRESSED_RGBA_S3_TC_DXT3_EXT = 0x83F2
         /// </summary>
-        CompressedRgbaS3TCDxt3Ext = 0x83f2,
+        CompressedRgbaS3TCDxt3Ext = 0x83F2,
 
         /// <summary>
-        /// Original was GL_COMPRESSED_RGBA_S3TC_DXT5_EXT = 0x83F3
+        /// Original was GL_COMPRESSED_RGBA_S3_TC_DXT5_EXT = 0x83F3
         /// </summary>
-        CompressedRgbaS3TCDxt5Ext = 0x83f3,
+        CompressedRgbaS3TCDxt5Ext = 0x83F3,
 
         /// <summary>
         /// Original was GL_RGB_ICC_SGIX = 0x8460
@@ -451,47 +461,27 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_INTENSITY16_ICC_SGIX = 0x846A
         /// </summary>
-        Intensity16IccSgix = 0x846a,
+        Intensity16IccSgix = 0x846A,
 
         /// <summary>
         /// Original was GL_LUMINANCE16_ALPHA8_ICC_SGIX = 0x846B
         /// </summary>
-        Luminance16Alpha8IccSgix = 0x846b,
-
-        /// <summary>
-        /// Original was GL_COMPRESSED_ALPHA = 0x84E9
-        /// </summary>
-        CompressedAlpha = 0x84e9,
-
-        /// <summary>
-        /// Original was GL_COMPRESSED_LUMINANCE = 0x84EA
-        /// </summary>
-        CompressedLuminance = 0x84ea,
-
-        /// <summary>
-        /// Original was GL_COMPRESSED_LUMINANCE_ALPHA = 0x84EB
-        /// </summary>
-        CompressedLuminanceAlpha = 0x84eb,
-
-        /// <summary>
-        /// Original was GL_COMPRESSED_INTENSITY = 0x84EC
-        /// </summary>
-        CompressedIntensity = 0x84ec,
+        Luminance16Alpha8IccSgix = 0x846B,
 
         /// <summary>
         /// Original was GL_COMPRESSED_RGB = 0x84ED
         /// </summary>
-        CompressedRgb = 0x84ed,
+        CompressedRgb = 0x84ED,
 
         /// <summary>
         /// Original was GL_COMPRESSED_RGBA = 0x84EE
         /// </summary>
-        CompressedRgba = 0x84ee,
+        CompressedRgba = 0x84EE,
 
         /// <summary>
         /// Original was GL_DEPTH_STENCIL = 0x84F9
         /// </summary>
-        DepthStencil = 0x84f9,
+        DepthStencil = 0x84F9,
 
         /// <summary>
         /// Original was GL_RGBA32F = 0x8814
@@ -506,286 +496,236 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_RGBA16F = 0x881A
         /// </summary>
-        Rgba16f = 0x881a,
+        Rgba16f = 0x881A,
 
         /// <summary>
         /// Original was GL_RGB16F = 0x881B
         /// </summary>
-        Rgb16f = 0x881b,
+        Rgb16f = 0x881B,
 
         /// <summary>
         /// Original was GL_DEPTH24_STENCIL8 = 0x88F0
         /// </summary>
-        Depth24Stencil8 = 0x88f0,
+        Depth24Stencil8 = 0x88F0,
 
         /// <summary>
         /// Original was GL_R11F_G11F_B10F = 0x8C3A
         /// </summary>
-        R11fG11fB10f = 0x8c3a,
+        R11fG11fB10f = 0x8C3A,
 
         /// <summary>
         /// Original was GL_RGB9_E5 = 0x8C3D
         /// </summary>
-        Rgb9E5 = 0x8c3d,
+        Rgb9E5 = 0x8C3D,
 
         /// <summary>
         /// Original was GL_SRGB = 0x8C40
         /// </summary>
-        Srgb = 0x8c40,
+        Srgb = 0x8C40,
 
         /// <summary>
         /// Original was GL_SRGB8 = 0x8C41
         /// </summary>
-        Srgb8 = 0x8c41,
+        Srgb8 = 0x8C41,
 
         /// <summary>
         /// Original was GL_SRGB_ALPHA = 0x8C42
         /// </summary>
-        SrgbAlpha = 0x8c42,
+        SrgbAlpha = 0x8C42,
 
         /// <summary>
         /// Original was GL_SRGB8_ALPHA8 = 0x8C43
         /// </summary>
-        Srgb8Alpha8 = 0x8c43,
-
-        /// <summary>
-        /// Original was GL_SLUMINANCE_ALPHA = 0x8C44
-        /// </summary>
-        SluminanceAlpha = 0x8c44,
-
-        /// <summary>
-        /// Original was GL_SLUMINANCE8_ALPHA8 = 0x8C45
-        /// </summary>
-        Sluminance8Alpha8 = 0x8c45,
-
-        /// <summary>
-        /// Original was GL_SLUMINANCE = 0x8C46
-        /// </summary>
-        Sluminance = 0x8c46,
-
-        /// <summary>
-        /// Original was GL_SLUMINANCE8 = 0x8C47
-        /// </summary>
-        Sluminance8 = 0x8c47,
+        Srgb8Alpha8 = 0x8C43,
 
         /// <summary>
         /// Original was GL_COMPRESSED_SRGB = 0x8C48
         /// </summary>
-        CompressedSrgb = 0x8c48,
+        CompressedSrgb = 0x8C48,
 
         /// <summary>
         /// Original was GL_COMPRESSED_SRGB_ALPHA = 0x8C49
         /// </summary>
-        CompressedSrgbAlpha = 0x8c49,
+        CompressedSrgbAlpha = 0x8C49,
 
         /// <summary>
-        /// Original was GL_COMPRESSED_SLUMINANCE = 0x8C4A
+        /// Original was GL_COMPRESSED_SRGB_S3_TC_DXT1_EXT = 0x8C4C
         /// </summary>
-        CompressedSluminance = 0x8c4a,
+        CompressedSrgbS3TCDxt1Ext = 0x8C4C,
 
         /// <summary>
-        /// Original was GL_COMPRESSED_SLUMINANCE_ALPHA = 0x8C4B
+        /// Original was GL_COMPRESSED_SRGB_ALPHA_S3_TC_DXT1_EXT = 0x8C4D
         /// </summary>
-        CompressedSluminanceAlpha = 0x8c4b,
+        CompressedSrgbAlphaS3TCDxt1Ext = 0x8C4D,
 
         /// <summary>
-        /// Original was GL_COMPRESSED_SRGB_S3TC_DXT1_EXT = 0x8C4C
+        /// Original was GL_COMPRESSED_SRGB_ALPHA_S3_TC_DXT3_EXT = 0x8C4E
         /// </summary>
-        CompressedSrgbS3TCDxt1Ext = 0x8c4c,
+        CompressedSrgbAlphaS3TCDxt3Ext = 0x8C4E,
 
         /// <summary>
-        /// Original was GL_COMPRESSED_SRGB_ALPHA_S3TC_DXT1_EXT = 0x8C4D
+        /// Original was GL_COMPRESSED_SRGB_ALPHA_S3_TC_DXT5_EXT = 0x8C4F
         /// </summary>
-        CompressedSrgbAlphaS3TCDxt1Ext = 0x8c4d,
-
-        /// <summary>
-        /// Original was GL_COMPRESSED_SRGB_ALPHA_S3TC_DXT3_EXT = 0x8C4E
-        /// </summary>
-        CompressedSrgbAlphaS3TCDxt3Ext = 0x8c4e,
-
-        /// <summary>
-        /// Original was GL_COMPRESSED_SRGB_ALPHA_S3TC_DXT5_EXT = 0x8C4F
-        /// </summary>
-        CompressedSrgbAlphaS3TCDxt5Ext = 0x8c4f,
+        CompressedSrgbAlphaS3TCDxt5Ext = 0x8C4F,
 
         /// <summary>
         /// Original was GL_DEPTH_COMPONENT32F = 0x8CAC
         /// </summary>
-        DepthComponent32f = 0x8cac,
+        DepthComponent32f = 0x8CAC,
 
         /// <summary>
         /// Original was GL_DEPTH32F_STENCIL8 = 0x8CAD
         /// </summary>
-        Depth32fStencil8 = 0x8cad,
+        Depth32fStencil8 = 0x8CAD,
 
         /// <summary>
         /// Original was GL_RGBA32UI = 0x8D70
         /// </summary>
-        Rgba32ui = 0x8d70,
+        Rgba32ui = 0x8D70,
 
         /// <summary>
         /// Original was GL_RGB32UI = 0x8D71
         /// </summary>
-        Rgb32ui = 0x8d71,
+        Rgb32ui = 0x8D71,
 
         /// <summary>
         /// Original was GL_RGBA16UI = 0x8D76
         /// </summary>
-        Rgba16ui = 0x8d76,
+        Rgba16ui = 0x8D76,
 
         /// <summary>
         /// Original was GL_RGB16UI = 0x8D77
         /// </summary>
-        Rgb16ui = 0x8d77,
+        Rgb16ui = 0x8D77,
 
         /// <summary>
         /// Original was GL_RGBA8UI = 0x8D7C
         /// </summary>
-        Rgba8ui = 0x8d7c,
+        Rgba8ui = 0x8D7C,
 
         /// <summary>
         /// Original was GL_RGB8UI = 0x8D7D
         /// </summary>
-        Rgb8ui = 0x8d7d,
+        Rgb8ui = 0x8D7D,
 
         /// <summary>
         /// Original was GL_RGBA32I = 0x8D82
         /// </summary>
-        Rgba32i = 0x8d82,
+        Rgba32i = 0x8D82,
 
         /// <summary>
         /// Original was GL_RGB32I = 0x8D83
         /// </summary>
-        Rgb32i = 0x8d83,
+        Rgb32i = 0x8D83,
 
         /// <summary>
         /// Original was GL_RGBA16I = 0x8D88
         /// </summary>
-        Rgba16i = 0x8d88,
+        Rgba16i = 0x8D88,
 
         /// <summary>
         /// Original was GL_RGB16I = 0x8D89
         /// </summary>
-        Rgb16i = 0x8d89,
+        Rgb16i = 0x8D89,
 
         /// <summary>
         /// Original was GL_RGBA8I = 0x8D8E
         /// </summary>
-        Rgba8i = 0x8d8e,
+        Rgba8i = 0x8D8E,
 
         /// <summary>
         /// Original was GL_RGB8I = 0x8D8F
         /// </summary>
-        Rgb8i = 0x8d8f,
+        Rgb8i = 0x8D8F,
 
         /// <summary>
-        /// Original was GL_FLOAT_32_UNSIGNED_INT_24_8_REV = 0x8DAD
+        /// Original was GL_FLOAT32_UNSIGNED_INT248_REV = 0x8DAD
         /// </summary>
-        Float32UnsignedInt248Rev = 0x8dad,
+        Float32UnsignedInt248Rev = 0x8DAD,
 
         /// <summary>
         /// Original was GL_COMPRESSED_RED_RGTC1 = 0x8DBB
         /// </summary>
-        CompressedRedRgtc1 = 0x8dbb,
+        CompressedRedRgtc1 = 0x8DBB,
 
         /// <summary>
         /// Original was GL_COMPRESSED_SIGNED_RED_RGTC1 = 0x8DBC
         /// </summary>
-        CompressedSignedRedRgtc1 = 0x8dbc,
+        CompressedSignedRedRgtc1 = 0x8DBC,
 
         /// <summary>
         /// Original was GL_COMPRESSED_RG_RGTC2 = 0x8DBD
         /// </summary>
-        CompressedRGRgtc2 = 0x8dbd,
+        CompressedRGRgtc2 = 0x8DBD,
 
         /// <summary>
         /// Original was GL_COMPRESSED_SIGNED_RG_RGTC2 = 0x8DBE
         /// </summary>
-        CompressedSignedRGRgtc2 = 0x8dbe,
+        CompressedSignedRGRgtc2 = 0x8DBE,
 
         /// <summary>
         /// Original was GL_COMPRESSED_RGBA_BPTC_UNORM = 0x8E8C
         /// </summary>
-        CompressedRgbaBptcUnorm = 0x8e8c,
+        CompressedRgbaBptcUnorm = 0x8E8C,
 
         /// <summary>
         /// Original was GL_COMPRESSED_SRGB_ALPHA_BPTC_UNORM = 0x8E8D
         /// </summary>
-        CompressedSrgbAlphaBptcUnorm = 0x8e8d,
+        CompressedSrgbAlphaBptcUnorm = 0x8E8D,
 
         /// <summary>
         /// Original was GL_COMPRESSED_RGB_BPTC_SIGNED_FLOAT = 0x8E8E
         /// </summary>
-        CompressedRgbBptcSignedFloat = 0x8e8e,
+        CompressedRgbBptcSignedFloat = 0x8E8E,
 
         /// <summary>
         /// Original was GL_COMPRESSED_RGB_BPTC_UNSIGNED_FLOAT = 0x8E8F
         /// </summary>
-        CompressedRgbBptcUnsignedFloat = 0x8e8f,
+        CompressedRgbBptcUnsignedFloat = 0x8E8F,
 
         /// <summary>
-        /// Original was GL_R8_SNORM = 0x8F94
+        /// Original was GL_R8_S_NORM = 0x8F94
         /// </summary>
-        R8SNorm = 0x8f94,
+        R8SNorm = 0x8F94,
 
         /// <summary>
-        /// Original was GL_RG8_SNORM = 0x8F95
+        /// Original was GL_RG8_S_NORM = 0x8F95
         /// </summary>
-        RG8SNorm = 0x8f95,
+        RG8SNorm = 0x8F95,
 
         /// <summary>
-        /// Original was GL_RGB8_SNORM = 0x8F96
+        /// Original was GL_RGB8_S_NORM = 0x8F96
         /// </summary>
-        Rgb8SNorm = 0x8f96,
+        Rgb8SNorm = 0x8F96,
 
         /// <summary>
-        /// Original was GL_RGBA8_SNORM = 0x8F97
+        /// Original was GL_RGBA8_S_NORM = 0x8F97
         /// </summary>
-        Rgba8SNorm = 0x8f97,
+        Rgba8SNorm = 0x8F97,
 
         /// <summary>
-        /// Original was GL_R16_SNORM = 0x8F98
+        /// Original was GL_R16_S_NORM = 0x8F98
         /// </summary>
-        R16SNorm = 0x8f98,
+        R16SNorm = 0x8F98,
 
         /// <summary>
-        /// Original was GL_RG16_SNORM = 0x8F99
+        /// Original was GL_RG16_S_NORM = 0x8F99
         /// </summary>
-        RG16SNorm = 0x8f99,
+        RG16SNorm = 0x8F99,
 
         /// <summary>
-        /// Original was GL_RGB16_SNORM = 0x8F9A
+        /// Original was GL_RGB16_S_NORM = 0x8F9A
         /// </summary>
-        Rgb16SNorm = 0x8f9a,
+        Rgb16SNorm = 0x8F9A,
 
         /// <summary>
-        /// Original was GL_RGBA16_SNORM = 0x8F9B
+        /// Original was GL_RGBA16_S_NORM = 0x8F9B
         /// </summary>
-        Rgba16SNorm = 0x8f9b,
+        Rgba16SNorm = 0x8F9B,
 
         /// <summary>
         /// Original was GL_RGB10_A2UI = 0x906F
         /// </summary>
-        Rgb10A2ui = 0x906f,
-
-        /// <summary>
-        /// Original was GL_ONE = 1
-        /// </summary>
-        One = 1,
-
-        /// <summary>
-        /// Original was GL_TWO = 2
-        /// </summary>
-        Two = 2,
-
-        /// <summary>
-        /// Original was GL_THREE = 3
-        /// </summary>
-        Three = 3,
-
-        /// <summary>
-        /// Original was GL_FOUR = 4
-        /// </summary>
-        Four = 4
+        Rgb10A2ui = 0x906F
     }
 }

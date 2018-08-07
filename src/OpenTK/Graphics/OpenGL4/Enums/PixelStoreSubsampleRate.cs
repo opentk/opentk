@@ -34,18 +34,18 @@ namespace OpenTK.Graphics.OpenGL4
     public enum PixelStoreSubsampleRate
     {
         /// <summary>
-        /// Original was GL_PIXEL_SUBSAMPLE_4444_SGIX = 0x85A2
+        /// Original was GL_PIXEL_SUBSAMPLE4444_SGIX = 0x85A2
         /// </summary>
-        PixelSubsample4444Sgix = 0x85a2,
+        PixelSubsample4444Sgix = 0x85A2,
 
         /// <summary>
-        /// Original was GL_PIXEL_SUBSAMPLE_2424_SGIX = 0x85A3
+        /// Original was GL_PIXEL_SUBSAMPLE2424_SGIX = 0x85A3
         /// </summary>
-        PixelSubsample2424Sgix = 0x85a3,
+        PixelSubsample2424Sgix = 0x85A3,
 
         /// <summary>
-        /// Original was GL_PIXEL_SUBSAMPLE_4242_SGIX = 0x85A4
+        /// Original was GL_PIXEL_SUBSAMPLE4242_SGIX = 0x85A4
         /// </summary>
-        PixelSubsample4242Sgix = 0x85a4
+        PixelSubsample4242Sgix = 0x85A4
     }
 }

@@ -36,11 +36,11 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_INTERLEAVED_ATTRIBS = 0x8C8C
         /// </summary>
-        InterleavedAttribs = 0x8c8c,
+        InterleavedAttribs = 0x8C8C,
 
         /// <summary>
         /// Original was GL_SEPARATE_ATTRIBS = 0x8C8D
         /// </summary>
-        SeparateAttribs = 0x8c8d
+        SeparateAttribs = 0x8C8D
     }
 }

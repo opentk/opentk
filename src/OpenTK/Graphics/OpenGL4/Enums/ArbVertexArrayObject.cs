@@ -36,6 +36,6 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_VERTEX_ARRAY_BINDING = 0x85B5
         /// </summary>
-        VertexArrayBinding = 0x85b5
+        VertexArrayBinding = 0x85B5
     }
 }

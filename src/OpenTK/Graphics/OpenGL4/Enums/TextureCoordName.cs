@@ -29,7 +29,7 @@
 namespace OpenTK.Graphics.OpenGL4
 {
     /// <summary>
-    /// Used in GL.Ext.GetMultiTexGen and GL.Ext.MultiTexGend, as well as 1 other function.
+    /// Used in GL.EXT.GetMultiTexGen and GL.EXT.MultiTexGend, as well as 1 other function.
     /// </summary>
     public enum TextureCoordName
     {

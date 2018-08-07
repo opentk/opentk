@@ -36,26 +36,26 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_SHADER_TYPE = 0x8B4F
         /// </summary>
-        ShaderType = 0x8b4f,
+        ShaderType = 0x8B4F,
 
         /// <summary>
         /// Original was GL_DELETE_STATUS = 0x8B80
         /// </summary>
-        DeleteStatus = 0x8b80,
+        DeleteStatus = 0x8B80,
 
         /// <summary>
         /// Original was GL_COMPILE_STATUS = 0x8B81
         /// </summary>
-        CompileStatus = 0x8b81,
+        CompileStatus = 0x8B81,
 
         /// <summary>
         /// Original was GL_INFO_LOG_LENGTH = 0x8B84
         /// </summary>
-        InfoLogLength = 0x8b84,
+        InfoLogLength = 0x8B84,
 
         /// <summary>
         /// Original was GL_SHADER_SOURCE_LENGTH = 0x8B88
         /// </summary>
-        ShaderSourceLength = 0x8b88
+        ShaderSourceLength = 0x8B88
     }
 }

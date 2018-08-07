@@ -41,41 +41,41 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_FRAGMENT_SHADER = 0x8B30
         /// </summary>
-        FragmentShader = 0x8b30,
+        FragmentShader = 0x8B30,
 
         /// <summary>
         /// Original was GL_VERTEX_SHADER = 0x8B31
         /// </summary>
-        VertexShader = 0x8b31,
+        VertexShader = 0x8B31,
 
         /// <summary>
         /// Original was GL_VALIDATE_STATUS = 0x8B83
         /// </summary>
-        ValidateStatus = 0x8b83,
+        ValidateStatus = 0x8B83,
 
         /// <summary>
         /// Original was GL_INFO_LOG_LENGTH = 0x8B84
         /// </summary>
-        InfoLogLength = 0x8b84,
+        InfoLogLength = 0x8B84,
 
         /// <summary>
         /// Original was GL_GEOMETRY_SHADER = 0x8DD9
         /// </summary>
-        GeometryShader = 0x8dd9,
+        GeometryShader = 0x8DD9,
 
         /// <summary>
         /// Original was GL_TESS_EVALUATION_SHADER = 0x8E87
         /// </summary>
-        TessEvaluationShader = 0x8e87,
+        TessEvaluationShader = 0x8E87,
 
         /// <summary>
         /// Original was GL_TESS_CONTROL_SHADER = 0x8E88
         /// </summary>
-        TessControlShader = 0x8e88,
+        TessControlShader = 0x8E88,
 
         /// <summary>
         /// Original was GL_COMPUTE_SHADER = 0x91B9
         /// </summary>
-        ComputeShader = 0x91b9
+        ComputeShader = 0x91B9
     }
 }

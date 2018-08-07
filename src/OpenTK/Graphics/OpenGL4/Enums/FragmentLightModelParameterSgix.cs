@@ -46,11 +46,11 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_FRAGMENT_LIGHT_MODEL_AMBIENT_SGIX = 0x840A
         /// </summary>
-        FragmentLightModelAmbientSgix = 0x840a,
+        FragmentLightModelAmbientSgix = 0x840A,
 
         /// <summary>
         /// Original was GL_FRAGMENT_LIGHT_MODEL_NORMAL_INTERPOLATION_SGIX = 0x840B
         /// </summary>
-        FragmentLightModelNormalInterpolationSgix = 0x840b
+        FragmentLightModelNormalInterpolationSgix = 0x840B
     }
 }

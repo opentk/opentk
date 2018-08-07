@@ -34,114 +34,114 @@ namespace OpenTK.Graphics.OpenGL4
     public enum Version46
     {
         /// <summary>
-        /// Original was GL_NONE = 0
+        /// Original was GL_NONE = 0x0
         /// </summary>
-        None = 0,
+        None = 0x0,
 
         /// <summary>
-        /// Original was GL_CONTEXT_FLAG_NO_ERROR_BIT = 0x00000008
+        /// Original was GL_CONTEXT_FLAG_NO_ERROR_BIT = 0x8
         /// </summary>
-        ContextFlagNoErrorBit = 0x00000008,
+        ContextFlagNoErrorBit = 0x8,
 
         /// <summary>
         /// Original was GL_PARAMETER_BUFFER = 0x80EE
         /// </summary>
-        ParameterBuffer = 0x80ee,
+        ParameterBuffer = 0x80EE,
 
         /// <summary>
         /// Original was GL_PARAMETER_BUFFER_BINDING = 0x80EF
         /// </summary>
-        ParameterBufferBinding = 0x80ef,
+        ParameterBufferBinding = 0x80EF,
 
         /// <summary>
         /// Original was GL_TRANSFORM_FEEDBACK_OVERFLOW = 0x82EC
         /// </summary>
-        TransformFeedbackOverflow = 0x82ec,
+        TransformFeedbackOverflow = 0x82EC,
 
         /// <summary>
         /// Original was GL_TRANSFORM_FEEDBACK_STREAM_OVERFLOW = 0x82ED
         /// </summary>
-        TransformFeedbackStreamOverflow = 0x82ed,
+        TransformFeedbackStreamOverflow = 0x82ED,
 
         /// <summary>
         /// Original was GL_VERTICES_SUBMITTED = 0x82EE
         /// </summary>
-        VerticesSubmitted = 0x82ee,
+        VerticesSubmitted = 0x82EE,
 
         /// <summary>
         /// Original was GL_PRIMITIVES_SUBMITTED = 0x82EF
         /// </summary>
-        PrimitivesSubmitted = 0x82ef,
+        PrimitivesSubmitted = 0x82EF,
 
         /// <summary>
         /// Original was GL_VERTEX_SHADER_INVOCATIONS = 0x82F0
         /// </summary>
-        VertexShaderInvocations = 0x82f0,
+        VertexShaderInvocations = 0x82F0,
 
         /// <summary>
         /// Original was GL_TESS_CONTROL_SHADER_PATCHES = 0x82F1
         /// </summary>
-        TessControlShaderPatches = 0x82f1,
+        TessControlShaderPatches = 0x82F1,
 
         /// <summary>
         /// Original was GL_TESS_EVALUATION_SHADER_INVOCATIONS = 0x82F2
         /// </summary>
-        TessEvaluationShaderInvocations = 0x82f2,
+        TessEvaluationShaderInvocations = 0x82F2,
 
         /// <summary>
         /// Original was GL_GEOMETRY_SHADER_PRIMITIVES_EMITTED = 0x82F3
         /// </summary>
-        GeometryShaderPrimitivesEmitted = 0x82f3,
+        GeometryShaderPrimitivesEmitted = 0x82F3,
 
         /// <summary>
         /// Original was GL_FRAGMENT_SHADER_INVOCATIONS = 0x82F4
         /// </summary>
-        FragmentShaderInvocations = 0x82f4,
+        FragmentShaderInvocations = 0x82F4,
 
         /// <summary>
         /// Original was GL_COMPUTE_SHADER_INVOCATIONS = 0x82F5
         /// </summary>
-        ComputeShaderInvocations = 0x82f5,
+        ComputeShaderInvocations = 0x82F5,
 
         /// <summary>
         /// Original was GL_CLIPPING_INPUT_PRIMITIVES = 0x82F6
         /// </summary>
-        ClippingInputPrimitives = 0x82f6,
+        ClippingInputPrimitives = 0x82F6,
 
         /// <summary>
         /// Original was GL_CLIPPING_OUTPUT_PRIMITIVES = 0x82F7
         /// </summary>
-        ClippingOutputPrimitives = 0x82f7,
+        ClippingOutputPrimitives = 0x82F7,
 
         /// <summary>
         /// Original was GL_CONTEXT_RELEASE_BEHAVIOR = 0x82FB
         /// </summary>
-        ContextReleaseBehavior = 0x82fb,
+        ContextReleaseBehavior = 0x82FB,
 
         /// <summary>
         /// Original was GL_CONTEXT_RELEASE_BEHAVIOR_FLUSH = 0x82FC
         /// </summary>
-        ContextReleaseBehaviorFlush = 0x82fc,
+        ContextReleaseBehaviorFlush = 0x82FC,
 
         /// <summary>
         /// Original was GL_TEXTURE_MAX_ANISOTROPY = 0x84FE
         /// </summary>
-        TextureMaxAnisotropy = 0x84fe,
+        TextureMaxAnisotropy = 0x84FE,
 
         /// <summary>
         /// Original was GL_MAX_TEXTURE_MAX_ANISOTROPY = 0x84FF
         /// </summary>
-        MaxTextureMaxAnisotropy = 0x84ff,
+        MaxTextureMaxAnisotropy = 0x84FF,
 
         /// <summary>
         /// Original was GL_GEOMETRY_SHADER_INVOCATIONS = 0x887F
         /// </summary>
-        GeometryShaderInvocations = 0x887f,
+        GeometryShaderInvocations = 0x887F,
 
         /// <summary>
         /// Original was GL_POLYGON_OFFSET_CLAMP = 0x8E1B
         /// </summary>
-        PolygonOffsetClamp = 0x8e1b,
+        PolygonOffsetClamp = 0x8E1B,
 
         /// <summary>
         /// Original was GL_SHADER_BINARY_FORMAT_SPIR_V = 0x9551

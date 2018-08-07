@@ -29,39 +29,39 @@
 namespace OpenTK.Graphics.OpenGL4
 {
     /// <summary>
-    /// Used in GL.Khr.GetObjectLabel and GL.Khr.GetPointer.
+    /// Used in GL.KHR.GetPointer and GL.KHR.GetObjectLabel.
     /// </summary>
     public enum KhrDebug
     {
         /// <summary>
-        /// Original was GL_CONTEXT_FLAG_DEBUG_BIT = 0x00000002
+        /// Original was GL_CONTEXT_FLAG_DEBUG_BIT = 0x2
         /// </summary>
-        ContextFlagDebugBit = 0x00000002,
+        ContextFlagDebugBit = 0x2,
 
         /// <summary>
-        /// Original was GL_CONTEXT_FLAG_DEBUG_BIT_KHR = 0x00000002
+        /// Original was GL_CONTEXT_FLAG_DEBUG_BIT_KHR = 0x2
         /// </summary>
-        ContextFlagDebugBitKhr = 0x00000002,
+        ContextFlagDebugBitKhr = 0x2,
 
         /// <summary>
-        /// Original was GL_STACK_OVERFLOW = 0x0503
+        /// Original was GL_STACK_OVERFLOW = 0x503
         /// </summary>
-        StackOverflow = 0x0503,
+        StackOverflow = 0x503,
 
         /// <summary>
-        /// Original was GL_STACK_OVERFLOW_KHR = 0x0503
+        /// Original was GL_STACK_OVERFLOW_KHR = 0x503
         /// </summary>
-        StackOverflowKhr = 0x0503,
+        StackOverflowKhr = 0x503,
 
         /// <summary>
-        /// Original was GL_STACK_UNDERFLOW = 0x0504
+        /// Original was GL_STACK_UNDERFLOW = 0x504
         /// </summary>
-        StackUnderflow = 0x0504,
+        StackUnderflow = 0x504,
 
         /// <summary>
-        /// Original was GL_STACK_UNDERFLOW_KHR = 0x0504
+        /// Original was GL_STACK_UNDERFLOW_KHR = 0x504
         /// </summary>
-        StackUnderflowKhr = 0x0504,
+        StackUnderflowKhr = 0x504,
 
         /// <summary>
         /// Original was GL_VERTEX_ARRAY = 0x8074
@@ -156,62 +156,62 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_DEBUG_SOURCE_APPLICATION = 0x824A
         /// </summary>
-        DebugSourceApplication = 0x824a,
+        DebugSourceApplication = 0x824A,
 
         /// <summary>
         /// Original was GL_DEBUG_SOURCE_APPLICATION_KHR = 0x824A
         /// </summary>
-        DebugSourceApplicationKhr = 0x824a,
+        DebugSourceApplicationKhr = 0x824A,
 
         /// <summary>
         /// Original was GL_DEBUG_SOURCE_OTHER = 0x824B
         /// </summary>
-        DebugSourceOther = 0x824b,
+        DebugSourceOther = 0x824B,
 
         /// <summary>
         /// Original was GL_DEBUG_SOURCE_OTHER_KHR = 0x824B
         /// </summary>
-        DebugSourceOtherKhr = 0x824b,
+        DebugSourceOtherKhr = 0x824B,
 
         /// <summary>
         /// Original was GL_DEBUG_TYPE_ERROR = 0x824C
         /// </summary>
-        DebugTypeError = 0x824c,
+        DebugTypeError = 0x824C,
 
         /// <summary>
         /// Original was GL_DEBUG_TYPE_ERROR_KHR = 0x824C
         /// </summary>
-        DebugTypeErrorKhr = 0x824c,
+        DebugTypeErrorKhr = 0x824C,
 
         /// <summary>
         /// Original was GL_DEBUG_TYPE_DEPRECATED_BEHAVIOR = 0x824D
         /// </summary>
-        DebugTypeDeprecatedBehavior = 0x824d,
+        DebugTypeDeprecatedBehavior = 0x824D,
 
         /// <summary>
         /// Original was GL_DEBUG_TYPE_DEPRECATED_BEHAVIOR_KHR = 0x824D
         /// </summary>
-        DebugTypeDeprecatedBehaviorKhr = 0x824d,
+        DebugTypeDeprecatedBehaviorKhr = 0x824D,
 
         /// <summary>
         /// Original was GL_DEBUG_TYPE_UNDEFINED_BEHAVIOR = 0x824E
         /// </summary>
-        DebugTypeUndefinedBehavior = 0x824e,
+        DebugTypeUndefinedBehavior = 0x824E,
 
         /// <summary>
         /// Original was GL_DEBUG_TYPE_UNDEFINED_BEHAVIOR_KHR = 0x824E
         /// </summary>
-        DebugTypeUndefinedBehaviorKhr = 0x824e,
+        DebugTypeUndefinedBehaviorKhr = 0x824E,
 
         /// <summary>
         /// Original was GL_DEBUG_TYPE_PORTABILITY = 0x824F
         /// </summary>
-        DebugTypePortability = 0x824f,
+        DebugTypePortability = 0x824F,
 
         /// <summary>
         /// Original was GL_DEBUG_TYPE_PORTABILITY_KHR = 0x824F
         /// </summary>
-        DebugTypePortabilityKhr = 0x824f,
+        DebugTypePortabilityKhr = 0x824F,
 
         /// <summary>
         /// Original was GL_DEBUG_TYPE_PERFORMANCE = 0x8250
@@ -256,117 +256,117 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_DEBUG_TYPE_POP_GROUP = 0x826A
         /// </summary>
-        DebugTypePopGroup = 0x826a,
+        DebugTypePopGroup = 0x826A,
 
         /// <summary>
         /// Original was GL_DEBUG_TYPE_POP_GROUP_KHR = 0x826A
         /// </summary>
-        DebugTypePopGroupKhr = 0x826a,
+        DebugTypePopGroupKhr = 0x826A,
 
         /// <summary>
         /// Original was GL_DEBUG_SEVERITY_NOTIFICATION = 0x826B
         /// </summary>
-        DebugSeverityNotification = 0x826b,
+        DebugSeverityNotification = 0x826B,
 
         /// <summary>
         /// Original was GL_DEBUG_SEVERITY_NOTIFICATION_KHR = 0x826B
         /// </summary>
-        DebugSeverityNotificationKhr = 0x826b,
+        DebugSeverityNotificationKhr = 0x826B,
 
         /// <summary>
         /// Original was GL_MAX_DEBUG_GROUP_STACK_DEPTH = 0x826C
         /// </summary>
-        MaxDebugGroupStackDepth = 0x826c,
+        MaxDebugGroupStackDepth = 0x826C,
 
         /// <summary>
         /// Original was GL_MAX_DEBUG_GROUP_STACK_DEPTH_KHR = 0x826C
         /// </summary>
-        MaxDebugGroupStackDepthKhr = 0x826c,
+        MaxDebugGroupStackDepthKhr = 0x826C,
 
         /// <summary>
         /// Original was GL_DEBUG_GROUP_STACK_DEPTH = 0x826D
         /// </summary>
-        DebugGroupStackDepth = 0x826d,
+        DebugGroupStackDepth = 0x826D,
 
         /// <summary>
         /// Original was GL_DEBUG_GROUP_STACK_DEPTH_KHR = 0x826D
         /// </summary>
-        DebugGroupStackDepthKhr = 0x826d,
+        DebugGroupStackDepthKhr = 0x826D,
 
         /// <summary>
         /// Original was GL_BUFFER = 0x82E0
         /// </summary>
-        Buffer = 0x82e0,
+        Buffer = 0x82E0,
 
         /// <summary>
         /// Original was GL_BUFFER_KHR = 0x82E0
         /// </summary>
-        BufferKhr = 0x82e0,
+        BufferKhr = 0x82E0,
 
         /// <summary>
         /// Original was GL_SHADER = 0x82E1
         /// </summary>
-        Shader = 0x82e1,
+        Shader = 0x82E1,
 
         /// <summary>
         /// Original was GL_SHADER_KHR = 0x82E1
         /// </summary>
-        ShaderKhr = 0x82e1,
+        ShaderKhr = 0x82E1,
 
         /// <summary>
         /// Original was GL_PROGRAM = 0x82E2
         /// </summary>
-        Program = 0x82e2,
+        Program = 0x82E2,
 
         /// <summary>
         /// Original was GL_PROGRAM_KHR = 0x82E2
         /// </summary>
-        ProgramKhr = 0x82e2,
+        ProgramKhr = 0x82E2,
 
         /// <summary>
         /// Original was GL_QUERY = 0x82E3
         /// </summary>
-        Query = 0x82e3,
+        Query = 0x82E3,
 
         /// <summary>
         /// Original was GL_QUERY_KHR = 0x82E3
         /// </summary>
-        QueryKhr = 0x82e3,
+        QueryKhr = 0x82E3,
 
         /// <summary>
         /// Original was GL_PROGRAM_PIPELINE = 0x82E4
         /// </summary>
-        ProgramPipeline = 0x82e4,
+        ProgramPipeline = 0x82E4,
 
         /// <summary>
         /// Original was GL_PROGRAM_PIPELINE_KHR = 0x82E4
         /// </summary>
-        ProgramPipelineKhr = 0x82e4,
+        ProgramPipelineKhr = 0x82E4,
 
         /// <summary>
         /// Original was GL_SAMPLER = 0x82E6
         /// </summary>
-        Sampler = 0x82e6,
+        Sampler = 0x82E6,
 
         /// <summary>
         /// Original was GL_SAMPLER_KHR = 0x82E6
         /// </summary>
-        SamplerKhr = 0x82e6,
+        SamplerKhr = 0x82E6,
 
         /// <summary>
         /// Original was GL_DISPLAY_LIST = 0x82E7
         /// </summary>
-        DisplayList = 0x82e7,
+        DisplayList = 0x82E7,
 
         /// <summary>
         /// Original was GL_MAX_LABEL_LENGTH = 0x82E8
         /// </summary>
-        MaxLabelLength = 0x82e8,
+        MaxLabelLength = 0x82E8,
 
         /// <summary>
         /// Original was GL_MAX_LABEL_LENGTH_KHR = 0x82E8
         /// </summary>
-        MaxLabelLengthKhr = 0x82e8,
+        MaxLabelLengthKhr = 0x82E8,
 
         /// <summary>
         /// Original was GL_MAX_DEBUG_MESSAGE_LENGTH = 0x9143
@@ -431,11 +431,11 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_DEBUG_OUTPUT = 0x92E0
         /// </summary>
-        DebugOutput = 0x92e0,
+        DebugOutput = 0x92E0,
 
         /// <summary>
         /// Original was GL_DEBUG_OUTPUT_KHR = 0x92E0
         /// </summary>
-        DebugOutputKhr = 0x92e0
+        DebugOutputKhr = 0x92E0
     }
 }

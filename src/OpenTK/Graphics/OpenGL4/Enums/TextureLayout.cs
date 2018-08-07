@@ -46,17 +46,17 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_LAYOUT_GENERAL_EXT = 0x958D
         /// </summary>
-        LayoutGeneralExt = 0x958d,
+        LayoutGeneralExt = 0x958D,
 
         /// <summary>
         /// Original was GL_LAYOUT_COLOR_ATTACHMENT_EXT = 0x958E
         /// </summary>
-        LayoutColorAttachmentExt = 0x958e,
+        LayoutColorAttachmentExt = 0x958E,
 
         /// <summary>
         /// Original was GL_LAYOUT_DEPTH_STENCIL_ATTACHMENT_EXT = 0x958F
         /// </summary>
-        LayoutDepthStencilAttachmentExt = 0x958f,
+        LayoutDepthStencilAttachmentExt = 0x958F,
 
         /// <summary>
         /// Original was GL_LAYOUT_DEPTH_STENCIL_READ_ONLY_EXT = 0x9590

@@ -36,16 +36,16 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_POINT = 0x1B00
         /// </summary>
-        Point = 0x1b00,
+        Point = 0x1B00,
 
         /// <summary>
         /// Original was GL_LINE = 0x1B01
         /// </summary>
-        Line = 0x1b01,
+        Line = 0x1B01,
 
         /// <summary>
         /// Original was GL_FILL = 0x1B02
         /// </summary>
-        Fill = 0x1b02
+        Fill = 0x1B02
     }
 }

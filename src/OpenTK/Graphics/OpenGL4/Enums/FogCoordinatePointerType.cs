@@ -41,11 +41,6 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_DOUBLE = 0x140A
         /// </summary>
-        Double = 0x140a,
-
-        /// <summary>
-        /// Original was GL_HALF_FLOAT = 0x140B
-        /// </summary>
-        HalfFloat = 0x140b
+        Double = 0x140A
     }
 }

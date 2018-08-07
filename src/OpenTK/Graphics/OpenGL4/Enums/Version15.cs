@@ -91,82 +91,82 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_VERTEX_ATTRIB_ARRAY_BUFFER_BINDING = 0x889F
         /// </summary>
-        VertexAttribArrayBufferBinding = 0x889f,
+        VertexAttribArrayBufferBinding = 0x889F,
 
         /// <summary>
         /// Original was GL_READ_ONLY = 0x88B8
         /// </summary>
-        ReadOnly = 0x88b8,
+        ReadOnly = 0x88B8,
 
         /// <summary>
         /// Original was GL_WRITE_ONLY = 0x88B9
         /// </summary>
-        WriteOnly = 0x88b9,
+        WriteOnly = 0x88B9,
 
         /// <summary>
         /// Original was GL_READ_WRITE = 0x88BA
         /// </summary>
-        ReadWrite = 0x88ba,
+        ReadWrite = 0x88BA,
 
         /// <summary>
         /// Original was GL_BUFFER_ACCESS = 0x88BB
         /// </summary>
-        BufferAccess = 0x88bb,
+        BufferAccess = 0x88BB,
 
         /// <summary>
         /// Original was GL_BUFFER_MAPPED = 0x88BC
         /// </summary>
-        BufferMapped = 0x88bc,
+        BufferMapped = 0x88BC,
 
         /// <summary>
         /// Original was GL_BUFFER_MAP_POINTER = 0x88BD
         /// </summary>
-        BufferMapPointer = 0x88bd,
+        BufferMapPointer = 0x88BD,
 
         /// <summary>
         /// Original was GL_STREAM_DRAW = 0x88E0
         /// </summary>
-        StreamDraw = 0x88e0,
+        StreamDraw = 0x88E0,
 
         /// <summary>
         /// Original was GL_STREAM_READ = 0x88E1
         /// </summary>
-        StreamRead = 0x88e1,
+        StreamRead = 0x88E1,
 
         /// <summary>
         /// Original was GL_STREAM_COPY = 0x88E2
         /// </summary>
-        StreamCopy = 0x88e2,
+        StreamCopy = 0x88E2,
 
         /// <summary>
         /// Original was GL_STATIC_DRAW = 0x88E4
         /// </summary>
-        StaticDraw = 0x88e4,
+        StaticDraw = 0x88E4,
 
         /// <summary>
         /// Original was GL_STATIC_READ = 0x88E5
         /// </summary>
-        StaticRead = 0x88e5,
+        StaticRead = 0x88E5,
 
         /// <summary>
         /// Original was GL_STATIC_COPY = 0x88E6
         /// </summary>
-        StaticCopy = 0x88e6,
+        StaticCopy = 0x88E6,
 
         /// <summary>
         /// Original was GL_DYNAMIC_DRAW = 0x88E8
         /// </summary>
-        DynamicDraw = 0x88e8,
+        DynamicDraw = 0x88E8,
 
         /// <summary>
         /// Original was GL_DYNAMIC_READ = 0x88E9
         /// </summary>
-        DynamicRead = 0x88e9,
+        DynamicRead = 0x88E9,
 
         /// <summary>
         /// Original was GL_DYNAMIC_COPY = 0x88EA
         /// </summary>
-        DynamicCopy = 0x88ea,
+        DynamicCopy = 0x88EA,
 
         /// <summary>
         /// Original was GL_SAMPLES_PASSED = 0x8914

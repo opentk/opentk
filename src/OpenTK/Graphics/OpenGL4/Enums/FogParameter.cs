@@ -36,11 +36,6 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_FOG_OFFSET_VALUE_SGIX = 0x8199
         /// </summary>
-        FogOffsetValueSgix = 0x8199,
-
-        /// <summary>
-        /// Original was GL_FOG_COORD_SRC = 0x8450
-        /// </summary>
-        FogCoordSrc = 0x8450
+        FogOffsetValueSgix = 0x8199
     }
 }

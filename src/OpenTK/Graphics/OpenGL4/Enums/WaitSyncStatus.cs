@@ -36,21 +36,21 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_ALREADY_SIGNALED = 0x911A
         /// </summary>
-        AlreadySignaled = 0x911a,
+        AlreadySignaled = 0x911A,
 
         /// <summary>
         /// Original was GL_TIMEOUT_EXPIRED = 0x911B
         /// </summary>
-        TimeoutExpired = 0x911b,
+        TimeoutExpired = 0x911B,
 
         /// <summary>
         /// Original was GL_CONDITION_SATISFIED = 0x911C
         /// </summary>
-        ConditionSatisfied = 0x911c,
+        ConditionSatisfied = 0x911C,
 
         /// <summary>
         /// Original was GL_WAIT_FAILED = 0x911D
         /// </summary>
-        WaitFailed = 0x911d
+        WaitFailed = 0x911D
     }
 }

@@ -51,6 +51,6 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_UNSIGNED_NORMALIZED = 0x8C17
         /// </summary>
-        UnsignedNormalized = 0x8c17
+        UnsignedNormalized = 0x8C17
     }
 }

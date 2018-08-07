@@ -34,82 +34,82 @@ namespace OpenTK.Graphics.OpenGL4
     public enum Version12
     {
         /// <summary>
-        /// Original was GL_SMOOTH_POINT_SIZE_RANGE = 0x0B12
+        /// Original was GL_SMOOTH_POINT_SIZE_RANGE = 0xB12
         /// </summary>
-        SmoothPointSizeRange = 0x0b12,
+        SmoothPointSizeRange = 0xB12,
 
         /// <summary>
-        /// Original was GL_SMOOTH_POINT_SIZE_GRANULARITY = 0x0B13
+        /// Original was GL_SMOOTH_POINT_SIZE_GRANULARITY = 0xB13
         /// </summary>
-        SmoothPointSizeGranularity = 0x0b13,
+        SmoothPointSizeGranularity = 0xB13,
 
         /// <summary>
-        /// Original was GL_SMOOTH_LINE_WIDTH_RANGE = 0x0B22
+        /// Original was GL_SMOOTH_LINE_WIDTH_RANGE = 0xB22
         /// </summary>
-        SmoothLineWidthRange = 0x0b22,
+        SmoothLineWidthRange = 0xB22,
 
         /// <summary>
-        /// Original was GL_SMOOTH_LINE_WIDTH_GRANULARITY = 0x0B23
+        /// Original was GL_SMOOTH_LINE_WIDTH_GRANULARITY = 0xB23
         /// </summary>
-        SmoothLineWidthGranularity = 0x0b23,
+        SmoothLineWidthGranularity = 0xB23,
 
         /// <summary>
-        /// Original was GL_UNSIGNED_BYTE_3_3_2 = 0x8032
+        /// Original was GL_UNSIGNED_BYTE332 = 0x8032
         /// </summary>
         UnsignedByte332 = 0x8032,
 
         /// <summary>
-        /// Original was GL_UNSIGNED_SHORT_4_4_4_4 = 0x8033
+        /// Original was GL_UNSIGNED_SHORT4444 = 0x8033
         /// </summary>
         UnsignedShort4444 = 0x8033,
 
         /// <summary>
-        /// Original was GL_UNSIGNED_SHORT_5_5_5_1 = 0x8034
+        /// Original was GL_UNSIGNED_SHORT5551 = 0x8034
         /// </summary>
         UnsignedShort5551 = 0x8034,
 
         /// <summary>
-        /// Original was GL_UNSIGNED_INT_8_8_8_8 = 0x8035
+        /// Original was GL_UNSIGNED_INT8888 = 0x8035
         /// </summary>
         UnsignedInt8888 = 0x8035,
 
         /// <summary>
-        /// Original was GL_UNSIGNED_INT_10_10_10_2 = 0x8036
+        /// Original was GL_UNSIGNED_INT1010102 = 0x8036
         /// </summary>
         UnsignedInt1010102 = 0x8036,
 
         /// <summary>
-        /// Original was GL_TEXTURE_BINDING_3D = 0x806A
+        /// Original was GL_TEXTURE_BINDING3_D = 0x806A
         /// </summary>
-        TextureBinding3D = 0x806a,
+        TextureBinding3D = 0x806A,
 
         /// <summary>
         /// Original was GL_PACK_SKIP_IMAGES = 0x806B
         /// </summary>
-        PackSkipImages = 0x806b,
+        PackSkipImages = 0x806B,
 
         /// <summary>
         /// Original was GL_PACK_IMAGE_HEIGHT = 0x806C
         /// </summary>
-        PackImageHeight = 0x806c,
+        PackImageHeight = 0x806C,
 
         /// <summary>
         /// Original was GL_UNPACK_SKIP_IMAGES = 0x806D
         /// </summary>
-        UnpackSkipImages = 0x806d,
+        UnpackSkipImages = 0x806D,
 
         /// <summary>
         /// Original was GL_UNPACK_IMAGE_HEIGHT = 0x806E
         /// </summary>
-        UnpackImageHeight = 0x806e,
+        UnpackImageHeight = 0x806E,
 
         /// <summary>
-        /// Original was GL_TEXTURE_3D = 0x806F
+        /// Original was GL_TEXTURE3_D = 0x806F
         /// </summary>
-        Texture3D = 0x806f,
+        Texture3D = 0x806F,
 
         /// <summary>
-        /// Original was GL_PROXY_TEXTURE_3D = 0x8070
+        /// Original was GL_PROXY_TEXTURE3_D = 0x8070
         /// </summary>
         ProxyTexture3D = 0x8070,
 
@@ -124,93 +124,93 @@ namespace OpenTK.Graphics.OpenGL4
         TextureWrapR = 0x8072,
 
         /// <summary>
-        /// Original was GL_MAX_3D_TEXTURE_SIZE = 0x8073
+        /// Original was GL_MAX3_D_TEXTURE_SIZE = 0x8073
         /// </summary>
         Max3DTextureSize = 0x8073,
 
         /// <summary>
         /// Original was GL_BGR = 0x80E0
         /// </summary>
-        Bgr = 0x80e0,
+        Bgr = 0x80E0,
 
         /// <summary>
         /// Original was GL_BGRA = 0x80E1
         /// </summary>
-        Bgra = 0x80e1,
+        Bgra = 0x80E1,
 
         /// <summary>
         /// Original was GL_MAX_ELEMENTS_VERTICES = 0x80E8
         /// </summary>
-        MaxElementsVertices = 0x80e8,
+        MaxElementsVertices = 0x80E8,
 
         /// <summary>
         /// Original was GL_MAX_ELEMENTS_INDICES = 0x80E9
         /// </summary>
-        MaxElementsIndices = 0x80e9,
+        MaxElementsIndices = 0x80E9,
 
         /// <summary>
         /// Original was GL_CLAMP_TO_EDGE = 0x812F
         /// </summary>
-        ClampToEdge = 0x812f,
+        ClampToEdge = 0x812F,
 
         /// <summary>
         /// Original was GL_TEXTURE_MIN_LOD = 0x813A
         /// </summary>
-        TextureMinLod = 0x813a,
+        TextureMinLod = 0x813A,
 
         /// <summary>
         /// Original was GL_TEXTURE_MAX_LOD = 0x813B
         /// </summary>
-        TextureMaxLod = 0x813b,
+        TextureMaxLod = 0x813B,
 
         /// <summary>
         /// Original was GL_TEXTURE_BASE_LEVEL = 0x813C
         /// </summary>
-        TextureBaseLevel = 0x813c,
+        TextureBaseLevel = 0x813C,
 
         /// <summary>
         /// Original was GL_TEXTURE_MAX_LEVEL = 0x813D
         /// </summary>
-        TextureMaxLevel = 0x813d,
+        TextureMaxLevel = 0x813D,
 
         /// <summary>
-        /// Original was GL_UNSIGNED_BYTE_2_3_3_REV = 0x8362
+        /// Original was GL_UNSIGNED_BYTE233_REV = 0x8362
         /// </summary>
         UnsignedByte233Rev = 0x8362,
 
         /// <summary>
-        /// Original was GL_UNSIGNED_SHORT_5_6_5 = 0x8363
+        /// Original was GL_UNSIGNED_SHORT565 = 0x8363
         /// </summary>
         UnsignedShort565 = 0x8363,
 
         /// <summary>
-        /// Original was GL_UNSIGNED_SHORT_5_6_5_REV = 0x8364
+        /// Original was GL_UNSIGNED_SHORT565_REV = 0x8364
         /// </summary>
         UnsignedShort565Rev = 0x8364,
 
         /// <summary>
-        /// Original was GL_UNSIGNED_SHORT_4_4_4_4_REV = 0x8365
+        /// Original was GL_UNSIGNED_SHORT4444_REV = 0x8365
         /// </summary>
         UnsignedShort4444Rev = 0x8365,
 
         /// <summary>
-        /// Original was GL_UNSIGNED_SHORT_1_5_5_5_REV = 0x8366
+        /// Original was GL_UNSIGNED_SHORT1555_REV = 0x8366
         /// </summary>
         UnsignedShort1555Rev = 0x8366,
 
         /// <summary>
-        /// Original was GL_UNSIGNED_INT_8_8_8_8_REV = 0x8367
+        /// Original was GL_UNSIGNED_INT8888_REV = 0x8367
         /// </summary>
         UnsignedInt8888Rev = 0x8367,
 
         /// <summary>
-        /// Original was GL_UNSIGNED_INT_2_10_10_10_REV = 0x8368
+        /// Original was GL_UNSIGNED_INT2101010_REV = 0x8368
         /// </summary>
         UnsignedInt2101010Rev = 0x8368,
 
         /// <summary>
         /// Original was GL_ALIASED_LINE_WIDTH_RANGE = 0x846E
         /// </summary>
-        AliasedLineWidthRange = 0x846e
+        AliasedLineWidthRange = 0x846E
     }
 }

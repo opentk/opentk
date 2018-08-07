@@ -36,6 +36,6 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_MIN_MAP_BUFFER_ALIGNMENT = 0x90BC
         /// </summary>
-        MinMapBufferAlignment = 0x90bc
+        MinMapBufferAlignment = 0x90BC
     }
 }

@@ -34,24 +34,24 @@ namespace OpenTK.Graphics.OpenGL4
     public enum ArbGeometryShader4
     {
         /// <summary>
-        /// Original was GL_LINES_ADJACENCY_ARB = 0x000A
+        /// Original was GL_LINES_ADJACENCY_ARB = 0xA
         /// </summary>
-        LinesAdjacencyArb = 0x000a,
+        LinesAdjacencyArb = 0xA,
 
         /// <summary>
-        /// Original was GL_LINE_STRIP_ADJACENCY_ARB = 0x000B
+        /// Original was GL_LINE_STRIP_ADJACENCY_ARB = 0xB
         /// </summary>
-        LineStripAdjacencyArb = 0x000b,
+        LineStripAdjacencyArb = 0xB,
 
         /// <summary>
-        /// Original was GL_TRIANGLES_ADJACENCY_ARB = 0x000C
+        /// Original was GL_TRIANGLES_ADJACENCY_ARB = 0xC
         /// </summary>
-        TrianglesAdjacencyArb = 0x000c,
+        TrianglesAdjacencyArb = 0xC,
 
         /// <summary>
-        /// Original was GL_TRIANGLE_STRIP_ADJACENCY_ARB = 0x000D
+        /// Original was GL_TRIANGLE_STRIP_ADJACENCY_ARB = 0xD
         /// </summary>
-        TriangleStripAdjacencyArb = 0x000d,
+        TriangleStripAdjacencyArb = 0xD,
 
         /// <summary>
         /// Original was GL_PROGRAM_POINT_SIZE_ARB = 0x8642
@@ -61,76 +61,76 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_MAX_VARYING_COMPONENTS = 0x8B4B
         /// </summary>
-        MaxVaryingComponents = 0x8b4b,
+        MaxVaryingComponents = 0x8B4B,
 
         /// <summary>
         /// Original was GL_MAX_GEOMETRY_TEXTURE_IMAGE_UNITS_ARB = 0x8C29
         /// </summary>
-        MaxGeometryTextureImageUnitsArb = 0x8c29,
+        MaxGeometryTextureImageUnitsArb = 0x8C29,
 
         /// <summary>
         /// Original was GL_FRAMEBUFFER_ATTACHMENT_TEXTURE_LAYER = 0x8CD4
         /// </summary>
-        FramebufferAttachmentTextureLayer = 0x8cd4,
+        FramebufferAttachmentTextureLayer = 0x8CD4,
 
         /// <summary>
         /// Original was GL_FRAMEBUFFER_ATTACHMENT_LAYERED_ARB = 0x8DA7
         /// </summary>
-        FramebufferAttachmentLayeredArb = 0x8da7,
+        FramebufferAttachmentLayeredArb = 0x8DA7,
 
         /// <summary>
         /// Original was GL_FRAMEBUFFER_INCOMPLETE_LAYER_TARGETS_ARB = 0x8DA8
         /// </summary>
-        FramebufferIncompleteLayerTargetsArb = 0x8da8,
+        FramebufferIncompleteLayerTargetsArb = 0x8DA8,
 
         /// <summary>
         /// Original was GL_FRAMEBUFFER_INCOMPLETE_LAYER_COUNT_ARB = 0x8DA9
         /// </summary>
-        FramebufferIncompleteLayerCountArb = 0x8da9,
+        FramebufferIncompleteLayerCountArb = 0x8DA9,
 
         /// <summary>
         /// Original was GL_GEOMETRY_SHADER_ARB = 0x8DD9
         /// </summary>
-        GeometryShaderArb = 0x8dd9,
+        GeometryShaderArb = 0x8DD9,
 
         /// <summary>
         /// Original was GL_GEOMETRY_VERTICES_OUT_ARB = 0x8DDA
         /// </summary>
-        GeometryVerticesOutArb = 0x8dda,
+        GeometryVerticesOutArb = 0x8DDA,
 
         /// <summary>
         /// Original was GL_GEOMETRY_INPUT_TYPE_ARB = 0x8DDB
         /// </summary>
-        GeometryInputTypeArb = 0x8ddb,
+        GeometryInputTypeArb = 0x8DDB,
 
         /// <summary>
         /// Original was GL_GEOMETRY_OUTPUT_TYPE_ARB = 0x8DDC
         /// </summary>
-        GeometryOutputTypeArb = 0x8ddc,
+        GeometryOutputTypeArb = 0x8DDC,
 
         /// <summary>
         /// Original was GL_MAX_GEOMETRY_VARYING_COMPONENTS_ARB = 0x8DDD
         /// </summary>
-        MaxGeometryVaryingComponentsArb = 0x8ddd,
+        MaxGeometryVaryingComponentsArb = 0x8DDD,
 
         /// <summary>
         /// Original was GL_MAX_VERTEX_VARYING_COMPONENTS_ARB = 0x8DDE
         /// </summary>
-        MaxVertexVaryingComponentsArb = 0x8dde,
+        MaxVertexVaryingComponentsArb = 0x8DDE,
 
         /// <summary>
         /// Original was GL_MAX_GEOMETRY_UNIFORM_COMPONENTS_ARB = 0x8DDF
         /// </summary>
-        MaxGeometryUniformComponentsArb = 0x8ddf,
+        MaxGeometryUniformComponentsArb = 0x8DDF,
 
         /// <summary>
         /// Original was GL_MAX_GEOMETRY_OUTPUT_VERTICES_ARB = 0x8DE0
         /// </summary>
-        MaxGeometryOutputVerticesArb = 0x8de0,
+        MaxGeometryOutputVerticesArb = 0x8DE0,
 
         /// <summary>
         /// Original was GL_MAX_GEOMETRY_TOTAL_OUTPUT_COMPONENTS_ARB = 0x8DE1
         /// </summary>
-        MaxGeometryTotalOutputComponentsArb = 0x8de1
+        MaxGeometryTotalOutputComponentsArb = 0x8DE1
     }
 }

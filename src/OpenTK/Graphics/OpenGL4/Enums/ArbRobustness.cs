@@ -34,14 +34,14 @@ namespace OpenTK.Graphics.OpenGL4
     public enum ArbRobustness
     {
         /// <summary>
-        /// Original was GL_NO_ERROR = 0
+        /// Original was GL_NO_ERROR = 0x0
         /// </summary>
-        NoError = 0,
+        NoError = 0x0,
 
         /// <summary>
-        /// Original was GL_CONTEXT_FLAG_ROBUST_ACCESS_BIT_ARB = 0x00000004
+        /// Original was GL_CONTEXT_FLAG_ROBUST_ACCESS_BIT_ARB = 0x4
         /// </summary>
-        ContextFlagRobustAccessBitArb = 0x00000004,
+        ContextFlagRobustAccessBitArb = 0x4,
 
         /// <summary>
         /// Original was GL_LOSE_CONTEXT_ON_RESET_ARB = 0x8252

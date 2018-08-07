@@ -34,19 +34,19 @@ namespace OpenTK.Graphics.OpenGL4
     public enum GenerateMipmapTarget
     {
         /// <summary>
-        /// Original was GL_TEXTURE_1D = 0x0DE0
+        /// Original was GL_TEXTURE1_D = 0xDE0
         /// </summary>
-        Texture1D = 0x0de0,
+        Texture1D = 0xDE0,
 
         /// <summary>
-        /// Original was GL_TEXTURE_2D = 0x0DE1
+        /// Original was GL_TEXTURE2_D = 0xDE1
         /// </summary>
-        Texture2D = 0x0de1,
+        Texture2D = 0xDE1,
 
         /// <summary>
-        /// Original was GL_TEXTURE_3D = 0x806F
+        /// Original was GL_TEXTURE3_D = 0x806F
         /// </summary>
-        Texture3D = 0x806f,
+        Texture3D = 0x806F,
 
         /// <summary>
         /// Original was GL_TEXTURE_CUBE_MAP = 0x8513
@@ -54,14 +54,14 @@ namespace OpenTK.Graphics.OpenGL4
         TextureCubeMap = 0x8513,
 
         /// <summary>
-        /// Original was GL_TEXTURE_1D_ARRAY = 0x8C18
+        /// Original was GL_TEXTURE1_D_ARRAY = 0x8C18
         /// </summary>
-        Texture1DArray = 0x8c18,
+        Texture1DArray = 0x8C18,
 
         /// <summary>
-        /// Original was GL_TEXTURE_2D_ARRAY = 0x8C1A
+        /// Original was GL_TEXTURE2_D_ARRAY = 0x8C1A
         /// </summary>
-        Texture2DArray = 0x8c1a,
+        Texture2DArray = 0x8C1A,
 
         /// <summary>
         /// Original was GL_TEXTURE_CUBE_MAP_ARRAY = 0x9009
@@ -69,12 +69,12 @@ namespace OpenTK.Graphics.OpenGL4
         TextureCubeMapArray = 0x9009,
 
         /// <summary>
-        /// Original was GL_TEXTURE_2D_MULTISAMPLE = 0x9100
+        /// Original was GL_TEXTURE2_D_MULTISAMPLE = 0x9100
         /// </summary>
         Texture2DMultisample = 0x9100,
 
         /// <summary>
-        /// Original was GL_TEXTURE_2D_MULTISAMPLE_ARRAY = 0x9102
+        /// Original was GL_TEXTURE2_D_MULTISAMPLE_ARRAY = 0x9102
         /// </summary>
         Texture2DMultisampleArray = 0x9102
     }

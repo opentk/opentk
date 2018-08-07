@@ -36,6 +36,6 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_DEPTH_CLAMP = 0x864F
         /// </summary>
-        DepthClamp = 0x864f
+        DepthClamp = 0x864F
     }
 }

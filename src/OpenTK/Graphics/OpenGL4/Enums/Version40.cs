@@ -34,359 +34,364 @@ namespace OpenTK.Graphics.OpenGL4
     public enum Version40
     {
         /// <summary>
-        /// Original was GL_QUADS = 0x0007
+        /// Original was GL_QUADS = 0x7
         /// </summary>
-        Quads = 0x0007,
+        Quads = 0x7,
 
         /// <summary>
-        /// Original was GL_PATCHES = 0x000E
+        /// Original was GL_PATCHES = 0xE
         /// </summary>
-        Patches = 0x000e,
+        Patches = 0xE,
 
         /// <summary>
         /// Original was GL_UNIFORM_BLOCK_REFERENCED_BY_TESS_CONTROL_SHADER = 0x84F0
         /// </summary>
-        UniformBlockReferencedByTessControlShader = 0x84f0,
+        UniformBlockReferencedByTessControlShader = 0x84F0,
 
         /// <summary>
         /// Original was GL_UNIFORM_BLOCK_REFERENCED_BY_TESS_EVALUATION_SHADER = 0x84F1
         /// </summary>
-        UniformBlockReferencedByTessEvaluationShader = 0x84f1,
+        UniformBlockReferencedByTessEvaluationShader = 0x84F1,
 
         /// <summary>
         /// Original was GL_MAX_TESS_CONTROL_INPUT_COMPONENTS = 0x886C
         /// </summary>
-        MaxTessControlInputComponents = 0x886c,
+        MaxTessControlInputComponents = 0x886C,
 
         /// <summary>
         /// Original was GL_MAX_TESS_EVALUATION_INPUT_COMPONENTS = 0x886D
         /// </summary>
-        MaxTessEvaluationInputComponents = 0x886d,
+        MaxTessEvaluationInputComponents = 0x886D,
 
         /// <summary>
         /// Original was GL_GEOMETRY_SHADER_INVOCATIONS = 0x887F
         /// </summary>
-        GeometryShaderInvocations = 0x887f,
+        GeometryShaderInvocations = 0x887F,
 
         /// <summary>
         /// Original was GL_SAMPLE_SHADING = 0x8C36
         /// </summary>
-        SampleShading = 0x8c36,
+        SampleShading = 0x8C36,
 
         /// <summary>
         /// Original was GL_MIN_SAMPLE_SHADING_VALUE = 0x8C37
         /// </summary>
-        MinSampleShadingValue = 0x8c37,
+        MinSampleShadingValue = 0x8C37,
 
         /// <summary>
         /// Original was GL_ACTIVE_SUBROUTINES = 0x8DE5
         /// </summary>
-        ActiveSubroutines = 0x8de5,
+        ActiveSubroutines = 0x8DE5,
 
         /// <summary>
         /// Original was GL_ACTIVE_SUBROUTINE_UNIFORMS = 0x8DE6
         /// </summary>
-        ActiveSubroutineUniforms = 0x8de6,
+        ActiveSubroutineUniforms = 0x8DE6,
 
         /// <summary>
         /// Original was GL_MAX_SUBROUTINES = 0x8DE7
         /// </summary>
-        MaxSubroutines = 0x8de7,
+        MaxSubroutines = 0x8DE7,
 
         /// <summary>
         /// Original was GL_MAX_SUBROUTINE_UNIFORM_LOCATIONS = 0x8DE8
         /// </summary>
-        MaxSubroutineUniformLocations = 0x8de8,
+        MaxSubroutineUniformLocations = 0x8DE8,
 
         /// <summary>
         /// Original was GL_MAX_COMBINED_TESS_CONTROL_UNIFORM_COMPONENTS = 0x8E1E
         /// </summary>
-        MaxCombinedTessControlUniformComponents = 0x8e1e,
+        MaxCombinedTessControlUniformComponents = 0x8E1E,
 
         /// <summary>
         /// Original was GL_MAX_COMBINED_TESS_EVALUATION_UNIFORM_COMPONENTS = 0x8E1F
         /// </summary>
-        MaxCombinedTessEvaluationUniformComponents = 0x8e1f,
+        MaxCombinedTessEvaluationUniformComponents = 0x8E1F,
 
         /// <summary>
         /// Original was GL_TRANSFORM_FEEDBACK = 0x8E22
         /// </summary>
-        TransformFeedback = 0x8e22,
+        TransformFeedback = 0x8E22,
 
         /// <summary>
         /// Original was GL_TRANSFORM_FEEDBACK_BUFFER_PAUSED = 0x8E23
         /// </summary>
-        TransformFeedbackBufferPaused = 0x8e23,
+        TransformFeedbackBufferPaused = 0x8E23,
 
         /// <summary>
         /// Original was GL_TRANSFORM_FEEDBACK_BUFFER_ACTIVE = 0x8E24
         /// </summary>
-        TransformFeedbackBufferActive = 0x8e24,
+        TransformFeedbackBufferActive = 0x8E24,
 
         /// <summary>
         /// Original was GL_TRANSFORM_FEEDBACK_BINDING = 0x8E25
         /// </summary>
-        TransformFeedbackBinding = 0x8e25,
+        TransformFeedbackBinding = 0x8E25,
 
         /// <summary>
         /// Original was GL_ACTIVE_SUBROUTINE_UNIFORM_LOCATIONS = 0x8E47
         /// </summary>
-        ActiveSubroutineUniformLocations = 0x8e47,
+        ActiveSubroutineUniformLocations = 0x8E47,
 
         /// <summary>
         /// Original was GL_ACTIVE_SUBROUTINE_MAX_LENGTH = 0x8E48
         /// </summary>
-        ActiveSubroutineMaxLength = 0x8e48,
+        ActiveSubroutineMaxLength = 0x8E48,
 
         /// <summary>
         /// Original was GL_ACTIVE_SUBROUTINE_UNIFORM_MAX_LENGTH = 0x8E49
         /// </summary>
-        ActiveSubroutineUniformMaxLength = 0x8e49,
+        ActiveSubroutineUniformMaxLength = 0x8E49,
 
         /// <summary>
         /// Original was GL_NUM_COMPATIBLE_SUBROUTINES = 0x8E4A
         /// </summary>
-        NumCompatibleSubroutines = 0x8e4a,
+        NumCompatibleSubroutines = 0x8E4A,
 
         /// <summary>
         /// Original was GL_COMPATIBLE_SUBROUTINES = 0x8E4B
         /// </summary>
-        CompatibleSubroutines = 0x8e4b,
+        CompatibleSubroutines = 0x8E4B,
 
         /// <summary>
         /// Original was GL_MAX_GEOMETRY_SHADER_INVOCATIONS = 0x8E5A
         /// </summary>
-        MaxGeometryShaderInvocations = 0x8e5a,
+        MaxGeometryShaderInvocations = 0x8E5A,
 
         /// <summary>
         /// Original was GL_MIN_FRAGMENT_INTERPOLATION_OFFSET = 0x8E5B
         /// </summary>
-        MinFragmentInterpolationOffset = 0x8e5b,
+        MinFragmentInterpolationOffset = 0x8E5B,
 
         /// <summary>
         /// Original was GL_MAX_FRAGMENT_INTERPOLATION_OFFSET = 0x8E5C
         /// </summary>
-        MaxFragmentInterpolationOffset = 0x8e5c,
+        MaxFragmentInterpolationOffset = 0x8E5C,
 
         /// <summary>
         /// Original was GL_FRAGMENT_INTERPOLATION_OFFSET_BITS = 0x8E5D
         /// </summary>
-        FragmentInterpolationOffsetBits = 0x8e5d,
+        FragmentInterpolationOffsetBits = 0x8E5D,
 
         /// <summary>
         /// Original was GL_MIN_PROGRAM_TEXTURE_GATHER_OFFSET = 0x8E5E
         /// </summary>
-        MinProgramTextureGatherOffset = 0x8e5e,
+        MinProgramTextureGatherOffset = 0x8E5E,
 
         /// <summary>
         /// Original was GL_MAX_PROGRAM_TEXTURE_GATHER_OFFSET = 0x8E5F
         /// </summary>
-        MaxProgramTextureGatherOffset = 0x8e5f,
+        MaxProgramTextureGatherOffset = 0x8E5F,
 
         /// <summary>
         /// Original was GL_MAX_TRANSFORM_FEEDBACK_BUFFERS = 0x8E70
         /// </summary>
-        MaxTransformFeedbackBuffers = 0x8e70,
+        MaxTransformFeedbackBuffers = 0x8E70,
 
         /// <summary>
         /// Original was GL_MAX_VERTEX_STREAMS = 0x8E71
         /// </summary>
-        MaxVertexStreams = 0x8e71,
+        MaxVertexStreams = 0x8E71,
+
+        /// <summary>
+        /// Original was GL_MAX_VERTEX_STREAMS = 0x8E71
+        /// </summary>
+        MaxVertexStreams = 0x8E71,
 
         /// <summary>
         /// Original was GL_PATCH_VERTICES = 0x8E72
         /// </summary>
-        PatchVertices = 0x8e72,
+        PatchVertices = 0x8E72,
 
         /// <summary>
         /// Original was GL_PATCH_DEFAULT_INNER_LEVEL = 0x8E73
         /// </summary>
-        PatchDefaultInnerLevel = 0x8e73,
+        PatchDefaultInnerLevel = 0x8E73,
 
         /// <summary>
         /// Original was GL_PATCH_DEFAULT_OUTER_LEVEL = 0x8E74
         /// </summary>
-        PatchDefaultOuterLevel = 0x8e74,
+        PatchDefaultOuterLevel = 0x8E74,
 
         /// <summary>
         /// Original was GL_TESS_CONTROL_OUTPUT_VERTICES = 0x8E75
         /// </summary>
-        TessControlOutputVertices = 0x8e75,
+        TessControlOutputVertices = 0x8E75,
 
         /// <summary>
         /// Original was GL_TESS_GEN_MODE = 0x8E76
         /// </summary>
-        TessGenMode = 0x8e76,
+        TessGenMode = 0x8E76,
 
         /// <summary>
         /// Original was GL_TESS_GEN_SPACING = 0x8E77
         /// </summary>
-        TessGenSpacing = 0x8e77,
+        TessGenSpacing = 0x8E77,
 
         /// <summary>
         /// Original was GL_TESS_GEN_VERTEX_ORDER = 0x8E78
         /// </summary>
-        TessGenVertexOrder = 0x8e78,
+        TessGenVertexOrder = 0x8E78,
 
         /// <summary>
         /// Original was GL_TESS_GEN_POINT_MODE = 0x8E79
         /// </summary>
-        TessGenPointMode = 0x8e79,
+        TessGenPointMode = 0x8E79,
 
         /// <summary>
         /// Original was GL_ISOLINES = 0x8E7A
         /// </summary>
-        Isolines = 0x8e7a,
+        Isolines = 0x8E7A,
 
         /// <summary>
         /// Original was GL_FRACTIONAL_ODD = 0x8E7B
         /// </summary>
-        FractionalOdd = 0x8e7b,
+        FractionalOdd = 0x8E7B,
 
         /// <summary>
         /// Original was GL_FRACTIONAL_EVEN = 0x8E7C
         /// </summary>
-        FractionalEven = 0x8e7c,
+        FractionalEven = 0x8E7C,
 
         /// <summary>
         /// Original was GL_MAX_PATCH_VERTICES = 0x8E7D
         /// </summary>
-        MaxPatchVertices = 0x8e7d,
+        MaxPatchVertices = 0x8E7D,
 
         /// <summary>
         /// Original was GL_MAX_TESS_GEN_LEVEL = 0x8E7E
         /// </summary>
-        MaxTessGenLevel = 0x8e7e,
+        MaxTessGenLevel = 0x8E7E,
 
         /// <summary>
         /// Original was GL_MAX_TESS_CONTROL_UNIFORM_COMPONENTS = 0x8E7F
         /// </summary>
-        MaxTessControlUniformComponents = 0x8e7f,
+        MaxTessControlUniformComponents = 0x8E7F,
 
         /// <summary>
         /// Original was GL_MAX_TESS_EVALUATION_UNIFORM_COMPONENTS = 0x8E80
         /// </summary>
-        MaxTessEvaluationUniformComponents = 0x8e80,
+        MaxTessEvaluationUniformComponents = 0x8E80,
 
         /// <summary>
         /// Original was GL_MAX_TESS_CONTROL_TEXTURE_IMAGE_UNITS = 0x8E81
         /// </summary>
-        MaxTessControlTextureImageUnits = 0x8e81,
+        MaxTessControlTextureImageUnits = 0x8E81,
 
         /// <summary>
         /// Original was GL_MAX_TESS_EVALUATION_TEXTURE_IMAGE_UNITS = 0x8E82
         /// </summary>
-        MaxTessEvaluationTextureImageUnits = 0x8e82,
+        MaxTessEvaluationTextureImageUnits = 0x8E82,
 
         /// <summary>
         /// Original was GL_MAX_TESS_CONTROL_OUTPUT_COMPONENTS = 0x8E83
         /// </summary>
-        MaxTessControlOutputComponents = 0x8e83,
+        MaxTessControlOutputComponents = 0x8E83,
 
         /// <summary>
         /// Original was GL_MAX_TESS_PATCH_COMPONENTS = 0x8E84
         /// </summary>
-        MaxTessPatchComponents = 0x8e84,
+        MaxTessPatchComponents = 0x8E84,
 
         /// <summary>
         /// Original was GL_MAX_TESS_CONTROL_TOTAL_OUTPUT_COMPONENTS = 0x8E85
         /// </summary>
-        MaxTessControlTotalOutputComponents = 0x8e85,
+        MaxTessControlTotalOutputComponents = 0x8E85,
 
         /// <summary>
         /// Original was GL_MAX_TESS_EVALUATION_OUTPUT_COMPONENTS = 0x8E86
         /// </summary>
-        MaxTessEvaluationOutputComponents = 0x8e86,
+        MaxTessEvaluationOutputComponents = 0x8E86,
 
         /// <summary>
         /// Original was GL_TESS_EVALUATION_SHADER = 0x8E87
         /// </summary>
-        TessEvaluationShader = 0x8e87,
+        TessEvaluationShader = 0x8E87,
 
         /// <summary>
         /// Original was GL_TESS_CONTROL_SHADER = 0x8E88
         /// </summary>
-        TessControlShader = 0x8e88,
+        TessControlShader = 0x8E88,
 
         /// <summary>
         /// Original was GL_MAX_TESS_CONTROL_UNIFORM_BLOCKS = 0x8E89
         /// </summary>
-        MaxTessControlUniformBlocks = 0x8e89,
+        MaxTessControlUniformBlocks = 0x8E89,
 
         /// <summary>
         /// Original was GL_MAX_TESS_EVALUATION_UNIFORM_BLOCKS = 0x8E8A
         /// </summary>
-        MaxTessEvaluationUniformBlocks = 0x8e8a,
+        MaxTessEvaluationUniformBlocks = 0x8E8A,
 
         /// <summary>
         /// Original was GL_DRAW_INDIRECT_BUFFER = 0x8F3F
         /// </summary>
-        DrawIndirectBuffer = 0x8f3f,
+        DrawIndirectBuffer = 0x8F3F,
 
         /// <summary>
         /// Original was GL_DRAW_INDIRECT_BUFFER_BINDING = 0x8F43
         /// </summary>
-        DrawIndirectBufferBinding = 0x8f43,
+        DrawIndirectBufferBinding = 0x8F43,
 
         /// <summary>
         /// Original was GL_DOUBLE_MAT2 = 0x8F46
         /// </summary>
-        DoubleMat2 = 0x8f46,
+        DoubleMat2 = 0x8F46,
 
         /// <summary>
         /// Original was GL_DOUBLE_MAT3 = 0x8F47
         /// </summary>
-        DoubleMat3 = 0x8f47,
+        DoubleMat3 = 0x8F47,
 
         /// <summary>
         /// Original was GL_DOUBLE_MAT4 = 0x8F48
         /// </summary>
-        DoubleMat4 = 0x8f48,
+        DoubleMat4 = 0x8F48,
 
         /// <summary>
-        /// Original was GL_DOUBLE_MAT2x3 = 0x8F49
+        /// Original was GL_DOUBLE_MAT2X3 = 0x8F49
         /// </summary>
-        DoubleMat2x3 = 0x8f49,
+        DoubleMat2x3 = 0x8F49,
 
         /// <summary>
-        /// Original was GL_DOUBLE_MAT2x4 = 0x8F4A
+        /// Original was GL_DOUBLE_MAT2X4 = 0x8F4A
         /// </summary>
-        DoubleMat2x4 = 0x8f4a,
+        DoubleMat2x4 = 0x8F4A,
 
         /// <summary>
-        /// Original was GL_DOUBLE_MAT3x2 = 0x8F4B
+        /// Original was GL_DOUBLE_MAT3X2 = 0x8F4B
         /// </summary>
-        DoubleMat3x2 = 0x8f4b,
+        DoubleMat3x2 = 0x8F4B,
 
         /// <summary>
-        /// Original was GL_DOUBLE_MAT3x4 = 0x8F4C
+        /// Original was GL_DOUBLE_MAT3X4 = 0x8F4C
         /// </summary>
-        DoubleMat3x4 = 0x8f4c,
+        DoubleMat3x4 = 0x8F4C,
 
         /// <summary>
-        /// Original was GL_DOUBLE_MAT4x2 = 0x8F4D
+        /// Original was GL_DOUBLE_MAT4X2 = 0x8F4D
         /// </summary>
-        DoubleMat4x2 = 0x8f4d,
+        DoubleMat4x2 = 0x8F4D,
 
         /// <summary>
-        /// Original was GL_DOUBLE_MAT4x3 = 0x8F4E
+        /// Original was GL_DOUBLE_MAT4X3 = 0x8F4E
         /// </summary>
-        DoubleMat4x3 = 0x8f4e,
+        DoubleMat4x3 = 0x8F4E,
 
         /// <summary>
         /// Original was GL_DOUBLE_VEC2 = 0x8FFC
         /// </summary>
-        DoubleVec2 = 0x8ffc,
+        DoubleVec2 = 0x8FFC,
 
         /// <summary>
         /// Original was GL_DOUBLE_VEC3 = 0x8FFD
         /// </summary>
-        DoubleVec3 = 0x8ffd,
+        DoubleVec3 = 0x8FFD,
 
         /// <summary>
         /// Original was GL_DOUBLE_VEC4 = 0x8FFE
         /// </summary>
-        DoubleVec4 = 0x8ffe,
+        DoubleVec4 = 0x8FFE,
 
         /// <summary>
         /// Original was GL_TEXTURE_CUBE_MAP_ARRAY = 0x9009
@@ -396,31 +401,31 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_TEXTURE_BINDING_CUBE_MAP_ARRAY = 0x900A
         /// </summary>
-        TextureBindingCubeMapArray = 0x900a,
+        TextureBindingCubeMapArray = 0x900A,
 
         /// <summary>
         /// Original was GL_PROXY_TEXTURE_CUBE_MAP_ARRAY = 0x900B
         /// </summary>
-        ProxyTextureCubeMapArray = 0x900b,
+        ProxyTextureCubeMapArray = 0x900B,
 
         /// <summary>
         /// Original was GL_SAMPLER_CUBE_MAP_ARRAY = 0x900C
         /// </summary>
-        SamplerCubeMapArray = 0x900c,
+        SamplerCubeMapArray = 0x900C,
 
         /// <summary>
         /// Original was GL_SAMPLER_CUBE_MAP_ARRAY_SHADOW = 0x900D
         /// </summary>
-        SamplerCubeMapArrayShadow = 0x900d,
+        SamplerCubeMapArrayShadow = 0x900D,
 
         /// <summary>
         /// Original was GL_INT_SAMPLER_CUBE_MAP_ARRAY = 0x900E
         /// </summary>
-        IntSamplerCubeMapArray = 0x900e,
+        IntSamplerCubeMapArray = 0x900E,
 
         /// <summary>
         /// Original was GL_UNSIGNED_INT_SAMPLER_CUBE_MAP_ARRAY = 0x900F
         /// </summary>
-        UnsignedIntSamplerCubeMapArray = 0x900f
+        UnsignedIntSamplerCubeMapArray = 0x900F
     }
 }

@@ -29,7 +29,7 @@
 namespace OpenTK.Graphics.OpenGL4
 {
     /// <summary>
-    /// Used in GL.VertexAttribIFormat and GL.VertexAttribIPointer.
+    /// Used in GL.VertexAttribIPointer and GL.VertexAttribIFormat.
     /// </summary>
     public enum VertexAttribIntegerType
     {

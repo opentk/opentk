@@ -66,46 +66,46 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_COLORBURN_KHR = 0x929A
         /// </summary>
-        ColorburnKhr = 0x929a,
+        ColorburnKhr = 0x929A,
 
         /// <summary>
         /// Original was GL_HARDLIGHT_KHR = 0x929B
         /// </summary>
-        HardlightKhr = 0x929b,
+        HardlightKhr = 0x929B,
 
         /// <summary>
         /// Original was GL_SOFTLIGHT_KHR = 0x929C
         /// </summary>
-        SoftlightKhr = 0x929c,
+        SoftlightKhr = 0x929C,
 
         /// <summary>
         /// Original was GL_DIFFERENCE_KHR = 0x929E
         /// </summary>
-        DifferenceKhr = 0x929e,
+        DifferenceKhr = 0x929E,
 
         /// <summary>
         /// Original was GL_EXCLUSION_KHR = 0x92A0
         /// </summary>
-        ExclusionKhr = 0x92a0,
+        ExclusionKhr = 0x92A0,
 
         /// <summary>
         /// Original was GL_HSL_HUE_KHR = 0x92AD
         /// </summary>
-        HslHueKhr = 0x92ad,
+        HslHueKhr = 0x92AD,
 
         /// <summary>
         /// Original was GL_HSL_SATURATION_KHR = 0x92AE
         /// </summary>
-        HslSaturationKhr = 0x92ae,
+        HslSaturationKhr = 0x92AE,
 
         /// <summary>
         /// Original was GL_HSL_COLOR_KHR = 0x92AF
         /// </summary>
-        HslColorKhr = 0x92af,
+        HslColorKhr = 0x92AF,
 
         /// <summary>
         /// Original was GL_HSL_LUMINOSITY_KHR = 0x92B0
         /// </summary>
-        HslLuminosityKhr = 0x92b0
+        HslLuminosityKhr = 0x92B0
     }
 }

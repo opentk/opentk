@@ -36,11 +36,11 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_INT64_NV = 0x140E
         /// </summary>
-        Int64NV = 0x140e,
+        Int64NV = 0x140E,
 
         /// <summary>
         /// Original was GL_UNSIGNED_INT64_NV = 0x140F
         /// </summary>
-        UnsignedInt64NV = 0x140f
+        UnsignedInt64NV = 0x140F
     }
 }

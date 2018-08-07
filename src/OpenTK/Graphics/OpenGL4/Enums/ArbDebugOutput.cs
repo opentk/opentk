@@ -76,32 +76,32 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_DEBUG_SOURCE_APPLICATION_ARB = 0x824A
         /// </summary>
-        DebugSourceApplicationArb = 0x824a,
+        DebugSourceApplicationArb = 0x824A,
 
         /// <summary>
         /// Original was GL_DEBUG_SOURCE_OTHER_ARB = 0x824B
         /// </summary>
-        DebugSourceOtherArb = 0x824b,
+        DebugSourceOtherArb = 0x824B,
 
         /// <summary>
         /// Original was GL_DEBUG_TYPE_ERROR_ARB = 0x824C
         /// </summary>
-        DebugTypeErrorArb = 0x824c,
+        DebugTypeErrorArb = 0x824C,
 
         /// <summary>
         /// Original was GL_DEBUG_TYPE_DEPRECATED_BEHAVIOR_ARB = 0x824D
         /// </summary>
-        DebugTypeDeprecatedBehaviorArb = 0x824d,
+        DebugTypeDeprecatedBehaviorArb = 0x824D,
 
         /// <summary>
         /// Original was GL_DEBUG_TYPE_UNDEFINED_BEHAVIOR_ARB = 0x824E
         /// </summary>
-        DebugTypeUndefinedBehaviorArb = 0x824e,
+        DebugTypeUndefinedBehaviorArb = 0x824E,
 
         /// <summary>
         /// Original was GL_DEBUG_TYPE_PORTABILITY_ARB = 0x824F
         /// </summary>
-        DebugTypePortabilityArb = 0x824f,
+        DebugTypePortabilityArb = 0x824F,
 
         /// <summary>
         /// Original was GL_DEBUG_TYPE_PERFORMANCE_ARB = 0x8250

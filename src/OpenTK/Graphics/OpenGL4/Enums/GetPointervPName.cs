@@ -36,12 +36,12 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_VERTEX_ARRAY_POINTER_EXT = 0x808E
         /// </summary>
-        VertexArrayPointerExt = 0x808e,
+        VertexArrayPointerExt = 0x808E,
 
         /// <summary>
         /// Original was GL_NORMAL_ARRAY_POINTER_EXT = 0x808F
         /// </summary>
-        NormalArrayPointerExt = 0x808f,
+        NormalArrayPointerExt = 0x808F,
 
         /// <summary>
         /// Original was GL_COLOR_ARRAY_POINTER_EXT = 0x8090
@@ -76,16 +76,6 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_DEBUG_CALLBACK_USER_PARAM = 0x8245
         /// </summary>
-        DebugCallbackUserParam = 0x8245,
-
-        /// <summary>
-        /// Original was GL_FOG_COORD_ARRAY_POINTER = 0x8456
-        /// </summary>
-        FogCoordArrayPointer = 0x8456,
-
-        /// <summary>
-        /// Original was GL_SECONDARY_COLOR_ARRAY_POINTER = 0x845D
-        /// </summary>
-        SecondaryColorArrayPointer = 0x845d
+        DebugCallbackUserParam = 0x8245
     }
 }

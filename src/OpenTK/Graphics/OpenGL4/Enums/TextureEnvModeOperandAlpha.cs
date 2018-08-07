@@ -34,13 +34,13 @@ namespace OpenTK.Graphics.OpenGL4
     public enum TextureEnvModeOperandAlpha
     {
         /// <summary>
-        /// Original was GL_SRC_ALPHA = 0x0302
+        /// Original was GL_SRC_ALPHA = 0x302
         /// </summary>
-        SrcAlpha = 0x0302,
+        SrcAlpha = 0x302,
 
         /// <summary>
-        /// Original was GL_ONE_MINUS_SRC_ALPHA = 0x0303
+        /// Original was GL_ONE_MINUS_SRC_ALPHA = 0x303
         /// </summary>
-        OneMinusSrcAlpha = 0x0303
+        OneMinusSrcAlpha = 0x303
     }
 }

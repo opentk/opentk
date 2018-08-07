@@ -36,7 +36,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_MINMAX_FORMAT = 0x802F
         /// </summary>
-        MinmaxFormat = 0x802f,
+        MinmaxFormat = 0x802F,
 
         /// <summary>
         /// Original was GL_MINMAX_SINK = 0x8030

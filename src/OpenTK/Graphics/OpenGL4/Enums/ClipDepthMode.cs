@@ -36,11 +36,11 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_NEGATIVE_ONE_TO_ONE = 0x935E
         /// </summary>
-        NegativeOneToOne = 0x935e,
+        NegativeOneToOne = 0x935E,
 
         /// <summary>
         /// Original was GL_ZERO_TO_ONE = 0x935F
         /// </summary>
-        ZeroToOne = 0x935f
+        ZeroToOne = 0x935F
     }
 }

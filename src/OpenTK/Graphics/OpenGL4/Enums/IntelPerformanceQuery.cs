@@ -34,99 +34,99 @@ namespace OpenTK.Graphics.OpenGL4
     public enum IntelPerformanceQuery
     {
         /// <summary>
-        /// Original was GL_PERFQUERY_SINGLE_CONTEXT_INTEL = 0x00000000
+        /// Original was GL_PERFQUERY_SINGLE_CONTEXT_INTEL = 0x0
         /// </summary>
-        PerfquerySingleContextIntel = 0x00000000,
+        PerfquerySingleContextIntel = 0x0,
 
         /// <summary>
-        /// Original was GL_PERFQUERY_GLOBAL_CONTEXT_INTEL = 0x00000001
+        /// Original was GL_PERFQUERY_GLOBAL_CONTEXT_INTEL = 0x1
         /// </summary>
-        PerfqueryGlobalContextIntel = 0x00000001,
+        PerfqueryGlobalContextIntel = 0x1,
 
         /// <summary>
         /// Original was GL_PERFQUERY_DONOT_FLUSH_INTEL = 0x83F9
         /// </summary>
-        PerfqueryDonotFlushIntel = 0x83f9,
+        PerfqueryDonotFlushIntel = 0x83F9,
 
         /// <summary>
         /// Original was GL_PERFQUERY_FLUSH_INTEL = 0x83FA
         /// </summary>
-        PerfqueryFlushIntel = 0x83fa,
+        PerfqueryFlushIntel = 0x83FA,
 
         /// <summary>
         /// Original was GL_PERFQUERY_WAIT_INTEL = 0x83FB
         /// </summary>
-        PerfqueryWaitIntel = 0x83fb,
+        PerfqueryWaitIntel = 0x83FB,
 
         /// <summary>
         /// Original was GL_PERFQUERY_COUNTER_EVENT_INTEL = 0x94F0
         /// </summary>
-        PerfqueryCounterEventIntel = 0x94f0,
+        PerfqueryCounterEventIntel = 0x94F0,
 
         /// <summary>
         /// Original was GL_PERFQUERY_COUNTER_DURATION_NORM_INTEL = 0x94F1
         /// </summary>
-        PerfqueryCounterDurationNormIntel = 0x94f1,
+        PerfqueryCounterDurationNormIntel = 0x94F1,
 
         /// <summary>
         /// Original was GL_PERFQUERY_COUNTER_DURATION_RAW_INTEL = 0x94F2
         /// </summary>
-        PerfqueryCounterDurationRawIntel = 0x94f2,
+        PerfqueryCounterDurationRawIntel = 0x94F2,
 
         /// <summary>
         /// Original was GL_PERFQUERY_COUNTER_THROUGHPUT_INTEL = 0x94F3
         /// </summary>
-        PerfqueryCounterThroughputIntel = 0x94f3,
+        PerfqueryCounterThroughputIntel = 0x94F3,
 
         /// <summary>
         /// Original was GL_PERFQUERY_COUNTER_RAW_INTEL = 0x94F4
         /// </summary>
-        PerfqueryCounterRawIntel = 0x94f4,
+        PerfqueryCounterRawIntel = 0x94F4,
 
         /// <summary>
         /// Original was GL_PERFQUERY_COUNTER_TIMESTAMP_INTEL = 0x94F5
         /// </summary>
-        PerfqueryCounterTimestampIntel = 0x94f5,
+        PerfqueryCounterTimestampIntel = 0x94F5,
 
         /// <summary>
         /// Original was GL_PERFQUERY_COUNTER_DATA_UINT32_INTEL = 0x94F8
         /// </summary>
-        PerfqueryCounterDataUint32Intel = 0x94f8,
+        PerfqueryCounterDataUint32Intel = 0x94F8,
 
         /// <summary>
         /// Original was GL_PERFQUERY_COUNTER_DATA_UINT64_INTEL = 0x94F9
         /// </summary>
-        PerfqueryCounterDataUint64Intel = 0x94f9,
+        PerfqueryCounterDataUint64Intel = 0x94F9,
 
         /// <summary>
         /// Original was GL_PERFQUERY_COUNTER_DATA_FLOAT_INTEL = 0x94FA
         /// </summary>
-        PerfqueryCounterDataFloatIntel = 0x94fa,
+        PerfqueryCounterDataFloatIntel = 0x94FA,
 
         /// <summary>
         /// Original was GL_PERFQUERY_COUNTER_DATA_DOUBLE_INTEL = 0x94FB
         /// </summary>
-        PerfqueryCounterDataDoubleIntel = 0x94fb,
+        PerfqueryCounterDataDoubleIntel = 0x94FB,
 
         /// <summary>
         /// Original was GL_PERFQUERY_COUNTER_DATA_BOOL32_INTEL = 0x94FC
         /// </summary>
-        PerfqueryCounterDataBool32Intel = 0x94fc,
+        PerfqueryCounterDataBool32Intel = 0x94FC,
 
         /// <summary>
         /// Original was GL_PERFQUERY_QUERY_NAME_LENGTH_MAX_INTEL = 0x94FD
         /// </summary>
-        PerfqueryQueryNameLengthMaxIntel = 0x94fd,
+        PerfqueryQueryNameLengthMaxIntel = 0x94FD,
 
         /// <summary>
         /// Original was GL_PERFQUERY_COUNTER_NAME_LENGTH_MAX_INTEL = 0x94FE
         /// </summary>
-        PerfqueryCounterNameLengthMaxIntel = 0x94fe,
+        PerfqueryCounterNameLengthMaxIntel = 0x94FE,
 
         /// <summary>
         /// Original was GL_PERFQUERY_COUNTER_DESC_LENGTH_MAX_INTEL = 0x94FF
         /// </summary>
-        PerfqueryCounterDescLengthMaxIntel = 0x94ff,
+        PerfqueryCounterDescLengthMaxIntel = 0x94FF,
 
         /// <summary>
         /// Original was GL_PERFQUERY_GPA_EXTENDED_COUNTERS_INTEL = 0x9500

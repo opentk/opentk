@@ -29,7 +29,7 @@
 namespace OpenTK.Graphics.OpenGL4
 {
     /// <summary>
-    /// Used in GL.Arb.GetnColorTable and GL.Arb.GetnConvolutionFilter, as well as 60 other functions.
+    /// Used in GL.GetColorTable and GL.GetConvolutionFilter, as well as 58 other functions.
     /// </summary>
     public enum PixelType
     {
@@ -69,113 +69,53 @@ namespace OpenTK.Graphics.OpenGL4
         Float = 0x1406,
 
         /// <summary>
-        /// Original was GL_HALF_FLOAT = 0x140B
-        /// </summary>
-        HalfFloat = 0x140b,
-
-        /// <summary>
-        /// Original was GL_UNSIGNED_BYTE_3_3_2 = 0x8032
+        /// Original was GL_UNSIGNED_BYTE332 = 0x8032
         /// </summary>
         UnsignedByte332 = 0x8032,
 
         /// <summary>
-        /// Original was GL_UNSIGNED_BYTE_3_3_2_EXT = 0x8032
+        /// Original was GL_UNSIGNED_BYTE332_EXT = 0x8032
         /// </summary>
         UnsignedByte332Ext = 0x8032,
 
         /// <summary>
-        /// Original was GL_UNSIGNED_SHORT_4_4_4_4 = 0x8033
+        /// Original was GL_UNSIGNED_SHORT4444 = 0x8033
         /// </summary>
         UnsignedShort4444 = 0x8033,
 
         /// <summary>
-        /// Original was GL_UNSIGNED_SHORT_4_4_4_4_EXT = 0x8033
+        /// Original was GL_UNSIGNED_SHORT4444_EXT = 0x8033
         /// </summary>
         UnsignedShort4444Ext = 0x8033,
 
         /// <summary>
-        /// Original was GL_UNSIGNED_SHORT_5_5_5_1 = 0x8034
+        /// Original was GL_UNSIGNED_SHORT5551 = 0x8034
         /// </summary>
         UnsignedShort5551 = 0x8034,
 
         /// <summary>
-        /// Original was GL_UNSIGNED_SHORT_5_5_5_1_EXT = 0x8034
+        /// Original was GL_UNSIGNED_SHORT5551_EXT = 0x8034
         /// </summary>
         UnsignedShort5551Ext = 0x8034,
 
         /// <summary>
-        /// Original was GL_UNSIGNED_INT_8_8_8_8 = 0x8035
+        /// Original was GL_UNSIGNED_INT8888 = 0x8035
         /// </summary>
         UnsignedInt8888 = 0x8035,
 
         /// <summary>
-        /// Original was GL_UNSIGNED_INT_8_8_8_8_EXT = 0x8035
+        /// Original was GL_UNSIGNED_INT8888_EXT = 0x8035
         /// </summary>
         UnsignedInt8888Ext = 0x8035,
 
         /// <summary>
-        /// Original was GL_UNSIGNED_INT_10_10_10_2 = 0x8036
+        /// Original was GL_UNSIGNED_INT1010102 = 0x8036
         /// </summary>
         UnsignedInt1010102 = 0x8036,
 
         /// <summary>
-        /// Original was GL_UNSIGNED_INT_10_10_10_2_EXT = 0x8036
+        /// Original was GL_UNSIGNED_INT1010102_EXT = 0x8036
         /// </summary>
-        UnsignedInt1010102Ext = 0x8036,
-
-        /// <summary>
-        /// Original was GL_UNSIGNED_BYTE_2_3_3_REVERSED = 0x8362
-        /// </summary>
-        UnsignedByte233Reversed = 0x8362,
-
-        /// <summary>
-        /// Original was GL_UNSIGNED_SHORT_5_6_5 = 0x8363
-        /// </summary>
-        UnsignedShort565 = 0x8363,
-
-        /// <summary>
-        /// Original was GL_UNSIGNED_SHORT_5_6_5_REVERSED = 0x8364
-        /// </summary>
-        UnsignedShort565Reversed = 0x8364,
-
-        /// <summary>
-        /// Original was GL_UNSIGNED_SHORT_4_4_4_4_REVERSED = 0x8365
-        /// </summary>
-        UnsignedShort4444Reversed = 0x8365,
-
-        /// <summary>
-        /// Original was GL_UNSIGNED_SHORT_1_5_5_5_REVERSED = 0x8366
-        /// </summary>
-        UnsignedShort1555Reversed = 0x8366,
-
-        /// <summary>
-        /// Original was GL_UNSIGNED_INT_8_8_8_8_REVERSED = 0x8367
-        /// </summary>
-        UnsignedInt8888Reversed = 0x8367,
-
-        /// <summary>
-        /// Original was GL_UNSIGNED_INT_2_10_10_10_REVERSED = 0x8368
-        /// </summary>
-        UnsignedInt2101010Reversed = 0x8368,
-
-        /// <summary>
-        /// Original was GL_UNSIGNED_INT_24_8 = 0x84FA
-        /// </summary>
-        UnsignedInt248 = 0x84fa,
-
-        /// <summary>
-        /// Original was GL_UNSIGNED_INT_10F_11F_11F_REV = 0x8C3B
-        /// </summary>
-        UnsignedInt10f11f11fRev = 0x8c3b,
-
-        /// <summary>
-        /// Original was GL_UNSIGNED_INT_5_9_9_9_REV = 0x8C3E
-        /// </summary>
-        UnsignedInt5999Rev = 0x8c3e,
-
-        /// <summary>
-        /// Original was GL_FLOAT_32_UNSIGNED_INT_24_8_REV = 0x8DAD
-        /// </summary>
-        Float32UnsignedInt248Rev = 0x8dad
+        UnsignedInt1010102Ext = 0x8036
     }
 }

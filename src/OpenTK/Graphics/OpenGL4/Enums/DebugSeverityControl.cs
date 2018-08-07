@@ -41,7 +41,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_DEBUG_SEVERITY_NOTIFICATION = 0x826B
         /// </summary>
-        DebugSeverityNotification = 0x826b,
+        DebugSeverityNotification = 0x826B,
 
         /// <summary>
         /// Original was GL_DEBUG_SEVERITY_HIGH = 0x9146

@@ -36,26 +36,26 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_TEXTURE_BUFFER_ARB = 0x8C2A
         /// </summary>
-        TextureBufferArb = 0x8c2a,
+        TextureBufferArb = 0x8C2A,
 
         /// <summary>
         /// Original was GL_MAX_TEXTURE_BUFFER_SIZE_ARB = 0x8C2B
         /// </summary>
-        MaxTextureBufferSizeArb = 0x8c2b,
+        MaxTextureBufferSizeArb = 0x8C2B,
 
         /// <summary>
         /// Original was GL_TEXTURE_BINDING_BUFFER_ARB = 0x8C2C
         /// </summary>
-        TextureBindingBufferArb = 0x8c2c,
+        TextureBindingBufferArb = 0x8C2C,
 
         /// <summary>
         /// Original was GL_TEXTURE_BUFFER_DATA_STORE_BINDING_ARB = 0x8C2D
         /// </summary>
-        TextureBufferDataStoreBindingArb = 0x8c2d,
+        TextureBufferDataStoreBindingArb = 0x8C2D,
 
         /// <summary>
         /// Original was GL_TEXTURE_BUFFER_FORMAT_ARB = 0x8C2E
         /// </summary>
-        TextureBufferFormatArb = 0x8c2e
+        TextureBufferFormatArb = 0x8C2E
     }
 }

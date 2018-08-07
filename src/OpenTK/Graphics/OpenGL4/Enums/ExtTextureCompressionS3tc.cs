@@ -34,23 +34,23 @@ namespace OpenTK.Graphics.OpenGL4
     public enum ExtTextureCompressionS3tc
     {
         /// <summary>
-        /// Original was GL_COMPRESSED_RGB_S3TC_DXT1_EXT = 0x83F0
+        /// Original was GL_COMPRESSED_RGB_S3_TC_DXT1_EXT = 0x83F0
         /// </summary>
-        CompressedRgbS3TCDxt1Ext = 0x83f0,
+        CompressedRgbS3TCDxt1Ext = 0x83F0,
 
         /// <summary>
-        /// Original was GL_COMPRESSED_RGBA_S3TC_DXT1_EXT = 0x83F1
+        /// Original was GL_COMPRESSED_RGBA_S3_TC_DXT1_EXT = 0x83F1
         /// </summary>
-        CompressedRgbaS3TCDxt1Ext = 0x83f1,
+        CompressedRgbaS3TCDxt1Ext = 0x83F1,
 
         /// <summary>
-        /// Original was GL_COMPRESSED_RGBA_S3TC_DXT3_EXT = 0x83F2
+        /// Original was GL_COMPRESSED_RGBA_S3_TC_DXT3_EXT = 0x83F2
         /// </summary>
-        CompressedRgbaS3TCDxt3Ext = 0x83f2,
+        CompressedRgbaS3TCDxt3Ext = 0x83F2,
 
         /// <summary>
-        /// Original was GL_COMPRESSED_RGBA_S3TC_DXT5_EXT = 0x83F3
+        /// Original was GL_COMPRESSED_RGBA_S3_TC_DXT5_EXT = 0x83F3
         /// </summary>
-        CompressedRgbaS3TCDxt5Ext = 0x83f3
+        CompressedRgbaS3TCDxt5Ext = 0x83F3
     }
 }

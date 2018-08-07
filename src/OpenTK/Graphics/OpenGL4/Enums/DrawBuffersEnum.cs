@@ -34,128 +34,108 @@ namespace OpenTK.Graphics.OpenGL4
     public enum DrawBuffersEnum
     {
         /// <summary>
-        /// Original was GL_NONE = 0
+        /// Original was GL_NONE = 0x0
         /// </summary>
-        None = 0,
+        None = 0x0,
 
         /// <summary>
-        /// Original was GL_FRONT_LEFT = 0x0400
+        /// Original was GL_FRONT_LEFT = 0x400
         /// </summary>
-        FrontLeft = 0x0400,
+        FrontLeft = 0x400,
 
         /// <summary>
-        /// Original was GL_FRONT_RIGHT = 0x0401
+        /// Original was GL_FRONT_RIGHT = 0x401
         /// </summary>
-        FrontRight = 0x0401,
+        FrontRight = 0x401,
 
         /// <summary>
-        /// Original was GL_BACK_LEFT = 0x0402
+        /// Original was GL_BACK_LEFT = 0x402
         /// </summary>
-        BackLeft = 0x0402,
+        BackLeft = 0x402,
 
         /// <summary>
-        /// Original was GL_BACK_RIGHT = 0x0403
+        /// Original was GL_BACK_RIGHT = 0x403
         /// </summary>
-        BackRight = 0x0403,
-
-        /// <summary>
-        /// Original was GL_AUX0 = 0x0409
-        /// </summary>
-        Aux0 = 0x0409,
-
-        /// <summary>
-        /// Original was GL_AUX1 = 0x040A
-        /// </summary>
-        Aux1 = 0x040a,
-
-        /// <summary>
-        /// Original was GL_AUX2 = 0x040B
-        /// </summary>
-        Aux2 = 0x040b,
-
-        /// <summary>
-        /// Original was GL_AUX3 = 0x040C
-        /// </summary>
-        Aux3 = 0x040c,
+        BackRight = 0x403,
 
         /// <summary>
         /// Original was GL_COLOR_ATTACHMENT0 = 0x8CE0
         /// </summary>
-        ColorAttachment0 = 0x8ce0,
+        ColorAttachment0 = 0x8CE0,
 
         /// <summary>
         /// Original was GL_COLOR_ATTACHMENT1 = 0x8CE1
         /// </summary>
-        ColorAttachment1 = 0x8ce1,
+        ColorAttachment1 = 0x8CE1,
 
         /// <summary>
         /// Original was GL_COLOR_ATTACHMENT2 = 0x8CE2
         /// </summary>
-        ColorAttachment2 = 0x8ce2,
+        ColorAttachment2 = 0x8CE2,
 
         /// <summary>
         /// Original was GL_COLOR_ATTACHMENT3 = 0x8CE3
         /// </summary>
-        ColorAttachment3 = 0x8ce3,
+        ColorAttachment3 = 0x8CE3,
 
         /// <summary>
         /// Original was GL_COLOR_ATTACHMENT4 = 0x8CE4
         /// </summary>
-        ColorAttachment4 = 0x8ce4,
+        ColorAttachment4 = 0x8CE4,
 
         /// <summary>
         /// Original was GL_COLOR_ATTACHMENT5 = 0x8CE5
         /// </summary>
-        ColorAttachment5 = 0x8ce5,
+        ColorAttachment5 = 0x8CE5,
 
         /// <summary>
         /// Original was GL_COLOR_ATTACHMENT6 = 0x8CE6
         /// </summary>
-        ColorAttachment6 = 0x8ce6,
+        ColorAttachment6 = 0x8CE6,
 
         /// <summary>
         /// Original was GL_COLOR_ATTACHMENT7 = 0x8CE7
         /// </summary>
-        ColorAttachment7 = 0x8ce7,
+        ColorAttachment7 = 0x8CE7,
 
         /// <summary>
         /// Original was GL_COLOR_ATTACHMENT8 = 0x8CE8
         /// </summary>
-        ColorAttachment8 = 0x8ce8,
+        ColorAttachment8 = 0x8CE8,
 
         /// <summary>
         /// Original was GL_COLOR_ATTACHMENT9 = 0x8CE9
         /// </summary>
-        ColorAttachment9 = 0x8ce9,
+        ColorAttachment9 = 0x8CE9,
 
         /// <summary>
         /// Original was GL_COLOR_ATTACHMENT10 = 0x8CEA
         /// </summary>
-        ColorAttachment10 = 0x8cea,
+        ColorAttachment10 = 0x8CEA,
 
         /// <summary>
         /// Original was GL_COLOR_ATTACHMENT11 = 0x8CEB
         /// </summary>
-        ColorAttachment11 = 0x8ceb,
+        ColorAttachment11 = 0x8CEB,
 
         /// <summary>
         /// Original was GL_COLOR_ATTACHMENT12 = 0x8CEC
         /// </summary>
-        ColorAttachment12 = 0x8cec,
+        ColorAttachment12 = 0x8CEC,
 
         /// <summary>
         /// Original was GL_COLOR_ATTACHMENT13 = 0x8CED
         /// </summary>
-        ColorAttachment13 = 0x8ced,
+        ColorAttachment13 = 0x8CED,
 
         /// <summary>
         /// Original was GL_COLOR_ATTACHMENT14 = 0x8CEE
         /// </summary>
-        ColorAttachment14 = 0x8cee,
+        ColorAttachment14 = 0x8CEE,
 
         /// <summary>
         /// Original was GL_COLOR_ATTACHMENT15 = 0x8CEF
         /// </summary>
-        ColorAttachment15 = 0x8cef
+        ColorAttachment15 = 0x8CEF
     }
 }

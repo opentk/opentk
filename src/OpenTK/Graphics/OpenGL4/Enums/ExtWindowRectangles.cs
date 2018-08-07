@@ -29,38 +29,38 @@
 namespace OpenTK.Graphics.OpenGL4
 {
     /// <summary>
-    /// Used in GL.Ext.WindowRectangles.
+    /// Used in GL.EXT.WindowRectangles.
     /// </summary>
     public enum ExtWindowRectangles
     {
         /// <summary>
         /// Original was GL_INCLUSIVE_EXT = 0x8F10
         /// </summary>
-        InclusiveExt = 0x8f10,
+        InclusiveExt = 0x8F10,
 
         /// <summary>
         /// Original was GL_EXCLUSIVE_EXT = 0x8F11
         /// </summary>
-        ExclusiveExt = 0x8f11,
+        ExclusiveExt = 0x8F11,
 
         /// <summary>
         /// Original was GL_WINDOW_RECTANGLE_EXT = 0x8F12
         /// </summary>
-        WindowRectangleExt = 0x8f12,
+        WindowRectangleExt = 0x8F12,
 
         /// <summary>
         /// Original was GL_WINDOW_RECTANGLE_MODE_EXT = 0x8F13
         /// </summary>
-        WindowRectangleModeExt = 0x8f13,
+        WindowRectangleModeExt = 0x8F13,
 
         /// <summary>
         /// Original was GL_MAX_WINDOW_RECTANGLES_EXT = 0x8F14
         /// </summary>
-        MaxWindowRectanglesExt = 0x8f14,
+        MaxWindowRectanglesExt = 0x8F14,
 
         /// <summary>
         /// Original was GL_NUM_WINDOW_RECTANGLES_EXT = 0x8F15
         /// </summary>
-        NumWindowRectanglesExt = 0x8f15
+        NumWindowRectanglesExt = 0x8F15
     }
 }

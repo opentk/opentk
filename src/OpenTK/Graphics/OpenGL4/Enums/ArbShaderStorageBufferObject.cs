@@ -34,88 +34,88 @@ namespace OpenTK.Graphics.OpenGL4
     public enum ArbShaderStorageBufferObject
     {
         /// <summary>
-        /// Original was GL_SHADER_STORAGE_BARRIER_BIT = 0x00002000
+        /// Original was GL_SHADER_STORAGE_BARRIER_BIT = 0x2000
         /// </summary>
-        ShaderStorageBarrierBit = 0x00002000,
+        ShaderStorageBarrierBit = 0x2000,
 
         /// <summary>
         /// Original was GL_MAX_COMBINED_IMAGE_UNITS_AND_FRAGMENT_OUTPUTS = 0x8F39
         /// </summary>
-        MaxCombinedImageUnitsAndFragmentOutputs = 0x8f39,
+        MaxCombinedImageUnitsAndFragmentOutputs = 0x8F39,
 
         /// <summary>
         /// Original was GL_MAX_COMBINED_SHADER_OUTPUT_RESOURCES = 0x8F39
         /// </summary>
-        MaxCombinedShaderOutputResources = 0x8f39,
+        MaxCombinedShaderOutputResources = 0x8F39,
 
         /// <summary>
         /// Original was GL_SHADER_STORAGE_BUFFER = 0x90D2
         /// </summary>
-        ShaderStorageBuffer = 0x90d2,
+        ShaderStorageBuffer = 0x90D2,
 
         /// <summary>
         /// Original was GL_SHADER_STORAGE_BUFFER_BINDING = 0x90D3
         /// </summary>
-        ShaderStorageBufferBinding = 0x90d3,
+        ShaderStorageBufferBinding = 0x90D3,
 
         /// <summary>
         /// Original was GL_SHADER_STORAGE_BUFFER_START = 0x90D4
         /// </summary>
-        ShaderStorageBufferStart = 0x90d4,
+        ShaderStorageBufferStart = 0x90D4,
 
         /// <summary>
         /// Original was GL_SHADER_STORAGE_BUFFER_SIZE = 0x90D5
         /// </summary>
-        ShaderStorageBufferSize = 0x90d5,
+        ShaderStorageBufferSize = 0x90D5,
 
         /// <summary>
         /// Original was GL_MAX_VERTEX_SHADER_STORAGE_BLOCKS = 0x90D6
         /// </summary>
-        MaxVertexShaderStorageBlocks = 0x90d6,
+        MaxVertexShaderStorageBlocks = 0x90D6,
 
         /// <summary>
         /// Original was GL_MAX_GEOMETRY_SHADER_STORAGE_BLOCKS = 0x90D7
         /// </summary>
-        MaxGeometryShaderStorageBlocks = 0x90d7,
+        MaxGeometryShaderStorageBlocks = 0x90D7,
 
         /// <summary>
         /// Original was GL_MAX_TESS_CONTROL_SHADER_STORAGE_BLOCKS = 0x90D8
         /// </summary>
-        MaxTessControlShaderStorageBlocks = 0x90d8,
+        MaxTessControlShaderStorageBlocks = 0x90D8,
 
         /// <summary>
         /// Original was GL_MAX_TESS_EVALUATION_SHADER_STORAGE_BLOCKS = 0x90D9
         /// </summary>
-        MaxTessEvaluationShaderStorageBlocks = 0x90d9,
+        MaxTessEvaluationShaderStorageBlocks = 0x90D9,
 
         /// <summary>
         /// Original was GL_MAX_FRAGMENT_SHADER_STORAGE_BLOCKS = 0x90DA
         /// </summary>
-        MaxFragmentShaderStorageBlocks = 0x90da,
+        MaxFragmentShaderStorageBlocks = 0x90DA,
 
         /// <summary>
         /// Original was GL_MAX_COMPUTE_SHADER_STORAGE_BLOCKS = 0x90DB
         /// </summary>
-        MaxComputeShaderStorageBlocks = 0x90db,
+        MaxComputeShaderStorageBlocks = 0x90DB,
 
         /// <summary>
         /// Original was GL_MAX_COMBINED_SHADER_STORAGE_BLOCKS = 0x90DC
         /// </summary>
-        MaxCombinedShaderStorageBlocks = 0x90dc,
+        MaxCombinedShaderStorageBlocks = 0x90DC,
 
         /// <summary>
         /// Original was GL_MAX_SHADER_STORAGE_BUFFER_BINDINGS = 0x90DD
         /// </summary>
-        MaxShaderStorageBufferBindings = 0x90dd,
+        MaxShaderStorageBufferBindings = 0x90DD,
 
         /// <summary>
         /// Original was GL_MAX_SHADER_STORAGE_BLOCK_SIZE = 0x90DE
         /// </summary>
-        MaxShaderStorageBlockSize = 0x90de,
+        MaxShaderStorageBlockSize = 0x90DE,
 
         /// <summary>
         /// Original was GL_SHADER_STORAGE_BUFFER_OFFSET_ALIGNMENT = 0x90DF
         /// </summary>
-        ShaderStorageBufferOffsetAlignment = 0x90df
+        ShaderStorageBufferOffsetAlignment = 0x90DF
     }
 }

@@ -36,6 +36,6 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_FILL_RECTANGLE_NV = 0x933C
         /// </summary>
-        FillRectangleNV = 0x933c
+        FillRectangleNV = 0x933C
     }
 }

@@ -29,18 +29,18 @@
 namespace OpenTK.Graphics.OpenGL4
 {
     /// <summary>
-    /// Used in GL.Arb.GetnMinmax and GL.GetMinmax, as well as 4 other functions.
+    /// Not used directly.
     /// </summary>
     public enum MinmaxTargetExt
     {
         /// <summary>
         /// Original was GL_MINMAX = 0x802E
         /// </summary>
-        Minmax = 0x802e,
+        Minmax = 0x802E,
 
         /// <summary>
         /// Original was GL_MINMAX_EXT = 0x802E
         /// </summary>
-        MinmaxExt = 0x802e
+        MinmaxExt = 0x802E
     }
 }

@@ -34,119 +34,119 @@ namespace OpenTK.Graphics.OpenGL4
     public enum ArbShaderImageLoadStore
     {
         /// <summary>
-        /// Original was GL_VERTEX_ATTRIB_ARRAY_BARRIER_BIT = 0x00000001
+        /// Original was GL_VERTEX_ATTRIB_ARRAY_BARRIER_BIT = 0x1
         /// </summary>
-        VertexAttribArrayBarrierBit = 0x00000001,
+        VertexAttribArrayBarrierBit = 0x1,
 
         /// <summary>
-        /// Original was GL_ELEMENT_ARRAY_BARRIER_BIT = 0x00000002
+        /// Original was GL_ELEMENT_ARRAY_BARRIER_BIT = 0x2
         /// </summary>
-        ElementArrayBarrierBit = 0x00000002,
+        ElementArrayBarrierBit = 0x2,
 
         /// <summary>
-        /// Original was GL_UNIFORM_BARRIER_BIT = 0x00000004
+        /// Original was GL_UNIFORM_BARRIER_BIT = 0x4
         /// </summary>
-        UniformBarrierBit = 0x00000004,
+        UniformBarrierBit = 0x4,
 
         /// <summary>
-        /// Original was GL_TEXTURE_FETCH_BARRIER_BIT = 0x00000008
+        /// Original was GL_TEXTURE_FETCH_BARRIER_BIT = 0x8
         /// </summary>
-        TextureFetchBarrierBit = 0x00000008,
+        TextureFetchBarrierBit = 0x8,
 
         /// <summary>
-        /// Original was GL_SHADER_IMAGE_ACCESS_BARRIER_BIT = 0x00000020
+        /// Original was GL_SHADER_IMAGE_ACCESS_BARRIER_BIT = 0x20
         /// </summary>
-        ShaderImageAccessBarrierBit = 0x00000020,
+        ShaderImageAccessBarrierBit = 0x20,
 
         /// <summary>
-        /// Original was GL_COMMAND_BARRIER_BIT = 0x00000040
+        /// Original was GL_COMMAND_BARRIER_BIT = 0x40
         /// </summary>
-        CommandBarrierBit = 0x00000040,
+        CommandBarrierBit = 0x40,
 
         /// <summary>
-        /// Original was GL_PIXEL_BUFFER_BARRIER_BIT = 0x00000080
+        /// Original was GL_PIXEL_BUFFER_BARRIER_BIT = 0x80
         /// </summary>
-        PixelBufferBarrierBit = 0x00000080,
+        PixelBufferBarrierBit = 0x80,
 
         /// <summary>
-        /// Original was GL_TEXTURE_UPDATE_BARRIER_BIT = 0x00000100
+        /// Original was GL_TEXTURE_UPDATE_BARRIER_BIT = 0x100
         /// </summary>
-        TextureUpdateBarrierBit = 0x00000100,
+        TextureUpdateBarrierBit = 0x100,
 
         /// <summary>
-        /// Original was GL_BUFFER_UPDATE_BARRIER_BIT = 0x00000200
+        /// Original was GL_BUFFER_UPDATE_BARRIER_BIT = 0x200
         /// </summary>
-        BufferUpdateBarrierBit = 0x00000200,
+        BufferUpdateBarrierBit = 0x200,
 
         /// <summary>
-        /// Original was GL_FRAMEBUFFER_BARRIER_BIT = 0x00000400
+        /// Original was GL_FRAMEBUFFER_BARRIER_BIT = 0x400
         /// </summary>
-        FramebufferBarrierBit = 0x00000400,
+        FramebufferBarrierBit = 0x400,
 
         /// <summary>
-        /// Original was GL_TRANSFORM_FEEDBACK_BARRIER_BIT = 0x00000800
+        /// Original was GL_TRANSFORM_FEEDBACK_BARRIER_BIT = 0x800
         /// </summary>
-        TransformFeedbackBarrierBit = 0x00000800,
+        TransformFeedbackBarrierBit = 0x800,
 
         /// <summary>
-        /// Original was GL_ATOMIC_COUNTER_BARRIER_BIT = 0x00001000
+        /// Original was GL_ATOMIC_COUNTER_BARRIER_BIT = 0x1000
         /// </summary>
-        AtomicCounterBarrierBit = 0x00001000,
+        AtomicCounterBarrierBit = 0x1000,
 
         /// <summary>
         /// Original was GL_MAX_IMAGE_UNITS = 0x8F38
         /// </summary>
-        MaxImageUnits = 0x8f38,
+        MaxImageUnits = 0x8F38,
 
         /// <summary>
         /// Original was GL_MAX_COMBINED_IMAGE_UNITS_AND_FRAGMENT_OUTPUTS = 0x8F39
         /// </summary>
-        MaxCombinedImageUnitsAndFragmentOutputs = 0x8f39,
+        MaxCombinedImageUnitsAndFragmentOutputs = 0x8F39,
 
         /// <summary>
         /// Original was GL_IMAGE_BINDING_NAME = 0x8F3A
         /// </summary>
-        ImageBindingName = 0x8f3a,
+        ImageBindingName = 0x8F3A,
 
         /// <summary>
         /// Original was GL_IMAGE_BINDING_LEVEL = 0x8F3B
         /// </summary>
-        ImageBindingLevel = 0x8f3b,
+        ImageBindingLevel = 0x8F3B,
 
         /// <summary>
         /// Original was GL_IMAGE_BINDING_LAYERED = 0x8F3C
         /// </summary>
-        ImageBindingLayered = 0x8f3c,
+        ImageBindingLayered = 0x8F3C,
 
         /// <summary>
         /// Original was GL_IMAGE_BINDING_LAYER = 0x8F3D
         /// </summary>
-        ImageBindingLayer = 0x8f3d,
+        ImageBindingLayer = 0x8F3D,
 
         /// <summary>
         /// Original was GL_IMAGE_BINDING_ACCESS = 0x8F3E
         /// </summary>
-        ImageBindingAccess = 0x8f3e,
+        ImageBindingAccess = 0x8F3E,
 
         /// <summary>
-        /// Original was GL_IMAGE_1D = 0x904C
+        /// Original was GL_IMAGE1_D = 0x904C
         /// </summary>
-        Image1D = 0x904c,
+        Image1D = 0x904C,
 
         /// <summary>
-        /// Original was GL_IMAGE_2D = 0x904D
+        /// Original was GL_IMAGE2_D = 0x904D
         /// </summary>
-        Image2D = 0x904d,
+        Image2D = 0x904D,
 
         /// <summary>
-        /// Original was GL_IMAGE_3D = 0x904E
+        /// Original was GL_IMAGE3_D = 0x904E
         /// </summary>
-        Image3D = 0x904e,
+        Image3D = 0x904E,
 
         /// <summary>
-        /// Original was GL_IMAGE_2D_RECT = 0x904F
+        /// Original was GL_IMAGE2_D_RECT = 0x904F
         /// </summary>
-        Image2DRect = 0x904f,
+        Image2DRect = 0x904F,
 
         /// <summary>
         /// Original was GL_IMAGE_CUBE = 0x9050
@@ -159,12 +159,12 @@ namespace OpenTK.Graphics.OpenGL4
         ImageBuffer = 0x9051,
 
         /// <summary>
-        /// Original was GL_IMAGE_1D_ARRAY = 0x9052
+        /// Original was GL_IMAGE1_D_ARRAY = 0x9052
         /// </summary>
         Image1DArray = 0x9052,
 
         /// <summary>
-        /// Original was GL_IMAGE_2D_ARRAY = 0x9053
+        /// Original was GL_IMAGE2_D_ARRAY = 0x9053
         /// </summary>
         Image2DArray = 0x9053,
 
@@ -174,87 +174,87 @@ namespace OpenTK.Graphics.OpenGL4
         ImageCubeMapArray = 0x9054,
 
         /// <summary>
-        /// Original was GL_IMAGE_2D_MULTISAMPLE = 0x9055
+        /// Original was GL_IMAGE2_D_MULTISAMPLE = 0x9055
         /// </summary>
         Image2DMultisample = 0x9055,
 
         /// <summary>
-        /// Original was GL_IMAGE_2D_MULTISAMPLE_ARRAY = 0x9056
+        /// Original was GL_IMAGE2_D_MULTISAMPLE_ARRAY = 0x9056
         /// </summary>
         Image2DMultisampleArray = 0x9056,
 
         /// <summary>
-        /// Original was GL_INT_IMAGE_1D = 0x9057
+        /// Original was GL_INT_IMAGE1_D = 0x9057
         /// </summary>
         IntImage1D = 0x9057,
 
         /// <summary>
-        /// Original was GL_INT_IMAGE_2D = 0x9058
+        /// Original was GL_INT_IMAGE2_D = 0x9058
         /// </summary>
         IntImage2D = 0x9058,
 
         /// <summary>
-        /// Original was GL_INT_IMAGE_3D = 0x9059
+        /// Original was GL_INT_IMAGE3_D = 0x9059
         /// </summary>
         IntImage3D = 0x9059,
 
         /// <summary>
-        /// Original was GL_INT_IMAGE_2D_RECT = 0x905A
+        /// Original was GL_INT_IMAGE2_D_RECT = 0x905A
         /// </summary>
-        IntImage2DRect = 0x905a,
+        IntImage2DRect = 0x905A,
 
         /// <summary>
         /// Original was GL_INT_IMAGE_CUBE = 0x905B
         /// </summary>
-        IntImageCube = 0x905b,
+        IntImageCube = 0x905B,
 
         /// <summary>
         /// Original was GL_INT_IMAGE_BUFFER = 0x905C
         /// </summary>
-        IntImageBuffer = 0x905c,
+        IntImageBuffer = 0x905C,
 
         /// <summary>
-        /// Original was GL_INT_IMAGE_1D_ARRAY = 0x905D
+        /// Original was GL_INT_IMAGE1_D_ARRAY = 0x905D
         /// </summary>
-        IntImage1DArray = 0x905d,
+        IntImage1DArray = 0x905D,
 
         /// <summary>
-        /// Original was GL_INT_IMAGE_2D_ARRAY = 0x905E
+        /// Original was GL_INT_IMAGE2_D_ARRAY = 0x905E
         /// </summary>
-        IntImage2DArray = 0x905e,
+        IntImage2DArray = 0x905E,
 
         /// <summary>
         /// Original was GL_INT_IMAGE_CUBE_MAP_ARRAY = 0x905F
         /// </summary>
-        IntImageCubeMapArray = 0x905f,
+        IntImageCubeMapArray = 0x905F,
 
         /// <summary>
-        /// Original was GL_INT_IMAGE_2D_MULTISAMPLE = 0x9060
+        /// Original was GL_INT_IMAGE2_D_MULTISAMPLE = 0x9060
         /// </summary>
         IntImage2DMultisample = 0x9060,
 
         /// <summary>
-        /// Original was GL_INT_IMAGE_2D_MULTISAMPLE_ARRAY = 0x9061
+        /// Original was GL_INT_IMAGE2_D_MULTISAMPLE_ARRAY = 0x9061
         /// </summary>
         IntImage2DMultisampleArray = 0x9061,
 
         /// <summary>
-        /// Original was GL_UNSIGNED_INT_IMAGE_1D = 0x9062
+        /// Original was GL_UNSIGNED_INT_IMAGE1_D = 0x9062
         /// </summary>
         UnsignedIntImage1D = 0x9062,
 
         /// <summary>
-        /// Original was GL_UNSIGNED_INT_IMAGE_2D = 0x9063
+        /// Original was GL_UNSIGNED_INT_IMAGE2_D = 0x9063
         /// </summary>
         UnsignedIntImage2D = 0x9063,
 
         /// <summary>
-        /// Original was GL_UNSIGNED_INT_IMAGE_3D = 0x9064
+        /// Original was GL_UNSIGNED_INT_IMAGE3_D = 0x9064
         /// </summary>
         UnsignedIntImage3D = 0x9064,
 
         /// <summary>
-        /// Original was GL_UNSIGNED_INT_IMAGE_2D_RECT = 0x9065
+        /// Original was GL_UNSIGNED_INT_IMAGE2_D_RECT = 0x9065
         /// </summary>
         UnsignedIntImage2DRect = 0x9065,
 
@@ -269,88 +269,88 @@ namespace OpenTK.Graphics.OpenGL4
         UnsignedIntImageBuffer = 0x9067,
 
         /// <summary>
-        /// Original was GL_UNSIGNED_INT_IMAGE_1D_ARRAY = 0x9068
+        /// Original was GL_UNSIGNED_INT_IMAGE1_D_ARRAY = 0x9068
         /// </summary>
         UnsignedIntImage1DArray = 0x9068,
 
         /// <summary>
-        /// Original was GL_UNSIGNED_INT_IMAGE_2D_ARRAY = 0x9069
+        /// Original was GL_UNSIGNED_INT_IMAGE2_D_ARRAY = 0x9069
         /// </summary>
         UnsignedIntImage2DArray = 0x9069,
 
         /// <summary>
         /// Original was GL_UNSIGNED_INT_IMAGE_CUBE_MAP_ARRAY = 0x906A
         /// </summary>
-        UnsignedIntImageCubeMapArray = 0x906a,
+        UnsignedIntImageCubeMapArray = 0x906A,
 
         /// <summary>
-        /// Original was GL_UNSIGNED_INT_IMAGE_2D_MULTISAMPLE = 0x906B
+        /// Original was GL_UNSIGNED_INT_IMAGE2_D_MULTISAMPLE = 0x906B
         /// </summary>
-        UnsignedIntImage2DMultisample = 0x906b,
+        UnsignedIntImage2DMultisample = 0x906B,
 
         /// <summary>
-        /// Original was GL_UNSIGNED_INT_IMAGE_2D_MULTISAMPLE_ARRAY = 0x906C
+        /// Original was GL_UNSIGNED_INT_IMAGE2_D_MULTISAMPLE_ARRAY = 0x906C
         /// </summary>
-        UnsignedIntImage2DMultisampleArray = 0x906c,
+        UnsignedIntImage2DMultisampleArray = 0x906C,
 
         /// <summary>
         /// Original was GL_MAX_IMAGE_SAMPLES = 0x906D
         /// </summary>
-        MaxImageSamples = 0x906d,
+        MaxImageSamples = 0x906D,
 
         /// <summary>
         /// Original was GL_IMAGE_BINDING_FORMAT = 0x906E
         /// </summary>
-        ImageBindingFormat = 0x906e,
+        ImageBindingFormat = 0x906E,
 
         /// <summary>
         /// Original was GL_IMAGE_FORMAT_COMPATIBILITY_TYPE = 0x90C7
         /// </summary>
-        ImageFormatCompatibilityType = 0x90c7,
+        ImageFormatCompatibilityType = 0x90C7,
 
         /// <summary>
         /// Original was GL_IMAGE_FORMAT_COMPATIBILITY_BY_SIZE = 0x90C8
         /// </summary>
-        ImageFormatCompatibilityBySize = 0x90c8,
+        ImageFormatCompatibilityBySize = 0x90C8,
 
         /// <summary>
         /// Original was GL_IMAGE_FORMAT_COMPATIBILITY_BY_CLASS = 0x90C9
         /// </summary>
-        ImageFormatCompatibilityByClass = 0x90c9,
+        ImageFormatCompatibilityByClass = 0x90C9,
 
         /// <summary>
         /// Original was GL_MAX_VERTEX_IMAGE_UNIFORMS = 0x90CA
         /// </summary>
-        MaxVertexImageUniforms = 0x90ca,
+        MaxVertexImageUniforms = 0x90CA,
 
         /// <summary>
         /// Original was GL_MAX_TESS_CONTROL_IMAGE_UNIFORMS = 0x90CB
         /// </summary>
-        MaxTessControlImageUniforms = 0x90cb,
+        MaxTessControlImageUniforms = 0x90CB,
 
         /// <summary>
         /// Original was GL_MAX_TESS_EVALUATION_IMAGE_UNIFORMS = 0x90CC
         /// </summary>
-        MaxTessEvaluationImageUniforms = 0x90cc,
+        MaxTessEvaluationImageUniforms = 0x90CC,
 
         /// <summary>
         /// Original was GL_MAX_GEOMETRY_IMAGE_UNIFORMS = 0x90CD
         /// </summary>
-        MaxGeometryImageUniforms = 0x90cd,
+        MaxGeometryImageUniforms = 0x90CD,
 
         /// <summary>
         /// Original was GL_MAX_FRAGMENT_IMAGE_UNIFORMS = 0x90CE
         /// </summary>
-        MaxFragmentImageUniforms = 0x90ce,
+        MaxFragmentImageUniforms = 0x90CE,
 
         /// <summary>
         /// Original was GL_MAX_COMBINED_IMAGE_UNIFORMS = 0x90CF
         /// </summary>
-        MaxCombinedImageUniforms = 0x90cf,
+        MaxCombinedImageUniforms = 0x90CF,
 
         /// <summary>
         /// Original was GL_ALL_BARRIER_BITS = 0xFFFFFFFF
         /// </summary>
-        AllBarrierBits = unchecked((int)0xffffffff)
+        AllBarrierBits = unchecked((int)0xFFFFFFFF)
     }
 }

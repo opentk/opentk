@@ -51,32 +51,32 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_R16 = 0x822A
         /// </summary>
-        R16 = 0x822a,
+        R16 = 0x822A,
 
         /// <summary>
         /// Original was GL_RG8 = 0x822B
         /// </summary>
-        RG8 = 0x822b,
+        RG8 = 0x822B,
 
         /// <summary>
         /// Original was GL_RG16 = 0x822C
         /// </summary>
-        RG16 = 0x822c,
+        RG16 = 0x822C,
 
         /// <summary>
         /// Original was GL_R16F = 0x822D
         /// </summary>
-        R16f = 0x822d,
+        R16f = 0x822D,
 
         /// <summary>
         /// Original was GL_R32F = 0x822E
         /// </summary>
-        R32f = 0x822e,
+        R32f = 0x822E,
 
         /// <summary>
         /// Original was GL_RG16F = 0x822F
         /// </summary>
-        RG16f = 0x822f,
+        RG16f = 0x822F,
 
         /// <summary>
         /// Original was GL_RG32F = 0x8230
@@ -131,16 +131,16 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_RG16UI = 0x823A
         /// </summary>
-        RG16ui = 0x823a,
+        RG16ui = 0x823A,
 
         /// <summary>
         /// Original was GL_RG32I = 0x823B
         /// </summary>
-        RG32i = 0x823b,
+        RG32i = 0x823B,
 
         /// <summary>
         /// Original was GL_RG32UI = 0x823C
         /// </summary>
-        RG32ui = 0x823c
+        RG32ui = 0x823C
     }
 }

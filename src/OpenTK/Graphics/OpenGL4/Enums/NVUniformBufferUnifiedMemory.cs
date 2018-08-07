@@ -36,12 +36,12 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_UNIFORM_BUFFER_UNIFIED_NV = 0x936E
         /// </summary>
-        UniformBufferUnifiedNV = 0x936e,
+        UniformBufferUnifiedNV = 0x936E,
 
         /// <summary>
         /// Original was GL_UNIFORM_BUFFER_ADDRESS_NV = 0x936F
         /// </summary>
-        UniformBufferAddressNV = 0x936f,
+        UniformBufferAddressNV = 0x936F,
 
         /// <summary>
         /// Original was GL_UNIFORM_BUFFER_LENGTH_NV = 0x9370

@@ -34,8 +34,8 @@ namespace OpenTK.Graphics.OpenGL4
     public enum WaitSyncFlags
     {
         /// <summary>
-        /// Original was GL_NONE = 0
+        /// Original was GL_NONE = 0x0
         /// </summary>
-        None = 0
+        None = 0x0
     }
 }

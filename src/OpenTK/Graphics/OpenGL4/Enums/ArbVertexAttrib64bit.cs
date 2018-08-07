@@ -36,66 +36,66 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_RGB32I = 0x8D83
         /// </summary>
-        Rgb32i = 0x8d83,
+        Rgb32i = 0x8D83,
 
         /// <summary>
         /// Original was GL_DOUBLE_MAT2 = 0x8F46
         /// </summary>
-        DoubleMat2 = 0x8f46,
+        DoubleMat2 = 0x8F46,
 
         /// <summary>
         /// Original was GL_DOUBLE_MAT3 = 0x8F47
         /// </summary>
-        DoubleMat3 = 0x8f47,
+        DoubleMat3 = 0x8F47,
 
         /// <summary>
         /// Original was GL_DOUBLE_MAT4 = 0x8F48
         /// </summary>
-        DoubleMat4 = 0x8f48,
+        DoubleMat4 = 0x8F48,
 
         /// <summary>
-        /// Original was GL_DOUBLE_MAT2x3 = 0x8F49
+        /// Original was GL_DOUBLE_MAT2X3 = 0x8F49
         /// </summary>
-        DoubleMat2x3 = 0x8f49,
+        DoubleMat2x3 = 0x8F49,
 
         /// <summary>
-        /// Original was GL_DOUBLE_MAT2x4 = 0x8F4A
+        /// Original was GL_DOUBLE_MAT2X4 = 0x8F4A
         /// </summary>
-        DoubleMat2x4 = 0x8f4a,
+        DoubleMat2x4 = 0x8F4A,
 
         /// <summary>
-        /// Original was GL_DOUBLE_MAT3x2 = 0x8F4B
+        /// Original was GL_DOUBLE_MAT3X2 = 0x8F4B
         /// </summary>
-        DoubleMat3x2 = 0x8f4b,
+        DoubleMat3x2 = 0x8F4B,
 
         /// <summary>
-        /// Original was GL_DOUBLE_MAT3x4 = 0x8F4C
+        /// Original was GL_DOUBLE_MAT3X4 = 0x8F4C
         /// </summary>
-        DoubleMat3x4 = 0x8f4c,
+        DoubleMat3x4 = 0x8F4C,
 
         /// <summary>
-        /// Original was GL_DOUBLE_MAT4x2 = 0x8F4D
+        /// Original was GL_DOUBLE_MAT4X2 = 0x8F4D
         /// </summary>
-        DoubleMat4x2 = 0x8f4d,
+        DoubleMat4x2 = 0x8F4D,
 
         /// <summary>
-        /// Original was GL_DOUBLE_MAT4x3 = 0x8F4E
+        /// Original was GL_DOUBLE_MAT4X3 = 0x8F4E
         /// </summary>
-        DoubleMat4x3 = 0x8f4e,
+        DoubleMat4x3 = 0x8F4E,
 
         /// <summary>
         /// Original was GL_DOUBLE_VEC2 = 0x8FFC
         /// </summary>
-        DoubleVec2 = 0x8ffc,
+        DoubleVec2 = 0x8FFC,
 
         /// <summary>
         /// Original was GL_DOUBLE_VEC3 = 0x8FFD
         /// </summary>
-        DoubleVec3 = 0x8ffd,
+        DoubleVec3 = 0x8FFD,
 
         /// <summary>
         /// Original was GL_DOUBLE_VEC4 = 0x8FFE
         /// </summary>
-        DoubleVec4 = 0x8ffe
+        DoubleVec4 = 0x8FFE
     }
 }

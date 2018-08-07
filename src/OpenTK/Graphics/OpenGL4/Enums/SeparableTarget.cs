@@ -34,7 +34,7 @@ namespace OpenTK.Graphics.OpenGL4
     public enum SeparableTarget
     {
         /// <summary>
-        /// Original was GL_SEPARABLE_2D = 0x8012
+        /// Original was GL_SEPARABLE2_D = 0x8012
         /// </summary>
         Separable2D = 0x8012
     }

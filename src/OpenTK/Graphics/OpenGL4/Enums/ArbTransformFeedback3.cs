@@ -36,11 +36,11 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_MAX_TRANSFORM_FEEDBACK_BUFFERS = 0x8E70
         /// </summary>
-        MaxTransformFeedbackBuffers = 0x8e70,
+        MaxTransformFeedbackBuffers = 0x8E70,
 
         /// <summary>
         /// Original was GL_MAX_VERTEX_STREAMS = 0x8E71
         /// </summary>
-        MaxVertexStreams = 0x8e71
+        MaxVertexStreams = 0x8E71
     }
 }

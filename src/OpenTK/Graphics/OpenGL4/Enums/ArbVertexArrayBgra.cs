@@ -36,6 +36,6 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_BGRA = 0x80E1
         /// </summary>
-        Bgra = 0x80e1
+        Bgra = 0x80E1
     }
 }

@@ -36,21 +36,21 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_UNIFORM_SIZE = 0x8A38
         /// </summary>
-        UniformSize = 0x8a38,
+        UniformSize = 0x8A38,
 
         /// <summary>
         /// Original was GL_UNIFORM_NAME_LENGTH = 0x8A39
         /// </summary>
-        UniformNameLength = 0x8a39,
+        UniformNameLength = 0x8A39,
 
         /// <summary>
         /// Original was GL_NUM_COMPATIBLE_SUBROUTINES = 0x8E4A
         /// </summary>
-        NumCompatibleSubroutines = 0x8e4a,
+        NumCompatibleSubroutines = 0x8E4A,
 
         /// <summary>
         /// Original was GL_COMPATIBLE_SUBROUTINES = 0x8E4B
         /// </summary>
-        CompatibleSubroutines = 0x8e4b
+        CompatibleSubroutines = 0x8E4B
     }
 }

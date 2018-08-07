@@ -36,12 +36,12 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_MAX_COMPUTE_FIXED_GROUP_INVOCATIONS_ARB = 0x90EB
         /// </summary>
-        MaxComputeFixedGroupInvocationsArb = 0x90eb,
+        MaxComputeFixedGroupInvocationsArb = 0x90EB,
 
         /// <summary>
         /// Original was GL_MAX_COMPUTE_FIXED_GROUP_SIZE_ARB = 0x91BF
         /// </summary>
-        MaxComputeFixedGroupSizeArb = 0x91bf,
+        MaxComputeFixedGroupSizeArb = 0x91BF,
 
         /// <summary>
         /// Original was GL_MAX_COMPUTE_VARIABLE_GROUP_INVOCATIONS_ARB = 0x9344

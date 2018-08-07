@@ -34,49 +34,49 @@ namespace OpenTK.Graphics.OpenGL4
     public enum ArbViewportArray
     {
         /// <summary>
-        /// Original was GL_DEPTH_RANGE = 0x0B70
+        /// Original was GL_DEPTH_RANGE = 0xB70
         /// </summary>
-        DepthRange = 0x0b70,
+        DepthRange = 0xB70,
 
         /// <summary>
-        /// Original was GL_VIEWPORT = 0x0BA2
+        /// Original was GL_VIEWPORT = 0xBA2
         /// </summary>
-        Viewport = 0x0ba2,
+        Viewport = 0xBA2,
 
         /// <summary>
-        /// Original was GL_SCISSOR_BOX = 0x0C10
+        /// Original was GL_SCISSOR_BOX = 0xC10
         /// </summary>
-        ScissorBox = 0x0c10,
+        ScissorBox = 0xC10,
 
         /// <summary>
-        /// Original was GL_SCISSOR_TEST = 0x0C11
+        /// Original was GL_SCISSOR_TEST = 0xC11
         /// </summary>
-        ScissorTest = 0x0c11,
+        ScissorTest = 0xC11,
 
         /// <summary>
         /// Original was GL_MAX_VIEWPORTS = 0x825B
         /// </summary>
-        MaxViewports = 0x825b,
+        MaxViewports = 0x825B,
 
         /// <summary>
         /// Original was GL_VIEWPORT_SUBPIXEL_BITS = 0x825C
         /// </summary>
-        ViewportSubpixelBits = 0x825c,
+        ViewportSubpixelBits = 0x825C,
 
         /// <summary>
         /// Original was GL_VIEWPORT_BOUNDS_RANGE = 0x825D
         /// </summary>
-        ViewportBoundsRange = 0x825d,
+        ViewportBoundsRange = 0x825D,
 
         /// <summary>
         /// Original was GL_LAYER_PROVOKING_VERTEX = 0x825E
         /// </summary>
-        LayerProvokingVertex = 0x825e,
+        LayerProvokingVertex = 0x825E,
 
         /// <summary>
         /// Original was GL_VIEWPORT_INDEX_PROVOKING_VERTEX = 0x825F
         /// </summary>
-        ViewportIndexProvokingVertex = 0x825f,
+        ViewportIndexProvokingVertex = 0x825F,
 
         /// <summary>
         /// Original was GL_UNDEFINED_VERTEX = 0x8260
@@ -86,16 +86,16 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_FIRST_VERTEX_CONVENTION = 0x8E4D
         /// </summary>
-        FirstVertexConvention = 0x8e4d,
+        FirstVertexConvention = 0x8E4D,
 
         /// <summary>
         /// Original was GL_LAST_VERTEX_CONVENTION = 0x8E4E
         /// </summary>
-        LastVertexConvention = 0x8e4e,
+        LastVertexConvention = 0x8E4E,
 
         /// <summary>
         /// Original was GL_PROVOKING_VERTEX = 0x8E4F
         /// </summary>
-        ProvokingVertex = 0x8e4f
+        ProvokingVertex = 0x8E4F
     }
 }

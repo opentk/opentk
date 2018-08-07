@@ -126,32 +126,32 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_DRAW_BUFFER5 = 0x882A
         /// </summary>
-        DrawBuffer5 = 0x882a,
+        DrawBuffer5 = 0x882A,
 
         /// <summary>
         /// Original was GL_DRAW_BUFFER6 = 0x882B
         /// </summary>
-        DrawBuffer6 = 0x882b,
+        DrawBuffer6 = 0x882B,
 
         /// <summary>
         /// Original was GL_DRAW_BUFFER7 = 0x882C
         /// </summary>
-        DrawBuffer7 = 0x882c,
+        DrawBuffer7 = 0x882C,
 
         /// <summary>
         /// Original was GL_DRAW_BUFFER8 = 0x882D
         /// </summary>
-        DrawBuffer8 = 0x882d,
+        DrawBuffer8 = 0x882D,
 
         /// <summary>
         /// Original was GL_DRAW_BUFFER9 = 0x882E
         /// </summary>
-        DrawBuffer9 = 0x882e,
+        DrawBuffer9 = 0x882E,
 
         /// <summary>
         /// Original was GL_DRAW_BUFFER10 = 0x882F
         /// </summary>
-        DrawBuffer10 = 0x882f,
+        DrawBuffer10 = 0x882F,
 
         /// <summary>
         /// Original was GL_DRAW_BUFFER11 = 0x8830
@@ -181,7 +181,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_BLEND_EQUATION_ALPHA = 0x883D
         /// </summary>
-        BlendEquationAlpha = 0x883d,
+        BlendEquationAlpha = 0x883D,
 
         /// <summary>
         /// Original was GL_MAX_VERTEX_ATTRIBS = 0x8869
@@ -191,7 +191,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_VERTEX_ATTRIB_ARRAY_NORMALIZED = 0x886A
         /// </summary>
-        VertexAttribArrayNormalized = 0x886a,
+        VertexAttribArrayNormalized = 0x886A,
 
         /// <summary>
         /// Original was GL_MAX_TEXTURE_IMAGE_UNITS = 0x8872
@@ -201,236 +201,236 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_FRAGMENT_SHADER = 0x8B30
         /// </summary>
-        FragmentShader = 0x8b30,
+        FragmentShader = 0x8B30,
 
         /// <summary>
         /// Original was GL_VERTEX_SHADER = 0x8B31
         /// </summary>
-        VertexShader = 0x8b31,
+        VertexShader = 0x8B31,
 
         /// <summary>
         /// Original was GL_MAX_FRAGMENT_UNIFORM_COMPONENTS = 0x8B49
         /// </summary>
-        MaxFragmentUniformComponents = 0x8b49,
+        MaxFragmentUniformComponents = 0x8B49,
 
         /// <summary>
         /// Original was GL_MAX_VERTEX_UNIFORM_COMPONENTS = 0x8B4A
         /// </summary>
-        MaxVertexUniformComponents = 0x8b4a,
+        MaxVertexUniformComponents = 0x8B4A,
 
         /// <summary>
         /// Original was GL_MAX_VARYING_FLOATS = 0x8B4B
         /// </summary>
-        MaxVaryingFloats = 0x8b4b,
+        MaxVaryingFloats = 0x8B4B,
 
         /// <summary>
         /// Original was GL_MAX_VERTEX_TEXTURE_IMAGE_UNITS = 0x8B4C
         /// </summary>
-        MaxVertexTextureImageUnits = 0x8b4c,
+        MaxVertexTextureImageUnits = 0x8B4C,
 
         /// <summary>
         /// Original was GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS = 0x8B4D
         /// </summary>
-        MaxCombinedTextureImageUnits = 0x8b4d,
+        MaxCombinedTextureImageUnits = 0x8B4D,
 
         /// <summary>
         /// Original was GL_SHADER_TYPE = 0x8B4F
         /// </summary>
-        ShaderType = 0x8b4f,
+        ShaderType = 0x8B4F,
 
         /// <summary>
         /// Original was GL_FLOAT_VEC2 = 0x8B50
         /// </summary>
-        FloatVec2 = 0x8b50,
+        FloatVec2 = 0x8B50,
 
         /// <summary>
         /// Original was GL_FLOAT_VEC3 = 0x8B51
         /// </summary>
-        FloatVec3 = 0x8b51,
+        FloatVec3 = 0x8B51,
 
         /// <summary>
         /// Original was GL_FLOAT_VEC4 = 0x8B52
         /// </summary>
-        FloatVec4 = 0x8b52,
+        FloatVec4 = 0x8B52,
 
         /// <summary>
         /// Original was GL_INT_VEC2 = 0x8B53
         /// </summary>
-        IntVec2 = 0x8b53,
+        IntVec2 = 0x8B53,
 
         /// <summary>
         /// Original was GL_INT_VEC3 = 0x8B54
         /// </summary>
-        IntVec3 = 0x8b54,
+        IntVec3 = 0x8B54,
 
         /// <summary>
         /// Original was GL_INT_VEC4 = 0x8B55
         /// </summary>
-        IntVec4 = 0x8b55,
+        IntVec4 = 0x8B55,
 
         /// <summary>
         /// Original was GL_BOOL = 0x8B56
         /// </summary>
-        Bool = 0x8b56,
+        Bool = 0x8B56,
 
         /// <summary>
         /// Original was GL_BOOL_VEC2 = 0x8B57
         /// </summary>
-        BoolVec2 = 0x8b57,
+        BoolVec2 = 0x8B57,
 
         /// <summary>
         /// Original was GL_BOOL_VEC3 = 0x8B58
         /// </summary>
-        BoolVec3 = 0x8b58,
+        BoolVec3 = 0x8B58,
 
         /// <summary>
         /// Original was GL_BOOL_VEC4 = 0x8B59
         /// </summary>
-        BoolVec4 = 0x8b59,
+        BoolVec4 = 0x8B59,
 
         /// <summary>
         /// Original was GL_FLOAT_MAT2 = 0x8B5A
         /// </summary>
-        FloatMat2 = 0x8b5a,
+        FloatMat2 = 0x8B5A,
 
         /// <summary>
         /// Original was GL_FLOAT_MAT3 = 0x8B5B
         /// </summary>
-        FloatMat3 = 0x8b5b,
+        FloatMat3 = 0x8B5B,
 
         /// <summary>
         /// Original was GL_FLOAT_MAT4 = 0x8B5C
         /// </summary>
-        FloatMat4 = 0x8b5c,
+        FloatMat4 = 0x8B5C,
 
         /// <summary>
-        /// Original was GL_SAMPLER_1D = 0x8B5D
+        /// Original was GL_SAMPLER1_D = 0x8B5D
         /// </summary>
-        Sampler1D = 0x8b5d,
+        Sampler1D = 0x8B5D,
 
         /// <summary>
-        /// Original was GL_SAMPLER_2D = 0x8B5E
+        /// Original was GL_SAMPLER2_D = 0x8B5E
         /// </summary>
-        Sampler2D = 0x8b5e,
+        Sampler2D = 0x8B5E,
 
         /// <summary>
-        /// Original was GL_SAMPLER_3D = 0x8B5F
+        /// Original was GL_SAMPLER3_D = 0x8B5F
         /// </summary>
-        Sampler3D = 0x8b5f,
+        Sampler3D = 0x8B5F,
 
         /// <summary>
         /// Original was GL_SAMPLER_CUBE = 0x8B60
         /// </summary>
-        SamplerCube = 0x8b60,
+        SamplerCube = 0x8B60,
 
         /// <summary>
-        /// Original was GL_SAMPLER_1D_SHADOW = 0x8B61
+        /// Original was GL_SAMPLER1_D_SHADOW = 0x8B61
         /// </summary>
-        Sampler1DShadow = 0x8b61,
+        Sampler1DShadow = 0x8B61,
 
         /// <summary>
-        /// Original was GL_SAMPLER_2D_SHADOW = 0x8B62
+        /// Original was GL_SAMPLER2_D_SHADOW = 0x8B62
         /// </summary>
-        Sampler2DShadow = 0x8b62,
+        Sampler2DShadow = 0x8B62,
 
         /// <summary>
         /// Original was GL_DELETE_STATUS = 0x8B80
         /// </summary>
-        DeleteStatus = 0x8b80,
+        DeleteStatus = 0x8B80,
 
         /// <summary>
         /// Original was GL_COMPILE_STATUS = 0x8B81
         /// </summary>
-        CompileStatus = 0x8b81,
+        CompileStatus = 0x8B81,
 
         /// <summary>
         /// Original was GL_LINK_STATUS = 0x8B82
         /// </summary>
-        LinkStatus = 0x8b82,
+        LinkStatus = 0x8B82,
 
         /// <summary>
         /// Original was GL_VALIDATE_STATUS = 0x8B83
         /// </summary>
-        ValidateStatus = 0x8b83,
+        ValidateStatus = 0x8B83,
 
         /// <summary>
         /// Original was GL_INFO_LOG_LENGTH = 0x8B84
         /// </summary>
-        InfoLogLength = 0x8b84,
+        InfoLogLength = 0x8B84,
 
         /// <summary>
         /// Original was GL_ATTACHED_SHADERS = 0x8B85
         /// </summary>
-        AttachedShaders = 0x8b85,
+        AttachedShaders = 0x8B85,
 
         /// <summary>
         /// Original was GL_ACTIVE_UNIFORMS = 0x8B86
         /// </summary>
-        ActiveUniforms = 0x8b86,
+        ActiveUniforms = 0x8B86,
 
         /// <summary>
         /// Original was GL_ACTIVE_UNIFORM_MAX_LENGTH = 0x8B87
         /// </summary>
-        ActiveUniformMaxLength = 0x8b87,
+        ActiveUniformMaxLength = 0x8B87,
 
         /// <summary>
         /// Original was GL_SHADER_SOURCE_LENGTH = 0x8B88
         /// </summary>
-        ShaderSourceLength = 0x8b88,
+        ShaderSourceLength = 0x8B88,
 
         /// <summary>
         /// Original was GL_ACTIVE_ATTRIBUTES = 0x8B89
         /// </summary>
-        ActiveAttributes = 0x8b89,
+        ActiveAttributes = 0x8B89,
 
         /// <summary>
         /// Original was GL_ACTIVE_ATTRIBUTE_MAX_LENGTH = 0x8B8A
         /// </summary>
-        ActiveAttributeMaxLength = 0x8b8a,
+        ActiveAttributeMaxLength = 0x8B8A,
 
         /// <summary>
         /// Original was GL_FRAGMENT_SHADER_DERIVATIVE_HINT = 0x8B8B
         /// </summary>
-        FragmentShaderDerivativeHint = 0x8b8b,
+        FragmentShaderDerivativeHint = 0x8B8B,
 
         /// <summary>
         /// Original was GL_SHADING_LANGUAGE_VERSION = 0x8B8C
         /// </summary>
-        ShadingLanguageVersion = 0x8b8c,
+        ShadingLanguageVersion = 0x8B8C,
 
         /// <summary>
         /// Original was GL_CURRENT_PROGRAM = 0x8B8D
         /// </summary>
-        CurrentProgram = 0x8b8d,
+        CurrentProgram = 0x8B8D,
 
         /// <summary>
         /// Original was GL_POINT_SPRITE_COORD_ORIGIN = 0x8CA0
         /// </summary>
-        PointSpriteCoordOrigin = 0x8ca0,
+        PointSpriteCoordOrigin = 0x8CA0,
 
         /// <summary>
         /// Original was GL_LOWER_LEFT = 0x8CA1
         /// </summary>
-        LowerLeft = 0x8ca1,
+        LowerLeft = 0x8CA1,
 
         /// <summary>
         /// Original was GL_UPPER_LEFT = 0x8CA2
         /// </summary>
-        UpperLeft = 0x8ca2,
+        UpperLeft = 0x8CA2,
 
         /// <summary>
         /// Original was GL_STENCIL_BACK_REF = 0x8CA3
         /// </summary>
-        StencilBackRef = 0x8ca3,
+        StencilBackRef = 0x8CA3,
 
         /// <summary>
         /// Original was GL_STENCIL_BACK_VALUE_MASK = 0x8CA4
         /// </summary>
-        StencilBackValueMask = 0x8ca4,
+        StencilBackValueMask = 0x8CA4,
 
         /// <summary>
         /// Original was GL_STENCIL_BACK_WRITEMASK = 0x8CA5
         /// </summary>
-        StencilBackWritemask = 0x8ca5
+        StencilBackWritemask = 0x8CA5
     }
 }

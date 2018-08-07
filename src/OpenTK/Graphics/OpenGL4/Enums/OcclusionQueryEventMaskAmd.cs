@@ -23,8 +23,6 @@
 // OTHER DEALINGS IN THE SOFTWARE.
 //
 
-using System;
-
 // ReSharper disable InconsistentNaming
 #pragma warning disable SA1139 // Use literal suffix notation instead of casting
 
@@ -33,32 +31,31 @@ namespace OpenTK.Graphics.OpenGL4
     /// <summary>
     /// Not used directly.
     /// </summary>
-    [Flags]
     public enum OcclusionQueryEventMaskAmd
     {
         /// <summary>
-        /// Original was GL_QUERY_DEPTH_PASS_EVENT_BIT_AMD = 0x00000001
+        /// Original was GL_QUERY_DEPTH_PASS_EVENT_BIT_AMD = 0x1
         /// </summary>
-        QueryDepthPassEventBitAmd = 0x00000001,
+        QueryDepthPassEventBitAmd = 0x1,
 
         /// <summary>
-        /// Original was GL_QUERY_DEPTH_FAIL_EVENT_BIT_AMD = 0x00000002
+        /// Original was GL_QUERY_DEPTH_FAIL_EVENT_BIT_AMD = 0x2
         /// </summary>
-        QueryDepthFailEventBitAmd = 0x00000002,
+        QueryDepthFailEventBitAmd = 0x2,
 
         /// <summary>
-        /// Original was GL_QUERY_STENCIL_FAIL_EVENT_BIT_AMD = 0x00000004
+        /// Original was GL_QUERY_STENCIL_FAIL_EVENT_BIT_AMD = 0x4
         /// </summary>
-        QueryStencilFailEventBitAmd = 0x00000004,
+        QueryStencilFailEventBitAmd = 0x4,
 
         /// <summary>
-        /// Original was GL_QUERY_DEPTH_BOUNDS_FAIL_EVENT_BIT_AMD = 0x00000008
+        /// Original was GL_QUERY_DEPTH_BOUNDS_FAIL_EVENT_BIT_AMD = 0x8
         /// </summary>
-        QueryDepthBoundsFailEventBitAmd = 0x00000008,
+        QueryDepthBoundsFailEventBitAmd = 0x8,
 
         /// <summary>
         /// Original was GL_QUERY_ALL_EVENT_BITS_AMD = 0xFFFFFFFF
         /// </summary>
-        QueryAllEventBitsAmd = unchecked((int)0xffffffff)
+        QueryAllEventBitsAmd = unchecked((int)0xFFFFFFFF)
     }
 }

@@ -41,16 +41,16 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_CONVEX_HULL_NV = 0x908B
         /// </summary>
-        ConvexHullNV = 0x908b,
+        ConvexHullNV = 0x908B,
 
         /// <summary>
         /// Original was GL_BOUNDING_BOX_NV = 0x908D
         /// </summary>
-        BoundingBoxNV = 0x908d,
+        BoundingBoxNV = 0x908D,
 
         /// <summary>
         /// Original was GL_BOUNDING_BOX_OF_BOUNDING_BOXES_NV = 0x909C
         /// </summary>
-        BoundingBoxOfBoundingBoxesNV = 0x909c
+        BoundingBoxOfBoundingBoxesNV = 0x909C
     }
 }

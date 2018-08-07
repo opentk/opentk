@@ -36,6 +36,6 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_TEXTURE_CUBE_MAP_SEAMLESS = 0x884F
         /// </summary>
-        TextureCubeMapSeamless = 0x884f
+        TextureCubeMapSeamless = 0x884F
     }
 }

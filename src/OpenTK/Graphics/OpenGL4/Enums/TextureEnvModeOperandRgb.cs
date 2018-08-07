@@ -34,23 +34,23 @@ namespace OpenTK.Graphics.OpenGL4
     public enum TextureEnvModeOperandRgb
     {
         /// <summary>
-        /// Original was GL_SRC_COLOR = 0x0300
+        /// Original was GL_SRC_COLOR = 0x300
         /// </summary>
-        SrcColor = 0x0300,
+        SrcColor = 0x300,
 
         /// <summary>
-        /// Original was GL_ONE_MINUS_SRC_COLOR = 0x0301
+        /// Original was GL_ONE_MINUS_SRC_COLOR = 0x301
         /// </summary>
-        OneMinusSrcColor = 0x0301,
+        OneMinusSrcColor = 0x301,
 
         /// <summary>
-        /// Original was GL_SRC_ALPHA = 0x0302
+        /// Original was GL_SRC_ALPHA = 0x302
         /// </summary>
-        SrcAlpha = 0x0302,
+        SrcAlpha = 0x302,
 
         /// <summary>
-        /// Original was GL_ONE_MINUS_SRC_ALPHA = 0x0303
+        /// Original was GL_ONE_MINUS_SRC_ALPHA = 0x303
         /// </summary>
-        OneMinusSrcAlpha = 0x0303
+        OneMinusSrcAlpha = 0x303
     }
 }

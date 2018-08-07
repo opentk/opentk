@@ -29,28 +29,28 @@
 namespace OpenTK.Graphics.OpenGL4
 {
     /// <summary>
-    /// Not used directly.
+    /// Used in GL.NV.BeginConditionalRender.
     /// </summary>
     public enum NVConditionalRender
     {
         /// <summary>
         /// Original was GL_QUERY_WAIT_NV = 0x8E13
         /// </summary>
-        QueryWaitNV = 0x8e13,
+        QueryWaitNV = 0x8E13,
 
         /// <summary>
         /// Original was GL_QUERY_NO_WAIT_NV = 0x8E14
         /// </summary>
-        QueryNoWaitNV = 0x8e14,
+        QueryNoWaitNV = 0x8E14,
 
         /// <summary>
         /// Original was GL_QUERY_BY_REGION_WAIT_NV = 0x8E15
         /// </summary>
-        QueryByRegionWaitNV = 0x8e15,
+        QueryByRegionWaitNV = 0x8E15,
 
         /// <summary>
         /// Original was GL_QUERY_BY_REGION_NO_WAIT_NV = 0x8E16
         /// </summary>
-        QueryByRegionNoWaitNV = 0x8e16
+        QueryByRegionNoWaitNV = 0x8E16
     }
 }

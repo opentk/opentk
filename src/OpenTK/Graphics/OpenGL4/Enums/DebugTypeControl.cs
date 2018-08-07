@@ -41,22 +41,22 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_DEBUG_TYPE_ERROR = 0x824C
         /// </summary>
-        DebugTypeError = 0x824c,
+        DebugTypeError = 0x824C,
 
         /// <summary>
         /// Original was GL_DEBUG_TYPE_DEPRECATED_BEHAVIOR = 0x824D
         /// </summary>
-        DebugTypeDeprecatedBehavior = 0x824d,
+        DebugTypeDeprecatedBehavior = 0x824D,
 
         /// <summary>
         /// Original was GL_DEBUG_TYPE_UNDEFINED_BEHAVIOR = 0x824E
         /// </summary>
-        DebugTypeUndefinedBehavior = 0x824e,
+        DebugTypeUndefinedBehavior = 0x824E,
 
         /// <summary>
         /// Original was GL_DEBUG_TYPE_PORTABILITY = 0x824F
         /// </summary>
-        DebugTypePortability = 0x824f,
+        DebugTypePortability = 0x824F,
 
         /// <summary>
         /// Original was GL_DEBUG_TYPE_PERFORMANCE = 0x8250
@@ -81,6 +81,6 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_DEBUG_TYPE_POP_GROUP = 0x826A
         /// </summary>
-        DebugTypePopGroup = 0x826a
+        DebugTypePopGroup = 0x826A
     }
 }

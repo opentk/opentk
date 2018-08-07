@@ -39,29 +39,29 @@ namespace OpenTK.Graphics.OpenGL4
         TextureTarget = 0x1006,
 
         /// <summary>
-        /// Original was GL_TEXTURE_BINDING_1D = 0x8068
+        /// Original was GL_TEXTURE_BINDING1_D = 0x8068
         /// </summary>
         TextureBinding1D = 0x8068,
 
         /// <summary>
-        /// Original was GL_TEXTURE_BINDING_2D = 0x8069
+        /// Original was GL_TEXTURE_BINDING2_D = 0x8069
         /// </summary>
         TextureBinding2D = 0x8069,
 
         /// <summary>
-        /// Original was GL_TEXTURE_BINDING_3D = 0x806A
+        /// Original was GL_TEXTURE_BINDING3_D = 0x806A
         /// </summary>
-        TextureBinding3D = 0x806a,
+        TextureBinding3D = 0x806A,
 
         /// <summary>
         /// Original was GL_QUERY_TARGET = 0x82EA
         /// </summary>
-        QueryTarget = 0x82ea,
+        QueryTarget = 0x82EA,
 
         /// <summary>
         /// Original was GL_TEXTURE_BINDING_RECTANGLE = 0x84F6
         /// </summary>
-        TextureBindingRectangle = 0x84f6,
+        TextureBindingRectangle = 0x84F6,
 
         /// <summary>
         /// Original was GL_TEXTURE_BINDING_CUBE_MAP = 0x8514
@@ -69,32 +69,32 @@ namespace OpenTK.Graphics.OpenGL4
         TextureBindingCubeMap = 0x8514,
 
         /// <summary>
-        /// Original was GL_TEXTURE_BINDING_1D_ARRAY = 0x8C1C
+        /// Original was GL_TEXTURE_BINDING1_D_ARRAY = 0x8C1C
         /// </summary>
-        TextureBinding1DArray = 0x8c1c,
+        TextureBinding1DArray = 0x8C1C,
 
         /// <summary>
-        /// Original was GL_TEXTURE_BINDING_2D_ARRAY = 0x8C1D
+        /// Original was GL_TEXTURE_BINDING2_D_ARRAY = 0x8C1D
         /// </summary>
-        TextureBinding2DArray = 0x8c1d,
+        TextureBinding2DArray = 0x8C1D,
 
         /// <summary>
         /// Original was GL_TEXTURE_BINDING_BUFFER = 0x8C2C
         /// </summary>
-        TextureBindingBuffer = 0x8c2c,
+        TextureBindingBuffer = 0x8C2C,
 
         /// <summary>
         /// Original was GL_TEXTURE_BINDING_CUBE_MAP_ARRAY = 0x900A
         /// </summary>
-        TextureBindingCubeMapArray = 0x900a,
+        TextureBindingCubeMapArray = 0x900A,
 
         /// <summary>
-        /// Original was GL_TEXTURE_BINDING_2D_MULTISAMPLE = 0x9104
+        /// Original was GL_TEXTURE_BINDING2_D_MULTISAMPLE = 0x9104
         /// </summary>
         TextureBinding2DMultisample = 0x9104,
 
         /// <summary>
-        /// Original was GL_TEXTURE_BINDING_2D_MULTISAMPLE_ARRAY = 0x9105
+        /// Original was GL_TEXTURE_BINDING2_D_MULTISAMPLE_ARRAY = 0x9105
         /// </summary>
         TextureBinding2DMultisampleArray = 0x9105
     }

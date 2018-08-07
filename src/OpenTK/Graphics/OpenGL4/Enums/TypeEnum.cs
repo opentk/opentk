@@ -29,28 +29,28 @@
 namespace OpenTK.Graphics.OpenGL4
 {
     /// <summary>
-    /// Used in GL.Ext.GetDouble and GL.Ext.GetDoubleIndexed, as well as 6 other functions.
+    /// Not used directly.
     /// </summary>
     public enum TypeEnum
     {
         /// <summary>
         /// Original was GL_QUERY_WAIT = 0x8E13
         /// </summary>
-        QueryWait = 0x8e13,
+        QueryWait = 0x8E13,
 
         /// <summary>
         /// Original was GL_QUERY_NO_WAIT = 0x8E14
         /// </summary>
-        QueryNoWait = 0x8e14,
+        QueryNoWait = 0x8E14,
 
         /// <summary>
         /// Original was GL_QUERY_BY_REGION_WAIT = 0x8E15
         /// </summary>
-        QueryByRegionWait = 0x8e15,
+        QueryByRegionWait = 0x8E15,
 
         /// <summary>
         /// Original was GL_QUERY_BY_REGION_NO_WAIT = 0x8E16
         /// </summary>
-        QueryByRegionNoWait = 0x8e16
+        QueryByRegionNoWait = 0x8E16
     }
 }

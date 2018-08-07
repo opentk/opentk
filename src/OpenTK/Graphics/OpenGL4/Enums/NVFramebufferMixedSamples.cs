@@ -29,14 +29,14 @@
 namespace OpenTK.Graphics.OpenGL4
 {
     /// <summary>
-    /// Not used directly.
+    /// Used in GL.NV.CoverageModulation.
     /// </summary>
     public enum NVFramebufferMixedSamples
     {
         /// <summary>
         /// Original was GL_COLOR_SAMPLES_NV = 0x8E20
         /// </summary>
-        ColorSamplesNV = 0x8e20,
+        ColorSamplesNV = 0x8E20,
 
         /// <summary>
         /// Original was GL_RASTER_MULTISAMPLE_EXT = 0x9327
@@ -56,32 +56,32 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_RASTER_FIXED_SAMPLE_LOCATIONS_EXT = 0x932A
         /// </summary>
-        RasterFixedSampleLocationsExt = 0x932a,
+        RasterFixedSampleLocationsExt = 0x932A,
 
         /// <summary>
         /// Original was GL_MULTISAMPLE_RASTERIZATION_ALLOWED_EXT = 0x932B
         /// </summary>
-        MultisampleRasterizationAllowedExt = 0x932b,
+        MultisampleRasterizationAllowedExt = 0x932B,
 
         /// <summary>
         /// Original was GL_EFFECTIVE_RASTER_SAMPLES_EXT = 0x932C
         /// </summary>
-        EffectiveRasterSamplesExt = 0x932c,
+        EffectiveRasterSamplesExt = 0x932C,
 
         /// <summary>
         /// Original was GL_DEPTH_SAMPLES_NV = 0x932D
         /// </summary>
-        DepthSamplesNV = 0x932d,
+        DepthSamplesNV = 0x932D,
 
         /// <summary>
         /// Original was GL_STENCIL_SAMPLES_NV = 0x932E
         /// </summary>
-        StencilSamplesNV = 0x932e,
+        StencilSamplesNV = 0x932E,
 
         /// <summary>
         /// Original was GL_MIXED_DEPTH_SAMPLES_SUPPORTED_NV = 0x932F
         /// </summary>
-        MixedDepthSamplesSupportedNV = 0x932f,
+        MixedDepthSamplesSupportedNV = 0x932F,
 
         /// <summary>
         /// Original was GL_MIXED_STENCIL_SAMPLES_SUPPORTED_NV = 0x9330

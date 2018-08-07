@@ -36,16 +36,16 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_DEPTH_COMPONENT32F = 0x8CAC
         /// </summary>
-        DepthComponent32f = 0x8cac,
+        DepthComponent32f = 0x8CAC,
 
         /// <summary>
         /// Original was GL_DEPTH32F_STENCIL8 = 0x8CAD
         /// </summary>
-        Depth32fStencil8 = 0x8cad,
+        Depth32fStencil8 = 0x8CAD,
 
         /// <summary>
-        /// Original was GL_FLOAT_32_UNSIGNED_INT_24_8_REV = 0x8DAD
+        /// Original was GL_FLOAT32_UNSIGNED_INT248_REV = 0x8DAD
         /// </summary>
-        Float32UnsignedInt248Rev = 0x8dad
+        Float32UnsignedInt248Rev = 0x8DAD
     }
 }

@@ -81,32 +81,32 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_FUNC_SUBTRACT = 0x800A
         /// </summary>
-        FuncSubtract = 0x800a,
+        FuncSubtract = 0x800A,
 
         /// <summary>
         /// Original was GL_FUNC_REVERSE_SUBTRACT = 0x800B
         /// </summary>
-        FuncReverseSubtract = 0x800b,
+        FuncReverseSubtract = 0x800B,
 
         /// <summary>
         /// Original was GL_BLEND_DST_RGB = 0x80C8
         /// </summary>
-        BlendDstRgb = 0x80c8,
+        BlendDstRgb = 0x80C8,
 
         /// <summary>
         /// Original was GL_BLEND_SRC_RGB = 0x80C9
         /// </summary>
-        BlendSrcRgb = 0x80c9,
+        BlendSrcRgb = 0x80C9,
 
         /// <summary>
         /// Original was GL_BLEND_DST_ALPHA = 0x80CA
         /// </summary>
-        BlendDstAlpha = 0x80ca,
+        BlendDstAlpha = 0x80CA,
 
         /// <summary>
         /// Original was GL_BLEND_SRC_ALPHA = 0x80CB
         /// </summary>
-        BlendSrcAlpha = 0x80cb,
+        BlendSrcAlpha = 0x80CB,
 
         /// <summary>
         /// Original was GL_POINT_FADE_THRESHOLD_SIZE = 0x8128
@@ -116,17 +116,17 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_DEPTH_COMPONENT16 = 0x81A5
         /// </summary>
-        DepthComponent16 = 0x81a5,
+        DepthComponent16 = 0x81A5,
 
         /// <summary>
         /// Original was GL_DEPTH_COMPONENT24 = 0x81A6
         /// </summary>
-        DepthComponent24 = 0x81a6,
+        DepthComponent24 = 0x81A6,
 
         /// <summary>
         /// Original was GL_DEPTH_COMPONENT32 = 0x81A7
         /// </summary>
-        DepthComponent32 = 0x81a7,
+        DepthComponent32 = 0x81A7,
 
         /// <summary>
         /// Original was GL_MIRRORED_REPEAT = 0x8370
@@ -136,7 +136,7 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_MAX_TEXTURE_LOD_BIAS = 0x84FD
         /// </summary>
-        MaxTextureLodBias = 0x84fd,
+        MaxTextureLodBias = 0x84FD,
 
         /// <summary>
         /// Original was GL_TEXTURE_LOD_BIAS = 0x8501
@@ -156,16 +156,16 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_TEXTURE_DEPTH_SIZE = 0x884A
         /// </summary>
-        TextureDepthSize = 0x884a,
+        TextureDepthSize = 0x884A,
 
         /// <summary>
         /// Original was GL_TEXTURE_COMPARE_MODE = 0x884C
         /// </summary>
-        TextureCompareMode = 0x884c,
+        TextureCompareMode = 0x884C,
 
         /// <summary>
         /// Original was GL_TEXTURE_COMPARE_FUNC = 0x884D
         /// </summary>
-        TextureCompareFunc = 0x884d
+        TextureCompareFunc = 0x884D
     }
 }

@@ -61,17 +61,17 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_LINEAR_SHARPEN_SGIS = 0x80AD
         /// </summary>
-        LinearSharpenSgis = 0x80ad,
+        LinearSharpenSgis = 0x80AD,
 
         /// <summary>
         /// Original was GL_LINEAR_SHARPEN_ALPHA_SGIS = 0x80AE
         /// </summary>
-        LinearSharpenAlphaSgis = 0x80ae,
+        LinearSharpenAlphaSgis = 0x80AE,
 
         /// <summary>
         /// Original was GL_LINEAR_SHARPEN_COLOR_SGIS = 0x80AF
         /// </summary>
-        LinearSharpenColorSgis = 0x80af,
+        LinearSharpenColorSgis = 0x80AF,
 
         /// <summary>
         /// Original was GL_FILTER4_SGIS = 0x8146

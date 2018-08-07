@@ -29,58 +29,58 @@
 namespace OpenTK.Graphics.OpenGL4
 {
     /// <summary>
-    /// Used in GL.Arb.GetnPixelMap and GL.GetnPixelMap.
+    /// Used in GL.ARB.GetnPixelMap and GL.GetnPixelMap.
     /// </summary>
     public enum PixelMap
     {
         /// <summary>
-        /// Original was GL_PIXEL_MAP_I_TO_I = 0x0C70
+        /// Original was GL_PIXEL_MAP_I_TO_I = 0xC70
         /// </summary>
-        PixelMapIToI = 0x0c70,
+        PixelMapIToI = 0xC70,
 
         /// <summary>
-        /// Original was GL_PIXEL_MAP_S_TO_S = 0x0C71
+        /// Original was GL_PIXEL_MAP_S_TO_S = 0xC71
         /// </summary>
-        PixelMapSToS = 0x0c71,
+        PixelMapSToS = 0xC71,
 
         /// <summary>
-        /// Original was GL_PIXEL_MAP_I_TO_R = 0x0C72
+        /// Original was GL_PIXEL_MAP_I_TO_R = 0xC72
         /// </summary>
-        PixelMapIToR = 0x0c72,
+        PixelMapIToR = 0xC72,
 
         /// <summary>
-        /// Original was GL_PIXEL_MAP_I_TO_G = 0x0C73
+        /// Original was GL_PIXEL_MAP_I_TO_G = 0xC73
         /// </summary>
-        PixelMapIToG = 0x0c73,
+        PixelMapIToG = 0xC73,
 
         /// <summary>
-        /// Original was GL_PIXEL_MAP_I_TO_B = 0x0C74
+        /// Original was GL_PIXEL_MAP_I_TO_B = 0xC74
         /// </summary>
-        PixelMapIToB = 0x0c74,
+        PixelMapIToB = 0xC74,
 
         /// <summary>
-        /// Original was GL_PIXEL_MAP_I_TO_A = 0x0C75
+        /// Original was GL_PIXEL_MAP_I_TO_A = 0xC75
         /// </summary>
-        PixelMapIToA = 0x0c75,
+        PixelMapIToA = 0xC75,
 
         /// <summary>
-        /// Original was GL_PIXEL_MAP_R_TO_R = 0x0C76
+        /// Original was GL_PIXEL_MAP_R_TO_R = 0xC76
         /// </summary>
-        PixelMapRToR = 0x0c76,
+        PixelMapRToR = 0xC76,
 
         /// <summary>
-        /// Original was GL_PIXEL_MAP_G_TO_G = 0x0C77
+        /// Original was GL_PIXEL_MAP_G_TO_G = 0xC77
         /// </summary>
-        PixelMapGToG = 0x0c77,
+        PixelMapGToG = 0xC77,
 
         /// <summary>
-        /// Original was GL_PIXEL_MAP_B_TO_B = 0x0C78
+        /// Original was GL_PIXEL_MAP_B_TO_B = 0xC78
         /// </summary>
-        PixelMapBToB = 0x0c78,
+        PixelMapBToB = 0xC78,
 
         /// <summary>
-        /// Original was GL_PIXEL_MAP_A_TO_A = 0x0C79
+        /// Original was GL_PIXEL_MAP_A_TO_A = 0xC79
         /// </summary>
-        PixelMapAToA = 0x0c79
+        PixelMapAToA = 0xC79
     }
 }

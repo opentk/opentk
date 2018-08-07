@@ -36,31 +36,31 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_GEOMETRY_SHADER_INVOCATIONS = 0x887F
         /// </summary>
-        GeometryShaderInvocations = 0x887f,
+        GeometryShaderInvocations = 0x887F,
 
         /// <summary>
         /// Original was GL_MAX_GEOMETRY_SHADER_INVOCATIONS = 0x8E5A
         /// </summary>
-        MaxGeometryShaderInvocations = 0x8e5a,
+        MaxGeometryShaderInvocations = 0x8E5A,
 
         /// <summary>
         /// Original was GL_MIN_FRAGMENT_INTERPOLATION_OFFSET = 0x8E5B
         /// </summary>
-        MinFragmentInterpolationOffset = 0x8e5b,
+        MinFragmentInterpolationOffset = 0x8E5B,
 
         /// <summary>
         /// Original was GL_MAX_FRAGMENT_INTERPOLATION_OFFSET = 0x8E5C
         /// </summary>
-        MaxFragmentInterpolationOffset = 0x8e5c,
+        MaxFragmentInterpolationOffset = 0x8E5C,
 
         /// <summary>
         /// Original was GL_FRAGMENT_INTERPOLATION_OFFSET_BITS = 0x8E5D
         /// </summary>
-        FragmentInterpolationOffsetBits = 0x8e5d,
+        FragmentInterpolationOffsetBits = 0x8E5D,
 
         /// <summary>
         /// Original was GL_MAX_VERTEX_STREAMS = 0x8E71
         /// </summary>
-        MaxVertexStreams = 0x8e71
+        MaxVertexStreams = 0x8E71
     }
 }

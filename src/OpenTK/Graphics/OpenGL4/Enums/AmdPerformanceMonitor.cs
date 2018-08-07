@@ -29,43 +29,43 @@
 namespace OpenTK.Graphics.OpenGL4
 {
     /// <summary>
-    /// Used in GL.Amd.GetPerfMonitorCounterData and GL.Amd.GetPerfMonitorCounterInfo.
+    /// Used in GL.AMD.GetPerfMonitorCounterData and GL.AMD.GetPerfMonitorCounterInfo.
     /// </summary>
     public enum AmdPerformanceMonitor
     {
         /// <summary>
         /// Original was GL_COUNTER_TYPE_AMD = 0x8BC0
         /// </summary>
-        CounterTypeAmd = 0x8bc0,
+        CounterTypeAmd = 0x8BC0,
 
         /// <summary>
         /// Original was GL_COUNTER_RANGE_AMD = 0x8BC1
         /// </summary>
-        CounterRangeAmd = 0x8bc1,
+        CounterRangeAmd = 0x8BC1,
 
         /// <summary>
         /// Original was GL_UNSIGNED_INT64_AMD = 0x8BC2
         /// </summary>
-        UnsignedInt64Amd = 0x8bc2,
+        UnsignedInt64Amd = 0x8BC2,
 
         /// <summary>
         /// Original was GL_PERCENTAGE_AMD = 0x8BC3
         /// </summary>
-        PercentageAmd = 0x8bc3,
+        PercentageAmd = 0x8BC3,
 
         /// <summary>
         /// Original was GL_PERFMON_RESULT_AVAILABLE_AMD = 0x8BC4
         /// </summary>
-        PerfmonResultAvailableAmd = 0x8bc4,
+        PerfmonResultAvailableAmd = 0x8BC4,
 
         /// <summary>
         /// Original was GL_PERFMON_RESULT_SIZE_AMD = 0x8BC5
         /// </summary>
-        PerfmonResultSizeAmd = 0x8bc5,
+        PerfmonResultSizeAmd = 0x8BC5,
 
         /// <summary>
         /// Original was GL_PERFMON_RESULT_AMD = 0x8BC6
         /// </summary>
-        PerfmonResultAmd = 0x8bc6
+        PerfmonResultAmd = 0x8BC6
     }
 }

@@ -36,11 +36,11 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_DRAW_INDIRECT_BUFFER = 0x8F3F
         /// </summary>
-        DrawIndirectBuffer = 0x8f3f,
+        DrawIndirectBuffer = 0x8F3F,
 
         /// <summary>
         /// Original was GL_DRAW_INDIRECT_BUFFER_BINDING = 0x8F43
         /// </summary>
-        DrawIndirectBufferBinding = 0x8f43
+        DrawIndirectBufferBinding = 0x8F43
     }
 }

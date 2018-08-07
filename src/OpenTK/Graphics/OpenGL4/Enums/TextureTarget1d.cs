@@ -34,12 +34,12 @@ namespace OpenTK.Graphics.OpenGL4
     public enum TextureTarget1d
     {
         /// <summary>
-        /// Original was GL_TEXTURE_1D = 0x0DE0
+        /// Original was GL_TEXTURE1_D = 0xDE0
         /// </summary>
-        Texture1D = 0x0de0,
+        Texture1D = 0xDE0,
 
         /// <summary>
-        /// Original was GL_PROXY_TEXTURE_1D = 0x8063
+        /// Original was GL_PROXY_TEXTURE1_D = 0x8063
         /// </summary>
         ProxyTexture1D = 0x8063
     }

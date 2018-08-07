@@ -34,13 +34,13 @@ namespace OpenTK.Graphics.OpenGL4
     public enum ArbSparseBuffer
     {
         /// <summary>
-        /// Original was GL_SPARSE_STORAGE_BIT_ARB = 0x0400
+        /// Original was GL_SPARSE_STORAGE_BIT_ARB = 0x400
         /// </summary>
-        SparseStorageBitArb = 0x0400,
+        SparseStorageBitArb = 0x400,
 
         /// <summary>
         /// Original was GL_SPARSE_BUFFER_PAGE_SIZE_ARB = 0x82F8
         /// </summary>
-        SparseBufferPageSizeArb = 0x82f8
+        SparseBufferPageSizeArb = 0x82F8
     }
 }

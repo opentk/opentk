@@ -36,16 +36,16 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_READ_FRAMEBUFFER = 0x8CA8
         /// </summary>
-        ReadFramebuffer = 0x8ca8,
+        ReadFramebuffer = 0x8CA8,
 
         /// <summary>
         /// Original was GL_DRAW_FRAMEBUFFER = 0x8CA9
         /// </summary>
-        DrawFramebuffer = 0x8ca9,
+        DrawFramebuffer = 0x8CA9,
 
         /// <summary>
         /// Original was GL_FRAMEBUFFER = 0x8D40
         /// </summary>
-        Framebuffer = 0x8d40
+        Framebuffer = 0x8D40
     }
 }

@@ -29,18 +29,18 @@
 namespace OpenTK.Graphics.OpenGL4
 {
     /// <summary>
-    /// Used in GL.ColorP3 and GL.ColorP4, as well as 17 other functions.
+    /// Used in GL.VertexP2 and GL.VertexP3, as well as 17 other functions.
     /// </summary>
     public enum PackedPointerType
     {
         /// <summary>
-        /// Original was GL_UNSIGNED_INT_2_10_10_10_REV = 0x8368
+        /// Original was GL_UNSIGNED_INT2101010_REV = 0x8368
         /// </summary>
         UnsignedInt2101010Rev = 0x8368,
 
         /// <summary>
-        /// Original was GL_INT_2_10_10_10_REV = 0x8D9F
+        /// Original was GL_INT2101010_REV = 0x8D9F
         /// </summary>
-        Int2101010Rev = 0x8d9f
+        Int2101010Rev = 0x8D9F
     }
 }

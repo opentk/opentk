@@ -41,36 +41,31 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_CLAMP_TO_BORDER = 0x812D
         /// </summary>
-        ClampToBorder = 0x812d,
+        ClampToBorder = 0x812D,
 
         /// <summary>
         /// Original was GL_CLAMP_TO_BORDER_ARB = 0x812D
         /// </summary>
-        ClampToBorderArb = 0x812d,
+        ClampToBorderArb = 0x812D,
 
         /// <summary>
         /// Original was GL_CLAMP_TO_BORDER_NV = 0x812D
         /// </summary>
-        ClampToBorderNV = 0x812d,
+        ClampToBorderNV = 0x812D,
 
         /// <summary>
         /// Original was GL_CLAMP_TO_BORDER_SGIS = 0x812D
         /// </summary>
-        ClampToBorderSgis = 0x812d,
+        ClampToBorderSgis = 0x812D,
 
         /// <summary>
         /// Original was GL_CLAMP_TO_EDGE = 0x812F
         /// </summary>
-        ClampToEdge = 0x812f,
+        ClampToEdge = 0x812F,
 
         /// <summary>
         /// Original was GL_CLAMP_TO_EDGE_SGIS = 0x812F
         /// </summary>
-        ClampToEdgeSgis = 0x812f,
-
-        /// <summary>
-        /// Original was GL_MIRRORED_REPEAT = 0x8370
-        /// </summary>
-        MirroredRepeat = 0x8370
+        ClampToEdgeSgis = 0x812F
     }
 }

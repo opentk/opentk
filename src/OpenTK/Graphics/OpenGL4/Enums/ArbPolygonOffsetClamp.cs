@@ -36,6 +36,6 @@ namespace OpenTK.Graphics.OpenGL4
         /// <summary>
         /// Original was GL_POLYGON_OFFSET_CLAMP = 0x8E1B
         /// </summary>
-        PolygonOffsetClamp = 0x8e1b
+        PolygonOffsetClamp = 0x8E1B
     }
 }
