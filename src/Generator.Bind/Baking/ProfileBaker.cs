@@ -56,13 +56,25 @@ namespace Bind.Baking
         /// </summary>
         /// <param name="profileName">The name of the profile.</param>
         /// <param name="versionRange">The version range of the profile to bake.</param>
+        /// <param name="baseProfileName">The name of the base profile, if any.</param>
         /// <returns>A baked profile.</returns>
         [NotNull]
-        public ApiProfile BakeProfile([NotNull] string profileName, [NotNull] VersionRange versionRange)
+        public ApiProfile BakeProfile
+        (
+            [NotNull] string profileName,
+            [NotNull] VersionRange versionRange,
+            [CanBeNull] string baseProfileName = null
+        )
         {
             // Coalesce profile and overrides
             var coalescedProfile = CoalesceProfile(profileName, versionRange);
             var coalescedOverrides = CoalesceOverrides(profileName, versionRange);
+
+            // Trim out deprecated tokens and overrides
+            if (!(baseProfileName is null))
+            {
+                coalescedOverrides = TrimDeprecatedOverrides(coalescedOverrides, baseProfileName);
+            }
 
             // Perform the second resolution pass over the override enumerations
             ResolveEnumerationOverrides(coalescedOverrides, coalescedProfile);
@@ -75,6 +87,101 @@ namespace Bind.Baking
             var overridenProfile = ApplyOverridesToProfile(translatedProfile, coalescedOverrides);
 
             return overridenProfile;
+        }
+
+        /// <summary>
+        /// Trims out any overrides or additions that are using deprecated functions as their base.
+        /// </summary>
+        /// <param name="coalescedOverrides">The coalesced overrides to trim.</param>
+        /// <param name="baseProfileName">The name of the base profile to check for deprecated functions and tokens.</param>
+        /// <returns>The trimmed overrides.</returns>
+        [NotNull]
+        private ApiProfileOverride TrimDeprecatedOverrides
+        (
+            [NotNull] ApiProfileOverride coalescedOverrides,
+            [NotNull] string baseProfileName
+        )
+        {
+            var coalescedBaseProfile = CoalesceProfile(baseProfileName, coalescedOverrides.Versions);
+            var deprecatedTokens = coalescedBaseProfile.Enumerations
+                .SelectMany(e => e.Tokens)
+                .Where(t => t.IsDeprecated)
+                .Where(t => t.DeprecatedIn < coalescedOverrides.Versions.Maximum)
+                .ToList();
+
+            var deprecatedFunctions = coalescedBaseProfile.NativeSignatures
+                .Where(f => f.IsDeprecated)
+                .Where(t => t.DeprecatedIn < coalescedOverrides.Versions.Maximum)
+                .ToList();
+
+            var newEnumerations = new List<EnumerationOverride>();
+            foreach (var addedEnumeration in coalescedOverrides.AddedEnumerations)
+            {
+                var newDirectTokens = new List<TokenSignature>();
+                foreach (var directToken in addedEnumeration.DirectTokens)
+                {
+                    if (deprecatedTokens.Any(dt => dt.Name == directToken.Name))
+                    {
+                        continue;
+                    }
+
+                    newDirectTokens.Add(directToken);
+                }
+
+                var newUseTokens = new List<UseTokenOverride>();
+                foreach (var useToken in addedEnumeration.UseTokens)
+                {
+                    if (deprecatedTokens.Any(dt => dt.Name == useToken.Token))
+                    {
+                        continue;
+                    }
+
+                    newUseTokens.Add(useToken);
+                }
+
+                var newEnumeration = new EnumerationOverride
+                (
+                    addedEnumeration.Name,
+                    newDirectTokens,
+                    newUseTokens,
+                    addedEnumeration.ReuseEnumerations
+                );
+
+                newEnumerations.Add(newEnumeration);
+            }
+
+            var newFunctionReplacements = new List<FunctionOverride>();
+            foreach (var functionReplacement in coalescedOverrides.ReplacedFunctions)
+            {
+                var nameVariations = GetNameVariations(functionReplacement);
+
+                var isReplacementDeprecated = nameVariations.Any(variation => deprecatedFunctions.Any(df => df.Name == variation));
+                if (!isReplacementDeprecated)
+                {
+                    newFunctionReplacements.Add(functionReplacement);
+                }
+            }
+
+            var newFunctionOverloads = new List<FunctionOverride>();
+            foreach (var functionOverload in coalescedOverrides.FunctionOverloads)
+            {
+                var nameVariations = GetNameVariations(functionOverload);
+
+                var isReplacementDeprecated = nameVariations.Any(variation => deprecatedFunctions.Any(df => df.Name == variation));
+                if (!isReplacementDeprecated)
+                {
+                    newFunctionOverloads.Add(functionOverload);
+                }
+            }
+
+            return new ApiProfileOverride
+            (
+                coalescedOverrides.Name,
+                coalescedOverrides.Versions,
+                newEnumerations,
+                newFunctionReplacements,
+                newFunctionOverloads
+            );
         }
 
         /// <summary>
@@ -439,16 +546,11 @@ namespace Bind.Baking
 
                     if (foundToken is null)
                     {
-                        if (!useToken.IsOptional)
-                        {
-                            Debug.WriteLine
-                            (
-                                $"Failed to resolve token \"{tokenName}\". Consider using the optional attribute to " +
-                                $"suppress this message, or fix the override."
-                            );
-                        }
-
-                        continue;
+                        throw new InvalidDataException
+                        (
+                            $"Failed to resolve token \"{tokenName}\". Consider using the optional attribute to " +
+                            $"suppress this message, or fix the override."
+                        );
                     }
 
                     resolvedTokens.Add(foundToken);

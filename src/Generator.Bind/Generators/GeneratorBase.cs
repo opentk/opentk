@@ -64,6 +64,9 @@ namespace Bind.Generators
         /// <inheritdoc/>
         public virtual string ProfileName => "gl";
 
+        /// <inheritdoc/>
+        public virtual string BaseProfileName => null;
+
         /// <summary>
         /// Gets the range of versions that should be included in the generation.
         /// </summary>

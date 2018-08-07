@@ -70,7 +70,7 @@ namespace Bind
                 var profileOverrides = OverrideReader.GetProfileOverrides(generator.OverrideFiles.ToArray()).ToList();
 
                 var baker = new ProfileBaker(profiles, profileOverrides);
-                var bakedProfile = baker.BakeProfile(generator.ProfileName, generator.Versions);
+                var bakedProfile = baker.BakeProfile(generator.ProfileName, generator.Versions, generator.BaseProfileName);
 
                 var documentationPath = Path.Combine
                 (
@@ -125,7 +125,7 @@ namespace Bind
             if (Arguments.TargetAPIs.Contains(TargetAPI.All))
             {
                 Generators.Add(new GL2Generator());
-                Generators.Add(new GL4Generator());
+                Generators.Add(new GLCore4Generator());
                 Generators.Add(new ES10Generator());
                 Generators.Add(new ES11Generator());
                 Generators.Add(new ES2Generator());
@@ -146,7 +146,7 @@ namespace Bind
                         case TargetAPI.GL3:
                         case TargetAPI.GL4:
                         {
-                            Generators.Add(new GL4Generator());
+                            Generators.Add(new GLCore4Generator());
                             break;
                         }
                         case TargetAPI.ES10:

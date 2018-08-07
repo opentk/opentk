@@ -32,12 +32,10 @@
   <!-- Buffer object functions -->
   <replace name="gl|glcore">
     <function name="ClearNamedBufferData">
-      <param name="target"><type>BufferTarget</type></param>
       <param name="internalformat"><type>PixelInternalFormat</type></param>
       <param name="format"><type>PixelFormat</type></param>
     </function>
     <function name="ClearNamedBufferSubData">
-      <param name="target"><type>BufferTarget</type></param>
       <param name="internalformat"><type>PixelInternalFormat</type></param>
       <param name="format"><type>PixelFormat</type></param>
     </function>

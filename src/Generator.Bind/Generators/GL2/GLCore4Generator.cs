@@ -31,7 +31,7 @@ namespace Bind.Generators.GL2
     /// <summary>
     /// Generates API bindings for the OpenGL 4 API.
     /// </summary>
-    internal class GL4Generator : GeneratorBase
+    internal class GLCore4Generator : GeneratorBase
     {
         /// <inheritdoc/>
         public override string APIIdentifier => "GL4";
@@ -46,12 +46,15 @@ namespace Bind.Generators.GL2
         public override string ProfileName => "glcore";
 
         /// <inheritdoc/>
+        public override string BaseProfileName => "gl";
+
+        /// <inheritdoc/>
         public override string SpecificationDocumentationPath => "gl4";
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="GL4Generator"/> class.
+        /// Initializes a new instance of the <see cref="GLCore4Generator"/> class.
         /// </summary>
-        public GL4Generator()
+        public GLCore4Generator()
         {
             var overrideFileDirectoryPath = Path.Combine(Program.Arguments.InputPath, "GL2", "GL");
             var extraOverrides = Directory.GetFiles(overrideFileDirectoryPath, "*.xml", SearchOption.AllDirectories);

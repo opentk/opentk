@@ -35,13 +35,16 @@
       <attribute ctor="M:JetBrains.Annotations.ItemNotNullAttribute.#ctor" />
     </parameter>
   </member>
-  <member name="M:Bind.Baking.ProfileBaker.BakeProfile(System.String,Bind.Versioning.VersionRange)">
+  <member name="M:Bind.Baking.ProfileBaker.BakeProfile(System.String,Bind.Versioning.VersionRange,System.String)">
     <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
     <parameter name="profileName">
       <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
     </parameter>
     <parameter name="versionRange">
       <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+    </parameter>
+    <parameter name="baseProfileName">
+      <attribute ctor="M:JetBrains.Annotations.CanBeNullAttribute.#ctor" />
     </parameter>
   </member>
   <member name="M:Bind.Builders.ApiProfileBuilder.#ctor(Bind.XML.Signatures.ApiProfile)">
@@ -772,6 +775,9 @@
     </parameter>
   </member>
   <member name="P:Bind.XML.Signatures.ApiProfile.Enumerations">
+    <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+  </member>
+  <member name="M:Bind.XML.Signatures.ApiProfile.FindContainingEnumeration(System.String)">
     <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
   </member>
   <member name="M:Bind.XML.Signatures.ApiProfile.FindFunctionWithEntrypoint(System.String)">

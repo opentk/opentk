@@ -1340,63 +1340,6 @@
       </param>
     </function>
 
-    <function name="ProgramString" extension="Arb">
-      <param name="target">
-        <type>AssemblyProgramTargetArb</type>
-      </param>
-      <param name="format">
-        <type>AssemblyProgramFormatArb</type>
-      </param>
-    </function>
-
-    <function name="BindProgram" extension="Arb">
-      <param name="target">
-        <type>AssemblyProgramTargetArb</type>
-      </param>
-    </function>
-
-    <function name="ProgramEnvParameter4" extension="Arb">
-      <param name="target">
-        <type>AssemblyProgramTargetArb</type>
-      </param>
-    </function>
-
-    <function name="ProgramLocalParameter4" extension="Arb">
-      <param name="target">
-        <type>AssemblyProgramTargetArb</type>
-      </param>
-    </function>
-
-    <function name="GetProgramEnvParameter" extension="Arb">
-      <param name="target">
-        <type>AssemblyProgramTargetArb</type>
-      </param>
-    </function>
-
-    <function name="GetProgramLocalParameter" extension="Arb">
-      <param name="target">
-        <type>AssemblyProgramTargetArb</type>
-      </param>
-    </function>
-
-    <function name="GetProgram" extension="Arb">
-      <param name="target">
-        <type>AssemblyProgramTargetArb</type>
-      </param>
-      <param name="pname">
-        <type>AssemblyProgramParameterArb</type>
-      </param>
-    </function>
-
-    <function name="GetProgramString" extension="Arb">
-      <param name="target">
-        <type>AssemblyProgramTargetArb</type>
-      </param>
-      <param name="pname">
-        <type>AssemblyProgramParameterArb</type>
-      </param>
-    </function>
-
     <function name="GetVertexAttrib" extension="Arb">
       <param name="pname">
         <type>VertexAttribParameterArb</type>
@@ -1507,18 +1450,6 @@
       </param>
     </function>
 
-    <function name="TangentPointer" extension="Ext">
-      <param name="type">
-        <type>NormalPointerType</type>
-      </param>
-    </function>
-
-    <function name="BinormalPointer" extension="Ext">
-      <param name="type">
-        <type>NormalPointerType</type>
-      </param>
-    </function>
-
     <function name="RenderbufferStorage" extension="Ext">
       <param name="internalformat">
         <type>RenderbufferStorage</type>
@@ -1586,44 +1517,95 @@
        </param>
     </function>
 
-    <function name="GetUnsignedByte" extension="Ext">
-      <param name="target">
-        <type>ExtMemoryObject</type>
-      </param>
-    </function>
-
     <function name="ClearNamedBufferSubData" extension="Ext">
       <param name="internalformat">
         <type>RenderbufferStorage</type>
       </param>
     </function>
 
-    <!-- Apple -->
+    <!-- Version 4.4 -->
 
-    <function name="BufferParameter" extension="Apple">
-      <param name="target">
-        <type>BufferTarget</type>
+    <!-- Synchronization -->
+    <function name="FenceSync" extension="Core">
+      <param name="condition">
+        <type>SyncCondition</type>
       </param>
+      <param name="flags">
+        <type>WaitSyncFlags</type>
+      </param>
+    </function>
+
+    <function name="ClientWaitSync" extension="Core">
+      <returns>WaitSyncStatus</returns>
+      <param name="flags">
+        <type>ClientWaitSyncFlags</type>
+      </param>
+    </function>
+
+    <function name="WaitSync" extension="Core">
+      <param name="flags">
+        <type>WaitSyncFlags</type>
+      </param>
+    </function>
+
+    <function name="GetSynciv" extension="Core">
       <param name="pname">
-        <type>BufferParameterApple</type>
-      </param>
+          <type>SyncParameterName</type>
+        </param>
     </function>
 
-    <function name="FlushMappedBufferRange" extension="Apple">
+    <function name="BufferStorage" extension="Core">
       <param name="target">
         <type>BufferTarget</type>
       </param>
-    </function>
-
-
-    <!-- IBM -->
-
-    <function name="FogCoordPointerList" extension="IBM">
-      <param name="type">
-        <type>FogPointerType</type>
+      <param name="flags">
+        <type>BufferStorageFlags</type>
       </param>
     </function>
 
+  </replace>
+
+  <overload name="glcore">
+    <!-- For symmetry with gl namespace (issue #171) -->
+    <function name="DrawElements" extension="Core">
+      <param name="indices">
+        <type>int</type>
+      </param>
+    </function>
+  </overload>
+
+  <overload name="gl">
+    <!-- added manually -->
+    <function name="DrawElements">
+      <param name="mode">
+        <type>BeginMode</type>
+      </param>
+      <param name="indices">
+        <type>int</type>
+      </param>
+    </function>
+    <function name="DrawElements">
+      <param name="mode">
+        <type>PrimitiveType</type>
+      </param>
+      <param name="indices">
+        <type>int</type>
+      </param>
+    </function>
+  </overload>
+
+  <add name="gl">
+    <enum name="Buffer_Parameter_Apple">
+      <use enum="APPLE_flush_buffer_range" token="BUFFER_SERIALIZED_MODIFY_APPLE" />
+      <use enum="APPLE_flush_buffer_range" token="BUFFER_FLUSHING_UNMAP_APPLE" />
+    </enum>
+    <enum name="TextureTarget">
+      <use enum="ARB_texture_rectangle" token="TEXTURE_RECTANGLE_ARB" />
+      <use enum="NV_texture_rectangle" token="TEXTURE_RECTANGLE_NV" />
+    </enum>
+  </add>
+
+  <replace name="gl">
     <!-- NV -->
 
     <function name="BindProgram" extension="NV">
@@ -1782,76 +1764,108 @@
       </param>
     </function>
 
-    <!-- Version 4.4 -->
+    <!-- Apple -->
 
-    <!-- Synchronization -->
-    <function name="FenceSync" extension="Core">
-      <param name="condition">
-        <type>SyncCondition</type>
-      </param>
-      <param name="flags">
-        <type>WaitSyncFlags</type>
-      </param>
-    </function>
-
-    <function name="ClientWaitSync" extension="Core">
-      <returns>WaitSyncStatus</returns>
-      <param name="flags">
-        <type>ClientWaitSyncFlags</type>
-      </param>
-    </function>
-
-    <function name="WaitSync" extension="Core">
-      <param name="flags">
-        <type>WaitSyncFlags</type>
-      </param>
-    </function>
-
-    <function name="GetSynciv" extension="Core">
-      <param name="pname">
-          <type>SyncParameterName</type>
-        </param>
-    </function>
-
-    <function name="BufferStorage" extension="Core">
+    <function name="BufferParameter" extension="Apple">
       <param name="target">
         <type>BufferTarget</type>
       </param>
-      <param name="flags">
-        <type>BufferStorageFlags</type>
+      <param name="pname">
+        <type>BufferParameterApple</type>
       </param>
     </function>
 
+    <function name="FlushMappedBufferRange" extension="Apple">
+      <param name="target">
+        <type>BufferTarget</type>
+      </param>
+    </function>
+
+    <!-- IBM -->
+
+    <function name="FogCoordPointerList" extension="IBM">
+      <param name="type">
+        <type>FogPointerType</type>
+      </param>
+    </function>
+
+
+
+    <function name="GetUnsignedByte" extension="Ext">
+      <param name="target">
+        <type>ExtMemoryObject</type>
+      </param>
+    </function>
+
+    <function name="TangentPointer" extension="Ext">
+      <param name="type">
+        <type>NormalPointerType</type>
+      </param>
+    </function>
+
+    <function name="BinormalPointer" extension="Ext">
+      <param name="type">
+        <type>NormalPointerType</type>
+      </param>
+    </function>
+
+    <function name="ProgramString" extension="Arb">
+      <param name="target">
+        <type>AssemblyProgramTargetArb</type>
+      </param>
+      <param name="format">
+        <type>AssemblyProgramFormatArb</type>
+      </param>
+    </function>
+
+    <function name="BindProgram" extension="Arb">
+      <param name="target">
+        <type>AssemblyProgramTargetArb</type>
+      </param>
+    </function>
+
+    <function name="ProgramEnvParameter4" extension="Arb">
+      <param name="target">
+        <type>AssemblyProgramTargetArb</type>
+      </param>
+    </function>
+
+    <function name="ProgramLocalParameter4" extension="Arb">
+      <param name="target">
+        <type>AssemblyProgramTargetArb</type>
+      </param>
+    </function>
+
+    <function name="GetProgramEnvParameter" extension="Arb">
+      <param name="target">
+        <type>AssemblyProgramTargetArb</type>
+      </param>
+    </function>
+
+    <function name="GetProgramLocalParameter" extension="Arb">
+      <param name="target">
+        <type>AssemblyProgramTargetArb</type>
+      </param>
+    </function>
+
+    <function name="GetProgram" extension="Arb">
+      <param name="target">
+        <type>AssemblyProgramTargetArb</type>
+      </param>
+      <param name="pname">
+        <type>AssemblyProgramParameterArb</type>
+      </param>
+    </function>
+
+    <function name="GetProgramString" extension="Arb">
+      <param name="target">
+        <type>AssemblyProgramTargetArb</type>
+      </param>
+      <param name="pname">
+        <type>AssemblyProgramParameterArb</type>
+      </param>
+    </function>
   </replace>
-
-  <overload name="glcore">
-    <!-- For symmetry with gl namespace (issue #171) -->
-    <function name="DrawElements" extension="Core">
-      <param name="indices">
-        <type>int</type>
-      </param>
-    </function>
-  </overload>
-
-  <overload name="gl">
-    <!-- added manually -->
-    <function name="DrawElements">
-      <param name="mode">
-        <type>BeginMode</type>
-      </param>
-      <param name="indices">
-        <type>int</type>
-      </param>
-    </function>
-    <function name="DrawElements">
-      <param name="mode">
-        <type>PrimitiveType</type>
-      </param>
-      <param name="indices">
-        <type>int</type>
-      </param>
-    </function>
-  </overload>
 
   <add name="gl|glcore">
     <enum name="ColorComponent">
@@ -2178,10 +2192,6 @@
       <use enum="TextureMagFilter" token="LINEAR" />
       <use enum="TextureMagFilter" token="NEAREST" />
     </enum>
-    <enum name="Buffer_Parameter_Apple">
-      <use enum="APPLE_flush_buffer_range" token="BUFFER_SERIALIZED_MODIFY_APPLE" optional="true" />
-      <use enum="APPLE_flush_buffer_range" token="BUFFER_FLUSHING_UNMAP_APPLE" optional="true" />
-    </enum>
     <enum name="BufferAccess">
       <token name="READ_ONLY" value="0x88B8" />
       <token name="READ_WRITE" value="0x88BA" />
@@ -2437,10 +2447,10 @@
       <use enum="DrawBufferMode" token="FRONT_RIGHT" />
       <use enum="DrawBufferMode" token="BACK_LEFT" />
       <use enum="DrawBufferMode" token="BACK_RIGHT" />
-      <use enum="DrawBufferMode" token="AUX0" optional="true" />
-      <use enum="DrawBufferMode" token="AUX1" optional="true" />
-      <use enum="DrawBufferMode" token="AUX2" optional="true" />
-      <use enum="DrawBufferMode" token="AUX3" optional="true" />
+      <use enum="DrawBufferMode" token="AUX0" />
+      <use enum="DrawBufferMode" token="AUX1" />
+      <use enum="DrawBufferMode" token="AUX2" />
+      <use enum="DrawBufferMode" token="AUX3" />
       <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT0" />
       <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT1" />
       <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT2" />
@@ -3140,8 +3150,8 @@
       <use enum="PixelCopyType" token="COLOR" />
     </enum>
     <enum name="MatrixModeArb">
-      <use enum="MatrixMode" token="MODELVIEW" optional="true" />
-      <use enum="MatrixMode" token="PROJECTION" optional="true" />
+      <use enum="MatrixMode" token="MODELVIEW" />
+      <use enum="MatrixMode" token="PROJECTION" />
       <use enum="MatrixMode" token="TEXTURE" />
       <use enum="MatrixMode" token="COLOR" />
       <token name="MATRIX0" value="0x88C0" />
@@ -3241,16 +3251,16 @@
       <token name="RED_INTEGER" value="0x8D94" />
       <token name="RGB_INTEGER" value="0x8D98" />
       <token name="RGBA_INTEGER" value="0x8D99" />
-      <use enum="EXT_abgr" token="ABGR_EXT" optional="true" />
-      <use enum="EXT_cmyka" token="CMYK_EXT" optional="true" />
-      <use enum="EXT_cmyka" token="CMYKA_EXT" optional="true" />
+      <use token="ABGR_EXT"/>
+      <use token="CMYK_EXT" />
+      <use token="CMYKA_EXT" />
       <use enum="SGIX_icc_texture" token="R5_G6_B5_ICC_SGIX" />
       <use enum="SGIX_icc_texture" token="R5_G6_B5_A8_ICC_SGIX" />
       <use enum="SGIX_icc_texture" token="ALPHA16_ICC_SGIX" />
       <use enum="SGIX_icc_texture" token="LUMINANCE16_ICC_SGIX" />
       <use enum="SGIX_icc_texture" token="LUMINANCE16_ALPHA8_ICC_SGIX" />
-      <use enum="SGIX_ycrcb" token="YCRCB_422_SGIX" optional="true" />
-      <use enum="SGIX_ycrcb" token="YCRCB_444_SGIX" optional="true" />
+      <use token="YCRCB_422_SGIX" />
+      <use token="YCRCB_444_SGIX" />
       <token name="ALPHA" value="0x1906" />
       <token name="BLUE" value="0x1905" />
       <token name="COLOR_INDEX" value="0x1900" />
@@ -3266,11 +3276,11 @@
     <enum name="PixelInternalFormat">
       <use enum="PixelFormat" token="DEPTH_COMPONENT" />
       <!-- Copy from InternalFormat (Khronos renamed PixelInternalFormat) -->
-      <use token="ALPHA12" optional="true" />
-      <use token="ALPHA16" optional="true" />
+      <use token="ALPHA12" />
+      <use token="ALPHA16" />
       <use token="ALPHA16_ICC_SGIX"/>
-      <use token="ALPHA4" optional="true" />
-      <use token="ALPHA8" optional="true" />
+      <use token="ALPHA4" />
+      <use token="ALPHA8" />
       <use token="ALPHA_ICC_SGIX"/>
       <use token="DEPTH_COMPONENT16_SGIX"/>
       <use token="DEPTH_COMPONENT24_SGIX"/>
@@ -3289,25 +3299,25 @@
       <use token="DUAL_LUMINANCE8_SGIS"/>
       <use token="DUAL_LUMINANCE_ALPHA4_SGIS"/>
       <use token="DUAL_LUMINANCE_ALPHA8_SGIS"/>
-      <use token="INTENSITY" optional="true" />
-      <use token="INTENSITY12" optional="true" />
-      <use token="INTENSITY16" optional="true" />
+      <use token="INTENSITY" />
+      <use token="INTENSITY12" />
+      <use token="INTENSITY16" />
       <use token="INTENSITY16_ICC_SGIX"/>
-      <use token="INTENSITY4" optional="true" />
-      <use token="INTENSITY8" optional="true" />
+      <use token="INTENSITY4" />
+      <use token="INTENSITY8" />
       <use token="INTENSITY_ICC_SGIX"/>
-      <use token="LUMINANCE12" optional="true" />
-      <use token="LUMINANCE12_ALPHA12" optional="true" />
-      <use token="LUMINANCE12_ALPHA4" optional="true" />
-      <use token="LUMINANCE16" optional="true" />
-      <use token="LUMINANCE16_ALPHA16" optional="true" />
+      <use token="LUMINANCE12" />
+      <use token="LUMINANCE12_ALPHA12" />
+      <use token="LUMINANCE12_ALPHA4" />
+      <use token="LUMINANCE16" />
+      <use token="LUMINANCE16_ALPHA16" />
       <use token="LUMINANCE16_ALPHA8_ICC_SGIX"/>
       <use token="LUMINANCE16_ICC_SGIX"/>
-      <use token="LUMINANCE4" optional="true" />
-      <use token="LUMINANCE4_ALPHA4" optional="true" />
-      <use token="LUMINANCE6_ALPHA2" optional="true" />
-      <use token="LUMINANCE8" optional="true" />
-      <use token="LUMINANCE8_ALPHA8" optional="true" />
+      <use token="LUMINANCE4" />
+      <use token="LUMINANCE4_ALPHA4" />
+      <use token="LUMINANCE6_ALPHA2" />
+      <use token="LUMINANCE8" />
+      <use token="LUMINANCE8_ALPHA8" />
       <use token="LUMINANCE_ALPHA_ICC_SGIX"/>
       <use token="LUMINANCE_ICC_SGIX"/>
       <use token="QUAD_ALPHA4_SGIS"/>
@@ -3696,10 +3706,10 @@
       <token name="RENDERBUFFER_WIDTH_EXT" value="0x8D42" />
     </enum>
     <enum name="RenderbufferStorage">
-      <use enum="PixelInternalFormat" token="ALPHA4" optional="true" />
-      <use enum="PixelInternalFormat" token="ALPHA8" optional="true" />
-      <use enum="PixelInternalFormat" token="ALPHA12" optional="true" />
-      <use enum="PixelInternalFormat" token="ALPHA16" optional="true" />
+      <use enum="PixelInternalFormat" token="ALPHA4" />
+      <use enum="PixelInternalFormat" token="ALPHA8" />
+      <use enum="PixelInternalFormat" token="ALPHA12" />
+      <use enum="PixelInternalFormat" token="ALPHA16" />
       <use enum="PixelInternalFormat" token="R8" />
       <use enum="PixelInternalFormat" token="R16" />
       <use enum="PixelInternalFormat" token="RG8" />
@@ -3936,7 +3946,7 @@
     <enum name="TextureEnvModeCombine">
       <use enum="StencilOp" token="REPLACE" />
       <use enum="TextureEnvMode" token="MODULATE" />
-      <use enum="AccumOp" token="ADD" optional="true" />
+      <use enum="AccumOp" token="ADD" />
       <token name="ADD_SIGNED" value="0x8574" />
       <token name="DOT3_RGB" value="0x86AE" />
       <token name="DOT3_RGBA" value="0x86AF" />
@@ -4001,7 +4011,7 @@
       <token name="TEXTURE9" value="0x84C9" />
     </enum>
     <enum name="TextureEnvParameter">
-      <use enum="GetPName" token="ALPHA_SCALE" optional="true" />
+      <use enum="GetPName" token="ALPHA_SCALE" />
       <token name="COMBINE_ALPHA" value="0x8572" />
       <token name="COMBINE_RGB" value="0x8571" />
       <token name="COORD_REPLACE" value="0x8862" />
@@ -4030,12 +4040,12 @@
       <token name="REFLECTION_MAP" value="0x8512" />
     </enum>
     <enum name="TextureParameterName">
-      <use enum="GetTextureParameter" token="TEXTURE_MIN_LOD" />
-      <use enum="GetTextureParameter" token="TEXTURE_MAX_LOD" />
-      <use enum="GetTextureParameter" token="TEXTURE_BASE_LEVEL" />
-      <use enum="GetTextureParameter" token="TEXTURE_MAX_LEVEL" />
-      <use enum="GetTextureParameter" token="TEXTURE_DEPTH" />
-      <use enum="GetTextureParameter" token="TEXTURE_WRAP_R" />
+      <use token="TEXTURE_MIN_LOD" />
+      <use token="TEXTURE_MAX_LOD" />
+      <use token="TEXTURE_BASE_LEVEL" />
+      <use token="TEXTURE_MAX_LEVEL" />
+      <use token="TEXTURE_DEPTH" />
+      <use token="TEXTURE_WRAP_R" />
       <token name="CLAMP_TO_BORDER" value="0x812D" />
       <token name="CLAMP_TO_EDGE" value="0x812F" />
       <token name="DEPTH_TEXTURE_MODE" value="0x884B" />
@@ -4102,8 +4112,6 @@
       <token name="TEXTURE_CUBE_MAP_POSITIVE_Y" value="0x8517" />
       <token name="TEXTURE_CUBE_MAP_POSITIVE_Z" value="0x8519" />
       <token name="TEXTURE_RECTANGLE" value="0x84F5" />
-      <use enum="ARB_texture_rectangle" token="TEXTURE_RECTANGLE_ARB" />
-      <use enum="NV_texture_rectangle" token="TEXTURE_RECTANGLE_NV" />
       <use token="TEXTURE_BUFFER" />
       <use token="TEXTURE_CUBE_MAP_ARRAY" />
       <use token="PROXY_TEXTURE_CUBE_MAP_ARRAY" />
@@ -6716,7 +6724,7 @@
   </replace>
 
   <!-- ExtGetProgramBinarySourceQCOM -->
-  <replace name="gl|glcore|gles1|gles2">
+  <replace name="gles1|gles2">
     <!-- ExtGetProgramBinarySourceQCOM is missing count attributes -->
     <function name="ExtGetProgramBinarySource" extension="QCOM">
       <param name="source">

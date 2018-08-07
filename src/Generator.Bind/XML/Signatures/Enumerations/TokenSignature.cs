@@ -32,6 +32,11 @@ namespace Bind.XML.Signatures.Enumerations
         public string Remarks { get; }
 
         /// <summary>
+        /// Gets a value indicating whether the token is deprecated.
+        /// </summary>
+        public bool IsDeprecated => !(DeprecatedIn is null);
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="TokenSignature"/> class.
         /// </summary>
         /// <param name="name">The name of the token.</param>

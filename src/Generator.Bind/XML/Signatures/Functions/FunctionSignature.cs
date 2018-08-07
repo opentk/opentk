@@ -73,6 +73,11 @@ namespace Bind.XML.Signatures.Functions
         public bool HasGenericTypeParameters => GenericTypeParameters.Any();
 
         /// <summary>
+        /// Gets a value indicating whether the function is deprecated.
+        /// </summary>
+        public bool IsDeprecated => !(DeprecatedIn is null);
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="FunctionSignature"/> class.
         /// </summary>
         /// <param name="name">The name of the function.</param>

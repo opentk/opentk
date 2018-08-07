@@ -70,6 +70,12 @@ namespace Bind.Generators
         string ProfileName { get; }
 
         /// <summary>
+        /// Gets the name of the profile's base profile, that is, the profile that the current profile is a subset of.
+        /// </summary>
+        [CanBeNull]
+        string BaseProfileName { get; }
+
+        /// <summary>
         /// Gets the path to the file that contains the API specification.
         /// </summary>
         [NotNull]
