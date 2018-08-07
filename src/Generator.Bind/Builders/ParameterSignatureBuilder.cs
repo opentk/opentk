@@ -1,4 +1,4 @@
-using Bind.Structures;
+using Bind.XML.Signatures;
 using Bind.XML.Signatures.Functions;
 using JetBrains.Annotations;
 

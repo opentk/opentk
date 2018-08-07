@@ -1,8 +1,7 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Bind.Builders;
-using Bind.Structures;
+using Bind.XML.Signatures;
 using Bind.XML.Signatures.Functions;
 using JetBrains.Annotations;
 

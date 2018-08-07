@@ -107,11 +107,9 @@ namespace Bind.XML.Overrides.Functions
         }
 
         /// <inheritdoc/>
-        [NotNull]
         string INamedExtensionScopedEntity.Name => BaseName;
 
         /// <inheritdoc/>
-        [CanBeNull]
         string INamedExtensionScopedEntity.Extension => BaseExtension;
     }
 }

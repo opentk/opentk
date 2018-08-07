@@ -15,7 +15,6 @@ using Bind.Generators.ES;
 using Bind.Generators.GL2;
 using Bind.Translation.Mappers;
 using Bind.Typemap;
-using Bind.Versioning;
 using Bind.XML.Documentation;
 using Bind.XML.Overrides;
 using Bind.XML.Signatures;
@@ -34,7 +33,7 @@ namespace Bind
         /// </summary>
         internal static CommandLineArguments Arguments { get; private set; }
 
-        private static readonly List<IGenerator> Generators = new List<IGenerator>();
+        private static readonly List<IGeneratorSettings> Generators = new List<IGeneratorSettings>();
 
         private static readonly IDictionary<string, IReadOnlyList<ApiProfile>> _cachedProfiles =
             new Dictionary<string, IReadOnlyList<ApiProfile>>();
@@ -74,9 +73,7 @@ namespace Bind
 
                 var documentationPath = Path.Combine
                 (
-                    Arguments.InputPath,
-                    "Docs",
-                    "docs.gl",
+                    Arguments.DocumentationPath,
                     generator.SpecificationDocumentationPath
                 );
 
@@ -124,13 +121,13 @@ namespace Bind
         {
             if (Arguments.TargetAPIs.Contains(TargetAPI.All))
             {
-                Generators.Add(new GL2Generator());
-                Generators.Add(new GLCore4Generator());
-                Generators.Add(new ES10Generator());
-                Generators.Add(new ES11Generator());
-                Generators.Add(new ES2Generator());
-                Generators.Add(new ES3Generator());
-                Generators.Add(new ES31Generator());
+                Generators.Add(new GL2GeneratorSettings());
+                Generators.Add(new GLCore4GeneratorSettings());
+                Generators.Add(new ES10GeneratorSettings());
+                Generators.Add(new ES11GeneratorSettings());
+                Generators.Add(new ES2GeneratorSettings());
+                Generators.Add(new ES3GeneratorSettings());
+                Generators.Add(new ES31GeneratorSettings());
             }
             else
             {
@@ -140,38 +137,38 @@ namespace Bind
                     {
                         case TargetAPI.GL2:
                         {
-                            Generators.Add(new GL2Generator());
+                            Generators.Add(new GL2GeneratorSettings());
                             break;
                         }
                         case TargetAPI.GL3:
                         case TargetAPI.GL4:
                         {
-                            Generators.Add(new GLCore4Generator());
+                            Generators.Add(new GLCore4GeneratorSettings());
                             break;
                         }
                         case TargetAPI.ES10:
                         {
-                            Generators.Add(new ES10Generator());
+                            Generators.Add(new ES10GeneratorSettings());
                             break;
                         }
                         case TargetAPI.ES11:
                         {
-                            Generators.Add(new ES11Generator());
+                            Generators.Add(new ES11GeneratorSettings());
                             break;
                         }
                         case TargetAPI.ES20:
                         {
-                            Generators.Add(new ES2Generator());
+                            Generators.Add(new ES2GeneratorSettings());
                             break;
                         }
                         case TargetAPI.ES30:
                         {
-                            Generators.Add(new ES3Generator());
+                            Generators.Add(new ES3GeneratorSettings());
                             break;
                         }
                         case TargetAPI.ES31:
                         {
-                            Generators.Add(new ES31Generator());
+                            Generators.Add(new ES31GeneratorSettings());
                             break;
                         }
                     }

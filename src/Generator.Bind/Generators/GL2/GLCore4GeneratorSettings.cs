@@ -25,13 +25,14 @@
 
 using System.IO;
 using System.Linq;
+using JetBrains.Annotations;
 
 namespace Bind.Generators.GL2
 {
     /// <summary>
     /// Generates API bindings for the OpenGL 4 API.
     /// </summary>
-    internal class GLCore4Generator : GeneratorBase
+    internal class GLCore4GeneratorSettings : GeneratorSettingsBase
     {
         /// <inheritdoc/>
         public override string APIIdentifier => "GL4";
@@ -46,15 +47,16 @@ namespace Bind.Generators.GL2
         public override string ProfileName => "glcore";
 
         /// <inheritdoc/>
+        [NotNull]
         public override string BaseProfileName => "gl";
 
         /// <inheritdoc/>
         public override string SpecificationDocumentationPath => "gl4";
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="GLCore4Generator"/> class.
+        /// Initializes a new instance of the <see cref="GLCore4GeneratorSettings"/> class.
         /// </summary>
-        public GLCore4Generator()
+        public GLCore4GeneratorSettings()
         {
             var overrideFileDirectoryPath = Path.Combine(Program.Arguments.InputPath, "GL2", "GL");
             var extraOverrides = Directory.GetFiles(overrideFileDirectoryPath, "*.xml", SearchOption.AllDirectories);

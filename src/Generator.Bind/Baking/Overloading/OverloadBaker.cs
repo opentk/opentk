@@ -4,7 +4,6 @@ using Bind.Builders;
 using Bind.XML.Signatures;
 using Bind.XML.Signatures.Functions;
 using JetBrains.Annotations;
-using MoreLinq.Extensions;
 
 namespace Bind.Baking.Overloading
 {

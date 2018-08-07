@@ -7,7 +7,7 @@ namespace Bind.Generators.ES
     /// <summary>
     /// Generates API bindings for OpenGL ES 2.0.
     /// </summary>
-    internal class ES2Generator : GeneratorBase
+    internal class ES2GeneratorSettings : GeneratorSettingsBase
     {
         /// <inheritdoc/>
         public override string APIIdentifier => "ES20";
@@ -27,13 +27,10 @@ namespace Bind.Generators.ES
         /// <inheritdoc/>
         public override VersionRange Versions => new VersionRange(new Version(2, 0));
 
-        /// <inheritdoc/>
-        protected override string Version => "2.0";
-
         /// <summary>
-        /// Initializes a new instance of the <see cref="ES2Generator"/> class.
+        /// Initializes a new instance of the <see cref="ES2GeneratorSettings"/> class.
         /// </summary>
-        public ES2Generator()
+        public ES2GeneratorSettings()
         {
             OverrideFiles = new[]
             {

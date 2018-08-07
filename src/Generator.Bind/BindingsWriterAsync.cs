@@ -31,7 +31,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Bind.Generators;
-using Bind.Structures;
 using Bind.Translation.Translators;
 using Bind.Writers;
 using Bind.XML.Documentation;
@@ -50,7 +49,7 @@ namespace Bind
     internal sealed class BindingsWriterAsync
     {
         [NotNull]
-        private readonly IGenerator _generatorSettings;
+        private readonly IGeneratorSettings _generatorSettings;
 
         [NotNull]
         private readonly ApiProfile _profile;
@@ -80,7 +79,7 @@ namespace Bind
         /// <param name="documentation">The documentation for the profile.</param>
         public BindingsWriterAsync
         (
-            [NotNull] IGenerator generatorSettings,
+            [NotNull] IGeneratorSettings generatorSettings,
             [NotNull] ApiProfile profile,
             [NotNull] ProfileDocumentation documentation
         )

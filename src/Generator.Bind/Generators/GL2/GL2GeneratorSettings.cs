@@ -1,5 +1,5 @@
-﻿//
-// Documentation.cs
+//
+// GL2Generator.cs
 //
 // Author:
 //       Stefanos A. <stapostol@gmail.com>
@@ -25,23 +25,32 @@
 // THE SOFTWARE.
 //
 
-using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 
-namespace Bind.Structures
+namespace Bind.Generators.GL2
 {
     /// <summary>
-    /// Holds data for function documentation.
+    /// Generates API bindings for the OpenGL 2 API.
     /// </summary>
-    internal class DocumentationDefinition
+    internal class GL2GeneratorSettings : GeneratorSettingsBase
     {
-        /// <summary>
-        /// Gets or sets the documentation summary.
-        /// </summary>
-        public string Summary { get; set; }
+        /// <inheritdoc/>
+        public override string APIIdentifier => "GL2";
 
         /// <summary>
-        /// Gets or sets a list of parameter documentations for the function (if any).
+        /// Initializes a new instance of the <see cref="GL2GeneratorSettings"/> class.
         /// </summary>
-        public List<DocumentationParameterDefinition> Parameters { get; set; }
+        public GL2GeneratorSettings()
+        {
+            var overrideFileDirectoryPath = Path.Combine(Program.Arguments.InputPath, "GL2", "GL");
+            var extraOverrides = Directory.GetFiles(overrideFileDirectoryPath, "*.xml", SearchOption.AllDirectories);
+
+            OverrideFiles = new[]
+            {
+                Path.Combine(Program.Arguments.InputPath, "GL2", "overrides.xml")
+            }
+            .Concat(extraOverrides);
+        }
     }
 }

@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
 using JetBrains.Annotations;
 
 namespace Bind.XML.Signatures.Functions

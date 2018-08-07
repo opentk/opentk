@@ -43,8 +43,8 @@ namespace Bind.Baking
         /// <param name="overrides">The overrides to use in the baking.</param>
         public ProfileBaker
         (
-            [NotNull] [ItemNotNull] IReadOnlyList<ApiProfile> profiles,
-            [NotNull] [ItemNotNull] IReadOnlyList<ApiProfileOverride> overrides
+            [NotNull, ItemNotNull] IReadOnlyList<ApiProfile> profiles,
+            [NotNull, ItemNotNull] IReadOnlyList<ApiProfileOverride> overrides
         )
         {
             _profiles = profiles ?? throw new ArgumentNullException(nameof(profiles));
@@ -351,8 +351,7 @@ namespace Bind.Baking
         /// The mathematical expression to apply to the name of the referenced parameter.
         /// </param>
         /// <returns>An overriden parameter.</returns>
-        [NotNull]
-        [ContractAnnotation("hasComputedCount : true => computedCountParameterNames : notnull; hasValueReference : true => valueReferenceName : notnull")]
+        [NotNull, ContractAnnotation("hasComputedCount : true => computedCountParameterNames : notnull; hasValueReference : true => valueReferenceName : notnull")]
         private static ParameterSignature CreateOverriddenParameter
         (
             [NotNull] ParameterSignature baseParameter,

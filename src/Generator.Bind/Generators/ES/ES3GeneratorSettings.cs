@@ -7,7 +7,7 @@ namespace Bind.Generators.ES
     /// <summary>
     /// Generates API bindings for OpenGL ES 3.0.
     /// </summary>
-    internal class ES3Generator : GeneratorBase
+    internal class ES3GeneratorSettings : GeneratorSettingsBase
     {
         /// <inheritdoc/>
         public override string APIIdentifier => "ES30";
@@ -27,13 +27,10 @@ namespace Bind.Generators.ES
         /// <inheritdoc/>
         public override VersionRange Versions => new VersionRange(new Version(2, 0), new Version(3, 0));
 
-        /// <inheritdoc/>
-        protected override string Version => "2.0|3.0";
-
         /// <summary>
-        /// Initializes a new instance of the <see cref="ES3Generator"/> class.
+        /// Initializes a new instance of the <see cref="ES3GeneratorSettings"/> class.
         /// </summary>
-        public ES3Generator()
+        public ES3GeneratorSettings()
         {
             OverrideFiles = new[]
             {

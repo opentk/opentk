@@ -1,5 +1,4 @@
 using System;
-using Bind.Structures;
 using JetBrains.Annotations;
 
 namespace Bind.XML.Signatures.Functions

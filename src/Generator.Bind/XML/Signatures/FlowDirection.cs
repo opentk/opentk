@@ -23,7 +23,7 @@
 // OTHER DEALINGS IN THE SOFTWARE.
 //
 
-namespace Bind.Structures
+namespace Bind.XML.Signatures
 {
     /// <summary>
     /// Enumerates the possible flows of a parameter (ie. is this parameter

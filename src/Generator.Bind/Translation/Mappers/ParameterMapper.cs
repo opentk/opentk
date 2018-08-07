@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Bind.Builders;
-using Bind.Structures;
+using Bind.XML.Signatures;
 using Bind.XML.Signatures.Functions;
 
 namespace Bind.Translation.Mappers

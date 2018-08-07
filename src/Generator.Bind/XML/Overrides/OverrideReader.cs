@@ -4,10 +4,10 @@ using System.IO;
 using System.Linq;
 using System.Xml.Linq;
 using Bind.Extensions;
-using Bind.Structures;
 using Bind.Versioning;
 using Bind.XML.Overrides.Enumerations;
 using Bind.XML.Overrides.Functions;
+using Bind.XML.Signatures;
 using JetBrains.Annotations;
 using static Bind.XML.ParsingHelpers;
 

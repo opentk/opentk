@@ -8,7 +8,7 @@ namespace Bind.Generators.ES
     /// <summary>
     /// Generates API bindings for the OpenGL ES 3.1 API.
     /// </summary>
-    internal class ES31Generator : GeneratorBase
+    internal class ES31GeneratorSettings : GeneratorSettingsBase
     {
         /// <inheritdoc/>
         public override string APIIdentifier => "ES31";
@@ -28,13 +28,10 @@ namespace Bind.Generators.ES
         /// <inheritdoc/>
         public override VersionRange Versions => new VersionRange(new Version(2, 0), new Version(3, 1));
 
-        /// <inheritdoc/>
-        protected override string Version => "2.0|3.0|3.1";
-
         /// <summary>
-        /// Initializes a new instance of the <see cref="ES31Generator"/> class.
+        /// Initializes a new instance of the <see cref="ES31GeneratorSettings"/> class.
         /// </summary>
-        public ES31Generator()
+        public ES31GeneratorSettings()
         {
             var overrideFileDirectoryPath = Path.Combine(Program.Arguments.InputPath, "GL2", "ES", "3.1");
             var extraOverrides = Directory.GetFiles(overrideFileDirectoryPath, "*.xml", SearchOption.AllDirectories);

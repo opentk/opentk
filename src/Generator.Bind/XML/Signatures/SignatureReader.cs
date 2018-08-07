@@ -4,7 +4,6 @@ using System.IO;
 using System.Linq;
 using System.Xml.Linq;
 using Bind.Extensions;
-using Bind.Structures;
 using Bind.Versioning;
 using Bind.XML.Signatures.Enumerations;
 using Bind.XML.Signatures.Functions;
@@ -165,9 +164,9 @@ namespace Bind.XML.Signatures
         /// </param>
         /// <param name="hasValueReference">Whether or not the parameter has a count value reference.</param>
         /// <param name="valueReferenceName">The name of the parameter that the count value references.</param>
+        /// <param name="valueReferenceExpression">The expression that should be applied to the value reference.</param>
         /// <returns>A parsed parameter.</returns>
-        [NotNull]
-        [ContractAnnotation("hasComputedCount : true => computedCountParameterNames : notnull; hasValueReference : true => valueReferenceName : notnull")]
+        [NotNull, ContractAnnotation("hasComputedCount : true => computedCountParameterNames : notnull; hasValueReference : true => valueReferenceName : notnull")]
         private static ParameterSignature ParseParameterSignature
         (
             [NotNull] XElement paramElement,

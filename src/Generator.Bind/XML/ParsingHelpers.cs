@@ -37,8 +37,7 @@ namespace Bind.XML
         /// <param name="attributeName">The name of the attribute to parse from.</param>
         /// <param name="defaultVersion">The default value to return.</param>
         /// <returns>A parsed version.</returns>
-        [CanBeNull]
-        [ContractAnnotation("defaultVersion : null => canbenull; defaultVersion : notnull => notnull")]
+        [CanBeNull, ContractAnnotation("defaultVersion : null => canbenull; defaultVersion : notnull => notnull")]
         public static Version ParseVersion([NotNull] XElement element, [NotNull] string attributeName = "version", [CanBeNull] Version defaultVersion = null)
         {
             var versionAttribute = element.Attribute(attributeName);
@@ -64,8 +63,7 @@ namespace Bind.XML
         /// <param name="versionString">The version string.</param>
         /// <param name="defaultVersion">The default value to return.</param>
         /// <returns>A parsed version.</returns>
-        [CanBeNull]
-        [ContractAnnotation("defaultVersion : null => canbenull; defaultVersion : notnull => notnull")]
+        [CanBeNull, ContractAnnotation("defaultVersion : null => canbenull; defaultVersion : notnull => notnull")]
         public static Version ParseVersion([CanBeNull] string versionString, [CanBeNull] Version defaultVersion = null)
         {
             var version = string.IsNullOrWhiteSpace(versionString)
@@ -225,8 +223,7 @@ namespace Bind.XML
         ///   <paramref name="valueReferenceExpression"/> may contain a mathematical expression, which should be applied
         ///   to the parameter's value to get the final count.
         /// </returns>
-        [CanBeNull]
-        [ContractAnnotation("hasComputedCount : true => computedCountParameterNames : notnull; hasValueReference : true => valueReferenceName : notnull")]
+        [CanBeNull, ContractAnnotation("hasComputedCount : true => computedCountParameterNames : notnull; hasValueReference : true => valueReferenceName : notnull")]
         public static CountSignature ParseCountSignature
         (
             [CanBeNull] string countData,

@@ -1,15 +1,17 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Linq;
+using Bind.Versioning;
 
 namespace Bind.Generators.ES
 {
     /// <summary>
-    /// Generates API bindings for OpenGL ES 1.1.
+    /// Generates API bindings for OpenGL ES 1.0.
     /// </summary>
-    internal class ES11Generator : GeneratorBase
+    internal class ES10GeneratorSettings : GeneratorSettingsBase
     {
         /// <inheritdoc/>
-        public override string APIIdentifier => "ES11";
+        public override string APIIdentifier => "ES10";
 
         /// <inheritdoc/>
         public override string OutputSubfolder => APIIdentifier;
@@ -17,19 +19,19 @@ namespace Bind.Generators.ES
         /// <inheritdoc/>
         public override string Namespace => $"OpenTK.Graphics.{APIIdentifier}";
 
-        /// <remarks>
-        /// The ES 1.1 generator uses the ES2.0 documentation, since there are no docbook sources available for 1.1.
-        /// </remarks>
         /// <inheritdoc/>
         public override string SpecificationDocumentationPath => "es1";
 
         /// <inheritdoc/>
         public override string ProfileName => "gles1";
 
+        /// <inheritdoc/>
+        public override VersionRange Versions => new VersionRange(new Version(1, 0));
+
         /// <summary>
-        /// Initializes a new instance of the <see cref="ES11Generator"/> class.
+        /// Initializes a new instance of the <see cref="ES10GeneratorSettings"/> class.
         /// </summary>
-        public ES11Generator()
+        public ES10GeneratorSettings()
         {
             var overrideFileDirectoryPath = Path.Combine(Program.Arguments.InputPath, "GL2", "GL");
             var extraOverrides = Directory.GetFiles(overrideFileDirectoryPath, "*.xml", SearchOption.AllDirectories);

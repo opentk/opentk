@@ -2,9 +2,7 @@
  * See license.txt for license info
  */
 
-using System;
 using System.Collections.Generic;
-using Bind.Structures;
 using Bind.Versioning;
 using JetBrains.Annotations;
 
@@ -13,7 +11,7 @@ namespace Bind.Generators
     /// <summary>
     /// Interface for API generation configuration objects.
     /// </summary>
-    internal interface IGenerator
+    internal interface IGeneratorSettings
     {
         /// <summary>
         /// Gets a short-name identifier for the API (such as GL, GL4, ES10, etc).
@@ -98,41 +96,5 @@ namespace Bind.Generators
         /// </summary>
         [NotNull]
         VersionRange Versions { get; }
-
-        /// <summary>
-        /// Gets the delegates that were loaded from the API specification.
-        /// </summary>
-        [NotNull, Obsolete]
-        DelegateCollection Delegates { get; }
-
-        /// <summary>
-        /// Gets the enums that were generated from the API specification.
-        /// </summary>
-        [NotNull, Obsolete]
-        EnumCollection Enums { get; }
-
-        /// <summary>
-        /// Gets the function wrappers that were generated from the API specification.
-        /// </summary>
-        [NotNull, Obsolete]
-        FunctionCollection Wrappers { get; }
-
-        /// <summary>
-        /// Gets the API typemap.
-        /// </summary>
-        [NotNull, Obsolete]
-        IDictionary<string, string> APITypes { get; }
-
-        /// <summary>
-        /// Gets the language typemap.
-        /// </summary>
-        [NotNull, Obsolete]
-        IDictionary<string, string> LanguageTypes { get; }
-
-        /// <summary>
-        /// Loads the data that the generator wraps.
-        /// </summary>
-        [Obsolete]
-        void LoadData();
     }
 }
