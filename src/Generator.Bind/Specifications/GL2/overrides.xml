@@ -7,14 +7,50 @@
   <replace name="gl|glcore">
 
     <!-- Core and EXT_direct_state_access variants -->
-    <function name="DisableClientState|DisableClientStateIndexed" extension="Core|Ext">
+    <function name="DisableClientStateIndexed" extension="Core">
+      <param name="array">
+        <type>ArrayCap</type>
+      </param>
+    </function>
+
+    <function name="DisableClientState" extension="Core">
+      <param name="array">
+        <type>ArrayCap</type>
+      </param>
+    </function>
+
+    <function name="DisableClientStateIndexed" extension="Ext">
+      <param name="array">
+        <type>ArrayCap</type>
+      </param>
+    </function>
+
+    <function name="DisableClientState" extension="Ext">
       <param name="array">
         <type>ArrayCap</type>
       </param>
     </function>
 
     <!-- Core and EXT_direct_state_access variants -->
-    <function name="EnableClientState|EnableClientStateIndexed" extension="Core|Ext">
+    <function name="EnableClientState" extension="Core">
+      <param name="array">
+        <type>ArrayCap</type>
+      </param>
+    </function>
+
+    <function name="EnableClientStateIndexed" extension="Core">
+      <param name="array">
+        <type>ArrayCap</type>
+      </param>
+    </function>
+
+    <function name="EnableClientState" extension="Ext">
+      <param name="array">
+        <type>ArrayCap</type>
+      </param>
+    </function>
+
+    <function name="EnableClientStateIndexed" extension="Ext">
       <param name="array">
         <type>ArrayCap</type>
       </param>
@@ -1825,178 +1861,178 @@
       <use token="NONE"/>
     </enum>
     <enum name="ActiveAttribType">
-      <use enum="VERSION_1_1" token="NONE" />
-      <use enum="DataType" token="FLOAT" />
+      <use token="NONE" />
+      <use token="FLOAT" />
       <token name="FLOAT_MAT2" value="0x8B5A" />
       <token name="FLOAT_MAT3" value="0x8B5B" />
       <token name="FLOAT_MAT4" value="0x8B5C" />
-      <use enum="VERSION_2_1" token="FLOAT_MAT2x3" />
-      <use enum="VERSION_2_1" token="FLOAT_MAT2x4" />
-      <use enum="VERSION_2_1" token="FLOAT_MAT3x2" />
-      <use enum="VERSION_2_1" token="FLOAT_MAT3x4" />
-      <use enum="VERSION_2_1" token="FLOAT_MAT4x2" />
-      <use enum="VERSION_2_1" token="FLOAT_MAT4x3" />
+      <use token="FLOAT_MAT2x3" />
+      <use token="FLOAT_MAT2x4" />
+      <use token="FLOAT_MAT3x2" />
+      <use token="FLOAT_MAT3x4" />
+      <use token="FLOAT_MAT4x2" />
+      <use token="FLOAT_MAT4x3" />
       <token name="FLOAT_VEC2" value="0x8B50" />
       <token name="FLOAT_VEC3" value="0x8B51" />
       <token name="FLOAT_VEC4" value="0x8B52" />
-      <use enum="VERSION_2_0" token="INT" />
-      <use enum="VERSION_2_0" token="INT_VEC2" />
-      <use enum="VERSION_2_0" token="INT_VEC3" />
-      <use enum="VERSION_2_0" token="INT_VEC4" />
-      <use enum="VERSION_3_0" token="UNSIGNED_INT" />
-      <use enum="VERSION_3_0" token="UNSIGNED_INT_VEC2" />
-      <use enum="VERSION_3_0" token="UNSIGNED_INT_VEC3" />
-      <use enum="VERSION_3_0" token="UNSIGNED_INT_VEC4" />
-      <use enum="VERSION_4_0" token="DOUBLE" />
-      <use enum="VERSION_4_0" token="DOUBLE_VEC2" />
-      <use enum="VERSION_4_0" token="DOUBLE_VEC3" />
-      <use enum="VERSION_4_0" token="DOUBLE_VEC4" />
-      <use enum="VERSION_4_0" token="DOUBLE_MAT2" />
-      <use enum="VERSION_4_0" token="DOUBLE_MAT3" />
-      <use enum="VERSION_4_0" token="DOUBLE_MAT4" />
-      <use enum="VERSION_4_0" token="DOUBLE_MAT2x3" />
-      <use enum="VERSION_4_0" token="DOUBLE_MAT2x4" />
-      <use enum="VERSION_4_0" token="DOUBLE_MAT3x2" />
-      <use enum="VERSION_4_0" token="DOUBLE_MAT3x4" />
-      <use enum="VERSION_4_0" token="DOUBLE_MAT4x2" />
-      <use enum="VERSION_4_0" token="DOUBLE_MAT4x3" />
+      <use token="INT" />
+      <use token="INT_VEC2" />
+      <use token="INT_VEC3" />
+      <use token="INT_VEC4" />
+      <use token="UNSIGNED_INT" />
+      <use token="UNSIGNED_INT_VEC2" />
+      <use token="UNSIGNED_INT_VEC3" />
+      <use token="UNSIGNED_INT_VEC4" />
+      <use token="DOUBLE" />
+      <use token="DOUBLE_VEC2" />
+      <use token="DOUBLE_VEC3" />
+      <use token="DOUBLE_VEC4" />
+      <use token="DOUBLE_MAT2" />
+      <use token="DOUBLE_MAT3" />
+      <use token="DOUBLE_MAT4" />
+      <use token="DOUBLE_MAT2x3" />
+      <use token="DOUBLE_MAT2x4" />
+      <use token="DOUBLE_MAT3x2" />
+      <use token="DOUBLE_MAT3x4" />
+      <use token="DOUBLE_MAT4x2" />
+      <use token="DOUBLE_MAT4x3" />
     </enum>
     <enum name="ActiveSubroutineUniformParameter">
-      <use enum="VERSION_4_0" token="NUM_COMPATIBLE_SUBROUTINES" />
-      <use enum="VERSION_4_0" token="COMPATIBLE_SUBROUTINES" />
-      <use enum="VERSION_4_0" token="UNIFORM_SIZE" />
-      <use enum="VERSION_4_0" token="UNIFORM_NAME_LENGTH" />
+      <use token="NUM_COMPATIBLE_SUBROUTINES" />
+      <use token="COMPATIBLE_SUBROUTINES" />
+      <use token="UNIFORM_SIZE" />
+      <use token="UNIFORM_NAME_LENGTH" />
     </enum>
     <enum name="ActiveUniformBlockParameter">
-      <use enum="VERSION_3_1" token="UNIFORM_BLOCK_BINDING" />
-      <use enum="VERSION_3_1" token="UNIFORM_BLOCK_DATA_SIZE" />
-      <use enum="VERSION_3_1" token="UNIFORM_BLOCK_NAME_LENGTH" />
-      <use enum="VERSION_3_1" token="UNIFORM_BLOCK_ACTIVE_UNIFORMS" />
-      <use enum="VERSION_3_1" token="UNIFORM_BLOCK_ACTIVE_UNIFORM_INDICES" />
-      <use enum="VERSION_3_1" token="UNIFORM_BLOCK_REFERENCED_BY_VERTEX_SHADER" />
-      <use enum="VERSION_3_1" token="UNIFORM_BLOCK_REFERENCED_BY_GEOMETRY_SHADER" />
-      <use enum="VERSION_3_1" token="UNIFORM_BLOCK_REFERENCED_BY_FRAGMENT_SHADER" />
-      <use enum="VERSION_4_0" token="UNIFORM_BLOCK_REFERENCED_BY_TESS_CONTROL_SHADER" />
-      <use enum="VERSION_4_0" token="UNIFORM_BLOCK_REFERENCED_BY_TESS_EVALUATION_SHADER" />
-      <use enum="VERSION_4_3" token="UNIFORM_BLOCK_REFERENCED_BY_COMPUTE_SHADER" />
+      <use token="UNIFORM_BLOCK_BINDING" />
+      <use token="UNIFORM_BLOCK_DATA_SIZE" />
+      <use token="UNIFORM_BLOCK_NAME_LENGTH" />
+      <use token="UNIFORM_BLOCK_ACTIVE_UNIFORMS" />
+      <use token="UNIFORM_BLOCK_ACTIVE_UNIFORM_INDICES" />
+      <use token="UNIFORM_BLOCK_REFERENCED_BY_VERTEX_SHADER" />
+      <use token="UNIFORM_BLOCK_REFERENCED_BY_GEOMETRY_SHADER" />
+      <use token="UNIFORM_BLOCK_REFERENCED_BY_FRAGMENT_SHADER" />
+      <use token="UNIFORM_BLOCK_REFERENCED_BY_TESS_CONTROL_SHADER" />
+      <use token="UNIFORM_BLOCK_REFERENCED_BY_TESS_EVALUATION_SHADER" />
+      <use token="UNIFORM_BLOCK_REFERENCED_BY_COMPUTE_SHADER" />
     </enum>
     <enum name="ActiveUniformParameter">
-      <use enum="VERSION_3_1" token="UNIFORM_TYPE" />
-      <use enum="VERSION_3_1" token="UNIFORM_SIZE" />
-      <use enum="VERSION_3_1" token="UNIFORM_NAME_LENGTH" />
-      <use enum="VERSION_3_1" token="UNIFORM_BLOCK_INDEX" />
-      <use enum="VERSION_3_1" token="UNIFORM_OFFSET" />
-      <use enum="VERSION_3_1" token="UNIFORM_ARRAY_STRIDE" />
-      <use enum="VERSION_3_1" token="UNIFORM_MATRIX_STRIDE" />
-      <use enum="VERSION_3_1" token="UNIFORM_IS_ROW_MAJOR" />
-      <use enum="VERSION_4_2" token="UNIFORM_ATOMIC_COUNTER_BUFFER_INDEX" />
+      <use token="UNIFORM_TYPE" />
+      <use token="UNIFORM_SIZE" />
+      <use token="UNIFORM_NAME_LENGTH" />
+      <use token="UNIFORM_BLOCK_INDEX" />
+      <use token="UNIFORM_OFFSET" />
+      <use token="UNIFORM_ARRAY_STRIDE" />
+      <use token="UNIFORM_MATRIX_STRIDE" />
+      <use token="UNIFORM_IS_ROW_MAJOR" />
+      <use token="UNIFORM_ATOMIC_COUNTER_BUFFER_INDEX" />
     </enum>
     <enum name="ActiveUniformType">
-      <use enum="VERSION_1_1" token="FLOAT" />
-      <use enum="VERSION_2_0" token="FLOAT_VEC2" />
-      <use enum="VERSION_2_0" token="FLOAT_VEC3" />
-      <use enum="VERSION_2_0" token="FLOAT_VEC4" />
-      <use enum="VERSION_1_1" token="DOUBLE" />
-      <use enum="VERSION_4_0" token="DOUBLE_VEC2" />
-      <use enum="VERSION_4_0" token="DOUBLE_VEC3" />
-      <use enum="VERSION_4_0" token="DOUBLE_VEC4" />
-      <use enum="VERSION_1_1" token="INT" />
-      <use enum="VERSION_2_0" token="INT_VEC2" />
-      <use enum="VERSION_2_0" token="INT_VEC3" />
-      <use enum="VERSION_2_0" token="INT_VEC4" />
-      <use enum="VERSION_1_1" token="UNSIGNED_INT" />
-      <use enum="VERSION_3_0" token="UNSIGNED_INT_VEC2" />
-      <use enum="VERSION_3_0" token="UNSIGNED_INT_VEC3" />
-      <use enum="VERSION_3_0" token="UNSIGNED_INT_VEC4" />
-      <use enum="VERSION_1_1" token="BOOL" />
-      <use enum="VERSION_2_0" token="BOOL_VEC2" />
-      <use enum="VERSION_2_0" token="BOOL_VEC3" />
-      <use enum="VERSION_2_0" token="BOOL_VEC4" />
-      <use enum="VERSION_2_0" token="FLOAT_MAT2" />
-      <use enum="VERSION_2_0" token="FLOAT_MAT3" />
-      <use enum="VERSION_2_0" token="FLOAT_MAT4" />
-      <use enum="VERSION_2_1" token="FLOAT_MAT2x3" />
-      <use enum="VERSION_2_1" token="FLOAT_MAT2x4" />
-      <use enum="VERSION_2_1" token="FLOAT_MAT3x2" />
-      <use enum="VERSION_2_1" token="FLOAT_MAT3x4" />
-      <use enum="VERSION_2_1" token="FLOAT_MAT4x2" />
-      <use enum="VERSION_2_1" token="FLOAT_MAT4x3" />
-      <use enum="VERSION_2_0" token="SAMPLER_1D" />
-      <use enum="VERSION_2_0" token="SAMPLER_2D" />
-      <use enum="VERSION_2_0" token="SAMPLER_3D" />
-      <use enum="VERSION_2_0" token="SAMPLER_CUBE" />
-      <use enum="VERSION_2_0" token="SAMPLER_1D_SHADOW" />
-      <use enum="VERSION_2_0" token="SAMPLER_2D_SHADOW" />
-      <use enum="VERSION_3_0" token="SAMPLER_1D_ARRAY" />
-      <use enum="VERSION_3_0" token="SAMPLER_2D_ARRAY" />
-      <use enum="VERSION_4_0" token="SAMPLER_CUBE_MAP_ARRAY" />
-      <use enum="VERSION_3_0" token="SAMPLER_1D_ARRAY_SHADOW" />
-      <use enum="VERSION_3_0" token="SAMPLER_2D_ARRAY_SHADOW" />
-      <use enum="VERSION_3_2" token="SAMPLER_2D_MULTISAMPLE" />
-      <use enum="VERSION_3_2" token="SAMPLER_2D_MULTISAMPLE_ARRAY" />
-      <use enum="VERSION_3_0" token="SAMPLER_CUBE_SHADOW" />
-      <use enum="VERSION_4_0" token="SAMPLER_CUBE_MAP_ARRAY_SHADOW" />
-      <use enum="VERSION_3_1" token="SAMPLER_BUFFER" />
-      <use enum="VERSION_3_1" token="SAMPLER_2D_RECT" />
-      <use enum="VERSION_3_1" token="SAMPLER_2D_RECT_SHADOW" />
-      <use enum="VERSION_3_0" token="INT_SAMPLER_1D" />
-      <use enum="VERSION_3_0" token="INT_SAMPLER_2D" />
-      <use enum="VERSION_3_0" token="INT_SAMPLER_3D" />
-      <use enum="VERSION_3_0" token="INT_SAMPLER_CUBE" />
-      <use enum="VERSION_3_0" token="INT_SAMPLER_1D_ARRAY" />
-      <use enum="VERSION_3_0" token="INT_SAMPLER_2D_ARRAY" />
-      <use enum="VERSION_4_0" token="INT_SAMPLER_CUBE_MAP_ARRAY" />
-      <use enum="VERSION_3_2" token="INT_SAMPLER_2D_MULTISAMPLE" />
-      <use enum="VERSION_3_2" token="INT_SAMPLER_2D_MULTISAMPLE_ARRAY" />
-      <use enum="VERSION_3_1" token="INT_SAMPLER_BUFFER" />
-      <use enum="VERSION_3_1" token="INT_SAMPLER_2D_RECT" />
-      <use enum="VERSION_3_0" token="UNSIGNED_INT_SAMPLER_1D" />
-      <use enum="VERSION_3_0" token="UNSIGNED_INT_SAMPLER_2D" />
-      <use enum="VERSION_3_0" token="UNSIGNED_INT_SAMPLER_3D" />
-      <use enum="VERSION_3_0" token="UNSIGNED_INT_SAMPLER_CUBE" />
-      <use enum="VERSION_3_0" token="UNSIGNED_INT_SAMPLER_1D_ARRAY" />
-      <use enum="VERSION_3_0" token="UNSIGNED_INT_SAMPLER_2D_ARRAY" />
-      <use enum="VERSION_4_0" token="UNSIGNED_INT_SAMPLER_CUBE_MAP_ARRAY" />
-      <use enum="VERSION_3_2" token="UNSIGNED_INT_SAMPLER_2D_MULTISAMPLE" />
-      <use enum="VERSION_3_2" token="UNSIGNED_INT_SAMPLER_2D_MULTISAMPLE_ARRAY" />
-      <use enum="VERSION_3_1" token="UNSIGNED_INT_SAMPLER_BUFFER" />
-      <use enum="VERSION_3_1" token="UNSIGNED_INT_SAMPLER_2D_RECT" />
-      <use enum="VERSION_4_2" token="IMAGE_1D" />
-      <use enum="VERSION_4_2" token="IMAGE_2D" />
-      <use enum="VERSION_4_2" token="IMAGE_3D" />
-      <use enum="VERSION_4_2" token="IMAGE_2D_RECT" />
-      <use enum="VERSION_4_2" token="IMAGE_CUBE" />
-      <use enum="VERSION_4_2" token="IMAGE_BUFFER" />
-      <use enum="VERSION_4_2" token="IMAGE_1D_ARRAY" />
-      <use enum="VERSION_4_2" token="IMAGE_2D_ARRAY" />
-      <use enum="VERSION_4_2" token="IMAGE_CUBE_MAP_ARRAY" />
-      <use enum="VERSION_4_2" token="IMAGE_2D_MULTISAMPLE" />
-      <use enum="VERSION_4_2" token="IMAGE_2D_MULTISAMPLE_ARRAY" />
-      <use enum="VERSION_4_2" token="INT_IMAGE_1D" />
-      <use enum="VERSION_4_2" token="INT_IMAGE_2D" />
-      <use enum="VERSION_4_2" token="INT_IMAGE_3D" />
-      <use enum="VERSION_4_2" token="INT_IMAGE_2D_RECT" />
-      <use enum="VERSION_4_2" token="INT_IMAGE_CUBE" />
-      <use enum="VERSION_4_2" token="INT_IMAGE_BUFFER" />
-      <use enum="VERSION_4_2" token="INT_IMAGE_1D_ARRAY" />
-      <use enum="VERSION_4_2" token="INT_IMAGE_2D_ARRAY" />
-      <use enum="VERSION_4_2" token="INT_IMAGE_CUBE_MAP_ARRAY" />
-      <use enum="VERSION_4_2" token="INT_IMAGE_CUBE_MAP_ARRAY" />
-      <use enum="VERSION_4_2" token="INT_IMAGE_2D_MULTISAMPLE" />
-      <use enum="VERSION_4_2" token="INT_IMAGE_2D_MULTISAMPLE_ARRAY" />
-      <use enum="VERSION_4_2" token="UNSIGNED_INT_IMAGE_1D" />
-      <use enum="VERSION_4_2" token="UNSIGNED_INT_IMAGE_2D" />
-      <use enum="VERSION_4_2" token="UNSIGNED_INT_IMAGE_3D" />
-      <use enum="VERSION_4_2" token="UNSIGNED_INT_IMAGE_2D_RECT" />
-      <use enum="VERSION_4_2" token="UNSIGNED_INT_IMAGE_CUBE" />
-      <use enum="VERSION_4_2" token="UNSIGNED_INT_IMAGE_BUFFER" />
-      <use enum="VERSION_4_2" token="UNSIGNED_INT_IMAGE_1D_ARRAY" />
-      <use enum="VERSION_4_2" token="UNSIGNED_INT_IMAGE_2D_ARRAY" />
-      <use enum="VERSION_4_2" token="UNSIGNED_INT_IMAGE_CUBE_MAP_ARRAY" />
-      <use enum="VERSION_4_2" token="UNSIGNED_INT_IMAGE_CUBE_MAP_ARRAY" />
-      <use enum="VERSION_4_2" token="UNSIGNED_INT_IMAGE_2D_MULTISAMPLE" />
-      <use enum="VERSION_4_2" token="UNSIGNED_INT_IMAGE_2D_MULTISAMPLE_ARRAY" />
-      <use enum="VERSION_4_2" token="UNSIGNED_INT_ATOMIC_COUNTER" />
+      <use token="FLOAT" />
+      <use token="FLOAT_VEC2" />
+      <use token="FLOAT_VEC3" />
+      <use token="FLOAT_VEC4" />
+      <use token="DOUBLE" />
+      <use token="DOUBLE_VEC2" />
+      <use token="DOUBLE_VEC3" />
+      <use token="DOUBLE_VEC4" />
+      <use token="INT" />
+      <use token="INT_VEC2" />
+      <use token="INT_VEC3" />
+      <use token="INT_VEC4" />
+      <use token="UNSIGNED_INT" />
+      <use token="UNSIGNED_INT_VEC2" />
+      <use token="UNSIGNED_INT_VEC3" />
+      <use token="UNSIGNED_INT_VEC4" />
+      <use token="BOOL" />
+      <use token="BOOL_VEC2" />
+      <use token="BOOL_VEC3" />
+      <use token="BOOL_VEC4" />
+      <use token="FLOAT_MAT2" />
+      <use token="FLOAT_MAT3" />
+      <use token="FLOAT_MAT4" />
+      <use token="FLOAT_MAT2x3" />
+      <use token="FLOAT_MAT2x4" />
+      <use token="FLOAT_MAT3x2" />
+      <use token="FLOAT_MAT3x4" />
+      <use token="FLOAT_MAT4x2" />
+      <use token="FLOAT_MAT4x3" />
+      <use token="SAMPLER_1D" />
+      <use token="SAMPLER_2D" />
+      <use token="SAMPLER_3D" />
+      <use token="SAMPLER_CUBE" />
+      <use token="SAMPLER_1D_SHADOW" />
+      <use token="SAMPLER_2D_SHADOW" />
+      <use token="SAMPLER_1D_ARRAY" />
+      <use token="SAMPLER_2D_ARRAY" />
+      <use token="SAMPLER_CUBE_MAP_ARRAY" />
+      <use token="SAMPLER_1D_ARRAY_SHADOW" />
+      <use token="SAMPLER_2D_ARRAY_SHADOW" />
+      <use token="SAMPLER_2D_MULTISAMPLE" />
+      <use token="SAMPLER_2D_MULTISAMPLE_ARRAY" />
+      <use token="SAMPLER_CUBE_SHADOW" />
+      <use token="SAMPLER_CUBE_MAP_ARRAY_SHADOW" />
+      <use token="SAMPLER_BUFFER" />
+      <use token="SAMPLER_2D_RECT" />
+      <use token="SAMPLER_2D_RECT_SHADOW" />
+      <use token="INT_SAMPLER_1D" />
+      <use token="INT_SAMPLER_2D" />
+      <use token="INT_SAMPLER_3D" />
+      <use token="INT_SAMPLER_CUBE" />
+      <use token="INT_SAMPLER_1D_ARRAY" />
+      <use token="INT_SAMPLER_2D_ARRAY" />
+      <use token="INT_SAMPLER_CUBE_MAP_ARRAY" />
+      <use token="INT_SAMPLER_2D_MULTISAMPLE" />
+      <use token="INT_SAMPLER_2D_MULTISAMPLE_ARRAY" />
+      <use token="INT_SAMPLER_BUFFER" />
+      <use token="INT_SAMPLER_2D_RECT" />
+      <use token="UNSIGNED_INT_SAMPLER_1D" />
+      <use token="UNSIGNED_INT_SAMPLER_2D" />
+      <use token="UNSIGNED_INT_SAMPLER_3D" />
+      <use token="UNSIGNED_INT_SAMPLER_CUBE" />
+      <use token="UNSIGNED_INT_SAMPLER_1D_ARRAY" />
+      <use token="UNSIGNED_INT_SAMPLER_2D_ARRAY" />
+      <use token="UNSIGNED_INT_SAMPLER_CUBE_MAP_ARRAY" />
+      <use token="UNSIGNED_INT_SAMPLER_2D_MULTISAMPLE" />
+      <use token="UNSIGNED_INT_SAMPLER_2D_MULTISAMPLE_ARRAY" />
+      <use token="UNSIGNED_INT_SAMPLER_BUFFER" />
+      <use token="UNSIGNED_INT_SAMPLER_2D_RECT" />
+      <use token="IMAGE_1D" />
+      <use token="IMAGE_2D" />
+      <use token="IMAGE_3D" />
+      <use token="IMAGE_2D_RECT" />
+      <use token="IMAGE_CUBE" />
+      <use token="IMAGE_BUFFER" />
+      <use token="IMAGE_1D_ARRAY" />
+      <use token="IMAGE_2D_ARRAY" />
+      <use token="IMAGE_CUBE_MAP_ARRAY" />
+      <use token="IMAGE_2D_MULTISAMPLE" />
+      <use token="IMAGE_2D_MULTISAMPLE_ARRAY" />
+      <use token="INT_IMAGE_1D" />
+      <use token="INT_IMAGE_2D" />
+      <use token="INT_IMAGE_3D" />
+      <use token="INT_IMAGE_2D_RECT" />
+      <use token="INT_IMAGE_CUBE" />
+      <use token="INT_IMAGE_BUFFER" />
+      <use token="INT_IMAGE_1D_ARRAY" />
+      <use token="INT_IMAGE_2D_ARRAY" />
+      <use token="INT_IMAGE_CUBE_MAP_ARRAY" />
+      <use token="INT_IMAGE_CUBE_MAP_ARRAY" />
+      <use token="INT_IMAGE_2D_MULTISAMPLE" />
+      <use token="INT_IMAGE_2D_MULTISAMPLE_ARRAY" />
+      <use token="UNSIGNED_INT_IMAGE_1D" />
+      <use token="UNSIGNED_INT_IMAGE_2D" />
+      <use token="UNSIGNED_INT_IMAGE_3D" />
+      <use token="UNSIGNED_INT_IMAGE_2D_RECT" />
+      <use token="UNSIGNED_INT_IMAGE_CUBE" />
+      <use token="UNSIGNED_INT_IMAGE_BUFFER" />
+      <use token="UNSIGNED_INT_IMAGE_1D_ARRAY" />
+      <use token="UNSIGNED_INT_IMAGE_2D_ARRAY" />
+      <use token="UNSIGNED_INT_IMAGE_CUBE_MAP_ARRAY" />
+      <use token="UNSIGNED_INT_IMAGE_CUBE_MAP_ARRAY" />
+      <use token="UNSIGNED_INT_IMAGE_2D_MULTISAMPLE" />
+      <use token="UNSIGNED_INT_IMAGE_2D_MULTISAMPLE_ARRAY" />
+      <use token="UNSIGNED_INT_ATOMIC_COUNTER" />
     </enum>
     <enum name="ArrayCap">
       <use enum="GetPName" token="VERTEX_ARRAY" />
@@ -2050,39 +2086,38 @@
       <token name="PROGRAM_TEX_INDIRECTIONS_ARB" value="0x8807" />
       <token name="PROGRAM_TEX_INSTRUCTIONS_ARB" value="0x8806" />
       <token name="PROGRAM_UNDER_NATIVE_LIMITS" value="0x88B6" />
-      <use enum="VERSION_3_2" token="GEOMETRY_INPUT_TYPE" />
-      <use enum="VERSION_3_2" token="GEOMETRY_OUTPUT_TYPE" />
-      <use enum="VERSION_3_2" token="GEOMETRY_VERTICES_OUT" />
-      <use enum="VERSION_4_1" token="PROGRAM_SEPARABLE" />
-      <use enum="VERSION_4_1" token="PROGRAM_BINARY_RETRIEVABLE_HINT" />
+      <use token="GEOMETRY_INPUT_TYPE" />
+      <use token="GEOMETRY_OUTPUT_TYPE" />
+      <use token="GEOMETRY_VERTICES_OUT" />
+      <use token="PROGRAM_SEPARABLE" />
+      <use token="PROGRAM_BINARY_RETRIEVABLE_HINT" />
     </enum>
     <enum name="AssemblyProgramStringParameterArb">
       <token name="PROGRAM_STRING" value="0x8628" />
     </enum>
     <enum name="AssemblyProgramTargetArb">
-      <use enum="NV_geometry_program4" token="GEOMETRY_PROGRAM_NV" />
       <token name="FRAGMENT_PROGRAM" value="0x8804" />
       <token name="VERTEX_PROGRAM" value="0x8620" />
     </enum>
     <enum name="AtomicCounterBufferParameter">
-      <use enum="VERSION_4_2" token="ATOMIC_COUNTER_BUFFER_BINDING" />
-      <use enum="VERSION_4_2" token="ATOMIC_COUNTER_BUFFER_DATA_SIZE" />
-      <use enum="VERSION_4_2" token="ATOMIC_COUNTER_BUFFER_ACTIVE_ATOMIC_COUNTERS" />
-      <use enum="VERSION_4_2" token="ATOMIC_COUNTER_BUFFER_ACTIVE_ATOMIC_COUNTER_INDICES" />
-      <use enum="VERSION_4_2" token="ATOMIC_COUNTER_BUFFER_REFERENCED_BY_VERTEX_SHADER" />
-      <use enum="VERSION_4_2" token="ATOMIC_COUNTER_BUFFER_REFERENCED_BY_GEOMETRY_SHADER" />
-      <use enum="VERSION_4_2" token="ATOMIC_COUNTER_BUFFER_REFERENCED_BY_FRAGMENT_SHADER" />
-      <use enum="VERSION_4_2" token="ATOMIC_COUNTER_BUFFER_REFERENCED_BY_TESS_CONTROL_SHADER" />
-      <use enum="VERSION_4_2" token="ATOMIC_COUNTER_BUFFER_REFERENCED_BY_TESS_EVALUATION_SHADER" />
-      <use enum="VERSION_4_3" token="ATOMIC_COUNTER_BUFFER_REFERENCED_BY_COMPUTE_SHADER" />
+      <use token="ATOMIC_COUNTER_BUFFER_BINDING" />
+      <use token="ATOMIC_COUNTER_BUFFER_DATA_SIZE" />
+      <use token="ATOMIC_COUNTER_BUFFER_ACTIVE_ATOMIC_COUNTERS" />
+      <use token="ATOMIC_COUNTER_BUFFER_ACTIVE_ATOMIC_COUNTER_INDICES" />
+      <use token="ATOMIC_COUNTER_BUFFER_REFERENCED_BY_VERTEX_SHADER" />
+      <use token="ATOMIC_COUNTER_BUFFER_REFERENCED_BY_GEOMETRY_SHADER" />
+      <use token="ATOMIC_COUNTER_BUFFER_REFERENCED_BY_FRAGMENT_SHADER" />
+      <use token="ATOMIC_COUNTER_BUFFER_REFERENCED_BY_TESS_CONTROL_SHADER" />
+      <use token="ATOMIC_COUNTER_BUFFER_REFERENCED_BY_TESS_EVALUATION_SHADER" />
+      <use token="ATOMIC_COUNTER_BUFFER_REFERENCED_BY_COMPUTE_SHADER" />
     </enum>
     <enum name="AttribMask">
       <token name="MULTISAMPLE_BIT" value="0x20000000" />
     </enum>
     <enum name="BeginFeedbackMode">
-      <use enum="BeginMode" token="Points" />
-      <use enum="BeginMode" token="Lines" />
-      <use enum="BeginMode" token="Triangles" />
+      <use enum="BeginMode" token="POINTS" />
+      <use enum="BeginMode" token="LINES" />
+      <use enum="BeginMode" token="TRIANGLES" />
     </enum>
     <enum name="BeginMode">
       <token name="LINE_LOOP" value="0x0002" />
@@ -2099,7 +2134,7 @@
       <token name="LINES_ADJACENCY" value="0xA" />
       <token name="TRIANGLE_STRIP_ADJACENCY" value="0xD" />
       <token name="TRIANGLES_ADJACENCY" value="0xC" />
-      <use enum="VERSION_4_0" token="PATCHES" />
+      <use token="PATCHES" />
     </enum>
     <enum name="BinaryFormat">
       <!-- Tokens must be queried at runtime. -->
@@ -2119,14 +2154,14 @@
       <token name="CONSTANT_COLOR" value="0x8001" />
       <token name="ONE_MINUS_CONSTANT_ALPHA" value="0x8004" />
       <token name="ONE_MINUS_CONSTANT_COLOR" value="0x8002" />
-      <use enum="VERSION_1_1" token="SRC_COLOR" />
-      <use enum="VERSION_1_1" token="SRC_ALPHA" />
-      <use enum="VERSION_1_1" token="ONE_MINUS_SRC_ALPHA" />
-      <use enum="VERSION_1_1" token="ONE_MINUS_SRC_COLOR" />
-      <use enum="VERSION_3_3" token="SRC1_ALPHA" />
-      <use enum="VERSION_3_3" token="SRC1_COLOR" />
-      <use enum="VERSION_3_3" token="ONE_MINUS_SRC1_ALPHA" />
-      <use enum="VERSION_3_3" token="ONE_MINUS_SRC1_COLOR" />
+      <use token="SRC_COLOR" />
+      <use token="SRC_ALPHA" />
+      <use token="ONE_MINUS_SRC_ALPHA" />
+      <use token="ONE_MINUS_SRC_COLOR" />
+      <use token="SRC1_ALPHA" />
+      <use token="SRC1_COLOR" />
+      <use token="ONE_MINUS_SRC1_ALPHA" />
+      <use token="ONE_MINUS_SRC1_COLOR" />
       <use token="DST_COLOR" />
       <use token="DST_ALPHA" />
       <use token="ONE_MINUS_SRC_COLOR" />
@@ -2144,8 +2179,8 @@
       <use enum="TextureMagFilter" token="NEAREST" />
     </enum>
     <enum name="Buffer_Parameter_Apple">
-      <use enum="APPLE_flush_buffer_range" token="BUFFER_SERIALIZED_MODIFY_APPLE" />
-      <use enum="APPLE_flush_buffer_range" token="BUFFER_FLUSHING_UNMAP_APPLE" />
+      <use enum="APPLE_flush_buffer_range" token="BUFFER_SERIALIZED_MODIFY_APPLE" optional="true" />
+      <use enum="APPLE_flush_buffer_range" token="BUFFER_FLUSHING_UNMAP_APPLE" optional="true" />
     </enum>
     <enum name="BufferAccess">
       <token name="READ_ONLY" value="0x88B8" />
@@ -2158,25 +2193,25 @@
       <token name="WRITE_ONLY" value="0x88B9" />
     </enum>
     <enum name="BufferAccessMask">
-      <use enum="VERSION_3_0" token="MAP_READ_BIT" />
-      <use enum="VERSION_3_0" token="MAP_WRITE_BIT" />
-      <use enum="VERSION_3_0" token="MAP_INVALIDATE_RANGE_BIT" />
-      <use enum="VERSION_3_0" token="MAP_INVALIDATE_BUFFER_BIT" />
-      <use enum="VERSION_3_0" token="MAP_FLUSH_EXPLICIT_BIT" />
-      <use enum="VERSION_3_0" token="MAP_UNSYNCHRONIZED_BIT" />
-      <use enum="VERSION_4_4" token="MAP_COHERENT_BIT" />
-      <use enum="VERSION_4_4" token="MAP_PERSISTENT_BIT" />
+      <use token="MAP_READ_BIT" />
+      <use token="MAP_WRITE_BIT" />
+      <use token="MAP_INVALIDATE_RANGE_BIT" />
+      <use token="MAP_INVALIDATE_BUFFER_BIT" />
+      <use token="MAP_FLUSH_EXPLICIT_BIT" />
+      <use token="MAP_UNSYNCHRONIZED_BIT" />
+      <use token="MAP_COHERENT_BIT" />
+      <use token="MAP_PERSISTENT_BIT" />
     </enum>
     <enum name="BufferParameterName">
-      <use enum="VERSION_1_5" token="BUFFER_SIZE" />
-      <use enum="VERSION_1_5" token="BUFFER_USAGE" />
-      <use enum="VERSION_1_5" token="BUFFER_ACCESS" />
-      <use enum="VERSION_1_5" token="BUFFER_MAPPED" />
-      <use enum="VERSION_3_0" token="BUFFER_ACCESS_FLAGS" />
-      <use enum="VERSION_3_0" token="BUFFER_MAP_OFFSET" />
-      <use enum="VERSION_3_0" token="BUFFER_MAP_LENGTH" />
-      <use enum="VERSION_4_4" token="BUFFER_IMMUTABLE_STORAGE" />
-      <use enum="VERSION_4_4" token="BUFFER_STORAGE_FLAGS" />
+      <use token="BUFFER_SIZE" />
+      <use token="BUFFER_USAGE" />
+      <use token="BUFFER_ACCESS" />
+      <use token="BUFFER_MAPPED" />
+      <use token="BUFFER_ACCESS_FLAGS" />
+      <use token="BUFFER_MAP_OFFSET" />
+      <use token="BUFFER_MAP_LENGTH" />
+      <use token="BUFFER_IMMUTABLE_STORAGE" />
+      <use token="BUFFER_STORAGE_FLAGS" />
     </enum>
     <enum name="BufferParameterNameArb">
       <token name="BUFFER_ACCESS" value="0x88BB" />
@@ -2191,13 +2226,13 @@
       <token name="BUFFER_MAP_POINTER" value="0x88BD" />
     </enum>
     <enum name="BufferStorageFlags">
-      <use enum="VERSION_1_1" token="NONE" />
-      <use enum="VERSION_3_0" token="MAP_READ_BIT" />
-      <use enum="VERSION_3_0" token="MAP_WRITE_BIT" />
-      <use enum="VERSION_4_4" token="CLIENT_STORAGE_BIT" />
-      <use enum="VERSION_4_4" token="DYNAMIC_STORAGE_BIT" />
-      <use enum="VERSION_4_4" token="MAP_COHERENT_BIT" />
-      <use enum="VERSION_4_4" token="MAP_PERSISTENT_BIT" />
+      <use token="NONE" />
+      <use token="MAP_READ_BIT" />
+      <use token="MAP_WRITE_BIT" />
+      <use token="CLIENT_STORAGE_BIT" />
+      <use token="DYNAMIC_STORAGE_BIT" />
+      <use token="MAP_COHERENT_BIT" />
+      <use token="MAP_PERSISTENT_BIT" />
     </enum>
     <enum name="BufferTarget">
       <use enum="ARB_copy_buffer" token="COPY_READ_BUFFER" />
@@ -2208,23 +2243,23 @@
       <token name="PIXEL_PACK_BUFFER" value="0x88EB" />
       <token name="PIXEL_UNPACK_BUFFER" value="0x88EC" />
       <token name="TRANSFORM_FEEDBACK_BUFFER" value="0x8C8E" />
-      <use enum="VERSION_3_1" token="TEXTURE_BUFFER" />
-      <use enum="VERSION_4_0" token="DRAW_INDIRECT_BUFFER" />
-      <use enum="VERSION_4_2" token="ATOMIC_COUNTER_BUFFER" />
-      <use enum="VERSION_4_3" token="DISPATCH_INDIRECT_BUFFER" />
-      <use enum="VERSION_4_3" token="SHADER_STORAGE_BUFFER" />
-      <use enum="VERSION_4_4" token="QUERY_BUFFER" />
+      <use token="TEXTURE_BUFFER" />
+      <use token="DRAW_INDIRECT_BUFFER" />
+      <use token="ATOMIC_COUNTER_BUFFER" />
+      <use token="DISPATCH_INDIRECT_BUFFER" />
+      <use token="SHADER_STORAGE_BUFFER" />
+      <use token="QUERY_BUFFER" />
     </enum>
     <enum name="BufferRangeTarget">
-      <use enum="VERSION_3_1" token="UNIFORM_BUFFER" />
-      <use enum="VERSION_4_2" token="ATOMIC_COUNTER_BUFFER" />
-      <use enum="VERSION_4_3" token="SHADER_STORAGE_BUFFER" />
-      <use enum="VERSION_4_4" token="TRANSFORM_FEEDBACK_BUFFER" />
+      <use token="UNIFORM_BUFFER" />
+      <use token="ATOMIC_COUNTER_BUFFER" />
+      <use token="SHADER_STORAGE_BUFFER" />
+      <use token="TRANSFORM_FEEDBACK_BUFFER" />
     </enum>
     <enum name="BufferTargetArb">
       <token name="ARRAY_BUFFER" value="0x8892" />
       <token name="ELEMENT_ARRAY_BUFFER" value="0x8893" />
-      <use enum="VERSION_3_1" token="TEXTURE_BUFFER" /> <!-- Arb_texture_buffer_object -->
+      <use token="TEXTURE_BUFFER" /> <!-- Arb_texture_buffer_object -->
     </enum>
     <enum name="BufferUsageArb">
       <token name="DYNAMIC_COPY" value="0x88EA" />
@@ -2259,30 +2294,30 @@
       <token name="CLAMP_VERTEX_COLOR" value="0x891A" />
     </enum>
     <enum name="ClearBuffer">
-      <use enum="VERSION_1_1" token="COLOR" />
-      <use enum="VERSION_1_1" token="DEPTH" />
-      <use enum="VERSION_1_1" token="STENCIL" />
+      <use token="COLOR" />
+      <use token="DEPTH" />
+      <use token="STENCIL" />
     </enum>
     <enum name="ClearBufferCombined">
-      <use enum="VERSION_3_0" token="DEPTH_STENCIL" />
+      <use token="DEPTH_STENCIL" />
     </enum>
     <enum name="ClearBufferMask">
-      <use enum="VERSION_1_1" token="NONE" />
+      <use token="NONE" />
     </enum>
     <enum name="ClipDepthMode">
-      <use enum="VERSION_4_5" token="NEGATIVE_ONE_TO_ONE" />
-      <use enum="VERSION_4_5" token="ZERO_TO_ONE" />
+      <use token="NEGATIVE_ONE_TO_ONE" />
+      <use token="ZERO_TO_ONE" />
     </enum>
     <enum name="ClipOrigin">
-      <use enum="VERSION_4_5" token="LOWER_LEFT" />
-      <use enum="VERSION_4_5" token="UPPER_LEFT" />
+      <use token="LOWER_LEFT" />
+      <use token="UPPER_LEFT" />
     </enum>
     <enum name="ClipControl">
     </enum>
     <enum name="ColorPointerType">
       <use enum="ARB_half_float_vertex" token="HALF_FLOAT" />
-      <use enum="VERSION_3_3" token="UNSIGNED_INT_2_10_10_10_REV" />
-      <use enum="VERSION_3_3" token="INT_2_10_10_10_REV" />
+      <use token="UNSIGNED_INT_2_10_10_10_REV" />
+      <use token="INT_2_10_10_10_REV" />
     </enum>
     <enum name="ColorTableParameterPName">
       <token name="COLOR_TABLE_BIAS" value="0x80D7" />
@@ -2301,10 +2336,10 @@
       <token name="QUERY_BY_REGION_WAIT" value="0x8E15" />
       <token name="QUERY_NO_WAIT" value="0x8E14" />
       <token name="QUERY_WAIT" value="0x8E13" />
-      <use enum="VERSION_4_5" token="QUERY_BY_REGION_NO_WAIT_INVERTED" />
-      <use enum="VERSION_4_5" token="QUERY_BY_REGION_WAIT_INVERTED" />
-      <use enum="VERSION_4_5" token="QUERY_NO_WAIT_INVERTED" />
-      <use enum="VERSION_4_5" token="QUERY_WAIT_INVERTED" />
+      <use token="QUERY_BY_REGION_NO_WAIT_INVERTED" />
+      <use token="QUERY_BY_REGION_WAIT_INVERTED" />
+      <use token="QUERY_NO_WAIT_INVERTED" />
+      <use token="QUERY_WAIT_INVERTED" />
     </enum>
     <enum name="ConvolutionParameter">
       <token name="CONVOLUTION_BORDER_MODE" value="0x8013" />
@@ -2322,61 +2357,61 @@
       <token name="SEPARABLE_2D" value="0x8012" />
     </enum>
     <enum name="DebugSeverity">
-      <use enum="VERSION_4_3" token="DEBUG_SEVERITY_HIGH" />
-      <use enum="VERSION_4_3" token="DEBUG_SEVERITY_MEDIUM" />
-      <use enum="VERSION_4_3" token="DEBUG_SEVERITY_LOW" />
-      <use enum="VERSION_4_3" token="DEBUG_SEVERITY_NOTIFICATION" />
+      <use token="DEBUG_SEVERITY_HIGH" />
+      <use token="DEBUG_SEVERITY_MEDIUM" />
+      <use token="DEBUG_SEVERITY_LOW" />
+      <use token="DEBUG_SEVERITY_NOTIFICATION" />
     </enum>
     <enum name="DebugSeverityControl">
-      <use enum="VERSION_1_1" token="DONT_CARE" />
-      <use enum="VERSION_4_3" token="DEBUG_SEVERITY_HIGH" />
-      <use enum="VERSION_4_3" token="DEBUG_SEVERITY_MEDIUM" />
-      <use enum="VERSION_4_3" token="DEBUG_SEVERITY_LOW" />
-      <use enum="VERSION_4_3" token="DEBUG_SEVERITY_NOTIFICATION" />
+      <use token="DONT_CARE" />
+      <use token="DEBUG_SEVERITY_HIGH" />
+      <use token="DEBUG_SEVERITY_MEDIUM" />
+      <use token="DEBUG_SEVERITY_LOW" />
+      <use token="DEBUG_SEVERITY_NOTIFICATION" />
     </enum>
     <enum name="DebugSource">
-      <use enum="VERSION_4_3" token="DEBUG_SOURCE_API" />
-      <use enum="VERSION_4_3" token="DEBUG_SOURCE_SHADER_COMPILER" />
-      <use enum="VERSION_4_3" token="DEBUG_SOURCE_WINDOW_SYSTEM" />
-      <use enum="VERSION_4_3" token="DEBUG_SOURCE_THIRD_PARTY" />
-      <use enum="VERSION_4_3" token="DEBUG_SOURCE_APPLICATION" />
-      <use enum="VERSION_4_3" token="DEBUG_SOURCE_OTHER" />
+      <use token="DEBUG_SOURCE_API" />
+      <use token="DEBUG_SOURCE_SHADER_COMPILER" />
+      <use token="DEBUG_SOURCE_WINDOW_SYSTEM" />
+      <use token="DEBUG_SOURCE_THIRD_PARTY" />
+      <use token="DEBUG_SOURCE_APPLICATION" />
+      <use token="DEBUG_SOURCE_OTHER" />
     </enum>
     <enum name="DebugSourceControl">
-      <use enum="VERSION_1_1" token="DONT_CARE" />
-      <use enum="VERSION_4_3" token="DEBUG_SOURCE_API" />
-      <use enum="VERSION_4_3" token="DEBUG_SOURCE_SHADER_COMPILER" />
-      <use enum="VERSION_4_3" token="DEBUG_SOURCE_WINDOW_SYSTEM" />
-      <use enum="VERSION_4_3" token="DEBUG_SOURCE_THIRD_PARTY" />
-      <use enum="VERSION_4_3" token="DEBUG_SOURCE_APPLICATION" />
-      <use enum="VERSION_4_3" token="DEBUG_SOURCE_OTHER" />
+      <use token="DONT_CARE" />
+      <use token="DEBUG_SOURCE_API" />
+      <use token="DEBUG_SOURCE_SHADER_COMPILER" />
+      <use token="DEBUG_SOURCE_WINDOW_SYSTEM" />
+      <use token="DEBUG_SOURCE_THIRD_PARTY" />
+      <use token="DEBUG_SOURCE_APPLICATION" />
+      <use token="DEBUG_SOURCE_OTHER" />
     </enum>
     <enum name="DebugSourceExternal">
-      <use enum="VERSION_4_3" token="DEBUG_SOURCE_THIRD_PARTY" />
-      <use enum="VERSION_4_3" token="DEBUG_SOURCE_APPLICATION" />
+      <use token="DEBUG_SOURCE_THIRD_PARTY" />
+      <use token="DEBUG_SOURCE_APPLICATION" />
     </enum>
     <enum name="DebugType">
-      <use enum="VERSION_4_3" token="DEBUG_TYPE_ERROR" />
-      <use enum="VERSION_4_3" token="DEBUG_TYPE_MARKER" />
-      <use enum="VERSION_4_3" token="DEBUG_TYPE_OTHER" />
-      <use enum="VERSION_4_3" token="DEBUG_TYPE_DEPRECATED_BEHAVIOR" />
-      <use enum="VERSION_4_3" token="DEBUG_TYPE_UNDEFINED_BEHAVIOR" />
-      <use enum="VERSION_4_3" token="DEBUG_TYPE_PERFORMANCE" />
-      <use enum="VERSION_4_3" token="DEBUG_TYPE_PORTABILITY" />
-      <use enum="VERSION_4_3" token="DEBUG_TYPE_PUSH_GROUP" />
-      <use enum="VERSION_4_3" token="DEBUG_TYPE_POP_GROUP" />
+      <use token="DEBUG_TYPE_ERROR" />
+      <use token="DEBUG_TYPE_MARKER" />
+      <use token="DEBUG_TYPE_OTHER" />
+      <use token="DEBUG_TYPE_DEPRECATED_BEHAVIOR" />
+      <use token="DEBUG_TYPE_UNDEFINED_BEHAVIOR" />
+      <use token="DEBUG_TYPE_PERFORMANCE" />
+      <use token="DEBUG_TYPE_PORTABILITY" />
+      <use token="DEBUG_TYPE_PUSH_GROUP" />
+      <use token="DEBUG_TYPE_POP_GROUP" />
     </enum>
     <enum name="DebugTypeControl">
-      <use enum="VERSION_1_1" token="DONT_CARE" />
-      <use enum="VERSION_4_3" token="DEBUG_TYPE_ERROR" />
-      <use enum="VERSION_4_3" token="DEBUG_TYPE_MARKER" />
-      <use enum="VERSION_4_3" token="DEBUG_TYPE_OTHER" />
-      <use enum="VERSION_4_3" token="DEBUG_TYPE_DEPRECATED_BEHAVIOR" />
-      <use enum="VERSION_4_3" token="DEBUG_TYPE_UNDEFINED_BEHAVIOR" />
-      <use enum="VERSION_4_3" token="DEBUG_TYPE_PERFORMANCE" />
-      <use enum="VERSION_4_3" token="DEBUG_TYPE_PORTABILITY" />
-      <use enum="VERSION_4_3" token="DEBUG_TYPE_PUSH_GROUP" />
-      <use enum="VERSION_4_3" token="DEBUG_TYPE_POP_GROUP" />
+      <use token="DONT_CARE" />
+      <use token="DEBUG_TYPE_ERROR" />
+      <use token="DEBUG_TYPE_MARKER" />
+      <use token="DEBUG_TYPE_OTHER" />
+      <use token="DEBUG_TYPE_DEPRECATED_BEHAVIOR" />
+      <use token="DEBUG_TYPE_UNDEFINED_BEHAVIOR" />
+      <use token="DEBUG_TYPE_PERFORMANCE" />
+      <use token="DEBUG_TYPE_PORTABILITY" />
+      <use token="DEBUG_TYPE_PUSH_GROUP" />
+      <use token="DEBUG_TYPE_POP_GROUP" />
     </enum>
     <enum name="DrawBufferMode">
       <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT0" />
@@ -2402,10 +2437,10 @@
       <use enum="DrawBufferMode" token="FRONT_RIGHT" />
       <use enum="DrawBufferMode" token="BACK_LEFT" />
       <use enum="DrawBufferMode" token="BACK_RIGHT" />
-      <use enum="DrawBufferMode" token="AUX0" />
-      <use enum="DrawBufferMode" token="AUX1" />
-      <use enum="DrawBufferMode" token="AUX2" />
-      <use enum="DrawBufferMode" token="AUX3" />
+      <use enum="DrawBufferMode" token="AUX0" optional="true" />
+      <use enum="DrawBufferMode" token="AUX1" optional="true" />
+      <use enum="DrawBufferMode" token="AUX2" optional="true" />
+      <use enum="DrawBufferMode" token="AUX3" optional="true" />
       <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT0" />
       <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT1" />
       <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT2" />
@@ -2424,9 +2459,9 @@
       <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT15" />
     </enum>
     <enum name="DrawElementsType">
-      <use enum="DataType" token="UNSIGNED_BYTE" />
-      <use enum="DataType" token="UNSIGNED_SHORT" />
-      <use enum="DataType" token="UNSIGNED_INT" />
+      <use token="UNSIGNED_BYTE" />
+      <use token="UNSIGNED_SHORT" />
+      <use token="UNSIGNED_INT" />
     </enum>
     <enum name="EnableCap">
       <use enum="ARB_framebuffer_sRGB" token="FRAMEBUFFER_SRGB" />
@@ -2455,31 +2490,31 @@
       <token name="TEXTURE_CUBE_MAP_SEAMLESS" value="0x884F" />
       <token name="VERTEX_PROGRAM_POINT_SIZE" value="0x8642" />
       <token name="VERTEX_PROGRAM_TWO_SIDE" value="0x8643" />
-      <use enum="VERSION_3_0" token="CLIP_DISTANCE0" />
-      <use enum="VERSION_3_0" token="CLIP_DISTANCE1" />
-      <use enum="VERSION_3_0" token="CLIP_DISTANCE2" />
-      <use enum="VERSION_3_0" token="CLIP_DISTANCE3" />
-      <use enum="VERSION_3_0" token="CLIP_DISTANCE4" />
-      <use enum="VERSION_3_0" token="CLIP_DISTANCE5" />
-      <use enum="VERSION_3_0" token="CLIP_DISTANCE6" />
-      <use enum="VERSION_3_0" token="CLIP_DISTANCE7" />
-      <use enum="VERSION_3_1" token="TEXTURE_RECTANGLE" />
-      <use enum="VERSION_3_2" token="TEXTURE_CUBE_MAP_SEAMLESS" />
-      <use enum="VERSION_4_0" token="SAMPLE_SHADING" />
-      <use enum="VERSION_4_3" token="DEBUG_OUTPUT" />
-      <use enum="VERSION_4_3" token="DEBUG_OUTPUT_SYNCHRONOUS" />
-      <use enum="VERSION_4_3" token="PRIMITIVE_RESTART_FIXED_INDEX" />
+      <use token="CLIP_DISTANCE0" />
+      <use token="CLIP_DISTANCE1" />
+      <use token="CLIP_DISTANCE2" />
+      <use token="CLIP_DISTANCE3" />
+      <use token="CLIP_DISTANCE4" />
+      <use token="CLIP_DISTANCE5" />
+      <use token="CLIP_DISTANCE6" />
+      <use token="CLIP_DISTANCE7" />
+      <use token="TEXTURE_RECTANGLE" />
+      <use token="TEXTURE_CUBE_MAP_SEAMLESS" />
+      <use token="SAMPLE_SHADING" />
+      <use token="DEBUG_OUTPUT" />
+      <use token="DEBUG_OUTPUT_SYNCHRONOUS" />
+      <use token="PRIMITIVE_RESTART_FIXED_INDEX" />
     </enum>
     <enum name="ErrorCode">
       <use enum="ARB_framebuffer_object" token="INVALID_FRAMEBUFFER_OPERATION" />
       <token name="INVALID_FRAMEBUFFER_OPERATION_EXT" value="0x0506" />
-      <use enum="VERSION_4_5" token="CONTEXT_LOST" />
+      <use token="CONTEXT_LOST" />
     </enum>
     <!-- Referenced group in several methods, but not defined in the registry -->
     <enum name="FogCoordinatePointerType">
-      <use enum="VERSION_1_1" token="FLOAT" />
-      <use enum="VERSION_1_1" token="DOUBLE" />
-      <use enum="VERSION_3_0" token="HALF_FLOAT" />
+      <use token="FLOAT" />
+      <use token="DOUBLE" />
+      <use token="HALF_FLOAT" />
     </enum>
     <enum name="FogMode">
       <token name="FOG_COORD" value="0x8451" />
@@ -2489,18 +2524,18 @@
       <token name="FOG_COORD_SRC" value="0x8450" />
     </enum>
     <enum name="FogPointerType">
-      <use enum="DataType" token="FLOAT" />
-      <use enum="DataType" token="DOUBLE" />
+      <use token="FLOAT" />
+      <use token="DOUBLE" />
       <use enum="ARB_half_float_vertex" token="HALF_FLOAT" />
     </enum>
     <enum name="FogPointerTypeExt">
-      <use enum="DataType" token="FLOAT" />
-      <use enum="DataType" token="DOUBLE" />
+      <use token="FLOAT" />
+      <use token="DOUBLE" />
       <use enum="ARB_half_float_vertex" token="HALF_FLOAT" />
     </enum>
     <enum name="FogPointerTypeIbm">
-      <use enum="DataType" token="FLOAT" />
-      <use enum="DataType" token="DOUBLE" />
+      <use token="FLOAT" />
+      <use token="DOUBLE" />
       <use enum="ARB_half_float_vertex" token="HALF_FLOAT" />
     </enum>
     <enum name="FramebufferAttachment">
@@ -2541,21 +2576,21 @@
       <token name="COLOR_ATTACHMENT9_EXT" value="0x8CE9" />
       <token name="DEPTH_ATTACHMENT_EXT" value="0x8D00" />
       <token name="STENCIL_ATTACHMENT_EXT" value="0x8D20" />
-      <use enum="VERSION_1_1" token="FRONT_LEFT" />
-      <use enum="VERSION_1_1" token="FRONT_RIGHT" />
-      <use enum="VERSION_1_1" token="BACK_LEFT" />
-      <use enum="VERSION_1_1" token="BACK_RIGHT" />
-      <use enum="VERSION_1_1" token="AUX0" />
-      <use enum="VERSION_1_1" token="AUX1" />
-      <use enum="VERSION_1_1" token="AUX2" />
-      <use enum="VERSION_1_1" token="AUX3" />
-      <use enum="VERSION_1_1" token="COLOR" />
-      <use enum="VERSION_1_1" token="DEPTH" />
-      <use enum="VERSION_1_1" token="STENCIL" />
+      <use token="FRONT_LEFT" />
+      <use token="FRONT_RIGHT" />
+      <use token="BACK_LEFT" />
+      <use token="BACK_RIGHT" />
+      <use token="AUX0" />
+      <use token="AUX1" />
+      <use token="AUX2" />
+      <use token="AUX3" />
+      <use token="COLOR" />
+      <use token="DEPTH" />
+      <use token="STENCIL" />
     </enum>
     <enum name="FramebufferAttachmentComponentType">
-      <use enum="DataType" token="FLOAT" />
-      <use enum="DataType" token="INT" />
+      <use token="FLOAT" />
+      <use token="INT" />
       <use enum="ARB_framebuffer_object" token="UNSIGNED_NORMALIZED" />
       <use enum="ARB_framebuffer_object" token="INDEX" />
     </enum>
@@ -2566,11 +2601,11 @@
       <token name="NONE" value="0" />
     </enum>
     <enum name="FramebufferDefaultParameter">
-      <use enum="VERSION_4_3" token="FRAMEBUFFER_DEFAULT_WIDTH" />
-      <use enum="VERSION_4_3" token="FRAMEBUFFER_DEFAULT_HEIGHT" />
-      <use enum="VERSION_4_3" token="FRAMEBUFFER_DEFAULT_FIXED_SAMPLE_LOCATIONS" />
-      <use enum="VERSION_4_3" token="FRAMEBUFFER_DEFAULT_SAMPLES" />
-      <use enum="VERSION_4_3" token="FRAMEBUFFER_DEFAULT_LAYERS" />
+      <use token="FRAMEBUFFER_DEFAULT_WIDTH" />
+      <use token="FRAMEBUFFER_DEFAULT_HEIGHT" />
+      <use token="FRAMEBUFFER_DEFAULT_FIXED_SAMPLE_LOCATIONS" />
+      <use token="FRAMEBUFFER_DEFAULT_SAMPLES" />
+      <use token="FRAMEBUFFER_DEFAULT_LAYERS" />
     </enum>
     <enum name="FramebufferErrorCode">
       <use enum="ARB_framebuffer_object" token="FRAMEBUFFER_COMPLETE" />
@@ -2630,7 +2665,7 @@
       <use enum="TextureTarget" token="TEXTURE_2D_MULTISAMPLE_ARRAY" />
       <use enum="TextureTarget" token="TEXTURE_3D" />
       <use enum="TextureTarget" token="TEXTURE_CUBE_MAP" />
-      <use enum="VERSION_4_0" token="TEXTURE_CUBE_MAP_ARRAY" />
+      <use token="TEXTURE_CUBE_MAP_ARRAY" />
     </enum>
     <enum name="GetColorTableParameterPName">
       <token name="COLOR_TABLE_ALPHA_SIZE" value="0x80DD" />
@@ -2673,10 +2708,10 @@
       <token name="TRANSFORM_FEEDBACK_BUFFER_BINDING" value="0x8C8F" />
       <token name="TRANSFORM_FEEDBACK_BUFFER_SIZE" value="0x8C85" />
       <token name="TRANSFORM_FEEDBACK_BUFFER_START" value="0x8C84" />
-      <use enum="VERSION_1_1" token="COLOR_WRITEMASK" />
-      <use enum="VERSION_4_1" token="SCISSOR_BOX" />
-      <use enum="VERSION_4_1" token="VIEWPORT" />
-      <use enum="VERSION_4_1" token="DEPTH_RANGE" />
+      <use token="COLOR_WRITEMASK" />
+      <use token="SCISSOR_BOX" />
+      <use token="VIEWPORT" />
+      <use token="DEPTH_RANGE" />
     </enum>
     <enum name="GetMinmaxParameterPName">
       <token name="MINMAX_FORMAT" value="0x802F" />
@@ -2848,88 +2883,88 @@
       <token name="VERTEX_ARRAY_BUFFER_BINDING" value="0x8896" />
       <token name="VERTEX_ATTRIB_ARRAY_BUFFER_BINDING" value="0x889F" />
       <token name="WEIGHT_ARRAY_BUFFER_BINDING" value="0x889E" />
-      <use enum="VERSION_1_3" token="SAMPLES" />
-      <use enum="VERSION_1_3" token="SAMPLE_BUFFERS" />
-      <use enum="VERSION_3_1" token="TEXTURE_BUFFER" />
-      <use enum="VERSION_3_1" token="MAX_TEXTURE_BUFFER_SIZE" />
-      <use enum="VERSION_3_1" token="TEXTURE_BINDING_BUFFER" />
-      <use enum="VERSION_3_1" token="TEXTURE_BUFFER_DATA_STORE_BINDING" />
-      <!--<use enum="VERSION_3_1" token="TEXTURE_BUFFER_FORMAT" /> Does not exist in core -->
-      <use enum="VERSION_3_2" token="MAX_FRAGMENT_INPUT_COMPONENTS" />
-      <use enum="VERSION_3_2" token="MAX_GEOMETRY_INPUT_COMPONENTS" />
-      <use enum="VERSION_3_2" token="MAX_GEOMETRY_OUTPUT_COMPONENTS" />
-      <use enum="VERSION_3_2" token="MAX_VERTEX_OUTPUT_COMPONENTS" />
-      <use enum="VERSION_3_3" token="SAMPLER_BINDING" />
-      <use enum="VERSION_3_3" token="MAX_DUAL_SOURCE_DRAW_BUFFERS" />
-      <use enum="VERSION_3_3" token="TIMESTAMP" />
-      <use enum="VERSION_4_0" token="DRAW_INDIRECT_BUFFER_BINDING" />
-      <use enum="VERSION_4_0" token="MAX_GEOMETRY_SHADER_INVOCATIONS" />
-      <use enum="VERSION_4_0" token="MIN_FRAGMENT_INTERPOLATION_OFFSET" />
-      <use enum="VERSION_4_0" token="MAX_FRAGMENT_INTERPOLATION_OFFSET" />
-      <use enum="VERSION_4_0" token="FRAGMENT_INTERPOLATION_OFFSET_BITS" />
-      <use enum="VERSION_4_0" token="MAX_VERTEX_STREAMS" />
-      <use enum="VERSION_4_0" token="SAMPLE_SHADING" />
-      <use enum="VERSION_4_0" token="MIN_SAMPLE_SHADING_VALUE" />
-      <use enum="VERSION_4_0" token="MAX_SUBROUTINES" />
-      <use enum="VERSION_4_0" token="MAX_SUBROUTINE_UNIFORM_LOCATIONS" />
-      <use enum="VERSION_4_0" token="PATCH_VERTICES" />
-      <use enum="VERSION_4_0" token="PATCH_DEFAULT_INNER_LEVEL" />
-      <use enum="VERSION_4_0" token="PATCH_DEFAULT_OUTER_LEVEL" />
-      <use enum="VERSION_4_0" token="MAX_PATCH_VERTICES" />
-      <use enum="VERSION_4_0" token="MAX_TESS_GEN_LEVEL" />
-      <use enum="VERSION_4_0" token="MAX_TESS_CONTROL_UNIFORM_COMPONENTS" />
-      <use enum="VERSION_4_0" token="MAX_TESS_EVALUATION_UNIFORM_COMPONENTS" />
-      <use enum="VERSION_4_0" token="MAX_TESS_CONTROL_TEXTURE_IMAGE_UNITS" />
-      <use enum="VERSION_4_0" token="MAX_TESS_EVALUATION_TEXTURE_IMAGE_UNITS" />
-      <use enum="VERSION_4_0" token="MAX_TESS_CONTROL_OUTPUT_COMPONENTS" />
-      <use enum="VERSION_4_0" token="MAX_TESS_PATCH_COMPONENTS" />
-      <use enum="VERSION_4_0" token="MAX_TESS_CONTROL_TOTAL_OUTPUT_COMPONENTS" />
-      <use enum="VERSION_4_0" token="MAX_TESS_EVALUATION_OUTPUT_COMPONENTS" />
-      <use enum="VERSION_4_0" token="MAX_TESS_CONTROL_UNIFORM_BLOCKS" />
-      <use enum="VERSION_4_0" token="MAX_TESS_EVALUATION_UNIFORM_BLOCKS" />
-      <use enum="VERSION_4_0" token="MAX_TESS_CONTROL_INPUT_COMPONENTS" />
-      <use enum="VERSION_4_0" token="MAX_TESS_EVALUATION_INPUT_COMPONENTS" />
-      <use enum="VERSION_4_0" token="MAX_COMBINED_TESS_CONTROL_UNIFORM_COMPONENTS" />
-      <use enum="VERSION_4_0" token="MAX_COMBINED_TESS_EVALUATION_UNIFORM_COMPONENTS" />
-      <!--<use enum="VERSION_4_0" token="TEXTURE_CUBE_MAP_ARRAY_BINDING" /> Does not exist -->
-      <use enum="VERSION_4_0" token="MAX_PROGRAM_TEXTURE_GATHER_OFFSET" />
-      <use enum="VERSION_4_0" token="MIN_PROGRAM_TEXTURE_GATHER_OFFSET" />
-      <!--<use enum="VERSION_4_0" token="MAX_PROGRAM_TEXTURE_GATHER_COMPONENTS" /> Does not exist -->
-      <use enum="VERSION_4_0" token="TRANSFORM_FEEDBACK_BUFFER_PAUSED" />
-      <use enum="VERSION_4_0" token="TRANSFORM_FEEDBACK_BUFFER_ACTIVE" />
-      <use enum="VERSION_4_0" token="TRANSFORM_FEEDBACK_BINDING" />
-      <use enum="VERSION_4_0" token="MAX_TRANSFORM_FEEDBACK_BUFFERS" />
-      <use enum="VERSION_4_0" token="MAX_VERTEX_STREAMS" />
-      <use enum="VERSION_4_1" token="PROGRAM_PIPELINE_BINDING" />
-      <use enum="VERSION_4_1" token="SHADER_COMPILER" />
-      <use enum="VERSION_4_1" token="SHADER_BINARY_FORMATS" />
-      <use enum="VERSION_4_1" token="NUM_SHADER_BINARY_FORMATS" />
-      <use enum="VERSION_4_1" token="MAX_VERTEX_UNIFORM_VECTORS" />
-      <use enum="VERSION_4_1" token="MAX_VARYING_VECTORS" />
-      <use enum="VERSION_4_1" token="MAX_FRAGMENT_UNIFORM_VECTORS" />
-      <use enum="VERSION_4_1" token="IMPLEMENTATION_COLOR_READ_TYPE" />
-      <use enum="VERSION_4_1" token="IMPLEMENTATION_COLOR_READ_FORMAT" />
-      <use enum="VERSION_4_1" token="NUM_PROGRAM_BINARY_FORMATS" />
-      <use enum="VERSION_4_1" token="PROGRAM_BINARY_FORMATS" />
-      <use enum="VERSION_4_1" token="MAX_VIEWPORTS" />
-      <use enum="VERSION_4_1" token="VIEWPORT_SUBPIXEL_BITS" />
-      <use enum="VERSION_4_1" token="VIEWPORT_BOUNDS_RANGE" />
-      <use enum="VERSION_4_1" token="LAYER_PROVOKING_VERTEX" />
-      <use enum="VERSION_4_1" token="VIEWPORT_INDEX_PROVOKING_VERTEX" />
-      <use enum="VERSION_4_2" token="MAX_VERTEX_IMAGE_UNIFORMS" />
-      <use enum="VERSION_4_2" token="MAX_TESS_CONTROL_IMAGE_UNIFORMS" />
-      <use enum="VERSION_4_2" token="MAX_TESS_EVALUATION_IMAGE_UNIFORMS" />
-      <use enum="VERSION_4_2" token="MAX_GEOMETRY_IMAGE_UNIFORMS" />
-      <use enum="VERSION_4_2" token="MAX_FRAGMENT_IMAGE_UNIFORMS" />
-      <use enum="VERSION_4_2" token="MAX_COMBINED_IMAGE_UNIFORMS" />
-      <use enum="VERSION_4_3" token="MAX_COMPUTE_IMAGE_UNIFORMS" />
-      <use enum="VERSION_4_5" token="CLIP_ORIGIN" />
-      <use enum="VERSION_4_5" token="CLIP_DEPTH_MODE" />
-      <use enum="VERSION_4_5" token="MAX_CULL_DISTANCES" />
-      <use enum="VERSION_4_5" token="MAX_COMBINED_CLIP_AND_CULL_DISTANCES" />
-      <use enum="VERSION_4_5" token="CONTEXT_RELEASE_BEHAVIOR" />
-      <use enum="VERSION_4_5" token="CONTEXT_ROBUST_ACCESS" />
-      <use enum="VERSION_4_5" token="RESET_NOTIFICATION_STRATEGY" />
+      <use token="SAMPLES" />
+      <use token="SAMPLE_BUFFERS" />
+      <use token="TEXTURE_BUFFER" />
+      <use token="MAX_TEXTURE_BUFFER_SIZE" />
+      <use token="TEXTURE_BINDING_BUFFER" />
+      <use token="TEXTURE_BUFFER_DATA_STORE_BINDING" />
+      <!--<use token="TEXTURE_BUFFER_FORMAT" /> Does not exist in core -->
+      <use token="MAX_FRAGMENT_INPUT_COMPONENTS" />
+      <use token="MAX_GEOMETRY_INPUT_COMPONENTS" />
+      <use token="MAX_GEOMETRY_OUTPUT_COMPONENTS" />
+      <use token="MAX_VERTEX_OUTPUT_COMPONENTS" />
+      <use token="SAMPLER_BINDING" />
+      <use token="MAX_DUAL_SOURCE_DRAW_BUFFERS" />
+      <use token="TIMESTAMP" />
+      <use token="DRAW_INDIRECT_BUFFER_BINDING" />
+      <use token="MAX_GEOMETRY_SHADER_INVOCATIONS" />
+      <use token="MIN_FRAGMENT_INTERPOLATION_OFFSET" />
+      <use token="MAX_FRAGMENT_INTERPOLATION_OFFSET" />
+      <use token="FRAGMENT_INTERPOLATION_OFFSET_BITS" />
+      <use token="MAX_VERTEX_STREAMS" />
+      <use token="SAMPLE_SHADING" />
+      <use token="MIN_SAMPLE_SHADING_VALUE" />
+      <use token="MAX_SUBROUTINES" />
+      <use token="MAX_SUBROUTINE_UNIFORM_LOCATIONS" />
+      <use token="PATCH_VERTICES" />
+      <use token="PATCH_DEFAULT_INNER_LEVEL" />
+      <use token="PATCH_DEFAULT_OUTER_LEVEL" />
+      <use token="MAX_PATCH_VERTICES" />
+      <use token="MAX_TESS_GEN_LEVEL" />
+      <use token="MAX_TESS_CONTROL_UNIFORM_COMPONENTS" />
+      <use token="MAX_TESS_EVALUATION_UNIFORM_COMPONENTS" />
+      <use token="MAX_TESS_CONTROL_TEXTURE_IMAGE_UNITS" />
+      <use token="MAX_TESS_EVALUATION_TEXTURE_IMAGE_UNITS" />
+      <use token="MAX_TESS_CONTROL_OUTPUT_COMPONENTS" />
+      <use token="MAX_TESS_PATCH_COMPONENTS" />
+      <use token="MAX_TESS_CONTROL_TOTAL_OUTPUT_COMPONENTS" />
+      <use token="MAX_TESS_EVALUATION_OUTPUT_COMPONENTS" />
+      <use token="MAX_TESS_CONTROL_UNIFORM_BLOCKS" />
+      <use token="MAX_TESS_EVALUATION_UNIFORM_BLOCKS" />
+      <use token="MAX_TESS_CONTROL_INPUT_COMPONENTS" />
+      <use token="MAX_TESS_EVALUATION_INPUT_COMPONENTS" />
+      <use token="MAX_COMBINED_TESS_CONTROL_UNIFORM_COMPONENTS" />
+      <use token="MAX_COMBINED_TESS_EVALUATION_UNIFORM_COMPONENTS" />
+      <!--<use token="TEXTURE_CUBE_MAP_ARRAY_BINDING" /> Does not exist -->
+      <use token="MAX_PROGRAM_TEXTURE_GATHER_OFFSET" />
+      <use token="MIN_PROGRAM_TEXTURE_GATHER_OFFSET" />
+      <!--<use token="MAX_PROGRAM_TEXTURE_GATHER_COMPONENTS" /> Does not exist -->
+      <use token="TRANSFORM_FEEDBACK_BUFFER_PAUSED" />
+      <use token="TRANSFORM_FEEDBACK_BUFFER_ACTIVE" />
+      <use token="TRANSFORM_FEEDBACK_BINDING" />
+      <use token="MAX_TRANSFORM_FEEDBACK_BUFFERS" />
+      <use token="MAX_VERTEX_STREAMS" />
+      <use token="PROGRAM_PIPELINE_BINDING" />
+      <use token="SHADER_COMPILER" />
+      <use token="SHADER_BINARY_FORMATS" />
+      <use token="NUM_SHADER_BINARY_FORMATS" />
+      <use token="MAX_VERTEX_UNIFORM_VECTORS" />
+      <use token="MAX_VARYING_VECTORS" />
+      <use token="MAX_FRAGMENT_UNIFORM_VECTORS" />
+      <use token="IMPLEMENTATION_COLOR_READ_TYPE" />
+      <use token="IMPLEMENTATION_COLOR_READ_FORMAT" />
+      <use token="NUM_PROGRAM_BINARY_FORMATS" />
+      <use token="PROGRAM_BINARY_FORMATS" />
+      <use token="MAX_VIEWPORTS" />
+      <use token="VIEWPORT_SUBPIXEL_BITS" />
+      <use token="VIEWPORT_BOUNDS_RANGE" />
+      <use token="LAYER_PROVOKING_VERTEX" />
+      <use token="VIEWPORT_INDEX_PROVOKING_VERTEX" />
+      <use token="MAX_VERTEX_IMAGE_UNIFORMS" />
+      <use token="MAX_TESS_CONTROL_IMAGE_UNIFORMS" />
+      <use token="MAX_TESS_EVALUATION_IMAGE_UNIFORMS" />
+      <use token="MAX_GEOMETRY_IMAGE_UNIFORMS" />
+      <use token="MAX_FRAGMENT_IMAGE_UNIFORMS" />
+      <use token="MAX_COMBINED_IMAGE_UNIFORMS" />
+      <use token="MAX_COMPUTE_IMAGE_UNIFORMS" />
+      <use token="CLIP_ORIGIN" />
+      <use token="CLIP_DEPTH_MODE" />
+      <use token="MAX_CULL_DISTANCES" />
+      <use token="MAX_COMBINED_CLIP_AND_CULL_DISTANCES" />
+      <use token="CONTEXT_RELEASE_BEHAVIOR" />
+      <use token="CONTEXT_ROBUST_ACCESS" />
+      <use token="RESET_NOTIFICATION_STRATEGY" />
     </enum>
     <enum name="GetPointervPName">
       <token name="FOG_COORD_ARRAY_POINTER" value="0x8456" />
@@ -2979,20 +3014,20 @@
       <token name="TEXTURE_SAMPLES" value="0x9106" />
       <token name="TEXTURE_SHARED_SIZE" value="0x8C3F" />
       <token name="TEXTURE_WRAP_R" value="0x8072" />
-      <use enum="VERSION_1_3" token="TEXTURE_COMPRESSED" />
-      <use enum="VERSION_3_3" token="TEXTURE_SWIZZLE_R" />
-      <use enum="VERSION_3_3" token="TEXTURE_SWIZZLE_G" />
-      <use enum="VERSION_3_3" token="TEXTURE_SWIZZLE_B" />
-      <use enum="VERSION_3_3" token="TEXTURE_SWIZZLE_A" />
-      <use enum="VERSION_3_3" token="TEXTURE_SWIZZLE_RGBA" />
-      <use enum="VERSION_4_2" token="IMAGE_FORMAT_COMPATIBILITY_TYPE" />
-      <use enum="VERSION_4_2" token="TEXTURE_IMMUTABLE_FORMAT" />
-      <use enum="VERSION_4_3" token="TEXTURE_IMMUTABLE_LEVELS" />
-      <use enum="VERSION_4_3" token="TEXTURE_VIEW_MIN_LEVEL" />
-      <use enum="VERSION_4_3" token="TEXTURE_VIEW_NUM_LEVELS" />
-      <use enum="VERSION_4_3" token="TEXTURE_VIEW_MIN_LAYER" />
-      <use enum="VERSION_4_3" token="TEXTURE_VIEW_NUM_LEVELS" />
-      <use enum="VERSION_4_3" token="TEXTURE_VIEW_NUM_LAYERS" />
+      <use token="TEXTURE_COMPRESSED" />
+      <use token="TEXTURE_SWIZZLE_R" />
+      <use token="TEXTURE_SWIZZLE_G" />
+      <use token="TEXTURE_SWIZZLE_B" />
+      <use token="TEXTURE_SWIZZLE_A" />
+      <use token="TEXTURE_SWIZZLE_RGBA" />
+      <use token="IMAGE_FORMAT_COMPATIBILITY_TYPE" />
+      <use token="TEXTURE_IMMUTABLE_FORMAT" />
+      <use token="TEXTURE_IMMUTABLE_LEVELS" />
+      <use token="TEXTURE_VIEW_MIN_LEVEL" />
+      <use token="TEXTURE_VIEW_NUM_LEVELS" />
+      <use token="TEXTURE_VIEW_MIN_LAYER" />
+      <use token="TEXTURE_VIEW_NUM_LEVELS" />
+      <use token="TEXTURE_VIEW_NUM_LAYERS" />
     </enum>
     <enum name="HintTarget">
       <token name="FRAGMENT_SHADER_DERIVATIVE_HINT" value="0x8B8B" />
@@ -3004,28 +3039,28 @@
       <token name="PROXY_HISTOGRAM" value="0x8025" />
     </enum>
     <enum name="ImageTarget">
-      <use enum="VERSION_1_1" token="TEXTURE_1D" />
-      <use enum="VERSION_1_1" token="TEXTURE_2D" />
-      <use enum="VERSION_1_2" token="TEXTURE_3D" />
-      <use enum="VERSION_3_0" token="TEXTURE_1D_ARRAY" />
-      <use enum="VERSION_3_0" token="TEXTURE_2D_ARRAY" />
-      <use enum="VERSION_3_2" token="TEXTURE_2D_MULTISAMPLE" />
-      <use enum="VERSION_3_2" token="TEXTURE_2D_MULTISAMPLE_ARRAY" />
-      <use enum="VERSION_3_1" token="TEXTURE_BUFFER" />
-      <use enum="VERSION_3_1" token="TEXTURE_RECTANGLE" />
-      <use enum="VERSION_1_3" token="TEXTURE_CUBE_MAP" />
-      <use enum="VERSION_4_0" token="TEXTURE_CUBE_MAP_ARRAY" />
-      <use enum="VERSION_3_0" token="RENDERBUFFER" />
+      <use token="TEXTURE_1D" />
+      <use token="TEXTURE_2D" />
+      <use token="TEXTURE_3D" />
+      <use token="TEXTURE_1D_ARRAY" />
+      <use token="TEXTURE_2D_ARRAY" />
+      <use token="TEXTURE_2D_MULTISAMPLE" />
+      <use token="TEXTURE_2D_MULTISAMPLE_ARRAY" />
+      <use token="TEXTURE_BUFFER" />
+      <use token="TEXTURE_RECTANGLE" />
+      <use token="TEXTURE_CUBE_MAP" />
+      <use token="TEXTURE_CUBE_MAP_ARRAY" />
+      <use token="RENDERBUFFER" />
     </enum>
     <enum name="IndexedEnableCap">
       <use enum="GetPName" token="BLEND" />
-      <use enum="VERSION_4_1" token="SCISSOR_TEST" />
+      <use token="SCISSOR_TEST" />
     </enum>
     <enum name="InternalFormatParameter">
-      <use enum="VERSION_4_3" token="CLEAR_BUFFER" />
-      <use enum="VERSION_4_4" token="CLEAR_TEXTURE" />
+      <use token="CLEAR_BUFFER" />
+      <use token="CLEAR_TEXTURE" />
       <use token="COLOR_ENCODING" />
-      <use enum="VERSION_4_3" token="COLOR_COMPONENTS" />
+      <use token="COLOR_COMPONENTS" />
       <use token="COLOR_RENDERABLE" />
       <use token="COMPUTE_TEXTURE" />
       <use token="DEPTH_COMPONENTS" />
@@ -3105,8 +3140,8 @@
       <use enum="PixelCopyType" token="COLOR" />
     </enum>
     <enum name="MatrixModeArb">
-      <use enum="MatrixMode" token="MODELVIEW" />
-      <use enum="MatrixMode" token="PROJECTION" />
+      <use enum="MatrixMode" token="MODELVIEW" optional="true" />
+      <use enum="MatrixMode" token="PROJECTION" optional="true" />
       <use enum="MatrixMode" token="TEXTURE" />
       <use enum="MatrixMode" token="COLOR" />
       <token name="MATRIX0" value="0x88C0" />
@@ -3143,54 +3178,54 @@
       <token name="MATRIX9" value="0x88C9" />
     </enum>
     <enum name="MemoryBarrierFlags">
-      <use enum="VERSION_4_2" token="ALL_BARRIER_BITS" />
-      <use enum="VERSION_4_2" token="VERTEX_ATTRIB_ARRAY_BARRIER_BIT" />
-      <use enum="VERSION_4_2" token="ELEMENT_ARRAY_BARRIER_BIT" />
-      <use enum="VERSION_4_2" token="UNIFORM_BARRIER_BIT" />
-      <use enum="VERSION_4_2" token="TEXTURE_FETCH_BARRIER_BIT" />
-      <use enum="VERSION_4_2" token="BUFFER_UPDATE_BARRIER_BIT" />
-      <use enum="VERSION_4_2" token="SHADER_IMAGE_ACCESS_BARRIER_BIT" />
-      <use enum="VERSION_4_2" token="COMMAND_BARRIER_BIT" />
-      <use enum="VERSION_4_2" token="PIXEL_BUFFER_BARRIER_BIT" />
-      <use enum="VERSION_4_2" token="TEXTURE_UPDATE_BARRIER_BIT" />
-      <use enum="VERSION_4_2" token="FRAMEBUFFER_BARRIER_BIT" />
-      <use enum="VERSION_4_2" token="TRANSFORM_FEEDBACK_BARRIER_BIT" />
-      <use enum="VERSION_4_2" token="ATOMIC_COUNTER_BARRIER_BIT" />
-      <use enum="VERSION_4_3" token="SHADER_STORAGE_BARRIER_BIT" />
-      <use enum="VERSION_4_4" token="CLIENT_MAPPED_BUFFER_BARRIER_BIT" />
-      <use enum="VERSION_4_4" token="QUERY_BUFFER_BARRIER_BIT" />
+      <use token="ALL_BARRIER_BITS" />
+      <use token="VERTEX_ATTRIB_ARRAY_BARRIER_BIT" />
+      <use token="ELEMENT_ARRAY_BARRIER_BIT" />
+      <use token="UNIFORM_BARRIER_BIT" />
+      <use token="TEXTURE_FETCH_BARRIER_BIT" />
+      <use token="BUFFER_UPDATE_BARRIER_BIT" />
+      <use token="SHADER_IMAGE_ACCESS_BARRIER_BIT" />
+      <use token="COMMAND_BARRIER_BIT" />
+      <use token="PIXEL_BUFFER_BARRIER_BIT" />
+      <use token="TEXTURE_UPDATE_BARRIER_BIT" />
+      <use token="FRAMEBUFFER_BARRIER_BIT" />
+      <use token="TRANSFORM_FEEDBACK_BARRIER_BIT" />
+      <use token="ATOMIC_COUNTER_BARRIER_BIT" />
+      <use token="SHADER_STORAGE_BARRIER_BIT" />
+      <use token="CLIENT_MAPPED_BUFFER_BARRIER_BIT" />
+      <use token="QUERY_BUFFER_BARRIER_BIT" />
     </enum>
     <enum name="MinmaxTarget">
       <token name="MINMAX" value="0x802E" />
     </enum>
     <enum name="NormalPointerType">
       <use enum="ARB_half_float_vertex" token="HALF_FLOAT" />
-      <use enum="VERSION_3_3" token="UNSIGNED_INT_2_10_10_10_REV" />
-      <use enum="VERSION_3_3" token="INT_2_10_10_10_REV" />
+      <use token="UNSIGNED_INT_2_10_10_10_REV" />
+      <use token="INT_2_10_10_10_REV" />
     </enum>
     <enum name="ObjectLabelIdentifier">
-      <use enum="VERSION_4_3" token="BUFFER" />
-      <use enum="VERSION_4_3" token="FRAMEBUFFER" />
-      <use enum="VERSION_4_3" token="RENDERBUFFER" />
-      <use enum="VERSION_4_3" token="PROGRAM_PIPELINE" />
-      <use enum="VERSION_4_3" token="PROGRAM" />
-      <use enum="VERSION_4_3" token="QUERY" />
-      <use enum="VERSION_4_3" token="SAMPLER" />
-      <use enum="VERSION_4_3" token="SHADER" />
-      <use enum="VERSION_4_3" token="TEXTURE" />
-      <use enum="VERSION_4_3" token="TRANSFORM_FEEDBACK" />
-      <use enum="VERSION_4_3" token="VERTEX_ARRAY" />
+      <use token="BUFFER" />
+      <use token="FRAMEBUFFER" />
+      <use token="RENDERBUFFER" />
+      <use token="PROGRAM_PIPELINE" />
+      <use token="PROGRAM" />
+      <use token="QUERY" />
+      <use token="SAMPLER" />
+      <use token="SHADER" />
+      <use token="TEXTURE" />
+      <use token="TRANSFORM_FEEDBACK" />
+      <use token="VERTEX_ARRAY" />
     </enum>
     <enum name="PackedPointerType">
-      <use enum="VERSION_3_3" token="UNSIGNED_INT_2_10_10_10_REV" />
-      <use enum="VERSION_3_3" token="INT_2_10_10_10_REV" />
+      <use token="UNSIGNED_INT_2_10_10_10_REV" />
+      <use token="INT_2_10_10_10_REV" />
     </enum>
     <enum name="PatchParameterInt">
-      <use enum="VERSION_4_0" token="PATCH_VERTICES" />
+      <use token="PATCH_VERTICES" />
     </enum>
     <enum name="PatchParameterFloat">
-      <use enum="VERSION_4_0" token="PATCH_DEFAULT_INNER_LEVEL" />
-      <use enum="VERSION_4_0" token="PATCH_DEFAULT_OUTER_LEVEL" />
+      <use token="PATCH_DEFAULT_INNER_LEVEL" />
+      <use token="PATCH_DEFAULT_OUTER_LEVEL" />
     </enum>
     <enum name="PixelFormat">
       <use enum="ARB_texture_rg" token="RG" />
@@ -3206,16 +3241,16 @@
       <token name="RED_INTEGER" value="0x8D94" />
       <token name="RGB_INTEGER" value="0x8D98" />
       <token name="RGBA_INTEGER" value="0x8D99" />
-      <use enum="EXT_abgr" token="ABGR_EXT" />
-      <use enum="EXT_cmyka" token="CMYK_EXT" />
-      <use enum="EXT_cmyka" token="CMYKA_EXT" />
+      <use enum="EXT_abgr" token="ABGR_EXT" optional="true" />
+      <use enum="EXT_cmyka" token="CMYK_EXT" optional="true" />
+      <use enum="EXT_cmyka" token="CMYKA_EXT" optional="true" />
       <use enum="SGIX_icc_texture" token="R5_G6_B5_ICC_SGIX" />
       <use enum="SGIX_icc_texture" token="R5_G6_B5_A8_ICC_SGIX" />
       <use enum="SGIX_icc_texture" token="ALPHA16_ICC_SGIX" />
       <use enum="SGIX_icc_texture" token="LUMINANCE16_ICC_SGIX" />
       <use enum="SGIX_icc_texture" token="LUMINANCE16_ALPHA8_ICC_SGIX" />
-      <use enum="SGIX_ycrcb" token="YCRCB_422_SGIX" />
-      <use enum="SGIX_ycrcb" token="YCRCB_444_SGIX" />
+      <use enum="SGIX_ycrcb" token="YCRCB_422_SGIX" optional="true" />
+      <use enum="SGIX_ycrcb" token="YCRCB_444_SGIX" optional="true" />
       <token name="ALPHA" value="0x1906" />
       <token name="BLUE" value="0x1905" />
       <token name="COLOR_INDEX" value="0x1900" />
@@ -3231,11 +3266,11 @@
     <enum name="PixelInternalFormat">
       <use enum="PixelFormat" token="DEPTH_COMPONENT" />
       <!-- Copy from InternalFormat (Khronos renamed PixelInternalFormat) -->
-      <use token="ALPHA12"/>
-      <use token="ALPHA16"/>
+      <use token="ALPHA12" optional="true" />
+      <use token="ALPHA16" optional="true" />
       <use token="ALPHA16_ICC_SGIX"/>
-      <use token="ALPHA4"/>
-      <use token="ALPHA8"/>
+      <use token="ALPHA4" optional="true" />
+      <use token="ALPHA8" optional="true" />
       <use token="ALPHA_ICC_SGIX"/>
       <use token="DEPTH_COMPONENT16_SGIX"/>
       <use token="DEPTH_COMPONENT24_SGIX"/>
@@ -3254,25 +3289,25 @@
       <use token="DUAL_LUMINANCE8_SGIS"/>
       <use token="DUAL_LUMINANCE_ALPHA4_SGIS"/>
       <use token="DUAL_LUMINANCE_ALPHA8_SGIS"/>
-      <use token="INTENSITY"/>
-      <use token="INTENSITY12"/>
-      <use token="INTENSITY16"/>
+      <use token="INTENSITY" optional="true" />
+      <use token="INTENSITY12" optional="true" />
+      <use token="INTENSITY16" optional="true" />
       <use token="INTENSITY16_ICC_SGIX"/>
-      <use token="INTENSITY4"/>
-      <use token="INTENSITY8"/>
+      <use token="INTENSITY4" optional="true" />
+      <use token="INTENSITY8" optional="true" />
       <use token="INTENSITY_ICC_SGIX"/>
-      <use token="LUMINANCE12"/>
-      <use token="LUMINANCE12_ALPHA12"/>
-      <use token="LUMINANCE12_ALPHA4"/>
-      <use token="LUMINANCE16"/>
-      <use token="LUMINANCE16_ALPHA16"/>
+      <use token="LUMINANCE12" optional="true" />
+      <use token="LUMINANCE12_ALPHA12" optional="true" />
+      <use token="LUMINANCE12_ALPHA4" optional="true" />
+      <use token="LUMINANCE16" optional="true" />
+      <use token="LUMINANCE16_ALPHA16" optional="true" />
       <use token="LUMINANCE16_ALPHA8_ICC_SGIX"/>
       <use token="LUMINANCE16_ICC_SGIX"/>
-      <use token="LUMINANCE4"/>
-      <use token="LUMINANCE4_ALPHA4"/>
-      <use token="LUMINANCE6_ALPHA2"/>
-      <use token="LUMINANCE8"/>
-      <use token="LUMINANCE8_ALPHA8"/>
+      <use token="LUMINANCE4" optional="true" />
+      <use token="LUMINANCE4_ALPHA4" optional="true" />
+      <use token="LUMINANCE6_ALPHA2" optional="true" />
+      <use token="LUMINANCE8" optional="true" />
+      <use token="LUMINANCE8_ALPHA8" optional="true" />
       <use token="LUMINANCE_ALPHA_ICC_SGIX"/>
       <use token="LUMINANCE_ICC_SGIX"/>
       <use token="QUAD_ALPHA4_SGIS"/>
@@ -3383,49 +3418,49 @@
       <use enum="PixelFormat" token="LUMINANCE_ALPHA" />
       <use enum="PixelFormat" token="RGB" />
       <use enum="PixelFormat" token="RGBA" />
-      <use enum="VERSION_3_1" token="R8_SNORM" />
-      <use enum="VERSION_3_1" token="RG8_SNORM" />
-      <use enum="VERSION_3_1" token="RGB8_SNORM" />
-      <use enum="VERSION_3_1" token="RGBA8_SNORM" />
-      <use enum="VERSION_3_1" token="R16_SNORM" />
-      <use enum="VERSION_3_1" token="RG16_SNORM" />
-      <use enum="VERSION_3_1" token="RGB16_SNORM" />
-      <use enum="VERSION_3_1" token="RGBA16_SNORM" />
-      <use enum="VERSION_3_3" token="RGB10_A2UI" />
-      <use enum="VERSION_4_3" token="COMPRESSED_RED_RGTC1" />
-      <use enum="VERSION_4_3" token="COMPRESSED_RG_RGTC2" />
-      <use enum="VERSION_4_3" token="COMPRESSED_SIGNED_RED_RGTC1" />
-      <use enum="VERSION_4_3" token="COMPRESSED_SIGNED_RG_RGTC2" />
-      <use enum="VERSION_4_4" token="COMPRESSED_RGBA_BPTC_UNORM" />
-      <use enum="VERSION_4_4" token="COMPRESSED_SRGB_ALPHA_BPTC_UNORM" />
-      <use enum="VERSION_4_4" token="COMPRESSED_RGB_BPTC_UNSIGNED_FLOAT" />
-      <use enum="VERSION_4_4" token="COMPRESSED_RGB_BPTC_SIGNED_FLOAT" />
+      <use token="R8_SNORM" />
+      <use token="RG8_SNORM" />
+      <use token="RGB8_SNORM" />
+      <use token="RGBA8_SNORM" />
+      <use token="R16_SNORM" />
+      <use token="RG16_SNORM" />
+      <use token="RGB16_SNORM" />
+      <use token="RGBA16_SNORM" />
+      <use token="RGB10_A2UI" />
+      <use token="COMPRESSED_RED_RGTC1" />
+      <use token="COMPRESSED_RG_RGTC2" />
+      <use token="COMPRESSED_SIGNED_RED_RGTC1" />
+      <use token="COMPRESSED_SIGNED_RG_RGTC2" />
+      <use token="COMPRESSED_RGBA_BPTC_UNORM" />
+      <use token="COMPRESSED_SRGB_ALPHA_BPTC_UNORM" />
+      <use token="COMPRESSED_RGB_BPTC_UNSIGNED_FLOAT" />
+      <use token="COMPRESSED_RGB_BPTC_SIGNED_FLOAT" />
     </enum>
     <enum name="PixelStoreParameter">
-      <use enum="VERSION_1_1" token="PACK_SWAP_BYTES" />
-      <use enum="VERSION_1_1" token="PACK_LSB_FIRST" />
-      <use enum="VERSION_1_1" token="PACK_ROW_LENGTH" />
-      <use enum="VERSION_1_1" token="PACK_SKIP_IMAGES" />
-      <use enum="VERSION_1_1" token="PACK_SKIP_PIXELS" />
-      <use enum="VERSION_1_1" token="PACK_SKIP_ROWS" />
-      <use enum="VERSION_1_1" token="PACK_ALIGNMENT" />
-      <use enum="VERSION_1_2" token="PACK_IMAGE_HEIGHT" />
-      <use enum="VERSION_4_2" token="PACK_COMPRESSED_BLOCK_WIDTH" />
-      <use enum="VERSION_4_2" token="PACK_COMPRESSED_BLOCK_HEIGHT" />
-      <use enum="VERSION_4_2" token="PACK_COMPRESSED_BLOCK_DEPTH" />
-      <use enum="VERSION_4_2" token="PACK_COMPRESSED_BLOCK_SIZE" />
-      <use enum="VERSION_1_1" token="UNPACK_SWAP_BYTES" />
-      <use enum="VERSION_1_1" token="UNPACK_LSB_FIRST" />
-      <use enum="VERSION_1_1" token="UNPACK_ROW_LENGTH" />
-      <use enum="VERSION_1_1" token="UNPACK_SKIP_IMAGES" />
-      <use enum="VERSION_1_1" token="UNPACK_SKIP_PIXELS" />
-      <use enum="VERSION_1_1" token="UNPACK_SKIP_ROWS" />
-      <use enum="VERSION_1_1" token="UNPACK_ALIGNMENT" />
-      <use enum="VERSION_1_2" token="UNPACK_IMAGE_HEIGHT" />
-      <use enum="VERSION_4_2" token="UNPACK_COMPRESSED_BLOCK_WIDTH" />
-      <use enum="VERSION_4_2" token="UNPACK_COMPRESSED_BLOCK_HEIGHT" />
-      <use enum="VERSION_4_2" token="UNPACK_COMPRESSED_BLOCK_DEPTH" />
-      <use enum="VERSION_4_2" token="UNPACK_COMPRESSED_BLOCK_SIZE" />
+      <use token="PACK_SWAP_BYTES" />
+      <use token="PACK_LSB_FIRST" />
+      <use token="PACK_ROW_LENGTH" />
+      <use token="PACK_SKIP_IMAGES" />
+      <use token="PACK_SKIP_PIXELS" />
+      <use token="PACK_SKIP_ROWS" />
+      <use token="PACK_ALIGNMENT" />
+      <use token="PACK_IMAGE_HEIGHT" />
+      <use token="PACK_COMPRESSED_BLOCK_WIDTH" />
+      <use token="PACK_COMPRESSED_BLOCK_HEIGHT" />
+      <use token="PACK_COMPRESSED_BLOCK_DEPTH" />
+      <use token="PACK_COMPRESSED_BLOCK_SIZE" />
+      <use token="UNPACK_SWAP_BYTES" />
+      <use token="UNPACK_LSB_FIRST" />
+      <use token="UNPACK_ROW_LENGTH" />
+      <use token="UNPACK_SKIP_IMAGES" />
+      <use token="UNPACK_SKIP_PIXELS" />
+      <use token="UNPACK_SKIP_ROWS" />
+      <use token="UNPACK_ALIGNMENT" />
+      <use token="UNPACK_IMAGE_HEIGHT" />
+      <use token="UNPACK_COMPRESSED_BLOCK_WIDTH" />
+      <use token="UNPACK_COMPRESSED_BLOCK_HEIGHT" />
+      <use token="UNPACK_COMPRESSED_BLOCK_DEPTH" />
+      <use token="UNPACK_COMPRESSED_BLOCK_SIZE" />
     </enum>
     <enum name="PixelType">
       <use enum="ARB_framebuffer_object" token="UNSIGNED_INT_24_8" />
@@ -3458,166 +3493,166 @@
       <token name="UPPER_LEFT" value="0x8CA2" />
     </enum>
     <enum name="PrimitiveType">
-      <use enum="VERSION_1_1" token="POINTS" />
-      <use enum="VERSION_1_1" token="LINE_STRIP" />
-      <use enum="VERSION_1_1" token="LINE_LOOP" />
-      <use enum="VERSION_1_1" token="LINES" />
-      <use enum="VERSION_1_1" token="TRIANGLE_STRIP" />
-      <use enum="VERSION_1_1" token="TRIANGLE_FAN" />
-      <use enum="VERSION_1_1" token="TRIANGLES" />
-      <use enum="VERSION_3_2" token="LINES_ADJACENCY" />
-      <use enum="VERSION_3_2" token="TRIANGLES_ADJACENCY" />
-      <use enum="VERSION_3_2" token="LINE_STRIP_ADJACENCY" />
-      <use enum="VERSION_3_2" token="TRIANGLE_STRIP_ADJACENCY" />
-      <use enum="VERSION_4_0" token="PATCHES" />
-      <use enum="VERSION_4_0" token="QUADS" />
+      <use token="POINTS" />
+      <use token="LINE_STRIP" />
+      <use token="LINE_LOOP" />
+      <use token="LINES" />
+      <use token="TRIANGLE_STRIP" />
+      <use token="TRIANGLE_FAN" />
+      <use token="TRIANGLES" />
+      <use token="LINES_ADJACENCY" />
+      <use token="TRIANGLES_ADJACENCY" />
+      <use token="LINE_STRIP_ADJACENCY" />
+      <use token="TRIANGLE_STRIP_ADJACENCY" />
+      <use token="PATCHES" />
+      <use token="QUADS" />
     </enum>
     <enum name="BasicPrimitiveType">
-      <use enum="VERSION_1_1" token="POINTS" />
-      <use enum="VERSION_1_1" token="LINES" />
-      <use enum="VERSION_1_1" token="TRIANGLES" />
-      <use enum="VERSION_4_0" token="QUADS" />
-      <use enum="VERSION_4_0" token="PATCHES" />
-      <use enum="VERSION_3_2" token="LINES_ADJACENCY" />
-      <use enum="VERSION_3_2" token="TRIANGLES_ADJACENCY" />
+      <use token="POINTS" />
+      <use token="LINES" />
+      <use token="TRIANGLES" />
+      <use token="QUADS" />
+      <use token="PATCHES" />
+      <use token="LINES_ADJACENCY" />
+      <use token="TRIANGLES_ADJACENCY" />
     </enum>
     <enum name="ProgramInterface">
-      <use enum="VERSION_3_0" token="TRANSFORM_FEEDBACK_BUFFER" />
-      <use enum="VERSION_4_2" token="ATOMIC_COUNTER_BUFFER" />
-      <use enum="VERSION_4_3" token="BUFFER_VARIABLE" />
-      <use enum="VERSION_4_3" token="UNIFORM" />
-      <use enum="VERSION_4_3" token="UNIFORM_BLOCK" />
-      <use enum="VERSION_4_3" token="PROGRAM_INPUT" />
-      <use enum="VERSION_4_3" token="PROGRAM_OUTPUT" />
-      <use enum="VERSION_4_3" token="SHADER_STORAGE_BLOCK" />
-      <use enum="VERSION_4_3" token="GEOMETRY_SUBROUTINE" />
-      <use enum="VERSION_4_3" token="VERTEX_SUBROUTINE" />
-      <use enum="VERSION_4_3" token="TESS_CONTROL_SUBROUTINE" />
-      <use enum="VERSION_4_3" token="TESS_EVALUATION_SUBROUTINE" />
-      <use enum="VERSION_4_3" token="FRAGMENT_SUBROUTINE" />
-      <use enum="VERSION_4_3" token="COMPUTE_SUBROUTINE" />
-      <use enum="VERSION_4_3" token="TESS_CONTROL_SUBROUTINE_UNIFORM" />
-      <use enum="VERSION_4_3" token="TESS_EVALUATION_SUBROUTINE_UNIFORM" />
-      <use enum="VERSION_4_3" token="GEOMETRY_SUBROUTINE_UNIFORM" />
-      <use enum="VERSION_4_3" token="VERTEX_SUBROUTINE_UNIFORM" />
-      <use enum="VERSION_4_3" token="FRAGMENT_SUBROUTINE_UNIFORM" />
-      <use enum="VERSION_4_3" token="COMPUTE_SUBROUTINE_UNIFORM" />
-      <use enum="VERSION_4_3" token="TRANSFORM_FEEDBACK_VARYING" />
+      <use token="TRANSFORM_FEEDBACK_BUFFER" />
+      <use token="ATOMIC_COUNTER_BUFFER" />
+      <use token="BUFFER_VARIABLE" />
+      <use token="UNIFORM" />
+      <use token="UNIFORM_BLOCK" />
+      <use token="PROGRAM_INPUT" />
+      <use token="PROGRAM_OUTPUT" />
+      <use token="SHADER_STORAGE_BLOCK" />
+      <use token="GEOMETRY_SUBROUTINE" />
+      <use token="VERTEX_SUBROUTINE" />
+      <use token="TESS_CONTROL_SUBROUTINE" />
+      <use token="TESS_EVALUATION_SUBROUTINE" />
+      <use token="FRAGMENT_SUBROUTINE" />
+      <use token="COMPUTE_SUBROUTINE" />
+      <use token="TESS_CONTROL_SUBROUTINE_UNIFORM" />
+      <use token="TESS_EVALUATION_SUBROUTINE_UNIFORM" />
+      <use token="GEOMETRY_SUBROUTINE_UNIFORM" />
+      <use token="VERTEX_SUBROUTINE_UNIFORM" />
+      <use token="FRAGMENT_SUBROUTINE_UNIFORM" />
+      <use token="COMPUTE_SUBROUTINE_UNIFORM" />
+      <use token="TRANSFORM_FEEDBACK_VARYING" />
     </enum>
     <enum name="ProgramInterfaceParameter">
-      <use enum="VERSION_4_3" token="ACTIVE_RESOURCES" />
-      <use enum="VERSION_4_3" token="MAX_NAME_LENGTH" />
-      <use enum="VERSION_4_3" token="MAX_NUM_ACTIVE_VARIABLES" />
-      <use enum="VERSION_4_3" token="MAX_NUM_COMPATIBLE_SUBROUTINES" />
+      <use token="ACTIVE_RESOURCES" />
+      <use token="MAX_NAME_LENGTH" />
+      <use token="MAX_NUM_ACTIVE_VARIABLES" />
+      <use token="MAX_NUM_COMPATIBLE_SUBROUTINES" />
     </enum>
     <enum name="ProgramParameter">
-      <use enum="VERSION_2_0" token="DELETE_STATUS" />
-      <use enum="VERSION_2_0" token="LINK_STATUS" />
-      <use enum="VERSION_2_0" token="VALIDATE_STATUS" />
-      <use enum="VERSION_2_0" token="INFO_LOG_LENGTH" />
-      <use enum="VERSION_2_0" token="ATTACHED_SHADERS" />
-      <use enum="VERSION_2_0" token="ACTIVE_ATTRIBUTES" />
-      <use enum="VERSION_2_0" token="ACTIVE_ATTRIBUTE_MAX_LENGTH" />
-      <use enum="VERSION_2_0" token="ACTIVE_UNIFORMS" />
-      <use enum="VERSION_2_0" token="ACTIVE_UNIFORM_MAX_LENGTH" />
-      <use enum="VERSION_3_0" token="TRANSFORM_FEEDBACK_BUFFER_MODE" />
-      <use enum="VERSION_3_0" token="TRANSFORM_FEEDBACK_VARYINGS" />
-      <use enum="VERSION_3_0" token="TRANSFORM_FEEDBACK_VARYING_MAX_LENGTH" />
-      <use enum="VERSION_3_1" token="ACTIVE_UNIFORM_BLOCKS" />
-      <use enum="VERSION_3_1" token="ACTIVE_UNIFORM_BLOCK_MAX_NAME_LENGTH" />
-      <use enum="VERSION_3_2" token="GEOMETRY_VERTICES_OUT" />
-      <use enum="VERSION_3_2" token="GEOMETRY_INPUT_TYPE" />
-      <use enum="VERSION_3_2" token="GEOMETRY_OUTPUT_TYPE" />
-      <use enum="VERSION_3_2" token="GEOMETRY_SHADER_INVOCATIONS" />
-      <use enum="VERSION_4_0" token="TESS_CONTROL_OUTPUT_VERTICES" />
-      <use enum="VERSION_4_0" token="TESS_GEN_MODE" />
-      <use enum="VERSION_4_0" token="TESS_GEN_SPACING" />
-      <use enum="VERSION_4_0" token="TESS_GEN_VERTEX_ORDER" />
-      <use enum="VERSION_4_0" token="TESS_GEN_POINT_MODE" />
-      <use enum="VERSION_4_1" token="PROGRAM_SEPARABLE" />
-      <use enum="VERSION_4_1" token="PROGRAM_BINARY_RETRIEVABLE_HINT" />
-      <use enum="VERSION_4_2" token="ACTIVE_ATOMIC_COUNTER_BUFFERS" />
-      <use enum="VERSION_4_3" token="MAX_COMPUTE_WORK_GROUP_SIZE" />
+      <use token="DELETE_STATUS" />
+      <use token="LINK_STATUS" />
+      <use token="VALIDATE_STATUS" />
+      <use token="INFO_LOG_LENGTH" />
+      <use token="ATTACHED_SHADERS" />
+      <use token="ACTIVE_ATTRIBUTES" />
+      <use token="ACTIVE_ATTRIBUTE_MAX_LENGTH" />
+      <use token="ACTIVE_UNIFORMS" />
+      <use token="ACTIVE_UNIFORM_MAX_LENGTH" />
+      <use token="TRANSFORM_FEEDBACK_BUFFER_MODE" />
+      <use token="TRANSFORM_FEEDBACK_VARYINGS" />
+      <use token="TRANSFORM_FEEDBACK_VARYING_MAX_LENGTH" />
+      <use token="ACTIVE_UNIFORM_BLOCKS" />
+      <use token="ACTIVE_UNIFORM_BLOCK_MAX_NAME_LENGTH" />
+      <use token="GEOMETRY_VERTICES_OUT" />
+      <use token="GEOMETRY_INPUT_TYPE" />
+      <use token="GEOMETRY_OUTPUT_TYPE" />
+      <use token="GEOMETRY_SHADER_INVOCATIONS" />
+      <use token="TESS_CONTROL_OUTPUT_VERTICES" />
+      <use token="TESS_GEN_MODE" />
+      <use token="TESS_GEN_SPACING" />
+      <use token="TESS_GEN_VERTEX_ORDER" />
+      <use token="TESS_GEN_POINT_MODE" />
+      <use token="PROGRAM_SEPARABLE" />
+      <use token="PROGRAM_BINARY_RETRIEVABLE_HINT" />
+      <use token="ACTIVE_ATOMIC_COUNTER_BUFFERS" />
+      <use token="MAX_COMPUTE_WORK_GROUP_SIZE" />
     </enum>
     <enum name="ProgramParameterPName">
-      <use enum="VERSION_4_1" token="PROGRAM_SEPARABLE" />
-      <use enum="VERSION_4_1" token="PROGRAM_BINARY_RETRIEVABLE_HINT" />
+      <use token="PROGRAM_SEPARABLE" />
+      <use token="PROGRAM_BINARY_RETRIEVABLE_HINT" />
     </enum>
     <enum name="ProgramParameterName">
       <reuse enum="ProgramParameterPName" />
     </enum>
     <enum name="ProgramPipelineParameter">
-      <use enum="VERSION_4_1" token="ACTIVE_PROGRAM" />
-      <use enum="VERSION_2_0" token="VALIDATE_STATUS" />
-      <use enum="VERSION_2_0" token="VERTEX_SHADER" />
-      <use enum="VERSION_2_0" token="FRAGMENT_SHADER" />
-      <use enum="VERSION_3_2" token="GEOMETRY_SHADER" />
-      <use enum="VERSION_4_2" token="TESS_CONTROL_SHADER" />
-      <use enum="VERSION_4_2" token="TESS_EVALUATION_SHADER" />
-      <use enum="VERSION_2_0" token="INFO_LOG_LENGTH" />
-      <use enum="VERSION_4_3" token="COMPUTE_SHADER" />
+      <use token="ACTIVE_PROGRAM" />
+      <use token="VALIDATE_STATUS" />
+      <use token="VERTEX_SHADER" />
+      <use token="FRAGMENT_SHADER" />
+      <use token="GEOMETRY_SHADER" />
+      <use token="TESS_CONTROL_SHADER" />
+      <use token="TESS_EVALUATION_SHADER" />
+      <use token="INFO_LOG_LENGTH" />
+      <use token="COMPUTE_SHADER" />
     </enum>
     <enum name="ProgramProperty">
-      <use enum="VERSION_4_3" token="ACTIVE_VARIABLES" />
-      <use enum="VERSION_4_3" token="BUFFER_BINDING" />
-      <use enum="VERSION_4_3" token="NUM_ACTIVE_VARIABLES" />
-      <use enum="VERSION_4_3" token="ARRAY_SIZE" />
-      <use enum="VERSION_4_3" token="ARRAY_STRIDE" />
-      <use enum="VERSION_4_3" token="BLOCK_INDEX" />
-      <use enum="VERSION_4_3" token="IS_ROW_MAJOR" />
-      <use enum="VERSION_4_3" token="MATRIX_STRIDE" />
-      <use enum="VERSION_4_3" token="ATOMIC_COUNTER_BUFFER_INDEX" />
-      <use enum="VERSION_4_3" token="BUFFER_DATA_SIZE" />
-      <use enum="VERSION_4_3" token="NUM_COMPATIBLE_SUBROUTINES" />
-      <use enum="VERSION_4_3" token="COMPATIBLE_SUBROUTINES" />
-      <use enum="VERSION_4_3" token="IS_PER_PATCH" />
-      <use enum="VERSION_4_3" token="LOCATION" />
-      <use enum="VERSION_4_4" token="LOCATION_COMPONENT" />
-      <use enum="VERSION_4_3" token="LOCATION_INDEX" />
-      <use enum="VERSION_4_3" token="NAME_LENGTH" />
-      <use enum="VERSION_4_3" token="OFFSET" />
-      <use enum="VERSION_4_3" token="REFERENCED_BY_VERTEX_SHADER" />
-      <use enum="VERSION_4_3" token="REFERENCED_BY_TESS_CONTROL_SHADER" />
-      <use enum="VERSION_4_3" token="REFERENCED_BY_TESS_EVALUATION_SHADER" />
-      <use enum="VERSION_4_3" token="REFERENCED_BY_GEOMETRY_SHADER" />
-      <use enum="VERSION_4_3" token="REFERENCED_BY_FRAGMENT_SHADER" />
-      <use enum="VERSION_4_4" token="TRANSFORM_FEEDBACK_BUFFER_INDEX" />
-      <use enum="VERSION_4_4" token="TRANSFORM_FEEDBACK_BUFFER_STRIDE" />
-      <use enum="VERSION_4_3" token="TOP_LEVEL_ARRAY_SIZE" />
-      <use enum="VERSION_4_3" token="TOP_LEVEL_ARRAY_STRIDE" />
-      <use enum="VERSION_4_3" token="TYPE" />
+      <use token="ACTIVE_VARIABLES" />
+      <use token="BUFFER_BINDING" />
+      <use token="NUM_ACTIVE_VARIABLES" />
+      <use token="ARRAY_SIZE" />
+      <use token="ARRAY_STRIDE" />
+      <use token="BLOCK_INDEX" />
+      <use token="IS_ROW_MAJOR" />
+      <use token="MATRIX_STRIDE" />
+      <use token="ATOMIC_COUNTER_BUFFER_INDEX" />
+      <use token="BUFFER_DATA_SIZE" />
+      <use token="NUM_COMPATIBLE_SUBROUTINES" />
+      <use token="COMPATIBLE_SUBROUTINES" />
+      <use token="IS_PER_PATCH" />
+      <use token="LOCATION" />
+      <use token="LOCATION_COMPONENT" />
+      <use token="LOCATION_INDEX" />
+      <use token="NAME_LENGTH" />
+      <use token="OFFSET" />
+      <use token="REFERENCED_BY_VERTEX_SHADER" />
+      <use token="REFERENCED_BY_TESS_CONTROL_SHADER" />
+      <use token="REFERENCED_BY_TESS_EVALUATION_SHADER" />
+      <use token="REFERENCED_BY_GEOMETRY_SHADER" />
+      <use token="REFERENCED_BY_FRAGMENT_SHADER" />
+      <use token="TRANSFORM_FEEDBACK_BUFFER_INDEX" />
+      <use token="TRANSFORM_FEEDBACK_BUFFER_STRIDE" />
+      <use token="TOP_LEVEL_ARRAY_SIZE" />
+      <use token="TOP_LEVEL_ARRAY_STRIDE" />
+      <use token="TYPE" />
     </enum>
     <enum name="ProgramStageMask">
-      <use enum="VERSION_4_1" token="ALL_SHADER_BITS" />
-      <use enum="VERSION_4_1" token="VERTEX_SHADER_BIT" />
-      <use enum="VERSION_4_1" token="FRAGMENT_SHADER_BIT" />
-      <use enum="VERSION_4_1" token="GEOMETRY_SHADER_BIT" />
-      <use enum="VERSION_4_1" token="TESS_CONTROL_SHADER_BIT" />
-      <use enum="VERSION_4_1" token="TESS_EVALUATION_SHADER_BIT" />
-      <use enum="VERSION_4_4" token="COMPUTE_SHADER_BIT" />
+      <use token="ALL_SHADER_BITS" />
+      <use token="VERTEX_SHADER_BIT" />
+      <use token="FRAGMENT_SHADER_BIT" />
+      <use token="GEOMETRY_SHADER_BIT" />
+      <use token="TESS_CONTROL_SHADER_BIT" />
+      <use token="TESS_EVALUATION_SHADER_BIT" />
+      <use token="COMPUTE_SHADER_BIT" />
     </enum>
     <enum name="ProgramStageParameter">
-      <use enum="VERSION_4_0" token="ACTIVE_SUBROUTINES" />
-      <use enum="VERSION_4_0" token="ACTIVE_SUBROUTINE_UNIFORMS" />
-      <use enum="VERSION_4_0" token="ACTIVE_SUBROUTINE_UNIFORM_LOCATIONS" />
-      <use enum="VERSION_4_0" token="ACTIVE_SUBROUTINE_MAX_LENGTH" />
-      <use enum="VERSION_4_0" token="ACTIVE_SUBROUTINE_UNIFORM_MAX_LENGTH" />
+      <use token="ACTIVE_SUBROUTINES" />
+      <use token="ACTIVE_SUBROUTINE_UNIFORMS" />
+      <use token="ACTIVE_SUBROUTINE_UNIFORM_LOCATIONS" />
+      <use token="ACTIVE_SUBROUTINE_MAX_LENGTH" />
+      <use token="ACTIVE_SUBROUTINE_UNIFORM_MAX_LENGTH" />
     </enum>
     <enum name="ProvokingVertexMode">
       <token name="FIRST_VERTEX_CONVENTION" value="0x8E4D" />
       <token name="LAST_VERTEX_CONVENTION" value="0x8E4E" />
     </enum>
     <enum name="QueryCounterTarget">
-      <use enum="VERSION_3_3" token="TIMESTAMP" />
+      <use token="TIMESTAMP" />
     </enum>
       <enum name="QueryTarget">
       <token name="PRIMITIVES_GENERATED" value="0x8C87" />
       <token name="SAMPLES_PASSED" value="0x8914" />
       <token name="TRANSFORM_FEEDBACK_PRIMITIVES_WRITTEN" value="0x8C88" />
       <use enum="ARB_occlusion_query2" token="ANY_SAMPLES_PASSED" />
-      <use enum="VERSION_3_3" token="TIME_ELAPSED" />
-      <use enum="VERSION_3_3" token="TIMESTAMP" /> <!-- only valid in GetQuery -->
-      <use enum="VERSION_4_3" token="ANY_SAMPLES_PASSED_CONSERVATIVE" />
+      <use token="TIME_ELAPSED" />
+      <use token="TIMESTAMP" /> <!-- only valid in GetQuery -->
+      <use token="ANY_SAMPLES_PASSED_CONSERVATIVE" />
     </enum>
     <enum name="ReadBufferMode">
       <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT0" />
@@ -3636,8 +3671,8 @@
       <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT13" />
       <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT14" />
       <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT15" />
-      <use enum="VERSION_1_1" token="NONE" />
-      <use enum="VERSION_1_1" token="FRONT_AND_BACK" />
+      <use token="NONE" />
+      <use token="FRONT_AND_BACK" />
     </enum>
     <enum name="RenderbufferParameterName">
       <use enum="ARB_framebuffer_object" token="RENDERBUFFER_SAMPLES" />
@@ -3661,10 +3696,10 @@
       <token name="RENDERBUFFER_WIDTH_EXT" value="0x8D42" />
     </enum>
     <enum name="RenderbufferStorage">
-      <use enum="PixelInternalFormat" token="ALPHA4" />
-      <use enum="PixelInternalFormat" token="ALPHA8" />
-      <use enum="PixelInternalFormat" token="ALPHA12" />
-      <use enum="PixelInternalFormat" token="ALPHA16" />
+      <use enum="PixelInternalFormat" token="ALPHA4" optional="true" />
+      <use enum="PixelInternalFormat" token="ALPHA8" optional="true" />
+      <use enum="PixelInternalFormat" token="ALPHA12" optional="true" />
+      <use enum="PixelInternalFormat" token="ALPHA16" optional="true" />
       <use enum="PixelInternalFormat" token="R8" />
       <use enum="PixelInternalFormat" token="R16" />
       <use enum="PixelInternalFormat" token="RG8" />
@@ -3737,17 +3772,17 @@
       <token name="STENCIL_INDEX16_EXT" value="0x8D49" />
       <token name="STENCIL_INDEX4_EXT" value="0x8D47" />
       <token name="STENCIL_INDEX8_EXT" value="0x8D48" />
-      <use enum="VERSION_3_3" token="RGB10_A2UI" />
+      <use token="RGB10_A2UI" />
     </enum>
     <enum name="RenderbufferTarget">
       <use enum="ARB_framebuffer_object" token="RENDERBUFFER" />
       <token name="RENDERBUFFER_EXT" value="0x8D41" />
     </enum>
     <enum name="ResetStatus">
-      <use enum="VERSION_4_5" token="NO_ERROR" />
-      <use enum="VERSION_4_5" token="GUILTY_CONTEXT_RESET" />
-      <use enum="VERSION_4_5" token="INNOCENT_CONTEXT_RESET" />
-      <use enum="VERSION_4_5" token="UNKNOWN_CONTEXT_RESET" />
+      <use token="NO_ERROR" />
+      <use token="GUILTY_CONTEXT_RESET" />
+      <use token="INNOCENT_CONTEXT_RESET" />
+      <use token="UNKNOWN_CONTEXT_RESET" />
     </enum>
     <enum name="SamplerParameter">
       <token name="TextureWrapS" value = "0x2802" />
@@ -3791,21 +3826,20 @@
       <token name="SHADER_TYPE" value="0x8B4F" />
     </enum>
     <enum name="ShaderPrecision">
-      <use enum="VERSION_4_1" token="LOW_FLOAT" />
-      <use enum="VERSION_4_1" token="MEDIUM_FLOAT" />
-      <use enum="VERSION_4_1" token="HIGH_FLOAT" />
-      <use enum="VERSION_4_1" token="LOW_INT" />
-      <use enum="VERSION_4_1" token="MEDIUM_INT" />
-      <use enum="VERSION_4_1" token="HIGH_INT" />
+      <use token="LOW_FLOAT" />
+      <use token="MEDIUM_FLOAT" />
+      <use token="HIGH_FLOAT" />
+      <use token="LOW_INT" />
+      <use token="MEDIUM_INT" />
+      <use token="HIGH_INT" />
     </enum>
     <enum name="ShaderType">
-      <use enum="VERSION_2_0" token="FRAGMENT_SHADER" />
-      <use enum="VERSION_2_0" token="VERTEX_SHADER" />
-      <use enum="VERSION_3_2" token="GEOMETRY_SHADER" />
-      <use enum="EXT_geometry_shader4" token="GEOMETRY_SHADER_EXT" /> <!-- for back compat -->
-      <use enum="VERSION_4_0" token="TESS_EVALUATION_SHADER" />
-      <use enum="VERSION_4_0" token="TESS_CONTROL_SHADER" />
-      <use enum="VERSION_4_3" token="COMPUTE_SHADER" />
+      <use token="FRAGMENT_SHADER" />
+      <use token="VERTEX_SHADER" />
+      <use token="GEOMETRY_SHADER" />
+      <use token="TESS_EVALUATION_SHADER" />
+      <use token="TESS_CONTROL_SHADER" />
+      <use token="COMPUTE_SHADER" />
     </enum>
     <enum name="SizedInternalFormat">
       <use enum="PixelInternalFormat" token="R8" />
@@ -3849,51 +3883,51 @@
       <token name="INCR_WRAP" value="0x8507" />
     </enum>
     <enum name="StringName">
-      <use enum="VERSION_2_0" token="SHADING_LANGUAGE_VERSION" />
+      <use token="SHADING_LANGUAGE_VERSION" />
     </enum>
     <enum name="StringNameIndexed">
-      <use enum="VERSION_1_1" token="EXTENSIONS" />
-      <use enum="VERSION_2_0" token="SHADING_LANGUAGE_VERSION" />
+      <use token="EXTENSIONS" />
+      <use token="SHADING_LANGUAGE_VERSION" />
     </enum>
     <enum name="SyncCondition">
-      <use enum="VERSION_4_1" token="SYNC_GPU_COMMANDS_COMPLETE" />
+      <use token="SYNC_GPU_COMMANDS_COMPLETE" />
     </enum>
     <enum name="ClientWaitSyncFlags">
-      <use enum="VERSION_1_1" token="NONE" />
-      <use enum="VERSION_4_1" token="SYNC_FLUSH_COMMANDS_BIT" />
+      <use token="NONE" />
+      <use token="SYNC_FLUSH_COMMANDS_BIT" />
     </enum>
     <enum name="WaitSyncFlags">
-      <use enum="VERSION_1_1" token="NONE" />
+      <use token="NONE" />
     </enum>
     <enum name="WaitSyncStatus">
-      <use enum="VERSION_3_2" token="ALREADY_SIGNALED" />
-      <use enum="VERSION_3_2" token="TIMEOUT_EXPIRED" />
-      <use enum="VERSION_3_2" token="CONDITION_SATISFIED" />
-      <use enum="VERSION_3_2" token="WAIT_FAILED" />
+      <use token="ALREADY_SIGNALED" />
+      <use token="TIMEOUT_EXPIRED" />
+      <use token="CONDITION_SATISFIED" />
+      <use token="WAIT_FAILED" />
     </enum>
     <enum name="SyncParameterName">
-      <use enum="VERSION_3_2" token="OBJECT_TYPE" />
-      <use enum="VERSION_3_2" token="SYNC_STATUS" />
-      <use enum="VERSION_3_2" token="SYNC_CONDITION" />
-      <use enum="VERSION_3_2" token="SYNC_FLAGS" />
+      <use token="OBJECT_TYPE" />
+      <use token="SYNC_STATUS" />
+      <use token="SYNC_CONDITION" />
+      <use token="SYNC_FLAGS" />
     </enum>
     <enum name="TextureAccess">
-      <use enum="VERSION_1_5" token="READ_ONLY" />
-      <use enum="VERSION_1_5" token="WRITE_ONLY" />
-      <use enum="VERSION_1_5" token="READ_WRITE" />
+      <use token="READ_ONLY" />
+      <use token="WRITE_ONLY" />
+      <use token="READ_WRITE" />
     </enum>
     <enum name="TexCoordPointerType">
       <use enum="ARB_half_float_vertex" token="HALF_FLOAT" />
-      <use enum="VERSION_3_3" token="UNSIGNED_INT_2_10_10_10_REV" />
-      <use enum="VERSION_3_3" token="INT_2_10_10_10_REV" />
+      <use token="UNSIGNED_INT_2_10_10_10_REV" />
+      <use token="INT_2_10_10_10_REV" />
     </enum>
     <enum name="TextureBufferTarget">
-      <use enum="VERSION_3_1" token="TEXTURE_BUFFER" />
+      <use token="TEXTURE_BUFFER" />
     </enum>
     <enum name="TextureCompareMode">
       <token name="COMPARE_R_TO_TEXTURE" value="0x884E" />
       <token name="COMPARE_REF_TO_TEXTURE" value="0x884E" />
-      <use enum="VERSION_1_1" token="NONE" />
+      <use token="NONE" />
     </enum>
     <enum name="TextureEnvMode">
       <token name="COMBINE" value="0x8570" />
@@ -3902,7 +3936,7 @@
     <enum name="TextureEnvModeCombine">
       <use enum="StencilOp" token="REPLACE" />
       <use enum="TextureEnvMode" token="MODULATE" />
-      <use enum="AccumOp" token="ADD" />
+      <use enum="AccumOp" token="ADD" optional="true" />
       <token name="ADD_SIGNED" value="0x8574" />
       <token name="DOT3_RGB" value="0x86AE" />
       <token name="DOT3_RGBA" value="0x86AF" />
@@ -3967,7 +4001,7 @@
       <token name="TEXTURE9" value="0x84C9" />
     </enum>
     <enum name="TextureEnvParameter">
-      <use enum="GetPName" token="ALPHA_SCALE" />
+      <use enum="GetPName" token="ALPHA_SCALE" optional="true" />
       <token name="COMBINE_ALPHA" value="0x8572" />
       <token name="COMBINE_RGB" value="0x8571" />
       <token name="COORD_REPLACE" value="0x8862" />
@@ -4010,41 +4044,41 @@
       <token name="TEXTURE_COMPARE_FUNC" value="0x884D" />
       <token name="TEXTURE_COMPARE_MODE" value="0x884C" />
       <token name="TEXTURE_LOD_BIAS" value="0x8501" />
-      <use enum="VERSION_3_3" token="TEXTURE_SWIZZLE_R" />
-      <use enum="VERSION_3_3" token="TEXTURE_SWIZZLE_G" />
-      <use enum="VERSION_3_3" token="TEXTURE_SWIZZLE_B" />
-      <use enum="VERSION_3_3" token="TEXTURE_SWIZZLE_A" />
-      <use enum="VERSION_3_3" token="TEXTURE_SWIZZLE_RGBA" />
+      <use token="TEXTURE_SWIZZLE_R" />
+      <use token="TEXTURE_SWIZZLE_G" />
+      <use token="TEXTURE_SWIZZLE_B" />
+      <use token="TEXTURE_SWIZZLE_A" />
+      <use token="TEXTURE_SWIZZLE_RGBA" />
     </enum>
     <enum name="TextureTarget1d">
-      <use enum="VERSION_1_1" token="TEXTURE_1D" />
-      <use enum="VERSION_1_1" token="PROXY_TEXTURE_1D" />
+      <use token="TEXTURE_1D" />
+      <use token="PROXY_TEXTURE_1D" />
     </enum>
     <enum name="TextureTarget2d">
-      <use enum="VERSION_1_1" token="TEXTURE_2D" />
-      <use enum="VERSION_1_3" token="TEXTURE_CUBE_MAP" />
-      <use enum="VERSION_3_0" token="TEXTURE_1D_ARRAY" />
-      <use enum="VERSION_3_1" token="TEXTURE_RECTANGLE" />
-      <use enum="VERSION_1_1" token="PROXY_TEXTURE_2D" />
-      <use enum="VERSION_1_3" token="PROXY_TEXTURE_CUBE_MAP" />
-      <use enum="VERSION_3_0" token="PROXY_TEXTURE_1D_ARRAY" />
-      <use enum="VERSION_3_1" token="PROXY_TEXTURE_RECTANGLE" />
+      <use token="TEXTURE_2D" />
+      <use token="TEXTURE_CUBE_MAP" />
+      <use token="TEXTURE_1D_ARRAY" />
+      <use token="TEXTURE_RECTANGLE" />
+      <use token="PROXY_TEXTURE_2D" />
+      <use token="PROXY_TEXTURE_CUBE_MAP" />
+      <use token="PROXY_TEXTURE_1D_ARRAY" />
+      <use token="PROXY_TEXTURE_RECTANGLE" />
     </enum>
     <enum name="TextureTarget3d">
-      <use enum="VERSION_1_2" token="TEXTURE_3D" />
-      <use enum="VERSION_1_3" token="TEXTURE_CUBE_MAP" />
-      <use enum="VERSION_3_0" token="TEXTURE_2D_ARRAY" />
-      <use enum="VERSION_1_2" token="PROXY_TEXTURE_3D" />
-      <use enum="VERSION_1_3" token="PROXY_TEXTURE_CUBE_MAP" />
-      <use enum="VERSION_3_0" token="PROXY_TEXTURE_2D_ARRAY" />
+      <use token="TEXTURE_3D" />
+      <use token="TEXTURE_CUBE_MAP" />
+      <use token="TEXTURE_2D_ARRAY" />
+      <use token="PROXY_TEXTURE_3D" />
+      <use token="PROXY_TEXTURE_CUBE_MAP" />
+      <use token="PROXY_TEXTURE_2D_ARRAY" />
     </enum>
     <enum name="TextureTargetMultisample2d">
-      <use enum="VERSION_3_2" token="TEXTURE_2D_MULTISAMPLE" />
-      <use enum="VERSION_3_2" token="PROXY_TEXTURE_2D_MULTISAMPLE" />
+      <use token="TEXTURE_2D_MULTISAMPLE" />
+      <use token="PROXY_TEXTURE_2D_MULTISAMPLE" />
     </enum>
     <enum name="TextureTargetMultisample3d">
-      <use enum="VERSION_3_2" token="TEXTURE_2D_MULTISAMPLE_ARRAY" />
-      <use enum="VERSION_3_2" token="PROXY_TEXTURE_2D_MULTISAMPLE_ARRAY" />
+      <use token="TEXTURE_2D_MULTISAMPLE_ARRAY" />
+      <use token="PROXY_TEXTURE_2D_MULTISAMPLE_ARRAY" />
     </enum>
     <enum name="TextureTarget">
       <token name="PROXY_TEXTURE_1D_ARRAY" value="0x8C19" />
@@ -4070,9 +4104,9 @@
       <token name="TEXTURE_RECTANGLE" value="0x84F5" />
       <use enum="ARB_texture_rectangle" token="TEXTURE_RECTANGLE_ARB" />
       <use enum="NV_texture_rectangle" token="TEXTURE_RECTANGLE_NV" />
-      <use enum="VERSION_3_1" token="TEXTURE_BUFFER" />
-      <use enum="VERSION_4_0" token="TEXTURE_CUBE_MAP_ARRAY" />
-      <use enum="VERSION_4_0" token="PROXY_TEXTURE_CUBE_MAP_ARRAY" />
+      <use token="TEXTURE_BUFFER" />
+      <use token="TEXTURE_CUBE_MAP_ARRAY" />
+      <use token="PROXY_TEXTURE_CUBE_MAP_ARRAY" />
     </enum>
     <enum name="TextureTargetMultisample">
       <token name="PROXY_TEXTURE_2D_MULTISAMPLE" value="0x9101" />
@@ -4129,7 +4163,7 @@
       <use enum="PrimitiveType" token="TRIANGLES" />
     </enum>
     <enum name="TransformFeedbackTarget">
-      <use enum="VERSION_4_0" token="TRANSFORM_FEEDBACK" />
+      <use token="TRANSFORM_FEEDBACK" />
     </enum>
     <enum name="TransformFeedbackType">
       <use token="FLOAT" />
@@ -4168,23 +4202,23 @@
       <use token="DOUBLE_MAT4x3" />
     </enum>
     <enum name="VertexAttribDoubleType">
-      <use enum="VERSION_4_1" token="DOUBLE" />
+      <use token="DOUBLE" />
     </enum>
     <enum name="VertexAttribIntegerType">
-      <use enum="DataType" token="BYTE" />
-      <use enum="DataType" token="UNSIGNED_BYTE" />
-      <use enum="DataType" token="SHORT" />
-      <use enum="DataType" token="UNSIGNED_SHORT" />
-      <use enum="DataType" token="INT" />
-      <use enum="DataType" token="UNSIGNED_INT" />
+      <use token="BYTE" />
+      <use token="UNSIGNED_BYTE" />
+      <use token="SHORT" />
+      <use token="UNSIGNED_SHORT" />
+      <use token="INT" />
+      <use token="UNSIGNED_INT" />
     </enum>
     <enum name="VertexAttribI_PointerType">
-      <use enum="DataType" token="BYTE" />
-      <use enum="DataType" token="UNSIGNED_BYTE" />
-      <use enum="DataType" token="SHORT" />
-      <use enum="DataType" token="UNSIGNED_SHORT" />
-      <use enum="DataType" token="INT" />
-      <use enum="DataType" token="UNSIGNED_INT" />
+      <use token="BYTE" />
+      <use token="UNSIGNED_BYTE" />
+      <use token="SHORT" />
+      <use token="UNSIGNED_SHORT" />
+      <use token="INT" />
+      <use token="UNSIGNED_INT" />
     </enum>
     <enum name="VertexAttribParameter">
       <token name="ARRAY_ENABLED" value="0x8622" />
@@ -4194,7 +4228,7 @@
       <token name="ARRAY_TYPE" value="0x8625" />
       <token name="CURRENT_VERTEX_ATTRIB" value="0x8626" />
       <token name="VERTEX_ATTRIB_ARRAY_INTEGER" value="0x88FD" />
-      <use enum="VERSION_3_3" token="VERTEX_ATTRIB_ARRAY_DIVISOR" />
+      <use token="VERTEX_ATTRIB_ARRAY_DIVISOR" />
     </enum>
     <enum name="VertexAttribParameterArb">
       <token name="ARRAY_DIVISOR" value="0x88FE" />
@@ -4212,50 +4246,50 @@
       <token name="ARRAY_POINTER" value="0x8645" />
     </enum>
     <enum name="VertexAttribType">
-      <use enum="VERSION_1_1" token="BYTE" />
-      <use enum="VERSION_1_1" token="UNSIGNED_BYTE" />
-      <use enum="VERSION_1_1" token="SHORT" />
-      <use enum="VERSION_1_1" token="UNSIGNED_SHORT" />
-      <use enum="VERSION_1_1" token="INT" />
-      <use enum="VERSION_1_1" token="UNSIGNED_INT" />
-      <use enum="VERSION_1_1" token="FLOAT" />
-      <use enum="VERSION_1_1" token="DOUBLE" />
-      <use enum="VERSION_3_0" token="HALF_FLOAT" />
-      <use enum="VERSION_3_3" token="UNSIGNED_INT_2_10_10_10_REV" />
-      <use enum="VERSION_3_3" token="INT_2_10_10_10_REV" />
-      <use enum="VERSION_4_1" token="FIXED" />
+      <use token="BYTE" />
+      <use token="UNSIGNED_BYTE" />
+      <use token="SHORT" />
+      <use token="UNSIGNED_SHORT" />
+      <use token="INT" />
+      <use token="UNSIGNED_INT" />
+      <use token="FLOAT" />
+      <use token="DOUBLE" />
+      <use token="HALF_FLOAT" />
+      <use token="UNSIGNED_INT_2_10_10_10_REV" />
+      <use token="INT_2_10_10_10_REV" />
+      <use token="FIXED" />
     </enum>
     <enum name="VertexAttribPointerType">
-      <use enum="VERSION_1_1" token="BYTE" />
-      <use enum="VERSION_1_1" token="UNSIGNED_BYTE" />
-      <use enum="VERSION_1_1" token="SHORT" />
-      <use enum="VERSION_1_1" token="UNSIGNED_SHORT" />
-      <use enum="VERSION_1_1" token="INT" />
-      <use enum="VERSION_1_1" token="UNSIGNED_INT" />
-      <use enum="VERSION_1_1" token="FLOAT" />
-      <use enum="VERSION_1_1" token="DOUBLE" />
-      <use enum="VERSION_3_0" token="HALF_FLOAT" />
-      <use enum="VERSION_3_3" token="UNSIGNED_INT_2_10_10_10_REV" />
-      <use enum="VERSION_3_3" token="INT_2_10_10_10_REV" />
-      <use enum="VERSION_4_1" token="FIXED" />
+      <use token="BYTE" />
+      <use token="UNSIGNED_BYTE" />
+      <use token="SHORT" />
+      <use token="UNSIGNED_SHORT" />
+      <use token="INT" />
+      <use token="UNSIGNED_INT" />
+      <use token="FLOAT" />
+      <use token="DOUBLE" />
+      <use token="HALF_FLOAT" />
+      <use token="UNSIGNED_INT_2_10_10_10_REV" />
+      <use token="INT_2_10_10_10_REV" />
+      <use token="FIXED" />
     </enum>
     <enum name="VertexAttribD_PointerType">
-      <use enum="VERSION_1_1" token="DOUBLE" />
+      <use token="DOUBLE" />
     </enum>
     <enum name="VertexAttribPointerTypeArb">
-      <use enum="DataType" token="BYTE" />
-      <use enum="DataType" token="UNSIGNED_BYTE" />
-      <use enum="DataType" token="SHORT" />
-      <use enum="DataType" token="UNSIGNED_SHORT" />
-      <use enum="DataType" token="INT" />
-      <use enum="DataType" token="UNSIGNED_INT" />
-      <use enum="DataType" token="FLOAT" />
-      <use enum="DataType" token="DOUBLE" />
+      <use token="BYTE" />
+      <use token="UNSIGNED_BYTE" />
+      <use token="SHORT" />
+      <use token="UNSIGNED_SHORT" />
+      <use token="INT" />
+      <use token="UNSIGNED_INT" />
+      <use token="FLOAT" />
+      <use token="DOUBLE" />
     </enum>
     <enum name="VertexPointerType">
       <use enum="ARB_half_float_vertex" token="HALF_FLOAT" />
-      <use enum="VERSION_3_3" token="UNSIGNED_INT_2_10_10_10_REV" />
-      <use enum="VERSION_3_3" token="INT_2_10_10_10_REV" />
+      <use token="UNSIGNED_INT_2_10_10_10_REV" />
+      <use token="INT_2_10_10_10_REV" />
     </enum>
 
     <!-- AMD_vertex_shader_tessellator -->

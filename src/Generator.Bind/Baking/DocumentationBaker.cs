@@ -152,6 +152,7 @@ namespace Bind.Baking
                                         AppendConstantNode(descriptionBuilder, function, parameter, element, greedilyConsumedNodes);
                                         break;
                                     }
+                                    case "code":
                                     case "emphasis":
                                     {
                                         AppendEmphasisNode(descriptionBuilder, element);

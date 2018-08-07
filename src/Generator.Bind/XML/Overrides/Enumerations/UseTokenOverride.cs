@@ -22,14 +22,21 @@ namespace Bind.XML.Overrides.Enumerations
         public string Enumeration { get; }
 
         /// <summary>
+        /// Gets a value indicating whether the use reference is optional and can be omitted.
+        /// </summary>
+        public bool IsOptional { get; }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="UseTokenOverride"/> class.
         /// </summary>
         /// <param name="token">The name of the token to use.</param>
         /// <param name="enumeration">The name of the enumeration to search.</param>
-        public UseTokenOverride([NotNull] string token, [CanBeNull] string enumeration)
+        /// <param name="isOptional">Whether or not the token is optional.</param>
+        public UseTokenOverride([NotNull] string token, [CanBeNull] string enumeration, bool isOptional)
         {
             Token = token ?? throw new ArgumentNullException(nameof(token));
             Enumeration = enumeration;
+            IsOptional = isOptional;
         }
 
         /// <inheritdoc/>

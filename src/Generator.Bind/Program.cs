@@ -19,6 +19,7 @@ using Bind.Versioning;
 using Bind.XML.Documentation;
 using Bind.XML.Overrides;
 using Bind.XML.Signatures;
+using Bind.XML.Signatures.Functions;
 using CommandLine;
 
 namespace Bind
@@ -35,6 +36,12 @@ namespace Bind
 
         private static readonly List<IGenerator> Generators = new List<IGenerator>();
 
+        private static readonly IDictionary<string, IReadOnlyList<ApiProfile>> _cachedProfiles =
+            new Dictionary<string, IReadOnlyList<ApiProfile>>();
+
+        private static readonly IDictionary<string, IReadOnlyDictionary<TypeSignature, TypeSignature>> _cachedTypemaps =
+            new Dictionary<string, IReadOnlyDictionary<TypeSignature, TypeSignature>>();
+
         private static async Task<int> Main(string[] args)
         {
             Console.WriteLine($"OpenGL binding generator {Assembly.GetExecutingAssembly().GetName().Version} for OpenTK.");
@@ -49,48 +56,59 @@ namespace Bind
                 return 1;
             }
 
-            var es31GeneratorSettings = new ES31Generator();
-
-            var profiles = SignatureReader.GetAvailableProfiles(Path.Combine(Arguments.InputPath, "GL2", "signatures.xml")).ToList();
-            var profileOverrides = OverrideReader.GetProfileOverrides(es31GeneratorSettings.OverrideFiles.ToArray()).ToList();
-
-            var baker = new ProfileBaker(profiles, profileOverrides);
-            var bakedProfile = baker.BakeProfile("gles2", new VersionRange(new Version(3, 1)));
-
-            var docs = DocumentationReader.ReadProfileDocumentation(Path.Combine(Arguments.InputPath, "Docs", "docs.gl", "es3"));
-            var bakedDocs = new DocumentationBaker(bakedProfile).BakeDocumentation(docs);
-
-            ApiProfile mappedProfile;
-            using (var csharpFs = File.OpenRead(Path.Combine(Arguments.InputPath, "csharp.tm")))
-            {
-                using (var apiFs = File.OpenRead(Path.Combine(Arguments.InputPath, "GL2", "gl.tm")))
-                {
-                    var mappingReader = new TypemapReader();
-
-                    var csharpMap = mappingReader.ReadTypemap(csharpFs);
-                    var apiMap = mappingReader.ReadTypemap(apiFs);
-
-                    var bakedMap = TypemapBaker.BakeTypemaps(apiMap, csharpMap);
-
-                    var mapper = new ProfileMapper(bakedMap);
-                    mappedProfile = mapper.Map(bakedProfile);
-                }
-            }
-
-            var overloadedProfile = OverloadBaker.BakeOverloads(mappedProfile);
-
             CreateGenerators();
-
-            var bindingsWriter = new BindingsWriterAsync(es31GeneratorSettings, overloadedProfile, bakedDocs);
 
             foreach (var generator in Generators)
             {
                 var ticks = DateTime.Now.Ticks;
+                var signaturePath = Path.Combine(Arguments.InputPath, generator.SpecificationFile);
+                if (!_cachedProfiles.TryGetValue(signaturePath, out var profiles))
+                {
+                    profiles = SignatureReader.GetAvailableProfiles(signaturePath).ToList();
+                }
 
-                //generator.LoadData();
+                var profileOverrides = OverrideReader.GetProfileOverrides(generator.OverrideFiles.ToArray()).ToList();
 
-                var writer = new LegacyBindingsWriter();
-                //writer.LegacyWriteBindings(generator);
+                var baker = new ProfileBaker(profiles, profileOverrides);
+                var bakedProfile = baker.BakeProfile(generator.ProfileName, generator.Versions);
+
+                var documentationPath = Path.Combine
+                (
+                    Arguments.InputPath,
+                    "Docs",
+                    "docs.gl",
+                    generator.SpecificationDocumentationPath
+                );
+
+                var docs = DocumentationReader.ReadProfileDocumentation(documentationPath);
+                var bakedDocs = new DocumentationBaker(bakedProfile).BakeDocumentation(docs);
+
+                var languageTypemapPath = Path.Combine(Arguments.InputPath, generator.LanguageTypemap);
+                if (!_cachedTypemaps.TryGetValue(languageTypemapPath, out var languageTypemap))
+                {
+                    using (var fs = File.OpenRead(languageTypemapPath))
+                    {
+                        languageTypemap = new TypemapReader().ReadTypemap(fs);
+                    }
+                }
+
+                var apiTypemapPath = Path.Combine(Arguments.InputPath, generator.APITypemap);
+                if (!_cachedTypemaps.TryGetValue(apiTypemapPath, out var apiTypemap))
+                {
+                    using (var fs = File.OpenRead(apiTypemapPath))
+                    {
+                        apiTypemap = new TypemapReader().ReadTypemap(fs);
+                    }
+                }
+
+                var bakedMap = TypemapBaker.BakeTypemaps(apiTypemap, languageTypemap);
+
+                var mapper = new ProfileMapper(bakedMap);
+                var mappedProfile = mapper.Map(bakedProfile);
+
+                var overloadedProfile = OverloadBaker.BakeOverloads(mappedProfile);
+
+                var bindingsWriter = new BindingsWriterAsync(generator, overloadedProfile, bakedDocs);
                 await bindingsWriter.WriteBindingsAsync();
 
                 ticks = DateTime.Now.Ticks - ticks;

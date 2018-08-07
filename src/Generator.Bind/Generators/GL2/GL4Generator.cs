@@ -43,7 +43,10 @@ namespace Bind.Generators.GL2
         public override string Namespace => "OpenTK.Graphics.OpenGL4";
 
         /// <inheritdoc/>
-        protected override string ProfileName => "glcore";
+        public override string ProfileName => "glcore";
+
+        /// <inheritdoc/>
+        public override string SpecificationDocumentationPath => "gl4";
 
         /// <summary>
         /// Initializes a new instance of the <see cref="GL4Generator"/> class.

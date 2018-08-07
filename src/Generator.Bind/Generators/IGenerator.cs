@@ -5,6 +5,7 @@
 using System;
 using System.Collections.Generic;
 using Bind.Structures;
+using Bind.Versioning;
 using JetBrains.Annotations;
 
 namespace Bind.Generators
@@ -55,6 +56,42 @@ namespace Bind.Generators
         /// </summary>
         [NotNull]
         string SpecificationDocumentationPath { get; }
+
+        /// <summary>
+        /// Gets or a set of paths, indicating files to scan for specification overrides.
+        /// </summary>
+        IEnumerable<string> OverrideFiles { get; }
+
+        /// <summary>
+        /// Gets the name that corresponds to the "profile" attribute in the OpenGL registry. We use this to distinguish
+        /// between different profiles (e.g. "gl", "glcore", "gles1", "gles2").
+        /// </summary>
+        [NotNull]
+        string ProfileName { get; }
+
+        /// <summary>
+        /// Gets the path to the file that contains the API specification.
+        /// </summary>
+        [NotNull]
+        string SpecificationFile { get; }
+
+        /// <summary>
+        /// Gets the path to the file that contains the language typemap.
+        /// </summary>
+        [NotNull]
+        string LanguageTypemap { get; }
+
+        /// <summary>
+        /// Gets the path to the file that contains the API typemap.
+        /// </summary>
+        [NotNull]
+        string APITypemap { get; }
+
+        /// <summary>
+        /// Gets the versions to generate for.
+        /// </summary>
+        [NotNull]
+        VersionRange Versions { get; }
 
         /// <summary>
         /// Gets the delegates that were loaded from the API specification.

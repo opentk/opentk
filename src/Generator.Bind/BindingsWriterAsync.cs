@@ -631,16 +631,14 @@ namespace Bind
                     valueString = $"unchecked((int){valueString})";
                 }
 
-                await sw.WriteAsync($"{token.Name} = {valueString}");
-
                 if (token != tokens.Last())
                 {
-                    await sw.WriteLineAsync(",");
+                    await sw.WriteLineAsync($"{token.Name} = {valueString},");
                     await sw.WriteLineNoTabsAsync();
                 }
                 else
                 {
-                    await sw.WriteLineAsync();
+                    await sw.WriteLineAsync($"{token.Name} = {valueString}");
                 }
             }
         }

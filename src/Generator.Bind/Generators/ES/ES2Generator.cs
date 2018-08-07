@@ -1,4 +1,6 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
+using Bind.Versioning;
 
 namespace Bind.Generators.ES
 {
@@ -17,10 +19,13 @@ namespace Bind.Generators.ES
         public override string Namespace => $"OpenTK.Graphics.{APIIdentifier}";
 
         /// <inheritdoc/>
-        public override string SpecificationDocumentationPath => APIIdentifier;
+        public override string SpecificationDocumentationPath => "es2";
 
         /// <inheritdoc/>
-        protected override string ProfileName => "gles2";
+        public override string ProfileName => "gles2";
+
+        /// <inheritdoc/>
+        public override VersionRange Versions => new VersionRange(new Version(2, 0));
 
         /// <inheritdoc/>
         protected override string Version => "2.0";

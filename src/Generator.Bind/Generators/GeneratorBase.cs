@@ -2,9 +2,11 @@
  * See license.txt for license info
  */
 
+using System;
 using System.Collections.Generic;
 using System.IO;
 using Bind.Structures;
+using Bind.Versioning;
 using JetBrains.Annotations;
 
 namespace Bind.Generators
@@ -35,28 +37,17 @@ namespace Bind.Generators
         /// <inheritdoc/>
         public virtual string SpecificationDocumentationPath => "GL";
 
-        /// <summary>
-        /// Gets or sets a set of paths, indicating files to scan for specification overrides.
-        /// </summary>
+        /// <inheritdoc/>
         public virtual IEnumerable<string> OverrideFiles { get; set; }
 
-        /// <summary>
-        /// Gets the path to the file that contains the language typemap.
-        /// </summary>
-        [NotNull]
-        protected virtual string LanguageTypemap => "csharp.tm";
+        /// <inheritdoc/>
+        public virtual string LanguageTypemap => "csharp.tm";
 
-        /// <summary>
-        /// Gets the path to the file that contains the API typemap.
-        /// </summary>
-        [NotNull]
-        protected virtual string APITypemap => Path.Combine("GL2", "gl.tm");
+        /// <inheritdoc/>
+        public virtual string APITypemap => Path.Combine("GL2", "gl.tm");
 
-        /// <summary>
-        /// Gets the path to the file that contains the API specification.
-        /// </summary>
-        [NotNull]
-        protected virtual string SpecificationFile => Path.Combine("GL2", "signatures.xml");
+        /// <inheritdoc/>
+        public virtual string SpecificationFile => Path.Combine("GL2", "signatures.xml");
 
         /// <summary>
         /// Gets the path to the file that contains the API enum specification.
@@ -70,12 +61,13 @@ namespace Bind.Generators
         [NotNull]
         protected const string LoadAllFuncName = "LoadAll";
 
+        /// <inheritdoc/>
+        public virtual string ProfileName => "gl";
+
         /// <summary>
-        /// Gets the name that corresponds to the "profile" attribute in the OpenGL registry. We use this to distinguish
-        /// between different profiles (e.g. "gl", "glcore", "gles1", "gles2").
+        /// Gets the range of versions that should be included in the generation.
         /// </summary>
-        [NotNull]
-        protected virtual string ProfileName => "gl";
+        public virtual VersionRange Versions => new VersionRange();
 
         /// <summary>
         /// Gets the version that corresponds to the "number" attribute in the OpenGL registry. We use this to

@@ -1,5 +1,7 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Linq;
+using Bind.Versioning;
 
 namespace Bind.Generators.ES
 {
@@ -17,14 +19,14 @@ namespace Bind.Generators.ES
         /// <inheritdoc/>
         public override string Namespace => $"OpenTK.Graphics.{APIIdentifier}";
 
-        /// <remarks>
-        /// The ES 1.0 generator uses the ES2.0 documentation, since there are no docbook sources available for 1.1.
-        /// </remarks>
         /// <inheritdoc/>
-        public override string SpecificationDocumentationPath => "ES20";
+        public override string SpecificationDocumentationPath => "es1";
 
         /// <inheritdoc/>
-        protected override string ProfileName => "gles1";
+        public override string ProfileName => "gles1";
+
+        /// <inheritdoc/>
+        public override VersionRange Versions => new VersionRange(new Version(1, 0));
 
         /// <inheritdoc/>
         protected override string Version => "1.0";

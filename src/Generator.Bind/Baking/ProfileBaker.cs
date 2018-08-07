@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using Bind.Builders;
+using Bind.Extensions;
 using Bind.Translation.Translators;
 using Bind.Translation.Trimmers;
 using Bind.Versioning;
@@ -368,7 +370,7 @@ namespace Bind.Baking
                     throw new InvalidDataException
                     (
                         $"No base function found for the override with the name \"{functionOverride.BaseName}\" when " +
-                        $"considering the variation \"variation\" that had the following parameters: " +
+                        $"considering the variation \"{variation}\" that had the following parameters: " +
                         $"({string.Join(", ", parameterNames.ToArray())})" +
                         $"Specify other parameter names."
                     );
@@ -434,6 +436,21 @@ namespace Bind.Baking
 
                     var foundToken =
                         ResolveEnumerationTokenReference(tokenName, targetEnumName, coalescedProfile, coalescedOverrides);
+
+                    if (foundToken is null)
+                    {
+                        if (!useToken.IsOptional)
+                        {
+                            Debug.WriteLine
+                            (
+                                $"Failed to resolve token \"{tokenName}\". Consider using the optional attribute to " +
+                                $"suppress this message, or fix the override."
+                            );
+                        }
+
+                        continue;
+                    }
+
                     resolvedTokens.Add(foundToken);
                 }
 
@@ -514,18 +531,32 @@ namespace Bind.Baking
         /// <param name="targetEnumName">The name of the enumeration to search in.</param>
         /// <param name="coalescedProfile">A coalesced profile.</param>
         /// <param name="coalescedOverrides">A coalesced override profile.</param>
+        /// <param name="visitedEnumerations">
+        /// A list of names of visited enumerations. Used to break out of cyclic dependencies.
+        /// </param>
         /// <returns>The token.</returns>
         /// <exception cref="InvalidDataException">Thrown if the directive couldn't be resolved.</exception>
-        [NotNull]
+        [CanBeNull]
         private static TokenSignature ResolveEnumerationTokenReference
         (
             [NotNull] string tokenName,
             [CanBeNull] string targetEnumName,
             [NotNull] ApiProfile coalescedProfile,
-            [NotNull] ApiProfileOverride coalescedOverrides
+            [NotNull] ApiProfileOverride coalescedOverrides,
+            [CanBeNull] List<string> visitedEnumerations = null
         )
         {
-            TokenSignature foundToken = null;
+            visitedEnumerations = visitedEnumerations ?? new List<string>();
+
+            if (visitedEnumerations.Contains(targetEnumName))
+            {
+                Debug.WriteLine
+                (
+                    $"Cyclical dependency in enum found when resolving \"{tokenName}\" in \"{targetEnumName}\"."
+                );
+
+                return null;
+            }
 
             var profileEnumCandidates = targetEnumName is null
                 ? coalescedProfile.Enumerations
@@ -557,38 +588,48 @@ namespace Bind.Baking
                 var nestedUseToken = overrideEnum.UseTokens.FirstOrDefault(t => t.Token == tokenName);
                 if (!(nestedUseToken is null))
                 {
+                    visitedEnumerations.Add(targetEnumName);
+
                     // We'll recursively resolve that token until we find it or run out of options, in which case an
                     // exception will be thrown.
-                    return ResolveEnumerationTokenReference
+                    token = ResolveEnumerationTokenReference
                     (
                         nestedUseToken.Token,
                         nestedUseToken.Enumeration,
                         coalescedProfile,
-                        coalescedOverrides
+                        coalescedOverrides,
+                        visitedEnumerations
                     );
+
+                    if (!(token is null))
+                    {
+                        return token;
+                    }
                 }
 
                 var reuseTokens = overrideEnum.ReuseEnumerations;
                 foreach (var reuseToken in reuseTokens)
                 {
-                    // We'll recursively resolve that token until we find it or run out of options, in which case an
-                    // exception will be thrown.
-                    return ResolveEnumerationTokenReference
+                    visitedEnumerations.Add(targetEnumName);
+
+                    // We'll recursively resolve that token until we find it or run out of options
+                    token = ResolveEnumerationTokenReference
                     (
                         tokenName,
                         reuseToken.Enumeration,
                         coalescedProfile,
-                        coalescedOverrides
+                        coalescedOverrides,
+                        visitedEnumerations
                     );
+
+                    if (!(token is null))
+                    {
+                        return token;
+                    }
                 }
             }
 
-            if (foundToken is null)
-            {
-                throw new InvalidDataException("Target enumeration in use directive not found.");
-            }
-
-            return foundToken;
+            return null;
         }
 
         /// <summary>
@@ -646,11 +687,11 @@ namespace Bind.Baking
             {
                 foreach (var function in profileOverride.FunctionOverloads)
                 {
-                    if (overloads.Any(f => f.HasSameSignatureAs(function)))
+                    if (overloads.Any(f => f.HasSameSignatureAs(function) && f.BaseExtension == function.BaseExtension))
                     {
                         throw new InvalidOperationException
                         (
-                            "Overload redefinition in overrides detected - generator error or schema change."
+                            "Duplicate overload redefinition in overrides detected - generator error or schema change."
                         );
                     }
 
@@ -659,11 +700,11 @@ namespace Bind.Baking
 
                 foreach (var function in profileOverride.ReplacedFunctions)
                 {
-                    if (replacedFunctions.Any(f => f.HasSameSignatureAs(function)))
+                    if (replacedFunctions.Any(f => f.HasSameSignatureAs(function) && f.BaseExtension == function.BaseExtension))
                     {
                         throw new InvalidOperationException
                         (
-                            "Replaced function redefinition in overrides detected - generator error or schema change."
+                            "Duplicate replaced function redefinition in overrides detected - generator error or schema change."
                         );
                     }
 
@@ -731,10 +772,14 @@ namespace Bind.Baking
                 {
                     if (functions.ContainsKey(function.Name))
                     {
-                        throw new InvalidOperationException
+                        Debug.WriteLine
                         (
-                            "Function redefinition in signatures detected - generator error or schema change."
+                            $"Function redefinition of \"{function.Name}\" in profile \"{profile.GetFriendlyName()} " +
+                            $"v{profile.Versions}\" detected - replacing existing definition."
                         );
+
+                        functions[function.Name] = function;
+                        continue;
                     }
 
                     functions.Add(function.Name, function);

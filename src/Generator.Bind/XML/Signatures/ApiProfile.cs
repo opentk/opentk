@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using Bind.Extensions;
 using Bind.Versioning;
@@ -87,6 +88,7 @@ namespace Bind.XML.Signatures
         /// </summary>
         /// <param name="tokenName">The name of the token.</param>
         /// <returns>The enumeration that contains the token.</returns>
+        [NotNull]
         public EnumerationSignature FindContainingEnumeration(string tokenName)
         {
             var candidates = Enumerations
@@ -105,6 +107,11 @@ namespace Bind.XML.Signatures
             if (specializedEnums.Any())
             {
                 return specializedEnums.First();
+            }
+
+            if (!candidates.Any())
+            {
+                throw new ArgumentException("Couldn't find the given token.", nameof(tokenName));
             }
 
             return candidates.First();

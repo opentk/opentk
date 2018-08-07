@@ -21,10 +21,10 @@ namespace Bind.Generators.ES
         /// The ES 1.1 generator uses the ES2.0 documentation, since there are no docbook sources available for 1.1.
         /// </remarks>
         /// <inheritdoc/>
-        public override string SpecificationDocumentationPath => "ES20";
+        public override string SpecificationDocumentationPath => "es1";
 
         /// <inheritdoc/>
-        protected override string ProfileName => "gles1";
+        public override string ProfileName => "gles1";
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ES11Generator"/> class.

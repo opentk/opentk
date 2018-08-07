@@ -560,7 +560,7 @@
   <member name="P:Bind.XML.Overrides.Enumerations.ReuseEnumerationOverride.Enumeration">
     <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
   </member>
-  <member name="M:Bind.XML.Overrides.Enumerations.UseTokenOverride.#ctor(System.String,System.String)">
+  <member name="M:Bind.XML.Overrides.Enumerations.UseTokenOverride.#ctor(System.String,System.String,System.Boolean)">
     <parameter name="token">
       <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
     </parameter>
