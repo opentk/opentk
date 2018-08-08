@@ -38,16 +38,14 @@ namespace Bind.Overloaders
                     continue;
                 }
 
-                string genericTypeParameterName = $"T{i}";
+                string genericTypeParameterName;
                 if (baseParameters.Count(p => p.Type.IsVoidPointer()) > 1)
                 {
-                    // TODO: Restore sane behaviour after diffing is done
-                    // genericTypeParameterName = $"T{newGenericTypeParameters.Count + 1}";
+                    genericTypeParameterName = $"T{newGenericTypeParameters.Count + 1}";
                 }
                 else
                 {
-                    // TODO: Restore sane behaviour after diffing is done
-                    //genericTypeParameterName = "T";
+                    genericTypeParameterName = "T";
                 }
 
                 var genericTypeParameter = new GenericTypeParameterSignature(genericTypeParameterName);
