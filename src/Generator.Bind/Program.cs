@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -20,6 +21,7 @@ using Bind.XML.Overrides;
 using Bind.XML.Signatures;
 using Bind.XML.Signatures.Functions;
 using CommandLine;
+using JetBrains.Annotations;
 
 namespace Bind
 {
@@ -57,64 +59,73 @@ namespace Bind
 
             CreateGenerators();
 
-            foreach (var generator in Generators)
-            {
-                var ticks = DateTime.Now.Ticks;
-                var signaturePath = Path.Combine(Arguments.InputPath, generator.SpecificationFile);
-                if (!_cachedProfiles.TryGetValue(signaturePath, out var profiles))
-                {
-                    profiles = SignatureReader.GetAvailableProfiles(signaturePath).ToList();
-                }
+            var stopwatch = Stopwatch.StartNew();
+            var generatorTasks = Generators.Select(GenerateBindingsAsync);
+            await Task.WhenAll(generatorTasks);
+            stopwatch.Stop();
 
-                var profileOverrides = OverrideReader.GetProfileOverrides(generator.OverrideFiles.ToArray()).ToList();
-
-                var baker = new ProfileBaker(profiles, profileOverrides);
-                var bakedProfile = baker.BakeProfile(generator.ProfileName, generator.Versions, generator.BaseProfileName);
-
-                var documentationPath = Path.Combine
-                (
-                    Arguments.DocumentationPath,
-                    generator.SpecificationDocumentationPath
-                );
-
-                var docs = DocumentationReader.ReadProfileDocumentation(documentationPath);
-                var bakedDocs = new DocumentationBaker(bakedProfile).BakeDocumentation(docs);
-
-                var languageTypemapPath = Path.Combine(Arguments.InputPath, generator.LanguageTypemap);
-                if (!_cachedTypemaps.TryGetValue(languageTypemapPath, out var languageTypemap))
-                {
-                    using (var fs = File.OpenRead(languageTypemapPath))
-                    {
-                        languageTypemap = new TypemapReader().ReadTypemap(fs);
-                    }
-                }
-
-                var apiTypemapPath = Path.Combine(Arguments.InputPath, generator.APITypemap);
-                if (!_cachedTypemaps.TryGetValue(apiTypemapPath, out var apiTypemap))
-                {
-                    using (var fs = File.OpenRead(apiTypemapPath))
-                    {
-                        apiTypemap = new TypemapReader().ReadTypemap(fs);
-                    }
-                }
-
-                var bakedMap = TypemapBaker.BakeTypemaps(apiTypemap, languageTypemap);
-
-                var mapper = new ProfileMapper(bakedMap);
-                var mappedProfile = mapper.Map(bakedProfile);
-
-                var overloadedProfile = OverloadBaker.BakeOverloads(mappedProfile);
-
-                var bindingsWriter = new BindingsWriterAsync(generator, overloadedProfile, bakedDocs);
-                await bindingsWriter.WriteBindingsAsync();
-
-                ticks = DateTime.Now.Ticks - ticks;
-
-                Console.WriteLine();
-                Console.WriteLine("Bindings generated in {0} seconds.", ticks / 10000000.0);
-            }
+            Console.WriteLine();
+            Console.WriteLine("Bindings generated in {0} seconds.", stopwatch.Elapsed.Ticks / 10000000.0);
 
             return 0;
+        }
+
+        private static async Task GenerateBindingsAsync([NotNull] IGeneratorSettings generatorSettings)
+        {
+            var signaturePath = Path.Combine(Arguments.InputPath, generatorSettings.SpecificationFile);
+            if (!_cachedProfiles.TryGetValue(signaturePath, out var profiles))
+            {
+                profiles = SignatureReader.GetAvailableProfiles(signaturePath).ToList();
+            }
+
+            var profileOverrides = OverrideReader
+                .GetProfileOverrides(generatorSettings.OverrideFiles.ToArray())
+                .ToList();
+
+            var baker = new ProfileBaker(profiles, profileOverrides);
+            var bakedProfile = baker.BakeProfile
+            (
+                generatorSettings.ProfileName,
+                generatorSettings.Versions,
+                generatorSettings.BaseProfileName
+            );
+
+            var documentationPath = Path.Combine
+            (
+                Arguments.DocumentationPath,
+                generatorSettings.SpecificationDocumentationPath
+            );
+
+            var docs = DocumentationReader.ReadProfileDocumentation(documentationPath);
+            var bakedDocs = new DocumentationBaker(bakedProfile).BakeDocumentation(docs);
+
+            var languageTypemapPath = Path.Combine(Arguments.InputPath, generatorSettings.LanguageTypemap);
+            if (!_cachedTypemaps.TryGetValue(languageTypemapPath, out var languageTypemap))
+            {
+                using (var fs = File.OpenRead(languageTypemapPath))
+                {
+                    languageTypemap = new TypemapReader().ReadTypemap(fs);
+                }
+            }
+
+            var apiTypemapPath = Path.Combine(Arguments.InputPath, generatorSettings.APITypemap);
+            if (!_cachedTypemaps.TryGetValue(apiTypemapPath, out var apiTypemap))
+            {
+                using (var fs = File.OpenRead(apiTypemapPath))
+                {
+                    apiTypemap = new TypemapReader().ReadTypemap(fs);
+                }
+            }
+
+            var bakedMap = TypemapBaker.BakeTypemaps(apiTypemap, languageTypemap);
+
+            var mapper = new ProfileMapper(bakedMap);
+            var mappedProfile = mapper.Map(bakedProfile);
+
+            var overloadedProfile = OverloadBaker.BakeOverloads(mappedProfile);
+
+            var bindingsWriter = new BindingsWriterAsync(generatorSettings, overloadedProfile, bakedDocs);
+            await bindingsWriter.WriteBindingsAsync();
         }
 
         private static void CreateGenerators()

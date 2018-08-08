@@ -29,7 +29,12 @@ namespace Bind.Extensions
             [NotNull] string sectionName = "div"
         )
         {
-            var sectionElements = container.Elements(sectionName);
+            var sectionElements = container.Elements();
+            if (!string.IsNullOrWhiteSpace(sectionName))
+            {
+                sectionElements = container.Elements(sectionName);
+            }
+
             var targetSections = sectionElements.Where(e => e.GetRequiredAttribute("class").Value == className).ToList();
 
             if (!targetSections.Any())

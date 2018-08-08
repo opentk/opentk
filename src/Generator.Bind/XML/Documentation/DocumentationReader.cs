@@ -250,7 +250,7 @@ namespace Bind.XML.Documentation
             var name = functionPrototypeElement.Elements("tr").First()
                 .GetRequiredElement("td")
                 .GetRequiredSectionByClass("funcdef", "code")
-                .GetRequiredSectionByClass("fsfunc", "strong")
+                .GetRequiredSectionByClass("fsfunc", string.Empty)
                 .Value;
 
             var parameters = functionPrototypeElement.Elements("tr")
@@ -280,7 +280,7 @@ namespace Bind.XML.Documentation
         {
             var variableListElement = parameterSetElement
                 .GetRequiredSectionByClass("variablelist")
-                .GetRequiredSectionByClass("variablelist", "dl");
+                .GetRequiredElement("dl");
 
             var parameterNameElements = new List<XElement>();
             foreach (var element in variableListElement.Elements())

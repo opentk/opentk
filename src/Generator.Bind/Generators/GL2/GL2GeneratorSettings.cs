@@ -38,6 +38,9 @@ namespace Bind.Generators.GL2
         /// <inheritdoc/>
         public override string APIIdentifier => "GL2";
 
+        /// <inheritdoc/>
+        public override string SpecificationDocumentationPath => "gl4";
+
         /// <summary>
         /// Initializes a new instance of the <see cref="GL2GeneratorSettings"/> class.
         /// </summary>

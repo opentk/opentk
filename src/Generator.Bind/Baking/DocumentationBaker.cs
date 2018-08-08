@@ -139,6 +139,13 @@ namespace Bind.Baking
                                     break;
                                 }
 
+                                if (element.Attribute("class") is null)
+                                {
+                                    // Some sort of weird HTML tag
+                                    descriptionBuilder.Append(element);
+                                    break;
+                                }
+
                                 var elementClass = element.GetRequiredAttribute("class").Value;
                                 switch (elementClass)
                                 {
@@ -152,6 +159,7 @@ namespace Bind.Baking
                                         AppendConstantNode(descriptionBuilder, function, parameter, element, greedilyConsumedNodes);
                                         break;
                                     }
+                                    case "replaceable":
                                     case "code":
                                     case "emphasis":
                                     {
@@ -292,7 +300,8 @@ namespace Bind.Baking
                 }
 
                 var hasEmphasizedNumberInsert = constantNode.NextNode is XElement emphasisNode &&
-                                                emphasisNode.Attribute("class")?.Value == "emphasis";
+                                                (emphasisNode.Attribute("class")?.Value == "emphasis" ||
+                                                 emphasisNode.Attribute("class")?.Value == "replaceable");
                 if (hasEmphasizedNumberInsert)
                 {
                     var nextNode = (XElement)constantNode.NextNode;

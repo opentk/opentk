@@ -1629,36 +1629,12 @@
       </param>
     </function>
 
-    <function name="GetProgram" extension="NV">
-      <param name="target">
-        <type>AssemblyProgramTargetArb</type>
-      </param>
-    </function>
-
-    <function name="GetProgramString" extension="NV">
-      <param name="target">
-        <type>AssemblyProgramTargetArb</type>
-      </param>
-    </function>
-
     <function name="GetTrackMatrix" extension="NV">
       <param name="target">
         <type>AssemblyProgramTargetArb</type>
       </param>
       <param name="pname">
         <type>AssemblyProgramParameterArb</type>
-      </param>
-    </function>
-
-    <function name="GetVertexAttrib" extension="NV">
-      <param name="target">
-        <type>VertexAttribParameterArb</type>
-      </param>
-    </function>
-
-    <function name="GetVertexAttribPointer" extension="NV">
-      <param name="target">
-        <type>VertexAttribParameterPointerArb</type>
       </param>
     </function>
 
@@ -4315,13 +4291,6 @@
     </enum>
   </add>
 
-  <replace name="gles1">
-    <!-- AMD_performance_monitors is not const-correct -->
-    <function name="DeletePerfMonitors" extension="AMD">
-      <param name="monitors"><flow>in</flow></param>
-    </function>
-  </replace>
-
   <add name="gles1">
     <enum name="BeginMode">
       <token name="Points" value="0x0000" />
@@ -4384,17 +4353,110 @@
     </enum>
 </add>
 
-  <!-- gles2 replacements for 2.0 and 3.0 -->
-  <replace name="gles2" version="2.0|3.0">
-    <!-- Buffer Objects [2.9] -->
-    <function name="BindBuffer">
-      <param name="target"><type>BufferTarget</type></param>
-    </function>
+
+  <replace name="gles2" version="3.0">
     <function name="BindBufferRange">
       <param name="target"><type>BufferRangeTarget</type></param>
     </function>
     <function name="BindBufferBase">
       <param name="target"><type>BufferRangeTarget</type></param>
+    </function>
+
+    <!-- Transform Feedback [2.14, 6.1.11] -->
+    <function name="BindTransformFeedback">
+      <param name="target"><type>TransformFeedbackTarget</type></param>
+    </function>
+    <function name="BeginTransformFeedback">
+      <param name="primitiveMode"><type>TransformFeedbackPrimitiveType</type></param>
+    </function>
+
+    <function name="ReadBuffer">
+      <param name="src"><type>ReadBufferMode</type></param>
+    </function>
+
+    <!-- Vertex Arrays [2.8] -->
+    <function name="VertexAttribIPointer">
+      <param name="type"><type>VertexAttribIntegerType</type></param>
+    </function>
+
+    <function name="DrawRangeElements">
+      <param name="mode"><type>PrimitiveType</type></param>
+      <param name="type"><type>DrawElementsType</type></param>
+    </function>
+
+    <function name="GetActiveUniforms">
+      <param name="pname"><type>ActiveUniformParameter</type></param>
+    </function>
+    <function name="GetActiveUniformBlock">
+      <param name="pname"><type>ActiveUniformBlockParameter</type></param>
+    </function>
+
+    <!-- Output Variables [2.11.8] -->
+    <function name="GetTransformFeedbackVarying">
+      <param name="type"><type>TransformFeedbackType*</type></param>
+    </function>
+    <function name="TransformFeedbackVaryings">
+      <param name="bufferMode"><type>TransformFeedbackMode</type></param>
+    </function>
+
+    <!-- Sampler Objects [3.8.2] -->
+    <function name="SamplerParameter">
+      <param name="pname"><type>SamplerParameterName</type></param>
+    </function>
+
+    <!-- Sampler Queries [6.1.5] -->
+    <function name="GetSamplerParameter">
+      <param name="pname"><type>SamplerParameterName</type></param>
+    </function>
+
+    <function name="ClearBuffer">
+      <param name="buffer"><type>ClearBuffer</type></param>
+      <param name="drawbuffer"/>
+      <param name="value"/>
+    </function>
+    <function name="ClearBuffer">
+      <param name="buffer"><type>ClearBufferCombined</type></param>
+      <param name="drawbuffer"/>
+      <param name="depth"/>
+      <param name="stencil"/>
+    </function>
+
+    <function name="FramebufferTextureLayer">
+      <param name="target"><type>FramebufferTarget</type></param>
+      <param name="attachment"><type>FramebufferAttachment</type></param>
+      <param name="texture">
+        <name>textureTarget</name>
+        <type>TextureTarget3d</type>
+      </param>
+    </function>
+
+
+    <!-- Invalidating Framebuffer Contents [4.5] -->
+    <function name="InvalidateFramebuffer">
+      <param name="target"><type>FramebufferTarget</type></param>
+      <param name="attachments"><type>FramebufferAttachment*</type></param>
+    </function>
+    <function name="InvalidateSubFramebuffer">
+      <param name="target"><type>FramebufferTarget</type></param>
+      <param name="attachments"><type>FramebufferAttachment*</type></param>
+    </function>
+
+    <function name="GetInternalFormat">
+      <param name="target"><type>ImageTarget</type></param>
+      <param name="internalformat"><type>SizedInternalFormat</type></param>
+      <param name="pname"><type>InternalFormatParameter</type></param>
+    </function>
+
+    <function name="GetInteger64i_v">
+      <param name="target"><type>GetIndexedPName</type></param>
+    </function>
+  </replace>
+
+  <!-- gles2 replacements for 2.0 and 3.0 -->
+  <replace name="gles2" version="2.0|3.0">
+    <!-- Buffer Objects [2.9] -->
+    <function name="BindBuffer">
+      <param name="target"><type>BufferTarget</type></param>
     </function>
     <function name="BufferData">
       <param name="target"><type>BufferTarget</type></param>
@@ -4443,22 +4505,12 @@
       <param name="pname"><type>GetQueryObjectParam</type></param>
     </function>
 
-    <!-- Transform Feedback [2.14, 6.1.11] -->
-    <function name="BindTransformFeedback">
-      <param name="target"><type>TransformFeedbackTarget</type></param>
-    </function>
-    <function name="BeginTransformFeedback">
-      <param name="primitiveMode"><type>TransformFeedbackPrimitiveType</type></param>
-    </function>
-
     <!-- Reading and Copying Pixels [4.3.1-2] -->
     <function name="ReadPixels">
       <param name="format"><type>PixelFormat</type></param>
       <param name="type"><type>PixelType</type></param>
     </function>
-    <function name="ReadBuffer">
-      <param name="src"><type>ReadBufferMode</type></param>
-    </function>
+
     <function name="BlitFramebuffer">
       <param name="mask"><type>ClearBufferMask</type></param>
       <param name="filter"><type>BlitFramebufferFilter</type></param>
@@ -4478,11 +4530,6 @@
       </param>
     </function>
 
-    <!-- Vertex Arrays [2.8] -->
-    <function name="VertexAttribIPointer">
-      <param name="type"><type>VertexAttribIntegerType</type></param>
-    </function>
-
     <!-- Drawing [2.8.3] -->
     <function name="DrawArrays">
       <param name="mode"><type>PrimitiveType</type></param>
@@ -4498,10 +4545,7 @@
       <param name="mode"><type>PrimitiveType</type></param>
       <param name="type"><type>DrawElementsType</type></param>
     </function>
-    <function name="DrawRangeElements">
-      <param name="mode"><type>PrimitiveType</type></param>
-      <param name="type"><type>DrawElementsType</type></param>
-    </function>
+
 
     <!-- Shaders and Programs [2.11.1] -->
     <function name="CreateShader">
@@ -4526,20 +4570,6 @@
     <!-- Uniform Variables [2.11.6] -->
     <function name="GetActiveUniform">
       <param name="type"><type>ActiveUniformType*</type></param>
-    </function>
-    <function name="GetActiveUniforms">
-      <param name="pname"><type>ActiveUniformParameter</type></param>
-    </function>
-    <function name="GetActiveUniformBlock">
-      <param name="pname"><type>ActiveUniformBlockParameter</type></param>
-    </function>
-
-    <!-- Output Variables [2.11.8] -->
-    <function name="GetTransformFeedbackVarying">
-      <param name="type"><type>TransformFeedbackType*</type></param>
-    </function>
-    <function name="TransformFeedbackVaryings">
-      <param name="bufferMode"><type>TransformFeedbackMode</type></param>
     </function>
 
 	<!-- Shader Queries [6.1.12] -->
@@ -4568,16 +4598,6 @@
     </function>
     <function name="BindTexture">
       <param name="target"><type>TextureTarget</type></param>
-    </function>
-
-    <!-- Sampler Objects [3.8.2] -->
-    <function name="SamplerParameter">
-      <param name="pname"><type>SamplerParameterName</type></param>
-    </function>
-
-    <!-- Sampler Queries [6.1.5] -->
-    <function name="GetSamplerParameter">
-      <param name="pname"><type>SamplerParameterName</type></param>
     </function>
 
     <!-- Texture Image Specification [3.8.3-4] -->
@@ -4726,17 +4746,6 @@
     <function name="Clear">
       <param name="mask"><type>ClearBufferMask</type></param>
     </function>
-    <function name="ClearBuffer">
-      <param name="buffer"><type>ClearBuffer</type></param>
-      <param name="drawbuffer"/>
-      <param name="value"/>
-    </function>
-    <function name="ClearBuffer">
-      <param name="buffer"><type>ClearBufferCombined</type></param>
-      <param name="drawbuffer"/>
-      <param name="depth"/>
-      <param name="stencil"/>
-    </function>
 
     <!-- Sync Objects and Fences [5.2] -->
     <function name="FenceSync">
@@ -4792,29 +4801,11 @@
       <param name="attachment"><type>FramebufferAttachment</type></param>
       <param name="textarget"><type>TextureTarget2d</type></param>
     </function>
-    <function name="FramebufferTextureLayer">
-      <param name="target"><type>FramebufferTarget</type></param>
-      <param name="attachment"><type>FramebufferAttachment</type></param>
-      <param name="texture">
-        <name>textureTarget</name>
-        <type>TextureTarget3d</type>
-    </param>
-    </function>
 
     <!-- Framebuffer Completeness [4.4.4] -->
     <function name="CheckFramebufferStatus">
       <returns>FramebufferErrorCode</returns>
       <param name="target"><type>FramebufferTarget</type></param>
-    </function>
-
-    <!-- Invalidating Framebuffer Contents [4.5] -->
-    <function name="InvalidateFramebuffer">
-      <param name="target"><type>FramebufferTarget</type></param>
-      <param name="attachments"><type>FramebufferAttachment*</type></param>
-    </function>
-    <function name="InvalidateSubFramebuffer">
-      <param name="target"><type>FramebufferTarget</type></param>
-      <param name="attachments"><type>FramebufferAttachment*</type></param>
     </function>
 
     <!-- Renderbuffer Object Queries [6.1.13-14] -->
@@ -4828,11 +4819,6 @@
       <param name="target"><type>FramebufferTarget</type></param>
       <param name="attachment"><type>FramebufferAttachment</type></param>
       <param name="pname"><type>FramebufferParameterName</type></param>
-    </function>
-    <function name="GetInternalformat">
-      <param name="target"><type>ImageTarget</type></param>
-      <param name="internalformat"><type>SizedInternalFormat</type></param>
-      <param name="pname"><type>InternalFormatParameter</type></param>
     </function>
 
     <!-- String Queries [6.1.6] -->
@@ -4850,9 +4836,6 @@
     </function>
     <function name="GetInteger64">
       <param name="pname"><type>GetPName</type></param>
-    </function>
-    <function name="GetInteger64i_v">
-      <param name="target"><type>GetIndexedPName</type></param>
     </function>
     <function name="GetString">
       <param name="name"><type>StringName</type></param>
@@ -6697,7 +6680,7 @@
   </add>
 
   <!-- INTEL_performance_query -->
-  <replace name="gl|glcore|gles1|gles2">
+  <replace name="gl|glcore|gles2">
     <!-- GetPerfQueryIdByNameINTEL is not const-correct -->
     <function name="GetPerfQueryIdByName" extension="INTEL">
       <param name="queryName">
