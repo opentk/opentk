@@ -492,7 +492,12 @@ namespace Bind
             for (int i = 0; i < function.Parameters.Count; ++i)
             {
                 var parameter = function.Parameters[i];
-                var parameterDocumentation = documentation.Parameters[i];
+                var parameterDocumentation = documentation.Parameters.FirstOrDefault(dp => dp.Name == parameter.Name);
+                if (parameterDocumentation is null)
+                {
+                    await sw.WriteLineAsync($"/// <param name=\"{parameter.Name}\">This parameter lacks documentation.</param>");
+                    continue;
+                }
 
                 // XML documentation doesn't require keyword escaping.
                 if (parameter.Name.TrimStart('@') != parameterDocumentation.Name)
