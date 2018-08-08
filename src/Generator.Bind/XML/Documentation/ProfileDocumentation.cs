@@ -27,7 +27,7 @@ namespace Bind.XML.Documentation
         {
             Functions = functions ?? throw new ArgumentNullException(nameof(functions));
 
-            _documentedFunctions = functions.ToDictionary(f => f.Name);
+            _documentedFunctions = functions.ToDictionary(f => new string(f.Name.SkipWhile(char.IsLower).ToArray()));
         }
 
         /// <summary>

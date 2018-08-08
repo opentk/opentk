@@ -4441,7 +4441,7 @@
       <param name="attachments"><type>FramebufferAttachment*</type></param>
     </function>
 
-    <function name="GetInternalFormat">
+    <function name="GetInternalformat">
       <param name="target"><type>ImageTarget</type></param>
       <param name="internalformat"><type>SizedInternalFormat</type></param>
       <param name="pname"><type>InternalFormatParameter</type></param>

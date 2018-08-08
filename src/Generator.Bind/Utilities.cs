@@ -3,7 +3,10 @@
  */
 
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using Bind.Translation.Trimmers;
+using Bind.XML.Overrides.Functions;
 using JetBrains.Annotations;
 
 namespace Bind
@@ -117,6 +120,80 @@ namespace Bind
             builder.Append(']');
 
             return builder.ToString();
+        }
+
+        /// <summary>
+        /// Gets the possible variations on the base name of the given override. Typically, this boils down to the
+        /// following three cases, in order:
+        ///
+        /// * FunctionNamefvEXT
+        /// * FunctionNamefv
+        /// * FunctionName
+        ///
+        /// Care should be taken when creating new overrides that the intended function is targeted.
+        /// </summary>
+        /// <param name="functionOverride">The override to create variations of.</param>
+        /// <returns>The name variations, ordered by length, starting with the longest.</returns>
+        [NotNull, ItemNotNull]
+        public static IEnumerable<string> GetNameVariations([NotNull] FunctionOverride functionOverride)
+        {
+            var extensionTrimmer = new OpenGLFunctionExtensionTrimmer();
+            var dataTypeTrimmer = new OpenGLFunctionDataTypeTrimmer();
+
+            var variations = new List<string>();
+            var currentVariation = functionOverride.BaseName;
+
+            variations.Add(currentVariation);
+
+            if (extensionTrimmer.IsRelevant(functionOverride))
+            {
+                currentVariation = extensionTrimmer.Trim(functionOverride);
+                variations.Add(currentVariation);
+            }
+
+            if (dataTypeTrimmer.IsRelevant(currentVariation))
+            {
+                variations.Add(dataTypeTrimmer.Trim(currentVariation));
+            }
+
+            return variations.Distinct().OrderByDescending(v => v.Length);
+        }
+
+        /// <summary>
+        /// Gets the possible variations on the given entry point. Typically, this boils down to the
+        /// following three cases, in order:
+        ///
+        /// * FunctionNamefvEXT
+        /// * FunctionNamefv
+        /// * FunctionName
+        ///
+        /// Care should be taken when creating new overrides that the intended function is targeted.
+        /// </summary>
+        /// <param name="functionEntrypoint">The entrypoint to create variations of.</param>
+        /// <returns>The name variations, ordered by length, starting with the longest.</returns>
+        [NotNull, ItemNotNull]
+        public static IEnumerable<string> GetNameVariations(string functionEntrypoint)
+        {
+            var extensionTrimmer = new OpenGLFunctionExtensionTrimmer();
+            var dataTypeTrimmer = new OpenGLFunctionDataTypeTrimmer();
+
+            var variations = new List<string>();
+            var currentVariation = functionEntrypoint;
+
+            variations.Add(currentVariation);
+
+            if (extensionTrimmer.IsRelevant(currentVariation))
+            {
+                currentVariation = extensionTrimmer.Trim(currentVariation);
+                variations.Add(currentVariation);
+            }
+
+            if (dataTypeTrimmer.IsRelevant(currentVariation))
+            {
+                variations.Add(dataTypeTrimmer.Trim(currentVariation));
+            }
+
+            return variations.Distinct().OrderByDescending(v => v.Length);
         }
     }
 }

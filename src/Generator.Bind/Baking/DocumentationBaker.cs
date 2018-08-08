@@ -47,6 +47,16 @@ namespace Bind.Baking
             var bakedFunctions = new List<FunctionDocumentation>();
             foreach (var function in documentation.Functions)
             {
+                var functionNameWithoutPrefix = new string(function.Name.SkipWhile(char.IsLower).ToArray());
+
+                var actualFunction =
+                    _apiProfile.FindFunctionWithEntrypoint(functionNameWithoutPrefix);
+                if (actualFunction is null)
+                {
+                    // This function isn't a part of the profile
+                    continue;
+                }
+
                 bakedFunctions.Add(BakeFunctionDocumentation(function));
             }
 

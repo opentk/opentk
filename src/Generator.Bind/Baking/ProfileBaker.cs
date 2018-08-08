@@ -157,7 +157,7 @@ namespace Bind.Baking
             var newFunctionReplacements = new List<FunctionOverride>();
             foreach (var functionReplacement in coalescedOverrides.ReplacedFunctions)
             {
-                var nameVariations = GetNameVariations(functionReplacement);
+                var nameVariations = Utilities.GetNameVariations(functionReplacement);
 
                 var isReplacementDeprecated = nameVariations.Any(variation => deprecatedFunctions.Any(df => df.Name == variation));
                 if (!isReplacementDeprecated)
@@ -169,7 +169,7 @@ namespace Bind.Baking
             var newFunctionOverloads = new List<FunctionOverride>();
             foreach (var functionOverload in coalescedOverrides.FunctionOverloads)
             {
-                var nameVariations = GetNameVariations(functionOverload);
+                var nameVariations = Utilities.GetNameVariations(functionOverload);
 
                 var isReplacementDeprecated = nameVariations.Any(variation => deprecatedFunctions.Any(df => df.Name == variation));
                 if (!isReplacementDeprecated)
@@ -410,7 +410,7 @@ namespace Bind.Baking
         )
         {
             // First, build the list of candidate names
-            var variations = GetNameVariations(functionOverride).ToList();
+            var variations = Utilities.GetNameVariations(functionOverride).ToList();
             foreach (var variation in variations)
             {
                 var baseFunctionCandidates = existingFunctions.Where
@@ -488,43 +488,6 @@ namespace Bind.Baking
             }
 
             throw new InvalidDataException("No base function found for override.");
-        }
-
-        /// <summary>
-        /// Gets the possible variations on the base name of the given override. Typically, this boils down to the
-        /// following three cases, in order:
-        ///
-        /// * FunctionNamefvEXT
-        /// * FunctionNamefv
-        /// * FunctionName
-        ///
-        /// Care should be taken when creating new overrides that the intended function is targeted.
-        /// </summary>
-        /// <param name="functionOverride">The override to create variations of.</param>
-        /// <returns>The name variations, ordered by length, starting with the longest.</returns>
-        [NotNull, ItemNotNull]
-        private static IEnumerable<string> GetNameVariations([NotNull] FunctionOverride functionOverride)
-        {
-            var extensionTrimmer = new OpenGLFunctionExtensionTrimmer();
-            var dataTypeTrimmer = new OpenGLFunctionDataTypeTrimmer();
-
-            var variations = new List<string>();
-            var currentVariation = functionOverride.BaseName;
-
-            variations.Add(currentVariation);
-
-            if (extensionTrimmer.IsRelevant(functionOverride))
-            {
-                currentVariation = extensionTrimmer.Trim(functionOverride);
-                variations.Add(currentVariation);
-            }
-
-            if (dataTypeTrimmer.IsRelevant(currentVariation))
-            {
-                variations.Add(dataTypeTrimmer.Trim(currentVariation));
-            }
-
-            return variations.Distinct().OrderByDescending(v => v.Length);
         }
 
         /// <summary>
@@ -918,7 +881,8 @@ namespace Bind.Baking
         }
 
         /// <summary>
-        /// Gets the profiles that fall inside a given profile name and version range.
+        /// Gets the profiles that fall inside a given profile name and version range. A profile with the maximum
+        /// version "0.0.0" is always considered in range.
         /// </summary>
         /// <param name="profileName">The name of the profile.</param>
         /// <param name="versionRange">The version range.</param>
@@ -930,11 +894,19 @@ namespace Bind.Baking
             [NotNull] VersionRange versionRange
         )
         {
-            return _profiles.Where(p => p.Name == profileName && versionRange.IsInRange(p.Versions.Maximum));
+            var zeroVersion = new Version(0, 0);
+            return _profiles
+                .Where
+                (
+                    p =>
+                        p.Name == profileName &&
+                        (versionRange.IsInRange(p.Versions.Maximum) || p.Versions.Maximum == zeroVersion)
+                );
         }
 
         /// <summary>
-        /// Gets the overrides that fall inside a given profile name and version range.
+        /// Gets the overrides that fall inside a given profile name and version range. An override with the maximum
+        /// version "0.0.0" is always considered in range.
         /// </summary>
         /// <param name="profileName">The name of the profile.</param>
         /// <param name="versionRange">The version range.</param>
@@ -946,7 +918,14 @@ namespace Bind.Baking
             [NotNull] VersionRange versionRange
         )
         {
-            return _overrides.Where(p => p.Name == profileName && versionRange.IsInRange(p.Versions.Maximum));
+            var zeroVersion = new Version(0, 0);
+            return _overrides
+                .Where
+                (
+                    p =>
+                        p.Name == profileName &&
+                        (versionRange.IsInRange(p.Versions.Maximum) || p.Versions.Maximum == zeroVersion)
+                );
         }
     }
 }
