@@ -3,6 +3,7 @@
  */
 
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -37,11 +38,11 @@ namespace Bind
 
         private static readonly List<IGeneratorSettings> Generators = new List<IGeneratorSettings>();
 
-        private static readonly IDictionary<string, IReadOnlyList<ApiProfile>> _cachedProfiles =
-            new Dictionary<string, IReadOnlyList<ApiProfile>>();
+        private static readonly ConcurrentDictionary<string, IReadOnlyList<ApiProfile>> _cachedProfiles =
+            new ConcurrentDictionary<string, IReadOnlyList<ApiProfile>>();
 
-        private static readonly IDictionary<string, IReadOnlyDictionary<TypeSignature, TypeSignature>> _cachedTypemaps =
-            new Dictionary<string, IReadOnlyDictionary<TypeSignature, TypeSignature>>();
+        private static readonly ConcurrentDictionary<string, IReadOnlyDictionary<TypeSignature, TypeSignature>> _cachedTypemaps =
+            new ConcurrentDictionary<string, IReadOnlyDictionary<TypeSignature, TypeSignature>>();
 
         private static async Task<int> Main(string[] args)
         {
@@ -76,6 +77,7 @@ namespace Bind
             if (!_cachedProfiles.TryGetValue(signaturePath, out var profiles))
             {
                 profiles = SignatureReader.GetAvailableProfiles(signaturePath).ToList();
+                _cachedProfiles.TryAdd(signaturePath, profiles);
             }
 
             var profileOverrides = OverrideReader
@@ -105,6 +107,7 @@ namespace Bind
                 using (var fs = File.OpenRead(languageTypemapPath))
                 {
                     languageTypemap = new TypemapReader().ReadTypemap(fs);
+                    _cachedTypemaps.TryAdd(languageTypemapPath, languageTypemap);
                 }
             }
 
@@ -114,6 +117,7 @@ namespace Bind
                 using (var fs = File.OpenRead(apiTypemapPath))
                 {
                     apiTypemap = new TypemapReader().ReadTypemap(fs);
+                    _cachedTypemaps.TryAdd(apiTypemapPath, apiTypemap);
                 }
             }
 
