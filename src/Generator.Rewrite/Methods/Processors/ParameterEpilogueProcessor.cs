@@ -8,6 +8,9 @@ using OpenTK.Rewrite.Extensions;
 
 namespace OpenTK.Rewrite.Methods.Processors
 {
+    /// <summary>
+    /// Rewrites wrapper method IL to include the epilogue for the wrapper method parameters.
+    /// </summary>
     public sealed class ParameterEpilogueProcessor : EpilogueProcessor<IEnumerable<VariableIdentifier>>
     {
         private readonly TypeDefinition _bindingsBaseType;
@@ -21,8 +24,8 @@ namespace OpenTK.Rewrite.Methods.Processors
         /// Initializes a new instance of the <see cref="ParameterEpilogueProcessor"/> class with a given mscorlib
         /// definition and bindings base type definition.
         /// </summary>
-        /// <param name="mscorlib"></param>
-        /// <param name="bindingsBaseType"></param>
+        /// <param name="mscorlib">The mscorlib assembly definition to set up this processor.</param>
+        /// <param name="bindingsBaseType">The 'BindingsBase' type used for some helper definitions.</param>
         public ParameterEpilogueProcessor
         (
             AssemblyDefinition mscorlib,
@@ -36,13 +39,13 @@ namespace OpenTK.Rewrite.Methods.Processors
         /// <inheritdoc/>
         protected override void ProcessEpilogue
         (
-            ILProcessor ilProcessor,
+            ILProcessor cilProcessor,
             MethodDefinition wrapper,
             MethodDefinition native,
             IEnumerable<VariableIdentifier> generatedVariables
         )
         {
-            _ilProcessor = ilProcessor;
+            _ilProcessor = cilProcessor;
             _wrapper = wrapper;
 
             foreach (var param in wrapper.Parameters)
@@ -54,11 +57,11 @@ namespace OpenTK.Rewrite.Methods.Processors
                 {
                     EmitStringOutEpilogue(param, generatedVariable);
                 }
-                // if ParameterType is not an array type, GetElementType() just returns the same type
-                // so this checks for a string or string array type
-                // everything else will be handled by EmitStringEpilogue
                 else if (param.ParameterType.GetElementType().FullNameEquals<string>())
                 {
+                    // if ParameterType is not an array type, GetElementType() just returns the same type
+                    // so this checks for a string or string array type
+                    // everything else will be handled by EmitStringEpilogue
                     EmitStringEpilogue(param, generatedVariable, param.ParameterType.IsArray);
                 }
             }

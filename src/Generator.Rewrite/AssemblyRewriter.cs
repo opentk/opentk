@@ -28,9 +28,6 @@ namespace OpenTK.Rewrite
         /// definition, BindingsBase type definition and the useDllImport option. The resulting
         /// <see cref="ITypeRewriter"/> will be cached and reused for all types.
         /// </param>
-        /// <param name="strongNameKeyPath">
-        /// The relative or absolute path to the strong name key file that will be used for signing the assembly.
-        /// </param>
         public AssemblyRewriter
         (
             IAssemblyResolver assemblyResolver,

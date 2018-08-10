@@ -32,11 +32,11 @@ namespace OpenTK.Rewrite.Methods
         public MethodDefinition Rewrite(MethodDefinition wrapper, MethodDefinition native)
         {
             wrapper.Body.Instructions.Clear();
-            var ilProcessor = wrapper.Body.GetILProcessor();
+            var cilProcessor = wrapper.Body.GetILProcessor();
 
             foreach (var processor in _processors)
             {
-                processor.Process(ilProcessor, wrapper, native);
+                processor.Process(cilProcessor, wrapper, native);
             }
 
             // some processors here are coupled with an "epilogue" step.
@@ -45,11 +45,11 @@ namespace OpenTK.Rewrite.Methods
             {
                 if (processor is IMethodProcessorWithPostProcessor p)
                 {
-                    p.PostProcessor.Process(ilProcessor, wrapper, native);
+                    p.PostProcessor.Process(cilProcessor, wrapper, native);
                 }
             }
 
-            ilProcessor.Emit(OpCodes.Ret);
+            cilProcessor.Emit(OpCodes.Ret);
 
             if (wrapper.Body.Variables.Count > 0)
             {
