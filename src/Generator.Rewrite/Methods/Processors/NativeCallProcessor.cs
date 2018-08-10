@@ -23,14 +23,14 @@ namespace OpenTK.Rewrite.Methods.Processors
         }
 
         /// <inheritdoc/>
-        public void Process(ILProcessor ilProcessor, MethodDefinition wrapper, MethodDefinition native)
+        public void Process(ILProcessor cilProcessor, MethodDefinition wrapper, MethodDefinition native)
         {
             int slot = native.GetSlot();
 
             if (slot == -1 || _useDllImport)
             {
                 // issue DllImport call
-                ilProcessor.Emit(OpCodes.Call, native);
+                cilProcessor.Emit(OpCodes.Call, native);
             }
             else
             {
@@ -52,9 +52,9 @@ namespace OpenTK.Rewrite.Methods.Processors
                 }
 
                 // push the entry point address on the stack
-                ilProcessor.Emit(OpCodes.Ldsfld, entryPointsField);
-                ilProcessor.Emit(OpCodes.Ldc_I4, slot);
-                ilProcessor.Emit(OpCodes.Ldelem_I);
+                cilProcessor.Emit(OpCodes.Ldsfld, entryPointsField);
+                cilProcessor.Emit(OpCodes.Ldc_I4, slot);
+                cilProcessor.Emit(OpCodes.Ldelem_I);
 
                 // issue calli
                 var signature = new CallSite(native.ReturnType)
@@ -69,7 +69,7 @@ namespace OpenTK.Rewrite.Methods.Processors
 
                 // Since the last parameter is always the entry point address,
                 // we do not need any special preparation before emiting calli.
-                ilProcessor.Emit(OpCodes.Calli, signature);
+                cilProcessor.Emit(OpCodes.Calli, signature);
             }
         }
     }

@@ -36,13 +36,13 @@ namespace OpenTK.Rewrite.Methods.Processors
         /// <inheritdoc/>
         protected override void ProcessEpilogue
         (
-            ILProcessor ilProcessor,
+            ILProcessor cilProcessor,
             MethodDefinition wrapper,
             MethodDefinition native,
             IEnumerable<VariableIdentifier> generatedVariables
         )
         {
-            _ilProcessor = ilProcessor;
+            _ilProcessor = cilProcessor;
             _wrapper = wrapper;
 
             foreach (var param in wrapper.Parameters)

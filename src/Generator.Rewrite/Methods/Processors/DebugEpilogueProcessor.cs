@@ -21,7 +21,7 @@ namespace OpenTK.Rewrite.Methods.Processors
         /// <inheritdoc/>
         protected override void ProcessEpilogue
         (
-            ILProcessor ilProcessor,
+            ILProcessor cilProcessor,
             MethodDefinition wrapper,
             MethodDefinition native,
             DebugVariables debugVariables
@@ -38,17 +38,17 @@ namespace OpenTK.Rewrite.Methods.Processors
             var resultLocal = new VariableDefinition(wrapper.ReturnType);
             if (!resultLocal.VariableType.FullNameEquals(_voidType))
             {
-                ilProcessor.Body.Variables.Add(resultLocal);
-                ilProcessor.Emit(OpCodes.Stloc, resultLocal);
+                cilProcessor.Body.Variables.Add(resultLocal);
+                cilProcessor.Emit(OpCodes.Stloc, resultLocal);
             }
 
             // Special case End to turn on error checking.
-            if (ilProcessor.Body.Method.Name == "End")
+            if (cilProcessor.Body.Method.Name == "End")
             {
-                ilProcessor.Emit(OpCodes.Call, debugVariables.Get_CurrentContext);
-                ilProcessor.Emit(OpCodes.Ldc_I4_1);
-                ilProcessor.Emit(OpCodes.Conv_I1);
-                ilProcessor.Emit(OpCodes.Call, debugVariables.Set_ErrorChecking);
+                cilProcessor.Emit(OpCodes.Call, debugVariables.Get_CurrentContext);
+                cilProcessor.Emit(OpCodes.Ldc_I4_1);
+                cilProcessor.Emit(OpCodes.Conv_I1);
+                cilProcessor.Emit(OpCodes.Call, debugVariables.Set_ErrorChecking);
             }
 
             // We need a NOP to set up the finally handler range correctly.
@@ -58,11 +58,11 @@ namespace OpenTK.Rewrite.Methods.Processors
             var disposeInstruction = Instruction.Create(OpCodes.Call, disposeMethod);
             var endFinallyInstruction = Instruction.Create(OpCodes.Endfinally);
 
-            ilProcessor.Append(endTryInstruction);
-            ilProcessor.Append(loadInstruction);
-            ilProcessor.Append(disposeInstruction);
-            ilProcessor.Append(endFinallyInstruction);
-            ilProcessor.Append(nopInstruction);
+            cilProcessor.Append(endTryInstruction);
+            cilProcessor.Append(loadInstruction);
+            cilProcessor.Append(disposeInstruction);
+            cilProcessor.Append(endFinallyInstruction);
+            cilProcessor.Append(nopInstruction);
 
             var finallyHandler = new ExceptionHandler(ExceptionHandlerType.Finally)
             {
@@ -72,11 +72,11 @@ namespace OpenTK.Rewrite.Methods.Processors
                 HandlerEnd = nopInstruction
             };
 
-            ilProcessor.Body.ExceptionHandlers.Add(finallyHandler);
+            cilProcessor.Body.ExceptionHandlers.Add(finallyHandler);
 
             if (!resultLocal.VariableType.FullNameEquals(_voidType))
             {
-                ilProcessor.Emit(OpCodes.Ldloc, resultLocal);
+                cilProcessor.Emit(OpCodes.Ldloc, resultLocal);
             }
         }
     }

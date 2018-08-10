@@ -27,6 +27,6 @@ namespace OpenTK.Rewrite.Methods.Processors
         }
 
         /// <inheritdoc/>
-        public abstract void Process(ILProcessor ilProcessor, MethodDefinition wrapper, MethodDefinition native);
+        public abstract void Process(ILProcessor cilProcessor, MethodDefinition wrapper, MethodDefinition native);
     }
 }

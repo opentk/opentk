@@ -11,9 +11,9 @@ namespace OpenTK.Rewrite.Methods.Processors
         /// <summary>
         /// Processes the IL of a managed wrapper method definition to call a native function.
         /// </summary>
-        /// <param name="ilProcessor">The IL processor for the wrapper method definition.</param>
+        /// <param name="cilProcessor">The IL processor for the wrapper method definition.</param>
         /// <param name="wrapper">The method definition for the managed wrapper method.</param>
         /// <param name="native">The method definition for the native function.</param>
-        void Process(ILProcessor ilProcessor, MethodDefinition wrapper, MethodDefinition native);
+        void Process(ILProcessor cilProcessor, MethodDefinition wrapper, MethodDefinition native);
     }
 }
