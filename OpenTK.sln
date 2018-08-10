@@ -31,7 +31,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "props", "props", "{9A58BE7A
 		props\netfx-mono.props = props\netfx-mono.props
 		props\nuget-common.props = props\nuget-common.props
 		props\stylecop.props = props\stylecop.props
-        props\jetbrains.props = props\jetbrains.props
+		props\jetbrains.props = props\jetbrains.props
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ci-config", "ci-config", "{DB4C8652-965F-44F9-998B-8918768DB6AA}"
