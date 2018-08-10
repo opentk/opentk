@@ -8,6 +8,9 @@ using OpenTK.Rewrite.Extensions;
 
 namespace OpenTK.Rewrite.Methods.Processors
 {
+    /// <summary>
+    /// Rewrites wrapper method IL to include the prologue for the debug configuration.
+    /// </summary>
     public sealed class DebugPrologueProcessor : MethodProcessorWithEpilogue<DebugVariables>
     {
         private readonly IReadOnlyList<string> _graphicsModules = new List<string>

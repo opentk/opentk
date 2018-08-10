@@ -7,6 +7,9 @@ using OpenTK.Rewrite.Extensions;
 
 namespace OpenTK.Rewrite.Methods.Processors
 {
+    /// <summary>
+    /// Rewrites wrapper method IL to handle differences in return type between wrapper and native function.
+    /// </summary>
     public sealed class ReturnTypeProcessor : IMethodProcessor
     {
         private readonly TypeDefinition _intPtrType;

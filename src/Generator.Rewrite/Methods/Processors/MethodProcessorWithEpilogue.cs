@@ -3,6 +3,12 @@ using Mono.Cecil.Cil;
 
 namespace OpenTK.Rewrite.Methods.Processors
 {
+    /// <summary>
+    /// Provides functionality to rewrite a wrapper method with an additional "epilogue" step that is run at a later time.
+    /// </summary>
+    /// <typeparam name="T">
+    /// The type of the variable that will be passed from the prologue to the epilogue rewriting step.
+    /// </typeparam>
     public abstract class MethodProcessorWithEpilogue<T> : IMethodProcessorWithPostProcessor
     {
         /// <inheritdoc/>

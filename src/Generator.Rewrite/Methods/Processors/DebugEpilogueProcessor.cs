@@ -4,6 +4,9 @@ using OpenTK.Rewrite.Extensions;
 
 namespace OpenTK.Rewrite.Methods.Processors
 {
+    /// <summary>
+    /// Rewrites wrapper method IL to include the epilogue for the debug configuration.
+    /// </summary>
     public sealed class DebugEpilogueProcessor : EpilogueProcessor<DebugVariables>
     {
         private readonly TypeDefinition _voidType;

@@ -9,6 +9,9 @@ using OpenTK.Rewrite.Extensions;
 
 namespace OpenTK.Rewrite.Methods.Processors
 {
+    /// <summary>
+    /// Rewrites wrapper method IL to include the prologue for the wrapper method parameters.
+    /// </summary>
     public sealed class ParameterProcessor : MethodProcessorWithEpilogue<IEnumerable<VariableIdentifier>>
     {
         private readonly TypeDefinition _bindingsBaseType;
@@ -18,6 +21,11 @@ namespace OpenTK.Rewrite.Methods.Processors
         private readonly TypeDefinition _intPtrType;
         private readonly TypeDefinition _marshalType;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ParameterProcessor"/> class.
+        /// </summary>
+        /// <param name="mscorlib">The mscorlib assembly definition to set up this processor.</param>
+        /// <param name="bindingsBaseType">The 'BindingsBase' type used for some helper definitions.</param>
         public ParameterProcessor(AssemblyDefinition mscorlib, TypeDefinition bindingsBaseType)
             : base(new ParameterEpilogueProcessor(mscorlib, bindingsBaseType))
         {
