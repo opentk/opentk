@@ -12,5 +12,4 @@
 
   <Import Project="..\..\props\common.props" />
   <Import Project="..\..\props\nuget-common.props" />
-  <Import Project="..\..\props\stylecop.props" />
 </Project>
