@@ -64,8 +64,6 @@ namespace Bind.Translation.Trimmers
         /// <inheritdoc/>
         public bool IsRelevant(string trimmable)
         {
-            // Note: some endings should not be trimmed, for example: 'b' from Attrib.
-            // Check the endingsNotToTrim regex for details.
             if (EndingsNotToTrim.IsMatch(trimmable))
             {
                 return false;

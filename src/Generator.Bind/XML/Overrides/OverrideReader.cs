@@ -295,9 +295,8 @@ namespace Bind.XML.Overrides
             var tokenName = useElement.GetRequiredAttribute("token").Value;
             var enumName = useElement.Attribute("enum")?.Value;
             var isOptionalValue = useElement.Attribute("optional")?.Value;
-            var isOptional = !string.IsNullOrWhiteSpace(isOptionalValue) && isOptionalValue == "true";
 
-            return new UseTokenOverride(tokenName, enumName, isOptional);
+            return new UseTokenOverride(tokenName, enumName);
         }
 
         /// <summary>

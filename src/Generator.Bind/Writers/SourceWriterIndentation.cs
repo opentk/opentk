@@ -4,7 +4,7 @@ using JetBrains.Annotations;
 namespace Bind.Writers
 {
     /// <summary>
-    /// Represents an indentation handle for a level of indentation in an <see cref="SourceWriter"/>. On creation,
+    /// Represents an indentation handle for a level of indentation in a <see cref="SourceWriter"/>. On creation,
     /// this class indents the provided <see cref="SourceWriter"/> by one, and unindents it by one upon disposal.
     /// </summary>
     public class SourceWriterIndentation : IDisposable

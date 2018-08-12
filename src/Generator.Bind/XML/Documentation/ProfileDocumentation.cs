@@ -11,6 +11,10 @@ namespace Bind.XML.Documentation
     /// </summary>
     public class ProfileDocumentation
     {
+        /// <summary>
+        /// Gets a dictionary of the functions that have been documented in the profile, mapped by their names, with the
+        /// function prefix removed (such as gl, egl, glx, or wgl).
+        /// </summary>
         private IReadOnlyDictionary<string, FunctionDocumentation> _documentedFunctions;
 
         /// <summary>

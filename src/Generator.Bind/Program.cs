@@ -17,6 +17,7 @@ using Bind.Generators.ES;
 using Bind.Generators.GL2;
 using Bind.Translation.Mappers;
 using Bind.Typemap;
+using Bind.Writers;
 using Bind.XML.Documentation;
 using Bind.XML.Overrides;
 using Bind.XML.Signatures;
@@ -36,14 +37,28 @@ namespace Bind
         /// </summary>
         internal static CommandLineArguments Arguments { get; private set; }
 
+        /// <summary>
+        /// Gets a list of generator settings for which bindings should be generated.
+        /// </summary>
         private static readonly List<IGeneratorSettings> Generators = new List<IGeneratorSettings>();
 
+        /// <summary>
+        /// Gets a dictionary of cached profiles that have been read from signature files.
+        /// </summary>
         private static readonly ConcurrentDictionary<string, IReadOnlyList<ApiProfile>> _cachedProfiles =
             new ConcurrentDictionary<string, IReadOnlyList<ApiProfile>>();
 
+        /// <summary>
+        /// Gets a dictionary of cached typemaps that have been read from file.
+        /// </summary>
         private static readonly ConcurrentDictionary<string, IReadOnlyDictionary<TypeSignature, TypeSignature>> _cachedTypemaps =
             new ConcurrentDictionary<string, IReadOnlyDictionary<TypeSignature, TypeSignature>>();
 
+        /// <summary>
+        /// The main entry point of the application.
+        /// </summary>
+        /// <param name="args">A set of command-line arguments and switches to be parsed.</param>
+        /// <returns>An integer, indicating success or failure. On a failure, a nonzero value is returned.</returns>
         private static async Task<int> Main(string[] args)
         {
             Console.WriteLine($"OpenGL binding generator {Assembly.GetExecutingAssembly().GetName().Version} for OpenTK.");
@@ -71,6 +86,12 @@ namespace Bind
             return 0;
         }
 
+        /// <summary>
+        /// Asynchronously generates bindings for the API described by the given <see cref="IGeneratorSettings"/>
+        /// object.
+        /// </summary>
+        /// <param name="generatorSettings">The settings describing the API.</param>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         private static async Task GenerateBindingsAsync([NotNull] IGeneratorSettings generatorSettings)
         {
             var signaturePath = Path.Combine(Arguments.InputPath, generatorSettings.SpecificationFile);
@@ -128,10 +149,13 @@ namespace Bind
 
             var overloadedProfile = OverloadBaker.BakeOverloads(mappedProfile);
 
-            var bindingsWriter = new BindingsWriterAsync(generatorSettings, overloadedProfile, bakedDocs);
+            var bindingsWriter = new BindingWriter(generatorSettings, overloadedProfile, bakedDocs);
             await bindingsWriter.WriteBindingsAsync();
         }
 
+        /// <summary>
+        /// Populates the <see cref="Generators"/> field with the generators relevant for the current run.
+        /// </summary>
         private static void CreateGenerators()
         {
             if (Arguments.TargetAPIs.Contains(TargetAPI.All))

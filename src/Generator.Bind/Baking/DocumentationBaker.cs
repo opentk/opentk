@@ -20,9 +20,16 @@ namespace Bind.Baking
     /// </summary>
     public class DocumentationBaker
     {
+        /// <summary>
+        /// Gets the <see cref="ApiProfile"/> that is relevant for the documentation set. Typically, this is a coalesced
+        /// profile from a previous stage.
+        /// </summary>
         [NotNull]
         private readonly ApiProfile _apiProfile;
 
+        /// <summary>
+        /// Gets an identifier translator, used for resolving referenced methods and enumerations.
+        /// </summary>
         private readonly NativeIdentifierTranslator _identifierTranslator;
 
         /// <summary>

@@ -92,7 +92,7 @@ namespace Bind.Generators
         string APITypemap { get; }
 
         /// <summary>
-        /// Gets the versions to generate for.
+        /// Gets the range of versions that should be included in the generation.
         /// </summary>
         [NotNull]
         VersionRange Versions { get; }

@@ -9,12 +9,15 @@ namespace Bind.Builders
     /// </summary>
     public class ParameterSignatureBuilder
     {
+        [NotNull]
         private string _newName;
 
+        [NotNull]
         private TypeSignature _newType;
 
         private FlowDirection _newFlow;
 
+        [CanBeNull]
         private CountSignature _newCount;
 
         /// <summary>
@@ -35,7 +38,7 @@ namespace Bind.Builders
         /// <param name="newName">The new name.</param>
         /// <returns>The builder, with the change applied.</returns>
         [NotNull]
-        public ParameterSignatureBuilder WithName(string newName)
+        public ParameterSignatureBuilder WithName([NotNull] string newName)
         {
             _newName = newName;
             return this;
@@ -47,7 +50,7 @@ namespace Bind.Builders
         /// <param name="newType">The new type.</param>
         /// <returns>The builder, with the change applied.</returns>
         [NotNull]
-        public ParameterSignatureBuilder WithType(TypeSignature newType)
+        public ParameterSignatureBuilder WithType([NotNull] TypeSignature newType)
         {
             _newType = newType;
             return this;
@@ -71,7 +74,7 @@ namespace Bind.Builders
         /// <param name="newCount">The new count.</param>
         /// <returns>The builder, with the change applied.</returns>
         [NotNull]
-        public ParameterSignatureBuilder WithCount(CountSignature newCount)
+        public ParameterSignatureBuilder WithCount([CanBeNull] CountSignature newCount)
         {
             _newCount = newCount;
             return this;

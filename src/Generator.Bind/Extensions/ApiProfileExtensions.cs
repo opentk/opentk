@@ -11,6 +11,10 @@ namespace Bind.Extensions
     /// </summary>
     public static class ApiProfileExtensions
     {
+        /// <summary>
+        /// Gets a dictionary of profile names, mapping to human-friendly names.
+        /// </summary>
+        [NotNull]
         private static IDictionary<string, string> FriendlyNames = new Dictionary<string, string>
         {
             { "gl", "OpenGL (Compatibility Profile)" },

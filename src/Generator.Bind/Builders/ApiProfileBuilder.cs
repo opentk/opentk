@@ -12,14 +12,19 @@ namespace Bind.Builders
     /// </summary>
     public class ApiProfileBuilder
     {
+        [NotNull]
         private string _newName;
 
+        [NotNull]
         private VersionRange _newVersions;
 
+        [NotNull]
         private IReadOnlyList<FunctionSignature> _newNativeSignatures;
 
+        [NotNull]
         private IReadOnlyList<FunctionSignature> _newOverloads;
 
+        [NotNull]
         private IReadOnlyList<EnumerationSignature> _newEnumerations;
 
         /// <summary>

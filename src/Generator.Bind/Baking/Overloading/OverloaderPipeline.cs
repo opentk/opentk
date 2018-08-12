@@ -11,7 +11,10 @@ namespace Bind.Baking.Overloading
     /// </summary>
     public class OverloaderPipeline
     {
-        private IReadOnlyList<IFunctionOverloader> _pipeline;
+        /// <summary>
+        /// Gets the base pipeline of overloaders.
+        /// </summary>
+        private readonly IReadOnlyList<IFunctionOverloader> _pipeline;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="OverloaderPipeline"/> class.

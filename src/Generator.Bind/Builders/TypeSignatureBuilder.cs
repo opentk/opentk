@@ -8,6 +8,7 @@ namespace Bind.Builders
     /// </summary>
     public sealed class TypeSignatureBuilder
     {
+        [NotNull]
         private string _newName;
 
         private int _newIndirectionLevel;
@@ -35,7 +36,7 @@ namespace Bind.Builders
         /// <param name="newName">The new name.</param>
         /// <returns>The builder, with the name.</returns>
         [NotNull]
-        public TypeSignatureBuilder WithName(string newName)
+        public TypeSignatureBuilder WithName([NotNull] string newName)
         {
             _newName = newName;
             return this;

@@ -30,11 +30,17 @@ namespace Bind.Baking
     /// </summary>
     public class ProfileBaker
     {
+        /// <summary>
+        /// Gets the set of profiles to bake.
+        /// </summary>
         [NotNull, ItemNotNull]
-        private IReadOnlyList<ApiProfile> _profiles;
+        private readonly IReadOnlyList<ApiProfile> _profiles;
 
+        /// <summary>
+        /// Gets the set of overrides to bake into the profiles.
+        /// </summary>
         [NotNull, ItemNotNull]
-        private IReadOnlyList<ApiProfileOverride> _overrides;
+        private readonly IReadOnlyList<ApiProfileOverride> _overrides;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ProfileBaker"/> class.

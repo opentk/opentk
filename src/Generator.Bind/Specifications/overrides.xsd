@@ -183,11 +183,6 @@
                     <xs:documentation>The name of the token to use.</xs:documentation>
                   </xs:annotation>
                 </xs:attribute>
-                <xs:attribute name ="optional" type="xs:boolean">
-                  <xs:annotation>
-                    <xs:documentation>Whether or not the token may be excluded if it is not found.</xs:documentation>
-                  </xs:annotation>
-                </xs:attribute>
               </xs:complexType>
             </xs:element>
           </xs:sequence>
