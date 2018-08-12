@@ -498,7 +498,7 @@ namespace Bind.Baking
 
         /// <summary>
         /// Resolves all external token references in the override enumerations, recursively searching for them as
-        /// needed. This method modifies the contents of the <see cref="coalescedOverrides"/> parameter.
+        /// needed. This method modifies the contents of the <paramref name="coalescedOverrides"/> parameter.
         /// </summary>
         /// <param name="coalescedOverrides">The override profile to resolve the enumerations in.</param>
         /// <param name="coalescedProfile">The profile that the overrides are applicable to.</param>

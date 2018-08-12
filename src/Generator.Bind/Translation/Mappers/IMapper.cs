@@ -16,7 +16,7 @@ namespace Bind.Translation.Mappers
         bool HasMapping([NotNull] TInput input);
 
         /// <summary>
-        /// Maps the given <see cref="TInput"/> to another.
+        /// Maps the given <typeparamref name="TInput"/> to another.
         /// </summary>
         /// <param name="input">The instance to map.</param>
         /// <returns>The mapped instance.</returns>
