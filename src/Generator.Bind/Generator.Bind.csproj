@@ -3,7 +3,7 @@
     <OutputType>Exe</OutputType>
     <AssemblyName>Bind</AssemblyName>
     <RootNamespace>Bind</RootNamespace>
-    <TargetFramework>net461</TargetFramework>
+    <TargetFrameworks>net461;netcoreapp20;netstandard20</TargetFrameworks>
   </PropertyGroup>
 
   <PropertyGroup>

@@ -145,7 +145,7 @@ namespace Bind.Writers
             var createConstructorFileTask = CreateWrapperClassConstructorFileAsync(wrappersOutputDirectory);
             var extensionWriteTasks = extensionNames.Select(extensionName => WriteExtensionWrapperFiles(extensionName, wrappersOutputDirectory));
 
-            var tasks = extensionWriteTasks.Append(createConstructorFileTask);
+            var tasks = AppendExtension.Append(extensionWriteTasks, createConstructorFileTask);
             return Task.WhenAll(tasks);
         }
 

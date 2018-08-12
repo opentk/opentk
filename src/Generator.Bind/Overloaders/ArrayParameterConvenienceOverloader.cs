@@ -74,7 +74,7 @@ namespace Bind.Overloaders
             var arrayParameterType = arrayParameter.Type;
 
             var newName = function.Name.Singularize(false);
-            var newParameters = new List<ParameterSignature>(function.Parameters).SkipLast(2).ToList();
+            var newParameters = SkipLastExtension.SkipLast(new List<ParameterSignature>(function.Parameters), 2).ToList();
 
             var newArrayParameterType = new TypeSignatureBuilder(arrayParameterType)
                 .WithArrayDimensions(0)

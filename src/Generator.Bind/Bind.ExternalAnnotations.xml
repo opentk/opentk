@@ -157,15 +157,24 @@
   </member>
   <member name="M:Bind.Builders.ParameterSignatureBuilder.WithCount(Bind.XML.Signatures.Functions.CountSignature)">
     <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+    <parameter name="newCount">
+      <attribute ctor="M:JetBrains.Annotations.CanBeNullAttribute.#ctor" />
+    </parameter>
   </member>
   <member name="M:Bind.Builders.ParameterSignatureBuilder.WithFlow(Bind.XML.Signatures.FlowDirection)">
     <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
   </member>
   <member name="M:Bind.Builders.ParameterSignatureBuilder.WithName(System.String)">
     <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+    <parameter name="newName">
+      <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+    </parameter>
   </member>
   <member name="M:Bind.Builders.ParameterSignatureBuilder.WithType(Bind.XML.Signatures.Functions.TypeSignature)">
     <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+    <parameter name="newType">
+      <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+    </parameter>
   </member>
   <member name="M:Bind.Builders.TypeSignatureBuilder.#ctor(Bind.XML.Signatures.Functions.TypeSignature)">
     <parameter name="typeSignature">
@@ -189,6 +198,9 @@
   </member>
   <member name="M:Bind.Builders.TypeSignatureBuilder.WithName(System.String)">
     <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+    <parameter name="newName">
+      <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+    </parameter>
   </member>
   <member name="M:Bind.Extensions.ApiProfileExtensions.GetFriendlyName(Bind.XML.IApiProfile)">
     <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
@@ -545,7 +557,7 @@
   <member name="P:Bind.XML.Overrides.Enumerations.ReuseEnumerationOverride.Enumeration">
     <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
   </member>
-  <member name="M:Bind.XML.Overrides.Enumerations.UseTokenOverride.#ctor(System.String,System.String,System.Boolean)">
+  <member name="M:Bind.XML.Overrides.Enumerations.UseTokenOverride.#ctor(System.String,System.String)">
     <parameter name="token">
       <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
     </parameter>
