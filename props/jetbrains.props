@@ -4,10 +4,10 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <Content Include="$(AssemblyName).ExternalAnnotations.xml">
+        <AdditionalFiles Include="$(AssemblyName).ExternalAnnotations.xml">
             <InProject>false</InProject>
             <CopyToOutputDirectory>CopyIfNewer</CopyToOutputDirectory>
-        </Content>
+        </AdditionalFiles>
     </ItemGroup>
 
     <ItemGroup>
