@@ -29,7 +29,7 @@ using System.IO;
 using System.Linq;
 using Bind.Generators.Bases;
 
-namespace Bind.Generators.GL2
+namespace Bind.Generators.GL.Compatibility
 {
     /// <summary>
     /// Generates API bindings for the OpenGL 2 API.

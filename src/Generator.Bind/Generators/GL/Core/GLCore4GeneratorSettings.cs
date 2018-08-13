@@ -28,7 +28,7 @@ using System.Linq;
 using Bind.Generators.Bases;
 using JetBrains.Annotations;
 
-namespace Bind.Generators.GL2
+namespace Bind.Generators.GL.Core
 {
     /// <summary>
     /// Generates API bindings for the OpenGL 4 API.
