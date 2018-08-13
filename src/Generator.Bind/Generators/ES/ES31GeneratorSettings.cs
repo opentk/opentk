@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using Bind.Generators.Bases;
 using Bind.Versioning;
 
 namespace Bind.Generators.ES
@@ -8,10 +9,12 @@ namespace Bind.Generators.ES
     /// <summary>
     /// Generates API bindings for the OpenGL ES 3.1 API.
     /// </summary>
-    internal class ES31GeneratorSettings : GeneratorSettingsBase
+    internal class ES31GeneratorSettings : OpenGLGeneratorSettingsBase
     {
-        /// <inheritdoc/>
-        public override string APIIdentifier => "ES31";
+        /// <summary>
+        /// Gets a short-name identifier for the API.
+        /// </summary>
+        private const string APIIdentifier = "ES31";
 
         /// <inheritdoc/>
         public override string OutputSubfolder => APIIdentifier;

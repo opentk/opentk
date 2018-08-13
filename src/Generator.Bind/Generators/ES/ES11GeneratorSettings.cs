@@ -1,15 +1,18 @@
 ﻿using System.IO;
 using System.Linq;
+using Bind.Generators.Bases;
 
 namespace Bind.Generators.ES
 {
     /// <summary>
     /// Generates API bindings for OpenGL ES 1.1.
     /// </summary>
-    internal class ES11GeneratorSettings : GeneratorSettingsBase
+    internal class ES11GeneratorSettings : OpenGLGeneratorSettingsBase
     {
-        /// <inheritdoc/>
-        public override string APIIdentifier => "ES11";
+        /// <summary>
+        /// Gets a short-name identifier for the API.
+        /// </summary>
+        private const string APIIdentifier = "ES11";
 
         /// <inheritdoc/>
         public override string OutputSubfolder => APIIdentifier;

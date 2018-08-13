@@ -14,12 +14,6 @@ namespace Bind.Generators
     internal interface IGeneratorSettings
     {
         /// <summary>
-        /// Gets a short-name identifier for the API (such as GL, GL4, ES10, etc).
-        /// </summary>
-        [NotNull]
-        string APIIdentifier { get; }
-
-        /// <summary>
         /// Gets the namespace that the output classes and enums should live in.
         /// </summary>
         [NotNull]

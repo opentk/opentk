@@ -1,0 +1,43 @@
+/* Copyright (c) 2006, 2007 Stefanos Apostolopoulos
+ * See license.txt for license info
+ */
+
+using System.Collections.Generic;
+using System.IO;
+using Bind.Versioning;
+
+namespace Bind.Generators.Bases
+{
+    /// <summary>
+    /// Base class for OpenGL API generators.
+    /// </summary>
+    internal abstract class OpenGLGeneratorSettingsBase : GeneratorSettingsBase
+    {
+        /// <inheritdoc/>
+        public override string OutputSubfolder => "OpenGL";
+
+        /// <inheritdoc/>
+        public override string Namespace => "OpenTK.Graphics.OpenGL";
+
+        /// <inheritdoc/>
+        public override string ClassName => "GL";
+
+        /// <inheritdoc/>
+        public override string FunctionPrefix => "gl";
+
+        /// <inheritdoc/>
+        public override string ConstantPrefix => "GL_";
+
+        /// <inheritdoc/>
+        public override string APITypemap => Path.Combine("GL2", "gl.tm");
+
+        /// <inheritdoc/>
+        public override string SpecificationFile => Path.Combine("GL2", "signatures.xml");
+
+        /// <inheritdoc/>
+        public override string BaseProfileName => null;
+
+        /// <inheritdoc />
+        public override VersionRange Versions => new VersionRange();
+    }
+}

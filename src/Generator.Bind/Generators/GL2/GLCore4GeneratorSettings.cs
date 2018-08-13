@@ -25,6 +25,7 @@
 
 using System.IO;
 using System.Linq;
+using Bind.Generators.Bases;
 using JetBrains.Annotations;
 
 namespace Bind.Generators.GL2
@@ -32,11 +33,8 @@ namespace Bind.Generators.GL2
     /// <summary>
     /// Generates API bindings for the OpenGL 4 API.
     /// </summary>
-    internal class GLCore4GeneratorSettings : GeneratorSettingsBase
+    internal class GLCore4GeneratorSettings : OpenGLGeneratorSettingsBase
     {
-        /// <inheritdoc/>
-        public override string APIIdentifier => "GL4";
-
         /// <inheritdoc/>
         public override string OutputSubfolder => "OpenGL4";
 

@@ -27,19 +27,20 @@
 
 using System.IO;
 using System.Linq;
+using Bind.Generators.Bases;
 
 namespace Bind.Generators.GL2
 {
     /// <summary>
     /// Generates API bindings for the OpenGL 2 API.
     /// </summary>
-    internal class GL2GeneratorSettings : GeneratorSettingsBase
+    internal class GL2GeneratorSettings : OpenGLGeneratorSettingsBase
     {
         /// <inheritdoc/>
-        public override string APIIdentifier => "GL2";
+        public override string SpecificationDocumentationPath => "gl4";
 
         /// <inheritdoc/>
-        public override string SpecificationDocumentationPath => "gl4";
+        public override string ProfileName => "gl";
 
         /// <summary>
         /// Initializes a new instance of the <see cref="GL2GeneratorSettings"/> class.
