@@ -5,8 +5,9 @@
 
     <ItemGroup>
         <AdditionalFiles Include="$(AssemblyName).ExternalAnnotations.xml">
+            <Visible>false</Visible>
             <InProject>false</InProject>
-            <CopyToOutputDirectory>CopyIfNewer</CopyToOutputDirectory>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </AdditionalFiles>
     </ItemGroup>
 
