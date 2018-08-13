@@ -30,20 +30,5 @@ namespace Bind.Generators.ES
 
         /// <inheritdoc/>
         public override VersionRange Versions => new VersionRange(new Version(1, 0));
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ES10GeneratorSettings"/> class.
-        /// </summary>
-        public ES10GeneratorSettings()
-        {
-            var overrideFileDirectoryPath = Path.Combine(Program.Arguments.InputPath, "OpenGL", "GL");
-            var extraOverrides = Directory.GetFiles(overrideFileDirectoryPath, "*.xml", SearchOption.AllDirectories);
-
-            OverrideFiles = new[]
-            {
-                Path.Combine(Program.Arguments.InputPath, "OpenGL", "overrides.xml")
-            }
-            .Concat(extraOverrides);
-        }
     }
 }

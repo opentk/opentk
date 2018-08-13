@@ -41,20 +41,5 @@ namespace Bind.Generators.GL.Compatibility
 
         /// <inheritdoc/>
         public override string ProfileName => "gl";
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="GL2GeneratorSettings"/> class.
-        /// </summary>
-        public GL2GeneratorSettings()
-        {
-            var overrideFileDirectoryPath = Path.Combine(Program.Arguments.InputPath, "OpenGL", "GL");
-            var extraOverrides = Directory.GetFiles(overrideFileDirectoryPath, "*.xml", SearchOption.AllDirectories);
-
-            OverrideFiles = new[]
-            {
-                Path.Combine(Program.Arguments.InputPath, "OpenGL", "overrides.xml")
-            }
-            .Concat(extraOverrides);
-        }
     }
 }

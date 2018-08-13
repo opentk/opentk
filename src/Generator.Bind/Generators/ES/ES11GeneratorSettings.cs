@@ -28,20 +28,5 @@ namespace Bind.Generators.ES
 
         /// <inheritdoc/>
         public override string ProfileName => "gles1";
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ES11GeneratorSettings"/> class.
-        /// </summary>
-        public ES11GeneratorSettings()
-        {
-            var overrideFileDirectoryPath = Path.Combine(Program.Arguments.InputPath, "OpenGL", "GL");
-            var extraOverrides = Directory.GetFiles(overrideFileDirectoryPath, "*.xml", SearchOption.AllDirectories);
-
-            OverrideFiles = new[]
-            {
-                Path.Combine(Program.Arguments.InputPath, "OpenGL", "overrides.xml")
-            }
-            .Concat(extraOverrides);
-        }
     }
 }

@@ -4,6 +4,7 @@
 
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Bind.Versioning;
 
 namespace Bind.Generators.Bases
@@ -39,5 +40,20 @@ namespace Bind.Generators.Bases
 
         /// <inheritdoc />
         public override VersionRange Versions => new VersionRange();
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="OpenGLGeneratorSettingsBase"/> class.
+        /// </summary>
+        protected OpenGLGeneratorSettingsBase()
+        {
+            var overrideFileDirectoryPath = Path.Combine(Program.Arguments.InputPath, "OpenGL", "GL");
+            var extraOverrides = Directory.GetFiles(overrideFileDirectoryPath, "*.xml", SearchOption.AllDirectories);
+
+            OverrideFiles = new[]
+            {
+                Path.Combine(Program.Arguments.InputPath, "OpenGL", "overrides.xml")
+            }
+            .Concat(extraOverrides);
+        }
     }
 }

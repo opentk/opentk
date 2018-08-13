@@ -50,20 +50,5 @@ namespace Bind.Generators.GL.Core
 
         /// <inheritdoc/>
         public override string SpecificationDocumentationPath => "gl4";
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="GLCore4GeneratorSettings"/> class.
-        /// </summary>
-        public GLCore4GeneratorSettings()
-        {
-            var overrideFileDirectoryPath = Path.Combine(Program.Arguments.InputPath, "OpenGL", "GL");
-            var extraOverrides = Directory.GetFiles(overrideFileDirectoryPath, "*.xml", SearchOption.AllDirectories);
-
-            OverrideFiles = new[]
-            {
-                Path.Combine(Program.Arguments.InputPath, "OpenGL", "overrides.xml")
-            }
-            .Concat(extraOverrides);
-        }
     }
 }
