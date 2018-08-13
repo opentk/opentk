@@ -47,12 +47,12 @@ namespace Bind.Generators.GL.Compatibility
         /// </summary>
         public GL2GeneratorSettings()
         {
-            var overrideFileDirectoryPath = Path.Combine(Program.Arguments.InputPath, "GL2", "GL");
+            var overrideFileDirectoryPath = Path.Combine(Program.Arguments.InputPath, "OpenGL", "GL");
             var extraOverrides = Directory.GetFiles(overrideFileDirectoryPath, "*.xml", SearchOption.AllDirectories);
 
             OverrideFiles = new[]
             {
-                Path.Combine(Program.Arguments.InputPath, "GL2", "overrides.xml")
+                Path.Combine(Program.Arguments.InputPath, "OpenGL", "overrides.xml")
             }
             .Concat(extraOverrides);
         }

@@ -36,12 +36,12 @@ namespace Bind.Generators.ES
         /// </summary>
         public ES31GeneratorSettings()
         {
-            var overrideFileDirectoryPath = Path.Combine(Program.Arguments.InputPath, "GL2", "ES", "3.1");
+            var overrideFileDirectoryPath = Path.Combine(Program.Arguments.InputPath, "OpenGL", "ES", "3.1");
             var extraOverrides = Directory.GetFiles(overrideFileDirectoryPath, "*.xml", SearchOption.AllDirectories);
 
             OverrideFiles = new[]
             {
-                Path.Combine(Program.Arguments.InputPath, "GL2", "overrides.xml")
+                Path.Combine(Program.Arguments.InputPath, "OpenGL", "overrides.xml")
             }
             .Concat(extraOverrides);
         }

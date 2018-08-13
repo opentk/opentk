@@ -37,7 +37,7 @@ namespace Bind.Generators.ES
         {
             OverrideFiles = new[]
             {
-                Path.Combine(Program.Arguments.InputPath, "GL2", "overrides.xml")
+                Path.Combine(Program.Arguments.InputPath, "OpenGL", "overrides.xml")
             };
         }
     }

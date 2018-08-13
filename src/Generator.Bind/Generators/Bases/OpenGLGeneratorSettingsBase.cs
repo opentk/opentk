@@ -29,10 +29,10 @@ namespace Bind.Generators.Bases
         public override string ConstantPrefix => "GL_";
 
         /// <inheritdoc/>
-        public override string APITypemap => Path.Combine("GL2", "gl.tm");
+        public override string APITypemap => Path.Combine("OpenGL", "gl.tm");
 
         /// <inheritdoc/>
-        public override string SpecificationFile => Path.Combine("GL2", "signatures.xml");
+        public override string SpecificationFile => Path.Combine("OpenGL", "signatures.xml");
 
         /// <inheritdoc/>
         public override string BaseProfileName => null;
