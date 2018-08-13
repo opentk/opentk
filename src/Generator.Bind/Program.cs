@@ -165,8 +165,8 @@ namespace Bind
                 Generators.Add(new GLCore4GeneratorSettings());
                 Generators.Add(new ES10GeneratorSettings());
                 Generators.Add(new ES11GeneratorSettings());
-                Generators.Add(new ES2GeneratorSettings());
-                Generators.Add(new ES3GeneratorSettings());
+                Generators.Add(new ES20GeneratorSettings());
+                Generators.Add(new ES30GeneratorSettings());
                 Generators.Add(new ES31GeneratorSettings());
             }
             else
@@ -198,12 +198,12 @@ namespace Bind
                         }
                         case TargetAPI.ES20:
                         {
-                            Generators.Add(new ES2GeneratorSettings());
+                            Generators.Add(new ES20GeneratorSettings());
                             break;
                         }
                         case TargetAPI.ES30:
                         {
-                            Generators.Add(new ES3GeneratorSettings());
+                            Generators.Add(new ES30GeneratorSettings());
                             break;
                         }
                         case TargetAPI.ES31:
