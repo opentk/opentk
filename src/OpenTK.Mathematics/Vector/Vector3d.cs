@@ -270,11 +270,11 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Subtract one Vector from another
+        /// Subtract one Vector from another.
         /// </summary>
-        /// <param name="a">First operand</param>
-        /// <param name="b">Second operand</param>
-        /// <returns>Result of subtraction</returns>
+        /// <param name="a">First operand.</param>
+        /// <param name="b">Second operand.</param>
+        /// <returns>Result of subtraction.</returns>
         public static Vector3d Subtract(Vector3d a, Vector3d b)
         {
             Subtract(ref a, ref b, out a);
@@ -282,11 +282,11 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Subtract one Vector from another
+        /// Subtract one Vector from another.
         /// </summary>
-        /// <param name="a">First operand</param>
-        /// <param name="b">Second operand</param>
-        /// <param name="result">Result of subtraction</param>
+        /// <param name="a">First operand.</param>
+        /// <param name="b">Second operand.</param>
+        /// <param name="result">Result of subtraction.</param>
         public static void Subtract(ref Vector3d a, ref Vector3d b, out Vector3d result)
         {
             result.X = a.X - b.X;
@@ -397,9 +397,9 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Returns a vector created from the smallest of the corresponding components of the given vectors.
         /// </summary>
-        /// <param name="a">First operand</param>
-        /// <param name="b">Second operand</param>
-        /// <returns>The component-wise minimum</returns>
+        /// <param name="a">First operand.</param>
+        /// <param name="b">Second operand.</param>
+        /// <returns>The component-wise minimum.</returns>
         public static Vector3d ComponentMin(Vector3d a, Vector3d b)
         {
             a.X = a.X < b.X ? a.X : b.X;
@@ -411,9 +411,9 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Returns a vector created from the smallest of the corresponding components of the given vectors.
         /// </summary>
-        /// <param name="a">First operand</param>
-        /// <param name="b">Second operand</param>
-        /// <param name="result">The component-wise minimum</param>
+        /// <param name="a">First operand.</param>
+        /// <param name="b">Second operand.</param>
+        /// <param name="result">The component-wise minimum.</param>
         public static void ComponentMin(ref Vector3d a, ref Vector3d b, out Vector3d result)
         {
             result.X = a.X < b.X ? a.X : b.X;
@@ -424,9 +424,9 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Returns a vector created from the largest of the corresponding components of the given vectors.
         /// </summary>
-        /// <param name="a">First operand</param>
-        /// <param name="b">Second operand</param>
-        /// <returns>The component-wise maximum</returns>
+        /// <param name="a">First operand.</param>
+        /// <param name="b">Second operand.</param>
+        /// <returns>The component-wise maximum.</returns>
         public static Vector3d ComponentMax(Vector3d a, Vector3d b)
         {
             a.X = a.X > b.X ? a.X : b.X;
@@ -438,9 +438,9 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Returns a vector created from the largest of the corresponding components of the given vectors.
         /// </summary>
-        /// <param name="a">First operand</param>
-        /// <param name="b">Second operand</param>
-        /// <param name="result">The component-wise maximum</param>
+        /// <param name="a">First operand.</param>
+        /// <param name="b">Second operand.</param>
+        /// <param name="result">The component-wise maximum.</param>
         public static void ComponentMax(ref Vector3d a, ref Vector3d b, out Vector3d result)
         {
             result.X = a.X > b.X ? a.X : b.X;
@@ -449,55 +449,55 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Returns the Vector3d with the minimum magnitude
+        /// Returns the Vector3d with the minimum magnitude.
         /// </summary>
-        /// <param name="left">Left operand</param>
-        /// <param name="right">Right operand</param>
-        /// <returns>The minimum Vector3d</returns>
+        /// <param name="left">Left operand.</param>
+        /// <param name="right">Right operand.</param>
+        /// <returns>The minimum Vector3d.</returns>
         public static Vector3d MagnitudeMin(Vector3d left, Vector3d right)
         {
             return left.LengthSquared < right.LengthSquared ? left : right;
         }
 
         /// <summary>
-        /// Returns the Vector3d with the minimum magnitude
+        /// Returns the Vector3d with the minimum magnitude.
         /// </summary>
-        /// <param name="left">Left operand</param>
-        /// <param name="right">Right operand</param>
-        /// <param name="result">The magnitude-wise minimum</param>
+        /// <param name="left">Left operand.</param>
+        /// <param name="right">Right operand.</param>
+        /// <param name="result">The magnitude-wise minimum.</param>
         public static void MagnitudeMin(ref Vector3d left, ref Vector3d right, out Vector3d result)
         {
             result = left.LengthSquared < right.LengthSquared ? left : right;
         }
 
         /// <summary>
-        /// Returns the Vector3d with the minimum magnitude
+        /// Returns the Vector3d with the minimum magnitude.
         /// </summary>
-        /// <param name="left">Left operand</param>
-        /// <param name="right">Right operand</param>
-        /// <returns>The minimum Vector3d</returns>
+        /// <param name="left">Left operand.</param>
+        /// <param name="right">Right operand.</param>
+        /// <returns>The minimum Vector3d.</returns>
         public static Vector3d MagnitudeMax(Vector3d left, Vector3d right)
         {
             return left.LengthSquared >= right.LengthSquared ? left : right;
         }
 
         /// <summary>
-        /// Returns the Vector3d with the maximum magnitude
+        /// Returns the Vector3d with the maximum magnitude.
         /// </summary>
-        /// <param name="left">Left operand</param>
-        /// <param name="right">Right operand</param>
-        /// <param name="result">The magnitude-wise maximum</param>
+        /// <param name="left">Left operand.</param>
+        /// <param name="right">Right operand.</param>
+        /// <param name="result">The magnitude-wise maximum.</param>
         public static void MagnitudeMax(ref Vector3d left, ref Vector3d right, out Vector3d result)
         {
             result = left.LengthSquared >= right.LengthSquared ? left : right;
         }
 
         /// <summary>
-        /// Returns the Vector3d with the minimum magnitude
+        /// Returns the Vector3d with the minimum magnitude.
         /// </summary>
-        /// <param name="left">Left operand</param>
-        /// <param name="right">Right operand</param>
-        /// <returns>The minimum Vector3</returns>
+        /// <param name="left">Left operand.</param>
+        /// <param name="right">Right operand.</param>
+        /// <returns>The minimum Vector3.</returns>
         [Obsolete("Use MagnitudeMin() instead.")]
         public static Vector3d Min(Vector3d left, Vector3d right)
         {
@@ -505,11 +505,11 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Returns the Vector3d with the minimum magnitude
+        /// Returns the Vector3d with the minimum magnitude.
         /// </summary>
-        /// <param name="left">Left operand</param>
-        /// <param name="right">Right operand</param>
-        /// <returns>The minimum Vector3</returns>
+        /// <param name="left">Left operand.</param>
+        /// <param name="right">Right operand.</param>
+        /// <returns>The minimum Vector3.</returns>
         [Obsolete("Use MagnitudeMax() instead.")]
         public static Vector3d Max(Vector3d left, Vector3d right)
         {
@@ -517,12 +517,12 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Clamp a vector to the given minimum and maximum vectors
+        /// Clamp a vector to the given minimum and maximum vectors.
         /// </summary>
-        /// <param name="vec">Input vector</param>
-        /// <param name="min">Minimum vector</param>
-        /// <param name="max">Maximum vector</param>
-        /// <returns>The clamped vector</returns>
+        /// <param name="vec">Input vector.</param>
+        /// <param name="min">Minimum vector.</param>
+        /// <param name="max">Maximum vector.</param>
+        /// <returns>The clamped vector.</returns>
         public static Vector3d Clamp(Vector3d vec, Vector3d min, Vector3d max)
         {
             vec.X = vec.X < min.X ? min.X : vec.X > max.X ? max.X : vec.X;
@@ -532,12 +532,12 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Clamp a vector to the given minimum and maximum vectors
+        /// Clamp a vector to the given minimum and maximum vectors.
         /// </summary>
-        /// <param name="vec">Input vector</param>
-        /// <param name="min">Minimum vector</param>
-        /// <param name="max">Maximum vector</param>
-        /// <param name="result">The clamped vector</param>
+        /// <param name="vec">Input vector.</param>
+        /// <param name="min">Minimum vector.</param>
+        /// <param name="max">Maximum vector.</param>
+        /// <param name="result">The clamped vector.</param>
         public static void Clamp(ref Vector3d vec, ref Vector3d min, ref Vector3d max, out Vector3d result)
         {
             result.X = vec.X < min.X ? min.X : vec.X > max.X ? max.X : vec.X;
@@ -548,9 +548,9 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Compute the euclidean distance between two vectors.
         /// </summary>
-        /// <param name="vec1">The first vector</param>
-        /// <param name="vec2">The second vector</param>
-        /// <returns>The distance</returns>
+        /// <param name="vec1">The first vector.</param>
+        /// <param name="vec2">The second vector.</param>
+        /// <returns>The distance.</returns>
         public static double Distance(Vector3d vec1, Vector3d vec2)
         {
             Distance(ref vec1, ref vec2, out double result);
@@ -560,9 +560,9 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Compute the euclidean distance between two vectors.
         /// </summary>
-        /// <param name="vec1">The first vector</param>
-        /// <param name="vec2">The second vector</param>
-        /// <param name="result">The distance</param>
+        /// <param name="vec1">The first vector.</param>
+        /// <param name="vec2">The second vector.</param>
+        /// <param name="result">The distance.</param>
         public static void Distance(ref Vector3d vec1, ref Vector3d vec2, out double result)
         {
             result = Math.Sqrt(((vec2.X - vec1.X) * (vec2.X - vec1.X)) + ((vec2.Y - vec1.Y) * (vec2.Y - vec1.Y)) +
@@ -572,9 +572,9 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Compute the squared euclidean distance between two vectors.
         /// </summary>
-        /// <param name="vec1">The first vector</param>
-        /// <param name="vec2">The second vector</param>
-        /// <returns>The squared distance</returns>
+        /// <param name="vec1">The first vector.</param>
+        /// <param name="vec2">The second vector.</param>
+        /// <returns>The squared distance.</returns>
         public static double DistanceSquared(Vector3d vec1, Vector3d vec2)
         {
             DistanceSquared(ref vec1, ref vec2, out double result);
@@ -584,9 +584,9 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Compute the squared euclidean distance between two vectors.
         /// </summary>
-        /// <param name="vec1">The first vector</param>
-        /// <param name="vec2">The second vector</param>
-        /// <param name="result">The squared distance</param>
+        /// <param name="vec1">The first vector.</param>
+        /// <param name="vec2">The second vector.</param>
+        /// <param name="result">The squared distance.</param>
         public static void DistanceSquared(ref Vector3d vec1, ref Vector3d vec2, out double result)
         {
             result = ((vec2.X - vec1.X) * (vec2.X - vec1.X)) + ((vec2.Y - vec1.Y) * (vec2.Y - vec1.Y)) +
@@ -594,10 +594,10 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Scale a vector to unit length
+        /// Scale a vector to unit length.
         /// </summary>
-        /// <param name="vec">The input vector</param>
-        /// <returns>The normalized vector</returns>
+        /// <param name="vec">The input vector.</param>
+        /// <returns>The normalized vector.</returns>
         public static Vector3d Normalize(Vector3d vec)
         {
             var scale = 1.0 / vec.Length;
@@ -608,10 +608,10 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Scale a vector to unit length
+        /// Scale a vector to unit length.
         /// </summary>
-        /// <param name="vec">The input vector</param>
-        /// <param name="result">The normalized vector</param>
+        /// <param name="vec">The input vector.</param>
+        /// <param name="result">The normalized vector.</param>
         public static void Normalize(ref Vector3d vec, out Vector3d result)
         {
             var scale = 1.0 / vec.Length;
@@ -621,10 +621,10 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Scale a vector to approximately unit length
+        /// Scale a vector to approximately unit length.
         /// </summary>
-        /// <param name="vec">The input vector</param>
-        /// <returns>The normalized vector</returns>
+        /// <param name="vec">The input vector.</param>
+        /// <returns>The normalized vector.</returns>
         public static Vector3d NormalizeFast(Vector3d vec)
         {
             var scale = MathHelper.InverseSqrtFast((vec.X * vec.X) + (vec.Y * vec.Y) + (vec.Z * vec.Z));
@@ -635,10 +635,10 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Scale a vector to approximately unit length
+        /// Scale a vector to approximately unit length.
         /// </summary>
-        /// <param name="vec">The input vector</param>
-        /// <param name="result">The normalized vector</param>
+        /// <param name="vec">The input vector.</param>
+        /// <param name="result">The normalized vector.</param>
         public static void NormalizeFast(ref Vector3d vec, out Vector3d result)
         {
             var scale = MathHelper.InverseSqrtFast((vec.X * vec.X) + (vec.Y * vec.Y) + (vec.Z * vec.Z));
@@ -648,33 +648,33 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Calculate the dot (scalar) product of two vectors
+        /// Calculate the dot (scalar) product of two vectors.
         /// </summary>
-        /// <param name="left">First operand</param>
-        /// <param name="right">Second operand</param>
-        /// <returns>The dot product of the two inputs</returns>
+        /// <param name="left">First operand.</param>
+        /// <param name="right">Second operand.</param>
+        /// <returns>The dot product of the two inputs.</returns>
         public static double Dot(Vector3d left, Vector3d right)
         {
             return (left.X * right.X) + (left.Y * right.Y) + (left.Z * right.Z);
         }
 
         /// <summary>
-        /// Calculate the dot (scalar) product of two vectors
+        /// Calculate the dot (scalar) product of two vectors.
         /// </summary>
-        /// <param name="left">First operand</param>
-        /// <param name="right">Second operand</param>
-        /// <param name="result">The dot product of the two inputs</param>
+        /// <param name="left">First operand.</param>
+        /// <param name="right">Second operand.</param>
+        /// <param name="result">The dot product of the two inputs.</param>
         public static void Dot(ref Vector3d left, ref Vector3d right, out double result)
         {
             result = (left.X * right.X) + (left.Y * right.Y) + (left.Z * right.Z);
         }
 
         /// <summary>
-        /// Caclulate the cross (vector) product of two vectors
+        /// Caclulate the cross (vector) product of two vectors.
         /// </summary>
-        /// <param name="left">First operand</param>
-        /// <param name="right">Second operand</param>
-        /// <returns>The cross product of the two inputs</returns>
+        /// <param name="left">First operand.</param>
+        /// <param name="right">Second operand.</param>
+        /// <returns>The cross product of the two inputs.</returns>
         public static Vector3d Cross(Vector3d left, Vector3d right)
         {
             Cross(ref left, ref right, out Vector3d result);
@@ -682,16 +682,16 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Caclulate the cross (vector) product of two vectors
+        /// Caclulate the cross (vector) product of two vectors.
         /// </summary>
         /// <remarks>
         /// It is incorrect to call this method passing the same variable for
         ///  <paramref name="result"/> as for <paramref name="left"/> or
         ///  <paramref name="right"/>.
         /// </remarks>
-        /// <param name="left">First operand</param>
-        /// <param name="right">Second operand</param>
-        /// <param name="result">The cross product of the two inputs</param>
+        /// <param name="left">First operand.</param>
+        /// <param name="right">Second operand.</param>
+        /// <param name="result">The cross product of the two inputs.</param>
         public static void Cross(ref Vector3d left, ref Vector3d right, out Vector3d result)
         {
             result.X = (left.Y * right.Z) - (left.Z * right.Y);
@@ -700,12 +700,12 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Returns a new Vector that is the linear blend of the 2 given Vectors
+        /// Returns a new Vector that is the linear blend of the 2 given Vectors.
         /// </summary>
-        /// <param name="a">First input vector</param>
-        /// <param name="b">Second input vector</param>
+        /// <param name="a">First input vector.</param>
+        /// <param name="b">Second input vector.</param>
         /// <param name="blend">The blend factor. a when blend=0, b when blend=1.</param>
-        /// <returns>a when blend=0, b when blend=1, and a linear combination otherwise</returns>
+        /// <returns>a when blend=0, b when blend=1, and a linear combination otherwise.</returns>
         public static Vector3d Lerp(Vector3d a, Vector3d b, double blend)
         {
             a.X = (blend * (b.X - a.X)) + a.X;
@@ -715,12 +715,12 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Returns a new Vector that is the linear blend of the 2 given Vectors
+        /// Returns a new Vector that is the linear blend of the 2 given Vectors.
         /// </summary>
-        /// <param name="a">First input vector</param>
-        /// <param name="b">Second input vector</param>
+        /// <param name="a">First input vector.</param>
+        /// <param name="b">Second input vector.</param>
         /// <param name="blend">The blend factor. a when blend=0, b when blend=1.</param>
-        /// <param name="result">a when blend=0, b when blend=1, and a linear combination otherwise</param>
+        /// <param name="result">a when blend=0, b when blend=1, and a linear combination otherwise.</param>
         public static void Lerp(ref Vector3d a, ref Vector3d b, double blend, out Vector3d result)
         {
             result.X = (blend * (b.X - a.X)) + a.X;
@@ -729,21 +729,21 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Interpolate 3 Vectors using Barycentric coordinates
+        /// Interpolate 3 Vectors using Barycentric coordinates.
         /// </summary>
-        /// <param name="a">First input Vector</param>
-        /// <param name="b">Second input Vector</param>
-        /// <param name="c">Third input Vector</param>
-        /// <param name="u">First Barycentric Coordinate</param>
-        /// <param name="v">Second Barycentric Coordinate</param>
-        /// <returns>a when u=v=0, b when u=1,v=0, c when u=0,v=1, and a linear combination of a,b,c otherwise</returns>
+        /// <param name="a">First input Vector.</param>
+        /// <param name="b">Second input Vector.</param>
+        /// <param name="c">Third input Vector.</param>
+        /// <param name="u">First Barycentric Coordinate.</param>
+        /// <param name="v">Second Barycentric Coordinate.</param>
+        /// <returns>a when u=v=0, b when u=1,v=0, c when u=0,v=1, and a linear combination of a,b,c otherwise.</returns>
         public static Vector3d BaryCentric(Vector3d a, Vector3d b, Vector3d c, double u, double v)
         {
             return a + (u * (b - a)) + (v * (c - a));
         }
 
         /// <summary>
-        /// Interpolate 3 Vectors using Barycentric coordinates
+        /// Interpolate 3 Vectors using Barycentric coordinates.
         /// </summary>
         /// <param name="a">First input Vector.</param>
         /// <param name="b">Second input Vector.</param>
@@ -752,7 +752,7 @@ namespace OpenTK.Mathematics
         /// <param name="v">Second Barycentric Coordinate.</param>
         /// <param name="result">
         /// Output Vector. a when u=v=0, b when u=1,v=0, c when u=0,v=1, and a linear combination of a,b,c
-        /// otherwise
+        /// otherwise.
         /// </param>
         public static void BaryCentric
         (
@@ -778,12 +778,12 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Transform a direction vector by the given Matrix
+        /// Transform a direction vector by the given Matrix.
         /// Assumes the matrix has a bottom row of (0,0,0,1), that is the translation part is ignored.
         /// </summary>
-        /// <param name="vec">The vector to transform</param>
-        /// <param name="mat">The desired transformation</param>
-        /// <returns>The transformed vector</returns>
+        /// <param name="vec">The vector to transform.</param>
+        /// <param name="mat">The desired transformation.</param>
+        /// <returns>The transformed vector.</returns>
         public static Vector3d TransformVector(Vector3d vec, Matrix4d mat)
         {
             TransformVector(ref vec, ref mat, out Vector3d result);
@@ -791,16 +791,16 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Transform a direction vector by the given Matrix
+        /// Transform a direction vector by the given Matrix.
         /// Assumes the matrix has a bottom row of (0,0,0,1), that is the translation part is ignored.
         /// </summary>
         /// <remarks>
         /// It is incorrect to call this method passing the same variable for
         ///  <paramref name="result"/> as for <paramref name="vec"/>.
         /// </remarks>
-        /// <param name="vec">The vector to transform</param>
-        /// <param name="mat">The desired transformation</param>
-        /// <param name="result">The transformed vector</param>
+        /// <param name="vec">The vector to transform.</param>
+        /// <param name="mat">The desired transformation.</param>
+        /// <param name="result">The transformed vector.</param>
         public static void TransformVector(ref Vector3d vec, ref Matrix4d mat, out Vector3d result)
         {
             result.X = (vec.X * mat.Row0.X) +
@@ -817,15 +817,15 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Transform a Normal by the given Matrix
+        /// Transform a Normal by the given Matrix.
         /// </summary>
         /// <remarks>
         /// This calculates the inverse of the given matrix, use TransformNormalInverse if you
-        /// already have the inverse to avoid this extra calculation
+        /// already have the inverse to avoid this extra calculation.
         /// </remarks>
-        /// <param name="norm">The normal to transform</param>
-        /// <param name="mat">The desired transformation</param>
-        /// <returns>The transformed normal</returns>
+        /// <param name="norm">The normal to transform.</param>
+        /// <param name="mat">The desired transformation.</param>
+        /// <returns>The transformed normal.</returns>
         public static Vector3d TransformNormal(Vector3d norm, Matrix4d mat)
         {
             mat.Invert();
@@ -833,15 +833,15 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Transform a Normal by the given Matrix
+        /// Transform a Normal by the given Matrix.
         /// </summary>
         /// <remarks>
         /// This calculates the inverse of the given matrix, use TransformNormalInverse if you
-        /// already have the inverse to avoid this extra calculation
+        /// already have the inverse to avoid this extra calculation.
         /// </remarks>
-        /// <param name="norm">The normal to transform</param>
-        /// <param name="mat">The desired transformation</param>
-        /// <param name="result">The transformed normal</param>
+        /// <param name="norm">The normal to transform.</param>
+        /// <param name="mat">The desired transformation.</param>
+        /// <param name="result">The transformed normal.</param>
         public static void TransformNormal(ref Vector3d norm, ref Matrix4d mat, out Vector3d result)
         {
             var Inverse = Matrix4d.Invert(mat);
@@ -849,15 +849,15 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Transform a Normal by the (transpose of the) given Matrix
+        /// Transform a Normal by the (transpose of the) given Matrix.
         /// </summary>
         /// <remarks>
         /// This version doesn't calculate the inverse matrix.
-        /// Use this version if you already have the inverse of the desired transform to hand
+        /// Use this version if you already have the inverse of the desired transform to hand.
         /// </remarks>
-        /// <param name="norm">The normal to transform</param>
-        /// <param name="invMat">The inverse of the desired transformation</param>
-        /// <returns>The transformed normal</returns>
+        /// <param name="norm">The normal to transform.</param>
+        /// <param name="invMat">The inverse of the desired transformation.</param>
+        /// <returns>The transformed normal.</returns>
         public static Vector3d TransformNormalInverse(Vector3d norm, Matrix4d invMat)
         {
             TransformNormalInverse(ref norm, ref invMat, out Vector3d result);
@@ -865,15 +865,15 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Transform a Normal by the (transpose of the) given Matrix
+        /// Transform a Normal by the (transpose of the) given Matrix.
         /// </summary>
         /// <remarks>
         /// This version doesn't calculate the inverse matrix.
-        /// Use this version if you already have the inverse of the desired transform to hand
+        /// Use this version if you already have the inverse of the desired transform to hand.
         /// </remarks>
-        /// <param name="norm">The normal to transform</param>
-        /// <param name="invMat">The inverse of the desired transformation</param>
-        /// <param name="result">The transformed normal</param>
+        /// <param name="norm">The normal to transform.</param>
+        /// <param name="invMat">The inverse of the desired transformation.</param>
+        /// <param name="result">The transformed normal.</param>
         public static void TransformNormalInverse(ref Vector3d norm, ref Matrix4d invMat, out Vector3d result)
         {
             result.X = (norm.X * invMat.Row0.X) +
@@ -890,11 +890,11 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Transform a Position by the given Matrix
+        /// Transform a Position by the given Matrix.
         /// </summary>
-        /// <param name="pos">The position to transform</param>
-        /// <param name="mat">The desired transformation</param>
-        /// <returns>The transformed position</returns>
+        /// <param name="pos">The position to transform.</param>
+        /// <param name="mat">The desired transformation.</param>
+        /// <returns>The transformed position.</returns>
         public static Vector3d TransformPosition(Vector3d pos, Matrix4d mat)
         {
             TransformPosition(ref pos, ref mat, out Vector3d result);
@@ -902,11 +902,11 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Transform a Position by the given Matrix
+        /// Transform a Position by the given Matrix.
         /// </summary>
-        /// <param name="pos">The position to transform</param>
-        /// <param name="mat">The desired transformation</param>
-        /// <param name="result">The transformed position</param>
+        /// <param name="pos">The position to transform.</param>
+        /// <param name="mat">The desired transformation.</param>
+        /// <param name="result">The transformed position.</param>
         public static void TransformPosition(ref Vector3d pos, ref Matrix4d mat, out Vector3d result)
         {
             result.X = (pos.X * mat.Row0.X) +
@@ -926,11 +926,11 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Transform a Vector by the given Matrix
+        /// Transform a Vector by the given Matrix.
         /// </summary>
-        /// <param name="vec">The vector to transform</param>
-        /// <param name="mat">The desired transformation</param>
-        /// <returns>The transformed vector</returns>
+        /// <param name="vec">The vector to transform.</param>
+        /// <param name="mat">The desired transformation.</param>
+        /// <returns>The transformed vector.</returns>
         public static Vector3d Transform(Vector3d vec, Matrix4d mat)
         {
             Transform(ref vec, ref mat, out Vector3d result);
@@ -938,16 +938,16 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Transform a Vector by the given Matrix
+        /// Transform a Vector by the given Matrix.
         /// </summary>
         /// <remarks>
         /// It is incorrect to call this method passing the same variable for
         ///  <paramref name="result"/> as for <paramref name="left"/> or
         ///  <paramref name="right"/>.
         /// </remarks>
-        /// <param name="vec">The vector to transform</param>
-        /// <param name="mat">The desired transformation</param>
-        /// <param name="result">The transformed vector</param>
+        /// <param name="vec">The vector to transform.</param>
+        /// <param name="mat">The desired transformation.</param>
+        /// <param name="result">The transformed vector.</param>
         public static void Transform(ref Vector3d vec, ref Matrix4d mat, out Vector3d result)
         {
             var v4 = new Vector4d(vec.X, vec.Y, vec.Z, 1.0);
@@ -989,11 +989,11 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Transform a Vector3d by the given Matrix, and project the resulting Vector4 back to a Vector3
+        /// Transform a Vector3d by the given Matrix, and project the resulting Vector4 back to a Vector3.
         /// </summary>
-        /// <param name="vec">The vector to transform</param>
-        /// <param name="mat">The desired transformation</param>
-        /// <returns>The transformed vector</returns>
+        /// <param name="vec">The vector to transform.</param>
+        /// <param name="mat">The desired transformation.</param>
+        /// <returns>The transformed vector.</returns>
         public static Vector3d TransformPerspective(Vector3d vec, Matrix4d mat)
         {
             TransformPerspective(ref vec, ref mat, out Vector3d result);
@@ -1001,11 +1001,11 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Transform a Vector3d by the given Matrix, and project the resulting Vector4d back to a Vector3d
+        /// Transform a Vector3d by the given Matrix, and project the resulting Vector4d back to a Vector3d.
         /// </summary>
-        /// <param name="vec">The vector to transform</param>
-        /// <param name="mat">The desired transformation</param>
-        /// <param name="result">The transformed vector</param>
+        /// <param name="vec">The vector to transform.</param>
+        /// <param name="mat">The desired transformation.</param>
+        /// <param name="result">The transformed vector.</param>
         public static void TransformPerspective(ref Vector3d vec, ref Matrix4d mat, out Vector3d result)
         {
             var v = new Vector4d(vec.X, vec.Y, vec.Z, 1);

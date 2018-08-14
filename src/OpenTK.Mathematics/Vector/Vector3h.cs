@@ -116,7 +116,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// The new Half3 instance will convert the Vector3 into 16-bit half-precision floating-point.
         /// </summary>
-        /// <param name="v">OpenTK.Vector3</param>
+        /// <param name="v">The <see cref="Vector3"/> to convert.</param>
         public Vector3h(Vector3 v)
         {
             X = new Half(v.X);
@@ -127,7 +127,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// The new Half3 instance will convert the Vector3 into 16-bit half-precision floating-point.
         /// </summary>
-        /// <param name="v">OpenTK.Vector3</param>
+        /// <param name="v">The <see cref="Vector3"/> to convert.</param>
         /// <param name="throwOnError">Enable checks that will throw if the conversion result is not meaningful.</param>
         public Vector3h(Vector3 v, bool throwOnError)
         {
@@ -140,7 +140,7 @@ namespace OpenTK.Mathematics
         /// The new Half3 instance will convert the Vector3 into 16-bit half-precision floating-point.
         /// This is the fastest constructor.
         /// </summary>
-        /// <param name="v">OpenTK.Vector3</param>
+        /// <param name="v">The <see cref="Vector3"/> to convert.</param>
         public Vector3h(ref Vector3 v)
         {
             X = new Half(v.X);
@@ -151,7 +151,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// The new Half3 instance will convert the Vector3 into 16-bit half-precision floating-point.
         /// </summary>
-        /// <param name="v">OpenTK.Vector3</param>
+        /// <param name="v">The <see cref="Vector3"/> to convert.</param>
         /// <param name="throwOnError">Enable checks that will throw if the conversion result is not meaningful.</param>
         public Vector3h(ref Vector3 v, bool throwOnError)
         {
@@ -163,7 +163,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// The new Half3 instance will convert the Vector3d into 16-bit half-precision floating-point.
         /// </summary>
-        /// <param name="v">OpenTK.Vector3d</param>
+        /// <param name="v">The <see cref="Vector3d"/> to convert.</param>
         public Vector3h(Vector3d v)
         {
             X = new Half(v.X);
@@ -174,7 +174,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// The new Half3 instance will convert the Vector3d into 16-bit half-precision floating-point.
         /// </summary>
-        /// <param name="v">OpenTK.Vector3d</param>
+        /// <param name="v">The <see cref="Vector3d"/> to convert.</param>
         /// <param name="throwOnError">Enable checks that will throw if the conversion result is not meaningful.</param>
         public Vector3h(Vector3d v, bool throwOnError)
         {
@@ -187,7 +187,7 @@ namespace OpenTK.Mathematics
         /// The new Half3 instance will convert the Vector3d into 16-bit half-precision floating-point.
         /// This is the faster constructor.
         /// </summary>
-        /// <param name="v">OpenTK.Vector3d</param>
+        /// <param name="v">The <see cref="Vector3d"/> to convert.</param>
         public Vector3h(ref Vector3d v)
         {
             X = new Half(v.X);
@@ -198,7 +198,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// The new Half3 instance will convert the Vector3d into 16-bit half-precision floating-point.
         /// </summary>
-        /// <param name="v">OpenTK.Vector3d</param>
+        /// <param name="v">The <see cref="Vector3d"/> to convert.</param>
         /// <param name="throwOnError">Enable checks that will throw if the conversion result is not meaningful.</param>
         public Vector3h(ref Vector3d v, bool throwOnError)
         {
@@ -369,7 +369,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Returns this Half3 instance's contents as Vector3.
         /// </summary>
-        /// <returns>OpenTK.Vector3</returns>
+        /// <returns>The vector.</returns>
         public Vector3 ToVector3()
         {
             return new Vector3(X, Y, Z);
@@ -378,6 +378,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Returns this Half3 instance's contents as Vector3d.
         /// </summary>
+        /// <returns>The vector.</returns>
         public Vector3d ToVector3d()
         {
             return new Vector3d(X, Y, Z);

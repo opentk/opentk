@@ -37,7 +37,7 @@ namespace OpenTK.Mathematics
         public IList<Vector2> Points => _points;
 
         /// <summary>
-        /// Constructs a new <see cref="BezierCurve"/>.
+        /// Initializes a new instance of the <see cref="BezierCurve"/> struct.
         /// </summary>
         /// <param name="points">The points.</param>
         public BezierCurve(IEnumerable<Vector2> points)
@@ -52,7 +52,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Constructs a new <see cref="BezierCurve"/>.
+        /// Initializes a new instance of the <see cref="BezierCurve"/> struct.
         /// </summary>
         /// <param name="points">The points.</param>
         public BezierCurve(params Vector2[] points)
@@ -67,7 +67,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Constructs a new <see cref="BezierCurve"/>.
+        /// Initializes a new instance of the <see cref="BezierCurve"/> struct.
         /// </summary>
         /// <param name="parallel">The parallel value.</param>
         /// <param name="points">The points.</param>
@@ -83,7 +83,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Constructs a new <see cref="BezierCurve"/>.
+        /// Initializes a new instance of the <see cref="BezierCurve"/> struct.
         /// </summary>
         /// <param name="parallel">The parallel value.</param>
         /// <param name="points">The points.</param>

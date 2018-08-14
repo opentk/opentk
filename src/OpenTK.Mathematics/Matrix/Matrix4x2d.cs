@@ -76,7 +76,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Constructs a new instance
+        /// Constructs a new instance.
         /// </summary>
         /// <param name="m00">First item of the first row of the matrix.</param>
         /// <param name="m01">Second item of the first row of the matrix.</param>
@@ -666,9 +666,9 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Scalar multiplication.
         /// </summary>
-        /// <param name="left">left-hand operand</param>
-        /// <param name="right">right-hand operand</param>
-        /// <returns>A new Matrix4x2d which holds the result of the multiplication</returns>
+        /// <param name="left">left-hand operand.</param>
+        /// <param name="right">right-hand operand.</param>
+        /// A new Matrix4x2d which holds the result of the multiplication./returns>
         public static Matrix4x2d operator *(double left, Matrix4x2d right)
         {
             return Mult(right, left);
@@ -677,64 +677,64 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Scalar multiplication.
         /// </summary>
-        /// <param name="left">left-hand operand</param>
-        /// <param name="right">right-hand operand</param>
-        /// <returns>A new Matrix4x2d which holds the result of the multiplication</returns>
+        /// <param name="left">left-hand operand.</param>
+        /// <param name="right">right-hand operand.</param>
+        /// A new Matrix4x2d which holds the result of the multiplication./returns>
         public static Matrix4x2d operator *(Matrix4x2d left, double right)
         {
             return Mult(left, right);
         }
 
         /// <summary>
-        /// Matrix multiplication
+        /// Matrix multiplication.
         /// </summary>
-        /// <param name="left">left-hand operand</param>
-        /// <param name="right">right-hand operand</param>
-        /// <returns>A new Matrix2d which holds the result of the multiplication</returns>
+        /// <param name="left">left-hand operand.</param>
+        /// <param name="right">right-hand operand.</param>
+        /// A new Matrix2d which holds the result of the multiplication./returns>
         public static Matrix4x2d operator *(Matrix4x2d left, Matrix2d right)
         {
             return Mult(left, right);
         }
 
         /// <summary>
-        /// Matrix multiplication
+        /// Matrix multiplication.
         /// </summary>
-        /// <param name="left">left-hand operand</param>
-        /// <param name="right">right-hand operand</param>
-        /// <returns>A new Matrix4x3d which holds the result of the multiplication</returns>
+        /// <param name="left">left-hand operand.</param>
+        /// <param name="right">right-hand operand.</param>
+        /// A new Matrix4x3d which holds the result of the multiplication./returns>
         public static Matrix4x3d operator *(Matrix4x2d left, Matrix2x3d right)
         {
             return Mult(left, right);
         }
 
         /// <summary>
-        /// Matrix multiplication
+        /// Matrix multiplication.
         /// </summary>
-        /// <param name="left">left-hand operand</param>
-        /// <param name="right">right-hand operand</param>
-        /// <returns>A new Matrix4d which holds the result of the multiplication</returns>
+        /// <param name="left">left-hand operand.</param>
+        /// <param name="right">right-hand operand.</param>
+        /// A new Matrix4d which holds the result of the multiplication./returns>
         public static Matrix4d operator *(Matrix4x2d left, Matrix2x4d right)
         {
             return Mult(left, right);
         }
 
         /// <summary>
-        /// Matrix addition
+        /// Matrix addition.
         /// </summary>
-        /// <param name="left">left-hand operand</param>
-        /// <param name="right">right-hand operand</param>
-        /// <returns>A new Matrix4x2d which holds the result of the addition</returns>
+        /// <param name="left">left-hand operand.</param>
+        /// <param name="right">right-hand operand.</param>
+        /// A new Matrix4x2d which holds the result of the addition./returns>
         public static Matrix4x2d operator +(Matrix4x2d left, Matrix4x2d right)
         {
             return Add(left, right);
         }
 
         /// <summary>
-        /// Matrix subtraction
+        /// Matrix subtraction.
         /// </summary>
-        /// <param name="left">left-hand operand</param>
-        /// <param name="right">right-hand operand</param>
-        /// <returns>A new Matrix4x2d which holds the result of the subtraction</returns>
+        /// <param name="left">left-hand operand.</param>
+        /// <param name="right">right-hand operand.</param>
+        /// A new Matrix4x2d which holds the result of the subtraction./returns>
         public static Matrix4x2d operator -(Matrix4x2d left, Matrix4x2d right)
         {
             return Subtract(left, right);
