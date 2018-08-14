@@ -58,11 +58,11 @@ namespace OpenTK.Mathematics
         public static readonly Matrix3 Zero = new Matrix3(Vector3.Zero, Vector3.Zero, Vector3.Zero);
 
         /// <summary>
-        /// Constructs a new instance.
+        /// Initializes a new instance of the <see cref="Matrix3"/> struct.
         /// </summary>
         /// <param name="row0">Top row of the matrix.</param>
-         /// <param name="row1">Second row of the matrix.</param>
-         /// <param name="row2">Bottom row of the matrix.</param>
+        /// <param name="row1">Second row of the matrix.</param>
+        /// <param name="row2">Bottom row of the matrix.</param>
         public Matrix3(Vector3 row0, Vector3 row1, Vector3 row2)
         {
             Row0 = row0;
@@ -71,7 +71,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Constructs a new instance.
+        /// Initializes a new instance of the <see cref="Matrix3"/> struct.
         /// </summary>
         /// <param name="m00">First item of the first row of the matrix.</param>
         /// <param name="m01">Second item of the first row of the matrix.</param>
@@ -101,7 +101,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Constructs a new instance.
+        /// Initializes a new instance of the <see cref="Matrix3"/> struct.
         /// </summary>
         /// <param name="matrix">A Matrix4 to take the upper-left 3x3 from.</param>
         public Matrix3(Matrix4 matrix)
@@ -251,6 +251,8 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Gets or sets the value at a specified row and column.
         /// </summary>
+        /// <param name="rowIndex">The index of the row.</param>
+        /// <param name="columnIndex">The index of the column.</param>
         public float this[int rowIndex, int columnIndex]
         {
             get
@@ -315,6 +317,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Returns a normalised copy of this instance.
         /// </summary>
+        /// <returns>The matrix.</returns>
         public Matrix3 Normalized()
         {
             var m = this;
@@ -323,7 +326,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Divides each element in the Matrix by the .see cref="Determinant"/>.
+        /// Divides each element in the Matrix by the <see cref="Determinant"/>.
         /// </summary>
         public void Normalize()
         {
@@ -336,6 +339,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Returns an inverted copy of this instance.
         /// </summary>
+        /// <returns>The matrix.</returns>
         public Matrix3 Inverted()
         {
             var m = this;
@@ -350,6 +354,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Returns a copy of this Matrix3 without scale.
         /// </summary>
+        /// <returns>The matrix.</returns>
         public Matrix3 ClearScale()
         {
             var m = this;
@@ -362,6 +367,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Returns a copy of this Matrix3 without rotation.
         /// </summary>
+        /// <returns>The matrix.</returns>
         public Matrix3 ClearRotation()
         {
             var m = this;
@@ -374,6 +380,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Returns the scale component of this instance.
         /// </summary>
+        /// <returns>The scale components.</returns>
         public Vector3 ExtractScale()
         {
             return new Vector3(Row0.Length, Row1.Length, Row2.Length);
@@ -386,6 +393,7 @@ namespace OpenTK.Mathematics
         /// Whether the method should row-normalise (i.e. remove scale from) the Matrix. Pass false if
         /// you know it's already normalised.
         /// </param>
+        /// <returns>The rotation.</returns>
         public Quaternion ExtractRotation(bool row_normalise = true)
         {
             var row0 = Row0;
@@ -917,7 +925,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         /// <param name="left">left-hand operand.</param>
         /// <param name="right">right-hand operand.</param>
-        /// A new Matrix3d which holds the result of the multiplication./returns>
+        /// <returns>A new Matrix3d which holds the result of the multiplication.</returns>
         public static Matrix3 operator *(Matrix3 left, Matrix3 right)
         {
             return Mult(left, right);

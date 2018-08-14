@@ -50,7 +50,7 @@ namespace OpenTK.Mathematics
         public static readonly Matrix2d Zero = new Matrix2d(Vector2d.Zero, Vector2d.Zero);
 
         /// <summary>
-        /// Constructs a new instance.
+        /// Initializes a new instance of the <see cref="Matrix2d"/> struct.
         /// </summary>
         /// <param name="row0">Top row of the matrix.</param>
         /// <param name="row1">Bottom row of the matrix.</param>
@@ -61,7 +61,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Constructs a new instance.
+        /// Initializes a new instance of the <see cref="Matrix2d"/> struct.
         /// </summary>
         /// <param name="m00">First item of the first row of the matrix.</param>
         /// <param name="m01">Second item of the first row of the matrix.</param>
@@ -593,7 +593,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         /// <param name="left">left-hand operand.</param>
         /// <param name="right">right-hand operand.</param>
-        /// A new Matrix2d which holds the result of the multiplication./returns>
+        /// <returns>A new Matrix2d which holds the result of the multiplication.</returns>
         public static Matrix2d operator *(double left, Matrix2d right)
         {
             return Mult(right, left);
@@ -604,7 +604,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         /// <param name="left">left-hand operand.</param>
         /// <param name="right">right-hand operand.</param>
-        /// A new Matrix2d which holds the result of the multiplication./returns>
+        /// <returns>A new Matrix2d which holds the result of the multiplication.</returns>
         public static Matrix2d operator *(Matrix2d left, double right)
         {
             return Mult(left, right);
@@ -615,7 +615,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         /// <param name="left">left-hand operand.</param>
         /// <param name="right">right-hand operand.</param>
-        /// A new Matrix2d which holds the result of the multiplication./returns>
+        /// <returns>A new Matrix2d which holds the result of the multiplication.</returns>
         public static Matrix2d operator *(Matrix2d left, Matrix2d right)
         {
             return Mult(left, right);
@@ -626,7 +626,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         /// <param name="left">left-hand operand.</param>
         /// <param name="right">right-hand operand.</param>
-        /// A new Matrix2x3d which holds the result of the multiplication./returns>
+        /// <returns>A new Matrix2x3d which holds the result of the multiplication.</returns>
         public static Matrix2x3d operator *(Matrix2d left, Matrix2x3d right)
         {
             return Mult(left, right);
@@ -637,7 +637,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         /// <param name="left">left-hand operand.</param>
         /// <param name="right">right-hand operand.</param>
-        /// A new Matrix2x4d which holds the result of the multiplication./returns>
+        /// <returns>A new Matrix2x4d which holds the result of the multiplication.</returns>
         public static Matrix2x4d operator *(Matrix2d left, Matrix2x4d right)
         {
             return Mult(left, right);
@@ -648,7 +648,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         /// <param name="left">left-hand operand.</param>
         /// <param name="right">right-hand operand.</param>
-        /// A new Matrix2d which holds the result of the addition./returns>
+        /// <returns>A new Matrix2d which holds the result of the addition.</returns>
         public static Matrix2d operator +(Matrix2d left, Matrix2d right)
         {
             return Add(left, right);
@@ -659,7 +659,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         /// <param name="left">left-hand operand.</param>
         /// <param name="right">right-hand operand.</param>
-        /// A new Matrix2d which holds the result of the subtraction./returns>
+        /// <returns>A new Matrix2d which holds the result of the subtraction.</returns>
         public static Matrix2d operator -(Matrix2d left, Matrix2d right)
         {
             return Subtract(left, right);

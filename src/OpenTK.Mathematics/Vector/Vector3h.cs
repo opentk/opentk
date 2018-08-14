@@ -52,7 +52,7 @@ namespace OpenTK.Mathematics
         public Half Z;
 
         /// <summary>
-        /// Constructs a new instance.
+        /// Initializes a new instance of the <see cref="Vector3h"/> struct.
         /// </summary>
         /// <param name="value">The value that will initialize this instance.</param>
         public Vector3h(Half value)
@@ -63,7 +63,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Constructs a new instance.
+        /// Initializes a new instance of the <see cref="Vector3h"/> struct.
         /// </summary>
         /// <param name="value">The value that will initialize this instance.</param>
         public Vector3h(float value)
@@ -74,11 +74,11 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// The new Half3 instance will avoid conversion and copy directly from the Half parameters.
+        /// Initializes a new instance of the <see cref="Vector3h"/> struct.
         /// </summary>
-        /// <param name="x">An Half instance of a 16-bit half-precision floating-point number.</param>
-        /// <param name="y">An Half instance of a 16-bit half-precision floating-point number.</param>
-        /// <param name="z">An Half instance of a 16-bit half-precision floating-point number.</param>
+        /// <param name="x">The X component of the vector.</param>
+        /// <param name="y">The Y component of the vector.</param>
+        /// <param name="z">The Z component of the vector.</param>
         public Vector3h(Half x, Half y, Half z)
         {
             X = x;
@@ -87,11 +87,12 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="Vector3h"/> struct.
         /// The new Half3 instance will convert the 3 parameters into 16-bit half-precision floating-point.
         /// </summary>
-        /// <param name="x">32-bit single-precision floating-point number.</param>
-        /// <param name="y">32-bit single-precision floating-point number.</param>
-        /// <param name="z">32-bit single-precision floating-point number.</param>
+        /// <param name="x">The X component of the vector.</param>
+        /// <param name="y">The Y component of the vector.</param>
+        /// <param name="z">The Z component of the vector.</param>
         public Vector3h(float x, float y, float z)
         {
             X = new Half(x);
@@ -100,11 +101,12 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="Vector3h"/> struct.
         /// The new Half3 instance will convert the 3 parameters into 16-bit half-precision floating-point.
         /// </summary>
-        /// <param name="x">32-bit single-precision floating-point number.</param>
-        /// <param name="y">32-bit single-precision floating-point number.</param>
-        /// <param name="z">32-bit single-precision floating-point number.</param>
+        /// <param name="x">The X component of the vector.</param>
+        /// <param name="y">The Y component of the vector.</param>
+        /// <param name="z">The Z component of the vector.</param>
         /// <param name="throwOnError">Enable checks that will throw if the conversion result is not meaningful.</param>
         public Vector3h(float x, float y, float z, bool throwOnError)
         {
@@ -114,7 +116,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// The new Half3 instance will convert the Vector3 into 16-bit half-precision floating-point.
+        /// Initializes a new instance of the <see cref="Vector3h"/> struct.
         /// </summary>
         /// <param name="v">The <see cref="Vector3"/> to convert.</param>
         public Vector3h(Vector3 v)
@@ -125,7 +127,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// The new Half3 instance will convert the Vector3 into 16-bit half-precision floating-point.
+        /// Initializes a new instance of the <see cref="Vector3h"/> struct.
         /// </summary>
         /// <param name="v">The <see cref="Vector3"/> to convert.</param>
         /// <param name="throwOnError">Enable checks that will throw if the conversion result is not meaningful.</param>
@@ -137,8 +139,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// The new Half3 instance will convert the Vector3 into 16-bit half-precision floating-point.
-        /// This is the fastest constructor.
+        /// Initializes a new instance of the <see cref="Vector3h"/> struct.
         /// </summary>
         /// <param name="v">The <see cref="Vector3"/> to convert.</param>
         public Vector3h(ref Vector3 v)
@@ -149,7 +150,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// The new Half3 instance will convert the Vector3 into 16-bit half-precision floating-point.
+        /// Initializes a new instance of the <see cref="Vector3h"/> struct.
         /// </summary>
         /// <param name="v">The <see cref="Vector3"/> to convert.</param>
         /// <param name="throwOnError">Enable checks that will throw if the conversion result is not meaningful.</param>
@@ -161,7 +162,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// The new Half3 instance will convert the Vector3d into 16-bit half-precision floating-point.
+        /// Initializes a new instance of the <see cref="Vector3h"/> struct.
         /// </summary>
         /// <param name="v">The <see cref="Vector3d"/> to convert.</param>
         public Vector3h(Vector3d v)
@@ -172,7 +173,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// The new Half3 instance will convert the Vector3d into 16-bit half-precision floating-point.
+        /// Initializes a new instance of the <see cref="Vector3h"/> struct.
         /// </summary>
         /// <param name="v">The <see cref="Vector3d"/> to convert.</param>
         /// <param name="throwOnError">Enable checks that will throw if the conversion result is not meaningful.</param>
@@ -184,8 +185,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// The new Half3 instance will convert the Vector3d into 16-bit half-precision floating-point.
-        /// This is the faster constructor.
+        /// Initializes a new instance of the <see cref="Vector3h"/> struct.
         /// </summary>
         /// <param name="v">The <see cref="Vector3d"/> to convert.</param>
         public Vector3h(ref Vector3d v)
@@ -196,7 +196,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// The new Half3 instance will convert the Vector3d into 16-bit half-precision floating-point.
+        /// Initializes a new instance of the <see cref="Vector3h"/> struct.
         /// </summary>
         /// <param name="v">The <see cref="Vector3d"/> to convert.</param>
         /// <param name="throwOnError">Enable checks that will throw if the conversion result is not meaningful.</param>
@@ -436,10 +436,10 @@ namespace OpenTK.Mathematics
         public static readonly int SizeInBytes = 6;
 
         /// <summary>
-        /// Constructor used by ISerializable to deserialize the object.
+        /// Initializes a new instance of the <see cref="Vector3h"/> struct.
         /// </summary>
-        /// <param name="info"></param>
-        /// <param name="context"></param>
+        /// <param name="info">The serialization info.</param>
+        /// <param name="context">The streaming context.</param>
         public Vector3h(SerializationInfo info, StreamingContext context)
         {
             X = (Half)info.GetValue("X", typeof(Half));
@@ -447,11 +447,7 @@ namespace OpenTK.Mathematics
             Z = (Half)info.GetValue("Z", typeof(Half));
         }
 
-        /// <summary>
-        /// Used by ISerialize to serialize the object.
-        /// </summary>
-        /// <param name="info"></param>
-        /// <param name="context"></param>
+        /// <inheritdoc/>
         public void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             info.AddValue("X", X);
@@ -493,9 +489,7 @@ namespace OpenTK.Mathematics
 
         private static readonly string ListSeparator = CultureInfo.CurrentCulture.TextInfo.ListSeparator;
 
-        /// <summary>
-        /// Returns a string that contains this Half3's numbers in human-legible form.
-        /// </summary>
+        /// <inheritdoc/>
         public override string ToString()
         {
             return string.Format("({0}{3} {1}{3} {2})", X.ToString(), Y.ToString(), Z.ToString(), ListSeparator);

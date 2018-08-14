@@ -48,7 +48,7 @@ namespace OpenTK.Mathematics
         public float Y;
 
         /// <summary>
-        /// Constructs a new instance.
+        /// Initializes a new instance of the <see cref="Vector2"/> struct.
         /// </summary>
         /// <param name="value">The value that will initialize this instance.</param>
         public Vector2(float value)
@@ -58,7 +58,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Constructs a new Vector2.
+        /// Initializes a new instance of the <see cref="Vector2"/> struct.
         /// </summary>
         /// <param name="x">The x coordinate of the net Vector2.</param>
         /// <param name="y">The y coordinate of the net Vector2.</param>
@@ -71,6 +71,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Gets or sets the value at the index of the Vector.
         /// </summary>
+        /// <param name="index">The index.</param>
         public float this[int index]
         {
             get
@@ -147,7 +148,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Returns a copy of the Vector2 scaled to unit length.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The vector.</returns>
         public Vector2 Normalized()
         {
             var v = this;
@@ -866,10 +867,7 @@ namespace OpenTK.Mathematics
 
         private static readonly string ListSeparator = CultureInfo.CurrentCulture.TextInfo.ListSeparator;
 
-        /// <summary>
-        /// Returns a System.String that represents the current Vector2.
-        /// </summary>
-        /// <returns></returns>
+        /// <inheritdoc/>
         public override string ToString()
         {
             return string.Format("({0}{2} {1})", X, Y, ListSeparator);

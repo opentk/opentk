@@ -90,7 +90,7 @@ namespace OpenTK.Mathematics
         public static readonly int SizeInBytes = Marshal.SizeOf<Vector4d>();
 
         /// <summary>
-        /// Constructs a new instance.
+        /// Initializes a new instance of the <see cref="Vector4d"/> struct.
         /// </summary>
         /// <param name="value">The value that will initialize this instance.</param>
         public Vector4d(double value)
@@ -102,7 +102,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Constructs a new Vector4d.
+        /// Initializes a new instance of the <see cref="Vector4d"/> struct.
         /// </summary>
         /// <param name="x">The x component of the Vector4d.</param>
         /// <param name="y">The y component of the Vector4d.</param>
@@ -117,7 +117,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Constructs a new Vector4d from the given Vector2d.
+        /// Initializes a new instance of the <see cref="Vector4d"/> struct.
         /// </summary>
         /// <param name="v">The Vector2d to copy components from.</param>
         public Vector4d(Vector2d v)
@@ -129,8 +129,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Constructs a new Vector4d from the given Vector3d.
-        /// The w component is initialized to 0.
+        /// Initializes a new instance of the <see cref="Vector4d"/> struct.
         /// </summary>
         /// <param name="v">The Vector3d to copy components from.</param>
         /// <remarks>
@@ -145,7 +144,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Constructs a new Vector4d from the specified Vector3d and w component.
+        /// Initializes a new instance of the <see cref="Vector4d"/> struct.
         /// </summary>
         /// <param name="v">The Vector3d to copy components from.</param>
         /// <param name="w">The w component of the new Vector4.</param>
@@ -158,7 +157,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Constructs a new Vector4d from the given Vector4d.
+        /// Initializes a new instance of the <see cref="Vector4d"/> struct.
         /// </summary>
         /// <param name="v">The Vector4d to copy components from.</param>
         public Vector4d(Vector4d v)
@@ -172,6 +171,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Gets or sets the value at the index of the Vector.
         /// </summary>
+        /// <param name="index">The index.</param>
         public double this[int index]
         {
             get
@@ -255,6 +255,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Returns a copy of the Vector4d scaled to unit length.
         /// </summary>
+        /// <returns>The vector.</returns>
         public Vector4d Normalized()
         {
             var v = this;
@@ -1986,10 +1987,7 @@ namespace OpenTK.Mathematics
 
         private static readonly string ListSeparator = CultureInfo.CurrentCulture.TextInfo.ListSeparator;
 
-        /// <summary>
-        /// Returns a System.String that represents the current Vector4d.
-        /// </summary>
-        /// <returns></returns>
+        /// <inheritdoc />
         public override string ToString()
         {
             return string.Format("({0}{4} {1}{4} {2}{4} {3})", X, Y, Z, W, ListSeparator);

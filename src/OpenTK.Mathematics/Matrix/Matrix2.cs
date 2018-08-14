@@ -593,7 +593,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         /// <param name="left">left-hand operand.</param>
         /// <param name="right">right-hand operand.</param>
-        /// A new Matrix2 which holds the result of the multiplication./returns>
+        /// <returns>A new Matrix2 which holds the result of the multiplication.</returns>
         public static Matrix2 operator *(float left, Matrix2 right)
         {
             return Mult(right, left);
@@ -604,7 +604,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         /// <param name="left">left-hand operand.</param>
         /// <param name="right">right-hand operand.</param>
-        /// A new Matrix2 which holds the result of the multiplication./returns>
+        /// <returns>A new Matrix2 which holds the result of the multiplication.</returns>
         public static Matrix2 operator *(Matrix2 left, float right)
         {
             return Mult(left, right);
@@ -615,7 +615,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         /// <param name="left">left-hand operand.</param>
         /// <param name="right">right-hand operand.</param>
-        /// A new Matrix2 which holds the result of the multiplication./returns>
+        /// <returns>A new Matrix2 which holds the result of the multiplication.</returns>
         public static Matrix2 operator *(Matrix2 left, Matrix2 right)
         {
             return Mult(left, right);
@@ -626,7 +626,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         /// <param name="left">left-hand operand.</param>
         /// <param name="right">right-hand operand.</param>
-        /// A new Matrix2x3 which holds the result of the multiplication./returns>
+        /// <returns>A new Matrix2x3 which holds the result of the multiplication.</returns>
         public static Matrix2x3 operator *(Matrix2 left, Matrix2x3 right)
         {
             return Mult(left, right);
@@ -637,7 +637,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         /// <param name="left">left-hand operand.</param>
         /// <param name="right">right-hand operand.</param>
-        /// A new Matrix2x4 which holds the result of the multiplication./returns>
+        /// <returns>A new Matrix2x4 which holds the result of the multiplication.</returns>
         public static Matrix2x4 operator *(Matrix2 left, Matrix2x4 right)
         {
             return Mult(left, right);
@@ -648,7 +648,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         /// <param name="left">left-hand operand.</param>
         /// <param name="right">right-hand operand.</param>
-        /// A new Matrix2 which holds the result of the addition./returns>
+        /// <returns>A new Matrix2 which holds the result of the addition.</returns>
         public static Matrix2 operator +(Matrix2 left, Matrix2 right)
         {
             return Add(left, right);
@@ -659,7 +659,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         /// <param name="left">left-hand operand.</param>
         /// <param name="right">right-hand operand.</param>
-        /// A new Matrix2 which holds the result of the subtraction./returns>
+        /// <returns>A new Matrix2 which holds the result of the subtraction.</returns>
         public static Matrix2 operator -(Matrix2 left, Matrix2 right)
         {
             return Subtract(left, right);

@@ -53,7 +53,7 @@ namespace OpenTK.Mathematics
         public float Z;
 
         /// <summary>
-        /// Constructs a new instance.
+        /// Initializes a new instance of the <see cref="Vector3"/> struct.
         /// </summary>
         /// <param name="value">The value that will initialize this instance.</param>
         public Vector3(float value)
@@ -64,7 +64,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Constructs a new Vector3.
+        /// Initializes a new instance of the <see cref="Vector3"/> struct.
         /// </summary>
         /// <param name="x">The x component of the Vector3.</param>
         /// <param name="y">The y component of the Vector3.</param>
@@ -77,7 +77,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Constructs a new Vector3 from the given Vector2.
+        /// Initializes a new instance of the <see cref="Vector3"/> struct.
         /// </summary>
         /// <param name="v">The Vector2 to copy components from.</param>
         public Vector3(Vector2 v)
@@ -88,7 +88,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Constructs a new Vector3 from the given Vector3.
+        /// Initializes a new instance of the <see cref="Vector3"/> struct.
         /// </summary>
         /// <param name="v">The Vector3 to copy components from.</param>
         public Vector3(Vector3 v)
@@ -99,7 +99,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Constructs a new Vector3 from the given Vector4.
+        /// Initializes a new instance of the <see cref="Vector3"/> struct.
         /// </summary>
         /// <param name="v">The Vector4 to copy components from.</param>
         public Vector3(Vector4 v)
@@ -112,6 +112,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Gets or sets the value at the index of the Vector.
         /// </summary>
+        /// <param name="index">The index.</param>
         public float this[int index]
         {
             get
@@ -187,6 +188,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Returns a copy of the Vector3 scaled to unit length.
         /// </summary>
+        /// <returns>The vector.</returns>
         public Vector3 Normalized()
         {
             var v = this;
@@ -850,8 +852,8 @@ namespace OpenTK.Mathematics
         /// <param name="result">The transformed normal.</param>
         public static void TransformNormal(ref Vector3 norm, ref Matrix4 mat, out Vector3 result)
         {
-            var Inverse = Matrix4.Invert(mat);
-            TransformNormalInverse(ref norm, ref Inverse, out result);
+            var inverse = Matrix4.Invert(mat);
+            TransformNormalInverse(ref norm, ref inverse, out result);
         }
 
         /// <summary>
@@ -992,6 +994,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         /// <param name="mat">The desired transformation.</param>
         /// <param name="vec">The vector to transform.</param>
+        /// <returns>The transformed vector.</returns>
         public static Vector3 Transform(Matrix3 mat, Vector3 vec)
         {
             Transform(ref vec, ref mat, out Vector3 result);
@@ -1461,7 +1464,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         /// <param name="vec">The vector to transform.</param>
         /// <param name="quat">The quaternion to rotate the vector by.</param>
-        /// <returns></returns>
+        /// <returns>The multiplied vector.</returns>
         public static Vector3 operator *(Quaternion quat, Vector3 vec)
         {
             Transform(ref vec, ref quat, out Vector3 result);
@@ -1506,10 +1509,7 @@ namespace OpenTK.Mathematics
 
         private static readonly string ListSeparator = CultureInfo.CurrentCulture.TextInfo.ListSeparator;
 
-        /// <summary>
-        /// Returns a System.String that represents the current Vector3.
-        /// </summary>
-        /// <returns></returns>
+        /// <inheritdoc />
         public override string ToString()
         {
             return string.Format("({0}{3} {1}{3} {2})", X, Y, Z, ListSeparator);

@@ -65,7 +65,7 @@ namespace OpenTK.Mathematics
         public static readonly Matrix4 Zero = new Matrix4(Vector4.Zero, Vector4.Zero, Vector4.Zero, Vector4.Zero);
 
         /// <summary>
-        /// Constructs a new instance.
+        /// Initializes a new instance of the <see cref="Matrix4"/> struct.
         /// </summary>
         /// <param name="row0">Top row of the matrix.</param>
         /// <param name="row1">Second row of the matrix.</param>
@@ -80,7 +80,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Constructs a new instance.
+        /// Initializes a new instance of the <see cref="Matrix4"/> struct.
         /// </summary>
         /// <param name="m00">First item of the first row of the matrix.</param>
         /// <param name="m01">Second item of the first row of the matrix.</param>
@@ -125,7 +125,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Constructs a new instance.
+        /// Initializes a new instance of the <see cref="Matrix4"/> struct.
         /// </summary>
         /// <param name="topLeft">The top left 3x3 of the matrix.</param>
         public Matrix4(Matrix3 topLeft)
@@ -410,6 +410,8 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Gets or sets the value at a specified row and column.
         /// </summary>
+        /// <param name="rowIndex">The index of the row.</param>
+        /// <param name="columnIndex">The index of the column.</param>
         public float this[int rowIndex, int columnIndex]
         {
             get
@@ -483,6 +485,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Returns a normalised copy of this instance.
         /// </summary>
+        /// <returns>The matrix.</returns>
         public Matrix4 Normalized()
         {
             var m = this;
@@ -491,7 +494,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Divides each element in the Matrix by the .see cref="Determinant"/>.
+        /// Divides each element in the Matrix by the <see cref="Determinant"/>.
         /// </summary>
         public void Normalize()
         {
@@ -505,6 +508,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Returns an inverted copy of this instance.
         /// </summary>
+        /// <returns>The matrix.</returns>
         public Matrix4 Inverted()
         {
             var m = this;
@@ -519,6 +523,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Returns a copy of this Matrix4 without translation.
         /// </summary>
+        /// <returns>The matrix.</returns>
         public Matrix4 ClearTranslation()
         {
             var m = this;
@@ -529,6 +534,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Returns a copy of this Matrix4 without scale.
         /// </summary>
+        /// <returns>The matrix.</returns>
         public Matrix4 ClearScale()
         {
             var m = this;
@@ -541,6 +547,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Returns a copy of this Matrix4 without rotation.
         /// </summary>
+        /// <returns>The matrix.</returns>
         public Matrix4 ClearRotation()
         {
             var m = this;
@@ -553,6 +560,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Returns a copy of this Matrix4 without projection.
         /// </summary>
+        /// <returns>The matrix.</returns>
         public Matrix4 ClearProjection()
         {
             var m = this;
@@ -563,6 +571,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Returns the translation component of this instance.
         /// </summary>
+        /// <returns>The translation.</returns>
         public Vector3 ExtractTranslation()
         {
             return Row3.Xyz;
@@ -571,6 +580,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Returns the scale component of this instance.
         /// </summary>
+        /// <returns>The scale.</returns>
         public Vector3 ExtractScale()
         {
             return new Vector3(Row0.Xyz.Length, Row1.Xyz.Length, Row2.Xyz.Length);
@@ -583,6 +593,7 @@ namespace OpenTK.Mathematics
         /// Whether the method should row-normalise (i.e. remove scale from) the Matrix. Pass false if
         /// you know it's already normalised.
         /// </param>
+        /// <returns>The rotation.</returns>
         public Quaternion ExtractRotation(bool row_normalise = true)
         {
             var row0 = Row0.Xyz;
@@ -648,6 +659,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Returns the projection component of this instance.
         /// </summary>
+        /// <returns>The projection.</returns>
         public Vector4 ExtractProjection()
         {
             return Column3;
@@ -963,7 +975,7 @@ namespace OpenTK.Mathematics
         /// <param name="height">The height of the projection volume.</param>
         /// <param name="zNear">The near edge of the projection volume.</param>
         /// <param name="zFar">The far edge of the projection volume.</param>
-        /// <rereturns>The resulting Matrix4 instance.</rereturns>
+        /// <returns>The resulting Matrix4 instance.</returns>
         public static Matrix4 CreateOrthographic(float width, float height, float zNear, float zFar)
         {
             CreateOrthographicOffCenter(-width / 2, width / 2, -height / 2, height / 2, zNear, zFar, out Matrix4 result);
@@ -1033,20 +1045,20 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Creates a perspective projection matrix.
         /// </summary>
-        /// <param name="fovy">Angle of the field of view in the y direction (in radians)</param>
-        /// <param name="aspect">Aspect ratio of the view (width / height)</param>
-        /// Distance to the near clip plane./param>
-        /// Distance to the far clip plane./param>
-        /// A projection matrix that transforms camera space to raster space./param>
+        /// <param name="fovy">Angle of the field of view in the y direction (in radians).</param>
+        /// <param name="aspect">Aspect ratio of the view (width / height).</param>
+        /// <param name="zNear">Distance to the near clip plane.</param>
+        /// <param name="zFar">Distance to the far clip plane.</param>
+        /// <param name="result">A projection matrix that transforms camera space to raster space.</param>
         /// <exception cref="System.ArgumentOutOfRangeException">
         /// Thrown under the following conditions:
-        ///  .list type="bullet">
-        ///  .item>fovy is zero, less than zero or larger than Math.PI</item>
-        ///  .item>aspect is negative or zero</item>
-        ///  .item>zNear is negative or zero</item>
-        ///  .item>zFar is negative or zero</item>
-        ///  .item>zNear is larger than zFar</item>
-        ///  ./list>
+        ///  <list type="bullet">
+        ///  <item>fovy is zero, less than zero or larger than Math.PI</item>
+        ///  <item>aspect is negative or zero</item>
+        ///  <item>zNear is negative or zero</item>
+        ///  <item>zFar is negative or zero</item>
+        ///  <item>zNear is larger than zFar</item>
+        ///  </list>
         /// </exception>
         public static void CreatePerspectiveFieldOfView
         (
@@ -1088,20 +1100,20 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Creates a perspective projection matrix.
         /// </summary>
-        /// <param name="fovy">Angle of the field of view in the y direction (in radians)</param>
-        /// <param name="aspect">Aspect ratio of the view (width / height)</param>
-        /// Distance to the near clip plane./param>
-        /// Distance to the far clip plane./param>
-        /// A projection matrix that transforms camera space to raster space./returns>
+        /// <param name="fovy">Angle of the field of view in the y direction (in radians).</param>
+        /// <param name="aspect">Aspect ratio of the view (width / height).</param>
+        /// <param name="zNear">Distance to the near clip plane.</param>
+        /// <param name="zFar">Distance to the far clip plane.</param>
+        /// <returns>A projection matrix that transforms camera space to raster space.</returns>
         /// <exception cref="System.ArgumentOutOfRangeException">
         /// Thrown under the following conditions:
-        ///  .list type="bullet">
-        ///  .item>fovy is zero, less than zero or larger than Math.PI</item>
-        ///  .item>aspect is negative or zero</item>
-        ///  .item>zNear is negative or zero</item>
-        ///  .item>zFar is negative or zero</item>
-        ///  .item>zNear is larger than zFar</item>
-        ///  ./list>
+        ///  <list type="bullet">
+        ///  <item>fovy is zero, less than zero or larger than Math.PI</item>
+        ///  <item>aspect is negative or zero</item>
+        ///  <item>zNear is negative or zero</item>
+        ///  <item>zFar is negative or zero</item>
+        ///  <item>zNear is larger than zFar</item>
+        ///  </list>
         /// </exception>
         public static Matrix4 CreatePerspectiveFieldOfView(float fovy, float aspect, float zNear, float zFar)
         {
@@ -1112,20 +1124,20 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Creates an perspective projection matrix.
         /// </summary>
-        /// Left edge of the view frustum./param>
-        /// Right edge of the view frustum./param>
-        /// Bottom edge of the view frustum./param>
-        /// Top edge of the view frustum./param>
-        /// Distance to the near clip plane./param>
-        /// Distance to the far clip plane./param>
-        /// A projection matrix that transforms camera space to raster space./param>
+        /// <param name="left">Left edge of the view frustum.</param>
+        /// <param name="right">Right edge of the view frustum.</param>
+        /// <param name="bottom">Bottom edge of the view frustum.</param>
+        /// <param name="top">Top edge of the view frustum.</param>
+        /// <param name="zNear">Distance to the near clip plane.</param>
+        /// <param name="zFar">Distance to the far clip plane.</param>
+        /// <param name="result">A projection matrix that transforms camera space to raster space.</param>
         /// <exception cref="System.ArgumentOutOfRangeException">
         /// Thrown under the following conditions:
-        ///  .list type="bullet">
-        ///  .item>zNear is negative or zero</item>
-        ///  .item>zFar is negative or zero</item>
-        ///  .item>zNear is larger than zFar</item>
-        ///  ./list>
+        ///  <list type="bullet">
+        ///  <item>zNear is negative or zero</item>
+        ///  <item>zFar is negative or zero</item>
+        ///  <item>zNear is larger than zFar</item>
+        ///  </list>
         /// </exception>
         public static void CreatePerspectiveOffCenter
         (
@@ -1181,20 +1193,20 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Creates an perspective projection matrix.
         /// </summary>
-        /// Left edge of the view frustum./param>
-        /// Right edge of the view frustum./param>
-        /// Bottom edge of the view frustum./param>
-        /// Top edge of the view frustum./param>
-        /// Distance to the near clip plane./param>
-        /// Distance to the far clip plane./param>
-        /// A projection matrix that transforms camera space to raster space./returns>
+        /// <param name="left">Left edge of the view frustum.</param>
+        /// <param name="right">Right edge of the view frustum.</param>
+        /// <param name="bottom">Bottom edge of the view frustum.</param>
+        /// <param name="top">Top edge of the view frustum.</param>
+        /// <param name="zNear">Distance to the near clip plane.</param>
+        /// <param name="zFar">Distance to the far clip plane.</param>
+        /// <returns>A projection matrix that transforms camera space to raster space.</returns>
         /// <exception cref="System.ArgumentOutOfRangeException">
         /// Thrown under the following conditions:
-        ///  .list type="bullet">
-        ///  .item>zNear is negative or zero</item>
-        ///  .item>zFar is negative or zero</item>
-        ///  .item>zNear is larger than zFar</item>
-        ///  ./list>
+        ///  <list type="bullet">
+        ///  <item>zNear is negative or zero</item>
+        ///  <item>zFar is negative or zero</item>
+        ///  <item>zNear is larger than zFar</item>
+        ///  </list>
         /// </exception>
         public static Matrix4 CreatePerspectiveOffCenter
         (
@@ -1213,10 +1225,12 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Build a world space to camera space matrix.
         /// </summary>
-        /// <param name="eye">Eye (camera) position in world space</param>
-        /// Target position in world space./param>
-        /// <param name="up">Up vector in world space (should not be parallel to the camera direction, that is target - eye)</param>
-        /// A Matrix4 that transforms world space to camera space./returns>
+        /// <param name="eye">Eye (camera) position in world space.</param>
+        /// <param name="target">Target position in world space.</param>
+        /// <param name="up">
+        /// Up vector in world space (should not be parallel to the camera direction, that is target - eye).
+        /// </param>
+        /// <returns>A Matrix4 that transforms world space to camera space.</returns>
         public static Matrix4 LookAt(Vector3 eye, Vector3 target, Vector3 up)
         {
             var z = Vector3.Normalize(eye - target);
@@ -1248,22 +1262,22 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Build a world space to camera space matrix.
         /// </summary>
-        /// <param name="eyeX">Eye (camera) X-position in world space</param>
-        /// <param name="eyeY">Eye (camera) Y-position in world space</param>
-        /// <param name="eyeZ">Eye (camera) Z-position in world space</param>
-        /// Target X-position in world space./param>
-        /// Target Y-position in world space./param>
-        /// Target Z-position in world space./param>
+        /// <param name="eyeX">Eye (camera) X-position in world space.</param>
+        /// <param name="eyeY">Eye (camera) Y-position in world space.</param>
+        /// <param name="eyeZ">Eye (camera) Z-position in world space.</param>
+        /// <param name="targetX">Target X-position in world space.</param>
+        /// <param name="targetY">Target Y-position in world space.</param>
+        /// <param name="targetZ">Target Z-position in world space.</param>
         /// <param name="upX">
-        /// X of the up vector in world space (should not be parallel to the camera direction, that is target - eye)
+        /// X of the up vector in world space (should not be parallel to the camera direction, that is target - eye).
         /// </param>
         /// <param name="upY">
-        /// Y of the up vector in world space (should not be parallel to the camera direction, that is target - eye)
+        /// Y of the up vector in world space (should not be parallel to the camera direction, that is target - eye).
         /// </param>
         /// <param name="upZ">
-        /// Z of the up vector in world space (should not be parallel to the camera direction, that is target - eye)
+        /// Z of the up vector in world space (should not be parallel to the camera direction, that is target - eye).
         /// </param>
-        /// A Matrix4 that transforms world space to camera space./returns>
+        /// <returns>A Matrix4 that transforms world space to camera space.</returns>
         public static Matrix4 LookAt
         (
             float eyeX,
@@ -1603,7 +1617,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         /// <param name="left">left-hand operand.</param>
         /// <param name="right">right-hand operand.</param>
-        /// A new Matrix4 which holds the result of the multiplication./returns>
+        /// <returns>A new Matrix4 which holds the result of the multiplication.</returns>
         public static Matrix4 operator *(Matrix4 left, Matrix4 right)
         {
             return Mult(left, right);
@@ -1614,7 +1628,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         /// <param name="left">left-hand operand.</param>
         /// <param name="right">right-hand operand.</param>
-        /// A new Matrix4 which holds the result of the multiplication./returns>
+        /// <returns>A new Matrix4 which holds the result of the multiplication.</returns>
         public static Matrix4 operator *(Matrix4 left, float right)
         {
             return Mult(left, right);
@@ -1625,7 +1639,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         /// <param name="left">left-hand operand.</param>
         /// <param name="right">right-hand operand.</param>
-        /// A new Matrix4 which holds the result of the addition./returns>
+        /// <returns>A new Matrix4 which holds the result of the addition.</returns>
         public static Matrix4 operator +(Matrix4 left, Matrix4 right)
         {
             return Add(left, right);
@@ -1636,7 +1650,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         /// <param name="left">left-hand operand.</param>
         /// <param name="right">right-hand operand.</param>
-        /// A new Matrix4 which holds the result of the subtraction./returns>
+        /// <returns>A new Matrix4 which holds the result of the subtraction.</returns>
         public static Matrix4 operator -(Matrix4 left, Matrix4 right)
         {
             return Subtract(left, right);

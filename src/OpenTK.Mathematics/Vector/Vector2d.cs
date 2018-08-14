@@ -70,7 +70,7 @@ namespace OpenTK.Mathematics
         public static readonly int SizeInBytes = Marshal.SizeOf<Vector2>();
 
         /// <summary>
-        /// Constructs a new instance.
+        /// Initializes a new instance of the <see cref="Vector2d"/> struct.
         /// </summary>
         /// <param name="value">The value that will initialize this instance.</param>
         public Vector2d(double value)
@@ -80,7 +80,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Constructs left vector with the given coordinates.
+        /// Initializes a new instance of the <see cref="Vector2d"/> struct.
         /// </summary>
         /// <param name="x">The X coordinate.</param>
         /// <param name="y">The Y coordinate.</param>
@@ -93,6 +93,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Gets or sets the value at the index of the Vector.
         /// </summary>
+        /// <param name="index">The index.</param>
         public double this[int index]
         {
             get
@@ -156,7 +157,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Returns a copy of the Vector2d scaled to unit length.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The vector.</returns>
         public Vector2d Normalized()
         {
             var v = this;
@@ -868,10 +869,7 @@ namespace OpenTK.Mathematics
 
         private static readonly string ListSeparator = CultureInfo.CurrentCulture.TextInfo.ListSeparator;
 
-        /// <summary>
-        /// Returns a System.String that represents the current instance.
-        /// </summary>
-        /// <returns></returns>
+        /// <inheritdoc/>
         public override string ToString()
         {
             return string.Format("({0}{2} {1})", X, Y, ListSeparator);

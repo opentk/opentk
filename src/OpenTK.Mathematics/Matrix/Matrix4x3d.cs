@@ -58,12 +58,12 @@ namespace OpenTK.Mathematics
         public static Matrix4x3d Zero = new Matrix4x3d(Vector3d.Zero, Vector3d.Zero, Vector3d.Zero, Vector3d.Zero);
 
         /// <summary>
-        /// Constructs a new instance.
+        /// Initializes a new instance of the <see cref="Matrix4x3d"/> struct.
         /// </summary>
-        /// Top row of the matrix./param>
-        /// Second row of the matrix./param>
-        /// Third row of the matrix./param>
-        /// Bottom row of the matrix./param>
+        /// <param name="row0">Top row of the matrix.</param>
+        /// <param name="row1">Second row of the matrix.</param>
+        /// <param name="row2">Third row of the matrix.</param>
+        /// <param name="row3">Bottom row of the matrix.</param>
         public Matrix4x3d(Vector3d row0, Vector3d row1, Vector3d row2, Vector3d row3)
         {
             Row0 = row0;
@@ -73,7 +73,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Constructs a new instance.
+        /// Initializes a new instance of the <see cref="Matrix4x3d"/> struct.
         /// </summary>
         /// <param name="m00">First item of the first row of the matrix.</param>
         /// <param name="m01">Second item of the first row of the matrix.</param>
@@ -254,6 +254,8 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Gets or sets the value at a specified row and column.
         /// </summary>
+        /// <param name="rowIndex">The index of the row.</param>
+        /// <param name="columnIndex">The index of the column.</param>
         public double this[int rowIndex, int columnIndex]
         {
             get
@@ -858,7 +860,7 @@ namespace OpenTK.Mathematics
         /// Calculate the inverse of the given matrix.
         /// </summary>
         /// <param name="mat">The matrix to invert.</param>
-        /// The inverse of the given matrix if it has one, or the input if it is singular./param>
+        /// <param name="result">The inverse of the given matrix if it has one, or the input if it is singular.</param>
         /// <exception cref="InvalidOperationException">Thrown if the Matrix4 is singular.</exception>
         public static void Invert(ref Matrix4x3d mat, out Matrix4x3d result)
         {
@@ -907,7 +909,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         /// <param name="left">left-hand operand.</param>
         /// <param name="right">right-hand operand.</param>
-        /// A new Matrix4d which holds the result of the multiplication./returns>
+        /// <returns>A new Matrix4d which holds the result of the multiplication.</returns>
         public static Matrix4d operator *(Matrix4x3d left, Matrix3x4d right)
         {
             return Mult(left, right);
@@ -918,7 +920,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         /// <param name="left">left-hand operand.</param>
         /// <param name="right">right-hand operand.</param>
-        /// A new Matrix4x3d which holds the result of the multiplication./returns>
+        /// <returns>A new Matrix4x3d which holds the result of the multiplication.</returns>
         public static Matrix4x3d operator *(Matrix4x3d left, Matrix4x3d right)
         {
             return Mult(left, right);
@@ -929,7 +931,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         /// <param name="left">left-hand operand.</param>
         /// <param name="right">right-hand operand.</param>
-        /// A new Matrix4x3d which holds the result of the multiplication./returns>
+        /// <returns>A new Matrix4x3d which holds the result of the multiplication.</returns>
         public static Matrix4x3d operator *(Matrix4x3d left, double right)
         {
             return Mult(left, right);
@@ -940,7 +942,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         /// <param name="left">left-hand operand.</param>
         /// <param name="right">right-hand operand.</param>
-        /// A new Matrix4x3d which holds the result of the addition./returns>
+        /// <returns>A new Matrix4x3d which holds the result of the addition.</returns>
         public static Matrix4x3d operator +(Matrix4x3d left, Matrix4x3d right)
         {
             return Add(left, right);
@@ -951,7 +953,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         /// <param name="left">left-hand operand.</param>
         /// <param name="right">right-hand operand.</param>
-        /// A new Matrix4x3d which holds the result of the subtraction./returns>
+        /// <returns>A new Matrix4x3d which holds the result of the subtraction.</returns>
         public static Matrix4x3d operator -(Matrix4x3d left, Matrix4x3d right)
         {
             return Subtract(left, right);
