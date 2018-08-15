@@ -49,17 +49,15 @@ namespace OpenTK.OpenAL.Native
         private readonly int AL_STORAGE_AUTOMATIC;
         private readonly int AL_STORAGE_HARDWARE;
 
-        private readonly Delegate_GetBufferMode Imported_GetBufferMode;
-        // typedef ALenum    (__cdecl *EAXGetBufferMode)(ALuint buffer, ALint *value);
+        private readonly ALDelegateGetBufferMode Imported_GetBufferMode;
 
-        private readonly Delegate_SetBufferMode Imported_SetBufferMode;
+        private readonly ALDelegateSetBufferMode Imported_SetBufferMode;
 
         /// <summary>
         /// Constructs a new XRamExtension instance.
         /// </summary>
         public XRamExtension()
         {
-            // Query if Extension supported and retrieve Tokens/Pointers if it is.
             IsInitialized = false;
             if (AL.IsExtensionPresent("EAX-RAM") == false)
             {
@@ -72,8 +70,6 @@ namespace OpenTK.OpenAL.Native
             AL_STORAGE_HARDWARE = AL.GetEnumValue("AL_STORAGE_HARDWARE");
             AL_STORAGE_ACCESSIBLE = AL.GetEnumValue("AL_STORAGE_ACCESSIBLE");
 
-            // Console.WriteLine("RamSize: {0} RamFree: {1} StorageAuto: {2} StorageHW: {3} StorageAccess: {4}",AL_EAX_RAM_SIZE,AL_EAX_RAM_FREE,AL_STORAGE_AUTOMATIC,AL_STORAGE_HARDWARE,AL_STORAGE_ACCESSIBLE);
-
             if (AL_EAX_RAM_SIZE == 0 ||
                 AL_EAX_RAM_FREE == 0 ||
                 AL_STORAGE_AUTOMATIC == 0 ||
@@ -84,16 +80,14 @@ namespace OpenTK.OpenAL.Native
                 return;
             }
 
-            // Console.WriteLine("Free Ram: {0} / {1}",GetRamFree( ),GetRamSize( ));
-
             try
             {
                 Imported_GetBufferMode =
-                    (Delegate_GetBufferMode)Marshal.GetDelegateForFunctionPointer(
-                        AL.GetProcAddress("EAXGetBufferMode"), typeof(Delegate_GetBufferMode));
+                    (ALDelegateGetBufferMode)Marshal.GetDelegateForFunctionPointer(
+                        AL.GetProcAddress("EAXGetBufferMode"), typeof(ALDelegateGetBufferMode));
                 Imported_SetBufferMode =
-                    (Delegate_SetBufferMode)Marshal.GetDelegateForFunctionPointer(
-                        AL.GetProcAddress("EAXSetBufferMode"), typeof(Delegate_SetBufferMode));
+                    (ALDelegateSetBufferMode)Marshal.GetDelegateForFunctionPointer(
+                        AL.GetProcAddress("EAXSetBufferMode"), typeof(ALDelegateSetBufferMode));
             }
             catch (Exception e)
             {
@@ -165,21 +159,18 @@ namespace OpenTK.OpenAL.Native
         /// <returns>The current Mode of the Buffer.</returns>
         public XRamStorage GetBufferMode(ref uint buffer)
         {
-            var tempresult =
-                Imported_GetBufferMode(buffer,
-                    IntPtr.Zero); // IntPtr.Zero due to the parameter being unused/reserved atm
+            var tempResult = Imported_GetBufferMode(buffer, IntPtr.Zero);
 
-            if (tempresult == AL_STORAGE_ACCESSIBLE)
+            if (tempResult == AL_STORAGE_ACCESSIBLE)
             {
                 return XRamStorage.Accessible;
             }
 
-            if (tempresult == AL_STORAGE_HARDWARE)
+            if (tempResult == AL_STORAGE_HARDWARE)
             {
                 return XRamStorage.Hardware;
             }
 
-            // default:
             return XRamStorage.Automatic;
         }
 
@@ -194,10 +185,8 @@ namespace OpenTK.OpenAL.Native
             return GetBufferMode(ref temp);
         }
 
-        private delegate bool Delegate_SetBufferMode(int n, ref uint buffers, int value);
-        // typedef ALboolean (__cdecl *EAXSetBufferMode)(ALsizei n, ALuint *buffers, ALint value);
+        private delegate bool ALDelegateSetBufferMode(int n, ref uint buffers, int value);
 
-        // [CLSCompliant( false )]
-        private delegate int Delegate_GetBufferMode(uint buffer, IntPtr value);
+        private delegate int ALDelegateGetBufferMode(uint buffer, IntPtr value);
     }
 }

@@ -1,7 +1,7 @@
 ﻿namespace OpenTK.OpenAL.Native
 {
     /// <summary>
-    /// A list of valid float[] Listener/GetListener parameters
+    /// A list of valid float[] Listener/GetListener parameters.
     /// </summary>
     public enum ALListenerfv
     {

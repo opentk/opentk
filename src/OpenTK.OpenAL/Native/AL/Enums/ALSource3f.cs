@@ -1,7 +1,7 @@
 ﻿namespace OpenTK.OpenAL.Native
 {
     /// <summary>
-    /// A list of valid Math.Vector3 Source/GetSource parameters
+    /// A list of valid Math.Vector3 Source/GetSource parameters.
     /// </summary>
     public enum ALSource3f
     {

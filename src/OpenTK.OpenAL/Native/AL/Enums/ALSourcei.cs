@@ -1,7 +1,7 @@
 ﻿namespace OpenTK.OpenAL.Native
 {
     /// <summary>
-    /// A list of valid Int32 Source parameters
+    /// A list of valid Int32 Source parameters.
     /// </summary>
     public enum ALSourcei
     {
@@ -21,13 +21,12 @@
         Buffer = 0x1009,
 
         /// <summary>
-        /// Source type (Static, Streaming or undetermined). Use enum AlSourceType for comparison
+        /// Source type (Static, Streaming or undetermined). Use enum AlSourceType for comparison.
         /// </summary>
         SourceType = 0x1027,
 
         /// <summary>
         /// (EFX Extension) This Source property is used to apply filtering on the direct-path (dry signal) of a Source.
-        /// ///
         /// </summary>
         EfxDirectFilter = 0x20005
     }

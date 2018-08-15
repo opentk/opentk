@@ -2,12 +2,12 @@
 {
     /// <summary>
     /// Used by AL.DistanceModel(), the distance model can be retrieved by AL.Get() with
-    /// ALGetInteger.DistanceModel /// ///
+    /// ALGetInteger.DistanceModel.
     /// </summary>
     public enum ALDistanceModel
     {
         /// <summary>
-        /// Bypasses all distance attenuation calculation for all Sources. ///
+        /// Bypasses all distance attenuation calculation for all Sources.
         /// </summary>
         None = 0,
 

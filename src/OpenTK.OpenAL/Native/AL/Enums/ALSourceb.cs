@@ -1,12 +1,12 @@
 ﻿namespace OpenTK.OpenAL.Native
 {
     /// <summary>
-    /// A list of valid 8-bit boolean Source/GetSource parameters
+    /// A list of valid 8-bit boolean Source/GetSource parameters.
     /// </summary>
     public enum ALSourceb
     {
         /// <summary>
-        /// Indicate that the Source has relative coordinates. Type: bool Range: [True, False]
+        /// Indicate that the Source has relative coordinates. Type: bool Range: [True, False].
         /// </summary>
         SourceRelative = 0x202,
 

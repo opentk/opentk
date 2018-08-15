@@ -1,7 +1,7 @@
 ﻿namespace OpenTK.OpenAL.Native
 {
     /// <summary>
-    /// Returned by AL.GetError
+    /// Returned by AL.GetError.
     /// </summary>
     public enum ALError
     {
