@@ -139,7 +139,7 @@ namespace OpenTK.NT.Native
         /// property exists.
         /// </summary>
         [FieldOffset(102)]
-        private readonly char _formName;
+        private char _formName;
 
         /// <summary>
         /// For displays, specifies the number of logical pixels per inch of a display device and should be equal
