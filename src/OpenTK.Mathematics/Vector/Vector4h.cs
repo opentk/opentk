@@ -57,7 +57,7 @@ namespace OpenTK.Mathematics
         public Half W;
 
         /// <summary>
-        /// Constructs a new instance.
+        /// Initializes a new instance of the <see cref="Vector4h"/> struct.
         /// </summary>
         /// <param name="value">The value that will initialize this instance.</param>
         public Vector4h(Half value)
@@ -69,7 +69,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Constructs a new instance.
+        /// Initializes a new instance of the <see cref="Vector4h"/> struct.
         /// </summary>
         /// <param name="value">The value that will initialize this instance.</param>
         public Vector4h(float value)
@@ -81,12 +81,12 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// The new Half4 instance will avoid conversion and copy directly from the Half parameters.
+        /// Initializes a new instance of the <see cref="Vector4h"/> struct.
         /// </summary>
-        /// <param name="x">An Half instance of a 16-bit half-precision floating-point number.</param>
-        /// <param name="y">An Half instance of a 16-bit half-precision floating-point number.</param>
-        /// <param name="z">An Half instance of a 16-bit half-precision floating-point number.</param>
-        /// <param name="w">An Half instance of a 16-bit half-precision floating-point number.</param>
+        /// <param name="x">The X component of the vector.</param>
+        /// <param name="y">The Y component of the vector.</param>
+        /// <param name="z">The Z component of the vector.</param>
+        /// <param name="w">The W component of the vector.</param>
         public Vector4h(Half x, Half y, Half z, Half w)
         {
             X = x;
@@ -96,12 +96,12 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// The new Half4 instance will convert the 4 parameters into 16-bit half-precision floating-point.
+        /// Initializes a new instance of the <see cref="Vector4h"/> struct.
         /// </summary>
-        /// <param name="x">32-bit single-precision floating-point number.</param>
-        /// <param name="y">32-bit single-precision floating-point number.</param>
-        /// <param name="z">32-bit single-precision floating-point number.</param>
-        /// <param name="w">32-bit single-precision floating-point number.</param>
+        /// <param name="x">The X component of the vector.</param>
+        /// <param name="y">The Y component of the vector.</param>
+        /// <param name="z">The Z component of the vector.</param>
+        /// <param name="w">The W component of the vector.</param>
         public Vector4h(float x, float y, float z, float w)
         {
             X = new Half(x);
@@ -111,12 +111,12 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// The new Half4 instance will convert the 4 parameters into 16-bit half-precision floating-point.
+        /// Initializes a new instance of the <see cref="Vector4h"/> struct.
         /// </summary>
-        /// <param name="x">32-bit single-precision floating-point number.</param>
-        /// <param name="y">32-bit single-precision floating-point number.</param>
-        /// <param name="z">32-bit single-precision floating-point number.</param>
-        /// <param name="w">32-bit single-precision floating-point number.</param>
+        /// <param name="x">The X component of the vector.</param>
+        /// <param name="y">The Y component of the vector.</param>
+        /// <param name="z">The Z component of the vector.</param>
+        /// <param name="w">The W component of the vector.</param>
         /// <param name="throwOnError">Enable checks that will throw if the conversion result is not meaningful.</param>
         public Vector4h(float x, float y, float z, float w, bool throwOnError)
         {
@@ -127,9 +127,9 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// The new Half4 instance will convert the Vector4 into 16-bit half-precision floating-point.
+        /// Initializes a new instance of the <see cref="Vector4h"/> struct.
         /// </summary>
-        /// <param name="v">OpenTK.Vector4</param>
+        /// <param name="v">The <see cref="Vector4"/> to convert.</param>
         public Vector4h(Vector4 v)
         {
             X = new Half(v.X);
@@ -139,9 +139,9 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// The new Half4 instance will convert the Vector4 into 16-bit half-precision floating-point.
+        /// Initializes a new instance of the <see cref="Vector4h"/> struct.
         /// </summary>
-        /// <param name="v">OpenTK.Vector4</param>
+        /// <param name="v">The <see cref="Vector4"/> to convert.</param>
         /// <param name="throwOnError">Enable checks that will throw if the conversion result is not meaningful.</param>
         public Vector4h(Vector4 v, bool throwOnError)
         {
@@ -152,10 +152,9 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// The new Half4 instance will convert the Vector4 into 16-bit half-precision floating-point.
-        /// This is the fastest constructor.
+        /// Initializes a new instance of the <see cref="Vector4h"/> struct.
         /// </summary>
-        /// <param name="v">OpenTK.Vector4</param>
+        /// <param name="v">The <see cref="Vector4"/> to convert.</param>
         public Vector4h(ref Vector4 v)
         {
             X = new Half(v.X);
@@ -165,9 +164,9 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// The new Half4 instance will convert the Vector4 into 16-bit half-precision floating-point.
+        /// Initializes a new instance of the <see cref="Vector4h"/> struct.
         /// </summary>
-        /// <param name="v">OpenTK.Vector4</param>
+        /// <param name="v">The <see cref="Vector4"/> to convert.</param>
         /// <param name="throwOnError">Enable checks that will throw if the conversion result is not meaningful.</param>
         public Vector4h(ref Vector4 v, bool throwOnError)
         {
@@ -178,9 +177,9 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// The new Half4 instance will convert the Vector4d into 16-bit half-precision floating-point.
+        /// Initializes a new instance of the <see cref="Vector4h"/> struct.
         /// </summary>
-        /// <param name="v">OpenTK.Vector4d</param>
+        /// <param name="v">The <see cref="Vector4d"/> to convert.</param>
         public Vector4h(Vector4d v)
         {
             X = new Half(v.X);
@@ -190,9 +189,9 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// The new Half4 instance will convert the Vector4d into 16-bit half-precision floating-point.
+        /// Initializes a new instance of the <see cref="Vector4h"/> struct.
         /// </summary>
-        /// <param name="v">OpenTK.Vector4d</param>
+        /// <param name="v">The <see cref="Vector4d"/> to convert.</param>
         /// <param name="throwOnError">Enable checks that will throw if the conversion result is not meaningful.</param>
         public Vector4h(Vector4d v, bool throwOnError)
         {
@@ -203,10 +202,9 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// The new Half4 instance will convert the Vector4d into 16-bit half-precision floating-point.
-        /// This is the faster constructor.
+        /// Initializes a new instance of the <see cref="Vector4h"/> struct.
         /// </summary>
-        /// <param name="v">OpenTK.Vector4d</param>
+        /// <param name="v">The <see cref="Vector4d"/> to convert.</param>
         public Vector4h(ref Vector4d v)
         {
             X = new Half(v.X);
@@ -216,9 +214,9 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// The new Half4 instance will convert the Vector4d into 16-bit half-precision floating-point.
+        /// Initializes a new instance of the <see cref="Vector4h"/> struct.
         /// </summary>
-        /// <param name="v">OpenTK.Vector4d</param>
+        /// <param name="v">The <see cref="Vector4d"/> to convert.</param>
         /// <param name="throwOnError">Enable checks that will throw if the conversion result is not meaningful.</param>
         public Vector4h(ref Vector4d v, bool throwOnError)
         {
@@ -1191,7 +1189,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Returns this Half4 instance's contents as Vector4.
         /// </summary>
-        /// <returns>OpenTK.Vector4</returns>
+        /// <returns>The vector.</returns>
         public Vector4 ToVector4()
         {
             return new Vector4(X, Y, Z, W);
@@ -1200,6 +1198,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Returns this Half4 instance's contents as Vector4d.
         /// </summary>
+        /// <returns>The vector.</returns>
         public Vector4d ToVector4d()
         {
             return new Vector4d(X, Y, Z, W);
@@ -1259,10 +1258,10 @@ namespace OpenTK.Mathematics
         public static readonly int SizeInBytes = 8;
 
         /// <summary>
-        /// Constructor used by ISerializable to deserialize the object.
+        /// Initializes a new instance of the <see cref="Vector4h"/> struct.
         /// </summary>
-        /// <param name="info"></param>
-        /// <param name="context"></param>
+        /// <param name="info">The serialization info.</param>
+        /// <param name="context">The streaming context.</param>
         public Vector4h(SerializationInfo info, StreamingContext context)
         {
             X = (Half)info.GetValue("X", typeof(Half));
@@ -1271,11 +1270,7 @@ namespace OpenTK.Mathematics
             W = (Half)info.GetValue("W", typeof(Half));
         }
 
-        /// <summary>
-        /// Used by ISerialize to serialize the object.
-        /// </summary>
-        /// <param name="info"></param>
-        /// <param name="context"></param>
+        /// <inheritdoc />
         public void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             info.AddValue("X", X);
@@ -1320,9 +1315,7 @@ namespace OpenTK.Mathematics
 
         private static readonly string ListSeparator = CultureInfo.CurrentCulture.TextInfo.ListSeparator;
 
-        /// <summary>
-        /// Returns a string that contains this Half4's numbers in human-legible form.
-        /// </summary>
+        /// <inheritdoc/>
         public override string ToString()
         {
             return string.Format

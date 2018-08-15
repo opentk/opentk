@@ -58,11 +58,11 @@ namespace OpenTK.Mathematics
         public static readonly Matrix3 Zero = new Matrix3(Vector3.Zero, Vector3.Zero, Vector3.Zero);
 
         /// <summary>
-        /// Constructs a new instance.
+        /// Initializes a new instance of the <see cref="Matrix3"/> struct.
         /// </summary>
-        /// <param name="row0">Top row of the matrix</param>
-        /// <param name="row1">Second row of the matrix</param>
-        /// <param name="row2">Bottom row of the matrix</param>
+        /// <param name="row0">Top row of the matrix.</param>
+        /// <param name="row1">Second row of the matrix.</param>
+        /// <param name="row2">Bottom row of the matrix.</param>
         public Matrix3(Vector3 row0, Vector3 row1, Vector3 row2)
         {
             Row0 = row0;
@@ -71,7 +71,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Constructs a new instance.
+        /// Initializes a new instance of the <see cref="Matrix3"/> struct.
         /// </summary>
         /// <param name="m00">First item of the first row of the matrix.</param>
         /// <param name="m01">Second item of the first row of the matrix.</param>
@@ -101,7 +101,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Constructs a new instance.
+        /// Initializes a new instance of the <see cref="Matrix3"/> struct.
         /// </summary>
         /// <param name="matrix">A Matrix4 to take the upper-left 3x3 from.</param>
         public Matrix3(Matrix4 matrix)
@@ -251,6 +251,8 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Gets or sets the value at a specified row and column.
         /// </summary>
+        /// <param name="rowIndex">The index of the row.</param>
+        /// <param name="columnIndex">The index of the column.</param>
         public float this[int rowIndex, int columnIndex]
         {
             get
@@ -315,6 +317,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Returns a normalised copy of this instance.
         /// </summary>
+        /// <returns>The matrix.</returns>
         public Matrix3 Normalized()
         {
             var m = this;
@@ -336,6 +339,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Returns an inverted copy of this instance.
         /// </summary>
+        /// <returns>The matrix.</returns>
         public Matrix3 Inverted()
         {
             var m = this;
@@ -350,6 +354,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Returns a copy of this Matrix3 without scale.
         /// </summary>
+        /// <returns>The matrix.</returns>
         public Matrix3 ClearScale()
         {
             var m = this;
@@ -362,6 +367,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Returns a copy of this Matrix3 without rotation.
         /// </summary>
+        /// <returns>The matrix.</returns>
         public Matrix3 ClearRotation()
         {
             var m = this;
@@ -374,6 +380,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Returns the scale component of this instance.
         /// </summary>
+        /// <returns>The scale components.</returns>
         public Vector3 ExtractScale()
         {
             return new Vector3(Row0.Length, Row1.Length, Row2.Length);
@@ -386,6 +393,7 @@ namespace OpenTK.Mathematics
         /// Whether the method should row-normalise (i.e. remove scale from) the Matrix. Pass false if
         /// you know it's already normalised.
         /// </param>
+        /// <returns>The rotation.</returns>
         public Quaternion ExtractRotation(bool row_normalise = true)
         {
             var row0 = Row0;
@@ -712,7 +720,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         /// <param name="left">The left operand of the multiplication.</param>
         /// <param name="right">The right operand of the multiplication.</param>
-        /// <returns>A new instance that is the result of the multiplication</returns>
+        /// <returns>A new instance that is the result of the multiplication.</returns>
         public static Matrix3 Mult(Matrix3 left, Matrix3 right)
         {
             Mult(ref left, ref right, out Matrix3 result);
@@ -724,7 +732,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         /// <param name="left">The left operand of the multiplication.</param>
         /// <param name="right">The right operand of the multiplication.</param>
-        /// <param name="result">A new instance that is the result of the multiplication</param>
+        /// <param name="result">A new instance that is the result of the multiplication.</param>
         public static void Mult(ref Matrix3 left, ref Matrix3 right, out Matrix3 result)
         {
             float lM11 = left.Row0.X,
@@ -758,10 +766,10 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Calculate the inverse of the given matrix
+        /// Calculate the inverse of the given matrix.
         /// </summary>
-        /// <param name="mat">The matrix to invert</param>
-        /// <param name="result">The inverse of the given matrix if it has one, or the input if it is singular</param>
+        /// <param name="mat">The matrix to invert.</param>
+        /// <param name="result">The inverse of the given matrix if it has one, or the input if it is singular.</param>
         /// <exception cref="InvalidOperationException">Thrown if the Matrix3 is singular.</exception>
         public static void Invert(ref Matrix3 mat, out Matrix3 result)
         {
@@ -873,10 +881,10 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Calculate the inverse of the given matrix
+        /// Calculate the inverse of the given matrix.
         /// </summary>
-        /// <param name="mat">The matrix to invert</param>
-        /// <returns>The inverse of the given matrix if it has one, or the input if it is singular</returns>
+        /// <param name="mat">The matrix to invert.</param>
+        /// <returns>The inverse of the given matrix.</returns>
         /// <exception cref="InvalidOperationException">Thrown if the Matrix4 is singular.</exception>
         public static Matrix3 Invert(Matrix3 mat)
         {
@@ -885,20 +893,20 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Calculate the transpose of the given matrix
+        /// Calculate the transpose of the given matrix.
         /// </summary>
-        /// <param name="mat">The matrix to transpose</param>
-        /// <returns>The transpose of the given matrix</returns>
+        /// <param name="mat">The matrix to transpose.</param>
+        /// <returns>The transpose of the given matrix.</returns>
         public static Matrix3 Transpose(Matrix3 mat)
         {
             return new Matrix3(mat.Column0, mat.Column1, mat.Column2);
         }
 
         /// <summary>
-        /// Calculate the transpose of the given matrix
+        /// Calculate the transpose of the given matrix.
         /// </summary>
-        /// <param name="mat">The matrix to transpose</param>
-        /// <param name="result">The result of the calculation</param>
+        /// <param name="mat">The matrix to transpose.</param>
+        /// <param name="result">The result of the calculation.</param>
         public static void Transpose(ref Matrix3 mat, out Matrix3 result)
         {
             result.Row0.X = mat.Row0.X;
@@ -913,11 +921,11 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Matrix multiplication
+        /// Matrix multiplication.
         /// </summary>
-        /// <param name="left">left-hand operand</param>
-        /// <param name="right">right-hand operand</param>
-        /// <returns>A new Matrix3d which holds the result of the multiplication</returns>
+        /// <param name="left">left-hand operand.</param>
+        /// <param name="right">right-hand operand.</param>
+        /// <returns>A new Matrix3d which holds the result of the multiplication.</returns>
         public static Matrix3 operator *(Matrix3 left, Matrix3 right)
         {
             return Mult(left, right);

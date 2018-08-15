@@ -43,7 +43,7 @@ namespace OpenTK.Mathematics
         public float Parallel;
 
         /// <summary>
-        /// Constructs a new <see cref="BezierCurveQuadric"/>.
+        /// Initializes a new instance of the <see cref="BezierCurveQuadric"/> struct.
         /// </summary>
         /// <param name="startAnchor">The start anchor.</param>
         /// <param name="endAnchor">The end anchor.</param>
@@ -57,7 +57,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Constructs a new <see cref="BezierCurveQuadric"/>.
+        /// Initializes a new instance of the <see cref="BezierCurveQuadric"/> struct.
         /// </summary>
         /// <param name="parallel">The parallel value.</param>
         /// <param name="startAnchor">The start anchor.</param>

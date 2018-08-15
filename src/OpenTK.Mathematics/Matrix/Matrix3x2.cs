@@ -50,7 +50,7 @@ namespace OpenTK.Mathematics
         public static readonly Matrix3x2 Zero = new Matrix3x2(Vector2.Zero, Vector2.Zero, Vector2.Zero);
 
         /// <summary>
-        /// Constructs a new instance.
+        /// Initializes a new instance of the <see cref="Matrix3x2"/> struct.
         /// </summary>
         /// <param name="row0">Top row of the matrix.</param>
         /// <param name="row1">Second row of the matrix.</param>
@@ -63,7 +63,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Constructs a new instance
+        /// Initializes a new instance of the <see cref="Matrix3x2"/> struct.
         /// </summary>
         /// <param name="m00">First item of the first row of the matrix.</param>
         /// <param name="m01">Second item of the first row of the matrix.</param>
@@ -189,6 +189,8 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Gets or sets the value at a specified row and column.
         /// </summary>
+        /// <param name="rowIndex">The index of the row.</param>
+        /// <param name="columnIndex">The index of the column.</param>
         public float this[int rowIndex, int columnIndex]
         {
             get
@@ -588,9 +590,9 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Scalar multiplication.
         /// </summary>
-        /// <param name="left">left-hand operand</param>
-        /// <param name="right">right-hand operand</param>
-        /// <returns>A new Matrix3x2 which holds the result of the multiplication</returns>
+        /// <param name="left">left-hand operand.</param>
+        /// <param name="right">right-hand operand.</param>
+        /// <returns>A new Matrix3x2 which holds the result of the multiplication.</returns>
         public static Matrix3x2 operator *(float left, Matrix3x2 right)
         {
             return Mult(right, left);
@@ -599,64 +601,64 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Scalar multiplication.
         /// </summary>
-        /// <param name="left">left-hand operand</param>
-        /// <param name="right">right-hand operand</param>
-        /// <returns>A new Matrix3x2 which holds the result of the multiplication</returns>
+        /// <param name="left">left-hand operand.</param>
+        /// <param name="right">right-hand operand.</param>
+        /// <returns>A new Matrix3x2 which holds the result of the multiplication.</returns>
         public static Matrix3x2 operator *(Matrix3x2 left, float right)
         {
             return Mult(left, right);
         }
 
         /// <summary>
-        /// Matrix multiplication
+        /// Matrix multiplication.
         /// </summary>
-        /// <param name="left">left-hand operand</param>
-        /// <param name="right">right-hand operand</param>
-        /// <returns>A new Matrix3x2 which holds the result of the multiplication</returns>
+        /// <param name="left">left-hand operand.</param>
+        /// <param name="right">right-hand operand.</param>
+        /// <returns>A new Matrix3x2 which holds the result of the multiplication.</returns>
         public static Matrix3x2 operator *(Matrix3x2 left, Matrix2 right)
         {
             return Mult(left, right);
         }
 
         /// <summary>
-        /// Matrix multiplication
+        /// Matrix multiplication.
         /// </summary>
-        /// <param name="left">left-hand operand</param>
-        /// <param name="right">right-hand operand</param>
-        /// <returns>A new Matrix3 which holds the result of the multiplication</returns>
+        /// <param name="left">left-hand operand.</param>
+        /// <param name="right">right-hand operand.</param>
+        /// <returns>A new Matrix3 which holds the result of the multiplication.</returns>
         public static Matrix3 operator *(Matrix3x2 left, Matrix2x3 right)
         {
             return Mult(left, right);
         }
 
         /// <summary>
-        /// Matrix multiplication
+        /// Matrix multiplication.
         /// </summary>
-        /// <param name="left">left-hand operand</param>
-        /// <param name="right">right-hand operand</param>
-        /// <returns>A new Matrix3x4 which holds the result of the multiplication</returns>
+        /// <param name="left">left-hand operand.</param>
+        /// <param name="right">right-hand operand.</param>
+        /// <returns>A new Matrix3x4 which holds the result of the multiplication.</returns>
         public static Matrix3x4 operator *(Matrix3x2 left, Matrix2x4 right)
         {
             return Mult(left, right);
         }
 
         /// <summary>
-        /// Matrix addition
+        /// Matrix addition.
         /// </summary>
-        /// <param name="left">left-hand operand</param>
-        /// <param name="right">right-hand operand</param>
-        /// <returns>A new Matrix3x2 which holds the result of the addition</returns>
+        /// <param name="left">left-hand operand.</param>
+        /// <param name="right">right-hand operand.</param>
+        /// <returns>A new Matrix3x2 which holds the result of the addition.</returns>
         public static Matrix3x2 operator +(Matrix3x2 left, Matrix3x2 right)
         {
             return Add(left, right);
         }
 
         /// <summary>
-        /// Matrix subtraction
+        /// Matrix subtraction.
         /// </summary>
-        /// <param name="left">left-hand operand</param>
-        /// <param name="right">right-hand operand</param>
-        /// <returns>A new Matrix3x2 which holds the result of the subtraction</returns>
+        /// <param name="left">left-hand operand.</param>
+        /// <param name="right">right-hand operand.</param>
+        /// <returns>A new Matrix3x2 which holds the result of the subtraction.</returns>
         public static Matrix3x2 operator -(Matrix3x2 left, Matrix3x2 right)
         {
             return Subtract(left, right);

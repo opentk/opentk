@@ -25,7 +25,7 @@ using System;
 namespace OpenTK.Mathematics
 {
     /// <summary>
-    /// Represents a 2x2 matrix
+    /// Represents a 2x2 matrix.
     /// </summary>
     public struct Matrix2d : IEquatable<Matrix2d>
     {
@@ -50,7 +50,7 @@ namespace OpenTK.Mathematics
         public static readonly Matrix2d Zero = new Matrix2d(Vector2d.Zero, Vector2d.Zero);
 
         /// <summary>
-        /// Constructs a new instance.
+        /// Initializes a new instance of the <see cref="Matrix2d"/> struct.
         /// </summary>
         /// <param name="row0">Top row of the matrix.</param>
         /// <param name="row1">Bottom row of the matrix.</param>
@@ -61,7 +61,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Constructs a new instance
+        /// Initializes a new instance of the <see cref="Matrix2d"/> struct.
         /// </summary>
         /// <param name="m00">First item of the first row of the matrix.</param>
         /// <param name="m01">Second item of the first row of the matrix.</param>
@@ -178,6 +178,8 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Gets or sets the value at a specified row and column.
         /// </summary>
+        /// <param name="rowIndex">The index of the row.</param>
+        /// <param name="columnIndex">The index of the column.</param>
         public double this[int rowIndex, int columnIndex]
         {
             get
@@ -527,10 +529,10 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Calculate the inverse of the given matrix
+        /// Calculate the inverse of the given matrix.
         /// </summary>
-        /// <param name="mat">The matrix to invert</param>
-        /// <param name="result">The inverse of the given matrix if it has one, or the input if it is singular</param>
+        /// <param name="mat">The matrix to invert.</param>
+        /// <param name="result">The inverse of the given matrix if it has one, or the input if it is singular.</param>
         /// <exception cref="InvalidOperationException">Thrown if the Matrix2d is singular.</exception>
         public static void Invert(ref Matrix2d mat, out Matrix2d result)
         {
@@ -550,11 +552,12 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Calculate the inverse of the given matrix
+        /// Calculate the inverse of the given matrix.
         /// </summary>
-        /// <param name="mat">The matrix to invert</param>
-        /// <returns>The inverse of the given matrix if it has one, or the input if it is singular</returns>
+        /// <param name="mat">The matrix to invert.</param>
+        /// <returns>The inverse of the given matrix.</returns>
         /// <exception cref="InvalidOperationException">Thrown if the Matrix2d is singular.</exception>
+        /// <returns>The inverted matrix.</returns>
         public static Matrix2d Invert(Matrix2d mat)
         {
             Invert(ref mat, out Matrix2d result);
@@ -588,9 +591,9 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Scalar multiplication.
         /// </summary>
-        /// <param name="left">left-hand operand</param>
-        /// <param name="right">right-hand operand</param>
-        /// <returns>A new Matrix2d which holds the result of the multiplication</returns>
+        /// <param name="left">left-hand operand.</param>
+        /// <param name="right">right-hand operand.</param>
+        /// <returns>A new Matrix2d which holds the result of the multiplication.</returns>
         public static Matrix2d operator *(double left, Matrix2d right)
         {
             return Mult(right, left);
@@ -599,64 +602,64 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Scalar multiplication.
         /// </summary>
-        /// <param name="left">left-hand operand</param>
-        /// <param name="right">right-hand operand</param>
-        /// <returns>A new Matrix2d which holds the result of the multiplication</returns>
+        /// <param name="left">left-hand operand.</param>
+        /// <param name="right">right-hand operand.</param>
+        /// <returns>A new Matrix2d which holds the result of the multiplication.</returns>
         public static Matrix2d operator *(Matrix2d left, double right)
         {
             return Mult(left, right);
         }
 
         /// <summary>
-        /// Matrix multiplication
+        /// Matrix multiplication.
         /// </summary>
-        /// <param name="left">left-hand operand</param>
-        /// <param name="right">right-hand operand</param>
-        /// <returns>A new Matrix2d which holds the result of the multiplication</returns>
+        /// <param name="left">left-hand operand.</param>
+        /// <param name="right">right-hand operand.</param>
+        /// <returns>A new Matrix2d which holds the result of the multiplication.</returns>
         public static Matrix2d operator *(Matrix2d left, Matrix2d right)
         {
             return Mult(left, right);
         }
 
         /// <summary>
-        /// Matrix multiplication
+        /// Matrix multiplication.
         /// </summary>
-        /// <param name="left">left-hand operand</param>
-        /// <param name="right">right-hand operand</param>
-        /// <returns>A new Matrix2x3d which holds the result of the multiplication</returns>
+        /// <param name="left">left-hand operand.</param>
+        /// <param name="right">right-hand operand.</param>
+        /// <returns>A new Matrix2x3d which holds the result of the multiplication.</returns>
         public static Matrix2x3d operator *(Matrix2d left, Matrix2x3d right)
         {
             return Mult(left, right);
         }
 
         /// <summary>
-        /// Matrix multiplication
+        /// Matrix multiplication.
         /// </summary>
-        /// <param name="left">left-hand operand</param>
-        /// <param name="right">right-hand operand</param>
-        /// <returns>A new Matrix2x4d which holds the result of the multiplication</returns>
+        /// <param name="left">left-hand operand.</param>
+        /// <param name="right">right-hand operand.</param>
+        /// <returns>A new Matrix2x4d which holds the result of the multiplication.</returns>
         public static Matrix2x4d operator *(Matrix2d left, Matrix2x4d right)
         {
             return Mult(left, right);
         }
 
         /// <summary>
-        /// Matrix addition
+        /// Matrix addition.
         /// </summary>
-        /// <param name="left">left-hand operand</param>
-        /// <param name="right">right-hand operand</param>
-        /// <returns>A new Matrix2d which holds the result of the addition</returns>
+        /// <param name="left">left-hand operand.</param>
+        /// <param name="right">right-hand operand.</param>
+        /// <returns>A new Matrix2d which holds the result of the addition.</returns>
         public static Matrix2d operator +(Matrix2d left, Matrix2d right)
         {
             return Add(left, right);
         }
 
         /// <summary>
-        /// Matrix subtraction
+        /// Matrix subtraction.
         /// </summary>
-        /// <param name="left">left-hand operand</param>
-        /// <param name="right">right-hand operand</param>
-        /// <returns>A new Matrix2d which holds the result of the subtraction</returns>
+        /// <param name="left">left-hand operand.</param>
+        /// <param name="right">right-hand operand.</param>
+        /// <returns>A new Matrix2d which holds the result of the subtraction.</returns>
         public static Matrix2d operator -(Matrix2d left, Matrix2d right)
         {
             return Subtract(left, right);

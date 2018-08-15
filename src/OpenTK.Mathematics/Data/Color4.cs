@@ -55,7 +55,7 @@ namespace OpenTK.Mathematics
         public float A;
 
         /// <summary>
-        /// Constructs a new Color4 structure from the specified components.
+        /// Initializes a new instance of the <see cref="Color4"/> struct.
         /// </summary>
         /// <param name="r">The red component of the new Color4 structure.</param>
         /// <param name="g">The green component of the new Color4 structure.</param>
@@ -70,7 +70,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Constructs a new Color4 structure from the specified components.
+        /// Initializes a new instance of the <see cref="Color4"/> struct.
         /// </summary>
         /// <param name="r">The red component of the new Color4 structure.</param>
         /// <param name="g">The green component of the new Color4 structure.</param>
@@ -989,47 +989,47 @@ namespace OpenTK.Mathematics
             var saturation = hsl.Y;
             var lightness = hsl.Z;
 
-            var C = (1.0f - Math.Abs((2.0f * lightness) - 1.0f)) * saturation;
+            var c = (1.0f - Math.Abs((2.0f * lightness) - 1.0f)) * saturation;
 
             var h = hue / 60.0f;
-            var X = C * (1.0f - Math.Abs((h % 2.0f) - 1.0f));
+            var x = c * (1.0f - Math.Abs((h % 2.0f) - 1.0f));
 
             float r, g, b;
             if (h >= 0.0f && h < 1.0f)
             {
-                r = C;
-                g = X;
+                r = c;
+                g = x;
                 b = 0.0f;
             }
             else if (h >= 1.0f && h < 2.0f)
             {
-                r = X;
-                g = C;
+                r = x;
+                g = c;
                 b = 0.0f;
             }
             else if (h >= 2.0f && h < 3.0f)
             {
                 r = 0.0f;
-                g = C;
-                b = X;
+                g = c;
+                b = x;
             }
             else if (h >= 3.0f && h < 4.0f)
             {
                 r = 0.0f;
-                g = X;
-                b = C;
+                g = x;
+                b = c;
             }
             else if (h >= 4.0f && h < 5.0f)
             {
-                r = X;
+                r = x;
                 g = 0.0f;
-                b = C;
+                b = c;
             }
             else if (h >= 5.0f && h < 6.0f)
             {
-                r = C;
+                r = c;
                 g = 0.0f;
-                b = X;
+                b = x;
             }
             else
             {
@@ -1038,7 +1038,7 @@ namespace OpenTK.Mathematics
                 b = 0.0f;
             }
 
-            var m = lightness - (C / 2.0f);
+            var m = lightness - (c / 2.0f);
             return new Color4(r + m, g + m, b + m, hsl.W);
         }
 
@@ -1054,22 +1054,22 @@ namespace OpenTK.Mathematics
         /// <param name="rgb">Color value to convert.</param>
         public static Vector4 ToHsl(Color4 rgb)
         {
-            var M = Math.Max(rgb.R, Math.Max(rgb.G, rgb.B));
-            var m = Math.Min(rgb.R, Math.Min(rgb.G, rgb.B));
-            var C = M - m;
+            var max = Math.Max(rgb.R, Math.Max(rgb.G, rgb.B));
+            var min = Math.Min(rgb.R, Math.Min(rgb.G, rgb.B));
+            var diff = max - min;
 
             var h = 0.0f;
-            if (M == rgb.R)
+            if (max == rgb.R)
             {
-                h = (rgb.G - rgb.B) / C;
+                h = (rgb.G - rgb.B) / diff;
             }
-            else if (M == rgb.G)
+            else if (max == rgb.G)
             {
-                h = ((rgb.B - rgb.R) / C) + 2.0f;
+                h = ((rgb.B - rgb.R) / diff) + 2.0f;
             }
-            else if (M == rgb.B)
+            else if (max == rgb.B)
             {
-                h = ((rgb.R - rgb.G) / C) + 4.0f;
+                h = ((rgb.R - rgb.G) / diff) + 4.0f;
             }
 
             var hue = h / 6.0f;
@@ -1078,12 +1078,12 @@ namespace OpenTK.Mathematics
                 hue += 1.0f;
             }
 
-            var lightness = (M + m) / 2.0f;
+            var lightness = (max + min) / 2.0f;
 
             var saturation = 0.0f;
             if (lightness != 0.0f && lightness != 1.0f)
             {
-                saturation = C / (1.0f - Math.Abs((2.0f * lightness) - 1.0f));
+                saturation = diff / (1.0f - Math.Abs((2.0f * lightness) - 1.0f));
             }
 
             return new Vector4(hue, saturation, lightness, rgb.A);
@@ -1107,47 +1107,47 @@ namespace OpenTK.Mathematics
             var saturation = hsv.Y;
             var value = hsv.Z;
 
-            var C = value * saturation;
+            var c = value * saturation;
 
             var h = hue / 60.0f;
-            var X = C * (1.0f - Math.Abs((h % 2.0f) - 1.0f));
+            var x = c * (1.0f - Math.Abs((h % 2.0f) - 1.0f));
 
             float r, g, b;
             if (h >= 0.0f && h < 1.0f)
             {
-                r = C;
-                g = X;
+                r = c;
+                g = x;
                 b = 0.0f;
             }
             else if (h >= 1.0f && h < 2.0f)
             {
-                r = X;
-                g = C;
+                r = x;
+                g = c;
                 b = 0.0f;
             }
             else if (h >= 2.0f && h < 3.0f)
             {
                 r = 0.0f;
-                g = C;
-                b = X;
+                g = c;
+                b = x;
             }
             else if (h >= 3.0f && h < 4.0f)
             {
                 r = 0.0f;
-                g = X;
-                b = C;
+                g = x;
+                b = c;
             }
             else if (h >= 4.0f && h < 5.0f)
             {
-                r = X;
+                r = x;
                 g = 0.0f;
-                b = C;
+                b = c;
             }
             else if (h >= 5.0f && h < 6.0f)
             {
-                r = C;
+                r = c;
                 g = 0.0f;
-                b = X;
+                b = x;
             }
             else
             {
@@ -1156,7 +1156,7 @@ namespace OpenTK.Mathematics
                 b = 0.0f;
             }
 
-            var m = value - C;
+            var m = value - c;
             return new Color4(r + m, g + m, b + m, hsv.W);
         }
 
@@ -1172,33 +1172,33 @@ namespace OpenTK.Mathematics
         /// <param name="rgb">Color value to convert.</param>
         public static Vector4 ToHsv(Color4 rgb)
         {
-            var M = Math.Max(rgb.R, Math.Max(rgb.G, rgb.B));
-            var m = Math.Min(rgb.R, Math.Min(rgb.G, rgb.B));
-            var C = M - m;
+            var max = Math.Max(rgb.R, Math.Max(rgb.G, rgb.B));
+            var min = Math.Min(rgb.R, Math.Min(rgb.G, rgb.B));
+            var diff = max - min;
 
             var h = 0.0f;
-            if (M == rgb.R)
+            if (max == rgb.R)
             {
-                h = ((rgb.G - rgb.B) / C) % 6.0f;
+                h = ((rgb.G - rgb.B) / diff) % 6.0f;
             }
-            else if (M == rgb.G)
+            else if (max == rgb.G)
             {
-                h = ((rgb.B - rgb.R) / C) + 2.0f;
+                h = ((rgb.B - rgb.R) / diff) + 2.0f;
             }
-            else if (M == rgb.B)
+            else if (max == rgb.B)
             {
-                h = ((rgb.R - rgb.G) / C) + 4.0f;
+                h = ((rgb.R - rgb.G) / diff) + 4.0f;
             }
 
             var hue = h * 60.0f / 360.0f;
 
             var saturation = 0.0f;
-            if (M != 0.0f)
+            if (max != 0.0f)
             {
-                saturation = C / M;
+                saturation = diff / max;
             }
 
-            return new Vector4(hue, saturation, M, rgb.A);
+            return new Vector4(hue, saturation, max, rgb.A);
         }
 
         /// <summary>
@@ -1295,48 +1295,48 @@ namespace OpenTK.Mathematics
         public static Color4 FromHcy(Vector4 hcy)
         {
             var hue = hcy.X * 360.0f;
-            var C = hcy.Y;
+            var y = hcy.Y;
             var luminance = hcy.Z;
 
             var h = hue / 60.0f;
-            var X = C * (1.0f - Math.Abs((h % 2.0f) - 1.0f));
+            var x = y * (1.0f - Math.Abs((h % 2.0f) - 1.0f));
 
             float r, g, b;
             if (h >= 0.0f && h < 1.0f)
             {
-                r = C;
-                g = X;
+                r = y;
+                g = x;
                 b = 0.0f;
             }
             else if (h >= 1.0f && h < 2.0f)
             {
-                r = X;
-                g = C;
+                r = x;
+                g = y;
                 b = 0.0f;
             }
             else if (h >= 2.0f && h < 3.0f)
             {
                 r = 0.0f;
-                g = C;
-                b = X;
+                g = y;
+                b = x;
             }
             else if (h >= 3.0f && h < 4.0f)
             {
                 r = 0.0f;
-                g = X;
-                b = C;
+                g = x;
+                b = y;
             }
             else if (h >= 4.0f && h < 5.0f)
             {
-                r = X;
+                r = x;
                 g = 0.0f;
-                b = C;
+                b = y;
             }
             else if (h >= 5.0f && h < 6.0f)
             {
-                r = C;
+                r = y;
                 g = 0.0f;
-                b = X;
+                b = x;
             }
             else
             {
@@ -1361,29 +1361,29 @@ namespace OpenTK.Mathematics
         /// <param name="rgb">Color value to convert.</param>
         public static Vector4 ToHcy(Color4 rgb)
         {
-            var M = Math.Max(rgb.R, Math.Max(rgb.G, rgb.B));
-            var m = Math.Min(rgb.R, Math.Min(rgb.G, rgb.B));
-            var C = M - m;
+            var max = Math.Max(rgb.R, Math.Max(rgb.G, rgb.B));
+            var min = Math.Min(rgb.R, Math.Min(rgb.G, rgb.B));
+            var diff = max - min;
 
             var h = 0.0f;
-            if (M == rgb.R)
+            if (max == rgb.R)
             {
-                h = ((rgb.G - rgb.B) / C) % 6.0f;
+                h = ((rgb.G - rgb.B) / diff) % 6.0f;
             }
-            else if (M == rgb.G)
+            else if (max == rgb.G)
             {
-                h = ((rgb.B - rgb.R) / C) + 2.0f;
+                h = ((rgb.B - rgb.R) / diff) + 2.0f;
             }
-            else if (M == rgb.B)
+            else if (max == rgb.B)
             {
-                h = ((rgb.R - rgb.G) / C) + 4.0f;
+                h = ((rgb.R - rgb.G) / diff) + 4.0f;
             }
 
             var hue = h * 60.0f / 360.0f;
 
             var luminance = (0.30f * rgb.R) + (0.59f * rgb.G) + (0.11f * rgb.B);
 
-            return new Vector4(hue, C, luminance, rgb.A);
+            return new Vector4(hue, diff, luminance, rgb.A);
         }
 
         /// <summary>

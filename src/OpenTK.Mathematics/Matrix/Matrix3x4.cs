@@ -26,38 +26,38 @@ using System.Runtime.InteropServices;
 namespace OpenTK.Mathematics
 {
     /// <summary>
-    /// Represents a 3x4 Matrix
+    /// Represents a 3x4 Matrix.
     /// </summary>
     [Serializable]
     [StructLayout(LayoutKind.Sequential)]
     public struct Matrix3x4 : IEquatable<Matrix3x4>
     {
         /// <summary>
-        /// Top row of the matrix
+        /// Top row of the matrix.
         /// </summary>
         public Vector4 Row0;
 
         /// <summary>
-        /// 2nd row of the matrix
+        /// 2nd row of the matrix.
         /// </summary>
         public Vector4 Row1;
 
         /// <summary>
-        /// Bottom row of the matrix
+        /// Bottom row of the matrix.
         /// </summary>
         public Vector4 Row2;
 
         /// <summary>
-        /// The zero matrix
+        /// The zero matrix.
         /// </summary>
         public static Matrix3x4 Zero = new Matrix3x4(Vector4.Zero, Vector4.Zero, Vector4.Zero);
 
         /// <summary>
-        /// Constructs a new instance.
+        /// Initializes a new instance of the <see cref="Matrix3x4"/> struct.
         /// </summary>
-        /// <param name="row0">Top row of the matrix</param>
-        /// <param name="row1">Second row of the matrix</param>
-        /// <param name="row2">Bottom row of the matrix</param>
+        /// <param name="row0">Top row of the matrix.</param>
+        /// <param name="row1">Second row of the matrix.</param>
+        /// <param name="row2">Bottom row of the matrix.</param>
         public Matrix3x4(Vector4 row0, Vector4 row1, Vector4 row2)
         {
             Row0 = row0;
@@ -66,7 +66,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Constructs a new instance.
+        /// Initializes a new instance of the <see cref="Matrix3x4"/> struct.
         /// </summary>
         /// <param name="m00">First item of the first row of the matrix.</param>
         /// <param name="m01">Second item of the first row of the matrix.</param>
@@ -251,6 +251,8 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Gets or sets the value at a specified row and column.
         /// </summary>
+        /// <param name="rowIndex">The index of the row.</param>
+        /// <param name="columnIndex">The index of the column.</param>
         public float this[int rowIndex, int columnIndex]
         {
             get
@@ -584,32 +586,32 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Build a scaling matrix
+        /// Build a scaling matrix.
         /// </summary>
-        /// <param name="scale">Single scale factor for x,y and z axes</param>
-        /// <returns>A scaling matrix</returns>
+        /// <param name="scale">Single scale factor for x,y and z axes.</param>
+        /// <returns>A scaling matrix.</returns>
         public static Matrix3x4 CreateScale(float scale)
         {
             return CreateScale(scale, scale, scale);
         }
 
         /// <summary>
-        /// Build a scaling matrix
+        /// Build a scaling matrix.
         /// </summary>
-        /// <param name="scale">Scale factors for x,y and z axes</param>
-        /// <returns>A scaling matrix</returns>
+        /// <param name="scale">Scale factors for x,y and z axes.</param>
+        /// <returns>A scaling matrix.</returns>
         public static Matrix3x4 CreateScale(Vector3 scale)
         {
             return CreateScale(scale.X, scale.Y, scale.Z);
         }
 
         /// <summary>
-        /// Build a scaling matrix
+        /// Build a scaling matrix.
         /// </summary>
-        /// <param name="x">Scale factor for x-axis</param>
-        /// <param name="y">Scale factor for y-axis</param>
-        /// <param name="z">Scale factor for z-axis</param>
-        /// <returns>A scaling matrix</returns>
+        /// <param name="x">Scale factor for x-axis.</param>
+        /// <param name="y">Scale factor for y-axis.</param>
+        /// <param name="z">Scale factor for z-axis.</param>
+        /// <returns>A scaling matrix.</returns>
         public static Matrix3x4 CreateScale(float x, float y, float z)
         {
             Matrix3x4 result;
@@ -633,7 +635,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         /// <param name="left">The left operand of the multiplication.</param>
         /// <param name="right">The right operand of the multiplication.</param>
-        /// <returns>A new instance that is the result of the multiplication</returns>
+        /// <returns>A new instance that is the result of the multiplication.</returns>
         public static Matrix3 Mult(Matrix3x4 left, Matrix4x3 right)
         {
             Mult(ref left, ref right, out Matrix3 result);
@@ -645,7 +647,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         /// <param name="left">The left operand of the multiplication.</param>
         /// <param name="right">The right operand of the multiplication.</param>
-        /// <param name="result">A new instance that is the result of the multiplication</param>
+        /// <param name="result">A new instance that is the result of the multiplication.</param>
         public static void Mult(ref Matrix3x4 left, ref Matrix4x3 right, out Matrix3 result)
         {
             float lM11 = left.Row0.X,
@@ -689,7 +691,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         /// <param name="left">The left operand of the multiplication.</param>
         /// <param name="right">The right operand of the multiplication.</param>
-        /// <returns>A new instance that is the result of the multiplication</returns>
+        /// <returns>A new instance that is the result of the multiplication.</returns>
         public static Matrix3x4 Mult(Matrix3x4 left, Matrix3x4 right)
         {
             Mult(ref left, ref right, out Matrix3x4 result);
@@ -701,7 +703,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         /// <param name="left">The left operand of the multiplication.</param>
         /// <param name="right">The right operand of the multiplication.</param>
-        /// <param name="result">A new instance that is the result of the multiplication</param>
+        /// <param name="result">A new instance that is the result of the multiplication.</param>
         public static void Mult(ref Matrix3x4 left, ref Matrix3x4 right, out Matrix3x4 result)
         {
             float lM11 = left.Row0.X,
@@ -757,7 +759,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         /// <param name="left">The left operand of the multiplication.</param>
         /// <param name="right">The right operand of the multiplication.</param>
-        /// <returns>A new instance that is the result of the multiplication</returns>
+        /// <returns>A new instance that is the result of the multiplication.</returns>
         public static Matrix3x4 Mult(Matrix3x4 left, float right)
         {
             Mult(ref left, right, out Matrix3x4 result);
@@ -769,7 +771,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         /// <param name="left">The left operand of the multiplication.</param>
         /// <param name="right">The right operand of the multiplication.</param>
-        /// <param name="result">A new instance that is the result of the multiplication</param>
+        /// <param name="result">A new instance that is the result of the multiplication.</param>
         public static void Mult(ref Matrix3x4 left, float right, out Matrix3x4 result)
         {
             result.Row0 = left.Row0 * right;
@@ -828,10 +830,10 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Calculate the inverse of the given matrix
+        /// Calculate the inverse of the given matrix.
         /// </summary>
-        /// <param name="mat">The matrix to invert</param>
-        /// <returns>The inverse of the given matrix if it has one, or the input if it is singular</returns>
+        /// <param name="mat">The matrix to invert.</param>
+        /// <returns>The inverse of the given matrix.</returns>
         /// <exception cref="InvalidOperationException">Thrown if the Matrix4 is singular.</exception>
         public static Matrix3x4 Invert(Matrix3x4 mat)
         {
@@ -840,10 +842,10 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Calculate the inverse of the given matrix
+        /// Calculate the inverse of the given matrix.
         /// </summary>
-        /// <param name="mat">The matrix to invert</param>
-        /// <param name="result">The inverse of the given matrix if it has one, or the input if it is singular</param>
+        /// <param name="mat">The matrix to invert.</param>
+        /// <param name="result">The inverse of the given matrix if it has one, or the input if it is singular.</param>
         /// <exception cref="InvalidOperationException">Thrown if the Matrix4 is singular.</exception>
         public static void Invert(ref Matrix3x4 mat, out Matrix3x4 result)
         {
@@ -860,20 +862,20 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Calculate the transpose of the given matrix
+        /// Calculate the transpose of the given matrix.
         /// </summary>
-        /// <param name="mat">The matrix to transpose</param>
-        /// <returns>The transpose of the given matrix</returns>
+        /// <param name="mat">The matrix to transpose.</param>
+        /// <returns>The transpose of the given matrix.</returns>
         public static Matrix4x3 Transpose(Matrix3x4 mat)
         {
             return new Matrix4x3(mat.Column0, mat.Column1, mat.Column2, mat.Column3);
         }
 
         /// <summary>
-        /// Calculate the transpose of the given matrix
+        /// Calculate the transpose of the given matrix.
         /// </summary>
-        /// <param name="mat">The matrix to transpose</param>
-        /// <param name="result">The result of the calculation</param>
+        /// <param name="mat">The matrix to transpose.</param>
+        /// <param name="result">The result of the calculation.</param>
         public static void Transpose(ref Matrix3x4 mat, out Matrix4x3 result)
         {
             result.Row0 = mat.Column0;
@@ -883,55 +885,55 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Matrix multiplication
+        /// Matrix multiplication.
         /// </summary>
-        /// <param name="left">left-hand operand</param>
-        /// <param name="right">right-hand operand</param>
-        /// <returns>A new Matrix3 which holds the result of the multiplication</returns>
+        /// <param name="left">left-hand operand.</param>
+        /// <param name="right">right-hand operand.</param>
+        /// <returns>A new Matrix3 which holds the result of the multiplication.</returns>
         public static Matrix3 operator *(Matrix3x4 left, Matrix4x3 right)
         {
             return Mult(left, right);
         }
 
         /// <summary>
-        /// Matrix-scalar multiplication
+        /// Matrix-scalar multiplication.
         /// </summary>
-        /// <param name="left">left-hand operand</param>
-        /// <param name="right">right-hand operand</param>
-        /// <returns>A new Matrix3x4 which holds the result of the multiplication</returns>
+        /// <param name="left">left-hand operand.</param>
+        /// <param name="right">right-hand operand.</param>
+        /// <returns>A new Matrix3x4 which holds the result of the multiplication.</returns>
         public static Matrix3x4 operator *(Matrix3x4 left, Matrix3x4 right)
         {
             return Mult(left, right);
         }
 
         /// <summary>
-        /// Matrix-scalar multiplication
+        /// Matrix-scalar multiplication.
         /// </summary>
-        /// <param name="left">left-hand operand</param>
-        /// <param name="right">right-hand operand</param>
-        /// <returns>A new Matrix3x4 which holds the result of the multiplication</returns>
+        /// <param name="left">left-hand operand.</param>
+        /// <param name="right">right-hand operand.</param>
+        /// <returns>A new Matrix3x4 which holds the result of the multiplication.</returns>
         public static Matrix3x4 operator *(Matrix3x4 left, float right)
         {
             return Mult(left, right);
         }
 
         /// <summary>
-        /// Matrix addition
+        /// Matrix addition.
         /// </summary>
-        /// <param name="left">left-hand operand</param>
-        /// <param name="right">right-hand operand</param>
-        /// <returns>A new Matrix3x4 which holds the result of the addition</returns>
+        /// <param name="left">left-hand operand.</param>
+        /// <param name="right">right-hand operand.</param>
+        /// <returns>A new Matrix3x4 which holds the result of the addition.</returns>
         public static Matrix3x4 operator +(Matrix3x4 left, Matrix3x4 right)
         {
             return Add(left, right);
         }
 
         /// <summary>
-        /// Matrix subtraction
+        /// Matrix subtraction.
         /// </summary>
-        /// <param name="left">left-hand operand</param>
-        /// <param name="right">right-hand operand</param>
-        /// <returns>A new Matrix3x4 which holds the result of the subtraction</returns>
+        /// <param name="left">left-hand operand.</param>
+        /// <param name="right">right-hand operand.</param>
+        /// <returns>A new Matrix3x4 which holds the result of the subtraction.</returns>
         public static Matrix3x4 operator -(Matrix3x4 left, Matrix3x4 right)
         {
             return Subtract(left, right);
