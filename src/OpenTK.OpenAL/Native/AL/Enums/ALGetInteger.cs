@@ -8,7 +8,7 @@
         /// <summary>
         /// See enum ALDistanceModel.
         /// </summary>
-        /// <see cref="ALDistanceModel" />
+        /// <see cref="ALDistanceModel"/>
         DistanceModel = 0xD000
     }
 }

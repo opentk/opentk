@@ -191,7 +191,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Returns a copy of the Quaternion scaled to unit length.
         /// </summary>
-        /// <returns>The normalized copy.</returns>
+        /// <returns>The normalized Quaternion.</returns>
         public Quaternion Normalized()
         {
             var q = this;
@@ -210,7 +210,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Returns a copy of this Quaterniond with its rotation angle reversed.
         /// </summary>
-        /// <returns>The inverted copy.</returns>
+        /// <returns>The inverted Quaternion.</returns>
         public Quaternion Inverted()
         {
             var q = this;

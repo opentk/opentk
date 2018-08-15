@@ -19,7 +19,7 @@ namespace OpenTK.Platform
         /// This delegate represents any method that takes no arguments and returns an int.
         /// I would have used Func but that requires .NET 4
         /// </summary>
-        /// <returns>The int value that your method returns</returns>
+        /// <returns>The int value that your method returns.</returns>
         public delegate int GetInt();
     }
 
@@ -287,8 +287,8 @@ namespace OpenTK.Platform
 /// <param name="windowHandle">The handle of the window.</param>
 /// <param name="ownHandle">Ignored. This is reserved for future use.</param>
 /// <param name="isControl">Set to true if windowHandle corresponds to a System.Windows.Forms control.</param>
-/// <param name="xOffset">The X offset for the GL viewport</param>
-/// <param name="yOffset">The Y offset for the GL viewport</param>
+/// <param name="xOffset">The X offset for the GL viewport.</param>
+/// <param name="yOffset">The Y offset for the GL viewport.</param>
 /// <returns>A new IWindowInfo instance.</returns>
         public static IWindowInfo CreateMacOSCarbonWindowInfo(IntPtr windowHandle, bool ownHandle, bool isControl,
             OpenTK.Platform.MacOS.GetInt xOffset, OpenTK.Platform.MacOS.GetInt yOffset)

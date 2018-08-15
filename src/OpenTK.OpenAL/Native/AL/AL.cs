@@ -99,7 +99,7 @@ namespace OpenTK.OpenAL.Native
         /// its code.
         /// </summary>
         /// <returns>
-        /// The first error that occured. can be used with <see cref="AL.GetString"/>. Returns an Alenum representing the error state.
+        /// The first error that occured. can be used with <see cref="Get(OpenTK.OpenAL.Native.ALGetString)"/>. Returns an Alenum representing the error state.
         /// When an OpenAL error occurs, the error state is set and will not be changed until the error state is retrieved
         /// using alGetError. Whenever alGetError is called, the error state is cleared and the last state (the current state
         /// when the call was made) is returned. To isolate error detection to a specific portion of code, alGetError should be
@@ -296,7 +296,7 @@ namespace OpenTK.OpenAL.Native
 
         /// <summary>
         /// This function generates one or more sources. References to sources are uint values, which are used wherever a
-        /// source reference is needed (in calls such as <see cref="AL.DeleteSources"/> and <see cref="AL.Source"/> with parameter ALSourcei).
+        /// source reference is needed (in calls such as <see cref="DeleteSources(int,uint*)"/> and <see cref="AL.Source"/> with parameter ALSourcei).
         /// </summary>
         /// <param name="n">The number of sources to be generated.</param>
         /// <param name="sources">Pointer to an array of uint values which will store the names of the new sources.</param>

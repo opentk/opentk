@@ -12,7 +12,9 @@ namespace OpenTK.Convert
         /// <summary>
         /// Gets or sets the prefix to remove from parsed functions and constants.
         /// </summary>
-        [Option('p', "prefix",
+        [Option(
+            'p',
+            "prefix",
             HelpText = "The prefix to remove from parsed functions and constants.",
             Required = true,
             Default = "gl")]
@@ -21,7 +23,9 @@ namespace OpenTK.Convert
         /// <summary>
         /// Gets or sets the path to the output file. Defaults to stdout if no path is provided.
         /// </summary>
-        [Option('o', "output-file",
+        [Option(
+            'o',
+            "output-file",
             HelpText = "The path to the output file. Defaults to stdout if no path is provided.")]
         public string OutputFile { get; set; }
 
@@ -29,9 +33,10 @@ namespace OpenTK.Convert
         /// Gets or sets a list of the Khronos XML files to parse into OpenTK XML. Remote resources in the form of URLs are
         /// supported.
         /// </summary>
-        [Option('i', "input-files",
-            HelpText =
-                "A list of the Khronos XML files to parse into OpenTK XML. Remote resources in the form of URLs are supported.",
+        [Option(
+            'i',
+            "input-files",
+            HelpText = "A list of the Khronos XML files to parse into OpenTK XML. Remote resources in the form of URLs are supported.",
             Required = true)]
         public IEnumerable<string> InputFiles { get; set; }
 
@@ -43,11 +48,9 @@ namespace OpenTK.Convert
         {
             get
             {
-                yield return new Example
-                (
+                yield return new Example(
                     "Converting local files",
-                    new Options { Prefix = "gl", OutputFile = "signatures.xml", InputFiles = new[] { "gl.xml" } }
-                );
+                    new Options { Prefix = "gl", OutputFile = "signatures.xml", InputFiles = new[] { "gl.xml" } });
 
                 yield return new Example
                 (
@@ -57,7 +60,9 @@ namespace OpenTK.Convert
                         Prefix = "gl",
                         OutputFile = "signatures.xml",
                         InputFiles = new[]
-                            { "https://cvs.khronos.org/svn/repos/ogl/trunk/doc/registry/public/api/gl.xml" }
+                            {
+                                "https://cvs.khronos.org/svn/repos/ogl/trunk/doc/registry/public/api/gl.xml",
+                            },
                     }
                 );
             }

@@ -5,6 +5,7 @@
     <RootNamespace>Convert</RootNamespace>
     <TargetFramework>net461</TargetFramework>
     <Deterministic>true</Deterministic>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup>

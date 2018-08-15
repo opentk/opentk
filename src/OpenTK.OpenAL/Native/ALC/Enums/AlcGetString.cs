@@ -1,7 +1,7 @@
 ﻿namespace OpenTK.OpenAL.Native
 {
     /// <summary>
-    /// Defines available parameters for <see cref="Alc.GetString(System.IntPtr,OpenTK.OpenAL.Native.AlcGetString)" />.
+    /// Defines available parameters for <see cref="Alc.GetString(System.IntPtr,OpenTK.OpenAL.Native.AlcGetString)"/>.
     /// </summary>
     public enum AlcGetString
     {

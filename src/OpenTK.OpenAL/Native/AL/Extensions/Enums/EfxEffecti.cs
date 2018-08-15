@@ -1,4 +1,11 @@
-﻿namespace OpenTK.OpenAL.Native
+﻿/* EfxEffecti.cs
+ * C headers: \OpenAL 1.1 SDK\include\ "efx.h", "efx-creative.h", "Efx-Util.h"
+ * Spec: Effects Extension Guide.pdf (bundled with OpenAL SDK)
+ * Copyright (c) 2008 Christoph Brandtner and Stefanos Apostolopoulos
+ * See license.txt for license details
+ * http://www.OpenTK.net */
+
+namespace OpenTK.OpenAL.Native
 {
     /// <summary>
     /// A list of valid Int32 Effect/GetEffect parameters.
@@ -97,7 +104,7 @@
         /// Enabling this will result in audio exhibiting smaller variation in intensity between the loudest and quietest
         /// portions. Unit: (0) Off, (1) On Range [0 .. 1] Default: 1
         /// </summary>
-        CompressorOnoff = 0x0001,
+        CompressorOnOff = 0x0001,
 
         /// <summary>
         /// When this flag is set, the high-frequency decay time automatically stays below a limit value that's derived
@@ -114,6 +121,6 @@
         /// <summary>
         /// Used with the enum EfxEffectType as it's parameter.
         /// </summary>
-        EffectType = 0x8001
+        EffectType = 0x8001,
     }
 }

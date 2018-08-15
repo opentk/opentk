@@ -28,11 +28,20 @@ using OpenTK.OpenAL.Native;
 
 namespace OpenTK.OpenAL
 {
+    /// <summary>
+    /// A helper struct to mark a region with a using statement to be error checked for ALC errors, which get checked at the end of the using block or with a dispose statement.
+    /// </summary>
     internal struct AudioDeviceErrorChecker : IDisposable
     {
-        private readonly IntPtr Device;
         private static readonly string ErrorString = "Device {0} reported {1}.";
 
+        private readonly IntPtr _device;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AudioDeviceErrorChecker"/> struct.
+        /// </summary>
+        /// <param name="device">The ALC device handle.</param>
+        /// <exception cref="AudioDeviceException">Thrown if <paramref name="device"/> is <seealso cref="IntPtr.Zero"/>.</exception>
         public AudioDeviceErrorChecker(IntPtr device)
         {
             if (device == IntPtr.Zero)
@@ -40,25 +49,32 @@ namespace OpenTK.OpenAL
                 throw new AudioDeviceException();
             }
 
-            Device = device;
+            this._device = device;
         }
 
+        /// <summary>
+        /// Checks for ALC errors.
+        /// </summary>
+        /// <exception cref="OutOfMemoryException">Thrown if an out of memory error occured in ALC.</exception>
+        /// <exception cref="AudioValueException">Thrown if an invalid error occured in ALC.</exception>
+        /// <exception cref="AudioDeviceException">Thrown if an invalid device error occured in ALC.</exception>
+        /// <exception cref="AudioContextException">Thrown if an invalid context error occured in ALC.</exception>
         public void Dispose()
         {
-            var err = Alc.GetError(Device);
+            var err = Alc.GetError(_device);
             switch (err)
             {
                 case AlcError.OutOfMemory:
-                    throw new OutOfMemoryException(string.Format(ErrorString, Device, err));
+                    throw new OutOfMemoryException(string.Format(ErrorString, _device, err));
 
                 case AlcError.InvalidValue:
-                    throw new AudioValueException(string.Format(ErrorString, Device, err));
+                    throw new AudioValueException(string.Format(ErrorString, _device, err));
 
                 case AlcError.InvalidDevice:
-                    throw new AudioDeviceException(string.Format(ErrorString, Device, err));
+                    throw new AudioDeviceException(string.Format(ErrorString, _device, err));
 
                 case AlcError.InvalidContext:
-                    throw new AudioContextException(string.Format(ErrorString, Device, err));
+                    throw new AudioContextException(string.Format(ErrorString, _device, err));
 
                 case AlcError.NoError:
                 default:

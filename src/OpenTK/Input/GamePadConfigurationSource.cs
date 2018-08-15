@@ -37,8 +37,8 @@ namespace OpenTK.Input
         /// <summary>
         /// Creates a new gamepad configuration source from an axis or a button
         /// </summary>
-        /// <param name="isAxis">Whether this source is an axis or a button</param>
-        /// <param name="index">The index of this source</param>
+        /// <param name="isAxis">Whether this source is an axis or a button.</param>
+        /// <param name="index">The index of this source.</param>
         public GamePadConfigurationSource(bool isAxis, int index)
             : this()
         {
@@ -57,8 +57,8 @@ namespace OpenTK.Input
         /// <summary>
         /// Creates a new gamepad configuration source from a hat
         /// </summary>
-        /// <param name="hat">The hat</param>
-        /// <param name="pos">The starting hat position</param>
+        /// <param name="hat">The hat.</param>
+        /// <param name="pos">The starting hat position.</param>
         public GamePadConfigurationSource(JoystickHat hat, HatPosition pos)
             : this()
         {

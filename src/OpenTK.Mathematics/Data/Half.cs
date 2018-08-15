@@ -406,14 +406,14 @@ namespace OpenTK.Mathematics
         /// Initializes a new instance of the <see cref="Half"/> struct.
         /// Used by <see cref="ISerializable"/> to deserialize the object.
         /// </summary>
+        /// <param name="info">The object that contains a serialized <see cref="Half"/> struct.</param>
+        /// <param name="context">The destination for this serialization. (This parameter is not used; specify null.).</param>
         public Half(SerializationInfo info, StreamingContext context)
         {
             _bits = (ushort)info.GetValue("bits", typeof(ushort));
         }
 
-        /// <summary>
-        /// Used by <see cref="ISerializable"/> to serialize the object.
-        /// </summary>
+        /// <inheritdoc/>
         public void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             info.AddValue("bits", _bits);

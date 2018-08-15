@@ -1,4 +1,11 @@
-﻿namespace OpenTK.OpenAL.Native
+﻿/* EfxEffectType.cs
+ * C headers: \OpenAL 1.1 SDK\include\ "efx.h", "efx-creative.h", "Efx-Util.h"
+ * Spec: Effects Extension Guide.pdf (bundled with OpenAL SDK)
+ * Copyright (c) 2008 Christoph Brandtner and Stefanos Apostolopoulos
+ * See license.txt for license details
+ * http://www.OpenTK.net */
+
+namespace OpenTK.OpenAL.Native
 {
     /// <summary>
     /// Effect type definitions to be used with EfxEffecti.EffectType.
@@ -83,6 +90,6 @@
         /// The EAX Reverb has a more advanced parameter set than EfxEffectType.Reverb, but is only natively supported on
         /// devices that support the EAX 3.0 or above.
         /// </summary>
-        EaxReverb = 0x8000
+        EaxReverb = 0x8000,
     }
 }

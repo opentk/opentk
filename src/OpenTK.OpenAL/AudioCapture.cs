@@ -206,8 +206,8 @@ namespace OpenTK.OpenAL
 
         /// <summary>
         /// Start recording samples.
-        /// The number of available samples can be obtained through the <see cref="AvailableSamples" /> property.
-        /// The data can be queried with any <see cref="ReadSamples(IntPtr, int)" /> method.
+        /// The number of available samples can be obtained through the <see cref="AvailableSamples"/> property.
+        /// The data can be queried with any <see cref="ReadSamples(IntPtr, int)"/> method.
         /// </summary>
         public void Start()
         {
@@ -239,7 +239,7 @@ namespace OpenTK.OpenAL
         /// Fills the specified buffer with samples from the internal capture ring-buffer. This method does not block:
         /// it is an error to specify a sampleCount larger than AvailableSamples.
         /// </summary>
-        /// <typeparam name="TBuffer"></typeparam>
+        /// <typeparam name="TBuffer">The type of the samples.</typeparam>
         /// <param name="buffer">The buffer to fill.</param>
         /// <param name="sampleCount">The number of samples to be written to the buffer.</param>
         /// <exception cref="ArgumentNullException">Raised when buffer is null.</exception>
@@ -252,14 +252,14 @@ namespace OpenTK.OpenAL
                 throw new ArgumentNullException(nameof(buffer));
             }
 
-            var buffer_size = BlittableValueType<TBuffer>.Stride * buffer.Length;
+            var bufferSize = BlittableValueType<TBuffer>.Stride * buffer.Length;
 
             // This is more of a heuristic than a 100% valid check. However, it will work
             // correctly for 99.9% of all use cases.
             // This should never produce a false positive, but a false negative might
             // be produced with compressed sample formats (which are very rare).
             // Still, this is better than no check at all.
-            if (sampleCount * GetSampleSize(SampleFormat) > buffer_size)
+            if (sampleCount * GetSampleSize(SampleFormat) > bufferSize)
             {
                 throw new ArgumentOutOfRangeException(nameof(sampleCount));
             }

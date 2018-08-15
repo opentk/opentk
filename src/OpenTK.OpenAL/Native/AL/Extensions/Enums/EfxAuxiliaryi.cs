@@ -1,7 +1,14 @@
-﻿namespace OpenTK.OpenAL.Native
+﻿/* EfxAuxiliaryi.cs
+ * C headers: \OpenAL 1.1 SDK\include\ "efx.h", "efx-creative.h", "Efx-Util.h"
+ * Spec: Effects Extension Guide.pdf (bundled with OpenAL SDK)
+ * Copyright (c) 2008 Christoph Brandtner and Stefanos Apostolopoulos
+ * See license.txt for license details
+ * http://www.OpenTK.net */
+
+namespace OpenTK.OpenAL.Native
 {
     /// <summary>
-    /// A list of valid Int32 AuxiliaryEffectSlot/GetAuxiliaryEffectSlot parameters
+    /// A list of valid Int32 AuxiliaryEffectSlot/GetAuxiliaryEffectSlot parameters.
     /// </summary>
     public enum EfxAuxiliaryi
     {
@@ -18,6 +25,6 @@
         /// sources and the listener. This property should be enabled when an application wishes to use a reverb effect to
         /// simulate the environment surrounding a listener or a collection of Sources. Range [False, True] Default: True
         /// </summary>
-        EffectslotAuxiliarySendAuto = 0x0003
+        EffectslotAuxiliarySendAuto = 0x0003,
     }
 }

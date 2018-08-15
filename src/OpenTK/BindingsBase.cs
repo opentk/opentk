@@ -150,7 +150,7 @@ namespace OpenTK
         /// Marshals a <c>System.String</c> array to unmanaged memory by calling
         /// Marshal.AllocHGlobal for each element.
         /// </summary>
-        /// <returns>An unmanaged pointer to an array of null-terminated strings</returns>
+        /// <returns>An unmanaged pointer to an array of null-terminated strings.</returns>
         /// <param name="str_array">The string array to marshal.</param>
         protected static IntPtr MarshalStringArrayToPtr(string[] str_array)
         {

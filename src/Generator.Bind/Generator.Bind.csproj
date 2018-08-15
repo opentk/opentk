@@ -5,18 +5,16 @@
     <RootNamespace>Bind</RootNamespace>
     <TargetFramework>net461</TargetFramework>
     <Deterministic>true</Deterministic>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
-
   <PropertyGroup>
     <IsPackable>false</IsPackable>
   </PropertyGroup>
-
   <ItemGroup>
     <PackageReference Include="CommandLineParser" Version="2.2.1" />
     <PackageReference Include="Humanizer" Version="2.3.3" />
     <PackageReference Include="System.CodeDom" Version="4.5.0-preview2-26406-04" />
   </ItemGroup>
-
   <Import Project="..\..\props\common.props" />
   <Import Project="..\..\props\netfx-mono.props" />
   <Import Project="..\..\props\stylecop.props" />

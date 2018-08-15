@@ -21,9 +21,9 @@ namespace OpenTK.Platform.Egl
         /// Create an additional rendering surface that shares the display
         /// of this window.
         /// </summary>
-        /// <param name="width">width in pixels</param>
-        /// <param name="height">height in pixels</param>
-        /// <returns>A reference to the new surface</returns>
+        /// <param name="width">width in pixels.</param>
+        /// <param name="height">height in pixels.</param>
+        /// <returns>A reference to the new surface.</returns>
         EGLSurface CreateSurface(int width, int height);
 
         /// <summary>
