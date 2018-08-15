@@ -1,7 +1,7 @@
 ﻿namespace OpenTK.OpenAL.Native
 {
     /// <summary>
-    /// A list of valid Int32 AL.Get() parameters
+    /// A list of valid Int32 AL.Get() parameters.
     /// </summary>
     public enum ALGetInteger
     {

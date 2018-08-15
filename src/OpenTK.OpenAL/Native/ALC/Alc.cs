@@ -13,60 +13,6 @@ using System.Security;
 using System.Text;
 using OpenTK.Core;
 
-/* Type Mapping
-// 8-bit boolean
-typedef char ALCboolean;
- * byte
-// character
-typedef char ALCchar;
- * byte
-// signed 8-bit 2's complement integer
-typedef char ALCbyte;
- * byte
-
-// unsigned 8-bit integer
-typedef unsigned char ALCubyte;
- * ubyte
-
-// signed 16-bit 2's complement integer
-typedef short ALCshort;
- * short
-
-// unsigned 16-bit integer
-typedef unsigned short ALCushort;
- * ushort
-
-// unsigned 32-bit integer
-typedef unsigned int ALCuint;
- * uint
-
-// signed 32-bit 2's complement integer
-typedef int ALCint;
- * int
-// non-negative 32-bit binary integer size
-typedef int ALCsizei;
- * int
-// enumerated 32-bit value
-typedef int ALCenum;
- * int
-
-// 32-bit IEEE754 floating-point
-typedef float ALCfloat;
- * float
-
-// 64-bit IEEE754 floating-point
-typedef double ALCdouble;
- * double
-
-// void type (for opaque pointers only)
-typedef void ALCvoid;
- * void
-
- * ALCdevice
- * ALCcontext *context
- * IntPtr
-*/
-
 namespace OpenTK.OpenAL.Native
 {
     /// <summary>
@@ -74,7 +20,7 @@ namespace OpenTK.OpenAL.Native
     /// </summary>
     public static class Alc
     {
-        private const string Lib = AL.Lib;
+        private const string Lib = AL.Library;
         private const CallingConvention Style = CallingConvention.Cdecl;
 
         [DllImport(Lib, EntryPoint = "alcCreateContext", ExactSpelling = true, CallingConvention = Style)]
@@ -97,8 +43,6 @@ namespace OpenTK.OpenAL.Native
         {
             return new ContextHandle(sys_CreateContext(device, attrlist));
         }
-
-        // ALC_API ALCcontext *    ALC_APIENTRY alcCreateContext( ALCdevice *device, const ALCint* attrlist );
 
         /// <summary>
         /// This function creates a context using a specified device.
@@ -137,7 +81,6 @@ namespace OpenTK.OpenAL.Native
         {
             return MakeContextCurrent(context.Handle);
         }
-        // ALC_API ALCboolean      ALC_APIENTRY alcMakeContextCurrent( ALCcontext *context );
 
         [DllImport(Lib, EntryPoint = "alcProcessContext", ExactSpelling = true, CallingConvention = Style)]
         [SuppressUnmanagedCodeSecurity]
@@ -155,7 +98,6 @@ namespace OpenTK.OpenAL.Native
         {
             ProcessContext(context.Handle);
         }
-        // ALC_API void            ALC_APIENTRY alcProcessContext( ALCcontext *context );
 
         [DllImport(Lib, EntryPoint = "alcSuspendContext", ExactSpelling = true, CallingConvention = Style)]
         [SuppressUnmanagedCodeSecurity]
@@ -173,7 +115,6 @@ namespace OpenTK.OpenAL.Native
         {
             SuspendContext(context.Handle);
         }
-        // ALC_API void            ALC_APIENTRY alcSuspendContext( ALCcontext *context );
 
         [DllImport(Lib, EntryPoint = "alcDestroyContext", ExactSpelling = true, CallingConvention = Style)]
         [SuppressUnmanagedCodeSecurity]
@@ -187,7 +128,6 @@ namespace OpenTK.OpenAL.Native
         {
             DestroyContext(context.Handle);
         }
-        // ALC_API void            ALC_APIENTRY alcDestroyContext( ALCcontext *context );
 
         [DllImport(Lib, EntryPoint = "alcGetCurrentContext", ExactSpelling = true, CallingConvention = Style)]
         [SuppressUnmanagedCodeSecurity]
@@ -201,7 +141,6 @@ namespace OpenTK.OpenAL.Native
         {
             return new ContextHandle(sys_GetCurrentContext());
         }
-        // ALC_API ALCcontext *    ALC_APIENTRY alcGetCurrentContext( void );
 
         [DllImport(Lib, EntryPoint = "alcGetContextsDevice", ExactSpelling = true, CallingConvention = Style)]
         [SuppressUnmanagedCodeSecurity]
@@ -216,18 +155,15 @@ namespace OpenTK.OpenAL.Native
         {
             return GetContextsDevice(context.Handle);
         }
-        // ALC_API ALCdevice*      ALC_APIENTRY alcGetContextsDevice( ALCcontext *context );
 
         /// <summary>
         /// This function opens a device by name.
         /// </summary>
         /// <param name="devicename">a null-terminated string describing a device.</param>
         /// <returns>Returns a pointer to the opened device. The return value will be NULL if there is an error.</returns>
-        [DllImport(Lib, EntryPoint = "alcOpenDevice", ExactSpelling = true, CallingConvention = Style,
-            CharSet = CharSet.Ansi)]
+        [DllImport(Lib, EntryPoint = "alcOpenDevice", ExactSpelling = true, CallingConvention = Style, CharSet = CharSet.Ansi)]
         [SuppressUnmanagedCodeSecurity]
         public static extern IntPtr OpenDevice([In] string devicename);
-        // ALC_API ALCdevice *     ALC_APIENTRY alcOpenDevice( const ALCchar *devicename );
 
         /// <summary>
         /// This function closes a device by name.
@@ -240,7 +176,6 @@ namespace OpenTK.OpenAL.Native
         [DllImport(Lib, EntryPoint = "alcCloseDevice", ExactSpelling = true, CallingConvention = Style)]
         [SuppressUnmanagedCodeSecurity]
         public static extern bool CloseDevice([In] IntPtr device);
-        // ALC_API ALCboolean      ALC_APIENTRY alcCloseDevice( ALCdevice *device );
 
         /// <summary>
         /// This function retrieves the current context error state.
@@ -250,7 +185,6 @@ namespace OpenTK.OpenAL.Native
         [DllImport(Lib, EntryPoint = "alcGetError", ExactSpelling = true, CallingConvention = Style)]
         [SuppressUnmanagedCodeSecurity]
         public static extern AlcError GetError([In] IntPtr device);
-        // ALC_API ALCenum         ALC_APIENTRY alcGetError( ALCdevice *device );
 
         /// <summary>
         /// This function queries if a specified context extension is available.
@@ -262,7 +196,6 @@ namespace OpenTK.OpenAL.Native
             CharSet = CharSet.Ansi)]
         [SuppressUnmanagedCodeSecurity]
         public static extern bool IsExtensionPresent([In] IntPtr device, [In] string extname);
-        // ALC_API ALCboolean      ALC_APIENTRY alcIsExtensionPresent( ALCdevice *device, const ALCchar *extname );
 
         /// <summary>
         /// This function retrieves the address of a specified context extension function.
@@ -274,7 +207,6 @@ namespace OpenTK.OpenAL.Native
             CharSet = CharSet.Ansi)]
         [SuppressUnmanagedCodeSecurity]
         public static extern IntPtr GetProcAddress([In] IntPtr device, [In] string funcname);
-        // ALC_API void  *         ALC_APIENTRY alcGetProcAddress( ALCdevice *device, const ALCchar *funcname );
 
         /// <summary>
         /// This function retrieves the enum value for a specified enumeration name.
@@ -285,17 +217,13 @@ namespace OpenTK.OpenAL.Native
         /// Returns the enum value described by the enumName string. This is most often used for querying an enum value
         /// for an ALC extension.
         /// </returns>
-        [DllImport(Lib, EntryPoint = "alcGetEnumValue", ExactSpelling = true, CallingConvention = Style,
-            CharSet = CharSet.Ansi)]
+        [DllImport(Lib, EntryPoint = "alcGetEnumValue", ExactSpelling = true, CallingConvention = Style, CharSet = CharSet.Ansi)]
         [SuppressUnmanagedCodeSecurity]
         public static extern int GetEnumValue([In] IntPtr device, [In] string enumname);
-        // ALC_API ALCenum         ALC_APIENTRY alcGetEnumValue( ALCdevice *device, const ALCchar *enumname );
 
-        [DllImport(Lib, EntryPoint = "alcGetString", ExactSpelling = true, CallingConvention = Style,
-            CharSet = CharSet.Ansi)]
+        [DllImport(Lib, EntryPoint = "alcGetString", ExactSpelling = true, CallingConvention = Style, CharSet = CharSet.Ansi)]
         [SuppressUnmanagedCodeSecurity]
         private static extern IntPtr GetStringPrivate([In] IntPtr device, AlcGetString param);
-        // ALC_API const ALCchar * ALC_APIENTRY alcGetString( ALCdevice *device, ALCenum param );
 
         /// <summary>
         /// This function returns pointers to strings related to the context.
@@ -399,11 +327,9 @@ namespace OpenTK.OpenAL.Native
             return result;
         }
 
-        [DllImport(Lib, EntryPoint = "alcGetIntegerv", ExactSpelling = true, CallingConvention = Style,
-            CharSet = CharSet.Ansi)]
+        [DllImport(Lib, EntryPoint = "alcGetIntegerv", ExactSpelling = true, CallingConvention = Style, CharSet = CharSet.Ansi)]
         [SuppressUnmanagedCodeSecurity]
         private static extern unsafe void GetInteger(IntPtr device, AlcGetInteger param, int size, int* data);
-        // ALC_API void            ALC_APIENTRY alcGetIntegerv( ALCdevice *device, ALCenum param, ALCsizei size, ALCint *buffer );
 
         /// <summary>
         /// This function returns integers related to the context.
@@ -455,8 +381,7 @@ namespace OpenTK.OpenAL.Native
         /// <param name="format">the requested capture buffer format.</param>
         /// <param name="buffersize">the size of the capture buffer in samples, not bytes.</param>
         /// <returns>Returns the capture device pointer, or NULL on failure.</returns>
-        [DllImport(Lib, EntryPoint = "alcCaptureOpenDevice", ExactSpelling = true, CallingConvention = Style,
-            CharSet = CharSet.Ansi)]
+        [DllImport(Lib, EntryPoint = "alcCaptureOpenDevice", ExactSpelling = true, CallingConvention = Style, CharSet = CharSet.Ansi)]
         [SuppressUnmanagedCodeSecurity]
         public static extern IntPtr CaptureOpenDevice(string devicename, uint frequency, ALFormat format,
             int buffersize);
@@ -469,13 +394,11 @@ namespace OpenTK.OpenAL.Native
         /// <param name="format">the requested capture buffer format.</param>
         /// <param name="buffersize">the size of the capture buffer in samples, not bytes.</param>
         /// <returns>Returns the capture device pointer, or NULL on failure.</returns>
-        [DllImport(Lib, EntryPoint = "alcCaptureOpenDevice", ExactSpelling = true, CallingConvention = Style,
-            CharSet = CharSet.Ansi)]
+        [DllImport(Lib, EntryPoint = "alcCaptureOpenDevice", ExactSpelling = true, CallingConvention = Style, CharSet = CharSet.Ansi)]
         [SuppressUnmanagedCodeSecurity]
         public static extern IntPtr
             CaptureOpenDevice(string devicename, int frequency, ALFormat format, int buffersize);
 
-        // ALC_API ALCdevice*      ALC_APIENTRY alcCaptureOpenDevice( const ALCchar *devicename, ALCuint frequency, ALCenum format, ALCsizei buffersize );
 
         /// <summary>
         /// This function closes the specified capture device.
@@ -485,7 +408,6 @@ namespace OpenTK.OpenAL.Native
         [DllImport(Lib, EntryPoint = "alcCaptureCloseDevice", ExactSpelling = true, CallingConvention = Style)]
         [SuppressUnmanagedCodeSecurity]
         public static extern bool CaptureCloseDevice([In] IntPtr device);
-        // ALC_API ALCboolean      ALC_APIENTRY alcCaptureCloseDevice( ALCdevice *device );
 
         /// <summary>
         /// This function begins a capture operation.
@@ -500,7 +422,6 @@ namespace OpenTK.OpenAL.Native
         [DllImport(Lib, EntryPoint = "alcCaptureStart", ExactSpelling = true, CallingConvention = Style)]
         [SuppressUnmanagedCodeSecurity]
         public static extern void CaptureStart([In] IntPtr device);
-        // ALC_API void            ALC_APIENTRY alcCaptureStart( ALCdevice *device );
 
         /// <summary>
         /// This function stops a capture operation.
@@ -509,7 +430,6 @@ namespace OpenTK.OpenAL.Native
         [DllImport(Lib, EntryPoint = "alcCaptureStop", ExactSpelling = true, CallingConvention = Style)]
         [SuppressUnmanagedCodeSecurity]
         public static extern void CaptureStop([In] IntPtr device);
-        // ALC_API void            ALC_APIENTRY alcCaptureStop( ALCdevice *device );
 
         /// <summary>
         /// This function completes a capture operation, and does not block.
@@ -520,7 +440,6 @@ namespace OpenTK.OpenAL.Native
         [DllImport(Lib, EntryPoint = "alcCaptureSamples", ExactSpelling = true, CallingConvention = Style)]
         [SuppressUnmanagedCodeSecurity]
         public static extern void CaptureSamples(IntPtr device, IntPtr buffer, int samples);
-        // ALC_API void            ALC_APIENTRY alcCaptureSamples( ALCdevice *device, ALCvoid *buffer, ALCsizei samples );
 
         /// <summary>
         /// This function completes a capture operation, and does not block.

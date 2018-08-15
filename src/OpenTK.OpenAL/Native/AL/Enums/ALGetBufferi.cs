@@ -1,7 +1,7 @@
 ﻿namespace OpenTK.OpenAL.Native
 {
     /// <summary>
-    /// A list of valid Int32 GetBuffer parameters
+    /// A list of valid Int32 GetBuffer parameters.
     /// </summary>
     public enum ALGetBufferi
     {
