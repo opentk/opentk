@@ -6,9 +6,9 @@
     public enum ALGetInteger
     {
         /// <summary>
-        /// See enum ALDistanceModel.
+        /// Gets the distance model. The return value corresponds to one of the members in
+        /// <see cref="ALDistanceModel"/>.
         /// </summary>
-        /// <see cref="ALDistanceModel" />
         DistanceModel = 0xD000
     }
 }

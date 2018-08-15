@@ -15,6 +15,10 @@
     <ProjectReference Include="..\OpenTK.Mathematics\OpenTK.Mathematics.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="AdvancedDLSupport" Version="2.1.2" />
+  </ItemGroup>
+
   <Import Project="..\..\props\common.props" />
   <Import Project="..\..\props\nuget-common.props" />
 </Project>
