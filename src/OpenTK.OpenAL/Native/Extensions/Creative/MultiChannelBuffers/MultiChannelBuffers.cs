@@ -1,7 +1,5 @@
-using System;
-using System.Runtime.InteropServices;
+using System.Runtime.CompilerServices;
 using AdvancedDLSupport;
-using OpenTK.Core.Utility;
 
 namespace OpenTK.OpenAL.Native.Extensions.Creative.MultiChannelBuffers
 {
@@ -28,26 +26,15 @@ namespace OpenTK.OpenAL.Native.Extensions.Creative.MultiChannelBuffers
         /// <param name="data">The data.</param>
         /// <param name="frequency">The frequency of the data.</param>
         public void BufferData<TElement>(uint buffer, MultiChannelBufferFormat format, TElement[] data, int frequency)
-            where TElement : struct
+            where TElement : unmanaged
         {
-            if (!BlittableValueType.Check(data))
+            unsafe
             {
-                throw new ArgumentException(nameof(data));
-            }
-
-            var size = Marshal.SizeOf<TElement>() * data.Length;
-
-            var handle = GCHandle.Alloc(data, GCHandleType.Pinned);
-            try
-            {
-                unsafe
+                var size = sizeof(TElement) * data.Length;
+                fixed (void* ptr = &data[0])
                 {
-                    BufferData(buffer, format, handle.AddrOfPinnedObject().ToPointer(), size, frequency);
+                    BufferData(buffer, format, ptr, size, frequency);
                 }
-            }
-            finally
-            {
-                handle.Free();
             }
         }
     }
