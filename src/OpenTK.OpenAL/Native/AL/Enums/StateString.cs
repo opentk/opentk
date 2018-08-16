@@ -3,7 +3,7 @@
     /// <summary>
     /// A list of valid string AL.Get() parameters.
     /// </summary>
-    public enum ALGetString
+    public enum StateString
     {
         /// <summary>
         /// Gets the Vendor name.

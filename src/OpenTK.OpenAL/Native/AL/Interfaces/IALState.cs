@@ -24,6 +24,7 @@ namespace OpenTK.OpenAL.Native.Interfaces
         /// Determines whether or not the given capability is enabled.
         /// </summary>
         /// <param name="capability">The capability.</param>
+        /// <returns>true if the capability is enabled; otherwise, false.</returns>
         bool IsEnabled(ALCapability capability);
 
         /// <summary>
@@ -59,13 +60,13 @@ namespace OpenTK.OpenAL.Native.Interfaces
         /// </summary>
         /// <param name="param">The name of the value to retrieve.</param>
         /// <returns>The value.</returns>
-        string GetString(ALGetString param);
+        string GetString(StateString param);
 
         /// <summary>
         /// Sets the model by which sources attenuate with distance.
         /// </summary>
         /// <param name="distanceModel">The distance model.</param>
-        void DistanceModel(ALDistanceModel distanceModel);
+        void DistanceModel(DistanceModel distanceModel);
 
         /// <summary>
         /// Doppler scale.

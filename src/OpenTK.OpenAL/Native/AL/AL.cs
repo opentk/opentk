@@ -52,14 +52,14 @@ namespace OpenTK.OpenAL.Native
 
         [DllImport(Library, EntryPoint = "alGetString", ExactSpelling = true, CallingConvention = Style, CharSet = CharSet.Ansi)]
         [SuppressUnmanagedCodeSecurity]
-        private static extern IntPtr GetStringPrivate(ALGetString param);
+        private static extern IntPtr GetStringPrivate(StateString param);
 
         /// <summary>
         /// This function retrieves an OpenAL string property.
         /// </summary>
         /// <param name="param">The property to be returned: Vendor, Version, Renderer and Extensions.</param>
         /// <returns>Returns a pointer to a null-terminated string.</returns>
-        public static string Get(ALGetString param)
+        public static string Get(StateString param)
         {
             return Marshal.PtrToStringAnsi(GetStringPrivate(param));
         }
@@ -71,7 +71,7 @@ namespace OpenTK.OpenAL.Native
         /// <returns>Returns a pointer to a null-terminated string.</returns>
         public static string GetErrorString(ALError param)
         {
-            return Marshal.PtrToStringAnsi(GetStringPrivate((ALGetString)param));
+            return Marshal.PtrToStringAnsi(GetStringPrivate((StateString)param));
         }
 
         /// <summary>
@@ -1671,10 +1671,10 @@ namespace OpenTK.OpenAL.Native
         public static extern void SpeedOfSound(float value);
 
         /// <summary>
-        /// This function selects the OpenAL distance model – <see cref="ALDistanceModel.InverseDistance"/>,
-        /// <see cref="ALDistanceModel.InverseDistanceClamped"/>, <see cref="ALDistanceModel.LinearDistance"/>, <see cref="ALDistanceModel.LinearDistanceClamped"/>,
-        /// <see cref="ALDistanceModel.ExponentDistance"/>, <see cref="ALDistanceModel.ExponentDistanceClamped"/>, or <see cref="ALDistanceModel.None"/>. The default
-        /// distance model in OpenAL is <see cref="ALDistanceModel.InverseDistanceClamped"/>.
+        /// This function selects the OpenAL distance model – <see cref="Native.DistanceModel.InverseDistance"/>,
+        /// <see cref="Native.DistanceModel.InverseDistanceClamped"/>, <see cref="Native.DistanceModel.LinearDistance"/>, <see cref="Native.DistanceModel.LinearDistanceClamped"/>,
+        /// <see cref="Native.DistanceModel.ExponentDistance"/>, <see cref="Native.DistanceModel.ExponentDistanceClamped"/>, or <see cref="Native.DistanceModel.None"/>. The default
+        /// distance model in OpenAL is <see cref="Native.DistanceModel.InverseDistanceClamped"/>.
         /// </summary>
         /// <remarks>
         /// The ALDistanceModel .InverseDistance model works according to the following formula:
@@ -1685,28 +1685,28 @@ namespace OpenTK.OpenAL.Native
         /// distance = min(distance,<see cref="ALSourcef.MaxDistance"/>);
         /// gain = <see cref="ALSourcef.ReferenceDistance"/> / (<see cref="ALSourcef.ReferenceDistance"/> + <see cref="ALSourcef.RolloffFactor"/> * (distance –
         /// <see cref="ALSourcef.ReferenceDistance"/>));
-        /// The <see cref="ALDistanceModel.LinearDistance"/> model works according to the following formula:
+        /// The <see cref="Native.DistanceModel.LinearDistance"/> model works according to the following formula:
         /// distance = min(distance, <see cref="ALSourcef.MaxDistance"/>) // avoid negative gain
         /// gain = (1 – <see cref="ALSourcef.RolloffFactor"/> * (distance – <see cref="ALSourcef.ReferenceDistance"/>) / (<see cref="ALSourcef.MaxDistance"/> –
         /// <see cref="ALSourcef.ReferenceDistance"/>))
-        /// The <see cref="ALDistanceModel.LinearDistanceClamped"/> model works according to the following formula:
+        /// The <see cref="Native.DistanceModel.LinearDistanceClamped"/> model works according to the following formula:
         /// distance = max(distance, <see cref="ALSourcef.ReferenceDistance"/>)
         /// distance = min(distance, <see cref="ALSourcef.MaxDistance"/>)
         /// gain = (1 – <see cref="ALSourcef.RolloffFactor"/> * (distance – <see cref="ALSourcef.ReferenceDistance"/>) / (<see cref="ALSourcef.MaxDistance"/> –
         /// <see cref="ALSourcef.ReferenceDistance"/>))
-        /// The <see cref="ALDistanceModel.ExponentDistance"/> model works according to the following formula:
+        /// The <see cref="Native.DistanceModel.ExponentDistance"/> model works according to the following formula:
         /// gain = (distance / <see cref="ALSourcef.ReferenceDistance"/>) ^ (- <see cref="ALSourcef.RolloffFactor"/>)
-        /// The <see cref="ALDistanceModel.ExponentDistanceClamped"/> model works according to the following formula:
+        /// The <see cref="Native.DistanceModel.ExponentDistanceClamped"/> model works according to the following formula:
         /// distance = max(distance, <see cref="ALSourcef.ReferenceDistance"/>)
         /// distance = min(distance, <see cref="ALSourcef.MaxDistance"/>)
         /// gain = (distance / <see cref="ALSourcef.ReferenceDistance"/>) ^ (- <see cref="ALSourcef.RolloffFactor"/>)
-        /// The <see cref="ALDistanceModel.None"/> model works according to the following formula:
+        /// The <see cref="Native.DistanceModel.None"/> model works according to the following formula:
         /// gain = 1f.
         /// </remarks>
         /// <param name="distancemodel">The distance model.</param>
         [DllImport(Library, EntryPoint = "alDistanceModel", ExactSpelling = true, CallingConvention = Style)]
         [SuppressUnmanagedCodeSecurity]
-        public static extern void DistanceModel(ALDistanceModel distancemodel);
+        public static extern void DistanceModel(DistanceModel distancemodel);
 
         /// <summary>
         /// (Helper) Returns Source state information.
@@ -1753,12 +1753,12 @@ namespace OpenTK.OpenAL.Native
         }
 
         /// <summary>
-        /// Returns the <see cref="ALDistanceModel" /> of the current context.
+        /// Returns the <see cref="Native.DistanceModel" /> of the current context.
         /// </summary>
-        /// <returns>The <see cref="ALDistanceModel" /> of the current context.</returns>
-        public static ALDistanceModel GetDistanceModel()
+        /// <returns>The <see cref="Native.DistanceModel" /> of the current context.</returns>
+        public static DistanceModel GetDistanceModel()
         {
-            return (ALDistanceModel)Get(StateInteger.DistanceModel);
+            return (DistanceModel)Get(StateInteger.DistanceModel);
         }
     }
 }
