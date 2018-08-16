@@ -3,7 +3,7 @@ namespace OpenTK.OpenAL.Native.Extensions.Creative.EFX
     /// <summary>
     /// A list of valid <see cref="float"/> Source/GetSource parameters.
     /// </summary>
-    public enum SourceFloat
+    public enum EFXSourceFloat
     {
         /// <summary>
         /// Range [0.0f .. 10.0f]

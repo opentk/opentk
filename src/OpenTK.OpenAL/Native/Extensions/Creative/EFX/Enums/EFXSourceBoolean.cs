@@ -3,7 +3,7 @@ namespace OpenTK.OpenAL.Native.Extensions.Creative.EFX
     /// <summary>
     /// A list of valid <see cref="bool"/> Source/GetSource parameters.
     /// </summary>
-    public enum SourceBoolean
+    public enum EFXSourceBoolean
     {
         /// <summary>
         /// Default: True

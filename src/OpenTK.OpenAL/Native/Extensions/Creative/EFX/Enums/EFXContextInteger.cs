@@ -3,7 +3,7 @@ namespace OpenTK.OpenAL.Native.Extensions.Creative.EFX
     /// <summary>
     /// Defines new integer properties on the OpenAL context.
     /// </summary>
-    public enum ContextInteger
+    public enum EFXContextInteger
     {
         /// <summary>
         /// This property can be used by the application to retrieve the Major version number of the

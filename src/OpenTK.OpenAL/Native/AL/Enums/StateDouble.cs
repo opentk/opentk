@@ -6,7 +6,7 @@ namespace OpenTK.OpenAL.Native
     /// <summary>
     /// A list of valid <see cref="double"/> <see cref="IALState.GetDouble"/> parameters.
     /// </summary>
-    public enum ALGetDouble
+    public enum StateDouble
     {
         /// <summary>
         /// Scale for source and listener velocities.

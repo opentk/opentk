@@ -16,7 +16,7 @@ namespace OpenTK.OpenAL.Native.Extensions.Creative.EFX
         /// <param name="param">The named property.</param>
         /// <param name="value">The value to set the property to.</param>
         [NativeSymbol("Sourcei")]
-        void SetSourceProperty(uint source, SourceInteger param, int value);
+        void SetSourceProperty(uint source, EFXSourceInteger param, int value);
 
         /// <summary>
         /// Sets the value of a named property on the given source.
@@ -25,7 +25,7 @@ namespace OpenTK.OpenAL.Native.Extensions.Creative.EFX
         /// <param name="param">The named property.</param>
         /// <param name="value">The value to set the property to.</param>
         [NativeSymbol("Sourcef")]
-        void SetSourceProperty(uint source, SourceFloat param, float value);
+        void SetSourceProperty(uint source, EFXSourceFloat param, float value);
 
         /// <summary>
         /// Sets the value of a named property on the given source.
@@ -34,7 +34,7 @@ namespace OpenTK.OpenAL.Native.Extensions.Creative.EFX
         /// <param name="param">The named property.</param>
         /// <param name="value">The value to set the property to.</param>
         [NativeSymbol("Sourceb")]
-        void SetSourceProperty(uint source, SourceBoolean param, bool value);
+        void SetSourceProperty(uint source, EFXSourceBoolean param, bool value);
 
         /// <summary>
         /// Gets the value of a named property on the given source.
@@ -43,7 +43,7 @@ namespace OpenTK.OpenAL.Native.Extensions.Creative.EFX
         /// <param name="param">The named property.</param>
         /// <param name="value">The value to set the property to.</param>
         [NativeSymbol("GetSourcei")]
-        void GetSourceProperty(uint source, SourceInteger param, out int value);
+        void GetSourceProperty(uint source, EFXSourceInteger param, out int value);
 
         /// <summary>
         /// Gets the value of a named property on the given source.
@@ -52,15 +52,6 @@ namespace OpenTK.OpenAL.Native.Extensions.Creative.EFX
         /// <param name="param">The named property.</param>
         /// <param name="value">The value to set the property to.</param>
         [NativeSymbol("GetSourcef")]
-        void GetSourceProperty(uint source, SourceFloat param, out float value);
-
-        /// <summary>
-        /// Gets the value of a named property on the given source.
-        /// </summary>
-        /// <param name="source">The source.</param>
-        /// <param name="param">The named property.</param>
-        /// <param name="value">The value to set the property to.</param>
-        [NativeSymbol("GetSourceb")]
-        void GetSourceProperty(uint source, SourceBoolean param, out bool value);
+        void GetSourceProperty(uint source, EFXSourceFloat param, out float value);
     }
 }

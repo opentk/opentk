@@ -81,7 +81,7 @@ namespace OpenTK.OpenAL.Native
         /// <returns>The integer state described by param will be returned.</returns>
         [DllImport(Library, EntryPoint = "alGetInteger", ExactSpelling = true, CallingConvention = Style)]
         [SuppressUnmanagedCodeSecurity]
-        public static extern int Get(ALGetInteger param);
+        public static extern int Get(StateInteger param);
 
         /// <summary>
         /// This function returns a floating-point OpenAL state.
@@ -90,7 +90,7 @@ namespace OpenTK.OpenAL.Native
         /// <returns>The floating-point state described by param will be returned.</returns>
         [DllImport(Library, EntryPoint = "alGetFloat", ExactSpelling = true, CallingConvention = Style)]
         [SuppressUnmanagedCodeSecurity]
-        public static extern float Get(ALGetFloat param);
+        public static extern float Get(StateFloat param);
 
         /// <summary>
         /// Error support. Obtain the most recent error generated in the AL state machine. When an error is detected by
@@ -1643,7 +1643,7 @@ namespace OpenTK.OpenAL.Native
         /// </summary>
         /// <param name="value">
         /// A negative value will result in an error, the command is then ignored. The default value is 1f. The
-        /// current setting can be queried using <see cref="AL.Get"/> with parameter <see cref="ALGetFloat.SpeedOfSound"/>.
+        /// current setting can be queried using <see cref="AL.Get"/> with parameter <see cref="StateFloat.SpeedOfSound"/>.
         /// </param>
         [DllImport(Library, EntryPoint = "alDopplerFactor", ExactSpelling = true, CallingConvention = Style)]
         [SuppressUnmanagedCodeSecurity]
@@ -1664,7 +1664,7 @@ namespace OpenTK.OpenAL.Native
         /// <param name="value">
         /// A negative or zero value will result in an error, and the command is ignored. Default: 343.3f
         /// (appropriate for velocity units of meters and air as the propagation medium). The current setting can be queried
-        /// using <see cref="AL.Get"/> with parameter <see cref="ALGetFloat.SpeedOfSound"/>.
+        /// using <see cref="AL.Get"/> with parameter <see cref="StateFloat.SpeedOfSound"/>.
         /// </param>
         [DllImport(Library, EntryPoint = "alSpeedOfSound", ExactSpelling = true, CallingConvention = Style)]
         [SuppressUnmanagedCodeSecurity]
@@ -1758,7 +1758,7 @@ namespace OpenTK.OpenAL.Native
         /// <returns>The <see cref="ALDistanceModel" /> of the current context.</returns>
         public static ALDistanceModel GetDistanceModel()
         {
-            return (ALDistanceModel)Get(ALGetInteger.DistanceModel);
+            return (ALDistanceModel)Get(StateInteger.DistanceModel);
         }
     }
 }

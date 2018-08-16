@@ -31,28 +31,28 @@ namespace OpenTK.OpenAL.Native.Interfaces
         /// </summary>
         /// <param name="param">The name of the value to retrieve.</param>
         /// <returns>The value.</returns>
-        bool GetBoolean(ALGetBoolean param);
+        bool GetBoolean(StateBoolean param);
 
         /// <summary>
         /// Gets a named value from the state.
         /// </summary>
         /// <param name="param">The name of the value to retrieve.</param>
         /// <returns>The value.</returns>
-        double GetDouble(ALGetDouble param);
+        double GetDouble(StateDouble param);
 
         /// <summary>
         /// Gets a named value from the state.
         /// </summary>
         /// <param name="param">The name of the value to retrieve.</param>
         /// <returns>The value.</returns>
-        float GetFloat(ALGetFloat param);
+        float GetFloat(StateFloat param);
 
         /// <summary>
         /// Gets a named value from the state.
         /// </summary>
         /// <param name="param">The name of the value to retrieve.</param>
         /// <returns>The value.</returns>
-        int GetInteger(ALGetInteger param);
+        int GetInteger(StateInteger param);
 
         /// <summary>
         /// Gets a named value from the state.

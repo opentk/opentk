@@ -24,7 +24,7 @@ namespace OpenTK.OpenAL.Native.Extensions.Creative.EFX
             unsafe
             {
                 var result = 0;
-                GetContextProperty(device, ContextInteger.EFXMajorVersion, sizeof(int), &result);
+                GetContextProperty(device, EFXContextInteger.EFXMajorVersion, sizeof(int), &result);
 
                 return result;
             }
@@ -40,7 +40,7 @@ namespace OpenTK.OpenAL.Native.Extensions.Creative.EFX
             unsafe
             {
                 var result = 0;
-                GetContextProperty(device, ContextInteger.EFXMinorVersion, sizeof(int), &result);
+                GetContextProperty(device, EFXContextInteger.EFXMinorVersion, sizeof(int), &result);
 
                 return result;
             }
@@ -57,6 +57,6 @@ namespace OpenTK.OpenAL.Native.Extensions.Creative.EFX
         }
 
         /// <inheritdoc />
-        public abstract unsafe void GetContextProperty(IntPtr device, ContextInteger param, int size, int* data);
+        public abstract unsafe void GetContextProperty(IntPtr device, EFXContextInteger param, int size, int* data);
     }
 }

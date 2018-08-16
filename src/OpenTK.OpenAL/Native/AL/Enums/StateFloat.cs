@@ -3,7 +3,7 @@
     /// <summary>
     /// A list of valid 32-bit Float AL.Get() parameters.
     /// </summary>
-    public enum ALGetFloat
+    public enum StateFloat
     {
         /// <summary>
         /// Doppler scale. Default 1.0f.

@@ -375,16 +375,16 @@ namespace OpenTK.OpenAL.Native.Extensions.Creative.EFX
         }
 
         /// <inheritdoc />
-        public abstract void SetSourceProperty(uint source, SourceInteger param, int value);
+        public abstract void SetSourceProperty(uint source, EFXSourceInteger param, int value);
 
         /// <inheritdoc />
-        public abstract void SetSourceProperty(uint source, SourceFloat param, float value);
+        public abstract void SetSourceProperty(uint source, EFXSourceFloat param, float value);
 
         /// <inheritdoc />
-        public abstract void SetSourceProperty(uint source, SourceBoolean param, bool value);
+        public abstract void SetSourceProperty(uint source, EFXSourceBoolean param, bool value);
 
         /// <inheritdoc />
-        public abstract void GetSourceProperty(uint source, SourceInteger param, out int value);
+        public abstract void GetSourceProperty(uint source, EFXSourceInteger param, out int value);
 
         /// <summary>
         /// Gets the value of a named property on the given source.
@@ -392,14 +392,14 @@ namespace OpenTK.OpenAL.Native.Extensions.Creative.EFX
         /// <param name="source">The source.</param>
         /// <param name="param">The named property.</param>
         /// <returns>The value.</returns>
-        public int GetSourceProperty(uint source, SourceInteger param)
+        public int GetSourceProperty(uint source, EFXSourceInteger param)
         {
             GetSourceProperty(source, param, out var result);
             return result;
         }
 
         /// <inheritdoc />
-        public abstract void GetSourceProperty(uint source, SourceFloat param, out float value);
+        public abstract void GetSourceProperty(uint source, EFXSourceFloat param, out float value);
 
         /// <summary>
         /// Gets the value of a named property on the given source.
@@ -407,14 +407,11 @@ namespace OpenTK.OpenAL.Native.Extensions.Creative.EFX
         /// <param name="source">The source.</param>
         /// <param name="param">The named property.</param>
         /// <returns>The value.</returns>
-        public float GetSourceProperty(uint source, SourceFloat param)
+        public float GetSourceProperty(uint source, EFXSourceFloat param)
         {
             GetSourceProperty(source, param, out var result);
             return result;
         }
-
-        /// <inheritdoc />
-        public abstract void GetSourceProperty(uint source, SourceBoolean param, out bool value);
 
         /// <summary>
         /// Gets the value of a named property on the given source.
@@ -422,17 +419,17 @@ namespace OpenTK.OpenAL.Native.Extensions.Creative.EFX
         /// <param name="source">The source.</param>
         /// <param name="param">The named property.</param>
         /// <returns>The value.</returns>
-        public bool GetSourceProperty(uint source, SourceBoolean param)
+        public bool GetSourceProperty(uint source, EFXSourceBoolean param)
         {
-            GetSourceProperty(source, param, out var result);
-            return result;
+            GetSourceProperty(source, (EFXSourceInteger)param, out var result);
+            return result > 0;
         }
 
         /// <inheritdoc />
-        public abstract void SetListenerProperty(uint listener, ListenerFloat param, float value);
+        public abstract void SetListenerProperty(uint listener, EFXListenerFloat param, float value);
 
         /// <inheritdoc />
-        public abstract void GetListenerProperty(uint listener, ListenerFloat param, out float value);
+        public abstract void GetListenerProperty(uint listener, EFXListenerFloat param, out float value);
 
         /// <summary>
         /// Gets the value of a named property on the given listener.
@@ -440,7 +437,7 @@ namespace OpenTK.OpenAL.Native.Extensions.Creative.EFX
         /// <param name="listener">The listener.</param>
         /// <param name="param">The named property.</param>
         /// <returns>The value.</returns>
-        public float GetListenerProperty(uint listener, ListenerFloat param)
+        public float GetListenerProperty(uint listener, EFXListenerFloat param)
         {
             GetListenerProperty(listener, param, out var result);
             return result;

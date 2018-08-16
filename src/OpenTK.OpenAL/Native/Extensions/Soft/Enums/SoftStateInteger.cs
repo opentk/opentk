@@ -5,7 +5,7 @@ namespace OpenTK.OpenAL.Native.Extensions.Soft
     /// <summary>
     /// A list of valid <see cref="int"/> <see cref="IALState.GetInteger"/> parameters.
     /// </summary>
-    public enum StateInteger
+    public enum SoftStateInteger
     {
         /// <summary>
         /// Gets the number of available resamplers.

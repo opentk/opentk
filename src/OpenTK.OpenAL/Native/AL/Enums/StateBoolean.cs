@@ -5,7 +5,7 @@ namespace OpenTK.OpenAL.Native
     /// <summary>
     /// A list of valid <see cref="bool"/> parameters for <see cref="IALState.GetBoolean"/>.
     /// </summary>
-    public enum ALGetBoolean
+    public enum StateBoolean
     {
         /// <summary>
         /// Determines whether or not the state has a doppler factor set.

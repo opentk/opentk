@@ -5,7 +5,7 @@ namespace OpenTK.OpenAL.Native.Extensions.Soft.DeferredUpdates
     /// <summary>
     /// A list of valid <see cref="bool"/> <see cref="IALState.GetBoolean"/> parameters.
     /// </summary>
-    public enum StateBoolean
+    public enum DeferredStateBoolean
     {
         /// <summary>
         /// Determines whether or not updates are currently deferred.

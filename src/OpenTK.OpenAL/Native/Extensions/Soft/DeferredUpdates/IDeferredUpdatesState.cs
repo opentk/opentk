@@ -17,7 +17,7 @@ namespace OpenTK.OpenAL.Native.Extensions.Soft.DeferredUpdates
         /// </summary>
         /// <param name="param">The name of the value to retrieve.</param>
         /// <returns>The value.</returns>
-        bool GetBoolean(StateBoolean param);
+        bool GetBoolean(DeferredStateBoolean param);
 
         /// <summary>
         /// Defers updates until <see cref="ProcessUpdates"/> is called.

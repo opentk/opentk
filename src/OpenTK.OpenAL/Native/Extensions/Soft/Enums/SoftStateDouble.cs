@@ -6,7 +6,7 @@ namespace OpenTK.OpenAL.Native.Extensions.Soft
     /// A list of valid <see cref="double"/> <see cref="IALState.GetDouble"/> parameters. These enumeration members
     /// are defined as extensions in the OpenAL Soft library.
     /// </summary>
-    public enum StateDouble
+    public enum SoftStateDouble
     {
         /// <summary>
         /// Gets the gain limit of the context.

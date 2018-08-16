@@ -16,7 +16,7 @@ namespace OpenTK.OpenAL.Native.Extensions.Soft
         /// </summary>
         /// <param name="param">The name of the value to retrieve.</param>
         /// <returns>The value.</returns>
-        bool GetBoolean(StateBoolean param);
+        bool GetBoolean(SoftStateBoolean param);
 
         /// <summary>
         /// Gets a named value from the state. This overload covers additional valid values added by OpenAL
@@ -24,7 +24,7 @@ namespace OpenTK.OpenAL.Native.Extensions.Soft
         /// </summary>
         /// <param name="param">The name of the value to retrieve.</param>
         /// <returns>The value.</returns>
-        double GetDouble(StateDouble param);
+        double GetDouble(SoftStateDouble param);
 
         /// <summary>
         /// Gets a named value from the state. This overload covers additional valid values added by OpenAL
@@ -32,7 +32,7 @@ namespace OpenTK.OpenAL.Native.Extensions.Soft
         /// </summary>
         /// <param name="param">The name of the value to retrieve.</param>
         /// <returns>The value.</returns>
-        float GetFloat(StateFloat param);
+        float GetFloat(SoftStateFloat param);
 
         /// <summary>
         /// Gets a named value from the state. This overload covers additional valid values added by OpenAL
@@ -40,7 +40,7 @@ namespace OpenTK.OpenAL.Native.Extensions.Soft
         /// </summary>
         /// <param name="param">The name of the value to retrieve.</param>
         /// <returns>The value.</returns>
-        int GetInteger(StateInteger param);
+        int GetInteger(SoftStateInteger param);
 
         /// <summary>
         /// Gets a named value from the state. This overload covers additional valid values added by OpenAL

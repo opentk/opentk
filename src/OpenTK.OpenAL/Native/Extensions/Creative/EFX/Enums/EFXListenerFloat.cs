@@ -3,7 +3,7 @@ namespace OpenTK.OpenAL.Native.Extensions.Creative.EFX
     /// <summary>
     /// A list of valid <see cref="float"/> Listener/GetListener parameters.
     /// </summary>
-    public enum ListenerFloat
+    public enum EFXListenerFloat
     {
         /// <summary>
         /// centimeters 0.01f

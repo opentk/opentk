@@ -18,6 +18,6 @@ namespace OpenTK.OpenAL.Native.Extensions.Creative.EFX
         /// <param name="size">The size of the provided buffer.</param>
         /// <param name="data">A pointer to the first element of a provided data buffer.</param>
         [NativeSymbol("GetIntegerv")]
-        unsafe void GetContextProperty(IntPtr device, ContextInteger param, int size, int* data);
+        unsafe void GetContextProperty(IntPtr device, EFXContextInteger param, int size, int* data);
     }
 }

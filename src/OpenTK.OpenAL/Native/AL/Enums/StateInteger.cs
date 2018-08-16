@@ -3,7 +3,7 @@
     /// <summary>
     /// A list of valid Int32 AL.Get() parameters.
     /// </summary>
-    public enum ALGetInteger
+    public enum StateInteger
     {
         /// <summary>
         /// Gets the distance model. The return value corresponds to one of the members in
