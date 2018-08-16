@@ -65,26 +65,5 @@
         /// The playback position, expressed in seconds.
         /// </summary>
         SecOffset = 0x1024,
-
-        /// <summary>
-        /// (EFX Extension) This property is a multiplier on the amount of Air Absorption applied to the Source. The
-        /// AL_AIR_ABSORPTION_FACTOR is multiplied by an internal Air Absorption Gain HF value of 0.994 (-0.05dB) per meter
-        /// which represents normal atmospheric humidity and temperature. Range [0.0f .. 10.0f] Default: 0.0f.
-        /// </summary>
-        EfxAirAbsorptionFactor = 0x20007,
-
-        /// <summary>
-        /// (EFX Extension) This property is defined the same way as the Reverb Room Rolloff property: it is one of two
-        /// methods available in the Effect Extension to attenuate the reflected sound (early reflections and reverberation)
-        /// according to source-listener distance. Range [0.0f .. 10.0f] Default: 0.0f.
-        /// </summary>
-        EfxRoomRolloffFactor = 0x20008,
-
-        /// <summary>
-        /// (EFX Extension) A directed Source points in a specified direction. The Source sounds at full volume when the
-        /// listener is directly in front of the source; it is attenuated as the listener circles the Source away from the
-        /// front. Range [0.0f .. 1.0f] Default: 1.0f.
-        /// </summary>
-        EfxConeOuterGainHighFrequency = 0x20009
     }
 }
