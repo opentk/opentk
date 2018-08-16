@@ -31,7 +31,7 @@ namespace OpenTK.OpenAL.Native
         /// <param name="capability">The name of a capability to enable.</param>
         [DllImport(Library, EntryPoint = "alEnable", ExactSpelling = true, CallingConvention = Style)]
         [SuppressUnmanagedCodeSecurity]
-        public static extern void Enable(ALCapability capability);
+        public static extern void Enable(Capability capability);
 
         /// <summary>
         /// This function disables a feature of the OpenAL driver.
@@ -39,7 +39,7 @@ namespace OpenTK.OpenAL.Native
         /// <param name="capability">The name of a capability to disable.</param>
         [DllImport(Library, EntryPoint = "alDisable", ExactSpelling = true, CallingConvention = Style)]
         [SuppressUnmanagedCodeSecurity]
-        public static extern void Disable(ALCapability capability);
+        public static extern void Disable(Capability capability);
 
         /// <summary>
         /// This function returns a boolean indicating if a specific feature is enabled in the OpenAL driver.
@@ -48,7 +48,7 @@ namespace OpenTK.OpenAL.Native
         /// <returns>True if enabled, False if disabled.</returns>
         [DllImport(Library, EntryPoint = "alIsEnabled", ExactSpelling = true, CallingConvention = Style)]
         [SuppressUnmanagedCodeSecurity]
-        public static extern bool IsEnabled(ALCapability capability);
+        public static extern bool IsEnabled(Capability capability);
 
         [DllImport(Library, EntryPoint = "alGetString", ExactSpelling = true, CallingConvention = Style, CharSet = CharSet.Ansi)]
         [SuppressUnmanagedCodeSecurity]

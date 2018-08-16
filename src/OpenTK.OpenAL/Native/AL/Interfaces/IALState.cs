@@ -12,20 +12,20 @@ namespace OpenTK.OpenAL.Native.Interfaces
         /// Enables a capability in the state.
         /// </summary>
         /// <param name="capability">The capability.</param>
-        void Enable(ALCapability capability);
+        void Enable(Capability capability);
 
         /// <summary>
         /// Disables a capability in the state.
         /// </summary>
         /// <param name="capability">The capability.</param>
-        void Disable(ALCapability capability);
+        void Disable(Capability capability);
 
         /// <summary>
         /// Determines whether or not the given capability is enabled.
         /// </summary>
         /// <param name="capability">The capability.</param>
         /// <returns>true if the capability is enabled; otherwise, false.</returns>
-        bool IsEnabled(ALCapability capability);
+        bool IsEnabled(Capability capability);
 
         /// <summary>
         /// Gets a named value from the state.
