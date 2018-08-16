@@ -1,13 +1,15 @@
 using AdvancedDLSupport;
-using OpenTK.OpenAL.Native.Extensions.Soft.DeferredUpdates.Enums;
 using OpenTK.OpenAL.Native.Interfaces;
 
 // ReSharper disable ExplicitCallerInfoArgument
 
 namespace OpenTK.OpenAL.Native.Extensions.Soft.DeferredUpdates
 {
+    /// <summary>
+    /// Defines the public API of state-related functions in the Deferred Updates extension.
+    /// </summary>
     [NativeSymbols(Prefix = "al")]
-    public interface ISoftDeferredUpdatesState : IALExtensions
+    public interface IDeferredUpdatesState : IALExtensions
     {
         /// <summary>
         /// Gets a named value from the state. This overload covers additional valid values added by the Deferred
@@ -15,7 +17,7 @@ namespace OpenTK.OpenAL.Native.Extensions.Soft.DeferredUpdates
         /// </summary>
         /// <param name="param">The name of the value to retrieve.</param>
         /// <returns>The value.</returns>
-        bool GetBoolean(ALGetBooleanSoftDeferredUpdates param);
+        bool GetBoolean(StateBoolean param);
 
         /// <summary>
         /// Defers updates until <see cref="ProcessUpdates"/> is called.

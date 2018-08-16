@@ -1,5 +1,8 @@
 namespace OpenTK.OpenAL.Native.Extensions.Creative.EFX
 {
+    /// <summary>
+    /// Defines new context attributes.
+    /// </summary>
     public enum ContextAttributes
     {
         /// <summary>

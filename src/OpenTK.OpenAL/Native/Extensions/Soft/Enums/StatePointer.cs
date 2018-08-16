@@ -5,7 +5,7 @@ namespace OpenTK.OpenAL.Native.Extensions.Soft
     /// <summary>
     /// A list of valid <see cref="IntPtr"/> <see cref="IALStateSoft.GetPointer"/> parameters.
     /// </summary>
-    public enum ALGetPointerSoft
+    public enum StatePointer
     {
         /// <summary>
         /// Gets a pointer to the set event callback function.

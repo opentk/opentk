@@ -5,6 +5,5 @@ namespace OpenTK.OpenAL.Native.Extensions.Soft
     /// </summary>
     public interface IALSoft : IALStateSoft
     {
-
     }
 }

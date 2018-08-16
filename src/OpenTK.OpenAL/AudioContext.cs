@@ -457,7 +457,7 @@ namespace OpenTK.OpenAL
             // Alc 1.0 does not support device enumeration.
             if
             (
-                AudioDeviceEnumerator.Version == AudioDeviceEnumerator.AlcVersion.Alc11 &&
+                AudioDeviceEnumerator.Version == AlcVersion.Alc11 &&
                 AudioDeviceEnumerator.AvailablePlaybackDevices.Count == 0
             )
             {

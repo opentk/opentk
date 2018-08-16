@@ -10,12 +10,12 @@ namespace OpenTK.OpenAL.Native.Extensions.Creative.EFX
         /// <summary>
         /// Gets the preset value for <see cref="EffectFloat.ReverbDensity"/>.
         /// </summary>
-        public float Density  { get; }
+        public float Density { get; }
 
         /// <summary>
         /// Gets the preset value for <see cref="EffectFloat.ReverbDiffusion "/>.
         /// </summary>
-        public float Diffusion  { get; }
+        public float Diffusion { get; }
 
         /// <summary>
         /// Gets the preset value for <ReverbGainsee cref="EffectFloat.ReverbGain"/>.

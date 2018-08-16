@@ -16,7 +16,7 @@ namespace OpenTK.OpenAL.Native.Extensions.Soft
         /// </summary>
         /// <param name="param">The name of the value to retrieve.</param>
         /// <returns>The value.</returns>
-        bool GetBoolean(ALGetBooleanSoft param);
+        bool GetBoolean(StateBoolean param);
 
         /// <summary>
         /// Gets a named value from the state. This overload covers additional valid values added by OpenAL
@@ -24,7 +24,7 @@ namespace OpenTK.OpenAL.Native.Extensions.Soft
         /// </summary>
         /// <param name="param">The name of the value to retrieve.</param>
         /// <returns>The value.</returns>
-        double GetDouble(ALGetDoubleSoft param);
+        double GetDouble(StateDouble param);
 
         /// <summary>
         /// Gets a named value from the state. This overload covers additional valid values added by OpenAL
@@ -32,7 +32,7 @@ namespace OpenTK.OpenAL.Native.Extensions.Soft
         /// </summary>
         /// <param name="param">The name of the value to retrieve.</param>
         /// <returns>The value.</returns>
-        float GetFloat(ALGetFloatSoft param);
+        float GetFloat(StateFloat param);
 
         /// <summary>
         /// Gets a named value from the state. This overload covers additional valid values added by OpenAL
@@ -40,7 +40,7 @@ namespace OpenTK.OpenAL.Native.Extensions.Soft
         /// </summary>
         /// <param name="param">The name of the value to retrieve.</param>
         /// <returns>The value.</returns>
-        int GetInteger(ALGetIntegerSoft param);
+        int GetInteger(StateInteger param);
 
         /// <summary>
         /// Gets a named value from the state. This overload covers additional valid values added by OpenAL
@@ -49,7 +49,6 @@ namespace OpenTK.OpenAL.Native.Extensions.Soft
         /// <param name="param">The name of the value to retrieve.</param>
         /// <returns>The value.</returns>
         [NativeSymbol("GetPointerSOFT")]
-        IntPtr GetPointer(ALGetPointerSoft param);
+        IntPtr GetPointer(StatePointer param);
     }
 }
-

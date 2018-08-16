@@ -9,8 +9,9 @@ namespace OpenTK.OpenAL.Native.Extensions
     /// </summary>
     public abstract class ExtensionBase : NativeLibraryBase, IALExtensions
     {
-        /// <inheritdoc />
-        protected ExtensionBase(string path, ImplementationOptions options) : base(path, options)
+        /// <inheritdoc cref="ExtensionBase"/>
+        protected ExtensionBase(string path, ImplementationOptions options)
+            : base(path, options)
         {
         }
 

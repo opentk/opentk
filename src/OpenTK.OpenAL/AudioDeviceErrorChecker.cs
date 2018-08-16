@@ -33,7 +33,7 @@ namespace OpenTK.OpenAL
     /// </summary>
     internal struct AudioDeviceErrorChecker : IDisposable
     {
-        private readonly IntPtr Device;
+        private readonly IntPtr _device;
         private static readonly string ErrorString = "Device {0} reported {1}.";
 
         /// <summary>
@@ -47,30 +47,30 @@ namespace OpenTK.OpenAL
                 throw new AudioDeviceException();
             }
 
-            Device = device;
+            _device = device;
         }
 
         /// <inheritdoc/>
         public void Dispose()
         {
-            var err = Alc.GetError(Device);
+            var err = Alc.GetError(_device);
             switch (err)
             {
                 case AlcError.OutOfMemory:
                 {
-                    throw new OutOfMemoryException(string.Format(ErrorString, Device, err));
+                    throw new OutOfMemoryException(string.Format(ErrorString, _device, err));
                 }
                 case AlcError.InvalidValue:
                 {
-                    throw new AudioValueException(string.Format(ErrorString, Device, err));
+                    throw new AudioValueException(string.Format(ErrorString, _device, err));
                 }
                 case AlcError.InvalidDevice:
                 {
-                    throw new AudioDeviceException(string.Format(ErrorString, Device, err));
+                    throw new AudioDeviceException(string.Format(ErrorString, _device, err));
                 }
                 case AlcError.InvalidContext:
                 {
-                    throw new AudioContextException(string.Format(ErrorString, Device, err));
+                    throw new AudioContextException(string.Format(ErrorString, _device, err));
                 }
             }
         }

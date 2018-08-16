@@ -1,5 +1,8 @@
 namespace OpenTK.OpenAL.Native.Extensions.Creative.EFX
 {
+    /// <summary>
+    /// A list of valid <see cref="int"/> Source/GetSource parameters.
+    /// </summary>
     public enum SourceInteger
     {
         /// <summary>

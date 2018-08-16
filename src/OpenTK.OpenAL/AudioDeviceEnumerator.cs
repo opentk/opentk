@@ -166,22 +166,34 @@ namespace OpenTK.OpenAL
             }
         }
 
+        /// <summary>
+        /// Gets the names of the available playback devices.
+        /// </summary>
         internal static IList<string> AvailablePlaybackDevices => AvailablePlaybackDevicesValue.AsReadOnly();
 
+        /// <summary>
+        /// Gets the names of the available recording devices.
+        /// </summary>
         internal static IList<string> AvailableRecordingDevices => AvailableRecordingDevicesValue.AsReadOnly();
 
+        /// <summary>
+        /// Gets the name of the default playback device.
+        /// </summary>
         internal static string DefaultPlaybackDevice { get; }
 
+        /// <summary>
+        /// Gets the name of the default recording device.
+        /// </summary>
         internal static string DefaultRecordingDevice { get; }
 
+        /// <summary>
+        /// Gets a value indicating whether OpenAL is supported.
+        /// </summary>
         internal static bool IsOpenALSupported { get; } = true;
 
+        /// <summary>
+        /// Gets the OpenAL version.
+        /// </summary>
         internal static AlcVersion Version { get; }
-
-        internal enum AlcVersion
-        {
-            Alc10,
-            Alc11
-        }
     }
 }

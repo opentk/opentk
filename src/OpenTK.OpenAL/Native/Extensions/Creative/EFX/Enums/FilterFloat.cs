@@ -1,7 +1,7 @@
 ﻿namespace OpenTK.OpenAL.Native.Extensions.Creative.EFX
 {
     /// <summary>
-    /// A list of valid 32-bits Float Filter/GetFilter parameters
+    /// A list of valid <see cref="float"/> Filter/GetFilter parameters.
     /// </summary>
     public enum FilterFloat
     {

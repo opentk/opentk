@@ -6,7 +6,7 @@ namespace OpenTK.OpenAL.Native.Extensions.Soft
     /// A list of valid <see cref="bool"/> parameters for <see cref="IALState.GetBoolean"/>. These enumeration members
     /// are defined as extensions in the OpenAL Soft library.
     /// </summary>
-    public enum ALGetBooleanSoft
+    public enum StateBoolean
     {
         /// <summary>
         /// Determines whether or not the state has a gain limit set.

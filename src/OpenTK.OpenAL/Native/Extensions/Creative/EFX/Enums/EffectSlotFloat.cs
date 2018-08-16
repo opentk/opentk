@@ -1,7 +1,7 @@
 ﻿namespace OpenTK.OpenAL.Native.Extensions.Creative.EFX
 {
     /// <summary>
-    /// A list of valid 32-bits Float AuxiliaryEffectSlot/GetAuxiliaryEffectSlot parameters
+    /// A list of valid <see cref="float"/> AuxiliaryEffectSlot/GetAuxiliaryEffectSlot parameters.
     /// </summary>
     public enum EffectSlotFloat
     {

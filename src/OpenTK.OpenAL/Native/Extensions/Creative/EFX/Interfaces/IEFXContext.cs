@@ -4,6 +4,9 @@ using AdvancedDLSupport;
 
 namespace OpenTK.OpenAL.Native.Extensions.Creative.EFX
 {
+    /// <summary>
+    /// Defines the public API of the context-related functions in the Effects Extension.
+    /// </summary>
     [NativeSymbols(Prefix = "alc")]
     internal interface IEFXContext
     {

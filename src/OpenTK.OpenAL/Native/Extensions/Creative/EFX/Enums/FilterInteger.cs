@@ -1,7 +1,7 @@
 ﻿namespace OpenTK.OpenAL.Native.Extensions.Creative.EFX
 {
     /// <summary>
-    /// A list of valid Int32 Filter/GetFilter parameters
+    /// A list of valid <see cref="int"/> Filter/GetFilter parameters.
     /// </summary>
     public enum FilterInteger
     {

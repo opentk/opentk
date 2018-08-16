@@ -5,7 +5,7 @@ namespace OpenTK.OpenAL.Native.Extensions.Soft
     /// <summary>
     /// A list of valid <see cref="int"/> <see cref="IALState.GetInteger"/> parameters.
     /// </summary>
-    public enum ALGetIntegerSoft
+    public enum StateInteger
     {
         /// <summary>
         /// Gets the number of available resamplers.
@@ -14,7 +14,7 @@ namespace OpenTK.OpenAL.Native.Extensions.Soft
 
         /// <summary>
         /// Gets the default resampler. The return value corresponds to one of the members in
-        /// <see cref="ALSoftResampler"/>.
+        /// <see cref="Resampler"/>.
         /// </summary>
         DefaultResampler = 0x1211
     }

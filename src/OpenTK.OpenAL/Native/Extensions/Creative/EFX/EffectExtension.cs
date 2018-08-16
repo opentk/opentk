@@ -8,8 +8,9 @@ namespace OpenTK.OpenAL.Native.Extensions.Creative.EFX
     /// </summary>
     public abstract class EffectExtension : ExtensionBase, IEFX
     {
-        /// <inheritdoc />
-        protected EffectExtension(string path, ImplementationOptions options) : base(path, options)
+        /// <inheritdoc cref="ExtensionBase"/>
+        protected EffectExtension(string path, ImplementationOptions options)
+            : base(path, options)
         {
         }
 
