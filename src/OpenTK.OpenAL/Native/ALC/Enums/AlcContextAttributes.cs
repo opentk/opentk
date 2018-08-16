@@ -36,13 +36,5 @@ namespace OpenTK.OpenAL.Native
         /// Followed by System.Int32 Num of requested Stereo Sources
         /// </summary>
         StereoSources = 0x1011,
-
-        /// <summary>
-        /// (EFX Extension) This Context property can be passed to OpenAL during Context creation (alcCreateContext) to
-        /// request a maximum number of Auxiliary Sends desired on each Source. It is not guaranteed that the desired number of
-        /// sends will be available, so an application should query this property after creating the context using
-        /// alcGetIntergerv. Default: 2
-        /// </summary>
-        EfxMaxAuxiliarySends = 0x20003
     }
 }

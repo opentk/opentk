@@ -7,7 +7,7 @@ namespace OpenTK.OpenAL.Native.Extensions.Creative.EFX
     /// Defines the public API of the filter-related functions of the Effects Extension.
     /// </summary>
     [NativeSymbols(Prefix = "al")]
-    public interface IEFXFilters
+    internal interface IEFXFilters
     {
         /// <summary>
         /// Creates one or more filter objects.

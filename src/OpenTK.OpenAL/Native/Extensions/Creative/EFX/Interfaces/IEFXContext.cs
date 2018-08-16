@@ -1,0 +1,20 @@
+using System;
+using AdvancedDLSupport;
+// ReSharper disable ExplicitCallerInfoArgument
+
+namespace OpenTK.OpenAL.Native.Extensions.Creative.EFX
+{
+    [NativeSymbols(Prefix = "alc")]
+    internal interface IEFXContext
+    {
+        /// <summary>
+        /// Gets a vector of integer properties from the context.
+        /// </summary>
+        /// <param name="device">The audio device.</param>
+        /// <param name="param">The named property.</param>
+        /// <param name="size">The size of the provided buffer.</param>
+        /// <param name="data">A pointer to the first element of a provided data buffer.</param>
+        [NativeSymbol("GetIntegerv")]
+        unsafe void GetContextProperty(IntPtr device, ContextInteger param, int size, int* data);
+    }
+}

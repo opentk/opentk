@@ -2,8 +2,11 @@ using System;
 using AdvancedDLSupport;
 using OpenTK.OpenAL.Native.Interfaces;
 
-namespace OpenTK.OpenAL.Native.Extensions.EAX.XRam
+namespace OpenTK.OpenAL.Native.Extensions.Creative.XRam
 {
+    /// <summary>
+    /// Defines the public interface of the X-RAM extension.
+    /// </summary>
     [NativeSymbols(Prefix = "EAX")]
     internal interface IXRam : IALExtensions
     {

@@ -7,7 +7,7 @@ namespace OpenTK.OpenAL.Native.Extensions.Creative.EFX
     /// Defines the public API of the effect slot-related functions of the Effects Extension.
     /// </summary>
     [NativeSymbols(Prefix = "al")]
-    public interface IEFXEffectSlots
+    internal interface IEFXEffectSlots
     {
         /// <summary>
         /// Creates one or more auxiliary effect slots.

@@ -5,7 +5,7 @@
     /// effect that will be heard. If these two parameters are set to different phonemes, the filtering effect will morph
     /// between the two settings at a rate specified by EfxEffectf.VocalMorpherRate.
     /// </summary>
-    public enum EfxFormantFilterSettings
+    public enum FormantFilterSettings
     {
         /// <summary>
         /// The A phoneme of the vocal morpher.

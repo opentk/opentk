@@ -1,8 +1,8 @@
-namespace OpenTK.OpenAL.Native.Extensions.EAX.XRam
+namespace OpenTK.OpenAL.Native.Extensions.Creative.XRam
 {
     /// <summary>
-    /// This enum is used to abstract the need of using AL.GetEnumValue() with the Extension. The values do NOT
-    /// correspond to AL_STORAGE_* tokens!
+    /// This enum is used to abstract the need of using AL.GetEnumValue() with the extension. The values do not
+    /// correspond to the actual tokens.
     /// </summary>
     public enum BufferStorageMode
     {

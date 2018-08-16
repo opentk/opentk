@@ -5,7 +5,7 @@ using AdvancedDLSupport;
 
 // ReSharper disable VirtualMemberCallInConstructor
 
-namespace OpenTK.OpenAL.Native.Extensions.EAX.XRam
+namespace OpenTK.OpenAL.Native.Extensions.Creative.XRam
 {
     /// <summary>
     /// Exposes the X-RAM extension by Creative Labs.
@@ -19,8 +19,9 @@ namespace OpenTK.OpenAL.Native.Extensions.EAX.XRam
         private readonly int _ramSize;
         private readonly int _ramFree;
 
-        /// <inheritdoc />
-        protected XRam(string path, ImplementationOptions options) : base(path, options)
+        /// <inheritdoc cref="NativeLibraryBase"/>
+        protected XRam(string path, ImplementationOptions options)
+            : base(path, options)
         {
             _bufferStorageModeAutomatic = GetEnumValue("AL_STORAGE_AUTOMATIC");
             _bufferStorageModeHardware = GetEnumValue("AL_STORAGE_HARDWARE");
@@ -67,8 +68,8 @@ namespace OpenTK.OpenAL.Native.Extensions.EAX.XRam
         /// <summary>
         /// Sets the storage mode of a set of OpenAL buffers.
         /// </summary>
-        /// <param name="buffers">An array of OpenAL buffer handles.</param>
         /// <param name="mode">The storage mode that should be used for all the given buffers.</param>
+        /// <param name="buffers">An array of OpenAL buffer handles.</param>
         /// <returns>
         /// true if all buffers were successfully set to the requested storage mode; otherwise, false.
         /// </returns>

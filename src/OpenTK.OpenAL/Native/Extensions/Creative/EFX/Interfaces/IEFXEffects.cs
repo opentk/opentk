@@ -8,7 +8,7 @@ namespace OpenTK.OpenAL.Native.Extensions.Creative.EFX
     /// Defines the public API of the effect-related functions of the Effects Extension.
     /// </summary>
     [NativeSymbols(Prefix = "al")]
-    public interface IEFXEffects
+    internal interface IEFXEffects
     {
         /// <summary>
         /// Creates one or more effect objects.
