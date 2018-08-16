@@ -290,6 +290,7 @@ namespace OpenTK.OpenAL
                 case ALFormat.StereoFloat32Ext: return 8;
                 case ALFormat.StereoDoubleExt: return 16;
 
+                /* TODO: Move to extension
                 case ALFormat.MultiQuad8Ext: return 4;
                 case ALFormat.MultiQuad16Ext: return 8;
                 case ALFormat.MultiQuad32Ext: return 16;
@@ -305,6 +306,7 @@ namespace OpenTK.OpenAL
                 case ALFormat.MultiRear8Ext: return 1;
                 case ALFormat.MultiRear16Ext: return 2;
                 case ALFormat.MultiRear32Ext: return 4;
+                */
 
                 default: return 1; // Unknown sample size.
             }

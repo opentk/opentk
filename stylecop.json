@@ -24,7 +24,10 @@
         },
         "namingRules" : {
             "allowCommonHungarianPrefixes" : true,
-            "allowedHungarianPrefixes" : []
+            "allowedHungarianPrefixes" : [
+                "hf",
+                "lf"
+            ]
         },
         "maintainabilityRules" : {
             "topLevelTypes" : [

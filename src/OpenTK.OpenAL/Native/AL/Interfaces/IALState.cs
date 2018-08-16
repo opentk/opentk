@@ -90,4 +90,3 @@ namespace OpenTK.OpenAL.Native.Interfaces
         void SpeedOfSound(float value);
     }
 }
-

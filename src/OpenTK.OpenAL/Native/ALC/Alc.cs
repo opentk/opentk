@@ -16,7 +16,7 @@ using OpenTK.Core;
 namespace OpenTK.OpenAL.Native
 {
     /// <summary>
-    /// Alc = Audio Library Context
+    /// Alc = Audio Library Context.
     /// </summary>
     public static class Alc
     {
@@ -25,15 +25,15 @@ namespace OpenTK.OpenAL.Native
 
         [DllImport(Lib, EntryPoint = "alcCreateContext", ExactSpelling = true, CallingConvention = Style)]
         [SuppressUnmanagedCodeSecurity]
-        private static extern unsafe IntPtr sys_CreateContext([In] IntPtr device, [In] int* attrlist);
+        private static extern unsafe IntPtr InternalCreateContext([In] IntPtr device, [In] int* attrlist);
 
         /// <summary>
         /// This function creates a context using a specified device.
         /// </summary>
-        /// <param name="device">a pointer to a device</param>
+        /// <param name="device">a pointer to a device.</param>
         /// <param name="attrlist">
         /// a pointer to a set of attributes: ALC_FREQUENCY, ALC_MONO_SOURCES, ALC_REFRESH,
-        /// ALC_STEREO_SOURCES, ALC_SYNC
+        /// ALC_STEREO_SOURCES, ALC_SYNC.
         /// </param>
         /// <returns>
         /// Returns a pointer to the new context (NULL on failure). The attribute list can be NULL, or a zero terminated
@@ -41,16 +41,16 @@ namespace OpenTK.OpenAL.Native
         /// </returns>
         public static unsafe ContextHandle CreateContext([In] IntPtr device, [In] int* attrlist)
         {
-            return new ContextHandle(sys_CreateContext(device, attrlist));
+            return new ContextHandle(InternalCreateContext(device, attrlist));
         }
 
         /// <summary>
         /// This function creates a context using a specified device.
         /// </summary>
-        /// <param name="device">a pointer to a device</param>
+        /// <param name="device">a pointer to a device.</param>
         /// <param name="attriblist">
         /// an array of a set of attributes: ALC_FREQUENCY, ALC_MONO_SOURCES, ALC_REFRESH,
-        /// ALC_STEREO_SOURCES, ALC_SYNC
+        /// ALC_STEREO_SOURCES, ALC_SYNC.
         /// </param>
         /// <returns>Returns a pointer to the new context (NULL on failure).</returns>
         /// <remarks>
@@ -93,7 +93,7 @@ namespace OpenTK.OpenAL.Native
         /// immediately. In some cases, this procedure may be more efficient than application of properties in a non-suspended
         /// state. In some implementations, process and suspend calls are each a NOP.
         /// </summary>
-        /// <param name="context">a pointer to the new context</param>
+        /// <param name="context">a pointer to the new context.</param>
         public static void ProcessContext(ContextHandle context)
         {
             ProcessContext(context.Handle);
@@ -131,7 +131,7 @@ namespace OpenTK.OpenAL.Native
 
         [DllImport(Lib, EntryPoint = "alcGetCurrentContext", ExactSpelling = true, CallingConvention = Style)]
         [SuppressUnmanagedCodeSecurity]
-        private static extern IntPtr sys_GetCurrentContext();
+        private static extern IntPtr InternalGetCurrentContext();
 
         /// <summary>
         /// This function retrieves the current context.
@@ -139,7 +139,7 @@ namespace OpenTK.OpenAL.Native
         /// <returns>Returns a pointer to the current context.</returns>
         public static ContextHandle GetCurrentContext()
         {
-            return new ContextHandle(sys_GetCurrentContext());
+            return new ContextHandle(InternalGetCurrentContext());
         }
 
         [DllImport(Lib, EntryPoint = "alcGetContextsDevice", ExactSpelling = true, CallingConvention = Style)]
@@ -168,7 +168,7 @@ namespace OpenTK.OpenAL.Native
         /// <summary>
         /// This function closes a device by name.
         /// </summary>
-        /// <param name="device">a pointer to an opened device</param>
+        /// <param name="device">a pointer to an opened device.</param>
         /// <returns>
         /// True will be returned on success or False on failure. Closing a device will fail if the device contains any
         /// contexts or buffers.
@@ -180,7 +180,7 @@ namespace OpenTK.OpenAL.Native
         /// <summary>
         /// This function retrieves the current context error state.
         /// </summary>
-        /// <param name="device">a pointer to the device to retrieve the error state from</param>
+        /// <param name="device">a pointer to the device to retrieve the error state from.</param>
         /// <returns>Errorcode Int32.</returns>
         [DllImport(Lib, EntryPoint = "alcGetError", ExactSpelling = true, CallingConvention = Style)]
         [SuppressUnmanagedCodeSecurity]
@@ -192,8 +192,7 @@ namespace OpenTK.OpenAL.Native
         /// <param name="device">a pointer to the device to be queried for an extension.</param>
         /// <param name="extname">a null-terminated string describing the extension.</param>
         /// <returns>Returns True if the extension is available, False if the extension is not available.</returns>
-        [DllImport(Lib, EntryPoint = "alcIsExtensionPresent", ExactSpelling = true, CallingConvention = Style,
-            CharSet = CharSet.Ansi)]
+        [DllImport(Lib, EntryPoint = "alcIsExtensionPresent", ExactSpelling = true, CallingConvention = Style, CharSet = CharSet.Ansi)]
         [SuppressUnmanagedCodeSecurity]
         public static extern bool IsExtensionPresent([In] IntPtr device, [In] string extname);
 
@@ -203,8 +202,7 @@ namespace OpenTK.OpenAL.Native
         /// <param name="device">a pointer to the device to be queried for the function.</param>
         /// <param name="funcname">a null-terminated string describing the function.</param>
         /// <returns>Returns the address of the function, or NULL if it is not found.</returns>
-        [DllImport(Lib, EntryPoint = "alcGetProcAddress", ExactSpelling = true, CallingConvention = Style,
-            CharSet = CharSet.Ansi)]
+        [DllImport(Lib, EntryPoint = "alcGetProcAddress", ExactSpelling = true, CallingConvention = Style, CharSet = CharSet.Ansi)]
         [SuppressUnmanagedCodeSecurity]
         public static extern IntPtr GetProcAddress([In] IntPtr device, [In] string funcname);
 
@@ -243,7 +241,7 @@ namespace OpenTK.OpenAL.Native
         /// <param name="device">a pointer to the device to be queried.</param>
         /// <param name="param">
         /// an attribute to be retrieved: ALC_DEFAULT_DEVICE_SPECIFIER, ALC_CAPTURE_DEFAULT_DEVICE_SPECIFIER,
-        /// ALC_DEVICE_SPECIFIER, ALC_CAPTURE_DEVICE_SPECIFIER, ALC_EXTENSIONS
+        /// ALC_DEVICE_SPECIFIER, ALC_CAPTURE_DEVICE_SPECIFIER, ALC_EXTENSIONS.
         /// </param>
         /// <returns>A string containing the name of the Device.</returns>
         public static string GetString(IntPtr device, AlcGetString param)
@@ -274,7 +272,7 @@ namespace OpenTK.OpenAL.Native
         /// <param name="device">a pointer to the device to be queried.</param>
         /// <param name="param">
         /// an attribute to be retrieved: ALC_DEVICE_SPECIFIER, ALC_CAPTURE_DEVICE_SPECIFIER,
-        /// ALC_ALL_DEVICES_SPECIFIER
+        /// ALC_ALL_DEVICES_SPECIFIER.
         /// </param>
         /// <returns>A List of strings containing the names of the Devices.</returns>
         public static IList<string> GetString(IntPtr device, AlcGetStringList param)
@@ -316,12 +314,15 @@ namespace OpenTK.OpenAL.Native
                         // Another string is starting, clear the StringBuilder
                         sb.Remove(0, sb.Length);
                     }
-                } while (true);
+                }
+                while (true);
             }
             else
             {
-                Debug.Print("[Audio] Alc.GetString({0}, {1}) returned null.",
-                    device, param);
+                Debug.Print
+                (
+                    $"[Audio] Alc.GetString({device}, {param}) returned null."
+                );
             }
 
             return result;
@@ -337,10 +338,10 @@ namespace OpenTK.OpenAL.Native
         /// <param name="device">a pointer to the device to be queried.</param>
         /// <param name="param">
         /// an attribute to be retrieved: ALC_MAJOR_VERSION, ALC_MINOR_VERSION, ALC_ATTRIBUTES_SIZE,
-        /// ALC_ALL_ATTRIBUTES
+        /// ALC_ALL_ATTRIBUTES.
         /// </param>
         /// <param name="size">the size of the destination buffer provided, in number of integers.</param>
-        /// <param name="data">a pointer to the buffer to be returned</param>
+        /// <param name="data">a pointer to the buffer to be returned.</param>
         public static void GetInteger(IntPtr device, AlcGetInteger param, int size, out int data)
         {
             unsafe
@@ -358,10 +359,10 @@ namespace OpenTK.OpenAL.Native
         /// <param name="device">a pointer to the device to be queried.</param>
         /// <param name="param">
         /// an attribute to be retrieved: ALC_MAJOR_VERSION, ALC_MINOR_VERSION, ALC_ATTRIBUTES_SIZE,
-        /// ALC_ALL_ATTRIBUTES
+        /// ALC_ALL_ATTRIBUTES.
         /// </param>
         /// <param name="size">the size of the destination buffer provided, in number of integers.</param>
-        /// <param name="data">a pointer to the buffer to be returned</param>
+        /// <param name="data">a pointer to the buffer to be returned.</param>
         public static void GetInteger(IntPtr device, AlcGetInteger param, int size, int[] data)
         {
             unsafe
@@ -383,8 +384,7 @@ namespace OpenTK.OpenAL.Native
         /// <returns>Returns the capture device pointer, or NULL on failure.</returns>
         [DllImport(Lib, EntryPoint = "alcCaptureOpenDevice", ExactSpelling = true, CallingConvention = Style, CharSet = CharSet.Ansi)]
         [SuppressUnmanagedCodeSecurity]
-        public static extern IntPtr CaptureOpenDevice(string devicename, uint frequency, ALFormat format,
-            int buffersize);
+        public static extern IntPtr CaptureOpenDevice(string devicename, uint frequency, ALFormat format, int buffersize);
 
         /// <summary>
         /// This function opens a capture device by name.
@@ -396,9 +396,7 @@ namespace OpenTK.OpenAL.Native
         /// <returns>Returns the capture device pointer, or NULL on failure.</returns>
         [DllImport(Lib, EntryPoint = "alcCaptureOpenDevice", ExactSpelling = true, CallingConvention = Style, CharSet = CharSet.Ansi)]
         [SuppressUnmanagedCodeSecurity]
-        public static extern IntPtr
-            CaptureOpenDevice(string devicename, int frequency, ALFormat format, int buffersize);
-
+        public static extern IntPtr CaptureOpenDevice(string devicename, int frequency, ALFormat format, int buffersize);
 
         /// <summary>
         /// This function closes the specified capture device.
@@ -444,6 +442,7 @@ namespace OpenTK.OpenAL.Native
         /// <summary>
         /// This function completes a capture operation, and does not block.
         /// </summary>
+        /// <typeparam name="T">The buffer type.</typeparam>
         /// <param name="device">a pointer to a capture device.</param>
         /// <param name="buffer">a reference to a buffer, which must be large enough to accommodate the number of samples.</param>
         /// <param name="samples">the number of samples to be retrieved.</param>
@@ -464,6 +463,7 @@ namespace OpenTK.OpenAL.Native
         /// <summary>
         /// This function completes a capture operation, and does not block.
         /// </summary>
+        /// <typeparam name="T">The buffer type.</typeparam>
         /// <param name="device">a pointer to a capture device.</param>
         /// <param name="buffer">a buffer, which must be large enough to accommodate the number of samples.</param>
         /// <param name="samples">the number of samples to be retrieved.</param>
@@ -476,6 +476,7 @@ namespace OpenTK.OpenAL.Native
         /// <summary>
         /// This function completes a capture operation, and does not block.
         /// </summary>
+        /// <typeparam name="T">The buffer type.</typeparam>
         /// <param name="device">a pointer to a capture device.</param>
         /// <param name="buffer">a buffer, which must be large enough to accommodate the number of samples.</param>
         /// <param name="samples">the number of samples to be retrieved.</param>
@@ -488,6 +489,7 @@ namespace OpenTK.OpenAL.Native
         /// <summary>
         /// This function completes a capture operation, and does not block.
         /// </summary>
+        /// <typeparam name="T">The buffer type.</typeparam>
         /// <param name="device">a pointer to a capture device.</param>
         /// <param name="buffer">a buffer, which must be large enough to accommodate the number of samples.</param>
         /// <param name="samples">the number of samples to be retrieved.</param>
