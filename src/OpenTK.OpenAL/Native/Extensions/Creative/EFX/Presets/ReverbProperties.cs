@@ -10,117 +10,117 @@ namespace OpenTK.OpenAL.Native.Extensions.Creative.EFX
         /// <summary>
         /// Gets the preset value for <see cref="EffectFloat.ReverbDensity"/>.
         /// </summary>
-        public float Density { get; }
+        public float Density  { get; }
 
         /// <summary>
         /// Gets the preset value for <see cref="EffectFloat.ReverbDiffusion "/>.
         /// </summary>
-        public float Diffusion { get; }
+        public float Diffusion  { get; }
 
         /// <summary>
         /// Gets the preset value for <ReverbGainsee cref="EffectFloat.ReverbGain"/>.
         /// </summary>
-        public float Gain{ get; }
+        public float Gain { get; }
 
         /// <summary>
         /// Gets the preset value for <see cref="EffectFloat.ReverbGainHF"/>.
         /// </summary>
-        public float GainHF{ get; }
+        public float GainHF { get; }
 
         /// <summary>
         /// Gets the preset value for <see cref="EffectFloat.EaxReverbGainLF"/>.
         /// </summary>
-        public float GainLF{ get; }
+        public float GainLF { get; }
 
         /// <summary>
         /// Gets the preset value for <see cref="EffectFloat.ReverbDecayTime"/>.
         /// </summary>
-        public float DecayTime{ get; }
+        public float DecayTime { get; }
 
         /// <summary>
         /// Gets the preset value for <see cref="EffectFloat.ReverbDecayHFRatio"/>.
         /// </summary>
-        public float DecayHFRatio{ get; }
+        public float DecayHFRatio { get; }
 
         /// <summary>
         /// Gets the preset value for <see cref="EffectFloat.EaxReverbDecayLFRatio"/>.
         /// </summary>
-        public float DecayLFRatio{ get; }
+        public float DecayLFRatio { get; }
 
         /// <summary>
         /// Gets the preset value for <see cref="EffectFloat.ReverbReflectionsGain"/>.
         /// </summary>
-        public float ReflectionsGain{ get; }
+        public float ReflectionsGain { get; }
 
         /// <summary>
         /// Gets the preset value for <see cref="EffectFloat.ReverbReflectionsDelay"/>.
         /// </summary>
-        public float ReflectionsDelay{ get; }
+        public float ReflectionsDelay { get; }
 
         /// <summary>
         /// Gets the preset value for <see cref="EffectVector3.EaxReverbReflectionsPan"/>.
         /// </summary>
-        public Vector3 ReflectionsPan{ get; }
+        public Vector3 ReflectionsPan { get; }
 
         /// <summary>
         /// Gets the preset value for <see cref="EffectFloat.ReverbLateReverbGain"/>.
         /// </summary>
-        public float LateReverbGain{ get; }
+        public float LateReverbGain { get; }
 
         /// <summary>
         /// Gets the preset value for <see cref="EffectFloat.ReverbLateReverbDelay"/>.
         /// </summary>
-        public float LateReverbDelay{ get; }
+        public float LateReverbDelay { get; }
 
         /// <summary>
         /// Gets the preset value for <see cref="EffectVector3.EaxReverbLateReverbPan"/>.
         /// </summary>
-        public Vector3 LateReverbPan{ get; }
+        public Vector3 LateReverbPan { get; }
 
         /// <summary>
         /// Gets the preset value for <see cref="EffectFloat.EaxReverbEchoTime"/>.
         /// </summary>
-        public float EchoTime{ get; }
+        public float EchoTime { get; }
 
         /// <summary>
         /// Gets the preset value for <see cref="EffectFloat.EaxReverbEchoDepth"/>.
         /// </summary>
-        public float EchoDepth{ get; }
+        public float EchoDepth { get; }
 
         /// <summary>
         /// Gets the preset value for <see cref="EffectFloat.EaxReverbModulationTime"/>.
         /// </summary>
-        public float ModulationTime{ get; }
+        public float ModulationTime { get; }
 
         /// <summary>
         /// Gets the preset value for <see cref="EffectFloat.EaxReverbModulationDepth"/>.
         /// </summary>
-        public float ModulationDepth{ get; }
+        public float ModulationDepth { get; }
 
         /// <summary>
         /// Gets the preset value for <see cref="EffectFloat.ReverbAirAbsorptionGainHF"/>.
         /// </summary>
-        public float AirAbsorptionGainHF{ get; }
+        public float AirAbsorptionGainHF { get; }
 
         /// <summary>
         /// Gets the preset value for <see cref="EffectFloat.EaxReverbHFReference"/>.
         /// </summary>
-        public float HFReference{ get; }
+        public float HFReference { get; }
 
         /// <summary>
         /// Gets the preset value for <see cref="EffectFloat.EaxReverbLFReference"/>.
         /// </summary>
-        public float LFReference{ get; }
+        public float LFReference { get; }
 
         /// <summary>
         /// Gets the preset value for <see cref="EffectFloat.ReverbRoomRolloffFactor"/>.
         /// </summary>
-        public float RoomRolloffFactor{ get; }
+        public float RoomRolloffFactor { get; }
 
         /// <summary>
         /// Gets the preset value for <see cref="Effect."/>.
         /// </summary>
-        public int DecayHFLimit{ get; }
+        public int DecayHFLimit { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ReverbProperties"/> struct.

@@ -31,14 +31,14 @@ namespace OpenTK.OpenAL
     public class AudioDeviceException : AudioException
     {
         /// <summary>
-        /// Constructs a new AudioDeviceException.
+        /// Initializes a new instance of the <see cref="AudioDeviceException"/> class.
         /// </summary>
         public AudioDeviceException()
         {
         }
 
         /// <summary>
-        /// Constructs a new AudioDeviceException with the specified error message.
+        /// Initializes a new instance of the <see cref="AudioDeviceException"/> class.
         /// </summary>
         /// <param name="message">The error message of the AudioDeviceException.</param>
         public AudioDeviceException(string message)

@@ -28,11 +28,18 @@ using OpenTK.OpenAL.Native;
 
 namespace OpenTK.OpenAL
 {
+    /// <summary>
+    /// Represents an error watchdog that can be used by wrapping calls to OpenAL in it.
+    /// </summary>
     internal struct AudioDeviceErrorChecker : IDisposable
     {
         private readonly IntPtr Device;
         private static readonly string ErrorString = "Device {0} reported {1}.";
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AudioDeviceErrorChecker"/> struct.
+        /// </summary>
+        /// <param name="device">The device to monitor.</param>
         public AudioDeviceErrorChecker(IntPtr device)
         {
             if (device == IntPtr.Zero)
@@ -43,27 +50,28 @@ namespace OpenTK.OpenAL
             Device = device;
         }
 
+        /// <inheritdoc/>
         public void Dispose()
         {
             var err = Alc.GetError(Device);
             switch (err)
             {
                 case AlcError.OutOfMemory:
+                {
                     throw new OutOfMemoryException(string.Format(ErrorString, Device, err));
-
+                }
                 case AlcError.InvalidValue:
+                {
                     throw new AudioValueException(string.Format(ErrorString, Device, err));
-
+                }
                 case AlcError.InvalidDevice:
+                {
                     throw new AudioDeviceException(string.Format(ErrorString, Device, err));
-
+                }
                 case AlcError.InvalidContext:
+                {
                     throw new AudioContextException(string.Format(ErrorString, Device, err));
-
-                case AlcError.NoError:
-                default:
-                    // everything went fine, do nothing
-                    break;
+                }
             }
         }
     }

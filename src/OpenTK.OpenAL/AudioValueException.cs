@@ -31,14 +31,14 @@ namespace OpenTK.OpenAL
     public class AudioValueException : AudioException
     {
         /// <summary>
-        /// Constructs a new instance.
+        /// Initializes a new instance of the <see cref="AudioValueException"/> class.
         /// </summary>
         public AudioValueException()
         {
         }
 
         /// <summary>
-        /// Constructs a new instance with the specified error message.
+        /// Initializes a new instance of the <see cref="AudioValueException"/> class.
         /// </summary>
         /// <param name="message">The error message of the AudioContextException.</param>
         public AudioValueException(string message)

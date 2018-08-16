@@ -239,7 +239,7 @@ namespace OpenTK.OpenAL
         /// Fills the specified buffer with samples from the internal capture ring-buffer. This method does not block:
         /// it is an error to specify a sampleCount larger than AvailableSamples.
         /// </summary>
-        /// <typeparam name="TBuffer"></typeparam>
+        /// <typeparam name="TBuffer">The type of the buffer.</typeparam>
         /// <param name="buffer">The buffer to fill.</param>
         /// <param name="sampleCount">The number of samples to be written to the buffer.</param>
         /// <exception cref="ArgumentNullException">Raised when buffer is null.</exception>
