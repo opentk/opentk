@@ -33,47 +33,24 @@ using CommandLine;
 
 namespace OpenTK.Convert
 {
-    internal class EnumTokenComparer : IEqualityComparer<XNode>
-    {
-        public bool Equals(XNode a, XNode b)
-        {
-            var a_attr = ((XElement)a).Attribute("name") ?? ((XElement)a).Attribute("token");
-            var b_attr = ((XElement)b).Attribute("name") ?? ((XElement)b).Attribute("token");
-            return a_attr.Value == b_attr.Value;
-        }
-
-        public int GetHashCode(XNode a)
-        {
-            var e = (XElement)a;
-            if (e.Name == "enum" || e.Name == "token" || e.Name == "function")
-            {
-                return ((XElement)a).Attribute("name").Value.GetHashCode() ^ e.Name.LocalName.GetHashCode();
-            }
-
-            if (e.Name == "use")
-            {
-                return ((XElement)a).Attribute("token").Value.GetHashCode();
-            }
-
-            throw new InvalidOperationException($"Unknown element type: {e}");
-        }
-    }
-
+    /// <summary>
+    /// The main class containing the EntryPoint of the Generator.Converter Application.
+    /// </summary>
     internal class EntryPoint
     {
-        private static Options CLIOptions;
+        private static Options cliOptions;
 
         private static void Main(string[] args)
         {
             Parser.Default.ParseArguments<Options>(args)
-                .WithParsed(result => CLIOptions = result)
+                .WithParsed(result => cliOptions = result)
                 .WithNotParsed(error => Environment.Exit(-1));
 
             try
             {
-                XmlParser xmlParser = new GLXmlParser { Prefix = CLIOptions.Prefix };
+                XmlParser xmlParser = new GLXmlParser { Prefix = cliOptions.Prefix };
 
-                var sigs = CLIOptions.InputFiles.Select(h => xmlParser.Parse(h)).ToList();
+                var sigs = cliOptions.InputFiles.Select(h => xmlParser.Parse((string)h)).ToList();
 
                 // Merge any duplicate enum entries (in case an enum is declared
                 // in multiple files with different entries in each file).
@@ -85,14 +62,14 @@ namespace OpenTK.Convert
                 settings.Encoding = Encoding.UTF8;
 
                 TextWriter out_stream = null;
-                if (CLIOptions.OutputFile == null)
+                if (cliOptions.OutputFile == null)
                 {
                     out_stream = Console.Out;
                     Console.OutputEncoding = Encoding.UTF8;
                 }
                 else
                 {
-                    out_stream = new StreamWriter(CLIOptions.OutputFile, false);
+                    out_stream = new StreamWriter(cliOptions.OutputFile, false);
                 }
 
                 using (var writer = XmlWriter.Create(out_stream, settings))
@@ -101,12 +78,13 @@ namespace OpenTK.Convert
                     foreach (var api in sigs.SelectMany(s => s))
                     {
                         output.Add(
-                            new XElement("add",
-                                new XAttribute("name", api.Attribute("name").Value),
-                                api.Attribute("version") != null
-                                    ? new XAttribute("version", api.Attribute("version").Value)
-                                    : null,
-                                api.Elements()
+                            new XElement(
+                                    "add",
+                                    new XAttribute(
+                                        "name",
+                                        api.Attribute("name").Value),
+                                    api.Attribute("version") != null ? new XAttribute("version", api.Attribute("version").Value) : null,
+                                    api.Elements()
                                     .OrderBy(s => s.Name.LocalName)
                                     .ThenBy(s => (string)s.Attribute("value") ?? string.Empty)
                                     .ThenBy(s => (string)s.Attribute("name") ?? string.Empty)
@@ -155,8 +133,8 @@ namespace OpenTK.Convert
             var entries = new Dictionary<string, XElement>();
             foreach (var e in sigs.SelectMany(s => s))
             {
-                var name = (string)e.Attribute("name") ?? "";
-                var version = (string)e.Attribute("version") ?? "";
+                var name = (string)e.Attribute("name") ?? string.Empty;
+                var version = (string)e.Attribute("version") ?? string.Empty;
                 var key = name + version;
                 if (entries.ContainsKey(key))
                 {

@@ -129,7 +129,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Initializes a new instance of the <see cref="Vector4h"/> struct.
         /// </summary>
-        /// <param name="v">The <see cref="Vector4"/> to convert.</param>
+        /// <param name="v">The vector.</param>
         public Vector4h(Vector4 v)
         {
             X = new Half(v.X);

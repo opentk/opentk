@@ -20,7 +20,6 @@
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
-
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -29,17 +28,40 @@ using System.Xml.Linq;
 
 namespace OpenTK.Convert
 {
-    // The base class for a parser.
+    /// <summary>
+    /// The base class for a parser.
+    /// </summary>
     internal abstract class XmlParser
     {
-        // Defines a prefix that should be removed from methods and tokens in the XML files, e.g. "gl", "cl", etc.
+        /// <summary>
+        /// Gets or sets a prefix that should be removed from methods and tokens in the XML files, e.g. "gl", "cl", etc.
+        /// </summary>
         public string Prefix { get; set; }
+
+        /// <summary>
+        /// Gets a prefix that should be removed from tokens in the XML files, e.g. "gl_", "cl_", etc.
+        /// </summary>
         public string EnumPrefix => Prefix.ToUpper() + "_";
+
+        /// <summary>
+        /// Gets a prefix that should be removed from methods in the XML files, e.g. "gl", "cl", etc.
+        /// </summary>
         public string FuncPrefix => Prefix;
 
         // Implements the parsing logic for a specific input file.
+
+        /// <summary>
+        /// Parses a given Xml Document and returns parsed specification information.
+        /// </summary>
+        /// <param name="lines">The XML Document as an array of strings.</param>
+        /// <returns>The parsed specification information.</returns>
         public abstract IEnumerable<XElement> Parse(string[] lines);
 
+        /// <summary>
+        /// Parses the Document given by Path.
+        /// </summary>
+        /// <param name="path">The path to the file to parse. Can be an URL.</param>
+        /// <returns>The parsed specification information.</returns>
         public IEnumerable<XElement> Parse(string path)
         {
             string[] contents = null;
@@ -83,6 +105,11 @@ namespace OpenTK.Convert
             return Parse(contents);
         }
 
+        /// <summary>
+        /// Trims the given name by <see cref="EnumPrefix"/> and <see cref="FuncPrefix"/>.
+        /// </summary>
+        /// <param name="name">The name to trim.</param>
+        /// <returns>The trimmed name.</returns>
         public string TrimName(string name)
         {
             if (name.StartsWith(EnumPrefix))

@@ -1,4 +1,4 @@
-﻿/* EfxTokens.cs
+﻿/* EfxEffectf.cs
  * C headers: \OpenAL 1.1 SDK\include\ "efx.h", "efx-creative.h", "Efx-Util.h"
  * Spec: Effects Extension Guide.pdf (bundled with OpenAL SDK)
  * Copyright (c) 2008 Christoph Brandtner and Stefanos Apostolopoulos
@@ -39,7 +39,7 @@ namespace OpenTK.OpenAL.Native
         /// of the reverb effect. Ranges from 1.0f (0db) (no filter) to 0.0f (-100db) (virtually no reflected sound) are
         /// accepted. Units: Linear gain Range [0.0f .. 1.0f] Default: 0.89f
         /// </summary>
-        ReverbGainHF = 0x0004,
+        ReverbGainHf = 0x0004,
 
         /// <summary>
         /// The Decay Time property sets the reverberation decay time. It ranges from 0.1f (typically a small room with
@@ -53,7 +53,7 @@ namespace OpenTK.OpenAL.Native
         /// high-frequency decay time relative to the time set by Decay Time.. Unit: linear multiplier Range [0.1f .. 2.0f]
         /// Default: 0.83f
         /// </summary>
-        ReverbDecayHFRatio = 0x0006,
+        ReverbDecayHfRatio = 0x0006,
 
         /// <summary>
         /// The Reflections Gain property controls the overall amount of initial reflections relative to the Gain
@@ -89,7 +89,7 @@ namespace OpenTK.OpenAL.Native
         /// the propagation medium and applies to reflected sound only. Unit: Linear gain per meter Range [0.892f .. 1.0f]
         /// Default: 0.994f
         /// </summary>
-        ReverbAirAbsorptionGainHF = 0x000B,
+        ReverbAirAbsorptionGainHf = 0x000B,
 
         /// <summary>
         /// The Room Rolloff Factor property is one of two methods available to attenuate the reflected sound (containing
@@ -341,13 +341,13 @@ namespace OpenTK.OpenAL.Native
         /// use this property to give a room specific spectral characteristic. Unit: Linear gain Range [0.0f .. 1.0f] Default:
         /// 0.89f
         /// </summary>
-        EaxReverbGainHF = 0x0004,
+        EaxReverbGainHf = 0x0004,
 
         /// <summary>
         /// Gain LF is the low frequency counterpart to Gain HF. Use this to reduce or boost the low frequency content in
         /// an environment. Unit: Linear gain Range [0.0f .. 1.0f] Default: 1.0f
         /// </summary>
-        EaxReverbGainLF = 0x0005,
+        EaxReverbGainLf = 0x0005,
 
         /// <summary>
         /// The Decay Time property sets the reverberation decay time. It ranges from 0.1f (typically a small room with
@@ -361,13 +361,13 @@ namespace OpenTK.OpenAL.Native
         /// changing this value, you are changing the amount of time it takes for the high frequencies to decay compared to the
         /// mid frequencies of the reverb. Range [0.1f .. 2.0f] Default: 0.83f
         /// </summary>
-        EaxReverbDecayHFRatio = 0x0007,
+        EaxReverbDecayHfRatio = 0x0007,
 
         /// <summary>
         /// Decay LF Ratio scales the decay time of low frequencies in the reverberation in the same manner that Decay HF
         /// Ratio handles high frequencies. Unit: Linear multiplier Range [0.1f .. 2.0f] Default: 1.0f
         /// </summary>
-        EaxReverbDecayLFRatio = 0x0008,
+        EaxReverbDecayLfRatio = 0x0008,
 
         /// <summary>
         /// Reflections Gain sets the level of the early reflections in an environment. Early reflections are used as a
@@ -423,25 +423,25 @@ namespace OpenTK.OpenAL.Native
         /// The Air Absorption Gain HF property controls the distance-dependent attenuation at high frequencies caused by
         /// the propagation medium. It applies to reflected sound only. Range [0.892f .. 1.0f] Default: 0.994f
         /// </summary>
-        EaxReverbAirAbsorptionGainHF = 0x0013,
+        EaxReverbAirAbsorptionGainHf = 0x0013,
 
         /// <summary>
         /// The property HF reference determines the frequency at which the high-frequency effects created by Reverb
         /// properties are measured. Unit: Hz Range [1000.0f .. 20000.0f] Default: 5000.0f
         /// </summary>
-        EaxReverbHFReference = 0x0014,
+        EaxReverbHfReference = 0x0014,
 
         /// <summary>
         /// The property LF reference determines the frequency at which the low-frequency effects created by Reverb
         /// properties are measured. Unit: Hz Range [20.0f .. 1000.0f] Default: 250.0f
         /// </summary>
-        EaxReverbLFReference = 0x0015,
+        EaxReverbLfReference = 0x0015,
 
         /// <summary>
         /// The Room Rolloff Factor property is one of two methods available to attenuate the reflected sound (containing
         /// both reflections and reverberation) according to source-listener distance. It's defined the same way as OpenAL
         /// Rolloff Factor, but operates on reverb sound instead of direct-path sound. Range [0.0f .. 10.0f] Default: 0.0f
         /// </summary>
-        EaxReverbRoomRolloffFactor = 0x0016
+        EaxReverbRoomRolloffFactor = 0x0016,
     }
 }

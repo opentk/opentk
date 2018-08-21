@@ -13,7 +13,6 @@ namespace Bind.Structures
     internal class EnumDefinition
     {
         private string _name;
-
         private string _type;
 
         /// <summary>

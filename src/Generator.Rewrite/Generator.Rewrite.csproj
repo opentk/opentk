@@ -3,8 +3,8 @@
     <OutputType>Exe</OutputType>
     <TargetFramework>net471</TargetFramework>
     <Deterministic>true</Deterministic>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
-
   <PropertyGroup>
     <RootNamespace>OpenTK.Rewrite</RootNamespace>
     <AssemblyName>Rewrite</AssemblyName>
@@ -12,12 +12,10 @@
     <Version>4.0.0</Version>
     <IsPackable>false</IsPackable>
   </PropertyGroup>
-
   <ItemGroup>
     <PackageReference Include="CommandLineParser" Version="2.2.1" />
     <PackageReference Include="Mono.Cecil" Version="0.10.0" />
   </ItemGroup>
-
   <Import Project="..\..\props\common.props" />
   <Import Project="..\..\props\netfx-mono.props" />
   <Import Project="..\..\props\stylecop.props" />

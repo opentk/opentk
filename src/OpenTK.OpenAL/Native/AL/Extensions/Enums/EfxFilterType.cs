@@ -1,4 +1,11 @@
-﻿namespace OpenTK.OpenAL.Native
+﻿/* EfxFilterType.cs
+ * C headers: \OpenAL 1.1 SDK\include\ "efx.h", "efx-creative.h", "Efx-Util.h"
+ * Spec: Effects Extension Guide.pdf (bundled with OpenAL SDK)
+ * Copyright (c) 2008 Christoph Brandtner and Stefanos Apostolopoulos
+ * See license.txt for license details
+ * http://www.OpenTK.net */
+
+namespace OpenTK.OpenAL.Native
 {
     /// <summary>
     /// Filter type definitions to be used with EfxFilteri.FilterType.
@@ -23,6 +30,6 @@
         /// <summary>
         /// Currently not implemented. A band-pass filter is used to remove high and low frequency content from a signal.
         /// </summary>
-        Bandpass = 0x0003
+        Bandpass = 0x0003,
     }
 }

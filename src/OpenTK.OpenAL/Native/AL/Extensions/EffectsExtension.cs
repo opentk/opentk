@@ -7,6 +7,7 @@
 
 using System;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 using OpenTK.Mathematics;
 
@@ -17,51 +18,94 @@ namespace OpenTK.OpenAL.Native
     /// </summary>
     public partial class EffectsExtension
     {
-        private readonly ALDelegateAuxiliaryEffectSlotf _delegateALAuxiliaryEffectSlotf;
+        private readonly Delegates.AlAuxiliaryEffectSlotf _alAuxiliaryEffectSlotf;
 
-        private readonly ALDelegateAuxiliaryEffectSloti _delegateALAuxiliaryEffectSloti;
+        private readonly Delegates.AlAuxiliaryEffectSloti _alAuxiliaryEffectSloti;
 
-        private readonly ALDelegateDeleteAuxiliaryEffectSlots _delegateALDeleteAuxiliaryEffectSlots;
+        private readonly Delegates.AlDeleteAuxiliaryEffectSlots _alDeleteAuxiliaryEffectSlots;
 
-        private readonly ALDelegateDeleteEffects _delegateALDeleteEffects;
+        private readonly Delegates.AlDeleteEffects _alDeleteEffects;
 
-        private readonly ALDelegateDeleteFilters _delegateALDeleteFilters;
+        private readonly Delegates.AlDeleteFilters _alDeleteFilters;
 
-        private readonly ALDelegateEffectf _delegateALEffectf;
+        private readonly Delegates.AlEffectf _alEffectf;
 
-        private readonly ALDelegateEffectfv _delegateALEffectfv;
+        private readonly Delegates.AlEffectfv _alEffectfv;
 
-        private readonly ALDelegateEffecti _delegateALEffecti;
+        private readonly Delegates.AlEffecti _alEffecti;
 
-        private readonly ALDelegateFilterf _delegateALFilterf;
+        private readonly Delegates.AlFilterf _alFilterf;
 
-        private readonly ALDelegateFilteri _delegateALFilteri;
+        private readonly Delegates.AlFilteri _alFilteri;
 
-        private readonly ALDelegateGenAuxiliaryEffectSlots _delegateALGenAuxiliaryEffectSlots;
+        private readonly Delegates.AlGenAuxiliaryEffectSlots _alGenAuxiliaryEffectSlots;
 
-        private readonly ALDelegateGenEffects _delegateALGenEffects;
+        private readonly Delegates.AlGenEffects _alGenEffects;
 
-        private readonly ALDelegateGenFilters _delegateALGenFilters;
+        private readonly Delegates.AlGenFilters _alGenFilters;
 
-        private readonly ALDelegateGetAuxiliaryEffectSlotf _delegateALGetAuxiliaryEffectSlotf;
+        private readonly Delegates.AlGetAuxiliaryEffectSlotf _alGetAuxiliaryEffectSlotf;
 
-        private readonly ALDelegateGetAuxiliaryEffectSloti _delegateALGetAuxiliaryEffectSloti;
+        private readonly Delegates.AlGetAuxiliaryEffectSloti _alGetAuxiliaryEffectSloti;
 
-        private readonly ALDelegateGetEffectf _delegateALGetEffectf;
+        private readonly Delegates.AlGetEffectf _alGetEffectf;
 
-        private readonly ALDelegateGetEffectfv _delegateALGetEffectfv;
+        private readonly Delegates.AlGetEffectfv _alGetEffectfv;
 
-        private readonly ALDelegateGetEffecti _delegateALGetEffecti;
+        private readonly Delegates.AlGetEffecti _alGetEffecti;
 
-        private readonly ALDelegateGetFilterf _delegateALGetFilterf;
+        private readonly Delegates.AlGetFilterf _alGetFilterf;
 
-        private readonly ALDelegateGetFilteri _delegateALGetFilteri;
+        private readonly Delegates.AlGetFilteri _alGetFilteri;
 
-        private readonly ALDelegateIsAuxiliaryEffectSlot _delegateALIsAuxiliaryEffectSlot;
+        private readonly Delegates.AlIsAuxiliaryEffectSlot _alIsAuxiliaryEffectSlot;
 
-        private readonly ALDelegateIsEffect _delegateALIsEffect;
+        private readonly Delegates.AlIsEffect _alIsEffect;
 
-        private readonly ALDelegateIsFilter _delegateALIsFilter;
+        private readonly Delegates.AlIsFilter _alIsFilter;
+
+        /// <summary>
+        /// Converts legacy EAX <see cref="EaxReverb"/> to newer EFX <see cref="EfxEaxReverb"/> object.
+        /// </summary>
+        /// <param name="input">The EAX compatible <see cref="EaxReverb"/> to convert.</param>
+        /// <param name="output">The EFX compatible <see cref="EfxEaxReverb"/> conversion result.</param>
+        public static void GetEaxFromEfxEax(ref EaxReverb input, out EfxEaxReverb output)
+        {
+            output = new EfxEaxReverb()
+            {
+                AirAbsorptionGainHf = input.AirAbsorptionGainHf,
+                RoomRolloffFactor = input.RoomRolloffFactor,
+
+                Density = input.Density,
+                Diffusion = input.Diffusion,
+
+                DecayTime = input.DecayTime,
+                DecayHfLimit = input.DecayHfLimit,
+                DecayHfRatio = input.DecayHfRatio,
+                DecayLfRatio = 1.0f, // todo, currently default
+
+                EchoDepth = 0f, // todo, currently default
+                EchoTime = 0.25f, // todo, currently default
+
+                Gain = input.Gain,
+                GainHf = input.GainHf,
+                GainLf = 1f, // todo, currently default
+
+                LfReference = 250f, // todo, currently default
+                HfReference = 5000f, // todo, currently default
+
+                LateReverbDelay = 0.011f, // todo, currently default
+                LateReverbGain = input.LateReverbGain,
+                LateReverbPan = default(Vector3), // todo, currently default
+
+                ModulationDepth = 0f, // todo, currently default
+                ModulationTime = 0.25f, // todo, currently default
+
+                ReflectionsDelay = input.ReflectionsDelay,
+                ReflectionsGain = input.ReflectionsGain,
+                ReflectionsPan = default(Vector3), // todo, currently default
+            };
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="EffectsExtension"/> class.
@@ -88,59 +132,15 @@ namespace OpenTK.OpenAL.Native
 
             try
             {
-                _delegateALGenEffects = (ALDelegateGenEffects)Marshal.GetDelegateForFunctionPointer
-                (
-                    AL.GetProcAddress("alGenEffects"),
-                    typeof(ALDelegateGenEffects)
-                );
-
-                _delegateALDeleteEffects = (ALDelegateDeleteEffects)Marshal.GetDelegateForFunctionPointer
-                (
-                    AL.GetProcAddress("alDeleteEffects"),
-                    typeof(ALDelegateDeleteEffects)
-                );
-
-                _delegateALIsEffect = (ALDelegateIsEffect)Marshal.GetDelegateForFunctionPointer
-                (
-                    AL.GetProcAddress("alIsEffect"),
-                    typeof(ALDelegateIsEffect)
-                );
-
-                _delegateALEffecti = (ALDelegateEffecti)Marshal.GetDelegateForFunctionPointer
-                (
-                    AL.GetProcAddress("alEffecti"),
-                    typeof(ALDelegateEffecti)
-                );
-
-                _delegateALEffectf = (ALDelegateEffectf)Marshal.GetDelegateForFunctionPointer
-                (
-                    AL.GetProcAddress("alEffectf"),
-                    typeof(ALDelegateEffectf)
-                );
-
-                _delegateALEffectfv = (ALDelegateEffectfv)Marshal.GetDelegateForFunctionPointer
-                (
-                    AL.GetProcAddress("alEffectfv"),
-                    typeof(ALDelegateEffectfv)
-                );
-
-                _delegateALGetEffecti = (ALDelegateGetEffecti)Marshal.GetDelegateForFunctionPointer
-                (
-                    AL.GetProcAddress("alGetEffecti"),
-                    typeof(ALDelegateGetEffecti)
-                );
-
-                _delegateALGetEffectf = (ALDelegateGetEffectf)Marshal.GetDelegateForFunctionPointer
-                (
-                    AL.GetProcAddress("alGetEffectf"),
-                    typeof(ALDelegateGetEffectf)
-                );
-
-                _delegateALGetEffectfv = (ALDelegateGetEffectfv)Marshal.GetDelegateForFunctionPointer
-                (
-                    AL.GetProcAddress("alGetEffectfv"),
-                    typeof(ALDelegateGetEffectfv)
-                );
+                _alGenEffects = (Delegates.AlGenEffects)Marshal.GetDelegateForFunctionPointer(AL.GetProcAddress("alGenEffects"), typeof(Delegates.AlGenEffects));
+                _alDeleteEffects = (Delegates.AlDeleteEffects)Marshal.GetDelegateForFunctionPointer(AL.GetProcAddress("alDeleteEffects"), typeof(Delegates.AlDeleteEffects));
+                _alIsEffect = (Delegates.AlIsEffect)Marshal.GetDelegateForFunctionPointer(AL.GetProcAddress("alIsEffect"), typeof(Delegates.AlIsEffect));
+                _alEffecti = (Delegates.AlEffecti)Marshal.GetDelegateForFunctionPointer(AL.GetProcAddress("alEffecti"), typeof(Delegates.AlEffecti));
+                _alEffectf = (Delegates.AlEffectf)Marshal.GetDelegateForFunctionPointer(AL.GetProcAddress("alEffectf"), typeof(Delegates.AlEffectf));
+                _alEffectfv = (Delegates.AlEffectfv)Marshal.GetDelegateForFunctionPointer(AL.GetProcAddress("alEffectfv"), typeof(Delegates.AlEffectfv));
+                _alGetEffecti = (Delegates.AlGetEffecti)Marshal.GetDelegateForFunctionPointer(AL.GetProcAddress("alGetEffecti"), typeof(Delegates.AlGetEffecti));
+                _alGetEffectf = (Delegates.AlGetEffectf)Marshal.GetDelegateForFunctionPointer(AL.GetProcAddress("alGetEffectf"), typeof(Delegates.AlGetEffectf));
+                _alGetEffectfv = (Delegates.AlGetEffectfv)Marshal.GetDelegateForFunctionPointer(AL.GetProcAddress("alGetEffectfv"), typeof(Delegates.AlGetEffectfv));
             }
             catch (Exception e)
             {
@@ -150,47 +150,13 @@ namespace OpenTK.OpenAL.Native
 
             try
             {
-                _delegateALGenFilters = (ALDelegateGenFilters)Marshal.GetDelegateForFunctionPointer
-                (
-                    AL.GetProcAddress("alGenFilters"),
-                    typeof(ALDelegateGenFilters)
-                );
-
-                _delegateALDeleteFilters = (ALDelegateDeleteFilters)Marshal.GetDelegateForFunctionPointer
-                (
-                    AL.GetProcAddress("alDeleteFilters"),
-                    typeof(ALDelegateDeleteFilters)
-                );
-
-                _delegateALIsFilter = (ALDelegateIsFilter)Marshal.GetDelegateForFunctionPointer
-                (
-                    AL.GetProcAddress("alIsFilter"),
-                    typeof(ALDelegateIsFilter)
-                );
-
-                _delegateALFilteri = (ALDelegateFilteri)Marshal.GetDelegateForFunctionPointer
-                (
-                    AL.GetProcAddress("alFilteri"),
-                    typeof(ALDelegateFilteri)
-                );
-
-                _delegateALFilterf = (ALDelegateFilterf)Marshal.GetDelegateForFunctionPointer
-                (
-                    AL.GetProcAddress("alFilterf"),
-                    typeof(ALDelegateFilterf)
-                );
-
-                _delegateALGetFilteri = (ALDelegateGetFilteri)Marshal.GetDelegateForFunctionPointer
-                (
-                    AL.GetProcAddress("alGetFilteri"),
-                    typeof(ALDelegateGetFilteri)
-                );
-
-                _delegateALGetFilterf = (ALDelegateGetFilterf)Marshal.GetDelegateForFunctionPointer
-                (
-                    AL.GetProcAddress("alGetFilterf"),
-                    typeof(ALDelegateGetFilterf)
-                );
+                _alGenFilters = (Delegates.AlGenFilters)Marshal.GetDelegateForFunctionPointer(AL.GetProcAddress("alGenFilters"), typeof(Delegates.AlGenFilters));
+                _alDeleteFilters = (Delegates.AlDeleteFilters)Marshal.GetDelegateForFunctionPointer(AL.GetProcAddress("alDeleteFilters"), typeof(Delegates.AlDeleteFilters));
+                _alIsFilter = (Delegates.AlIsFilter)Marshal.GetDelegateForFunctionPointer(AL.GetProcAddress("alIsFilter"), typeof(Delegates.AlIsFilter));
+                _alFilteri = (Delegates.AlFilteri)Marshal.GetDelegateForFunctionPointer(AL.GetProcAddress("alFilteri"), typeof(Delegates.AlFilteri));
+                _alFilterf = (Delegates.AlFilterf)Marshal.GetDelegateForFunctionPointer(AL.GetProcAddress("alFilterf"), typeof(Delegates.AlFilterf));
+                _alGetFilteri = (Delegates.AlGetFilteri)Marshal.GetDelegateForFunctionPointer(AL.GetProcAddress("alGetFilteri"), typeof(Delegates.AlGetFilteri));
+                _alGetFilterf = (Delegates.AlGetFilterf)Marshal.GetDelegateForFunctionPointer(AL.GetProcAddress("alGetFilterf"), typeof(Delegates.AlGetFilterf));
             }
             catch (Exception e)
             {
@@ -200,47 +166,13 @@ namespace OpenTK.OpenAL.Native
 
             try
             {
-                _delegateALGenAuxiliaryEffectSlots = (ALDelegateGenAuxiliaryEffectSlots)Marshal.GetDelegateForFunctionPointer
-                (
-                    AL.GetProcAddress("alGenAuxiliaryEffectSlots"),
-                    typeof(ALDelegateGenAuxiliaryEffectSlots)
-                );
-
-                _delegateALDeleteAuxiliaryEffectSlots = (ALDelegateDeleteAuxiliaryEffectSlots)Marshal.GetDelegateForFunctionPointer
-                (
-                    AL.GetProcAddress("alDeleteAuxiliaryEffectSlots"),
-                    typeof(ALDelegateDeleteAuxiliaryEffectSlots)
-                );
-
-                _delegateALIsAuxiliaryEffectSlot = (ALDelegateIsAuxiliaryEffectSlot)Marshal.GetDelegateForFunctionPointer
-                (
-                    AL.GetProcAddress("alIsAuxiliaryEffectSlot"),
-                    typeof(ALDelegateIsAuxiliaryEffectSlot)
-                );
-
-                _delegateALAuxiliaryEffectSloti = (ALDelegateAuxiliaryEffectSloti)Marshal.GetDelegateForFunctionPointer
-                (
-                    AL.GetProcAddress("alAuxiliaryEffectSloti"),
-                    typeof(ALDelegateAuxiliaryEffectSloti)
-                );
-
-                _delegateALAuxiliaryEffectSlotf = (ALDelegateAuxiliaryEffectSlotf)Marshal.GetDelegateForFunctionPointer
-                (
-                    AL.GetProcAddress("alAuxiliaryEffectSlotf"),
-                    typeof(ALDelegateAuxiliaryEffectSlotf)
-                );
-
-                _delegateALGetAuxiliaryEffectSloti = (ALDelegateGetAuxiliaryEffectSloti)Marshal.GetDelegateForFunctionPointer
-                (
-                    AL.GetProcAddress("alGetAuxiliaryEffectSloti"),
-                    typeof(ALDelegateGetAuxiliaryEffectSloti)
-                );
-
-                _delegateALGetAuxiliaryEffectSlotf = (ALDelegateGetAuxiliaryEffectSlotf)Marshal.GetDelegateForFunctionPointer
-                (
-                    AL.GetProcAddress("alGetAuxiliaryEffectSlotf"),
-                    typeof(ALDelegateGetAuxiliaryEffectSlotf)
-                );
+                _alGenAuxiliaryEffectSlots = (Delegates.AlGenAuxiliaryEffectSlots)Marshal.GetDelegateForFunctionPointer(AL.GetProcAddress("alGenAuxiliaryEffectSlots"), typeof(Delegates.AlGenAuxiliaryEffectSlots));
+                _alDeleteAuxiliaryEffectSlots = (Delegates.AlDeleteAuxiliaryEffectSlots)Marshal.GetDelegateForFunctionPointer(AL.GetProcAddress("alDeleteAuxiliaryEffectSlots"), typeof(Delegates.AlDeleteAuxiliaryEffectSlots));
+                _alIsAuxiliaryEffectSlot = (Delegates.AlIsAuxiliaryEffectSlot)Marshal.GetDelegateForFunctionPointer(AL.GetProcAddress("alIsAuxiliaryEffectSlot"), typeof(Delegates.AlIsAuxiliaryEffectSlot));
+                _alAuxiliaryEffectSloti = (Delegates.AlAuxiliaryEffectSloti)Marshal.GetDelegateForFunctionPointer(AL.GetProcAddress("alAuxiliaryEffectSloti"), typeof(Delegates.AlAuxiliaryEffectSloti));
+                _alAuxiliaryEffectSlotf = (Delegates.AlAuxiliaryEffectSlotf)Marshal.GetDelegateForFunctionPointer(AL.GetProcAddress("alAuxiliaryEffectSlotf"), typeof(Delegates.AlAuxiliaryEffectSlotf));
+                _alGetAuxiliaryEffectSloti = (Delegates.AlGetAuxiliaryEffectSloti)Marshal.GetDelegateForFunctionPointer(AL.GetProcAddress("alGetAuxiliaryEffectSloti"), typeof(Delegates.AlGetAuxiliaryEffectSloti));
+                _alGetAuxiliaryEffectSlotf = (Delegates.AlGetAuxiliaryEffectSlotf)Marshal.GetDelegateForFunctionPointer(AL.GetProcAddress("alGetAuxiliaryEffectSlotf"), typeof(Delegates.AlGetAuxiliaryEffectSlotf));
             }
             catch (Exception e)
             {
@@ -251,41 +183,11 @@ namespace OpenTK.OpenAL.Native
             IsInitialized = true;
         }
 
-        public static void GetEaxFromEfxEax(ref EaxReverb input, out EfxEaxReverb output)
-        {
-            output.AirAbsorptionGainHF = 0.995f; // input.AirAbsorptionHF  * somegain?
-            output.RoomRolloffFactor = input.RoomRolloffFactor;
-
-            output.Density = 1f; // todo, currently default
-            output.Diffusion = 1f; // todo, currently default
-
-            output.DecayTime = input.DecayTime;
-            output.DecayHFLimit = 1; // todo, currently default
-            output.DecayHFRatio = input.DecayHFRatio;
-            output.DecayLFRatio = input.DecayLFRatio;
-
-            output.EchoDepth = input.EchoDepth;
-            output.EchoTime = input.EchoTime;
-
-            output.Gain = 0.32f; // todo, currently default
-            output.GainHF = 0.89f; // todo, currently default
-            output.GainLF = 1f; // todo, currently default
-
-            output.LFReference = input.LFReference;
-            output.HFReference = input.HFReference;
-
-            output.LateReverbDelay = input.ReverbDelay;
-            output.LateReverbGain = 1.26f; // todo, currently default
-            output.LateReverbPan = input.ReverbPan;
-
-            output.ModulationDepth = input.ModulationDepth;
-            output.ModulationTime = input.ModulationTime;
-
-            output.ReflectionsDelay = input.ReflectionsDelay;
-            output.ReflectionsGain = 0.05f; // todo, currently default
-            output.ReflectionsPan = input.ReflectionsPan;
-        }
-
+        // Not used:
+        // typedef void (__cdecl *LPALAUXILIARYEFFECTSLOTIV)( ALuint asid, ALenum param, ALint* values );
+        // typedef void (__cdecl *LPALAUXILIARYEFFECTSLOTFV)( ALuint asid, ALenum param, ALfloat* values );
+        // typedef void (__cdecl *LPALGETAUXILIARYEFFECTSLOTIV)( ALuint asid, ALenum pname, ALint* values );
+        // typedef void (__cdecl *LPALGETAUXILIARYEFFECTSLOTFV)( ALuint asid, ALenum pname, ALfloat* values );
 
         /// <summary>
         /// Gets a value indicating whether the EFX Extension has been found and could be initialized.
@@ -299,7 +201,7 @@ namespace OpenTK.OpenAL.Native
         /// <param name="type">Effect type.</param>
         public void BindEffect(uint eid, EfxEffectType type)
         {
-            _delegateALEffecti(eid, EfxEffecti.EffectType, (int)type);
+            _alEffecti(eid, EfxEffecti.EffectType, (int)type);
         }
 
         /// <summary>
@@ -309,7 +211,7 @@ namespace OpenTK.OpenAL.Native
         /// <param name="type">Effect type.</param>
         public void BindEffect(int eid, EfxEffectType type)
         {
-            _delegateALEffecti((uint)eid, EfxEffecti.EffectType, (int)type);
+            _alEffecti((uint)eid, EfxEffecti.EffectType, (int)type);
         }
 
         /// <summary>
@@ -363,7 +265,7 @@ namespace OpenTK.OpenAL.Native
         /// </param>
         /// <param name="filter">
         /// Filter handle to be attached between Source ouput and Auxiliary Slot input. Use 0 or
-        /// <see cref="EfxFilterType.FilterNull"/> for no filter.
+        /// <see cref="EfxFilterType.Null"/> for no filter.
         /// </param>
         public void BindSourceToAuxiliarySlot(uint source, uint slot, int slotNumber, uint filter)
         {
@@ -381,7 +283,7 @@ namespace OpenTK.OpenAL.Native
         /// </param>
         /// <param name="filter">
         /// Filter handle to be attached between Source output and Auxiliary Slot input. Use 0 or
-        /// <see cref="EfxFilterType.FilterNull"/> for no filter.
+        /// <see cref="EfxFilterType.Null"/> for no filter.
         /// </param>
         public void BindSourceToAuxiliarySlot(int source, int slot, int slotNumber, int filter)
         {
@@ -406,7 +308,7 @@ namespace OpenTK.OpenAL.Native
             {
                 fixed (uint* ptr = &effects)
                 {
-                    _delegateALGenEffects(n, ptr);
+                    _alGenEffects(n, ptr);
                     effects = *ptr;
                 }
             }
@@ -430,7 +332,7 @@ namespace OpenTK.OpenAL.Native
             {
                 fixed (int* ptr = &effects)
                 {
-                    _delegateALGenEffects(n, (uint*)ptr);
+                    _alGenEffects(n, (uint*)ptr);
                     effects = *ptr;
                 }
             }
@@ -452,7 +354,7 @@ namespace OpenTK.OpenAL.Native
         /// with EfxEffecti.
         ///  </para>
         /// </remarks>
-        /// <returns>The generated effects.</returns>
+        /// <returns>The generated effect names.</returns>
         public int[] GenEffects(int n)
         {
             if (n <= 0)
@@ -481,7 +383,6 @@ namespace OpenTK.OpenAL.Native
         /// with EfxEffecti.
         ///  </para>
         /// </remarks>
-        /// <returns>The generated effect.</returns>
         public int GenEffect()
         {
             GenEffects(1, out int temp);
@@ -498,7 +399,7 @@ namespace OpenTK.OpenAL.Native
             {
                 fixed (uint* ptr = &effect)
                 {
-                    _delegateALGenEffects(1, ptr);
+                    _alGenEffects(1, ptr);
                     effect = *ptr;
                 }
             }
@@ -516,7 +417,7 @@ namespace OpenTK.OpenAL.Native
             {
                 fixed (uint* ptr = &effects)
                 {
-                    _delegateALDeleteEffects(n, ptr);
+                    _alDeleteEffects(n, ptr);
                 }
             }
         }
@@ -533,7 +434,7 @@ namespace OpenTK.OpenAL.Native
             {
                 fixed (int* ptr = &effects)
                 {
-                    _delegateALDeleteEffects(n, (uint*)ptr);
+                    _alDeleteEffects(n, (uint*)ptr);
                 }
             }
         }
@@ -587,7 +488,7 @@ namespace OpenTK.OpenAL.Native
             {
                 fixed (uint* ptr = &effect)
                 {
-                    _delegateALDeleteEffects(1, ptr);
+                    _alDeleteEffects(1, ptr);
                 }
             }
         }
@@ -599,7 +500,7 @@ namespace OpenTK.OpenAL.Native
         /// <returns>True if the identifier is a valid Effect, False otherwise.</returns>
         public bool IsEffect(uint eid)
         {
-            return _delegateALIsEffect(eid);
+            return _alIsEffect(eid);
         }
 
         /// <summary>
@@ -609,7 +510,7 @@ namespace OpenTK.OpenAL.Native
         /// <returns>True if the identifier is a valid Effect, False otherwise.</returns>
         public bool IsEffect(int eid)
         {
-            return _delegateALIsEffect((uint)eid);
+            return _alIsEffect((uint)eid);
         }
 
         /// <summary>
@@ -620,7 +521,7 @@ namespace OpenTK.OpenAL.Native
         /// <param name="value">Integer value.</param>
         public void Effect(uint eid, EfxEffecti param, int value)
         {
-            _delegateALEffecti(eid, param, value);
+            _alEffecti(eid, param, value);
         }
 
         /// <summary>
@@ -631,7 +532,7 @@ namespace OpenTK.OpenAL.Native
         /// <param name="value">Integer value.</param>
         public void Effect(int eid, EfxEffecti param, int value)
         {
-            _delegateALEffecti((uint)eid, param, value);
+            _alEffecti((uint)eid, param, value);
         }
 
         /// <summary>
@@ -642,7 +543,7 @@ namespace OpenTK.OpenAL.Native
         /// <param name="value">Floating-point value.</param>
         public void Effect(uint eid, EfxEffectf param, float value)
         {
-            _delegateALEffectf(eid, param, value);
+            _alEffectf(eid, param, value);
         }
 
         /// <summary>
@@ -653,7 +554,7 @@ namespace OpenTK.OpenAL.Native
         /// <param name="value">Floating-point value.</param>
         public void Effect(int eid, EfxEffectf param, float value)
         {
-            _delegateALEffectf((uint)eid, param, value);
+            _alEffectf((uint)eid, param, value);
         }
 
         /// <summary>
@@ -661,14 +562,14 @@ namespace OpenTK.OpenAL.Native
         /// </summary>
         /// <param name="eid">Effect object identifier.</param>
         /// <param name="param">Effect property to set.</param>
-        /// <param name="values">Pointer to <see cref="Math.Vector3"/>.</param>
+        /// <param name="values">Pointer to <see cref="Mathematics.Vector3"/>.</param>
         public void Effect(uint eid, EfxEffect3f param, ref Vector3 values)
         {
             unsafe
             {
                 fixed (float* ptr = &values.X)
                 {
-                    _delegateALEffectfv(eid, param, ptr);
+                    _alEffectfv(eid, param, ptr);
                 }
             }
         }
@@ -678,7 +579,7 @@ namespace OpenTK.OpenAL.Native
         /// </summary>
         /// <param name="eid">Effect object identifier.</param>
         /// <param name="param">Effect property to set.</param>
-        /// <param name="values">Pointer to <see cref="Math.Vector3"/>.</param>
+        /// <param name="values">Pointer to <see cref="Mathematics.Vector3"/>.</param>
         public void Effect(int eid, EfxEffect3f param, ref Vector3 values)
         {
             Effect((uint)eid, param, ref values);
@@ -696,7 +597,7 @@ namespace OpenTK.OpenAL.Native
             {
                 fixed (int* ptr = &value)
                 {
-                    _delegateALGetEffecti(eid, pname, ptr);
+                    _alGetEffecti(eid, pname, ptr);
                 }
             }
         }
@@ -724,7 +625,7 @@ namespace OpenTK.OpenAL.Native
             {
                 fixed (float* ptr = &value)
                 {
-                    _delegateALGetEffectf(eid, pname, ptr);
+                    _alGetEffectf(eid, pname, ptr);
                 }
             }
         }
@@ -745,14 +646,14 @@ namespace OpenTK.OpenAL.Native
         /// </summary>
         /// <param name="eid">Effect object identifier.</param>
         /// <param name="param">Effect property to retrieve.</param>
-        /// <param name="values">A <see cref="Math.Vector3"/> to hold the values.</param>
+        /// <param name="values">A <see cref="Mathematics.Vector3"/> to hold the values.</param>
         public void GetEffect(uint eid, EfxEffect3f param, out Vector3 values)
         {
             unsafe
             {
                 fixed (float* ptr = &values.X)
                 {
-                    _delegateALGetEffectfv(eid, param, ptr);
+                    _alGetEffectfv(eid, param, ptr);
                     values.X = ptr[0];
                     values.Y = ptr[1];
                     values.Z = ptr[2];
@@ -765,7 +666,7 @@ namespace OpenTK.OpenAL.Native
         /// </summary>
         /// <param name="eid">Effect object identifier.</param>
         /// <param name="param">Effect property to retrieve.</param>
-        /// <param name="values">A <see cref="Math.Vector3"/> to hold the values.</param>
+        /// <param name="values">A <see cref="Mathematics.Vector3"/> to hold the values.</param>
         public void GetEffect(int eid, EfxEffect3f param, out Vector3 values)
         {
             GetEffect((uint)eid, param, out values);
@@ -789,7 +690,7 @@ namespace OpenTK.OpenAL.Native
             {
                 fixed (uint* ptr = &filters)
                 {
-                    _delegateALGenFilters(n, ptr);
+                    _alGenFilters(n, ptr);
                     filters = *ptr;
                 }
             }
@@ -813,7 +714,7 @@ namespace OpenTK.OpenAL.Native
             {
                 fixed (int* ptr = &filters)
                 {
-                    _delegateALGenFilters(n, (uint*)ptr);
+                    _alGenFilters(n, (uint*)ptr);
                     filters = *ptr;
                 }
             }
@@ -861,7 +762,7 @@ namespace OpenTK.OpenAL.Native
         {
             fixed (uint* ptr = &filter)
             {
-                _delegateALGenFilters(1, ptr);
+                _alGenFilters(1, ptr);
                 filter = *ptr;
             }
         }
@@ -878,7 +779,7 @@ namespace OpenTK.OpenAL.Native
             {
                 fixed (uint* ptr = &filters)
                 {
-                    _delegateALDeleteFilters(n, ptr);
+                    _alDeleteFilters(n, ptr);
                 }
             }
         }
@@ -895,7 +796,7 @@ namespace OpenTK.OpenAL.Native
             {
                 fixed (int* ptr = &filters)
                 {
-                    _delegateALDeleteFilters(n, (uint*)ptr);
+                    _alDeleteFilters(n, (uint*)ptr);
                 }
             }
         }
@@ -947,7 +848,7 @@ namespace OpenTK.OpenAL.Native
             {
                 fixed (uint* ptr = &filter)
                 {
-                    _delegateALDeleteFilters(1, ptr);
+                    _alDeleteFilters(1, ptr);
                 }
             }
         }
@@ -959,7 +860,7 @@ namespace OpenTK.OpenAL.Native
         /// <returns>True if the identifier is a valid Filter, False otherwise.</returns>
         public bool IsFilter(uint fid)
         {
-            return _delegateALIsFilter(fid);
+            return _alIsFilter(fid);
         }
 
         /// <summary>
@@ -969,7 +870,7 @@ namespace OpenTK.OpenAL.Native
         /// <returns>True if the identifier is a valid Filter, False otherwise.</returns>
         public bool IsFilter(int fid)
         {
-            return _delegateALIsFilter((uint)fid);
+            return _alIsFilter((uint)fid);
         }
 
         /// <summary>
@@ -980,7 +881,7 @@ namespace OpenTK.OpenAL.Native
         /// <param name="value">Integer value.</param>
         public void Filter(uint fid, EfxFilteri param, int value)
         {
-            _delegateALFilteri(fid, param, value);
+            _alFilteri(fid, param, value);
         }
 
         /// <summary>
@@ -991,7 +892,7 @@ namespace OpenTK.OpenAL.Native
         /// <param name="value">Integer value.</param>
         public void Filter(int fid, EfxFilteri param, int value)
         {
-            _delegateALFilteri((uint)fid, param, value);
+            _alFilteri((uint)fid, param, value);
         }
 
         /// <summary>
@@ -1002,7 +903,7 @@ namespace OpenTK.OpenAL.Native
         /// <param name="value">Floating-point value.</param>
         public void Filter(uint fid, EfxFilterf param, float value)
         {
-            _delegateALFilterf(fid, param, value);
+            _alFilterf(fid, param, value);
         }
 
         /// <summary>
@@ -1013,7 +914,7 @@ namespace OpenTK.OpenAL.Native
         /// <param name="value">Floating-point value.</param>
         public void Filter(int fid, EfxFilterf param, float value)
         {
-            _delegateALFilterf((uint)fid, param, value);
+            _alFilterf((uint)fid, param, value);
         }
 
         /// <summary>
@@ -1028,7 +929,7 @@ namespace OpenTK.OpenAL.Native
             {
                 fixed (int* ptr = &value)
                 {
-                    _delegateALGetFilteri(fid, pname, ptr);
+                    _alGetFilteri(fid, pname, ptr);
                 }
             }
         }
@@ -1056,7 +957,7 @@ namespace OpenTK.OpenAL.Native
             {
                 fixed (float* ptr = &value)
                 {
-                    _delegateALGetFilterf(fid, pname, ptr);
+                    _alGetFilterf(fid, pname, ptr);
                 }
             }
         }
@@ -1091,7 +992,7 @@ namespace OpenTK.OpenAL.Native
             {
                 fixed (uint* ptr = &slots)
                 {
-                    _delegateALGenAuxiliaryEffectSlots(n, ptr);
+                    _alGenAuxiliaryEffectSlots(n, ptr);
                     slots = *ptr;
                 }
             }
@@ -1116,7 +1017,7 @@ namespace OpenTK.OpenAL.Native
             {
                 fixed (int* ptr = &slots)
                 {
-                    _delegateALGenAuxiliaryEffectSlots(n, (uint*)ptr);
+                    _alGenAuxiliaryEffectSlots(n, (uint*)ptr);
                     slots = *ptr;
                 }
             }
@@ -1167,7 +1068,7 @@ namespace OpenTK.OpenAL.Native
             {
                 fixed (uint* ptr = &slot)
                 {
-                    _delegateALGenAuxiliaryEffectSlots(1, ptr);
+                    _alGenAuxiliaryEffectSlots(1, ptr);
                     slot = *ptr;
                 }
             }
@@ -1185,7 +1086,7 @@ namespace OpenTK.OpenAL.Native
             {
                 fixed (uint* ptr = &slots)
                 {
-                    _delegateALDeleteAuxiliaryEffectSlots(n, ptr);
+                    _alDeleteAuxiliaryEffectSlots(n, ptr);
                 }
             }
         }
@@ -1202,7 +1103,7 @@ namespace OpenTK.OpenAL.Native
             {
                 fixed (int* ptr = &slots)
                 {
-                    _delegateALDeleteAuxiliaryEffectSlots(n, (uint*)ptr);
+                    _alDeleteAuxiliaryEffectSlots(n, (uint*)ptr);
                 }
             }
         }
@@ -1264,7 +1165,7 @@ namespace OpenTK.OpenAL.Native
             {
                 fixed (uint* ptr = &slot)
                 {
-                    _delegateALDeleteAuxiliaryEffectSlots(1, ptr);
+                    _alDeleteAuxiliaryEffectSlots(1, ptr);
                 }
             }
         }
@@ -1277,7 +1178,7 @@ namespace OpenTK.OpenAL.Native
         /// <returns>True if the identifier is a valid Auxiliary Effect Slot, False otherwise.</returns>
         public bool IsAuxiliaryEffectSlot(uint slot)
         {
-            return _delegateALIsAuxiliaryEffectSlot(slot);
+            return _alIsAuxiliaryEffectSlot(slot);
         }
 
         /// <summary>
@@ -1288,7 +1189,7 @@ namespace OpenTK.OpenAL.Native
         /// <returns>True if the identifier is a valid Auxiliary Effect Slot, False otherwise.</returns>
         public bool IsAuxiliaryEffectSlot(int slot)
         {
-            return _delegateALIsAuxiliaryEffectSlot((uint)slot);
+            return _alIsAuxiliaryEffectSlot((uint)slot);
         }
 
         /// <summary>
@@ -1299,7 +1200,7 @@ namespace OpenTK.OpenAL.Native
         /// <param name="value">Integer value.</param>
         public void AuxiliaryEffectSlot(uint asid, EfxAuxiliaryi param, int value)
         {
-            _delegateALAuxiliaryEffectSloti(asid, param, value);
+            _alAuxiliaryEffectSloti(asid, param, value);
         }
 
         /// <summary>
@@ -1310,7 +1211,7 @@ namespace OpenTK.OpenAL.Native
         /// <param name="value">Integer value.</param>
         public void AuxiliaryEffectSlot(int asid, EfxAuxiliaryi param, int value)
         {
-            _delegateALAuxiliaryEffectSloti((uint)asid, param, value);
+            _alAuxiliaryEffectSloti((uint)asid, param, value);
         }
 
         /// <summary>
@@ -1321,7 +1222,7 @@ namespace OpenTK.OpenAL.Native
         /// <param name="value">Floating-point value.</param>
         public void AuxiliaryEffectSlot(uint asid, EfxAuxiliaryf param, float value)
         {
-            _delegateALAuxiliaryEffectSlotf(asid, param, value);
+            _alAuxiliaryEffectSlotf(asid, param, value);
         }
 
         /// <summary>
@@ -1332,7 +1233,7 @@ namespace OpenTK.OpenAL.Native
         /// <param name="value">Floating-point value.</param>
         public void AuxiliaryEffectSlot(int asid, EfxAuxiliaryf param, float value)
         {
-            _delegateALAuxiliaryEffectSlotf((uint)asid, param, value);
+            _alAuxiliaryEffectSlotf((uint)asid, param, value);
         }
 
         /// <summary>
@@ -1347,7 +1248,7 @@ namespace OpenTK.OpenAL.Native
             {
                 fixed (int* ptr = &value)
                 {
-                    _delegateALGetAuxiliaryEffectSloti(asid, pname, ptr);
+                    _alGetAuxiliaryEffectSloti(asid, pname, ptr);
                 }
             }
         }
@@ -1375,7 +1276,7 @@ namespace OpenTK.OpenAL.Native
             {
                 fixed (float* ptr = &value)
                 {
-                    _delegateALGetAuxiliaryEffectSlotf(asid, pname, ptr);
+                    _alGetAuxiliaryEffectSlotf(asid, pname, ptr);
                 }
             }
         }
@@ -1391,50 +1292,53 @@ namespace OpenTK.OpenAL.Native
             GetAuxiliaryEffectSlot((uint)asid, pname, out value);
         }
 
-        private unsafe delegate void ALDelegateGenEffects(int n, [Out] uint* effects);
+        private static class Delegates
+        {
+            public unsafe delegate void AlGenEffects(int n, [Out] uint* effects);
 
-        private unsafe delegate void ALDelegateDeleteEffects(int n, [In] uint* effects);
+            public unsafe delegate void AlDeleteEffects(int n, [In] uint* effects);
 
-        private delegate bool ALDelegateIsEffect(uint eid);
+            public delegate bool AlIsEffect(uint eid);
 
-        private delegate void ALDelegateEffecti(uint eid, EfxEffecti param, int value);
+            public delegate void AlEffecti(uint eid, EfxEffecti param, int value);
 
-        private delegate void ALDelegateEffectf(uint eid, EfxEffectf param, float value);
+            public delegate void AlEffectf(uint eid, EfxEffectf param, float value);
 
-        private unsafe delegate void ALDelegateEffectfv(uint eid, EfxEffect3f param, [In] float* values);
+            public unsafe delegate void AlEffectfv(uint eid, EfxEffect3f param, [In] float* values);
 
-        private unsafe delegate void ALDelegateGetEffecti(uint eid, EfxEffecti pname, [Out] int* value);
+            public unsafe delegate void AlGetEffecti(uint eid, EfxEffecti pname, [Out] int* value);
 
-        private unsafe delegate void ALDelegateGetEffectf(uint eid, EfxEffectf pname, [Out] float* value);
+            public unsafe delegate void AlGetEffectf(uint eid, EfxEffectf pname, [Out] float* value);
 
-        private unsafe delegate void ALDelegateGetEffectfv(uint eid, EfxEffect3f param, [Out] float* values);
+            public unsafe delegate void AlGetEffectfv(uint eid, EfxEffect3f param, [Out] float* values);
 
-        private unsafe delegate void ALDelegateGenFilters(int n, [Out] uint* filters);
+            public unsafe delegate void AlGenFilters(int n, [Out] uint* filters);
 
-        private unsafe delegate void ALDelegateDeleteFilters(int n, [In] uint* filters);
+            public unsafe delegate void AlDeleteFilters(int n, [In] uint* filters);
 
-        private delegate bool ALDelegateIsFilter(uint fid);
+            public delegate bool AlIsFilter(uint fid);
 
-        private delegate void ALDelegateFilteri(uint fid, EfxFilteri param, int value);
+            public delegate void AlFilteri(uint fid, EfxFilteri param, int value);
 
-        private delegate void ALDelegateFilterf(uint fid, EfxFilterf param, float value);
+            public delegate void AlFilterf(uint fid, EfxFilterf param, float value);
 
-        private unsafe delegate void ALDelegateGetFilteri(uint fid, EfxFilteri pname, [Out] int* value);
+            public unsafe delegate void AlGetFilteri(uint fid, EfxFilteri pname, [Out] int* value);
 
-        private unsafe delegate void ALDelegateGetFilterf(uint fid, EfxFilterf pname, [Out] float* value);
+            public unsafe delegate void AlGetFilterf(uint fid, EfxFilterf pname, [Out] float* value);
 
-        private unsafe delegate void ALDelegateGenAuxiliaryEffectSlots(int n, [Out] uint* slots);
+            public unsafe delegate void AlGenAuxiliaryEffectSlots(int n, [Out] uint* slots);
 
-        private unsafe delegate void ALDelegateDeleteAuxiliaryEffectSlots(int n, [In] uint* slots);
+            public unsafe delegate void AlDeleteAuxiliaryEffectSlots(int n, [In] uint* slots);
 
-        private delegate bool ALDelegateIsAuxiliaryEffectSlot(uint slot);
+            public delegate bool AlIsAuxiliaryEffectSlot(uint slot);
 
-        private delegate void ALDelegateAuxiliaryEffectSloti(uint asid, EfxAuxiliaryi param, int value);
+            public delegate void AlAuxiliaryEffectSloti(uint asid, EfxAuxiliaryi param, int value);
 
-        private delegate void ALDelegateAuxiliaryEffectSlotf(uint asid, EfxAuxiliaryf param, float value);
+            public delegate void AlAuxiliaryEffectSlotf(uint asid, EfxAuxiliaryf param, float value);
 
-        private unsafe delegate void ALDelegateGetAuxiliaryEffectSloti(uint asid, EfxAuxiliaryi pname, [Out] int* value);
+            public unsafe delegate void AlGetAuxiliaryEffectSloti(uint asid, EfxAuxiliaryi pname, [Out] int* value);
 
-        private unsafe delegate void ALDelegateGetAuxiliaryEffectSlotf(uint asid, EfxAuxiliaryf pname, [Out] float* value);
+            public unsafe delegate void AlGetAuxiliaryEffectSlotf(uint asid, EfxAuxiliaryf pname, [Out] float* value);
+        }
     }
 }

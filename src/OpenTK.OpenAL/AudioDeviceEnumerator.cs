@@ -31,6 +31,9 @@ using OpenTK.OpenAL.Native;
 
 namespace OpenTK.OpenAL
 {
+    /// <summary>
+    /// Provides enumerations of of playback and recording devices as well as version information and default devices.
+    /// </summary>
     internal static class AudioDeviceEnumerator
     {
         private static readonly List<string> AvailablePlaybackDevicesValue = new List<string>();
@@ -39,8 +42,8 @@ namespace OpenTK.OpenAL
         // Loads all available audio devices into the available_*_devices lists.
         static AudioDeviceEnumerator()
         {
-            var dummy_device = IntPtr.Zero;
-            var dummy_context = ContextHandle.Zero;
+            var dummyDevice = IntPtr.Zero;
+            var dummyContext = ContextHandle.Zero;
 
             try
             {
@@ -48,17 +51,17 @@ namespace OpenTK.OpenAL
                 Debug.Indent();
 
                 // need a dummy context for correct results
-                dummy_device = Alc.OpenDevice(null);
-                dummy_context = Alc.CreateContext(dummy_device, (int[])null);
-                var dummy_success = Alc.MakeContextCurrent(dummy_context);
-                var dummy_error = Alc.GetError(dummy_device);
-                if (!dummy_success || dummy_error != AlcError.NoError)
+                dummyDevice = Alc.OpenDevice(null);
+                dummyContext = Alc.CreateContext(dummyDevice, (int[])null);
+                var dummySuccess = Alc.MakeContextCurrent(dummyContext);
+                var dummyError = Alc.GetError(dummyDevice);
+                if (!dummySuccess || dummyError != AlcError.NoError)
                 {
-                    throw new AudioContextException("Failed to create dummy Context. Device (" + dummy_device +
-                                                    ") Context (" + dummy_context.Handle +
-                                                    ") MakeContextCurrent " + (dummy_success ? "succeeded" : "failed") +
-                                                    ", Alc Error (" + dummy_error + ") " +
-                                                    Alc.GetString(IntPtr.Zero, (AlcGetString)dummy_error));
+                    throw new AudioContextException("Failed to create dummy Context. Device (" + dummyDevice +
+                                                    ") Context (" + dummyContext.Handle +
+                                                    ") MakeContextCurrent " + (dummySuccess ? "succeeded" : "failed") +
+                                                    ", Alc Error (" + dummyError + ") " +
+                                                    Alc.GetString(IntPtr.Zero, (AlcGetString)dummyError));
                 }
 
                 // Get a list of all known playback devices, using best extension available
@@ -88,12 +91,12 @@ namespace OpenTK.OpenAL
                     Debug.Print("Device enumeration extension not available. Failed to enumerate playback devices.");
                 }
 
-                var playback_err = Alc.GetError(dummy_device);
-                if (playback_err != AlcError.NoError)
+                var playbackErr = Alc.GetError(dummyDevice);
+                if (playbackErr != AlcError.NoError)
                 {
                     throw new AudioContextException
                     (
-                        $"Alc Error occured when querying available playback devices: {playback_err}"
+                        $"Alc Error occured when querying available playback devices: {playbackErr}"
                     );
                 }
 
@@ -111,12 +114,12 @@ namespace OpenTK.OpenAL
                     Debug.Print("Capture extension not available. Failed to enumerate recording devices.");
                 }
 
-                var record_err = Alc.GetError(dummy_device);
-                if (record_err != AlcError.NoError)
+                var recordErr = Alc.GetError(dummyDevice);
+                if (recordErr != AlcError.NoError)
                 {
                     throw new AudioContextException
                     (
-                        $"Alc Error occured when querying available recording devices: {record_err}"
+                        $"Alc Error occured when querying available recording devices: {recordErr}"
                     );
                 }
 
@@ -158,14 +161,14 @@ namespace OpenTK.OpenAL
                     {
                         // clean up the dummy context
                         Alc.MakeContextCurrent(ContextHandle.Zero);
-                        if (dummy_context != ContextHandle.Zero && dummy_context.Handle != IntPtr.Zero)
+                        if (dummyContext != ContextHandle.Zero && dummyContext.Handle != IntPtr.Zero)
                         {
-                            Alc.DestroyContext(dummy_context);
+                            Alc.DestroyContext(dummyContext);
                         }
 
-                        if (dummy_device != IntPtr.Zero)
+                        if (dummyDevice != IntPtr.Zero)
                         {
-                            Alc.CloseDevice(dummy_device);
+                            Alc.CloseDevice(dummyDevice);
                         }
                     }
                     catch
@@ -176,22 +179,50 @@ namespace OpenTK.OpenAL
             }
         }
 
+        /// <summary>
+        /// Gets a list of available playback device names.
+        /// </summary>
         internal static IList<string> AvailablePlaybackDevices => AvailablePlaybackDevicesValue.AsReadOnly();
 
+        /// <summary>
+        /// Gets a list of available recording device names.
+        /// </summary>
         internal static IList<string> AvailableRecordingDevices => AvailableRecordingDevicesValue.AsReadOnly();
 
+        /// <summary>
+        /// Gets the default playback device name.
+        /// </summary>
         internal static string DefaultPlaybackDevice { get; }
 
+        /// <summary>
+        /// Gets the default recording device name.
+        /// </summary>
         internal static string DefaultRecordingDevice { get; }
 
+        /// <summary>
+        /// Gets a value indicating whether OpenAL is supported.
+        /// </summary>
         internal static bool IsOpenALSupported { get; } = true;
 
+        /// <summary>
+        /// Gets the ALC Version.
+        /// </summary>
         internal static AlcVersion Version { get; }
 
+        /// <summary>
+        /// The ALC Version enumeration.
+        /// </summary>
         internal enum AlcVersion
         {
+            /// <summary>
+            /// ALC Version 1.0.
+            /// </summary>
             Alc1_0,
-            Alc1_1
+
+            /// <summary>
+            /// ALC Version 1.1.
+            /// </summary>
+            Alc1_1,
         }
     }
 }

@@ -242,7 +242,7 @@ namespace OpenTK.Platform.X11
         /// matches what you want
         /// </param>
         /// <param name="arg">Specifies the user-supplied argument that will be passed to the predicate procedure.</param>
-        /// <returns>true if the predicate returns true for some event, false otherwise</returns>
+        /// <returns>true if the predicate returns true for some event, false otherwise.</returns>
         [DllImport(_dll_name, EntryPoint = "XCheckIfEvent")]
         [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool CheckIfEvent(Display display, ref XEvent event_return,
@@ -278,7 +278,7 @@ namespace OpenTK.Platform.X11
         /// </summary>
         /// <param name="display">Specifies the connection to the X server.</param>
         /// <param name="first_keycode">Specifies the first KeyCode that is to be returned.</param>
-        /// <param name="keycode_count">Specifies the number of KeyCodes that are to be returned</param>
+        /// <param name="keycode_count">Specifies the number of KeyCodes that are to be returned.</param>>
         /// <param name="keysyms_per_keycode_return">Returns the number of KeySyms per KeyCode.</param>
         /// <returns></returns>
         /// <remarks>
@@ -313,7 +313,7 @@ namespace OpenTK.Platform.X11
         /// The XDisplayKeycodes() function returns the min-keycodes and max-keycodes supported by the specified display.
         /// </summary>
         /// <param name="display">Specifies the connection to the X server.</param>
-        /// <param name="min_keycodes_return">Returns the minimum number of KeyCodes</param>
+        /// <param name="min_keycodes_return">Returns the minimum number of KeyCodes.</param>
         /// <param name="max_keycodes_return">Returns the maximum number of KeyCodes.</param>
         /// <remarks>
         /// The minimum number of KeyCodes returned is never less than 8, and the maximum number of KeyCodes returned is

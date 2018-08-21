@@ -279,8 +279,8 @@ namespace OpenTK.OpenAL
         /// Gets a value indicating whether the AudioContext is
         /// currently processing audio events.
         /// </summary>
-        /// <seealso cref="Process" />
-        /// <seealso cref="Suspend" />
+        /// <seealso cref="Process"/>
+        /// <seealso cref="Suspend"/>
         public bool IsProcessing
         {
             get
@@ -299,7 +299,7 @@ namespace OpenTK.OpenAL
         /// Gets a value indicating whether the AudioContext is
         /// synchronized.
         /// </summary>
-        /// <seealso cref="Process" />
+        /// <seealso cref="Process"/>
         public bool IsSynchronized
         {
             get
@@ -625,9 +625,9 @@ namespace OpenTK.OpenAL
         ///  </para>
         /// </remarks>
         /// <exception cref="ObjectDisposedException">Occurs when this function is called after the AudioContext had been disposed.</exception>
-        /// <seealso cref="Suspend" />
-        /// <seealso cref="IsProcessing" />
-        /// <seealso cref="IsSynchronized" />
+        /// <seealso cref="Suspend"/>
+        /// <seealso cref="IsProcessing"/>
+        /// <seealso cref="IsSynchronized"/>
         public void Process()
         {
             if (_disposed)
@@ -656,9 +656,9 @@ namespace OpenTK.OpenAL
         ///  </para>
         /// </remarks>
         /// <exception cref="ObjectDisposedException">Occurs when this function is called after the AudioContext had been disposed.</exception>
-        /// <seealso cref="Process" />
-        /// <seealso cref="IsProcessing" />
-        /// <seealso cref="IsSynchronized" />
+        /// <seealso cref="Process"/>
+        /// <seealso cref="IsProcessing"/>
+        /// <seealso cref="IsSynchronized"/>
         public void Suspend()
         {
             if (_disposed)
@@ -722,9 +722,9 @@ namespace OpenTK.OpenAL
         }
 
         /// <summary>
-        /// Returns a <see cref="string" /> that desrcibes this instance.
+        /// Returns a <see cref="string"/> that desrcibes this instance.
         /// </summary>
-        /// <returns>A <see cref="string" /> that desrcibes this instance.</returns>
+        /// <returns>A <see cref="string"/> that desrcibes this instance.</returns>
         public override string ToString()
         {
             return $"{_deviceName} (handle: {_contextHandle}, device: {Device})";

@@ -32,20 +32,16 @@ using System.Xml.Linq;
 
 namespace OpenTK.Convert
 {
-    internal static class Extension
-    {
-        public static string ValueOrDefault(this XAttribute a)
-        {
-            return a != null ? a.Value : string.Empty;
-        }
-    }
-
+    /// <summary>
+    /// A XML Parser for OpenGL specification files.
+    /// </summary>
     internal class GLXmlParser : XmlParser
     {
         private static readonly Regex ExtensionRegex = new Regex(
             @"3DFX|(?!(?<=[1-4])D)[A-Z]{2,}$",
             RegexOptions.Compiled);
 
+        /// <inheritdoc />
         public override IEnumerable<XElement> Parse(string[] lines)
         {
             var input = XDocument.Parse(string.Join(" ", lines));
@@ -114,7 +110,7 @@ namespace OpenTK.Convert
             var extensions = input.Root.Elements("extensions").Elements("extension");
             var enumerations = input.Root.Elements("enums").Elements("enum");
             var groups = input.Root.Elements("groups").Elements("group");
-            var APIs = new SortedDictionary<string, XElement>();
+            var apis = new SortedDictionary<string, XElement>();
 
             // Build a list of all available tokens.
             // Some tokens have a different value between GL and GLES,
@@ -153,9 +149,9 @@ namespace OpenTK.Convert
                 foreach (var apiname in apinames)
                 {
                     var key = apiname + version;
-                    if (!APIs.ContainsKey(key))
+                    if (!apis.ContainsKey(key))
                     {
-                        APIs.Add(
+                        apis.Add(
                             key,
                             new XElement(
                                 "api",
@@ -163,7 +159,7 @@ namespace OpenTK.Convert
                                 string.IsNullOrEmpty(version) ? null : new XAttribute("version", version)));
                     }
 
-                    var api = APIs[key];
+                    var api = apis[key];
 
                     var enum_name = TrimName(feature.Attribute("name").Value);
 
@@ -198,7 +194,7 @@ namespace OpenTK.Convert
                     api.Add(e);
                 }
 
-                foreach (var api in APIs.Values)
+                foreach (var api in apis.Values)
                 {
                     var apiname = api.Attribute("name").Value;
 
@@ -229,7 +225,7 @@ namespace OpenTK.Convert
                 }
             }
 
-            return APIs.Values;
+            return apis.Values;
         }
 
         private IEnumerable<XElement> ParseFunctions(XDocument input)
@@ -242,7 +238,7 @@ namespace OpenTK.Convert
             // overloads for correct use.
             var features = input.Root.Elements("feature");
             var extensions = input.Root.Elements("extensions").Elements("extension");
-            var APIs = new SortedDictionary<string, XElement>();
+            var apis = new SortedDictionary<string, XElement>();
 
             // First we build a list of all available commands,
             // including their parameters and return types.
@@ -262,7 +258,7 @@ namespace OpenTK.Convert
                 var apinames = GetApiNames(feature);
 
                 var version =
-                    (feature.Attribute("number") != null ? feature.Attribute("number").Value : "")
+                    (feature.Attribute("number") != null ? feature.Attribute("number").Value : string.Empty)
                     .Split('|');
 
                 var i = -1;
@@ -274,9 +270,9 @@ namespace OpenTK.Convert
                     var cmd_version = version.Length > i ? version[i] : version[0];
 
                     var key = apiname + cmd_version;
-                    if (!APIs.ContainsKey(key))
+                    if (!apis.ContainsKey(key))
                     {
-                        APIs.Add(
+                        apis.Add(
                             key,
                             new XElement(
                                 "api",
@@ -284,7 +280,7 @@ namespace OpenTK.Convert
                                 new XAttribute("version", cmd_version)));
                     }
 
-                    var api = APIs[key];
+                    var api = apis[key];
 
                     foreach (var command in feature.Elements("require").Elements("command"))
                     {
@@ -310,7 +306,7 @@ namespace OpenTK.Convert
                 }
 
                 i = -1;
-                foreach (var api in APIs.Values)
+                foreach (var api in apis.Values)
                 {
                     i++;
                     var apiname = api.Attribute("name").Value;
@@ -343,7 +339,7 @@ namespace OpenTK.Convert
                 }
             }
 
-            return APIs.Values;
+            return apis.Values;
         }
 
         private void Merge(XElement api, XElement function)
@@ -353,10 +349,8 @@ namespace OpenTK.Convert
             var f = api.Elements(type).FirstOrDefault(p => p.Attribute("name").Value == name);
             if (f != null)
             {
-                f.SetAttributeValue("category",
-                    string.Join("|", f.Attribute("category").Value, function.Attribute("category").Value));
-                f.SetAttributeValue("version",
-                    (f.Attribute("version") ?? function.Attribute("version")).ValueOrDefault());
+                f.SetAttributeValue("category", string.Join("|", f.Attribute("category").Value, function.Attribute("category").Value));
+                f.SetAttributeValue("version", (f.Attribute("version") ?? function.Attribute("version")).ValueOrDefault());
 
                 // Sanity check: one function cannot belong to two different extensions
                 if (f.Attribute("extension").Value != function.Attribute("extension").Value)
@@ -400,12 +394,9 @@ namespace OpenTK.Convert
                         .Replace("struct", string.Empty)
                         .Trim());
 
-                var count = parameter.Attribute("len") != null
-                    ? new XAttribute("count", parameter.Attribute("len").Value)
-                    : null;
+                var count = parameter.Attribute("len") != null ? new XAttribute("count", parameter.Attribute("len").Value) : null;
 
-                var flow = new XAttribute("flow",
-                    param.Contains("*") && !param.Contains("const") ? "out" : "in");
+                var flow = new XAttribute("flow", param.Contains("*") && !param.Contains("const") ? "out" : "in");
 
                 p.Add(pname, type, flow);
                 if (count != null)
@@ -431,9 +422,9 @@ namespace OpenTK.Convert
             // Parse the C-like <proto> element. Possible instances:
             // Return types:
             // - <proto>void <name>glGetSharpenTexFuncSGIS</name></proto>
-            //   -> <returns>void</returns>
+            //   -> <returns>void.</returns>
             // - <proto group="String">const <ptype>GLubyte</ptype> *<name>glGetString</name></proto>
-            //   -> <returns>String</returns>
+            //   -> <returns>String.</returns>
             // Note: group attribute takes precedence if it exists. This matches the old .spec file format.
             // Parameter types:
             // - <param><ptype>GLenum</ptype> <name>shadertype</name></param>
