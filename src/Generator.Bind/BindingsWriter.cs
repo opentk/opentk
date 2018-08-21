@@ -1,4 +1,4 @@
-﻿﻿//
+﻿//
 // The Open Toolkit Library License
 //
 // Copyright (c) 2006 - 2010 the Open Toolkit library.

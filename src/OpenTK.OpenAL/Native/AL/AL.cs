@@ -313,7 +313,7 @@ namespace OpenTK.OpenAL.Native
 
         /// <summary>
         /// This function generates one or more sources. References to sources are int values, which are used wherever a
-        /// source reference is needed (in calls such as <see cref="AL.DeleteSources"/> and <see cref="AL.Source"/> with parameter ALSourcei).
+        /// source reference is needed (in calls such as <see cref="AL.DeleteSources(int,ref int)"/> and <see cref="AL.Source"/> with parameter ALSourcei).
         /// </summary>
         /// <param name="n">The number of sources to be generated.</param>
         /// <param name="sources">Pointer to an array of int values which will store the names of the new sources.</param>
@@ -330,7 +330,7 @@ namespace OpenTK.OpenAL.Native
 
         /// <summary>
         /// This function generates one or more sources. References to sources are int values, which are used wherever a
-        /// source reference is needed (in calls such as <see cref="AL.DeleteSources"/> and <see cref="AL.Source"/> with parameter ALSourcei).
+        /// source reference is needed (in calls such as <see cref="AL.DeleteSources(int[])"/> and <see cref="AL.Source"/> with parameter ALSourcei).
         /// </summary>
         /// <param name="sources">Pointer to an array of int values which will store the names of the new sources.</param>
         public static void GenSources(int[] sources)
@@ -345,7 +345,7 @@ namespace OpenTK.OpenAL.Native
 
         /// <summary>
         /// This function generates one or more sources. References to sources are int values, which are used wherever a
-        /// source reference is needed (in calls such as <see cref="AL.DeleteSources"/> and <see cref="AL.Source"/> with parameter ALSourcei).
+        /// source reference is needed (in calls such as <see cref="AL.DeleteSources(int[])"/> and <see cref="AL.Source"/> with parameter ALSourcei).
         /// </summary>
         /// <param name="n">The number of sources to be generated.</param>
         /// <returns>Pointer to an array of int values which will store the names of the new sources.</returns>
@@ -364,7 +364,7 @@ namespace OpenTK.OpenAL.Native
 
         /// <summary>
         /// This function generates one source only. References to sources are int values, which are used wherever a
-        /// source reference is needed (in calls such as <see cref="AL.DeleteSources"/> and <see cref="AL.Source"/> with parameter ALSourcei).
+        /// source reference is needed (in calls such as <see cref="AL.DeleteSource(int)"/> and <see cref="AL.Source"/> with parameter ALSourcei).
         /// </summary>
         /// <returns>Pointer to an int value which will store the name of the new source.</returns>
         public static int GenSource()
@@ -375,7 +375,7 @@ namespace OpenTK.OpenAL.Native
 
         /// <summary>
         /// This function generates one source only. References to sources are uint values, which are used wherever a
-        /// source reference is needed (in calls such as <see cref="AL.DeleteSources"/> and <see cref="AL.Source"/> with parameter ALSourcei).
+        /// source reference is needed (in calls such as <see cref="DeleteSource(ref uint)"/> and <see cref="AL.Source"/> with parameter ALSourcei).
         /// </summary>
         /// <param name="source">Pointer to an uint value which will store the name of the new source.</param>
         public static void GenSource(out uint source)
@@ -566,8 +566,9 @@ namespace OpenTK.OpenAL.Native
         /// </summary>
         /// <param name="sid">Source name whose attribute is being set.</param>
         /// <param name="param">
-        /// The name of the attribute to set: <see cref="ALSourcei.SourceRelative"/>, ConeInnerAngle, ConeOuterAngle,
-        /// Looping, Buffer, SourceState.
+        /// The name of the attribute to set: <see cref="ALSourcei.Buffer"/>, <see cref="ALSourcei.ByteOffset"/>
+        /// <see cref="ALSourcei.EfxDirectFilter"/>, <see cref="ALSourcei.SampleOffset"/>, <see cref="ALSourcei.SourceType"/>,
+        /// <see cref="ALSourceb.Looping"/>, <see cref="ALSourceb.SourceRelative"/>.
         /// </param>
         /// <param name="value">The value to set the attribute to.</param>
         [DllImport(Library, EntryPoint = "alSourcei", ExactSpelling = true, CallingConvention = Style)]
@@ -579,8 +580,9 @@ namespace OpenTK.OpenAL.Native
         /// </summary>
         /// <param name="sid">Source name whose attribute is being set.</param>
         /// <param name="param">
-        /// The name of the attribute to set: <see cref="ALSourcei.SourceRelative"/>, ConeInnerAngle, ConeOuterAngle,
-        /// Looping, Buffer, SourceState.
+        /// The name of the attribute to set: <see cref="ALSourcei.Buffer"/>, <see cref="ALSourcei.ByteOffset"/>
+        /// <see cref="ALSourcei.EfxDirectFilter"/>, <see cref="ALSourcei.SampleOffset"/>, <see cref="ALSourcei.SourceType"/>,
+        /// <see cref="ALSourceb.Looping"/>, <see cref="ALSourceb.SourceRelative"/>.
         /// </param>
         /// <param name="value">The value to set the attribute to.</param>
         public static void Source(int sid, ALSourcei param, int value)
@@ -662,9 +664,11 @@ namespace OpenTK.OpenAL.Native
         /// </summary>
         /// <param name="sid">Source name whose attribute is being retrieved.</param>
         /// <param name="param">
-        /// The name of the attribute to set: <see cref="ALSourcef.Pitch"/>, Gain, MinGain, MaxGain, MaxDistance,
-        /// RolloffFactor, ConeOuterGain, ConeInnerAngle, ConeOuterAngle, ReferenceDistance, EfxAirAbsorptionFactor,
-        /// EfxRoomRolloffFactor, EfxConeOuterGainHighFrequency.
+        /// The name of the attribute to set: <see cref="ALSourcef.Pitch"/>, <see cref="ALSourcef.Gain"/>,
+        /// <see cref="ALSourcef.MinGain"/>, <see cref="ALSourcef.MaxGain"/>, <see cref="ALSourcef.MaxDistance"/>,
+        /// <see cref="ALSourcef.RolloffFactor"/>, <see cref="ALSourcef.ConeOuterGain"/>, <see cref="ALSourcef.ConeInnerAngle"/>,
+        /// <see cref="ALSourcef.ConeOuterAngle"/>, <see cref="ALSourcef.ReferenceDistance"/>, <see cref="ALSourcef.EfxAirAbsorptionFactor"/>,
+        /// <see cref="ALSourcef.EfxRoomRolloffFactor"/>, <see cref="ALSourcef.EfxConeOuterGainHighFrequency"/>.
         /// </param>
         /// <param name="value">A pointer to the floating-point value being retrieved.</param>
         [DllImport(Library, EntryPoint = "alGetSourcef", ExactSpelling = true, CallingConvention = Style)]
@@ -738,8 +742,9 @@ namespace OpenTK.OpenAL.Native
         /// </summary>
         /// <param name="sid">Source name whose attribute is being retrieved.</param>
         /// <param name="param">
-        /// The name of the attribute to retrieve: <see cref="ALSourcei.SourceRelative"/>, Buffer, SourceState,
-        /// BuffersQueued, BuffersProcessed.
+        /// The name of the attribute to retrieve: <see cref="ALGetSourcei.Buffer"/>, <see cref="ALGetSourcei.SourceState"/>
+        /// <see cref="ALGetSourcei.BuffersQueued"/>, <see cref="ALGetSourcei.BuffersProcessed"/>, <see cref="ALGetSourcei.ByteOffset"/>,
+        /// <see cref="ALGetSourcei.SampleOffset"/>, <see cref="ALGetSourcei.SourceState"/>.
         /// </param>
         /// <param name="value">A pointer to the integer value being retrieved.</param>
         [DllImport(Library, EntryPoint = "alGetSourcei", ExactSpelling = true, CallingConvention = Style)]
@@ -751,8 +756,9 @@ namespace OpenTK.OpenAL.Native
         /// </summary>
         /// <param name="sid">Source name whose attribute is being retrieved.</param>
         /// <param name="param">
-        /// The name of the attribute to retrieve: <see cref="ALSourcei.SourceRelative"/>, Buffer, SourceState,
-        /// BuffersQueued, BuffersProcessed.
+        /// The name of the attribute to retrieve: <see cref="ALGetSourcei.Buffer"/>, <see cref="ALGetSourcei.SourceState"/>
+        /// <see cref="ALGetSourcei.BuffersQueued"/>, <see cref="ALGetSourcei.BuffersProcessed"/>, <see cref="ALGetSourcei.ByteOffset"/>,
+        /// <see cref="ALGetSourcei.SampleOffset"/>, <see cref="ALGetSourcei.SourceState"/>.
         /// </param>
         /// <param name="value">A pointer to the integer value being retrieved.</param>
         public static void GetSource(int sid, ALGetSourcei param, out int value)
@@ -764,7 +770,7 @@ namespace OpenTK.OpenAL.Native
         /// This function retrieves a bool property of a source.
         /// </summary>
         /// <param name="sid">Source name whose attribute is being retrieved.</param>
-        /// <param name="param">The name of the attribute to get: <see cref="ALSourceb.SourceRelative"/>, Looping.</param>
+        /// <param name="param">The name of the attribute to get: <see cref="ALSourceb.SourceRelative"/>, <see cref="ALSourceb.Looping"/>.</param>
         /// <param name="value">A pointer to the bool value being retrieved.</param>
         public static void GetSource(uint sid, ALSourceb param, out bool value)
         {
@@ -776,7 +782,7 @@ namespace OpenTK.OpenAL.Native
         /// This function retrieves a bool property of a source.
         /// </summary>
         /// <param name="sid">Source name whose attribute is being retrieved.</param>
-        /// <param name="param">The name of the attribute to get: <see cref="ALSourceb.SourceRelative"/>, Looping.</param>
+        /// <param name="param">The name of the attribute to get: <see cref="ALSourceb.SourceRelative"/>, <see cref="ALSourceb.Looping"/>.</param>
         /// <param name="value">A pointer to the bool value being retrieved.</param>
         public static void GetSource(int sid, ALSourceb param, out bool value)
         {
@@ -1115,9 +1121,9 @@ namespace OpenTK.OpenAL.Native
 
         /// <summary>
         /// This function queues a set of buffers on a source. All buffers attached to a source will be played in
-        /// sequence, and the number of processed buffers can be detected using <see cref="AL.GetSource"/> with parameter
+        /// sequence, and the number of processed buffers can be detected using <see cref="AL.GetSource(ALGetSourcei)"/> with parameter
         /// <see cref="ALGetSourcei.BuffersProcessed"/>. When first created, a source will be of type <see cref="ALSourceType.Undetermined"/>. A successful
-        /// <see cref="AL.SourceQueueBuffers"/> call will change the source type to <see cref="ALSourceType.Streaming"/>.
+        /// <see cref="AL.SourceQueueBuffers(uint,int,uint[])"/> call will change the source type to <see cref="ALSourceType.Streaming"/>.
         /// </summary>
         /// <param name="sid">The name of the source to queue buffers onto.</param>
         /// <param name="numEntries">The number of buffers to be queued.</param>
@@ -1137,7 +1143,7 @@ namespace OpenTK.OpenAL.Native
         /// This function queues a set of buffers on a source. All buffers attached to a source will be played in
         /// sequence, and the number of processed buffers can be detected using <see cref="AL.GetSource"/> with parameter
         /// <see cref="ALGetSourcei.BuffersProcessed"/>. When first created, a source will be of type <see cref="ALSourceType.Undetermined"/>. A successful
-        /// <see cref="AL.SourceQueueBuffers"/> call will change the source type to <see cref="ALSourceType.Streaming"/>.
+        /// <see cref="AL.SourceQueueBuffers(int,int,int[])"/> call will change the source type to <see cref="ALSourceType.Streaming"/>.
         /// </summary>
         /// <param name="sid">The name of the source to queue buffers onto.</param>
         /// <param name="numEntries">The number of buffers to be queued.</param>
@@ -1157,7 +1163,7 @@ namespace OpenTK.OpenAL.Native
         /// This function queues a set of buffers on a source. All buffers attached to a source will be played in
         /// sequence, and the number of processed buffers can be detected using <see cref="AL.GetSource"/> with parameter
         /// <see cref="ALGetSourcei.BuffersProcessed"/>. When first created, a source will be of type <see cref="ALSourceType.Undetermined"/>. A successful
-        /// <see cref="AL.SourceQueueBuffers"/> call will change the source type to <see cref="ALSourceType.Streaming"/>.
+        /// <see cref="AL.SourceQueueBuffers(uint,int,ref uint)"/> call will change the source type to <see cref="ALSourceType.Streaming"/>.
         /// </summary>
         /// <param name="sid">The name of the source to queue buffers onto.</param>
         /// <param name="numEntries">The number of buffers to be queued.</param>
@@ -1177,7 +1183,7 @@ namespace OpenTK.OpenAL.Native
         /// This function queues a set of buffers on a source. All buffers attached to a source will be played in
         /// sequence, and the number of processed buffers can be detected using <see cref="AL.GetSource"/> with parameter
         /// <see cref="ALGetSourcei.BuffersProcessed"/>. When first created, a source will be of type <see cref="ALSourceType.Undetermined"/>. A successful
-        /// <see cref="AL.SourceQueueBuffers"/> call will change the source type to <see cref="ALSourceType.Streaming"/>.
+        /// <see cref="AL.SourceQueueBuffer(int,int)"/> call will change the source type to <see cref="ALSourceType.Streaming"/>.
         /// </summary>
         /// <param name="source">The name of the source to queue buffers onto.</param>
         /// <param name="buffer">The name of the buffer to be queued.</param>
@@ -1405,7 +1411,7 @@ namespace OpenTK.OpenAL.Native
 
         /// <summary>
         /// This function deletes one or more buffers, freeing the resources used by the buffer. Buffers which are
-        /// attached to a source can not be deleted. See <see cref="AL.Source"/> (ALSourcei) and <see cref="AL.SourceUnqueueBuffers"/> for information on
+        /// attached to a source can not be deleted. See <see cref="AL.Source"/> (ALSourcei) and <see cref="AL.SourceUnqueueBuffers(uint,int,uint*)"/> for information on
         /// how to detach a buffer from a source.
         /// </summary>
         /// <param name="n">The number of buffers to be deleted.</param>
@@ -1427,7 +1433,7 @@ namespace OpenTK.OpenAL.Native
 
         /// <summary>
         /// This function deletes one or more buffers, freeing the resources used by the buffer. Buffers which are
-        /// attached to a source can not be deleted. See <see cref="AL.Source"/> (ALSourcei) and <see cref="AL.SourceUnqueueBuffers"/> for information on
+        /// attached to a source can not be deleted. See <see cref="AL.Source"/> (ALSourcei) and <see cref="AL.SourceUnqueueBuffers(uint,int,out uint)"/> for information on
         /// how to detach a buffer from a source.
         /// </summary>
         /// <param name="n">The number of buffers to be deleted.</param>
@@ -1445,7 +1451,7 @@ namespace OpenTK.OpenAL.Native
 
         /// <summary>
         /// This function deletes one or more buffers, freeing the resources used by the buffer. Buffers which are
-        /// attached to a source can not be deleted. See <see cref="AL.Source"/> (ALSourcei) and <see cref="AL.SourceUnqueueBuffers"/> for information on
+        /// attached to a source can not be deleted. See <see cref="AL.Source"/> (ALSourcei) and <see cref="AL.SourceUnqueueBuffers(int,int,out int)"/> for information on
         /// how to detach a buffer from a source.
         /// </summary>
         /// <param name="n">The number of buffers to be deleted.</param>
@@ -1463,7 +1469,7 @@ namespace OpenTK.OpenAL.Native
 
         /// <summary>
         /// This function deletes one buffer only, freeing the resources used by the buffer. Buffers which are attached to
-        /// a source can not be deleted. See <see cref="AL.Source"/> (ALSourcei) and <see cref="AL.SourceUnqueueBuffers"/> for information on how to detach
+        /// a source can not be deleted. See <see cref="AL.Source"/> (ALSourcei) and <see cref="AL.SourceUnqueueBuffers(uint,int,uint[])"/> for information on how to detach
         /// a buffer from a source.
         /// </summary>
         /// <param name="buffers">Pointer to a buffer name identifying the buffer to be deleted.</param>
@@ -1484,7 +1490,7 @@ namespace OpenTK.OpenAL.Native
 
         /// <summary>
         /// This function deletes one or more buffers, freeing the resources used by the buffer. Buffers which are
-        /// attached to a source can not be deleted. See <see cref="AL.Source"/> (ALSourcei) and <see cref="AL.SourceUnqueueBuffers"/> for information on
+        /// attached to a source can not be deleted. See <see cref="AL.Source"/> (ALSourcei) and <see cref="AL.SourceUnqueueBuffers(int,int)"/> for information on
         /// how to detach a buffer from a source.
         /// </summary>
         /// <param name="buffers">Pointer to an array of buffer names identifying the buffers to be deleted.</param>
@@ -1505,7 +1511,7 @@ namespace OpenTK.OpenAL.Native
 
         /// <summary>
         /// This function deletes one buffer only, freeing the resources used by the buffer. Buffers which are attached to
-        /// a source can not be deleted. See <see cref="AL.Source"/> (ALSourcei) and <see cref="AL.SourceUnqueueBuffers"/> for information on how to detach
+        /// a source can not be deleted. See <see cref="AL.Source"/> (ALSourcei) and <see cref="AL.SourceUnqueueBuffer"/> for information on how to detach
         /// a buffer from a source.
         /// </summary>
         /// <param name="buffer">Pointer to a buffer name identifying the buffer to be deleted.</param>
@@ -1516,7 +1522,7 @@ namespace OpenTK.OpenAL.Native
 
         /// <summary>
         /// This function deletes one buffer only, freeing the resources used by the buffer. Buffers which are attached to
-        /// a source can not be deleted. See <see cref="AL.Source"/> (ALSourcei) and <see cref="AL.SourceUnqueueBuffers"/> for information on how to detach
+        /// a source can not be deleted. See <see cref="AL.Source"/> (ALSourcei) and <see cref="SourceUnqueueBuffer"/> for information on how to detach
         /// a buffer from a source.
         /// </summary>
         /// <param name="buffer">Pointer to a buffer name identifying the buffer to be deleted.</param>
@@ -1643,7 +1649,7 @@ namespace OpenTK.OpenAL.Native
         /// </summary>
         /// <param name="value">
         /// A negative value will result in an error, the command is then ignored. The default value is 1f. The
-        /// current setting can be queried using <see cref="AL.Get"/> with parameter <see cref="ALGetFloat.SpeedOfSound"/>.
+        /// current setting can be queried using <see cref="AL.Get(ALGetFloat)"/> with parameter <see cref="ALGetFloat.SpeedOfSound"/>.
         /// </param>
         [DllImport(Library, EntryPoint = "alDopplerFactor", ExactSpelling = true, CallingConvention = Style)]
         [SuppressUnmanagedCodeSecurity]
@@ -1664,7 +1670,7 @@ namespace OpenTK.OpenAL.Native
         /// <param name="value">
         /// A negative or zero value will result in an error, and the command is ignored. Default: 343.3f
         /// (appropriate for velocity units of meters and air as the propagation medium). The current setting can be queried
-        /// using <see cref="AL.Get"/> with parameter <see cref="ALGetFloat.SpeedOfSound"/>.
+        /// using <see cref="Get(ALGetFloat)"/> with parameter <see cref="ALGetFloat.SpeedOfSound"/>.
         /// </param>
         [DllImport(Library, EntryPoint = "alSpeedOfSound", ExactSpelling = true, CallingConvention = Style)]
         [SuppressUnmanagedCodeSecurity]

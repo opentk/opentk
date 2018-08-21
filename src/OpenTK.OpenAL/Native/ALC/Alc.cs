@@ -394,7 +394,6 @@ namespace OpenTK.OpenAL.Native
         [SuppressUnmanagedCodeSecurity]
         public static extern IntPtr CaptureOpenDevice(string devicename, int frequency, ALFormat format, int buffersize);
 
-
         /// <summary>
         /// This function closes the specified capture device.
         /// </summary>
