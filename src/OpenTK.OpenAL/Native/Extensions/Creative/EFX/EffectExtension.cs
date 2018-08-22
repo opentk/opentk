@@ -383,6 +383,9 @@ namespace OpenTK.OpenAL.Native.Extensions.Creative.EFX
         /// <inheritdoc />
         public abstract void SetSourceProperty(uint source, EFXSourceBoolean param, bool value);
 
+        /// <inheritdoc/>
+        public abstract void SetSourceProperty(uint source, EFXSourceInteger3 param, int value1, int value2, int value3);
+
         /// <inheritdoc />
         public abstract void GetSourceProperty(uint source, EFXSourceInteger param, out int value);
 
@@ -413,6 +416,9 @@ namespace OpenTK.OpenAL.Native.Extensions.Creative.EFX
             return result;
         }
 
+        /// <inheritdoc/>
+        public abstract void GetSourceProperty(uint source, EFXSourceBoolean param, out bool value);
+
         /// <summary>
         /// Gets the value of a named property on the given source.
         /// </summary>
@@ -421,9 +427,12 @@ namespace OpenTK.OpenAL.Native.Extensions.Creative.EFX
         /// <returns>The value.</returns>
         public bool GetSourceProperty(uint source, EFXSourceBoolean param)
         {
-            GetSourceProperty(source, (EFXSourceInteger)param, out var result);
-            return result > 0;
+            GetSourceProperty(source, param, out var result);
+            return result;
         }
+
+        /// <inheritdoc/>
+        public abstract void SetSourceProperty(uint source, EFXSourceInteger3 param, out int value1, out int value2, out int value3);
 
         /// <inheritdoc />
         public abstract void SetListenerProperty(uint listener, EFXListenerFloat param, float value);
