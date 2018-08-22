@@ -1,0 +1,115 @@
+\boolfalse {citerequest}\boolfalse {citetracker}\boolfalse {pagetracker}\boolfalse {backtracker}\relax 
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {0}Foreword}{5}{section*.3}
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {0.1}Rule Types}{6}{subsection.0.1}
+\defcounter {refsection}{0}\relax 
+\contentsline {subsubsection}{\numberline {0.1.1}Must}{6}{subsubsection.0.1.1}
+\defcounter {refsection}{0}\relax 
+\contentsline {rules}{\numberline { 0.1.1 } EX0001: A rule that must be followed }{6}{rule.0.1}
+\defcounter {refsection}{0}\relax 
+\contentsline {subsubsection}{\numberline {0.1.2}Should}{6}{subsubsection.0.1.2}
+\defcounter {refsection}{0}\relax 
+\contentsline {rules}{\numberline { 0.1.2 } EX0002: A rule that should be followed }{6}{rule.0.2}
+\defcounter {refsection}{0}\relax 
+\contentsline {subsubsection}{\numberline {0.1.3}May}{6}{subsubsection.0.1.3}
+\defcounter {refsection}{0}\relax 
+\contentsline {rules}{\numberline { 0.1.3 } An optional rule }{6}{rule.0.3}
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {1}Project Structure}{8}{section.1}
+\defcounter {refsection}{0}\relax 
+\contentsline {rules}{\numberline { 1.0.1 } Files should be organized according to their namespace }{8}{rule.1.1}
+\defcounter {refsection}{0}\relax 
+\contentsline {rules}{\numberline { 1.0.2 } Files without a namespace should be placed correctly }{8}{rule.1.2}
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {2}Formatting}{8}{section.2}
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {2.1}General}{8}{subsection.2.1}
+\defcounter {refsection}{0}\relax 
+\contentsline {rules}{\numberline { 2.1.1 } Line width must not exceed 120 columns }{8}{rule.2.1}
+\defcounter {refsection}{0}\relax 
+\contentsline {rules}{\numberline { 2.1.2 } All files must end with a newline character }{9}{rule.2.2}
+\defcounter {refsection}{0}\relax 
+\contentsline {rules}{\numberline { 2.1.3 } Files must be saved as UTF-8 }{9}{rule.2.3}
+\defcounter {refsection}{0}\relax 
+\contentsline {rules}{\numberline { 2.1.4 } Lines must end with a newline character }{9}{rule.2.4}
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {2.2}Braces, Parens, and Brackets}{9}{subsection.2.2}
+\defcounter {refsection}{0}\relax 
+\contentsline {rules}{\numberline { 2.2.5 } Braces must be formatted correctly }{9}{rule.2.5}
+\defcounter {refsection}{0}\relax 
+\contentsline {rules}{\numberline { 2.2.6 } Method calls and initializers must be wrapped correctly }{10}{rule.2.6}
+\defcounter {refsection}{0}\relax 
+\contentsline {rules}{\numberline { 2.2.7 } Wrapped method calls must be aligned correctly }{10}{rule.2.7}
+\defcounter {refsection}{0}\relax 
+\contentsline {rules}{\numberline { 2.2.8 } Method declarations must be wrapped correctly }{11}{rule.2.8}
+\defcounter {refsection}{0}\relax 
+\contentsline {rules}{\numberline { 2.2.9 } Braces must not have additional blank lines }{11}{rule.2.9}
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {3}Naming}{13}{section.3}
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {3.1}Files}{13}{subsection.3.1}
+\defcounter {refsection}{0}\relax 
+\contentsline {rules}{\numberline { 3.1.1 } Files must be named correctly }{13}{rule.3.1}
+\defcounter {refsection}{0}\relax 
+\contentsline {rules}{\numberline { 3.1.2 } Filenames should match their contained type }{13}{rule.3.2}
+\defcounter {refsection}{0}\relax 
+\contentsline {rules}{\numberline { 3.1.3 } Names of files containing a generic type may be suffixed }{13}{rule.3.3}
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {3.2}Types and Members}{14}{subsection.3.2}
+\defcounter {refsection}{0}\relax 
+\contentsline {rules}{\numberline { 3.2.4 } Identifiers must not contain underscores }{14}{rule.3.4}
+\defcounter {refsection}{0}\relax 
+\contentsline {rules}{\numberline { 3.2.5 } Types must be named correctly }{14}{rule.3.5}
+\defcounter {refsection}{0}\relax 
+\contentsline {rules}{\numberline { 3.2.6 } Fields must be named correctly }{14}{rule.3.6}
+\defcounter {refsection}{0}\relax 
+\contentsline {rules}{\numberline { 3.2.7 } Methods must be named correctly }{14}{rule.3.7}
+\defcounter {refsection}{0}\relax 
+\contentsline {rules}{\numberline { 3.2.8 } Properties must be named correctly }{15}{rule.3.8}
+\defcounter {refsection}{0}\relax 
+\contentsline {rules}{\numberline { 3.2.9 } Locals must be named correctly }{15}{rule.3.9}
+\defcounter {refsection}{0}\relax 
+\contentsline {rules}{\numberline { 3.2.10 } Named \texttt {ValueTuple} members must be named correctly }{15}{rule.3.10}
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {4}Declarations}{16}{section.4}
+\defcounter {refsection}{0}\relax 
+\contentsline {rules}{\numberline { 4.0.1 } Declarations must be correctly ordered }{16}{rule.4.1}
+\defcounter {refsection}{0}\relax 
+\contentsline {rules}{\numberline { 4.0.2 } Types must be declared within a namespace }{16}{rule.4.2}
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {4.1}Methods}{16}{subsection.4.1}
+\defcounter {refsection}{0}\relax 
+\contentsline {rules}{\numberline { 4.1.3 } Methods should be private }{16}{rule.4.3}
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {4.2}Properties}{17}{subsection.4.2}
+\defcounter {refsection}{0}\relax 
+\contentsline {rules}{\numberline { 4.2.4 } Properties should be auto-properties }{17}{rule.4.4}
+\defcounter {refsection}{0}\relax 
+\contentsline {rules}{\numberline { 4.2.5 } Auto-properties must be declared on one line }{17}{rule.4.5}
+\defcounter {refsection}{0}\relax 
+\contentsline {rules}{\numberline { 4.2.6 } Properties should be expression-bodied }{17}{rule.4.6}
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {5}Documentation}{18}{section.5}
+\defcounter {refsection}{0}\relax 
+\contentsline {rules}{\numberline { 5.0.1 } Private members should be documented }{18}{rule.5.1}
+\defcounter {refsection}{0}\relax 
+\contentsline {rules}{\numberline { 5.0.2 } Files must have the correct header }{18}{rule.5.2}
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {6}Language Features}{19}{section.6}
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {6.1}Declarations}{19}{subsection.6.1}
+\defcounter {refsection}{0}\relax 
+\contentsline {rules}{\numberline { 6.1.1 } \texttt {var} should be used whenever possible }{19}{rule.6.1}
+\defcounter {refsection}{0}\relax 
+\contentsline {rules}{\numberline { 6.1.2 } \texttt {out} variables should be inlined }{19}{rule.6.2}
+\defcounter {refsection}{0}\relax 
+\contentsline {rules}{\numberline { 6.1.3 } Object initializers should be used }{19}{rule.6.3}
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {6.2}Invocations}{20}{subsection.6.2}
+\defcounter {refsection}{0}\relax 
+\contentsline {rules}{\numberline { 6.2.4 } Events should be directly invoked }{20}{rule.6.4}
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {6.3}Null Checking}{21}{subsection.6.3}
+\defcounter {refsection}{0}\relax 
+\contentsline {rules}{\numberline { 6.3.5 } Null should be checked using pattern matching }{21}{rule.6.5}

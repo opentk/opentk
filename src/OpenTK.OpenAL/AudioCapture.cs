@@ -285,12 +285,13 @@ namespace OpenTK.OpenAL
                 case ALFormat.Mono16: return 2;
                 case ALFormat.Stereo8: return 2;
                 case ALFormat.Stereo16: return 4;
+
+                /* TODO: Move to extension
                 case ALFormat.MonoFloat32Ext: return 4;
                 case ALFormat.MonoDoubleExt: return 8;
                 case ALFormat.StereoFloat32Ext: return 8;
                 case ALFormat.StereoDoubleExt: return 16;
 
-                /* TODO: Move to extension
                 case ALFormat.MultiQuad8Ext: return 4;
                 case ALFormat.MultiQuad16Ext: return 8;
                 case ALFormat.MultiQuad32Ext: return 16;

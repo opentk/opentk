@@ -1,0 +1,57 @@
+\BOOKMARK [1][-]{section*.3}{Foreword}{}% 1
+\BOOKMARK [2][-]{subsection.0.1}{Rule Types}{section*.3}% 2
+\BOOKMARK [3][-]{subsubsection.0.1.1}{Must}{subsection.0.1}% 3
+\BOOKMARK [0][-]{rule.0.1}{ EX0001: A rule that must be followed }{}% 4
+\BOOKMARK [1][-]{subsubsection.0.1.2}{Should}{rule.0.1}% 5
+\BOOKMARK [0][-]{rule.0.2}{ EX0002: A rule that should be followed }{}% 6
+\BOOKMARK [1][-]{subsubsection.0.1.3}{May}{rule.0.2}% 7
+\BOOKMARK [0][-]{rule.0.3}{ An optional rule }{}% 8
+\BOOKMARK [1][-]{section.1}{Project Structure}{rule.0.3}% 9
+\BOOKMARK [0][-]{rule.1.1}{ Files should be organized according to their namespace }{}% 10
+\BOOKMARK [0][-]{rule.1.2}{ Files without a namespace should be placed correctly }{}% 11
+\BOOKMARK [1][-]{section.2}{Formatting}{rule.1.2}% 12
+\BOOKMARK [2][-]{subsection.2.1}{General}{section.2}% 13
+\BOOKMARK [0][-]{rule.2.1}{ Line width must not exceed 120 columns }{}% 14
+\BOOKMARK [0][-]{rule.2.2}{ All files must end with a newline character }{}% 15
+\BOOKMARK [0][-]{rule.2.3}{ Files must be saved as UTF-8 }{}% 16
+\BOOKMARK [0][-]{rule.2.4}{ Lines must end with a newline character }{}% 17
+\BOOKMARK [1][-]{subsection.2.2}{Braces, Parens, and Brackets}{rule.2.4}% 18
+\BOOKMARK [0][-]{rule.2.5}{ Braces must be formatted correctly }{}% 19
+\BOOKMARK [0][-]{rule.2.6}{ Method calls and initializers must be wrapped correctly }{}% 20
+\BOOKMARK [0][-]{rule.2.7}{ Wrapped method calls must be aligned correctly }{}% 21
+\BOOKMARK [0][-]{rule.2.8}{ Method declarations must be wrapped correctly }{}% 22
+\BOOKMARK [0][-]{rule.2.9}{ Braces must not have additional blank lines }{}% 23
+\BOOKMARK [1][-]{section.3}{Naming}{rule.2.9}% 24
+\BOOKMARK [2][-]{subsection.3.1}{Files}{section.3}% 25
+\BOOKMARK [0][-]{rule.3.1}{ Files must be named correctly }{}% 26
+\BOOKMARK [0][-]{rule.3.2}{ Filenames should match their contained type }{}% 27
+\BOOKMARK [0][-]{rule.3.3}{ Names of files containing a generic type may be suffixed }{}% 28
+\BOOKMARK [1][-]{subsection.3.2}{Types and Members}{rule.3.3}% 29
+\BOOKMARK [0][-]{rule.3.4}{ Identifiers must not contain underscores }{}% 30
+\BOOKMARK [0][-]{rule.3.5}{ Types must be named correctly }{}% 31
+\BOOKMARK [0][-]{rule.3.6}{ Fields must be named correctly }{}% 32
+\BOOKMARK [0][-]{rule.3.7}{ Methods must be named correctly }{}% 33
+\BOOKMARK [0][-]{rule.3.8}{ Properties must be named correctly }{}% 34
+\BOOKMARK [0][-]{rule.3.9}{ Locals must be named correctly }{}% 35
+\BOOKMARK [0][-]{rule.3.10}{ Named ValueTuple members must be named correctly }{}% 36
+\BOOKMARK [1][-]{section.4}{Declarations}{rule.3.10}% 37
+\BOOKMARK [0][-]{rule.4.1}{ Declarations must be correctly ordered }{}% 38
+\BOOKMARK [0][-]{rule.4.2}{ Types must be declared within a namespace }{}% 39
+\BOOKMARK [1][-]{subsection.4.1}{Methods}{rule.4.2}% 40
+\BOOKMARK [0][-]{rule.4.3}{ Methods should be private }{}% 41
+\BOOKMARK [1][-]{subsection.4.2}{Properties}{rule.4.3}% 42
+\BOOKMARK [0][-]{rule.4.4}{ Properties should be auto-properties }{}% 43
+\BOOKMARK [0][-]{rule.4.5}{ Auto-properties must be declared on one line }{}% 44
+\BOOKMARK [0][-]{rule.4.6}{ Properties should be expression-bodied }{}% 45
+\BOOKMARK [1][-]{section.5}{Documentation}{rule.4.6}% 46
+\BOOKMARK [0][-]{rule.5.1}{ Private members should be documented }{}% 47
+\BOOKMARK [0][-]{rule.5.2}{ Files must have the correct header }{}% 48
+\BOOKMARK [1][-]{section.6}{Language Features}{rule.5.2}% 49
+\BOOKMARK [2][-]{subsection.6.1}{Declarations}{section.6}% 50
+\BOOKMARK [0][-]{rule.6.1}{ var should be used whenever possible }{}% 51
+\BOOKMARK [0][-]{rule.6.2}{ out variables should be inlined }{}% 52
+\BOOKMARK [0][-]{rule.6.3}{ Object initializers should be used }{}% 53
+\BOOKMARK [1][-]{subsection.6.2}{Invocations}{rule.6.3}% 54
+\BOOKMARK [0][-]{rule.6.4}{ Events should be directly invoked }{}% 55
+\BOOKMARK [1][-]{subsection.6.3}{Null Checking}{rule.6.4}% 56
+\BOOKMARK [0][-]{rule.6.5}{ Null should be checked using pattern matching }{}% 57
