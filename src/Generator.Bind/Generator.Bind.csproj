@@ -3,7 +3,7 @@
     <OutputType>Exe</OutputType>
     <AssemblyName>Bind</AssemblyName>
     <RootNamespace>Bind</RootNamespace>
-    <TargetFramework>net461</TargetFramework>
+    <TargetFramework>netstandard2.0</TargetFramework>
     <Deterministic>true</Deterministic>
   </PropertyGroup>
 
