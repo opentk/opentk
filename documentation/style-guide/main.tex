@@ -440,7 +440,7 @@ That is, the following example
 \begin{code}[Good formatting]
 if (myThing)
 {
-	DoThing();
+    DoThing();
 }
 
 AnotherThing();
@@ -448,10 +448,10 @@ AnotherThing();
 // and
 public void MyMethod()
 {
-	if (myThing)
-	{
-		return;
-	}
+    if (myThing)
+    {
+        return;
+    }
 }
 \end{code}
 
@@ -461,7 +461,7 @@ is to be preferred over
 if (myThing)
 {
 
-	DoThing();
+    DoThing();
 }
 
 AnotherThing();
@@ -469,13 +469,13 @@ AnotherThing();
 // and
 public void MyMethod()
 {
-	if (myThing)
-	{
-	
-		return;
-		
-	}
-	
+    if (myThing)
+    {
+    
+        return;
+        
+    }
+    
 }
 \end{code}
 
@@ -533,7 +533,7 @@ All locals (local variables, method parameters, lambda arguments, etc) must be n
 \end{must}
 
 \begin{must}{Named \texttt{ValueTuple} members must be named correctly}
-Named \texttt{ValueTuple} members are, for all intents and purposes, considered public properties on a class. Therefore, they must be named according to \texttt{camelCase}.
+Named \texttt{ValueTuple} members are, for all intents and purposes, considered public properties on a class. Therefore, they must be named according to \texttt{PascalCase}.
 \end{must}
 
 \section{Declarations}
@@ -675,8 +675,8 @@ That is, the following example
 \begin{code}[Object initializer]
 var myThing = new MyThing
 {
-	MyProp = true,
-	MySecondProp = 42
+    MyProp = true,
+    MySecondProp = 42
 };
 \end{code}
 
@@ -703,14 +703,14 @@ is to be preferred over
 \begin{code}
 private void OnMyEvent()
 {
-	MyEvent?.Invoke();
-	
-	// or
-	
-	if (!(MyEvent is null))
-	{
-		MyEvent();
-	}
+    MyEvent?.Invoke();
+    
+    // or
+    
+    if (!(MyEvent is null))
+    {
+        MyEvent();
+    }
 }
 
 OnMyEvent();
@@ -719,8 +719,12 @@ OnMyEvent();
 \subsection{Null Checking}
 Null checking has evolved with the advent of C\# 7.0, allowing us to use pattern matching to detect null values. In the ongoing move to treat null as a more and more exceptional value, this is a very good thing, and lets us check for null in a faster, safer way.
 
+\begin{should}{Null should be treated as an exceptional value}
+\texttt{null} is to be treated as an exceptional value, and should not be a typical return value. Methods should reject null as valid input parameters to the broadest extent possible, and should not return null themselves. In the instances where a method must return or accept null, it should be explicitly documented, and obviously implemented.
+\end{should}
+
 \begin{should}{Null should be checked using pattern matching}
-\texttt{null} is to be treated as an exceptional value, and should not be a typical return value. To highlight this, and to avoid overridden equality operators, null checking shall be performed using pattern matching.
+To assist in highlighting \texttt{null}'s exceptionality, and to avoid overridden equality operators, null checking shall be performed using pattern matching.
 \end{should}
 
 That is, the following example
