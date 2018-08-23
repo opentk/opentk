@@ -1345,7 +1345,7 @@ namespace OpenTK.Mathematics
                 b = 0.0f;
             }
 
-            var m = luminance - ((0.30f * r) + (0.59f * g) + (0.11f * b));
+            var m = luminance - (0.30f * r) + (0.59f * g) + (0.11f * b);
             return new Color4(r + m, g + m, b + m, hcy.W);
         }
 

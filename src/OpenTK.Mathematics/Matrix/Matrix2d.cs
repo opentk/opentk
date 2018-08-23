@@ -21,6 +21,7 @@ SOFTWARE.
  */
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace OpenTK.Mathematics
 {
@@ -67,13 +68,10 @@ namespace OpenTK.Mathematics
         /// <param name="m01">Second item of the first row of the matrix.</param>
         /// <param name="m10">First item of the second row of the matrix.</param>
         /// <param name="m11">Second item of the second row of the matrix.</param>
-        public Matrix2d
-        (
-            double m00,
-            double m01,
-            double m10,
-            double m11
-        )
+        [SuppressMessage("ReSharper", "SA1117", Justification = "For better readability of Matrix struct.")]
+        public Matrix2d(
+            double m00, double m01,
+            double m10, double m11)
         {
             Row0 = new Vector2d(m00, m01);
             Row1 = new Vector2d(m10, m11);
@@ -180,6 +178,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         /// <param name="rowIndex">The index of the row.</param>
         /// <param name="columnIndex">The index of the column.</param>
+        /// <returns>The element at the given row and column index.</returns>
         public double this[int rowIndex, int columnIndex]
         {
             get
@@ -367,19 +366,19 @@ namespace OpenTK.Mathematics
         /// <param name="result">A new instance that is the result of the multiplication.</param>
         public static void Mult(ref Matrix2d left, ref Matrix2d right, out Matrix2d result)
         {
-            double lM11 = left.Row0.X,
-                lM12 = left.Row0.Y,
-                lM21 = left.Row1.X,
-                lM22 = left.Row1.Y,
-                rM11 = right.Row0.X,
-                rM12 = right.Row0.Y,
-                rM21 = right.Row1.X,
-                rM22 = right.Row1.Y;
+            double leftM11 = left.Row0.X,
+                leftM12 = left.Row0.Y,
+                leftM21 = left.Row1.X,
+                leftM22 = left.Row1.Y,
+                rightM11 = right.Row0.X,
+                rightM12 = right.Row0.Y,
+                rightM21 = right.Row1.X,
+                rightM22 = right.Row1.Y;
 
-            result.Row0.X = (lM11 * rM11) + (lM12 * rM21);
-            result.Row0.Y = (lM11 * rM12) + (lM12 * rM22);
-            result.Row1.X = (lM21 * rM11) + (lM22 * rM21);
-            result.Row1.Y = (lM21 * rM12) + (lM22 * rM22);
+            result.Row0.X = (leftM11 * rightM11) + (leftM12 * rightM21);
+            result.Row0.Y = (leftM11 * rightM12) + (leftM12 * rightM22);
+            result.Row1.X = (leftM21 * rightM11) + (leftM22 * rightM21);
+            result.Row1.Y = (leftM21 * rightM12) + (leftM22 * rightM22);
         }
 
         /// <summary>
@@ -402,23 +401,23 @@ namespace OpenTK.Mathematics
         /// <param name="result">A new instance that is the result of the multiplication.</param>
         public static void Mult(ref Matrix2d left, ref Matrix2x3d right, out Matrix2x3d result)
         {
-            double lM11 = left.Row0.X,
-                lM12 = left.Row0.Y,
-                lM21 = left.Row1.X,
-                lM22 = left.Row1.Y,
-                rM11 = right.Row0.X,
-                rM12 = right.Row0.Y,
-                rM13 = right.Row0.Z,
-                rM21 = right.Row1.X,
-                rM22 = right.Row1.Y,
-                rM23 = right.Row1.Z;
+            double leftM11 = left.Row0.X,
+                leftM12 = left.Row0.Y,
+                leftM21 = left.Row1.X,
+                leftM22 = left.Row1.Y,
+                rightM11 = right.Row0.X,
+                rightM12 = right.Row0.Y,
+                rightM13 = right.Row0.Z,
+                rightM21 = right.Row1.X,
+                rightM22 = right.Row1.Y,
+                rightM23 = right.Row1.Z;
 
-            result.Row0.X = (lM11 * rM11) + (lM12 * rM21);
-            result.Row0.Y = (lM11 * rM12) + (lM12 * rM22);
-            result.Row0.Z = (lM11 * rM13) + (lM12 * rM23);
-            result.Row1.X = (lM21 * rM11) + (lM22 * rM21);
-            result.Row1.Y = (lM21 * rM12) + (lM22 * rM22);
-            result.Row1.Z = (lM21 * rM13) + (lM22 * rM23);
+            result.Row0.X = (leftM11 * rightM11) + (leftM12 * rightM21);
+            result.Row0.Y = (leftM11 * rightM12) + (leftM12 * rightM22);
+            result.Row0.Z = (leftM11 * rightM13) + (leftM12 * rightM23);
+            result.Row1.X = (leftM21 * rightM11) + (leftM22 * rightM21);
+            result.Row1.Y = (leftM21 * rightM12) + (leftM22 * rightM22);
+            result.Row1.Z = (leftM21 * rightM13) + (leftM22 * rightM23);
         }
 
         /// <summary>
@@ -441,27 +440,27 @@ namespace OpenTK.Mathematics
         /// <param name="result">A new instance that is the result of the multiplication.</param>
         public static void Mult(ref Matrix2d left, ref Matrix2x4d right, out Matrix2x4d result)
         {
-            double lM11 = left.Row0.X,
-                lM12 = left.Row0.Y,
-                lM21 = left.Row1.X,
-                lM22 = left.Row1.Y,
-                rM11 = right.Row0.X,
-                rM12 = right.Row0.Y,
-                rM13 = right.Row0.Z,
-                rM14 = right.Row0.W,
-                rM21 = right.Row1.X,
-                rM22 = right.Row1.Y,
-                rM23 = right.Row1.Z,
-                rM24 = right.Row1.W;
+            double leftM11 = left.Row0.X,
+                leftM12 = left.Row0.Y,
+                leftM21 = left.Row1.X,
+                leftM22 = left.Row1.Y,
+                rightM11 = right.Row0.X,
+                rightM12 = right.Row0.Y,
+                rightM13 = right.Row0.Z,
+                rightM14 = right.Row0.W,
+                rightM21 = right.Row1.X,
+                rightM22 = right.Row1.Y,
+                rightM23 = right.Row1.Z,
+                rightM24 = right.Row1.W;
 
-            result.Row0.X = (lM11 * rM11) + (lM12 * rM21);
-            result.Row0.Y = (lM11 * rM12) + (lM12 * rM22);
-            result.Row0.Z = (lM11 * rM13) + (lM12 * rM23);
-            result.Row0.W = (lM11 * rM14) + (lM12 * rM24);
-            result.Row1.X = (lM21 * rM11) + (lM22 * rM21);
-            result.Row1.Y = (lM21 * rM12) + (lM22 * rM22);
-            result.Row1.Z = (lM21 * rM13) + (lM22 * rM23);
-            result.Row1.W = (lM21 * rM14) + (lM22 * rM24);
+            result.Row0.X = (leftM11 * rightM11) + (leftM12 * rightM21);
+            result.Row0.Y = (leftM11 * rightM12) + (leftM12 * rightM22);
+            result.Row0.Z = (leftM11 * rightM13) + (leftM12 * rightM23);
+            result.Row0.W = (leftM11 * rightM14) + (leftM12 * rightM24);
+            result.Row1.X = (leftM21 * rightM11) + (leftM22 * rightM21);
+            result.Row1.Y = (leftM21 * rightM12) + (leftM22 * rightM22);
+            result.Row1.Z = (leftM21 * rightM13) + (leftM22 * rightM23);
+            result.Row1.W = (leftM21 * rightM14) + (leftM22 * rightM24);
         }
 
         /// <summary>

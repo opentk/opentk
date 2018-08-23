@@ -171,7 +171,8 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Gets or sets the value at the index of the Vector.
         /// </summary>
-        /// <param name="index">The index.</param>
+        /// <param name="index">The index of the component from the Vector.</param>
+        /// <exception cref="IndexOutOfRangeException">Thrown if the index is less than 0 or greater than 3.</exception>
         public double this[int index]
         {
             get
@@ -255,7 +256,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Returns a copy of the Vector4d scaled to unit length.
         /// </summary>
-        /// <returns>The vector.</returns>
+        /// <returns>The normalized vector.</returns>
         public Vector4d Normalized()
         {
             var v = this;

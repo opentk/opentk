@@ -21,6 +21,7 @@ SOFTWARE.
  */
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace OpenTK.Mathematics
 {
@@ -66,17 +67,10 @@ namespace OpenTK.Mathematics
         /// <param name="m11">Second item of the second row of the matrix.</param>
         /// <param name="m12">Third item of the second row of the matrix.</param>
         /// <param name="m13">Fourth item of the second row of the matrix.</param>
-        public Matrix2x4d
-        (
-            double m00,
-            double m01,
-            double m02,
-            double m03,
-            double m10,
-            double m11,
-            double m12,
-            double m13
-        )
+        [SuppressMessage("ReSharper", "SA1117", Justification = "For better readability of Matrix struct.")]
+        public Matrix2x4d(
+            double m00, double m01, double m02, double m03,
+            double m10, double m11, double m12, double m13)
         {
             Row0 = new Vector4d(m00, m01, m02, m03);
             Row1 = new Vector4d(m10, m11, m12, m13);
@@ -229,6 +223,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         /// <param name="rowIndex">The index of the row.</param>
         /// <param name="columnIndex">The index of the column.</param>
+        /// <returns>The element at the given row and column index.</returns>
         public double this[int rowIndex, int columnIndex]
         {
             get
@@ -420,27 +415,27 @@ namespace OpenTK.Mathematics
         /// <param name="result">A new instance that is the result of the multiplication.</param>
         public static void Mult(ref Matrix2x4d left, ref Matrix4x2 right, out Matrix2d result)
         {
-            double lM11 = left.Row0.X,
-                lM12 = left.Row0.Y,
-                lM13 = left.Row0.Z,
-                lM14 = left.Row0.W,
-                lM21 = left.Row1.X,
-                lM22 = left.Row1.Y,
-                lM23 = left.Row1.Z,
-                lM24 = left.Row1.W,
-                rM11 = right.Row0.X,
-                rM12 = right.Row0.Y,
-                rM21 = right.Row1.X,
-                rM22 = right.Row1.Y,
-                rM31 = right.Row2.X,
-                rM32 = right.Row2.Y,
-                rM41 = right.Row3.X,
-                rM42 = right.Row3.Y;
+            double leftM11 = left.Row0.X,
+                leftM12 = left.Row0.Y,
+                leftM13 = left.Row0.Z,
+                leftM14 = left.Row0.W,
+                leftM21 = left.Row1.X,
+                leftM22 = left.Row1.Y,
+                leftM23 = left.Row1.Z,
+                leftM24 = left.Row1.W,
+                rightM11 = right.Row0.X,
+                rightM12 = right.Row0.Y,
+                rightM21 = right.Row1.X,
+                rightM22 = right.Row1.Y,
+                rightM31 = right.Row2.X,
+                rightM32 = right.Row2.Y,
+                rightM41 = right.Row3.X,
+                rightM42 = right.Row3.Y;
 
-            result.Row0.X = (lM11 * rM11) + (lM12 * rM21) + (lM13 * rM31) + (lM14 * rM41);
-            result.Row0.Y = (lM11 * rM12) + (lM12 * rM22) + (lM13 * rM32) + (lM14 * rM42);
-            result.Row1.X = (lM21 * rM11) + (lM22 * rM21) + (lM23 * rM31) + (lM24 * rM41);
-            result.Row1.Y = (lM21 * rM12) + (lM22 * rM22) + (lM23 * rM32) + (lM24 * rM42);
+            result.Row0.X = (leftM11 * rightM11) + (leftM12 * rightM21) + (leftM13 * rightM31) + (leftM14 * rightM41);
+            result.Row0.Y = (leftM11 * rightM12) + (leftM12 * rightM22) + (leftM13 * rightM32) + (leftM14 * rightM42);
+            result.Row1.X = (leftM21 * rightM11) + (leftM22 * rightM21) + (leftM23 * rightM31) + (leftM24 * rightM41);
+            result.Row1.Y = (leftM21 * rightM12) + (leftM22 * rightM22) + (leftM23 * rightM32) + (leftM24 * rightM42);
         }
 
         /// <summary>
@@ -463,33 +458,33 @@ namespace OpenTK.Mathematics
         /// <param name="result">A new instance that is the result of the multiplication.</param>
         public static void Mult(ref Matrix2x4d left, ref Matrix4x3 right, out Matrix2x3d result)
         {
-            double lM11 = left.Row0.X,
-                lM12 = left.Row0.Y,
-                lM13 = left.Row0.Z,
-                lM14 = left.Row0.W,
-                lM21 = left.Row1.X,
-                lM22 = left.Row1.Y,
-                lM23 = left.Row1.Z,
-                lM24 = left.Row1.W,
-                rM11 = right.Row0.X,
-                rM12 = right.Row0.Y,
-                rM13 = right.Row0.Z,
-                rM21 = right.Row1.X,
-                rM22 = right.Row1.Y,
-                rM23 = right.Row1.Z,
-                rM31 = right.Row2.X,
-                rM32 = right.Row2.Y,
-                rM33 = right.Row2.Z,
-                rM41 = right.Row3.X,
-                rM42 = right.Row3.Y,
-                rM43 = right.Row3.Z;
+            double leftM11 = left.Row0.X,
+                leftM12 = left.Row0.Y,
+                leftM13 = left.Row0.Z,
+                leftM14 = left.Row0.W,
+                leftM21 = left.Row1.X,
+                leftM22 = left.Row1.Y,
+                leftM23 = left.Row1.Z,
+                leftM24 = left.Row1.W,
+                rightM11 = right.Row0.X,
+                rightM12 = right.Row0.Y,
+                rightM13 = right.Row0.Z,
+                rightM21 = right.Row1.X,
+                rightM22 = right.Row1.Y,
+                rightM23 = right.Row1.Z,
+                rightM31 = right.Row2.X,
+                rightM32 = right.Row2.Y,
+                rightM33 = right.Row2.Z,
+                rightM41 = right.Row3.X,
+                rightM42 = right.Row3.Y,
+                rightM43 = right.Row3.Z;
 
-            result.Row0.X = (lM11 * rM11) + (lM12 * rM21) + (lM13 * rM31) + (lM14 * rM41);
-            result.Row0.Y = (lM11 * rM12) + (lM12 * rM22) + (lM13 * rM32) + (lM14 * rM42);
-            result.Row0.Z = (lM11 * rM13) + (lM12 * rM23) + (lM13 * rM33) + (lM14 * rM43);
-            result.Row1.X = (lM21 * rM11) + (lM22 * rM21) + (lM23 * rM31) + (lM24 * rM41);
-            result.Row1.Y = (lM21 * rM12) + (lM22 * rM22) + (lM23 * rM32) + (lM24 * rM42);
-            result.Row1.Z = (lM21 * rM13) + (lM22 * rM23) + (lM23 * rM33) + (lM24 * rM43);
+            result.Row0.X = (leftM11 * rightM11) + (leftM12 * rightM21) + (leftM13 * rightM31) + (leftM14 * rightM41);
+            result.Row0.Y = (leftM11 * rightM12) + (leftM12 * rightM22) + (leftM13 * rightM32) + (leftM14 * rightM42);
+            result.Row0.Z = (leftM11 * rightM13) + (leftM12 * rightM23) + (leftM13 * rightM33) + (leftM14 * rightM43);
+            result.Row1.X = (leftM21 * rightM11) + (leftM22 * rightM21) + (leftM23 * rightM31) + (leftM24 * rightM41);
+            result.Row1.Y = (leftM21 * rightM12) + (leftM22 * rightM22) + (leftM23 * rightM32) + (leftM24 * rightM42);
+            result.Row1.Z = (leftM21 * rightM13) + (leftM22 * rightM23) + (leftM23 * rightM33) + (leftM24 * rightM43);
         }
 
         /// <summary>
@@ -512,39 +507,39 @@ namespace OpenTK.Mathematics
         /// <param name="result">A new instance that is the result of the multiplication.</param>
         public static void Mult(ref Matrix2x4d left, ref Matrix4 right, out Matrix2x4d result)
         {
-            double lM11 = left.Row0.X,
-                lM12 = left.Row0.Y,
-                lM13 = left.Row0.Z,
-                lM14 = left.Row0.W,
-                lM21 = left.Row1.X,
-                lM22 = left.Row1.Y,
-                lM23 = left.Row1.Z,
-                lM24 = left.Row1.W,
-                rM11 = right.Row0.X,
-                rM12 = right.Row0.Y,
-                rM13 = right.Row0.Z,
-                rM14 = right.Row0.W,
-                rM21 = right.Row1.X,
-                rM22 = right.Row1.Y,
-                rM23 = right.Row1.Z,
-                rM24 = right.Row1.W,
-                rM31 = right.Row2.X,
-                rM32 = right.Row2.Y,
-                rM33 = right.Row2.Z,
-                rM34 = right.Row2.W,
-                rM41 = right.Row3.X,
-                rM42 = right.Row3.Y,
-                rM43 = right.Row3.Z,
-                rM44 = right.Row3.W;
+            double leftM11 = left.Row0.X,
+                leftM12 = left.Row0.Y,
+                leftM13 = left.Row0.Z,
+                leftM14 = left.Row0.W,
+                leftM21 = left.Row1.X,
+                leftM22 = left.Row1.Y,
+                leftM23 = left.Row1.Z,
+                leftM24 = left.Row1.W,
+                rightM11 = right.Row0.X,
+                rightM12 = right.Row0.Y,
+                rightM13 = right.Row0.Z,
+                rightM14 = right.Row0.W,
+                rightM21 = right.Row1.X,
+                rightM22 = right.Row1.Y,
+                rightM23 = right.Row1.Z,
+                rightM24 = right.Row1.W,
+                rightM31 = right.Row2.X,
+                rightM32 = right.Row2.Y,
+                rightM33 = right.Row2.Z,
+                rightM34 = right.Row2.W,
+                rightM41 = right.Row3.X,
+                rightM42 = right.Row3.Y,
+                rightM43 = right.Row3.Z,
+                rightM44 = right.Row3.W;
 
-            result.Row0.X = (lM11 * rM11) + (lM12 * rM21) + (lM13 * rM31) + (lM14 * rM41);
-            result.Row0.Y = (lM11 * rM12) + (lM12 * rM22) + (lM13 * rM32) + (lM14 * rM42);
-            result.Row0.Z = (lM11 * rM13) + (lM12 * rM23) + (lM13 * rM33) + (lM14 * rM43);
-            result.Row0.W = (lM11 * rM14) + (lM12 * rM24) + (lM13 * rM34) + (lM14 * rM44);
-            result.Row1.X = (lM21 * rM11) + (lM22 * rM21) + (lM23 * rM31) + (lM24 * rM41);
-            result.Row1.Y = (lM21 * rM12) + (lM22 * rM22) + (lM23 * rM32) + (lM24 * rM42);
-            result.Row1.Z = (lM21 * rM13) + (lM22 * rM23) + (lM23 * rM33) + (lM24 * rM43);
-            result.Row1.W = (lM21 * rM14) + (lM22 * rM24) + (lM23 * rM34) + (lM24 * rM44);
+            result.Row0.X = (leftM11 * rightM11) + (leftM12 * rightM21) + (leftM13 * rightM31) + (leftM14 * rightM41);
+            result.Row0.Y = (leftM11 * rightM12) + (leftM12 * rightM22) + (leftM13 * rightM32) + (leftM14 * rightM42);
+            result.Row0.Z = (leftM11 * rightM13) + (leftM12 * rightM23) + (leftM13 * rightM33) + (leftM14 * rightM43);
+            result.Row0.W = (leftM11 * rightM14) + (leftM12 * rightM24) + (leftM13 * rightM34) + (leftM14 * rightM44);
+            result.Row1.X = (leftM21 * rightM11) + (leftM22 * rightM21) + (leftM23 * rightM31) + (leftM24 * rightM41);
+            result.Row1.Y = (leftM21 * rightM12) + (leftM22 * rightM22) + (leftM23 * rightM32) + (leftM24 * rightM42);
+            result.Row1.Z = (leftM21 * rightM13) + (leftM22 * rightM23) + (leftM23 * rightM33) + (leftM24 * rightM43);
+            result.Row1.W = (leftM21 * rightM14) + (leftM22 * rightM24) + (leftM23 * rightM34) + (leftM24 * rightM44);
         }
 
         /// <summary>

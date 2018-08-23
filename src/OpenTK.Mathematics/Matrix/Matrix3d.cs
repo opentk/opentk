@@ -21,6 +21,7 @@ SOFTWARE.
  */
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 
 namespace OpenTK.Mathematics
@@ -77,18 +78,11 @@ namespace OpenTK.Mathematics
         /// <param name="m20">First item of the third row of the matrix.</param>
         /// <param name="m21">Second item of the third row of the matrix.</param>
         /// <param name="m22">Third item of the third row of the matrix.</param>
-        public Matrix3d
-        (
-            double m00,
-            double m01,
-            double m02,
-            double m10,
-            double m11,
-            double m12,
-            double m20,
-            double m21,
-            double m22
-        )
+        [SuppressMessage("ReSharper", "SA1117", Justification = "For better readability of Matrix struct.")]
+        public Matrix3d(
+            double m00, double m01, double m02,
+            double m10, double m11, double m12,
+            double m20, double m21, double m22)
         {
             Row0 = new Vector3d(m00, m01, m02);
             Row1 = new Vector3d(m10, m11, m12);
@@ -311,7 +305,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Returns a normalised copy of this instance.
+        /// Returns a normalized copy of this instance.
         /// </summary>
         /// <returns>The normalized vector.</returns>
         public Matrix3d Normalized()
@@ -350,7 +344,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Returns a copy of this Matrix3 without scale.
         /// </summary>
-        /// <returns>The matrix.</returns>
+        /// <returns>The matrix without scaling.</returns>
         public Matrix3d ClearScale()
         {
             var m = this;
@@ -363,7 +357,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Returns a copy of this Matrix3 without rotation.
         /// </summary>
-        /// <returns>The matrix.</returns>
+        /// <returns>The matrix without rotation.</returns>
         public Matrix3d ClearRotation()
         {
             var m = this;
@@ -376,7 +370,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Returns the scale component of this instance.
         /// </summary>
-        /// <returns>The matrix.</returns>
+        /// <returns>The scale components.</returns>
         public Vector3d ExtractScale()
         {
             return new Vector3d(Row0.Length, Row1.Length, Row2.Length);
@@ -385,18 +379,18 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Returns the rotation component of this instance. Quite slow.
         /// </summary>
-        /// <param name="row_normalise">
-        /// Whether the method should row-normalise (i.e. remove scale from) the Matrix. Pass false if
-        /// you know it's already normalised.
+        /// <param name="rowNormalize">
+        /// Whether the method should row-normalize (i.e. remove scale from) the Matrix. Pass false if
+        /// you know it's already normalized.
         /// </param>
         /// <returns>The rotation.</returns>
-        public Quaterniond ExtractRotation(bool row_normalise = true)
+        public Quaterniond ExtractRotation(bool rowNormalize = true)
         {
             var row0 = Row0;
             var row1 = Row1;
             var row2 = Row2;
 
-            if (row_normalise)
+            if (rowNormalize)
             {
                 row0 = row0.Normalized();
                 row1 = row1.Normalized();
@@ -458,6 +452,7 @@ namespace OpenTK.Mathematics
         /// <param name="axis">The axis to rotate about.</param>
         /// <param name="angle">Angle in radians to rotate counter-clockwise (looking in the direction of the given axis).</param>
         /// <param name="result">A matrix instance.</param>
+        [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1305", Justification = "Is not hungarian notation but abbreveation for precalculated values.")]
         public static void CreateFromAxisAngle(Vector3d axis, double angle, out Matrix3d result)
         {
             // normalize and create a local copy of the vector.
@@ -731,34 +726,34 @@ namespace OpenTK.Mathematics
         /// <param name="result">A new instance that is the result of the multiplication.</param>
         public static void Mult(ref Matrix3d left, ref Matrix3d right, out Matrix3d result)
         {
-            double lM11 = left.Row0.X,
-                lM12 = left.Row0.Y,
-                lM13 = left.Row0.Z,
-                lM21 = left.Row1.X,
-                lM22 = left.Row1.Y,
-                lM23 = left.Row1.Z,
-                lM31 = left.Row2.X,
-                lM32 = left.Row2.Y,
-                lM33 = left.Row2.Z,
-                rM11 = right.Row0.X,
-                rM12 = right.Row0.Y,
-                rM13 = right.Row0.Z,
-                rM21 = right.Row1.X,
-                rM22 = right.Row1.Y,
-                rM23 = right.Row1.Z,
-                rM31 = right.Row2.X,
-                rM32 = right.Row2.Y,
-                rM33 = right.Row2.Z;
+            double leftM11 = left.Row0.X,
+                leftM12 = left.Row0.Y,
+                leftM13 = left.Row0.Z,
+                leftM21 = left.Row1.X,
+                leftM22 = left.Row1.Y,
+                leftM23 = left.Row1.Z,
+                leftM31 = left.Row2.X,
+                leftM32 = left.Row2.Y,
+                leftM33 = left.Row2.Z,
+                rightM11 = right.Row0.X,
+                rightM12 = right.Row0.Y,
+                rightM13 = right.Row0.Z,
+                rightM21 = right.Row1.X,
+                rightM22 = right.Row1.Y,
+                rightM23 = right.Row1.Z,
+                rightM31 = right.Row2.X,
+                rightM32 = right.Row2.Y,
+                rightM33 = right.Row2.Z;
 
-            result.Row0.X = (lM11 * rM11) + (lM12 * rM21) + (lM13 * rM31);
-            result.Row0.Y = (lM11 * rM12) + (lM12 * rM22) + (lM13 * rM32);
-            result.Row0.Z = (lM11 * rM13) + (lM12 * rM23) + (lM13 * rM33);
-            result.Row1.X = (lM21 * rM11) + (lM22 * rM21) + (lM23 * rM31);
-            result.Row1.Y = (lM21 * rM12) + (lM22 * rM22) + (lM23 * rM32);
-            result.Row1.Z = (lM21 * rM13) + (lM22 * rM23) + (lM23 * rM33);
-            result.Row2.X = (lM31 * rM11) + (lM32 * rM21) + (lM33 * rM31);
-            result.Row2.Y = (lM31 * rM12) + (lM32 * rM22) + (lM33 * rM32);
-            result.Row2.Z = (lM31 * rM13) + (lM32 * rM23) + (lM33 * rM33);
+            result.Row0.X = (leftM11 * rightM11) + (leftM12 * rightM21) + (leftM13 * rightM31);
+            result.Row0.Y = (leftM11 * rightM12) + (leftM12 * rightM22) + (leftM13 * rightM32);
+            result.Row0.Z = (leftM11 * rightM13) + (leftM12 * rightM23) + (leftM13 * rightM33);
+            result.Row1.X = (leftM21 * rightM11) + (leftM22 * rightM21) + (leftM23 * rightM31);
+            result.Row1.Y = (leftM21 * rightM12) + (leftM22 * rightM22) + (leftM23 * rightM32);
+            result.Row1.Z = (leftM21 * rightM13) + (leftM22 * rightM23) + (leftM23 * rightM33);
+            result.Row2.X = (leftM31 * rightM11) + (leftM32 * rightM21) + (leftM33 * rightM31);
+            result.Row2.Y = (leftM31 * rightM12) + (leftM32 * rightM22) + (leftM33 * rightM32);
+            result.Row2.Z = (leftM31 * rightM13) + (leftM32 * rightM23) + (leftM33 * rightM33);
         }
 
         /// <summary>
