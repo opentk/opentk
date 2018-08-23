@@ -3,7 +3,7 @@
     /// <summary>
     /// A list of valid Int32 Source parameters.
     /// </summary>
-    public enum ALSourcei
+    public enum SourceInteger
     {
         /// <summary>
         /// The playback position, expressed in bytes.

@@ -3,7 +3,7 @@
     /// <summary>
     /// A list of valid 32-bit Float Source/GetSource parameters.
     /// </summary>
-    public enum ALSourcef
+    public enum SourceFloat
     {
         /// <summary>
         /// Source specific reference distance. Type: float Range: [0.0f - float.PositiveInfinity] At 0.0f, no distance

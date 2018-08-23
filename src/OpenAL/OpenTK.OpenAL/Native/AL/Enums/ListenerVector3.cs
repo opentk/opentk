@@ -3,7 +3,7 @@
     /// <summary>
     /// A list of valid Math.Vector3 Listener/GetListener parameters.
     /// </summary>
-    public enum ALListener3f
+    public enum ListenerVector3
     {
         /// <summary>
         /// Specify the current location in three dimensional space. OpenAL, like OpenGL, uses a right handed coordinate

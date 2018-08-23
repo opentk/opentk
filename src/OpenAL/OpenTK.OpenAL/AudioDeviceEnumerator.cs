@@ -55,7 +55,7 @@ namespace OpenTK.OpenAL
                 dummyContext = Alc.CreateContext(dummyDevice, (int[])null);
                 var dummySuccess = Alc.MakeContextCurrent(dummyContext);
                 var dummyError = Alc.GetError(dummyDevice);
-                if (!dummySuccess || dummyError != AlcError.NoError)
+                if (!dummySuccess || dummyError != ContextError.NoError)
                 {
                     throw new AudioContextException
                     (
@@ -63,7 +63,7 @@ namespace OpenTK.OpenAL
                         $"Device ({dummyDevice}) \n" +
                         $"Context ({dummyContext.Handle}) \n" +
                         $"MakeContextCurrent {(dummySuccess ? "succeeded" : "failed")}\n" +
-                        $"Alc Error ({dummyError}) {Alc.GetString(IntPtr.Zero, (AlcGetString)dummyError)}"
+                        $"Alc Error ({dummyError}) {Alc.GetString(IntPtr.Zero, (GetContextString)dummyError)}"
                     );
                 }
 
@@ -75,19 +75,19 @@ namespace OpenTK.OpenAL
                     {
                         AvailablePlaybackDevicesValue.AddRange
                         (
-                            Alc.GetString(IntPtr.Zero, AlcGetStringList.AllDevicesSpecifier)
+                            Alc.GetString(IntPtr.Zero, GetContextStringList.AllDevicesSpecifier)
                         );
 
-                        DefaultPlaybackDevice = Alc.GetString(IntPtr.Zero, AlcGetString.DefaultAllDevicesSpecifier);
+                        DefaultPlaybackDevice = Alc.GetString(IntPtr.Zero, GetContextString.DefaultAllDevicesSpecifier);
                     }
                     else
                     {
                         AvailablePlaybackDevicesValue.AddRange
                         (
-                            Alc.GetString(IntPtr.Zero, AlcGetStringList.DeviceSpecifier)
+                            Alc.GetString(IntPtr.Zero, GetContextStringList.DeviceSpecifier)
                         );
 
-                        DefaultPlaybackDevice = Alc.GetString(IntPtr.Zero, AlcGetString.DefaultDeviceSpecifier);
+                        DefaultPlaybackDevice = Alc.GetString(IntPtr.Zero, GetContextString.DefaultDeviceSpecifier);
                     }
                 }
                 else
@@ -97,7 +97,7 @@ namespace OpenTK.OpenAL
                 }
 
                 var playbackErr = Alc.GetError(dummyDevice);
-                if (playbackErr != AlcError.NoError)
+                if (playbackErr != ContextError.NoError)
                 {
                     throw new AudioContextException
                     (
@@ -110,9 +110,9 @@ namespace OpenTK.OpenAL
                 {
                     AvailableRecordingDevicesValue.AddRange
                     (
-                        Alc.GetString(IntPtr.Zero, AlcGetStringList.CaptureDeviceSpecifier)
+                        Alc.GetString(IntPtr.Zero, GetContextStringList.CaptureDeviceSpecifier)
                     );
-                    DefaultRecordingDevice = Alc.GetString(IntPtr.Zero, AlcGetString.CaptureDefaultDeviceSpecifier);
+                    DefaultRecordingDevice = Alc.GetString(IntPtr.Zero, GetContextString.CaptureDefaultDeviceSpecifier);
                 }
                 else
                 {
@@ -120,7 +120,7 @@ namespace OpenTK.OpenAL
                 }
 
                 var recordErr = Alc.GetError(dummyDevice);
-                if (recordErr != AlcError.NoError)
+                if (recordErr != ContextError.NoError)
                 {
                     throw new AudioContextException
                     (

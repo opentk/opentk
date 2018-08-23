@@ -241,7 +241,7 @@ namespace OpenTK.OpenAL
         /// <summary>
         /// Gets the ALC error code for this instance.
         /// </summary>
-        public AlcError CurrentError
+        public ContextError CurrentError
         {
             get
             {
@@ -403,17 +403,17 @@ namespace OpenTK.OpenAL
 
             if (frequency != 0)
             {
-                attributes.Add((int)AlcContextAttributes.Frequency);
+                attributes.Add((int)ContextAttributes.Frequency);
                 attributes.Add(frequency);
             }
 
             if (refreshRate != 0)
             {
-                attributes.Add((int)AlcContextAttributes.Refresh);
+                attributes.Add((int)ContextAttributes.Refresh);
                 attributes.Add(refreshRate);
             }
 
-            attributes.Add((int)AlcContextAttributes.Sync);
+            attributes.Add((int)ContextAttributes.Sync);
             attributes.Add(isSynchronous ? 1 : 0);
 
             attributes.Add(0);
@@ -522,7 +522,7 @@ namespace OpenTK.OpenAL
 
             CheckErrors();
 
-            _deviceName = Alc.GetString(Device, AlcGetString.DeviceSpecifier);
+            _deviceName = Alc.GetString(Device, GetContextString.DeviceSpecifier);
 
             lock (AudioContextLock)
             {

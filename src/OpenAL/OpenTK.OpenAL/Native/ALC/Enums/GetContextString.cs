@@ -1,9 +1,9 @@
 ﻿namespace OpenTK.OpenAL.Native
 {
     /// <summary>
-    /// Defines available parameters for <see cref="Alc.GetString(System.IntPtr,OpenTK.OpenAL.Native.AlcGetString)" />.
+    /// Defines available parameters for <see cref="ALContext.GetString(System.IntPtr,GetContextString)" />.
     /// </summary>
-    public enum AlcGetString
+    public enum GetContextString
     {
         /// <summary>
         /// The specifier string for the default device.
@@ -25,21 +25,21 @@
         /// </summary>
         DefaultAllDevicesSpecifier = 0x1012,
 
-        // duplicates from AlcGetStringList:
+        // duplicates from GetContextStringList:
 
         /// <summary>
-        /// Will only return the first Device, not a list. Use AlcGetStringList.CaptureDeviceSpecifier.
+        /// Will only return the first Device, not a list. Use GetContextStringList.CaptureDeviceSpecifier.
         /// ALC_EXT_CAPTURE_EXT
         /// </summary>
         CaptureDeviceSpecifier = 0x310,
 
         /// <summary>
-        /// Will only return the first Device, not a list. Use AlcGetStringList.DeviceSpecifier
+        /// Will only return the first Device, not a list. Use GetContextStringList.DeviceSpecifier
         /// </summary>
         DeviceSpecifier = 0x1005,
 
         /// <summary>
-        /// Will only return the first Device, not a list. Use AlcGetStringList.AllDevicesSpecifier
+        /// Will only return the first Device, not a list. Use GetContextStringList.AllDevicesSpecifier
         /// </summary>
         AllDevicesSpecifier = 0x1013
     }

@@ -3,7 +3,7 @@
     /// <summary>
     /// A list of valid 8-bit boolean Source/GetSource parameters.
     /// </summary>
-    public enum ALSourceb
+    public enum SourceBoolean
     {
         /// <summary>
         /// Indicate that the Source has relative coordinates. Type: bool Range: [True, False].

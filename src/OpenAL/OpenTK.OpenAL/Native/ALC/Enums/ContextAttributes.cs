@@ -10,7 +10,7 @@ namespace OpenTK.OpenAL.Native
     /// <summary>
     /// Defines available context attributes.
     /// </summary>
-    public enum AlcContextAttributes
+    public enum ContextAttributes
     {
         /// <summary>
         /// Followed by System.Int32 Hz

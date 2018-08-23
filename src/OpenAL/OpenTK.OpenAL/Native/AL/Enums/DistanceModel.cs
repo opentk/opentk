@@ -12,13 +12,13 @@
         None = 0,
 
         /// <summary>
-        /// InverseDistance is equivalent to the IASIG I3DL2 model with the exception that ALSourcef.ReferenceDistance
+        /// InverseDistance is equivalent to the IASIG I3DL2 model with the exception that SourceFloat.ReferenceDistance
         /// does not imply any clamping.
         /// </summary>
         InverseDistance = 0xD001,
 
         /// <summary>
-        /// InverseDistanceClamped is the IASIG I3DL2 model, with ALSourcef.ReferenceDistance indicating both the
+        /// InverseDistanceClamped is the IASIG I3DL2 model, with SourceFloat.ReferenceDistance indicating both the
         /// reference distance and the distance below which gain will be clamped.
         /// </summary>
         InverseDistanceClamped = 0xD002,

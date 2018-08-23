@@ -3,7 +3,7 @@
     /// <summary>
     /// Buffer state. Not supported for public use (yet).
     /// </summary>
-    public enum ALBufferState
+    public enum BufferState
     {
         /// <summary>
         /// Buffer state. Not supported for public use (yet).

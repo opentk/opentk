@@ -3,7 +3,7 @@
     /// <summary>
     /// Returned by AL.GetError.
     /// </summary>
-    public enum ALError
+    public enum AudioError
     {
         /// <summary>
         /// No OpenAL Error.

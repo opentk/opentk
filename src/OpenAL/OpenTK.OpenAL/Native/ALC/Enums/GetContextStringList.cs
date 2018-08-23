@@ -1,9 +1,9 @@
 ﻿namespace OpenTK.OpenAL.Native
 {
     /// <summary>
-    /// Defines available parameters for <see cref="Alc.GetString(System.IntPtr,OpenTK.OpenAL.Native.AlcGetStringList)" />.
+    /// Defines available parameters for <see cref="ALContext.GetString(System.IntPtr,GetContextStringList)" />.
     /// </summary>
-    public enum AlcGetStringList
+    public enum GetContextStringList
     {
         /// <summary>
         /// The name of the specified capture device, or a list of all available capture devices if no capture device is

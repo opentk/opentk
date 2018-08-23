@@ -3,7 +3,7 @@
     /// <summary>
     /// A list of valid Int32 GetBuffer parameters.
     /// </summary>
-    public enum ALGetBufferi
+    public enum GetBufferInteger
     {
         /// <summary>
         /// Sound sample's frequency, in units of hertz [Hz]. This is the number of samples per second. Half of the sample

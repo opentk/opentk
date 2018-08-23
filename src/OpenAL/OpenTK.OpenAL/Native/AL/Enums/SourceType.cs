@@ -1,9 +1,9 @@
 ﻿namespace OpenTK.OpenAL.Native
 {
     /// <summary>
-    /// Source type information,  can be retrieved by AL.Source() with ALSourcei.SourceType.
+    /// Source type information,  can be retrieved by AL.Source() with SourceInteger.SourceType.
     /// </summary>
-    public enum ALSourceType
+    public enum SourceType
     {
         /// <summary>
         /// Source is Static if a Buffer has been attached using AL.Source with the parameter Sourcei.Buffer.

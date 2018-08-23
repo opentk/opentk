@@ -57,7 +57,7 @@ namespace OpenTK.OpenAL
         /// Implicitly set parameters are: 22050Hz, 16Bit Mono, 4096 samples ringbuffer.
         /// </summary>
         public AudioCapture()
-            : this(DefaultDevice, 22050, ALFormat.Mono16, 4096)
+            : this(DefaultDevice, 22050, BufferFormat.Mono16, 4096)
         {
         }
 
@@ -71,7 +71,7 @@ namespace OpenTK.OpenAL
         /// The size of OpenAL's capture internal ring-buffer. This value expects number of samples, not
         /// bytes.
         /// </param>
-        public AudioCapture(string deviceName, int frequency, ALFormat sampleFormat, int bufferSize)
+        public AudioCapture(string deviceName, int frequency, BufferFormat sampleFormat, int bufferSize)
         {
             if (!AudioDeviceEnumerator.IsOpenALSupported)
             {
@@ -152,7 +152,7 @@ namespace OpenTK.OpenAL
         /// <summary>
         /// Gets the ALC error code for this device.
         /// </summary>
-        public AlcError CurrentError => Alc.GetError(_handle);
+        public ContextError CurrentError => Alc.GetError(_handle);
 
         /// <summary>
         /// Gets the number of available samples for capture.
@@ -163,15 +163,15 @@ namespace OpenTK.OpenAL
             {
                 // TODO: Investigate inconsistency between documentation and actual usage.
                 // Doc claims the 3rd param is Number-of-Bytes, but it appears to be Number-of-Int32s
-                Alc.GetInteger(_handle, AlcGetInteger.CaptureSamples, 1, out int result);
+                Alc.GetInteger(_handle, GetContextInteger.CaptureSamples, 1, out int result);
                 return result;
             }
         }
 
         /// <summary>
-        /// Gets the OpenTK.Audio.ALFormat for this instance.
+        /// Gets the OpenTK.Audio.BufferFormat for this instance.
         /// </summary>
-        public ALFormat SampleFormat { get; }
+        public BufferFormat SampleFormat { get; }
 
         /// <summary>
         /// Gets the sampling rate for this instance.
@@ -277,36 +277,36 @@ namespace OpenTK.OpenAL
 
         // Retrieves the sample size in bytes for various ALFormats.
         // Compressed formats always return 1.
-        private static int GetSampleSize(ALFormat format)
+        private static int GetSampleSize(BufferFormat format)
         {
             switch (format)
             {
-                case ALFormat.Mono8: return 1;
-                case ALFormat.Mono16: return 2;
-                case ALFormat.Stereo8: return 2;
-                case ALFormat.Stereo16: return 4;
+                case BufferFormat.Mono8: return 1;
+                case BufferFormat.Mono16: return 2;
+                case BufferFormat.Stereo8: return 2;
+                case BufferFormat.Stereo16: return 4;
 
                 /* TODO: Move to extension
-                case ALFormat.MonoFloat32Ext: return 4;
-                case ALFormat.MonoDoubleExt: return 8;
-                case ALFormat.StereoFloat32Ext: return 8;
-                case ALFormat.StereoDoubleExt: return 16;
+                case BufferFormat.MonoFloat32Ext: return 4;
+                case BufferFormat.MonoDoubleExt: return 8;
+                case BufferFormat.StereoFloat32Ext: return 8;
+                case BufferFormat.StereoDoubleExt: return 16;
 
-                case ALFormat.MultiQuad8Ext: return 4;
-                case ALFormat.MultiQuad16Ext: return 8;
-                case ALFormat.MultiQuad32Ext: return 16;
+                case BufferFormat.MultiQuad8Ext: return 4;
+                case BufferFormat.MultiQuad16Ext: return 8;
+                case BufferFormat.MultiQuad32Ext: return 16;
 
-                case ALFormat.Multi51Chn8Ext: return 6;
-                case ALFormat.Multi51Chn16Ext: return 12;
-                case ALFormat.Multi51Chn32Ext: return 24;
+                case BufferFormat.Multi51Chn8Ext: return 6;
+                case BufferFormat.Multi51Chn16Ext: return 12;
+                case BufferFormat.Multi51Chn32Ext: return 24;
 
-                case ALFormat.Multi61Chn8Ext: return 7;
-                case ALFormat.Multi71Chn16Ext: return 14;
-                case ALFormat.Multi71Chn32Ext: return 28;
+                case BufferFormat.Multi61Chn8Ext: return 7;
+                case BufferFormat.Multi71Chn16Ext: return 14;
+                case BufferFormat.Multi71Chn32Ext: return 28;
 
-                case ALFormat.MultiRear8Ext: return 1;
-                case ALFormat.MultiRear16Ext: return 2;
-                case ALFormat.MultiRear32Ext: return 4;
+                case BufferFormat.MultiRear8Ext: return 1;
+                case BufferFormat.MultiRear16Ext: return 2;
+                case BufferFormat.MultiRear32Ext: return 4;
                 */
 
                 default: return 1; // Unknown sample size.
@@ -314,16 +314,16 @@ namespace OpenTK.OpenAL
         }
 
         // Converts an error code to an error string with additional information.
-        private string ErrorMessage(string devicename, int frequency, ALFormat bufferformat, int buffersize)
+        private string ErrorMessage(string devicename, int frequency, BufferFormat bufferformat, int buffersize)
         {
             string alcerrmsg;
             var alcerrcode = CurrentError;
             switch (alcerrcode)
             {
-                case AlcError.OutOfMemory:
+                case ContextError.OutOfMemory:
                     alcerrmsg = alcerrcode + ": The specified device is invalid, or can not capture audio.";
                     break;
-                case AlcError.InvalidValue:
+                case ContextError.InvalidValue:
                     alcerrmsg = alcerrcode + ": One of the parameters has an invalid value.";
                     break;
                 default:

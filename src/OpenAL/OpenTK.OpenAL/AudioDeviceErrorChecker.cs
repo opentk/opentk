@@ -53,22 +53,22 @@ namespace OpenTK.OpenAL
         /// <inheritdoc/>
         public void Dispose()
         {
-            var err = Alc.GetError(_device);
+            var err = ALContext.GetError(_device);
             switch (err)
             {
-                case AlcError.OutOfMemory:
+                case ContextError.OutOfMemory:
                 {
                     throw new OutOfMemoryException(string.Format(ErrorString, _device, err));
                 }
-                case AlcError.InvalidValue:
+                case ContextError.InvalidValue:
                 {
                     throw new AudioValueException(string.Format(ErrorString, _device, err));
                 }
-                case AlcError.InvalidDevice:
+                case ContextError.InvalidDevice:
                 {
                     throw new AudioDeviceException(string.Format(ErrorString, _device, err));
                 }
-                case AlcError.InvalidContext:
+                case ContextError.InvalidContext:
                 {
                     throw new AudioContextException(string.Format(ErrorString, _device, err));
                 }

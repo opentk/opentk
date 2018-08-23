@@ -69,7 +69,7 @@ namespace OpenTK.OpenAL.Native
         /// </summary>
         /// <param name="param">The human-readable error string to be returned.</param>
         /// <returns>Returns a pointer to a null-terminated string.</returns>
-        public static string GetErrorString(ALError param)
+        public static string GetErrorString(AudioError param)
         {
             return Marshal.PtrToStringAnsi(GetStringPrivate((StateString)param));
         }
@@ -107,7 +107,7 @@ namespace OpenTK.OpenAL.Native
         /// </returns>
         [DllImport(Library, EntryPoint = "alGetError", ExactSpelling = true, CallingConvention = Style)]
         [SuppressUnmanagedCodeSecurity]
-        public static extern ALError GetError();
+        public static extern AudioError GetError();
 
         /// <summary>
         /// This function tests if a specific Extension is available for the OpenAL driver.
@@ -145,46 +145,46 @@ namespace OpenTK.OpenAL.Native
         /// <summary>
         /// This function sets a floating-point property for the listener.
         /// </summary>
-        /// <param name="param">The name of the attribute to be set: <see cref="ALListenerf.Gain"/>.</param>
+        /// <param name="param">The name of the attribute to be set: <see cref="ListenerFloat.Gain"/>.</param>
         /// <param name="value">The float value to set the attribute to.</param>
         [DllImport(Library, EntryPoint = "alListenerf", ExactSpelling = true, CallingConvention = Style)]
         [SuppressUnmanagedCodeSecurity]
-        public static extern void Listener(ALListenerf param, float value);
+        public static extern void Listener(ListenerFloat param, float value);
 
         /// <summary>
         /// This function sets a floating-point property for the listener.
         /// </summary>
-        /// <param name="param">The name of the attribute to set: <see cref="ALListener3f.Position"/>, <see cref="ALListener3f.Velocity"/>.</param>
+        /// <param name="param">The name of the attribute to set: <see cref="ListenerVector3.Position"/>, <see cref="ListenerVector3.Velocity"/>.</param>
         /// <param name="value1">The value to set the first element in the attribute to.</param>
         /// <param name="value2">The value to set the second element in the attribute to.</param>
         /// <param name="value3">The value to set the third element in the attribute to.</param>
         [DllImport(Library, EntryPoint = "alListener3f", ExactSpelling = true, CallingConvention = Style)]
         [SuppressUnmanagedCodeSecurity]
-        public static extern void Listener(ALListener3f param, float value1, float value2, float value3);
+        public static extern void Listener(ListenerVector3 param, float value1, float value2, float value3);
 
         /// <summary>
         /// This function sets a Math.Vector3 property for the listener.
         /// </summary>
-        /// <param name="param">The name of the attribute to set: <see cref="ALListener3f.Position"/>, <see cref="ALListener3f.Velocity"/>.</param>
+        /// <param name="param">The name of the attribute to set: <see cref="ListenerVector3.Position"/>, <see cref="ListenerVector3.Velocity"/>.</param>
         /// <param name="values">The Math.Vector3 to set the attribute to.</param>
-        public static void Listener(ALListener3f param, ref Vector3 values)
+        public static void Listener(ListenerVector3 param, ref Vector3 values)
         {
             Listener(param, values.X, values.Y, values.Z);
         }
 
         [DllImport(Library, EntryPoint = "alListenerfv", ExactSpelling = true, CallingConvention = Style)]
         [SuppressUnmanagedCodeSecurity]
-        private static extern unsafe void ListenerPrivate(ALListenerfv param, float* values);
+        private static extern unsafe void ListenerPrivate(ListenerFloatArray param, float* values);
 
         /// <summary>
         /// This function sets a floating-point vector property of the listener.
         /// </summary>
         /// <param name="param">
-        /// The name of the attribute to be set: <see cref="ALListener3f.Position"/>, <see cref="ALListener3f.Velocity"/>,
-        /// <see cref="ALListenerfv.Orientation"/>.
+        /// The name of the attribute to be set: <see cref="ListenerVector3.Position"/>, <see cref="ListenerVector3.Velocity"/>,
+        /// <see cref="ListenerFloatArray.Orientation"/>.
         /// </param>
         /// <param name="values">Pointer to floating-point vector values.</param>
-        public static void Listener(ALListenerfv param, ref float[] values)
+        public static void Listener(ListenerFloatArray param, ref float[] values)
         {
             unsafe
             {
@@ -198,10 +198,10 @@ namespace OpenTK.OpenAL.Native
         /// <summary>
         /// This function sets two Math.Vector3 properties of the listener.
         /// </summary>
-        /// <param name="param">The name of the attribute to be set: <see cref="ALListenerfv.Orientation"/>.</param>
+        /// <param name="param">The name of the attribute to be set: <see cref="ListenerFloatArray.Orientation"/>.</param>
         /// <param name="at">A Math.Vector3 for the At-Vector.</param>
         /// <param name="up">A Math.Vector3 for the Up-Vector.</param>
-        public static void Listener(ALListenerfv param, ref Vector3 at, ref Vector3 up)
+        public static void Listener(ListenerFloatArray param, ref Vector3 at, ref Vector3 up)
         {
             var temp = new float[6];
 
@@ -225,29 +225,29 @@ namespace OpenTK.OpenAL.Native
         /// <summary>
         /// This function retrieves a floating-point property of the listener.
         /// </summary>
-        /// <param name="param">the name of the attribute to be retrieved: <see cref="ALListenerf.Gain"/>.</param>
+        /// <param name="param">the name of the attribute to be retrieved: <see cref="ListenerFloat.Gain"/>.</param>
         /// <param name="value">a pointer to the floating-point value being retrieved.</param>
         [DllImport(Library, EntryPoint = "alGetListenerf", ExactSpelling = true, CallingConvention = Style)]
         [SuppressUnmanagedCodeSecurity]
-        public static extern void GetListener(ALListenerf param, [Out] out float value);
+        public static extern void GetListener(ListenerFloat param, [Out] out float value);
 
         /// <summary>
         /// This function retrieves a set of three floating-point values from a property of the listener.
         /// </summary>
-        /// <param name="param">The name of the attribute to be retrieved: <see cref="ALListener3f.Position"/>, <see cref="ALListener3f.Velocity"/>.</param>
+        /// <param name="param">The name of the attribute to be retrieved: <see cref="ListenerVector3.Position"/>, <see cref="ListenerVector3.Velocity"/>.</param>
         /// <param name="value1">The first floating-point value being retrieved.</param>
         /// <param name="value2">The second floating-point value  being retrieved.</param>
         /// <param name="value3">The third floating-point value  being retrieved.</param>
         [DllImport(Library, EntryPoint = "alGetListener3f", ExactSpelling = true, CallingConvention = Style)]
         [SuppressUnmanagedCodeSecurity]
-        public static extern void GetListener(ALListener3f param, [Out] out float value1, [Out] out float value2, [Out] out float value3);
+        public static extern void GetListener(ListenerVector3 param, [Out] out float value1, [Out] out float value2, [Out] out float value3);
 
         /// <summary>
         /// This function retrieves a Math.Vector3 from a property of the listener.
         /// </summary>
-        /// <param name="param">The name of the attribute to be retrieved: <see cref="ALListener3f.Position"/>, <see cref="ALListener3f.Velocity"/>.</param>
+        /// <param name="param">The name of the attribute to be retrieved: <see cref="ListenerVector3.Position"/>, <see cref="ListenerVector3.Velocity"/>.</param>
         /// <param name="values">A Math.Vector3 to hold the three floats being retrieved.</param>
-        public static void GetListener(ALListener3f param, out Vector3 values)
+        public static void GetListener(ListenerVector3 param, out Vector3 values)
         {
             GetListener(param, out values.X, out values.Y, out values.Z);
         }
@@ -256,21 +256,21 @@ namespace OpenTK.OpenAL.Native
         /// This function retrieves a floating-point vector property of the listener. You must pin it manually.
         /// </summary>
         /// <param name="param">
-        /// the name of the attribute to be retrieved: <see cref="ALListener3f.Position"/>, <see cref="ALListener3f.Velocity"/>,
-        /// <see cref="ALListenerfv.Orientation"/>.
+        /// the name of the attribute to be retrieved: <see cref="ListenerVector3.Position"/>, <see cref="ListenerVector3.Velocity"/>,
+        /// <see cref="ListenerFloatArray.Orientation"/>.
         /// </param>
         /// <param name="values">A pointer to the floating-point vector value being retrieved.</param>
         [DllImport(Library, EntryPoint = "alGetListenerfv", ExactSpelling = true, CallingConvention = Style)]
         [SuppressUnmanagedCodeSecurity]
-        public static extern unsafe void GetListener(ALListenerfv param, float* values);
+        public static extern unsafe void GetListener(ListenerFloatArray param, float* values);
 
         /// <summary>
         /// This function retrieves two Math.Vector3 properties of the listener.
         /// </summary>
-        /// <param name="param">the name of the attribute to be retrieved: <see cref="ALListenerfv.Orientation"/>.</param>
+        /// <param name="param">the name of the attribute to be retrieved: <see cref="ListenerFloatArray.Orientation"/>.</param>
         /// <param name="at">A Math.Vector3 for the At-Vector.</param>
         /// <param name="up">A Math.Vector3 for the Up-Vector.</param>
-        public static void GetListener(ALListenerfv param, out Vector3 at, out Vector3 up)
+        public static void GetListener(ListenerFloatArray param, out Vector3 at, out Vector3 up)
         {
             var pinned = new float[6]; // should lose scope when the function exits
             unsafe
@@ -296,7 +296,7 @@ namespace OpenTK.OpenAL.Native
 
         /// <summary>
         /// This function generates one or more sources. References to sources are uint values, which are used wherever a
-        /// source reference is needed (in calls such as <see cref="AL.DeleteSources"/> and <see cref="AL.Source"/> with parameter ALSourcei).
+        /// source reference is needed (in calls such as <see cref="AL.DeleteSources"/> and <see cref="AL.Source"/> with parameter SourceInteger).
         /// </summary>
         /// <param name="n">The number of sources to be generated.</param>
         /// <param name="sources">Pointer to an array of uint values which will store the names of the new sources.</param>
@@ -313,7 +313,7 @@ namespace OpenTK.OpenAL.Native
 
         /// <summary>
         /// This function generates one or more sources. References to sources are int values, which are used wherever a
-        /// source reference is needed (in calls such as <see cref="AL.DeleteSources"/> and <see cref="AL.Source"/> with parameter ALSourcei).
+        /// source reference is needed (in calls such as <see cref="AL.DeleteSources"/> and <see cref="AL.Source"/> with parameter SourceInteger).
         /// </summary>
         /// <param name="n">The number of sources to be generated.</param>
         /// <param name="sources">Pointer to an array of int values which will store the names of the new sources.</param>
@@ -330,7 +330,7 @@ namespace OpenTK.OpenAL.Native
 
         /// <summary>
         /// This function generates one or more sources. References to sources are int values, which are used wherever a
-        /// source reference is needed (in calls such as <see cref="AL.DeleteSources"/> and <see cref="AL.Source"/> with parameter ALSourcei).
+        /// source reference is needed (in calls such as <see cref="AL.DeleteSources"/> and <see cref="AL.Source"/> with parameter SourceInteger).
         /// </summary>
         /// <param name="sources">Pointer to an array of int values which will store the names of the new sources.</param>
         public static void GenSources(int[] sources)
@@ -345,7 +345,7 @@ namespace OpenTK.OpenAL.Native
 
         /// <summary>
         /// This function generates one or more sources. References to sources are int values, which are used wherever a
-        /// source reference is needed (in calls such as <see cref="AL.DeleteSources"/> and <see cref="AL.Source"/> with parameter ALSourcei).
+        /// source reference is needed (in calls such as <see cref="AL.DeleteSources"/> and <see cref="AL.Source"/> with parameter SourceInteger).
         /// </summary>
         /// <param name="n">The number of sources to be generated.</param>
         /// <returns>Pointer to an array of int values which will store the names of the new sources.</returns>
@@ -364,7 +364,7 @@ namespace OpenTK.OpenAL.Native
 
         /// <summary>
         /// This function generates one source only. References to sources are int values, which are used wherever a
-        /// source reference is needed (in calls such as <see cref="AL.DeleteSources"/> and <see cref="AL.Source"/> with parameter ALSourcei).
+        /// source reference is needed (in calls such as <see cref="AL.DeleteSources"/> and <see cref="AL.Source"/> with parameter SourceInteger).
         /// </summary>
         /// <returns>Pointer to an int value which will store the name of the new source.</returns>
         public static int GenSource()
@@ -375,7 +375,7 @@ namespace OpenTK.OpenAL.Native
 
         /// <summary>
         /// This function generates one source only. References to sources are uint values, which are used wherever a
-        /// source reference is needed (in calls such as <see cref="AL.DeleteSources"/> and <see cref="AL.Source"/> with parameter ALSourcei).
+        /// source reference is needed (in calls such as <see cref="AL.DeleteSources"/> and <see cref="AL.Source"/> with parameter SourceInteger).
         /// </summary>
         /// <param name="source">Pointer to an uint value which will store the name of the new source.</param>
         public static void GenSource(out uint source)
@@ -490,26 +490,26 @@ namespace OpenTK.OpenAL.Native
         /// </summary>
         /// <param name="sid">Source name whose attribute is being set.</param>
         /// <param name="param">
-        /// The name of the attribute to set: <see cref="ALSourcef.Pitch"/>, Gain, MinGain, MaxGain, MaxDistance,
+        /// The name of the attribute to set: <see cref="SourceFloat.Pitch"/>, Gain, MinGain, MaxGain, MaxDistance,
         /// RolloffFactor, ConeOuterGain, ConeInnerAngle, ConeOuterAngle, ReferenceDistance, EfxAirAbsorptionFactor,
         /// EfxRoomRolloffFactor, EfxConeOuterGainHighFrequency.
         /// </param>
         /// <param name="value">The value to set the attribute to.</param>
         [DllImport(Library, EntryPoint = "alSourcef", ExactSpelling = true, CallingConvention = Style)]
         [SuppressUnmanagedCodeSecurity]
-        public static extern void Source(uint sid, ALSourcef param, float value);
+        public static extern void Source(uint sid, SourceFloat param, float value);
 
         /// <summary>
         /// This function sets a floating-point property of a source.
         /// </summary>
         /// <param name="sid">Source name whose attribute is being set.</param>
         /// <param name="param">
-        /// The name of the attribute to set: <see cref="ALSourcef.Pitch"/>, Gain, MinGain, MaxGain, MaxDistance,
+        /// The name of the attribute to set: <see cref="SourceFloat.Pitch"/>, Gain, MinGain, MaxGain, MaxDistance,
         /// RolloffFactor, ConeOuterGain, ConeInnerAngle, ConeOuterAngle, ReferenceDistance, EfxAirAbsorptionFactor,
         /// EfxRoomRolloffFactor, EfxConeOuterGainHighFrequency.
         /// </param>
         /// <param name="value">The value to set the attribute to.</param>
-        public static void Source(int sid, ALSourcef param, float value)
+        public static void Source(int sid, SourceFloat param, float value)
         {
             Source((uint)sid, param, value);
         }
@@ -518,23 +518,23 @@ namespace OpenTK.OpenAL.Native
         /// This function sets a source property requiring three floating-point values.
         /// </summary>
         /// <param name="sid">Source name whose attribute is being set.</param>
-        /// <param name="param">The name of the attribute to set: <see cref="ALSource3f.Position"/>, Velocity, Direction.</param>
+        /// <param name="param">The name of the attribute to set: <see cref="SourceVector3.Position"/>, Velocity, Direction.</param>
         /// <param name="value1">The first ALfloat value which the attribute will be set to.</param>
         /// <param name="value2">The second ALfloat value which the attribute will be set to.</param>
         /// <param name="value3">The third ALfloat value which the attribute will be set to.</param>
         [DllImport(Library, EntryPoint = "alSource3f", ExactSpelling = true, CallingConvention = Style)]
         [SuppressUnmanagedCodeSecurity]
-        public static extern void Source(uint sid, ALSource3f param, float value1, float value2, float value3);
+        public static extern void Source(uint sid, SourceVector3 param, float value1, float value2, float value3);
 
         /// <summary>
         /// This function sets a source property requiring three floating-point values.
         /// </summary>
         /// <param name="sid">Source name whose attribute is being set.</param>
-        /// <param name="param">The name of the attribute to set: <see cref="ALSource3f.Position"/>, Velocity, Direction.</param>
+        /// <param name="param">The name of the attribute to set: <see cref="SourceVector3.Position"/>, Velocity, Direction.</param>
         /// <param name="value1">The first ALfloat value which the attribute will be set to.</param>
         /// <param name="value2">The second ALfloat value which the attribute will be set to.</param>
         /// <param name="value3">The third ALfloat value which the attribute will be set to.</param>
-        public static void Source(int sid, ALSource3f param, float value1, float value2, float value3)
+        public static void Source(int sid, SourceVector3 param, float value1, float value2, float value3)
         {
             Source((uint)sid, param, value1, value2, value3);
         }
@@ -543,9 +543,9 @@ namespace OpenTK.OpenAL.Native
         /// This function sets a source property requiring three floating-point values.
         /// </summary>
         /// <param name="sid">Source name whose attribute is being set.</param>
-        /// <param name="param">The name of the attribute to set: <see cref="ALSource3f.Position"/>, Velocity, Direction.</param>
+        /// <param name="param">The name of the attribute to set: <see cref="SourceVector3.Position"/>, Velocity, Direction.</param>
         /// <param name="values">A Math.Vector3 which the attribute will be set to.</param>
-        public static void Source(uint sid, ALSource3f param, ref Vector3 values)
+        public static void Source(uint sid, SourceVector3 param, ref Vector3 values)
         {
             Source(sid, param, values.X, values.Y, values.Z);
         }
@@ -554,9 +554,9 @@ namespace OpenTK.OpenAL.Native
         /// This function sets a source property requiring three floating-point values.
         /// </summary>
         /// <param name="sid">Source name whose attribute is being set.</param>
-        /// <param name="param">The name of the attribute to set: <see cref="ALSource3f.Position"/>, Velocity, Direction.</param>
+        /// <param name="param">The name of the attribute to set: <see cref="SourceVector3.Position"/>, Velocity, Direction.</param>
         /// <param name="values">A Math.Vector3 which the attribute will be set to.</param>
-        public static void Source(int sid, ALSource3f param, ref Vector3 values)
+        public static void Source(int sid, SourceVector3 param, ref Vector3 values)
         {
             Source((uint)sid, param, values.X, values.Y, values.Z);
         }
@@ -566,24 +566,24 @@ namespace OpenTK.OpenAL.Native
         /// </summary>
         /// <param name="sid">Source name whose attribute is being set.</param>
         /// <param name="param">
-        /// The name of the attribute to set: <see cref="ALSourcei.SourceRelative"/>, ConeInnerAngle, ConeOuterAngle,
+        /// The name of the attribute to set: <see cref="SourceInteger.SourceRelative"/>, ConeInnerAngle, ConeOuterAngle,
         /// Looping, Buffer, SourceState.
         /// </param>
         /// <param name="value">The value to set the attribute to.</param>
         [DllImport(Library, EntryPoint = "alSourcei", ExactSpelling = true, CallingConvention = Style)]
         [SuppressUnmanagedCodeSecurity]
-        public static extern void Source(uint sid, ALSourcei param, int value);
+        public static extern void Source(uint sid, SourceInteger param, int value);
 
         /// <summary>
         /// This function sets an integer property of a source.
         /// </summary>
         /// <param name="sid">Source name whose attribute is being set.</param>
         /// <param name="param">
-        /// The name of the attribute to set: <see cref="ALSourcei.SourceRelative"/>, ConeInnerAngle, ConeOuterAngle,
+        /// The name of the attribute to set: <see cref="SourceInteger.SourceRelative"/>, ConeInnerAngle, ConeOuterAngle,
         /// Looping, Buffer, SourceState.
         /// </param>
         /// <param name="value">The value to set the attribute to.</param>
-        public static void Source(int sid, ALSourcei param, int value)
+        public static void Source(int sid, SourceInteger param, int value)
         {
             Source((uint)sid, param, value);
         }
@@ -592,22 +592,22 @@ namespace OpenTK.OpenAL.Native
         /// This function sets an bool property of a source.
         /// </summary>
         /// <param name="sid">Source name whose attribute is being set.</param>
-        /// <param name="param">The name of the attribute to set: <see cref="ALSourceb.SourceRelative"/>, Looping.</param>
+        /// <param name="param">The name of the attribute to set: <see cref="SourceBoolean.SourceRelative"/>, Looping.</param>
         /// <param name="value">The value to set the attribute to.</param>
-        public static void Source(uint sid, ALSourceb param, bool value)
+        public static void Source(uint sid, SourceBoolean param, bool value)
         {
-            Source(sid, (ALSourcei)param, value ? 1 : 0);
+            Source(sid, (SourceInteger)param, value ? 1 : 0);
         }
 
         /// <summary>
         /// This function sets an bool property of a source.
         /// </summary>
         /// <param name="sid">Source name whose attribute is being set.</param>
-        /// <param name="param">The name of the attribute to set: <see cref="ALSourceb.SourceRelative"/>, Looping.</param>
+        /// <param name="param">The name of the attribute to set: <see cref="SourceBoolean.SourceRelative"/>, Looping.</param>
         /// <param name="value">The value to set the attribute to.</param>
-        public static void Source(int sid, ALSourceb param, bool value)
+        public static void Source(int sid, SourceBoolean param, bool value)
         {
-            Source((uint)sid, (ALSourcei)param, value ? 1 : 0);
+            Source((uint)sid, (SourceInteger)param, value ? 1 : 0);
         }
 
         /// <summary>
@@ -617,7 +617,7 @@ namespace OpenTK.OpenAL.Native
         /// <param name="buffer">Buffer name which is attached to the Source.</param>
         public static void BindBufferToSource(uint source, uint buffer)
         {
-            Source(source, ALSourcei.Buffer, (int)buffer);
+            Source(source, SourceInteger.Buffer, (int)buffer);
         }
 
         /// <summary>
@@ -627,34 +627,7 @@ namespace OpenTK.OpenAL.Native
         /// <param name="buffer">Buffer name which is attached to the Source.</param>
         public static void BindBufferToSource(int source, int buffer)
         {
-            Source((uint)source, ALSourcei.Buffer, buffer);
-        }
-
-        /// <summary>
-        /// This function sets 3 integer properties of a source. This property is used to establish connections between
-        /// Sources and Auxiliary Effect Slots.
-        /// </summary>
-        /// <param name="sid">Source name whose attribute is being set.</param>
-        /// <param name="param">The name of the attribute to set: EfxAuxiliarySendFilter.</param>
-        /// <param name="value1">The value to set the attribute to. (EFX Extension) The destination Auxiliary Effect Slot ID.</param>
-        /// <param name="value2">The value to set the attribute to. (EFX Extension) The Auxiliary Send number.</param>
-        /// <param name="value3">The value to set the attribute to. (EFX Extension) optional Filter ID.</param>
-        [DllImport(Library, EntryPoint = "alSource3i", ExactSpelling = true, CallingConvention = Style)]
-        [SuppressUnmanagedCodeSecurity]
-        public static extern void Source(uint sid, ALSource3i param, int value1, int value2, int value3);
-
-        /// <summary>
-        /// This function sets 3 integer properties of a source. This property is used to establish connections between
-        /// Sources and Auxiliary Effect Slots.
-        /// </summary>
-        /// <param name="sid">Source name whose attribute is being set.</param>
-        /// <param name="param">The name of the attribute to set: EfxAuxiliarySendFilter.</param>
-        /// <param name="value1">The value to set the attribute to. (EFX Extension) The destination Auxiliary Effect Slot ID.</param>
-        /// <param name="value2">The value to set the attribute to. (EFX Extension) The Auxiliary Send number.</param>
-        /// <param name="value3">The value to set the attribute to. (EFX Extension) optional Filter ID.</param>
-        public static void Source(int sid, ALSource3i param, int value1, int value2, int value3)
-        {
-            Source((uint)sid, param, value1, value2, value3);
+            Source((uint)source, SourceInteger.Buffer, buffer);
         }
 
         /// <summary>
@@ -662,26 +635,26 @@ namespace OpenTK.OpenAL.Native
         /// </summary>
         /// <param name="sid">Source name whose attribute is being retrieved.</param>
         /// <param name="param">
-        /// The name of the attribute to set: <see cref="ALSourcef.Pitch"/>, Gain, MinGain, MaxGain, MaxDistance,
+        /// The name of the attribute to set: <see cref="SourceFloat.Pitch"/>, Gain, MinGain, MaxGain, MaxDistance,
         /// RolloffFactor, ConeOuterGain, ConeInnerAngle, ConeOuterAngle, ReferenceDistance, EfxAirAbsorptionFactor,
         /// EfxRoomRolloffFactor, EfxConeOuterGainHighFrequency.
         /// </param>
         /// <param name="value">A pointer to the floating-point value being retrieved.</param>
         [DllImport(Library, EntryPoint = "alGetSourcef", ExactSpelling = true, CallingConvention = Style)]
         [SuppressUnmanagedCodeSecurity]
-        public static extern void GetSource(uint sid, ALSourcef param, [Out] out float value);
+        public static extern void GetSource(uint sid, SourceFloat param, [Out] out float value);
 
         /// <summary>
         /// This function retrieves a floating-point property of a source.
         /// </summary>
         /// <param name="sid">Source name whose attribute is being retrieved.</param>
         /// <param name="param">
-        /// The name of the attribute to set: <see cref="ALSourcef.Pitch"/>, Gain, MinGain, MaxGain, MaxDistance,
+        /// The name of the attribute to set: <see cref="SourceFloat.Pitch"/>, Gain, MinGain, MaxGain, MaxDistance,
         /// RolloffFactor, ConeOuterGain, ConeInnerAngle, ConeOuterAngle, ReferenceDistance, EfxAirAbsorptionFactor,
         /// EfxRoomRolloffFactor, EfxConeOuterGainHighFrequency.
         /// </param>
         /// <param name="value">A pointer to the floating-point value being retrieved.</param>
-        public static void GetSource(int sid, ALSourcef param, out float value)
+        public static void GetSource(int sid, SourceFloat param, out float value)
         {
             GetSource((uint)sid, param, out value);
         }
@@ -690,23 +663,23 @@ namespace OpenTK.OpenAL.Native
         /// This function retrieves three floating-point values representing a property of a source.
         /// </summary>
         /// <param name="sid">Source name whose attribute is being retrieved.</param>
-        /// <param name="param">the name of the attribute being retrieved: <see cref="ALSource3f.Position"/>, Velocity, Direction.</param>
+        /// <param name="param">the name of the attribute being retrieved: <see cref="SourceVector3.Position"/>, Velocity, Direction.</param>
         /// <param name="value1">Pointer to the first element in the  value to retrieve.</param>
         /// <param name="value2">Pointer to the second element in the  value to retrieve.</param>
         /// <param name="value3">Pointer to the third element in the  value to retrieve.</param>
         [DllImport(Library, EntryPoint = "alGetSource3f", ExactSpelling = true, CallingConvention = Style)]
         [SuppressUnmanagedCodeSecurity]
-        public static extern void GetSource(uint sid, ALSource3f param, [Out] out float value1, [Out] out float value2, [Out] out float value3);
+        public static extern void GetSource(uint sid, SourceVector3 param, [Out] out float value1, [Out] out float value2, [Out] out float value3);
 
         /// <summary>
         /// This function retrieves three floating-point values representing a property of a source.
         /// </summary>
         /// <param name="sid">Source name whose attribute is being retrieved.</param>
-        /// <param name="param">the name of the attribute being retrieved: <see cref="ALSource3f.Position"/>, Velocity, Direction.</param>
+        /// <param name="param">the name of the attribute being retrieved: <see cref="SourceVector3.Position"/>, Velocity, Direction.</param>
         /// <param name="value1">Pointer to the first element in the  value to retrieve.</param>
         /// <param name="value2">Pointer to the second element in the  value to retrieve.</param>
         /// <param name="value3">Pointer to the third element in the  value to retrieve.</param>
-        public static void GetSource(int sid, ALSource3f param, out float value1, out float value2, out float value3)
+        public static void GetSource(int sid, SourceVector3 param, out float value1, out float value2, out float value3)
         {
             GetSource((uint)sid, param, out value1, out value2, out value3);
         }
@@ -715,9 +688,9 @@ namespace OpenTK.OpenAL.Native
         /// This function retrieves three floating-point values representing a property of a source.
         /// </summary>
         /// <param name="sid">Source name whose attribute is being retrieved.</param>
-        /// <param name="param">the name of the attribute being retrieved: <see cref="ALSource3f.Position"/>, Velocity, Direction.</param>
+        /// <param name="param">the name of the attribute being retrieved: <see cref="SourceVector3.Position"/>, Velocity, Direction.</param>
         /// <param name="values">A Math.Vector3 to retrieve the values to.</param>
-        public static void GetSource(uint sid, ALSource3f param, out Vector3 values)
+        public static void GetSource(uint sid, SourceVector3 param, out Vector3 values)
         {
             GetSource(sid, param, out values.X, out values.Y, out values.Z);
         }
@@ -726,9 +699,9 @@ namespace OpenTK.OpenAL.Native
         /// This function retrieves three floating-point values representing a property of a source.
         /// </summary>
         /// <param name="sid">Source name whose attribute is being retrieved.</param>
-        /// <param name="param">the name of the attribute being retrieved: <see cref="ALSource3f.Position"/>, Velocity, Direction.</param>
+        /// <param name="param">the name of the attribute being retrieved: <see cref="SourceVector3.Position"/>, Velocity, Direction.</param>
         /// <param name="values">A Math.Vector3 to retrieve the values to.</param>
-        public static void GetSource(int sid, ALSource3f param, out Vector3 values)
+        public static void GetSource(int sid, SourceVector3 param, out Vector3 values)
         {
             GetSource((uint)sid, param, out values.X, out values.Y, out values.Z);
         }
@@ -738,24 +711,24 @@ namespace OpenTK.OpenAL.Native
         /// </summary>
         /// <param name="sid">Source name whose attribute is being retrieved.</param>
         /// <param name="param">
-        /// The name of the attribute to retrieve: <see cref="ALSourcei.SourceRelative"/>, Buffer, SourceState,
+        /// The name of the attribute to retrieve: <see cref="SourceInteger.SourceRelative"/>, Buffer, SourceState,
         /// BuffersQueued, BuffersProcessed.
         /// </param>
         /// <param name="value">A pointer to the integer value being retrieved.</param>
         [DllImport(Library, EntryPoint = "alGetSourcei", ExactSpelling = true, CallingConvention = Style)]
         [SuppressUnmanagedCodeSecurity]
-        public static extern void GetSource(uint sid, ALGetSourcei param, [Out] out int value);
+        public static extern void GetSource(uint sid, GetSourceInteger param, [Out] out int value);
 
         /// <summary>
         /// This function retrieves an integer property of a source.
         /// </summary>
         /// <param name="sid">Source name whose attribute is being retrieved.</param>
         /// <param name="param">
-        /// The name of the attribute to retrieve: <see cref="ALSourcei.SourceRelative"/>, Buffer, SourceState,
+        /// The name of the attribute to retrieve: <see cref="SourceInteger.SourceRelative"/>, Buffer, SourceState,
         /// BuffersQueued, BuffersProcessed.
         /// </param>
         /// <param name="value">A pointer to the integer value being retrieved.</param>
-        public static void GetSource(int sid, ALGetSourcei param, out int value)
+        public static void GetSource(int sid, GetSourceInteger param, out int value)
         {
             GetSource((uint)sid, param, out value);
         }
@@ -764,11 +737,11 @@ namespace OpenTK.OpenAL.Native
         /// This function retrieves a bool property of a source.
         /// </summary>
         /// <param name="sid">Source name whose attribute is being retrieved.</param>
-        /// <param name="param">The name of the attribute to get: <see cref="ALSourceb.SourceRelative"/>, Looping.</param>
+        /// <param name="param">The name of the attribute to get: <see cref="SourceBoolean.SourceRelative"/>, Looping.</param>
         /// <param name="value">A pointer to the bool value being retrieved.</param>
-        public static void GetSource(uint sid, ALSourceb param, out bool value)
+        public static void GetSource(uint sid, SourceBoolean param, out bool value)
         {
-            GetSource(sid, (ALGetSourcei)param, out int result);
+            GetSource(sid, (GetSourceInteger)param, out int result);
             value = result != 0;
         }
 
@@ -776,18 +749,18 @@ namespace OpenTK.OpenAL.Native
         /// This function retrieves a bool property of a source.
         /// </summary>
         /// <param name="sid">Source name whose attribute is being retrieved.</param>
-        /// <param name="param">The name of the attribute to get: <see cref="ALSourceb.SourceRelative"/>, Looping.</param>
+        /// <param name="param">The name of the attribute to get: <see cref="SourceBoolean.SourceRelative"/>, Looping.</param>
         /// <param name="value">A pointer to the bool value being retrieved.</param>
-        public static void GetSource(int sid, ALSourceb param, out bool value)
+        public static void GetSource(int sid, SourceBoolean param, out bool value)
         {
-            GetSource((uint)sid, (ALGetSourcei)param, out int result);
+            GetSource((uint)sid, (GetSourceInteger)param, out int result);
             value = result != 0;
         }
 
         /// <summary>
         /// This function plays a set of sources. The playing sources will have their state changed to
-        /// <see cref="ALSourceState.Playing"/>. When called on a source which is already playing, the source will restart at the beginning.
-        /// When the attached buffer(s) are done playing, the source will progress to the <see cref="ALSourceState.Stopped"/> state.
+        /// <see cref="SourceState.Playing"/>. When called on a source which is already playing, the source will restart at the beginning.
+        /// When the attached buffer(s) are done playing, the source will progress to the <see cref="SourceState.Stopped"/> state.
         /// </summary>
         /// <param name="ns">The number of sources to be played.</param>
         /// <param name="sids">A pointer to an array of sources to be played.</param>
@@ -797,8 +770,8 @@ namespace OpenTK.OpenAL.Native
 
         /// <summary>
         /// This function plays a set of sources. The playing sources will have their state changed to
-        /// <see cref="ALSourceState.Playing"/>. When called on a source which is already playing, the source will restart at the beginning.
-        /// When the attached buffer(s) are done playing, the source will progress to the <see cref="ALSourceState.Stopped"/> state.
+        /// <see cref="SourceState.Playing"/>. When called on a source which is already playing, the source will restart at the beginning.
+        /// When the attached buffer(s) are done playing, the source will progress to the <see cref="SourceState.Stopped"/> state.
         /// </summary>
         /// <param name="ns">The number of sources to be played.</param>
         /// <param name="sids">A pointer to an array of sources to be played.</param>
@@ -815,8 +788,8 @@ namespace OpenTK.OpenAL.Native
 
         /// <summary>
         /// This function plays a set of sources. The playing sources will have their state changed to
-        /// <see cref="ALSourceState.Playing"/>. When called on a source which is already playing, the source will restart at the beginning.
-        /// When the attached buffer(s) are done playing, the source will progress to the <see cref="ALSourceState.Stopped"/> state.
+        /// <see cref="SourceState.Playing"/>. When called on a source which is already playing, the source will restart at the beginning.
+        /// When the attached buffer(s) are done playing, the source will progress to the <see cref="SourceState.Stopped"/> state.
         /// </summary>
         /// <param name="ns">The number of sources to be played.</param>
         /// <param name="sids">A pointer to an array of sources to be played.</param>
@@ -833,8 +806,8 @@ namespace OpenTK.OpenAL.Native
 
         /// <summary>
         /// This function plays a set of sources. The playing sources will have their state changed to
-        /// <see cref="ALSourceState.Playing"/>. When called on a source which is already playing, the source will restart at the beginning.
-        /// When the attached buffer(s) are done playing, the source will progress to the <see cref="ALSourceState.Stopped"/> state.
+        /// <see cref="SourceState.Playing"/>. When called on a source which is already playing, the source will restart at the beginning.
+        /// When the attached buffer(s) are done playing, the source will progress to the <see cref="SourceState.Stopped"/> state.
         /// </summary>
         /// <param name="ns">The number of sources to be played.</param>
         /// <param name="sids">A pointer to an array of sources to be played.</param>
@@ -851,7 +824,7 @@ namespace OpenTK.OpenAL.Native
 
         /// <summary>
         /// This function stops a set of sources. The stopped sources will have their state changed to
-        /// <see cref="ALSourceState.Stopped"/>.
+        /// <see cref="SourceState.Stopped"/>.
         /// </summary>
         /// <param name="ns">The number of sources to stop.</param>
         /// <param name="sids">A pointer to an array of sources to be stopped.</param>
@@ -861,7 +834,7 @@ namespace OpenTK.OpenAL.Native
 
         /// <summary>
         /// This function stops a set of sources. The stopped sources will have their state changed to
-        /// <see cref="ALSourceState.Stopped"/>.
+        /// <see cref="SourceState.Stopped"/>.
         /// </summary>
         /// <param name="ns">The number of sources to stop.</param>
         /// <param name="sids">A pointer to an array of sources to be stopped.</param>
@@ -878,7 +851,7 @@ namespace OpenTK.OpenAL.Native
 
         /// <summary>
         /// This function stops a set of sources. The stopped sources will have their state changed to
-        /// <see cref="ALSourceState.Stopped"/>.
+        /// <see cref="SourceState.Stopped"/>.
         /// </summary>
         /// <param name="ns">The number of sources to stop.</param>
         /// <param name="sids">A pointer to an array of sources to be stopped.</param>
@@ -895,7 +868,7 @@ namespace OpenTK.OpenAL.Native
 
         /// <summary>
         /// This function stops a set of sources. The stopped sources will have their state changed to
-        /// <see cref="ALSourceState.Stopped"/>.
+        /// <see cref="SourceState.Stopped"/>.
         /// </summary>
         /// <param name="ns">The number of sources to stop.</param>
         /// <param name="sids">A pointer to an array of sources to be stopped.</param>
@@ -911,7 +884,7 @@ namespace OpenTK.OpenAL.Native
         }
 
         /// <summary>
-        /// This function stops a set of sources and sets all their states to <see cref="ALSourceState.Initial"/>.
+        /// This function stops a set of sources and sets all their states to <see cref="SourceState.Initial"/>.
         /// </summary>
         /// <param name="ns">The number of sources to be rewound.</param>
         /// <param name="sids">A pointer to an array of sources to be rewound.</param>
@@ -920,7 +893,7 @@ namespace OpenTK.OpenAL.Native
         public static extern unsafe void SourceRewind(int ns, [In] uint* sids);
 
         /// <summary>
-        /// This function stops a set of sources and sets all their states to <see cref="ALSourceState.Initial"/>.
+        /// This function stops a set of sources and sets all their states to <see cref="SourceState.Initial"/>.
         /// </summary>
         /// <param name="ns">The number of sources to be rewound.</param>
         /// <param name="sids">A pointer to an array of sources to be rewound.</param>
@@ -936,7 +909,7 @@ namespace OpenTK.OpenAL.Native
         }
 
         /// <summary>
-        /// This function stops a set of sources and sets all their states to <see cref="ALSourceState.Initial"/>.
+        /// This function stops a set of sources and sets all their states to <see cref="SourceState.Initial"/>.
         /// </summary>
         /// <param name="ns">The number of sources to be rewound.</param>
         /// <param name="sids">A pointer to an array of sources to be rewound.</param>
@@ -952,7 +925,7 @@ namespace OpenTK.OpenAL.Native
         }
 
         /// <summary>
-        /// This function stops a set of sources and sets all their states to <see cref="ALSourceState.Initial"/>.
+        /// This function stops a set of sources and sets all their states to <see cref="SourceState.Initial"/>.
         /// </summary>
         /// <param name="ns">The number of sources to be rewound.</param>
         /// <param name="sids">A pointer to an array of sources to be rewound.</param>
@@ -969,7 +942,7 @@ namespace OpenTK.OpenAL.Native
 
         /// <summary>
         /// This function pauses a set of sources. The paused sources will have their state changed to
-        /// <see cref="ALSourceState.Paused"/>.
+        /// <see cref="SourceState.Paused"/>.
         /// </summary>
         /// <param name="ns">The number of sources to be paused.</param>
         /// <param name="sids">A pointer to an array of sources to be paused.</param>
@@ -979,7 +952,7 @@ namespace OpenTK.OpenAL.Native
 
         /// <summary>
         /// This function pauses a set of sources. The paused sources will have their state changed to
-        /// <see cref="ALSourceState.Paused"/>.
+        /// <see cref="SourceState.Paused"/>.
         /// </summary>
         /// <param name="ns">The number of sources to be paused.</param>
         /// <param name="sids">A pointer to an array of sources to be paused.</param>
@@ -996,7 +969,7 @@ namespace OpenTK.OpenAL.Native
 
         /// <summary>
         /// This function pauses a set of sources. The paused sources will have their state changed to
-        /// <see cref="ALSourceState.Paused"/>.
+        /// <see cref="SourceState.Paused"/>.
         /// </summary>
         /// <param name="ns">The number of sources to be paused.</param>
         /// <param name="sids">A pointer to an array of sources to be paused.</param>
@@ -1013,7 +986,7 @@ namespace OpenTK.OpenAL.Native
 
         /// <summary>
         /// This function pauses a set of sources. The paused sources will have their state changed to
-        /// <see cref="ALSourceState.Paused"/>.
+        /// <see cref="SourceState.Paused"/>.
         /// </summary>
         /// <param name="ns">The number of sources to be paused.</param>
         /// <param name="sids">A pointer to an array of sources to be paused.</param>
@@ -1030,8 +1003,8 @@ namespace OpenTK.OpenAL.Native
 
         /// <summary>
         /// This function plays, replays or resumes a source. The playing source will have it's state changed to
-        /// <see cref="ALSourceState.Playing"/>. When called on a source which is already playing, the source will restart at the beginning.
-        /// When the attached buffer(s) are done playing, the source will progress to the <see cref="ALSourceState.Stopped"/> state.
+        /// <see cref="SourceState.Playing"/>. When called on a source which is already playing, the source will restart at the beginning.
+        /// When the attached buffer(s) are done playing, the source will progress to the <see cref="SourceState.Stopped"/> state.
         /// </summary>
         /// <param name="sid">The name of the source to be played.</param>
         [DllImport(Library, EntryPoint = "alSourcePlay", ExactSpelling = true, CallingConvention = Style)]
@@ -1040,8 +1013,8 @@ namespace OpenTK.OpenAL.Native
 
         /// <summary>
         /// This function plays, replays or resumes a source. The playing source will have it's state changed to
-        /// <see cref="ALSourceState.Playing"/>. When called on a source which is already playing, the source will restart at the beginning.
-        /// When the attached buffer(s) are done playing, the source will progress to the <see cref="ALSourceState.Stopped"/> state.
+        /// <see cref="SourceState.Playing"/>. When called on a source which is already playing, the source will restart at the beginning.
+        /// When the attached buffer(s) are done playing, the source will progress to the <see cref="SourceState.Stopped"/> state.
         /// </summary>
         /// <param name="sid">The name of the source to be played.</param>
         public static void SourcePlay(int sid)
@@ -1050,7 +1023,7 @@ namespace OpenTK.OpenAL.Native
         }
 
         /// <summary>
-        /// This function stops a source. The stopped source will have it's state changed to <see cref="ALSourceState.Stopped"/>.
+        /// This function stops a source. The stopped source will have it's state changed to <see cref="SourceState.Stopped"/>.
         /// </summary>
         /// <param name="sid">The name of the source to be stopped.</param>
         [DllImport(Library, EntryPoint = "alSourceStop", ExactSpelling = true, CallingConvention = Style)]
@@ -1058,7 +1031,7 @@ namespace OpenTK.OpenAL.Native
         public static extern void SourceStop(uint sid);
 
         /// <summary>
-        /// This function stops a source. The stopped source will have it's state changed to <see cref="ALSourceState.Stopped"/>.
+        /// This function stops a source. The stopped source will have it's state changed to <see cref="SourceState.Stopped"/>.
         /// </summary>
         /// <param name="sid">The name of the source to be stopped.</param>
         public static void SourceStop(int sid)
@@ -1067,7 +1040,7 @@ namespace OpenTK.OpenAL.Native
         }
 
         /// <summary>
-        /// This function stops the source and sets its state to <see cref="ALSourceState.Initial"/>.
+        /// This function stops the source and sets its state to <see cref="SourceState.Initial"/>.
         /// </summary>
         /// <param name="sid">The name of the source to be rewound.</param>
         [DllImport(Library, EntryPoint = "alSourceRewind", ExactSpelling = true, CallingConvention = Style)]
@@ -1075,7 +1048,7 @@ namespace OpenTK.OpenAL.Native
         public static extern void SourceRewind(uint sid);
 
         /// <summary>
-        /// This function stops the source and sets its state to <see cref="ALSourceState.Initial"/>.
+        /// This function stops the source and sets its state to <see cref="SourceState.Initial"/>.
         /// </summary>
         /// <param name="sid">The name of the source to be rewound.</param>
         public static void SourceRewind(int sid)
@@ -1084,7 +1057,7 @@ namespace OpenTK.OpenAL.Native
         }
 
         /// <summary>
-        /// This function pauses a source. The paused source will have its state changed to <see cref="ALSourceState.Paused"/>.
+        /// This function pauses a source. The paused source will have its state changed to <see cref="SourceState.Paused"/>.
         /// </summary>
         /// <param name="sid">The name of the source to be paused.</param>
         [DllImport(Library, EntryPoint = "alSourcePause", ExactSpelling = true, CallingConvention = Style)]
@@ -1092,7 +1065,7 @@ namespace OpenTK.OpenAL.Native
         public static extern void SourcePause(uint sid);
 
         /// <summary>
-        /// This function pauses a source. The paused source will have its state changed to <see cref="ALSourceState.Paused"/>.
+        /// This function pauses a source. The paused source will have its state changed to <see cref="SourceState.Paused"/>.
         /// </summary>
         /// <param name="sid">The name of the source to be paused.</param>
         public static void SourcePause(int sid)
@@ -1103,8 +1076,8 @@ namespace OpenTK.OpenAL.Native
         /// <summary>
         /// This function queues a set of buffers on a source. All buffers attached to a source will be played in
         /// sequence, and the number of processed buffers can be detected using <see cref="AL.GetSource"/> with parameter
-        /// <see cref="ALGetSourcei.BuffersProcessed"/>. When first created, a source will be of type <see cref="ALSourceType.Undetermined"/>. A successful
-        /// <see cref="AL.SourceQueueBuffers"/> call will change the source type to <see cref="ALSourceType.Streaming"/>.
+        /// <see cref="GetSourceInteger.BuffersProcessed"/>. When first created, a source will be of type <see cref="SourceType.Undetermined"/>. A successful
+        /// <see cref="AL.SourceQueueBuffers"/> call will change the source type to <see cref="SourceType.Streaming"/>.
         /// </summary>
         /// <param name="sid">The name of the source to queue buffers onto.</param>
         /// <param name="numEntries">The number of buffers to be queued.</param>
@@ -1116,8 +1089,8 @@ namespace OpenTK.OpenAL.Native
         /// <summary>
         /// This function queues a set of buffers on a source. All buffers attached to a source will be played in
         /// sequence, and the number of processed buffers can be detected using <see cref="AL.GetSource"/> with parameter
-        /// <see cref="ALGetSourcei.BuffersProcessed"/>. When first created, a source will be of type <see cref="ALSourceType.Undetermined"/>. A successful
-        /// <see cref="AL.SourceQueueBuffers"/> call will change the source type to <see cref="ALSourceType.Streaming"/>.
+        /// <see cref="GetSourceInteger.BuffersProcessed"/>. When first created, a source will be of type <see cref="SourceType.Undetermined"/>. A successful
+        /// <see cref="AL.SourceQueueBuffers"/> call will change the source type to <see cref="SourceType.Streaming"/>.
         /// </summary>
         /// <param name="sid">The name of the source to queue buffers onto.</param>
         /// <param name="numEntries">The number of buffers to be queued.</param>
@@ -1136,8 +1109,8 @@ namespace OpenTK.OpenAL.Native
         /// <summary>
         /// This function queues a set of buffers on a source. All buffers attached to a source will be played in
         /// sequence, and the number of processed buffers can be detected using <see cref="AL.GetSource"/> with parameter
-        /// <see cref="ALGetSourcei.BuffersProcessed"/>. When first created, a source will be of type <see cref="ALSourceType.Undetermined"/>. A successful
-        /// <see cref="AL.SourceQueueBuffers"/> call will change the source type to <see cref="ALSourceType.Streaming"/>.
+        /// <see cref="GetSourceInteger.BuffersProcessed"/>. When first created, a source will be of type <see cref="SourceType.Undetermined"/>. A successful
+        /// <see cref="AL.SourceQueueBuffers"/> call will change the source type to <see cref="SourceType.Streaming"/>.
         /// </summary>
         /// <param name="sid">The name of the source to queue buffers onto.</param>
         /// <param name="numEntries">The number of buffers to be queued.</param>
@@ -1156,8 +1129,8 @@ namespace OpenTK.OpenAL.Native
         /// <summary>
         /// This function queues a set of buffers on a source. All buffers attached to a source will be played in
         /// sequence, and the number of processed buffers can be detected using <see cref="AL.GetSource"/> with parameter
-        /// <see cref="ALGetSourcei.BuffersProcessed"/>. When first created, a source will be of type <see cref="ALSourceType.Undetermined"/>. A successful
-        /// <see cref="AL.SourceQueueBuffers"/> call will change the source type to <see cref="ALSourceType.Streaming"/>.
+        /// <see cref="GetSourceInteger.BuffersProcessed"/>. When first created, a source will be of type <see cref="SourceType.Undetermined"/>. A successful
+        /// <see cref="AL.SourceQueueBuffers"/> call will change the source type to <see cref="SourceType.Streaming"/>.
         /// </summary>
         /// <param name="sid">The name of the source to queue buffers onto.</param>
         /// <param name="numEntries">The number of buffers to be queued.</param>
@@ -1176,8 +1149,8 @@ namespace OpenTK.OpenAL.Native
         /// <summary>
         /// This function queues a set of buffers on a source. All buffers attached to a source will be played in
         /// sequence, and the number of processed buffers can be detected using <see cref="AL.GetSource"/> with parameter
-        /// <see cref="ALGetSourcei.BuffersProcessed"/>. When first created, a source will be of type <see cref="ALSourceType.Undetermined"/>. A successful
-        /// <see cref="AL.SourceQueueBuffers"/> call will change the source type to <see cref="ALSourceType.Streaming"/>.
+        /// <see cref="GetSourceInteger.BuffersProcessed"/>. When first created, a source will be of type <see cref="SourceType.Undetermined"/>. A successful
+        /// <see cref="AL.SourceQueueBuffers"/> call will change the source type to <see cref="SourceType.Streaming"/>.
         /// </summary>
         /// <param name="source">The name of the source to queue buffers onto.</param>
         /// <param name="buffer">The name of the buffer to be queued.</param>
@@ -1191,7 +1164,7 @@ namespace OpenTK.OpenAL.Native
 
         /// <summary>
         /// This function unqueues a set of buffers attached to a source. The number of processed buffers can be detected
-        /// using <see cref="AL.GetSource"/> with parameter <see cref="ALGetSourcei.BuffersProcessed"/>, which is the maximum number of buffers that can be
+        /// using <see cref="AL.GetSource"/> with parameter <see cref="GetSourceInteger.BuffersProcessed"/>, which is the maximum number of buffers that can be
         /// unqueued using this call. The unqueue operation will only take place if all n buffers can be removed from the
         /// queue.
         /// </summary>
@@ -1204,7 +1177,7 @@ namespace OpenTK.OpenAL.Native
 
         /// <summary>
         /// This function unqueues a set of buffers attached to a source. The number of processed buffers can be detected
-        /// using <see cref="AL.GetSource"/> with parameter <see cref="ALGetSourcei.BuffersProcessed"/>, which is the maximum number of buffers that can be
+        /// using <see cref="AL.GetSource"/> with parameter <see cref="GetSourceInteger.BuffersProcessed"/>, which is the maximum number of buffers that can be
         /// unqueued using this call. The unqueue operation will only take place if all n buffers can be removed from the
         /// queue.
         /// </summary>
@@ -1217,7 +1190,7 @@ namespace OpenTK.OpenAL.Native
 
         /// <summary>
         /// This function unqueues a set of buffers attached to a source. The number of processed buffers can be detected
-        /// using <see cref="AL.GetSource"/> with parameter <see cref="ALGetSourcei.BuffersProcessed"/>, which is the maximum number of buffers that can be
+        /// using <see cref="AL.GetSource"/> with parameter <see cref="GetSourceInteger.BuffersProcessed"/>, which is the maximum number of buffers that can be
         /// unqueued using this call. The unqueue operation will only take place if all n buffers can be removed from the
         /// queue.
         /// </summary>
@@ -1230,7 +1203,7 @@ namespace OpenTK.OpenAL.Native
 
         /// <summary>
         /// This function unqueues a set of buffers attached to a source. The number of processed buffers can be detected
-        /// using <see cref="AL.GetSource"/> with parameter <see cref="ALGetSourcei.BuffersProcessed"/>, which is the maximum number of buffers that can be
+        /// using <see cref="AL.GetSource"/> with parameter <see cref="GetSourceInteger.BuffersProcessed"/>, which is the maximum number of buffers that can be
         /// unqueued using this call. The unqueue operation will only take place if all n buffers can be removed from the
         /// queue.
         /// </summary>
@@ -1243,7 +1216,7 @@ namespace OpenTK.OpenAL.Native
 
         /// <summary>
         /// This function unqueues a set of buffers attached to a source. The number of processed buffers can be detected
-        /// using <see cref="AL.GetSource"/> with parameter <see cref="ALGetSourcei.BuffersProcessed"/>, which is the maximum number of buffers that can be
+        /// using <see cref="AL.GetSource"/> with parameter <see cref="GetSourceInteger.BuffersProcessed"/>, which is the maximum number of buffers that can be
         /// unqueued using this call. The unqueue operation will only take place if all n buffers can be removed from the
         /// queue.
         /// </summary>
@@ -1256,7 +1229,7 @@ namespace OpenTK.OpenAL.Native
 
         /// <summary>
         /// This function unqueues a set of buffers attached to a source. The number of processed buffers can be detected
-        /// using <see cref="AL.GetSource"/> with parameter <see cref="ALGetSourcei.BuffersProcessed"/>, which is the maximum number of buffers that can be
+        /// using <see cref="AL.GetSource"/> with parameter <see cref="GetSourceInteger.BuffersProcessed"/>, which is the maximum number of buffers that can be
         /// unqueued using this call. The unqueue operation will only take place if all n buffers can be removed from the
         /// queue.
         /// </summary>
@@ -1275,7 +1248,7 @@ namespace OpenTK.OpenAL.Native
 
         /// <summary>
         /// This function unqueues a set of buffers attached to a source. The number of processed buffers can be detected
-        /// using <see cref="AL.GetSource"/> with parameter <see cref="ALGetSourcei.BuffersProcessed"/>, which is the maximum number of buffers that can be
+        /// using <see cref="AL.GetSource"/> with parameter <see cref="GetSourceInteger.BuffersProcessed"/>, which is the maximum number of buffers that can be
         /// unqueued using this call. The unqueue operation will only take place if all n buffers can be removed from the
         /// queue.
         /// </summary>
@@ -1311,7 +1284,7 @@ namespace OpenTK.OpenAL.Native
         /// <summary>
         /// This function generates one or more buffers, which contain audio buffer (see <see cref="AL.BufferData"/>). References to
         /// buffers are uint values, which are used wherever a buffer reference is needed (in calls such as <see cref="AL.DeleteBuffers"/>,
-        /// <see cref="AL.Source"/> with parameter ALSourcei, <see cref="AL.SourceQueueBuffers"/>, and <see cref="AL.SourceUnqueueBuffers"/>).
+        /// <see cref="AL.Source"/> with parameter SourceInteger, <see cref="AL.SourceQueueBuffers"/>, and <see cref="AL.SourceUnqueueBuffers"/>).
         /// </summary>
         /// <param name="n">The number of buffers to be generated.</param>
         /// <param name="buffers">Pointer to an array of uint values which will store the names of the new buffers.</param>
@@ -1322,7 +1295,7 @@ namespace OpenTK.OpenAL.Native
         /// <summary>
         /// This function generates one or more buffers, which contain audio buffer (see <see cref="AL.BufferData"/>). References to
         /// buffers are uint values, which are used wherever a buffer reference is needed (in calls such as <see cref="AL.DeleteBuffers"/>,
-        /// <see cref="AL.Source"/> with parameter ALSourcei, <see cref="AL.SourceQueueBuffers"/>, and <see cref="AL.SourceUnqueueBuffers"/>).
+        /// <see cref="AL.Source"/> with parameter SourceInteger, <see cref="AL.SourceQueueBuffers"/>, and <see cref="AL.SourceUnqueueBuffers"/>).
         /// </summary>
         /// <param name="n">The number of buffers to be generated.</param>
         /// <param name="buffers">Pointer to an array of uint values which will store the names of the new buffers.</param>
@@ -1333,7 +1306,7 @@ namespace OpenTK.OpenAL.Native
         /// <summary>
         /// This function generates one or more buffers, which contain audio buffer (see <see cref="AL.BufferData"/>). References to
         /// buffers are uint values, which are used wherever a buffer reference is needed (in calls such as <see cref="AL.DeleteBuffers"/>,
-        /// <see cref="AL.Source"/> with parameter ALSourcei, <see cref="AL.SourceQueueBuffers"/>, and <see cref="AL.SourceUnqueueBuffers"/>).
+        /// <see cref="AL.Source"/> with parameter SourceInteger, <see cref="AL.SourceQueueBuffers"/>, and <see cref="AL.SourceUnqueueBuffers"/>).
         /// </summary>
         /// <param name="n">The number of buffers to be generated.</param>
         /// <param name="buffers">Pointer to an array of uint values which will store the names of the new buffers.</param>
@@ -1351,7 +1324,7 @@ namespace OpenTK.OpenAL.Native
         /// <summary>
         /// This function generates one or more buffers, which contain audio buffer (see <see cref="AL.BufferData"/>). References to
         /// buffers are uint values, which are used wherever a buffer reference is needed (in calls such as <see cref="AL.DeleteBuffers"/>,
-        /// <see cref="AL.Source"/> with parameter ALSourcei, <see cref="AL.SourceQueueBuffers"/>, and <see cref="AL.SourceUnqueueBuffers"/>).
+        /// <see cref="AL.Source"/> with parameter SourceInteger, <see cref="AL.SourceQueueBuffers"/>, and <see cref="AL.SourceUnqueueBuffers"/>).
         /// </summary>
         /// <param name="n">The number of buffers to be generated.</param>
         /// <param name="buffers">Pointer to an array of uint values which will store the names of the new buffers.</param>
@@ -1369,7 +1342,7 @@ namespace OpenTK.OpenAL.Native
         /// <summary>
         /// This function generates one or more buffers, which contain audio data (see <see cref="AL.BufferData"/>). References to
         /// buffers are uint values, which are used wherever a buffer reference is needed (in calls such as <see cref="AL.DeleteBuffers"/>,
-        /// <see cref="AL.Source"/> with parameter ALSourcei, <see cref="AL.SourceQueueBuffers"/>, and <see cref="AL.SourceUnqueueBuffers"/>).
+        /// <see cref="AL.Source"/> with parameter SourceInteger, <see cref="AL.SourceQueueBuffers"/>, and <see cref="AL.SourceUnqueueBuffers"/>).
         /// </summary>
         /// <param name="n">The number of buffers to be generated.</param>
         /// <returns>Pointer to an array of uint values which will store the names of the new buffers.</returns>
@@ -1383,7 +1356,7 @@ namespace OpenTK.OpenAL.Native
         /// <summary>
         /// This function generates one buffer only, which contain audio data (see <see cref="AL.BufferData"/>). References to buffers
         /// are uint values, which are used wherever a buffer reference is needed (in calls such as <see cref="AL.DeleteBuffers"/>, <see cref="AL.Source"/>
-        /// with parameter ALSourcei, <see cref="AL.SourceQueueBuffers"/>, and <see cref="AL.SourceUnqueueBuffers"/>).
+        /// with parameter SourceInteger, <see cref="AL.SourceQueueBuffers"/>, and <see cref="AL.SourceUnqueueBuffers"/>).
         /// </summary>
         /// <returns>Pointer to an uint value which will store the name of the new buffer.</returns>
         public static int GenBuffer()
@@ -1395,7 +1368,7 @@ namespace OpenTK.OpenAL.Native
         /// <summary>
         /// This function generates one buffer only, which contain audio data (see <see cref="AL.BufferData"/>). References to buffers
         /// are uint values, which are used wherever a buffer reference is needed (in calls such as <see cref="AL.DeleteBuffers"/>, <see cref="AL.Source"/>
-        /// with parameter ALSourcei, <see cref="AL.SourceQueueBuffers"/>, and <see cref="AL.SourceUnqueueBuffers"/>).
+        /// with parameter SourceInteger, <see cref="AL.SourceQueueBuffers"/>, and <see cref="AL.SourceUnqueueBuffers"/>).
         /// </summary>
         /// <param name="buffer">Pointer to an uint value which will store the names of the new buffer.</param>
         public static void GenBuffer(out uint buffer)
@@ -1405,7 +1378,7 @@ namespace OpenTK.OpenAL.Native
 
         /// <summary>
         /// This function deletes one or more buffers, freeing the resources used by the buffer. Buffers which are
-        /// attached to a source can not be deleted. See <see cref="AL.Source"/> (ALSourcei) and <see cref="AL.SourceUnqueueBuffers"/> for information on
+        /// attached to a source can not be deleted. See <see cref="AL.Source"/> (SourceInteger) and <see cref="AL.SourceUnqueueBuffers"/> for information on
         /// how to detach a buffer from a source.
         /// </summary>
         /// <param name="n">The number of buffers to be deleted.</param>
@@ -1416,7 +1389,7 @@ namespace OpenTK.OpenAL.Native
 
         /// <summary>
         /// This function deletes one or more buffers, freeing the resources used by the buffer. Buffers which are
-        /// attached to a source can not be deleted. See <see cref="AL.Source"/> (ALSourcei) and <see cref="AL.SourceUnqueueBuffers"/> for information on
+        /// attached to a source can not be deleted. See <see cref="AL.Source"/> (SourceInteger) and <see cref="AL.SourceUnqueueBuffers"/> for information on
         /// how to detach a buffer from a source.
         /// </summary>
         /// <param name="n">The number of buffers to be deleted.</param>
@@ -1427,7 +1400,7 @@ namespace OpenTK.OpenAL.Native
 
         /// <summary>
         /// This function deletes one or more buffers, freeing the resources used by the buffer. Buffers which are
-        /// attached to a source can not be deleted. See <see cref="AL.Source"/> (ALSourcei) and <see cref="AL.SourceUnqueueBuffers"/> for information on
+        /// attached to a source can not be deleted. See <see cref="AL.Source"/> (SourceInteger) and <see cref="AL.SourceUnqueueBuffers"/> for information on
         /// how to detach a buffer from a source.
         /// </summary>
         /// <param name="n">The number of buffers to be deleted.</param>
@@ -1445,7 +1418,7 @@ namespace OpenTK.OpenAL.Native
 
         /// <summary>
         /// This function deletes one or more buffers, freeing the resources used by the buffer. Buffers which are
-        /// attached to a source can not be deleted. See <see cref="AL.Source"/> (ALSourcei) and <see cref="AL.SourceUnqueueBuffers"/> for information on
+        /// attached to a source can not be deleted. See <see cref="AL.Source"/> (SourceInteger) and <see cref="AL.SourceUnqueueBuffers"/> for information on
         /// how to detach a buffer from a source.
         /// </summary>
         /// <param name="n">The number of buffers to be deleted.</param>
@@ -1463,7 +1436,7 @@ namespace OpenTK.OpenAL.Native
 
         /// <summary>
         /// This function deletes one buffer only, freeing the resources used by the buffer. Buffers which are attached to
-        /// a source can not be deleted. See <see cref="AL.Source"/> (ALSourcei) and <see cref="AL.SourceUnqueueBuffers"/> for information on how to detach
+        /// a source can not be deleted. See <see cref="AL.Source"/> (SourceInteger) and <see cref="AL.SourceUnqueueBuffers"/> for information on how to detach
         /// a buffer from a source.
         /// </summary>
         /// <param name="buffers">Pointer to a buffer name identifying the buffer to be deleted.</param>
@@ -1484,7 +1457,7 @@ namespace OpenTK.OpenAL.Native
 
         /// <summary>
         /// This function deletes one or more buffers, freeing the resources used by the buffer. Buffers which are
-        /// attached to a source can not be deleted. See <see cref="AL.Source"/> (ALSourcei) and <see cref="AL.SourceUnqueueBuffers"/> for information on
+        /// attached to a source can not be deleted. See <see cref="AL.Source"/> (SourceInteger) and <see cref="AL.SourceUnqueueBuffers"/> for information on
         /// how to detach a buffer from a source.
         /// </summary>
         /// <param name="buffers">Pointer to an array of buffer names identifying the buffers to be deleted.</param>
@@ -1505,7 +1478,7 @@ namespace OpenTK.OpenAL.Native
 
         /// <summary>
         /// This function deletes one buffer only, freeing the resources used by the buffer. Buffers which are attached to
-        /// a source can not be deleted. See <see cref="AL.Source"/> (ALSourcei) and <see cref="AL.SourceUnqueueBuffers"/> for information on how to detach
+        /// a source can not be deleted. See <see cref="AL.Source"/> (SourceInteger) and <see cref="AL.SourceUnqueueBuffers"/> for information on how to detach
         /// a buffer from a source.
         /// </summary>
         /// <param name="buffer">Pointer to a buffer name identifying the buffer to be deleted.</param>
@@ -1516,7 +1489,7 @@ namespace OpenTK.OpenAL.Native
 
         /// <summary>
         /// This function deletes one buffer only, freeing the resources used by the buffer. Buffers which are attached to
-        /// a source can not be deleted. See <see cref="AL.Source"/> (ALSourcei) and <see cref="AL.SourceUnqueueBuffers"/> for information on how to detach
+        /// a source can not be deleted. See <see cref="AL.Source"/> (SourceInteger) and <see cref="AL.SourceUnqueueBuffers"/> for information on how to detach
         /// a buffer from a source.
         /// </summary>
         /// <param name="buffer">Pointer to a buffer name identifying the buffer to be deleted.</param>
@@ -1551,15 +1524,15 @@ namespace OpenTK.OpenAL.Native
         /// </summary>
         /// <param name="bid">buffer Handle/Name to be filled with buffer.</param>
         /// <param name="format">
-        /// Format type from among the following: <see cref="ALFormat.Mono8"/>, <see cref="ALFormat.Mono16"/>, <see cref="ALFormat.Stereo8"/>,
-        /// <see cref="ALFormat.Stereo16"/>.
+        /// Format type from among the following: <see cref="BufferFormat.Mono8"/>, <see cref="BufferFormat.Mono16"/>, <see cref="BufferFormat.Stereo8"/>,
+        /// <see cref="BufferFormat.Stereo16"/>.
         /// </param>
         /// <param name="buffer">Pointer to a pinned audio buffer.</param>
         /// <param name="size">The size of the audio buffer in bytes.</param>
         /// <param name="freq">The frequency of the audio buffer.</param>
         [DllImport(Library, EntryPoint = "alBufferData", ExactSpelling = true, CallingConvention = Style)]
         [SuppressUnmanagedCodeSecurity]
-        public static extern void BufferData(uint bid, ALFormat format, IntPtr buffer, int size, int freq);
+        public static extern void BufferData(uint bid, BufferFormat format, IntPtr buffer, int size, int freq);
 
         /// <summary>
         /// This function fills a buffer with audio buffer. All the pre-defined formats are PCM buffer, but this function
@@ -1567,13 +1540,13 @@ namespace OpenTK.OpenAL.Native
         /// </summary>
         /// <param name="bid">buffer Handle/Name to be filled with buffer.</param>
         /// <param name="format">
-        /// Format type from among the following: <see cref="ALFormat.Mono8"/>, <see cref="ALFormat.Mono16"/>, <see cref="ALFormat.Stereo8"/>,
-        /// <see cref="ALFormat.Stereo16"/>.
+        /// Format type from among the following: <see cref="BufferFormat.Mono8"/>, <see cref="BufferFormat.Mono16"/>, <see cref="BufferFormat.Stereo8"/>,
+        /// <see cref="BufferFormat.Stereo16"/>.
         /// </param>
         /// <param name="buffer">Pointer to a pinned audio buffer.</param>
         /// <param name="size">The size of the audio buffer in bytes.</param>
         /// <param name="freq">The frequency of the audio buffer.</param>
-        public static void BufferData(int bid, ALFormat format, IntPtr buffer, int size, int freq)
+        public static void BufferData(int bid, BufferFormat format, IntPtr buffer, int size, int freq)
         {
             BufferData((uint)bid, format, buffer, size, freq);
         }
@@ -1584,14 +1557,14 @@ namespace OpenTK.OpenAL.Native
         /// </summary>
         /// <param name="bid">buffer Handle/Name to be filled with buffer.</param>
         /// <param name="format">
-        /// Format type from among the following: <see cref="ALFormat.Mono8"/>, <see cref="ALFormat.Mono16"/>, <see cref="ALFormat.Stereo8"/>,
-        /// <see cref="ALFormat.Stereo16"/>.
+        /// Format type from among the following: <see cref="BufferFormat.Mono8"/>, <see cref="BufferFormat.Mono16"/>, <see cref="BufferFormat.Stereo8"/>,
+        /// <see cref="BufferFormat.Stereo16"/>.
         /// </param>
         /// <typeparam name="TBuffer">The type of the buffer.</typeparam>
         /// <param name="buffer">The audio buffer.</param>
         /// <param name="size">The size of the audio buffer in bytes.</param>
         /// <param name="freq">The frequency of the audio buffer.</param>
-        public static void BufferData<TBuffer>(int bid, ALFormat format, TBuffer[] buffer, int size, int freq)
+        public static void BufferData<TBuffer>(int bid, BufferFormat format, TBuffer[] buffer, int size, int freq)
             where TBuffer : struct
         {
             if (!BlittableValueType.Check(buffer))
@@ -1615,24 +1588,24 @@ namespace OpenTK.OpenAL.Native
         /// </summary>
         /// <param name="bid">Buffer name whose attribute is being retrieved.</param>
         /// <param name="param">
-        /// The name of the attribute to be retrieved: <see cref="ALGetBufferi.Frequency"/>, Bits, Channels, Size, and the
+        /// The name of the attribute to be retrieved: <see cref="GetBufferInteger.Frequency"/>, Bits, Channels, Size, and the
         /// currently hidden AL_DATA (dangerous).
         /// </param>
         /// <param name="value">A pointer to an int to hold the retrieved buffer.</param>
         [DllImport(Library, EntryPoint = "alGetBufferi", ExactSpelling = true, CallingConvention = Style)]
         [SuppressUnmanagedCodeSecurity]
-        public static extern void GetBuffer(uint bid, ALGetBufferi param, [Out] out int value);
+        public static extern void GetBuffer(uint bid, GetBufferInteger param, [Out] out int value);
 
         /// <summary>
         /// This function retrieves an integer property of a buffer.
         /// </summary>
         /// <param name="bid">Buffer name whose attribute is being retrieved.</param>
         /// <param name="param">
-        /// The name of the attribute to be retrieved: <see cref="ALGetBufferi.Frequency"/>, Bits, Channels, Size, and the
+        /// The name of the attribute to be retrieved: <see cref="GetBufferInteger.Frequency"/>, Bits, Channels, Size, and the
         /// currently hidden AL_DATA (dangerous).
         /// </param>
         /// <param name="value">A pointer to an int to hold the retrieved buffer.</param>
-        public static void GetBuffer(int bid, ALGetBufferi param, out int value)
+        public static void GetBuffer(int bid, GetBufferInteger param, out int value)
         {
             GetBuffer((uint)bid, param, out value);
         }
@@ -1678,28 +1651,28 @@ namespace OpenTK.OpenAL.Native
         /// </summary>
         /// <remarks>
         /// The ALDistanceModel .InverseDistance model works according to the following formula:
-        /// gain = <see cref="ALSourcef.ReferenceDistance"/> / (<see cref="ALSourcef.ReferenceDistance"/> + <see cref="ALSourcef.RolloffFactor"/> * (distance –
-        /// <see cref="ALSourcef.ReferenceDistance"/>));
+        /// gain = <see cref="SourceFloat.ReferenceDistance"/> / (<see cref="SourceFloat.ReferenceDistance"/> + <see cref="SourceFloat.RolloffFactor"/> * (distance –
+        /// <see cref="SourceFloat.ReferenceDistance"/>));
         /// The ALDistanceModel .InverseDistanceClamped model works according to the following formula:
-        /// distance = max(distance,<see cref="ALSourcef.ReferenceDistance"/>);
-        /// distance = min(distance,<see cref="ALSourcef.MaxDistance"/>);
-        /// gain = <see cref="ALSourcef.ReferenceDistance"/> / (<see cref="ALSourcef.ReferenceDistance"/> + <see cref="ALSourcef.RolloffFactor"/> * (distance –
-        /// <see cref="ALSourcef.ReferenceDistance"/>));
+        /// distance = max(distance,<see cref="SourceFloat.ReferenceDistance"/>);
+        /// distance = min(distance,<see cref="SourceFloat.MaxDistance"/>);
+        /// gain = <see cref="SourceFloat.ReferenceDistance"/> / (<see cref="SourceFloat.ReferenceDistance"/> + <see cref="SourceFloat.RolloffFactor"/> * (distance –
+        /// <see cref="SourceFloat.ReferenceDistance"/>));
         /// The <see cref="Native.DistanceModel.LinearDistance"/> model works according to the following formula:
-        /// distance = min(distance, <see cref="ALSourcef.MaxDistance"/>) // avoid negative gain
-        /// gain = (1 – <see cref="ALSourcef.RolloffFactor"/> * (distance – <see cref="ALSourcef.ReferenceDistance"/>) / (<see cref="ALSourcef.MaxDistance"/> –
-        /// <see cref="ALSourcef.ReferenceDistance"/>))
+        /// distance = min(distance, <see cref="SourceFloat.MaxDistance"/>) // avoid negative gain
+        /// gain = (1 – <see cref="SourceFloat.RolloffFactor"/> * (distance – <see cref="SourceFloat.ReferenceDistance"/>) / (<see cref="SourceFloat.MaxDistance"/> –
+        /// <see cref="SourceFloat.ReferenceDistance"/>))
         /// The <see cref="Native.DistanceModel.LinearDistanceClamped"/> model works according to the following formula:
-        /// distance = max(distance, <see cref="ALSourcef.ReferenceDistance"/>)
-        /// distance = min(distance, <see cref="ALSourcef.MaxDistance"/>)
-        /// gain = (1 – <see cref="ALSourcef.RolloffFactor"/> * (distance – <see cref="ALSourcef.ReferenceDistance"/>) / (<see cref="ALSourcef.MaxDistance"/> –
-        /// <see cref="ALSourcef.ReferenceDistance"/>))
+        /// distance = max(distance, <see cref="SourceFloat.ReferenceDistance"/>)
+        /// distance = min(distance, <see cref="SourceFloat.MaxDistance"/>)
+        /// gain = (1 – <see cref="SourceFloat.RolloffFactor"/> * (distance – <see cref="SourceFloat.ReferenceDistance"/>) / (<see cref="SourceFloat.MaxDistance"/> –
+        /// <see cref="SourceFloat.ReferenceDistance"/>))
         /// The <see cref="Native.DistanceModel.ExponentDistance"/> model works according to the following formula:
-        /// gain = (distance / <see cref="ALSourcef.ReferenceDistance"/>) ^ (- <see cref="ALSourcef.RolloffFactor"/>)
+        /// gain = (distance / <see cref="SourceFloat.ReferenceDistance"/>) ^ (- <see cref="SourceFloat.RolloffFactor"/>)
         /// The <see cref="Native.DistanceModel.ExponentDistanceClamped"/> model works according to the following formula:
-        /// distance = max(distance, <see cref="ALSourcef.ReferenceDistance"/>)
-        /// distance = min(distance, <see cref="ALSourcef.MaxDistance"/>)
-        /// gain = (distance / <see cref="ALSourcef.ReferenceDistance"/>) ^ (- <see cref="ALSourcef.RolloffFactor"/>)
+        /// distance = max(distance, <see cref="SourceFloat.ReferenceDistance"/>)
+        /// distance = min(distance, <see cref="SourceFloat.MaxDistance"/>)
+        /// gain = (distance / <see cref="SourceFloat.ReferenceDistance"/>) ^ (- <see cref="SourceFloat.RolloffFactor"/>)
         /// The <see cref="Native.DistanceModel.None"/> model works according to the following formula:
         /// gain = 1f.
         /// </remarks>
@@ -1713,10 +1686,10 @@ namespace OpenTK.OpenAL.Native
         /// </summary>
         /// <param name="sid">The source to be queried.</param>
         /// <returns>state information from OpenAL.</returns>
-        public static ALSourceState GetSourceState(uint sid)
+        public static SourceState GetSourceState(uint sid)
         {
-            GetSource(sid, ALGetSourcei.SourceState, out int temp);
-            return (ALSourceState)temp;
+            GetSource(sid, GetSourceInteger.SourceState, out int temp);
+            return (SourceState)temp;
         }
 
         /// <summary>
@@ -1724,10 +1697,10 @@ namespace OpenTK.OpenAL.Native
         /// </summary>
         /// <param name="sid">The source to be queried.</param>
         /// <returns>state information from OpenAL.</returns>
-        public static ALSourceState GetSourceState(int sid)
+        public static SourceState GetSourceState(int sid)
         {
-            GetSource(sid, ALGetSourcei.SourceState, out int temp);
-            return (ALSourceState)temp;
+            GetSource(sid, GetSourceInteger.SourceState, out int temp);
+            return (SourceState)temp;
         }
 
         /// <summary>
@@ -1735,10 +1708,10 @@ namespace OpenTK.OpenAL.Native
         /// </summary>
         /// <param name="sid">The source to be queried.</param>
         /// <returns>type information from OpenAL.</returns>
-        public static ALSourceType GetSourceType(uint sid)
+        public static SourceType GetSourceType(uint sid)
         {
-            GetSource(sid, ALGetSourcei.SourceType, out int temp);
-            return (ALSourceType)temp;
+            GetSource(sid, GetSourceInteger.SourceType, out int temp);
+            return (SourceType)temp;
         }
 
         /// <summary>
@@ -1746,10 +1719,10 @@ namespace OpenTK.OpenAL.Native
         /// </summary>
         /// <param name="sid">The source to be queried.</param>
         /// <returns>type information from OpenAL.</returns>
-        public static ALSourceType GetSourceType(int sid)
+        public static SourceType GetSourceType(int sid)
         {
-            GetSource(sid, ALGetSourcei.SourceType, out int temp);
-            return (ALSourceType)temp;
+            GetSource(sid, GetSourceInteger.SourceType, out int temp);
+            return (SourceType)temp;
         }
 
         /// <summary>

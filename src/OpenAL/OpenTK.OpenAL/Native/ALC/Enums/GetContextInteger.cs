@@ -1,9 +1,9 @@
 ﻿namespace OpenTK.OpenAL.Native
 {
     /// <summary>
-    /// Defines available parameters for <see cref="Alc.GetInteger(System.IntPtr,OpenTK.OpenAL.Native.AlcGetInteger,int,int[])" />.
+    /// Defines available parameters for <see cref="ALContext.GetInteger(System.IntPtr,GetContextInteger,int,int[])" />.
     /// </summary>
-    public enum AlcGetInteger
+    public enum GetContextInteger
     {
         /// <summary>
         /// The specification revision for this implementation (major version). NULL is an acceptable device.

@@ -18,7 +18,7 @@ namespace OpenTK.OpenAL.Native
     /// <summary>
     /// Alc = Audio Library Context.
     /// </summary>
-    public static class Alc
+    public static class ALContext
     {
         private const string Lib = AL.Library;
         private const CallingConvention Style = CallingConvention.Cdecl;
@@ -184,7 +184,7 @@ namespace OpenTK.OpenAL.Native
         /// <returns>Errorcode Int32.</returns>
         [DllImport(Lib, EntryPoint = "alcGetError", ExactSpelling = true, CallingConvention = Style)]
         [SuppressUnmanagedCodeSecurity]
-        public static extern AlcError GetError([In] IntPtr device);
+        public static extern ContextError GetError([In] IntPtr device);
 
         /// <summary>
         /// This function queries if a specified context extension is available.
@@ -221,7 +221,7 @@ namespace OpenTK.OpenAL.Native
 
         [DllImport(Lib, EntryPoint = "alcGetString", ExactSpelling = true, CallingConvention = Style, CharSet = CharSet.Ansi)]
         [SuppressUnmanagedCodeSecurity]
-        private static extern IntPtr GetStringPrivate([In] IntPtr device, AlcGetString param);
+        private static extern IntPtr GetStringPrivate([In] IntPtr device, GetContextString param);
 
         /// <summary>
         /// This function returns pointers to strings related to the context.
@@ -244,7 +244,7 @@ namespace OpenTK.OpenAL.Native
         /// ALC_DEVICE_SPECIFIER, ALC_CAPTURE_DEVICE_SPECIFIER, ALC_EXTENSIONS.
         /// </param>
         /// <returns>A string containing the name of the Device.</returns>
-        public static string GetString(IntPtr device, AlcGetString param)
+        public static string GetString(IntPtr device, GetContextString param)
         {
             var pstr = GetStringPrivate(device, param);
             var str = string.Empty;
@@ -275,7 +275,7 @@ namespace OpenTK.OpenAL.Native
         /// ALC_ALL_DEVICES_SPECIFIER.
         /// </param>
         /// <returns>A List of strings containing the names of the Devices.</returns>
-        public static IList<string> GetString(IntPtr device, AlcGetStringList param)
+        public static IList<string> GetString(IntPtr device, GetContextStringList param)
         {
             var result = new List<string>();
 
@@ -285,7 +285,7 @@ namespace OpenTK.OpenAL.Native
             // Marshal.PtrToStringAnsi() will fail in the latter case (it will only
             // return the very first string in the array.)
             // We'll have to marshal this ourselves.
-            var t = GetStringPrivate(device, (AlcGetString)param);
+            var t = GetStringPrivate(device, (GetContextString)param);
             if (t != IntPtr.Zero)
             {
                 var sb = new StringBuilder();
@@ -330,7 +330,7 @@ namespace OpenTK.OpenAL.Native
 
         [DllImport(Lib, EntryPoint = "alcGetIntegerv", ExactSpelling = true, CallingConvention = Style, CharSet = CharSet.Ansi)]
         [SuppressUnmanagedCodeSecurity]
-        private static extern unsafe void GetInteger(IntPtr device, AlcGetInteger param, int size, int* data);
+        private static extern unsafe void GetInteger(IntPtr device, GetContextInteger param, int size, int* data);
 
         /// <summary>
         /// This function returns integers related to the context.
@@ -342,7 +342,7 @@ namespace OpenTK.OpenAL.Native
         /// </param>
         /// <param name="size">the size of the destination buffer provided, in number of integers.</param>
         /// <param name="data">a pointer to the buffer to be returned.</param>
-        public static void GetInteger(IntPtr device, AlcGetInteger param, int size, out int data)
+        public static void GetInteger(IntPtr device, GetContextInteger param, int size, out int data)
         {
             unsafe
             {
@@ -363,7 +363,7 @@ namespace OpenTK.OpenAL.Native
         /// </param>
         /// <param name="size">the size of the destination buffer provided, in number of integers.</param>
         /// <param name="data">a pointer to the buffer to be returned.</param>
-        public static void GetInteger(IntPtr device, AlcGetInteger param, int size, int[] data)
+        public static void GetInteger(IntPtr device, GetContextInteger param, int size, int[] data)
         {
             unsafe
             {
@@ -384,7 +384,7 @@ namespace OpenTK.OpenAL.Native
         /// <returns>Returns the capture device pointer, or NULL on failure.</returns>
         [DllImport(Lib, EntryPoint = "alcCaptureOpenDevice", ExactSpelling = true, CallingConvention = Style, CharSet = CharSet.Ansi)]
         [SuppressUnmanagedCodeSecurity]
-        public static extern IntPtr CaptureOpenDevice(string devicename, uint frequency, ALFormat format, int buffersize);
+        public static extern IntPtr CaptureOpenDevice(string devicename, uint frequency, BufferFormat format, int buffersize);
 
         /// <summary>
         /// This function opens a capture device by name.
@@ -396,7 +396,7 @@ namespace OpenTK.OpenAL.Native
         /// <returns>Returns the capture device pointer, or NULL on failure.</returns>
         [DllImport(Lib, EntryPoint = "alcCaptureOpenDevice", ExactSpelling = true, CallingConvention = Style, CharSet = CharSet.Ansi)]
         [SuppressUnmanagedCodeSecurity]
-        public static extern IntPtr CaptureOpenDevice(string devicename, int frequency, ALFormat format, int buffersize);
+        public static extern IntPtr CaptureOpenDevice(string devicename, int frequency, BufferFormat format, int buffersize);
 
         /// <summary>
         /// This function closes the specified capture device.

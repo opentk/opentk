@@ -3,7 +3,7 @@
     /// <summary>
     /// Defines OpenAL context errors.
     /// </summary>
-    public enum AlcError
+    public enum ContextError
     {
         /// <summary>
         /// There is no current error.

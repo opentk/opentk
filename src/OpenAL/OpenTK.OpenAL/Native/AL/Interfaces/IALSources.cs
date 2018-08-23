@@ -44,7 +44,7 @@ namespace OpenTK.OpenAL.Native.Interfaces
         /// <param name="param">The named property.</param>
         /// <param name="value">The value to set the property to.</param>
         [NativeSymbol("Sourcef")]
-        void SetSourceProperty(uint source, ALSourcef param, float value);
+        void SetSourceProperty(uint source, SourceFloat param, float value);
 
         /// <summary>
         /// Sets the value of a named property on the given source.
@@ -53,7 +53,7 @@ namespace OpenTK.OpenAL.Native.Interfaces
         /// <param name="param">The named property.</param>
         /// <param name="value">The value to set the property to.</param>
         [NativeSymbol("Sourcefv")]
-        void SetSourceProperty(uint source, ALSource3f param, in Vector3 value);
+        void SetSourceProperty(uint source, SourceVector3 param, in Vector3 value);
 
         /// <summary>
         /// Sets the value of a named property on the given source.
@@ -62,7 +62,7 @@ namespace OpenTK.OpenAL.Native.Interfaces
         /// <param name="param">The named property.</param>
         /// <param name="value">The value to set the property to.</param>
         [NativeSymbol("Sourcei")]
-        void SetSourceProperty(uint source, ALSourcef param, int value);
+        void SetSourceProperty(uint source, SourceInteger param, int value);
 
         /// <summary>
         /// Gets the value of a named property on the given source.
@@ -71,7 +71,7 @@ namespace OpenTK.OpenAL.Native.Interfaces
         /// <param name="param">The named property.</param>
         /// <param name="value">The value to set the property to.</param>
         [NativeSymbol("GetSourcef")]
-        void GetSourceProperty(uint source, ALSourcef param, out float value);
+        void GetSourceProperty(uint source, SourceFloat param, out float value);
 
         /// <summary>
         /// Gets the value of a named property on the given source.
@@ -80,7 +80,7 @@ namespace OpenTK.OpenAL.Native.Interfaces
         /// <param name="param">The named property.</param>
         /// <param name="value">The value to set the property to.</param>
         [NativeSymbol("GetSourcefv")]
-        void GetSourceProperty(uint source, ALSource3f param, out Vector3 value);
+        void GetSourceProperty(uint source, SourceVector3 param, out Vector3 value);
 
         /// <summary>
         /// Gets the value of a named property on the given source.
@@ -89,7 +89,7 @@ namespace OpenTK.OpenAL.Native.Interfaces
         /// <param name="param">The named property.</param>
         /// <param name="value">The value to set the property to.</param>
         [NativeSymbol("GetSourcei")]
-        void GetSourceProperty(uint source, ALSourcef param, out int value);
+        void GetSourceProperty(uint source, GetSourceInteger param, out int value);
 
         /// <summary>
         /// Plays a source.
@@ -174,7 +174,7 @@ namespace OpenTK.OpenAL.Native.Interfaces
         /// <summary>
         /// Queues a set of buffers on the source. All buffers attached to a source will be played in sequence, and the
         /// number of processed buffers can be detected using a call to
-        /// <see cref="GetSourceProperty(uint,OpenTK.OpenAL.Native.ALSourcei,out int)"/>.
+        /// <see cref="GetSourceProperty(uint,SourceInteger,out int)"/>.
         /// </summary>
         /// <param name="source">The source.</param>
         /// <param name="count">The number of buffers to queue.</param>
@@ -183,7 +183,7 @@ namespace OpenTK.OpenAL.Native.Interfaces
 
         /// <summary>
         /// Unqueues a set of buffers on the source. The number of processed buffers can be detected using a call to
-        /// <see cref="GetSourceProperty(uint,OpenTK.OpenAL.Native.ALSourcei,out int)"/>, which is the maximum number of
+        /// <see cref="GetSourceProperty(uint,SourceInteger,out int)"/>, which is the maximum number of
         /// buffers that can be unqueued during this call.
         /// </summary>
         /// <param name="source">The source.</param>

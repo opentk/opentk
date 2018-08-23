@@ -1,4 +1,5 @@
 using AdvancedDLSupport;
+// ReSharper disable ExplicitCallerInfoArgument
 
 namespace OpenTK.OpenAL.Native.Interfaces
 {
@@ -32,35 +33,40 @@ namespace OpenTK.OpenAL.Native.Interfaces
         /// </summary>
         /// <param name="param">The name of the value to retrieve.</param>
         /// <returns>The value.</returns>
-        bool GetBoolean(StateBoolean param);
+        [NativeSymbol("GetBoolean")]
+        bool GetStateProperty(StateBoolean param);
 
         /// <summary>
         /// Gets a named value from the state.
         /// </summary>
         /// <param name="param">The name of the value to retrieve.</param>
         /// <returns>The value.</returns>
-        double GetDouble(StateDouble param);
+        [NativeSymbol("GetDouble")]
+        double GetStateProperty(StateDouble param);
 
         /// <summary>
         /// Gets a named value from the state.
         /// </summary>
         /// <param name="param">The name of the value to retrieve.</param>
         /// <returns>The value.</returns>
-        float GetFloat(StateFloat param);
+        [NativeSymbol("GetFloat")]
+        float GetStateProperty(StateFloat param);
 
         /// <summary>
         /// Gets a named value from the state.
         /// </summary>
         /// <param name="param">The name of the value to retrieve.</param>
         /// <returns>The value.</returns>
-        int GetInteger(StateInteger param);
+        [NativeSymbol("GetInteger")]
+        int GetStateProperty(StateInteger param);
 
         /// <summary>
         /// Gets a named value from the state.
         /// </summary>
         /// <param name="param">The name of the value to retrieve.</param>
         /// <returns>The value.</returns>
-        string GetString(StateString param);
+        [NativeSymbol("GetString")]
+        string GetStateProperty(StateString param);
 
         /// <summary>
         /// Sets the model by which sources attenuate with distance.

@@ -3,7 +3,7 @@
     /// <summary>
     /// A list of valid 32-bit Float Listener/GetListener parameters.
     /// </summary>
-    public enum ALListenerf
+    public enum ListenerFloat
     {
         /// <summary>
         /// Indicate the gain (Volume amplification) applied. Type: float Range: [0.0f - ? ] A value of 1.0 means

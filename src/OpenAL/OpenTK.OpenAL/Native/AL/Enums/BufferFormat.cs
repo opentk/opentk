@@ -3,7 +3,7 @@
     /// <summary>
     /// Sound samples: Format specifier.
     /// </summary>
-    public enum ALFormat
+    public enum BufferFormat
     {
         /// <summary>
         /// 1 Channel, 8 bits per sample.

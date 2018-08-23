@@ -3,7 +3,7 @@
     /// <summary>
     /// A list of valid Math.Vector3 Source/GetSource parameters.
     /// </summary>
-    public enum ALSource3f
+    public enum SourceVector3
     {
         /// <summary>
         /// Specify the current location in three dimensional space. OpenAL, like OpenGL, uses a right handed coordinate

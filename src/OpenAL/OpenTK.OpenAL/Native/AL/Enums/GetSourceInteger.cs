@@ -3,7 +3,7 @@
     /// <summary>
     /// A list of valid Int32 GetSource parameters.
     /// </summary>
-    public enum ALGetSourcei
+    public enum GetSourceInteger
     {
         /// <summary>
         /// The playback position, expressed in bytes. AL_EXT_OFFSET Extension.

@@ -1,9 +1,9 @@
 ﻿namespace OpenTK.OpenAL.Native
 {
     /// <summary>
-    /// Source state information, can be retrieved by AL.Source() with ALSourcei.SourceState.
+    /// Source state information, can be retrieved by AL.Source() with SourceInteger.SourceState.
     /// </summary>
-    public enum ALSourceState
+    public enum SourceState
     {
         /// <summary>
         /// Default State when loaded, can be manually set with AL.SourceRewind().
