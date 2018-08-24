@@ -210,7 +210,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Returns a copy of this Quaterniond with its rotation angle reversed.
         /// </summary>
-        /// <returns>The inverted Quaternion.</returns>
+        /// <returns>The inverted copy.</returns>
         public Quaternion Inverted()
         {
             var q = this;

@@ -475,7 +475,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Returns an inverted copy of this instance.
         /// </summary>
-        /// <returns>The inverted matrix.</returns>
+        /// <returns>The inverted copy.</returns>
         public Matrix4d Inverted()
         {
             var m = this;
