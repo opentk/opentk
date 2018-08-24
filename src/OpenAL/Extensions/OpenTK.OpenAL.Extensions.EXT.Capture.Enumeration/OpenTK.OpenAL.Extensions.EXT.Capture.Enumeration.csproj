@@ -8,6 +8,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\OpenTK.OpenAL\OpenTK.OpenAL.csproj" />
+    <ProjectReference Include="..\OpenTK.OpenAL.Extensions.Enumeration\OpenTK.OpenAL.Extensions.Enumeration.csproj" />
+    <ProjectReference Include="..\OpenTK.OpenAL.Extensions.EXT.Capture\OpenTK.OpenAL.Extensions.EXT.Capture.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -8,7 +8,7 @@ namespace OpenTK.OpenAL.Extensions.Enumeration
     /// Defines the public API of the context-related functions of the Capture extension.
     /// </summary>
     [NativeSymbols(Prefix = "alc")]
-    internal interface ICaptureContextState
+    internal interface ICaptureEnumerationContextState
     {
         /// <summary>
         /// Gets a named property on the context.
@@ -16,7 +16,7 @@ namespace OpenTK.OpenAL.Extensions.Enumeration
         /// <param name="device">The device for the context.</param>
         /// <param name="param">The named property.</param>
         /// <returns>The value.</returns>
-        unsafe char* GetString(Device* device, GetCaptureContextString param);
+        unsafe char* GetString(Device* device, GetCaptureEnumerationContextString param);
 
         /// <summary>
         /// Gets a named property on the context.

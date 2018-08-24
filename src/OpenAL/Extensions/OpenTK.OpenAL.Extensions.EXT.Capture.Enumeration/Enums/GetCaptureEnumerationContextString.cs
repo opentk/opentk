@@ -3,9 +3,9 @@
 namespace OpenTK.OpenAL.Extensions.Enumeration
 {
     /// <summary>
-    /// Defines available parameters for <see cref="ALContext.GetString(System.IntPtr,GetCaptureContextString)" />.
+    /// Defines available parameters for <see cref="ALContext.GetString(System.IntPtr,GetCaptureEnumerationContextString)" />.
     /// </summary>
-    public enum GetCaptureContextString
+    public enum GetCaptureEnumerationContextString
     {
         /// <summary>
         /// Gets the name of the default capture device

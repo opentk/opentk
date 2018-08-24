@@ -8,12 +8,12 @@ using OpenTK.OpenAL.Native.Extensions;
 namespace OpenTK.OpenAL.Extensions.Enumeration
 {
     /// <summary>
-    /// Exposes the API in the CaptureEnumeration extension.
+    /// Exposes the API in the CaptureEnumerationEnumeration extension.
     /// </summary>
-    public abstract class CaptureEnumeration : ExtensionBase, ICaptureEnumerationContextState
+    public abstract class CaptureEnumerationEnumeration : ExtensionBase, ICaptureEnumerationContextState
     {
         /// <inheritdoc cref="ExtensionBase"/>
-        protected CaptureEnumeration(string path, ImplementationOptions options) : base(path, options)
+        protected CaptureEnumerationEnumeration(string path, ImplementationOptions options) : base(path, options)
         {
         }
 
@@ -36,10 +36,10 @@ namespace OpenTK.OpenAL.Extensions.Enumeration
         }
 
         /// <inheritdoc />
-        public abstract unsafe char* GetStringList(void* device, GetEnumerationContextStringList param);
+        public abstract unsafe char* GetStringList(void* device, GetCaptureContextStringList param);
 
-        /// <inheritdoc cref="GetString(void*, GetEnumerationContextStringList)"/>
-        public IEnumerable<string> GetStringList(GetEnumerationContextStringList param)
+        /// <inheritdoc cref="GetString(void*, GetCaptureContextStringList)"/>
+        public IEnumerable<string> GetStringList(GetCaptureContextStringList param)
         {
             unsafe
             {
