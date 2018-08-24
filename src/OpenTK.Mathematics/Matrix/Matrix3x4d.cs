@@ -82,10 +82,12 @@ namespace OpenTK.Mathematics
         /// <param name="m22">Third item of the third row of the matrix.</param>
         /// <param name="m23">Fourth item of the third row of the matrix.</param>
         [SuppressMessage("ReSharper", "SA1117", Justification = "For better readability of Matrix struct.")]
-        public Matrix3x4d(
+        public Matrix3x4d
+        (
             double m00, double m01, double m02, double m03,
             double m10, double m11, double m12, double m13,
-            double m20, double m21, double m22, double m23)
+            double m20, double m21, double m22, double m23
+        )
         {
             Row0 = new Vector4d(m00, m01, m02, m03);
             Row1 = new Vector4d(m10, m11, m12, m13);
@@ -304,7 +306,6 @@ namespace OpenTK.Mathematics
         /// <param name="axis">The axis to rotate about.</param>
         /// <param name="angle">Angle in radians to rotate counter-clockwise (looking in the direction of the given axis).</param>
         /// <param name="result">A matrix instance.</param>
-        [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1305", Justification = "Is not hungarian notation but abbreveation for precalculated values.")]
         public static void CreateFromAxisAngle(Vector3d axis, double angle, out Matrix3x4d result)
         {
             axis.Normalize();
@@ -314,16 +315,16 @@ namespace OpenTK.Mathematics
             var sin = Math.Sin(angle);
             var t = 1.0f - cos;
 
-            double tXX = t * axisX * axisX,
-                tXY = t * axisX * axisY,
-                tXZ = t * axisX * axisZ,
-                tYY = t * axisY * axisY,
-                tYZ = t * axisY * axisZ,
-                tZZ = t * axisZ * axisZ;
+            double tXX = t * axisX * axisX;
+            double tXY = t * axisX * axisY;
+            double tXZ = t * axisX * axisZ;
+            double tYY = t * axisY * axisY;
+            double tYZ = t * axisY * axisZ;
+            double tZZ = t * axisZ * axisZ;
 
-            double sinX = sin * axisX,
-                sinY = sin * axisY,
-                sinZ = sin * axisZ;
+            double sinX = sin * axisX;
+            double sinY = sin * axisY;
+            double sinZ = sin * axisZ;
 
             result.Row0.X = tXX + cos;
             result.Row0.Y = tXY - sinZ;
@@ -358,22 +359,22 @@ namespace OpenTK.Mathematics
         /// <param name="result">A matrix instance.</param>
         public static void CreateFromQuaternion(ref Quaternion q, out Matrix3x4d result)
         {
-            double x = q.X,
-                y = q.Y,
-                z = q.Z,
-                w = q.W,
-                tx = 2 * x,
-                ty = 2 * y,
-                tz = 2 * z,
-                txx = tx * x,
-                tyy = ty * y,
-                tzz = tz * z,
-                txy = tx * y,
-                txz = tx * z,
-                tyz = ty * z,
-                txw = tx * w,
-                tyw = ty * w,
-                tzw = tz * w;
+            double x = q.X;
+            double y = q.Y;
+            double z = q.Z;
+            double w = q.W;
+            double tx = 2 * x;
+            double ty = 2 * y;
+            double tz = 2 * z;
+            double txx = tx * x;
+            double tyy = ty * y;
+            double tzz = tz * z;
+            double txy = tx * y;
+            double txz = tx * z;
+            double tyz = ty * z;
+            double txw = tx * w;
+            double tyw = ty * w;
+            double tzw = tz * w;
 
             result.Row0.X = 1f - (tyy + tzz);
             result.Row0.Y = txy + tzw;
@@ -387,11 +388,6 @@ namespace OpenTK.Mathematics
             result.Row2.Y = tyz - txw;
             result.Row2.Z = 1f - (txx + tyy);
             result.Row2.W = 0f;
-
-            /*Vector3d axis;
-            double angle;
-            q.ToAxisAngle(out axis, out angle);
-            CreateFromAxisAngle(axis, angle, out result);*/
         }
 
         /// <summary>
@@ -643,30 +639,30 @@ namespace OpenTK.Mathematics
         /// <param name="result">A new instance that is the result of the multiplication.</param>
         public static void Mult(ref Matrix3x4d left, ref Matrix4x3d right, out Matrix3d result)
         {
-            double leftM11 = left.Row0.X,
-                leftM12 = left.Row0.Y,
-                leftM13 = left.Row0.Z,
-                leftM14 = left.Row0.W,
-                leftM21 = left.Row1.X,
-                leftM22 = left.Row1.Y,
-                leftM23 = left.Row1.Z,
-                leftM24 = left.Row1.W,
-                leftM31 = left.Row2.X,
-                leftM32 = left.Row2.Y,
-                leftM33 = left.Row2.Z,
-                leftM34 = left.Row2.W,
-                rightM11 = right.Row0.X,
-                rightM12 = right.Row0.Y,
-                rightM13 = right.Row0.Z,
-                rightM21 = right.Row1.X,
-                rightM22 = right.Row1.Y,
-                rightM23 = right.Row1.Z,
-                rightM31 = right.Row2.X,
-                rightM32 = right.Row2.Y,
-                rightM33 = right.Row2.Z,
-                rightM41 = right.Row3.X,
-                rightM42 = right.Row3.Y,
-                rightM43 = right.Row3.Z;
+            double leftM11 = left.Row0.X;
+            double leftM12 = left.Row0.Y;
+            double leftM13 = left.Row0.Z;
+            double leftM14 = left.Row0.W;
+            double leftM21 = left.Row1.X;
+            double leftM22 = left.Row1.Y;
+            double leftM23 = left.Row1.Z;
+            double leftM24 = left.Row1.W;
+            double leftM31 = left.Row2.X;
+            double leftM32 = left.Row2.Y;
+            double leftM33 = left.Row2.Z;
+            double leftM34 = left.Row2.W;
+            double rightM11 = right.Row0.X;
+            double rightM12 = right.Row0.Y;
+            double rightM13 = right.Row0.Z;
+            double rightM21 = right.Row1.X;
+            double rightM22 = right.Row1.Y;
+            double rightM23 = right.Row1.Z;
+            double rightM31 = right.Row2.X;
+            double rightM32 = right.Row2.Y;
+            double rightM33 = right.Row2.Z;
+            double rightM41 = right.Row3.X;
+            double rightM42 = right.Row3.Y;
+            double rightM43 = right.Row3.Z;
 
             result.Row0.X = (leftM11 * rightM11) + (leftM12 * rightM21) + (leftM13 * rightM31) + (leftM14 * rightM41);
             result.Row0.Y = (leftM11 * rightM12) + (leftM12 * rightM22) + (leftM13 * rightM32) + (leftM14 * rightM42);
@@ -699,30 +695,30 @@ namespace OpenTK.Mathematics
         /// <param name="result">A new instance that is the result of the multiplication.</param>
         public static void Mult(ref Matrix3x4d left, ref Matrix3x4d right, out Matrix3x4d result)
         {
-            double leftM11 = left.Row0.X,
-                leftM12 = left.Row0.Y,
-                leftM13 = left.Row0.Z,
-                leftM14 = left.Row0.W,
-                leftM21 = left.Row1.X,
-                leftM22 = left.Row1.Y,
-                leftM23 = left.Row1.Z,
-                leftM24 = left.Row1.W,
-                leftM31 = left.Row2.X,
-                leftM32 = left.Row2.Y,
-                leftM33 = left.Row2.Z,
-                leftM34 = left.Row2.W,
-                rightM11 = right.Row0.X,
-                rightM12 = right.Row0.Y,
-                rightM13 = right.Row0.Z,
-                rightM14 = right.Row0.W,
-                rightM21 = right.Row1.X,
-                rightM22 = right.Row1.Y,
-                rightM23 = right.Row1.Z,
-                rightM24 = right.Row1.W,
-                rightM31 = right.Row2.X,
-                rightM32 = right.Row2.Y,
-                rightM33 = right.Row2.Z,
-                rightM34 = right.Row2.W;
+            double leftM11 = left.Row0.X;
+            double leftM12 = left.Row0.Y;
+            double leftM13 = left.Row0.Z;
+            double leftM14 = left.Row0.W;
+            double leftM21 = left.Row1.X;
+            double leftM22 = left.Row1.Y;
+            double leftM23 = left.Row1.Z;
+            double leftM24 = left.Row1.W;
+            double leftM31 = left.Row2.X;
+            double leftM32 = left.Row2.Y;
+            double leftM33 = left.Row2.Z;
+            double leftM34 = left.Row2.W;
+            double rightM11 = right.Row0.X;
+            double rightM12 = right.Row0.Y;
+            double rightM13 = right.Row0.Z;
+            double rightM14 = right.Row0.W;
+            double rightM21 = right.Row1.X;
+            double rightM22 = right.Row1.Y;
+            double rightM23 = right.Row1.Z;
+            double rightM24 = right.Row1.W;
+            double rightM31 = right.Row2.X;
+            double rightM32 = right.Row2.Y;
+            double rightM33 = right.Row2.Z;
+            double rightM34 = right.Row2.W;
 
             result.Row0.X = (leftM11 * rightM11) + (leftM12 * rightM21) + (leftM13 * rightM31);
             result.Row0.Y = (leftM11 * rightM12) + (leftM12 * rightM22) + (leftM13 * rightM32);
@@ -736,15 +732,6 @@ namespace OpenTK.Mathematics
             result.Row2.Y = (leftM31 * rightM12) + (leftM32 * rightM22) + (leftM33 * rightM32);
             result.Row2.Z = (leftM31 * rightM13) + (leftM32 * rightM23) + (leftM33 * rightM33);
             result.Row2.W = (leftM31 * rightM14) + (leftM32 * rightM24) + (leftM33 * rightM34) + leftM34;
-
-            /*result.Row0 = (right.Row0 * leftM11 + right.Row1 * leftM12 + right.Row2 * leftM13);
-            result.Row0.W += leftM14;
-
-            result.Row1 = (right.Row0 * leftM21 + right.Row1 * leftM22 + right.Row2 * leftM23);
-            result.Row1.W += leftM24;
-
-            result.Row2 = (right.Row0 * leftM31 + right.Row1 * leftM32 + right.Row2 * leftM33);
-            result.Row2.W += leftM34;*/
         }
 
         /// <summary>

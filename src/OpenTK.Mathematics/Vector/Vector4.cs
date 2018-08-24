@@ -260,7 +260,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Returns a copy of the Vector4 scaled to unit length.
         /// </summary>
-        /// <returns>The normalized vector.</returns>
+        /// <returns>The normalized copy.</returns>
         public Vector4 Normalized()
         {
             var v = this;
@@ -651,7 +651,7 @@ namespace OpenTK.Mathematics
         /// Scale a vector to unit length.
         /// </summary>
         /// <param name="vec">The input vector.</param>
-        /// <returns>The normalized vector.</returns>
+        /// <returns>The normalized copy.</returns>
         public static Vector4 Normalize(Vector4 vec)
         {
             var scale = 1.0f / vec.Length;
@@ -680,7 +680,7 @@ namespace OpenTK.Mathematics
         /// Scale a vector to approximately unit length.
         /// </summary>
         /// <param name="vec">The input vector.</param>
-        /// <returns>The normalized vector.</returns>
+        /// <returns>The normalized copy.</returns>
         public static Vector4 NormalizeFast(Vector4 vec)
         {
             var scale = MathHelper.InverseSqrtFast((vec.X * vec.X) + (vec.Y * vec.Y) + (vec.Z * vec.Z) + (vec.W * vec.W));
@@ -695,7 +695,7 @@ namespace OpenTK.Mathematics
         /// Scale a vector to approximately unit length.
         /// </summary>
         /// <param name="vec">The input vector.</param>
-        /// <param name="result">The normalized vector.</param>
+        /// <param name="result">The normalized copy.</param>
         public static void NormalizeFast(ref Vector4 vec, out Vector4 result)
         {
             var scale = MathHelper.InverseSqrtFast((vec.X * vec.X) + (vec.Y * vec.Y) + (vec.Z * vec.Z) + (vec.W * vec.W));

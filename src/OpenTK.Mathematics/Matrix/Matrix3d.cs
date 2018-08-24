@@ -79,10 +79,12 @@ namespace OpenTK.Mathematics
         /// <param name="m21">Second item of the third row of the matrix.</param>
         /// <param name="m22">Third item of the third row of the matrix.</param>
         [SuppressMessage("ReSharper", "SA1117", Justification = "For better readability of Matrix struct.")]
-        public Matrix3d(
+        public Matrix3d
+        (
             double m00, double m01, double m02,
             double m10, double m11, double m12,
-            double m20, double m21, double m22)
+            double m20, double m21, double m22
+        )
         {
             Row0 = new Vector3d(m00, m01, m02);
             Row1 = new Vector3d(m10, m11, m12);
@@ -107,15 +109,15 @@ namespace OpenTK.Mathematics
         {
             get
             {
-                double m11 = Row0.X,
-                    m12 = Row0.Y,
-                    m13 = Row0.Z,
-                    m21 = Row1.X,
-                    m22 = Row1.Y,
-                    m23 = Row1.Z,
-                    m31 = Row2.X,
-                    m32 = Row2.Y,
-                    m33 = Row2.Z;
+                double m11 = Row0.X;
+                double m12 = Row0.Y;
+                double m13 = Row0.Z;
+                double m21 = Row1.X;
+                double m22 = Row1.Y;
+                double m23 = Row1.Z;
+                double m31 = Row2.X;
+                double m32 = Row2.Y;
+                double m33 = Row2.Z;
 
                 return
                     (m11 * m22 * m33) + (m12 * m23 * m31) + (m13 * m21 * m32)
@@ -307,7 +309,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Returns a normalized copy of this instance.
         /// </summary>
-        /// <returns>The normalized vector.</returns>
+        /// <returns>The normalized copy.</returns>
         public Matrix3d Normalized()
         {
             var m = this;
@@ -329,7 +331,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Returns an inverted copy of this instance.
         /// </summary>
-        /// <returns>The inverted matrix.</returns>
+        /// <returns>The inverted copy.</returns>
         public Matrix3d Inverted()
         {
             var m = this;
@@ -452,7 +454,6 @@ namespace OpenTK.Mathematics
         /// <param name="axis">The axis to rotate about.</param>
         /// <param name="angle">Angle in radians to rotate counter-clockwise (looking in the direction of the given axis).</param>
         /// <param name="result">A matrix instance.</param>
-        [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1305", Justification = "Is not hungarian notation but abbreveation for precalculated values.")]
         public static void CreateFromAxisAngle(Vector3d axis, double angle, out Matrix3d result)
         {
             // normalize and create a local copy of the vector.
@@ -465,16 +466,16 @@ namespace OpenTK.Mathematics
             var t = 1.0f - cos;
 
             // do the conversion math once
-            double tXX = t * axisX * axisX,
-                tXY = t * axisX * axisY,
-                tXZ = t * axisX * axisZ,
-                tYY = t * axisY * axisY,
-                tYZ = t * axisY * axisZ,
-                tZZ = t * axisZ * axisZ;
+            double tXX = t * axisX * axisX;
+            double tXY = t * axisX * axisY;
+            double tXZ = t * axisX * axisZ;
+            double tYY = t * axisY * axisY;
+            double tYZ = t * axisY * axisZ;
+            double tZZ = t * axisZ * axisZ;
 
-            double sinX = sin * axisX,
-                sinY = sin * axisY,
-                sinZ = sin * axisZ;
+            double sinX = sin * axisX;
+            double sinY = sin * axisY;
+            double sinZ = sin * axisZ;
 
             result.Row0.X = tXX + cos;
             result.Row0.Y = tXY - sinZ;
@@ -726,24 +727,24 @@ namespace OpenTK.Mathematics
         /// <param name="result">A new instance that is the result of the multiplication.</param>
         public static void Mult(ref Matrix3d left, ref Matrix3d right, out Matrix3d result)
         {
-            double leftM11 = left.Row0.X,
-                leftM12 = left.Row0.Y,
-                leftM13 = left.Row0.Z,
-                leftM21 = left.Row1.X,
-                leftM22 = left.Row1.Y,
-                leftM23 = left.Row1.Z,
-                leftM31 = left.Row2.X,
-                leftM32 = left.Row2.Y,
-                leftM33 = left.Row2.Z,
-                rightM11 = right.Row0.X,
-                rightM12 = right.Row0.Y,
-                rightM13 = right.Row0.Z,
-                rightM21 = right.Row1.X,
-                rightM22 = right.Row1.Y,
-                rightM23 = right.Row1.Z,
-                rightM31 = right.Row2.X,
-                rightM32 = right.Row2.Y,
-                rightM33 = right.Row2.Z;
+            double leftM11 = left.Row0.X;
+            double leftM12 = left.Row0.Y;
+            double leftM13 = left.Row0.Z;
+            double leftM21 = left.Row1.X;
+            double leftM22 = left.Row1.Y;
+            double leftM23 = left.Row1.Z;
+            double leftM31 = left.Row2.X;
+            double leftM32 = left.Row2.Y;
+            double leftM33 = left.Row2.Z;
+            double rightM11 = right.Row0.X;
+            double rightM12 = right.Row0.Y;
+            double rightM13 = right.Row0.Z;
+            double rightM21 = right.Row1.X;
+            double rightM22 = right.Row1.Y;
+            double rightM23 = right.Row1.Z;
+            double rightM31 = right.Row2.X;
+            double rightM32 = right.Row2.Y;
+            double rightM33 = right.Row2.Z;
 
             result.Row0.X = (leftM11 * rightM11) + (leftM12 * rightM21) + (leftM13 * rightM31);
             result.Row0.Y = (leftM11 * rightM12) + (leftM12 * rightM22) + (leftM13 * rightM32);

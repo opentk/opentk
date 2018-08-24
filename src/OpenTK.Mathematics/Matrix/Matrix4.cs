@@ -100,11 +100,13 @@ namespace OpenTK.Mathematics
         /// <param name="m32">Third item of the fourth row of the matrix.</param>
         /// <param name="m33">Fourth item of the fourth row of the matrix.</param>
         [SuppressMessage("ReSharper", "SA1117", Justification = "For better readability of Matrix struct.")]
-        public Matrix4(
+        public Matrix4
+        (
             float m00, float m01, float m02, float m03,
             float m10, float m11, float m12, float m13,
             float m20, float m21, float m22, float m23,
-            float m30, float m31, float m32, float m33)
+            float m30, float m31, float m32, float m33
+        )
         {
             Row0 = new Vector4(m00, m01, m02, m03);
             Row1 = new Vector4(m10, m11, m12, m13);
@@ -143,22 +145,22 @@ namespace OpenTK.Mathematics
         {
             get
             {
-                float m11 = Row0.X,
-                    m12 = Row0.Y,
-                    m13 = Row0.Z,
-                    m14 = Row0.W,
-                    m21 = Row1.X,
-                    m22 = Row1.Y,
-                    m23 = Row1.Z,
-                    m24 = Row1.W,
-                    m31 = Row2.X,
-                    m32 = Row2.Y,
-                    m33 = Row2.Z,
-                    m34 = Row2.W,
-                    m41 = Row3.X,
-                    m42 = Row3.Y,
-                    m43 = Row3.Z,
-                    m44 = Row3.W;
+                float m11 = Row0.X;
+                float m12 = Row0.Y;
+                float m13 = Row0.Z;
+                float m14 = Row0.W;
+                float m21 = Row1.X;
+                float m22 = Row1.Y;
+                float m23 = Row1.Z;
+                float m24 = Row1.W;
+                float m31 = Row2.X;
+                float m32 = Row2.Y;
+                float m33 = Row2.Z;
+                float m34 = Row2.W;
+                float m41 = Row3.X;
+                float m42 = Row3.Y;
+                float m43 = Row3.Z;
+                float m44 = Row3.W;
 
                 return
                     (m11 * m22 * m33 * m44) - (m11 * m22 * m34 * m43) + (m11 * m23 * m34 * m42) - (m11 * m23 * m32 * m44)
@@ -474,7 +476,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Returns a normalized copy of this instance.
         /// </summary>
-        /// <returns>The normalized matrix.</returns>
+        /// <returns>The normalized copy.</returns>
         public Matrix4 Normalized()
         {
             var m = this;
@@ -497,7 +499,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Returns an inverted copy of this instance.
         /// </summary>
-        /// <returns>The inverted matrix.</returns>
+        /// <returns>The inverted copy.</returns>
         public Matrix4 Inverted()
         {
             var m = this;
@@ -660,7 +662,6 @@ namespace OpenTK.Mathematics
         /// <param name="axis">The axis to rotate about.</param>
         /// <param name="angle">Angle in radians to rotate counter-clockwise (looking in the direction of the given axis).</param>
         /// <param name="result">A matrix instance.</param>
-        [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1305", Justification = "Is not hungarian notation but abbreveation for precalculated values.")]
         public static void CreateFromAxisAngle(Vector3 axis, float angle, out Matrix4 result)
         {
             // normalize and create a local copy of the vector.
@@ -673,16 +674,16 @@ namespace OpenTK.Mathematics
             var t = 1.0f - cos;
 
             // do the conversion math once
-            float tXX = t * axisX * axisX,
-                tXY = t * axisX * axisY,
-                tXZ = t * axisX * axisZ,
-                tYY = t * axisY * axisY,
-                tYZ = t * axisY * axisZ,
-                tZZ = t * axisZ * axisZ;
+            float tXX = t * axisX * axisX;
+            float tXY = t * axisX * axisY;
+            float tXZ = t * axisX * axisZ;
+            float tYY = t * axisY * axisY;
+            float tYZ = t * axisY * axisZ;
+            float tZZ = t * axisZ * axisZ;
 
-            float sinX = sin * axisX,
-                sinY = sin * axisY,
-                sinZ = sin * axisZ;
+            float sinX = sin * axisX;
+            float sinY = sin * axisY;
+            float sinZ = sin * axisZ;
 
             result.Row0.X = tXX + cos;
             result.Row0.Y = tXY - sinZ;
@@ -1359,38 +1360,38 @@ namespace OpenTK.Mathematics
         /// <param name="result">A new instance that is the result of the multiplication.</param>
         public static void Mult(ref Matrix4 left, ref Matrix4 right, out Matrix4 result)
         {
-            float leftM11 = left.Row0.X,
-                leftM12 = left.Row0.Y,
-                leftM13 = left.Row0.Z,
-                leftM14 = left.Row0.W,
-                leftM21 = left.Row1.X,
-                leftM22 = left.Row1.Y,
-                leftM23 = left.Row1.Z,
-                leftM24 = left.Row1.W,
-                leftM31 = left.Row2.X,
-                leftM32 = left.Row2.Y,
-                leftM33 = left.Row2.Z,
-                leftM34 = left.Row2.W,
-                leftM41 = left.Row3.X,
-                leftM42 = left.Row3.Y,
-                leftM43 = left.Row3.Z,
-                leftM44 = left.Row3.W,
-                rightM11 = right.Row0.X,
-                rightM12 = right.Row0.Y,
-                rightM13 = right.Row0.Z,
-                rightM14 = right.Row0.W,
-                rightM21 = right.Row1.X,
-                rightM22 = right.Row1.Y,
-                rightM23 = right.Row1.Z,
-                rightM24 = right.Row1.W,
-                rightM31 = right.Row2.X,
-                rightM32 = right.Row2.Y,
-                rightM33 = right.Row2.Z,
-                rightM34 = right.Row2.W,
-                rightM41 = right.Row3.X,
-                rightM42 = right.Row3.Y,
-                rightM43 = right.Row3.Z,
-                rightM44 = right.Row3.W;
+            float leftM11 = left.Row0.X;
+            float leftM12 = left.Row0.Y;
+            float leftM13 = left.Row0.Z;
+            float leftM14 = left.Row0.W;
+            float leftM21 = left.Row1.X;
+            float leftM22 = left.Row1.Y;
+            float leftM23 = left.Row1.Z;
+            float leftM24 = left.Row1.W;
+            float leftM31 = left.Row2.X;
+            float leftM32 = left.Row2.Y;
+            float leftM33 = left.Row2.Z;
+            float leftM34 = left.Row2.W;
+            float leftM41 = left.Row3.X;
+            float leftM42 = left.Row3.Y;
+            float leftM43 = left.Row3.Z;
+            float leftM44 = left.Row3.W;
+            float rightM11 = right.Row0.X;
+            float rightM12 = right.Row0.Y;
+            float rightM13 = right.Row0.Z;
+            float rightM14 = right.Row0.W;
+            float rightM21 = right.Row1.X;
+            float rightM22 = right.Row1.Y;
+            float rightM23 = right.Row1.Z;
+            float rightM24 = right.Row1.W;
+            float rightM31 = right.Row2.X;
+            float rightM32 = right.Row2.Y;
+            float rightM33 = right.Row2.Z;
+            float rightM34 = right.Row2.W;
+            float rightM41 = right.Row3.X;
+            float rightM42 = right.Row3.Y;
+            float rightM43 = right.Row3.Z;
+            float rightM44 = right.Row3.W;
 
             result.Row0.X = (leftM11 * rightM11) + (leftM12 * rightM21) + (leftM13 * rightM31) + (leftM14 * rightM41);
             result.Row0.Y = (leftM11 * rightM12) + (leftM12 * rightM22) + (leftM13 * rightM32) + (leftM14 * rightM42);
@@ -1454,7 +1455,7 @@ namespace OpenTK.Mathematics
                 { mat.Row0.X, mat.Row0.Y, mat.Row0.Z, mat.Row0.W },
                 { mat.Row1.X, mat.Row1.Y, mat.Row1.Z, mat.Row1.W },
                 { mat.Row2.X, mat.Row2.Y, mat.Row2.Z, mat.Row2.W },
-                { mat.Row3.X, mat.Row3.Y, mat.Row3.Z, mat.Row3.W },
+                { mat.Row3.X, mat.Row3.Y, mat.Row3.Z, mat.Row3.W }
             };
             var icol = 0;
             var irow = 0;

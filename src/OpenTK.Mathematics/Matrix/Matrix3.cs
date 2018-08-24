@@ -84,10 +84,12 @@ namespace OpenTK.Mathematics
         /// <param name="m21">Second item of the third row of the matrix.</param>
         /// <param name="m22">Third item of the third row of the matrix.</param>
         [SuppressMessage("ReSharper", "SA1117", Justification = "For better readability of Matrix struct.")]
-        public Matrix3(
+        public Matrix3
+        (
             float m00, float m01, float m02,
             float m10, float m11, float m12,
-            float m20, float m21, float m22)
+            float m20, float m21, float m22
+        )
         {
             Row0 = new Vector3(m00, m01, m02);
             Row1 = new Vector3(m10, m11, m12);
@@ -112,15 +114,15 @@ namespace OpenTK.Mathematics
         {
             get
             {
-                float m11 = Row0.X,
-                    m12 = Row0.Y,
-                    m13 = Row0.Z,
-                    m21 = Row1.X,
-                    m22 = Row1.Y,
-                    m23 = Row1.Z,
-                    m31 = Row2.X,
-                    m32 = Row2.Y,
-                    m33 = Row2.Z;
+                float m11 = Row0.X;
+                float m12 = Row0.Y;
+                float m13 = Row0.Z;
+                float m21 = Row1.X;
+                float m22 = Row1.Y;
+                float m23 = Row1.Z;
+                float m31 = Row2.X;
+                float m32 = Row2.Y;
+                float m33 = Row2.Z;
 
                 return (m11 * m22 * m33) + (m12 * m23 * m31) + (m13 * m21 * m32)
                        - (m13 * m22 * m31) - (m11 * m23 * m32) - (m12 * m21 * m33);
@@ -312,7 +314,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Returns a normalized copy of this instance.
         /// </summary>
-        /// <returns>The normalized matrix.</returns>
+        /// <returns>The normalized copy.</returns>
         public Matrix3 Normalized()
         {
             var m = this;
@@ -334,7 +336,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Returns an inverted copy of this instance.
         /// </summary>
-        /// <returns>The inverted matrix.</returns>
+        /// <returns>The inverted copy.</returns>
         public Matrix3 Inverted()
         {
             var m = this;
@@ -457,7 +459,6 @@ namespace OpenTK.Mathematics
         /// <param name="axis">The axis to rotate about.</param>
         /// <param name="angle">Angle in radians to rotate counter-clockwise (looking in the direction of the given axis).</param>
         /// <param name="result">A matrix instance.</param>
-        [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1305", Justification = "Is not hungarian notation but abbreveation for precalculated values.")]
         public static void CreateFromAxisAngle(Vector3 axis, float angle, out Matrix3 result)
         {
             // normalize and create a local copy of the vector.
@@ -470,16 +471,16 @@ namespace OpenTK.Mathematics
             var t = 1.0f - cos;
 
             // do the conversion math once
-            float tXX = t * axisX * axisX,
-                tXY = t * axisX * axisY,
-                tXZ = t * axisX * axisZ,
-                tYY = t * axisY * axisY,
-                tYZ = t * axisY * axisZ,
-                tZZ = t * axisZ * axisZ;
+            float tXX = t * axisX * axisX;
+            float tXY = t * axisX * axisY;
+            float tXZ = t * axisX * axisZ;
+            float tYY = t * axisY * axisY;
+            float tYZ = t * axisY * axisZ;
+            float tZZ = t * axisZ * axisZ;
 
-            float sinX = sin * axisX,
-                sinY = sin * axisY,
-                sinZ = sin * axisZ;
+            float sinX = sin * axisX;
+            float sinY = sin * axisY;
+            float sinZ = sin * axisZ;
 
             result.Row0.X = tXX + cos;
             result.Row0.Y = tXY - sinZ;
@@ -731,24 +732,24 @@ namespace OpenTK.Mathematics
         /// <param name="result">A new instance that is the result of the multiplication.</param>
         public static void Mult(ref Matrix3 left, ref Matrix3 right, out Matrix3 result)
         {
-            float leftM11 = left.Row0.X,
-                leftM12 = left.Row0.Y,
-                leftM13 = left.Row0.Z,
-                leftM21 = left.Row1.X,
-                leftM22 = left.Row1.Y,
-                leftM23 = left.Row1.Z,
-                leftM31 = left.Row2.X,
-                leftM32 = left.Row2.Y,
-                leftM33 = left.Row2.Z,
-                rightM11 = right.Row0.X,
-                rightM12 = right.Row0.Y,
-                rightM13 = right.Row0.Z,
-                rightM21 = right.Row1.X,
-                rightM22 = right.Row1.Y,
-                rightM23 = right.Row1.Z,
-                rightM31 = right.Row2.X,
-                rightM32 = right.Row2.Y,
-                rightM33 = right.Row2.Z;
+            float leftM11 = left.Row0.X;
+            float leftM12 = left.Row0.Y;
+            float leftM13 = left.Row0.Z;
+            float leftM21 = left.Row1.X;
+            float leftM22 = left.Row1.Y;
+            float leftM23 = left.Row1.Z;
+            float leftM31 = left.Row2.X;
+            float leftM32 = left.Row2.Y;
+            float leftM33 = left.Row2.Z;
+            float rightM11 = right.Row0.X;
+            float rightM12 = right.Row0.Y;
+            float rightM13 = right.Row0.Z;
+            float rightM21 = right.Row1.X;
+            float rightM22 = right.Row1.Y;
+            float rightM23 = right.Row1.Z;
+            float rightM31 = right.Row2.X;
+            float rightM32 = right.Row2.Y;
+            float rightM33 = right.Row2.Z;
 
             result.Row0.X = (leftM11 * rightM11) + (leftM12 * rightM21) + (leftM13 * rightM31);
             result.Row0.Y = (leftM11 * rightM12) + (leftM12 * rightM22) + (leftM13 * rightM32);
@@ -777,7 +778,7 @@ namespace OpenTK.Mathematics
             {
                 { mat.Row0.X, mat.Row0.Y, mat.Row0.Z },
                 { mat.Row1.X, mat.Row1.Y, mat.Row1.Z },
-                { mat.Row2.X, mat.Row2.Y, mat.Row2.Z },
+                { mat.Row2.X, mat.Row2.Y, mat.Row2.Z }
             };
 
             var icol = 0;

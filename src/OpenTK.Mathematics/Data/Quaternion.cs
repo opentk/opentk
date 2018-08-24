@@ -191,7 +191,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Returns a copy of the Quaternion scaled to unit length.
         /// </summary>
-        /// <returns>The normalized Quaternion.</returns>
+        /// <returns>The normalized copy.</returns>
         public Quaternion Normalized()
         {
             var q = this;
@@ -406,7 +406,7 @@ namespace OpenTK.Mathematics
         /// Scale the given quaternion to unit length.
         /// </summary>
         /// <param name="q">The quaternion to normalize.</param>
-        /// <returns>The normalized quaternion.</returns>
+        /// <returns>The normalized copy.</returns>
         public static Quaternion Normalize(Quaternion q)
         {
             Normalize(ref q, out Quaternion result);

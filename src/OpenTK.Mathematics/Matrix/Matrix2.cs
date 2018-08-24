@@ -69,9 +69,11 @@ namespace OpenTK.Mathematics
         /// <param name="m10">First item of the second row of the matrix.</param>
         /// <param name="m11">Second item of the second row of the matrix.</param>
         [SuppressMessage("ReSharper", "SA1117", Justification = "For better readability of Matrix struct.")]
-        public Matrix2(
+        public Matrix2
+        (
             float m00, float m01,
-            float m10, float m11)
+            float m10, float m11
+        )
         {
             Row0 = new Vector2(m00, m01);
             Row1 = new Vector2(m10, m11);
@@ -84,10 +86,10 @@ namespace OpenTK.Mathematics
         {
             get
             {
-                float m11 = Row0.X,
-                    m12 = Row0.Y,
-                    m21 = Row1.X,
-                    m22 = Row1.Y;
+                float m11 = Row0.X;
+                float m12 = Row0.Y;
+                float m21 = Row1.X;
+                float m22 = Row1.Y;
 
                 return (m11 * m22) - (m12 * m21);
             }
@@ -366,14 +368,14 @@ namespace OpenTK.Mathematics
         /// <param name="result">A new instance that is the result of the multiplication.</param>
         public static void Mult(ref Matrix2 left, ref Matrix2 right, out Matrix2 result)
         {
-            float leftM11 = left.Row0.X,
-                leftM12 = left.Row0.Y,
-                leftM21 = left.Row1.X,
-                leftM22 = left.Row1.Y,
-                rightM11 = right.Row0.X,
-                rightM12 = right.Row0.Y,
-                rightM21 = right.Row1.X,
-                rightM22 = right.Row1.Y;
+            float leftM11 = left.Row0.X;
+            float leftM12 = left.Row0.Y;
+            float leftM21 = left.Row1.X;
+            float leftM22 = left.Row1.Y;
+            float rightM11 = right.Row0.X;
+            float rightM12 = right.Row0.Y;
+            float rightM21 = right.Row1.X;
+            float rightM22 = right.Row1.Y;
 
             result.Row0.X = (leftM11 * rightM11) + (leftM12 * rightM21);
             result.Row0.Y = (leftM11 * rightM12) + (leftM12 * rightM22);
@@ -401,16 +403,16 @@ namespace OpenTK.Mathematics
         /// <param name="result">A new instance that is the result of the multiplication.</param>
         public static void Mult(ref Matrix2 left, ref Matrix2x3 right, out Matrix2x3 result)
         {
-            float leftM11 = left.Row0.X,
-                leftM12 = left.Row0.Y,
-                leftM21 = left.Row1.X,
-                leftM22 = left.Row1.Y,
-                rightM11 = right.Row0.X,
-                rightM12 = right.Row0.Y,
-                rightM13 = right.Row0.Z,
-                rightM21 = right.Row1.X,
-                rightM22 = right.Row1.Y,
-                rightM23 = right.Row1.Z;
+            float leftM11 = left.Row0.X;
+            float leftM12 = left.Row0.Y;
+            float leftM21 = left.Row1.X;
+            float leftM22 = left.Row1.Y;
+            float rightM11 = right.Row0.X;
+            float rightM12 = right.Row0.Y;
+            float rightM13 = right.Row0.Z;
+            float rightM21 = right.Row1.X;
+            float rightM22 = right.Row1.Y;
+            float rightM23 = right.Row1.Z;
 
             result.Row0.X = (leftM11 * rightM11) + (leftM12 * rightM21);
             result.Row0.Y = (leftM11 * rightM12) + (leftM12 * rightM22);
@@ -440,18 +442,18 @@ namespace OpenTK.Mathematics
         /// <param name="result">A new instance that is the result of the multiplication.</param>
         public static void Mult(ref Matrix2 left, ref Matrix2x4 right, out Matrix2x4 result)
         {
-            float leftM11 = left.Row0.X,
-                leftM12 = left.Row0.Y,
-                leftM21 = left.Row1.X,
-                leftM22 = left.Row1.Y,
-                rightM11 = right.Row0.X,
-                rightM12 = right.Row0.Y,
-                rightM13 = right.Row0.Z,
-                rightM14 = right.Row0.W,
-                rightM21 = right.Row1.X,
-                rightM22 = right.Row1.Y,
-                rightM23 = right.Row1.Z,
-                rightM24 = right.Row1.W;
+            float leftM11 = left.Row0.X;
+            float leftM12 = left.Row0.Y;
+            float leftM21 = left.Row1.X;
+            float leftM22 = left.Row1.Y;
+            float rightM11 = right.Row0.X;
+            float rightM12 = right.Row0.Y;
+            float rightM13 = right.Row0.Z;
+            float rightM14 = right.Row0.W;
+            float rightM21 = right.Row1.X;
+            float rightM22 = right.Row1.Y;
+            float rightM23 = right.Row1.Z;
+            float rightM24 = right.Row1.W;
 
             result.Row0.X = (leftM11 * rightM11) + (leftM12 * rightM21);
             result.Row0.Y = (leftM11 * rightM12) + (leftM12 * rightM22);
@@ -556,7 +558,7 @@ namespace OpenTK.Mathematics
         /// <param name="mat">The matrix to invert.</param>
         /// <returns>The inverse of the given matrix.</returns>
         /// <exception cref="InvalidOperationException">Thrown if the Matrix2 is singular.</exception>
-        /// <returns>The inverted matrix.</returns>
+        /// <returns>The inverted copy.</returns>
         public static Matrix2 Invert(Matrix2 mat)
         {
             Invert(ref mat, out Matrix2 result);
