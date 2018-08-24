@@ -250,7 +250,7 @@ namespace OpenTK.OpenAL
                     throw new ObjectDisposedException(GetType().FullName);
                 }
 
-                return Alc.GetError(Device);
+                return ALContext.GetError(Device);
             }
         }
 
@@ -327,7 +327,7 @@ namespace OpenTK.OpenAL
                         return null;
                     }
 
-                    AvailableContexts.TryGetValue(Alc.GetCurrentContext(), out var context);
+                    AvailableContexts.TryGetValue(ALContext.GetCurrentContext(), out var context);
                     return context;
                 }
             }
@@ -472,19 +472,19 @@ namespace OpenTK.OpenAL
             if (!string.IsNullOrEmpty(device))
             {
                 _deviceName = device;
-                Device = Alc.OpenDevice(device); // try to open device by name
+                Device = ALContext.OpenDevice(device); // try to open device by name
             }
 
             if (Device == IntPtr.Zero)
             {
                 _deviceName = "IntPtr.Zero (null string)";
-                Device = Alc.OpenDevice(null); // try to open unnamed default device
+                Device = ALContext.OpenDevice(null); // try to open unnamed default device
             }
 
             if (Device == IntPtr.Zero)
             {
                 _deviceName = DefaultDevice;
-                Device = Alc.OpenDevice(DefaultDevice); // try to open named default device
+                Device = ALContext.OpenDevice(DefaultDevice); // try to open named default device
             }
 
             if (Device == IntPtr.Zero)
@@ -499,11 +499,11 @@ namespace OpenTK.OpenAL
 
             CheckErrors();
 
-            _contextHandle = Alc.CreateContext(Device, attributes.ToArray());
+            _contextHandle = ALContext.CreateContext(Device, attributes.ToArray());
 
             if (_contextHandle == ContextHandle.Zero)
             {
-                Alc.CloseDevice(Device);
+                ALContext.CloseDevice(Device);
                 throw new AudioContextException
                 (
                     "The audio context could not be created with the specified parameters."
@@ -522,7 +522,7 @@ namespace OpenTK.OpenAL
 
             CheckErrors();
 
-            _deviceName = Alc.GetString(Device, GetContextString.DeviceSpecifier);
+            _deviceName = ALContext.GetString(Device, GetContextString.DeviceSpecifier);
 
             lock (AudioContextLock)
             {
@@ -546,10 +546,10 @@ namespace OpenTK.OpenAL
         {
             lock (AudioContextLock)
             {
-                if (!Alc.MakeContextCurrent(context != null ? context._contextHandle : ContextHandle.Zero))
+                if (!ALContext.MakeContextCurrent(context != null ? context._contextHandle : ContextHandle.Zero))
                 {
                     throw new AudioContextException(
-                        $"ALC {Alc.GetError(context != null ? (IntPtr)context._contextHandle : IntPtr.Zero).ToString()} error detected at {(context != null ? context.ToString() : "null")}.");
+                        $"ALC {ALContext.GetError(context != null ? (IntPtr)context._contextHandle : IntPtr.Zero).ToString()} error detected at {(context != null ? context.ToString() : "null")}.");
                 }
             }
         }
@@ -619,7 +619,7 @@ namespace OpenTK.OpenAL
                 throw new ObjectDisposedException(GetType().FullName);
             }
 
-            Alc.ProcessContext(_contextHandle);
+            ALContext.ProcessContext(_contextHandle);
             IsProcessing = true;
         }
 
@@ -650,7 +650,7 @@ namespace OpenTK.OpenAL
                 throw new ObjectDisposedException(GetType().FullName);
             }
 
-            Alc.SuspendContext(_contextHandle);
+            ALContext.SuspendContext(_contextHandle);
             IsProcessing = false;
         }
 
@@ -666,7 +666,7 @@ namespace OpenTK.OpenAL
                 throw new ObjectDisposedException(GetType().FullName);
             }
 
-            return Alc.IsExtensionPresent(Device, extension);
+            return ALContext.IsExtensionPresent(Device, extension);
         }
 
         private void Dispose(bool manual)
@@ -681,12 +681,12 @@ namespace OpenTK.OpenAL
                 if (_contextHandle != ContextHandle.Zero)
                 {
                     AvailableContexts.Remove(_contextHandle);
-                    Alc.DestroyContext(_contextHandle);
+                    ALContext.DestroyContext(_contextHandle);
                 }
 
                 if (Device != IntPtr.Zero)
                 {
-                    Alc.CloseDevice(Device);
+                    ALContext.CloseDevice(Device);
                 }
 
                 if (manual)

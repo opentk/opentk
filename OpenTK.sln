@@ -69,6 +69,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenTK.OpenAL.Extensions.So
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenTK.OpenAL.Extensions.Soft.DeferredUpdates", "src\OpenAL\Extensions\OpenTK.OpenAL.Extensions.Soft.DeferredUpdates\OpenTK.OpenAL.Extensions.Soft.DeferredUpdates.csproj", "{DC7C9285-3BE1-41A6-98F1-71D7DB3C030A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenTK.OpenAL.Extensions.Enumeration", "src\OpenAL\Extensions\OpenTK.OpenAL.Extensions.Enumeration\OpenTK.OpenAL.Extensions.Enumeration.csproj", "{8A8918DC-5ECD-4B81-9BB7-36CB7E5FE5B1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenTK.OpenAL.Extensions.Creative.EnumerateAll", "src\OpenAL\Extensions\OpenTK.OpenAL.Extensions.Creative.EnumerateAll\OpenTK.OpenAL.Extensions.Creative.EnumerateAll.csproj", "{2B0BF65F-F712-4792-8B01-52D3C88834FE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenTK.OpenAL.Extensions.EXT.Capture", "src\OpenAL\Extensions\OpenTK.OpenAL.Extensions.EXT.Capture\OpenTK.OpenAL.Extensions.EXT.Capture.csproj", "{86CE656C-0D40-4014-B97B-102C9C259FDA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -151,6 +157,18 @@ Global
 		{DC7C9285-3BE1-41A6-98F1-71D7DB3C030A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DC7C9285-3BE1-41A6-98F1-71D7DB3C030A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DC7C9285-3BE1-41A6-98F1-71D7DB3C030A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8A8918DC-5ECD-4B81-9BB7-36CB7E5FE5B1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8A8918DC-5ECD-4B81-9BB7-36CB7E5FE5B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8A8918DC-5ECD-4B81-9BB7-36CB7E5FE5B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8A8918DC-5ECD-4B81-9BB7-36CB7E5FE5B1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2B0BF65F-F712-4792-8B01-52D3C88834FE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2B0BF65F-F712-4792-8B01-52D3C88834FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2B0BF65F-F712-4792-8B01-52D3C88834FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2B0BF65F-F712-4792-8B01-52D3C88834FE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{86CE656C-0D40-4014-B97B-102C9C259FDA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{86CE656C-0D40-4014-B97B-102C9C259FDA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{86CE656C-0D40-4014-B97B-102C9C259FDA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{86CE656C-0D40-4014-B97B-102C9C259FDA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -173,5 +191,8 @@ Global
 		{652BEC89-F9AF-487D-BE24-8F58E285D0D9} = {EA863589-4B76-455C-9F91-87CD642BC7F0}
 		{C4DA366A-78CC-4DCA-B465-45F71B34A907} = {EA863589-4B76-455C-9F91-87CD642BC7F0}
 		{DC7C9285-3BE1-41A6-98F1-71D7DB3C030A} = {EA863589-4B76-455C-9F91-87CD642BC7F0}
+		{8A8918DC-5ECD-4B81-9BB7-36CB7E5FE5B1} = {EA863589-4B76-455C-9F91-87CD642BC7F0}
+		{2B0BF65F-F712-4792-8B01-52D3C88834FE} = {EA863589-4B76-455C-9F91-87CD642BC7F0}
+		{86CE656C-0D40-4014-B97B-102C9C259FDA} = {EA863589-4B76-455C-9F91-87CD642BC7F0}
 	EndGlobalSection
 EndGlobal

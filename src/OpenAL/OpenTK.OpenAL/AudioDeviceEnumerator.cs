@@ -51,10 +51,10 @@ namespace OpenTK.OpenAL
                 Debug.Indent();
 
                 // need a dummy context for correct results
-                dummyDevice = Alc.OpenDevice(null);
-                dummyContext = Alc.CreateContext(dummyDevice, (int[])null);
-                var dummySuccess = Alc.MakeContextCurrent(dummyContext);
-                var dummyError = Alc.GetError(dummyDevice);
+                dummyDevice = ALContext.OpenDevice(null);
+                dummyContext = ALContext.CreateContext(dummyDevice, (int[])null);
+                var dummySuccess = ALContext.MakeContextCurrent(dummyContext);
+                var dummyError = ALContext.GetError(dummyDevice);
                 if (!dummySuccess || dummyError != ContextError.NoError)
                 {
                     throw new AudioContextException
@@ -63,31 +63,33 @@ namespace OpenTK.OpenAL
                         $"Device ({dummyDevice}) \n" +
                         $"Context ({dummyContext.Handle}) \n" +
                         $"MakeContextCurrent {(dummySuccess ? "succeeded" : "failed")}\n" +
-                        $"Alc Error ({dummyError}) {Alc.GetString(IntPtr.Zero, (GetContextString)dummyError)}"
+                        $"Alc Error ({dummyError}) {ALContext.GetString(IntPtr.Zero, (GetContextString)dummyError)}"
                     );
                 }
 
+                // TODO: Reimplement
+                /*
                 // Get a list of all known playback devices, using best extension available
-                if (Alc.IsExtensionPresent(IntPtr.Zero, "ALC_ENUMERATION_EXT"))
+                if (ALContext.IsExtensionPresent(IntPtr.Zero, "ALC_ENUMERATION_EXT"))
                 {
                     Version = AlcVersion.Alc11;
-                    if (Alc.IsExtensionPresent(IntPtr.Zero, "ALC_ENUMERATE_ALL_EXT"))
+                    if (ALContext.IsExtensionPresent(IntPtr.Zero, "ALC_ENUMERATE_ALL_EXT"))
                     {
                         AvailablePlaybackDevicesValue.AddRange
                         (
-                            Alc.GetString(IntPtr.Zero, GetContextStringList.AllDevicesSpecifier)
+                            ALContext.GetString(IntPtr.Zero, GetContextStringList.AllDevicesSpecifier)
                         );
 
-                        DefaultPlaybackDevice = Alc.GetString(IntPtr.Zero, GetContextString.DefaultAllDevicesSpecifier);
+                        DefaultPlaybackDevice = ALContext.GetString(IntPtr.Zero, GetContextString.DefaultAllDevicesSpecifier);
                     }
                     else
                     {
                         AvailablePlaybackDevicesValue.AddRange
                         (
-                            Alc.GetString(IntPtr.Zero, GetContextStringList.DeviceSpecifier)
+                            ALContext.GetString(IntPtr.Zero, GetContextStringList.DeviceSpecifier)
                         );
 
-                        DefaultPlaybackDevice = Alc.GetString(IntPtr.Zero, GetContextString.DefaultDeviceSpecifier);
+                        DefaultPlaybackDevice = ALContext.GetString(IntPtr.Zero, GetContextString.DefaultDeviceSpecifier);
                     }
                 }
                 else
@@ -96,7 +98,7 @@ namespace OpenTK.OpenAL
                     Debug.Print("Device enumeration extension not available. Failed to enumerate playback devices.");
                 }
 
-                var playbackErr = Alc.GetError(dummyDevice);
+                var playbackErr = ALContext.GetError(dummyDevice);
                 if (playbackErr != ContextError.NoError)
                 {
                     throw new AudioContextException
@@ -106,20 +108,20 @@ namespace OpenTK.OpenAL
                 }
 
                 // Get a list of all known recording devices, at least ALC_ENUMERATION_EXT is needed too
-                if (Version == AlcVersion.Alc11 && Alc.IsExtensionPresent(IntPtr.Zero, "ALC_EXT_CAPTURE"))
+                if (Version == AlcVersion.Alc11 && ALContext.IsExtensionPresent(IntPtr.Zero, "ALC_EXT_CAPTURE"))
                 {
                     AvailableRecordingDevicesValue.AddRange
                     (
-                        Alc.GetString(IntPtr.Zero, GetContextStringList.CaptureDeviceSpecifier)
+                        ALContext.GetString(IntPtr.Zero, GetContextStringList.CaptureDeviceSpecifier)
                     );
-                    DefaultRecordingDevice = Alc.GetString(IntPtr.Zero, GetContextString.CaptureDefaultDeviceSpecifier);
+                    DefaultRecordingDevice = ALContext.GetString(IntPtr.Zero, GetContextString.CaptureDefaultDeviceSpecifier);
                 }
                 else
                 {
                     Debug.Print("Capture extension not available. Failed to enumerate recording devices.");
                 }
 
-                var recordErr = Alc.GetError(dummyDevice);
+                var recordErr = ALContext.GetError(dummyDevice);
                 if (recordErr != ContextError.NoError)
                 {
                     throw new AudioContextException
@@ -127,6 +129,7 @@ namespace OpenTK.OpenAL
                         $"Alc Error occured when querying available recording devices: {recordErr}"
                     );
                 }
+                */
             }
             catch (DllNotFoundException e)
             {
@@ -147,15 +150,15 @@ namespace OpenTK.OpenAL
                     try
                     {
                         // clean up the dummy context
-                        Alc.MakeContextCurrent(ContextHandle.Zero);
+                        ALContext.MakeContextCurrent(ContextHandle.Zero);
                         if (dummyContext != ContextHandle.Zero && dummyContext.Handle != IntPtr.Zero)
                         {
-                            Alc.DestroyContext(dummyContext);
+                            ALContext.DestroyContext(dummyContext);
                         }
 
                         if (dummyDevice != IntPtr.Zero)
                         {
-                            Alc.CloseDevice(dummyDevice);
+                            ALContext.CloseDevice(dummyDevice);
                         }
                     }
                     catch
