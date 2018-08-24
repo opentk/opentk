@@ -112,7 +112,8 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Gets or sets the value at the index of the Vector.
         /// </summary>
-        /// <param name="index">The index.</param>
+        /// <param name="index">The index of the component from the Vector.</param>
+        /// <exception cref="IndexOutOfRangeException">Thrown if the index is less than 0 or greater than 2.</exception>
         public float this[int index]
         {
             get
@@ -188,7 +189,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Returns a copy of the Vector3 scaled to unit length.
         /// </summary>
-        /// <returns>The vector.</returns>
+        /// <returns>The normalized copy.</returns>
         public Vector3 Normalized()
         {
             var v = this;
@@ -605,7 +606,7 @@ namespace OpenTK.Mathematics
         /// Scale a vector to unit length.
         /// </summary>
         /// <param name="vec">The input vector.</param>
-        /// <returns>The normalized vector.</returns>
+        /// <returns>The normalized copy.</returns>
         public static Vector3 Normalize(Vector3 vec)
         {
             var scale = 1.0f / vec.Length;
@@ -632,7 +633,7 @@ namespace OpenTK.Mathematics
         /// Scale a vector to approximately unit length.
         /// </summary>
         /// <param name="vec">The input vector.</param>
-        /// <returns>The normalized vector.</returns>
+        /// <returns>The normalized copy.</returns>
         public static Vector3 NormalizeFast(Vector3 vec)
         {
             var scale = MathHelper.InverseSqrtFast((vec.X * vec.X) + (vec.Y * vec.Y) + (vec.Z * vec.Z));

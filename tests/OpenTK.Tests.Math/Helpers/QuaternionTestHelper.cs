@@ -14,8 +14,8 @@ namespace OpenTK.Tests.Math.Helpers
         /// false: When <paramref name="toTest" /> does contain xyz values, when it should be 0,
         /// or does not contain 0 when it should be
         /// </returns>
-        /// <param name="toTest">To test</param>
-        /// <param name="expected">Expected directions. Values getting only 0 checked</param>
+        /// <param name="toTest">To test.</param>
+        /// <param name="expected">Expected directions. Values getting only 0 checked.</param>>
         public static bool VerifyEqualSingleDirection(Vector3 toTest, Vector3 expected)
         {
             //To verify the direction of an vector, just respect the 0 values and check against these.
