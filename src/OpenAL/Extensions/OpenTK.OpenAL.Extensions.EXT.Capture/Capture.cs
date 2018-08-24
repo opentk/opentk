@@ -1,14 +1,10 @@
 using System;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
 using AdvancedDLSupport;
-using OpenTK.OpenAL.Extensions.EXT.Capture;
 using OpenTK.OpenAL.Native;
 using OpenTK.OpenAL.Native.Attributes;
 using OpenTK.OpenAL.Native.Extensions;
 
-namespace OpenTK.OpenAL.Extensions.Enumeration
+namespace OpenTK.OpenAL.Extensions.EXT.Capture
 {
     /// <summary>
     /// Exposes the API in the Capture extension.
