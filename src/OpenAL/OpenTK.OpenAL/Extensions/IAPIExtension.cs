@@ -6,7 +6,7 @@ namespace OpenTK.OpenAL.Extensions
     /// <summary>
     /// Defines the API surface of an API extension for OpenAL.
     /// </summary>
-    internal interface IAPIExtension
+    public interface IAPIExtension
     {
         /// <summary>
         /// Determines whether or not the named extension is available.

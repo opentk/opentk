@@ -7,7 +7,10 @@
 
 using System;
 using AdvancedDLSupport;
+using OpenTK.Core.Loader;
 using OpenTK.Mathematics;
+using OpenTK.OpenAL.Attributes;
+using OpenTK.OpenAL.Extensions;
 using OpenTK.OpenAL.Interfaces;
 
 namespace OpenTK.OpenAL
@@ -15,11 +18,22 @@ namespace OpenTK.OpenAL
     /// <summary>
     /// Provides access to the OpenAL 1.1 API.
     /// </summary>
+    [APIClass("openal32", typeof(IAL))]
     public abstract class AL : NativeLibraryBase, IAL
     {
         /// <inheritdoc cref="NativeLibraryBase"/>
         protected AL(string path, ImplementationOptions options) : base(path, options)
         {
+        }
+
+        /// <summary>
+        /// Gets an instance of the API of an extension to the API.
+        /// </summary>
+        /// <typeparam name="TExtension">The extension type.</typeparam>
+        /// <returns>The extension.</returns>
+        public TExtension GetExtension<TExtension>() where TExtension : NativeLibraryBase, IExtensions
+        {
+            return ExtensionLoader.LoadExtension<TExtension>(this);
         }
 
         /// <inheritdoc />
@@ -499,5 +513,14 @@ namespace OpenTK.OpenAL
 
         /// <inheritdoc />
         public abstract void SpeedOfSound(float value);
+
+        /// <summary>
+        /// Gets an instance of the API.
+        /// </summary>
+        /// <returns></returns>
+        public static AL GetAPI()
+        {
+            return APILoader.Load<AL>();
+        }
     }
 }
