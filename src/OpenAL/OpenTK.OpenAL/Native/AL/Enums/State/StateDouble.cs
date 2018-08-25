@@ -4,7 +4,7 @@ using OpenTK.OpenAL.Native.Interfaces;
 namespace OpenTK.OpenAL.Native
 {
     /// <summary>
-    /// A list of valid <see cref="double"/> <see cref="IALState.GetDouble"/> parameters.
+    /// A list of valid <see cref="double"/> <see cref="IState.GetDouble"/> parameters.
     /// </summary>
     public enum StateDouble
     {

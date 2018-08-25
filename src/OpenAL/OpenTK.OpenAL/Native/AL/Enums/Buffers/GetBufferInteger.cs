@@ -26,7 +26,5 @@
         /// size of the Buffer in bytes.
         /// </summary>
         Size = 0x2004
-
-        // Deprecated: From Manual, not in header: AL_DATA ( i, iv ) original location where buffer was copied from generally useless, as was probably freed after buffer creation
     }
 }

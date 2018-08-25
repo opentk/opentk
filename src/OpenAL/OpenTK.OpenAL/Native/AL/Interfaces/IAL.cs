@@ -8,7 +8,7 @@ namespace OpenTK.OpenAL.Native.Interfaces
     /// Defines the public interface of the OpenAL 1.1 library.
     /// </summary>
     [NativeSymbols(Prefix = "al")]
-    public interface IAL : IALState, IALSources, IALExtensions
+    internal interface IAL : IBuffers, IErrors, IExtensions, IListener, ISources, IState
     {
     }
 }

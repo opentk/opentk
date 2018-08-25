@@ -3,7 +3,7 @@ using System;
 namespace OpenTK.OpenAL.Extensions.Soft
 {
     /// <summary>
-    /// A list of valid <see cref="IntPtr"/> <see cref="IALStateSoft.GetPointer"/> parameters.
+    /// A list of valid <see cref="IntPtr"/> <see cref="IStateSoft.GetPointer"/> parameters.
     /// </summary>
     public enum StatePointer
     {

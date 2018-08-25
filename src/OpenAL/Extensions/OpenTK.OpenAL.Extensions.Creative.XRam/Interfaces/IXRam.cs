@@ -8,7 +8,7 @@ namespace OpenTK.OpenAL.Extensions.Creative.XRam
     /// Defines the public interface of the X-RAM extension.
     /// </summary>
     [NativeSymbols(Prefix = "EAX")]
-    internal interface IXRam : IALExtensions
+    internal interface IXRam : IExtensions
     {
         /// <summary>
         /// Gets a named value from the state. This overload covers additional valid values added by the X-RAM

@@ -3,7 +3,7 @@ using OpenTK.OpenAL.Native.Interfaces;
 namespace OpenTK.OpenAL.Extensions.Soft.DeferredUpdates
 {
     /// <summary>
-    /// A list of valid <see cref="bool"/> <see cref="IALState.GetBoolean"/> parameters.
+    /// A list of valid <see cref="bool"/> <see cref="IState.GetBoolean"/> parameters.
     /// </summary>
     public enum DeferredStateBoolean
     {

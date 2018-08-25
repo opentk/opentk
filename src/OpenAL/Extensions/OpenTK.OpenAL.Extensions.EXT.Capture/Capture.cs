@@ -9,7 +9,7 @@ namespace OpenTK.OpenAL.Extensions.EXT.Capture
     /// <summary>
     /// Exposes the API in the Capture extension.
     /// </summary>
-    public abstract class Capture : ExtensionBase, ICaptureContext
+    public abstract class Capture : ContextExtensionBase, ICaptureContext, ICaptureContextState
     {
         /// <inheritdoc cref="ExtensionBase"/>
         protected Capture(string path, ImplementationOptions options) : base(path, options)
@@ -72,6 +72,18 @@ namespace OpenTK.OpenAL.Extensions.EXT.Capture
             }
 
             return resizeBuffer;
+        }
+
+        /// <inheritdoc />
+        public abstract unsafe void GetContextProperty(void* device, GetCaptureContextInteger param, int count, void* data);
+
+        /// <inheritdoc cref="GetContextProperty"/>
+        public unsafe int GetAvailableSamples(void* device)
+        {
+            var result = 0;
+            GetContextProperty(device, GetCaptureContextInteger.CaptureSamples, 1, &result);
+
+            return result;
         }
     }
 }

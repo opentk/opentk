@@ -3,7 +3,7 @@
 namespace OpenTK.OpenAL.Extensions.Soft
 {
     /// <summary>
-    /// A list of valid <see cref="int"/> <see cref="IALState.GetInteger"/> parameters.
+    /// A list of valid <see cref="int"/> <see cref="IState.GetInteger"/> parameters.
     /// </summary>
     public enum SoftStateInteger
     {

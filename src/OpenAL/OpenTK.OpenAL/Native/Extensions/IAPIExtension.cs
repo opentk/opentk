@@ -1,13 +1,12 @@
 using System;
 using AdvancedDLSupport;
 
-namespace OpenTK.OpenAL.Native.Interfaces
+namespace OpenTK.OpenAL.Native.Extensions
 {
     /// <summary>
-    /// Defines the public interface for the extension-related functions of OpenAL 1.1. Furthermore, this interface is
-    /// used to constrain extension implementation classes.
+    /// Defines the API surface of an API extension for OpenAL.
     /// </summary>
-    public interface IALExtensions
+    internal interface IAPIExtension
     {
         /// <summary>
         /// Determines whether or not the named extension is available.

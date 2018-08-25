@@ -43,7 +43,7 @@ namespace OpenTK.OpenAL
 
         private bool _isDisposed;
 
-        // Alc.CaptureStop should be called prior to device shutdown, this keeps track of Alc.CaptureStart/Stop calls.
+        // ALContext.CaptureStop should be called prior to device shutdown, this keeps track of ALContext.CaptureStart/Stop calls.
         static AudioCapture()
         {
             // forces enumeration
@@ -90,20 +90,20 @@ namespace OpenTK.OpenAL
 
             // Try to open specified device. If it fails, try to open default device.
             CurrentDevice = deviceName;
-            _handle = Alc.CaptureOpenDevice(deviceName, frequency, sampleFormat, bufferSize);
+            _handle = ALContext.CaptureOpenDevice(deviceName, frequency, sampleFormat, bufferSize);
 
             if (_handle == IntPtr.Zero)
             {
                 Debug.WriteLine(ErrorMessage(deviceName, frequency, sampleFormat, bufferSize));
                 CurrentDevice = "IntPtr.Zero";
-                _handle = Alc.CaptureOpenDevice(null, frequency, sampleFormat, bufferSize);
+                _handle = ALContext.CaptureOpenDevice(null, frequency, sampleFormat, bufferSize);
             }
 
             if (_handle == IntPtr.Zero)
             {
                 Debug.WriteLine(ErrorMessage("IntPtr.Zero", frequency, sampleFormat, bufferSize));
                 CurrentDevice = AudioDeviceEnumerator.DefaultRecordingDevice;
-                _handle = Alc.CaptureOpenDevice
+                _handle = ALContext.CaptureOpenDevice
                 (
                     AudioDeviceEnumerator.DefaultRecordingDevice,
                     frequency,
@@ -152,7 +152,7 @@ namespace OpenTK.OpenAL
         /// <summary>
         /// Gets the ALC error code for this device.
         /// </summary>
-        public ContextError CurrentError => Alc.GetError(_handle);
+        public ContextError CurrentError => ALContext.GetError(_handle);
 
         /// <summary>
         /// Gets the number of available samples for capture.
@@ -163,7 +163,7 @@ namespace OpenTK.OpenAL
             {
                 // TODO: Investigate inconsistency between documentation and actual usage.
                 // Doc claims the 3rd param is Number-of-Bytes, but it appears to be Number-of-Int32s
-                Alc.GetInteger(_handle, GetContextInteger.CaptureSamples, 1, out int result);
+                ALContext.GetInteger(_handle, GetContextInteger.CaptureSamples, 1, out int result);
                 return result;
             }
         }
@@ -211,7 +211,7 @@ namespace OpenTK.OpenAL
         /// </summary>
         public void Start()
         {
-            Alc.CaptureStart(_handle);
+            ALContext.CaptureStart(_handle);
             IsRunning = true;
         }
 
@@ -220,7 +220,7 @@ namespace OpenTK.OpenAL
         /// </summary>
         public void Stop()
         {
-            Alc.CaptureStop(_handle);
+            ALContext.CaptureStop(_handle);
             IsRunning = false;
         }
 
@@ -232,7 +232,7 @@ namespace OpenTK.OpenAL
         /// <param name="sampleCount">The number of samples to be written to the buffer.</param>
         public void ReadSamples(IntPtr buffer, int sampleCount)
         {
-            Alc.CaptureSamples(_handle, buffer, sampleCount);
+            ALContext.CaptureSamples(_handle, buffer, sampleCount);
         }
 
         /// <summary>
@@ -331,7 +331,7 @@ namespace OpenTK.OpenAL
                     break;
             }
 
-            return "The handle returned by Alc.CaptureOpenDevice is null." +
+            return "The handle returned by ALContext.CaptureOpenDevice is null." +
                    "\nAlc Error: " + alcerrmsg +
                    "\nDevice Name: " + devicename +
                    "\nCapture frequency: " + frequency +
@@ -358,7 +358,7 @@ namespace OpenTK.OpenAL
                         Stop();
                     }
 
-                    Alc.CaptureCloseDevice(_handle);
+                    ALContext.CaptureCloseDevice(_handle);
                 }
 
                 _isDisposed = true;

@@ -9,7 +9,7 @@ namespace OpenTK.OpenAL.Extensions.Soft.DeferredUpdates
     /// Defines the public API of state-related functions in the Deferred Updates extension.
     /// </summary>
     [NativeSymbols(Prefix = "al")]
-    public interface IDeferredUpdatesState : IALExtensions
+    public interface IDeferredUpdatesState : IExtensions
     {
         /// <summary>
         /// Gets a named value from the state. This overload covers additional valid values added by the Deferred

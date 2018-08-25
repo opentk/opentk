@@ -8,7 +8,7 @@ namespace OpenTK.OpenAL.Native.Interfaces
     /// Defines the public interface for the source-related functions of OpenAL 1.1.
     /// </summary>
     [NativeSymbols(Prefix = "al")]
-    public interface IALSources
+    internal interface ISources
     {
         /// <summary>
         /// Creates one or more source objects.
@@ -51,9 +51,29 @@ namespace OpenTK.OpenAL.Native.Interfaces
         /// </summary>
         /// <param name="source">The source.</param>
         /// <param name="param">The named property.</param>
+        /// <param name="value1">The first value to set the property to.</param>
+        /// <param name="value2">The second value to set the property to.</param>
+        /// <param name="value3">The third value to set the property to.</param>
+        [NativeSymbol("Source3f")]
+        void SetSourceProperty(uint source, SourceVector3 param, float value1, float value2, float value3);
+
+        /// <summary>
+        /// Sets the value of a named property on the given source.
+        /// </summary>
+        /// <param name="source">The source.</param>
+        /// <param name="param">The named property.</param>
         /// <param name="value">The value to set the property to.</param>
         [NativeSymbol("Sourcefv")]
         void SetSourceProperty(uint source, SourceVector3 param, in Vector3 value);
+
+        /// <summary>
+        /// Sets the value of a named property on the given source.
+        /// </summary>
+        /// <param name="source">The source.</param>
+        /// <param name="param">The named property.</param>
+        /// <param name="value">The value to set the property to.</param>
+        [NativeSymbol("Sourcefv")]
+        unsafe void SetSourceProperty(uint source, SourceVector3 param, float* value);
 
         /// <summary>
         /// Sets the value of a named property on the given source.
@@ -65,11 +85,31 @@ namespace OpenTK.OpenAL.Native.Interfaces
         void SetSourceProperty(uint source, SourceInteger param, int value);
 
         /// <summary>
-        /// Gets the value of a named property on the given source.
+        /// Sets the value of a named property on the given source.
+        /// </summary>
+        /// <param name="source">The source.</param>
+        /// <param name="param">The named property.</param>
+        /// <param name="value1">The first value to set the property to.</param>
+        /// <param name="value2">The second value to set the property to.</param>
+        /// <param name="value3">The third value to set the property to.</param>
+        [NativeSymbol("Source3i")]
+        void SetSourceProperty(uint source, SourceInteger param, int value1, int value2, int value3);
+
+        /// <summary>
+        /// Sets the value of a named property on the given source.
         /// </summary>
         /// <param name="source">The source.</param>
         /// <param name="param">The named property.</param>
         /// <param name="value">The value to set the property to.</param>
+        [NativeSymbol("Sourceiv")]
+        unsafe void SetSourceProperty(uint source, SourceInteger param, int* value);
+
+        /// <summary>
+        /// Gets the value of a named property on the given source.
+        /// </summary>
+        /// <param name="source">The source.</param>
+        /// <param name="param">The named property.</param>
+        /// <param name="value">The value of the property.</param>
         [NativeSymbol("GetSourcef")]
         void GetSourceProperty(uint source, SourceFloat param, out float value);
 
@@ -78,7 +118,18 @@ namespace OpenTK.OpenAL.Native.Interfaces
         /// </summary>
         /// <param name="source">The source.</param>
         /// <param name="param">The named property.</param>
-        /// <param name="value">The value to set the property to.</param>
+        /// <param name="value1">The first value of the property.</param>
+        /// <param name="value2">The second value of the property.</param>
+        /// <param name="value3">The third value of the property.</param>
+        [NativeSymbol("GetSource3f")]
+        void GetSourceProperty(uint source, SourceVector3 param, out float value1, out float value2, out float value3);
+
+        /// <summary>
+        /// Gets the value of a named property on the given source.
+        /// </summary>
+        /// <param name="source">The source.</param>
+        /// <param name="param">The named property.</param>
+        /// <param name="value">The value of the property.</param>
         [NativeSymbol("GetSourcefv")]
         void GetSourceProperty(uint source, SourceVector3 param, out Vector3 value);
 
@@ -87,9 +138,38 @@ namespace OpenTK.OpenAL.Native.Interfaces
         /// </summary>
         /// <param name="source">The source.</param>
         /// <param name="param">The named property.</param>
-        /// <param name="value">The value to set the property to.</param>
+        /// <param name="value">The value of the property.</param>
+        [NativeSymbol("GetSourcefv")]
+        unsafe void GetSourceProperty(uint source, SourceFloat param, float* value);
+
+        /// <summary>
+        /// Gets the value of a named property on the given source.
+        /// </summary>
+        /// <param name="source">The source.</param>
+        /// <param name="param">The named property.</param>
+        /// <param name="value">The value of the property.</param>
         [NativeSymbol("GetSourcei")]
         void GetSourceProperty(uint source, GetSourceInteger param, out int value);
+
+        /// <summary>
+        /// Sets the value of a named property on the given source.
+        /// </summary>
+        /// <param name="source">The source.</param>
+        /// <param name="param">The named property.</param>
+        /// <param name="value1">The first value of the property.</param>
+        /// <param name="value2">The second value of the property.</param>
+        /// <param name="value3">The third value of the property.</param>
+        [NativeSymbol("Source3i")]
+        void GetSourceProperty(uint source, GetSourceInteger param, out int value1, out int value2, out int value3);
+
+        /// <summary>
+        /// Gets the value of a named property on the given source.
+        /// </summary>
+        /// <param name="source">The source.</param>
+        /// <param name="param">The named property.</param>
+        /// <param name="value">The value of the property.</param>
+        [NativeSymbol("GetSourceiv")]
+        unsafe void GetSourceProperty(uint source, GetSourceInteger param, int* value);
 
         /// <summary>
         /// Plays a source.

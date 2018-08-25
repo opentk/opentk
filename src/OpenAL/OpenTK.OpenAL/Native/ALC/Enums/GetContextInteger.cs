@@ -26,10 +26,5 @@
         /// specified device. NULL is an invalid device.
         /// </summary>
         AllAttributes = 0x1003,
-
-        /// <summary>
-        /// The number of capture samples available. NULL is an invalid device.
-        /// </summary>
-        CaptureSamples = 0x312,
     }
 }

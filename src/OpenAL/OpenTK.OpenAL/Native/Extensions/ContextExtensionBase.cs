@@ -5,12 +5,12 @@ using OpenTK.OpenAL.Native.Interfaces;
 namespace OpenTK.OpenAL.Native.Extensions
 {
     /// <summary>
-    /// Base class for OpenAL extensions.
+    /// Base class for OpenAL context extensions.
     /// </summary>
-    public abstract class ExtensionBase : NativeLibraryBase, IExtensions
+    public abstract class ContextExtensionBase : NativeLibraryBase, IContextExtensions
     {
         /// <inheritdoc cref="NativeLibraryBase"/>
-        protected ExtensionBase(string path, ImplementationOptions options)
+        protected ContextExtensionBase(string path, ImplementationOptions options)
             : base(path, options)
         {
         }

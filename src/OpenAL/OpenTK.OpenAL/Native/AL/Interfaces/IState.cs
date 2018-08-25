@@ -7,7 +7,7 @@ namespace OpenTK.OpenAL.Native.Interfaces
     /// Defines the public interface for the state-related functions of OpenAL 1.1.
     /// </summary>
     [NativeSymbols(Prefix = "al")]
-    public interface IALState
+    internal interface IState
     {
         /// <summary>
         /// Enables a capability in the state.

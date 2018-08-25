@@ -3,7 +3,7 @@
 namespace OpenTK.OpenAL.Native
 {
     /// <summary>
-    /// A list of valid <see cref="bool"/> parameters for <see cref="IALState.GetBoolean"/>.
+    /// A list of valid <see cref="bool"/> parameters for <see cref="IState.GetBoolean"/>.
     /// </summary>
     public enum StateBoolean
     {
