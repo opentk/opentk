@@ -1,4 +1,4 @@
-﻿using OpenTK.OpenAL.Native.Interfaces;
+﻿using OpenTK.OpenAL.Interfaces;
 
 namespace OpenTK.OpenAL.Extensions.Soft
 {

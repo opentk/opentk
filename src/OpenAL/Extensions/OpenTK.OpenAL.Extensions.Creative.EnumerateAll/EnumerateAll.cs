@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using AdvancedDLSupport;
-using OpenTK.OpenAL.Native.Extensions;
 
 namespace OpenTK.OpenAL.Extensions.Creative.EnumerateAll
 {

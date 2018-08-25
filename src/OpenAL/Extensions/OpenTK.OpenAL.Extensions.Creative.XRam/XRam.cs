@@ -2,7 +2,6 @@ using System;
 using System.Buffers;
 using System.ComponentModel;
 using AdvancedDLSupport;
-using OpenTK.OpenAL.Native.Extensions;
 
 // ReSharper disable VirtualMemberCallInConstructor
 

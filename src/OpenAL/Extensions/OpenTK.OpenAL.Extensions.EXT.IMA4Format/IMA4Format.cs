@@ -1,4 +1,5 @@
 using AdvancedDLSupport;
+using OpenTK.OpenAL.Extensions;
 
 namespace OpenTK.OpenAL.Native.Extensions.EXT.IMA4Format
 {

@@ -24,7 +24,6 @@
 //
 
 using System;
-using OpenTK.OpenAL.Native;
 
 namespace OpenTK.OpenAL
 {

@@ -1,6 +1,5 @@
 
 using AdvancedDLSupport;
-using OpenTK.OpenAL.Native;
 using Device = System.Void;
 
 namespace OpenTK.OpenAL.Extensions.EXT.Capture

@@ -1,6 +1,5 @@
 using AdvancedDLSupport;
 using OpenTK.Mathematics;
-using OpenTK.OpenAL.Native.Extensions;
 
 namespace OpenTK.OpenAL.Extensions.Creative.EFX
 {

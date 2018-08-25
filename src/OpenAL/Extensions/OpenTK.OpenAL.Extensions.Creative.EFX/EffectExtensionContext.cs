@@ -1,6 +1,5 @@
 using System;
 using AdvancedDLSupport;
-using OpenTK.OpenAL.Native.Extensions;
 
 namespace OpenTK.OpenAL.Extensions.Creative.EFX
 {

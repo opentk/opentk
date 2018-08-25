@@ -1,8 +1,6 @@
 using System;
 using AdvancedDLSupport;
-using OpenTK.OpenAL.Native;
-using OpenTK.OpenAL.Native.Attributes;
-using OpenTK.OpenAL.Native.Extensions;
+using OpenTK.OpenAL.Attributes;
 
 namespace OpenTK.OpenAL.Extensions.EXT.Capture
 {
