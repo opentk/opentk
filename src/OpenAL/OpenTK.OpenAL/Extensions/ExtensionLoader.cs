@@ -3,13 +3,14 @@ using System.Reflection;
 using AdvancedDLSupport;
 using OpenTK.Core.Exceptions;
 using OpenTK.Core.Loader;
+using OpenTK.OpenAL.Interfaces;
 
 namespace OpenTK.OpenAL.Extensions
 {
     /// <summary>
     /// Loader class for API extensions.
     /// </summary>
-    public static class ExtensionLoader
+    internal static class ExtensionLoader
     {
         /// <summary>
         /// Loads the API for the given extension, using the base API.
@@ -19,7 +20,7 @@ namespace OpenTK.OpenAL.Extensions
         /// <returns>The extension.</returns>
         /// <exception cref="ExtensionNotSupportedException">Thrown if the API doesn't support the extension.</exception>
         public static TExtension LoadExtension<TExtension>(IAPIExtension baseAPI)
-            where TExtension : NativeLibraryBase
+            where TExtension : ExtensionBase
         {
             var extensionMetadata = GetAPIExtensionMetadata<TExtension>();
 
@@ -29,6 +30,27 @@ namespace OpenTK.OpenAL.Extensions
             }
 
             return APILoader.Load<TExtension, OpenALLibraryNameContainer>();
+        }
+
+        /// <summary>
+        /// Loads the API for the given extension, using the base API.
+        /// </summary>
+        /// <param name="device">The device of the context.</param>
+        /// <param name="baseAPI">The base API instance.</param>
+        /// <typeparam name="TContextExtension">The extension type.</typeparam>
+        /// <returns>The extension.</returns>
+        /// <exception cref="ExtensionNotSupportedException">Thrown if the API doesn't support the extension.</exception>
+        internal static unsafe TContextExtension LoadContextExtension<TContextExtension>(void* device, IContextExtensions baseAPI)
+            where TContextExtension : ContextExtensionBase
+        {
+            var extensionMetadata = GetAPIExtensionMetadata<TContextExtension>();
+
+            if (!baseAPI.IsExtensionPresent(device, extensionMetadata.ExtensionName))
+            {
+                throw new ExtensionNotSupportedException(extensionMetadata.ExtensionName);
+            }
+
+            return APILoader.Load<TContextExtension, OpenALLibraryNameContainer>();
         }
 
         /// <summary>

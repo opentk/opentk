@@ -24,16 +24,18 @@
 //
 
 using System;
+using OpenTK.Core.Loader;
+using OpenTK.OpenAL.Interfaces;
 
 namespace OpenTK.OpenAL
 {
     /// <summary>
     /// Represents an error watchdog that can be used by wrapping calls to OpenAL in it.
     /// </summary>
-    internal struct AudioDeviceErrorChecker : IDisposable
+    public struct AudioDeviceErrorChecker : IDisposable
     {
-        private readonly IntPtr _device;
-        private static readonly string ErrorString = "Device {0} reported {1}.";
+        private readonly unsafe void* _device;
+        private static readonly IContextErrors ErrorAPI = APILoader.Load<ALContext, OpenALLibraryNameContainer>();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AudioDeviceErrorChecker"/> struct.
@@ -46,30 +48,51 @@ namespace OpenTK.OpenAL
                 throw new AudioDeviceException();
             }
 
-            _device = device;
+            unsafe
+            {
+                _device = device.ToPointer();
+            }
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AudioDeviceErrorChecker"/> struct.
+        /// </summary>
+        /// <param name="device">The device to monitor.</param>
+        public unsafe AudioDeviceErrorChecker(void* device) : this(new IntPtr(device))
+        {
         }
 
         /// <inheritdoc/>
         public void Dispose()
         {
-            var err = ALContext.GetError(_device);
-            switch (err)
+            unsafe
             {
-                case ContextError.OutOfMemory:
+                var err = ErrorAPI.GetError(_device);
+
+                if (err == ContextError.NoError)
                 {
-                    throw new OutOfMemoryException(string.Format(ErrorString, _device, err));
+                    return;
                 }
-                case ContextError.InvalidValue:
+
+                var message = $"Device {new UIntPtr(_device).ToString()} reported {err}.";
+                switch (err)
                 {
-                    throw new AudioValueException(string.Format(ErrorString, _device, err));
-                }
-                case ContextError.InvalidDevice:
-                {
-                    throw new AudioDeviceException(string.Format(ErrorString, _device, err));
-                }
-                case ContextError.InvalidContext:
-                {
-                    throw new AudioContextException(string.Format(ErrorString, _device, err));
+                    case ContextError.OutOfMemory:
+                    {
+                        throw new OutOfMemoryException(message);
+                    }
+                    case ContextError.InvalidValue:
+                    {
+                        throw new AudioValueException(message);
+                    }
+                    case ContextError.InvalidDevice:
+                    {
+                        throw new AudioDeviceException(message);
+                    }
+                    case ContextError.InvalidContext:
+                    {
+                        throw new AudioContextException(message);
+                    }
                 }
             }
         }

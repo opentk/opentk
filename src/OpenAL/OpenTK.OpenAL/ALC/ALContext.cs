@@ -7,6 +7,7 @@
 
 using System;
 using AdvancedDLSupport;
+using OpenTK.Core;
 using OpenTK.Core.Loader;
 using OpenTK.OpenAL.Attributes;
 using OpenTK.OpenAL.Extensions;
@@ -27,18 +28,33 @@ namespace OpenTK.OpenAL
         /// <summary>
         /// Gets an instance of the API of an extension to the API.
         /// </summary>
-        /// <typeparam name="TExtension">The extension type.</typeparam>
+        /// <typeparam name="TContextExtension">The extension type.</typeparam>
         /// <returns>The extension.</returns>
-        public TExtension GetExtension<TExtension>() where TExtension : NativeLibraryBase, IExtensions
+        public unsafe TContextExtension GetExtension<TContextExtension>(void* device) where TContextExtension : ContextExtensionBase
         {
-            return ExtensionLoader.LoadExtension<TExtension>(this);
+            return ExtensionLoader.LoadContextExtension<TContextExtension>(device, this);
         }
 
         /// <inheritdoc />
         public abstract unsafe void* CreateContext(void* device, int* attributeList);
 
+        /// <inheritdoc cref="CreateContext"/>
+        public unsafe ContextHandle CreateContextHandle(void* device, int* attributeList)
+        {
+            return new ContextHandle(CreateContext(device, attributeList));
+        }
+
         /// <inheritdoc />
         public abstract unsafe bool MakeContextCurrent(void* context);
+
+        /// <inheritdoc cref="MakeContextCurrent(void*)"/>
+        public bool MakeContextCurrent(ContextHandle context)
+        {
+            unsafe
+            {
+                return MakeContextCurrent((void*)context);
+            }
+        }
 
         /// <inheritdoc />
         public abstract unsafe void ProcessContext(void* context);
@@ -51,6 +67,15 @@ namespace OpenTK.OpenAL
 
         /// <inheritdoc />
         public abstract unsafe void* GetCurrentContext();
+
+        /// <inheritdoc cref="GetCurrentContext"/>
+        public ContextHandle GetCurrentContextHandle()
+        {
+            unsafe
+            {
+                return new ContextHandle(GetCurrentContext());
+            }
+        }
 
         /// <inheritdoc />
         public abstract unsafe void* GetContextsDevice(void* context);
@@ -65,13 +90,13 @@ namespace OpenTK.OpenAL
         public abstract unsafe ContextError GetError(void* device);
 
         /// <inheritdoc />
-        public abstract bool IsExtensionPresent(string name);
+        public abstract unsafe bool IsExtensionPresent(void* device, string name);
 
         /// <inheritdoc />
-        public abstract IntPtr GetProcAddress(string name);
+        public abstract unsafe void* GetProcAddress(void* device, string name);
 
         /// <inheritdoc />
-        public abstract int GetEnumValue(string name);
+        public abstract unsafe int GetEnumValue(void* device, string name);
 
         /// <inheritdoc />
         public abstract unsafe string GetContextProperty(void* device, GetContextString param);

@@ -14,9 +14,9 @@ namespace OpenTK.Core
     public struct ContextHandle : IComparable<ContextHandle>, IEquatable<ContextHandle>
     {
         /// <summary>
-        /// Gets a System.IntPtr that represents the handle of this ContextHandle.
+        /// Gets a void* that represents the handle of this ContextHandle.
         /// </summary>
-        public IntPtr Handle { get; }
+        public unsafe void* Handle { get; }
 
         /// <summary>
         /// A read-only field that represents a handle that has been initialized to zero.
@@ -29,7 +29,19 @@ namespace OpenTK.Core
         /// <param name="h">A System.IntPtr containing the value for this instance.</param>
         public ContextHandle(IntPtr h)
         {
-            Handle = h;
+            unsafe
+            {
+                Handle = h.ToPointer();
+            }
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ContextHandle"/> struct.
+        /// </summary>
+        /// <param name="handle">The handle.</param>
+        public unsafe ContextHandle(void* handle)
+        {
+            Handle = handle;
         }
 
         /// <summary>
@@ -39,7 +51,20 @@ namespace OpenTK.Core
         /// <returns>A System.IntPtr equivalent to the specified ContextHandle.</returns>
         public static explicit operator IntPtr(ContextHandle c)
         {
-            return c != Zero ? c.Handle : IntPtr.Zero;
+            unsafe
+            {
+                return c != Zero ? (IntPtr)c.Handle : IntPtr.Zero;
+            }
+        }
+
+        /// <summary>
+        /// Converts the specified ContextHandle to the equivalent void*.
+        /// </summary>
+        /// <param name="c">The ContextHandle to convert.</param>
+        /// <returns>A System.IntPtr equivalent to the specified ContextHandle.</returns>
+        public static unsafe explicit operator void*(ContextHandle c)
+        {
+            return c.Handle;
         }
 
         /// <summary>
@@ -48,6 +73,16 @@ namespace OpenTK.Core
         /// <param name="p">The System.IntPtr to convert.</param>
         /// <returns>A ContextHandle equivalent to the specified IntPtr.</returns>
         public static explicit operator ContextHandle(IntPtr p)
+        {
+            return new ContextHandle(p);
+        }
+
+        /// <summary>
+        /// Converts the specified void* to the equivalent ContextHandle.
+        /// </summary>
+        /// <param name="p">The System.IntPtr to convert.</param>
+        /// <returns>A ContextHandle equivalent to the specified IntPtr.</returns>
+        public static unsafe explicit operator ContextHandle(void* p)
         {
             return new ContextHandle(p);
         }
@@ -77,7 +112,10 @@ namespace OpenTK.Core
         /// <inheritdoc />
         public override string ToString()
         {
-            return Handle.ToString();
+            unsafe
+            {
+                return ((UIntPtr)Handle).ToString();
+            }
         }
 
         /// <inheritdoc />
@@ -94,7 +132,10 @@ namespace OpenTK.Core
         /// <inheritdoc />
         public override int GetHashCode()
         {
-            return Handle.GetHashCode();
+            unsafe
+            {
+                return ((UIntPtr)Handle).GetHashCode();
+            }
         }
 
         /// <inheritdoc />
@@ -102,14 +143,17 @@ namespace OpenTK.Core
         {
             unsafe
             {
-                return (int)((int*)other.Handle.ToPointer() - (int*)Handle.ToPointer());
+                return (int)((int*)other.Handle - (int*)Handle);
             }
         }
 
         /// <inheritdoc />
         public bool Equals(ContextHandle other)
         {
-            return Handle == other.Handle;
+            unsafe
+            {
+                return Handle == other.Handle;
+            }
         }
     }
 }

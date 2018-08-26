@@ -66,7 +66,7 @@ namespace OpenTK.OpenAL.Extensions.EXT.Capture
             var managedBufferElementCount = internalBufferSize / managedFormatSize;
 
             var resizeBuffer = new TManagedFormat[managedBufferElementCount];
-            CaptureSamples(device, bufferFormat, sampleCount, ref resizeBuffer);
+            CaptureSamples(device, bufferFormat, sampleCount, in resizeBuffer);
 
             return resizeBuffer;
         }
@@ -83,7 +83,7 @@ namespace OpenTK.OpenAL.Extensions.EXT.Capture
             void* device,
             TBufferFormat bufferFormat,
             int sampleCount,
-            ref TManagedFormat[] buffer
+            in TManagedFormat[] buffer
         )
             where TBufferFormat : struct, Enum
             where TManagedFormat : unmanaged
@@ -107,6 +107,26 @@ namespace OpenTK.OpenAL.Extensions.EXT.Capture
             {
                 CaptureSamples(device, ptr, sampleCount);
             }
+        }
+
+        /// <summary>
+        /// Creates a capture for the given device, using the specified settings.
+        /// </summary>
+        /// <param name="deviceName">The name of the device.</param>
+        /// <param name="frequency">The capture frequency.</param>
+        /// <param name="sampleFormat">The capture sample format.</param>
+        /// <param name="bufferSize"></param>
+        /// <returns></returns>
+        public AudioCapture<TBufferFormat> CreateCapture<TBufferFormat>
+        (
+            string deviceName = null,
+            uint frequency = 22050,
+            TBufferFormat? sampleFormat = null,
+            int bufferSize = 4096
+        )
+            where TBufferFormat : struct, Enum
+        {
+            return new AudioCapture<TBufferFormat>(this, deviceName, frequency, sampleFormat, bufferSize);
         }
 
         /// <inheritdoc />

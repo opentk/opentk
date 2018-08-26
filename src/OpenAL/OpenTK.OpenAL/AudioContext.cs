@@ -27,6 +27,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using OpenTK.Core;
+using OpenTK.Core.Loader;
 
 namespace OpenTK.OpenAL
 {
@@ -36,37 +37,7 @@ namespace OpenTK.OpenAL
     /// </summary>
     public sealed class AudioContext : IDisposable
     {
-        /// <summary>
-        /// May be passed at context construction time to indicate the number of desired auxiliary effect slot sends per
-        /// source.
-        /// </summary>
-        public enum MaxAuxiliarySends
-        {
-            /// <summary>
-            /// Will chose a reliably working parameter.
-            /// </summary>
-            UseDriverDefault = 0,
-
-            /// <summary>
-            /// One send per source.
-            /// </summary>
-            One = 1,
-
-            /// <summary>
-            /// Two sends per source.
-            /// </summary>
-            Two = 2,
-
-            /// <summary>
-            /// Three sends per source.
-            /// </summary>
-            Three = 3,
-
-            /// <summary>
-            /// Four sends per source.
-            /// </summary>
-            Four = 4
-        }
+        private static readonly ALContext ContextAPI = APILoader.Load<ALContext, OpenALLibraryNameContainer>();
 
         private static readonly object AudioContextLock = new object();
 
@@ -80,17 +51,6 @@ namespace OpenTK.OpenAL
         private bool _disposed;
         private bool _isProcessing;
         private bool _isSynchronized;
-
-        /// <summary>
-        /// Initializes static members of the <see cref="AudioContext"/> class. Loads available devices.
-        /// </summary>
-        static AudioContext()
-        {
-            // forces enumeration
-            if (AudioDeviceEnumerator.IsOpenALSupported)
-            {
-            }
-        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AudioContext"/> class using the default audio device.
@@ -128,22 +88,6 @@ namespace OpenTK.OpenAL
         /// </remarks>
         public AudioContext(string device, int freq, int refresh)
             : this(device, freq, refresh, false)
-        {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="AudioContext"/> class using the default audio device and
-        /// device parameters.
-        /// </summary>
-        /// <param name="freq">Frequency for mixing output buffer, in units of Hz. Pass 0 for driver default.</param>
-        /// <param name="refresh">Refresh intervals, in units of Hz. Pass 0 for driver default.</param>
-        /// <param name="sync">Flag, indicating a synchronous context.</param>
-        /// <remarks>
-        /// Use AudioContext.AvailableDevices to obtain a list of all available audio devices.
-        /// devices.
-        /// </remarks>
-        public AudioContext(int freq, int refresh, bool sync)
-            : this(AudioDeviceEnumerator.AvailablePlaybackDevices[0], freq, refresh, sync)
         {
         }
 
@@ -235,7 +179,7 @@ namespace OpenTK.OpenAL
             set => MakeCurrent(value ? this : null);
         }
 
-        private IntPtr Device { get; set; }
+        private unsafe void* Device { get; set; }
 
         /// <summary>
         /// Gets the ALC error code for this instance.
@@ -249,7 +193,10 @@ namespace OpenTK.OpenAL
                     throw new ObjectDisposedException(GetType().FullName);
                 }
 
-                return ALContext.GetError(Device);
+                unsafe
+                {
+                    return ContextAPI.GetError(Device);
+                }
             }
         }
 
@@ -326,29 +273,10 @@ namespace OpenTK.OpenAL
                         return null;
                     }
 
-                    AvailableContexts.TryGetValue(ALContext.GetCurrentContext(), out var context);
+                    AvailableContexts.TryGetValue(ContextAPI.GetCurrentContextHandle(), out var context);
                     return context;
                 }
             }
-        }
-
-        /// <summary>
-        /// Gets a list of strings containing all known playback devices.
-        /// </summary>
-        public static IList<string> AvailableDevices => AudioDeviceEnumerator.AvailablePlaybackDevices;
-
-        /// <summary>
-        /// Gets the name of the device that will be used as playback default.
-        /// </summary>
-        public static string DefaultDevice => AudioDeviceEnumerator.DefaultPlaybackDevice;
-
-        /// <summary>
-        /// Disposes of the AudioContext, cleaning up all resources consumed by it.
-        /// </summary>
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
         }
 
         /// <summary>
@@ -442,27 +370,12 @@ namespace OpenTK.OpenAL
         ///  <para>For maximum compatibility, you are strongly recommended to use the default constructor.</para>
         ///  <para>Multiple AudioContexts are not supported at this point.</para>
         /// </remarks>
-        private void CreateContext
+        private unsafe void CreateContext
         (
             string device,
             IEnumerable<int> attributes
         )
         {
-            if (!AudioDeviceEnumerator.IsOpenALSupported)
-            {
-                throw new DllNotFoundException("openal32.dll");
-            }
-
-            // Alc 1.0 does not support device enumeration.
-            if
-            (
-                AudioDeviceEnumerator.Version == AlcVersion.Alc11 &&
-                AudioDeviceEnumerator.AvailablePlaybackDevices.Count == 0
-            )
-            {
-                throw new NotSupportedException("No audio hardware is available.");
-            }
-
             if (_contextExists)
             {
                 throw new NotSupportedException("Multiple AudioContexts are not supported.");
@@ -471,22 +384,16 @@ namespace OpenTK.OpenAL
             if (!string.IsNullOrEmpty(device))
             {
                 _deviceName = device;
-                Device = ALContext.OpenDevice(device); // try to open device by name
+                Device = ContextAPI.OpenDevice(device); // try to open device by name
             }
 
-            if (Device == IntPtr.Zero)
+            if (Device == null)
             {
                 _deviceName = "IntPtr.Zero (null string)";
-                Device = ALContext.OpenDevice(null); // try to open unnamed default device
+                Device = ContextAPI.OpenDevice(null); // try to open unnamed default device
             }
 
-            if (Device == IntPtr.Zero)
-            {
-                _deviceName = DefaultDevice;
-                Device = ALContext.OpenDevice(DefaultDevice); // try to open named default device
-            }
-
-            if (Device == IntPtr.Zero)
+            if (Device == null)
             {
                 _deviceName = "None";
                 throw new AudioDeviceException
@@ -498,11 +405,14 @@ namespace OpenTK.OpenAL
 
             CheckErrors();
 
-            _contextHandle = ALContext.CreateContext(Device, attributes.ToArray());
+            fixed (int* ptr = attributes.ToArray())
+            {
+                _contextHandle = ContextAPI.CreateContextHandle(Device, ptr);
+            }
 
             if (_contextHandle == ContextHandle.Zero)
             {
-                ALContext.CloseDevice(Device);
+                ContextAPI.CloseDevice(Device);
                 throw new AudioContextException
                 (
                     "The audio context could not be created with the specified parameters."
@@ -511,17 +421,11 @@ namespace OpenTK.OpenAL
 
             CheckErrors();
 
-            // HACK: OpenAL SI on Linux/ALSA crashes on MakeCurrent. This hack avoids calling MakeCurrent when
-            // an old OpenAL version is detect - it may affect outdated OpenAL versions different than OpenAL SI,
-            // but it looks like a good compromise for now.
-            if (AudioDeviceEnumerator.AvailablePlaybackDevices.Count > 0)
-            {
-                MakeCurrent();
-            }
+            MakeCurrent();
 
             CheckErrors();
 
-            _deviceName = ALContext.GetString(Device, GetContextString.DeviceSpecifier);
+            _deviceName = ContextAPI.GetContextProperty(Device, GetContextString.DeviceSpecifier);
 
             lock (AudioContextLock)
             {
@@ -545,10 +449,18 @@ namespace OpenTK.OpenAL
         {
             lock (AudioContextLock)
             {
-                if (!ALContext.MakeContextCurrent(context != null ? context._contextHandle : ContextHandle.Zero))
+                unsafe
                 {
-                    throw new AudioContextException(
-                        $"ALC {ALContext.GetError(context != null ? (IntPtr)context._contextHandle : IntPtr.Zero).ToString()} error detected at {(context != null ? context.ToString() : "null")}.");
+                    if (!ContextAPI.MakeContextCurrent(context?._contextHandle ?? ContextHandle.Zero))
+                    {
+                        var deviceHandle = context?._contextHandle;
+                        var error = ContextAPI.GetError((void*)deviceHandle);
+
+                        throw new AudioContextException
+                        (
+                            $"ALC {error} error detected at {(context != null ? context.ToString() : "null")}."
+                        );
+                    }
                 }
             }
         }
@@ -567,7 +479,10 @@ namespace OpenTK.OpenAL
                 throw new ObjectDisposedException(GetType().FullName);
             }
 
-            new AudioDeviceErrorChecker(Device).Dispose();
+            unsafe
+            {
+                new AudioDeviceErrorChecker(Device).Dispose();
+            }
         }
 
         /// <summary>
@@ -618,7 +533,11 @@ namespace OpenTK.OpenAL
                 throw new ObjectDisposedException(GetType().FullName);
             }
 
-            ALContext.ProcessContext(_contextHandle);
+            unsafe
+            {
+                ContextAPI.ProcessContext((void*)_contextHandle);
+            }
+
             IsProcessing = true;
         }
 
@@ -649,7 +568,11 @@ namespace OpenTK.OpenAL
                 throw new ObjectDisposedException(GetType().FullName);
             }
 
-            ALContext.SuspendContext(_contextHandle);
+            unsafe
+            {
+                ContextAPI.SuspendContext((void*)_contextHandle);
+            }
+
             IsProcessing = false;
         }
 
@@ -665,10 +588,14 @@ namespace OpenTK.OpenAL
                 throw new ObjectDisposedException(GetType().FullName);
             }
 
-            return ALContext.IsExtensionPresent(Device, extension);
+            unsafe
+            {
+                return ContextAPI.IsExtensionPresent(Device, extension);
+            }
         }
 
-        private void Dispose(bool manual)
+        /// <inheritdoc />
+        public void Dispose()
         {
             if (!_disposed)
             {
@@ -680,18 +607,20 @@ namespace OpenTK.OpenAL
                 if (_contextHandle != ContextHandle.Zero)
                 {
                     AvailableContexts.Remove(_contextHandle);
-                    ALContext.DestroyContext(_contextHandle);
+
+                    unsafe
+                    {
+                        ContextAPI.DestroyContext((void*)_contextHandle);
+                    }
                 }
 
-                if (Device != IntPtr.Zero)
+                unsafe
                 {
-                    ALContext.CloseDevice(Device);
+                    if (Device != null)
+                    {
+                        ContextAPI.CloseDevice(Device);
+                    }
                 }
-
-                if (manual)
-                {
-                }
-
                 _disposed = true;
             }
         }
@@ -701,7 +630,7 @@ namespace OpenTK.OpenAL
         /// </summary>
         ~AudioContext()
         {
-            Dispose(false);
+            Dispose();
         }
 
         /// <summary>
@@ -710,7 +639,10 @@ namespace OpenTK.OpenAL
         /// <returns>A <see cref="string" /> that desrcibes this instance.</returns>
         public override string ToString()
         {
-            return $"{_deviceName} (handle: {_contextHandle}, device: {Device})";
+            unsafe
+            {
+                return $"{_deviceName} (handle: {_contextHandle}, device: {(long)Device})";
+            }
         }
     }
 }

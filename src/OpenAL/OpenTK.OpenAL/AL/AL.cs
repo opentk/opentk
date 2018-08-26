@@ -30,7 +30,7 @@ namespace OpenTK.OpenAL
         /// </summary>
         /// <typeparam name="TExtension">The extension type.</typeparam>
         /// <returns>The extension.</returns>
-        public TExtension GetExtension<TExtension>() where TExtension : NativeLibraryBase, IExtensions
+        public TExtension GetExtension<TExtension>() where TExtension : ExtensionBase
         {
             return ExtensionLoader.LoadExtension<TExtension>(this);
         }
