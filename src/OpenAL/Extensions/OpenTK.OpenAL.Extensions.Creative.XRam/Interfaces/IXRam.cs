@@ -1,5 +1,6 @@
 using System;
 using AdvancedDLSupport;
+using OpenTK.OpenAL.Interfaces;
 
 namespace OpenTK.OpenAL.Extensions.Creative.XRam
 {

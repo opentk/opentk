@@ -2,13 +2,15 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using AdvancedDLSupport;
+using OpenTK.Core.Loader;
 
 namespace OpenTK.OpenAL.Extensions.Enumeration
 {
     /// <summary>
     /// Exposes the API in the Enumeration extension.
     /// </summary>
-    public abstract class Enumeration : ExtensionBase, IEnumerationContextState
+    [Extension("ALC_ENUMERATION_EXT")]
+    public abstract class Enumeration : ContextExtensionBase, IEnumerationContextState
     {
         /// <inheritdoc cref="ExtensionBase"/>
         protected Enumeration(string path, ImplementationOptions options) : base(path, options)

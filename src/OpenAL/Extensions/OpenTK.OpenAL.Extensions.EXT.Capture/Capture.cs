@@ -1,5 +1,6 @@
 using System;
 using AdvancedDLSupport;
+using OpenTK.Core.Loader;
 using OpenTK.OpenAL.Attributes;
 
 namespace OpenTK.OpenAL.Extensions.EXT.Capture
@@ -7,6 +8,7 @@ namespace OpenTK.OpenAL.Extensions.EXT.Capture
     /// <summary>
     /// Exposes the API in the Capture extension.
     /// </summary>
+    [Extension("ALC_EXT_CAPTURE")]
     public abstract class Capture : ContextExtensionBase, ICaptureContext, ICaptureContextState
     {
         /// <inheritdoc cref="ExtensionBase"/>

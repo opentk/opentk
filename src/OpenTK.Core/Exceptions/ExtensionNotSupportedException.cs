@@ -30,7 +30,7 @@ namespace OpenTK.Core.Exceptions
     /// <summary>
     /// Represents exceptions related to API extensions.
     /// </summary>
-    public class ExtensionNotFoundException : Exception
+    public class ExtensionNotSupportedException : Exception
     {
         /// <summary>
         /// Gets the name of the extension.
@@ -38,20 +38,20 @@ namespace OpenTK.Core.Exceptions
         public string Extension { get; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ExtensionNotFoundException"/> class.
+        /// Initializes a new instance of the <see cref="ExtensionNotSupportedException"/> class.
         /// </summary>
         /// <param name="extension">The name of the extension.</param>
-        public ExtensionNotFoundException(string extension)
+        public ExtensionNotSupportedException(string extension)
         {
             Extension = extension;
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ExtensionNotFoundException"/> class.
+        /// Initializes a new instance of the <see cref="ExtensionNotSupportedException"/> class.
         /// </summary>
-        /// <param name="message">The error message of the ExtensionNotFoundException.</param>
+        /// <param name="message">The error message of the ExtensionNotSupportedException.</param>
         /// <param name="extension">The name of the extension.</param>
-        public ExtensionNotFoundException(string message, string extension)
+        public ExtensionNotSupportedException(string message, string extension)
             : base(message)
         {
             Extension = extension;

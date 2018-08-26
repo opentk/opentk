@@ -6,7 +6,7 @@ namespace OpenTK.Core.Loader
     /// Provides metadata for API extensions.
     /// </summary>
     [AttributeUsage(AttributeTargets.Class)]
-    public class APIExtensionAttribute : Attribute
+    public class ExtensionAttribute : Attribute
     {
         /// <summary>
         /// Gets or sets the name of the extension.
@@ -14,10 +14,10 @@ namespace OpenTK.Core.Loader
         public string ExtensionName { get; set; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="APIExtensionAttribute"/> class.
+        /// Initializes a new instance of the <see cref="ExtensionAttribute"/> class.
         /// </summary>
         /// <param name="extensionName">The extension name.</param>
-        public APIExtensionAttribute(string extensionName)
+        public ExtensionAttribute(string extensionName)
         {
             ExtensionName = extensionName;
         }

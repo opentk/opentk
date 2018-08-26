@@ -2,6 +2,7 @@ using System;
 using System.Buffers;
 using System.ComponentModel;
 using AdvancedDLSupport;
+using OpenTK.Core.Loader;
 
 // ReSharper disable VirtualMemberCallInConstructor
 
@@ -10,6 +11,7 @@ namespace OpenTK.OpenAL.Extensions.Creative.XRam
     /// <summary>
     /// Exposes the X-RAM extension by Creative Labs.
     /// </summary>
+    [Extension("EAX-RAM")]
     public abstract class XRam : ExtensionBase, IXRam
     {
         private readonly int _bufferStorageModeAutomatic;

@@ -1,4 +1,5 @@
 using AdvancedDLSupport;
+using OpenTK.Core.Loader;
 using OpenTK.Mathematics;
 
 namespace OpenTK.OpenAL.Extensions.Creative.EFX
@@ -6,6 +7,7 @@ namespace OpenTK.OpenAL.Extensions.Creative.EFX
     /// <summary>
     /// Exposes the functions of the Effects Extension.
     /// </summary>
+    [Extension("AL_EXT_EFX")]
     public abstract class EffectExtension : ExtensionBase, IEFX
     {
         /// <inheritdoc cref="ExtensionBase"/>

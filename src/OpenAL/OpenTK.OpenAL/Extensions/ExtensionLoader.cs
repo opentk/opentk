@@ -6,8 +6,18 @@ using OpenTK.Core.Loader;
 
 namespace OpenTK.OpenAL.Extensions
 {
-    public class ExtensionLoader
+    /// <summary>
+    /// Loader class for API extensions.
+    /// </summary>
+    public static class ExtensionLoader
     {
+        /// <summary>
+        /// Loads the API for the given extension, using the base API.
+        /// </summary>
+        /// <param name="baseAPI">The base API instance.</param>
+        /// <typeparam name="TExtension">The extension type.</typeparam>
+        /// <returns>The extension.</returns>
+        /// <exception cref="ExtensionNotSupportedException">Thrown if the API doesn't support the extension.</exception>
         public static TExtension LoadExtension<TExtension>(IAPIExtension baseAPI)
             where TExtension : NativeLibraryBase
         {
@@ -15,30 +25,10 @@ namespace OpenTK.OpenAL.Extensions
 
             if (!baseAPI.IsExtensionPresent(extensionMetadata.ExtensionName))
             {
-                throw new ExtensionNotFoundException(extensionMetadata.ExtensionName);
+                throw new ExtensionNotSupportedException(extensionMetadata.ExtensionName);
             }
 
-            return APILoader.Load<TExtension>();
-        }
-
-        /// <summary>
-        /// Gets some required metadata about an API type.
-        /// </summary>
-        /// <typeparam name="TAPI">The API type.</typeparam>
-        /// <returns>The metadata.</returns>
-        /// <exception cref="InvalidOperationException">
-        /// Thrown if the API type doesn't have a metadata attribute.
-        /// </exception>
-        private static APIClassAttribute GetAPIMetadata<TAPI>() where TAPI : NativeLibraryBase
-        {
-            var apiType = typeof(TAPI);
-
-            if (!(apiType.GetCustomAttribute(typeof(APIClassAttribute)) is APIClassAttribute attribute))
-            {
-                throw new InvalidOperationException("The API class didn't have an API class attribute applied to it.");
-            }
-
-            return attribute;
+            return APILoader.Load<TExtension, OpenALLibraryNameContainer>();
         }
 
         /// <summary>
@@ -49,11 +39,11 @@ namespace OpenTK.OpenAL.Extensions
         /// <exception cref="InvalidOperationException">
         /// Thrown if the API type doesn't have a metadata attribute.
         /// </exception>
-        private static APIExtensionAttribute GetAPIExtensionMetadata<TAPIExtension>() where TAPIExtension : NativeLibraryBase
+        private static ExtensionAttribute GetAPIExtensionMetadata<TAPIExtension>() where TAPIExtension : NativeLibraryBase
         {
             var apiType = typeof(TAPIExtension);
 
-            if (!(apiType.GetCustomAttribute(typeof(APIExtensionAttribute)) is APIExtensionAttribute attribute))
+            if (!(apiType.GetCustomAttribute(typeof(ExtensionAttribute)) is ExtensionAttribute attribute))
             {
                 throw new InvalidOperationException("The API class didn't have an API class attribute applied to it.");
             }

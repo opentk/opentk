@@ -18,7 +18,6 @@ namespace OpenTK.OpenAL
     /// <summary>
     /// Provides access to the OpenAL 1.1 API.
     /// </summary>
-    [APIClass("openal32", typeof(IAL))]
     public abstract class AL : NativeLibraryBase, IAL
     {
         /// <inheritdoc cref="NativeLibraryBase"/>
@@ -520,7 +519,7 @@ namespace OpenTK.OpenAL
         /// <returns></returns>
         public static AL GetAPI()
         {
-            return APILoader.Load<AL>();
+            return APILoader.Load<AL, OpenALLibraryNameContainer>();
         }
     }
 }

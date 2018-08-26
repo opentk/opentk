@@ -17,7 +17,6 @@ namespace OpenTK.OpenAL
     /// <summary>
     /// Provides access to the OpenAL 1.1 context API.
     /// </summary>
-    [APIClass("openal32", typeof(IALC))]
     public abstract class ALContext : NativeLibraryBase, IALC
     {
         /// <inheritdoc cref="NativeLibraryBase"/>
@@ -80,6 +79,13 @@ namespace OpenTK.OpenAL
         /// <inheritdoc />
         public abstract unsafe void GetContextProperty(void* device, GetContextInteger param, int count, void* data);
 
-
+        /// <summary>
+        /// Gets an instance of the API.
+        /// </summary>
+        /// <returns></returns>
+        public static ALContext GetAPI()
+        {
+            return APILoader.Load<ALContext, OpenALLibraryNameContainer>();
+        }
     }
 }

@@ -10,7 +10,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AdvancedDLSupport" Version="2.1.2" />
+    <PackageReference Include="AdvancedDLSupport" Version="2.2.0" />
   </ItemGroup>
 
   <Import Project="..\..\props\common.props" />

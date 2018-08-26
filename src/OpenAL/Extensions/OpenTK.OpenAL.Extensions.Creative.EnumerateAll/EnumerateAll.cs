@@ -2,13 +2,15 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using AdvancedDLSupport;
+using OpenTK.Core.Loader;
 
 namespace OpenTK.OpenAL.Extensions.Creative.EnumerateAll
 {
     /// <summary>
     /// Exposes the API in the EnumerateAll extension.
     /// </summary>
-    public abstract class EnumerateAll : ExtensionBase, IEnumerateAllContextState
+    [Extension("ALC_ENUMERATE_ALL_EXT")]
+    public abstract class EnumerateAll : ContextExtensionBase, IEnumerateAllContextState
     {
         /// <inheritdoc cref="ExtensionBase"/>
         protected EnumerateAll(string path, ImplementationOptions options) : base(path, options)

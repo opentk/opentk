@@ -1,11 +1,13 @@
 using System;
 using AdvancedDLSupport;
+using OpenTK.Core.Loader;
 
 namespace OpenTK.OpenAL.Extensions.Creative.EFX
 {
     /// <summary>
     /// Exposes the context-related functions of the Effects Extension.
     /// </summary>
+    [Extension("AL_EXT_EFX")]
     public abstract class EffectExtensionContext : ExtensionBase, IEFXContext
     {
         /// <inheritdoc cref="ExtensionBase" />
