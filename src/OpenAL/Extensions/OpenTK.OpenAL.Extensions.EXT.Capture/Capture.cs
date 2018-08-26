@@ -64,12 +64,47 @@ namespace OpenTK.OpenAL.Extensions.EXT.Capture
             var managedBufferElementCount = internalBufferSize / managedFormatSize;
 
             var resizeBuffer = new TManagedFormat[managedBufferElementCount];
-            fixed (void* ptr = resizeBuffer)
+            CaptureSamples(device, bufferFormat, sampleCount, ref resizeBuffer);
+
+            return resizeBuffer;
+        }
+
+        /// <summary>
+        /// Completes a capture operation. This call does not block.
+        /// </summary>
+        /// <param name="device">The device.</param>
+        /// <param name="bufferFormat">The data format of the buffer.</param>
+        /// <param name="sampleCount">The number of samples to retrieve.</param>
+        /// <param name="buffer">The buffer to fill. </param>
+        public unsafe void CaptureSamples<TManagedFormat, TBufferFormat>
+        (
+            void* device,
+            TBufferFormat bufferFormat,
+            int sampleCount,
+            ref TManagedFormat[] buffer
+        )
+            where TBufferFormat : struct, Enum
+            where TManagedFormat : unmanaged
+        {
+            var formatSize = FormatHelpers.GetFormatSize(bufferFormat);
+
+            var managedFormatSize = sizeof(TManagedFormat);
+            var internalBufferSize = sampleCount * formatSize;
+            var managedBufferElementCount = internalBufferSize / managedFormatSize;
+
+            if (buffer.Length < managedBufferElementCount)
+            {
+                throw new ArgumentException
+                (
+                    "The buffer wasn't large enough to contain all of the requested samples.",
+                    nameof(buffer)
+                );
+            }
+
+            fixed (void* ptr = buffer)
             {
                 CaptureSamples(device, ptr, sampleCount);
             }
-
-            return resizeBuffer;
         }
 
         /// <inheritdoc />
