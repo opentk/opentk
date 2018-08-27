@@ -16,12 +16,12 @@ namespace OpenTK.OpenAL.Extensions
         }
 
         /// <inheritdoc />
-        public abstract unsafe bool IsExtensionPresent(void* device, [CallerFree] string name);
+        public abstract unsafe bool IsExtensionPresent(Device* device, [CallerFree] string name);
 
         /// <inheritdoc />
-        public abstract unsafe void* GetProcAddress(void* device, [CallerFree] string name);
+        public abstract unsafe void* GetProcAddress(Device* device, [CallerFree] string name);
 
         /// <inheritdoc />
-        public abstract unsafe int GetEnumValue(void* device, [CallerFree] string name);
+        public abstract unsafe int GetEnumValue(Device* device, [CallerFree] string name);
     }
 }

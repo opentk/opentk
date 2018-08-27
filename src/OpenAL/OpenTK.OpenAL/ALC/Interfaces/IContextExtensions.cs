@@ -16,20 +16,20 @@ namespace OpenTK.OpenAL.Interfaces
         /// </summary>
         /// <param name="name">The name of the extension.</param>
         /// <returns>true if the extension is available; otherwise, false.</returns>
-        unsafe bool IsExtensionPresent(void* device, [CallerFree] string name);
+        unsafe bool IsExtensionPresent(Device* device, [CallerFree] string name);
 
         /// <summary>
         /// Gets the address of an OpenAL extension function.
         /// </summary>
         /// <param name="name">The name of the function.</param>
         /// <returns>The function pointer.</returns>
-        unsafe void* GetProcAddress(void* device, [CallerFree] string name);
+        unsafe void* GetProcAddress(Device* device, [CallerFree] string name);
 
         /// <summary>
         /// Gets the value of the named OpenAL extension enumeration member.
         /// </summary>
         /// <param name="name">The name of the enumeration member.</param>
         /// <returns>The value of the member.</returns>
-        unsafe int GetEnumValue(void* device, [CallerFree] string name);
+        unsafe int GetEnumValue(Device* device, [CallerFree] string name);
     }
 }

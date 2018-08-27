@@ -34,7 +34,7 @@ namespace OpenTK.OpenAL
     /// </summary>
     public struct AudioDeviceErrorChecker : IDisposable
     {
-        private readonly unsafe void* _device;
+        private readonly unsafe Device* _device;
         private static readonly IContextErrors ErrorAPI = APILoader.Load<ALContext, OpenALLibraryNameContainer>();
 
         /// <summary>
@@ -50,7 +50,7 @@ namespace OpenTK.OpenAL
 
             unsafe
             {
-                _device = device.ToPointer();
+                _device = (Device*)device.ToPointer();
             }
         }
 
@@ -58,7 +58,7 @@ namespace OpenTK.OpenAL
         /// Initializes a new instance of the <see cref="AudioDeviceErrorChecker"/> struct.
         /// </summary>
         /// <param name="device">The device to monitor.</param>
-        public unsafe AudioDeviceErrorChecker(void* device) : this(new IntPtr(device))
+        public unsafe AudioDeviceErrorChecker(Device* device) : this(new IntPtr(device))
         {
         }
 

@@ -17,10 +17,10 @@ namespace OpenTK.OpenAL.Extensions.EXT.Capture
         }
 
         /// <inheritdoc />
-        public abstract unsafe void* CaptureOpenDevice(string deviceName, uint frequency, BufferFormat format, int size);
+        public abstract unsafe Device* CaptureOpenDevice(string deviceName, uint frequency, BufferFormat format, int size);
 
         /// <inheritdoc cref="CaptureOpenDevice"/>
-        public unsafe void* CaptureOpenDevice<TBufferFormat>
+        public unsafe Device* CaptureOpenDevice<TBufferFormat>
         (
             string deviceName,
             uint frequency,
@@ -33,16 +33,16 @@ namespace OpenTK.OpenAL.Extensions.EXT.Capture
         }
 
         /// <inheritdoc />
-        public abstract unsafe bool CaptureCloseDevice(void* device);
+        public abstract unsafe bool CaptureCloseDevice(Device* device);
 
         /// <inheritdoc />
-        public abstract unsafe void CaptureStart(void* device);
+        public abstract unsafe void CaptureStart(Device* device);
 
         /// <inheritdoc />
-        public abstract unsafe void CaptureStop(void* device);
+        public abstract unsafe void CaptureStop(Device* device);
 
         /// <inheritdoc />
-        public abstract unsafe void CaptureSamples(void* device, void* buffer, int sampleCount);
+        public abstract unsafe void CaptureSamples(Device* device, void* buffer, int sampleCount);
 
         /// <summary>
         /// Completes a capture operation. This call does not block.
@@ -52,7 +52,7 @@ namespace OpenTK.OpenAL.Extensions.EXT.Capture
         /// <param name="sampleCount">The number of samples to retrieve.</param>
         public unsafe TManagedFormat[] CaptureSamples<TManagedFormat, TBufferFormat>
         (
-            void* device,
+            Device* device,
             TBufferFormat bufferFormat,
             int sampleCount
         )
@@ -80,7 +80,7 @@ namespace OpenTK.OpenAL.Extensions.EXT.Capture
         /// <param name="buffer">The buffer to fill. </param>
         public unsafe void CaptureSamples<TManagedFormat, TBufferFormat>
         (
-            void* device,
+            Device* device,
             TBufferFormat bufferFormat,
             int sampleCount,
             in TManagedFormat[] buffer
@@ -130,10 +130,10 @@ namespace OpenTK.OpenAL.Extensions.EXT.Capture
         }
 
         /// <inheritdoc />
-        public abstract unsafe void GetContextProperty(void* device, GetCaptureContextInteger param, int count, void* data);
+        public abstract unsafe void GetContextProperty(Device* device, GetCaptureContextInteger param, int count, void* data);
 
         /// <inheritdoc cref="GetContextProperty"/>
-        public unsafe int GetAvailableSamples(void* device)
+        public unsafe int GetAvailableSamples(Device* device)
         {
             var result = 0;
             GetContextProperty(device, GetCaptureContextInteger.CaptureSamples, 1, &result);

@@ -18,25 +18,10 @@ namespace OpenTK.OpenAL.Extensions.Enumeration
         }
 
         /// <inheritdoc />
-        public abstract unsafe char* GetString(void* device, GetCaptureEnumerationContextString param);
-
-        /// <inheritdoc cref="GetString(void*, GetCaptureEnumerationContextString)"/>
-        public string GetString(IntPtr device, GetCaptureEnumerationContextString param)
-        {
-            unsafe
-            {
-                var result = GetString(device.ToPointer(), param);
-                if (result != (char*)0)
-                {
-                    return Marshal.PtrToStringAnsi(new IntPtr(result));
-                }
-            }
-
-            return string.Empty;
-        }
+        public abstract unsafe string GetString(Device* device, GetCaptureEnumerationContextString param);
 
         /// <inheritdoc />
-        public abstract unsafe char* GetStringList(void* device, GetCaptureContextStringList param);
+        public abstract unsafe char* GetStringList(Device* device, GetCaptureContextStringList param);
 
         /// <inheritdoc cref="GetString(void*, GetCaptureContextStringList)"/>
         public IEnumerable<string> GetStringList(GetCaptureContextStringList param)

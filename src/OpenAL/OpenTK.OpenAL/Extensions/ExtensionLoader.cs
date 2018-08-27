@@ -40,7 +40,7 @@ namespace OpenTK.OpenAL.Extensions
         /// <typeparam name="TContextExtension">The extension type.</typeparam>
         /// <returns>The extension.</returns>
         /// <exception cref="ExtensionNotSupportedException">Thrown if the API doesn't support the extension.</exception>
-        internal static unsafe TContextExtension LoadContextExtension<TContextExtension>(void* device, IContextExtensions baseAPI)
+        internal static unsafe TContextExtension LoadContextExtension<TContextExtension>(Device* device, IContextExtensions baseAPI)
             where TContextExtension : ContextExtensionBase
         {
             var extensionMetadata = GetAPIExtensionMetadata<TContextExtension>();

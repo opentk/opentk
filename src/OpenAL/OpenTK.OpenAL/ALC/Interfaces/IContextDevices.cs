@@ -1,5 +1,4 @@
 using AdvancedDLSupport;
-using Device = System.Void;
 
 namespace OpenTK.OpenAL.Interfaces
 {

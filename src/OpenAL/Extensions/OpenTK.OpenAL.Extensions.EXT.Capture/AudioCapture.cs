@@ -33,7 +33,7 @@ namespace OpenTK.OpenAL.Extensions.EXT.Capture
     public sealed class AudioCapture<TBufferFormat> : IDisposable
         where TBufferFormat : struct, Enum
     {
-        private readonly unsafe void* _handle;
+        private readonly unsafe Device* _handle;
 
         private bool _isDisposed;
 

@@ -18,25 +18,10 @@ namespace OpenTK.OpenAL.Extensions.Creative.EnumerateAll
         }
 
         /// <inheritdoc />
-        public abstract unsafe char* GetString(void* device, GetEnumerateAllContextString param);
-
-        /// <inheritdoc cref="GetString(void*, GetEnumerateAllContextString)"/>
-        public string GetString(IntPtr device, GetEnumerateAllContextString param)
-        {
-            unsafe
-            {
-                var result = GetString(device.ToPointer(), param);
-                if (result != (char*)0)
-                {
-                    return Marshal.PtrToStringAnsi(new IntPtr(result));
-                }
-            }
-
-            return string.Empty;
-        }
+        public abstract unsafe string GetString(Device* device, GetEnumerateAllContextString param);
 
         /// <inheritdoc />
-        public abstract unsafe char* GetStringList(void* device, GetEnumerateAllContextStringList param);
+        public abstract unsafe char* GetStringList(Device* device, GetEnumerateAllContextStringList param);
 
         /// <inheritdoc cref="GetString(void*, GetEnumerateAllContextStringList)"/>
         public IEnumerable<string> GetStringList(GetEnumerateAllContextStringList param)

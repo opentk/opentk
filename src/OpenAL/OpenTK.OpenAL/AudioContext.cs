@@ -179,7 +179,7 @@ namespace OpenTK.OpenAL
             set => MakeCurrent(value ? this : null);
         }
 
-        private unsafe void* Device { get; set; }
+        private unsafe Device* Device { get; set; }
 
         /// <summary>
         /// Gets the ALC error code for this instance.
@@ -451,10 +451,12 @@ namespace OpenTK.OpenAL
             {
                 unsafe
                 {
-                    if (!ContextAPI.MakeContextCurrent(context?._contextHandle ?? ContextHandle.Zero))
+                    var contextHandle = context?._contextHandle ?? ContextHandle.Zero;
+                    if (!ContextAPI.MakeContextCurrent(contextHandle))
                     {
-                        var deviceHandle = context?._contextHandle;
-                        var error = ContextAPI.GetError((void*)deviceHandle);
+                        var contextPtr = (Context*)contextHandle.Handle;
+                        var deviceHandle = ContextAPI.GetContextsDevice(contextPtr);
+                        var error = ContextAPI.GetError(deviceHandle);
 
                         throw new AudioContextException
                         (
@@ -535,7 +537,7 @@ namespace OpenTK.OpenAL
 
             unsafe
             {
-                ContextAPI.ProcessContext((void*)_contextHandle);
+                ContextAPI.ProcessContext((Context*)_contextHandle.Handle);
             }
 
             IsProcessing = true;
@@ -570,7 +572,7 @@ namespace OpenTK.OpenAL
 
             unsafe
             {
-                ContextAPI.SuspendContext((void*)_contextHandle);
+                ContextAPI.SuspendContext((Context*)_contextHandle.Handle);
             }
 
             IsProcessing = false;
@@ -610,7 +612,7 @@ namespace OpenTK.OpenAL
 
                     unsafe
                     {
-                        ContextAPI.DestroyContext((void*)_contextHandle);
+                        ContextAPI.DestroyContext((Context*)_contextHandle.Handle);
                     }
                 }
 

@@ -30,43 +30,43 @@ namespace OpenTK.OpenAL
         /// </summary>
         /// <typeparam name="TContextExtension">The extension type.</typeparam>
         /// <returns>The extension.</returns>
-        public unsafe TContextExtension GetExtension<TContextExtension>(void* device) where TContextExtension : ContextExtensionBase
+        public unsafe TContextExtension GetExtension<TContextExtension>(Device* device) where TContextExtension : ContextExtensionBase
         {
             return ExtensionLoader.LoadContextExtension<TContextExtension>(device, this);
         }
 
         /// <inheritdoc />
-        public abstract unsafe void* CreateContext(void* device, int* attributeList);
+        public abstract unsafe Context* CreateContext(Device* device, int* attributeList);
 
         /// <inheritdoc cref="CreateContext"/>
-        public unsafe ContextHandle CreateContextHandle(void* device, int* attributeList)
+        public unsafe ContextHandle CreateContextHandle(Device* device, int* attributeList)
         {
             return new ContextHandle(CreateContext(device, attributeList));
         }
 
         /// <inheritdoc />
-        public abstract unsafe bool MakeContextCurrent(void* context);
+        public abstract unsafe bool MakeContextCurrent(Context* context);
 
         /// <inheritdoc cref="MakeContextCurrent(void*)"/>
         public bool MakeContextCurrent(ContextHandle context)
         {
             unsafe
             {
-                return MakeContextCurrent((void*)context);
+                return MakeContextCurrent((Context*)context.Handle);
             }
         }
 
         /// <inheritdoc />
-        public abstract unsafe void ProcessContext(void* context);
+        public abstract unsafe void ProcessContext(Context* context);
 
         /// <inheritdoc />
-        public abstract unsafe void SuspendContext(void* context);
+        public abstract unsafe void SuspendContext(Context* context);
 
         /// <inheritdoc />
-        public abstract unsafe void DestroyContext(void* context);
+        public abstract unsafe void DestroyContext(Context* context);
 
         /// <inheritdoc />
-        public abstract unsafe void* GetCurrentContext();
+        public abstract unsafe Context* GetCurrentContext();
 
         /// <inheritdoc cref="GetCurrentContext"/>
         public ContextHandle GetCurrentContextHandle()
@@ -78,31 +78,31 @@ namespace OpenTK.OpenAL
         }
 
         /// <inheritdoc />
-        public abstract unsafe void* GetContextsDevice(void* context);
+        public abstract unsafe Device* GetContextsDevice(Context* context);
 
         /// <inheritdoc />
-        public abstract unsafe void* OpenDevice(string deviceName);
+        public abstract unsafe Device* OpenDevice(string deviceName);
 
         /// <inheritdoc />
-        public abstract unsafe bool CloseDevice(void* device);
+        public abstract unsafe bool CloseDevice(Device* device);
 
         /// <inheritdoc />
-        public abstract unsafe ContextError GetError(void* device);
+        public abstract unsafe ContextError GetError(Device* device);
 
         /// <inheritdoc />
-        public abstract unsafe bool IsExtensionPresent(void* device, string name);
+        public abstract unsafe bool IsExtensionPresent(Device* device, string name);
 
         /// <inheritdoc />
-        public abstract unsafe void* GetProcAddress(void* device, string name);
+        public abstract unsafe void* GetProcAddress(Device* device, string name);
 
         /// <inheritdoc />
-        public abstract unsafe int GetEnumValue(void* device, string name);
+        public abstract unsafe int GetEnumValue(Device* device, string name);
 
         /// <inheritdoc />
-        public abstract unsafe string GetContextProperty(void* device, GetContextString param);
+        public abstract unsafe string GetContextProperty(Device* device, GetContextString param);
 
         /// <inheritdoc />
-        public abstract unsafe void GetContextProperty(void* device, GetContextInteger param, int count, void* data);
+        public abstract unsafe void GetContextProperty(Device* device, GetContextInteger param, int count, void* data);
 
         /// <summary>
         /// Gets an instance of the API.

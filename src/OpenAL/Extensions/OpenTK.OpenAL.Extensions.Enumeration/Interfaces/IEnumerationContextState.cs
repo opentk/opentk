@@ -1,5 +1,4 @@
 using AdvancedDLSupport;
-using Device = System.Void;
 // ReSharper disable ExplicitCallerInfoArgument
 
 namespace OpenTK.OpenAL.Extensions.Enumeration
@@ -16,7 +15,7 @@ namespace OpenTK.OpenAL.Extensions.Enumeration
         /// <param name="device">The device for the context.</param>
         /// <param name="param">The named property.</param>
         /// <returns>The value.</returns>
-        unsafe char* GetString(Device* device, GetEnumerationContextString param);
+        unsafe string GetString(Device* device, GetEnumerationContextString param);
 
         /// <summary>
         /// Gets a named property on the context.
