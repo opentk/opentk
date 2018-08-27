@@ -6,6 +6,7 @@ namespace OpenTK.OpenAL.Interfaces
     /// <summary>
     /// Defines the public interface for the device-related context functions of OpenAL 1.1.
     /// </summary>
+    [NativeSymbols(Prefix = "alc")]
     internal interface IContextDevices
     {
         /// <summary>

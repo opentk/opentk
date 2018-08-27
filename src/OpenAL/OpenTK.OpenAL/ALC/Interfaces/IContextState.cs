@@ -1,3 +1,4 @@
+using AdvancedDLSupport;
 using Device = System.Void;
 
 namespace OpenTK.OpenAL.Interfaces
@@ -5,6 +6,7 @@ namespace OpenTK.OpenAL.Interfaces
     /// <summary>
     /// Defines the public interface for the state-related context functions of OpenAL 1.1.
     /// </summary>
+    [NativeSymbols(Prefix = "alc")]
     internal interface IContextState
     {
         /// <summary>

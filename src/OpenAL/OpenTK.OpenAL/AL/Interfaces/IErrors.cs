@@ -1,8 +1,11 @@
+using AdvancedDLSupport;
+
 namespace OpenTK.OpenAL.Interfaces
 {
     /// <summary>
     /// Defines the public interface for the error-related functions of OpenAL 1.1.
     /// </summary>
+    [NativeSymbols(Prefix = "al")]
     internal interface IErrors
     {
         /// <summary>
