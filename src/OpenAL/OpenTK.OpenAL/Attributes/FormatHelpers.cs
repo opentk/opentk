@@ -12,7 +12,9 @@ namespace OpenTK.OpenAL.Attributes
         /// <summary>
         /// Gets the native byte size of the given format.
         /// </summary>
-        /// <returns></returns>
+        /// <typeparam name="TFormat">The format type.</typeparam>
+        /// <param name="format">The format.</param>
+        /// <returns>The size.</returns>
         public static int GetFormatSize<TFormat>(TFormat format) where TFormat : struct, Enum
         {
             var enumType = typeof(TFormat);

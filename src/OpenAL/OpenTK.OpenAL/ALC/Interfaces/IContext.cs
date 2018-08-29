@@ -13,7 +13,7 @@ namespace OpenTK.OpenAL.Interfaces
         /// </summary>
         /// <param name="device">The device.</param>
         /// <param name="attributeList">The context's attribute list.</param>
-        /// <returns></returns>
+        /// <returns>The context handle.</returns>
         unsafe Context* CreateContext(Device* device, int* attributeList);
 
         /// <summary>

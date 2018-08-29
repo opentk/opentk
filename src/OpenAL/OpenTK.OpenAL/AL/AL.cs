@@ -21,7 +21,8 @@ namespace OpenTK.OpenAL
     public abstract class AL : NativeLibraryBase, IAL
     {
         /// <inheritdoc cref="NativeLibraryBase"/>
-        protected AL(string path, ImplementationOptions options) : base(path, options)
+        protected AL(string path, ImplementationOptions options)
+            : base(path, options)
         {
         }
 
@@ -308,7 +309,6 @@ namespace OpenTK.OpenAL
             }
         }
 
-
         /// <inheritdoc />
         public abstract bool IsSource(uint source);
 
@@ -516,7 +516,7 @@ namespace OpenTK.OpenAL
         /// <summary>
         /// Gets an instance of the API.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The instance.</returns>
         public static AL GetAPI()
         {
             return APILoader.Load<AL, OpenALLibraryNameContainer>();

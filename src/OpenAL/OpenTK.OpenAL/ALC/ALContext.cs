@@ -21,7 +21,8 @@ namespace OpenTK.OpenAL
     public abstract class ALContext : NativeLibraryBase, IALC
     {
         /// <inheritdoc cref="NativeLibraryBase"/>
-        protected ALContext(string path, ImplementationOptions options) : base(path, options)
+        protected ALContext(string path, ImplementationOptions options)
+            : base(path, options)
         {
         }
 
@@ -29,6 +30,7 @@ namespace OpenTK.OpenAL
         /// Gets an instance of the API of an extension to the API.
         /// </summary>
         /// <typeparam name="TContextExtension">The extension type.</typeparam>
+        /// <param name="device">The device the context is on.</param>
         /// <returns>The extension.</returns>
         public unsafe TContextExtension GetExtension<TContextExtension>(Device* device) where TContextExtension : ContextExtensionBase
         {
@@ -107,7 +109,7 @@ namespace OpenTK.OpenAL
         /// <summary>
         /// Gets an instance of the API.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The instance.</returns>
         public static ALContext GetAPI()
         {
             return APILoader.Load<ALContext, OpenALLibraryNameContainer>();

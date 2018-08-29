@@ -58,7 +58,8 @@ namespace OpenTK.OpenAL
         /// Initializes a new instance of the <see cref="AudioDeviceErrorChecker"/> struct.
         /// </summary>
         /// <param name="device">The device to monitor.</param>
-        public unsafe AudioDeviceErrorChecker(Device* device) : this(new IntPtr(device))
+        public unsafe AudioDeviceErrorChecker(Device* device)
+            : this(new IntPtr(device))
         {
         }
 

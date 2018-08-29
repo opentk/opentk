@@ -14,6 +14,7 @@ namespace OpenTK.OpenAL.Interfaces
         /// <summary>
         /// Determines whether or not the named extension is available.
         /// </summary>
+        /// <param name="device">The device.</param>
         /// <param name="name">The name of the extension.</param>
         /// <returns>true if the extension is available; otherwise, false.</returns>
         unsafe bool IsExtensionPresent(Device* device, [CallerFree] string name);
@@ -21,6 +22,7 @@ namespace OpenTK.OpenAL.Interfaces
         /// <summary>
         /// Gets the address of an OpenAL extension function.
         /// </summary>
+        /// <param name="device">The device.</param>
         /// <param name="name">The name of the function.</param>
         /// <returns>The function pointer.</returns>
         unsafe void* GetProcAddress(Device* device, [CallerFree] string name);
@@ -28,6 +30,7 @@ namespace OpenTK.OpenAL.Interfaces
         /// <summary>
         /// Gets the value of the named OpenAL extension enumeration member.
         /// </summary>
+        /// <param name="device">The device.</param>
         /// <param name="name">The name of the enumeration member.</param>
         /// <returns>The value of the member.</returns>
         unsafe int GetEnumValue(Device* device, [CallerFree] string name);

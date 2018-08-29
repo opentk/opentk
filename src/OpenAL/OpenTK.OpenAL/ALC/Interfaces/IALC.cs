@@ -6,7 +6,7 @@ namespace OpenTK.OpenAL.Interfaces
     /// Defines the public interface of the context in the OpenAL 1.1 library.
     /// </summary>
     [NativeSymbols(Prefix = "alc")]
-    internal interface IALC :  IContext, IContextDevices, IContextErrors, IContextExtensions, IContextState
+    internal interface IALC : IContext, IContextDevices, IContextErrors, IContextExtensions, IContextState
     {
     }
 }

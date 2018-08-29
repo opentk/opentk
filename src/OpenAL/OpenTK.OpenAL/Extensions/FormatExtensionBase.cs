@@ -16,7 +16,7 @@ namespace OpenTK.OpenAL.Extensions
         {
         }
 
-        /// <inheritdoc/>
+        /// <inheritdoc cref="BufferData"/>
         public abstract unsafe void BufferData(uint buffer, TExtendedBufferFormat format, void* data, int size, int frequency);
 
         /// <summary>
