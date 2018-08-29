@@ -1,7 +1,6 @@
 using AdvancedDLSupport;
 
 // ReSharper disable ExplicitCallerInfoArgument
-
 namespace OpenTK.OpenAL.Interfaces
 {
     /// <summary>

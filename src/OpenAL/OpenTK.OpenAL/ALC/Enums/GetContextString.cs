@@ -1,7 +1,9 @@
-﻿namespace OpenTK.OpenAL
+﻿using OpenTK.OpenAL.Interfaces;
+
+namespace OpenTK.OpenAL
 {
     /// <summary>
-    /// Defines available parameters for <see cref="ALContext.GetString(System.IntPtr,GetContextString)" />.
+    /// Defines available parameters for <see cref="IContextState.GetContextProperty(OpenTK.OpenAL.Device*,GetContextString)" />.
     /// </summary>
     public enum GetContextString
     {

@@ -1,7 +1,9 @@
-﻿namespace OpenTK.OpenAL
+﻿using OpenTK.OpenAL.Interfaces;
+
+namespace OpenTK.OpenAL
 {
     /// <summary>
-    /// A list of valid <see cref="double"/> <see cref="IState.GetDouble"/> parameters.
+    /// A list of valid <see cref="double"/> <see cref="IState.GetStateProperty(StateDouble)"/> parameters.
     /// </summary>
     public enum StateDouble
     {

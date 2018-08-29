@@ -49,7 +49,7 @@ namespace OpenTK.OpenAL
         /// <inheritdoc />
         public abstract unsafe bool MakeContextCurrent(Context* context);
 
-        /// <inheritdoc cref="MakeContextCurrent(void*)"/>
+        /// <inheritdoc cref="MakeContextCurrent(OpenTK.OpenAL.Context*)"/>
         public bool MakeContextCurrent(ContextHandle context)
         {
             unsafe
