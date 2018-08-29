@@ -1,7 +1,8 @@
 using AdvancedDLSupport;
-// ReSharper disable ExplicitCallerInfoArgument
+using OpenTK.OpenAL.Extensions.Enumeration;
 
-namespace OpenTK.OpenAL.Extensions.Enumeration
+// ReSharper disable ExplicitCallerInfoArgument
+namespace OpenTK.OpenAL.Extensions.EXT.Capture.Enumeration
 {
     /// <summary>
     /// Defines the public API of the context-related functions of the Capture extension.

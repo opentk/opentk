@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using AdvancedDLSupport;
 using OpenTK.Core.Loader;
+using OpenTK.OpenAL.Extensions.EXT.Capture.Enumeration;
 
 namespace OpenTK.OpenAL.Extensions.Enumeration
 {
@@ -13,7 +14,8 @@ namespace OpenTK.OpenAL.Extensions.Enumeration
     public abstract class CaptureEnumerationEnumeration : ContextExtensionBase, ICaptureEnumerationContextState
     {
         /// <inheritdoc cref="ExtensionBase"/>
-        protected CaptureEnumerationEnumeration(string path, ImplementationOptions options) : base(path, options)
+        protected CaptureEnumerationEnumeration(string path, ImplementationOptions options)
+            : base(path, options)
         {
         }
 
@@ -23,7 +25,7 @@ namespace OpenTK.OpenAL.Extensions.Enumeration
         /// <inheritdoc />
         public abstract unsafe char* GetStringList(Device* device, GetCaptureContextStringList param);
 
-        /// <inheritdoc cref="GetString(void*, GetCaptureContextStringList)"/>
+        /// <inheritdoc cref="GetStringList(OpenTK.OpenAL.Device*,OpenTK.OpenAL.Extensions.EXT.Capture.Enumeration.GetCaptureContextStringList)"/>
         public IEnumerable<string> GetStringList(GetCaptureContextStringList param)
         {
             unsafe

@@ -1,7 +1,7 @@
-﻿namespace OpenTK.OpenAL.Extensions.Enumeration
+﻿namespace OpenTK.OpenAL.Extensions.EXT.Capture.Enumeration
 {
     /// <summary>
-    /// Defines available parameters for <see cref="ICaptureEnumerationContextState.GetString(System.IntPtr,GetCaptureContextStringList)" />.
+    /// Defines available parameters for <see cref="ICaptureEnumerationContextState.GetString(Device*,GetCaptureContextStringList)" />.
     /// </summary>
     public enum GetCaptureContextStringList
     {

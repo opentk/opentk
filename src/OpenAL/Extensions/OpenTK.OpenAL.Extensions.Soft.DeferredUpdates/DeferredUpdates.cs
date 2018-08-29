@@ -9,7 +9,8 @@ namespace OpenTK.OpenAL.Extensions.Soft.DeferredUpdates
     public abstract class DeferredUpdates : ExtensionBase, IDeferredUpdatesState
     {
         /// <inheritdoc cref ="ExtensionBase"/>
-        protected DeferredUpdates(string path, ImplementationOptions options) : base(path, options)
+        protected DeferredUpdates(string path, ImplementationOptions options)
+            : base(path, options)
         {
         }
 

@@ -12,7 +12,8 @@ namespace OpenTK.OpenAL.Extensions.EXT.Capture
     public abstract class Capture : ContextExtensionBase, ICaptureContext, ICaptureContextState
     {
         /// <inheritdoc cref="ExtensionBase"/>
-        protected Capture(string path, ImplementationOptions options) : base(path, options)
+        protected Capture(string path, ImplementationOptions options)
+            : base(path, options)
         {
         }
 
@@ -29,7 +30,7 @@ namespace OpenTK.OpenAL.Extensions.EXT.Capture
         )
             where TBufferFormat : struct, Enum
         {
-            return CaptureOpenDevice(deviceName, frequency,(BufferFormat)(object)format, size);
+            return CaptureOpenDevice(deviceName, frequency, (BufferFormat)(object)format, size);
         }
 
         /// <inheritdoc />
@@ -47,9 +48,12 @@ namespace OpenTK.OpenAL.Extensions.EXT.Capture
         /// <summary>
         /// Completes a capture operation. This call does not block.
         /// </summary>
+        /// <typeparam name="TManagedFormat">The managed format of the buffer.</typeparam>
+        /// <typeparam name="TBufferFormat">The format of the native buffer.</typeparam>
         /// <param name="device">The device.</param>
         /// <param name="bufferFormat">The data format of the buffer.</param>
         /// <param name="sampleCount">The number of samples to retrieve.</param>
+        /// <returns>The captured samples.</returns>
         public unsafe TManagedFormat[] CaptureSamples<TManagedFormat, TBufferFormat>
         (
             Device* device,
@@ -74,6 +78,8 @@ namespace OpenTK.OpenAL.Extensions.EXT.Capture
         /// <summary>
         /// Completes a capture operation. This call does not block.
         /// </summary>
+        /// <typeparam name="TManagedFormat">The managed format of the buffer.</typeparam>
+        /// <typeparam name="TBufferFormat">The format of the native buffer.</typeparam>
         /// <param name="device">The device.</param>
         /// <param name="bufferFormat">The data format of the buffer.</param>
         /// <param name="sampleCount">The number of samples to retrieve.</param>
@@ -112,11 +118,12 @@ namespace OpenTK.OpenAL.Extensions.EXT.Capture
         /// <summary>
         /// Creates a capture for the given device, using the specified settings.
         /// </summary>
+        /// <typeparam name="TBufferFormat">The format of the native buffer.</typeparam>
         /// <param name="deviceName">The name of the device.</param>
         /// <param name="frequency">The capture frequency.</param>
         /// <param name="sampleFormat">The capture sample format.</param>
-        /// <param name="bufferSize"></param>
-        /// <returns></returns>
+        /// <param name="bufferSize">The size of the ring buffer.</param>
+        /// <returns>An object wrapping a capture capability.</returns>
         public AudioCapture<TBufferFormat> CreateCapture<TBufferFormat>
         (
             string deviceName = null,

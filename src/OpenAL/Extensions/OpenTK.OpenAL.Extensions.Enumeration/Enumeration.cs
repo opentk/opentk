@@ -13,7 +13,8 @@ namespace OpenTK.OpenAL.Extensions.Enumeration
     public abstract class Enumeration : ContextExtensionBase, IEnumerationContextState
     {
         /// <inheritdoc cref="ExtensionBase"/>
-        protected Enumeration(string path, ImplementationOptions options) : base(path, options)
+        protected Enumeration(string path, ImplementationOptions options)
+            : base(path, options)
         {
         }
 

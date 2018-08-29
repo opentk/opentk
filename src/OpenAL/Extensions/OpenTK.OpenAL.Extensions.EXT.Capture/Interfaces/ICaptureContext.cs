@@ -1,4 +1,3 @@
-
 using AdvancedDLSupport;
 
 namespace OpenTK.OpenAL.Extensions.EXT.Capture

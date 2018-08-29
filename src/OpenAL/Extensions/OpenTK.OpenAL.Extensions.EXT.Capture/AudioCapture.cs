@@ -30,14 +30,15 @@ namespace OpenTK.OpenAL.Extensions.EXT.Capture
     /// <summary>
     /// Provides methods to instantiate, use and destroy an audio device for recording.
     /// </summary>
+    /// <typeparam name="TBufferFormat">The buffer format of the capture.</typeparam>
     public sealed class AudioCapture<TBufferFormat> : IDisposable
         where TBufferFormat : struct, Enum
     {
         private readonly unsafe Device* _handle;
 
-        private bool _isDisposed;
-
         private readonly Capture _captureAPI;
+
+        private bool _isDisposed;
 
         /// <summary>
         /// Gets the name of the device associated with this instance.
@@ -74,7 +75,7 @@ namespace OpenTK.OpenAL.Extensions.EXT.Capture
         public bool IsRunning { get; private set; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AudioCapture"/> class that opens a device for audio recording.
+        /// Initializes a new instance of the <see cref="AudioCapture{TBufferFormat}"/> class that opens a device for audio recording.
         /// </summary>
         /// <param name="captureAPI">The capture API instance to use.</param>
         /// <param name="deviceName">The device name.</param>
@@ -135,7 +136,6 @@ namespace OpenTK.OpenAL.Extensions.EXT.Capture
             SampleFormat = actualSampleFormat;
             SampleFrequency = frequency;
         }
-
 
         /// <summary>
         /// Checks for ALC error conditions.
@@ -215,7 +215,7 @@ namespace OpenTK.OpenAL.Extensions.EXT.Capture
         }
 
         /// <summary>
-        /// Finalizes an instance of the <see cref="AudioCapture"/> class.
+        /// Finalizes an instance of the <see cref="AudioCapture{T}"/> class.
         /// </summary>
         ~AudioCapture()
         {

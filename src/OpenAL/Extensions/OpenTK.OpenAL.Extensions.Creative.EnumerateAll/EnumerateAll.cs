@@ -13,7 +13,8 @@ namespace OpenTK.OpenAL.Extensions.Creative.EnumerateAll
     public abstract class EnumerateAll : ContextExtensionBase, IEnumerateAllContextState
     {
         /// <inheritdoc cref="ExtensionBase"/>
-        protected EnumerateAll(string path, ImplementationOptions options) : base(path, options)
+        protected EnumerateAll(string path, ImplementationOptions options)
+            : base(path, options)
         {
         }
 

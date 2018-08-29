@@ -9,7 +9,8 @@ namespace OpenTK.OpenAL.Extensions.Soft
     public abstract class Soft : ExtensionBase, IStateSoft
     {
         /// <inheritdoc cref="ExtensionBase" />
-        protected Soft(string path, ImplementationOptions options) : base(path, options)
+        protected Soft(string path, ImplementationOptions options)
+            : base(path, options)
         {
         }
 
