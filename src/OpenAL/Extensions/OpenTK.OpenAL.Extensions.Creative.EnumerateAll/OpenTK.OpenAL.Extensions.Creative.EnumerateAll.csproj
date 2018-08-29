@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\OpenTK.OpenAL\OpenTK.OpenAL.csproj" />
+    <ProjectReference Include="$(OpenTKSolutionRoot)\src\OpenAL\OpenTK.OpenAL\OpenTK.OpenAL.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -16,7 +16,7 @@
   </ItemGroup>
 
   <Import Project="..\..\..\..\props\common.props" />
-  <Import Project="..\..\..\..\props\nuget-common.props" />
-  <Import Project="..\..\..\..\props\stylecop.props" />
+  <Import Project="$(OpenTKSolutionRoot)\props\nuget-common.props" />
+  <Import Project="$(OpenTKSolutionRoot)\props\stylecop.props" />
 
 </Project>
