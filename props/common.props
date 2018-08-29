@@ -1,5 +1,9 @@
 <Project>
   <PropertyGroup>
+    <HasCommonProperties>true</HasCommonProperties>
     <Copyright>Copyright (c) 2006 - 2018 Stefanos Apostolopoulos (stapostol@gmail.com) for the Open Toolkit library.</Copyright>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OpenTKSolutionRoot>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)\..))</OpenTKSolutionRoot>
   </PropertyGroup>
 </Project>
