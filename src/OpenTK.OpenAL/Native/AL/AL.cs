@@ -8,7 +8,6 @@
 using System;
 using System.Runtime.InteropServices;
 using System.Security;
-using OpenTK.Core.Utility;
 using OpenTK.Mathematics;
 
 namespace OpenTK.OpenAL.Native
