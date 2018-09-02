@@ -1,10 +1,9 @@
 language: csharp
 
-mono: latest
+mono: preview
 dotnet: 2.1.401
 
 solution: OpenTK.sln
 
 install:
-  - csc /version
   - dotnet restore -v quiet $TRAVIS_SOLUTION
