@@ -252,7 +252,7 @@ namespace OpenTK.OpenAL
                 throw new ArgumentNullException(nameof(buffer));
             }
 
-            var buffer_size = BlittableValueType<TBuffer>.Stride * buffer.Length;
+            var buffer_size = Marshal.SizeOf<TBuffer>() * buffer.Length;
 
             // This is more of a heuristic than a 100% valid check. However, it will work
             // correctly for 99.9% of all use cases.

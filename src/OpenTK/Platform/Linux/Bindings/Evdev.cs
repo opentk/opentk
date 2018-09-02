@@ -385,8 +385,7 @@ namespace OpenTK.Platform.Linux
                 fixed (InputAbsInfo* pinfo = &info)
                 {
                     // EVIOCGABS(abs) = _IOR('E', 0x40 + (abs), struct input_absinfo)
-                    var ioctl = IOCreate(DirectionFlags.Read, (int)axis + 0x40,
-                        BlittableValueType<InputAbsInfo>.Stride);
+                    var ioctl = IOCreate(DirectionFlags.Read, (int)axis + 0x40, Marshal.SizeOf<InputAbsInfo>());
                     var retval = Libc.ioctl(fd, ioctl, new IntPtr(pinfo));
                     return retval;
                 }
