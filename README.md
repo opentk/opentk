@@ -7,6 +7,7 @@ OpenTK
 OpenTK is a large project, with a huge number of components. We're looking to add a more maintainers to the team.
 Email [@varon](https://github.com/varon) or message him in Gitter if you'd like to help out.
 
+
 [![Discord](https://discordapp.com/api/guilds/337627185248468993/widget.png)](https://discord.gg/GZTYR4s)
 
 The Open Toolkit library is a fast, low-level C# binding for OpenGL, OpenGL ES and OpenAL. It runs on all major platforms and powers hundreds of apps, games and scientific research.
