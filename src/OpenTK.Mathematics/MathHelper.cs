@@ -33,7 +33,7 @@ namespace OpenTK.Mathematics
         public const float PiOver3 = Pi / 3;
 
         /// <summary>
-        /// Definesthe value of  Pi divided by four as a <see cref="float"/>.
+        /// Defines the value of  Pi divided by four as a <see cref="float"/>.
         /// </summary>
         public const float PiOver4 = Pi / 4;
 
