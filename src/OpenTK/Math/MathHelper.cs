@@ -32,7 +32,7 @@ namespace OpenTK
         public const float PiOver3 = Pi / 3;
 
         /// <summary>
-        /// Defines the value of  Pi divided by four as a <see cref="System.Single"/>.
+        /// Definesthe value of  Pi divided by four as a <see cref="System.Single"/>.
         /// </summary>
         public const float PiOver4 = Pi / 4;
 
