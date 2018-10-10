@@ -21,6 +21,7 @@ SOFTWARE.
  */
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 
 namespace OpenTK.Mathematics
@@ -34,37 +35,37 @@ namespace OpenTK.Mathematics
     public struct Matrix4d : IEquatable<Matrix4d>
     {
         /// <summary>
-        /// Top row of the matrix
+        /// Top row of the matrix.
         /// </summary>
         public Vector4d Row0;
 
         /// <summary>
-        /// 2nd row of the matrix
+        /// 2nd row of the matrix.
         /// </summary>
         public Vector4d Row1;
 
         /// <summary>
-        /// 3rd row of the matrix
+        /// 3rd row of the matrix.
         /// </summary>
         public Vector4d Row2;
 
         /// <summary>
-        /// Bottom row of the matrix
+        /// Bottom row of the matrix.
         /// </summary>
         public Vector4d Row3;
 
         /// <summary>
-        /// The identity matrix
+        /// The identity matrix.
         /// </summary>
         public static Matrix4d Identity = new Matrix4d(Vector4d.UnitX, Vector4d.UnitY, Vector4d.UnitZ, Vector4d.UnitW);
 
         /// <summary>
-        /// Constructs a new instance.
+        /// Initializes a new instance of the <see cref="Matrix4d"/> struct.
         /// </summary>
-        /// <param name="row0">Top row of the matrix</param>
-        /// <param name="row1">Second row of the matrix</param>
-        /// <param name="row2">Third row of the matrix</param>
-        /// <param name="row3">Bottom row of the matrix</param>
+        /// <param name="row0">Top row of the matrix.</param>
+        /// <param name="row1">Second row of the matrix.</param>
+        /// <param name="row2">Third row of the matrix.</param>
+        /// <param name="row3">Bottom row of the matrix.</param>
         public Matrix4d(Vector4d row0, Vector4d row1, Vector4d row2, Vector4d row3)
         {
             Row0 = row0;
@@ -74,7 +75,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Constructs a new instance.
+        /// Initializes a new instance of the <see cref="Matrix4d"/> struct.
         /// </summary>
         /// <param name="m00">First item of the first row.</param>
         /// <param name="m01">Second item of the first row.</param>
@@ -92,24 +93,13 @@ namespace OpenTK.Mathematics
         /// <param name="m31">Second item of the fourth row.</param>
         /// <param name="m32">Third item of the fourth row.</param>
         /// <param name="m33">Fourth item of the fourth row.</param>
+        [SuppressMessage("ReSharper", "SA1117", Justification = "For better readability of Matrix struct.")]
         public Matrix4d
         (
-            double m00,
-            double m01,
-            double m02,
-            double m03,
-            double m10,
-            double m11,
-            double m12,
-            double m13,
-            double m20,
-            double m21,
-            double m22,
-            double m23,
-            double m30,
-            double m31,
-            double m32,
-            double m33
+            double m00, double m01, double m02, double m03,
+            double m10, double m11, double m12, double m13,
+            double m20, double m21, double m22, double m23,
+            double m30, double m31, double m32, double m33
         )
         {
             Row0 = new Vector4d(m00, m01, m02, m03);
@@ -119,7 +109,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Constructs a new instance.
+        /// Initializes a new instance of the <see cref="Matrix4d"/> struct.
         /// </summary>
         /// <param name="topLeft">The top left 3x3 of the matrix.</param>
         public Matrix4d(Matrix3d topLeft)
@@ -386,6 +376,9 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Gets or sets the value at a specified row and column.
         /// </summary>
+        /// <param name="rowIndex">The index of the row.</param>
+        /// <param name="columnIndex">The index of the column.</param>
+        /// <returns>The element at the given row and column index.</returns>
         public double this[int rowIndex, int columnIndex]
         {
             get
@@ -457,8 +450,9 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Returns a normalised copy of this instance.
+        /// Returns a normalized copy of this instance.
         /// </summary>
+        /// <returns>The normalized copy.</returns>
         public Matrix4d Normalized()
         {
             var m = this;
@@ -481,6 +475,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Returns an inverted copy of this instance.
         /// </summary>
+        /// <returns>The inverted copy.</returns>
         public Matrix4d Inverted()
         {
             var m = this;
@@ -495,6 +490,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Returns a copy of this Matrix4d without translation.
         /// </summary>
+        /// <returns>The matrix without translation.</returns>
         public Matrix4d ClearTranslation()
         {
             var m = this;
@@ -505,6 +501,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Returns a copy of this Matrix4d without scale.
         /// </summary>
+        /// <returns>The matrix without scaling.</returns>
         public Matrix4d ClearScale()
         {
             var m = this;
@@ -517,6 +514,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Returns a copy of this Matrix4d without rotation.
         /// </summary>
+        /// <returns>The matrix without rotation.</returns>
         public Matrix4d ClearRotation()
         {
             var m = this;
@@ -529,6 +527,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Returns a copy of this Matrix4d without projection.
         /// </summary>
+        /// <returns>The matrix without projection.</returns>
         public Matrix4d ClearProjection()
         {
             var m = this;
@@ -539,6 +538,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Returns the translation component of this instance.
         /// </summary>
+        /// <returns>The translation.</returns>
         public Vector3d ExtractTranslation()
         {
             return Row3.Xyz;
@@ -547,6 +547,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Returns the scale component of this instance.
         /// </summary>
+        /// <returns>The scale.</returns>
         public Vector3d ExtractScale()
         {
             return new Vector3d(Row0.Xyz.Length, Row1.Xyz.Length, Row2.Xyz.Length);
@@ -555,17 +556,18 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Returns the rotation component of this instance. Quite slow.
         /// </summary>
-        /// <param name="row_normalise">
-        /// Whether the method should row-normalise (i.e. remove scale from) the Matrix. Pass false if
-        /// you know it's already normalised.
+        /// <param name="rowNormalize">
+        /// Whether the method should row-normalize (i.e. remove scale from) the Matrix. Pass false if
+        /// you know it's already normalized.
         /// </param>
-        public Quaterniond ExtractRotation(bool row_normalise = true)
+        /// <returns>The rotation.</returns>
+        public Quaterniond ExtractRotation(bool rowNormalize = true)
         {
             var row0 = Row0.Xyz;
             var row1 = Row1.Xyz;
             var row2 = Row2.Xyz;
 
-            if (row_normalise)
+            if (rowNormalize)
             {
                 row0 = row0.Normalized();
                 row1 = row1.Normalized();
@@ -624,6 +626,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Returns the projection component of this instance.
         /// </summary>
+        /// <returns>The projection.</returns>
         public Vector4d ExtractProjection()
         {
             return Column3;
@@ -647,16 +650,16 @@ namespace OpenTK.Mathematics
             var t = 1.0f - cos;
 
             // do the conversion math once
-            double tXX = t * axisX * axisX,
-                tXY = t * axisX * axisY,
-                tXZ = t * axisX * axisZ,
-                tYY = t * axisY * axisY,
-                tYZ = t * axisY * axisZ,
-                tZZ = t * axisZ * axisZ;
+            double tXX = t * axisX * axisX;
+            double tXY = t * axisX * axisY;
+            double tXZ = t * axisX * axisZ;
+            double tYY = t * axisY * axisY;
+            double tYZ = t * axisY * axisZ;
+            double tZZ = t * axisZ * axisZ;
 
-            double sinX = sin * axisX,
-                sinY = sin * axisY,
-                sinZ = sin * axisZ;
+            double sinX = sin * axisX;
+            double sinY = sin * axisY;
+            double sinZ = sin * axisZ;
 
             result.Row0.X = tXX + cos;
             result.Row0.Y = tXY - sinZ;
@@ -819,19 +822,19 @@ namespace OpenTK.Mathematics
         /// </summary>
         /// <param name="width">The width of the projection volume.</param>
         /// <param name="height">The height of the projection volume.</param>
-        /// <param name="zNear">The near edge of the projection volume.</param>
-        /// <param name="zFar">The far edge of the projection volume.</param>
+        /// <param name="depthNear">The near edge of the projection volume.</param>
+        /// <param name="depthFar">The far edge of the projection volume.</param>
         /// <param name="result">The resulting Matrix4d instance.</param>
         public static void CreateOrthographic
         (
             double width,
             double height,
-            double zNear,
-            double zFar,
+            double depthNear,
+            double depthFar,
             out Matrix4d result
         )
         {
-            CreateOrthographicOffCenter(-width / 2, width / 2, -height / 2, height / 2, zNear, zFar, out result);
+            CreateOrthographicOffCenter(-width / 2, width / 2, -height / 2, height / 2, depthNear, depthFar, out result);
         }
 
         /// <summary>
@@ -839,12 +842,12 @@ namespace OpenTK.Mathematics
         /// </summary>
         /// <param name="width">The width of the projection volume.</param>
         /// <param name="height">The height of the projection volume.</param>
-        /// <param name="zNear">The near edge of the projection volume.</param>
-        /// <param name="zFar">The far edge of the projection volume.</param>
-        /// <rereturns>The resulting Matrix4d instance.</rereturns>
-        public static Matrix4d CreateOrthographic(double width, double height, double zNear, double zFar)
+        /// <param name="depthNear">The near edge of the projection volume.</param>
+        /// <param name="depthFar">The far edge of the projection volume.</param>
+        /// <returns>The resulting Matrix4d instance.</returns>
+        public static Matrix4d CreateOrthographic(double width, double height, double depthNear, double depthFar)
         {
-            CreateOrthographicOffCenter(-width / 2, width / 2, -height / 2, height / 2, zNear, zFar, out Matrix4d result);
+            CreateOrthographicOffCenter(-width / 2, width / 2, -height / 2, height / 2, depthNear, depthFar, out Matrix4d result);
             return result;
         }
 
@@ -855,8 +858,8 @@ namespace OpenTK.Mathematics
         /// <param name="right">The right edge of the projection volume.</param>
         /// <param name="bottom">The bottom edge of the projection volume.</param>
         /// <param name="top">The top edge of the projection volume.</param>
-        /// <param name="zNear">The near edge of the projection volume.</param>
-        /// <param name="zFar">The far edge of the projection volume.</param>
+        /// <param name="depthNear">The near edge of the projection volume.</param>
+        /// <param name="depthFar">The far edge of the projection volume.</param>
         /// <param name="result">The resulting Matrix4d instance.</param>
         public static void CreateOrthographicOffCenter
         (
@@ -864,14 +867,14 @@ namespace OpenTK.Mathematics
             double right,
             double bottom,
             double top,
-            double zNear,
-            double zFar,
+            double depthNear,
+            double depthFar,
             out Matrix4d result
         )
         {
             var invRL = 1 / (right - left);
             var invTB = 1 / (top - bottom);
-            var invFN = 1 / (zFar - zNear);
+            var invFN = 1 / (depthFar - depthNear);
 
             result = new Matrix4d
             {
@@ -881,7 +884,7 @@ namespace OpenTK.Mathematics
 
                 M41 = -(right + left) * invRL,
                 M42 = -(top + bottom) * invTB,
-                M43 = -(zFar + zNear) * invFN,
+                M43 = -(depthFar + depthNear) * invFN,
                 M44 = 1
             };
         }
@@ -893,8 +896,8 @@ namespace OpenTK.Mathematics
         /// <param name="right">The right edge of the projection volume.</param>
         /// <param name="bottom">The bottom edge of the projection volume.</param>
         /// <param name="top">The top edge of the projection volume.</param>
-        /// <param name="zNear">The near edge of the projection volume.</param>
-        /// <param name="zFar">The far edge of the projection volume.</param>
+        /// <param name="depthNear">The near edge of the projection volume.</param>
+        /// <param name="depthFar">The far edge of the projection volume.</param>
         /// <returns>The resulting Matrix4d instance.</returns>
         public static Matrix4d CreateOrthographicOffCenter
         (
@@ -902,38 +905,38 @@ namespace OpenTK.Mathematics
             double right,
             double bottom,
             double top,
-            double zNear,
-            double zFar
+            double depthNear,
+            double depthFar
         )
         {
-            CreateOrthographicOffCenter(left, right, bottom, top, zNear, zFar, out Matrix4d result);
+            CreateOrthographicOffCenter(left, right, bottom, top, depthNear, depthFar, out Matrix4d result);
             return result;
         }
 
         /// <summary>
         /// Creates a perspective projection matrix.
         /// </summary>
-        /// <param name="fovy">Angle of the field of view in the y direction (in radians)</param>
-        /// <param name="aspect">Aspect ratio of the view (width / height)</param>
-        /// <param name="zNear">Distance to the near clip plane</param>
-        /// <param name="zFar">Distance to the far clip plane</param>
-        /// <param name="result">A projection matrix that transforms camera space to raster space</param>
+        /// <param name="fovy">Angle of the field of view in the y direction (in radians).</param>
+        /// <param name="aspect">Aspect ratio of the view (width / height).</param>
+        /// <param name="depthNear">Distance to the near clip plane.</param>
+        /// <param name="depthFar">Distance to the far clip plane.</param>
+        /// <param name="result">A projection matrix that transforms camera space to raster space.</param>
         /// <exception cref="System.ArgumentOutOfRangeException">
         /// Thrown under the following conditions:
         ///  <list type="bullet">
         ///  <item>fovy is zero, less than zero or larger than Math.PI</item>
         ///  <item>aspect is negative or zero</item>
-        ///  <item>zNear is negative or zero</item>
-        ///  <item>zFar is negative or zero</item>
-        ///  <item>zNear is larger than zFar</item>
+        ///  <item>depthNear is negative or zero</item>
+        ///  <item>depthFar is negative or zero</item>
+        ///  <item>depthNear is larger than depthFar</item>
         ///  </list>
         /// </exception>
         public static void CreatePerspectiveFieldOfView
         (
             double fovy,
             double aspect,
-            double zNear,
-            double zFar,
+            double depthNear,
+            double depthFar,
             out Matrix4d result
         )
         {
@@ -947,64 +950,64 @@ namespace OpenTK.Mathematics
                 throw new ArgumentOutOfRangeException(nameof(aspect));
             }
 
-            if (zNear <= 0)
+            if (depthNear <= 0)
             {
-                throw new ArgumentOutOfRangeException(nameof(zNear));
+                throw new ArgumentOutOfRangeException(nameof(depthNear));
             }
 
-            if (zFar <= 0)
+            if (depthFar <= 0)
             {
-                throw new ArgumentOutOfRangeException(nameof(zFar));
+                throw new ArgumentOutOfRangeException(nameof(depthFar));
             }
 
-            var yMax = zNear * Math.Tan(0.5 * fovy);
-            var yMin = -yMax;
-            var xMin = yMin * aspect;
-            var xMax = yMax * aspect;
+            var maxY = depthNear * Math.Tan(0.5 * fovy);
+            var minY = -maxY;
+            var minX = minY * aspect;
+            var maxX = maxY * aspect;
 
-            CreatePerspectiveOffCenter(xMin, xMax, yMin, yMax, zNear, zFar, out result);
+            CreatePerspectiveOffCenter(minX, maxX, minY, maxY, depthNear, depthFar, out result);
         }
 
         /// <summary>
         /// Creates a perspective projection matrix.
         /// </summary>
-        /// <param name="fovy">Angle of the field of view in the y direction (in radians)</param>
-        /// <param name="aspect">Aspect ratio of the view (width / height)</param>
-        /// <param name="zNear">Distance to the near clip plane</param>
-        /// <param name="zFar">Distance to the far clip plane</param>
-        /// <returns>A projection matrix that transforms camera space to raster space</returns>
+        /// <param name="fovy">Angle of the field of view in the y direction (in radians).</param>
+        /// <param name="aspect">Aspect ratio of the view (width / height).</param>
+        /// <param name="depthNear">Distance to the near clip plane.</param>
+        /// <param name="depthFar">Distance to the far clip plane.</param>
+        /// <returns>A projection matrix that transforms camera space to raster space.</returns>
         /// <exception cref="System.ArgumentOutOfRangeException">
         /// Thrown under the following conditions:
         ///  <list type="bullet">
         ///  <item>fovy is zero, less than zero or larger than Math.PI</item>
         ///  <item>aspect is negative or zero</item>
-        ///  <item>zNear is negative or zero</item>
-        ///  <item>zFar is negative or zero</item>
-        ///  <item>zNear is larger than zFar</item>
+        ///  <item>depthNear is negative or zero</item>
+        ///  <item>depthFar is negative or zero</item>
+        ///  <item>depthNear is larger than depthFar</item>
         ///  </list>
         /// </exception>
-        public static Matrix4d CreatePerspectiveFieldOfView(double fovy, double aspect, double zNear, double zFar)
+        public static Matrix4d CreatePerspectiveFieldOfView(double fovy, double aspect, double depthNear, double depthFar)
         {
-            CreatePerspectiveFieldOfView(fovy, aspect, zNear, zFar, out Matrix4d result);
+            CreatePerspectiveFieldOfView(fovy, aspect, depthNear, depthFar, out Matrix4d result);
             return result;
         }
 
         /// <summary>
         /// Creates an perspective projection matrix.
         /// </summary>
-        /// <param name="left">Left edge of the view frustum</param>
-        /// <param name="right">Right edge of the view frustum</param>
-        /// <param name="bottom">Bottom edge of the view frustum</param>
-        /// <param name="top">Top edge of the view frustum</param>
-        /// <param name="zNear">Distance to the near clip plane</param>
-        /// <param name="zFar">Distance to the far clip plane</param>
-        /// <param name="result">A projection matrix that transforms camera space to raster space</param>
+        /// <param name="left">Left edge of the view frustum.</param>
+        /// <param name="right">Right edge of the view frustum.</param>
+        /// <param name="bottom">Bottom edge of the view frustum.</param>
+        /// <param name="top">Top edge of the view frustum.</param>
+        /// <param name="depthNear">Distance to the near clip plane.</param>
+        /// <param name="depthFar">Distance to the far clip plane.</param>
+        /// <param name="result">A projection matrix that transforms camera space to raster space.</param>
         /// <exception cref="System.ArgumentOutOfRangeException">
         /// Thrown under the following conditions:
         ///  <list type="bullet">
-        ///  <item>zNear is negative or zero</item>
-        ///  <item>zFar is negative or zero</item>
-        ///  <item>zNear is larger than zFar</item>
+        ///  <item>depthNear is negative or zero</item>
+        ///  <item>depthFar is negative or zero</item>
+        ///  <item>depthNear is larger than depthFar</item>
         ///  </list>
         /// </exception>
         public static void CreatePerspectiveOffCenter
@@ -1013,32 +1016,32 @@ namespace OpenTK.Mathematics
             double right,
             double bottom,
             double top,
-            double zNear,
-            double zFar,
+            double depthNear,
+            double depthFar,
             out Matrix4d result
         )
         {
-            if (zNear <= 0)
+            if (depthNear <= 0)
             {
-                throw new ArgumentOutOfRangeException(nameof(zNear));
+                throw new ArgumentOutOfRangeException(nameof(depthNear));
             }
 
-            if (zFar <= 0)
+            if (depthFar <= 0)
             {
-                throw new ArgumentOutOfRangeException(nameof(zFar));
+                throw new ArgumentOutOfRangeException(nameof(depthFar));
             }
 
-            if (zNear >= zFar)
+            if (depthNear >= depthFar)
             {
-                throw new ArgumentOutOfRangeException(nameof(zNear));
+                throw new ArgumentOutOfRangeException(nameof(depthNear));
             }
 
-            var x = 2.0 * zNear / (right - left);
-            var y = 2.0 * zNear / (top - bottom);
+            var x = 2.0 * depthNear / (right - left);
+            var y = 2.0 * depthNear / (top - bottom);
             var a = (right + left) / (right - left);
             var b = (top + bottom) / (top - bottom);
-            var c = -(zFar + zNear) / (zFar - zNear);
-            var d = -(2.0 * zFar * zNear) / (zFar - zNear);
+            var c = -(depthFar + depthNear) / (depthFar - depthNear);
+            var d = -(2.0 * depthFar * depthNear) / (depthFar - depthNear);
 
 #pragma warning disable SA1117 // Parameters should be on same line or separate lines
             result = new Matrix4d
@@ -1054,19 +1057,19 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Creates an perspective projection matrix.
         /// </summary>
-        /// <param name="left">Left edge of the view frustum</param>
-        /// <param name="right">Right edge of the view frustum</param>
-        /// <param name="bottom">Bottom edge of the view frustum</param>
-        /// <param name="top">Top edge of the view frustum</param>
-        /// <param name="zNear">Distance to the near clip plane</param>
-        /// <param name="zFar">Distance to the far clip plane</param>
-        /// <returns>A projection matrix that transforms camera space to raster space</returns>
+        /// <param name="left">Left edge of the view frustum.</param>
+        /// <param name="right">Right edge of the view frustum.</param>
+        /// <param name="bottom">Bottom edge of the view frustum.</param>
+        /// <param name="top">Top edge of the view frustum.</param>
+        /// <param name="depthNear">Distance to the near clip plane.</param>
+        /// <param name="depthFar">Distance to the far clip plane.</param>
+        /// <returns>A projection matrix that transforms camera space to raster space.</returns>
         /// <exception cref="System.ArgumentOutOfRangeException">
         /// Thrown under the following conditions:
         ///  <list type="bullet">
-        ///  <item>zNear is negative or zero</item>
-        ///  <item>zFar is negative or zero</item>
-        ///  <item>zNear is larger than zFar</item>
+        ///  <item>depthNear is negative or zero</item>
+        ///  <item>depthFar is negative or zero</item>
+        ///  <item>depthNear is larger than depthFar</item>
         ///  </list>
         /// </exception>
         public static Matrix4d CreatePerspectiveOffCenter
@@ -1075,11 +1078,11 @@ namespace OpenTK.Mathematics
             double right,
             double bottom,
             double top,
-            double zNear,
-            double zFar
+            double depthNear,
+            double depthFar
         )
         {
-            CreatePerspectiveOffCenter(left, right, bottom, top, zNear, zFar, out Matrix4d result);
+            CreatePerspectiveOffCenter(left, right, bottom, top, depthNear, depthFar, out Matrix4d result);
             return result;
         }
 
@@ -1106,32 +1109,32 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Build a scaling matrix
+        /// Build a scaling matrix.
         /// </summary>
-        /// <param name="scale">Single scale factor for x,y and z axes</param>
-        /// <returns>A scaling matrix</returns>
+        /// <param name="scale">Single scale factor for x,y and z axes.</param>
+        /// <returns>A scaling matrix.</returns>
         public static Matrix4d Scale(double scale)
         {
             return Scale(scale, scale, scale);
         }
 
         /// <summary>
-        /// Build a scaling matrix
+        /// Build a scaling matrix.
         /// </summary>
-        /// <param name="scale">Scale factors for x,y and z axes</param>
-        /// <returns>A scaling matrix</returns>
+        /// <param name="scale">Scale factors for x,y and z axes.</param>
+        /// <returns>A scaling matrix.</returns>
         public static Matrix4d Scale(Vector3d scale)
         {
             return Scale(scale.X, scale.Y, scale.Z);
         }
 
         /// <summary>
-        /// Build a scaling matrix
+        /// Build a scaling matrix.
         /// </summary>
-        /// <param name="x">Scale factor for x-axis</param>
-        /// <param name="y">Scale factor for y-axis</param>
-        /// <param name="z">Scale factor for z-axis</param>
-        /// <returns>A scaling matrix</returns>
+        /// <param name="x">Scale factor for x-axis.</param>
+        /// <param name="y">Scale factor for y-axis.</param>
+        /// <param name="z">Scale factor for z-axis.</param>
+        /// <returns>A scaling matrix.</returns>
         public static Matrix4d Scale(double x, double y, double z)
         {
             Matrix4d result;
@@ -1143,10 +1146,10 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Build a rotation matrix that rotates about the x-axis
+        /// Build a rotation matrix that rotates about the x-axis.
         /// </summary>
-        /// <param name="angle">angle in radians to rotate counter-clockwise around the x-axis</param>
-        /// <returns>A rotation matrix</returns>
+        /// <param name="angle">The angle in radians to rotate counter-clockwise around the x-axis.</param>
+        /// <returns>A rotation matrix.</returns>
         public static Matrix4d RotateX(double angle)
         {
             var cos = Math.Cos(angle);
@@ -1161,10 +1164,10 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Build a rotation matrix that rotates about the y-axis
+        /// Build a rotation matrix that rotates about the y-axis.
         /// </summary>
-        /// <param name="angle">angle in radians to rotate counter-clockwise around the y-axis</param>
-        /// <returns>A rotation matrix</returns>
+        /// <param name="angle">The angle in radians to rotate counter-clockwise around the y-axis.</param>
+        /// <returns>A rotation matrix.</returns>
         public static Matrix4d RotateY(double angle)
         {
             var cos = Math.Cos(angle);
@@ -1179,10 +1182,10 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Build a rotation matrix that rotates about the z-axis
+        /// Build a rotation matrix that rotates about the z-axis.
         /// </summary>
-        /// <param name="angle">angle in radians to rotate counter-clockwise around the z-axis</param>
-        /// <returns>A rotation matrix</returns>
+        /// <param name="angle">The angle in radians to rotate counter-clockwise around the z-axis.</param>
+        /// <returns>A rotation matrix.</returns>
         public static Matrix4d RotateZ(double angle)
         {
             var cos = Math.Cos(angle);
@@ -1197,11 +1200,13 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Build a rotation matrix to rotate about the given axis
+        /// Build a rotation matrix to rotate about the given axis.
         /// </summary>
-        /// <param name="axis">the axis to rotate about</param>
-        /// <param name="angle">angle in radians to rotate counter-clockwise (looking in the direction of the given axis)</param>
-        /// <returns>A rotation matrix</returns>
+        /// <param name="axis">The axis to rotate about.</param>
+        /// <param name="angle">
+        /// angle in radians to rotate counter-clockwise (looking in the direction of the given axis).
+        /// </param>
+        /// <returns>A rotation matrix.</returns>
         public static Matrix4d Rotate(Vector3d axis, double angle)
         {
             var cos = Math.Cos(-angle);
@@ -1238,10 +1243,10 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Build a rotation matrix from a quaternion
+        /// Build a rotation matrix from a quaternion.
         /// </summary>
-        /// <param name="q">the quaternion</param>
-        /// <returns>A rotation matrix</returns>
+        /// <param name="q">The quaternion.</param>
+        /// <returns>A rotation matrix.</returns>
         public static Matrix4d Rotate(Quaterniond q)
         {
             q.ToAxisAngle(out Vector3d axis, out double angle);
@@ -1249,12 +1254,12 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Build a world space to camera space matrix
+        /// Build a world space to camera space matrix.
         /// </summary>
-        /// <param name="eye">Eye (camera) position in world space</param>
-        /// <param name="target">Target position in world space</param>
-        /// <param name="up">Up vector in world space (should not be parallel to the camera direction, that is target - eye)</param>
-        /// <returns>A Matrix that transforms world space to camera space</returns>
+        /// <param name="eye">Eye (camera) position in world space.</param>
+        /// <param name="target">Target position in world space.</param>
+        /// <param name="up">Up vector in world space (should not be parallel to the camera direction, that is target - eye).</param>
+        /// <returns>A Matrix that transforms world space to camera space.</returns>
         public static Matrix4d LookAt(Vector3d eye, Vector3d target, Vector3d up)
         {
             var z = Vector3d.Normalize(eye - target);
@@ -1275,24 +1280,24 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Build a world space to camera space matrix
+        /// Build a world space to camera space matrix.
         /// </summary>
-        /// <param name="eyeX">Eye (camera) X-position in world space</param>
-        /// <param name="eyeY">Eye (camera) Y-position in world space</param>
-        /// <param name="eyeZ">Eye (camera) Z-position in world space</param>
-        /// <param name="targetX">Target X-position in world space</param>
-        /// <param name="targetY">Target Y-position in world space</param>
-        /// <param name="targetZ">Target Z-position in world space</param>
+        /// <param name="eyeX">Eye (camera) X-position in world space.</param>
+        /// <param name="eyeY">Eye (camera) Y-position in world space.</param>
+        /// <param name="eyeZ">Eye (camera) Z-position in world space.</param>
+        /// <param name="targetX">Target X-position in world space.</param>
+        /// <param name="targetY">Target Y-position in world space.</param>
+        /// <param name="targetZ">Target Z-position in world space.</param>
         /// <param name="upX">
-        /// X of the up vector in world space (should not be parallel to the camera direction, that is target - eye)
+        /// X of the up vector in world space (should not be parallel to the camera direction, that is target - eye).
         /// </param>
         /// <param name="upY">
-        /// Y of the up vector in world space (should not be parallel to the camera direction, that is target - eye)
+        /// Y of the up vector in world space (should not be parallel to the camera direction, that is target - eye).
         /// </param>
         /// <param name="upZ">
-        /// Z of the up vector in world space (should not be parallel to the camera direction, that is target - eye)
+        /// Z of the up vector in world space (should not be parallel to the camera direction, that is target - eye).
         /// </param>
-        /// <returns>A Matrix4 that transforms world space to camera space</returns>
+        /// <returns>A Matrix4 that transforms world space to camera space.</returns>
         public static Matrix4d LookAt
         (
             double eyeX,
@@ -1315,45 +1320,45 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Build a projection matrix
+        /// Build a projection matrix.
         /// </summary>
-        /// <param name="left">Left edge of the view frustum</param>
-        /// <param name="right">Right edge of the view frustum</param>
-        /// <param name="bottom">Bottom edge of the view frustum</param>
-        /// <param name="top">Top edge of the view frustum</param>
-        /// <param name="near">Distance to the near clip plane</param>
-        /// <param name="far">Distance to the far clip plane</param>
-        /// <returns>A projection matrix that transforms camera space to raster space</returns>
-        public static Matrix4d Frustum(double left, double right, double bottom, double top, double near, double far)
+        /// <param name="left">Left edge of the view frustum.</param>
+        /// <param name="right">Right edge of the view frustum.</param>
+        /// <param name="bottom">Bottom edge of the view frustum.</param>
+        /// <param name="top">Top edge of the view frustum.</param>
+        /// <param name="depthNear">Distance to the near clip plane.</param>
+        /// <param name="depthFar">Distance to the far clip plane.</param>
+        /// <returns>A projection matrix that transforms camera space to raster space.</returns>
+        public static Matrix4d Frustum(double left, double right, double bottom, double top, double depthNear, double depthFar)
         {
             var invRL = 1.0 / (right - left);
             var invTB = 1.0 / (top - bottom);
-            var invFN = 1.0 / (far - near);
+            var invFN = 1.0 / (depthFar - depthNear);
             return new Matrix4d
             (
-                new Vector4d(2.0 * near * invRL, 0.0, 0.0, 0.0),
-                new Vector4d(0.0, 2.0 * near * invTB, 0.0, 0.0),
-                new Vector4d((right + left) * invRL, (top + bottom) * invTB, -(far + near) * invFN, -1.0),
-                new Vector4d(0.0, 0.0, -2.0 * far * near * invFN, 0.0)
+                new Vector4d(2.0 * depthNear * invRL, 0.0, 0.0, 0.0),
+                new Vector4d(0.0, 2.0 * depthNear * invTB, 0.0, 0.0),
+                new Vector4d((right + left) * invRL, (top + bottom) * invTB, -(depthFar + depthNear) * invFN, -1.0),
+                new Vector4d(0.0, 0.0, -2.0 * depthFar * depthNear * invFN, 0.0)
             );
         }
 
         /// <summary>
-        /// Build a projection matrix
+        /// Build a projection matrix.
         /// </summary>
-        /// <param name="fovy">Angle of the field of view in the y direction (in radians)</param>
-        /// <param name="aspect">Aspect ratio of the view (width / height)</param>
-        /// <param name="near">Distance to the near clip plane</param>
-        /// <param name="far">Distance to the far clip plane</param>
-        /// <returns>A projection matrix that transforms camera space to raster space</returns>
-        public static Matrix4d Perspective(double fovy, double aspect, double near, double far)
+        /// <param name="fovy">Angle of the field of view in the y direction (in radians).</param>
+        /// <param name="aspect">Aspect ratio of the view (width / height).</param>
+        /// <param name="depthNear">Distance to the near clip plane.</param>
+        /// <param name="depthFar">Distance to the far clip plane.</param>
+        /// <returns>A projection matrix that transforms camera space to raster space.</returns>
+        public static Matrix4d Perspective(double fovy, double aspect, double depthNear, double depthFar)
         {
-            var yMax = near * Math.Tan(0.5f * fovy);
+            var yMax = depthNear * Math.Tan(0.5f * fovy);
             var yMin = -yMax;
             var xMin = yMin * aspect;
             var xMax = yMax * aspect;
 
-            return Frustum(xMin, xMax, yMin, yMax, near, far);
+            return Frustum(xMin, xMax, yMin, yMax, depthNear, depthFar);
         }
 
         /// <summary>
@@ -1413,7 +1418,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         /// <param name="left">The left operand of the multiplication.</param>
         /// <param name="right">The right operand of the multiplication.</param>
-        /// <returns>A new instance that is the result of the multiplication</returns>
+        /// <returns>A new instance that is the result of the multiplication.</returns>
         public static Matrix4d Mult(Matrix4d left, Matrix4d right)
         {
             Mult(ref left, ref right, out Matrix4d result);
@@ -1425,58 +1430,58 @@ namespace OpenTK.Mathematics
         /// </summary>
         /// <param name="left">The left operand of the multiplication.</param>
         /// <param name="right">The right operand of the multiplication.</param>
-        /// <param name="result">A new instance that is the result of the multiplication</param>
+        /// <param name="result">A new instance that is the result of the multiplication.</param>
         public static void Mult(ref Matrix4d left, ref Matrix4d right, out Matrix4d result)
         {
-            double lM11 = left.Row0.X,
-                lM12 = left.Row0.Y,
-                lM13 = left.Row0.Z,
-                lM14 = left.Row0.W,
-                lM21 = left.Row1.X,
-                lM22 = left.Row1.Y,
-                lM23 = left.Row1.Z,
-                lM24 = left.Row1.W,
-                lM31 = left.Row2.X,
-                lM32 = left.Row2.Y,
-                lM33 = left.Row2.Z,
-                lM34 = left.Row2.W,
-                lM41 = left.Row3.X,
-                lM42 = left.Row3.Y,
-                lM43 = left.Row3.Z,
-                lM44 = left.Row3.W,
-                rM11 = right.Row0.X,
-                rM12 = right.Row0.Y,
-                rM13 = right.Row0.Z,
-                rM14 = right.Row0.W,
-                rM21 = right.Row1.X,
-                rM22 = right.Row1.Y,
-                rM23 = right.Row1.Z,
-                rM24 = right.Row1.W,
-                rM31 = right.Row2.X,
-                rM32 = right.Row2.Y,
-                rM33 = right.Row2.Z,
-                rM34 = right.Row2.W,
-                rM41 = right.Row3.X,
-                rM42 = right.Row3.Y,
-                rM43 = right.Row3.Z,
-                rM44 = right.Row3.W;
+            double leftM11 = left.Row0.X;
+            double leftM12 = left.Row0.Y;
+            double leftM13 = left.Row0.Z;
+            double leftM14 = left.Row0.W;
+            double leftM21 = left.Row1.X;
+            double leftM22 = left.Row1.Y;
+            double leftM23 = left.Row1.Z;
+            double leftM24 = left.Row1.W;
+            double leftM31 = left.Row2.X;
+            double leftM32 = left.Row2.Y;
+            double leftM33 = left.Row2.Z;
+            double leftM34 = left.Row2.W;
+            double leftM41 = left.Row3.X;
+            double leftM42 = left.Row3.Y;
+            double leftM43 = left.Row3.Z;
+            double leftM44 = left.Row3.W;
+            double rightM11 = right.Row0.X;
+            double rightM12 = right.Row0.Y;
+            double rightM13 = right.Row0.Z;
+            double rightM14 = right.Row0.W;
+            double rightM21 = right.Row1.X;
+            double rightM22 = right.Row1.Y;
+            double rightM23 = right.Row1.Z;
+            double rightM24 = right.Row1.W;
+            double rightM31 = right.Row2.X;
+            double rightM32 = right.Row2.Y;
+            double rightM33 = right.Row2.Z;
+            double rightM34 = right.Row2.W;
+            double rightM41 = right.Row3.X;
+            double rightM42 = right.Row3.Y;
+            double rightM43 = right.Row3.Z;
+            double rightM44 = right.Row3.W;
 
-            result.Row0.X = (lM11 * rM11) + (lM12 * rM21) + (lM13 * rM31) + (lM14 * rM41);
-            result.Row0.Y = (lM11 * rM12) + (lM12 * rM22) + (lM13 * rM32) + (lM14 * rM42);
-            result.Row0.Z = (lM11 * rM13) + (lM12 * rM23) + (lM13 * rM33) + (lM14 * rM43);
-            result.Row0.W = (lM11 * rM14) + (lM12 * rM24) + (lM13 * rM34) + (lM14 * rM44);
-            result.Row1.X = (lM21 * rM11) + (lM22 * rM21) + (lM23 * rM31) + (lM24 * rM41);
-            result.Row1.Y = (lM21 * rM12) + (lM22 * rM22) + (lM23 * rM32) + (lM24 * rM42);
-            result.Row1.Z = (lM21 * rM13) + (lM22 * rM23) + (lM23 * rM33) + (lM24 * rM43);
-            result.Row1.W = (lM21 * rM14) + (lM22 * rM24) + (lM23 * rM34) + (lM24 * rM44);
-            result.Row2.X = (lM31 * rM11) + (lM32 * rM21) + (lM33 * rM31) + (lM34 * rM41);
-            result.Row2.Y = (lM31 * rM12) + (lM32 * rM22) + (lM33 * rM32) + (lM34 * rM42);
-            result.Row2.Z = (lM31 * rM13) + (lM32 * rM23) + (lM33 * rM33) + (lM34 * rM43);
-            result.Row2.W = (lM31 * rM14) + (lM32 * rM24) + (lM33 * rM34) + (lM34 * rM44);
-            result.Row3.X = (lM41 * rM11) + (lM42 * rM21) + (lM43 * rM31) + (lM44 * rM41);
-            result.Row3.Y = (lM41 * rM12) + (lM42 * rM22) + (lM43 * rM32) + (lM44 * rM42);
-            result.Row3.Z = (lM41 * rM13) + (lM42 * rM23) + (lM43 * rM33) + (lM44 * rM43);
-            result.Row3.W = (lM41 * rM14) + (lM42 * rM24) + (lM43 * rM34) + (lM44 * rM44);
+            result.Row0.X = (leftM11 * rightM11) + (leftM12 * rightM21) + (leftM13 * rightM31) + (leftM14 * rightM41);
+            result.Row0.Y = (leftM11 * rightM12) + (leftM12 * rightM22) + (leftM13 * rightM32) + (leftM14 * rightM42);
+            result.Row0.Z = (leftM11 * rightM13) + (leftM12 * rightM23) + (leftM13 * rightM33) + (leftM14 * rightM43);
+            result.Row0.W = (leftM11 * rightM14) + (leftM12 * rightM24) + (leftM13 * rightM34) + (leftM14 * rightM44);
+            result.Row1.X = (leftM21 * rightM11) + (leftM22 * rightM21) + (leftM23 * rightM31) + (leftM24 * rightM41);
+            result.Row1.Y = (leftM21 * rightM12) + (leftM22 * rightM22) + (leftM23 * rightM32) + (leftM24 * rightM42);
+            result.Row1.Z = (leftM21 * rightM13) + (leftM22 * rightM23) + (leftM23 * rightM33) + (leftM24 * rightM43);
+            result.Row1.W = (leftM21 * rightM14) + (leftM22 * rightM24) + (leftM23 * rightM34) + (leftM24 * rightM44);
+            result.Row2.X = (leftM31 * rightM11) + (leftM32 * rightM21) + (leftM33 * rightM31) + (leftM34 * rightM41);
+            result.Row2.Y = (leftM31 * rightM12) + (leftM32 * rightM22) + (leftM33 * rightM32) + (leftM34 * rightM42);
+            result.Row2.Z = (leftM31 * rightM13) + (leftM32 * rightM23) + (leftM33 * rightM33) + (leftM34 * rightM43);
+            result.Row2.W = (leftM31 * rightM14) + (leftM32 * rightM24) + (leftM33 * rightM34) + (leftM34 * rightM44);
+            result.Row3.X = (leftM41 * rightM11) + (leftM42 * rightM21) + (leftM43 * rightM31) + (leftM44 * rightM41);
+            result.Row3.Y = (leftM41 * rightM12) + (leftM42 * rightM22) + (leftM43 * rightM32) + (leftM44 * rightM42);
+            result.Row3.Z = (leftM41 * rightM13) + (leftM42 * rightM23) + (leftM43 * rightM33) + (leftM44 * rightM43);
+            result.Row3.W = (leftM41 * rightM14) + (leftM42 * rightM24) + (leftM43 * rightM34) + (leftM44 * rightM44);
         }
 
         /// <summary>
@@ -1484,7 +1489,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         /// <param name="left">The left operand of the multiplication.</param>
         /// <param name="right">The right operand of the multiplication.</param>
-        /// <returns>A new instance that is the result of the multiplication</returns>
+        /// <returns>A new instance that is the result of the multiplication.</returns>
         public static Matrix4d Mult(Matrix4d left, double right)
         {
             Mult(ref left, right, out Matrix4d result);
@@ -1496,7 +1501,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         /// <param name="left">The left operand of the multiplication.</param>
         /// <param name="right">The right operand of the multiplication.</param>
-        /// <param name="result">A new instance that is the result of the multiplication</param>
+        /// <param name="result">A new instance that is the result of the multiplication.</param>
         public static void Mult(ref Matrix4d left, double right, out Matrix4d result)
         {
             result.Row0 = left.Row0 * right;
@@ -1506,10 +1511,10 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Calculate the inverse of the given matrix
+        /// Calculate the inverse of the given matrix.
         /// </summary>
-        /// <param name="mat">The matrix to invert</param>
-        /// <returns>The inverse of the given matrix if it has one, or the input if it is singular</returns>
+        /// <param name="mat">The matrix to invert.</param>
+        /// <returns>The inverse of the given matrix.</returns>
         /// <exception cref="InvalidOperationException">Thrown if the Matrix4d is singular.</exception>
         public static Matrix4d Invert(Matrix4d mat)
         {
@@ -1577,8 +1582,6 @@ namespace OpenTK.Mathematics
                 if (pivot == 0.0)
                 {
                     throw new InvalidOperationException("Matrix is singular and cannot be inverted.");
-
-                    // return mat;
                 }
 
                 // Scale row so it has a unit diagonal
@@ -1625,20 +1628,20 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Calculate the transpose of the given matrix
+        /// Calculate the transpose of the given matrix.
         /// </summary>
-        /// <param name="mat">The matrix to transpose</param>
-        /// <returns>The transpose of the given matrix</returns>
+        /// <param name="mat">The matrix to transpose.</param>
+        /// <returns>The transpose of the given matrix.</returns>
         public static Matrix4d Transpose(Matrix4d mat)
         {
             return new Matrix4d(mat.Column0, mat.Column1, mat.Column2, mat.Column3);
         }
 
         /// <summary>
-        /// Calculate the transpose of the given matrix
+        /// Calculate the transpose of the given matrix.
         /// </summary>
-        /// <param name="mat">The matrix to transpose</param>
-        /// <param name="result">The result of the calculation</param>
+        /// <param name="mat">The matrix to transpose.</param>
+        /// <param name="result">The result of the calculation.</param>
         public static void Transpose(ref Matrix4d mat, out Matrix4d result)
         {
             result.Row0 = mat.Column0;
@@ -1648,44 +1651,44 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Matrix multiplication
+        /// Matrix multiplication.
         /// </summary>
-        /// <param name="left">left-hand operand</param>
-        /// <param name="right">right-hand operand</param>
-        /// <returns>A new Matrix4d which holds the result of the multiplication</returns>
+        /// <param name="left">left-hand operand.</param>
+        /// <param name="right">right-hand operand.</param>
+        /// <returns>A new Matrix4d which holds the result of the multiplication.</returns>
         public static Matrix4d operator *(Matrix4d left, Matrix4d right)
         {
             return Mult(left, right);
         }
 
         /// <summary>
-        /// Matrix-scalar multiplication
+        /// Matrix-scalar multiplication.
         /// </summary>
-        /// <param name="left">left-hand operand</param>
-        /// <param name="right">right-hand operand</param>
-        /// <returns>A new Matrix4d which holds the result of the multiplication</returns>
+        /// <param name="left">left-hand operand.</param>
+        /// <param name="right">right-hand operand.</param>
+        /// <returns>A new Matrix4d which holds the result of the multiplication.</returns>
         public static Matrix4d operator *(Matrix4d left, float right)
         {
             return Mult(left, right);
         }
 
         /// <summary>
-        /// Matrix addition
+        /// Matrix addition.
         /// </summary>
-        /// <param name="left">left-hand operand</param>
-        /// <param name="right">right-hand operand</param>
-        /// <returns>A new Matrix4d which holds the result of the addition</returns>
+        /// <param name="left">left-hand operand.</param>
+        /// <param name="right">right-hand operand.</param>
+        /// <returns>A new Matrix4d which holds the result of the addition.</returns>
         public static Matrix4d operator +(Matrix4d left, Matrix4d right)
         {
             return Add(left, right);
         }
 
         /// <summary>
-        /// Matrix subtraction
+        /// Matrix subtraction.
         /// </summary>
-        /// <param name="left">left-hand operand</param>
-        /// <param name="right">right-hand operand</param>
-        /// <returns>A new Matrix4d which holds the result of the subtraction</returns>
+        /// <param name="left">left-hand operand.</param>
+        /// <param name="right">right-hand operand.</param>
+        /// <returns>A new Matrix4d which holds the result of the subtraction.</returns>
         public static Matrix4d operator -(Matrix4d left, Matrix4d right)
         {
             return Subtract(left, right);
@@ -1713,10 +1716,7 @@ namespace OpenTK.Mathematics
             return !left.Equals(right);
         }
 
-        /// <summary>
-        /// Returns a System.String that represents the current Matrix44.
-        /// </summary>
-        /// <returns></returns>
+        /// <inheritdoc />
         public override string ToString()
         {
             return $"{Row0}\n{Row1}\n{Row2}\n{Row3}";

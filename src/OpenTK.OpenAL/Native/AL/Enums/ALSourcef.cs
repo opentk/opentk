@@ -1,7 +1,7 @@
 ﻿namespace OpenTK.OpenAL.Native
 {
     /// <summary>
-    /// A list of valid 32-bit Float Source/GetSource parameters
+    /// A list of valid 32-bit Float Source/GetSource parameters.
     /// </summary>
     public enum ALSourcef
     {
@@ -13,18 +13,18 @@
 
         /// <summary>
         /// Indicate distance above which Sources are not attenuated using the inverse clamped distance model. Default:
-        /// float.PositiveInfinity Type: float Range: [0.0f - float.PositiveInfinity]
+        /// float.PositiveInfinity Type: float Range: [0.0f - float.PositiveInfinity].
         /// </summary>
         MaxDistance = 0x1023,
 
         /// <summary>
-        /// Source specific rolloff factor. Type: float Range: [0.0f - float.PositiveInfinity]
+        /// Source specific rolloff factor. Type: float Range: [0.0f - float.PositiveInfinity].
         /// </summary>
         RolloffFactor = 0x1021,
 
         /// <summary>
         /// Specify the pitch to be applied, either at Source, or on mixer results, at Listener. Range: [0.5f - 2.0f]
-        /// Default: 1.0f
+        /// Default: 1.0f.
         /// </summary>
         Pitch = 0x1003,
 
@@ -37,53 +37,53 @@
         Gain = 0x100A,
 
         /// <summary>
-        /// Indicate minimum Source attenuation. Type: float Range: [0.0f - 1.0f] (Logarthmic)
+        /// Indicate minimum Source attenuation. Type: float Range: [0.0f - 1.0f] (Logarthmic).
         /// </summary>
         MinGain = 0x100D,
 
         /// <summary>
-        /// Indicate maximum Source attenuation. Type: float Range: [0.0f - 1.0f] (Logarthmic)
+        /// Indicate maximum Source attenuation. Type: float Range: [0.0f - 1.0f] (Logarthmic).
         /// </summary>
         MaxGain = 0x100E,
 
         /// <summary>
-        /// Directional Source, inner cone angle, in degrees. Range: [0-360] Default: 360
+        /// Directional Source, inner cone angle, in degrees. Range: [0-360] Default: 360.
         /// </summary>
         ConeInnerAngle = 0x1001,
 
         /// <summary>
-        /// Directional Source, outer cone angle, in degrees. Range: [0-360] Default: 360
+        /// Directional Source, outer cone angle, in degrees. Range: [0-360] Default: 360.
         /// </summary>
         ConeOuterAngle = 0x1002,
 
         /// <summary>
-        /// Directional Source, outer cone gain. Default: 0.0f Range: [0.0f - 1.0] (Logarithmic)
+        /// Directional Source, outer cone gain. Default: 0.0f Range: [0.0f - 1.0] (Logarithmic).
         /// </summary>
         ConeOuterGain = 0x1022,
 
         /// <summary>
         /// The playback position, expressed in seconds.
         /// </summary>
-        SecOffset = 0x1024, // AL_EXT_OFFSET extension.
+        SecOffset = 0x1024,
 
         /// <summary>
         /// (EFX Extension) This property is a multiplier on the amount of Air Absorption applied to the Source. The
         /// AL_AIR_ABSORPTION_FACTOR is multiplied by an internal Air Absorption Gain HF value of 0.994 (-0.05dB) per meter
-        /// which represents normal atmospheric humidity and temperature. Range [0.0f .. 10.0f] Default: 0.0f
+        /// which represents normal atmospheric humidity and temperature. Range [0.0f .. 10.0f] Default: 0.0f.
         /// </summary>
         EfxAirAbsorptionFactor = 0x20007,
 
         /// <summary>
         /// (EFX Extension) This property is defined the same way as the Reverb Room Rolloff property: it is one of two
         /// methods available in the Effect Extension to attenuate the reflected sound (early reflections and reverberation)
-        /// according to source-listener distance. Range [0.0f .. 10.0f] Default: 0.0f
+        /// according to source-listener distance. Range [0.0f .. 10.0f] Default: 0.0f.
         /// </summary>
         EfxRoomRolloffFactor = 0x20008,
 
         /// <summary>
         /// (EFX Extension) A directed Source points in a specified direction. The Source sounds at full volume when the
         /// listener is directly in front of the source; it is attenuated as the listener circles the Source away from the
-        /// front. Range [0.0f .. 1.0f] Default: 1.0f
+        /// front. Range [0.0f .. 1.0f] Default: 1.0f.
         /// </summary>
         EfxConeOuterGainHighFrequency = 0x20009
     }

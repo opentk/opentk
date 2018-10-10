@@ -1,7 +1,7 @@
 ﻿namespace OpenTK.OpenAL.Native
 {
     /// <summary>
-    /// A list of valid 32-bit Float Listener/GetListener parameters
+    /// A list of valid 32-bit Float Listener/GetListener parameters.
     /// </summary>
     public enum ALListenerf
     {
@@ -15,7 +15,7 @@
         /// <summary>
         /// (EFX Extension) This setting is critical if Air Absorption effects are enabled because the amount of Air
         /// Absorption applied is directly related to the real-world distance between the Source and the Listener. centimeters
-        /// 0.01f meters 1.0f kilometers 1000.0f Range [float.MinValue .. float.MaxValue] Default: 1.0f
+        /// 0.01f meters 1.0f kilometers 1000.0f Range [float.MinValue .. float.MaxValue] Default: 1.0f.
         /// </summary>
         EfxMetersPerUnit = 0x20004
     }

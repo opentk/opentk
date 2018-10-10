@@ -29,8 +29,7 @@ namespace OpenTK.Mathematics
     /// <summary>
     /// Represents a Quaternion.
     /// </summary>
-    [Serializable]
-    [StructLayout(LayoutKind.Sequential)]
+    [Serializable, StructLayout(LayoutKind.Sequential)]
     public struct Quaternion : IEquatable<Quaternion>
     {
         /// <summary>
@@ -44,10 +43,10 @@ namespace OpenTK.Mathematics
         public float W;
 
         /// <summary>
-        /// Construct a new Quaternion from vector and w components
+        /// Initializes a new instance of the <see cref="Quaternion"/> struct.
         /// </summary>
-        /// <param name="v">The vector part</param>
-        /// <param name="w">The w part</param>
+        /// <param name="v">The vector part.</param>
+        /// <param name="w">The w part.</param>
         public Quaternion(Vector3 v, float w)
         {
             Xyz = v;
@@ -55,25 +54,25 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Construct a new Quaternion
+        /// Initializes a new instance of the <see cref="Quaternion"/> struct.
         /// </summary>
-        /// <param name="x">The x component</param>
-        /// <param name="y">The y component</param>
-        /// <param name="z">The z component</param>
-        /// <param name="w">The w component</param>
+        /// <param name="x">The x component.</param>
+        /// <param name="y">The y component.</param>
+        /// <param name="z">The z component.</param>
+        /// <param name="w">The w component.</param>
         public Quaternion(float x, float y, float z, float w)
             : this(new Vector3(x, y, z), w)
         {
         }
 
         /// <summary>
-        /// Construct a new Quaternion from given Euler angles in radians.
+        /// Initializes a new instance of the <see cref="Quaternion"/> struct from given Euler angles in radians.
         /// The rotations will get applied in following order:
-        /// 1. around X axis, 2. around Y axis, 3. around Z axis
+        /// 1. around X axis, 2. around Y axis, 3. around Z axis.
         /// </summary>
-        /// <param name="rotationX">Counterclockwise rotation around X axis in radian</param>
-        /// <param name="rotationY">Counterclockwise rotation around Y axis in radian</param>
-        /// <param name="rotationZ">Counterclockwise rotation around Z axis in radian</param>
+        /// <param name="rotationX">Counterclockwise rotation around X axis in radian.</param>
+        /// <param name="rotationY">Counterclockwise rotation around Y axis in radian.</param>
+        /// <param name="rotationZ">Counterclockwise rotation around Z axis in radian.</param>
         public Quaternion(float rotationX, float rotationY, float rotationZ)
         {
             rotationX *= 0.5f;
@@ -94,10 +93,11 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Construct a new Quaternion from given Euler angles. The rotations will get applied in following order:
-        /// 1. Around X, 2. Around Y, 3. Around Z
+        /// Initializes a new instance of the <see cref="Quaternion"/> struct from given Euler angles in radians.
+        /// The rotations will get applied in following order:
+        /// 1. Around X, 2. Around Y, 3. Around Z.
         /// </summary>
-        /// <param name="eulerAngles">The counterclockwise euler angles as a Vector3</param>
+        /// <param name="eulerAngles">The counterclockwise euler angles as a Vector3.</param>
         public Quaternion(Vector3 eulerAngles)
             : this(eulerAngles.X, eulerAngles.Y, eulerAngles.Z)
         {
@@ -134,10 +134,10 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Convert the current quaternion to axis angle representation
+        /// Convert the current quaternion to axis angle representation.
         /// </summary>
-        /// <param name="axis">The resultant axis</param>
-        /// <param name="angle">The resultant angle</param>
+        /// <param name="axis">The resultant axis.</param>
+        /// <param name="angle">The resultant angle.</param>
         public void ToAxisAngle(out Vector3 axis, out float angle)
         {
             var result = ToAxisAngle();
@@ -191,6 +191,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Returns a copy of the Quaternion scaled to unit length.
         /// </summary>
+        /// <returns>The normalized copy.</returns>
         public Quaternion Normalized()
         {
             var q = this;
@@ -209,6 +210,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Returns a copy of this Quaterniond with its rotation angle reversed.
         /// </summary>
+        /// <returns>The inverted copy.</returns>
         public Quaternion Inverted()
         {
             var q = this;
@@ -240,11 +242,11 @@ namespace OpenTK.Mathematics
         public static readonly Quaternion Identity = new Quaternion(0, 0, 0, 1);
 
         /// <summary>
-        /// Add two quaternions
+        /// Add two quaternions.
         /// </summary>
-        /// <param name="left">The first operand</param>
-        /// <param name="right">The second operand</param>
-        /// <returns>The result of the addition</returns>
+        /// <param name="left">The first operand.</param>
+        /// <param name="right">The second operand.</param>
+        /// <returns>The result of the addition.</returns>
         public static Quaternion Add(Quaternion left, Quaternion right)
         {
             return new Quaternion(
@@ -253,11 +255,11 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Add two quaternions
+        /// Add two quaternions.
         /// </summary>
-        /// <param name="left">The first operand</param>
-        /// <param name="right">The second operand</param>
-        /// <param name="result">The result of the addition</param>
+        /// <param name="left">The first operand.</param>
+        /// <param name="right">The second operand.</param>
+        /// <param name="result">The result of the addition.</param>
         public static void Add(ref Quaternion left, ref Quaternion right, out Quaternion result)
         {
             result = new Quaternion(
@@ -351,30 +353,30 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Get the conjugate of the given quaternion
+        /// Get the conjugate of the given quaternion.
         /// </summary>
-        /// <param name="q">The quaternion</param>
-        /// <returns>The conjugate of the given quaternion</returns>
+        /// <param name="q">The quaternion.</param>
+        /// <returns>The conjugate of the given quaternion.</returns>
         public static Quaternion Conjugate(Quaternion q)
         {
             return new Quaternion(-q.Xyz, q.W);
         }
 
         /// <summary>
-        /// Get the conjugate of the given quaternion
+        /// Get the conjugate of the given quaternion.
         /// </summary>
-        /// <param name="q">The quaternion</param>
-        /// <param name="result">The conjugate of the given quaternion</param>
+        /// <param name="q">The quaternion.</param>
+        /// <param name="result">The conjugate of the given quaternion.</param>
         public static void Conjugate(ref Quaternion q, out Quaternion result)
         {
             result = new Quaternion(-q.Xyz, q.W);
         }
 
         /// <summary>
-        /// Get the inverse of the given quaternion
+        /// Get the inverse of the given quaternion.
         /// </summary>
-        /// <param name="q">The quaternion to invert</param>
-        /// <returns>The inverse of the given quaternion</returns>
+        /// <param name="q">The quaternion to invert.</param>
+        /// <returns>The inverse of the given quaternion.</returns>
         public static Quaternion Invert(Quaternion q)
         {
             Invert(ref q, out Quaternion result);
@@ -382,10 +384,10 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Get the inverse of the given quaternion
+        /// Get the inverse of the given quaternion.
         /// </summary>
-        /// <param name="q">The quaternion to invert</param>
-        /// <param name="result">The inverse of the given quaternion</param>
+        /// <param name="q">The quaternion to invert.</param>
+        /// <param name="result">The inverse of the given quaternion.</param>
         public static void Invert(ref Quaternion q, out Quaternion result)
         {
             var lengthSq = q.LengthSquared;
@@ -401,10 +403,10 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Scale the given quaternion to unit length
+        /// Scale the given quaternion to unit length.
         /// </summary>
-        /// <param name="q">The quaternion to normalize</param>
-        /// <returns>The normalized quaternion</returns>
+        /// <param name="q">The quaternion to normalize.</param>
+        /// <returns>The normalized copy.</returns>
         public static Quaternion Normalize(Quaternion q)
         {
             Normalize(ref q, out Quaternion result);
@@ -412,10 +414,10 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Scale the given quaternion to unit length
+        /// Scale the given quaternion to unit length.
         /// </summary>
-        /// <param name="q">The quaternion to normalize</param>
-        /// <param name="result">The normalized quaternion</param>
+        /// <param name="q">The quaternion to normalize.</param>
+        /// <param name="result">The normalized quaternion.</param>
         public static void Normalize(ref Quaternion q, out Quaternion result)
         {
             var scale = 1.0f / q.Length;
@@ -423,11 +425,11 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Build a quaternion from the given axis and angle in radians
+        /// Build a quaternion from the given axis and angle in radians.
         /// </summary>
-        /// <param name="axis">The axis to rotate about</param>
-        /// <param name="angle">The rotation angle in radians</param>
-        /// <returns>The equivalent quaternion</returns>
+        /// <param name="axis">The axis to rotate about.</param>
+        /// <param name="angle">The rotation angle in radians.</param>
+        /// <returns>The equivalent quaternion.</returns>
         public static Quaternion FromAxisAngle(Vector3 axis, float angle)
         {
             if (axis.LengthSquared == 0.0f)
@@ -448,12 +450,12 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Builds a Quaternion from the given euler angles in radians
         /// The rotations will get applied in following order:
-        /// 1. pitch (X axis), 2. yaw (Y axis), 3. roll (Z axis)
+        /// 1. pitch (X axis), 2. yaw (Y axis), 3. roll (Z axis).
         /// </summary>
-        /// <param name="pitch">The pitch (attitude), counterclockwise rotation around X axis</param>
-        /// <param name="yaw">The yaw (heading), counterclockwise rotation around Y axis</param>
-        /// <param name="roll">The roll (bank), counterclockwise rotation around Z axis</param>
-        /// <returns></returns>
+        /// <param name="pitch">The pitch (attitude), counterclockwise rotation around X axis.</param>
+        /// <param name="yaw">The yaw (heading), counterclockwise rotation around Y axis.</param>
+        /// <param name="roll">The roll (bank), counterclockwise rotation around Z axis.</param>
+        /// <returns>The quaternion.</returns>
         public static Quaternion FromEulerAngles(float pitch, float yaw, float roll)
         {
             return new Quaternion(pitch, yaw, roll);
@@ -462,10 +464,10 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Builds a Quaternion from the given euler angles in radians.
         /// The rotations will get applied in following order:
-        /// 1. X axis, 2. Y axis, 3. Z axis
+        /// 1. X axis, 2. Y axis, 3. Z axis.
         /// </summary>
-        /// <param name="eulerAngles">The counterclockwise euler angles as a vector</param>
-        /// <returns>The equivalent Quaternion</returns>
+        /// <param name="eulerAngles">The counterclockwise euler angles as a vector.</param>
+        /// <returns>The equivalent Quaternion.</returns>
         public static Quaternion FromEulerAngles(Vector3 eulerAngles)
         {
             return new Quaternion(eulerAngles);
@@ -474,10 +476,10 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Builds a Quaternion from the given euler angles in radians.
         /// The rotations will get applied in following order:
-        /// 1. Around X, 2. Around Y, 3. Around Z
+        /// 1. Around X, 2. Around Y, 3. Around Z.
         /// </summary>
-        /// <param name="eulerAngles">The counterclockwise euler angles a vector</param>
-        /// <param name="result">The equivalent Quaternion</param>
+        /// <param name="eulerAngles">The counterclockwise euler angles a vector.</param>
+        /// <param name="result">The equivalent Quaternion.</param>
         public static void FromEulerAngles(ref Vector3 eulerAngles, out Quaternion result)
         {
             var c1 = (float)Math.Cos(eulerAngles.X * 0.5f);
@@ -494,10 +496,10 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Builds a quaternion from the given rotation matrix
+        /// Builds a quaternion from the given rotation matrix.
         /// </summary>
-        /// <param name="matrix">A rotation matrix</param>
-        /// <returns>The equivalent quaternion</returns>
+        /// <param name="matrix">A rotation matrix.</param>
+        /// <returns>The equivalent quaternion.</returns>
         public static Quaternion FromMatrix(Matrix3 matrix)
         {
             FromMatrix(ref matrix, out Quaternion result);
@@ -505,10 +507,10 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Builds a quaternion from the given rotation matrix
+        /// Builds a quaternion from the given rotation matrix.
         /// </summary>
-        /// <param name="matrix">A rotation matrix</param>
-        /// <param name="result">The equivalent quaternion</param>
+        /// <param name="matrix">A rotation matrix.</param>
+        /// <param name="result">The equivalent quaternion.</param>
         public static void FromMatrix(ref Matrix3 matrix, out Quaternion result)
         {
             var trace = matrix.Trace;
@@ -561,12 +563,12 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Do Spherical linear interpolation between two quaternions
+        /// Do Spherical linear interpolation between two quaternions.
         /// </summary>
-        /// <param name="q1">The first quaternion</param>
-        /// <param name="q2">The second quaternion</param>
-        /// <param name="blend">The blend factor</param>
-        /// <returns>A smooth blend between the given quaternions</returns>
+        /// <param name="q1">The first quaternion.</param>
+        /// <param name="q2">The second quaternion.</param>
+        /// <param name="blend">The blend factor.</param>
+        /// <returns>A smooth blend between the given quaternions.</returns>
         public static Quaternion Slerp(Quaternion q1, Quaternion q2, float blend)
         {
             // if either input is zero, return the other.
@@ -719,7 +721,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Returns a System.String that represents the current Quaternion.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>A human-readable representation of the quaternion.</returns>
         public override string ToString()
         {
             return $"V: {Xyz}, W: {W}";

@@ -29,26 +29,26 @@ namespace OpenTK.Rewrite.Methods.Processors
         }
 
         /// <inheritdoc/>
-        public void Process(ILProcessor ilProcessor, MethodDefinition wrapper, MethodDefinition native)
+        public void Process(ILProcessor cilProcessor, MethodDefinition wrapper, MethodDefinition native)
         {
             if (!RewriteVariables.TryRemove(wrapper, out T variable))
             {
                 throw new InvalidOperationException();
             }
 
-            ProcessEpilogue(ilProcessor, wrapper, native, variable);
+            ProcessEpilogue(cilProcessor, wrapper, native, variable);
         }
 
         /// <summary>
         /// Implements the actual epilogue rewriting step.
         /// </summary>
-        /// <param name="ilProcessor">The IL processor for the wrapper method definition.</param>
+        /// <param name="cilProcessor">The IL processor for the wrapper method definition.</param>
         /// <param name="wrapper">The method definition for the managed wrapper method.</param>
         /// <param name="native">The method definition for the native function.</param>
         /// <param name="argument">Additional information that was created in the epilogue rewriting step.</param>
         protected abstract void ProcessEpilogue
         (
-            ILProcessor ilProcessor,
+            ILProcessor cilProcessor,
             MethodDefinition wrapper,
             MethodDefinition native,
             T argument

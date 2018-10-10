@@ -49,7 +49,7 @@ namespace OpenTK.NT.Native
         /// <summary>
         /// The first character of the <see cref="Name"/>.
         /// </summary>
-        private readonly char _name;
+        private char _name;
 
         /// <summary>
         /// The size of this structure in bytes.

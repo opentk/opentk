@@ -35,7 +35,7 @@ namespace OpenTK.Mathematics
         public float Bottom;
 
         /// <summary>
-        /// Constructs a new Box2 with the specified dimensions.
+        /// Initializes a new instance of the <see cref="Box2"/> struct.
         /// </summary>
         /// <param name="topLeft">An OpenTK.Vector2 describing the top-left corner of the Box2.</param>
         /// <param name="bottomRight">An OpenTK.Vector2 describing the bottom-right corner of the Box2.</param>
@@ -48,7 +48,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Constructs a new Box2 with the specified dimensions.
+        /// Initializes a new instance of the <see cref="Box2"/> struct.
         /// </summary>
         /// <param name="left">The position of the left boundary.</param>
         /// <param name="top">The position of the top boundary.</param>
@@ -141,6 +141,8 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Returns a Box2 translated by the given amount.
         /// </summary>
+        /// <param name="point">The distance to translate the box.</param>
+        /// <returns>The translated box.</returns>
         public Box2 Translated(Vector2 point)
         {
             return new Box2(Left + point.X, Top + point.Y, Right + point.X, Bottom + point.Y);
@@ -149,6 +151,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Translates this Box2 by the given amount.
         /// </summary>
+        /// <param name="point">The distance to translate the box.</param>
         public void Translate(Vector2 point)
         {
             Left += point.X;
@@ -160,6 +163,8 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Equality comparator.
         /// </summary>
+        /// <param name="left">The left operand.</param>
+        /// <param name="right">The right operand.</param>
         public static bool operator ==(Box2 left, Box2 right)
         {
             return left.Bottom == right.Bottom && left.Top == right.Top &&
@@ -169,30 +174,26 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Inequality comparator.
         /// </summary>
+        /// <param name="left">The left operand.</param>
+        /// <param name="right">The right operand.</param>
         public static bool operator !=(Box2 left, Box2 right)
         {
             return !(left == right);
         }
 
-        /// <summary>
-        /// Functional equality comparator.
-        /// </summary>
+        /// <inheritdoc/>
         public bool Equals(Box2 other)
         {
             return this == other;
         }
 
-        /// <summary>
-        /// Implements Object.Equals.
-        /// </summary>
+        /// <inheritdoc/>
         public override bool Equals(object obj)
         {
             return obj is Box2 box && Equals(box);
         }
 
-        /// <summary>
-        /// Gets the hash code for this Box2.
-        /// </summary>
+        /// <inheritdoc/>
         public override int GetHashCode()
         {
             unchecked
@@ -207,10 +208,7 @@ namespace OpenTK.Mathematics
 
         private static readonly string ListSeparator = CultureInfo.CurrentCulture.TextInfo.ListSeparator;
 
-        /// <summary>
-        /// Returns a <see cref="string"/> describing the current instance.
-        /// </summary>
-        /// <returns></returns>
+        /// <inheritdoc/>
         public override string ToString()
         {
             return string.Format("({0}{4} {1}) - ({2}{4} {3})", Left, Top, Right, Bottom, ListSeparator);

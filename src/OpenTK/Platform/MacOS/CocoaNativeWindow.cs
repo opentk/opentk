@@ -1108,15 +1108,15 @@ namespace OpenTK.Platform.MacOS
                     cursor.Height,
                     8,
                     4,
-                    1,
-                    0,
+                    true,
+                    false,
                     NSDeviceRGBColorSpace,
                     NSBitmapFormat.AlphaFirst,
                     4 * cursor.Width,
                     32);
             if (imgdata == IntPtr.Zero)
             {
-                Debug.Print("Failed to create NSBitmapImageRep with size ({0},{1]})",
+                Debug.Print("Failed to create NSBitmapImageRep with size ({0},{1})",
                     cursor.Width, cursor.Height);
                 return IntPtr.Zero;
             }

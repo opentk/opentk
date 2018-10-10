@@ -48,7 +48,7 @@ namespace OpenTK.Mathematics
         public float Y;
 
         /// <summary>
-        /// Constructs a new instance.
+        /// Initializes a new instance of the <see cref="Vector2"/> struct.
         /// </summary>
         /// <param name="value">The value that will initialize this instance.</param>
         public Vector2(float value)
@@ -58,7 +58,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Constructs a new Vector2.
+        /// Initializes a new instance of the <see cref="Vector2"/> struct.
         /// </summary>
         /// <param name="x">The x coordinate of the net Vector2.</param>
         /// <param name="y">The y coordinate of the net Vector2.</param>
@@ -71,6 +71,8 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Gets or sets the value at the index of the Vector.
         /// </summary>
+        /// <param name="index">The index of the component from the Vector.</param>
+        /// <exception cref="IndexOutOfRangeException">Thrown if the index is less than 0 or greater than 1.</exception>
         public float this[int index]
         {
             get
@@ -147,7 +149,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Returns a copy of the Vector2 scaled to unit length.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The normalized copy.</returns>
         public Vector2 Normalized()
         {
             var v = this;
@@ -225,11 +227,11 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Subtract one Vector from another
+        /// Subtract one Vector from another.
         /// </summary>
-        /// <param name="a">First operand</param>
-        /// <param name="b">Second operand</param>
-        /// <returns>Result of subtraction</returns>
+        /// <param name="a">First operand.</param>
+        /// <param name="b">Second operand.</param>
+        /// <returns>Result of subtraction.</returns>
         public static Vector2 Subtract(Vector2 a, Vector2 b)
         {
             Subtract(ref a, ref b, out a);
@@ -237,11 +239,11 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Subtract one Vector from another
+        /// Subtract one Vector from another.
         /// </summary>
-        /// <param name="a">First operand</param>
-        /// <param name="b">Second operand</param>
-        /// <param name="result">Result of subtraction</param>
+        /// <param name="a">First operand.</param>
+        /// <param name="b">Second operand.</param>
+        /// <param name="result">Result of subtraction.</param>
         public static void Subtract(ref Vector2 a, ref Vector2 b, out Vector2 result)
         {
             result.X = a.X - b.X;
@@ -347,9 +349,9 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Returns a vector created from the smallest of the corresponding components of the given vectors.
         /// </summary>
-        /// <param name="a">First operand</param>
-        /// <param name="b">Second operand</param>
-        /// <returns>The component-wise minimum</returns>
+        /// <param name="a">First operand.</param>
+        /// <param name="b">Second operand.</param>
+        /// <returns>The component-wise minimum.</returns>
         public static Vector2 ComponentMin(Vector2 a, Vector2 b)
         {
             a.X = a.X < b.X ? a.X : b.X;
@@ -360,9 +362,9 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Returns a vector created from the smallest of the corresponding components of the given vectors.
         /// </summary>
-        /// <param name="a">First operand</param>
-        /// <param name="b">Second operand</param>
-        /// <param name="result">The component-wise minimum</param>
+        /// <param name="a">First operand.</param>
+        /// <param name="b">Second operand.</param>
+        /// <param name="result">The component-wise minimum.</param>
         public static void ComponentMin(ref Vector2 a, ref Vector2 b, out Vector2 result)
         {
             result.X = a.X < b.X ? a.X : b.X;
@@ -372,9 +374,9 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Returns a vector created from the largest of the corresponding components of the given vectors.
         /// </summary>
-        /// <param name="a">First operand</param>
-        /// <param name="b">Second operand</param>
-        /// <returns>The component-wise maximum</returns>
+        /// <param name="a">First operand.</param>
+        /// <param name="b">Second operand.</param>
+        /// <returns>The component-wise maximum.</returns>
         public static Vector2 ComponentMax(Vector2 a, Vector2 b)
         {
             a.X = a.X > b.X ? a.X : b.X;
@@ -385,9 +387,9 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Returns a vector created from the largest of the corresponding components of the given vectors.
         /// </summary>
-        /// <param name="a">First operand</param>
-        /// <param name="b">Second operand</param>
-        /// <param name="result">The component-wise maximum</param>
+        /// <param name="a">First operand.</param>
+        /// <param name="b">Second operand.</param>
+        /// <param name="result">The component-wise maximum.</param>
         public static void ComponentMax(ref Vector2 a, ref Vector2 b, out Vector2 result)
         {
             result.X = a.X > b.X ? a.X : b.X;
@@ -398,9 +400,9 @@ namespace OpenTK.Mathematics
         /// Returns the Vector2 with the minimum magnitude. If the magnitudes are equal, the second vector
         /// is selected.
         /// </summary>
-        /// <param name="left">Left operand</param>
-        /// <param name="right">Right operand</param>
-        /// <returns>The minimum Vector2</returns>
+        /// <param name="left">Left operand.</param>
+        /// <param name="right">Right operand.</param>
+        /// <returns>The minimum Vector2.</returns>
         public static Vector2 MagnitudeMin(Vector2 left, Vector2 right)
         {
             return left.LengthSquared < right.LengthSquared ? left : right;
@@ -410,9 +412,9 @@ namespace OpenTK.Mathematics
         /// Returns the Vector2 with the minimum magnitude. If the magnitudes are equal, the second vector
         /// is selected.
         /// </summary>
-        /// <param name="left">Left operand</param>
-        /// <param name="right">Right operand</param>
-        /// <param name="result">The magnitude-wise minimum</param>
+        /// <param name="left">Left operand.</param>
+        /// <param name="right">Right operand.</param>
+        /// <param name="result">The magnitude-wise minimum.</param>
         public static void MagnitudeMin(ref Vector2 left, ref Vector2 right, out Vector2 result)
         {
             result = left.LengthSquared < right.LengthSquared ? left : right;
@@ -422,9 +424,9 @@ namespace OpenTK.Mathematics
         /// Returns the Vector2 with the maximum magnitude. If the magnitudes are equal, the first vector
         /// is selected.
         /// </summary>
-        /// <param name="left">Left operand</param>
-        /// <param name="right">Right operand</param>
-        /// <returns>The maximum Vector2</returns>
+        /// <param name="left">Left operand.</param>
+        /// <param name="right">Right operand.</param>
+        /// <returns>The maximum Vector2.</returns>
         public static Vector2 MagnitudeMax(Vector2 left, Vector2 right)
         {
             return left.LengthSquared >= right.LengthSquared ? left : right;
@@ -434,20 +436,20 @@ namespace OpenTK.Mathematics
         /// Returns the Vector2 with the maximum magnitude. If the magnitudes are equal, the first vector
         /// is selected.
         /// </summary>
-        /// <param name="left">Left operand</param>
-        /// <param name="right">Right operand</param>
-        /// <param name="result">The magnitude-wise maximum</param>
+        /// <param name="left">Left operand.</param>
+        /// <param name="right">Right operand.</param>
+        /// <param name="result">The magnitude-wise maximum.</param>
         public static void MagnitudeMax(ref Vector2 left, ref Vector2 right, out Vector2 result)
         {
             result = left.LengthSquared >= right.LengthSquared ? left : right;
         }
 
         /// <summary>
-        /// Returns the Vector3 with the minimum magnitude
+        /// Returns the Vector3 with the minimum magnitude.
         /// </summary>
-        /// <param name="left">Left operand</param>
-        /// <param name="right">Right operand</param>
-        /// <returns>The minimum Vector3</returns>
+        /// <param name="left">Left operand.</param>
+        /// <param name="right">Right operand.</param>
+        /// <returns>The minimum Vector3.</returns>
         [Obsolete("Use MagnitudeMin() instead.")]
         public static Vector2 Min(Vector2 left, Vector2 right)
         {
@@ -455,11 +457,11 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Returns the Vector3 with the minimum magnitude
+        /// Returns the Vector3 with the minimum magnitude.
         /// </summary>
-        /// <param name="left">Left operand</param>
-        /// <param name="right">Right operand</param>
-        /// <returns>The minimum Vector3</returns>
+        /// <param name="left">Left operand.</param>
+        /// <param name="right">Right operand.</param>
+        /// <returns>The minimum Vector3.</returns>
         [Obsolete("Use MagnitudeMax() instead.")]
         public static Vector2 Max(Vector2 left, Vector2 right)
         {
@@ -467,12 +469,12 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Clamp a vector to the given minimum and maximum vectors
+        /// Clamp a vector to the given minimum and maximum vectors.
         /// </summary>
-        /// <param name="vec">Input vector</param>
-        /// <param name="min">Minimum vector</param>
-        /// <param name="max">Maximum vector</param>
-        /// <returns>The clamped vector</returns>
+        /// <param name="vec">Input vector.</param>
+        /// <param name="min">Minimum vector.</param>
+        /// <param name="max">Maximum vector.</param>
+        /// <returns>The clamped vector.</returns>
         public static Vector2 Clamp(Vector2 vec, Vector2 min, Vector2 max)
         {
             vec.X = vec.X < min.X ? min.X : vec.X > max.X ? max.X : vec.X;
@@ -481,12 +483,12 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Clamp a vector to the given minimum and maximum vectors
+        /// Clamp a vector to the given minimum and maximum vectors.
         /// </summary>
-        /// <param name="vec">Input vector</param>
-        /// <param name="min">Minimum vector</param>
-        /// <param name="max">Maximum vector</param>
-        /// <param name="result">The clamped vector</param>
+        /// <param name="vec">Input vector.</param>
+        /// <param name="min">Minimum vector.</param>
+        /// <param name="max">Maximum vector.</param>
+        /// <param name="result">The clamped vector.</param>
         public static void Clamp(ref Vector2 vec, ref Vector2 min, ref Vector2 max, out Vector2 result)
         {
             result.X = vec.X < min.X ? min.X : vec.X > max.X ? max.X : vec.X;
@@ -496,9 +498,9 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Compute the euclidean distance between two vectors.
         /// </summary>
-        /// <param name="vec1">The first vector</param>
-        /// <param name="vec2">The second vector</param>
-        /// <returns>The distance</returns>
+        /// <param name="vec1">The first vector.</param>
+        /// <param name="vec2">The second vector.</param>
+        /// <returns>The distance.</returns>
         public static float Distance(Vector2 vec1, Vector2 vec2)
         {
             Distance(ref vec1, ref vec2, out float result);
@@ -508,9 +510,9 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Compute the euclidean distance between two vectors.
         /// </summary>
-        /// <param name="vec1">The first vector</param>
-        /// <param name="vec2">The second vector</param>
-        /// <param name="result">The distance</param>
+        /// <param name="vec1">The first vector.</param>
+        /// <param name="vec2">The second vector.</param>
+        /// <param name="result">The distance.</param>
         public static void Distance(ref Vector2 vec1, ref Vector2 vec2, out float result)
         {
             result = (float)Math.Sqrt(((vec2.X - vec1.X) * (vec2.X - vec1.X)) + ((vec2.Y - vec1.Y) * (vec2.Y - vec1.Y)));
@@ -519,9 +521,9 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Compute the squared euclidean distance between two vectors.
         /// </summary>
-        /// <param name="vec1">The first vector</param>
-        /// <param name="vec2">The second vector</param>
-        /// <returns>The squared distance</returns>
+        /// <param name="vec1">The first vector.</param>
+        /// <param name="vec2">The second vector.</param>
+        /// <returns>The squared distance.</returns>
         public static float DistanceSquared(Vector2 vec1, Vector2 vec2)
         {
             DistanceSquared(ref vec1, ref vec2, out float result);
@@ -531,19 +533,19 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Compute the squared euclidean distance between two vectors.
         /// </summary>
-        /// <param name="vec1">The first vector</param>
-        /// <param name="vec2">The second vector</param>
-        /// <param name="result">The squared distance</param>
+        /// <param name="vec1">The first vector.</param>
+        /// <param name="vec2">The second vector.</param>
+        /// <param name="result">The squared distance.</param>
         public static void DistanceSquared(ref Vector2 vec1, ref Vector2 vec2, out float result)
         {
             result = ((vec2.X - vec1.X) * (vec2.X - vec1.X)) + ((vec2.Y - vec1.Y) * (vec2.Y - vec1.Y));
         }
 
         /// <summary>
-        /// Scale a vector to unit length
+        /// Scale a vector to unit length.
         /// </summary>
-        /// <param name="vec">The input vector</param>
-        /// <returns>The normalized vector</returns>
+        /// <param name="vec">The input vector.</param>
+        /// <returns>The normalized copy.</returns>
         public static Vector2 Normalize(Vector2 vec)
         {
             var scale = 1.0f / vec.Length;
@@ -553,10 +555,10 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Scale a vector to unit length
+        /// Scale a vector to unit length.
         /// </summary>
-        /// <param name="vec">The input vector</param>
-        /// <param name="result">The normalized vector</param>
+        /// <param name="vec">The input vector.</param>
+        /// <param name="result">The normalized vector.</param>
         public static void Normalize(ref Vector2 vec, out Vector2 result)
         {
             var scale = 1.0f / vec.Length;
@@ -565,10 +567,10 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Scale a vector to approximately unit length
+        /// Scale a vector to approximately unit length.
         /// </summary>
-        /// <param name="vec">The input vector</param>
-        /// <returns>The normalized vector</returns>
+        /// <param name="vec">The input vector.</param>
+        /// <returns>The normalized copy.</returns>
         public static Vector2 NormalizeFast(Vector2 vec)
         {
             var scale = MathHelper.InverseSqrtFast((vec.X * vec.X) + (vec.Y * vec.Y));
@@ -578,10 +580,10 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Scale a vector to approximately unit length
+        /// Scale a vector to approximately unit length.
         /// </summary>
-        /// <param name="vec">The input vector</param>
-        /// <param name="result">The normalized vector</param>
+        /// <param name="vec">The input vector.</param>
+        /// <param name="result">The normalized vector.</param>
         public static void NormalizeFast(ref Vector2 vec, out Vector2 result)
         {
             var scale = MathHelper.InverseSqrtFast((vec.X * vec.X) + (vec.Y * vec.Y));
@@ -590,56 +592,56 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Calculate the dot (scalar) product of two vectors
+        /// Calculate the dot (scalar) product of two vectors.
         /// </summary>
-        /// <param name="left">First operand</param>
-        /// <param name="right">Second operand</param>
-        /// <returns>The dot product of the two inputs</returns>
+        /// <param name="left">First operand.</param>
+        /// <param name="right">Second operand.</param>
+        /// <returns>The dot product of the two inputs.</returns>
         public static float Dot(Vector2 left, Vector2 right)
         {
             return (left.X * right.X) + (left.Y * right.Y);
         }
 
         /// <summary>
-        /// Calculate the dot (scalar) product of two vectors
+        /// Calculate the dot (scalar) product of two vectors.
         /// </summary>
-        /// <param name="left">First operand</param>
-        /// <param name="right">Second operand</param>
-        /// <param name="result">The dot product of the two inputs</param>
+        /// <param name="left">First operand.</param>
+        /// <param name="right">Second operand.</param>
+        /// <param name="result">The dot product of the two inputs.</param>
         public static void Dot(ref Vector2 left, ref Vector2 right, out float result)
         {
             result = (left.X * right.X) + (left.Y * right.Y);
         }
 
         /// <summary>
-        /// Calculate the perpendicular dot (scalar) product of two vectors
+        /// Calculate the perpendicular dot (scalar) product of two vectors.
         /// </summary>
-        /// <param name="left">First operand</param>
-        /// <param name="right">Second operand</param>
-        /// <returns>The perpendicular dot product of the two inputs</returns>
+        /// <param name="left">First operand.</param>
+        /// <param name="right">Second operand.</param>
+        /// <returns>The perpendicular dot product of the two inputs.</returns>
         public static float PerpDot(Vector2 left, Vector2 right)
         {
             return (left.X * right.Y) - (left.Y * right.X);
         }
 
         /// <summary>
-        /// Calculate the perpendicular dot (scalar) product of two vectors
+        /// Calculate the perpendicular dot (scalar) product of two vectors.
         /// </summary>
-        /// <param name="left">First operand</param>
-        /// <param name="right">Second operand</param>
-        /// <param name="result">The perpendicular dot product of the two inputs</param>
+        /// <param name="left">First operand.</param>
+        /// <param name="right">Second operand.</param>
+        /// <param name="result">The perpendicular dot product of the two inputs.</param>
         public static void PerpDot(ref Vector2 left, ref Vector2 right, out float result)
         {
             result = (left.X * right.Y) - (left.Y * right.X);
         }
 
         /// <summary>
-        /// Returns a new Vector that is the linear blend of the 2 given Vectors
+        /// Returns a new Vector that is the linear blend of the 2 given Vectors.
         /// </summary>
-        /// <param name="a">First input vector</param>
-        /// <param name="b">Second input vector</param>
+        /// <param name="a">First input vector.</param>
+        /// <param name="b">Second input vector.</param>
         /// <param name="blend">The blend factor. a when blend=0, b when blend=1.</param>
-        /// <returns>a when blend=0, b when blend=1, and a linear combination otherwise</returns>
+        /// <returns>a when blend=0, b when blend=1, and a linear combination otherwise.</returns>
         public static Vector2 Lerp(Vector2 a, Vector2 b, float blend)
         {
             a.X = (blend * (b.X - a.X)) + a.X;
@@ -648,12 +650,12 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Returns a new Vector that is the linear blend of the 2 given Vectors
+        /// Returns a new Vector that is the linear blend of the 2 given Vectors.
         /// </summary>
-        /// <param name="a">First input vector</param>
-        /// <param name="b">Second input vector</param>
+        /// <param name="a">First input vector.</param>
+        /// <param name="b">Second input vector.</param>
         /// <param name="blend">The blend factor. a when blend=0, b when blend=1.</param>
-        /// <param name="result">a when blend=0, b when blend=1, and a linear combination otherwise</param>
+        /// <param name="result">a when blend=0, b when blend=1, and a linear combination otherwise.</param>
         public static void Lerp(ref Vector2 a, ref Vector2 b, float blend, out Vector2 result)
         {
             result.X = (blend * (b.X - a.X)) + a.X;
@@ -661,21 +663,21 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Interpolate 3 Vectors using Barycentric coordinates
+        /// Interpolate 3 Vectors using Barycentric coordinates.
         /// </summary>
-        /// <param name="a">First input Vector</param>
-        /// <param name="b">Second input Vector</param>
-        /// <param name="c">Third input Vector</param>
-        /// <param name="u">First Barycentric Coordinate</param>
-        /// <param name="v">Second Barycentric Coordinate</param>
-        /// <returns>a when u=v=0, b when u=1,v=0, c when u=0,v=1, and a linear combination of a,b,c otherwise</returns>
+        /// <param name="a">First input Vector.</param>
+        /// <param name="b">Second input Vector.</param>
+        /// <param name="c">Third input Vector.</param>
+        /// <param name="u">First Barycentric Coordinate.</param>
+        /// <param name="v">Second Barycentric Coordinate.</param>
+        /// <returns>a when u=v=0, b when u=1,v=0, c when u=0,v=1, and a linear combination of a,b,c otherwise.</returns>
         public static Vector2 BaryCentric(Vector2 a, Vector2 b, Vector2 c, float u, float v)
         {
             return a + (u * (b - a)) + (v * (c - a));
         }
 
         /// <summary>
-        /// Interpolate 3 Vectors using Barycentric coordinates
+        /// Interpolate 3 Vectors using Barycentric coordinates.
         /// </summary>
         /// <param name="a">First input Vector.</param>
         /// <param name="b">Second input Vector.</param>
@@ -684,7 +686,7 @@ namespace OpenTK.Mathematics
         /// <param name="v">Second Barycentric Coordinate.</param>
         /// <param name="result">
         /// Output Vector. a when u=v=0, b when u=1,v=0, c when u=0,v=1, and a linear combination of a,b,c
-        /// otherwise
+        /// otherwise.
         /// </param>
         public static void BaryCentric
         (
@@ -832,8 +834,8 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Divides the specified instance by a scalar.
         /// </summary>
-        /// <param name="vec">Left operand</param>
-        /// <param name="scale">Right operand</param>
+        /// <param name="vec">Left operand.</param>
+        /// <param name="scale">Right operand.</param>
         /// <returns>Result of the division.</returns>
         public static Vector2 operator /(Vector2 vec, float scale)
         {
@@ -866,10 +868,7 @@ namespace OpenTK.Mathematics
 
         private static readonly string ListSeparator = CultureInfo.CurrentCulture.TextInfo.ListSeparator;
 
-        /// <summary>
-        /// Returns a System.String that represents the current Vector2.
-        /// </summary>
-        /// <returns></returns>
+        /// <inheritdoc/>
         public override string ToString()
         {
             return string.Format("({0}{2} {1})", X, Y, ListSeparator);

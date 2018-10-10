@@ -1,7 +1,7 @@
 ﻿namespace OpenTK.OpenAL.Native
 {
     /// <summary>
-    /// A list of valid Int32 GetSource parameters
+    /// A list of valid Int32 GetSource parameters.
     /// </summary>
     public enum ALGetSourcei
     {

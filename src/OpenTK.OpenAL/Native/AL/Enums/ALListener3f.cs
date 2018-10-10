@@ -1,7 +1,7 @@
 ﻿namespace OpenTK.OpenAL.Native
 {
     /// <summary>
-    /// A list of valid Math.Vector3 Listener/GetListener parameters
+    /// A list of valid Math.Vector3 Listener/GetListener parameters.
     /// </summary>
     public enum ALListener3f
     {

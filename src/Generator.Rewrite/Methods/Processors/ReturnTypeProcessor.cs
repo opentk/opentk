@@ -7,6 +7,9 @@ using OpenTK.Rewrite.Extensions;
 
 namespace OpenTK.Rewrite.Methods.Processors
 {
+    /// <summary>
+    /// Rewrites wrapper method IL to handle differences in return type between wrapper and native function.
+    /// </summary>
     public sealed class ReturnTypeProcessor : IMethodProcessor
     {
         private readonly TypeDefinition _intPtrType;
@@ -29,7 +32,7 @@ namespace OpenTK.Rewrite.Methods.Processors
         }
 
         /// <inheritdoc/>
-        public void Process(ILProcessor ilProcessor, MethodDefinition wrapper, MethodDefinition native)
+        public void Process(ILProcessor cilProcessor, MethodDefinition wrapper, MethodDefinition native)
         {
             if (wrapper.ReturnType.FullNameEquals(typeof(void)) ||
                 wrapper.ReturnType == native.ReturnType ||
@@ -43,7 +46,7 @@ namespace OpenTK.Rewrite.Methods.Processors
             if (wrapper.Parameters.Count < native.Parameters.Count)
             {
                 // Convenience wrapper. The result is stored in the last local variable
-                ilProcessor.Emit(OpCodes.Ldloc, wrapper.Body.Variables.Count - 1);
+                cilProcessor.Emit(OpCodes.Ldloc, wrapper.Body.Variables.Count - 1);
                 return;
             }
 
@@ -70,8 +73,8 @@ namespace OpenTK.Rewrite.Methods.Processors
                         })
                 );
 
-                ilProcessor.Emit(OpCodes.Call, explicitOperator);
-                ilProcessor.Emit(OpCodes.Newobj, stringConstructor);
+                cilProcessor.Emit(OpCodes.Call, explicitOperator);
+                cilProcessor.Emit(OpCodes.Newobj, stringConstructor);
             }
             else
             {

@@ -8,6 +8,9 @@ using OpenTK.Rewrite.Extensions;
 
 namespace OpenTK.Rewrite.Methods.Processors
 {
+    /// <summary>
+    /// Rewrites wrapper method IL to include the prologue for the debug configuration.
+    /// </summary>
     public sealed class DebugPrologueProcessor : MethodProcessorWithEpilogue<DebugVariables>
     {
         private readonly IReadOnlyList<string> _graphicsModules = new List<string>
@@ -31,14 +34,14 @@ namespace OpenTK.Rewrite.Methods.Processors
         }
 
         /// <inheritdoc/>
-        public override void Process(ILProcessor ilProcessor, MethodDefinition wrapper, MethodDefinition native)
+        public override void Process(ILProcessor cilProcessor, MethodDefinition wrapper, MethodDefinition native)
         {
-            if (ilProcessor.Body.Method.Name == "GetError")
+            if (cilProcessor.Body.Method.Name == "GetError")
             {
                 return;
             }
 
-            string moduleName = ilProcessor.Body.Method.FullName;
+            string moduleName = cilProcessor.Body.Method.FullName;
             moduleName = moduleName.Substring(moduleName.IndexOf(' ') + 1);
             moduleName = moduleName.Remove(moduleName.IndexOf("::", StringComparison.Ordinal));
             moduleName = moduleName.Remove(moduleName.LastIndexOf('.'));
@@ -82,19 +85,19 @@ namespace OpenTK.Rewrite.Methods.Processors
             );
 
             // using (new ErrorHelper(GraphicsContext.CurrentContext)) { ...
-            ilProcessor.Body.Variables.Add(debugVariables.ErrorHelperLocal);
-            ilProcessor.Emit(OpCodes.Ldloca, debugVariables.ErrorHelperLocal);
-            ilProcessor.Emit(OpCodes.Call, debugVariables.Get_CurrentContext);
-            ilProcessor.Emit(OpCodes.Call, ctor);
-            ilProcessor.Append(debugVariables.BeginTry);
+            cilProcessor.Body.Variables.Add(debugVariables.ErrorHelperLocal);
+            cilProcessor.Emit(OpCodes.Ldloca, debugVariables.ErrorHelperLocal);
+            cilProcessor.Emit(OpCodes.Call, debugVariables.Get_CurrentContext);
+            cilProcessor.Emit(OpCodes.Call, ctor);
+            cilProcessor.Append(debugVariables.BeginTry);
 
             // Special case Begin to turn off error checking.
-            if (ilProcessor.Body.Method.Name == "Begin")
+            if (cilProcessor.Body.Method.Name == "Begin")
             {
-                ilProcessor.Emit(OpCodes.Call, debugVariables.Get_CurrentContext);
-                ilProcessor.Emit(OpCodes.Ldc_I4_0);
-                ilProcessor.Emit(OpCodes.Conv_I1);
-                ilProcessor.Emit(OpCodes.Call, debugVariables.Set_ErrorChecking);
+                cilProcessor.Emit(OpCodes.Call, debugVariables.Get_CurrentContext);
+                cilProcessor.Emit(OpCodes.Ldc_I4_0);
+                cilProcessor.Emit(OpCodes.Conv_I1);
+                cilProcessor.Emit(OpCodes.Call, debugVariables.Set_ErrorChecking);
             }
 
             EpilogueProcessor.RewriteVariables.TryAdd(wrapper, debugVariables);

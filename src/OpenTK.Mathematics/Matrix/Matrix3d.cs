@@ -21,6 +21,7 @@ SOFTWARE.
  */
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 
 namespace OpenTK.Mathematics
@@ -53,11 +54,11 @@ namespace OpenTK.Mathematics
         public static Matrix3d Identity = new Matrix3d(Vector3d.UnitX, Vector3d.UnitY, Vector3d.UnitZ);
 
         /// <summary>
-        /// Constructs a new instance.
+        /// Initializes a new instance of the <see cref="Matrix3d"/> struct.
         /// </summary>
-        /// <param name="row0">Top row of the matrix</param>
-        /// <param name="row1">Second row of the matrix</param>
-        /// <param name="row2">Bottom row of the matrix</param>
+        /// <param name="row0">Top row of the matrix.</param>
+        /// <param name="row1">Second row of the matrix.</param>
+        /// <param name="row2">Bottom row of the matrix.</param>
         public Matrix3d(Vector3d row0, Vector3d row1, Vector3d row2)
         {
             Row0 = row0;
@@ -66,7 +67,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Constructs a new instance.
+        /// Initializes a new instance of the <see cref="Matrix3d"/> struct.
         /// </summary>
         /// <param name="m00">First item of the first row of the matrix.</param>
         /// <param name="m01">Second item of the first row of the matrix.</param>
@@ -77,17 +78,12 @@ namespace OpenTK.Mathematics
         /// <param name="m20">First item of the third row of the matrix.</param>
         /// <param name="m21">Second item of the third row of the matrix.</param>
         /// <param name="m22">Third item of the third row of the matrix.</param>
+        [SuppressMessage("ReSharper", "SA1117", Justification = "For better readability of Matrix struct.")]
         public Matrix3d
         (
-            double m00,
-            double m01,
-            double m02,
-            double m10,
-            double m11,
-            double m12,
-            double m20,
-            double m21,
-            double m22
+            double m00, double m01, double m02,
+            double m10, double m11, double m12,
+            double m20, double m21, double m22
         )
         {
             Row0 = new Vector3d(m00, m01, m02);
@@ -96,7 +92,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Constructs a new instance.
+        /// Initializes a new instance of the <see cref="Matrix3d"/> struct.
         /// </summary>
         /// <param name="matrix">A Matrix4d to take the upper-left 3x3 from.</param>
         public Matrix3d(Matrix4d matrix)
@@ -113,15 +109,15 @@ namespace OpenTK.Mathematics
         {
             get
             {
-                double m11 = Row0.X,
-                    m12 = Row0.Y,
-                    m13 = Row0.Z,
-                    m21 = Row1.X,
-                    m22 = Row1.Y,
-                    m23 = Row1.Z,
-                    m31 = Row2.X,
-                    m32 = Row2.Y,
-                    m33 = Row2.Z;
+                double m11 = Row0.X;
+                double m12 = Row0.Y;
+                double m13 = Row0.Z;
+                double m21 = Row1.X;
+                double m22 = Row1.Y;
+                double m23 = Row1.Z;
+                double m31 = Row2.X;
+                double m32 = Row2.Y;
+                double m33 = Row2.Z;
 
                 return
                     (m11 * m22 * m33) + (m12 * m23 * m31) + (m13 * m21 * m32)
@@ -247,6 +243,8 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Gets or sets the value at a specified row and column.
         /// </summary>
+        /// <param name="rowIndex">The index of the row.</param>
+        /// <param name="columnIndex">The index of the column.</param>
         public double this[int rowIndex, int columnIndex]
         {
             get
@@ -309,8 +307,9 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Returns a normalised copy of this instance.
+        /// Returns a normalized copy of this instance.
         /// </summary>
+        /// <returns>The normalized copy.</returns>
         public Matrix3d Normalized()
         {
             var m = this;
@@ -332,6 +331,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Returns an inverted copy of this instance.
         /// </summary>
+        /// <returns>The inverted copy.</returns>
         public Matrix3d Inverted()
         {
             var m = this;
@@ -346,6 +346,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Returns a copy of this Matrix3 without scale.
         /// </summary>
+        /// <returns>The matrix without scaling.</returns>
         public Matrix3d ClearScale()
         {
             var m = this;
@@ -358,6 +359,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Returns a copy of this Matrix3 without rotation.
         /// </summary>
+        /// <returns>The matrix without rotation.</returns>
         public Matrix3d ClearRotation()
         {
             var m = this;
@@ -370,6 +372,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Returns the scale component of this instance.
         /// </summary>
+        /// <returns>The scale components.</returns>
         public Vector3d ExtractScale()
         {
             return new Vector3d(Row0.Length, Row1.Length, Row2.Length);
@@ -378,17 +381,18 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Returns the rotation component of this instance. Quite slow.
         /// </summary>
-        /// <param name="row_normalise">
-        /// Whether the method should row-normalise (i.e. remove scale from) the Matrix. Pass false if
-        /// you know it's already normalised.
+        /// <param name="rowNormalize">
+        /// Whether the method should row-normalize (i.e. remove scale from) the Matrix. Pass false if
+        /// you know it's already normalized.
         /// </param>
-        public Quaterniond ExtractRotation(bool row_normalise = true)
+        /// <returns>The rotation.</returns>
+        public Quaterniond ExtractRotation(bool rowNormalize = true)
         {
             var row0 = Row0;
             var row1 = Row1;
             var row2 = Row2;
 
-            if (row_normalise)
+            if (rowNormalize)
             {
                 row0 = row0.Normalized();
                 row1 = row1.Normalized();
@@ -462,16 +466,16 @@ namespace OpenTK.Mathematics
             var t = 1.0f - cos;
 
             // do the conversion math once
-            double tXX = t * axisX * axisX,
-                tXY = t * axisX * axisY,
-                tXZ = t * axisX * axisZ,
-                tYY = t * axisY * axisY,
-                tYZ = t * axisY * axisZ,
-                tZZ = t * axisZ * axisZ;
+            double tXX = t * axisX * axisX;
+            double tXY = t * axisX * axisY;
+            double tXZ = t * axisX * axisZ;
+            double tYY = t * axisY * axisY;
+            double tYZ = t * axisY * axisZ;
+            double tZZ = t * axisZ * axisZ;
 
-            double sinX = sin * axisX,
-                sinY = sin * axisY,
-                sinZ = sin * axisZ;
+            double sinX = sin * axisX;
+            double sinY = sin * axisY;
+            double sinZ = sin * axisZ;
 
             result.Row0.X = tXX + cos;
             result.Row0.Y = tXY - sinZ;
@@ -708,7 +712,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         /// <param name="left">The left operand of the multiplication.</param>
         /// <param name="right">The right operand of the multiplication.</param>
-        /// <returns>A new instance that is the result of the multiplication</returns>
+        /// <returns>A new instance that is the result of the multiplication.</returns>
         public static Matrix3d Mult(Matrix3d left, Matrix3d right)
         {
             Mult(ref left, ref right, out Matrix3d result);
@@ -720,44 +724,44 @@ namespace OpenTK.Mathematics
         /// </summary>
         /// <param name="left">The left operand of the multiplication.</param>
         /// <param name="right">The right operand of the multiplication.</param>
-        /// <param name="result">A new instance that is the result of the multiplication</param>
+        /// <param name="result">A new instance that is the result of the multiplication.</param>
         public static void Mult(ref Matrix3d left, ref Matrix3d right, out Matrix3d result)
         {
-            double lM11 = left.Row0.X,
-                lM12 = left.Row0.Y,
-                lM13 = left.Row0.Z,
-                lM21 = left.Row1.X,
-                lM22 = left.Row1.Y,
-                lM23 = left.Row1.Z,
-                lM31 = left.Row2.X,
-                lM32 = left.Row2.Y,
-                lM33 = left.Row2.Z,
-                rM11 = right.Row0.X,
-                rM12 = right.Row0.Y,
-                rM13 = right.Row0.Z,
-                rM21 = right.Row1.X,
-                rM22 = right.Row1.Y,
-                rM23 = right.Row1.Z,
-                rM31 = right.Row2.X,
-                rM32 = right.Row2.Y,
-                rM33 = right.Row2.Z;
+            double leftM11 = left.Row0.X;
+            double leftM12 = left.Row0.Y;
+            double leftM13 = left.Row0.Z;
+            double leftM21 = left.Row1.X;
+            double leftM22 = left.Row1.Y;
+            double leftM23 = left.Row1.Z;
+            double leftM31 = left.Row2.X;
+            double leftM32 = left.Row2.Y;
+            double leftM33 = left.Row2.Z;
+            double rightM11 = right.Row0.X;
+            double rightM12 = right.Row0.Y;
+            double rightM13 = right.Row0.Z;
+            double rightM21 = right.Row1.X;
+            double rightM22 = right.Row1.Y;
+            double rightM23 = right.Row1.Z;
+            double rightM31 = right.Row2.X;
+            double rightM32 = right.Row2.Y;
+            double rightM33 = right.Row2.Z;
 
-            result.Row0.X = (lM11 * rM11) + (lM12 * rM21) + (lM13 * rM31);
-            result.Row0.Y = (lM11 * rM12) + (lM12 * rM22) + (lM13 * rM32);
-            result.Row0.Z = (lM11 * rM13) + (lM12 * rM23) + (lM13 * rM33);
-            result.Row1.X = (lM21 * rM11) + (lM22 * rM21) + (lM23 * rM31);
-            result.Row1.Y = (lM21 * rM12) + (lM22 * rM22) + (lM23 * rM32);
-            result.Row1.Z = (lM21 * rM13) + (lM22 * rM23) + (lM23 * rM33);
-            result.Row2.X = (lM31 * rM11) + (lM32 * rM21) + (lM33 * rM31);
-            result.Row2.Y = (lM31 * rM12) + (lM32 * rM22) + (lM33 * rM32);
-            result.Row2.Z = (lM31 * rM13) + (lM32 * rM23) + (lM33 * rM33);
+            result.Row0.X = (leftM11 * rightM11) + (leftM12 * rightM21) + (leftM13 * rightM31);
+            result.Row0.Y = (leftM11 * rightM12) + (leftM12 * rightM22) + (leftM13 * rightM32);
+            result.Row0.Z = (leftM11 * rightM13) + (leftM12 * rightM23) + (leftM13 * rightM33);
+            result.Row1.X = (leftM21 * rightM11) + (leftM22 * rightM21) + (leftM23 * rightM31);
+            result.Row1.Y = (leftM21 * rightM12) + (leftM22 * rightM22) + (leftM23 * rightM32);
+            result.Row1.Z = (leftM21 * rightM13) + (leftM22 * rightM23) + (leftM23 * rightM33);
+            result.Row2.X = (leftM31 * rightM11) + (leftM32 * rightM21) + (leftM33 * rightM31);
+            result.Row2.Y = (leftM31 * rightM12) + (leftM32 * rightM22) + (leftM33 * rightM32);
+            result.Row2.Z = (leftM31 * rightM13) + (leftM32 * rightM23) + (leftM33 * rightM33);
         }
 
         /// <summary>
-        /// Calculate the inverse of the given matrix
+        /// Calculate the inverse of the given matrix.
         /// </summary>
-        /// <param name="mat">The matrix to invert</param>
-        /// <param name="result">The inverse of the given matrix if it has one, or the input if it is singular</param>
+        /// <param name="mat">The matrix to invert.</param>
+        /// <param name="result">The inverse of the given matrix if it has one, or the input if it is singular.</param>
         /// <exception cref="InvalidOperationException">Thrown if the Matrix3d is singular.</exception>
         public static void Invert(ref Matrix3d mat, out Matrix3d result)
         {
@@ -869,10 +873,10 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Calculate the inverse of the given matrix
+        /// Calculate the inverse of the given matrix.
         /// </summary>
-        /// <param name="mat">The matrix to invert</param>
-        /// <returns>The inverse of the given matrix if it has one, or the input if it is singular</returns>
+        /// <param name="mat">The matrix to invert.</param>
+        /// <returns>The inverse of the given matrix.</returns>
         /// <exception cref="InvalidOperationException">Thrown if the Matrix4 is singular.</exception>
         public static Matrix3d Invert(Matrix3d mat)
         {
@@ -881,20 +885,20 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Calculate the transpose of the given matrix
+        /// Calculate the transpose of the given matrix.
         /// </summary>
-        /// <param name="mat">The matrix to transpose</param>
-        /// <returns>The transpose of the given matrix</returns>
+        /// <param name="mat">The matrix to transpose.</param>
+        /// <returns>The transpose of the given matrix.</returns>
         public static Matrix3d Transpose(Matrix3d mat)
         {
             return new Matrix3d(mat.Column0, mat.Column1, mat.Column2);
         }
 
         /// <summary>
-        /// Calculate the transpose of the given matrix
+        /// Calculate the transpose of the given matrix.
         /// </summary>
-        /// <param name="mat">The matrix to transpose</param>
-        /// <param name="result">The result of the calculation</param>
+        /// <param name="mat">The matrix to transpose.</param>
+        /// <param name="result">The result of the calculation.</param>
         public static void Transpose(ref Matrix3d mat, out Matrix3d result)
         {
             result.Row0 = mat.Column0;
@@ -903,11 +907,11 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Matrix multiplication
+        /// Matrix multiplication.
         /// </summary>
-        /// <param name="left">left-hand operand</param>
-        /// <param name="right">right-hand operand</param>
-        /// <returns>A new Matrix3d which holds the result of the multiplication</returns>
+        /// <param name="left">left-hand operand.</param>
+        /// <param name="right">right-hand operand.</param>
+        /// <returns>A new Matrix3d which holds the result of the multiplication.</returns>
         public static Matrix3d operator *(Matrix3d left, Matrix3d right)
         {
             return Mult(left, right);

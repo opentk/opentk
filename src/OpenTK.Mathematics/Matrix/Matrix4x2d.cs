@@ -21,6 +21,7 @@ SOFTWARE.
  */
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace OpenTK.Mathematics
 {
@@ -61,7 +62,7 @@ namespace OpenTK.Mathematics
         );
 
         /// <summary>
-        /// Constructs a new instance.
+        /// Initializes a new instance of the <see cref="Matrix4x2d"/> struct.
         /// </summary>
         /// <param name="row0">Top row of the matrix.</param>
         /// <param name="row1">Second row of the matrix.</param>
@@ -76,7 +77,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Constructs a new instance
+        /// Initializes a new instance of the <see cref="Matrix4x2d"/> struct.
         /// </summary>
         /// <param name="m00">First item of the first row of the matrix.</param>
         /// <param name="m01">Second item of the first row of the matrix.</param>
@@ -86,16 +87,13 @@ namespace OpenTK.Mathematics
         /// <param name="m21">Second item of the third row of the matrix.</param>
         /// <param name="m30">First item of the fourth row of the matrix.</param>
         /// <param name="m31">Second item of the fourth row of the matrix.</param>
+        [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1117", Justification = "For better readability of Matrix struct.")]
         public Matrix4x2d
         (
-            double m00,
-            double m01,
-            double m10,
-            double m11,
-            double m20,
-            double m21,
-            double m30,
-            double m31
+            double m00, double m01,
+            double m10, double m11,
+            double m20, double m21,
+            double m30, double m31
         )
         {
             Row0 = new Vector2d(m00, m01);
@@ -227,6 +225,9 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Gets or sets the value at a specified row and column.
         /// </summary>
+        /// <param name="rowIndex">The index of the row.</param>
+        /// <param name="columnIndex">The index of the column.</param>
+        /// <returns>The element at the given row and column index.</returns>
         public double this[int rowIndex, int columnIndex]
         {
             get
@@ -436,27 +437,27 @@ namespace OpenTK.Mathematics
         /// <param name="result">A new instance that is the result of the multiplication.</param>
         public static void Mult(ref Matrix4x2d left, ref Matrix2d right, out Matrix4x2d result)
         {
-            double lM11 = left.Row0.X,
-                lM12 = left.Row0.Y,
-                lM21 = left.Row1.X,
-                lM22 = left.Row1.Y,
-                lM31 = left.Row2.X,
-                lM32 = left.Row2.Y,
-                lM41 = left.Row3.X,
-                lM42 = left.Row3.Y,
-                rM11 = right.Row0.X,
-                rM12 = right.Row0.Y,
-                rM21 = right.Row1.X,
-                rM22 = right.Row1.Y;
+            double leftM11 = left.Row0.X;
+            double leftM12 = left.Row0.Y;
+            double leftM21 = left.Row1.X;
+            double leftM22 = left.Row1.Y;
+            double leftM31 = left.Row2.X;
+            double leftM32 = left.Row2.Y;
+            double leftM41 = left.Row3.X;
+            double leftM42 = left.Row3.Y;
+            double rightM11 = right.Row0.X;
+            double rightM12 = right.Row0.Y;
+            double rightM21 = right.Row1.X;
+            double rightM22 = right.Row1.Y;
 
-            result.Row0.X = (lM11 * rM11) + (lM12 * rM21);
-            result.Row0.Y = (lM11 * rM12) + (lM12 * rM22);
-            result.Row1.X = (lM21 * rM11) + (lM22 * rM21);
-            result.Row1.Y = (lM21 * rM12) + (lM22 * rM22);
-            result.Row2.X = (lM31 * rM11) + (lM32 * rM21);
-            result.Row2.Y = (lM31 * rM12) + (lM32 * rM22);
-            result.Row3.X = (lM41 * rM11) + (lM42 * rM21);
-            result.Row3.Y = (lM41 * rM12) + (lM42 * rM22);
+            result.Row0.X = (leftM11 * rightM11) + (leftM12 * rightM21);
+            result.Row0.Y = (leftM11 * rightM12) + (leftM12 * rightM22);
+            result.Row1.X = (leftM21 * rightM11) + (leftM22 * rightM21);
+            result.Row1.Y = (leftM21 * rightM12) + (leftM22 * rightM22);
+            result.Row2.X = (leftM31 * rightM11) + (leftM32 * rightM21);
+            result.Row2.Y = (leftM31 * rightM12) + (leftM32 * rightM22);
+            result.Row3.X = (leftM41 * rightM11) + (leftM42 * rightM21);
+            result.Row3.Y = (leftM41 * rightM12) + (leftM42 * rightM22);
         }
 
         /// <summary>
@@ -479,33 +480,33 @@ namespace OpenTK.Mathematics
         /// <param name="result">A new instance that is the result of the multiplication.</param>
         public static void Mult(ref Matrix4x2d left, ref Matrix2x3d right, out Matrix4x3d result)
         {
-            double lM11 = left.Row0.X,
-                lM12 = left.Row0.Y,
-                lM21 = left.Row1.X,
-                lM22 = left.Row1.Y,
-                lM31 = left.Row2.X,
-                lM32 = left.Row2.Y,
-                lM41 = left.Row3.X,
-                lM42 = left.Row3.Y,
-                rM11 = right.Row0.X,
-                rM12 = right.Row0.Y,
-                rM13 = right.Row0.Z,
-                rM21 = right.Row1.X,
-                rM22 = right.Row1.Y,
-                rM23 = right.Row1.Z;
+            double leftM11 = left.Row0.X;
+            double leftM12 = left.Row0.Y;
+            double leftM21 = left.Row1.X;
+            double leftM22 = left.Row1.Y;
+            double leftM31 = left.Row2.X;
+            double leftM32 = left.Row2.Y;
+            double leftM41 = left.Row3.X;
+            double leftM42 = left.Row3.Y;
+            double rightM11 = right.Row0.X;
+            double rightM12 = right.Row0.Y;
+            double rightM13 = right.Row0.Z;
+            double rightM21 = right.Row1.X;
+            double rightM22 = right.Row1.Y;
+            double rightM23 = right.Row1.Z;
 
-            result.Row0.X = (lM11 * rM11) + (lM12 * rM21);
-            result.Row0.Y = (lM11 * rM12) + (lM12 * rM22);
-            result.Row0.Z = (lM11 * rM13) + (lM12 * rM23);
-            result.Row1.X = (lM21 * rM11) + (lM22 * rM21);
-            result.Row1.Y = (lM21 * rM12) + (lM22 * rM22);
-            result.Row1.Z = (lM21 * rM13) + (lM22 * rM23);
-            result.Row2.X = (lM31 * rM11) + (lM32 * rM21);
-            result.Row2.Y = (lM31 * rM12) + (lM32 * rM22);
-            result.Row2.Z = (lM31 * rM13) + (lM32 * rM23);
-            result.Row3.X = (lM41 * rM11) + (lM42 * rM21);
-            result.Row3.Y = (lM41 * rM12) + (lM42 * rM22);
-            result.Row3.Z = (lM41 * rM13) + (lM42 * rM23);
+            result.Row0.X = (leftM11 * rightM11) + (leftM12 * rightM21);
+            result.Row0.Y = (leftM11 * rightM12) + (leftM12 * rightM22);
+            result.Row0.Z = (leftM11 * rightM13) + (leftM12 * rightM23);
+            result.Row1.X = (leftM21 * rightM11) + (leftM22 * rightM21);
+            result.Row1.Y = (leftM21 * rightM12) + (leftM22 * rightM22);
+            result.Row1.Z = (leftM21 * rightM13) + (leftM22 * rightM23);
+            result.Row2.X = (leftM31 * rightM11) + (leftM32 * rightM21);
+            result.Row2.Y = (leftM31 * rightM12) + (leftM32 * rightM22);
+            result.Row2.Z = (leftM31 * rightM13) + (leftM32 * rightM23);
+            result.Row3.X = (leftM41 * rightM11) + (leftM42 * rightM21);
+            result.Row3.Y = (leftM41 * rightM12) + (leftM42 * rightM22);
+            result.Row3.Z = (leftM41 * rightM13) + (leftM42 * rightM23);
         }
 
         /// <summary>
@@ -528,39 +529,39 @@ namespace OpenTK.Mathematics
         /// <param name="result">A new instance that is the result of the multiplication.</param>
         public static void Mult(ref Matrix4x2d left, ref Matrix2x4d right, out Matrix4d result)
         {
-            double lM11 = left.Row0.X,
-                lM12 = left.Row0.Y,
-                lM21 = left.Row1.X,
-                lM22 = left.Row1.Y,
-                lM31 = left.Row2.X,
-                lM32 = left.Row2.Y,
-                lM41 = left.Row3.X,
-                lM42 = left.Row3.Y,
-                rM11 = right.Row0.X,
-                rM12 = right.Row0.Y,
-                rM13 = right.Row0.Z,
-                rM14 = right.Row0.W,
-                rM21 = right.Row1.X,
-                rM22 = right.Row1.Y,
-                rM23 = right.Row1.Z,
-                rM24 = right.Row1.W;
+            double leftM11 = left.Row0.X;
+            double leftM12 = left.Row0.Y;
+            double leftM21 = left.Row1.X;
+            double leftM22 = left.Row1.Y;
+            double leftM31 = left.Row2.X;
+            double leftM32 = left.Row2.Y;
+            double leftM41 = left.Row3.X;
+            double leftM42 = left.Row3.Y;
+            double rightM11 = right.Row0.X;
+            double rightM12 = right.Row0.Y;
+            double rightM13 = right.Row0.Z;
+            double rightM14 = right.Row0.W;
+            double rightM21 = right.Row1.X;
+            double rightM22 = right.Row1.Y;
+            double rightM23 = right.Row1.Z;
+            double rightM24 = right.Row1.W;
 
-            result.Row0.X = (lM11 * rM11) + (lM12 * rM21);
-            result.Row0.Y = (lM11 * rM12) + (lM12 * rM22);
-            result.Row0.Z = (lM11 * rM13) + (lM12 * rM23);
-            result.Row0.W = (lM11 * rM14) + (lM12 * rM24);
-            result.Row1.X = (lM21 * rM11) + (lM22 * rM21);
-            result.Row1.Y = (lM21 * rM12) + (lM22 * rM22);
-            result.Row1.Z = (lM21 * rM13) + (lM22 * rM23);
-            result.Row1.W = (lM21 * rM14) + (lM22 * rM24);
-            result.Row2.X = (lM31 * rM11) + (lM32 * rM21);
-            result.Row2.Y = (lM31 * rM12) + (lM32 * rM22);
-            result.Row2.Z = (lM31 * rM13) + (lM32 * rM23);
-            result.Row2.W = (lM31 * rM14) + (lM32 * rM24);
-            result.Row3.X = (lM41 * rM11) + (lM42 * rM21);
-            result.Row3.Y = (lM41 * rM12) + (lM42 * rM22);
-            result.Row3.Z = (lM41 * rM13) + (lM42 * rM23);
-            result.Row3.W = (lM41 * rM14) + (lM42 * rM24);
+            result.Row0.X = (leftM11 * rightM11) + (leftM12 * rightM21);
+            result.Row0.Y = (leftM11 * rightM12) + (leftM12 * rightM22);
+            result.Row0.Z = (leftM11 * rightM13) + (leftM12 * rightM23);
+            result.Row0.W = (leftM11 * rightM14) + (leftM12 * rightM24);
+            result.Row1.X = (leftM21 * rightM11) + (leftM22 * rightM21);
+            result.Row1.Y = (leftM21 * rightM12) + (leftM22 * rightM22);
+            result.Row1.Z = (leftM21 * rightM13) + (leftM22 * rightM23);
+            result.Row1.W = (leftM21 * rightM14) + (leftM22 * rightM24);
+            result.Row2.X = (leftM31 * rightM11) + (leftM32 * rightM21);
+            result.Row2.Y = (leftM31 * rightM12) + (leftM32 * rightM22);
+            result.Row2.Z = (leftM31 * rightM13) + (leftM32 * rightM23);
+            result.Row2.W = (leftM31 * rightM14) + (leftM32 * rightM24);
+            result.Row3.X = (leftM41 * rightM11) + (leftM42 * rightM21);
+            result.Row3.Y = (leftM41 * rightM12) + (leftM42 * rightM22);
+            result.Row3.Z = (leftM41 * rightM13) + (leftM42 * rightM23);
+            result.Row3.W = (leftM41 * rightM14) + (leftM42 * rightM24);
         }
 
         /// <summary>
@@ -666,9 +667,9 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Scalar multiplication.
         /// </summary>
-        /// <param name="left">left-hand operand</param>
-        /// <param name="right">right-hand operand</param>
-        /// <returns>A new Matrix4x2d which holds the result of the multiplication</returns>
+        /// <param name="left">left-hand operand.</param>
+        /// <param name="right">right-hand operand.</param>
+        /// <returns>A new Matrix4x2d which holds the result of the multiplication.</returns>
         public static Matrix4x2d operator *(double left, Matrix4x2d right)
         {
             return Mult(right, left);
@@ -677,64 +678,64 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Scalar multiplication.
         /// </summary>
-        /// <param name="left">left-hand operand</param>
-        /// <param name="right">right-hand operand</param>
-        /// <returns>A new Matrix4x2d which holds the result of the multiplication</returns>
+        /// <param name="left">left-hand operand.</param>
+        /// <param name="right">right-hand operand.</param>
+        /// <returns>A new Matrix4x2d which holds the result of the multiplication.</returns>
         public static Matrix4x2d operator *(Matrix4x2d left, double right)
         {
             return Mult(left, right);
         }
 
         /// <summary>
-        /// Matrix multiplication
+        /// Matrix multiplication.
         /// </summary>
-        /// <param name="left">left-hand operand</param>
-        /// <param name="right">right-hand operand</param>
-        /// <returns>A new Matrix2d which holds the result of the multiplication</returns>
+        /// <param name="left">left-hand operand.</param>
+        /// <param name="right">right-hand operand.</param>
+        /// <returns>A new Matrix2d which holds the result of the multiplication.</returns>
         public static Matrix4x2d operator *(Matrix4x2d left, Matrix2d right)
         {
             return Mult(left, right);
         }
 
         /// <summary>
-        /// Matrix multiplication
+        /// Matrix multiplication.
         /// </summary>
-        /// <param name="left">left-hand operand</param>
-        /// <param name="right">right-hand operand</param>
-        /// <returns>A new Matrix4x3d which holds the result of the multiplication</returns>
+        /// <param name="left">left-hand operand.</param>
+        /// <param name="right">right-hand operand.</param>
+        /// <returns>A new Matrix4x3d which holds the result of the multiplication.</returns>
         public static Matrix4x3d operator *(Matrix4x2d left, Matrix2x3d right)
         {
             return Mult(left, right);
         }
 
         /// <summary>
-        /// Matrix multiplication
+        /// Matrix multiplication.
         /// </summary>
-        /// <param name="left">left-hand operand</param>
-        /// <param name="right">right-hand operand</param>
-        /// <returns>A new Matrix4d which holds the result of the multiplication</returns>
+        /// <param name="left">left-hand operand.</param>
+        /// <param name="right">right-hand operand.</param>
+        /// <returns>A new Matrix4d which holds the result of the multiplication.</returns>
         public static Matrix4d operator *(Matrix4x2d left, Matrix2x4d right)
         {
             return Mult(left, right);
         }
 
         /// <summary>
-        /// Matrix addition
+        /// Matrix addition.
         /// </summary>
-        /// <param name="left">left-hand operand</param>
-        /// <param name="right">right-hand operand</param>
-        /// <returns>A new Matrix4x2d which holds the result of the addition</returns>
+        /// <param name="left">left-hand operand.</param>
+        /// <param name="right">right-hand operand.</param>
+        /// <returns>A new Matrix4x2d which holds the result of the addition.</returns>
         public static Matrix4x2d operator +(Matrix4x2d left, Matrix4x2d right)
         {
             return Add(left, right);
         }
 
         /// <summary>
-        /// Matrix subtraction
+        /// Matrix subtraction.
         /// </summary>
-        /// <param name="left">left-hand operand</param>
-        /// <param name="right">right-hand operand</param>
-        /// <returns>A new Matrix4x2d which holds the result of the subtraction</returns>
+        /// <param name="left">left-hand operand.</param>
+        /// <param name="right">right-hand operand.</param>
+        /// <returns>A new Matrix4x2d which holds the result of the subtraction.</returns>
         public static Matrix4x2d operator -(Matrix4x2d left, Matrix4x2d right)
         {
             return Subtract(left, right);

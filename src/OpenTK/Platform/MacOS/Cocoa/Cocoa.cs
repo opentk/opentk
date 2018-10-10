@@ -96,7 +96,7 @@ namespace OpenTK.Platform.MacOS
 
         [DllImport(LibObjC, EntryPoint = "objc_msgSend")]
         public static extern IntPtr SendIntPtr(IntPtr receiver, IntPtr selector, IntPtr p1, int p2, int p3, int p4,
-            int p5, int p6, int p7, IntPtr p8, NSBitmapFormat p9, int p10, int p11);
+            int p5, bool p6, bool p7, IntPtr p8, NSBitmapFormat p9, int p10, int p11);
 
         [DllImport(LibObjC, EntryPoint = "objc_msgSend")]
         public static extern bool SendBool(IntPtr receiver, IntPtr selector);
