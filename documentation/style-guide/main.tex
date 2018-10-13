@@ -251,7 +251,7 @@ basicstyle=\ttfamily\small,
 
 \date
 {
-    June 2017\\
+    \today\\
     Version 1.0.0
 }
 
@@ -333,16 +333,16 @@ Any line that is longer than 120 columns (documentation, code, or otherwise) mus
 
 A "word boundary" is mentioned here. To clarify, a word boundary is any point at which a typical word starts or ends (spaces, commas, punctuation, et cetera), as well as programmatic word boundaries - the end of an identifier, the end of an assignment, and so on. You should wrap as close as possible to the point at which you need to wrap, unless another rule applies.
 
-\begin{must}{All files must end with a newline character}
-In accordance with the POSIX specification, a line is defined as a string of characters ending with a newline character. As such, all files must end with a single newline character.
+\begin{must}{All files must end with a line feed character}
+In accordance with the POSIX specification, a line is defined as a string of characters ending with a line feed character. As such, all files must end with a single line feed character.
 \end{must}
 
 \begin{must}{Files must be saved as UTF-8}
 Files shall be encoded in `UTF-8` with no byte order mark. 
 \end{must}
 
-\begin{must}{Lines must end with a newline character}
-Lines shall be terminated by a single newline character. Under no circumstances shall a return carriage character occur in a file, except as a part of a string literal.
+\begin{must}{Lines must end with a line feed character}
+Lines shall be terminated by a single line feed character. Under no circumstances shall a return carriage character occur in a file, except as a part of a string literal.
 \end{must}
 
 \subsection{Braces, Parens, and Brackets}
@@ -534,6 +534,10 @@ All locals (local variables, method parameters, lambda arguments, etc) must be n
 
 \begin{must}{Named \texttt{ValueTuple} members must be named correctly}
 Named \texttt{ValueTuple} members are, for all intents and purposes, considered public properties on a class. Therefore, they must be named according to \texttt{PascalCase}.
+\end{must}
+
+\begin{must}{Abbreviations must use correct casing}
+In accordance with the standard library, abbreviations must be fully capitalized if they are two characters or less; in all other cases, they must be PascalCased. For instance, use "ID", but al
 \end{must}
 
 \section{Declarations}
