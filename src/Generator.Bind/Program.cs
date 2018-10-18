@@ -82,7 +82,7 @@ namespace Bind
             stopwatch.Stop();
 
             Console.WriteLine();
-            Console.WriteLine("Bindings generated in {0} seconds.", stopwatch.Elapsed.Ticks / 10000000.0);
+            Console.WriteLine("Bindings generated in {0} seconds.", stopwatch.Elapsed.TotalSeconds);
 
             return 0;
         }
