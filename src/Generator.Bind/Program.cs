@@ -90,6 +90,16 @@ namespace Bind
         /// <summary>
         /// Asynchronously generates bindings for the API described by the given <see cref="IGeneratorSettings"/>
         /// object.
+        ///
+        /// Broadly, this takes the following steps:
+        /// 1) Load the base API.
+        /// 2) Bake overrides into the API
+        /// 3) Bake Documentation into the API
+        /// 4) Create mappings between OpenGL types and C# types
+        /// 5) Apply the mappings to the API
+        /// 6) Bake convenience overloads into the API (adding unsafe, etc)
+        /// 7) Write the bindings
+        /// 
         /// </summary>
         /// <param name="generatorSettings">The settings describing the API.</param>
         /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>

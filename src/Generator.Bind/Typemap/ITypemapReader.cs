@@ -6,6 +6,8 @@ namespace Bind.Typemap
 {
     /// <summary>
     /// Represents a type that can read a typemap from a file.
+    ///
+    /// A typemap is a translation from one type to another, say GLfloat <-> float32, or GLdouble <-> double.
     /// </summary>
     public interface ITypemapReader
     {

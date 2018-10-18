@@ -5,6 +5,8 @@ namespace Bind.XML.Signatures.Enumerations
 {
     /// <summary>
     /// Represents a token signature inside an enumeration.
+    ///
+    /// This is a specific value that is part of an enum, usually a special hexadecimal number that OpenGL knows how to use.
     /// </summary>
     public class TokenSignature
     {
