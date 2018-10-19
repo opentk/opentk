@@ -1,4 +1,5 @@
 ﻿using System;
+using JetBrains.Annotations;
 
 namespace Bind.Writers
 {
@@ -9,8 +10,12 @@ namespace Bind.Writers
     /// </summary>
     public class SourceWriterBlock : IDisposable
     {
+        [NotNull]
         private readonly SourceWriter _sourceWriter;
+
         private readonly bool _withSemicolon;
+
+        [NotNull]
         private readonly SourceWriterIndentation _indentation;
 
         /// <summary>
@@ -18,7 +23,7 @@ namespace Bind.Writers
         /// </summary>
         /// <param name="sourceWriter">The source writer to manage the block of.</param>
         /// <param name="withSemicolon">Whether or not the closing brace should be terminated with a semicolon.</param>
-        public SourceWriterBlock(SourceWriter sourceWriter, bool withSemicolon)
+        public SourceWriterBlock([NotNull] SourceWriter sourceWriter, bool withSemicolon)
         {
             _sourceWriter = sourceWriter;
             _withSemicolon = withSemicolon;

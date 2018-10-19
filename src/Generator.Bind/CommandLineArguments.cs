@@ -26,7 +26,7 @@ namespace Bind
         /// Gets or sets the base path where documentation files are stored.
         /// </summary>
         [Option('d', "doc-path", HelpText = "The base path where documentation files are stored.")]
-        public string DocumentationPath { get; set; } = Path.Combine("src", "Generator.Bind", "Specifications", "Docs");
+        public string DocumentationPath { get; set; } = Path.Combine("src", "Generator.Bind", "Specifications", "Docs", "docs.gl");
 
         /// <summary>
         /// Gets or sets the path to the license file to use for headers.

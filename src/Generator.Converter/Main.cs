@@ -97,7 +97,14 @@ namespace OpenTK.Convert
 
                 using (var writer = XmlWriter.Create(out_stream, settings))
                 {
-                    var output = new XElement("signatures", new XAttribute("version", "2"));
+                    var output = new XElement
+                    (
+                        "signatures",
+                        new XAttribute("version", "2"),
+                        new XAttribute("xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance"),
+                        new XAttribute("xsi:noNamespaceSchemaLocation", "../signatures.xsd")
+                    );
+
                     foreach (var api in sigs.SelectMany(s => s))
                     {
                         output.Add(

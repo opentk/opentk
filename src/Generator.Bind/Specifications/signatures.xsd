@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <!-- Custom restrictive types -->
+  <xs:simpleType name="identifierType">
+    <xs:annotation>
+      <xs:documentation>A language-compatible identifier.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:ID">
+      <xs:pattern value="^((?!\d).+)$" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="versionType">
+    <xs:annotation>
+      <xs:documentation>A formatted version string.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:normalizedString">
+      <xs:pattern value="^(\d\.?){1,4}$" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="hexType">
+    <xs:annotation>
+      <xs:documentation>A hexadecimal number, with a capacity of up to 64 bits.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:normalizedString">
+      <xs:pattern value="^0x([A-F]|\d|[a-f]){1,16}$" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="flowType">
+    <xs:annotation>
+      <xs:documentation>The intended flow of a parameter.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:token">
+      <xs:enumeration value="in">
+        <xs:annotation>
+          <xs:documentation>An input parameter.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="out">
+        <xs:annotation>
+          <xs:documentation>An output parameter.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="countType">
+    <xs:annotation>
+      <xs:documentation>A formatted count attribute (a raw integer, or a computed size).</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:normalizedString">
+      <xs:pattern value="^\d+|COMPSIZE(.+)$" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <!-- Common attributes -->
+  <xs:attribute name="name" type="identifierType" />
+  <xs:attribute name="version" type="versionType" />
+  <xs:attribute name="type" type="identifierType" />
+
+  <!-- Complex types -->
+  <xs:element name="function">
+    <xs:annotation>
+      <xs:documentation>A function definition.</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="param" minOccurs="0" maxOccurs="unbounded">
+          <xs:complexType>
+            <xs:attribute ref="name" use="required">
+              <xs:annotation>
+                <xs:documentation>The name of the parameter.</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+            <xs:attribute ref="type" use="required">
+              <xs:annotation>
+                <xs:documentation>The type of the parameter.</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="flow" type="flowType" use="required">
+              <xs:annotation>
+                <xs:documentation>The flow of the parameter.</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="count" type="countType">
+              <xs:annotation>
+                <xs:documentation>The new count attribute of the parameter.</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="returns">
+          <xs:annotation>
+            <xs:documentation>The return type of the function.</xs:documentation>
+          </xs:annotation>
+          <xs:complexType>
+            <xs:attribute ref="type" use="required"/>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+      <xs:attribute ref="name" use="required">
+        <xs:annotation>
+          <xs:documentation>The name of the function.</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="category" type="xs:string" use="required" >
+        <xs:annotation>
+          <xs:documentation>The category of the function.</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="extension" type="xs:string" use="required">
+        <xs:annotation>
+          <xs:documentation>The extension that the function is part of.</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute ref="version">
+        <xs:annotation>
+          <xs:documentation>The version that the function was introduced in.</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="deprecated" type="versionType">
+        <xs:annotation>
+          <xs:documentation>The version that the function was deprecated in.</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="enum">
+    <xs:annotation>
+      <xs:documentation>An enumeration definition.</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="token">
+          <xs:annotation>
+            <xs:documentation>An explicit token in the enumeration.</xs:documentation>
+          </xs:annotation>
+          <xs:complexType>
+            <xs:attribute ref="name" use="required">
+              <xs:annotation>
+                <xs:documentation>The name of the token.</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="value" type="hexType" use="required">
+              <xs:annotation>
+                <xs:documentation>The value assigned to the token.</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="deprecated" type="versionType">
+              <xs:annotation>
+                <xs:documentation>The deprecation version of the token.</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="remark" type="xs:normalizedString">
+              <xs:annotation>
+                <xs:documentation>Remarks or comments about the token.</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+      <xs:attribute name="name" use="required">
+        <xs:annotation>
+          <xs:documentation>The name of the enumeration.</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="signatures">
+    <xs:annotation>
+      <xs:documentation>The signature collection.</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="add" minOccurs="0" maxOccurs="unbounded">
+          <xs:annotation>
+            <xs:documentation>New definitions that should be added to the existing set.</xs:documentation>
+          </xs:annotation>
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element ref="function" minOccurs="0" maxOccurs="unbounded" />
+              <xs:element ref="enum" minOccurs="0" maxOccurs="unbounded" />
+            </xs:sequence>
+            <xs:attribute ref="name" use="required">
+              <xs:annotation>
+                <xs:documentation>The profile name that the contained definitions should be added to.</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+            <xs:attribute ref="version">
+              <xs:annotation>
+                <xs:documentation>The profile version that the contained definitions should be added to.</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+      <xs:attribute ref="version" use="required">
+        <xs:annotation>
+          <xs:documentation>The specification version.</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
