@@ -1,12 +1,8 @@
 OpenTK
 ======
 
-
-### MAINTAINERS WANTED
-
 OpenTK is a large project, with a huge number of components. We're looking to add a more maintainers to the team.
-Email [@varon](https://github.com/varon) or message him in Gitter if you'd like to help out.
-
+Come join us in Discord and let us know where you'd like to help out.
 
 [![Discord](https://discordapp.com/api/guilds/337627185248468993/widget.png)](https://discord.gg/GZTYR4s)
 
@@ -17,7 +13,6 @@ Use OpenTK to add cross-platform 3d graphics, audio, compute and haptics to your
 Project website: https://opentk.github.io/
 
 Official git repository: https://github.com/opentk/opentk
-
 
 Build Status
 ========
@@ -34,6 +29,9 @@ Features
 - Create cutting-edge graphics with OpenGL 4.6 and OpenGL ES 3.0
 - Spice up your GUI with 3d acceleration
 - Improve your code flow with strong types and inline documentation
+- Windowing systems to help get you started
+- Input, and other game essentials.
+- Performant, highly optimized and bug-free linear algebra library
 - Write once run everywhere
 
 OpenTK is available for Windows, Linux, Mac OS X, *BSD, SteamOS, Android and iOS. It can be used standalone or integrated into a GUI (Windows.Forms, WPF, GTK+, Qt, VTK, ...)
@@ -64,6 +62,26 @@ your IDE.
 
 News
 ====
+
+### 2018-10-19
+
+Work is well underway on OpenTK 4.0, which targets .Net Core. We would welcome any contributions!
+
+### 2018-06-07
+
+OpenTK 3.0.1 is available.
+
+https://www.nuget.org/packages/OpenTK/3.0.1
+
+https://www.nuget.org/packages/OpenTK.GLControl/3.0.1
+
+### 2018-01-05
+
+OpenTK 3.0.0 is available.
+
+https://www.nuget.org/packages/OpenTK/3.0.0
+
+https://www.nuget.org/packages/OpenTK.GLControl/3.0.0
 
 ### 2017-05-08
 
@@ -156,10 +174,8 @@ Some areas we could really use your help:
 - Tutorials for OpenGL 3.x and 4.x. [Inspiration here](https://github.com/g-truc/ogl-samples)
 - New platforms:
   - Native Client (NaCL)
-  - Blackberry
   - Wayland
   - Mir
-  - WinRT (via ANGLE)
 - New features:
   - Multitouch
   - Force feedback
@@ -171,12 +187,12 @@ Further ideas for improvement are always welcome!
 Requirements
 ============
 
-- Windows (XP/Vista/7/8), Linux, Mac OS X, *BSD, SteamOS, Android or iOS
+- Windows (XP/Vista/7/8,10), Linux, Mac OS X, *BSD, SteamOS, Android or iOS
 - For graphics, OpenGL drivers or a suitable emulator, such as [ANGLE](https://github.com/opentk/opentk/tree/develop/Dependencies/Readme.txt)
 - For audio, OpenAL drivers or [OpenAL Soft](https://github.com/opentk/opentk/tree/develop/Dependencies/Readme.txt)
-- To develop desktop applications: Visual Studio, Xamarin Studio, MonoDevelop or SharpDevelop
-- To develop Android applications: Xamarin Studio or the Xamarin Extensions for Visual Studio
-- To develop iOS applications: Xamarin Studio and XCode
+- To develop desktop applications: Visual Studio, Rider, or the command line tools.
+- To develop Android applications: Visual Studio and Xamarin
+- To develop iOS applications: Visual Studio, Xamarin and XCode
 
 
 Documentation
@@ -186,120 +202,15 @@ Your favorite IDE will display inline documentation for all OpenTK APIs. Additio
 
 Technical documentation about the implementation of OpenTK can be found in the [Technical Wiki](https://github.com/opentk/opentk/wiki).
 
-
 Need Help?
 ==========
 
-Post your questions at the [OpenTK forums](http://www.opentk.com/forum).
+Come chat with us on [Discord](https://discord.gg/GZTYR4s).
 
-Report bugs at https://github.com/opentk/opentk/issues
+We're happy to help with anything from learning OpenGL to advanced OpenTK questions.
 
 
 License
 =======
 
 The Open Toolkit is distributed under the permissive MIT/X11 license and is absolutely free.
-
-http://www.opentk.com/project/license
-
-
-API compatibility
-=================
-
-OpenTK 1.1.4 is backwards compatible with 1.1.3.
-
-OpenTK 1.1.3 is backwards compatible with 1.1.2.
-
-OpenTK 1.1.2 is backwards compatible with 1.1.1.
-
-OpenTK 1.1.1 is backwards compatible with 1.1.0.
-
-OpenTK 1.1.0 is not backwards compatible with 1.0. Most projects will be able to upgrade without any modifications. Projects using the following signatures will have to implement the suggested changes:
-
-Namespace OpenTK.Graphics.OpenGL
-Change signature:
-- GL.MultiDrawArrays (`out` -> `ref`)
-- GL.Amd.DeletePerfMonitors (`out` -> `ref`)
-
-Change signature (may cause crash):
-- GL.Apple.ObjectPurgeable (returns `AppleObjectPurgeable` instead of `IntPtr`)
-- GL.Ext.SeparableFilter2D
-- GL.Ibm.EdgeFlagPointerList (`bool[]` -> `bool*[]`)
-- GL.NV.TransformFeedbackVaryings (`string[]` -> `int[]`)
-
-Change return type:
-- GL.WaitSync (returns `WaitSyncFlags` instead of `ArbSync`)
-
-
-Namespace OpenTK.Graphics.ES11
-Change return type:
-- GL.GetError (`ErrorCode` instead of `All`)
-
-Change `ref` parameters to `out`:
-- GL.GenBuffers
-- GL.GenTextures
-- GL.GetBoolean
-- GL.GetBufferParameter
-- GL.GetClipPlane
-- GL.GetClipPlanex
-- GL.GetFixed
-- GL.GetFloat
-- GL.GetInteger
-- GL.GetLight
-- GL.GetLightx
-- GL.GetMaterial
-- GL.GetMaterialx
-- GL.GetTexEnv
-- GL.GetTexEnvx
-- GL.GetTexParameter
-- GL.GetTexParameterx
-- GL.Oes.GenFramebuffers
-- GL.Oes.GetClipPlane
-- GL.Oes.GetClipPlanex
-- GL.Oes.GetFixed
-- GL.Oes.GetFramebufferAttachmentParameter
-- GL.Oes.GetLightx
-- GL.Oes.GetMaterialx
-- GL.Oes.GetRenderbufferParameter
-- GL.Oes.GetTexEnvx
-- GL.Oes.GetTexGen
-- GL.Oes.GetTexGenx
-- GL.Oes.GetTexParameterx
-- GL.Oes.QueryMatrixx
-- GL.NV.GenFences
-- GL.NV.GetFence
-
-Change namespace:
-- GL.ClipPlanefIMG -> GL.Img.ClipPlane
-- GL.DisableDriverControlQCOM -> GL.Qcom.DisableDriverControl
-
-
-Namespace OpenTK.Graphics.ES20.GL
-Change signature (may cause crash):
-- GL.NV.GetFence now takes three parameters instead of two
-
-Change `ref` parameters to `out`:
-- GL.GetActiveAttrib
-- GL.GetActiveUniform
-- GL.GetAttachedShaders
-- GL.GetProgramInfoLog
-- GL.GetShaderInfoLog
-- GL.GetShaderSource
-- GL.Amd.GetPerfMonitorCounterData
-- GL.Amd.GetPerfMonitorCounters
-- GL.Amd.GetPerfMonitorCounterString
-- GL.Amd.GetPerfMonitorGroup
-- GL.Amd.GetPerfMonitorGroupString
-- GL.Amd.SelectPerfMonitorCounters
-
-Change namespace:
-- GL.DisableDriverControlQCOM -> GL.Qcom.DisableDriverControl
-- GL.GetDriverControlsQCOM -> GL.Qcom.GetDriverControls
-- GL.GetDriverControlStringQCOM -> GL.Qcom.GetDriverControlString
-
-
-See also
-========
-
-[Delta Engine](http://deltaengine.net/), a high-level, open-source game engine.
-[MonoGame](https://github.com/mono/monogame), an open-source, cross-platform implementation of XNA.
