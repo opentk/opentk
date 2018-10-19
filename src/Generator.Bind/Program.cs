@@ -9,6 +9,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Runtime;
 using System.Threading.Tasks;
 using Bind.Baking;
 using Bind.Baking.Overloading;
@@ -62,6 +63,8 @@ namespace Bind
         /// <returns>An integer, indicating success or failure. On a failure, a nonzero value is returned.</returns>
         private static async Task<int> Main(string[] args)
         {
+            // force the GC off for a bit more speed.
+            GCSettings.LatencyMode = GCLatencyMode.Batch;
             Console.WriteLine($"OpenGL binding generator {Assembly.GetExecutingAssembly().GetName().Version} for OpenTK.");
             Console.WriteLine("For comments, bugs and suggestions visit http://github.com/opentk/opentk");
             Console.WriteLine();
