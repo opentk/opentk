@@ -171,10 +171,7 @@ namespace OpenTK
         /// </summary>
         private static void OnGraphicsContextInitialized()
         {
-            if (GraphicsContextInitialized != null)
-            {
-                GraphicsContextInitialized(null, EventArgs.Empty);
-            }
+            GraphicsContextInitialized?.Invoke(null, EventArgs.Empty);
         }
 
         /// <summary>
@@ -188,10 +185,7 @@ namespace OpenTK
         /// </summary>
         private static void OnGraphicsContextShuttingDown()
         {
-            if (GraphicsContextShuttingDown != null)
-            {
-                GraphicsContextShuttingDown(null, EventArgs.Empty);
-            }
+            GraphicsContextShuttingDown?.Invoke(null, EventArgs.Empty);
         }
 
         /// <summary>
@@ -205,10 +199,7 @@ namespace OpenTK
         /// </summary>
         protected virtual void OnInitialized()
         {
-            if (Initialized != null)
-            {
-                Initialized(this, EventArgs.Empty);
-            }
+            Initialized?.Invoke(this, EventArgs.Empty);
         }
 
         /// <summary>
@@ -221,10 +212,7 @@ namespace OpenTK
         /// </summary>
         protected virtual void OnShuttingDown()
         {
-            if (ShuttingDown != null)
-            {
-                ShuttingDown(this, EventArgs.Empty);
-            }
+            ShuttingDown?.Invoke(this, EventArgs.Empty);
         }
 
         /// <summary>

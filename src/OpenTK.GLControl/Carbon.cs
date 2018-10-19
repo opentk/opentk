@@ -88,7 +88,7 @@ namespace OpenTK.Platform.MacOS.Carbon
 
         internal short X
         {
-            get { return left; }
+            get => left;
             set
             {
                 short width = Width;
@@ -99,7 +99,7 @@ namespace OpenTK.Platform.MacOS.Carbon
 
         internal short Y
         {
-            get { return top; }
+            get => top;
             set
             {
                 short height = Height;
@@ -108,28 +108,23 @@ namespace OpenTK.Platform.MacOS.Carbon
             }
         }
 
-        internal short Width 
-        { 
-            get { return (short)(right - left); } 
-            set { right = (short)(left + value); }
+        internal short Width
+        {
+            get => (short)(right - left);
+            set => right = (short)(left + value);
         }
 
         internal short Height 
         { 
-            get { return (short)(bottom - top); } 
+            get => (short)(bottom - top);
             set { bottom = (short)(top + value); }
         }
 
         public override string ToString()
-        {
-            return string.Format(
-                "Rect: [{0}, {1}, {2}, {3}]", X, Y, Width, Height);
-        }
+            => $"Rect: [{X}, {Y}, {Width}, {Height}]";
 
         public Rectangle ToRectangle()
-        {
-            return new Rectangle(X, Y, Width, Height);
-        }
+            => new Rectangle(X, Y, Width, Height);
     }
 
     internal class API

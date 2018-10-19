@@ -44,15 +44,9 @@ namespace OpenTK
             // This must be fixed upstream.
         }
 
-        public Graphics.IGraphicsContext CreateContext(int major, int minor, Graphics.GraphicsContextFlags flags)
-        {
-            return new GraphicsContext(mode, WindowInfo, major, minor, flags);
-        }
+        public Graphics.IGraphicsContext CreateContext(int major, int minor, Graphics.GraphicsContextFlags flags) => new GraphicsContext(mode, WindowInfo, major, minor, flags);
 
-        public bool IsIdle
-        {
-            get { return NativeMethods.SDL_HasEvents(0, 0xffff); }
-        }
+        public bool IsIdle => NativeMethods.SDL_HasEvents(0, 0xffff);
 
         public Platform.IWindowInfo WindowInfo { get; }
 

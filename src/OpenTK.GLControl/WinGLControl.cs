@@ -43,10 +43,7 @@ namespace OpenTK
             public POINT Point;
             //internal object RefObject;
 
-            public override string ToString()
-            {
-                return String.Format("msg=0x{0:x} ({1}) hwnd=0x{2:x} wparam=0x{3:x} lparam=0x{4:x} pt=0x{5:x}", (int)Message, Message.ToString(), HWnd.ToInt32(), WParam.ToInt32(), LParam.ToInt32(), Point);
-            }
+            public override string ToString() => $"msg=0x{(int)Message:x} ({Message.ToString()}) hwnd=0x{HWnd.ToInt32():x} wparam=0x{WParam.ToInt32():x} lparam=0x{LParam.ToInt32():x} pt=0x{Point:x}";
         }
 
         private struct POINT
@@ -60,15 +57,9 @@ namespace OpenTK
                 this.Y = y;
             }
 
-            public System.Drawing.Point ToPoint()
-            {
-                return new System.Drawing.Point(X, Y);
-            }
+            public System.Drawing.Point ToPoint() => new System.Drawing.Point(X, Y);
 
-            public override string ToString()
-            {
-                return "Point {" + X.ToString() + ", " + Y.ToString() + ")";
-            }
+            public override string ToString() => "Point {" + X+ ", " + Y+ ")";
         }
 
         [System.Security.SuppressUnmanagedCodeSecurity]
@@ -85,15 +76,9 @@ namespace OpenTK
             WindowInfo = Utilities.CreateWindowsWindowInfo(control.Handle);
         }
 
-        public IGraphicsContext CreateContext(int major, int minor, GraphicsContextFlags flags)
-        {
-            return new GraphicsContext(mode, WindowInfo, major, minor, flags);
-        }
+        public IGraphicsContext CreateContext(int major, int minor, GraphicsContextFlags flags) => new GraphicsContext(mode, WindowInfo, major, minor, flags);
 
-        public bool IsIdle
-        {
-            get { return !PeekMessage(ref msg, IntPtr.Zero, 0, 0, 0); }
-        }
+        public bool IsIdle => !PeekMessage(ref msg, IntPtr.Zero, 0, 0, 0);
 
         public IWindowInfo WindowInfo { get; }
     }

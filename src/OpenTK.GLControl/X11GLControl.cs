@@ -43,11 +43,7 @@ namespace OpenTK
             public int ColormapSize;
             public int BitsPerRgb;
 
-            public override string ToString()
-            {
-                return String.Format("id ({0}), screen ({1}), depth ({2}), class ({3})",
-                    VisualID, Screen, Depth, Class);
-            }
+            public override string ToString() => $"id ({VisualID}), screen ({Screen}), depth ({Depth}), class ({Class})";
         }
 
         private GraphicsMode mode;
@@ -61,11 +57,11 @@ namespace OpenTK
         {
             if (mode == null)
             {
-                throw new ArgumentNullException("mode");
+                throw new ArgumentNullException(nameof(mode));
             }
             if (control == null)
             {
-                throw new ArgumentNullException("control");
+                throw new ArgumentNullException(nameof(control));
             }
 
             // Note: the X11 window is created with a default XVisualInfo,
@@ -120,10 +116,7 @@ namespace OpenTK
             return context;
         }
 
-        public bool IsIdle
-        {
-            get { return XPending(display) == 0; }
-        }
+        public bool IsIdle => XPending(display) == 0;
 
         public IWindowInfo WindowInfo { get; }
 
