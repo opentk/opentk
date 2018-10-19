@@ -8,7 +8,6 @@
 using System;
 using System.Runtime.InteropServices;
 using System.Security;
-using OpenTK.Core.Utility;
 using OpenTK.Mathematics;
 
 namespace OpenTK.OpenAL.Native
@@ -1592,13 +1591,8 @@ namespace OpenTK.OpenAL.Native
         /// <param name="size">The size of the audio buffer in bytes.</param>
         /// <param name="freq">The frequency of the audio buffer.</param>
         public static void BufferData<TBuffer>(int bid, ALFormat format, TBuffer[] buffer, int size, int freq)
-            where TBuffer : struct
+            where TBuffer : unmanaged
         {
-            if (!BlittableValueType.Check(buffer))
-            {
-                throw new ArgumentException("buffer");
-            }
-
             var handle = GCHandle.Alloc(buffer, GCHandleType.Pinned);
             try
             {
