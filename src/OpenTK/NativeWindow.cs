@@ -89,15 +89,15 @@ namespace OpenTK
             // TODO: Should a constraint be added for the position?
             if (width < 1)
             {
-                throw new ArgumentOutOfRangeException("width", "Must be greater than zero.");
+                throw new ArgumentOutOfRangeException(nameof(width), "Must be greater than zero.");
             }
             if (height < 1)
             {
-                throw new ArgumentOutOfRangeException("height", "Must be greater than zero.");
+                throw new ArgumentOutOfRangeException(nameof(height), "Must be greater than zero.");
             }
             if (mode == null)
             {
-                throw new ArgumentNullException("mode");
+                throw new ArgumentNullException(nameof(mode));
             }
 
             this.options = options;
@@ -142,10 +142,7 @@ namespace OpenTK
         /// <returns>
         /// The point transformed to client coordinates.
         /// </returns>
-        public Point PointToClient(Point point)
-        {
-            return implementation.PointToClient(point);
-        }
+        public Point PointToClient(Point point) => implementation.PointToClient(point);
 
         /// <summary>
         /// Transforms the specified point from client to screen coordinates.
@@ -156,18 +153,12 @@ namespace OpenTK
         /// <returns>
         /// The point transformed to screen coordinates.
         /// </returns>
-        public Point PointToScreen(Point point)
-        {
-            return implementation.PointToScreen(point);
-        }
+        public Point PointToScreen(Point point) => implementation.PointToScreen(point);
 
         /// <summary>
         /// Processes operating system events until the NativeWindow becomes idle.
         /// </summary>
-        public void ProcessEvents()
-        {
-            ProcessEvents(false);
-        }
+        public void ProcessEvents() => ProcessEvents(false);
 
         /// <summary>
         /// Gets or sets a <see cref="System.Drawing.Rectangle"/> structure
@@ -251,13 +242,7 @@ namespace OpenTK
         /// <summary>
         /// Gets a value indicating whether a render window exists.
         /// </summary>
-        public bool Exists
-        {
-            get
-            {
-                return IsDisposed ? false : implementation.Exists; // TODO: Should disposed be ignored instead?
-            }
-        }
+        public bool Exists => IsDisposed ? false : implementation.Exists; // TODO: Should disposed be ignored instead?
 
         /// <summary>
         /// Gets a System.Boolean that indicates whether this NativeWindow has input focus.
@@ -397,14 +382,8 @@ namespace OpenTK
         /// </summary>
         public WindowBorder WindowBorder
         {
-            get
-            {
-                return implementation.WindowBorder;
-            }
-            set
-            {
-                implementation.WindowBorder = value;
-            }
+            get => implementation.WindowBorder;
+            set => implementation.WindowBorder = value;
         }
 
         /// <summary>
@@ -424,14 +403,8 @@ namespace OpenTK
         /// </summary>
         public virtual WindowState WindowState
         {
-            get
-            {
-                return implementation.WindowState;
-            }
-            set
-            {
-                implementation.WindowState = value;
-            }
+            get => implementation.WindowState;
+            set => implementation.WindowState = value;
         }
 
         /// <summary>
@@ -475,14 +448,8 @@ namespace OpenTK
         /// </summary>
         public bool CursorVisible
         {
-            get
-            {
-                return implementation.CursorVisible;
-            }
-            set
-            {
-                implementation.CursorVisible = value;
-            }
+            get => implementation.CursorVisible;
+            set => implementation.CursorVisible = value;
         }
 
         /// <summary>
@@ -635,10 +602,7 @@ namespace OpenTK
         /// Called when the NativeWindow has closed.
         /// </summary>
         /// <param name="e">Not used.</param>
-        protected virtual void OnClosed(EventArgs e)
-        {
-            Closed(this, e);
-        }
+        protected virtual void OnClosed(EventArgs e) => Closed(this, e);
 
         /// <summary>
         /// Called when the NativeWindow is about to close.
@@ -646,19 +610,13 @@ namespace OpenTK
         /// <param name="e">
         /// The <see cref="System.ComponentModel.CancelEventArgs" /> for this event.
         /// Set e.Cancel to true in order to stop the NativeWindow from closing.</param>
-        protected virtual void OnClosing(CancelEventArgs e)
-        {
-            Closing(this, e);
-        }
+        protected virtual void OnClosing(CancelEventArgs e) => Closing(this, e);
 
         /// <summary>
         /// Called when the NativeWindow is disposed.
         /// </summary>
         /// <param name="e">Not used.</param>
-        protected virtual void OnDisposed(EventArgs e)
-        {
-            Disposed(this, e);
-        }
+        protected virtual void OnDisposed(EventArgs e) => Disposed(this, e);
 
         /// <summary>
         /// Called when the <see cref="OpenTK.INativeWindow.Focused"/> property of the NativeWindow has changed.
@@ -687,63 +645,42 @@ namespace OpenTK
         /// Called when the <see cref="OpenTK.INativeWindow.Icon"/> property of the NativeWindow has changed.
         /// </summary>
         /// <param name="e">Not used.</param>
-        protected virtual void OnIconChanged(EventArgs e)
-        {
-            IconChanged(this, e);
-        }
+        protected virtual void OnIconChanged(EventArgs e) => IconChanged(this, e);
 
         /// <summary>
         /// Occurs whenever a keyboard key is pressed.
         /// </summary>
-        protected virtual void OnKeyDown(KeyboardKeyEventArgs e)
-        {
-            KeyDown(this, e);
-        }
+        protected virtual void OnKeyDown(KeyboardKeyEventArgs e) => KeyDown(this, e);
 
         /// <summary>
         /// Called when a character is typed.
         /// </summary>
         /// <param name="e">The <see cref="OpenTK.KeyPressEventArgs"/> for this event.</param>
-        protected virtual void OnKeyPress(KeyPressEventArgs e)
-        {
-            KeyPress(this, e);
-        }
+        protected virtual void OnKeyPress(KeyPressEventArgs e) => KeyPress(this, e);
 
         /// <summary>
         /// Called when a keyboard key is released.
         /// </summary>
         /// <param name="e">The <see cref="OpenTK.Input.KeyboardKeyEventArgs"/> for this event.</param>
-        protected virtual void OnKeyUp(KeyboardKeyEventArgs e)
-        {
-            KeyUp(this, e);
-        }
+        protected virtual void OnKeyUp(KeyboardKeyEventArgs e) => KeyUp(this, e);
 
         /// <summary>
         /// Called when the NativeWindow is moved.
         /// </summary>
         /// <param name="e">Not used.</param>
-        protected virtual void OnMove(EventArgs e)
-        {
-            Move(this, e);
-        }
+        protected virtual void OnMove(EventArgs e) => Move(this, e);
 
         /// <summary>
         /// Called whenever the mouse cursor reenters the window <see cref="Bounds"/>.
         /// </summary>
         /// <param name="e">Not used.</param>
-        protected virtual void OnMouseEnter(EventArgs e)
-        {
-            MouseEnter(this, e);
-        }
+        protected virtual void OnMouseEnter(EventArgs e) => MouseEnter(this, e);
 
         /// <summary>
         /// Called whenever the mouse cursor leaves the window <see cref="Bounds"/>.
         /// </summary>
         /// <param name="e">Not used.</param>
-        protected virtual void OnMouseLeave(EventArgs e)
-        {
-            MouseLeave(this, e);
-        }
+        protected virtual void OnMouseLeave(EventArgs e) => MouseLeave(this, e);
 
         /// <summary>
         /// Raises the <see cref="MouseDown"/> event.
@@ -752,10 +689,7 @@ namespace OpenTK
         /// A <see cref="MouseButtonEventArgs"/> instance carrying mouse state information.
         /// The information carried by this instance is only valid within this method body.
         /// </param>
-        protected virtual void OnMouseDown(MouseButtonEventArgs e)
-        {
-            MouseDown(this, e);
-        }
+        protected virtual void OnMouseDown(MouseButtonEventArgs e) => MouseDown(this, e);
 
         /// <summary>
         /// Raises the <see cref="MouseUp"/> event.
@@ -764,10 +698,7 @@ namespace OpenTK
         /// A <see cref="MouseButtonEventArgs"/> instance carrying mouse state information.
         /// The information carried by this instance is only valid within this method body.
         /// </param>
-        protected virtual void OnMouseUp(MouseButtonEventArgs e)
-        {
-            MouseUp(this, e);
-        }
+        protected virtual void OnMouseUp(MouseButtonEventArgs e) => MouseUp(this, e);
 
         /// <summary>
         /// Raises the <see cref="MouseMove"/> event.
@@ -776,10 +707,7 @@ namespace OpenTK
         /// A <see cref="MouseMoveEventArgs"/> instance carrying mouse state information.
         /// The information carried by this instance is only valid within this method body.
         /// </param>
-        protected virtual void OnMouseMove(MouseMoveEventArgs e)
-        {
-            MouseMove(this, e);
-        }
+        protected virtual void OnMouseMove(MouseMoveEventArgs e) => MouseMove(this, e);
 
         /// <summary>
         /// Raises the <see cref="MouseWheel"/> event.
@@ -788,10 +716,7 @@ namespace OpenTK
         /// A <see cref="MouseWheelEventArgs"/> instance carrying mouse state information.
         /// The information carried by this instance is only valid within this method body.
         /// </param>
-        protected virtual void OnMouseWheel(MouseWheelEventArgs e)
-        {
-            MouseWheel(this, e);
-        }
+        protected virtual void OnMouseWheel(MouseWheelEventArgs e) => MouseWheel(this, e);
 
         /// <summary>
         /// Raises the <see cref="FileDrop"/> event.
@@ -800,55 +725,37 @@ namespace OpenTK
         /// A <see cref="FileDropEventArgs"/> instance carrying file name.
         /// The information carried by this instance is only valid within this method body.
         /// </param>
-        protected virtual void OnFileDrop(FileDropEventArgs e)
-        {
-            FileDrop(this, e);
-        }
+        protected virtual void OnFileDrop(FileDropEventArgs e) => FileDrop(this, e);
 
         /// <summary>
         /// Called when the NativeWindow is resized.
         /// </summary>
         /// <param name="e">Not used.</param>
-        protected virtual void OnResize(EventArgs e)
-        {
-            Resize(this, e);
-        }
+        protected virtual void OnResize(EventArgs e) => Resize(this, e);
 
         /// <summary>
         /// Called when the <see cref="OpenTK.INativeWindow.Title"/> property of the NativeWindow has changed.
         /// </summary>
         /// <param name="e">Not used.</param>
-        protected virtual void OnTitleChanged(EventArgs e)
-        {
-            TitleChanged(this, e);
-        }
+        protected virtual void OnTitleChanged(EventArgs e) => TitleChanged(this, e);
 
         /// <summary>
         /// Called when the <see cref="OpenTK.INativeWindow.Visible"/> property of the NativeWindow has changed.
         /// </summary>
         /// <param name="e">Not used.</param>
-        protected virtual void OnVisibleChanged(EventArgs e)
-        {
-            VisibleChanged(this, e);
-        }
+        protected virtual void OnVisibleChanged(EventArgs e) => VisibleChanged(this, e);
 
         /// <summary>
         /// Called when the WindowBorder of this NativeWindow has changed.
         /// </summary>
         /// <param name="e">Not used.</param>
-        protected virtual void OnWindowBorderChanged(EventArgs e)
-        {
-            WindowBorderChanged(this, e);
-        }
+        protected virtual void OnWindowBorderChanged(EventArgs e) => WindowBorderChanged(this, e);
 
         /// <summary>
         /// Called when the WindowState of this NativeWindow has changed.
         /// </summary>
         /// <param name="e">Not used.</param>
-        protected virtual void OnWindowStateChanged(EventArgs e)
-        {
-            WindowStateChanged(this, e);
-        }
+        protected virtual void OnWindowStateChanged(EventArgs e) => WindowStateChanged(this, e);
 
         /// <summary>
         /// Processes operating system events until the NativeWindow becomes idle.
@@ -874,42 +781,42 @@ namespace OpenTK
             Events = false;
         }
 
-        private void OnClosingInternal(object sender, CancelEventArgs e) { OnClosing(e); }
+        private void OnClosingInternal(object sender, CancelEventArgs e) => OnClosing(e);
 
-        private void OnDisposedInternal(object sender, EventArgs e) { OnDisposed(e); }
+        private void OnDisposedInternal(object sender, EventArgs e) => OnDisposed(e);
 
-        private void OnFocusedChangedInternal(object sender, EventArgs e) { OnFocusedChanged(e); }
+        private void OnFocusedChangedInternal(object sender, EventArgs e) => OnFocusedChanged(e);
 
-        private void OnIconChangedInternal(object sender, EventArgs e) { OnIconChanged(e); }
+        private void OnIconChangedInternal(object sender, EventArgs e) => OnIconChanged(e);
 
-        private void OnKeyDownInternal(object sender, KeyboardKeyEventArgs e) { OnKeyDown(e); }
+        private void OnKeyDownInternal(object sender, KeyboardKeyEventArgs e) => OnKeyDown(e);
 
-        private void OnKeyPressInternal(object sender, KeyPressEventArgs e) { OnKeyPress(e); }
+        private void OnKeyPressInternal(object sender, KeyPressEventArgs e) => OnKeyPress(e);
 
-        private void OnKeyUpInternal(object sender, KeyboardKeyEventArgs e) { OnKeyUp(e); }
+        private void OnKeyUpInternal(object sender, KeyboardKeyEventArgs e) => OnKeyUp(e);
 
-        private void OnMouseEnterInternal(object sender, EventArgs e) { OnMouseEnter(e); }
+        private void OnMouseEnterInternal(object sender, EventArgs e) => OnMouseEnter(e);
 
-        private void OnMouseLeaveInternal(object sender, EventArgs e) { OnMouseLeave(e); }
+        private void OnMouseLeaveInternal(object sender, EventArgs e) => OnMouseLeave(e);
 
-        private void OnMouseDownInternal(object sender, MouseButtonEventArgs e) { OnMouseDown(e); }
-        private void OnMouseUpInternal(object sender, MouseButtonEventArgs e) { OnMouseUp(e); }
-        private void OnMouseMoveInternal(object sender, MouseMoveEventArgs e) { OnMouseMove(e); }
-        private void OnMouseWheelInternal(object sender, MouseWheelEventArgs e) { OnMouseWheel(e); }
+        private void OnMouseDownInternal(object sender, MouseButtonEventArgs e) => OnMouseDown(e);
+        private void OnMouseUpInternal(object sender, MouseButtonEventArgs e) => OnMouseUp(e);
+        private void OnMouseMoveInternal(object sender, MouseMoveEventArgs e) => OnMouseMove(e);
+        private void OnMouseWheelInternal(object sender, MouseWheelEventArgs e) => OnMouseWheel(e);
 
-        private void OnFileDropInternal(object sender, FileDropEventArgs e) { OnFileDrop(e); }
+        private void OnFileDropInternal(object sender, FileDropEventArgs e) => OnFileDrop(e);
 
-        private void OnMoveInternal(object sender, EventArgs e) { OnMove(e); }
+        private void OnMoveInternal(object sender, EventArgs e) => OnMove(e);
 
-        private void OnResizeInternal(object sender, EventArgs e) { OnResize(e); }
+        private void OnResizeInternal(object sender, EventArgs e) => OnResize(e);
 
-        private void OnTitleChangedInternal(object sender, EventArgs e) { OnTitleChanged(e); }
+        private void OnTitleChangedInternal(object sender, EventArgs e) => OnTitleChanged(e);
 
-        private void OnVisibleChangedInternal(object sender, EventArgs e) { OnVisibleChanged(e); }
+        private void OnVisibleChangedInternal(object sender, EventArgs e) => OnVisibleChanged(e);
 
-        private void OnWindowBorderChangedInternal(object sender, EventArgs e) { OnWindowBorderChanged(e); }
+        private void OnWindowBorderChangedInternal(object sender, EventArgs e) => OnWindowBorderChanged(e);
 
-        private void OnWindowStateChangedInternal(object sender, EventArgs e) { OnWindowStateChanged(e); }
+        private void OnWindowStateChangedInternal(object sender, EventArgs e) => OnWindowStateChanged(e);
 
         private bool Events
         {

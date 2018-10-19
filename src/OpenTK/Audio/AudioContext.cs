@@ -151,10 +151,7 @@ namespace OpenTK.Audio
         /// Values higher than supported will be clamped by the driver.
         /// </para>
         /// </remarks>
-        public AudioContext(string device, int freq, int refresh, bool sync, bool enableEfx, MaxAuxiliarySends efxMaxAuxSends)
-        {
-            CreateContext(device, freq, refresh, sync, enableEfx, efxMaxAuxSends);
-        }
+        public AudioContext(string device, int freq, int refresh, bool sync, bool enableEfx, MaxAuxiliarySends efxMaxAuxSends) => CreateContext(device, freq, refresh, sync, enableEfx, efxMaxAuxSends);
 
         /// <summary>May be passed at context construction time to indicate the number of desired auxiliary effect slot sends per source.</summary>
         public enum MaxAuxiliarySends:int
@@ -448,7 +445,7 @@ namespace OpenTK.Audio
 
                 return is_processing;
             }
-            private set { is_processing = value; }
+            private set => is_processing = value;
         }
 
         /// <summary>
@@ -467,7 +464,7 @@ namespace OpenTK.Audio
 
                 return is_synchronized;
             }
-            private set { is_synchronized = value; }
+            private set => is_synchronized = value;
         }
 
         /// <summary>

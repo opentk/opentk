@@ -44,10 +44,7 @@ namespace OpenTK
         /// Constructs a new instance.
         /// </summary>
         /// <param name="index">The slot index for a wrapper function.</param>
-        public SlotAttribute(int index)
-        {
-            Slot = index;
-        }
+        public SlotAttribute(int index) => Slot = index;
     }
 }
 

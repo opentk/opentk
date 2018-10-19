@@ -33,15 +33,9 @@ namespace OpenTK
     // Seriously, Microsoft, shouldn't this have been in the BCL out of the box?
     internal class IntPtrEqualityComparer : IEqualityComparer<IntPtr>
     {
-        public bool Equals(IntPtr x, IntPtr y)
-        {
-            return x == y;
-        }
+        public bool Equals(IntPtr x, IntPtr y) => x == y;
 
-        public int GetHashCode(IntPtr obj)
-        {
-            return obj.GetHashCode();
-        }
+        public int GetHashCode(IntPtr obj) => obj.GetHashCode();
     }
 }
 

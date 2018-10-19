@@ -60,7 +60,7 @@ namespace OpenTK
         {
             if (data == null)
             {
-                throw new ArgumentNullException();
+                throw new ArgumentNullException(nameof(data));
             }
             if (data.Length < Width * Height * 4)
             {

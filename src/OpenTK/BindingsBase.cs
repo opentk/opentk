@@ -83,11 +83,12 @@ namespace OpenTK
         {
             if (ptr == IntPtr.Zero)
             {
-                throw new ArgumentException("ptr");
+                throw new ArgumentException(nameof(ptr));
             }
 
             unsafe
             {
+                //TODO: would it be possible to use a Span<T> here?
                 sbyte* str = (sbyte*)ptr;
                 int len = 0;
                 while (*str != 0)
@@ -145,10 +146,7 @@ namespace OpenTK
         /// Frees a marshalled string that allocated by <see cref="MarshalStringToPtr"/>.
         /// </summary>
         /// <param name="ptr">An unmanaged pointer allocated with <see cref="MarshalStringToPtr"/></param>
-        protected static void FreeStringPtr(IntPtr ptr)
-        {
-            Marshal.FreeHGlobal(ptr);
-        }
+        protected static void FreeStringPtr(IntPtr ptr) => Marshal.FreeHGlobal(ptr);
 
         /// <summary>
         /// Marshals a <see cref="System.String"/> array to unmanaged memory by calling

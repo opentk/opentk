@@ -135,11 +135,6 @@ namespace OpenTK
         /// </summary>
         bool CursorVisible { get; set; }
 
-//        /// <summary>
-//        /// Gets or sets a value, indicating whether the mouse cursor is confined inside the window size.
-//        /// </summary>
-//        bool CursorGrabbed { get; set; }
-
         /// <summary>
         /// Closes this window.
         /// </summary>
@@ -271,9 +266,6 @@ namespace OpenTK
         /// Occurs whenever a mouse wheel is moved;
         /// </summary>
         event EventHandler<Input.MouseWheelEventArgs> MouseWheel;
-
-        //event EventHandler<MouseEventArgs> MouseClick;
-        //event EventHandler<MouseEventArgs> MouseDoubleClick;
 
         /// <summary>
         /// Occurs whenever file dropped on window.

@@ -46,19 +46,13 @@ namespace OpenTK.Input
         /// Gets a <see cref="GamePadThumbSticks"/> structure describing the
         /// state of the <see cref="GamePad"/> thumb sticks.
         /// </summary>
-        public GamePadThumbSticks ThumbSticks
-        {
-            get { return new GamePadThumbSticks(left_stick_x, left_stick_y, right_stick_x, right_stick_y); }
-        }
+        public GamePadThumbSticks ThumbSticks => new GamePadThumbSticks(left_stick_x, left_stick_y, right_stick_x, right_stick_y);
 
         /// <summary>
         /// Gets a <see cref="GamePadButtons"/> structure describing the
         /// state of the <see cref="GamePad"/> buttons.
         /// </summary>
-        public GamePadButtons Buttons
-        {
-            get { return new GamePadButtons(buttons); }
-        }
+        public GamePadButtons Buttons => new GamePadButtons(buttons);
 
         /// <summary>
         /// Gets a <see cref="GamePadDPad"/> structure describing the
@@ -183,10 +177,7 @@ namespace OpenTK.Input
             }
         }
 
-        internal void SetConnected(bool connected)
-        {
-            IsConnected = connected;
-        }
+        internal void SetConnected(bool connected) => IsConnected = connected;
 
         internal void SetTriggers(byte left, byte right)
         {
@@ -194,10 +185,7 @@ namespace OpenTK.Input
             right_trigger = right;
         }
 
-        internal void SetPacketNumber(int number)
-        {
-            PacketNumber = number;
-        }
+        internal void SetPacketNumber(int number) => PacketNumber = number;
 
         // This doesn't seem to be used, maybe delete it?
         private bool IsAxisValid(GamePadAxes axis)

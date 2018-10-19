@@ -468,10 +468,7 @@ namespace OpenTK.Graphics
         /// is resized for proper behavior on Mac OS X.
         /// </summary>
         /// <param name="window"></param>
-        public void Update(IWindowInfo window)
-        {
-            implementation.Update(window);
-        }
+        public void Update(IWindowInfo window) => implementation.Update(window);
 
         /// <summary>
         /// Loads all OpenGL entry points.
@@ -492,10 +489,7 @@ namespace OpenTK.Graphics
         /// <summary>
         /// Gets the platform-specific implementation of this IGraphicsContext.
         /// </summary>
-        IGraphicsContext IGraphicsContextInternal.Implementation
-        {
-            get { return implementation; }
-        }
+        IGraphicsContext IGraphicsContextInternal.Implementation => implementation;
 
         /// <summary>
         /// Gets a handle to the OpenGL rendering context.
@@ -515,10 +509,7 @@ namespace OpenTK.Graphics
         /// <summary>
         /// Gets the GraphicsMode of the context.
         /// </summary>
-        public GraphicsMode GraphicsMode
-        {
-            get { return (implementation as IGraphicsContext).GraphicsMode; }
-        }
+        public GraphicsMode GraphicsMode => (implementation as IGraphicsContext).GraphicsMode;
 
         /// <summary>
         /// Retrieves the implementation-defined address of an OpenGL function.
@@ -549,10 +540,7 @@ namespace OpenTK.Graphics
         /// available in the current OpenGL context. The return value and calling convention
         /// depends on the underlying platform.
         /// </returns>
-        IntPtr IGraphicsContextInternal.GetAddress(IntPtr function)
-        {
-            return (implementation as IGraphicsContextInternal).GetAddress(function);
-        }
+        IntPtr IGraphicsContextInternal.GetAddress(IntPtr function) => (implementation as IGraphicsContextInternal).GetAddress(function);
 
         /// <summary>
         /// Disposes of the GraphicsContext.

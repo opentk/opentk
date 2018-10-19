@@ -65,6 +65,7 @@ namespace OpenTK
     /// </remarks>
     public class GameWindow : NativeWindow, IGameWindow, IDisposable
     {
+        private const string DefaultWindowTitle = "OpenTK Game Window";
         private const double MaxFrequency = 500.0; // Frequency cap for Update/RenderFrame events
 
         private readonly Stopwatch watchRender = new Stopwatch();
@@ -95,20 +96,20 @@ namespace OpenTK
 
         /// <summary>Constructs a new GameWindow with sensible default attributes.</summary>
         public GameWindow()
-            : this(640, 480, GraphicsMode.Default, "OpenTK Game Window", 0, DisplayDevice.Default) { }
+            : this(640, 480, GraphicsMode.Default, DefaultWindowTitle, 0, DisplayDevice.Default) { }
 
         /// <summary>Constructs a new GameWindow with the specified attributes.</summary>
         /// <param name="width">The width of the GameWindow in pixels.</param>
         /// <param name="height">The height of the GameWindow in pixels.</param>
         public GameWindow(int width, int height)
-            : this(width, height, GraphicsMode.Default, "OpenTK Game Window", 0, DisplayDevice.Default) { }
+            : this(width, height, GraphicsMode.Default, DefaultWindowTitle, 0, DisplayDevice.Default) { }
 
         /// <summary>Constructs a new GameWindow with the specified attributes.</summary>
         /// <param name="width">The width of the GameWindow in pixels.</param>
         /// <param name="height">The height of the GameWindow in pixels.</param>
         /// <param name="mode">The OpenTK.Graphics.GraphicsMode of the GameWindow.</param>
         public GameWindow(int width, int height, GraphicsMode mode)
-            : this(width, height, mode, "OpenTK Game Window", 0, DisplayDevice.Default) { }
+            : this(width, height, mode, DefaultWindowTitle, 0, DisplayDevice.Default) { }
 
         /// <summary>Constructs a new GameWindow with the specified attributes.</summary>
         /// <param name="width">The width of the GameWindow in pixels.</param>
@@ -184,8 +185,8 @@ namespace OpenTK
         public GameWindow(int width, int height, GraphicsMode mode, string title, GameWindowFlags options, DisplayDevice device,
                           int major, int minor, GraphicsContextFlags flags, IGraphicsContext sharedContext, bool isSingleThreaded)
             : base(width, height, title, options,
-                   mode == null ? GraphicsMode.Default : mode,
-                   device == null ? DisplayDevice.Default : device)
+                   mode ?? GraphicsMode.Default,
+                   device ?? DisplayDevice.Default)
         {
             try
             {
@@ -240,10 +241,7 @@ namespace OpenTK
         /// <para>Override if you are not using <see cref="GameWindow.Run()"/>.</para>
         /// <para>If you override this method, place a call to base.Exit(), to ensure proper OpenTK shutdown.</para>
         /// </remarks>
-        public virtual void Exit()
-        {
-            Close();
-        }
+        public virtual void Exit() => Close();
 
         /// <summary>
         /// Makes the GraphicsContext current on the calling thread.
@@ -275,37 +273,25 @@ namespace OpenTK
         /// Called after an OpenGL context has been established, but before entering the main loop.
         /// </summary>
         /// <param name="e">Not used.</param>
-        protected virtual void OnLoad(EventArgs e)
-        {
-            Load(this, e);
-        }
+        protected virtual void OnLoad(EventArgs e) => Load(this, e);
 
         /// <summary>
         /// Called after GameWindow.Exit was called, but before destroying the OpenGL context.
         /// </summary>
         /// <param name="e">Not used.</param>
-        protected virtual void OnUnload(EventArgs e)
-        {
-            Unload(this, e);
-        }
+        protected virtual void OnUnload(EventArgs e) => Unload(this, e);
 
         /// <summary>
         /// Enters the game loop of the GameWindow using the maximum update rate.
         /// </summary>
         /// <seealso cref="Run(double)"/>
-        public void Run()
-        {
-            Run(0.0, 0.0);
-        }
+        public void Run() => Run(0.0, 0.0);
 
         /// <summary>
         /// Enters the game loop of the GameWindow using the specified update rate.
         /// maximum possible render frequency.
         /// </summary>
-        public void Run(double updateRate)
-        {
-            Run(updateRate, 0.0);
-        }
+        public void Run(double updateRate) => Run(updateRate, 0.0);
 
         /// <summary>
         /// Enters the game loop of the GameWindow updating and rendering at the specified frequency.
@@ -317,32 +303,32 @@ namespace OpenTK
         /// Once ProcessEvents() returns, it is time to call update and render the next frame.
         /// </para>
         /// </remarks>
-        /// <param name="updates_per_second">The frequency of UpdateFrame events.</param>
-        /// <param name="frames_per_second">The frequency of RenderFrame events.</param>
-        public void Run(double updates_per_second, double frames_per_second)
+        /// <param name="updatesPerSecond">The frequency of UpdateFrame events.</param>
+        /// <param name="framesPerSecord">The frequency of RenderFrame events.</param>
+        public void Run(double updatesPerSecond, double framesPerSecord)
         {
             EnsureUndisposed();
 
             try
             {
-                if (updates_per_second < 0.0 || updates_per_second > 200.0)
+                const string outOfRangeMessage = "Parameter should be inside the range [0.0, 200.0]";
+
+                if (updatesPerSecond < 0.0 || updatesPerSecond > 200.0)
                 {
-                    throw new ArgumentOutOfRangeException("updates_per_second", updates_per_second,
-                        "Parameter should be inside the range [0.0, 200.0]");
+                    throw new ArgumentOutOfRangeException(nameof(updatesPerSecond), updatesPerSecond, outOfRangeMessage);
                 }
-                if (frames_per_second < 0.0 || frames_per_second > 200.0)
+                if (framesPerSecord < 0.0 || framesPerSecord > 200.0)
                 {
-                    throw new ArgumentOutOfRangeException("frames_per_second", frames_per_second,
-                        "Parameter should be inside the range [0.0, 200.0]");
+                    throw new ArgumentOutOfRangeException(nameof(framesPerSecord), framesPerSecord, outOfRangeMessage);
                 }
 
-                if (updates_per_second != 0)
+                if (updatesPerSecond != 0)
                 {
-                    TargetUpdateFrequency = updates_per_second;
+                    TargetUpdateFrequency = updatesPerSecond;
                 }
-                if (frames_per_second != 0)
+                if (framesPerSecord != 0)
                 {
-                    TargetRenderFrequency = frames_per_second;
+                    TargetRenderFrequency = framesPerSecord;
                 }
 
                 Visible = true;   // Make sure the GameWindow is visible.
@@ -797,10 +783,7 @@ namespace OpenTK
         /// </summary>
         public override WindowState WindowState
         {
-            get
-            {
-                return base.WindowState;
-            }
+            get => base.WindowState;
             set
             {
                 base.WindowState = value;
@@ -851,10 +834,7 @@ namespace OpenTK
         /// <remarks>
         /// Subscribe to the <see cref="RenderFrame"/> event instead of overriding this method.
         /// </remarks>
-        protected virtual void OnRenderFrame(FrameEventArgs e)
-        {
-            RenderFrame(this, e);
-        }
+        protected virtual void OnRenderFrame(FrameEventArgs e) => RenderFrame(this, e);
 
         /// <summary>
         /// Called when the frame is updated.
@@ -863,10 +843,7 @@ namespace OpenTK
         /// <remarks>
         /// Subscribe to the <see cref="UpdateFrame"/> event instead of overriding this method.
         /// </remarks>
-        protected virtual void OnUpdateFrame(FrameEventArgs e)
-        {
-            UpdateFrame(this, e);
-        }
+        protected virtual void OnUpdateFrame(FrameEventArgs e) => UpdateFrame(this, e);
 
         /// <summary>
         /// Called when the WindowInfo for this GameWindow has changed.
@@ -889,10 +866,7 @@ namespace OpenTK
             glContext.Update(base.WindowInfo);
         }
 
-        private void OnLoadInternal(EventArgs e)
-        {
-            OnLoad(e);
-        }
+        private void OnLoadInternal(EventArgs e) => OnLoad(e);
 
         private void OnRenderFrameInternal(FrameEventArgs e) 
         { 
@@ -902,10 +876,7 @@ namespace OpenTK
             }
         }
 
-        private void OnUnloadInternal(EventArgs e)
-        {
-            OnUnload(e);
-        }
+        private void OnUnloadInternal(EventArgs e) => OnUnload(e);
 
         private void OnUpdateFrameInternal(FrameEventArgs e) 
         { 

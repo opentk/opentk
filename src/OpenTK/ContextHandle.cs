@@ -18,7 +18,7 @@ namespace OpenTK
         /// <summary>
         /// Gets a System.IntPtr that represents the handle of this ContextHandle.
         /// </summary>
-        public IntPtr Handle { get { return handle; } }
+        public IntPtr Handle => handle;
 
         /// <summary>A read-only field that represents a handle that has been initialized to zero.</summary>
         public static readonly ContextHandle Zero = new ContextHandle(IntPtr.Zero);
@@ -27,16 +27,13 @@ namespace OpenTK
         /// Constructs a new instance with the specified handle.
         /// </summary>
         /// <param name="h">A System.IntPtr containing the value for this instance.</param>
-        public ContextHandle(IntPtr h) { handle = h; }
+        public ContextHandle(IntPtr h) => handle = h;
 
         /// <summary>
         /// Converts this instance to its equivalent string representation.
         /// </summary>
         /// <returns>A System.String that contains the string representation of this instance.</returns>
-        public override string ToString()
-        {
-            return Handle.ToString();
-        }
+        public override string ToString() => Handle.ToString();
 
         /// <summary>
         /// Compares this instance to the specified object.
@@ -44,42 +41,28 @@ namespace OpenTK
         /// <param name="obj">The System.Object to compare to.</param>
         /// <returns>True if obj is a ContextHandle that is equal to this instance; false otherwise.</returns>
         public override bool Equals(object obj)
-        {
-            if (obj is ContextHandle)
-            {
-                return this.Equals((ContextHandle)obj);
-            }
-            return false;
-        }
+            => obj is ContextHandle contextHandle &&
+                this.Equals(contextHandle);
 
         /// <summary>
         /// Returns the hash code for this instance.
         /// </summary>
         /// <returns>A System.Int32 with the hash code of this instance.</returns>
-        public override int GetHashCode()
-        {
-            return Handle.GetHashCode();
-        }
+        public override int GetHashCode() => Handle.GetHashCode();
 
         /// <summary>
         /// Converts the specified ContextHandle to the equivalent IntPtr.
         /// </summary>
         /// <param name="c">The ContextHandle to convert.</param>
         /// <returns>A System.IntPtr equivalent to the specified ContextHandle.</returns>
-        public static explicit operator IntPtr(ContextHandle c)
-        {
-            return c != ContextHandle.Zero ? c.handle : IntPtr.Zero;
-        }
+        public static explicit operator IntPtr(ContextHandle c) => c != ContextHandle.Zero ? c.handle : IntPtr.Zero;
 
         /// <summary>
         /// Converts the specified IntPtr to the equivalent ContextHandle.
         /// </summary>
         /// <param name="p">The System.IntPtr to convert.</param>
         /// <returns>A ContextHandle equivalent to the specified IntPtr.</returns>
-        public static explicit operator ContextHandle(IntPtr p)
-        {
-            return new ContextHandle(p);
-        }
+        public static explicit operator ContextHandle(IntPtr p) => new ContextHandle(p);
 
         /// <summary>
         /// Compares two ContextHandles for equality.
@@ -87,10 +70,7 @@ namespace OpenTK
         /// <param name="left">The ContextHandle to compare.</param>
         /// <param name="right">The ContextHandle to compare to.</param>
         /// <returns>True if left is equal to right; false otherwise.</returns>
-        public static bool operator ==(ContextHandle left, ContextHandle right)
-        {
-            return left.Equals(right);
-        }
+        public static bool operator ==(ContextHandle left, ContextHandle right) => left.Equals(right);
 
         /// <summary>
         /// Compares two ContextHandles for inequality.
@@ -98,10 +78,7 @@ namespace OpenTK
         /// <param name="left">The ContextHandle to compare.</param>
         /// <param name="right">The ContextHandle to compare to.</param>
         /// <returns>True if left is not equal to right; false otherwise.</returns>
-        public static bool operator !=(ContextHandle left, ContextHandle right)
-        {
-            return !left.Equals(right);
-        }
+        public static bool operator !=(ContextHandle left, ContextHandle right) => !left.Equals(right);
 
         /// <summary>
         /// Compares the numerical value of this instance to the specified ContextHandle and
@@ -119,9 +96,6 @@ namespace OpenTK
         /// </summary>
         /// <param name="other">The ContextHandle to compare to.</param>
         /// <returns>True if this instance is equal to other; false otherwise.</returns>
-        public bool Equals(ContextHandle other)
-        {
-            return Handle == other.Handle;
-        }
+        public bool Equals(ContextHandle other) => Handle == other.Handle;
     }
 }

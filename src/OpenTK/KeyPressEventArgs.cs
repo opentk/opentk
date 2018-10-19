@@ -37,10 +37,7 @@ namespace OpenTK
         /// Constructs a new instance.
         /// </summary>
         /// <param name="keyChar">The ASCII character that was typed.</param>
-        public KeyPressEventArgs(char keyChar)
-        {
-            KeyChar = keyChar;
-        }
+        public KeyPressEventArgs(char keyChar) => KeyChar = keyChar;
 
         /// <summary>
         /// Gets a <see cref="System.Char"/> that defines the ASCII character that was typed.

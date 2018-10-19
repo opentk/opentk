@@ -44,7 +44,7 @@ namespace OpenTK
         {
             if (factory == null)
             {
-                throw new ArgumentNullException("factory");
+                throw new ArgumentNullException(nameof(factory));
             }
             platform_factory = factory;
         }
@@ -78,10 +78,7 @@ namespace OpenTK
         /// An IDisposable instance that you can use to dispose of the resources
         /// consumed by OpenTK.
         /// </returns>
-        public static Toolkit Init()
-        {
-            return Init(ToolkitOptions.Default);
-        }
+        public static Toolkit Init() => Init(ToolkitOptions.Default);
 
         /// <summary>
         /// Initializes OpenTK with the specified options. Use this method
@@ -119,7 +116,7 @@ namespace OpenTK
         {
             if (options == null)
             {
-                throw new ArgumentNullException("options");
+                throw new ArgumentNullException(nameof(options));
             }
 
             lock (InitLock)
