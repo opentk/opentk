@@ -175,15 +175,13 @@ namespace Bind.Writers
             var translatedExtensionName = _identifierTranslator.Translate(extensionName);
 
             var nativeSignatures = _profile.NativeSignatures
-                .Where(ns => ns.Extension == extensionName)
-                .Where(ns => ns.Categories.First() == category)
+                .Where(ns => ns.Extension == extensionName && ns.Categories.First() == category)
                 .OrderBy(s => s.Name)
                 .ThenBy(s => s.Parameters.Count)
                 .ToList();
 
             var overloads = _profile.Overloads
-                .Where(o => o.Extension == extensionName)
-                .Where(o => o.Categories.First() == category)
+                .Where(o => o.Extension == extensionName && o.Categories.First() == category)
                 .ToList();
 
             var categorySignatures = nativeSignatures
@@ -193,7 +191,7 @@ namespace Bind.Writers
                 .ThenBy(s => s.ToString())
                 .ToList();
 
-            if (!categorySignatures.Any())
+            if (categorySignatures.Count == 0)
             {
                 return;
             }
@@ -249,11 +247,12 @@ namespace Bind.Writers
                         // Write the overload methods
                         using (sw.BeginBlock())
                         {
+                            var last = categorySignatures[categorySignatures.Count - 1];
                             foreach (var signature in categorySignatures)
                             {
                                 WriteMethod(sw, signature);
 
-                                if (signature != categorySignatures.Last())
+                                if (signature != last)
                                 {
                                     sw.WriteLineNoTabs();
                                 }
