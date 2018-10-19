@@ -6,7 +6,6 @@ namespace Bind.Translation.Mappers
 {
     /// <summary>
     /// Maps OpenGL types to C# language types.
-    ///
     /// </summary>
     public class TypeMapper : IMapper<TypeSignature>
     {

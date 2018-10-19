@@ -13,7 +13,7 @@ using static Bind.XML.ParsingHelpers;
 namespace Bind.XML.Signatures
 {
     /// <summary>
-    /// Reads API profile definitions from an XML document.
+    /// Reads signature definitions from an XML document.
     ///
     /// This builds up a working domain model from the XML specification of the API, which we use to generate our bindings.
     /// </summary>
