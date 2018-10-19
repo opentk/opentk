@@ -30,7 +30,7 @@ using System;
 namespace OpenTK.Input
 {
     /// <summary>
-    /// Describes the capabilities of a <c>GamePad</c> input device.
+    /// Describes the capabilities of a <see cref="GamePad"/> input device.
     /// </summary>
     public struct GamePadCapabilities : IEquatable<GamePadCapabilities>
     {
@@ -50,17 +50,17 @@ namespace OpenTK.Input
 
         /// <summary>
         /// Gets a <see cref="GamePadType"/>  value describing the type of a <see cref="GamePad"/> input device.
-        /// This value depends on the connected device and the drivers in use. If <c>IsConnected</c>
-        /// is false, then this value will be <c>GamePadType.Unknown</c>.
+        /// This value depends on the connected device and the drivers in use. If <see cref="IsConnected"/>
+        /// is false, then this value will be <see cref="GamePadType.Unknown"/>.
         /// </summary>
-        /// <value>The <c>GamePadType</c> of the connected input device.</value>
+        /// <value>The <see cref="GamePadType"/> of the connected input device.</value>
         public GamePadType GamePadType
         {
             get { return (GamePadType)gamepad_type; }
         }
 
         /// <summary>
-        /// Gets a <see cref="System.Boolean"/> value describing whether this <c>GamePad</c> has
+        /// Gets a <see cref="System.Boolean"/> value describing whether this <see cref="GamePad"/> has
         /// an up digital pad button.
         /// </summary>
         /// <value><c>true</c> if this instance has an up digital pad button; otherwise, <c>false</c>.</value>
@@ -70,7 +70,7 @@ namespace OpenTK.Input
         }
 
         /// <summary>
-        /// Gets a <see cref="System.Boolean"/> value describing whether this <c>GamePad</c> has
+        /// Gets a <see cref="System.Boolean"/> value describing whether this <see cref="GamePad"/> has
         /// a down digital pad button.
         /// </summary>
         /// <value><c>true</c> if this instance has a down digital pad button; otherwise, <c>false</c>.</value>
@@ -80,7 +80,7 @@ namespace OpenTK.Input
         }
 
         /// <summary>
-        /// Gets a <see cref="System.Boolean"/> value describing whether this <c>GamePad</c> has
+        /// Gets a <see cref="System.Boolean"/> value describing whether this <see cref="GamePad"/> has
         /// a left digital pad button.
         /// </summary>
         /// <value><c>true</c> if this instance has a left digital pad button; otherwise, <c>false</c>.</value>
@@ -90,7 +90,7 @@ namespace OpenTK.Input
         }
 
         /// <summary>
-        /// Gets a <see cref="System.Boolean"/> value describing whether this <c>GamePad</c> has
+        /// Gets a <see cref="System.Boolean"/> value describing whether this <see cref="GamePad"/> has
         /// a right digital pad button.
         /// </summary>
         /// <value><c>true</c> if this instance has a right digital pad button; otherwise, <c>false</c>.</value>
@@ -100,7 +100,7 @@ namespace OpenTK.Input
         }
 
         /// <summary>
-        /// Gets a <see cref="System.Boolean"/> value describing whether this <c>GamePad</c> has
+        /// Gets a <see cref="System.Boolean"/> value describing whether this <see cref="GamePad"/> has
         /// an A button.
         /// </summary>
         /// <value><c>true</c> if this instance has an A button; otherwise, <c>false</c>.</value>
@@ -110,7 +110,7 @@ namespace OpenTK.Input
         }
 
         /// <summary>
-        /// Gets a <see cref="System.Boolean"/> value describing whether this <c>GamePad</c> has
+        /// Gets a <see cref="System.Boolean"/> value describing whether this <see cref="GamePad"/> has
         /// a B button.
         /// </summary>
         /// <value><c>true</c> if this instance has a B button; otherwise, <c>false</c>.</value>
@@ -120,7 +120,7 @@ namespace OpenTK.Input
         }
 
         /// <summary>
-        /// Gets a <see cref="System.Boolean"/> value describing whether this <c>GamePad</c> has
+        /// Gets a <see cref="System.Boolean"/> value describing whether this <see cref="GamePad"/> has
         /// a X button.
         /// </summary>
         /// <value><c>true</c> if this instance has a X button; otherwise, <c>false</c>.</value>
@@ -130,7 +130,7 @@ namespace OpenTK.Input
         }
 
         /// <summary>
-        /// Gets a <see cref="System.Boolean"/> value describing whether this <c>GamePad</c> has
+        /// Gets a <see cref="System.Boolean"/> value describing whether this <see cref="GamePad"/> has
         /// a Y button.
         /// </summary>
         /// <value><c>true</c> if this instance has a Y button; otherwise, <c>false</c>.</value>
@@ -140,7 +140,7 @@ namespace OpenTK.Input
         }
 
         /// <summary>
-        /// Gets a <see cref="System.Boolean"/> value describing whether this <c>GamePad</c> has
+        /// Gets a <see cref="System.Boolean"/> value describing whether this <see cref="GamePad"/> has
         /// a left stick button.
         /// </summary>
         /// <value><c>true</c> if this instance has a left stick button; otherwise, <c>false</c>.</value>
@@ -150,7 +150,7 @@ namespace OpenTK.Input
         }
 
         /// <summary>
-        /// Gets a <see cref="System.Boolean"/> value describing whether this <c>GamePad</c> has
+        /// Gets a <see cref="System.Boolean"/> value describing whether this <see cref="GamePad"/> has
         /// a right stick button.
         /// </summary>
         /// <value><c>true</c> if this instance has a right stick button; otherwise, <c>false</c>.</value>
@@ -160,7 +160,7 @@ namespace OpenTK.Input
         }
 
         /// <summary>
-        /// Gets a <see cref="System.Boolean"/> value describing whether this <c>GamePad</c> has
+        /// Gets a <see cref="System.Boolean"/> value describing whether this <see cref="GamePad"/> has
         /// a left shoulder button.
         /// </summary>
         /// <value><c>true</c> if this instance has a left shoulder button; otherwise, <c>false</c>.</value>
@@ -170,7 +170,7 @@ namespace OpenTK.Input
         }
 
         /// <summary>
-        /// Gets a <see cref="System.Boolean"/> value describing whether this <c>GamePad</c> has
+        /// Gets a <see cref="System.Boolean"/> value describing whether this <see cref="GamePad"/> has
         /// a right shoulder button.
         /// </summary>
         /// <value><c>true</c> if this instance has a right shoulder button; otherwise, <c>false</c>.</value>
@@ -180,7 +180,7 @@ namespace OpenTK.Input
         }
 
         /// <summary>
-        /// Gets a <see cref="System.Boolean"/> value describing whether this <c>GamePad</c> has
+        /// Gets a <see cref="System.Boolean"/> value describing whether this <see cref="GamePad"/> has
         /// a back button.
         /// </summary>
         /// <value><c>true</c> if this instance has a back button; otherwise, <c>false</c>.</value>
@@ -190,7 +190,7 @@ namespace OpenTK.Input
         }
 
         /// <summary>
-        /// Gets a <see cref="System.Boolean"/> value describing whether this <c>GamePad</c> has
+        /// Gets a <see cref="System.Boolean"/> value describing whether this <see cref="GamePad"/> has
         /// a big button. (also known as "guide" or "home" button).
         /// </summary>
         /// <value><c>true</c> if this instance has a big button; otherwise, <c>false</c>.</value>
@@ -200,7 +200,7 @@ namespace OpenTK.Input
         }
 
         /// <summary>
-        /// Gets a <see cref="System.Boolean"/> value describing whether this <c>GamePad</c> has
+        /// Gets a <see cref="System.Boolean"/> value describing whether this <see cref="GamePad"/> has
         /// a start button.
         /// </summary>
         /// <value><c>true</c> if this instance has a start button; otherwise, <c>false</c>.</value>
@@ -210,7 +210,7 @@ namespace OpenTK.Input
         }
 
         /// <summary>
-        /// Gets a <see cref="System.Boolean"/> value describing whether this <c>GamePad</c> has
+        /// Gets a <see cref="System.Boolean"/> value describing whether this <see cref="GamePad"/> has
         /// a left thumbstick with a x-axis.
         /// </summary>
         /// <value><c>true</c> if this instance has a left thumbstick with a x-axis; otherwise, <c>false</c>.</value>
@@ -220,7 +220,7 @@ namespace OpenTK.Input
         }
 
         /// <summary>
-        /// Gets a <see cref="System.Boolean"/> value describing whether this <c>GamePad</c> has
+        /// Gets a <see cref="System.Boolean"/> value describing whether this <see cref="GamePad"/> has
         /// a left thumbstick with a y-axis.
         /// </summary>
         /// <value><c>true</c> if this instance has a left thumbstick with a y-axis; otherwise, <c>false</c>.</value>
@@ -230,7 +230,7 @@ namespace OpenTK.Input
         }
 
         /// <summary>
-        /// Gets a <see cref="System.Boolean"/> value describing whether this <c>GamePad</c> has
+        /// Gets a <see cref="System.Boolean"/> value describing whether this <see cref="GamePad"/> has
         /// a right thumbstick with a x-axis.
         /// </summary>
         /// <value><c>true</c> if this instance has a right thumbstick with a x-axis; otherwise, <c>false</c>.</value>
@@ -240,7 +240,7 @@ namespace OpenTK.Input
         }
 
         /// <summary>
-        /// Gets a <see cref="System.Boolean"/> value describing whether this <c>GamePad</c> has
+        /// Gets a <see cref="System.Boolean"/> value describing whether this <see cref="GamePad"/> has
         /// a right thumbstick with a y-axis.
         /// </summary>
         /// <value><c>true</c> if this instance has a right thumbstick with a y-axis; otherwise, <c>false</c>.</value>
@@ -250,7 +250,7 @@ namespace OpenTK.Input
         }
 
         /// <summary>
-        /// Gets a <see cref="System.Boolean"/> value describing whether this <c>GamePad</c> has
+        /// Gets a <see cref="System.Boolean"/> value describing whether this <see cref="GamePad"/> has
         /// a left trigger.
         /// </summary>
         /// <value><c>true</c> if this instance has a left trigger; otherwise, <c>false</c>.</value>
@@ -260,7 +260,7 @@ namespace OpenTK.Input
         }
 
         /// <summary>
-        /// Gets a <see cref="System.Boolean"/> value describing whether this <c>GamePad</c> has
+        /// Gets a <see cref="System.Boolean"/> value describing whether this <see cref="GamePad"/> has
         /// a right trigger.
         /// </summary>
         /// <value><c>true</c> if this instance has a right trigger; otherwise, <c>false</c>.</value>
@@ -270,7 +270,7 @@ namespace OpenTK.Input
         }
 
         /// <summary>
-        /// Gets a <see cref="System.Boolean"/> value describing whether this <c>GamePad</c> has
+        /// Gets a <see cref="System.Boolean"/> value describing whether this <see cref="GamePad"/> has
         /// a low-frequency vibration motor.
         /// </summary>
         /// <value><c>true</c> if this instance has a low-frequency vibration motor; otherwise, <c>false</c>.</value>
@@ -280,7 +280,7 @@ namespace OpenTK.Input
         }
 
         /// <summary>
-        /// Gets a <see cref="System.Boolean"/> value describing whether this <c>GamePad</c> has
+        /// Gets a <see cref="System.Boolean"/> value describing whether this <see cref="GamePad"/> has
         /// a high-frequency vibration motor.
         /// </summary>
         /// <value><c>true</c> if this instance has a high frequency vibration motor; otherwise, <c>false</c>.</value>
@@ -290,7 +290,7 @@ namespace OpenTK.Input
         }
 
         /// <summary>
-        /// Gets a <see cref="System.Boolean"/> value describing whether this <c>GamePad</c> has
+        /// Gets a <see cref="System.Boolean"/> value describing whether this <see cref="GamePad"/> has
         /// a microphone input.
         /// </summary>
         /// <value><c>true</c> if this instance has a microphone input; otherwise, <c>false</c>.</value>
@@ -300,7 +300,7 @@ namespace OpenTK.Input
         }
 
         /// <summary>
-        /// Gets a <see cref="System.Boolean"/> value describing whether this <c>GamePad</c> is
+        /// Gets a <see cref="System.Boolean"/> value describing whether this <see cref="GamePad"/> is
         /// currently connected.
         /// </summary>
         /// <value><c>true</c> if this instance is currently connected; otherwise, <c>false</c>.</value>
@@ -308,7 +308,7 @@ namespace OpenTK.Input
 
         /// <summary>
         /// Gets a <see cref="System.Boolean"/> value describing whether a valid button configuration
-        /// exists for this <c>GamePad</c> in the GamePad configuration database.
+        /// exists for this <see cref="GamePad"/> in the GamePad configuration database.
         /// </summary>
         public bool IsMapped { get; }
 

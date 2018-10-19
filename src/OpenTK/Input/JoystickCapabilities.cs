@@ -31,7 +31,7 @@ using System.Diagnostics;
 namespace OpenTK.Input
 {
     /// <summary>
-    /// Describes the <c>JoystickCapabilities</c> of a <see cref="JoystickDevice"/>.
+    /// Describes the <see cref="JoystickCapabilities"/> of a <see cref="JoystickDevice"/>.
     /// </summary>
     public struct JoystickCapabilities : IEquatable<JoystickCapabilities>
     {

@@ -31,7 +31,7 @@ namespace OpenTK
 {
     /// <summary>
     /// Provides information about the underlying OS and runtime.
-    /// You must call <c>Toolkit.Init</c> before accessing members
+    /// You must call <see cref="Toolkit.Init"/> before accessing members
     /// of this class.
     /// </summary>
     public sealed class Configuration

@@ -44,7 +44,7 @@ namespace OpenTK.Input
 
         /// <summary>
         /// Gets a <see cref="GamePadThumbSticks"/> structure describing the
-        /// state of the <c>GamePad</c> thumb sticks.
+        /// state of the <see cref="GamePad"/> thumb sticks.
         /// </summary>
         public GamePadThumbSticks ThumbSticks
         {
@@ -53,7 +53,7 @@ namespace OpenTK.Input
 
         /// <summary>
         /// Gets a <see cref="GamePadButtons"/> structure describing the
-        /// state of the <c>GamePad</c> buttons.
+        /// state of the <see cref="GamePad"/> buttons.
         /// </summary>
         public GamePadButtons Buttons
         {
@@ -62,7 +62,7 @@ namespace OpenTK.Input
 
         /// <summary>
         /// Gets a <see cref="GamePadDPad"/> structure describing the
-        /// state of the <c>GamePad</c> directional pad.
+        /// state of the <see cref="GamePad"/> directional pad.
         /// </summary>
         public GamePadDPad DPad
         {
@@ -71,7 +71,7 @@ namespace OpenTK.Input
 
         /// <summary>
         /// Gets a <see cref="GamePadTriggers"/> structure describing the
-        /// state of the <c>GamePad</c> triggers.
+        /// state of the <see cref="GamePad"/> triggers.
         /// </summary>
         public GamePadTriggers Triggers
         {
@@ -79,7 +79,7 @@ namespace OpenTK.Input
         }
 
         /// <summary>
-        /// Gets a value indicating whether this <c>GamePad</c> instance is connected.
+        /// Gets a value indicating whether this <see cref="GamePad"/> instance is connected.
         /// </summary>
         /// <value><c>true</c> if this instance is connected; otherwise, <c>false</c>.</value>
         public bool IsConnected { get; private set; }
@@ -87,7 +87,7 @@ namespace OpenTK.Input
         /// <summary>
         /// Gets the packet number for this <c>GamePadState</c> instance.
         /// Use the packet number to determine whether the state of a
-        /// <c>GamePad</c> device has changed.
+        /// <see cref="GamePad"/> device has changed.
         /// </summary>
         public int PacketNumber { get; private set; }
 

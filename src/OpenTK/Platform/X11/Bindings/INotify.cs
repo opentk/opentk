@@ -18,7 +18,7 @@
         /// Create and initialize inotify instance with specified flags
         /// </summary>
         /// <param name="flags">See <see cref="INotifyInitFlags"/></param>
-        /// <returns>A <c>System.Int32</c> handle to a inotify instance</returns>
+        /// <returns>A Argument(1)Int32</c> handle to a inotify instance</returns>
         [DllImport(lib, EntryPoint = "inotify_init1", ExactSpelling = true)]
         public static extern int Init(INotifyFlags flags);
 

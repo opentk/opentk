@@ -40,13 +40,13 @@ namespace OpenTK.Graphics
         /// Used to retrive function pointers by name.
         /// </summary>
         /// <param name="function">The function name.</param>
-        /// <returns>A function pointer to <paramref name="function"/>, or <c>IntPtr.Zero</c></returns>
+        /// <returns>A function pointer to <paramref name="function"/>, or <see cref="IntPtr.Zero"/></returns>
         public delegate IntPtr GetAddressDelegate(string function);
 
         /// <summary>
         /// Used to return the handel of the current OpenGL context.
         /// </summary>
-        /// <returns>The current OpenGL context, or <c>IntPtr.Zero</c> if no context is on the calling thread.</returns>
+        /// <returns>The current OpenGL context, or <see cref="IntPtr.Zero"/> if no context is on the calling thread.</returns>
         public delegate ContextHandle GetCurrentContextDelegate();
 
         private IGraphicsContext implementation;  // The actual render context implementation for the underlying platform.
@@ -200,19 +200,19 @@ namespace OpenTK.Graphics
         /// an external context handle that was created by a third-party library.
         /// </summary>
         /// <param name="handle">
-        /// A valid, unique handle for an external OpenGL context, or <c>ContextHandle.Zero</c> to use the current context.
+        /// A valid, unique handle for an external OpenGL context, or <see cref="ContextHandle.Zero"/> to use the current context.
         /// It is an error to specify a handle that has been created through OpenTK or that has been passed to OpenTK before.
         /// </param>
         /// <param name="getAddress">
-        /// A <c>GetAddressDelegate</c> instance that accepts the name of an OpenGL function and returns
-        /// a valid function pointer, or <c>IntPtr.Zero</c> if that function is not supported. This delegate should be
+        /// A <see cref="GetAddressDelegate"/> instance that accepts the name of an OpenGL function and returns
+        /// a valid function pointer, or <see cref="IntPtr.Zero"/> if that function is not supported. This delegate should be
         /// implemented using the same toolkit that created the OpenGL context (i.e. if the context was created with
         /// SDL_GL_CreateContext(), then this delegate should use SDL_GL_GetProcAddress() to retrieve function
         /// pointers.)
         /// </param>
         /// <param name="getCurrent">
-        /// A <c>GetCurrentContextDelegate</c> instance that returns the handle of the current OpenGL context,
-        /// or <c>IntPtr.Zero</c> if no context is current on the calling thread. This delegate should be implemented
+        /// A <see cref="GetCurrentContextDelegate"/> instance that returns the handle of the current OpenGL context,
+        /// or <see cref="IntPtr.Zero"/> if no context is current on the calling thread. This delegate should be implemented
         /// using the same toolkit that created the OpenGL context (i.e. if the context was created with
         /// SDL_GL_CreateContext(), then this delegate should use SDL_GL_GetCurrentContext() to retrieve
         /// the current context.)

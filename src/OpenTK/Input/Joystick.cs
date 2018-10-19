@@ -32,9 +32,9 @@ namespace OpenTK.Input
     /// <summary>
     /// Provides access to Joystick devices.
     /// Joystick devices provide a varying number of axes and buttons.
-    /// Use <c>GetCapabilities</c> to retrieve the number of supported
+    /// Use <see cref="GetCapabilities"/> to retrieve the number of supported
     /// axes and buttons on a given device.
-    /// Use <c>GetState</c> to retrieve the current state of a given device.
+    /// Use <see cref="GetState"/> to retrieve the current state of a given device.
     /// </summary>
     /// <seealso cref="GamePad"/>
     public sealed class Joystick
@@ -51,7 +51,7 @@ namespace OpenTK.Input
         /// <returns>
         /// A <see cref="JoystickCapabilities"/> structure describing
         /// the capabilities of the device at the specified index.
-        /// If no device is connected at the specified index, the <c>IsConnected</c>
+        /// If no device is connected at the specified index, the <see cref="IsConnected"/>
         /// property of the returned structure will be false.
         /// </returns>
         /// <param name="index">The zero-based index of the device to poll.</param>
@@ -66,7 +66,7 @@ namespace OpenTK.Input
         /// </summary>
         /// <returns>A <see cref="JoystickState"/> structure describing
         /// the current state of the device at the specified index.
-        /// If no device is connected at this index, the <c>IsConnected</c>
+        /// If no device is connected at this index, the <see cref="IsConnected"/>
         /// property of the returned structure will be false.
         /// </returns>
         /// <param name="index">The zero-based index of the device to poll.</param>

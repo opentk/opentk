@@ -72,12 +72,12 @@ namespace OpenTK
         protected abstract object SyncRoot { get; }
 
         /// <summary>
-        /// Marshals a pointer to a null-terminated byte array to a new <c>System.String</c>.
+        /// Marshals a pointer to a null-terminated byte array to a new <see cref="System.String"/>.
         /// This method supports OpenTK and is not intended to be called by user code.
         /// </summary>
         /// <param name="ptr">A pointer to a null-terminated byte array.</param>
         /// <returns>
-        /// A <c>System.String</c> with the data from <paramref name="ptr"/>.
+        /// A <see cref="System.String"/> with the data from <paramref name="ptr"/>.
         /// </returns>
         protected static string MarshalPtrToString(IntPtr ptr)
         {
@@ -101,14 +101,14 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Marshal a <c>System.String</c> to unmanaged memory.
+        /// Marshal a <see cref="System.String"/> to unmanaged memory.
         /// The resulting string is encoded in UTF8 and must be freed
-        /// with <c>FreeStringPtr</c>.
+        /// with <see cref="FreeStringPtr"/>.
         /// </summary>
-        /// <param name="str">The <c>System.String</c> to marshal.</param>
+        /// <param name="str">The <see cref="System.String"/> to marshal.</param>
         /// <returns>
         /// An unmanaged pointer containing the marshalled string.
-        /// This pointer must be freed with <c>FreeStringPtr</c>
+        /// This pointer must be freed with <see cref="FreeStringPtr"/>
         /// </returns>
         protected static IntPtr MarshalStringToPtr(string str)
         {
@@ -142,16 +142,16 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Frees a marshalled string that allocated by <c>MarshalStringToPtr</c>.
+        /// Frees a marshalled string that allocated by <see cref="MarshalStringToPtr"/>.
         /// </summary>
-        /// <param name="ptr">An unmanaged pointer allocated with <c>MarshalStringToPtr</c></param>
+        /// <param name="ptr">An unmanaged pointer allocated with <see cref="MarshalStringToPtr"/></param>
         protected static void FreeStringPtr(IntPtr ptr)
         {
             Marshal.FreeHGlobal(ptr);
         }
 
         /// <summary>
-        /// Marshals a <c>System.String</c> array to unmanaged memory by calling
+        /// Marshals a <see cref="System.String"/> array to unmanaged memory by calling
         /// Marshal.AllocHGlobal for each element.
         /// </summary>
         /// <returns>An unmanaged pointer to an array of null-terminated strings</returns>
@@ -192,9 +192,9 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Frees a marshalled string that allocated by <c>MarshalStringArrayToPtr</c>.
+        /// Frees a marshalled string that allocated by <see cref="MarshalStringArrayToPtr"/>.
         /// </summary>
-        /// <param name="ptr">An unmanaged pointer allocated with <c>MarshalStringArrayToPtr</c></param>
+        /// <param name="ptr">An unmanaged pointer allocated with <see cref="MarshalStringArrayToPtr"/></param>
         /// <param name="length">The length of the string array.</param>
         protected static void FreeStringArrayPtr(IntPtr ptr, int length)
         {
