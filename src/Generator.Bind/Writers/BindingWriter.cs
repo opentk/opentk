@@ -142,7 +142,7 @@ namespace Bind.Writers
             var extensionNames = _profile.GetExtensions();
 
             // Create the interop setup necessary
-            var createConstructorFileTask = Task.Run(() => CreateWrapperClassConstructorFileAsync(wrappersOutputDirectory));
+            var createConstructorFileTask = Task.Run(() => WriteWrapperClassConstructorFile(wrappersOutputDirectory));
             var extensionWriteTasks = extensionNames.Select(extensionName => WriteExtensionWrapperFiles(extensionName, wrappersOutputDirectory));
 
             var tasks = AppendExtension.Append(extensionWriteTasks, createConstructorFileTask);
@@ -300,7 +300,7 @@ namespace Bind.Writers
             File.Move(tempWrapperOutputPath, outputCategorySubPath);
         }
 
-        private void CreateWrapperClassConstructorFileAsync([NotNull] string wrappersOutputDirectory)
+        private void WriteWrapperClassConstructorFile([NotNull] string wrappersOutputDirectory)
         {
             var tempInteropFilePath = Path.GetTempFileName();
             using (var outputFile = File.Open(tempInteropFilePath, FileMode.OpenOrCreate))
