@@ -15,7 +15,7 @@ namespace Bind.XML.Signatures
     /// <summary>
     /// Reads API profile definitions from an XML document.
     ///
-    /// This builds up a working domain model from the XML specification of the API, which we use to generate our bindings. 
+    /// This builds up a working domain model from the XML specification of the API, which we use to generate our bindings.
     /// </summary>
     public static class SignatureReader
     {

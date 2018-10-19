@@ -34,13 +34,12 @@ namespace Bind.Generators.Bases
 
         /// <inheritdoc/>
         public override string LicenseText { get; }
-        
+
         /// <inheritdoc/>
         public override string SpecificationFile => Path.Combine("OpenGL", "signatures.xml");
 
         /// <inheritdoc/>
         public override string BaseProfileName => null;
-
 
         /// <inheritdoc />
         public override VersionRange Versions => new VersionRange();
@@ -53,7 +52,8 @@ namespace Bind.Generators.Bases
             var overrideFileDirectoryPath = Path.Combine(Program.Arguments.InputPath, "OpenGL", "GL");
             var extraOverrides = Directory.GetFiles(overrideFileDirectoryPath, "*.xml", SearchOption.AllDirectories);
 
-            using (var fs = File.OpenText(Program.Arguments.LicenseFile)) {
+            using (var fs = File.OpenText(Program.Arguments.LicenseFile))
+            {
                 var licenseContents = fs.ReadToEnd().TrimEnd();
                 LicenseText = licenseContents;
             }

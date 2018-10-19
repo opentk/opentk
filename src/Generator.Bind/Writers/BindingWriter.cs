@@ -39,7 +39,6 @@ using Bind.XML.Signatures.Functions;
 using Humanizer;
 using JetBrains.Annotations;
 using MoreLinq.Extensions;
-// ReSharper disable SA1101
 
 namespace Bind.Writers
 {
@@ -143,7 +142,7 @@ namespace Bind.Writers
             var extensionNames = _profile.GetExtensions();
 
             // Create the interop setup necessary
-            var createConstructorFileTask = CreateWrapperClassConstructorFileAsync(wrappersOutputDirectory);
+            var createConstructorFileTask = Task.Run(() => CreateWrapperClassConstructorFileAsync(wrappersOutputDirectory));
             var extensionWriteTasks = extensionNames.Select(extensionName => WriteExtensionWrapperFiles(extensionName, wrappersOutputDirectory));
 
             var tasks = AppendExtension.Append(extensionWriteTasks, createConstructorFileTask);
@@ -161,12 +160,12 @@ namespace Bind.Writers
             }
 
             var allCategories = _profile.GetCategories();
-            var categoryTasks = allCategories.Select(category => WriteCategoryWrapperFile(extensionOutputDirectory, extensionName, category));
+            var categoryTasks = allCategories.Select(category => Task.Run(() => WriteCategoryWrapperFile(extensionOutputDirectory, extensionName, category)));
 
             return Task.WhenAll(categoryTasks);
         }
 
-        private async Task WriteCategoryWrapperFile
+        private void WriteCategoryWrapperFile
         (
             [NotNull] string extensionOutputDirectory,
             [NotNull] string extensionName,
@@ -302,7 +301,7 @@ namespace Bind.Writers
             File.Move(tempWrapperOutputPath, outputCategorySubPath);
         }
 
-        private async Task CreateWrapperClassConstructorFileAsync([NotNull] string wrappersOutputDirectory)
+        private void CreateWrapperClassConstructorFileAsync([NotNull] string wrappersOutputDirectory)
         {
             var tempInteropFilePath = Path.GetTempFileName();
             using (var outputFile = File.Open(tempInteropFilePath, FileMode.OpenOrCreate))
@@ -568,13 +567,12 @@ namespace Bind.Writers
                 Directory.CreateDirectory(enumOutputDirectory);
             }
 
-            foreach (var enumeration in _profile.Enumerations)
-            {
-                await WriteEnumerationFileAsync(enumOutputDirectory, enumeration);
-            }
+            var genEnumTasks =
+                _profile.Enumerations.Select(e => Task.Run(() => WriteEnumerationFile(enumOutputDirectory, e)));
+            await Task.WhenAll(genEnumTasks);
         }
 
-        private async Task WriteEnumerationFileAsync
+        private void WriteEnumerationFile
         (
             [NotNull] string enumOutputDirectory,
             [NotNull] EnumerationSignature enumeration
@@ -614,7 +612,7 @@ namespace Bind.Writers
                         sw.WriteLine($"public enum {enumeration.Name}");
                         using (sw.BeginBlock())
                         {
-                            await WriteTokensAsync(sw, enumeration.Tokens);
+                            WriteTokens(sw, enumeration.Tokens);
                         }
                     }
                 }
@@ -630,7 +628,7 @@ namespace Bind.Writers
             File.Move(tempEnumFilePath, outputEnumPath);
         }
 
-        private async Task WriteTokensAsync([NotNull] SourceWriter sw, [NotNull] IEnumerable<TokenSignature> tokens)
+        private void WriteTokens([NotNull] SourceWriter sw, [NotNull] IEnumerable<TokenSignature> tokens)
         {
             // Make sure everything is sorted. This will avoid random changes between
             // consecutive runs of the program.

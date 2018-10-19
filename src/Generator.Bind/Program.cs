@@ -99,7 +99,7 @@ namespace Bind
         /// 5) Apply the mappings to the API
         /// 6) Bake convenience overloads into the API (adding unsafe, etc)
         /// 7) Write the bindings to the files.
-        /// 
+        ///
         /// </summary>
         /// <param name="generatorSettings">The settings describing the API.</param>
         /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>

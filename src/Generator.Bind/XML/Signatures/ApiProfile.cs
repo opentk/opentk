@@ -15,7 +15,7 @@ namespace Bind.XML.Signatures
     /// These are, broadly speaking, a collection of Function signatures, their overloads, and enums used by them.
     ///
     /// A profile is like a version which also includes a choice about if it supports deprecated functionality or not.
-    /// This choice is typically referred to as core/compatibility profiles for a given version. 
+    /// This choice is typically referred to as core/compatibility profiles for a given version.
     /// </summary>
     public class ApiProfile : IApiProfile
     {
