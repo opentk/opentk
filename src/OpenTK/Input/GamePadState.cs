@@ -64,19 +64,13 @@ namespace OpenTK.Input
         /// Gets a <see cref="GamePadDPad"/> structure describing the
         /// state of the <see cref="GamePad"/> directional pad.
         /// </summary>
-        public GamePadDPad DPad
-        {
-            get { return new GamePadDPad(buttons); }
-        }
+        public GamePadDPad DPad => new GamePadDPad(buttons);
 
         /// <summary>
         /// Gets a <see cref="GamePadTriggers"/> structure describing the
         /// state of the <see cref="GamePad"/> triggers.
         /// </summary>
-        public GamePadTriggers Triggers
-        {
-            get { return new GamePadTriggers(left_trigger, right_trigger); }
-        }
+        public GamePadTriggers Triggers => new GamePadTriggers(left_trigger, right_trigger);
 
         /// <summary>
         /// Gets a value indicating whether this <see cref="GamePad"/> instance is connected.
@@ -85,7 +79,7 @@ namespace OpenTK.Input
         public bool IsConnected { get; private set; }
 
         /// <summary>
-        /// Gets the packet number for this <c>GamePadState</c> instance.
+        /// Gets the packet number for this <see cref="GamePadState"/> instance.
         /// Use the packet number to determine whether the state of a
         /// <see cref="GamePad"/> device has changed.
         /// </summary>
@@ -205,15 +199,13 @@ namespace OpenTK.Input
             PacketNumber = number;
         }
 
+        // This doesn't seem to be used, maybe delete it?
         private bool IsAxisValid(GamePadAxes axis)
         {
             int index = (int)axis;
             return index >= 0 && index < GamePad.MaxAxisCount;
         }
 
-        private bool IsDPadValid(int index)
-        {
-            return index >= 0 && index < GamePad.MaxDPadCount;
-        }
+        private bool IsDPadValid(int index) => index >= 0 && index < GamePad.MaxDPadCount;
     }
 }

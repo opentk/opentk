@@ -282,19 +282,13 @@ namespace OpenTK.Graphics
         /// Returns a <see cref="System.String"/> representing this instance.
         /// </summary>
         /// <returns>A <see cref="System.String"/>  that contains a string representation of this instance.</returns>
-        public override string ToString()
-        {
-            return (this as IGraphicsContextInternal).Context.ToString();
-        }
+        public override string ToString() => (this as IGraphicsContextInternal).Context.ToString();
 
         /// <summary>
         /// Returns the hash code for this instance.
         /// </summary>
         /// <returns>A System.Int32 with the hash code of this instance.</returns>
-        public override int GetHashCode()
-        {
-            return (this as IGraphicsContextInternal).Context.GetHashCode();
-        }
+        public override int GetHashCode() => (this as IGraphicsContextInternal).Context.GetHashCode();
 
         /// <summary>
         /// Compares two instances.
@@ -302,10 +296,8 @@ namespace OpenTK.Graphics
         /// <param name="obj">The instance to compare to.</param>
         /// <returns>True, if obj is equal to this instance; false otherwise.</returns>
         public override bool Equals(object obj)
-        {
-            return (obj is GraphicsContext) &&
+            => (obj is GraphicsContext) &&
                 (this as IGraphicsContextInternal).Context == (obj as IGraphicsContextInternal).Context;
-        }
 
         private static void AddContext(IGraphicsContextInternal context)
         {
@@ -372,10 +364,7 @@ namespace OpenTK.Graphics
         /// <summary>
         /// Gets the handle of the current GraphicsContext in the calling thread.
         /// </summary>
-        public static ContextHandle CurrentContextHandle
-        {
-            get { return GetCurrentContext(); }
-        }
+        public static ContextHandle CurrentContextHandle => GetCurrentContext();
 
         /// <summary>
         /// Gets the GraphicsContext that is current in the calling thread.
@@ -435,10 +424,7 @@ namespace OpenTK.Graphics
         /// <summary>
         /// Swaps buffers on a context. This presents the rendered scene to the user.
         /// </summary>
-        public void SwapBuffers()
-        {
-            implementation.SwapBuffers();
-        }
+        public void SwapBuffers() => implementation.SwapBuffers();
 
         /// <summary>
         /// Makes the GraphicsContext the current rendering target.
@@ -447,18 +433,12 @@ namespace OpenTK.Graphics
         /// <remarks>
         /// You can use this method to bind the GraphicsContext to a different window than the one it was created from.
         /// </remarks>
-        public void MakeCurrent(IWindowInfo window)
-        {
-            implementation.MakeCurrent(window);
-        }
+        public void MakeCurrent(IWindowInfo window) => implementation.MakeCurrent(window);
 
         /// <summary>
         /// Gets a <see cref="System.Boolean"/> indicating whether this instance is current in the calling thread.
         /// </summary>
-        public bool IsCurrent
-        {
-            get { return implementation.IsCurrent; }
-        }
+        public bool IsCurrent => implementation.IsCurrent;
 
         /// <summary>
         /// Gets a <see cref="System.Boolean"/> indicating whether this instance has been disposed.
@@ -466,8 +446,8 @@ namespace OpenTK.Graphics
         /// </summary>
         public bool IsDisposed
         {
-            get { return disposed && implementation.IsDisposed; }
-            private set { disposed = value; }
+            get => disposed && implementation.IsDisposed;
+            private set => disposed = value;
         }
 
         /// <summary>
@@ -479,8 +459,8 @@ namespace OpenTK.Graphics
         /// </summary>
         public int SwapInterval
         {
-            get { return implementation.SwapInterval; }
-            set { implementation.SwapInterval = value; }
+            get => implementation.SwapInterval;
+            set => implementation.SwapInterval = value;
         }
 
         /// <summary>

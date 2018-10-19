@@ -123,9 +123,7 @@ namespace OpenTK.Audio
         /// </para>
         /// </remarks>
         public AudioContext(string device, int freq, int refresh, bool sync, bool enableEfx)
-        {
-            CreateContext(device, freq, refresh, sync, enableEfx, MaxAuxiliarySends.UseDriverDefault);
-        }
+            => CreateContext(device, freq, refresh, sync, enableEfx, MaxAuxiliarySends.UseDriverDefault);
 
         /// <summary>Creates the audio context using the specified device and device parameters.</summary>
         /// <param name="device">The device descriptor obtained through AudioContext.AvailableDevices.</param>
@@ -595,23 +593,11 @@ namespace OpenTK.Audio
         /// <summary>
         /// Returns a list of strings containing all known playback devices.
         /// </summary>
-        public static IList<string> AvailableDevices
-        {
-            get
-            {
-                return AudioDeviceEnumerator.AvailablePlaybackDevices;
-            }
-        }
+        public static IList<string> AvailableDevices => AudioDeviceEnumerator.AvailablePlaybackDevices;
         /// <summary>
         /// Returns the name of the device that will be used as playback default.
         /// </summary>
-        public static string DefaultDevice
-        {
-            get
-            {
-                return AudioDeviceEnumerator.DefaultPlaybackDevice;
-            }
-        }
+        public static string DefaultDevice => AudioDeviceEnumerator.DefaultPlaybackDevice;
 
         /// <summary>
         /// Disposes of the AudioContext, cleaning up all resources consumed by it.
@@ -661,29 +647,19 @@ namespace OpenTK.Audio
         /// Calculates the hash code for this instance.
         /// </summary>
         /// <returns></returns>
-        public override int GetHashCode()
-        {
-            return base.GetHashCode();
-        }
+        public override int GetHashCode() => base.GetHashCode();
 
         /// <summary>
         /// Compares this instance with another.
         /// </summary>
         /// <param name="obj">The instance to compare to.</param>
         /// <returns>True, if obj refers to this instance; false otherwise.</returns>
-        public override bool Equals(object obj)
-        {
-            return base.Equals(obj);
-        }
+        public override bool Equals(object obj) => base.Equals(obj);
 
         /// <summary>
         /// Returns a <see cref="System.String"/> that desrcibes this instance.
         /// </summary>
         /// <returns>A <see cref="System.String"/> that desrcibes this instance.</returns>
-        public override string ToString()
-        {
-            return String.Format("{0} (handle: {1}, device: {2})",
-                                 this.device_name, this.context_handle, this.Device);
-        }
+        public override string ToString() => $"{this.device_name} (handle: {this.context_handle}, device: {this.Device})";
     }
 }

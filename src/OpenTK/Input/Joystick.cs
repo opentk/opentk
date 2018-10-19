@@ -55,10 +55,7 @@ namespace OpenTK.Input
         /// property of the returned structure will be false.
         /// </returns>
         /// <param name="index">The zero-based index of the device to poll.</param>
-        public static JoystickCapabilities GetCapabilities(int index)
-        {
-            return implementation.GetCapabilities(index);
-        }
+        public static JoystickCapabilities GetCapabilities(int index) => implementation.GetCapabilities(index);
 
         /// <summary>
         /// Retrieves the <see cref="JoystickState"/> of the device connected
@@ -70,10 +67,7 @@ namespace OpenTK.Input
         /// property of the returned structure will be false.
         /// </returns>
         /// <param name="index">The zero-based index of the device to poll.</param>
-        public static JoystickState GetState(int index)
-        {
-            return implementation.GetState(index);
-        }
+        public static JoystickState GetState(int index) => implementation.GetState(index);
 
         /// <summary>
         /// Retrieves the ID of the device connected
@@ -83,14 +77,6 @@ namespace OpenTK.Input
         /// A <see cref="Guid"/> representing the id of the connected device.
         /// </returns>
         /// <param name="index">The zero-based index of the device to poll.</param>
-        public static Guid GetGuid(int index)
-        {
-            return implementation.GetGuid(index);
-        }
-
-        //public string GetName(int index)
-        //{
-        //    return implementation.GetName(index);
-        //}
+        public static Guid GetGuid(int index) => implementation.GetGuid(index);
     }
 }

@@ -40,101 +40,65 @@ namespace OpenTK.Input
         /// Initializes a new instance of the <see cref="OpenTK.Input.GamePadButtons"/> structure.
         /// </summary>
         /// <param name="state">A bitmask containing the button state.</param>
-        public GamePadButtons(Buttons state)
-        {
-            buttons = state;
-        }
+        public GamePadButtons(Buttons state) => buttons = state;
 
         /// <summary>
         /// Gets the <see cref="ButtonState"/> for the A button.
         /// </summary>
-        public ButtonState A
-        {
-            get { return GetButton(Buttons.A); }
-        }
+        public ButtonState A => GetButton(Buttons.A);
 
         /// <summary>
         /// Gets the <see cref="ButtonState"/> for the B button.
         /// </summary>
-        public ButtonState B
-        {
-            get { return GetButton(Buttons.B); }
-        }
+        public ButtonState B => GetButton(Buttons.B);
 
         /// <summary>
         /// Gets the <see cref="ButtonState"/> for the X button.
         /// </summary>
-        public ButtonState X
-        {
-            get { return GetButton(Buttons.X); }
-        }
+        public ButtonState X => GetButton(Buttons.X);
 
         /// <summary>
         /// Gets the <see cref="ButtonState"/> for the Y button.
         /// </summary>
-        public ButtonState Y
-        {
-            get { return GetButton(Buttons.Y); }
-        }
+        public ButtonState Y => GetButton(Buttons.Y);
 
         /// <summary>
         /// Gets the <see cref="ButtonState"/> for the Back button.
         /// </summary>
-        public ButtonState Back
-        {
-            get { return GetButton(Buttons.Back); }
-        }
+        public ButtonState Back => GetButton(Buttons.Back);
 
         /// <summary>
         /// Gets the <see cref="ButtonState"/> for the big button.
         /// This button is also known as Home or Guide.
         /// </summary>
-        public ButtonState BigButton
-        {
-            get { return GetButton(Buttons.BigButton); }
-        }
+        public ButtonState BigButton => GetButton(Buttons.BigButton);
 
         /// <summary>
         /// Gets the <see cref="ButtonState"/> for the left shoulder button.
         /// </summary>
-        public ButtonState LeftShoulder
-        {
-            get { return GetButton(Buttons.LeftShoulder); }
-        }
+        public ButtonState LeftShoulder => GetButton(Buttons.LeftShoulder);
 
         /// <summary>
         /// Gets the <see cref="ButtonState"/> for the left stick button.
         /// This button represents a left stick that is pressed in.
         /// </summary>
-        public ButtonState LeftStick
-        {
-            get { return GetButton(Buttons.LeftStick); }
-        }
+        public ButtonState LeftStick => GetButton(Buttons.LeftStick);
 
         /// <summary>
         /// Gets the <see cref="ButtonState"/> for the right shoulder button.
         /// </summary>
-        public ButtonState RightShoulder
-        {
-            get { return GetButton(Buttons.RightShoulder); }
-        }
+        public ButtonState RightShoulder => GetButton(Buttons.RightShoulder);
 
         /// <summary>
         /// Gets the <see cref="ButtonState"/> for the right stick button.
         /// This button represents a right stick that is pressed in.
         /// </summary>
-        public ButtonState RightStick
-        {
-            get { return GetButton(Buttons.RightStick); }
-        }
+        public ButtonState RightStick => GetButton(Buttons.RightStick);
 
         /// <summary>
         /// Gets the <see cref="ButtonState"/> for the starth button.
         /// </summary>
-        public ButtonState Start
-        {
-            get { return GetButton(Buttons.Start); }
-        }
+        public ButtonState Start => GetButton(Buttons.Start);
 
         /// <summary>
         /// Gets a value indicating whether any button is pressed.
@@ -152,16 +116,12 @@ namespace OpenTK.Input
         /// <param name="left">A <see cref="GamePadButtons"/> instance to test for equality.</param>
         /// <param name="right">A <see cref="GamePadButtons"/> instance to test for equality.</param>
         public static bool operator ==(GamePadButtons left, GamePadButtons right)
-        {
-            return left.Equals(right);
-        }
+            => left.Equals(right);
 
         /// <param name="left">A <see cref="GamePadButtons"/> instance to test for inequality.</param>
         /// <param name="right">A <see cref="GamePadButtons"/> instance to test for inequality.</param>
         public static bool operator !=(GamePadButtons left, GamePadButtons right)
-        {
-            return !left.Equals(right);
-        }
+            => !left.Equals(right);
 
         /// <summary>
         /// Returns a <see cref="System.String"/> that represents the current <see cref="OpenTK.Input.GamePadButtons"/>.
@@ -172,19 +132,19 @@ namespace OpenTK.Input
             System.Text.StringBuilder sb = new System.Text.StringBuilder();
             if (A == ButtonState.Pressed)
             {
-                sb.Append("A");
+                sb.Append(nameof(A));
             }
             if (B == ButtonState.Pressed)
             {
-                sb.Append("B");
+                sb.Append(nameof(B));
             }
             if (X == ButtonState.Pressed)
             {
-                sb.Append("X");
+                sb.Append(nameof(X));
             }
             if (Y == ButtonState.Pressed)
             {
-                sb.Append("Y");
+                sb.Append(nameof(Y));
             }
             if (Back == ButtonState.Pressed)
             {
@@ -227,10 +187,7 @@ namespace OpenTK.Input
         /// </summary>
         /// <returns>A hash code for this instance that is suitable for use in hashing algorithms and data structures such as a
         /// hash table.</returns>
-        public override int GetHashCode()
-        {
-            return buttons.GetHashCode();
-        }
+        public override int GetHashCode() => buttons.GetHashCode();
 
         /// <summary>
         /// Determines whether the specified <see cref="System.Object"/> is equal to the current <see cref="OpenTK.Input.GamePadButtons"/>.
@@ -251,15 +208,10 @@ namespace OpenTK.Input
         /// <param name="other">The <see cref="OpenTK.Input.GamePadButtons"/> to compare with the current <see cref="OpenTK.Input.GamePadButtons"/>.</param>
         /// <returns><c>true</c> if the specified <see cref="OpenTK.Input.GamePadButtons"/> is equal to the current
         /// <see cref="OpenTK.Input.GamePadButtons"/>; otherwise, <c>false</c>.</returns>
-        public bool Equals(GamePadButtons other)
-        {
-            return buttons == other.buttons;
-        }
+        public bool Equals(GamePadButtons other) => buttons == other.buttons;
 
         private ButtonState GetButton(Buttons b)
-        {
-            return (buttons & b) != 0 ? ButtonState.Pressed : ButtonState.Released;
-        }
+            => (buttons & b) != 0 ? ButtonState.Pressed : ButtonState.Released;
     }
 }
 

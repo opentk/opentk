@@ -67,34 +67,22 @@ namespace OpenTK.Input
             this.IsConnected = is_connected;
         }
 
-        internal void SetIsConnected(bool value)
-        {
-            IsConnected = value;
-        }
+        internal void SetIsConnected(bool value) => IsConnected = value;
 
         /// <summary>
         /// Gets the number of axes supported by this <see cref="JoystickDevice"/>.
         /// </summary>
-        public int AxisCount
-        {
-            get { return axis_count; }
-        }
+        public int AxisCount => axis_count;
 
         /// <summary>
         /// Gets the number of buttons supported by this <see cref="JoystickDevice"/>.
         /// </summary>
-        public int ButtonCount
-        {
-            get { return button_count; }
-        }
+        public int ButtonCount => button_count;
 
         /// <summary>
         /// Gets the number of hats supported by this <see cref="JoystickDevice"/>.
         /// </summary>
-        public int HatCount
-        {
-            get { return hat_count; }
-        }
+        public int HatCount => hat_count;
 
         /// <summary>
         /// Gets a value indicating whether this <see cref="JoystickDevice"/> is connected.
@@ -106,12 +94,7 @@ namespace OpenTK.Input
         /// Returns a <see cref="System.String"/> that represents the current <see cref="OpenTK.Input.JoystickCapabilities"/>.
         /// </summary>
         /// <returns>A <see cref="System.String"/> that represents the current <see cref="OpenTK.Input.JoystickCapabilities"/>.</returns>
-        public override string ToString()
-        {
-            return String.Format(
-                "{{Axes: {0}; Buttons: {1}; Hats: {2}; IsConnected: {3}}}",
-                AxisCount, ButtonCount, HatCount, IsConnected);
-        }
+        public override string ToString() => $"{{Axes: {AxisCount}; Buttons: {ButtonCount}; Hats: {HatCount}; IsConnected: {IsConnected}}}";
 
         /// <summary>
         /// Serves as a hash function for a <see cref="OpenTK.Input.JoystickCapabilities"/> object.
@@ -119,13 +102,10 @@ namespace OpenTK.Input
         /// <returns>A hash code for this instance that is suitable for use in hashing algorithms and data structures such as a
         /// hash table.</returns>
         public override int GetHashCode()
-        {
-            return
-                AxisCount.GetHashCode() ^
+            => AxisCount.GetHashCode() ^
                 ButtonCount.GetHashCode() ^
                 HatCount.GetHashCode() ^
                 IsConnected.GetHashCode();
-        }
 
         /// <summary>
         /// Determines whether the specified <see cref="System.Object"/> is equal to the current <see cref="OpenTK.Input.JoystickCapabilities"/>.
@@ -134,11 +114,8 @@ namespace OpenTK.Input
         /// <returns><c>true</c> if the specified <see cref="System.Object"/> is equal to the current
         /// <see cref="OpenTK.Input.JoystickCapabilities"/>; otherwise, <c>false</c>.</returns>
         public override bool Equals(object obj)
-        {
-            return
-                obj is JoystickCapabilities &&
+            => obj is JoystickCapabilities &&
                 Equals((JoystickCapabilities)obj);
-        }
 
         /// <summary>
         /// Determines whether the specified <see cref="OpenTK.Input.JoystickCapabilities"/> is equal to the current <see cref="OpenTK.Input.JoystickCapabilities"/>.
@@ -147,12 +124,9 @@ namespace OpenTK.Input
         /// <returns><c>true</c> if the specified <see cref="OpenTK.Input.JoystickCapabilities"/> is equal to the current
         /// <see cref="OpenTK.Input.JoystickCapabilities"/>; otherwise, <c>false</c>.</returns>
         public bool Equals(JoystickCapabilities other)
-        {
-            return
-                AxisCount == other.AxisCount &&
+            => AxisCount == other.AxisCount &&
                 ButtonCount == other.ButtonCount &&
                 HatCount == other.HatCount &&
                 IsConnected == other.IsConnected;
-        }
     }
 }

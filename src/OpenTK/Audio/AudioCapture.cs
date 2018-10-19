@@ -74,11 +74,11 @@ namespace OpenTK.Audio
             }
             if (frequency <= 0)
             {
-                throw new ArgumentOutOfRangeException("frequency");
+                throw new ArgumentOutOfRangeException(nameof(frequency));
             }
             if (bufferSize <= 0)
             {
-                throw new ArgumentOutOfRangeException("bufferSize");
+                throw new ArgumentOutOfRangeException(nameof(bufferSize));
             }
 
             // Try to open specified device. If it fails, try to open default device.
@@ -123,24 +123,12 @@ namespace OpenTK.Audio
         /// <summary>
         /// Returns a list of strings containing all known recording devices.
         /// </summary>
-        public static IList<string> AvailableDevices
-        {
-            get
-            {
-                return AudioDeviceEnumerator.AvailableRecordingDevices;
-            }
-        }
+        public static IList<string> AvailableDevices => AudioDeviceEnumerator.AvailableRecordingDevices;
 
         /// <summary>
         /// Returns the name of the device that will be used as recording default.
         /// </summary>
-        public static string DefaultDevice
-        {
-            get
-            {
-                return AudioDeviceEnumerator.DefaultRecordingDevice;
-            }
-        }
+        public static string DefaultDevice => AudioDeviceEnumerator.DefaultRecordingDevice;
 
         /// <summary>
         /// Checks for ALC error conditions.
@@ -149,19 +137,10 @@ namespace OpenTK.Audio
         /// <exception cref="AudioValueException">Raised when an invalid value is detected.</exception>
         /// <exception cref="AudioDeviceException">Raised when an invalid device is detected.</exception>
         /// <exception cref="AudioContextException">Raised when an invalid context is detected.</exception>
-        public void CheckErrors()
-        {
-            new AudioDeviceErrorChecker(Handle).Dispose();
-        }
+        public void CheckErrors() => new AudioDeviceErrorChecker(Handle).Dispose();
 
         /// <summary>Returns the ALC error code for this device.</summary>
-        public AlcError CurrentError
-        {
-            get
-            {
-                return Alc.GetError(Handle);
-            }
-        }
+        public AlcError CurrentError => Alc.GetError(Handle);
 
         /// <summary>
         /// Start recording samples.
@@ -188,8 +167,7 @@ namespace OpenTK.Audio
             {
                 // TODO: Investigate inconsistency between documentation and actual usage.
                 // Doc claims the 3rd param is Number-of-Bytes, but it appears to be Number-of-Int32s
-                int result;
-                Alc.GetInteger(Handle, AlcGetInteger.CaptureSamples, 1, out result);
+                Alc.GetInteger(Handle, AlcGetInteger.CaptureSamples, 1, out var result);
                 return result;
             }
         }
@@ -197,10 +175,7 @@ namespace OpenTK.Audio
         /// <summary>Fills the specified buffer with samples from the internal capture ring-buffer. This method does not block: it is an error to specify a sampleCount larger than AvailableSamples.</summary>
         /// <param name="buffer">A pointer to a previously initialized and pinned array.</param>
         /// <param name="sampleCount">The number of samples to be written to the buffer.</param>
-        public void ReadSamples(IntPtr buffer, int sampleCount)
-        {
-            Alc.CaptureSamples(Handle, buffer, sampleCount);
-        }
+        public void ReadSamples(IntPtr buffer, int sampleCount) => Alc.CaptureSamples(Handle, buffer, sampleCount);
 
         /// <summary>Fills the specified buffer with samples from the internal capture ring-buffer. This method does not block: it is an error to specify a sampleCount larger than AvailableSamples.</summary>
         /// <param name="buffer">The buffer to fill.</param>
