@@ -39,6 +39,7 @@ using Bind.XML.Signatures.Functions;
 using Humanizer;
 using JetBrains.Annotations;
 using MoreLinq.Extensions;
+// ReSharper disable SA1101
 
 namespace Bind.Writers
 {
@@ -206,43 +207,43 @@ namespace Bind.Writers
             {
                 using (var sw = new SourceWriter(new StreamWriter(outputFile)))
                 {
-                    await WriteLicenseAsync(sw);
-                    await sw.WriteLineNoTabsAsync();
+                    sw.WriteLine(_generatorSettings.LicenseText);
+                    sw.WriteLineNoTabs();
 
-                    await sw.WriteLineAsync("using System;");
-                    await sw.WriteLineAsync("using System.Runtime.InteropServices;");
-                    await sw.WriteLineAsync("using System.Text;");
-                    await sw.WriteLineNoTabsAsync();
+                    sw.WriteLine("using System;");
+                    sw.WriteLine("using System.Runtime.InteropServices;");
+                    sw.WriteLine("using System.Text;");
+                    sw.WriteLineNoTabs();
 
-                    await sw.WriteLineAsync($"namespace {_generatorSettings.Namespace}");
+                    sw.WriteLine($"namespace {_generatorSettings.Namespace}");
                     using (sw.BeginBlock())
                     {
-                        SourceWriterBlock outerBlock = null;
+                        SourceWriterBlock? outerBlock = null;
                         if (extensionName == "Core")
                         {
-                            await sw.WriteLineAsync($"public sealed partial class {_generatorSettings.ClassName}");
+                            sw.WriteLine($"public sealed partial class {_generatorSettings.ClassName}");
                         }
                         else
                         {
-                            await sw.WriteLineAsync($"public sealed partial class {_generatorSettings.ClassName}");
+                            sw.WriteLine($"public sealed partial class {_generatorSettings.ClassName}");
 
                             outerBlock = sw.BeginBlock();
 
-                            await sw.WriteLineAsync("/// <summary>");
-                            await sw.WriteLineAsync
+                            sw.WriteLine("/// <summary>");
+                            sw.WriteLine
                             (
                                 $"/// Contains native bindings to functions in the category" +
                                 $" \"{translatedCategoryName}\" in the extension " +
                                 $"\"{translatedExtensionName}\"."
                             );
-                            await sw.WriteLineAsync("/// </summary>");
+                            sw.WriteLine("/// </summary>");
 
                             // Identifiers can't begin with numbers
                             var safeExtensionName = char.IsDigit(extensionName[0])
                                 ? $"{_generatorSettings.ConstantPrefix}{extensionName}"
                                 : extensionName;
 
-                            await sw.WriteLineAsync($"public static partial class {safeExtensionName}");
+                            sw.WriteLine($"public static partial class {safeExtensionName}");
                         }
 
                         // Write the native signature methods
@@ -251,36 +252,36 @@ namespace Bind.Writers
                         {
                             foreach (var signature in categorySignatures)
                             {
-                                await WriteMethodAsync(sw, signature);
+                                WriteMethod(sw, signature);
 
                                 if (signature != categorySignatures.Last())
                                 {
-                                    await sw.WriteLineNoTabsAsync();
+                                    sw.WriteLineNoTabs();
                                 }
                             }
 
-                            await sw.WriteLineNoTabsAsync();
+                            sw.WriteLineNoTabs();
 
-                            await sw.WriteLineAsync(
+                            sw.WriteLine(
                                 "#pragma warning disable SA1300 // Element should begin with an upper-case letter");
-                            await sw.WriteLineNoTabsAsync();
+                            sw.WriteLineNoTabs();
 
                             // Write the native signature externs
                             // These are required by the patcher.
                             foreach (var signature in nativeSignatures)
                             {
-                                await sw.WriteLineAsync(
+                                sw.WriteLine(
                                     $"[Slot({_entrypointSlots[signature.NativeEntrypoint].ToString()})]");
-                                await sw.WriteLineAsync(
+                                sw.WriteLine(
                                     "[DllImport(Library, ExactSpelling = true, CallingConvention = CallingConvention.Winapi)]");
-                                await sw.WriteLineAsync
+                                sw.WriteLine
                                 (
                                     $"private static extern {GetNativeDeclarationString(signature)};"
                                 );
 
                                 if (signature != nativeSignatures.Last())
                                 {
-                                    await sw.WriteLineNoTabsAsync();
+                                    sw.WriteLineNoTabs();
                                 }
                             }
                         }
@@ -308,22 +309,22 @@ namespace Bind.Writers
             {
                 using (var sw = new SourceWriter(new StreamWriter(outputFile)))
                 {
-                    await WriteLicenseAsync(sw);
-                    await sw.WriteLineNoTabsAsync();
+                    sw.WriteLine(_generatorSettings.LicenseText);
+                    sw.WriteLineNoTabs();
 
-                    await sw.WriteLineAsync("using System;");
-                    await sw.WriteLineAsync("using System.Runtime.InteropServices;");
-                    await sw.WriteLineAsync("using System.Text;");
-                    await sw.WriteLineNoTabsAsync();
+                    sw.WriteLine("using System;");
+                    sw.WriteLine("using System.Runtime.InteropServices;");
+                    sw.WriteLine("using System.Text;");
+                    sw.WriteLineNoTabs();
 
-                    await sw.WriteLineAsync($"namespace {_generatorSettings.Namespace}");
+                    sw.WriteLine($"namespace {_generatorSettings.Namespace}");
                     using (sw.BeginBlock())
                     {
-                        await sw.WriteLineAsync($"public sealed partial class {_generatorSettings.ClassName}");
+                        sw.WriteLine($"public sealed partial class {_generatorSettings.ClassName}");
                         using (sw.BeginBlock())
                         {
                             // Write constructor
-                            await sw.WriteLineAsync($"static {_generatorSettings.ClassName}()");
+                            sw.WriteLine($"static {_generatorSettings.ClassName}()");
                             using (sw.BeginBlock())
                             {
                                 var nativeEntrypointsWithPrefix = _profile.NativeSignatures
@@ -337,7 +338,7 @@ namespace Bind.Writers
                                 // Instead of strings, which are costly to construct,
                                 // we use a 1d array of ASCII bytes. Names are laid out
                                 // sequentially, with a nul-terminator between them.
-                                await sw.WriteLineAsync("EntryPointNames = new byte[]");
+                                sw.WriteLine("EntryPointNames = new byte[]");
                                 using (sw.BeginBlock(true))
                                 {
                                     foreach (var nativeEntrypoint in nativeEntrypointsWithPrefix)
@@ -348,28 +349,28 @@ namespace Bind.Writers
                                             Encoding.ASCII.GetBytes(nativeEntrypoint).Select(b => b.ToString()).ToArray()
                                         );
 
-                                        await sw.WriteLineAsync($"{byteString}, 0,");
+                                        sw.WriteLine($"{byteString}, 0,");
                                     }
                                 }
 
-                                await sw.WriteLineNoTabsAsync();
+                                sw.WriteLineNoTabs();
 
                                 // Write entry point name offsets.
                                 // This is an array of offsets into the EntryPointNames[] array above.
-                                await sw.WriteLineAsync("EntryPointNameOffsets = new int[]");
+                                sw.WriteLine("EntryPointNameOffsets = new int[]");
                                 using (sw.BeginBlock(true))
                                 {
                                     var offset = 0;
                                     foreach (var nativeEntrypoint in nativeEntrypointsWithPrefix)
                                     {
-                                        await sw.WriteLineAsync($"{offset.ToString()},");
+                                        sw.WriteLine($"{offset.ToString()},");
                                         offset += nativeEntrypoint.Length + 1;
                                     }
                                 }
 
-                                await sw.WriteLineNoTabsAsync();
+                                sw.WriteLineNoTabs();
 
-                                await sw.WriteLineAsync("EntryPoints = new IntPtr[EntryPointNameOffsets.Length];");
+                                sw.WriteLine("EntryPoints = new IntPtr[EntryPointNameOffsets.Length];");
                             }
                         }
                     }
@@ -386,9 +387,9 @@ namespace Bind.Writers
             File.Move(tempInteropFilePath, outputFilePath);
         }
 
-        private async Task WriteMethodAsync([NotNull] SourceWriter sw, [NotNull] FunctionSignature function)
+        private void WriteMethod([NotNull] SourceWriter sw, [NotNull] FunctionSignature function)
         {
-            await WriteDocumentationAsync(sw, function);
+            WriteDocumentation(sw, function);
 
             if (!(function.DeprecatedIn is null) || !(function.DeprecationReason is null))
             {
@@ -404,10 +405,10 @@ namespace Bind.Writers
                     deprecationBuilder.Append(function.DeprecationReason);
                 }
 
-                await sw.WriteLineAsync($"[Obsolete(\"{deprecationBuilder}\")]");
+                sw.WriteLine($"[Obsolete(\"{deprecationBuilder}\")]");
             }
 
-            await sw.WriteLineAsync
+            sw.WriteLine
             (
                 $"[AutoGenerated(" +
                 $"Category = \"{function.Categories.First()}\", " +
@@ -419,31 +420,31 @@ namespace Bind.Writers
             var declarationString = GetDeclarationString(function).TrimEnd();
             var declarationStringLines = declarationString.Split('\n').ToList();
 
-            await sw.WriteLineAsync($"public static {declarationStringLines.First()}");
+            sw.WriteLine($"public static {declarationStringLines.First()}");
             foreach (var line in declarationStringLines.Skip(1))
             {
-                await sw.WriteLineAsync(line);
+                sw.WriteLine(line);
             }
 
             using (sw.BeginBlock())
             {
-                await sw.WriteLineAsync("throw new BindingsNotRewrittenException();");
+                sw.WriteLine("throw new BindingsNotRewrittenException();");
             }
         }
 
-        private async Task WritePlaceholderDocumentationAsync
+        private void WritePlaceholderDocumentation
         (
             [NotNull] SourceWriter sw,
             [NotNull] FunctionSignature function
         )
         {
-            await sw.WriteLineAsync("/// <summary>");
-            await sw.WriteLineAsync("/// This function lacks documentation. See online docs for further information.");
-            await sw.WriteLineAsync("/// </summary>");
+            sw.WriteLine("/// <summary>");
+            sw.WriteLine("/// This function lacks documentation. See online docs for further information.");
+            sw.WriteLine("/// </summary>");
 
             foreach (var parameter in function.Parameters)
             {
-                await sw.WriteLineAsync($"/// <param name=\"{parameter.Name}\">See summary.</param>");
+                sw.WriteLine($"/// <param name=\"{parameter.Name}\">See summary.</param>");
             }
 
             if (function.HasGenericTypeParameters)
@@ -451,7 +452,7 @@ namespace Bind.Writers
                 foreach (var genericTypeParameter in function.GenericTypeParameters)
                 {
                     var referencingParameter = function.Parameters.First(f => f.Type.Name == genericTypeParameter.Name);
-                    await sw.WriteLineAsync
+                    sw.WriteLine
                     (
                         $"/// <typeparam name=\"{genericTypeParameter.Name}\">The generic type of " +
                         $"{referencingParameter.Name}.</typeparam>"
@@ -461,11 +462,11 @@ namespace Bind.Writers
 
             if (!function.ReturnType.Name.Equals(typeof(void).Name, StringComparison.OrdinalIgnoreCase))
             {
-                await sw.WriteLineAsync("/// <returns>See summary.</returns>");
+                sw.WriteLine("/// <returns>See summary.</returns>");
             }
         }
 
-        private async Task WriteDocumentationAsync([NotNull] SourceWriter sw, [NotNull] FunctionSignature function)
+        private void WriteDocumentation([NotNull] SourceWriter sw, [NotNull] FunctionSignature function)
         {
             if (!_documentation.TryGetDocumentation(function, out var documentation))
             {
@@ -475,18 +476,18 @@ namespace Bind.Writers
                     $"the function."
                 );
 
-                await WritePlaceholderDocumentationAsync(sw, function);
+                WritePlaceholderDocumentation(sw, function);
                 return;
             }
 
-            await sw.WriteLineAsync("/// <summary>");
+            sw.WriteLine("/// <summary>");
             var summaryLines = documentation.Purpose.TrimEnd().Split('\n');
             foreach (var summaryLine in summaryLines)
             {
-                await sw.WriteLineAsync($"/// {summaryLine}");
+                sw.WriteLine($"/// {summaryLine}");
             }
 
-            await sw.WriteLineAsync("/// </summary>");
+            sw.WriteLine("/// </summary>");
 
             for (int i = 0; i < function.Parameters.Count; ++i)
             {
@@ -494,7 +495,7 @@ namespace Bind.Writers
                 var parameterDocumentation = documentation.Parameters.FirstOrDefault(dp => dp.Name == parameter.Name);
                 if (parameterDocumentation is null)
                 {
-                    await sw.WriteLineAsync($"/// <param name=\"{parameter.Name}\">This parameter lacks documentation.</param>");
+                    sw.WriteLine($"/// <param name=\"{parameter.Name}\">This parameter lacks documentation.</param>");
                     continue;
                 }
 
@@ -508,43 +509,43 @@ namespace Bind.Writers
                     );
                 }
 
-                await sw.WriteLineAsync($"/// <param name=\"{parameterDocumentation.Name}\">");
+                sw.WriteLine($"/// <param name=\"{parameterDocumentation.Name}\">");
                 if (!(parameter.Count is null))
                 {
                     if (parameter.Count.IsStatic)
                     {
-                        await sw.WriteLineAsync($"/// This parameter contains {parameter.Count.Count} elements.");
-                        await sw.WriteLineAsync("///");
+                        sw.WriteLine($"/// This parameter contains {parameter.Count.Count} elements.");
+                        sw.WriteLine("///");
                     }
 
                     if (parameter.Count.IsComputed)
                     {
                         var parameterList = parameter.Count.ComputedFrom.Select(cf => cf.Name).Humanize();
-                        await sw.WriteLineAsync($"/// This parameter's element count is computed from {parameterList}.");
-                        await sw.WriteLineAsync("///");
+                        sw.WriteLine($"/// This parameter's element count is computed from {parameterList}.");
+                        sw.WriteLine("///");
                     }
 
                     if (parameter.Count.IsReference)
                     {
                         // ReSharper disable once PossibleNullReferenceException
-                        await sw.WriteLineAsync($"/// This parameter's element count is taken from {parameter.Count.ValueReference.Name}.");
-                        await sw.WriteLineAsync("///");
+                        sw.WriteLine($"/// This parameter's element count is taken from {parameter.Count.ValueReference.Name}.");
+                        sw.WriteLine("///");
                     }
                 }
 
                 var descriptionLines = parameterDocumentation.Description.TrimEnd().Split('\n');
                 foreach (var descriptionLine in descriptionLines)
                 {
-                    await sw.WriteLineAsync($"/// {descriptionLine}");
+                    sw.WriteLine($"/// {descriptionLine}");
                 }
 
-                await sw.WriteLineAsync("/// </param>");
+                sw.WriteLine("/// </param>");
             }
 
             foreach (var genericTypeParameter in function.GenericTypeParameters)
             {
                 var referencingParameter = function.Parameters.First(f => f.Type.Name == genericTypeParameter.Name);
-                await sw.WriteLineAsync
+                sw.WriteLine
                 (
                     $"/// <typeparam name=\"{genericTypeParameter.Name}\">The generic type of " +
                     $"{referencingParameter.Name}.</typeparam>"
@@ -553,7 +554,7 @@ namespace Bind.Writers
 
             if (!function.ReturnType.Name.Equals(typeof(void).Name, StringComparison.OrdinalIgnoreCase))
             {
-                await sw.WriteLineAsync("/// <returns>See online documentation.</returns>");
+                sw.WriteLine("/// <returns>See online documentation.</returns>");
             }
         }
 
@@ -584,33 +585,33 @@ namespace Bind.Writers
             {
                 using (var sw = new SourceWriter(new StreamWriter(outputFile)))
                 {
-                    await WriteLicenseAsync(sw);
-                    await sw.WriteLineNoTabsAsync();
+                    sw.WriteLine(_generatorSettings.LicenseText);
+                    sw.WriteLineNoTabs();
 
                     if (enumeration.IsFlagEnum)
                     {
-                        await sw.WriteLineAsync("using System;");
-                        await sw.WriteLineNoTabsAsync();
+                        sw.WriteLine("using System;");
+                        sw.WriteLineNoTabs();
                     }
 
-                    await sw.WriteLineAsync("// ReSharper disable InconsistentNaming");
-                    await sw.WriteLineAsync("#pragma warning disable SA1139 // Use literal suffix notation instead of casting");
-                    await sw.WriteLineNoTabsAsync();
+                    sw.WriteLine("// ReSharper disable InconsistentNaming");
+                    sw.WriteLine("#pragma warning disable SA1139 // Use literal suffix notation instead of casting");
+                    sw.WriteLineNoTabs();
 
-                    await sw.WriteLineAsync($"namespace {_generatorSettings.Namespace}");
+                    sw.WriteLine($"namespace {_generatorSettings.Namespace}");
                     using (sw.BeginBlock())
                     {
                         // Document which functions use this enum.
-                        await sw.WriteLineAsync("/// <summary>");
-                        await sw.WriteLineAsync($"/// {GetEnumUsageString(enumeration)}");
-                        await sw.WriteLineAsync("/// </summary>");
+                        sw.WriteLine("/// <summary>");
+                        sw.WriteLine($"/// {GetEnumUsageString(enumeration)}");
+                        sw.WriteLine("/// </summary>");
 
                         if (enumeration.IsFlagEnum)
                         {
-                            await sw.WriteLineAsync("[Flags]");
+                            sw.WriteLine("[Flags]");
                         }
 
-                        await sw.WriteLineAsync($"public enum {enumeration.Name}");
+                        sw.WriteLine($"public enum {enumeration.Name}");
                         using (sw.BeginBlock())
                         {
                             await WriteTokensAsync(sw, enumeration.Tokens);
@@ -639,10 +640,10 @@ namespace Bind.Writers
             {
                 var valueString = $"0x{token.Value:X}";
 
-                await sw.WriteLineAsync("/// <summary>");
+                sw.WriteLine("/// <summary>");
                 var originalTokenName = $"{_generatorSettings.ConstantPrefix}{token.Name.Underscore().ToUpperInvariant()}";
-                await sw.WriteLineAsync($"/// Original was {originalTokenName} = {valueString}");
-                await sw.WriteLineAsync("/// </summary>");
+                sw.WriteLine($"/// Original was {originalTokenName} = {valueString}");
+                sw.WriteLine("/// </summary>");
 
                 var needsCasting = token.Value > int.MaxValue || token.Value < 0;
                 if (needsCasting)
@@ -653,12 +654,12 @@ namespace Bind.Writers
 
                 if (token != tokens.Last())
                 {
-                    await sw.WriteLineAsync($"{token.Name} = {valueString},");
-                    await sw.WriteLineNoTabsAsync();
+                    sw.WriteLine($"{token.Name} = {valueString},");
+                    sw.WriteLineNoTabs();
                 }
                 else
                 {
-                    await sw.WriteLineAsync($"{token.Name} = {valueString}");
+                    sw.WriteLine($"{token.Name} = {valueString}");
                 }
             }
         }
@@ -691,19 +692,6 @@ namespace Bind.Writers
             }
 
             return "Not used directly.";
-        }
-
-        private async Task WriteLicenseAsync([NotNull] SourceWriter sw)
-        {
-            var licenseFilePath = Path.Combine(Program.Arguments.LicenseFile);
-
-            string licenseContents;
-            using (var fs = File.OpenText(licenseFilePath))
-            {
-                licenseContents = (await fs.ReadToEndAsync()).TrimEnd();
-            }
-
-            await sw.WriteLineAsync(licenseContents);
         }
 
         [NotNull]

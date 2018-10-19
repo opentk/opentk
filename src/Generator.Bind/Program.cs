@@ -98,7 +98,7 @@ namespace Bind
         /// 4) Create mappings between OpenGL types and C# types
         /// 5) Apply the mappings to the API
         /// 6) Bake convenience overloads into the API (adding unsafe, etc)
-        /// 7) Write the bindings
+        /// 7) Write the bindings to the files.
         /// 
         /// </summary>
         /// <param name="generatorSettings">The settings describing the API.</param>
