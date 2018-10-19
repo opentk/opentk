@@ -65,10 +65,7 @@ namespace OpenTK
         /// Checks whether the current typename T is blittable.
         /// </summary>
         /// <returns>True if T is blittable; false otherwise.</returns>
-        public static bool Check()
-        {
-            return Check(Type);
-        }
+        public static bool Check() => Check(Type);
 
         /// <summary>
         /// Checks whether type is a blittable value type.
@@ -84,12 +81,12 @@ namespace OpenTK
 
             return CheckType(type);
         }
-
-        // Checks whether the parameter is a primitive type or consists of primitive types recursively.
-        // Throws a NotSupportedException if it is not.
+        
+        /// <summary>Checks whether the parameter is a primitive type or consists of primitive types recursively.</summary>
+        /// <param name="type">The type.</param>
+        /// <exception cref="NotSupportedException">If the parameter is not a primitive type or consists of primitive types recursively.</exception>
         private static bool CheckType(Type type)
         {
-            //Debug.Print("Checking type {0} (size: {1} bytes).", type.Name, Marshal.SizeOf(type));
             if (type.IsPrimitive)
             {
                 return true;
@@ -102,6 +99,7 @@ namespace OpenTK
 
             FieldInfo[] fields = type.GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
             Debug.Indent();
+            
             foreach (FieldInfo field in fields)
             {
                 if (!CheckType(field.FieldType))
@@ -109,25 +107,24 @@ namespace OpenTK
                     return false;
                 }
             }
+
             Debug.Unindent();
 
             return Stride != 0;
         }
-
-        // Checks whether the specified struct defines [StructLayout(LayoutKind.Sequential, Pack=1)]
-        // or [StructLayout(LayoutKind.Explicit)]
+        
+        /// <summary>Checks whether the specified struct defines [StructLayout(LayoutKind.Sequential, Pack=1)]
+        /// or [StructLayout(LayoutKind.Explicit)]</summary>
         private static bool CheckStructLayoutAttribute(Type type)
         {
             StructLayoutAttribute[] attr =
                 (StructLayoutAttribute[])type.GetCustomAttributes(typeof(StructLayoutAttribute), true);
 
-            if ((attr == null) ||
-                (attr != null && attr.Length > 0 && attr[0].Value != LayoutKind.Explicit && attr[0].Pack != 1))
-            {
-                return false;
-            }
-
-            return true;
+            return !((attr == null) ||
+                (attr != null &&
+                attr.Length > 0 &&
+                attr[0].Value != LayoutKind.Explicit &&
+                attr[0].Pack != 1));
         }
     }
 
@@ -145,10 +142,7 @@ namespace OpenTK
         /// </summary>
         /// <param name="type">An instance of the type to check.</param>
         /// <returns>True if T is blittable; false otherwise.</returns>
-        public static bool Check<T>(T type)
-        {
-            return BlittableValueType<T>.Check();
-        }
+        public static bool Check<T>(T type) => BlittableValueType<T>.Check();
 
         /// <summary>
         /// Checks whether type is a blittable value type.
@@ -156,10 +150,7 @@ namespace OpenTK
         /// <param name="type">An instance of the type to check.</param>
         /// <returns>True if T is blittable; false otherwise.</returns>
         [CLSCompliant(false)]
-        public static bool Check<T>(T[] type)
-        {
-            return BlittableValueType<T>.Check();
-        }
+        public static bool Check<T>(T[] type) => BlittableValueType<T>.Check();
 
         /// <summary>
         /// Checks whether type is a blittable value type.
@@ -167,10 +158,7 @@ namespace OpenTK
         /// <param name="type">An instance of the type to check.</param>
         /// <returns>True if T is blittable; false otherwise.</returns>
         [CLSCompliant(false)]
-        public static bool Check<T>(T[,] type)
-        {
-            return BlittableValueType<T>.Check();
-        }
+        public static bool Check<T>(T[,] type) => BlittableValueType<T>.Check();
 
         /// <summary>
         /// Checks whether type is a blittable value type.
@@ -178,10 +166,7 @@ namespace OpenTK
         /// <param name="type">An instance of the type to check.</param>
         /// <returns>True if T is blittable; false otherwise.</returns>
         [CLSCompliant(false)]
-        public static bool Check<T>(T[,,] type)
-        {
-            return BlittableValueType<T>.Check();
-        }
+        public static bool Check<T>(T[,,] type) => BlittableValueType<T>.Check();
 
         /// <summary>
         /// Checks whether type is a blittable value type.
@@ -189,10 +174,7 @@ namespace OpenTK
         /// <param name="type">An instance of the type to check.</param>
         /// <returns>True if T is blittable; false otherwise.</returns>
         [CLSCompliant(false)]
-        public static bool Check<T>(T[][] type)
-        {
-            return BlittableValueType<T>.Check();
-        }
+        public static bool Check<T>(T[][] type) => BlittableValueType<T>.Check();
 
         /// <summary>
         /// Returns the size of the specified value type in bytes or 0 if the type is not blittable.
@@ -205,7 +187,7 @@ namespace OpenTK
         {
             if (!Check(type))
             {
-                throw new ArgumentException("type");
+                throw new ArgumentException(nameof(type));
             }
 
             return BlittableValueType<T>.Stride;
@@ -223,7 +205,7 @@ namespace OpenTK
         {
             if (!Check(type))
             {
-                throw new ArgumentException("type");
+                throw new ArgumentException(nameof(type));
             }
 
             return BlittableValueType<T>.Stride;
@@ -241,7 +223,7 @@ namespace OpenTK
         {
             if (!Check(type))
             {
-                throw new ArgumentException("type");
+                throw new ArgumentException(nameof(type));
             }
 
             return BlittableValueType<T>.Stride;
@@ -259,7 +241,7 @@ namespace OpenTK
         {
             if (!Check(type))
             {
-                throw new ArgumentException("type");
+                throw new ArgumentException(nameof(type));
             }
 
             return BlittableValueType<T>.Stride;
