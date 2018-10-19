@@ -59,7 +59,7 @@ namespace OpenTK
 
             public System.Drawing.Point ToPoint() => new System.Drawing.Point(X, Y);
 
-            public override string ToString() => "Point {" + X+ ", " + Y+ ")";
+            public override string ToString() => $"Point ({X}, {Y})";
         }
 
         [System.Security.SuppressUnmanagedCodeSecurity]
