@@ -13,6 +13,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "project", "project", "{5EEE
 		stylecop.ruleset = stylecop.ruleset
 	EndProjectSection
 EndProject
+
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "documentation", "documentation", "{4EAF040E-2FBB-4D5A-8DE0-ED5872F173E2}"
+	ProjectSection(SolutionItems) = preProject
+		documentation/ISSUE_TEMPLATE.md = .github/ISSUE_TEMPLATE.md
+		documentation/PULL_REQUEST_TEMPLATE.md = .github/PULL_REQUEST_TEMPLATE.md
+	EndProjectSection
+EndProject
+
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Generator.Bind", "src\Generator.Bind\Generator.Bind.csproj", "{4828A378-F24E-4BB0-BF5F-C4C6C9082081}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenTK.Input", "src\OpenTK.Input\OpenTK.Input.csproj", "{FD2151DE-0663-4100-9AB5-D1E22CF2144D}"

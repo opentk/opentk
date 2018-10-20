@@ -151,6 +151,8 @@ Contributing
 4. When ready, issue a Pull Request (PR) against the _develop_ branch of https://github.com/opentk/opentk
 
 For details on coding style and best practices, refer to https://github.com/opentk/opentk/wiki/Contributing
+Refer to [the Style Guide](https://github.com/opentk/opentk/documentation/The%20OpenTK%20Style%20Guide/main.pdf) for style
+information.
 
 Some areas we could really use your help:
 - Tutorials for OpenGL 3.x and 4.x. [Inspiration here](https://github.com/g-truc/ogl-samples)
