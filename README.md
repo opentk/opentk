@@ -31,7 +31,7 @@ Features
 - Improve your code flow with strong types and inline documentation
 - Windowing systems to help get you started
 - Input, and other game essentials.
-- Performant, highly optimized and bug-free linear algebra library
+- Performant, highly optimized and reliable linear algebra library
 - Write once run everywhere
 
 OpenTK is available for Windows, Linux, Mac OS X, *BSD, SteamOS, Android and iOS. It can be used standalone or integrated into a GUI (Windows.Forms, WPF, GTK+, Qt, VTK, ...)
