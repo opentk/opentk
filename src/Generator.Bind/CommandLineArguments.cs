@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using CommandLine;
+using JetBrains.Annotations;
 using static Bind.TargetAPI;
 
 namespace Bind
@@ -8,7 +9,8 @@ namespace Bind
     /// <summary>
     /// Holds command-line arguments, parsed from the command line.
     /// </summary>
-    public class CommandLineArguments
+    [UsedImplicitly(ImplicitUseTargetFlags.WithMembers)]
+    public sealed class CommandLineArguments
     {
         /// <summary>
         /// Gets or sets the base input path where the binder looks for specification files.

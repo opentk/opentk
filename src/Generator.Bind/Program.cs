@@ -9,6 +9,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Runtime;
 using System.Threading.Tasks;
 using Bind.Baking;
 using Bind.Baking.Overloading;
@@ -62,6 +63,8 @@ namespace Bind
         /// <returns>An integer, indicating success or failure. On a failure, a nonzero value is returned.</returns>
         private static async Task<int> Main(string[] args)
         {
+            // force the GC to a suitable mode.
+            GCSettings.LatencyMode = GCLatencyMode.Batch;
             Console.WriteLine($"OpenGL binding generator {Assembly.GetExecutingAssembly().GetName().Version} for OpenTK.");
             Console.WriteLine("For comments, bugs and suggestions visit http://github.com/opentk/opentk");
             Console.WriteLine();
@@ -82,7 +85,7 @@ namespace Bind
             stopwatch.Stop();
 
             Console.WriteLine();
-            Console.WriteLine("Bindings generated in {0} seconds.", stopwatch.Elapsed.Ticks / 10000000.0);
+            Console.WriteLine("Bindings generated in {0} seconds.", stopwatch.Elapsed.TotalSeconds);
 
             return 0;
         }
@@ -90,6 +93,16 @@ namespace Bind
         /// <summary>
         /// Asynchronously generates bindings for the API described by the given <see cref="IGeneratorSettings"/>
         /// object.
+        ///
+        /// Broadly, this takes the following steps:
+        /// 1) Load the base API.
+        /// 2) Bake overrides into the API
+        /// 3) Bake Documentation into the API
+        /// 4) Create mappings between OpenGL types and C# types
+        /// 5) Apply the mappings to the API
+        /// 6) Bake convenience overloads into the API (adding unsafe, etc)
+        /// 7) Write the bindings to the files.
+        ///
         /// </summary>
         /// <param name="generatorSettings">The settings describing the API.</param>
         /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>

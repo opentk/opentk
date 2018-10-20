@@ -6,7 +6,7 @@ using JetBrains.Annotations;
 namespace Bind.XML.Overrides.Enumerations
 {
     /// <summary>
-    /// Represents an enumeration definition in an API.
+    /// Represents an enumeration definition in an API, which has been overridden.
     /// </summary>
     public class EnumerationOverride
     {

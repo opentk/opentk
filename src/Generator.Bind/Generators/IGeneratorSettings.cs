@@ -86,6 +86,12 @@ namespace Bind.Generators
         string APITypemap { get; }
 
         /// <summary>
+        /// Gets the license text that will be prepended to any generated bindings file.
+        /// </summary>
+        [NotNull]
+        string LicenseText { get; }
+
+        /// <summary>
         /// Gets the range of versions that should be included in the generation.
         /// </summary>
         [NotNull]

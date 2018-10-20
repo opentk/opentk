@@ -69,7 +69,7 @@ namespace Bind.XML.Signatures.Functions
         /// <summary>
         /// Gets a value indicating whether the function has generic type parameters.
         /// </summary>
-        public bool HasGenericTypeParameters => GenericTypeParameters.Any();
+        public bool HasGenericTypeParameters => GenericTypeParameters.Count > 0;
 
         /// <summary>
         /// Gets a value indicating whether the function is deprecated.
