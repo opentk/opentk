@@ -369,6 +369,10 @@ foreach (var item in list) { // ... }
 
 This rule extends to formatting of method calls and various initializers when they need to be split over more than one line. OpenTK uses a similar block-based style when method calls need to be wrapped.
 
+\begin{must}{Braces must not be omitted}
+Braces must not be omitted from if statements, loops, case labels, switches, and similar constructs.
+\end{must}
+
 \begin{must}{Method calls and initializers must be wrapped correctly}
 When a method call or initializer must be wrapped, it should be wrapped using block-style formatting, similar to the Allman style for brace layout.
 \end{must}
@@ -743,6 +747,17 @@ is to be preferred over
 bool result = value == null;
 bool result = value != null;
 \end{code}
+
+\subsection{Garbage Collection}
+\begin{should}{"Hot paths" should minimize heap allocations}
+"Hot paths" refer to code that will be executed in a significant portion of an application's lifetime - this includes things like event loops, frame rendering, low-level API calls, et cetera. 
+
+Heap allocations should be kept at an absolute minimum on these paths, in order to avoid costly garbage collection in critical paths.
+\end{should}
+
+The Heap Allocations Viewer plugin for R\# and Rider by JetBrains is an excellent tool for detecting and eliminating these allocations.
+
+See https://blog.jetbrains.com/dotnet/2014/06/06/heap-allocations-viewer-plugin/.
 
 \printbibliography
 \end{document}
