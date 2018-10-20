@@ -7,7 +7,7 @@ namespace Bind.XML.Signatures.Enumerations
     /// <summary>
     /// Represents an enumeration definition in an API.
     ///
-    /// This is a collection of values that functions can take. These are very much like enums in C#.
+    /// This is a collection of values that functions can take. These are enums in C#.
     /// </summary>
     public class EnumerationSignature
     {
