@@ -1,0 +1,763 @@
+\documentclass[11pt,a4paper]{article}
+% ======
+% Packages
+% ======
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[backend=biber,bibencoding=utf8]{biblatex}
+\usepackage{graphicx}
+\usepackage{ifmtarg}
+\usepackage{environ}
+\usepackage[tikz]{bclogo}
+\usepackage{tikz}
+\usepackage[titles]{tocloft}
+\usepackage{etoolbox}
+\usepackage{listings}
+\usepackage[T1]{fontenc}
+\usepackage{inconsolata}
+\usepackage[printwatermark]{xwatermark}
+
+\usetikzlibrary{calc}
+
+% ======
+% Setup
+% ======
+\addbibresource{bibliography.bib}
+\graphicspath{{./graphics/}}
+
+\makeatletter
+\newcommand{\selectifempty}[3]
+{
+      \@ifmtarg{#1}{#2}{#3}
+}
+\makeatother
+
+\definecolor{bluekeywords}{rgb}{0,0,1}
+\definecolor{greencomments}{rgb}{0,0.5,0}
+\definecolor{redstrings}{rgb}{0.64,0.08,0.08}
+\definecolor{xmlcomments}{rgb}{0.5,0.5,0.5}
+\definecolor{types}{rgb}{0.17,0.57,0.68}
+
+\usepackage{listings}
+\lstset{language=[Sharp]C,
+captionpos=b,
+%numbers=left, 
+%numberstyle=\tiny, 
+frame=lines, 
+showspaces=false,
+showtabs=false,
+breaklines=true,
+showstringspaces=false,
+breakatwhitespace=true,
+escapeinside={(*@}{@*)},
+commentstyle=\color{greencomments},
+morekeywords={partial, var, value, get, set},
+keywordstyle=\color{bluekeywords},
+stringstyle=\color{redstrings},
+basicstyle=\ttfamily\small,
+}
+
+\newsavebox\mybox
+\savebox\mybox{\tikz[color=gray,opacity=0.3]\node{DRAFT};}
+\newwatermark*[
+  allpages,
+  angle=45,
+  scale=6,
+  xpos=-20,
+  ypos=15
+]{\usebox\mybox}
+
+% ======
+% Custom lists
+% ======
+
+\newcommand{\listruletitle}{List of Rules}
+\newlistof[section]{rules}{exp}{\listruletitle}
+
+\newcounter{rule}[section]
+\renewcommand{\therule}
+{
+    \arabic{section}.\arabic{subsection}.\arabic{rule}
+}
+
+\cftsetindents{rules}{1.5em}{3.0em}
+\setlength{\cftrulesnumwidth}{1.5cm}
+
+% ======
+% Custom environments
+% ======
+
+\lstnewenvironment{code}[1][]
+{
+    \medskip
+    \noindent
+    \centering
+    \newline
+    \minipage{\textwidth}
+    \lstset{
+      caption=#1
+    }
+}
+{
+    \endminipage
+    \medskip
+}
+
+\NewEnviron{must}[2][]
+{    
+    \refstepcounter{rule}
+    \addcontentsline{toc}{rules}{\protect\numberline{\therule}\selectifempty{#1}{#2}{#1: #2}}
+    \par
+    \medskip
+    \noindent
+    \begin{tikzpicture}
+        \node[inner sep=0pt] (box) 
+        {
+            \parbox[t]{.99\textwidth}
+            {
+                \begin{minipage}{.3\textwidth}
+                    \centering
+                     \tikz[scale=5]
+                     \node[scale=0.25]
+                     {
+                         \includegraphics{opentk-red-triangle}
+                     };
+                \end{minipage}
+                \begin{minipage}{.65\textwidth}
+                    \textbf
+                    {
+                        \therule \selectifempty{#1}{#2}{#1: #2}
+                    }
+                    \par\smallskip
+                    \BODY
+                \end{minipage}\hfill
+            }
+        };
+        % Draw the clamps
+        \draw[red!75!black,line width=3pt] 
+            ( $ (box.north east) + (-5pt,3pt) $ ) -- ( $ (box.north east) + (0,3pt) $ ) -- ( $ (box.south east) + (0,-3pt) $ ) -- + (-5pt,0);
+        \draw[red!75!black,line width=3pt] 
+            ( $ (box.north west) + (5pt,3pt) $ ) -- ( $ (box.north west) + (0,3pt) $ ) -- ( $ (box.south west) + (0,-3pt) $ ) -- + (5pt,0);
+    \end{tikzpicture}
+    \par
+    \medskip
+}
+
+\NewEnviron{should}[2][]
+{
+    \refstepcounter{rule}
+    \addcontentsline{toc}{rules}{\protect\numberline{\therule}\selectifempty{#1}{#2}{#1: #2}}
+    \par
+    \medskip
+     \noindent
+    \begin{tikzpicture}
+        \node[inner sep=0pt] (box) 
+        {
+            \parbox[t]{.99\textwidth}
+            {
+                \begin{minipage}{.3\textwidth}
+                    \centering
+                     \tikz[scale=5]
+                     \node[scale=0.25]
+                     {
+                         \includegraphics{opentk-yellow-rhombus}
+                     };
+                \end{minipage}
+                \begin{minipage}{.65\textwidth}
+                    \textbf
+                    {
+                        \therule \selectifempty{#1}{#2}{#1: #2}
+                    }
+                    \par\smallskip
+                    \BODY
+                \end{minipage}\hfill
+            }
+        };
+        % Draw the clamps
+        \draw[yellow!75!black,line width=3pt] 
+            ( $ (box.north east) + (-5pt,3pt) $ ) -- ( $ (box.north east) + (0,3pt) $ ) -- ( $ (box.south east) + (0,-3pt) $ ) -- + (-5pt,0);
+        \draw[yellow!75!black,line width=3pt] 
+            ( $ (box.north west) + (5pt,3pt) $ ) -- ( $ (box.north west) + (0,3pt) $ ) -- ( $ (box.south west) + (0,-3pt) $ ) -- + (5pt,0);
+    \end{tikzpicture}
+    \par
+    \medskip
+}
+
+\NewEnviron{may}[2][]
+{
+    \refstepcounter{rule}
+    \addcontentsline{toc}{rules}{\protect\numberline{\therule}\selectifempty{#1}{#2}{#1: #2}}
+    \par
+    \medskip
+    \noindent
+    \begin{tikzpicture}
+        \node[inner sep=0pt] (box) 
+        {
+            \parbox[t]{.99\textwidth}
+            {
+                \begin{minipage}{.3\textwidth}
+                    \centering
+                     \tikz[scale=5]
+                     \node[scale=0.25]
+                     {
+                         \includegraphics{opentk-blue-hexagon}
+                     };
+                \end{minipage}
+                \begin{minipage}{.65\textwidth}
+                    \textbf
+                    {
+                        \therule \selectifempty{#1}{#2}{#1: #2}
+                    }
+                    \par\smallskip
+                    \BODY
+                \end{minipage}\hfill
+            }
+        };
+        % Draw the clamps
+        \draw[blue!75!black,line width=3pt] 
+            ( $ (box.north east) + (-5pt,3pt) $ ) -- ( $ (box.north east) + (0,3pt) $ ) -- ( $ (box.south east) + (0,-3pt) $ ) -- + (-5pt,0);
+        \draw[blue!75!black,line width=3pt] 
+            ( $ (box.north west) + (5pt,3pt) $ ) -- ( $ (box.north west) + (0,3pt) $ ) -- ( $ (box.south west) + (0,-3pt) $ ) -- + (5pt,0);
+    \end{tikzpicture}
+    \par
+    \medskip
+}
+
+% ======
+% Title
+% ======
+
+\title
+{
+    \textbf
+    {
+        The OpenTK Style Guide
+    }
+}
+
+% ======
+% Author
+% ======
+    
+\author
+{
+    The OpenTK Maintenance Team\\
+    \texttt{https://opentk.github.io/}
+    \and
+    Jarl Gullberg\\
+    \texttt{jarl.gullberg@gmail.com}
+}
+
+\date
+{
+    \today\\
+    Version 1.0.0
+}
+
+\begin{document}
+\maketitle
+
+\begin{center}
+    \includegraphics[scale=1]{opentk-blue-hexagon}
+\end{center}
+
+\pagebreak
+\tableofcontents
+
+\pagebreak
+\listoffigures
+
+\pagebreak
+\section*{Foreword}
+\addcontentsline{toc}{section}{\protect\numberline{\thesection}Foreword}
+This document outlines the style and code conventions used in the OpenTK project. While the codebase is an old, very large chunk of code, all new additions or alterations to the project must follow these guidelines. It is intended as an exhaustive list of all conventions used in OpenTK and its related projects, and may be changed as the conventions evolve or new cases to take into consideration appear. 
+
+It's important for any and all contributions to adhere to this set of guidelines in order to maintain a readable, consistent, and maintainable codebase. It's recommended that pull requests submitters take a few minutes and leaf through the document before submitting their pull requests to minimize review times.
+
+Beyond this document, a significant number of rules are implemented using StyleCop.Analyzers. These rules are verified on-the-fly if you're using an editor that supports them, and will be raised as compiler errors if they are detected in the code. Refer to the "stylecop.rules" file for an exhaustive list, and the StyleCop documentation for descriptions of each rule.
+
+The document is divided into several chapters, each dealing with a specific area of the guidelines. See the table of contents for an exhaustive list.
+
+\pagebreak
+\subsection{Rule Types}
+Within each chapter, a set of rules will be listed. Each rule's definition will be described, and, if applicable, an example will be given. Rules may optionally be accompanied by a C\# compiler warning code (either a builtin code, or one provided by an external analyzer such as StyleCop), which refers to the compiler warning or error that will be raised in case of a detected violation.
+
+Each rule falls into one of the following categories.
+
+\subsubsection{Must}
+Rules in this category must be followed without exception. Any pull request, code alteration, or contribution that breaks a rule in this category will be rejected until the issue has been rectified.
+
+\begin{must}[EX0001]{A rule that must be followed}
+The description of the rule.
+\end{must}
+
+\subsubsection{Should}
+Rules in this category should be adhered to as closely as possible, but may have exceptions or contextual variations. Typically, the rule should be applied as a \textit{must} rule, but violations will not result in an outright rejection. Violations will, however, be subject to close review.
+
+\begin{should}[EX0002]{A rule that should be followed}
+The description of the rule.
+\end{should}
+
+\subsubsection{May}
+Rules in this category are non-critical, and are typically characterized as general guidelines and not hard rules. They're nice to have, and most likely lead to better or more readable code, but they can be ignored.
+
+\begin{may}{An optional rule}
+The description of the rule.
+\end{may}
+
+\pagebreak
+\begin{center}
+    \huge{Rules \& Guidelines}
+\end{center}
+
+\pagebreak
+\section{Project Structure}
+\begin{should}{Files should be organized according to their namespace}
+Files shall be placed in subdirectories which map to the namespace they are part of. 
+\end{should}
+
+For example, if the file contains a type with the namespace\\ \texttt{OpenTK.Platform.X11}, it shall reside in \texttt{OpenTK/Platform/X11}. Subfolders within a major namespace may be used for organizational purposes if creating another namespace for that folder would add verbosity without adding useful separation. For example, \texttt{OpenTK/XML} might contain the folders \texttt{OpenTK/XML/Interfaces} and \texttt{OpenTK/XML/Implementations}. These folders are there for organizational purposes, but would only complicate the namespace tree if the above rule was enforced.
+
+\begin{should}{Files without a namespace should be placed correctly}
+If the file does not contain a type or a namespace, it shall be placed in a folder relevant to its usage or perceived namespace - That is, the following example an XML file which contains localizations would be placed in a folder named `Localizations`.
+\end{should}
+
+\section{Formatting}
+\subsection{General}
+This section contains some general rules that apply to all files in the project - text, source code, or data. They deal with generic requirements and restrictions that are language-agnostic, and serve to facilitate easier cross-editor and cross-platform support.
+
+\begin{must}{Line width must not exceed 120 columns}
+Any line that is longer than 120 columns (documentation, code, or otherwise) must be wrapped at the nearest word boundary and continue on the next line. 
+\end{must}
+
+A "word boundary" is mentioned here. To clarify, a word boundary is any point at which a typical word starts or ends (spaces, commas, punctuation, et cetera), as well as programmatic word boundaries - the end of an identifier, the end of an assignment, and so on. You should wrap as close as possible to the point at which you need to wrap, unless another rule applies.
+
+\begin{must}{All files must end with a line feed character}
+In accordance with the POSIX specification, a line is defined as a string of characters ending with a line feed character. As such, all files must end with a single line feed character.
+\end{must}
+
+\begin{must}{Files must be saved as UTF-8}
+Files shall be encoded in `UTF-8` with no byte order mark. 
+\end{must}
+
+\begin{must}{Lines must end with a line feed character}
+Lines shall be terminated by a single line feed character. Under no circumstances shall a return carriage character occur in a file, except as a part of a string literal.
+\end{must}
+
+\subsection{Braces, Parens, and Brackets}
+\begin{must}{Braces must be formatted correctly}
+OpenTK exclusively uses the Allman brace style. No other brace styles are allowed.
+\end{must}
+
+As an example to the above rule, the following style is valid, while the subsequent is not.
+
+\begin{code}[Correct formatting]
+foreach (var item in list)
+{
+    // ...
+}
+\end{code}
+
+\begin{code}[Incorrect formatting]
+foreach (var item in list) {
+    // ...
+}
+
+foreach (var item in list) { // ... }
+\end{code}
+
+This rule extends to formatting of method calls and various initializers when they need to be split over more than one line. OpenTK uses a similar block-based style when method calls need to be wrapped.
+
+\begin{must}{Braces must not be omitted}
+Braces must not be omitted from if statements, loops, case labels, switches, and similar constructs.
+\end{must}
+
+\begin{must}{Method calls and initializers must be wrapped correctly}
+When a method call or initializer must be wrapped, it should be wrapped using block-style formatting, similar to the Allman style for brace layout.
+\end{must}
+
+\begin{must}{Wrapped method calls must be aligned correctly}
+If a method call chain is wrapped, all method calls (including the first) must be placed separately on their own lines.
+If a single method call is wrapped, it must remain on the same line as the object it is invoked on, except when remaining exceeds the maximum line width.
+\end{must}
+
+\begin{code}[Wrapping an initializer]
+var myArray = new[] 
+{
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+}; 
+\end{code}
+
+\begin{code}[Wrapping a method call]
+var linqResults = myCollection
+    .Where(x => x > 10)
+    .Select
+    (
+        x => 
+            new OtherType(x, x * 2);
+    );
+    
+var otherResults = myCollection.Select
+    (
+        x => 
+        {
+            var myThing = DoThingWith(x);
+            var myOtherThing = DoOtherThing(x);
+            
+            return new OtherType(x, x * 2);
+        }
+    );
+\end{code}
+
+Notice how the call to \texttt{Select} is wrapped. Instead of sharing the opening parens with the call, it is placed on a new line. This also extends to method declarations.
+
+\begin{must}{Method declarations must be wrapped correctly}
+When a method declaration must be wrapped, its parameters should be wrapped using block-style formatting, similar to the Allman style for brace layout.
+\end{must}
+
+\begin{code}[Wrapping a method declaration]
+public void MyBigMethod
+(
+    int index,
+    MyLongClassNameThatKeepsGoingAndEatsSpace instance,
+    ActionType action
+)
+{
+    // ...
+}
+\end{code}
+
+In the majority of cases, having methods that do not require excessively long calls is preferable.
+
+\begin{must}{Braces must not have additional blank lines}
+Opening braces may not be preceded or succeeded by a blank line.
+Closing braces must be succeeded by a blank line, unless the next line contains another closing brace. If that is the case, then it must not be followed by a blank line.
+\end{must}
+
+That is, the following example 
+\begin{code}[Good formatting]
+if (myThing)
+{
+    DoThing();
+}
+
+AnotherThing();
+
+// and
+public void MyMethod()
+{
+    if (myThing)
+    {
+        return;
+    }
+}
+\end{code}
+
+is to be preferred over
+
+\begin{code}[Extraneous lines]
+if (myThing)
+{
+
+    DoThing();
+}
+
+AnotherThing();
+
+// and
+public void MyMethod()
+{
+    if (myThing)
+    {
+    
+        return;
+        
+    }
+    
+}
+\end{code}
+
+\section{Naming}
+\subsection{Files}
+\begin{must}{Files must be named correctly}
+The file ending shall be in all lower case, whereas the name of the file shall match the name of the type exactly. A single punctuation mark shall separate the name and file extension. No more than one punctuation mark may be present in the filename.
+\end{must}
+
+\begin{should}{Filenames should match their contained type}
+Files should share the name of the type they contain, excluding the namespace. This includes generic types - no extra type information should be annotated in the file name.
+\end{should}
+
+In some cases, there may exist both a generic and a non-generic declaration of a type. In this case, the file containing the nongeneric type takes precedence, and the following rule comes into effect.
+
+\begin{may}{Names of files containing a generic type may be suffixed}
+If required, the name of a file that contains a generic type may be suffixed by the names of the generic arguments to the class, held within a set of braces.
+\end{may}
+
+As an example, given two type definitions,
+
+\begin{code}[Two declarations with the same name]
+public interface ISomeInterface { }
+public interface ISomeInterface<in TInput, out TOutput> { }
+\end{code}
+
+would be placed into \texttt{ISomeInterface.cs} and \texttt{ISomeInterface\string{TInput, TOutput\string}.cs}, respectively.
+
+\subsection{Types and Members}
+While most of these naming rules are covered by StyleCop, they still bear mentioning here - StyleCop is not entirely exhaustive, and some of these rules are not covered.
+
+\begin{must}{Identifiers must not contain underscores}
+Identifiers (type names, variable names, enumeration members, etc) must not contain underscores, except as overridden by another rule.
+\end{must}
+
+\begin{must}{Types must be named correctly}
+All types must be named according to \texttt{PascalCase}.
+\end{must}
+
+\begin{must}{Fields must be named correctly}
+Instance fields must be prefixed with the underscore (\_) character, and be named according to \texttt{camelCase}.
+Static fields must \textit{not} be prefixed with an underscore, and must be named according to \texttt{PascalCase}.
+\end{must}
+
+\begin{must}{Methods must be named correctly}
+All methods (including local methods) must be named according to \texttt{PascalCase}.
+\end{must}
+
+\begin{must}{Properties must be named correctly}
+All properties must be named according to \texttt{PascalCase}.
+\end{must}
+
+\begin{must}{Locals must be named correctly}
+All locals (local variables, method parameters, lambda arguments, etc) must be named according to \texttt{camelCase}.
+\end{must}
+
+\begin{must}{Named \texttt{ValueTuple} members must be named correctly}
+Named \texttt{ValueTuple} members are, for all intents and purposes, considered public properties on a class. Therefore, they must be named according to \texttt{PascalCase}.
+\end{must}
+
+\begin{must}{Abbreviations must use correct casing}
+In accordance with the standard library, abbreviations must be fully capitalized if they are two characters or less; in all other cases, they must be PascalCased. For instance, use "ID", but also "Http".
+\end{must}
+
+\section{Declarations}
+\begin{must}{Declarations must be correctly ordered}
+Members in a type declaration must be declared in the following order:
+\begin{itemize}
+\item Public fields
+\item Private fields
+\item Public properties
+\item Private properties
+\item Constructors
+\item Public methods
+\item Private methods
+\item Overridden methods
+\item Interface implementations
+\end{itemize}
+
+Any static declaration must come last in its corresponding section. Within a section, there is no sorting order. Apply common sense.
+\end{must}
+
+\begin{must}{Types must be declared within a namespace}
+Any type declaration must appear inside a namespace.
+\end{must}
+
+\subsection{Methods}
+\begin{should}{Methods should be private}
+Whenever possible, methods should be declared private, or public as part of an internal class.
+\end{should}
+
+In order to reduce the public API surface of the library beyond what is actually maintained, the set of methods exposed to the end user should be as small as possible.
+
+\subsection{Properties}
+\begin{should}{Properties should be auto-properties}
+Whenever possible, a property's accessors should be automatically implemented.
+\end{should}
+
+\begin{must}{Auto-properties must be declared on one line}
+If a property is declared as an auto-property, it must be declared on one line.
+\end{must}
+
+That is, the following example 
+\begin{code}[One line]
+public bool IsCorrect { get; set; }
+\end{code}
+
+is to be preferred over
+
+\begin{code}[Multiple lines]
+public bool IsCorrect 
+{
+    get; 
+    set; 
+}
+\end{code}
+
+\begin{should}{Properties should be expression-bodied}
+Whenever possible, a property should be expression-bodied.
+\end{should}
+
+That is, the following example 
+\begin{code}[One line]
+public int GetSomeValue => _internalValue * 5;
+\end{code}
+
+is to be preferred over
+
+\begin{code}[Multiple lines]
+public bool IsCorrect 
+{
+    get
+    {
+        return _internalValue * 5;
+    }
+}
+\end{code}
+
+
+\section{Documentation}
+\begin{should}{Private members should be documented}
+Whenever possible, the internal API surface should be documented.
+\end{should}
+
+In order to help the next person along, all members should be documented - not just the members exposed to the end user.
+
+\begin{must}{Files must have the correct header}
+Files shall contain a file header, containing the following text.
+\end{must}
+
+\begin{code}[File header]
+// 
+//  <filename>
+//
+//  Copyright (C) <year of creation> OpenTK
+//
+//  This software may be modified and distributed under the terms
+//  of the MIT license. See the LICENSE file for details.
+//
+\end{code}
+
+The file header is configured and checked by StyleCop. The most recent version is included in this guide, and will always accompany this rule.
+
+\section{Language Features}
+\subsection{Declarations}
+\begin{should}{\texttt{var} should be used whenever possible}
+Implicitly typed local variables should be used whenever possible, in order to reduce typing and code verbosity.
+\end{should}
+
+While \texttt{var} is useful, it may sometimes obscure valuable information, and an explicit type might be a better fit.
+
+In general, an explicit type should be used over \texttt{var} if
+\begin{itemize}
+\item Knowing the type is explicitly required, or
+\item Knowing the type is valuable or particularly useful in understanding the surrounding code
+\end{itemize}
+
+In all other cases, however, using implicit typing is preferred.
+
+\begin{should}{\texttt{out} variables should be inlined}
+Whenever possible, \texttt{out} variables should be inlined into their respective method calls.
+\end{should}
+
+That is, the following example 
+\begin{code}[Inlined out]
+MyMethod(out var myThing);
+\end{code}
+
+is to be preferred over
+
+\begin{code}[External out]
+MyType myThing;
+MyMethod(out myThing);
+\end{code}
+
+\begin{should}{Object initializers should be used}
+Whenever possible, object initializers should be used instead of assigning members after the fact.
+\end{should}
+
+That is, the following example 
+\begin{code}[Object initializer]
+var myThing = new MyThing
+{
+    MyProp = true,
+    MySecondProp = 42
+};
+\end{code}
+
+is to be preferred over
+
+\begin{code}[Post-construction assignments]
+var myThing = new MyThing();
+myThing.MyProp = true;
+myThing.MySecondProp = 42;
+\end{code}
+
+\subsection{Invocations}
+\begin{should}{Events should be directly invoked}
+Events shall not have wrapper methods for invoking them unless absolutely required. Instead, null-propagation operators shall be used to invoke them directly.
+\end{should}
+
+That is, the following example 
+\begin{code}[Direct invocation]
+MyEvent?.Invoke();
+\end{code}
+
+is to be preferred over
+
+\begin{code}
+private void OnMyEvent()
+{
+    MyEvent?.Invoke();
+    
+    // or
+    
+    if (!(MyEvent is null))
+    {
+        MyEvent();
+    }
+}
+
+OnMyEvent();
+\end{code}
+
+\subsection{Null Checking}
+Null checking has evolved with the advent of C\# 7.0, allowing us to use pattern matching to detect null values. In the ongoing move to treat null as a more and more exceptional value, this is a very good thing, and lets us check for null in a faster, safer way.
+
+\begin{should}{Null should be treated as an exceptional value}
+\texttt{null} is to be treated as an exceptional value, and should not be a typical return value. Methods should reject null as valid input parameters to the broadest extent possible, and should not return null themselves. In the instances where a method must return or accept null, it should be explicitly documented, and obviously implemented.
+\end{should}
+
+\begin{should}{Null should be checked using pattern matching}
+To assist in highlighting \texttt{null}'s exceptionality, and to avoid overridden equality operators, null checking shall be performed using pattern matching.
+\end{should}
+
+That is, the following example
+\begin{code}
+bool result = value is null; // true
+bool result = !(value is null); // false
+\end{code}
+
+is to be preferred over
+
+\begin{code}
+bool result = value == null;
+bool result = value != null;
+\end{code}
+
+\subsection{Garbage Collection}
+\begin{should}{"Hot paths" should minimize heap allocations}
+"Hot paths" refer to code that will be executed in a significant portion of an application's lifetime - this includes things like event loops, frame rendering, low-level API calls, et cetera. 
+
+Heap allocations should be kept at an absolute minimum on these paths, in order to avoid costly garbage collection in critical paths.
+\end{should}
+
+The Heap Allocations Viewer plugin for R\# and Rider by JetBrains is an excellent tool for detecting and eliminating these allocations.
+
+See https://blog.jetbrains.com/dotnet/2014/06/06/heap-allocations-viewer-plugin/.
+
+\printbibliography
+\end{document}

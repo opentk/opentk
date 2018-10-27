@@ -33,7 +33,7 @@ namespace OpenTK.Mathematics
         public const float PiOver3 = Pi / 3;
 
         /// <summary>
-        /// Definesthe value of  Pi divided by four as a <see cref="float"/>.
+        /// Defines the value of  Pi divided by four as a <see cref="float"/>.
         /// </summary>
         public const float PiOver4 = Pi / 4;
 
@@ -189,23 +189,20 @@ namespace OpenTK.Mathematics
         /// which is found in the Quake III source code. This implementation comes from
         /// http://www.codemaestro.com/reviews/review00000105.html. For the history of this method, see
         /// http://www.beyond3d.com/content/articles/8/.
+        /// double magic number from: https://cs.uwaterloo.ca/~m32rober/rsqrt.pdf
+        /// chapter 4.8.
         /// </remarks>
         public static double InverseSqrtFast(double x)
         {
-            return InverseSqrtFast((float)x);
-
-            // TODO: The following code is wrong. Fix it, to improve precision.
-#if false
             unsafe
             {
-                double xhalf = 0.5f * x;
-                int i = *(int*)&x;              // Read bits as integer.
-                i = 0x5f375a86 - (i >> 1);      // Make an initial guess for Newton-Raphson approximation
-                x = *(float*)&i;                // Convert bits back to float
-                x = x * (1.5f - xhalf * x * x); // Perform left single Newton-Raphson step.
+                double xhalf = 0.5 * x;
+                long i = *(long*)&x; // Read bits as long.
+                i = 0x5fe6eb50c7b537a9 - (i >> 1); // Make an initial guess for Newton-Raphson approximation
+                x = *(double*)&i; // Convert bits back to double
+                x = x * (1.5 - (xhalf * x * x)); // Perform left single Newton-Raphson step.
                 return x;
             }
-#endif
         }
 
         /// <summary>
