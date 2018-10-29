@@ -1,6 +1,6 @@
 language: csharp
 
-mono: latest
+mono: preview
 dotnet: 2.1.401
 
 solution: OpenTK.sln

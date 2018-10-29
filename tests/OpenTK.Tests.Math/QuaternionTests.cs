@@ -15,8 +15,8 @@ namespace OpenTK.Tests.Math
             /// <summary>
             /// Checks if a single given value (either pitch, yaw or roll) get converted into correct x,y,z value of quaternion.
             /// </summary>
-            /// <param name="eulerValues">euler angle values</param>
-            /// <param name="expectedResult">expected xyz component of quaternion</param>
+            /// <param name="eulerValues">euler angle values.</param>
+            /// <param name="expectedResult">expected xyz component of quaternion.</param>
             [Theory]
             [MemberData(nameof(QuaternionTestDataGenerator.SingleAxisTestCases), MemberType =
                 typeof(QuaternionTestDataGenerator))]
@@ -35,8 +35,8 @@ namespace OpenTK.Tests.Math
             /// <summary>
             /// Checks if a single given value (either pitch, yaw or roll) get converted into correct x,y,z value of quaternion.
             /// </summary>
-            /// <param name="eulerValues">euler angle values</param>
-            /// <param name="expectedResult">expected xyz component of quaternion</param>
+            /// <param name="eulerValues">euler angle values.</param>
+            /// <param name="expectedResult">expected xyz component of quaternion.</param>
             [Theory]
             [MemberData(nameof(QuaternionTestDataGenerator.SingleAxisTestCases), MemberType =
                 typeof(QuaternionTestDataGenerator))]
@@ -63,8 +63,8 @@ namespace OpenTK.Tests.Math
             /// <summary>
             /// Checks if a single given value (either pitch, yaw or roll) get converted into correct x,y,z value of quaternion.
             /// </summary>
-            /// <param name="eulerValues">euler angle values</param>
-            /// <param name="expectedResult">expected xyz component of quaternion</param>
+            /// <param name="eulerValues">euler angle values.</param>
+            /// <param name="expectedResult">expected xyz component of quaternion.</param>
             [Theory]
             [MemberData(nameof(QuaternionTestDataGenerator.SingleAxisTestCases), MemberType =
                 typeof(QuaternionTestDataGenerator))]
@@ -83,8 +83,8 @@ namespace OpenTK.Tests.Math
             /// <summary>
             /// Checks if a single given value (either pitch, yaw or roll) get converted into correct x,y,z value of quaternion.
             /// </summary>
-            /// <param name="eulerValues">euler angle values</param>
-            /// <param name="expectedResult">expected xyz component of quaternion</param>
+            /// <param name="eulerValues">euler angle values.</param>
+            /// <param name="expectedResult">expected xyz component of quaternion.</param>
             [Theory]
             [MemberData(nameof(QuaternionTestDataGenerator.SingleAxisTestCases), MemberType =
                 typeof(QuaternionTestDataGenerator))]
@@ -103,8 +103,8 @@ namespace OpenTK.Tests.Math
             /// <summary>
             /// Checks if a single given value (either pitch, yaw or roll) get converted into correct x,y,z value of quaternion.
             /// </summary>
-            /// <param name="eulerValues">euler angle values</param>
-            /// <param name="expectedResult">expected xyz component of quaternion</param>
+            /// <param name="eulerValues">euler angle values.</param>
+            /// <param name="expectedResult">expected xyz component of quaternion.</param>
             [Theory]
             [MemberData(nameof(QuaternionTestDataGenerator.SingleAxisTestCases), MemberType =
                 typeof(QuaternionTestDataGenerator))]
@@ -133,7 +133,7 @@ namespace OpenTK.Tests.Math
             /// <summary>
             /// Check if a quaternion returns a a rotation about the correct coordinate axis
             /// </summary>
-            /// <param name="cut">Prepared Quaternion</param>
+            /// <param name="cut">Prepared Quaternion.</param>
             /// <param name="expectedResult">Expected result.</param>
             [Theory]
             [MemberData(nameof(QuaternionTestDataGenerator.ToAxisAngleTestCases), MemberType =

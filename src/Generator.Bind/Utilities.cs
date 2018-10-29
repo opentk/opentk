@@ -4,8 +4,10 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.RegularExpressions;
-using Bind.Structures;
+using System.Text;
+using Bind.Translation.Trimmers;
+using Bind.XML.Overrides.Functions;
+using JetBrains.Annotations;
 
 namespace Bind
 {
@@ -15,68 +17,9 @@ namespace Bind
     internal static class Utilities
     {
         /// <summary>
-        /// Gets a regex that matches known extension names in the specification.
-        /// </summary>
-        public static Regex Extensions { get; private set; }
-
-        /// <summary>
-        /// Gets a regex that matches known acronyms used by the specification.
-        /// </summary>
-        public static Regex Acronyms { get; private set; }
-
-        // Both GL and ES contains SGI extension enums, even though no function
-        // uses them. This is a remnant from the glory days of gl.spec and GL 1.1.
-        // Note: REMOVING THESE WILL BREAK BINARY-COMPATIBILITY WITH OPENTK 1.0,
-        // WRT THE ES 1.1 API.
-        // You have been warned.
-        private static List<string> _extensionNames = new List<string>
-        {
-            "SGI", "SGIS", "SGIX", "IBM", "AMD", "INTEL",
-        };
-
-        /// <summary>
-        /// Merges the given extensions into the current set of extensions.
-        /// </summary>
-        /// <param name="extensions">The extensions to merge in.</param>
-        public static void AddExtensions(IEnumerable<string> extensions)
-        {
-            // Merge the new extensions with the current list of extensions
-            var extensionCount = _extensionNames.Count;
-            _extensionNames.AddRange(
-                extensions.Where(n => !_extensionNames.Contains(n)));
-
-            // If any new extensions have been added,
-            // recreate the Extensions regex.
-            if (_extensionNames.Count != extensionCount)
-            {
-                // Sort longest extensions first, otherwise SGIS may be
-                // incorrectly matched as SGI.
-                _extensionNames.Sort((a, b) => b.Length.CompareTo(a.Length));
-
-                Extensions = new Regex(
-                    string.Join("|", _extensionNames.ToArray()),
-                    RegexOptions.Compiled);
-
-                var acronyms = new[]
-                {
-                    "EGL",  "ES", "GL", "CL",
-                    "RGBA", "BGRA", "RGB", "BGR",
-                    "SRGB", "YCBCR",
-                    "3TC", "DXT", "BPTC", "RGTC",
-                    "3DC", "ATC", "ETC",
-                    "ANGLE",  "MESAX", "MESA",
-                    "ATI"
-                };
-
-                var acronymNames = extensions.Concat(acronyms).ToList();
-                acronymNames.Sort((a, b) => b.Length.CompareTo(a.Length));
-                Acronyms = new Regex(string.Join("|", acronymNames.ToArray()), RegexOptions.Compiled);
-            }
-        }
-
-        /// <summary>
         /// Gets a list of keywords in the C# language.
         /// </summary>
+        [NotNull]
         public static List<string> CSharpKeywords => new List<string>
         {
             "abstract",
@@ -159,95 +102,98 @@ namespace Bind
         };
 
         /// <summary>
-        /// Merges one enum collection into another.
+        /// Gets an array declaration string that matches the given level of array dimensions.
         /// </summary>
-        /// <param name="currentEnums">The enum collection to merge into.</param>
-        /// <param name="newEnums">The enums to merge.</param>
-        internal static void Merge(EnumCollection currentEnums, EnumCollection newEnums)
+        /// <param name="arrayDimensions">The dimension.</param>
+        /// <returns>The string.</returns>
+        [NotNull]
+        public static string GetArrayDimensionString(int arrayDimensions)
         {
-            foreach (var e in newEnums)
-            {
-                Merge(currentEnums, e.Value);
-            }
-        }
-
-        /// <summary>
-        /// Merges the given enum into the enum list. If an enum of the same name exists,
-        /// it merges their respective constants.
-        /// </summary>
-        /// <param name="currentEnums">The enums.</param>
-        /// <param name="newEnum">The new enum.</param>
-        internal static void Merge(EnumCollection currentEnums, EnumDefinition newEnum)
-        {
-            if (!currentEnums.ContainsKey(newEnum.Name))
-            {
-                currentEnums.Add(newEnum.Name, newEnum);
-            }
-            else
-            {
-                var e = currentEnums[newEnum.Name];
-                foreach (var c in newEnum.ConstantCollection.Values)
-                {
-                    Merge(e, c);
-                }
-            }
-        }
-
-        /// <summary>
-        /// Places a new constant in the specified enum, if it doesn't already exist.
-        /// The existing constant is replaced if the new has a numeric value and the old
-        /// has a reference value (eg 0x5 is preferred over AttribMask.Foo).
-        /// </summary>
-        /// <param name="enumDefinition">The enumeration definiton.</param>
-        /// <param name="constantDefinition">The constant definition.</param>
-        internal static void Merge(EnumDefinition enumDefinition, ConstantDefinition constantDefinition)
-        {
-            if (!enumDefinition.ConstantCollection.ContainsKey(constantDefinition.Name))
-            {
-                enumDefinition.ConstantCollection.Add(constantDefinition.Name, constantDefinition);
-            }
-            else
-            {
-                // Tried to add a constant that already exists. If one constant
-                // is like: 'Foo = 0x5' and the other like: 'Foo = Bar.Foo', then
-                // keep the first one.
-                if (!string.IsNullOrEmpty(enumDefinition.ConstantCollection[constantDefinition.Name].Reference))
-                {
-                    enumDefinition.ConstantCollection[constantDefinition.Name] = constantDefinition;
-                }
-            }
-        }
-
-        /// <summary>
-        /// Gets the name of the specification extension that the given name is a part of.
-        /// </summary>
-        /// <param name="name">The name to inspect.</param>
-        /// <param name="returnUnmodified">
-        /// Whether or not to return the extension name unmodified. If false, the extension name will be turned to title
-        /// case.
-        /// </param>
-        /// <returns>The extension name.</returns>
-        internal static string GetExtension(string name, bool returnUnmodified)
-        {
-            var match = Extensions.Match(name);
-            if (!match.Success)
+            if (arrayDimensions == 0)
             {
                 return string.Empty;
             }
 
-            var ext = match.Value;
+            var builder = new StringBuilder();
+            builder.Append('[');
+            builder.Append(new string(',', arrayDimensions - 1));
+            builder.Append(']');
 
-            if (returnUnmodified)
+            return builder.ToString();
+        }
+
+        /// <summary>
+        /// Gets the possible variations on the base name of the given override. Typically, this boils down to the
+        /// following three cases, in order:
+        ///
+        /// * FunctionNamefvEXT
+        /// * FunctionNamefv
+        /// * FunctionName
+        ///
+        /// Care should be taken when creating new overrides that the intended function is targeted.
+        /// </summary>
+        /// <param name="functionOverride">The override to create variations of.</param>
+        /// <returns>The name variations, ordered by length, starting with the longest.</returns>
+        [NotNull, ItemNotNull]
+        public static IEnumerable<string> GetNameVariations([NotNull] FunctionOverride functionOverride)
+        {
+            var extensionTrimmer = new OpenGLFunctionExtensionTrimmer();
+            var dataTypeTrimmer = new OpenGLFunctionDataTypeTrimmer();
+
+            var variations = new List<string>();
+            var currentVariation = functionOverride.BaseName;
+
+            variations.Add(currentVariation);
+
+            if (extensionTrimmer.IsRelevant(functionOverride))
             {
-                return ext;
+                currentVariation = extensionTrimmer.Trim(functionOverride);
+                variations.Add(currentVariation);
             }
 
-            if (ext.Length > 2)
+            if (dataTypeTrimmer.IsRelevant(currentVariation))
             {
-                ext = ext[0] + ext.Substring(1).ToLower();
+                variations.Add(dataTypeTrimmer.Trim(currentVariation));
             }
 
-            return ext;
+            return variations.Distinct().OrderByDescending(v => v.Length);
+        }
+
+        /// <summary>
+        /// Gets the possible variations on the given entry point. Typically, this boils down to the
+        /// following three cases, in order:
+        ///
+        /// * FunctionNamefvEXT
+        /// * FunctionNamefv
+        /// * FunctionName
+        ///
+        /// Care should be taken when creating new overrides that the intended function is targeted.
+        /// </summary>
+        /// <param name="functionEntrypoint">The entrypoint to create variations of.</param>
+        /// <returns>The name variations, ordered by length, starting with the longest.</returns>
+        [NotNull, ItemNotNull]
+        public static IEnumerable<string> GetNameVariations(string functionEntrypoint)
+        {
+            var extensionTrimmer = new OpenGLFunctionExtensionTrimmer();
+            var dataTypeTrimmer = new OpenGLFunctionDataTypeTrimmer();
+
+            var variations = new List<string>();
+            var currentVariation = functionEntrypoint;
+
+            variations.Add(currentVariation);
+
+            if (extensionTrimmer.IsRelevant(currentVariation))
+            {
+                currentVariation = extensionTrimmer.Trim(currentVariation);
+                variations.Add(currentVariation);
+            }
+
+            if (dataTypeTrimmer.IsRelevant(currentVariation))
+            {
+                variations.Add(dataTypeTrimmer.Trim(currentVariation));
+            }
+
+            return variations.Distinct().OrderByDescending(v => v.Length);
         }
     }
 }

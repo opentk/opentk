@@ -1,5 +1,7 @@
 ﻿using System.CodeDom.Compiler;
 using System.IO;
+using System.Threading.Tasks;
+using JetBrains.Annotations;
 
 namespace Bind.Writers
 {
@@ -12,7 +14,7 @@ namespace Bind.Writers
         /// Initializes a new instance of the <see cref="SourceWriter"/> class.
         /// </summary>
         /// <param name="writer">The <see cref="TextWriter"/> to wrap.</param>
-        public SourceWriter(TextWriter writer)
+        public SourceWriter([NotNull] TextWriter writer)
             : base(writer)
         {
         }
@@ -22,7 +24,7 @@ namespace Bind.Writers
         /// </summary>
         /// <param name="writer">The <see cref="TextWriter"/> to wrap.</param>
         /// <param name="tabString">The string of characters to use as a tabulation sequence.</param>
-        public SourceWriter(TextWriter writer, string tabString)
+        public SourceWriter([NotNull] TextWriter writer, [NotNull] string tabString)
             : base(writer, tabString)
         {
         }
@@ -36,10 +38,20 @@ namespace Bind.Writers
         }
 
         /// <summary>
+        /// Writes an unindented line to the document.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        public async Task WriteLineNoTabsAsync()
+        {
+            await InnerWriter.WriteLineAsync(string.Empty);
+        }
+
+        /// <summary>
         /// Indents the <see cref="SourceWriter"/> by one, and returns a handle that can be disposed to unindent the
         /// writer once the writing has been finished.
         /// </summary>
         /// <returns>An indentation handle.</returns>
+        [NotNull]
         public SourceWriterIndentation BeginIndent()
         {
             return new SourceWriterIndentation(this);
@@ -51,6 +63,7 @@ namespace Bind.Writers
         /// </summary>
         /// <param name="withSemicolon">Whether or not the closing brace should be terminated with a semicolon.</param>
         /// <returns>An indentation handle.</returns>
+        [NotNull]
         public SourceWriterBlock BeginBlock(bool withSemicolon = false)
         {
             return new SourceWriterBlock(this, withSemicolon);
