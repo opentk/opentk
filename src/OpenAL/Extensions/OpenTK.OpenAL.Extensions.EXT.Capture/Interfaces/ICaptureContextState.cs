@@ -15,6 +15,7 @@ namespace OpenTK.OpenAL.Extensions.EXT.Capture
         /// <param name="param">The name of the value to retrieve.</param>
         /// <param name="count">The size of the output buffer.</param>
         /// <param name="data">The output buffer.</param>
+        [NativeSymbol("GetIntegerv")]
         unsafe void GetContextProperty(Device* device, GetCaptureContextInteger param, int count, void* data);
     }
 }
