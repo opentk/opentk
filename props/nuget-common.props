@@ -6,7 +6,9 @@
     <PackageReleaseNotes>Initial 4.0 release.</PackageReleaseNotes>
     <PackageTags>opentk;opengl;cross-platform;openal;csharp;fsharp;vb;dotnet;mono;graphics;game;scientific;science;3d;2d;math;input;gamepad;joystick</PackageTags>
     <PackageProjectUrl>https://github.com/opentk/opentk</PackageProjectUrl>
+    <PackageOutputPath>$(OpenTKSolutionRoot)\nuget</PackageOutputPath>
     <IncludeSymbols>true</IncludeSymbols>
     <IncludeSource>true</IncludeSource>
   </PropertyGroup>
+  <Import Project="common.props" Condition="!$(HasCommonProperties)"/>
 </Project>

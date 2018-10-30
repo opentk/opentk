@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="$(OpenTKSolutionRoot)\src\OpenAL\OpenTK.OpenAL\OpenTK.OpenAL.csproj" />
+    <ProjectReference Include="..\OpenTK.OpenAL.Extensions.Enumeration\OpenTK.OpenAL.Extensions.Enumeration.csproj" />
+    <ProjectReference Include="..\OpenTK.OpenAL.Extensions.EXT.Capture\OpenTK.OpenAL.Extensions.EXT.Capture.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Buffers" Version="4.5.0" />
+    <PackageReference Include="System.Memory" Version="4.5.1" />
+  </ItemGroup>
+
+  <Import Project="..\..\..\..\props\common.props" />
+  <Import Project="$(OpenTKSolutionRoot)\props\nuget-common.props" />
+  <Import Project="$(OpenTKSolutionRoot)\props\stylecop.props" />
+
+</Project>
