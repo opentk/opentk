@@ -204,7 +204,7 @@ namespace Bind.Writers
             {
                 using (var sw = new SourceWriter(new StreamWriter(outputFile)))
                 {
-                    sw.WriteLine(_generatorSettings.LicenseText);
+                    sw.WriteLine(EmbeddedResources.LicenseText);
                     sw.WriteLineNoTabs();
 
                     sw.WriteLine("using System;");
@@ -307,7 +307,7 @@ namespace Bind.Writers
             {
                 using (var sw = new SourceWriter(new StreamWriter(outputFile)))
                 {
-                    sw.WriteLine(_generatorSettings.LicenseText);
+                    sw.WriteLine(EmbeddedResources.LicenseText);
                     sw.WriteLineNoTabs();
 
                     sw.WriteLine("using System;");
@@ -582,7 +582,7 @@ namespace Bind.Writers
             {
                 using (var sw = new SourceWriter(new StreamWriter(outputFile)))
                 {
-                    sw.WriteLine(_generatorSettings.LicenseText);
+                    sw.WriteLine(EmbeddedResources.LicenseText);
                     sw.WriteLineNoTabs();
 
                     if (enumeration.IsFlagEnum)
