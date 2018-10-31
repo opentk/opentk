@@ -52,6 +52,21 @@ namespace Bind.Generators.Bases
             var overrideFileDirectoryPath = Path.Combine(Program.Arguments.InputPath, "OpenGL", "GL");
             var extraOverrides = Directory.GetFiles(overrideFileDirectoryPath, "*.xml", SearchOption.AllDirectories);
 
+            if (!Directory.Exists(overrideFileDirectoryPath))
+            {
+                var parentDir = Directory.GetParent(overrideFileDirectoryPath).ToString();
+                int ind = parentDir.IndexOf(@"src");
+                string solutionPath = parentDir.Substring(0, ind);
+                string InsertSolutionDirectory(string str) => str.Insert(0, solutionPath);
+
+                Program.Arguments.InputPath = InsertSolutionDirectory(Program.Arguments.InputPath);
+                Program.Arguments.OutputPath = InsertSolutionDirectory(Program.Arguments.OutputPath);
+                Program.Arguments.DocumentationPath = InsertSolutionDirectory(Program.Arguments.DocumentationPath);
+                Program.Arguments.LicenseFile = InsertSolutionDirectory(Program.Arguments.LicenseFile);
+                
+                overrideFileDirectoryPath = Path.Combine(Program.Arguments.InputPath, "OpenGL", "GL");
+            }
+
             using (var fs = File.OpenText(Program.Arguments.LicenseFile))
             {
                 var licenseContents = fs.ReadToEnd().TrimEnd();
