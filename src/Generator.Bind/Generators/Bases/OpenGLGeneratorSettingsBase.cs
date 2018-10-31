@@ -50,22 +50,23 @@ namespace Bind.Generators.Bases
         protected OpenGLGeneratorSettingsBase()
         {
             var overrideFileDirectoryPath = Path.Combine(Program.Arguments.InputPath, "OpenGL", "GL");
-            var extraOverrides = Directory.GetFiles(overrideFileDirectoryPath, "*.xml", SearchOption.AllDirectories);
+            var fullPath = Path.GetFullPath(overrideFileDirectoryPath);
 
-            if (!Directory.Exists(overrideFileDirectoryPath))
+            if (!Directory.Exists(fullPath))
             {
-                var parentDir = Directory.GetParent(overrideFileDirectoryPath).ToString();
-                int ind = parentDir.IndexOf(@"src");
-                string solutionPath = parentDir.Substring(0, ind);
-                string InsertSolutionDirectory(string str) => str.Insert(0, solutionPath);
+                string solutionPath = fullPath.Substring(0, fullPath.IndexOf(@"src"));
+                string InsertSolutionDir(string str) => str.Insert(0, solutionPath);
 
-                Program.Arguments.InputPath = InsertSolutionDirectory(Program.Arguments.InputPath);
-                Program.Arguments.OutputPath = InsertSolutionDirectory(Program.Arguments.OutputPath);
-                Program.Arguments.DocumentationPath = InsertSolutionDirectory(Program.Arguments.DocumentationPath);
-                Program.Arguments.LicenseFile = InsertSolutionDirectory(Program.Arguments.LicenseFile);
-                
+                Program.Arguments.InputPath = InsertSolutionDir(Program.Arguments.InputPath);
+                Program.Arguments.OutputPath = InsertSolutionDir(Program.Arguments.OutputPath);
+                Program.Arguments.DocumentationPath = InsertSolutionDir(Program.Arguments.DocumentationPath);
+                Program.Arguments.LicenseFile = InsertSolutionDir(Program.Arguments.LicenseFile);
+                System.Console.WriteLine("Adding solution path to directory");
+
                 overrideFileDirectoryPath = Path.Combine(Program.Arguments.InputPath, "OpenGL", "GL");
             }
+
+            var extraOverrides = Directory.GetFiles(overrideFileDirectoryPath, "*.xml", SearchOption.AllDirectories);
 
             using (var fs = File.OpenText(Program.Arguments.LicenseFile))
             {
