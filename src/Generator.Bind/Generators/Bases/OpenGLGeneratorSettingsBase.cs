@@ -53,6 +53,7 @@ namespace Bind.Generators.Bases
             var fullPath = Path.GetFullPath(overrideFileDirectoryPath);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
             if (!Directory.Exists(fullPath))
             {
@@ -71,6 +72,8 @@ namespace Bind.Generators.Bases
             var extraOverrides = Directory.GetFiles(overrideFileDirectoryPath, "*.xml", SearchOption.AllDirectories);
 
 >>>>>>> 8ee326fdcb04412916581eda1afe167b84015141
+=======
+>>>>>>> parent of 91811a3b... Added directory safety
             using (var fs = File.OpenText(Program.Arguments.LicenseFile))
             {
                 var licenseContents = fs.ReadToEnd().TrimEnd();
