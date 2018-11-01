@@ -19,6 +19,10 @@
     <PackageReference Include="System.Memory" Version="4.5.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <EmbeddedResource Include="Specifications/License.txt" />
+  </ItemGroup>
+
   <Import Project="..\..\props\common.props" />
   <Import Project="..\..\props\netfx-mono.props" />
   <Import Project="..\..\props\stylecop.props" />
