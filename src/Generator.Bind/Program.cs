@@ -72,6 +72,8 @@ namespace Bind
             Parser.Default.ParseArguments<CommandLineArguments>(args)
                 .WithParsed(r => Arguments = r);
 
+            PathResolver.EnsureCorrectArguments();
+            
             if (Arguments is null)
             {
                 return 1;
