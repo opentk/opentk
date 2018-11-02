@@ -120,22 +120,22 @@ namespace Bind
         /// Path validation.
         /// </summary>
         /// <param name="args">Paths to check for integrity.</param>
-        /// <param name="quitIfNotFound">Specify if program exit be initiated on fail.</param>
-        private static void ValidatePaths(ref List<PathID> args, bool quitIfNotFound)
+        /// <param name="quitIfPathInvalid">Specify if program exit should be initiated if the path is invalid.</param>
+        private static void ValidatePaths(ref List<PathID> args, bool quitIfPathInvalid)
         {
             for (int i = 0; i < args.Count; i++)
             {
                 var fullPath = Path.GetFullPath(GetPathByID(args[i]));
                 bool dirExists = Directory.Exists(fullPath) || File.Exists(fullPath);
 
-                if (!dirExists && !quitIfNotFound)
+                if (!dirExists && !quitIfPathInvalid)
                 {
                     Console.WriteLine($"Path {fullPath} doesn't exist.");
                     Console.WriteLine("...Replacing with solution directory.");
                     Console.WriteLine();
                     UpdatePath(args[i]);
                 }
-                else if (!dirExists && quitIfNotFound)
+                else if (!dirExists && quitIfPathInvalid)
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine();
