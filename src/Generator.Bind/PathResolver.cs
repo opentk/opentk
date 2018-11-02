@@ -103,7 +103,7 @@ namespace Bind
                         Console.WriteLine();
                         Console.WriteLine($"Failed to resolve directory for {_pathValues[args[i]]}.");
                         Console.WriteLine($"Argument specified: {GetPathByID(args[i])}");
-                        Console.WriteLine($"... Result of the path was {fullPath}");
+                        Console.WriteLine($"Result path: {fullPath}");
                         Console.WriteLine();
                         Console.WriteLine("Please check the specified arguments and try again.");
                         Console.WriteLine("Press any key to exit...");
