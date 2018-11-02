@@ -24,9 +24,9 @@ namespace Bind
         /// </summary>
         public static void EnsureCorrectArguments()
         {
-            bool IsAnyEmpty(params string[] args) => args.Any(x => string.IsNullOrEmpty(x));
+            bool AnyEmpty(params string[] args) => args.Any(x => string.IsNullOrEmpty(x));
 
-            if (IsAnyEmpty(Program.Arguments.InputPath, Program.Arguments.OutputPath, Program.Arguments.DocumentationPath, Program.Arguments.LicenseFile))
+            if (AnyEmpty(Program.Arguments.InputPath, Program.Arguments.OutputPath, Program.Arguments.DocumentationPath, Program.Arguments.LicenseFile))
             {
                 SetDefaults();
                 ResolvePath();
