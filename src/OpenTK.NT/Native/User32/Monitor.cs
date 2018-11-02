@@ -1,10 +1,11 @@
 ﻿using System.Runtime.InteropServices;
-
+using OpenToolkit.NT.Native.User32.Enums;
+using OpenToolkit.NT.Native.User32.Structs;
 using BOOL = System.Boolean;
 using HMONITOR = System.IntPtr;
 using HWND = System.IntPtr;
 
-namespace OpenTK.NT.Native
+namespace OpenToolkit.NT.Native.User32
 {
     public static partial class User32
     {

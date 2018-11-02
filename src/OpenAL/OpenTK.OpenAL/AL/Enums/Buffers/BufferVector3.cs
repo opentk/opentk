@@ -1,6 +1,6 @@
-using OpenTK.Mathematics;
+using OpenToolkit.Mathematics;
 
-namespace OpenTK.OpenAL
+namespace OpenToolkit.OpenAL
 {
     /// <summary>
     /// A list of valid <see cref="Vector3"/> Buffer/GetBuffer parameters.

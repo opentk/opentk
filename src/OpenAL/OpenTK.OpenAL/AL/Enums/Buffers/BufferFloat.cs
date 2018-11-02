@@ -1,4 +1,4 @@
-namespace OpenTK.OpenAL
+namespace OpenToolkit.OpenAL
 {
     /// <summary>
     /// A list of valid <see cref="float"/> Buffer/GetBuffer parameters.

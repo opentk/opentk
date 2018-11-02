@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Runtime.InteropServices;
-
+using OpenToolkit.NT.Native.User32.Delegates;
+using OpenToolkit.NT.Native.User32.Enums;
 using HBRUSH = System.IntPtr;
 using HCURSOR = System.IntPtr;
 using HICON = System.IntPtr;
 using HINSTANCE = System.IntPtr;
 
-namespace OpenTK.NT.Native
+namespace OpenToolkit.NT.Native.User32.Structs
 {
     /// <summary>
     /// Contains the window class attributes that are registered by the RegisterClass function.

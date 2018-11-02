@@ -6,7 +6,7 @@
 
 using System;
 
-namespace OpenTK.Core
+namespace OpenToolkit.Core
 {
     /// <summary>
     /// Represents a handle to an OpenGL or OpenAL context.

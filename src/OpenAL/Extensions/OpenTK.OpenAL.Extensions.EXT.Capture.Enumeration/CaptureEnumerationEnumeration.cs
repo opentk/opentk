@@ -2,10 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using AdvancedDLSupport;
-using OpenTK.Core.Loader;
-using OpenTK.OpenAL.Extensions.EXT.Capture.Enumeration;
+using OpenToolkit.Core.Loader;
 
-namespace OpenTK.OpenAL.Extensions.Enumeration
+namespace OpenToolkit.OpenAL.Extensions.EXT.Capture.Enumeration
 {
     /// <summary>
     /// Exposes the API in the CaptureEnumerationEnumeration extension.
@@ -25,7 +24,7 @@ namespace OpenTK.OpenAL.Extensions.Enumeration
         /// <inheritdoc />
         public abstract unsafe char* GetStringList(Device* device, GetCaptureContextStringList param);
 
-        /// <inheritdoc cref="GetStringList(OpenTK.OpenAL.Device*,OpenTK.OpenAL.Extensions.EXT.Capture.Enumeration.GetCaptureContextStringList)"/>
+        /// <inheritdoc cref="GetStringList(OpenToolkit.OpenAL.Device*,OpenToolkit.OpenAL.Extensions.EXT.Capture.Enumeration.GetCaptureContextStringList)"/>
         public IEnumerable<string> GetStringList(GetCaptureContextStringList param)
         {
             unsafe

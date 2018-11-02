@@ -1,4 +1,4 @@
-﻿namespace OpenTK.OpenAL
+﻿namespace OpenToolkit.OpenAL
 {
     /// <summary>
     /// Source type information,  can be retrieved by AL.Source() with SourceInteger.SourceType.

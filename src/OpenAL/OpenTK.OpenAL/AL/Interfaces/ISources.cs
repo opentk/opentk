@@ -1,8 +1,8 @@
 using AdvancedDLSupport;
-using OpenTK.Mathematics;
+using OpenToolkit.Mathematics;
 
 // ReSharper disable ExplicitCallerInfoArgument
-namespace OpenTK.OpenAL.Interfaces
+namespace OpenToolkit.OpenAL.Interfaces
 {
     /// <summary>
     /// Defines the public interface for the source-related functions of OpenAL 1.1.

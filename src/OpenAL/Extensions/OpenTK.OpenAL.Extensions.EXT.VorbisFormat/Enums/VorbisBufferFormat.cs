@@ -1,4 +1,4 @@
-namespace OpenTK.OpenAL.Extensions.EXT.VorbisFormat
+namespace OpenToolkit.OpenAL.Extensions.EXT.VorbisFormat
 {
     /// <summary>
     /// Defines valid format specifiers for sound samples. This covers the additions from the multi-channel buffers

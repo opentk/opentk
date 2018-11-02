@@ -2,11 +2,13 @@ using System;
 using System.Buffers;
 using System.ComponentModel;
 using AdvancedDLSupport;
-using OpenTK.Core.Loader;
+using OpenToolkit.Core.Loader;
+using OpenToolkit.OpenAL.Extensions.Creative.XRam.Enums;
+using OpenToolkit.OpenAL.Extensions.Creative.XRam.Interfaces;
 
 // ReSharper disable VirtualMemberCallInConstructor
 
-namespace OpenTK.OpenAL.Extensions.Creative.XRam
+namespace OpenToolkit.OpenAL.Extensions.Creative.XRam
 {
     /// <summary>
     /// Exposes the X-RAM extension by Creative Labs.

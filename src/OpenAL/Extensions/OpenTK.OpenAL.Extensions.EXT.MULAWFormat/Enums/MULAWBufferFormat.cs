@@ -1,4 +1,4 @@
-namespace OpenTK.OpenAL.Extensions.EXT.MULAWFormat
+namespace OpenToolkit.OpenAL.Extensions.EXT.MULAWFormat
 {
     /// <summary>
     /// Defines valid format specifiers for sound samples. This covers the additions from the multi-channel buffers

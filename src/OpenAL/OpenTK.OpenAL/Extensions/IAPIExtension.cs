@@ -1,7 +1,7 @@
 using System;
 using AdvancedDLSupport;
 
-namespace OpenTK.OpenAL.Extensions
+namespace OpenToolkit.OpenAL.Extensions
 {
     /// <summary>
     /// Defines the API surface of an API extension for OpenAL.

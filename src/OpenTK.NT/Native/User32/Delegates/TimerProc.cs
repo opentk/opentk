@@ -1,10 +1,10 @@
 ﻿using System.Runtime.InteropServices;
-
+using OpenToolkit.NT.Native.User32.Enums;
 using DWORD = System.UInt32;
 using HWND = System.IntPtr;
 using UINT_PTR = System.UIntPtr;
 
-namespace OpenTK.NT.Native
+namespace OpenToolkit.NT.Native.User32.Delegates
 {
     /// <summary>
     /// An application-defined callback function that processes <see cref="WindowMessage.Timer"/> messages. TimerProc

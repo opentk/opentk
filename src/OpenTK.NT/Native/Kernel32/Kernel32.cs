@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 using System.Security;
-
 using BOOL = System.Boolean;
 using DWORD = System.UInt32;
 using FARPROC = System.IntPtr;
@@ -10,7 +9,7 @@ using LARGE_INTEGER = System.Int64;
 using LPCSTR = System.String;
 using LPCTSTR = System.String;
 
-namespace OpenTK.NT.Native
+namespace OpenToolkit.NT.Native.Kernel32
 {
     /// <summary>
     /// Provides a subset of functions from the Windows API, specifically those that are imported from kernel32.dll.

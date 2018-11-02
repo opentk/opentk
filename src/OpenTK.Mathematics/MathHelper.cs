@@ -9,7 +9,7 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 
-namespace OpenTK.Mathematics
+namespace OpenToolkit.Mathematics
 {
     /// <summary>
     /// Contains common mathematical functions and constants.

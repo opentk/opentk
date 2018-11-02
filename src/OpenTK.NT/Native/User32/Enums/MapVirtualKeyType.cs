@@ -1,6 +1,6 @@
 ﻿using UINT = System.UInt32;
 
-namespace OpenTK.NT.Native
+namespace OpenToolkit.NT.Native.User32.Enums
 {
     /// <summary>
     /// Used in <see cref="MapVirtualKeyType"/> to specify the translation to be performed.

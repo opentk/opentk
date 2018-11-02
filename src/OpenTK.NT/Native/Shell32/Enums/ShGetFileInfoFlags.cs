@@ -1,12 +1,12 @@
 ﻿using System;
-
+using OpenToolkit.NT.Native.Shell32.Structs;
 using UINT = System.UInt32;
 
-namespace OpenTK.NT.Native
+namespace OpenToolkit.NT.Native.Shell32.Enums
 {
     /// <summary>
     /// Used in
-    /// <see cref="Shell32.SHGetFileInfo(string, FileAttributeFlags, ref SHFileInfo, UINT, ShGetFileInfoFlags)"/> to
+    /// <see cref="Shell32.SHGetFileInfo"/> to
     /// specify the type of file information to retrieve.
     /// </summary>
     [Flags]

@@ -1,4 +1,4 @@
-﻿namespace OpenTK.NT.Native
+﻿namespace OpenToolkit.NT.Native.Gdi32.Enums
 {
     /// <summary>
     /// Identifiers for the <see cref="Gdi32.GetStockObject(GetStockObjectType)"/> function.

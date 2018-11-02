@@ -1,4 +1,4 @@
-﻿namespace OpenTK.OpenAL.Extensions.Creative.EFX
+﻿namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
 {
     /// <summary>
     /// Filter type definitions to be used with EfxFilteri.FilterType.

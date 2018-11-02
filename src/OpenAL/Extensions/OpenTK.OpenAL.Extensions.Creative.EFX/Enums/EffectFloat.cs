@@ -5,7 +5,7 @@
  * See license.txt for license details
  * http://www.OpenTK.net */
 
-namespace OpenTK.OpenAL.Extensions.Creative.EFX
+namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
 {
     /// <summary>
     /// A list of valid 32-bit Float Effect/GetEffect parameters.

@@ -4,6 +4,7 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <LangVersion>latest</LangVersion>
+    <RootNamespace>OpenToolkit.OpenAL.Extensions.EXT.VorbisFormat</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

@@ -26,10 +26,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using OpenTK.Core;
-using OpenTK.Core.Loader;
+using OpenToolkit.Core;
+using OpenToolkit.Core.Loader;
 
-namespace OpenTK.OpenAL
+namespace OpenToolkit.OpenAL
 {
     /// <summary>
     /// Provides methods to instantiate, use and destroy an audio context for playback.
