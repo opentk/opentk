@@ -8,6 +8,7 @@ namespace Bind
 {
     /// <summary>
     /// Holds command-line arguments, parsed from the command line.
+    /// For default argument values, refer to <see cref="PathResolver"/>.
     /// </summary>
     [UsedImplicitly(ImplicitUseTargetFlags.WithMembers)]
     public sealed class CommandLineArguments
@@ -17,7 +18,7 @@ namespace Bind
         /// </summary>
         [Option('i', "input", HelpText = "The base input path where the binder looks for specification files.")]
         public string InputPath { get; set; }
-        
+
         /// <summary>
         /// Gets or sets the base output path where the binder will write the generated files.
         /// </summary>
