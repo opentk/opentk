@@ -24,11 +24,32 @@ namespace Bind
         /// </summary>
         public static void EnsureCorrectArguments()
         {
-            bool AnyEmpty(params string[] args) => args.Any(x => string.IsNullOrEmpty(x));
+            System.Collections.Generic.List<string> argValues = new System.Collections.Generic.List<string>()
+            {
+                "Input Path",
+                "Output Path",
+                "Documentation Path",
+                "License file"
+            };
+
+            bool AnyEmpty(params string[] args)
+            {
+                bool markedWrong = false;
+                for (int i = 0; i < args.Length; i++)
+                {
+                    if (string.IsNullOrEmpty(args[i]))
+                    {
+                        Console.WriteLine($"Argument {argValues[i]} wasn't specified.");
+                        markedWrong = true;
+                    }
+                }
+                return markedWrong;
+            }
 
             if (AnyEmpty(Program.Arguments.InputPath, Program.Arguments.OutputPath, Program.Arguments.DocumentationPath, Program.Arguments.LicenseFile))
             {
-                SetDefaults();
+                Console.WriteLine("Reseting arguments to default");
+                SetDefaultArguments();
                 ResolvePath();
                 return;
             }
@@ -104,7 +125,7 @@ namespace Bind
             Program.Arguments.LicenseFile = InsertSolutionDir(Program.Arguments.LicenseFile);
         }
 
-        private static void SetDefaults()
+        private static void SetDefaultArguments()
         {
             Program.Arguments.InputPath = DefaultInputPath;
             Program.Arguments.OutputPath = DefaultOutputPath;
