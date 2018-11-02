@@ -26,7 +26,7 @@
 namespace OpenToolkit.OpenAL
 {
     /// <summary>
-    /// Represents exceptions related to an OpenTK.Audio.AudioContext.
+    /// Represents exceptions related to an OpenToolkit.Audio.AudioContext.
     /// </summary>
     public class AudioContextException : AudioException
     {

@@ -256,7 +256,7 @@ namespace OpenToolkit.OpenAL
         }
 
         /// <summary>
-        /// Gets the OpenTK.Audio.AudioContext which is current in the application.
+        /// Gets the OpenToolkit.Audio.AudioContext which is current in the application.
         /// </summary>
         /// <remarks>
         /// Only one AudioContext can be current in the application at any time,
@@ -438,7 +438,7 @@ namespace OpenToolkit.OpenAL
         /// <summary>
         /// Makes the specified AudioContext current in the calling thread.
         /// </summary>
-        /// <param name="context">The OpenTK.Audio.AudioContext to make current, or null.</param>
+        /// <param name="context">The OpenToolkit.Audio.AudioContext to make current, or null.</param>
         /// <exception cref="ObjectDisposedException">
         /// Occurs if this function is called after the AudioContext has been disposed.
         /// </exception>
