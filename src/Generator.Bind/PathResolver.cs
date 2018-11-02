@@ -20,6 +20,7 @@ namespace Bind
         /// </summary>
         public static void ResolvePath()
         {
+            Console.WriteLine("Arguments were not found. Attempting to resolve");
             var fullPath = Path.GetFullPath(Program.Arguments.InputPath);
             bool dirExists = Directory.Exists(fullPath);
 
@@ -34,27 +35,19 @@ namespace Bind
                 Program.Arguments.LicenseFile = InsertSolutionDir(Program.Arguments.LicenseFile);
 
                 fullPath = Path.GetFullPath(Program.Arguments.InputPath);
-                dirExists = Directory.Exists(fullPath) || File.Exists(fullPath);
+                dirExists = Directory.Exists(fullPath);
 
-                if (dirExists)
+                if (!dirExists)
                 {
-                    Console.WriteLine("Path successfully resolved.");
+                    Console.ForegroundColor = ConsoleColor.DarkRed;
+                    Console.WriteLine("Failed to resolve path for binder.");
+                    Console.WriteLine("Press any key to exit...");
+                    Console.ReadKey(true);
+                    Environment.Exit(-1);
                 }
-                else
-                {
-                    ProgramExit();
-                }
+
+                Console.WriteLine("...Path successfully resolved.");
             }
-        }
-
-        private static void ProgramExit()
-        {
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine();
-            Console.WriteLine("Failed to resolve path for binder.");
-            Console.WriteLine("Press any key to exit...");
-            Console.ReadKey(true);
-            Environment.Exit(-1);
         }
     }
 }
