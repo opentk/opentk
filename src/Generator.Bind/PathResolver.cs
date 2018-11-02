@@ -15,9 +15,10 @@ namespace Bind
     public static class PathResolver
     {
         /// <summary>
-        /// Helper enum that holds Argument IDs.
+        /// Helper enum that holds Path IDs.
+        /// Each Path ID represents an argument.
         /// </summary>
-        private enum ArgumentID
+        private enum PathID
         {
             Input,
             Output,
@@ -28,24 +29,24 @@ namespace Bind
         /// <summary>
         /// Default path values in case of missing arguments.
         /// </summary>
-        private static Dictionary<ArgumentID, string> _defaultPaths = new Dictionary<ArgumentID, string>()
+        private static Dictionary<PathID, string> _defaultPaths = new Dictionary<PathID, string>()
         {
-            { ArgumentID.Input, Path.Combine("src", "Generator.Bind", "Specifications") },
-            { ArgumentID.Output, Path.Combine("src", "OpenTK", "Graphics") },
-            { ArgumentID.Documentation, Path.Combine("src", "Generator.Bind", "Specifications", "Docs", "docs.gl") },
-            { ArgumentID.License, Path.Combine("src", "Generator.Bind", "Specifications", "License.txt") }
+            { PathID.Input, Path.Combine("src", "Generator.Bind", "Specifications") },
+            { PathID.Output, Path.Combine("src", "OpenTK", "Graphics") },
+            { PathID.Documentation, Path.Combine("src", "Generator.Bind", "Specifications", "Docs", "docs.gl") },
+            { PathID.License, Path.Combine("src", "Generator.Bind", "Specifications", "License.txt") }
         };
 
         /// <summary>
         /// How to represent values in program. Cosmetic usage only.
         /// Note: Index order is hardcoded.
         /// </summary>
-        private static Dictionary<ArgumentID, string> _argValues = new Dictionary<ArgumentID, string>()
+        private static Dictionary<PathID, string> _pathValues = new Dictionary<PathID, string>()
         {
-            { ArgumentID.Input, "Input Path" },
-            { ArgumentID.Output, "Output Path" },
-            { ArgumentID.Documentation, "Documentation Path" },
-            { ArgumentID.License, "License Path" }
+            { PathID.Input, "Input Path" },
+            { PathID.Output, "Output Path" },
+            { PathID.Documentation, "Documentation Path" },
+            { PathID.License, "License Path" }
         };
 
         /// <summary>
@@ -54,9 +55,16 @@ namespace Bind
         /// </summary>
         public static void ValidateArguments()
         {
+            // Scan for missing arguments
+            Console.WriteLine("Checking Arguments");
+            Console.WriteLine("...");
+            Console.WriteLine();
             CheckForEmptyArguments(Program.Arguments.InputPath, Program.Arguments.OutputPath, Program.Arguments.DocumentationPath, Program.Arguments.LicenseFile);
 
             // Check if paths are valid.
+            Console.WriteLine("Validating Paths");
+            Console.WriteLine("...");
+            Console.WriteLine();
             ValidatePaths(false, Program.Arguments.InputPath, Program.Arguments.OutputPath, Program.Arguments.DocumentationPath, Program.Arguments.LicenseFile);
 
             // Check again. Initiate program exit if a path is not valid.
@@ -73,10 +81,11 @@ namespace Bind
             {
                 if (string.IsNullOrEmpty(args[i]))
                 {
-                    Console.WriteLine($"Argument {_argValues.ElementAt(i).Value} wasn't specified. Setting default value.");
-                    SetDefaultArgument(_argValues.ElementAt(i).Key);
+                    Console.WriteLine($"Argument {_pathValues.ElementAt(i).Value} wasn't specified. Setting default value.");
+                    SetDefaultPath(_pathValues.ElementAt(i).Key);
                 }
             }
+            Console.WriteLine();
         }
 
         /// <summary>
@@ -95,11 +104,13 @@ namespace Bind
                 {
                     Console.WriteLine($"Path {fullPath} doesn't exist.");
                     Console.WriteLine("...Replacing with solution directory.");
-                    UpdateArgument(_argValues.ElementAt(i).Key);
+                    Console.WriteLine();
+                    UpdatePath(_pathValues.ElementAt(i).Key);
                 }
                 else if (!dirExists && quitIfNotFound)
                 {
-                    Console.WriteLine($"Failed to resolve directory for {_argValues.ElementAt(i).Value}.");
+                    Console.WriteLine();
+                    Console.WriteLine($"Failed to resolve directory for {_pathValues.ElementAt(i).Value}.");
                     Console.WriteLine("Press any key to exit...");
                     Console.ReadKey(true);
                     Environment.Exit(-1);
@@ -107,45 +118,45 @@ namespace Bind
             }
         }
 
-        private static void SetDefaultArgument(ArgumentID argID)
+        private static void SetDefaultPath(PathID argID)
         {
-            if (argID == ArgumentID.Input)
+            if (argID == PathID.Input)
             {
                 Program.Arguments.InputPath = _defaultPaths[argID];
             }
-            else if (argID == ArgumentID.Output)
+            else if (argID == PathID.Output)
             {
                 Program.Arguments.OutputPath = _defaultPaths[argID];
             }
-            else if (argID == ArgumentID.Documentation)
+            else if (argID == PathID.Documentation)
             {
                 Program.Arguments.DocumentationPath = _defaultPaths[argID];
             }
-            else if (argID == ArgumentID.License)
+            else if (argID == PathID.License)
             {
                 Program.Arguments.LicenseFile = _defaultPaths[argID];
             }
         }
 
-        private static void UpdateArgument(ArgumentID argID)
+        private static void UpdatePath(PathID argID)
         {
             var fullPath = Path.GetFullPath(Program.Arguments.InputPath);
             string solutionPath = fullPath.Substring(0, fullPath.IndexOf(@"src"));
             string InsertSolutionDir(string str) => str.Insert(0, solutionPath);
 
-            if (argID == ArgumentID.Input)
+            if (argID == PathID.Input)
             {
                 Program.Arguments.InputPath = InsertSolutionDir(Program.Arguments.InputPath);
             }
-            else if (argID == ArgumentID.Output)
+            else if (argID == PathID.Output)
             {
                 Program.Arguments.OutputPath = InsertSolutionDir(Program.Arguments.OutputPath);
             }
-            else if (argID == ArgumentID.Documentation)
+            else if (argID == PathID.Documentation)
             {
                 Program.Arguments.DocumentationPath = InsertSolutionDir(Program.Arguments.DocumentationPath);
             }
-            else if (argID == ArgumentID.License)
+            else if (argID == PathID.License)
             {
                 Program.Arguments.LicenseFile = InsertSolutionDir(Program.Arguments.LicenseFile);
             }
