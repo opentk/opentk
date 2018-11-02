@@ -1,4 +1,4 @@
-﻿namespace OpenTK.NT.Native
+﻿namespace OpenToolkit.NT.Native.User32.Enums
 {
     /// <summary>
     /// For printers, specifies the printer resolution.<para/>

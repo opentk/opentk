@@ -1,6 +1,7 @@
 ﻿using System;
+using OpenToolkit.NT.Native.User32.Structs;
 
-namespace OpenTK.NT.Native
+namespace OpenToolkit.NT.Native.User32.Enums
 {
     /// <summary>
     /// Used in <see cref="RawInputDevice"/> to specify how to interpret the data in the structure.

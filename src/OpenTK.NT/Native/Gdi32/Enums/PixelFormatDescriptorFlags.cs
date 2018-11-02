@@ -1,8 +1,7 @@
 ﻿using System;
-
 using DWORD = System.UInt32;
 
-namespace OpenTK.NT.Native
+namespace OpenToolkit.NT.Native.Gdi32.Enums
 {
     /// <summary>
     /// A set of bit flags that specify properties of the pixel buffer. The properties are generally

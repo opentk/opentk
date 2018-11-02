@@ -1,11 +1,10 @@
 ﻿using System;
-
 using UINT = System.UInt32;
 
-namespace OpenTK.NT.Native
+namespace OpenToolkit.NT.Native.User32.Enums
 {
     /// <summary>
-    /// Used in <see cref="User32.Message.PeekMessage(out Msg, IntPtr, UINT, UINT, PeekMessageActions)"/>
+    /// Used in <see cref="User32.Message.PeekMessage"/>
     /// to define what actions to take for retrieved messages.
     /// </summary>
     [Flags]

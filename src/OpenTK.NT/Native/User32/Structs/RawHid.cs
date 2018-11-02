@@ -1,8 +1,8 @@
 ﻿using System;
-
+using OpenToolkit.NT.Native.User32.Enums;
 using DWORD = System.UInt32;
 
-namespace OpenTK.NT.Native
+namespace OpenToolkit.NT.Native.User32.Structs
 {
     /// <summary>
     /// The RawHID structure describes the format of the raw input from a Human Interface Device (HID).

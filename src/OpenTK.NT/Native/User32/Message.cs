@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 using System.Security;
-
+using OpenToolkit.NT.Native.User32.Enums;
+using OpenToolkit.NT.Native.User32.Structs;
 using BOOL = System.Boolean;
 using DWORD = System.UInt32;
 using HWND = System.IntPtr;
@@ -10,7 +11,7 @@ using LPARAM = System.IntPtr;
 using LRESULT = System.IntPtr;
 using WPARAM = System.IntPtr;
 
-namespace OpenTK.NT.Native
+namespace OpenToolkit.NT.Native.User32
 {
     public static partial class User32
     {

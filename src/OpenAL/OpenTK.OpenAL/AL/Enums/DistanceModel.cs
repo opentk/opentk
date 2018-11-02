@@ -1,4 +1,4 @@
-﻿namespace OpenTK.OpenAL
+﻿namespace OpenToolkit.OpenAL
 {
     /// <summary>
     /// Used by AL.DistanceModel(), the distance model can be retrieved by AL.Get() with

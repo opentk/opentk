@@ -1,10 +1,10 @@
 ﻿using DWORD = System.UInt32;
 
-namespace OpenTK.NT.Native
+namespace OpenToolkit.NT.Native.User32.Enums
 {
     /// <summary>
     /// Specifies what values to return if
-    /// <see cref="User32.Monitor.MonitorFromPoint(Point, MonitorFromDefaultValue)"/> and
+    /// <see cref="User32.Monitor.MonitorFromPoint"/> and
     /// <see cref="User32.Monitor.MonitorFromWindow(System.IntPtr, MonitorFromDefaultValue)"/>
     /// fail to find a monitor for the given arguments.
     /// </summary>

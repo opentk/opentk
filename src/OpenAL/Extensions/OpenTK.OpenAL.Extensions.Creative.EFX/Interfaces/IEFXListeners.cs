@@ -2,7 +2,7 @@ using AdvancedDLSupport;
 
 // ReSharper disable ExplicitCallerInfoArgument
 
-namespace OpenTK.OpenAL.Extensions.Creative.EFX
+namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
 {
     /// <summary>
     /// Defines the public API of the listener-related functions of the Effects Extension.

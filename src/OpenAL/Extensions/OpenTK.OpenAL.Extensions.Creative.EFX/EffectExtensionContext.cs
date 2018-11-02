@@ -1,8 +1,8 @@
 using System;
 using AdvancedDLSupport;
-using OpenTK.Core.Loader;
+using OpenToolkit.Core.Loader;
 
-namespace OpenTK.OpenAL.Extensions.Creative.EFX
+namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
 {
     /// <summary>
     /// Exposes the context-related functions of the Effects Extension.

@@ -4,6 +4,7 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <Deterministic>true</Deterministic>
     <LangVersion>latest</LangVersion>
+    <RootNamespace>OpenToolkit.OpenAL</RootNamespace>
   </PropertyGroup>
 
   <PropertyGroup>

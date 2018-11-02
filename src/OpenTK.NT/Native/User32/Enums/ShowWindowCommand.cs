@@ -1,4 +1,4 @@
-﻿namespace OpenTK.NT.Native
+﻿namespace OpenToolkit.NT.Native.User32.Enums
 {
     /// <summary>
     /// Used in <see cref="User32.Window.ShowWindow(System.IntPtr, ShowWindowCommand)"/> to control

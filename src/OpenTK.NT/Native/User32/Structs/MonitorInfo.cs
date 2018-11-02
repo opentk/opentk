@@ -1,8 +1,7 @@
 ﻿using System.Runtime.InteropServices;
-
 using DWORD = System.UInt32;
 
-namespace OpenTK.NT.Native
+namespace OpenToolkit.NT.Native.User32.Structs
 {
     /// <summary>
     /// Contains information about a display monitor.

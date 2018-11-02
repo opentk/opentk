@@ -1,8 +1,7 @@
 ﻿using System;
-
 using UINT = System.UInt32;
 
-namespace OpenTK.NT.Native
+namespace OpenToolkit.NT.Native.User32.Enums
 {
     /// <summary>
     /// Window sizing and positioning flags.

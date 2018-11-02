@@ -1,4 +1,6 @@
-namespace OpenTK.OpenAL.Extensions.Creative.XRam
+using OpenToolkit.OpenAL.Extensions.Creative.XRam.Interfaces;
+
+namespace OpenToolkit.OpenAL.Extensions.Creative.XRam.Enums
 {
     /// <summary>
     /// A list of valid <see cref="int"/> <see cref="IXRam.GetInteger"/> parameters.

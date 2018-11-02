@@ -1,6 +1,6 @@
 using AdvancedDLSupport;
 
-namespace OpenTK.OpenAL.Interfaces
+namespace OpenToolkit.OpenAL.Interfaces
 {
     /// <summary>
     /// Defines the public interface for the error-related functions of OpenAL 1.1.

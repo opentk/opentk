@@ -1,4 +1,4 @@
-﻿namespace OpenTK.OpenAL
+﻿namespace OpenToolkit.OpenAL
 {
     /// <summary>
     /// Source state information, can be retrieved by AL.Source() with SourceInteger.SourceState.

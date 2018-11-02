@@ -1,4 +1,4 @@
-namespace OpenTK.Core.Loader
+namespace OpenToolkit.Core.Loader
 {
     /// <summary>
     /// Defines a class that holds library names used on various platforms.

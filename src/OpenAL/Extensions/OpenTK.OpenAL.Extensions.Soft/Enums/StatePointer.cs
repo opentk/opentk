@@ -1,6 +1,6 @@
 using System;
 
-namespace OpenTK.OpenAL.Extensions.Soft
+namespace OpenToolkit.OpenAL.Extensions.Soft
 {
     /// <summary>
     /// A list of valid <see cref="IntPtr"/> <see cref="IStateSoft.GetPointer"/> parameters.

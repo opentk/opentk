@@ -1,8 +1,8 @@
 ﻿using System.Runtime.InteropServices;
-
+using OpenToolkit.NT.Native.User32.Enums;
 using HWND = System.IntPtr;
 
-namespace OpenTK.NT.Native
+namespace OpenToolkit.NT.Native.User32.Structs
 {
     /// <summary>
     /// Contains information about the size and position of a window.

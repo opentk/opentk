@@ -1,5 +1,7 @@
 ﻿using System.Runtime.InteropServices;
-
+using OpenToolkit.NT.Native.Shell32.Enums;
+using OpenToolkit.NT.Native.Shell32.Structs;
+using OpenToolkit.NT.Native.User32.Enums;
 using BOOL = System.Boolean;
 using DWORD = System.UInt32;
 using DWORD_PTR = System.IntPtr;
@@ -9,7 +11,7 @@ using LPCTSTR = System.String;
 using LPTSTR = System.Text.StringBuilder;
 using UINT = System.UInt32;
 
-namespace OpenTK.NT.Native
+namespace OpenToolkit.NT.Native.Shell32
 {
     /// <summary>
     /// Provides a subset of functions from the Windows API, specifically those that are imported from shell32.dll.

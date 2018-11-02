@@ -1,4 +1,4 @@
-﻿namespace OpenTK.NT.Native
+﻿namespace OpenToolkit.NT.Native.User32.Enums
 {
     /// <summary>
     /// Specifies duplex (double-sided) printing for duplex-capable printers.

@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Runtime.InteropServices;
-
+using OpenToolkit.NT.Native.User32.Enums;
 using DWORD = System.UInt32;
 using WORD = System.UInt16;
 
-namespace OpenTK.NT.Native
+namespace OpenToolkit.NT.Native.User32.Structs
 {
     /// <summary>
     /// Specifies characteristics of display and print devices.<para/>

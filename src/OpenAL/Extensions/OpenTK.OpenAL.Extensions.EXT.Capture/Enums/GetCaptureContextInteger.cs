@@ -1,4 +1,4 @@
-namespace OpenTK.OpenAL.Extensions.EXT.Capture
+namespace OpenToolkit.OpenAL.Extensions.EXT.Capture
 {
     /// <summary>
     /// Defines valid values for the <see cref="ICaptureContext.GetContextProperty"/> method.

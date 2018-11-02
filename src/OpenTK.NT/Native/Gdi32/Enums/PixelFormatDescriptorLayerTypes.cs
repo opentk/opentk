@@ -1,6 +1,7 @@
-﻿using BYTE = System.Byte;
+﻿using OpenToolkit.NT.Native.Gdi32.Structs;
+using BYTE = System.Byte;
 
-namespace OpenTK.NT.Native
+namespace OpenToolkit.NT.Native.Gdi32.Enums
 {
     /// <summary>
     /// Specifies a layer type for a <see cref="PixelFormatDescriptor"/>.<para/>

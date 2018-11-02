@@ -1,7 +1,7 @@
 ﻿using DWORD = System.UInt32;
 using USHORT = System.UInt16;
 
-namespace OpenTK.NT.Native
+namespace OpenToolkit.NT.Native.User32.Structs
 {
     /// <summary>
     /// Defines the raw input data coming from the specified Human Interface Device (HID).

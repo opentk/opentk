@@ -1,7 +1,7 @@
 using AdvancedDLSupport;
-using OpenTK.Core.Loader;
+using OpenToolkit.Core.Loader;
 
-namespace OpenTK.OpenAL.Extensions.EXT.MP3Format
+namespace OpenToolkit.OpenAL.Extensions.EXT.MP3Format
 {
     /// <summary>
     /// Exposes the multi-channel buffers extension by Creative Labs.

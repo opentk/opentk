@@ -1,4 +1,4 @@
-namespace OpenTK.OpenAL.Extensions.Creative.EFX
+namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
 {
     /// <summary>
     /// A list of valid <see cref="bool"/> Source/GetSource parameters.

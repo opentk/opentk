@@ -1,6 +1,6 @@
 using AdvancedDLSupport;
 
-namespace OpenTK.OpenAL.Extensions.EXT.FloatFormat
+namespace OpenToolkit.OpenAL.Extensions.EXT.FloatFormat
 {
     /// <summary>
     /// Defines the public interface for buffer-related functions of the multi-channel buffers extension.

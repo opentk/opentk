@@ -1,6 +1,4 @@
-using OpenTK.OpenAL.Interfaces;
-
-namespace OpenTK.OpenAL.Extensions.Soft.DeferredUpdates
+namespace OpenToolkit.OpenAL.Extensions.Soft.DeferredUpdates
 {
     /// <summary>
     /// A list of valid <see cref="bool"/> <see cref="IState.GetBoolean"/> parameters.

@@ -1,8 +1,8 @@
 ﻿using System.Runtime.InteropServices;
-
+using OpenToolkit.NT.Native.User32.Enums;
 using DWORD = System.UInt32;
 
-namespace OpenTK.NT.Native
+namespace OpenToolkit.NT.Native.User32.Structs
 {
     /// <summary>
     /// Defines the raw input data coming from any device.

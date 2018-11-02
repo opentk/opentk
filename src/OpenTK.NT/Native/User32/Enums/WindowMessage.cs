@@ -1,8 +1,7 @@
 ﻿using System;
-
 using UINT = System.UInt32;
 
-namespace OpenTK.NT.Native
+namespace OpenToolkit.NT.Native.User32.Enums
 {
     /// <summary>
     /// Specifies the different types of window messages.
@@ -91,10 +90,10 @@ namespace OpenTK.NT.Native
         /// <summary>
         /// Sent when the system or another application makes a request to paint a portion of an application's window.
         /// The message is sent when the UpdateWindow or RedrawWindow function is called, or by the
-        /// <see cref="User32.Message.DispatchMessage(ref Msg)"/> function when the application obtains a
+        /// <see cref="User32.Message.DispatchMessage"/> function when the application obtains a
         /// <see cref="WindowMessage.Paint"/> message by using the
-        /// <see cref="User32.Message.GetMessage(out Msg, IntPtr, UINT, UINT)"/> or
-        /// <see cref="User32.Message.PeekMessage(out Msg, IntPtr, UINT, UINT, PeekMessageActions)"/> function.
+        /// <see cref="User32.Message.GetMessage"/> or
+        /// <see cref="User32.Message.PeekMessage"/> function.
         /// </summary>
         Paint = 0x000F,
 
@@ -113,7 +112,7 @@ namespace OpenTK.NT.Native
         /// <summary>
         /// Indicates a request to terminate an application, and is generated when the application calls the
         /// <see cref="User32.Message.PostQuitMessage(int)"/> function. This message causes the
-        /// <see cref="User32.Message.GetMessage(out Msg, IntPtr, UINT, UINT)"/> function to return zero.
+        /// <see cref="User32.Message.GetMessage"/> function to return zero.
         /// </summary>
         Quit = 0x0012,
 
@@ -720,8 +719,8 @@ namespace OpenTK.NT.Native
 
         /// <summary>
         /// Posted to the installing thread's message queue when a timer expires.
-        /// The message is posted by the <see cref="User32.Message.GetMessage(out Msg, IntPtr, UINT, UINT)"/> or
-        /// <see cref="User32.Message.PeekMessage(out Msg, IntPtr, UINT, UINT, PeekMessageActions)"/> function.
+        /// The message is posted by the <see cref="User32.Message.GetMessage"/> or
+        /// <see cref="User32.Message.PeekMessage"/> function.
         /// </summary>
         Timer = 0x0113,
 
@@ -883,7 +882,7 @@ namespace OpenTK.NT.Native
 
         /// <summary>
         /// Use to specify the first mouse message. Use the
-        /// <see cref="User32.Message.PeekMessage(out Msg, IntPtr, UINT, UINT, PeekMessageActions)"/> function.
+        /// <see cref="User32.Message.PeekMessage"/> function.
         /// </summary>
         MouseFirst = 0x0200,
 
@@ -1360,25 +1359,25 @@ namespace OpenTK.NT.Native
 
         /// <summary>
         /// Posted to a window when the cursor hovers over the nonclient area of the window for the period of time
-        /// specified in a prior call to <see cref="User32.Mouse.TrackMouseEvent(ref TrackMouseEvent)"/>.
+        /// specified in a prior call to <see cref="User32.Mouse.TrackMouseEvent"/>.
         /// </summary>
         NCMouseHover = 0x02A0,
 
         /// <summary>
         /// Posted to a window when the cursor hovers over the client area of the window for the period of time
-        /// specified in a prior call to <see cref="User32.Mouse.TrackMouseEvent(ref TrackMouseEvent)"/>.
+        /// specified in a prior call to <see cref="User32.Mouse.TrackMouseEvent"/>.
         /// </summary>
         MouseHover = 0x02A1,
 
         /// <summary>
         /// Posted to a window when the cursor leaves the nonclient area of the window specified
-        /// in a prior call to <see cref="User32.Mouse.TrackMouseEvent(ref TrackMouseEvent)"/>.
+        /// in a prior call to <see cref="User32.Mouse.TrackMouseEvent"/>.
         /// </summary>
         NCMouseLeave = 0x02A2,
 
         /// <summary>
         /// Posted to a window when the cursor leaves the client area of the window specified
-        /// in a prior call to <see cref="User32.Mouse.TrackMouseEvent(ref TrackMouseEvent)"/>.
+        /// in a prior call to <see cref="User32.Mouse.TrackMouseEvent"/>.
         /// </summary>
         MouseLeave = 0x02A3,
 

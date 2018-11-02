@@ -2,9 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using AdvancedDLSupport;
-using OpenTK.Core.Loader;
+using OpenToolkit.Core.Loader;
 
-namespace OpenTK.OpenAL.Extensions.Creative.EnumerateAll
+namespace OpenToolkit.OpenAL.Extensions.Creative.EnumerateAll
 {
     /// <summary>
     /// Exposes the API in the EnumerateAll extension.

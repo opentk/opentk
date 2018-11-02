@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Runtime.InteropServices;
-
+using OpenToolkit.NT.Native.User32.Enums;
 using BOOL = System.Boolean;
 using HANDLE = System.IntPtr;
 using HDEVNOTIFY = System.IntPtr;
 using LPVOID = System.IntPtr;
 
-namespace OpenTK.NT.Native
+namespace OpenToolkit.NT.Native.User32
 {
     public static partial class User32
     {

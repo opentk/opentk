@@ -1,10 +1,10 @@
 ﻿using System.Runtime.InteropServices;
-
+using OpenToolkit.NT.Native.User32.Enums;
 using LONG = System.Int32;
 using ULONG = System.UInt32;
 using USHORT = System.UInt16;
 
-namespace OpenTK.NT.Native
+namespace OpenToolkit.NT.Native.User32.Structs
 {
     /// <summary>
     /// Contains information about the state of the mouse.

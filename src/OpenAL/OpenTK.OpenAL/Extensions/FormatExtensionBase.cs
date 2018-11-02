@@ -1,7 +1,7 @@
 using System;
 using AdvancedDLSupport;
 
-namespace OpenTK.OpenAL.Extensions
+namespace OpenToolkit.OpenAL.Extensions
 {
     /// <summary>
     /// Base class for OpenAL extensions that add audio formats.

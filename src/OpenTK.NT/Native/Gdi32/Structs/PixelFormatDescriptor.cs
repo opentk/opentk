@@ -1,10 +1,10 @@
 ﻿using System.Runtime.InteropServices;
-
+using OpenToolkit.NT.Native.Gdi32.Enums;
 using BYTE = System.Byte;
 using DWORD= System.UInt32;
 using WORD = System.UInt16;
 
-namespace OpenTK.NT.Native
+namespace OpenToolkit.NT.Native.Gdi32.Structs
 {
     /// <summary>
     /// Describes the pixel format of a drawing surface.

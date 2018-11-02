@@ -3,6 +3,7 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <Deterministic>true</Deterministic>
+    <RootNamespace>OpenToolkit.NT</RootNamespace>
   </PropertyGroup>
 
   <PropertyGroup>

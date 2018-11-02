@@ -1,4 +1,4 @@
-namespace OpenTK.OpenAL
+namespace OpenToolkit.OpenAL
 {
     /// <summary>
     /// Opaque handle to an OpenAL device.

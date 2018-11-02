@@ -1,10 +1,10 @@
 ﻿using System.Runtime.InteropServices;
-
+using OpenToolkit.NT.Native.User32;
 using DWORD = System.UInt32;
 using HICON = System.IntPtr;
 using TCHAR = System.String;
 
-namespace OpenTK.NT.Native
+namespace OpenToolkit.NT.Native.Shell32.Structs
 {
     /// <summary>
     /// Contains information about a file object.
@@ -14,7 +14,7 @@ namespace OpenTK.NT.Native
     {
         /// <summary>
         /// A handle to the icon that represents the file. You are responsible for destroying this handle with
-        /// <see cref="User32.Icon.DestroyIcon(HICON)"/> when you no longer need it.
+        /// <see cref="User32.Icon.DestroyIcon"/> when you no longer need it.
         /// </summary>
         public HICON Icon;
 

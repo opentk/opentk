@@ -2,7 +2,9 @@
 using System.ComponentModel;
 using System.Runtime.InteropServices;
 using System.Security;
-
+using OpenToolkit.NT.Native.User32.Delegates;
+using OpenToolkit.NT.Native.User32.Enums;
+using OpenToolkit.NT.Native.User32.Structs;
 using BOOL = System.Boolean;
 using HINSTANCE = System.IntPtr;
 using HMENU = System.IntPtr;
@@ -16,7 +18,7 @@ using LRESULT = System.IntPtr;
 using WNDPROC = System.IntPtr;
 using WPARAM = System.IntPtr;
 
-namespace OpenTK.NT.Native
+namespace OpenToolkit.NT.Native.User32
 {
     public static partial class User32
     {
@@ -540,7 +542,7 @@ namespace OpenTK.NT.Native
             /// <exception cref="Win32Exception">An error occurs in the native function call.</exception>
             public static LONG_PTR SetWindowLong(HWND window, int index, LONG_PTR newLong)
             {
-                Kernel32.SetLastError(0);
+                Kernel32.Kernel32.SetLastError(0);
 
                 IntPtr result;
                 if (IntPtr.Size == 8)

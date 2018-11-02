@@ -1,8 +1,8 @@
 ﻿using System;
-
+using OpenToolkit.NT.Native.User32.Structs;
 using DWORD = System.UInt32;
 
-namespace OpenTK.NT.Native
+namespace OpenToolkit.NT.Native.User32.Enums
 {
     /// <summary>
     /// Used in <see cref="DisplayDevice"/> to represent the device state.

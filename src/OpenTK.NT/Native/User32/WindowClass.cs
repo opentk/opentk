@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Runtime.InteropServices;
-
+using OpenToolkit.NT.Native.User32.Structs;
 using BOOL = System.Boolean;
 using HINSTANCE = System.IntPtr;
 
-namespace OpenTK.NT.Native
+namespace OpenToolkit.NT.Native.User32
 {
     public static partial class User32
     {

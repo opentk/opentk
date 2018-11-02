@@ -24,10 +24,10 @@
 //
 
 using System;
-using OpenTK.Core.Loader;
-using OpenTK.OpenAL.Interfaces;
+using OpenToolkit.Core.Loader;
+using OpenToolkit.OpenAL.Interfaces;
 
-namespace OpenTK.OpenAL
+namespace OpenToolkit.OpenAL
 {
     /// <summary>
     /// Represents an error watchdog that can be used by wrapping calls to OpenAL in it.

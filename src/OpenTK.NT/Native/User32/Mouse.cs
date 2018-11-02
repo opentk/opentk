@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Runtime.InteropServices;
-
+using OpenToolkit.NT.Native.User32.Enums;
+using OpenToolkit.NT.Native.User32.Structs;
 using BOOL = System.Boolean;
 using HWND = System.IntPtr;
 
-namespace OpenTK.NT.Native
+namespace OpenToolkit.NT.Native.User32
 {
     public static partial class User32
     {
@@ -63,7 +64,7 @@ namespace OpenTK.NT.Native
             /// over a window for a specified amount of time.
             /// </summary>
             /// <param name="trackMouseEvent">
-            /// A pointer to a <see cref="Native.TrackMouseEvent"/> structure that contains tracking information.
+            /// A pointer to a <see cref="Structs.TrackMouseEvent"/> structure that contains tracking information.
             /// </param>
             /// <returns>
             /// If the function succeeds, the return value is true.<para/>

@@ -1,4 +1,4 @@
-﻿namespace OpenTK.NT.Native
+﻿namespace OpenToolkit.NT.Native.User32.Enums
 {
     /// <summary>
     /// Specifies a set of pre-defined values for special behavior in <see cref="User32.Window.SetWindowPos(

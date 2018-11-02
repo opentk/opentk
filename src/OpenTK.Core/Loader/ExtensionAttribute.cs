@@ -1,6 +1,6 @@
 using System;
 
-namespace OpenTK.Core.Loader
+namespace OpenToolkit.Core.Loader
 {
     /// <summary>
     /// Provides metadata for API extensions.

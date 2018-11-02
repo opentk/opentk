@@ -1,6 +1,6 @@
 using AdvancedDLSupport;
 
-namespace OpenTK.OpenAL.Extensions.EXT.DoubleFormat
+namespace OpenToolkit.OpenAL.Extensions.EXT.DoubleFormat
 {
     /// <summary>
     /// Defines the public interface for buffer-related functions of the multi-channel buffers extension.
