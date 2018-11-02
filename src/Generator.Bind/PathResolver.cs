@@ -15,8 +15,7 @@ namespace Bind
     public static class PathResolver
     {
         /// <summary>
-        /// Helper enum that holds Path IDs.
-        /// Each Path ID represents an argument.
+        /// Helper enum that holds Argument IDs.
         /// </summary>
         private enum PathID
         {
@@ -55,34 +54,63 @@ namespace Bind
         /// </summary>
         public static void ValidateArguments()
         {
+            List<PathID> pathsToCheck = new List<PathID>()
+            {
+                    PathID.Input,
+                    PathID.Output,
+                    PathID.Documentation,
+                    PathID.License
+            };
+
+            // Store the previous color before switching.
+            ConsoleColor previousColor = Console.ForegroundColor;
+            Console.ForegroundColor = ConsoleColor.Blue;
+
             // Scan for missing arguments
-            Console.WriteLine("Checking Arguments");
-            Console.WriteLine("...");
-            Console.WriteLine();
-            CheckForEmptyArguments(Program.Arguments.InputPath, Program.Arguments.OutputPath, Program.Arguments.DocumentationPath, Program.Arguments.LicenseFile);
+            CheckForEmptyArguments(ref pathsToCheck);
 
             // Check if paths are valid.
-            Console.WriteLine("Validating Paths");
-            Console.WriteLine("...");
-            Console.WriteLine();
-            ValidatePaths(false, Program.Arguments.InputPath, Program.Arguments.OutputPath, Program.Arguments.DocumentationPath, Program.Arguments.LicenseFile);
+            ValidatePaths(ref pathsToCheck, false);
 
             // Check again. Initiate program exit if a path is not valid.
-            ValidatePaths(true, Program.Arguments.InputPath, Program.Arguments.OutputPath, Program.Arguments.DocumentationPath, Program.Arguments.LicenseFile);
+            ValidatePaths(ref pathsToCheck, true);
+
+            // Set back the original color.
+            Console.ForegroundColor = previousColor;
         }
 
         /// <summary>
         /// Scan the arguments and replace any missing ones with the default argument value.
+        /// If a path was specified on program arguments, validates it's integrity.
         /// </summary>
         /// <param name="args">Arguments to check.</param>
-        private static void CheckForEmptyArguments(params string[] args)
+        private static void CheckForEmptyArguments(ref List<PathID> args)
         {
-            for (int i = 0; i < args.Length; i++)
+            for (int i = args.Count - 1; i >= 0; i--)
             {
-                if (string.IsNullOrEmpty(args[i]))
+                if (string.IsNullOrEmpty(GetPathByID(args[i])))
                 {
-                    Console.WriteLine($"Argument {_pathValues.ElementAt(i).Value} wasn't specified. Setting default value.");
-                    SetDefaultPath(_pathValues.ElementAt(i).Key);
+                    Console.WriteLine($"Argument {_pathValues[args[i]]} wasn't specified. Setting default value.");
+                    SetDefaultPath(args[i]);
+                }
+                else
+                {
+                    var fullPath = Path.GetFullPath(GetPathByID(args[i]));
+                    bool dirExists = Directory.Exists(fullPath) || File.Exists(fullPath);
+                    if (!dirExists)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine();
+                        Console.WriteLine($"Failed to resolve directory for {_pathValues[args[i]]}.");
+                        Console.WriteLine($"Argument specified: {GetPathByID(args[i])}");
+                        Console.WriteLine($"... Result of the path was {fullPath}");
+                        Console.WriteLine();
+                        Console.WriteLine("Please check the specified arguments and try again.");
+                        Console.WriteLine("Press any key to exit...");
+                        Console.ReadKey(true);
+                        Environment.Exit(-1);
+                    }
+                    args.RemoveAt(i);
                 }
             }
             Console.WriteLine();
@@ -91,13 +119,13 @@ namespace Bind
         /// <summary>
         /// Path validation.
         /// </summary>
-        /// <param name="quitIfNotFound">Specify if program exit be initiated on fail.</param>
         /// <param name="args">Paths to check for integrity.</param>
-        private static void ValidatePaths(bool quitIfNotFound, params string[] args)
+        /// <param name="quitIfNotFound">Specify if program exit be initiated on fail.</param>
+        private static void ValidatePaths(ref List<PathID> args, bool quitIfNotFound)
         {
-            for (int i = 0; i < args.Length; i++)
+            for (int i = 0; i < args.Count; i++)
             {
-                var fullPath = Path.GetFullPath(args[i]);
+                var fullPath = Path.GetFullPath(GetPathByID(args[i]));
                 bool dirExists = Directory.Exists(fullPath) || File.Exists(fullPath);
 
                 if (!dirExists && !quitIfNotFound)
@@ -105,17 +133,42 @@ namespace Bind
                     Console.WriteLine($"Path {fullPath} doesn't exist.");
                     Console.WriteLine("...Replacing with solution directory.");
                     Console.WriteLine();
-                    UpdatePath(_pathValues.ElementAt(i).Key);
+                    UpdatePath(args[i]);
                 }
                 else if (!dirExists && quitIfNotFound)
                 {
+                    Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine();
-                    Console.WriteLine($"Failed to resolve directory for {_pathValues.ElementAt(i).Value}.");
+                    Console.WriteLine($"Failed to resolve directory for {_pathValues[args[i]]}.");
                     Console.WriteLine("Press any key to exit...");
                     Console.ReadKey(true);
                     Environment.Exit(-1);
                 }
             }
+        }
+
+        private static string GetPathByID(PathID argID)
+        {
+            string path = string.Empty;
+
+            if (argID == PathID.Input)
+            {
+                path = Program.Arguments.InputPath;
+            }
+            else if (argID == PathID.Output)
+            {
+                path = Program.Arguments.OutputPath;
+            }
+            else if (argID == PathID.Documentation)
+            {
+                path = Program.Arguments.DocumentationPath;
+            }
+            else if (argID == PathID.License)
+            {
+                path = Program.Arguments.LicenseFile;
+            }
+
+            return path;
         }
 
         private static void SetDefaultPath(PathID argID)
