@@ -63,7 +63,7 @@ namespace Bind
                     var dummyFullPath = Path.GetFullPath(path);
                     if (!Directory.Exists(path))
                     {
-                        Console.WriteLine(path + " doesn't exist.");
+                        Console.WriteLine($"Path {path} doesn't exist.");
                         markedWrong = true;
                     }
                 }
@@ -107,7 +107,6 @@ namespace Bind
                 Console.ReadKey(true);
                 Environment.Exit(-1);
             }
-            Console.ReadKey(true);
         }
 
         /// <summary>
