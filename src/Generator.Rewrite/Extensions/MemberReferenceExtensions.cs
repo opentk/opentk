@@ -5,7 +5,7 @@ namespace OpenToolkit.Rewrite.Extensions
 {
     /// <summary>
     /// Provides convenience extension methods for <see cref="MemberReference"/>
-    /// instances that are used in the OpenTK.Rewrite namespace.
+    /// instances that are used in the OpenToolkit.Rewrite namespace.
     /// </summary>
     public static class MemberReferenceExtensions
     {

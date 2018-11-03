@@ -28,7 +28,7 @@ using System;
 namespace OpenToolkit.OpenAL
 {
     /// <summary>
-    /// Represents exceptions related to the OpenTK.Audio subsystem.
+    /// Represents exceptions related to the OpenToolkit.Audio subsystem.
     /// </summary>
     public class AudioException : Exception
     {

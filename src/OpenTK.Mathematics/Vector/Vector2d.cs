@@ -723,7 +723,7 @@ namespace OpenToolkit.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector2d with the Y and X components of this instance.
+        /// Gets or sets an OpenToolkit.Vector2d with the Y and X components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector2d Yx
@@ -849,7 +849,7 @@ namespace OpenToolkit.Mathematics
         }
 
         /// <summary>
-        /// Converts OpenTK.Vector2 to OpenTK.Vector2d.
+        /// Converts OpenToolkit.Vector2 to OpenToolkit.Vector2d.
         /// </summary>
         /// <param name="v2">The Vector2 to convert.</param>
         /// <returns>The resulting Vector2d.</returns>
@@ -859,7 +859,7 @@ namespace OpenToolkit.Mathematics
         }
 
         /// <summary>
-        /// Converts OpenTK.Vector2d to OpenTK.Vector2.
+        /// Converts OpenToolkit.Vector2d to OpenToolkit.Vector2.
         /// </summary>
         /// <param name="v2d">The Vector2d to convert.</param>
         /// <returns>The resulting Vector2.</returns>
