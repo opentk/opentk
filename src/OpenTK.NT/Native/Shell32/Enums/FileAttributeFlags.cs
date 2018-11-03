@@ -2,7 +2,7 @@
 
 using DWORD = System.UInt32;
 
-namespace OpenTK.NT.Native
+namespace OpenToolkit.NT.Native
 {
     /// <summary>
     /// Metadata values stored by the file system on disk and are used by the system and are available to developers

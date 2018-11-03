@@ -1,7 +1,7 @@
 using System;
 using AdvancedDLSupport;
 
-namespace OpenTK.OpenAL.Extensions.Soft
+namespace OpenToolkit.OpenAL.Extensions.Soft
 {
     /// <summary>
     /// Exposes the public API of functions added by OpenAL Soft.

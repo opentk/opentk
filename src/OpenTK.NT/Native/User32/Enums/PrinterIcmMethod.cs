@@ -1,6 +1,6 @@
 ﻿using DWORD = System.UInt32;
 
-namespace OpenTK.NT.Native
+namespace OpenToolkit.NT.Native
 {
     /// <summary>
     /// Specifies how Image Color Management (ICM) is handled.

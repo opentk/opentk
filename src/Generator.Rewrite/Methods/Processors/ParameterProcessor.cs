@@ -5,9 +5,9 @@ using System.Runtime.InteropServices;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 using Mono.Cecil.Rocks;
-using OpenTK.Rewrite.Extensions;
+using OpenToolkit.Rewrite.Extensions;
 
-namespace OpenTK.Rewrite.Methods.Processors
+namespace OpenToolkit.Rewrite.Methods.Processors
 {
     /// <summary>
     /// Rewrites wrapper method IL to include the prologue for the wrapper method parameters.

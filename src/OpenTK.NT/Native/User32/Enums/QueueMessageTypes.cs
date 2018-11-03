@@ -2,7 +2,7 @@
 
 using DWORD = System.UInt32;
 
-namespace OpenTK.NT.Native
+namespace OpenToolkit.NT.Native
 {
     /// <summary>
     /// Flags used in <see cref="User32.Message.GetQueueStatus(QueueMessageTypes)"/>

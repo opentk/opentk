@@ -4,9 +4,9 @@ using System.Linq;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 using Mono.Cecil.Rocks;
-using OpenTK.Rewrite.Extensions;
+using OpenToolkit.Rewrite.Extensions;
 
-namespace OpenTK.Rewrite.Methods.Processors
+namespace OpenToolkit.Rewrite.Methods.Processors
 {
     /// <summary>
     /// Rewrites wrapper method IL to include the prologue for the debug configuration.
@@ -15,12 +15,12 @@ namespace OpenTK.Rewrite.Methods.Processors
     {
         private readonly IReadOnlyList<string> _graphicsModules = new List<string>
         {
-            "OpenTK.Graphics.OpenGL4",
-            "OpenTK.Graphics.OpenGL",
-            "OpenTK.Graphics.ES10",
-            "OpenTK.Graphics.ES11",
-            "OpenTK.Graphics.ES20",
-            "OpenTK.Graphics.ES30",
+            "OpenToolkit.Graphics.OpenGL4",
+            "OpenToolkit.Graphics.OpenGL",
+            "OpenToolkit.Graphics.ES10",
+            "OpenToolkit.Graphics.ES11",
+            "OpenToolkit.Graphics.ES20",
+            "OpenToolkit.Graphics.ES30",
         };
 
         /// <summary>
@@ -58,8 +58,8 @@ namespace OpenTK.Rewrite.Methods.Processors
                 return;
             }
 
-            var graphicsContext = wrapper.Module.GetType("OpenTK.Graphics.GraphicsContext");
-            var graphicsContextInterface = wrapper.Module.GetType("OpenTK.Graphics.IGraphicsContext");
+            var graphicsContext = wrapper.Module.GetType("OpenToolkit.Graphics.GraphicsContext");
+            var graphicsContextInterface = wrapper.Module.GetType("OpenToolkit.Graphics.IGraphicsContext");
 
             // Get the constructor that takes a GraphicsContext parameter
             var ctor = errorHelperType.GetConstructors().FirstOrDefault(c =>

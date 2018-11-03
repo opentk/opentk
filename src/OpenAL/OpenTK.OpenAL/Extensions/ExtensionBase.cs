@@ -1,8 +1,8 @@
 using System;
 using AdvancedDLSupport;
-using OpenTK.OpenAL.Interfaces;
+using OpenToolkit.OpenAL.Interfaces;
 
-namespace OpenTK.OpenAL.Extensions
+namespace OpenToolkit.OpenAL.Extensions
 {
     /// <summary>
     /// Base class for OpenAL extensions.

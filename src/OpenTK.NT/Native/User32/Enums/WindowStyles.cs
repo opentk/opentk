@@ -2,7 +2,7 @@
 
 using DWORD = System.UInt32;
 
-namespace OpenTK.NT.Native
+namespace OpenToolkit.NT.Native
 {
     /// <summary>
     /// Every window has one or more window styles. A window style is a named constant that defines an aspect of the

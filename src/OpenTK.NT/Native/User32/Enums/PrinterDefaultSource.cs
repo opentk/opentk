@@ -1,4 +1,4 @@
-﻿namespace OpenTK.NT.Native
+﻿namespace OpenToolkit.NT.Native
 {
     /// <summary>
     /// For a printer, specifies the paper source.

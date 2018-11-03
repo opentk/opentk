@@ -1,4 +1,4 @@
-﻿namespace OpenTK.NT.Native
+﻿namespace OpenToolkit.NT.Native
 {
     /// <summary>
     /// Specifies a set of pre-defined values for special behavior in <see cref="User32.Window.SetWindowPos(

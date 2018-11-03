@@ -1,4 +1,4 @@
-﻿namespace OpenTK.NT.Native
+﻿namespace OpenToolkit.NT.Native
 {
     /// <summary>
     /// Used in <see cref="Gdi32.GetDeviceCaps(System.IntPtr, GetDeviceCapsIndex)"/> to specify the type of

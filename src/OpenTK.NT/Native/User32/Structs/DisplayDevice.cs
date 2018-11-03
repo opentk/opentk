@@ -2,7 +2,7 @@
 
 using DWORD = System.UInt32;
 
-namespace OpenTK.NT.Native
+namespace OpenToolkit.NT.Native
 {
     /// <summary>
     /// Receives information about the display device specified by the iDevNum parameter of the

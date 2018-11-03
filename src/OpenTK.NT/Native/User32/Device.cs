@@ -6,7 +6,7 @@ using HANDLE = System.IntPtr;
 using HDEVNOTIFY = System.IntPtr;
 using LPVOID = System.IntPtr;
 
-namespace OpenTK.NT.Native
+namespace OpenToolkit.NT.Native
 {
     public static partial class User32
     {

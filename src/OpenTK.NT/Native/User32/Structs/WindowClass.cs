@@ -6,7 +6,7 @@ using HCURSOR = System.IntPtr;
 using HICON = System.IntPtr;
 using HINSTANCE = System.IntPtr;
 
-namespace OpenTK.NT.Native
+namespace OpenToolkit.NT.Native
 {
     /// <summary>
     /// Contains the window class attributes that are registered by the RegisterClass function.

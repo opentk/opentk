@@ -1,6 +1,6 @@
-﻿using OpenTK.OpenAL.Interfaces;
+﻿using OpenToolkit.OpenAL.Interfaces;
 
-namespace OpenTK.OpenAL
+namespace OpenToolkit.OpenAL
 {
     /// <summary>
     /// A list of valid <see cref="bool"/> parameters for <see cref="IState.GetStateProperty(StateBoolean)"/>.

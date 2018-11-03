@@ -1,8 +1,8 @@
 using AdvancedDLSupport;
-using OpenTK.Mathematics;
+using OpenToolkit.Mathematics;
 
 // ReSharper disable ExplicitCallerInfoArgument
-namespace OpenTK.OpenAL.Interfaces
+namespace OpenToolkit.OpenAL.Interfaces
 {
     /// <summary>
     /// Defines the public interface for the source-related functions of OpenAL 1.1.
@@ -254,7 +254,7 @@ namespace OpenTK.OpenAL.Interfaces
         /// <summary>
         /// Queues a set of buffers on the source. All buffers attached to a source will be played in sequence, and the
         /// number of processed buffers can be detected using a call to
-        /// <see cref="GetSourceProperty(uint,OpenTK.OpenAL.SourceFloat,out int)"/>.
+        /// <see cref="GetSourceProperty(uint,OpenToolkit.OpenAL.SourceFloat,out int)"/>.
         /// </summary>
         /// <param name="source">The source.</param>
         /// <param name="count">The number of buffers to queue.</param>

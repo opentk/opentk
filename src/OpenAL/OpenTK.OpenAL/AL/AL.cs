@@ -7,13 +7,13 @@
 
 using System;
 using AdvancedDLSupport;
-using OpenTK.Core.Loader;
-using OpenTK.Mathematics;
-using OpenTK.OpenAL.Attributes;
-using OpenTK.OpenAL.Extensions;
-using OpenTK.OpenAL.Interfaces;
+using OpenToolkit.Core.Loader;
+using OpenToolkit.Mathematics;
+using OpenToolkit.OpenAL.Attributes;
+using OpenToolkit.OpenAL.Extensions;
+using OpenToolkit.OpenAL.Interfaces;
 
-namespace OpenTK.OpenAL
+namespace OpenToolkit.OpenAL
 {
     /// <summary>
     /// Provides access to the OpenAL 1.1 API.
@@ -444,7 +444,7 @@ namespace OpenTK.OpenAL
         /// <summary>
         /// Queues a set of buffers on the source. All buffers attached to a source will be played in sequence, and the
         /// number of processed buffers can be detected using a call to
-        /// <see cref="GetSourceProperty(uint,OpenTK.OpenAL.SourceFloat,out int)"/>.
+        /// <see cref="GetSourceProperty(uint,OpenToolkit.OpenAL.SourceFloat,out int)"/>.
         /// </summary>
         /// <param name="source">The source.</param>
         /// <param name="buffers">The buffers.</param>

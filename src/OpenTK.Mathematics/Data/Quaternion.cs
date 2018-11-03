@@ -24,7 +24,7 @@ using System;
 using System.Runtime.InteropServices;
 using System.Xml.Serialization;
 
-namespace OpenTK.Mathematics
+namespace OpenToolkit.Mathematics
 {
     /// <summary>
     /// Represents a Quaternion.

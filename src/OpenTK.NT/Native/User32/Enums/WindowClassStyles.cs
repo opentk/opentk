@@ -2,7 +2,7 @@
 
 using UINT = System.UInt32;
 
-namespace OpenTK.NT.Native
+namespace OpenToolkit.NT.Native
 {
     /// <summary>
     /// Defines additional elements of the window class.

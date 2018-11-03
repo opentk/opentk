@@ -8,7 +8,7 @@ using LPCTSTR = System.String;
 using LPVOID = System.IntPtr;
 using SHORT = System.Int16;
 
-namespace OpenTK.NT.Native
+namespace OpenToolkit.NT.Native
 {
     /// <summary>
     /// Defines the initialization parameters passed to the window procedure of an application. These members are

@@ -2,7 +2,7 @@
 
 using HWND = System.IntPtr;
 
-namespace OpenTK.NT.Native
+namespace OpenToolkit.NT.Native
 {
     /// <summary>
     /// Contains information about the size and position of a window.

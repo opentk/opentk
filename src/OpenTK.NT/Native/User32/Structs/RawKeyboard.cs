@@ -2,7 +2,7 @@
 using ULONG = System.UInt32;
 using USHORT = System.UInt16;
 
-namespace OpenTK.NT.Native
+namespace OpenToolkit.NT.Native
 {
     /// <summary>
     /// Contains information about the state of the keyboard.

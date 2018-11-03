@@ -10,7 +10,7 @@ using LARGE_INTEGER = System.Int64;
 using LPCSTR = System.String;
 using LPCTSTR = System.String;
 
-namespace OpenTK.NT.Native
+namespace OpenToolkit.NT.Native
 {
     /// <summary>
     /// Provides a subset of functions from the Windows API, specifically those that are imported from kernel32.dll.

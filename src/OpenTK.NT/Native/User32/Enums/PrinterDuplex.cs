@@ -1,4 +1,4 @@
-﻿namespace OpenTK.NT.Native
+﻿namespace OpenToolkit.NT.Native
 {
     /// <summary>
     /// Specifies duplex (double-sided) printing for duplex-capable printers.

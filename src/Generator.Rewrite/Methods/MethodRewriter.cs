@@ -3,9 +3,9 @@ using System.Linq;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 using Mono.Cecil.Rocks;
-using OpenTK.Rewrite.Methods.Processors;
+using OpenToolkit.Rewrite.Methods.Processors;
 
-namespace OpenTK.Rewrite.Methods
+namespace OpenToolkit.Rewrite.Methods
 {
     /// <summary>
     /// A class that provides functionality to rewrite the IL of an unfinished wrapper method to call a specified

@@ -1,4 +1,4 @@
-namespace OpenTK.OpenAL.Extensions.EXT.MP3Format
+namespace OpenToolkit.OpenAL.Extensions.EXT.MP3Format
 {
     /// <summary>
     /// Defines valid format specifiers for sound samples. This covers the additions from the multi-channel buffers

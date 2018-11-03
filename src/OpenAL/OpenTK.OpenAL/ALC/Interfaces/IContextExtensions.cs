@@ -1,8 +1,8 @@
 using System;
 using AdvancedDLSupport;
-using OpenTK.OpenAL.Extensions;
+using OpenToolkit.OpenAL.Extensions;
 
-namespace OpenTK.OpenAL.Interfaces
+namespace OpenToolkit.OpenAL.Interfaces
 {
     /// <summary>
     /// Defines the public interface for the extension-related context functions of OpenAL 1.1. Furthermore, this interface is

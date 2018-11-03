@@ -6,7 +6,7 @@ using LPARAM = System.IntPtr;
 using LRESULT = System.IntPtr;
 using WPARAM = System.IntPtr;
 
-namespace OpenTK.NT.Native
+namespace OpenToolkit.NT.Native
 {
     /// <summary>
     /// An application-defined function that processes messages sent to a window. WindowProc is a placeholder for the

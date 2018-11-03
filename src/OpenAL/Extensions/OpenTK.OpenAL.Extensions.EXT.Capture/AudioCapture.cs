@@ -25,7 +25,7 @@
 
 using System;
 
-namespace OpenTK.OpenAL.Extensions.EXT.Capture
+namespace OpenToolkit.OpenAL.Extensions.EXT.Capture
 {
     /// <summary>
     /// Provides methods to instantiate, use and destroy an audio device for recording.
@@ -60,7 +60,7 @@ namespace OpenTK.OpenAL.Extensions.EXT.Capture
         }
 
         /// <summary>
-        /// Gets the OpenTK.Audio.BufferFormat for this instance.
+        /// Gets the OpenToolkit.Audio.BufferFormat for this instance.
         /// </summary>
         public TBufferFormat SampleFormat { get; }
 

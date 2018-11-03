@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 using DWORD = System.UInt32;
 using WORD = System.UInt16;
 
-namespace OpenTK.NT.Native
+namespace OpenToolkit.NT.Native
 {
     /// <summary>
     /// Specifies characteristics of display and print devices.<para/>

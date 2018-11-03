@@ -1,7 +1,7 @@
 using AdvancedDLSupport;
-using OpenTK.Core.Loader;
+using OpenToolkit.Core.Loader;
 
-namespace OpenTK.OpenAL.Extensions.EXT.MULAWFormat
+namespace OpenToolkit.OpenAL.Extensions.EXT.MULAWFormat
 {
     /// <summary>
     /// Exposes the multi-channel buffers extension by Creative Labs.

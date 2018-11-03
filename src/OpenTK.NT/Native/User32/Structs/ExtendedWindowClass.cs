@@ -7,7 +7,7 @@ using HICON = System.IntPtr;
 using HINSTANCE = System.IntPtr;
 using UINT = System.UInt32;
 
-namespace OpenTK.NT.Native
+namespace OpenToolkit.NT.Native
 {
     /// <summary>
     /// Contains window class information. It is used with the

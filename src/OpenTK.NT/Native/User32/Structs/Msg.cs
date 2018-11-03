@@ -3,7 +3,7 @@ using HWND = System.IntPtr;
 using LPARAM = System.IntPtr;
 using WPARAM = System.IntPtr;
 
-namespace OpenTK.NT.Native
+namespace OpenToolkit.NT.Native
 {
     /// <summary>
     /// Contains message information from a thread's message queue.

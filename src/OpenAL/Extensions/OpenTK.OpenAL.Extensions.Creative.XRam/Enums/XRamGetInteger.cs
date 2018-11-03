@@ -1,4 +1,4 @@
-namespace OpenTK.OpenAL.Extensions.Creative.XRam
+namespace OpenToolkit.OpenAL.Extensions.Creative.XRam
 {
     /// <summary>
     /// A list of valid <see cref="int"/> <see cref="IXRam.GetInteger"/> parameters.

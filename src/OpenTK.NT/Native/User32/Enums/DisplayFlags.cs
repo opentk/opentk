@@ -2,7 +2,7 @@
 
 using DWORD = System.UInt32;
 
-namespace OpenTK.NT.Native
+namespace OpenToolkit.NT.Native
 {
     /// <summary>
     /// Specifies the device's display mode.

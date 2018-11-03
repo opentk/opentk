@@ -1,6 +1,6 @@
-using OpenTK.Core.Loader;
+using OpenToolkit.Core.Loader;
 
-namespace OpenTK.OpenAL
+namespace OpenToolkit.OpenAL
 {
     /// <summary>
     /// Contains the library name of OpenAL.

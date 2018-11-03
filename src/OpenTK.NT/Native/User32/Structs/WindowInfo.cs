@@ -5,7 +5,7 @@ using DWORD = System.UInt32;
 using UINT = System.UInt32;
 using WORD = System.UInt16;
 
-namespace OpenTK.NT.Native
+namespace OpenToolkit.NT.Native
 {
     /// <summary>
     /// Contains window information.

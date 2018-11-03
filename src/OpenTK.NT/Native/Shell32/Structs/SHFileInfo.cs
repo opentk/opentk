@@ -4,7 +4,7 @@ using DWORD = System.UInt32;
 using HICON = System.IntPtr;
 using TCHAR = System.String;
 
-namespace OpenTK.NT.Native
+namespace OpenToolkit.NT.Native
 {
     /// <summary>
     /// Contains information about a file object.

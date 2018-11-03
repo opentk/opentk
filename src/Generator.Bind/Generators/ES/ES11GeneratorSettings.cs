@@ -18,7 +18,7 @@ namespace Bind.Generators.ES
         public override string OutputSubfolder => APIIdentifier;
 
         /// <inheritdoc/>
-        public override string Namespace => $"OpenTK.Graphics.{APIIdentifier}";
+        public override string Namespace => $"OpenToolkit.Graphics.{APIIdentifier}";
 
         /// <remarks>
         /// The ES 1.1 generator uses the ES2.0 documentation, since there are no docbook sources available for 1.1.

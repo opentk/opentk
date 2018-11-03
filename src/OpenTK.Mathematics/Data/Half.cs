@@ -60,7 +60,7 @@ using System.IO;
 using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 
-namespace OpenTK.Mathematics
+namespace OpenToolkit.Mathematics
 {
     /// <summary>
     /// The name Half is derived from half-precision floating-point number.

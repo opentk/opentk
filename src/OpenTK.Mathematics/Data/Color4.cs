@@ -26,7 +26,7 @@
 using System;
 using System.Drawing;
 
-namespace OpenTK.Mathematics
+namespace OpenToolkit.Mathematics
 {
     /// <summary>
     /// Represents a color with 4 floating-point components (R, G, B, A).

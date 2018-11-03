@@ -1,6 +1,6 @@
 ﻿using DWORD = System.UInt32;
 
-namespace OpenTK.NT.Native
+namespace OpenToolkit.NT.Native
 {
     /// <summary>
     /// Specifies which color matching method, or intent, is used by default.

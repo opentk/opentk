@@ -1,6 +1,6 @@
 ﻿using BYTE = System.Byte;
 
-namespace OpenTK.NT.Native
+namespace OpenToolkit.NT.Native
 {
     /// <summary>
     /// Specifies the type of pixel data.

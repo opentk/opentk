@@ -1,6 +1,6 @@
 ﻿using BYTE = System.Byte;
 
-namespace OpenTK.NT.Native
+namespace OpenToolkit.NT.Native
 {
     /// <summary>
     /// Specifies a layer type for a <see cref="PixelFormatDescriptor"/>.<para/>

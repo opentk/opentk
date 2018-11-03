@@ -1,8 +1,8 @@
 using System;
 using AdvancedDLSupport;
-using OpenTK.OpenAL.Interfaces;
+using OpenToolkit.OpenAL.Interfaces;
 
-namespace OpenTK.OpenAL.Extensions.Creative.XRam
+namespace OpenToolkit.OpenAL.Extensions.Creative.XRam
 {
     /// <summary>
     /// Defines the public interface of the X-RAM extension.

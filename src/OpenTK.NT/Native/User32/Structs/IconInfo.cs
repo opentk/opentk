@@ -2,7 +2,7 @@
 using DWORD = System.UInt32;
 using HBITMAP = System.IntPtr;
 
-namespace OpenTK.NT.Native
+namespace OpenToolkit.NT.Native
 {
     /// <summary>
     /// Contains information about an icon or a cursor.

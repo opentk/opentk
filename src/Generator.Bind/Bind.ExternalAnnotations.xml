@@ -202,6 +202,9 @@
       <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
     </parameter>
   </member>
+  <member name="T:Bind.CommandLineArguments">
+    <attribute ctor="M:JetBrains.Annotations.UsedImplicitlyAttribute.#ctor(JetBrains.Annotations.ImplicitUseTargetFlags)" />
+  </member>
   <member name="M:Bind.Extensions.ApiProfileExtensions.GetFriendlyName(Bind.XML.IApiProfile)">
     <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
     <parameter name="profile">

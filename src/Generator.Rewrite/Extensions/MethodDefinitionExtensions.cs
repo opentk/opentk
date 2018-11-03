@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using Mono.Cecil;
 
-namespace OpenTK.Rewrite.Extensions
+namespace OpenToolkit.Rewrite.Extensions
 {
     /// <summary>
     /// Provides convenience extension methods for <see cref="MethodDefinition"/> instances.

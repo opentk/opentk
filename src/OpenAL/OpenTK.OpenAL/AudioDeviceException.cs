@@ -23,10 +23,10 @@
 // OTHER DEALINGS IN THE SOFTWARE.
 //
 
-namespace OpenTK.OpenAL
+namespace OpenToolkit.OpenAL
 {
     /// <summary>
-    /// Represents exceptions related to an OpenTK.Audio device.
+    /// Represents exceptions related to an OpenToolkit.Audio device.
     /// </summary>
     public class AudioDeviceException : AudioException
     {

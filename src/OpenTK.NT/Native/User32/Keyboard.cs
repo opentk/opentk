@@ -6,7 +6,7 @@ using HWND = System.IntPtr;
 using SHORT = System.Int16;
 using UINT = System.UInt32;
 
-namespace OpenTK.NT.Native
+namespace OpenToolkit.NT.Native
 {
     public static partial class User32
     {

@@ -4,7 +4,7 @@ using BOOL = System.Boolean;
 using HMONITOR = System.IntPtr;
 using HWND = System.IntPtr;
 
-namespace OpenTK.NT.Native
+namespace OpenToolkit.NT.Native
 {
     public static partial class User32
     {

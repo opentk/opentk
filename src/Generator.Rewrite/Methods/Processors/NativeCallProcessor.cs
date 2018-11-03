@@ -2,9 +2,9 @@
 using System.Linq;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
-using OpenTK.Rewrite.Extensions;
+using OpenToolkit.Rewrite.Extensions;
 
-namespace OpenTK.Rewrite.Methods.Processors
+namespace OpenToolkit.Rewrite.Methods.Processors
 {
     /// <summary>
     /// Rewrites wrapper method IL to call the native function, either via DllImport or the calli opcode.

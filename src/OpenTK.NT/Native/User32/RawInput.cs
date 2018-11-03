@@ -10,7 +10,7 @@ using LPVOID = System.IntPtr;
 using LRESULT = System.IntPtr;
 using UINT = System.UInt32;
 
-namespace OpenTK.NT.Native
+namespace OpenToolkit.NT.Native
 {
     public static partial class User32
     {

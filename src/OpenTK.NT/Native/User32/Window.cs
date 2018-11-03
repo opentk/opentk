@@ -16,7 +16,7 @@ using LRESULT = System.IntPtr;
 using WNDPROC = System.IntPtr;
 using WPARAM = System.IntPtr;
 
-namespace OpenTK.NT.Native
+namespace OpenToolkit.NT.Native
 {
     public static partial class User32
     {

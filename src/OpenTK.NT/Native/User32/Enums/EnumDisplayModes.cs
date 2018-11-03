@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace OpenTK.NT.Native
+namespace OpenToolkit.NT.Native
 {
     /// <summary>
     /// Flags used in <see cref="User32.DeviceContext.EnumDisplaySettingsEx(string, DisplayModeSetting, out DeviceMode,

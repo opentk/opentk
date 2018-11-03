@@ -1,6 +1,6 @@
 ﻿using Mono.Cecil;
 
-namespace OpenTK.Rewrite.Methods
+namespace OpenToolkit.Rewrite.Methods
 {
     /// <summary>
     /// Provides an interface to rewrite method definitions.

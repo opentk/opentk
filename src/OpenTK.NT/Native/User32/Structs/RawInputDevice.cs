@@ -1,10 +1,10 @@
 ﻿using System.Runtime.InteropServices;
-using OpenTK.Input.Hid;
+using OpenToolkit.Input.Hid;
 
 using HWND = System.IntPtr;
 using USHORT = System.UInt16;
 
-namespace OpenTK.NT.Native
+namespace OpenToolkit.NT.Native
 {
     /// <summary>
     /// Defines information for the raw input devices.

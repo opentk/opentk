@@ -3,9 +3,9 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using Mono.Cecil;
-using OpenTK.Rewrite.Types;
+using OpenToolkit.Rewrite.Types;
 
-namespace OpenTK.Rewrite
+namespace OpenToolkit.Rewrite
 {
     /// <summary>
     /// Provides functionality to rewrite types in an assembly with an implementation of <see cref="ITypeRewriter"/>.
@@ -113,7 +113,7 @@ namespace OpenTK.Rewrite
                 Console.WriteLine($"Rewriting assembly with mscorlib: {mscorlib}");
                 Console.WriteLine();
 
-                var bindingsBaseType = assembly.Modules.First().GetType("OpenTK.BindingsBase");
+                var bindingsBaseType = assembly.Modules.First().GetType("OpenToolkit.BindingsBase");
                 var typeRewriter = _typeRewriterFactory(mscorlib, bindingsBaseType, useDllImport);
 
                 foreach (var module in assembly.Modules)

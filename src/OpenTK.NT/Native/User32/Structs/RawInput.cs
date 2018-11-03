@@ -1,6 +1,6 @@
 ﻿using System.Runtime.InteropServices;
 
-namespace OpenTK.NT.Native
+namespace OpenToolkit.NT.Native
 {
     /// <summary>
     /// Contains the raw input from a device.

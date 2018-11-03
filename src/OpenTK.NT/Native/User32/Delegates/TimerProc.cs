@@ -4,7 +4,7 @@ using DWORD = System.UInt32;
 using HWND = System.IntPtr;
 using UINT_PTR = System.UIntPtr;
 
-namespace OpenTK.NT.Native
+namespace OpenToolkit.NT.Native
 {
     /// <summary>
     /// An application-defined callback function that processes <see cref="WindowMessage.Timer"/> messages. TimerProc

@@ -10,7 +10,7 @@ using LPARAM = System.IntPtr;
 using LRESULT = System.IntPtr;
 using WPARAM = System.IntPtr;
 
-namespace OpenTK.NT.Native
+namespace OpenToolkit.NT.Native
 {
     public static partial class User32
     {

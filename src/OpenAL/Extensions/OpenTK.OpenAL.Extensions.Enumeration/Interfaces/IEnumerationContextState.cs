@@ -1,7 +1,7 @@
 using AdvancedDLSupport;
 // ReSharper disable ExplicitCallerInfoArgument
 
-namespace OpenTK.OpenAL.Extensions.Enumeration
+namespace OpenToolkit.OpenAL.Extensions.Enumeration
 {
     /// <summary>
     /// Defines the public API of the context-related functions of the Enumeration extension.

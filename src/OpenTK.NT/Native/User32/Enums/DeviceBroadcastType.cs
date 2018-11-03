@@ -1,6 +1,6 @@
 ﻿using DWORD = System.UInt32;
 
-namespace OpenTK.NT.Native
+namespace OpenToolkit.NT.Native
 {
     /// <summary>
     /// Used in the <see cref="BroadcastDeviceInterface"/>.

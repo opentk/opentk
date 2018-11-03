@@ -1,4 +1,4 @@
-﻿namespace OpenTK.NT.Native
+﻿namespace OpenToolkit.NT.Native
 {
     /// <summary>
     /// Lists all defined types for paper size, with <see cref="Letter"/>, <see cref="Legal"/>, <see cref="A3"/> and

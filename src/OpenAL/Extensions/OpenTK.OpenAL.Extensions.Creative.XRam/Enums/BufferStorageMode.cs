@@ -1,4 +1,4 @@
-namespace OpenTK.OpenAL.Extensions.Creative.XRam
+namespace OpenToolkit.OpenAL.Extensions.Creative.XRam
 {
     /// <summary>
     /// This enum is used to abstract the need of using AL.GetEnumValue() with the extension. The values do not

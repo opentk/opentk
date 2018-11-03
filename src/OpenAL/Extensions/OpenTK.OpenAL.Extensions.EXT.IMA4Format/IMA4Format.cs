@@ -1,8 +1,8 @@
 using AdvancedDLSupport;
-using OpenTK.Core.Loader;
-using OpenTK.OpenAL.Extensions;
+using OpenToolkit.Core.Loader;
+using OpenToolkit.OpenAL.Extensions;
 
-namespace OpenTK.OpenAL.Native.Extensions.EXT.IMA4Format
+namespace OpenToolkit.OpenAL.Native.Extensions.EXT.IMA4Format
 {
     /// <summary>
     /// Exposes the multi-channel buffers extension by Creative Labs.

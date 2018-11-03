@@ -1,4 +1,4 @@
-﻿namespace OpenTK.OpenAL
+﻿namespace OpenToolkit.OpenAL
 {
     /// <summary>
     /// Buffer state. Not supported for public use (yet).

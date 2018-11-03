@@ -2,7 +2,7 @@
 
 using UINT = System.UInt32;
 
-namespace OpenTK.NT.Native
+namespace OpenToolkit.NT.Native
 {
     /// <summary>
     /// Used in <see cref="User32.Message.PeekMessage(out Msg, IntPtr, UINT, UINT, PeekMessageActions)"/>

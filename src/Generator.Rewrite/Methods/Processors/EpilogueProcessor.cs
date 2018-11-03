@@ -3,7 +3,7 @@ using System.Collections.Concurrent;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 
-namespace OpenTK.Rewrite.Methods.Processors
+namespace OpenToolkit.Rewrite.Methods.Processors
 {
     /// <summary>
     /// Provides functionality for additional (epilogue) processing that is dependent

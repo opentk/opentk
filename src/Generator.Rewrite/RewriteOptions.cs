@@ -1,6 +1,6 @@
 ﻿using CommandLine;
 
-namespace OpenTK.Rewrite
+namespace OpenToolkit.Rewrite
 {
     /// <summary>
     /// A class containing all command line options used when rewriting an assembly.

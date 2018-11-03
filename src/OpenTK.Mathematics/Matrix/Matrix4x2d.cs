@@ -23,7 +23,7 @@ SOFTWARE.
 using System;
 using System.Diagnostics.CodeAnalysis;
 
-namespace OpenTK.Mathematics
+namespace OpenToolkit.Mathematics
 {
     /// <summary>
     /// Represents a 4x2 matrix.

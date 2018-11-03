@@ -3,10 +3,10 @@ using System.Runtime.InteropServices;
 
 using BOOL = System.Boolean;
 using HWND = System.IntPtr;
-using TIMERPROC = OpenTK.NT.Native.TimerProc;
+using TIMERPROC = OpenToolkit.NT.Native.TimerProc;
 using UINT_PTR = System.UIntPtr;
 
-namespace OpenTK.NT.Native
+namespace OpenToolkit.NT.Native
 {
     public static partial class User32
     {

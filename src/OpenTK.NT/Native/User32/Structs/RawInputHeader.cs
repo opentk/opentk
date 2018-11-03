@@ -4,7 +4,7 @@ using DWORD = System.UInt32;
 using HANDLE = System.IntPtr;
 using WPARAM = System.IntPtr;
 
-namespace OpenTK.NT.Native
+namespace OpenToolkit.NT.Native
 {
     /// <summary>
     /// Contains the header information that is part of the raw input data.

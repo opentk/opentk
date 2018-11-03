@@ -4,7 +4,7 @@ using BYTE = System.Byte;
 using DWORD= System.UInt32;
 using WORD = System.UInt16;
 
-namespace OpenTK.NT.Native
+namespace OpenToolkit.NT.Native
 {
     /// <summary>
     /// Describes the pixel format of a drawing surface.

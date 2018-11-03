@@ -7,13 +7,13 @@
 
 using System;
 using AdvancedDLSupport;
-using OpenTK.Core;
-using OpenTK.Core.Loader;
-using OpenTK.OpenAL.Attributes;
-using OpenTK.OpenAL.Extensions;
-using OpenTK.OpenAL.Interfaces;
+using OpenToolkit.Core;
+using OpenToolkit.Core.Loader;
+using OpenToolkit.OpenAL.Attributes;
+using OpenToolkit.OpenAL.Extensions;
+using OpenToolkit.OpenAL.Interfaces;
 
-namespace OpenTK.OpenAL
+namespace OpenToolkit.OpenAL
 {
     /// <summary>
     /// Provides access to the OpenAL 1.1 context API.
@@ -49,7 +49,7 @@ namespace OpenTK.OpenAL
         /// <inheritdoc />
         public abstract unsafe bool MakeContextCurrent(Context* context);
 
-        /// <inheritdoc cref="MakeContextCurrent(OpenTK.OpenAL.Context*)"/>
+        /// <inheritdoc cref="MakeContextCurrent(OpenToolkit.OpenAL.Context*)"/>
         public bool MakeContextCurrent(ContextHandle context)
         {
             unsafe

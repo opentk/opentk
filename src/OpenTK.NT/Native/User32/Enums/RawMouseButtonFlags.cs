@@ -2,7 +2,7 @@
 
 using USHORT = System.UInt16;
 
-namespace OpenTK.NT.Native
+namespace OpenToolkit.NT.Native
 {
     /// <summary>
     /// Specifies the transition state of the mouse buttons.

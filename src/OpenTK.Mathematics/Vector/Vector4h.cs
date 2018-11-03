@@ -27,7 +27,7 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-namespace OpenTK.Mathematics
+namespace OpenToolkit.Mathematics
 {
     /// <summary>
     /// 4-component Vector of the Half type. Occupies 8 Byte total.
@@ -227,7 +227,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector2h with the X and Y components of this instance.
+        /// Gets or sets an OpenToolkit.Vector2h with the X and Y components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector2h Xy
@@ -241,7 +241,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector2h with the X and Z components of this instance.
+        /// Gets or sets an OpenToolkit.Vector2h with the X and Z components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector2h Xz
@@ -255,7 +255,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector2h with the X and W components of this instance.
+        /// Gets or sets an OpenToolkit.Vector2h with the X and W components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector2h Xw
@@ -269,7 +269,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector2h with the Y and X components of this instance.
+        /// Gets or sets an OpenToolkit.Vector2h with the Y and X components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector2h Yx
@@ -283,7 +283,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector2h with the Y and Z components of this instance.
+        /// Gets or sets an OpenToolkit.Vector2h with the Y and Z components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector2h Yz
@@ -297,7 +297,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector2h with the Y and W components of this instance.
+        /// Gets or sets an OpenToolkit.Vector2h with the Y and W components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector2h Yw
@@ -311,7 +311,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector2h with the Z and X components of this instance.
+        /// Gets or sets an OpenToolkit.Vector2h with the Z and X components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector2h Zx
@@ -325,7 +325,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector2h with the Z and Y components of this instance.
+        /// Gets or sets an OpenToolkit.Vector2h with the Z and Y components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector2h Zy
@@ -339,7 +339,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector2h with the Z and W components of this instance.
+        /// Gets or sets an OpenToolkit.Vector2h with the Z and W components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector2h Zw
@@ -353,7 +353,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector2h with the W and X components of this instance.
+        /// Gets or sets an OpenToolkit.Vector2h with the W and X components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector2h Wx
@@ -367,7 +367,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector2h with the W and Y components of this instance.
+        /// Gets or sets an OpenToolkit.Vector2h with the W and Y components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector2h Wy
@@ -381,7 +381,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector2h with the W and Z components of this instance.
+        /// Gets or sets an OpenToolkit.Vector2h with the W and Z components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector2h Wz
@@ -395,7 +395,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector3h with the X, Y, and Z components of this instance.
+        /// Gets or sets an OpenToolkit.Vector3h with the X, Y, and Z components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector3h Xyz
@@ -410,7 +410,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector3h with the X, Y, and Z components of this instance.
+        /// Gets or sets an OpenToolkit.Vector3h with the X, Y, and Z components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector3h Xyw
@@ -425,7 +425,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector3h with the X, Z, and Y components of this instance.
+        /// Gets or sets an OpenToolkit.Vector3h with the X, Z, and Y components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector3h Xzy
@@ -440,7 +440,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector3h with the X, Z, and W components of this instance.
+        /// Gets or sets an OpenToolkit.Vector3h with the X, Z, and W components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector3h Xzw
@@ -455,7 +455,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector3h with the X, W, and Y components of this instance.
+        /// Gets or sets an OpenToolkit.Vector3h with the X, W, and Y components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector3h Xwy
@@ -470,7 +470,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector3h with the X, W, and Z components of this instance.
+        /// Gets or sets an OpenToolkit.Vector3h with the X, W, and Z components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector3h Xwz
@@ -485,7 +485,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector3h with the Y, X, and Z components of this instance.
+        /// Gets or sets an OpenToolkit.Vector3h with the Y, X, and Z components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector3h Yxz
@@ -500,7 +500,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector3h with the Y, X, and W components of this instance.
+        /// Gets or sets an OpenToolkit.Vector3h with the Y, X, and W components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector3h Yxw
@@ -515,7 +515,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector3h with the Y, Z, and X components of this instance.
+        /// Gets or sets an OpenToolkit.Vector3h with the Y, Z, and X components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector3h Yzx
@@ -530,7 +530,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector3h with the Y, Z, and W components of this instance.
+        /// Gets or sets an OpenToolkit.Vector3h with the Y, Z, and W components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector3h Yzw
@@ -545,7 +545,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector3h with the Y, W, and X components of this instance.
+        /// Gets or sets an OpenToolkit.Vector3h with the Y, W, and X components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector3h Ywx
@@ -560,7 +560,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector3h with the Y, W, and Z components of this instance.
+        /// Gets or sets an OpenToolkit.Vector3h with the Y, W, and Z components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector3h Ywz
@@ -575,7 +575,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector3h with the Z, X, and Y components of this instance.
+        /// Gets or sets an OpenToolkit.Vector3h with the Z, X, and Y components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector3h Zxy
@@ -590,7 +590,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector3h with the Z, X, and W components of this instance.
+        /// Gets or sets an OpenToolkit.Vector3h with the Z, X, and W components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector3h Zxw
@@ -605,7 +605,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector3h with the Z, Y, and X components of this instance.
+        /// Gets or sets an OpenToolkit.Vector3h with the Z, Y, and X components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector3h Zyx
@@ -620,7 +620,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector3h with the Z, Y, and W components of this instance.
+        /// Gets or sets an OpenToolkit.Vector3h with the Z, Y, and W components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector3h Zyw
@@ -635,7 +635,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector3h with the Z, W, and X components of this instance.
+        /// Gets or sets an OpenToolkit.Vector3h with the Z, W, and X components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector3h Zwx
@@ -650,7 +650,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector3h with the Z, W, and Y components of this instance.
+        /// Gets or sets an OpenToolkit.Vector3h with the Z, W, and Y components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector3h Zwy
@@ -665,7 +665,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector3h with the W, X, and Y components of this instance.
+        /// Gets or sets an OpenToolkit.Vector3h with the W, X, and Y components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector3h Wxy
@@ -680,7 +680,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector3h with the W, X, and Z components of this instance.
+        /// Gets or sets an OpenToolkit.Vector3h with the W, X, and Z components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector3h Wxz
@@ -695,7 +695,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector3h with the W, Y, and X components of this instance.
+        /// Gets or sets an OpenToolkit.Vector3h with the W, Y, and X components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector3h Wyx
@@ -710,7 +710,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector3h with the W, Y, and Z components of this instance.
+        /// Gets or sets an OpenToolkit.Vector3h with the W, Y, and Z components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector3h Wyz
@@ -725,7 +725,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector3h with the W, Z, and X components of this instance.
+        /// Gets or sets an OpenToolkit.Vector3h with the W, Z, and X components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector3h Wzx
@@ -740,7 +740,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector3h with the W, Z, and Y components of this instance.
+        /// Gets or sets an OpenToolkit.Vector3h with the W, Z, and Y components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector3h Wzy
@@ -755,7 +755,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector4h with the X, Y, W, and Z components of this instance.
+        /// Gets or sets an OpenToolkit.Vector4h with the X, Y, W, and Z components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector4h Xywz
@@ -771,7 +771,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector4h with the X, Z, Y, and W components of this instance.
+        /// Gets or sets an OpenToolkit.Vector4h with the X, Z, Y, and W components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector4h Xzyw
@@ -787,7 +787,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector4h with the X, Z, W, and Y components of this instance.
+        /// Gets or sets an OpenToolkit.Vector4h with the X, Z, W, and Y components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector4h Xzwy
@@ -803,7 +803,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector4h with the X, W, Y, and Z components of this instance.
+        /// Gets or sets an OpenToolkit.Vector4h with the X, W, Y, and Z components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector4h Xwyz
@@ -819,7 +819,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector4h with the X, W, Z, and Y components of this instance.
+        /// Gets or sets an OpenToolkit.Vector4h with the X, W, Z, and Y components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector4h Xwzy
@@ -835,7 +835,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector4h with the Y, X, Z, and W components of this instance.
+        /// Gets or sets an OpenToolkit.Vector4h with the Y, X, Z, and W components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector4h Yxzw
@@ -851,7 +851,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector4h with the Y, X, W, and Z components of this instance.
+        /// Gets or sets an OpenToolkit.Vector4h with the Y, X, W, and Z components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector4h Yxwz
@@ -867,7 +867,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector4h with the Y, Y, Z, and W components of this instance.
+        /// Gets or sets an OpenToolkit.Vector4h with the Y, Y, Z, and W components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector4h Yyzw
@@ -883,7 +883,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector4h with the Y, Y, W, and Z components of this instance.
+        /// Gets or sets an OpenToolkit.Vector4h with the Y, Y, W, and Z components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector4h Yywz
@@ -899,7 +899,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector4h with the Y, Z, X, and W components of this instance.
+        /// Gets or sets an OpenToolkit.Vector4h with the Y, Z, X, and W components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector4h Yzxw
@@ -915,7 +915,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector4h with the Y, Z, W, and X components of this instance.
+        /// Gets or sets an OpenToolkit.Vector4h with the Y, Z, W, and X components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector4h Yzwx
@@ -931,7 +931,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector4h with the Y, W, X, and Z components of this instance.
+        /// Gets or sets an OpenToolkit.Vector4h with the Y, W, X, and Z components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector4h Ywxz
@@ -947,7 +947,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector4h with the Y, W, Z, and X components of this instance.
+        /// Gets or sets an OpenToolkit.Vector4h with the Y, W, Z, and X components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector4h Ywzx
@@ -963,7 +963,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector4h with the Z, X, Y, and Z components of this instance.
+        /// Gets or sets an OpenToolkit.Vector4h with the Z, X, Y, and Z components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector4h Zxyw
@@ -979,7 +979,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector4h with the Z, X, W, and Y components of this instance.
+        /// Gets or sets an OpenToolkit.Vector4h with the Z, X, W, and Y components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector4h Zxwy
@@ -995,7 +995,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector4h with the Z, Y, X, and W components of this instance.
+        /// Gets or sets an OpenToolkit.Vector4h with the Z, Y, X, and W components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector4h Zyxw
@@ -1011,7 +1011,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector4h with the Z, Y, W, and X components of this instance.
+        /// Gets or sets an OpenToolkit.Vector4h with the Z, Y, W, and X components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector4h Zywx
@@ -1027,7 +1027,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector4h with the Z, W, X, and Y components of this instance.
+        /// Gets or sets an OpenToolkit.Vector4h with the Z, W, X, and Y components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector4h Zwxy
@@ -1043,7 +1043,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector4h with the Z, W, Y, and X components of this instance.
+        /// Gets or sets an OpenToolkit.Vector4h with the Z, W, Y, and X components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector4h Zwyx
@@ -1059,7 +1059,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector4h with the Z, W, Z, and Y components of this instance.
+        /// Gets or sets an OpenToolkit.Vector4h with the Z, W, Z, and Y components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector4h Zwzy
@@ -1075,7 +1075,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector4h with the W, X, Y, and Z components of this instance.
+        /// Gets or sets an OpenToolkit.Vector4h with the W, X, Y, and Z components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector4h Wxyz
@@ -1091,7 +1091,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector4h with the W, X, Z, and Y components of this instance.
+        /// Gets or sets an OpenToolkit.Vector4h with the W, X, Z, and Y components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector4h Wxzy
@@ -1107,7 +1107,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector4h with the W, Y, X, and Z components of this instance.
+        /// Gets or sets an OpenToolkit.Vector4h with the W, Y, X, and Z components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector4h Wyxz
@@ -1123,7 +1123,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector4h with the W, Y, Z, and X components of this instance.
+        /// Gets or sets an OpenToolkit.Vector4h with the W, Y, Z, and X components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector4h Wyzx
@@ -1139,7 +1139,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector4h with the W, Z, X, and Y components of this instance.
+        /// Gets or sets an OpenToolkit.Vector4h with the W, Z, X, and Y components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector4h Wzxy
@@ -1155,7 +1155,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector4h with the W, Z, Y, and X components of this instance.
+        /// Gets or sets an OpenToolkit.Vector4h with the W, Z, Y, and X components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector4h Wzyx
@@ -1171,7 +1171,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector4h with the W, Z, Y, and W components of this instance.
+        /// Gets or sets an OpenToolkit.Vector4h with the W, Z, Y, and W components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector4h Wzyw
@@ -1205,7 +1205,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Converts OpenTK.Vector4 to OpenTK.Half4.
+        /// Converts OpenToolkit.Vector4 to OpenToolkit.Half4.
         /// </summary>
         /// <param name="v4f">The Vector4 to convert.</param>
         /// <returns>The resulting Half vector.</returns>
@@ -1215,7 +1215,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Converts OpenTK.Vector4d to OpenTK.Half4.
+        /// Converts OpenToolkit.Vector4d to OpenToolkit.Half4.
         /// </summary>
         /// <param name="v4d">The Vector4d to convert.</param>
         /// <returns>The resulting Half vector.</returns>
@@ -1225,7 +1225,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Converts OpenTK.Half4 to OpenTK.Vector4.
+        /// Converts OpenToolkit.Half4 to OpenToolkit.Vector4.
         /// </summary>
         /// <param name="h4">The Half4 to convert.</param>
         /// <returns>The resulting Vector4.</returns>
@@ -1239,7 +1239,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Converts OpenTK.Half4 to OpenTK.Vector4d.
+        /// Converts OpenToolkit.Half4 to OpenToolkit.Vector4d.
         /// </summary>
         /// <param name="h4">The Half4 to convert.</param>
         /// <returns>The resulting Vector4d.</returns>
@@ -1304,9 +1304,9 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Returns a value indicating whether this instance is equal to a specified OpenTK.Half4 vector.
+        /// Returns a value indicating whether this instance is equal to a specified OpenToolkit.Half4 vector.
         /// </summary>
-        /// <param name="other">OpenTK.Half4 to compare to this instance..</param>
+        /// <param name="other">OpenToolkit.Half4 to compare to this instance..</param>
         /// <returns>True, if other is equal to this instance; false otherwise.</returns>
         public bool Equals(Vector4h other)
         {

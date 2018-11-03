@@ -1,7 +1,7 @@
 ﻿using Mono.Cecil;
 using Mono.Cecil.Cil;
 
-namespace OpenTK.Rewrite.Methods.Processors
+namespace OpenToolkit.Rewrite.Methods.Processors
 {
     /// <summary>
     /// Provides functionality to rewrite a wrapper method with an additional "epilogue" step that is run at a later time.

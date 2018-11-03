@@ -6,7 +6,7 @@ using HDC = System.IntPtr;
 using HGDIOBJ = System.IntPtr;
 using UINT = System.UInt32;
 
-namespace OpenTK.NT.Native
+namespace OpenToolkit.NT.Native
 {
     /// <summary>
     /// Provides a subset of functions from the Windows API, specifically those that are imported from gdi32.dll.
