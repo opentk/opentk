@@ -1,4 +1,4 @@
-﻿namespace OpenToolkit.OpenAL
+﻿namespace OpenTK.OpenAL
 {
     /// <summary>
     /// A list of valid Enable/Disable/IsEnabled parameters.

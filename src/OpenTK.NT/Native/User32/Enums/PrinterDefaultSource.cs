@@ -1,4 +1,4 @@
-﻿namespace OpenToolkit.NT.Native.User32.Enums
+﻿namespace OpenTK.NT.Native
 {
     /// <summary>
     /// For a printer, specifies the paper source.

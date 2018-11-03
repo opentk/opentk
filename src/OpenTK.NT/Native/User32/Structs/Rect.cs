@@ -1,7 +1,8 @@
 ﻿using System.Drawing;
+
 using LONG = System.Int32;
 
-namespace OpenToolkit.NT.Native.User32.Structs
+namespace OpenTK.NT.Native
 {
     /// <summary>
     /// Defines the coordinates of the upper-left and lower-right corners of a rectangle.

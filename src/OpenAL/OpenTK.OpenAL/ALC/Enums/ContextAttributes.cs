@@ -5,7 +5,7 @@
  * See license.txt for license details
  * http://www.OpenTK.net */
 
-namespace OpenToolkit.OpenAL
+namespace OpenTK.OpenAL
 {
     /// <summary>
     /// Defines available context attributes.

@@ -5,13 +5,15 @@
  * See license.txt for license details
  * http://www.OpenTK.net */
 
+using System;
 using AdvancedDLSupport;
-using OpenToolkit.Core;
-using OpenToolkit.Core.Loader;
-using OpenToolkit.OpenAL.Extensions;
-using OpenToolkit.OpenAL.Interfaces;
+using OpenTK.Core;
+using OpenTK.Core.Loader;
+using OpenTK.OpenAL.Attributes;
+using OpenTK.OpenAL.Extensions;
+using OpenTK.OpenAL.Interfaces;
 
-namespace OpenToolkit.OpenAL
+namespace OpenTK.OpenAL
 {
     /// <summary>
     /// Provides access to the OpenAL 1.1 context API.
@@ -47,7 +49,7 @@ namespace OpenToolkit.OpenAL
         /// <inheritdoc />
         public abstract unsafe bool MakeContextCurrent(Context* context);
 
-        /// <inheritdoc cref="MakeContextCurrent(OpenToolkit.OpenAL.Context*)"/>
+        /// <inheritdoc cref="MakeContextCurrent(OpenTK.OpenAL.Context*)"/>
         public bool MakeContextCurrent(ContextHandle context)
         {
             unsafe

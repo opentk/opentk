@@ -1,4 +1,4 @@
-﻿namespace OpenToolkit.NT.Native.User32.Enums
+﻿namespace OpenTK.NT.Native
 {
     /// <summary>
     /// Lists all defined types for paper size, with <see cref="Letter"/>, <see cref="Legal"/>, <see cref="A3"/> and

@@ -6,7 +6,7 @@ using System;
 using System.Globalization;
 using System.Runtime.InteropServices;
 
-namespace OpenToolkit.Mathematics
+namespace OpenTK.Mathematics
 {
     /// <summary>
     /// Defines a 2d box (rectangle).

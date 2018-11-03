@@ -1,7 +1,7 @@
 using AdvancedDLSupport;
 
 // ReSharper disable ExplicitCallerInfoArgument
-namespace OpenToolkit.OpenAL.Interfaces
+namespace OpenTK.OpenAL.Interfaces
 {
     /// <summary>
     /// Defines the public interface for the state-related functions of OpenAL 1.1.

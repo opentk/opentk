@@ -1,11 +1,11 @@
 using System;
 using System.Reflection;
 using AdvancedDLSupport;
-using OpenToolkit.Core.Exceptions;
-using OpenToolkit.Core.Loader;
-using OpenToolkit.OpenAL.Interfaces;
+using OpenTK.Core.Exceptions;
+using OpenTK.Core.Loader;
+using OpenTK.OpenAL.Interfaces;
 
-namespace OpenToolkit.OpenAL.Extensions
+namespace OpenTK.OpenAL.Extensions
 {
     /// <summary>
     /// Loader class for API extensions.

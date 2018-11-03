@@ -1,4 +1,4 @@
-namespace OpenToolkit.OpenAL.Extensions.EXT.DoubleFormat
+namespace OpenTK.OpenAL.Extensions.EXT.DoubleFormat
 {
     /// <summary>
     /// Defines valid format specifiers for sound samples. This covers the additions from the multi-channel buffers

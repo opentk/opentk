@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Runtime.InteropServices;
-using OpenToolkit.NT.Native.User32.Enums;
+
 using HINSTANCE = System.IntPtr;
 using HMENU = System.IntPtr;
 using HWND = System.IntPtr;
@@ -8,7 +8,7 @@ using LPCTSTR = System.String;
 using LPVOID = System.IntPtr;
 using SHORT = System.Int16;
 
-namespace OpenToolkit.NT.Native.User32.Structs
+namespace OpenTK.NT.Native
 {
     /// <summary>
     /// Defines the initialization parameters passed to the window procedure of an application. These members are

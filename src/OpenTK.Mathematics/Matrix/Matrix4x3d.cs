@@ -24,7 +24,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 
-namespace OpenToolkit.Mathematics
+namespace OpenTK.Mathematics
 {
     /// <summary>
     /// Represents a 3x4 matrix.

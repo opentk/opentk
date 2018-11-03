@@ -1,6 +1,6 @@
 using AdvancedDLSupport;
 
-namespace OpenToolkit.OpenAL.Interfaces
+namespace OpenTK.OpenAL.Interfaces
 {
     /// <summary>
     /// Defines the public interface of the OpenAL 1.1 library.

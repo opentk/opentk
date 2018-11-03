@@ -25,7 +25,7 @@ using System.Globalization;
 using System.Runtime.InteropServices;
 using System.Xml.Serialization;
 
-namespace OpenToolkit.Mathematics
+namespace OpenTK.Mathematics
 {
     /// <summary>
     /// Represents a 3D vector using three single-precision floating-point numbers.

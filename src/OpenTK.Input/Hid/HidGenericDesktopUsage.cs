@@ -1,4 +1,4 @@
-﻿namespace OpenToolkit.Input.Hid
+﻿namespace OpenTK.Input.Hid
 {
     /// <summary>
     /// Describes usages for the <see cref="HidPage.GenericDesktop"/> page.

@@ -1,6 +1,6 @@
-﻿using OpenToolkit.Mathematics;
+﻿using OpenTK.Mathematics;
 
-namespace OpenToolkit.OpenAL.Extensions.Creative.EFX.Presets
+namespace OpenTK.OpenAL.Extensions.Creative.EFX
 {
     /// <summary>
     /// A set of reverb presets that can be used with the extension.

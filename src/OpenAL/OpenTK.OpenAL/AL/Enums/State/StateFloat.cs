@@ -1,4 +1,4 @@
-﻿namespace OpenToolkit.OpenAL
+﻿namespace OpenTK.OpenAL
 {
     /// <summary>
     /// A list of valid 32-bit Float AL.Get() parameters.

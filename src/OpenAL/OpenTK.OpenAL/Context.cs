@@ -1,4 +1,4 @@
-namespace OpenToolkit.OpenAL
+namespace OpenTK.OpenAL
 {
     /// <summary>
     /// Opaque handle to an OpenAL context.

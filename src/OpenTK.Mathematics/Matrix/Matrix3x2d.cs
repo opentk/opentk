@@ -23,7 +23,7 @@ SOFTWARE.
 using System;
 using System.Diagnostics.CodeAnalysis;
 
-namespace OpenToolkit.Mathematics
+namespace OpenTK.Mathematics
 {
     /// <summary>
     /// Represents a 3x2 matrix.

@@ -1,10 +1,10 @@
 ﻿using System.Runtime.InteropServices;
-using OpenToolkit.NT.Native.User32.Enums;
+
 using DWORD = System.UInt32;
 using HANDLE = System.IntPtr;
 using WPARAM = System.IntPtr;
 
-namespace OpenToolkit.NT.Native.User32.Structs
+namespace OpenTK.NT.Native
 {
     /// <summary>
     /// Contains the header information that is part of the raw input data.

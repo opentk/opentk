@@ -1,4 +1,4 @@
-﻿namespace OpenToolkit.NT.Native.User32.Enums
+﻿namespace OpenTK.NT.Native
 {
     /// <summary>
     /// For printers, the orientation for output.

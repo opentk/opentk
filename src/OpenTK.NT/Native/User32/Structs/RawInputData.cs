@@ -1,6 +1,6 @@
 ﻿using System.Runtime.InteropServices;
 
-namespace OpenToolkit.NT.Native.User32.Structs
+namespace OpenTK.NT.Native
 {
     /// <summary>
     /// A union containing raw input data from a device.

@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
 
-namespace OpenToolkit.Input.Hid
+namespace OpenTK.Input.Hid
 {
     /// <summary>
     /// Static class that provides helper functions for consuming HID input.

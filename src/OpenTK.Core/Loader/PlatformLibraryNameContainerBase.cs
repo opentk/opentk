@@ -1,7 +1,7 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace OpenToolkit.Core.Loader
+namespace OpenTK.Core.Loader
 {
     /// <summary>
     /// Base class for a class that holds library names used on various platforms.

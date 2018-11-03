@@ -1,6 +1,6 @@
 ﻿using DWORD = System.UInt32;
 
-namespace OpenToolkit.NT.Native.User32.Structs
+namespace OpenTK.NT.Native
 {
     /// <summary>
     /// Defines the raw input data coming from the specified keyboard.

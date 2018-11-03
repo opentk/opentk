@@ -1,7 +1,6 @@
 using AdvancedDLSupport;
-using OpenToolkit.OpenAL.Extensions.Creative.MultiChannelBuffers.Enums;
 
-namespace OpenToolkit.OpenAL.Extensions.Creative.MultiChannelBuffers.Interfaces
+namespace OpenTK.OpenAL.Extensions.Creative.MultiChannelBuffers
 {
     /// <summary>
     /// Defines the public interface for buffer-related functions of the multi-channel buffers extension.

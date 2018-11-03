@@ -1,4 +1,4 @@
-﻿namespace OpenToolkit.NT.Native.User32
+﻿namespace OpenTK.NT.Native
 {
     /// <summary>
     /// Provides a subset of functions from the Windows API, specifically those that are imported from user32.dll.

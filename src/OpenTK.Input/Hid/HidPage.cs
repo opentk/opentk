@@ -1,4 +1,4 @@
-﻿namespace OpenToolkit.Input.Hid
+﻿namespace OpenTK.Input.Hid
 {
     /// <summary>
     /// The usage page identifies both the intended usage and the measured values of a human interface device.

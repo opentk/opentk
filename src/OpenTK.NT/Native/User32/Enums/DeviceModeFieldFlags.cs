@@ -1,8 +1,8 @@
 ﻿using System;
-using OpenToolkit.NT.Native.User32.Structs;
+
 using DWORD = System.UInt32;
 
-namespace OpenToolkit.NT.Native.User32.Enums
+namespace OpenTK.NT.Native
 {
     /// <summary>
     /// Used in the <see cref="DeviceMode"/> structure to specify whether certain members of the structure

@@ -1,6 +1,8 @@
+using System;
+using System.Reflection;
 using AdvancedDLSupport;
 
-namespace OpenToolkit.Core.Loader
+namespace OpenTK.Core.Loader
 {
     /// <summary>
     /// Handles loading API class types into usable instances.

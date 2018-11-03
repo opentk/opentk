@@ -1,9 +1,9 @@
 using AdvancedDLSupport;
-using OpenToolkit.Mathematics;
+using OpenTK.Mathematics;
 
 // ReSharper disable ExplicitCallerInfoArgument
 
-namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
+namespace OpenTK.OpenAL.Extensions.Creative.EFX
 {
     /// <summary>
     /// Defines the public API of the effect-related functions of the Effects Extension.

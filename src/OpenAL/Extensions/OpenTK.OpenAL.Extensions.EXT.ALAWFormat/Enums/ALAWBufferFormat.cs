@@ -1,4 +1,4 @@
-namespace OpenToolkit.OpenAL.Extensions.EXT.ALAWFormat.Enums
+namespace OpenTK.OpenAL.Extensions.EXT.ALAWFormat
 {
     /// <summary>
     /// Defines valid format specifiers for sound samples. This covers the additions from the multi-channel buffers

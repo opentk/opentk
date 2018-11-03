@@ -1,7 +1,8 @@
 ﻿using System;
+
 using DWORD = System.UInt32;
 
-namespace OpenToolkit.NT.Native.Shell32.Enums
+namespace OpenTK.NT.Native
 {
     /// <summary>
     /// Metadata values stored by the file system on disk and are used by the system and are available to developers

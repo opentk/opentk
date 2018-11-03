@@ -1,4 +1,4 @@
-namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
+namespace OpenTK.OpenAL.Extensions.Creative.EFX
 {
     /// <summary>
     /// May be passed at context construction time to indicate the number of desired auxiliary effect slot sends per

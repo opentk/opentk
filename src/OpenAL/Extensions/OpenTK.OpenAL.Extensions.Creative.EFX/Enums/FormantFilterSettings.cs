@@ -1,4 +1,4 @@
-﻿namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
+﻿namespace OpenTK.OpenAL.Extensions.Creative.EFX
 {
     /// <summary>
     /// Vocal morpher effect parameters. If both parameters are set to the same phoneme, that determines the filtering

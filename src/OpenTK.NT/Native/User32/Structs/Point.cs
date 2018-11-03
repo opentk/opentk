@@ -1,4 +1,4 @@
-﻿namespace OpenToolkit.NT.Native.User32.Structs
+﻿namespace OpenTK.NT.Native
 {
     /// <summary>
     /// Defines the X and Y coordinates of a point.

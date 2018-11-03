@@ -1,11 +1,11 @@
 ﻿using System.Runtime.InteropServices;
-using OpenToolkit.NT.Native.User32.Enums;
+
 using ATOM = System.UInt16;
 using DWORD = System.UInt32;
 using UINT = System.UInt32;
 using WORD = System.UInt16;
 
-namespace OpenToolkit.NT.Native.User32.Structs
+namespace OpenTK.NT.Native
 {
     /// <summary>
     /// Contains window information.

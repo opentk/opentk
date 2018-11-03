@@ -1,8 +1,8 @@
 ﻿using System;
-using OpenToolkit.NT.Native.User32.Structs;
+
 using USHORT = System.UInt16;
 
-namespace OpenToolkit.NT.Native.User32.Enums
+namespace OpenTK.NT.Native
 {
     /// <summary>
     /// Specifies the transition state of the mouse buttons.

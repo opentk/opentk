@@ -1,4 +1,6 @@
-﻿namespace OpenToolkit.OpenAL.Extensions.Soft
+﻿using OpenTK.OpenAL.Interfaces;
+
+namespace OpenTK.OpenAL.Extensions.Soft
 {
     /// <summary>
     /// A list of valid <see cref="double"/> <see cref="IState.GetFloat"/> parameters. These enumeration members

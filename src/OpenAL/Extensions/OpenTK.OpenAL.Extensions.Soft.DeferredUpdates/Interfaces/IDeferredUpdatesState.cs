@@ -1,9 +1,9 @@
 using AdvancedDLSupport;
-using OpenToolkit.OpenAL.Interfaces;
+using OpenTK.OpenAL.Interfaces;
 
 // ReSharper disable ExplicitCallerInfoArgument
 
-namespace OpenToolkit.OpenAL.Extensions.Soft.DeferredUpdates
+namespace OpenTK.OpenAL.Extensions.Soft.DeferredUpdates
 {
     /// <summary>
     /// Defines the public API of state-related functions in the Deferred Updates extension.

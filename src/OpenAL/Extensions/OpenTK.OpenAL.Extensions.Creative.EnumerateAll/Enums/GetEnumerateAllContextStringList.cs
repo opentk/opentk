@@ -1,4 +1,4 @@
-﻿namespace OpenToolkit.OpenAL.Extensions.Creative.EnumerateAll
+﻿namespace OpenTK.OpenAL.Extensions.Creative.EnumerateAll
 {
     /// <summary>
     /// Defines available parameters for <see cref="IEnumerateAllContextState.GetString(System.IntPtr,GetEnumerateAllContextStringList)" />.

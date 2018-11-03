@@ -2,7 +2,7 @@ using System;
 using System.Linq;
 using System.Reflection;
 
-namespace OpenToolkit.OpenAL.Attributes
+namespace OpenTK.OpenAL.Attributes
 {
     /// <summary>
     /// Helper methods for buffer formats.

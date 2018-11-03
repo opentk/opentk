@@ -1,8 +1,8 @@
 using AdvancedDLSupport;
-using OpenToolkit.Core.Loader;
-using OpenToolkit.Mathematics;
+using OpenTK.Core.Loader;
+using OpenTK.Mathematics;
 
-namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
+namespace OpenTK.OpenAL.Extensions.Creative.EFX
 {
     /// <summary>
     /// Exposes the functions of the Effects Extension.

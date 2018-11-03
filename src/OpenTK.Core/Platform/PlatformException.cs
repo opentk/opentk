@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace OpenToolkit.Core.Platform
+namespace OpenTK.Core.Platform
 {
     /// <summary>
     /// Defines a platform-specific exception.

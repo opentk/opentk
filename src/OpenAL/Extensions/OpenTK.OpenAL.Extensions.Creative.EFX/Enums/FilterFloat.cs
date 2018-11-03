@@ -1,4 +1,4 @@
-﻿namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
+﻿namespace OpenTK.OpenAL.Extensions.Creative.EFX
 {
     /// <summary>
     /// A list of valid <see cref="float"/> Filter/GetFilter parameters.

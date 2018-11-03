@@ -1,9 +1,9 @@
-﻿using OpenToolkit.OpenAL.Interfaces;
+﻿using OpenTK.OpenAL.Interfaces;
 
-namespace OpenToolkit.OpenAL
+namespace OpenTK.OpenAL
 {
     /// <summary>
-    /// Defines available parameters for <see cref="IContextState.GetContextProperty(OpenToolkit.OpenAL.Device*,OpenToolkit.OpenAL.GetContextString)" />.
+    /// Defines available parameters for <see cref="IContextState.GetContextProperty(OpenTK.OpenAL.Device*,GetContextString)" />.
     /// </summary>
     public enum GetContextString
     {

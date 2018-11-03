@@ -8,7 +8,7 @@
 
 using System;
 
-namespace OpenToolkit.Mathematics
+namespace OpenTK.Mathematics
 {
     /// <summary>
     /// Represents a quadric bezier curve with two anchor and one control point.

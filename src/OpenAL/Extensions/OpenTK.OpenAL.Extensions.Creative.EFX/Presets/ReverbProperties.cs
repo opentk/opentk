@@ -1,6 +1,6 @@
-﻿using OpenToolkit.Mathematics;
+﻿using OpenTK.Mathematics;
 
-namespace OpenToolkit.OpenAL.Extensions.Creative.EFX.Presets
+namespace OpenTK.OpenAL.Extensions.Creative.EFX
 {
     /// <summary>
     /// Defines a set of predefined reverb properties.

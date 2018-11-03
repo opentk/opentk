@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 using System.Security;
-using OpenToolkit.NT.Native.User32.Enums;
+
 using HWND = System.IntPtr;
 using SHORT = System.Int16;
 using UINT = System.UInt32;
 
-namespace OpenToolkit.NT.Native.User32
+namespace OpenTK.NT.Native
 {
     public static partial class User32
     {

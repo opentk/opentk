@@ -1,6 +1,6 @@
 ﻿using DWORD = System.UInt32;
 
-namespace OpenToolkit.NT.Native.User32.Enums
+namespace OpenTK.NT.Native
 {
     /// <summary>
     /// For fixed-resolution displays, specifies how the device can present a lower-resolution

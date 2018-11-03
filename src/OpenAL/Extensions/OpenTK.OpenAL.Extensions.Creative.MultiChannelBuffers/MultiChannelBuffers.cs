@@ -1,9 +1,7 @@
 using AdvancedDLSupport;
-using OpenToolkit.Core.Loader;
-using OpenToolkit.OpenAL.Extensions.Creative.MultiChannelBuffers.Enums;
-using OpenToolkit.OpenAL.Extensions.Creative.MultiChannelBuffers.Interfaces;
+using OpenTK.Core.Loader;
 
-namespace OpenToolkit.OpenAL.Extensions.Creative.MultiChannelBuffers
+namespace OpenTK.OpenAL.Extensions.Creative.MultiChannelBuffers
 {
     /// <summary>
     /// Exposes the multi-channel buffers extension by Creative Labs.

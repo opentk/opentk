@@ -9,7 +9,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace OpenToolkit.Mathematics
+namespace OpenTK.Mathematics
 {
     /// <summary>
     /// Represents a bezier curve with as many points as you want.

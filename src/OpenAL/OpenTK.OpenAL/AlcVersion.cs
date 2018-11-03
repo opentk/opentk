@@ -1,4 +1,4 @@
-namespace OpenToolkit.OpenAL
+namespace OpenTK.OpenAL
 {
     /// <summary>
     /// Defines the known OpenAL versions.

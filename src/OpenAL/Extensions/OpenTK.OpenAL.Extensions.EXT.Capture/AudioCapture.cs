@@ -25,7 +25,7 @@
 
 using System;
 
-namespace OpenToolkit.OpenAL.Extensions.EXT.Capture
+namespace OpenTK.OpenAL.Extensions.EXT.Capture
 {
     /// <summary>
     /// Provides methods to instantiate, use and destroy an audio device for recording.

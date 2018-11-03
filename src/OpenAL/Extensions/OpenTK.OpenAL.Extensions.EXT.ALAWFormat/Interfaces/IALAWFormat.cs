@@ -1,7 +1,6 @@
 using AdvancedDLSupport;
-using OpenToolkit.OpenAL.Extensions.EXT.ALAWFormat.Enums;
 
-namespace OpenToolkit.OpenAL.Extensions.EXT.ALAWFormat.Interfaces
+namespace OpenTK.OpenAL.Extensions.EXT.ALAWFormat
 {
     /// <summary>
     /// Defines the public interface for buffer-related functions of the multi-channel buffers extension.

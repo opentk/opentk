@@ -25,7 +25,7 @@
 
 using System;
 
-namespace OpenToolkit.Core.Exceptions
+namespace OpenTK.Core.Exceptions
 {
     /// <summary>
     /// Represents exceptions related to API extensions.

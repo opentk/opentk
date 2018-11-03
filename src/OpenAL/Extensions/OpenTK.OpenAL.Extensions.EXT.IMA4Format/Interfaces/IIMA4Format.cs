@@ -1,6 +1,6 @@
 using AdvancedDLSupport;
 
-namespace OpenToolkit.OpenAL.Extensions.EXT.IMA4Format
+namespace OpenTK.OpenAL.Native.Extensions.EXT.IMA4Format
 {
     /// <summary>
     /// Defines the public interface for buffer-related functions of the multi-channel buffers extension.

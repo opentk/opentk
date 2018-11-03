@@ -1,9 +1,8 @@
-﻿using OpenToolkit.NT.Native.User32.Enums;
-using UINT = System.UInt32;
+﻿using UINT = System.UInt32;
 using ULONG = System.UInt32;
 using USHORT = System.UInt16;
 
-namespace OpenToolkit.NT.Native.User32.Structs
+namespace OpenTK.NT.Native
 {
     /// <summary>
     /// Contains information about the state of the keyboard.

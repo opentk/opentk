@@ -1,6 +1,6 @@
 using AdvancedDLSupport;
 
-namespace OpenToolkit.OpenAL.Extensions.EXT.Capture
+namespace OpenTK.OpenAL.Extensions.EXT.Capture
 {
     /// <summary>
     /// Defines the public API of state-related functions in the Capture extension.

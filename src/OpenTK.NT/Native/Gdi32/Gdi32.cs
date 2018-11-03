@@ -1,13 +1,12 @@
 ﻿using System.Runtime.InteropServices;
 using System.Security;
-using OpenToolkit.NT.Native.Gdi32.Enums;
-using OpenToolkit.NT.Native.Gdi32.Structs;
+
 using BOOL = System.Boolean;
 using HDC = System.IntPtr;
 using HGDIOBJ = System.IntPtr;
 using UINT = System.UInt32;
 
-namespace OpenToolkit.NT.Native.Gdi32
+namespace OpenTK.NT.Native
 {
     /// <summary>
     /// Provides a subset of functions from the Windows API, specifically those that are imported from gdi32.dll.

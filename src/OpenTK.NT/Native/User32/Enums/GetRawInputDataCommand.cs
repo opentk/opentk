@@ -1,7 +1,6 @@
-﻿using OpenToolkit.NT.Native.User32.Structs;
-using UINT = System.UInt32;
+﻿using UINT = System.UInt32;
 
-namespace OpenToolkit.NT.Native.User32.Enums
+namespace OpenTK.NT.Native
 {
     /// <summary>
     /// Specifies which type of raw input data to get in a <see cref="User32.RawInput.GetRawInputData(System.IntPtr,

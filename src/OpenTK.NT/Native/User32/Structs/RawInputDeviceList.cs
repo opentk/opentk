@@ -1,8 +1,8 @@
 ﻿using System.Runtime.InteropServices;
-using OpenToolkit.NT.Native.User32.Enums;
+
 using HANDLE = System.IntPtr;
 
-namespace OpenToolkit.NT.Native.User32.Structs
+namespace OpenTK.NT.Native
 {
     /// <summary>
     /// Contains information about a raw input device.

@@ -1,4 +1,4 @@
-namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
+namespace OpenTK.OpenAL.Extensions.Creative.EFX
 {
     /// <summary>
     /// Defines new integer properties on the OpenAL context.

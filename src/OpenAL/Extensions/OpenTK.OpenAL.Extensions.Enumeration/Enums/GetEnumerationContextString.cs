@@ -1,4 +1,4 @@
-﻿namespace OpenToolkit.OpenAL.Extensions.Enumeration
+﻿namespace OpenTK.OpenAL.Extensions.Enumeration
 {
     /// <summary>
     /// Defines available parameters for <see cref="ALContext.GetString(System.IntPtr,GetEnumerationContextString)" />.

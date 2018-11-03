@@ -1,9 +1,9 @@
 using System;
 using AdvancedDLSupport;
-using OpenToolkit.Core.Loader;
-using OpenToolkit.OpenAL.Attributes;
+using OpenTK.Core.Loader;
+using OpenTK.OpenAL.Attributes;
 
-namespace OpenToolkit.OpenAL.Extensions.EXT.Capture
+namespace OpenTK.OpenAL.Extensions.EXT.Capture
 {
     /// <summary>
     /// Exposes the API in the Capture extension.

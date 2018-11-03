@@ -1,6 +1,7 @@
+using System;
 using AdvancedDLSupport;
 
-namespace OpenToolkit.OpenAL.Extensions.Soft.DeferredUpdates
+namespace OpenTK.OpenAL.Extensions.Soft.DeferredUpdates
 {
     /// <summary>
     /// Exposes the public API of the OpenAL Soft Deferred Updates extension.

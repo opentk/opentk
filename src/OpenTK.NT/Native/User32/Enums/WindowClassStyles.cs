@@ -1,7 +1,8 @@
 ﻿using System;
+
 using UINT = System.UInt32;
 
-namespace OpenToolkit.NT.Native.User32.Enums
+namespace OpenTK.NT.Native
 {
     /// <summary>
     /// Defines additional elements of the window class.

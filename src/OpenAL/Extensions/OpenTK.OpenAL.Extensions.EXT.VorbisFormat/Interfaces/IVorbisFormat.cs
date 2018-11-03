@@ -1,6 +1,6 @@
 using AdvancedDLSupport;
 
-namespace OpenToolkit.OpenAL.Extensions.EXT.VorbisFormat
+namespace OpenTK.OpenAL.Extensions.EXT.VorbisFormat
 {
     /// <summary>
     /// Defines the public interface for buffer-related functions of the multi-channel buffers extension.

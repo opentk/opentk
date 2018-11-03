@@ -1,7 +1,7 @@
 using AdvancedDLSupport;
-using OpenToolkit.Core.Loader;
+using OpenTK.Core.Loader;
 
-namespace OpenToolkit.OpenAL.Extensions.EXT.VorbisFormat
+namespace OpenTK.OpenAL.Extensions.EXT.VorbisFormat
 {
     /// <summary>
     /// Exposes the multi-channel buffers extension by Creative Labs.

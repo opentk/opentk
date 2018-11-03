@@ -7,12 +7,13 @@
 
 using System;
 using AdvancedDLSupport;
-using OpenToolkit.Core.Loader;
-using OpenToolkit.Mathematics;
-using OpenToolkit.OpenAL.Extensions;
-using OpenToolkit.OpenAL.Interfaces;
+using OpenTK.Core.Loader;
+using OpenTK.Mathematics;
+using OpenTK.OpenAL.Attributes;
+using OpenTK.OpenAL.Extensions;
+using OpenTK.OpenAL.Interfaces;
 
-namespace OpenToolkit.OpenAL
+namespace OpenTK.OpenAL
 {
     /// <summary>
     /// Provides access to the OpenAL 1.1 API.

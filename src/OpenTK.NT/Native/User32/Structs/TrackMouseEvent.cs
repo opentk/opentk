@@ -1,9 +1,9 @@
 ﻿using System.Runtime.InteropServices;
-using OpenToolkit.NT.Native.User32.Enums;
+
 using DWORD = System.UInt32;
 using HWND = System.IntPtr;
 
-namespace OpenToolkit.NT.Native.User32.Structs
+namespace OpenTK.NT.Native
 {
     /// <summary>
     /// Used by the <see cref="User32.Mouse.TrackMouseEvent(ref TrackMouseEvent)"/> function to track

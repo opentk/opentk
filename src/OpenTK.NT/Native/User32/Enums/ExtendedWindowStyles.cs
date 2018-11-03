@@ -1,7 +1,8 @@
 ﻿using System;
+
 using DWORD = System.UInt32;
 
-namespace OpenToolkit.NT.Native.User32.Enums
+namespace OpenTK.NT.Native
 {
     /// <summary>
     /// Defines extended window style flags for usage in <see cref="User32.Window.AdjustWindowRectEx(ref Rect,

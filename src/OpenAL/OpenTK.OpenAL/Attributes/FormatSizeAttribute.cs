@@ -1,6 +1,6 @@
 using System;
 
-namespace OpenToolkit.OpenAL.Attributes
+namespace OpenTK.OpenAL.Attributes
 {
     /// <summary>
     /// Specifies the native size of one sample of a given buffer format.

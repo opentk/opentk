@@ -1,4 +1,4 @@
-namespace OpenToolkit.OpenAL.Extensions.Soft
+namespace OpenTK.OpenAL.Extensions.Soft
 {
     /// <summary>
     /// A set of resamplers defined in OpenAL Soft.
