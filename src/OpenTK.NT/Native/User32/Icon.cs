@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Runtime.InteropServices;
-using OpenToolkit.NT.Native.User32.Enums;
-using OpenToolkit.NT.Native.User32.Structs;
+
 using BOOL = System.Boolean;
 using HICON = System.IntPtr;
 using HINSTANCE = System.IntPtr;
 
-namespace OpenToolkit.NT.Native.User32
+namespace OpenToolkit.NT.Native
 {
     public static partial class User32
     {

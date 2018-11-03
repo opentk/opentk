@@ -1,3 +1,5 @@
+using System;
+using System.Reflection;
 using AdvancedDLSupport;
 
 namespace OpenToolkit.Core.Loader

@@ -60,7 +60,7 @@ namespace OpenToolkit.OpenAL.Extensions.EXT.Capture
         }
 
         /// <summary>
-        /// Gets the OpenTK.Audio.BufferFormat for this instance.
+        /// Gets the OpenToolkit.Audio.BufferFormat for this instance.
         /// </summary>
         public TBufferFormat SampleFormat { get; }
 

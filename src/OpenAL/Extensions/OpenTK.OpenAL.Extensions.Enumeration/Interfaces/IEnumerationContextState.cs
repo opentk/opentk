@@ -1,5 +1,4 @@
 using AdvancedDLSupport;
-
 // ReSharper disable ExplicitCallerInfoArgument
 
 namespace OpenToolkit.OpenAL.Extensions.Enumeration

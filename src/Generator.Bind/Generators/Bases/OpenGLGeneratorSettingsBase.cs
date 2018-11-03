@@ -18,7 +18,7 @@ namespace Bind.Generators.Bases
         public override string OutputSubfolder => "OpenGL";
 
         /// <inheritdoc/>
-        public override string Namespace => "OpenTK.Graphics.OpenGL";
+        public override string Namespace => "OpenToolkit.Graphics.OpenGL";
 
         /// <inheritdoc/>
         public override string ClassName => "GL";

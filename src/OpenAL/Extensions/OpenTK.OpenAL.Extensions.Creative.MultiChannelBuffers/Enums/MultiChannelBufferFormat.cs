@@ -1,4 +1,4 @@
-namespace OpenToolkit.OpenAL.Extensions.Creative.MultiChannelBuffers.Enums
+namespace OpenToolkit.OpenAL.Extensions.Creative.MultiChannelBuffers
 {
     /// <summary>
     /// Defines valid format specifiers for sound samples. This covers the additions from the multi-channel buffers

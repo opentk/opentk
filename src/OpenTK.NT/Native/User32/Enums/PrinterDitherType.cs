@@ -1,6 +1,6 @@
 ﻿using DWORD = System.UInt32;
 
-namespace OpenToolkit.NT.Native.User32.Enums
+namespace OpenToolkit.NT.Native
 {
     /// <summary>
     /// For printers, specifies types of dithering.

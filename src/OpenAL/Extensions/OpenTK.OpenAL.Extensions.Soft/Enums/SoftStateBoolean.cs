@@ -1,4 +1,6 @@
-﻿namespace OpenToolkit.OpenAL.Extensions.Soft
+﻿using OpenToolkit.OpenAL.Interfaces;
+
+namespace OpenToolkit.OpenAL.Extensions.Soft
 {
     /// <summary>
     /// A list of valid <see cref="bool"/> parameters for <see cref="IState.GetBoolean"/>. These enumeration members

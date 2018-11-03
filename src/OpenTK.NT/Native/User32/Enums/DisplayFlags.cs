@@ -1,7 +1,8 @@
 ﻿using System;
+
 using DWORD = System.UInt32;
 
-namespace OpenToolkit.NT.Native.User32.Enums
+namespace OpenToolkit.NT.Native
 {
     /// <summary>
     /// Specifies the device's display mode.

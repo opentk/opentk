@@ -39,7 +39,7 @@ namespace Bind.Generators.GL.Core
         public override string OutputSubfolder => "OpenGL4";
 
         /// <inheritdoc/>
-        public override string Namespace => "OpenTK.Graphics.OpenGL4";
+        public override string Namespace => "OpenToolkit.Graphics.OpenGL4";
 
         /// <inheritdoc/>
         public override string ProfileName => "glcore";

@@ -1,6 +1,4 @@
-﻿using OpenToolkit.NT.Native.User32;
-
-namespace OpenToolkit.NT.Native.Gdi32.Enums
+﻿namespace OpenToolkit.NT.Native
 {
     /// <summary>
     /// Used in <see cref="Gdi32.GetDeviceCaps(System.IntPtr, GetDeviceCapsIndex)"/> to specify the type of

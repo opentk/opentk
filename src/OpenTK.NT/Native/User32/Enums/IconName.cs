@@ -1,4 +1,4 @@
-﻿namespace OpenToolkit.NT.Native.User32.Enums
+﻿namespace OpenToolkit.NT.Native
 {
     /// <summary>
     /// Specifies resource identifiers for the pre-defined icons.

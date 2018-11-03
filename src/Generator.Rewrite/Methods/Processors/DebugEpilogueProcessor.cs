@@ -1,8 +1,8 @@
 ﻿using Mono.Cecil;
 using Mono.Cecil.Cil;
-using OpenTK.Rewrite.Extensions;
+using OpenToolkit.Rewrite.Extensions;
 
-namespace OpenTK.Rewrite.Methods.Processors
+namespace OpenToolkit.Rewrite.Methods.Processors
 {
     /// <summary>
     /// Rewrites wrapper method IL to include the epilogue for the debug configuration.

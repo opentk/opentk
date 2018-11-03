@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Runtime.InteropServices;
-using OpenToolkit.NT.Native.User32.Enums;
-using OpenToolkit.NT.Native.User32.Structs;
+
 using BOOL = System.Boolean;
 using DEVMODE = System.IntPtr;
 using DWORD = System.UInt32;
@@ -9,7 +8,7 @@ using HDC = System.IntPtr;
 using HWND = System.IntPtr;
 using LPVOID = System.IntPtr;
 
-namespace OpenToolkit.NT.Native.User32
+namespace OpenToolkit.NT.Native
 {
     public static partial class User32
     {

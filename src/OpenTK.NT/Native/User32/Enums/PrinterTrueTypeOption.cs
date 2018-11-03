@@ -1,4 +1,4 @@
-﻿namespace OpenToolkit.NT.Native.User32.Enums
+﻿namespace OpenToolkit.NT.Native
 {
     /// <summary>
     /// Specifies how TrueType fonts should be printed.

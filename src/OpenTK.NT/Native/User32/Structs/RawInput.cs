@@ -1,6 +1,6 @@
 ﻿using System.Runtime.InteropServices;
 
-namespace OpenToolkit.NT.Native.User32.Structs
+namespace OpenToolkit.NT.Native
 {
     /// <summary>
     /// Contains the raw input from a device.

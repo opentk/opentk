@@ -1,7 +1,7 @@
 ﻿using BOOL = System.Boolean;
 using DWORD = System.UInt32;
 
-namespace OpenToolkit.NT.Native.User32.Structs
+namespace OpenToolkit.NT.Native
 {
     /// <summary>
     /// Defines the raw input data coming from the specified mouse.

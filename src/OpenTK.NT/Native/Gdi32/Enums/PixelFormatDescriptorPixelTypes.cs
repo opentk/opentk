@@ -1,6 +1,6 @@
 ﻿using BYTE = System.Byte;
 
-namespace OpenToolkit.NT.Native.Gdi32.Enums
+namespace OpenToolkit.NT.Native
 {
     /// <summary>
     /// Specifies the type of pixel data.

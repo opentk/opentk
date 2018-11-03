@@ -1,10 +1,9 @@
-﻿using OpenToolkit.NT.Native.User32.Enums;
-using DWORD = System.UInt32;
+﻿using DWORD = System.UInt32;
 using HWND = System.IntPtr;
 using LPARAM = System.IntPtr;
 using WPARAM = System.IntPtr;
 
-namespace OpenToolkit.NT.Native.User32.Structs
+namespace OpenToolkit.NT.Native
 {
     /// <summary>
     /// Contains message information from a thread's message queue.

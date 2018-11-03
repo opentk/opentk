@@ -1,8 +1,9 @@
 ﻿using System.Runtime.InteropServices;
+
 using DWORD = System.UInt32;
 using ULONG_PTR = System.IntPtr;
 
-namespace OpenToolkit.NT.Native.User32.Structs
+namespace OpenToolkit.NT.Native
 {
     /// <summary>
     /// Contains information about the mouse's location in screen coordinates.

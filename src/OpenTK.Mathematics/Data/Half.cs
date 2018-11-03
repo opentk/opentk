@@ -321,7 +321,7 @@ namespace OpenToolkit.Mathematics
         }
 
         /// <summary>
-        /// Converts a System.Single to a OpenTK.Half.
+        /// Converts a System.Single to a OpenToolkit.Half.
         /// </summary>
         /// <param name="f">
         /// The <see cref="float"/> value to convert.
@@ -335,7 +335,7 @@ namespace OpenToolkit.Mathematics
         }
 
         /// <summary>
-        /// Converts a System.Double to a OpenTK.Half.
+        /// Converts a System.Double to a OpenToolkit.Half.
         /// </summary>
         /// <param name="d">
         /// The <see cref="double"/> value to convert.
@@ -349,7 +349,7 @@ namespace OpenToolkit.Mathematics
         }
 
         /// <summary>
-        /// Converts a OpenTK.Half to a System.Single.
+        /// Converts a OpenToolkit.Half to a System.Single.
         /// </summary>
         /// <param name="h">
         /// The <see cref="Half"/> value to convert.
@@ -363,7 +363,7 @@ namespace OpenToolkit.Mathematics
         }
 
         /// <summary>
-        /// Converts a OpenTK.Half to a System.Double.
+        /// Converts a OpenToolkit.Half to a System.Double.
         /// </summary>
         /// <param name="h">
         /// The <see cref="Half"/> value to convert.
@@ -439,9 +439,9 @@ namespace OpenToolkit.Mathematics
         }
 
         /// <summary>
-        /// Returns a value indicating whether this instance is equal to a specified OpenTK.Half value.
+        /// Returns a value indicating whether this instance is equal to a specified OpenToolkit.Half value.
         /// </summary>
-        /// <param name="other">OpenTK.Half object to compare to this instance..</param>
+        /// <param name="other">OpenToolkit.Half object to compare to this instance..</param>
         /// <returns>True, if other is equal to this instance; false otherwise.</returns>
         public bool Equals(Half other)
         {
@@ -483,16 +483,16 @@ namespace OpenToolkit.Mathematics
         /// A signed number indicating the relative values of this instance and value. If the number is:
         ///  <para>
         /// Less than zero, then this instance is less than other, or this instance is not a number
-        /// (OpenTK.Half.NaN) and other is a number.
+        /// (OpenToolkit.Half.NaN) and other is a number.
         ///  </para>
         ///  <para>
         /// Zero: this instance is equal to value, or both this instance and other
-        /// are not a number (OpenTK.Half.NaN), OpenTK.Half.PositiveInfinity, or
-        /// OpenTK.Half.NegativeInfinity.
+        /// are not a number (OpenToolkit.Half.NaN), OpenToolkit.Half.PositiveInfinity, or
+        /// OpenToolkit.Half.NegativeInfinity.
         ///  </para>
         ///  <para>
         /// Greater than zero: this instance is greater than othrs, or this instance is a number
-        /// and other is not a number (OpenTK.Half.NaN).
+        /// and other is not a number (OpenToolkit.Half.NaN).
         ///  </para>
         /// </returns>
         public int CompareTo(Half other)

@@ -1,7 +1,6 @@
-﻿using OpenToolkit.NT.Native.User32.Enums;
-using DWORD = System.UInt32;
+﻿using DWORD = System.UInt32;
 
-namespace OpenToolkit.NT.Native.User32.Structs
+namespace OpenToolkit.NT.Native
 {
     /// <summary>
     /// Contains the styles for a window.<para/>

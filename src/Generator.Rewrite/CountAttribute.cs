@@ -1,7 +1,7 @@
-﻿namespace OpenTK.Rewrite
+﻿namespace OpenToolkit.Rewrite
 {
     /// <summary>
-    /// A copy of OpenTK.CountAttribute. Only for internal use.
+    /// A copy of OpenToolkit.CountAttribute. Only for internal use.
     /// </summary>
     internal sealed class CountAttribute
     {

@@ -185,7 +185,7 @@ namespace OpenToolkit.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector2h with the Y and X components of this instance.
+        /// Gets or sets an OpenToolkit.Vector2h with the Y and X components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector2h Yx
@@ -217,7 +217,7 @@ namespace OpenToolkit.Mathematics
         }
 
         /// <summary>
-        /// Converts OpenTK.Vector2 to OpenTK.Half2.
+        /// Converts OpenToolkit.Vector2 to OpenToolkit.Half2.
         /// </summary>
         /// <param name="v">The Vector2 to convert.</param>
         /// <returns>The resulting Half vector.</returns>
@@ -227,7 +227,7 @@ namespace OpenToolkit.Mathematics
         }
 
         /// <summary>
-        /// Converts OpenTK.Vector2d to OpenTK.Half2.
+        /// Converts OpenToolkit.Vector2d to OpenToolkit.Half2.
         /// </summary>
         /// <param name="v">The Vector2d to convert.</param>
         /// <returns>The resulting Half vector.</returns>
@@ -237,7 +237,7 @@ namespace OpenToolkit.Mathematics
         }
 
         /// <summary>
-        /// Converts OpenTK.Half2 to OpenTK.Vector2.
+        /// Converts OpenToolkit.Half2 to OpenToolkit.Vector2.
         /// </summary>
         /// <param name="h">The Half2 to convert.</param>
         /// <returns>The resulting Vector2.</returns>
@@ -247,7 +247,7 @@ namespace OpenToolkit.Mathematics
         }
 
         /// <summary>
-        /// Converts OpenTK.Half2 to OpenTK.Vector2d.
+        /// Converts OpenToolkit.Half2 to OpenToolkit.Vector2d.
         /// </summary>
         /// <param name="h">The Half2 to convert.</param>
         /// <returns>The resulting Vector2d.</returns>
@@ -300,9 +300,9 @@ namespace OpenToolkit.Mathematics
         }
 
         /// <summary>
-        /// Returns a value indicating whether this instance is equal to a specified OpenTK.Half2 vector.
+        /// Returns a value indicating whether this instance is equal to a specified OpenToolkit.Half2 vector.
         /// </summary>
-        /// <param name="other">OpenTK.Half2 to compare to this instance..</param>
+        /// <param name="other">OpenToolkit.Half2 to compare to this instance..</param>
         /// <returns>True, if other is equal to this instance; false otherwise.</returns>
         public bool Equals(Vector2h other)
         {

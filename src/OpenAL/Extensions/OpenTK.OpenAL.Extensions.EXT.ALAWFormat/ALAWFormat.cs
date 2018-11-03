@@ -1,7 +1,5 @@
 using AdvancedDLSupport;
 using OpenToolkit.Core.Loader;
-using OpenToolkit.OpenAL.Extensions.EXT.ALAWFormat.Enums;
-using OpenToolkit.OpenAL.Extensions.EXT.ALAWFormat.Interfaces;
 
 namespace OpenToolkit.OpenAL.Extensions.EXT.ALAWFormat
 {

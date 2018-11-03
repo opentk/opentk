@@ -1,4 +1,4 @@
-﻿namespace OpenToolkit.NT.Native.User32.Enums
+﻿namespace OpenToolkit.NT.Native
 {
     /// <summary>
     /// Flags for scan code information.

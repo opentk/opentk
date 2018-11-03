@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using Mono.Cecil;
 using Mono.Cecil.Rocks;
-using OpenTK.Rewrite.Extensions;
-using OpenTK.Rewrite.Methods;
+using OpenToolkit.Rewrite.Extensions;
+using OpenToolkit.Rewrite.Methods;
 
-namespace OpenTK.Rewrite.Types
+namespace OpenToolkit.Rewrite.Types
 {
     /// <summary>
     /// Rewrites all wrapper methods in a type according to a supplied <see cref="IMethodRewriter"/> implementation.

@@ -1,3 +1,5 @@
+using OpenToolkit.OpenAL.Interfaces;
+
 namespace OpenToolkit.OpenAL.Extensions.Soft.DeferredUpdates
 {
     /// <summary>

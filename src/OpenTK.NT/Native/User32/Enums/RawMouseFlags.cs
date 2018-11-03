@@ -1,7 +1,8 @@
 ﻿using System;
+
 using USHORT = System.UInt16;
 
-namespace OpenToolkit.NT.Native.User32.Enums
+namespace OpenToolkit.NT.Native
 {
     /// <summary>
     /// Mouse indicator flags (found in winuser.h).

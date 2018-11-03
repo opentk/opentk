@@ -1,6 +1,6 @@
 ﻿using Mono.Cecil;
 
-namespace OpenTK.Rewrite.Types
+namespace OpenToolkit.Rewrite.Types
 {
     /// <summary>
     /// Provides functionality to rewrite a type definition.

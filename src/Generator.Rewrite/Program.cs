@@ -18,14 +18,14 @@ using System;
 using System.Linq;
 using CommandLine;
 using Mono.Cecil;
-using OpenTK.Rewrite.Methods;
-using OpenTK.Rewrite.Methods.Processors;
-using OpenTK.Rewrite.Types;
+using OpenToolkit.Rewrite.Methods;
+using OpenToolkit.Rewrite.Methods.Processors;
+using OpenToolkit.Rewrite.Types;
 
-namespace OpenTK.Rewrite
+namespace OpenToolkit.Rewrite
 {
     /// <summary>
-    /// A commandline tool that replaces OpenTK.InteropHelper method instances with the correct IL instructions.
+    /// A commandline tool that replaces OpenToolkit.InteropHelper method instances with the correct IL instructions.
     /// </summary>
     internal class Program
     {

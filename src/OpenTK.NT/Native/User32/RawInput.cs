@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 using System.Security;
-using OpenToolkit.NT.Native.User32.Enums;
-using OpenToolkit.NT.Native.User32.Structs;
+
 using BOOL = System.Boolean;
 using HANDLE = System.IntPtr;
 using HRAWINPUT = System.IntPtr;
@@ -11,7 +10,7 @@ using LPVOID = System.IntPtr;
 using LRESULT = System.IntPtr;
 using UINT = System.UInt32;
 
-namespace OpenToolkit.NT.Native.User32
+namespace OpenToolkit.NT.Native
 {
     public static partial class User32
     {
@@ -24,12 +23,12 @@ namespace OpenToolkit.NT.Native.User32
             /// <summary>
             /// Calls the default raw input procedure to provide default processing for any raw input messages that
             /// an application does not process. This function ensures that every message is processed.
-            /// <see cref="DefRawInputProc(OpenToolkit.NT.Native.User32.Structs.RawInput[],int,uint)"/> is called with the same parameters
+            /// <see cref="DefRawInputProc(Native.RawInput[], int, uint)"/> is called with the same parameters
             /// received by the window procedure.
             /// </summary>
-            /// <param name="rawInputArrayOut">An array of <see cref="Structs.RawInput"/> structures.</param>
+            /// <param name="rawInputArrayOut">An array of <see cref="Native.RawInput"/> structures.</param>
             /// <param name="rawInputAmount">
-            /// The number of <see cref="Structs.RawInput"/>
+            /// The number of <see cref="Native.RawInput"/>
             /// structures pointed to by <paramref name="rawInputArrayOut"/>.
             /// </param>
             /// <param name="headerSize">The size, in bytes, of the <see cref="RawInputHeader"/> structure.</param>
@@ -40,7 +39,7 @@ namespace OpenToolkit.NT.Native.User32
             [DllImport(Library)]
             public static extern LRESULT DefRawInputProc
             (
-                [In] Structs.RawInput[] rawInputArrayOut,
+                [In] Native.RawInput[] rawInputArrayOut,
                 [In] INT rawInputAmount,
                 [In] UINT headerSize
             );
@@ -48,14 +47,14 @@ namespace OpenToolkit.NT.Native.User32
             /// <summary>
             /// Calls the default raw input procedure to provide default processing for any raw input messages that
             /// an application does not process. This function ensures that every message is processed.
-            /// <see cref="DefRawInputProc(OpenToolkit.NT.Native.User32.Structs.RawInput[],int,uint)"/> is called with the same parameters
+            /// <see cref="DefRawInputProc(Native.RawInput[], int, uint)"/> is called with the same parameters
             /// received by the window procedure.
             /// </summary>
             /// <param name="rawInputArrayOut">
-            /// A pointer to an array of <see cref="Structs.RawInput"/> structures.
+            /// A pointer to an array of <see cref="Native.RawInput"/> structures.
             /// </param>
             /// <param name="rawInputAmount">
-            /// The number of <see cref="Structs.RawInput"/>
+            /// The number of <see cref="Native.RawInput"/>
             /// structures pointed to by <paramref name="rawInputArrayOut"/>.
             /// </param>
             /// <param name="headerSize">The size, in bytes, of the <see cref="RawInputHeader"/> structure.</param>
@@ -66,7 +65,7 @@ namespace OpenToolkit.NT.Native.User32
             [DllImport(Library)]
             public static unsafe extern LRESULT DefRawInputProc
             (
-                [In] Structs.RawInput* rawInputArrayOut,
+                [In] Native.RawInput* rawInputArrayOut,
                 [In] INT rawInputAmount,
                 [In] UINT headerSize
             );
@@ -141,7 +140,7 @@ namespace OpenToolkit.NT.Native.User32
             [DllImport(Library, SetLastError = true)]
             public static extern UINT GetRawInputBuffer
             (
-                [Out] [Optional] Structs.RawInput[] data,
+                [Out] [Optional] Native.RawInput[] data,
                 [In] [Out] ref UINT rawInputSize,
                 [In] UINT headerSize
             );
@@ -166,7 +165,7 @@ namespace OpenToolkit.NT.Native.User32
             [DllImport(Library, SetLastError = true)]
             public static unsafe extern UINT GetRawInputBuffer
             (
-                [Out] [Optional] Structs.RawInput* data,
+                [Out] [Optional] Native.RawInput* data,
                 [In] [Out] ref UINT rawInputSize,
                 [In] UINT headerSize
             );
@@ -341,7 +340,7 @@ namespace OpenToolkit.NT.Native.User32
             /// Retrieves the raw input header from the specified device.
             /// </summary>
             /// <param name="rawInput">
-            /// A handle to the <see cref="Structs.RawInput"/> structure. This comes from the lParam in
+            /// A handle to the <see cref="Native.RawInput"/> structure. This comes from the lParam in
             /// <see cref="WindowMessage.Input"/>.
             /// </param>
             /// <param name="header">The <see cref="RawInputHeader"/> structure to receive the raw data.</param>
@@ -370,19 +369,19 @@ namespace OpenToolkit.NT.Native.User32
             /// Retrieves raw input data from the specified device.
             /// </summary>
             /// <param name="rawInput">
-            /// A handle to the <see cref="Structs.RawInput"/> structure. This comes from the lParam in
+            /// A handle to the <see cref="Native.RawInput"/> structure. This comes from the lParam in
             /// <see cref="WindowMessage.Input"/>.
             /// </param>
-            /// <param name="data">The <see cref="Structs.RawInput"/> structure to receive the raw data.</param>
+            /// <param name="data">The <see cref="Native.RawInput"/> structure to receive the raw data.</param>
             /// <returns>
             /// If the function is successful, the return value is the number of bytes copied into
             /// <paramref name="data"/>.<para/>
             /// If there is an error, the return value is (UINT)-1 [== <see cref="uint.MaxValue"/>].
             /// </returns>
-            public static unsafe UINT GetRawInputData(HRAWINPUT rawInput, out Structs.RawInput data)
+            public static unsafe UINT GetRawInputData(HRAWINPUT rawInput, out Native.RawInput data)
             {
-                uint size = Structs.RawInput.SizeInBytes;
-                fixed (Structs.RawInput* dataPtr = &data)
+                uint size = Native.RawInput.SizeInBytes;
+                fixed (Native.RawInput* dataPtr = &data)
                 {
                     return GetRawInputData
                     (
@@ -400,12 +399,12 @@ namespace OpenToolkit.NT.Native.User32
             /// Consider using one of the other overloads for a better experience.
             /// </summary>
             /// <param name="rawInput">
-            /// A handle to the <see cref="Structs.RawInput"/> structure. This comes from the lParam in
+            /// A handle to the <see cref="Native.RawInput"/> structure. This comes from the lParam in
             /// <see cref="WindowMessage.Input"/>.
             /// </param>
             /// <param name="command">The command flag.</param>
             /// <param name="data">
-            /// A pointer to the data that comes from the <see cref="Structs.RawInput"/> structure. This depends on the
+            /// A pointer to the data that comes from the <see cref="Native.RawInput"/> structure. This depends on the
             /// value of <paramref name="command"/>. If <paramref name="data"/> is <see cref="IntPtr.Zero"/>,
             /// the required size of the buffer is returned in <paramref name="size"/>.
             /// </param>

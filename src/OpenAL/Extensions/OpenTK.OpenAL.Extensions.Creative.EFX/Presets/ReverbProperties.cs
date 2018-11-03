@@ -1,6 +1,6 @@
 ﻿using OpenToolkit.Mathematics;
 
-namespace OpenToolkit.OpenAL.Extensions.Creative.EFX.Presets
+namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
 {
     /// <summary>
     /// Defines a set of predefined reverb properties.

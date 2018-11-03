@@ -1,4 +1,4 @@
-﻿namespace OpenTK.Rewrite
+﻿namespace OpenToolkit.Rewrite
 {
     /// <summary>
     /// Provides constants representing attribute names which are used in the rewriting process.

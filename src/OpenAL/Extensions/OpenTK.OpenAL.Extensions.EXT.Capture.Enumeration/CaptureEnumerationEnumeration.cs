@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using AdvancedDLSupport;
 using OpenToolkit.Core.Loader;
+using OpenToolkit.OpenAL.Extensions.EXT.Capture.Enumeration;
 
-namespace OpenToolkit.OpenAL.Extensions.EXT.Capture.Enumeration
+namespace OpenToolkit.OpenAL.Extensions.Enumeration
 {
     /// <summary>
     /// Exposes the API in the CaptureEnumerationEnumeration extension.

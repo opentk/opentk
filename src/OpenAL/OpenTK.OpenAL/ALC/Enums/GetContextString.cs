@@ -3,7 +3,7 @@
 namespace OpenToolkit.OpenAL
 {
     /// <summary>
-    /// Defines available parameters for <see cref="IContextState.GetContextProperty(OpenToolkit.OpenAL.Device*,OpenToolkit.OpenAL.GetContextString)" />.
+    /// Defines available parameters for <see cref="IContextState.GetContextProperty(OpenToolkit.OpenAL.Device*,GetContextString)" />.
     /// </summary>
     public enum GetContextString
     {

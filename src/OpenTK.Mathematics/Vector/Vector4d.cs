@@ -858,7 +858,7 @@ namespace OpenToolkit.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector2d with the X and Y components of this instance.
+        /// Gets or sets an OpenToolkit.Vector2d with the X and Y components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector2d Xy
@@ -872,7 +872,7 @@ namespace OpenToolkit.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector2d with the X and Z components of this instance.
+        /// Gets or sets an OpenToolkit.Vector2d with the X and Z components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector2d Xz
@@ -886,7 +886,7 @@ namespace OpenToolkit.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector2d with the X and W components of this instance.
+        /// Gets or sets an OpenToolkit.Vector2d with the X and W components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector2d Xw
@@ -900,7 +900,7 @@ namespace OpenToolkit.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector2d with the Y and X components of this instance.
+        /// Gets or sets an OpenToolkit.Vector2d with the Y and X components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector2d Yx
@@ -914,7 +914,7 @@ namespace OpenToolkit.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector2d with the Y and Z components of this instance.
+        /// Gets or sets an OpenToolkit.Vector2d with the Y and Z components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector2d Yz
@@ -928,7 +928,7 @@ namespace OpenToolkit.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector2d with the Y and W components of this instance.
+        /// Gets or sets an OpenToolkit.Vector2d with the Y and W components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector2d Yw
@@ -942,7 +942,7 @@ namespace OpenToolkit.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector2d with the Z and X components of this instance.
+        /// Gets or sets an OpenToolkit.Vector2d with the Z and X components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector2d Zx
@@ -956,7 +956,7 @@ namespace OpenToolkit.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector2d with the Z and Y components of this instance.
+        /// Gets or sets an OpenToolkit.Vector2d with the Z and Y components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector2d Zy
@@ -970,7 +970,7 @@ namespace OpenToolkit.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector2d with the Z and W components of this instance.
+        /// Gets or sets an OpenToolkit.Vector2d with the Z and W components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector2d Zw
@@ -984,7 +984,7 @@ namespace OpenToolkit.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector2d with the W and X components of this instance.
+        /// Gets or sets an OpenToolkit.Vector2d with the W and X components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector2d Wx
@@ -998,7 +998,7 @@ namespace OpenToolkit.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector2d with the W and Y components of this instance.
+        /// Gets or sets an OpenToolkit.Vector2d with the W and Y components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector2d Wy
@@ -1012,7 +1012,7 @@ namespace OpenToolkit.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector2d with the W and Z components of this instance.
+        /// Gets or sets an OpenToolkit.Vector2d with the W and Z components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector2d Wz
@@ -1026,7 +1026,7 @@ namespace OpenToolkit.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector3d with the X, Y, and Z components of this instance.
+        /// Gets or sets an OpenToolkit.Vector3d with the X, Y, and Z components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector3d Xyz
@@ -1041,7 +1041,7 @@ namespace OpenToolkit.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector3d with the X, Y, and Z components of this instance.
+        /// Gets or sets an OpenToolkit.Vector3d with the X, Y, and Z components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector3d Xyw
@@ -1056,7 +1056,7 @@ namespace OpenToolkit.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector3d with the X, Z, and Y components of this instance.
+        /// Gets or sets an OpenToolkit.Vector3d with the X, Z, and Y components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector3d Xzy
@@ -1071,7 +1071,7 @@ namespace OpenToolkit.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector3d with the X, Z, and W components of this instance.
+        /// Gets or sets an OpenToolkit.Vector3d with the X, Z, and W components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector3d Xzw
@@ -1086,7 +1086,7 @@ namespace OpenToolkit.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector3d with the X, W, and Y components of this instance.
+        /// Gets or sets an OpenToolkit.Vector3d with the X, W, and Y components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector3d Xwy
@@ -1101,7 +1101,7 @@ namespace OpenToolkit.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector3d with the X, W, and Z components of this instance.
+        /// Gets or sets an OpenToolkit.Vector3d with the X, W, and Z components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector3d Xwz
@@ -1116,7 +1116,7 @@ namespace OpenToolkit.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector3d with the Y, X, and Z components of this instance.
+        /// Gets or sets an OpenToolkit.Vector3d with the Y, X, and Z components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector3d Yxz
@@ -1131,7 +1131,7 @@ namespace OpenToolkit.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector3d with the Y, X, and W components of this instance.
+        /// Gets or sets an OpenToolkit.Vector3d with the Y, X, and W components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector3d Yxw
@@ -1146,7 +1146,7 @@ namespace OpenToolkit.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector3d with the Y, Z, and X components of this instance.
+        /// Gets or sets an OpenToolkit.Vector3d with the Y, Z, and X components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector3d Yzx
@@ -1161,7 +1161,7 @@ namespace OpenToolkit.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector3d with the Y, Z, and W components of this instance.
+        /// Gets or sets an OpenToolkit.Vector3d with the Y, Z, and W components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector3d Yzw
@@ -1176,7 +1176,7 @@ namespace OpenToolkit.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector3d with the Y, W, and X components of this instance.
+        /// Gets or sets an OpenToolkit.Vector3d with the Y, W, and X components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector3d Ywx
@@ -1191,7 +1191,7 @@ namespace OpenToolkit.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector3d with the Y, W, and Z components of this instance.
+        /// Gets or sets an OpenToolkit.Vector3d with the Y, W, and Z components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector3d Ywz
@@ -1206,7 +1206,7 @@ namespace OpenToolkit.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector3d with the Z, X, and Y components of this instance.
+        /// Gets or sets an OpenToolkit.Vector3d with the Z, X, and Y components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector3d Zxy
@@ -1221,7 +1221,7 @@ namespace OpenToolkit.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector3d with the Z, X, and W components of this instance.
+        /// Gets or sets an OpenToolkit.Vector3d with the Z, X, and W components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector3d Zxw
@@ -1236,7 +1236,7 @@ namespace OpenToolkit.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector3d with the Z, Y, and X components of this instance.
+        /// Gets or sets an OpenToolkit.Vector3d with the Z, Y, and X components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector3d Zyx
@@ -1251,7 +1251,7 @@ namespace OpenToolkit.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector3d with the Z, Y, and W components of this instance.
+        /// Gets or sets an OpenToolkit.Vector3d with the Z, Y, and W components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector3d Zyw
@@ -1266,7 +1266,7 @@ namespace OpenToolkit.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector3d with the Z, W, and X components of this instance.
+        /// Gets or sets an OpenToolkit.Vector3d with the Z, W, and X components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector3d Zwx
@@ -1281,7 +1281,7 @@ namespace OpenToolkit.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector3d with the Z, W, and Y components of this instance.
+        /// Gets or sets an OpenToolkit.Vector3d with the Z, W, and Y components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector3d Zwy
@@ -1296,7 +1296,7 @@ namespace OpenToolkit.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector3d with the W, X, and Y components of this instance.
+        /// Gets or sets an OpenToolkit.Vector3d with the W, X, and Y components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector3d Wxy
@@ -1311,7 +1311,7 @@ namespace OpenToolkit.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector3d with the W, X, and Z components of this instance.
+        /// Gets or sets an OpenToolkit.Vector3d with the W, X, and Z components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector3d Wxz
@@ -1326,7 +1326,7 @@ namespace OpenToolkit.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector3d with the W, Y, and X components of this instance.
+        /// Gets or sets an OpenToolkit.Vector3d with the W, Y, and X components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector3d Wyx
@@ -1341,7 +1341,7 @@ namespace OpenToolkit.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector3d with the W, Y, and Z components of this instance.
+        /// Gets or sets an OpenToolkit.Vector3d with the W, Y, and Z components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector3d Wyz
@@ -1356,7 +1356,7 @@ namespace OpenToolkit.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector3d with the W, Z, and X components of this instance.
+        /// Gets or sets an OpenToolkit.Vector3d with the W, Z, and X components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector3d Wzx
@@ -1371,7 +1371,7 @@ namespace OpenToolkit.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector3d with the W, Z, and Y components of this instance.
+        /// Gets or sets an OpenToolkit.Vector3d with the W, Z, and Y components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector3d Wzy
@@ -1386,7 +1386,7 @@ namespace OpenToolkit.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector4d with the X, Y, W, and Z components of this instance.
+        /// Gets or sets an OpenToolkit.Vector4d with the X, Y, W, and Z components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector4d Xywz
@@ -1402,7 +1402,7 @@ namespace OpenToolkit.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector4d with the X, Z, Y, and W components of this instance.
+        /// Gets or sets an OpenToolkit.Vector4d with the X, Z, Y, and W components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector4d Xzyw
@@ -1418,7 +1418,7 @@ namespace OpenToolkit.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector4d with the X, Z, W, and Y components of this instance.
+        /// Gets or sets an OpenToolkit.Vector4d with the X, Z, W, and Y components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector4d Xzwy
@@ -1434,7 +1434,7 @@ namespace OpenToolkit.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector4d with the X, W, Y, and Z components of this instance.
+        /// Gets or sets an OpenToolkit.Vector4d with the X, W, Y, and Z components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector4d Xwyz
@@ -1450,7 +1450,7 @@ namespace OpenToolkit.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector4d with the X, W, Z, and Y components of this instance.
+        /// Gets or sets an OpenToolkit.Vector4d with the X, W, Z, and Y components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector4d Xwzy
@@ -1466,7 +1466,7 @@ namespace OpenToolkit.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector4d with the Y, X, Z, and W components of this instance.
+        /// Gets or sets an OpenToolkit.Vector4d with the Y, X, Z, and W components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector4d Yxzw
@@ -1482,7 +1482,7 @@ namespace OpenToolkit.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector4d with the Y, X, W, and Z components of this instance.
+        /// Gets or sets an OpenToolkit.Vector4d with the Y, X, W, and Z components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector4d Yxwz
@@ -1498,7 +1498,7 @@ namespace OpenToolkit.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector4d with the Y, Y, Z, and W components of this instance.
+        /// Gets or sets an OpenToolkit.Vector4d with the Y, Y, Z, and W components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector4d Yyzw
@@ -1514,7 +1514,7 @@ namespace OpenToolkit.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector4d with the Y, Y, W, and Z components of this instance.
+        /// Gets or sets an OpenToolkit.Vector4d with the Y, Y, W, and Z components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector4d Yywz
@@ -1530,7 +1530,7 @@ namespace OpenToolkit.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector4d with the Y, Z, X, and W components of this instance.
+        /// Gets or sets an OpenToolkit.Vector4d with the Y, Z, X, and W components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector4d Yzxw
@@ -1546,7 +1546,7 @@ namespace OpenToolkit.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector4d with the Y, Z, W, and X components of this instance.
+        /// Gets or sets an OpenToolkit.Vector4d with the Y, Z, W, and X components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector4d Yzwx
@@ -1562,7 +1562,7 @@ namespace OpenToolkit.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector4d with the Y, W, X, and Z components of this instance.
+        /// Gets or sets an OpenToolkit.Vector4d with the Y, W, X, and Z components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector4d Ywxz
@@ -1578,7 +1578,7 @@ namespace OpenToolkit.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector4d with the Y, W, Z, and X components of this instance.
+        /// Gets or sets an OpenToolkit.Vector4d with the Y, W, Z, and X components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector4d Ywzx
@@ -1594,7 +1594,7 @@ namespace OpenToolkit.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector4d with the Z, X, Y, and Z components of this instance.
+        /// Gets or sets an OpenToolkit.Vector4d with the Z, X, Y, and Z components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector4d Zxyw
@@ -1610,7 +1610,7 @@ namespace OpenToolkit.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector4d with the Z, X, W, and Y components of this instance.
+        /// Gets or sets an OpenToolkit.Vector4d with the Z, X, W, and Y components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector4d Zxwy
@@ -1626,7 +1626,7 @@ namespace OpenToolkit.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector4d with the Z, Y, X, and W components of this instance.
+        /// Gets or sets an OpenToolkit.Vector4d with the Z, Y, X, and W components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector4d Zyxw
@@ -1642,7 +1642,7 @@ namespace OpenToolkit.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector4d with the Z, Y, W, and X components of this instance.
+        /// Gets or sets an OpenToolkit.Vector4d with the Z, Y, W, and X components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector4d Zywx
@@ -1658,7 +1658,7 @@ namespace OpenToolkit.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector4d with the Z, W, X, and Y components of this instance.
+        /// Gets or sets an OpenToolkit.Vector4d with the Z, W, X, and Y components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector4d Zwxy
@@ -1674,7 +1674,7 @@ namespace OpenToolkit.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector4d with the Z, W, Y, and X components of this instance.
+        /// Gets or sets an OpenToolkit.Vector4d with the Z, W, Y, and X components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector4d Zwyx
@@ -1690,7 +1690,7 @@ namespace OpenToolkit.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector4d with the Z, W, Z, and Y components of this instance.
+        /// Gets or sets an OpenToolkit.Vector4d with the Z, W, Z, and Y components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector4d Zwzy
@@ -1706,7 +1706,7 @@ namespace OpenToolkit.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector4d with the W, X, Y, and Z components of this instance.
+        /// Gets or sets an OpenToolkit.Vector4d with the W, X, Y, and Z components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector4d Wxyz
@@ -1722,7 +1722,7 @@ namespace OpenToolkit.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector4d with the W, X, Z, and Y components of this instance.
+        /// Gets or sets an OpenToolkit.Vector4d with the W, X, Z, and Y components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector4d Wxzy
@@ -1738,7 +1738,7 @@ namespace OpenToolkit.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector4d with the W, Y, X, and Z components of this instance.
+        /// Gets or sets an OpenToolkit.Vector4d with the W, Y, X, and Z components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector4d Wyxz
@@ -1754,7 +1754,7 @@ namespace OpenToolkit.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector4d with the W, Y, Z, and X components of this instance.
+        /// Gets or sets an OpenToolkit.Vector4d with the W, Y, Z, and X components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector4d Wyzx
@@ -1770,7 +1770,7 @@ namespace OpenToolkit.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector4d with the W, Z, X, and Y components of this instance.
+        /// Gets or sets an OpenToolkit.Vector4d with the W, Z, X, and Y components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector4d Wzxy
@@ -1786,7 +1786,7 @@ namespace OpenToolkit.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector4d with the W, Z, Y, and X components of this instance.
+        /// Gets or sets an OpenToolkit.Vector4d with the W, Z, Y, and X components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector4d Wzyx
@@ -1802,7 +1802,7 @@ namespace OpenToolkit.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets an OpenTK.Vector4d with the W, Z, Y, and W components of this instance.
+        /// Gets or sets an OpenToolkit.Vector4d with the W, Z, Y, and W components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector4d Wzyw
@@ -1967,7 +1967,7 @@ namespace OpenToolkit.Mathematics
         }
 
         /// <summary>
-        /// Converts OpenTK.Vector4 to OpenTK.Vector4d.
+        /// Converts OpenToolkit.Vector4 to OpenToolkit.Vector4d.
         /// </summary>
         /// <param name="v4">The Vector4 to convert.</param>
         /// <returns>The resulting Vector4d.</returns>
@@ -1977,7 +1977,7 @@ namespace OpenToolkit.Mathematics
         }
 
         /// <summary>
-        /// Converts OpenTK.Vector4d to OpenTK.Vector4.
+        /// Converts OpenToolkit.Vector4d to OpenToolkit.Vector4.
         /// </summary>
         /// <param name="v4d">The Vector4d to convert.</param>
         /// <returns>The resulting Vector4.</returns>

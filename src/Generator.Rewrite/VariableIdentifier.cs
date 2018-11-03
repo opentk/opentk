@@ -1,7 +1,7 @@
 using System;
 using Mono.Cecil.Cil;
 
-namespace OpenTK.Rewrite
+namespace OpenToolkit.Rewrite
 {
     /// <summary>
     /// Acts as a unique identifier for a named variable that can be passed between methods. Replaces uses of

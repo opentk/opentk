@@ -2,11 +2,11 @@
 using System.Linq;
 using Mono.Cecil;
 
-namespace OpenTK.Rewrite.Extensions
+namespace OpenToolkit.Rewrite.Extensions
 {
     /// <summary>
     /// Provides convenience extension methods for <see cref="ICustomAttributeProvider"/>
-    /// instances that are used in the OpenTK.Rewrite namespace.
+    /// instances that are used in the OpenToolkit.Rewrite namespace.
     /// </summary>
     public static class ICustomAttributeProviderExtensions
     {

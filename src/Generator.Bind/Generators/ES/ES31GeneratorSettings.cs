@@ -20,7 +20,7 @@ namespace Bind.Generators.ES
         public override string OutputSubfolder => APIIdentifier;
 
         /// <inheritdoc/>
-        public override string Namespace => $"OpenTK.Graphics.{APIIdentifier}";
+        public override string Namespace => $"OpenToolkit.Graphics.{APIIdentifier}";
 
         /// <inheritdoc/>
         public override string SpecificationDocumentationPath => "es3";

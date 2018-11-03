@@ -1,4 +1,4 @@
-namespace OpenToolkit.OpenAL.Extensions.EXT.IMA4Format
+namespace OpenToolkit.OpenAL.Native.Extensions.EXT.IMA4Format
 {
     /// <summary>
     /// Defines valid format specifiers for sound samples. This covers the additions from the multi-channel buffers

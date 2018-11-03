@@ -1,7 +1,8 @@
 ﻿using System;
+
 using DWORD = System.UInt32;
 
-namespace OpenToolkit.NT.Native.User32.Enums
+namespace OpenToolkit.NT.Native
 {
     /// <summary>
     /// Flags used in <see cref="User32.Message.GetQueueStatus(QueueMessageTypes)"/>

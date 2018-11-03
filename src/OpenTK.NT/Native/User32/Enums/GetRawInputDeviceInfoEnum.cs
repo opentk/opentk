@@ -1,7 +1,6 @@
-﻿using OpenToolkit.NT.Native.User32.Structs;
-using UINT = System.UInt32;
+﻿using UINT = System.UInt32;
 
-namespace OpenToolkit.NT.Native.User32.Enums
+namespace OpenToolkit.NT.Native
 {
     /// <summary>
     /// Used in <see cref="User32.RawInput.GetRawInputDeviceInfo(System.IntPtr,

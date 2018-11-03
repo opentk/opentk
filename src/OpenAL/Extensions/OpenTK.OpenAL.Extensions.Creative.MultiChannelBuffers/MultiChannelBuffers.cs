@@ -1,7 +1,5 @@
 using AdvancedDLSupport;
 using OpenToolkit.Core.Loader;
-using OpenToolkit.OpenAL.Extensions.Creative.MultiChannelBuffers.Enums;
-using OpenToolkit.OpenAL.Extensions.Creative.MultiChannelBuffers.Interfaces;
 
 namespace OpenToolkit.OpenAL.Extensions.Creative.MultiChannelBuffers
 {

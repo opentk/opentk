@@ -1,10 +1,10 @@
 ﻿using System.Runtime.InteropServices;
 using OpenToolkit.Input.Hid;
-using OpenToolkit.NT.Native.User32.Enums;
+
 using HWND = System.IntPtr;
 using USHORT = System.UInt16;
 
-namespace OpenToolkit.NT.Native.User32.Structs
+namespace OpenToolkit.NT.Native
 {
     /// <summary>
     /// Defines information for the raw input devices.

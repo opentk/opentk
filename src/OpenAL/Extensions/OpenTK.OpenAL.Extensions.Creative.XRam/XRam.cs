@@ -3,8 +3,6 @@ using System.Buffers;
 using System.ComponentModel;
 using AdvancedDLSupport;
 using OpenToolkit.Core.Loader;
-using OpenToolkit.OpenAL.Extensions.Creative.XRam.Enums;
-using OpenToolkit.OpenAL.Extensions.Creative.XRam.Interfaces;
 
 // ReSharper disable VirtualMemberCallInConstructor
 
