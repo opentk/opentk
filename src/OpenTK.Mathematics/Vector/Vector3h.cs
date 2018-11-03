@@ -208,7 +208,7 @@ namespace OpenToolkit.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets an OpenToolkit.Vector2h with the X and Y components of this instance.
+        /// Gets or sets an OpenTK.Vector2h with the X and Y components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector2h Xy
@@ -222,7 +222,7 @@ namespace OpenToolkit.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets an OpenToolkit.Vector2h with the X and Z components of this instance.
+        /// Gets or sets an OpenTK.Vector2h with the X and Z components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector2h Xz
@@ -236,7 +236,7 @@ namespace OpenToolkit.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets an OpenToolkit.Vector2h with the Y and X components of this instance.
+        /// Gets or sets an OpenTK.Vector2h with the Y and X components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector2h Yx
@@ -250,7 +250,7 @@ namespace OpenToolkit.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets an OpenToolkit.Vector2h with the Y and Z components of this instance.
+        /// Gets or sets an OpenTK.Vector2h with the Y and Z components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector2h Yz
@@ -264,7 +264,7 @@ namespace OpenToolkit.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets an OpenToolkit.Vector2h with the Z and X components of this instance.
+        /// Gets or sets an OpenTK.Vector2h with the Z and X components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector2h Zx
@@ -278,7 +278,7 @@ namespace OpenToolkit.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets an OpenToolkit.Vector2h with the Z and Y components of this instance.
+        /// Gets or sets an OpenTK.Vector2h with the Z and Y components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector2h Zy
@@ -292,7 +292,7 @@ namespace OpenToolkit.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets an OpenToolkit.Vector3h with the X, Z, and Y components of this instance.
+        /// Gets or sets an OpenTK.Vector3h with the X, Z, and Y components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector3h Xzy
@@ -307,7 +307,7 @@ namespace OpenToolkit.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets an OpenToolkit.Vector3h with the Y, X, and Z components of this instance.
+        /// Gets or sets an OpenTK.Vector3h with the Y, X, and Z components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector3h Yxz
@@ -322,7 +322,7 @@ namespace OpenToolkit.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets an OpenToolkit.Vector3h with the Y, Z, and X components of this instance.
+        /// Gets or sets an OpenTK.Vector3h with the Y, Z, and X components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector3h Yzx
@@ -337,7 +337,7 @@ namespace OpenToolkit.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets an OpenToolkit.Vector3h with the Z, X, and Y components of this instance.
+        /// Gets or sets an OpenTK.Vector3h with the Z, X, and Y components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector3h Zxy
@@ -352,7 +352,7 @@ namespace OpenToolkit.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets an OpenToolkit.Vector3h with the Z, Y, and X components of this instance.
+        /// Gets or sets an OpenTK.Vector3h with the Z, Y, and X components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector3h Zyx
@@ -385,7 +385,7 @@ namespace OpenToolkit.Mathematics
         }
 
         /// <summary>
-        /// Converts OpenToolkit.Vector3 to OpenToolkit.Half3.
+        /// Converts OpenTK.Vector3 to OpenTK.Half3.
         /// </summary>
         /// <param name="v3f">The Vector3 to convert.</param>
         /// <returns>The resulting Half vector.</returns>
@@ -395,7 +395,7 @@ namespace OpenToolkit.Mathematics
         }
 
         /// <summary>
-        /// Converts OpenToolkit.Vector3d to OpenToolkit.Half3.
+        /// Converts OpenTK.Vector3d to OpenTK.Half3.
         /// </summary>
         /// <param name="v3d">The Vector3d to convert.</param>
         /// <returns>The resulting Half vector.</returns>
@@ -405,7 +405,7 @@ namespace OpenToolkit.Mathematics
         }
 
         /// <summary>
-        /// Converts OpenToolkit.Half3 to OpenToolkit.Vector3.
+        /// Converts OpenTK.Half3 to OpenTK.Vector3.
         /// </summary>
         /// <param name="h3">The Half3 to convert.</param>
         /// <returns>The resulting Vector3.</returns>
@@ -418,7 +418,7 @@ namespace OpenToolkit.Mathematics
         }
 
         /// <summary>
-        /// Converts OpenToolkit.Half3 to OpenToolkit.Vector3d.
+        /// Converts OpenTK.Half3 to OpenTK.Vector3d.
         /// </summary>
         /// <param name="h3">The Half3 to convert.</param>
         /// <returns>The resulting Vector3d.</returns>
@@ -478,9 +478,9 @@ namespace OpenToolkit.Mathematics
         }
 
         /// <summary>
-        /// Returns a value indicating whether this instance is equal to a specified OpenToolkit.Half3 vector.
+        /// Returns a value indicating whether this instance is equal to a specified OpenTK.Half3 vector.
         /// </summary>
-        /// <param name="other">OpenToolkit.Half3 to compare to this instance..</param>
+        /// <param name="other">OpenTK.Half3 to compare to this instance..</param>
         /// <returns>True, if other is equal to this instance; false otherwise.</returns>
         public bool Equals(Vector3h other)
         {

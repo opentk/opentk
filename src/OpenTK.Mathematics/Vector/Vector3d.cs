@@ -1044,7 +1044,7 @@ namespace OpenToolkit.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets an OpenToolkit.Vector2d with the X and Y components of this instance.
+        /// Gets or sets an OpenTK.Vector2d with the X and Y components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector2d Xy
@@ -1058,7 +1058,7 @@ namespace OpenToolkit.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets an OpenToolkit.Vector2d with the X and Z components of this instance.
+        /// Gets or sets an OpenTK.Vector2d with the X and Z components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector2d Xz
@@ -1072,7 +1072,7 @@ namespace OpenToolkit.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets an OpenToolkit.Vector2d with the Y and X components of this instance.
+        /// Gets or sets an OpenTK.Vector2d with the Y and X components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector2d Yx
@@ -1086,7 +1086,7 @@ namespace OpenToolkit.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets an OpenToolkit.Vector2d with the Y and Z components of this instance.
+        /// Gets or sets an OpenTK.Vector2d with the Y and Z components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector2d Yz
@@ -1100,7 +1100,7 @@ namespace OpenToolkit.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets an OpenToolkit.Vector2d with the Z and X components of this instance.
+        /// Gets or sets an OpenTK.Vector2d with the Z and X components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector2d Zx
@@ -1114,7 +1114,7 @@ namespace OpenToolkit.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets an OpenToolkit.Vector2d with the Z and Y components of this instance.
+        /// Gets or sets an OpenTK.Vector2d with the Z and Y components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector2d Zy
@@ -1128,7 +1128,7 @@ namespace OpenToolkit.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets an OpenToolkit.Vector3d with the X, Z, and Y components of this instance.
+        /// Gets or sets an OpenTK.Vector3d with the X, Z, and Y components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector3d Xzy
@@ -1143,7 +1143,7 @@ namespace OpenToolkit.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets an OpenToolkit.Vector3d with the Y, X, and Z components of this instance.
+        /// Gets or sets an OpenTK.Vector3d with the Y, X, and Z components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector3d Yxz
@@ -1158,7 +1158,7 @@ namespace OpenToolkit.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets an OpenToolkit.Vector3d with the Y, Z, and X components of this instance.
+        /// Gets or sets an OpenTK.Vector3d with the Y, Z, and X components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector3d Yzx
@@ -1173,7 +1173,7 @@ namespace OpenToolkit.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets an OpenToolkit.Vector3d with the Z, X, and Y components of this instance.
+        /// Gets or sets an OpenTK.Vector3d with the Z, X, and Y components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector3d Zxy
@@ -1188,7 +1188,7 @@ namespace OpenToolkit.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets an OpenToolkit.Vector3d with the Z, Y, and X components of this instance.
+        /// Gets or sets an OpenTK.Vector3d with the Z, Y, and X components of this instance.
         /// </summary>
         [XmlIgnore]
         public Vector3d Zyx
@@ -1322,7 +1322,7 @@ namespace OpenToolkit.Mathematics
         }
 
         /// <summary>
-        /// Converts OpenToolkit.Vector3 to OpenToolkit.Vector3d.
+        /// Converts OpenTK.Vector3 to OpenTK.Vector3d.
         /// </summary>
         /// <param name="v3">The Vector3 to convert.</param>
         /// <returns>The resulting Vector3d.</returns>
@@ -1332,7 +1332,7 @@ namespace OpenToolkit.Mathematics
         }
 
         /// <summary>
-        /// Converts OpenToolkit.Vector3d to OpenToolkit.Vector3.
+        /// Converts OpenTK.Vector3d to OpenTK.Vector3.
         /// </summary>
         /// <param name="v3d">The Vector3d to convert.</param>
         /// <returns>The resulting Vector3.</returns>

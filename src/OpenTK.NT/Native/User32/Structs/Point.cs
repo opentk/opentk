@@ -30,7 +30,7 @@
         /// Converts a <see cref="Point"/> structure used for interoperability with the Windows API to a
         /// <see cref="System.Drawing.Point"/>.
         /// </summary>
-        /// <param name="point">The OpenToolkit.NT.Native.Point structure to convert.</param>
+        /// <param name="point">The OpenTK.NT.Native.Point structure to convert.</param>
         public static implicit operator System.Drawing.Point(Point point)
         {
             return new System.Drawing.Point(point.X, point.Y);

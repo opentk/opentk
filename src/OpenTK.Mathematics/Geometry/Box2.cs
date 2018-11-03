@@ -37,8 +37,8 @@ namespace OpenToolkit.Mathematics
         /// <summary>
         /// Initializes a new instance of the <see cref="Box2"/> struct.
         /// </summary>
-        /// <param name="topLeft">An OpenToolkit.Vector2 describing the top-left corner of the Box2.</param>
-        /// <param name="bottomRight">An OpenToolkit.Vector2 describing the bottom-right corner of the Box2.</param>
+        /// <param name="topLeft">An OpenTK.Vector2 describing the top-left corner of the Box2.</param>
+        /// <param name="bottomRight">An OpenTK.Vector2 describing the bottom-right corner of the Box2.</param>
         public Box2(Vector2 topLeft, Vector2 bottomRight)
         {
             Left = topLeft.X;
@@ -69,7 +69,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="left">The position of the left boundary.</param>
         /// <param name="right">The position of the right boundary.</param>
         /// <param name="bottom">The position of the bottom boundary.</param>
-        /// <returns>A new OpenToolkit.Box2 with the specfied dimensions.</returns>
+        /// <returns>A new OpenTK.Box2 with the specfied dimensions.</returns>
         public static Box2 FromTLRB(float top, float left, float right, float bottom)
         {
             return new Box2(left, top, right, bottom);
@@ -82,7 +82,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="top">The position of the top boundary.</param>
         /// <param name="width">The width of the box.</param>
         /// <param name="height">The height of the box.</param>
-        /// <returns>A new OpenToolkit.Box2 with the specfied dimensions.</returns>
+        /// <returns>A new OpenTK.Box2 with the specfied dimensions.</returns>
         public static Box2 FromDimensions(float left, float top, float width, float height)
         {
             return new Box2(left, top, left + width, top + height);
@@ -93,7 +93,7 @@ namespace OpenToolkit.Mathematics
         /// </summary>
         /// <param name="position">The position of the top left corner.</param>
         /// <param name="size">The size of the box.</param>
-        /// <returns>A new OpenToolkit.Box2 with the specfied dimensions.</returns>
+        /// <returns>A new OpenTK.Box2 with the specfied dimensions.</returns>
         public static Box2 FromDimensions(Vector2 position, Vector2 size)
         {
             return FromDimensions(position.X, position.Y, size.X, size.Y);
