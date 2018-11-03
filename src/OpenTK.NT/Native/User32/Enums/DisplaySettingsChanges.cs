@@ -1,7 +1,5 @@
 ﻿using System;
 
-using DWORD = System.UInt32;
-
 namespace OpenToolkit.NT.Native
 {
     /// <summary>
@@ -10,7 +8,7 @@ namespace OpenToolkit.NT.Native
     /// IntPtr)"/> to indicate how the graphics mode should be changed.
     /// </summary>
     [Flags]
-    public enum DisplaySettingsChanges : DWORD
+    public enum DisplaySettingsChanges : uint
     {
         /// <summary>
         /// The graphics mode for the current screen will be changed dynamically.

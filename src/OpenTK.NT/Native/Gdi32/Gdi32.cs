@@ -1,10 +1,6 @@
-﻿using System.Runtime.InteropServices;
+﻿using System;
+using System.Runtime.InteropServices;
 using System.Security;
-
-using BOOL = System.Boolean;
-using HDC = System.IntPtr;
-using HGDIOBJ = System.IntPtr;
-using UINT = System.UInt32;
 
 namespace OpenToolkit.NT.Native
 {
@@ -36,7 +32,7 @@ namespace OpenToolkit.NT.Native
         /// call <see cref="Marshal.GetLastWin32Error"/>.
         /// </returns>
         [DllImport(Library, SetLastError = true)]
-        public static extern int ChoosePixelFormat(HDC hdc, ref PixelFormatDescriptor ppfd);
+        public static extern int ChoosePixelFormat(IntPtr hdc, ref PixelFormatDescriptor ppfd);
 
         /// <summary>
         /// Obtains information about the pixel format identified by <paramref name="pixelFormatIndex"/> of the device
@@ -51,7 +47,7 @@ namespace OpenToolkit.NT.Native
         /// </param>
         /// <param name="descriptorSize">
         /// The size, in bytes, of the structure pointed to by <paramref name="ppfd"/>. The
-        /// <see cref="DescribePixelFormat(HDC, int, UINT, ref PixelFormatDescriptor)"/> function stores no more than
+        /// <see cref="DescribePixelFormat(IntPtr, int, uint, ref PixelFormatDescriptor)"/> function stores no more than
         /// <paramref name="descriptorSize"/> bytes of data to that structure.
         /// Set this value to <see cref="PixelFormatDescriptor.SizeInBytes"/>.
         /// </param>
@@ -72,9 +68,9 @@ namespace OpenToolkit.NT.Native
         [DllImport(Library, SetLastError = true)]
         public static extern int DescribePixelFormat
         (
-            HDC hdc,
+            IntPtr hdc,
             int pixelFormatIndex,
-            UINT descriptorSize,
+            uint descriptorSize,
             ref PixelFormatDescriptor ppfd
         );
 
@@ -91,7 +87,7 @@ namespace OpenToolkit.NT.Native
         /// Pointer to a <see cref="PixelFormatDescriptor"/> structure that contains the logical pixel format
         /// specification. The system's metafile component uses this structure to record the logical pixel
         /// format specification. The structure has no other effect upon the behavior of the
-        /// <see cref="SetPixelFormat(HDC, int, ref PixelFormatDescriptor)"/> function.
+        /// <see cref="SetPixelFormat(IntPtr, int, ref PixelFormatDescriptor)"/> function.
         /// </param>
         /// <returns>
         /// If the function succeeds, the return value is true.<para/>
@@ -100,9 +96,9 @@ namespace OpenToolkit.NT.Native
         /// </returns>
         [DllImport(Library, SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
-        public static extern BOOL SetPixelFormat
+        public static extern bool SetPixelFormat
         (
-            HDC hdc,
+            IntPtr hdc,
             int pixelFormatIndex,
             ref PixelFormatDescriptor ppfd
         );
@@ -120,7 +116,7 @@ namespace OpenToolkit.NT.Native
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Library, SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
-        public static extern BOOL SwapBuffers(HDC hdc);
+        public static extern bool SwapBuffers(IntPtr hdc);
 
         /// <summary>
         /// Retrieves device-specific information for the specified device.
@@ -133,7 +129,7 @@ namespace OpenToolkit.NT.Native
         /// has 15bpp or 16bpp, the return value is 16.
         /// </returns>
         [DllImport(Library)]
-        public static extern int GetDeviceCaps([In] HDC hdc, [In] GetDeviceCapsIndex capIndex);
+        public static extern int GetDeviceCaps([In] IntPtr hdc, [In] GetDeviceCapsIndex capIndex);
 
         /// <summary>
         /// Retrieves a handle to one of the stock pens, brushes, fonts, or palettes.
@@ -144,7 +140,7 @@ namespace OpenToolkit.NT.Native
         /// If the function fails, the return value is null.
         /// </returns>
         [DllImport(Library)]
-        public static extern HGDIOBJ GetStockObject(GetStockObjectType objectType);
+        public static extern IntPtr GetStockObject(GetStockObjectType objectType);
 
         /// <summary>
         /// Deletes a logical pen, brush, font, bitmap, region, or palette, freeing all system resources associated
@@ -162,6 +158,6 @@ namespace OpenToolkit.NT.Native
         /// </remarks>
         [DllImport(Library)]
         [return: MarshalAs(UnmanagedType.Bool)]
-        public static extern BOOL DeleteObject([In] HGDIOBJ obj);
+        public static extern bool DeleteObject([In] IntPtr obj);
     }
 }

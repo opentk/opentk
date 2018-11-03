@@ -1,8 +1,5 @@
-﻿using System.Runtime.InteropServices;
-
-using DWORD = System.UInt32;
-using HICON = System.IntPtr;
-using TCHAR = System.String;
+﻿using System;
+using System.Runtime.InteropServices;
 
 namespace OpenToolkit.NT.Native
 {
@@ -14,9 +11,9 @@ namespace OpenToolkit.NT.Native
     {
         /// <summary>
         /// A handle to the icon that represents the file. You are responsible for destroying this handle with
-        /// <see cref="User32.Icon.DestroyIcon(HICON)"/> when you no longer need it.
+        /// <see cref="User32.Icon.DestroyIcon(IntPtr)"/> when you no longer need it.
         /// </summary>
-        public HICON Icon;
+        public IntPtr Icon;
 
         /// <summary>
         /// The index of the icon image within the system image list.
@@ -27,20 +24,20 @@ namespace OpenToolkit.NT.Native
         /// An array of values that indicates the attributes of the file object. For information about these values,
         /// see the IShellFolder::GetAttributesOf method.
         /// </summary>
-        public DWORD Attributes;
+        public uint Attributes;
 
         /// <summary>
         /// A string that contains the name of the file as it appears in the Windows Shell, or the path and file
         /// name of the file that contains the icon representing the file.
         /// </summary>
         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 260)]
-        public TCHAR DisplayName;
+        public string DisplayName;
 
         /// <summary>
         /// A string that describes the type of file.
         /// </summary>
         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 80)]
-        public TCHAR TypeName;
+        public string TypeName;
 
         /// <summary>
         /// The size of this structure in bytes.

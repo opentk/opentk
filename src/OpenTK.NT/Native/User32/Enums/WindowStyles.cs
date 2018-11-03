@@ -1,7 +1,5 @@
 ﻿using System;
 
-using DWORD = System.UInt32;
-
 namespace OpenToolkit.NT.Native
 {
     /// <summary>
@@ -11,7 +9,7 @@ namespace OpenToolkit.NT.Native
     /// <see cref="User32.Window.SetWindowLong(IntPtr, int, int)"/> function.
     /// </summary>
     [Flags]
-    public enum WindowStyles : DWORD
+    public enum WindowStyles : uint
     {
         /// <summary>
         /// The window is an overlapped window. An overlapped window has a title bar and a border.

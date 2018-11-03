@@ -1,6 +1,4 @@
-﻿using DWORD = System.UInt32;
-
-namespace OpenToolkit.NT.Native
+﻿namespace OpenToolkit.NT.Native
 {
     /// <summary>
     /// Defines the raw input data coming from the specified keyboard.
@@ -13,31 +11,31 @@ namespace OpenToolkit.NT.Native
         /// <summary>
         /// Type of the keyboard.
         /// </summary>
-        public DWORD Type;
+        public uint Type;
 
         /// <summary>
         /// Subtype of the keyboard.
         /// </summary>
-        public DWORD SubType;
+        public uint SubType;
 
         /// <summary>
         /// Scan code mode.
         /// </summary>
-        public DWORD KeyboardMode;
+        public uint KeyboardMode;
 
         /// <summary>
         /// Number of function keys on the keyboard.
         /// </summary>
-        public DWORD NumberOfFunctionKeys;
+        public uint NumberOfFunctionKeys;
 
         /// <summary>
         /// Number of LED indicators on the keyboard.
         /// </summary>
-        public DWORD NumberOfIndicators;
+        public uint NumberOfIndicators;
 
         /// <summary>
         /// Total number of keys on the keyboard.
         /// </summary>
-        public DWORD NumberOfKeysTotal;
+        public uint NumberOfKeysTotal;
     }
 }

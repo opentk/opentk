@@ -1,12 +1,10 @@
-﻿using UINT = System.UInt32;
-
-namespace OpenToolkit.NT.Native
+﻿namespace OpenToolkit.NT.Native
 {
     /// <summary>
     /// Used in <see cref="User32.RawInput.GetRawInputDeviceInfo(System.IntPtr,
-    /// GetRawInputDeviceInfoEnum, byte[], ref UINT)"/> to specify what data to return in the data parameter.
+    /// GetRawInputDeviceInfoEnum, byte[], ref uint)"/> to specify what data to return in the data parameter.
     /// </summary>
-    public enum GetRawInputDeviceInfoEnum : UINT
+    public enum GetRawInputDeviceInfoEnum : uint
     {
         /// <summary>
         /// data points to the previously parsed data.

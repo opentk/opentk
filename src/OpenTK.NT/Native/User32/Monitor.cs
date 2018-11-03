@@ -1,8 +1,5 @@
-﻿using System.Runtime.InteropServices;
-
-using BOOL = System.Boolean;
-using HMONITOR = System.IntPtr;
-using HWND = System.IntPtr;
+﻿using System;
+using System.Runtime.InteropServices;
 
 namespace OpenToolkit.NT.Native
 {
@@ -22,7 +19,7 @@ namespace OpenToolkit.NT.Native
             /// A pointer to a <see cref="MonitorInfo"/> or MONITORINFOEX structure
             /// that receives information about the specified display monitor.<para/>
             /// You must set the Size member of the structure to the respective structure's size in bytes
-            /// before calling the <see cref="GetMonitorInfo(HMONITOR, out MonitorInfo)"/> function. Doing so
+            /// before calling the <see cref="GetMonitorInfo(IntPtr, out MonitorInfo)"/> function. Doing so
             /// lets the function determine the type of structure you are passing to it.
             /// </param>
             /// <returns>
@@ -31,7 +28,7 @@ namespace OpenToolkit.NT.Native
             /// </returns>
             [DllImport(Library)]
             [return: MarshalAs(UnmanagedType.Bool)]
-            public static extern BOOL GetMonitorInfo([In] HMONITOR monitor, [Out] out MonitorInfo monitorInfo);
+            public static extern bool GetMonitorInfo([In] IntPtr monitor, [Out] out MonitorInfo monitorInfo);
 
             /// <summary>
             /// Retrieves a handle to the display monitor that contains a specified point.
@@ -44,12 +41,12 @@ namespace OpenToolkit.NT.Native
             /// </param>
             /// <returns>
             /// If the point is contained by a display monitor,
-            /// the return value is an <see cref="HMONITOR"/> handle to that display monitor.<para/>
+            /// the return value is an <see cref="IntPtr"/> handle to that display monitor.<para/>
             /// If the point is not contained by a display monitor,
             /// the return value depends on the value of <paramref name="defaultTo"/>.
             /// </returns>
             [DllImport(Library)]
-            public static extern HMONITOR MonitorFromPoint([In] Point pt, [In] MonitorFromDefaultValue defaultTo);
+            public static extern IntPtr MonitorFromPoint([In] Point pt, [In] MonitorFromDefaultValue defaultTo);
 
             /// <summary>
             /// Retrieves a handle to the display monitor that has the largest area of intersection
@@ -61,13 +58,13 @@ namespace OpenToolkit.NT.Native
             /// </param>
             /// <returns>
             /// If the window intersects one or more display monitor rectangles, the return value is an
-            /// <see cref="HMONITOR"/> handle to the display monitor that
+            /// <see cref="IntPtr"/> handle to the display monitor that
             /// has the largest area of intersection with the window.<para/>
             /// If the window does not intersect a display monitor,
             /// the return value depends on the value of <paramref name="defaultTo"/>.
             /// </returns>
             [DllImport(Library)]
-            public static extern HMONITOR MonitorFromWindow([In] HWND window, [In] MonitorFromDefaultValue defaultTo);
+            public static extern IntPtr MonitorFromWindow([In] IntPtr window, [In] MonitorFromDefaultValue defaultTo);
         }
     }
 }

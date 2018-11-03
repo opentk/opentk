@@ -1,11 +1,9 @@
-﻿using BYTE = System.Byte;
-
-namespace OpenToolkit.NT.Native
+﻿namespace OpenToolkit.NT.Native
 {
     /// <summary>
     /// Specifies the type of pixel data.
     /// </summary>
-    public enum PixelFormatDescriptorPixelTypes : BYTE
+    public enum PixelFormatDescriptorPixelTypes : byte
     {
         /// <summary>
         /// RGBA pixels. Each pixel has four components in this order: red, green, blue, and alpha.

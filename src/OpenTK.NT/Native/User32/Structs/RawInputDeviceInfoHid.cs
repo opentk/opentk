@@ -1,7 +1,4 @@
-﻿using DWORD = System.UInt32;
-using USHORT = System.UInt16;
-
-namespace OpenToolkit.NT.Native
+﻿namespace OpenToolkit.NT.Native
 {
     /// <summary>
     /// Defines the raw input data coming from the specified Human Interface Device (HID).
@@ -11,26 +8,26 @@ namespace OpenToolkit.NT.Native
         /// <summary>
         /// Vendor ID for the HID.
         /// </summary>
-        public DWORD VendorId;
+        public uint VendorId;
 
         /// <summary>
         /// Product ID for the HID.
         /// </summary>
-        public DWORD ProductId;
+        public uint ProductId;
 
         /// <summary>
         /// Version number for the HID.
         /// </summary>
-        public DWORD VersionNumber;
+        public uint VersionNumber;
 
         /// <summary>
         /// Top-level collection Usage Page for the device.
         /// </summary>
-        public USHORT UsagePage;
+        public ushort UsagePage;
 
         /// <summary>
         /// Top-level collection Usage for the device.
         /// </summary>
-        public USHORT Usage;
+        public ushort Usage;
     }
 }

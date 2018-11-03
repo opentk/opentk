@@ -1,16 +1,14 @@
 ﻿using System;
 
-using UINT = System.UInt32;
-
 namespace OpenToolkit.NT.Native
 {
     /// <summary>
     /// Used in
-    /// <see cref="Shell32.SHGetFileInfo(string, FileAttributeFlags, ref SHFileInfo, UINT, ShGetFileInfoFlags)"/> to
+    /// <see cref="Shell32.SHGetFileInfo(string, FileAttributeFlags, ref SHFileInfo, uint, ShGetFileInfoFlags)"/> to
     /// specify the type of file information to retrieve.
     /// </summary>
     [Flags]
-    public enum ShGetFileInfoFlags : UINT
+    public enum ShGetFileInfoFlags : uint
     {
         /// <summary>
         /// Modify <see cref="Icon"/>, causing the function to retrieve the file's large icon.

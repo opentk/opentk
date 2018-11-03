@@ -2,14 +2,6 @@
 using System.Runtime.InteropServices;
 using System.Security;
 
-using BOOL = System.Boolean;
-using DWORD = System.UInt32;
-using HWND = System.IntPtr;
-using LONG = System.Int32;
-using LPARAM = System.IntPtr;
-using LRESULT = System.IntPtr;
-using WPARAM = System.IntPtr;
-
 namespace OpenToolkit.NT.Native
 {
     public static partial class User32
@@ -25,7 +17,7 @@ namespace OpenToolkit.NT.Native
             /// disabled or invisible unowned windows, overlapped windows, and pop-up windows;
             /// but not to child windows.
             /// </summary>
-            public static readonly HWND BroadcastHandle = new HWND(0xFFFF);
+            public static readonly IntPtr BroadcastHandle = new IntPtr(0xFFFF);
 
             /// <summary>
             /// Dispatches incoming sent messages, checks the thread message queue for a posted message,
@@ -36,15 +28,15 @@ namespace OpenToolkit.NT.Native
             /// A handle to the window whose messages are to be retrieved.
             /// The window must belong to the current thread.<para/>
             /// If <paramref name="window"/> is <see cref="IntPtr.Zero"/>,
-            /// <see cref="PeekMessage(out Msg, HWND, uint, uint, PeekMessageActions)"/> retrieves messages for any
+            /// <see cref="PeekMessage(out Msg, IntPtr, uint, uint, PeekMessageActions)"/> retrieves messages for any
             /// window that belongs to the current thread, and any messages on the current thread's message queue whose
             /// <paramref name="window"/> value is <see cref="IntPtr.Zero"/> (see the <see cref="Msg"/> structure).
             /// Therefore if <paramref name="window"/> is <see cref="IntPtr.Zero"/>, both window messages
             /// and thread messages are processed.<para/>
             /// If <paramref name="window"/> is -1,
-            /// <see cref="PeekMessage(out Msg, HWND, uint, uint, PeekMessageActions)"/> retrieves only messages on the
+            /// <see cref="PeekMessage(out Msg, IntPtr, uint, uint, PeekMessageActions)"/> retrieves only messages on the
             /// current thread's message queue whose <paramref name="window"/> value is <see cref="IntPtr.Zero"/>,
-            /// that is, thread messages as posted by <see cref="PostMessage(HWND, WindowMessage, HWND, HWND)"/>
+            /// that is, thread messages as posted by <see cref="PostMessage(IntPtr, WindowMessage, IntPtr, IntPtr)"/>
             /// (when the window parameter is <see cref="IntPtr.Zero"/>) or PostThreadMessage.
             /// </param>
             /// <param name="messageFilterMin">
@@ -52,7 +44,7 @@ namespace OpenToolkit.NT.Native
             /// Use <see cref="WindowMessage.KeyFirst"/> to specify the first keyboard message or
             /// <see cref="WindowMessage.MouseFirst"/> to specify the first mouse message.<para/>
             /// If <paramref name="messageFilterMin"/> and <paramref name="messageFilterMax"/> are both zero,
-            /// <see cref="PeekMessage(out Msg, HWND, uint, uint, PeekMessageActions)"/> returns all available messages
+            /// <see cref="PeekMessage(out Msg, IntPtr, uint, uint, PeekMessageActions)"/> returns all available messages
             /// (that is, no range filtering is performed).
             /// </param>
             /// <param name="messageFilterMax">
@@ -60,7 +52,7 @@ namespace OpenToolkit.NT.Native
             /// <see cref="WindowMessage.KeyLast"/> to specify the last keyboard message or
             /// <see cref="WindowMessage.MouseLast"/> to specify the last mouse message.<para/>
             /// If <paramref name="messageFilterMin"/> and <paramref name="messageFilterMax"/> are both zero,
-            /// <see cref="PeekMessage(out Msg, HWND, uint, uint, PeekMessageActions)"/> returns all available messages
+            /// <see cref="PeekMessage(out Msg, IntPtr, uint, uint, PeekMessageActions)"/> returns all available messages
             /// (that is, no range filtering is performed).
             /// </param>
             /// <param name="messageActions">Specifies how messages are to be handled.</param>
@@ -71,10 +63,10 @@ namespace OpenToolkit.NT.Native
             [SuppressUnmanagedCodeSecurity]
             [DllImport(Library)]
             [return: MarshalAs(UnmanagedType.Bool)]
-            public static extern BOOL PeekMessage
+            public static extern bool PeekMessage
             (
                 [Out] out Msg msg,
-                [In] [Optional] HWND window,
+                [In] [Optional] IntPtr window,
                 [In] uint messageFilterMin,
                 [In] uint messageFilterMax,
                 [In] PeekMessageActions messageActions
@@ -83,8 +75,8 @@ namespace OpenToolkit.NT.Native
             /// <summary>
             /// Retrieves a message from the calling thread's message queue. The function dispatches
             /// incoming sent messages until a posted message is available for retrieval.<para/>
-            /// Unlike <see cref="GetMessage(out Msg, HWND, uint, uint)"/>, the
-            /// <see cref="PeekMessage(out Msg, HWND, uint, uint, PeekMessageActions)"/> function does not wait
+            /// Unlike <see cref="GetMessage(out Msg, IntPtr, uint, uint)"/>, the
+            /// <see cref="PeekMessage(out Msg, IntPtr, uint, uint, PeekMessageActions)"/> function does not wait
             /// for a message to be posted before returning.
             /// </summary>
             /// <param name="msg">
@@ -94,15 +86,15 @@ namespace OpenToolkit.NT.Native
             /// A handle to the window whose messages are to be retrieved.
             /// The window must belong to the current thread.<para/>
             /// If <paramref name="window"/> is <see cref="IntPtr.Zero"/>,
-            /// <see cref="PeekMessage(out Msg, HWND, uint, uint, PeekMessageActions)"/> retrieves messages for any
+            /// <see cref="PeekMessage(out Msg, IntPtr, uint, uint, PeekMessageActions)"/> retrieves messages for any
             /// window that belongs to the current thread, and any messages on the current thread's message queue whose
             /// <paramref name="window"/> value is <see cref="IntPtr.Zero"/> (see the <see cref="Msg"/> structure).
             /// Therefore if <paramref name="window"/> is <see cref="IntPtr.Zero"/>, both window messages
             /// and thread messages are processed.<para/>
             /// If <paramref name="window"/> is -1,
-            /// <see cref="PeekMessage(out Msg, HWND, uint, uint, PeekMessageActions)"/> retrieves only messages on the
+            /// <see cref="PeekMessage(out Msg, IntPtr, uint, uint, PeekMessageActions)"/> retrieves only messages on the
             /// current thread's message queue whose <paramref name="window"/> value is <see cref="IntPtr.Zero"/>,
-            /// that is, thread messages as posted by <see cref="PostMessage(HWND, WindowMessage, HWND, HWND)"/>
+            /// that is, thread messages as posted by <see cref="PostMessage(IntPtr, WindowMessage, IntPtr, IntPtr)"/>
             /// (when the window parameter is <see cref="IntPtr.Zero"/>) or PostThreadMessage.
             /// </param>
             /// <param name="messageFilterMin">
@@ -112,7 +104,7 @@ namespace OpenToolkit.NT.Native
             /// Use <see cref="WindowMessage.Input"/> here and in <paramref name="messageFilterMax"/> to specify only
             /// the <see cref="WindowMessage.Input"/> messages.<para/>
             /// If <paramref name="messageFilterMin"/> and <paramref name="messageFilterMax"/> are both zero,
-            /// <see cref="PeekMessage(out Msg, HWND, uint, uint, PeekMessageActions)"/> returns all available messages
+            /// <see cref="PeekMessage(out Msg, IntPtr, uint, uint, PeekMessageActions)"/> returns all available messages
             /// (that is, no range filtering is performed).
             /// </param>
             /// <param name="messageFilterMax">
@@ -122,7 +114,7 @@ namespace OpenToolkit.NT.Native
             /// Use <see cref="WindowMessage.Input"/> here and in <paramref name="messageFilterMin"/> to specify only
             /// the <see cref="WindowMessage.Input"/> messages.<para/>
             /// If <paramref name="messageFilterMin"/> and <paramref name="messageFilterMax"/> are both zero,
-            /// <see cref="PeekMessage(out Msg, HWND, uint, uint, PeekMessageActions)"/> returns all available messages
+            /// <see cref="PeekMessage(out Msg, IntPtr, uint, uint, PeekMessageActions)"/> returns all available messages
             /// (that is, no range filtering is performed).
             /// </param>
             /// <returns>
@@ -139,24 +131,24 @@ namespace OpenToolkit.NT.Native
             public static extern int GetMessage
             (
                 [Out] out Msg msg,
-                [In] [Optional] HWND window,
+                [In] [Optional] IntPtr window,
                 [In] uint messageFilterMin,
                 [In] uint messageFilterMax
             );
 
             /// <summary>
             /// Retrieves the message time for the last message retrieved by the
-            /// <see cref="GetMessage(out Msg, HWND, uint, uint)"/> function. The time is a long integer that
+            /// <see cref="GetMessage(out Msg, IntPtr, uint, uint)"/> function. The time is a long integer that
             /// specifies the elapsed time, in milliseconds, from the time the system was started to the time the
             /// message was created (that is, placed in the thread's message queue).
             /// </summary>
             /// <returns>The return value specifies the message time.</returns>
             [DllImport(Library)]
-            public static extern LONG GetMessageTime();
+            public static extern int GetMessageTime();
 
             /// <summary>
             /// Sends the specified message to a window or windows. The
-            /// <see cref="SendMessage(HWND, WindowMessage, HWND, HWND)"/> function calls the window procedure for the
+            /// <see cref="SendMessage(IntPtr, WindowMessage, IntPtr, IntPtr)"/> function calls the window procedure for the
             /// specified window and does not return until the window procedure has processed the message.
             /// </summary>
             /// <param name="window">
@@ -171,12 +163,12 @@ namespace OpenToolkit.NT.Native
             /// The return value specifies the result of the message processing; it depends on the message sent.
             /// </returns>
             [DllImport(Library, SetLastError = true)]
-            public static extern LRESULT SendMessage
+            public static extern IntPtr SendMessage
             (
-                [In] HWND window,
+                [In] IntPtr window,
                 [In] WindowMessage msg,
-                [In] WPARAM wparam,
-                [In] LPARAM lparam
+                [In] IntPtr wparam,
+                [In] IntPtr lparam
             );
 
             /// <summary>
@@ -192,7 +184,7 @@ namespace OpenToolkit.NT.Native
             /// <remarks>
             /// This method uses the constant <see cref="BroadcastHandle"/> for this special behavior.
             /// </remarks>
-            public static LRESULT SendMessageAsBroadcast(WindowMessage msg, WPARAM wparam, LPARAM lparam)
+            public static IntPtr SendMessageAsBroadcast(WindowMessage msg, IntPtr wparam, IntPtr lparam)
             {
                 return SendMessage(BroadcastHandle, msg, wparam, lparam);
             }
@@ -219,12 +211,12 @@ namespace OpenToolkit.NT.Native
             [SuppressUnmanagedCodeSecurity]
             [DllImport(Library, SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
-            public static extern BOOL PostMessage
+            public static extern bool PostMessage
             (
-                [In] [Optional] HWND window,
+                [In] [Optional] IntPtr window,
                 [In] WindowMessage msg,
-                [In] WPARAM wparam,
-                [In] LPARAM lparam
+                [In] IntPtr wparam,
+                [In] IntPtr lparam
             );
 
             /// <summary>
@@ -242,7 +234,7 @@ namespace OpenToolkit.NT.Native
             /// <remarks>
             /// This method uses the constant <see cref="BroadcastHandle"/> for this special behavior.
             /// </remarks>
-            public static BOOL PostMessageAsBroadcast(WindowMessage msg, WPARAM wparam, LPARAM lparam)
+            public static bool PostMessageAsBroadcast(WindowMessage msg, IntPtr wparam, IntPtr lparam)
             {
                 return PostMessage(BroadcastHandle, msg, wparam, lparam);
             }
@@ -260,7 +252,7 @@ namespace OpenToolkit.NT.Native
 
             /// <summary>
             /// Dispatches a message to a window procedure. It is typically used to
-            /// dispatch a message retrieved by the <see cref="GetMessage(out Msg, HWND, uint, uint)"/> function.
+            /// dispatch a message retrieved by the <see cref="GetMessage(out Msg, IntPtr, uint, uint)"/> function.
             /// </summary>
             /// <param name="msg">A structure that contains the message.</param>
             /// <returns>
@@ -269,18 +261,18 @@ namespace OpenToolkit.NT.Native
             /// </returns>
             [SuppressUnmanagedCodeSecurity]
             [DllImport(Library)]
-            public static extern LRESULT DispatchMessage([In] ref Msg msg);
+            public static extern IntPtr DispatchMessage([In] ref Msg msg);
 
             /// <summary>
             /// Translates virtual-key messages into character messages. The character messages are posted to the
             /// calling thread's message queue, to be read the next time the thread calls the
-            /// <see cref="GetMessage(out Msg, HWND, uint, uint)"/> or
-            /// <see cref="PeekMessage(out Msg, HWND, uint, uint, PeekMessageActions)"/> function.
+            /// <see cref="GetMessage(out Msg, IntPtr, uint, uint)"/> or
+            /// <see cref="PeekMessage(out Msg, IntPtr, uint, uint, PeekMessageActions)"/> function.
             /// </summary>
             /// <param name="msg">
             /// An <see cref="Msg"/> structure that contains message information retrieved from the
-            /// calling thread's message queue by using the <see cref="GetMessage(out Msg, HWND, uint, uint)"/> or
-            /// <see cref="PeekMessage(out Msg, HWND, uint, uint, PeekMessageActions)"/> function.
+            /// calling thread's message queue by using the <see cref="GetMessage(out Msg, IntPtr, uint, uint)"/> or
+            /// <see cref="PeekMessage(out Msg, IntPtr, uint, uint, PeekMessageActions)"/> function.
             /// </param>
             /// <returns>
             /// If the message is translated (that is, a character message is posted to the thread's message queue),
@@ -294,7 +286,7 @@ namespace OpenToolkit.NT.Native
             [SuppressUnmanagedCodeSecurity]
             [DllImport(Library)]
             [return: MarshalAs(UnmanagedType.Bool)]
-            public static extern BOOL TranslateMessage([In] ref Msg msg);
+            public static extern bool TranslateMessage([In] ref Msg msg);
 
             /// <summary>
             /// Retrieves the type of messages found in the calling thread's message queue.
@@ -304,12 +296,12 @@ namespace OpenToolkit.NT.Native
             /// The high-order word of the return value indicates the types of messages currently in the queue.
             /// The low-order word indicates the types of messages that have been added to the queue and that are
             /// still in the queue since the last call to the <see cref="GetQueueStatus(QueueMessageTypes)"/>,
-            /// <see cref="GetMessage(out Msg, HWND, DWORD, DWORD)"/>, or
-            /// <see cref="PeekMessage(out Msg, HWND, DWORD, DWORD, PeekMessageActions)"/> function.
+            /// <see cref="GetMessage(out Msg, IntPtr, uint, uint)"/>, or
+            /// <see cref="PeekMessage(out Msg, IntPtr, uint, uint, PeekMessageActions)"/> function.
             /// </returns>
             [SuppressUnmanagedCodeSecurity]
             [DllImport(Library)]
-            public static extern DWORD GetQueueStatus([In] QueueMessageTypes flags);
+            public static extern uint GetQueueStatus([In] QueueMessageTypes flags);
         }
     }
 }

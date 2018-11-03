@@ -1,6 +1,4 @@
-﻿using BOOL = System.Boolean;
-using DWORD = System.UInt32;
-using HBITMAP = System.IntPtr;
+﻿using System;
 
 namespace OpenToolkit.NT.Native
 {
@@ -13,21 +11,21 @@ namespace OpenToolkit.NT.Native
         /// Specifies whether this structure defines an icon or a cursor. A
         /// value of true specifies an icon; false specifies a cursor.
         /// </summary>
-        public BOOL Icon;
+        public bool Icon;
 
         /// <summary>
         /// The x-coordinate of a cursor's hot spot. If this structure defines
         /// an icon, the hot spot is always in the center of the icon, and
         /// this member is ignored.
         /// </summary>
-        public DWORD XHotspot;
+        public uint XHotspot;
 
         /// <summary>
         /// The y-coordinate of a cursor's hot spot. If this structure defines
         /// an icon, the hot spot is always in the center of the icon, and
         /// this member is ignored.
         /// </summary>
-        public DWORD YHotspot;
+        public uint YHotspot;
 
         /// <summary>
         /// The icon bitmask bitmap. If this structure defines a black and
@@ -37,7 +35,7 @@ namespace OpenToolkit.NT.Native
         /// two. If this structure defines a color icon, this mask only
         /// defines the AND bitmask of the icon.
         /// </summary>
-        public HBITMAP BitmapMask;
+        public IntPtr BitmapMask;
 
         /// <summary>
         /// A handle to the icon color bitmap. This member can be optional if
@@ -46,6 +44,6 @@ namespace OpenToolkit.NT.Native
         /// subsequently, the color bitmap is applied (using XOR) to the
         /// destination by using the SRCINVERT flag.
         /// </summary>
-        public HBITMAP BitmapColor;
+        public IntPtr BitmapColor;
     }
 }

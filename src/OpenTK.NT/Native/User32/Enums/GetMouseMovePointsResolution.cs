@@ -1,12 +1,10 @@
-﻿using DWORD = System.UInt32;
-
-namespace OpenToolkit.NT.Native
+﻿namespace OpenToolkit.NT.Native
 {
     /// <summary>
-    /// Specifies the resolution desired by <see cref="User32.Mouse.GetMouseMovePointsEx(DWORD, ref MouseMovePoint,
+    /// Specifies the resolution desired by <see cref="User32.Mouse.GetMouseMovePointsEx(uint, ref MouseMovePoint,
     /// MouseMovePoint*, int, GetMouseMovePointsResolution)"/>.
     /// </summary>
-    public enum GetMouseMovePointsResolution : DWORD
+    public enum GetMouseMovePointsResolution : uint
     {
         /// <summary>
         /// Retrieves the points using the display resolution.

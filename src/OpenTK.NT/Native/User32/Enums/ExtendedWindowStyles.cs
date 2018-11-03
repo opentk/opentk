@@ -1,7 +1,5 @@
 ﻿using System;
 
-using DWORD = System.UInt32;
-
 namespace OpenToolkit.NT.Native
 {
     /// <summary>
@@ -10,7 +8,7 @@ namespace OpenToolkit.NT.Native
     /// ExtendedWindowStyles, string, string, WindowStyles, int, int, int, int, IntPtr, IntPtr, IntPtr, IntPtr)"/>.
     /// </summary>
     [Flags]
-    public enum ExtendedWindowStyles : DWORD
+    public enum ExtendedWindowStyles : uint
     {
         /// <summary>
         /// The window has a double border; the window can, optionally, be created with a title bar

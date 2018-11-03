@@ -1,7 +1,5 @@
 ﻿using System;
 
-using DWORD = System.UInt32;
-
 namespace OpenToolkit.NT.Native
 {
     /// <summary>
@@ -9,7 +7,7 @@ namespace OpenToolkit.NT.Native
     /// to specify the types of messages to check for.
     /// </summary>
     [Flags]
-    public enum QueueMessageTypes : DWORD
+    public enum QueueMessageTypes : uint
     {
         /// <summary>
         /// A <see cref="WindowMessage.KeyUp"/>, <see cref="WindowMessage.KeyDown"/>,

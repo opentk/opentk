@@ -1,7 +1,5 @@
 ﻿using System;
 
-using DWORD = System.UInt32;
-
 namespace OpenToolkit.NT.Native
 {
     /// <summary>
@@ -9,7 +7,7 @@ namespace OpenToolkit.NT.Native
     /// not mutually exclusive; you can set any combination of bit flags, with the exceptions noted.
     /// </summary>
     [Flags]
-    public enum PixelFormatDescriptorFlags : DWORD
+    public enum PixelFormatDescriptorFlags : uint
     {
         /// <summary>
         /// The buffer is double-buffered. This flag and <see cref="SupportGdi"/> are mutually exclusive

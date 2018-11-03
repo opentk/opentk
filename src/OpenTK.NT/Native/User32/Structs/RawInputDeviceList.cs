@@ -1,6 +1,5 @@
-﻿using System.Runtime.InteropServices;
-
-using HANDLE = System.IntPtr;
+﻿using System;
+using System.Runtime.InteropServices;
 
 namespace OpenToolkit.NT.Native
 {
@@ -12,7 +11,7 @@ namespace OpenToolkit.NT.Native
         /// <summary>
         /// Handle to the raw input device.
         /// </summary>
-        public HANDLE Device;
+        public IntPtr Device;
 
         /// <summary>
         /// Type of device.

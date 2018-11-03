@@ -1,13 +1,6 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
-using BOOL = System.Boolean;
-using DEVMODE = System.IntPtr;
-using DWORD = System.UInt32;
-using HDC = System.IntPtr;
-using HWND = System.IntPtr;
-using LPVOID = System.IntPtr;
-
 namespace OpenToolkit.NT.Native
 {
     public static partial class User32
@@ -32,7 +25,7 @@ namespace OpenToolkit.NT.Native
             /// If the function fails, the return value is <see cref="IntPtr.Zero"/>.
             /// </returns>
             [DllImport(Library)]
-            public static extern HDC GetDC([In] [Optional] HWND window);
+            public static extern IntPtr GetDC([In] [Optional] IntPtr window);
 
             /// <summary>
             /// Releases a device context (DC), freeing it for use by other applications. The effect of this function
@@ -48,12 +41,12 @@ namespace OpenToolkit.NT.Native
             /// </returns>
             [DllImport(Library)]
             [return: MarshalAs(UnmanagedType.Bool)]
-            public static extern BOOL ReleaseDC([In] HWND window, [In] HDC dc);
+            public static extern bool ReleaseDC([In] IntPtr window, [In] IntPtr dc);
 
             /// <summary>
             /// Changes the settings of the default display device to the specified graphics mode.<para/>
             /// To change the settings of a specified display device, use the
-            /// <see cref="ChangeDisplaySettingsEx(string, DEVMODE, DEVMODE, DisplaySettingsChanges, DEVMODE)"/>
+            /// <see cref="ChangeDisplaySettingsEx(string, IntPtr, IntPtr, DisplaySettingsChanges, IntPtr)"/>
             /// function.
             /// </summary>
             /// <param name="deviceMode">
@@ -80,7 +73,7 @@ namespace OpenToolkit.NT.Native
             /// <param name="deviceName">
             /// A string that specifies the display device whose graphics mode will change.<para/>
             /// Only display device names as returned by
-            /// <see cref="EnumDisplayDevices(string, DWORD, out DisplayDevice, DWORD)"/> are valid.
+            /// <see cref="EnumDisplayDevices(string, uint, out DisplayDevice, uint)"/> are valid.
             /// </param>
             /// <param name="deviceMode">
             /// A <see cref="DeviceMode"/> structure that describes the new graphics mode. If
@@ -103,10 +96,10 @@ namespace OpenToolkit.NT.Native
             public static extern ChangeDisplaySettingsResult ChangeDisplaySettingsEx
             (
                 [In] [Optional] string deviceName,
-                [In] [Optional] DEVMODE deviceMode,
-                [Optional] HWND window,
+                [In] [Optional] IntPtr deviceMode,
+                [Optional] IntPtr window,
                 [In] DisplaySettingsChanges changeFlags,
-                [In] LPVOID changeParams
+                [In] IntPtr changeParams
             );
 
             /// <summary>
@@ -117,7 +110,7 @@ namespace OpenToolkit.NT.Native
             /// A string that specifies the display device about whose graphics mode the function
             /// will obtain information.<para/>
             /// This parameter is either null or a <see cref="DisplayDevice.DeviceName"/> returned from
-            /// <see cref="EnumDisplayDevices(string, DWORD, out DisplayDevice, DWORD)"/>. A null value specifies the
+            /// <see cref="EnumDisplayDevices(string, uint, out DisplayDevice, uint)"/>. A null value specifies the
             /// current display device on the computer on which the calling thread is running.
             /// </param>
             /// <param name="modeSetting">Specifies the type of information to be retrieved.</param>
@@ -135,7 +128,7 @@ namespace OpenToolkit.NT.Native
             /// </returns>
             [DllImport(Library, CharSet = CharSet.Unicode)]
             [return: MarshalAs(UnmanagedType.Bool)]
-            public static extern BOOL EnumDisplaySettings
+            public static extern bool EnumDisplaySettings
             (
                 [In] string deviceName,
                 [In] DisplayModeSetting modeSetting,
@@ -150,7 +143,7 @@ namespace OpenToolkit.NT.Native
             /// A string that specifies the display device about whose graphics mode the function
             /// will obtain information.<para/>
             /// This parameter is either null or a <see cref="DisplayDevice.DeviceName"/> returned from
-            /// <see cref="EnumDisplayDevices(string, DWORD, out DisplayDevice, DWORD)"/>. A null value specifies the
+            /// <see cref="EnumDisplayDevices(string, uint, out DisplayDevice, uint)"/>. A null value specifies the
             /// current display device on the computer on which the calling thread is running.
             /// </param>
             /// <param name="modeSetting">Specifies the type of information to be retrieved.</param>
@@ -171,7 +164,7 @@ namespace OpenToolkit.NT.Native
             /// </returns>
             [DllImport(Library, CharSet = CharSet.Unicode)]
             [return: MarshalAs(UnmanagedType.Bool)]
-            public static extern BOOL EnumDisplaySettingsEx
+            public static extern bool EnumDisplaySettingsEx
             (
                 [In] string deviceName,
                 [In] DisplayModeSetting modeSetting,
@@ -190,7 +183,7 @@ namespace OpenToolkit.NT.Native
             /// <param name="displayDevice">
             /// A <see cref="DisplayDevice"/> structure that receives information about the display device
             /// specified by <paramref name="deviceIndex"/>.<para/>
-            /// Before calling <see cref="EnumDisplayDevices(string, DWORD, out DisplayDevice, DWORD)"/>, you must
+            /// Before calling <see cref="EnumDisplayDevices(string, uint, out DisplayDevice, uint)"/>, you must
             /// initialize the <see cref="DisplayDevice.Size"/> member of <see cref="DisplayDevice"/>
             /// to <see cref="DisplayDevice.SizeInBytes"/>.
             /// </param>
@@ -208,12 +201,12 @@ namespace OpenToolkit.NT.Native
             /// </returns>
             [DllImport(Library, CharSet = CharSet.Unicode)]
             [return: MarshalAs(UnmanagedType.Bool)]
-            public static extern BOOL EnumDisplayDevices
+            public static extern bool EnumDisplayDevices
             (
                 [In] [Optional] string deviceName,
-                [In] DWORD deviceIndex,
+                [In] uint deviceIndex,
                 [Out] out DisplayDevice displayDevice,
-                [In] DWORD flags
+                [In] uint flags
             );
         }
     }

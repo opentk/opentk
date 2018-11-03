@@ -1,6 +1,4 @@
-﻿using DWORD = System.UInt32;
-
-namespace OpenToolkit.NT.Native
+﻿namespace OpenToolkit.NT.Native
 {
     /// <summary>
     /// Specifies what values to return if
@@ -8,7 +6,7 @@ namespace OpenToolkit.NT.Native
     /// <see cref="User32.Monitor.MonitorFromWindow(System.IntPtr, MonitorFromDefaultValue)"/>
     /// fail to find a monitor for the given arguments.
     /// </summary>
-    public enum MonitorFromDefaultValue : DWORD
+    public enum MonitorFromDefaultValue : uint
     {
         /// <summary>
         /// Returns null.

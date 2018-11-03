@@ -1,7 +1,4 @@
-﻿using DWORD = System.UInt32;
-using HWND = System.IntPtr;
-using LPARAM = System.IntPtr;
-using WPARAM = System.IntPtr;
+﻿using System;
 
 namespace OpenToolkit.NT.Native
 {
@@ -14,7 +11,7 @@ namespace OpenToolkit.NT.Native
         /// A handle to the window whose window procedure receives the message. This member is
         /// <see cref="System.IntPtr.Zero"/> when the message is a thread message.
         /// </summary>
-        public HWND HWnd;
+        public IntPtr HWnd;
 
         /// <summary>
         /// The message identifier. Applications can only use the low word; the high word is reserved by the system.
@@ -25,18 +22,18 @@ namespace OpenToolkit.NT.Native
         /// Additional information about the message.The exact meaning depends on the value of the
         /// <see cref="Message"/> member.
         /// </summary>
-        public WPARAM WParam;
+        public IntPtr WParam;
 
         /// <summary>
         /// Additional information about the message.The exact meaning depends on the value of the
         /// <see cref="Message"/> member.
         /// </summary>
-        public LPARAM LParam;
+        public IntPtr LParam;
 
         /// <summary>
         /// The time at which the message was posted.
         /// </summary>
-        public DWORD Time;
+        public uint Time;
 
         /// <summary>
         /// The cursor position, in screen coordinates, when the message was posted.

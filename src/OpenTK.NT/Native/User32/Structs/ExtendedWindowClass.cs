@@ -1,18 +1,12 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
-using HBRUSH = System.IntPtr;
-using HCURSOR = System.IntPtr;
-using HICON = System.IntPtr;
-using HINSTANCE = System.IntPtr;
-using UINT = System.UInt32;
-
 namespace OpenToolkit.NT.Native
 {
     /// <summary>
     /// Contains window class information. It is used with the
     /// <see cref="User32.WindowClass.RegisterClassEx(ref ExtendedWindowClass)"/> and
-    /// <see cref="User32.WindowClass.GetClassInfoEx(HBRUSH, string, out ExtendedWindowClass)"/> functions.<para/>
+    /// <see cref="User32.WindowClass.GetClassInfoEx(IntPtr, string, out ExtendedWindowClass)"/> functions.<para/>
     /// The <see cref="ExtendedWindowClass"/> structure is similar to the <see cref="WindowClass"/> structure.
     /// There are two differences. <see cref="ExtendedWindowClass"/> includes the <see cref="Size"/> member, which
     /// specifies the size of the structure, and the <see cref="IconSmall"/> member, which contains a handle
@@ -24,9 +18,9 @@ namespace OpenToolkit.NT.Native
         /// <summary>
         /// The size, in bytes, of this structure. Set this member to <see cref="SizeInBytes"/>.<para/>
         /// Be sure to set this member before calling the
-        /// <see cref="User32.WindowClass.GetClassInfoEx(HBRUSH, HBRUSH, out ExtendedWindowClass)"/> function.
+        /// <see cref="User32.WindowClass.GetClassInfoEx(IntPtr, IntPtr, out ExtendedWindowClass)"/> function.
         /// </summary>
-        public UINT Size;
+        public uint Size;
 
         /// <summary>
         /// The class style(s). This member can be any combination of <see cref="WindowClassStyles"/>.
@@ -54,27 +48,27 @@ namespace OpenToolkit.NT.Native
         /// <summary>
         /// A handle to the instance that contains the window procedure for the class.
         /// </summary>
-        public HINSTANCE Instance;
+        public IntPtr Instance;
 
         /// <summary>
         /// A handle to the class icon. This member must be a handle to an icon resource.
         /// If this member is <see cref="IntPtr.Zero"/>, the system provides a default icon.
         /// </summary>
-        public HICON Icon;
+        public IntPtr Icon;
 
         /// <summary>
         /// A handle to the class cursor. This member must be a handle to a cursor resource.
         /// If this member is <see cref="IntPtr.Zero"/>, an application must explicitly set the cursor shape
         /// whenever the mouse moves into the application's window.
         /// </summary>
-        public HCURSOR Cursor;
+        public IntPtr Cursor;
 
         /// <summary>
         /// A handle to the class background brush. This member can be a handle to the brush to be used for
         /// painting the background, or it can be a color value.<para/>
         /// For more information on setting this to a color value, check the official documentation.
         /// </summary>
-        public HBRUSH Background;
+        public IntPtr Background;
 
         /// <summary>
         /// Pointer to a string that specifies the resource name of the class menu, as the name appears in the
@@ -94,7 +88,7 @@ namespace OpenToolkit.NT.Native
         /// <see cref="IntPtr.Zero"/>, the system searches the icon resource specified by the hIcon member for an icon
         /// of the appropriate size to use as the small icon.
         /// </summary>
-        public HICON IconSmall;
+        public IntPtr IconSmall;
 
         /// <summary>
         /// The size of this structure in bytes.

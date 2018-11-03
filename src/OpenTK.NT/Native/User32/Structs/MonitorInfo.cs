@@ -1,7 +1,5 @@
 ﻿using System.Runtime.InteropServices;
 
-using DWORD = System.UInt32;
-
 namespace OpenToolkit.NT.Native
 {
     /// <summary>
@@ -13,7 +11,7 @@ namespace OpenToolkit.NT.Native
         /// The size of the structure, in bytes. Set this member to <see cref="SizeInBytes"/> before calling the
         /// <see cref="User32.Monitor.GetMonitorInfo(System.IntPtr, out MonitorInfo)"/> function.
         /// </summary>
-        public DWORD Size;
+        public uint Size;
 
         /// <summary>
         /// A <see cref="Rect"/> structure that specifies the display monitor rectangle, expressed in virtual-screen
@@ -34,7 +32,7 @@ namespace OpenToolkit.NT.Native
         /// The (currently only) defined flag is "Primary" with a value of 1, so a value of 1 means the display is
         /// primary while a value of 0 means that it is not.
         /// </summary>
-        public DWORD Flags;
+        public uint Flags;
 
         /// <summary>
         /// The size of this structure in bytes.

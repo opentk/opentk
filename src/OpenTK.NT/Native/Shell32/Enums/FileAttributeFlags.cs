@@ -1,7 +1,5 @@
 ﻿using System;
 
-using DWORD = System.UInt32;
-
 namespace OpenToolkit.NT.Native
 {
     /// <summary>
@@ -9,7 +7,7 @@ namespace OpenToolkit.NT.Native
     /// via various file I/O APIs.
     /// </summary>
     [Flags]
-    public enum FileAttributeFlags : DWORD
+    public enum FileAttributeFlags : uint
     {
         /// <summary>
         /// A file that is read-only. Applications can read the file, but cannot write to it or delete it.

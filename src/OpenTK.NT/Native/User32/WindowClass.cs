@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
-using BOOL = System.Boolean;
-using HINSTANCE = System.IntPtr;
-
 namespace OpenToolkit.NT.Native
 {
     public static partial class User32
@@ -40,9 +37,9 @@ namespace OpenToolkit.NT.Native
             /// </returns>
             [DllImport(Library, SetLastError = true, CharSet = CharSet.Unicode)]
             [return: MarshalAs(UnmanagedType.Bool)]
-            public static extern BOOL GetClassInfoEx
+            public static extern bool GetClassInfoEx
             (
-                [In] [Optional] HINSTANCE instance,
+                [In] [Optional] IntPtr instance,
                 [In] string className,
                 [Out] out ExtendedWindowClass extendedWindowClass
             );
@@ -73,9 +70,9 @@ namespace OpenToolkit.NT.Native
             /// </returns>
             [DllImport(Library, SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
-            public static extern BOOL GetClassInfoEx
+            public static extern bool GetClassInfoEx
             (
-                [In] HINSTANCE instance,
+                [In] IntPtr instance,
                 [In] IntPtr className,
                 [Out] out ExtendedWindowClass extendedWindowClass
             );
@@ -103,9 +100,9 @@ namespace OpenToolkit.NT.Native
             /// If the function does not find a matching class and successfully copy the data, the return value is
             /// false. To get extended error information, call <see cref="Marshal.GetLastWin32Error"/>.
             /// </returns>
-            public static BOOL GetClassInfoEx
+            public static bool GetClassInfoEx
             (
-                [In] HINSTANCE instance,
+                [In] IntPtr instance,
                 [In] ushort classAtom,
                 [Out] out ExtendedWindowClass extendedWindowStyle
             )
@@ -115,8 +112,8 @@ namespace OpenToolkit.NT.Native
 
             /// <summary>
             /// Registers a window class for subsequent use in calls to the CreateWindow or
-            /// <see cref="Window.CreateWindowEx(ExtendedWindowStyles, HINSTANCE, string,
-            /// WindowStyles, int, int, int, int, HINSTANCE, HINSTANCE, HINSTANCE, HINSTANCE)"/> function.
+            /// <see cref="Window.CreateWindowEx(ExtendedWindowStyles, IntPtr, string,
+            /// WindowStyles, int, int, int, int, IntPtr, IntPtr, IntPtr, IntPtr)"/> function.
             /// </summary>
             /// <param name="extendedWindowClass">
             /// A pointer to a <see cref="ExtendedWindowClass"/> structure. You must fill the structure with the
@@ -125,10 +122,10 @@ namespace OpenToolkit.NT.Native
             /// <returns>
             /// If the function succeeds, the return value is a class atom that uniquely identifies the class being
             /// registered. This atom can only be used by the CreateWindow,
-            /// <see cref="Window.CreateWindowEx(ExtendedWindowStyles, HINSTANCE, string,
-            /// WindowStyles, int, int, int, int, HINSTANCE, HINSTANCE, HINSTANCE, HINSTANCE)"/>,
-            /// GetClassInfo, <see cref="GetClassInfoEx(HINSTANCE, HINSTANCE, out ExtendedWindowClass)"/>, FindWindow,
-            /// FindWindowEx, and <see cref="UnregisterClass(string, HINSTANCE)"/> functions
+            /// <see cref="Window.CreateWindowEx(ExtendedWindowStyles, IntPtr, string,
+            /// WindowStyles, int, int, int, int, IntPtr, IntPtr, IntPtr, IntPtr)"/>,
+            /// GetClassInfo, <see cref="GetClassInfoEx(IntPtr, IntPtr, out ExtendedWindowClass)"/>, FindWindow,
+            /// FindWindowEx, and <see cref="UnregisterClass(string, IntPtr)"/> functions
             /// and the IActiveIMMap::FilterClientWindows method.<para/>
             /// If the function fails, the return value is zero.
             /// To get extended error information, call <see cref="Marshal.GetLastWin32Error"/>.
@@ -157,7 +154,7 @@ namespace OpenToolkit.NT.Native
             /// </remarks>
             [DllImport(Library, SetLastError = true, CharSet = CharSet.Unicode)]
             [return: MarshalAs(UnmanagedType.Bool)]
-            public static extern BOOL UnregisterClass([In] string className, [In] [Optional] HINSTANCE moduleInstance);
+            public static extern bool UnregisterClass([In] string className, [In] [Optional] IntPtr moduleInstance);
 
             /// <summary>
             /// Unregisters a window class, freeing the memory required for the class.
@@ -180,10 +177,10 @@ namespace OpenToolkit.NT.Native
             /// </remarks>
             [DllImport(Library, SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
-            public static extern BOOL UnregisterClass
+            public static extern bool UnregisterClass
             (
                 [In] IntPtr className,
-                [In] [Optional] HINSTANCE moduleInstance
+                [In] [Optional] IntPtr moduleInstance
             );
 
             /// <summary>
@@ -204,7 +201,7 @@ namespace OpenToolkit.NT.Native
             /// specified class.<para/>
             /// All window classes that an application registers are unregistered when it terminates.
             /// </remarks>
-            public static BOOL UnregisterClass([In] ushort classAtom, [In] [Optional] HINSTANCE moduleInstance)
+            public static bool UnregisterClass([In] ushort classAtom, [In] [Optional] IntPtr moduleInstance)
             {
                 return UnregisterClass(new IntPtr(classAtom), moduleInstance);
             }

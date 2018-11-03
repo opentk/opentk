@@ -1,7 +1,5 @@
 ﻿using System.Drawing;
 
-using LONG = System.Int32;
-
 namespace OpenToolkit.NT.Native
 {
     /// <summary>
@@ -18,32 +16,32 @@ namespace OpenToolkit.NT.Native
         /// <summary>
         /// Specifies the x-coordinate of the upper-left corner of the rectangle.
         /// </summary>
-        public LONG Left;
+        public int Left;
 
         /// <summary>
         /// Specifies the y-coordinate of the upper-left corner of the rectangle.
         /// </summary>
-        public LONG Top;
+        public int Top;
 
         /// <summary>
         /// Specifies the x-coordinate of the lower-right corner of the rectangle.
         /// </summary>
-        public LONG Right;
+        public int Right;
 
         /// <summary>
         /// Specifies the y-coordinate of the lower-right corner of the rectangle.
         /// </summary>
-        public LONG Bottom;
+        public int Bottom;
 
         /// <summary>
         /// Gets the width of the rectangle.
         /// </summary>
-        public LONG Width => Right - Left;
+        public int Width => Right - Left;
 
         /// <summary>
         /// Gets the height of the rectangle.
         /// </summary>
-        public LONG Height => Bottom - Top;
+        public int Height => Bottom - Top;
 
         /// <inheritdoc/>
         public override string ToString() => $"{{X={Left},Y={Top},Width={Width},Height={Height}}}";

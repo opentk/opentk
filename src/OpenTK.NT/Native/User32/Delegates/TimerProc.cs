@@ -1,8 +1,5 @@
-﻿using System.Runtime.InteropServices;
-
-using DWORD = System.UInt32;
-using HWND = System.IntPtr;
-using UINT_PTR = System.UIntPtr;
+﻿using System;
+using System.Runtime.InteropServices;
 
 namespace OpenToolkit.NT.Native
 {
@@ -20,9 +17,9 @@ namespace OpenToolkit.NT.Native
     [UnmanagedFunctionPointer(CallingConvention.Winapi)]
     public delegate void TimerProc
     (
-        [In] HWND hwnd,
+        [In] IntPtr hwnd,
         [In] WindowMessage msg,
-        [In] UINT_PTR timerID,
-        [In] DWORD elapsedTime
+        [In] UIntPtr timerID,
+        [In] uint elapsedTime
     );
 }

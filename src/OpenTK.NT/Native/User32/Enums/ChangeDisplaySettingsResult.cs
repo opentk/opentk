@@ -1,7 +1,5 @@
 ﻿using System;
 
-using LONG = System.Int32;
-
 namespace OpenToolkit.NT.Native
 {
     /// <summary>
@@ -9,7 +7,7 @@ namespace OpenToolkit.NT.Native
     /// and <see cref="User32.DeviceContext.ChangeDisplaySettingsEx(string, IntPtr, IntPtr, DisplaySettingsChanges,
     /// IntPtr)"/> to indicate the result of the function call.
     /// </summary>
-    public enum ChangeDisplaySettingsResult : LONG
+    public enum ChangeDisplaySettingsResult : int
     {
         /// <summary>
         /// The settings change was successful.

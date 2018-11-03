@@ -1,14 +1,12 @@
 ﻿using System;
 
-using DWORD = System.UInt32;
-
 namespace OpenToolkit.NT.Native
 {
     /// <summary>
     /// Used in <see cref="TrackMouseEvent"/> to request specific services.
     /// </summary>
     [Flags]
-    public enum TrackMouseEvents : DWORD
+    public enum TrackMouseEvents : uint
     {
         /// <summary>
         /// The caller wants hover notification. Notification is delivered as a <see cref="WindowMessage.MouseHover"/>

@@ -1,10 +1,6 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
-using BOOL = System.Boolean;
-using HICON = System.IntPtr;
-using HINSTANCE = System.IntPtr;
-
 namespace OpenToolkit.NT.Native
 {
     public static partial class User32
@@ -27,7 +23,7 @@ namespace OpenToolkit.NT.Native
             /// To get extended error information, call <see cref="Marshal.GetLastWin32Error"/>.
             /// </returns>
             [DllImport(Library, SetLastError = true)]
-            public static extern HICON CreateIconIndirect([In] ref IconInfo iconInfo);
+            public static extern IntPtr CreateIconIndirect([In] ref IconInfo iconInfo);
 
             /// <summary>
             /// Destroys an icon and frees any memory the icon occupied.
@@ -40,7 +36,7 @@ namespace OpenToolkit.NT.Native
             /// </returns>
             [DllImport(Library, SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
-            public static extern BOOL DestroyIcon([In] HICON icon);
+            public static extern bool DestroyIcon([In] IntPtr icon);
 
             /// <summary>
             /// Retrieves information about the specified icon or cursor.
@@ -57,7 +53,7 @@ namespace OpenToolkit.NT.Native
             /// </returns>
             [DllImport(Library, SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
-            public static extern BOOL GetIconInfo([In] HICON icon, [Out] out IconInfo iconInfo);
+            public static extern bool GetIconInfo([In] IntPtr icon, [Out] out IconInfo iconInfo);
 
             /// <summary>
             /// Retrieves information about the specified pre-defined cursor.
@@ -72,9 +68,9 @@ namespace OpenToolkit.NT.Native
             /// If the function fails, the return value is false.
             /// To get extended error information, call <see cref="Marshal.GetLastWin32Error"/>.
             /// </returns>
-            public static BOOL GetIconInfo(CursorName cursorName, out IconInfo iconInfo)
+            public static bool GetIconInfo(CursorName cursorName, out IconInfo iconInfo)
             {
-                return GetIconInfo(new HICON((int)cursorName), out iconInfo);
+                return GetIconInfo(new IntPtr((int)cursorName), out iconInfo);
             }
 
             /// <summary>
@@ -90,9 +86,9 @@ namespace OpenToolkit.NT.Native
             /// If the function fails, the return value is false.
             /// To get extended error information, call <see cref="Marshal.GetLastWin32Error"/>.
             /// </returns>
-            public static BOOL GetIconInfo(IconName iconName, out IconInfo iconInfo)
+            public static bool GetIconInfo(IconName iconName, out IconInfo iconInfo)
             {
-                return GetIconInfo(new HICON((int)iconName), out iconInfo);
+                return GetIconInfo(new IntPtr((int)iconName), out iconInfo);
             }
 
             /// <summary>
@@ -110,7 +106,7 @@ namespace OpenToolkit.NT.Native
             /// To get extended error information, call <see cref="Marshal.GetLastWin32Error"/>.
             /// </returns>
             [DllImport(Library, SetLastError = true, CharSet = CharSet.Unicode)]
-            public static extern HICON LoadIcon([In] [Optional] HINSTANCE moduleInstance, [In] string iconName);
+            public static extern IntPtr LoadIcon([In] [Optional] IntPtr moduleInstance, [In] string iconName);
 
             /// <summary>
             /// Loads the specified icon resource from the executable (.exe)
@@ -127,7 +123,7 @@ namespace OpenToolkit.NT.Native
             /// To get extended error information, call <see cref="Marshal.GetLastWin32Error"/>.
             /// </returns>
             [DllImport(Library, SetLastError = true, CharSet = CharSet.Unicode)]
-            public static extern HICON LoadIcon([In] [Optional] HINSTANCE moduleInstance, [In] IntPtr iconName);
+            public static extern IntPtr LoadIcon([In] [Optional] IntPtr moduleInstance, [In] IntPtr iconName);
 
             /// <summary>
             /// Loads the specified icon resource from the executable (.exe)
@@ -139,7 +135,7 @@ namespace OpenToolkit.NT.Native
             /// If the function fails, the return value is <see cref="IntPtr.Zero"/>.
             /// To get extended error information, call <see cref="Marshal.GetLastWin32Error"/>.
             /// </returns>
-            public static HICON LoadIcon(CursorName cursorName)
+            public static IntPtr LoadIcon(CursorName cursorName)
             {
                 return LoadIcon(IntPtr.Zero, new IntPtr((int)cursorName));
             }
@@ -154,7 +150,7 @@ namespace OpenToolkit.NT.Native
             /// If the function fails, the return value is <see cref="IntPtr.Zero"/>.
             /// To get extended error information, call <see cref="Marshal.GetLastWin32Error"/>.
             /// </returns>
-            public static HICON LoadIcon(IconName iconName)
+            public static IntPtr LoadIcon(IconName iconName)
             {
                 return LoadIcon(IntPtr.Zero, new IntPtr((int)iconName));
             }

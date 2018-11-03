@@ -1,14 +1,12 @@
 ﻿using System;
 
-using UINT = System.UInt32;
-
 namespace OpenToolkit.NT.Native
 {
     /// <summary>
     /// Window sizing and positioning flags.
     /// </summary>
     [Flags]
-    public enum SetWindowPosFlags : UINT
+    public enum SetWindowPosFlags : uint
     {
         /// <summary>
         /// Retains the current size (ignores the cx and cy parameters).

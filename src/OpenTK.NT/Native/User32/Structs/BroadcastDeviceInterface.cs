@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Runtime.InteropServices;
-using DWORD = System.UInt32;
 
 namespace OpenToolkit.NT.Native
 {
@@ -14,7 +13,7 @@ namespace OpenToolkit.NT.Native
         /// <see cref="Name"/> string (the null character is accounted for by the declaration of <see cref="Name"/>
         /// as a one-character array).
         /// </summary>
-        public DWORD Size;
+        public uint Size;
 
         /// <summary>
         /// Official documentation states "Set to <see cref="DeviceBroadcastType.DeviceInterface"/>".<para/>
@@ -25,7 +24,7 @@ namespace OpenToolkit.NT.Native
         /// <summary>
         /// Reserved; do not use.
         /// </summary>
-        public DWORD Reserved;
+        public uint Reserved;
 
         /// <summary>
         /// The GUID for the interface device class.

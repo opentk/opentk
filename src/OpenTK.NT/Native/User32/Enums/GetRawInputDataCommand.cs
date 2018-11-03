@@ -1,12 +1,10 @@
-﻿using UINT = System.UInt32;
-
-namespace OpenToolkit.NT.Native
+﻿namespace OpenToolkit.NT.Native
 {
     /// <summary>
     /// Specifies which type of raw input data to get in a <see cref="User32.RawInput.GetRawInputData(System.IntPtr,
-    /// GetRawInputDataCommand, System.IntPtr, ref UINT, UINT)"/> function call.
+    /// GetRawInputDataCommand, System.IntPtr, ref uint, uint)"/> function call.
     /// </summary>
-    public enum GetRawInputDataCommand : UINT
+    public enum GetRawInputDataCommand : uint
     {
         /// <summary>
         /// Get the raw data from the <see cref="RawInput"/> structure.

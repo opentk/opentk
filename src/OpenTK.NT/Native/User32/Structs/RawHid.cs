@@ -1,7 +1,5 @@
 ﻿using System;
 
-using DWORD = System.UInt32;
-
 namespace OpenToolkit.NT.Native
 {
     /// <summary>
@@ -16,12 +14,12 @@ namespace OpenToolkit.NT.Native
         /// <summary>
         /// Size, in bytes, of each HID input in bRawData.
         /// </summary>
-        public DWORD SizeHid;
+        public uint SizeHid;
 
         /// <summary>
         /// Number of HID inputs in bRawData.
         /// </summary>
-        public DWORD Count;
+        public uint Count;
 
         /// <summary>
         /// The first byte of the raw input data.

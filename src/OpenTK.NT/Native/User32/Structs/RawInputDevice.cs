@@ -1,8 +1,6 @@
-﻿using System.Runtime.InteropServices;
+﻿using System;
+using System.Runtime.InteropServices;
 using OpenToolkit.Input.Hid;
-
-using HWND = System.IntPtr;
-using USHORT = System.UInt16;
 
 namespace OpenToolkit.NT.Native
 {
@@ -19,7 +17,7 @@ namespace OpenToolkit.NT.Native
         /// <summary>
         /// Top level collection Usage for the raw input device.
         /// </summary>
-        public USHORT Usage;
+        public ushort Usage;
 
         /// <summary>
         /// Mode flag that specifies how to interpret the information provided by UsagePage and Usage.
@@ -31,7 +29,7 @@ namespace OpenToolkit.NT.Native
         /// <summary>
         /// Handle to the target window. If NULL it follows the keyboard focus.
         /// </summary>
-        public HWND Target;
+        public IntPtr Target;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RawInputDevice"/> struct for generic desktop usage.
@@ -39,7 +37,7 @@ namespace OpenToolkit.NT.Native
         /// <param name="usage">HID usage for the Generic Desktop page.</param>
         /// <param name="flags">Specifies how to interpret the raw input data.</param>
         /// <param name="target">Handle to the target window.</param>
-        public RawInputDevice(HidGenericDesktopUsage usage, RawInputDeviceFlags flags, HWND target)
+        public RawInputDevice(HidGenericDesktopUsage usage, RawInputDeviceFlags flags, IntPtr target)
             : this((ushort)usage, flags, target, HidPage.GenericDesktop)
         {
         }
@@ -50,7 +48,7 @@ namespace OpenToolkit.NT.Native
         /// <param name="usage">HID usage for the Consumer page.</param>
         /// <param name="flags">Specifies how to interpret the raw input data.</param>
         /// <param name="target">Handle to the target window.</param>
-        public RawInputDevice(HidConsumerUsage usage, RawInputDeviceFlags flags, HWND target)
+        public RawInputDevice(HidConsumerUsage usage, RawInputDeviceFlags flags, IntPtr target)
             : this((ushort)usage, flags, target, HidPage.Consumer)
         {
         }
@@ -61,12 +59,12 @@ namespace OpenToolkit.NT.Native
         /// <param name="usage">HID usage for the Simulation page.</param>
         /// <param name="flags">Specifies how to interpret the raw input data.</param>
         /// <param name="target">Handle to the target window.</param>
-        public RawInputDevice(HidSimulationUsage usage, RawInputDeviceFlags flags, HWND target)
+        public RawInputDevice(HidSimulationUsage usage, RawInputDeviceFlags flags, IntPtr target)
             : this((ushort)usage, flags, target, HidPage.Simulation)
         {
         }
 
-        private RawInputDevice(ushort usage, RawInputDeviceFlags flags, HWND target, HidPage usagePage)
+        private RawInputDevice(ushort usage, RawInputDeviceFlags flags, IntPtr target, HidPage usagePage)
         {
             Usage = usage;
             Flags = flags;

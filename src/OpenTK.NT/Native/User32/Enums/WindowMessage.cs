@@ -1,13 +1,11 @@
 ﻿using System;
 
-using UINT = System.UInt32;
-
 namespace OpenToolkit.NT.Native
 {
     /// <summary>
     /// Specifies the different types of window messages.
     /// </summary>
-    public enum WindowMessage : UINT
+    public enum WindowMessage : uint
     {
         /// <summary>
         /// Performs no operation. An application sends the <see cref="Null"/> message if it wants to
@@ -93,8 +91,8 @@ namespace OpenToolkit.NT.Native
         /// The message is sent when the UpdateWindow or RedrawWindow function is called, or by the
         /// <see cref="User32.Message.DispatchMessage(ref Msg)"/> function when the application obtains a
         /// <see cref="WindowMessage.Paint"/> message by using the
-        /// <see cref="User32.Message.GetMessage(out Msg, IntPtr, UINT, UINT)"/> or
-        /// <see cref="User32.Message.PeekMessage(out Msg, IntPtr, UINT, UINT, PeekMessageActions)"/> function.
+        /// <see cref="User32.Message.GetMessage(out Msg, IntPtr, uint, uint)"/> or
+        /// <see cref="User32.Message.PeekMessage(out Msg, IntPtr, uint, uint, PeekMessageActions)"/> function.
         /// </summary>
         Paint = 0x000F,
 
@@ -113,7 +111,7 @@ namespace OpenToolkit.NT.Native
         /// <summary>
         /// Indicates a request to terminate an application, and is generated when the application calls the
         /// <see cref="User32.Message.PostQuitMessage(int)"/> function. This message causes the
-        /// <see cref="User32.Message.GetMessage(out Msg, IntPtr, UINT, UINT)"/> function to return zero.
+        /// <see cref="User32.Message.GetMessage(out Msg, IntPtr, uint, uint)"/> function to return zero.
         /// </summary>
         Quit = 0x0012,
 
@@ -720,8 +718,8 @@ namespace OpenToolkit.NT.Native
 
         /// <summary>
         /// Posted to the installing thread's message queue when a timer expires.
-        /// The message is posted by the <see cref="User32.Message.GetMessage(out Msg, IntPtr, UINT, UINT)"/> or
-        /// <see cref="User32.Message.PeekMessage(out Msg, IntPtr, UINT, UINT, PeekMessageActions)"/> function.
+        /// The message is posted by the <see cref="User32.Message.GetMessage(out Msg, IntPtr, uint, uint)"/> or
+        /// <see cref="User32.Message.PeekMessage(out Msg, IntPtr, uint, uint, PeekMessageActions)"/> function.
         /// </summary>
         Timer = 0x0113,
 
@@ -883,7 +881,7 @@ namespace OpenToolkit.NT.Native
 
         /// <summary>
         /// Use to specify the first mouse message. Use the
-        /// <see cref="User32.Message.PeekMessage(out Msg, IntPtr, UINT, UINT, PeekMessageActions)"/> function.
+        /// <see cref="User32.Message.PeekMessage(out Msg, IntPtr, uint, uint, PeekMessageActions)"/> function.
         /// </summary>
         MouseFirst = 0x0200,
 

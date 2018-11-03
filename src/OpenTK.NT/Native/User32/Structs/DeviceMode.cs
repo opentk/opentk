@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
-using DWORD = System.UInt32;
-using WORD = System.UInt16;
-
 namespace OpenToolkit.NT.Native
 {
     /// <summary>
@@ -27,7 +24,7 @@ namespace OpenToolkit.NT.Native
         /// Default value for <see cref="SpecVersion"/> and <see cref="DriverVersion"/> (see the documentation of those
         /// fields for more information).
         /// </summary>
-        public const WORD DefaultSpecVersion = 800;
+        public const ushort DefaultSpecVersion = 800;
 
         /// <summary>
         /// A zero-terminated character array that specifies the "friendly" name of the printer or display.
@@ -41,14 +38,14 @@ namespace OpenToolkit.NT.Native
         /// The current version number is identified by <see cref="DefaultSpecVersion"/>.
         /// </summary>
         [FieldOffset(64)]
-        public WORD SpecVersion;
+        public ushort SpecVersion;
 
         /// <summary>
         /// For a printer, specifies the printer driver version number assigned by the printer driver developer.<para/>
         /// Display drivers can set this member to <see cref="DefaultSpecVersion"/>.
         /// </summary>
         [FieldOffset(66)]
-        public WORD DriverVersion;
+        public ushort DriverVersion;
 
         /// <summary>
         /// Specifies the size in bytes of the public DEVMODEW structure, not including any private,
@@ -56,14 +53,14 @@ namespace OpenToolkit.NT.Native
         /// Set this to <see cref="SizeInBytes"/>.
         /// </summary>
         [FieldOffset(68)]
-        public WORD Size;
+        public ushort Size;
 
         /// <summary>
         /// Specifies the number of bytes of private driver data that follow the public structure members.
         /// If a device driver does not provide private members, this member should be set to zero.
         /// </summary>
         [FieldOffset(70)]
-        public WORD DriverExtra;
+        public ushort DriverExtra;
 
         /// <summary>
         /// Specifies bit flags identifying which of the following members are in use.
@@ -146,25 +143,25 @@ namespace OpenToolkit.NT.Native
         /// to the ulLogPixels member of the GDIINFO structure.
         /// </summary>
         [FieldOffset(166)]
-        public WORD LogPixels;
+        public ushort LogPixels;
 
         /// <summary>
         /// For displays, specifies the color resolution, in bits per pixel, of a display device.
         /// </summary>
         [FieldOffset(168)]
-        public DWORD BitsPerPixel;
+        public uint BitsPerPixel;
 
         /// <summary>
         /// For displays, specifies the width, in pixels, of the visible device surface.
         /// </summary>
         [FieldOffset(172)]
-        public DWORD WidthInPixels;
+        public uint WidthInPixels;
 
         /// <summary>
         /// For displays, specifies the height, in pixels, of the visible device surface.
         /// </summary>
         [FieldOffset(176)]
-        public DWORD HeightInPixels;
+        public uint HeightInPixels;
 
         /// <summary>
         /// For displays, specifies a display device's display mode.
@@ -177,13 +174,13 @@ namespace OpenToolkit.NT.Native
         /// (playing multiple EMF logical pages onto a single physical page).
         /// </summary>
         [FieldOffset(180)]
-        public DWORD Nup;
+        public uint Nup;
 
         /// <summary>
         /// For displays, specifies the frequency, in hertz, of a display device in its current mode.
         /// </summary>
         [FieldOffset(184)]
-        public DWORD DisplayFrequency;
+        public uint DisplayFrequency;
 
         /// <summary>
         /// For printers, specifies how Image Color Management (ICM) is handled. For a non-ICM application, this field
@@ -224,25 +221,25 @@ namespace OpenToolkit.NT.Native
         /// Is reserved for system use and must be zero.
         /// </summary>
         [FieldOffset(204)]
-        public DWORD Reserved1;
+        public uint Reserved1;
 
         /// <summary>
         /// Is reserved for system use and must be zero.
         /// </summary>
         [FieldOffset(208)]
-        public DWORD Reserved2;
+        public uint Reserved2;
 
         /// <summary>
         /// Must be zero.
         /// </summary>
         [FieldOffset(212)]
-        public DWORD PanningWidth;
+        public uint PanningWidth;
 
         /// <summary>
         /// Must be zero.
         /// </summary>
         [FieldOffset(216)]
-        public DWORD PanningHeight;
+        public uint PanningHeight;
 
         /// <summary>
         /// The size of the structure in bytes.

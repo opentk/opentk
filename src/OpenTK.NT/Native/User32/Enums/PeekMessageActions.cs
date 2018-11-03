@@ -1,15 +1,13 @@
 ﻿using System;
 
-using UINT = System.UInt32;
-
 namespace OpenToolkit.NT.Native
 {
     /// <summary>
-    /// Used in <see cref="User32.Message.PeekMessage(out Msg, IntPtr, UINT, UINT, PeekMessageActions)"/>
+    /// Used in <see cref="User32.Message.PeekMessage(out Msg, IntPtr, uint, uint, PeekMessageActions)"/>
     /// to define what actions to take for retrieved messages.
     /// </summary>
     [Flags]
-    public enum PeekMessageActions : UINT
+    public enum PeekMessageActions : uint
     {
         /// <summary>
         /// Messages are not removed from the queue after processing by <see cref="User32.Message.PeekMessage"/>.

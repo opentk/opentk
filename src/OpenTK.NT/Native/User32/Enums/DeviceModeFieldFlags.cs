@@ -1,7 +1,5 @@
 ﻿using System;
 
-using DWORD = System.UInt32;
-
 namespace OpenToolkit.NT.Native
 {
     /// <summary>
@@ -12,7 +10,7 @@ namespace OpenToolkit.NT.Native
     /// printer or display technology.
     /// </summary>
     [Flags]
-    public enum DeviceModeFieldFlags : DWORD
+    public enum DeviceModeFieldFlags : uint
     {
         /// <summary>
         /// Specifies whether the <see cref="DeviceMode.PrinterDeviceOptions.Orientation"/> field is set.

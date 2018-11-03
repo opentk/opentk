@@ -1,10 +1,6 @@
-﻿using System.Runtime.InteropServices;
+﻿using System;
+using System.Runtime.InteropServices;
 using System.Security;
-
-using HWND = System.IntPtr;
-using LPARAM = System.IntPtr;
-using LRESULT = System.IntPtr;
-using WPARAM = System.IntPtr;
 
 namespace OpenToolkit.NT.Native
 {
@@ -25,11 +21,11 @@ namespace OpenToolkit.NT.Native
     /// <returns>The return value is the result of the message processing and depends on the message sent.</returns>
     [SuppressUnmanagedCodeSecurity]
     [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-    public delegate LRESULT WindowProc
+    public delegate IntPtr WindowProc
     (
-        [In] HWND hwnd,
+        [In] IntPtr hwnd,
         [In] WindowMessage msg,
-        [In] WPARAM wparam,
-        [In] LPARAM lparam
+        [In] IntPtr wparam,
+        [In] IntPtr lparam
     );
 }
