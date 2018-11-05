@@ -1286,6 +1286,18 @@ namespace OpenToolkit.Mathematics
         }
 
         /// <summary>
+        /// Transforms a vector by a quaternion rotation.
+        /// </summary>
+        /// <param name="quat">The quaternion to rotate the vector by.</param>
+        /// <param name="vec">The vector to transform.</param>
+        /// <returns>The transformed vector.</returns>
+        public static Vector3d operator *(Quaterniond quat, Vector3d vec)
+        {
+            Transform(ref vec, ref quat, out Vector3d result);
+            return result;
+        }
+
+        /// <summary>
         /// Divides an instance by a scalar.
         /// </summary>
         /// <param name="vec">The instance.</param>
