@@ -1,11 +1,9 @@
-﻿using DWORD = System.UInt32;
-
-namespace OpenToolkit.NT.Native
+﻿namespace OpenToolkit.NT.Native
 {
     /// <summary>
     /// Specifies how Image Color Management (ICM) is handled.
     /// </summary>
-    public enum PrinterIcmMethod : DWORD
+    public enum PrinterIcmMethod : uint
     {
         /// <summary>
         /// Specifies that ICM is disabled.

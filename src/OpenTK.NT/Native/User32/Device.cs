@@ -1,11 +1,6 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
-using BOOL = System.Boolean;
-using HANDLE = System.IntPtr;
-using HDEVNOTIFY = System.IntPtr;
-using LPVOID = System.IntPtr;
-
 namespace OpenToolkit.NT.Native
 {
     public static partial class User32
@@ -22,7 +17,7 @@ namespace OpenToolkit.NT.Native
             /// <param name="recipient">
             /// A handle to the window or service that will receive device events for the devices specified in the
             /// <paramref name="notificationFilter"/> parameter. The same window handle can be used in multiple calls
-            /// to <see cref="RegisterDeviceNotification(HANDLE, HANDLE, DeviceNotificationEnum)"/>.<para/>
+            /// to <see cref="RegisterDeviceNotification(IntPtr, IntPtr, DeviceNotificationEnum)"/>.<para/>
             /// Services can specify either a window handle or service status handle.
             /// </param>
             /// <param name="notificationFilter">
@@ -39,10 +34,10 @@ namespace OpenToolkit.NT.Native
             /// To get extended error information, call <see cref="Marshal.GetLastWin32Error"/>.
             /// </returns>
             [DllImport(Library, SetLastError = true)]
-            public static extern HDEVNOTIFY RegisterDeviceNotification
+            public static extern IntPtr RegisterDeviceNotification
             (
-                [In] HANDLE recipient,
-                [In] LPVOID notificationFilter,
+                [In] IntPtr recipient,
+                [In] IntPtr notificationFilter,
                 [In] DeviceNotificationEnum flags
             );
 
@@ -51,7 +46,7 @@ namespace OpenToolkit.NT.Native
             /// </summary>
             /// <param name="handle">
             /// Device notification handle returned by the
-            /// <see cref="RegisterDeviceNotification(HANDLE, HANDLE, DeviceNotificationEnum)"/> function.
+            /// <see cref="RegisterDeviceNotification(IntPtr, IntPtr, DeviceNotificationEnum)"/> function.
             /// </param>
             /// <returns>
             /// If the function succeeds, the return value is true.
@@ -60,7 +55,7 @@ namespace OpenToolkit.NT.Native
             /// </returns>
             [DllImport(Library, SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
-            public static extern BOOL UnregisterDeviceNotification([In] HDEVNOTIFY handle);
+            public static extern bool UnregisterDeviceNotification([In] IntPtr handle);
         }
     }
 }

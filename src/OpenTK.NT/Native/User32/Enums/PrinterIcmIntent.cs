@@ -1,11 +1,9 @@
-﻿using DWORD = System.UInt32;
-
-namespace OpenToolkit.NT.Native
+﻿namespace OpenToolkit.NT.Native
 {
     /// <summary>
     /// Specifies which color matching method, or intent, is used by default.
     /// </summary>
-    public enum PrinterIcmIntent : DWORD
+    public enum PrinterIcmIntent : uint
     {
         /// <summary>
         /// Optimize for color saturation.<para/>

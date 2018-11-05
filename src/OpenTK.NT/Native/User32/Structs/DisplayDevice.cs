@@ -1,22 +1,20 @@
 ﻿using System.Runtime.InteropServices;
 
-using DWORD = System.UInt32;
-
 namespace OpenToolkit.NT.Native
 {
     /// <summary>
     /// Receives information about the display device specified by the iDevNum parameter of the
-    /// <see cref="User32.DeviceContext.EnumDisplayDevices(string, DWORD, out DisplayDevice, DWORD)"/> function.
+    /// <see cref="User32.DeviceContext.EnumDisplayDevices(string, uint, out DisplayDevice, uint)"/> function.
     /// </summary>
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
     public struct DisplayDevice
     {
         /// <summary>
         /// Size, in bytes, of the structure. This must be initialized prior to calling
-        /// <see cref="User32.DeviceContext.EnumDisplayDevices(string, DWORD, out DisplayDevice, DWORD)"/>.
+        /// <see cref="User32.DeviceContext.EnumDisplayDevices(string, uint, out DisplayDevice, uint)"/>.
         /// </summary>
         /// <seealso cref="SizeInBytes"/>
-        public DWORD Size;
+        public uint Size;
 
         /// <summary>
         /// An array of characters identifying the device name.

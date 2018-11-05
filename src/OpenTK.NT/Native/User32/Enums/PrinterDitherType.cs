@@ -1,11 +1,9 @@
-﻿using DWORD = System.UInt32;
-
-namespace OpenToolkit.NT.Native
+﻿namespace OpenToolkit.NT.Native
 {
     /// <summary>
     /// For printers, specifies types of dithering.
     /// </summary>
-    public enum PrinterDitherType : DWORD
+    public enum PrinterDitherType : uint
     {
         /// <summary>
         /// No dithering.

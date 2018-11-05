@@ -2,10 +2,6 @@
 using System.Runtime.InteropServices;
 using System.Security;
 
-using BOOL = System.Boolean;
-using HCURSOR = System.IntPtr;
-using HINSTANCE = System.IntPtr;
-
 namespace OpenToolkit.NT.Native
 {
     public static partial class User32
@@ -25,7 +21,7 @@ namespace OpenToolkit.NT.Native
             /// If the function fails, the return value is <see cref="IntPtr.Zero"/>.
             /// To get extended error information, call <see cref="Marshal.GetLastWin32Error"/>.
             /// </returns>
-            public static HCURSOR LoadCursor(CursorName cursorName)
+            public static IntPtr LoadCursor(CursorName cursorName)
                 => LoadCursor(IntPtr.Zero, (int)cursorName);
 
             /// <summary>
@@ -42,9 +38,9 @@ namespace OpenToolkit.NT.Native
             /// To get extended error information, call <see cref="Marshal.GetLastWin32Error"/>.
             /// </returns>
             [DllImport(Library, SetLastError = true, CharSet = CharSet.Unicode)]
-            public static extern HCURSOR LoadCursor
+            public static extern IntPtr LoadCursor
             (
-                [In] HINSTANCE moduleInstance,
+                [In] IntPtr moduleInstance,
                 [In] string cursorName
             );
 
@@ -61,9 +57,9 @@ namespace OpenToolkit.NT.Native
             /// To get extended error information, call <see cref="Marshal.GetLastWin32Error"/>.
             /// </returns>
             [DllImport(Library, SetLastError = true)]
-            private static extern HCURSOR LoadCursor
+            private static extern IntPtr LoadCursor
             (
-                [In] [Optional] HINSTANCE moduleInstance,
+                [In] [Optional] IntPtr moduleInstance,
                 [In] int cursorIdentifier
             );
 
@@ -84,7 +80,7 @@ namespace OpenToolkit.NT.Native
             /// </returns>
             [DllImport(Library, SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
-            public static extern BOOL ClipCursor([In] [Optional] ref Rect rect);
+            public static extern bool ClipCursor([In] [Optional] ref Rect rect);
 
             /// <summary>
             /// Confines the cursor to a rectangular area on the screen. If a subsequent cursor position
@@ -103,7 +99,7 @@ namespace OpenToolkit.NT.Native
             /// </returns>
             [DllImport(Library, SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
-            public static extern BOOL ClipCursor([In] [Optional] IntPtr rect);
+            public static extern bool ClipCursor([In] [Optional] IntPtr rect);
 
             /// <summary>
             /// Displays or hides the cursor.
@@ -113,7 +109,7 @@ namespace OpenToolkit.NT.Native
             /// </param>
             /// <returns>The return value specifies the new display counter.</returns>
             [DllImport(Library)]
-            public static extern int ShowCursor([In] BOOL show);
+            public static extern int ShowCursor([In] bool show);
 
             /// <summary>
             /// Retrieves the cursor's position, in screen coordinates.
@@ -128,7 +124,7 @@ namespace OpenToolkit.NT.Native
             [DllImport(Library, SetLastError = true)]
             [SuppressUnmanagedCodeSecurity]
             [return: MarshalAs(UnmanagedType.Bool)]
-            public static extern BOOL GetCursorPos([Out] out Point point);
+            public static extern bool GetCursorPos([Out] out Point point);
 
             /// <summary>
             /// Moves the cursor to the specified screen coordinates. If the new coordinates are not within the
@@ -143,7 +139,7 @@ namespace OpenToolkit.NT.Native
             /// </returns>
             [DllImport(Library, SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
-            public static extern BOOL SetCursorPos([In] int x, [In] int y);
+            public static extern bool SetCursorPos([In] int x, [In] int y);
 
             /// <summary>
             /// Retrieves a handle to the current cursor.
@@ -153,14 +149,14 @@ namespace OpenToolkit.NT.Native
             /// no cursor, the return value is null.
             /// </returns>
             [DllImport(Library)]
-            public static extern HCURSOR GetCursor();
+            public static extern IntPtr GetCursor();
 
             /// <summary>
             /// Sets the cursor shape.
             /// </summary>
             /// <param name="cursor">
             /// A handle to the cursor. The cursor must have been created by the CreateCursor function or loaded by
-            /// the <see cref="LoadCursor(HCURSOR, string)"/> or LoadImage function. If this parameter is null,
+            /// the <see cref="LoadCursor(IntPtr, string)"/> or LoadImage function. If this parameter is null,
             /// the cursor is removed from the screen.
             /// </param>
             /// <returns>
@@ -168,7 +164,7 @@ namespace OpenToolkit.NT.Native
             /// If there was no previous cursor, the return value is null.
             /// </returns>
             [DllImport(Library)]
-            public static extern HCURSOR SetCursor([In] [Optional] HCURSOR cursor);
+            public static extern IntPtr SetCursor([In] [Optional] IntPtr cursor);
         }
     }
 }

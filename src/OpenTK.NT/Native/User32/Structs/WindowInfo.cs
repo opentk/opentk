@@ -1,10 +1,5 @@
 ﻿using System.Runtime.InteropServices;
 
-using ATOM = System.UInt16;
-using DWORD = System.UInt32;
-using UINT = System.UInt32;
-using WORD = System.UInt16;
-
 namespace OpenToolkit.NT.Native
 {
     /// <summary>
@@ -15,7 +10,7 @@ namespace OpenToolkit.NT.Native
         /// <summary>
         /// The size of the structure, in bytes.
         /// </summary>
-        public DWORD Size;
+        public uint Size;
 
         /// <summary>
         /// Pointer to a RECT structure that specifies the coordinates of the window.
@@ -41,27 +36,27 @@ namespace OpenToolkit.NT.Native
         /// The window status. If this member is WS_ACTIVECAPTION, the window is active.
         /// Otherwise, this member is zero.
         /// </summary>
-        public DWORD WindowStatus;
+        public uint WindowStatus;
 
         /// <summary>
         /// The width of the window border, in pixels.
         /// </summary>
-        public UINT WindowBordersX;
+        public uint WindowBordersX;
 
         /// <summary>
         /// The height of the window border, in pixels.
         /// </summary>
-        public UINT WindowBordersY;
+        public uint WindowBordersY;
 
         /// <summary>
         /// The window class atom (see RegisterClass).
         /// </summary>
-        public ATOM WindowType;
+        public ushort WindowType;
 
         /// <summary>
         /// The Microsoft Windows version of the application that created the window.
         /// </summary>
-        public WORD CreatorVersion;
+        public ushort CreatorVersion;
 
         /// <summary>
         /// The size of this structure in bytes.

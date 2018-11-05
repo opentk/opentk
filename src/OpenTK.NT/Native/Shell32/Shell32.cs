@@ -1,13 +1,6 @@
-﻿using System.Runtime.InteropServices;
-
-using BOOL = System.Boolean;
-using DWORD = System.UInt32;
-using DWORD_PTR = System.IntPtr;
-using HDROP = System.IntPtr;
-using HWND = System.IntPtr;
-using LPCTSTR = System.String;
-using LPTSTR = System.Text.StringBuilder;
-using UINT = System.UInt32;
+﻿using System;
+using System.Runtime.InteropServices;
+using System.Text;
 
 namespace OpenToolkit.NT.Native
 {
@@ -37,7 +30,7 @@ namespace OpenToolkit.NT.Native
         /// files. This value is true to accept dropped files or false to discontinue accepting dropped files.
         /// </param>
         [DllImport(Library)]
-        public static extern void DragAcceptFiles(HWND window, BOOL accept);
+        public static extern void DragAcceptFiles(IntPtr window, bool accept);
 
         /// <summary>
         /// Retrieves the names of dropped files that result from a successful drag-and-drop operation.
@@ -45,15 +38,15 @@ namespace OpenToolkit.NT.Native
         /// <param name="drop">Identifier of the structure that contains the file names of the dropped files.</param>
         /// <param name="fileIndex">
         /// Index of the file to query. If the value of this parameter is 0xFFFFFFFF,
-        /// <see cref="DragQueryFile(DWORD_PTR, DWORD, LPTSTR, DWORD)"/> returns a count of the files dropped.
+        /// <see cref="DragQueryFile(IntPtr, uint, StringBuilder, uint)"/> returns a count of the files dropped.
         /// If the value of this parameter is between zero and the total number of files dropped,
-        /// <see cref="DragQueryFile(DWORD_PTR, DWORD, LPTSTR, DWORD)"/> copies the file name with the corresponding
+        /// <see cref="DragQueryFile(IntPtr, uint, StringBuilder, uint)"/> copies the file name with the corresponding
         /// value to the buffer pointed to by the <paramref name="lpszFile"/> parameter.
         /// </param>
         /// <param name="lpszFile">
         /// The address of a buffer that receives the file name of a dropped file when the function returns. This
         /// file name is a null-terminated string. If this parameter is null,
-        /// <see cref="DragQueryFile(DWORD_PTR, DWORD, LPTSTR, DWORD)"/> returns the required size, in characters,
+        /// <see cref="DragQueryFile(IntPtr, uint, StringBuilder, uint)"/> returns the required size, in characters,
         /// of this buffer.
         /// </param>
         /// <param name="cch">The size, in characters, of the <paramref name="lpszFile"/> buffer.</param>
@@ -68,12 +61,12 @@ namespace OpenToolkit.NT.Native
         /// null character.
         /// </returns>
         [DllImport(Library, CharSet = CharSet.Unicode)]
-        public static extern UINT DragQueryFile
+        public static extern uint DragQueryFile
         (
-            [In] HDROP drop,
-            [In] UINT fileIndex,
-            [Out] LPTSTR lpszFile,
-            UINT cch
+            [In] IntPtr drop,
+            [In] uint fileIndex,
+            [Out] StringBuilder lpszFile,
+            uint cch
         );
 
         /// <summary>
@@ -84,7 +77,7 @@ namespace OpenToolkit.NT.Native
         /// parameter of the <see cref="WindowMessage.DropFiles"/> message.
         /// </param>
         [DllImport(Library)]
-        public static extern void DragFinish(HDROP drop);
+        public static extern void DragFinish(IntPtr drop);
 
         /// <summary>
         /// Retrieves information about an object in the file system, such as a file, folder, directory, or drive root.
@@ -115,12 +108,12 @@ namespace OpenToolkit.NT.Native
         /// specifies the type of the executable file. Check the windows API documentation for more information.
         /// </returns>
         [DllImport(Library)]
-        public static extern DWORD_PTR SHGetFileInfo
+        public static extern IntPtr SHGetFileInfo
         (
-            [In] LPCTSTR pszPath,
+            [In] string pszPath,
             FileAttributeFlags fileAttributes,
             [In] [Out] ref SHFileInfo psfi,
-            UINT fileInfo,
+            uint fileInfo,
             ShGetFileInfoFlags flags
         );
     }

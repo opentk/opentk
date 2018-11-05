@@ -2,14 +2,6 @@
 using System.Runtime.InteropServices;
 using System.Security;
 
-using BOOL = System.Boolean;
-using HANDLE = System.IntPtr;
-using HRAWINPUT = System.IntPtr;
-using INT = System.Int32;
-using LPVOID = System.IntPtr;
-using LRESULT = System.IntPtr;
-using UINT = System.UInt32;
-
 namespace OpenToolkit.NT.Native
 {
     public static partial class User32
@@ -37,11 +29,11 @@ namespace OpenToolkit.NT.Native
             /// </returns>
             [SuppressUnmanagedCodeSecurity]
             [DllImport(Library)]
-            public static extern LRESULT DefRawInputProc
+            public static extern IntPtr DefRawInputProc
             (
                 [In] Native.RawInput[] rawInputArrayOut,
-                [In] INT rawInputAmount,
-                [In] UINT headerSize
+                [In] int rawInputAmount,
+                [In] uint headerSize
             );
 
             /// <summary>
@@ -63,11 +55,11 @@ namespace OpenToolkit.NT.Native
             /// </returns>
             [SuppressUnmanagedCodeSecurity]
             [DllImport(Library)]
-            public static unsafe extern LRESULT DefRawInputProc
+            public static unsafe extern IntPtr DefRawInputProc
             (
                 [In] Native.RawInput* rawInputArrayOut,
-                [In] INT rawInputAmount,
-                [In] UINT headerSize
+                [In] int rawInputAmount,
+                [In] uint headerSize
             );
 
             /// <summary>
@@ -87,11 +79,11 @@ namespace OpenToolkit.NT.Native
             /// </returns>
             [DllImport(Library, SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
-            public static extern BOOL RegisterRawInputDevices
+            public static extern bool RegisterRawInputDevices
             (
                 [In] RawInputDevice[] rawInputDevices,
-                [In] UINT deviceAmount,
-                [In] UINT size
+                [In] uint deviceAmount,
+                [In] uint size
             );
 
             /// <summary>
@@ -113,11 +105,11 @@ namespace OpenToolkit.NT.Native
             /// For more details, call <see cref="Marshal.GetLastWin32Error"/>.
             /// </returns>
             [DllImport(Library, SetLastError = true)]
-            public static extern UINT GetRegisteredRawInputDevices
+            public static extern uint GetRegisteredRawInputDevices
             (
                 [Out] [Optional] RawInputDevice[] rawInputDevicesOut,
-                [In] [Out] ref UINT deviceAmount,
-                [In] UINT size
+                [In] [Out] ref uint deviceAmount,
+                [In] uint size
             );
 
             /// <summary>
@@ -138,11 +130,11 @@ namespace OpenToolkit.NT.Native
             /// </returns>
             [SuppressUnmanagedCodeSecurity]
             [DllImport(Library, SetLastError = true)]
-            public static extern UINT GetRawInputBuffer
+            public static extern uint GetRawInputBuffer
             (
                 [Out] [Optional] Native.RawInput[] data,
-                [In] [Out] ref UINT rawInputSize,
-                [In] UINT headerSize
+                [In] [Out] ref uint rawInputSize,
+                [In] uint headerSize
             );
 
             /// <summary>
@@ -158,16 +150,16 @@ namespace OpenToolkit.NT.Native
             /// If <paramref name="data"/> is null and the function is successful, the return value is zero.
             /// If <paramref name="data"/> is not null and the function is successful, the return value is the
             /// number of <see cref="RawInput"/> structures written to <paramref name="data"/>.<para/>
-            /// If an error occurs, the return value is (UINT)-1.
+            /// If an error occurs, the return value is (uint)-1.
             /// Call <see cref="Marshal.GetLastWin32Error"/> for the error code.
             /// </returns>
             [SuppressUnmanagedCodeSecurity]
             [DllImport(Library, SetLastError = true)]
-            public static unsafe extern UINT GetRawInputBuffer
+            public static unsafe extern uint GetRawInputBuffer
             (
                 [Out] [Optional] Native.RawInput* data,
-                [In] [Out] ref UINT rawInputSize,
-                [In] UINT headerSize
+                [In] [Out] ref uint rawInputSize,
+                [In] uint headerSize
             );
 
             /// <summary>
@@ -191,15 +183,15 @@ namespace OpenToolkit.NT.Native
             /// <returns>
             /// If the function is successful, the return value is the number of devices stored in the buffer
             /// pointed to by <paramref name="deviceListArrayOut"/>.<para/>
-            /// On any other error, the function returns (UINT)-1 and
+            /// On any other error, the function returns (uint)-1 and
             /// <see cref="Marshal.GetLastWin32Error"/> returns the error indication.
             /// </returns>
             [DllImport(Library, SetLastError = true)]
-            public static extern UINT GetRawInputDeviceList
+            public static extern uint GetRawInputDeviceList
             (
                 [Out] [Optional] RawInputDeviceList[] deviceListArrayOut,
-                [In] [Out] ref UINT deviceListAmount,
-                [In] UINT deviceListSize
+                [In] [Out] ref uint deviceListAmount,
+                [In] uint deviceListSize
             );
 
             /// <summary>
@@ -223,15 +215,15 @@ namespace OpenToolkit.NT.Native
             /// <returns>
             /// If the function is successful, the return value is the number of devices stored in the buffer
             /// pointed to by <paramref name="deviceListArrayOut"/>.<para/>
-            /// On any other error, the function returns (UINT)-1 and
+            /// On any other error, the function returns (uint)-1 and
             /// <see cref="Marshal.GetLastWin32Error"/> returns the error indication.
             /// </returns>
             [DllImport(Library, SetLastError = true)]
-            public static unsafe extern UINT GetRawInputDeviceList
+            public static unsafe extern uint GetRawInputDeviceList
             (
                 [Out] [Optional] RawInputDeviceList* deviceListArrayOut,
-                [In] [Out] ref UINT deviceListAmount,
-                [In] UINT deviceListSize
+                [In] [Out] ref uint deviceListAmount,
+                [In] uint deviceListSize
             );
 
             /// <summary>
@@ -239,14 +231,14 @@ namespace OpenToolkit.NT.Native
             /// </summary>
             /// <param name="device">
             /// A handle to the raw input device. This comes from the <see cref="RawInputHeader.Device"/> or
-            /// from <see cref="GetRawInputDeviceList(RawInputDeviceList[], ref UINT, UINT)"/>.
+            /// from <see cref="GetRawInputDeviceList(RawInputDeviceList[], ref uint, uint)"/>.
             /// </param>
             /// <param name="command">Specifies what data will be returned in <paramref name="data"/>.</param>
             /// <param name="data">
             /// A buffer that contains the information specified by <paramref name="command"/>.
             /// If <paramref name="command"/> is <see cref="GetRawInputDeviceInfoEnum.DeviceInfo"/>, set the
             /// <see cref="RawInputDeviceInfo.Size"/> to <see cref="RawInputDeviceInfo.SizeInBytes"/> before calling
-            /// <see cref="GetRawInputDeviceInfo(HANDLE, GetRawInputDeviceInfoEnum, HANDLE, ref UINT)"/>.
+            /// <see cref="GetRawInputDeviceInfo(IntPtr, GetRawInputDeviceInfoEnum, IntPtr, ref uint)"/>.
             /// </param>
             /// <param name="dataSize">The size, in bytes, of the data in <paramref name="data"/>.</param>
             /// <returns>
@@ -260,9 +252,9 @@ namespace OpenToolkit.NT.Native
             /// </returns>
             [SuppressUnmanagedCodeSecurity]
             [DllImport(Library, SetLastError = true)]
-            public static extern UINT GetRawInputDeviceInfo
+            public static extern uint GetRawInputDeviceInfo
             (
-                [In] [Optional] HANDLE device,
+                [In] [Optional] IntPtr device,
                 [In] GetRawInputDeviceInfoEnum command,
                 [In] [Out] [Optional] byte[] data,
                 [In] [Out] ref uint dataSize
@@ -273,14 +265,14 @@ namespace OpenToolkit.NT.Native
             /// </summary>
             /// <param name="device">
             /// A handle to the raw input device. This comes from the <see cref="RawInputHeader.Device"/> or
-            /// from <see cref="GetRawInputDeviceList(RawInputDeviceList[], ref UINT, UINT)"/>.
+            /// from <see cref="GetRawInputDeviceList(RawInputDeviceList[], ref uint, uint)"/>.
             /// </param>
             /// <param name="command">Specifies what data will be returned in <paramref name="data"/>.</param>
             /// <param name="data">
             /// A pointer to a buffer that contains the information specified by <paramref name="command"/>.
             /// If <paramref name="command"/> is <see cref="GetRawInputDeviceInfoEnum.DeviceInfo"/>, set the
             /// <see cref="RawInputDeviceInfo.Size"/> to <see cref="RawInputDeviceInfo.SizeInBytes"/> before calling
-            /// <see cref="GetRawInputDeviceInfo(HANDLE, GetRawInputDeviceInfoEnum, LPVOID, ref UINT)"/>.
+            /// <see cref="GetRawInputDeviceInfo(IntPtr, GetRawInputDeviceInfoEnum, IntPtr, ref uint)"/>.
             /// </param>
             /// <param name="dataSize">The size, in bytes, of the data in <paramref name="data"/>.</param>
             /// <returns>
@@ -294,12 +286,12 @@ namespace OpenToolkit.NT.Native
             /// </returns>
             [SuppressUnmanagedCodeSecurity]
             [DllImport(Library, SetLastError = true)]
-            public static unsafe extern UINT GetRawInputDeviceInfo
+            public static unsafe extern uint GetRawInputDeviceInfo
             (
-                [In] [Optional] HANDLE device,
+                [In] [Optional] IntPtr device,
                 [In] GetRawInputDeviceInfoEnum command,
-                [In] [Out] [Optional] LPVOID data,
-                [In] [Out] ref UINT dataSize
+                [In] [Out] [Optional] IntPtr data,
+                [In] [Out] ref uint dataSize
             );
 
             /// <summary>
@@ -307,7 +299,7 @@ namespace OpenToolkit.NT.Native
             /// </summary>
             /// <param name="device">
             /// A handle to the raw input device. This comes from <see cref="RawInputHeader.Device"/> or from
-            /// <see cref="GetRawInputDeviceList(RawInputDeviceList[], ref UINT, UINT)"/>.
+            /// <see cref="GetRawInputDeviceList(RawInputDeviceList[], ref uint, uint)"/>.
             /// </param>
             /// <param name="command">Specifies what data will be returned in <paramref name="data"/>.</param>
             /// <param name="data">
@@ -330,7 +322,7 @@ namespace OpenToolkit.NT.Native
             [DllImport(Library, SetLastError = true)]
             public static extern uint GetRawInputDeviceInfo
             (
-                [In] [Optional] HANDLE device,
+                [In] [Optional] IntPtr device,
                 [In] GetRawInputDeviceInfoEnum command,
                 [In] [Out] [Optional] ref RawInputDeviceInfo data,
                 [In] [Out] ref uint size
@@ -347,9 +339,9 @@ namespace OpenToolkit.NT.Native
             /// <returns>
             /// If the function is successful, the return value is the number of bytes copied into
             /// <paramref name="header"/>.<para/>
-            /// If there is an error, the return value is (UINT)-1 [== <see cref="uint.MaxValue"/>].
+            /// If there is an error, the return value is (uint)-1 [== <see cref="uint.MaxValue"/>].
             /// </returns>
-            public static unsafe UINT GetRawInputData(HRAWINPUT rawInput, out RawInputHeader header)
+            public static unsafe uint GetRawInputData(IntPtr rawInput, out RawInputHeader header)
             {
                 uint size = RawInputHeader.SizeInBytes;
                 fixed (RawInputHeader* headerPtr = &header)
@@ -376,9 +368,9 @@ namespace OpenToolkit.NT.Native
             /// <returns>
             /// If the function is successful, the return value is the number of bytes copied into
             /// <paramref name="data"/>.<para/>
-            /// If there is an error, the return value is (UINT)-1 [== <see cref="uint.MaxValue"/>].
+            /// If there is an error, the return value is (uint)-1 [== <see cref="uint.MaxValue"/>].
             /// </returns>
-            public static unsafe UINT GetRawInputData(HRAWINPUT rawInput, out Native.RawInput data)
+            public static unsafe uint GetRawInputData(IntPtr rawInput, out Native.RawInput data)
             {
                 uint size = Native.RawInput.SizeInBytes;
                 fixed (Native.RawInput* dataPtr = &data)
@@ -414,17 +406,17 @@ namespace OpenToolkit.NT.Native
             /// If <paramref name="data"/> is <see cref="IntPtr.Zero"/> and the function is successful, the return
             /// value is 0. If <paramref name="data"/> is not <see cref="IntPtr.Zero"/> and the function is successful,
             /// the return value is the number of bytes copied into <paramref name="data"/>.<para/>
-            /// If there is an error, the return value is (UINT)-1 [== <see cref="uint.MaxValue"/>].
+            /// If there is an error, the return value is (uint)-1 [== <see cref="uint.MaxValue"/>].
             /// </returns>
             [SuppressUnmanagedCodeSecurity]
             [DllImport(Library, SetLastError = true)]
-            public static extern UINT GetRawInputData
+            public static extern uint GetRawInputData
             (
-                [In] HRAWINPUT rawInput,
+                [In] IntPtr rawInput,
                 [In] GetRawInputDataCommand command,
-                [Out] [Optional] LPVOID data,
-                [In] [Out] ref UINT size,
-                [In] UINT headerSize
+                [Out] [Optional] IntPtr data,
+                [In] [Out] ref uint size,
+                [In] uint headerSize
             );
         }
     }

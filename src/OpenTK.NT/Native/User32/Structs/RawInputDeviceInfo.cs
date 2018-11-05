@@ -1,7 +1,5 @@
 ﻿using System.Runtime.InteropServices;
 
-using DWORD = System.UInt32;
-
 namespace OpenToolkit.NT.Native
 {
     /// <summary>
@@ -14,7 +12,7 @@ namespace OpenToolkit.NT.Native
         /// Size, in bytes, of the <see cref="RawInputDeviceInfo"/> structure.
         /// </summary>
         [FieldOffset(0)]
-        public DWORD Size;
+        public uint Size;
 
         /// <summary>
         /// Type of raw input data.

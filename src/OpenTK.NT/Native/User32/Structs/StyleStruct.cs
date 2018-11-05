@@ -1,6 +1,4 @@
-﻿using DWORD = System.UInt32;
-
-namespace OpenToolkit.NT.Native
+﻿namespace OpenToolkit.NT.Native
 {
     /// <summary>
     /// Contains the styles for a window.<para/>
@@ -11,11 +9,11 @@ namespace OpenToolkit.NT.Native
         /// <summary>
         /// The previous styles for a window.
         /// </summary>
-        public DWORD StyleOld;
+        public uint StyleOld;
 
         /// <summary>
         /// The new styles for a window.
         /// </summary>
-        public DWORD StyleNew;
+        public uint StyleNew;
     }
 }

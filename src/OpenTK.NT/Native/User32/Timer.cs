@@ -1,11 +1,6 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
-using BOOL = System.Boolean;
-using HWND = System.IntPtr;
-using TIMERPROC = OpenToolkit.NT.Native.TimerProc;
-using UINT_PTR = System.UIntPtr;
-
 namespace OpenToolkit.NT.Native
 {
     public static partial class User32
@@ -32,7 +27,7 @@ namespace OpenToolkit.NT.Native
             /// If the <paramref name="window"/> parameter is not <see cref="IntPtr.Zero"/>
             /// and the window specified by <paramref name="window"/> already has a timer with the value
             /// <paramref name="timerID"/>, then the existing timer is replaced by the new timer. When
-            /// <see cref="SetTimer(HWND, UINT_PTR, uint, TIMERPROC)"/> replaces a timer, the timer is reset.
+            /// <see cref="SetTimer(IntPtr, UIntPtr, uint, TimerProc)"/> replaces a timer, the timer is reset.
             /// Therefore, a message will be sent after the current time-out value elapses, but the previously set
             /// time-out value is ignored.<para/>
             /// If the call is not intended to replace an existing timer,
@@ -41,7 +36,7 @@ namespace OpenToolkit.NT.Native
             /// <param name="elapse">The time-out value, in milliseconds.</param>
             /// <param name="timerFunc">
             /// A pointer to the function to be notified when the time-out value elapses. For more information about
-            /// the function, see <see cref="TIMERPROC"/>. If <paramref name="timerFunc"/> is null, the system posts
+            /// the function, see <see cref="TimerProc"/>. If <paramref name="timerFunc"/> is null, the system posts
             /// a <see cref="WindowMessage.Timer"/> message to the application queue. The <see cref="Msg.HWnd"/>
             /// member of the message's <see cref="Msg"/> structure contains
             /// the value of the <paramref name="window"/> parameter.
@@ -49,15 +44,15 @@ namespace OpenToolkit.NT.Native
             /// <returns>
             /// If the function succeeds and the <paramref name="window"/> parameter is <see cref="IntPtr.Zero"/>,
             /// the return value is an integer identifying the new timer. An application can pass this value to the
-            /// <see cref="KillTimer(HWND, UINT_PTR)"/> function to destroy the timer.
+            /// <see cref="KillTimer(IntPtr, UIntPtr)"/> function to destroy the timer.
             /// </returns>
             [DllImport(Library, SetLastError = true)]
-            public static extern UINT_PTR SetTimer
+            public static extern UIntPtr SetTimer
             (
-                [In] [Optional] HWND window,
-                [In] UINT_PTR timerID,
+                [In] [Optional] IntPtr window,
+                [In] UIntPtr timerID,
                 [In] uint elapse,
-                [In] [Optional] TIMERPROC timerFunc
+                [In] [Optional] TimerProc timerFunc
             );
 
             /// <summary>
@@ -65,16 +60,16 @@ namespace OpenToolkit.NT.Native
             /// </summary>
             /// <param name="window">
             /// A handle to the window associated with the specified timer. This value must be the same as the window
-            /// value passed to the <see cref="SetTimer(HWND, UINT_PTR, uint, TIMERPROC)"/>
+            /// value passed to the <see cref="SetTimer(IntPtr, UIntPtr, uint, TimerProc)"/>
             /// function that created the timer.
             /// </param>
             /// <param name="timerID">
             /// The timer to be destroyed. If the window handle passed to
-            /// <see cref="SetTimer(HWND, UINT_PTR, uint, TIMERPROC)"/> is valid, this parameter must be the same as
-            /// the timerID value passed to <see cref="SetTimer(HWND, UINT_PTR, uint, TIMERPROC)"/>. If the application
-            /// calls <see cref="SetTimer(HWND, UINT_PTR, uint, TIMERPROC)"/> with window set to
+            /// <see cref="SetTimer(IntPtr, UIntPtr, uint, TimerProc)"/> is valid, this parameter must be the same as
+            /// the timerID value passed to <see cref="SetTimer(IntPtr, UIntPtr, uint, TimerProc)"/>. If the application
+            /// calls <see cref="SetTimer(IntPtr, UIntPtr, uint, TimerProc)"/> with window set to
             /// <see cref="IntPtr.Zero"/>, this parameter must be the timer identifier returned by
-            /// <see cref="SetTimer(HWND, UINT_PTR, uint, TIMERPROC)"/>.
+            /// <see cref="SetTimer(IntPtr, UIntPtr, uint, TimerProc)"/>.
             /// </param>
             /// <returns>
             /// If the function succeeds, the return value is true.<para/>
@@ -83,10 +78,10 @@ namespace OpenToolkit.NT.Native
             /// </returns>
             [DllImport(Library, SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
-            public static extern BOOL KillTimer
+            public static extern bool KillTimer
             (
-                [In] [Optional] HWND window,
-                [In] UINT_PTR timerID
+                [In] [Optional] IntPtr window,
+                [In] UIntPtr timerID
             );
         }
     }

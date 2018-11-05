@@ -1,14 +1,12 @@
 ﻿using System;
 
-using UINT = System.UInt32;
-
 namespace OpenToolkit.NT.Native
 {
     /// <summary>
     /// Defines additional elements of the window class.
     /// </summary>
     [Flags]
-    public enum WindowClassStyles : UINT
+    public enum WindowClassStyles : uint
     {
         /// <summary>
         /// Redraws the entire window if a movement or size adjustment changes the height of the client area.

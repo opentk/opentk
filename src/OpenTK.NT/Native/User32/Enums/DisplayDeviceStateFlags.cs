@@ -1,14 +1,12 @@
 ﻿using System;
 
-using DWORD = System.UInt32;
-
 namespace OpenToolkit.NT.Native
 {
     /// <summary>
     /// Used in <see cref="DisplayDevice"/> to represent the device state.
     /// </summary>
     [Flags]
-    public enum DisplayDeviceStateFlags : DWORD
+    public enum DisplayDeviceStateFlags : uint
     {
         /// <summary>
         /// This member is not officially documented. Use with care.

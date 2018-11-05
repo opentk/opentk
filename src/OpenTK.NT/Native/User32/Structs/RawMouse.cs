@@ -1,9 +1,5 @@
 ﻿using System.Runtime.InteropServices;
 
-using LONG = System.Int32;
-using ULONG = System.UInt32;
-using USHORT = System.UInt16;
-
 namespace OpenToolkit.NT.Native
 {
     /// <summary>
@@ -22,7 +18,7 @@ namespace OpenToolkit.NT.Native
         /// Reserved. Use <see cref="ButtonFlags"/> instead.
         /// </summary>
         [FieldOffset(4)]
-        public ULONG Buttons;
+        public uint Buttons;
 
         /// <summary>
         /// The transition state of the mouse buttons.
@@ -35,33 +31,33 @@ namespace OpenToolkit.NT.Native
         /// this member is a signed value that specifies the wheel delta.
         /// </summary>
         [FieldOffset(6)]
-        public USHORT ButtonData;
+        public ushort ButtonData;
 
         /// <summary>
         /// Raw state of the mouse buttons.
         /// </summary>
         [FieldOffset(8)]
-        public ULONG RawButtons;
+        public uint RawButtons;
 
         /// <summary>
         /// Motion in the X direction. This is signed relative motion or absolute motion,
         /// depending on the value of <see cref="Flags"/>.
         /// </summary>
         [FieldOffset(12)]
-        public LONG LastX;
+        public int LastX;
 
         /// <summary>
         /// Motion in the Y direction. This is signed relative motion or absolute motion,
         /// depending on the value of <see cref="Flags"/>.
         /// </summary>
         [FieldOffset(16)]
-        public LONG LastY;
+        public int LastY;
 
         /// <summary>
         /// Device-specific additional information for the event.
         /// </summary>
         [FieldOffset(20)]
-        public ULONG ExtraInformation;
+        public uint ExtraInformation;
 
         /// <summary>
         /// The size of this structure in bytes.

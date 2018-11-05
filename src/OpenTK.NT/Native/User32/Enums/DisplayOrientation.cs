@@ -1,11 +1,9 @@
-﻿using DWORD = System.UInt32;
-
-namespace OpenToolkit.NT.Native
+﻿namespace OpenToolkit.NT.Native
 {
     /// <summary>
     /// Defines possible display orientations.
     /// </summary>
-    public enum DisplayOrientation : DWORD
+    public enum DisplayOrientation : uint
     {
         /// <summary>
         /// The current mode's display device orientation is the natural orientation of the device,

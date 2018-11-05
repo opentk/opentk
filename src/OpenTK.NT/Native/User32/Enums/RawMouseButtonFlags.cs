@@ -1,14 +1,12 @@
 ﻿using System;
 
-using USHORT = System.UInt16;
-
 namespace OpenToolkit.NT.Native
 {
     /// <summary>
     /// Specifies the transition state of the mouse buttons.
     /// </summary>
     [Flags]
-    public enum RawMouseButtonFlags : USHORT
+    public enum RawMouseButtonFlags : ushort
     {
         /// <summary>
         /// Left Button changed to down.

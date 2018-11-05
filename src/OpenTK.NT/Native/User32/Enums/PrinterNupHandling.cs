@@ -1,11 +1,9 @@
-﻿using DWORD = System.UInt32;
-
-namespace OpenToolkit.NT.Native
+﻿namespace OpenToolkit.NT.Native
 {
     /// <summary>
     /// Specifies the responsibility for performing page layout for N-up printing.
     /// </summary>
-    public enum PrinterNupHandling : DWORD
+    public enum PrinterNupHandling : uint
     {
         /// <summary>
         /// The print server does the page layout.

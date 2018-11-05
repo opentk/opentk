@@ -1,11 +1,9 @@
-﻿using UINT = System.UInt32;
-
-namespace OpenToolkit.NT.Native
+﻿namespace OpenToolkit.NT.Native
 {
     /// <summary>
     /// Used in <see cref="MapVirtualKeyType"/> to specify the translation to be performed.
     /// </summary>
-    public enum MapVirtualKeyType : UINT
+    public enum MapVirtualKeyType : uint
     {
         /// <summary>
         /// uCode is a virtual-key code and is translated into a scan code. If it is a virtual-key code that does not

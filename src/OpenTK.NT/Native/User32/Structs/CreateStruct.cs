@@ -1,20 +1,13 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
-using HINSTANCE = System.IntPtr;
-using HMENU = System.IntPtr;
-using HWND = System.IntPtr;
-using LPCTSTR = System.String;
-using LPVOID = System.IntPtr;
-using SHORT = System.Int16;
-
 namespace OpenToolkit.NT.Native
 {
     /// <summary>
     /// Defines the initialization parameters passed to the window procedure of an application. These members are
     /// identical to the parameters of the
-    /// <see cref="User32.Window.CreateWindowEx(ExtendedWindowStyles, HINSTANCE, string,
-    /// WindowStyles, int, int, int, int, HINSTANCE, HINSTANCE, HINSTANCE, HINSTANCE)"/> function.
+    /// <see cref="User32.Window.CreateWindowEx(ExtendedWindowStyles, IntPtr, string,
+    /// WindowStyles, int, int, int, int, IntPtr, IntPtr, IntPtr, IntPtr)"/> function.
     /// </summary>
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
     public struct CreateStruct
@@ -22,34 +15,34 @@ namespace OpenToolkit.NT.Native
         /// <summary>
         /// Contains additional data which may be used to create the window. If the window is being created as a
         /// result of a call to the CreateWindow or
-        /// <see cref="User32.Window.CreateWindowEx(ExtendedWindowStyles, HINSTANCE, string,
-        /// WindowStyles, int, int, int, int, HINSTANCE, HINSTANCE, HINSTANCE, HINSTANCE)"/>
+        /// <see cref="User32.Window.CreateWindowEx(ExtendedWindowStyles, IntPtr, string,
+        /// WindowStyles, int, int, int, int, IntPtr, IntPtr, IntPtr, IntPtr)"/>
         /// function, this member contains the value of the lpParam parameter specified in the function call.<para/>
         /// If the window being created is a MDI client window, this member contains a pointer to a CLIENTCREATESTRUCT
         /// structure. If the window being created is a MDI child window, this member contains a pointer to an
         /// MDICREATESTRUCT structure.<para/>
-        /// If the window is being created from a dialog template, this member is the address of a <see cref="SHORT"/>
+        /// If the window is being created from a dialog template, this member is the address of a <see cref="short"/>
         /// value that specifies the size, in bytes, of the window creation data. The value is immediately followed
         /// by the creation data.
         /// </summary>
-        public LPVOID CreateParams;
+        public IntPtr CreateParams;
 
         /// <summary>
         /// Handle to the module that owns the new window.
         /// </summary>
-        public HINSTANCE Instance;
+        public IntPtr Instance;
 
         /// <summary>
         /// Handle to the menu to be used by the new window.
         /// </summary>
-        public HMENU Menu;
+        public IntPtr Menu;
 
         /// <summary>
         /// Handle to the parent window, if the window is a child window.
         /// If the window is owned, this member identifies the owner window.
         /// If the window is not a child or owned window, this member is null.
         /// </summary>
-        public HWND Parent;
+        public IntPtr Parent;
 
         /// <summary>
         /// Specifies the height of the new window, in pixels.
@@ -83,7 +76,7 @@ namespace OpenToolkit.NT.Native
         /// <summary>
         /// Pointer to a null-terminated string that specifies the name of the new window.
         /// </summary>
-        public LPCTSTR Name;
+        public string Name;
 
         /// <summary>
         /// Either a pointer to a null-terminated string or an atom that specifies the class name

@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
-using BOOL = System.Boolean;
-using HWND = System.IntPtr;
-
 namespace OpenToolkit.NT.Native
 {
     public static partial class User32
@@ -23,11 +20,11 @@ namespace OpenToolkit.NT.Native
             /// If no window in the thread has captured the mouse, the return value is <see cref="IntPtr.Zero"/>.
             /// </returns>
             [DllImport(Library)]
-            public static extern HWND GetCapture();
+            public static extern IntPtr GetCapture();
 
             /// <summary>
             /// Sets the mouse capture to the specified window belonging to the current thread.
-            /// <see cref="SetCapture(HWND)"/> captures mouse input either when the mouse is over the capturing window,
+            /// <see cref="SetCapture(IntPtr)"/> captures mouse input either when the mouse is over the capturing window,
             /// or when the mouse button was pressed while the mouse was over the capturing window and the button is
             /// still down. Only one window at a time can capture the mouse.<para/>
             /// If the mouse cursor is over a window created by another thread,
@@ -41,7 +38,7 @@ namespace OpenToolkit.NT.Native
             /// If there is no such window, the return value is <see cref="IntPtr.Zero"/>.
             /// </returns>
             [DllImport(Library)]
-            public static extern HWND SetCapture(HWND window);
+            public static extern IntPtr SetCapture(IntPtr window);
 
             /// <summary>
             /// Releases the mouse capture from a window in the current thread and restores normal mouse input
@@ -56,7 +53,7 @@ namespace OpenToolkit.NT.Native
             /// </returns>
             [DllImport(Library, SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
-            public static extern BOOL ReleaseCapture();
+            public static extern bool ReleaseCapture();
 
             /// <summary>
             /// Posts messages when the mouse pointer leaves a window or hovers
@@ -72,7 +69,7 @@ namespace OpenToolkit.NT.Native
             /// </returns>
             [DllImport(Library, SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
-            public static extern BOOL TrackMouseEvent([In] [Out] ref TrackMouseEvent trackMouseEvent);
+            public static extern bool TrackMouseEvent([In] [Out] ref TrackMouseEvent trackMouseEvent);
 
             /// <summary>
             /// Retrieves a history of up to 64 previous coordinates of the mouse or pen.

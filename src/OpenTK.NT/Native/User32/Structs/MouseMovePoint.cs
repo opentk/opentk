@@ -1,7 +1,5 @@
-﻿using System.Runtime.InteropServices;
-
-using DWORD = System.UInt32;
-using ULONG_PTR = System.IntPtr;
+﻿using System;
+using System.Runtime.InteropServices;
 
 namespace OpenToolkit.NT.Native
 {
@@ -23,12 +21,12 @@ namespace OpenToolkit.NT.Native
         /// <summary>
         /// The time stamp of the mouse coordinate.
         /// </summary>
-        public DWORD Time;
+        public uint Time;
 
         /// <summary>
         /// Additional information associated with this coordinate.
         /// </summary>
-        public ULONG_PTR ExtraInfo;
+        public IntPtr ExtraInfo;
 
         /// <summary>
         /// The size of this structure in bytes.

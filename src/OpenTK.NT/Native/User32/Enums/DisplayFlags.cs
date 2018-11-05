@@ -1,14 +1,12 @@
 ﻿using System;
 
-using DWORD = System.UInt32;
-
 namespace OpenToolkit.NT.Native
 {
     /// <summary>
     /// Specifies the device's display mode.
     /// </summary>
     [Flags]
-    public enum DisplayFlags : DWORD
+    public enum DisplayFlags : uint
     {
         /// <summary>
         /// Specifies that the display is a noncolor device. If this flag is not set, color is assumed.

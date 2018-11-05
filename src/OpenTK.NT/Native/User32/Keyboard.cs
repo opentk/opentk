@@ -2,10 +2,6 @@
 using System.Runtime.InteropServices;
 using System.Security;
 
-using HWND = System.IntPtr;
-using SHORT = System.Int16;
-using UINT = System.UInt32;
-
 namespace OpenToolkit.NT.Native
 {
     public static partial class User32
@@ -30,7 +26,7 @@ namespace OpenToolkit.NT.Native
             /// </returns>
             [SuppressUnmanagedCodeSecurity]
             [DllImport(Library, SetLastError = true)]
-            public static extern SHORT GetKeyState([In] VirtualKey key);
+            public static extern short GetKeyState([In] VirtualKey key);
 
             /// <summary>
             /// Determines whether a key is up or down at the time the function is called,
@@ -46,7 +42,7 @@ namespace OpenToolkit.NT.Native
             /// </returns>
             [SuppressUnmanagedCodeSecurity]
             [DllImport(Library, SetLastError = true)]
-            public static extern SHORT GetAsyncKeyState([In] VirtualKey key);
+            public static extern short GetAsyncKeyState([In] VirtualKey key);
 
             /// <summary>
             /// Retrieves the handle to the window that has the keyboard focus,
@@ -58,7 +54,7 @@ namespace OpenToolkit.NT.Native
             /// the return value is <see cref="IntPtr.Zero"/>.
             /// </returns>
             [DllImport(Library)]
-            public static extern HWND GetFocus();
+            public static extern IntPtr GetFocus();
 
             /// <summary>
             /// Sets the keyboard focus to the specified window.
@@ -73,7 +69,7 @@ namespace OpenToolkit.NT.Native
             /// To get extended error information, call <see cref="Marshal.GetLastWin32Error"/>.
             /// </returns>
             [DllImport(Library, SetLastError = true)]
-            public static extern HWND SetFocus([In] [Optional] HWND window);
+            public static extern IntPtr SetFocus([In] [Optional] IntPtr window);
 
             /// <summary>
             /// Translates (maps) a virtual-key code into a scan code or character value,
@@ -91,7 +87,7 @@ namespace OpenToolkit.NT.Native
             /// </returns>
             [SuppressUnmanagedCodeSecurity]
             [DllImport(Library, SetLastError = true)]
-            public static extern UINT MapVirtualKey([In] VirtualKey vkey, [In] MapVirtualKeyType mapType);
+            public static extern uint MapVirtualKey([In] VirtualKey vkey, [In] MapVirtualKeyType mapType);
         }
     }
 }

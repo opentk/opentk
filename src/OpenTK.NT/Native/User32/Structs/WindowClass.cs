@@ -1,11 +1,6 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
-using HBRUSH = System.IntPtr;
-using HCURSOR = System.IntPtr;
-using HICON = System.IntPtr;
-using HINSTANCE = System.IntPtr;
-
 namespace OpenToolkit.NT.Native
 {
     /// <summary>
@@ -40,27 +35,27 @@ namespace OpenToolkit.NT.Native
         /// <summary>
         /// A handle to the instance that contains the window procedure for the class.
         /// </summary>
-        public HINSTANCE Instance;
+        public IntPtr Instance;
 
         /// <summary>
         /// A handle to the class icon. This member must be a handle to an icon resource.
         /// If this member is <see cref="IntPtr.Zero"/>, the system provides a default icon.
         /// </summary>
-        public HICON Icon;
+        public IntPtr Icon;
 
         /// <summary>
         /// A handle to the class cursor. This member must be a handle to a cursor resource.
         /// If this member is <see cref="IntPtr.Zero"/>, an application must explicitly set the cursor shape
         /// whenever the mouse moves into the application's window.
         /// </summary>
-        public HCURSOR Cursor;
+        public IntPtr Cursor;
 
         /// <summary>
         /// A handle to the class background brush. This member can be a handle to the brush to be used for
         /// painting the background, or it can be a color value.<para/>
         /// For more information on setting this to a color value, check the official documentation.
         /// </summary>
-        public HBRUSH Background;
+        public IntPtr Background;
 
         /// <summary>
         /// Pointer to a string that specifies the resource name of the class menu, as the name appears in the

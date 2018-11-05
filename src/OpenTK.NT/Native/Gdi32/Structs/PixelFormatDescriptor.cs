@@ -1,9 +1,5 @@
 ﻿using System.Runtime.InteropServices;
 
-using BYTE = System.Byte;
-using DWORD= System.UInt32;
-using WORD = System.UInt16;
-
 namespace OpenToolkit.NT.Native
 {
     /// <summary>
@@ -20,12 +16,12 @@ namespace OpenToolkit.NT.Native
         /// <summary>
         /// Specifies the size of this data structure. This value should be set to <see cref="SizeInBytes"/>.
         /// </summary>
-        public WORD Size;
+        public ushort Size;
 
         /// <summary>
         /// Specifies the version of this data structure. This value should be set to 1.
         /// </summary>
-        public WORD Version;
+        public ushort Version;
 
         /// <summary>
         /// A set of bit flags that specify properties of the pixel buffer. The properties are generally
@@ -45,87 +41,87 @@ namespace OpenToolkit.NT.Native
         /// color buffer, excluding the alpha bitplanes.
         /// For color-index pixels, it is the size of the color-index buffer.
         /// </summary>
-        public BYTE ColorBits;
+        public byte ColorBits;
 
         /// <summary>
         /// Specifies the number of red bitplanes in each RGBA color buffer.
         /// </summary>
-        public BYTE RedBits;
+        public byte RedBits;
 
         /// <summary>
         /// Specifies the shift count for red bitplanes in each RGBA color buffer.
         /// </summary>
-        public BYTE RedShift;
+        public byte RedShift;
 
         /// <summary>
         /// Specifies the number of green bitplanes in each RGBA color buffer.
         /// </summary>
-        public BYTE GreenBits;
+        public byte GreenBits;
 
         /// <summary>
         /// Specifies the shift count for green bitplanes in each RGBA color buffer.
         /// </summary>
-        public BYTE GreenShift;
+        public byte GreenShift;
 
         /// <summary>
         /// Specifies the number of blue bitplanes in each RGBA color buffer.
         /// </summary>
-        public BYTE BlueBits;
+        public byte BlueBits;
 
         /// <summary>
         /// Specifies the shift count for blue bitplanes in each RGBA color buffer.
         /// </summary>
-        public BYTE BlueShift;
+        public byte BlueShift;
 
         /// <summary>
         /// Specifies the number of alpha bitplanes in each RGBA color buffer. Alpha bitplanes are not supported.
         /// </summary>
-        public BYTE AlphaBits;
+        public byte AlphaBits;
 
         /// <summary>
         /// Specifies the shift count for alpha bitplanes in each RGBA color buffer. Alpha bitplanes are not supported.
         /// </summary>
-        public BYTE AlphaShift;
+        public byte AlphaShift;
 
         /// <summary>
         /// Specifies the total number of bitplanes in the accumulation buffer.
         /// </summary>
-        public BYTE AccumBits;
+        public byte AccumBits;
 
         /// <summary>
         /// Specifies the number of red bitplanes in the accumulation buffer.
         /// </summary>
-        public BYTE AccumRedBits;
+        public byte AccumRedBits;
 
         /// <summary>
         /// Specifies the number of green bitplanes in the accumulation buffer.
         /// </summary>
-        public BYTE AccumGreenBits;
+        public byte AccumGreenBits;
 
         /// <summary>
         /// Specifies the number of blue bitplanes in the accumulation buffer.
         /// </summary>
-        public BYTE AccumBlueBits;
+        public byte AccumBlueBits;
 
         /// <summary>
         /// Specifies the number of alpha bitplanes in the accumulation buffer.
         /// </summary>
-        public BYTE AccumAlphaBits;
+        public byte AccumAlphaBits;
 
         /// <summary>
         /// Specifies the depth of the depth (z-axis) buffer.
         /// </summary>
-        public BYTE DepthBits;
+        public byte DepthBits;
 
         /// <summary>
         /// Specifies the depth of the stencil buffer.
         /// </summary>
-        public BYTE StencilBits;
+        public byte StencilBits;
 
         /// <summary>
         /// Specifies the number of auxiliary buffers. Auxiliary buffers are not supported.
         /// </summary>
-        public BYTE AuxBuffers;
+        public byte AuxBuffers;
 
         /// <summary>
         /// Ignored. Earlier implementations of OpenGL used this member, but it is no longer used.
@@ -136,24 +132,24 @@ namespace OpenToolkit.NT.Native
         /// Specifies the number of overlay and underlay planes. Bits 0 through 3 specify up to 15 overlay planes
         /// and bits 4 through 7 specify up to 15 underlay planes.
         /// </summary>
-        public BYTE Reserved;
+        public byte Reserved;
 
         /// <summary>
         /// Ignored. Earlier implementations of OpenGL used this member, but it is no longer used.
         /// </summary>
-        public DWORD LayerMask;
+        public uint LayerMask;
 
         /// <summary>
         /// Specifies the transparent color or index of an underlay plane. When the pixel type is RGBA,
         /// <see cref="VisibleMask"/> is a transparent RGB color value. When the pixel type is color index,
         /// it is a transparent index value.
         /// </summary>
-        public DWORD VisibleMask;
+        public uint VisibleMask;
 
         /// <summary>
         /// Ignored. Earlier implementations of OpenGL used this member, but it is no longer used.
         /// </summary>
-        public DWORD DamageMask;
+        public uint DamageMask;
 
         /// <summary>
         /// The size of this structure in bytes.

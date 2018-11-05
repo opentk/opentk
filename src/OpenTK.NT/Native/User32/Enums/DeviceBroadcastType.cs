@@ -1,11 +1,9 @@
-﻿using DWORD = System.UInt32;
-
-namespace OpenToolkit.NT.Native
+﻿namespace OpenToolkit.NT.Native
 {
     /// <summary>
     /// Used in the <see cref="BroadcastDeviceInterface"/>.
     /// </summary>
-    public enum DeviceBroadcastType : DWORD
+    public enum DeviceBroadcastType : uint
     {
         /// <summary>
         /// This member is not officially documented. Use with care.

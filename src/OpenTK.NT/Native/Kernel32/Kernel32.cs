@@ -2,14 +2,6 @@
 using System.Runtime.InteropServices;
 using System.Security;
 
-using BOOL = System.Boolean;
-using DWORD = System.UInt32;
-using FARPROC = System.IntPtr;
-using HMODULE = System.IntPtr;
-using LARGE_INTEGER = System.Int64;
-using LPCSTR = System.String;
-using LPCTSTR = System.String;
-
 namespace OpenToolkit.NT.Native
 {
     /// <summary>
@@ -41,7 +33,7 @@ namespace OpenToolkit.NT.Native
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Library, SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
-        public static extern BOOL QueryPerformanceFrequency([Out] out LARGE_INTEGER frequency);
+        public static extern bool QueryPerformanceFrequency([Out] out long frequency);
 
         /// <summary>
         /// Retrieves the current value of the performance counter, which is a high resolution (&lt;1us) time stamp
@@ -59,7 +51,7 @@ namespace OpenToolkit.NT.Native
         [SuppressUnmanagedCodeSecurity]
         [DllImport(Library, SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
-        public static extern BOOL QueryPerformanceCounter([Out] out LARGE_INTEGER performanceCount);
+        public static extern bool QueryPerformanceCounter([Out] out long performanceCount);
 
         /// <summary>
         /// Retrieves the address of an exported function or variable from the specified dynamic-link library (DLL).
@@ -75,14 +67,14 @@ namespace OpenToolkit.NT.Native
         /// To get extended error information, call <see cref="Marshal.GetLastWin32Error"/>.
         /// </returns>
         [DllImport(Library, SetLastError = true, CharSet = CharSet.Unicode)]
-        public static extern FARPROC GetProcAddress([In] HMODULE module, [In] LPCSTR procName);
+        public static extern IntPtr GetProcAddress([In] IntPtr module, [In] string procName);
 
         /// <summary>
         /// Retrieves the address of an exported function or variable from the specified dynamic-link library (DLL).
         /// </summary>
         /// <param name="module">
-        /// A handle to the DLL module that contains the function or variable. The <see cref="LoadLibrary(LPCSTR)"/>,
-        /// LoadLibraryEx, LoadPackagedLibrary, or <see cref="GetModuleHandle(LPCSTR)"/> functions return this handle.
+        /// A handle to the DLL module that contains the function or variable. The <see cref="LoadLibrary(string)"/>,
+        /// LoadLibraryEx, LoadPackagedLibrary, or <see cref="GetModuleHandle(string)"/> functions return this handle.
         /// </param>
         /// <param name="procName">
         /// The function's ordinal value. It must be in the low-order word; the high-order word must be zero.
@@ -93,14 +85,14 @@ namespace OpenToolkit.NT.Native
         /// To get extended error information, call <see cref="Marshal.GetLastWin32Error"/>.
         /// </returns>
         [DllImport(Library, SetLastError = true, CharSet = CharSet.Unicode)]
-        public static extern FARPROC GetProcAddress([In] HMODULE module, [In] IntPtr procName);
+        public static extern IntPtr GetProcAddress([In] IntPtr module, [In] IntPtr procName);
 
         /// <summary>
         /// Sets the last-error code for the calling thread.
         /// </summary>
         /// <param name="errorCode">The last-error code for the thread.</param>
         [DllImport(Library)]
-        public static extern void SetLastError(DWORD errorCode);
+        public static extern void SetLastError(uint errorCode);
 
         /// <summary>
         /// Retrieves a module handle for the specified module.
@@ -113,7 +105,7 @@ namespace OpenToolkit.NT.Native
         /// specifying a path, be sure to use backslashes (\), not forward slashes (/). The name is compared (case
         /// independently) to the names of modules currently mapped into the address space of the calling process.
         /// <para/>
-        /// If this parameter is null, <see cref="GetModuleHandle(LPCSTR)"/> returns a handle to the file used to
+        /// If this parameter is null, <see cref="GetModuleHandle(string)"/> returns a handle to the file used to
         /// create the calling process (.exe file).
         /// </param>
         /// <returns>
@@ -122,7 +114,7 @@ namespace OpenToolkit.NT.Native
         /// To get extended error information, call <see cref="Marshal.GetLastWin32Error"/>.
         /// </returns>
         [DllImport(Library, SetLastError = true)]
-        public static extern HMODULE GetModuleHandle([In] [Optional] LPCTSTR moduleName);
+        public static extern IntPtr GetModuleHandle([In] [Optional] string moduleName);
 
         /// <summary>
         /// Loads the specified module into the address space of the calling process.
@@ -147,7 +139,7 @@ namespace OpenToolkit.NT.Native
         /// To get extended error information, call <see cref="Marshal.GetLastWin32Error"/>.
         /// </returns>
         [DllImport(Library, SetLastError = true)]
-        public static extern HMODULE LoadLibrary([In] LPCTSTR fileName);
+        public static extern IntPtr LoadLibrary([In] string fileName);
 
         /// <summary>
         /// Frees the loaded dynamic-link library (DLL) module and, if necessary, decrements its reference count.
@@ -155,8 +147,8 @@ namespace OpenToolkit.NT.Native
         /// process and the handle is no longer valid.
         /// </summary>
         /// <param name="module">
-        /// A handle to the loaded library module. The <see cref="LoadLibrary(LPCSTR)"/>, LoadLibraryEx,
-        /// <see cref="GetModuleHandle(LPCSTR)"/>, or GetModuleHandleEx functions return this handle.
+        /// A handle to the loaded library module. The <see cref="LoadLibrary(string)"/>, LoadLibraryEx,
+        /// <see cref="GetModuleHandle(string)"/>, or GetModuleHandleEx functions return this handle.
         /// </param>
         /// <returns>
         /// If the function succeeds, the return value is true.<para/>
@@ -165,6 +157,6 @@ namespace OpenToolkit.NT.Native
         /// </returns>
         [DllImport(Library)]
         [return: MarshalAs(UnmanagedType.Bool)]
-        public static extern BOOL FreeLibrary([In] HMODULE module);
+        public static extern bool FreeLibrary([In] IntPtr module);
     }
 }

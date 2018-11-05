@@ -2,19 +2,7 @@
 using System.ComponentModel;
 using System.Runtime.InteropServices;
 using System.Security;
-
-using BOOL = System.Boolean;
-using HINSTANCE = System.IntPtr;
-using HMENU = System.IntPtr;
-using HWND = System.IntPtr;
-using LONG = System.Int32;
-using LONG_PTR = System.IntPtr;
-using LPARAM = System.IntPtr;
-using LPTSTR = System.Text.StringBuilder;
-using LPVOID = System.IntPtr;
-using LRESULT = System.IntPtr;
-using WNDPROC = System.IntPtr;
-using WPARAM = System.IntPtr;
+using System.Text;
 
 namespace OpenToolkit.NT.Native
 {
@@ -50,18 +38,17 @@ namespace OpenToolkit.NT.Native
             [SuppressUnmanagedCodeSecurity]
             [DllImport(Library, SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
-            public static extern BOOL AdjustWindowRect
+            public static extern bool AdjustWindowRect
             (
                 [In] [Out] ref Rect rect,
                 [In] WindowStyles style,
-                [In] BOOL hasMenu
+                [In] bool hasMenu
             );
 
             /// <summary>
             /// Calculates the required size of the window rectangle, based on the desired client-rectangle size.
             /// The window rectangle can then be passed to the
-            /// <see cref="CreateWindowEx(ExtendedWindowStyles, string, string, WindowStyles, LONG, LONG, LONG,
-            /// LONG, HINSTANCE, HINSTANCE, HINSTANCE, HINSTANCE)"/>
+            /// <see cref="CreateWindowEx(ExtendedWindowStyles, string, string, WindowStyles, int, int, int, int, IntPtr, IntPtr, IntPtr, IntPtr)"/>
             /// function to create a window whose client area is the desired size.
             /// </summary>
             /// <param name="rect">
@@ -86,11 +73,11 @@ namespace OpenToolkit.NT.Native
             [SuppressUnmanagedCodeSecurity]
             [DllImport(Library, SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
-            public static extern BOOL AdjustWindowRectEx
+            public static extern bool AdjustWindowRectEx
             (
                 [In] [Out] ref Rect rect,
                 [In] WindowStyles style,
-                [In] BOOL hasMenu,
+                [In] bool hasMenu,
                 [In] ExtendedWindowStyles extendedStyle
             );
 
@@ -130,9 +117,9 @@ namespace OpenToolkit.NT.Native
             /// If an overlapped window is created with the <see cref="WindowStyles.Visible"/> style bit set and
             /// the x parameter is set to <see cref="int.MinValue"/>, then the y parameter determines how the window
             /// is shown. If the y parameter is <see cref="int.MinValue"/>, then the window manager calls
-            /// <see cref="ShowWindow(HINSTANCE, ShowWindowCommand)"/> with the <see cref="ShowWindowCommand.Show"/>
+            /// <see cref="ShowWindow(IntPtr, ShowWindowCommand)"/> with the <see cref="ShowWindowCommand.Show"/>
             /// flag after the window has been created. If the y parameter is some other value, then the window manager
-            /// calls <see cref="ShowWindow(HINSTANCE, ShowWindowCommand)"/> with that value as the nCmdShow parameter.
+            /// calls <see cref="ShowWindow(IntPtr, ShowWindowCommand)"/> with that value as the nCmdShow parameter.
             /// </param>
             /// <param name="width">
             /// The width, in device units, of the window. For overlapped windows, nWidth is the window's width, in
@@ -177,7 +164,7 @@ namespace OpenToolkit.NT.Native
             /// To get extended error information, call <see cref="Marshal.GetLastWin32Error"/>.
             /// </returns>
             [DllImport(Library, SetLastError = true, CharSet = CharSet.Unicode)]
-            public static extern HWND CreateWindowEx
+            public static extern IntPtr CreateWindowEx
             (
                 [In] ExtendedWindowStyles extendedStyle,
                 [In] [Optional] string className,
@@ -187,10 +174,10 @@ namespace OpenToolkit.NT.Native
                 [In] int y,
                 [In] int width,
                 [In] int height,
-                [In] [Optional] HWND parentWindow,
-                [In] [Optional] HMENU menu,
-                [In] [Optional] HINSTANCE moduleInstance,
-                [In] [Optional] LPVOID createParam
+                [In] [Optional] IntPtr parentWindow,
+                [In] [Optional] IntPtr menu,
+                [In] [Optional] IntPtr moduleInstance,
+                [In] [Optional] IntPtr createParam
             );
 
             /// <summary>
@@ -223,9 +210,9 @@ namespace OpenToolkit.NT.Native
             /// If an overlapped window is created with the <see cref="WindowStyles.Visible"/> style bit set and
             /// the x parameter is set to <see cref="int.MinValue"/>, then the y parameter determines how the window
             /// is shown. If the y parameter is <see cref="int.MinValue"/>, then the window manager calls
-            /// <see cref="ShowWindow(HINSTANCE, ShowWindowCommand)"/> with the <see cref="ShowWindowCommand.Show"/>
+            /// <see cref="ShowWindow(IntPtr, ShowWindowCommand)"/> with the <see cref="ShowWindowCommand.Show"/>
             /// flag after the window has been created. If the y parameter is some other value, then the window manager
-            /// calls <see cref="ShowWindow(HINSTANCE, ShowWindowCommand)"/> with that value as the nCmdShow parameter.
+            /// calls <see cref="ShowWindow(IntPtr, ShowWindowCommand)"/> with that value as the nCmdShow parameter.
             /// </param>
             /// <param name="width">
             /// The width, in device units, of the window. For overlapped windows, nWidth is the window's width, in
@@ -270,7 +257,7 @@ namespace OpenToolkit.NT.Native
             /// To get extended error information, call <see cref="Marshal.GetLastWin32Error"/>.
             /// </returns>
             [DllImport(Library, SetLastError = true, CharSet = CharSet.Unicode)]
-            public static extern HWND CreateWindowEx
+            public static extern IntPtr CreateWindowEx
             (
                 [In] ExtendedWindowStyles extendedStyle,
                 [In] [Optional] IntPtr className,
@@ -280,10 +267,10 @@ namespace OpenToolkit.NT.Native
                 [In] int y,
                 [In] int width,
                 [In] int height,
-                [In] [Optional] HWND parentWindow,
-                [In] [Optional] HMENU menu,
-                [In] [Optional] HINSTANCE moduleInstance,
-                [In] [Optional] LPVOID createParam
+                [In] [Optional] IntPtr parentWindow,
+                [In] [Optional] IntPtr menu,
+                [In] [Optional] IntPtr moduleInstance,
+                [In] [Optional] IntPtr createParam
             );
 
             /// <summary>
@@ -319,9 +306,9 @@ namespace OpenToolkit.NT.Native
             /// If an overlapped window is created with the <see cref="WindowStyles.Visible"/> style bit set and
             /// the x parameter is set to <see cref="int.MinValue"/>, then the y parameter determines how the window
             /// is shown. If the y parameter is <see cref="int.MinValue"/>, then the window manager calls
-            /// <see cref="ShowWindow(HINSTANCE, ShowWindowCommand)"/> with the <see cref="ShowWindowCommand.Show"/>
+            /// <see cref="ShowWindow(IntPtr, ShowWindowCommand)"/> with the <see cref="ShowWindowCommand.Show"/>
             /// flag after the window has been created. If the y parameter is some other value, then the window manager
-            /// calls <see cref="ShowWindow(HINSTANCE, ShowWindowCommand)"/> with that value as the nCmdShow parameter.
+            /// calls <see cref="ShowWindow(IntPtr, ShowWindowCommand)"/> with that value as the nCmdShow parameter.
             /// </param>
             /// <param name="width">
             /// The width, in device units, of the window. For overlapped windows, nWidth is the window's width, in
@@ -365,7 +352,7 @@ namespace OpenToolkit.NT.Native
             /// If the function fails, the return value is <see cref="IntPtr.Zero"/>.
             /// To get extended error information, call <see cref="Marshal.GetLastWin32Error"/>.
             /// </returns>
-            public static HWND CreateWindowEx
+            public static IntPtr CreateWindowEx
             (
                 [In] ExtendedWindowStyles extendedStyle,
                 [In] [Optional] ushort classAtom,
@@ -375,10 +362,10 @@ namespace OpenToolkit.NT.Native
                 [In] int y,
                 [In] int width,
                 [In] int height,
-                [In] [Optional] HWND parentWindow,
-                [In] [Optional] HMENU menu,
-                [In] [Optional] HINSTANCE moduleInstance,
-                [In] [Optional] LPVOID createParam
+                [In] [Optional] IntPtr parentWindow,
+                [In] [Optional] IntPtr menu,
+                [In] [Optional] IntPtr moduleInstance,
+                [In] [Optional] IntPtr createParam
             )
             {
                 return CreateWindowEx
@@ -404,7 +391,7 @@ namespace OpenToolkit.NT.Native
             /// keyboard focus from it. The function also destroys the window's menu, flushes the thread message queue,
             /// destroys timers, removes clipboard ownership, and breaks the clipboard viewer chain
             /// (if the window is at the top of the viewer chain).<para/>
-            /// If the specified window is a parent or owner window, <see cref="DestroyWindow(HWND)"/> automatically
+            /// If the specified window is a parent or owner window, <see cref="DestroyWindow(IntPtr)"/> automatically
             /// destroys the associated child or owned windows when it destroys the parent or owner window. The
             /// function first destroys child or owned windows, and then it destroys the parent or owner window.
             /// </summary>
@@ -416,17 +403,17 @@ namespace OpenToolkit.NT.Native
             /// </returns>
             [DllImport(Library, SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
-            public static extern BOOL DestroyWindow([In] HWND window);
+            public static extern bool DestroyWindow([In] IntPtr window);
 
             /// <summary>
             /// Passes message information to the specified window procedure.
             /// </summary>
             /// <param name="previousWindowFunc">
             /// The previous window procedure. If this value is obtained by calling the
-            /// <see cref="GetWindowLong(HINSTANCE, GetWindowLongIndex)"/> function with the index parameter set to
+            /// <see cref="GetWindowLong(IntPtr, GetWindowLongIndex)"/> function with the index parameter set to
             /// <see cref="GetWindowLongIndex.WindowProcedure"/> or DWL_DLGPROC, it is actually either the address of
             /// a window or dialog box procedure, or a special internal value meaningful only to
-            /// <see cref="CallWindowProc(HINSTANCE, HINSTANCE, WindowMessage, HINSTANCE, HINSTANCE)"/>.
+            /// <see cref="CallWindowProc(IntPtr, IntPtr, WindowMessage, IntPtr, IntPtr)"/>.
             /// </param>
             /// <param name="window">A handle to the window procedure to receive the message.</param>
             /// <param name="msg">The message.</param>
@@ -443,13 +430,13 @@ namespace OpenToolkit.NT.Native
             /// </returns>
             [SuppressUnmanagedCodeSecurity]
             [DllImport(Library, SetLastError = true)]
-            public static extern LRESULT CallWindowProc
+            public static extern IntPtr CallWindowProc
             (
-                [In] WNDPROC previousWindowFunc,
-                [In] HWND window,
+                [In] IntPtr previousWindowFunc,
+                [In] IntPtr window,
                 [In] WindowMessage msg,
-                [In] WPARAM wparam,
-                [In] LPARAM lparam
+                [In] IntPtr wparam,
+                [In] IntPtr lparam
             );
 
             /// <summary>
@@ -464,7 +451,7 @@ namespace OpenToolkit.NT.Native
             /// </returns>
             [DllImport(Library)]
             [return: MarshalAs(UnmanagedType.Bool)]
-            public static extern BOOL SetProcessDPIAware();
+            public static extern bool SetProcessDPIAware();
 
             /// <summary>
             /// Changes the window procedure of the specified window.
@@ -479,7 +466,7 @@ namespace OpenToolkit.NT.Native
             /// If the function fails, the return value is zero.
             /// To get extended error information, call <see cref="Marshal.GetLastWin32Error"/>.
             /// </returns>
-            public static LONG_PTR SetWindowLong(HWND window, WindowProc newProc)
+            public static IntPtr SetWindowLong(IntPtr window, WindowProc newProc)
             {
                 return SetWindowLong
                 (
@@ -506,7 +493,7 @@ namespace OpenToolkit.NT.Native
             /// If the function fails, the return value is zero.
             /// To get extended error information, call <see cref="Marshal.GetLastWin32Error"/>.
             /// </returns>
-            public static LONG_PTR SetWindowLong(HWND window, GetWindowLongIndex index, LONG_PTR newLong)
+            public static IntPtr SetWindowLong(IntPtr window, GetWindowLongIndex index, IntPtr newLong)
             {
                 return SetWindowLong(window, (int)index, newLong);
             }
@@ -538,7 +525,7 @@ namespace OpenToolkit.NT.Native
             /// that indicates failure.
             /// </remarks>
             /// <exception cref="Win32Exception">An error occurs in the native function call.</exception>
-            public static LONG_PTR SetWindowLong(HWND window, int index, LONG_PTR newLong)
+            public static IntPtr SetWindowLong(IntPtr window, int index, IntPtr newLong)
             {
                 Kernel32.SetLastError(0);
 
@@ -565,18 +552,18 @@ namespace OpenToolkit.NT.Native
             [DllImport(Library, SetLastError = true)]
             private static extern int SetWindowLong
             (
-                [In] HWND window,
+                [In] IntPtr window,
                 [In] int index,
-                [In] LONG newLong
+                [In] int newLong
             );
 
             [SuppressUnmanagedCodeSecurity]
             [DllImport(Library, SetLastError = true)]
-            private static extern LONG_PTR SetWindowLongPtr
+            private static extern IntPtr SetWindowLongPtr
             (
-                [In] HWND window,
+                [In] IntPtr window,
                 [In] int index,
-                [In] LONG_PTR newLong
+                [In] IntPtr newLong
             );
 
             /// <summary>
@@ -602,7 +589,7 @@ namespace OpenToolkit.NT.Native
             /// This method will always call the "correct" function for this machine,
             /// and return the value wrapped in an <see cref="IntPtr"/>.
             /// </remarks>
-            public static LONG_PTR GetWindowLong(HWND window, GetWindowLongIndex index)
+            public static IntPtr GetWindowLong(IntPtr window, GetWindowLongIndex index)
             {
                 return GetWindowLong(window, (int)index);
             }
@@ -631,7 +618,7 @@ namespace OpenToolkit.NT.Native
             /// This method will always call the "correct" function for this machine,
             /// and return the value wrapped in an <see cref="IntPtr"/>.
             /// </remarks>
-            public static LONG_PTR GetWindowLong(HWND window, int index)
+            public static IntPtr GetWindowLong(IntPtr window, int index)
             {
                 if (IntPtr.Size == 8)
                 {
@@ -645,11 +632,11 @@ namespace OpenToolkit.NT.Native
 
             [SuppressUnmanagedCodeSecurity]
             [DllImport(Library, SetLastError = true)]
-            private static extern LONG GetWindowLongPrivate([In] HWND window, [In] int index);
+            private static extern int GetWindowLongPrivate([In] IntPtr window, [In] int index);
 
             [SuppressUnmanagedCodeSecurity]
             [DllImport(Library, SetLastError = true)]
-            private static extern LONG_PTR GetWindowLongPtr([In] HWND window, [In] int index);
+            private static extern IntPtr GetWindowLongPtr([In] IntPtr window, [In] int index);
 
             /// <summary>
             /// Calls the default window procedure to provide default processing for any window messages that an
@@ -667,12 +654,12 @@ namespace OpenToolkit.NT.Native
             /// </param>
             /// <returns>The return value is the result of the message processing and depends on the message.</returns>
             [DllImport(Library, CharSet = CharSet.Unicode)]
-            public static extern LRESULT DefWindowProc
+            public static extern IntPtr DefWindowProc
             (
-                [In] HWND window,
+                [In] IntPtr window,
                 [In] WindowMessage msg,
-                [In] WPARAM wparam,
-                [In] LPARAM lparam
+                [In] IntPtr wparam,
+                [In] IntPtr lparam
             );
 
             /// <summary>
@@ -684,12 +671,12 @@ namespace OpenToolkit.NT.Native
             [DllImport(Library, SetLastError = true)]
             [SuppressUnmanagedCodeSecurity]
             [return: MarshalAs(UnmanagedType.Bool)]
-            public static extern BOOL ShowWindow([In] HWND window, [In] ShowWindowCommand showCommand);
+            public static extern bool ShowWindow([In] IntPtr window, [In] ShowWindowCommand showCommand);
 
             /// <summary>
             /// Copies the text of the specified window's title bar (if it has one) into a buffer. If the specified
             /// window is a control, the text of the control is copied. However,
-            /// <see cref="GetWindowText(HINSTANCE, LPTSTR, LONG)"/> cannot retrieve the text of a control in another
+            /// <see cref="GetWindowText(IntPtr, StringBuilder, int)"/> cannot retrieve the text of a control in another
             /// application.
             /// </summary>
             /// <param name="window">A handle to the window or control containing the text.</param>
@@ -710,14 +697,14 @@ namespace OpenToolkit.NT.Native
             [DllImport(Library, SetLastError = true, CharSet = CharSet.Unicode)]
             public static extern int GetWindowText
             (
-                [In] HWND window,
-                [In] [Out] LPTSTR windowText,
+                [In] IntPtr window,
+                [In] [Out] StringBuilder windowText,
                 [In] int maxCharCount
             );
 
             /// <summary>
             /// Changes the text of the specified window's title bar (if it has one). If the specified window is a
-            /// control, the text of the control is changed. However, <see cref="SetWindowText(HINSTANCE, string)"/>
+            /// control, the text of the control is changed. However, <see cref="SetWindowText(IntPtr, string)"/>
             /// cannot change the text of a control in another application.
             /// </summary>
             /// <param name="window">A handle to the window or control whose text is to be changed.</param>
@@ -729,9 +716,9 @@ namespace OpenToolkit.NT.Native
             /// </returns>
             [DllImport(Library, SetLastError = true, CharSet = CharSet.Unicode)]
             [return: MarshalAs(UnmanagedType.Bool)]
-            public static extern BOOL SetWindowText
+            public static extern bool SetWindowText
             (
-                [In] HWND window,
+                [In] IntPtr window,
                 [In] [Optional] string newText
             );
 
@@ -757,10 +744,10 @@ namespace OpenToolkit.NT.Native
             /// </returns>
             [DllImport(Library)]
             [return: MarshalAs(UnmanagedType.Bool)]
-            public static extern BOOL SetWindowPos
+            public static extern bool SetWindowPos
             (
-                [In] HWND window,
-                [In] [Optional] HWND windowInsertAfter,
+                [In] IntPtr window,
+                [In] [Optional] IntPtr windowInsertAfter,
                 [In] int x,
                 [In] int y,
                 [In] int cx,
@@ -790,9 +777,9 @@ namespace OpenToolkit.NT.Native
             /// </returns>
             [DllImport(Library)]
             [return: MarshalAs(UnmanagedType.Bool)]
-            public static extern BOOL SetWindowPos
+            public static extern bool SetWindowPos
             (
-                [In] HWND window,
+                [In] IntPtr window,
                 [In] [Optional] SetWindowPosHwndEnum windowInsertAfter,
                 [In] int x,
                 [In] int y,
@@ -816,7 +803,7 @@ namespace OpenToolkit.NT.Native
             /// </returns>
             [DllImport(Library)]
             [return: MarshalAs(UnmanagedType.Bool)]
-            public static extern BOOL SetForegroundWindow([In] HWND window);
+            public static extern bool SetForegroundWindow([In] IntPtr window);
 
             /// <summary>
             /// Brings the specified window to the top of the Z order. If the window is a top-level window, it is
@@ -831,7 +818,7 @@ namespace OpenToolkit.NT.Native
             /// </returns>
             [DllImport(Library, SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
-            public static extern BOOL BringWindowToTop([In] HWND window);
+            public static extern bool BringWindowToTop([In] IntPtr window);
 
             /// <summary>
             /// Changes the parent window of the specified child window.
@@ -847,10 +834,10 @@ namespace OpenToolkit.NT.Native
             /// To get extended error information, call <see cref="Marshal.GetLastWin32Error"/>.
             /// </returns>
             [DllImport(Library, SetLastError = true)]
-            public static extern HWND SetParent
+            public static extern IntPtr SetParent
             (
-                [In] HWND childWindow,
-                [In] [Optional] HWND newParent
+                [In] IntPtr childWindow,
+                [In] [Optional] IntPtr newParent
             );
 
             /// <summary>
@@ -870,7 +857,7 @@ namespace OpenToolkit.NT.Native
             [SuppressUnmanagedCodeSecurity]
             [DllImport(Library, SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
-            public static extern BOOL GetWindowInfo([In] HWND hwnd, [In] [Out] ref WindowInfo wi);
+            public static extern bool GetWindowInfo([In] IntPtr hwnd, [In] [Out] ref WindowInfo wi);
 
             /// <summary>
             /// Determines the visibility state of the specified window.
@@ -885,7 +872,7 @@ namespace OpenToolkit.NT.Native
             /// </returns>
             [DllImport(Library)]
             [return: MarshalAs(UnmanagedType.Bool)]
-            public static extern BOOL IsWindowVisible([In] HWND window);
+            public static extern bool IsWindowVisible([In] IntPtr window);
 
             /// <summary>
             /// Retrieves the dimensions of the bounding rectangle of the specified window. The dimensions are given
@@ -904,7 +891,7 @@ namespace OpenToolkit.NT.Native
             [SuppressUnmanagedCodeSecurity]
             [DllImport(Library, SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
-            public static extern BOOL GetWindowRect([In] HWND windowHandle, [Out] out Rect windowRectangle);
+            public static extern bool GetWindowRect([In] IntPtr windowHandle, [Out] out Rect windowRectangle);
 
             /// <summary>
             /// Retrieves the coordinates of a window's client area. The client coordinates specify the upper-left
@@ -925,7 +912,7 @@ namespace OpenToolkit.NT.Native
             [SuppressUnmanagedCodeSecurity]
             [DllImport(Library, SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
-            public static extern BOOL GetClientRect([In] HWND windowHandle, [Out] out Rect clientRectangle);
+            public static extern bool GetClientRect([In] IntPtr windowHandle, [Out] out Rect clientRectangle);
 
             /// <summary>
             /// Converts the screen coordinates of a specified point on the screen to client-area coordinates.
@@ -941,7 +928,7 @@ namespace OpenToolkit.NT.Native
             [SuppressUnmanagedCodeSecurity]
             [DllImport(Library, SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
-            public static extern BOOL ScreenToClient([In] HWND window, ref Point point);
+            public static extern bool ScreenToClient([In] IntPtr window, ref Point point);
 
             /// <summary>
             /// Converts the client-area coordinates of a specified point to screen coordinates.
@@ -958,7 +945,7 @@ namespace OpenToolkit.NT.Native
             [SuppressUnmanagedCodeSecurity]
             [DllImport(Library, SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
-            public static extern BOOL ClientToScreen([In] HWND window, [In] [Out] ref Point point);
+            public static extern bool ClientToScreen([In] IntPtr window, [In] [Out] ref Point point);
         }
     }
 }

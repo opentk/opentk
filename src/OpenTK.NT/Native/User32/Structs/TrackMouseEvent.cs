@@ -1,7 +1,5 @@
-﻿using System.Runtime.InteropServices;
-
-using DWORD = System.UInt32;
-using HWND = System.IntPtr;
+﻿using System;
+using System.Runtime.InteropServices;
 
 namespace OpenToolkit.NT.Native
 {
@@ -14,13 +12,13 @@ namespace OpenToolkit.NT.Native
         /// <summary>
         /// Set <see cref="HoverTime"/> to this value to use the system default hover time-out.
         /// </summary>
-        public const DWORD DefaultHoverTime = 0xFFFFFFFF;
+        public const uint DefaultHoverTime = 0xFFFFFFFF;
 
         /// <summary>
         /// The size of the <see cref="TrackMouseEvent"/> structure, in bytes.<para/>
         /// Set this to <see cref="SizeInBytes"/>.
         /// </summary>
-        public DWORD Size;
+        public uint Size;
 
         /// <summary>
         /// The services requested.
@@ -30,13 +28,13 @@ namespace OpenToolkit.NT.Native
         /// <summary>
         /// A handle to the window to track.
         /// </summary>
-        public HWND TrackWindowHandle;
+        public IntPtr TrackWindowHandle;
 
         /// <summary>
         /// The hover time-out (if <see cref="TrackMouseEvents.Hover"/> was specified in <see cref="Flags"/>), in
         /// milliseconds. Can be <see cref="DefaultHoverTime"/>, which means to use the system default hover time-out.
         /// </summary>
-        public DWORD HoverTime;
+        public uint HoverTime;
 
         /// <summary>
         /// The size of this structure in bytes.

@@ -1,11 +1,9 @@
-﻿using DWORD = System.UInt32;
-
-namespace OpenToolkit.NT.Native
+﻿namespace OpenToolkit.NT.Native
 {
     /// <summary>
     /// Specifies the type of media being printed on.
     /// </summary>
-    public enum PrinterMediaType : DWORD
+    public enum PrinterMediaType : uint
     {
         /// <summary>
         /// Plain paper.
