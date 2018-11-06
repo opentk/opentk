@@ -154,7 +154,7 @@ namespace OpenTK
 
             // Detect whether SDL2 is supported
             // We require:
-            // - SDL2 version 2.0.0 or higher (previous beta
+            // - SDL2 version 2.0.4 or higher (previous beta
             //   versions are not ABI-compatible)
             // - Successful SDL2 initialization (sometimes the
             //   binary exists but fails to initialize correctly)
@@ -162,7 +162,7 @@ namespace OpenTK
             try
             {
                 version = SDL.Version;
-                if (version.Number >= 2000)
+                if (version.Number >= 2040)
                 {
                     if (SDL.WasInit(0))
                     {
