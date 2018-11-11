@@ -70,7 +70,7 @@ namespace OpenTK.Platform.MacOS
         private static readonly IntPtr selKeyCode = Selector.Get("keyCode");
         private static readonly IntPtr selModifierFlags = Selector.Get("modifierFlags");
         private static readonly IntPtr selIsARepeat = Selector.Get("isARepeat");
-        private static readonly IntPtr selCharactersIgnoringModifiers = Selector.Get("charactersIgnoringModifiers");
+        private static readonly IntPtr selCharacters = Selector.Get("characters");
         private static readonly IntPtr selAddTrackingArea = Selector.Get("addTrackingArea:");
         private static readonly IntPtr selRemoveTrackingArea = Selector.Get("removeTrackingArea:");
         private static readonly IntPtr selTrackingArea = Selector.Get("trackingArea");
@@ -654,7 +654,7 @@ namespace OpenTK.Platform.MacOS
 
                             OnKeyDown(key, isARepeat);
 
-                            var s = Cocoa.FromNSString(Cocoa.SendIntPtr(e, selCharactersIgnoringModifiers));
+                            var s = Cocoa.FromNSString(Cocoa.SendIntPtr(e, selCharacters));
                             foreach (var c in s)
                             {
                                 int intVal = (int)c;
