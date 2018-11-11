@@ -89,6 +89,7 @@ namespace OpenTK.Platform.Windows
 
         private MouseCursor cursor = MouseCursor.Default;
         private IntPtr cursor_handle = Functions.LoadCursor(CursorName.Arrow);
+        private bool cursor_grabbed = false;
         private int cursor_visible_count = 0;
 
         private static readonly object SyncRoot = new object();
@@ -225,9 +226,9 @@ namespace OpenTK.Platform.Windows
             is_in_modal_loop = true;
             StartTimer(handle);
 
-            if (!CursorVisible)
+            if (cursor_grabbed)
             {
-                UngrabCursor();
+                SetCursorGrab(false);
             }
         }
 
@@ -239,9 +240,9 @@ namespace OpenTK.Platform.Windows
             StopTimer(handle);
 
             // Ensure cursor remains grabbed
-            if (!CursorVisible)
+            if (cursor_grabbed)
             {
-                GrabCursor();
+                SetCursorGrab(true);
             }
         }
 
@@ -284,9 +285,9 @@ namespace OpenTK.Platform.Windows
                         // If we are in a modal resize/move loop, cursor grabbing is
                         // handled inside [ENTER|EXIT]SIZEMOVE case above.
                         // If not, then we have to handle cursor grabbing here.
-                        if (!CursorVisible)
+                        if (cursor_grabbed)
                         {
-                            GrabCursor();
+                            SetCursorGrab(true);
                         }
                     }
                 }
@@ -322,9 +323,9 @@ namespace OpenTK.Platform.Windows
             if (new_border != windowBorder)
             {
                 // Ensure cursor remains grabbed
-                if (!CursorVisible)
+                if (cursor_grabbed)
                 {
-                    GrabCursor();
+                    SetCursorGrab(true);
                 }
 
                 windowBorder = new_border;
@@ -359,9 +360,9 @@ namespace OpenTK.Platform.Windows
                 OnWindowStateChanged(EventArgs.Empty);
 
                 // Ensure cursor remains grabbed
-                if (!CursorVisible)
+                if (cursor_grabbed)
                 {
-                    GrabCursor();
+                    SetCursorGrab(true);
                 }
             }
         }
@@ -1008,27 +1009,29 @@ namespace OpenTK.Platform.Windows
             suppress_resize--;
         }
 
-        private void GrabCursor()
+        private void SetCursorGrab(bool shouldGrab)
         {
-            Point pos = PointToScreen(new Point(ClientRectangle.X, ClientRectangle.Y));
-            Win32Rectangle rect = new Win32Rectangle();
-            rect.left = pos.X;
-            rect.right = pos.X + ClientRectangle.Width;
-            rect.top = pos.Y;
-            rect.bottom = pos.Y + ClientRectangle.Height;
-            if (!Functions.ClipCursor(ref rect))
+            if (shouldGrab)
             {
-                Debug.WriteLine(String.Format("Failed to grab cursor. Error: {0}",
-                    Marshal.GetLastWin32Error()));
+                Point pos = PointToScreen(new Point(ClientRectangle.X, ClientRectangle.Y));
+                Win32Rectangle rect = new Win32Rectangle();
+                rect.left = pos.X;
+                rect.right = pos.X + ClientRectangle.Width;
+                rect.top = pos.Y;
+                rect.bottom = pos.Y + ClientRectangle.Height;
+                if (!Functions.ClipCursor(ref rect))
+                {
+                    Debug.WriteLine(String.Format("Failed to grab cursor. Error: {0}",
+                                                  Marshal.GetLastWin32Error()));
+                }
             }
-        }
-
-        private void UngrabCursor()
-        {
-            if (!Functions.ClipCursor(IntPtr.Zero))
+            else
             {
-                Debug.WriteLine(String.Format("Failed to ungrab cursor. Error: {0}",
-                    Marshal.GetLastWin32Error()));
+                if (!Functions.ClipCursor(IntPtr.Zero))
+                {
+                    Debug.WriteLine(String.Format("Failed to ungrab cursor. Error: {0}",
+                                                  Marshal.GetLastWin32Error()));
+                }
             }
         }
 
@@ -1254,6 +1257,23 @@ namespace OpenTK.Platform.Windows
             }
         }
 
+        public override bool CursorGrabbed
+        {
+            get
+            {
+                return cursor_grabbed;
+            }
+            set
+            {
+                if (value == cursor_grabbed)
+                {
+                    return;
+                }
+                SetCursorGrab(value);
+                cursor_grabbed = value;
+            }
+        }
+
         public override bool CursorVisible
         {
             get
@@ -1273,8 +1293,6 @@ namespace OpenTK.Platform.Windows
                         cursor_visible_count = Functions.ShowCursor(true);
                     }
                     while (cursor_visible_count < 0);
-
-                    UngrabCursor();
                 }
                 else
                 {
@@ -1283,8 +1301,6 @@ namespace OpenTK.Platform.Windows
                         cursor_visible_count = Functions.ShowCursor(false);
                     }
                     while (cursor_visible_count >= 0);
-
-                    GrabCursor();
                 }
             }
         }
