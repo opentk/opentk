@@ -48,6 +48,7 @@ namespace OpenTK.Platform.SDL2
         private uint window_id;
         private bool is_visible;
         private bool is_focused;
+        private bool is_cursor_grabbed = false;
         private bool is_cursor_visible = true;
         private bool exists;
         private bool must_destroy;
@@ -224,7 +225,7 @@ namespace OpenTK.Platform.SDL2
 
             // We need MouseUp events to be reported even if they occur
             // outside the window. SetWindowGrab ensures we get them.
-            if (window.CursorVisible)
+            if (!window.is_cursor_grabbed)
             {
                 SDL.SetWindowGrab(window.window.Handle,
                     button_pressed ? true : false);
@@ -416,21 +417,14 @@ namespace OpenTK.Platform.SDL2
             window.Handle = IntPtr.Zero;
         }
 
-        private void GrabCursor(bool grab)
+        private void SetCursorGrab(bool shouldGrab)
         {
-            SDL.ShowCursor(!grab);
-            SDL.SetWindowGrab(window.Handle, grab);
-            SDL.SetRelativeMouseMode(grab);
-            if (!grab)
-            {
-                // Move the cursor to the current position
-                // in order to avoid a sudden jump when it
-                // becomes visible again
-                float scale = Width / (float)Size.Width;
-                SDL.WarpMouseInWindow(window.Handle,
-                    (int)Math.Round(MouseState.X / scale),
-                    (int)Math.Round(MouseState.Y / scale));
-            }
+            SDL.SetWindowGrab(window.Handle, shouldGrab);
+        }
+
+        private void SetCursorVisible(bool shouldVisible)
+        {
+            SDL.ShowCursor(shouldVisible);
         }
 
         // Hack to force WindowState events to be pumped
@@ -778,7 +772,7 @@ namespace OpenTK.Platform.SDL2
 
                             if (!CursorVisible)
                             {
-                                GrabCursor(true);
+                                SetCursorGrab(true);
                             }
                         }
                     }
@@ -919,6 +913,26 @@ namespace OpenTK.Platform.SDL2
             }
         }
 
+        public override bool CursorGrabbed
+        {
+            get
+            {
+                return is_cursor_grabbed;
+            }
+            set
+            {
+                lock (sync)
+                {
+                    if (!Exists || value == is_cursor_grabbed)
+                    {
+                        return;
+                    }
+                    SetCursorGrab(value);
+                    is_cursor_grabbed = value;
+                }
+            }
+        }
+
         public override bool CursorVisible
         {
             get
@@ -929,11 +943,12 @@ namespace OpenTK.Platform.SDL2
             {
                 lock (sync)
                 {
-                    if (Exists && value != is_cursor_visible)
+                    if (!Exists || value == is_cursor_visible)
                     {
-                        GrabCursor(!value);
-                        is_cursor_visible = value;
+                        return;
                     }
+                    SetCursorVisible(value);
+                    is_cursor_visible = value;
                 }
             }
         }
