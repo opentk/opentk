@@ -68,11 +68,6 @@ namespace OpenTK.Input
         RWin = WinRight,
         /// <summary>The menu key.</summary>
         Menu,
-
-        /// <summary>The Command key.</summary>
-        /// <remarks>Valid on OS-X only</remarks>
-        Command,
-
         // Function keys (hopefully enough for most keyboards - mine has 26)
         // <keysymdef.h> on X11 reports up to 35 function keys.
         /// <summary>The F1 key.</summary>
@@ -377,6 +372,9 @@ namespace OpenTK.Input
         /// <summary>The secondary backslash key.</summary>
         NonUSBackSlash,
         /// <summary>Indicates the last available keyboard key.</summary>
-        LastKey
+        LastKey,
+        /// <summary>The Command key.</summary>
+        /// <remarks>Valid on OS-X only</remarks>
+        Command,
     }
 }
