@@ -26,16 +26,6 @@ namespace Bind
         GL4,
 
         /// <summary>
-        /// Generate API bindings for OpenGL ES 1.0.
-        /// </summary>
-        ES10,
-
-        /// <summary>
-        /// Generate API bindings for OpenGL ES 1.1.
-        /// </summary>
-        ES11,
-
-        /// <summary>
         /// Generate API bindings for OpenGL ES 2.0.
         /// </summary>
         ES20,

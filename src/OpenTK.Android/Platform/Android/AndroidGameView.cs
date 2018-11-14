@@ -76,7 +76,7 @@ namespace OpenTK.Platform.Android
         private void Init ()
         {
             // default
-            ContextRenderingApi = GLVersion.ES1;
+            ContextRenderingApi = GLVersion.ES2;
             mHolder = Holder;
             RenderThreadRestartRetries = 3;
 

@@ -17,8 +17,6 @@ namespace OpenToolkit.Rewrite.Methods.Processors
         {
             "OpenToolkit.Graphics.OpenGL4",
             "OpenToolkit.Graphics.OpenGL",
-            "OpenToolkit.Graphics.ES10",
-            "OpenToolkit.Graphics.ES11",
             "OpenToolkit.Graphics.ES20",
             "OpenToolkit.Graphics.ES30",
         };

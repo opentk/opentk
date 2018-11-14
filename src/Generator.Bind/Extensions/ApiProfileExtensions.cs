@@ -19,7 +19,6 @@ namespace Bind.Extensions
         {
             { "gl", "OpenGL (Compatibility Profile)" },
             { "glcore", "OpenGL (Core Profile)" },
-            { "gles1", "OpenGL ES 1.0" },
             { "gles2", "OpenGL ES 2.0" },
             { "glsc2", "OpenGL SC 2.0" }
         };
