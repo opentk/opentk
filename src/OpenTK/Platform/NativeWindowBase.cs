@@ -189,8 +189,8 @@ namespace OpenTK.Platform
 
             if (control)
             {
-                OnKeyDown(Key.ControlLeft, KeyboardState[Key.AltLeft]);
-                OnKeyDown(Key.ControlRight, KeyboardState[Key.AltLeft]);
+                OnKeyDown(Key.ControlLeft, KeyboardState[Key.ControlLeft]);
+                OnKeyDown(Key.ControlRight, KeyboardState[Key.ControlRight]);
             }
             else
             {
@@ -206,8 +206,8 @@ namespace OpenTK.Platform
 
             if (shift)
             {
-                OnKeyDown(Key.ShiftLeft, KeyboardState[Key.AltLeft]);
-                OnKeyDown(Key.ShiftRight, KeyboardState[Key.AltLeft]);
+                OnKeyDown(Key.ShiftLeft, KeyboardState[Key.ShiftLeft]);
+                OnKeyDown(Key.ShiftRight, KeyboardState[Key.ShiftRight]);
             }
             else
             {
@@ -223,7 +223,7 @@ namespace OpenTK.Platform
 
             if (command)
             {
-                OnKeyDown(Key.Command, KeyboardState[Key.AltLeft]);
+                OnKeyDown(Key.Command, KeyboardState[Key.Command]);
             }
             else
             {
