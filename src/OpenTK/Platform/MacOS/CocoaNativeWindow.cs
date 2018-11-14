@@ -636,6 +636,8 @@ namespace OpenTK.Platform.MacOS
             return (MouseButton)cocoaButtonIndex;
         }
 
+
+
         public override void ProcessEvents()
         {
             base.ProcessEvents();
@@ -660,15 +662,18 @@ namespace OpenTK.Platform.MacOS
 
                             OnKeyDown(key, isARepeat);
 
-                            var s = Cocoa.FromNSString(Cocoa.SendIntPtr(e, selCharacters));
-                            foreach (var c in s)
+                            if (IsKeyPressEvent(key))
                             {
-                                int intVal = (int)c;
-                                if (!Char.IsControl(c) && (intVal < 63232 || intVal > 63235))
+                                var s = Cocoa.FromNSString(Cocoa.SendIntPtr(e, selCharacters));
+                                foreach (var c in s)
                                 {
-                                    // For some reason, arrow keys (mapped 63232-63235)
-                                    // are seen as non-control characters, so get rid of those.
-                                    OnKeyPress(c);
+                                    int intVal = (int)c;
+                                    if (!Char.IsControl(c) && (intVal < 63232 || intVal > 63235))
+                                    {
+                                        // For some reason, arrow keys (mapped 63232-63235)
+                                        // are seen as non-control characters, so get rid of those.
+                                        OnKeyPress(c);
+                                    }
                                 }
                             }
                         }
@@ -820,6 +825,16 @@ namespace OpenTK.Platform.MacOS
                 shouldClose = false;
                 CloseWindow(false);
             }
+        }
+
+
+        bool IsKeyPressEvent(Key key)
+        {
+            // Cut, Copy and Paste Events should not trigger a key press event
+            return
+                !KeyboardState[Key.Command] ||
+                (key != Key.V && key != Key.C && key != Key.X)
+            ;
         }
 
         public override Point PointToClient(Point point)
@@ -1242,11 +1257,7 @@ namespace OpenTK.Platform.MacOS
 
             // Inside this rectangle, the following NSCursor will be used
             var cursor = IntPtr.Zero;
-            if (!CursorVisible)
-            {
-                cursor = ToNSCursor(MouseCursor.Empty);
-            }
-            else if (selectedCursor == MouseCursor.Default)
+            if (selectedCursor == MouseCursor.Default)
             {
                 cursor = Cocoa.SendIntPtr(NSCursor, selArrowCursor);
             }
@@ -1279,6 +1290,7 @@ namespace OpenTK.Platform.MacOS
                 {
                     return;
                 }
+
                 SetCursorGrab(value);
                 cursorGrabbed = value;
             }
@@ -1297,9 +1309,14 @@ namespace OpenTK.Platform.MacOS
                     return;
                 }
                 cursorVisible = value;
-                // Another approach will be use of hide and unhide methods
-                // of NSCursor
-                InvalidateCursorRects();
+
+                if (!cursorVisible)
+                {
+                    CG.DisplayHideCursor(WindowInfo.Handle);
+                } else
+                {
+                    CG.DisplayShowCursor(WindowInfo.Handle);
+                }
             }
         }
 
