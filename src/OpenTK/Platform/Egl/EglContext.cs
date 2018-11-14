@@ -222,7 +222,7 @@ namespace OpenTK.Platform.Egl
 
         public override IntPtr GetAddress(IntPtr function)
         {
-            // Try loading a static export from ES1 or ES2
+            // Try loading a static export from ES2
             var address = GetStaticAddress(function, Renderable);
 
             // If a static export is not available, try retrieving an extension
