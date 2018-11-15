@@ -25,6 +25,8 @@
 
 using System;
 using System.Drawing;
+using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 
 namespace OpenToolkit.Mathematics
 {
@@ -32,6 +34,7 @@ namespace OpenToolkit.Mathematics
     /// Represents a color with 4 floating-point components (R, G, B, A).
     /// </summary>
     [Serializable]
+    [StructLayout(LayoutKind.Sequential)]
     public struct Color4 : IEquatable<Color4>
     {
         /// <summary>
@@ -147,6 +150,44 @@ namespace OpenToolkit.Mathematics
                 (int)(color.R * byte.MaxValue),
                 (int)(color.G * byte.MaxValue),
                 (int)(color.B * byte.MaxValue));
+        }
+
+        /// <summary>
+        /// Returns this Color4 as a Vector4.
+        /// </summary>
+        /// <param name="c">The Color4 to convert.</param>
+        /// <returns>The Color4 to convert into a Vector4.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static explicit operator Vector4(Color4 c)
+        {
+            unsafe
+            {
+                return *((Vector4*)&c);
+            }
+        }
+
+        /// <summary>
+        /// Returns a new Vector4.
+        /// </summary>
+        /// <returns>f.</returns>
+        public Vector4 AsVector4()
+        {
+            return new Vector4(R, G, B, A);
+        }
+
+        /// <summary>
+        /// this is a bad idea.
+        /// </summary>
+        /// <returns>why is this necessary for simple operations.</returns>
+        public Vector4 AsVector4Unsafe()
+        {
+            unsafe
+            {
+                fixed (Color4* ptr = &this)
+                {
+                    return *((Vector4*)ptr);
+                }
+            }
         }
 
         /// <summary>
