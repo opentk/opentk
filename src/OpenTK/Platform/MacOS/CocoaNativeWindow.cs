@@ -764,6 +764,11 @@ namespace OpenTK.Platform.MacOS
                             // Only raise events when the mouse has actually moved
                             if (MouseState.X != p.X || MouseState.Y != p.Y)
                             {
+                                if (!cursorVisible)
+                                {
+                                    CG.DisplayHideCursor(WindowInfo.Handle);
+                                }
+
                                 OnMouseMove(p.X, p.Y);
                             }
                         }
