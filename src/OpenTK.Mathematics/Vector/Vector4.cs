@@ -2039,7 +2039,7 @@ namespace OpenToolkit.Mathematics
         }
 
         /// <summary>
-        /// Returns this Vector4 as a Color4.
+        /// Returns this Vector4 as a Color4. The resulting struct will have RGBA mapped to XYZW, in that order.
         /// </summary>
         /// <param name="v">The Vector4 to convert.</param>
         /// <returns>The Vector4 converted to a Color4.</returns>
@@ -2048,6 +2048,8 @@ namespace OpenToolkit.Mathematics
         {
             unsafe
             {
+                // Because these structs are identical on the byte-level (due to the StructLayout above),
+                // we can use pointer-casting to convert this into a Color4, which lets us reinterpret the data instead of copying it to a new struct.
                 return *((Color4*)&v);
             }
         }
