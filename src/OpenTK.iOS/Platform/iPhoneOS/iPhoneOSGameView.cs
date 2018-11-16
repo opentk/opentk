@@ -23,8 +23,6 @@ using OpenTK.Input;
 using OpenTK.Platform;
 using OpenTK.Platform.iPhoneOS;
 
-using All  = OpenTK.Graphics.ES11.All;
-using ES11 = OpenTK.Graphics.ES11;
 using ES20 = OpenTK.Graphics.ES20;
 using ES30 = OpenTK.Graphics.ES30;
 
@@ -62,30 +60,10 @@ namespace OpenTK.Platform.iPhoneOS
         public static GLCalls GetGLCalls(EAGLRenderingAPI api)
         {
             switch (api) {
-                case EAGLRenderingAPI.OpenGLES1: return CreateES1();
                 case EAGLRenderingAPI.OpenGLES2: return CreateES2();
                 case EAGLRenderingAPI.OpenGLES3: return CreateES3();
             }
             throw new ArgumentException("api");
-        }
-
-        private static GLCalls CreateES1()
-        {
-            return new GLCalls() {
-                BindFramebuffer          = (t, f)              => ES11.GL.Oes.BindFramebuffer(t, f),
-                BindRenderbuffer         = (t, r)              => ES11.GL.Oes.BindRenderbuffer(t, r),
-                DeleteFramebuffers       = (int n, ref int f)  => ES11.GL.Oes.DeleteFramebuffers(n, ref f),
-                DeleteRenderbuffers      = (int n, ref int r)  => ES11.GL.Oes.DeleteRenderbuffers(n, ref r),
-                FramebufferRenderbuffer  = (t, a, rt, rb)      => ES11.GL.Oes.FramebufferRenderbuffer(t, a, rt, rb),
-                GenFramebuffers          = (int n, out int f)  => ES11.GL.Oes.GenFramebuffers(n, out f),
-                GenRenderbuffers         = (int n, out int r)  => ES11.GL.Oes.GenRenderbuffers(n, out r),
-                GetInteger               = (All n, out int v)  => ES11.GL.GetInteger(n, out v),
-                Scissor                  = (x, y, w, h)        => ES11.GL.Scissor(x, y, w, h),
-                Viewport                 = (x, y, w, h)        => ES11.GL.Viewport(x, y, w, h),
-                GetRenderbufferParameter = (All t, All p, out int a) => ES11.GL.Oes.GetRenderbufferParameter (t, p, out a),
-                PixelStore               = (n, p)                    => ES11.GL.PixelStore(n, p),
-                ReadPixels               = (x, y, w, h, f, t, d)     => ES11.GL.ReadPixels(x, y, w, h, f, t, d),
-            };
         }
 
         private static GLCalls CreateES2()
@@ -576,7 +554,6 @@ namespace OpenTK.Platform.iPhoneOS
             int major = 0, minor = 0;
             switch (ContextRenderingApi)
             {
-                case EAGLRenderingAPI.OpenGLES1: major = 1; minor = 1; break;
                 case EAGLRenderingAPI.OpenGLES2: major = 2; minor = 0; break;
                 case EAGLRenderingAPI.OpenGLES3: major = 3; minor = 0; break;
                 default:

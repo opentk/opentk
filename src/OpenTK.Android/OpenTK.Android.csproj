@@ -120,10 +120,6 @@
     <Compile Include="Graphics\GraphicsModeException.cs" />
     <Compile Include="Graphics\IGraphicsContext.cs" />
     <Compile Include="Graphics\IGraphicsMode.cs" />
-    <Compile Include="Graphics\ES11\ES11.cs" />
-    <Compile Include="Graphics\ES11\ES11Enums.cs" />
-    <Compile Include="Graphics\ES11\ErrorHelper.cs" />
-    <Compile Include="Graphics\ES11\Helper.cs" />
     <Compile Include="Graphics\ES20\ES20.cs" />
     <Compile Include="Graphics\ES20\ES20Enums.cs" />
     <Compile Include="Graphics\ES20\ErrorHelper.cs" />

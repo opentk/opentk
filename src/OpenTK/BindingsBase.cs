@@ -45,8 +45,8 @@ namespace OpenTK
         /// </summary>
         /// <remarks>
         /// This object should be unique across bindings but consistent between bindings
-        /// of the same type. For example, ES10.GL, OpenGL.GL and CL10.CL should all return
-        /// unique objects, but all instances of ES10.GL should return the same object.
+        /// of the same type. For example, ES20.GL, OpenGL.GL and CL20.CL should all return
+        /// unique objects, but all instances of ES20.GL should return the same object.
         /// </remarks>
         protected abstract object SyncRoot { get; }
 

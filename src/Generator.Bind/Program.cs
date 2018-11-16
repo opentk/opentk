@@ -176,8 +176,6 @@ namespace Bind
             {
                 Generators.Add(new GL2GeneratorSettings());
                 Generators.Add(new GLCore4GeneratorSettings());
-                Generators.Add(new ES10GeneratorSettings());
-                Generators.Add(new ES11GeneratorSettings());
                 Generators.Add(new ES20GeneratorSettings());
                 Generators.Add(new ES30GeneratorSettings());
                 Generators.Add(new ES31GeneratorSettings());
@@ -197,16 +195,6 @@ namespace Bind
                         case TargetAPI.GL4:
                         {
                             Generators.Add(new GLCore4GeneratorSettings());
-                            break;
-                        }
-                        case TargetAPI.ES10:
-                        {
-                            Generators.Add(new ES10GeneratorSettings());
-                            break;
-                        }
-                        case TargetAPI.ES11:
-                        {
-                            Generators.Add(new ES11GeneratorSettings());
                             break;
                         }
                         case TargetAPI.ES20:

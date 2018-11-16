@@ -36,7 +36,6 @@ namespace OpenTK.Platform.Egl
 {
     internal class EglUnixContext : EglContext
     {
-        private IntPtr ES1 = DL.Open("libGLESv1_CM", DLOpenFlags.Lazy);
         private IntPtr ES2 = DL.Open("libGLESv2", DLOpenFlags.Lazy);
         private IntPtr GL = DL.Open("libGL", DLOpenFlags.Lazy);
 
@@ -59,11 +58,6 @@ namespace OpenTK.Platform.Egl
                 return DL.Symbol(ES2, function);
             }
 
-            if ((renderable & RenderableFlags.ES) != 0 && ES1 != IntPtr.Zero)
-            {
-                return DL.Symbol(ES1, function);
-            }
-
             if ((renderable & RenderableFlags.GL) != 0 && GL != IntPtr.Zero)
             {
                 return DL.Symbol(GL, function);
@@ -74,11 +68,6 @@ namespace OpenTK.Platform.Egl
 
         protected override void Dispose(bool manual)
         {
-            if (ES1 != IntPtr.Zero)
-            {
-                DL.Close(ES1);
-            }
-
             if (ES2 != IntPtr.Zero)
             {
                 DL.Close(ES2);
@@ -89,7 +78,7 @@ namespace OpenTK.Platform.Egl
                 DL.Close(GL);
             }
 
-            GL = ES1 = ES2 = IntPtr.Zero;
+            GL = ES2 = IntPtr.Zero;
 
             base.Dispose(manual);
         }
@@ -105,7 +94,6 @@ namespace OpenTK.Platform.Egl
 
             new GL().LoadEntryPoints();
             new Graphics.OpenGL4.GL().LoadEntryPoints();
-            new Graphics.ES11.GL().LoadEntryPoints();
             new Graphics.ES20.GL().LoadEntryPoints();
             new Graphics.ES30.GL().LoadEntryPoints();
 
