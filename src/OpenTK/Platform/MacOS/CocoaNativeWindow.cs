@@ -764,11 +764,6 @@ namespace OpenTK.Platform.MacOS
                             // Only raise events when the mouse has actually moved
                             if (MouseState.X != p.X || MouseState.Y != p.Y)
                             {
-                                if (!cursorVisible)
-                                {
-                                    CG.DisplayHideCursor(WindowInfo.Handle);
-                                }
-
                                 OnMouseMove(p.X, p.Y);
                             }
                         }
@@ -1317,10 +1312,23 @@ namespace OpenTK.Platform.MacOS
 
                 if (!cursorVisible)
                 {
-                    CG.DisplayHideCursor(WindowInfo.Handle);
+                    // The mac os feature "Shake mouse pointer to locate" seems to still be visible when calling hide only once
+                    // but calling it multiple times seems to resolve the issue
+                    CG.DisplayHideCursor (WindowInfo.Handle);
+                    CG.DisplayHideCursor (WindowInfo.Handle);
+                    CG.DisplayHideCursor (WindowInfo.Handle);
+                    CG.DisplayHideCursor (WindowInfo.Handle);
+
+                    CG.AssociateMouseAndMouseCursorPosition (false);
                 } else
                 {
-                    CG.DisplayShowCursor(WindowInfo.Handle);
+                    CG.DisplayShowCursor (WindowInfo.Handle);
+                    CG.DisplayShowCursor (WindowInfo.Handle);
+                    CG.DisplayShowCursor (WindowInfo.Handle);
+                    CG.DisplayShowCursor (WindowInfo.Handle);
+                   
+
+                    CG.AssociateMouseAndMouseCursorPosition (true);
                 }
             }
         }
