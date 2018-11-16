@@ -25,6 +25,8 @@
 
 using System;
 using System.Drawing;
+using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 
 namespace OpenToolkit.Mathematics
 {
@@ -32,6 +34,7 @@ namespace OpenToolkit.Mathematics
     /// Represents a color with 4 floating-point components (R, G, B, A).
     /// </summary>
     [Serializable]
+    [StructLayout(LayoutKind.Sequential)]
     public struct Color4 : IEquatable<Color4>
     {
         /// <summary>
@@ -147,6 +150,22 @@ namespace OpenToolkit.Mathematics
                 (int)(color.R * byte.MaxValue),
                 (int)(color.G * byte.MaxValue),
                 (int)(color.B * byte.MaxValue));
+        }
+
+        /// <summary>
+        /// Returns this Color4 as a Vector4. The resulting struct will have XYZW mapped to RGBA, in that order.
+        /// </summary>
+        /// <param name="c">The Color4 to convert.</param>
+        /// <returns>The Color4 to convert into a Vector4.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static explicit operator Vector4(Color4 c)
+        {
+            unsafe
+            {
+                // Because these structs are identical on the byte-level (due to the StructLayout above),
+                // we can use pointer-casting to convert this into a Vector4, which lets us reinterpret the data instead of copying it to a new struct.
+                return *((Vector4*)&c);
+            }
         }
 
         /// <summary>
