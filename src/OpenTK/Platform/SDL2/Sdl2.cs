@@ -73,9 +73,6 @@ namespace OpenTK.Platform.SDL2
         private static string IntPtrToString(IntPtr ptr)
         {
             return Marshal.PtrToStringAnsi(ptr);
-            //int strlen = 0;
-            //while (Marshal.ReadByte(ptr) != 0)
-            //    strlen++;
         }
 
         [SuppressUnmanagedCodeSecurity]
@@ -1516,20 +1513,6 @@ namespace OpenTK.Platform.SDL2
         [FieldOffset(0)] public ControllerButtonEvent ControllerButton;
         [FieldOffset(0)] public ControllerDeviceEvent ControllerDevice;
         [FieldOffset(0)] public DropEvent Drop;
-#if false
-        [FieldOffset(0)]
-        public QuitEvent quit;
-        [FieldOffset(0)]
-        public UserEvent user;
-        [FieldOffset(0)]
-        public SysWMEvent syswm;
-        [FieldOffset(0)]
-        public TouchFingerEvent tfinger;
-        [FieldOffset(0)]
-        public MultiGestureEvent mgesture;
-        [FieldOffset(0)]
-        public DollarGestureEvent dgesture;
-#endif
 
         // Ensure the structure is big enough
         // This hack is necessary to ensure compatibility
