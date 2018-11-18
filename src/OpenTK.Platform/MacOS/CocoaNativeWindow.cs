@@ -34,10 +34,7 @@ using OpenToolkit.Graphics;
 using OpenToolkit.Input;
 using OpenToolkit.Mathematics;
 using OpenToolkit.Core.Platform;
-#if !MINIMAL
 using System.Drawing;
-
-#endif
 
 namespace OpenToolkit.Platform.MacOS
 {

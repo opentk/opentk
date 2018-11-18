@@ -28,11 +28,8 @@
 using System;
 using System.IO;
 using System.Runtime.InteropServices;
-#if !MINIMAL
 using System.Drawing;
 using System.Drawing.Imaging;
-
-#endif
 
 namespace OpenTK.Platform.MacOS
 {

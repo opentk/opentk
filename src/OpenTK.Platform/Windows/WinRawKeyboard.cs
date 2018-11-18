@@ -31,10 +31,7 @@ using OpenToolkit.Core;
 using OpenToolkit.Input;
 using OpenToolkit.NT.Native;
 using OpenToolkit.Input.Hid;
-#if !(ANDROID || IPHONE || MINIMAL)
 using Microsoft.Win32;
-
-#endif
 
 namespace OpenToolkit.Platform.Windows
 {

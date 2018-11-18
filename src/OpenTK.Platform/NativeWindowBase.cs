@@ -29,10 +29,7 @@ using System;
 using System.ComponentModel;
 using System.Diagnostics;
 using OpenToolkit.Input;
-#if !MINIMAL
 using System.Drawing;
-
-#endif
 
 namespace OpenToolkit.Platform
 {

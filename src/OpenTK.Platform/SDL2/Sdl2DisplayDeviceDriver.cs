@@ -24,10 +24,7 @@
 //
 
 using System.Collections.Generic;
-#if !MINIMAL
 using System.Drawing;
-
-#endif
 
 namespace OpenToolkit.Platform.SDL2
 {

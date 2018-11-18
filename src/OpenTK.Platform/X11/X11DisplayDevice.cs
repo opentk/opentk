@@ -27,10 +27,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
-#if !MINIMAL
 using System.Drawing;
-
-#endif
 
 namespace OpenToolkit.Platform.X11
 {

@@ -31,10 +31,7 @@ using System.Runtime.InteropServices;
 using System.Threading;
 using OpenToolkit.Input;
 using OpenToolkit.Mathematics;
-#if !MINIMAL
 using System.Drawing;
-
-#endif
 
 namespace OpenToolkit.Platform.Linux
 {

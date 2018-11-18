@@ -30,11 +30,8 @@ using System.Runtime.InteropServices;
 using System.Text;
 using OpenToolkit.Input;
 using OpenToolkit.NT.Native;
-#if !MINIMAL
 using System.Drawing;
 using System.Drawing.Imaging;
-
-#endif
 
 namespace OpenToolkit.Platform.Windows
 {

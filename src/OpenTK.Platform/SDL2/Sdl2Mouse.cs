@@ -27,9 +27,6 @@ using System;
 using System.Diagnostics;
 using OpenToolkit.Input;
 
-#if !MINIMAL
-#endif
-
 namespace OpenToolkit.Platform.SDL2
 {
     internal class Sdl2Mouse : IMouseDriver2

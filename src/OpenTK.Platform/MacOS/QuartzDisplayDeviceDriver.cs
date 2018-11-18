@@ -27,10 +27,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using OpenToolkit.Platform.MacOS.Carbon;
-#if !MINIMAL
 using System.Drawing;
-
-#endif
 
 namespace OpenToolkit.Platform.MacOS
 {

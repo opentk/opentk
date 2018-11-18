@@ -30,15 +30,8 @@ using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Text;
 using OpenToolkit.Input;
-#if !MINIMAL
 using System.Drawing;
-#endif
-#if ANDROID || IPHONE || MINIMAL
-using OpenToolkit.Minimal;
-#else
 using System.Drawing.Imaging;
-
-#endif
 
 namespace OpenToolkit.Platform.SDL2
 {

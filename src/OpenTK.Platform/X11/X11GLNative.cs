@@ -32,10 +32,7 @@ using System.Text;
 using OpenToolkit.Graphics;
 using OpenToolkit.Input;
 using OpenToolkit.Mathematics;
-#if !MINIMAL
 using System.Drawing;
-
-#endif
 
 namespace OpenToolkit.Platform.X11
 {

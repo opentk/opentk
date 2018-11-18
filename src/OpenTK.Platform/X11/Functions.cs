@@ -7,15 +7,8 @@
 using System;
 using System.Runtime.InteropServices;
 using System.Text;
-#if !MINIMAL
 using System.Drawing;
-#endif
-#if ANDROID || IPHONE || MINIMAL
-using OpenToolkit.Minimal;
-#else
 using System.Drawing.Imaging;
-
-#endif
 
 namespace OpenToolkit.Platform.X11
 {

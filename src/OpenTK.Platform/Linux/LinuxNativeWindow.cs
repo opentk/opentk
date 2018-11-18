@@ -31,10 +31,7 @@ using OpenToolkit.Graphics;
 using OpenToolkit.Input;
 using OpenToolkit.Mathematics;
 using OpenToolkit.Platform.Egl;
-#if !MINIMAL
 using System.Drawing;
-
-#endif
 
 namespace OpenToolkit.Platform.Linux
 {

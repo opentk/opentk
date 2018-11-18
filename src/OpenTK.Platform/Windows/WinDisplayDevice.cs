@@ -27,11 +27,8 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
-#if !MINIMAL
 using Microsoft.Win32;
 using OpenToolkit.NT.Native;
-
-#endif
 
 namespace OpenToolkit.Platform.Windows
 {
