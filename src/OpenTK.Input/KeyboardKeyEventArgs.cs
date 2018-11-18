@@ -37,7 +37,7 @@ namespace OpenToolkit.Input
     ///  <see cref="KeyboardKeyEventArgs(KeyboardKeyEventArgs)" /> constructor.
     ///  </para>
     /// </remarks>
-    public class KeyboardKeyEventArgs : EventArgs
+    public sealed class KeyboardKeyEventArgs : EventArgs
     {
         /// <summary>
         /// Constructs a new KeyboardEventArgs instance.

@@ -5,7 +5,7 @@ namespace OpenToolkit.Input
     /// <summary>
     /// Defines the event data for <see cref="NativeWindow" /> events.
     /// </summary>
-    public class FileDropEventArgs : EventArgs
+    public sealed class FileDropEventArgs : EventArgs
     {
         /// <summary>
         /// Gets the name of the file.

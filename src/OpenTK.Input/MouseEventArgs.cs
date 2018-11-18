@@ -154,7 +154,7 @@ namespace OpenToolkit.Input
     ///  <see cref="MouseMoveEventArgs(MouseMoveEventArgs)" /> constructor.
     ///  </para>
     /// </remarks>
-    public class MouseMoveEventArgs : MouseEventArgs
+    public sealed class MouseMoveEventArgs : MouseEventArgs
     {
         /// <summary>
         /// Constructs a new <see cref="MouseMoveEventArgs" /> instance.
@@ -207,7 +207,7 @@ namespace OpenToolkit.Input
     ///  <see cref="MouseButtonEventArgs(MouseButtonEventArgs)" /> constructor.
     ///  </para>
     /// </remarks>
-    public class MouseButtonEventArgs : MouseEventArgs
+    public sealed class MouseButtonEventArgs : MouseEventArgs
     {
         /// <summary>
         /// Constructs a new <see cref="MouseButtonEventArgs" /> instance.
@@ -264,7 +264,7 @@ namespace OpenToolkit.Input
     ///  <see cref="MouseWheelEventArgs(MouseWheelEventArgs)" /> constructor.
     ///  </para>
     /// </remarks>
-    public class MouseWheelEventArgs : MouseEventArgs
+    public sealed class MouseWheelEventArgs : MouseEventArgs
     {
         /// <summary>
         /// Constructs a new <see cref="MouseWheelEventArgs" /> instance.

@@ -30,7 +30,7 @@ using System.Collections.Generic;
 
 namespace OpenToolkit.Input
 {
-    internal class GamePadConfigurationDatabase
+    internal sealed class GamePadConfigurationDatabase
     {
         internal const string UnmappedName = "Unmapped Controller";
 

@@ -27,7 +27,7 @@
 
 namespace OpenToolkit.Input
 {
-    internal class GamePadConfigurationItem
+    internal sealed class GamePadConfigurationItem
     {
         public GamePadConfigurationItem(GamePadConfigurationSource source, GamePadConfigurationTarget target)
         {
