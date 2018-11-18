@@ -38,7 +38,7 @@ namespace OpenToolkit.Platform
 #if OPENGLES
             new OpenToolkit.Graphics.ES20.GL().LoadEntryPoints();
             new OpenToolkit.Graphics.ES30.GL().LoadEntryPoints();
-            #endif
+#endif
 
             Debug.Print("Bindings loaded in {0} ms.", time.Elapsed.TotalMilliseconds);
         }
