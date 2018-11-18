@@ -3,9 +3,14 @@
     <ProjectReference Include="..\OpenTK.Input\OpenTK.Input.csproj" />
     <ProjectReference Include="..\OpenTK.Core\OpenTK.Core.csproj" />
   </ItemGroup>
+
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <Deterministic>true</Deterministic>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
 
   <PropertyGroup>
