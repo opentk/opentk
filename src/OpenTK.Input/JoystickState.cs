@@ -29,7 +29,7 @@ using System;
 using System.Diagnostics;
 using System.Text;
 
-namespace OpenTK.Input
+namespace OpenToolkit.Input
 {
     /// <summary>
     /// Describes the current state of a <see cref="JoystickDevice" />.

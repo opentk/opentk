@@ -27,7 +27,7 @@
 
 using System;
 
-namespace OpenTK.Input
+namespace OpenToolkit.Input
 {
     internal interface IJoystickDriver2
     {

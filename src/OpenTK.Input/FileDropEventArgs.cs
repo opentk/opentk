@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace OpenTK.Input
+namespace OpenToolkit.Input
 {
     /// <summary>
     /// Defines the event data for <see cref="NativeWindow" /> events.

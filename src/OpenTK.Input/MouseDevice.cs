@@ -30,7 +30,7 @@ using System;
 #endif
 
 
-namespace OpenTK.Input
+namespace OpenToolkit.Input
 {
     /// <summary>
     /// Represents a mouse device and provides methods to query its status.

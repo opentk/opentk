@@ -31,7 +31,7 @@ using System.Drawing;
 
 #endif
 
-namespace OpenTK.Input
+namespace OpenToolkit.Input
 {
     /// <summary>
     /// Defines the event data for <see cref="MouseDevice" /> events.

@@ -24,9 +24,9 @@
 //
 
 using System;
-using OpenTK.Mathematics;
+using OpenToolkit.Mathematics;
 
-namespace OpenTK.Input
+namespace OpenToolkit.Input
 {
     /// <summary>
     /// Encapsulates the state of a mouse device.

@@ -25,7 +25,7 @@
 // THE SOFTWARE.
 //
 
-namespace OpenTK.Input
+namespace OpenToolkit.Input
 {
     internal struct GamePadConfigurationTarget
     {

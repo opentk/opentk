@@ -27,7 +27,7 @@
 
 using System;
 
-namespace OpenTK.Input
+namespace OpenToolkit.Input
 {
     /// <summary>
     /// Describes the capabilities of a <c>GamePad</c> input device.

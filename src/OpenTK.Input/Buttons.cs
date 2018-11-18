@@ -26,7 +26,7 @@
 
 using System;
 
-namespace OpenTK.Input
+namespace OpenToolkit.Input
 {
     /// <summary>
     /// Enumerates available buttons for a <c>GamePad</c> device.

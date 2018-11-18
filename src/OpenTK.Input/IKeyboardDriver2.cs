@@ -1,4 +1,4 @@
-﻿namespace OpenTK.Input
+﻿namespace OpenToolkit.Input
 {
     internal interface IKeyboardDriver2
     {

@@ -28,7 +28,7 @@
 using System;
 using System.Text;
 
-namespace OpenTK.Input
+namespace OpenToolkit.Input
 {
     /// <summary>
     /// Describes the <see cref="ButtonState" /> of <see cref="GamePad" /> <see cref="Buttons" />.

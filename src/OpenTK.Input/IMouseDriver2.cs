@@ -23,7 +23,7 @@
 // OTHER DEALINGS IN THE SOFTWARE.
 //
 
-namespace OpenTK.Input
+namespace OpenToolkit.Input
 {
     internal interface IMouseDriver2
     {

@@ -28,7 +28,7 @@
 
 using System;
 
-namespace OpenTK.Input
+namespace OpenToolkit.Input
 {
     /// <summary>
     /// Describes the state of a <see cref="GamePad" /> trigger buttons.

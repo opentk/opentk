@@ -26,9 +26,9 @@
 //
 
 using System;
-using OpenTK.Mathematics;
+using OpenToolkit.Mathematics;
 
-namespace OpenTK.Input
+namespace OpenToolkit.Input
 {
     /// <summary>
     /// Describes the current thumb stick state of a <see cref="GamePad" /> device

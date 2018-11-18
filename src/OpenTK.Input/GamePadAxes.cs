@@ -26,7 +26,7 @@
 
 using System;
 
-namespace OpenTK.Input
+namespace OpenToolkit.Input
 {
     [Flags]
     internal enum GamePadAxes : byte

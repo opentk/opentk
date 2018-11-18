@@ -28,7 +28,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace OpenTK.Input
+namespace OpenToolkit.Input
 {
     internal sealed class GamePadConfiguration
     {

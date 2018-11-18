@@ -25,7 +25,7 @@
 
 using System;
 
-namespace OpenTK.Input
+namespace OpenToolkit.Input
 {
     // Defines the interface for a 2nd generation input driver.
     internal interface IInputDriver2 : IDisposable

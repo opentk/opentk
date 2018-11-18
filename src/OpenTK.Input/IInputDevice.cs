@@ -2,7 +2,7 @@
  * See license.txt for license info
  */
 
-namespace OpenTK.Input
+namespace OpenToolkit.Input
 {
     /// <summary>
     /// Defines a common interface for all input devices.

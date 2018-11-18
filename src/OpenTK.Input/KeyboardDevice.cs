@@ -4,7 +4,7 @@
 
 using System;
 
-namespace OpenTK.Input
+namespace OpenToolkit.Input
 {
     /// <summary>
     /// Represents a keyboard device and provides methods to query its status.

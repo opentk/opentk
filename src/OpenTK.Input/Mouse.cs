@@ -24,9 +24,9 @@
 //
 
 using System;
-using OpenTK.Platform;
+using OpenToolkit.Platform;
 
-namespace OpenTK.Input
+namespace OpenToolkit.Input
 {
     /// <summary>
     /// Provides access to mouse devices. Note: this API is not implemented yet.

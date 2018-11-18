@@ -27,9 +27,9 @@
 
 using System;
 using System.Diagnostics;
-using OpenTK.Mathematics;
+using OpenToolkit.Mathematics;
 
-namespace OpenTK.Input
+namespace OpenToolkit.Input
 {
     /// <summary>
     /// Describes the <c>JoystickCapabilities</c> of a <see cref="JoystickDevice" />.
