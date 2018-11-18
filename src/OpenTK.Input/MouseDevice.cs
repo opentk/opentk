@@ -63,12 +63,12 @@ namespace OpenToolkit.Input
         /// <summary>
         /// Gets an integer representing the absolute x position of the pointer, in window pixel coordinates.
         /// </summary>
-        public int X => state.X;
+        public float X => state.X;
 
         /// <summary>
         /// Gets an integer representing the absolute y position of the pointer, in window pixel coordinates.
         /// </summary>
-        public int Y => state.Y;
+        public float Y => state.Y;
 
         /// <summary>
         /// Gets a System.Boolean indicating the state of the specified MouseButton.

@@ -57,7 +57,7 @@ namespace OpenToolkit.Input
         /// </summary>
         /// <param name="x">The X position.</param>
         /// <param name="y">The Y position.</param>
-        public MouseEventArgs(int x, int y)
+        public MouseEventArgs(float x, float y)
             : this()
         {
             state.X = x;
@@ -76,7 +76,7 @@ namespace OpenToolkit.Input
         /// <summary>
         /// Gets the X position of the mouse for the event.
         /// </summary>
-        public int X
+        public float X
         {
             get => state.X;
             internal set => state.X = value;
@@ -85,7 +85,7 @@ namespace OpenToolkit.Input
         /// <summary>
         /// Gets the Y position of the mouse for the event.
         /// </summary>
-        public int Y
+        public float Y
         {
             get => state.Y;
             internal set => state.Y = value;
@@ -170,7 +170,7 @@ namespace OpenToolkit.Input
         /// <param name="y">The Y position.</param>
         /// <param name="xDelta">The change in X position produced by this event.</param>
         /// <param name="yDelta">The change in Y position produced by this event.</param>
-        public MouseMoveEventArgs(int x, int y, int xDelta, int yDelta)
+        public MouseMoveEventArgs(float x, float y, float xDelta, float yDelta)
             : base(x, y)
         {
             XDelta = xDelta;
@@ -189,12 +189,12 @@ namespace OpenToolkit.Input
         /// <summary>
         /// Gets the change in X position produced by this event.
         /// </summary>
-        public int XDelta { get; internal set; }
+        public float XDelta { get; internal set; }
 
         /// <summary>
         /// Gets the change in Y position produced by this event.
         /// </summary>
-        public int YDelta { get; internal set; }
+        public float YDelta { get; internal set; }
     }
 
     /// <summary>
@@ -223,7 +223,7 @@ namespace OpenToolkit.Input
         /// <param name="y">The Y position.</param>
         /// <param name="button">The mouse button for the event.</param>
         /// <param name="pressed">The current state of the button.</param>
-        public MouseButtonEventArgs(int x, int y, MouseButton button, bool pressed)
+        public MouseButtonEventArgs(float x, float y, MouseButton button, bool pressed)
             : base(x, y)
         {
             Button = button;
@@ -280,7 +280,7 @@ namespace OpenToolkit.Input
         /// <param name="y">The Y position.</param>
         /// <param name="value">The value of the wheel.</param>
         /// <param name="delta">The change in value of the wheel for this event.</param>
-        public MouseWheelEventArgs(int x, int y, int value, int delta)
+        public MouseWheelEventArgs(float x, float y, int value, int delta)
             : base(x, y)
         {
             Mouse.SetScrollAbsolute(Mouse.Scroll.X, value);

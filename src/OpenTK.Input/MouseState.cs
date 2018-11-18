@@ -96,20 +96,20 @@ namespace OpenToolkit.Input
         public MouseScroll Scroll => scroll;
 
         /// <summary>
-        /// Gets an integer representing the absolute x position of the pointer, in window pixel coordinates.
+        /// Gets a float representing the absolute x position of the pointer, in window pixel coordinates.
         /// </summary>
-        public int X
+        public float X
         {
-            get => (int)Math.Round(position.X);
+            get => position.X;
             internal set => position.X = value;
         }
 
         /// <summary>
         /// Gets an integer representing the absolute y position of the pointer, in window pixel coordinates.
         /// </summary>
-        public int Y
+        public float Y
         {
-            get => (int)Math.Round(position.Y);
+            get => position.Y;
             internal set => position.Y = value;
         }
 
