@@ -15,7 +15,7 @@ namespace OpenToolkit.Input
         string Description { get; }
 
         /// <summary>
-        /// Gets an OpenTK.Input.InputDeviceType value, representing the device type of this IInputDevice instance.
+        /// Gets an OpenToolkit.Input.InputDeviceType value, representing the device type of this IInputDevice instance.
         /// </summary>
         InputDeviceType DeviceType { get; }
     }

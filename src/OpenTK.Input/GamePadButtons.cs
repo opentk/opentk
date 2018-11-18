@@ -38,7 +38,7 @@ namespace OpenToolkit.Input
         private readonly Buttons buttons;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="OpenTK.Input.GamePadButtons" /> structure.
+        /// Initializes a new instance of the <see cref="OpenToolkit.Input.GamePadButtons" /> structure.
         /// </summary>
         /// <param name="state">A bitmask containing the button state.</param>
         public GamePadButtons(Buttons state)
@@ -125,9 +125,9 @@ namespace OpenToolkit.Input
         }
 
         /// <summary>
-        /// Returns a <see cref="System.String" /> that represents the current <see cref="OpenTK.Input.GamePadButtons" />.
+        /// Returns a <see cref="System.String" /> that represents the current <see cref="OpenToolkit.Input.GamePadButtons" />.
         /// </summary>
-        /// <returns>A <see cref="System.String" /> that represents the current <see cref="OpenTK.Input.GamePadButtons" />.</returns>
+        /// <returns>A <see cref="System.String" /> that represents the current <see cref="OpenToolkit.Input.GamePadButtons" />.</returns>
         public override string ToString()
         {
             var sb = new StringBuilder();
@@ -195,7 +195,7 @@ namespace OpenToolkit.Input
         }
 
         /// <summary>
-        /// Serves as a hash function for a <see cref="OpenTK.Input.GamePadButtons" /> object.
+        /// Serves as a hash function for a <see cref="OpenToolkit.Input.GamePadButtons" /> object.
         /// </summary>
         /// <returns>
         /// A hash code for this instance that is suitable for use in hashing algorithms and data structures such as a
@@ -208,15 +208,15 @@ namespace OpenToolkit.Input
 
         /// <summary>
         /// Determines whether the specified <see cref="System.Object" /> is equal to the current
-        ///  <see cref="OpenTK.Input.GamePadButtons" />.
+        ///  <see cref="OpenToolkit.Input.GamePadButtons" />.
         /// </summary>
         /// <param name="obj">
         /// The <see cref="System.Object" /> to compare with the current
-        ///  <see cref="OpenTK.Input.GamePadButtons" />.
+        ///  <see cref="OpenToolkit.Input.GamePadButtons" />.
         /// </param>
         /// <returns>
         ///  <c>true</c> if the specified <see cref="System.Object" /> is equal to the current
-        ///  <see cref="OpenTK.Input.GamePadButtons" />; otherwise, <c>false</c>.
+        ///  <see cref="OpenToolkit.Input.GamePadButtons" />; otherwise, <c>false</c>.
         /// </returns>
         public override bool Equals(object obj)
         {
@@ -226,16 +226,16 @@ namespace OpenToolkit.Input
         }
 
         /// <summary>
-        /// Determines whether the specified <see cref="OpenTK.Input.GamePadButtons" /> is equal to the current
-        ///  <see cref="OpenTK.Input.GamePadButtons" />.
+        /// Determines whether the specified <see cref="OpenToolkit.Input.GamePadButtons" /> is equal to the current
+        ///  <see cref="OpenToolkit.Input.GamePadButtons" />.
         /// </summary>
         /// <param name="other">
-        /// The <see cref="OpenTK.Input.GamePadButtons" /> to compare with the current
-        ///  <see cref="OpenTK.Input.GamePadButtons" />.
+        /// The <see cref="OpenToolkit.Input.GamePadButtons" /> to compare with the current
+        ///  <see cref="OpenToolkit.Input.GamePadButtons" />.
         /// </param>
         /// <returns>
-        ///  <c>true</c> if the specified <see cref="OpenTK.Input.GamePadButtons" /> is equal to the current
-        ///  <see cref="OpenTK.Input.GamePadButtons" />; otherwise, <c>false</c>.
+        ///  <c>true</c> if the specified <see cref="OpenToolkit.Input.GamePadButtons" /> is equal to the current
+        ///  <see cref="OpenToolkit.Input.GamePadButtons" />; otherwise, <c>false</c>.
         /// </returns>
         public bool Equals(GamePadButtons other)
         {

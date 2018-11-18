@@ -108,7 +108,7 @@ namespace OpenToolkit.Input
         }
 
         /// <summary>
-        /// Gets the current <see cref="OpenTK.Input.MouseState" />.
+        /// Gets the current <see cref="OpenToolkit.Input.MouseState" />.
         /// </summary>
         public MouseState Mouse
         {

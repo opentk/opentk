@@ -133,9 +133,9 @@ namespace OpenToolkit.Input
         public bool IsConnected { get; private set; }
 
         /// <summary>
-        /// Returns a <see cref="System.String" /> that represents the current <see cref="OpenTK.Input.JoystickState" />.
+        /// Returns a <see cref="System.String" /> that represents the current <see cref="OpenToolkit.Input.JoystickState" />.
         /// </summary>
-        /// <returns>A <see cref="System.String" /> that represents the current <see cref="OpenTK.Input.JoystickState" />.</returns>
+        /// <returns>A <see cref="System.String" /> that represents the current <see cref="OpenToolkit.Input.JoystickState" />.</returns>
         public override string ToString()
         {
             var sb = new StringBuilder();
@@ -150,7 +150,7 @@ namespace OpenToolkit.Input
         }
 
         /// <summary>
-        /// Serves as a hash function for a <see cref="OpenTK.Input.JoystickState" /> object.
+        /// Serves as a hash function for a <see cref="OpenToolkit.Input.JoystickState" /> object.
         /// </summary>
         /// <returns>
         /// A hash code for this instance that is suitable for use in hashing algorithms and data structures such as a
@@ -169,15 +169,15 @@ namespace OpenToolkit.Input
 
         /// <summary>
         /// Determines whether the specified <see cref="System.Object" /> is equal to the current
-        ///  <see cref="OpenTK.Input.JoystickState" />.
+        ///  <see cref="OpenToolkit.Input.JoystickState" />.
         /// </summary>
         /// <param name="obj">
         /// The <see cref="System.Object" /> to compare with the current
-        ///  <see cref="OpenTK.Input.JoystickState" />.
+        ///  <see cref="OpenToolkit.Input.JoystickState" />.
         /// </param>
         /// <returns>
         ///  <c>true</c> if the specified <see cref="System.Object" /> is equal to the current
-        ///  <see cref="OpenTK.Input.JoystickState" />; otherwise, <c>false</c>.
+        ///  <see cref="OpenToolkit.Input.JoystickState" />; otherwise, <c>false</c>.
         /// </returns>
         public override bool Equals(object obj)
         {
@@ -285,16 +285,16 @@ namespace OpenToolkit.Input
         }
 
         /// <summary>
-        /// Determines whether the specified <see cref="OpenTK.Input.JoystickState" /> is equal to the current
-        ///  <see cref="OpenTK.Input.JoystickState" />.
+        /// Determines whether the specified <see cref="OpenToolkit.Input.JoystickState" /> is equal to the current
+        ///  <see cref="OpenToolkit.Input.JoystickState" />.
         /// </summary>
         /// <param name="other">
-        /// The <see cref="OpenTK.Input.JoystickState" /> to compare with the current
-        ///  <see cref="OpenTK.Input.JoystickState" />.
+        /// The <see cref="OpenToolkit.Input.JoystickState" /> to compare with the current
+        ///  <see cref="OpenToolkit.Input.JoystickState" />.
         /// </param>
         /// <returns>
-        ///  <c>true</c> if the specified <see cref="OpenTK.Input.JoystickState" /> is equal to the current
-        ///  <see cref="OpenTK.Input.JoystickState" />; otherwise, <c>false</c>.
+        ///  <c>true</c> if the specified <see cref="OpenToolkit.Input.JoystickState" /> is equal to the current
+        ///  <see cref="OpenToolkit.Input.JoystickState" />; otherwise, <c>false</c>.
         /// </returns>
         public bool Equals(JoystickState other)
         {

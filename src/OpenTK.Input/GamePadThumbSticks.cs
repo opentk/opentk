@@ -76,16 +76,16 @@ namespace OpenToolkit.Input
         }
 
         /// <summary>
-        /// Returns a <see cref="System.String" /> that represents the current <see cref="OpenTK.Input.GamePadThumbSticks" />.
+        /// Returns a <see cref="System.String" /> that represents the current <see cref="OpenToolkit.Input.GamePadThumbSticks" />.
         /// </summary>
-        /// <returns>A <see cref="System.String" /> that represents the current <see cref="OpenTK.Input.GamePadThumbSticks" />.</returns>
+        /// <returns>A <see cref="System.String" /> that represents the current <see cref="OpenToolkit.Input.GamePadThumbSticks" />.</returns>
         public override string ToString()
         {
             return $"{{Left: ({Left.X:f4}; {Left.Y:f4}); Right: ({Right.X:f4}; {Right.Y:f4})}}";
         }
 
         /// <summary>
-        /// Serves as a hash function for a <see cref="OpenTK.Input.GamePadThumbSticks" /> object.
+        /// Serves as a hash function for a <see cref="OpenToolkit.Input.GamePadThumbSticks" /> object.
         /// </summary>
         /// <returns>
         /// A hash code for this instance that is suitable for use in hashing algorithms and data structures such as a
@@ -100,15 +100,15 @@ namespace OpenToolkit.Input
 
         /// <summary>
         /// Determines whether the specified <see cref="System.Object" /> is equal to the current
-        ///  <see cref="OpenTK.Input.GamePadThumbSticks" />.
+        ///  <see cref="OpenToolkit.Input.GamePadThumbSticks" />.
         /// </summary>
         /// <param name="obj">
         /// The <see cref="System.Object" /> to compare with the current
-        ///  <see cref="OpenTK.Input.GamePadThumbSticks" />.
+        ///  <see cref="OpenToolkit.Input.GamePadThumbSticks" />.
         /// </param>
         /// <returns>
         ///  <c>true</c> if the specified <see cref="System.Object" /> is equal to the current
-        ///  <see cref="OpenTK.Input.GamePadThumbSticks" />; otherwise, <c>false</c>.
+        ///  <see cref="OpenToolkit.Input.GamePadThumbSticks" />; otherwise, <c>false</c>.
         /// </returns>
         public override bool Equals(object obj)
         {
@@ -118,16 +118,16 @@ namespace OpenToolkit.Input
         }
 
         /// <summary>
-        /// Determines whether the specified <see cref="OpenTK.Input.GamePadThumbSticks" /> is equal to the current
-        ///  <see cref="OpenTK.Input.GamePadThumbSticks" />.
+        /// Determines whether the specified <see cref="OpenToolkit.Input.GamePadThumbSticks" /> is equal to the current
+        ///  <see cref="OpenToolkit.Input.GamePadThumbSticks" />.
         /// </summary>
         /// <param name="other">
-        /// The <see cref="OpenTK.Input.GamePadThumbSticks" /> to compare with the current
-        ///  <see cref="OpenTK.Input.GamePadThumbSticks" />.
+        /// The <see cref="OpenToolkit.Input.GamePadThumbSticks" /> to compare with the current
+        ///  <see cref="OpenToolkit.Input.GamePadThumbSticks" />.
         /// </param>
         /// <returns>
-        ///  <c>true</c> if the specified <see cref="OpenTK.Input.GamePadThumbSticks" /> is equal to the current
-        ///  <see cref="OpenTK.Input.GamePadThumbSticks" />; otherwise, <c>false</c>.
+        ///  <c>true</c> if the specified <see cref="OpenToolkit.Input.GamePadThumbSticks" /> is equal to the current
+        ///  <see cref="OpenToolkit.Input.GamePadThumbSticks" />; otherwise, <c>false</c>.
         /// </returns>
         public bool Equals(GamePadThumbSticks other)
         {

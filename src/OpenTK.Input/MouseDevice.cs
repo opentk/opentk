@@ -97,34 +97,34 @@ namespace OpenToolkit.Input
         public InputDeviceType DeviceType => InputDeviceType.Mouse;
 
         /// <summary>
-        /// Retrieves the combined hardware <see cref="OpenTK.Input.MouseState" /> for all specified mouse devices.
-        /// This method is equivalent to <see cref="OpenTK.Input.Mouse.GetState()" />.
+        /// Retrieves the combined hardware <see cref="OpenToolkit.Input.MouseState" /> for all specified mouse devices.
+        /// This method is equivalent to <see cref="OpenToolkit.Input.Mouse.GetState()" />.
         /// </summary>
-        /// <returns>A <see cref="OpenTK.Input.MouseState" /> structure representing the state for the specified mouse device.</returns>
-        /// <seealso cref="OpenTK.Input.Mouse.GetState()" />
+        /// <returns>A <see cref="OpenToolkit.Input.MouseState" /> structure representing the state for the specified mouse device.</returns>
+        /// <seealso cref="OpenToolkit.Input.Mouse.GetState()" />
         public MouseState GetState()
         {
             return Mouse.GetState();
         }
 
         /// <summary>
-        /// Retrieves the hardware <see cref="OpenTK.Input.MouseState" /> for the specified mouse device.
-        /// This method is equivalent to <see cref="OpenTK.Input.Mouse.GetState(int)" />.
+        /// Retrieves the hardware <see cref="OpenToolkit.Input.MouseState" /> for the specified mouse device.
+        /// This method is equivalent to <see cref="OpenToolkit.Input.Mouse.GetState(int)" />.
         /// </summary>
         /// <param name="index">The index of the mouse device.</param>
-        /// <returns>A <see cref="OpenTK.Input.MouseState" /> structure representing the state for the specified mouse device.</returns>
-        /// <seealso cref="OpenTK.Input.Mouse.GetState(int)" />
+        /// <returns>A <see cref="OpenToolkit.Input.MouseState" /> structure representing the state for the specified mouse device.</returns>
+        /// <seealso cref="OpenToolkit.Input.Mouse.GetState(int)" />
         public MouseState GetState(int index)
         {
             return Mouse.GetState(index);
         }
 
         /// <summary>
-        /// Retreves the <see cref="OpenTK.Input.MouseState" /> for the mouse cursor.
-        /// This method is equivalent to <see cref="OpenTK.Input.Mouse.GetCursorState" />.
+        /// Retreves the <see cref="OpenToolkit.Input.MouseState" /> for the mouse cursor.
+        /// This method is equivalent to <see cref="OpenToolkit.Input.Mouse.GetCursorState" />.
         /// </summary>
-        /// <returns>A <see cref="OpenTK.Input.MouseState" /> structure representing the state of the mouse cursor.</returns>
-        /// <seealso cref="OpenTK.Input.Mouse.GetCursorState()" />
+        /// <returns>A <see cref="OpenToolkit.Input.MouseState" /> structure representing the state of the mouse cursor.</returns>
+        /// <seealso cref="OpenToolkit.Input.Mouse.GetCursorState()" />
         public MouseState GetCursorState()
         {
             return Mouse.GetCursorState();

@@ -92,23 +92,23 @@ namespace OpenToolkit.Input
         public event EventHandler<KeyboardKeyEventArgs> KeyUp = delegate { };
 
         /// <summary>
-        /// Retrieves the combined <see cref="OpenTK.Input.KeyboardState" /> for all keyboard devices.
-        /// This method is equivalent to <see cref="OpenTK.Input.Keyboard.GetState()" />.
+        /// Retrieves the combined <see cref="OpenToolkit.Input.KeyboardState" /> for all keyboard devices.
+        /// This method is equivalent to <see cref="OpenToolkit.Input.Keyboard.GetState()" />.
         /// </summary>
-        /// <returns>An <see cref="OpenTK.Input.KeyboardState" /> structure containing the combined state for all keyboard devices.</returns>
-        /// <seealso cref="OpenTK.Input.Keyboard.GetState()" />
+        /// <returns>An <see cref="OpenToolkit.Input.KeyboardState" /> structure containing the combined state for all keyboard devices.</returns>
+        /// <seealso cref="OpenToolkit.Input.Keyboard.GetState()" />
         public KeyboardState GetState()
         {
             return Keyboard.GetState();
         }
 
         /// <summary>
-        /// Retrieves the <see cref="OpenTK.Input.KeyboardState" /> for the specified keyboard device.
-        /// This method is equivalent to <see cref="OpenTK.Input.Keyboard.GetState(int)" />.
+        /// Retrieves the <see cref="OpenToolkit.Input.KeyboardState" /> for the specified keyboard device.
+        /// This method is equivalent to <see cref="OpenToolkit.Input.Keyboard.GetState(int)" />.
         /// </summary>
         /// <param name="index">The index of the keyboard device.</param>
-        /// <returns>An <see cref="OpenTK.Input.KeyboardState" /> structure containing the combined state for all keyboard devices.</returns>
-        /// <seealso cref="OpenTK.Input.Keyboard.GetState(int)" />
+        /// <returns>An <see cref="OpenToolkit.Input.KeyboardState" /> structure containing the combined state for all keyboard devices.</returns>
+        /// <seealso cref="OpenToolkit.Input.Keyboard.GetState(int)" />
         public KeyboardState GetState(int index)
         {
             return Keyboard.GetState(index);

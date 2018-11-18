@@ -39,9 +39,9 @@ namespace OpenToolkit.Input
         private static readonly object SyncRoot = new object();
 
         /// <summary>
-        /// Retrieves the combined <see cref="OpenTK.Input.KeyboardState" /> for all keyboard devices.
+        /// Retrieves the combined <see cref="OpenToolkit.Input.KeyboardState" /> for all keyboard devices.
         /// </summary>
-        /// <returns>An <see cref="OpenTK.Input.KeyboardState" /> structure containing the combined state for all keyboard devices.</returns>
+        /// <returns>An <see cref="OpenToolkit.Input.KeyboardState" /> structure containing the combined state for all keyboard devices.</returns>
         public static KeyboardState GetState()
         {
             lock (SyncRoot)
@@ -51,10 +51,10 @@ namespace OpenToolkit.Input
         }
 
         /// <summary>
-        /// Retrieves the <see cref="OpenTK.Input.KeyboardState" /> for the specified keyboard device.
+        /// Retrieves the <see cref="OpenToolkit.Input.KeyboardState" /> for the specified keyboard device.
         /// </summary>
         /// <param name="index">The index of the keyboard device.</param>
-        /// <returns>An <see cref="OpenTK.Input.KeyboardState" /> structure containing the state of the keyboard device.</returns>
+        /// <returns>An <see cref="OpenToolkit.Input.KeyboardState" /> structure containing the state of the keyboard device.</returns>
         public static KeyboardState GetState(int index)
         {
             if (index < 0)

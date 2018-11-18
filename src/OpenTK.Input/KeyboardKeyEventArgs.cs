@@ -66,25 +66,25 @@ namespace OpenToolkit.Input
         public uint ScanCode => (uint)Key;
 
         /// <summary>
-        /// Gets a value indicating whether <see cref="OpenTK.Input.KeyModifiers.Alt" /> is pressed.
+        /// Gets a value indicating whether <see cref="OpenToolkit.Input.KeyModifiers.Alt" /> is pressed.
         /// </summary>
         /// <value><c>true</c> if pressed; otherwise, <c>false</c>.</value>
         public bool Alt => Keyboard[Key.AltLeft] || Keyboard[Key.AltRight];
 
         /// <summary>
-        /// Gets a value indicating whether <see cref="OpenTK.Input.KeyModifiers.Control" /> is pressed.
+        /// Gets a value indicating whether <see cref="OpenToolkit.Input.KeyModifiers.Control" /> is pressed.
         /// </summary>
         /// <value><c>true</c> if pressed; otherwise, <c>false</c>.</value>
         public bool Control => Keyboard[Key.ControlLeft] || Keyboard[Key.ControlRight];
 
         /// <summary>
-        /// Gets a value indicating whether <see cref="OpenTK.Input.KeyModifiers.Shift" /> is pressed.
+        /// Gets a value indicating whether <see cref="OpenToolkit.Input.KeyModifiers.Shift" /> is pressed.
         /// </summary>
         /// <value><c>true</c> if pressed; otherwise, <c>false</c>.</value>
         public bool Shift => Keyboard[Key.ShiftLeft] || Keyboard[Key.ShiftRight];
 
         /// <summary>
-        /// Gets a bitwise combination representing the <see cref="OpenTK.Input.KeyModifiers" />
+        /// Gets a bitwise combination representing the <see cref="OpenToolkit.Input.KeyModifiers" />
         /// that are currently pressed.
         /// </summary>
         /// <value>The modifiers.</value>
@@ -101,7 +101,7 @@ namespace OpenToolkit.Input
         }
 
         /// <summary>
-        /// Gets the current <see cref="OpenTK.Input.KeyboardState" />.
+        /// Gets the current <see cref="OpenToolkit.Input.KeyboardState" />.
         /// </summary>
         /// <value>The keyboard.</value>
         public KeyboardState Keyboard { get; internal set; }

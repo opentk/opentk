@@ -81,9 +81,9 @@ namespace OpenToolkit.Input
         public int PacketNumber { get; private set; }
 
         /// <summary>
-        /// Returns a <see cref="System.String" /> that represents the current <see cref="OpenTK.Input.GamePadState" />.
+        /// Returns a <see cref="System.String" /> that represents the current <see cref="OpenToolkit.Input.GamePadState" />.
         /// </summary>
-        /// <returns>A <see cref="System.String" /> that represents the current <see cref="OpenTK.Input.GamePadState" />.</returns>
+        /// <returns>A <see cref="System.String" /> that represents the current <see cref="OpenToolkit.Input.GamePadState" />.</returns>
         public override string ToString()
         {
             return
@@ -91,7 +91,7 @@ namespace OpenToolkit.Input
         }
 
         /// <summary>
-        /// Serves as a hash function for a <see cref="OpenTK.Input.GamePadState" /> object.
+        /// Serves as a hash function for a <see cref="OpenToolkit.Input.GamePadState" /> object.
         /// </summary>
         /// <returns>
         /// A hash code for this instance that is suitable for use in hashing algorithms and data structures such as a
@@ -106,15 +106,15 @@ namespace OpenToolkit.Input
 
         /// <summary>
         /// Determines whether the specified <see cref="System.Object" /> is equal to the current
-        ///  <see cref="OpenTK.Input.GamePadState" />.
+        ///  <see cref="OpenToolkit.Input.GamePadState" />.
         /// </summary>
         /// <param name="obj">
-        /// The <see cref="System.Object" /> to compare with the current <see cref="OpenTK.Input.GamePadState" />
+        /// The <see cref="System.Object" /> to compare with the current <see cref="OpenToolkit.Input.GamePadState" />
         /// .
         /// </param>
         /// <returns>
         ///  <c>true</c> if the specified <see cref="System.Object" /> is equal to the current
-        ///  <see cref="OpenTK.Input.GamePadState" />; otherwise, <c>false</c>.
+        ///  <see cref="OpenToolkit.Input.GamePadState" />; otherwise, <c>false</c>.
         /// </returns>
         public override bool Equals(object obj)
         {
@@ -124,16 +124,16 @@ namespace OpenToolkit.Input
         }
 
         /// <summary>
-        /// Determines whether the specified <see cref="OpenTK.Input.GamePadState" /> is equal to the current
-        ///  <see cref="OpenTK.Input.GamePadState" />.
+        /// Determines whether the specified <see cref="OpenToolkit.Input.GamePadState" /> is equal to the current
+        ///  <see cref="OpenToolkit.Input.GamePadState" />.
         /// </summary>
         /// <param name="other">
-        /// The <see cref="OpenTK.Input.GamePadState" /> to compare with the current
-        ///  <see cref="OpenTK.Input.GamePadState" />.
+        /// The <see cref="OpenToolkit.Input.GamePadState" /> to compare with the current
+        ///  <see cref="OpenToolkit.Input.GamePadState" />.
         /// </param>
         /// <returns>
-        ///  <c>true</c> if the specified <see cref="OpenTK.Input.GamePadState" /> is equal to the current
-        ///  <see cref="OpenTK.Input.GamePadState" />; otherwise, <c>false</c>.
+        ///  <c>true</c> if the specified <see cref="OpenToolkit.Input.GamePadState" /> is equal to the current
+        ///  <see cref="OpenToolkit.Input.GamePadState" />; otherwise, <c>false</c>.
         /// </returns>
         public bool Equals(GamePadState other)
         {
