@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <ItemGroup>
+    <ProjectReference Include="..\OpenTK.Input\OpenTK.Input.csproj" />
+    <ProjectReference Include="..\OpenTK.Core\OpenTK.Core.csproj" />
+  </ItemGroup>
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <Version>1.0.0</Version>
+    <Description>Platform-specific code for the OpenTK library.</Description>
+  </PropertyGroup>
+
+  <Import Project="..\..\props\common.props" />
+  <Import Project="..\..\props\nuget-common.props" />
+  <Import Project="..\..\props\stylecop.props" />
+</Project>
