@@ -25,11 +25,6 @@
 
 using System;
 
-#if !MINIMAL
-
-#endif
-
-
 namespace OpenToolkit.Input
 {
     /// <summary>

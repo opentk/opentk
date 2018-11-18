@@ -26,10 +26,7 @@
 //
 
 using System;
-#if !MINIMAL
-using System.Drawing;
-
-#endif
+using OpenToolkit.Mathematics;
 
 namespace OpenToolkit.Input
 {
@@ -95,15 +92,15 @@ namespace OpenToolkit.Input
         }
 
         /// <summary>
-        /// Gets a <see cref="System.Drawing.Point" /> representing the location of the mouse for the event.
+        /// Gets a <see cref="OpenToolkit.Mathematics.Vector2" /> representing the location of the mouse for the event.
         /// </summary>
-        public Point Position
+        public Vector2 Position
         {
-            get => new Point(state.X, state.Y);
+            get => new Vector2(state.X, state.Y);
             set
             {
-                X = value.X;
-                Y = value.Y;
+                X = (int)value.X;
+                Y = (int)value.Y;
             }
         }
 
