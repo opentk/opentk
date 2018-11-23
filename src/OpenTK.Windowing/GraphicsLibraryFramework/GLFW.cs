@@ -15,7 +15,7 @@ using OpenToolkit.Windowing.GraphicsLibraryFramework.Interfaces;
 namespace OpenToolkit.Windowing.GraphicsLibraryFramework
 {
     /// <summary>
-    /// Provides access to the OpenAL 1.1 API.
+    /// Provides access to the GLFW API.
     /// </summary>
     public abstract class GLFW : NativeLibraryBase, IGLFW
     {

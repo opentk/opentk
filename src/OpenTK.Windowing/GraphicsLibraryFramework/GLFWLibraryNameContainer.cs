@@ -13,7 +13,7 @@ using System;
 namespace OpenToolkit.Windowing.GraphicsLibraryFramework
 {
     /// <summary>
-    /// Contains the library name of OpenAL.
+    /// Contains the library name of GLFW.
     /// </summary>
     internal class GLFWLibraryNameContainer : PlatformLibraryNameContainerBase
     {
