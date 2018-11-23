@@ -15,7 +15,7 @@ namespace OpenToolkit.Windowing.GraphicsLibraryFramework.Interfaces
     /// Defines the public interface of the GLFW 3.2 library
     /// </summary>
     [NativeSymbols(Prefix = "glfw")]
-    public interface IGLFW
+    internal interface IGLFW
     {
         bool Init();
         void Terminate();
