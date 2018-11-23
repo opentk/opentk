@@ -1,9 +1,11 @@
-﻿/* GLFW.cs
- * C header: 
- * Spec: <see cref=""/>
- * Copyright (c) 2008 Stefanos Apostolopoulos
- * See license.txt for license details
- * http://www.OpenTK.net */
+﻿//
+// GLFW.cs
+//
+// Copyright (C) 2018 OpenTK
+//
+// This software may be modified and distributed under the terms
+// of the MIT license. See the LICENSE file for details.
+//
 
 using System;
 using AdvancedDLSupport;
