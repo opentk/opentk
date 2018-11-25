@@ -1,6 +1,6 @@
 using AdvancedDLSupport;
 using OpenToolkit.Core.Loader;
-using OpenToolkit.Mathematics;
+using OpenToolkit.Math;
 
 namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
 {

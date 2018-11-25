@@ -4,6 +4,7 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <Deterministic>true</Deterministic>
     <RootNamespace>OpenToolkit.NT</RootNamespace>
+    <AssemblyName>OpenToolkit.NT</AssemblyName>
   </PropertyGroup>
 
   <PropertyGroup>

@@ -5,6 +5,7 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <LangVersion>latest</LangVersion>
     <RootNamespace>OpenToolkit.OpenAL.Extensions.EXT.FloatFormat</RootNamespace>
+    <AssemblyName>OpenToolkit.OpenAL.Extensions.EXT.FloatFormat</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>

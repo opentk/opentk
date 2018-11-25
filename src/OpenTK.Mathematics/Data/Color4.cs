@@ -26,7 +26,7 @@
 using System;
 using System.Drawing;
 
-namespace OpenToolkit.Mathematics
+namespace OpenToolkit.Math
 {
     /// <summary>
     /// Represents a color with 4 floating-point components (R, G, B, A).
@@ -906,7 +906,7 @@ namespace OpenToolkit.Mathematics
             }
             else
             {
-                r = (float)Math.Pow((srgb.R + 0.055f) / (1.0f + 0.055f), 2.4f);
+                r = (float)System.Math.Pow((srgb.R + 0.055f) / (1.0f + 0.055f), 2.4f);
             }
 
             if (srgb.G <= 0.04045f)
@@ -915,7 +915,7 @@ namespace OpenToolkit.Mathematics
             }
             else
             {
-                g = (float)Math.Pow((srgb.G + 0.055f) / (1.0f + 0.055f), 2.4f);
+                g = (float)System.Math.Pow((srgb.G + 0.055f) / (1.0f + 0.055f), 2.4f);
             }
 
             if (srgb.B <= 0.04045f)
@@ -924,7 +924,7 @@ namespace OpenToolkit.Mathematics
             }
             else
             {
-                b = (float)Math.Pow((srgb.B + 0.055f) / (1.0f + 0.055f), 2.4f);
+                b = (float)System.Math.Pow((srgb.B + 0.055f) / (1.0f + 0.055f), 2.4f);
             }
 
             return new Color4(r, g, b, srgb.A);
@@ -947,7 +947,7 @@ namespace OpenToolkit.Mathematics
             }
             else
             {
-                r = ((1.0f + 0.055f) * (float)Math.Pow(rgb.R, 1.0f / 2.4f)) - 0.055f;
+                r = ((1.0f + 0.055f) * (float)System.Math.Pow(rgb.R, 1.0f / 2.4f)) - 0.055f;
             }
 
             if (rgb.G <= 0.0031308)
@@ -956,7 +956,7 @@ namespace OpenToolkit.Mathematics
             }
             else
             {
-                g = ((1.0f + 0.055f) * (float)Math.Pow(rgb.G, 1.0f / 2.4f)) - 0.055f;
+                g = ((1.0f + 0.055f) * (float)System.Math.Pow(rgb.G, 1.0f / 2.4f)) - 0.055f;
             }
 
             if (rgb.B <= 0.0031308)
@@ -965,7 +965,7 @@ namespace OpenToolkit.Mathematics
             }
             else
             {
-                b = ((1.0f + 0.055f) * (float)Math.Pow(rgb.B, 1.0f / 2.4f)) - 0.055f;
+                b = ((1.0f + 0.055f) * (float)System.Math.Pow(rgb.B, 1.0f / 2.4f)) - 0.055f;
             }
 
             return new Color4(r, g, b, rgb.A);
@@ -989,10 +989,10 @@ namespace OpenToolkit.Mathematics
             var saturation = hsl.Y;
             var lightness = hsl.Z;
 
-            var c = (1.0f - Math.Abs((2.0f * lightness) - 1.0f)) * saturation;
+            var c = (1.0f - System.Math.Abs((2.0f * lightness) - 1.0f)) * saturation;
 
             var h = hue / 60.0f;
-            var x = c * (1.0f - Math.Abs((h % 2.0f) - 1.0f));
+            var x = c * (1.0f - System.Math.Abs((h % 2.0f) - 1.0f));
 
             float r, g, b;
             if (h >= 0.0f && h < 1.0f)
@@ -1054,8 +1054,8 @@ namespace OpenToolkit.Mathematics
         /// <param name="rgb">Color value to convert.</param>
         public static Vector4 ToHsl(Color4 rgb)
         {
-            var max = Math.Max(rgb.R, Math.Max(rgb.G, rgb.B));
-            var min = Math.Min(rgb.R, Math.Min(rgb.G, rgb.B));
+            var max = System.Math.Max(rgb.R, System.Math.Max(rgb.G, rgb.B));
+            var min = System.Math.Min(rgb.R, System.Math.Min(rgb.G, rgb.B));
             var diff = max - min;
 
             var h = 0.0f;
@@ -1083,7 +1083,7 @@ namespace OpenToolkit.Mathematics
             var saturation = 0.0f;
             if (lightness != 0.0f && lightness != 1.0f)
             {
-                saturation = diff / (1.0f - Math.Abs((2.0f * lightness) - 1.0f));
+                saturation = diff / (1.0f - System.Math.Abs((2.0f * lightness) - 1.0f));
             }
 
             return new Vector4(hue, saturation, lightness, rgb.A);
@@ -1110,7 +1110,7 @@ namespace OpenToolkit.Mathematics
             var c = value * saturation;
 
             var h = hue / 60.0f;
-            var x = c * (1.0f - Math.Abs((h % 2.0f) - 1.0f));
+            var x = c * (1.0f - System.Math.Abs((h % 2.0f) - 1.0f));
 
             float r, g, b;
             if (h >= 0.0f && h < 1.0f)
@@ -1172,8 +1172,8 @@ namespace OpenToolkit.Mathematics
         /// <param name="rgb">Color value to convert.</param>
         public static Vector4 ToHsv(Color4 rgb)
         {
-            var max = Math.Max(rgb.R, Math.Max(rgb.G, rgb.B));
-            var min = Math.Min(rgb.R, Math.Min(rgb.G, rgb.B));
+            var max = System.Math.Max(rgb.R, System.Math.Max(rgb.G, rgb.B));
+            var min = System.Math.Min(rgb.R, System.Math.Min(rgb.G, rgb.B));
             var diff = max - min;
 
             var h = 0.0f;
@@ -1299,7 +1299,7 @@ namespace OpenToolkit.Mathematics
             var luminance = hcy.Z;
 
             var h = hue / 60.0f;
-            var x = y * (1.0f - Math.Abs((h % 2.0f) - 1.0f));
+            var x = y * (1.0f - System.Math.Abs((h % 2.0f) - 1.0f));
 
             float r, g, b;
             if (h >= 0.0f && h < 1.0f)
@@ -1361,8 +1361,8 @@ namespace OpenToolkit.Mathematics
         /// <param name="rgb">Color value to convert.</param>
         public static Vector4 ToHcy(Color4 rgb)
         {
-            var max = Math.Max(rgb.R, Math.Max(rgb.G, rgb.B));
-            var min = Math.Min(rgb.R, Math.Min(rgb.G, rgb.B));
+            var max = System.Math.Max(rgb.R, System.Math.Max(rgb.G, rgb.B));
+            var min = System.Math.Min(rgb.R, System.Math.Min(rgb.G, rgb.B));
             var diff = max - min;
 
             var h = 0.0f;

@@ -5,6 +5,7 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <LangVersion>latest</LangVersion>
     <RootNamespace>OpenToolkit.OpenAL.Extensions.EXT.DoubleFormat</RootNamespace>
+    <AssemblyName>OpenToolkit.OpenAL.Extensions.EXT.DoubleFormat</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>

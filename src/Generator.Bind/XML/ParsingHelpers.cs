@@ -163,7 +163,7 @@ namespace Bind.XML
                 var firstPointerLevelIndex = typeName.IndexOf('*');
                 var lastPointerLevelIndex = typeName.LastIndexOf('*');
 
-                pointerLevel = Math.Abs(lastPointerLevelIndex - firstPointerLevelIndex) + 1;
+                pointerLevel = System.Math.Abs(lastPointerLevelIndex - firstPointerLevelIndex) + 1;
 
                 typeName = typeName.Remove(firstPointerLevelIndex);
             }
@@ -175,7 +175,7 @@ namespace Bind.XML
                 var firstArrayIndex = typeName.IndexOf('[');
                 var lastArrayIndex = typeName.IndexOf(']');
 
-                arrayLevel = Math.Abs(firstArrayIndex - lastArrayIndex);
+                arrayLevel = System.Math.Abs(firstArrayIndex - lastArrayIndex);
 
                 typeName = typeName.Remove(firstArrayIndex);
             }

@@ -23,7 +23,7 @@ SOFTWARE.
 using System;
 using System.Diagnostics.CodeAnalysis;
 
-namespace OpenToolkit.Mathematics
+namespace OpenToolkit.Math
 {
     /// <summary>
     /// Represents a 3x2 matrix.
@@ -243,8 +243,8 @@ namespace OpenToolkit.Mathematics
         /// <param name="result">The resulting Matrix3x2 instance.</param>
         public static void CreateRotation(float angle, out Matrix3x2 result)
         {
-            var cos = (float)Math.Cos(angle);
-            var sin = (float)Math.Sin(angle);
+            var cos = (float)System.Math.Cos(angle);
+            var sin = (float)System.Math.Sin(angle);
 
             result.Row0.X = cos;
             result.Row0.Y = sin;

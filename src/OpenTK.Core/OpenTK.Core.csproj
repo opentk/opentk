@@ -3,6 +3,7 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <RootNamespace>OpenToolkit.Core</RootNamespace>
+    <AssemblyName>OpenToolkit.Core</AssemblyName>
   </PropertyGroup>
 
   <PropertyGroup>

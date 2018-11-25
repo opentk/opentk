@@ -24,7 +24,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 
-namespace OpenToolkit.Mathematics
+namespace OpenToolkit.Math
 {
     /// <summary>
     /// Represents a 4x4 matrix containing 3D rotation, scale, transform, and projection.
@@ -604,7 +604,7 @@ namespace OpenToolkit.Mathematics
 
             if (trace > 0)
             {
-                var sq = Math.Sqrt(trace);
+                var sq = System.Math.Sqrt(trace);
 
                 q.W = (float)sq;
                 sq = 1.0 / (4.0 * sq);
@@ -614,7 +614,7 @@ namespace OpenToolkit.Mathematics
             }
             else if (row0[0] > row1[1] && row0[0] > row2[2])
             {
-                var sq = 2.0 * Math.Sqrt(1.0 + row0[0] - row1[1] - row2[2]);
+                var sq = 2.0 * System.Math.Sqrt(1.0 + row0[0] - row1[1] - row2[2]);
 
                 q.X = (float)(0.25 * sq);
                 sq = 1.0 / sq;
@@ -624,7 +624,7 @@ namespace OpenToolkit.Mathematics
             }
             else if (row1[1] > row2[2])
             {
-                var sq = 2.0 * Math.Sqrt(1.0 + row1[1] - row0[0] - row2[2]);
+                var sq = 2.0 * System.Math.Sqrt(1.0 + row1[1] - row0[0] - row2[2]);
 
                 q.Y = (float)(0.25 * sq);
                 sq = 1.0 / sq;
@@ -634,7 +634,7 @@ namespace OpenToolkit.Mathematics
             }
             else
             {
-                var sq = 2.0 * Math.Sqrt(1.0 + row2[2] - row0[0] - row1[1]);
+                var sq = 2.0 * System.Math.Sqrt(1.0 + row2[2] - row0[0] - row1[1]);
 
                 q.Z = (float)(0.25 * sq);
                 sq = 1.0 / sq;
@@ -669,8 +669,8 @@ namespace OpenToolkit.Mathematics
             float axisX = axis.X, axisY = axis.Y, axisZ = axis.Z;
 
             // calculate angles
-            var cos = (float)Math.Cos(-angle);
-            var sin = (float)Math.Sin(-angle);
+            var cos = (float)System.Math.Cos(-angle);
+            var sin = (float)System.Math.Sin(-angle);
             var t = 1.0f - cos;
 
             // do the conversion math once
@@ -741,8 +741,8 @@ namespace OpenToolkit.Mathematics
         /// <param name="result">The resulting Matrix4 instance.</param>
         public static void CreateRotationX(float angle, out Matrix4 result)
         {
-            var cos = (float)Math.Cos(angle);
-            var sin = (float)Math.Sin(angle);
+            var cos = (float)System.Math.Cos(angle);
+            var sin = (float)System.Math.Sin(angle);
 
             result = Identity;
             result.Row1.Y = cos;
@@ -769,8 +769,8 @@ namespace OpenToolkit.Mathematics
         /// <param name="result">The resulting Matrix4 instance.</param>
         public static void CreateRotationY(float angle, out Matrix4 result)
         {
-            var cos = (float)Math.Cos(angle);
-            var sin = (float)Math.Sin(angle);
+            var cos = (float)System.Math.Cos(angle);
+            var sin = (float)System.Math.Sin(angle);
 
             result = Identity;
             result.Row0.X = cos;
@@ -797,8 +797,8 @@ namespace OpenToolkit.Mathematics
         /// <param name="result">The resulting Matrix4 instance.</param>
         public static void CreateRotationZ(float angle, out Matrix4 result)
         {
-            var cos = (float)Math.Cos(angle);
-            var sin = (float)Math.Sin(angle);
+            var cos = (float)System.Math.Cos(angle);
+            var sin = (float)System.Math.Sin(angle);
 
             result = Identity;
             result.Row0.X = cos;
@@ -1044,7 +1044,7 @@ namespace OpenToolkit.Mathematics
         /// <exception cref="System.ArgumentOutOfRangeException">
         /// Thrown under the following conditions:
         ///  <list type="bullet">
-        ///  <item>fovy is zero, less than zero or larger than Math.PI</item>
+        ///  <item>fovy is zero, less than zero or larger than System.Math.PI</item>
         ///  <item>aspect is negative or zero</item>
         ///  <item>depthNear is negative or zero</item>
         ///  <item>depthFar is negative or zero</item>
@@ -1060,7 +1060,7 @@ namespace OpenToolkit.Mathematics
             out Matrix4 result
         )
         {
-            if (fovy <= 0 || fovy > Math.PI)
+            if (fovy <= 0 || fovy > System.Math.PI)
             {
                 throw new ArgumentOutOfRangeException(nameof(fovy));
             }
@@ -1080,7 +1080,7 @@ namespace OpenToolkit.Mathematics
                 throw new ArgumentOutOfRangeException(nameof(depthFar));
             }
 
-            var maxY = depthNear * (float)Math.Tan(0.5f * fovy);
+            var maxY = depthNear * (float)System.Math.Tan(0.5f * fovy);
             var minY = -maxY;
             var minX = minY * aspect;
             var maxX = maxY * aspect;
@@ -1099,7 +1099,7 @@ namespace OpenToolkit.Mathematics
         /// <exception cref="System.ArgumentOutOfRangeException">
         /// Thrown under the following conditions:
         ///  <list type="bullet">
-        ///  <item>fovy is zero, less than zero or larger than Math.PI</item>
+        ///  <item>fovy is zero, less than zero or larger than System.Math.PI</item>
         ///  <item>aspect is negative or zero</item>
         ///  <item>depthNear is negative or zero</item>
         ///  <item>depthFar is negative or zero</item>
@@ -1471,7 +1471,7 @@ namespace OpenToolkit.Mathematics
                         {
                             if (pivotIdx[k] == -1)
                             {
-                                var absVal = Math.Abs(inverse[j, k]);
+                                var absVal = System.Math.Abs(inverse[j, k]);
                                 if (absVal > maxPivot)
                                 {
                                     maxPivot = absVal;

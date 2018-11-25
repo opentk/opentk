@@ -5,6 +5,7 @@
     <Deterministic>true</Deterministic>
     <LangVersion>latest</LangVersion>
     <RootNamespace>OpenToolkit.OpenAL</RootNamespace>
+    <AssemblyName>OpenToolkit.OpenAL</AssemblyName>
   </PropertyGroup>
 
   <PropertyGroup>

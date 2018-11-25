@@ -25,7 +25,7 @@ using System.Globalization;
 using System.Runtime.InteropServices;
 using System.Xml.Serialization;
 
-namespace OpenToolkit.Mathematics
+namespace OpenToolkit.Math
 {
     /// <summary>
     /// Represents a 3D vector using three single-precision floating-point numbers.
@@ -162,7 +162,7 @@ namespace OpenToolkit.Mathematics
         /// </summary>
         /// <see cref="LengthFast"/>
         /// <seealso cref="LengthSquared"/>
-        public float Length => (float)Math.Sqrt((X * X) + (Y * Y) + (Z * Z));
+        public float Length => (float)System.Math.Sqrt((X * X) + (Y * Y) + (Z * Z));
 
         /// <summary>
         /// Gets an approximation of the vector length (magnitude).
@@ -574,7 +574,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="result">The distance.</param>
         public static void Distance(ref Vector3 vec1, ref Vector3 vec2, out float result)
         {
-            result = (float)Math.Sqrt(((vec2.X - vec1.X) * (vec2.X - vec1.X)) + ((vec2.Y - vec1.Y) * (vec2.Y - vec1.Y)) +
+            result = (float)System.Math.Sqrt(((vec2.X - vec1.X) * (vec2.X - vec1.X)) + ((vec2.Y - vec1.Y) * (vec2.Y - vec1.Y)) +
                                       ((vec2.Z - vec1.Z) * (vec2.Z - vec1.Z)));
         }
 
@@ -1065,7 +1065,7 @@ namespace OpenToolkit.Mathematics
         public static void CalculateAngle(ref Vector3 first, ref Vector3 second, out float result)
         {
             Dot(ref first, ref second, out float temp);
-            result = (float)Math.Acos(MathHelper.Clamp(temp / (first.Length * second.Length), -1.0, 1.0));
+            result = (float)System.Math.Acos(MathHelper.Clamp(temp / (first.Length * second.Length), -1.0, 1.0));
         }
 
         /// <summary>

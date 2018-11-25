@@ -3,6 +3,7 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <Deterministic>true</Deterministic>
     <RootNamespace>OpenToolkit.Input</RootNamespace>
+    <AssemblyName>OpenToolkit.Input</AssemblyName>
   </PropertyGroup>
 
   <PropertyGroup>

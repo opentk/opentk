@@ -5,6 +5,7 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <LangVersion>latest</LangVersion>
     <RootNamespace>OpenToolkit.OpenAL.Extensions.Enumeration</RootNamespace>
+    <AssemblyName>OpenToolkit.OpenAL.Extensions.Enumeration</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>

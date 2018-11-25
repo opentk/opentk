@@ -1,5 +1,5 @@
 using AdvancedDLSupport;
-using OpenToolkit.Mathematics;
+using OpenToolkit.Math;
 
 // ReSharper disable ExplicitCallerInfoArgument
 

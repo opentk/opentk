@@ -5,6 +5,7 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <LangVersion>latest</LangVersion>
     <RootNamespace>OpenToolkit.OpenAL.Extensions.Soft</RootNamespace>
+    <AssemblyName>OpenToolkit.OpenAL.Extensions.Soft</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>

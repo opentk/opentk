@@ -24,7 +24,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 
-namespace OpenToolkit.Mathematics
+namespace OpenToolkit.Math
 {
     /// <summary>
     /// Represents a 3x3 matrix containing 3D rotation and scale with double-precision components.
@@ -405,7 +405,7 @@ namespace OpenToolkit.Mathematics
 
             if (trace > 0)
             {
-                var sq = Math.Sqrt(trace);
+                var sq = System.Math.Sqrt(trace);
 
                 q.W = sq;
                 sq = 1.0 / (4.0 * sq);
@@ -415,7 +415,7 @@ namespace OpenToolkit.Mathematics
             }
             else if (row0[0] > row1[1] && row0[0] > row2[2])
             {
-                var sq = 2.0 * Math.Sqrt(1.0 + row0[0] - row1[1] - row2[2]);
+                var sq = 2.0 * System.Math.Sqrt(1.0 + row0[0] - row1[1] - row2[2]);
 
                 q.X = 0.25 * sq;
                 sq = 1.0 / sq;
@@ -425,7 +425,7 @@ namespace OpenToolkit.Mathematics
             }
             else if (row1[1] > row2[2])
             {
-                var sq = 2.0 * Math.Sqrt(1.0 + row1[1] - row0[0] - row2[2]);
+                var sq = 2.0 * System.Math.Sqrt(1.0 + row1[1] - row0[0] - row2[2]);
 
                 q.Y = 0.25 * sq;
                 sq = 1.0 / sq;
@@ -435,7 +435,7 @@ namespace OpenToolkit.Mathematics
             }
             else
             {
-                var sq = 2.0 * Math.Sqrt(1.0 + row2[2] - row0[0] - row1[1]);
+                var sq = 2.0 * System.Math.Sqrt(1.0 + row2[2] - row0[0] - row1[1]);
 
                 q.Z = 0.25 * sq;
                 sq = 1.0 / sq;
@@ -461,8 +461,8 @@ namespace OpenToolkit.Mathematics
             double axisX = axis.X, axisY = axis.Y, axisZ = axis.Z;
 
             // calculate angles
-            var cos = Math.Cos(-angle);
-            var sin = Math.Sin(-angle);
+            var cos = System.Math.Cos(-angle);
+            var sin = System.Math.Sin(-angle);
             var t = 1.0f - cos;
 
             // do the conversion math once
@@ -529,8 +529,8 @@ namespace OpenToolkit.Mathematics
         /// <param name="result">The resulting Matrix3d instance.</param>
         public static void CreateRotationX(double angle, out Matrix3d result)
         {
-            var cos = Math.Cos(angle);
-            var sin = Math.Sin(angle);
+            var cos = System.Math.Cos(angle);
+            var sin = System.Math.Sin(angle);
 
             result = Identity;
             result.Row1.Y = cos;
@@ -557,8 +557,8 @@ namespace OpenToolkit.Mathematics
         /// <param name="result">The resulting Matrix3d instance.</param>
         public static void CreateRotationY(double angle, out Matrix3d result)
         {
-            var cos = Math.Cos(angle);
-            var sin = Math.Sin(angle);
+            var cos = System.Math.Cos(angle);
+            var sin = System.Math.Sin(angle);
 
             result = Identity;
             result.Row0.X = cos;
@@ -585,8 +585,8 @@ namespace OpenToolkit.Mathematics
         /// <param name="result">The resulting Matrix3d instance.</param>
         public static void CreateRotationZ(double angle, out Matrix3d result)
         {
-            var cos = Math.Cos(angle);
-            var sin = Math.Sin(angle);
+            var cos = System.Math.Cos(angle);
+            var sin = System.Math.Sin(angle);
 
             result = Identity;
             result.Row0.X = cos;
@@ -789,7 +789,7 @@ namespace OpenToolkit.Mathematics
                         {
                             if (pivotIdx[k] == -1)
                             {
-                                var absVal = Math.Abs(inverse[j, k]);
+                                var absVal = System.Math.Abs(inverse[j, k]);
                                 if (absVal > maxPivot)
                                 {
                                     maxPivot = absVal;

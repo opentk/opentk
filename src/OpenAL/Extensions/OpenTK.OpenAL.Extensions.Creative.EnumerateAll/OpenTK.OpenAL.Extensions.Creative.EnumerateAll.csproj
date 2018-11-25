@@ -5,6 +5,7 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <LangVersion>latest</LangVersion>
     <RootNamespace>OpenToolkit.OpenAL.Extensions.Creative.EnumerateAll</RootNamespace>
+    <AssemblyName>OpenToolkit.OpenAL.Extensions.Creative.EnumerateAll</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>

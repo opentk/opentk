@@ -9,7 +9,7 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 
-namespace OpenToolkit.Mathematics
+namespace OpenToolkit.Math
 {
     /// <summary>
     /// Contains common mathematical functions and constants.
@@ -79,7 +79,7 @@ namespace OpenToolkit.Mathematics
                 throw new ArgumentOutOfRangeException(nameof(n), "Must be positive.");
             }
 
-            return (long)Math.Pow(2, Math.Ceiling(Math.Log(n, 2)));
+            return (long)System.Math.Pow(2, System.Math.Ceiling(System.Math.Log(n, 2)));
         }
 
         /// <summary>
@@ -94,7 +94,7 @@ namespace OpenToolkit.Mathematics
                 throw new ArgumentOutOfRangeException(nameof(n), "Must be positive.");
             }
 
-            return (int)Math.Pow(2, Math.Ceiling(Math.Log(n, 2)));
+            return (int)System.Math.Pow(2, System.Math.Ceiling(System.Math.Log(n, 2)));
         }
 
         /// <summary>
@@ -109,7 +109,7 @@ namespace OpenToolkit.Mathematics
                 throw new ArgumentOutOfRangeException(nameof(n), "Must be positive.");
             }
 
-            return (float)Math.Pow(2, Math.Ceiling(Math.Log(n, 2)));
+            return (float)System.Math.Pow(2, System.Math.Ceiling(System.Math.Log(n, 2)));
         }
 
         /// <summary>
@@ -124,7 +124,7 @@ namespace OpenToolkit.Mathematics
                 throw new ArgumentOutOfRangeException(nameof(n), "Must be positive.");
             }
 
-            return Math.Pow(2, Math.Ceiling(Math.Log(n, 2)));
+            return System.Math.Pow(2, System.Math.Ceiling(System.Math.Log(n, 2)));
         }
 
         /// <summary>
@@ -212,7 +212,7 @@ namespace OpenToolkit.Mathematics
         /// <returns>The angle expressed in radians.</returns>
         public static float DegreesToRadians(float degrees)
         {
-            const float degToRad = (float)Math.PI / 180.0f;
+            const float degToRad = (float)System.Math.PI / 180.0f;
             return degrees * degToRad;
         }
 
@@ -223,7 +223,7 @@ namespace OpenToolkit.Mathematics
         /// <returns>The angle expressed in degrees.</returns>
         public static float RadiansToDegrees(float radians)
         {
-            const float radToDeg = 180.0f / (float)Math.PI;
+            const float radToDeg = 180.0f / (float)System.Math.PI;
             return radians * radToDeg;
         }
 
@@ -234,7 +234,7 @@ namespace OpenToolkit.Mathematics
         /// <returns>The angle expressed in radians.</returns>
         public static double DegreesToRadians(double degrees)
         {
-            const double degToRad = Math.PI / 180.0;
+            const double degToRad = System.Math.PI / 180.0;
             return degrees * degToRad;
         }
 
@@ -245,7 +245,7 @@ namespace OpenToolkit.Mathematics
         /// <returns>The angle expressed in degrees.</returns>
         public static double RadiansToDegrees(double radians)
         {
-            const double radToDeg = 180.0 / Math.PI;
+            const double radToDeg = 180.0 / System.Math.PI;
             return radians * radToDeg;
         }
 
@@ -282,7 +282,7 @@ namespace OpenToolkit.Mathematics
         /// <returns>min, if n is lower than min; max, if n is higher than max; n otherwise.</returns>
         public static int Clamp(int n, int min, int max)
         {
-            return Math.Max(Math.Min(n, max), min);
+            return System.Math.Max(System.Math.Min(n, max), min);
         }
 
         /// <summary>
@@ -294,7 +294,7 @@ namespace OpenToolkit.Mathematics
         /// <returns>min, if n is lower than min; max, if n is higher than max; n otherwise.</returns>
         public static float Clamp(float n, float min, float max)
         {
-            return Math.Max(Math.Min(n, max), min);
+            return System.Math.Max(System.Math.Min(n, max), min);
         }
 
         /// <summary>
@@ -306,7 +306,7 @@ namespace OpenToolkit.Mathematics
         /// <returns>min, if n is lower than min; max, if n is higher than max; n otherwise.</returns>
         public static double Clamp(double n, double min, double max)
         {
-            return Math.Max(Math.Min(n, max), min);
+            return System.Math.Max(System.Math.Min(n, max), min);
         }
 
         private static unsafe int FloatToInt32Bits(float f)
@@ -369,7 +369,7 @@ namespace OpenToolkit.Mathematics
                 l = int.MinValue - l;
             }
 
-            var intDiff = Math.Abs(k - l);
+            var intDiff = System.Math.Abs(k - l);
             return intDiff <= 1 << maxDeltaBits;
         }
 
@@ -388,9 +388,9 @@ namespace OpenToolkit.Mathematics
         public static bool ApproximatelyEqualEpsilon(double a, double b, double epsilon)
         {
             const double doubleNormal = (1L << 52) * double.Epsilon;
-            var absA = Math.Abs(a);
-            var absB = Math.Abs(b);
-            var diff = Math.Abs(a - b);
+            var absA = System.Math.Abs(a);
+            var absB = System.Math.Abs(b);
+            var diff = System.Math.Abs(a - b);
 
             if (a == b)
             {
@@ -406,7 +406,7 @@ namespace OpenToolkit.Mathematics
             }
 
             // use relative error
-            return diff / Math.Min(absA + absB, double.MaxValue) < epsilon;
+            return diff / System.Math.Min(absA + absB, double.MaxValue) < epsilon;
         }
 
         /// <summary>
@@ -424,9 +424,9 @@ namespace OpenToolkit.Mathematics
         public static bool ApproximatelyEqualEpsilon(float a, float b, float epsilon)
         {
             const float floatNormal = (1 << 23) * float.Epsilon;
-            var absA = Math.Abs(a);
-            var absB = Math.Abs(b);
-            var diff = Math.Abs(a - b);
+            var absA = System.Math.Abs(a);
+            var absB = System.Math.Abs(b);
+            var diff = System.Math.Abs(a - b);
 
             if (a == b)
             {
@@ -442,7 +442,7 @@ namespace OpenToolkit.Mathematics
             }
 
             // use relative error
-            var relativeError = diff / Math.Min(absA + absB, float.MaxValue);
+            var relativeError = diff / System.Math.Min(absA + absB, float.MaxValue);
             return relativeError < epsilon;
         }
 
@@ -465,7 +465,7 @@ namespace OpenToolkit.Mathematics
                 return true;
             }
 
-            var diff = Math.Abs(a - b);
+            var diff = System.Math.Abs(a - b);
             return diff <= tolerance;
         }
 
@@ -488,7 +488,7 @@ namespace OpenToolkit.Mathematics
                 return true;
             }
 
-            var diff = Math.Abs(a - b);
+            var diff = System.Math.Abs(a - b);
             return diff <= tolerance;
         }
     }

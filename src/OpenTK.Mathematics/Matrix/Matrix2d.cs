@@ -23,7 +23,7 @@ SOFTWARE.
 using System;
 using System.Diagnostics.CodeAnalysis;
 
-namespace OpenToolkit.Mathematics
+namespace OpenToolkit.Math
 {
     /// <summary>
     /// Represents a 2x2 matrix.
@@ -240,8 +240,8 @@ namespace OpenToolkit.Mathematics
         /// <param name="result">The resulting Matrix2d instance.</param>
         public static void CreateRotation(double angle, out Matrix2d result)
         {
-            var cos = Math.Cos(angle);
-            var sin = Math.Sin(angle);
+            var cos = System.Math.Cos(angle);
+            var sin = System.Math.Sin(angle);
 
             result.Row0.X = cos;
             result.Row0.Y = sin;

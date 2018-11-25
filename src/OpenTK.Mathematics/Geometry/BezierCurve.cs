@@ -9,7 +9,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace OpenToolkit.Mathematics
+namespace OpenToolkit.Math
 {
     /// <summary>
     /// Represents a bezier curve with as many points as you want.
@@ -205,7 +205,7 @@ namespace OpenToolkit.Mathematics
             {
                 temp = MathHelper.BinomialCoefficient
                 (
-                    points.Count - 1, i) * (float)(Math.Pow(t, i) * Math.Pow(c, points.Count - 1 - i)
+                    points.Count - 1, i) * (float)(System.Math.Pow(t, i) * System.Math.Pow(c, points.Count - 1 - i)
                 );
 
                 r.X += temp * pt.X;
@@ -249,7 +249,7 @@ namespace OpenToolkit.Mathematics
             {
                 temp = MathHelper.BinomialCoefficient
                 (
-                    points.Count - 2, i) * (float)(Math.Pow(t, i) * Math.Pow(c, points.Count - 2 - i)
+                    points.Count - 2, i) * (float)(System.Math.Pow(t, i) * System.Math.Pow(c, points.Count - 2 - i)
                 );
 
                 r.X += temp * pt.X;

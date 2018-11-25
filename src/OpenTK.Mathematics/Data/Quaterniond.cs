@@ -24,7 +24,7 @@ using System;
 using System.Runtime.InteropServices;
 using System.Xml.Serialization;
 
-namespace OpenToolkit.Mathematics
+namespace OpenToolkit.Math
 {
     /// <summary>
     /// Represents a double-precision Quaternion.
@@ -77,12 +77,12 @@ namespace OpenToolkit.Mathematics
             pitch *= 0.5;
             roll *= 0.5;
 
-            var c1 = Math.Cos(yaw);
-            var c2 = Math.Cos(pitch);
-            var c3 = Math.Cos(roll);
-            var s1 = Math.Sin(yaw);
-            var s2 = Math.Sin(pitch);
-            var s3 = Math.Sin(roll);
+            var c1 = System.Math.Cos(yaw);
+            var c2 = System.Math.Cos(pitch);
+            var c3 = System.Math.Cos(roll);
+            var s1 = System.Math.Sin(yaw);
+            var s2 = System.Math.Sin(pitch);
+            var s3 = System.Math.Sin(roll);
 
             W = (c1 * c2 * c3) - (s1 * s2 * s3);
             Xyz.X = (s1 * s2 * c3) + (c1 * c2 * s3);
@@ -148,17 +148,17 @@ namespace OpenToolkit.Mathematics
         public Vector4d ToAxisAngle()
         {
             var q = this;
-            if (Math.Abs(q.W) > 1.0f)
+            if (System.Math.Abs(q.W) > 1.0f)
             {
                 q.Normalize();
             }
 
             var result = new Vector4d
             {
-                W = 2.0f * (float)Math.Acos(q.W) // angle
+                W = 2.0f * (float)System.Math.Acos(q.W) // angle
             };
 
-            var den = (float)Math.Sqrt(1.0 - (q.W * q.W));
+            var den = (float)System.Math.Sqrt(1.0 - (q.W * q.W));
             if (den > 0.0001f)
             {
                 result.Xyz = q.Xyz / den;
@@ -177,7 +177,7 @@ namespace OpenToolkit.Mathematics
         /// Gets the length (magnitude) of the Quaterniond.
         /// </summary>
         /// <seealso cref="LengthSquared"/>
-        public double Length => Math.Sqrt((W * W) + Xyz.LengthSquared);
+        public double Length => System.Math.Sqrt((W * W) + Xyz.LengthSquared);
 
         /// <summary>
         /// Gets the square of the Quaterniond length (magnitude).
@@ -437,8 +437,8 @@ namespace OpenToolkit.Mathematics
 
             angle *= 0.5f;
             axis.Normalize();
-            result.Xyz = axis * Math.Sin(angle);
-            result.W = Math.Cos(angle);
+            result.Xyz = axis * System.Math.Sin(angle);
+            result.W = System.Math.Cos(angle);
 
             return Normalize(result);
         }
@@ -472,12 +472,12 @@ namespace OpenToolkit.Mathematics
         /// <param name="result">The equivalent Quaterniond.</param>
         public static void FromEulerAngles(ref Vector3d eulerAngles, out Quaterniond result)
         {
-            var c1 = Math.Cos(eulerAngles.Y * 0.5);
-            var c2 = Math.Cos(eulerAngles.X * 0.5);
-            var c3 = Math.Cos(eulerAngles.Z * 0.5);
-            var s1 = Math.Sin(eulerAngles.Y * 0.5);
-            var s2 = Math.Sin(eulerAngles.X * 0.5);
-            var s3 = Math.Sin(eulerAngles.Z * 0.5);
+            var c1 = System.Math.Cos(eulerAngles.Y * 0.5);
+            var c2 = System.Math.Cos(eulerAngles.X * 0.5);
+            var c3 = System.Math.Cos(eulerAngles.Z * 0.5);
+            var s1 = System.Math.Sin(eulerAngles.Y * 0.5);
+            var s2 = System.Math.Sin(eulerAngles.X * 0.5);
+            var s3 = System.Math.Sin(eulerAngles.Z * 0.5);
 
             result.W = (c1 * c2 * c3) - (s1 * s2 * s3);
             result.Xyz.X = (s1 * s2 * c3) + (c1 * c2 * s3);
@@ -507,7 +507,7 @@ namespace OpenToolkit.Mathematics
 
             if (trace > 0)
             {
-                var s = Math.Sqrt(trace + 1) * 2;
+                var s = System.Math.Sqrt(trace + 1) * 2;
                 var invS = 1.0 / s;
 
                 result.W = s * 0.25;
@@ -521,7 +521,7 @@ namespace OpenToolkit.Mathematics
 
                 if (m00 > m11 && m00 > m22)
                 {
-                    var s = Math.Sqrt(1 + m00 - m11 - m22) * 2;
+                    var s = System.Math.Sqrt(1 + m00 - m11 - m22) * 2;
                     var invS = 1.0 / s;
 
                     result.W = (matrix.Row2.Y - matrix.Row1.Z) * invS;
@@ -531,7 +531,7 @@ namespace OpenToolkit.Mathematics
                 }
                 else if (m11 > m22)
                 {
-                    var s = Math.Sqrt(1 + m11 - m00 - m22) * 2;
+                    var s = System.Math.Sqrt(1 + m11 - m00 - m22) * 2;
                     var invS = 1.0 / s;
 
                     result.W = (matrix.Row0.Z - matrix.Row2.X) * invS;
@@ -541,7 +541,7 @@ namespace OpenToolkit.Mathematics
                 }
                 else
                 {
-                    var s = Math.Sqrt(1 + m22 - m00 - m11) * 2;
+                    var s = System.Math.Sqrt(1 + m22 - m00 - m11) * 2;
                     var invS = 1.0 / s;
 
                     result.W = (matrix.Row1.X - matrix.Row0.Y) * invS;
@@ -597,11 +597,11 @@ namespace OpenToolkit.Mathematics
             if (cosHalfAngle < 0.99f)
             {
                 // do proper slerp for big angles
-                var halfAngle = Math.Acos(cosHalfAngle);
-                var sinHalfAngle = Math.Sin(halfAngle);
+                var halfAngle = System.Math.Acos(cosHalfAngle);
+                var sinHalfAngle = System.Math.Sin(halfAngle);
                 var oneOverSinHalfAngle = 1.0f / sinHalfAngle;
-                blendA = Math.Sin(halfAngle * (1.0f - blend)) * oneOverSinHalfAngle;
-                blendB = Math.Sin(halfAngle * blend) * oneOverSinHalfAngle;
+                blendA = System.Math.Sin(halfAngle * (1.0f - blend)) * oneOverSinHalfAngle;
+                blendB = System.Math.Sin(halfAngle * blend) * oneOverSinHalfAngle;
             }
             else
             {

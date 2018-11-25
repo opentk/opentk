@@ -1,4 +1,4 @@
-﻿using OpenToolkit.Mathematics;
+﻿using OpenToolkit.Math;
 
 namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
 {

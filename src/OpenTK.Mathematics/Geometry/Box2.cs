@@ -6,7 +6,7 @@ using System;
 using System.Globalization;
 using System.Runtime.InteropServices;
 
-namespace OpenToolkit.Mathematics
+namespace OpenToolkit.Math
 {
     /// <summary>
     /// Defines a 2d box (rectangle).
@@ -102,12 +102,12 @@ namespace OpenToolkit.Mathematics
         /// <summary>
         /// Gets a float describing the width of the Box2 structure.
         /// </summary>
-        public float Width => Math.Abs(Right - Left);
+        public float Width => System.Math.Abs(Right - Left);
 
         /// <summary>
         /// Gets a float describing the height of the Box2 structure.
         /// </summary>
-        public float Height => Math.Abs(Bottom - Top);
+        public float Height => System.Math.Abs(Bottom - Top);
 
         /// <summary>
         /// Returns whether the box contains the specified point on the closed region described by this Box2.

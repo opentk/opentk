@@ -25,7 +25,7 @@ using System.Globalization;
 using System.Runtime.InteropServices;
 using System.Xml.Serialization;
 
-namespace OpenToolkit.Mathematics
+namespace OpenToolkit.Math
 {
     /// <summary>
     /// Represents a 2D vector using two double-precision floating-point numbers.
@@ -133,7 +133,7 @@ namespace OpenToolkit.Mathematics
         /// Gets the length (magnitude) of the vector.
         /// </summary>
         /// <seealso cref="LengthSquared"/>
-        public double Length => Math.Sqrt((X * X) + (Y * Y));
+        public double Length => System.Math.Sqrt((X * X) + (Y * Y));
 
         /// <summary>
         /// Gets the square of the vector length (magnitude).
@@ -519,7 +519,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="result">The distance.</param>
         public static void Distance(ref Vector2d vec1, ref Vector2d vec2, out double result)
         {
-            result = Math.Sqrt(((vec2.X - vec1.X) * (vec2.X - vec1.X)) + ((vec2.Y - vec1.Y) * (vec2.Y - vec1.Y)));
+            result = System.Math.Sqrt(((vec2.X - vec1.X) * (vec2.X - vec1.X)) + ((vec2.Y - vec1.Y) * (vec2.Y - vec1.Y)));
         }
 
         /// <summary>

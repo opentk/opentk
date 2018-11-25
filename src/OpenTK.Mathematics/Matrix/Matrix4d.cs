@@ -24,7 +24,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 
-namespace OpenToolkit.Mathematics
+namespace OpenToolkit.Math
 {
     /// <summary>
     /// Represents a 4x4 matrix containing 3D rotation, scale, transform, and projection with double-precision components.
@@ -580,7 +580,7 @@ namespace OpenToolkit.Mathematics
 
             if (trace > 0)
             {
-                var sq = Math.Sqrt(trace);
+                var sq = System.Math.Sqrt(trace);
 
                 q.W = sq;
                 sq = 1.0 / (4.0 * sq);
@@ -590,7 +590,7 @@ namespace OpenToolkit.Mathematics
             }
             else if (row0[0] > row1[1] && row0[0] > row2[2])
             {
-                var sq = 2.0 * Math.Sqrt(1.0 + row0[0] - row1[1] - row2[2]);
+                var sq = 2.0 * System.Math.Sqrt(1.0 + row0[0] - row1[1] - row2[2]);
 
                 q.X = 0.25 * sq;
                 sq = 1.0 / sq;
@@ -600,7 +600,7 @@ namespace OpenToolkit.Mathematics
             }
             else if (row1[1] > row2[2])
             {
-                var sq = 2.0 * Math.Sqrt(1.0 + row1[1] - row0[0] - row2[2]);
+                var sq = 2.0 * System.Math.Sqrt(1.0 + row1[1] - row0[0] - row2[2]);
 
                 q.Y = 0.25 * sq;
                 sq = 1.0 / sq;
@@ -610,7 +610,7 @@ namespace OpenToolkit.Mathematics
             }
             else
             {
-                var sq = 2.0 * Math.Sqrt(1.0 + row2[2] - row0[0] - row1[1]);
+                var sq = 2.0 * System.Math.Sqrt(1.0 + row2[2] - row0[0] - row1[1]);
 
                 q.Z = 0.25 * sq;
                 sq = 1.0 / sq;
@@ -645,8 +645,8 @@ namespace OpenToolkit.Mathematics
             double axisX = axis.X, axisY = axis.Y, axisZ = axis.Z;
 
             // calculate angles
-            var cos = Math.Cos(-angle);
-            var sin = Math.Sin(-angle);
+            var cos = System.Math.Cos(-angle);
+            var sin = System.Math.Sin(-angle);
             var t = 1.0f - cos;
 
             // do the conversion math once
@@ -695,8 +695,8 @@ namespace OpenToolkit.Mathematics
         /// <param name="result">The resulting Matrix4d instance.</param>
         public static void CreateRotationX(double angle, out Matrix4d result)
         {
-            var cos = Math.Cos(angle);
-            var sin = Math.Sin(angle);
+            var cos = System.Math.Cos(angle);
+            var sin = System.Math.Sin(angle);
 
             result.Row0 = Vector4d.UnitX;
             result.Row1 = new Vector4d(0, cos, sin, 0);
@@ -722,8 +722,8 @@ namespace OpenToolkit.Mathematics
         /// <param name="result">The resulting Matrix4d instance.</param>
         public static void CreateRotationY(double angle, out Matrix4d result)
         {
-            var cos = Math.Cos(angle);
-            var sin = Math.Sin(angle);
+            var cos = System.Math.Cos(angle);
+            var sin = System.Math.Sin(angle);
 
             result.Row0 = new Vector4d(cos, 0, -sin, 0);
             result.Row1 = Vector4d.UnitY;
@@ -749,8 +749,8 @@ namespace OpenToolkit.Mathematics
         /// <param name="result">The resulting Matrix4d instance.</param>
         public static void CreateRotationZ(double angle, out Matrix4d result)
         {
-            var cos = Math.Cos(angle);
-            var sin = Math.Sin(angle);
+            var cos = System.Math.Cos(angle);
+            var sin = System.Math.Sin(angle);
 
             result.Row0 = new Vector4d(cos, sin, 0, 0);
             result.Row1 = new Vector4d(-sin, cos, 0, 0);
@@ -924,7 +924,7 @@ namespace OpenToolkit.Mathematics
         /// <exception cref="System.ArgumentOutOfRangeException">
         /// Thrown under the following conditions:
         ///  <list type="bullet">
-        ///  <item>fovy is zero, less than zero or larger than Math.PI</item>
+        ///  <item>fovy is zero, less than zero or larger than System.Math.PI</item>
         ///  <item>aspect is negative or zero</item>
         ///  <item>depthNear is negative or zero</item>
         ///  <item>depthFar is negative or zero</item>
@@ -940,7 +940,7 @@ namespace OpenToolkit.Mathematics
             out Matrix4d result
         )
         {
-            if (fovy <= 0 || fovy > Math.PI)
+            if (fovy <= 0 || fovy > System.Math.PI)
             {
                 throw new ArgumentOutOfRangeException(nameof(fovy));
             }
@@ -960,7 +960,7 @@ namespace OpenToolkit.Mathematics
                 throw new ArgumentOutOfRangeException(nameof(depthFar));
             }
 
-            var maxY = depthNear * Math.Tan(0.5 * fovy);
+            var maxY = depthNear * System.Math.Tan(0.5 * fovy);
             var minY = -maxY;
             var minX = minY * aspect;
             var maxX = maxY * aspect;
@@ -979,7 +979,7 @@ namespace OpenToolkit.Mathematics
         /// <exception cref="System.ArgumentOutOfRangeException">
         /// Thrown under the following conditions:
         ///  <list type="bullet">
-        ///  <item>fovy is zero, less than zero or larger than Math.PI</item>
+        ///  <item>fovy is zero, less than zero or larger than System.Math.PI</item>
         ///  <item>aspect is negative or zero</item>
         ///  <item>depthNear is negative or zero</item>
         ///  <item>depthFar is negative or zero</item>
@@ -1152,8 +1152,8 @@ namespace OpenToolkit.Mathematics
         /// <returns>A rotation matrix.</returns>
         public static Matrix4d RotateX(double angle)
         {
-            var cos = Math.Cos(angle);
-            var sin = Math.Sin(angle);
+            var cos = System.Math.Cos(angle);
+            var sin = System.Math.Sin(angle);
 
             Matrix4d result;
             result.Row0 = Vector4d.UnitX;
@@ -1170,8 +1170,8 @@ namespace OpenToolkit.Mathematics
         /// <returns>A rotation matrix.</returns>
         public static Matrix4d RotateY(double angle)
         {
-            var cos = Math.Cos(angle);
-            var sin = Math.Sin(angle);
+            var cos = System.Math.Cos(angle);
+            var sin = System.Math.Sin(angle);
 
             Matrix4d result;
             result.Row0 = new Vector4d(cos, 0.0, -sin, 0.0);
@@ -1188,8 +1188,8 @@ namespace OpenToolkit.Mathematics
         /// <returns>A rotation matrix.</returns>
         public static Matrix4d RotateZ(double angle)
         {
-            var cos = Math.Cos(angle);
-            var sin = Math.Sin(angle);
+            var cos = System.Math.Cos(angle);
+            var sin = System.Math.Sin(angle);
 
             Matrix4d result;
             result.Row0 = new Vector4d(cos, sin, 0.0, 0.0);
@@ -1209,8 +1209,8 @@ namespace OpenToolkit.Mathematics
         /// <returns>A rotation matrix.</returns>
         public static Matrix4d Rotate(Vector3d axis, double angle)
         {
-            var cos = Math.Cos(-angle);
-            var sin = Math.Sin(-angle);
+            var cos = System.Math.Cos(-angle);
+            var sin = System.Math.Sin(-angle);
             var t = 1.0 - cos;
 
             axis.Normalize();
@@ -1353,7 +1353,7 @@ namespace OpenToolkit.Mathematics
         /// <returns>A projection matrix that transforms camera space to raster space.</returns>
         public static Matrix4d Perspective(double fovy, double aspect, double depthNear, double depthFar)
         {
-            var yMax = depthNear * Math.Tan(0.5f * fovy);
+            var yMax = depthNear * System.Math.Tan(0.5f * fovy);
             var yMin = -yMax;
             var xMin = yMin * aspect;
             var xMax = yMax * aspect;
@@ -1544,7 +1544,7 @@ namespace OpenToolkit.Mathematics
                         {
                             if (pivotIdx[k] == -1)
                             {
-                                var absVal = Math.Abs(inverse[j, k]);
+                                var absVal = System.Math.Abs(inverse[j, k]);
                                 if (absVal > maxPivot)
                                 {
                                     maxPivot = absVal;

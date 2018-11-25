@@ -5,6 +5,7 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <LangVersion>latest</LangVersion>
     <RootNamespace>OpenToolkit.OpenAL.Extensions.Soft.DeferredUpdates</RootNamespace>
+    <AssemblyName>OpenToolkit.OpenAL.Extensions.Soft.DeferredUpdates</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>

@@ -32,8 +32,8 @@ GLboolean*,         bool*
 GLsizeiptrARB,      UIntPtr
 GLintptrARB,        IntPtr
 GLhandleARB,        uint
-GLhalfARB,          OpenToolkit.Mathematics.Half
-GLhalfNV,           OpenToolkit.Mathematics.Half
+GLhalfARB,          OpenToolkit.Math.Half
+GLhalfNV,           OpenToolkit.Math.Half
 GLcharARB,          char
 
 # 64 bit types (introduced in 2.1)

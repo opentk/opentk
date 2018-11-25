@@ -60,7 +60,7 @@ using System.IO;
 using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 
-namespace OpenToolkit.Mathematics
+namespace OpenToolkit.Math
 {
     /// <summary>
     /// The name Half is derived from half-precision floating-point number.
@@ -462,7 +462,7 @@ namespace OpenToolkit.Mathematics
                 l = (short)(0x8000 - l);
             }
 
-            var intDiff = Math.Abs((short)(k - l));
+            var intDiff = System.Math.Abs((short)(k - l));
 
             if (intDiff <= maxUlps)
             {

@@ -5,6 +5,7 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <LangVersion>latest</LangVersion>
     <RootNamespace>OpenToolkit.OpenAL.Extensions.EXT.IMA4Format</RootNamespace>
+    <AssemblyName>OpenToolkit.OpenAL.Extensions.EXT.IMA4Format</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>

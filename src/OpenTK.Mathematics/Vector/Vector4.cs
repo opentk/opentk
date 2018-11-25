@@ -25,7 +25,7 @@ using System.Globalization;
 using System.Runtime.InteropServices;
 using System.Xml.Serialization;
 
-namespace OpenToolkit.Mathematics
+namespace OpenToolkit.Math
 {
     /// <summary>
     /// Represents a 4D vector using four single-precision floating-point numbers.
@@ -233,7 +233,7 @@ namespace OpenToolkit.Mathematics
         /// </summary>
         /// <see cref="LengthFast"/>
         /// <seealso cref="LengthSquared"/>
-        public float Length => (float)Math.Sqrt((X * X) + (Y * Y) + (Z * Z) + (W * W));
+        public float Length => (float)System.Math.Sqrt((X * X) + (Y * Y) + (Z * Z) + (W * W));
 
         /// <summary>
         /// Gets an approximation of the vector length (magnitude).

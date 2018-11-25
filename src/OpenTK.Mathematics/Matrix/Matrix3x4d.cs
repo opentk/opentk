@@ -24,7 +24,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 
-namespace OpenToolkit.Mathematics
+namespace OpenToolkit.Math
 {
     /// <summary>
     /// Represents a 3x4 Matrix.
@@ -311,8 +311,8 @@ namespace OpenToolkit.Mathematics
             axis.Normalize();
             double axisX = axis.X, axisY = axis.Y, axisZ = axis.Z;
 
-            var cos = Math.Cos(angle);
-            var sin = Math.Sin(angle);
+            var cos = System.Math.Cos(angle);
+            var sin = System.Math.Sin(angle);
             var t = 1.0f - cos;
 
             double tXX = t * axisX * axisX;
@@ -408,8 +408,8 @@ namespace OpenToolkit.Mathematics
         /// <param name="result">The resulting Matrix4 instance.</param>
         public static void CreateRotationX(double angle, out Matrix3x4d result)
         {
-            var cos = Math.Cos(angle);
-            var sin = Math.Sin(angle);
+            var cos = System.Math.Cos(angle);
+            var sin = System.Math.Sin(angle);
 
             result.Row0.X = 1;
             result.Row0.Y = 0;
@@ -443,8 +443,8 @@ namespace OpenToolkit.Mathematics
         /// <param name="result">The resulting Matrix4 instance.</param>
         public static void CreateRotationY(double angle, out Matrix3x4d result)
         {
-            var cos = Math.Cos(angle);
-            var sin = Math.Sin(angle);
+            var cos = System.Math.Cos(angle);
+            var sin = System.Math.Sin(angle);
 
             result.Row0.X = cos;
             result.Row0.Y = 0;
@@ -478,8 +478,8 @@ namespace OpenToolkit.Mathematics
         /// <param name="result">The resulting Matrix4 instance.</param>
         public static void CreateRotationZ(double angle, out Matrix3x4d result)
         {
-            var cos = Math.Cos(angle);
-            var sin = Math.Sin(angle);
+            var cos = System.Math.Cos(angle);
+            var sin = System.Math.Sin(angle);
 
             result.Row0.X = cos;
             result.Row0.Y = sin;
