@@ -1,5 +1,5 @@
 ﻿//
-// IWindowInfo.cs
+// IGameWindow.cs
 //
 // Copyright (C) 2018 OpenTK
 //
@@ -9,16 +9,13 @@
 
 using System;
 
+
 namespace OpenToolkit.Windowing.Interfaces
 {
     /// <summary>
-    /// Describes an OS window.
+    /// Defines the interface for a NativeWindow
     /// </summary>
-    public interface IWindowInfo : IDisposable
+    public interface INativeWindow : IWindowProperties, IWindowEvents, IWindowInput, IDisposable
     {
-        /// <summary>
-        /// Retrieves a handle to this window.
-        /// </summary>
-        IntPtr Handle { get; }
     }
 }

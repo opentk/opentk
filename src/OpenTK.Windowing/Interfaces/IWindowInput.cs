@@ -8,10 +8,7 @@
 //
 
 using OpenToolkit.Windowing.Input;
-using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Text;
 
 namespace OpenToolkit.Windowing.Interfaces
 {
@@ -29,10 +26,10 @@ namespace OpenToolkit.Windowing.Interfaces
         /// </summary>
         bool CursorVisible { get; set; }
 
-        //        /// <summary>
-        //        /// Gets or sets a value, indicating whether the mouse cursor is confined inside the window size.
-        //        /// </summary>
-        //        bool CursorGrabbed { get; set; }
+        /// <summary>
+        /// Gets or sets a value, indicating whether the mouse cursor is confined inside the window size.
+        /// </summary>
+        bool CursorGrabbed { get; set; }
 
         /// <summary>
         /// Transforms the specified point from screen to client coordinates.

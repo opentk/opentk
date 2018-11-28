@@ -24,5 +24,9 @@ namespace OpenToolkit.Windowing.GraphicsLibraryFramework.Interfaces
         unsafe void DestroyWindow(Window* window);
         unsafe VideoMode* GetVideoMode(Monitor* monitor);
         void WindowHint(WindowHint hint, int value);
+        unsafe int WindowShouldClose(Window* window);
+        unsafe void SetWindowShouldClose(Window* window);
+        unsafe void SetWindowTitle(Window* window);
+        unsafe void SetWindowIcon(Window* window, int count, Image* images);
     }
 }

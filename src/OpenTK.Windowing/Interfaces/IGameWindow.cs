@@ -7,18 +7,13 @@
 // of the MIT license. See the LICENSE file for details.
 //
 
-using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Text;
-
 
 namespace OpenToolkit.Windowing.Interfaces
 {
     /// <summary>
     /// Defines the interface for a GameWindow.
     /// </summary>
-    public interface IGameWindow: IWindowProperties, IWindowEvents, IWindowInput, IDisposable
+    public interface IGameWindow: INativeWindow
     {
         /// <summary>
         /// Closes this window.
