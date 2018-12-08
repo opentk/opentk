@@ -366,34 +366,16 @@
       <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
     </parameter>
   </member>
-  <member name="M:Bind.Writers.SourceWriter.#ctor(System.IO.TextWriter)">
-    <parameter name="writer">
-      <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
-    </parameter>
-  </member>
-  <member name="M:Bind.Writers.SourceWriter.#ctor(System.IO.TextWriter,System.String)">
-    <parameter name="writer">
-      <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
-    </parameter>
-    <parameter name="tabString">
-      <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
-    </parameter>
-  </member>
-  <member name="M:Bind.Writers.SourceWriter.BeginBlock(System.Boolean)">
+  <member name="P:Bind.Writers.Structure.Projects.Function.GenericTypeParameters">
     <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+    <attribute ctor="M:JetBrains.Annotations.ItemNotNullAttribute.#ctor" />
   </member>
-  <member name="M:Bind.Writers.SourceWriter.BeginIndent">
+  <member name="P:Bind.Writers.Structure.Projects.Function.Parameters">
     <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+    <attribute ctor="M:JetBrains.Annotations.ItemNotNullAttribute.#ctor" />
   </member>
-  <member name="M:Bind.Writers.SourceWriterBlock.#ctor(Bind.Writers.SourceWriter,System.Boolean)">
-    <parameter name="sourceWriter">
-      <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
-    </parameter>
-  </member>
-  <member name="M:Bind.Writers.SourceWriterIndentation.#ctor(Bind.Writers.SourceWriter)">
-    <parameter name="sourceWriter">
-      <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
-    </parameter>
+  <member name="P:Bind.Writers.Structure.Projects.Parameter.Name">
+    <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
   </member>
   <member name="M:Bind.XML.Documentation.DocumentationReader.ReadFunctionDocumentations(System.Xml.Linq.XDocument)">
     <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
@@ -786,6 +768,9 @@
   <member name="M:Bind.XML.Signatures.ApiProfile.GetCategories">
     <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
     <attribute ctor="M:JetBrains.Annotations.ItemNotNullAttribute.#ctor" />
+  </member>
+  <member name="M:Bind.XML.Signatures.ApiProfile.GetExtensionDictionary">
+    <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
   </member>
   <member name="M:Bind.XML.Signatures.ApiProfile.GetExtensions">
     <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />

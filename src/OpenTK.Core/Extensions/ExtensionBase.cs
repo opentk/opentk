@@ -1,13 +1,12 @@
 using System;
 using AdvancedDLSupport;
-using OpenToolkit.OpenAL.Interfaces;
 
-namespace OpenToolkit.OpenAL.Extensions
+namespace OpenToolkit.Core.Extensions
 {
     /// <summary>
-    /// Base class for OpenAL extensions.
+    /// Base class for extensions.
     /// </summary>
-    public abstract class ExtensionBase : NativeLibraryBase, IExtensions
+    public abstract class ExtensionBase : NativeLibraryBase, IAPIExtension
     {
         /// <inheritdoc cref="NativeLibraryBase"/>
         protected ExtensionBase(string path, ImplementationOptions options)

@@ -36,10 +36,7 @@ namespace Bind.Generators.GL.Core
     internal class GLCore4GeneratorSettings : OpenGLGeneratorSettingsBase
     {
         /// <inheritdoc/>
-        public override string OutputSubfolder => "OpenGL4";
-
-        /// <inheritdoc/>
-        public override string Namespace => "OpenToolkit.Graphics.OpenGL4";
+        public override string Namespace => "OpenToolkit.OpenGL.GL4";
 
         /// <inheritdoc/>
         public override string ProfileName => "glcore";
@@ -47,6 +44,9 @@ namespace Bind.Generators.GL.Core
         /// <inheritdoc/>
         [NotNull]
         public override string BaseProfileName => "gl";
+
+        /// <inheritdoc />
+        public override string ClassName => "GL";
 
         /// <inheritdoc/>
         public override string SpecificationDocumentationPath => "gl4";

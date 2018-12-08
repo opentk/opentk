@@ -1,4 +1,4 @@
-/* Copyright (c) 2006, 2007 Stefanos Apostolopoulos
+﻿/* Copyright (c) 2006, 2007 Stefanos Apostolopoulos
  * See license.txt for license info
  */
 
@@ -20,12 +20,14 @@ using Bind.Generators.GL.Core;
 using Bind.Translation.Mappers;
 using Bind.Typemap;
 using Bind.Writers;
+using Bind.Writers.Structure;
 using Bind.XML.Documentation;
 using Bind.XML.Overrides;
 using Bind.XML.Signatures;
 using Bind.XML.Signatures.Functions;
 using CommandLine;
 using JetBrains.Annotations;
+using MoreLinq;
 
 namespace Bind
 {
@@ -63,6 +65,12 @@ namespace Bind
         /// <returns>An integer, indicating success or failure. On a failure, a nonzero value is returned.</returns>
         private static async Task<int> Main(string[] args)
         {
+            if (!File.Exists("OpenTK.sln"))
+            {
+                Console.WriteLine("Please run this program in the root of your clone to avoid any potential errors.");
+                return 1;
+            }
+
             // force the GC to a suitable mode.
             GCSettings.LatencyMode = GCLatencyMode.Batch;
             Console.WriteLine($"OpenGL binding generator {Assembly.GetExecutingAssembly().GetName().Version} for OpenTK.");
@@ -83,7 +91,6 @@ namespace Bind
             var generatorTasks = Generators.Select(GenerateBindingsAsync);
             await Task.WhenAll(generatorTasks);
             stopwatch.Stop();
-
             Console.WriteLine();
             Console.WriteLine("Bindings generated in {0} seconds.", stopwatch.Elapsed.TotalSeconds);
 
@@ -176,8 +183,6 @@ namespace Bind
             {
                 Generators.Add(new GL2GeneratorSettings());
                 Generators.Add(new GLCore4GeneratorSettings());
-                Generators.Add(new ES10GeneratorSettings());
-                Generators.Add(new ES11GeneratorSettings());
                 Generators.Add(new ES20GeneratorSettings());
                 Generators.Add(new ES30GeneratorSettings());
                 Generators.Add(new ES31GeneratorSettings());
@@ -197,16 +202,6 @@ namespace Bind
                         case TargetAPI.GL4:
                         {
                             Generators.Add(new GLCore4GeneratorSettings());
-                            break;
-                        }
-                        case TargetAPI.ES10:
-                        {
-                            Generators.Add(new ES10GeneratorSettings());
-                            break;
-                        }
-                        case TargetAPI.ES11:
-                        {
-                            Generators.Add(new ES11GeneratorSettings());
                             break;
                         }
                         case TargetAPI.ES20:

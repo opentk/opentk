@@ -14,13 +14,13 @@ namespace Bind.Generators.Bases
     internal abstract class GeneratorSettingsBase : IGeneratorSettings
     {
         /// <inheritdoc/>
-        public abstract string OutputSubfolder { get; }
+        public abstract string OutputFolder { get; }
+
+        /// <inheritdoc />
+        public abstract string ExtensionsNamespace { get; }
 
         /// <inheritdoc/>
         public abstract string Namespace { get; }
-
-        /// <inheritdoc/>
-        public abstract string ClassName { get; }
 
         /// <inheritdoc/>
         public abstract string FunctionPrefix { get; }
@@ -51,5 +51,8 @@ namespace Bind.Generators.Bases
 
         /// <inheritdoc />
         public virtual VersionRange Versions => new VersionRange();
+
+        /// <inheritdoc />
+        public abstract string ClassName { get; }
     }
 }

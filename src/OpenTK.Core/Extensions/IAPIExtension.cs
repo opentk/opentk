@@ -1,10 +1,10 @@
 using System;
 using AdvancedDLSupport;
 
-namespace OpenToolkit.OpenAL.Extensions
+namespace OpenToolkit.Core.Extensions
 {
     /// <summary>
-    /// Defines the API surface of an API extension for OpenAL.
+    /// Defines the API surface of an API extension.
     /// </summary>
     public interface IAPIExtension
     {
@@ -16,14 +16,14 @@ namespace OpenToolkit.OpenAL.Extensions
         bool IsExtensionPresent([CallerFree] string name);
 
         /// <summary>
-        /// Gets the address of an OpenAL extension function.
+        /// Gets the address of an extension function.
         /// </summary>
         /// <param name="name">The name of the function.</param>
         /// <returns>The function pointer.</returns>
         IntPtr GetProcAddress([CallerFree] string name);
 
         /// <summary>
-        /// Gets the value of the named OpenAL extension enumeration member.
+        /// Gets the value of the named extension enumeration member.
         /// </summary>
         /// <param name="name">The name of the enumeration member.</param>
         /// <returns>The value of the member.</returns>

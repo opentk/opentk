@@ -34,7 +34,7 @@ namespace OpenToolkit.OpenAL
         /// <returns>The extension.</returns>
         public unsafe TContextExtension GetExtension<TContextExtension>(Device* device) where TContextExtension : ContextExtensionBase
         {
-            return ExtensionLoader.LoadContextExtension<TContextExtension>(device, this);
+            return ALExtensionLoader.LoadContextExtension<TContextExtension>(device, this);
         }
 
         /// <inheritdoc />

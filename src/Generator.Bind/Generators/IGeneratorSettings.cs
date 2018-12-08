@@ -20,16 +20,16 @@ namespace Bind.Generators
         string Namespace { get; }
 
         /// <summary>
-        /// Gets the name of the subfolder where the generated files should be placed.
+        /// Gets the name of the folder where the generated projects should be placed.
         /// </summary>
         [NotNull]
-        string OutputSubfolder { get; }
+        string OutputFolder { get; }
 
         /// <summary>
-        /// Gets the name of the output class.
+        /// Gets the name of the root namespace of all extensions.
         /// </summary>
         [NotNull]
-        string ClassName { get; }
+        string ExtensionsNamespace { get; }
 
         /// <summary>
         /// Gets the prefix of the functions in the API.
@@ -90,5 +90,10 @@ namespace Bind.Generators
         /// </summary>
         [NotNull]
         VersionRange Versions { get; }
+
+        /// <summary>
+        /// Gets the name of the metainterface, excluding the prefixed I.
+        /// </summary>
+        string ClassName { get; }
     }
 }

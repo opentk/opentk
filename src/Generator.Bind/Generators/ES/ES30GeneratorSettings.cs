@@ -16,10 +16,7 @@ namespace Bind.Generators.ES
         private const string APIIdentifier = "ES30";
 
         /// <inheritdoc/>
-        public override string OutputSubfolder => APIIdentifier;
-
-        /// <inheritdoc/>
-        public override string Namespace => $"OpenToolkit.Graphics.{APIIdentifier}";
+        public override string Namespace => $"OpenToolkit.OpenGL.{APIIdentifier}";
 
         /// <inheritdoc/>
         public override string SpecificationDocumentationPath => "es3";
@@ -29,6 +26,9 @@ namespace Bind.Generators.ES
 
         /// <inheritdoc/>
         public override VersionRange Versions => new VersionRange(new Version(2, 0), new Version(3, 0));
+
+        /// <inheritdoc />
+        public override string ClassName => "GL";
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ES30GeneratorSettings"/> class.

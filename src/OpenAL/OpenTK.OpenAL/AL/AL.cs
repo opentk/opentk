@@ -7,6 +7,7 @@
 
 using System;
 using AdvancedDLSupport;
+using OpenToolkit.Core.Extensions;
 using OpenToolkit.Core.Loader;
 using OpenToolkit.Mathematics;
 using OpenToolkit.OpenAL.Attributes;
@@ -33,7 +34,7 @@ namespace OpenToolkit.OpenAL
         /// <returns>The extension.</returns>
         public TExtension GetExtension<TExtension>() where TExtension : ExtensionBase
         {
-            return ExtensionLoader.LoadExtension<TExtension>(this);
+            return ExtensionLoader<OpenALLibraryNameContainer>.LoadExtension<TExtension>(this);
         }
 
         /// <inheritdoc />

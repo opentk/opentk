@@ -41,5 +41,8 @@ namespace Bind.Generators.GL.Compatibility
 
         /// <inheritdoc/>
         public override string ProfileName => "gl";
+
+        /// <inheritdoc />
+        public override string ClassName => "GL";
     }
 }

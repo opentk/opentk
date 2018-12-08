@@ -15,13 +15,10 @@ namespace Bind.Generators.Bases
     internal abstract class OpenGLGeneratorSettingsBase : GeneratorSettingsBase
     {
         /// <inheritdoc/>
-        public override string OutputSubfolder => "OpenGL";
+        public override string OutputFolder => "OpenGL";
 
         /// <inheritdoc/>
-        public override string Namespace => "OpenToolkit.Graphics.OpenGL";
-
-        /// <inheritdoc/>
-        public override string ClassName => "GL";
+        public override string Namespace => "OpenToolkit.OpenGL";
 
         /// <inheritdoc/>
         public override string FunctionPrefix => "gl";
@@ -40,6 +37,9 @@ namespace Bind.Generators.Bases
 
         /// <inheritdoc />
         public override VersionRange Versions => new VersionRange();
+
+        /// <inheritdoc />
+        public override string ExtensionsNamespace => Namespace + ".Extensions";
 
         /// <summary>
         /// Initializes a new instance of the <see cref="OpenGLGeneratorSettingsBase"/> class.

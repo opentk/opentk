@@ -102,11 +102,11 @@ namespace Bind.XML.Signatures
 
             // Try to get the most specialized candidate
             var specializedEnums = candidates.Where
-            (
-                c => !c.Name.Contains("Version")
-            )
-            .OrderByDescending(c => c.Name.Length)
-            .ToList(); // long enum names tend to be more specialized...
+                (
+                    c => !c.Name.Contains("Version")
+                )
+                .OrderByDescending(c => c.Name.Length)
+                .ToList(); // long enum names tend to be more specialized...
 
             if (specializedEnums.Any())
             {
@@ -145,6 +145,45 @@ namespace Bind.XML.Signatures
             var overloadExtensions = Overloads.Select(f => f.Extension);
 
             return nativeExtensions.Concat(overloadExtensions).Distinct();
+        }
+
+        /// <summary>
+        /// Gets the available extensions & categories in the profile.
+        /// </summary>
+        /// <returns>A dictionary made up of the extension name as the key, and a list of categories as the value.</returns>
+        [NotNull]
+        public IEnumerable<KeyValuePair<string, IReadOnlyList<string>>> GetExtensionDictionary()
+        {
+            var nativeExtensions = new Dictionary<string, List<string>>();
+            foreach (var functionSignature in NativeSignatures)
+            {
+                if (nativeExtensions.ContainsKey(functionSignature.Extension))
+                {
+                    nativeExtensions[functionSignature.Extension]
+                        .AddRange(functionSignature.Categories.Where(x => !nativeExtensions.ContainsKey(x)));
+                }
+                else
+                {
+                    nativeExtensions.Add(functionSignature.Extension, functionSignature.Categories.ToList());
+                }
+            }
+
+            var overloadExtensions = new Dictionary<string, List<string>>();
+            foreach (var functionSignature in NativeSignatures)
+            {
+                if (overloadExtensions.ContainsKey(functionSignature.Extension))
+                {
+                    overloadExtensions[functionSignature.Extension]
+                        .AddRange(functionSignature.Categories.Where(x => !overloadExtensions.ContainsKey(x)));
+                }
+                else
+                {
+                    overloadExtensions.Add(functionSignature.Extension, functionSignature.Categories.ToList());
+                }
+            }
+
+            return nativeExtensions.Concat(overloadExtensions)
+                .Select(x => new KeyValuePair<string, IReadOnlyList<string>>(x.Key, x.Value)).Distinct();
         }
 
         /// <inheritdoc/>
