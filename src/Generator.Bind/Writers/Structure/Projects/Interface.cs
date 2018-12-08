@@ -4,16 +4,33 @@ using System.Threading.Tasks;
 
 namespace Bind.Writers.Structure.Projects
 {
+    /// <summary>
+    /// Represents an AdvancedDLSupport interface.
+    /// </summary>
     internal class Interface
     {
+        /// <summary>
+        /// Gets or sets the name of this interface.
+        /// </summary>
         public string Name { get; set; }
 
+        /// <summary>
+        /// Gets or sets the functions contained within this interface.
+        /// </summary>
         public List<Function> Functions { get; set; } = new List<Function>();
 
+        /// <summary>
+        /// Gets or sets a list of attributes to be applied to this interface.
+        /// </summary>
         public List<Attribute> Attributes { get; set; } = new List<Attribute>();
 
-        public string Doc { get; set; }
-
+        /// <summary>
+        /// Asynchronously writes this interface to a file.
+        /// </summary>
+        /// <param name="file">The file to write to.</param>
+        /// <param name="subsystem">The subsystem containing this interface.</param>
+        /// <param name="project">The project containing this interface.</param>
+        /// <returns>The asynchronous task.</returns>
         public async Task WriteAsync(string file, Subsystem subsystem, Project project)
         {
             if (File.Exists(file))
@@ -22,8 +39,7 @@ namespace Bind.Writers.Structure.Projects
             }
 
             var sw = new StreamWriter(file);
-            await sw.WriteLineAsync(EmbeddedResources.LicenseText);
-            await sw.WriteLineAsync();
+            await sw.WriteAsync(EmbeddedResources.LicenseText);
             await sw.WriteLineAsync("using System;");
             await sw.WriteLineAsync("using System.Runtime.InteropServices;");
             await sw.WriteLineAsync("using System.Text;");
@@ -61,7 +77,9 @@ namespace Bind.Writers.Structure.Projects
 
                 await sw.WriteLineAsync("        " + function.ToString());
                 if (index != Functions.Count)
+                {
                     await sw.WriteLineAsync(); // style guide
+                }
             }
 
             await sw.WriteLineAsync("    }");

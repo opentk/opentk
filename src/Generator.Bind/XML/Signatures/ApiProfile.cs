@@ -148,7 +148,7 @@ namespace Bind.XML.Signatures
         }
 
         /// <summary>
-        /// Gets the available extensions & categories in the profile.
+        /// Gets the available extensions and categories in the profile.
         /// </summary>
         /// <returns>A dictionary made up of the extension name as the key, and a list of categories as the value.</returns>
         [NotNull]

@@ -7,20 +7,67 @@ using Bind.Writers.Structure.Projects;
 
 namespace Bind.Writers.Structure
 {
+    /// <summary>
+    /// Represents a project, whether root or extension, containing <see cref="Interface"/>s and <see cref="Enum"/>s.
+    /// </summary>
     internal class Project
     {
+        /// <summary>
+        /// The name of the subfolder containing <see cref="Enum"/>s.
+        /// </summary>
+        public const string EnumsSubfolder = "Enums";
+
+        /// <summary>
+        /// The name of the subfolder containing <see cref="Interface"/>s.
+        /// </summary>
+        public const string InterfacesSubfolder = "Interfaces";
+
         private IGeneratorSettings _settings;
         private Subsystem _subsystem;
-        public const string EnumsSubfolder = "Enums";
-        public const string InterfacesSubfolder = "Interfaces";
+
+        /// <summary>
+        /// Gets or sets the name of the extension this project is categorised under.
+        /// </summary>
         public string ExtensionName { get; set; }
+
+        /// <summary>
+        /// Gets or sets the category name of this project.
+        /// </summary>
         public string CategoryName { get; set; }
+
+        /// <summary>
+        /// Gets or sets the name of this project. Note that this is not the assembly name.
+        /// </summary>
         public string ProjectName { get; set; }
+
+        /// <summary>
+        /// Gets or sets the root namespace of this project. This is also used as the assembly name.
+        /// </summary>
         public string Namespace { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether this project is the root project, or an extension.
+        /// </summary>
         public bool IsRoot { get; set; }
+
+        /// <summary>
+        /// Gets or sets a list of <see cref="Enum"/>s contained within this <see cref="Project"/>.
+        /// </summary>
         public List<Enum> Enums { get; set; } = new List<Enum>();
+
+        /// <summary>
+        /// Gets or sets a dictionary where the category names are the keys, and <see cref="Interface"/>s
+        /// are the values.
+        /// </summary>
         public Dictionary<string, Interface> Interfaces { get; set; } = new Dictionary<string, Interface>();
 
+        /// <summary>
+        /// Asynchronously writes this project in the given folder, with the given settings and parent subsystem.
+        /// </summary>
+        /// <param name="folder">The folder to write this project to.</param>
+        /// <param name="settings">The generator settings to use.</param>
+        /// <param name="subsystem">The parent subsystem.</param>
+        /// <returns>The asynchronous task.</returns>
         public async Task WriteAsync(string folder, IGeneratorSettings settings, Subsystem subsystem)
         {
             _settings = settings;
@@ -50,9 +97,12 @@ namespace Bind.Writers.Structure
             await Task.WhenAll(interfaceTasks.Concat(enumTasks));
         }
 
-        #region WriteAsync stages
-
-        public async Task WriteProjectFileAsync(string folder)
+        /// <summary>
+        /// Asynchronously writes the project file to the given folder.
+        /// </summary>
+        /// <param name="folder">The folder that should contain the project file.</param>
+        /// <returns>The asynchronous task.</returns>
+        private async Task WriteProjectFileAsync(string folder)
         {
             if (File.Exists(Path.Combine(folder, ProjectName + ".csproj")))
             {
@@ -97,7 +147,5 @@ namespace Bind.Writers.Structure
             await csproj.FlushAsync();
             csproj.Dispose();
         }
-
-        #endregion
     }
 }

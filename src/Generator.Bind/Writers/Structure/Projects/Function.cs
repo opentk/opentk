@@ -5,32 +5,58 @@ using System.Text;
 using Bind.XML.Signatures;
 using Bind.XML.Signatures.Functions;
 using JetBrains.Annotations;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace Bind.Writers.Structure.Projects
 {
+    /// <summary>
+    /// Represents a C# function.
+    /// </summary>
     public class Function
     {
+        /// <summary>
+        /// Gets or sets the name of this function.
+        /// </summary>
         public string Name { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether is function is unsafe or safe.
+        /// </summary>
         public bool IsUnsafe { get; set; }
+
+        /// <summary>
+        /// Gets or sets the return type of this function.
+        /// </summary>
         public TypeSignature ReturnType { get; set; }
+
+        /// <summary>
+        /// Gets or sets the name of this function, as defined by the API specification.
+        /// </summary>
         public string NativeName { get; set; }
 
         /// <summary>
-        /// Gets the parameters of the function.
+        /// Gets or sets the parameters of the function.
         /// </summary>
         [NotNull, ItemNotNull]
         public List<ParameterSignature> Parameters { get; set; } = new List<ParameterSignature>();
 
         /// <summary>
-        /// Gets the generic type parameters of the function.
+        /// Gets or sets the generic type parameters of the function.
         /// </summary>
         [NotNull, ItemNotNull]
         public List<GenericTypeParameterSignature> GenericTypeParameters { get; set; } = new List<GenericTypeParameterSignature>();
+
+        /// <summary>
+        /// Gets or sets a list of attributes to be applied to this function.
+        /// </summary>
         public List<Attribute> Attributes { get; set; } = new List<Attribute>();
+
+        /// <summary>
+        /// Gets or sets the formatted XML documentation for this function.
+        /// </summary>
         public string Doc { get; set; }
 
-        public string ToString()
+        /// <inheritdoc />
+        public override string ToString()
         {
             var sb = new StringBuilder();
 
@@ -80,19 +106,28 @@ namespace Bind.Writers.Structure.Projects
             return sb.ToString();
         }
 
+        /// <summary>
+        /// Gets the C# declaration string for the given parameter.
+        /// </summary>
+        /// <param name="parameter">The given parameter.</param>
+        /// <returns>The C# declaration string.</returns>
         [NotNull]
-        private string GetDeclarationString([NotNull] ParameterSignature parameter)
+        private static string GetDeclarationString([NotNull] ParameterSignature parameter)
         {
             var sb = new StringBuilder();
 
-            var attributes = new List<string>();
-            if (parameter.Flow == FlowDirection.Out && parameter.Type.IsPointer)
+            switch (parameter.Flow)
             {
-                sb.Append("out");
-            }
-            else if (parameter.Flow == FlowDirection.In && parameter.Type.IsPointer)
-            {
-                sb.Append("in");
+                case FlowDirection.Out when parameter.Type.IsPointer:
+                    sb.Append("out ");
+                    break;
+                case FlowDirection.In when parameter.Type.IsPointer:
+                    sb.Append("in ");
+                    break;
+                case FlowDirection.Undefined:
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
 
             sb.Append(parameter.Type.ToString());

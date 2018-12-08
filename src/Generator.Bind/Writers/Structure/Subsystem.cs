@@ -18,7 +18,7 @@ using Enum = Bind.Writers.Structure.Projects.Enum;
 namespace Bind.Writers.Structure
 {
     /// <summary>
-    /// Represents a subsystem as defined in GitHub issue #823
+    /// Represents a subsystem as defined in GitHub issue #823.
     /// </summary>
     internal class Subsystem
     {
@@ -27,7 +27,7 @@ namespace Bind.Writers.Structure
         private readonly ProfileDocumentation _docs;
 
         /// <summary>
-        /// Creates a <see cref="Subsystem"/> from the given generator settings, API specification
+        /// Initializes a new instance of the <see cref="Subsystem"/> class from the given generator settings, API specification.
         /// and API documentation.
         /// </summary>
         /// <param name="settings">The generator settings to use.</param>
@@ -50,7 +50,7 @@ namespace Bind.Writers.Structure
         /// Asynchronously generates all of the projects, interfaces, and enums in memory so
         /// that they can then be written to disk using <see cref="FlushAsync"/>.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The asynchronous task.</returns>
         public async Task GenerateAsync()
         {
             // Initialization
@@ -354,7 +354,7 @@ namespace Bind.Writers.Structure
         /// <summary>
         /// Asynchronously writes all of the projects, interfaces, and enums to disk.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The asynchronous task.</returns>
         public async Task FlushAsync()
         {
             var rootFolder = Path.Combine("src", _settings.OutputFolder);

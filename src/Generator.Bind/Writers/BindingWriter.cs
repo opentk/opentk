@@ -27,7 +27,7 @@ namespace Bind.Writers
         public IGeneratorSettings Settings { get; }
 
         /// <summary>
-        /// Creates an instance with the given <see cref="Settings"/>, <see cref="Profile"/>, and <see cref="ProfileDocs"/>.
+        /// Initializes a new instance of the <see cref="BindingWriter"/> class with the given <see cref="Settings"/>, <see cref="Profile"/>, and <see cref="ProfileDocs"/>.
         /// </summary>
         /// <param name="generatorSettings">The settings to use.</param>
         /// <param name="overloadedProfile">The API specification to use.</param>
@@ -40,19 +40,14 @@ namespace Bind.Writers
         }
 
         /// <summary>
-        /// 
+        /// Generates and writes bindings.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The asynchronous task.</returns>
         public async Task WriteBindingsAsync()
         {
-            Subsystem subsystem = new Subsystem(Settings,Profile,ProfileDocs);
+            Subsystem subsystem = new Subsystem(Settings, Profile, ProfileDocs);
             await subsystem.GenerateAsync();
             await subsystem.FlushAsync();
-        }
-
-        public async Task GenerateProjectsAsync(string outputFolder)
-        {
-            
         }
     }
 }

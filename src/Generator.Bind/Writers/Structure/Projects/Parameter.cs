@@ -5,6 +5,9 @@ using JetBrains.Annotations;
 
 namespace Bind.Writers.Structure.Projects
 {
+    /// <summary>
+    /// Represents a function parameter.
+    /// </summary>
     public class Parameter
     {
         /// <summary>
@@ -42,7 +45,15 @@ namespace Bind.Writers.Structure.Projects
         /// Gets a value indicating whether the type is an array.
         /// </summary>
         public bool IsArray => ArrayDimensions > 0;
+
+        /// <summary>
+        /// Gets or sets the flow of this parameter. Applies to pointers only.
+        /// </summary>
         public FlowDirection Flow { get; set; }
+
+        /// <summary>
+        /// Gets or sets a list of attributes to be applied to this parameter.
+        /// </summary>
         public List<Attribute> Attributes { get; set; }
     }
 }
