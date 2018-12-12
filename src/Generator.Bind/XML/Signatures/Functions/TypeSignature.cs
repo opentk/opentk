@@ -6,7 +6,7 @@ namespace Bind.XML.Signatures.Functions
     /// <summary>
     /// Represents a type signature in an API.
     /// </summary>
-    public class TypeSignature : IEquatable<TypeSignature>
+    public class TypeSignature : IEquatable<TypeSignature>, ICloneable
     {
         /// <summary>
         /// Gets the name of the type.
@@ -15,9 +15,9 @@ namespace Bind.XML.Signatures.Functions
         public string Name { get; }
 
         /// <summary>
-        /// Gets the level of indirection (i.e, the number of pointer levels) of the type.
+        /// Gets or sets the level of indirection (i.e, the number of pointer levels) of the type.
         /// </summary>
-        public int IndirectionLevel { get; }
+        public int IndirectionLevel { get; set; }
 
         /// <summary>
         /// Gets the number of array dimensions of the type.
@@ -122,6 +122,12 @@ namespace Bind.XML.Signatures.Functions
             }
         }
 
+        /// <inheritdoc />
+        public object Clone()
+        {
+            return new TypeSignature(Name, IndirectionLevel, ArrayDimensions, IsByRef, IsOut);
+        }
+
         /// <summary>
         /// Determines if two <see cref="TypeSignature"/> instances are equal.
         /// </summary>
@@ -149,7 +155,7 @@ namespace Bind.XML.Signatures.Functions
         {
             return $"{(IsByRef ? IsOut ? "out " : "ref " : string.Empty)}" +
                    $"{Name}" +
-                   $"{new string('*', IndirectionLevel)}" +
+                   $"{new string('*', IndirectionLevel == -1 ? 0 : IndirectionLevel)}" +
                    $"{Utilities.GetArrayDimensionString(ArrayDimensions)}";
         }
     }

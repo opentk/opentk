@@ -43,7 +43,8 @@ namespace Bind.Writers.Structure.Projects
         /// Gets or sets the generic type parameters of the function.
         /// </summary>
         [NotNull, ItemNotNull]
-        public List<GenericTypeParameterSignature> GenericTypeParameters { get; set; } = new List<GenericTypeParameterSignature>();
+        public List<GenericTypeParameterSignature> GenericTypeParameters { get; set; } =
+            new List<GenericTypeParameterSignature>();
 
         /// <summary>
         /// Gets or sets a list of attributes to be applied to this function.
@@ -60,7 +61,7 @@ namespace Bind.Writers.Structure.Projects
         {
             var sb = new StringBuilder();
 
-            if (Parameters.Any(p => p.Type.IsPointer))
+            if (Parameters.Any(p => p.Type.IsPointer) || ReturnType.IsPointer)
             {
                 sb.Append("unsafe ");
             }
@@ -91,13 +92,18 @@ namespace Bind.Writers.Structure.Projects
             if (GenericTypeParameters.Count != 0)
             {
                 sb.Append(" ");
-                foreach (var p in GenericTypeParameters)
+                for (var index = 0; index < GenericTypeParameters.Count; index++)
                 {
+                    var p = GenericTypeParameters[index];
                     var constraints = p.Constraints.Any()
                         ? string.Join(", ", p.Constraints)
                         : "struct";
 
-                    sb.Append($"    where {p.Name} : {constraints}");
+                    sb.Append($"where {p.Name} : {constraints}");
+                    if (index != GenericTypeParameters.Count - 1)
+                    {
+                        sb.Append(" ");
+                    }
                 }
             }
 
@@ -116,24 +122,28 @@ namespace Bind.Writers.Structure.Projects
         {
             var sb = new StringBuilder();
 
-            switch (parameter.Flow)
+            var type = (TypeSignature)parameter.Type.Clone(); // we're multi-threaded, don't wanna wreck anything
+            if (parameter.Flow == FlowDirection.Out && parameter.Type.IsPointer)
             {
-                case FlowDirection.Out when parameter.Type.IsPointer:
-                    sb.Append("out ");
-                    break;
-                case FlowDirection.In when parameter.Type.IsPointer:
-                    sb.Append("in ");
-                    break;
-                case FlowDirection.Undefined:
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
+                sb.Append("out ");
+            }
+            else if (parameter.Flow == FlowDirection.In && parameter.Type.IsPointer)
+            {
+                sb.Append("in ");
+                if (type.ToString() == "void*")
+                {
+                    type = new TypeSignature("UIntPtr", 0, 0, false, false);
+                }
+                else
+                {
+                    type.IndirectionLevel--;
+                }
             }
 
-            sb.Append(parameter.Type.ToString());
+            sb.Append(type);
 
             sb.Append(" ");
-            sb.Append(parameter.Name);
+            sb.Append((Utilities.CSharpKeywords.Contains(parameter.Name) ? "@" : string.Empty) + parameter.Name);
 
             return sb.ToString();
         }

@@ -9,7 +9,9 @@ namespace OpenToolkit.Core.Extensions
     /// <summary>
     /// Loader class for API extensions.
     /// </summary>
-    public static class ExtensionLoader<TLibraryNameContainer> where TLibraryNameContainer:PlatformLibraryNameContainerBase, new()
+    /// <typeparam name="TLibraryNameContainer">The library name container for the loader.</typeparam>
+    public static class ExtensionLoader<TLibraryNameContainer>
+        where TLibraryNameContainer : PlatformLibraryNameContainerBase, new()
     {
         /// <summary>
         /// Loads the API for the given extension, using the base API.

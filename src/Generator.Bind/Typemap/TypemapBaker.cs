@@ -87,7 +87,8 @@ namespace Bind.Typemap
 
                 throw new AmbiguousMatchException
                 (
-                    "Same-type remapping found in two or more maps, but they didn't map to the same type."
+                    "Same-type remapping found in two or more maps, but they didn't map to the same type. " +
+                    existingMapping + " -> " + toType
                 );
             }
 

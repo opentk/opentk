@@ -22,7 +22,8 @@ namespace Bind.Translation.Translators
             var newEnumerations = new List<EnumerationSignature>();
             foreach (var enumeration in enumerations)
             {
-                var newEnumerationName = identifierTranslator.Translate(enumeration.Name);
+                //BUG: enum name translation does not reflect on usages. Moved translation to the writer as a workaround
+                //var newEnumerationName = identifierTranslator.Translate(enumeration.Name);
 
                 var newTokens = new List<TokenSignature>();
                 foreach (var token in enumeration.Tokens)
@@ -32,7 +33,7 @@ namespace Bind.Translation.Translators
                     newTokens.Add(new TokenSignature(newTokenName, token.Value, token.DeprecatedIn, token.Remarks));
                 }
 
-                newEnumerations.Add(new EnumerationSignature(newEnumerationName, newTokens));
+                newEnumerations.Add(new EnumerationSignature(enumeration.Name, newTokens));
             }
 
             return new ApiProfileBuilder(profile)

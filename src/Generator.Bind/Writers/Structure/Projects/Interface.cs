@@ -51,20 +51,8 @@ namespace Bind.Writers.Structure.Projects
             await sw.WriteLineAsync("{");
             foreach (var attr in Attributes)
             {
-                await sw.WriteAsync("[" + attr.Name + "(");
-                var max = attr.Arguments.Count;
-                for (var i = 0; i < max; i++)
-                {
-                    await sw.WriteAsync(attr.Arguments[i]);
-                    if (i != max)
-                    {
-                        await sw.WriteAsync(", ");
-                    }
-                }
-
-                await sw.WriteLineAsync(")]");
+                await sw.WriteLineAsync("    " + attr);
             }
-
             await sw.WriteLineAsync("    internal interface " + Name);
             await sw.WriteLineAsync("    {");
             for (var index = 0; index < Functions.Count; index++)
@@ -72,10 +60,19 @@ namespace Bind.Writers.Structure.Projects
                 var function = Functions[index];
                 foreach (var line in function.Doc.Split('\n'))
                 {
+                    if (line == null)
+                    {
+                        continue;
+                    }
+
                     await sw.WriteLineAsync("        " + line);
                 }
 
-                await sw.WriteLineAsync("        " + function.ToString());
+                foreach (var attr in function.Attributes)
+                {
+                    await sw.WriteLineAsync("        " + attr);
+                }
+                await sw.WriteLineAsync("        " + function);
                 if (index != Functions.Count)
                 {
                     await sw.WriteLineAsync(); // style guide

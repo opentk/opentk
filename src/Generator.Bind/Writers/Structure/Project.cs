@@ -109,13 +109,13 @@ namespace Bind.Writers.Structure
                 return;
             }
             var csproj = new StreamWriter(Path.Combine(folder, ProjectName + ".csproj"));
-            await csproj.WriteLineAsync("<Project Sdk=\"Microsoft.NET.Sdk\"");
+            await csproj.WriteLineAsync("<Project Sdk=\"Microsoft.NET.Sdk\">");
             await csproj.WriteLineAsync();
             await csproj.WriteLineAsync("  <PropertyGroup>");
             await csproj.WriteLineAsync("    <TargetFramework>netstandard2.0</TargetFramework>");
             await csproj.WriteLineAsync("    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>");
             await csproj.WriteLineAsync("    <LangVersion>latest</LangVersion>");
-            await csproj.WriteLineAsync("    <RootNamespace>" + Namespace + "</AllowUnsafeBlocks>");
+            await csproj.WriteLineAsync("    <RootNamespace>" + Namespace + "</RootNamespace>");
             await csproj.WriteLineAsync("    <AssemblyName>" + Namespace + "</AssemblyName>");
             await csproj.WriteLineAsync("  </PropertyGroup>");
             await csproj.WriteLineAsync();

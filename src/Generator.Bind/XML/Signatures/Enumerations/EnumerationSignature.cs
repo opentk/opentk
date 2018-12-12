@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Text;
 using JetBrains.Annotations;
 
 namespace Bind.XML.Signatures.Enumerations
@@ -39,6 +40,11 @@ namespace Bind.XML.Signatures.Enumerations
             [CanBeNull] IReadOnlyList<TokenSignature> tokens = null
         )
         {
+            if (name == "HistogramTargetExt")
+            {
+                Console.WriteLine(name + Environment.StackTrace);
+            }
+
             Name = name ?? throw new ArgumentNullException(nameof(name));
             Tokens = tokens ?? new List<TokenSignature>();
         }

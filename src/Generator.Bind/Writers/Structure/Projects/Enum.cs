@@ -47,18 +47,7 @@ namespace Bind.Writers.Structure.Projects
             await sw.WriteLineAsync("{");
             foreach (var attr in Attributes)
             {
-                await sw.WriteAsync("[" + attr.Name + "(");
-                var max = attr.Arguments.Count;
-                for (var i = 0; i < max; i++)
-                {
-                    await sw.WriteAsync(attr.Arguments[i]);
-                    if (i != max)
-                    {
-                        await sw.WriteAsync(", ");
-                    }
-                }
-
-                await sw.WriteLineAsync(")]");
+                await sw.WriteLineAsync("    " + attr);
             }
 
             await sw.WriteLineAsync("    public enum " + Name);
@@ -70,7 +59,7 @@ namespace Bind.Writers.Structure.Projects
                 await sw.WriteLineAsync
                 (
                     "        " + token.Name + " = " + token.Value +
-                    (index == Tokens.Count ? "," : string.Empty)
+                    (index != Tokens.Count ? "," : string.Empty)
                 );
             }
 

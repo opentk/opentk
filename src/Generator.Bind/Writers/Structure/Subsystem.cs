@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Bind.Generators;
+using Bind.Translation.Translators;
 using Bind.Writers.Structure.Projects;
 using Bind.XML.Documentation;
 using Bind.XML.Signatures;
@@ -132,7 +133,7 @@ namespace Bind.Writers.Structure
             {
                 foreach (var category in kvp.Value)
                 {
-                    var camelCat = "I" + Utilities.ConvertCategoryNameToCamel(category);
+                    var camelCat = "I" + Utilities.ConvertCategoryNameToCamel(category.ToLower());
                     if (kvp.Key == "Core")
                     {
                         if (!Projects["Core"].Interfaces.ContainsKey(category))
@@ -142,16 +143,7 @@ namespace Bind.Writers.Structure
                                 category,
                                 new Interface()
                                 {
-                                    Name = camelCat,
-                                    Attributes = new List<Attribute>()
-                                    {
-                                        new Attribute()
-                                        {
-                                            Name = "AdvancedDLSupport.NativeSymbolsAttribute",
-                                            Arguments = new List<string>()
-                                                { "Prefix = \"" + _settings.FunctionPrefix + "\"" }
-                                        }
-                                    }
+                                    Name = camelCat
                                 });
                         }
                     }
@@ -179,7 +171,15 @@ namespace Bind.Writers.Structure
                 generated.GenericTypeParameters.AddRange(function.GenericTypeParameters);
                 generated.IsUnsafe = generated.Parameters.Any(x => x.Type.IsPointer);
                 generated.ReturnType = function.ReturnType;
-                generated.NativeName = function.NativeEntrypoint;
+                generated.NativeName = _settings.FunctionPrefix + function.NativeEntrypoint;
+                generated.Attributes.Add
+                (
+                    new Attribute()
+                    {
+                        Name = "AdvancedDLSupport.NativeSymbolAttribute",
+                        Arguments = new List<string>() { "\"" + generated.NativeName + "\"" }
+                    }
+                );
                 if (function.IsDeprecated)
                 {
                     generated.Attributes.Add(new Attribute()
@@ -207,15 +207,16 @@ namespace Bind.Writers.Structure
 
         private Task WriteEnumsAsync()
         {
+            var translator = new NativeIdentifierTranslator();
             var enums = _profile.Enumerations;
             foreach (var @enum in enums)
             {
-                var generated = new Enum() { Name = @enum.Name };
+                var generated = new Enum() { Name = translator.Translate(@enum.Name) };
                 foreach (var tokenSignature in @enum.Tokens)
                 {
                     var token = new Token()
                     {
-                        Name = Utilities.ConvertCategoryNameToCamel(tokenSignature.Name.ToLower()),
+                        Name = tokenSignature.Name,
                         Value = tokenSignature.Value + string.Empty, NativeName = tokenSignature.Name
                     };
                     if (tokenSignature.IsDeprecated)
@@ -229,6 +230,7 @@ namespace Bind.Writers.Structure
                             }
                         });
                     }
+                    generated.Tokens.Add(token);
                 }
 
                 // XML doesn't categorize enums, so we can't add extension-specific enums
@@ -361,6 +363,11 @@ namespace Bind.Writers.Structure
             if (!Directory.Exists(rootFolder))
             {
                 Directory.CreateDirectory(rootFolder);
+            }
+
+            if (Directory.Exists(Path.Combine(rootFolder, Projects["Core"].ProjectName)))
+            {
+                Console.WriteLine(_settings.Namespace.Split('.').Last() + " - Bindings already written. Please delete the " + _settings.OutputFolder + " folder to write bindings again.");
             }
 
             if (!Directory.Exists(Path.Combine(rootFolder, "Extensions")))
