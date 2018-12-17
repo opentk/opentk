@@ -5,22 +5,24 @@ using System.Text.RegularExpressions;
 using Humanizer;
 using JetBrains.Annotations;
 
-namespace Bind.Translation.Translators
+namespace OpenTK.BuildTools.Convert
 {
     /// <summary>
     /// Translates an identifier (a type name, a constant name, etc) into a .NET-style identifier.
     /// </summary>
-    public class NativeIdentifierTranslator : ITranslator<string>
+    public static class NativeIdentifierTranslator
     {
         /// <summary>
         /// Gets a regular expression that matches against isolated long acronyms (3+ capital characters).
         /// </summary>
-        private static readonly Regex LongAcronymsRegex = new Regex("(?<![A-Z])[A-Z]{3,}(?![A-Z])", RegexOptions.Compiled);
+        private static readonly Regex LongAcronymsRegex = new Regex
+            ("(?<![A-Z])[A-Z]{3,}(?![A-Z])", RegexOptions.Compiled);
 
         /// <summary>
         /// Gets a regular expression that matches against short acronym candidates, which should still be transformed.
         /// </summary>
-        private static readonly Regex ShortNonAcronymsRegex = new Regex("(?<![A-Z])(IS|AS|NO|ON|TO|OP|BY|OF|IN|UP|OR)(?![A-Z])", RegexOptions.Compiled);
+        private static readonly Regex ShortNonAcronymsRegex = new Regex
+            ("(?<![A-Z])(IS|AS|NO|ON|TO|OP|BY|OF|IN|UP|OR)(?![A-Z])", RegexOptions.Compiled);
 
         /// <summary>
         /// Gets a regular expression that matches against simple data type identifiers in other identifiers.
@@ -30,18 +32,13 @@ namespace Bind.Translation.Translators
         /// <summary>
         /// Gets a set of overrides used for name translation when dealing with complicated extensions and acronyms.
         /// </summary>
-        public static readonly IReadOnlyDictionary<string, string> ExtensionAndAcronymOverrides = new Dictionary<string, string>
-        {
-            { "CMAAINTEL", "CmaaIntel" },
-            { "QCOM", "QCom" },
-            { "SNORM", "SNorm" }
-        };
-
-        /// <inheritdoc/>
-        public string Translate(string input)
-        {
-            return TranslateIdentifierName(input);
-        }
+        public static readonly IReadOnlyDictionary<string, string> ExtensionAndAcronymOverrides =
+            new Dictionary<string, string>
+            {
+                {"CMAAINTEL", "CmaaIntel"},
+                {"QCOM", "QCom"},
+                {"SNORM", "SNorm"}
+            };
 
         /// <summary>
         /// Translates an identifier name into a C#-style PascalCase name.

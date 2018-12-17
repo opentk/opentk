@@ -5,7 +5,7 @@ using System.Reflection;
 using System.Xml.Linq;
 using JetBrains.Annotations;
 
-namespace Bind.Extensions
+namespace OpenTK.BuildTools.Common
 {
     /// <summary>
     /// Extension methods for the <see cref="XContainer"/> class.
@@ -35,7 +35,9 @@ namespace Bind.Extensions
                 sectionElements = container.Elements(sectionName);
             }
 
-            var targetSections = sectionElements.Where(e => e.GetRequiredAttribute("class").Value == className).ToList();
+            var targetSections = sectionElements.Where
+                    (e => e.GetRequiredAttribute("class").Value == className)
+                .ToList();
 
             if (!targetSections.Any())
             {
@@ -69,7 +71,9 @@ namespace Bind.Extensions
         )
         {
             var sectionElements = container.Elements(sectionName);
-            var targetSections = sectionElements.Where(e => e.GetRequiredAttribute("class").Value == className).ToList();
+            var targetSections = sectionElements.Where
+                    (e => e.GetRequiredAttribute("class").Value == className)
+                .ToList();
 
             if (!targetSections.Any())
             {

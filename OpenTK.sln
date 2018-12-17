@@ -84,9 +84,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenTK.OpenAL.Extensions.EX
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "OpenGL", "OpenGL", "{85C133D9-ABA2-4C93-99BE-3D7D2CD3A6B8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Generator.Bind", "src\Generator.Bind\Generator.Bind.csproj", "{8AE84A6B-5CD7-4FF6-96CD-1CF48066F427}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Generator.Convert", "src\Generator.Converter\Generator.Convert.csproj", "{319B0E0E-DBAC-4828-AD54-E09806DC8444}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenTK.BuildTools", "src\OpenTK.BuildTools\OpenTK.BuildTools.csproj", "{FE306BC5-F43C-4047-8908-D9366D3DACC9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -178,14 +176,10 @@ Global
 		{2E39B827-1513-4B77-B80A-0BA87DBC199F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2E39B827-1513-4B77-B80A-0BA87DBC199F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2E39B827-1513-4B77-B80A-0BA87DBC199F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8AE84A6B-5CD7-4FF6-96CD-1CF48066F427}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8AE84A6B-5CD7-4FF6-96CD-1CF48066F427}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8AE84A6B-5CD7-4FF6-96CD-1CF48066F427}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8AE84A6B-5CD7-4FF6-96CD-1CF48066F427}.Release|Any CPU.Build.0 = Release|Any CPU
-		{319B0E0E-DBAC-4828-AD54-E09806DC8444}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{319B0E0E-DBAC-4828-AD54-E09806DC8444}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{319B0E0E-DBAC-4828-AD54-E09806DC8444}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{319B0E0E-DBAC-4828-AD54-E09806DC8444}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FE306BC5-F43C-4047-8908-D9366D3DACC9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FE306BC5-F43C-4047-8908-D9366D3DACC9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FE306BC5-F43C-4047-8908-D9366D3DACC9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FE306BC5-F43C-4047-8908-D9366D3DACC9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

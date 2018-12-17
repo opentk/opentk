@@ -3,7 +3,7 @@ using System.Linq;
 using System.Xml.Linq;
 using JetBrains.Annotations;
 
-namespace Bind.Extensions
+namespace OpenTK.BuildTools.Common
 {
     /// <summary>
     /// Extensions for the <see cref="XElement"/> class.

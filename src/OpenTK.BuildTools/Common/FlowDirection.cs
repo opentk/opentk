@@ -23,7 +23,7 @@
 // OTHER DEALINGS IN THE SOFTWARE.
 //
 
-namespace Bind.XML.Signatures
+namespace OpenTK.BuildTools.Common
 {
     /// <summary>
     /// Enumerates the possible flows of a parameter (ie. is this parameter

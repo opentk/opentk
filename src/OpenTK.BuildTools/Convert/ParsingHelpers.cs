@@ -5,13 +5,12 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Xml.Linq;
-using Bind.Extensions;
-using Bind.XML.Signatures.Enumerations;
-using Bind.XML.Signatures.Functions;
 using JetBrains.Annotations;
 using Microsoft.CodeAnalysis.CSharp;
+using OpenTK.BuildTools.Common;
+using Type = OpenTK.BuildTools.Common.Type;
 
-namespace Bind.XML
+namespace OpenTK.BuildTools.Convert
 {
     /// <summary>
     /// Shared functionality for the parsing classes.
@@ -38,7 +37,12 @@ namespace Bind.XML
         /// <param name="defaultVersion">The default value to return.</param>
         /// <returns>A parsed version.</returns>
         [CanBeNull, ContractAnnotation("defaultVersion : null => canbenull; defaultVersion : notnull => notnull")]
-        public static Version ParseVersion([NotNull] XElement element, [NotNull] string attributeName = "version", [CanBeNull] Version defaultVersion = null)
+        public static Version ParseVersion
+        (
+            [NotNull] XElement element,
+            [NotNull] string attributeName = "version",
+            [CanBeNull] Version defaultVersion = null
+        )
         {
             var versionAttribute = element.Attribute(attributeName);
 
@@ -79,7 +83,7 @@ namespace Bind.XML
         /// <param name="tokenElement">The token element.</param>
         /// <returns>A parsed token.</returns>
         [NotNull]
-        public static TokenSignature ParseTokenSignature([NotNull] XElement tokenElement)
+        public static Token ParseTokenSignature([NotNull] XElement tokenElement)
         {
             var tokenName = tokenElement.GetRequiredAttribute("name").Value;
             var tokenValueHexStr = tokenElement.GetRequiredAttribute("value").Value;
@@ -89,7 +93,8 @@ namespace Bind.XML
                 tokenValueHexStr = tokenValueHexStr.Substring(2);
             }
 
-            if (!long.TryParse(tokenValueHexStr, NumberStyles.HexNumber, CultureInfo.InvariantCulture, out var tokenValue))
+            if (!long.TryParse
+                (tokenValueHexStr, NumberStyles.HexNumber, CultureInfo.InvariantCulture, out var tokenValue))
             {
                 if (!long.TryParse(tokenValueHexStr, out tokenValue))
                 {
@@ -101,7 +106,12 @@ namespace Bind.XML
 
             var tokenRemarks = tokenElement.Attribute("remark")?.Value;
 
-            return new TokenSignature(tokenName, tokenValue, tokenDeprecationVersion, tokenRemarks);
+            // TODO: Deprecated attribute
+            return new Token()
+            {
+                Name = NativeIdentifierTranslator.TranslateIdentifierName(tokenName), NativeName = tokenName,
+                Value = "0x" + tokenValueHexStr
+            };
         }
 
         /// <summary>
@@ -110,7 +120,7 @@ namespace Bind.XML
         /// <param name="typeElement">The type element.</param>
         /// <returns>A parsed type.</returns>
         [NotNull]
-        public static TypeSignature ParseTypeSignature([NotNull] XElement typeElement)
+        public static Type ParseTypeSignature([NotNull] XElement typeElement)
         {
             var typeString = typeElement.GetRequiredAttribute("type").Value;
 
@@ -123,7 +133,7 @@ namespace Bind.XML
         /// <param name="type">The type string.</param>
         /// <returns>A parsed type.</returns>
         [NotNull]
-        public static TypeSignature ParseTypeSignature([NotNull] string type)
+        public static Type ParseTypeSignature([NotNull] string type)
         {
             if (type.Contains('*') && (type.Contains('[') || type.Contains(']')))
             {
@@ -180,7 +190,7 @@ namespace Bind.XML
                 typeName = typeName.Remove(firstArrayIndex);
             }
 
-            return new TypeSignature(typeName, pointerLevel, arrayLevel, false, false);
+            return new Type() { Name = typeName, IsPointer = isPointer, IndirectionLevels = pointerLevel, IsArray = isArray, ArrayDimensions = arrayLevel};
         }
 
         /// <summary>
@@ -223,8 +233,12 @@ namespace Bind.XML
         ///   <paramref name="valueReferenceExpression"/> may contain a mathematical expression, which should be applied
         ///   to the parameter's value to get the final count.
         /// </returns>
-        [CanBeNull, ContractAnnotation("hasComputedCount : true => computedCountParameterNames : notnull; hasValueReference : true => valueReferenceName : notnull")]
-        public static CountSignature ParseCountSignature
+        [CanBeNull,
+         ContractAnnotation
+         (
+             "hasComputedCount : true => computedCountParameterNames : notnull; hasValueReference : true => valueReferenceName : notnull"
+         )]
+        public static Count ParseCountSignature
         (
             [CanBeNull] string countData,
             out bool hasComputedCount,
@@ -248,7 +262,7 @@ namespace Bind.XML
 
             if (int.TryParse(countData, out var staticCount))
             {
-                return new CountSignature(staticCount);
+                return new Count(staticCount);
             }
 
             if (ComputedSizeParametersRegex.IsMatch(countData))
@@ -259,7 +273,7 @@ namespace Bind.XML
                     .Cast<Match>()
                     .Select(m => m.Value)
                     .First()
-                    .Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+                    .Split(new[] {','}, StringSplitOptions.RemoveEmptyEntries);
 
                 computedCountParameterNames = countParamNames.ToList();
 
@@ -303,8 +317,9 @@ namespace Bind.XML
         /// <param name="parametersWithValueReferenceCounts">The parameters with reference counts.</param>
         public static void ResolveReferenceCountSignatures
         (
-            [NotNull, ItemNotNull] IReadOnlyCollection<ParameterSignature> parameters,
-            [NotNull] IEnumerable<(ParameterSignature Parameter, string ParameterReferenceName)> parametersWithValueReferenceCounts
+            [NotNull, ItemNotNull] IReadOnlyCollection<Parameter> parameters,
+            [NotNull]
+            IEnumerable<(Parameter parameter, string parameterReferenceName)> parametersWithValueReferenceCounts
         )
         {
             foreach (var (parameter, valueReferenceName) in parametersWithValueReferenceCounts)
@@ -315,7 +330,7 @@ namespace Bind.XML
                                              "Referenced parameter in count attribute not found."
                                          );
 
-                var countSignature = new CountSignature(referenceParameter);
+                var countSignature = new Count(referenceParameter);
 
                 parameter.Count = countSignature;
             }
@@ -328,14 +343,16 @@ namespace Bind.XML
         /// <param name="parametersWithComputedCounts">The parameters with computed counts.</param>
         public static void ResolveComputedCountSignatures
         (
-            [NotNull, ItemNotNull] IReadOnlyCollection<ParameterSignature> parameters,
-            [NotNull] IEnumerable<(ParameterSignature Parameter, IReadOnlyList<string> ComputedCountParameterNames)> parametersWithComputedCounts
+            [NotNull, ItemNotNull] IReadOnlyCollection<Parameter> parameters,
+            [NotNull]
+            IEnumerable<(Parameter parameter, IReadOnlyList<string> computedCountParameterNames)>
+                parametersWithComputedCounts
         )
         {
             foreach (var (parameter, computedCountNames) in parametersWithComputedCounts)
             {
                 var computedParameters = parameters.Where(p => computedCountNames.Contains(p.Name)).ToList();
-                var countSignature = new CountSignature(computedParameters);
+                var countSignature = new Count(computedParameters);
 
                 parameter.Count = countSignature;
             }

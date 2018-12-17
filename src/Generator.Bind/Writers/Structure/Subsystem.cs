@@ -26,6 +26,7 @@ namespace Bind.Writers.Structure
         private readonly IGeneratorSettings _settings;
         private readonly ApiProfile _profile;
         private readonly ProfileDocumentation _docs;
+        private Dictionary<string, string> _internalTypemap;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Subsystem"/> class from the given generator settings, API specification.
@@ -63,11 +64,11 @@ namespace Bind.Writers.Structure
             // Interface Generation
             await GenerateInterfacesAsync();
 
-            // Function Generation
-            await WriteFunctionsAsync();
-
             // Enum Generation
             await WriteEnumsAsync();
+
+            // Function Generation
+            await WriteFunctionsAsync();
 
             // XMLDoc Generation
             await WriteDocumentationAsync();
@@ -166,7 +167,33 @@ namespace Bind.Writers.Structure
             foreach (var function in functions)
             {
                 var generated = new Function() { };
-                generated.Parameters.AddRange(function.Parameters);
+                //generated.Parameters.AddRange(function.Parameters);
+                // Workaround for the enum translation bug, see ProfileEnumerationTranslator.cs
+                foreach (var param in function.Parameters)
+                {
+                    if (_internalTypemap.ContainsKey(param.Type.Name))
+                    {
+                        generated.Parameters.Add
+                        (
+                            new ParameterSignature
+                            (
+                                param.Name,
+                                new TypeSignature
+                                (
+                                    _internalTypemap[param.Type.Name],
+                                    param.Type.IndirectionLevel,
+                                    param.Type.ArrayDimensions,
+                                    param.Type.IsByRef,
+                                    param.Type.IsOut
+                                )
+                            )
+                        );
+                    }
+                    else
+                    {
+                        generated.Parameters.Add(param);
+                    }
+                }
                 generated.Name = function.Name;
                 generated.GenericTypeParameters.AddRange(function.GenericTypeParameters);
                 generated.IsUnsafe = generated.Parameters.Any(x => x.Type.IsPointer);
@@ -207,11 +234,12 @@ namespace Bind.Writers.Structure
 
         private Task WriteEnumsAsync()
         {
-            var translator = new NativeIdentifierTranslator();
+            _internalTypemap = new Dictionary<string, string>();
             var enums = _profile.Enumerations;
             foreach (var @enum in enums)
             {
-                var generated = new Enum() { Name = translator.Translate(@enum.Name) };
+                _internalTypemap[@enum.Name] = translato.Translate(@enum.Name);
+                var generated = new Enum() { Name = _internalTypemap[@enum.Name] };
                 foreach (var tokenSignature in @enum.Tokens)
                 {
                     var token = new Token()
