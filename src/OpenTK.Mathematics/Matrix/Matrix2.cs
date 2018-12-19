@@ -572,10 +572,8 @@ namespace OpenToolkit.Mathematics
         /// <param name="result">The transpose of the given matrix.</param>
         public static void Transpose(ref Matrix2 mat, out Matrix2 result)
         {
-            result.Row0.X = mat.Row0.X;
-            result.Row0.Y = mat.Row1.X;
-            result.Row1.X = mat.Row0.Y;
-            result.Row1.Y = mat.Row1.Y;
+            result.Row0 = mat.Column0;
+            result.Row1 = mat.Column1;
         }
 
         /// <summary>
