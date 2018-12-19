@@ -1,10 +1,8 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <OutputType>Exe</OutputType>
-    <AssemblyName>BuildTools</AssemblyName>
-    <TargetFrameworks>net461</TargetFrameworks>
+    <TargetFramework>netstandard20</TargetFramework>
   </PropertyGroup>
-
+  
   <ItemGroup>
     <PackageReference Include="CommandLineParser" Version="2.2.1" />
     <PackageReference Include="Humanizer" Version="2.4.2" />
@@ -13,10 +11,6 @@
     <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
     <PackageReference Include="System.CodeDom" Version="4.5.0" />
     <PackageReference Include="System.Memory" Version="4.5.1" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <EmbeddedResource Include="Specifications/License.txt" />
   </ItemGroup>
 
   <!--<Import Project="..\..\props\common.props" />

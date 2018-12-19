@@ -3,7 +3,7 @@ using System.Linq;
 using System.Xml.Linq;
 using JetBrains.Annotations;
 
-namespace OpenTK.BuildTools.Common
+namespace Generator.Convert
 {
     /// <summary>
     /// Extensions for the <see cref="XElement"/> class.

@@ -6,7 +6,7 @@ using System;
 using System.IO;
 using System.Reflection;
 
-namespace OpenTK.BuildTools.Common
+namespace Generator.Bind
 {
     /// <summary>
     /// Class for handling embedded resources.
@@ -20,7 +20,7 @@ namespace OpenTK.BuildTools.Common
                 using (var streamReader = new StreamReader
                 (
                     Assembly.GetAssembly(typeof(Program))
-                        .GetManifestResourceStream("OpenTK.BuildTools.Specifications.License.txt")
+                        .GetManifestResourceStream("Generator.Bind.Specifications.License.txt")
                 ))
                 {
                     return streamReader.ReadToEnd();

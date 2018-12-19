@@ -5,7 +5,7 @@ using System.Reflection;
 using System.Xml.Linq;
 using JetBrains.Annotations;
 
-namespace OpenTK.BuildTools.Common
+namespace Generator.Convert
 {
     /// <summary>
     /// Extension methods for the <see cref="XContainer"/> class.

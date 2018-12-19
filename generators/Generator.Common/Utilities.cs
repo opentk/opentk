@@ -6,12 +6,12 @@ using System.Collections.Generic;
 using System.Linq;
 using JetBrains.Annotations;
 
-namespace OpenTK.BuildTools
+namespace Generator.Common
 {
     /// <summary>
     /// Various utilities for use by the tool.
     /// </summary>
-    internal static class Utilities
+    public static class Utilities
     {
         /// <summary>
         /// Gets a list of keywords in the C# language.

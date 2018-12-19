@@ -5,7 +5,7 @@ using System.Text.RegularExpressions;
 using Humanizer;
 using JetBrains.Annotations;
 
-namespace OpenTK.BuildTools.Convert
+namespace Generator.Convert
 {
     /// <summary>
     /// Translates an identifier (a type name, a constant name, etc) into a .NET-style identifier.

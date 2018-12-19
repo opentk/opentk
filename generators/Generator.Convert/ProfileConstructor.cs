@@ -2,16 +2,14 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Xml;
 using System.Xml.Linq;
 using Newtonsoft.Json;
 using OpenTK.BuildTools.Common;
 using Formatting = Newtonsoft.Json.Formatting;
 
-namespace OpenTK.BuildTools.Convert
+namespace Generator.Convert
 {
-    public class ProfileConstuctor
+    public partial class ProfileConstructor
     {
         public List<string> InputFiles { get; set; }
         public string OutputFolder { get; set; }

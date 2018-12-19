@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Xml.Linq;
 
-namespace OpenTK.BuildTools.Convert
+namespace Generator.Convert
 {
     internal class EnumTokenComparer : IEqualityComparer<XNode>
     {

@@ -10,7 +10,7 @@ using Microsoft.CodeAnalysis.CSharp;
 using OpenTK.BuildTools.Common;
 using Type = OpenTK.BuildTools.Common.Type;
 
-namespace OpenTK.BuildTools.Convert
+namespace Generator.Convert
 {
     /// <summary>
     /// Shared functionality for the parsing classes.

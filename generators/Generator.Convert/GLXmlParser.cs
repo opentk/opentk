@@ -32,7 +32,7 @@ using System.Net;
 using System.Text.RegularExpressions;
 using System.Xml.Linq;
 
-namespace OpenTK.BuildTools.Convert
+namespace Generator.Convert
 {
     internal static class Extension
     {

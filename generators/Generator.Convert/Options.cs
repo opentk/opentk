@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using CommandLine;
 using CommandLine.Text;
 
-namespace OpenTK.BuildTools.Convert
+namespace Generator.Convert
 {
     /// <summary>
     /// A container class used by <see cref="CommandLine.Parser" /> to parse command line arguments.

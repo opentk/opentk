@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <AssemblyName>Bind</AssemblyName>
+    <TargetFrameworks>net461</TargetFrameworks>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="../Generator.Common/Generator.Common.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Specifications/License.txt" />
+  </ItemGroup>
+
+  <!--<Import Project="..\..\props\common.props" />
+  <Import Project="..\..\props\netfx-mono.props" />
+  <Import Project="..\..\props\stylecop.props" />-->
+  <Import Project="..\..\props\jetbrains.props" />
+</Project>
