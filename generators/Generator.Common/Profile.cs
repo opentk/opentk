@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using Newtonsoft.Json;
 
-namespace OpenTK.BuildTools.Common
+namespace Generator.Common
 {
     /// <summary>
     /// Represents a subsystem as defined in GitHub issue #823.

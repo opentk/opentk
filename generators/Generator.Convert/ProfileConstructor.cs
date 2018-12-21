@@ -3,13 +3,15 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Xml.Linq;
+using Generator.Common;
+using Generator.Convert.Construction;
+using Generator.Convert.XML;
 using Newtonsoft.Json;
-using OpenTK.BuildTools.Common;
 using Formatting = Newtonsoft.Json.Formatting;
 
 namespace Generator.Convert
 {
-    public partial class ProfileConstructor
+    public class ProfileConstructor : IDisposable
     {
         public List<string> InputFiles { get; set; }
         public string OutputFolder { get; set; }
@@ -66,7 +68,9 @@ namespace Generator.Convert
                             Path.Combine
                             (
                                 OutputFolder,
-                                profile.Name + (!string.IsNullOrEmpty(profile.Version) ? "-" + profile.Version : null) +
+                                "api-" +
+                                profile.Name +
+                                (!string.IsNullOrEmpty(profile.Version) ? "-" + profile.Version : null) +
                                 ".json"
                             )
                         )
@@ -120,6 +124,10 @@ namespace Generator.Convert
             }
 
             return entries;
+        }
+
+        public void Dispose()
+        {
         }
     }
 }

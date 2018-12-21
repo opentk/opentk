@@ -1,9 +1,7 @@
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
+using Generator.Common.Enums;
 
-namespace OpenTK.BuildTools.Common
+namespace Generator.Common
 {
     /// <summary>
     /// Represents a project, whether root or extension, containing <see cref="Interface"/>s and <see cref="Enum"/>s.

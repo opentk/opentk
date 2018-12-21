@@ -1,13 +1,10 @@
-using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Text;
-using System.Xml.Linq;
 using JetBrains.Annotations;
 using Newtonsoft.Json;
 
-namespace OpenTK.BuildTools.Common
+namespace Generator.Common.Functions
 {
     /// <summary>
     /// Represents a C# function.

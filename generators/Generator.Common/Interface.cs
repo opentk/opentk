@@ -1,8 +1,7 @@
 using System.Collections.Generic;
-using System.IO;
-using System.Threading.Tasks;
+using Generator.Common.Functions;
 
-namespace OpenTK.BuildTools.Common
+namespace Generator.Common
 {
     /// <summary>
     /// Represents an AdvancedDLSupport interface.

@@ -2,15 +2,16 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using OpenTK.BuildTools.Common;
-using Enum = OpenTK.BuildTools.Common.Enum;
+using Generator.Common;
+using Generator.Common.Enums;
+using Enum = Generator.Common.Enums.Enum;
 
 namespace Generator.Bind
 {
     public static class ProfileWriter
     {
         /// <summary>
-        /// The name of the subfolder containing <see cref="OpenTK.BuildTools.Common.Enum"/>s.
+        /// The name of the subfolder containing <see cref="Enum"/>s.
         /// </summary>
         public const string EnumsSubfolder = "Enums";
 

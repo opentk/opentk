@@ -1,7 +1,7 @@
 using System.Collections.Generic;
-using OpenTK.BuildTools.Common;
+using Generator.Common.Functions;
 
-namespace Generator.Convert
+namespace Generator.Convert.Construction
 {
     public static class TypeMapper
     {

@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace OpenTK.BuildTools.Common
+namespace Generator.Common.Enums
 {
     /// <summary>
     /// Represents an enum token.

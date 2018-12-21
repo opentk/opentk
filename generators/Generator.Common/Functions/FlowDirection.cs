@@ -23,7 +23,7 @@
 // OTHER DEALINGS IN THE SOFTWARE.
 //
 
-namespace OpenTK.BuildTools.Common
+namespace Generator.Common.Functions
 {
     /// <summary>
     /// Enumerates the possible flows of a parameter (ie. is this parameter

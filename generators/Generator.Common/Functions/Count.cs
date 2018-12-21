@@ -4,7 +4,7 @@ using System.Linq;
 using JetBrains.Annotations;
 using Newtonsoft.Json;
 
-namespace OpenTK.BuildTools.Common
+namespace Generator.Common.Functions
 {
     /// <summary>
     /// Represents a computed or static element count of a parameter. A computed parameter varies its count based on the
@@ -92,7 +92,7 @@ namespace OpenTK.BuildTools.Common
         public bool IsStatic => !(IsComputed || IsReference);
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Common.Count"/> class.
+        /// Initializes a new instance of the <see cref="Count"/> class.
         /// </summary>
         [Obsolete("This constructor is for JSON use only. Please use one of the overloads.")]
         public Count()
@@ -100,7 +100,7 @@ namespace OpenTK.BuildTools.Common
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Common.Count"/> class.
+        /// Initializes a new instance of the <see cref="Count"/> class.
         /// </summary>
         /// <param name="count">The static count.</param>
         public Count(int count)
@@ -110,7 +110,7 @@ namespace OpenTK.BuildTools.Common
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Common.Count"/> class.
+        /// Initializes a new instance of the <see cref="Count"/> class.
         /// </summary>
         /// <param name="computedFrom">The parameters the count is computed from.</param>
         public Count([NotNull] IReadOnlyList<Parameter> computedFrom)
@@ -119,7 +119,7 @@ namespace OpenTK.BuildTools.Common
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Common.Count"/> class.
+        /// Initializes a new instance of the <see cref="Count"/> class.
         /// </summary>
         /// <param name="valueReference">The parameter the count is taken from.</param>
         public Count([CanBeNull] Parameter valueReference)

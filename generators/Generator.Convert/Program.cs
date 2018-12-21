@@ -1,22 +1,62 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using CommandLine;
+using CommandLine.Text;
+using Generator.Convert.Baking;
+using Newtonsoft.Json;
 
 namespace Generator.Convert
 {
     class Program
     {
+        public static Options CliOptions { get; set; }
+
         static void Main(string[] args)
         {
             Console.WriteLine("OpenGL Registry Converter");
             Console.WriteLine("(C) The Open Toolkit Project");
             Console.WriteLine();
-            var profileConstuctor = new ProfileConstructor();
-            profileConstuctor.InputFiles = new List<string>() {args[0]};
-            profileConstuctor.OutputFolder = Path.Combine(Environment.CurrentDirectory,"Specifications");
-            profileConstuctor.Pretty = true;
-            profileConstuctor.Prefix = "gl";
-            profileConstuctor.WriteProfiles();
+            var parserResult = new Parser(x => x.HelpWriter = TextWriter.Null).ParseArguments<Options>(args);
+            parserResult.WithParsed(result => CliOptions = result);
+            parserResult.WithNotParsed
+            (
+                errs =>
+                {
+                    var helpText = HelpText.AutoBuild
+                        (parserResult, h => HelpText.DefaultParsingErrorsHandler(parserResult, h), e => e);
+                    helpText.Copyright = string.Empty;
+                    helpText.Heading = string.Empty;
+                    Console.WriteLine(helpText);
+                    Environment.Exit(-1);
+                }
+            );
+
+            using (var profileConstructor = new ProfileConstructor
+            {
+                InputFiles = CliOptions.InputFiles.ToList(),
+                OutputFolder = CliOptions.OutputFolder,
+                Pretty = CliOptions.PrettyPrinted,
+                Prefix = CliOptions.Prefix
+            })
+            {
+                profileConstructor.WriteProfiles();
+            }
+
+            ProfileBakery.Bake
+            (
+                CliOptions.BakeryInformation.Any() ?
+                    CliOptions.BakeryInformation.Select(File.ReadAllText)
+                    .Select(JsonConvert.DeserializeObject<ProfileBakeryInformation>) :
+                ProfileBakeryInformation.Default,
+                CliOptions.OutputFolder,
+                CliOptions.PrettyPrinted
+            );
+            if (!CliOptions.PreserveRawAPIs)
+            {
+                ProfileBakery.DeleteRawAPIs(CliOptions.OutputFolder);
+            }
         }
     }
 }

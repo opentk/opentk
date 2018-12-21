@@ -3,7 +3,7 @@ using System.Linq;
 using System.Xml.Linq;
 using JetBrains.Annotations;
 
-namespace Generator.Convert
+namespace Generator.Convert.XML
 {
     /// <summary>
     /// Extensions for the <see cref="XElement"/> class.

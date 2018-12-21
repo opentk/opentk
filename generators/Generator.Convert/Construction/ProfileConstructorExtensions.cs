@@ -2,16 +2,16 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Xml.Linq;
 using Generator.Common;
+using Generator.Common.Enums;
+using Generator.Common.Functions;
+using Generator.Convert.XML;
 using JetBrains.Annotations;
 using MoreLinq.Extensions;
-using OpenTK.BuildTools.Common;
-using static Generator.Convert.ParsingHelpers;
-using Enum = OpenTK.BuildTools.Common.Enum;
+using Enum = Generator.Common.Enums.Enum;
 
-namespace Generator.Convert
+namespace Generator.Convert.Construction
 {
     public static class ProfileConstructorExtensions
     {
@@ -51,13 +51,13 @@ namespace Generator.Convert
                 .Split(new[] {'|'}, StringSplitOptions.RemoveEmptyEntries);
             var functionExtensions = element.GetRequiredAttribute("extension").Value;
 
-            var functionVersion = ParseVersion(element, defaultVersion: new Version(0, 0));
-            var functionDeprecationVersion = ParseVersion(element, "deprecated");
+            var functionVersion = ParsingHelpers.ParseVersion(element, defaultVersion: new Version(0, 0));
+            var functionDeprecationVersion = ParsingHelpers.ParseVersion(element, "deprecated");
 
             var parameters = ParseParameters(element);
 
             var returnElement = element.GetRequiredElement("returns");
-            var returnType = ParseTypeSignature(returnElement);
+            var returnType = ParsingHelpers.ParseTypeSignature(returnElement);
             return new Function()
             {
                 Name = NativeIdentifierTranslator.TranslateIdentifierName(functionName),
@@ -107,9 +107,9 @@ namespace Generator.Convert
                 resultParameters.Add(parameter);
             }
 
-            ResolveComputedCountSignatures(resultParameters, parametersWithComputedCounts);
+            ParsingHelpers.ResolveComputedCountSignatures(resultParameters, parametersWithComputedCounts);
 
-            ResolveReferenceCountSignatures(resultParameters, parametersWithValueReferenceCounts);
+            ParsingHelpers.ResolveReferenceCountSignatures(resultParameters, parametersWithValueReferenceCounts);
 
             return resultParameters;
         }
@@ -146,7 +146,7 @@ namespace Generator.Convert
             var paramName = paramElement.GetRequiredAttribute("name").Value;
 
             // A parameter is technically a type signature (think of it as Parameter : ITypeSignature)
-            var paramType = ParseTypeSignature(paramElement);
+            var paramType = ParsingHelpers.ParseTypeSignature(paramElement);
 
             var paramFlowStr = paramElement.GetRequiredAttribute("flow").Value;
 
@@ -156,7 +156,7 @@ namespace Generator.Convert
             }
 
             var paramCountStr = paramElement.Attribute("count")?.Value;
-            var countSignature = ParseCountSignature
+            var countSignature = ParsingHelpers.ParseCountSignature
             (
                 paramCountStr,
                 out hasComputedCount,

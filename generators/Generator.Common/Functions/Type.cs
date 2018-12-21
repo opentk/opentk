@@ -1,4 +1,4 @@
-namespace OpenTK.BuildTools.Common
+namespace Generator.Common.Functions
 {
     public class Type
     {

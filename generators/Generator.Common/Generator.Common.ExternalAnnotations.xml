@@ -1,34 +1,34 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <assembly name="Generator.Common">
-  <member name="P:Generator.Common.Utilities.CSharpKeywords">
-    <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
-  </member>
-  <member name="M:OpenTK.BuildTools.Common.Count.#ctor(OpenTK.BuildTools.Common.Parameter)">
+  <member name="M:Generator.Common.Functions.Count.#ctor(Generator.Common.Functions.Parameter)">
     <parameter name="valueReference">
       <attribute ctor="M:JetBrains.Annotations.CanBeNullAttribute.#ctor" />
     </parameter>
   </member>
-  <member name="M:OpenTK.BuildTools.Common.Count.#ctor(System.Collections.Generic.IReadOnlyList{OpenTK.BuildTools.Common.Parameter})">
+  <member name="M:Generator.Common.Functions.Count.#ctor(System.Collections.Generic.IReadOnlyList{Generator.Common.Functions.Parameter})">
     <parameter name="computedFrom">
       <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
     </parameter>
   </member>
-  <member name="P:OpenTK.BuildTools.Common.Count.ComputedFrom">
+  <member name="P:Generator.Common.Functions.Count.ComputedFrom">
     <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
   </member>
-  <member name="P:OpenTK.BuildTools.Common.Count.ValueReference">
+  <member name="P:Generator.Common.Functions.Count.ValueReference">
     <attribute ctor="M:JetBrains.Annotations.CanBeNullAttribute.#ctor" />
   </member>
-  <member name="P:OpenTK.BuildTools.Common.Function.Categories">
+  <member name="P:Generator.Common.Functions.Function.Categories">
     <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
     <attribute ctor="M:JetBrains.Annotations.ItemNotNullAttribute.#ctor" />
   </member>
-  <member name="P:OpenTK.BuildTools.Common.Function.GenericTypeParameters">
+  <member name="P:Generator.Common.Functions.Function.GenericTypeParameters">
     <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
     <attribute ctor="M:JetBrains.Annotations.ItemNotNullAttribute.#ctor" />
   </member>
-  <member name="P:OpenTK.BuildTools.Common.Function.Parameters">
+  <member name="P:Generator.Common.Functions.Function.Parameters">
     <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
     <attribute ctor="M:JetBrains.Annotations.ItemNotNullAttribute.#ctor" />
+  </member>
+  <member name="P:Generator.Common.Utilities.CSharpKeywords">
+    <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
   </member>
 </assembly>

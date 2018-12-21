@@ -32,7 +32,7 @@ using System.Net;
 using System.Text.RegularExpressions;
 using System.Xml.Linq;
 
-namespace Generator.Convert
+namespace Generator.Convert.XML
 {
     internal static class Extension
     {

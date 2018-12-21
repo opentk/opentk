@@ -5,7 +5,7 @@ using System.Text.RegularExpressions;
 using Humanizer;
 using JetBrains.Annotations;
 
-namespace Generator.Convert
+namespace Generator.Convert.Construction
 {
     /// <summary>
     /// Translates an identifier (a type name, a constant name, etc) into a .NET-style identifier.

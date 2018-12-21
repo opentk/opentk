@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace OpenTK.BuildTools.Common
+namespace Generator.Common.Functions
 {
     /// <summary>
     /// Represents a C# generic type parameter.

@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace OpenTK.BuildTools.Common
+namespace Generator.Common
 {
     /// <summary>
     /// Represents a C# attribute.

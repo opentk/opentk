@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Xml.Linq;
 
-namespace Generator.Convert
+namespace Generator.Convert.Construction
 {
     internal class EnumTokenComparer : IEqualityComparer<XNode>
     {

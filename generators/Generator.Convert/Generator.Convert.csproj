@@ -9,6 +9,10 @@
     <ProjectReference Include="../Generator.Common/Generator.Common.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Docs" />
+  </ItemGroup>
+
   <!--<Import Project="..\..\props\common.props" />
   <Import Project="..\..\props\netfx-mono.props" />
   <Import Project="..\..\props\stylecop.props" />-->
