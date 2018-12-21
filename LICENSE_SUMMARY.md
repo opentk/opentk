@@ -33,6 +33,7 @@ use ADL's API where OpenTK doesn't require it, the entire LGPLv3 applies to your
 OpenTK licenses.
 * **Don't** use AdvancedDLSupport outside of OpenTK, because you'll have to comply with LGPLv3 otherwise.
 * **Don't** undermine the license grant - you'll make it angry.
+
 Basically, you can redistribute ADL as long as *you* don't use it, and only OpenTK does.
 
 ### Disclaimer
@@ -40,3 +41,5 @@ If you do wish to use ADL outside of OpenTK and aren't able to use LGPL, feel fr
 @Firwood-Software to figure out a custom licensing scheme.
 
 Again, thanks for using OpenTK; we hope you enjoy it! :)
+
+- Team OpenTK.
