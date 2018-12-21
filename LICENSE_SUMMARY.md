@@ -14,7 +14,7 @@ license header in our files**.
 
 ### AdvancedDLSupport
 OpenTK uses AdvancedDLSupport for added compatibility with .NET Core, and to maximize performance. **AdvancedDLSupport
-("ADL") is licensed under LGPLv3**; which requires that all projects that release ADL are LGPL or GPL. This causes a
+("ADL") is licensed under LGPLv3**; which requires that all projects that statically link ADL are LGPL or GPL. This causes a
 license conflict between MIT and LGPLv3 and, as such, a custom license is required.
 
 [See the Lesser General Public License (LGPL) terms](https://choosealicense.com/licenses/lgpl-3.0/)
@@ -31,7 +31,7 @@ use ADL's API where OpenTK doesn't require it, the entire LGPLv3 applies to your
 * **Do** use OpenTK in your project using the MIT license.
 * **Do** make projects that depend on OpenTK with **whatever license**, provided the licenses don't undermine any of the
 OpenTK licenses.
-* **Don't** use AdvancedDLSupport outside of OpenTK, because you'll have to comply with LGPLv3 otherwise.
+* **Don't** use AdvancedDLSupport outside of OpenTK, otherwise LGPLv3 applies.
 * **Don't** undermine the license grant - you'll make it angry.
 
 Basically, you can redistribute ADL as long as *you* don't use it, and only OpenTK does.
