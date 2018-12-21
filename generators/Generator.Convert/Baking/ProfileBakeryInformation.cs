@@ -4,45 +4,42 @@ namespace Generator.Convert.Baking
 {
     public class ProfileBakeryInformation
     {
-        public static ProfileBakeryInformation ES20 { get; } = new ProfileBakeryInformationBuilder()
-            .Implements("gles2", "gles2-2.0")
-            .WithNamespaces("OpenToolkit.OpenGL.ES20", "OpenToolkit.OpenGL.ES20.Extensions")
-            .WithName("ES20")
+        // ReSharper disable InconsistentNaming
+        public static ProfileBakeryInformation GLES { get; } = new ProfileBakeryInformationBuilder()
+            .Implements("gles2", "gles2-2.0", "gles2-3.0", "gles2-3.1", "gles2-3.2")
+            .WithNamespaces("OpenToolkit.OpenGLES", "OpenToolkit.OpenGLES.Extensions")
+            .WithName("GLES")
             .WithOutputFolder("OpenGL")
             .Result;
 
-        public static ProfileBakeryInformation ES30 { get; } = new ProfileBakeryInformationBuilder()
-            .Extends("ES20")
-            .Implements("gles2-3.0")
-            .WithNamespaces("OpenToolkit.OpenGL.ES30", "OpenToolkit.OpenGL.ES30.Extensions")
-            .WithName("ES30")
+        public static ProfileBakeryInformation GLCompatibility { get; } = new ProfileBakeryInformationBuilder()
+            .Implements("gl", "gl-1.0", "gl-1.1", "gl-1.2", "gl-1.3", "gl-1.4", "gl-1.5")
+            .Implements("gl-2.0", "gl-2.1")
+            .Implements("gl-3.0", "gl-3.1", "gl-3.2", "gl-3.3")
+            .Implements("gl-4.0", "gl-4.1", "gl-4.2", "gl-4.3", "gl-4.4", "gl-4.5", "gl-4.6")
+            .WithNamespaces("OpenToolkit.OpenGL.Compatibility", "OpenToolkit.OpenGL.Compatibility.Extensions")
+            .WithName("OpenGL")
             .WithOutputFolder("OpenGL")
             .Result;
-
-        public static ProfileBakeryInformation ES31 { get; } = new ProfileBakeryInformationBuilder()
-            .Extends("ES20", "ES30")
-            .Implements("gles2-3.1")
-            .WithNamespaces("OpenToolkit.OpenGL.ES31", "OpenToolkit.OpenGL.ES31.Extensions")
-            .WithName("ES31")
-            .WithOutputFolder("OpenGL")
-            .Result;
-
-        public static ProfileBakeryInformation GL2 { get; } = new ProfileBakeryInformationBuilder()
-            .Implements("gl", "gl-1.0", "gl-1.1", "gl-1.2", "gl-1.3", "gl-1.4", "gl-1.5", "gl-2.0")
-            .WithNamespaces("OpenToolkit.OpenGL", "OpenToolkit.OpenGL.Extensions")
-            .WithName("GL2")
-            .WithOutputFolder("OpenGL")
-            .Result;
-
-        public static ProfileBakeryInformation GL4 { get; } = new ProfileBakeryInformationBuilder()
+        
+        public static ProfileBakeryInformation GLCore { get; } = new ProfileBakeryInformationBuilder()
             .Implements("glcore", "glcore-1.0", "glcore-1.1", "glcore-1.2", "glcore-1.3", "glcore-1.4", "glcore-1.5")
             .Implements("glcore-2.0", "glcore-2.1")
             .Implements("glcore-3.0", "glcore-3.1", "glcore-3.2", "glcore-3.3")
-            .Implements("glcore-4.0")
-            .WithNamespaces("OpenToolkit.OpenGL.GL4", "OpenToolkit.OpenGL.GL4.Extensions")
-            .WithName("GL4")
+            .Implements("glcore-4.0", "glcore-4.1", "glcore-4.2", "glcore-4.3", "glcore-4.4", "glcore-4.5")
+            .Implements("glcore-4.6")
+            .WithNamespaces("OpenToolkit.OpenGL", "OpenToolkit.OpenGL.Extensions")
+            .WithName("OpenGL (Core Profile)")
             .WithOutputFolder("OpenGL")
             .Result;
+
+        public static ProfileBakeryInformation GLSC { get; } = new ProfileBakeryInformationBuilder()
+            .Implements("glsc2", "glsc2-2.0")
+            .WithNamespaces("OpenToolkit.OpenGLSC", "OpenToolkit.OpenGLSC.Extensions")
+            .WithName("GLSC")
+            .WithOutputFolder("OpenGL")
+            .Result;
+        // ReSharper restore InconsistentNaming
 
         /// <summary>
         /// Gets or sets a list of the APIs that should be baked into this profile
@@ -76,11 +73,10 @@ namespace Generator.Convert.Baking
         
         public static List<ProfileBakeryInformation> Default { get; } = new List<ProfileBakeryInformation>()
         {
-            ES20,
-            ES30,
-            ES31,
-            GL2,
-            GL4
+            GLCore,
+            GLCompatibility,
+            GLES,
+            GLSC
         };
     }
 }
