@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using Generator.Common;
 using Generator.Common.Baking;
 using MoreLinq.Extensions;
@@ -10,7 +12,7 @@ namespace Generator.Convert.Baking
 {
     public class ProfileBakery
     {
-        public static void Bake(ProfileBakeryInformation information, string folder, bool pretty)
+        public static Task BakeAsync(ProfileBakeryInformation information, string folder, bool pretty)
         {
             // get APIs implemented
             var impl = information.Implements.Select(x => File.ReadAllText(Path.Combine(folder, "api-" + x + ".json")))
@@ -35,7 +37,7 @@ namespace Generator.Convert.Baking
                 "Core",
                 new Project()
                 {
-                    CategoryName = "Core", ExtensionName = "Core", Namespace = information.Namespace, IsRoot = true
+                    CategoryName = "Core", ExtensionName = "Core", Namespace = "", IsRoot = true
                 }
             );
 
@@ -63,14 +65,12 @@ namespace Generator.Convert.Baking
                 Path.Combine(folder, information.Name + ".json"),
                 JsonConvert.SerializeObject(bakedProfile, pretty ? Formatting.Indented : Formatting.None)
             );
+            return Task.CompletedTask;
         }
 
-        public static void Bake(IEnumerable<ProfileBakeryInformation> information, string folder, bool pretty)
+        public static async Task BakeAsync(IEnumerable<ProfileBakeryInformation> information, string folder, bool pretty)
         {
-            foreach (var info in information)
-            {
-                Bake(info, folder, pretty);
-            }
+            await Task.WhenAll(information.Select(info => BakeAsync(info, folder, pretty)));
         }
 
         public static void DeleteRawAPIs(string folder)
@@ -81,6 +81,11 @@ namespace Generator.Convert.Baking
             {
                 File.Delete(file);
             }
+        }
+
+        public static void Bake(IEnumerable<ProfileBakeryInformation> information, string folder, bool pretty)
+        {
+            BakeAsync(information, folder, pretty).GetAwaiter().GetResult();
         }
     }
 }

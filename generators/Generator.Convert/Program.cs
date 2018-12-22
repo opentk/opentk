@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using CommandLine;
@@ -33,6 +34,8 @@ namespace Generator.Convert
                 }
             );
 
+            var stopwatch = new Stopwatch();
+            stopwatch.Start();
             using (var profileConstructor = new ProfileConstructor
             {
                 InputFiles = CliOptions.InputFiles.ToList(),
@@ -57,6 +60,9 @@ namespace Generator.Convert
             {
                 ProfileBakery.DeleteRawAPIs(CliOptions.OutputFolder);
             }
+            
+            stopwatch.Stop();
+            Console.WriteLine("Profiles generated in {0} seconds.", stopwatch.Elapsed.TotalSeconds);
         }
     }
 }
