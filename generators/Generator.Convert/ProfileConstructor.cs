@@ -18,7 +18,7 @@ namespace Generator.Convert
         public string OutputFolder { get; set; }
         public string Prefix { get; set; }
         public bool Pretty { get; set; }
-        public Dictionary<string, string> TypeMap { get; set; }
+        public List<Dictionary<string, string>> TypeMaps { get; set; }
 
         public IEnumerable<Profile> ReadProfiles()
         {
@@ -38,7 +38,7 @@ namespace Generator.Convert
             {
                 Name = api.Attribute("name")?.Value,
                 Version = api.Attribute("version")?.Value ?? string.Empty,
-                TypeMap = TypeMap
+                TypeMaps = TypeMaps
             };
             var elements = api.Elements()
                 .OrderBy(s => s.Name.LocalName)

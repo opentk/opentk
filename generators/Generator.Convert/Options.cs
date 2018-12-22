@@ -74,10 +74,10 @@ namespace Generator.Convert
         public bool PreserveRawAPIs { get; set; } = false;
 
         /// <summary>
-        /// Gets or sets the path of the typemap to be used.
+        /// Gets or sets the paths of the typemaps to be used.
         /// </summary>
-        [Option('t', "typemap", HelpText = "The path of the typemap to use.", Required = false)]
-        public string Typemap { get; set; }
+        [Option('t', "typemaps", HelpText = "The paths of the typemaps to use.", Required = false)]
+        public IEnumerable<string> Typemap { get; set; }
         
         /// <summary>
         /// Gets a set of usage examples which can be shown to the user.

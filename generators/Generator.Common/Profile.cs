@@ -26,6 +26,6 @@ namespace Generator.Common
         public string Version { get; set; }
 
         [JsonIgnore]
-        public Dictionary<string, string> TypeMap { get; set; } = new Dictionary<string, string>();
+        public List<Dictionary<string, string>> TypeMaps { get; set; } = new List<Dictionary<string, string>>();
     }
 }

@@ -42,8 +42,10 @@ namespace Generator.Convert
                 OutputFolder = CliOptions.OutputFolder,
                 Pretty = CliOptions.PrettyPrinted,
                 Prefix = CliOptions.Prefix,
-                TypeMap = !string.IsNullOrWhiteSpace(CliOptions.Typemap)
-                    ? JsonConvert.DeserializeObject<Dictionary<string, string>>(File.ReadAllText(CliOptions.Typemap))
+                TypeMaps = CliOptions.Typemap.Any()
+                    ? CliOptions.Typemap.Select(File.ReadAllText)
+                        .Select(JsonConvert.DeserializeObject<Dictionary<string, string>>)
+                        .ToList()
                     : null
             })
             {

@@ -181,11 +181,13 @@ namespace Generator.Convert.Construction
             var parsed = funs.Select(ParseFunction).ToList();
             TypeMapper.Map
             (
-                profile.TypeMap
-                    .Concat(profile.Projects["Core"].Enums.ToDictionary(x => x.NativeName, x => x.Name))
-                    .ToDictionary(),
+                profile.Projects["Core"].Enums.ToDictionary(x => x.NativeName, x => x.Name),
                 parsed
             );
+            foreach (var typeMap in profile.TypeMaps)
+            {
+                TypeMapper.Map(typeMap, parsed);
+            }
             profile.WriteFunctions(parsed);
         }
 
