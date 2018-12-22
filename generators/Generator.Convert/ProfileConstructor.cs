@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Xml.Linq;
 using Generator.Common;
 using Generator.Convert.Construction;
@@ -17,6 +18,7 @@ namespace Generator.Convert
         public string OutputFolder { get; set; }
         public string Prefix { get; set; }
         public bool Pretty { get; set; }
+        public Dictionary<string, string> TypeMap { get; set; }
 
         public IEnumerable<Profile> ReadProfiles()
         {
@@ -27,27 +29,28 @@ namespace Generator.Convert
             // in multiple files with different entries in each file).
             var entries = MergeDuplicates(sigs);
             SortTokens(entries);
+            return Task.WhenAll(sigs.SelectMany(s => s).Select(ReadProfileAsync)).GetAwaiter().GetResult();
+        }
 
-
-            foreach (var api in sigs.SelectMany(s => s))
+        private Task<Profile> ReadProfileAsync(XElement api)
+        {
+            var profile = new Profile
             {
-                var profile = new Profile
-                {
-                    Name = api.Attribute("name")?.Value,
-                    Version = api.Attribute("version")?.Value ?? string.Empty
-                };
-                var elements = api.Elements()
-                    .OrderBy(s => s.Name.LocalName)
-                    .ThenBy(s => (string)s.Attribute("value") ?? string.Empty)
-                    .ThenBy(s => (string)s.Attribute("name") ?? string.Empty)
-                    .ThenBy(s => (string)s.Attribute("version") ?? string.Empty)
-                    .ThenBy(s => (string)s.Attribute("extension") ?? string.Empty)
-                    .ToList();
-                var enums = elements.Where(x => x.Name == "enum");
-                var functions = elements.Where(x => x.Name == "function");
-                profile.ParseXml(enums, functions);
-                yield return profile;
-            }
+                Name = api.Attribute("name")?.Value,
+                Version = api.Attribute("version")?.Value ?? string.Empty,
+                TypeMap = TypeMap
+            };
+            var elements = api.Elements()
+                .OrderBy(s => s.Name.LocalName)
+                .ThenBy(s => (string)s.Attribute("value") ?? string.Empty)
+                .ThenBy(s => (string)s.Attribute("name") ?? string.Empty)
+                .ThenBy(s => (string)s.Attribute("version") ?? string.Empty)
+                .ThenBy(s => (string)s.Attribute("extension") ?? string.Empty)
+                .ToList();
+            var enums = elements.Where(x => x.Name == "enum");
+            var functions = elements.Where(x => x.Name == "function");
+            profile.ParseXml(enums, functions);
+            return Task.FromResult(profile);
         }
 
         public void WriteProfiles()

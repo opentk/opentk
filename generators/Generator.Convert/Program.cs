@@ -41,7 +41,10 @@ namespace Generator.Convert
                 InputFiles = CliOptions.InputFiles.ToList(),
                 OutputFolder = CliOptions.OutputFolder,
                 Pretty = CliOptions.PrettyPrinted,
-                Prefix = CliOptions.Prefix
+                Prefix = CliOptions.Prefix,
+                TypeMap = !string.IsNullOrWhiteSpace(CliOptions.Typemap)
+                    ? JsonConvert.DeserializeObject<Dictionary<string, string>>(File.ReadAllText(CliOptions.Typemap))
+                    : null
             })
             {
                 profileConstructor.WriteProfiles();
@@ -49,10 +52,10 @@ namespace Generator.Convert
 
             ProfileBakery.Bake
             (
-                CliOptions.BakeryInformation.Any() ?
-                    CliOptions.BakeryInformation.Select(File.ReadAllText)
-                    .Select(JsonConvert.DeserializeObject<ProfileBakeryInformation>) :
-                ProfileBakeryInformation.Default,
+                CliOptions.BakeryInformation.Any()
+                    ? CliOptions.BakeryInformation.Select(File.ReadAllText)
+                        .Select(JsonConvert.DeserializeObject<ProfileBakeryInformation>)
+                    : ProfileBakeryInformation.Default,
                 CliOptions.OutputFolder,
                 CliOptions.PrettyPrinted
             );
@@ -60,7 +63,7 @@ namespace Generator.Convert
             {
                 ProfileBakery.DeleteRawAPIs(CliOptions.OutputFolder);
             }
-            
+
             stopwatch.Stop();
             Console.WriteLine("Profiles generated in {0} seconds.", stopwatch.Elapsed.TotalSeconds);
         }
