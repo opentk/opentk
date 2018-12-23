@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Generator.Common;
-using Generator.Common.Baking;
 using MoreLinq.Extensions;
 using Newtonsoft.Json;
 
@@ -17,11 +16,6 @@ namespace Generator.Convert.Baking
             // get APIs implemented
             var impl = information.Implements.Select(x => File.ReadAllText(Path.Combine(folder, "api-" + x + ".json")))
                 .Select(JsonConvert.DeserializeObject<Profile>)
-                .ToList();
-
-            // get profiles extended
-            var ext = information.Extends.Select(x => File.ReadAllText(Path.Combine(folder, x + ".json")))
-                .Select(JsonConvert.DeserializeObject<BakedProfile>)
                 .ToList();
 
             // create the profile
@@ -50,20 +44,11 @@ namespace Generator.Convert.Baking
             profile.Projects["Core"].Enums.AddRange(coreEnums);
             profile.Projects = profile.Projects.Concat(extProjects).ToDictionary();
 
-            // create the output (baked) profile referencing the extended APIs
-            var bakedProfile = new BakedProfile
-            {
-                Profile = profile,
-                PackageReferences = ext.SelectMany(x => x.PackageReferences)
-                    .Concat(ext.Select(x => x.Profile.Namespace))
-                    .ToList()
-            };
-
             // save this to disk
             File.WriteAllText
             (
                 Path.Combine(folder, information.Name + ".json"),
-                JsonConvert.SerializeObject(bakedProfile, pretty ? Formatting.Indented : Formatting.None)
+                JsonConvert.SerializeObject(profile, pretty ? Formatting.Indented : Formatting.None)
             );
             return Task.CompletedTask;
         }

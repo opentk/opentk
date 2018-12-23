@@ -44,7 +44,6 @@ namespace Generator.Convert.Construction.Trimmers
             return IsRelevant(trimmable.Name);
         }
 
-        private bool done;
         /// <inheritdoc/>
         public void Trim(Function trimmable)
         {

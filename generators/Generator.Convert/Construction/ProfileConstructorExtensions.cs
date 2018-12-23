@@ -83,7 +83,7 @@ namespace Generator.Convert.Construction
                         new Attribute()
                         {
                             Name = "Obsolete",
-                            Arguments = new List<string>() {"\"Deprecated in " + functionDeprecationVersion + "."}
+                            Arguments = new List<string>() {"\"Deprecated in " + functionDeprecationVersion + ".\""}
                         }
                     }
                     : new List<Attribute>()

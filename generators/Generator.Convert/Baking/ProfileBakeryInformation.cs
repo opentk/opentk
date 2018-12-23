@@ -47,11 +47,6 @@ namespace Generator.Convert.Baking
         public List<string> Implements { get; set; } = new List<string>();
 
         /// <summary>
-        /// Gets or sets a list of baked profiles that this baked profile should extend.
-        /// </summary>
-        public List<string> Extends { get; set; } = new List<string>();
-
-        /// <summary>
         /// Gets or sets the namespace in which the Core functions and enums should be placed
         /// </summary>
         public string Namespace { get; set; }

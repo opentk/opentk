@@ -10,12 +10,6 @@ namespace Generator.Convert.Baking
         {
             Result = new ProfileBakeryInformation();
         }
-
-        public ProfileBakeryInformationBuilder Extends(params string[] extends)
-        {
-            Result.Extends.AddRange(extends);
-            return this;
-        }
         
         public ProfileBakeryInformationBuilder Implements(params string[] implements)
         {
