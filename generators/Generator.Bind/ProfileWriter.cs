@@ -34,7 +34,7 @@ namespace Generator.Bind
             await sw.WriteLineAsync();
             await sw.WriteLineAsync("using System;");
             await sw.WriteLineAsync();
-            await sw.WriteLineAsync("namespace " + project.Namespace + ".Enums");
+            await sw.WriteLineAsync("namespace " + project.Namespace);
             await sw.WriteLineAsync("{");
             foreach (var attr in @enum.Attributes)
             {
@@ -75,11 +75,9 @@ namespace Generator.Bind
             await sw.WriteLineAsync("using System;");
             await sw.WriteLineAsync("using System.Runtime.InteropServices;");
             await sw.WriteLineAsync("using System.Text;");
-            await sw.WriteLineAsync("using " + profile.Projects["Core"].Namespace + ";");
-            await sw.WriteLineAsync("using " + profile.Projects["Core"].Namespace + ".Enums;");
             await sw.WriteLineAsync("using AdvancedDLSupport;");
             await sw.WriteLineAsync();
-            await sw.WriteLineAsync("namespace " + project.Namespace + ".Interfaces");
+            await sw.WriteLineAsync("namespace " + project.Namespace);
             await sw.WriteLineAsync("{");
             foreach (var attr in @interface.Attributes)
             {
@@ -123,7 +121,7 @@ namespace Generator.Bind
         /// Asynchronously writes this project in the given folder, with the given settings and parent subsystem.
         /// </summary>
         /// <param name="folder">The folder to write this project to.</param>
-        /// <param name="settings">The generator settings to use.</param>
+        /// <param name="project">The project to write.</param>
         /// <param name="profile">The parent subsystem.</param>
         /// <returns>The asynchronous task.</returns>
         public static async Task WriteAsync(this Project project, string folder, Profile profile)

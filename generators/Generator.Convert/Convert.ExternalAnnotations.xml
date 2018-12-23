@@ -93,6 +93,18 @@
       <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
     </parameter>
   </member>
+  <member name="M:Generator.Convert.Construction.Trimmers.ITrimmer`1.IsRelevant(`0)">
+    <parameter name="trimmable">
+      <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+    </parameter>
+  </member>
+  <member name="M:Generator.Convert.Construction.Trimmers.ITrimmer`1.Trim(`0)">
+    <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+    <attribute ctor="M:JetBrains.Annotations.PureAttribute.#ctor" />
+    <parameter name="trimmable">
+      <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+    </parameter>
+  </member>
   <member name="M:Generator.Convert.XML.XContainerExtensions.GetRequiredElement(System.Xml.Linq.XContainer,System.String,System.Boolean)">
     <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
     <parameter name="container">

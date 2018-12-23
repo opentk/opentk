@@ -38,7 +38,7 @@ namespace Generator.Convert
             {
                 Name = api.Attribute("name")?.Value,
                 Version = api.Attribute("version")?.Value ?? string.Empty,
-                TypeMaps = TypeMaps
+                TypeMaps = TypeMaps ?? new List<Dictionary<string, string>>() // NRE
             };
             var elements = api.Elements()
                 .OrderBy(s => s.Name.LocalName)

@@ -184,10 +184,15 @@ namespace Generator.Convert.Construction
                 profile.Projects["Core"].Enums.ToDictionary(x => x.NativeName, x => x.Name),
                 parsed
             );
+            NameTrimmer.Trim
+            (
+                parsed
+            );
             foreach (var typeMap in profile.TypeMaps)
             {
                 TypeMapper.Map(typeMap, parsed);
             }
+
             profile.WriteFunctions(parsed);
         }
 

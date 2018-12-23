@@ -17,14 +17,8 @@ namespace Generator.Bind
         (
             () =>
             {
-                using (var streamReader = new StreamReader
-                (
-                    Assembly.GetAssembly(typeof(Program))
-                        .GetManifestResourceStream("Generator.Bind.Specifications.License.txt")
-                ))
-                {
-                    return streamReader.ReadToEnd();
-                }
+                TryGetSpecification("License.txt", out var result);
+                return result;
             }
         );
 
@@ -32,5 +26,26 @@ namespace Generator.Bind
         /// Gets the license text from the embedded resource.
         /// </summary>
         public static string LicenseText => _licenseText.Value;
+
+        public static bool TryGetSpecification(string filename, out string contents)
+        {
+            try
+            {
+                using (var streamReader = new StreamReader
+                (
+                    Assembly.GetAssembly(typeof(Program))
+                        .GetManifestResourceStream("Generator.Bind.Specifications." + filename)
+                ))
+                {
+                    contents = streamReader.ReadToEnd();
+                    return true;
+                }
+            }
+            catch (IOException)
+            {
+                contents = null;
+                return false;
+            }
+        }
     }
 }
