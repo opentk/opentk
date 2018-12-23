@@ -29,11 +29,6 @@ namespace Generator.Bind
         /// <returns>The asynchronous task.</returns>
         public static async Task WriteAsync(this Enum @enum, string file, Profile profile, Project project)
         {
-            if (File.Exists(file))
-            {
-                return;
-            }
-
             var sw = new StreamWriter(file);
             await sw.WriteLineAsync(EmbeddedResources.LicenseText);
             await sw.WriteLineAsync();
@@ -75,11 +70,6 @@ namespace Generator.Bind
         /// <returns>The asynchronous task.</returns>
         public static async Task WriteAsync(this Interface @interface, string file, Profile profile, Project project)
         {
-            if (File.Exists(file))
-            {
-                return;
-            }
-
             var sw = new StreamWriter(file);
             await sw.WriteAsync(EmbeddedResources.LicenseText);
             await sw.WriteLineAsync("using System;");
