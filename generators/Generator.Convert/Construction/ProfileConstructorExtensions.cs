@@ -9,6 +9,7 @@ using Generator.Common.Functions;
 using Generator.Convert.XML;
 using JetBrains.Annotations;
 using MoreLinq.Extensions;
+using Attribute = Generator.Common.Attribute;
 using Enum = Generator.Common.Enums.Enum;
 
 namespace Generator.Convert.Construction
@@ -28,14 +29,24 @@ namespace Generator.Convert.Construction
             };
             foreach (var child in element.Elements("token"))
             {
+                var deprecatedSince = ParsingHelpers.ParseVersion(child, "deprecated");
                 result.Tokens.Add
                 (
                     new Token()
                     {
                         Name = NativeIdentifierTranslator.TranslateIdentifierName(child.Attribute("name")?.Value),
                         NativeName = child.Attribute("name")?.Value,
-                        Value = child.Attribute("value")?.Value
-                        // TODO: deprecation
+                        Value = child.Attribute("value")?.Value,
+                        Attributes = deprecatedSince != null
+                            ? new List<Attribute>()
+                            {
+                                new Attribute()
+                                {
+                                    Name = "Obsolete",
+                                    Arguments = new List<string>() {"\"Deprecated in " + deprecatedSince + ".\""}
+                                }
+                            }
+                            : new List<Attribute>()
                     }
                 );
             }
@@ -65,7 +76,17 @@ namespace Generator.Convert.Construction
                 Parameters = parameters.ToList(),
                 ReturnType = returnType,
                 Categories = functionCategories,
-                ExtensionName = functionExtensions
+                ExtensionName = functionExtensions,
+                Attributes = functionDeprecationVersion != null
+                    ? new List<Attribute>()
+                    {
+                        new Attribute()
+                        {
+                            Name = "Obsolete",
+                            Arguments = new List<string>() {"\"Deprecated in " + functionDeprecationVersion + "."}
+                        }
+                    }
+                    : new List<Attribute>()
             };
         }
 
