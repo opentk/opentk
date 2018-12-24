@@ -5,6 +5,9 @@ using OpenToolkit.OpenAL.Interfaces;
 
 namespace OpenToolkit.OpenAL.Extensions
 {
+    /// <summary>
+    /// Contains methods for loading OpenAL extensions.
+    /// </summary>
     public static class ALExtensionLoader
     {
         /// <summary>

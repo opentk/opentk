@@ -1,5 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <assembly name="Convert">
+  <member name="M:Generator.Convert.Construction.DocumentationWriter.WriteDocumentationAsync(Generator.Common.Functions.Function,Generator.Convert.Documentation.ProfileDocumentation)">
+    <parameter name="function">
+      <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+    </parameter>
+  </member>
+  <member name="M:Generator.Convert.Construction.DocumentationWriter.WriteDocumentationAsync(System.Collections.Generic.IEnumerable{Generator.Common.Functions.Function},Generator.Convert.Documentation.ProfileDocumentation)">
+    <parameter name="functions">
+      <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+      <attribute ctor="M:JetBrains.Annotations.ItemNotNullAttribute.#ctor" />
+    </parameter>
+  </member>
   <member name="M:Generator.Convert.Construction.NativeIdentifierTranslator.TranslateIdentifierName(System.String)">
     <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
     <parameter name="name">
@@ -103,6 +114,93 @@
     <attribute ctor="M:JetBrains.Annotations.PureAttribute.#ctor" />
     <parameter name="trimmable">
       <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+    </parameter>
+  </member>
+  <member name="M:Generator.Convert.Documentation.DocumentationReader.ReadFunctionDocumentations(System.Xml.Linq.XDocument)">
+    <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+    <attribute ctor="M:JetBrains.Annotations.ItemNotNullAttribute.#ctor" />
+    <parameter name="functionDocument">
+      <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+    </parameter>
+  </member>
+  <member name="M:Generator.Convert.Documentation.DocumentationReader.ReadProfileDocumentation(System.String)">
+    <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+    <parameter name="path">
+      <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+      <attribute ctor="M:JetBrains.Annotations.PathReferenceAttribute.#ctor" />
+    </parameter>
+  </member>
+  <member name="M:Generator.Convert.Documentation.FunctionDocumentation.#ctor(System.String,System.String,System.Collections.Generic.IReadOnlyList{Generator.Convert.Documentation.ParameterDocumentation},System.String)">
+    <parameter name="name">
+      <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+    </parameter>
+    <parameter name="purpose">
+      <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+    </parameter>
+    <parameter name="parameters">
+      <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+      <attribute ctor="M:JetBrains.Annotations.ItemNotNullAttribute.#ctor" />
+    </parameter>
+    <parameter name="functionGroup">
+      <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+    </parameter>
+  </member>
+  <member name="P:Generator.Convert.Documentation.FunctionDocumentation.Group">
+    <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+  </member>
+  <member name="P:Generator.Convert.Documentation.FunctionDocumentation.Name">
+    <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+  </member>
+  <member name="P:Generator.Convert.Documentation.FunctionDocumentation.Parameters">
+    <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+    <attribute ctor="M:JetBrains.Annotations.ItemNotNullAttribute.#ctor" />
+  </member>
+  <member name="P:Generator.Convert.Documentation.FunctionDocumentation.Purpose">
+    <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+  </member>
+  <member name="M:Generator.Convert.Documentation.ParameterDocumentation.#ctor(System.String,System.String)">
+    <parameter name="name">
+      <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+    </parameter>
+    <parameter name="description">
+      <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+    </parameter>
+  </member>
+  <member name="P:Generator.Convert.Documentation.ParameterDocumentation.Description">
+    <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+  </member>
+  <member name="P:Generator.Convert.Documentation.ParameterDocumentation.Name">
+    <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+  </member>
+  <member name="M:Generator.Convert.Documentation.ProfileDocumentation.#ctor(System.Collections.Generic.IReadOnlyList{Generator.Convert.Documentation.FunctionDocumentation})">
+    <parameter name="functions">
+      <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+    </parameter>
+  </member>
+  <member name="P:Generator.Convert.Documentation.ProfileDocumentation.Functions">
+    <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+    <attribute ctor="M:JetBrains.Annotations.ItemNotNullAttribute.#ctor" />
+  </member>
+  <member name="M:Generator.Convert.Documentation.ProfileDocumentation.GetDocumentation(Generator.Common.Functions.Function)">
+    <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+    <parameter name="function">
+      <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+    </parameter>
+  </member>
+  <member name="M:Generator.Convert.Documentation.ProfileDocumentation.HasDocumentation(Generator.Common.Functions.Function)">
+    <parameter name="function">
+      <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+    </parameter>
+  </member>
+  <member name="M:Generator.Convert.Documentation.ProfileDocumentation.TryGetDocumentation(Generator.Common.Functions.Function,Generator.Convert.Documentation.FunctionDocumentation@)">
+    <attribute ctor="M:JetBrains.Annotations.ContractAnnotationAttribute.#ctor(System.String)">
+      <argument>true, documentation : notnull &lt;=; false, documentation : null &lt;=</argument>
+    </attribute>
+    <parameter name="function">
+      <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+    </parameter>
+    <parameter name="documentation">
+      <attribute ctor="M:JetBrains.Annotations.CanBeNullAttribute.#ctor" />
     </parameter>
   </member>
   <member name="M:Generator.Convert.XML.XContainerExtensions.GetRequiredElement(System.Xml.Linq.XContainer,System.String,System.Boolean)">

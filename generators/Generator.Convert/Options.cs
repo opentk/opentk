@@ -86,6 +86,12 @@ namespace Generator.Convert
         public IEnumerable<string> Typemap { get; set; }
 
         /// <summary>
+        /// Gets or sets the root of a docs.gl clone.
+        /// </summary>
+        [Option('d', "docs", HelpText = "The path of a docs.gl clone.", Required = true)]
+        public string DocumentationPath { get; set; }
+
+        /// <summary>
         /// Gets a set of usage examples which can be shown to the user.
         /// </summary>
         [Usage(ApplicationAlias = "Convert")]
@@ -96,7 +102,13 @@ namespace Generator.Convert
                 yield return new Example
                 (
                     "Converting local files",
-                    new Options { Prefix = "gl", OutputFolder = "Specifications", InputFiles = new[] { "gl.xml" } }
+                    new Options
+                    {
+                        Prefix = "gl",
+                        OutputFolder = "Specifications",
+                        InputFiles = new[] { "gl.xml" },
+                        DocumentationPath = "docs.gl",
+                    }
                 );
 
                 yield return new Example
@@ -109,7 +121,8 @@ namespace Generator.Convert
                         InputFiles = new[]
                         {
                             "https://raw.githubusercontent.com/KhronosGroup/OpenGL-Registry/master/xml/gl.xml"
-                        }
+                        },
+                        DocumentationPath = "docs.gl",
                     }
                 );
             }

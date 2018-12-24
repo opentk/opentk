@@ -58,6 +58,7 @@ namespace Generator.Convert.Baking
             .WithName("GLSC")
             .WithOutputFolder("OpenGL")
             .Result;
+
         // ReSharper restore InconsistentNaming
 
         /// <summary>
@@ -93,7 +94,7 @@ namespace Generator.Convert.Baking
             GLCore,
             GLCompatibility,
             GLES,
-            GLSC
+            GLSC,
         };
     }
 }
