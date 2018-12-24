@@ -35,9 +35,9 @@ namespace Generator.Convert.Construction
         public static readonly IReadOnlyDictionary<string, string> ExtensionAndAcronymOverrides =
             new Dictionary<string, string>
             {
-                {"CMAAINTEL", "CmaaIntel"},
-                {"QCOM", "QCom"},
-                {"SNORM", "SNorm"}
+                { "CMAAINTEL", "CmaaIntel" },
+                { "QCOM", "QCom" },
+                { "SNORM", "SNorm" }
             };
 
         /// <summary>

@@ -4,8 +4,12 @@ using System.Xml.Linq;
 
 namespace Generator.Convert.Construction
 {
+    /// <summary>
+    /// An equality comparer that compares enum names.
+    /// </summary>
     internal class EnumTokenComparer : IEqualityComparer<XNode>
     {
+        /// <inheritdoc />
         public bool Equals(XNode a, XNode b)
         {
             var a_attr = ((XElement)a).Attribute("name") ?? ((XElement)a).Attribute("token");
@@ -13,6 +17,7 @@ namespace Generator.Convert.Construction
             return a_attr.Value == b_attr.Value;
         }
 
+        /// <inheritdoc />
         public int GetHashCode(XNode a)
         {
             var e = (XElement)a;

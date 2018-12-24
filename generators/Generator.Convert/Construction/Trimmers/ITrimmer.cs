@@ -19,7 +19,6 @@ namespace Generator.Convert.Construction.Trimmers
         /// Trims the given type.
         /// </summary>
         /// <param name="trimmable">The type to trim.</param>
-        /// <returns>The trimmed type.</returns>
         [NotNull, Pure]
         void Trim([NotNull] TTrimmable trimmable);
     }

@@ -192,7 +192,7 @@ namespace Generator.Convert.Construction
                 typeName = typeName.Remove(firstArrayIndex);
             }
 
-            return new Type() { Name = typeName, IsPointer = isPointer, IndirectionLevels = pointerLevel, IsArray = isArray, ArrayDimensions = arrayLevel};
+            return new Type() { Name = typeName, IsPointer = isPointer, IndirectionLevels = pointerLevel, IsArray = isArray, ArrayDimensions = arrayLevel };
         }
 
         /// <summary>
@@ -275,7 +275,7 @@ namespace Generator.Convert.Construction
                     .Cast<Match>()
                     .Select(m => m.Value)
                     .First()
-                    .Split(new[] {','}, StringSplitOptions.RemoveEmptyEntries);
+                    .Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
 
                 computedCountParameterNames = countParamNames.ToList();
 

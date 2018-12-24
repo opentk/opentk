@@ -14,8 +14,16 @@ using Enum = Generator.Common.Enums.Enum;
 
 namespace Generator.Convert.Construction
 {
+    /// <summary>
+    /// A collection of extension methods for parsing and constructing profiles.
+    /// </summary>
     public static class ProfileConstructorExtensions
     {
+        /// <summary>
+        /// Parses an enum signature from XML.
+        /// </summary>
+        /// <param name="element">The XML to parse.</param>
+        /// <returns>The resultant enum.</returns>
         public static Enum ParseEnum(XElement element)
         {
             var result = new Enum
@@ -43,7 +51,7 @@ namespace Generator.Convert.Construction
                                 new Attribute()
                                 {
                                     Name = "Obsolete",
-                                    Arguments = new List<string>() {"\"Deprecated in " + deprecatedSince + ".\""}
+                                    Arguments = new List<string>() { "\"Deprecated in " + deprecatedSince + ".\"" }
                                 }
                             }
                             : new List<Attribute>()
@@ -54,12 +62,17 @@ namespace Generator.Convert.Construction
             return result;
         }
 
+        /// <summary>
+        /// Parses a function from XML.
+        /// </summary>
+        /// <param name="element">The XML to parse.</param>
+        /// <returns>The resultant function.</returns>
         public static Function ParseFunction(XElement element)
         {
             var functionName = element.GetRequiredAttribute("name").Value;
             var functionCategories = element.GetRequiredAttribute("category")
                 .Value
-                .Split(new[] {'|'}, StringSplitOptions.RemoveEmptyEntries);
+                .Split(new[] { '|' }, StringSplitOptions.RemoveEmptyEntries);
             var functionExtensions = element.GetRequiredAttribute("extension").Value;
 
             var functionVersion = ParsingHelpers.ParseVersion(element, defaultVersion: new Version(0, 0));
@@ -83,13 +96,18 @@ namespace Generator.Convert.Construction
                         new Attribute()
                         {
                             Name = "Obsolete",
-                            Arguments = new List<string>() {"\"Deprecated in " + functionDeprecationVersion + ".\""}
+                            Arguments = new List<string>() { "\"Deprecated in " + functionDeprecationVersion + ".\"" }
                         }
                     }
                     : new List<Attribute>()
             };
         }
 
+        /// <summary>
+        /// Parses parameters from XML.
+        /// </summary>
+        /// <param name="functionElement">The XML block containing the parameters.</param>
+        /// <returns>The parsed parameters.</returns>
         [NotNull, ItemNotNull]
         private static IReadOnlyList<Parameter> ParseParameters([NotNull] XElement functionElement)
         {
@@ -187,15 +205,21 @@ namespace Generator.Convert.Construction
                 out valueReferenceExpression
             );
 
-            return new Parameter() {Name = paramName, Flow = paramFlow, Type = paramType, Count = countSignature};
+            return new Parameter() { Name = paramName, Flow = paramFlow, Type = paramType, Count = countSignature };
         }
 
+        /// <summary>
+        /// Parses the enums and functions from their XML representations, and writes them to this profile.
+        /// </summary>
+        /// <param name="profile">The profile to write to.</param>
+        /// <param name="enums">The enum XML blocks.</param>
+        /// <param name="functions">The function XML blocks.</param>
         public static void ParseXml(this Profile profile, IEnumerable<XElement> enums, IEnumerable<XElement> functions)
         {
             profile.Projects.Add
             (
                 "Core",
-                new Project() {CategoryName = "Core", ExtensionName = "Core", IsRoot = true, Namespace = string.Empty}
+                new Project() { CategoryName = "Core", ExtensionName = "Core", IsRoot = true, Namespace = string.Empty }
             );
             profile.Projects["Core"].Enums.AddRange(enums.Select(ParseEnum));
             var funs = functions.ToList();
@@ -217,6 +241,11 @@ namespace Generator.Convert.Construction
             profile.WriteFunctions(parsed);
         }
 
+        /// <summary>
+        /// Writes a collection of functions to their appropriate projects.
+        /// </summary>
+        /// <param name="profile">The profile to write the projects to.</param>
+        /// <param name="functions">The functions to write.</param>
         public static void WriteFunctions(this Profile profile, IEnumerable<Function> functions)
         {
             foreach (var function in functions)
@@ -263,7 +292,9 @@ namespace Generator.Convert.Construction
                             (
                                 category,
                                 new Interface()
-                                    {Name = "I" + NativeIdentifierTranslator.TranslateIdentifierName(category)}
+                                {
+                                    Name = "I" + NativeIdentifierTranslator.TranslateIdentifierName(category)
+                                }
                             );
                     }
 

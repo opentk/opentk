@@ -59,7 +59,7 @@ namespace Generator.Common.Functions
         /// Gets or sets the formatted XML documentation for this function.
         /// </summary>
         public string Doc { get; set; }
-        
+
         /// <summary>
         /// Gets or sets the name (vendor) of the given extension.
         /// </summary>

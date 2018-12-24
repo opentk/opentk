@@ -10,11 +10,21 @@ using Newtonsoft.Json;
 
 namespace Generator.Convert
 {
-    class Program
+    /// <summary>
+    /// The entry point for the bindings converter.
+    /// </summary>
+    public class Program
     {
+        /// <summary>
+        /// Gets or sets the parsed command-line arguments.
+        /// </summary>
         public static Options CliOptions { get; set; }
 
-        static void Main(string[] args)
+        /// <summary>
+        /// The entry point for the bindings converter.
+        /// </summary>
+        /// <param name="args">The raw command-line arguments.</param>
+        public static void Main(string[] args)
         {
             Console.WriteLine("OpenGL Registry Converter");
             Console.WriteLine("(C) The Open Toolkit Project");

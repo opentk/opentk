@@ -39,18 +39,24 @@ namespace Generator.Common
         /// </summary>
         public Dictionary<string, Interface> Interfaces { get; set; } = new Dictionary<string, Interface>();
 
+        /// <summary>
+        /// Gets the full project name of this project, given the profile's root namespace.
+        /// </summary>
+        /// <param name="profile">The profile to use for the root namespace.</param>
+        /// <returns>The full project name.</returns>
         public string GetProjectName(Profile profile)
         {
             return GetNamespace(profile).Replace("OpenToolkit", "OpenTK");
         }
 
+        /// <summary>
+        /// Gets the full namespace of this project, given the profile's root namespace.
+        /// </summary>
+        /// <param name="profile">The profile to use for the root namespace.</param>
+        /// <returns>The full namespace.</returns>
         public string GetNamespace(Profile profile)
         {
-            return
-            (
-                (!IsRoot ? profile.ExtensionsNamespace : profile.Namespace)
-                + Namespace
-            );
+            return (!IsRoot ? profile.ExtensionsNamespace : profile.Namespace) + Namespace;
         }
     }
 }

@@ -18,7 +18,8 @@ namespace Generator.Common.Functions
         /// <summary>
         /// Backing field for <see cref="Count"/>.
         /// </summary>
-        [JsonProperty] private int _count;
+        [JsonProperty]
+        private int _count;
 
         /// <summary>
         /// Gets the static count of the parameter.
@@ -50,11 +51,14 @@ namespace Generator.Common.Functions
         }
 
         /// <summary>
-        /// Gets the parameter that the count is taken from.
+        /// Gets or sets the parameter that the count is taken from.
         /// </summary>
         [CanBeNull, JsonIgnore]
         public Parameter ValueReference { get; set; }
 
+        /// <summary>
+        /// Gets or sets the function that the parameter in question is part of.
+        /// </summary>
         [JsonIgnore]
         public Function FunctionReference { get; set; }
 

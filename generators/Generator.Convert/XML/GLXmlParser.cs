@@ -34,14 +34,9 @@ using System.Xml.Linq;
 
 namespace Generator.Convert.XML
 {
-    internal static class Extension
-    {
-        public static string ValueOrDefault(this XAttribute a)
-        {
-            return a != null ? a.Value : string.Empty;
-        }
-    }
-
+    /// <summary>
+    /// A class which parses Khronos XML files and converts them to a friendlier format.
+    /// </summary>
     internal class GLXmlParser
     {
         private static readonly Regex ExtensionRegex = new Regex
@@ -50,11 +45,26 @@ namespace Generator.Convert.XML
             RegexOptions.Compiled
         );
 
-        // Defines a prefix that should be removed from methods and tokens in the XML files, e.g. "gl", "cl", etc.
+        /// <summary>
+        /// Gets or sets a prefix that should be removed from methods and tokens in the XML files, e.g. "gl", "cl", etc.
+        /// </summary>
         public string Prefix { get; set; }
+
+        /// <summary>
+        /// Gets the enum prefix.
+        /// </summary>
         public string EnumPrefix => Prefix.ToUpper() + "_";
+
+        /// <summary>
+        /// Gets the function prefix.
+        /// </summary>
         public string FuncPrefix => Prefix;
 
+        /// <summary>
+        /// Parses Khronos XML files and converts them to a friendlier format.
+        /// </summary>
+        /// <param name="path">The path to the Khronos XML file.</param>
+        /// <returns>A friendlier representation of the XML file.</returns>
         public IEnumerable<XElement> Parse(string path)
         {
             string[] contents = null;
@@ -98,6 +108,11 @@ namespace Generator.Convert.XML
             return Parse(contents);
         }
 
+        /// <summary>
+        /// Trims the prefix from the given name.
+        /// </summary>
+        /// <param name="name">The name to trim.</param>
+        /// <returns>The trimmed name.</returns>
         public string TrimName(string name)
         {
             if (name.StartsWith(EnumPrefix))
@@ -113,6 +128,11 @@ namespace Generator.Convert.XML
             return name;
         }
 
+        /// <summary>
+        /// Parses Khronos XML lines and converts them to a friendlier format.
+        /// </summary>
+        /// <param name="lines">The contents of the XML file.</param>
+        /// <returns>A friendlier representation of the XML file.</returns>
         public IEnumerable<XElement> Parse(string[] lines)
         {
             var input = XDocument.Parse(string.Join(" ", lines));
@@ -136,6 +156,12 @@ namespace Generator.Convert.XML
             return elements.Values;
         }
 
+        /// <summary>
+        /// Gets all API names from the given XML element.
+        /// </summary>
+        /// <param name="feature">The XML element.</param>
+        /// <returns>All API names in this XML element.</returns>
+        /// <exception cref="NotSupportedException">The feature type is unknown.</exception>
         private static string[] GetApiNames(XElement feature)
         {
             string[] apinames = null;
@@ -163,7 +189,7 @@ namespace Generator.Convert.XML
                 }
                 case "group":
                 {
-                    apinames = new[] {"gl", "glcore", "gles1", "gles2"};
+                    apinames = new[] { "gl", "glcore", "gles1", "gles2" };
                     break;
                 }
                 default:
@@ -181,7 +207,7 @@ namespace Generator.Convert.XML
             var extensions = input.Root.Elements("extensions").Elements("extension");
             var enumerations = input.Root.Elements("enums").Elements("enum");
             var groups = input.Root.Elements("groups").Elements("group");
-            var APIs = new SortedDictionary<string, XElement>();
+            var apis = new SortedDictionary<string, XElement>();
 
             // Build a list of all available tokens.
             // Some tokens have a different value between GL and GLES,
@@ -223,9 +249,9 @@ namespace Generator.Convert.XML
                 foreach (var apiname in apinames)
                 {
                     var key = apiname + version;
-                    if (!APIs.ContainsKey(key))
+                    if (!apis.ContainsKey(key))
                     {
-                        APIs.Add
+                        apis.Add
                         (
                             key,
                             new XElement
@@ -237,7 +263,7 @@ namespace Generator.Convert.XML
                         );
                     }
 
-                    var api = APIs[key];
+                    var api = apis[key];
 
                     var enum_name = TrimName(feature.Attribute("name").Value);
 
@@ -274,7 +300,7 @@ namespace Generator.Convert.XML
                     api.Add(e);
                 }
 
-                foreach (var api in APIs.Values)
+                foreach (var api in apis.Values)
                 {
                     var apiname = api.Attribute("name").Value;
 
@@ -307,9 +333,14 @@ namespace Generator.Convert.XML
                 }
             }
 
-            return APIs.Values;
+            return apis.Values;
         }
 
+        /// <summary>
+        /// Parses all functions from the given XML document.
+        /// </summary>
+        /// <param name="input">The XML document.</param>
+        /// <returns>Friendlier representations of the function signatures contained within the document.</returns>
         private IEnumerable<XElement> ParseFunctions(XDocument input)
         {
             //  Go through the list of commands and build OpenTK functions out of those.
@@ -320,7 +351,7 @@ namespace Generator.Convert.XML
             // overloads for correct use.
             var features = input.Root.Elements("feature");
             var extensions = input.Root.Elements("extensions").Elements("extension");
-            var APIs = new SortedDictionary<string, XElement>();
+            var apis = new SortedDictionary<string, XElement>();
 
             // First we build a list of all available commands,
             // including their parameters and return types.
@@ -340,7 +371,7 @@ namespace Generator.Convert.XML
                 var apinames = GetApiNames(feature);
 
                 var version =
-                    (feature.Attribute("number") != null ? feature.Attribute("number").Value : "")?
+                    (feature.Attribute("number") != null ? feature.Attribute("number").Value : string.Empty)?
                     .Split('|');
 
                 var i = -1;
@@ -352,9 +383,9 @@ namespace Generator.Convert.XML
                     var cmd_version = version.Length > i ? version[i] : version[0];
 
                     var key = apiname + cmd_version;
-                    if (!APIs.ContainsKey(key))
+                    if (!apis.ContainsKey(key))
                     {
-                        APIs.Add
+                        apis.Add
                         (
                             key,
                             new XElement
@@ -366,7 +397,7 @@ namespace Generator.Convert.XML
                         );
                     }
 
-                    var api = APIs[key];
+                    var api = apis[key];
 
                     foreach (var command in feature.Elements("require").Elements("command"))
                     {
@@ -392,7 +423,7 @@ namespace Generator.Convert.XML
                 }
 
                 i = -1;
-                foreach (var api in APIs.Values)
+                foreach (var api in apis.Values)
                 {
                     i++;
                     var apiname = api.Attribute("name").Value;
@@ -425,9 +456,15 @@ namespace Generator.Convert.XML
                 }
             }
 
-            return APIs.Values;
+            return apis.Values;
         }
 
+        /// <summary>
+        /// Adds the function to the API.
+        /// </summary>
+        /// <param name="api">The API.</param>
+        /// <param name="function">The function to add to the API.</param>
+        /// <exception cref="InvalidOperationException">The function has multiple extensions.</exception>
         private void Merge(XElement api, XElement function)
         {
             var type = function.Name.LocalName;
@@ -458,6 +495,11 @@ namespace Generator.Convert.XML
             }
         }
 
+        /// <summary>
+        /// Converts the given function XML to the friendlier format.
+        /// </summary>
+        /// <param name="command">The function XML.</param>
+        /// <returns>A friendlier representation of the function XML.</returns>
         private XElement TranslateCommand(XElement command)
         {
             var function = new XElement("function");
@@ -518,11 +560,21 @@ namespace Generator.Convert.XML
             return function;
         }
 
+        /// <summary>
+        /// Gets the trimmed function name from the XML element.
+        /// </summary>
+        /// <param name="e">The XML element.</param>
+        /// <returns>The trimmed name.</returns>
         private string FunctionName(XElement e)
         {
             return TrimName(e.Element("proto").Element("name").Value);
         }
 
+        /// <summary>
+        /// Parse the C-like proto element.
+        /// </summary>
+        /// <param name="e">The proto element.</param>
+        /// <returns>The type signature represented by the proto element.</returns>
         private string FunctionParameterType(XElement e)
         {
             // Parse the C-like <proto> element. Possible instances:
@@ -562,31 +614,18 @@ namespace Generator.Convert.XML
             return ret;
         }
 
-        private static string Join(string left, string right)
+        /// <summary>
+        /// Gets the given attribute from the given command contained within the given categories.
+        /// </summary>
+        /// <param name="categories">The categories.</param>
+        /// <param name="cmdName">The command name.</param>
+        /// <param name="attribute">The attribute name.</param>
+        /// <returns>The attribute.</returns>
+        private static XAttribute Lookup(IDictionary<string, XElement> categories, string cmdName, string attribute)
         {
-            if (!string.IsNullOrEmpty(left) && !string.IsNullOrEmpty(right))
+            if (categories.ContainsKey(cmdName))
             {
-                return left + "|" + right;
-            }
-
-            if (!string.IsNullOrEmpty(left))
-            {
-                return left;
-            }
-
-            if (!string.IsNullOrEmpty(right))
-            {
-                return right;
-            }
-
-            return string.Empty;
-        }
-
-        private static XAttribute Lookup(IDictionary<string, XElement> categories, string cmd_name, string attribute)
-        {
-            if (categories.ContainsKey(cmd_name))
-            {
-                return categories[cmd_name].Attribute(attribute);
+                return categories[cmdName].Attribute(attribute);
             }
 
             return null;

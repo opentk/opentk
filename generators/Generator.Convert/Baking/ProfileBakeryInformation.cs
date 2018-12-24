@@ -2,9 +2,17 @@ using System.Collections.Generic;
 
 namespace Generator.Convert.Baking
 {
+    /// <summary>
+    /// Represents information to be passed to the profile bakery (a script or recipe if you will).
+    /// </summary>
     public class ProfileBakeryInformation
     {
         // ReSharper disable InconsistentNaming
+
+        /// <summary>
+        /// Gets <see cref="ProfileBakeryInformation"/> implementing OpenGL for Embedded Systems,
+        /// versions 2.0 through 3.2.
+        /// </summary>
         public static ProfileBakeryInformation GLES { get; } = new ProfileBakeryInformationBuilder()
             .Implements("gles2", "gles2-2.0", "gles2-3.0", "gles2-3.1", "gles2-3.2")
             .WithNamespaces("OpenToolkit.OpenGLES", "OpenToolkit.OpenGLES.Extensions")
@@ -12,6 +20,10 @@ namespace Generator.Convert.Baking
             .WithOutputFolder("OpenGL")
             .Result;
 
+        /// <summary>
+        /// Gets <see cref="ProfileBakeryInformation"/> implementing the OpenGL Compatibility Profile, versions 1.0
+        /// through 4.6.
+        /// </summary>
         public static ProfileBakeryInformation GLCompatibility { get; } = new ProfileBakeryInformationBuilder()
             .Implements("gl", "gl-1.0", "gl-1.1", "gl-1.2", "gl-1.3", "gl-1.4", "gl-1.5")
             .Implements("gl-2.0", "gl-2.1")
@@ -21,7 +33,11 @@ namespace Generator.Convert.Baking
             .WithName("OpenGL")
             .WithOutputFolder("OpenGL")
             .Result;
-        
+
+        /// <summary>
+        /// Gets <see cref="ProfileBakeryInformation"/> implementing the OpenGL Core Profile, versions 1.0
+        /// through 4.6.
+        /// </summary>
         public static ProfileBakeryInformation GLCore { get; } = new ProfileBakeryInformationBuilder()
             .Implements("glcore", "glcore-1.0", "glcore-1.1", "glcore-1.2", "glcore-1.3", "glcore-1.4", "glcore-1.5")
             .Implements("glcore-2.0", "glcore-2.1")
@@ -33,6 +49,9 @@ namespace Generator.Convert.Baking
             .WithOutputFolder("OpenGL")
             .Result;
 
+        /// <summary>
+        /// Gets <see cref="ProfileBakeryInformation"/> implementing OpenGL Safety Critical, version 2.0.
+        /// </summary>
         public static ProfileBakeryInformation GLSC { get; } = new ProfileBakeryInformationBuilder()
             .Implements("glsc2", "glsc2-2.0")
             .WithNamespaces("OpenToolkit.OpenGLSC", "OpenToolkit.OpenGLSC.Extensions")
@@ -42,12 +61,12 @@ namespace Generator.Convert.Baking
         // ReSharper restore InconsistentNaming
 
         /// <summary>
-        /// Gets or sets a list of the APIs that should be baked into this profile
+        /// Gets or sets a list of the APIs that should be baked into this profile.
         /// </summary>
         public List<string> Implements { get; set; } = new List<string>();
 
         /// <summary>
-        /// Gets or sets the namespace in which the Core functions and enums should be placed
+        /// Gets or sets the namespace in which the Core functions and enums should be placed.
         /// </summary>
         public string Namespace { get; set; }
 
@@ -55,17 +74,20 @@ namespace Generator.Convert.Baking
         /// Gets or sets the root namespace in which Extension namespaces should be prefixed.
         /// </summary>
         public string ExtensionsNamespace { get; set; }
-        
+
         /// <summary>
         /// Gets or sets the name of the baked profile.
         /// </summary>
         public string Name { get; set; }
-        
+
         /// <summary>
         /// Gets or sets the subfolder (relative to src) in which this profile should be exported.
         /// </summary>
         public string OutputFolder { get; set; }
-        
+
+        /// <summary>
+        /// Gets all of the out-of-the-box-supported bakery info.
+        /// </summary>
         public static List<ProfileBakeryInformation> Default { get; } = new List<ProfileBakeryInformation>()
         {
             GLCore,

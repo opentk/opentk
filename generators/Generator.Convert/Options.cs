@@ -16,7 +16,8 @@ namespace Generator.Convert
         /// </summary>
         [Option
         (
-            'p', "prefix",
+            'p',
+            "prefix",
             HelpText = "The prefix to remove from parsed functions and constants.",
             Default = "gl"
         )]
@@ -27,7 +28,8 @@ namespace Generator.Convert
         /// </summary>
         [Option
         (
-            'o', "output-folder",
+            'o',
+            "output-folder",
             HelpText = "The folder that the profiles should be written to.",
             Required = true
         )]
@@ -39,9 +41,9 @@ namespace Generator.Convert
         /// </summary>
         [Option
         (
-            'i', "input-files",
-            HelpText =
-                "A list of the Khronos XML files to parse into OpenTK XML. Remote resources in the form of URLs are supported.",
+            'i',
+            "input-files",
+            HelpText = "A list of the Khronos XML files to parse into OpenTK XML. HTTP(S) URLs supported.",
             Required = true
         )]
         public IEnumerable<string> InputFiles { get; set; }
@@ -58,7 +60,9 @@ namespace Generator.Convert
         /// </summary>
         [Option
         (
-            'f', "pretty", HelpText = "Indicates that the output files should be pretty printed.",
+            'f',
+            "pretty",
+            HelpText = "Indicates that the output files should be pretty printed.",
             Default = false
         )]
         public bool PrettyPrinted { get; set; } = false;
@@ -68,7 +72,9 @@ namespace Generator.Convert
         /// </summary>
         [Option
         (
-            'k', "preserve", HelpText = "Indicates that the raw (unbaked) API files shouldn't be deleted.",
+            'k',
+            "preserve",
+            HelpText = "Indicates that the raw (unbaked) API files shouldn't be deleted.",
             Default = false
         )]
         public bool PreserveRawAPIs { get; set; } = false;
@@ -78,7 +84,7 @@ namespace Generator.Convert
         /// </summary>
         [Option('t', "typemaps", HelpText = "The paths of the typemaps to use.", Required = false)]
         public IEnumerable<string> Typemap { get; set; }
-        
+
         /// <summary>
         /// Gets a set of usage examples which can be shown to the user.
         /// </summary>
@@ -90,7 +96,7 @@ namespace Generator.Convert
                 yield return new Example
                 (
                     "Converting local files",
-                    new Options {Prefix = "gl", OutputFolder = "Specifications", InputFiles = new[] {"gl.xml"}}
+                    new Options { Prefix = "gl", OutputFolder = "Specifications", InputFiles = new[] { "gl.xml" } }
                 );
 
                 yield return new Example
@@ -101,7 +107,9 @@ namespace Generator.Convert
                         Prefix = "gl",
                         OutputFolder = "Specifications",
                         InputFiles = new[]
-                            {"https://cvs.khronos.org/svn/repos/ogl/trunk/doc/registry/public/api/gl.xml"}
+                        {
+                            "https://raw.githubusercontent.com/KhronosGroup/OpenGL-Registry/master/xml/gl.xml"
+                        }
                     }
                 );
             }

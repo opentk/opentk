@@ -12,17 +12,43 @@ using Formatting = Newtonsoft.Json.Formatting;
 
 namespace Generator.Convert
 {
+    /// <summary>
+    /// A class for reading and creating profiles from XML.
+    /// </summary>
     public class ProfileConstructor : IDisposable
     {
+        /// <summary>
+        /// Gets or sets the input XML files.
+        /// </summary>
         public List<string> InputFiles { get; set; }
+
+        /// <summary>
+        /// Gets or sets the output folder.
+        /// </summary>
         public string OutputFolder { get; set; }
+
+        /// <summary>
+        /// Gets or sets the prefix to be removed from function and enum names.
+        /// </summary>
         public string Prefix { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the JSON should be pretty-printed.
+        /// </summary>
         public bool Pretty { get; set; }
+
+        /// <summary>
+        /// Gets or sets a list of type maps to use.
+        /// </summary>
         public List<Dictionary<string, string>> TypeMaps { get; set; }
 
+        /// <summary>
+        /// Reads and parses the XML input files, and returns the constructed profiles.
+        /// </summary>
+        /// <returns>The profiles constructed from the XML files.</returns>
         public IEnumerable<Profile> ReadProfiles()
         {
-            var parser = new GLXmlParser {Prefix = Prefix};
+            var parser = new GLXmlParser { Prefix = Prefix };
             var sigs = InputFiles.Select(x => parser.Parse(x)).ToList();
 
             // Merge any duplicate enum entries (in case an enum is declared
@@ -32,6 +58,11 @@ namespace Generator.Convert
             return Task.WhenAll(sigs.SelectMany(s => s).Select(ReadProfileAsync)).GetAwaiter().GetResult();
         }
 
+        /// <summary>
+        /// Asynchronously reads a profile from the given XML block.
+        /// </summary>
+        /// <param name="api">The XML block.</param>
+        /// <returns>An asynchronous task.</returns>
         private Task<Profile> ReadProfileAsync(XElement api)
         {
             var profile = new Profile
@@ -53,6 +84,9 @@ namespace Generator.Convert
             return Task.FromResult(profile);
         }
 
+        /// <summary>
+        /// Reads and constructs profiles from the XML files, and writes the resultant profiles to the output folder.
+        /// </summary>
         public void WriteProfiles()
         {
             if (!Directory.Exists(OutputFolder))
@@ -71,10 +105,7 @@ namespace Generator.Convert
                             Path.Combine
                             (
                                 OutputFolder,
-                                "api-" +
-                                profile.Name +
-                                (!string.IsNullOrEmpty(profile.Version) ? "-" + profile.Version : null) +
-                                ".json"
+                                "api-" + profile.Name + (!string.IsNullOrEmpty(profile.Version) ? "-" + profile.Version : null) + ".json"
                             )
                         )
                 )
@@ -88,6 +119,10 @@ namespace Generator.Convert
             }
         }
 
+        /// <summary>
+        /// Sorts enum tokens by their names.
+        /// </summary>
+        /// <param name="entries">The enum tokens to sort.</param>
         private static void SortTokens(Dictionary<string, XElement> entries)
         {
             foreach (var e in entries)
@@ -105,13 +140,18 @@ namespace Generator.Convert
             }
         }
 
+        /// <summary>
+        /// Merges duplicate enum signatures.
+        /// </summary>
+        /// <param name="sigs">The signatures to merge, if duplicates are found.</param>
+        /// <returns>The merged signatures.</returns>
         private static Dictionary<string, XElement> MergeDuplicates(IEnumerable<IEnumerable<XElement>> sigs)
         {
             var entries = new Dictionary<string, XElement>();
             foreach (var e in sigs.SelectMany(s => s))
             {
-                var name = (string)e.Attribute("name") ?? "";
-                var version = (string)e.Attribute("version") ?? "";
+                var name = (string)e.Attribute("name") ?? string.Empty;
+                var version = (string)e.Attribute("version") ?? string.Empty;
                 var key = name + version;
                 if (entries.ContainsKey(key))
                 {
@@ -129,6 +169,7 @@ namespace Generator.Convert
             return entries;
         }
 
+        /// <inheritdoc />
         public void Dispose()
         {
         }

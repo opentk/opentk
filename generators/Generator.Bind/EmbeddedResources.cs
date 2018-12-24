@@ -27,6 +27,12 @@ namespace Generator.Bind
         /// </summary>
         public static string LicenseText => _licenseText.Value;
 
+        /// <summary>
+        /// Gets the specification with the given filename.
+        /// </summary>
+        /// <param name="filename">The file name.</param>
+        /// <param name="contents">The contents of the specification.</param>
+        /// <returns>Whether the operation was successful or not.</returns>
         public static bool TryGetSpecification(string filename, out string contents)
         {
             try

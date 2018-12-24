@@ -21,7 +21,7 @@ namespace Generator.Common.Enums
         /// Gets or sets the name of this enum as defined by the Khronos spec.
         /// </summary>
         public string NativeName { get; set; }
-        
+
         /// <summary>
         /// Gets or sets a list of attributes.
         /// </summary>

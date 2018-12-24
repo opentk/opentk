@@ -8,6 +8,9 @@ using Enum = Generator.Common.Enums.Enum;
 
 namespace Generator.Bind
 {
+    /// <summary>
+    /// Contains methods for writing profiles to disk.
+    /// </summary>
     public static class ProfileWriter
     {
         /// <summary>
@@ -19,10 +22,11 @@ namespace Generator.Bind
         /// The name of the subfolder containing <see cref="Interface"/>s.
         /// </summary>
         public const string InterfacesSubfolder = "Interfaces";
-        
+
         /// <summary>
         /// Asynchronously writes this enum to a file.
         /// </summary>
+        /// <param name="enum">The enum to write.</param>
         /// <param name="file">The file to write to.</param>
         /// <param name="profile">The subsystem containing this enum.</param>
         /// <param name="project">The project containing this enum.</param>
@@ -120,8 +124,8 @@ namespace Generator.Bind
         /// <summary>
         /// Asynchronously writes this project in the given folder, with the given settings and parent subsystem.
         /// </summary>
-        /// <param name="folder">The folder to write this project to.</param>
         /// <param name="project">The project to write.</param>
+        /// <param name="folder">The folder to write this project to.</param>
         /// <param name="profile">The parent subsystem.</param>
         /// <returns>The asynchronous task.</returns>
         public static async Task WriteAsync(this Project project, string folder, Profile profile)
@@ -153,11 +157,13 @@ namespace Generator.Bind
             );
             await Task.WhenAll(interfaceTasks.Concat(enumTasks));
         }
-        
+
         /// <summary>
         /// Asynchronously writes the project file to the given folder.
         /// </summary>
+        /// <param name="project">The project to write.</param>
         /// <param name="folder">The folder that should contain the project file.</param>
+        /// <param name="prof">The parent profile.</param>
         /// <returns>The asynchronous task.</returns>
         private static async Task WriteProjectFileAsync(this Project project, string folder, Profile prof)
         {
@@ -216,6 +222,8 @@ namespace Generator.Bind
         /// <summary>
         /// Asynchronously writes all of the projects, interfaces, and enums to disk.
         /// </summary>
+        /// <param name="profile">The profile containing the profiles, interfaces, and enums.</param>
+        /// <param name="outputFolder">The folder to write to.</param>
         /// <returns>The asynchronous task.</returns>
         public static async Task FlushAsync(this Profile profile, string outputFolder)
         {

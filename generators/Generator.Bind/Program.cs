@@ -2,9 +2,16 @@
 
 namespace Generator.Bind
 {
-    class Program
+    /// <summary>
+    /// The entry point for the bindings writer.
+    /// </summary>
+    public class Program
     {
-        static void Main(string[] args)
+        /// <summary>
+        /// The entry point for the bindings writer.
+        /// </summary>
+        /// <param name="args">The raw command-line arguments.</param>
+        public static void Main(string[] args)
         {
             Console.WriteLine("Hello World!");
         }
