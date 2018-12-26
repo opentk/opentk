@@ -56,9 +56,6 @@ namespace OpenToolkit.Windowing.GraphicsLibraryFramework
         public abstract void WindowHint(WindowHint hint, int value);
 
         /// <inheritdoc />
-        public abstract unsafe string GetWindowTitle(Window* window);
-
-        /// <inheritdoc />
         public abstract unsafe void SetWindowTitle(Window* window, string title);
 
         /// <inheritdoc />

@@ -22,19 +22,16 @@ namespace OpenToolkit.Windowing
         private static GLFW glfw = null;
         private readonly unsafe Window* windowPtr = null;
 
+        private string _title;
+
         public string Title
         {
-            get
-            {
-                unsafe
-                {
-                    return glfw.GetWindowTitle(windowPtr);
-                }
-            }
+            get => _title;
             set
             {
                 unsafe
                 {
+                    _title = value;
                     glfw.SetWindowTitle(windowPtr, value);
                 }
             }
@@ -123,6 +120,7 @@ namespace OpenToolkit.Windowing
                 glfw.Init();
             }
 
+            _title = title;
 
             unsafe
             {

@@ -25,7 +25,6 @@ namespace OpenToolkit.Windowing.GraphicsLibraryFramework.Interfaces
         unsafe Monitor* GetPrimaryMonitor();
         unsafe VideoMode* GetVideoMode(Monitor* monitor);
         unsafe int GetWindowAttrib(Window* window, int attribute);
-        unsafe string GetWindowTitle(Window* window);
         unsafe void HideWindow(Window* window);
         unsafe void SetWindowIcon(Window* window, int count, Image* images);
         unsafe void SetWindowShouldClose(Window* window);
