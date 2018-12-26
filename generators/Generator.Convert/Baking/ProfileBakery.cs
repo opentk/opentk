@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Generator.Common;
-using Generator.Convert.Construction;
 using MoreLinq.Extensions;
 using Newtonsoft.Json;
 
@@ -55,14 +54,6 @@ namespace Generator.Convert.Baking
             profile.Projects["Core"].Enums.AddRange(coreEnums);
             profile.Projects = profile.Projects.Concat(extProjects).ToDictionary();
 
-            // bake in the documentation. we don't do this at the construction stage
-            // because we want to be able to get the latest documentation for functions.
-            DocumentationWriter.Write
-            (
-                profile,
-                DocumentationWriter.GetDocumentation(profile, Program.CliOptions.DocumentationPath)
-            );
-
             // save this to disk
             File.WriteAllText
             (
@@ -79,10 +70,7 @@ namespace Generator.Convert.Baking
         /// <param name="folder">The output folder.</param>
         /// <param name="pretty">Whether the output JSON should be pretty-printed.</param>
         /// <returns>An asynchronous task.</returns>
-        public static async Task BakeAsync
-        (
-            IEnumerable<ProfileBakeryInformation> information, string folder, bool pretty
-        )
+        public static async Task BakeAsync(IEnumerable<ProfileBakeryInformation> information, string folder, bool pretty)
         {
             await Task.WhenAll(information.Select(info => BakeAsync(info, folder, pretty)));
         }

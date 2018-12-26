@@ -34,24 +34,21 @@ namespace Generator.Common.Functions
         /// <summary>
         /// Gets or sets the parameters of the function.
         /// </summary>
-        [NotNull]
-        [ItemNotNull]
+        [NotNull, ItemNotNull]
         public List<Parameter> Parameters { get; set; } = new List<Parameter>();
 
         /// <summary>
         /// Gets or sets the categories in which this function falls under.
         /// </summary>
-        [NotNull]
-        [ItemNotNull]
-        [JsonIgnore]
+        [NotNull, ItemNotNull, JsonIgnore]
         public string[] Categories { get; set; }
 
         /// <summary>
         /// Gets or sets the generic type parameters of the function.
         /// </summary>
-        [NotNull]
-        [ItemNotNull]
-        public List<GenericTypeParameter> GenericTypeParameters { get; set; } = new List<GenericTypeParameter>();
+        [NotNull, ItemNotNull]
+        public List<GenericTypeParameter> GenericTypeParameters { get; set; } =
+            new List<GenericTypeParameter>();
 
         /// <summary>
         /// Gets or sets a list of attributes to be applied to this function.
