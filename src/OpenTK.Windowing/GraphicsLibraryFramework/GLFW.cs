@@ -41,10 +41,37 @@ namespace OpenToolkit.Windowing.GraphicsLibraryFramework
         public abstract unsafe void DestroyWindow(Window* window);
 
         /// <inheritdoc />
+        public abstract unsafe void FocusWindow(Window* window);
+
+        /// <inheritdoc />
+        public abstract unsafe void HideWindow(Window* window);
+
+        /// <inheritdoc />
         public abstract unsafe VideoMode* GetVideoMode(Monitor* monitor);
 
         /// <inheritdoc />
+        public abstract unsafe int GetWindowAttrib(Window* window, int attribute);
+
+        /// <inheritdoc />
         public abstract void WindowHint(WindowHint hint, int value);
+
+        /// <inheritdoc />
+        public abstract unsafe string GetWindowTitle(Window* window);
+
+        /// <inheritdoc />
+        public abstract unsafe void SetWindowTitle(Window* window, string title);
+
+        /// <inheritdoc />
+        public abstract unsafe int WindowShouldClose(Window* window);
+
+        /// <inheritdoc />
+        public abstract unsafe void ShowWindow(Window* window);
+
+        /// <inheritdoc />
+        public abstract unsafe void SetWindowShouldClose(Window* window);
+
+        /// <inheritdoc />
+        public abstract unsafe void SetWindowIcon(Window* window, int count, Image* images);
 
         /// <summary>
         /// Gets an instance of the API.

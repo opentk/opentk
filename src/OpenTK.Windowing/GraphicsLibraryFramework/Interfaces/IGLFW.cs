@@ -12,7 +12,7 @@ using AdvancedDLSupport;
 namespace OpenToolkit.Windowing.GraphicsLibraryFramework.Interfaces
 {
     /// <summary>
-    /// Defines the public interface of the GLFW 3.2 library
+    ///     Defines the public interface of the GLFW 3.2 library
     /// </summary>
     [NativeSymbols(Prefix = "glfw")]
     internal interface IGLFW
@@ -20,13 +20,18 @@ namespace OpenToolkit.Windowing.GraphicsLibraryFramework.Interfaces
         bool Init();
         void Terminate();
         unsafe Window* CreateWindow(int width, int height, string title, Monitor* monitor, Window* share);
-        unsafe Monitor* GetPrimaryMonitor();
         unsafe void DestroyWindow(Window* window);
+        unsafe void FocusWindow(Window* window);
+        unsafe Monitor* GetPrimaryMonitor();
         unsafe VideoMode* GetVideoMode(Monitor* monitor);
+        unsafe int GetWindowAttrib(Window* window, int attribute);
+        unsafe string GetWindowTitle(Window* window);
+        unsafe void HideWindow(Window* window);
+        unsafe void SetWindowIcon(Window* window, int count, Image* images);
+        unsafe void SetWindowShouldClose(Window* window);
+        unsafe void SetWindowTitle(Window* window, string title);
+        unsafe void ShowWindow(Window* window);
         void WindowHint(WindowHint hint, int value);
         unsafe int WindowShouldClose(Window* window);
-        unsafe void SetWindowShouldClose(Window* window);
-        unsafe void SetWindowTitle(Window* window);
-        unsafe void SetWindowIcon(Window* window, int count, Image* images);
     }
 }

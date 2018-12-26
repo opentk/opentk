@@ -22,13 +22,80 @@ namespace OpenToolkit.Windowing
         private static GLFW glfw = null;
         private readonly unsafe Window* windowPtr = null;
 
-        public string Title { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public string Title
+        {
+            get
+            {
+                unsafe
+                {
+                    return glfw.GetWindowTitle(windowPtr);
+                }
+            }
+            set
+            {
+                unsafe
+                {
+                    glfw.SetWindowTitle(windowPtr, value);
+                }
+            }
+        }
 
-        public bool Focused => throw new NotImplementedException();
+        public bool Focused
+        {
+            get
+            {
+                unsafe
+                {
+                    return glfw.GetWindowAttrib(windowPtr, (int)WindowHint.GLFW_FOCUSED) != 0;
+                }
+            }
+            set
+            {
+                unsafe
+                {
+                    if (value)
+                    {
+                        glfw.FocusWindow(windowPtr);
+                    }
+                }
+            }
+        }
 
-        public bool Visible { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public bool Visible
+        {
+            get
+            {
+                unsafe
+                {
+                    return glfw.GetWindowAttrib(windowPtr, (int)WindowHint.GLFW_VISIBLE) != 0;
+                }
+            }
+            set
+            {
+                if (value)
+                {
+                    unsafe
+                    {
+                        glfw.ShowWindow(windowPtr);
+                    }
+                }
+                else
+                {
+                    unsafe
+                    {
+                        glfw.HideWindow(windowPtr);
+                    }
+                }
+            }
+        }
 
-        public bool Exists => throw new NotImplementedException();
+        public bool Exists
+        {
+            get
+            {
+                unsafe { return windowPtr != null; }
+            }
+        }
 
         public IWindowInfo WindowInfo => throw new NotImplementedException();
 
