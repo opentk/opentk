@@ -343,7 +343,7 @@ namespace Generator.Convert.XML
         /// <returns>Friendlier representations of the function signatures contained within the document.</returns>
         private IEnumerable<XElement> ParseFunctions(XDocument input)
         {
-            //  Go through the list of commands and build OpenTK functions out of those.
+            // Go through the list of commands and build OpenTK functions out of those.
             // Every function has a number of attributes that define which API version and
             // category (see above) they belong to.
             // It also includes information about the return type and parameters. These
@@ -589,7 +589,6 @@ namespace Generator.Convert.XML
             //   -> <param name="shadertype" type="GLenum" />
             // - <param len="1"><ptype>GLsizei</ptype> *<name>length</name></param>
             //   -> <param name="length" type="GLsizei" count="1" />
-
             var proto = e.Value;
             var name = e.Element("name").Value;
             var group = e.Attribute("group");

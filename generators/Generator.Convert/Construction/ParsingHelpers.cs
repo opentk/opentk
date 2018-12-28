@@ -207,7 +207,7 @@ namespace Generator.Convert.Construction
         }
 
         /// <summary>
-        /// Parses a <see cref="CountSignature"/> from a raw string.
+        /// Parses a <see cref="Count"/> from a raw string.
         /// </summary>
         /// <param name="countData">The raw count string.</param>
         /// <param name="hasComputedCount">Whether or not the signature has a computed count.</param>

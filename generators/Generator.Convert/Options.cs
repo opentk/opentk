@@ -114,5 +114,11 @@ namespace Generator.Convert
                 );
             }
         }
+
+        /// <summary>
+        /// Gets or sets the folder in which a docs.gl clone is contained.
+        /// </summary>
+        [Option('d', "docs", HelpText = "The folder in which a docs.gl clone is contained.", Required = false)]
+        public string DocumentationFolder { get; set; }
     }
 }

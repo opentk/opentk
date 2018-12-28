@@ -4,6 +4,10 @@
     <AssemblyName>Convert</AssemblyName>
     <TargetFrameworks>net461</TargetFrameworks>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net461|AnyCPU'">
+    <WarningLevel>3</WarningLevel>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+  </PropertyGroup>
 
   <ItemGroup>
     <ProjectReference Include="../Generator.Common/Generator.Common.csproj" />
@@ -11,6 +15,10 @@
 
   <ItemGroup>
     <Folder Include="Docs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="HtmlAgilityPack" Version="1.8.11" />
   </ItemGroup>
 
   <Import Project="..\..\props\common.props" />

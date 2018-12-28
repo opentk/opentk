@@ -1,3 +1,5 @@
+using MoreLinq.Extensions;
+
 namespace Generator.Common.Functions
 {
     /// <summary>
@@ -29,5 +31,13 @@ namespace Generator.Common.Functions
         /// Gets or sets the name of this type.
         /// </summary>
         public string Name { get; set; }
+
+        /// <inheritdoc />
+        public override string ToString()
+        {
+            return Name +
+                   (IsPointer ? new string('*', IndirectionLevels) : string.Empty) +
+                   (IsArray ? "[]".Repeat(ArrayDimensions) : string.Empty);
+        }
     }
 }

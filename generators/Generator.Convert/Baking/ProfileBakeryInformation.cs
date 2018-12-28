@@ -58,6 +58,7 @@ namespace Generator.Convert.Baking
             .WithName("GLSC")
             .WithOutputFolder("OpenGL")
             .Result;
+
         // ReSharper restore InconsistentNaming
 
         /// <summary>

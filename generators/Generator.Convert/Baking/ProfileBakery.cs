@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Generator.Common;
+using Generator.Convert.Documentation;
 using MoreLinq.Extensions;
 using Newtonsoft.Json;
 
@@ -53,6 +54,12 @@ namespace Generator.Convert.Baking
             profile.Projects["Core"].Interfaces = profile.Projects["Core"].Interfaces.Concat(coreFunc).ToDictionary();
             profile.Projects["Core"].Enums.AddRange(coreEnums);
             profile.Projects = profile.Projects.Concat(extProjects).ToDictionary();
+
+            // bake in the documentation
+            if (!string.IsNullOrWhiteSpace(Program.CliOptions.DocumentationFolder))
+            {
+                DocumentationWriter.Write(profile, Program.CliOptions.DocumentationFolder);
+            }
 
             // save this to disk
             File.WriteAllText
