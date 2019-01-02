@@ -7,6 +7,7 @@
 // of the MIT license. See the LICENSE file for details.
 //
 
+// TODO: Need to create WindowAttrib enum and see if any need duplicate/moved to that one since there is a syntactic difference
 namespace OpenToolkit.Windowing.GraphicsLibraryFramework.Enums
 {
     public enum WindowHint
