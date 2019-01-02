@@ -19,7 +19,7 @@ namespace OpenToolkit.Windowing
 {
     public class NativeWindow : INativeWindow
     {
-        private static GLFW glfw = null;
+        private static GLFW glfw => GLFWProvider.GLFW;
         private readonly unsafe Window* windowPtr = null;
 
         private string _title;
@@ -114,12 +114,8 @@ namespace OpenToolkit.Windowing
 
         public NativeWindow(int width = 640, int height = 480, string title = "", bool windowedFullscreen = false)
         {
-            if (glfw == null)
             {
-                glfw = GLFW.GetAPI();
-                glfw.Init();
             }
-
             _title = title;
 
             unsafe
