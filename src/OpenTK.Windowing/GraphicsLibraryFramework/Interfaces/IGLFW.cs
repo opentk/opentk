@@ -9,7 +9,6 @@
 
 using System;
 using AdvancedDLSupport;
-using OpenToolkit.Windowing.GraphicsLibraryFramework.Enums;
 
 namespace OpenToolkit.Windowing.GraphicsLibraryFramework.Interfaces
 {

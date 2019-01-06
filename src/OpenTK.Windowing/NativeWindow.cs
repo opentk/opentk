@@ -12,7 +12,6 @@ using System.ComponentModel;
 using System.Drawing;
 using OpenToolkit.Windowing.EventingModels;
 using OpenToolkit.Windowing.GraphicsLibraryFramework;
-using OpenToolkit.Windowing.GraphicsLibraryFramework.Enums;
 using OpenToolkit.Windowing.Input;
 using OpenToolkit.Windowing.Interfaces;
 
@@ -38,17 +37,14 @@ namespace OpenToolkit.Windowing
             }
         }
 
-        public bool Focused
+        public unsafe bool Focused
         {
-            get { unsafe { return glfw.GetWindowAttrib(windowPtr, (int)WindowHint.GLFW_FOCUSED) != 0; } }
+            get => glfw.GetWindowAttrib(windowPtr, (int)WindowHint.Focused) != 0;
             set
             {
-                unsafe
+                if (value)
                 {
-                    if (value)
-                    {
-                        glfw.FocusWindow(windowPtr);
-                    }
+                    glfw.FocusWindow(windowPtr);
                 }
             }
         }
@@ -57,7 +53,7 @@ namespace OpenToolkit.Windowing
         {
             get
             {
-                unsafe { return glfw.GetWindowAttrib(windowPtr, (int)WindowHint.GLFW_VISIBLE) != 0; }
+                unsafe { return glfw.GetWindowAttrib(windowPtr, (int)WindowHint.Visible) != 0; }
             }
             set
             {
@@ -86,7 +82,7 @@ namespace OpenToolkit.Windowing
             {
                 unsafe
                 {
-                    if (glfw.GetWindowAttrib(windowPtr, (int)WindowHint.GLFW_ICONIFIED) == 1)
+                    if (glfw.GetWindowAttrib(windowPtr, (int)WindowHint.Iconified) == 1)
                     {
                         return WindowState.Minimized;
                     }
@@ -141,11 +137,11 @@ namespace OpenToolkit.Windowing
             {
                 unsafe
                 {
-                    if (glfw.GetWindowAttrib(windowPtr, (int)WindowHint.GLFW_DECORATED) == 0)
+                    if (glfw.GetWindowAttrib(windowPtr, (int)WindowHint.Decorated) == 0)
                     {
                         return WindowBorder.Hidden;
                     }
-                    else if (glfw.GetWindowAttrib(windowPtr, (int)WindowHint.GLFW_RESIZABLE) == 0)
+                    else if (glfw.GetWindowAttrib(windowPtr, (int)WindowHint.Resizable) == 0)
                     {
                         return WindowBorder.Fixed;
                     }
@@ -244,9 +240,9 @@ namespace OpenToolkit.Windowing
             {
                 unsafe
                 {
-                    return glfw.GetInputMode(windowPtr, InputMode.GLFW_CURSOR) == InputModeValue.GLFW_CURSOR_HIDDEN
-                           || glfw.GetInputMode(windowPtr, InputMode.GLFW_CURSOR) ==
-                           InputModeValue.GLFW_CURSOR_DISABLED;
+                    return glfw.GetInputMode(windowPtr, InputMode.Cursor) == InputModeValue.CursorHidden
+                           || glfw.GetInputMode(windowPtr, InputMode.Cursor) ==
+                           InputModeValue.CursorDisabled;
                 }
             }
             set
@@ -256,11 +252,11 @@ namespace OpenToolkit.Windowing
                 {
                     if (value)
                     {
-                        glfw.SetInputMode(windowPtr, InputMode.GLFW_CURSOR, InputModeValue.GLFW_CURSOR_HIDDEN);
+                        glfw.SetInputMode(windowPtr, InputMode.Cursor, InputModeValue.CursorHidden);
                     }
                     else
                     {
-                        glfw.SetInputMode(windowPtr, InputMode.GLFW_CURSOR, InputModeValue.GLFW_CURSOR_NORMAL);
+                        glfw.SetInputMode(windowPtr, InputMode.Cursor, InputModeValue.CursorNormal);
                     }
                 }
             }
@@ -268,22 +264,22 @@ namespace OpenToolkit.Windowing
 
         public bool CursorGrabbed
         {
-            get { unsafe { return glfw.GetInputMode(windowPtr, InputMode.GLFW_CURSOR) == InputModeValue.GLFW_CURSOR_DISABLED; } }
+            get { unsafe { return glfw.GetInputMode(windowPtr, InputMode.Cursor) == InputModeValue.CursorDisabled; } }
             set
             {
                 unsafe
                 {
                     if (value)
                     {
-                        glfw.SetInputMode(windowPtr, InputMode.GLFW_CURSOR, InputModeValue.GLFW_CURSOR_DISABLED);
+                        glfw.SetInputMode(windowPtr, InputMode.Cursor, InputModeValue.CursorDisabled);
                     }
                     else if (_cursorHidden)
                     {
-                        glfw.SetInputMode(windowPtr, InputMode.GLFW_CURSOR, InputModeValue.GLFW_CURSOR_HIDDEN);
+                        glfw.SetInputMode(windowPtr, InputMode.Cursor, InputModeValue.CursorHidden);
                     }
                     else
                     {
-                        glfw.SetInputMode(windowPtr, InputMode.GLFW_CURSOR, InputModeValue.GLFW_CURSOR_NORMAL);
+                        glfw.SetInputMode(windowPtr, InputMode.Cursor, InputModeValue.CursorNormal);
                     }
                 }
             }
@@ -300,10 +296,10 @@ namespace OpenToolkit.Windowing
                 if (windowedFullscreen)
                 {
                     var modePtr = glfw.GetVideoMode(monitor);
-                    glfw.WindowHint(WindowHint.GLFW_RED_BITS, modePtr->redBits);
-                    glfw.WindowHint(WindowHint.GLFW_GREEN_BITS, modePtr->greenBits);
-                    glfw.WindowHint(WindowHint.GLFW_BLUE_BITS, modePtr->blueBits);
-                    glfw.WindowHint(WindowHint.GLFW_REFRESH_RATE, modePtr->refreshRate);
+                    glfw.WindowHint(WindowHint.RedBits, modePtr->redBits);
+                    glfw.WindowHint(WindowHint.GreenBits, modePtr->greenBits);
+                    glfw.WindowHint(WindowHint.BlueBits, modePtr->blueBits);
+                    glfw.WindowHint(WindowHint.RefreshRate, modePtr->refreshRate);
                     windowPtr = glfw.CreateWindow(modePtr->width, modePtr->height, title, monitor, null);
                 }
                 else
