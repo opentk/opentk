@@ -88,13 +88,56 @@ namespace OpenToolkit.Windowing.GraphicsLibraryFramework
         public abstract unsafe int WindowShouldClose(Window* window);
 
         /// <inheritdoc />
+        public abstract unsafe void SetCharCallback(Window* window, Action<Window, int> callback);
+
+        /// <inheritdoc />
+        public abstract unsafe void SetCharModsCallback(Window* window, Action<Window, int, int> callback);
+
+        /// <inheritdoc />
+        public abstract unsafe void SetCursorEnterCallback(Window* window, Action<Window, bool> callback);
+
+        /// <inheritdoc />
+        public abstract unsafe void SetCursorPosCallback(Window* window, Action<Window, int, int> callback);
+
+        /// <inheritdoc />
+        public abstract unsafe void SetDropCallback(Window* window, Action<Window, int, string[]> callback);
+
+        /// <inheritdoc />
         public abstract unsafe void SetErrorCallback(Action<int, string> callback);
 
         /// <inheritdoc />
         public abstract unsafe void SetInputMode(Window* window, InputMode mode, InputModeValue value);
 
         /// <inheritdoc />
+        public abstract unsafe void SetJoystickCallback(Action<int, int> callback);
+
+        /// <inheritdoc />
+        public abstract unsafe void SetKeyCallback(Window* window, Action<Window, int, int, InputAction, int> callback);
+
+        /// <inheritdoc />
+        public abstract unsafe void SetScrollCallback(Window* window, Action<Window, int, int> callback);
+
+        /// <inheritdoc />
+        public abstract unsafe void SetMonitorCallback(Action<Monitor, int> callback);
+
+        /// <inheritdoc />
+        public abstract unsafe void SetMouseButtonCallback(Window* window, Action<Window, int, InputAction, int> callback);
+
+        /// <inheritdoc />
+        public abstract unsafe void SetWindowCloseCallback(Window* window, Action<Window> callback);
+
+        /// <inheritdoc />
+        public abstract unsafe void SetWindowFocusCallback(Window* window, Action<Window, bool> callback);
+
+        /// <inheritdoc />
+        public abstract unsafe void SetWindowIcon(Window* window, int count, Image* images);
+
+        /// <inheritdoc />
+        public abstract unsafe void SetWindowIconifyCallback(Window* window, Action<Window, bool> callback);
+
+        /// <inheritdoc />
         public abstract unsafe void SetWindowTitle(Window* window, string title);
+
         /// <inheritdoc />
         public abstract unsafe void ShowWindow(Window* window);
 
@@ -102,16 +145,19 @@ namespace OpenToolkit.Windowing.GraphicsLibraryFramework
         public abstract unsafe void SetWindowSize(Window* window, int width, int height);
 
         /// <inheritdoc />
-        public abstract unsafe void SetWindowShouldClose(Window* window);
+        public abstract unsafe void SetWindowSizeCallback(Window* window, Action<int, int> callback);
 
         /// <inheritdoc />
-        public abstract unsafe void SetWindowIcon(Window* window, int count, Image* images);
+        public abstract unsafe void SetWindowShouldClose(Window* window);
 
         /// <inheritdoc />
         public abstract unsafe void SetWindowMonitor(Window* window, Monitor* monitor, int x, int y, int width, int height, int refreshRate);
 
         /// <inheritdoc />
         public abstract unsafe void SetWindowPos(Window* window, int x, int y);
+
+        /// <inheritdoc />
+        public abstract unsafe void SetWindowPosCallback(Window* window, Action<Window, int, int> callback);
 
         /// <summary>
         /// Gets an instance of the API.

@@ -34,6 +34,8 @@ namespace OpenToolkit.Windowing
                     _title = value;
                     glfw.SetWindowTitle(windowPtr, value);
                 }
+
+                TitleChanged.Invoke(this, EventArgs.Empty);
             }
         }
 
@@ -65,6 +67,7 @@ namespace OpenToolkit.Windowing
                 {
                     unsafe { glfw.HideWindow(windowPtr); }
                 }
+                VisibleChanged.Invoke(this, EventArgs.Empty);
             }
         }
 
@@ -306,6 +309,64 @@ namespace OpenToolkit.Windowing
                 {
                     windowPtr = glfw.CreateWindow(width, height, title, null, null);
                 }
+
+                RegisterWindowCallbacks();
+                Load.Invoke(this, EventArgs.Empty);
+            }
+        }
+
+        private void RegisterWindowCallbacks()
+        {
+            unsafe
+            {
+                glfw.SetWindowPosCallback(windowPtr, (window, x, y) => Move.Invoke(this, EventArgs.Empty));
+                glfw.SetWindowSizeCallback(windowPtr, (width, height) => Resize.Invoke(this, EventArgs.Empty));
+                glfw.SetWindowCloseCallback(windowPtr, (window) => Closing.Invoke(this, new CancelEventArgs()));
+                glfw.SetWindowIconifyCallback(windowPtr, (window, iconified) => IconChanged.Invoke(this, EventArgs.Empty));
+                glfw.SetWindowFocusCallback(windowPtr, (window, focused) => FocusedChanged.Invoke(this, EventArgs.Empty));
+                glfw.SetCharCallback(windowPtr, (window, codepoint) => KeyPress.Invoke(this, new KeyPressEventArgs((char)codepoint)));
+                glfw.SetKeyCallback(windowPtr, (window, key, scancode, action, mods) =>
+                {
+                    if (action == InputAction.Press)
+                    {
+                        KeyDown.Invoke(this, new KeyboardKeyEventArgs());
+                    }
+                    else if (action == InputAction.Release)
+                    {
+                        KeyUp.Invoke(this, new KeyboardKeyEventArgs());
+                    }
+                });
+                glfw.SetCursorEnterCallback(windowPtr, (window, entered) =>
+                {
+                    if (entered)
+                    {
+                        MouseEnter.Invoke(this, EventArgs.Empty);
+                    }
+                    else
+                    {
+                        MouseLeave.Invoke(this, EventArgs.Empty);
+                    }
+                });
+                glfw.SetMouseButtonCallback(windowPtr, (window, button, action, mods) =>
+                {
+                    if (action == InputAction.Press)
+                    {
+                        MouseDown.Invoke(this, new MouseButtonEventArgs());
+                    }
+                    else if (action == InputAction.Release)
+                    {
+                        MouseUp.Invoke(this, new MouseButtonEventArgs());
+                    }
+
+                });
+                glfw.SetCursorPosCallback(windowPtr, (window, xpos, ypos) => MouseMove.Invoke(this, new MouseMoveEventArgs()));
+                glfw.SetScrollCallback(windowPtr, (window, xOffset, yOffset) => MouseWheel.Invoke(this, new MouseWheelEventArgs()));
+                glfw.SetDropCallback(windowPtr, (window, count, paths) => FileDrop.Invoke(this, new FileDropEventArgs()));
+
+                //TODO: Events from GLFW the 'legacy' NativeWindow didnt have events for.
+                glfw.SetCharModsCallback(windowPtr, (window, codepoint, mods) => throw new NotImplementedException());
+                glfw.SetJoystickCallback((joy, eventCode) => throw new NotImplementedException());
+                glfw.SetMonitorCallback((monitor, eventCode) => throw new NotImplementedException());
             }
         }
 
@@ -354,6 +415,7 @@ namespace OpenToolkit.Windowing
         {
             if (!disposedValue)
             {
+                Unload.Invoke(this, EventArgs.Empty);
                 if (disposing)
                 {
                     // Free managed resources
@@ -365,11 +427,12 @@ namespace OpenToolkit.Windowing
                     if (windowPtr != null)
                     {
                         glfw.DestroyWindow(windowPtr);
+                        Closed.Invoke(this, EventArgs.Empty);
                     }
                 }
-                glfw.Terminate();
 
                 disposedValue = true;
+                Disposed.Invoke(this, EventArgs.Empty);
             }
         }
 

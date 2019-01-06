@@ -36,12 +36,27 @@ namespace OpenToolkit.Windowing.GraphicsLibraryFramework.Interfaces
         unsafe void MakeContextCurrent(Window* window);
         unsafe void MaximizeWindow(Window* window);
         unsafe void RestoreWindow(Window* window);
-        unsafe void SetErrorCallback(Action<int, string> callback);
+        unsafe void SetCharCallback(Window* window, Action<Window, int> callback); //TODO: Make enum for int param in callback
+        unsafe void SetCharModsCallback(Window* window, Action<Window, int, int> callback); //TODO: Make enums for int params in callback
+        unsafe void SetCursorEnterCallback(Window* window, Action<Window, bool> callback);
+        unsafe void SetCursorPosCallback(Window* window, Action<Window, int, int> callback); //TODO: Make enums for int params in callback
+        unsafe void SetDropCallback(Window* window, Action<Window, int, string[]> callback); //TODO: Make enum for int param in callback
+        unsafe void SetErrorCallback(Action<int, string> callback); //TODO: Make enum for int param in callback
         unsafe void SetInputMode(Window* window, InputMode mode, InputModeValue value);
+        unsafe void SetJoystickCallback(Action<int, int> callback);
+        unsafe void SetKeyCallback(Window* window, Action<Window, int, int, InputAction, int> callback); //TODO: Make enums for int params in callback
+        unsafe void SetScrollCallback(Window* window, Action<Window, int, int> callback); //TODO: Make enums for int params in callback
+        unsafe void SetMonitorCallback(Action<Monitor, int> callback); //TODO: Make enum for int param in callback
+        unsafe void SetMouseButtonCallback(Window* window, Action<Window, int, InputAction, int> callback); //TODO: Make enums for int params in callback
+        unsafe void SetWindowCloseCallback(Window* window, Action<Window> callback);
+        unsafe void SetWindowFocusCallback(Window* window, Action<Window, bool> callback);
         unsafe void SetWindowIcon(Window* window, int count, Image* images);
+        unsafe void SetWindowIconifyCallback(Window* window, Action<Window, bool> callback);
         unsafe void SetWindowMonitor(Window* window, Monitor* monitor, int x, int y, int width, int height, int refreshRate);
         unsafe void SetWindowPos(Window* window, int x, int y);
+        unsafe void SetWindowPosCallback(Window* window, Action<Window, int, int> callback); //TODO: Make enums for int params in callback
         unsafe void SetWindowSize(Window* window, int width, int height);
+        unsafe void SetWindowSizeCallback(Window* window, Action<int, int> callback); //TODO: Make enums for int params in callback
         unsafe void SetWindowShouldClose(Window* window);
         unsafe void SetWindowTitle(Window* window, string title);
         unsafe void ShowWindow(Window* window);
