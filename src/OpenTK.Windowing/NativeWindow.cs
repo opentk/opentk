@@ -157,6 +157,7 @@ namespace OpenToolkit.Windowing
             set
             {
                 throw new NotImplementedException("Requires recreating the window with different window hints https://www.glfw.org/docs/latest/window_guide.html#window_attribs");
+                WindowBorderChanged.Invoke(this, EventArgs.Empty);
             }
         }
 
@@ -175,6 +176,7 @@ namespace OpenToolkit.Windowing
                 }
             }
         }
+
         public Point Location
         {
             get
@@ -185,6 +187,7 @@ namespace OpenToolkit.Windowing
             }
             set { unsafe { glfw.SetWindowPos(windowPtr, value.X, value.Y); } }
         }
+
         public Size Size
         {
             get
@@ -195,27 +198,36 @@ namespace OpenToolkit.Windowing
             }
             set { unsafe { glfw.SetWindowSize(windowPtr, value.Width, value.Height); } }
         }
+
         public int X
         {
             get { return Location.X; }
             set { Location = new Point(value, Location.Y); }
         }
+
         public int Y
         {
             get { return Location.Y; }
             set { Location = new Point(Location.X, value); }
         }
+
         public int Width
         {
             get { return Size.Width; }
             set { Size = new Size(value, Size.Height); }
         }
+
         public int Height
         {
             get { return Size.Height; }
             set { Size = new Size(Size.Width, value); }
         }
-        public Rectangle ClientRectangle { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
+        public Rectangle ClientRectangle
+        {
+            get => throw new NotImplementedException();
+            set => throw new NotImplementedException();
+        }
 
         public Size ClientSize
         {
@@ -267,25 +279,22 @@ namespace OpenToolkit.Windowing
             }
         }
 
-        public bool CursorGrabbed
+        public unsafe bool CursorGrabbed
         {
-            get { unsafe { return glfw.GetInputMode(windowPtr, InputMode.Cursor) == InputModeValue.CursorDisabled; } }
+            get => glfw.GetInputMode(windowPtr, InputMode.Cursor) == InputModeValue.CursorDisabled;
             set
             {
-                unsafe
+                if (value)
                 {
-                    if (value)
-                    {
-                        glfw.SetInputMode(windowPtr, InputMode.Cursor, InputModeValue.CursorDisabled);
-                    }
-                    else if (_cursorHidden)
-                    {
-                        glfw.SetInputMode(windowPtr, InputMode.Cursor, InputModeValue.CursorHidden);
-                    }
-                    else
-                    {
-                        glfw.SetInputMode(windowPtr, InputMode.Cursor, InputModeValue.CursorNormal);
-                    }
+                    glfw.SetInputMode(windowPtr, InputMode.Cursor, InputModeValue.CursorDisabled);
+                }
+                else if (_cursorHidden)
+                {
+                    glfw.SetInputMode(windowPtr, InputMode.Cursor, InputModeValue.CursorHidden);
+                }
+                else
+                {
+                    glfw.SetInputMode(windowPtr, InputMode.Cursor, InputModeValue.CursorNormal);
                 }
             }
         }
