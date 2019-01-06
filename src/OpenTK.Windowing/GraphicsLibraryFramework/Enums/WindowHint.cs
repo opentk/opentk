@@ -8,46 +8,47 @@
 //
 
 // TODO: Need to create WindowAttrib enum and see if any need duplicate/moved to that one since there is a syntactic difference
-namespace OpenToolkit.Windowing.GraphicsLibraryFramework.Enums
+// TODO: Confirm which of these (if not all) are flags so the containing enum can be appropriately attributed
+namespace OpenToolkit.Windowing.GraphicsLibraryFramework
 {
     public enum WindowHint
     {
-        GLFW_FOCUSED = 0x00020001,
-        GLFW_ICONIFIED = 0x00020002,
-        GLFW_RESIZABLE = 0x00020003,
-        GLFW_VISIBLE = 0x00020004,
-        GLFW_DECORATED = 0x00020005,
-        GLFW_AUTO_ICONIFY = 0x00020006,
-        GLFW_FLOATING = 0x00020007,
-        GLFW_MAXIMIZED = 0x00020008,
+        Focused = 0x00020001,
+        Iconified = 0x00020002,
+        Resizable = 0x00020003,
+        Visible = 0x00020004,
+        Decorated = 0x00020005,
+        AutoIconify = 0x00020006,
+        Floating = 0x00020007,
+        Maximized = 0x00020008,
 
-        GLFW_RED_BITS = 0x00021001,
-        GLFW_GREEN_BITS = 0x00021002,
-        GLFW_BLUE_BITS = 0x00021003,
-        GLFW_ALPHA_BITS = 0x00021004,
-        GLFW_DEPTH_BITS = 0x00021005,
-        GLFW_STENCIL_BITS = 0x00021006,
-        GLFW_ACCUM_RED_BITS = 0x00021007,
-        GLFW_ACCUM_GREEN_BITS = 0x00021008,
-        GLFW_ACCUM_BLUE_BITS = 0x00021009,
-        GLFW_ACCUM_ALPHA_BITS = 0x0002100A,
-        GLFW_AUX_BUFFERS = 0x0002100B,
-        GLFW_STEREO = 0x0002100C,
-        GLFW_SAMPLES = 0x0002100D,
-        GLFW_SRGB_CAPABLE = 0x0002100E,
-        GLFW_REFRESH_RATE = 0x0002100F,
-        GLFW_DOUBLEBUFFER = 0x00021010,
+        RedBits = 0x00021001,
+        GreenBits = 0x00021002,
+        BlueBits = 0x00021003,
+        AlphaBits = 0x00021004,
+        DepthBits = 0x00021005,
+        StencilBits = 0x00021006,
+        AccumRedBits = 0x00021007,
+        AccumGreenBits = 0x00021008,
+        AccumBlueBits = 0x00021009,
+        AccumAlphaBits = 0x0002100A,
+        AuxBuffers = 0x0002100B,
+        Stereo = 0x0002100C,
+        Samples = 0x0002100D,
+        SrgbCapable = 0x0002100E,
+        RefreshRate = 0x0002100F,
+        DoubleBuffer = 0x00021010,
 
-        GLFW_CLIENT_API = 0x00022001,
-        GLFW_CONTEXT_VERSION_MAJOR = 0x00022002,
-        GLFW_CONTEXT_VERSION_MINOR = 0x00022003,
-        GLFW_CONTEXT_REVISION = 0x00022004,
-        GLFW_CONTEXT_ROBUSTNESS = 0x00022005,
-        GLFW_OPENGL_FORWARD_COMPAT = 0x00022006,
-        GLFW_OPENGL_DEBUG_CONTEXT = 0x00022007,
-        GLFW_OPENGL_PROFILE = 0x00022008,
-        GLFW_CONTEXT_RELEASE_BEHAVIOR = 0x00022009,
-        GLFW_CONTEXT_NO_ERROR = 0x0002200A,
-        GLFW_CONTEXT_CREATION_API = 0x0002200B
+        ClientApi = 0x00022001,
+        ContextVersionMajor = 0x00022002,
+        ContextVersionMinor = 0x00022003,
+        ContextRevision = 0x00022004,
+        ContextRobustness = 0x00022005,
+        OpenGLForwardCompat = 0x00022006,
+        OpenGLDebugContext = 0x00022007,
+        OpenGLProfile = 0x00022008,
+        ContextReleaseBehavior = 0x00022009,
+        ContextNoError = 0x0002200A,
+        ContextCreationApi = 0x0002200B
     }
 }
