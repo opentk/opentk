@@ -1,5 +1,5 @@
 ﻿//
-// GameWindow.cs
+// NativeWindow.cs
 //
 // Copyright (C) 2018 OpenTK
 //
@@ -106,31 +106,33 @@ namespace OpenToolkit.Windowing
                             return WindowState.Maximized;
                         }
                     }
-                    return WindowState.Normal;
                 }
+                return WindowState.Normal;
             }
             set
             {
-                switch (value)
+                unsafe
                 {
-                    case WindowState.Normal:
-                        unsafe { glfw.RestoreWindow(windowPtr); }
-                        break;
-                    case WindowState.Minimized:
-                        unsafe { glfw.IconifyWindow(windowPtr); }
-                        break;
-                    case WindowState.Maximized:
-                        unsafe { glfw.MaximizeWindow(windowPtr); }
-                        break;
-                    case WindowState.Fullscreen:
-                        unsafe
-                        {
+                    switch (value)
+                    {
+                        case WindowState.Normal:
+                            glfw.RestoreWindow(windowPtr);
+                            break;
+                        case WindowState.Minimized:
+                            glfw.IconifyWindow(windowPtr);
+                            break;
+                        case WindowState.Maximized:
+                            glfw.MaximizeWindow(windowPtr);
+                            break;
+                        case WindowState.Fullscreen:
                             var monitor = glfw.GetPrimaryMonitor();
                             var mode = glfw.GetVideoMode(monitor);
                             glfw.SetWindowMonitor(windowPtr, monitor, 0, 0, mode->width, mode->height, mode->refreshRate);
-                        }
-                        break;
+                            break;
+                    }
                 }
+
+                WindowStateChanged.Invoke(this, EventArgs.Empty);
             }
         }
 
