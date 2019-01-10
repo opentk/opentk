@@ -5,7 +5,7 @@ OpenTK is a large project. There are many components to work on, and we'd welcom
 
 We have a very active discord server, if you need help, want to help, or are just curious, come join us!
 
-[![Discord](https://discordapp.com/api/guilds/337627185248468993/widget.png)](https://discord.gg/GZTYR4s)
+[![Discord](https://discordapp.com/api/guilds/337627185248468993/widget.png)](https://discord.gg/6HqD48s)
 
 The Open Toolkit library is a fast, low-level C# binding for OpenGL, OpenGL ES and OpenAL. It runs on all major platforms and powers hundreds of apps, games and scientific research.
 
