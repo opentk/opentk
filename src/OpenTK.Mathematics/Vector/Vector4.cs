@@ -899,7 +899,7 @@ namespace OpenToolkit.Mathematics
         [XmlIgnore]
         public Vector2 Xy
         {
-            get => new Vector2(X, Y);
+            get => Unsafe.As<Vector4, Vector2>(ref this);
             set
             {
                 X = value.X;
@@ -1067,7 +1067,7 @@ namespace OpenToolkit.Mathematics
         [XmlIgnore]
         public Vector3 Xyz
         {
-            get => new Vector3(X, Y, Z);
+            get => Unsafe.As<Vector4, Vector3>(ref this);
             set
             {
                 X = value.X;
