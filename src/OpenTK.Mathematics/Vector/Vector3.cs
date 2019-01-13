@@ -22,6 +22,7 @@ SOFTWARE.
 
 using System;
 using System.Globalization;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Xml.Serialization;
 
@@ -1200,7 +1201,7 @@ namespace OpenToolkit.Mathematics
         [XmlIgnore]
         public Vector2 Xy
         {
-            get => new Vector2(X, Y);
+            get => Unsafe.As<Vector3, Vector2>(ref this);
             set
             {
                 X = value.X;

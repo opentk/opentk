@@ -22,6 +22,7 @@ SOFTWARE.
 
 using System;
 using System.Globalization;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Xml.Serialization;
 
@@ -1049,7 +1050,7 @@ namespace OpenToolkit.Mathematics
         [XmlIgnore]
         public Vector2d Xy
         {
-            get => new Vector2d(X, Y);
+            get => Unsafe.As<Vector3d, Vector2d>(ref this);
             set
             {
                 X = value.X;

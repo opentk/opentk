@@ -24,6 +24,7 @@ using System;
 using System.Globalization;
 using System.IO;
 using System.Runtime.InteropServices;
+using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
@@ -213,7 +214,7 @@ namespace OpenToolkit.Mathematics
         [XmlIgnore]
         public Vector2h Xy
         {
-            get => new Vector2h(X, Y);
+            get => Unsafe.As<Vector3h, Vector2h>(ref this);
             set
             {
                 X = value.X;

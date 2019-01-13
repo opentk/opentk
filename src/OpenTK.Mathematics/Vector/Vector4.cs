@@ -899,7 +899,7 @@ namespace OpenToolkit.Mathematics
         [XmlIgnore]
         public Vector2 Xy
         {
-            get => new Vector2(X, Y);
+            get => Unsafe.As<Vector4, Vector2>(ref this);
             set
             {
                 X = value.X;
@@ -1067,7 +1067,7 @@ namespace OpenToolkit.Mathematics
         [XmlIgnore]
         public Vector3 Xyz
         {
-            get => new Vector3(X, Y, Z);
+            get => Unsafe.As<Vector4, Vector3>(ref this);
             set
             {
                 X = value.X;
@@ -2042,16 +2042,11 @@ namespace OpenToolkit.Mathematics
         /// Returns this Vector4 as a Color4. The resulting struct will have RGBA mapped to XYZW, in that order.
         /// </summary>
         /// <param name="v">The Vector4 to convert.</param>
-        /// <returns>The Vector4 converted to a Color4.</returns>
+        /// <returns>The Vector4, converted to a Color4.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static explicit operator Color4(Vector4 v)
         {
-            unsafe
-            {
-                // Because these structs are identical on the byte-level (due to the StructLayout above),
-                // we can use pointer-casting to convert this into a Color4, which lets us reinterpret the data instead of copying it to a new struct.
-                return *((Color4*)&v);
-            }
+            return Unsafe.As<Vector4, Color4>(ref v);
         }
 
         private static readonly string ListSeparator = CultureInfo.CurrentCulture.TextInfo.ListSeparator;

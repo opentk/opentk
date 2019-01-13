@@ -23,6 +23,7 @@ SOFTWARE.
 using System;
 using System.Globalization;
 using System.Runtime.InteropServices;
+using System.Runtime.CompilerServices;
 using System.Xml.Serialization;
 
 namespace OpenToolkit.Mathematics
@@ -863,7 +864,7 @@ namespace OpenToolkit.Mathematics
         [XmlIgnore]
         public Vector2d Xy
         {
-            get => new Vector2d(X, Y);
+            get => Unsafe.As<Vector4d, Vector2d>(ref this);
             set
             {
                 X = value.X;
@@ -1031,7 +1032,7 @@ namespace OpenToolkit.Mathematics
         [XmlIgnore]
         public Vector3d Xyz
         {
-            get => new Vector3d(X, Y, Z);
+            get => Unsafe.As<Vector4d, Vector3d>(ref this);
             set
             {
                 X = value.X;
