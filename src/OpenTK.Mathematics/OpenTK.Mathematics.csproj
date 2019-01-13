@@ -9,6 +9,10 @@
     <Version>1.0.0</Version>
     <Description>Mathematical structures and algorithms, provided and used by OpenTK.</Description>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="4.5.2" />
+  </ItemGroup>
   <Import Project="..\..\props\common.props" />
   <Import Project="..\..\props\nuget-common.props" />
   <Import Project="..\..\props\stylecop.props" />
