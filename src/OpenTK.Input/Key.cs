@@ -418,37 +418,6 @@ namespace OpenToolkit.Input
         /// The sleep key.
         /// </summary>
         Sleep,
-        /*LogOff,
-        Help,
-        Undo,
-        Redo,
-        New,
-        Open,
-        Close,
-        Reply,
-        Forward,
-        Send,
-        Spell,
-        Save,
-        Calculator,
-
-        // Folders and applications
-        Documents,
-        Pictures,
-        Music,
-        MediaPlayer,
-        Mail,
-        Browser,
-        Messenger,
-
-        // Multimedia keys
-        Mute,
-        PlayPause,
-        Stop,
-        VolumeUp,
-        VolumeDown,
-        TrackPrevious,
-        TrackNext,*/
 
         // Keypad keys
         /// <summary>
