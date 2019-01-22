@@ -29,7 +29,7 @@ using OpenToolkit.Platform;
 namespace OpenToolkit.Input
 {
     /// <summary>
-    /// Provides access to keyboard devices. Note: this API is not implemented yet.
+    /// Provides access to keyboard devices.
     /// </summary>
     public static class Keyboard
     {
