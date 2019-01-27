@@ -141,7 +141,7 @@ Technical documentation about the implementation of OpenTK can be found in the [
 Need Help?
 ==========
 
-Come chat with us on [Discord](https://discord.gg/GZTYR4s).
+Come chat with us on [Discord](https://discord.gg/6HqD48s).
 
 We're happy to help with anything from learning OpenGL to advanced OpenTK questions.
 
