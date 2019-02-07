@@ -82,7 +82,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenTK.OpenAL.Extensions.EX
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Windowing", "Windowing", "{BBBE802B-9F6E-4299-97CE-97CDA43802B9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenTK.Windowing", "src\OpenTK.Windowing\OpenTK.Windowing.csproj", "{619434D1-477D-40E7-A691-AAF510D8A209}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenTK.Windowing", "src\OpenTK.Windowing\OpenTK.Windowing.csproj", "{619434D1-477D-40E7-A691-AAF510D8A209}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenTK.Tests.Windowing", "tests\OpenTK.Tests.Windowing\OpenTK.Tests.Windowing.csproj", "{63B660A5-52FC-4380-9208-E38C2F9339B3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -186,6 +188,10 @@ Global
 		{619434D1-477D-40E7-A691-AAF510D8A209}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{619434D1-477D-40E7-A691-AAF510D8A209}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{619434D1-477D-40E7-A691-AAF510D8A209}.Release|Any CPU.Build.0 = Release|Any CPU
+		{63B660A5-52FC-4380-9208-E38C2F9339B3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{63B660A5-52FC-4380-9208-E38C2F9339B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{63B660A5-52FC-4380-9208-E38C2F9339B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{63B660A5-52FC-4380-9208-E38C2F9339B3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -210,6 +216,7 @@ Global
 		{86CE656C-0D40-4014-B97B-102C9C259FDA} = {EA863589-4B76-455C-9F91-87CD642BC7F0}
 		{2E39B827-1513-4B77-B80A-0BA87DBC199F} = {EA863589-4B76-455C-9F91-87CD642BC7F0}
 		{619434D1-477D-40E7-A691-AAF510D8A209} = {BBBE802B-9F6E-4299-97CE-97CDA43802B9}
+		{63B660A5-52FC-4380-9208-E38C2F9339B3} = {BBBE802B-9F6E-4299-97CE-97CDA43802B9}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {82DDE6D6-0D55-49B4-9C64-B31B4A6E729F}

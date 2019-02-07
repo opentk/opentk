@@ -82,10 +82,16 @@ namespace OpenToolkit.Windowing.GraphicsLibraryFramework
         public abstract unsafe void MaximizeWindow(Window* window);
 
         /// <inheritdoc />
+        public abstract void PollEvents();
+
+        /// <inheritdoc />
+        public abstract void PostEmptyEvent();
+
+        /// <inheritdoc />
         public abstract void WindowHint(WindowHint hint, int value);
 
         /// <inheritdoc />
-        public abstract unsafe int WindowShouldClose(Window* window);
+        public abstract unsafe bool WindowShouldClose(Window* window);
 
         /// <inheritdoc />
         public abstract unsafe void SetCharCallback(Window* window, Action<Window, int> callback);
@@ -100,7 +106,7 @@ namespace OpenToolkit.Windowing.GraphicsLibraryFramework
         public abstract unsafe void SetCursorPosCallback(Window* window, Action<Window, int, int> callback);
 
         /// <inheritdoc />
-        public abstract unsafe void SetDropCallback(Window* window, Action<Window, int, string[]> callback);
+        public abstract unsafe void SetDropCallback(Window* window, Action<Window, int, string> callback);
 
         /// <inheritdoc />
         public abstract unsafe void SetErrorCallback(Action<int, string> callback);
@@ -158,6 +164,12 @@ namespace OpenToolkit.Windowing.GraphicsLibraryFramework
 
         /// <inheritdoc />
         public abstract unsafe void SetWindowPosCallback(Window* window, Action<Window, int, int> callback);
+
+        /// <inheritdoc />
+        public abstract void WaitEvents();
+
+        /// <inheritdoc />
+        public abstract void WaitEventsTimeout(double timeout);
 
         /// <summary>
         /// Gets an instance of the API.

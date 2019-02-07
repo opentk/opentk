@@ -35,12 +35,14 @@ namespace OpenToolkit.Windowing.GraphicsLibraryFramework.Interfaces
         unsafe void IconifyWindow(Window* window);
         unsafe void MakeContextCurrent(Window* window);
         unsafe void MaximizeWindow(Window* window);
+        void PollEvents();
+        void PostEmptyEvent();
         unsafe void RestoreWindow(Window* window);
         unsafe void SetCharCallback(Window* window, Action<Window, int> callback); //TODO: Make enum for int param in callback
         unsafe void SetCharModsCallback(Window* window, Action<Window, int, int> callback); //TODO: Make enums for int params in callback
         unsafe void SetCursorEnterCallback(Window* window, Action<Window, bool> callback);
         unsafe void SetCursorPosCallback(Window* window, Action<Window, int, int> callback); //TODO: Make enums for int params in callback
-        unsafe void SetDropCallback(Window* window, Action<Window, int, string[]> callback); //TODO: Make enum for int param in callback
+        unsafe void SetDropCallback(Window* window, Action<Window, int, string> callback); //TODO: Make enum for int param in callback
         unsafe void SetErrorCallback(Action<int, string> callback); //TODO: Make enum for int param in callback
         unsafe void SetInputMode(Window* window, InputMode mode, InputModeValue value);
         unsafe void SetJoystickCallback(Action<int, int> callback);
@@ -60,7 +62,9 @@ namespace OpenToolkit.Windowing.GraphicsLibraryFramework.Interfaces
         unsafe void SetWindowShouldClose(Window* window);
         unsafe void SetWindowTitle(Window* window, string title);
         unsafe void ShowWindow(Window* window);
+        void WaitEvents();
+        void WaitEventsTimeout(double timeout);
         void WindowHint(WindowHint hint, int value);
-        unsafe int WindowShouldClose(Window* window);
+        unsafe bool WindowShouldClose(Window* window);
     }
 }

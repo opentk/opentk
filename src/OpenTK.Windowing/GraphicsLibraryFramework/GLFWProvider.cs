@@ -4,24 +4,27 @@ namespace OpenToolkit.Windowing.GraphicsLibraryFramework
 {
     public static class GLFWProvider
     {
-        private static GLFW glfw = null;
+        private static Lazy<GLFW> glfw = null;
         public static GLFW GLFW
         {
             get
             {
                 if (glfw == null)
                 {
-                    glfw = GLFW.GetAPI();
-                    glfw.Init();
-                    glfw.SetErrorCallback(GLFW.errorCallback);
+                    glfw = new Lazy<GLFW>(GLFW.GetAPI);
+                    lock (glfw.Value)
+                    {
+                        glfw.Value.Init();
+                        glfw.Value.SetErrorCallback(GLFW.errorCallback);
+                    }
                 }
-                return glfw;
+                return glfw.Value;
             }
         }
 
         public static void Unload()
         {
-            glfw.Terminate();
+            glfw.Value.Terminate();
             glfw = null;
         }
     }
