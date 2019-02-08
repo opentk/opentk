@@ -19,8 +19,8 @@ namespace OpenToolkit.Windowing
 {
     public class NativeWindow : INativeWindow
     {
-        private static GLFW glfw => GLFWProvider.GLFW;
-        private readonly unsafe Window* windowPtr = null;
+        private static GLFW Glfw => GLFWProvider.GLFW;
+        private readonly unsafe Window* _windowPtr;
 
         private string _title;
 
@@ -32,7 +32,7 @@ namespace OpenToolkit.Windowing
                 unsafe
                 {
                     _title = value;
-                    glfw.SetWindowTitle(windowPtr, value);
+                    Glfw.SetWindowTitle(_windowPtr, value);
                 }
 
                 TitleChanged?.Invoke(this, EventArgs.Empty);
@@ -41,12 +41,12 @@ namespace OpenToolkit.Windowing
 
         public unsafe bool Focused
         {
-            get => glfw.GetWindowAttrib(windowPtr, (int)WindowHint.Focused) != 0;
+            get => Glfw.GetWindowAttrib(_windowPtr, (int)WindowHint.Focused) != 0;
             set
             {
                 if (value)
                 {
-                    glfw.FocusWindow(windowPtr);
+                    Glfw.FocusWindow(_windowPtr);
                 }
             }
         }
@@ -55,17 +55,17 @@ namespace OpenToolkit.Windowing
         {
             get
             {
-                unsafe { return glfw.GetWindowAttrib(windowPtr, (int)WindowHint.Visible) != 0; }
+                unsafe { return Glfw.GetWindowAttrib(_windowPtr, (int)WindowHint.Visible) != 0; }
             }
             set
             {
                 if (value)
                 {
-                    unsafe { glfw.ShowWindow(windowPtr); }
+                    unsafe { Glfw.ShowWindow(_windowPtr); }
                 }
                 else
                 {
-                    unsafe { glfw.HideWindow(windowPtr); }
+                    unsafe { Glfw.HideWindow(_windowPtr); }
                 }
                 VisibleChanged?.Invoke(this, EventArgs.Empty);
             }
@@ -73,7 +73,7 @@ namespace OpenToolkit.Windowing
 
         public bool Exists
         {
-            get { unsafe { return windowPtr != null && !glfw.WindowShouldClose(windowPtr); } }
+            get { unsafe { return _windowPtr != null && !Glfw.WindowShouldClose(_windowPtr); } }
         }
 
         public IWindowInfo WindowInfo => throw new NotImplementedException("IWindowInfo is obsolete because platforms are going away, though we could create better borders around GLFW and define 'GLFWWindowInfo : IWindowInfo' but I think it's a case of YAGNI");
@@ -84,21 +84,20 @@ namespace OpenToolkit.Windowing
             {
                 unsafe
                 {
-                    if (glfw.GetWindowAttrib(windowPtr, (int)WindowHint.Iconified) == 1)
+                    if (Glfw.GetWindowAttrib(_windowPtr, (int)WindowHint.Iconified) == 1)
                     {
                         return WindowState.Minimized;
                     }
-                    else if (glfw.GetWindowMonitor(windowPtr) != null)
+                    else if (Glfw.GetWindowMonitor(_windowPtr) != null)
                     {
                         return WindowState.Fullscreen;
                     }
                     else
                     {
-                        var monitor = glfw.GetPrimaryMonitor();
-                        var mode = glfw.GetVideoMode(monitor);
-
-                        int windowWidth, windowHeight;
-                        glfw.GetWindowSize(windowPtr, out windowWidth, out windowHeight);
+                        var monitor = Glfw.GetPrimaryMonitor();
+                        var mode = Glfw.GetVideoMode(monitor);
+                        
+                        Glfw.GetWindowSize(_windowPtr, out var windowWidth, out var windowHeight);
 
                         if (mode->width == windowWidth && mode->height == windowHeight)
                         {
@@ -115,18 +114,18 @@ namespace OpenToolkit.Windowing
                     switch (value)
                     {
                         case WindowState.Normal:
-                            glfw.RestoreWindow(windowPtr);
+                            Glfw.RestoreWindow(_windowPtr);
                             break;
                         case WindowState.Minimized:
-                            glfw.IconifyWindow(windowPtr);
+                            Glfw.IconifyWindow(_windowPtr);
                             break;
                         case WindowState.Maximized:
-                            glfw.MaximizeWindow(windowPtr);
+                            Glfw.MaximizeWindow(_windowPtr);
                             break;
                         case WindowState.Fullscreen:
-                            var monitor = glfw.GetPrimaryMonitor();
-                            var mode = glfw.GetVideoMode(monitor);
-                            glfw.SetWindowMonitor(windowPtr, monitor, 0, 0, mode->width, mode->height, mode->refreshRate);
+                            var monitor = Glfw.GetPrimaryMonitor();
+                            var mode = Glfw.GetVideoMode(monitor);
+                            Glfw.SetWindowMonitor(_windowPtr, monitor, 0, 0, mode->width, mode->height, mode->refreshRate);
                             break;
                     }
                 }
@@ -141,11 +140,11 @@ namespace OpenToolkit.Windowing
             {
                 unsafe
                 {
-                    if (glfw.GetWindowAttrib(windowPtr, (int)WindowHint.Decorated) == 0)
+                    if (Glfw.GetWindowAttrib(_windowPtr, (int)WindowHint.Decorated) == 0)
                     {
                         return WindowBorder.Hidden;
                     }
-                    else if (glfw.GetWindowAttrib(windowPtr, (int)WindowHint.Resizable) == 0)
+                    else if (Glfw.GetWindowAttrib(_windowPtr, (int)WindowHint.Resizable) == 0)
                     {
                         return WindowBorder.Fixed;
                     }
@@ -166,8 +165,8 @@ namespace OpenToolkit.Windowing
             {
                 unsafe
                 {
-                    glfw.SetWindowSize(windowPtr, value.Width, value.Height);
-                    glfw.SetWindowPos(windowPtr, value.X, value.Y);
+                    Glfw.SetWindowSize(_windowPtr, value.Width, value.Height);
+                    Glfw.SetWindowPos(_windowPtr, value.X, value.Y);
                 }
             }
         }
@@ -177,10 +176,10 @@ namespace OpenToolkit.Windowing
             get
             {
                 int x, y;
-                unsafe { glfw.GetWindowPos(windowPtr, out x, out y); }
+                unsafe { Glfw.GetWindowPos(_windowPtr, out x, out y); }
                 return new Point(x, y);
             }
-            set { unsafe { glfw.SetWindowPos(windowPtr, value.X, value.Y); } }
+            set { unsafe { Glfw.SetWindowPos(_windowPtr, value.X, value.Y); } }
         }
 
         public Size Size
@@ -188,10 +187,10 @@ namespace OpenToolkit.Windowing
             get
             {
                 int width, height;
-                unsafe { glfw.GetWindowSize(windowPtr, out width, out height); }
+                unsafe { Glfw.GetWindowSize(_windowPtr, out width, out height); }
                 return new Size(width, height);
             }
-            set { unsafe { glfw.SetWindowSize(windowPtr, value.Width, value.Height); } }
+            set { unsafe { Glfw.SetWindowSize(_windowPtr, value.Width, value.Height); } }
         }
 
         public int X
@@ -229,7 +228,7 @@ namespace OpenToolkit.Windowing
             get
             {
                 int width, height;
-                unsafe { glfw.GetFramebufferSize(windowPtr, out width, out height); }
+                unsafe { Glfw.GetFramebufferSize(_windowPtr, out width, out height); }
                 return new Size(width, height);
             }
             set => throw new NotImplementedException();
@@ -248,8 +247,8 @@ namespace OpenToolkit.Windowing
             {
                 unsafe
                 {
-                    return glfw.GetInputMode(windowPtr, InputMode.Cursor) != InputModeValue.CursorHidden
-                           && glfw.GetInputMode(windowPtr, InputMode.Cursor) != InputModeValue.CursorDisabled;
+                    return Glfw.GetInputMode(_windowPtr, InputMode.Cursor) != InputModeValue.CursorHidden
+                           && Glfw.GetInputMode(_windowPtr, InputMode.Cursor) != InputModeValue.CursorDisabled;
                 }
             }
             set
@@ -257,34 +256,28 @@ namespace OpenToolkit.Windowing
                 _cursorHidden = !value;
                 unsafe
                 {
-                    if (value)
-                    {
-                        glfw.SetInputMode(windowPtr, InputMode.Cursor, InputModeValue.CursorNormal);
-                    }
-                    else
-                    {
-                        glfw.SetInputMode(windowPtr, InputMode.Cursor, InputModeValue.CursorHidden);
-                    }
+                    Glfw.SetInputMode(_windowPtr, InputMode.Cursor,
+                        value ? InputModeValue.CursorNormal : InputModeValue.CursorHidden);
                 }
             }
         }
 
         public unsafe bool CursorGrabbed
         {
-            get => glfw.GetInputMode(windowPtr, InputMode.Cursor) == InputModeValue.CursorDisabled;
+            get => Glfw.GetInputMode(_windowPtr, InputMode.Cursor) == InputModeValue.CursorDisabled;
             set
             {
                 if (value)
                 {
-                    glfw.SetInputMode(windowPtr, InputMode.Cursor, InputModeValue.CursorDisabled);
+                    Glfw.SetInputMode(_windowPtr, InputMode.Cursor, InputModeValue.CursorDisabled);
                 }
                 else if (_cursorHidden)
                 {
-                    glfw.SetInputMode(windowPtr, InputMode.Cursor, InputModeValue.CursorHidden);
+                    Glfw.SetInputMode(_windowPtr, InputMode.Cursor, InputModeValue.CursorHidden);
                 }
                 else
                 {
-                    glfw.SetInputMode(windowPtr, InputMode.Cursor, InputModeValue.CursorNormal);
+                    Glfw.SetInputMode(_windowPtr, InputMode.Cursor, InputModeValue.CursorNormal);
                 }
             }
         }
@@ -296,19 +289,19 @@ namespace OpenToolkit.Windowing
 
             unsafe
             {
-                var monitor = glfw.GetPrimaryMonitor();
+                var monitor = Glfw.GetPrimaryMonitor();
                 if (windowedFullscreen)
                 {
-                    var modePtr = glfw.GetVideoMode(monitor);
-                    glfw.WindowHint(WindowHint.RedBits, modePtr->redBits);
-                    glfw.WindowHint(WindowHint.GreenBits, modePtr->greenBits);
-                    glfw.WindowHint(WindowHint.BlueBits, modePtr->blueBits);
-                    glfw.WindowHint(WindowHint.RefreshRate, modePtr->refreshRate);
-                    windowPtr = glfw.CreateWindow(modePtr->width, modePtr->height, title, monitor, null);
+                    var modePtr = Glfw.GetVideoMode(monitor);
+                    Glfw.WindowHint(WindowHint.RedBits, modePtr->redBits);
+                    Glfw.WindowHint(WindowHint.GreenBits, modePtr->greenBits);
+                    Glfw.WindowHint(WindowHint.BlueBits, modePtr->blueBits);
+                    Glfw.WindowHint(WindowHint.RefreshRate, modePtr->refreshRate);
+                    _windowPtr = Glfw.CreateWindow(modePtr->width, modePtr->height, title, monitor, null);
                 }
                 else
                 {
-                    windowPtr = glfw.CreateWindow(width, height, title, null, null);
+                    _windowPtr = Glfw.CreateWindow(width, height, title, null, null);
                 }
 
                 RegisterWindowCallbacks();
@@ -319,13 +312,13 @@ namespace OpenToolkit.Windowing
         {
             unsafe
             {
-                glfw.SetWindowPosCallback(windowPtr, (window, x, y) => Move?.Invoke(this, EventArgs.Empty));
-                glfw.SetWindowSizeCallback(windowPtr, (width, height) => Resize?.Invoke(this, EventArgs.Empty));
-                glfw.SetWindowCloseCallback(windowPtr, (window) => Closing?.Invoke(this, new CancelEventArgs()));
-                glfw.SetWindowIconifyCallback(windowPtr, (window, iconified) => IconChanged?.Invoke(this, EventArgs.Empty));
-                glfw.SetWindowFocusCallback(windowPtr, (window, focused) => FocusedChanged?.Invoke(this, EventArgs.Empty));
-                glfw.SetCharCallback(windowPtr, (window, codepoint) => KeyPress?.Invoke(this, new KeyPressEventArgs((char)codepoint)));
-                glfw.SetKeyCallback(windowPtr, (window, key, scancode, action, mods) =>
+                Glfw.SetWindowPosCallback(_windowPtr, (window, x, y) => Move?.Invoke(this, EventArgs.Empty));
+                Glfw.SetWindowSizeCallback(_windowPtr, (width, height) => Resize?.Invoke(this, EventArgs.Empty));
+                Glfw.SetWindowCloseCallback(_windowPtr, (window) => Closing?.Invoke(this, new CancelEventArgs()));
+                Glfw.SetWindowIconifyCallback(_windowPtr, (window, iconified) => IconChanged?.Invoke(this, EventArgs.Empty));
+                Glfw.SetWindowFocusCallback(_windowPtr, (window, focused) => FocusedChanged?.Invoke(this, EventArgs.Empty));
+                Glfw.SetCharCallback(_windowPtr, (window, codepoint) => KeyPress?.Invoke(this, new KeyPressEventArgs((char)codepoint)));
+                Glfw.SetKeyCallback(_windowPtr, (window, key, scancode, action, mods) =>
                 {
                     if (action == InputAction.Press)
                     {
@@ -336,7 +329,7 @@ namespace OpenToolkit.Windowing
                         KeyUp?.Invoke(this, new KeyboardKeyEventArgs());
                     }
                 });
-                glfw.SetCursorEnterCallback(windowPtr, (window, entered) =>
+                Glfw.SetCursorEnterCallback(_windowPtr, (window, entered) =>
                 {
                     if (entered)
                     {
@@ -347,7 +340,7 @@ namespace OpenToolkit.Windowing
                         MouseLeave?.Invoke(this, EventArgs.Empty);
                     }
                 });
-                glfw.SetMouseButtonCallback(windowPtr, (window, button, action, mods) =>
+                Glfw.SetMouseButtonCallback(_windowPtr, (window, button, action, mods) =>
                 {
                     if (action == InputAction.Press)
                     {
@@ -359,14 +352,14 @@ namespace OpenToolkit.Windowing
                     }
 
                 });
-                glfw.SetCursorPosCallback(windowPtr, (window, xpos, ypos) => MouseMove?.Invoke(this, new MouseMoveEventArgs()));
-                glfw.SetScrollCallback(windowPtr, (window, xOffset, yOffset) => MouseWheel?.Invoke(this, new MouseWheelEventArgs()));
-                glfw.SetDropCallback(windowPtr, (window, count, paths) => FileDrop?.Invoke(this, new FileDropEventArgs()));
+                Glfw.SetCursorPosCallback(_windowPtr, (window, xpos, ypos) => MouseMove?.Invoke(this, new MouseMoveEventArgs()));
+                Glfw.SetScrollCallback(_windowPtr, (window, xOffset, yOffset) => MouseWheel?.Invoke(this, new MouseWheelEventArgs()));
+                Glfw.SetDropCallback(_windowPtr, (window, count, paths) => FileDrop?.Invoke(this, new FileDropEventArgs()));
 
                 //TODO: Events from GLFW the 'legacy' NativeWindow didnt have events for.
-                glfw.SetCharModsCallback(windowPtr, (window, codepoint, mods) => throw new NotImplementedException());
-                glfw.SetJoystickCallback((joy, eventCode) => throw new NotImplementedException());
-                glfw.SetMonitorCallback((monitor, eventCode) => throw new NotImplementedException());
+                Glfw.SetCharModsCallback(_windowPtr, (window, codepoint, mods) => throw new NotImplementedException());
+                Glfw.SetJoystickCallback((joy, eventCode) => throw new NotImplementedException());
+                Glfw.SetMonitorCallback((monitor, eventCode) => throw new NotImplementedException());
             }
         }
 
@@ -374,7 +367,7 @@ namespace OpenToolkit.Windowing
         {
             unsafe
             {
-                glfw.SetWindowShouldClose(windowPtr);
+                Glfw.SetWindowShouldClose(_windowPtr);
                 Closed?.Invoke(this, EventArgs.Empty);
             }
         }
@@ -383,14 +376,14 @@ namespace OpenToolkit.Windowing
         {
             unsafe
             {
-                glfw.MakeContextCurrent(windowPtr);
+                Glfw.MakeContextCurrent(_windowPtr);
             }
         }
 
         //TODO: This doesnt account for the scenario of an event-based application in which we would use `glfw.WaitEvents()` that waits for input to keep CPU usage minimal
         public virtual void ProcessEvents()
         {
-            glfw.PollEvents();
+            Glfw.PollEvents();
         }
 
         public Point PointToClient(Point point)
@@ -428,30 +421,32 @@ namespace OpenToolkit.Windowing
         #endregion
 
         #region IDisposable Support
-        private bool disposedValue = false; // To detect redundant calls
+        private bool _disposedValue = false; // To detect redundant calls
 
         protected virtual void Dispose(bool disposing)
         {
-            if (!disposedValue)
+            if (!_disposedValue)
             {
-                if (disposing)
-                {
-                    // Free managed resources
-                }
-
-                // Free unmanaged resources
-                unsafe
-                {
-                    if (windowPtr != null)
-                    {
-                        glfw.DestroyWindow(windowPtr);
-                        Closed?.Invoke(this, EventArgs.Empty);
-                    }
-                }
-
-                disposedValue = true;
-                Disposed?.Invoke(this, EventArgs.Empty);
+                return;
             }
+            
+            if (disposing)
+            {
+            
+            }
+
+            // Free unmanaged resources
+            unsafe
+            {
+                if (_windowPtr != null)
+                {
+                    Glfw.DestroyWindow(_windowPtr);
+                    Closed?.Invoke(this, EventArgs.Empty);
+                }
+            }
+
+            _disposedValue = true;
+            Disposed?.Invoke(this, EventArgs.Empty);
         }
 
         ~NativeWindow()
