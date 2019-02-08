@@ -58,7 +58,7 @@ namespace OpenToolkit.Windowing
         {
             get
             {
-                if (render_period == 0.0)
+                if (MathHelper.ApproximatelyEqualEpsilon(render_period, 0.0, 0.00001))
                 {
                     return 1.0;
                 }
@@ -79,7 +79,7 @@ namespace OpenToolkit.Windowing
         {
             get
             {
-                if (TargetRenderPeriod == 0.0)
+                if (MathHelper.ApproximatelyEqualEpsilon(TargetRenderPeriod, 0.0, 0.00001))
                 {
                     return 0.0;
                 }
@@ -174,7 +174,7 @@ namespace OpenToolkit.Windowing
         {
             get
             {
-                if (update_period == 0.0)
+                if (MathHelper.ApproximatelyEqualEpsilon(update_period, 0.0, 0.00001))
                 {
                     return 1.0;
                 }
