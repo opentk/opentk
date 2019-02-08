@@ -153,11 +153,10 @@ namespace OpenToolkit.Windowing
                     return WindowBorder.Resizable;
                 }
             }
-            set
-            {
-                throw new NotImplementedException("Requires recreating the window with different window hints https://www.glfw.org/docs/latest/window_guide.html#window_attribs");
-                WindowBorderChanged?.Invoke(this, EventArgs.Empty);
-            }
+            
+            //If GLFW 3.3 is supported by the time OpenTK 4.0 is ready, this will be implemented,
+            //but we want to avoid making features that depend on development versions of libraries.
+            set => throw new NotImplementedException("Cannot be implemented in GLFW 3.2.");
         }
 
         public Rectangle Bounds
