@@ -186,14 +186,8 @@ namespace OpenToolkit.Windowing
         public double UpdateTime => update_time;
         public VSyncMode VSync
         {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
+            get => throw new NotImplementedException();
+            set => throw new NotImplementedException();
         }
 
         /// <summary>

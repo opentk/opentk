@@ -161,10 +161,7 @@ namespace OpenToolkit.Windowing
 
         public Rectangle Bounds
         {
-            get
-            {
-                return new Rectangle(Location, Size);
-            }
+            get => new Rectangle(Location, Size);
             set
             {
                 unsafe
@@ -199,26 +196,26 @@ namespace OpenToolkit.Windowing
 
         public int X
         {
-            get { return Location.X; }
-            set { Location = new Point(value, Location.Y); }
+            get => Location.X;
+            set => Location = new Point(value, Location.Y);
         }
 
         public int Y
         {
-            get { return Location.Y; }
-            set { Location = new Point(Location.X, value); }
+            get => Location.Y;
+            set => Location = new Point(Location.X, value);
         }
 
         public int Width
         {
-            get { return Size.Width; }
-            set { Size = new Size(value, Size.Height); }
+            get => Size.Width;
+            set => Size = new Size(value, Size.Height);
         }
 
         public int Height
         {
-            get { return Size.Height; }
-            set { Size = new Size(Size.Width, value); }
+            get => Size.Height;
+            set => Size = new Size(Size.Width, value);
         }
 
         public Rectangle ClientRectangle
@@ -240,11 +237,7 @@ namespace OpenToolkit.Windowing
 
         public MouseCursor Cursor
         {
-            get
-            {
-                throw new NotImplementedException();
-
-            }
+            get => throw new NotImplementedException();
             set => throw new NotImplementedException();
         }
 
