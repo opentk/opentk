@@ -127,7 +127,7 @@ namespace OpenToolkit.Windowing
         {
             get
             {
-                if (TargetUpdatePeriod == 0.0)
+                if (MathHelper.ApproximatelyEqualEpsilon(TargetUpdatePeriod, 0.0, 0.00001))
                 {
                     return 0.0;
                 }
