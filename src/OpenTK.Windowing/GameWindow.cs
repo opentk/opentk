@@ -236,8 +236,8 @@ namespace OpenToolkit.Windowing
                 }
 
                 Visible = true; // Make sure the GameWindow is visible.
-                Load.Invoke(this, EventArgs.Empty);
-                Resize.Invoke(this, EventArgs.Empty);
+                Load?.Invoke(this, EventArgs.Empty);
+                Resize?.Invoke(this, EventArgs.Empty);
 
                 // On some platforms, ProcessEvents() does not return while the user is resizing or moving
                 // the window. We can avoid this issue by raising UpdateFrame and RenderFrame events
@@ -276,7 +276,7 @@ namespace OpenToolkit.Windowing
 
         private void UpdateThread()
         {
-            UpdateThreadStarted.Invoke(this, new EventArgs());
+            UpdateThreadStarted?.Invoke(this, new EventArgs());
             watchUpdate.Start();
             while (Exists && !IsExiting)
             {
