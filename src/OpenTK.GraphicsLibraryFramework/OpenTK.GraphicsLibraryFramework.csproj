@@ -21,4 +21,8 @@
       <ProjectReference Include="..\OpenTK.Core\OpenTK.Core.csproj" />
       <ProjectReference Include="..\OpenTK.Mathematics\OpenTK.Mathematics.csproj" />
     </ItemGroup>
+    
+    <ItemGroup>
+      <Folder Include="GraphicsLibraryFramework" />
+    </ItemGroup>
 </Project>
