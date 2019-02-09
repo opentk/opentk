@@ -877,7 +877,8 @@ namespace OpenTK.Platform.Windows
                 }
                 else if (points == -1)
                 {
-                    throw new Win32Exception(lastError);
+                    // A different error occured - we still just use the mouse move position.
+                    OnMouseMove(point.X, point.Y);
                 }
                 else
                 {
