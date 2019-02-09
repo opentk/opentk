@@ -22,6 +22,25 @@ namespace OpenToolkit.Windowing
         private static GLFW Glfw => GLFWProvider.GLFW;
         private readonly unsafe Window* _windowPtr;
 
+        public string ClipboardString
+        {
+            get
+            {
+                unsafe
+                {
+                    return Glfw.GetClipboardString(_windowPtr);
+                }
+            }
+
+            set
+            {
+                unsafe
+                {
+                    Glfw.SetClipboardString(_windowPtr, value);
+                }
+            }
+        }
+
         private string _title;
 
         public string Title

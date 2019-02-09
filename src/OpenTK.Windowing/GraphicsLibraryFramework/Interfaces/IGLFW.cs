@@ -23,6 +23,7 @@ namespace OpenToolkit.Windowing.GraphicsLibraryFramework.Interfaces
         unsafe Window* CreateWindow(int width, int height, string title, Monitor* monitor, Window* share);
         unsafe void DestroyWindow(Window* window);
         unsafe void FocusWindow(Window* window);
+        unsafe string GetClipboardString(Window* window);
         unsafe void GetFramebufferSize(Window* window, out int width, out int height);
         unsafe InputModeValue GetInputMode(Window* window, InputMode mode);
         unsafe Monitor* GetPrimaryMonitor();
@@ -40,6 +41,7 @@ namespace OpenToolkit.Windowing.GraphicsLibraryFramework.Interfaces
         unsafe void RestoreWindow(Window* window);
         unsafe void SetCharCallback(Window* window, Action<Window, int> callback); //TODO: Make enum for int param in callback
         unsafe void SetCharModsCallback(Window* window, Action<Window, int, int> callback); //TODO: Make enums for int params in callback
+        unsafe void SetClipboardString(Window* window, string data);
         unsafe void SetCursorEnterCallback(Window* window, Action<Window, bool> callback);
         unsafe void SetCursorPosCallback(Window* window, Action<Window, int, int> callback); //TODO: Make enums for int params in callback
         unsafe void SetDropCallback(Window* window, Action<Window, int, string> callback); //TODO: Make enum for int param in callback

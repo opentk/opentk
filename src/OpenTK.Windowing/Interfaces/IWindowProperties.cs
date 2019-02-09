@@ -20,6 +20,11 @@ namespace OpenToolkit.Windowing.Interfaces
         /// Gets or sets the <see cref="System.Drawing.Icon" /> of the window.
         /// </summary>
         //Icon Icon { get; set; } // HIGH: Either an assembly is missing or this isn't defined for .NET Standard 2.0's Drawing assembly
+        
+        /// <summary>
+        /// Gets or sets the clipboard string.
+        /// </summary>
+        string ClipboardString { get; set; }
 
         /// <summary>
         /// Gets or sets the title of the window.

@@ -170,6 +170,12 @@ namespace OpenToolkit.Windowing.GraphicsLibraryFramework
 
         /// <inheritdoc />
         public abstract void WaitEventsTimeout(double timeout);
+        
+        /// <inheritdoc />
+        public abstract unsafe string GetClipboardString(Window* window);
+
+        /// <inheritdoc />
+        public abstract unsafe void SetClipboardString(Window* window, string data);
 
         /// <summary>
         /// Gets an instance of the API.
