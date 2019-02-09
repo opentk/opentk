@@ -415,7 +415,7 @@ namespace OpenToolkit.Windowing.Desktop
             throw new NotImplementedException();
         }
 
-        #region Events
+        #region Event Handlers
         public event EventHandler<EventArgs> Move;
         public event EventHandler<EventArgs> Resize;
         public event EventHandler<CancelEventArgs> Closing;
@@ -437,6 +437,114 @@ namespace OpenToolkit.Windowing.Desktop
         public event EventHandler<MouseMoveEventArgs> MouseMove;
         public event EventHandler<MouseWheelEventArgs> MouseWheel;
         public event EventHandler<FileDropEventArgs> FileDrop;
+        #endregion
+
+        #region Events
+
+        protected virtual void OnMove(object sender, EventArgs e)
+        {
+            Move?.Invoke(sender, e);
+        }
+
+        protected virtual void OnResize(object sender, EventArgs e)
+        {
+            Resize?.Invoke(sender, e);
+        }
+        
+        protected virtual void OnClosing(object sender, CancelEventArgs e)
+        {
+            Closing?.Invoke(sender, e);
+        }
+        
+        protected virtual void OnClosed(object sender, EventArgs e)
+        {
+            Closed?.Invoke(sender, e);
+        }
+        
+        protected virtual void OnDisposed(object sender, EventArgs e)
+        {
+            Disposed?.Invoke(sender, e);
+        }
+        
+        protected virtual void OnIconChanged(object sender, EventArgs e)
+        {
+            IconChanged?.Invoke(sender, e);
+        }
+        
+        protected virtual void OnTitleChanged(object sender, EventArgs e)
+        {
+            TitleChanged?.Invoke(sender, e);
+        }
+        
+        protected virtual void OnVisibleChanged(object sender, EventArgs e)
+        {
+            VisibleChanged?.Invoke(sender, e);
+        }
+        
+        protected virtual void OnFocusedChanged(object sender, EventArgs e)
+        {
+            FocusedChanged?.Invoke(sender, e);
+        }
+        
+        protected virtual void OnWindowBorderChanged(object sender, EventArgs e)
+        {
+            WindowBorderChanged?.Invoke(sender, e);
+        }
+        
+        protected virtual void OnWindowStateChanged(object sender, EventArgs e)
+        {
+            WindowStateChanged?.Invoke(sender, e);
+        }
+        
+        protected virtual void OnKeyDown(object sender, KeyboardKeyEventArgs e)
+        {
+            KeyDown?.Invoke(sender, e);
+        }
+        
+        protected virtual void OnKeyPress(object sender, KeyPressEventArgs e)
+        {
+            KeyPress?.Invoke(sender, e);
+        }
+        
+        protected virtual void OnKeyUp(object sender, KeyboardKeyEventArgs e)
+        {
+            KeyUp?.Invoke(sender, e);
+        }
+        
+        protected virtual void OnMouseLeave(object sender, EventArgs e)
+        {
+            MouseLeave?.Invoke(sender, e);
+        }
+        
+        protected virtual void OnMouseEnter(object sender, EventArgs e)
+        {
+            MouseEnter?.Invoke(sender, e);
+        }
+        
+        protected virtual void OnMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            MouseDown?.Invoke(sender, e);
+        }
+        
+        protected virtual void OnMouseUp(object sender, MouseButtonEventArgs e)
+        {
+            MouseUp?.Invoke(sender, e);
+        }
+        
+        protected virtual void OnMouseMove(object sender, MouseMoveEventArgs e)
+        {
+            MouseMove?.Invoke(sender, e);
+        }
+        
+        protected virtual void OnMouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            MouseWheel?.Invoke(sender, e);
+        }
+        
+        protected virtual void OnFileDrop(object sender, FileDropEventArgs e)
+        {
+            FileDrop?.Invoke(sender, e);
+        }
         #endregion
 
         #region IDisposable Support
