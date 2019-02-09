@@ -26,53 +26,53 @@ namespace OpenToolkit.Windowing
 
         private const double MaxFrequency = 500.0; // Frequency cap for Update/RenderFrame events
 
-        private readonly bool isSingleThreaded;
-        private readonly FrameEventArgs render_args = new FrameEventArgs();
+        private readonly bool _isSingleThreaded;
+        private readonly FrameEventArgs _renderArgs = new FrameEventArgs();
 
-        private readonly FrameEventArgs update_args = new FrameEventArgs();
+        private readonly FrameEventArgs _updateArgs = new FrameEventArgs();
 
-        private readonly Stopwatch watchRender = new Stopwatch();
-        private readonly Stopwatch watchUpdate = new Stopwatch();
+        private readonly Stopwatch _watchRender = new Stopwatch();
+        private readonly Stopwatch _watchUpdate = new Stopwatch();
 
         //private IGraphicsContext glContext; //HIGH: Implement with OpenGL ADL Bindings
 
-        private bool is_running_slowly; // true, when UpdatePeriod cannot reach TargetUpdatePeriod
+        private bool _isRunningSlowly; // true, when UpdatePeriod cannot reach TargetUpdatePeriod
 
-        private bool isExiting;
-        private double render_time; // length of last RenderFrame event
-        private double render_timestamp; // timestamp of last RenderFrame event
-        private double target_update_period, target_render_period;
+        private bool _isExiting;
+        private double _renderTime; // length of last RenderFrame event
+        private double _renderTimestamp; // timestamp of last RenderFrame event
+        private double _targetUpdatePeriod, _targetRenderPeriod;
 
-        private double update_epsilon; // quantization error for UpdateFrame events
+        private double _updateEpsilon; // quantization error for UpdateFrame events
 
-        private double update_period, render_period;
+        private double _updatePeriod, _renderPeriod;
 
-        private double update_time; // length of last UpdateFrame event
+        private double _updateTime; // length of last UpdateFrame event
 
-        private double update_timestamp; // timestamp of last UpdateFrame event
-        private Thread updateThread;
+        private double _updateTimestamp; // timestamp of last UpdateFrame event
+        private Thread _updateThread;
 
-        public bool IsExiting => isExiting;
+        public bool IsExiting => _isExiting;
 
         public double RenderFrequency
         {
             get
             {
-                if (MathHelper.ApproximatelyEqualEpsilon(render_period, 0.0, 0.00001))
+                if (MathHelper.ApproximatelyEqualEpsilon(_renderPeriod, 0.0, 0.00001))
                 {
                     return 1.0;
                 }
 
-                return 1.0 / render_period;
+                return 1.0 / _renderPeriod;
             }
         }
         
-        public double RenderPeriod => render_period;
+        public double RenderPeriod => _renderPeriod;
 
         public double RenderTime
         {
-            get => render_time;
-            protected set => render_time = value;
+            get => _renderTime;
+            protected set => _renderTime = value;
         }
 
         public double TargetRenderFrequency
@@ -105,16 +105,16 @@ namespace OpenToolkit.Windowing
         
         public double TargetRenderPeriod
         {
-            get => target_render_period;
+            get => _targetRenderPeriod;
             set
             {
                 if (value <= 1 / MaxFrequency)
                 {
-                    target_render_period = 0.0;
+                    _targetRenderPeriod = 0.0;
                 }
                 else if (value <= 1.0)
                 {
-                    target_render_period = value;
+                    _targetRenderPeriod = value;
                 }
                 else
                 {
@@ -152,16 +152,16 @@ namespace OpenToolkit.Windowing
 
         public double TargetUpdatePeriod
         {
-            get => target_update_period;
+            get => _targetUpdatePeriod;
             set
             {
                 if (value <= 1 / MaxFrequency)
                 {
-                    target_update_period = 0.0;
+                    _targetUpdatePeriod = 0.0;
                 }
                 else if (value <= 1.0)
                 {
-                    target_update_period = value;
+                    _targetUpdatePeriod = value;
                 }
                 else
                 {
@@ -174,16 +174,16 @@ namespace OpenToolkit.Windowing
         {
             get
             {
-                if (MathHelper.ApproximatelyEqualEpsilon(update_period, 0.0, 0.00001))
+                if (MathHelper.ApproximatelyEqualEpsilon(_updatePeriod, 0.0, 0.00001))
                 {
                     return 1.0;
                 }
 
-                return 1.0 / update_period;
+                return 1.0 / _updatePeriod;
             }
         }
-        public double UpdatePeriod => update_period;
-        public double UpdateTime => update_time;
+        public double UpdatePeriod => _updatePeriod;
+        public double UpdateTime => _updateTime;
         public VSyncMode VSync
         {
             get => throw new NotImplementedException();
@@ -209,42 +209,42 @@ namespace OpenToolkit.Windowing
             Run(updateRate, 0.0);
         }
 
-        public void Run(double updates_per_second, double frames_per_second)
+        public void Run(double updatesPerSecond, double framesPerSecond)
         {
             try
             {
-                if (updates_per_second < 0.0)
+                if (updatesPerSecond < 0.0)
                 {
-                    throw new ArgumentOutOfRangeException(nameof(updates_per_second), updates_per_second,
+                    throw new ArgumentOutOfRangeException(nameof(updatesPerSecond), updatesPerSecond,
                         "Parameter cannot be negative");
                 }
 
-                if (updates_per_second > 200.0)
+                if (updatesPerSecond > 200.0)
                 {
-                    throw new ArgumentOutOfRangeException(nameof(updates_per_second), updates_per_second,
+                    throw new ArgumentOutOfRangeException(nameof(updatesPerSecond), updatesPerSecond,
                         "Parameter should be inside the range [0.0, 200.0]");
                 }
 
-                if (frames_per_second < 0.0)
+                if (framesPerSecond < 0.0)
                 {
-                    throw new ArgumentOutOfRangeException(nameof(frames_per_second), frames_per_second,
+                    throw new ArgumentOutOfRangeException(nameof(framesPerSecond), framesPerSecond,
                         "Parameter cannot be negative");
                 }
 
-                if (frames_per_second > 200.0)
+                if (framesPerSecond > 200.0)
                 {
-                    throw new ArgumentOutOfRangeException(nameof(frames_per_second), frames_per_second,
+                    throw new ArgumentOutOfRangeException(nameof(framesPerSecond), framesPerSecond,
                         "Parameter should be inside the range [0.0, 200.0]");
                 }
 
-                if (!MathHelper.ApproximatelyEqualEpsilon(updates_per_second, 0.0, 0.00001))
+                if (!MathHelper.ApproximatelyEqualEpsilon(updatesPerSecond, 0.0, 0.00001))
                 {
-                    TargetUpdateFrequency = updates_per_second;
+                    TargetUpdateFrequency = updatesPerSecond;
                 }
 
-                if (!MathHelper.ApproximatelyEqualEpsilon(frames_per_second, 0.0, 0.00001))
+                if (!MathHelper.ApproximatelyEqualEpsilon(framesPerSecond, 0.0, 0.00001))
                 {
-                    TargetRenderFrequency = frames_per_second;
+                    TargetRenderFrequency = framesPerSecond;
                 }
 
                 Visible = true; // Make sure the GameWindow is visible.
@@ -259,21 +259,21 @@ namespace OpenToolkit.Windowing
                 //Resize += DispatchUpdateAndRenderFrame;
 
                 Debug.Print("Entering main loop.");
-                if (!isSingleThreaded)
+                if (!_isSingleThreaded)
                 {
-                    updateThread = new Thread(UpdateThread);
-                    updateThread.Start();
+                    _updateThread = new Thread(UpdateThread);
+                    _updateThread.Start();
                 }
 
-                watchRender.Start();
+                _watchRender.Start();
                 while (true)
                 {
                     ProcessEvents();
                     if (Exists && !IsExiting)
                     {
-                        if (isSingleThreaded)
+                        if (_isSingleThreaded)
                         {
-                            DispatchUpdateFrame(watchRender);
+                            DispatchUpdateFrame(_watchRender);
                         }
 
                         DispatchRenderFrame();
@@ -289,30 +289,30 @@ namespace OpenToolkit.Windowing
         private void UpdateThread()
         {
             UpdateThreadStarted?.Invoke(this, new EventArgs());
-            watchUpdate.Start();
+            _watchUpdate.Start();
             while (Exists && !IsExiting)
             {
-                DispatchUpdateFrame(watchUpdate);
+                DispatchUpdateFrame(_watchUpdate);
             }
         }
 
         private void DispatchUpdateFrame(Stopwatch watch)
         {
-            var is_running_slowly_retries = 4;
+            var isRunningSlowlyRetries = 4;
             var timestamp = watch.Elapsed.TotalSeconds;
-            var elapsed = ClampElapsed(timestamp - update_timestamp);
+            var elapsed = ClampElapsed(timestamp - _updateTimestamp);
 
-            while (elapsed > 0 && elapsed + update_epsilon >= TargetUpdatePeriod)
+            while (elapsed > 0 && elapsed + _updateEpsilon >= TargetUpdatePeriod)
             {
                 RaiseUpdateFrame(watch, elapsed, ref timestamp);
 
                 // Calculate difference (positive or negative) between
                 // actual elapsed time and target elapsed time. We must
                 // compensate for this difference.
-                update_epsilon += elapsed - TargetUpdatePeriod;
+                _updateEpsilon += elapsed - TargetUpdatePeriod;
 
                 // Prepare for next loop
-                elapsed = ClampElapsed(timestamp - update_timestamp);
+                elapsed = ClampElapsed(timestamp - _updateTimestamp);
 
                 if (TargetUpdatePeriod <= double.Epsilon)
                 {
@@ -323,8 +323,8 @@ namespace OpenToolkit.Windowing
                     break;
                 }
 
-                is_running_slowly = update_epsilon >= TargetUpdatePeriod;
-                if (is_running_slowly && --is_running_slowly_retries == 0)
+                _isRunningSlowly = _updateEpsilon >= TargetUpdatePeriod;
+                if (_isRunningSlowly && --isRunningSlowlyRetries == 0)
                 {
                     // If UpdateFrame consistently takes longer than TargetUpdateFrame
                     // stop raising events to avoid hanging inside the UpdateFrame loop.
@@ -335,8 +335,8 @@ namespace OpenToolkit.Windowing
 
         private void DispatchRenderFrame()
         {
-            var timestamp = watchRender.Elapsed.TotalSeconds;
-            var elapsed = ClampElapsed(timestamp - render_timestamp);
+            var timestamp = _watchRender.Elapsed.TotalSeconds;
+            var elapsed = ClampElapsed(timestamp - _renderTimestamp);
             if (elapsed > 0 && elapsed >= TargetRenderPeriod)
             {
                 RaiseRenderFrame(elapsed, ref timestamp);
