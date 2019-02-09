@@ -25,9 +25,9 @@ namespace OpenToolkit.Windowing.Input
 
         /// <summary>
         /// Gets a <see cref="System.Boolean" /> indicating whether the specified
-        ///  <see cref="OpenTK.Input.MouseButton" /> is pressed.
+        ///  <see cref="OpenToolkit.Windowing.Input.Enums.MouseButton" /> is pressed.
         /// </summary>
-        /// <param name="button">The <see cref="OpenTK.Input.MouseButton" /> to check.</param>
+        /// <param name="button">The <see cref="OpenToolkit.Windowing.Input.Enums.MouseButton" /> to check.</param>
         /// <returns>True if key is pressed; false otherwise.</returns>
         public bool this[MouseButton button]
         {
@@ -48,7 +48,7 @@ namespace OpenToolkit.Windowing.Input
         /// <summary>
         /// Gets a <see cref="System.Boolean" /> indicating whether this button is down.
         /// </summary>
-        /// <param name="button">The <see cref="OpenTK.Input.MouseButton" /> to check.</param>
+        /// <param name="button">The <see cref="OpenToolkit.Windowing.Input.Enums.MouseButton" /> to check.</param>
         public bool IsButtonDown(MouseButton button)
         {
             return ReadBit((int)button);
@@ -57,7 +57,7 @@ namespace OpenToolkit.Windowing.Input
         /// <summary>
         /// Gets a <see cref="System.Boolean" /> indicating whether this button is up.
         /// </summary>
-        /// <param name="button">The <see cref="OpenTK.Input.MouseButton" /> to check.</param>
+        /// <param name="button">The <see cref="OpenToolkit.Windowing.Input.Enums.MouseButton" /> to check.</param>
         public bool IsButtonUp(MouseButton button)
         {
             return !ReadBit((int)button);
@@ -75,7 +75,7 @@ namespace OpenToolkit.Windowing.Input
         public float WheelPrecise => scroll.Y;
 
         /// <summary>
-        /// Gets a <see cref="OpenTK.Input.MouseScroll" /> instance,
+        /// Gets a <see cref="OpenToolkit.Windowing.Input.MouseScroll" /> instance,
         /// representing the current state of the mouse scroll wheel.
         /// </summary>
         public MouseScroll Scroll => scroll;
@@ -212,9 +212,9 @@ namespace OpenToolkit.Windowing.Input
         }
 
         /// <summary>
-        /// Returns a <see cref="System.String" /> that represents the current <see cref="OpenTK.Input.MouseState" />.
+        /// Returns a <see cref="System.String" /> that represents the current <see cref="OpenToolkit.Windowing.Input.MouseState" />.
         /// </summary>
-        /// <returns>A <see cref="System.String" /> that represents the current <see cref="OpenTK.Input.MouseState" />.</returns>
+        /// <returns>A <see cref="System.String" /> that represents the current <see cref="OpenToolkit.Windowing.Input.MouseState" />.</returns>
         public override string ToString()
         {
             var b = Convert.ToString(buttons, 2).PadLeft(10, '0');

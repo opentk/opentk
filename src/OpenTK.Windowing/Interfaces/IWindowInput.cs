@@ -15,7 +15,7 @@ namespace OpenToolkit.Windowing.Interfaces
     {
 
         /// <summary>
-        /// Gets or sets the <see cref="OpenTK.MouseCursor" /> for this window.
+        /// Gets or sets the <see cref="OpenToolkit.Windowing.Input.MouseCursor" /> for this window.
         /// </summary>
         /// <value>The cursor.</value>
         MouseCursor Cursor { get; set; }

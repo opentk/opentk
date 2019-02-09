@@ -42,17 +42,17 @@ namespace OpenToolkit.Windowing.Interfaces
         bool Exists { get; }
 
         /// <summary>
-        /// Gets the <see cref="OpenTK.Platform.IWindowInfo" /> for this window.
+        /// Gets the <see cref="OpenToolkit.Windowing.Interfaces.IWindowInfo" /> for this window.
         /// </summary>
         IWindowInfo WindowInfo { get; }
 
         /// <summary>
-        /// Gets or sets the <see cref="OpenTK.WindowState" /> for this window.
+        /// Gets or sets the <see cref="OpenToolkit.Windowing.WindowState" /> for this window.
         /// </summary>
         WindowState WindowState { get; set; }
 
         /// <summary>
-        /// Gets or sets the <see cref="OpenTK.WindowBorder" /> for this window.
+        /// Gets or sets the <see cref="OpenToolkit.Windowing.WindowBorder" /> for this window.
         /// </summary>
         WindowBorder WindowBorder { get; set; }
 

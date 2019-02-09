@@ -55,19 +55,19 @@ namespace OpenToolkit.Windowing.Interfaces
         void OnIconChanged(object sender, EventArgs e);
 
         /// <summary>
-        /// Occurs when the <see cref="Title" /> property of the window changes.
+        /// Occurs when the <see cref="OpenToolkit.Windowing.Interfaces.INativeWindow.Title" /> property of the window changes.
         /// </summary>
         event EventHandler<EventArgs> TitleChanged;
         void OnTitleChanged(object sender, EventArgs e);
 
         /// <summary>
-        /// Occurs when the <see cref="Visible" /> property of the window changes.
+        /// Occurs when the <see cref="OpenToolkit.Windowing.Interfaces.INativeWindow.Visible" /> property of the window changes.
         /// </summary>
         event EventHandler<EventArgs> VisibleChanged;
         void OnVisibleChanged(object sender, EventArgs e);
 
         /// <summary>
-        /// Occurs when the <see cref="Focused" /> property of the window changes.
+        /// Occurs when the <see cref="OpenToolkit.Windowing.Interfaces.INativeWindow.Focused" /> property of the window changes.
         /// </summary>
         event EventHandler<EventArgs> FocusedChanged;
         void OnFocusChanged(object sender, EventArgs e);
@@ -115,13 +115,13 @@ namespace OpenToolkit.Windowing.Interfaces
         void OnMouseEnter(object sender, EventArgs e);
 
         /// <summary>
-        /// Occurs whenever a <see cref="OpenTK.Input.MouseButton" /> is clicked.
+        /// Occurs whenever a <see cref="OpenToolkit.Windowing.Input.Enums.MouseButton" /> is clicked.
         /// </summary>
         event EventHandler<MouseButtonEventArgs> MouseDown;
         void OnMouseDown(object sender, EventArgs e);
 
         /// <summary>
-        /// Occurs whenever a <see cref="OpenTK.Input.MouseButton" /> is released.
+        /// Occurs whenever a <see cref="OpenToolkit.Windowing.Input.Enums.MouseButton" /> is released.
         /// </summary>
         event EventHandler<MouseButtonEventArgs> MouseUp;
         void OnMouseUp(object sender, EventArgs e);

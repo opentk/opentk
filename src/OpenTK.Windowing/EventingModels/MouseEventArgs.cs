@@ -110,7 +110,7 @@ namespace OpenToolkit.Windowing.EventingModels
         }
 
         /// <summary>
-        /// Gets the current <see cref="OpenTK.Input.MouseState" />.
+        /// Gets the current <see cref="OpenToolkit.Windowing.Input.MouseState" />.
         /// </summary>
         public MouseState Mouse
         {
