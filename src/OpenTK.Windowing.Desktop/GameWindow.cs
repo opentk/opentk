@@ -233,7 +233,7 @@ namespace OpenToolkit.Windowing.Desktop
                 throw new ArgumentOutOfRangeException(nameof(framesPerSecond), framesPerSecond,
                     "Parameter should be inside the range [0.0, 200.0]");
             }
-            
+
             try
             {
                 if (!MathHelper.ApproximatelyEqualEpsilon(updatesPerSecond, 0.0, 0.00001))
@@ -283,7 +283,11 @@ namespace OpenToolkit.Windowing.Desktop
                     }
                 }
             }
-            //TODO: There should be a catch block here
+            //TODO: There should be some better error checking here. This just keeps the compiler from complaining.
+            catch (Exception e)
+            {
+                throw;
+            }
         }
 
         private void UpdateThread()
