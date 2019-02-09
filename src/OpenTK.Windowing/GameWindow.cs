@@ -211,32 +211,32 @@ namespace OpenToolkit.Windowing
 
         public void Run(double updatesPerSecond, double framesPerSecond)
         {
+            if (updatesPerSecond < 0.0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(updatesPerSecond), updatesPerSecond,
+                    "Parameter cannot be negative");
+            }
+
+            if (updatesPerSecond > 200.0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(updatesPerSecond), updatesPerSecond,
+                    "Parameter should be inside the range [0.0, 200.0]");
+            }
+
+            if (framesPerSecond < 0.0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(framesPerSecond), framesPerSecond,
+                    "Parameter cannot be negative");
+            }
+
+            if (framesPerSecond > 200.0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(framesPerSecond), framesPerSecond,
+                    "Parameter should be inside the range [0.0, 200.0]");
+            }
+            
             try
             {
-                if (updatesPerSecond < 0.0)
-                {
-                    throw new ArgumentOutOfRangeException(nameof(updatesPerSecond), updatesPerSecond,
-                        "Parameter cannot be negative");
-                }
-
-                if (updatesPerSecond > 200.0)
-                {
-                    throw new ArgumentOutOfRangeException(nameof(updatesPerSecond), updatesPerSecond,
-                        "Parameter should be inside the range [0.0, 200.0]");
-                }
-
-                if (framesPerSecond < 0.0)
-                {
-                    throw new ArgumentOutOfRangeException(nameof(framesPerSecond), framesPerSecond,
-                        "Parameter cannot be negative");
-                }
-
-                if (framesPerSecond > 200.0)
-                {
-                    throw new ArgumentOutOfRangeException(nameof(framesPerSecond), framesPerSecond,
-                        "Parameter should be inside the range [0.0, 200.0]");
-                }
-
                 if (!MathHelper.ApproximatelyEqualEpsilon(updatesPerSecond, 0.0, 0.00001))
                 {
                     TargetUpdateFrequency = updatesPerSecond;
