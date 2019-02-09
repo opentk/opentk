@@ -16,6 +16,9 @@ namespace OpenToolkit.Windowing.EventingModels
     /// </summary>
     public class FileDropEventArgs : EventArgs
     {
+        //HIGH: GLFW documentation states that this should be a string array instead of a single string
+        // (for dragging and dropping multiple files at once)
+        
         /// <summary>
         /// Gets the name of the file.
         /// </summary>
