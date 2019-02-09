@@ -82,7 +82,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenTK.OpenAL.Extensions.EX
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Windowing", "Windowing", "{BBBE802B-9F6E-4299-97CE-97CDA43802B9}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenTK.Windowing", "src\OpenTK.Windowing\OpenTK.Windowing.csproj", "{619434D1-477D-40E7-A691-AAF510D8A209}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenTK.Windowing.Common", "src\OpenTK.Windowing.Common\OpenTK.Windowing.Common.csproj", "{619434D1-477D-40E7-A691-AAF510D8A209}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenTK.Tests.Windowing", "tests\OpenTK.Tests.Windowing\OpenTK.Tests.Windowing.csproj", "{63B660A5-52FC-4380-9208-E38C2F9339B3}"
 EndProject
