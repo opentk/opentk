@@ -7,9 +7,9 @@
 // of the MIT license. See the LICENSE file for details.
 //
 
+using System;
 using OpenToolkit.Windowing.Common.Input;
 using OpenToolkit.Windowing.Common.Input.Enums;
-using System;
 
 namespace OpenToolkit.Windowing.EventingModels
 {

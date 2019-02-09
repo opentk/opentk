@@ -1,5 +1,4 @@
-﻿using OpenToolkit.Windowing;
-using System;
+﻿using System.Threading;
 using Xunit;
 
 namespace OpenTK.Tests.Windowing
@@ -11,9 +10,9 @@ namespace OpenTK.Tests.Windowing
         {
             using (var engine = new GameWindow())
             {
-                System.Threading.Thread.Sleep(1);
+                Thread.Sleep(1);
             }
-            System.Threading.Thread.Sleep(1);
+            Thread.Sleep(1);
         }
     }
 }

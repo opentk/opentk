@@ -10,7 +10,6 @@
 using System;
 using System.IO;
 using System.Runtime.InteropServices;
-using SixLabors.ImageSharp;
 
 namespace OpenToolkit.GraphicsLibraryFramework
 {

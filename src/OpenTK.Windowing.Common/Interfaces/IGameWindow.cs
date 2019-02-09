@@ -8,8 +8,8 @@
 //
 
 
-using OpenToolkit.Windowing.EventingModels;
 using System;
+using OpenToolkit.Windowing.EventingModels;
 
 namespace OpenToolkit.Windowing.Common
 {

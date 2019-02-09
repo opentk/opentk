@@ -10,7 +10,6 @@
 using System;
 using System.Drawing;
 
-
 namespace OpenToolkit.Windowing.Common
 {
     /// <summary>

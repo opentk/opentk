@@ -10,10 +10,9 @@
 using System;
 using System.ComponentModel;
 using System.Drawing;
-using OpenToolkit.Windowing.EventingModels;
 using OpenToolkit.GraphicsLibraryFramework;
 using OpenToolkit.Windowing.Common.Input;
-using OpenToolkit.Windowing.Interfaces;
+using OpenToolkit.Windowing.EventingModels;
 
 namespace OpenToolkit.Windowing.Desktop
 {

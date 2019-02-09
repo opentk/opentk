@@ -8,6 +8,7 @@
 //
 
 using System;
+using System.Runtime.Serialization;
 
 namespace OpenToolkit.GraphicsLibraryFramework
 {
@@ -20,7 +21,7 @@ namespace OpenToolkit.GraphicsLibraryFramework
         public GLFWException(string message) : base(message) { }
         public GLFWException(string message, Exception inner) : base(message, inner) { }
         protected GLFWException(
-            System.Runtime.Serialization.SerializationInfo info,
-            System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
+            SerializationInfo info,
+            StreamingContext context) : base(info, context) { }
     }
 }

@@ -25,9 +25,9 @@
 // THE SOFTWARE.
 //
 
+using System;
 using OpenToolkit.Windowing.Common.Input;
 using OpenToolkit.Windowing.Common.Input.Enums;
-using System;
 #if !MINIMAL
 using System.Drawing;
 
