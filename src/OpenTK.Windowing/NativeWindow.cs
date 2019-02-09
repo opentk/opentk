@@ -88,21 +88,20 @@ namespace OpenToolkit.Windowing
                     {
                         return WindowState.Minimized;
                     }
-                    else if (Glfw.GetWindowMonitor(_windowPtr) != null)
+                    
+                    if (Glfw.GetWindowMonitor(_windowPtr) != null)
                     {
                         return WindowState.Fullscreen;
                     }
-                    else
-                    {
-                        var monitor = Glfw.GetPrimaryMonitor();
-                        var mode = Glfw.GetVideoMode(monitor);
+                    
+                    var monitor = Glfw.GetPrimaryMonitor();
+                    var mode = Glfw.GetVideoMode(monitor);
                         
-                        Glfw.GetWindowSize(_windowPtr, out var windowWidth, out var windowHeight);
+                    Glfw.GetWindowSize(_windowPtr, out var windowWidth, out var windowHeight);
 
-                        if (mode->width == windowWidth && mode->height == windowHeight)
-                        {
-                            return WindowState.Maximized;
-                        }
+                    if (mode->width == windowWidth && mode->height == windowHeight)
+                    {
+                        return WindowState.Maximized;
                     }
                 }
                 return WindowState.Normal;
