@@ -9,7 +9,7 @@
 
 namespace OpenToolkit.GraphicsLibraryFramework
 {
-    ///OpenToolkit. <summary>
+    /// <summary>
     /// Opaque handle to a GLFW monitor.
     /// </summary>
     public struct Monitor
