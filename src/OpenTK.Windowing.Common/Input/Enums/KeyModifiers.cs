@@ -9,7 +9,7 @@
 
 using System;
 
-namespace OpenToolkit.Windowing.Common.Input.Enums
+namespace OpenToolkit.Windowing.Common.Input
 {
     /// <summary>
     /// Enumerates modifier keys.

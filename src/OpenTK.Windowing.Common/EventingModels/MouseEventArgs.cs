@@ -27,7 +27,6 @@
 
 using System;
 using OpenToolkit.Windowing.Common.Input;
-using OpenToolkit.Windowing.Common.Input.Enums;
 #if !MINIMAL
 using System.Drawing;
 

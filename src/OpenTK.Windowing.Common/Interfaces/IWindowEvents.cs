@@ -115,13 +115,13 @@ namespace OpenToolkit.Windowing.Common
         void OnMouseEnter(object sender, EventArgs e);
 
         /// <summary>
-        /// Occurs whenever a <see cref="OpenToolkit.Windowing.Common.Input.Enums.MouseButton" /> is clicked.
+        /// Occurs whenever a <see cref="OpenToolkit.Windowing.Common.Input.MouseButton" /> is clicked.
         /// </summary>
         event EventHandler<MouseButtonEventArgs> MouseDown;
         void OnMouseDown(object sender, EventArgs e);
 
         /// <summary>
-        /// Occurs whenever a <see cref="OpenToolkit.Windowing.Common.Input.Enums.MouseButton" /> is released.
+        /// Occurs whenever a <see cref="OpenToolkit.Windowing.Common.Input.MouseButton" /> is released.
         /// </summary>
         event EventHandler<MouseButtonEventArgs> MouseUp;
         void OnMouseUp(object sender, EventArgs e);

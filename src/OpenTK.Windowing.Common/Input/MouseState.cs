@@ -9,7 +9,6 @@
 
 using System;
 using OpenToolkit.Mathematics;
-using OpenToolkit.Windowing.Common.Input.Enums;
 
 namespace OpenToolkit.Windowing.Common.Input
 {
@@ -25,9 +24,9 @@ namespace OpenToolkit.Windowing.Common.Input
 
         /// <summary>
         /// Gets a <see cref="System.Boolean" /> indicating whether the specified
-        ///  <see cref="OpenToolkit.Windowing.Common.Input.Enums.MouseButton" /> is pressed.
+        ///  <see cref="OpenToolkit.Windowing.Common.Input.MouseButton" /> is pressed.
         /// </summary>
-        /// <param name="button">The <see cref="OpenToolkit.Windowing.Common.Input.Enums.MouseButton" /> to check.</param>
+        /// <param name="button">The <see cref="OpenToolkit.Windowing.Common.Input.MouseButton" /> to check.</param>
         /// <returns>True if key is pressed; false otherwise.</returns>
         public bool this[MouseButton button]
         {
@@ -48,7 +47,7 @@ namespace OpenToolkit.Windowing.Common.Input
         /// <summary>
         /// Gets a <see cref="System.Boolean" /> indicating whether this button is down.
         /// </summary>
-        /// <param name="button">The <see cref="OpenToolkit.Windowing.Common.Input.Enums.MouseButton" /> to check.</param>
+        /// <param name="button">The <see cref="OpenToolkit.Windowing.Common.Input.MouseButton" /> to check.</param>
         public bool IsButtonDown(MouseButton button)
         {
             return ReadBit((int)button);
@@ -57,7 +56,7 @@ namespace OpenToolkit.Windowing.Common.Input
         /// <summary>
         /// Gets a <see cref="System.Boolean" /> indicating whether this button is up.
         /// </summary>
-        /// <param name="button">The <see cref="OpenToolkit.Windowing.Common.Input.Enums.MouseButton" /> to check.</param>
+        /// <param name="button">The <see cref="OpenToolkit.Windowing.Common.Input.MouseButton" /> to check.</param>
         public bool IsButtonUp(MouseButton button)
         {
             return !ReadBit((int)button);

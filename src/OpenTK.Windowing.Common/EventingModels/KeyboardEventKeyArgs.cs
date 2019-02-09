@@ -9,7 +9,6 @@
 
 using System;
 using OpenToolkit.Windowing.Common.Input;
-using OpenToolkit.Windowing.Common.Input.Enums;
 
 namespace OpenToolkit.Windowing.EventingModels
 {
@@ -52,25 +51,25 @@ namespace OpenToolkit.Windowing.EventingModels
         public uint ScanCode => (uint)Key;
 
         /// <summary>
-        /// Gets a value indicating whether <see cref="OpenToolkit.Windowing.Common.Input.Enums.KeyModifiers.Alt" /> is pressed.
+        /// Gets a value indicating whether <see cref="OpenToolkit.Windowing.Common.Input.KeyModifiers.Alt" /> is pressed.
         /// </summary>
         /// <value><c>true</c> if pressed; otherwise, <c>false</c>.</value>
         public bool Alt => Keyboard[Key.AltLeft] || Keyboard[Key.AltRight];
 
         /// <summary>
-        /// Gets a value indicating whether <see cref="OpenToolkit.Windowing.Common.Input.Enums.KeyModifiers.Control" /> is pressed.
+        /// Gets a value indicating whether <see cref="OpenToolkit.Windowing.Common.Input.KeyModifiers.Control" /> is pressed.
         /// </summary>
         /// <value><c>true</c> if pressed; otherwise, <c>false</c>.</value>
         public bool Control => Keyboard[Key.ControlLeft] || Keyboard[Key.ControlRight];
 
         /// <summary>
-        /// Gets a value indicating whether <see cref="OpenToolkit.Windowing.Common.Input.Enums.KeyModifiers.Shift" /> is pressed.
+        /// Gets a value indicating whether <see cref="OpenToolkit.Windowing.Common.Input.KeyModifiers.Shift" /> is pressed.
         /// </summary>
         /// <value><c>true</c> if pressed; otherwise, <c>false</c>.</value>
         public bool Shift => Keyboard[Key.ShiftLeft] || Keyboard[Key.ShiftRight];
 
         /// <summary>
-        /// Gets a bitwise combination representing the <see cref="OpenToolkit.Windowing.Common.Input.Enums.KeyModifiers" />
+        /// Gets a bitwise combination representing the <see cref="OpenToolkit.Windowing.Common.Input.KeyModifiers" />
         /// that are currently pressed.
         /// </summary>
         /// <value>The modifiers.</value>

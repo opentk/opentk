@@ -8,7 +8,6 @@
 //
 
 using System;
-using OpenToolkit.Windowing.Common.Input.Enums;
 
 namespace OpenToolkit.Windowing.Common.Input
 {

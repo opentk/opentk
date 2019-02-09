@@ -7,7 +7,7 @@
 // of the MIT license. See the LICENSE file for details.
 //
 
-namespace OpenToolkit.Windowing.Common.Input.Enums
+namespace OpenToolkit.Windowing.Common.Input
 {
     /// <summary>
     /// The available keyboard keys.
