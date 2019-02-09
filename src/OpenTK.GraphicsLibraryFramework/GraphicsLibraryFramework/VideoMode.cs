@@ -7,7 +7,7 @@
 // of the MIT license. See the LICENSE file for details.
 //
 
-namespace OpenToolkit.Windowing.GraphicsLibraryFramework
+namespace OpenToolkit.GraphicsLibraryFramework
 {
     /// <summary>
     /// Replicated handle to a GLFW VideoMode.

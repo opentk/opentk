@@ -7,9 +7,9 @@
 // of the MIT license. See the LICENSE file for details.
 //
 
-namespace OpenToolkit.Windowing.GraphicsLibraryFramework
+namespace OpenToolkit.GraphicsLibraryFramework
 {
-    /// <summary>
+    ///OpenToolkit. <summary>
     /// Opaque handle to a GLFW monitor.
     /// </summary>
     public struct Monitor

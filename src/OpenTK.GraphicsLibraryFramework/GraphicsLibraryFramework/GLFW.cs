@@ -10,9 +10,9 @@
 using System;
 using AdvancedDLSupport;
 using OpenToolkit.Core.Loader;
-using OpenToolkit.Windowing.GraphicsLibraryFramework.Interfaces;
+using OpenToolkit.GraphicsLibraryFramework.Interfaces;
 
-namespace OpenToolkit.Windowing.GraphicsLibraryFramework
+namespace OpenToolkit.GraphicsLibraryFramework
 {
     /// <summary>
     /// Provides access to the GLFW API.

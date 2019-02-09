@@ -12,7 +12,7 @@ using System.IO;
 using System.Runtime.InteropServices;
 using SixLabors.ImageSharp;
 
-namespace OpenToolkit.Windowing.GraphicsLibraryFramework
+namespace OpenToolkit.GraphicsLibraryFramework
 {
     /// <summary>
     /// Opaque handle to a GLFW image.

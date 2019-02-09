@@ -1,4 +1,4 @@
-﻿namespace OpenToolkit.Windowing.GraphicsLibraryFramework
+﻿namespace OpenToolkit.GraphicsLibraryFramework
 {
     public enum InputAction
     {

@@ -10,7 +10,7 @@
 using OpenToolkit.Core.Loader;
 using System;
 
-namespace OpenToolkit.Windowing.GraphicsLibraryFramework
+namespace OpenToolkit.GraphicsLibraryFramework
 {
     /// <summary>
     /// Contains the library name of GLFW.

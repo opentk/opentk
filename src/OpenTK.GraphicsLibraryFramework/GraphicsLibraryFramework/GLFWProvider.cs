@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace OpenToolkit.Windowing.GraphicsLibraryFramework
+namespace OpenToolkit.GraphicsLibraryFramework
 {
     public static class GLFWProvider
     {

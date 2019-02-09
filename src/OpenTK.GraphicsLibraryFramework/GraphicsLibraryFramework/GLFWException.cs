@@ -9,7 +9,7 @@
 
 using System;
 
-namespace OpenToolkit.Windowing.GraphicsLibraryFramework
+namespace OpenToolkit.GraphicsLibraryFramework
 {
     [Serializable]
     public class GLFWException : Exception
