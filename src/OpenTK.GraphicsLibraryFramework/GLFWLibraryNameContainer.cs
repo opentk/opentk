@@ -21,7 +21,7 @@ namespace OpenToolkit.GraphicsLibraryFramework
         public override string Linux => "libglfw.so.3";
 
         /// <inheritdoc />
-        public override string MacOS => throw new NotImplementedException("Get the path of the glfw install");
+        public override string MacOS => "libglfw.dylib";
 
         /// <inheritdoc />
         public override string Android => Linux;
