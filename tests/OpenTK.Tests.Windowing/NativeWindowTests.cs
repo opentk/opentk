@@ -1,6 +1,7 @@
 using System;
 using System.Drawing;
 using System.Threading;
+using OpenToolkit.Windowing.Common;
 using OpenToolkit.Windowing.Desktop;
 using Xunit;
 
