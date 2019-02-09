@@ -7,8 +7,8 @@
 // of the MIT license. See the LICENSE file for details.
 //
 
-using OpenToolkit.Windowing.Input;
-using OpenToolkit.Windowing.Input.Enums;
+using OpenToolkit.Windowing.Common.Input;
+using OpenToolkit.Windowing.Common.Input.Enums;
 using System;
 
 namespace OpenToolkit.Windowing.EventingModels
@@ -52,25 +52,25 @@ namespace OpenToolkit.Windowing.EventingModels
         public uint ScanCode => (uint)Key;
 
         /// <summary>
-        /// Gets a value indicating whether <see cref="OpenToolkit.Windowing.Input.Enums.KeyModifiers.Alt" /> is pressed.
+        /// Gets a value indicating whether <see cref="OpenToolkit.Windowing.Common.Input.Enums.KeyModifiers.Alt" /> is pressed.
         /// </summary>
         /// <value><c>true</c> if pressed; otherwise, <c>false</c>.</value>
         public bool Alt => Keyboard[Key.AltLeft] || Keyboard[Key.AltRight];
 
         /// <summary>
-        /// Gets a value indicating whether <see cref="OpenToolkit.Windowing.Input.Enums.KeyModifiers.Control" /> is pressed.
+        /// Gets a value indicating whether <see cref="OpenToolkit.Windowing.Common.Input.Enums.KeyModifiers.Control" /> is pressed.
         /// </summary>
         /// <value><c>true</c> if pressed; otherwise, <c>false</c>.</value>
         public bool Control => Keyboard[Key.ControlLeft] || Keyboard[Key.ControlRight];
 
         /// <summary>
-        /// Gets a value indicating whether <see cref="OpenToolkit.Windowing.Input.Enums.KeyModifiers.Shift" /> is pressed.
+        /// Gets a value indicating whether <see cref="OpenToolkit.Windowing.Common.Input.Enums.KeyModifiers.Shift" /> is pressed.
         /// </summary>
         /// <value><c>true</c> if pressed; otherwise, <c>false</c>.</value>
         public bool Shift => Keyboard[Key.ShiftLeft] || Keyboard[Key.ShiftRight];
 
         /// <summary>
-        /// Gets a bitwise combination representing the <see cref="OpenToolkit.Windowing.Input.Enums.KeyModifiers" />
+        /// Gets a bitwise combination representing the <see cref="OpenToolkit.Windowing.Common.Input.Enums.KeyModifiers" />
         /// that are currently pressed.
         /// </summary>
         /// <value>The modifiers.</value>
@@ -87,7 +87,7 @@ namespace OpenToolkit.Windowing.EventingModels
         }
 
         /// <summary>
-        /// Gets the current <see cref="OpenToolkit.Windowing.Input.KeyboardState" />.
+        /// Gets the current <see cref="OpenToolkit.Windowing.Common.Input.KeyboardState" />.
         /// </summary>
         /// <value>The keyboard.</value>
         public KeyboardState Keyboard { get; internal set; }

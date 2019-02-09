@@ -11,7 +11,7 @@
 using OpenToolkit.Windowing.EventingModels;
 using System;
 
-namespace OpenToolkit.Windowing.Interfaces
+namespace OpenToolkit.Windowing.Common.Interfaces
 {
     /// <summary>
     /// Defines the interface for a GameWindow.

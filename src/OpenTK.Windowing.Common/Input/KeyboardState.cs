@@ -7,10 +7,10 @@
 // of the MIT license. See the LICENSE file for details.
 //
 
-using OpenToolkit.Windowing.Input.Enums;
 using System;
+using OpenToolkit.Windowing.Common.Input.Enums;
 
-namespace OpenToolkit.Windowing.Input
+namespace OpenToolkit.Windowing.Common.Input
 {
     /// <summary>
     /// Encapsulates the state of a Keyboard device.
@@ -27,9 +27,9 @@ namespace OpenToolkit.Windowing.Input
 
         /// <summary>
         /// Gets a <see cref="System.Boolean" /> indicating whether the specified
-        ///  <see cref="OpenToolkit.Windowing.Input.Enums.Key" /> is pressed.
+        ///  <see cref="Key" /> is pressed.
         /// </summary>
-        /// <param name="key">The <see cref="OpenToolkit.Windowing.Input.Enums.Key" /> to check.</param>
+        /// <param name="key">The <see cref="Key" /> to check.</param>
         /// <returns>True if key is pressed; false otherwise.</returns>
         public bool this[Key key]
         {
@@ -39,7 +39,7 @@ namespace OpenToolkit.Windowing.Input
 
         /// <summary>
         /// Gets a <see cref="System.Boolean" /> indicating whether the specified
-        ///  <see cref="OpenToolkit.Windowing.Input.Key" /> is pressed.
+        ///  <see cref="OpenToolkit.Windowing.Common.Input.Key" /> is pressed.
         /// </summary>
         /// <param name="code">The scancode to check.</param>
         /// <returns>True if code is pressed; false otherwise.</returns>
@@ -48,7 +48,7 @@ namespace OpenToolkit.Windowing.Input
         /// <summary>
         /// Gets a <see cref="System.Boolean" /> indicating whether this key is down.
         /// </summary>
-        /// <param name="key">The <see cref="OpenToolkit.Windowing.Input.Enums.Key" /> to check.</param>
+        /// <param name="key">The <see cref="Key" /> to check.</param>
         public bool IsKeyDown(Key key)
         {
             return ReadBit((int)key);
@@ -66,7 +66,7 @@ namespace OpenToolkit.Windowing.Input
         /// <summary>
         /// Gets a <see cref="System.Boolean" /> indicating whether this key is up.
         /// </summary>
-        /// <param name="key">The <see cref="OpenToolkit.Windowing.Input.Enums.Key" /> to check.</param>
+        /// <param name="key">The <see cref="Key" /> to check.</param>
         public bool IsKeyUp(Key key)
         {
             return !ReadBit((int)key);

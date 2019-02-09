@@ -9,7 +9,7 @@
 
 using System;
 
-namespace OpenToolkit.Windowing.Input
+namespace OpenToolkit.Windowing.Common.Input
 {
     /// <summary>
     /// Represents the state of a mouse wheel.
@@ -45,16 +45,16 @@ namespace OpenToolkit.Windowing.Input
         }
 
         /// <summary>
-        /// Returns a <see cref="System.String" /> that represents the current <see cref="OpenToolkit.Windowing.Input.MouseScroll" />.
+        /// Returns a <see cref="System.String" /> that represents the current <see cref="MouseScroll" />.
         /// </summary>
-        /// <returns>A <see cref="System.String" /> that represents the current <see cref="OpenToolkit.Windowing.Input.MouseScroll" />.</returns>
+        /// <returns>A <see cref="System.String" /> that represents the current <see cref="MouseScroll" />.</returns>
         public override string ToString()
         {
             return $"[X={X:0.00}, Y={Y:0.00}]";
         }
 
         /// <summary>
-        /// Serves as a hash function for a <see cref="OpenToolkit.Windowing.Input.MouseScroll" /> object.
+        /// Serves as a hash function for a <see cref="MouseScroll" /> object.
         /// </summary>
         /// <returns>
         /// A hash code for this instance that is suitable for use in hashing algorithms and data structures such as a
@@ -67,12 +67,12 @@ namespace OpenToolkit.Windowing.Input
 
         /// <summary>
         /// Determines whether the specified <see cref="System.Object" /> is equal to the current
-        ///  <see cref="OpenToolkit.Windowing.Input.MouseScroll" />.
+        ///  <see cref="MouseScroll" />.
         /// </summary>
-        /// <param name="obj">The <see cref="System.Object" /> to compare with the current <see cref="OpenToolkit.Windowing.Input.MouseScroll" />.</param>
+        /// <param name="obj">The <see cref="System.Object" /> to compare with the current <see cref="MouseScroll" />.</param>
         /// <returns>
         ///  <c>true</c> if the specified <see cref="System.Object" /> is equal to the current
-        ///  <see cref="OpenToolkit.Windowing.Input.MouseScroll" />; otherwise, <c>false</c>.
+        ///  <see cref="MouseScroll" />; otherwise, <c>false</c>.
         /// </returns>
         public override bool Equals(object obj)
         {
@@ -82,16 +82,16 @@ namespace OpenToolkit.Windowing.Input
         }
 
         /// <summary>
-        /// Determines whether the specified <see cref="OpenToolkit.Windowing.Input.MouseScroll" /> is equal to the current
-        ///  <see cref="OpenToolkit.Windowing.Input.MouseScroll" />.
+        /// Determines whether the specified <see cref="MouseScroll" /> is equal to the current
+        ///  <see cref="MouseScroll" />.
         /// </summary>
         /// <param name="other">
-        /// The <see cref="OpenToolkit.Windowing.Input.MouseScroll" /> to compare with the current
-        ///  <see cref="OpenToolkit.Windowing.Input.MouseScroll" />.
+        /// The <see cref="MouseScroll" /> to compare with the current
+        ///  <see cref="MouseScroll" />.
         /// </param>
         /// <returns>
-        ///  <c>true</c> if the specified <see cref="OpenToolkit.Windowing.Input.MouseScroll" /> is equal to the current
-        ///  <see cref="OpenToolkit.Windowing.Input.MouseScroll" />; otherwise, <c>false</c>.
+        ///  <c>true</c> if the specified <see cref="MouseScroll" /> is equal to the current
+        ///  <see cref="MouseScroll" />; otherwise, <c>false</c>.
         /// </returns>
         public bool Equals(MouseScroll other)
         {

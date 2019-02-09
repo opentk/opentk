@@ -7,15 +7,15 @@
 // of the MIT license. See the LICENSE file for details.
 //
 
-using OpenToolkit.Windowing.Input;
+using OpenToolkit.Windowing.Common.Input;
 
-namespace OpenToolkit.Windowing.Interfaces
+namespace OpenToolkit.Windowing.Common.Interfaces
 {
     public interface IWindowInput
     {
 
         /// <summary>
-        /// Gets or sets the <see cref="OpenToolkit.Windowing.Input.MouseCursor" /> for this window.
+        /// Gets or sets the <see cref="OpenToolkit.Windowing.Common.Input.MouseCursor" /> for this window.
         /// </summary>
         /// <value>The cursor.</value>
         MouseCursor Cursor { get; set; }

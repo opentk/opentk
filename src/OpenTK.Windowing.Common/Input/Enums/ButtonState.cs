@@ -7,7 +7,7 @@
 // of the MIT license. See the LICENSE file for details.
 //
 
-namespace OpenToolkit.Windowing.Input.Enums
+namespace OpenToolkit.Windowing.Common.Input.Enums
 {
     /// <summary>
     /// Enumerates possible mouse button states.

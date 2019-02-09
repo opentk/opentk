@@ -10,7 +10,7 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace OpenToolkit.Windowing.Input
+namespace OpenToolkit.Windowing.Common.Input
 {
     /// <summary>
     /// Stores a window icon. A window icon is defined
@@ -20,7 +20,7 @@ namespace OpenToolkit.Windowing.Input
     {
         /// \internal
         /// <summary>
-        /// Initializes a new instance of the <see cref="OpenToolkit.Windowing.Input.WindowIcon" /> class.
+        /// Initializes a new instance of the <see cref="OpenToolkit.Windowing.Common.Input.WindowIcon" /> class.
         /// </summary>
         protected internal WindowIcon()
         {

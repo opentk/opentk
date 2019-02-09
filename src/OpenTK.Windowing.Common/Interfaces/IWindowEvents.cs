@@ -11,7 +11,7 @@ using OpenToolkit.Windowing.EventingModels;
 using System;
 using System.ComponentModel;
 
-namespace OpenToolkit.Windowing.Interfaces
+namespace OpenToolkit.Windowing.Common.Interfaces
 {
     /// <summary>
     /// Defines the interface for a GameWindow.
@@ -115,13 +115,13 @@ namespace OpenToolkit.Windowing.Interfaces
         void OnMouseEnter(object sender, EventArgs e);
 
         /// <summary>
-        /// Occurs whenever a <see cref="OpenToolkit.Windowing.Input.Enums.MouseButton" /> is clicked.
+        /// Occurs whenever a <see cref="OpenToolkit.Windowing.Common.Input.Enums.MouseButton" /> is clicked.
         /// </summary>
         event EventHandler<MouseButtonEventArgs> MouseDown;
         void OnMouseDown(object sender, EventArgs e);
 
         /// <summary>
-        /// Occurs whenever a <see cref="OpenToolkit.Windowing.Input.Enums.MouseButton" /> is released.
+        /// Occurs whenever a <see cref="OpenToolkit.Windowing.Common.Input.Enums.MouseButton" /> is released.
         /// </summary>
         event EventHandler<MouseButtonEventArgs> MouseUp;
         void OnMouseUp(object sender, EventArgs e);

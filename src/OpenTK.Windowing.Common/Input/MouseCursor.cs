@@ -9,7 +9,7 @@
 
 using System;
 
-namespace OpenToolkit.Windowing.Input
+namespace OpenToolkit.Windowing.Common.Input
 {
     /// <summary>
     /// Represents a predefined or custom mouse cursor.

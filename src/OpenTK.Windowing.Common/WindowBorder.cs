@@ -7,7 +7,7 @@
 // of the MIT license. See the LICENSE file for details.
 //
 
-namespace OpenToolkit.Windowing
+namespace OpenToolkit.Windowing.Common
 {
     /// <summary>
     /// Enumerates available window borders.

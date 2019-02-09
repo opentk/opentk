@@ -11,7 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace OpenToolkit.Windowing
+namespace OpenToolkit.Windowing.Common
 {
     /// <summary>
     /// Enumerates available window states.

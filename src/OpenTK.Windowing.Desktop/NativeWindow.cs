@@ -12,7 +12,7 @@ using System.ComponentModel;
 using System.Drawing;
 using OpenToolkit.Windowing.EventingModels;
 using OpenToolkit.GraphicsLibraryFramework;
-using OpenToolkit.Windowing.Input;
+using OpenToolkit.Windowing.Common.Input;
 using OpenToolkit.Windowing.Interfaces;
 
 namespace OpenToolkit.Windowing.Desktop

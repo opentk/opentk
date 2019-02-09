@@ -25,8 +25,8 @@
 // THE SOFTWARE.
 //
 
-using OpenToolkit.Windowing.Input;
-using OpenToolkit.Windowing.Input.Enums;
+using OpenToolkit.Windowing.Common.Input;
+using OpenToolkit.Windowing.Common.Input.Enums;
 using System;
 #if !MINIMAL
 using System.Drawing;
@@ -110,7 +110,7 @@ namespace OpenToolkit.Windowing.EventingModels
         }
 
         /// <summary>
-        /// Gets the current <see cref="OpenToolkit.Windowing.Input.MouseState" />.
+        /// Gets the current <see cref="OpenToolkit.Windowing.Common.Input.MouseState" />.
         /// </summary>
         public MouseState Mouse
         {
