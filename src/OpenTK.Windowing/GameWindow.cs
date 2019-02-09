@@ -300,7 +300,7 @@ namespace OpenToolkit.Windowing
         {
             var isRunningSlowlyRetries = 4;
             var timestamp = watch.Elapsed.TotalSeconds;
-            var elapsed = ClampElapsed(timestamp - _updateTimestamp);
+            var elapsed = MathHelper.Clamp(timestamp - _updateTimestamp, 0.0, 1.0);
 
             while (elapsed > 0 && elapsed + _updateEpsilon >= TargetUpdatePeriod)
             {
@@ -312,7 +312,7 @@ namespace OpenToolkit.Windowing
                 _updateEpsilon += elapsed - TargetUpdatePeriod;
 
                 // Prepare for next loop
-                elapsed = ClampElapsed(timestamp - _updateTimestamp);
+                elapsed = MathHelper.Clamp(timestamp - _updateTimestamp, 0.0, 1.0);
 
                 if (TargetUpdatePeriod <= double.Epsilon)
                 {
@@ -336,16 +336,11 @@ namespace OpenToolkit.Windowing
         private void DispatchRenderFrame()
         {
             var timestamp = _watchRender.Elapsed.TotalSeconds;
-            var elapsed = ClampElapsed(timestamp - _renderTimestamp);
+            var elapsed = MathHelper.Clamp(timestamp - _renderTimestamp, 0.0, 1.0);
             if (elapsed > 0 && elapsed >= TargetRenderPeriod)
             {
                 RaiseRenderFrame(elapsed, ref timestamp);
             }
-        }
-
-        private double ClampElapsed(double elapsed)
-        {
-            return MathHelper.Clamp(elapsed, 0.0, 1.0);
         }
 
         public virtual void SwapBuffers()
