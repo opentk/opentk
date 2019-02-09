@@ -54,7 +54,7 @@ namespace OpenToolkit.Windowing.Desktop
                     Glfw.SetWindowTitle(_windowPtr, value);
                 }
 
-                TitleChanged?.Invoke(this, EventArgs.Empty);
+                OnTitleChanged(this, EventArgs.Empty);
             }
         }
 
@@ -86,7 +86,7 @@ namespace OpenToolkit.Windowing.Desktop
                 {
                     unsafe { Glfw.HideWindow(_windowPtr); }
                 }
-                VisibleChanged?.Invoke(this, EventArgs.Empty);
+                OnVisibleChanged(this, EventArgs.Empty);
             }
         }
 
@@ -148,7 +148,7 @@ namespace OpenToolkit.Windowing.Desktop
                     }
                 }
 
-                WindowStateChanged?.Invoke(this, EventArgs.Empty);
+                OnWindowStateChanged(this, EventArgs.Empty);
             }
         }
 
@@ -341,39 +341,39 @@ namespace OpenToolkit.Windowing.Desktop
                 {
                     if (action == InputAction.Press)
                     {
-                        KeyDown?.Invoke(this, new KeyboardKeyEventArgs());
+                        OnKeyDown(this, new KeyboardKeyEventArgs());
                     }
                     else if (action == InputAction.Release)
                     {
-                        KeyUp?.Invoke(this, new KeyboardKeyEventArgs());
+                        OnKeyUp(this, new KeyboardKeyEventArgs());
                     }
                 });
                 Glfw.SetCursorEnterCallback(_windowPtr, (window, entered) =>
                 {
                     if (entered)
                     {
-                        MouseEnter?.Invoke(this, EventArgs.Empty);
+                        OnMouseEnter(this, EventArgs.Empty);
                     }
                     else
                     {
-                        MouseLeave?.Invoke(this, EventArgs.Empty);
+                        OnMouseLeave(this, EventArgs.Empty);
                     }
                 });
                 Glfw.SetMouseButtonCallback(_windowPtr, (window, button, action, mods) =>
                 {
                     if (action == InputAction.Press)
                     {
-                        MouseDown?.Invoke(this, new MouseButtonEventArgs());
+                        OnMouseDown(this, new MouseButtonEventArgs());
                     }
                     else if (action == InputAction.Release)
                     {
-                        MouseUp?.Invoke(this, new MouseButtonEventArgs());
+                        OnMouseUp(this, new MouseButtonEventArgs());
                     }
 
                 });
-                Glfw.SetCursorPosCallback(_windowPtr, (window, xpos, ypos) => MouseMove?.Invoke(this, new MouseMoveEventArgs()));
-                Glfw.SetScrollCallback(_windowPtr, (window, xOffset, yOffset) => MouseWheel?.Invoke(this, new MouseWheelEventArgs()));
-                Glfw.SetDropCallback(_windowPtr, (window, count, paths) => FileDrop?.Invoke(this, new FileDropEventArgs()));
+                Glfw.SetCursorPosCallback(_windowPtr, (window, xpos, ypos) => OnMouseMove(this, new MouseMoveEventArgs()));
+                Glfw.SetScrollCallback(_windowPtr, (window, xOffset, yOffset) => OnMouseWheel(this, new MouseWheelEventArgs()));
+                Glfw.SetDropCallback(_windowPtr, (window, count, paths) => OnFileDrop(this, new FileDropEventArgs()));
 
                 //TODO: Events from GLFW the 'legacy' NativeWindow didnt have events for.
                 Glfw.SetCharModsCallback(_windowPtr, (window, codepoint, mods) => throw new NotImplementedException());
@@ -387,7 +387,7 @@ namespace OpenToolkit.Windowing.Desktop
             unsafe
             {
                 Glfw.SetWindowShouldClose(_windowPtr);
-                Closed?.Invoke(this, EventArgs.Empty);
+                OnClosed(this, EventArgs.Empty);
             }
         }
 
