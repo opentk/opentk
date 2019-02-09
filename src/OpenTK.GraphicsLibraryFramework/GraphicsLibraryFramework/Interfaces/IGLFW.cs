@@ -10,7 +10,7 @@
 using System;
 using AdvancedDLSupport;
 
-namespace OpenToolkit.GraphicsLibraryFramework.Interfaces
+namespace OpenToolkit.GraphicsLibraryFramework
 {
     /// <summary>
     ///     Defines the public interface of the GLFW 3.2 library

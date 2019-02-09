@@ -12,7 +12,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Text;
 
-namespace OpenToolkit.Windowing.Common.Interfaces
+namespace OpenToolkit.Windowing.Common
 {
     public interface IWindowProperties
     {

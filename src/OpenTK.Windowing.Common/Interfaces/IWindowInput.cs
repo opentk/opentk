@@ -9,7 +9,7 @@
 
 using OpenToolkit.Windowing.Common.Input;
 
-namespace OpenToolkit.Windowing.Common.Interfaces
+namespace OpenToolkit.Windowing.Common
 {
     public interface IWindowInput
     {

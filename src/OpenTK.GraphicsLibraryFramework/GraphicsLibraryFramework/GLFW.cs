@@ -10,7 +10,7 @@
 using System;
 using AdvancedDLSupport;
 using OpenToolkit.Core.Loader;
-using OpenToolkit.GraphicsLibraryFramework.Interfaces;
+using OpenToolkit.GraphicsLibraryFramework;
 
 namespace OpenToolkit.GraphicsLibraryFramework
 {

@@ -11,7 +11,7 @@ using System;
 using System.Drawing;
 
 
-namespace OpenToolkit.Windowing.Common.Interfaces
+namespace OpenToolkit.Windowing.Common
 {
     /// <summary>
     /// Defines the interface for a NativeWindow

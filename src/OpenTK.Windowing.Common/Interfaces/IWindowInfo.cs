@@ -9,7 +9,7 @@
 
 using System;
 
-namespace OpenToolkit.Windowing.Common.Interfaces
+namespace OpenToolkit.Windowing.Common
 {
     /// <summary>
     /// Describes an OS window.
