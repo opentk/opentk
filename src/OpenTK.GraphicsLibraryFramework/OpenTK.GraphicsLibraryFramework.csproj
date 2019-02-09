@@ -1,0 +1,30 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netstandard2.0</TargetFramework>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+      <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+      <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
+        <_Parameter1>DLSupportDynamicAssembly</_Parameter1>
+      </AssemblyAttribute>
+    </ItemGroup>
+    
+    <ItemGroup>
+      <PackageReference Include="glfw" Version="3.2.1.5" />
+      <PackageReference Include="SixLabors.ImageSharp" Version="1.0.0-beta0005" />
+    </ItemGroup>
+    
+    <ItemGroup>
+      <ProjectReference Include="..\OpenTK.Core\OpenTK.Core.csproj" />
+      <ProjectReference Include="..\OpenTK.Mathematics\OpenTK.Mathematics.csproj" />
+    </ItemGroup>
+</Project>
