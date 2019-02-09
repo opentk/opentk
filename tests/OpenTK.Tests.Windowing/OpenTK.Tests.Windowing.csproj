@@ -14,6 +14,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\OpenTK.Windowing.Common\OpenTK.Windowing.Common.csproj" />
+    <ProjectReference Include="..\..\src\OpenTK.Windowing.Desktop\OpenTK.Windowing.Desktop.csproj" />
   </ItemGroup>
 
 </Project>

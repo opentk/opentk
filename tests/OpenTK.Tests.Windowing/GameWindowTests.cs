@@ -1,4 +1,5 @@
 ﻿using System.Threading;
+using OpenToolkit.Windowing.Desktop;
 using Xunit;
 
 namespace OpenTK.Tests.Windowing
