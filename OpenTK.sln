@@ -88,6 +88,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenTK.Tests.Windowing", "t
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenTK.GraphicsLibraryFramework", "src\OpenTK.GraphicsLibraryFramework\OpenTK.GraphicsLibraryFramework.csproj", "{CA7C55A9-B86F-4467-A655-14D04C573E89}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenTK.Windowing.Desktop", "src\OpenTK.Windowing.Desktop\OpenTK.Windowing.Desktop.csproj", "{BB7FF73F-5143-4D57-B228-770B10CA80C6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -198,6 +200,10 @@ Global
 		{CA7C55A9-B86F-4467-A655-14D04C573E89}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CA7C55A9-B86F-4467-A655-14D04C573E89}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CA7C55A9-B86F-4467-A655-14D04C573E89}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BB7FF73F-5143-4D57-B228-770B10CA80C6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BB7FF73F-5143-4D57-B228-770B10CA80C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BB7FF73F-5143-4D57-B228-770B10CA80C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BB7FF73F-5143-4D57-B228-770B10CA80C6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -224,6 +230,7 @@ Global
 		{619434D1-477D-40E7-A691-AAF510D8A209} = {BBBE802B-9F6E-4299-97CE-97CDA43802B9}
 		{63B660A5-52FC-4380-9208-E38C2F9339B3} = {BBBE802B-9F6E-4299-97CE-97CDA43802B9}
 		{CA7C55A9-B86F-4467-A655-14D04C573E89} = {BBBE802B-9F6E-4299-97CE-97CDA43802B9}
+		{BB7FF73F-5143-4D57-B228-770B10CA80C6} = {BBBE802B-9F6E-4299-97CE-97CDA43802B9}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {82DDE6D6-0D55-49B4-9C64-B31B4A6E729F}

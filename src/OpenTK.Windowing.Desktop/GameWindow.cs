@@ -14,7 +14,7 @@ using OpenToolkit.Mathematics;
 using OpenToolkit.Windowing.EventingModels;
 using OpenToolkit.Windowing.Interfaces;
 
-namespace OpenToolkit.Windowing
+namespace OpenToolkit.Windowing.Desktop
 {
     public class GameWindow: NativeWindow, IGameWindow
     {

@@ -15,7 +15,7 @@ using OpenToolkit.GraphicsLibraryFramework;
 using OpenToolkit.Windowing.Input;
 using OpenToolkit.Windowing.Interfaces;
 
-namespace OpenToolkit.Windowing
+namespace OpenToolkit.Windowing.Desktop
 {
     public class NativeWindow : INativeWindow
     {
