@@ -153,13 +153,13 @@ namespace OpenTK.Tests.Windowing
         {
             // Create and start 3 threads, each of which tries to use GLFW.
             Thread[] threads = { new Thread(WindowProc), new Thread(WindowProc), new Thread(WindowProc) };
-            foreach (Thread t in threads)
+            foreach (var t in threads)
             {
                 t.Start();
             }
 
             // Wait for all 3 threads to finish. (The order doesn't matter.)
-            foreach (Thread t in threads)
+            foreach (var t in threads)
             {
                 t.Join();
             }
