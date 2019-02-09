@@ -20,7 +20,7 @@ namespace OpenToolkit.Windowing.Input
     {
         /// \internal
         /// <summary>
-        /// Initializes a new instance of the <see cref="OpenToolkit.WindowIcon" /> class.
+        /// Initializes a new instance of the <see cref="OpenToolkit.Windowing.Input.WindowIcon" /> class.
         /// </summary>
         protected internal WindowIcon()
         {
