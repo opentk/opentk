@@ -8,7 +8,6 @@
 //
 
 // TODO: Need to create WindowAttrib enum and see if any need duplicate/moved to that one since there is a syntactic difference
-// TODO: Confirm which of these (if not all) are flags so the containing enum can be appropriately attributed
 namespace OpenToolkit.Windowing.GraphicsLibraryFramework
 {
     public enum WindowHint
