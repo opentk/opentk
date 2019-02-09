@@ -284,6 +284,7 @@ namespace OpenToolkit.Windowing
                     }
                 }
             }
+            //TODO: There should be a catch block here
         }
 
         private void UpdateThread()
