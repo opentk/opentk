@@ -18,7 +18,7 @@ namespace OpenToolkit.GraphicsLibraryFramework
     internal class GLFWLibraryNameContainer : PlatformLibraryNameContainerBase
     {
         /// <inheritdoc />
-        public override string Linux => throw new NotImplementedException("Get the name of the linux shared object file");
+        public override string Linux => "libglfw.so";
 
         /// <inheritdoc />
         public override string MacOS => throw new NotImplementedException("Get the path of the glfw install");
