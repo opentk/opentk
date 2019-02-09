@@ -247,8 +247,9 @@ namespace OpenToolkit.Windowing
             {
                 unsafe
                 {
-                    return Glfw.GetInputMode(_windowPtr, InputMode.Cursor) != InputModeValue.CursorHidden
-                           && Glfw.GetInputMode(_windowPtr, InputMode.Cursor) != InputModeValue.CursorDisabled;
+                    var inputMode = Glfw.GetInputMode(_windowPtr, InputMode.Cursor);
+                    return inputMode != InputModeValue.CursorHidden
+                           && inputMode != InputModeValue.CursorDisabled;
                 }
             }
             set
