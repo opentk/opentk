@@ -13,9 +13,11 @@ namespace OpenToolkit.Windowing.EventingModels
 {
     /// <summary>
     /// Defines the arguments for frame events.
+    /// </summary>
+    /// <remarks>
     /// A FrameEventArgs instance is only valid for the duration of the relevant event;
     /// do not store references to FrameEventArgs outside this event.
-    /// </summary>
+    /// </remarks>
     public class FrameEventArgs : EventArgs
     {
         private double elapsed;
