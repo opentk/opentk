@@ -11,6 +11,7 @@ using System;
 using System.ComponentModel;
 using System.Drawing;
 using OpenToolkit.GraphicsLibraryFramework;
+using OpenToolkit.Windowing.Common;
 using OpenToolkit.Windowing.Common.Input;
 using OpenToolkit.Windowing.EventingModels;
 
