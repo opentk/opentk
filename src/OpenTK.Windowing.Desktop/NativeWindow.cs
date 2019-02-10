@@ -86,7 +86,7 @@ namespace OpenToolkit.Windowing.Desktop
                 {
                     unsafe { Glfw.HideWindow(_windowPtr); }
                 }
-                OnVisibleChanged(this, EventArgs.Empty);
+                OnVisibleChanged(this, new VisibilityChangedEventArgs(value));
             }
         }
 
@@ -448,7 +448,7 @@ namespace OpenToolkit.Windowing.Desktop
         public event EventHandler<EventArgs> Disposed;
         public event EventHandler<IconifyEventArgs> IconChanged;
         public event EventHandler<TitleChangedEventArgs> TitleChanged;
-        public event EventHandler<EventArgs> VisibleChanged;
+        public event EventHandler<VisibilityChangedEventArgs> VisibleChanged;
         public event EventHandler<FocusedChangedEventArgs> FocusedChanged;
         public event EventHandler<EventArgs> WindowBorderChanged;
         public event EventHandler<EventArgs> WindowStateChanged;
@@ -501,7 +501,7 @@ namespace OpenToolkit.Windowing.Desktop
             TitleChanged?.Invoke(sender, e);
         }
         
-        protected virtual void OnVisibleChanged(object sender, EventArgs e)
+        protected virtual void OnVisibleChanged(object sender, VisibilityChangedEventArgs e)
         {
             VisibleChanged?.Invoke(sender, e);
         }
