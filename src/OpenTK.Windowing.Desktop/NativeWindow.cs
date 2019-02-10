@@ -19,7 +19,7 @@ namespace OpenToolkit.Windowing.Desktop
 {
     public class NativeWindow : INativeWindow
     {
-        private static GLFW Glfw => GLFWProvider.GLFW;
+        private static GLFW Glfw => GLFWProvider.GLFW.Value;
         private readonly unsafe Window* _windowPtr;
 
         public string ClipboardString

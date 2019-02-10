@@ -4,32 +4,24 @@ namespace OpenToolkit.GraphicsLibraryFramework
 {
     public static class GLFWProvider
     {
-        private static Lazy<GLFW> glfw = null;
-        public static GLFW GLFW
+        public static Lazy<GLFW> GLFW { get; internal set; } = new Lazy<GLFW>(() =>
         {
-            get
-            {
-                if (glfw != null)
-                {
-                    return glfw.Value;
-                }
-                
-                glfw = new Lazy<GLFW>(GLFW.GetAPI);
-                
-                lock (glfw.Value)
-                {
-                    glfw.Value.Init();
-                    glfw.Value.SetErrorCallback(GLFW.errorCallback);
-                }
-                
-                return glfw.Value;
-            }
-        }
+            var glfw = GraphicsLibraryFramework.GLFW.GetAPI();
+            glfw.Init();
+            glfw.SetErrorCallback(GraphicsLibraryFramework.GLFW.errorCallback);
+            return glfw;
+        });
 
         public static void Unload()
         {
-            glfw.Value.Terminate();
-            glfw = null;
+            GLFW.Value.Terminate();
+            GLFW = new Lazy<GLFW>(() =>
+            {
+                var glfw = GraphicsLibraryFramework.GLFW.GetAPI();
+                glfw.Init();
+                glfw.SetErrorCallback(GraphicsLibraryFramework.GLFW.errorCallback);
+                return glfw;
+            });
         }
     }
 }
