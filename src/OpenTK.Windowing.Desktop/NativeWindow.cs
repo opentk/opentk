@@ -382,16 +382,19 @@ namespace OpenToolkit.Windowing.Desktop
                 
                 Glfw.SetMouseButtonCallback(_windowPtr, (window, button, action, mods) =>
                 {
-                    if (action == InputAction.Press)
+                    var args = new MouseButtonEventArgs();
+                    args.Button = (MouseButton)button;
+                    
+                    if (action == InputAction.Release)
                     {
-                        OnMouseDown(this, new MouseButtonEventArgs());
+                        OnMouseUp(this, args);
                     }
-                    else if (action == InputAction.Release)
+                    else
                     {
-                        OnMouseUp(this, new MouseButtonEventArgs());
+                        OnMouseDown(this, args);
                     }
-
                 });
+                
                 Glfw.SetCursorPosCallback(_windowPtr, (window, xpos, ypos) => OnMouseMove(this, new MouseMoveEventArgs()));
                 Glfw.SetScrollCallback(_windowPtr, (window, xOffset, yOffset) => OnMouseWheel(this, new MouseWheelEventArgs()));
                 Glfw.SetDropCallback(_windowPtr, (window, count, paths) => OnFileDrop(this, new FileDropEventArgs()));
