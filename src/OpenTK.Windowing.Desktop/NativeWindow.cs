@@ -237,8 +237,13 @@ namespace OpenToolkit.Windowing.Desktop
 
         public Rectangle ClientRectangle
         {
-            get => throw new NotImplementedException();
-            set => throw new NotImplementedException();
+            get => new Rectangle(Location, Size);
+            
+            set
+            {
+                Location = value.Location;
+                Size = value.Size;
+            }
         }
 
         public Size ClientSize
