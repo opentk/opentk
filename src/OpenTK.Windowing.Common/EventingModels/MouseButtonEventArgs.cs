@@ -51,6 +51,8 @@ namespace OpenToolkit.Windowing.EventingModels
         
         // TODO: Move InputAction into this project so we can use this without referencing GraphicsLibraryFramework.
         //public InputAction Action { get; internal set; }
+        
+        public KeyModifiers Modifiers { get; internal set; }
 
         /// <summary>
         /// Gets a System.Boolean representing the state of the mouse button for the event.

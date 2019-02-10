@@ -384,6 +384,7 @@ namespace OpenToolkit.Windowing.Desktop
                 {
                     var args = new MouseButtonEventArgs();
                     args.Button = (MouseButton)button;
+                    args.Modifiers = (KeyModifiers)mods;
                     
                     if (action == InputAction.Release)
                     {
