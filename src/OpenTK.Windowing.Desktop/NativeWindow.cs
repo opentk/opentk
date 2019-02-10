@@ -54,7 +54,7 @@ namespace OpenToolkit.Windowing.Desktop
                     Glfw.SetWindowTitle(_windowPtr, value);
                 }
 
-                OnTitleChanged(this, EventArgs.Empty);
+                OnTitleChanged(this, new TitleChangedEventArgs(value));
             }
         }
 
@@ -331,23 +331,39 @@ namespace OpenToolkit.Windowing.Desktop
         {
             unsafe
             {
-                Glfw.SetWindowPosCallback(_windowPtr, (window, x, y) => Move?.Invoke(this, EventArgs.Empty));
-                Glfw.SetWindowSizeCallback(_windowPtr, (width, height) => Resize?.Invoke(this, EventArgs.Empty));
-                Glfw.SetWindowCloseCallback(_windowPtr, (window) => Closing?.Invoke(this, new CancelEventArgs()));
-                Glfw.SetWindowIconifyCallback(_windowPtr, (window, iconified) => IconChanged?.Invoke(this, EventArgs.Empty));
-                Glfw.SetWindowFocusCallback(_windowPtr, (window, focused) => FocusedChanged?.Invoke(this, EventArgs.Empty));
-                Glfw.SetCharCallback(_windowPtr, (window, codepoint) => KeyPress?.Invoke(this, new KeyPressEventArgs((char)codepoint)));
+                Glfw.SetWindowPosCallback(_windowPtr, (window, x, y) => OnMove(this, new WindowPositionEventArgs(x, y)));
+                
+                Glfw.SetWindowSizeCallback(_windowPtr, (width, height) => OnResize(this, new ResizeEventArgs(width, height)));
+                
+                Glfw.SetWindowCloseCallback(_windowPtr, (window) => OnClosing(this, new CancelEventArgs()));
+                
+                Glfw.SetWindowIconifyCallback(_windowPtr, (window, iconified) => OnIconChanged(this, new IconifyEventArgs(iconified)));
+                
+                Glfw.SetWindowFocusCallback(_windowPtr, (window, focused) => OnFocusedChanged(this, new FocusedChangedEventArgs(focused)));
+                
+                Glfw.SetCharCallback(_windowPtr, (window, codepoint) => OnKeyPress(this, new KeyPressEventArgs((char)codepoint)));
+                
                 Glfw.SetKeyCallback(_windowPtr, (window, key, scancode, action, mods) =>
                 {
-                    if (action == InputAction.Press)
+                    var args = new KeyboardKeyEventArgs();
+                    
+                    args.Key = (Key)key;
+                    args.IsRepeat = action == InputAction.Repeat;
+                    
+                    //TODO: Need to find a good way to set the mods,
+                    //The class as-is is coupled to the keyboard state in a really weird way.
+                    //args.Modifiers = (KeyModifiers)mods;
+                    
+                    if (action == InputAction.Release)
                     {
-                        OnKeyDown(this, new KeyboardKeyEventArgs());
+                        OnKeyUp(this, args);
                     }
-                    else if (action == InputAction.Release)
+                    else
                     {
-                        OnKeyUp(this, new KeyboardKeyEventArgs());
+                        OnKeyDown(this, args);
                     }
                 });
+                
                 Glfw.SetCursorEnterCallback(_windowPtr, (window, entered) =>
                 {
                     if (entered)
@@ -359,6 +375,7 @@ namespace OpenToolkit.Windowing.Desktop
                         OnMouseLeave(this, EventArgs.Empty);
                     }
                 });
+                
                 Glfw.SetMouseButtonCallback(_windowPtr, (window, button, action, mods) =>
                 {
                     if (action == InputAction.Press)
@@ -416,15 +433,15 @@ namespace OpenToolkit.Windowing.Desktop
         }
 
         #region Event Handlers
-        public event EventHandler<EventArgs> Move;
-        public event EventHandler<EventArgs> Resize;
+        public event EventHandler<WindowPositionEventArgs> Move;
+        public event EventHandler<ResizeEventArgs> Resize;
         public event EventHandler<CancelEventArgs> Closing;
         public event EventHandler<EventArgs> Closed;
         public event EventHandler<EventArgs> Disposed;
-        public event EventHandler<EventArgs> IconChanged;
-        public event EventHandler<EventArgs> TitleChanged;
+        public event EventHandler<IconifyEventArgs> IconChanged;
+        public event EventHandler<TitleChangedEventArgs> TitleChanged;
         public event EventHandler<EventArgs> VisibleChanged;
-        public event EventHandler<EventArgs> FocusedChanged;
+        public event EventHandler<FocusedChangedEventArgs> FocusedChanged;
         public event EventHandler<EventArgs> WindowBorderChanged;
         public event EventHandler<EventArgs> WindowStateChanged;
         public event EventHandler<KeyboardKeyEventArgs> KeyDown;
@@ -441,12 +458,12 @@ namespace OpenToolkit.Windowing.Desktop
 
         #region Events
 
-        protected virtual void OnMove(object sender, EventArgs e)
+        protected virtual void OnMove(object sender, WindowPositionEventArgs e)
         {
             Move?.Invoke(sender, e);
         }
 
-        protected virtual void OnResize(object sender, EventArgs e)
+        protected virtual void OnResize(object sender, ResizeEventArgs e)
         {
             Resize?.Invoke(sender, e);
         }
@@ -466,12 +483,12 @@ namespace OpenToolkit.Windowing.Desktop
             Disposed?.Invoke(sender, e);
         }
         
-        protected virtual void OnIconChanged(object sender, EventArgs e)
+        protected virtual void OnIconChanged(object sender, IconifyEventArgs e)
         {
             IconChanged?.Invoke(sender, e);
         }
         
-        protected virtual void OnTitleChanged(object sender, EventArgs e)
+        protected virtual void OnTitleChanged(object sender, TitleChangedEventArgs e)
         {
             TitleChanged?.Invoke(sender, e);
         }
@@ -481,7 +498,7 @@ namespace OpenToolkit.Windowing.Desktop
             VisibleChanged?.Invoke(sender, e);
         }
         
-        protected virtual void OnFocusedChanged(object sender, EventArgs e)
+        protected virtual void OnFocusedChanged(object sender, FocusedChangedEventArgs e)
         {
             FocusedChanged?.Invoke(sender, e);
         }

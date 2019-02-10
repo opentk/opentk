@@ -21,12 +21,12 @@ namespace OpenToolkit.Windowing.Common
         /// <summary>
         /// Occurs whenever the window is moved.
         /// </summary>
-        event EventHandler<EventArgs> Move;
+        event EventHandler<WindowPositionEventArgs> Move;
 
         /// <summary>
         /// Occurs whenever the window is resized.
         /// </summary>
-        event EventHandler<EventArgs> Resize;
+        event EventHandler<ResizeEventArgs> Resize;
 
         /// <summary>
         /// Occurs when the window is about to close.
@@ -46,12 +46,12 @@ namespace OpenToolkit.Windowing.Common
         /// <summary>
         /// Occurs when the <see cref="Icon" /> property of the window changes.
         /// </summary>
-        event EventHandler<EventArgs> IconChanged;
+        event EventHandler<IconifyEventArgs> IconChanged;
 
         /// <summary>
         /// Occurs when the <see cref="INativeWindow.Title" /> property of the window changes.
         /// </summary>
-        event EventHandler<EventArgs> TitleChanged;
+        event EventHandler<TitleChangedEventArgs> TitleChanged;
 
         /// <summary>
         /// Occurs when the <see cref="INativeWindow.Visible" /> property of the window changes.
@@ -61,7 +61,7 @@ namespace OpenToolkit.Windowing.Common
         /// <summary>
         /// Occurs when the <see cref="INativeWindow.Focused" /> property of the window changes.
         /// </summary>
-        event EventHandler<EventArgs> FocusedChanged;
+        event EventHandler<FocusedChangedEventArgs> FocusedChanged;
 
         /// <summary>
         /// Occurs when the <see cref="WindowBorder" /> property of the window changes.

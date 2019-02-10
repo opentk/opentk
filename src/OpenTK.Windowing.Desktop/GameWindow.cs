@@ -249,7 +249,7 @@ namespace OpenToolkit.Windowing.Desktop
 
                 Visible = true; // Make sure the GameWindow is visible.
                 Load?.Invoke(this, EventArgs.Empty);
-                OnResize(this, EventArgs.Empty);
+                OnResize(this, new ResizeEventArgs(Width, Height));
 
                 // On some platforms, ProcessEvents() does not return while the user is resizing or moving
                 // the window. We can avoid this issue by raising UpdateFrame and RenderFrame events
