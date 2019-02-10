@@ -349,11 +349,9 @@ namespace OpenToolkit.Windowing.Desktop
                 
                 Glfw.SetKeyCallback(_windowPtr, (window, key, scancode, action, mods) =>
                 {
-                    var args = new KeyboardKeyEventArgs();
-                    
-                    args.Key = (Key)key;
-                    args.IsRepeat = action == InputAction.Repeat;
-                    
+                    var args = new KeyboardKeyEventArgs {Key = (Key)key, IsRepeat = action == InputAction.Repeat};
+
+
                     //TODO: Need to find a good way to set the mods,
                     //The class as-is is coupled to the keyboard state in a really weird way.
                     //args.Modifiers = (KeyModifiers)mods;
@@ -382,10 +380,8 @@ namespace OpenToolkit.Windowing.Desktop
                 
                 Glfw.SetMouseButtonCallback(_windowPtr, (window, button, action, mods) =>
                 {
-                    var args = new MouseButtonEventArgs();
-                    args.Button = (MouseButton)button;
-                    args.Modifiers = (KeyModifiers)mods;
-                    
+                    var args = new MouseButtonEventArgs {Button = (MouseButton)button, Modifiers = (KeyModifiers)mods};
+
                     if (action == InputAction.Release)
                     {
                         OnMouseUp(this, args);
