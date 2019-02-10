@@ -9,15 +9,19 @@ namespace OpenToolkit.GraphicsLibraryFramework
         {
             get
             {
-                if (glfw == null)
+                if (glfw != null)
                 {
-                    glfw = new Lazy<GLFW>(GLFW.GetAPI);
-                    lock (glfw.Value)
-                    {
-                        glfw.Value.Init();
-                        glfw.Value.SetErrorCallback(GLFW.errorCallback);
-                    }
+                    return glfw.Value;
                 }
+                
+                glfw = new Lazy<GLFW>(GLFW.GetAPI);
+                
+                lock (glfw.Value)
+                {
+                    glfw.Value.Init();
+                    glfw.Value.SetErrorCallback(GLFW.errorCallback);
+                }
+                
                 return glfw.Value;
             }
         }
