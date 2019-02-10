@@ -254,7 +254,6 @@ namespace OpenToolkit.Windowing.Desktop
                 unsafe { Glfw.GetFramebufferSize(_windowPtr, out width, out height); }
                 return new Size(width, height);
             }
-            set => throw new NotImplementedException();
         }
 
         public MouseCursor Cursor

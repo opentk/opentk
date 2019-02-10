@@ -104,8 +104,8 @@ namespace OpenToolkit.Windowing.Common
         Rectangle ClientRectangle { get; set; }
 
         /// <summary>
-        /// Gets or sets a <see cref="System.Drawing.Size" /> structure that contains the internal size this window.
+        /// Gets a <see cref="System.Drawing.Size" /> structure that contains the internal size this window.
         /// </summary>
-        Size ClientSize { get; set; }
+        Size ClientSize { get; }
     }
 }
