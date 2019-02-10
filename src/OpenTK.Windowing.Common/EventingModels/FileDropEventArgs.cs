@@ -12,17 +12,14 @@ using System;
 namespace OpenToolkit.Windowing.EventingModels
 {
     /// <summary>
-    /// Defines the event data for <see cref="NativeWindow" /> events.
+    /// Defines the event data for files being dropped onto the window.
     /// </summary>
     public class FileDropEventArgs : EventArgs
-    {
-        //HIGH: GLFW documentation states that this should be a string array instead of a single string
-        // (for dragging and dropping multiple files at once)
-        
+    {        
         /// <summary>
-        /// Gets the name of the file.
+        /// Get the names of the files.
         /// </summary>
-        /// <value>The name of the file.</value>
-        public string FileName { get; internal set; }
+        /// <value>An <see cref="System.Array" /> of strings giving the names of all files dropped.</value>
+        public string[] FileName { get; internal set; }
     }
 }
