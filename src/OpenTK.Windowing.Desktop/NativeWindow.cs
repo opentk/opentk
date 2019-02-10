@@ -74,83 +74,96 @@ namespace OpenToolkit.Windowing.Desktop
         {
             get
             {
-                unsafe { return Glfw.GetWindowAttrib(_windowPtr, (int)WindowHint.Visible) != 0; }
+                unsafe
+                {
+                    return Glfw.GetWindowAttrib(_windowPtr, (int)WindowHint.Visible) != 0;
+                }
             }
             set
             {
                 if (value)
                 {
-                    unsafe { Glfw.ShowWindow(_windowPtr); }
+                    unsafe
+                    {
+                        Glfw.ShowWindow(_windowPtr);
+                    }
                 }
                 else
                 {
-                    unsafe { Glfw.HideWindow(_windowPtr); }
+                    unsafe
+                    {
+                        Glfw.HideWindow(_windowPtr);
+                    }
                 }
+
                 OnVisibleChanged(this, new VisibilityChangedEventArgs(value));
             }
         }
 
         public bool Exists
         {
-            get { unsafe { return _windowPtr != null && !Glfw.WindowShouldClose(_windowPtr); } }
-        }
-
-        public IWindowInfo WindowInfo => throw new NotImplementedException("IWindowInfo is obsolete because platforms are going away, though we could create better borders around GLFW and define 'GLFWWindowInfo : IWindowInfo' but I think it's a case of YAGNI");
-
-        public WindowState WindowState
-        {
             get
             {
                 unsafe
                 {
-                    if (Glfw.GetWindowAttrib(_windowPtr, (int)WindowHint.Iconified) == 1)
-                    {
-                        return WindowState.Minimized;
-                    }
-                    
-                    if (Glfw.GetWindowMonitor(_windowPtr) != null)
-                    {
-                        return WindowState.Fullscreen;
-                    }
-                    
-                    var monitor = Glfw.GetPrimaryMonitor();
-                    var mode = Glfw.GetVideoMode(monitor);
-                        
-                    Glfw.GetWindowSize(_windowPtr, out var windowWidth, out var windowHeight);
-
-                    if (mode->width == windowWidth && mode->height == windowHeight)
-                    {
-                        return WindowState.Maximized;
-                    }
+                    return _windowPtr != null && !Glfw.WindowShouldClose(_windowPtr);
                 }
+            }
+        }
+
+        public IWindowInfo WindowInfo => throw new NotImplementedException(
+            "IWindowInfo is obsolete because platforms are going away, though we could create better borders around GLFW and define 'GLFWWindowInfo : IWindowInfo' but I think it's a case of YAGNI");
+
+        public unsafe WindowState WindowState
+        {
+            get
+            {
+                if (Glfw.GetWindowAttrib(_windowPtr, (int)WindowHint.Iconified) == 1)
+                {
+                    return WindowState.Minimized;
+                }
+
+                if (Glfw.GetWindowMonitor(_windowPtr) != null)
+                {
+                    return WindowState.Fullscreen;
+                }
+
+                var monitor = Glfw.GetPrimaryMonitor();
+                var mode = Glfw.GetVideoMode(monitor);
+
+                Glfw.GetWindowSize(_windowPtr, out var windowWidth, out var windowHeight);
+
+                if (mode->width == windowWidth && mode->height == windowHeight)
+                {
+                    return WindowState.Maximized;
+                }
+
                 return WindowState.Normal;
             }
             set
             {
-                unsafe
+                switch (value)
                 {
-                    switch (value)
-                    {
-                        case WindowState.Normal:
-                            Glfw.RestoreWindow(_windowPtr);
-                            break;
-                        case WindowState.Minimized:
-                            Glfw.IconifyWindow(_windowPtr);
-                            break;
-                        case WindowState.Maximized:
-                            Glfw.MaximizeWindow(_windowPtr);
-                            break;
-                        case WindowState.Fullscreen:
-                            var monitor = Glfw.GetPrimaryMonitor();
-                            var mode = Glfw.GetVideoMode(monitor);
-                            Glfw.SetWindowMonitor(_windowPtr, monitor, 0, 0, mode->width, mode->height, mode->refreshRate);
-                            break;
-                    }
+                    case WindowState.Normal:
+                        Glfw.RestoreWindow(_windowPtr);
+                        break;
+                    case WindowState.Minimized:
+                        Glfw.IconifyWindow(_windowPtr);
+                        break;
+                    case WindowState.Maximized:
+                        Glfw.MaximizeWindow(_windowPtr);
+                        break;
+                    case WindowState.Fullscreen:
+                        var monitor = Glfw.GetPrimaryMonitor();
+                        var mode = Glfw.GetVideoMode(monitor);
+                        Glfw.SetWindowMonitor(_windowPtr, monitor, 0, 0, mode->width, mode->height, mode->refreshRate);
+                        break;
                 }
-
+                
                 OnWindowStateChanged(this, EventArgs.Empty);
             }
         }
+
 
         public WindowBorder WindowBorder
         {
