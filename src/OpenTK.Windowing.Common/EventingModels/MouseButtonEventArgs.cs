@@ -48,6 +48,9 @@ namespace OpenToolkit.Windowing.EventingModels
         /// Gets the <see cref="MouseButton" /> that triggered this event.
         /// </summary>
         public MouseButton Button { get; internal set; }
+        
+        // TODO: Move InputAction into this project so we can use this without referencing GraphicsLibraryFramework.
+        //public InputAction Action { get; internal set; }
 
         /// <summary>
         /// Gets a System.Boolean representing the state of the mouse button for the event.
