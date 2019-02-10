@@ -275,7 +275,7 @@ namespace OpenToolkit.Windowing.Desktop
             set => throw new NotImplementedException();
         }
 
-        private bool _cursorHidden;
+        private bool _cursorVisible;
         public bool CursorVisible
         {
             get
@@ -289,7 +289,7 @@ namespace OpenToolkit.Windowing.Desktop
             }
             set
             {
-                _cursorHidden = !value;
+                _cursorVisible = value;
                 unsafe
                 {
                     Glfw.SetInputMode(_windowPtr, InputMode.Cursor,
@@ -307,13 +307,13 @@ namespace OpenToolkit.Windowing.Desktop
                 {
                     Glfw.SetInputMode(_windowPtr, InputMode.Cursor, InputModeValue.CursorDisabled);
                 }
-                else if (_cursorHidden)
+                else if (_cursorVisible)
                 {
-                    Glfw.SetInputMode(_windowPtr, InputMode.Cursor, InputModeValue.CursorHidden);
+                    Glfw.SetInputMode(_windowPtr, InputMode.Cursor, InputModeValue.CursorNormal);
                 }
                 else
                 {
-                    Glfw.SetInputMode(_windowPtr, InputMode.Cursor, InputModeValue.CursorNormal);
+                    Glfw.SetInputMode(_windowPtr, InputMode.Cursor, InputModeValue.CursorHidden);
                 }
             }
         }
