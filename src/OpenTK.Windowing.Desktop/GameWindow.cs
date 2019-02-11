@@ -194,7 +194,7 @@ namespace OpenToolkit.Windowing.Desktop
         /// Constructs a new GameWindow with sensible default attributes.
         /// </summary>
         public GameWindow()
-            : base(640, 480, "OpenTK Game Window", false)
+            : base(640, 480, "OpenTK Game Window")
         {
             Load?.Invoke(this, EventArgs.Empty);
         }
