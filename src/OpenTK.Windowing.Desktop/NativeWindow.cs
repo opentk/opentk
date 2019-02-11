@@ -172,7 +172,8 @@ namespace OpenToolkit.Windowing.Desktop
                     {
                         return WindowBorder.Hidden;
                     }
-                    else if (Glfw.GetWindowAttrib(_windowPtr, (int)WindowHint.Resizable) == 0)
+                    
+                    if (Glfw.GetWindowAttrib(_windowPtr, (int)WindowHint.Resizable) == 0)
                     {
                         return WindowBorder.Fixed;
                     }
@@ -349,7 +350,7 @@ namespace OpenToolkit.Windowing.Desktop
                 
                 Glfw.SetWindowSizeCallback(_windowPtr, (width, height) => OnResize(this, new ResizeEventArgs(width, height)));
                 
-                Glfw.SetWindowCloseCallback(_windowPtr, (window) => OnClosing(this, new CancelEventArgs()));
+                Glfw.SetWindowCloseCallback(_windowPtr, window => OnClosing(this, new CancelEventArgs()));
                 
                 Glfw.SetWindowIconifyCallback(_windowPtr, (window, iconified) => OnIconChanged(this, new IconifyEventArgs(iconified)));
                 
