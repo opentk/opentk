@@ -29,9 +29,12 @@ namespace OpenToolkit.Windowing.Common
         string Title { get; set; }
 
         /// <summary>
-        /// Gets a System.Boolean that indicates whether this window has input focus.
+        /// Gets or sets a System.Boolean that indicates whether this window has input focus.
         /// </summary>
-        bool Focused { get; }
+        /// <remarks>
+        /// A window cannot be manually unfocused by setting this to false.
+        /// </remarks>
+        bool Focused { get; set; }
 
         /// <summary>
         /// Gets or sets a System.Boolean that indicates whether the window is visible.
