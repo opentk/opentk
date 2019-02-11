@@ -44,11 +44,6 @@ namespace OpenToolkit.Windowing.Common
         bool Exists { get; }
 
         /// <summary>
-        /// Gets the <see cref="IWindowInfo" /> for this window.
-        /// </summary>
-        IWindowInfo WindowInfo { get; }
-
-        /// <summary>
         /// Gets or sets the <see cref="WindowState" /> for this window.
         /// </summary>
         WindowState WindowState { get; set; }

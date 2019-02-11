@@ -111,9 +111,6 @@ namespace OpenToolkit.Windowing.Desktop
             }
         }
 
-        public IWindowInfo WindowInfo => throw new NotImplementedException(
-            "IWindowInfo is obsolete because platforms are going away, though we could create better borders around GLFW and define 'GLFWWindowInfo : IWindowInfo' but I think it's a case of YAGNI");
-
         public unsafe WindowState WindowState
         {
             get
