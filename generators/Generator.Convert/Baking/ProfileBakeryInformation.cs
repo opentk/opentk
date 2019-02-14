@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Generator.Common;
 
 namespace Generator.Convert.Baking
 {
@@ -18,6 +19,15 @@ namespace Generator.Convert.Baking
             .WithNamespaces("OpenToolkit.OpenGLES", "OpenToolkit.OpenGLES.Extensions")
             .WithName("GLES")
             .WithOutputFolder("OpenGL")
+            .WithLibraries
+            (
+                "OpenGLESLibraryNameContainer",
+                linux: "libGLESv2.so",
+                android: "libGLESv2.so",
+                osx: "/System/Library/Frameworks/OpenGLES.framework/OpenGLES",
+                windows: "libGLESv2.dll",
+                ios: "/System/Library/Frameworks/OpenGLES.framework/OpenGLES"
+            )
             .Result;
 
         /// <summary>
@@ -29,9 +39,18 @@ namespace Generator.Convert.Baking
             .Implements("gl-2.0", "gl-2.1")
             .Implements("gl-3.0", "gl-3.1", "gl-3.2", "gl-3.3")
             .Implements("gl-4.0", "gl-4.1", "gl-4.2", "gl-4.3", "gl-4.4", "gl-4.5", "gl-4.6")
-            .WithNamespaces("OpenToolkit.OpenGL.Compatibility", "OpenToolkit.OpenGL.Compatibility.Extensions")
+            .WithNamespaces("OpenToolkit.OpenGL", "OpenToolkit.OpenGL.Extensions")
             .WithName("OpenGL")
             .WithOutputFolder("OpenGL")
+            .WithLibraries
+            (
+                "OpenGLLibraryNameContainer",
+                linux: "libGL.so.1",
+                android: "libGL.so.1",
+                osx: "/System/Library/Frameworks/OpenGL.framework/OpenGL",
+                windows: "opengl32.dll",
+                ios: "/System/Library/Frameworks/OpenGL.framework/OpenGL"
+            )
             .Result;
 
         /// <summary>
@@ -44,20 +63,31 @@ namespace Generator.Convert.Baking
             .Implements("glcore-3.0", "glcore-3.1", "glcore-3.2", "glcore-3.3")
             .Implements("glcore-4.0", "glcore-4.1", "glcore-4.2", "glcore-4.3", "glcore-4.4", "glcore-4.5")
             .Implements("glcore-4.6")
-            .WithNamespaces("OpenToolkit.OpenGL", "OpenToolkit.OpenGL.Extensions")
+            .WithNamespaces("OpenToolkit.OpenGL.Core", "OpenToolkit.OpenGL.Core.Extensions")
             .WithName("OpenGL (Core Profile)")
             .WithOutputFolder("OpenGL")
+            .WithLibraries
+            (
+                "GLCoreLibraryNameContainer",
+                linux: "libGL.so.1",
+                android: "libGL.so.1",
+                osx: "/System/Library/Frameworks/OpenGL.framework/OpenGL",
+                windows: "opengl32.dll",
+                ios: "/System/Library/Frameworks/OpenGL.framework/OpenGL"
+            )
             .Result;
 
-        /// <summary>
-        /// Gets <see cref="ProfileBakeryInformation"/> implementing OpenGL Safety Critical, version 2.0.
-        /// </summary>
-        public static ProfileBakeryInformation GLSC { get; } = new ProfileBakeryInformationBuilder()
-            .Implements("glsc2", "glsc2-2.0")
-            .WithNamespaces("OpenToolkit.OpenGLSC", "OpenToolkit.OpenGLSC.Extensions")
-            .WithName("GLSC")
-            .WithOutputFolder("OpenGL")
-            .Result;
+/*
+*        /// <summary>
+*        /// Gets <see cref="ProfileBakeryInformation"/> implementing OpenGL Safety Critical, version 2.0.
+*        /// </summary>
+*        public static ProfileBakeryInformation GLSC { get; } = new ProfileBakeryInformationBuilder()
+*            .Implements("glsc2", "glsc2-2.0")
+*            .WithNamespaces("OpenToolkit.OpenGLSC", "OpenToolkit.OpenGLSC.Extensions")
+*            .WithName("GLSC")
+*            .WithOutputFolder("OpenGL")
+*            .Result;
+*/
 
         // ReSharper restore InconsistentNaming
 
@@ -87,6 +117,11 @@ namespace Generator.Convert.Baking
         public string OutputFolder { get; set; }
 
         /// <summary>
+        /// Gets or sets the name container for this profile.
+        /// </summary>
+        public NameContainer NameContainer { get; set; } = new NameContainer();
+
+        /// <summary>
         /// Gets all of the out-of-the-box-supported bakery info.
         /// </summary>
         public static List<ProfileBakeryInformation> Default { get; } = new List<ProfileBakeryInformation>()
@@ -94,7 +129,7 @@ namespace Generator.Convert.Baking
             GLCore,
             GLCompatibility,
             GLES,
-            GLSC
+            /* GLSC */
         };
     }
 }

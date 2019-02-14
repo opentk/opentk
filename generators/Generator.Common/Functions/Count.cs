@@ -81,7 +81,7 @@ namespace Generator.Common.Functions
         /// Gets a value indicating whether the count is computed from other parameters.
         /// </summary>
         [JsonIgnore]
-        public bool IsComputed => ComputedFrom.Any();
+        public bool IsComputed => ComputedFromNames.Any();
 
         /// <summary>
         /// Gets a value indicating whether the count is a reference to the value of another parameter.
@@ -137,7 +137,7 @@ namespace Generator.Common.Functions
         {
             if (IsComputed)
             {
-                return $"COMPSIZE({string.Join(", ", ComputedFrom.Select(p => p.Name))})";
+                return $"COMPSIZE({string.Join(", ", ComputedFromNames)})";
             }
 
             if (IsReference)

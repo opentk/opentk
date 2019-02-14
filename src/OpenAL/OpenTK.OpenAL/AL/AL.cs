@@ -27,6 +27,9 @@ namespace OpenToolkit.OpenAL
         {
         }
 
+        /// <inheritdoc cref="IAL" />
+        public IPlatformLibraryNameContainer NameContainer { get; } = new OpenALLibraryNameContainer();
+
         /// <summary>
         /// Gets an instance of the API of an extension to the API.
         /// </summary>
@@ -34,7 +37,7 @@ namespace OpenToolkit.OpenAL
         /// <returns>The extension.</returns>
         public TExtension GetExtension<TExtension>() where TExtension : ExtensionBase
         {
-            return ExtensionLoader<OpenALLibraryNameContainer>.LoadExtension<TExtension>(this);
+            return ExtensionLoader.LoadExtension<TExtension>(this);
         }
 
         /// <inheritdoc />
@@ -520,7 +523,7 @@ namespace OpenToolkit.OpenAL
         /// <returns>The instance.</returns>
         public static AL GetAPI()
         {
-            return APILoader.Load<AL, OpenALLibraryNameContainer>();
+            return APILoader.Load<AL>(new OpenALLibraryNameContainer());
         }
     }
 }

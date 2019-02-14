@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Generator.Common;
+using Generator.Convert.Construction;
 using Generator.Convert.Documentation;
 using MoreLinq.Extensions;
 using Newtonsoft.Json;
@@ -36,6 +37,7 @@ namespace Generator.Convert.Baking
                 Name = information.Name,
                 Namespace = information.Namespace,
                 ExtensionsNamespace = information.ExtensionsNamespace,
+                OutputFolder = information.OutputFolder,
             };
             profile.Projects.Add
             (
@@ -60,6 +62,16 @@ namespace Generator.Convert.Baking
             {
                 DocumentationWriter.Write(profile, Program.CliOptions.DocumentationFolder);
             }
+
+            NameTrimmer.Trim
+            (
+                profile.Projects.SelectMany(x => x.Value.Interfaces).SelectMany(x => x.Value.Functions)
+            );
+            TypeMapper.Map
+            (
+                profile.Projects.SelectMany(x => x.Value.Enums).ToDictionary(x => x.NativeName, x => x.Name),
+                profile.Projects.SelectMany(x => x.Value.Interfaces).SelectMany(x => x.Value.Functions)
+            );
 
             // save this to disk
             File.WriteAllText

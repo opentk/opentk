@@ -4,6 +4,7 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using JetBrains.Annotations;
 
 namespace Generator.Common
@@ -161,6 +162,27 @@ namespace Generator.Common
             }
 
             return ret;
+        }
+
+        /// <summary>
+        /// Gets an array declaration string that matches the given level of array dimensions.
+        /// </summary>
+        /// <param name="arrayDimensions">The dimension.</param>
+        /// <returns>The string.</returns>
+        [NotNull]
+        public static string GetArrayDimensionString(int arrayDimensions)
+        {
+            if (arrayDimensions == 0)
+            {
+                return string.Empty;
+            }
+
+            var builder = new StringBuilder();
+            builder.Append('[');
+            builder.Append(new string(',', arrayDimensions - 1));
+            builder.Append(']');
+
+            return builder.ToString();
         }
     }
 }

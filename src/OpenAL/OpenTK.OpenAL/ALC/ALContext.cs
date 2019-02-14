@@ -32,7 +32,8 @@ namespace OpenToolkit.OpenAL
         /// <typeparam name="TContextExtension">The extension type.</typeparam>
         /// <param name="device">The device the context is on.</param>
         /// <returns>The extension.</returns>
-        public unsafe TContextExtension GetExtension<TContextExtension>(Device* device) where TContextExtension : ContextExtensionBase
+        public unsafe TContextExtension GetExtension<TContextExtension>(Device* device)
+            where TContextExtension : ContextExtensionBase
         {
             return ALExtensionLoader.LoadContextExtension<TContextExtension>(device, this);
         }
@@ -112,7 +113,7 @@ namespace OpenToolkit.OpenAL
         /// <returns>The instance.</returns>
         public static ALContext GetAPI()
         {
-            return APILoader.Load<ALContext, OpenALLibraryNameContainer>();
+            return APILoader.Load<ALContext>(new OpenALLibraryNameContainer());
         }
     }
 }

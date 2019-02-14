@@ -29,7 +29,7 @@ namespace Generator.Convert.Documentation
         {
             var sb = new StringBuilder();
             sb.AppendLine("/// <summary>");
-            sb.AppendLine(Summary.Replace("\n", "\n/// "));
+            sb.AppendLine("/// " + Summary.Replace("\n", "\n/// "));
             sb.AppendLine("/// </summary>");
             foreach (var parameter in function.Parameters)
             {
@@ -53,7 +53,7 @@ namespace Generator.Convert.Documentation
 
                     if (parameter.Count.IsComputed)
                     {
-                        var parameterList = parameter.Count.ComputedFrom.Select(cf => cf.Name).Humanize();
+                        var parameterList = parameter.Count.ComputedFromNames.Humanize();
                         sb.AppendLine($"/// This parameter's element count is computed from {parameterList}.");
                         sb.AppendLine("///");
                     }
@@ -67,9 +67,9 @@ namespace Generator.Convert.Documentation
                         );
                         sb.AppendLine("///");
                     }
-
-                    sb.AppendLine("/// </param>");
                 }
+
+                sb.AppendLine("/// </param>");
             }
 
             if (function.ReturnType.ToString() != "void")

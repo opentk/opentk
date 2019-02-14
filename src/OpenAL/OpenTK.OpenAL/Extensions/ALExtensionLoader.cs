@@ -18,14 +18,14 @@ namespace OpenToolkit.OpenAL.Extensions
         internal static unsafe TContextExtension LoadContextExtension<TContextExtension>(Device* device, IContextExtensions baseAPI)
             where TContextExtension : ContextExtensionBase
         {
-            var extensionMetadata = ExtensionLoader<OpenALLibraryNameContainer>.GetAPIExtensionMetadata<TContextExtension>();
+            var extensionMetadata = ExtensionLoader.GetAPIExtensionMetadata<TContextExtension>();
 
             if (!baseAPI.IsExtensionPresent(device, extensionMetadata.ExtensionName))
             {
                 throw new ExtensionNotSupportedException(extensionMetadata.ExtensionName);
             }
 
-            return APILoader.Load<TContextExtension, OpenALLibraryNameContainer>();
+            return APILoader.Load<TContextExtension>(new OpenALLibraryNameContainer());
         }
     }
 }

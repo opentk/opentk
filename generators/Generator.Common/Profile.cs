@@ -27,7 +27,6 @@ namespace Generator.Common
         /// <summary>
         /// Gets or sets the output folder in which the projects are wrote.
         /// </summary>
-        [JsonIgnore]
         public string OutputFolder { get; set; }
 
         /// <summary>
@@ -40,6 +39,16 @@ namespace Generator.Common
         /// Gets or sets the version of this profile.
         /// </summary>
         public string Version { get; set; }
+
+        /// <summary>
+        /// Gets or sets the prefix that's appended to function native names.
+        /// </summary>
+        public string FunctionPrefix { get; set; }
+
+        /// <summary>
+        /// Gets or sets the name container for this profile.
+        /// </summary>
+        public NameContainer Names { get; set; } = new NameContainer();
 
         /// <summary>
         /// Gets or sets a list of type maps to be applied to the projects in the order in which they're applied.

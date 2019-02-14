@@ -192,7 +192,7 @@ namespace Generator.Convert.Construction
                 typeName = typeName.Remove(firstArrayIndex);
             }
 
-            return new Type() { Name = typeName, IsPointer = isPointer, IndirectionLevels = pointerLevel, IsArray = isArray, ArrayDimensions = arrayLevel };
+            return new Type() { Name = typeName, IndirectionLevels = pointerLevel, ArrayDimensions = arrayLevel };
         }
 
         /// <summary>

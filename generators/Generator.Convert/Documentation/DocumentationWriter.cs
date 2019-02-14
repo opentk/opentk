@@ -78,7 +78,7 @@ namespace Generator.Convert.Documentation
 
                             if (parameter.Count.IsComputed)
                             {
-                                var parameterList = parameter.Count.ComputedFrom.Select(cf => cf.Name).Humanize();
+                                var parameterList = parameter.Count.ComputedFromNames.Humanize();
                                 sb.AppendLine($"/// This parameter's element count is computed from {parameterList}.");
                                 sb.AppendLine("///");
                             }

@@ -56,6 +56,35 @@ namespace Generator.Convert.Baking
         }
 
         /// <summary>
+        /// Sets the profile's name container.
+        /// </summary>
+        /// <param name="classname">The value for the ClassName property.</param>
+        /// <param name="linux">The value for the Linux property.</param>
+        /// <param name="android">The value for the Android property.</param>
+        /// <param name="osx">The value for the MacOS property.</param>
+        /// <param name="windows">The value for the Windows property.</param>
+        /// <param name="ios">The value for the IOS property.</param>
+        /// <returns>This instance (for chaining purposes).</returns>
+        public ProfileBakeryInformationBuilder WithLibraries
+        (
+            string classname,
+            string linux,
+            string android,
+            string osx,
+            string windows,
+            string ios
+        )
+        {
+            Result.NameContainer.Linux = linux;
+            Result.NameContainer.Android = android;
+            Result.NameContainer.MacOS = osx;
+            Result.NameContainer.Windows = windows;
+            Result.NameContainer.IOS = ios;
+            Result.NameContainer.ClassName = classname;
+            return this;
+        }
+
+        /// <summary>
         /// Sets the output folder.
         /// </summary>
         /// <param name="folder">The output folder.</param>

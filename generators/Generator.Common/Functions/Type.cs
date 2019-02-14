@@ -1,4 +1,5 @@
 using MoreLinq.Extensions;
+using Newtonsoft.Json;
 
 namespace Generator.Common.Functions
 {
@@ -8,14 +9,16 @@ namespace Generator.Common.Functions
     public class Type
     {
         /// <summary>
-        /// Gets or sets a value indicating whether this type is a pointer.
+        /// Gets a value indicating whether this type is a pointer.
         /// </summary>
-        public bool IsPointer { get; set; }
+        [JsonIgnore]
+        public bool IsPointer => IndirectionLevels != 0;
 
         /// <summary>
-        /// Gets or sets a value indicating whether this type is an array.
+        /// Gets a value indicating whether this type is an array.
         /// </summary>
-        public bool IsArray { get; set; }
+        [JsonIgnore]
+        public bool IsArray => ArrayDimensions != 0;
 
         /// <summary>
         /// Gets or sets the amount of indirection levels (asterisks as represented in C#).
@@ -32,12 +35,31 @@ namespace Generator.Common.Functions
         /// </summary>
         public string Name { get; set; }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether this type is by ref.
+        /// </summary>
+        public bool IsByRef { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether this type is an out type.
+        /// </summary>
+        public bool IsOut { get; set; }
+
         /// <inheritdoc />
         public override string ToString()
         {
             return Name +
                    (IsPointer ? new string('*', IndirectionLevels) : string.Empty) +
-                   (IsArray ? "[]".Repeat(ArrayDimensions) : string.Empty);
+                   (IsArray ? Utilities.GetArrayDimensionString(ArrayDimensions) : string.Empty);
+        }
+
+        /// <summary>
+        /// Returns a value indicating whether this signature represents a void pointer.
+        /// </summary>
+        /// <returns>A value indicating whether this signature represents a void pointer.</returns>
+        public bool IsVoidPointer()
+        {
+            return ToString() == "void*";
         }
     }
 }

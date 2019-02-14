@@ -1,5 +1,6 @@
 using System;
 using AdvancedDLSupport;
+using OpenToolkit.Core.Loader;
 
 namespace OpenToolkit.Core.Extensions
 {
@@ -13,6 +14,9 @@ namespace OpenToolkit.Core.Extensions
             : base(path, options)
         {
         }
+
+        /// <inheritdoc />
+        public abstract IPlatformLibraryNameContainer NameContainer { get; }
 
         /// <inheritdoc />
         public abstract bool IsExtensionPresent(string name);

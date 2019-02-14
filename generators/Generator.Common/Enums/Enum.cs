@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 namespace Generator.Common.Enums
@@ -15,16 +16,16 @@ namespace Generator.Common.Enums
         /// <summary>
         /// Gets or sets the name of this enum.
         /// </summary>
-        public string Name { get; set; }
+        public string Name { get; set; } = string.Empty;
 
         /// <summary>
         /// Gets or sets the name of this enum as defined by the Khronos spec.
         /// </summary>
-        public string NativeName { get; set; }
+        public string NativeName { get; set; } = string.Empty;
 
         /// <summary>
         /// Gets or sets a list of attributes.
         /// </summary>
-        public List<Attribute> Attributes { get; set; }
+        public List<Attribute> Attributes { get; set; } = new List<Attribute>();
     }
 }

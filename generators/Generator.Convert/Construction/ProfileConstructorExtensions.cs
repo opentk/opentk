@@ -96,10 +96,10 @@ namespace Generator.Convert.Construction
                         new Attribute()
                         {
                             Name = "Obsolete",
-                            Arguments = new List<string>() { "\"Deprecated in " + functionDeprecationVersion + ".\"" }
-                        }
+                            Arguments = new List<string>() { "\"Deprecated in " + functionDeprecationVersion + ".\"" },
+                        },
                     }
-                    : new List<Attribute>()
+                    : new List<Attribute>(),
             };
         }
 
@@ -224,15 +224,6 @@ namespace Generator.Convert.Construction
             profile.Projects["Core"].Enums.AddRange(enums.Select(ParseEnum));
             var funs = functions.ToList();
             var parsed = funs.Select(ParseFunction).ToList();
-            TypeMapper.Map
-            (
-                profile.Projects["Core"].Enums.ToDictionary(x => x.NativeName, x => x.Name),
-                parsed
-            );
-            NameTrimmer.Trim
-            (
-                parsed
-            );
             foreach (var typeMap in profile.TypeMaps)
             {
                 TypeMapper.Map(typeMap, parsed);

@@ -78,6 +78,7 @@ namespace Generator.Convert
 
             stopwatch.Stop();
             Console.WriteLine("Profiles generated in {0} seconds.", stopwatch.Elapsed.TotalSeconds);
+            Debugger.Break();
         }
     }
 }

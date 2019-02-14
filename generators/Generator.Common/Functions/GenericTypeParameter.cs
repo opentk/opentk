@@ -15,6 +15,6 @@ namespace Generator.Common.Functions
         /// <summary>
         /// Gets or sets a list of generic type parameter constraints.
         /// </summary>
-        public List<string> Constraints { get; set; }
+        public List<string> Constraints { get; set; } = new List<string>();
     }
 }

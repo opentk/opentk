@@ -18,13 +18,13 @@ namespace Generator.Convert.Construction.Trimmers
                 return false;
             }
 
-            return trimmable.Name.EndsWith(trimmable.ExtensionName);
+            return trimmable.Name.ToLower().EndsWith(trimmable.ExtensionName.ToLower());
         }
 
         /// <inheritdoc/>
         public void Trim(Function trimmable)
         {
-            var extensionNameIndex = trimmable.Name.LastIndexOf(trimmable.ExtensionName, StringComparison.Ordinal);
+            var extensionNameIndex = trimmable.Name.LastIndexOf(trimmable.ExtensionName, StringComparison.OrdinalIgnoreCase);
             trimmable.Name = trimmable.Name.Remove(extensionNameIndex);
         }
 

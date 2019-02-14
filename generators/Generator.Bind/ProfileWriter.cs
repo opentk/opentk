@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -31,7 +32,7 @@ namespace Generator.Bind
         /// <param name="profile">The subsystem containing this enum.</param>
         /// <param name="project">The project containing this enum.</param>
         /// <returns>The asynchronous task.</returns>
-        public static async Task WriteAsync(this Enum @enum, string file, Profile profile, Project project)
+        public static async Task WriteEnumAsync(this Enum @enum, string file, Profile profile, Project project)
         {
             var sw = new StreamWriter(file);
             await sw.WriteLineAsync(EmbeddedResources.LicenseText);
@@ -72,7 +73,7 @@ namespace Generator.Bind
         /// <param name="profile">The subsystem containing this interface.</param>
         /// <param name="project">The project containing this interface.</param>
         /// <returns>The asynchronous task.</returns>
-        public static async Task WriteAsync(this Interface @interface, string file, Profile profile, Project project)
+        public static async Task WriteInterfaceAsync(this Interface @interface, string file, Profile profile, Project project)
         {
             var sw = new StreamWriter(file);
             await sw.WriteAsync(EmbeddedResources.LicenseText);
@@ -81,7 +82,8 @@ namespace Generator.Bind
             await sw.WriteLineAsync("using System.Text;");
             await sw.WriteLineAsync("using AdvancedDLSupport;");
             await sw.WriteLineAsync();
-            await sw.WriteLineAsync("namespace " + project.Namespace);
+            var ns = project.IsRoot ? profile.Namespace : profile.ExtensionsNamespace;
+            await sw.WriteLineAsync("namespace " + ns + project.Namespace);
             await sw.WriteLineAsync("{");
             foreach (var attr in @interface.Attributes)
             {
@@ -89,18 +91,18 @@ namespace Generator.Bind
             }
 
             await sw.WriteLineAsync("    internal interface " + @interface.Name);
-            await sw.WriteLineAsync("    {");
+            await sw.WriteAsync("    {");
             for (var index = 0; index < @interface.Functions.Count; index++)
             {
+                await sw.WriteLineAsync();
                 var function = @interface.Functions[index];
-                foreach (var line in function.Doc.Split('\n'))
+                using (var sr = new StringReader(function.Doc))
                 {
-                    if (line == null)
+                    string line;
+                    while ((line = await sr.ReadLineAsync()) != null)
                     {
-                        continue;
+                        await sw.WriteLineAsync("        " + line);
                     }
-
-                    await sw.WriteLineAsync("        " + line);
                 }
 
                 foreach (var attr in function.Attributes)
@@ -108,17 +110,63 @@ namespace Generator.Bind
                     await sw.WriteLineAsync("        " + attr);
                 }
 
+                await sw.WriteLineAsync
+                (
+                    "        [NativeSymbol(\"" + profile.FunctionPrefix + function.NativeName + "\")]"
+                );
                 await sw.WriteLineAsync("        " + function);
-                if (index != @interface.Functions.Count)
-                {
-                    await sw.WriteLineAsync(); // style guide
-                }
             }
 
             await sw.WriteLineAsync("    }");
             await sw.WriteLineAsync("}");
             await sw.FlushAsync();
             sw.Dispose();
+        }
+
+        public static async Task WriteMixedModeClassAsync(this Project project, Profile profile, string file)
+        {
+            // public abstract class MixedModeClass : IMixedModeClass
+            // {
+            // }
+            var sw = new StreamWriter(file);
+            await sw.WriteAsync(EmbeddedResources.LicenseText);
+            await sw.WriteLineAsync("using System;");
+            await sw.WriteLineAsync("using System.Runtime.InteropServices;");
+            await sw.WriteLineAsync("using System.Text;");
+            await sw.WriteLineAsync("using AdvancedDLSupport;");
+            await sw.WriteLineAsync();
+            var ns = project.IsRoot ? profile.Namespace : profile.ExtensionsNamespace;
+            await sw.WriteLineAsync("namespace " + ns + project.Namespace);
+            await sw.WriteLineAsync("{");
+            var nm = project.IsRoot ? profile.FunctionPrefix.ToUpper() : project.Namespace.Split('.').Last();
+            var @base = project.IsRoot ? "NativeLibraryBase" : "ExtensionBase";
+            await sw.WriteLineAsync("    public abstract class " + nm + " : " + @base + ", I" + nm);
+            await sw.WriteLineAsync("    {");
+            await sw.WriteLineAsync("        /// <inheritdoc cref=\"" + @base + "\"/>");
+            await sw.WriteLineAsync("        protected " + nm + "(string path, ImplementationOptions options)");
+            await sw.WriteLineAsync("            : base(path, options)");
+            await sw.WriteLineAsync("        {");
+            await sw.WriteLineAsync("        }");
+            await sw.WriteLineAsync();
+            if (project.IsRoot)
+            {
+                await sw.WriteLineAsync
+                (
+                    "        public IPlatformLibraryNameContainer NameContainer { get; } = new " +
+                    profile.Names.ClassName + "();"
+                );
+                await sw.WriteLineAsync();
+            }
+            foreach (var kvp in project.Interfaces)
+            {
+                await sw.WriteLineAsync("        // " + kvp.Key);
+                foreach (var function in kvp.Value.Functions)
+                {
+                    await sw.WriteLineAsync("        //// <inheritdoc />");
+                    await sw.WriteLineAsync("        public abstract " + function);
+                    await sw.WriteLineAsync();
+                }
+            }
         }
 
         /// <summary>
@@ -149,11 +197,11 @@ namespace Generator.Bind
 
             var interfaceTasks = project.Interfaces.Select
             (
-                x => x.Value.WriteAsync(Path.Combine(folder, InterfacesSubfolder, x.Value.Name + ".cs"), profile, project)
+                x => x.Value.WriteInterfaceAsync(Path.Combine(folder, InterfacesSubfolder, x.Value.Name + ".cs"), profile, project)
             );
             var enumTasks = project.Enums.Select
             (
-                x => x.WriteAsync(Path.Combine(folder, EnumsSubfolder, x.Name + ".cs"), profile, project)
+                x => x.WriteEnumAsync(Path.Combine(folder, EnumsSubfolder, x.Name + ".cs"), profile, project)
             );
             await Task.WhenAll(interfaceTasks.Concat(enumTasks));
         }
@@ -172,6 +220,7 @@ namespace Generator.Bind
                 return;
             }
 
+            Debug.WriteLine(folder + "/" + project.GetProjectName(prof) + ".csproj");
             var csproj = new StreamWriter(Path.Combine(folder, project.GetProjectName(prof) + ".csproj"));
             await csproj.WriteLineAsync("<Project Sdk=\"Microsoft.NET.Sdk\">");
             await csproj.WriteLineAsync();
@@ -223,23 +272,14 @@ namespace Generator.Bind
         /// Asynchronously writes all of the projects, interfaces, and enums to disk.
         /// </summary>
         /// <param name="profile">The profile containing the profiles, interfaces, and enums.</param>
-        /// <param name="outputFolder">The folder to write to.</param>
         /// <returns>The asynchronous task.</returns>
-        public static async Task FlushAsync(this Profile profile, string outputFolder)
+        public static async Task FlushAsync(this Profile profile)
         {
-            var rootFolder = Path.Combine("src", outputFolder);
+            var outFolder = profile.OutputFolder;
+            var rootFolder = Path.Combine(Program.CliOptions.OutputPath, outFolder);
             if (!Directory.Exists(rootFolder))
             {
                 Directory.CreateDirectory(rootFolder);
-            }
-
-            if (Directory.Exists(Path.Combine(rootFolder, profile.Projects["Core"].GetProjectName(profile))))
-            {
-                Console.WriteLine
-                (
-                    profile.Namespace.Split('.').Last() + " - Bindings already written. Please delete the " + outputFolder +
-                    " folder to write bindings again."
-                );
             }
 
             if (!Directory.Exists(Path.Combine(rootFolder, "Extensions")))

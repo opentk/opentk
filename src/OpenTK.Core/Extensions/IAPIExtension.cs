@@ -1,5 +1,6 @@
 using System;
 using AdvancedDLSupport;
+using OpenToolkit.Core.Loader;
 
 namespace OpenToolkit.Core.Extensions
 {
@@ -8,6 +9,11 @@ namespace OpenToolkit.Core.Extensions
     /// </summary>
     public interface IAPIExtension
     {
+        /// <summary>
+        /// Gets the library name container for this extension.
+        /// </summary>
+        IPlatformLibraryNameContainer NameContainer { get; }
+
         /// <summary>
         /// Determines whether or not the named extension is available.
         /// </summary>

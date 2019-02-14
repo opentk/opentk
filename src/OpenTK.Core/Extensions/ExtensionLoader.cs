@@ -10,8 +10,7 @@ namespace OpenToolkit.Core.Extensions
     /// Loader class for API extensions.
     /// </summary>
     /// <typeparam name="TLibraryNameContainer">The library name container for the loader.</typeparam>
-    public static class ExtensionLoader<TLibraryNameContainer>
-        where TLibraryNameContainer : PlatformLibraryNameContainerBase, new()
+    public static class ExtensionLoader
     {
         /// <summary>
         /// Loads the API for the given extension, using the base API.
@@ -30,7 +29,7 @@ namespace OpenToolkit.Core.Extensions
                 throw new ExtensionNotSupportedException(extensionMetadata.ExtensionName);
             }
 
-            return APILoader.Load<TExtension, TLibraryNameContainer>();
+            return APILoader.Load<TExtension>(baseAPI.NameContainer);
         }
 
         /// <summary>
