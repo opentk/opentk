@@ -58,6 +58,15 @@ namespace OpenToolkit.Windowing.Desktop
             }
         }
 
+        public unsafe bool IsFullscreen
+        {
+            get;
+            set
+            {
+                
+            }
+        }
+
         public unsafe bool Focused
         {
             get => Glfw.GetWindowAttrib(_windowPtr, (int)WindowHint.Focused) != 0;
@@ -317,7 +326,7 @@ namespace OpenToolkit.Windowing.Desktop
         }
 
 
-        public NativeWindow(NativeWindowSettings settings)
+        public NativeWindow(INativeWindowProperties settings)
         {
             _title = settings.Title;
 
@@ -344,8 +353,16 @@ namespace OpenToolkit.Windowing.Desktop
                 Visible = settings.Visible;
                 WindowState = settings.WindowState;
                 WindowBorder = settings.WindowBorder;
-                X = settings.X;
-                Y = settings.Y;
+                
+                if (settings.X > -1)
+                {
+                    X = settings.X;
+                }
+
+                if (settings.Y > -1)
+                {
+                    Y = settings.Y;
+                }
             }
         }
 

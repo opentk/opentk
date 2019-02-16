@@ -27,9 +27,6 @@ namespace OpenToolkit.Windowing.Desktop
         private const double MaxFrequency = 500.0; // Frequency cap for Update/RenderFrame events
 
         private readonly bool _isSingleThreaded;
-        private readonly FrameEventArgs _renderArgs = new FrameEventArgs();
-
-        private readonly FrameEventArgs _updateArgs = new FrameEventArgs();
 
         private readonly Stopwatch _watchRender = new Stopwatch();
         private readonly Stopwatch _watchUpdate = new Stopwatch();
@@ -38,152 +35,66 @@ namespace OpenToolkit.Windowing.Desktop
 
         private bool _isRunningSlowly; // true, when UpdatePeriod cannot reach TargetUpdatePeriod
 
-        private bool _isExiting;
-        private double _renderTime; // length of last RenderFrame event
-        private double _renderTimestamp; // timestamp of last RenderFrame event
-        private double _targetUpdatePeriod, _targetRenderPeriod;
-
         private double _updateEpsilon; // quantization error for UpdateFrame events
 
-        private double _updatePeriod, _renderPeriod;
+        private double _renderFrequency, _updateFrequency;
+        private double _renderTimestamp, _updateTimestamp;
 
-        private double _updateTime; // length of last UpdateFrame event
-
-        private double _updateTimestamp; // timestamp of last UpdateFrame event
         private Thread _updateThread;
 
-        public bool IsExiting => _isExiting;
+        public bool IsExiting { get; protected set; }
+
+        public bool IsSingleThreaded => _isSingleThreaded;
+        
 
         public double RenderFrequency
         {
-            get
-            {
-                if (MathHelper.ApproximatelyEqualEpsilon(_renderPeriod, 0.0, 0.00001))
-                {
-                    return 1.0;
-                }
+            get => _renderFrequency;
 
-                return 1.0 / _renderPeriod;
-            }
-        }
-        
-        public double RenderPeriod => _renderPeriod;
-
-        public double RenderTime
-        {
-            get => _renderTime;
-            protected set => _renderTime = value;
-        }
-
-        public double TargetRenderFrequency
-        {
-            get
-            {
-                if (MathHelper.ApproximatelyEqualEpsilon(TargetRenderPeriod, 0.0, 0.00001))
-                {
-                    return 0.0;
-                }
-
-                return 1.0 / TargetRenderPeriod;
-            }
             set
             {
-                if (value < 1.0)
+                if (value <= 1.0)
                 {
-                    TargetRenderPeriod = 0.0;
+                    _renderFrequency = 0.0;
                 }
                 else if (value <= MaxFrequency)
                 {
-                    TargetRenderPeriod = 1.0 / value;
+                    _renderFrequency = value;
                 }
                 else
                 {
                     Debug.Print("Target render frequency clamped to {0}Hz.", MaxFrequency);
-                }
-            }
-        }
-        
-        public double TargetRenderPeriod
-        {
-            get => _targetRenderPeriod;
-            set
-            {
-                if (value <= 1 / MaxFrequency)
-                {
-                    _targetRenderPeriod = 0.0;
-                }
-                else if (value <= 1.0)
-                {
-                    _targetRenderPeriod = value;
-                }
-                else
-                {
-                    Debug.Print("Target render period clamped to 1.0 seconds.");
+                    _renderFrequency = MaxFrequency;
                 }
             }
         }
 
-        public double TargetUpdateFrequency
-        {
-            get
-            {
-                if (MathHelper.ApproximatelyEqualEpsilon(TargetUpdatePeriod, 0.0, 0.00001))
-                {
-                    return 0.0;
-                }
-                return 1.0 / TargetUpdatePeriod;
-            }
-            set
-            {
-                if (value < 1.0)
-                {
-                    TargetUpdatePeriod = 0.0;
-                }
-                else if (value <= MaxFrequency)
-                {
-                    TargetUpdatePeriod = 1.0 / value;
-                }
-                else
-                {
-                    Debug.Print("Target render frequency clamped to {0}Hz.", MaxFrequency);
-                }
-            }
-        }
-
-        public double TargetUpdatePeriod
-        {
-            get => _targetUpdatePeriod;
-            set
-            {
-                if (value <= 1 / MaxFrequency)
-                {
-                    _targetUpdatePeriod = 0.0;
-                }
-                else if (value <= 1.0)
-                {
-                    _targetUpdatePeriod = value;
-                }
-                else
-                {
-                    Debug.Print("Target update period clamped to 1.0 seconds.");
-                }
-            }
-        }
+        public double RenderTime { get; protected set; }
 
         public double UpdateFrequency
         {
-            get
-            {
-                if (MathHelper.ApproximatelyEqualEpsilon(_updatePeriod, 0.0, 0.00001))
-                {
-                    return 1.0;
-                }
+            get => _updateFrequency;
 
-                return 1.0 / _updatePeriod;
+            set
+            {
+                if (value < 1.0)
+                {
+                    _updateFrequency = 0.0;
+                }
+                else if (value <= MaxFrequency)
+                {
+                    _updateFrequency = value;
+                }
+                else
+                {
+                    Debug.Print("Target render frequency clamped to {0}Hz.", MaxFrequency);
+                    _updateFrequency = MaxFrequency;
+                }
             }
         }
-        public double UpdatePeriod => _updatePeriod;
-        public double UpdateTime => _updateTime;
+
+        public double UpdateTime { get; }
+
         public VSyncMode VSync
         {
             get => throw new NotImplementedException();
@@ -193,60 +104,21 @@ namespace OpenToolkit.Windowing.Desktop
         /// <summary>
         /// Constructs a new GameWindow with sensible default attributes.
         /// </summary>
-        public GameWindow()
-            : base(640, 480, "OpenTK Game Window")
+        public GameWindow(IGameWindowProperties gameWindowSettings, INativeWindowProperties nativeWindowSettings)
+            : base(nativeWindowSettings)
         {
+            _isSingleThreaded = gameWindowSettings.IsSingleThreaded;
+
+            RenderFrequency = gameWindowSettings.RenderFrequency;
+            UpdateFrequency = gameWindowSettings.UpdateFrequency;
+            
             Load?.Invoke(this, EventArgs.Empty);
         }
 
         public virtual void Run()
         {
-            Run(0.0, 0.0);
-        }
-
-        public virtual void Run(double updateRate)
-        {
-            Run(updateRate, 0.0);
-        }
-
-        public void Run(double updatesPerSecond, double framesPerSecond)
-        {
-            if (updatesPerSecond < 0.0)
-            {
-                throw new ArgumentOutOfRangeException(nameof(updatesPerSecond), updatesPerSecond,
-                    "Parameter cannot be negative");
-            }
-
-            if (updatesPerSecond > 200.0)
-            {
-                throw new ArgumentOutOfRangeException(nameof(updatesPerSecond), updatesPerSecond,
-                    "Parameter should be inside the range [0.0, 200.0]");
-            }
-
-            if (framesPerSecond < 0.0)
-            {
-                throw new ArgumentOutOfRangeException(nameof(framesPerSecond), framesPerSecond,
-                    "Parameter cannot be negative");
-            }
-
-            if (framesPerSecond > 200.0)
-            {
-                throw new ArgumentOutOfRangeException(nameof(framesPerSecond), framesPerSecond,
-                    "Parameter should be inside the range [0.0, 200.0]");
-            }
-
             try
             {
-                if (!MathHelper.ApproximatelyEqualEpsilon(updatesPerSecond, 0.0, 0.00001))
-                {
-                    TargetUpdateFrequency = updatesPerSecond;
-                }
-
-                if (!MathHelper.ApproximatelyEqualEpsilon(framesPerSecond, 0.0, 0.00001))
-                {
-                    TargetRenderFrequency = framesPerSecond;
-                }
-
                 Visible = true; // Make sure the GameWindow is visible.
                 OnLoad(this, EventArgs.Empty);
                 OnResize(this, new ResizeEventArgs(Width, Height));
@@ -307,28 +179,29 @@ namespace OpenToolkit.Windowing.Desktop
             var timestamp = watch.Elapsed.TotalSeconds;
             var elapsed = MathHelper.Clamp(timestamp - _updateTimestamp, 0.0, 1.0);
 
-            while (elapsed > 0 && elapsed + _updateEpsilon >= TargetUpdatePeriod)
+            var UpdatePeriod = 1 / UpdateFrequency;
+
+            while (elapsed > 0 && elapsed + _updateEpsilon >= UpdatePeriod)
             {
                 OnUpdateFrame(this, new FrameEventArgs(elapsed));
 
                 // Calculate difference (positive or negative) between
                 // actual elapsed time and target elapsed time. We must
                 // compensate for this difference.
-                _updateEpsilon += elapsed - TargetUpdatePeriod;
+                _updateEpsilon += elapsed - UpdatePeriod;
 
                 // Prepare for next loop
                 elapsed = MathHelper.Clamp(timestamp - _updateTimestamp, 0.0, 1.0);
 
-                if (TargetUpdatePeriod <= double.Epsilon)
+                if (UpdateFrequency <= double.Epsilon)
                 {
-                    // According to the TargetUpdatePeriod documentation,
-                    // a TargetUpdatePeriod of zero means we will raise
+                    // An UpdateFrequency of zero means we will raise
                     // UpdateFrame events as fast as possible (one event
                     // per ProcessEvents() call)
                     break;
                 }
 
-                _isRunningSlowly = _updateEpsilon >= TargetUpdatePeriod;
+                _isRunningSlowly = _updateEpsilon >= UpdatePeriod;
                 if (_isRunningSlowly && --isRunningSlowlyRetries == 0)
                 {
                     // If UpdateFrame consistently takes longer than TargetUpdateFrame
@@ -342,7 +215,7 @@ namespace OpenToolkit.Windowing.Desktop
         {
             var timestamp = _watchRender.Elapsed.TotalSeconds;
             var elapsed = MathHelper.Clamp(timestamp - _renderTimestamp, 0.0, 1.0);
-            if (elapsed > 0 && elapsed >= TargetRenderPeriod)
+            if (elapsed > 0 && elapsed >= (1 / RenderFrequency))
             {
                 OnRenderFrame(this, new FrameEventArgs(elapsed));
             }
@@ -360,9 +233,9 @@ namespace OpenToolkit.Windowing.Desktop
         }
 
         #region EventHandlers
-        protected virtual void OnUpdateThreadStarted()
+        protected virtual void OnUpdateThreadStarted(object sender, EventArgs args)
         {
-
+            UpdateThreadStarted?.Invoke(sender, args);
         }
 
         protected virtual void OnLoad(object sender, EventArgs args)

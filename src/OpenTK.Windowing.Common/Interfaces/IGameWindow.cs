@@ -16,18 +16,12 @@ namespace OpenToolkit.Windowing.Common
     /// <summary>
     /// Defines the interface for a GameWindow.
     /// </summary>
-    public interface IGameWindow: INativeWindow
+    public interface IGameWindow: INativeWindow, IGameWindowProperties
     {
         /// <summary>
-        /// Enters the game loop of the GameWindow using the maximum update rate.
+        /// Enters the game loop of the GameWindow.
         /// </summary>
-        /// <seealso cref="Run(double)" />
         void Run();
-
-        /// <summary>
-        /// Enters the game loop of the GameWindow using the specified update rate.
-        /// </summary>
-        void Run(double updateRate);
 
         /// <summary>
         /// Swaps the front and back buffers of the current GraphicsContext, presenting the rendered scene to the user.
@@ -43,83 +37,9 @@ namespace OpenToolkit.Windowing.Common
         bool IsExiting { get; }
 
         /// <summary>
-        /// Gets a double representing the actual frequency of RenderFrame events, in hertz (i.e. fps or frames per second).
-        /// </summary>
-        double RenderFrequency { get; }
-
-        /// <summary>
-        /// Gets a double representing the period of RenderFrame events, in seconds.
-        /// </summary>
-        double RenderPeriod { get; }
-
-        /// <summary>
         /// Gets a double representing the time spent in the RenderFrame function, in seconds.
         /// </summary>
         double RenderTime { get; }
-
-        /// <summary>
-        /// Gets or sets a double representing the target render frequency, in hertz.
-        /// </summary>
-        /// <remarks>
-        ///  <para>
-        /// A value of 0.0 indicates that RenderFrame events are generated at the maximum possible frequency (i.e. only
-        /// limited by the hardware's capabilities).
-        ///  </para>
-        ///  <para>Values lower than 1.0Hz are clamped to 0.0. Values higher than 500.0Hz are clamped to 200.0Hz.</para>
-        /// </remarks>
-        double TargetRenderFrequency { get; set; }
-
-        /// <summary>
-        /// Gets or sets a double representing the target render period, in seconds.
-        /// </summary>
-        /// <remarks>
-        ///  <para>
-        /// A value of 0.0 indicates that RenderFrame events are generated at the maximum possible frequency (i.e. only
-        /// limited by the hardware's capabilities).
-        ///  </para>
-        ///  <para>
-        /// Values lower than 0.002 seconds (500Hz) are clamped to 0.0. Values higher than 1.0 seconds (1Hz) are clamped
-        /// to 1.0.
-        ///  </para>
-        /// </remarks>
-        double TargetRenderPeriod { get; set; }
-
-        /// <summary>
-        /// Gets or sets a double representing the target update frequency, in hertz.
-        /// </summary>
-        /// <remarks>
-        ///  <para>
-        /// A value of 0.0 indicates that UpdateFrame events are generated at the maximum possible frequency (i.e. only
-        /// limited by the hardware's capabilities).
-        ///  </para>
-        ///  <para>Values lower than 1.0Hz are clamped to 0.0. Values higher than 500.0Hz are clamped to 500.0Hz.</para>
-        /// </remarks>
-        double TargetUpdateFrequency { get; set; }
-
-        /// <summary>
-        /// Gets or sets a double representing the target update period, in seconds.
-        /// </summary>
-        /// <remarks>
-        ///  <para>
-        /// A value of 0.0 indicates that UpdateFrame events are generated at the maximum possible frequency (i.e. only
-        /// limited by the hardware's capabilities).
-        ///  </para>
-        ///  <para>
-        /// Values lower than 0.002 seconds (500Hz) are clamped to 0.0. Values higher than 1.0 seconds (1Hz) are clamped
-        /// to 1.0.
-        ///  </para>
-        /// </remarks>
-        double TargetUpdatePeriod { get; set; }
-
-        /// <summary>
-        /// Gets a double representing the frequency of UpdateFrame events, in hertz.
-        /// </summary>
-        double UpdateFrequency { get; }
-
-        /// <summary>
-        /// Gets a double representing the period of UpdateFrame events, in seconds.
-        /// </summary>
-        double UpdatePeriod { get; }
 
         /// <summary>
         /// Gets a double representing the time spent in the UpdateFrame function, in seconds.
