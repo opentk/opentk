@@ -9,7 +9,7 @@ namespace OpenTK.Tests.Windowing
         [Fact]
         public void CreatingThenDisposingGameWindowDoesNotThrowException()
         {
-            using (var engine = new GameWindow())
+            using (var engine = new GameWindow(GameWindowSettings.Default, NativeWindowSettings.Default))
             {
                 Thread.Sleep(1);
             }

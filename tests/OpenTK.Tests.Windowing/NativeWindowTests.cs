@@ -12,7 +12,7 @@ namespace OpenTK.Tests.Windowing
         [Fact]
         public void CreatingThenDisposingWindowDoesNotThrowException()
         {
-            using (var window = new NativeWindow())
+            using (var window = new NativeWindow(NativeWindowSettings.Default))
             {
                 Thread.Sleep(1);
             }
@@ -21,10 +21,10 @@ namespace OpenTK.Tests.Windowing
         [Fact]
         public void CreatingSubsequentWindowDoesNotThrowException()
         {
-            using (var window1 = new NativeWindow())
+            using (var window1 = new NativeWindow(NativeWindowSettings.Default))
             {
                 Thread.Sleep(100);
-                using (var window2 = new NativeWindow())
+                using (var window2 = new NativeWindow(NativeWindowSettings.Default))
                 {
                     Thread.Sleep(100);
                 }
@@ -34,7 +34,7 @@ namespace OpenTK.Tests.Windowing
         [Fact]
         public void TitleCanBeUpdated()
         {
-            using (var window = new NativeWindow())
+            using (var window = new NativeWindow(NativeWindowSettings.Default))
             {
                 var newTitle = $"{new Guid()}";
                 window.Title = newTitle;
@@ -45,7 +45,7 @@ namespace OpenTK.Tests.Windowing
         [Fact]
         public void WindowCanBeFocussed()
         {
-            using (var window = new NativeWindow())
+            using (var window = new NativeWindow(NativeWindowSettings.Default))
             {
                 window.Focused = true;
                 Assert.True(window.Focused);
@@ -55,7 +55,7 @@ namespace OpenTK.Tests.Windowing
         [Fact]
         public void WindowCanBeHidden()
         {
-            using (var window = new NativeWindow())
+            using (var window = new NativeWindow(NativeWindowSettings.Default))
             {
                 window.Visible = false;
                 Assert.False(window.Visible);
@@ -65,7 +65,7 @@ namespace OpenTK.Tests.Windowing
         [Fact]
         public void CanCheckIfWindowExists()
         {
-            using (var window = new NativeWindow())
+            using (var window = new NativeWindow(NativeWindowSettings.Default))
             {
                 Assert.True(window.Exists);
             }
@@ -74,7 +74,7 @@ namespace OpenTK.Tests.Windowing
         [Fact]
         public void CanMinimizeWindow()
         {
-            using (var window = new NativeWindow())
+            using (var window = new NativeWindow(NativeWindowSettings.Default))
             {
                 window.WindowState = WindowState.Minimized;
             }
@@ -83,7 +83,7 @@ namespace OpenTK.Tests.Windowing
         [Fact]
         public void CanMiximizeWindow()
         {
-            using (var window = new NativeWindow())
+            using (var window = new NativeWindow(NativeWindowSettings.Default))
             {
                 window.WindowState = WindowState.Maximized;
             }
@@ -92,7 +92,7 @@ namespace OpenTK.Tests.Windowing
         [Fact]
         public void CanFullscreenWindow()
         {
-            using (var window = new NativeWindow())
+            using (var window = new NativeWindow(NativeWindowSettings.Default))
             {
                 window.WindowState = WindowState.Fullscreen;
             }
@@ -101,7 +101,7 @@ namespace OpenTK.Tests.Windowing
         [Fact]
         public void CanGetWindowBorderState()
         {
-            using (var window = new NativeWindow())
+            using (var window = new NativeWindow(NativeWindowSettings.Default))
             {
                 var borderState = window.WindowBorder;
             }
@@ -110,7 +110,7 @@ namespace OpenTK.Tests.Windowing
         [Fact]
         public void CanChangeWindowBounds()
         {
-            using (var window = new NativeWindow())
+            using (var window = new NativeWindow(NativeWindowSettings.Default))
             {
                 var newBounds = new Rectangle(5, 6, 320, 240);
                 window.Bounds = newBounds;
@@ -125,7 +125,7 @@ namespace OpenTK.Tests.Windowing
         [Fact]
         public void CanChangeWindowLocation()
         {
-            using (var window = new NativeWindow())
+            using (var window = new NativeWindow(NativeWindowSettings.Default))
             {
                 var newLocation = new Point(5, 6);
                 window.Location = newLocation;
@@ -138,7 +138,7 @@ namespace OpenTK.Tests.Windowing
         [Fact]
         public void CanChangeWindowSize()
         {
-            using (var window = new NativeWindow())
+            using (var window = new NativeWindow(NativeWindowSettings.Default))
             {
                 var newSize = new Size(320, 240);
                 window.Size = newSize;
@@ -167,7 +167,7 @@ namespace OpenTK.Tests.Windowing
 
         private static void WindowProc(object state)
         {
-            using (var window = new NativeWindow())
+            using (var window = new NativeWindow(NativeWindowSettings.Default))
             {
                 Thread.Sleep(10);
             }
