@@ -57,14 +57,7 @@ namespace OpenToolkit.Windowing.Desktop
                 OnTitleChanged(this, new TitleChangedEventArgs(value));
             }
         }
-
-        //This requires a monitor handle; we need an API for setting which monitor the window goes to first
-        public unsafe bool IsFullscreen
-        {
-            get => throw new NotImplementedException();
-            set => throw new NotImplementedException();
-        }
-
+        
         public unsafe bool Focused
         {
             get => Glfw.GetWindowAttrib(_windowPtr, (int)WindowHint.Focused) != 0;

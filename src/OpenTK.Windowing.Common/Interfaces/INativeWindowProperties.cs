@@ -27,11 +27,6 @@ namespace OpenToolkit.Windowing.Common
         /// Gets or sets the title of the window.
         /// </summary>
         string Title { get; set; }
-        
-        /// <summary>
-        /// Gets or sets a System.Boolean that indicates whether this window is fullscreen.
-        /// </summary>
-        bool IsFullscreen { get; set; }
 
         /// <summary>
         /// Gets or sets a System.Boolean that indicates whether this window has input focus.
