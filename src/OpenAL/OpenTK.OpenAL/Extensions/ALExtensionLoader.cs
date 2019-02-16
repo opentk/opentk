@@ -5,6 +5,9 @@ using OpenToolkit.OpenAL.Interfaces;
 
 namespace OpenToolkit.OpenAL.Extensions
 {
+    /// <summary>
+    /// A loader for OpenAL extensions.
+    /// </summary>
     public static class ALExtensionLoader
     {
         /// <summary>
@@ -15,7 +18,8 @@ namespace OpenToolkit.OpenAL.Extensions
         /// <typeparam name="TContextExtension">The extension type.</typeparam>
         /// <returns>The extension.</returns>
         /// <exception cref="ExtensionNotSupportedException">Thrown if the API doesn't support the extension.</exception>
-        internal static unsafe TContextExtension LoadContextExtension<TContextExtension>(Device* device, IContextExtensions baseAPI)
+        internal static unsafe TContextExtension LoadContextExtension<TContextExtension>
+            (Device* device, IContextExtensions baseAPI)
             where TContextExtension : ContextExtensionBase
         {
             var extensionMetadata = ExtensionLoader.GetAPIExtensionMetadata<TContextExtension>();
