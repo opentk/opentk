@@ -1,5 +1,5 @@
 ﻿//
-// KeyboardEventArgs.cs
+// KeyboardKeyEventArgs.cs
 //
 // Copyright (C) 2018 OpenTK
 //
