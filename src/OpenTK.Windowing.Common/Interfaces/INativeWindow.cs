@@ -15,7 +15,7 @@ namespace OpenToolkit.Windowing.Common
     /// <summary>
     /// Defines the interface for a NativeWindow
     /// </summary>
-    public interface INativeWindow : IWindowProperties, IWindowEvents, IWindowInput, IDisposable
+    public interface INativeWindow : INativeWindowProperties, IWindowEvents, IWindowInput, IDisposable
     {
         /// <summary>
         /// Closes this window.

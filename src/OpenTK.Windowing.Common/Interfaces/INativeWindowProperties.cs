@@ -11,7 +11,7 @@ using System.Drawing;
 
 namespace OpenToolkit.Windowing.Common
 {
-    public interface IWindowProperties
+    public interface INativeWindowProperties
     {
         /// <summary>
         /// Gets or sets the <see cref="System.Drawing.Icon" /> of the window.
