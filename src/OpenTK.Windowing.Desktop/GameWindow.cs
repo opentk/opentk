@@ -248,7 +248,7 @@ namespace OpenToolkit.Windowing.Desktop
                 }
 
                 Visible = true; // Make sure the GameWindow is visible.
-                Load?.Invoke(this, EventArgs.Empty);
+                OnLoad(this, EventArgs.Empty);
                 OnResize(this, new ResizeEventArgs(Width, Height));
 
                 // On some platforms, ProcessEvents() does not return while the user is resizing or moving
@@ -309,7 +309,7 @@ namespace OpenToolkit.Windowing.Desktop
 
             while (elapsed > 0 && elapsed + _updateEpsilon >= TargetUpdatePeriod)
             {
-                RaiseUpdateFrame(watch, elapsed, ref timestamp);
+                OnUpdateFrame(this, new FrameEventArgs(elapsed));
 
                 // Calculate difference (positive or negative) between
                 // actual elapsed time and target elapsed time. We must
@@ -344,7 +344,7 @@ namespace OpenToolkit.Windowing.Desktop
             var elapsed = MathHelper.Clamp(timestamp - _renderTimestamp, 0.0, 1.0);
             if (elapsed > 0 && elapsed >= TargetRenderPeriod)
             {
-                RaiseRenderFrame(elapsed, ref timestamp);
+                OnRenderFrame(this, new FrameEventArgs(elapsed));
             }
         }
 
@@ -360,29 +360,29 @@ namespace OpenToolkit.Windowing.Desktop
         }
 
         #region EventHandlers
-        public virtual void OnUpdateThreadStarted()
+        protected virtual void OnUpdateThreadStarted()
         {
 
         }
 
-        public virtual void OnLoad()
+        protected virtual void OnLoad(object sender, EventArgs args)
         {
-
+            Load?.Invoke(sender, args);
         }
 
-        public virtual void OnUnload()
+        protected virtual void OnUnload(object sender, EventArgs args)
         {
-
+            Unload?.Invoke(sender, args);
         }
 
-        public virtual void OnUpdateFrame()
+        protected virtual void OnUpdateFrame(object sender, FrameEventArgs args)
         {
-
+            UpdateFrame?.Invoke(sender, args);
         }
 
-        public virtual void OnRenderFrame()
+        protected virtual void OnRenderFrame(object sender, FrameEventArgs args)
         {
-
+            RenderFrame?.Invoke(sender, args);
         }
         #endregion
     }
