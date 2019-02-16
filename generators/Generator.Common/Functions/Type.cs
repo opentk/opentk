@@ -1,3 +1,4 @@
+using System;
 using MoreLinq.Extensions;
 using Newtonsoft.Json;
 
@@ -59,7 +60,12 @@ namespace Generator.Common.Functions
         /// <returns>A value indicating whether this signature represents a void pointer.</returns>
         public bool IsVoidPointer()
         {
-            return ToString() == "void*";
+            return Name.Equals
+                   (
+                       typeof(void).Name.ToLowerInvariant(),
+                       StringComparison.OrdinalIgnoreCase
+                   )
+                   && IsPointer;
         }
     }
 }
