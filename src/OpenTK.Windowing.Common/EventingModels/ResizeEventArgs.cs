@@ -7,9 +7,11 @@
 // of the MIT license. See the LICENSE file for details.
 //
 
+using System;
+
 namespace OpenToolkit.Windowing.EventingModels
 {
-    public class ResizeEventArgs
+    public class ResizeEventArgs : EventArgs
     {
         public ResizeEventArgs()
         {
