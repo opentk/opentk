@@ -1,6 +1,7 @@
 using System.Drawing;
 using Humanizer;
 using Humanizer.Localisation.Formatters;
+using OpenToolkit.GraphicsLibraryFramework;
 using OpenToolkit.Windowing.Common;
 
 namespace OpenToolkit.Windowing.Desktop
@@ -11,6 +12,8 @@ namespace OpenToolkit.Windowing.Desktop
         /// Gets the default settings for a NativeWinow.
         /// </summary>
         public static readonly NativeWindowSettings Default = new NativeWindowSettings();
+
+        public unsafe Monitor* CurrentMonitor { get; set; } = GLFWProvider.GLFW.Value.GetPrimaryMonitor();
         
         public string ClipboardString { get; set; }
         public string Title { get; set; } = "OpenTK Window";

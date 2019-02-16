@@ -57,6 +57,16 @@ namespace OpenToolkit.Windowing.Desktop
                 OnTitleChanged(this, new TitleChangedEventArgs(value));
             }
         }
+
+        public unsafe Monitor* CurrentMonitor
+        {
+            get => Glfw.GetWindowMonitor(_windowPtr);
+            set
+            {
+                var mode = Glfw.GetVideoMode(value);
+                Glfw.SetWindowMonitor(_windowPtr, value, X, Y, Width, Height, mode->refreshRate);
+            }
+        }
         
         public unsafe bool Focused
         {
@@ -151,9 +161,8 @@ namespace OpenToolkit.Windowing.Desktop
                         Glfw.MaximizeWindow(_windowPtr);
                         break;
                     case WindowState.Fullscreen:
-                        var monitor = Glfw.GetPrimaryMonitor();
-                        var mode = Glfw.GetVideoMode(monitor);
-                        Glfw.SetWindowMonitor(_windowPtr, monitor, 0, 0, mode->width, mode->height, mode->refreshRate);
+                        var mode = Glfw.GetVideoMode(CurrentMonitor);
+                        Glfw.SetWindowMonitor(_windowPtr, CurrentMonitor, 0, 0, mode->width, mode->height, mode->refreshRate);
                         break;
                 }
                 
@@ -317,21 +326,20 @@ namespace OpenToolkit.Windowing.Desktop
         }
 
 
-        public NativeWindow(INativeWindowProperties settings)
+        public NativeWindow(NativeWindowSettings settings)
         {
             _title = settings.Title;
 
             unsafe
             {
-                var monitor = Glfw.GetPrimaryMonitor();
-                if (settings.IsFullscreen)
+                if (settings.WindowState == WindowState.Fullscreen)
                 {
-                    var modePtr = Glfw.GetVideoMode(monitor);
+                    var modePtr = Glfw.GetVideoMode(settings.CurrentMonitor);
                     Glfw.WindowHint(WindowHint.RedBits, modePtr->redBits);
                     Glfw.WindowHint(WindowHint.GreenBits, modePtr->greenBits);
                     Glfw.WindowHint(WindowHint.BlueBits, modePtr->blueBits);
                     Glfw.WindowHint(WindowHint.RefreshRate, modePtr->refreshRate);
-                    _windowPtr = Glfw.CreateWindow(modePtr->width, modePtr->height, _title, monitor, null);
+                    _windowPtr = Glfw.CreateWindow(modePtr->width, modePtr->height, _title, settings.CurrentMonitor, null);
                 }
                 else
                 {

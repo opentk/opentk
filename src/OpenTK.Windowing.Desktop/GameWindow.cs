@@ -104,7 +104,7 @@ namespace OpenToolkit.Windowing.Desktop
         /// <summary>
         /// Constructs a new GameWindow with sensible default attributes.
         /// </summary>
-        public GameWindow(IGameWindowProperties gameWindowSettings, INativeWindowProperties nativeWindowSettings)
+        public GameWindow(IGameWindowProperties gameWindowSettings, NativeWindowSettings nativeWindowSettings)
             : base(nativeWindowSettings)
         {
             _isSingleThreaded = gameWindowSettings.IsSingleThreaded;
