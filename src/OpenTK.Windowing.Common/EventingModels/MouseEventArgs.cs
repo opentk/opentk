@@ -27,10 +27,7 @@
 
 using System;
 using OpenToolkit.Windowing.Common.Input;
-#if !MINIMAL
 using System.Drawing;
-
-#endif
 
 namespace OpenToolkit.Windowing.EventingModels
 {
