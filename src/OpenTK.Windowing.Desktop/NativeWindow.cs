@@ -317,28 +317,35 @@ namespace OpenToolkit.Windowing.Desktop
         }
 
 
-        public NativeWindow(int width = 640, int height = 480, string title = "", bool windowedFullscreen = false)
+        public NativeWindow(NativeWindowSettings settings)
         {
-            _title = title;
+            _title = settings.Title;
 
             unsafe
             {
                 var monitor = Glfw.GetPrimaryMonitor();
-                if (windowedFullscreen)
+                if (settings.IsFullscreen)
                 {
                     var modePtr = Glfw.GetVideoMode(monitor);
                     Glfw.WindowHint(WindowHint.RedBits, modePtr->redBits);
                     Glfw.WindowHint(WindowHint.GreenBits, modePtr->greenBits);
                     Glfw.WindowHint(WindowHint.BlueBits, modePtr->blueBits);
                     Glfw.WindowHint(WindowHint.RefreshRate, modePtr->refreshRate);
-                    _windowPtr = Glfw.CreateWindow(modePtr->width, modePtr->height, title, monitor, null);
+                    _windowPtr = Glfw.CreateWindow(modePtr->width, modePtr->height, _title, monitor, null);
                 }
                 else
                 {
-                    _windowPtr = Glfw.CreateWindow(width, height, title, null, null);
+                    _windowPtr = Glfw.CreateWindow(settings.Width, settings.Height, _title, null, null);
                 }
 
                 RegisterWindowCallbacks();
+                
+                Focused = settings.Focused;
+                Visible = settings.Visible;
+                WindowState = settings.WindowState;
+                WindowBorder = settings.WindowBorder;
+                X = settings.X;
+                Y = settings.Y;
             }
         }
 
