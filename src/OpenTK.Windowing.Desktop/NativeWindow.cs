@@ -22,6 +22,11 @@ namespace OpenToolkit.Windowing.Desktop
         private static GLFW Glfw => GLFWProvider.GLFW.Value;
         private readonly unsafe Window* _windowPtr;
 
+        protected static int _numberOfUsers;
+        
+        //Use fully qualified type name here because System.Threading.Monitor causes naming conflicts
+        protected static System.Threading.Mutex _mutex;
+
         public string ClipboardString
         {
             get
@@ -361,6 +366,12 @@ namespace OpenToolkit.Windowing.Desktop
                     Y = settings.Y;
                 }
             }
+
+            _mutex.WaitOne();
+
+            _numberOfUsers += 1;
+            
+            _mutex.ReleaseMutex();
         }
 
         private void RegisterWindowCallbacks()
@@ -627,6 +638,17 @@ namespace OpenToolkit.Windowing.Desktop
 
             _disposedValue = true;
             Disposed?.Invoke(this, EventArgs.Empty);
+
+            _mutex.WaitOne();
+
+            _numberOfUsers -= 1;
+
+            if (_numberOfUsers <= 0)
+            {
+                GLFWProvider.Unload();
+            }
+            
+            _mutex.ReleaseMutex();
         }
 
         ~NativeWindow()

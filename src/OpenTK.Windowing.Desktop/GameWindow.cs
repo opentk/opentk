@@ -10,6 +10,7 @@
 using System;
 using System.Diagnostics;
 using System.Threading;
+using OpenToolkit.GraphicsLibraryFramework;
 using OpenToolkit.Mathematics;
 using OpenToolkit.Windowing.Common;
 using OpenToolkit.Windowing.EventingModels;

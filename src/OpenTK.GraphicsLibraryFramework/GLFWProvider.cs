@@ -3,7 +3,7 @@
 namespace OpenToolkit.GraphicsLibraryFramework
 {
     public static class GLFWProvider
-    {
+    {        
         public static Lazy<GLFW> GLFW { get; internal set; } = new Lazy<GLFW>(() =>
         {
             var glfw = GraphicsLibraryFramework.GLFW.GetAPI();
