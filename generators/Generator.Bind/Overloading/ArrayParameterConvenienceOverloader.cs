@@ -5,7 +5,7 @@ using System.Text;
 using Generator.Common.Builders;
 using Generator.Common.Functions;
 using Humanizer;
-using MoreLinq.Extensions;
+using MoreLinq;
 
 namespace Generator.Bind.Overloading
 {
@@ -74,7 +74,7 @@ namespace Generator.Bind.Overloading
             var arrayParameterType = arrayParameter.Type;
 
             var newName = function.Name.Singularize(false);
-            var newParameters = new List<Parameter>(function.Parameters).SkipLast(2).ToList();
+            var newParameters = MoreEnumerable.SkipLast(new List<Parameter>(function.Parameters),2).ToList();
 
             var newArrayParameterType = new TypeSignatureBuilder(arrayParameterType)
                 .WithArrayDimensions(0)

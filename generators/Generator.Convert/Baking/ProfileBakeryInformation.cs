@@ -28,6 +28,7 @@ namespace Generator.Convert.Baking
                 windows: "libGLESv2.dll",
                 ios: "/System/Library/Frameworks/OpenGLES.framework/OpenGLES"
             )
+            .WithPrefix("gl")
             .Result;
 
         /// <summary>
@@ -51,6 +52,7 @@ namespace Generator.Convert.Baking
                 windows: "opengl32.dll",
                 ios: "/System/Library/Frameworks/OpenGL.framework/OpenGL"
             )
+            .WithPrefix("gl")
             .Result;
 
         /// <summary>
@@ -75,6 +77,7 @@ namespace Generator.Convert.Baking
                 windows: "opengl32.dll",
                 ios: "/System/Library/Frameworks/OpenGL.framework/OpenGL"
             )
+            .WithPrefix("gl")
             .Result;
 
 /*
@@ -120,6 +123,11 @@ namespace Generator.Convert.Baking
         /// Gets or sets the name container for this profile.
         /// </summary>
         public NameContainer NameContainer { get; set; } = new NameContainer();
+
+        /// <summary>
+        /// Gets or sets the function prefix for this profile.
+        /// </summary>
+        public string FunctionPrefix { get; set; }
 
         /// <summary>
         /// Gets all of the out-of-the-box-supported bakery info.

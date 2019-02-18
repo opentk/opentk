@@ -56,6 +56,17 @@ namespace Generator.Convert.Baking
         }
 
         /// <summary>
+        /// Sets the function prefix.
+        /// </summary>
+        /// <param name="prefix">The function prefix.</param>
+        /// <returns>This instance (for chaining purposes).</returns>
+        public ProfileBakeryInformationBuilder WithPrefix(string prefix)
+        {
+            Result.FunctionPrefix = prefix;
+            return this;
+        }
+
+        /// <summary>
         /// Sets the profile's name container.
         /// </summary>
         /// <param name="classname">The value for the ClassName property.</param>

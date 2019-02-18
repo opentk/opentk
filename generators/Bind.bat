@@ -1,3 +1,2 @@
-dotnet build -p Generator.Bind\Generator.Bind.csproj
-cd ..
-generators\Generator.Bind\Generator.Bind\bin\Debug\net461\Bind %*
+dotnet run -f netcoreapp20 -p Generator.Bind\Generator.Bind.csproj -i "Generator.Bind\Specifications\GLES.json" "Generator.Bind\Specifications\OpenGL.json" "Generator.Bind\Specifications\OpenGL (Core Profile).json" -o ../src %*
+pause

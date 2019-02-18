@@ -2,7 +2,7 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <AssemblyName>Bind</AssemblyName>
-    <TargetFrameworks>net461</TargetFrameworks>
+    <TargetFrameworks>net461;netcoreapp20</TargetFrameworks>
   </PropertyGroup>
 
   <ItemGroup>

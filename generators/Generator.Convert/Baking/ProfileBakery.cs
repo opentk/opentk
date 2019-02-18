@@ -56,6 +56,8 @@ namespace Generator.Convert.Baking
             profile.Projects["Core"].Interfaces = profile.Projects["Core"].Interfaces.Concat(coreFunc).ToDictionary();
             profile.Projects["Core"].Enums.AddRange(coreEnums);
             profile.Projects = profile.Projects.Concat(extProjects).ToDictionary();
+            profile.FunctionPrefix = information.FunctionPrefix;
+            profile.Names = information.NameContainer;
 
             // bake in the documentation
             if (!string.IsNullOrWhiteSpace(Program.CliOptions.DocumentationFolder))

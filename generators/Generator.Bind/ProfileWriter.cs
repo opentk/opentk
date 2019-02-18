@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 using Generator.Common;
 using Generator.Common.Enums;
 using Enum = Generator.Common.Enums.Enum;
@@ -39,7 +40,8 @@ namespace Generator.Bind
             await sw.WriteLineAsync();
             await sw.WriteLineAsync("using System;");
             await sw.WriteLineAsync();
-            await sw.WriteLineAsync("namespace " + project.Namespace);
+            var ns = project.IsRoot ? profile.Namespace : profile.ExtensionsNamespace;
+            await sw.WriteLineAsync("namespace " + ns + project.Namespace);
             await sw.WriteLineAsync("{");
             foreach (var attr in @enum.Attributes)
             {
@@ -80,6 +82,7 @@ namespace Generator.Bind
             await sw.WriteLineAsync("using System;");
             await sw.WriteLineAsync("using System.Runtime.InteropServices;");
             await sw.WriteLineAsync("using System.Text;");
+            await sw.WriteLineAsync("using OpenToolkit.Core;");
             await sw.WriteLineAsync("using AdvancedDLSupport;");
             await sw.WriteLineAsync();
             var ns = project.IsRoot ? profile.Namespace : profile.ExtensionsNamespace;
@@ -123,6 +126,29 @@ namespace Generator.Bind
             sw.Dispose();
         }
 
+        public static async Task WriteMetaInterfaceAsync(this Project project, Profile profile, string file)
+        {
+            var sw = new StreamWriter(file);
+            await sw.WriteAsync(EmbeddedResources.LicenseText);
+            await sw.WriteLineAsync();
+            await sw.WriteLineAsync("namespace " + profile.Namespace + project.Namespace);
+            await sw.WriteLineAsync("{");
+            var names = project.Interfaces.Select(x => x.Value.Name).ToArray();
+            await sw.WriteAsync("    internal interface I" + profile.FunctionPrefix.ToUpper() + " : " + names[0]);
+            for (var i = 1; i < names.Length; i++)
+            {
+                await sw.WriteLineAsync(",");
+                await sw.WriteAsync("        " + names[i]);
+            }
+
+            await sw.WriteLineAsync();
+            await sw.WriteLineAsync("    {");
+            await sw.WriteLineAsync("    }");
+            await sw.WriteLineAsync("}");
+            await sw.FlushAsync();
+            sw.Close();
+        }
+
         public static async Task WriteMixedModeClassAsync(this Project project, Profile profile, string file)
         {
             // public abstract class MixedModeClass : IMixedModeClass
@@ -133,6 +159,7 @@ namespace Generator.Bind
             await sw.WriteLineAsync("using System;");
             await sw.WriteLineAsync("using System.Runtime.InteropServices;");
             await sw.WriteLineAsync("using System.Text;");
+            await sw.WriteLineAsync("using OpenToolkit.Core;");
             await sw.WriteLineAsync("using AdvancedDLSupport;");
             await sw.WriteLineAsync();
             var ns = project.IsRoot ? profile.Namespace : profile.ExtensionsNamespace;
@@ -203,6 +230,15 @@ namespace Generator.Bind
             (
                 x => x.WriteEnumAsync(Path.Combine(folder, EnumsSubfolder, x.Name + ".cs"), profile, project)
             );
+
+            if (project.IsRoot)
+            {
+                await project.WriteMetaInterfaceAsync
+                (
+                    profile, Path.Combine(folder, InterfacesSubfolder, "I" + profile.FunctionPrefix.ToUpper() + ".cs")
+                );
+            }
+            
             await Task.WhenAll(interfaceTasks.Concat(enumTasks));
         }
 

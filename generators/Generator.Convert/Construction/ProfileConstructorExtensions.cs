@@ -205,7 +205,13 @@ namespace Generator.Convert.Construction
                 out valueReferenceExpression
             );
 
-            return new Parameter() { Name = paramName, Flow = paramFlow, Type = paramType, Count = countSignature };
+            return new Parameter()
+            {
+                Name = Utilities.CSharpKeywords.Contains(paramName) ? "@" + paramName : paramName,
+                Flow = paramFlow,
+                Type = paramType,
+                Count = countSignature
+            };
         }
 
         /// <summary>

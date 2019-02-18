@@ -88,7 +88,7 @@ namespace Generator.Common.Builders
         {
             return new Parameter
             {
-                Name = _newName,
+                Name = Utilities.CSharpKeywords.Contains(_newName) ? "@" + _newName : _newName,
                 Count = _newCount,
                 Flow = _newFlow,
                 Type = _newType
