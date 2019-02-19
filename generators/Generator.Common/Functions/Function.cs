@@ -64,7 +64,7 @@ namespace Generator.Common.Functions
         /// <inheritdoc />
         public override string ToString()
         {
-            return ToString(true);
+            return ToString(false);
         }
 
         /// <summary>

@@ -2,6 +2,7 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Net.Sockets;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using Generator.Common;
@@ -117,7 +118,14 @@ namespace Generator.Bind
                 (
                     "        [NativeSymbol(\"" + profile.FunctionPrefix + function.NativeName + "\")]"
                 );
-                await sw.WriteLineAsync("        " + function);
+                using (var sr = new StringReader(function.ToString()))
+                {
+                    string line;
+                    while ((line = await sr.ReadLineAsync()) != null)
+                    {
+                        await sw.WriteLineAsync("        " + line);
+                    }
+                }
             }
 
             await sw.WriteLineAsync("    }");
