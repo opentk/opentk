@@ -67,20 +67,19 @@ namespace Generator.Convert.Documentation
                     sb.AppendLine("/// </summary>");
                     foreach (var parameter in function.Parameters)
                     {
-                        sb.AppendLine("/// <param name=\"" + parameter.Name + "\">To be added.</param>");
+                        sb.AppendLine("/// <param name=\"" + parameter.Name + "\">");
+                        sb.AppendLine("/// To be added.");
                         if (!(parameter.Count is null))
                         {
                             if (parameter.Count.IsStatic)
                             {
                                 sb.AppendLine($"/// This parameter contains {parameter.Count.StaticCount} elements.");
-                                sb.AppendLine("///");
                             }
 
                             if (parameter.Count.IsComputed)
                             {
                                 var parameterList = parameter.Count.ComputedFromNames.Humanize();
                                 sb.AppendLine($"/// This parameter's element count is computed from {parameterList}.");
-                                sb.AppendLine("///");
                             }
 
                             if (parameter.Count.IsReference)
@@ -90,11 +89,10 @@ namespace Generator.Convert.Documentation
                                 (
                                     $"/// This parameter's element count is taken from {parameter.Count.ValueReference.Name}."
                                 );
-                                sb.AppendLine("///");
                             }
-
-                            sb.AppendLine("/// </param>");
                         }
+
+                        sb.AppendLine("/// </param>");
                     }
 
                     if (function.ReturnType.ToString() != "void")

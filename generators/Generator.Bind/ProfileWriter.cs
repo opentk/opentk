@@ -48,7 +48,7 @@ namespace Generator.Bind
                 await sw.WriteLineAsync("    " + attr);
             }
 
-            await sw.WriteLineAsync("    public enum " + @enum.Name);
+            await sw.WriteLineAsync("    public enum " + @enum.Name + " : uint");
             await sw.WriteLineAsync("    {");
             for (var index = 0; index < @enum.Tokens.Count; index++)
             {
