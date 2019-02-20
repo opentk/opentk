@@ -199,7 +199,7 @@ namespace Generator.Bind
                 {
                     await sw.WriteLineAsync();
                     var lines = function.ToString().ReadAllLines().ToArray();
-                    await sw.WriteLineAsync("        //// <inheritdoc />");
+                    await sw.WriteLineAsync("        /// <inheritdoc />");
                     await sw.WriteLineAsync("        public abstract " + lines[0]);
                     for (var i = 1; i < lines.Length; i++)
                     {
