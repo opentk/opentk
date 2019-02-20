@@ -44,7 +44,7 @@ namespace Generator.Convert.Baking
                 "Core",
                 new Project()
                 {
-                    CategoryName = "Core", ExtensionName = "Core", Namespace = string.Empty, IsRoot = true
+                    CategoryName = "Core", ExtensionName = "Core", Namespace = string.Empty, IsRoot = true,
                 }
             );
 

@@ -182,26 +182,40 @@ namespace Generator.Bind
             await sw.WriteLineAsync("            : base(path, options)");
             await sw.WriteLineAsync("        {");
             await sw.WriteLineAsync("        }");
-            await sw.WriteLineAsync();
             if (project.IsRoot)
             {
+                await sw.WriteLineAsync();
                 await sw.WriteLineAsync
                 (
                     "        public IPlatformLibraryNameContainer NameContainer { get; } = new " +
                     profile.Names.ClassName + "();"
                 );
-                await sw.WriteLineAsync();
             }
             foreach (var kvp in project.Interfaces)
             {
+                await sw.WriteLineAsync();
                 await sw.WriteLineAsync("        // " + kvp.Key);
                 foreach (var function in kvp.Value.Functions)
                 {
-                    await sw.WriteLineAsync("        //// <inheritdoc />");
-                    await sw.WriteLineAsync("        public abstract " + function);
                     await sw.WriteLineAsync();
+                    var lines = function.ToString().ReadAllLines().ToArray();
+                    await sw.WriteLineAsync("        //// <inheritdoc />");
+                    await sw.WriteLineAsync("        public abstract " + lines[0]);
+                    for (var i = 1; i < lines.Length; i++)
+                    {
+                        await sw.WriteLineAsync("        " + lines[i]);
+                    }
                 }
             }
+
+            //if (project.IsRoot) TODO
+            //{
+            //    await sw.WriteLineAsync();
+            //    await sw.WriteLineAsync("    public static "+nm+" GetApi()");
+            //    await sw.WriteLineAsync("    {");
+            //}
+
+            await sw.FlushAsync();
         }
 
         /// <summary>
@@ -246,6 +260,9 @@ namespace Generator.Bind
                     profile, Path.Combine(folder, InterfacesSubfolder, "I" + profile.FunctionPrefix.ToUpper() + ".cs")
                 );
             }
+
+            var nm = project.IsRoot ? profile.FunctionPrefix : project.Namespace.Split('.').Last();
+            await project.WriteMixedModeClassAsync(profile, Path.Combine(folder, nm) + ".cs");
             
             await Task.WhenAll(interfaceTasks.Concat(enumTasks));
         }

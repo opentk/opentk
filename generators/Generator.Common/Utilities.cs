@@ -3,6 +3,7 @@
  */
 
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using JetBrains.Annotations;
@@ -141,6 +142,23 @@ namespace Generator.Common
             }
 
             return ret;
+        }
+
+        /// <summary>
+        /// Reads all lines from the given string.
+        /// </summary>
+        /// <param name="s">The string.</param>
+        /// <returns>The individual lines in the string.</returns>
+        public static IEnumerable<string> ReadAllLines(this string s)
+        {
+            using (var sr = new StringReader(s))
+            {
+                string line;
+                while ((line = sr.ReadLine()) != null)
+                {
+                    yield return line;
+                }
+            }
         }
 
         /// <summary>
