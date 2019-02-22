@@ -22,10 +22,10 @@ namespace OpenToolkit.Windowing.Common.Input
 
         /// <summary>
         /// Initializes a new <see cref="MouseCursor" /> instance from a
-        /// contiguous array of BGRA pixels.
-        /// Each pixel is composed of 4 bytes, representing B, G, R and A values,
+        /// contiguous array of RGBA pixels.
+        /// Each pixel is composed of 4 bytes, representing R, G, B and A values,
         /// respectively. For correct antialiasing of translucent cursors,
-        /// the B, G and R components should be premultiplied with the A component:
+        /// the R, G, and B components should be premultiplied with the A component:
         ///  <code>
         /// B = (byte)((B * A) / 255)
         /// G = (byte)((G * A) / 255)
@@ -38,7 +38,7 @@ namespace OpenToolkit.Windowing.Common.Input
         /// <param name="height">The height of the cursor data, in pixels.</param>
         /// <param name="data">
         /// A byte array representing the cursor image,
-        /// laid out as a contiguous array of BGRA pixels.
+        /// laid out as a contiguous array of RGBA pixels.
         /// </param>
         public MouseCursor(int hotx, int hoty, int width, int height, byte[] data)
             : base(width, height, data)
@@ -54,10 +54,10 @@ namespace OpenToolkit.Windowing.Common.Input
 
         /// <summary>
         /// Initializes a new <see cref="MouseCursor" /> instance from a
-        /// contiguous array of BGRA pixels.
-        /// Each pixel is composed of 4 bytes, representing B, G, R and A values,
+        /// contiguous array of RGBA pixels.
+        /// Each pixel is composed of 4 bytes, representing R, G, B and A values,
         /// respectively. For correct antialiasing of translucent cursors,
-        /// the B, G and R components should be premultiplied with the A component:
+        /// the R, G, and B components should be premultiplied with the A component:
         ///  <code>
         /// B = (byte)((B * A) / 255)
         /// G = (byte)((G * A) / 255)
@@ -69,7 +69,7 @@ namespace OpenToolkit.Windowing.Common.Input
         /// <param name="width">The width of the cursor data, in pixels.</param>
         /// <param name="height">The height of the cursor data, in pixels.</param>
         /// <param name="data">
-        /// A pointer to the cursor image, laid out as a contiguous array of BGRA pixels.
+        /// A pointer to the cursor image, laid out as a contiguous array of RGBA pixels.
         /// </param>
         public MouseCursor(int hotx, int hoty, int width, int height, IntPtr data)
             : base(width, height, data)
