@@ -33,13 +33,13 @@ namespace OpenToolkit.Windowing.EventingModels
         /// </summary>
         /// <param name="x">The X position.</param>
         /// <param name="y">The Y position.</param>
-        /// <param name="xDelta">The change in X position produced by this event.</param>
-        /// <param name="yDelta">The change in Y position produced by this event.</param>
-        public MouseMoveEventArgs(int x, int y, int xDelta, int yDelta)
+        /// <param name="deltaX">The change in X position produced by this event.</param>
+        /// <param name="deltaY">The change in Y position produced by this event.</param>
+        public MouseMoveEventArgs(int x, int y, int deltaX, int deltaY)
             : base(x, y)
         {
-            XDelta = xDelta;
-            YDelta = yDelta;
+            DeltaX = deltaX;
+            DeltaY = deltaY;
         }
 
         /// <summary>
@@ -47,18 +47,18 @@ namespace OpenToolkit.Windowing.EventingModels
         /// </summary>
         /// <param name="args">The <see cref="MouseMoveEventArgs" /> instance to clone.</param>
         public MouseMoveEventArgs(MouseMoveEventArgs args)
-            : this(args.X, args.Y, args.XDelta, args.YDelta)
+            : this(args.X, args.Y, args.DeltaX, args.DeltaY)
         {
         }
 
         /// <summary>
         /// Gets the change in X position produced by this event.
         /// </summary>
-        public int XDelta { get; internal set; }
+        public int DeltaX { get; internal set; }
 
         /// <summary>
         /// Gets the change in Y position produced by this event.
         /// </summary>
-        public int YDelta { get; internal set; }
+        public int DeltaY { get; internal set; }
     }
 }
