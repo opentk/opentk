@@ -1,6 +1,6 @@
 using System;
-using System.Drawing;
 using System.Threading;
+using OpenToolkit.Mathematics;
 using OpenToolkit.Windowing.Common;
 using OpenToolkit.Windowing.Desktop;
 using Xunit;
@@ -112,11 +112,11 @@ namespace OpenTK.Tests.Windowing
         {
             using (var window = new NativeWindow(NativeWindowSettings.Default))
             {
-                var newBounds = new Rectangle(5, 6, 320, 240);
+                var newBounds = new Box2(5, 6, 320, 240);
                 window.Bounds = newBounds;
                 var currentBounds = window.Bounds;
-                Assert.Equal(newBounds.X, currentBounds.X);
-                Assert.Equal(newBounds.Y, currentBounds.Y);
+                Assert.Equal(newBounds.Left, currentBounds.Left);
+                Assert.Equal(newBounds.Top, currentBounds.Top);
                 Assert.Equal(newBounds.Width, currentBounds.Width);
                 Assert.Equal(newBounds.Height, currentBounds.Height);
             }
@@ -127,7 +127,7 @@ namespace OpenTK.Tests.Windowing
         {
             using (var window = new NativeWindow(NativeWindowSettings.Default))
             {
-                var newLocation = new Point(5, 6);
+                var newLocation = new Vector2(5, 6);
                 window.Location = newLocation;
                 var currentLocation = window.Location;
                 Assert.Equal(newLocation.X, currentLocation.X);
@@ -140,11 +140,11 @@ namespace OpenTK.Tests.Windowing
         {
             using (var window = new NativeWindow(NativeWindowSettings.Default))
             {
-                var newSize = new Size(320, 240);
+                var newSize = new Vector2(320, 240);
                 window.Size = newSize;
                 var currentSize = window.Size;
-                Assert.Equal(newSize.Width, currentSize.Width);
-                Assert.Equal(newSize.Height, currentSize.Height);
+                Assert.Equal(newSize.X, currentSize.X);
+                Assert.Equal(newSize.Y, currentSize.Y);
             }
         }
 
