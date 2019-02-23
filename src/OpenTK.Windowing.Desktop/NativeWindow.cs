@@ -10,10 +10,13 @@
 using System;
 using System.ComponentModel;
 using System.Drawing;
+using System.Threading;
 using OpenToolkit.GraphicsLibraryFramework;
+using OpenToolkit.Mathematics;
 using OpenToolkit.Windowing.Common;
 using OpenToolkit.Windowing.Common.Input;
 using OpenToolkit.Windowing.EventingModels;
+using Monitor = OpenToolkit.GraphicsLibraryFramework.Monitor;
 
 namespace OpenToolkit.Windowing.Desktop
 {
@@ -25,7 +28,7 @@ namespace OpenToolkit.Windowing.Desktop
         protected static int _numberOfUsers;
         
         //Use fully qualified type name here because System.Threading.Monitor causes naming conflicts
-        protected static System.Threading.Mutex _mutex;
+        protected static Mutex _mutex;
 
         public string ClipboardString
         {
@@ -69,7 +72,7 @@ namespace OpenToolkit.Windowing.Desktop
             set
             {
                 var mode = Glfw.GetVideoMode(value);
-                Glfw.SetWindowMonitor(_windowPtr, value, X, Y, Width, Height, mode->refreshRate);
+                Glfw.SetWindowMonitor(_windowPtr, value, (int)X, (int)Y, (int)Width, (int)Height, mode->refreshRate);
             }
         }
         
@@ -201,83 +204,83 @@ namespace OpenToolkit.Windowing.Desktop
             set => throw new NotImplementedException("Cannot be implemented in GLFW 3.2.");
         }
 
-        public Rectangle Bounds
+        public Box2 Bounds
         {
-            get => new Rectangle(Location, Size);
+            get => new Box2(Location, Size);
             set
             {
                 unsafe
                 {
-                    Glfw.SetWindowSize(_windowPtr, value.Width, value.Height);
-                    Glfw.SetWindowPos(_windowPtr, value.X, value.Y);
+                    Glfw.SetWindowSize(_windowPtr, (int)value.Width, (int)value.Height);
+                    Glfw.SetWindowPos(_windowPtr, (int)value.Left, (int)value.Top);
                 }
             }
         }
 
-        public Point Location
+        public Vector2 Location
         {
             get
             {
                 int x, y;
                 unsafe { Glfw.GetWindowPos(_windowPtr, out x, out y); }
-                return new Point(x, y);
+                return new Vector2(x, y);
             }
-            set { unsafe { Glfw.SetWindowPos(_windowPtr, value.X, value.Y); } }
+            set { unsafe { Glfw.SetWindowPos(_windowPtr, (int)value.X, (int)value.Y); } }
         }
 
-        public Size Size
+        public Vector2 Size
         {
             get
             {
                 int width, height;
                 unsafe { Glfw.GetWindowSize(_windowPtr, out width, out height); }
-                return new Size(width, height);
+                return new Vector2(width, height);
             }
-            set { unsafe { Glfw.SetWindowSize(_windowPtr, value.Width, value.Height); } }
+            set { unsafe { Glfw.SetWindowSize(_windowPtr, (int)value.X, (int)value.Y); } }
         }
 
         public int X
         {
-            get => Location.X;
-            set => Location = new Point(value, Location.Y);
+            get => (int)Location.X;
+            set => Location = new Vector2(value, Y);
         }
 
         public int Y
         {
-            get => Location.Y;
-            set => Location = new Point(Location.X, value);
+            get => (int)Location.Y;
+            set => Location = new Vector2(X, value);
         }
 
         public int Width
         {
-            get => Size.Width;
-            set => Size = new Size(value, Size.Height);
+            get => (int)Size.X;
+            set => Size = new Vector2(value, Height);
         }
 
         public int Height
         {
-            get => Size.Height;
-            set => Size = new Size(Size.Width, value);
+            get => (int)Size.Y;
+            set => Size = new Vector2(Width, value);
         }
 
-        public Rectangle ClientRectangle
+        public Box2 ClientRectangle
         {
-            get => new Rectangle(Location, Size);
+            get => new Box2(Location, Size);
             
             set
             {
-                Location = value.Location;
-                Size = value.Size;
+                Location = new Vector2(value.Right, value.Top);
+                Size = new Vector2(value.Width, value.Height);
             }
         }
 
-        public Size ClientSize
+        public Vector2 ClientSize
         {
             get
             {
                 int width, height;
                 unsafe { Glfw.GetFramebufferSize(_windowPtr, out width, out height); }
-                return new Size(width, height);
+                return new Vector2(width, height);
             }
         }
 
@@ -332,6 +335,8 @@ namespace OpenToolkit.Windowing.Desktop
         public NativeWindow(NativeWindowSettings settings)
         {
             _title = settings.Title;
+            
+            _mutex = new Mutex();
 
             unsafe
             {

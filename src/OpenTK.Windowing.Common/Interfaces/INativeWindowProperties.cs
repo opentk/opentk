@@ -7,16 +7,18 @@
 // of the MIT license. See the LICENSE file for details.
 //
 
-using System.Drawing;
+using OpenToolkit.Mathematics;
 
 namespace OpenToolkit.Windowing.Common
 {
     public interface INativeWindowProperties
     {
+        /*
         /// <summary>
         /// Gets or sets the <see cref="System.Drawing.Icon" /> of the window.
         /// </summary>
-        //Icon Icon { get; set; } // HIGH: Either an assembly is missing or this isn't defined for .NET Standard 2.0's Drawing assembly
+        Icon Icon { get; set; } // HIGH: Either an assembly is missing or this isn't defined for .NET Standard 2.0's Drawing assembly
+        */
         
         /// <summary>
         /// Gets or sets the clipboard string.
@@ -57,22 +59,22 @@ namespace OpenToolkit.Windowing.Common
         WindowBorder WindowBorder { get; set; }
 
         /// <summary>
-        /// Gets or sets a <see cref="System.Drawing.Rectangle" /> structure the contains the external bounds of this window,
+        /// Gets or sets a <see cref="OpenToolkit.Mathematics.Box2" /> structure the contains the external bounds of this window,
         /// in screen coordinates.
         /// External bounds include the title bar, borders and drawing area of the window.
         /// </summary>
-        Rectangle Bounds { get; set; }
+        Box2 Bounds { get; set; }
 
         /// <summary>
-        /// Gets or sets a <see cref="System.Drawing.Point" /> structure that contains the location of this window on the
+        /// Gets or sets a <see cref="OpenToolkit.Mathematics.Vector2" /> structure that contains the location of this window on the
         /// desktop.
         /// </summary>
-        Point Location { get; set; }
+        Vector2 Location { get; set; }
 
         /// <summary>
-        /// Gets or sets a <see cref="System.Drawing.Size" /> structure that contains the external size of this window.
+        /// Gets or sets a <see cref="OpenToolkit.Mathematics.Vector2" /> structure that contains the external size of this window.
         /// </summary>
-        Size Size { get; set; }
+        Vector2 Size { get; set; }
 
         /// <summary>
         /// Gets or sets the horizontal location of this window on the desktop.
@@ -95,15 +97,15 @@ namespace OpenToolkit.Windowing.Common
         int Height { get; set; }
 
         /// <summary>
-        /// Gets or sets a <see cref="System.Drawing.Rectangle" /> structure that contains the internal bounds of this window,
+        /// Gets or sets a <see cref="OpenToolkit.Mathematics.Box2" /> structure that contains the internal bounds of this window,
         /// in client coordinates.
         /// The internal bounds include the drawing area of the window, but exclude the titlebar and window borders.
         /// </summary>
-        Rectangle ClientRectangle { get; set; }
+        Box2 ClientRectangle { get; set; }
 
         /// <summary>
-        /// Gets a <see cref="System.Drawing.Size" /> structure that contains the internal size this window.
+        /// Gets a <see cref="OpenToolkit.Mathematics.Vector2" /> structure that contains the internal size this window.
         /// </summary>
-        Size ClientSize { get; }
+        Vector2 ClientSize { get; }
     }
 }

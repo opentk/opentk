@@ -1,7 +1,5 @@
-using System.Drawing;
-using Humanizer;
-using Humanizer.Localisation.Formatters;
 using OpenToolkit.GraphicsLibraryFramework;
+using OpenToolkit.Mathematics;
 using OpenToolkit.Windowing.Common;
 
 namespace OpenToolkit.Windowing.Desktop
@@ -22,15 +20,15 @@ namespace OpenToolkit.Windowing.Desktop
         public bool Exists { get; }
         public WindowState WindowState { get; set; } = WindowState.Normal;
         public WindowBorder WindowBorder { get; set; } = WindowBorder.Resizable;
-        public Rectangle Bounds { get; set; }
-        public Point Location { get; set; }
-        public Size Size { get; set; }
+        public Box2 Bounds { get; set; }
+        public Vector2 Location { get; set; }
+        public Vector2 Size { get; set; }
         public int X { get; set; } = -1;
         public int Y { get; set; } = -1; //TODO: Find a way to set these equal to GLFW_DONT_CARE. For now, -1 will do.
         public int Width { get; set; } = 640;
         public int Height { get; set; } = 480;
-        public Rectangle ClientRectangle { get; set; }
-        public Size ClientSize { get; }
+        public Box2 ClientRectangle { get; set; }
+        public Vector2 ClientSize { get; }
 
         public bool IsFullscreen { get; set; } = false;
     }
