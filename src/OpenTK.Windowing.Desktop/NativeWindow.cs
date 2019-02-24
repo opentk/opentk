@@ -27,7 +27,6 @@ namespace OpenToolkit.Windowing.Desktop
 
         protected static int _numberOfUsers;
         
-        //Use fully qualified type name here because System.Threading.Monitor causes naming conflicts
         protected static Mutex _mutex;
 
         public string ClipboardString
