@@ -178,12 +178,8 @@ namespace OpenToolkit.Windowing.Desktop
                         return WindowBorder.Hidden;
                     }
                     
-                    if (Glfw.GetWindowAttrib(_windowPtr, (int)WindowHint.Resizable) == 0)
-                    {
-                        return WindowBorder.Fixed;
-                    }
-
-                    return WindowBorder.Resizable;
+                    return Glfw.GetWindowAttrib(_windowPtr, (int)WindowHint.Resizable) == 0
+                        ? WindowBorder.Fixed : WindowBorder.Resizable;
                 }
             }
             
