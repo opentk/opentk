@@ -190,7 +190,7 @@ namespace OpenToolkit.Windowing.Desktop
 
         public Box2 Bounds
         {
-            get => new Box2(Location, Size);
+            get => Box2.FromDimensions(Location, Size);
             set
             {
                 unsafe
@@ -226,30 +226,62 @@ namespace OpenToolkit.Windowing.Desktop
         public int X
         {
             get => (int)Location.X;
-            set => Location = new Vector2(value, Y);
+            set
+            {
+                _location.X = value;
+
+                unsafe
+                {
+                    Glfw.SetWindowPos(_windowPtr, value, (int)_location.Y);
+                }
+            }
         }
 
         public int Y
         {
             get => (int)Location.Y;
-            set => Location = new Vector2(X, value);
+            set
+            {
+                _location.Y = value;
+
+                unsafe
+                {
+                    Glfw.SetWindowPos(_windowPtr, (int)_location.X, value);
+                }
+            }
         }
 
         public int Width
         {
             get => (int)Size.X;
-            set => Size = new Vector2(value, Height);
+            set
+            {
+                _size.X = value;
+                
+                unsafe
+                {
+                    Glfw.SetWindowSize(_windowPtr, value, (int)_size.Y);
+                }
+            }
         }
 
         public int Height
         {
             get => (int)Size.Y;
-            set => Size = new Vector2(Width, value);
+            set
+            {
+                _size.Y = value;
+                
+                unsafe
+                {
+                    Glfw.SetWindowSize(_windowPtr, (int)_size.Y, value);
+                }
+            }
         }
 
         public Box2 ClientRectangle
         {
-            get => new Box2(Location, Size);
+            get => Box2.FromDimensions(Location, Size);
             
             set
             {
@@ -258,15 +290,7 @@ namespace OpenToolkit.Windowing.Desktop
             }
         }
 
-        public Vector2 ClientSize
-        {
-            get
-            {
-                int width, height;
-                unsafe { Glfw.GetFramebufferSize(_windowPtr, out width, out height); }
-                return new Vector2(width, height);
-            }
-        }
+        public Vector2 ClientSize { get; }
 
         public MouseCursor Cursor
         {
@@ -369,6 +393,9 @@ namespace OpenToolkit.Windowing.Desktop
                 {
                     Y = settings.Y;
                 }
+                
+                Glfw.GetFramebufferSize(_windowPtr, out var width, out var height);
+                ClientSize = new Vector2(width, height);
             }
 
             _mutex.WaitOne();
