@@ -60,8 +60,6 @@ namespace OpenToolkit.Windowing.Desktop
                 {
                     Glfw.SetWindowTitle(_windowPtr, value);
                 }
-
-                OnTitleChanged(this, new TitleChangedEventArgs(value));
             }
         }
 
@@ -71,7 +69,8 @@ namespace OpenToolkit.Windowing.Desktop
             set
             {
                 var mode = Glfw.GetVideoMode(value);
-                Glfw.SetWindowMonitor(_windowPtr, value, (int)X, (int)Y, (int)Width, (int)Height, mode->refreshRate);
+                Glfw.SetWindowMonitor(_windowPtr, value, (int)_location.X, (int)_location.Y,
+                    (int)_size.X, (int)_size.Y, mode->refreshRate);
             }
         }
 
@@ -96,22 +95,17 @@ namespace OpenToolkit.Windowing.Desktop
             get => _isVisible;
             set
             {
-                if (value)
+                unsafe
                 {
-                    unsafe
+                    if (value)
                     {
                         Glfw.ShowWindow(_windowPtr);
                     }
-                }
-                else
-                {
-                    unsafe
+                    else
                     {
                         Glfw.HideWindow(_windowPtr);
                     }
                 }
-
-                OnVisibleChanged(this, new VisibilityChangedEventArgs(value));
             }
         }
 
@@ -170,8 +164,6 @@ namespace OpenToolkit.Windowing.Desktop
                         Glfw.SetWindowMonitor(_windowPtr, CurrentMonitor, 0, 0, mode->width, mode->height, mode->refreshRate);
                         break;
                 }
-                
-                OnWindowStateChanged(this, EventArgs.Empty);
             }
         }
 
