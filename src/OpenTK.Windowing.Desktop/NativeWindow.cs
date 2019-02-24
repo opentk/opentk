@@ -58,7 +58,6 @@ namespace OpenToolkit.Windowing.Desktop
             {
                 unsafe
                 {
-                    _title = value;
                     Glfw.SetWindowTitle(_windowPtr, value);
                 }
 
@@ -75,28 +74,26 @@ namespace OpenToolkit.Windowing.Desktop
                 Glfw.SetWindowMonitor(_windowPtr, value, (int)X, (int)Y, (int)Width, (int)Height, mode->refreshRate);
             }
         }
+
+        private bool _isFocused;
         
-        public unsafe bool Focused
+        public bool Focused
         {
-            get => Glfw.GetWindowAttrib(_windowPtr, (int)WindowHint.Focused) != 0;
+            get => _isFocused;
             set
             {
                 if (value)
                 {
-                    Glfw.FocusWindow(_windowPtr);
+                    unsafe { Glfw.FocusWindow(_windowPtr); }
                 }
             }
         }
 
+        private bool _isVisible;
+
         public bool Visible
         {
-            get
-            {
-                unsafe
-                {
-                    return Glfw.GetWindowAttrib(_windowPtr, (int)WindowHint.Visible) != 0;
-                }
-            }
+            get => _isVisible;
             set
             {
                 if (value)
@@ -128,7 +125,7 @@ namespace OpenToolkit.Windowing.Desktop
                 }
             }
         }
-
+        
         public unsafe WindowState WindowState
         {
             get
@@ -178,6 +175,7 @@ namespace OpenToolkit.Windowing.Desktop
             }
         }
 
+        private WindowBorder _windowBorder;
 
         public WindowBorder WindowBorder
         {
@@ -217,26 +215,26 @@ namespace OpenToolkit.Windowing.Desktop
             }
         }
 
+        private Vector2 _location;
+
         public Vector2 Location
         {
-            get
+            get => _location;
+            set
             {
-                int x, y;
-                unsafe { Glfw.GetWindowPos(_windowPtr, out x, out y); }
-                return new Vector2(x, y);
+                unsafe { Glfw.SetWindowPos(_windowPtr, (int)value.X, (int)value.Y); }
             }
-            set { unsafe { Glfw.SetWindowPos(_windowPtr, (int)value.X, (int)value.Y); } }
         }
+
+        private Vector2 _size;
 
         public Vector2 Size
         {
-            get
+            get => _size;
+            set
             {
-                int width, height;
-                unsafe { Glfw.GetWindowSize(_windowPtr, out width, out height); }
-                return new Vector2(width, height);
+                unsafe { Glfw.SetWindowSize(_windowPtr, (int)value.X, (int)value.Y); }
             }
-            set { unsafe { Glfw.SetWindowSize(_windowPtr, (int)value.X, (int)value.Y); } }
         }
 
         public int X
@@ -331,7 +329,6 @@ namespace OpenToolkit.Windowing.Desktop
             }
         }
 
-
         public NativeWindow(NativeWindowSettings settings)
         {
             _title = settings.Title;
@@ -340,6 +337,23 @@ namespace OpenToolkit.Windowing.Desktop
 
             unsafe
             {
+                switch (settings.WindowBorder)
+                {
+                    case WindowBorder.Hidden:
+                        Glfw.WindowHint(WindowHint.Decorated, 0);
+                        break;
+                    
+                    case WindowBorder.Resizable:
+                        Glfw.WindowHint(WindowHint.Resizable, 1);
+                        break;
+                    
+                    case WindowBorder.Fixed:
+                        Glfw.WindowHint(WindowHint.Resizable, 0);
+                        break;
+                }
+
+                _windowBorder = settings.WindowBorder;
+                
                 if (settings.WindowState == WindowState.Fullscreen)
                 {
                     var modePtr = Glfw.GetVideoMode(settings.CurrentMonitor);
@@ -359,7 +373,6 @@ namespace OpenToolkit.Windowing.Desktop
                 Focused = settings.Focused;
                 Visible = settings.Visible;
                 WindowState = settings.WindowState;
-                WindowBorder = settings.WindowBorder;
                 
                 if (settings.X > -1)
                 {
@@ -513,11 +526,17 @@ namespace OpenToolkit.Windowing.Desktop
         protected virtual void OnMove(object sender, WindowPositionEventArgs e)
         {
             Move?.Invoke(sender, e);
+
+            _location.X = e.X;
+            _location.Y = e.Y;
         }
 
         protected virtual void OnResize(object sender, ResizeEventArgs e)
         {
             Resize?.Invoke(sender, e);
+            
+            _size.X = e.Width;
+            _size.Y = e.Height;
         }
         
         protected virtual void OnClosing(object sender, CancelEventArgs e)
@@ -543,16 +562,22 @@ namespace OpenToolkit.Windowing.Desktop
         protected virtual void OnTitleChanged(object sender, TitleChangedEventArgs e)
         {
             TitleChanged?.Invoke(sender, e);
+
+            _title = e.Title;
         }
         
         protected virtual void OnVisibleChanged(object sender, VisibilityChangedEventArgs e)
         {
             VisibleChanged?.Invoke(sender, e);
+
+            _isVisible = e.isVisible;
         }
         
         protected virtual void OnFocusedChanged(object sender, FocusedChangedEventArgs e)
         {
             FocusedChanged?.Invoke(sender, e);
+
+            _isFocused = e.isFocused;
         }
         
         protected virtual void OnWindowBorderChanged(object sender, EventArgs e)
