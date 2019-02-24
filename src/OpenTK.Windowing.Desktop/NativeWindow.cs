@@ -119,48 +119,55 @@ namespace OpenToolkit.Windowing.Desktop
             }
         }
         
-        public unsafe WindowState WindowState
+        public WindowState WindowState
         {
             get
             {
-                if (Glfw.GetWindowAttrib(_windowPtr, (int)WindowHint.Iconified) == 1)
+                unsafe
                 {
-                    return WindowState.Minimized;
-                }
+                    if (Glfw.GetWindowAttrib(_windowPtr, (int)WindowHint.Iconified) == 1)
+                    {
+                        return WindowState.Minimized;
+                    }
 
-                if (Glfw.GetWindowMonitor(_windowPtr) != null)
-                {
-                    return WindowState.Fullscreen;
-                }
+                    if (Glfw.GetWindowMonitor(_windowPtr) != null)
+                    {
+                        return WindowState.Fullscreen;
+                    }
 
-                var mode = Glfw.GetVideoMode(CurrentMonitor);
+                    var mode = Glfw.GetVideoMode(CurrentMonitor);
 
-                Glfw.GetWindowSize(_windowPtr, out var windowWidth, out var windowHeight);
+                    Glfw.GetWindowSize(_windowPtr, out var windowWidth, out var windowHeight);
 
-                if (mode->width == windowWidth && mode->height == windowHeight)
-                {
-                    return WindowState.Maximized;
+                    if (mode->width == windowWidth && mode->height == windowHeight)
+                    {
+                        return WindowState.Maximized;
+                    }
                 }
 
                 return WindowState.Normal;
             }
             set
             {
-                switch (value)
+                unsafe
                 {
-                    case WindowState.Normal:
-                        Glfw.RestoreWindow(_windowPtr);
-                        break;
-                    case WindowState.Minimized:
-                        Glfw.IconifyWindow(_windowPtr);
-                        break;
-                    case WindowState.Maximized:
-                        Glfw.MaximizeWindow(_windowPtr);
-                        break;
-                    case WindowState.Fullscreen:
-                        var mode = Glfw.GetVideoMode(CurrentMonitor);
-                        Glfw.SetWindowMonitor(_windowPtr, CurrentMonitor, 0, 0, mode->width, mode->height, mode->refreshRate);
-                        break;
+                    switch (value)
+                    {
+                        case WindowState.Normal:
+                            Glfw.RestoreWindow(_windowPtr);
+                            break;
+                        case WindowState.Minimized:
+                            Glfw.IconifyWindow(_windowPtr);
+                            break;
+                        case WindowState.Maximized:
+                            Glfw.MaximizeWindow(_windowPtr);
+                            break;
+                        case WindowState.Fullscreen:
+                            var mode = Glfw.GetVideoMode(CurrentMonitor);
+                            Glfw.SetWindowMonitor(_windowPtr, CurrentMonitor, 0, 0, mode->width, mode->height,
+                                mode->refreshRate);
+                            break;
+                    }
                 }
             }
         }
@@ -319,22 +326,32 @@ namespace OpenToolkit.Windowing.Desktop
             }
         }
 
-        public unsafe bool CursorGrabbed
+        public bool CursorGrabbed
         {
-            get => Glfw.GetInputMode(_windowPtr, InputMode.Cursor) == InputModeValue.CursorDisabled;
+            get
+            {
+                unsafe
+                {
+                    return Glfw.GetInputMode(_windowPtr, InputMode.Cursor) == InputModeValue.CursorDisabled;
+                }
+            }
+            
             set
             {
-                if (value)
+                unsafe
                 {
-                    Glfw.SetInputMode(_windowPtr, InputMode.Cursor, InputModeValue.CursorDisabled);
-                }
-                else if (CursorVisible)
-                {
-                    Glfw.SetInputMode(_windowPtr, InputMode.Cursor, InputModeValue.CursorNormal);
-                }
-                else
-                {
-                    Glfw.SetInputMode(_windowPtr, InputMode.Cursor, InputModeValue.CursorHidden);
+                    if (value)
+                    {
+                        Glfw.SetInputMode(_windowPtr, InputMode.Cursor, InputModeValue.CursorDisabled);
+                    }
+                    else if (CursorVisible)
+                    {
+                        Glfw.SetInputMode(_windowPtr, InputMode.Cursor, InputModeValue.CursorNormal);
+                    }
+                    else
+                    {
+                        Glfw.SetInputMode(_windowPtr, InputMode.Cursor, InputModeValue.CursorHidden);
+                    }
                 }
             }
         }
