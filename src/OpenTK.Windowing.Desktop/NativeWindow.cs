@@ -133,8 +133,7 @@ namespace OpenToolkit.Windowing.Desktop
                     return WindowState.Fullscreen;
                 }
 
-                var monitor = Glfw.GetPrimaryMonitor();
-                var mode = Glfw.GetVideoMode(monitor);
+                var mode = Glfw.GetVideoMode(CurrentMonitor);
 
                 Glfw.GetWindowSize(_windowPtr, out var windowWidth, out var windowHeight);
 
