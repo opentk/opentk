@@ -163,6 +163,9 @@ namespace OpenToolkit.GraphicsLibraryFramework
 
         /// <inheritdoc />
         public abstract unsafe void SetWindowPosCallback(Window* window, Action<Window, int, int> callback);
+        
+        /// <inheritdoc />
+        public abstract void SetSwapInterval(int interval);
 
         /// <inheritdoc />
         public abstract void WaitEvents();

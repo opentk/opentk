@@ -96,10 +96,30 @@ namespace OpenToolkit.Windowing.Desktop
 
         public double UpdateTime { get; }
 
+        private VSyncMode _vSync;
+        
         public VSyncMode VSync
         {
-            get => throw new NotImplementedException();
-            set => throw new NotImplementedException();
+            get => _vSync;
+            set
+            {
+                switch (value)
+                {
+                    case VSyncMode.On:
+                        Glfw.SetSwapInterval(1);
+                        break;
+                        
+                    case VSyncMode.Off:
+                        Glfw.SetSwapInterval(0);
+                        break;
+                        
+                    case VSyncMode.Adaptive:
+                        Glfw.SetSwapInterval(_isRunningSlowly ? 0 : 1);
+                        break;
+                    }
+
+                _vSync = value;
+            }
         }
 
         /// <summary>
@@ -142,19 +162,15 @@ namespace OpenToolkit.Windowing.Desktop
                 while (true)
                 {
                     ProcessEvents();
-                    if (Exists && !IsExiting)
+                    
+                    if (!Exists || IsExiting) continue;
+                    
+                    if (_isSingleThreaded)
                     {
-                        if (_isSingleThreaded)
-                        {
-                            DispatchUpdateFrame(_watchRender);
-                        }
+                        DispatchUpdateFrame(_watchRender);
+                    }
 
-                        DispatchRenderFrame();
-                    }
-                    else
-                    {
-                        return;
-                    }
+                    DispatchRenderFrame();
                 }
             }
             //TODO: There should be some better error checking here. This just keeps the compiler from complaining.
@@ -209,6 +225,12 @@ namespace OpenToolkit.Windowing.Desktop
                     // stop raising events to avoid hanging inside the UpdateFrame loop.
                     break;
                 }
+            }
+            
+            // Update VSync if set to adaptive
+            if (_vSync == VSyncMode.Adaptive)
+            {
+                Glfw.SetSwapInterval(_isRunningSlowly ? 0 : 1);
             }
         }
 

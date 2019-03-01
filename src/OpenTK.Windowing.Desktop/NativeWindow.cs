@@ -22,8 +22,8 @@ namespace OpenToolkit.Windowing.Desktop
 {
     public class NativeWindow : INativeWindow
     {
-        private static GLFW Glfw => GLFWProvider.GLFW.Value;
-        private readonly unsafe Window* _windowPtr;
+        protected static GLFW Glfw => GLFWProvider.GLFW.Value;
+        protected readonly unsafe Window* _windowPtr;
 
         protected static int _numberOfUsers;
         

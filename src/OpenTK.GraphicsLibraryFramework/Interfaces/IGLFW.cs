@@ -64,6 +64,7 @@ namespace OpenToolkit.GraphicsLibraryFramework
         unsafe void SetWindowShouldClose(Window* window);
         unsafe void SetWindowTitle(Window* window, string title);
         unsafe void ShowWindow(Window* window);
+        void SetSwapInterval(int interval);
         void WaitEvents();
         void WaitEventsTimeout(double timeout);
         void WindowHint(WindowHint hint, int value);
