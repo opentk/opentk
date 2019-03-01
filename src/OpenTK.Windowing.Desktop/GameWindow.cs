@@ -251,7 +251,7 @@ namespace OpenToolkit.Windowing.Desktop
 
         public override void Close()
         {
-            Unload?.Invoke(this, EventArgs.Empty);
+            OnUnload(this, EventArgs.Empty);
             base.Close();
         }
 
