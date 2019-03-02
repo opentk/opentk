@@ -67,6 +67,81 @@ namespace OpenToolkit.GraphicsLibraryFramework
         
         /// <inheritdoc />
         public abstract unsafe VideoMode* GetVideoModes(Monitor* monitor, out int count);
+        
+        /// <inheritdoc />
+        public abstract unsafe void SetGamma(Monitor* monitor, float gamma);
+        
+        /// <inheritdoc />
+        public abstract unsafe GammaRamp* GetGammaRamp(Monitor* monitor);
+        
+        /// <inheritdoc />
+        public abstract unsafe void SetGammaRamp(Monitor* monitor, GammaRamp* ramp);
+
+        /// <inheritdoc />
+        public abstract void DefaultWindowHints();
+
+        /// <inheritdoc />
+        public abstract void WindowHintString(int hint, string value);
+        
+        /// <inheritdoc />
+        public abstract unsafe void SetWindowSizeLimits(Window* window, int minwidth, int minheight, int maxwidth, int maxheight);
+
+        /// <inheritdoc />
+        public abstract unsafe void SetWindowAspectRatio(Window* window, int numer, int denom);
+        
+        /// <inheritdoc />
+        public abstract unsafe void GetWindowFrameSize(Window* window, out int left, out int top, out int right, out int bottom);
+        
+        /// <inheritdoc />
+        public abstract unsafe float GetWindowOpacity(Window* window);
+
+        /// <inheritdoc />
+        public abstract unsafe void SetWindowOpacity(Window* window, float opacity);
+        
+        /// <inheritdoc />
+        public abstract unsafe void RequestWindowAttention(Window* window);
+        
+        /// <inheritdoc />
+        public abstract unsafe void SetWindowAttrib(Window* window, WindowAttribute attrib, int value);
+
+        /// <inheritdoc />
+        public abstract bool RawMouseMotionSupported();
+
+        /// <inheritdoc />
+        public abstract unsafe char* GetKeyName(int key, int scancode);
+
+        /// <inheritdoc />
+        public abstract int GetKeyScancode(int key);
+        
+        /// <inheritdoc />
+        public abstract unsafe int GetKey(Window* window, int key);
+        
+        /// <inheritdoc />
+        public abstract unsafe int GetMouseButton(Window* window, int button);
+        
+        /// <inheritdoc />
+        public abstract unsafe void GetCursorPos(Window* window, out double xpos, out double ypos);
+
+        /// <inheritdoc />
+        public abstract unsafe void SetCursorPos(Window* window, double xpos, double ypos);
+        
+        /// <inheritdoc />
+        public abstract unsafe Cursor* CreateCursor(Image* image, int xhot, int yhot);
+
+        /// <inheritdoc />
+        public abstract unsafe Cursor* CreateStandardCursor(CursorShape shape);
+
+        /// <inheritdoc />
+        public abstract unsafe void DestroyCursor(Cursor* cursor);
+
+        /// <inheritdoc />
+        public abstract unsafe void SetCursor(Window* window, Cursor* cursor);
+        
+        /// <inheritdoc />
+        public abstract int JoystickPresent(int jid);
+
+        /// <inheritdoc />
+        public abstract unsafe float* GetJoystickAxes(int jid, out int count);
 
         /// <inheritdoc />
         public abstract unsafe Window* CreateWindow(int width, int height, string title, Monitor* monitor, Window* share);
@@ -93,7 +168,7 @@ namespace OpenToolkit.GraphicsLibraryFramework
         public abstract unsafe VideoMode* GetVideoMode(Monitor* monitor);
 
         /// <inheritdoc />
-        public abstract unsafe int GetWindowAttrib(Window* window, int attribute);
+        public abstract unsafe int GetWindowAttrib(Window* window, WindowAttribute attribute);
 
         /// <inheritdoc />
         public abstract unsafe void GetWindowSize(Window* window, out int width, out int height);
@@ -189,7 +264,7 @@ namespace OpenToolkit.GraphicsLibraryFramework
         public abstract unsafe void SetWindowSizeCallback(Window* window, Action<int, int> callback);
 
         /// <inheritdoc />
-        public abstract unsafe void SetWindowShouldClose(Window* window);
+        public abstract unsafe void SetWindowShouldClose(Window* window, int value);
 
         /// <inheritdoc />
         public abstract unsafe void SetWindowMonitor(Window* window, Monitor* monitor, int x, int y, int width, int height, int refreshRate);

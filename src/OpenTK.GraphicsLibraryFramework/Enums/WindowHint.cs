@@ -1,25 +1,27 @@
 ﻿//
 // WindowHint.cs
 //
-// Copyright (C) 2018 OpenTK
+// Copyright (C) 2019 OpenTK
 //
 // This software may be modified and distributed under the terms
 // of the MIT license. See the LICENSE file for details.
 //
 
-// TODO: Need to create WindowAttrib enum and see if any need duplicate/moved to that one since there is a syntactic difference
 namespace OpenToolkit.GraphicsLibraryFramework
 {
     public enum WindowHint
     {
         Focused = 0x00020001,
-        Iconified = 0x00020002,
         Resizable = 0x00020003,
         Visible = 0x00020004,
         Decorated = 0x00020005,
         AutoIconify = 0x00020006,
         Floating = 0x00020007,
         Maximized = 0x00020008,
+        
+        CenterCursor = 0x00020009,
+        TransparentFramebuffer = 0x0002000A,
+        FocusOnShow = 0x0002000C,
 
         RedBits = 0x00021001,
         GreenBits = 0x00021002,

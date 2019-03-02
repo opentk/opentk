@@ -125,7 +125,7 @@ namespace OpenToolkit.Windowing.Desktop
             {
                 unsafe
                 {
-                    if (Glfw.GetWindowAttrib(_windowPtr, (int)WindowHint.Iconified) == 1)
+                    if (Glfw.GetWindowAttrib(_windowPtr, WindowAttribute.Iconified) == 1)
                     {
                         return WindowState.Minimized;
                     }
@@ -180,12 +180,12 @@ namespace OpenToolkit.Windowing.Desktop
             {
                 unsafe
                 {
-                    if (Glfw.GetWindowAttrib(_windowPtr, (int)WindowHint.Decorated) == 0)
+                    if (Glfw.GetWindowAttrib(_windowPtr, WindowAttribute.Decorated) == 0)
                     {
                         return WindowBorder.Hidden;
                     }
                     
-                    return Glfw.GetWindowAttrib(_windowPtr, (int)WindowHint.Resizable) == 0
+                    return Glfw.GetWindowAttrib(_windowPtr, WindowAttribute.Resizable) == 0
                         ? WindowBorder.Fixed : WindowBorder.Resizable;
                 }
             }
@@ -498,7 +498,7 @@ namespace OpenToolkit.Windowing.Desktop
         {
             unsafe
             {
-                Glfw.SetWindowShouldClose(_windowPtr);
+                Glfw.SetWindowShouldClose(_windowPtr, 1);
                 OnClosed(this, EventArgs.Empty);
             }
         }

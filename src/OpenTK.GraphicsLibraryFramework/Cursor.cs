@@ -1,5 +1,5 @@
 //
-// InitHint.cs
+// Cursor.cs
 //
 // Copyright (C) 2019 OpenTK
 //
@@ -9,10 +9,11 @@
 
 namespace OpenToolkit.GraphicsLibraryFramework
 {
-    public enum InitHint
+    /// <summary>
+    /// Opaque handle to a GLFW cursor.
+    /// </summary>
+    public struct Cursor
     {
-        JoystickHatButtons = 0x00050001,
-        CocoaChdirResources = 0x00051001,
-        CocoaMenubar = 0x00051002
+        
     }
 }

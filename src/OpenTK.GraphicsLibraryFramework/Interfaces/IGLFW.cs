@@ -12,6 +12,8 @@ using AdvancedDLSupport;
 
 namespace OpenToolkit.GraphicsLibraryFramework
 {
+    //TODO: Enums for GLFW keys/mouse buttons
+    
     /// <summary>
     ///     Defines the public interface of the GLFW 3.2 library
     /// </summary>
@@ -20,6 +22,7 @@ namespace OpenToolkit.GraphicsLibraryFramework
     {
         bool Init();
         void Terminate();
+        
         void InitHint(InitHint hint, int value);
         void GetVersion(out int major, out int minor, out int revision);
         unsafe char* GetVersionString();
@@ -32,6 +35,32 @@ namespace OpenToolkit.GraphicsLibraryFramework
         unsafe void SetMonitorUserPointer(Monitor* monitor, IntPtr pointer);
         unsafe IntPtr GetMonitorUserPointer(Monitor* monitor);
         unsafe VideoMode* GetVideoModes(Monitor* monitor, out int count);
+        unsafe void SetGamma(Monitor* monitor, float gamma);
+        unsafe GammaRamp* GetGammaRamp(Monitor* monitor);
+        unsafe void SetGammaRamp(Monitor* monitor, GammaRamp* ramp);
+        void DefaultWindowHints();
+        void WindowHintString(int hint, string value);
+        unsafe void SetWindowSizeLimits(Window* window, int minwidth, int minheight, int maxwidth, int maxheight);
+        unsafe void SetWindowAspectRatio(Window* window, int numer, int denom);
+        unsafe void GetWindowFrameSize(Window* window, out int left, out int top, out int right, out int bottom);
+        unsafe float GetWindowOpacity(Window* window);
+        unsafe void SetWindowOpacity(Window* window, float opacity);
+        unsafe void RequestWindowAttention(Window* window);
+        unsafe void SetWindowAttrib(Window* window, WindowAttribute attribute, int value);
+        bool RawMouseMotionSupported();
+        unsafe char* GetKeyName(int key, int scancode);
+        int GetKeyScancode(int key);
+        unsafe int GetKey(Window* window, int key);
+        unsafe int GetMouseButton(Window* window, int button);
+        unsafe void GetCursorPos(Window* window, out double xpos, out double ypos);
+        unsafe void SetCursorPos(Window* window, double xpos, double ypos);
+        unsafe Cursor* CreateCursor(Image* image, int xhot, int yhot);
+        unsafe Cursor* CreateStandardCursor(CursorShape shape);
+        unsafe void DestroyCursor(Cursor* cursor);
+        unsafe void SetCursor(Window* window, Cursor* cursor);
+        int JoystickPresent(int jid);
+        unsafe float* GetJoystickAxes(int jid, out int count);
+        
         unsafe Window* CreateWindow(int width, int height, string title, Monitor* monitor, Window* share);
         unsafe void DestroyWindow(Window* window);
         unsafe void FocusWindow(Window* window);
@@ -40,7 +69,7 @@ namespace OpenToolkit.GraphicsLibraryFramework
         unsafe InputModeValue GetInputMode(Window* window, InputMode mode);
         unsafe Monitor* GetPrimaryMonitor();
         unsafe VideoMode* GetVideoMode(Monitor* monitor);
-        unsafe int GetWindowAttrib(Window* window, int attribute);
+        unsafe int GetWindowAttrib(Window* window, WindowAttribute attribute);
         unsafe void GetWindowSize(Window* window, out int width, out int height);
         unsafe void GetWindowPos(Window* window, out int x, out int y);
         unsafe Monitor* GetWindowMonitor(Window* window);
@@ -73,7 +102,7 @@ namespace OpenToolkit.GraphicsLibraryFramework
         unsafe void SetWindowPosCallback(Window* window, Action<Window, int, int> callback); //TODO: Make enums for int params in callback
         unsafe void SetWindowSize(Window* window, int width, int height);
         unsafe void SetWindowSizeCallback(Window* window, Action<int, int> callback); //TODO: Make enums for int params in callback
-        unsafe void SetWindowShouldClose(Window* window);
+        unsafe void SetWindowShouldClose(Window* window, int value);
         unsafe void SetWindowTitle(Window* window, string title);
         unsafe void ShowWindow(Window* window);
         void SetSwapInterval(int interval);
