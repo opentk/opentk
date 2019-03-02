@@ -46,7 +46,6 @@ namespace OpenToolkit.Windowing.Desktop
         public bool IsExiting { get; protected set; }
 
         public bool IsSingleThreaded => _isSingleThreaded;
-        
 
         public double RenderFrequency
         {
@@ -163,7 +162,7 @@ namespace OpenToolkit.Windowing.Desktop
                 {
                     ProcessEvents();
                     
-                    if (!Exists || IsExiting) continue;
+                    if (!Exists || IsExiting) return;
                     
                     if (_isSingleThreaded)
                     {
