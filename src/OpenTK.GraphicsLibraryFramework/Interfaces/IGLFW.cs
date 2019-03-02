@@ -25,13 +25,13 @@ namespace OpenToolkit.GraphicsLibraryFramework
         
         void InitHint(InitHint hint, int value);
         void GetVersion(out int major, out int minor, out int revision);
-        unsafe char* GetVersionString();
+        string GetVersionString();
         unsafe int GetError(char** description);
         unsafe Monitor** GetMonitors(out int count);
         unsafe void GetMonitorPos(Monitor* monitor, out int x, out int y);
         unsafe void GetMonitorPhysicalSize(Monitor* monitor, out int width, out int height);
         unsafe void GetMonitorContentScale(Monitor* monitor, out float xscale, out float yscale);
-        unsafe char* GetMonitorName(Monitor* monitor);
+        unsafe string GetMonitorName(Monitor* monitor);
         unsafe void SetMonitorUserPointer(Monitor* monitor, IntPtr pointer);
         unsafe IntPtr GetMonitorUserPointer(Monitor* monitor);
         unsafe VideoMode* GetVideoModes(Monitor* monitor, out int count);
@@ -48,7 +48,7 @@ namespace OpenToolkit.GraphicsLibraryFramework
         unsafe void RequestWindowAttention(Window* window);
         unsafe void SetWindowAttrib(Window* window, WindowAttribute attribute, int value);
         bool RawMouseMotionSupported();
-        unsafe char* GetKeyName(int key, int scancode);
+        string GetKeyName(int key, int scancode);
         int GetKeyScancode(int key);
         unsafe int GetKey(Window* window, int key);
         unsafe int GetMouseButton(Window* window, int button);
@@ -60,6 +60,25 @@ namespace OpenToolkit.GraphicsLibraryFramework
         unsafe void SetCursor(Window* window, Cursor* cursor);
         int JoystickPresent(int jid);
         unsafe float* GetJoystickAxes(int jid, out int count);
+        unsafe byte* GetJoystickButtons(int jid, out int count);
+        unsafe byte* GetJoystickHats(int jid, out int count);
+        string GetJoystickName(int jid);
+        string GetJoystickGUID(int jid);
+        void SetJoystickUserPointer(int jid, IntPtr ptr);
+        IntPtr GetJoystickUserPointer(int jid);
+        bool JoystickIsGamepad(int jid);
+        bool UpdateGamepadMappings(string newMapping);
+        string GetJoystickname(int jid);
+        bool GetGamepadState(int jid, out GamepadState state);
+        double GetTime();
+        void SetTime(double time);
+        long GetTimerValue();
+        long GetTimerFrequency();
+        unsafe Window* GetCurrentContext();
+        unsafe void SwapBuffers(Window* window);
+        bool ExtensionSupported(string extensionName);
+        bool VulkanSupported();
+        unsafe char** GetRequiredInstanceExtensions(out int count);
         
         unsafe Window* CreateWindow(int width, int height, string title, Monitor* monitor, Window* share);
         unsafe void DestroyWindow(Window* window);

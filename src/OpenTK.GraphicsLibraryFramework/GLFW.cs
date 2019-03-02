@@ -39,7 +39,7 @@ namespace OpenToolkit.GraphicsLibraryFramework
         public abstract void GetVersion(out int major, out int minor, out int revision);
 
         /// <inheritdoc />
-        public abstract unsafe char* GetVersionString();
+        public abstract string GetVersionString();
 
         /// <inheritdoc />
         public abstract unsafe int GetError(char** description);
@@ -57,7 +57,7 @@ namespace OpenToolkit.GraphicsLibraryFramework
         public abstract unsafe void GetMonitorContentScale(Monitor* monitor, out float xscale, out float yscale);
         
         /// <inheritdoc />
-        public abstract unsafe char* GetMonitorName(Monitor* monitor);
+        public abstract unsafe string GetMonitorName(Monitor* monitor);
         
         /// <inheritdoc />
         public abstract unsafe void SetMonitorUserPointer(Monitor* monitor, IntPtr pointer);
@@ -108,7 +108,7 @@ namespace OpenToolkit.GraphicsLibraryFramework
         public abstract bool RawMouseMotionSupported();
 
         /// <inheritdoc />
-        public abstract unsafe char* GetKeyName(int key, int scancode);
+        public abstract string GetKeyName(int key, int scancode);
 
         /// <inheritdoc />
         public abstract int GetKeyScancode(int key);
@@ -142,6 +142,62 @@ namespace OpenToolkit.GraphicsLibraryFramework
 
         /// <inheritdoc />
         public abstract unsafe float* GetJoystickAxes(int jid, out int count);
+
+        /// <inheritdoc />
+        public abstract unsafe byte* GetJoystickButtons(int jid, out int count);
+
+        /// <inheritdoc />
+        public abstract unsafe byte* GetJoystickHats(int jid, out int count);
+        
+        /// <inheritdoc />
+        public abstract string GetJoystickName(int jid);
+        
+        /// <inheritdoc />
+        public abstract string GetJoystickGUID(int jid);
+
+        /// <inheritdoc />
+        public abstract void SetJoystickUserPointer(int jid, IntPtr ptr);
+
+        /// <inheritdoc />
+        public abstract IntPtr GetJoystickUserPointer(int jid);
+
+        /// <inheritdoc />
+        public abstract bool JoystickIsGamepad(int jid);
+
+        /// <inheritdoc />
+        public abstract bool UpdateGamepadMappings(string newMapping);
+
+        /// <inheritdoc />
+        public abstract string GetJoystickname(int jid);
+        
+        /// <inheritdoc />
+        public abstract bool GetGamepadState(int jid, out GamepadState state);
+
+        /// <inheritdoc />
+        public abstract double GetTime();
+
+        /// <inheritdoc />
+        public abstract void SetTime(double time);
+        
+        /// <inheritdoc />
+        public abstract long GetTimerValue();
+        
+        /// <inheritdoc />
+        public abstract long GetTimerFrequency();
+        
+        /// <inheritdoc />
+        public abstract unsafe Window* GetCurrentContext();
+        
+        /// <inheritdoc />
+        public abstract unsafe void SwapBuffers(Window* window);
+        
+        /// <inheritdoc />
+        public abstract bool ExtensionSupported(string extensionName);
+
+        /// <inheritdoc />
+        public abstract bool VulkanSupported();
+
+        public abstract unsafe char** GetRequiredInstanceExtensions(out int count);
 
         /// <inheritdoc />
         public abstract unsafe Window* CreateWindow(int width, int height, string title, Monitor* monitor, Window* share);
