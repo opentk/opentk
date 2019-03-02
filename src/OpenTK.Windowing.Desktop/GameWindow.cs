@@ -131,8 +131,6 @@ namespace OpenToolkit.Windowing.Desktop
 
             RenderFrequency = gameWindowSettings.RenderFrequency;
             UpdateFrequency = gameWindowSettings.UpdateFrequency;
-            
-            Load?.Invoke(this, EventArgs.Empty);
         }
 
         public virtual void Run()
@@ -181,7 +179,7 @@ namespace OpenToolkit.Windowing.Desktop
 
         private void UpdateThread()
         {
-            UpdateThreadStarted?.Invoke(this, new EventArgs());
+            OnUpdateThreadStarted(this, EventArgs.Empty);
             _watchUpdate.Start();
             while (Exists && !IsExiting)
             {
