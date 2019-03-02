@@ -33,6 +33,42 @@ namespace OpenToolkit.GraphicsLibraryFramework
         public abstract void Terminate();
 
         /// <inheritdoc />
+        public abstract void InitHint(InitHint hint, int value);
+
+        /// <inheritdoc />
+        public abstract void GetVersion(out int major, out int minor, out int revision);
+
+        /// <inheritdoc />
+        public abstract unsafe char* GetVersionString();
+
+        /// <inheritdoc />
+        public abstract unsafe int GetError(char** description);
+        
+        /// <inheritdoc />
+        public abstract unsafe Monitor** GetMonitors(out int count);
+        
+        /// <inheritdoc />
+        public abstract unsafe void GetMonitorPos(Monitor* monitor, out int x, out int y);
+
+        /// <inheritdoc />
+        public abstract unsafe void GetMonitorPhysicalSize(Monitor* monitor, out int width, out int height);
+        
+        /// <inheritdoc />
+        public abstract unsafe void GetMonitorContentScale(Monitor* monitor, out float xscale, out float yscale);
+        
+        /// <inheritdoc />
+        public abstract unsafe char* GetMonitorName(Monitor* monitor);
+        
+        /// <inheritdoc />
+        public abstract unsafe void SetMonitorUserPointer(Monitor* monitor, IntPtr pointer);
+
+        /// <inheritdoc />
+        public abstract unsafe IntPtr GetMonitorUserPointer(Monitor* monitor);
+        
+        /// <inheritdoc />
+        public abstract unsafe VideoMode* GetVideoModes(Monitor* monitor, out int count);
+
+        /// <inheritdoc />
         public abstract unsafe Window* CreateWindow(int width, int height, string title, Monitor* monitor, Window* share);
 
         /// <inheritdoc />

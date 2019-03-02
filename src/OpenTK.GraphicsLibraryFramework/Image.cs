@@ -18,9 +18,9 @@ namespace OpenToolkit.GraphicsLibraryFramework
     /// </summary>
     public struct Image: IDisposable
     {
-        int Width { get; set; }
-        int Height { get; set; }
-        unsafe IntPtr Pixels { get; }
+        public int Width { get; set; }
+        public int Height { get; set; }
+        public unsafe IntPtr Pixels { get; }
 
 
         public Image(Stream imageStream)

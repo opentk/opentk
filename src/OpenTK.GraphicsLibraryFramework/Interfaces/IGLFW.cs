@@ -20,6 +20,18 @@ namespace OpenToolkit.GraphicsLibraryFramework
     {
         bool Init();
         void Terminate();
+        void InitHint(InitHint hint, int value);
+        void GetVersion(out int major, out int minor, out int revision);
+        unsafe char* GetVersionString();
+        unsafe int GetError(char** description);
+        unsafe Monitor** GetMonitors(out int count);
+        unsafe void GetMonitorPos(Monitor* monitor, out int x, out int y);
+        unsafe void GetMonitorPhysicalSize(Monitor* monitor, out int width, out int height);
+        unsafe void GetMonitorContentScale(Monitor* monitor, out float xscale, out float yscale);
+        unsafe char* GetMonitorName(Monitor* monitor);
+        unsafe void SetMonitorUserPointer(Monitor* monitor, IntPtr pointer);
+        unsafe IntPtr GetMonitorUserPointer(Monitor* monitor);
+        unsafe VideoMode* GetVideoModes(Monitor* monitor, out int count);
         unsafe Window* CreateWindow(int width, int height, string title, Monitor* monitor, Window* share);
         unsafe void DestroyWindow(Window* window);
         unsafe void FocusWindow(Window* window);
