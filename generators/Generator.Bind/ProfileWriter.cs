@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -25,6 +26,20 @@ namespace Generator.Bind
         /// The name of the subfolder containing <see cref="Interface"/>s.
         /// </summary>
         public const string InterfacesSubfolder = "Interfaces";
+
+        public static Lazy<Dictionary<string, ArraySegment<string>>> Helpers { get; } =
+            new Lazy<Dictionary<string, ArraySegment<string>>>
+            (
+                () => Program.CliOptions.Helpers.Select(File.ReadAllLines)
+                    .ToDictionary
+                    (
+                        x => x[0].StartsWith("// Profile: ")
+                            ? x[0].Trim("// Profile: ".ToCharArray())
+                            : throw new InvalidDataException
+                                ("Helpers file does not identify the profile to which it applies."),
+                        x => new ArraySegment<string>(x, 1, x.Length - 1)
+                    )
+            );
 
         /// <summary>
         /// Asynchronously writes this enum to a file.

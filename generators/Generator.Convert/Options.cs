@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using CommandLine;
 using CommandLine.Text;
 using Generator.Convert.Baking;
+using Generator.Convert.Overrides;
 using JetBrains.Annotations;
 
 namespace Generator.Convert
@@ -120,5 +121,11 @@ namespace Generator.Convert
         /// </summary>
         [Option('d', "docs", HelpText = "The folder in which a docs.gl clone is contained.", Required = false)]
         public string DocumentationFolder { get; set; }
+
+        /// <summary>
+        /// Gets or sets a list of profile overrides.
+        /// </summary>
+        [Option('v', "overrides", HelpText = "Override XML files.", Required = false)]
+        public IEnumerable<string> Overrides { get; set; }
     }
 }
