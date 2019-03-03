@@ -1,9 +1,9 @@
 using System;
-using Bind.XML.Signatures;
-using Bind.XML.Signatures.Functions;
+using Generator.Common.Functions;
 using JetBrains.Annotations;
+using Type = Generator.Common.Functions.Type;
 
-namespace Bind.XML.Overrides.Functions
+namespace Generator.Convert.Overrides.Functions
 {
     /// <summary>
     /// Represents an overridden parameter.
@@ -26,7 +26,7 @@ namespace Bind.XML.Overrides.Functions
         /// Gets the new type of the parameter.
         /// </summary>
         [CanBeNull]
-        public TypeSignature NewType { get; }
+        public Type NewType { get; }
 
         /// <summary>
         /// Gets the new flow of the parameter.
@@ -35,7 +35,7 @@ namespace Bind.XML.Overrides.Functions
         public FlowDirection? NewFlow { get; }
 
         /// <summary>
-        /// Gets the new count of the parameter. The count is validated and built into a <see cref="CountSignature"/> in
+        /// Gets the new count of the parameter. The count is validated and built into a <see cref="Count"/> in
         /// the baking step.
         /// </summary>
         [CanBeNull]
@@ -53,7 +53,7 @@ namespace Bind.XML.Overrides.Functions
         (
             [NotNull] string name,
             [CanBeNull] string newName,
-            [CanBeNull] TypeSignature newType,
+            [CanBeNull] Type newType,
             FlowDirection? newFlow,
             [CanBeNull] string newCount
         )
@@ -63,12 +63,6 @@ namespace Bind.XML.Overrides.Functions
             NewType = newType;
             NewFlow = newFlow;
             NewCount = newCount;
-        }
-
-        /// <inheritdoc/>
-        public override string ToString()
-        {
-            return $"{NewType} {NewName ?? BaseName}".Trim();
         }
     }
 }

@@ -1,15 +1,15 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Bind.XML.Signatures.Functions;
 using JetBrains.Annotations;
+using Type = Generator.Common.Functions.Type;
 
-namespace Bind.XML.Overrides.Functions
+namespace Generator.Convert.Overrides.Functions
 {
     /// <summary>
     /// Represents a function with overridden properties.
     /// </summary>
-    public class FunctionOverride : INamedExtensionScopedEntity
+    public class FunctionOverride
     {
         /// <summary>
         /// Gets the name of the function that the override affects.
@@ -27,7 +27,7 @@ namespace Bind.XML.Overrides.Functions
         /// Gets the new version that introduced the function.
         /// </summary>
         [CanBeNull]
-        public Version NewVersion { get; }
+        public string NewVersion { get; }
 
         /// <summary>
         /// Gets the reason the function was made obsolete.
@@ -39,7 +39,7 @@ namespace Bind.XML.Overrides.Functions
         /// Gets the new return type of the function.
         /// </summary>
         [CanBeNull]
-        public TypeSignature NewReturnType { get; }
+        public Type NewReturnType { get; }
 
         /// <summary>
         /// Gets the overridden parameters in the function.
@@ -60,9 +60,9 @@ namespace Bind.XML.Overrides.Functions
         (
             [NotNull] string baseName,
             [CanBeNull] string baseExtension,
-            [CanBeNull] Version newVersion,
+            [CanBeNull] string newVersion,
             [CanBeNull] string obsoletionReason,
-            [CanBeNull] TypeSignature newReturnType,
+            [CanBeNull] Type newReturnType,
             [NotNull] IReadOnlyList<ParameterOverride> parameterOverrides
         )
         {
@@ -99,17 +99,5 @@ namespace Bind.XML.Overrides.Functions
             // Parameters must match based on type and position
             return !ParameterOverrides.Where((t, i) => t.NewType != other.ParameterOverrides[i].NewType).Any();
         }
-
-        /// <inheritdoc/>
-        public override string ToString()
-        {
-            return $"{NewReturnType} {BaseName}({string.Join(", ", ParameterOverrides)})".Trim();
-        }
-
-        /// <inheritdoc/>
-        string INamedExtensionScopedEntity.Name => BaseName;
-
-        /// <inheritdoc/>
-        string INamedExtensionScopedEntity.Extension => BaseExtension;
     }
 }

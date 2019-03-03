@@ -3,15 +3,14 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Xml.Linq;
-using Bind.Extensions;
-using Bind.Versioning;
-using Bind.XML.Overrides.Enumerations;
-using Bind.XML.Overrides.Functions;
-using Bind.XML.Signatures;
+using Generator.Common.Functions;
+using Generator.Convert.Construction;
+using Generator.Convert.Overrides.Enumerations;
+using Generator.Convert.Overrides.Functions;
+using Generator.Convert.XML;
 using JetBrains.Annotations;
-using static Bind.XML.ParsingHelpers;
 
-namespace Bind.XML.Overrides
+namespace Generator.Convert.Overrides
 {
     /// <summary>
     /// Reads and organizes override signatures from an XML document.
@@ -81,7 +80,7 @@ namespace Bind.XML.Overrides
                 string,
                 Dictionary
                 <
-                    Version,
+                    string,
                     List<XElement>
                 >
             >();
@@ -89,7 +88,7 @@ namespace Bind.XML.Overrides
             var profileElements = signatureDocuments.Select(GetOverridesRoot).Elements().Where(e => e.Name == "add" || e.Name == "overload" || e.Name == "replace");
             foreach (var profileElement in profileElements)
             {
-                var profileNamesAndVersions = (Names: ParseProfileNames(profileElement), Versions: ParseProfileVersions(profileElement));
+                var profileNamesAndVersions = (Names: ParseProfileNames(profileElement), Versions: GetVersions(profileElement));
 
                 var profilePairs = profileNamesAndVersions.Names.SelectMany
                 (
@@ -116,7 +115,7 @@ namespace Bind.XML.Overrides
                     foundProfiles.Add
                     (
                         profileName,
-                        new Dictionary<Version, List<XElement>>
+                        new Dictionary<string, List<XElement>>
                         {
                             { profileVersion, new List<XElement> { profileElement } }
                         }
@@ -124,10 +123,14 @@ namespace Bind.XML.Overrides
                 }
             }
 
-            foreach (var (profileName, elementsByVersion) in foundProfiles)
+            foreach (var kvp in foundProfiles)
             {
-                foreach (var (version, elements) in elementsByVersion)
+                var profileName = kvp.Key;
+                var elementsByVersion = kvp.Value;
+                foreach (var kvp2 in elementsByVersion)
                 {
+                    var version = kvp2.Key;
+                    var elements = kvp2.Value;
                     var enumerationAdditions = new List<EnumerationOverride>();
 
                     var functionReplacements = new List<FunctionOverride>();
@@ -149,7 +152,8 @@ namespace Bind.XML.Overrides
                             }
                             case "overload":
                             {
-                                functionOverloads.AddRange(element.Elements("function").Select(ParseFunctionOverride));
+                                Console.WriteLine("Warning: XML Overloads are deprecated and should be moved to" +
+                                                  "helper classes. XML Overloads will be ignored.");
                                 break;
                             }
                             default:
@@ -162,7 +166,7 @@ namespace Bind.XML.Overrides
                     yield return new ApiProfileOverride
                     (
                         profileName,
-                        new VersionRange(version, version),
+                        version,
                         enumerationAdditions,
                         functionReplacements,
                         functionOverloads
@@ -197,13 +201,13 @@ namespace Bind.XML.Overrides
                 parameters.Add(parameterOverride);
             }
 
-            var newVersion = ParseVersion(functionElement.Element("version")?.Value);
+            var newVersion = functionElement.Element("version")?.Value;
             var obsoletionReason = functionElement.Element("obsolete")?.Value;
 
             var returnElement = functionElement.Element("returns");
             var newReturnType = returnElement is null
                 ? null
-                : ParseTypeSignature(returnElement.Value);
+                : ParsingHelpers.ParseTypeSignature(returnElement.Value);
 
             return new FunctionOverride
             (
@@ -233,7 +237,7 @@ namespace Bind.XML.Overrides
             var newTypeElement = paramElement.Element("type");
             var newType = newTypeElement is null
                 ? null
-                : ParseTypeSignature(newTypeElement.Value);
+                : ParsingHelpers.ParseTypeSignature(newTypeElement.Value);
 
             var newFlowElement = paramElement.Element("flow");
             FlowDirection? newFlow = null;
@@ -264,7 +268,7 @@ namespace Bind.XML.Overrides
         {
             var enumName = enumElement.GetRequiredAttribute("name").Value;
 
-            var directTokens = enumElement.Elements("token").Select(ParseTokenSignature).ToList();
+            var directTokens = enumElement.Elements("token").Select(ParsingHelpers.ParseTokenSignature).ToList();
             var useTokens = enumElement.Elements("use").Select(ParseUseTokenOverride).ToList();
             var reuseTokens = enumElement.Elements("reuse").Select(ParseReuseEnumerationOverride).ToList();
 
@@ -332,18 +336,12 @@ namespace Bind.XML.Overrides
         /// <param name="profileElement">The element.</param>
         /// <returns>The versions.</returns>
         [NotNull, ItemNotNull]
-        private static IEnumerable<Version> ParseProfileVersions([NotNull] XElement profileElement)
+        private static IEnumerable<string> GetVersions([NotNull] XElement profileElement)
         {
             var profileVersionString = profileElement.Attribute("version")?.Value ?? string.Empty;
             var profileVersionStrings = profileVersionString.Split('|');
 
-            return profileVersionStrings.Select
-            (
-                s =>
-                    string.IsNullOrWhiteSpace(s)
-                        ? new Version(0, 0)
-                        : new Version(s)
-            );
+            return profileVersionStrings;
         }
     }
 }

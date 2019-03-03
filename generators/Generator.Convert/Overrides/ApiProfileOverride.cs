@@ -1,23 +1,25 @@
 using System;
 using System.Collections.Generic;
-using Bind.Extensions;
-using Bind.Versioning;
-using Bind.XML.Overrides.Enumerations;
-using Bind.XML.Overrides.Functions;
+using Generator.Convert.Overrides.Enumerations;
+using Generator.Convert.Overrides.Functions;
 using JetBrains.Annotations;
 
-namespace Bind.XML.Overrides
+namespace Generator.Convert.Overrides
 {
     /// <summary>
     /// Represents a set of overridden APIs in a given profile.
     /// </summary>
-    public class ApiProfileOverride : IApiProfile
+    public class ApiProfileOverride
     {
-        /// <inheritdoc/>
+        /// <summary>
+        /// Gets the name of the profile to which these overrides apply.
+        /// </summary>
         public string Name { get; }
 
-        /// <inheritdoc/>
-        public VersionRange Versions { get; }
+        /// <summary>
+        /// Gets the version of the profile to which these overrides apply.
+        /// </summary>
+        public string Version { get; }
 
         /// <summary>
         /// Gets the enumerations that were added to the profile.
@@ -48,23 +50,17 @@ namespace Bind.XML.Overrides
         public ApiProfileOverride
         (
             [NotNull] string name,
-            [NotNull] VersionRange versions,
+            [NotNull] string versions,
             [NotNull] IReadOnlyList<EnumerationOverride> addedEnumerations,
             [NotNull] IReadOnlyList<FunctionOverride> replacedFunctions,
             [NotNull] IReadOnlyList<FunctionOverride> functionOverloads
         )
         {
             Name = name ?? throw new ArgumentNullException(nameof(name));
-            Versions = versions ?? throw new ArgumentNullException(nameof(versions));
+            Version = versions ?? throw new ArgumentNullException(nameof(versions));
             AddedEnumerations = addedEnumerations ?? throw new ArgumentNullException(nameof(addedEnumerations));
             ReplacedFunctions = replacedFunctions ?? throw new ArgumentNullException(nameof(replacedFunctions));
             FunctionOverloads = functionOverloads ?? throw new ArgumentNullException(nameof(functionOverloads));
-        }
-
-        /// <inheritdoc/>
-        public override string ToString()
-        {
-            return $"{Name} - {this.GetFriendlyName()}, v{Versions}";
         }
     }
 }

@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
-using Bind.XML.Signatures.Enumerations;
+using Generator.Common.Enums;
 using JetBrains.Annotations;
 
-namespace Bind.XML.Overrides.Enumerations
+namespace Generator.Convert.Overrides.Enumerations
 {
     /// <summary>
     /// Represents an enumeration definition in an API, which has been overridden.
@@ -20,7 +20,7 @@ namespace Bind.XML.Overrides.Enumerations
         /// Gets the set of tokens contained in the enumeration.
         /// </summary>
         [NotNull, ItemNotNull]
-        public IReadOnlyList<TokenSignature> DirectTokens { get; internal set; }
+        public IReadOnlyList<Token> DirectTokens { get; internal set; }
 
         /// <summary>
         /// Gets the set of token references contained in the enumeration. These are resolved in the baking step.
@@ -45,14 +45,14 @@ namespace Bind.XML.Overrides.Enumerations
         public EnumerationOverride
         (
             [NotNull] string name,
-            [CanBeNull, ItemNotNull] List<TokenSignature> directTokens = null,
+            [CanBeNull, ItemNotNull] List<Token> directTokens = null,
             [CanBeNull, ItemNotNull] IReadOnlyList<UseTokenOverride> useTokens = null,
             [CanBeNull, ItemNotNull] IReadOnlyList<ReuseEnumerationOverride> reuseEnumerations = null
         )
         {
             Name = name ?? throw new ArgumentNullException(nameof(name));
 
-            DirectTokens = directTokens ?? new List<TokenSignature>();
+            DirectTokens = directTokens ?? new List<Token>();
             UseTokens = useTokens ?? new List<UseTokenOverride>();
             ReuseEnumerations = reuseEnumerations ?? new List<ReuseEnumerationOverride>();
         }

@@ -1,7 +1,7 @@
 using System;
 using JetBrains.Annotations;
 
-namespace Bind.XML.Overrides.Enumerations
+namespace Generator.Convert.Overrides.Enumerations
 {
     /// <summary>
     /// Represents an override inclusion of a token from another enumeration.
