@@ -243,7 +243,10 @@ namespace OpenToolkit.Windowing.Desktop
 
         public virtual void SwapBuffers()
         {
-            throw new NotImplementedException();
+            unsafe
+            {
+                Glfw.SwapBuffers(_windowPtr);
+            }
         }
 
         public override void Close()
