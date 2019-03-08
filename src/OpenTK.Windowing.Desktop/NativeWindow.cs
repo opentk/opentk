@@ -9,7 +9,6 @@
 
 using System;
 using System.ComponentModel;
-using System.Drawing;
 using System.Threading;
 using OpenToolkit.GraphicsLibraryFramework;
 using OpenToolkit.Mathematics;
@@ -202,7 +201,7 @@ namespace OpenToolkit.Windowing.Desktop
                     //It isn't possible to implement this in versions of GLFW older than 3.3,
                     //as SetWindowAttrib didn't exist before then.
                     if (major == 3 && minor < 3)
-                        throw new NotImplementedException("Cannot be implemented in GLFW 3.2.");
+                        throw new NotSupportedException("Cannot be implemented in GLFW 3.2.");
                     
                     switch (value)
                     {
