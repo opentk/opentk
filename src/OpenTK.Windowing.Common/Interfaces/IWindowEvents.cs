@@ -49,6 +49,11 @@ namespace OpenToolkit.Windowing.Common
         event EventHandler<IconifyEventArgs> IconChanged;
 
         /// <summary>
+        /// Occurs when a joystick is connected or disconnected.
+        /// </summary>
+        event EventHandler<JoystickEventArgs> JoystickConnected;
+
+        /// <summary>
         /// Occurs when the <see cref="INativeWindow.Title" /> property of the window changes.
         /// </summary>
         event EventHandler<TitleChangedEventArgs> TitleChanged;
@@ -82,6 +87,14 @@ namespace OpenToolkit.Windowing.Common
         /// Occurs whenever a character is typed.
         /// </summary>
         event EventHandler<KeyPressEventArgs> KeyPress;
+        
+        /// <summary>
+        /// Occurs whenever a character is typed. Used for implementing custom Unicode input.
+        /// </summary>
+        /// <remarks>
+        /// If you don't need custom unicode input, use <see cref="KeyPress"/> instead.
+        /// </remarks>
+        event EventHandler<KeyboardCharModEventArgs> KeyboardCharMod;
 
         /// <summary>
         /// Occurs whenever a keyboard key is released.

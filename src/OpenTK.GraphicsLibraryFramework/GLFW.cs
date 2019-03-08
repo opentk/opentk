@@ -263,7 +263,7 @@ namespace OpenToolkit.GraphicsLibraryFramework
         public abstract unsafe void SetCharCallback(Window* window, Action<Window, int> callback);
 
         /// <inheritdoc />
-        public abstract unsafe void SetCharModsCallback(Window* window, Action<Window, int, int> callback);
+        public abstract unsafe void SetCharModsCallback(Window* window, Action<Window, uint, int> callback);
 
         /// <inheritdoc />
         public abstract unsafe void SetCursorEnterCallback(Window* window, Action<Window, bool> callback);
@@ -281,7 +281,7 @@ namespace OpenToolkit.GraphicsLibraryFramework
         public abstract unsafe void SetInputMode(Window* window, InputMode mode, InputModeValue value);
 
         /// <inheritdoc />
-        public abstract unsafe void SetJoystickCallback(Action<int, int> callback);
+        public abstract void SetJoystickCallback(Action<int, JoystickState> callback);
 
         /// <inheritdoc />
         public abstract unsafe void SetKeyCallback(Window* window, Action<Window, int, int, InputAction, int> callback);
@@ -290,7 +290,7 @@ namespace OpenToolkit.GraphicsLibraryFramework
         public abstract unsafe void SetScrollCallback(Window* window, Action<Window, int, int> callback);
 
         /// <inheritdoc />
-        public abstract unsafe void SetMonitorCallback(Action<Monitor, int> callback);
+        public abstract unsafe void SetMonitorCallback(Action<Monitor, MonitorState> callback);
 
         /// <inheritdoc />
         public abstract unsafe void SetMouseButtonCallback(Window* window, Action<Window, int, InputAction, int> callback);

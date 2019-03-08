@@ -189,14 +189,12 @@ namespace OpenToolkit.Windowing.Desktop
         public WindowBorder WindowBorder
         {
             get => _windowBorder;
-
-            //If GLFW 3.3 is supported by the time OpenTK 4.0 is ready, this will be implemented,
-            //but we want to avoid making features that depend on development versions of libraries.
+            
             set
             {
                 unsafe
                 {
-                    Glfw.GetVersion(out var major, out var minor, out var revision);
+                    Glfw.GetVersion(out var major, out var minor, out _);
                     
                     //It isn't possible to implement this in versions of GLFW older than 3.3,
                     //as SetWindowAttrib didn't exist before then.
@@ -532,10 +530,21 @@ namespace OpenToolkit.Windowing.Desktop
                     OnFileDrop(this, new FileDropEventArgs());
                 });
 
-                //TODO: Events from GLFW the 'legacy' NativeWindow didnt have events for.
-                Glfw.SetCharModsCallback(_windowPtr, (window, codepoint, mods) => throw new NotImplementedException());
-                Glfw.SetJoystickCallback((joy, eventCode) => throw new NotImplementedException());
-                Glfw.SetMonitorCallback((monitor, eventCode) => throw new NotImplementedException());
+                
+                Glfw.SetCharModsCallback(_windowPtr, (window, codepoint, mods) =>
+                {
+                    OnKeyboardCharMod(this, new KeyboardCharModEventArgs(codepoint, (KeyModifiers)mods));
+                });
+                
+                Glfw.SetJoystickCallback((joy, eventCode) =>
+                {
+                    OnJoystickConnected(this, new JoystickEventArgs(joy, eventCode == JoystickState.Connected));
+                });
+                
+                Glfw.SetMonitorCallback((monitor, eventCode) =>
+                {
+                    OnMonitorConnected(this, new MonitorEventArgs(monitor, eventCode == MonitorState.Connected));
+                });
             }
         }
 
@@ -579,6 +588,7 @@ namespace OpenToolkit.Windowing.Desktop
         public event EventHandler<EventArgs> Closed;
         public event EventHandler<EventArgs> Disposed;
         public event EventHandler<IconifyEventArgs> IconChanged;
+        public event EventHandler<JoystickEventArgs> JoystickConnected;
         public event EventHandler<TitleChangedEventArgs> TitleChanged;
         public event EventHandler<VisibilityChangedEventArgs> VisibleChanged;
         public event EventHandler<FocusedChangedEventArgs> FocusedChanged;
@@ -586,7 +596,9 @@ namespace OpenToolkit.Windowing.Desktop
         public event EventHandler<EventArgs> WindowStateChanged;
         public event EventHandler<KeyboardKeyEventArgs> KeyDown;
         public event EventHandler<KeyPressEventArgs> KeyPress;
+        public event EventHandler<KeyboardCharModEventArgs> KeyboardCharMod;
         public event EventHandler<KeyboardKeyEventArgs> KeyUp;
+        public event EventHandler<MonitorEventArgs> MonitorConnected;
         public event EventHandler<EventArgs> MouseLeave;
         public event EventHandler<EventArgs> MouseEnter;
         public event EventHandler<MouseButtonEventArgs> MouseDown;
@@ -633,6 +645,11 @@ namespace OpenToolkit.Windowing.Desktop
         {
             IconChanged?.Invoke(sender, e);
         }
+
+        protected virtual void OnJoystickConnected(object sender, JoystickEventArgs e)
+        {
+            JoystickConnected?.Invoke(sender, e);
+        }
         
         protected virtual void OnTitleChanged(object sender, TitleChangedEventArgs e)
         {
@@ -674,10 +691,20 @@ namespace OpenToolkit.Windowing.Desktop
         {
             KeyPress?.Invoke(sender, e);
         }
+
+        protected virtual void OnKeyboardCharMod(object sender, KeyboardCharModEventArgs e)
+        {
+            KeyboardCharMod?.Invoke(sender, e);
+        }
         
         protected virtual void OnKeyUp(object sender, KeyboardKeyEventArgs e)
         {
             KeyUp?.Invoke(sender, e);
+        }
+
+        protected virtual void OnMonitorConnected(object sender, MonitorEventArgs e)
+        {
+            MonitorConnected?.Invoke(sender, e);
         }
         
         protected virtual void OnMouseLeave(object sender, EventArgs e)

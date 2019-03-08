@@ -23,4 +23,8 @@
       <ProjectReference Include="..\OpenTK.Mathematics\OpenTK.Mathematics.csproj" />
       <ProjectReference Include="..\OpenTK.Windowing.Common\OpenTK.Windowing.Common.csproj" />
     </ItemGroup>
+    
+    <ItemGroup>
+      <Folder Include="EventingModels" />
+    </ItemGroup>
 </Project>
