@@ -59,9 +59,14 @@ namespace OpenToolkit.Windowing.EventingModels
         /// </summary>
         public MouseButton Button { get; internal set; }
         
-        // TODO: Move InputAction into this project so we can use this without referencing GraphicsLibraryFramework.
+        /// <summary>
+        /// Gets the <see cref="InputAction"/> of the pressed button.
+        /// </summary>
         public InputAction Action { get; internal set; }
         
+        /// <summary>
+        /// Gets the active <see cref="KeyModifiers"/> of the pressed button.
+        /// </summary>
         public KeyModifiers Modifiers { get; internal set; }
 
         /// <summary>
