@@ -24,7 +24,20 @@ namespace OpenToolkit.Windowing.Desktop
     {
         protected static GLFW Glfw => GLFWProvider.GLFW.Value;
         protected readonly unsafe Window* _windowPtr;
+        
+        /// <summary>
+        /// The X position of the mouse on the last update. Used to calculate the mouse delta.
+        /// </summary>
+        protected double lastMousePositionX;
+        
+        /// <summary>
+        /// The Y position of the mouse on the last update. Used to calculate the mouse delta.
+        /// </summary>
+        protected double lastMousePositionY;
 
+        /// <summary>
+        /// The current number of windows open. If this is zero when a window closes, GLFW will be terminated.
+        /// </summary>
         protected static int _numberOfUsers;
         
         protected static Mutex _mutex;
@@ -176,23 +189,39 @@ namespace OpenToolkit.Windowing.Desktop
 
         public WindowBorder WindowBorder
         {
-            get
+            get => _windowBorder;
+
+            //If GLFW 3.3 is supported by the time OpenTK 4.0 is ready, this will be implemented,
+            //but we want to avoid making features that depend on development versions of libraries.
+            set
             {
                 unsafe
                 {
-                    if (Glfw.GetWindowAttrib(_windowPtr, WindowAttribute.Decorated) == 0)
-                    {
-                        return WindowBorder.Hidden;
-                    }
+                    Glfw.GetVersion(out var major, out var minor, out var revision);
                     
-                    return Glfw.GetWindowAttrib(_windowPtr, WindowAttribute.Resizable) == 0
-                        ? WindowBorder.Fixed : WindowBorder.Resizable;
+                    //It isn't possible to implement this in versions of GLFW older than 3.3,
+                    //as SetWindowAttrib didn't exist before then.
+                    if (major == 3 && minor < 3)
+                        throw new NotImplementedException("Cannot be implemented in GLFW 3.2.");
+                    
+                    switch (value)
+                    {
+                        case WindowBorder.Hidden:
+                            Glfw.SetWindowAttrib(_windowPtr, WindowAttribute.Decorated, 0);
+                            break;
+                    
+                        case WindowBorder.Resizable:
+                            Glfw.SetWindowAttrib(_windowPtr, WindowAttribute.Resizable, 1);
+                            break;
+                    
+                        case WindowBorder.Fixed:
+                            Glfw.SetWindowAttrib(_windowPtr, WindowAttribute.Resizable, 0);
+                            break;
+                    }
                 }
+
+                _windowBorder = value;
             }
-            
-            //If GLFW 3.3 is supported by the time OpenTK 4.0 is ready, this will be implemented,
-            //but we want to avoid making features that depend on development versions of libraries.
-            set => throw new NotImplementedException("Cannot be implemented in GLFW 3.2.");
         }
 
         public Box2 Bounds
@@ -485,9 +514,24 @@ namespace OpenToolkit.Windowing.Desktop
                     }
                 });
                 
-                Glfw.SetCursorPosCallback(_windowPtr, (window, xpos, ypos) => OnMouseMove(this, new MouseMoveEventArgs()));
+                Glfw.SetCursorPosCallback(_windowPtr, (window, xpos, ypos) =>
+                {
+                    var deltaX = lastMousePositionX - xpos;
+                    var deltaY = lastMousePositionY - ypos;
+                    
+                    OnMouseMove(this, new MouseMoveEventArgs(xpos, ypos, deltaX, deltaY));
+
+                    lastMousePositionX = xpos;
+                    lastMousePositionY = ypos;
+                });
+                
                 Glfw.SetScrollCallback(_windowPtr, (window, xOffset, yOffset) => OnMouseWheel(this, new MouseWheelEventArgs()));
-                Glfw.SetDropCallback(_windowPtr, (window, count, paths) => OnFileDrop(this, new FileDropEventArgs()));
+                
+                Glfw.SetDropCallback(_windowPtr, (window, count, paths) =>
+                {
+                    //TODO: Parse paths to a string array somehow.
+                    OnFileDrop(this, new FileDropEventArgs());
+                });
 
                 //TODO: Events from GLFW the 'legacy' NativeWindow didnt have events for.
                 Glfw.SetCharModsCallback(_windowPtr, (window, codepoint, mods) => throw new NotImplementedException());

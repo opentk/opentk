@@ -9,7 +9,7 @@
 
 using System;
 using OpenToolkit.Windowing.Common.Input;
-using System.Drawing;
+using OpenToolkit.Mathematics;
 
 namespace OpenToolkit.Windowing.EventingModels
 {
@@ -40,7 +40,7 @@ namespace OpenToolkit.Windowing.EventingModels
         /// </summary>
         /// <param name="x">The X position.</param>
         /// <param name="y">The Y position.</param>
-        public MouseEventArgs(int x, int y)
+        public MouseEventArgs(double x, double y)
             : this()
         {
             state.X = x;
@@ -59,7 +59,7 @@ namespace OpenToolkit.Windowing.EventingModels
         /// <summary>
         /// Gets the X position of the mouse for the event.
         /// </summary>
-        public int X
+        public double X
         {
             get => state.X;
             internal set => state.X = value;
@@ -68,7 +68,7 @@ namespace OpenToolkit.Windowing.EventingModels
         /// <summary>
         /// Gets the Y position of the mouse for the event.
         /// </summary>
-        public int Y
+        public double Y
         {
             get => state.Y;
             internal set => state.Y = value;
@@ -77,9 +77,9 @@ namespace OpenToolkit.Windowing.EventingModels
         /// <summary>
         /// Gets a <see cref="System.Drawing.Point" /> representing the location of the mouse for the event.
         /// </summary>
-        public Point Position
+        public Vector2d Position
         {
-            get => new Point(state.X, state.Y);
+            get => new Vector2d(state.X, state.Y);
             set
             {
                 X = value.X;

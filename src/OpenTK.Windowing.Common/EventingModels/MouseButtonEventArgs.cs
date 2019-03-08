@@ -38,7 +38,7 @@ namespace OpenToolkit.Windowing.EventingModels
         /// <param name="y">The Y position.</param>
         /// <param name="button">The mouse button for the event.</param>
         /// <param name="pressed">The current state of the button.</param>
-        public MouseButtonEventArgs(int x, int y, MouseButton button, bool pressed)
+        public MouseButtonEventArgs(double x, double y, MouseButton button, bool pressed)
             : base(x, y)
         {
             Button = button;

@@ -38,7 +38,7 @@ namespace OpenToolkit.Windowing.EventingModels
         /// <param name="y">The Y position.</param>
         /// <param name="value">The value of the wheel.</param>
         /// <param name="delta">The change in value of the wheel for this event.</param>
-        public MouseWheelEventArgs(int x, int y, int value, int delta)
+        public MouseWheelEventArgs(double x, double y, int value, int delta)
             : base(x, y)
         {
             Mouse.SetScrollAbsolute(Mouse.Scroll.X, value);

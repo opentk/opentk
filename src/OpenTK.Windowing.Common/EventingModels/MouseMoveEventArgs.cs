@@ -35,7 +35,7 @@ namespace OpenToolkit.Windowing.EventingModels
         /// <param name="y">The Y position.</param>
         /// <param name="deltaX">The change in X position produced by this event.</param>
         /// <param name="deltaY">The change in Y position produced by this event.</param>
-        public MouseMoveEventArgs(int x, int y, int deltaX, int deltaY)
+        public MouseMoveEventArgs(double x, double y, double deltaX, double deltaY)
             : base(x, y)
         {
             DeltaX = deltaX;
@@ -54,11 +54,11 @@ namespace OpenToolkit.Windowing.EventingModels
         /// <summary>
         /// Gets the change in X position produced by this event.
         /// </summary>
-        public int DeltaX { get; internal set; }
+        public double DeltaX { get; internal set; }
 
         /// <summary>
         /// Gets the change in Y position produced by this event.
         /// </summary>
-        public int DeltaY { get; internal set; }
+        public double  DeltaY { get; internal set; }
     }
 }

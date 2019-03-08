@@ -103,7 +103,7 @@ namespace OpenToolkit.GraphicsLibraryFramework
         unsafe void SetCharModsCallback(Window* window, Action<Window, int, int> callback); //TODO: Make enums for int params in callback
         unsafe void SetClipboardString(Window* window, string data);
         unsafe void SetCursorEnterCallback(Window* window, Action<Window, bool> callback);
-        unsafe void SetCursorPosCallback(Window* window, Action<Window, int, int> callback); //TODO: Make enums for int params in callback
+        unsafe void SetCursorPosCallback(Window* window, Action<Window, double, double> callback); //TODO: Make enums for int params in callback
         unsafe void SetDropCallback(Window* window, Action<Window, int, IntPtr> callback); //TODO: Make enum for int param in callback
         unsafe void SetErrorCallback(Action<int, string> callback); //TODO: Make enum for int param in callback
         unsafe void SetInputMode(Window* window, InputMode mode, InputModeValue value);

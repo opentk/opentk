@@ -17,8 +17,8 @@ namespace OpenToolkit.Windowing.Common.Input
     /// </summary>
     public struct MouseState : IEquatable<MouseState>
     {
-        internal const int MaxButtons = 16; // we are storing in an ushort
-        private Vector2 position;
+        internal const int MaxButtons = 16;
+        private Vector2d position;
         private MouseScroll scroll;
         private ushort buttons;
 
@@ -82,18 +82,18 @@ namespace OpenToolkit.Windowing.Common.Input
         /// <summary>
         /// Gets an integer representing the absolute x position of the pointer, in window pixel coordinates.
         /// </summary>
-        public int X
+        public double X
         {
-            get => (int)Math.Round(position.X);
+            get => position.X;
             internal set => position.X = value;
         }
 
         /// <summary>
         /// Gets an integer representing the absolute y position of the pointer, in window pixel coordinates.
         /// </summary>
-        public int Y
+        public double Y
         {
-            get => (int)Math.Round(position.Y);
+            get => position.Y;
             internal set => position.Y = value;
         }
 
@@ -220,7 +220,7 @@ namespace OpenToolkit.Windowing.Common.Input
             return $"[X={X}, Y={Y}, Scroll={Scroll}, Buttons={b}, IsConnected={IsConnected}]";
         }
 
-        internal Vector2 Position
+        internal Vector2d Position
         {
             get => position;
             set => position = value;
