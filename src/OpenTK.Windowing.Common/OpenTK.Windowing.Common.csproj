@@ -25,4 +25,8 @@
     <ProjectReference Include="..\OpenTK.Mathematics\OpenTK.Mathematics.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Enums" />
+  </ItemGroup>
+
 </Project>

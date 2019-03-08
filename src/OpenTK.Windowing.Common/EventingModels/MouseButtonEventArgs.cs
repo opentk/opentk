@@ -7,6 +7,7 @@
 // of the MIT license. See the LICENSE file for details.
 //
 
+using OpenToolkit.Windowing.Common;
 using OpenToolkit.Windowing.Common.Input;
 
 namespace OpenToolkit.Windowing.EventingModels
@@ -59,7 +60,7 @@ namespace OpenToolkit.Windowing.EventingModels
         public MouseButton Button { get; internal set; }
         
         // TODO: Move InputAction into this project so we can use this without referencing GraphicsLibraryFramework.
-        //public InputAction Action { get; internal set; }
+        public InputAction Action { get; internal set; }
         
         public KeyModifiers Modifiers { get; internal set; }
 

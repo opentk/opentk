@@ -272,7 +272,7 @@ namespace OpenToolkit.GraphicsLibraryFramework
         public abstract unsafe void SetCursorPosCallback(Window* window, Action<Window, int, int> callback);
 
         /// <inheritdoc />
-        public abstract unsafe void SetDropCallback(Window* window, Action<Window, int, string> callback);
+        public abstract unsafe void SetDropCallback(Window* window, Action<Window, int, IntPtr> callback);
 
         /// <inheritdoc />
         public abstract unsafe void SetErrorCallback(Action<int, string> callback);
