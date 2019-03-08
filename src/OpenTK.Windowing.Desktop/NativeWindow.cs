@@ -9,6 +9,7 @@
 
 using System;
 using System.ComponentModel;
+using System.Runtime.InteropServices;
 using System.Threading;
 using OpenToolkit.GraphicsLibraryFramework;
 using OpenToolkit.Mathematics;
@@ -526,8 +527,20 @@ namespace OpenToolkit.Windowing.Desktop
                 
                 Glfw.SetDropCallback(_windowPtr, (window, count, paths) =>
                 {
-                    //TODO: Parse paths to a string array somehow.
-                    OnFileDrop(this, new FileDropEventArgs());
+                    unsafe
+                    {
+                        var pathsStrings = (char**)paths;
+
+                        var arrayOfPaths = new string[count];
+
+                        for (var i = 0; i < count; i++)
+                        {
+                            if (pathsStrings != null)
+                                arrayOfPaths[i] = new string(pathsStrings[i]);
+                        }
+                        
+                        OnFileDrop(this, new FileDropEventArgs(arrayOfPaths));
+                    }
                 });
 
                 

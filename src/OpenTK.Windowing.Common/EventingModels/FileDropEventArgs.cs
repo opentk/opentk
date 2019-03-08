@@ -15,11 +15,21 @@ namespace OpenToolkit.Windowing.EventingModels
     /// Defines the event data for files being dropped onto the window.
     /// </summary>
     public class FileDropEventArgs : EventArgs
-    {        
+    {
+        public FileDropEventArgs(string[] paths)
+        {
+            FileNames = paths;
+        }
+
+        public FileDropEventArgs(FileDropEventArgs other)
+        {
+            FileNames = other.FileNames;
+        }
+        
         /// <summary>
         /// Get the names of the files.
         /// </summary>
         /// <value>An <see cref="System.Array" /> of strings giving the names of all files dropped.</value>
-        public string[] FileName { get; internal set; }
+        public string[] FileNames { get; internal set; }
     }
 }
