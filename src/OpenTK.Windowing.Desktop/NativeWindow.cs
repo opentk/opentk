@@ -563,14 +563,14 @@ namespace OpenToolkit.Windowing.Desktop
             Glfw.PollEvents();
         }
 
-        public Point PointToClient(Point point)
+        public Vector2 PointToClient(Vector2 point)
         {
-            throw new NotImplementedException();
+            return point - Location;
         }
 
-        public Point PointToScreen(Point point)
+        public Vector2 PointToScreen(Vector2 point)
         {
-            throw new NotImplementedException();
+            return point + Location;
         }
 
         #region Event Handlers
