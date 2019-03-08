@@ -8,7 +8,7 @@
 //
 
 using System;
-using System.Drawing;
+using OpenToolkit.Mathematics;
 
 namespace OpenToolkit.Windowing.Common
 {
@@ -36,22 +36,22 @@ namespace OpenToolkit.Windowing.Common
         /// Transforms the specified point from screen to client coordinates.
         /// </summary>
         /// <param name="point">
-        /// A <see cref="System.Drawing.Point" /> to transform.
+        /// A <see cref="OpenToolkit.Mathematics.Vector2" /> to transform.
         /// </param>
         /// <returns>
         /// The point transformed to client coordinates.
         /// </returns>
-        Point PointToClient(Point point);
+        Vector2 PointToClient(Vector2 point);
 
         /// <summary>
         /// Transforms the specified point from client to screen coordinates.
         /// </summary>
         /// <param name="point">
-        /// A <see cref="System.Drawing.Point" /> to transform.
+        /// A <see cref="OpenToolkit.Mathematics.Vector2" /> to transform.
         /// </param>
         /// <returns>
         /// The point transformed to screen coordinates.
         /// </returns>
-        Point PointToScreen(Point point);
+        Vector2 PointToScreen(Vector2 point);
     }
 }
