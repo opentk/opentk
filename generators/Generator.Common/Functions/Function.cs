@@ -61,6 +61,11 @@ namespace Generator.Common.Functions
         /// </summary>
         public string ExtensionName { get; set; }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether the new keyword is set.
+        /// </summary>
+        public bool New { get; set; } = false;
+
         /// <inheritdoc />
         public override string ToString()
         {

@@ -14,10 +14,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Docs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="HtmlAgilityPack" Version="1.8.11" />
   </ItemGroup>
 

@@ -11,6 +11,7 @@
 
   <ItemGroup>
     <PackageReference Include="AdvancedDLSupport" Version="2.3.0" />
+    <PackageReference Include="System.Memory" Version="4.5.1" />
   </ItemGroup>
 
   <Import Project="..\..\props\common.props" />

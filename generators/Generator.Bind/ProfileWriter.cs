@@ -276,7 +276,7 @@ namespace Generator.Bind
                 );
             }
 
-            var nm = project.IsRoot ? profile.FunctionPrefix : project.Namespace.Split('.').Last();
+            var nm = project.IsRoot ? profile.FunctionPrefix.ToUpper() : project.Namespace.Split('.').Last();
             await project.WriteMixedModeClassAsync(profile, Path.Combine(folder, nm) + ".cs");
             
             await Task.WhenAll(interfaceTasks.Concat(enumTasks));
