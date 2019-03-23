@@ -9,14 +9,13 @@
 
 using System;
 using System.ComponentModel;
-using System.Runtime.InteropServices;
 using System.Threading;
 using OpenToolkit.GraphicsLibraryFramework;
 using OpenToolkit.Mathematics;
 using OpenToolkit.Windowing.Common;
 using OpenToolkit.Windowing.Common.Input;
 using OpenToolkit.Windowing.EventingModels;
-using Monitor = OpenToolkit.GraphicsLibraryFramework.Monitor;
+using Monitor = OpenToolkit.Windowing.Common.Monitor;
 
 namespace OpenToolkit.Windowing.Desktop
 {
@@ -75,13 +74,19 @@ namespace OpenToolkit.Windowing.Desktop
             }
         }
 
-        public unsafe Monitor* CurrentMonitor
+        public unsafe Monitor CurrentMonitor
         {
-            get => Glfw.GetWindowMonitor(_windowPtr);
+            get
+            {
+                var _monitor = (IntPtr)Glfw.GetWindowMonitor(_windowPtr);
+                
+                return new Monitor(_monitor);
+            }
             set
             {
-                var mode = Glfw.GetVideoMode(value);
-                Glfw.SetWindowMonitor(_windowPtr, value, (int)_location.X, (int)_location.Y,
+                var _monitor = (GraphicsLibraryFramework.Monitor*)value.Ptr;
+                var mode = Glfw.GetVideoMode(_monitor);
+                Glfw.SetWindowMonitor(_windowPtr, _monitor, (int)_location.X, (int)_location.Y,
                     (int)_size.X, (int)_size.Y, mode->refreshRate);
             }
         }
@@ -148,7 +153,7 @@ namespace OpenToolkit.Windowing.Desktop
                         return WindowState.Fullscreen;
                     }
 
-                    var mode = Glfw.GetVideoMode(CurrentMonitor);
+                    var mode = Glfw.GetVideoMode((GraphicsLibraryFramework.Monitor*)CurrentMonitor.Ptr);
 
                     Glfw.GetWindowSize(_windowPtr, out var windowWidth, out var windowHeight);
 
@@ -176,8 +181,9 @@ namespace OpenToolkit.Windowing.Desktop
                             Glfw.MaximizeWindow(_windowPtr);
                             break;
                         case WindowState.Fullscreen:
-                            var mode = Glfw.GetVideoMode(CurrentMonitor);
-                            Glfw.SetWindowMonitor(_windowPtr, CurrentMonitor, 0, 0, mode->width, mode->height,
+                            var _monitor = (GraphicsLibraryFramework.Monitor*)CurrentMonitor.Ptr;
+                            var mode = Glfw.GetVideoMode(_monitor);
+                            Glfw.SetWindowMonitor(_windowPtr, _monitor, 0, 0, mode->width, mode->height,
                                 mode->refreshRate);
                             break;
                     }
@@ -410,12 +416,14 @@ namespace OpenToolkit.Windowing.Desktop
                 
                 if (settings.WindowState == WindowState.Fullscreen)
                 {
-                    var modePtr = Glfw.GetVideoMode(settings.CurrentMonitor);
+                    var _monitor = (GraphicsLibraryFramework.Monitor*)settings.CurrentMonitor.Ptr;
+                    var modePtr = Glfw.GetVideoMode(_monitor);
                     Glfw.WindowHint(WindowHint.RedBits, modePtr->redBits);
                     Glfw.WindowHint(WindowHint.GreenBits, modePtr->greenBits);
                     Glfw.WindowHint(WindowHint.BlueBits, modePtr->blueBits);
                     Glfw.WindowHint(WindowHint.RefreshRate, modePtr->refreshRate);
-                    _windowPtr = Glfw.CreateWindow(modePtr->width, modePtr->height, _title, settings.CurrentMonitor, null);
+                    _windowPtr = Glfw.CreateWindow(modePtr->width, modePtr->height,
+                        _title, _monitor, null);
                 }
                 else
                 {

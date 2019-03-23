@@ -1,6 +1,9 @@
+using System;
+using System.Security.Cryptography.X509Certificates;
 using OpenToolkit.GraphicsLibraryFramework;
 using OpenToolkit.Mathematics;
 using OpenToolkit.Windowing.Common;
+using Monitor = OpenToolkit.Windowing.Common.Monitor;
 
 namespace OpenToolkit.Windowing.Desktop
 {
@@ -11,25 +14,48 @@ namespace OpenToolkit.Windowing.Desktop
         /// </summary>
         public static readonly NativeWindowSettings Default = new NativeWindowSettings();
 
-        public unsafe Monitor* CurrentMonitor { get; set; } = GLFWProvider.GLFW.Value.GetPrimaryMonitor();
+        public NativeWindowSettings()
+        {
+            unsafe
+            {
+                CurrentMonitor = new Monitor((IntPtr)GLFWProvider.GLFW.Value.GetPrimaryMonitor());
+            }
+
+            Title = "OpenTK Window";
+            Focused = true;
+            Visible = true;
+
+            WindowState = WindowState.Normal;
+            WindowBorder = WindowBorder.Resizable;
+
+            X = -1;
+            Y = -1;
+
+            Width = 640;
+            Height = 480;
+
+            IsFullscreen = false;
+        }
+
+        public Monitor CurrentMonitor { get; set; }
         
         public string ClipboardString { get; set; }
-        public string Title { get; set; } = "OpenTK Window";
-        public bool Focused { get; set; } = true;
-        public bool Visible { get; set; } = true;
+        public string Title { get; set; }
+        public bool Focused { get; set; }
+        public bool Visible { get; set; }
         public bool Exists { get; }
-        public WindowState WindowState { get; set; } = WindowState.Normal;
-        public WindowBorder WindowBorder { get; set; } = WindowBorder.Resizable;
+        public WindowState WindowState { get; set; }
+        public WindowBorder WindowBorder { get; set; }
         public Box2 Bounds { get; set; }
         public Vector2 Location { get; set; }
         public Vector2 Size { get; set; }
-        public int X { get; set; } = -1;
-        public int Y { get; set; } = -1; //TODO: Find a way to set these equal to GLFW_DONT_CARE. For now, -1 will do.
-        public int Width { get; set; } = 640;
-        public int Height { get; set; } = 480;
+        public int X { get; set; }
+        public int Y { get; set; }
+        public int Width { get; set; }
+        public int Height { get; set; }
         public Box2 ClientRectangle { get; set; }
         public Vector2 ClientSize { get; }
 
-        public bool IsFullscreen { get; set; } = false;
+        public bool IsFullscreen { get; set; }
     }
 }
