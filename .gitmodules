@@ -1,3 +1,3 @@
-[submodule "generators/Specifications/Docs"]
-	path = generators/Specifications/Docs
+[submodule "src/Generators/Specifications/Docs"]
+	path = src/Generators/Specifications/Docs
 	url = https://github.com/BSVino/docs.gl

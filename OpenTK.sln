@@ -84,11 +84,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenTK.OpenAL.Extensions.EX
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "OpenGL", "OpenGL", "{85C133D9-ABA2-4C93-99BE-3D7D2CD3A6B8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Generator.Bind", "generators\Generator.Bind\Generator.Bind.csproj", "{A7B31B0A-1240-4C02-A5B5-9B9F5E79A1E1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Generator.Bind", "src\Generators\Generator.Bind\Generator.Bind.csproj", "{A7B31B0A-1240-4C02-A5B5-9B9F5E79A1E1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Generator.Common", "generators\Generator.Common\Generator.Common.csproj", "{493C18E7-08D4-4A27-8687-02CE185A89FC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Generator.Common", "src\Generators\Generator.Common\Generator.Common.csproj", "{493C18E7-08D4-4A27-8687-02CE185A89FC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Generator.Convert", "generators\Generator.Convert\Generator.Convert.csproj", "{8E8ADCF9-38AD-42DC-BFB4-065A189DFB1A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Generator.Convert", "src\Generators\Generator.Convert\Generator.Convert.csproj", "{8E8ADCF9-38AD-42DC-BFB4-065A189DFB1A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

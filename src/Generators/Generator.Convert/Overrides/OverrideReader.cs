@@ -134,7 +134,6 @@ namespace Generator.Convert.Overrides
                     var enumerationAdditions = new List<EnumerationOverride>();
 
                     var functionReplacements = new List<FunctionOverride>();
-                    var functionOverloads = new List<FunctionOverride>();
 
                     foreach (var element in elements)
                     {
@@ -168,8 +167,7 @@ namespace Generator.Convert.Overrides
                         profileName,
                         version,
                         enumerationAdditions,
-                        functionReplacements,
-                        functionOverloads
+                        functionReplacements
                     );
                 }
             }
@@ -266,7 +264,10 @@ namespace Generator.Convert.Overrides
         [NotNull]
         private static EnumerationOverride ParseEnumeration([NotNull] XElement enumElement)
         {
-            var enumName = enumElement.GetRequiredAttribute("name").Value;
+            var enumName = NativeIdentifierTranslator.TranslateIdentifierName
+            (
+                enumElement.GetRequiredAttribute("name").Value
+            );
 
             var directTokens = enumElement.Elements("token").Select(ParsingHelpers.ParseTokenSignature).ToList();
             var useTokens = enumElement.Elements("use").Select(ParseUseTokenOverride).ToList();

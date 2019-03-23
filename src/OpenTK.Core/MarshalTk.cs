@@ -45,8 +45,8 @@ namespace OpenToolkit.Core
         /// </summary>
         /// <param name="str">The <c>System.String</c> to marshal.</param>
         /// <returns>
-        /// An unmanaged pointer containing the marshalled string.
-        /// This pointer must be freed with <c>FreeStringPtr</c>
+        /// An unmanaged pointer containing the marshaled string.
+        /// This pointer must be freed with <c>FreeStringPtr</c>.
         /// </returns>
         public static IntPtr MarshalStringToPtr(string str)
         {
@@ -55,7 +55,7 @@ namespace OpenToolkit.Core
                 return IntPtr.Zero;
             }
 
-            // Allocate a buffer big enough to hold the marshalled string.
+            // Allocate a buffer big enough to hold the marshaled string.
             // GetMaxByteCount() appears to allocate space for the final NUL
             // character, but allocate an extra one just in case (who knows
             // what old Mono version would do here.)
@@ -80,9 +80,9 @@ namespace OpenToolkit.Core
         }
 
         /// <summary>
-        /// Frees a marshalled string that allocated by <c>MarshalStringToPtr</c>.
+        /// Frees a marshaled string that allocated by <c>MarshalStringToPtr</c>.
         /// </summary>
-        /// <param name="ptr">An unmanaged pointer allocated with <c>MarshalStringToPtr</c></param>
+        /// <param name="ptr">An unmanaged pointer allocated with <c>MarshalStringToPtr</c>.</param>
         public static void FreeStringPtr(IntPtr ptr)
         {
             Marshal.FreeHGlobal(ptr);
@@ -92,7 +92,7 @@ namespace OpenToolkit.Core
         /// Marshals a <c>System.String</c> array to unmanaged memory by calling
         /// Marshal.AllocHGlobal for each element.
         /// </summary>
-        /// <returns>An unmanaged pointer to an array of null-terminated strings</returns>
+        /// <returns>An unmanaged pointer to an array of null-terminated strings.</returns>
         /// <param name="strArray">The string array to marshal.</param>
         public static IntPtr MarshalStringArrayToPtr(string[] strArray)
         {
@@ -131,9 +131,9 @@ namespace OpenToolkit.Core
         }
 
         /// <summary>
-        /// Frees a marshalled string that allocated by <c>MarshalStringArrayToPtr</c>.
+        /// Frees a marshaled string that allocated by <c>MarshalStringArrayToPtr</c>.
         /// </summary>
-        /// <param name="ptr">An unmanaged pointer allocated with <c>MarshalStringArrayToPtr</c></param>
+        /// <param name="ptr">An unmanaged pointer allocated with <c>MarshalStringArrayToPtr</c>.</param>
         /// <param name="length">The length of the string array.</param>
         public static void FreeStringArrayPtr(IntPtr ptr, int length)
         {

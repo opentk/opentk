@@ -14,8 +14,8 @@
     <EmbeddedResource Include="Specifications/*" />
   </ItemGroup>
 
-  <Import Project="..\..\props\common.props" />
-  <Import Project="..\..\props\netfx-mono.props" />
-  <!--<Import Project="..\..\props\stylecop.props" />-->
-  <Import Project="..\..\props\jetbrains.props" />
+  <Import Project="..\..\..\props\common.props" />
+  <Import Project="..\..\..\props\netfx-mono.props" />
+  <!--<Import Project="..\..\..\props\stylecop.props" />-->
+  <Import Project="..\..\..\props\jetbrains.props" />
 </Project>

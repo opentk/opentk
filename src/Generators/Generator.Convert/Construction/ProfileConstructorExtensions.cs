@@ -33,7 +33,7 @@ namespace Generator.Convert.Construction
                     element.Attribute("name")?.Value
                     ?? throw new InvalidOperationException("No name attribute.")
                 ),
-                NativeName = element.Attribute("name")?.Value
+                NativeName = element.Attribute("name")?.Value,
             };
             foreach (var child in element.Elements("token"))
             {
@@ -51,10 +51,10 @@ namespace Generator.Convert.Construction
                                 new Attribute()
                                 {
                                     Name = "Obsolete",
-                                    Arguments = new List<string>() { "\"Deprecated in " + deprecatedSince + ".\"" }
-                                }
+                                    Arguments = new List<string>() { "\"Deprecated in " + deprecatedSince + ".\"" },
+                                },
                             }
-                            : new List<Attribute>()
+                            : new List<Attribute>(),
                     }
                 );
             }

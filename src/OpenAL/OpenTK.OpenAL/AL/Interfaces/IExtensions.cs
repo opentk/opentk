@@ -9,7 +9,7 @@ namespace OpenToolkit.OpenAL.Interfaces
     /// used to constrain extension implementation classes.
     /// </summary>
     [NativeSymbols(Prefix = "al")]
-    public interface IExtensions : IALExtension
+    public interface IExtensions : IAPIExtension
     {
     }
 }

@@ -37,6 +37,7 @@ namespace Generator.Convert.Overrides
         /// Gets the function overloads that were added to the profile.
         /// </summary>
         [NotNull]
+        [Obsolete("Overloads have been moved to helper classes.", true)]
         public IReadOnlyList<FunctionOverride> FunctionOverloads { get; }
 
         /// <summary>
@@ -46,21 +47,18 @@ namespace Generator.Convert.Overrides
         /// <param name="versions">The versions the profile encompasses.</param>
         /// <param name="addedEnumerations">The added enumerations.</param>
         /// <param name="replacedFunctions">The replaced functions.</param>
-        /// <param name="functionOverloads">The function overloads.</param>
         public ApiProfileOverride
         (
             [NotNull] string name,
             [NotNull] string versions,
             [NotNull] IReadOnlyList<EnumerationOverride> addedEnumerations,
-            [NotNull] IReadOnlyList<FunctionOverride> replacedFunctions,
-            [NotNull] IReadOnlyList<FunctionOverride> functionOverloads
+            [NotNull] IReadOnlyList<FunctionOverride> replacedFunctions
         )
         {
             Name = name ?? throw new ArgumentNullException(nameof(name));
             Version = versions ?? throw new ArgumentNullException(nameof(versions));
             AddedEnumerations = addedEnumerations ?? throw new ArgumentNullException(nameof(addedEnumerations));
             ReplacedFunctions = replacedFunctions ?? throw new ArgumentNullException(nameof(replacedFunctions));
-            FunctionOverloads = functionOverloads ?? throw new ArgumentNullException(nameof(functionOverloads));
         }
     }
 }
