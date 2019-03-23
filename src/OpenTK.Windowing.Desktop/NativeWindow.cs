@@ -40,6 +40,8 @@ namespace OpenToolkit.Windowing.Desktop
         protected static int _numberOfUsers;
         
         protected static Mutex _mutex;
+        
+        public bool IsEventDriven { get; set; }
 
         public string ClipboardString
         {
@@ -435,6 +437,8 @@ namespace OpenToolkit.Windowing.Desktop
                 Focused = settings.Focused;
                 Visible = settings.Visible;
                 WindowState = settings.WindowState;
+
+                IsEventDriven = settings.IsEventDriven;
                 
                 if (settings.X > -1)
                 {
@@ -585,11 +589,17 @@ namespace OpenToolkit.Windowing.Desktop
                 Glfw.MakeContextCurrent(_windowPtr);
             }
         }
-
-        //TODO: This doesnt account for the scenario of an event-based application in which we would use `glfw.WaitEvents()` that waits for input to keep CPU usage minimal
+        
         public virtual void ProcessEvents()
         {
-            Glfw.PollEvents();
+            if (IsEventDriven)
+            {
+                Glfw.WaitEvents();
+            }
+            else 
+            {
+                Glfw.PollEvents();
+            }
         }
 
         public Vector2 PointToClient(Vector2 point)

@@ -35,7 +35,10 @@ namespace OpenToolkit.Windowing.Desktop
             Height = 480;
 
             IsFullscreen = false;
+            IsEventDriven = false;
         }
+
+        public bool IsEventDriven { get; set; }
 
         public Monitor CurrentMonitor { get; set; }
         

@@ -21,6 +21,13 @@ namespace OpenToolkit.Windowing.Common
         */
         
         /// <summary>
+        /// Gets or sets a <see cref="System.Boolean" /> representing whether or not this window is event-driven.
+        /// An event-driven window will wait for events before updating/rendering. It is useful for non-game applications,
+        /// where the program only needs to do any processing after the user inputs something.
+        /// </summary>
+        bool IsEventDriven { get; set; }
+        
+        /// <summary>
         /// Gets or sets the current monitor.
         /// </summary>
         Monitor CurrentMonitor { get; set; }
