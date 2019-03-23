@@ -10,7 +10,6 @@
 using System;
 using System.Diagnostics;
 using System.Threading;
-using OpenToolkit.GraphicsLibraryFramework;
 using OpenToolkit.Mathematics;
 using OpenToolkit.Windowing.Common;
 using OpenToolkit.Windowing.EventingModels;
@@ -173,6 +172,7 @@ namespace OpenToolkit.Windowing.Desktop
             //TODO: There should be some better error checking here. This just keeps the compiler from complaining.
             catch (Exception e)
             {
+                Console.WriteLine(e.Message);
                 throw;
             }
         }
