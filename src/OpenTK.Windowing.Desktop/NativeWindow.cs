@@ -389,7 +389,7 @@ namespace OpenToolkit.Windowing.Desktop
             }
         }
 
-        public NativeWindow(NativeWindowSettings settings)
+        public NativeWindow(INativeWindowProperties settings)
         {
             _title = settings.Title;
             

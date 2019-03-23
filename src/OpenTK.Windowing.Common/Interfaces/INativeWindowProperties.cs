@@ -21,6 +21,11 @@ namespace OpenToolkit.Windowing.Common
         */
         
         /// <summary>
+        /// Gets or sets the current monitor.
+        /// </summary>
+        Monitor CurrentMonitor { get; set; }
+        
+        /// <summary>
         /// Gets or sets the clipboard string.
         /// </summary>
         string ClipboardString { get; set; }
