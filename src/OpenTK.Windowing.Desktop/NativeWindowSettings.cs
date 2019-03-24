@@ -16,6 +16,8 @@ namespace OpenToolkit.Windowing.Desktop
 
         public NativeWindowSettings()
         {
+            IsEventDriven = false;
+            
             unsafe
             {
                 CurrentMonitor = new Monitor((IntPtr)GLFWProvider.GLFW.Value.GetPrimaryMonitor());
@@ -35,28 +37,87 @@ namespace OpenToolkit.Windowing.Desktop
             Height = 480;
 
             IsFullscreen = false;
-            IsEventDriven = false;
         }
 
         public bool IsEventDriven { get; set; }
 
+        public string ClipboardString { get; set; }
+
+        public string Title { get; set; }
+
         public Monitor CurrentMonitor { get; set; }
         
-        public string ClipboardString { get; set; }
-        public string Title { get; set; }
         public bool Focused { get; set; }
+
         public bool Visible { get; set; }
+
         public bool Exists { get; }
+
         public WindowState WindowState { get; set; }
+
         public WindowBorder WindowBorder { get; set; }
-        public Box2 Bounds { get; set; }
-        public Vector2 Location { get; set; }
-        public Vector2 Size { get; set; }
-        public int X { get; set; }
-        public int Y { get; set; }
-        public int Width { get; set; }
-        public int Height { get; set; }
-        public Box2 ClientRectangle { get; set; }
+
+        public Box2 Bounds
+        {
+            get => Box2.FromDimensions(Location, Size);
+            set
+            {
+                _location = new Vector2(value.Left, value.Left);
+                _size = new Vector2(value.Width, value.Height);
+            }
+        }
+
+        private Vector2 _location;
+
+        public Vector2 Location
+        {
+            get => _location;
+            set => _location = value;
+        }
+
+        private Vector2 _size;
+
+        public Vector2 Size
+        {
+            get => _size;
+            set => _size = value;
+        }
+
+        public int X
+        {
+            get => (int)Location.X;
+            set => _location.X = value;
+        }
+
+        public int Y
+        {
+            get => (int)Location.Y;
+            set => _location.Y = value;
+        }
+
+        public int Width
+        {
+            get => (int)Size.X;
+            set => _size.X = value;
+        }
+
+        public int Height
+        {
+            get => (int)Size.Y;
+            set => _size.Y = value;
+        }
+
+        public Box2 ClientRectangle
+        {
+            get => Box2.FromDimensions(Location, Size);
+            
+            set
+            {
+                Location = new Vector2(value.Right, value.Top);
+                Size = new Vector2(value.Width, value.Height);
+            }
+        }
+        
         public Vector2 ClientSize { get; }
 
         public bool IsFullscreen { get; set; }
