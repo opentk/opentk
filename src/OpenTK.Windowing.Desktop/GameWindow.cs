@@ -245,7 +245,7 @@ namespace OpenToolkit.Windowing.Desktop
         {
             unsafe
             {
-                Glfw.SwapBuffers(_windowPtr);
+                Glfw.SwapBuffers(WindowPtr);
             }
         }
 
