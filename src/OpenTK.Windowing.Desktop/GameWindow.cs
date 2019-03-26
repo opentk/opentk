@@ -132,46 +132,37 @@ namespace OpenToolkit.Windowing.Desktop
 
         public virtual void Run()
         {
-            try
+            Visible = true; // Make sure the GameWindow is visible.
+            OnLoad(this, EventArgs.Empty);
+            OnResize(this, new ResizeEventArgs(Width, Height));
+
+            // On some platforms, ProcessEvents() does not return while the user is resizing or moving
+            // the window. We can avoid this issue by raising UpdateFrame and RenderFrame events
+            // whenever we encounter a size or move event.
+            // Note: hack disabled. Threaded rendering provides a better solution to this issue.
+            //Move += DispatchUpdateAndRenderFrame;
+            //Resize += DispatchUpdateAndRenderFrame;
+
+            Debug.Print("Entering main loop.");
+            if (!IsSingleThreaded)
             {
-                Visible = true; // Make sure the GameWindow is visible.
-                OnLoad(this, EventArgs.Empty);
-                OnResize(this, new ResizeEventArgs(Width, Height));
-
-                // On some platforms, ProcessEvents() does not return while the user is resizing or moving
-                // the window. We can avoid this issue by raising UpdateFrame and RenderFrame events
-                // whenever we encounter a size or move event.
-                // Note: hack disabled. Threaded rendering provides a better solution to this issue.
-                //Move += DispatchUpdateAndRenderFrame;
-                //Resize += DispatchUpdateAndRenderFrame;
-
-                Debug.Print("Entering main loop.");
-                if (!IsSingleThreaded)
-                {
-                    _updateThread = new Thread(UpdateThread);
-                    _updateThread.Start();
-                }
-
-                _watchRender.Start();
-                while (true)
-                {
-                    ProcessEvents();
-                    
-                    if (!Exists || IsExiting) return;
-                    
-                    if (IsSingleThreaded)
-                    {
-                        DispatchUpdateFrame(_watchRender);
-                    }
-
-                    DispatchRenderFrame();
-                }
+                _updateThread = new Thread(UpdateThread);
+                _updateThread.Start();
             }
-            //TODO: There should be some better error checking here. This just keeps the compiler from complaining.
-            catch (Exception e)
+
+            _watchRender.Start();
+            while (true)
             {
-                Console.WriteLine(e.Message);
-                throw;
+                ProcessEvents();
+                    
+                if (!Exists || IsExiting) return;
+                    
+                if (IsSingleThreaded)
+                {
+                    DispatchUpdateFrame(_watchRender);
+                }
+
+                DispatchRenderFrame();
             }
         }
 
