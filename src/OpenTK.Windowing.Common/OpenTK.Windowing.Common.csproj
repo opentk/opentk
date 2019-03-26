@@ -17,10 +17,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="SixLabors.ImageSharp" Version="1.0.0-beta0005" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\OpenTK.Core\OpenTK.Core.csproj" />
     <ProjectReference Include="..\OpenTK.Mathematics\OpenTK.Mathematics.csproj" />
   </ItemGroup>

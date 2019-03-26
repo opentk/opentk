@@ -14,7 +14,6 @@
     
     <ItemGroup>
       <PackageReference Include="opentoolkit.redist.glfw" Version="3.2.1.5" />
-      <PackageReference Include="SixLabors.ImageSharp" Version="1.0.0-beta0005" />
     </ItemGroup>
     
     <ItemGroup>
