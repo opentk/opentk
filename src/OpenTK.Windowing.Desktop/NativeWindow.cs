@@ -333,11 +333,34 @@ namespace OpenToolkit.Windowing.Desktop
         }
 
         public Vector2 ClientSize { get; }
+        
+        private MouseCursor _cursor;
 
         public MouseCursor Cursor
         {
-            get => throw new NotImplementedException();
-            set => throw new NotImplementedException();
+            get => _cursor;
+            set
+            {
+                _cursor = value;
+
+                unsafe
+                {
+                    if (value == MouseCursor.Default)
+                    {
+                        var cursor = Glfw.CreateStandardCursor(CursorShape.Arrow);
+                        Glfw.SetCursor(WindowPtr, cursor);
+                    }
+                    else
+                    {
+                        fixed (byte* ptr = value.Data)
+                        {
+                            var cursorImg = new Image {Width = value.Width, Height = value.Height, Pixels = (IntPtr)ptr};
+                            var cursor = Glfw.CreateCursor(&cursorImg, value.X, value.Y);
+                            Glfw.SetCursor(WindowPtr, cursor);
+                        }
+                    }
+                }
+            }
         }
         
         public bool CursorVisible
