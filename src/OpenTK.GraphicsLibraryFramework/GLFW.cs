@@ -16,9 +16,10 @@ namespace OpenToolkit.GraphicsLibraryFramework
     /// <summary>
     /// Provides access to the GLFW API.
     /// </summary>
+    // ReSharper disable once InconsistentNaming
     public abstract class GLFW : NativeLibraryBase, IGLFW
     {
-        public static Action<int, string> errorCallback = (errorCode, description) => { throw new GLFWException(description) { ErrorCode = errorCode }; };
+        public static readonly Action<int, string> errorCallback = (errorCode, description) => { throw new GLFWException(description) { ErrorCode = errorCode }; };
 
         /// <inheritdoc cref="NativeLibraryBase"/>
         protected GLFW(string path, ImplementationOptions options)
