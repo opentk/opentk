@@ -19,7 +19,7 @@ namespace OpenToolkit.GraphicsLibraryFramework
     // ReSharper disable once InconsistentNaming
     public abstract class GLFW : NativeLibraryBase, IGLFW
     {
-        public static readonly Action<int, string> errorCallback = (errorCode, description) => { throw new GLFWException(description) { ErrorCode = errorCode }; };
+        public static readonly Action<ErrorCode, string> ErrorCallback = (errorCode, description) => throw new GLFWException(description) { ErrorCode = errorCode };
 
         /// <inheritdoc cref="NativeLibraryBase"/>
         protected GLFW(string path, ImplementationOptions options)
@@ -261,10 +261,10 @@ namespace OpenToolkit.GraphicsLibraryFramework
         public abstract unsafe bool WindowShouldClose(Window* window);
 
         /// <inheritdoc />
-        public abstract unsafe void SetCharCallback(Window* window, Action<Window, int> callback);
+        public abstract unsafe void SetCharCallback(Window* window, Action<Window, uint> callback);
 
         /// <inheritdoc />
-        public abstract unsafe void SetCharModsCallback(Window* window, Action<Window, uint, int> callback);
+        public abstract unsafe void SetCharModsCallback(Window* window, Action<Window, uint, KeyModifiers> callback);
 
         /// <inheritdoc />
         public abstract unsafe void SetCursorEnterCallback(Window* window, Action<Window, bool> callback);
@@ -276,7 +276,7 @@ namespace OpenToolkit.GraphicsLibraryFramework
         public abstract unsafe void SetDropCallback(Window* window, Action<Window, int, IntPtr> callback);
 
         /// <inheritdoc />
-        public abstract unsafe void SetErrorCallback(Action<int, string> callback);
+        public abstract unsafe void SetErrorCallback(Action<ErrorCode, string> callback);
 
         /// <inheritdoc />
         public abstract unsafe void SetInputMode(Window* window, InputMode mode, InputModeValue value);

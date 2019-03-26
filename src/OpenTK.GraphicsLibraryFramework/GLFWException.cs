@@ -15,7 +15,7 @@ namespace OpenToolkit.GraphicsLibraryFramework
     [Serializable]
     public class GLFWException : Exception
     {
-        public int ErrorCode { get; set; }
+        public ErrorCode ErrorCode { get; set; }
 
         public GLFWException() { }
         public GLFWException(string message) : base(message) { }

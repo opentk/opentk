@@ -99,13 +99,13 @@ namespace OpenToolkit.GraphicsLibraryFramework
         void PollEvents();
         void PostEmptyEvent();
         unsafe void RestoreWindow(Window* window);
-        unsafe void SetCharCallback(Window* window, Action<Window, int> callback); //TODO: Make enum for int param in callback
-        unsafe void SetCharModsCallback(Window* window, Action<Window, uint, int> callback); //TODO: Make enums for int params in callback
+        unsafe void SetCharCallback(Window* window, Action<Window, uint> callback); //TODO: Make enum for int param in callback
+        unsafe void SetCharModsCallback(Window* window, Action<Window, uint, KeyModifiers> callback);
         unsafe void SetClipboardString(Window* window, string data);
         unsafe void SetCursorEnterCallback(Window* window, Action<Window, bool> callback);
-        unsafe void SetCursorPosCallback(Window* window, Action<Window, double, double> callback); //TODO: Make enums for int params in callback
-        unsafe void SetDropCallback(Window* window, Action<Window, int, IntPtr> callback); //TODO: Make enum for int param in callback
-        unsafe void SetErrorCallback(Action<int, string> callback); //TODO: Make enum for int param in callback
+        unsafe void SetCursorPosCallback(Window* window, Action<Window, double, double> callback);
+        unsafe void SetDropCallback(Window* window, Action<Window, int, IntPtr> callback);
+        unsafe void SetErrorCallback(Action<ErrorCode, string> callback);
         unsafe void SetInputMode(Window* window, InputMode mode, InputModeValue value);
         void SetJoystickCallback(Action<int, JoystickState> callback);
         unsafe void SetKeyCallback(Window* window, Action<Window, int, int, InputAction, int> callback); //TODO: Make enums for int params in callback

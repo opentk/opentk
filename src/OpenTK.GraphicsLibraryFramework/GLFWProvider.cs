@@ -8,7 +8,7 @@ namespace OpenToolkit.GraphicsLibraryFramework
         {
             var glfw = GraphicsLibraryFramework.GLFW.GetAPI();
             glfw.Init();
-            glfw.SetErrorCallback(GraphicsLibraryFramework.GLFW.errorCallback);
+            glfw.SetErrorCallback(GraphicsLibraryFramework.GLFW.ErrorCallback);
             return glfw;
         });
 
@@ -19,7 +19,7 @@ namespace OpenToolkit.GraphicsLibraryFramework
             {
                 var glfw = GraphicsLibraryFramework.GLFW.GetAPI();
                 glfw.Init();
-                glfw.SetErrorCallback(GraphicsLibraryFramework.GLFW.errorCallback);
+                glfw.SetErrorCallback(GraphicsLibraryFramework.GLFW.ErrorCallback);
                 return glfw;
             });
         }
