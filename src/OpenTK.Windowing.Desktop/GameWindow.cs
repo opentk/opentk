@@ -132,16 +132,12 @@ namespace OpenToolkit.Windowing.Desktop
 
         public virtual void Run()
         {
-            Visible = true; // Make sure the GameWindow is visible.
+            // Make sure the GameWindow is visible when it first runs.
+            Visible = true;
             OnLoad(this, EventArgs.Empty);
+            
+            //Send a redundant OnResize event, to make sure all user code has the correct values.
             OnResize(this, new ResizeEventArgs(Width, Height));
-
-            // On some platforms, ProcessEvents() does not return while the user is resizing or moving
-            // the window. We can avoid this issue by raising UpdateFrame and RenderFrame events
-            // whenever we encounter a size or move event.
-            // Note: hack disabled. Threaded rendering provides a better solution to this issue.
-            //Move += DispatchUpdateAndRenderFrame;
-            //Resize += DispatchUpdateAndRenderFrame;
 
             Debug.Print("Entering main loop.");
             if (!IsSingleThreaded)
