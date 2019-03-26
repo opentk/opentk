@@ -24,9 +24,9 @@ namespace OpenToolkit.Windowing.Common.Input
         /// Initializes a new <see cref="MouseCursor" /> instance from a
         /// contiguous array of RGBA pixels.
         /// Each pixel is composed of 4 bytes, representing R, G, B and A values,
-        /// respectively. For correct antialiasing of translucent cursors,
-        /// the R, G, and B components should be premultiplied with the A component:
-        ///  <code>
+        /// respectively. On some backends, the R, G, and B components should be premultiplied with the A component
+        /// for correct antialiasing of translucent cursors:
+        /// <code>
         /// B = (byte)((B * A) / 255)
         /// G = (byte)((G * A) / 255)
         /// R = (byte)((R * A) / 255)
