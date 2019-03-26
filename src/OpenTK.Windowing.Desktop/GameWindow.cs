@@ -26,8 +26,6 @@ namespace OpenToolkit.Windowing.Desktop
 
         private const double MaxFrequency = 500.0; // Frequency cap for Update/RenderFrame events
 
-        private readonly bool _isSingleThreaded;
-
         private readonly Stopwatch _watchRender = new Stopwatch();
         private readonly Stopwatch _watchUpdate = new Stopwatch();
 
@@ -44,7 +42,7 @@ namespace OpenToolkit.Windowing.Desktop
 
         public bool IsExiting { get; protected set; }
 
-        public bool IsSingleThreaded => _isSingleThreaded;
+        public bool IsSingleThreaded { get; }
 
         public double RenderFrequency
         {
@@ -126,7 +124,7 @@ namespace OpenToolkit.Windowing.Desktop
         public GameWindow(IGameWindowProperties gameWindowSettings, INativeWindowProperties nativeWindowSettings)
             : base(nativeWindowSettings)
         {
-            _isSingleThreaded = gameWindowSettings.IsSingleThreaded;
+            IsSingleThreaded = gameWindowSettings.IsSingleThreaded;
 
             RenderFrequency = gameWindowSettings.RenderFrequency;
             UpdateFrequency = gameWindowSettings.UpdateFrequency;
@@ -148,7 +146,7 @@ namespace OpenToolkit.Windowing.Desktop
                 //Resize += DispatchUpdateAndRenderFrame;
 
                 Debug.Print("Entering main loop.");
-                if (!_isSingleThreaded)
+                if (!IsSingleThreaded)
                 {
                     _updateThread = new Thread(UpdateThread);
                     _updateThread.Start();
@@ -161,7 +159,7 @@ namespace OpenToolkit.Windowing.Desktop
                     
                     if (!Exists || IsExiting) return;
                     
-                    if (_isSingleThreaded)
+                    if (IsSingleThreaded)
                     {
                         DispatchUpdateFrame(_watchRender);
                     }
