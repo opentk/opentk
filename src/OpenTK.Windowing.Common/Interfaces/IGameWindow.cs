@@ -19,7 +19,7 @@ namespace OpenToolkit.Windowing.Common
     public interface IGameWindow: INativeWindow, IGameWindowProperties
     {
         /// <summary>
-        /// Enters the game loop of the GameWindow.
+        /// Initialize the update thread (if using a multi-threaded contex, and enter the game loop of the GameWindow.
         /// </summary>
         void Run();
 
