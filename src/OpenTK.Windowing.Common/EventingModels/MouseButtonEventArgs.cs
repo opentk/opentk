@@ -13,7 +13,8 @@ using OpenToolkit.Windowing.Common.Input;
 namespace OpenToolkit.Windowing.EventingModels
 {
     /// <summary>
-    /// Defines the event data for <see cref="MouseDevice.ButtonDown" /> and <see cref="MouseDevice.ButtonUp" /> events.
+    /// Defines the event data for <see cref="IWindowEvents.MouseDown" />
+    /// and <see cref="IWindowEvents.MouseUp" /> events.
     /// </summary>
     /// <remarks>
     ///  <para>
@@ -25,14 +26,14 @@ namespace OpenToolkit.Windowing.EventingModels
     public class MouseButtonEventArgs : MouseEventArgs
     {
         /// <summary>
-        /// Constructs a new <see cref="MouseButtonEventArgs" /> instance.
+        /// Initializes a new instance of the <see cref="MouseButtonEventArgs"/> class.
         /// </summary>
         public MouseButtonEventArgs()
         {
         }
 
         /// <summary>
-        /// Constructs a new <see cref="MouseButtonEventArgs" /> instance.
+        /// Initializes a new instance of the <see cref="MouseButtonEventArgs"/> class.
         /// </summary>
         /// <param name="x">The X position.</param>
         /// <param name="y">The Y position.</param>
@@ -46,7 +47,7 @@ namespace OpenToolkit.Windowing.EventingModels
         }
 
         /// <summary>
-        /// Constructs a new <see cref="MouseButtonEventArgs" /> instance.
+        /// Initializes a new instance of the <see cref="MouseButtonEventArgs"/> class.
         /// </summary>
         /// <param name="args">The <see cref="MouseButtonEventArgs" /> instance to clone.</param>
         public MouseButtonEventArgs(MouseButtonEventArgs args)
@@ -58,19 +59,19 @@ namespace OpenToolkit.Windowing.EventingModels
         /// Gets the <see cref="MouseButton" /> that triggered this event.
         /// </summary>
         public MouseButton Button { get; internal set; }
-        
+
         /// <summary>
         /// Gets the <see cref="InputAction"/> of the pressed button.
         /// </summary>
         public InputAction Action { get; internal set; }
-        
+
         /// <summary>
         /// Gets the active <see cref="KeyModifiers"/> of the pressed button.
         /// </summary>
         public KeyModifiers Modifiers { get; internal set; }
 
         /// <summary>
-        /// Gets a System.Boolean representing the state of the mouse button for the event.
+        /// Gets a value indicating whether the <see cref="Button"/> which triggered this event was pressed or released.
         /// </summary>
         public bool IsPressed
         {

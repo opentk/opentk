@@ -1,9 +1,12 @@
 namespace OpenToolkit.Windowing.Common
 {
+    /// <summary>
+    /// Describes <see cref="IGameWindow"/> related properties.
+    /// </summary>
     public interface IGameWindowProperties
     {
         /// <summary>
-        /// Whether or not the NativeWindow should use a single-threaded context.
+        /// Gets a value indicating whether or not the NativeWindow should use a single-threaded context.
         /// </summary>
         /// <remarks>
         ///   <para>
@@ -11,7 +14,7 @@ namespace OpenToolkit.Windowing.Common
         ///   </para>
         /// </remarks>
         bool IsSingleThreaded { get; }
-        
+
         /// <summary>
         /// Gets or sets a double representing the render frequency, in hertz.
         /// </summary>
@@ -23,7 +26,7 @@ namespace OpenToolkit.Windowing.Common
         ///  <para>Values lower than 1.0Hz are clamped to 0.0. Values higher than 500.0Hz are clamped to 200.0Hz.</para>
         /// </remarks>
         double RenderFrequency { get; set; }
-        
+
         /// <summary>
         /// Gets or sets a double representing the update frequency, in hertz.
         /// </summary>

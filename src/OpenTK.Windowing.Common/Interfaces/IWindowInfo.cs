@@ -17,7 +17,7 @@ namespace OpenToolkit.Windowing.Common
     public interface IWindowInfo : IDisposable
     {
         /// <summary>
-        /// Retrieves a handle to this window.
+        /// Gets a handle to this window.
         /// </summary>
         IntPtr Handle { get; }
     }

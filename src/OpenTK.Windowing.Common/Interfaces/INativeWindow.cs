@@ -13,7 +13,7 @@ using OpenToolkit.Mathematics;
 namespace OpenToolkit.Windowing.Common
 {
     /// <summary>
-    /// Defines the interface for a NativeWindow
+    /// Defines the interface for a NativeWindow.
     /// </summary>
     public interface INativeWindow : INativeWindowProperties, IWindowEvents, IWindowInput, IDisposable
     {

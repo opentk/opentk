@@ -11,9 +11,11 @@ using OpenToolkit.Windowing.Common.Input;
 
 namespace OpenToolkit.Windowing.Common
 {
+    /// <summary>
+    /// Describes mouse input and cursor related information.
+    /// </summary>
     public interface IWindowInput
     {
-
         /// <summary>
         /// Gets or sets the <see cref="OpenToolkit.Windowing.Common.Input.MouseCursor" /> for this window.
         /// </summary>
@@ -21,12 +23,12 @@ namespace OpenToolkit.Windowing.Common
         MouseCursor Cursor { get; set; }
 
         /// <summary>
-        /// Gets or sets a value, indicating whether the mouse cursor is visible.
+        /// Gets or sets a value indicating whether the mouse cursor is visible.
         /// </summary>
         bool CursorVisible { get; set; }
 
         /// <summary>
-        /// Gets or sets a value, indicating whether the mouse cursor is confined inside the window size.
+        /// Gets or sets a value indicating whether the mouse cursor is confined inside the window size.
         /// </summary>
         bool CursorGrabbed { get; set; }
     }

@@ -21,7 +21,7 @@ namespace OpenToolkit.Windowing.Common.Input
         }
 
         /// <summary>
-        /// Initializes a new <see cref="MouseCursor" /> instance from a
+        /// Initializes a new instance of the <see cref="MouseCursor" /> class from a
         /// contiguous array of RGBA pixels.
         /// Each pixel is composed of 4 bytes, representing R, G, B and A values,
         /// respectively. On some backends, the R, G, and B components should be premultiplied with the A component
@@ -32,28 +32,28 @@ namespace OpenToolkit.Windowing.Common.Input
         /// R = (byte)((R * A) / 255)
         /// </code>
         /// </summary>
-        /// <param name="hotx">The x-coordinate of the cursor hotspot, in the range [0, width]</param>
-        /// <param name="hoty">The y-coordinate of the cursor hotspot, in the range [0, height]</param>
+        /// <param name="hotX">The x-coordinate of the cursor hotspot, in the range [0, width].</param>
+        /// <param name="hotY">The y-coordinate of the cursor hotspot, in the range [0, height].</param>
         /// <param name="width">The width of the cursor data, in pixels.</param>
         /// <param name="height">The height of the cursor data, in pixels.</param>
         /// <param name="data">
         /// A byte array representing the cursor image,
         /// laid out as a contiguous array of RGBA pixels.
         /// </param>
-        public MouseCursor(int hotx, int hoty, int width, int height, byte[] data)
+        public MouseCursor(int hotX, int hotY, int width, int height, byte[] data)
             : base(width, height, data)
         {
-            if (hotx < 0 || hotx >= Width || hoty < 0 || hoty >= Height)
+            if (hotX < 0 || hotX >= Width || hotY < 0 || hotY >= Height)
             {
                 throw new ArgumentOutOfRangeException();
             }
 
-            X = hotx;
-            Y = hoty;
+            X = hotX;
+            Y = hotY;
         }
 
         /// <summary>
-        /// Initializes a new <see cref="MouseCursor" /> instance from a
+        /// Initializes a new instance of the <see cref="MouseCursor" /> class from a
         /// contiguous array of RGBA pixels.
         /// Each pixel is composed of 4 bytes, representing R, G, B and A values,
         /// respectively. For correct antialiasing of translucent cursors,
@@ -64,26 +64,33 @@ namespace OpenToolkit.Windowing.Common.Input
         /// R = (byte)((R * A) / 255)
         /// </code>
         /// </summary>
-        /// <param name="hotx">The x-coordinate of the cursor hotspot, in the range [0, width]</param>
-        /// <param name="hoty">The y-coordinate of the cursor hotspot, in the range [0, height]</param>
+        /// <param name="hotX">The x-coordinate of the cursor hotspot, in the range [0, <paramref name="width"/>].</param>
+        /// <param name="hotY">The y-coordinate of the cursor hotspot, in the range [0, <paramref name="height"/>].</param>
         /// <param name="width">The width of the cursor data, in pixels.</param>
         /// <param name="height">The height of the cursor data, in pixels.</param>
         /// <param name="data">
         /// A pointer to the cursor image, laid out as a contiguous array of RGBA pixels.
         /// </param>
-        public MouseCursor(int hotx, int hoty, int width, int height, IntPtr data)
+        public MouseCursor(int hotX, int hotY, int width, int height, IntPtr data)
             : base(width, height, data)
         {
-            if (hotx < 0 || hotx >= Width || hoty < 0 || hoty >= Height)
+            if (hotX < 0 || hotX >= Width || hotY < 0 || hotY >= Height)
             {
                 throw new ArgumentOutOfRangeException();
             }
 
-            X = hotx;
-            Y = hoty;
+            X = hotX;
+            Y = hotY;
         }
 
+        /// <summary>
+        /// Gets the x-coordinate of the cursor hotspot.
+        /// </summary>
         internal int X { get; }
+
+        /// <summary>
+        /// Gets the y-coordinate of the cursor hotspot.
+        /// </summary>
         internal int Y { get; }
 
         /// <summary>
@@ -98,4 +105,3 @@ namespace OpenToolkit.Windowing.Common.Input
             0, 0, 16, 16, new byte[16 * 16 * 4]);
     }
 }
-

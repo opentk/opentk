@@ -14,6 +14,5 @@ namespace OpenToolkit.GraphicsLibraryFramework
     /// </summary>
     public struct Cursor
     {
-        
     }
 }

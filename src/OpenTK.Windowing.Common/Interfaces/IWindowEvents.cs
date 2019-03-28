@@ -44,7 +44,7 @@ namespace OpenToolkit.Windowing.Common
         event EventHandler<EventArgs> Disposed;
 
         /// <summary>
-        /// Occurs when the <see cref="Icon" /> property of the window changes.
+        /// Occurs when the <see cref="INativeWindowProperties.Icon" /> property of the window changes.
         /// </summary>
         event EventHandler<IconifyEventArgs> IconChanged;
 
@@ -54,17 +54,17 @@ namespace OpenToolkit.Windowing.Common
         event EventHandler<JoystickEventArgs> JoystickConnected;
 
         /// <summary>
-        /// Occurs when the <see cref="INativeWindow.Title" /> property of the window changes.
+        /// Occurs when the <see cref="INativeWindowProperties.Title" /> property of the window changes.
         /// </summary>
         event EventHandler<TitleChangedEventArgs> TitleChanged;
 
         /// <summary>
-        /// Occurs when the <see cref="INativeWindow.Visible" /> property of the window changes.
+        /// Occurs when the <see cref="INativeWindowProperties.Visible" /> property of the window changes.
         /// </summary>
         event EventHandler<VisibilityChangedEventArgs> VisibleChanged;
 
         /// <summary>
-        /// Occurs when the <see cref="INativeWindow.Focused" /> property of the window changes.
+        /// Occurs when the <see cref="INativeWindowProperties.Focused" /> property of the window changes.
         /// </summary>
         event EventHandler<FocusedChangedEventArgs> FocusedChanged;
 
@@ -87,7 +87,7 @@ namespace OpenToolkit.Windowing.Common
         /// Occurs whenever a character is typed.
         /// </summary>
         event EventHandler<KeyPressEventArgs> KeyPress;
-        
+
         /// <summary>
         /// Occurs whenever a character is typed. Used for implementing custom Unicode input.
         /// </summary>
@@ -102,12 +102,12 @@ namespace OpenToolkit.Windowing.Common
         event EventHandler<KeyboardKeyEventArgs> KeyUp;
 
         /// <summary>
-        /// Occurs whenever the mouse cursor leaves the window <see cref="Bounds" />.
+        /// Occurs whenever the mouse cursor leaves the window <see cref="INativeWindowProperties.Bounds" />.
         /// </summary>
         event EventHandler<EventArgs> MouseLeave;
 
         /// <summary>
-        /// Occurs whenever the mouse cursor enters the window <see cref="Bounds" />.
+        /// Occurs whenever the mouse cursor enters the window <see cref="INativeWindowProperties.Bounds" />.
         /// </summary>
         event EventHandler<EventArgs> MouseEnter;
 
@@ -131,8 +131,8 @@ namespace OpenToolkit.Windowing.Common
         /// </summary>
         event EventHandler<MouseWheelEventArgs> MouseWheel;
 
-        //event EventHandler<MouseEventArgs> MouseClick;
-        //event EventHandler<MouseEventArgs> MouseDoubleClick;
+        // event EventHandler<MouseEventArgs> MouseClick;
+        // event EventHandler<MouseEventArgs> MouseDoubleClick;
 
         /// <summary>
         /// Occurs whenever file dropped on window.

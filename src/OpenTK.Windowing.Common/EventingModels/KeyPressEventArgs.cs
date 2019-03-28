@@ -18,7 +18,7 @@ namespace OpenToolkit.Windowing.EventingModels
     public class KeyPressEventArgs : EventArgs
     {
         /// <summary>
-        /// Constructs a new instance.
+        /// Initializes a new instance of the <see cref="KeyPressEventArgs"/> class.
         /// </summary>
         /// <param name="keyChar">The ASCII character that was typed.</param>
         public KeyPressEventArgs(char keyChar)
@@ -27,7 +27,7 @@ namespace OpenToolkit.Windowing.EventingModels
         }
 
         /// <summary>
-        /// Gets a <see cref="System.Char" /> that defines the ASCII character that was typed.
+        /// Gets a <see cref="char" /> that defines the ASCII character that was typed.
         /// </summary>
         public char KeyChar { get; internal set; }
     }

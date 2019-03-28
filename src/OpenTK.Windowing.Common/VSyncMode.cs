@@ -1,4 +1,4 @@
-namespace OpenToolkit.Windowing.Common
+﻿namespace OpenToolkit.Windowing
 {
     /// <summary>
     /// Enumerates available VSync modes.

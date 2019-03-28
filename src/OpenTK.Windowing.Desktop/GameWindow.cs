@@ -16,12 +16,50 @@ using OpenToolkit.Windowing.EventingModels;
 
 namespace OpenToolkit.Windowing.Desktop
 {
-    public class GameWindow: NativeWindow, IGameWindow
+    /// <summary>
+    /// The <see cref="GameWindow"/> class contains cross-platform methods to create and render on an OpenGL
+    /// window, handle input and load resources.
+    /// </summary>
+    /// <remarks>
+    /// <see cref="GameWindow"/> contains several events you can hook or override to add your custom logic:
+    /// <list>
+    /// <item>
+    /// <see cref="OnLoad"/>: Occurs after creating the OpenGL context, but before entering the main loop.
+    /// Override to load resources.
+    /// </item>
+    /// <item>
+    /// <see cref="OnUnload"/>: Occurs after exiting the main loop, but before deleting the OpenGL context.
+    /// Override to unload resources.
+    /// </item>
+    /// <item>
+    /// <see cref="NativeWindow.OnResize"/>: Occurs whenever GameWindow is resized. You should update the OpenGL Viewport
+    /// and Projection Matrix here.
+    /// </item>
+    /// <item>
+    /// <see cref="OnUpdateFrame"/>: Occurs at the specified logic update rate. Override to add your game
+    /// logic.
+    /// </item>
+    /// <item>
+    /// <see cref="OnRenderFrame"/>: Occurs at the specified frame render rate. Override to add your
+    /// rendering code.
+    /// </item>
+    /// </list>
+    /// </remarks>
+    public class GameWindow : NativeWindow, IGameWindow
     {
+        /// <inheritdoc/>
         public event EventHandler<EventArgs> Load;
+
+        /// <inheritdoc/>
         public event EventHandler<EventArgs> Unload;
+
+        /// <inheritdoc/>
         public event EventHandler<FrameEventArgs> UpdateFrame;
+
+        /// <inheritdoc/>
         public event EventHandler<EventArgs> UpdateThreadStarted;
+
+        /// <inheritdoc/>
         public event EventHandler<FrameEventArgs> RenderFrame;
 
         /// <summary>
@@ -32,10 +70,10 @@ namespace OpenToolkit.Windowing.Desktop
         private readonly Stopwatch _watchRender = new Stopwatch();
         private readonly Stopwatch _watchUpdate = new Stopwatch();
 
-        //private IGraphicsContext glContext; //HIGH: Implement with OpenGL ADL Bindings
+        // private IGraphicsContext glContext; //HIGH: Implement with OpenGL ADL Bindings
 
         /// <summary>
-        /// Whether or not UpdatePeriod has consistently failed to reach TargetUpdatePeriod.
+        /// Gets a value indicating whether or not UpdatePeriod has consistently failed to reach TargetUpdatePeriod.
         /// This can be used to do things such as decreasing visual quality if the user's computer isn't powerful enough
         /// to handle the application.
         /// </summary>
@@ -43,15 +81,21 @@ namespace OpenToolkit.Windowing.Desktop
 
         private double _updateEpsilon; // quantization error for UpdateFrame events
 
-        private double _renderFrequency, _updateFrequency;
-        private double _renderTimestamp, _updateTimestamp;
+        private double _renderFrequency;
+        private double _updateFrequency;
+
+        private double _renderTimestamp;
+        private double _updateTimestamp;
 
         private Thread _updateThread;
 
+        /// <inheritdoc/>
         public bool IsExiting { get; protected set; }
 
+        /// <inheritdoc/>
         public bool IsSingleThreaded { get; }
 
+        /// <inheritdoc />
         public double RenderFrequency
         {
             get => _renderFrequency;
@@ -74,8 +118,10 @@ namespace OpenToolkit.Windowing.Desktop
             }
         }
 
+        /// <inheritdoc />
         public double RenderTime { get; protected set; }
 
+        /// <inheritdoc />
         public double UpdateFrequency
         {
             get => _updateFrequency;
@@ -98,10 +144,12 @@ namespace OpenToolkit.Windowing.Desktop
             }
         }
 
+        /// <inheritdoc />
         public double UpdateTime { get; }
 
         private VSyncMode _vSync;
-        
+
+        /// <inheritdoc />
         public VSyncMode VSync
         {
             get => _vSync;
@@ -110,15 +158,15 @@ namespace OpenToolkit.Windowing.Desktop
                 switch (value)
                 {
                     case VSyncMode.On:
-                        Glfw.SetSwapInterval(1);
+                        Glfw.SwapInterval(1);
                         break;
-                        
+
                     case VSyncMode.Off:
-                        Glfw.SetSwapInterval(0);
+                        Glfw.SwapInterval(0);
                         break;
-                        
+
                     case VSyncMode.Adaptive:
-                        Glfw.SetSwapInterval(IsRunningSlowly ? 0 : 1);
+                        Glfw.SwapInterval(IsRunningSlowly ? 0 : 1);
                         break;
                     }
 
@@ -127,8 +175,10 @@ namespace OpenToolkit.Windowing.Desktop
         }
 
         /// <summary>
-        /// Constructs a new GameWindow with the structs provided.
+        /// Initializes a new instance of the <see cref="GameWindow"/> class with sensible default attributes.
         /// </summary>
+        /// <param name="gameWindowSettings">The <see cref="GameWindow"/> related settings.</param>
+        /// <param name="nativeWindowSettings">The <see cref="NativeWindow"/> related settings.</param>
         /// <remarks>
         /// <para>
         /// Use GameWindowSettings.Default and NativeWindowSettings.Default to get some sensible default attributes.
@@ -143,13 +193,14 @@ namespace OpenToolkit.Windowing.Desktop
             UpdateFrequency = gameWindowSettings.UpdateFrequency;
         }
 
+        /// <inheritdoc />
         public virtual void Run()
         {
             // Make sure the GameWindow is visible when it first runs.
             Visible = true;
             OnLoad(this, EventArgs.Empty);
-            
-            //Send a redundant OnResize event, to make sure all user code has the correct values.
+
+            // Send a redundant OnResize event, to make sure all user code has the correct values.
             OnResize(this, new ResizeEventArgs(Width, Height));
 
             Debug.Print("Entering main loop.");
@@ -163,9 +214,12 @@ namespace OpenToolkit.Windowing.Desktop
             while (true)
             {
                 ProcessEvents();
-                    
-                if (!Exists || IsExiting) return;
-                    
+
+                if (!Exists || IsExiting)
+                {
+                    return;
+                }
+
                 if (IsSingleThreaded)
                 {
                     DispatchUpdateFrame(_watchRender);
@@ -221,11 +275,11 @@ namespace OpenToolkit.Windowing.Desktop
                     break;
                 }
             }
-            
+
             // Update VSync if set to adaptive
             if (_vSync == VSyncMode.Adaptive)
             {
-                Glfw.SetSwapInterval(IsRunningSlowly ? 0 : 1);
+                Glfw.SwapInterval(IsRunningSlowly ? 0 : 1);
             }
         }
 
@@ -239,6 +293,7 @@ namespace OpenToolkit.Windowing.Desktop
             }
         }
 
+        /// <inheritdoc />
         public virtual void SwapBuffers()
         {
             unsafe
@@ -247,14 +302,13 @@ namespace OpenToolkit.Windowing.Desktop
             }
         }
 
+        /// <inheritdoc />
         public override void Close()
         {
             OnUnload(this, EventArgs.Empty);
             base.Close();
         }
 
-        #region EventHandlers
-        
         /// <summary>
         /// Run when the update thread is started. This will never run if you set IsSingleThreaded to true.
         /// </summary>
@@ -304,6 +358,5 @@ namespace OpenToolkit.Windowing.Desktop
         {
             RenderFrame?.Invoke(sender, args);
         }
-        #endregion
     }
 }

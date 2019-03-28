@@ -16,10 +16,15 @@ namespace OpenToolkit.GraphicsLibraryFramework
     /// <summary>
     /// Provides access to the GLFW API.
     /// </summary>
-    // ReSharper disable once InconsistentNaming
     public abstract class GLFW : NativeLibraryBase, IGLFW
     {
-        public static readonly Action<ErrorCode, string> ErrorCallback = (errorCode, description) => throw new GLFWException(description) { ErrorCode = errorCode };
+        /// <summary>
+        /// Gets the default callback which gets called when a GLFW-Error occurs.
+        /// </summary>
+        /// <seealso cref="SetErrorCallback"/>
+        /// TODO: pretty sure this callback should not be settable, because if we exchange values it will still call the old value,
+        /// TODO: we would need to set the new callback with SetErrorCallback-function
+        public static GLFWCallbacks.ErrorCallback ErrorCallback { get; } = (errorCode, description) => { throw new GLFWException(description) { ErrorCode = errorCode }; };
 
         /// <inheritdoc cref="NativeLibraryBase"/>
         protected GLFW(string path, ImplementationOptions options)
@@ -34,7 +39,7 @@ namespace OpenToolkit.GraphicsLibraryFramework
         public abstract void Terminate();
 
         /// <inheritdoc />
-        public abstract void InitHint(InitHint hint, int value);
+        public abstract void InitHint(InitHint hint, bool value);
 
         /// <inheritdoc />
         public abstract void GetVersion(out int major, out int minor, out int revision);
@@ -43,67 +48,66 @@ namespace OpenToolkit.GraphicsLibraryFramework
         public abstract string GetVersionString();
 
         /// <inheritdoc />
-        public abstract unsafe int GetError(char** description);
-        
+        public abstract unsafe ErrorCode GetError(out char* description);
+
         /// <inheritdoc />
         public abstract unsafe Monitor** GetMonitors(out int count);
-        
+
         /// <inheritdoc />
         public abstract unsafe void GetMonitorPos(Monitor* monitor, out int x, out int y);
 
         /// <inheritdoc />
         public abstract unsafe void GetMonitorPhysicalSize(Monitor* monitor, out int width, out int height);
-        
+
         /// <inheritdoc />
         public abstract unsafe void GetMonitorContentScale(Monitor* monitor, out float xscale, out float yscale);
-        
+
         /// <inheritdoc />
         public abstract unsafe string GetMonitorName(Monitor* monitor);
-        
+
         /// <inheritdoc />
         public abstract unsafe void SetMonitorUserPointer(Monitor* monitor, IntPtr pointer);
 
         /// <inheritdoc />
         public abstract unsafe IntPtr GetMonitorUserPointer(Monitor* monitor);
-        
+
         /// <inheritdoc />
         public abstract unsafe VideoMode* GetVideoModes(Monitor* monitor, out int count);
-        
+
         /// <inheritdoc />
         public abstract unsafe void SetGamma(Monitor* monitor, float gamma);
-        
+
         /// <inheritdoc />
         public abstract unsafe GammaRamp* GetGammaRamp(Monitor* monitor);
-        
+
         /// <inheritdoc />
-        public abstract unsafe void SetGammaRamp(Monitor* monitor, GammaRamp* ramp);
+        public abstract unsafe void SetGammaRamp(Monitor* monitor, ref GammaRamp ramp);
 
         /// <inheritdoc />
         public abstract void DefaultWindowHints();
 
-        /// <inheritdoc />
-        public abstract void WindowHintString(int hint, string value);
-        
+        // public abstract void WindowHintString(int hint, string value);
+
         /// <inheritdoc />
         public abstract unsafe void SetWindowSizeLimits(Window* window, int minwidth, int minheight, int maxwidth, int maxheight);
 
         /// <inheritdoc />
         public abstract unsafe void SetWindowAspectRatio(Window* window, int numer, int denom);
-        
+
         /// <inheritdoc />
         public abstract unsafe void GetWindowFrameSize(Window* window, out int left, out int top, out int right, out int bottom);
-        
+
         /// <inheritdoc />
         public abstract unsafe float GetWindowOpacity(Window* window);
 
         /// <inheritdoc />
         public abstract unsafe void SetWindowOpacity(Window* window, float opacity);
-        
+
         /// <inheritdoc />
         public abstract unsafe void RequestWindowAttention(Window* window);
-        
+
         /// <inheritdoc />
-        public abstract unsafe void SetWindowAttrib(Window* window, WindowAttribute attrib, int value);
+        public abstract unsafe void SetWindowAttrib(Window* window, WindowAttribute attrib, bool value);
 
         /// <inheritdoc />
         public abstract bool RawMouseMotionSupported();
@@ -113,19 +117,19 @@ namespace OpenToolkit.GraphicsLibraryFramework
 
         /// <inheritdoc />
         public abstract int GetKeyScancode(int key);
-        
+
         /// <inheritdoc />
         public abstract unsafe int GetKey(Window* window, int key);
-        
+
         /// <inheritdoc />
         public abstract unsafe int GetMouseButton(Window* window, int button);
-        
+
         /// <inheritdoc />
         public abstract unsafe void GetCursorPos(Window* window, out double xpos, out double ypos);
 
         /// <inheritdoc />
         public abstract unsafe void SetCursorPos(Window* window, double xpos, double ypos);
-        
+
         /// <inheritdoc />
         public abstract unsafe Cursor* CreateCursor(Image* image, int xhot, int yhot);
 
@@ -137,9 +141,9 @@ namespace OpenToolkit.GraphicsLibraryFramework
 
         /// <inheritdoc />
         public abstract unsafe void SetCursor(Window* window, Cursor* cursor);
-        
+
         /// <inheritdoc />
-        public abstract int JoystickPresent(int jid);
+        public abstract bool JoystickPresent(int jid);
 
         /// <inheritdoc />
         public abstract unsafe float* GetJoystickAxes(int jid, out int count);
@@ -149,10 +153,10 @@ namespace OpenToolkit.GraphicsLibraryFramework
 
         /// <inheritdoc />
         public abstract unsafe byte* GetJoystickHats(int jid, out int count);
-        
+
         /// <inheritdoc />
         public abstract string GetJoystickName(int jid);
-        
+
         /// <inheritdoc />
         public abstract string GetJoystickGUID(int jid);
 
@@ -169,8 +173,8 @@ namespace OpenToolkit.GraphicsLibraryFramework
         public abstract bool UpdateGamepadMappings(string newMapping);
 
         /// <inheritdoc />
-        public abstract string GetJoystickname(int jid);
-        
+        public abstract string GetGamepadName(int jid);
+
         /// <inheritdoc />
         public abstract bool GetGamepadState(int jid, out GamepadState state);
 
@@ -179,25 +183,26 @@ namespace OpenToolkit.GraphicsLibraryFramework
 
         /// <inheritdoc />
         public abstract void SetTime(double time);
-        
+
         /// <inheritdoc />
         public abstract long GetTimerValue();
-        
+
         /// <inheritdoc />
         public abstract long GetTimerFrequency();
-        
+
         /// <inheritdoc />
         public abstract unsafe Window* GetCurrentContext();
-        
+
         /// <inheritdoc />
         public abstract unsafe void SwapBuffers(Window* window);
-        
+
         /// <inheritdoc />
         public abstract bool ExtensionSupported(string extensionName);
 
         /// <inheritdoc />
         public abstract bool VulkanSupported();
 
+        /// <inheritdoc />
         public abstract unsafe char** GetRequiredInstanceExtensions(out int count);
 
         /// <inheritdoc />
@@ -216,7 +221,10 @@ namespace OpenToolkit.GraphicsLibraryFramework
         public abstract unsafe void GetFramebufferSize(Window* window, out int width, out int height);
 
         /// <inheritdoc />
-        public abstract unsafe InputModeValue GetInputMode(Window* window, InputMode mode);
+        public abstract unsafe CursorModeValue GetInputMode(Window* window, CursorStateAttribute mode);
+
+        /// <inheritdoc />
+        public abstract unsafe bool GetInputMode(Window* window, StickyAttributes mode);
 
         /// <inheritdoc />
         public abstract unsafe void RestoreWindow(Window* window);
@@ -225,7 +233,10 @@ namespace OpenToolkit.GraphicsLibraryFramework
         public abstract unsafe VideoMode* GetVideoMode(Monitor* monitor);
 
         /// <inheritdoc />
-        public abstract unsafe int GetWindowAttrib(Window* window, WindowAttribute attribute);
+        public abstract unsafe int GetWindowAttrib(Window* window, int attribute);
+
+        /// <inheritdoc />
+        public abstract unsafe bool GetWindowAttrib(Window* window, WindowAttribute attribute);
 
         /// <inheritdoc />
         public abstract unsafe void GetWindowSize(Window* window, out int width, out int height);
@@ -255,58 +266,88 @@ namespace OpenToolkit.GraphicsLibraryFramework
         public abstract void PostEmptyEvent();
 
         /// <inheritdoc />
-        public abstract void WindowHint(WindowHint hint, int value);
+        public abstract void WindowHint(FramebufferIntAttributes hint, int value);
+
+        /// <inheritdoc />
+        public abstract void WindowHint(FramebufferBoolAttributes hint, bool value);
+
+        /// <inheritdoc />
+        public abstract void WindowHint(WindowAttribute hint, bool value);
+
+        /// <inheritdoc />
+        public abstract void WindowHint(ContextAttributes hint, int value);
+
+        /// <inheritdoc />
+        public abstract void WindowHint(ContextBoolAttributes hint, bool value);
+
+        /// <inheritdoc />
+        public abstract void WindowHint(ContextClientApiAttribute hint, ClientApi value);
+
+        /// <inheritdoc />
+        public abstract void WindowHint(ContextReleaseBehaviorAttribute hint, ReleaseBehavior value);
+
+        /// <inheritdoc />
+        public abstract void WindowHint(ContextCreationApiAttribute hint, ContextApi value);
+
+        /// <inheritdoc />
+        public abstract void WindowHint(ContextRobustnessAttribute hint, Robustness value);
+
+        /// <inheritdoc />
+        public abstract void WindowHint(ContextOpenGlProfileAttribute hint, OpenGlProfile value);
 
         /// <inheritdoc />
         public abstract unsafe bool WindowShouldClose(Window* window);
 
         /// <inheritdoc />
-        public abstract unsafe void SetCharCallback(Window* window, Action<Window, uint> callback);
+        public abstract unsafe GLFWCallbacks.CharCallback SetCharCallback(Window* window, GLFWCallbacks.CharCallback callback);
 
         /// <inheritdoc />
-        public abstract unsafe void SetCharModsCallback(Window* window, Action<Window, uint, KeyModifiers> callback);
+        public abstract unsafe GLFWCallbacks.CharModsCallback SetCharModsCallback(Window* window, GLFWCallbacks.CharModsCallback callback);
 
         /// <inheritdoc />
-        public abstract unsafe void SetCursorEnterCallback(Window* window, Action<Window, bool> callback);
+        public abstract unsafe GLFWCallbacks.CursorEnterCallback SetCursorEnterCallback(Window* window, GLFWCallbacks.CursorEnterCallback callback);
 
         /// <inheritdoc />
-        public abstract unsafe void SetCursorPosCallback(Window* window, Action<Window, double, double> callback);
+        public abstract unsafe GLFWCallbacks.CursorPosCallback SetCursorPosCallback(Window* window, GLFWCallbacks.CursorPosCallback callback);
 
         /// <inheritdoc />
-        public abstract unsafe void SetDropCallback(Window* window, Action<Window, int, IntPtr> callback);
+        public abstract unsafe GLFWCallbacks.DropCallback SetDropCallback(Window* window, GLFWCallbacks.DropCallback callback);
 
         /// <inheritdoc />
-        public abstract unsafe void SetErrorCallback(Action<ErrorCode, string> callback);
+        public abstract unsafe GLFWCallbacks.ErrorCallback SetErrorCallback(GLFWCallbacks.ErrorCallback callback);
 
         /// <inheritdoc />
-        public abstract unsafe void SetInputMode(Window* window, InputMode mode, InputModeValue value);
+        public abstract unsafe void SetInputMode(Window* window, CursorStateAttribute mode, CursorModeValue value);
 
         /// <inheritdoc />
-        public abstract void SetJoystickCallback(Action<int, JoystickState> callback);
+        public abstract unsafe void SetInputMode(Window* window, StickyAttributes mode, bool value);
 
         /// <inheritdoc />
-        public abstract unsafe void SetKeyCallback(Window* window, Action<Window, int, int, InputAction, int> callback);
+        public abstract unsafe GLFWCallbacks.JoystickCallback SetJoystickCallback(GLFWCallbacks.JoystickCallback callback);
 
         /// <inheritdoc />
-        public abstract unsafe void SetScrollCallback(Window* window, Action<Window, int, int> callback);
+        public abstract unsafe GLFWCallbacks.KeyCallback SetKeyCallback(Window* window, GLFWCallbacks.KeyCallback callback);
 
         /// <inheritdoc />
-        public abstract unsafe void SetMonitorCallback(Action<Monitor, MonitorState> callback);
+        public abstract unsafe GLFWCallbacks.ScrollCallback SetScrollCallback(Window* window, GLFWCallbacks.ScrollCallback callback);
 
         /// <inheritdoc />
-        public abstract unsafe void SetMouseButtonCallback(Window* window, Action<Window, int, InputAction, int> callback);
+        public abstract unsafe GLFWCallbacks.MonitorCallback SetMonitorCallback(GLFWCallbacks.MonitorCallback callback);
 
         /// <inheritdoc />
-        public abstract unsafe void SetWindowCloseCallback(Window* window, Action<Window> callback);
+        public abstract unsafe GLFWCallbacks.MouseButtonCallback SetMouseButtonCallback(Window* window, GLFWCallbacks.MouseButtonCallback callback);
 
         /// <inheritdoc />
-        public abstract unsafe void SetWindowFocusCallback(Window* window, Action<Window, bool> callback);
+        public abstract unsafe GLFWCallbacks.WindowCloseCallback SetWindowCloseCallback(Window* window, GLFWCallbacks.WindowCloseCallback callback);
+
+        /// <inheritdoc />
+        public abstract unsafe GLFWCallbacks.WindowFocusCallback SetWindowFocusCallback(Window* window, GLFWCallbacks.WindowFocusCallback callback);
 
         /// <inheritdoc />
         public abstract unsafe void SetWindowIcon(Window* window, int count, Image* images);
 
         /// <inheritdoc />
-        public abstract unsafe void SetWindowIconifyCallback(Window* window, Action<Window, bool> callback);
+        public abstract unsafe GLFWCallbacks.WindowIconifyCallback SetWindowIconifyCallback(Window* window, GLFWCallbacks.WindowIconifyCallback callback);
 
         /// <inheritdoc />
         public abstract unsafe void SetWindowTitle(Window* window, string title);
@@ -318,10 +359,10 @@ namespace OpenToolkit.GraphicsLibraryFramework
         public abstract unsafe void SetWindowSize(Window* window, int width, int height);
 
         /// <inheritdoc />
-        public abstract unsafe void SetWindowSizeCallback(Window* window, Action<int, int> callback);
+        public abstract unsafe GLFWCallbacks.WindowSizeCallback SetWindowSizeCallback(Window* window, GLFWCallbacks.WindowSizeCallback callback);
 
         /// <inheritdoc />
-        public abstract unsafe void SetWindowShouldClose(Window* window, int value);
+        public abstract unsafe void SetWindowShouldClose(Window* window, bool value);
 
         /// <inheritdoc />
         public abstract unsafe void SetWindowMonitor(Window* window, Monitor* monitor, int x, int y, int width, int height, int refreshRate);
@@ -330,17 +371,17 @@ namespace OpenToolkit.GraphicsLibraryFramework
         public abstract unsafe void SetWindowPos(Window* window, int x, int y);
 
         /// <inheritdoc />
-        public abstract unsafe void SetWindowPosCallback(Window* window, Action<Window, int, int> callback);
-        
+        public abstract unsafe GLFWCallbacks.WindowPosCallback SetWindowPosCallback(Window* window, GLFWCallbacks.WindowPosCallback callback);
+
         /// <inheritdoc />
-        public abstract void SetSwapInterval(int interval);
+        public abstract void SwapInterval(int interval);
 
         /// <inheritdoc />
         public abstract void WaitEvents();
 
         /// <inheritdoc />
         public abstract void WaitEventsTimeout(double timeout);
-        
+
         /// <inheritdoc />
         public abstract unsafe string GetClipboardString(Window* window);
 

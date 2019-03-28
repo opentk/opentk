@@ -8,13 +8,14 @@
 //
 
 using System;
-using OpenToolkit.Windowing.Common.Input;
 using OpenToolkit.Mathematics;
+using OpenToolkit.Windowing.Common;
+using OpenToolkit.Windowing.Common.Input;
 
 namespace OpenToolkit.Windowing.EventingModels
 {
     /// <summary>
-    /// Defines the event data for <see cref="MouseDevice" /> events.
+    /// Defines base event data for mouse related events events.
     /// </summary>
     /// <remarks>
     ///  <para>
@@ -25,30 +26,30 @@ namespace OpenToolkit.Windowing.EventingModels
     /// </remarks>
     public class MouseEventArgs : EventArgs
     {
-        private MouseState state;
+        private MouseState _state;
 
         /// <summary>
-        /// Constructs a new instance.
+        /// Initializes a new instance of the <see cref="MouseEventArgs"/> class.
         /// </summary>
         public MouseEventArgs()
         {
-            state.SetIsConnected(true);
+            _state.SetIsConnected(true);
         }
 
         /// <summary>
-        /// Constructs a new instance.
+        /// Initializes a new instance of the <see cref="MouseEventArgs"/> class.
         /// </summary>
         /// <param name="x">The X position.</param>
         /// <param name="y">The Y position.</param>
         public MouseEventArgs(double x, double y)
             : this()
         {
-            state.X = x;
-            state.Y = y;
+            _state.X = x;
+            _state.Y = y;
         }
 
         /// <summary>
-        /// Constructs a new instance.
+        /// Initializes a new instance of the <see cref="MouseEventArgs"/> class.
         /// </summary>
         /// <param name="args">The <see cref="MouseEventArgs" /> instance to clone.</param>
         public MouseEventArgs(MouseEventArgs args)
@@ -61,8 +62,8 @@ namespace OpenToolkit.Windowing.EventingModels
         /// </summary>
         public double X
         {
-            get => state.X;
-            internal set => state.X = value;
+            get => _state.X;
+            internal set => _state.X = value;
         }
 
         /// <summary>
@@ -70,16 +71,16 @@ namespace OpenToolkit.Windowing.EventingModels
         /// </summary>
         public double Y
         {
-            get => state.Y;
-            internal set => state.Y = value;
+            get => _state.Y;
+            internal set => _state.Y = value;
         }
 
         /// <summary>
-        /// Gets a <see cref="System.Drawing.Point" /> representing the location of the mouse for the event.
+        /// Gets or sets a <see cref="System.Drawing.Point" /> representing the location of the mouse for the event.
         /// </summary>
         public Vector2d Position
         {
-            get => new Vector2d(state.X, state.Y);
+            get => new Vector2d(_state.X, _state.Y);
             set
             {
                 X = value.X;
@@ -92,10 +93,18 @@ namespace OpenToolkit.Windowing.EventingModels
         /// </summary>
         public MouseState Mouse
         {
-            get => state;
-            internal set => state = value;
+            get => _state;
+            internal set => _state = value;
         }
 
+        /// <summary>
+        /// Sets the button state of a specified button to a given state value.
+        /// </summary>
+        /// <param name="button">The button state to set.</param>
+        /// <param name="state">The value to change the state to.</param>
+        /// <exception cref="ArgumentOutOfRangeException">
+        /// Thrown when <paramref name="button"/> is outside of valid range of [0;<see cref="MouseButton.LastButton"/>].
+        /// </exception>
         internal void SetButton(MouseButton button, ButtonState state)
         {
             if (button < 0 || button > MouseButton.LastButton)
@@ -106,15 +115,23 @@ namespace OpenToolkit.Windowing.EventingModels
             switch (state)
             {
                 case ButtonState.Pressed:
-                    this.state.EnableBit((int)button);
+                    this._state.EnableBit((int)button);
                     break;
 
                 case ButtonState.Released:
-                    this.state.DisableBit((int)button);
+                    this._state.DisableBit((int)button);
                     break;
             }
         }
 
+        /// <summary>
+        /// Gets the button state of a specified button.
+        /// </summary>
+        /// <param name="button">The button of which to get the button state from.</param>
+        /// <returns>The button state of the given <paramref name="button"/>.</returns>
+        /// <exception cref="ArgumentOutOfRangeException">
+        /// Thrown when <paramref name="button"/> is outside of valid range of [0;<see cref="MouseButton.LastButton"/>].
+        /// </exception>
         internal ButtonState GetButton(MouseButton button)
         {
             if (button < 0 || button > MouseButton.LastButton)
@@ -123,7 +140,7 @@ namespace OpenToolkit.Windowing.EventingModels
             }
 
             return
-                state.ReadBit((int)button) ? ButtonState.Pressed : ButtonState.Released;
+                _state.ReadBit((int)button) ? ButtonState.Pressed : ButtonState.Released;
         }
     }
 }
