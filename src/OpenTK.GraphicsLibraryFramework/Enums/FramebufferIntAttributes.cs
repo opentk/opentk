@@ -1,5 +1,5 @@
 ﻿//
-// FramebufferAttributes.cs
+// FramebufferIntAttributes.cs
 //
 // Copyright (C) 2018 OpenTK
 //

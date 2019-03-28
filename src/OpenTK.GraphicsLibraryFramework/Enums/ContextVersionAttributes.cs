@@ -1,5 +1,5 @@
 //
-// ContextAttributes.cs
+// ContextVersionAttributes.cs
 //
 // Copyright (C) 2018 OpenTK
 //
@@ -7,14 +7,13 @@
 // of the MIT license. See the LICENSE file for details.
 //
 
-// TODO: sort by data types?
 namespace OpenToolkit.GraphicsLibraryFramework
 {
     /// <summary>
     /// Context related attributes.
     /// </summary>
-    /// <seealso cref="IGLFW.WindowHint(ContextAttributes,int)"/>
-    public enum ContextAttributes
+    /// <seealso cref="IGLFW.WindowHint(ContextVersionAttributes,int)"/>
+    public enum ContextVersionAttributes
     {
         /// <summary>
         /// Indicate the client API version(major part) of the window's context.

@@ -275,7 +275,7 @@ namespace OpenToolkit.GraphicsLibraryFramework
         public abstract void WindowHint(WindowAttribute hint, bool value);
 
         /// <inheritdoc />
-        public abstract void WindowHint(ContextAttributes hint, int value);
+        public abstract void WindowHint(ContextVersionAttributes hint, int value);
 
         /// <inheritdoc />
         public abstract void WindowHint(ContextBoolAttributes hint, bool value);

@@ -1656,7 +1656,7 @@ namespace OpenToolkit.GraphicsLibraryFramework
         /// By default, making a context non-current implicitly forces a pipeline flush.
         /// On machines that support <c>GL_KHR_context_flush_control</c>,
         /// you can control whether a context performs this flush
-        /// by setting the <see cref="ContextAttributes.ContextReleaseBehavior"/> window hint.
+        /// by setting the <see cref="ContextVersionAttributes.ContextReleaseBehavior"/> window hint.
         ///
         /// The specified window must have an OpenGL or OpenGL ES context.
         /// Specifying a window without a context will generate a <see cref="ErrorCode.NoWindowContext"/> error.
@@ -2439,14 +2439,14 @@ namespace OpenToolkit.GraphicsLibraryFramework
 
         /// <summary>
         /// This function sets hints for the next call to <see cref="CreateWindow"/>.
-        /// The hints, once set, retain their values until changed by a call to <see cref="WindowHint(ContextAttributes,int)"/>
+        /// The hints, once set, retain their values until changed by a call to <see cref="WindowHint(ContextVersionAttributes,int)"/>
         /// or <see cref="DefaultWindowHints"/>, or until the library is terminated.
         ///
         /// This function does not check whether the specified hint values are valid.
         /// If you set hints to invalid values this will instead be reported
         /// by the next call to <see cref="CreateWindow"/>.
         /// </summary>
-        /// <param name="hint">The <see cref="ContextAttributes"/> to set.</param>
+        /// <param name="hint">The <see cref="ContextVersionAttributes"/> to set.</param>
         /// <param name="value">The new value of the window hint.</param>
         /// <remarks>
         /// This function must only be called from the main thread.
@@ -2454,7 +2454,7 @@ namespace OpenToolkit.GraphicsLibraryFramework
         /// TODO: Possible errors include <see cref="ErrorCode.NotInitialized"/> and <see cref="ErrorCode.InvalidEnum"/>.
         /// </remarks>
         /// <seealso cref="DefaultWindowHints"/>
-        void WindowHint(ContextAttributes hint, int value);
+        void WindowHint(ContextVersionAttributes hint, int value);
 
         /// <summary>
         /// This function sets hints for the next call to <see cref="CreateWindow"/>.

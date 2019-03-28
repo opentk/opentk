@@ -1,5 +1,5 @@
 ﻿//
-// IGameWindow.cs
+// INativeWindow.cs
 //
 // Copyright (C) 2018 OpenTK
 //

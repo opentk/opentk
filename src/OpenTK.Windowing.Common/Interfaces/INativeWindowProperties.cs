@@ -1,5 +1,5 @@
 ﻿//
-// IWindowProperties.cs
+// INativeWindowProperties.cs
 //
 // Copyright (C) 2018 OpenTK
 //
