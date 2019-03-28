@@ -12,8 +12,8 @@ namespace OpenToolkit.GraphicsLibraryFramework
     /// <summary>
     /// Context related client api attribute.
     /// </summary>
-    /// <seealso cref="IGLFW.WindowHint(ContextClientApiAttribute,ClientApi)"/>
-    public enum ContextClientApiAttribute
+    /// <seealso cref="IGLFW.WindowHint(ContextClientAPIAttribute,ClientApi)"/>
+    public enum ContextClientAPIAttribute
     {
         /// <summary>
         /// Indicates the client API provided by the window's context;

@@ -12,7 +12,7 @@ namespace OpenToolkit.GraphicsLibraryFramework
     /// <summary>
     /// The context client apis.
     /// </summary>
-    /// <seealso cref="IGLFW.WindowHint(ContextClientApiAttribute,ClientApi)"/>
+    /// <seealso cref="IGLFW.WindowHint(ContextClientAPIAttribute,ClientApi)"/>
     public enum ClientApi
     {
         /// <summary>

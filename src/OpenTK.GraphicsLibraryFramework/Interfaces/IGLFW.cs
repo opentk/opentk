@@ -2459,14 +2459,14 @@ namespace OpenToolkit.GraphicsLibraryFramework
         /// <summary>
         /// This function sets hints for the next call to <see cref="CreateWindow"/>.
         /// The hints, once set, retain their values
-        /// until changed by a call to <see cref="WindowHint(ContextClientApiAttribute,ClientApi)"/>
+        /// until changed by a call to <see cref="WindowHint(ContextClientAPIAttribute,ClientApi)"/>
         /// or <see cref="DefaultWindowHints"/>, or until the library is terminated.
         ///
         /// This function does not check whether the specified hint values are valid.
         /// If you set hints to invalid values this will instead be reported
         /// by the next call to <see cref="CreateWindow"/>.
         /// </summary>
-        /// <param name="hint"><see cref="ContextClientApiAttribute.ClientApi"/>.</param>
+        /// <param name="hint"><see cref="ContextClientAPIAttribute.ClientApi"/>.</param>
         /// <param name="value">The new value of the window hint.</param>
         /// <remarks>
         /// This function must only be called from the main thread.
@@ -2474,7 +2474,7 @@ namespace OpenToolkit.GraphicsLibraryFramework
         /// TODO: Possible errors include <see cref="ErrorCode.NotInitialized"/> and <see cref="ErrorCode.InvalidEnum"/>.
         /// </remarks>
         /// <seealso cref="DefaultWindowHints"/>
-        void WindowHint(ContextClientApiAttribute hint, ClientApi value);
+        void WindowHint(ContextClientAPIAttribute hint, ClientApi value);
 
         /// <summary>
         /// This function sets hints for the next call to <see cref="CreateWindow"/>.
