@@ -1,5 +1,5 @@
-﻿//
-// FramebufferIntAttributes.cs
+//
+// WindowHintInt.cs
 //
 // Copyright (C) 2018 OpenTK
 //
@@ -7,15 +7,29 @@
 // of the MIT license. See the LICENSE file for details.
 //
 
-// TODO: sort by data types?
 namespace OpenToolkit.GraphicsLibraryFramework
 {
     /// <summary>
-    /// Defines available parameters for
-    /// <see cref="IGLFW.WindowHint(FramebufferIntAttributes,int)"/>.
+    /// Context related attributes.
     /// </summary>
-    public enum FramebufferIntAttributes
+    /// <seealso cref="IGLFW.WindowHint(WindowHintInt,int)"/>
+    public enum WindowHintInt
     {
+        /// <summary>
+        /// Indicate the client API version(major part) of the window's context.
+        /// </summary>
+        ContextVersionMajor = 0x00022002,
+
+        /// <summary>
+        /// Indicate the client API version(minor part) of the window's context.
+        /// </summary>
+        ContextVersionMinor = 0x00022003,
+
+        /// <summary>
+        /// Indicate the client API version(revision part) of the window's context.
+        /// </summary>
+        ContextRevision = 0x00022004,
+
         /// <summary>
         /// Specify the desired bit depths of the red component of the default framebuffer.
         /// <see cref="GLFW_DONT_CARE"/> means the application has no preference.

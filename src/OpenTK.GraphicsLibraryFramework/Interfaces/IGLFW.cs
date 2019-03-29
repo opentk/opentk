@@ -344,7 +344,7 @@ namespace OpenToolkit.GraphicsLibraryFramework
         /// <remarks>
         /// This function must only be called from the main thread.
         /// </remarks>
-        /// <seealso cref="WindowHint(FramebufferIntAttributes,int)"/>
+        /// <seealso cref="WindowHint(WindowHintInt,int)"/>
         void DefaultWindowHints();
 
         // TODO: not found in GLFW? void WindowHintString(int hint, string value);
@@ -498,9 +498,9 @@ namespace OpenToolkit.GraphicsLibraryFramework
         /// <summary>
         /// This function sets the value of an attribute of the specified window.
         ///
-        /// The supported attributes are <see cref="WindowAttribute.Decorated"/>,
-        /// <see cref="WindowAttribute.Resizable"/>, <see cref="WindowAttribute.Floating"/>,
-        /// <see cref="WindowAttribute.AutoIconify"/> and <see cref="WindowAttribute.FocusOnShow"/>.
+        /// The supported attributes are <see cref="WindowAttributeSetter.Decorated"/>,
+        /// <see cref="WindowAttributeSetter.Resizable"/>, <see cref="WindowAttributeSetter.Floating"/>,
+        /// <see cref="WindowAttributeSetter.AutoIconify"/> and <see cref="WindowAttributeSetter.FocusOnShow"/>.
         ///
         /// Some of these attributes are ignored for full screen windows.
         /// The new value will take effect if the window is later made windowed.
@@ -512,7 +512,7 @@ namespace OpenToolkit.GraphicsLibraryFramework
         /// <param name="attribute">A supported window attribute.</param>
         /// <param name="value"><c>true</c> or <c>false</c>.</param>
         /// <remarks>
-        /// Calling glfwGetWindowAttrib will always return the latest value,
+        /// Calling <see cref="GetWindowAttrib"/> will always return the latest value,
         /// even if that value is ignored by the current mode of the window.
         ///
         /// This function must only be called from the main thread.
@@ -520,7 +520,7 @@ namespace OpenToolkit.GraphicsLibraryFramework
         /// TODO: Possible errors include <see cref="ErrorCode.NotInitialized"/>, <see cref="ErrorCode.InvalidEnum"/>, <see cref="ErrorCode.InvalidValue"/> and <see cref="ErrorCode.PlatformError"/>.
         /// </remarks>
         /// <seealso cref="GetWindowAttrib"/>
-        unsafe void SetWindowAttrib(Window* window, WindowAttribute attribute, bool value);
+        unsafe void SetWindowAttrib(Window* window, WindowAttributeSetter attribute, bool value);
 
         /// <summary>
         /// This function returns whether raw mouse motion is supported on the current system.
@@ -1333,7 +1333,7 @@ namespace OpenToolkit.GraphicsLibraryFramework
         ///
         /// By default, newly created windows use the placement recommended by the window system.
         /// To create the window at a specific position,
-        /// make it initially invisible using the <see cref="WindowAttribute.Visible"/> window hint,
+        /// make it initially invisible using the <see cref="WindowHintBool.Visible"/> window hint,
         /// set its position(see <see cref="SetWindowPos"/>) and then show it
         /// (see <see cref="ShowWindow"/>).
         ///
@@ -1413,7 +1413,7 @@ namespace OpenToolkit.GraphicsLibraryFramework
         /// The window should already be visible and not iconified.
         ///
         /// By default, both windowed and full screen mode windows are focused when initially created.
-        /// Set the <see cref="WindowAttribute.Focused"/> to disable this behavior.
+        /// Set the <see cref="WindowHintBool.Focused"/> to disable this behavior.
         ///
         /// Do not use this function to steal focus from other applications unless you are certain
         /// that is what the user wants.
@@ -1537,37 +1537,20 @@ namespace OpenToolkit.GraphicsLibraryFramework
         /// This function returns the value of an attribute of the specified window or its OpenGL or OpenGL ES context.
         /// </summary>
         /// <param name="window">The window to query.</param>
-        /// <param name="attribute">The window attribute whose value to return. TODO: part of WindowHint?.</param>
-        /// <returns>The value of the attribute, or zero if an error occurred.</returns>
-        /// <remarks>
-        /// Framebuffer related hints are not window attributes. See
-        /// <a href="">Framebuffer related attributes</a> for more information.
-        ///
-        /// Zero is a valid value for many window and context related attributes
-        /// so you cannot use a return value of zero as an indication of errors.
-        /// However, this function should not fail as long as it is passed valid
-        /// arguments and the library has been initialized.
-        ///
-        /// This function must only be called from the main thread.
-        ///
-        /// TODO: Possible errors include <see cref="ErrorCode.NotInitialized"/>, <see cref="ErrorCode.InvalidEnum"/> and <see cref="ErrorCode.PlatformError"/>.
-        /// </remarks>
-        unsafe int GetWindowAttrib(Window* window, int attribute);
-
-        /// <summary>
-        /// This function returns the value of an attribute of the specified window or its OpenGL or OpenGL ES context.
-        /// </summary>
-        /// <param name="window">The window to query.</param>
         /// <param name="attribute">The window attribute whose value to return.</param>
         /// <returns>The value of the attribute, or zero if an error occurred.</returns>
         /// <remarks>
         /// Framebuffer related hints are not window attributes. See
-        /// <a href="">Framebuffer related attributes</a> for more information.
+        /// <a href="https://www.glfw.org/docs/3.3/window_guide.html#window_hints_fb">
+        /// Framebuffer related attributes
+        /// </a>
+        /// for more information.
+        ///
         /// This function must only be called from the main thread.
         ///
         /// TODO: Possible errors include <see cref="ErrorCode.NotInitialized"/>, <see cref="ErrorCode.InvalidEnum"/> and <see cref="ErrorCode.PlatformError"/>.
         /// </remarks>
-        unsafe bool GetWindowAttrib(Window* window, WindowAttribute attribute);
+        unsafe bool GetWindowAttrib(Window* window, WindowAttributeGetter attribute);
 
         /// <summary>
         /// This function retrieves the size, in screen coordinates, of the client area of the specified window.
@@ -1656,7 +1639,7 @@ namespace OpenToolkit.GraphicsLibraryFramework
         /// By default, making a context non-current implicitly forces a pipeline flush.
         /// On machines that support <c>GL_KHR_context_flush_control</c>,
         /// you can control whether a context performs this flush
-        /// by setting the <see cref="ContextVersionAttributes.ContextReleaseBehavior"/> window hint.
+        /// by setting the <see cref="WindowHintReleaseBehavior.ContextReleaseBehavior"/> window hint.
         ///
         /// The specified window must have an OpenGL or OpenGL ES context.
         /// Specifying a window without a context will generate a <see cref="ErrorCode.NoWindowContext"/> error.
@@ -1897,7 +1880,7 @@ namespace OpenToolkit.GraphicsLibraryFramework
         /// </summary>
         /// <param name="window">The window whose input mode to set.</param>
         /// <param name="mode"><see cref="CursorStateAttribute.Cursor"/>.</param>
-        /// <param name="value">The new value of the specified input mode. TODO bool overloading?.</param>
+        /// <param name="value">The new value of the specified input mode.</param>
         /// <remarks>
         /// This function must only be called from the main thread.
         ///
@@ -1928,7 +1911,7 @@ namespace OpenToolkit.GraphicsLibraryFramework
         /// <param name="mode">
         /// Either <see cref="StickyAttributes.StickyKeys"/> or <see cref="StickyAttributes.StickyMouseButtons"/>.
         /// </param>
-        /// <param name="value">The new value of the specified input mode. TODO bool overloading?.</param>
+        /// <param name="value">The new value of the specified input mode.</param>
         /// <remarks>
         /// This function must only be called from the main thread.
         ///
@@ -2381,14 +2364,14 @@ namespace OpenToolkit.GraphicsLibraryFramework
         /// <summary>
         /// This function sets hints for the next call to <see cref="CreateWindow"/>.
         /// The hints, once set, retain their values
-        /// until changed by a call to <see cref="WindowHint(FramebufferIntAttributes,int)"/>
+        /// until changed by a call to <see cref="WindowHint(WindowHintInt,int)"/>
         /// or <see cref="DefaultWindowHints"/>, or until the library is terminated.
         ///
         /// This function does not check whether the specified hint values are valid.
         /// If you set hints to invalid values this will instead be reported
         /// by the next call to <see cref="CreateWindow"/>.
         /// </summary>
-        /// <param name="hint">The <see cref="FramebufferIntAttributes"/> to set.</param>
+        /// <param name="hint">The <see cref="WindowHintInt"/> to set.</param>
         /// <param name="value">The new value of the framebuffer attribute hint.</param>
         /// <remarks>
         /// This function must only be called from the main thread.
@@ -2396,19 +2379,19 @@ namespace OpenToolkit.GraphicsLibraryFramework
         /// TODO: Possible errors include <see cref="ErrorCode.NotInitialized"/> and <see cref="ErrorCode.InvalidEnum"/>.
         /// </remarks>
         /// <seealso cref="DefaultWindowHints"/>
-        void WindowHint(FramebufferIntAttributes hint, int value);
+        void WindowHint(WindowHintInt hint, int value);
 
         /// <summary>
         /// This function sets hints for the next call to <see cref="CreateWindow"/>.
         /// The hints, once set, retain their values
-        /// until changed by a call to <see cref="WindowHint(FramebufferBoolAttributes,bool)"/>
+        /// until changed by a call to <see cref="WindowHint(WindowHintBool,bool)"/>
         /// or <see cref="DefaultWindowHints"/>, or until the library is terminated.
         ///
         /// This function does not check whether the specified hint values are valid.
         /// If you set hints to invalid values this will instead be reported
         /// by the next call to <see cref="CreateWindow"/>.
         /// </summary>
-        /// <param name="hint">The <see cref="FramebufferIntAttributes"/> to set.</param>
+        /// <param name="hint">The <see cref="WindowHintInt"/> to set.</param>
         /// <param name="value">The new value of the framebuffer attribute hint.</param>
         /// <remarks>
         /// This function must only be called from the main thread.
@@ -2416,57 +2399,19 @@ namespace OpenToolkit.GraphicsLibraryFramework
         /// TODO: Possible errors include <see cref="ErrorCode.NotInitialized"/> and <see cref="ErrorCode.InvalidEnum"/>.
         /// </remarks>
         /// <seealso cref="DefaultWindowHints"/>
-        void WindowHint(FramebufferBoolAttributes hint, bool value);
-
-        /// <summary>
-        /// This function sets hints for the next call to <see cref="CreateWindow"/>.
-        /// The hints, once set, retain their values until changed by a call to <see cref="WindowHint(WindowAttribute,bool)"/>
-        /// or <see cref="DefaultWindowHints"/>, or until the library is terminated.
-        ///
-        /// This function does not check whether the specified hint values are valid.
-        /// If you set hints to invalid values this will instead be reported
-        /// by the next call to <see cref="CreateWindow"/>.
-        /// </summary>
-        /// <param name="hint">The <see cref="WindowAttribute"/> to set.</param>
-        /// <param name="value">The new value of the window hint.</param>
-        /// <remarks>
-        /// This function must only be called from the main thread.
-        ///
-        /// TODO: Possible errors include <see cref="ErrorCode.NotInitialized"/> and <see cref="ErrorCode.InvalidEnum"/>.
-        /// </remarks>
-        /// <seealso cref="DefaultWindowHints"/>
-        void WindowHint(WindowAttribute hint, bool value);
-
-        /// <summary>
-        /// This function sets hints for the next call to <see cref="CreateWindow"/>.
-        /// The hints, once set, retain their values until changed by a call to <see cref="WindowHint(ContextVersionAttributes,int)"/>
-        /// or <see cref="DefaultWindowHints"/>, or until the library is terminated.
-        ///
-        /// This function does not check whether the specified hint values are valid.
-        /// If you set hints to invalid values this will instead be reported
-        /// by the next call to <see cref="CreateWindow"/>.
-        /// </summary>
-        /// <param name="hint">The <see cref="ContextVersionAttributes"/> to set.</param>
-        /// <param name="value">The new value of the window hint.</param>
-        /// <remarks>
-        /// This function must only be called from the main thread.
-        ///
-        /// TODO: Possible errors include <see cref="ErrorCode.NotInitialized"/> and <see cref="ErrorCode.InvalidEnum"/>.
-        /// </remarks>
-        /// <seealso cref="DefaultWindowHints"/>
-        void WindowHint(ContextVersionAttributes hint, int value);
+        void WindowHint(WindowHintBool hint, bool value);
 
         /// <summary>
         /// This function sets hints for the next call to <see cref="CreateWindow"/>.
         /// The hints, once set, retain their values
-        /// until changed by a call to <see cref="WindowHint(ContextClientAPIAttribute,ClientApi)"/>
+        /// until changed by a call to <see cref="WindowHint(WindowHintClientApi,ClientApi)"/>
         /// or <see cref="DefaultWindowHints"/>, or until the library is terminated.
         ///
         /// This function does not check whether the specified hint values are valid.
         /// If you set hints to invalid values this will instead be reported
         /// by the next call to <see cref="CreateWindow"/>.
         /// </summary>
-        /// <param name="hint"><see cref="ContextClientAPIAttribute.ClientApi"/>.</param>
+        /// <param name="hint"><see cref="WindowHintClientApi.ClientApi"/>.</param>
         /// <param name="value">The new value of the window hint.</param>
         /// <remarks>
         /// This function must only be called from the main thread.
@@ -2474,19 +2419,19 @@ namespace OpenToolkit.GraphicsLibraryFramework
         /// TODO: Possible errors include <see cref="ErrorCode.NotInitialized"/> and <see cref="ErrorCode.InvalidEnum"/>.
         /// </remarks>
         /// <seealso cref="DefaultWindowHints"/>
-        void WindowHint(ContextClientAPIAttribute hint, ClientApi value);
+        void WindowHint(WindowHintClientApi hint, ClientApi value);
 
         /// <summary>
         /// This function sets hints for the next call to <see cref="CreateWindow"/>.
         /// The hints, once set, retain their values
-        /// until changed by a call to <see cref="WindowHint(ContextBoolAttributes,bool)"/>
+        /// until changed by a call to <see cref="WindowHint(WindowHintReleaseBehavior,ReleaseBehavior)"/>
         /// or <see cref="DefaultWindowHints"/>, or until the library is terminated.
         ///
         /// This function does not check whether the specified hint values are valid.
         /// If you set hints to invalid values this will instead be reported
         /// by the next call to <see cref="CreateWindow"/>.
         /// </summary>
-        /// <param name="hint">The <see cref="ContextBoolAttributes"/>.</param>
+        /// <param name="hint"><see cref="WindowHintReleaseBehavior.ContextReleaseBehavior"/>.</param>
         /// <param name="value">The new value of the window hint.</param>
         /// <remarks>
         /// This function must only be called from the main thread.
@@ -2494,19 +2439,19 @@ namespace OpenToolkit.GraphicsLibraryFramework
         /// TODO: Possible errors include <see cref="ErrorCode.NotInitialized"/> and <see cref="ErrorCode.InvalidEnum"/>.
         /// </remarks>
         /// <seealso cref="DefaultWindowHints"/>
-        void WindowHint(ContextBoolAttributes hint, bool value);
+        void WindowHint(WindowHintReleaseBehavior hint, ReleaseBehavior value);
 
         /// <summary>
         /// This function sets hints for the next call to <see cref="CreateWindow"/>.
         /// The hints, once set, retain their values
-        /// until changed by a call to <see cref="WindowHint(ContextReleaseBehaviorAttribute,ReleaseBehavior)"/>
+        /// until changed by a call to <see cref="WindowHint(WindowHintContextApi,ContextApi)"/>
         /// or <see cref="DefaultWindowHints"/>, or until the library is terminated.
         ///
         /// This function does not check whether the specified hint values are valid.
         /// If you set hints to invalid values this will instead be reported
         /// by the next call to <see cref="CreateWindow"/>.
         /// </summary>
-        /// <param name="hint"><see cref="ContextReleaseBehaviorAttribute.ContextReleaseBehavior"/>.</param>
+        /// <param name="hint"><see cref="WindowHintContextApi.ContextCreationApi"/>.</param>
         /// <param name="value">The new value of the window hint.</param>
         /// <remarks>
         /// This function must only be called from the main thread.
@@ -2514,19 +2459,19 @@ namespace OpenToolkit.GraphicsLibraryFramework
         /// TODO: Possible errors include <see cref="ErrorCode.NotInitialized"/> and <see cref="ErrorCode.InvalidEnum"/>.
         /// </remarks>
         /// <seealso cref="DefaultWindowHints"/>
-        void WindowHint(ContextReleaseBehaviorAttribute hint, ReleaseBehavior value);
+        void WindowHint(WindowHintContextApi hint, ContextApi value);
 
         /// <summary>
         /// This function sets hints for the next call to <see cref="CreateWindow"/>.
         /// The hints, once set, retain their values
-        /// until changed by a call to <see cref="WindowHint(ContextCreationApiAttribute,ContextApi)"/>
+        /// until changed by a call to <see cref="WindowHint(WindowHintRobustness,Robustness)"/>
         /// or <see cref="DefaultWindowHints"/>, or until the library is terminated.
         ///
         /// This function does not check whether the specified hint values are valid.
         /// If you set hints to invalid values this will instead be reported
         /// by the next call to <see cref="CreateWindow"/>.
         /// </summary>
-        /// <param name="hint"><see cref="ContextCreationApiAttribute.ContextCreationApi"/>.</param>
+        /// <param name="hint"><see cref="WindowHintRobustness.ContextRobustness"/>.</param>
         /// <param name="value">The new value of the window hint.</param>
         /// <remarks>
         /// This function must only be called from the main thread.
@@ -2534,19 +2479,19 @@ namespace OpenToolkit.GraphicsLibraryFramework
         /// TODO: Possible errors include <see cref="ErrorCode.NotInitialized"/> and <see cref="ErrorCode.InvalidEnum"/>.
         /// </remarks>
         /// <seealso cref="DefaultWindowHints"/>
-        void WindowHint(ContextCreationApiAttribute hint, ContextApi value);
+        void WindowHint(WindowHintRobustness hint, Robustness value);
 
         /// <summary>
         /// This function sets hints for the next call to <see cref="CreateWindow"/>.
         /// The hints, once set, retain their values
-        /// until changed by a call to <see cref="WindowHint(ContextRobustnessAttribute,Robustness)"/>
+        /// until changed by a call to <see cref="WindowHint(WindowHintOpenGlProfile,OpenGlProfile)"/>
         /// or <see cref="DefaultWindowHints"/>, or until the library is terminated.
         ///
         /// This function does not check whether the specified hint values are valid.
         /// If you set hints to invalid values this will instead be reported
         /// by the next call to <see cref="CreateWindow"/>.
         /// </summary>
-        /// <param name="hint"><see cref="ContextRobustnessAttribute.ContextRobustness"/>.</param>
+        /// <param name="hint"><see cref="WindowHintOpenGlProfile.OpenGlProfile"/>.</param>
         /// <param name="value">The new value of the window hint.</param>
         /// <remarks>
         /// This function must only be called from the main thread.
@@ -2554,27 +2499,7 @@ namespace OpenToolkit.GraphicsLibraryFramework
         /// TODO: Possible errors include <see cref="ErrorCode.NotInitialized"/> and <see cref="ErrorCode.InvalidEnum"/>.
         /// </remarks>
         /// <seealso cref="DefaultWindowHints"/>
-        void WindowHint(ContextRobustnessAttribute hint, Robustness value);
-
-        /// <summary>
-        /// This function sets hints for the next call to <see cref="CreateWindow"/>.
-        /// The hints, once set, retain their values
-        /// until changed by a call to <see cref="WindowHint(ContextOpenGlProfileAttribute,OpenGlProfile)"/>
-        /// or <see cref="DefaultWindowHints"/>, or until the library is terminated.
-        ///
-        /// This function does not check whether the specified hint values are valid.
-        /// If you set hints to invalid values this will instead be reported
-        /// by the next call to <see cref="CreateWindow"/>.
-        /// </summary>
-        /// <param name="hint"><see cref="ContextOpenGlProfileAttribute.OpenGlProfile"/>.</param>
-        /// <param name="value">The new value of the window hint.</param>
-        /// <remarks>
-        /// This function must only be called from the main thread.
-        ///
-        /// TODO: Possible errors include <see cref="ErrorCode.NotInitialized"/> and <see cref="ErrorCode.InvalidEnum"/>.
-        /// </remarks>
-        /// <seealso cref="DefaultWindowHints"/>
-        void WindowHint(ContextOpenGlProfileAttribute hint, OpenGlProfile value);
+        void WindowHint(WindowHintOpenGlProfile hint, OpenGlProfile value);
 
         /// <summary>
         /// This function returns the value of the close flag of the specified window.

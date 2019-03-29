@@ -1,5 +1,5 @@
 //
-// ContextOpenGlProfileAttribute.cs
+// WindowHintOpenGlProfile.cs
 //
 // Copyright (C) 2019 OpenTK
 //
@@ -10,9 +10,10 @@
 namespace OpenToolkit.GraphicsLibraryFramework
 {
     /// <summary>
-    /// Context OpenGlProfile attribute.
+    /// Used to set the OpenGlProfile attribute.
     /// </summary>
-    public enum ContextOpenGlProfileAttribute
+    /// <seealso cref="IGLFW.WindowHint(WindowHintOpenGlProfile,OpenGlProfile)"/>
+    public enum WindowHintOpenGlProfile
     {
         /// <summary>
         /// Indicates the OpenGL profile used by the context.

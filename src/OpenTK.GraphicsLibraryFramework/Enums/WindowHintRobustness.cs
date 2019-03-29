@@ -1,5 +1,5 @@
 //
-// ContextRobustnessAttribute.cs
+// WindowHintRobustness.cs
 //
 // Copyright (C) 2019 OpenTK
 //
@@ -10,10 +10,10 @@
 namespace OpenToolkit.GraphicsLibraryFramework
 {
     /// <summary>
-    /// Context robustness attribute.
+    /// Used to set context robustness attribute.
     /// </summary>
-    /// <seealso cref="IGLFW.WindowHint(ContextRobustnessAttribute,Robustness)"/>
-    public enum ContextRobustnessAttribute
+    /// <seealso cref="IGLFW.WindowHint(WindowHintRobustness,Robustness)"/>
+    public enum WindowHintRobustness
     {
         /// <summary>
         /// Indicates the robustness strategy used by the context.

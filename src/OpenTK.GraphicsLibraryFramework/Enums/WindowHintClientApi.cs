@@ -1,5 +1,5 @@
 //
-// ContextClientApiAttribute.cs
+// WindowHintClientApi.cs
 //
 // Copyright (C) 2019 OpenTK
 //
@@ -10,10 +10,10 @@
 namespace OpenToolkit.GraphicsLibraryFramework
 {
     /// <summary>
-    /// Context related client api attribute.
+    /// Context related client API attribute.
     /// </summary>
-    /// <seealso cref="IGLFW.WindowHint(ContextClientAPIAttribute,ClientApi)"/>
-    public enum ContextClientAPIAttribute
+    /// <seealso cref="IGLFW.WindowHint(WindowHintClientApi,ClientApi)"/>
+    public enum WindowHintClientApi
     {
         /// <summary>
         /// Indicates the client API provided by the window's context;

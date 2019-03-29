@@ -107,7 +107,7 @@ namespace OpenToolkit.GraphicsLibraryFramework
         public abstract unsafe void RequestWindowAttention(Window* window);
 
         /// <inheritdoc />
-        public abstract unsafe void SetWindowAttrib(Window* window, WindowAttribute attrib, bool value);
+        public abstract unsafe void SetWindowAttrib(Window* window, WindowAttributeSetter attrib, bool value);
 
         /// <inheritdoc />
         public abstract bool RawMouseMotionSupported();
@@ -233,10 +233,7 @@ namespace OpenToolkit.GraphicsLibraryFramework
         public abstract unsafe VideoMode* GetVideoMode(Monitor* monitor);
 
         /// <inheritdoc />
-        public abstract unsafe int GetWindowAttrib(Window* window, int attribute);
-
-        /// <inheritdoc />
-        public abstract unsafe bool GetWindowAttrib(Window* window, WindowAttribute attribute);
+        public abstract unsafe bool GetWindowAttrib(Window* window, WindowAttributeGetter attribute);
 
         /// <inheritdoc />
         public abstract unsafe void GetWindowSize(Window* window, out int width, out int height);
@@ -266,34 +263,25 @@ namespace OpenToolkit.GraphicsLibraryFramework
         public abstract void PostEmptyEvent();
 
         /// <inheritdoc />
-        public abstract void WindowHint(FramebufferIntAttributes hint, int value);
+        public abstract void WindowHint(WindowHintInt hint, int value);
 
         /// <inheritdoc />
-        public abstract void WindowHint(FramebufferBoolAttributes hint, bool value);
+        public abstract void WindowHint(WindowHintBool hint, bool value);
 
         /// <inheritdoc />
-        public abstract void WindowHint(WindowAttribute hint, bool value);
+        public abstract void WindowHint(WindowHintClientApi hint, ClientApi value);
 
         /// <inheritdoc />
-        public abstract void WindowHint(ContextVersionAttributes hint, int value);
+        public abstract void WindowHint(WindowHintReleaseBehavior hint, ReleaseBehavior value);
 
         /// <inheritdoc />
-        public abstract void WindowHint(ContextBoolAttributes hint, bool value);
+        public abstract void WindowHint(WindowHintContextApi hint, ContextApi value);
 
         /// <inheritdoc />
-        public abstract void WindowHint(ContextClientAPIAttribute hint, ClientApi value);
+        public abstract void WindowHint(WindowHintRobustness hint, Robustness value);
 
         /// <inheritdoc />
-        public abstract void WindowHint(ContextReleaseBehaviorAttribute hint, ReleaseBehavior value);
-
-        /// <inheritdoc />
-        public abstract void WindowHint(ContextCreationApiAttribute hint, ContextApi value);
-
-        /// <inheritdoc />
-        public abstract void WindowHint(ContextRobustnessAttribute hint, Robustness value);
-
-        /// <inheritdoc />
-        public abstract void WindowHint(ContextOpenGlProfileAttribute hint, OpenGlProfile value);
+        public abstract void WindowHint(WindowHintOpenGlProfile hint, OpenGlProfile value);
 
         /// <inheritdoc />
         public abstract unsafe bool WindowShouldClose(Window* window);

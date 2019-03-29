@@ -15,7 +15,7 @@ namespace OpenToolkit.GraphicsLibraryFramework
     public enum ContextApi
     {
         /// <summary>
-        /// Uses the native context api to create the window context.
+        /// Uses the native context API to create the window context.
         /// </summary>
         NativeContextApi = 0x00036001,
 

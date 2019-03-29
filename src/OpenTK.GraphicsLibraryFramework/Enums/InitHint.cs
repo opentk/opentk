@@ -28,6 +28,9 @@ namespace OpenToolkit.GraphicsLibraryFramework
         /// subdirectory of the application's bundle, if present.
         /// Set this with <see cref="IGLFW.InitHint"/>.
         /// </summary>
+        /// <remarks>
+        /// Only affects macOS; no effect on other platforms.
+        /// </remarks>
         CocoaChdirResources = 0x00051001,
 
         /// <summary>
@@ -35,6 +38,9 @@ namespace OpenToolkit.GraphicsLibraryFramework
         /// when the first window is created, which is when AppKit is initialized.
         /// Set this with <see cref="IGLFW.InitHint"/>.
         /// </summary>
+        /// <remarks>
+        /// Only affects macOS; no effect on other platforms.
+        /// </remarks>
         CocoaMenubar = 0x00051002
     }
 }

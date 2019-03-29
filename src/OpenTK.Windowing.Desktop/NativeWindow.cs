@@ -174,7 +174,7 @@ namespace OpenToolkit.Windowing.Desktop
         {
             get
             {
-                if (Glfw.GetWindowAttrib(WindowPtr, WindowAttribute.Iconified))
+                if (Glfw.GetWindowAttrib(WindowPtr, WindowAttributeGetter.Iconified))
                 {
                     return WindowState.Minimized;
                 }
@@ -227,7 +227,7 @@ namespace OpenToolkit.Windowing.Desktop
 
             set
             {
-                if (!Glfw.GetWindowAttrib(WindowPtr, WindowAttribute.Decorated))
+                if (!Glfw.GetWindowAttrib(WindowPtr, WindowAttributeGetter.Decorated))
                 {
                     Glfw.GetVersion(out var major, out var minor, out _);
 
@@ -241,15 +241,15 @@ namespace OpenToolkit.Windowing.Desktop
                     switch (value)
                     {
                         case WindowBorder.Hidden:
-                            Glfw.SetWindowAttrib(WindowPtr, WindowAttribute.Decorated, false);
+                            Glfw.SetWindowAttrib(WindowPtr, WindowAttributeSetter.Decorated, false);
                             break;
 
                         case WindowBorder.Resizable:
-                            Glfw.SetWindowAttrib(WindowPtr, WindowAttribute.Resizable, true);
+                            Glfw.SetWindowAttrib(WindowPtr, WindowAttributeSetter.Resizable, true);
                             break;
 
                         case WindowBorder.Fixed:
-                            Glfw.SetWindowAttrib(WindowPtr, WindowAttribute.Resizable, false);
+                            Glfw.SetWindowAttrib(WindowPtr, WindowAttributeSetter.Resizable, false);
                             break;
                     }
                 }
@@ -443,15 +443,15 @@ namespace OpenToolkit.Windowing.Desktop
                 switch (settings.WindowBorder)
                 {
                     case WindowBorder.Hidden:
-                        Glfw.WindowHint(WindowAttribute.Decorated, false);
+                        Glfw.WindowHint(WindowHintBool.Decorated, false);
                         break;
 
                     case WindowBorder.Resizable:
-                        Glfw.WindowHint(WindowAttribute.Resizable, true);
+                        Glfw.WindowHint(WindowHintBool.Resizable, true);
                         break;
 
                     case WindowBorder.Fixed:
-                        Glfw.WindowHint(WindowAttribute.Resizable, false);
+                        Glfw.WindowHint(WindowHintBool.Resizable, false);
                         break;
                 }
 
@@ -461,10 +461,10 @@ namespace OpenToolkit.Windowing.Desktop
                 {
                     var monitor = settings.CurrentMonitor.ToUnsafePtr<GraphicsLibraryFramework.Monitor>();
                     var modePtr = Glfw.GetVideoMode(monitor);
-                    Glfw.WindowHint(FramebufferIntAttributes.RedBits, modePtr->RedBits);
-                    Glfw.WindowHint(FramebufferIntAttributes.GreenBits, modePtr->GreenBits);
-                    Glfw.WindowHint(FramebufferIntAttributes.BlueBits, modePtr->BlueBits);
-                    Glfw.WindowHint(FramebufferIntAttributes.RefreshRate, modePtr->RefreshRate);
+                    Glfw.WindowHint(WindowHintInt.RedBits, modePtr->RedBits);
+                    Glfw.WindowHint(WindowHintInt.GreenBits, modePtr->GreenBits);
+                    Glfw.WindowHint(WindowHintInt.BlueBits, modePtr->BlueBits);
+                    Glfw.WindowHint(WindowHintInt.RefreshRate, modePtr->RefreshRate);
                     WindowPtr = Glfw.CreateWindow(modePtr->Width, modePtr->Height, _title, monitor, null);
                 }
                 else
