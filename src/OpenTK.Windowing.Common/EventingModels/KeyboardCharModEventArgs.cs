@@ -8,30 +8,52 @@
 //
 
 using System;
+using OpenToolkit.Windowing.Common;
 using OpenToolkit.Windowing.Common.Input;
 
 namespace OpenToolkit.Windowing.EventingModels
 {
+    /// <summary>
+    /// Defines the event data for the <see cref="IWindowEvents.KeyboardCharMod"/> event.
+    /// </summary>
     public class KeyboardCharModEventArgs : EventArgs
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="KeyboardCharModEventArgs"/> class.
+        /// </summary>
         public KeyboardCharModEventArgs()
         {
-            
-        }
-        
-        public KeyboardCharModEventArgs(uint codepoint, KeyModifiers mods)
-        {
-            this.codepoint = codepoint;
-            this.mods = mods;
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="KeyboardCharModEventArgs"/> class.
+        /// </summary>
+        /// <param name="codepoint">The Unicode code point of the character.</param>
+        /// <param name="mods">The <see cref="KeyModifiers"/> which where held down.</param>
+        public KeyboardCharModEventArgs(uint codepoint, KeyModifiers mods)
+        {
+            this.Codepoint = codepoint;
+            this.Mods = mods;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="KeyboardCharModEventArgs"/> class.
+        /// </summary>
+        /// <param name="other">The <see cref="KeyboardCharModEventArgs" /> instance to clone.</param>
         public KeyboardCharModEventArgs(KeyboardCharModEventArgs other)
         {
-            this.codepoint = other.codepoint;
-            this.mods = other.mods;
+            this.Codepoint = other.Codepoint;
+            this.Mods = other.Mods;
         }
-        
-        public uint codepoint;
-        public KeyModifiers mods;
+
+        /// <summary>
+        /// Gets the Unicode code point of the character which triggered this event.
+        /// </summary>
+        public uint Codepoint { get; }
+
+        /// <summary>
+        /// Gets the <see cref="KeyModifiers"/> which where held down.
+        /// </summary>
+        public KeyModifiers Mods { get; }
     }
 }

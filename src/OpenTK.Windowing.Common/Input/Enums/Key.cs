@@ -20,6 +20,7 @@ namespace OpenToolkit.Windowing.Common.Input
         Unknown = 0,
 
         // Modifiers
+
         /// <summary>
         /// The left shift key.
         /// </summary>
@@ -110,7 +111,9 @@ namespace OpenToolkit.Windowing.Common.Input
         Command,
 
         // Function keys (hopefully enough for most keyboards - mine has 26)
+
         // <keysymdef.h> on X11 reports up to 35 function keys.
+
         /// <summary>
         /// The F1 key.
         /// </summary>
@@ -287,6 +290,7 @@ namespace OpenToolkit.Windowing.Common.Input
         F35,
 
         // Direction arrows
+
         /// <summary>
         /// The up arrow key.
         /// </summary>
@@ -393,6 +397,7 @@ namespace OpenToolkit.Windowing.Common.Input
         NumLock,
 
         // Special keys
+
         /// <summary>
         /// The clear key (Keypad5 with NumLock disabled, on typical keyboards).
         /// </summary>
@@ -435,6 +440,7 @@ namespace OpenToolkit.Windowing.Common.Input
         TrackNext,*/
 
         // Keypad keys
+
         /// <summary>
         /// The keypad 0 key.
         /// </summary>
@@ -531,6 +537,7 @@ namespace OpenToolkit.Windowing.Common.Input
         KeypadEnter,
 
         // Letters
+
         /// <summary>
         /// The A key.
         /// </summary>
@@ -662,6 +669,7 @@ namespace OpenToolkit.Windowing.Common.Input
         Z,
 
         // Numbers
+
         /// <summary>
         /// The number 0 key.
         /// </summary>
@@ -713,6 +721,7 @@ namespace OpenToolkit.Windowing.Common.Input
         Number9,
 
         // Symbols
+
         /// <summary>
         /// The tilde key.
         /// </summary>
@@ -728,7 +737,8 @@ namespace OpenToolkit.Windowing.Common.Input
         /// </summary>
         Minus,
 
-        //Equal,
+        // Equal,
+
         /// <summary>
         /// The plus key.
         /// </summary>

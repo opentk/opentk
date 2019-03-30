@@ -9,11 +9,12 @@
 
 using System;
 using OpenToolkit.Mathematics;
+using OpenToolkit.Windowing.Common;
 
 namespace OpenToolkit.Windowing.EventingModels
 {
     /// <summary>
-    /// Defines the event data for <see cref="MouseDevice.WheelChanged" /> events.
+    /// Defines the event data for <see cref="IWindowEvents.MouseWheel" /> events.
     /// </summary>
     /// <remarks>
     ///  <para>
@@ -25,14 +26,14 @@ namespace OpenToolkit.Windowing.EventingModels
     public class MouseWheelEventArgs : MouseEventArgs
     {
         /// <summary>
-        /// Constructs a new <see cref="MouseWheelEventArgs" /> instance.
+        /// Initializes a new instance of the <see cref="MouseWheelEventArgs"/> class.
         /// </summary>
         public MouseWheelEventArgs()
         {
         }
 
         /// <summary>
-        /// Constructs a new <see cref="MouseWheelEventArgs" /> instance.
+        /// Initializes a new instance of the <see cref="MouseWheelEventArgs"/> class.
         /// </summary>
         /// <param name="x">The X position.</param>
         /// <param name="y">The Y position.</param>
@@ -46,7 +47,7 @@ namespace OpenToolkit.Windowing.EventingModels
         }
 
         /// <summary>
-        /// Constructs a new <see cref="MouseWheelEventArgs" /> instance.
+        /// Initializes a new instance of the <see cref="MouseWheelEventArgs"/> class.
         /// </summary>
         /// <param name="args">The <see cref="MouseWheelEventArgs" /> instance to clone.</param>
         public MouseWheelEventArgs(MouseWheelEventArgs args)

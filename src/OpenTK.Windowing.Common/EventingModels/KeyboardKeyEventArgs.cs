@@ -8,12 +8,13 @@
 //
 
 using System;
+using OpenToolkit.Windowing.Common;
 using OpenToolkit.Windowing.Common.Input;
 
 namespace OpenToolkit.Windowing.EventingModels
 {
     /// <summary>
-    /// Defines the event data for <see cref="KeyboardDevice" /> events.
+    /// Defines the event data for <see cref="IWindowEvents.KeyDown"/> and <see cref="IWindowEvents.KeyUp"/> events.
     /// </summary>
     /// <remarks>
     ///  <para>
@@ -25,16 +26,16 @@ namespace OpenToolkit.Windowing.EventingModels
     public class KeyboardKeyEventArgs : EventArgs
     {
         /// <summary>
-        /// Constructs a new KeyboardEventArgs instance.
+        /// Initializes a new instance of the <see cref="KeyboardKeyEventArgs"/> class.
         /// </summary>
         public KeyboardKeyEventArgs()
         {
         }
 
         /// <summary>
-        /// Constructs a new KeyboardEventArgs instance.
+        /// Initializes a new instance of the <see cref="KeyboardKeyEventArgs"/> class.
         /// </summary>
-        /// <param name="args">An existing KeyboardEventArgs instance to clone.</param>
+        /// <param name="args">An existing <see cref="KeyboardKeyEventArgs"/> instance to clone.</param>
         public KeyboardKeyEventArgs(KeyboardKeyEventArgs args)
         {
             Key = args.Key;
@@ -92,7 +93,7 @@ namespace OpenToolkit.Windowing.EventingModels
         public KeyboardState Keyboard { get; internal set; }
 
         /// <summary>
-        /// Gets a <see cref="System.Boolean" /> indicating whether
+        /// Gets a value indicating whether
         /// this key event is a repeat.
         /// </summary>
         /// <value>

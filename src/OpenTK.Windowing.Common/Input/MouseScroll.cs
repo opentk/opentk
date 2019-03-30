@@ -30,24 +30,24 @@ namespace OpenToolkit.Windowing.Common.Input
         /// <value>The y.</value>
         public float Y { get; internal set; }
 
-        /// <param name="left">A <see cref="MouseScroll" /> instance to test for equality.</param>
-        /// <param name="right">A <see cref="MouseScroll" /> instance to test for equality.</param>
+        /// <param name="left">The first <see cref="MouseScroll" /> instance to test for equality.</param>
+        /// <param name="right">The second <see cref="MouseScroll" /> instance to test for equality.</param>
         public static bool operator ==(MouseScroll left, MouseScroll right)
         {
             return left.Equals(right);
         }
 
-        /// <param name="left">A <see cref="MouseScroll" /> instance to test for inequality.</param>
-        /// <param name="right">A <see cref="MouseScroll" /> instance to test for inequality.</param>
+        /// <param name="left">The first <see cref="MouseScroll" /> instance to test for inequality.</param>
+        /// <param name="right">The second <see cref="MouseScroll" /> instance to test for inequality.</param>
         public static bool operator !=(MouseScroll left, MouseScroll right)
         {
             return !left.Equals(right);
         }
 
         /// <summary>
-        /// Returns a <see cref="System.String" /> that represents the current <see cref="MouseScroll" />.
+        /// Returns a <see cref="string" /> that represents the current <see cref="MouseScroll" />.
         /// </summary>
-        /// <returns>A <see cref="System.String" /> that represents the current <see cref="MouseScroll" />.</returns>
+        /// <returns>A <see cref="string" /> that represents the current <see cref="MouseScroll" />.</returns>
         public override string ToString()
         {
             return $"[X={X:0.00}, Y={Y:0.00}]";
@@ -66,12 +66,12 @@ namespace OpenToolkit.Windowing.Common.Input
         }
 
         /// <summary>
-        /// Determines whether the specified <see cref="System.Object" /> is equal to the current
+        /// Determines whether the specified <see cref="object" /> is equal to the current
         ///  <see cref="MouseScroll" />.
         /// </summary>
-        /// <param name="obj">The <see cref="System.Object" /> to compare with the current <see cref="MouseScroll" />.</param>
+        /// <param name="obj">The <see cref="object" /> to compare with the current <see cref="MouseScroll" />.</param>
         /// <returns>
-        ///  <c>true</c> if the specified <see cref="System.Object" /> is equal to the current
+        ///  <c>true</c> if the specified <see cref="object" /> is equal to the current
         ///  <see cref="MouseScroll" />; otherwise, <c>false</c>.
         /// </returns>
         public override bool Equals(object obj)

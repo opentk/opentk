@@ -16,21 +16,35 @@ namespace OpenToolkit.Windowing.EventingModels
     /// </summary>
     public class FocusedChangedEventArgs : EventArgs
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FocusedChangedEventArgs"/> class.
+        /// </summary>
         public FocusedChangedEventArgs()
         {
-            
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FocusedChangedEventArgs"/> class
+        /// from a second <see cref="FocusedChangedEventArgs"/> which is copied.
+        /// </summary>
+        /// <param name="other">The <see cref="FocusedChangedEventArgs"/> to copy.</param>
         public FocusedChangedEventArgs(FocusedChangedEventArgs other)
         {
-            this.isFocused = other.isFocused;
+            this.IsFocused = other.IsFocused;
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FocusedChangedEventArgs"/> class.
+        /// </summary>
+        /// <param name="isFocused">A value indicating whether the window is focused.</param>
         internal FocusedChangedEventArgs(bool isFocused)
         {
-            this.isFocused = isFocused;
+            this.IsFocused = isFocused;
         }
 
-        public bool isFocused { get; internal set; }
+        /// <summary>
+        /// Gets a value indicating whether the window is focused.
+        /// </summary>
+        public bool IsFocused { get; internal set; }
     }
 }

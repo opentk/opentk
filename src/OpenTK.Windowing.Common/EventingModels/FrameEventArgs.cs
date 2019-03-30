@@ -20,17 +20,17 @@ namespace OpenToolkit.Windowing.EventingModels
     /// </remarks>
     public class FrameEventArgs : EventArgs
     {
-        private double elapsed;
+        private double _elapsed;
 
         /// <summary>
-        /// Constructs a new FrameEventArgs instance.
+        /// Initializes a new instance of the <see cref="FrameEventArgs"/> class.
         /// </summary>
         public FrameEventArgs()
         {
         }
 
         /// <summary>
-        /// Constructs a new FrameEventArgs instance.
+        /// Initializes a new instance of the <see cref="FrameEventArgs"/> class.
         /// </summary>
         /// <param name="elapsed">The amount of time that has elapsed since the previous event, in seconds.</param>
         public FrameEventArgs(double elapsed)
@@ -39,11 +39,11 @@ namespace OpenToolkit.Windowing.EventingModels
         }
 
         /// <summary>
-        /// Gets a <see cref="System.Double" /> that indicates how many seconds of time elapsed since the previous event.
+        /// Gets a <see cref="double" /> that indicates how many seconds of time elapsed since the previous event.
         /// </summary>
         public double Time
         {
-            get => elapsed;
+            get => _elapsed;
             internal set
             {
                 if (value <= 0)
@@ -51,7 +51,7 @@ namespace OpenToolkit.Windowing.EventingModels
                     throw new ArgumentOutOfRangeException();
                 }
 
-                elapsed = value;
+                _elapsed = value;
             }
         }
     }

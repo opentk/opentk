@@ -8,29 +8,53 @@
 //
 
 using System;
+using OpenToolkit.Windowing.Common;
 
 namespace OpenToolkit.Windowing.EventingModels
 {
+    /// <summary>
+    /// Defines the event data for the <see cref="IWindowEvents.JoystickConnected"/> event.
+    /// </summary>
     public class JoystickEventArgs : EventArgs
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="JoystickEventArgs"/> class.
+        /// </summary>
         public JoystickEventArgs()
         {
-            
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="JoystickEventArgs"/> class.
+        /// </summary>
+        /// <param name="joystickId">The Id of the joystick which triggered this event.</param>
+        /// <param name="isConnected">
+        /// A value indicating whether the joystick which triggered this event was connected.
+        /// </param>
         public JoystickEventArgs(int joystickId, bool isConnected)
         {
-            this.joystickId = joystickId;
-            this.isConnected = isConnected;
+            JoystickId = joystickId;
+            IsConnected = isConnected;
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="JoystickEventArgs"/> class.
+        /// </summary>
+        /// <param name="other">The <see cref="JoystickEventArgs" /> instance to clone.</param>
         public JoystickEventArgs(JoystickEventArgs other)
         {
-            this.joystickId = other.joystickId;
-            this.isConnected = other.isConnected;
+            JoystickId = other.JoystickId;
+            IsConnected = other.IsConnected;
         }
-        
-        public int joystickId;
-        public bool isConnected;
+
+        /// <summary>
+        /// Gets the Id of the joystick which triggered this event.
+        /// </summary>
+        public int JoystickId { get; }
+
+        /// <summary>
+        /// Gets a value indicating whether the joystick which triggered this event was connected.
+        /// </summary>
+        public bool IsConnected { get; }
     }
 }

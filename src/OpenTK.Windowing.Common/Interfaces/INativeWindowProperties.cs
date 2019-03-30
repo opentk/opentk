@@ -1,5 +1,5 @@
 ﻿//
-// IWindowProperties.cs
+// INativeWindowProperties.cs
 //
 // Copyright (C) 2018 OpenTK
 //
@@ -11,6 +11,9 @@ using OpenToolkit.Mathematics;
 
 namespace OpenToolkit.Windowing.Common
 {
+    /// <summary>
+    /// Describes window related properties.
+    /// </summary>
     public interface INativeWindowProperties
     {
         /*
@@ -19,19 +22,19 @@ namespace OpenToolkit.Windowing.Common
         /// </summary>
         Icon Icon { get; set; } // HIGH: Either an assembly is missing or this isn't defined for .NET Standard 2.0's Drawing assembly
         */
-        
+
         /// <summary>
-        /// Gets or sets a <see cref="System.Boolean" /> representing whether or not this window is event-driven.
+        /// Gets or sets a value indicating whether or not this window is event-driven.
         /// An event-driven window will wait for events before updating/rendering. It is useful for non-game applications,
         /// where the program only needs to do any processing after the user inputs something.
         /// </summary>
         bool IsEventDriven { get; set; }
-        
+
         /// <summary>
         /// Gets or sets the current monitor.
         /// </summary>
         Monitor CurrentMonitor { get; set; }
-        
+
         /// <summary>
         /// Gets or sets the clipboard string.
         /// </summary>
@@ -43,7 +46,7 @@ namespace OpenToolkit.Windowing.Common
         string Title { get; set; }
 
         /// <summary>
-        /// Gets or sets a System.Boolean that indicates whether this window has input focus.
+        /// Gets or sets a value indicating whether this window has input focus.
         /// </summary>
         /// <remarks>
         /// A window cannot be manually unfocused by setting this to false.
@@ -51,12 +54,12 @@ namespace OpenToolkit.Windowing.Common
         bool Focused { get; set; }
 
         /// <summary>
-        /// Gets or sets a System.Boolean that indicates whether the window is visible.
+        /// Gets or sets a value indicating whether the window is visible.
         /// </summary>
         bool Visible { get; set; }
 
         /// <summary>
-        /// Gets a System.Boolean that indicates whether the window has been created and has not been destroyed.
+        /// Gets a value indicating whether the window has been created and has not been destroyed.
         /// </summary>
         bool Exists { get; }
 
@@ -119,5 +122,10 @@ namespace OpenToolkit.Windowing.Common
         /// Gets a <see cref="OpenToolkit.Mathematics.Vector2" /> structure that contains the internal size this window.
         /// </summary>
         Vector2 ClientSize { get; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the window is fullscreen or not.
+        /// </summary>
+        bool IsFullscreen { get; set; }
     }
 }

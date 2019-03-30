@@ -1,9 +1,24 @@
-﻿using System;
+﻿//
+// GLFWProvider.cs
+//
+// Copyright (C) 2019 OpenTK
+//
+// This software may be modified and distributed under the terms
+// of the MIT license. See the LICENSE file for details.
+//
+
+using System;
 
 namespace OpenToolkit.GraphicsLibraryFramework
 {
+    /// <summary>
+    /// Singleton providing easy GLFW implementation access.
+    /// </summary>
     public static class GLFWProvider
-    {        
+    {
+        /// <summary>
+        /// Gets a GLFW interface implementation lazily.
+        /// </summary>
         public static Lazy<GLFW> GLFW { get; internal set; } = new Lazy<GLFW>(() =>
         {
             var glfw = GraphicsLibraryFramework.GLFW.GetAPI();
@@ -12,6 +27,9 @@ namespace OpenToolkit.GraphicsLibraryFramework
             return glfw;
         });
 
+        /// <summary>
+        /// Unloads the loaded <see cref="GLFW"/> interface implementation.
+        /// </summary>
         public static void Unload()
         {
             GLFW.Value.Terminate();

@@ -20,12 +20,17 @@ namespace OpenToolkit.Windowing.Common.Input
     {
         /// \internal
         /// <summary>
-        /// Initializes a new instance of the <see cref="OpenToolkit.Windowing.Common.Input.WindowIcon" /> class.
+        /// Initializes a new instance of the <see cref="WindowIcon" /> class.
         /// </summary>
         protected internal WindowIcon()
         {
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="WindowIcon" /> class.
+        /// </summary>
+        /// <param name="width">The icon pixel width.</param>
+        /// <param name="height">The icon pixel height.</param>
         private WindowIcon(int width, int height)
         {
             if (width < 0 || width > 256 || height < 0 || height > 256)
@@ -37,6 +42,12 @@ namespace OpenToolkit.Windowing.Common.Input
             Height = height;
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="WindowIcon" /> class.
+        /// </summary>
+        /// <param name="width">The icon pixel width.</param>
+        /// <param name="height">The icon pixel height.</param>
+        /// <param name="data">The RGBA pixel data of the icon.</param>
         internal WindowIcon(int width, int height, byte[] data)
             : this(width, height)
         {
@@ -53,6 +64,12 @@ namespace OpenToolkit.Windowing.Common.Input
             Data = data;
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="WindowIcon" /> class.
+        /// </summary>
+        /// <param name="width">The icon pixel width.</param>
+        /// <param name="height">The icon pixel height.</param>
+        /// <param name="data">Pointer to the RGBA pixel data of the icon.</param>
         internal WindowIcon(int width, int height, IntPtr data)
             : this(width, height)
         {
@@ -68,8 +85,19 @@ namespace OpenToolkit.Windowing.Common.Input
             Marshal.Copy(data, Data, 0, Data.Length);
         }
 
+        /// <summary>
+        /// Gets the RGBA pixel data of the icon.
+        /// </summary>
         internal byte[] Data { get; }
+
+        /// <summary>
+        /// Gets the icon pixel width.
+        /// </summary>
         internal int Width { get; }
+
+        /// <summary>
+        /// Gets the icon pixel height.
+        /// </summary>
         internal int Height { get; }
     }
 }

@@ -7,7 +7,6 @@
 // of the MIT license. See the LICENSE file for details.
 //
 
-
 using System;
 using OpenToolkit.Windowing.EventingModels;
 
@@ -16,7 +15,7 @@ namespace OpenToolkit.Windowing.Common
     /// <summary>
     /// Defines the interface for a GameWindow.
     /// </summary>
-    public interface IGameWindow: INativeWindow, IGameWindowProperties
+    public interface IGameWindow : INativeWindow, IGameWindowProperties
     {
         /// <summary>
         /// Initialize the update thread (if using a multi-threaded contex, and enter the game loop of the GameWindow.

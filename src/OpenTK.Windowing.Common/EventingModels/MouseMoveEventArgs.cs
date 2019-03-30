@@ -7,10 +7,12 @@
 // of the MIT license. See the LICENSE file for details.
 //
 
+using OpenToolkit.Windowing.Common;
+
 namespace OpenToolkit.Windowing.EventingModels
 {
     /// <summary>
-    /// Defines the event data for <see cref="MouseDevice.Move" /> events.
+    /// Defines the event data for <see cref="IWindowEvents.add_MouseMove" /> events.
     /// </summary>
     /// <remarks>
     ///  <para>
@@ -22,14 +24,14 @@ namespace OpenToolkit.Windowing.EventingModels
     public class MouseMoveEventArgs : MouseEventArgs
     {
         /// <summary>
-        /// Constructs a new <see cref="MouseMoveEventArgs" /> instance.
+        /// Initializes a new instance of the <see cref="MouseMoveEventArgs"/> class.
         /// </summary>
         public MouseMoveEventArgs()
         {
         }
 
         /// <summary>
-        /// Constructs a new <see cref="MouseMoveEventArgs" /> instance.
+        /// Initializes a new instance of the <see cref="MouseMoveEventArgs"/> class.
         /// </summary>
         /// <param name="x">The X position.</param>
         /// <param name="y">The Y position.</param>
@@ -43,7 +45,7 @@ namespace OpenToolkit.Windowing.EventingModels
         }
 
         /// <summary>
-        /// Constructs a new <see cref="MouseMoveEventArgs" /> instance.
+        /// Initializes a new instance of the <see cref="MouseMoveEventArgs"/> class.
         /// </summary>
         /// <param name="args">The <see cref="MouseMoveEventArgs" /> instance to clone.</param>
         public MouseMoveEventArgs(MouseMoveEventArgs args)
@@ -59,6 +61,6 @@ namespace OpenToolkit.Windowing.EventingModels
         /// <summary>
         /// Gets the change in Y position produced by this event.
         /// </summary>
-        public double  DeltaY { get; internal set; }
+        public double DeltaY { get; internal set; }
     }
 }

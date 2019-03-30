@@ -11,23 +11,40 @@ using System;
 
 namespace OpenToolkit.Windowing.EventingModels
 {
+    /// <summary>
+    /// Defines the event data for the window visibility changed event.
+    /// </summary>
     public class VisibilityChangedEventArgs : EventArgs
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="VisibilityChangedEventArgs"/> class.
+        /// </summary>
         public VisibilityChangedEventArgs()
         {
-            
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="VisibilityChangedEventArgs"/> class
+        /// from a second <see cref="VisibilityChangedEventArgs"/> which is copied.
+        /// </summary>
+        /// <param name="other">The <see cref="VisibilityChangedEventArgs"/> to copy.</param>
         public VisibilityChangedEventArgs(VisibilityChangedEventArgs other)
         {
-            this.isVisible = other.isVisible;
+            this.IsVisible = other.IsVisible;
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="VisibilityChangedEventArgs"/> class.
+        /// </summary>
+        /// <param name="isVisible">A value indicating whether the window is visible.</param>
         public VisibilityChangedEventArgs(bool isVisible)
         {
-            this.isVisible = isVisible;
+            this.IsVisible = isVisible;
         }
-        
-        public bool isVisible { get; internal set; }
+
+        /// <summary>
+        /// Gets a value indicating whether the window is visible.
+        /// </summary>
+        public bool IsVisible { get; internal set; }
     }
 }

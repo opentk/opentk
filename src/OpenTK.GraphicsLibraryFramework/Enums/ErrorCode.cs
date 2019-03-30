@@ -1,3 +1,12 @@
+//
+// ErrorCode.cs
+//
+// Copyright (C) 2019 OpenTK
+//
+// This software may be modified and distributed under the terms
+// of the MIT license. See the LICENSE file for details.
+//
+
 namespace OpenToolkit.GraphicsLibraryFramework
 {
     /// <summary>
@@ -9,17 +18,17 @@ namespace OpenToolkit.GraphicsLibraryFramework
         /// Everything is running as intended. Yay!
         /// </summary>
         NoError = 0,
-        
+
         /// <summary>
-        /// Called a function before calling GLFW.Init(). Initialize GLFW and then try again.
+        /// Called a function before calling <see cref="IGLFW.Init"/>. Initialize GLFW and then try again.
         /// </summary>
         NotInitialized = 0x00010001,
-        
+
         /// <summary>
         /// No OpenGL/OpenGL ES context on this thread.
         /// </summary>
         NoContext = 0x00010002,
-        
+
         /// <summary>
         /// Used an invalid enum value on a function.
         /// </summary>
@@ -29,7 +38,7 @@ namespace OpenToolkit.GraphicsLibraryFramework
         /// </para>
         /// </remarks>
         InvalidEnum = 0x00010003,
-        
+
         /// <summary>
         /// Called a function with an invalid argument.
         /// </summary>
@@ -42,7 +51,7 @@ namespace OpenToolkit.GraphicsLibraryFramework
         /// </para>
         /// </remarks>
         InvalidValue = 0x00010004,
-        
+
         /// <summary>
         /// A memory allocation failed on GLFW's end.
         /// </summary>
@@ -52,17 +61,17 @@ namespace OpenToolkit.GraphicsLibraryFramework
         /// </para>
         /// </remarks>
         OutOfMemory = 0x00010005,
-        
+
         /// <summary>
         /// The requested API is not available on the system.
         /// </summary>
         ApiUnavailable = 0x00010006,
-        
+
         /// <summary>
         /// The requested OpenGL version is not available on the system.
         /// </summary>
         VersionUnavailable = 0x00010007,
-        
+
         /// <summary>
         /// A platform-specific error occurred that doesn't fit into any more specific category.
         /// </summary>
@@ -72,7 +81,7 @@ namespace OpenToolkit.GraphicsLibraryFramework
         /// </para>
         /// </remarks>
         PlatformError = 0x00010008,
-        
+
         /// <summary>
         /// The requested format is unavailable.
         /// </summary>
@@ -85,7 +94,7 @@ namespace OpenToolkit.GraphicsLibraryFramework
         /// </para>
         /// </remarks>
         FormatUnavailable = 0x00010009,
-        
+
         /// <summary>
         /// There is no OpenGL/OpenGL ES context attached to this window.
         /// </summary>
