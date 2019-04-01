@@ -8,9 +8,8 @@
 //
 
 using System;
-using OpenToolkit.Windowing.Common;
 
-namespace OpenToolkit.Windowing.Desktop
+namespace OpenToolkit.Windowing.Common
 {
     /// <summary>
     /// Defines the event data for the <see cref="NativeWindow.MonitorConnected"/> event.
@@ -27,8 +26,8 @@ namespace OpenToolkit.Windowing.Desktop
         /// <summary>
         /// Initializes a new instance of the <see cref="MonitorEventArgs"/> class.
         /// </summary>
-        /// <param name="monitor">The <see cref="GraphicsLibraryFramework.Monitor"/> which triggered the event.</param>
-        /// <param name="isConnected">Whether the <see cref="GraphicsLibraryFramework.Monitor"/> is connected.</param>
+        /// <param name="monitor">The <see cref="Monitor"/> which triggered the event.</param>
+        /// <param name="isConnected">Whether the <see cref="Monitor"/> is connected.</param>
         public MonitorEventArgs(Monitor monitor, bool isConnected)
         {
             this.Monitor = monitor;

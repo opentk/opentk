@@ -107,6 +107,11 @@ namespace OpenToolkit.Windowing.Common
         event EventHandler<KeyboardKeyEventArgs> KeyUp;
 
         /// <summary>
+        /// Occurs when a <see cref="Monitor"/> is connected or disconnected.
+        /// </summary>
+        event EventHandler<MonitorEventArgs> MonitorConnected;
+
+        /// <summary>
         /// Occurs whenever the mouse cursor leaves the window <see cref="INativeWindowProperties.Bounds" />.
         /// </summary>
         event EventHandler<EventArgs> MouseLeave;

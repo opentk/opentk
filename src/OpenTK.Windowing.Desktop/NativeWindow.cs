@@ -9,7 +9,6 @@
 
 using System;
 using System.ComponentModel;
-using System.Runtime.InteropServices;
 using System.Threading;
 using OpenToolkit.GraphicsLibraryFramework;
 using OpenToolkit.Mathematics;
@@ -548,7 +547,7 @@ namespace OpenToolkit.Windowing.Desktop
                     {
                         Button = (MouseButton)button,
                         Action = (Common.InputAction)action,
-                        Modifiers = (KeyModifiers)mods
+                        Modifiers = (KeyModifiers)mods,
                     };
 
                     if (action == GraphicsLibraryFramework.InputAction.Release)
@@ -666,7 +665,7 @@ namespace OpenToolkit.Windowing.Desktop
 
         /// <inheritdoc />
         public event EventHandler<EventArgs> Disposed;
-        
+
         /// <inheritdoc />
         public event EventHandler<IconifyEventArgs> Iconified;
 
@@ -703,9 +702,7 @@ namespace OpenToolkit.Windowing.Desktop
         /// <inheritdoc />
         public event EventHandler<KeyboardKeyEventArgs> KeyUp;
 
-        /// <summary>
-        /// Occurs when a <see cref="Monitor"/> is connected or disconnected.
-        /// </summary>
+        /// <inheritdoc />
         public event EventHandler<MonitorEventArgs> MonitorConnected;
 
         /// <inheritdoc />
