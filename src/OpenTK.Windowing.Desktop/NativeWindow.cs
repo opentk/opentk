@@ -666,9 +666,12 @@ namespace OpenToolkit.Windowing.Desktop
 
         /// <inheritdoc />
         public event EventHandler<EventArgs> Disposed;
+        
+        /// <inheritdoc />
+        public event EventHandler<IconifyEventArgs> Iconified;
 
         /// <inheritdoc />
-        public event EventHandler<IconifyEventArgs> IconChanged;
+        public event EventHandler<EventArgs> IconChanged;
 
         /// <inheritdoc />
         public event EventHandler<JoystickEventArgs> JoystickConnected;
@@ -786,8 +789,8 @@ namespace OpenToolkit.Windowing.Desktop
         /// Raises the <see cref="IconChanged"/> event.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
-        /// <param name="e">A <see cref="IconifyEventArgs"/> that contains the event data.</param>
-        protected virtual void OnIconChanged(object sender, IconifyEventArgs e)
+        /// <param name="e">A <see cref="EventArgs"/> that contains the event data.</param>
+        protected virtual void OnIconChanged(object sender, EventArgs e)
         {
             IconChanged?.Invoke(sender, e);
         }
@@ -966,6 +969,16 @@ namespace OpenToolkit.Windowing.Desktop
         protected virtual void OnMouseWheel(object sender, MouseWheelEventArgs e)
         {
             MouseWheel?.Invoke(sender, e);
+        }
+
+        /// <summary>
+        /// Raises the <see cref="OnIconified"/> event.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">A <see cref="MouseWheelEventArgs"/> that contains the event data.</param>
+        protected virtual void OnIconified(object sender, IconifyEventArgs e)
+        {
+            Iconified?.Invoke(sender, e);
         }
 
         /// <summary>

@@ -44,9 +44,14 @@ namespace OpenToolkit.Windowing.Common
         event EventHandler<EventArgs> Disposed;
 
         /// <summary>
-        /// Occurs when the <see cref="INativeWindowProperties.Icon" /> property of the window changes.
+        /// Occurs when the window is iconified (minimized)
         /// </summary>
-        event EventHandler<IconifyEventArgs> IconChanged;
+        event EventHandler<IconifyEventArgs> Iconified;
+
+        /// <summary>
+        /// Occurs when the icon of the window changes.
+        /// </summary>
+        event EventHandler<EventArgs> IconChanged;
 
         /// <summary>
         /// Occurs when a joystick is connected or disconnected.

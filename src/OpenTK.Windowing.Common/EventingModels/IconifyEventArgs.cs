@@ -36,7 +36,7 @@ namespace OpenToolkit.Windowing.EventingModels
         /// Initializes a new instance of the <see cref="IconifyEventArgs"/> class.
         /// </summary>
         /// <param name="isIconified">
-        /// A value indicating whether the window is iconified(minimized).
+        /// A value indicating whether the window is iconified (minimized).
         /// </param>
         internal IconifyEventArgs(bool isIconified)
         {
@@ -44,7 +44,7 @@ namespace OpenToolkit.Windowing.EventingModels
         }
 
         /// <summary>
-        /// Gets a value indicating whether the window is iconified(minimized).
+        /// Gets a value indicating whether the window is iconified (minimized).
         /// </summary>
         public bool IsIconified { get; internal set; }
     }
