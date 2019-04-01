@@ -197,7 +197,7 @@ namespace OpenToolkit.Windowing.Desktop
         public virtual void Run()
         {
             // Make sure the GameWindow is visible when it first runs.
-            Visible = true;
+            IsVisible = true;
             OnLoad(this, EventArgs.Empty);
 
             // Send a redundant OnResize event, to make sure all user code has the correct values.

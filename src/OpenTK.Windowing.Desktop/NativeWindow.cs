@@ -123,7 +123,7 @@ namespace OpenToolkit.Windowing.Desktop
         private bool _isFocused;
 
         /// <inheritdoc />
-        public unsafe bool Focused
+        public unsafe bool IsFocused
         {
             get => _isFocused;
             set
@@ -138,7 +138,7 @@ namespace OpenToolkit.Windowing.Desktop
         private bool _isVisible;
 
         /// <inheritdoc />
-        public bool Visible
+        public bool IsVisible
         {
             get => _isVisible;
             set
@@ -474,8 +474,8 @@ namespace OpenToolkit.Windowing.Desktop
 
                 RegisterWindowCallbacks();
 
-                Focused = settings.Focused;
-                Visible = settings.Visible;
+                IsFocused = settings.IsFocused;
+                IsVisible = settings.IsVisible;
                 WindowState = settings.WindowState;
 
                 IsEventDriven = settings.IsEventDriven;

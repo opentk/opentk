@@ -47,8 +47,8 @@ namespace OpenTK.Tests.Windowing
         {
             using (var window = new NativeWindow(NativeWindowSettings.Default))
             {
-                window.Focused = true;
-                Assert.True(window.Focused);
+                window.IsFocused = true;
+                Assert.True(window.IsFocused);
             }
         }
 
@@ -57,8 +57,8 @@ namespace OpenTK.Tests.Windowing
         {
             using (var window = new NativeWindow(NativeWindowSettings.Default))
             {
-                window.Visible = false;
-                Assert.False(window.Visible);
+                window.IsVisible = false;
+                Assert.False(window.IsVisible);
             }
         }
 

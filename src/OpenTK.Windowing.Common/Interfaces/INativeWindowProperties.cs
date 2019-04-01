@@ -51,12 +51,12 @@ namespace OpenToolkit.Windowing.Common
         /// <remarks>
         /// A window cannot be manually unfocused by setting this to false.
         /// </remarks>
-        bool Focused { get; set; }
+        bool IsFocused { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether the window is visible.
         /// </summary>
-        bool Visible { get; set; }
+        bool IsVisible { get; set; }
 
         /// <summary>
         /// Gets a value indicating whether the window has been created and has not been destroyed.

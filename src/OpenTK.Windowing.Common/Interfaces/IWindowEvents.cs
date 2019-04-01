@@ -59,12 +59,12 @@ namespace OpenToolkit.Windowing.Common
         event EventHandler<TitleChangedEventArgs> TitleChanged;
 
         /// <summary>
-        /// Occurs when the <see cref="INativeWindowProperties.Visible" /> property of the window changes.
+        /// Occurs when the <see cref="INativeWindowProperties.IsVisible" /> property of the window changes.
         /// </summary>
         event EventHandler<VisibilityChangedEventArgs> VisibleChanged;
 
         /// <summary>
-        /// Occurs when the <see cref="INativeWindowProperties.Focused" /> property of the window changes.
+        /// Occurs when the <see cref="INativeWindowProperties.IsFocused" /> property of the window changes.
         /// </summary>
         event EventHandler<FocusedChangedEventArgs> FocusedChanged;
 

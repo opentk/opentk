@@ -40,8 +40,8 @@ namespace OpenToolkit.Windowing.Desktop
             }
 
             Title = "OpenTK Window";
-            Focused = true;
-            Visible = true;
+            IsFocused = true;
+            IsVisible = true;
 
             WindowState = WindowState.Normal;
             WindowBorder = WindowBorder.Resizable;
@@ -68,10 +68,10 @@ namespace OpenToolkit.Windowing.Desktop
         public string Title { get; set; }
 
         /// <inheritdoc />
-        public bool Focused { get; set; }
+        public bool IsFocused { get; set; }
 
         /// <inheritdoc />
-        public bool Visible { get; set; }
+        public bool IsVisible { get; set; }
 
         /// <inheritdoc />
         public bool Exists { get; }
