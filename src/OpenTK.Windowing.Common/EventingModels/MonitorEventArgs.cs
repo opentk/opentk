@@ -12,7 +12,7 @@ using System;
 namespace OpenToolkit.Windowing.Common
 {
     /// <summary>
-    /// Defines the event data for the <see cref="NativeWindow.MonitorConnected"/> event.
+    /// Defines the event data for the <see cref="IWindowEvents.MonitorConnected"/> event.
     /// </summary>
     public class MonitorEventArgs : EventArgs // TODO: merge with JoystickEventArgs?
     {
