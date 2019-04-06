@@ -46,7 +46,7 @@ namespace OpenToolkit.Windowing.Common
         /// <summary>
         /// Occurs when the window is iconified (minimized)
         /// </summary>
-        event EventHandler<IconifyEventArgs> Iconified;
+        event EventHandler<MinimizedEventArgs> Iconified;
 
         /// <summary>
         /// Occurs when the icon of the window changes.

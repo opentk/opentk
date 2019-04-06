@@ -1,5 +1,5 @@
 //
-// IconifyEventArgs.cs
+// MinimizedEventArgs.cs
 //
 // Copyright (C) 2018 OpenTK
 //
@@ -11,34 +11,34 @@ using System;
 namespace OpenToolkit.Windowing.EventingModels
 {
     /// <summary>
-    /// Defines the event data for the window iconification(minimizing) event.
+    /// Defines the event data for the window minimizing event.
     /// </summary>
-    public class IconifyEventArgs : EventArgs
+    public class MinimizedEventArgs : EventArgs
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="IconifyEventArgs"/> class.
+        /// Initializes a new instance of the <see cref="MinimizedEventArgs"/> class.
         /// </summary>
-        public IconifyEventArgs()
+        public MinimizedEventArgs()
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="IconifyEventArgs"/> class
-        /// from a second <see cref="IconifyEventArgs"/> which is copied.
+        /// Initializes a new instance of the <see cref="MinimizedEventArgs"/> class
+        /// from a second <see cref="MinimizedEventArgs"/> which is copied.
         /// </summary>
-        /// <param name="other">The <see cref="IconifyEventArgs"/> to copy.</param>
-        public IconifyEventArgs(IconifyEventArgs other)
+        /// <param name="other">The <see cref="MinimizedEventArgs"/> to copy.</param>
+        public MinimizedEventArgs(MinimizedEventArgs other)
         {
             this.IsIconified = other.IsIconified;
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="IconifyEventArgs"/> class.
+        /// Initializes a new instance of the <see cref="MinimizedEventArgs"/> class.
         /// </summary>
         /// <param name="isIconified">
         /// A value indicating whether the window is iconified (minimized).
         /// </param>
-        internal IconifyEventArgs(bool isIconified)
+        internal MinimizedEventArgs(bool isIconified)
         {
             this.IsIconified = isIconified;
         }
