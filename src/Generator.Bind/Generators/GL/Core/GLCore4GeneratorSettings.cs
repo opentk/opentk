@@ -23,8 +23,6 @@
 // OTHER DEALINGS IN THE SOFTWARE.
 //
 
-using System.IO;
-using System.Linq;
 using Bind.Generators.Bases;
 using JetBrains.Annotations;
 

@@ -1,4 +1,3 @@
-using System;
 using AdvancedDLSupport;
 
 namespace OpenToolkit.OpenAL.Extensions.Soft.DeferredUpdates

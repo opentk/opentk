@@ -8,7 +8,6 @@
 //
 
 using System;
-using System.Security.Cryptography.X509Certificates;
 using OpenToolkit.GraphicsLibraryFramework;
 using OpenToolkit.Mathematics;
 using OpenToolkit.Windowing.Common;

@@ -2,7 +2,6 @@
  * See license.txt for license info
  */
 
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Bind.Versioning;

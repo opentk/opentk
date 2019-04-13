@@ -9,7 +9,6 @@
 
 using System;
 using OpenToolkit.Mathematics;
-using OpenToolkit.Windowing.Common;
 using OpenToolkit.Windowing.Common.Input;
 
 namespace OpenToolkit.Windowing.EventingModels

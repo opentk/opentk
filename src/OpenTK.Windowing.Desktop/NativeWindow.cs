@@ -29,6 +29,11 @@ namespace OpenToolkit.Windowing.Desktop
         /// Gets a <see cref="GLFW"/> API implementation.
         /// </summary>
         protected static GLFW Glfw => GLFWProvider.GLFW.Value;
+        
+        /// <summary>
+        /// The current number of windows open. If this is zero when a window closes, GLFW will be terminated.
+        /// </summary>
+        private static int _numberOfUsers;
 
         /// <summary>
         /// Gets the native <see cref="Window"/> pointer for use with <see cref="GLFW"/> API.
@@ -44,11 +49,6 @@ namespace OpenToolkit.Windowing.Desktop
         /// The Y position of the mouse on the last update. Used to calculate the mouse delta.
         /// </summary>
         private double _lastMousePositionY;
-
-        /// <summary>
-        /// The current number of windows open. If this is zero when a window closes, GLFW will be terminated.
-        /// </summary>
-        private static int NumberOfUsers;
 
         /// <summary>
         /// Gets or sets a value indicating whether this window is event driven or not.
@@ -378,7 +378,7 @@ namespace OpenToolkit.Windowing.Desktop
                     {
                         fixed (byte* ptr = value.Data)
                         {
-                            var cursorImg = new Image(value.Width, value.Height, (IntPtr)ptr);
+                            var cursorImg = new GraphicsLibraryFramework.Image(value.Width, value.Height, (IntPtr)ptr);
                             var cursor = Glfw.CreateCursor(&cursorImg, value.X, value.Y);
                             Glfw.SetCursor(WindowPtr, cursor);
                         }
@@ -493,7 +493,7 @@ namespace OpenToolkit.Windowing.Desktop
                 ClientSize = new Vector2(width, height);
             }
 
-            Interlocked.Increment(ref NumberOfUsers);
+            Interlocked.Increment(ref _numberOfUsers);
         }
 
         private void RegisterWindowCallbacks()
@@ -1016,7 +1016,7 @@ namespace OpenToolkit.Windowing.Desktop
             Disposed?.Invoke(this, EventArgs.Empty);
 
             // Unloading twice impossible if no one did e.g. multiple disposes.
-            if (Interlocked.Decrement(ref NumberOfUsers) <= 0)
+            if (Interlocked.Decrement(ref _numberOfUsers) <= 0)
             {
                 GLFWProvider.Unload();
             }

@@ -7,7 +7,6 @@ using System.Reflection;
 using Bind.Builders;
 using Bind.Extensions;
 using Bind.Translation.Translators;
-using Bind.Translation.Trimmers;
 using Bind.Versioning;
 using Bind.XML;
 using Bind.XML.Overrides;

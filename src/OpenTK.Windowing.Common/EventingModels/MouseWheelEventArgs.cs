@@ -8,7 +8,6 @@
 //
 
 using System;
-using OpenToolkit.Mathematics;
 using OpenToolkit.Windowing.Common;
 
 namespace OpenToolkit.Windowing.EventingModels

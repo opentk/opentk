@@ -25,8 +25,6 @@
 // THE SOFTWARE.
 //
 
-using System.IO;
-using System.Linq;
 using Bind.Generators.Bases;
 
 namespace Bind.Generators.GL.Compatibility
