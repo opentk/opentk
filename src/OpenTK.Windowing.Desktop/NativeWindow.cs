@@ -9,6 +9,7 @@
 
 using System;
 using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using OpenToolkit.GraphicsLibraryFramework;
 using OpenToolkit.Mathematics;
@@ -49,6 +50,23 @@ namespace OpenToolkit.Windowing.Desktop
         /// The Y position of the mouse on the last update. Used to calculate the mouse delta.
         /// </summary>
         private double _lastMousePositionY;
+
+        private WindowIcon _icon;
+
+        /// <inheritdoc />
+        public WindowIcon Icon
+        {
+            get => _icon;
+            set
+            {
+                unsafe
+                {
+                    Glfw.SetWindowIcon(WindowPtr, value.Images.Length, Unsafe.As<GraphicsLibraryFramework.Image[]>(value.Images));
+                }
+
+                _icon = value;
+            }
+        }
 
         /// <summary>
         /// Gets or sets a value indicating whether this window is event driven or not.

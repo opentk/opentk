@@ -8,6 +8,7 @@
 //
 
 using OpenToolkit.Mathematics;
+using OpenToolkit.Windowing.Common.Input;
 
 namespace OpenToolkit.Windowing.Common
 {
@@ -16,12 +17,15 @@ namespace OpenToolkit.Windowing.Common
     /// </summary>
     public interface INativeWindowProperties
     {
-        /*
         /// <summary>
-        /// Gets or sets the <see cref="System.Drawing.Icon" /> of the window.
+        /// Gets or sets the current <see cref="WindowIcon" /> for this window.
         /// </summary>
-        Icon Icon { get; set; } // HIGH: Either an assembly is missing or this isn't defined for .NET Standard 2.0's Drawing assembly
-        */
+        /// <remarks>
+        /// <para>
+        /// This does nothing on macOS; on that platform, the icon is determined by the application bundle.
+        /// </para>
+        /// </remarks>
+        WindowIcon Icon { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether or not this window is event-driven.

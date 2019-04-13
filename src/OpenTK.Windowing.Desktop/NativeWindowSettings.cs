@@ -11,6 +11,7 @@ using System;
 using OpenToolkit.GraphicsLibraryFramework;
 using OpenToolkit.Mathematics;
 using OpenToolkit.Windowing.Common;
+using OpenToolkit.Windowing.Common.Input;
 using Monitor = OpenToolkit.Windowing.Common.Monitor;
 
 namespace OpenToolkit.Windowing.Desktop
@@ -53,6 +54,9 @@ namespace OpenToolkit.Windowing.Desktop
 
             IsFullscreen = false;
         }
+        
+        /// <inheritdoc />
+        public WindowIcon Icon { get; set; }
 
         /// <inheritdoc />
         public bool IsEventDriven { get; set; }
