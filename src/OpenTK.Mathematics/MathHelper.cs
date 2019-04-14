@@ -70,65 +70,65 @@ namespace OpenToolkit.Mathematics
         /// <summary>
         /// Returns the sine of the specified angle.
         /// </summary>
-        /// <param name="a">An angle, measured in radians.</param>
-        /// <returns>Sine of the angle. If a is equal to NaN, NegativeInfinity, or PositiveInfinity, this method returns NaN.</returns>
-        public static double Sin(double a) => Math.Sin(a);
+        /// <param name="radians">The specified angle.</param>
+        /// <returns>Sine of the angle. If radians is equal to NaN, NegativeInfinity, or PositiveInfinity, this method returns NaN.</returns>
+        public static double Sin(double radians) => Math.Sin(radians);
 
         /// <summary>
         /// Returns the hyperbolic sine of the specified angle.
         /// </summary>
-        /// <param name="a">An angle, measured in radians.</param>
-        /// <returns>Hyperbolic sine of the specified angle. If a is equal to NaN, NegativeInfinity, or PositiveInfinity, this method returns NaN.</returns>
-        public static double Sinh(double a) => Math.Sinh(a);
+        /// <param name="radians">The specified angle.</param>
+        /// <returns>Hyperbolic sine of the specified angle. If radians is equal to NaN, NegativeInfinity, or PositiveInfinity, this method returns NaN.</returns>
+        public static double Sinh(double radians) => Math.Sinh(radians);
 
         /// <summary>
         /// Returns the arc sine of the specified angle.
         /// </summary>
-        /// <param name="a">An angle, measured in radians.</param>
-        /// <returns>Arc sine of the specified angle. If a is equal to NaN, NegativeInfinity, or PositiveInfinity, this method returns NaN.</returns>
-        public static double Asin(double a) => Math.Asin(a);
+        /// <param name="radians">The specified angle.</param>
+        /// <returns>Arc sine of the specified angle. If radians is equal to NaN, NegativeInfinity, or PositiveInfinity, this method returns NaN.</returns>
+        public static double Asin(double radians) => Math.Asin(radians);
 
         /// <summary>
         /// Returns the cosine of the specified angle.
         /// </summary>
-        /// <param name="a">An angle, measured in radians.</param>
-        /// <returns>Cosine of the angle. If a is equal to NaN, NegativeInfinity, or PositiveInfinity, this method returns NaN.</returns>
-        public static double Cos(double a) => Math.Cos(a);
+        /// <param name="radians">The specified angle.</param>
+        /// <returns>Cosine of the angle. If radians is equal to NaN, NegativeInfinity, or PositiveInfinity, this method returns NaN.</returns>
+        public static double Cos(double radians) => Math.Cos(radians);
 
         /// <summary>
         /// Returns the hyperbolic cosine of the specified angle.
         /// </summary>
-        /// <param name="a">An angle, measured in radians.</param>
-        /// <returns>Hyperbolic cosine of the specified angle. If a is equal to NaN, NegativeInfinity, or PositiveInfinity, this method returns NaN.</returns>
-        public static double Cosh(double a) => Math.Cosh(a);
+        /// <param name="radians">The specified angle.</param>
+        /// <returns>Hyperbolic cosine of the specified angle. If radians is equal to NaN, NegativeInfinity, or PositiveInfinity, this method returns NaN.</returns>
+        public static double Cosh(double radians) => Math.Cosh(radians);
 
         /// <summary>
         /// Returns the arc sine of the specified angle.
         /// </summary>
-        /// <param name="a">An angle, measured in radians.</param>
-        /// <returns>Arc sine of the specified angle. If a is equal to NaN, NegativeInfinity, or PositiveInfinity, this method returns NaN.</returns>
-        public static double Acos(double a) => Math.Acos(a);
+        /// <param name="radians">The specified angle.</param>
+        /// <returns>Arc sine of the specified angle. If radians is equal to NaN, NegativeInfinity, or PositiveInfinity, this method returns NaN.</returns>
+        public static double Acos(double radians) => Math.Acos(radians);
 
         /// <summary>
         /// Returns the tangent of the specified angle.
         /// </summary>
-        /// <param name="a">An angle, measured in radians.</param>
-        /// <returns>Tangent of the specified angle. If a is equal to NaN, NegativeInfinity, or PositiveInfinity, this method returns NaN.</returns>
-        public static double Tan(double a) => Math.Tan(a);
+        /// <param name="radians">The specified angle.</param>
+        /// <returns>Tangent of the specified angle. If radians is equal to NaN, NegativeInfinity, or PositiveInfinity, this method returns NaN.</returns>
+        public static double Tan(double radians) => Math.Tan(radians);
 
         /// <summary>
         /// Returns the hyperbolic tangent of the specified angle.
         /// </summary>
-        /// <param name="a">An angle, measured in radians.</param>
-        /// <returns>Hyperbolic tangent of the specified angle. If a is equal to NaN, NegativeInfinity, or PositiveInfinity, this method returns NaN.</returns>
-        public static double Tanh(double a) => Math.Tanh(a);
+        /// <param name="radians">The specified angle.</param>
+        /// <returns>Hyperbolic tangent of the specified angle. If radians is equal to NaN, NegativeInfinity, or PositiveInfinity, this method returns NaN.</returns>
+        public static double Tanh(double radians) => Math.Tanh(radians);
 
         /// <summary>
         /// Returns the arc tangent of the specified angle.
         /// </summary>
-        /// <param name="a">An angle, measured in radians.</param>
-        /// <returns>Arc tangent of the specified angle. If a is equal to NaN, NegativeInfinity, or PositiveInfinity, this method returns NaN.</returns>
-        public static double Atan(double a) => Math.Atan(a);
+        /// <param name="radians">The specified angle.</param>
+        /// <returns>Arc tangent of the specified angle. If radians is equal to NaN, NegativeInfinity, or PositiveInfinity, this method returns NaN.</returns>
+        public static double Atan(double radians) => Math.Atan(radians);
 
         /// <summary>
         /// Returns the natural (base e) logarithm of a specified number.
