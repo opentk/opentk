@@ -18,7 +18,7 @@ namespace OpenToolkit.Windowing.Common.Input
         /// Initializes a new instance of the <see cref="WindowIcon" /> class.
         /// </summary>
         /// <param name="images">An array of <see cref="Image" />s, which will be used as the window icons.</param>
-        public WindowIcon(Image[] images)
+        public WindowIcon(params Image[] images)
         {
             Images = images;
         }
