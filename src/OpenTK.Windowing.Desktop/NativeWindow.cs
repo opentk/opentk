@@ -15,7 +15,6 @@ using OpenToolkit.GraphicsLibraryFramework;
 using OpenToolkit.Mathematics;
 using OpenToolkit.Windowing.Common;
 using OpenToolkit.Windowing.Common.Input;
-using OpenToolkit.Windowing.EventingModels;
 using KeyModifiers = OpenToolkit.Windowing.Common.Input.KeyModifiers;
 using Monitor = OpenToolkit.Windowing.Common.Monitor;
 
@@ -61,7 +60,11 @@ namespace OpenToolkit.Windowing.Desktop
             {
                 unsafe
                 {
-                    Glfw.SetWindowIcon(WindowPtr, value.Images.Length, Unsafe.As<GraphicsLibraryFramework.Image[]>(value.Images));
+                    fixed (GraphicsLibraryFramework.Image* ptr =
+                        Unsafe.As<GraphicsLibraryFramework.Image[]>(value.Images))
+                    {
+                        Glfw.SetWindowIcon(WindowPtr, value.Images.Length, ptr);
+                    }
                 }
 
                 _icon = value;
