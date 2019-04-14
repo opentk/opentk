@@ -227,7 +227,7 @@ namespace OpenToolkit.GraphicsLibraryFramework
         /// <returns>The UTF-8 encoded name of the monitor, or <c>null</c> if an error occurred.</returns>
         /// <remarks>
         /// The returned string is allocated and freed by GLFW. You should not free it yourself.
-        /// 
+        ///
         /// It is valid until the specified monitor is disconnected or the library is terminated.
         ///
         /// This function must only be called from the main thread.
