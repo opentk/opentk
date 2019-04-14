@@ -12,7 +12,6 @@ using System.Diagnostics;
 using System.Threading;
 using OpenToolkit.Mathematics;
 using OpenToolkit.Windowing.Common;
-using OpenToolkit.Windowing.EventingModels;
 
 namespace OpenToolkit.Windowing.Desktop
 {

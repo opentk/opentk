@@ -7,7 +7,7 @@
 // of the MIT license. See the LICENSE file for details.
 //
 
-using OpenToolkit.Windowing.EventingModels;
+using OpenToolkit.Windowing.Common;
 
 namespace OpenToolkit.Windowing.Common
 {

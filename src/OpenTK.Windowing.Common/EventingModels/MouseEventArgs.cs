@@ -11,7 +11,7 @@ using System;
 using OpenToolkit.Mathematics;
 using OpenToolkit.Windowing.Common.Input;
 
-namespace OpenToolkit.Windowing.EventingModels
+namespace OpenToolkit.Windowing.Common
 {
     /// <summary>
     /// Defines base event data for mouse related events events.

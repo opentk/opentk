@@ -9,7 +9,7 @@
 
 using System;
 
-namespace OpenToolkit.Windowing.EventingModels
+namespace OpenToolkit.Windowing.Common
 {
     /// <summary>
     /// Defines the arguments for frame events.

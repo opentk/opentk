@@ -10,7 +10,7 @@
 using System;
 using OpenToolkit.Windowing.Common;
 
-namespace OpenToolkit.Windowing.EventingModels
+namespace OpenToolkit.Windowing.Common
 {
     /// <summary>
     /// Defines the event data for <see cref="IWindowEvents.MouseWheel" /> events.

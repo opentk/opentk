@@ -11,7 +11,7 @@ using System;
 using OpenToolkit.Windowing.Common;
 using OpenToolkit.Windowing.Common.Input;
 
-namespace OpenToolkit.Windowing.EventingModels
+namespace OpenToolkit.Windowing.Common
 {
     /// <summary>
     /// Defines the event data for the <see cref="IWindowEvents.KeyboardCharMod"/> event.

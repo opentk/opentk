@@ -9,7 +9,7 @@
 
 using System;
 
-namespace OpenToolkit.Windowing.EventingModels
+namespace OpenToolkit.Windowing.Common
 {
     /// <summary>
     /// Defines the event arguments for KeyPress events. Instances of this class are cached:

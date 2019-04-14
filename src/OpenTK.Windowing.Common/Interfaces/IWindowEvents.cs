@@ -9,7 +9,7 @@
 
 using System;
 using System.ComponentModel;
-using OpenToolkit.Windowing.EventingModels;
+using OpenToolkit.Windowing.Common;
 
 namespace OpenToolkit.Windowing.Common
 {

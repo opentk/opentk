@@ -8,7 +8,7 @@
 //
 
 using System;
-using OpenToolkit.Windowing.EventingModels;
+using OpenToolkit.Windowing.Common;
 
 namespace OpenToolkit.Windowing.Common
 {
