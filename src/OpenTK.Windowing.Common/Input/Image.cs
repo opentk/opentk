@@ -43,7 +43,9 @@ namespace OpenToolkit.Windowing.Common.Input
         /// <summary>
         /// Initializes a new instance of the <see cref="Image"/> class.
         /// </summary>
-        protected Image() { }
+        protected Image()
+        {
+        }
 
         /// <summary>
         /// Gets the icon pixel width.
@@ -54,7 +56,7 @@ namespace OpenToolkit.Windowing.Common.Input
         /// Gets the icon pixel height.
         /// </summary>
         public int Height { get; }
-        
+
         /// <summary>
         /// Gets the RGBA pixel data of the icon.
         /// </summary>

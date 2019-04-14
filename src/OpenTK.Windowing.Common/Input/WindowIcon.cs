@@ -17,11 +17,6 @@ namespace OpenToolkit.Windowing.Common.Input
         /// <summary>
         /// Initializes a new instance of the <see cref="WindowIcon" /> class.
         /// </summary>
-        private WindowIcon() { }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="WindowIcon" /> class.
-        /// </summary>
         /// <param name="images">An array of <see cref="Image" />s, which will be used as the window icons.</param>
         public WindowIcon(Image[] images)
         {
@@ -29,8 +24,15 @@ namespace OpenToolkit.Windowing.Common.Input
         }
 
         /// <summary>
-        /// The array of <see cref="Image" />s to use.
+        /// Gets or sets the array of <see cref="Image" />s to use.
         /// </summary>
-        public readonly Image[] Images;
+        public Image[] Images { get; set; }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="WindowIcon" /> class.
+        /// </summary>
+        private WindowIcon()
+        {
+        }
     }
 }
