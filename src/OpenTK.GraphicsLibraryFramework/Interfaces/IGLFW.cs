@@ -121,7 +121,7 @@ namespace OpenToolkit.GraphicsLibraryFramework
         /// This function may be called from any thread.
         /// </remarks>
         /// <seealso cref="GetVersion"/>
-        string GetVersionString(); // use marshalling to ASCII C string
+        string GetVersionString(); // TODO: use marshalling to ASCII C string
 
         /// <summary>
         /// This function returns and clears the error code of the last error that occurred on the calling thread,
@@ -347,7 +347,7 @@ namespace OpenToolkit.GraphicsLibraryFramework
         /// <seealso cref="WindowHint(WindowHintInt,int)"/>
         void DefaultWindowHints();
 
-        // not found in GLFW? void WindowHintString(int hint, string value);
+        // TODO: not found in GLFW? void WindowHintString(int hint, string value);
 
         /// <summary>
         /// This function sets the size limits of the client area of the specified window.
@@ -361,16 +361,16 @@ namespace OpenToolkit.GraphicsLibraryFramework
         /// </summary>
         /// <param name="window">The window to set limits for.</param>
         /// <param name="minwidth">
-        /// The minimum width, in screen coordinates, of the client area, or <see cref="GLFW_DONT_CARE"/>.
+        /// The minimum width, in screen coordinates, of the client area, or TODO: <see cref="GLFW_DONT_CARE"/>.
         /// </param>
         /// <param name="minheight">
-        /// The minimum height, in screen coordinates, of the client area, or <see cref="GLFW_DONT_CARE"/>.
+        /// The minimum height, in screen coordinates, of the client area, or TODO: <see cref="GLFW_DONT_CARE"/>.
         /// </param>
         /// <param name="maxwidth">
-        /// The maximum width, in screen coordinates, of the client area, or <see cref="GLFW_DONT_CARE"/>.
+        /// The maximum width, in screen coordinates, of the client area, or TODO: <see cref="GLFW_DONT_CARE"/>.
         /// </param>
         /// <param name="maxheight">
-        /// The maximum height, in screen coordinates, of the client area, or <see cref="GLFW_DONT_CARE"/>.
+        /// The maximum height, in screen coordinates, of the client area, or TODO: <see cref="GLFW_DONT_CARE"/>.
         /// </param>
         /// <remarks>
         /// If you set size limits and an aspect ratio that conflict, the results are undefined.
@@ -390,13 +390,13 @@ namespace OpenToolkit.GraphicsLibraryFramework
         /// The aspect ratio is specified as a numerator and a denominator and both values must be greater than zero.
         /// For example, the common 16:9 aspect ratio is specified as 16 and 9, respectively.
         ///
-        /// If the numerator and denominator is set to <see cref="GLFW_DONT_CARE"/> then the aspect ratio limit is disabled.
+        /// If the numerator and denominator is set to TODO: <see cref="GLFW_DONT_CARE"/> then the aspect ratio limit is disabled.
         ///
         /// The aspect ratio is applied immediately to a windowed mode window and may cause it to be resized.
         /// </summary>
         /// <param name="window">The window to set limits for.</param>
-        /// <param name="numer">The numerator of the desired aspect ratio, or <see cref="GLFW_DONT_CARE"/>.</param>
-        /// <param name="denom">The denominator of the desired aspect ratio, or <see cref="GLFW_DONT_CARE"/>.</param>
+        /// <param name="numer">The numerator of the desired aspect ratio, or TODO: <see cref="GLFW_DONT_CARE"/>.</param>
+        /// <param name="denom">The denominator of the desired aspect ratio, or TODO: <see cref="GLFW_DONT_CARE"/>.</param>
         /// <remarks>
         /// If you set size limits and an aspect ratio that conflict, the results are undefined.
         ///
@@ -588,7 +588,7 @@ namespace OpenToolkit.GraphicsLibraryFramework
         /// while names for non-printable keys are the same across layouts but depend on the application language
         /// and should be localized along with other user interface text.
         /// </summary>
-        /// <param name="key">The key to query, or <see cref="Keys.Unknown"/>.</param>
+        /// <param name="key">The key to query, or TODO: <see cref="Keys.Unknown"/>.</param>
         /// <param name="scancode">The scancode of the key to query.</param>
         /// <returns>The UTF-8 encoded, layout-specific name of the key, or <c>null</c>.</returns>
         /// <remarks>
@@ -604,7 +604,7 @@ namespace OpenToolkit.GraphicsLibraryFramework
         /// <summary>
         /// This function returns the platform-specific scancode of the specified key.
         ///
-        /// If the key is <see cref="Keys.Unknown"/> or does not exist on the keyboard this method will return -1.
+        /// If the key is TODO: <see cref="Keys.Unknown"/> or does not exist on the keyboard this method will return -1.
         /// </summary>
         /// <param name="key">Any named key.</param>
         /// <returns>The platform-specific scancode for the key, or -1 if an error occurred.</returns>
@@ -868,7 +868,7 @@ namespace OpenToolkit.GraphicsLibraryFramework
         /// <summary>
         /// This function returns the state of all hats of the specified joystick.
         /// Each element in the array is one of the following values:
-        /// <list type="table">replace with enum value
+        /// <list type="table">TODO: replace with enum value
         /// <listheader>
         /// <term>Name</term>
         /// <term>Value ------------------—</term>
@@ -914,7 +914,7 @@ namespace OpenToolkit.GraphicsLibraryFramework
         /// The diagonal directions are bitwise combinations of the primary (up, right, down and left) directions
         /// and you can test for these individually by ANDing it with the corresponding direction.
         /// <code>
-        /// if (hats[2].HasFlag(GLFW_HAT_RIGHT)) replace with enum value
+        /// if (hats[2].HasFlag(GLFW_HAT_RIGHT)) TODO: replace with enum value
         /// {
         ///    // State of hat 2 could be right-up, right or right-down
         /// }
@@ -1067,7 +1067,7 @@ namespace OpenToolkit.GraphicsLibraryFramework
         /// </remarks>
         /// <seealso cref="JoystickIsGamepad"/>
         /// <seealso cref="GetGamepadName"/>
-        bool UpdateGamepadMappings(string newMapping); // use marshalling to ASCII C string
+        bool UpdateGamepadMappings(string newMapping); // TODO: use marshalling to ASCII C string
 
         /// <summary>
         /// This function returns the human-readable name of the gamepad
@@ -1237,8 +1237,8 @@ namespace OpenToolkit.GraphicsLibraryFramework
         ///
         /// Possible errors include <see cref="ErrorCode.NotInitialized"/>, <see cref="ErrorCode.NoContext"/>, <see cref="ErrorCode.InvalidValue"/> and <see cref="ErrorCode.PlatformError"/>.
         /// </remarks>
-        /// <seealso cref="GetProcAddress"/> implement this function as well?
-        bool ExtensionSupported(string extensionName); // use marshalling to ASCII C string
+        /// <seealso cref="GetProcAddress"/> TODO: implement this function as well?
+        bool ExtensionSupported(string extensionName); // TODO: use marshalling to ASCII C string
 
         /// <summary>
         /// This function returns whether the Vulkan loader and any minimally functional ICD have been found.
@@ -1248,7 +1248,7 @@ namespace OpenToolkit.GraphicsLibraryFramework
         /// For example, on Fermi systems Nvidia will install an ICD that provides no actual Vulkan support.
         /// Call <see cref="GetRequiredInstanceExtensions"/> to check whether the extensions necessary
         /// for Vulkan surface creation are available
-        /// and <see cref="GetPhysicalDevicePresentationSupport"/>(implement function?) to check whether a queue family
+        /// and <see cref="GetPhysicalDevicePresentationSupport"/>(TODO: implement function?) to check whether a queue family
         /// of a physical device supports image presentation.
         /// </summary>
         /// <returns><c>true</c> if Vulkan is minimally available, or <c>false</c> otherwise.</returns>
@@ -1291,7 +1291,7 @@ namespace OpenToolkit.GraphicsLibraryFramework
         ///
         /// Possible errors include <see cref="ErrorCode.NotInitialized"/> and <see cref="ErrorCode.ApiUnavailable"/>.
         /// </remarks>
-        /// <seealso cref="CreateWindowSurface"/> implement as well?
+        /// <seealso cref="CreateWindowSurface"/> TODO: implement as well?
         unsafe char** GetRequiredInstanceExtensions(out int count);
 
         /// <summary>
@@ -1384,7 +1384,7 @@ namespace OpenToolkit.GraphicsLibraryFramework
         /// This function must only be called from the main thread.
         ///
         /// Possible errors include <see cref="ErrorCode.NotInitialized"/>, <see cref="ErrorCode.InvalidEnum"/>, <see cref="ErrorCode.InvalidValue"/>, <see cref="ErrorCode.ApiUnavailable"/>,
-        /// <see cref="ErrorCode.VersionUnavailable"/>, <see cref="ErrorCode.FormatUnavailable"/> and <see cref="ErrorCode.PlatformError"/>.
+        /// TODO: <see cref="ErrorCode.VersionUnavailable"/>, <see cref="ErrorCode.FormatUnavailable"/> and <see cref="ErrorCode.PlatformError"/>.
         /// </remarks>
         /// <seealso cref="DestroyWindow"/>
         unsafe Window* CreateWindow(int width, int height, string title, Monitor* monitor, Window* share);
@@ -1473,7 +1473,7 @@ namespace OpenToolkit.GraphicsLibraryFramework
         /// <param name="mode">
         /// Either <see cref="StickyAttributes.StickyKeys"/> or <see cref="StickyAttributes.StickyMouseButtons"/>.
         /// </param>
-        /// <returns>return value is either InputModeValue or bool dependant on <paramref name="mode"/>.</returns>
+        /// <returns>TODO: return value is either InputModeValue or bool dependant on <paramref name="mode"/>.</returns>
         /// <remarks>
         /// This function must only be called from the main thread.
         ///
@@ -1490,7 +1490,7 @@ namespace OpenToolkit.GraphicsLibraryFramework
         /// <param name="mode">
         /// <see cref="CursorStateAttribute.Cursor"/>.
         /// </param>
-        /// <returns>return value is either InputModeValue or bool dependant on <paramref name="mode"/>.</returns>
+        /// <returns>TODO: return value is either InputModeValue or bool dependant on <paramref name="mode"/>.</returns>
         /// <remarks>
         /// This function must only be called from the main thread.
         ///
@@ -2126,7 +2126,7 @@ namespace OpenToolkit.GraphicsLibraryFramework
         /// <param name="y">The desired y-coordinate of the upper-left corner of the client area.</param>
         /// <param name="width">The desired with, in screen coordinates, of the client area or video mode.</param>
         /// <param name="height">The desired height, in screen coordinates, of the client area or video mode.</param>
-        /// <param name="refreshRate">The desired refresh rate, in Hz, of the video mode, or <see cref="GLFW_DONT_CARE"/>.</param>
+        /// <param name="refreshRate">The desired refresh rate, in Hz, of the video mode, or TODO: <see cref="GLFW_DONT_CARE"/>.</param>
         /// <remarks>
         /// This function must only be called from the main thread.
         ///
