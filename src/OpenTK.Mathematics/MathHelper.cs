@@ -131,6 +131,21 @@ namespace OpenToolkit.Mathematics
         public static double Atan(double a) => Math.Atan(a);
 
         /// <summary>
+        /// Returns the natural (base e) logarithm of a specified number.
+        /// </summary>
+        /// <param name="n">A number whose logarithm is to be found.</param>
+        /// <returns>The natural logarithm of n.</returns>
+        public static double Ln(double n) => Math.Log(n);
+
+        /// <summary>
+        /// Returns the logarithm of a specified number in a specified base.
+        /// </summary>
+        /// <param name="n">The specified number.</param>
+        /// <param name="newBase">The specified base.</param>
+        /// <returns>The base newBase logarithm of n.</returns>
+        public static double Log(double n, double newBase = 10) => Math.Log(n, newBase);
+
+        /// <summary>
         /// Returns the next power of two that is greater than or equal to the specified number.
         /// </summary>
         /// <param name="n">The specified number.</param>
