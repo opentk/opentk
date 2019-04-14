@@ -497,14 +497,11 @@ namespace OpenToolkit.Mathematics
         /// </summary>
         /// <param name="start">Start value.</param>
         /// <param name="end">End value.</param>
-        /// <param name="t">Value of the interpollation between a and b. Must be between 0 and 1 (inclusive).</param>
+        /// <param name="t">Value of the interpollation between a and b.</param>
         /// <returns>The interpolated result between the a and b values.</returns>
         public static float Lerp(float start, float end, float t)
         {
-            if (t < 0 || t > 1)
-            {
-                throw new ArgumentOutOfRangeException(nameof(t), "Must be between 0 and 1.");
-            }
+            t = Clamp(t, 0, 1);
             return start + (t * (end - start));
         }
     }
