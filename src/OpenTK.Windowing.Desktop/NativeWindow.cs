@@ -29,7 +29,7 @@ namespace OpenToolkit.Windowing.Desktop
         /// Gets a <see cref="GLFW"/> API implementation.
         /// </summary>
         protected static GLFW Glfw => GLFWProvider.GLFW.Value;
-        
+
         /// <summary>
         /// The current number of windows open. If this is zero when a window closes, GLFW will be terminated.
         /// </summary>

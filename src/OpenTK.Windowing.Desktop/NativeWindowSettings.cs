@@ -54,7 +54,7 @@ namespace OpenToolkit.Windowing.Desktop
 
             IsFullscreen = false;
         }
-        
+
         /// <inheritdoc />
         public WindowIcon Icon { get; set; }
 
