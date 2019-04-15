@@ -81,7 +81,7 @@ namespace OpenTK.Tests.Windowing
         }
 
         [Fact]
-        public void CanMiximizeWindow()
+        public void CanMaximizeWindow()
         {
             using (var window = new NativeWindow(NativeWindowSettings.Default))
             {
