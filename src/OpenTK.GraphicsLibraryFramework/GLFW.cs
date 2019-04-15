@@ -19,12 +19,26 @@ namespace OpenToolkit.GraphicsLibraryFramework
     public abstract class GLFW : NativeLibraryBase, IGLFW
     {
         /// <summary>
+        /// Gets an instance of the API.
+        /// </summary>
+        /// <returns>The instance.</returns>
+        public static GLFW GetAPI()
+        {
+            return APILoader.Load<GLFW, GLFWLibraryNameContainer>();
+        }
+        
+        /// <summary>
         /// Gets the default callback which gets called when a GLFW-Error occurs.
         /// </summary>
         /// <seealso cref="SetErrorCallback"/>
         /// TODO: pretty sure this callback should not be settable, because if we exchange values it will still call the old value,
         /// TODO: we would need to set the new callback with SetErrorCallback-function
-        public static GLFWCallbacks.ErrorCallback ErrorCallback { get; } = (errorCode, description) => { throw new GLFWException(description) { ErrorCode = errorCode }; };
+        public static GLFWCallbacks.ErrorCallback ErrorCallback { get; } = (errorCode, description) => throw new GLFWException(description) { ErrorCode = errorCode };
+
+        /// <summary>
+        /// Gets an integer equal to GLFW_DONT_CARE. This can be used for several window hints to use the platform default.
+        /// </summary>
+        public const int DontCare = -1;
 
         /// <inheritdoc cref="NativeLibraryBase"/>
         protected GLFW(string path, ImplementationOptions options)
@@ -200,12 +214,6 @@ namespace OpenToolkit.GraphicsLibraryFramework
         public abstract bool ExtensionSupported(string extensionName);
 
         /// <inheritdoc />
-        public abstract bool VulkanSupported();
-
-        /// <inheritdoc />
-        public abstract unsafe char** GetRequiredInstanceExtensions(out int count);
-
-        /// <inheritdoc />
         public abstract unsafe Window* CreateWindow(int width, int height, string title, Monitor* monitor, Window* share);
 
         /// <inheritdoc />
@@ -302,7 +310,7 @@ namespace OpenToolkit.GraphicsLibraryFramework
         public abstract unsafe GLFWCallbacks.DropCallback SetDropCallback(Window* window, GLFWCallbacks.DropCallback callback);
 
         /// <inheritdoc />
-        public abstract unsafe GLFWCallbacks.ErrorCallback SetErrorCallback(GLFWCallbacks.ErrorCallback callback);
+        public abstract GLFWCallbacks.ErrorCallback SetErrorCallback(GLFWCallbacks.ErrorCallback callback);
 
         /// <inheritdoc />
         public abstract unsafe void SetInputMode(Window* window, CursorStateAttribute mode, CursorModeValue value);
@@ -375,14 +383,5 @@ namespace OpenToolkit.GraphicsLibraryFramework
 
         /// <inheritdoc />
         public abstract unsafe void SetClipboardString(Window* window, string data);
-
-        /// <summary>
-        /// Gets an instance of the API.
-        /// </summary>
-        /// <returns>The instance.</returns>
-        public static GLFW GetAPI()
-        {
-            return APILoader.Load<GLFW, GLFWLibraryNameContainer>();
-        }
     }
 }
