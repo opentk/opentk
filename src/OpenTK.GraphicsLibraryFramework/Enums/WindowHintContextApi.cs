@@ -19,6 +19,6 @@ namespace OpenToolkit.GraphicsLibraryFramework
         /// Indicates the context creation API used to create the window's context;
         /// either <see cref="ContextApi.NativeContextApi"/> or <see cref="ContextApi.EglContextApi"/>.
         /// </summary>
-        ContextCreationApi = 0x0002200B
+        ContextCreationApi = 0x0002200B,
     }
 }
