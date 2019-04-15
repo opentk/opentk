@@ -88,6 +88,7 @@ namespace OpenToolkit.GraphicsLibraryFramework
         /// </remarks>
         void Terminate();
 
+        /*3.3SPECIFIC
         /// <summary>
         /// <para>
         /// This function sets hints for the next initialization of GLFW.
@@ -118,6 +119,7 @@ namespace OpenToolkit.GraphicsLibraryFramework
         /// </para>
         /// </remarks>
         void InitHint(InitHint hint, bool value);
+        3.3SPECIFIC*/
 
         /// <summary>
         /// <para>
@@ -168,6 +170,7 @@ namespace OpenToolkit.GraphicsLibraryFramework
         /// <seealso cref="GetVersion"/>
         string GetVersionString();
 
+        /*3.3SPECIFIC
         /// <summary>
         /// <para>
         /// This function returns and clears the error code of the last error that occurred on the calling thread,
@@ -194,6 +197,7 @@ namespace OpenToolkit.GraphicsLibraryFramework
         /// </remarks>
         /// <seealso cref="SetErrorCallback"/>
         unsafe ErrorCode GetError(out char* description);
+        3.3SPECIFIC*/
 
         /// <summary>
         /// <para>
@@ -278,6 +282,7 @@ namespace OpenToolkit.GraphicsLibraryFramework
         /// </remarks>
         unsafe void GetMonitorPhysicalSize(Monitor* monitor, out int width, out int height);
 
+        /*3.3SPECIFIC
         /// <summary>
         /// <para>
         /// This function retrieves the content scale for the specified monitor.
@@ -299,6 +304,7 @@ namespace OpenToolkit.GraphicsLibraryFramework
         /// <param name="xscale">Where to store the x-axis content scale, or <c>out _</c>.</param>
         /// <param name="yscale">Where to store the y-axis content scale, or <c>out _</c>.</param>
         unsafe void GetMonitorContentScale(Monitor* monitor, out float xscale, out float yscale);
+        3.3SPECIFIC*/
 
         /// <summary>
         /// <para>
@@ -323,6 +329,7 @@ namespace OpenToolkit.GraphicsLibraryFramework
         /// </remarks>
         unsafe string GetMonitorName(Monitor* monitor);
 
+        /*3.3SPECIFIC
         /// <summary>
         /// <para>
         /// This function sets the user-defined pointer of the specified monitor.
@@ -344,7 +351,9 @@ namespace OpenToolkit.GraphicsLibraryFramework
         /// </para>
         /// </remarks>
         unsafe void SetMonitorUserPointer(Monitor* monitor, IntPtr pointer);
+        3.3SPECIFIC*/
 
+        /*
         /// <summary>
         /// <para>
         /// This function returns the current value of the user-defined pointer of the specified monitor.
@@ -365,6 +374,7 @@ namespace OpenToolkit.GraphicsLibraryFramework
         /// </para>
         /// </remarks>
         unsafe IntPtr GetMonitorUserPointer(Monitor* monitor);
+        3.3SPECIFIC*/
 
         /// <summary>
         /// <para>
@@ -600,6 +610,7 @@ namespace OpenToolkit.GraphicsLibraryFramework
         /// </remarks>
         unsafe void GetWindowFrameSize(Window* window, out int left, out int top, out int right, out int bottom);
 
+        /*3.3SPECIFIC
         /// <summary>
         /// <para>
         /// This function returns the opacity of the window, including any decorations.
@@ -742,6 +753,7 @@ namespace OpenToolkit.GraphicsLibraryFramework
         /// </para>
         /// </remarks>
         bool RawMouseMotionSupported();
+        3.3SPECIFIC*/
 
         /// <summary>
         /// <para>
@@ -813,6 +825,7 @@ namespace OpenToolkit.GraphicsLibraryFramework
         /// </remarks>
         string GetKeyName(int key, int scancode);
 
+        /*3.3SPECIFIC
         /// <summary>
         /// <para>
         /// This function returns the platform-specific scancode of the specified key.
@@ -832,6 +845,7 @@ namespace OpenToolkit.GraphicsLibraryFramework
         /// </para>
         /// </remarks>
         int GetKeyScancode(int key);
+        3.3SPECIFIC*/
 
         /// <summary>
         /// <para>
@@ -1167,6 +1181,7 @@ namespace OpenToolkit.GraphicsLibraryFramework
         /// </remarks>
         unsafe byte* GetJoystickButtons(int jid, out int count);
 
+        /*3.3SPECIFIC
         /// <summary>
         /// <para>
         /// This function returns the state of all hats of the specified joystick.
@@ -1209,6 +1224,7 @@ namespace OpenToolkit.GraphicsLibraryFramework
         /// </para>
         /// </remarks>
         unsafe JoystickHats* GetJoystickHats(int jid, out int count);
+        3.3SPECIFIC*/
 
         /// <summary>
         /// <para>
@@ -1237,6 +1253,7 @@ namespace OpenToolkit.GraphicsLibraryFramework
         /// </remarks>
         string GetJoystickName(int jid);
 
+        /*3.3SPECIFIC
         /// <summary>
         /// <para>
         /// This function returns the SDL compatible GUID, as a UTF-8 encoded hexadecimal string,
@@ -1442,6 +1459,7 @@ namespace OpenToolkit.GraphicsLibraryFramework
         /// </para>
         /// </remarks>
         bool GetGamepadState(int jid, out GamepadState state);
+        3.3SPECIFIC*/
 
         /// <summary>
         /// <para>

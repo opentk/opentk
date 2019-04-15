@@ -247,6 +247,8 @@ namespace OpenToolkit.Windowing.Desktop
 
             set
             {
+                throw new GLFWException("Requires GLFW 3.3");
+                /*3.3SPECIFIC
                 if (!Glfw.GetWindowAttrib(WindowPtr, WindowAttributeGetter.Decorated))
                 {
                     Glfw.GetVersion(out var major, out var minor, out _);
@@ -275,6 +277,7 @@ namespace OpenToolkit.Windowing.Desktop
                 }
 
                 _windowBorder = value;
+                3.3SPECIFIC*/
             }
         }
 
