@@ -180,6 +180,14 @@ namespace OpenToolkit.Mathematics
         public static double Atan(double radians) => Math.Atan(radians);
 
         /// <summary>
+        /// Returns the angle whose tangent is the quotient of two specified numbers.
+        /// </summary>
+        /// <param name="y">The y coordinate of a point.</param>
+        /// <param name="x">The x coordinate of a point.</param>
+        /// <returns>An angle, θ, measured in radians, such that -π ≤ θ ≤ π, and tan(θ) = y / x, where (x, y) is a point in the Cartesian plane.</returns>
+        public static double Atan2(double y, double x) => Math.Atan2(y, x);
+
+        /// <summary>
         /// Produces the full product of two 32-bit numbers.
         /// </summary>
         /// <param name="a">The first number to multiply.</param>
@@ -378,7 +386,6 @@ namespace OpenToolkit.Mathematics
         /// <returns>Parameter a or b, whichever is larger.</returns>
         public static ulong Max(ulong a, ulong b) => Math.Max(a, b);
 
-        
         /// <summary>
         /// Returns the smaller of two bytes.
         /// </summary>
@@ -538,6 +545,20 @@ namespace OpenToolkit.Mathematics
         /// <returns>The integer nearest d. If the fractional component of d is halfway between two integers, one of which is even and the other odd, then the even number is returned.
         /// Note that this method returns a Double instead of an integral type.</returns>
         public static double Round(double d) => Math.Round(d);
+
+        /// <summary>
+        /// Calculates the integral part of a specified decimal number.
+        /// </summary>
+        /// <param name="d">A number to truncate.</param>
+        /// <returns>The integral part of d; that is, the number that remains after any fractional digits have been discarded.</returns>
+        public static decimal Truncate(decimal d) => Math.Truncate(d);
+
+        /// <summary>
+        /// Calculates the integral part of a specified double-precision floating-point number.
+        /// </summary>
+        /// <param name="d">A number to truncate.</param>
+        /// <returns>The integral part of d; that is, the number that remains after any fractional digits have been discarded, or one of the values listed in the following table.</returns>
+        public static double Truncate(double d) => Math.Truncate(d);
 
         /// <summary>
         /// Returns the next power of two that is greater than or equal to the specified number.
