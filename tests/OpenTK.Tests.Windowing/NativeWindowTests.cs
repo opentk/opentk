@@ -43,7 +43,7 @@ namespace OpenTK.Tests.Windowing
         }
 
         [Fact]
-        public void WindowCanBeFocussed()
+        public void WindowCanBeFocused()
         {
             using (var window = new NativeWindow(NativeWindowSettings.Default))
             {
@@ -95,6 +95,7 @@ namespace OpenTK.Tests.Windowing
             using (var window = new NativeWindow(NativeWindowSettings.Default))
             {
                 window.WindowState = WindowState.Fullscreen;
+                Assert.Equal(WindowState.Fullscreen, window.WindowState);
             }
         }
 
@@ -112,7 +113,7 @@ namespace OpenTK.Tests.Windowing
         {
             using (var window = new NativeWindow(NativeWindowSettings.Default))
             {
-                var newBounds = new Box2(5, 6, 320, 240);
+                var newBounds = Box2.FromDimensions(5, 6, 320, 240);
                 window.Bounds = newBounds;
                 var currentBounds = window.Bounds;
                 Assert.Equal(newBounds.Left, currentBounds.Left);

@@ -108,6 +108,8 @@ namespace OpenToolkit.Windowing.Desktop
                 {
                     Glfw.SetWindowTitle(WindowPtr, value);
                 }
+
+                OnTitleChanged(this, new TitleChangedEventArgs(value));
             }
         }
 
@@ -204,7 +206,7 @@ namespace OpenToolkit.Windowing.Desktop
                     return WindowState.Fullscreen;
                 }
 
-                var mode = Glfw.GetVideoMode(CurrentMonitor.ToUnsafePtr<GraphicsLibraryFramework.Monitor>());
+                var mode = Glfw.GetVideoMode((GraphicsLibraryFramework.Monitor*)CurrentMonitor.Pointer);
 
                 Glfw.GetWindowSize(WindowPtr, out var windowWidth, out var windowHeight);
 
