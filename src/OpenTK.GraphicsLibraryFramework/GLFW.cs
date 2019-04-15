@@ -26,7 +26,7 @@ namespace OpenToolkit.GraphicsLibraryFramework
         {
             return APILoader.Load<GLFW, GLFWLibraryNameContainer>();
         }
-        
+
         /// <summary>
         /// Gets the default callback which gets called when a GLFW-Error occurs.
         /// </summary>

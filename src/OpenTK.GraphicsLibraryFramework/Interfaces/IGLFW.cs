@@ -39,7 +39,7 @@ namespace OpenToolkit.GraphicsLibraryFramework
         /// Additional calls to this function after successful initialization
         /// but before termination will return <c>true</c> immediately.
         /// </para>
-        /// </summary> 
+        /// </summary>
         /// <returns><c>true</c> if successful, or <c>false</c> if an error occurred.</returns>
         /// <remarks>
         /// <para>
@@ -366,8 +366,8 @@ namespace OpenToolkit.GraphicsLibraryFramework
         /// </remarks>
         unsafe IntPtr GetMonitorUserPointer(Monitor* monitor);
 
-        /// <summary><
-        /// para>
+        /// <summary>
+        /// <para>
         /// This function returns an array of all video modes supported by the specified monitor.
         /// The returned array is sorted in ascending order, first by color bit depth (the sum of all channel depths)
         /// and then by resolution area (the product of width and height).
