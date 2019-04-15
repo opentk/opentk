@@ -1,5 +1,6 @@
 using System;
 using System.Threading;
+using OpenToolkit.GraphicsLibraryFramework;
 using OpenToolkit.Mathematics;
 using OpenToolkit.Windowing.Common;
 using OpenToolkit.Windowing.Desktop;
@@ -130,6 +131,8 @@ namespace OpenTK.Tests.Windowing
             {
                 var newLocation = new Vector2(5, 6);
                 window.Location = newLocation;
+                GLFWProvider.GLFW.Value.PollEvents();
+                GLFWProvider.GLFW.Value.PollEvents();
                 var currentLocation = window.Location;
                 Assert.Equal(newLocation.X, currentLocation.X);
                 Assert.Equal(newLocation.Y, currentLocation.Y);

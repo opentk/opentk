@@ -9,6 +9,7 @@
 
 using System;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using OpenToolkit.GraphicsLibraryFramework;
@@ -297,10 +298,7 @@ namespace OpenToolkit.Windowing.Desktop
         public unsafe Vector2 Location
         {
             get => _location;
-            set
-            {
-                Glfw.SetWindowPos(WindowPtr, (int)value.X, (int)value.Y);
-            }
+            set => Glfw.SetWindowPos(WindowPtr, (int)value.X, (int)value.Y);
         }
 
         private Vector2 _size;
@@ -504,15 +502,7 @@ namespace OpenToolkit.Windowing.Desktop
 
                 IsEventDriven = settings.IsEventDriven;
 
-                if (settings.X > -1)
-                {
-                    X = settings.X;
-                }
-
-                if (settings.Y > -1)
-                {
-                    Y = settings.Y;
-                }
+                Location = settings.Location;
 
                 Glfw.GetFramebufferSize(WindowPtr, out var width, out var height);
                 ClientSize = new Vector2(width, height);

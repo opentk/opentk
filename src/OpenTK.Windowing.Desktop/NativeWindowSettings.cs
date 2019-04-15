@@ -46,13 +46,15 @@ namespace OpenToolkit.Windowing.Desktop
             WindowState = WindowState.Normal;
             WindowBorder = WindowBorder.Resizable;
 
-            X = 20;
-            Y = 20;
+            X = GLFW.DontCare;
+            Y = GLFW.DontCare;
 
-            Width = 640;
-            Height = 480;
+            Width = 20;
+            Height = 30;
 
             IsFullscreen = false;
+
+            Exists = true;
         }
 
         /// <inheritdoc />
