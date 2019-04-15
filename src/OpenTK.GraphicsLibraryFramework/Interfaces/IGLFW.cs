@@ -1237,62 +1237,7 @@ namespace OpenToolkit.GraphicsLibraryFramework
         ///
         /// Possible errors include <see cref="ErrorCode.NotInitialized"/>, <see cref="ErrorCode.NoContext"/>, <see cref="ErrorCode.InvalidValue"/> and <see cref="ErrorCode.PlatformError"/>.
         /// </remarks>
-        /// <seealso cref="GetProcAddress"/> TODO: implement this function as well?
         bool ExtensionSupported(string extensionName); // TODO: use marshalling to ASCII C string
-
-        /// <summary>
-        /// This function returns whether the Vulkan loader and any minimally functional ICD have been found.
-        ///
-        /// The availability of a Vulkan loader and even an ICD does not by itself guarantee that surface creation
-        /// or even instance creation is possible.
-        /// For example, on Fermi systems Nvidia will install an ICD that provides no actual Vulkan support.
-        /// Call <see cref="GetRequiredInstanceExtensions"/> to check whether the extensions necessary
-        /// for Vulkan surface creation are available
-        /// and <see cref="GetPhysicalDevicePresentationSupport"/>(TODO: implement function?) to check whether a queue family
-        /// of a physical device supports image presentation.
-        /// </summary>
-        /// <returns><c>true</c> if Vulkan is minimally available, or <c>false</c> otherwise.</returns>
-        /// <remarks>
-        /// This function may be called from any thread.
-        ///
-        /// Possible errors include <see cref="ErrorCode.NotInitialized"/>.
-        /// </remarks>
-        bool VulkanSupported();
-
-        /// <summary>
-        /// This function returns an array of names of Vulkan instance extensions
-        /// required by GLFW for creating Vulkan surfaces for GLFW windows.
-        /// If successful, the list will always contains VK_KHR_surface,
-        /// so if you don't require any additional extensions
-        /// you can pass this list directly to the VkInstanceCreateInfo struct.
-        ///
-        /// If Vulkan is not available on the machine,
-        /// this function returns <c>null</c> and generates a <see cref="ErrorCode.ApiUnavailable"/> error.
-        /// Call <see cref="VulkanSupported"/> to check whether Vulkan is at least minimally available.
-        ///
-        /// If Vulkan is available but no set of extensions allowing window surface creation was found,
-        /// this function returns <c>null</c>. You may still use Vulkan for off-screen rendering and compute work.
-        /// </summary>
-        /// <param name="count">
-        /// Where to store the number of extensions in the returned array. This is set to zero if an error occurred.
-        /// </param>
-        /// <returns>An array of ASCII encoded extension names, or NULL if an error occurred.</returns>
-        /// <remarks>
-        /// Additional extensions may be required by future versions of GLFW.
-        /// You should check if any extensions you wish to enable are already in the returned array,
-        /// as it is an error to specify an extension more than once in the VkInstanceCreateInfo struct.
-        ///
-        /// macOS: This function currently only supports the VK_MVK_macos_surface extension from MoltenVK.
-        ///
-        /// The returned array is allocated and freed by GLFW. You should not free it yourself.
-        /// It is guaranteed to be valid only until the library is terminated.
-        ///
-        /// This function may be called from any thread.
-        ///
-        /// Possible errors include <see cref="ErrorCode.NotInitialized"/> and <see cref="ErrorCode.ApiUnavailable"/>.
-        /// </remarks>
-        /// <seealso cref="CreateWindowSurface"/> TODO: implement as well?
-        unsafe char** GetRequiredInstanceExtensions(out int count);
 
         /// <summary>
         /// This function creates a window and its associated OpenGL or OpenGL ES context.
