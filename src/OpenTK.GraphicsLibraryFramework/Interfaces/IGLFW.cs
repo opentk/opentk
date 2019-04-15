@@ -24,27 +24,31 @@ namespace OpenToolkit.GraphicsLibraryFramework
         // Still missing in documentation
 
         /// <summary>
+        /// <para>
         /// This function initializes the GLFW library. Before most GLFW functions can be used,
         /// GLFW must be initialized, and before an application terminates GLFW should be terminated in order to
         /// free any resources allocated during or after initialization.
+        /// </para>
+        /// <para>
         /// If this function fails, it calls <see cref="Terminate"/> before returning.
+        /// </para>
+        /// <para>
         /// If it succeeds, you should call <see cref="Terminate"/> before the application exits.
+        /// </para>
+        /// <para>
         /// Additional calls to this function after successful initialization
         /// but before termination will return <c>true</c> immediately.
-        /// </summary>
-        /// 
+        /// </para>
+        /// </summary> 
         /// <returns><c>true</c> if successful, or <c>false</c> if an error occurred.</returns>
-        /// 
         /// <remarks>
         /// <para>
         /// OS X: This function will change the current directory of the application
         /// to the Contents/Resources subdirectory of the application's bundle, if present.
         /// </para>
-        ///
         /// <para>
         /// This function must only be called from the main thread.
         /// </para>
-        ///
         /// <para>
         /// Possible errors include <see cref="ErrorCode.PlatformError"/>.
         /// </para>
@@ -52,31 +56,32 @@ namespace OpenToolkit.GraphicsLibraryFramework
         bool Init();
 
         /// <summary>
+        /// <para>
         /// This function destroys all remaining windows and cursors, restores any modified gamma ramps
         /// and frees any other allocated resources. Once this function is called,
         /// you must again call <see cref="Init"/> successfully before you will be able to use most GLFW functions.
+        /// </para>
+        /// <para>
         /// If GLFW has been successfully initialized, this function should be called before the application exits.
+        /// </para>
+        /// <para>
         /// If initialization fails, there is no need to call this function,
         /// as it is called by <see cref="Init"/> before it returns failure.
+        /// </para>
         /// </summary>
-        /// 
         /// <remarks>
         /// <para>
         /// The contexts of any remaining windows must not be current on any other thread when this function is called.
         /// </para>
-        ///
         /// <para>
         /// This function may be called before <see cref="Init"/>.
         /// </para>
-        ///
         /// <para>
         /// This function must not be called from a callback.
         /// </para>
-        ///
         /// <para>
         /// This function must only be called from the main thread.
         /// </para>
-        ///
         /// <para>
         /// Possible errors include <see cref="ErrorCode.PlatformError"/>.
         /// </para>
@@ -84,27 +89,30 @@ namespace OpenToolkit.GraphicsLibraryFramework
         void Terminate();
 
         /// <summary>
+        /// <para>
         /// This function sets hints for the next initialization of GLFW.
+        /// </para>
+        /// <para>
         /// The values you set hints to are never reset by GLFW, but they only take effect during initialization.
+        /// </para>
+        /// <para>
         /// Once GLFW has been initialized,
         /// any values you set will be ignored until the library is terminated and initialized again.
-        /// Some hints are platform specific.
+        /// </para>
+        /// <para>Some hints are platform specific.
         /// These may be set on any platform but they will only affect their specific platform.
         /// Other platforms will ignore them. Setting these hints requires no platform specific headers or functions.
+        /// </para>
         /// </summary>
-        /// 
         /// <param name="hint">The <see cref="GraphicsLibraryFramework.InitHint"/> to set.</param>
         /// <param name="value">The new value of the <see cref="GraphicsLibraryFramework.InitHint"/>.</param>
-        /// 
         /// <remarks>
         /// <para>
         /// This function may be called before <see cref="Init"/>.
         /// </para>
-        ///
         /// <para>
         /// This function must only be called from the main thread.
         /// </para>
-        ///
         /// <para>
         /// Possible errors include <see cref="ErrorCode.InvalidEnum"/> and <see cref="ErrorCode.InvalidValue"/>.
         /// </para>
@@ -112,48 +120,47 @@ namespace OpenToolkit.GraphicsLibraryFramework
         void InitHint(InitHint hint, bool value);
 
         /// <summary>
+        /// <para>
         /// This function retrieves the major, minor and revision numbers of the GLFW library.
         /// It is intended for when you are using GLFW
         /// as a shared library and want to ensure that you are using the minimum required version.
+        /// </para>
+        /// <para>
         /// Any or all of the version arguments may be <c>out _</c>.
+        /// </para>
         /// </summary>
-        /// 
         /// <param name="major">Where to store the major version number, or <c>out _</c>.</param>
         /// <param name="minor">Where to store the minor version number, or <c>out _</c>.</param>
         /// <param name="revision">Where to store the revision number, or <c>out _</c>.</param>
-        /// 
         /// <remarks>
         /// <para>
         /// This function may be called before <see cref="Init"/>.
         /// </para>
-        ///
         /// <para>
         /// This function may be called from any thread.
         /// </para>
         /// </remarks>
-        /// <seealso cref="GetVersionString"/>
         void GetVersion(out int major, out int minor, out int revision);
 
         /// <summary>
+        /// <para>
         /// This function returns the compile-time generated version string of the GLFW library binary.
         /// It describes the version, platform, compiler and any platform-specific compile-time options.
         /// It should not be confused with the OpenGL or OpenGL ES version string, queried with <c>glGetString</c>.
-        ///
+        /// </para>
+        /// <para>
         /// Do not use the version string to parse the GLFW library version.
         /// The <see cref="GetVersion"/> function provides the version of the running library binary in numerical format.
+        /// </para>
         /// </summary>
-        /// 
-        /// <returns>The ASCII encoded GLFW version string.</returns>
-        /// 
+        /// <returns>The ASCII-encoded GLFW version string.</returns>
         /// <remarks>
         /// <para>
         /// This function may be called before <see cref="Init"/>.
         /// </para>
-        /// 
         /// <para>
         /// The returned string is static and compile-time generated.
         /// </para>
-        ///
         /// <para>
         /// This function may be called from any thread.
         /// </para>
@@ -162,26 +169,25 @@ namespace OpenToolkit.GraphicsLibraryFramework
         string GetVersionString();
 
         /// <summary>
+        /// <para>
         /// This function returns and clears the error code of the last error that occurred on the calling thread,
         /// and optionally a UTF-8 encoded human-readable description of it.
+        /// </para>
+        /// <para>
         /// If no error has occurred since the last call,
         /// it returns <see cref="ErrorCode.NoError"/> (zero) and the description pointer is set to <c>null</c>.
+        /// </para>
         /// </summary>
-        /// 
         /// <param name="description">Where to store the error description pointer, or <c>out _</c>"/>.</param>
-        /// 
         /// <returns>The last error code for the calling thread, or <see cref="ErrorCode.NoError"/> (zero).</returns>
-        /// 
         /// <remarks>
         /// <para>
         /// The returned string is allocated and freed by GLFW. You should not free it yourself.
         /// It is only guaranteed to be valid until the next error occurs or the library is terminated.
         /// </para>
-        ///
         /// <para>
         /// This function may be called before <see cref="Init"/>.
         /// </para>
-        ///
         /// <para>
         /// This function may be called from any thread.
         /// </para>
@@ -190,29 +196,28 @@ namespace OpenToolkit.GraphicsLibraryFramework
         unsafe ErrorCode GetError(out char* description);
 
         /// <summary>
-        /// /This function returns an array of handles for all currently connected monitors.
+        /// <para>
+        /// This function returns an array of handles for all currently connected monitors.
         /// The primary monitor is always first in the returned array.
+        /// </para>
+        /// <para>
         /// If no monitors were found, this function returns <c>null</c>.
+        /// </para>
         /// </summary>
-        /// 
         /// <param name="count">
         /// Where to store the number of monitors in the returned array. This is set to zero if an error occurred.
         /// </param>
-        /// 
         /// <returns>
         /// An array of monitor handles, or <c>null</c> if no monitors were found or if an error occurred.
         /// </returns>
-        /// 
         /// <remarks>
         /// <para>
         /// The returned array is allocated and freed by GLFW. You should not free it yourself.
         /// It is only guaranteed to be valid until the monitor configuration changes or the library is terminated.
         /// </para>
-        ///
         /// <para>
         /// This function must only be called from the main thread.
         /// </para>
-        ///
         /// <para>
         /// Possible errors include <see cref="ErrorCode.NotInitialized"/>.
         /// </para>
@@ -221,18 +226,17 @@ namespace OpenToolkit.GraphicsLibraryFramework
         unsafe Monitor** GetMonitors(out int count);
 
         /// <summary>
+        /// <para>
         /// This function returns the position, in screen coordinates, of the upper-left corner of the specified monitor.
+        /// </para>
         /// </summary>
-        /// 
         /// <param name="monitor">The monitor to query.</param>
         /// <param name="x">Where to store the monitor x-coordinate, or <c>out _</c>.</param>
         /// <param name="y">Where to store the monitor y-coordinate, or <c>out _</c>.</param>
-        /// 
         /// <remarks>
         /// <para>
         /// This function must only be called from the main thread.
         /// </para>
-        ///
         /// <para>
         /// Possible errors include <see cref="ErrorCode.NotInitialized"/> and <see cref="ErrorCode.PlatformError"/>.
         /// </para>
@@ -240,16 +244,19 @@ namespace OpenToolkit.GraphicsLibraryFramework
         unsafe void GetMonitorPos(Monitor* monitor, out int x, out int y);
 
         /// <summary>
+        /// <para>
         /// This function returns the size, in millimetres, of the display area of the specified monitor.
-        ///
+        /// </para>
+        /// <para>
         /// Some systems do not provide accurate monitor size information,
         /// either because the monitor EDID(Extended Display Identification Data) data is incorrect
         /// or because the driver does not report it accurately.
-        ///
+        /// </para>
+        /// <para>
         /// Any or all of the size arguments may be <c>out _</c>.
         /// If an error occurs, all non-<c>out _</c> size arguments will be set to zero.
+        /// </para>
         /// </summary>
-        /// 
         /// <param name="monitor">The monitor to query.</param>
         /// <param name="width">
         /// Where to store the width, in millimetres, of the monitor's display area, or <c>out _</c>.
@@ -257,17 +264,14 @@ namespace OpenToolkit.GraphicsLibraryFramework
         /// <param name="height">
         /// Where to store the height, in millimetres, of the monitor's display area, or <c>out _</c>.
         /// </param>
-        /// 
         /// <remarks>
         /// <para>
         /// Windows: calculates the returned physical size from the current resolution
         ///          and system DPI instead of querying the monitor EDID data.
         /// </para>
-        ///
         /// <para>
         /// This function must only be called from the main thread.
         /// </para>
-        ///
         /// <para>
         /// Possible errors include <see cref="ErrorCode.NotInitialized"/>.
         /// </para>
@@ -275,43 +279,44 @@ namespace OpenToolkit.GraphicsLibraryFramework
         unsafe void GetMonitorPhysicalSize(Monitor* monitor, out int width, out int height);
 
         /// <summary>
+        /// <para>
         /// This function retrieves the content scale for the specified monitor.
+        /// </para>
+        /// <para>
         /// The content scale is the ratio between the current DPI and the platform's default DPI.
+        /// </para>
+        /// <para>
         /// If you scale all pixel dimensions by this scale then your content should appear at an appropriate size.
         /// This is especially important for text and any UI elements.
+        /// </para>
         ///
+        /// <para>
         /// The content scale may depend on both the monitor resolution and pixel density and on user settings.
         /// It may be very different from the raw DPI calculated from the physical size and current resolution.
+        /// </para>
         /// </summary>
-        /// 
         /// <param name="monitor">The monitor to query.</param>
         /// <param name="xscale">Where to store the x-axis content scale, or <c>out _</c>.</param>
         /// <param name="yscale">Where to store the y-axis content scale, or <c>out _</c>.</param>
         unsafe void GetMonitorContentScale(Monitor* monitor, out float xscale, out float yscale);
 
         /// <summary>
+        /// <para>
         /// This function returns a human-readable name, encoded as UTF-8, of the specified monitor.
         /// The name typically reflects the make and model of the monitor
         /// and is not guaranteed to be unique among the connected monitors.
+        /// </para>
         /// </summary>
-        /// 
         /// <param name="monitor">The monitor to query.</param>
-        /// 
         /// <returns>The UTF-8 encoded name of the monitor, or <c>null</c> if an error occurred.</returns>
-        /// 
         /// <remarks>
         /// <para>
         /// The returned string is allocated and freed by GLFW. You should not free it yourself.
-        /// </para>
-        ///
-        /// <para>
         /// It is valid until the specified monitor is disconnected or the library is terminated.
         /// </para>
-        ///
         /// <para>
         /// This function must only be called from the main thread.
         /// </para>
-        ///
         /// <para>
         /// Possible errors include <see cref="ErrorCode.NotInitialized"/>.
         /// </para>
@@ -319,21 +324,21 @@ namespace OpenToolkit.GraphicsLibraryFramework
         unsafe string GetMonitorName(Monitor* monitor);
 
         /// <summary>
+        /// <para>
         /// This function sets the user-defined pointer of the specified monitor.
         /// The current value is retained until the monitor is disconnected.
         /// The initial value is <see cref="IntPtr.Zero"/>.
-        ///
+        /// </para>
+        /// <para>
         /// This function may be called from the monitor callback, even for a monitor that is being disconnected.
+        /// </para>
         /// </summary>
-        /// 
         /// <param name="monitor">The monitor whose pointer to set.</param>
         /// <param name="pointer">The new value.</param>
-        /// 
         /// <remarks>
         /// <para>
         /// This function may be called from any thread. Access is not synchronized.
         /// </para>
-        ///
         /// <para>
         /// Possible errors include <see cref="ErrorCode.NotInitialized"/>.
         /// </para>
@@ -341,52 +346,48 @@ namespace OpenToolkit.GraphicsLibraryFramework
         unsafe void SetMonitorUserPointer(Monitor* monitor, IntPtr pointer);
 
         /// <summary>
+        /// <para>
         /// This function returns the current value of the user-defined pointer of the specified monitor.
         /// The initial value is <see cref="IntPtr.Zero"/>.
-        ///
+        /// </para>
+        /// <para>
         /// This function may be called from the monitor callback, even for a monitor that is being disconnected.
+        /// </para>
         /// </summary>
-        /// 
         /// <param name="monitor">The monitor whose pointer to return.</param>
-        /// 
         /// <returns>The user-defined pointer of the given <paramref name="monitor"/>.</returns>
-        /// 
         /// <remarks>
         /// <para>
         /// This function may be called from any thread. Access is not synchronized.
         /// </para>
-        ///
         /// <para>
         /// Possible errors include <see cref="ErrorCode.NotInitialized"/>.
         /// </para>
         /// </remarks>
         unsafe IntPtr GetMonitorUserPointer(Monitor* monitor);
 
-        /// <summary>
+        /// <summary><
+        /// para>
         /// This function returns an array of all video modes supported by the specified monitor.
         /// The returned array is sorted in ascending order, first by color bit depth (the sum of all channel depths)
         /// and then by resolution area (the product of width and height).
+        /// </para>
         /// </summary>
-        /// 
         /// <param name="monitor">The monitor to query.</param>
         /// <param name="count">
         /// Where to store the number of video modes in the returned array.
         /// This is set to zero if an error occurred.
         /// </param>
-        /// 
         /// <returns>An array of video modes, or <c>null</c> if an error occurred.</returns>
-        /// 
         /// <remarks>
         /// <para>
         /// The returned array is allocated and freed by GLFW. You should not free it yourself.
         /// It is valid until the specified monitor is disconnected,
         /// this function is called again for that monitor, or the library is terminated.
         /// </para>
-        ///
         /// <para>
         /// This function must only be called from the main thread.
         /// </para>
-        ///
         /// <para>
         /// Possible errors include <see cref="ErrorCode.NotInitialized"/> and <see cref="ErrorCode.PlatformError"/>.
         /// </para>
@@ -395,18 +396,17 @@ namespace OpenToolkit.GraphicsLibraryFramework
         unsafe VideoMode* GetVideoModes(Monitor* monitor, out int count);
 
         /// <summary>
+        /// <para>
         /// This function generates a 256-element gamma ramp from the specified exponent and then calls
         /// <see cref="SetGammaRamp"/> with it. The value must be a finite number greater than zero.
+        /// </para>
         /// </summary>
-        /// 
         /// <param name="monitor">The monitor whose gamma ramp to set.</param>
         /// <param name="gamma">The desired exponent.</param>
-        /// 
         /// <remarks>
         /// <para>
         /// This function must only be called from the main thread.
         /// </para>
-        ///
         /// <para>
         /// Possible errors include <see cref="ErrorCode.NotInitialized"/>, <see cref="ErrorCode.InvalidValue"/> and <see cref="ErrorCode.PlatformError"/>.
         /// </para>
@@ -414,24 +414,21 @@ namespace OpenToolkit.GraphicsLibraryFramework
         unsafe void SetGamma(Monitor* monitor, float gamma);
 
         /// <summary>
+        /// <para>
         /// This function returns the current gamma ramp of the specified monitor.
+        /// </para>
         /// </summary>
-        /// 
         /// <param name="monitor">The monitor to query.</param>
-        /// 
         /// <returns>The current gamma ramp, or <c>null</c> if an error occurred.</returns>
-        /// 
         /// <remarks>
         /// <para>
         /// The returned structure and its arrays are allocated and freed by GLFW.
         /// You should not free them yourself. They are valid until the specified monitor is disconnected,
         /// this function is called again for that monitor or the library is terminated.
         /// </para>
-        ///
         /// <para>
         /// This function must only be called from the main thread.
         /// </para>
-        ///
         /// <para>
         /// Possible errors include <see cref="ErrorCode.NotInitialized"/> and <see cref="ErrorCode.PlatformError"/>.
         /// </para>
@@ -439,31 +436,29 @@ namespace OpenToolkit.GraphicsLibraryFramework
         unsafe GammaRamp* GetGammaRamp(Monitor* monitor);
 
         /// <summary>
+        /// <para>
         /// This function sets the current gamma ramp for the specified monitor.
+        /// </para>
+        /// <para>
         /// The original gamma ramp for that monitor
         /// is saved by GLFW the first time this function is called and is restored by <see cref="Terminate"/>.
+        /// </para>
         /// </summary>
-        /// 
         /// <param name="monitor">The monitor whose gamma ramp to set.</param>
         /// <param name="ramp">The gamma ramp to use.</param>
-        /// 
         /// <remarks>
         /// <para>
         /// Gamma ramp sizes other than 256 are not supported by all platforms or graphics hardware.
         /// </para>
-        ///
         /// <para>
         /// Windows: The gamma ramp size must be 256.
         /// </para>
-        ///
         /// <para>
         /// The specified gamma ramp is copied before this function returns.
         /// </para>
-        ///
         /// <para>
         /// This function must only be called from the main thread.
         /// </para>
-        ///
         /// <para>
         /// Possible errors include <see cref="ErrorCode.NotInitialized"/> and <see cref="ErrorCode.PlatformError"/>.
         /// </para>
@@ -471,9 +466,10 @@ namespace OpenToolkit.GraphicsLibraryFramework
         unsafe void SetGammaRamp(Monitor* monitor, ref GammaRamp ramp);
 
         /// <summary>
+        /// <para>
         /// This function resets all window hints to their default values.
+        /// </para>
         /// </summary>
-        /// 
         /// <remarks>
         /// <para>
         /// This function must only be called from the main thread.
@@ -482,16 +478,23 @@ namespace OpenToolkit.GraphicsLibraryFramework
         void DefaultWindowHints();
 
         /// <summary>
+        /// <para>
         /// This function sets the size limits of the client area of the specified window.
+        /// </para>
+        /// <para>
         /// If the window is full screen, the size limits only take effect once it is made windowed.
+        /// </para>
+        /// <para>
         /// If the window is not resizable, this function does nothing.
-        ///
+        /// </para>
+        /// <para>
         /// The size limits are applied immediately to a windowed mode window and may cause it to be resized.
-        ///
+        /// </para>
+        /// <para>
         /// The maximum dimensions must be greater than or equal to the minimum dimensions
         /// and all must be greater than or equal to zero.
+        /// </para>
         /// </summary>
-        /// 
         /// <param name="window">The window to set limits for.</param>
         /// <param name="minwidth">
         /// The minimum width, in screen coordinates, of the client area, or <see cref="GLFW.DontCare"/>.
@@ -505,16 +508,13 @@ namespace OpenToolkit.GraphicsLibraryFramework
         /// <param name="maxheight">
         /// The maximum height, in screen coordinates, of the client area, or <see cref="GLFW.DontCare"/>.
         /// </param>
-        /// 
         /// <remarks>
         /// <para>
         /// If you set size limits and an aspect ratio that conflict, the results are undefined.
         /// </para>
-        ///
         /// <para>
         /// This function must only be called from the main thread.
         /// </para>
-        ///
         /// <para>
         /// Possible errors include <see cref="ErrorCode.NotInitialized"/>, <see cref="ErrorCode.InvalidValue"/> and <see cref="ErrorCode.PlatformError"/>.
         /// </para>
@@ -522,31 +522,36 @@ namespace OpenToolkit.GraphicsLibraryFramework
         unsafe void SetWindowSizeLimits(Window* window, int minwidth, int minheight, int maxwidth, int maxheight);
 
         /// <summary>
+        /// <para>
         /// This function sets the required aspect ratio of the client area of the specified window.
+        /// </para>
+        /// <para>
         /// If the window is full screen, the aspect ratio only takes effect once it is made windowed.
+        /// </para>
+        /// <para>
         /// If the window is not resizable, this function does nothing.
-        ///
+        /// </para>
+        /// <para>
         /// The aspect ratio is specified as a numerator and a denominator and both values must be greater than zero.
         /// For example, the common 16:9 aspect ratio is specified as 16 and 9, respectively.
-        ///
+        /// </para>
+        /// <para>
         /// If the numerator and denominator is set to <see cref="GLFW.DontCare"/> then the aspect ratio limit is disabled.
-        ///
+        /// </para>
+        /// <para>
         /// The aspect ratio is applied immediately to a windowed mode window and may cause it to be resized.
+        /// </para>
         /// </summary>
-        /// 
         /// <param name="window">The window to set limits for.</param>
         /// <param name="numer">The numerator of the desired aspect ratio, or <see cref="GLFW.DontCare"/>.</param>
         /// <param name="denom">The denominator of the desired aspect ratio, or <see cref="GLFW.DontCare"/>.</param>
-        /// 
         /// <remarks>
         /// <para>
         /// If you set size limits and an aspect ratio that conflict, the results are undefined.
         /// </para>
-        ///
         /// <para>
         /// This function must only be called from the main thread.
         /// </para>
-        ///
         /// <para>
         /// Possible errors include <see cref="ErrorCode.NotInitialized"/>, <see cref="ErrorCode.InvalidValue"/> and <see cref="ErrorCode.PlatformError"/>.
         /// </para>
@@ -554,17 +559,24 @@ namespace OpenToolkit.GraphicsLibraryFramework
         unsafe void SetWindowAspectRatio(Window* window, int numer, int denom);
 
         /// <summary>
+        /// <para>
         /// This function retrieves the size, in screen coordinates, of each edge of the frame of the specified window.
+        /// </para>
+        /// <para>
         /// This size includes the title bar, if the window has one.
         /// The size of the frame may vary depending on the window-related hints used to create it.
+        /// </para>
         ///
+        /// <para>
         /// Because this function retrieves the size of each window frame edge
         /// and not the offset along a particular coordinate axis, the retrieved values will always be zero or positive.
+        /// </para>
         ///
+        /// <para>
         /// Any or all of the size arguments may be <c>out _</c>.
         /// If an error occurs, all non-<c>out _</c> size arguments will be set to zero.
+        /// </para>
         /// </summary>
-        /// 
         /// <param name="window">The window whose frame size to query.</param>
         /// <param name="left">
         /// Where to store the size, in screen coordinates, of the left edge of the window frame, or <c>out _</c>.
@@ -578,12 +590,10 @@ namespace OpenToolkit.GraphicsLibraryFramework
         /// <param name="bottom">
         /// Where to store the size, in screen coordinates, of the bottom edge of the window frame, or <c>out _</c>.
         /// </param>
-        /// 
         /// <remarks>
         /// <para>
         /// This function must only be called from the main thread.
         /// </para>
-        ///
         /// <para>
         /// Possible errors include <see cref="ErrorCode.NotInitialized"/> and <see cref="ErrorCode.PlatformError"/>.
         /// </para>
@@ -591,24 +601,26 @@ namespace OpenToolkit.GraphicsLibraryFramework
         unsafe void GetWindowFrameSize(Window* window, out int left, out int top, out int right, out int bottom);
 
         /// <summary>
+        /// <para>
         /// This function returns the opacity of the window, including any decorations.
-        ///
+        /// </para>
+        /// <para>
         /// The opacity (or alpha) value is a positive finite number between zero and one,
         /// where zero is fully transparent and one is fully opaque.
+        /// </para>
+        /// <para>
         /// If the system does not support whole window transparency, this function always returns one.
-        ///
+        /// </para>
+        /// <para>
         /// The initial opacity value for newly created windows is one.
+        /// </para>
         /// </summary>
-        /// 
         /// <param name="window">The window to query.</param>
-        /// 
         /// <returns>The opacity value of the specified window.</returns>
-        /// 
         /// <remarks>
         /// <para>
         /// This function must only be called from the main thread.
         /// </para>
-        ///
         /// <para>
         /// Possible errors include <see cref="ErrorCode.NotInitialized"/> and <see cref="ErrorCode.PlatformError"/>.
         /// </para>
@@ -1648,7 +1660,7 @@ namespace OpenToolkit.GraphicsLibraryFramework
         /// </para>
         /// </remarks>
         bool ExtensionSupported(string extensionName);
-        
+
         /// <summary>
         /// <para>
         /// This function creates a window and its associated OpenGL or OpenGL ES context.
