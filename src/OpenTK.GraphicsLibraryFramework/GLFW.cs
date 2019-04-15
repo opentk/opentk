@@ -166,7 +166,7 @@ namespace OpenToolkit.GraphicsLibraryFramework
         public abstract unsafe byte* GetJoystickButtons(int jid, out int count);
 
         /// <inheritdoc />
-        public abstract unsafe byte* GetJoystickHats(int jid, out int count);
+        public abstract unsafe JoystickHats* GetJoystickHats(int jid, out int count);
 
         /// <inheritdoc />
         public abstract string GetJoystickName(int jid);
@@ -319,7 +319,7 @@ namespace OpenToolkit.GraphicsLibraryFramework
         public abstract unsafe void SetInputMode(Window* window, StickyAttributes mode, bool value);
 
         /// <inheritdoc />
-        public abstract unsafe GLFWCallbacks.JoystickCallback SetJoystickCallback(GLFWCallbacks.JoystickCallback callback);
+        public abstract GLFWCallbacks.JoystickCallback SetJoystickCallback(GLFWCallbacks.JoystickCallback callback);
 
         /// <inheritdoc />
         public abstract unsafe GLFWCallbacks.KeyCallback SetKeyCallback(Window* window, GLFWCallbacks.KeyCallback callback);
@@ -328,7 +328,7 @@ namespace OpenToolkit.GraphicsLibraryFramework
         public abstract unsafe GLFWCallbacks.ScrollCallback SetScrollCallback(Window* window, GLFWCallbacks.ScrollCallback callback);
 
         /// <inheritdoc />
-        public abstract unsafe GLFWCallbacks.MonitorCallback SetMonitorCallback(GLFWCallbacks.MonitorCallback callback);
+        public abstract GLFWCallbacks.MonitorCallback SetMonitorCallback(GLFWCallbacks.MonitorCallback callback);
 
         /// <inheritdoc />
         public abstract unsafe GLFWCallbacks.MouseButtonCallback SetMouseButtonCallback(Window* window, GLFWCallbacks.MouseButtonCallback callback);
