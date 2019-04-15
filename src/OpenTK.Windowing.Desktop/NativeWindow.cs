@@ -232,7 +232,7 @@ namespace OpenToolkit.Windowing.Desktop
                         Glfw.MaximizeWindow(WindowPtr);
                         break;
                     case WindowState.Fullscreen:
-                        var monitor = CurrentMonitor.ToUnsafePtr<GraphicsLibraryFramework.Monitor>();
+                        var monitor = (GraphicsLibraryFramework.Monitor*)CurrentMonitor.Pointer;
                         var mode = Glfw.GetVideoMode(monitor);
                         Glfw.SetWindowMonitor(WindowPtr, monitor, 0, 0, mode->Width, mode->Height, mode->RefreshRate);
                         break;
