@@ -46,8 +46,8 @@ namespace OpenToolkit.Windowing.Desktop
             WindowState = WindowState.Normal;
             WindowBorder = WindowBorder.Resizable;
 
-            X = -1;
-            Y = -1;
+            X = 20;
+            Y = 20;
 
             Width = 640;
             Height = 480;

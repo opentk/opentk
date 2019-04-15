@@ -113,17 +113,14 @@ namespace OpenToolkit.Windowing.Desktop
             }
         }
 
+        private Monitor _currentMonitor;
+
         /// <summary>
         /// Gets or sets the current <see cref="Monitor"/>.
         /// </summary>
         public unsafe Monitor CurrentMonitor
         {
-            get
-            {
-                var monitor = (IntPtr)Glfw.GetWindowMonitor(WindowPtr);
-
-                return new Monitor(monitor);
-            }
+            get => _currentMonitor;
 
             set
             {
@@ -206,7 +203,7 @@ namespace OpenToolkit.Windowing.Desktop
                     return WindowState.Fullscreen;
                 }
 
-                var mode = Glfw.GetVideoMode((GraphicsLibraryFramework.Monitor*)CurrentMonitor.Pointer);
+                var mode = Glfw.GetVideoMode(CurrentMonitor.ToUnsafePtr<GraphicsLibraryFramework.Monitor>());
 
                 Glfw.GetWindowSize(WindowPtr, out var windowWidth, out var windowHeight);
 
@@ -232,7 +229,7 @@ namespace OpenToolkit.Windowing.Desktop
                         Glfw.MaximizeWindow(WindowPtr);
                         break;
                     case WindowState.Fullscreen:
-                        var monitor = (GraphicsLibraryFramework.Monitor*)CurrentMonitor.Pointer;
+                        var monitor = CurrentMonitor.ToUnsafePtr<GraphicsLibraryFramework.Monitor>();
                         var mode = Glfw.GetVideoMode(monitor);
                         Glfw.SetWindowMonitor(WindowPtr, monitor, 0, 0, mode->Width, mode->Height, mode->RefreshRate);
                         break;
@@ -465,6 +462,8 @@ namespace OpenToolkit.Windowing.Desktop
 
             unsafe
             {
+                _currentMonitor = settings.CurrentMonitor;
+
                 switch (settings.WindowBorder)
                 {
                     case WindowBorder.Hidden:
