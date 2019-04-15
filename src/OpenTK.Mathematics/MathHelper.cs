@@ -286,7 +286,7 @@ namespace OpenToolkit.Mathematics
         /// </summary>
         /// <param name="n">The specified number.</param>
         /// <returns>The base 2 log of n.</returns>
-        /// <remarks>This one will be implemented by System.Math from .netcore 3.0 and onwards</remarks>
+        /// <remarks>This one will be implemented by System.Math from .netcore 3.0 and onwards.</remarks>
         public static double Log2(double n) => Math.Log(n, 2);
 
         /// <summary>
@@ -559,6 +559,55 @@ namespace OpenToolkit.Mathematics
         /// <param name="d">A number to truncate.</param>
         /// <returns>The integral part of d; that is, the number that remains after any fractional digits have been discarded, or one of the values listed in the following table.</returns>
         public static double Truncate(double d) => Math.Truncate(d);
+
+        /// <summary>
+        /// Returns an integer that indicates the sign of a sbyte.
+        /// </summary>
+        /// <param name="d">A signed number.</param>
+        /// <returns>If d ≤ -1 returns -1, if 1 ≤ d returns 1 and if d = 0 returns 0.</returns>
+        public static int Sign(sbyte d) => Math.Sign(d);
+
+        /// <summary>
+        /// Returns an integer that indicates the sign of a short.
+        /// </summary>
+        /// <param name="d">A signed number.</param>
+        /// <returns>If d ≤ -1 returns -1, if 1 ≤ d returns 1 and if d = 0 returns 0.</returns>
+        public static int Sign(short d) => Math.Sign(d);
+
+        /// <summary>
+        /// Returns an integer that indicates the sign of a int.
+        /// </summary>
+        /// <param name="d">A signed number.</param>
+        /// <returns>If d ≤ -1 returns -1, if 1 ≤ d returns 1 and if d = 0 returns 0.</returns>
+        public static int Sign(int d) => Math.Sign(d);
+
+        /// <summary>
+        /// Returns an integer that indicates the sign of a float.
+        /// </summary>
+        /// <param name="d">A signed number.</param>
+        /// <returns>If d ≤ -1 returns -1, if 1 ≤ d returns 1 and if d = 0 returns 0.</returns>
+        public static int Sign(float d) => Math.Sign(d);
+
+        /// <summary>
+        /// Returns an integer that indicates the sign of a decimal.
+        /// </summary>
+        /// <param name="d">A signed number.</param>
+        /// <returns>If d ≤ -1 returns -1, if 1 ≤ d returns 1 and if d = 0 returns 0.</returns>
+        public static int Sign(decimal d) => Math.Sign(d);
+
+        /// <summary>
+        /// Returns an integer that indicates the sign of a double.
+        /// </summary>
+        /// <param name="d">A signed number.</param>
+        /// <returns>If d ≤ -1 returns -1, if 1 ≤ d returns 1 and if d = 0 returns 0.</returns>
+        public static int Sign(double d) => Math.Sign(d);
+
+        /// <summary>
+        /// Returns an integer that indicates the sign of a long.
+        /// </summary>
+        /// <param name="d">A signed number.</param>
+        /// <returns>If d ≤ -1 returns -1, if 1 ≤ d returns 1 and if d = 0 returns 0.</returns>
+        public static int Sign(long d) => Math.Sign(d);
 
         /// <summary>
         /// Returns the next power of two that is greater than or equal to the specified number.
