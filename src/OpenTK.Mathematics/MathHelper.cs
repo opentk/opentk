@@ -68,6 +68,548 @@ namespace OpenToolkit.Mathematics
         public const float Log2E = 1.442695041f;
 
         /// <summary>
+        /// Returns the absolute value of a decimal number.
+        /// </summary>
+        /// <param name="n">A number that is greater than or equal to MinValue, but less than or equal to MaxValue.</param>
+        /// <returns>A decimal number, x, such that 0 ≤ x ≤ MaxValue.</returns>
+        public static decimal Abs(decimal n) => Math.Abs(n);
+
+        /// <summary>
+        /// Returns the absolute value of a double number.
+        /// </summary>
+        /// <param name="n">A number that is greater than or equal to MinValue, but less than or equal to MaxValue.</param>
+        /// <returns>A double number, x, such that 0 ≤ x ≤ MaxValue.</returns>
+        public static double Abs(double n) => Math.Abs(n);
+
+        /// <summary>
+        /// Returns the absolute value of a short number.
+        /// </summary>
+        /// <param name="n">A number that is greater than or equal to MinValue, but less than or equal to MaxValue.</param>
+        /// <returns>A short number, x, such that 0 ≤ x ≤ MaxValue.</returns>
+        public static short Abs(short n) => Math.Abs(n);
+
+        /// <summary>
+        /// Returns the absolute value of a int number.
+        /// </summary>
+        /// <param name="n">A number that is greater than or equal to MinValue, but less than or equal to MaxValue.</param>
+        /// <returns>A int number, x, such that 0 ≤ x ≤ MaxValue.</returns>
+        public static int Abs(int n) => Math.Abs(n);
+
+        /// <summary>
+        /// Returns the absolute value of a long number.
+        /// </summary>
+        /// <param name="n">A number that is greater than or equal to MinValue, but less than or equal to MaxValue.</param>
+        /// <returns>A long number, x, such that 0 ≤ x ≤ MaxValue.</returns>
+        public static long Abs(long n) => Math.Abs(n);
+
+        /// <summary>
+        /// Returns the absolute value of a sbyte number.
+        /// </summary>
+        /// <param name="n">A number that is greater than or equal to MinValue, but less than or equal to MaxValue.</param>
+        /// <returns>A sbyte number, x, such that 0 ≤ x ≤ MaxValue.</returns>
+        public static sbyte Abs(sbyte n) => Math.Abs(n);
+
+        /// <summary>
+        /// Returns the absolute value of a float number.
+        /// </summary>
+        /// <param name="n">A number that is greater than or equal to MinValue, but less than or equal to MaxValue.</param>
+        /// <returns>A float number, x, such that 0 ≤ x ≤ MaxValue.</returns>
+        public static float Abs(float n) => Math.Abs(n);
+
+        /// <summary>
+        /// Returns the sine of the specified angle.
+        /// </summary>
+        /// <param name="radians">The specified angle.</param>
+        /// <returns>Sine of the angle. If radians is equal to NaN, NegativeInfinity, or PositiveInfinity, this method returns NaN.</returns>
+        public static double Sin(double radians) => Math.Sin(radians);
+
+        /// <summary>
+        /// Returns the hyperbolic sine of the specified angle.
+        /// </summary>
+        /// <param name="radians">The specified angle.</param>
+        /// <returns>Hyperbolic sine of the specified angle. If radians is equal to NaN, NegativeInfinity, or PositiveInfinity, this method returns NaN.</returns>
+        public static double Sinh(double radians) => Math.Sinh(radians);
+
+        /// <summary>
+        /// Returns the arc sine of the specified angle.
+        /// </summary>
+        /// <param name="radians">The specified angle.</param>
+        /// <returns>Arc sine of the specified angle. If radians is equal to NaN, NegativeInfinity, or PositiveInfinity, this method returns NaN.</returns>
+        public static double Asin(double radians) => Math.Asin(radians);
+
+        /// <summary>
+        /// Returns the cosine of the specified angle.
+        /// </summary>
+        /// <param name="radians">The specified angle.</param>
+        /// <returns>Cosine of the angle. If radians is equal to NaN, NegativeInfinity, or PositiveInfinity, this method returns NaN.</returns>
+        public static double Cos(double radians) => Math.Cos(radians);
+
+        /// <summary>
+        /// Returns the hyperbolic cosine of the specified angle.
+        /// </summary>
+        /// <param name="radians">The specified angle.</param>
+        /// <returns>Hyperbolic cosine of the specified angle. If radians is equal to NaN, NegativeInfinity, or PositiveInfinity, this method returns NaN.</returns>
+        public static double Cosh(double radians) => Math.Cosh(radians);
+
+        /// <summary>
+        /// Returns the arc sine of the specified angle.
+        /// </summary>
+        /// <param name="radians">The specified angle.</param>
+        /// <returns>Arc sine of the specified angle. If radians is equal to NaN, NegativeInfinity, or PositiveInfinity, this method returns NaN.</returns>
+        public static double Acos(double radians) => Math.Acos(radians);
+
+        /// <summary>
+        /// Returns the tangent of the specified angle.
+        /// </summary>
+        /// <param name="radians">The specified angle.</param>
+        /// <returns>Tangent of the specified angle. If radians is equal to NaN, NegativeInfinity, or PositiveInfinity, this method returns NaN.</returns>
+        public static double Tan(double radians) => Math.Tan(radians);
+
+        /// <summary>
+        /// Returns the hyperbolic tangent of the specified angle.
+        /// </summary>
+        /// <param name="radians">The specified angle.</param>
+        /// <returns>Hyperbolic tangent of the specified angle. If radians is equal to NaN, NegativeInfinity, or PositiveInfinity, this method returns NaN.</returns>
+        public static double Tanh(double radians) => Math.Tanh(radians);
+
+        /// <summary>
+        /// Returns the arc tangent of the specified angle.
+        /// </summary>
+        /// <param name="radians">The specified angle.</param>
+        /// <returns>Arc tangent of the specified angle. If radians is equal to NaN, NegativeInfinity, or PositiveInfinity, this method returns NaN.</returns>
+        public static double Atan(double radians) => Math.Atan(radians);
+
+        /// <summary>
+        /// Returns the angle whose tangent is the quotient of two specified numbers.
+        /// </summary>
+        /// <param name="y">The y coordinate of a point.</param>
+        /// <param name="x">The x coordinate of a point.</param>
+        /// <returns>An angle, θ, measured in radians, such that -π ≤ θ ≤ π, and tan(θ) = y / x, where (x, y) is a point in the Cartesian plane.</returns>
+        public static double Atan2(double y, double x) => Math.Atan2(y, x);
+
+        /// <summary>
+        /// Produces the full product of two 32-bit numbers.
+        /// </summary>
+        /// <param name="a">The first number to multiply.</param>
+        /// <param name="b">The second number to multiply.</param>
+        /// <returns>The number containing the product of the specified numbers.</returns>
+        public static long BigMul(int a, int b) => Math.BigMul(a, b);
+
+        /// <summary>
+        /// Returns the square root of a specified number.
+        /// </summary>
+        /// <param name="n">The number whose square root is to be found.</param>
+        /// <returns>The positive square root of n.</returns>
+        public static double Sqrt(double n) => Math.Sqrt(n);
+
+        /// <summary>
+        /// Returns a specified number raised to the specified power.
+        /// </summary>
+        /// <param name="x">A double-precision floating-point number to be raised to a power.</param>
+        /// <param name="y">A double-precision floating-point number that specifies a power.</param>
+        /// <returns>The number x raised to the power y.</returns>
+        public static double Pow(double x, double y) => Math.Pow(x, y);
+
+        /// <summary>
+        /// Returns the smallest integral value greater than or equal to the specified number.
+        /// </summary>
+        /// <param name="n">A decimal number.</param>
+        /// <returns>The smallest integral value that is greater than or equal to n. Note that this method returns a Decimal instead of an integral type.</returns>
+        public static decimal Ceiling(decimal n) => Math.Ceiling(n);
+
+        /// <summary>
+        /// Returns the smallest integral value greater than or equal to the specified number.
+        /// </summary>
+        /// <param name="n">A double-precision floating-point number.</param>
+        /// <returns>The smallest integral value that is greater than or equal to n. If n is equal to NaN, NegativeInfinity, or PositiveInfinity, that value is returned.
+        /// Note that this method returns a Double instead of an integral type.</returns>
+        public static double Ceiling(double n) => Math.Ceiling(n);
+
+        /// <summary>
+        /// Returns the largest integral value less than or equal to the specified number.
+        /// </summary>
+        /// <param name="n">A decimal number.</param>
+        /// <returns>Returns the largest integral value less than or equal to the specified decimal number.</returns>
+        public static decimal Floor(decimal n) => Math.Floor(n);
+
+        /// <summary>
+        /// Returns the largest integral value less than or equal to the specified number.
+        /// </summary>
+        /// <param name="n">A double-precision floating-point number.</param>
+        /// <returns>Returns the largest integral value less than or equal to the specified double-precision floating-point number.</returns>
+        public static double Floor(double n) => Math.Floor(n);
+
+        /// <summary>
+        /// Calculates the quotient of two integers and also returns the remainder in an output parameter.
+        /// </summary>
+        /// <param name="a">The dividend.</param>
+        /// <param name="b">The divisor.</param>
+        /// <param name="result">The remainder.</param>
+        /// <returns>The quotient of the specified numbers.</returns>
+        /// <exception cref="DivideByZeroException">b is zero.</exception>
+        public static int DivRem(int a, int b, out int result) => Math.DivRem(a, b, out result);
+
+        /// <summary>
+        /// Calculates the quotient of two longs and also returns the remainder in an output parameter.
+        /// </summary>
+        /// <param name="a">The dividend.</param>
+        /// <param name="b">The divisor.</param>
+        /// <param name="result">The remainder.</param>
+        /// <returns>The quotient of the specified numbers.</returns>
+        /// <exception cref="DivideByZeroException">b is zero.</exception>
+        public static long DivRem(long a, long b, out long result) => Math.DivRem(a, b, out result);
+
+        /// <summary>
+        /// Returns the natural (base e) logarithm of a specified number.
+        /// </summary>
+        /// <param name="n">A number whose logarithm is to be found.</param>
+        /// <returns>The natural logarithm of n.</returns>
+        public static double Log(double n) => Math.Log(n);
+
+        /// <summary>
+        /// Returns the logarithm of a specified number in a specified base.
+        /// </summary>
+        /// <param name="n">The specified number.</param>
+        /// <param name="newBase">The specified base.</param>
+        /// <returns>The base newBase logarithm of n.</returns>
+        public static double Log(double n, double newBase) => Math.Log(n, newBase);
+
+        /// <summary>
+        /// Returns the base 10 logarithm of a specified number.
+        /// </summary>
+        /// <param name="n">The specified number.</param>
+        /// <returns>The base 10 log of n.</returns>
+        public static double Log10(double n) => Math.Log10(n);
+
+        /// <summary>
+        /// Returns the base 2 logarithm of a specified number.
+        /// </summary>
+        /// <param name="n">The specified number.</param>
+        /// <returns>The base 2 log of n.</returns>
+        /// <remarks>This one will be implemented by System.Math from .netcore 3.0 and onwards.</remarks>
+        public static double Log2(double n) => Math.Log(n, 2);
+
+        /// <summary>
+        /// Returns e raised to the specified power.
+        /// </summary>
+        /// <param name="n">The specified power.</param>
+        /// <returns>The number e raised to the power n. If n equals NaN or PositiveInfinity, that value is returned. If n equals NegativeInfinity, 0 is returned.</returns>
+        public static double Exp(double n) => Math.Exp(n);
+
+        /// <summary>
+        /// Returns the remainder resulting from the division of a specified number by another specified number.
+        /// </summary>
+        /// <param name="a">A dividend.</param>
+        /// <param name="b">A divisor.</param>
+        /// <returns>A number equal to a - (b Q), where Q is the quotient of a / b rounded to the nearest integer (if a / b falls halfway between two integers, the even integer is returned).
+        /// If a - (b Q) is zero, the value +0 is returned if a is positive, or -0 if a is negative.
+        /// If b = 0, NaN is returned.</returns>
+        public static double IEEERemainder(double a, double b) => Math.IEEERemainder(a, b);
+
+        /// <summary>
+        /// Returns the larger of two bytes.
+        /// </summary>
+        /// <param name="a">The first of two bytes to compare.</param>
+        /// <param name="b">The second of two bytes to compare.</param>
+        /// <returns>Parameter a or b, whichever is larger.</returns>
+        public static byte Max(byte a, byte b) => Math.Max(a, b);
+
+        /// <summary>
+        /// Returns the larger of two sbytes.
+        /// </summary>
+        /// <param name="a">The first of two sbytes to compare.</param>
+        /// <param name="b">The second of two sbytes to compare.</param>
+        /// <returns>Parameter a or b, whichever is larger.</returns>
+        public static sbyte Max(sbyte a, sbyte b) => Math.Max(a, b);
+
+        /// <summary>
+        /// Returns the larger of two shorts.
+        /// </summary>
+        /// <param name="a">The first of two shorts to compare.</param>
+        /// <param name="b">The second of two shorts to compare.</param>
+        /// <returns>Parameter a or b, whichever is larger.</returns>
+        public static short Max(short a, short b) => Math.Max(a, b);
+
+        /// <summary>
+        /// Returns the larger of two ushorts.
+        /// </summary>
+        /// <param name="a">The first of two ushorts to compare.</param>
+        /// <param name="b">The second of two ushorts to compare.</param>
+        /// <returns>Parameter a or b, whichever is larger.</returns>
+        public static ushort Max(ushort a, ushort b) => Math.Max(a, b);
+
+        /// <summary>
+        /// Returns the larger of two decimals.
+        /// </summary>
+        /// <param name="a">The first of two decimals to compare.</param>
+        /// <param name="b">The second of two decimals to compare.</param>
+        /// <returns>Parameter a or b, whichever is larger.</returns>
+        public static decimal Max(decimal a, decimal b) => Math.Max(a, b);
+
+        /// <summary>
+        /// Returns the larger of two ints.
+        /// </summary>
+        /// <param name="a">The first of two ints to compare.</param>
+        /// <param name="b">The second of two ints to compare.</param>
+        /// <returns>Parameter a or b, whichever is larger.</returns>
+        public static int Max(int a, int b) => Math.Max(a, b);
+
+        /// <summary>
+        /// Returns the larger of two uints.
+        /// </summary>
+        /// <param name="a">The first of two uints to compare.</param>
+        /// <param name="b">The second of two uints to compare.</param>
+        /// <returns>Parameter a or b, whichever is larger.</returns>
+        public static uint Max(uint a, uint b) => Math.Max(a, b);
+
+        /// <summary>
+        /// Returns the larger of two floats.
+        /// </summary>
+        /// <param name="a">The first of two floats to compare.</param>
+        /// <param name="b">The second of two floats to compare.</param>
+        /// <returns>Parameter a or b, whichever is larger.</returns>
+        public static float Max(float a, float b) => Math.Max(a, b);
+
+        /// <summary>
+        /// Returns the larger of two longs.
+        /// </summary>
+        /// <param name="a">The first of two longs to compare.</param>
+        /// <param name="b">The second of two longs to compare.</param>
+        /// <returns>Parameter a or b, whichever is larger.</returns>
+        public static long Max(long a, long b) => Math.Max(a, b);
+
+        /// <summary>
+        /// Returns the larger of two ulongs.
+        /// </summary>
+        /// <param name="a">The first of two ulongs to compare.</param>
+        /// <param name="b">The second of two ulongs to compare.</param>
+        /// <returns>Parameter a or b, whichever is larger.</returns>
+        public static ulong Max(ulong a, ulong b) => Math.Max(a, b);
+
+        /// <summary>
+        /// Returns the smaller of two bytes.
+        /// </summary>
+        /// <param name="a">The first of two bytes to compare.</param>
+        /// <param name="b">The second of two bytes to compare.</param>
+        /// <returns>Parameter a or b, whichever is smaller.</returns>
+        public static byte Min(byte a, byte b) => Math.Min(a, b);
+
+        /// <summary>
+        /// Returns the smaller of two sbytes.
+        /// </summary>
+        /// <param name="a">The first of two sbytes to compare.</param>
+        /// <param name="b">The second of two sbytes to compare.</param>
+        /// <returns>Parameter a or b, whichever is smaller.</returns>
+        public static sbyte Min(sbyte a, sbyte b) => Math.Min(a, b);
+
+        /// <summary>
+        /// Returns the smaller of two shorts.
+        /// </summary>
+        /// <param name="a">The first of two shorts to compare.</param>
+        /// <param name="b">The second of two shorts to compare.</param>
+        /// <returns>Parameter a or b, whichever is smaller.</returns>
+        public static short Min(short a, short b) => Math.Min(a, b);
+
+        /// <summary>
+        /// Returns the smaller of two ushorts.
+        /// </summary>
+        /// <param name="a">The first of two ushorts to compare.</param>
+        /// <param name="b">The second of two ushorts to compare.</param>
+        /// <returns>Parameter a or b, whichever is smaller.</returns>
+        public static ushort Min(ushort a, ushort b) => Math.Min(a, b);
+
+        /// <summary>
+        /// Returns the smaller of two decimals.
+        /// </summary>
+        /// <param name="a">The first of two decimals to compare.</param>
+        /// <param name="b">The second of two decimals to compare.</param>
+        /// <returns>Parameter a or b, whichever is smaller.</returns>
+        public static decimal Min(decimal a, decimal b) => Math.Min(a, b);
+
+        /// <summary>
+        /// Returns the smaller of two ints.
+        /// </summary>
+        /// <param name="a">The first of two ints to compare.</param>
+        /// <param name="b">The second of two ints to compare.</param>
+        /// <returns>Parameter a or b, whichever is smaller.</returns>
+        public static int Min(int a, int b) => Math.Min(a, b);
+
+        /// <summary>
+        /// Returns the smaller of two uints.
+        /// </summary>
+        /// <param name="a">The first of two uints to compare.</param>
+        /// <param name="b">The second of two uints to compare.</param>
+        /// <returns>Parameter a or b, whichever is smaller.</returns>
+        public static uint Min(uint a, uint b) => Math.Min(a, b);
+
+        /// <summary>
+        /// Returns the smaller of two floats.
+        /// </summary>
+        /// <param name="a">The first of two floats to compare.</param>
+        /// <param name="b">The second of two floats to compare.</param>
+        /// <returns>Parameter a or b, whichever is smaller.</returns>
+        public static float Min(float a, float b) => Math.Min(a, b);
+
+        /// <summary>
+        /// Returns the smaller of two longs.
+        /// </summary>
+        /// <param name="a">The first of two longs to compare.</param>
+        /// <param name="b">The second of two longs to compare.</param>
+        /// <returns>Parameter a or b, whichever is smaller.</returns>
+        public static long Min(long a, long b) => Math.Min(a, b);
+
+        /// <summary>
+        /// Returns the smaller of two ulongs.
+        /// </summary>
+        /// <param name="a">The first of two ulongs to compare.</param>
+        /// <param name="b">The second of two ulongs to compare.</param>
+        /// <returns>Parameter a or b, whichever is smaller.</returns>
+        public static ulong Min(ulong a, ulong b) => Math.Min(a, b);
+
+        /// <summary>
+        /// Rounds a decimal value to a specified number of fractional digits, and uses the specified rounding convention for midpoint values.
+        /// </summary>
+        /// <param name="d">A decimal number to be rounded.</param>
+        /// <param name="digits">The number of decimal places in the return value.</param>
+        /// <param name="mode">Specification for how to round d if it is midway between two other numbers.</param>
+        /// <returns>The number nearest to d that contains a number of fractional digits equal to digits. If d has fewer fractional digits than digits, d is returned unchanged.</returns>
+        /// <exception cref="ArgumentOutOfRangeException">digits is less than 0 or greater than 28.</exception>
+        /// <exception cref="ArgumentException">mode is not a valid value of MidpointRounding.</exception>
+        /// <exception cref="OverflowException">The result is outside the range of a Decimal.</exception>
+        public static decimal Round(decimal d, int digits, MidpointRounding mode) => Math.Round(d, digits, mode);
+
+        /// <summary>
+        /// Rounds a double-precision floating-point value to a specified number of fractional digits, and uses the specified rounding convention for midpoint values.
+        /// </summary>
+        /// <param name="d">A double-precision floating-point number to be rounded.</param>
+        /// <param name="digits">The number of fractional digits in the return value.</param>
+        /// <param name="mode">Specification for how to round d if it is midway between two other numbers.</param>
+        /// <returns>The number nearest to d that has a number of fractional digits equal to digits. If d has fewer fractional digits than digits, d is returned unchanged.</returns>
+        /// <exception cref="ArgumentOutOfRangeException">digits is less than 0 or greater than 15.</exception>
+        /// <exception cref="ArgumentException">mode is not a valid value of MidpointRounding.</exception>
+        public static double Round(double d, int digits, MidpointRounding mode) => Math.Round(d, digits, mode);
+
+        /// <summary>
+        /// Rounds a decimal value to the nearest integer, and uses the specified rounding convention for midpoint values.
+        /// </summary>
+        /// <param name="d">A decimal number to be rounded.</param>
+        /// <param name="mode">Specification for how to round d if it is midway between two other numbers.</param>
+        /// <returns>The integer nearest d. If d is halfway between two numbers, one of which is even and the other odd, then mode determines which of the two is returned.
+        /// Note that this method returns a Decimal instead of an integral type.</returns>
+        /// <exception cref="ArgumentException">mode is not a valid value of MidpointRounding.</exception>
+        /// <exception cref="OverflowException">The result is outside the range of a Decimal.</exception>
+        public static decimal Round(decimal d, MidpointRounding mode) => Math.Round(d, mode);
+
+        /// <summary>
+        /// Rounds a double-precision floating-point value to the nearest integer, and uses the specified rounding convention for midpoint values.
+        /// </summary>
+        /// <param name="d">A double-precision floating-point number to be rounded.</param>
+        /// <param name="mode">Specification for how to round d if it is midway between two other numbers.</param>
+        /// <returns>The integer nearest d. If d is halfway between two integers, one of which is even and the other odd, then mode determines which of the two is returned.
+        /// Note that this method returns a Double instead of an integral type.</returns>
+        /// <exception cref="ArgumentException">mode is not a valid value of MidpointRounding.</exception>
+        public static double Round(double d, MidpointRounding mode) => Math.Round(d, mode);
+
+        /// <summary>
+        /// Rounds a decimal value to a specified number of fractional digits, and rounds midpoint values to the nearest even number.
+        /// </summary>
+        /// <param name="d">A decimal number to be rounded.</param>
+        /// <param name="digits">The number of fractional digits in the return value.</param>
+        /// <returns>The number nearest to d that contains a number of fractional digits equal to digits.</returns>
+        /// <exception cref="ArgumentOutOfRangeException"> digits is less than 0 or greater than 15.</exception>
+        /// <exception cref="OverflowException">The result is outside the range of a Decimal.</exception>
+        public static decimal Round(decimal d, int digits) => Math.Round(d, digits);
+
+        /// <summary>
+        /// Rounds a double-precision floating-point value to a specified number of fractional digits, and rounds midpoint values to the nearest even number.
+        /// </summary>
+        /// <param name="d">A double-precision floating-point number to be rounded.</param>
+        /// <param name="digits">The number of fractional digits in the return value.</param>
+        /// <returns>The number nearest to value that contains a number of fractional digits equal to digits.</returns>
+        /// <exception cref="ArgumentOutOfRangeException"> digits is less than 0 or greater than 15.</exception>
+        public static double Round(double d, int digits) => Math.Round(d, digits);
+
+        /// <summary>
+        /// Rounds a decimal value to the nearest integral value, and rounds midpoint values to the nearest even number.
+        /// </summary>
+        /// <param name="d">A decimal number to be rounded.</param>
+        /// <returns>The integer nearest the d parameter. If the fractional component of d is halfway between two integers, one of which is even and the other odd, the even number is returned.
+        /// Note that this method returns a Decimal instead of an integral type.</returns>
+        /// <exception cref="OverflowException">The result is outside the range of a Decimal.</exception>
+        public static decimal Round(decimal d) => Math.Round(d);
+
+        /// <summary>
+        /// Rounds a double-precision floating-point value to the nearest integral value, and rounds midpoint values to the nearest even number.
+        /// </summary>
+        /// <param name="d">A double-precision floating-point number to be rounded.</param>
+        /// <returns>The integer nearest d. If the fractional component of d is halfway between two integers, one of which is even and the other odd, then the even number is returned.
+        /// Note that this method returns a Double instead of an integral type.</returns>
+        public static double Round(double d) => Math.Round(d);
+
+        /// <summary>
+        /// Calculates the integral part of a specified decimal number.
+        /// </summary>
+        /// <param name="d">A number to truncate.</param>
+        /// <returns>The integral part of d; that is, the number that remains after any fractional digits have been discarded.</returns>
+        public static decimal Truncate(decimal d) => Math.Truncate(d);
+
+        /// <summary>
+        /// Calculates the integral part of a specified double-precision floating-point number.
+        /// </summary>
+        /// <param name="d">A number to truncate.</param>
+        /// <returns>The integral part of d; that is, the number that remains after any fractional digits have been discarded, or one of the values listed in the following table.</returns>
+        public static double Truncate(double d) => Math.Truncate(d);
+
+        /// <summary>
+        /// Returns an integer that indicates the sign of a sbyte.
+        /// </summary>
+        /// <param name="d">A signed number.</param>
+        /// <returns>If d ≤ -1 returns -1, if 1 ≤ d returns 1 and if d = 0 returns 0.</returns>
+        public static int Sign(sbyte d) => Math.Sign(d);
+
+        /// <summary>
+        /// Returns an integer that indicates the sign of a short.
+        /// </summary>
+        /// <param name="d">A signed number.</param>
+        /// <returns>If d ≤ -1 returns -1, if 1 ≤ d returns 1 and if d = 0 returns 0.</returns>
+        public static int Sign(short d) => Math.Sign(d);
+
+        /// <summary>
+        /// Returns an integer that indicates the sign of a int.
+        /// </summary>
+        /// <param name="d">A signed number.</param>
+        /// <returns>If d ≤ -1 returns -1, if 1 ≤ d returns 1 and if d = 0 returns 0.</returns>
+        public static int Sign(int d) => Math.Sign(d);
+
+        /// <summary>
+        /// Returns an integer that indicates the sign of a float.
+        /// </summary>
+        /// <param name="d">A signed number.</param>
+        /// <returns>If d ≤ -1 returns -1, if 1 ≤ d returns 1 and if d = 0 returns 0.</returns>
+        public static int Sign(float d) => Math.Sign(d);
+
+        /// <summary>
+        /// Returns an integer that indicates the sign of a decimal.
+        /// </summary>
+        /// <param name="d">A signed number.</param>
+        /// <returns>If d ≤ -1 returns -1, if 1 ≤ d returns 1 and if d = 0 returns 0.</returns>
+        public static int Sign(decimal d) => Math.Sign(d);
+
+        /// <summary>
+        /// Returns an integer that indicates the sign of a double.
+        /// </summary>
+        /// <param name="d">A signed number.</param>
+        /// <returns>If d ≤ -1 returns -1, if 1 ≤ d returns 1 and if d = 0 returns 0.</returns>
+        public static int Sign(double d) => Math.Sign(d);
+
+        /// <summary>
+        /// Returns an integer that indicates the sign of a long.
+        /// </summary>
+        /// <param name="d">A signed number.</param>
+        /// <returns>If d ≤ -1 returns -1, if 1 ≤ d returns 1 and if d = 0 returns 0.</returns>
+        public static int Sign(long d) => Math.Sign(d);
+
+        /// <summary>
         /// Returns the next power of two that is greater than or equal to the specified number.
         /// </summary>
         /// <param name="n">The specified number.</param>
