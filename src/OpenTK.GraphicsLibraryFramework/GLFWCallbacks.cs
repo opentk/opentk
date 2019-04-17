@@ -22,7 +22,7 @@ namespace OpenToolkit.GraphicsLibraryFramework
         /// <param name="window">The window that received the event.</param>
         /// <param name="codepoint">The Unicode code point of the character.</param>
         /// <seealso cref="IGLFW.SetCharCallback"/>
-        public delegate void CharCallback(Window* window, uint codepoint); // TODO: Make enums for int params in callback
+        public delegate void CharCallback(Window* window, uint codepoint);
 
         /// <summary>
         /// The function signature for Unicode character with modifiers callback functions.
@@ -32,7 +32,7 @@ namespace OpenToolkit.GraphicsLibraryFramework
         /// <param name="codepoint">The Unicode code point of the character.</param>
         /// <param name="modifiers">Bit field describing which modifier keys were held down.</param>
         /// <seealso cref="IGLFW.SetCharModsCallback"/>
-        public delegate void CharModsCallback(Window* window, uint codepoint, KeyModifiers modifiers); // TODO: Make enums for int params in callback
+        public delegate void CharModsCallback(Window* window, uint codepoint, KeyModifiers modifiers);
 
         /// <summary>
         /// The function signature for cursor enter/leave callback functions.
@@ -49,7 +49,7 @@ namespace OpenToolkit.GraphicsLibraryFramework
         /// <param name="x">The new cursor x-coordinate, relative to the left edge of the client area.</param>
         /// <param name="y">The new cursor y-coordinate, relative to the top edge of the client area.</param>
         /// <seealso cref="IGLFW.SetCursorPosCallback"/>
-        public delegate void CursorPosCallback(Window* window, double x, double y); // TODO: Make enums for int params in callback
+        public delegate void CursorPosCallback(Window* window, double x, double y);
 
         /// <summary>
         /// The function signature for file drop callbacks.
@@ -58,7 +58,7 @@ namespace OpenToolkit.GraphicsLibraryFramework
         /// <param name="count">The number of dropped files.</param>
         /// <param name="paths">The UTF-8 encoded file and/or directory path names.</param>
         /// <seealso cref="IGLFW.SetDropCallback"/>
-        public delegate void DropCallback(Window* window, int count, IntPtr paths); // TODO: Make enum for int param in callback
+        public delegate void DropCallback(Window* window, int count, IntPtr paths);
 
         /// <summary>
         /// The function signature for joystick configuration callback functions.
@@ -79,7 +79,7 @@ namespace OpenToolkit.GraphicsLibraryFramework
         /// <param name="action">The <see cref="InputAction"/> for that <paramref name="key"/>.</param>
         /// <param name="mods">Bit field describing which modifier keys were held down.</param>
         /// <seealso cref="IGLFW.SetKeyCallback"/>
-        public delegate void KeyCallback(Window* window, int key, int scanCode, InputAction action, int mods); // TODO: Make enums for int params in callback
+        public delegate void KeyCallback(Window* window, Keys key, int scanCode, InputAction action, KeyModifiers mods);
 
         /// <summary>
         /// The function signature for mouse button callback functions.
@@ -98,7 +98,7 @@ namespace OpenToolkit.GraphicsLibraryFramework
         /// <param name="offsetX">The scroll offset along the x-axis.</param>
         /// <param name="offsetY">The scroll offset along the y-axis.</param>
         /// <seealso cref="IGLFW.SetScrollCallback"/>
-        public delegate void ScrollCallback(Window* window, double offsetX, double offsetY); // TODO: Make enums for int params in callback
+        public delegate void ScrollCallback(Window* window, double offsetX, double offsetY);
 
         /// <summary>
         /// The function signature for monitor configuration callback functions.
@@ -160,6 +160,6 @@ namespace OpenToolkit.GraphicsLibraryFramework
         /// </summary>
         /// <param name="error">An error code.</param>
         /// <param name="description">A UTF-8 encoded string describing the error.</param>
-        public delegate void ErrorCallback(ErrorCode error, string description); // TODO: Make enum for int param in callback
+        public delegate void ErrorCallback(ErrorCode error, string description);
     }
 }
