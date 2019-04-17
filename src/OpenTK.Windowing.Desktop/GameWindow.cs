@@ -190,7 +190,7 @@ namespace OpenToolkit.Windowing.Desktop
         {
             // Make sure the GameWindow is visible when it first runs.
             IsVisible = true;
-            
+
             // Send the OnLoad event, to load all user code.
             OnLoad(this, EventArgs.Empty);
 
