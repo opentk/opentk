@@ -17,7 +17,7 @@ namespace OpenToolkit.GraphicsLibraryFramework
     internal class GLFWLibraryNameContainer : PlatformLibraryNameContainerBase
     {
         /// <inheritdoc />
-        public override string Linux => "libglfw.so.3";
+        public override string Linux => "libglfw.so.3.3";
 
         /// <inheritdoc />
         public override string MacOS => "libglfw.dylib";

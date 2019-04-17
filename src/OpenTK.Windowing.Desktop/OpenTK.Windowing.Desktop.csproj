@@ -13,14 +13,14 @@
     </ItemGroup>
     
     <ItemGroup>
-      <PackageReference Include="opentoolkit.redist.glfw" Version="3.2.1.5" />
-    </ItemGroup>
-    
-    <ItemGroup>
       <ProjectReference Include="..\OpenTK.Core\OpenTK.Core.csproj" />
       <ProjectReference Include="..\OpenTK.GraphicsLibraryFramework\OpenTK.GraphicsLibraryFramework.csproj" />
       <ProjectReference Include="..\OpenTK.Mathematics\OpenTK.Mathematics.csproj" />
       <ProjectReference Include="..\OpenTK.Windowing.Common\OpenTK.Windowing.Common.csproj" />
+    </ItemGroup>
+    
+    <ItemGroup>
+      <PackageReference Include="opentoolkit.redist.glfw" Version="3.3.0-pre20190417200931" />
     </ItemGroup>
 
     <Import Project="..\..\props\common.props" />
