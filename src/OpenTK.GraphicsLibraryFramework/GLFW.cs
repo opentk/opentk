@@ -371,6 +371,9 @@ namespace OpenToolkit.GraphicsLibraryFramework
         public abstract unsafe GLFWCallbacks.WindowPosCallback SetWindowPosCallback(Window* window, GLFWCallbacks.WindowPosCallback callback);
 
         /// <inheritdoc />
+        public abstract unsafe GLFWCallbacks.WindowRefreshCallback SetWindowRefreshCallback(Window* window, GLFWCallbacks.WindowRefreshCallback callback);
+
+        /// <inheritdoc />
         public abstract void SwapInterval(int interval);
 
         /// <inheritdoc />

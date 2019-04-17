@@ -161,5 +161,11 @@ namespace OpenToolkit.GraphicsLibraryFramework
         /// <param name="error">An error code.</param>
         /// <param name="description">A UTF-8 encoded string describing the error.</param>
         public delegate void ErrorCallback(ErrorCode error, string description);
+
+        /// <summary>
+        /// The function signature for window refresh functions.
+        /// </summary>
+        /// <param name="window">The window that needs to be refreshed.</param>
+        public delegate void WindowRefreshCallback(Window* window);
     }
 }

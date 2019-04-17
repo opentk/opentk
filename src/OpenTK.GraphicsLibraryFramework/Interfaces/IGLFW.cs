@@ -2808,6 +2808,36 @@ namespace OpenToolkit.GraphicsLibraryFramework
 
         /// <summary>
         /// <para>
+        /// Sets the refresh callback for the specified window.
+        /// </para>
+        /// <para>
+        /// This function sets the refresh callback of the specified window, which is
+        /// called when the content area of the window needs to be redrawn, for example
+        /// if the window has been exposed after having been covered by another window.
+        /// </para>
+        /// <para>
+        /// On compositing window systems such as Aero, Compiz, Aqua or Wayland, where
+        /// the window contents are saved off-screen, this callback may be called only
+        /// very infrequently or never at all.
+        /// </para>
+        /// </summary>
+        /// <param name="window">The window whose callback to set.</param>
+        /// <param name="callback">The new callback, or <c>null</c> to remove the currently set callback.</param>
+        /// <returns>
+        /// The previously set callback, or <c>null</c> if no callback was set or the library had not been initialized.
+        /// </returns>
+        /// <remarks>
+        /// <para>
+        /// This function must only be called from the main thread.
+        /// </para>
+        /// <para>
+        /// Possible errors include <see cref="ErrorCode.NotInitialized"/>.
+        /// </para>
+        /// </remarks>
+        unsafe GLFWCallbacks.WindowRefreshCallback SetWindowRefreshCallback(Window* window, GLFWCallbacks.WindowRefreshCallback callback);
+
+        /// <summary>
+        /// <para>
         /// This function sets the size, in screen coordinates, of the client area of the specified window.
         /// </para>
         /// <para>
