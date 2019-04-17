@@ -533,18 +533,23 @@ namespace OpenToolkit.Windowing.Desktop
         {
             unsafe
             {
-                Glfw.SetWindowPosCallback(WindowPtr, _posCallback = (window, x, y) => OnMove(this, new WindowPositionEventArgs(x, y)));
+                _posCallback = (window, x, y) => OnMove(this, new WindowPositionEventArgs(x, y));
+                Glfw.SetWindowPosCallback(WindowPtr, _posCallback);
 
-                Glfw.SetWindowSizeCallback(WindowPtr, _sizeCallback = (window, width, height) => OnResize(this, new ResizeEventArgs(width, height)));
+                _sizeCallback = (window, width, height) => OnResize(this, new ResizeEventArgs(width, height));
+                Glfw.SetWindowSizeCallback(WindowPtr, _sizeCallback);
 
-                Glfw.SetWindowCloseCallback(WindowPtr, _closeCallback = window => OnClosing(this, new CancelEventArgs()));
+                _closeCallback = window => OnClosing(this, new CancelEventArgs());
+                Glfw.SetWindowCloseCallback(WindowPtr, _closeCallback);
 
-                Glfw.SetWindowIconifyCallback(WindowPtr, (window, iconified) => OnIconChanged(this, new MinimizedEventArgs(iconified)));
+                _iconifyCallback = (window, iconified) => OnIconChanged(this, new MinimizedEventArgs(iconified));
+                Glfw.SetWindowIconifyCallback(WindowPtr, _iconifyCallback);
 
                 _focusCallback = (window, focused) => OnFocusedChanged(this, new FocusedChangedEventArgs(focused));
                 Glfw.SetWindowFocusCallback(WindowPtr, _focusCallback);
 
-                Glfw.SetCharCallback(WindowPtr, _charCallback = (window, codepoint) => OnKeyPress(this, new KeyPressEventArgs((char)codepoint)));
+                _charCallback = (window, codepoint) => OnKeyPress(this, new KeyPressEventArgs((char)codepoint));
+                Glfw.SetCharCallback(WindowPtr, _charCallback);
 
                 _keyCallback = (window, key, scancode, action, mods) =>
                 {
@@ -615,7 +620,9 @@ namespace OpenToolkit.Windowing.Desktop
                 };
                 Glfw.SetCursorPosCallback(WindowPtr, _cursorPosCallback);
 
-                Glfw.SetScrollCallback(WindowPtr, _scrollCallback = (window, offsetX, offsetY) => OnMouseWheel(this, new MouseWheelEventArgs(offsetX, offsetY)));
+                _scrollCallback = (window, offsetX, offsetY) =>
+                    OnMouseWheel(this, new MouseWheelEventArgs(offsetX, offsetY));
+                Glfw.SetScrollCallback(WindowPtr, _scrollCallback);
 
                 _dropCallback = (window, count, paths) =>
                 {
