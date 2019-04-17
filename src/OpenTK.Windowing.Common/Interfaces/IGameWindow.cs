@@ -41,11 +41,6 @@ namespace OpenToolkit.Windowing.Common
         double RenderTime { get; }
 
         /// <summary>
-        /// Gets a double representing the time spent in the UpdateFrame function, in seconds.
-        /// </summary>
-        double UpdateTime { get; }
-
-        /// <summary>
         /// Gets or sets the VSyncMode.
         /// </summary>
         VSyncMode VSync { get; set; }

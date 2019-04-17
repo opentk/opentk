@@ -10,7 +10,6 @@
 using System;
 using System.Diagnostics;
 using System.Threading;
-using OpenToolkit.Mathematics;
 using OpenToolkit.Windowing.Common;
 
 namespace OpenToolkit.Windowing.Desktop
@@ -83,9 +82,6 @@ namespace OpenToolkit.Windowing.Desktop
         private double _renderFrequency;
         private double _updateFrequency;
 
-        private double _renderTimestamp;
-        private double _updateTimestamp;
-
         private Thread _updateThread;
 
         /// <inheritdoc/>
@@ -143,9 +139,6 @@ namespace OpenToolkit.Windowing.Desktop
             }
         }
 
-        /// <inheritdoc />
-        public double UpdateTime { get; }
-
         private VSyncMode _vSync;
 
         /// <inheritdoc />
@@ -197,6 +190,8 @@ namespace OpenToolkit.Windowing.Desktop
         {
             // Make sure the GameWindow is visible when it first runs.
             IsVisible = true;
+            
+            // Send the OnLoad event, to load all user code.
             OnLoad(this, EventArgs.Empty);
 
             // Send a redundant OnResize event, to make sure all user code has the correct values.
@@ -221,7 +216,7 @@ namespace OpenToolkit.Windowing.Desktop
 
                 if (IsSingleThreaded)
                 {
-                    DispatchUpdateFrame(_watchRender);
+                    DispatchUpdateFrame();
                 }
 
                 DispatchRenderFrame();
@@ -234,15 +229,14 @@ namespace OpenToolkit.Windowing.Desktop
             _watchUpdate.Start();
             while (Exists && !IsExiting)
             {
-                DispatchUpdateFrame(_watchUpdate);
+                DispatchUpdateFrame();
             }
         }
 
-        private void DispatchUpdateFrame(Stopwatch watch)
+        private void DispatchUpdateFrame()
         {
             var isRunningSlowlyRetries = 4;
-            var timestamp = watch.Elapsed.TotalSeconds;
-            var elapsed = MathHelper.Clamp(timestamp - _updateTimestamp, 0.0, 1.0);
+            var elapsed = _watchUpdate.Elapsed.TotalMilliseconds;
 
             var updatePeriod = 1 / UpdateFrequency;
 
@@ -254,9 +248,6 @@ namespace OpenToolkit.Windowing.Desktop
                 // actual elapsed time and target elapsed time. We must
                 // compensate for this difference.
                 _updateEpsilon += elapsed - updatePeriod;
-
-                // Prepare for next loop
-                elapsed = MathHelper.Clamp(timestamp - _updateTimestamp, 0.0, 1.0);
 
                 if (UpdateFrequency <= double.Epsilon)
                 {
@@ -284,12 +275,9 @@ namespace OpenToolkit.Windowing.Desktop
 
         private void DispatchRenderFrame()
         {
-            var timestamp = _watchRender.Elapsed.TotalSeconds;
-            var elapsed = MathHelper.Clamp(timestamp - _renderTimestamp, 0.0, 1.0);
-            if (elapsed > 0 && elapsed >= (1 / RenderFrequency))
-            {
-                OnRenderFrame(this, new FrameEventArgs(elapsed));
-            }
+            var timestamp = _watchRender.Elapsed.TotalMilliseconds;
+            OnRenderFrame(this, new FrameEventArgs(timestamp));
+            _watchRender.Restart();
         }
 
         /// <inheritdoc />
