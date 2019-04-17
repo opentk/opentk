@@ -24,7 +24,15 @@
     </ItemGroup>
     
     <ItemGroup>
-      <Folder Include="EventingModels" />
+      <Compile Remove="EventingModels\**" />
+    </ItemGroup>
+    
+    <ItemGroup>
+      <EmbeddedResource Remove="EventingModels\**" />
+    </ItemGroup>
+    
+    <ItemGroup>
+      <None Remove="EventingModels\**" />
     </ItemGroup>
 
     <Import Project="..\..\props\common.props" />

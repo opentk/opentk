@@ -49,7 +49,7 @@ namespace OpenToolkit.Windowing.Common
         /// Gets the Unicode scancode which generated this event.
         /// </summary>
         public int ScanCode { get; internal set; }
-        
+
         /// <summary>
         /// Gets a bitwise combination representing the <see cref="OpenToolkit.Windowing.Common.Input.KeyModifiers" />
         /// that are currently pressed.
