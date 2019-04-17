@@ -7,7 +7,7 @@
 // of the MIT license. See the LICENSE file for details.
 //
 
-// 3.3SPECIFICusing System;
+using System;
 using AdvancedDLSupport;
 using OpenToolkit.Core.Loader;
 
@@ -52,8 +52,8 @@ namespace OpenToolkit.GraphicsLibraryFramework
         /// <inheritdoc />
         public abstract void Terminate();
 
-        // 3.3SPECIFIC/// <inheritdoc />
-        // 3.3SPECIFICpublic abstract void InitHint(InitHint hint, bool value);
+        /// <inheritdoc />
+        public abstract void InitHint(InitHint hint, bool value);
 
         /// <inheritdoc />
         public abstract void GetVersion(out int major, out int minor, out int revision);
@@ -61,8 +61,8 @@ namespace OpenToolkit.GraphicsLibraryFramework
         /// <inheritdoc />
         public abstract string GetVersionString();
 
-        // 3.3SPECIFIC/// <inheritdoc />
-        // 3.3SPECIFICpublic abstract unsafe ErrorCode GetError(out char* description);
+        /// <inheritdoc />
+        public abstract unsafe ErrorCode GetError(out char* description);
 
         /// <inheritdoc />
         public abstract unsafe Monitor** GetMonitors(out int count);
@@ -73,17 +73,17 @@ namespace OpenToolkit.GraphicsLibraryFramework
         /// <inheritdoc />
         public abstract unsafe void GetMonitorPhysicalSize(Monitor* monitor, out int width, out int height);
 
-        // 3.3SPECIFIC/// <inheritdoc />
-        // 3.3SPECIFICpublic abstract unsafe void GetMonitorContentScale(Monitor* monitor, out float xscale, out float yscale);
+        /// <inheritdoc />
+        public abstract unsafe void GetMonitorContentScale(Monitor* monitor, out float xscale, out float yscale);
 
         /// <inheritdoc />
         public abstract unsafe string GetMonitorName(Monitor* monitor);
 
-        // 3.3SPECIFIC/// <inheritdoc />
-        // 3.3SPECIFICpublic abstract unsafe void SetMonitorUserPointer(Monitor* monitor, IntPtr pointer);
+        /// <inheritdoc />
+        public abstract unsafe void SetMonitorUserPointer(Monitor* monitor, IntPtr pointer);
 
-        // 3.3SPECIFIC/// <inheritdoc />
-        // 3.3SPECIFICpublic abstract unsafe IntPtr GetMonitorUserPointer(Monitor* monitor);
+        /// <inheritdoc />
+        public abstract unsafe IntPtr GetMonitorUserPointer(Monitor* monitor);
 
         /// <inheritdoc />
         public abstract unsafe VideoMode* GetVideoModes(Monitor* monitor, out int count);
@@ -100,7 +100,8 @@ namespace OpenToolkit.GraphicsLibraryFramework
         /// <inheritdoc />
         public abstract void DefaultWindowHints();
 
-        // 3.3SPECIFICpublic abstract void WindowHintString(int hint, string value);
+        /// <inheritdoc />
+        public abstract void WindowHintString(int hint, string value);
 
         /// <inheritdoc />
         public abstract unsafe void SetWindowSizeLimits(Window* window, int minwidth, int minheight, int maxwidth, int maxheight);
@@ -111,26 +112,26 @@ namespace OpenToolkit.GraphicsLibraryFramework
         /// <inheritdoc />
         public abstract unsafe void GetWindowFrameSize(Window* window, out int left, out int top, out int right, out int bottom);
 
-        // 3.3SPECIFIC/// <inheritdoc />
-        // 3.3SPECIFICpublic abstract unsafe float GetWindowOpacity(Window* window);
+        /// <inheritdoc />
+        public abstract unsafe float GetWindowOpacity(Window* window);
 
-        // 3.3SPECIFIC/// <inheritdoc />
-        // 3.3SPECIFICpublic abstract unsafe void SetWindowOpacity(Window* window, float opacity);
+        /// <inheritdoc />
+        public abstract unsafe void SetWindowOpacity(Window* window, float opacity);
 
-        // 3.3SPECIFIC/// <inheritdoc />
-        // 3.3SPECIFICpublic abstract unsafe void RequestWindowAttention(Window* window);
+        /// <inheritdoc />
+        public abstract unsafe void RequestWindowAttention(Window* window);
 
-        // 3.3SPECIFIC/// <inheritdoc />
-        // 3.3SPECIFICpublic abstract unsafe void SetWindowAttrib(Window* window, WindowAttributeSetter attrib, bool value);
+        /// <inheritdoc />
+        public abstract unsafe void SetWindowAttrib(Window* window, WindowAttributeSetter attrib, bool value);
 
-        // 3.3SPECIFIC/// <inheritdoc />
-        // 3.3SPECIFICpublic abstract bool RawMouseMotionSupported();
+        /// <inheritdoc />
+        public abstract bool RawMouseMotionSupported();
 
         /// <inheritdoc />
         public abstract string GetKeyName(int key, int scancode);
 
-        // 3.3SPECIFIC/// <inheritdoc />
-        // 3.3SPECIFICpublic abstract int GetKeyScancode(int key);
+        /// <inheritdoc />
+        public abstract int GetKeyScancode(int key);
 
         /// <inheritdoc />
         public abstract unsafe int GetKey(Window* window, int key);
@@ -165,32 +166,32 @@ namespace OpenToolkit.GraphicsLibraryFramework
         /// <inheritdoc />
         public abstract unsafe byte* GetJoystickButtons(int jid, out int count);
 
-        // 3.3SPECIFIC/// <inheritdoc />
-        // 3.3SPECIFICpublic abstract unsafe JoystickHats* GetJoystickHats(int jid, out int count);
+        /// <inheritdoc />
+        public abstract unsafe JoystickHats* GetJoystickHats(int jid, out int count);
 
         /// <inheritdoc />
         public abstract string GetJoystickName(int jid);
 
-        // 3.3SPECIFIC/// <inheritdoc />
-        // 3.3SPECIFICpublic abstract string GetJoystickGUID(int jid);
+        /// <inheritdoc />
+        public abstract string GetJoystickGUID(int jid);
 
-        // 3.3SPECIFIC/// <inheritdoc />
-        // 3.3SPECIFICpublic abstract void SetJoystickUserPointer(int jid, IntPtr ptr);
+        /// <inheritdoc />
+        public abstract void SetJoystickUserPointer(int jid, IntPtr ptr);
 
-        // 3.3SPECIFIC/// <inheritdoc />
-        // 3.3SPECIFICpublic abstract IntPtr GetJoystickUserPointer(int jid);
+        /// <inheritdoc />
+        public abstract IntPtr GetJoystickUserPointer(int jid);
 
-        // 3.3SPECIFIC/// <inheritdoc />
-        // 3.3SPECIFICpublic abstract bool JoystickIsGamepad(int jid);
+        /// <inheritdoc />
+        public abstract bool JoystickIsGamepad(int jid);
 
-        // 3.3SPECIFIC/// <inheritdoc />
-        // 3.3SPECIFICpublic abstract bool UpdateGamepadMappings(string newMapping);
+        /// <inheritdoc />
+        public abstract bool UpdateGamepadMappings(string newMapping);
 
-        // 3.3SPECIFIC/// <inheritdoc />
-        // 3.3SPECIFICpublic abstract string GetGamepadName(int jid);
+        /// <inheritdoc />
+        public abstract string GetGamepadName(int jid);
 
-        // 3.3SPECIFIC/// <inheritdoc />
-        // 3.3SPECIFICpublic abstract bool GetGamepadState(int jid, out GamepadState state);
+        /// <inheritdoc />
+        public abstract bool GetGamepadState(int jid, out GamepadState state);
 
         /// <inheritdoc />
         public abstract double GetTime();
