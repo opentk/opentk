@@ -29,6 +29,6 @@ namespace OpenToolkit.GraphicsLibraryFramework
         public override string IOS => MacOS;
 
         /// <inheritdoc />
-        public override string Windows => "glfw3.dll";
+        public override string Windows => "lib/win-x64/glfw3.dll";
     }
 }
