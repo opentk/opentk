@@ -19,10 +19,10 @@ namespace OpenToolkit.Windowing.Common
     ///  <para>
     /// Do not cache instances of this type outside their event handler.
     /// If necessary, you can clone an instance using the
-    ///  <see cref="MouseWheelEventArgs(MouseWheelEventArgs)" /> constructor.
+    ///  <see cref="MouseWheelEventArgs" /> constructor.
     ///  </para>
     /// </remarks>
-    public class MouseWheelEventArgs : MouseEventArgs
+    public class MouseWheelEventArgs
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="MouseWheelEventArgs"/> class.
@@ -34,15 +34,12 @@ namespace OpenToolkit.Windowing.Common
         /// <summary>
         /// Initializes a new instance of the <see cref="MouseWheelEventArgs"/> class.
         /// </summary>
-        /// <param name="x">The X position.</param>
-        /// <param name="y">The Y position.</param>
-        /// <param name="value">The value of the wheel.</param>
-        /// <param name="delta">The change in value of the wheel for this event.</param>
-        public MouseWheelEventArgs(double x, double y, int value, int delta)
-            : base(x, y)
+        /// <param name="offsetX">The offset on the X axis.</param>
+        /// <param name="offsetY">The offset on the Y axis.</param>
+        public MouseWheelEventArgs(double offsetX, double offsetY)
         {
-            Mouse.SetScrollAbsolute(Mouse.Scroll.X, value);
-            DeltaPrecise = delta;
+            OffsetX = offsetX;
+            OffsetY = offsetY;
         }
 
         /// <summary>
@@ -50,30 +47,18 @@ namespace OpenToolkit.Windowing.Common
         /// </summary>
         /// <param name="args">The <see cref="MouseWheelEventArgs" /> instance to clone.</param>
         public MouseWheelEventArgs(MouseWheelEventArgs args)
-            : this(args.X, args.Y, args.Value, args.Delta)
+            : this(args.OffsetX, args.OffsetY)
         {
         }
 
         /// <summary>
-        /// Gets the value of the wheel in integer units.
-        /// To support high-precision mice, it is recommended to use <see cref="ValuePrecise" /> instead.
+        /// Gets the offset on the X axis. Not many mice have this.
         /// </summary>
-        public int Value => (int)Math.Round(Mouse.Scroll.Y, MidpointRounding.AwayFromZero);
+        public double OffsetX { get; internal set; }
 
         /// <summary>
-        /// Gets the change in value of the wheel for this event in integer units.
-        /// To support high-precision mice, it is recommended to use <see cref="DeltaPrecise" /> instead.
+        /// Gets the offset on the Y axis. Most mice only have this.
         /// </summary>
-        public int Delta => (int)Math.Round(DeltaPrecise, MidpointRounding.AwayFromZero);
-
-        /// <summary>
-        /// Gets the precise value of the wheel in floating-point units.
-        /// </summary>
-        public float ValuePrecise => Mouse.Scroll.Y;
-
-        /// <summary>
-        /// Gets the precise change in value of the wheel for this event in floating-point units.
-        /// </summary>
-        public float DeltaPrecise { get; internal set; }
+        public double OffsetY { get; internal set; }
     }
 }

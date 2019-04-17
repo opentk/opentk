@@ -583,7 +583,7 @@ namespace OpenToolkit.Windowing.Desktop
                     _lastMousePositionY = ypos;
                 });
 
-                Glfw.SetScrollCallback(WindowPtr, (window, offsetX, offsetY) => OnMouseWheel(this, new MouseWheelEventArgs()));
+                Glfw.SetScrollCallback(WindowPtr, (window, offsetX, offsetY) => OnMouseWheel(this, new MouseWheelEventArgs(offsetX, offsetY)));
 
                 Glfw.SetDropCallback(WindowPtr, (window, count, paths) =>
                 {

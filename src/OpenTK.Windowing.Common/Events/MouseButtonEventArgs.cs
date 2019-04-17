@@ -23,7 +23,7 @@ namespace OpenToolkit.Windowing.Common
     ///  <see cref="MouseButtonEventArgs(MouseButtonEventArgs)" /> constructor.
     ///  </para>
     /// </remarks>
-    public class MouseButtonEventArgs : MouseEventArgs
+    public class MouseButtonEventArgs
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="MouseButtonEventArgs"/> class.
@@ -35,15 +35,14 @@ namespace OpenToolkit.Windowing.Common
         /// <summary>
         /// Initializes a new instance of the <see cref="MouseButtonEventArgs"/> class.
         /// </summary>
-        /// <param name="x">The X position.</param>
-        /// <param name="y">The Y position.</param>
         /// <param name="button">The mouse button for the event.</param>
-        /// <param name="pressed">The current state of the button.</param>
-        public MouseButtonEventArgs(double x, double y, MouseButton button, bool pressed)
-            : base(x, y)
+        /// <param name="action">The action of the mouse button.</param>
+        /// <param name="modifiers">The key modifiers held during the mouse button's action.</param>
+        public MouseButtonEventArgs(MouseButton button, InputAction action, KeyModifiers modifiers)
         {
             Button = button;
-            IsPressed = pressed;
+            Action = action;
+            Modifiers = modifiers;
         }
 
         /// <summary>
@@ -51,7 +50,7 @@ namespace OpenToolkit.Windowing.Common
         /// </summary>
         /// <param name="args">The <see cref="MouseButtonEventArgs" /> instance to clone.</param>
         public MouseButtonEventArgs(MouseButtonEventArgs args)
-            : this(args.X, args.Y, args.Button, args.IsPressed)
+            : this(args.Button, args.Action, args.Modifiers)
         {
         }
 
@@ -73,10 +72,6 @@ namespace OpenToolkit.Windowing.Common
         /// <summary>
         /// Gets a value indicating whether the <see cref="Button"/> which triggered this event was pressed or released.
         /// </summary>
-        public bool IsPressed
-        {
-            get => GetButton(Button) == ButtonState.Pressed;
-            internal set => SetButton(Button, value ? ButtonState.Pressed : ButtonState.Released);
-        }
+        public bool IsPressed => Action != InputAction.Release;
     }
 }

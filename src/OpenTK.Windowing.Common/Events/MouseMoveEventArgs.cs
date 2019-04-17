@@ -18,10 +18,10 @@ namespace OpenToolkit.Windowing.Common
     ///  <para>
     /// Do not cache instances of this type outside their event handler.
     /// If necessary, you can clone an instance using the
-    ///  <see cref="MouseMoveEventArgs(MouseMoveEventArgs)" /> constructor.
+    ///  <see cref="MouseMoveEventArgs" /> constructor.
     ///  </para>
     /// </remarks>
-    public class MouseMoveEventArgs : MouseEventArgs
+    public class MouseMoveEventArgs
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="MouseMoveEventArgs"/> class.
@@ -38,7 +38,6 @@ namespace OpenToolkit.Windowing.Common
         /// <param name="deltaX">The change in X position produced by this event.</param>
         /// <param name="deltaY">The change in Y position produced by this event.</param>
         public MouseMoveEventArgs(double x, double y, double deltaX, double deltaY)
-            : base(x, y)
         {
             DeltaX = deltaX;
             DeltaY = deltaY;
@@ -52,6 +51,16 @@ namespace OpenToolkit.Windowing.Common
             : this(args.X, args.Y, args.DeltaX, args.DeltaY)
         {
         }
+
+        /// <summary>
+        /// Gets the new X position produced by this event.
+        /// </summary>
+        public double X { get; internal set; }
+
+        /// <summary>
+        /// Gets the new Y position produced by this event.
+        /// </summary>
+        public double Y { get; internal set; }
 
         /// <summary>
         /// Gets the change in X position produced by this event.
