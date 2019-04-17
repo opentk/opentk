@@ -1,14 +1,13 @@
 ﻿//
 // KeyboardKeyEventArgs.cs
 //
-// Copyright (C) 2018 OpenTK
+// Copyright (C) 2019 OpenTK
 //
 // This software may be modified and distributed under the terms
 // of the MIT license. See the LICENSE file for details.
 //
 
 using System;
-using OpenToolkit.Windowing.Common;
 using OpenToolkit.Windowing.Common.Input;
 
 namespace OpenToolkit.Windowing.Common
@@ -20,7 +19,7 @@ namespace OpenToolkit.Windowing.Common
     ///  <para>
     /// Do not cache instances of this type outside their event handler.
     /// If necessary, you can clone a KeyboardEventArgs instance using the
-    ///  <see cref="KeyboardKeyEventArgs(KeyboardKeyEventArgs)" /> constructor.
+    ///  <see cref="KeyboardKeyEventArgs" /> constructor.
     ///  </para>
     /// </remarks>
     public class KeyboardKeyEventArgs : EventArgs
@@ -47,50 +46,16 @@ namespace OpenToolkit.Windowing.Common
         public Key Key { get; internal set; }
 
         /// <summary>
-        /// Gets the scancode which generated this event.
+        /// Gets the Unicode scancode which generated this event.
         /// </summary>
-        public uint ScanCode => (uint)Key;
-
-        /// <summary>
-        /// Gets a value indicating whether <see cref="OpenToolkit.Windowing.Common.Input.KeyModifiers.Alt" /> is pressed.
-        /// </summary>
-        /// <value><c>true</c> if pressed; otherwise, <c>false</c>.</value>
-        public bool Alt => Keyboard[Key.AltLeft] || Keyboard[Key.AltRight];
-
-        /// <summary>
-        /// Gets a value indicating whether <see cref="OpenToolkit.Windowing.Common.Input.KeyModifiers.Control" /> is pressed.
-        /// </summary>
-        /// <value><c>true</c> if pressed; otherwise, <c>false</c>.</value>
-        public bool Control => Keyboard[Key.ControlLeft] || Keyboard[Key.ControlRight];
-
-        /// <summary>
-        /// Gets a value indicating whether <see cref="OpenToolkit.Windowing.Common.Input.KeyModifiers.Shift" /> is pressed.
-        /// </summary>
-        /// <value><c>true</c> if pressed; otherwise, <c>false</c>.</value>
-        public bool Shift => Keyboard[Key.ShiftLeft] || Keyboard[Key.ShiftRight];
-
+        public int ScanCode { get; internal set; }
+        
         /// <summary>
         /// Gets a bitwise combination representing the <see cref="OpenToolkit.Windowing.Common.Input.KeyModifiers" />
         /// that are currently pressed.
         /// </summary>
         /// <value>The modifiers.</value>
-        public KeyModifiers Modifiers
-        {
-            get
-            {
-                KeyModifiers mods = 0;
-                mods |= Alt ? KeyModifiers.Alt : 0;
-                mods |= Control ? KeyModifiers.Control : 0;
-                mods |= Shift ? KeyModifiers.Shift : 0;
-                return mods;
-            }
-        }
-
-        /// <summary>
-        /// Gets the current <see cref="OpenToolkit.Windowing.Common.Input.KeyboardState" />.
-        /// </summary>
-        /// <value>The keyboard.</value>
-        public KeyboardState Keyboard { get; internal set; }
+        public KeyModifiers Modifiers { get; internal set; }
 
         /// <summary>
         /// Gets a value indicating whether
@@ -102,5 +67,23 @@ namespace OpenToolkit.Windowing.Common
         /// key for the first time.
         /// </value>
         public bool IsRepeat { get; internal set; }
+
+        /// <summary>
+        /// Gets a value indicating whether <see cref="OpenToolkit.Windowing.Common.Input.KeyModifiers.Alt" /> is pressed.
+        /// </summary>
+        /// <value><c>true</c> if pressed; otherwise, <c>false</c>.</value>
+        public bool Alt => (Modifiers & KeyModifiers.Alt) != 0;
+
+        /// <summary>
+        /// Gets a value indicating whether <see cref="OpenToolkit.Windowing.Common.Input.KeyModifiers.Control" /> is pressed.
+        /// </summary>
+        /// <value><c>true</c> if pressed; otherwise, <c>false</c>.</value>
+        public bool Control => (Modifiers & KeyModifiers.Control) != 0;
+
+        /// <summary>
+        /// Gets a value indicating whether <see cref="OpenToolkit.Windowing.Common.Input.KeyModifiers.Shift" /> is pressed.
+        /// </summary>
+        /// <value><c>true</c> if pressed; otherwise, <c>false</c>.</value>
+        public bool Shift => (Modifiers & KeyModifiers.Shift) != 0;
     }
 }

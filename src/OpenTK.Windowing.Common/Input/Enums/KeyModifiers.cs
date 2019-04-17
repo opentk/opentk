@@ -35,6 +35,6 @@ namespace OpenToolkit.Windowing.Common.Input
         /// <summary>
         /// The command key modifier on a Mac
         /// </summary>
-        Command = 1 << 3
+        Command = 1 << 3,
     }
 }

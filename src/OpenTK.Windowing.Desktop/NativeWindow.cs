@@ -16,6 +16,7 @@ using OpenToolkit.GraphicsLibraryFramework;
 using OpenToolkit.Mathematics;
 using OpenToolkit.Windowing.Common;
 using OpenToolkit.Windowing.Common.Input;
+using InputAction = OpenToolkit.GraphicsLibraryFramework.InputAction;
 using KeyModifiers = OpenToolkit.Windowing.Common.Input.KeyModifiers;
 using Monitor = OpenToolkit.Windowing.Common.Monitor;
 
@@ -519,7 +520,13 @@ namespace OpenToolkit.Windowing.Desktop
 
                 Glfw.SetKeyCallback(WindowPtr, (window, key, scancode, action, mods) =>
                 {
-                    var args = new KeyboardKeyEventArgs { Key = (Key)key, IsRepeat = action == GraphicsLibraryFramework.InputAction.Repeat };
+                    var args = new KeyboardKeyEventArgs
+                    {
+                        Key = (Key)key,
+                        ScanCode = scancode,
+                        IsRepeat = action == InputAction.Repeat,
+                        Modifiers = (KeyModifiers)mods
+                    };
 
                     // TODO: Need to find a good way to set the mods,
                     // The class as-is is coupled to the keyboard state in a really weird way.
