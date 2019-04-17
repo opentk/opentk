@@ -127,16 +127,16 @@ namespace OpenToolkit.Windowing.Desktop
             {
                 var monitor = value.ToUnsafePtr<GraphicsLibraryFramework.Monitor>();
                 var mode = Glfw.GetVideoMode(monitor);
-                Glfw.SetWindowMonitor
-                (
+                Glfw.SetWindowMonitor(
                     WindowPtr,
                     monitor,
                     (int)_location.X,
                     (int)_location.Y,
                     (int)_size.X,
                     (int)_size.Y,
-                    mode->RefreshRate
-                );
+                    mode->RefreshRate);
+
+                _currentMonitor = value;
             }
         }
 
@@ -304,10 +304,7 @@ namespace OpenToolkit.Windowing.Desktop
         public unsafe Vector2 Size
         {
             get => _size;
-            set
-            {
-                Glfw.SetWindowSize(WindowPtr, (int)value.X, (int)value.Y);
-            }
+            set => Glfw.SetWindowSize(WindowPtr, (int)value.X, (int)value.Y);
         }
 
         /// <inheritdoc />
@@ -415,15 +412,11 @@ namespace OpenToolkit.Windowing.Desktop
                        && inputMode != CursorModeValue.CursorDisabled;
             }
 
-            set
-            {
-                Glfw.SetInputMode
-                (
+            set =>
+                Glfw.SetInputMode(
                     WindowPtr,
                     CursorStateAttribute.Cursor,
-                    value ? CursorModeValue.CursorNormal : CursorModeValue.CursorHidden
-                );
-            }
+                    value ? CursorModeValue.CursorNormal : CursorModeValue.CursorHidden);
         }
 
         /// <inheritdoc />
