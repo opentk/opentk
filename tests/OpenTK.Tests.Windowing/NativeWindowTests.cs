@@ -122,7 +122,7 @@ namespace OpenTK.Tests.Windowing
                 TryProcessNextEvents(window);
                 window.WindowState = WindowState.Minimized;
                 TryProcessNextEvents(window);
-                Assert.Equal(window.WindowState, WindowState.Minimized);
+                Assert.Equal(WindowState.Minimized, window.WindowState);
             }
         }
 
