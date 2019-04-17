@@ -22,18 +22,6 @@
       <ProjectReference Include="..\OpenTK.Mathematics\OpenTK.Mathematics.csproj" />
       <ProjectReference Include="..\OpenTK.Windowing.Common\OpenTK.Windowing.Common.csproj" />
     </ItemGroup>
-    
-    <ItemGroup>
-      <Compile Remove="EventingModels\**" />
-    </ItemGroup>
-    
-    <ItemGroup>
-      <EmbeddedResource Remove="EventingModels\**" />
-    </ItemGroup>
-    
-    <ItemGroup>
-      <None Remove="EventingModels\**" />
-    </ItemGroup>
 
     <Import Project="..\..\props\common.props" />
     <Import Project="..\..\props\nuget-common.props" />

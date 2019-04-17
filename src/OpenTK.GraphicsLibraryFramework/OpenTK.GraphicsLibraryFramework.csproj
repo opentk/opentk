@@ -20,10 +20,6 @@
       <ProjectReference Include="..\OpenTK.Core\OpenTK.Core.csproj" />
       <ProjectReference Include="..\OpenTK.Mathematics\OpenTK.Mathematics.csproj" />
     </ItemGroup>
-    
-    <ItemGroup>
-      <Folder Include="GraphicsLibraryFramework" />
-    </ItemGroup>
 
     <Import Project="..\..\props\common.props" />
     <Import Project="..\..\props\nuget-common.props" />
