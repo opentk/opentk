@@ -18,10 +18,10 @@ function DownloadMesaOpenGL ($architecture) {
     # $url = $MESA_GL_URL + "opengl32_mingw_" + $architecture + ".dll"
     $url = $MESA_GL_URL
 
-    if (Test-Path $filepath) {
-        Write-Host "OpenGL already installed"
-        return
-    }
+    # if (Test-Path $filepath) {
+    #    Write-Host "OpenGL already installed"
+    #    return
+    #}
     If(!(test-path "./temp"))
     {
           New-Item -ItemType Directory -Force -Path "./temp"
@@ -34,7 +34,7 @@ function DownloadMesaOpenGL ($architecture) {
             $webclient.DownloadFile($url, $temppath)
             Expand-Archive -Force $temppath ./temp/
             Write-Host "Try saving at" $filepath
-            cp ./temp/opengl32.dll $filepath
+            Copy-Item  -Path ./temp/opengl32.dll -Destination $filepath -force
             break
         }
         Catch [Exception]{
