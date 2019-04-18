@@ -129,19 +129,6 @@ namespace OpenTK.Input
         /// </summary>
         public bool IsConnected { get; internal set; }
 
-#if false
-// Disabled until the correct cross-platform API can be determined.
-        public bool IsLedOn(KeyboardLeds led)
-        {
-            return false;
-        }
-
-        public bool IsLedOff(KeyboardLeds led)
-        {
-            return false;
-        }
-#endif
-
         /// <summary>
         /// Checks whether two <see cref="KeyboardState" /> instances are equal.
         /// </summary>

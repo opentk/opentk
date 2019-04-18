@@ -1,0 +1,30 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <AssemblyName>Bind</AssemblyName>
+    <RootNamespace>Bind</RootNamespace>
+    <TargetFrameworks>net461;netcoreapp20</TargetFrameworks>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CommandLineParser" Version="2.2.1" />
+    <PackageReference Include="Humanizer" Version="2.4.2" />
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="2.8.2" />
+    <PackageReference Include="morelinq" Version="3.0.0" />
+    <PackageReference Include="System.CodeDom" Version="4.5.0" />
+    <PackageReference Include="System.Memory" Version="4.5.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Specifications/License.txt" />
+  </ItemGroup>
+
+  <Import Project="..\..\props\common.props" />
+  <Import Project="..\..\props\netfx-mono.props" />
+  <Import Project="..\..\props\stylecop.props" />
+  <Import Project="..\..\props\jetbrains.props" />
+</Project>

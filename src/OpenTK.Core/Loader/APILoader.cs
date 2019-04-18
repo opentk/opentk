@@ -26,11 +26,14 @@ namespace OpenToolkit.Core.Loader
         /// Loads the given API type into an active instance.
         /// </summary>
         /// <typeparam name="TAPI">The API type.</typeparam>
-        /// <param name="nameLoader">The type that provides the name of the native library.</param>
+        /// <typeparam name="TNameContainer">The type that provides the name of the native library.</typeparam>
         /// <returns>The API instance.</returns>
-        public static TAPI Load<TAPI>(IPlatformLibraryNameContainer nameLoader)
+        public static TAPI Load<TAPI, TNameContainer>()
             where TAPI : NativeLibraryBase
+            where TNameContainer : PlatformLibraryNameContainerBase, new()
         {
+            var nameLoader = new TNameContainer();
+
             return _builder.ActivateClass<TAPI>(nameLoader.GetLibraryName());
         }
     }

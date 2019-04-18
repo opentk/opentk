@@ -22,6 +22,7 @@ SOFTWARE.
 
 using System;
 using System.Globalization;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Xml.Serialization;
 
@@ -898,7 +899,7 @@ namespace OpenToolkit.Mathematics
         [XmlIgnore]
         public Vector2 Xy
         {
-            get => new Vector2(X, Y);
+            get => Unsafe.As<Vector4, Vector2>(ref this);
             set
             {
                 X = value.X;
@@ -1066,7 +1067,7 @@ namespace OpenToolkit.Mathematics
         [XmlIgnore]
         public Vector3 Xyz
         {
-            get => new Vector3(X, Y, Z);
+            get => Unsafe.As<Vector4, Vector3>(ref this);
             set
             {
                 X = value.X;
@@ -2035,6 +2036,17 @@ namespace OpenToolkit.Mathematics
             {
                 return (IntPtr)(&v.X);
             }
+        }
+
+        /// <summary>
+        /// Returns this Vector4 as a Color4. The resulting struct will have RGBA mapped to XYZW, in that order.
+        /// </summary>
+        /// <param name="v">The Vector4 to convert.</param>
+        /// <returns>The Vector4, converted to a Color4.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static explicit operator Color4(Vector4 v)
+        {
+            return Unsafe.As<Vector4, Color4>(ref v);
         }
 
         private static readonly string ListSeparator = CultureInfo.CurrentCulture.TextInfo.ListSeparator;

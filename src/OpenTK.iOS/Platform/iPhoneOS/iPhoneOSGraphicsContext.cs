@@ -29,11 +29,7 @@ namespace OpenTK.Platform.iPhoneOS {
             iPhoneOSGraphicsContext shared = sharedContext as iPhoneOSGraphicsContext;
 
             EAGLRenderingAPI version = 0;
-            if (major == 1 && minor == 1)
-            {
-                version = EAGLRenderingAPI.OpenGLES1;
-            }
-            else if (major == 2 && minor == 0)
+            if (major == 2 && minor == 0)
             {
                 version = EAGLRenderingAPI.OpenGLES2;
             }
@@ -64,11 +60,7 @@ namespace OpenTK.Platform.iPhoneOS {
             iPhoneOSGraphicsContext shared = sharedContext as iPhoneOSGraphicsContext;
 
             EAGLRenderingAPI version = 0;
-            if (major == 1 && minor == 1)
-            {
-                version = EAGLRenderingAPI.OpenGLES1;
-            }
-            else if (major == 2 && minor == 0)
+            if (major == 2 && minor == 0)
             {
                 version = EAGLRenderingAPI.OpenGLES2;
             }
@@ -89,7 +81,7 @@ namespace OpenTK.Platform.iPhoneOS {
 
         public override void SwapBuffers()
         {
-            if (!EAGLContext.PresentRenderBuffer((uint)OpenTK.Graphics.ES11.All.RenderbufferOes))
+            if (!EAGLContext.PresentRenderBuffer((uint)OpenTK.Graphics.ES20.All.RenderbufferOes))
             {
                 throw new InvalidOperationException ("EAGLContext.PresentRenderbuffer failed.");
             }

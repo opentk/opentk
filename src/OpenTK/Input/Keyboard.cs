@@ -67,26 +67,5 @@ namespace OpenTK.Input
                 return driver.GetState(index);
             }
         }
-
-#if false
-// Disabled until a correct, cross-platform API can be defined.
-/// <summary>
-/// Retrieves the device name for the keyboard device.
-/// </summary>
-/// <param name="index">The index of the keyboard device.</param>
-/// <returns>A <see cref="System.String"/> with the name of the specified device or <see cref="System.String.Empty"/>.</returns>
-/// <remarks>
-/// <para>If no device exists at the specified index, the return value is <see cref="System.String.Empty"/>.</para></remarks>
-        public static string GetDeviceName(int index)
-        {
-            if (index < 0)
-                throw new ArgumentOutOfRangeException("index");
-
-            lock (SyncRoot)
-            {
-                return driver.GetDeviceName(index);
-            }
-        }
-#endif
     }
 }

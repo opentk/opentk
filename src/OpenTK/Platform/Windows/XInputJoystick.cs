@@ -205,29 +205,6 @@ namespace OpenTK.Platform.Windows
             return NumberOfSetBits((int)xbuttons);
         }
 
-#if false
-// Todo: Implement JoystickType enumeration
-        GamePadType TranslateSubType(XInputDeviceSubType xtype)
-        {
-            switch (xtype)
-            {
-                case XInputDeviceSubType.ArcadePad: return GamePadType.ArcadePad;
-                case XInputDeviceSubType.ArcadeStick: return GamePadType.ArcadeStick;
-                case XInputDeviceSubType.DancePad: return GamePadType.DancePad;
-                case XInputDeviceSubType.DrumKit: return GamePadType.DrumKit;
-                case XInputDeviceSubType.FlightStick: return GamePadType.FlightStick;
-                case XInputDeviceSubType.GamePad: return GamePadType.GamePad;
-                case XInputDeviceSubType.Guitar: return GamePadType.Guitar;
-                case XInputDeviceSubType.GuitarAlternate: return GamePadType.AlternateGuitar;
-                case XInputDeviceSubType.GuitarBass: return GamePadType.BassGuitar;
-                case XInputDeviceSubType.Wheel: return GamePadType.Wheel;
-                case XInputDeviceSubType.Unknown:
-                default:
-                    return GamePadType.Unknown;
-            }
-        }
-#endif
-
         private enum XInputErrorCode
         {
             Success = 0,

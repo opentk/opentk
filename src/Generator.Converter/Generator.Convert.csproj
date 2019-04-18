@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <AssemblyName>Convert</AssemblyName>
+    <RootNamespace>Convert</RootNamespace>
+    <TargetFramework>net461</TargetFramework>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CommandLineParser" Version="2.2.1" />
+  </ItemGroup>
+
+  <Import Project="..\..\props\common.props" />
+  <Import Project="..\..\props\netfx-mono.props" />
+  <Import Project="..\..\props\stylecop.props" />
+</Project>

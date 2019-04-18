@@ -7,7 +7,6 @@
 
 using System;
 using AdvancedDLSupport;
-using OpenToolkit.Core.Extensions;
 using OpenToolkit.Core.Loader;
 using OpenToolkit.Mathematics;
 using OpenToolkit.OpenAL.Attributes;
@@ -26,9 +25,6 @@ namespace OpenToolkit.OpenAL
             : base(path, options)
         {
         }
-
-        /// <inheritdoc cref="IAL" />
-        public IPlatformLibraryNameContainer NameContainer { get; } = new OpenALLibraryNameContainer();
 
         /// <summary>
         /// Gets an instance of the API of an extension to the API.
@@ -523,7 +519,7 @@ namespace OpenToolkit.OpenAL
         /// <returns>The instance.</returns>
         public static AL GetAPI()
         {
-            return APILoader.Load<AL>(new OpenALLibraryNameContainer());
+            return APILoader.Load<AL, OpenALLibraryNameContainer>();
         }
     }
 }

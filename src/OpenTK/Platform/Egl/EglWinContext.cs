@@ -35,7 +35,6 @@ namespace OpenTK.Platform.Egl
 {
     internal class EglWinContext : EglContext
     {
-        private IntPtr ES1 = Kernel32.LoadLibrary("libGLESv1_CM");
         private IntPtr ES2 = Kernel32.LoadLibrary("libGLESv2");
 
         public EglWinContext(GraphicsMode mode, EglWindowInfo window, IGraphicsContext sharedContext,
@@ -57,27 +56,17 @@ namespace OpenTK.Platform.Egl
                 return Kernel32.GetProcAddress(ES2, function);
             }
 
-            if ((renderable & RenderableFlags.ES) != 0 && ES1 != IntPtr.Zero)
-            {
-                return Kernel32.GetProcAddress(ES1, function);
-            }
-
             return IntPtr.Zero;
         }
 
         protected override void Dispose(bool manual)
         {
-            if (ES1 != IntPtr.Zero)
-            {
-                Kernel32.FreeLibrary(ES1);
-            }
-
             if (ES2 != IntPtr.Zero)
             {
                 Kernel32.FreeLibrary(ES2);
             }
 
-            ES1 = ES2 = IntPtr.Zero;
+            ES2 = IntPtr.Zero;
 
             base.Dispose(manual);
         }
