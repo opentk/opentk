@@ -19,8 +19,7 @@ namespace OpenToolkit.Mathematics
         /// <summary>
         /// Defines the value of Pi as a <see cref="float"/>.
         /// </summary>
-        public const float Pi =
-            3.141592653589793238462643383279502884197169399375105820974944592307816406286208998628034825342117067982148086513282306647093844609550582231725359408128481117450284102701938521105559644622948954930382f;
+        public const float Pi = 3.1415927f;
 
         /// <summary>
         /// Defines the value of Pi divided by two as a <see cref="float"/>.
@@ -55,17 +54,17 @@ namespace OpenToolkit.Mathematics
         /// <summary>
         /// Defines the value of E as a <see cref="float"/>.
         /// </summary>
-        public const float E = 2.71828182845904523536f;
+        public const float E = 2.7182817f;
 
         /// <summary>
         /// Defines the base-10 logarithm of E.
         /// </summary>
-        public const float Log10E = 0.434294482f;
+        public const float Log10E = 0.4342945f;
 
         /// <summary>
         /// Defines the base-2 logarithm of E.
         /// </summary>
-        public const float Log2E = 1.442695041f;
+        public const float Log2E = 1.442695f;
 
         /// <summary>
         /// Returns the absolute value of a decimal number.
