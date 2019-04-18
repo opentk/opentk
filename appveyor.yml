@@ -4,7 +4,9 @@ version: 4.0.0.{build}
 
 init:
   - git config --global core.autocrlf input
-
+install:
+  # Install OpenGL
+  - "powershell ./install-opengl.ps1"
 before_build:
   - cmd: nuget restore -Verbosity quiet OpenTK.sln
 
