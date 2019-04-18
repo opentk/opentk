@@ -7,6 +7,7 @@
 // of the MIT license. See the LICENSE file for details.
 //
 
+using System;
 using OpenToolkit.Core.Loader;
 
 namespace OpenToolkit.GraphicsLibraryFramework
@@ -29,6 +30,6 @@ namespace OpenToolkit.GraphicsLibraryFramework
         public override string IOS => MacOS;
 
         /// <inheritdoc />
-        public override string Windows => "lib/win-x64/glfw3.dll";
+        public override string Windows => Environment.Is64BitProcess ? "glfw3-x64.dll" : "glfw3-x86.dll";
     }
 }
