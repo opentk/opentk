@@ -75,12 +75,12 @@ function InstallAllMesaOpenGL()
 {
     if ([IntPtr]::Size -eq 8)
     {
-        InstallMesaOpenGL "x86" "$env:WINDIR/SysWOW64/"
-        InstallMesaOpenGL "x86_64" "$env:WINDIR/system32/"
+        InstallMesaOpenGL "x86" "$env:WINDIR\SysWOW64\"
+        InstallMesaOpenGL "x86_64" "$env:WINDIR\system32\"
     }
     elseif([IntPtr]::Size -eq 4)
     {
-        InstallMesaOpenGL "x86" "$env:WINDIR/system32/"
+        InstallMesaOpenGL "x86" "$env:WINDIR\system32\"
     }
     else
     {
@@ -103,8 +103,8 @@ function RemoveMesaOpenGL($basedir)
 
 function RemoveAllMesaOpenGL()
 {
-    RemoveMesaOpenGL "$env:WINDIR/system32/"
-    RemoveMesaOpenGL "$env:WINDIR/SysWOW64/"
+    RemoveMesaOpenGL "$env:WINDIR\system32\"
+    RemoveMesaOpenGL "$env:WINDIR\SysWOW64\"
 }
 
 
