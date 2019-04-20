@@ -20,7 +20,7 @@
     </ItemGroup>
     
     <ItemGroup>
-      <PackageReference Include="opentoolkit.redist.glfw" Version="3.3.0-pre20190418142801" />
+      <PackageReference Include="opentoolkit.redist.glfw" Version="3.3.0-pre20190419183326" />
     </ItemGroup>
 
     <Import Project="..\..\props\common.props" />
