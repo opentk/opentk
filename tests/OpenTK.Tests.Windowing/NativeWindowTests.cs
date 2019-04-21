@@ -64,30 +64,13 @@ namespace OpenTK.Tests.Windowing
                 bool testRunning = true;
                 window.TitleChanged += (sender, args) => testRunning = false;
                 window.Title = newTitle;
-                while(testRunning)
+                while (testRunning)
                 {
                     window.ProcessEvents();
                 }
 
                 Assert.Equal(newTitle, window.Title);
             }
-        }
-
-        [Fact]
-        public void WindowCanBeFocused()
-        {
-            /*var set = NativeWindowSettings.Default;
-            set.IsFocused = false; // TODO: should clone settings
-            using (var window = new NativeWindow(set))
-            {
-                PreprocessEvents(window);
-                bool testRunning = true;
-                window.FocusedChanged += (sender, args) => testRunning = false;
-                window.IsFocused = true;
-                while (testRunning)
-                    window.ProcessEvents();
-                Assert.True(window.IsFocused);
-            }*/
         }
 
         [Fact]
