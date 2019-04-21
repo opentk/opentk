@@ -1,12 +1,10 @@
 using System;
 using System.Threading;
-using OpenToolkit.GraphicsLibraryFramework;
 using OpenToolkit.Mathematics;
 using OpenToolkit.Windowing.Common;
 using OpenToolkit.Windowing.Desktop;
 using Xunit;
 using Xunit.Abstractions;
-using Xunit.Sdk;
 
 namespace OpenTK.Tests.Windowing
 {
@@ -22,10 +20,9 @@ namespace OpenTK.Tests.Windowing
         [Fact]
         public void CreatingThenDisposingWindowDoesNotThrowException()
         {
-            using (var window = new NativeWindow(NativeWindowSettings.Default))
-            {
-                Thread.Sleep(1);
-            }
+            var window = new NativeWindow(NativeWindowSettings.Default);
+            Thread.Sleep(1);
+            window.Dispose();
         }
 
         [Fact]
@@ -41,13 +38,14 @@ namespace OpenTK.Tests.Windowing
             }
         }
 
-        private void TryProcessNextEvents(INativeWindow window)
+        private static void TryProcessNextEvents(INativeWindow window)
         {
             if (window.IsEventDriven)
-                throw new NotImplementedException();
-            // TODO: any better ideas? ugly as hell
+                throw new Exception();
+            
             Thread.Sleep(10);
-            for (int i = 0; i < 100; i++) // busy waiting and try to process a maximum of 100 events
+            
+            for (var i = 0; i < 100; i++) // busy waiting and try to process a maximum of 100 events
             {
                 window.ProcessEvents();
                 Thread.Sleep(1);
@@ -61,7 +59,7 @@ namespace OpenTK.Tests.Windowing
             {
                 TryProcessNextEvents(window);
                 var newTitle = $"{new Guid()}";
-                bool testRunning = true;
+                var testRunning = true;
                 window.TitleChanged += (sender, args) => testRunning = false;
                 window.Title = newTitle;
                 while (testRunning)
@@ -79,7 +77,7 @@ namespace OpenTK.Tests.Windowing
             using (var window = new NativeWindow(NativeWindowSettings.Default))
             {
                 TryProcessNextEvents(window);
-                bool testRunning = true;
+                var testRunning = true;
                 window.VisibleChanged += (sender, args) => testRunning = false;
                 window.IsVisible = false;
                 while (testRunning)
@@ -117,7 +115,7 @@ namespace OpenTK.Tests.Windowing
                 TryProcessNextEvents(window);
                 window.WindowState = WindowState.Maximized;
                 TryProcessNextEvents(window);
-                Assert.Equal(window.WindowState, WindowState.Maximized);
+                Assert.Equal(WindowState.Maximized, window.WindowState);
             }
         }
 
