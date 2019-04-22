@@ -19,23 +19,13 @@ namespace Bind.Overloaders
             return function.Parameters.Any(HasStaticCount);
         }
 
-        /// <summary>
-        /// Determines whether or not the given parameter has a static count set.
-        /// </summary>
-        /// <param name="parameter">The parameter.</param>
-        /// <returns>True if the parameter has a static count; otherwise, false.</returns>
-        private bool HasStaticCount([NotNull] ParameterSignature parameter)
-        {
-            return !(parameter.Count is null) && parameter.Count.IsStatic;
-        }
-
         /// <inheritdoc/>
         public IEnumerable<(FunctionSignature, StringBuilder)> CreateOverloads(FunctionSignature function)
         {
             var baseParameters = function.Parameters;
 
             var staticCountPermutation = new List<ParameterSignature>(baseParameters);
-            for (int i = 0; i < baseParameters.Count; ++i)
+            for (var i = 0; i < baseParameters.Count; ++i)
             {
                 var baseParameter = baseParameters[i];
                 var baseType = baseParameter.Type;
@@ -77,9 +67,22 @@ namespace Bind.Overloaders
                 staticCountPermutation[i] = refParameter;
             }
 
-            yield return new FunctionSignatureBuilder(function)
+            // TODO: Implement this StringBuilder
+            var sb = new StringBuilder();
+
+            yield return (new FunctionSignatureBuilder(function)
                 .WithParameters(staticCountPermutation)
-                .Build();
+                .Build(), sb);
+        }
+
+        /// <summary>
+        /// Determines whether or not the given parameter has a static count set.
+        /// </summary>
+        /// <param name="parameter">The parameter.</param>
+        /// <returns>True if the parameter has a static count; otherwise, false.</returns>
+        private static bool HasStaticCount([NotNull] ParameterSignature parameter)
+        {
+            return !(parameter.Count is null) && parameter.Count.IsStatic;
         }
     }
 }

@@ -22,7 +22,8 @@ namespace Bind.Overloaders
         /// </summary>
         /// <param name="function">The base function.</param>
         /// <returns>A set of overloads.</returns>
-        [NotNull, ItemNotNull]
+        [NotNull]
+        [ItemNotNull]
         IEnumerable<(FunctionSignature, StringBuilder)> CreateOverloads([NotNull] FunctionSignature function);
     }
 }

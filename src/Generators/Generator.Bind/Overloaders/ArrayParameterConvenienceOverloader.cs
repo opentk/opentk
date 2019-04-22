@@ -93,8 +93,8 @@ namespace Bind.Overloaders
                 .WithParameters(newParameters)
                 .Build();
             var sb = new StringBuilder();
-            
-            sb.AppendLine(function.Name+"(1, &"+newArrayParameter.Name+");");
+
+            sb.AppendLine(function.Name + "(1, &" + newArrayParameter.Name + ");");
 
             yield return (new FunctionSignatureBuilder(function)
                 .WithName(newName)

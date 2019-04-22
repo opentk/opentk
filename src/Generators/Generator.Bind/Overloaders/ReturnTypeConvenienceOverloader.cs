@@ -86,11 +86,28 @@ namespace Bind.Overloaders
                 .WithName(newName)
                 .WithReturnType(newReturnType);
 
+            var sb = new StringBuilder();
+
+            sb.Append(function.Name + "(");
+
+            for (var i = 0; i < function.Parameters.Count; i++)
+            {
+                if (i != function.Parameters.Count)
+                {
+                    sb.Append(function.Parameters[i].Name + ", ");
+                }
+                else
+                {
+                    sb.Append("out var " + function.Parameters[i].Name + ");\n");
+                    sb.Append("return " + function.Parameters[i].Name + ";");
+                }
+            }
+
             if (!newParameters.Any())
             {
-                yield return functionBuilder
+                yield return (functionBuilder
                     .WithParameters(newParameters)
-                    .Build();
+                    .Build(), sb);
 
                 yield break;
             }
@@ -99,17 +116,17 @@ namespace Bind.Overloaders
             var sizeParameterType = newParameters.Last().Type;
             if (!sizeParameterType.Name.StartsWith("int", StringComparison.OrdinalIgnoreCase) || sizeParameterType.IsPointer)
             {
-                yield return functionBuilder
+                yield return (functionBuilder
                     .WithParameters(newParameters)
-                    .Build();
+                    .Build(), sb);
 
                 yield break;
             }
 
             newParameters = SkipLastExtension.SkipLast(newParameters, 1).ToList();
-            yield return functionBuilder
+            yield return (functionBuilder
                     .WithParameters(newParameters)
-                    .Build();
+                    .Build(), sb);
         }
     }
 }

@@ -142,7 +142,7 @@ namespace Bind.Overloaders
                 var parameter = function.Parameters[index];
                 if (parameter.Type.IsVoidPointer())
                 {
-                    sb.Append(parameter.Name+".ToPointer()");
+                    sb.Append(parameter.Name + ".ToPointer()");
                 }
                 else
                 {
