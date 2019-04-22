@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using Bind.Builders;
 using Bind.XML.Signatures;
 using Bind.XML.Signatures.Functions;
@@ -70,7 +71,7 @@ namespace Bind.Overloaders
         }
 
         /// <inheritdoc/>
-        public IEnumerable<FunctionSignature> CreateOverloads(FunctionSignature function)
+        public IEnumerable<(FunctionSignature, StringBuilder)> CreateOverloads(FunctionSignature function)
         {
             var lastParameterType = function.Parameters.Last().Type;
             var newReturnType = new TypeSignatureBuilder(lastParameterType)
