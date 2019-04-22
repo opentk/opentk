@@ -1,4 +1,5 @@
 using AdvancedDLSupport;
+using OpenToolkit.Core.Extensions;
 using OpenToolkit.Core.Loader;
 
 namespace OpenToolkit.OpenAL.Extensions.EXT.ALAWFormat
