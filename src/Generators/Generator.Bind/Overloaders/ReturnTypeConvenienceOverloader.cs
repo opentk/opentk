@@ -85,7 +85,7 @@ namespace Bind.Overloaders
             var functionBuilder = new FunctionSignatureBuilder(function)
                 .WithName(newName)
                 .WithReturnType(newReturnType);
-            
+
             var sb = new StringBuilder();
 
             if (!newParameters.Any())

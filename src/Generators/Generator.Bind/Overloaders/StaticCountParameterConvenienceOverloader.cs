@@ -66,7 +66,7 @@ namespace Bind.Overloaders
 
                 staticCountPermutation[i] = refParameter;
             }
-            
+
             var sb = new StringBuilder();
 
             yield return (new FunctionSignatureBuilder(function)
