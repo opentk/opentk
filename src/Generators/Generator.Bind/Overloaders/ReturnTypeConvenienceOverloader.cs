@@ -86,8 +86,22 @@ namespace Bind.Overloaders
                 .WithName(newName)
                 .WithReturnType(newReturnType);
 
-            // TODO: Implement this StringBuilder
             var sb = new StringBuilder();
+
+            sb.Append(function.Name + "(");
+
+            for (var i = 0; i < function.Parameters.Count; i++)
+            {
+                if (i != function.Parameters.Count)
+                {
+                    sb.Append(function.Parameters[i].Name + ", ");
+                }
+                else
+                {
+                    sb.Append("out var " + function.Parameters[i].Name + ");\n");
+                    sb.Append("return " + function.Parameters[i].Name + ";");
+                }
+            }
 
             if (!newParameters.Any())
             {
