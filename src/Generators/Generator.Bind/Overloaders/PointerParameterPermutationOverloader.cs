@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using Bind.Builders;
 using Bind.XML.Signatures;
 using Bind.XML.Signatures.Functions;
@@ -20,13 +21,13 @@ namespace Bind.Overloaders
         }
 
         /// <inheritdoc/>
-        public IEnumerable<FunctionSignature> CreateOverloads(FunctionSignature function)
+        public IEnumerable<(FunctionSignature, StringBuilder)> CreateOverloads(FunctionSignature function)
         {
             var baseParameters = function.Parameters;
 
             var refParameterPermutation = new List<ParameterSignature>(baseParameters);
             var arrayParameterPermutation = new List<ParameterSignature>(baseParameters);
-            for (int i = 0; i < baseParameters.Count; ++i)
+            for (var i = 0; i < baseParameters.Count; ++i)
             {
                 var baseParameter = baseParameters[i];
                 var baseType = baseParameter.Type;
@@ -77,13 +78,50 @@ namespace Bind.Overloaders
                 arrayParameterPermutation[i] = arrayParameter;
             }
 
-            yield return new FunctionSignatureBuilder(function)
+            yield return Fixed(new FunctionSignatureBuilder(function)
                 .WithParameters(refParameterPermutation)
-                .Build();
+                .Build());
 
-            yield return new FunctionSignatureBuilder(function)
+            yield return Fixed(new FunctionSignatureBuilder(function)
                 .WithParameters(arrayParameterPermutation)
-                .Build();
+                .Build());
+        }
+
+        private static (FunctionSignature, StringBuilder) Fixed(FunctionSignature function)
+        {
+            var sb = new StringBuilder();
+            var ind = string.Empty;
+            var args = new List<string>();
+            foreach (var refParam in function.Parameters)
+            {
+                if (!refParam.Type.IsByRef || refParam.Type.ArrayDimensions != 0)
+                {
+                    args.Add(refParam.Name);
+                    continue;
+                }
+
+                sb.AppendLine(ind + "fixed (" + refParam.Name + "* " + refParam.Name + "Ptr = &" + refParam.Name);
+                sb.AppendLine("{");
+                args.Add(refParam.Name + "Ptr");
+                ind += "    ";
+            }
+
+            if (function.ReturnType.ToString() != "void")
+            {
+                sb.Append("return ");
+            }
+
+            sb.Append(function.Name + "(");
+            sb.Append(string.Join(", ", args));
+            sb.AppendLine(");");
+
+            while (!string.IsNullOrEmpty(ind))
+            {
+                ind = ind.Remove(ind.Length - 4, 4);
+                sb.AppendLine(ind + "}");
+            }
+
+            return (function, sb);
         }
     }
 }
