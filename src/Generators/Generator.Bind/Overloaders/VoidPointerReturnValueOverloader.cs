@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using Bind.Builders;
 using Bind.Extensions;
 using Bind.XML.Signatures.Functions;
@@ -18,16 +20,25 @@ namespace Bind.Overloaders
         }
 
         /// <inheritdoc/>
-        public IEnumerable<FunctionSignature> CreateOverloads(FunctionSignature function)
+        public IEnumerable<(FunctionSignature, StringBuilder)> CreateOverloads(FunctionSignature function)
         {
             var newReturnType = new TypeSignatureBuilder(function.ReturnType)
                 .WithIndirectionLevel(0)
                 .WithName(nameof(IntPtr))
                 .Build();
 
-            yield return new FunctionSignatureBuilder(function)
+            yield return Cast(new FunctionSignatureBuilder(function)
                 .WithReturnType(newReturnType)
-                .Build();
+                .Build());
+        }
+
+        private (FunctionSignature, StringBuilder) Cast(FunctionSignature function)
+        {
+            var sb = new StringBuilder();
+            sb.Append("return (IntPtr) " + function.Name + "(");
+            sb.Append(string.Join(", ", function.Parameters.Select(x => x.Name)));
+            sb.AppendLine(");");
+            return (function, sb);
         }
     }
 }
