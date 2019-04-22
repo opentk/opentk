@@ -79,18 +79,20 @@ namespace Bind.Overloaders
                 .WithArrayDimensions(0)
                 .Build();
 
-            var newParameters = SkipLastExtension.SkipLast(function.Parameters, 1).ToList();
+            var newParameters = function.Parameters.SkipLast(1).ToList();
             var newName = function.Name.Singularize(false);
 
             var functionBuilder = new FunctionSignatureBuilder(function)
                 .WithName(newName)
                 .WithReturnType(newReturnType);
+            
+            var sb = new StringBuilder();
 
             if (!newParameters.Any())
             {
-                yield return functionBuilder
+                yield return (functionBuilder
                     .WithParameters(newParameters)
-                    .Build();
+                    .Build(), sb);
 
                 yield break;
             }
@@ -99,17 +101,17 @@ namespace Bind.Overloaders
             var sizeParameterType = newParameters.Last().Type;
             if (!sizeParameterType.Name.StartsWith("int", StringComparison.OrdinalIgnoreCase) || sizeParameterType.IsPointer)
             {
-                yield return functionBuilder
+                yield return (functionBuilder
                     .WithParameters(newParameters)
-                    .Build();
+                    .Build(), sb);
 
                 yield break;
             }
 
-            newParameters = SkipLastExtension.SkipLast(newParameters, 1).ToList();
-            yield return functionBuilder
+            newParameters = newParameters.SkipLast(1).ToList();
+            yield return (functionBuilder
                     .WithParameters(newParameters)
-                    .Build();
+                    .Build(), sb);
         }
     }
 }
