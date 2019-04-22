@@ -55,14 +55,9 @@ namespace OpenTK.Convert
 
                 using (var writer = XmlWriter.Create(out_stream, settings))
                 {
-                    var output = new XElement
-                    (
+                    var output = new XElement(
                         "signatures",
-                        new XAttribute("version", "2")
-                        // XmlException: The ':' character, hexadecimal value 0x3A, cannot be included in a name.
-                        //new XAttribute("xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance"),
-                        //new XAttribute("xsi:noNamespaceSchemaLocation", "../signatures.xsd")
-                    );
+                        new XAttribute("version", "2"));
 
                     foreach (var api in sigs.SelectMany(s => s))
                     {
