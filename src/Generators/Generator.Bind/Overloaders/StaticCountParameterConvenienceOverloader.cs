@@ -79,7 +79,7 @@ namespace Bind.Overloaders
         /// </summary>
         /// <param name="parameter">The parameter.</param>
         /// <returns>True if the parameter has a static count; otherwise, false.</returns>
-        private bool HasStaticCount([NotNull] ParameterSignature parameter)
+        private static bool HasStaticCount([NotNull] ParameterSignature parameter)
         {
             return !(parameter.Count is null) && parameter.Count.IsStatic;
         }
