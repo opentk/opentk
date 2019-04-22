@@ -86,6 +86,7 @@ namespace Bind.Overloaders
                 .WithName(newName)
                 .WithReturnType(newReturnType);
 
+            // TODO: Implement this StringBuilder
             var sb = new StringBuilder();
 
             if (!newParameters.Any())
