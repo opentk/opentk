@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using Bind.Builders;
 using Bind.Extensions;
 using Bind.XML.Signatures.Functions;
@@ -19,7 +20,7 @@ namespace Bind.Overloaders
         }
 
         /// <inheritdoc/>
-        public IEnumerable<FunctionSignature> CreateOverloads(FunctionSignature function)
+        public IEnumerable<(FunctionSignature, StringBuilder)> CreateOverloads(FunctionSignature function)
         {
             var baseParameters = function.Parameters;
 
@@ -48,7 +49,11 @@ namespace Bind.Overloaders
                     genericTypeParameterName = "T";
                 }
 
-                var genericTypeParameter = new GenericTypeParameterSignature(genericTypeParameterName);
+                var genericTypeParameter = new GenericTypeParameterSignature
+                (
+                    genericTypeParameterName,
+                    new[] { "unmanaged" }
+                );
 
                 newGenericTypeParameters.Add(genericTypeParameter);
 
@@ -103,29 +108,86 @@ namespace Bind.Overloaders
                     .Build();
             }
 
-            yield return new FunctionSignatureBuilder(function)
+            yield return ToPointer(new FunctionSignatureBuilder(function)
                 .WithParameters(newIntPtrParameters)
-                .Build();
+                .Build());
 
-            yield return new FunctionSignatureBuilder(function)
+            yield return Fixed(new FunctionSignatureBuilder(function)
                 .WithParameters(newGenericArray1DParameters)
                 .WithGenericTypeParameters(newGenericTypeParameters)
-                .Build();
+                .Build());
 
-            yield return new FunctionSignatureBuilder(function)
+            yield return Fixed(new FunctionSignatureBuilder(function)
                 .WithParameters(newGenericArray2DParameters)
                 .WithGenericTypeParameters(newGenericTypeParameters)
-                .Build();
+                .Build());
 
-            yield return new FunctionSignatureBuilder(function)
+            yield return Fixed(new FunctionSignatureBuilder(function)
                 .WithParameters(newGenericArray3DParameters)
                 .WithGenericTypeParameters(newGenericTypeParameters)
-                .Build();
+                .Build());
 
-            yield return new FunctionSignatureBuilder(function)
+            yield return Fixed(new FunctionSignatureBuilder(function)
                 .WithParameters(newGenericRefParameters)
                 .WithGenericTypeParameters(newGenericTypeParameters)
-                .Build();
+                .Build());
+        }
+
+        private (FunctionSignature, StringBuilder) ToPointer(FunctionSignature function)
+        {
+            var sb = new StringBuilder();
+            sb.Append("return " + function.Name + "(");
+            for (var index = 0; index < function.Parameters.Count; index++)
+            {
+                var parameter = function.Parameters[index];
+                if (parameter.Type.IsVoidPointer())
+                {
+                    sb.Append(parameter.Name+".ToPointer()");
+                }
+                else
+                {
+                    sb.Append(parameter.Name);
+                }
+
+                if (index != function.Parameters.Count)
+                {
+                    sb.Append(", ");
+                }
+            }
+
+            sb.AppendLine(");");
+            return (function, sb);
+        }
+
+        private (FunctionSignature, StringBuilder) Fixed(FunctionSignature function)
+        {
+            var sb = new StringBuilder();
+            var parameters = new List<string>();
+            var ind = string.Empty;
+            foreach (var param in function.Parameters)
+            {
+                if (function.GenericTypeParameters.Any(x => x.Name == param.Type.Name))
+                {
+                    sb.AppendLine(ind + "fixed (" + param.Type.Name + "* " + param.Name + "Ptr = " + param.Name + ")");
+                    sb.AppendLine(ind + "{");
+                    ind += "    ";
+                    parameters.Add("(IntPtr) " + param.Name + "Ptr");
+                }
+                else
+                {
+                    parameters.Add(param.Name);
+                }
+            }
+
+            sb.AppendLine(ind + string.Join(", ", parameters));
+
+            while (!string.IsNullOrEmpty(ind))
+            {
+                ind = ind.Remove(ind.Length - 4, 4);
+                sb.AppendLine(ind + "}");
+            }
+
+            return (function, sb);
         }
     }
 }
