@@ -79,7 +79,7 @@ namespace Bind.Overloaders
                 .WithArrayDimensions(0)
                 .Build();
 
-            var newParameters = function.Parameters.SkipLast(1).ToList();
+            var newParameters = SkipLastExtension.SkipLast(function.Parameters, 1).ToList();
             var newName = function.Name.Singularize(false);
 
             var functionBuilder = new FunctionSignatureBuilder(function)
@@ -108,7 +108,7 @@ namespace Bind.Overloaders
                 yield break;
             }
 
-            newParameters = newParameters.SkipLast(1).ToList();
+            newParameters = SkipLastExtension.SkipLast(newParameters, 1).ToList();
             yield return (functionBuilder
                     .WithParameters(newParameters)
                     .Build(), sb);
