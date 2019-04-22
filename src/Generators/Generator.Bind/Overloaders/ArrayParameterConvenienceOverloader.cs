@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using Bind.Builders;
 using Bind.XML.Signatures;
 using Bind.XML.Signatures.Functions;
@@ -68,7 +69,7 @@ namespace Bind.Overloaders
         }
 
         /// <inheritdoc/>
-        public IEnumerable<FunctionSignature> CreateOverloads(FunctionSignature function)
+        public IEnumerable<(FunctionSignature, StringBuilder)> CreateOverloads(FunctionSignature function)
         {
             var arrayParameter = function.Parameters.Last();
             var arrayParameterType = arrayParameter.Type;
@@ -87,10 +88,18 @@ namespace Bind.Overloaders
 
             newParameters.Add(newArrayParameter);
 
-            yield return new FunctionSignatureBuilder(function)
+            var sig = new FunctionSignatureBuilder(function)
                 .WithName(newName)
                 .WithParameters(newParameters)
                 .Build();
+            var sb = new StringBuilder();
+            
+            sb.AppendLine(function.Name+"(1, &"+newArrayParameter.Name+");");
+
+            yield return (new FunctionSignatureBuilder(function)
+                .WithName(newName)
+                .WithParameters(newParameters)
+                .Build(), sb);
         }
     }
 }
