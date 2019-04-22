@@ -98,7 +98,7 @@ namespace Bind.Overloaders
                 }
                 else
                 {
-                    sb.Append("out var " + function.Parameters[i].Name + ");\n");
+                    sb.AppendLine("out var " + function.Parameters[i].Name + ");");
                     sb.Append("return " + function.Parameters[i].Name + ";");
                 }
             }
