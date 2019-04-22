@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Text;
 using Bind.XML.Signatures.Functions;
 using JetBrains.Annotations;
 
@@ -22,6 +23,6 @@ namespace Bind.Overloaders
         /// <param name="function">The base function.</param>
         /// <returns>A set of overloads.</returns>
         [NotNull, ItemNotNull]
-        IEnumerable<FunctionSignature> CreateOverloads([NotNull] FunctionSignature function);
+        IEnumerable<(FunctionSignature, StringBuilder)> CreateOverloads([NotNull] FunctionSignature function);
     }
 }
