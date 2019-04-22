@@ -49,8 +49,8 @@ namespace OpenToolkit.Windowing.Desktop
             X = GLFW.DontCare;
             Y = GLFW.DontCare;
 
-            Width = 20;
-            Height = 30;
+            Width = 640;
+            Height = 360;
 
             IsFullscreen = false;
 
