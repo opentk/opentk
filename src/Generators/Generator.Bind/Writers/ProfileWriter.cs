@@ -160,6 +160,8 @@ namespace Bind.Writers
                 // we expect the project file to already be created
                 await WriteProjectFileAsync(ns, dir, subfolder, rns, project.Extension != "Core");
             }
+
+            await WriteMixedModeClassAsync(project, className, dir, ns, project.Extension != "Core");
         }
 
         private static async Task WriteMetaInterfaceAsync(string ns, string file, string name, IEnumerable<string> ints)

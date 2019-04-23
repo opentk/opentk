@@ -1,5 +1,7 @@
 using System.Collections.Generic;
+using System.Text;
 using Bind.XML.Signatures.Enumerations;
+using Bind.XML.Signatures.Functions;
 
 namespace Bind.Structure
 {
@@ -14,11 +16,19 @@ namespace Bind.Structure
         /// <param name="extension">The extension to which this project belongs.</param>
         /// <param name="interfaces">The interfaces within this project.</param>
         /// <param name="enums">The enums within this project.</param>
-        public Project(string extension, IEnumerable<Interface> interfaces, IEnumerable<EnumerationSignature> enums)
+        /// <param name="overloads">The overloads within this project.</param>
+        public Project
+        (
+            string extension,
+            IEnumerable<Interface> interfaces,
+            IEnumerable<EnumerationSignature> enums,
+            IEnumerable<(FunctionSignature, StringBuilder)> overloads
+        )
         {
             Extension = extension;
             Interfaces = interfaces;
             Enums = enums;
+            Overloads = overloads;
         }
         
         /// <summary>
@@ -35,5 +45,10 @@ namespace Bind.Structure
         /// Gets or sets the interfaces within this project.
         /// </summary>
         public IEnumerable<Interface> Interfaces { get; set; }
+
+        /// <summary>
+        /// Gets or sets the overloads within this project.
+        /// </summary>
+        public IEnumerable<(FunctionSignature, StringBuilder)> Overloads { get; set; }
     }
 }

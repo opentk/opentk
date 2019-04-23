@@ -133,7 +133,6 @@ namespace Bind.XML.Overrides
                     var enumerationAdditions = new List<EnumerationOverride>();
 
                     var functionReplacements = new List<FunctionOverride>();
-                    var functionOverloads = new List<FunctionOverride>();
                     var removedFunctions = new List<RemoveOverride>();
 
                     foreach (var element in elements)
@@ -185,7 +184,6 @@ namespace Bind.XML.Overrides
                         new VersionRange(version, version),
                         enumerationAdditions,
                         functionReplacements,
-                        functionOverloads,
                         removedFunctions
                     );
                 }

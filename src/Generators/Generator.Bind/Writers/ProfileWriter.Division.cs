@@ -23,7 +23,7 @@ namespace Bind.Writers
                     x => new Project(x.Item1, x.Item2,
                         x.Item1 == "Core"
                             ? profile.Enumerations
-                            : new EnumerationSignature[0])
+                            : new EnumerationSignature[0], profile.Overloads)
                 );
         }
 
