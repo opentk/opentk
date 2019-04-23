@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using Bind.Structure;
 using Bind.Translation.Translators;
 using Bind.XML.Signatures;
 using Bind.XML.Signatures.Enumerations;
@@ -14,31 +15,23 @@ namespace Bind.Writers
         /// </summary>
         /// <param name="profile">The profile to split.</param>
         /// <returns>A collection of projects.</returns>
-        public static
-            IEnumerable<(string Extension, IEnumerable<(string InterfaceName, IEnumerable<FunctionSignature>)>,
-                IEnumerable<EnumerationSignature>)> GetProjects(ApiProfile profile)
+        public static IEnumerable<Project> GetProjects(ApiProfile profile)
         {
-            return GetProjectsWithoutEnums(profile.NativeSignatures)
+            return GetWithoutEnums(profile.NativeSignatures)
                 .Select
                 (
-                    x => (x.name, x.Item2,
-                        (IEnumerable<EnumerationSignature>)(x.name == "Core"
+                    x => new Project(x.Item1, x.Item2,
+                        x.Item1 == "Core"
                             ? profile.Enumerations
-                            : new EnumerationSignature[0]))
+                            : new EnumerationSignature[0])
                 );
         }
 
-        /// <summary>
-        /// Writes a collection of functions to their appropriate projects.
-        /// </summary>
-        /// <param name="functions">The functions to write.</param>
-        /// <returns>A collection of projects.</returns>
-        public static IEnumerable<(string name, IEnumerable<(string category, IEnumerable<FunctionSignature>)>)>
-            GetProjectsWithoutEnums(IEnumerable<FunctionSignature> functions)
+        private static IEnumerable<(string, IEnumerable<Interface>)> GetWithoutEnums(IEnumerable<FunctionSignature> fns)
         {
             // extension or core, (interface name, functions)
             var projects = new Dictionary<string, Dictionary<string, List<FunctionSignature>>>();
-            foreach (var function in functions)
+            foreach (var function in fns)
             {
                 foreach (var category in function.Categories)
                 {
@@ -83,7 +76,7 @@ namespace Bind.Writers
                 }
             }
 
-            return projects.Select(x => (x.Key, x.Value.Select(y => (y.Key, (IEnumerable<FunctionSignature>)y.Value))));
+            return projects.Select(x => (x.Key, x.Value.Select(y => new Interface(y.Key, y.Value))));
         }
     }
 }

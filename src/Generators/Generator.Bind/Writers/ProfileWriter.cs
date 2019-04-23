@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Bind.Generators;
+using Bind.Structure;
 using Bind.Translation.Translators;
 using Bind.XML.Documentation;
 using Bind.XML.Signatures;
@@ -92,8 +93,7 @@ namespace Bind.Writers
 
         private static async Task WriteProjectAsync
         (
-            (string Extension, IEnumerable<(string InterfaceName, IEnumerable<FunctionSignature> Functions)> Interfaces,
-                IEnumerable<EnumerationSignature> Enums) project,
+            Project project,
             string folder,
             string rns,
             string ens,

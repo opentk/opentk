@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Bind.Structure;
 using Bind.XML.Documentation;
 using Bind.XML.Signatures;
 using Bind.XML.Signatures.Enumerations;
@@ -88,7 +89,7 @@ namespace Bind.Writers
         /// <param name="prefix">The function prefix for this interface.</param>
         /// <param name="doc">The profile's documentation.</param>
         /// <returns>The asynchronous task.</returns>
-        public static async Task WriteInterfaceAsync(this (string, IEnumerable<FunctionSignature>) i, string file, string ns, string prefix, ProfileDocumentation doc)
+        public static async Task WriteInterfaceAsync(this Interface i, string file, string ns, string prefix, ProfileDocumentation doc)
         {
             var sw = new StreamWriter(file);
             await sw.WriteLineAsync(EmbeddedResources.LicenseText);
@@ -100,9 +101,9 @@ namespace Bind.Writers
             await sw.WriteLineAsync();
             await sw.WriteLineAsync("namespace " + ns);
             await sw.WriteLineAsync("{");
-            await sw.WriteLineAsync("    internal interface " + i.Item1);
+            await sw.WriteLineAsync("    internal interface " + i.InterfaceName);
             await sw.WriteAsync("    {");
-            foreach (var function in i.Item2)
+            foreach (var function in i.Functions)
             {
                 await sw.WriteLineAsync();
                 using (var sr = new StringReader(GetDocumentation(function, doc)))
@@ -167,7 +168,7 @@ namespace Bind.Writers
             return firstHalf + "." + secondHalf;
         }
 
-        private static async Task WriteProjectFileAsync(string ns, string dir, string subdir, string coreProj, bool ext)
+        private static async Task WriteProjectFileAsync(string ns, string dir, string subDir, string coreProj, bool ext)
         {
             if (File.Exists(Path.Combine(dir, ns + ".csproj")))
             {
@@ -191,7 +192,7 @@ namespace Bind.Writers
                 await csproj.WriteLineAsync
                 (
                     "    <ProjectReference Include=\"$(OpenTKSolutionRoot)\\src\\" +
-                    subdir + "\\" + coreProj
+                    subDir + "\\" + coreProj
                     + "\\" + coreProj + ".csproj\" />"
                 );
             }
