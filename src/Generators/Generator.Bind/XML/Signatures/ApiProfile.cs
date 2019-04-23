@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using Bind.Extensions;
 using Bind.Versioning;
 using Bind.XML.Signatures.Enumerations;
@@ -38,7 +39,7 @@ namespace Bind.XML.Signatures
         /// <see cref="NativeSignatures"/>, they form the complete API surface.
         /// </summary>
         [NotNull]
-        public IReadOnlyList<FunctionSignature> Overloads { get; }
+        public IReadOnlyList<(FunctionSignature, StringBuilder)> Overloads { get; }
 
         /// <summary>
         /// Gets the available enumerations in the profile.
@@ -60,14 +61,14 @@ namespace Bind.XML.Signatures
             [NotNull] VersionRange versions,
             [NotNull] IReadOnlyList<FunctionSignature> nativeSignatures,
             [NotNull] IReadOnlyList<EnumerationSignature> enumerations,
-            [CanBeNull] IReadOnlyList<FunctionSignature> overloads = null
+            [CanBeNull] IReadOnlyList<(FunctionSignature, StringBuilder)> overloads = null
         )
         {
             Name = name ?? throw new ArgumentNullException(nameof(name));
             Versions = versions ?? throw new ArgumentNullException(nameof(versions));
             NativeSignatures = nativeSignatures ?? throw new ArgumentNullException(nameof(nativeSignatures));
             Enumerations = enumerations ?? throw new ArgumentNullException(nameof(enumerations));
-            Overloads = overloads ?? new List<FunctionSignature>();
+            Overloads = overloads ?? new List<(FunctionSignature, StringBuilder)>();
         }
 
         /// <summary>
@@ -78,13 +79,8 @@ namespace Bind.XML.Signatures
         [CanBeNull]
         public FunctionSignature FindFunctionWithEntrypoint([NotNull] string entrypoint)
         {
-            var nativeSignature = NativeSignatures.FirstOrDefault(f => f.NativeEntrypoint == entrypoint);
-            if (nativeSignature is null)
-            {
-                return Overloads.FirstOrDefault(f => f.NativeEntrypoint == entrypoint);
-            }
-
-            return nativeSignature;
+            return NativeSignatures.FirstOrDefault(f => f.NativeEntrypoint == entrypoint)
+                   ?? Overloads.FirstOrDefault(f => f.Item1.NativeEntrypoint == entrypoint).Item1;
         }
 
         /// <summary>
@@ -129,7 +125,7 @@ namespace Bind.XML.Signatures
         public IEnumerable<string> GetCategories()
         {
             var nativeCategories = NativeSignatures.SelectMany(f => f.Categories);
-            var overloadCategories = Overloads.SelectMany(f => f.Categories);
+            var overloadCategories = Overloads.SelectMany(f => f.Item1.Categories);
 
             return nativeCategories.Concat(overloadCategories).Distinct();
         }
@@ -142,7 +138,7 @@ namespace Bind.XML.Signatures
         public IEnumerable<string> GetExtensions()
         {
             var nativeExtensions = NativeSignatures.Select(f => f.Extension);
-            var overloadExtensions = Overloads.Select(f => f.Extension);
+            var overloadExtensions = Overloads.Select(f => f.Item1.Extension);
 
             return nativeExtensions.Concat(overloadExtensions).Distinct();
         }

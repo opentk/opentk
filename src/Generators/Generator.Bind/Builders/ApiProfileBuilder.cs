@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Text;
 using Bind.Versioning;
 using Bind.XML.Signatures;
 using Bind.XML.Signatures.Enumerations;
@@ -22,7 +23,7 @@ namespace Bind.Builders
         private IReadOnlyList<FunctionSignature> _newNativeSignatures;
 
         [NotNull]
-        private IReadOnlyList<FunctionSignature> _newOverloads;
+        private IReadOnlyList<(FunctionSignature, StringBuilder)> _newOverloads;
 
         [NotNull]
         private IReadOnlyList<EnumerationSignature> _newEnumerations;
@@ -82,7 +83,7 @@ namespace Bind.Builders
         /// <param name="newOverloads">The new overloads.</param>
         /// <returns>The builder, with the change applied.</returns>
         [NotNull]
-        public ApiProfileBuilder WithOverloads([NotNull] IReadOnlyList<FunctionSignature> newOverloads)
+        public ApiProfileBuilder WithOverloads([NotNull] IReadOnlyList<(FunctionSignature, StringBuilder)> newOverloads)
         {
             _newOverloads = newOverloads;
             return this;

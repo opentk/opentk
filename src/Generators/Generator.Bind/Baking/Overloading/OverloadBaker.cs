@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using Bind.Builders;
 using Bind.XML.Signatures;
 using Bind.XML.Signatures.Functions;
@@ -26,13 +27,13 @@ namespace Bind.Baking.Overloading
             var newOverloads = pipeline.ConsumeSignatures(functionsThatNeedOverloads).ToList();
 
             // Discard duplicate overloads
-            var optimizedOverloads = new List<FunctionSignature>(profile.Overloads);
-            foreach (var extensionGroup in newOverloads.GroupBy(f => f.Extension))
+            var optimizedOverloads = new List<(FunctionSignature, StringBuilder)>(profile.Overloads);
+            foreach (var extensionGroup in newOverloads.GroupBy(f => f.Item1.Extension))
             {
-                var uniqueOverloads = new List<FunctionSignature>();
+                var uniqueOverloads = new List<(FunctionSignature, StringBuilder)>();
                 foreach (var function in extensionGroup)
                 {
-                    if (uniqueOverloads.Any(f => f.HasSameSignatureAs(function)))
+                    if (uniqueOverloads.Any(f => f.Item1.HasSameSignatureAs(function.Item1)))
                     {
                         continue;
                     }

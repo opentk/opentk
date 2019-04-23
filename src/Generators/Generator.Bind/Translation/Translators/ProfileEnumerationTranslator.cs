@@ -95,7 +95,6 @@ namespace Bind.Translation.Translators
                 overrides.Versions,
                 newEnumerations,
                 overrides.ReplacedFunctions,
-                overrides.FunctionOverloads,
                 overrides.RemovedFunctions
             );
         }

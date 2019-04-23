@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using Bind.Overloaders;
 using Bind.XML.Signatures.Functions;
 using JetBrains.Annotations;
@@ -50,59 +51,22 @@ namespace Bind.Baking.Overloading
         }
 
         /// <summary>
-        /// Consumes a set of signatures, passing them through the given pipeline. Each stage is guaranteed to run only
-        /// once for any given branch of the input signatures. The generation process follows a recursive depth-first
-        /// reductive algorithm.
+        /// Consumes a set of signatures, passing them through the given pipeline.
         /// </summary>
         /// <param name="signatures">The signatures to process.</param>
         /// <param name="pipeline">A sorted list of generators, acting as the process pipeline.</param>
-        /// <returns>The augmented function list.</returns>
-        public IEnumerable<FunctionSignature> ConsumeSignatures
+        /// <returns>The augmented overload list.</returns>
+        public IEnumerable<(FunctionSignature, StringBuilder)> ConsumeSignatures
         (
             [NotNull] IEnumerable<FunctionSignature> signatures,
             [CanBeNull] IReadOnlyList<IFunctionOverloader> pipeline = null
         )
         {
-            pipeline = pipeline ?? _pipeline;
-
-            var definitionQueue = new Queue<FunctionSignature>(signatures);
-
-            while (definitionQueue.Any())
-            {
-                var signature = definitionQueue.Dequeue();
-
-                // Find the entry stage of the pipeline
-                var stage = pipeline.FirstOrDefault(s => s.IsApplicable(signature));
-                if (stage is null)
-                {
-                    continue;
-                }
-
-                // Push the signatures through the stage
-                var generatedDefinitions = stage.CreateOverloads(signature).ToList();
-
-                // Yield the results
-                foreach (var generatedOverload in generatedDefinitions)
-                {
-                    yield return generatedOverload;
-                }
-
-                if (!generatedDefinitions.Any())
-                {
-                    continue;
-                }
-
-                // Ensure that the current signature is passed through again, so that goes through all applicable
-                // stages.
-                var passthroughSignatures = new List<FunctionSignature>(generatedDefinitions) { signature };
-
-                // Run the new signatures through the remaining stages of the pipeline
-                var deeperDefinitions = ConsumeSignatures(passthroughSignatures, pipeline.Except(new[] { stage }).ToList());
-                foreach (var deeperDefinition in deeperDefinitions)
-                {
-                    yield return deeperDefinition;
-                }
-            }
+            return signatures.SelectMany
+            (
+                x => (pipeline ?? _pipeline).Where(y => y.IsApplicable(x)).Select(y => y.CreateOverloads(x))
+            )
+            .SelectMany(x => x);
         }
     }
 }

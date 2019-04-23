@@ -152,7 +152,10 @@ namespace Bind.XML.Overrides
                             }
                             case "overload":
                             {
-                                functionOverloads.AddRange(element.Elements("function").Select(ParseFunctionOverride));
+                                Console.WriteLine
+                                (
+                                    "Warning: Overloads defined in overrides are ignored, use helper files instead."
+                                );
                                 break;
                             }
                             case "remove":

@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Text;
 using Bind.Builders;
 using Bind.Extensions;
 using Bind.Translation.Translators;
@@ -193,18 +194,6 @@ namespace Bind.Baking
                 }
             }
 
-            var newFunctionOverloads = new List<FunctionOverride>();
-            foreach (var functionOverload in coalescedOverrides.FunctionOverloads)
-            {
-                var nameVariations = Utilities.GetNameVariations(functionOverload);
-
-                var isReplacementDeprecated = nameVariations.Any(variation => deprecatedFunctions.Any(df => df.Name == variation));
-                if (!isReplacementDeprecated)
-                {
-                    newFunctionOverloads.Add(functionOverload);
-                }
-            }
-
             var newFunctionRemovals = new List<RemoveOverride>();
             foreach (var functionRemoval in coalescedOverrides.RemovedFunctions)
             {
@@ -223,7 +212,6 @@ namespace Bind.Baking
                 coalescedOverrides.Versions,
                 newEnumerations,
                 newFunctionReplacements,
-                newFunctionOverloads,
                 newFunctionRemovals
             );
         }
@@ -269,22 +257,9 @@ namespace Bind.Baking
                 }
             }
 
-            var newOverloads = new List<FunctionSignature>(coalescedProfile.Overloads);
-            foreach (var functionOverload in coalescedOverrides.FunctionOverloads)
-            {
-                var baseFunctions = FindBaseFunctions(newFunctions, functionOverload);
-                foreach (var baseFunction in baseFunctions)
-                {
-                    var overloadedFunction = CreateOverriddenFunction(baseFunction, functionOverload);
-
-                    newOverloads.Add(overloadedFunction);
-                }
-            }
-
             return new ApiProfileBuilder(coalescedProfile)
                 .WithNativeSignatures(newFunctions)
                 .WithEnumerations(newEnums)
-                .WithOverloads(newOverloads)
                 .Build();
         }
 
@@ -823,24 +798,10 @@ namespace Bind.Baking
                 }
             }
 
-            var overloads = new List<FunctionOverride>();
             var removals = new List<RemoveOverride>();
             var replacedFunctions = new List<FunctionOverride>();
             foreach (var profileOverride in profileOverrides)
             {
-                foreach (var function in profileOverride.FunctionOverloads)
-                {
-                    if (overloads.Any(f => f.HasSameSignatureAs(function) && f.BaseExtension == function.BaseExtension))
-                    {
-                        throw new InvalidOperationException
-                        (
-                            "Duplicate overload redefinition in overrides detected - generator error or schema change."
-                        );
-                    }
-
-                    overloads.Add(function);
-                }
-
                 foreach (var function in profileOverride.RemovedFunctions)
                 {
                     if (removals.Any(f => Utilities.GetNameVariations(function).Contains(f.Name)))
@@ -874,7 +835,6 @@ namespace Bind.Baking
                 versionRange,
                 enums.Values.ToList(),
                 replacedFunctions,
-                overloads,
                 removals
             );
         }
