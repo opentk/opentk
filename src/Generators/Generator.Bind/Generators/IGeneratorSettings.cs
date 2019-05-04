@@ -68,6 +68,11 @@ namespace Bind.Generators
         string BaseProfileName { get; }
 
         /// <summary>
+        /// Gets a short-name identifier for the API.
+        /// </summary>
+        string APIIdentifier { get; }
+
+        /// <summary>
         /// Gets the path to the file that contains the API specification.
         /// </summary>
         [NotNull]

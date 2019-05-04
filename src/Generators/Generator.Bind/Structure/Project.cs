@@ -30,7 +30,7 @@ namespace Bind.Structure
             Enums = enums;
             Overloads = overloads;
         }
-        
+
         /// <summary>
         /// Gets or sets the extension to which this project belongs.
         /// </summary>

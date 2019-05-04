@@ -27,6 +27,9 @@ namespace Bind.Generators.Bases
         public override string ClassName => "GL";
 
         /// <inheritdoc/>
+        public override string APIIdentifier => "OpenGL";
+
+        /// <inheritdoc/>
         public override string FunctionPrefix => "gl";
 
         /// <inheritdoc/>

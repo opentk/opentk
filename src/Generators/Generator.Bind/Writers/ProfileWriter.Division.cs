@@ -20,10 +20,13 @@ namespace Bind.Writers
             return GetWithoutEnums(profile.NativeSignatures)
                 .Select
                 (
-                    x => new Project(x.Item1, x.Item2,
-                        x.Item1 == "Core"
-                            ? profile.Enumerations
-                            : new EnumerationSignature[0], profile.Overloads)
+                    x => new Project
+                    (
+                        x.Item1,
+                        x.Item2,
+                        x.Item1 == "Core" ? profile.Enumerations : new EnumerationSignature[0],
+                        profile.Overloads
+                    )
                 );
         }
 

@@ -34,10 +34,8 @@ namespace Bind.Baking.Overloading
         {
             yield return new VoidPointerParameterOverloader();
             yield return new VoidPointerReturnValueOverloader();
-            yield return new PointerParameterPermutationOverloader();
             yield return new ReturnTypeConvenienceOverloader();
             yield return new ArrayParameterConvenienceOverloader();
-            yield return new StaticCountParameterConvenienceOverloader();
         }
 
         /// <summary>

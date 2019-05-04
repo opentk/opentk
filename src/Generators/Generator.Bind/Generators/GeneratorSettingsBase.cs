@@ -41,6 +41,9 @@ namespace Bind.Generators.Bases
         public abstract string APITypemap { get; }
 
         /// <inheritdoc/>
+        public abstract string APIIdentifier { get; }
+
+        /// <inheritdoc/>
         public abstract string SpecificationFile { get; }
 
         /// <inheritdoc/>

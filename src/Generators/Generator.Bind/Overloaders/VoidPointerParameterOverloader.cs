@@ -179,7 +179,7 @@ namespace Bind.Overloaders
                 }
             }
 
-            sb.AppendLine(ind + string.Join(", ", parameters));
+            sb.AppendLine(ind + function.Name + "(" + string.Join(", ", parameters) + ");");
 
             while (!string.IsNullOrEmpty(ind))
             {

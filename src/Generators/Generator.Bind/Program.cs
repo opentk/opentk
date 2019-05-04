@@ -163,8 +163,8 @@ namespace Bind
 
             var overloadedProfile = OverloadBaker.BakeOverloads(mappedProfile);
 
-            //var bindingsWriter = new BindingWriter(generatorSettings, overloadedProfile, bakedDocs);
-            //await bindingsWriter.WriteBindingsAsync();
+            // var bindingsWriter = new BindingWriter(generatorSettings, overloadedProfile, bakedDocs);
+            // await bindingsWriter.WriteBindingsAsync();
             await ProfileWriter.WriteAsync
             (
                 Path.Combine(Arguments.OutputPath, generatorSettings.OutputSubfolder),
@@ -173,8 +173,10 @@ namespace Bind
                 generatorSettings.FunctionPrefix,
                 generatorSettings.OutputSubfolder,
                 generatorSettings.ClassName,
+                generatorSettings.APIIdentifier,
                 overloadedProfile,
-                bakedDocs
+                bakedDocs,
+                generatorSettings.NameContainer
             );
         }
 

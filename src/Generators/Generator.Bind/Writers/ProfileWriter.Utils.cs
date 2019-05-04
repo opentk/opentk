@@ -143,6 +143,16 @@ namespace Bind.Writers
             return sw.ToString();
         }
 
+        /// <summary>
+        /// Returns a string that's blah blah.
+        /// </summary>
+        /// <param name="sig">Blah.</param>
+        /// <returns>Blep.</returns>
+        public static string Tmp(FunctionSignature sig)
+        {
+            return GetDeclarationString(sig);
+        }
+
         [NotNull]
         private static string GetDeclarationString([NotNull] FunctionSignature function)
         {
@@ -178,14 +188,14 @@ namespace Bind.Writers
 
             if (function.HasGenericTypeParameters)
             {
-                sb.AppendLine();
                 foreach (var p in function.GenericTypeParameters)
                 {
+                    sb.AppendLine();
                     var constraints = p.Constraints.Any()
                         ? string.Join(", ", p.Constraints)
                         : "struct";
 
-                    sb.AppendLine($"    where {p.Name} : {constraints}");
+                    sb.Append($"            where {p.Name} : {constraints}");
                 }
             }
 

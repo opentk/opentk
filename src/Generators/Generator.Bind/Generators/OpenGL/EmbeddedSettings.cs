@@ -11,10 +11,8 @@ namespace Bind.Generators.ES
     /// </summary>
     internal class EmbeddedSettings : OpenGLGeneratorSettingsBase
     {
-        /// <summary>
-        /// Gets a short-name identifier for the API.
-        /// </summary>
-        private const string APIIdentifier = "OpenGLES";
+        /// <inheritdoc/>
+        public override string APIIdentifier => "OpenGLES";
 
         /// <inheritdoc/>
         public override string Namespace => $"OpenToolkit.OpenGLES";
