@@ -33,17 +33,6 @@ namespace Bind.Translation.Mappers
         {
             var newType = _glTypeMapper.Map(input.Type);
 
-            // if (newType.Name.Equals("string", StringComparison.OrdinalIgnoreCase))
-            // {
-            //     if (input.Flow == FlowDirection.Out)
-            //     {
-            //         newType = new TypeSignatureBuilder(newType)
-            //             .WithByRef(true)
-            //             .WithIsOut(true)
-            //             .Build();
-            //     }
-            // }
-
             return new ParameterSignatureBuilder(input)
                 .WithType(newType)
                 .Build();
