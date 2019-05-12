@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Bind.Builders;
 using Bind.Extensions;
+using Bind.XML;
 using Bind.XML.Signatures.Functions;
 
 namespace Bind.Overloaders
@@ -27,18 +28,32 @@ namespace Bind.Overloaders
                 .WithName(nameof(IntPtr))
                 .Build();
 
-            yield return Cast(new FunctionSignatureBuilder(function)
-                .WithReturnType(newReturnType)
-                .Build());
+            yield return Cast
+            (
+                new FunctionSignatureBuilder(function)
+                    .WithReturnType(newReturnType)
+                    .WithName(function.Name + "Ptr")
+                    .Build(),
+                function
+            );
         }
 
-        private (FunctionSignature, StringBuilder) Cast(FunctionSignature function)
+        private static (FunctionSignature, StringBuilder) Cast
+        (
+            FunctionSignature function,
+            INamedExtensionScopedEntity oldFunction
+        )
         {
             var sb = new StringBuilder();
-            sb.Append("return (IntPtr) " + function.Name + "(");
-            sb.Append(string.Join(", ", function.Parameters.Select(x => x.Name)));
+            sb.Append("return (IntPtr) " + oldFunction.Name + "(");
+            sb.Append(string.Join(", ", function.Parameters.Select(x => ConvertName(x.Name))));
             sb.AppendLine(");");
             return (function, sb);
+        }
+
+        private static string ConvertName(string argName)
+        {
+            return Utilities.CSharpKeywords.Contains(argName) ? "@" + argName : argName;
         }
     }
 }

@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Bind.Builders;
 using Bind.Overloaders;
 using Bind.XML.Signatures.Functions;
 using JetBrains.Annotations;
@@ -62,7 +63,15 @@ namespace Bind.Baking.Overloading
         {
             return signatures.SelectMany
             (
-                x => (pipeline ?? _pipeline).Where(y => y.IsApplicable(x)).Select(y => y.CreateOverloads(x))
+                x => (pipeline ?? _pipeline)
+                    .Where(y => y.IsApplicable(x))
+                    .Select
+                    (
+                        y => y.CreateOverloads(x).Select
+                        (
+                            z => (new FunctionSignatureBuilder(z.Item1).WithSource(y.GetType().Name).Build(), z.Item2)
+                        )
+                    )
             )
             .SelectMany(x => x);
         }

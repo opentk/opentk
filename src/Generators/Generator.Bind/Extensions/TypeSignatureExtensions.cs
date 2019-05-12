@@ -21,7 +21,7 @@ namespace Bind.Extensions
                        typeof(void).Name.ToLowerInvariant(),
                        StringComparison.OrdinalIgnoreCase
                    )
-                   && typeSignature.IsPointer;
+                   && typeSignature.IndirectionLevel == 1;
         }
     }
 }

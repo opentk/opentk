@@ -161,8 +161,6 @@ namespace Bind
             var mapper = new ProfileMapper(bakedMap);
             var mappedProfile = mapper.Map(bakedProfile);
 
-            var overloadedProfile = OverloadBaker.BakeOverloads(mappedProfile);
-
             // var bindingsWriter = new BindingWriter(generatorSettings, overloadedProfile, bakedDocs);
             // await bindingsWriter.WriteBindingsAsync();
             await ProfileWriter.WriteAsync
@@ -174,7 +172,7 @@ namespace Bind
                 generatorSettings.OutputSubfolder,
                 generatorSettings.ClassName,
                 generatorSettings.APIIdentifier,
-                overloadedProfile,
+                mappedProfile,
                 bakedDocs,
                 generatorSettings.NameContainer
             );

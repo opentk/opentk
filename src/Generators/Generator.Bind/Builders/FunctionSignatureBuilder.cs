@@ -40,6 +40,9 @@ namespace Bind.Builders
         [NotNull]
         private TypeSignature _newReturnType;
 
+        [NotNull]
+        private string _newSource;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="FunctionSignatureBuilder"/> class.
         /// </summary>
@@ -56,6 +59,7 @@ namespace Bind.Builders
             _newParameters = functionSignature.Parameters;
             _newReturnType = functionSignature.ReturnType;
             _newGenericTypeParameters = functionSignature.GenericTypeParameters;
+            _newSource = functionSignature.Source;
         }
 
         /// <summary>
@@ -182,6 +186,18 @@ namespace Bind.Builders
         }
 
         /// <summary>
+        /// Sets a new source for the function.
+        /// </summary>
+        /// <param name="source">The new source.</param>
+        /// <returns>The builder, with the change applied.</returns>
+        [NotNull]
+        public FunctionSignatureBuilder WithSource([NotNull] string source)
+        {
+            _newSource = source;
+            return this;
+        }
+
+        /// <summary>
         /// Builds the final instance.
         /// </summary>
         /// <returns>The instance.</returns>
@@ -199,7 +215,8 @@ namespace Bind.Builders
                 _newParameters,
                 _newDeprecatedIn,
                 _newDeprecationReason,
-                _newGenericTypeParameters
+                _newGenericTypeParameters,
+                _newSource
             );
         }
     }

@@ -25,6 +25,9 @@ namespace Bind
         /// <summary>
         /// Gets the license text from the embedded resource.
         /// </summary>
-        public static string LicenseText => _licenseText.Value;
+        /// <param name="fileName">The file that the license header is being added to.</param>
+        /// <returns>The license text from the embedded resource.</returns>
+        public static string LicenseText(string fileName) => _licenseText.Value.Replace("$FILENAME$", fileName)
+            .Replace("$YEAR$", DateTime.Now.Year.ToString());
     }
 }

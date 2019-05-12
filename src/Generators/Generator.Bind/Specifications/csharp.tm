@@ -22,11 +22,14 @@ String,             string
 # Pointer types
 GLvoid*,            void*
 GLchar*,            string
-GLchar**,           string[]
 GLcharARB*,         string
 GLfloat*,           float*
 GLdouble*,          double*
 GLboolean*,         bool*
+
+# Note: ADL cannot marshal arrays as return types.
+# There's no function in the spec that does, but if one's added we need to look into this.
+GLchar**,           string[]
 
 # ARB and NV types.
 GLsizeiptrARB,      UIntPtr

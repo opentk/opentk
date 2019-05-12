@@ -1,5 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+using Bind.Baking.Overloading;
 using Bind.Structure;
 using Bind.Translation.Translators;
 using Bind.XML.Signatures;
@@ -25,12 +27,12 @@ namespace Bind.Writers
                         x.Item1,
                         x.Item2,
                         x.Item1 == "Core" ? profile.Enumerations : new EnumerationSignature[0],
-                        profile.Overloads
+                        x.Item3.ToList()
                     )
                 );
         }
 
-        private static IEnumerable<(string, IEnumerable<Interface>)> GetWithoutEnums(IEnumerable<FunctionSignature> fns)
+        private static IEnumerable<(string, IEnumerable<Interface>, IEnumerable<(FunctionSignature, StringBuilder)>)> GetWithoutEnums(IEnumerable<FunctionSignature> fns)
         {
             // extension or core, (interface name, functions)
             var projects = new Dictionary<string, Dictionary<string, List<FunctionSignature>>>();
@@ -79,7 +81,15 @@ namespace Bind.Writers
                 }
             }
 
-            return projects.Select(x => (x.Key, x.Value.Select(y => new Interface(y.Key, y.Value))));
+            return projects.Select
+            (
+                x =>
+                (
+                    x.Key,
+                    x.Value.Select(y => new Interface(y.Key, y.Value)),
+                    x.Value.SelectMany(y => OverloadBaker.GetOverloads(y.Value))
+                )
+            );
         }
     }
 }

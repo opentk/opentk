@@ -87,21 +87,14 @@ namespace Bind.Overloaders
                 .WithReturnType(newReturnType);
 
             var sb = new StringBuilder();
+            var strParams = newParameters.Select(x => Utilities.CSharpKeywords.Contains(x.Name) ? "@" + x.Name : x.Name)
+                .Concat(new[] { "ret" });
 
+            sb.AppendLine(lastParameterType + " ret = null;");
             sb.Append(function.Name + "(");
-
-            for (var i = 0; i < function.Parameters.Count; i++)
-            {
-                if (i != function.Parameters.Count)
-                {
-                    sb.Append(function.Parameters[i].Name + ", ");
-                }
-                else
-                {
-                    sb.AppendLine("out var " + function.Parameters[i].Name + ");");
-                    sb.Append("return " + function.Parameters[i].Name + ";");
-                }
-            }
+            sb.Append(string.Join(", ", strParams));
+            sb.AppendLine(");");
+            sb.AppendLine($"return *ret;");
 
             if (!newParameters.Any())
             {

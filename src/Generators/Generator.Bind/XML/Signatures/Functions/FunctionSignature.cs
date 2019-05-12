@@ -21,6 +21,12 @@ namespace Bind.XML.Signatures.Functions
         public string NativeEntrypoint { get; }
 
         /// <summary>
+        /// Gets the name of the overloader that generated this signature, or "Khronos" if this is a native signature.
+        /// </summary>
+        [NotNull]
+        public string Source { get; }
+
+        /// <summary>
         /// Gets the categories the function belongs to.
         /// </summary>
         [NotNull]
@@ -89,6 +95,7 @@ namespace Bind.XML.Signatures.Functions
         /// <param name="deprecatedIn">The version the function was deprecated in, if any.</param>
         /// <param name="deprecationReason">The reason the function was deprecated.</param>
         /// <param name="genericTypeParameters">The generic type parameters in the function, if any.</param>
+        /// <param name="source">The source of this function.</param>
         public FunctionSignature
         (
             [NotNull] string name,
@@ -100,7 +107,8 @@ namespace Bind.XML.Signatures.Functions
             [CanBeNull] IReadOnlyList<ParameterSignature> parameters = null,
             [CanBeNull] Version deprecatedIn = null,
             [CanBeNull] string deprecationReason = null,
-            [CanBeNull] IReadOnlyList<GenericTypeParameterSignature> genericTypeParameters = null
+            [CanBeNull] IReadOnlyList<GenericTypeParameterSignature> genericTypeParameters = null,
+            [NotNull] string source = "Khronos"
         )
         {
             Name = name ?? throw new ArgumentNullException(nameof(name));
@@ -113,6 +121,7 @@ namespace Bind.XML.Signatures.Functions
             Parameters = parameters ?? new List<ParameterSignature>();
             ReturnType = returnType ?? throw new ArgumentNullException(nameof(returnType));
             GenericTypeParameters = genericTypeParameters ?? new List<GenericTypeParameterSignature>();
+            Source = source ?? throw new ArgumentNullException(nameof(source));
         }
 
         /// <summary>
@@ -122,11 +131,6 @@ namespace Bind.XML.Signatures.Functions
         /// <returns>true if the functions have the same signature; otherwise, false.</returns>
         public bool HasSameSignatureAs([NotNull] FunctionSignature f)
         {
-            if (f.ReturnType != ReturnType)
-            {
-                return false;
-            }
-
             if (f.Name != Name)
             {
                 return false;

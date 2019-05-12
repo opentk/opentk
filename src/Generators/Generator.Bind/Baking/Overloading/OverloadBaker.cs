@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,37 +15,30 @@ namespace Bind.Baking.Overloading
     public static class OverloadBaker
     {
         /// <summary>
-        /// Bakes new overloads into the given profile, based on the available overloaders.
+        /// Gets the overloads for the given signatures.
         /// </summary>
-        /// <param name="profile">The profile to bake.</param>
-        /// <returns>The baked profile.</returns>
-        [NotNull]
-        public static ApiProfile BakeOverloads([NotNull] ApiProfile profile)
+        /// <param name="sigs">The signatures to overload.</param>
+        /// <returns>The overloads.</returns>
+        public static IEnumerable<(FunctionSignature, StringBuilder)> GetOverloads(IEnumerable<FunctionSignature> sigs)
         {
             var pipeline = new OverloaderPipeline();
 
-            var functionsThatNeedOverloads = profile.NativeSignatures.Where(f => pipeline.HasApplicableStage(f));
+            var functionsThatNeedOverloads = sigs.Where(f => pipeline.HasApplicableStage(f));
             var newOverloads = pipeline.ConsumeSignatures(functionsThatNeedOverloads).ToList();
 
             // Discard duplicate overloads
-            var optimizedOverloads = new List<(FunctionSignature, StringBuilder)>(profile.Overloads);
-            foreach (var extensionGroup in newOverloads.GroupBy(f => f.Item1.Extension))
+            var uniqueOverloads = new List<(FunctionSignature, StringBuilder)>();
+            foreach (var function in newOverloads)
             {
-                var uniqueOverloads = new List<(FunctionSignature, StringBuilder)>();
-                foreach (var function in extensionGroup)
+                if (uniqueOverloads.Any(f => f.Item1.HasSameSignatureAs(function.Item1)))
                 {
-                    if (uniqueOverloads.Any(f => f.Item1.HasSameSignatureAs(function.Item1)))
-                    {
-                        continue;
-                    }
-
-                    uniqueOverloads.Add(function);
+                    continue;
                 }
 
-                optimizedOverloads.AddRange(uniqueOverloads);
+                uniqueOverloads.Add(function);
             }
 
-            return new ApiProfileBuilder(profile).WithOverloads(optimizedOverloads).Build();
+            return uniqueOverloads.Where(x => sigs.All(y => !y.HasSameSignatureAs(x.Item1))).ToList();
         }
     }
 }

@@ -180,7 +180,7 @@ namespace Bind.XML
                 typeName = typeName.Remove(firstArrayIndex);
             }
 
-            return new TypeSignature(typeName, pointerLevel, arrayLevel, false, false);
+            return new TypeSignature(typeName, pointerLevel, arrayLevel, false, false, false);
         }
 
         /// <summary>

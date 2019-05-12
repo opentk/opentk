@@ -18,6 +18,7 @@ namespace Bind.Builders
         private bool _newIsByRef;
 
         private bool _newIsOut;
+        private bool _newIsIn;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TypeSignatureBuilder"/> class.
@@ -28,6 +29,9 @@ namespace Bind.Builders
             _newName = typeSignature.Name;
             _newIndirectionLevel = typeSignature.IndirectionLevel;
             _newArrayDimensions = typeSignature.ArrayDimensions;
+            _newIsIn = typeSignature.IsIn;
+            _newIsOut = typeSignature.IsOut;
+            _newIsByRef = typeSignature.IsByRef;
         }
 
         /// <summary>
@@ -91,13 +95,25 @@ namespace Bind.Builders
         }
 
         /// <summary>
+        /// Sets a new is-in value for the type signature.
+        /// </summary>
+        /// <param name="isIn">The new is-in value.</param>
+        /// <returns>The builder, with the is-in value.</returns>
+        [NotNull]
+        public TypeSignatureBuilder WithIsIn(bool isIn)
+        {
+            _newIsIn = isIn;
+            return this;
+        }
+
+        /// <summary>
         /// Builds the final instance.
         /// </summary>
         /// <returns>The instance.</returns>
         [NotNull]
         public TypeSignature Build()
         {
-            return new TypeSignature(_newName, _newIndirectionLevel, _newArrayDimensions, _newIsByRef, _newIsOut);
+            return new TypeSignature(_newName, _newIndirectionLevel, _newArrayDimensions, _newIsByRef, _newIsOut, _newIsIn);
         }
     }
 }

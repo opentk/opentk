@@ -28,7 +28,6 @@ namespace Bind.Overloaders
             var newGenericArray1DParameters = new List<ParameterSignature>(baseParameters);
             var newGenericArray2DParameters = new List<ParameterSignature>(baseParameters);
             var newGenericArray3DParameters = new List<ParameterSignature>(baseParameters);
-            var newGenericRefParameters = new List<ParameterSignature>(baseParameters);
 
             var newGenericTypeParameters = new List<GenericTypeParameterSignature>();
             for (int i = 0; i < baseParameters.Count; ++i)
@@ -81,12 +80,6 @@ namespace Bind.Overloaders
                     .WithName(genericTypeParameterName)
                     .Build();
 
-                var newGenericRefParameterType = new TypeSignatureBuilder(parameter.Type)
-                    .WithIndirectionLevel(0)
-                    .WithName(genericTypeParameterName)
-                    .WithByRef(true)
-                    .Build();
-
                 newIntPtrParameters[i] = new ParameterSignatureBuilder(parameter)
                     .WithType(newIntPtrParameterType)
                     .Build();
@@ -102,15 +95,15 @@ namespace Bind.Overloaders
                 newGenericArray3DParameters[i] = new ParameterSignatureBuilder(parameter)
                     .WithType(newGenericArray3DParameterType)
                     .Build();
-
-                newGenericRefParameters[i] = new ParameterSignatureBuilder(parameter)
-                    .WithType(newGenericRefParameterType)
-                    .Build();
             }
 
-            yield return ToPointer(new FunctionSignatureBuilder(function)
-                .WithParameters(newIntPtrParameters)
-                .Build());
+            yield return ToPointer
+            (
+                new FunctionSignatureBuilder(function)
+                    .WithParameters(newIntPtrParameters)
+                    .Build(),
+                function
+            );
 
             yield return Fixed(new FunctionSignatureBuilder(function)
                 .WithParameters(newGenericArray1DParameters)
@@ -126,35 +119,32 @@ namespace Bind.Overloaders
                 .WithParameters(newGenericArray3DParameters)
                 .WithGenericTypeParameters(newGenericTypeParameters)
                 .Build());
-
-            yield return Fixed(new FunctionSignatureBuilder(function)
-                .WithParameters(newGenericRefParameters)
-                .WithGenericTypeParameters(newGenericTypeParameters)
-                .Build());
         }
 
-        private (FunctionSignature, StringBuilder) ToPointer(FunctionSignature function)
+        private (FunctionSignature, StringBuilder) ToPointer(FunctionSignature function, FunctionSignature old)
         {
             var sb = new StringBuilder();
-            sb.Append("return " + function.Name + "(");
-            for (var index = 0; index < function.Parameters.Count; index++)
+            if (function.ReturnType.ToString() != "void")
             {
-                var parameter = function.Parameters[index];
-                if (parameter.Type.IsVoidPointer())
+                sb.Append("return ");
+            }
+
+            sb.Append(function.Name + "(");
+            var list = new List<string>();
+            foreach (var param in old.Parameters)
+            {
+                var nm = Utilities.CSharpKeywords.Contains(param.Name) ? "@" + param.Name : param.Name;
+                if (param.Type.IsVoidPointer())
                 {
-                    sb.Append(parameter.Name + ".ToPointer()");
+                    list.Add(nm + ".ToPointer()");
                 }
                 else
                 {
-                    sb.Append(parameter.Name);
-                }
-
-                if (index != function.Parameters.Count)
-                {
-                    sb.Append(", ");
+                    list.Add(nm);
                 }
             }
 
+            sb.Append(string.Join(", ", list));
             sb.AppendLine(");");
             return (function, sb);
         }
@@ -166,16 +156,17 @@ namespace Bind.Overloaders
             var ind = string.Empty;
             foreach (var param in function.Parameters)
             {
+                var nm = Utilities.CSharpKeywords.Contains(param.Name) ? "@" + param.Name : param.Name;
                 if (function.GenericTypeParameters.Any(x => x.Name == param.Type.Name))
                 {
-                    sb.AppendLine(ind + "fixed (" + param.Type.Name + "* " + param.Name + "Ptr = " + param.Name + ")");
+                    sb.AppendLine(ind + "fixed (" + param.Type.Name + "* " + param.Name + "Ptr = " + nm + ")");
                     sb.AppendLine(ind + "{");
                     ind += "    ";
-                    parameters.Add("(IntPtr) " + param.Name + "Ptr");
+                    parameters.Add(param.Name + "Ptr");
                 }
                 else
                 {
-                    parameters.Add(param.Name);
+                    parameters.Add(nm);
                 }
             }
 

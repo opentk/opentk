@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using Bind.Baking.Overloading;
 using Bind.Builders;
 using Bind.Extensions;
 using Bind.Translation.Translators;
@@ -86,10 +87,11 @@ namespace Bind.Baking
             // Perform the second resolution pass over the override enumerations
             ResolveEnumerationOverrides(coalescedOverrides, coalescedProfile);
 
+            var functionTranslator = new ProfileFunctionTranslator();
             var enumerationTranslator = new ProfileEnumerationTranslator();
 
             // Translate profile identifiers and types names
-            var translatedProfile = new ProfileFunctionTranslator().Translate(coalescedProfile);
+            var translatedProfile = functionTranslator.Translate(coalescedProfile);
             translatedProfile = enumerationTranslator.Translate(translatedProfile);
 
             // Ensure that all duplicate definitions are merged where possible
@@ -114,6 +116,7 @@ namespace Bind.Baking
                     {
                         continue;
                     }
+
                     l.Add(new KeyValuePair<string, TokenSignature>(t.Name, t));
                 }
 

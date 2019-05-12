@@ -89,7 +89,7 @@ namespace Bind.XML.Documentation
                     }
                     else if (child.Name == "dd")
                     {
-                        parameters[dt] = new ParameterDocumentation(dt, child.InnerText);
+                        parameters[dt] = new ParameterDocumentation(dt, "<p>" + child.InnerText + "</p>");
                         dt = string.Empty;
                     }
                 }
@@ -122,7 +122,7 @@ namespace Bind.XML.Documentation
                 (
                     nameO ?? Path.GetFileNameWithoutExtension(xhtmlFile),
                     description,
-                    new ParameterDocumentation[0],
+                    parameters.Values.ToArray(),
                     null
                 )
             );

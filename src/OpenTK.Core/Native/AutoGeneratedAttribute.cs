@@ -51,6 +51,6 @@ namespace OpenToolkit.Core.Native
         /// <summary>
         /// Gets or sets the overloader that generated this function.
         /// </summary>
-        public string Overloader { get; set; }
+        public string Source { get; set; }
     }
 }
