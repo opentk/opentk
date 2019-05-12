@@ -61,13 +61,20 @@ namespace Bind.Writers
             if (ext)
             {
                 await sw.WriteLineAsync(" : ExtensionBase");
+                await sw.WriteLineAsync("    {");
+                await sw.WriteLineAsync("        /// <inheritdoc cref=\"ExtensionBase\"/>");
+                await sw.WriteLineAsync($"        protected {name}(string path, ImplementationOptions options)");
+                await sw.WriteLineAsync("            : base(path, options)");
+                await sw.WriteLineAsync("        {");
+                await sw.WriteLineAsync("        }");
+                await sw.WriteLineAsync();
             }
             else
             {
                 await sw.WriteLineAsync();
+                await sw.WriteLineAsync("    {");
             }
 
-            await sw.WriteLineAsync("    {");
             foreach (var func in project.Interfaces.SelectMany(x => x.Functions))
             {
                 await sw.WriteLineAsync("        /// <inheritdoc/>");
