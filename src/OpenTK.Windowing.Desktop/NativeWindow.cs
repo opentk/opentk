@@ -1,15 +1,8 @@
-﻿//
-// NativeWindow.cs
-//
-// Copyright (C) 2018 OpenTK
-//
-// This software may be modified and distributed under the terms
-// of the MIT license. See the LICENSE file for details.
-//
+﻿// Copyright (c) OpenTK. All Rights Reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using OpenToolkit.GraphicsLibraryFramework;
@@ -419,15 +412,13 @@ namespace OpenToolkit.Windowing.Desktop
                        && inputMode != CursorModeValue.CursorDisabled;
             }
 
-            set
-            {
+            set =>
                 Glfw.SetInputMode
                 (
                     WindowPtr,
                     CursorStateAttribute.Cursor,
                     value ? CursorModeValue.CursorNormal : CursorModeValue.CursorHidden
                 );
-            }
         }
 
         /// <inheritdoc />
@@ -561,10 +552,7 @@ namespace OpenToolkit.Windowing.Desktop
                         Modifiers = (KeyModifiers)mods
                     };
 
-                    // TODO: Need to find a good way to set the mods,
-                    // The class as-is is coupled to the keyboard state in a really weird way.
-                    // args.Modifiers = (KeyModifiers)mods;
-                    if (action == GraphicsLibraryFramework.InputAction.Release)
+                    if (action == InputAction.Release)
                     {
                         OnKeyUp(this, args);
                     }
@@ -597,7 +585,7 @@ namespace OpenToolkit.Windowing.Desktop
                         Modifiers = (KeyModifiers)mods,
                     };
 
-                    if (action == GraphicsLibraryFramework.InputAction.Release)
+                    if (action == InputAction.Release)
                     {
                         OnMouseUp(this, args);
                     }
