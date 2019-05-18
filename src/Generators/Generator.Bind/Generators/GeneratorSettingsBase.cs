@@ -3,7 +3,6 @@
  */
 
 using System.Collections.Generic;
-using System.IO;
 using Bind.Versioning;
 
 namespace Bind.Generators.Bases

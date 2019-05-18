@@ -9,6 +9,7 @@
     <PackageOutputPath>$(OpenTKSolutionRoot)\nuget</PackageOutputPath>
     <IncludeSymbols>true</IncludeSymbols>
     <IncludeSource>true</IncludeSource>
+    <Version>4.0.0</Version>
   </PropertyGroup>
   <Import Project="common.props" Condition="!$(HasCommonProperties)"/>
 </Project>

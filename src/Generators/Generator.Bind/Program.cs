@@ -12,7 +12,6 @@ using System.Reflection;
 using System.Runtime;
 using System.Threading.Tasks;
 using Bind.Baking;
-using Bind.Baking.Overloading;
 using Bind.Generators;
 using Bind.Generators.ES;
 using Bind.Generators.GL.Compatibility;
@@ -165,13 +164,7 @@ namespace Bind
             // await bindingsWriter.WriteBindingsAsync();
             await ProfileWriter.WriteAsync
             (
-                Path.Combine(Arguments.OutputPath, generatorSettings.OutputSubfolder),
-                generatorSettings.Namespace,
-                generatorSettings.ExtensionNamespace,
-                generatorSettings.FunctionPrefix,
-                generatorSettings.OutputSubfolder,
-                generatorSettings.ClassName,
-                generatorSettings.APIIdentifier,
+                generatorSettings,
                 mappedProfile,
                 bakedDocs,
                 generatorSettings.NameContainer

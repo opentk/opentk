@@ -1,20 +1,23 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
+using Bind.Baking.Overloading;
 using Bind.Generators;
 using Bind.Structure;
 using Bind.Translation.Translators;
 using Bind.XML.Documentation;
 using Bind.XML.Signatures;
 using Bind.XML.Signatures.Enumerations;
+using Bind.XML.Signatures.Functions;
 
 namespace Bind.Writers
 {
     /// <summary>
     /// Handles asynchronous writing of bindings to files.
     /// </summary>
-    internal partial class ProfileWriter
+    internal static class ProfileWriter
     {
         /// <summary>
         /// The subfolder in which extensions are contained.
@@ -34,31 +37,21 @@ namespace Bind.Writers
         /// <summary>
         /// Asynchronously writes the given profile to a directory.
         /// </summary>
-        /// <param name="rootFolder">The directory to write the profile to.</param>
-        /// <param name="rootNamespace">The namespace for the core specification.</param>
-        /// <param name="extensionNamespace">The root namespace for extensions.</param>
-        /// <param name="functionPrefix">The prefix for native functions.</param>
-        /// <param name="subD">The subdirectory in which all projects for this profile are contained.</param>
-        /// <param name="className">The name for the core project's mixed mode class.</param>
-        /// <param name="fullName">The profile's full name.</param>
+        /// <param name="generatorSettings">The generator settings to use for the profile writer.</param>
         /// <param name="profile">The profile to write.</param>
         /// <param name="docs">The profile's documentation.</param>
         /// <param name="nc">The name container for this profile.</param>
         /// <returns>An asynchronous task.</returns>
         public static Task WriteAsync
         (
-            string rootFolder,
-            string rootNamespace,
-            string extensionNamespace,
-            string functionPrefix,
-            string subD,
-            string className,
-            string fullName,
+            IGeneratorSettings generatorSettings,
             ApiProfile profile,
             ProfileDocumentation docs,
             NameContainer nc
         )
         {
+            var rootFolder = Path.Combine(Program.Arguments.OutputPath, generatorSettings.OutputSubfolder);
+            var rootNamespace = generatorSettings.Namespace;
             if (!Directory.Exists(rootFolder))
             {
                 Directory.CreateDirectory(rootFolder);
@@ -82,13 +75,7 @@ namespace Bind.Writers
                         x => WriteProjectAsync
                         (
                             x,
-                            rootFolder,
-                            rootNamespace,
-                            extensionNamespace,
-                            functionPrefix,
-                            subD,
-                            x.Extension == "Core" ? className : NativeIdentifierTranslator.TranslateIdentifierName(x.Extension),
-                            fullName,
+                            generatorSettings,
                             nc,
                             docs
                         )
@@ -99,20 +86,15 @@ namespace Bind.Writers
         private static async Task WriteProjectAsync
         (
             Project project,
-            string folder,
-            string rns,
-            string ens,
-            string prefix,
-            string subfolder,
-            string className,
-            string fullName,
+            IGeneratorSettings settings,
             NameContainer nc,
             ProfileDocumentation doc
         )
         {
-            var ns = project.Extension == "Core" ? rns : ens + "." + ConvertExtensionNameToNamespace(project.Extension);
+            var folder = Path.Combine(Program.Arguments.OutputPath, settings.OutputSubfolder);
+            var ns = project.Extension == "Core" ? settings.Namespace : settings.ExtensionNamespace + "." + Utilities.ConvertExtensionNameToNamespace(project.Extension);
             var dir = project.Extension == "Core"
-                ? Path.Combine(folder, ns, className)
+                ? Path.Combine(folder, ns, settings.ClassName)
                 : Path.Combine(folder, ExtensionsFolder, ns);
             if (!Directory.Exists(dir))
             {
@@ -133,20 +115,21 @@ namespace Bind.Writers
             (
                 project.Interfaces.Select
                     (
-                        x => WriteInterfaceAsync
+                        x => InterfaceWriter.WriteInterfaceAsync
                         (
-                            x, Path.Combine(dir, InterfacesFolder, x.InterfaceName + ".cs"), ns, prefix, doc, rns
+                            x, Path.Combine(dir, InterfacesFolder, x.InterfaceName + ".cs"), ns, settings.FunctionPrefix, doc, settings.Namespace
                         )
                     )
                     .Concat
                     (
                         project.Enums.Select
                         (
-                            x => x.WriteEnumAsync
+                            x => EnumWriter.WriteEnumAsync
                             (
+                                x,
                                 Path.Combine(dir, EnumsFolder, x.Name + ".cs"),
                                 ns,
-                                prefix.ToUpper() + "_"
+                                settings.ConstantPrefix
                             )
                         )
                     )
@@ -154,46 +137,103 @@ namespace Bind.Writers
 
             if (project.Extension == "Core")
             {
-                await WriteMetaInterfaceAsync
+                await InterfaceWriter.WriteMetaInterfaceAsync
                 (
                     ns,
-                    Path.Combine(dir, InterfacesFolder, "I" + className + ".cs"),
-                    className,
+                    Path.Combine(dir, InterfacesFolder, "I" + settings.ClassName + ".cs"),
+                    settings.ClassName,
                     project.Interfaces.Select(x => x.InterfaceName)
                 );
-                await WriteNameContainerAsync(Path.Combine(dir, $"{fullName}LibraryNameContainer.cs"), ns, fullName, nc);
+                await NameContainerWriter.WriteNameContainerAsync(Path.Combine(dir, $"{settings.APIIdentifier}LibraryNameContainer.cs"), ns, settings.APIIdentifier, nc);
             }
             else
             {
                 // we expect the project file to already be created
-                await WriteProjectFileAsync(ns, dir, subfolder, rns, project.Extension != "Core");
+                await ProjectFileWriter.WriteProjectFileAsync(ns, dir, settings.OutputSubfolder, settings.Namespace, project.Extension != "Core");
             }
 
-            await WriteMixedModeClassAsync(project, className, dir, ns, project.Extension != "Core", prefix, className, project.Extension, rns);
+            await ClassWriter.WriteMixedModeClassAsync(project, settings);
         }
 
-        private static async Task WriteMetaInterfaceAsync(string ns, string file, string name, IEnumerable<string> ints)
+        /// <summary>
+        /// Splits a profile into a group of projects, each containing the interfaces and enums specific to that
+        /// extension or profile.
+        /// </summary>
+        /// <param name="profile">The profile to split.</param>
+        /// <returns>A collection of projects.</returns>
+        private static IEnumerable<Project> GetProjects(ApiProfile profile)
         {
-            var interfaces = ints.ToArray();
-            var sw = new StreamWriter(File.Open(file, FileMode.Create, FileAccess.ReadWrite, FileShare.Inheritable));
-            await sw.WriteLineAsync("// <auto-generated />");
-            await sw.WriteAsync(EmbeddedResources.LicenseText(Path.GetFileName(file)));
-            await sw.WriteLineAsync();
-            await sw.WriteLineAsync("namespace " + ns);
-            await sw.WriteLineAsync("{");
-            await sw.WriteAsync("    internal interface I" + name + " : " + interfaces[0]);
-            for (var i = 1; i < interfaces.Length; i++)
+            return GetWithoutEnums(profile.NativeSignatures)
+                .Select
+                (
+                    x => new Project
+                    (
+                        x.Item1,
+                        x.Item2,
+                        x.Item1 == "Core" ? profile.Enumerations : new EnumerationSignature[0],
+                        x.Item3.ToList()
+                    )
+                );
+        }
+
+        private static IEnumerable<(string, IEnumerable<Interface>, IEnumerable<(FunctionSignature, StringBuilder)>)> GetWithoutEnums(IEnumerable<FunctionSignature> fns)
+        {
+            // extension or core, (interface name, functions)
+            var projects = new Dictionary<string, Dictionary<string, List<FunctionSignature>>>();
+            foreach (var function in fns)
             {
-                await sw.WriteLineAsync(",");
-                await sw.WriteAsync("        " + interfaces[i]);
+                foreach (var category in function.Categories)
+                {
+                    // check that the root project exists
+                    if (!projects.ContainsKey("Core"))
+                    {
+                        projects.Add
+                        (
+                            "Core",
+                            new Dictionary<string, List<FunctionSignature>>()
+                        );
+                    }
+
+                    // check that the extension project exists, if applicable
+                    if (function.Extension != "Core" && !projects.ContainsKey(category))
+                    {
+                        projects.Add
+                        (
+                            category,
+                            new Dictionary<string, List<FunctionSignature>>()
+                        );
+                    }
+
+                    // check that the interface exists
+                    if
+                    (
+                        !projects[function.Extension == "Core" ? "Core" : category].ContainsKey("I" + NativeIdentifierTranslator.TranslateIdentifierName(category))
+                    )
+                    {
+                        projects[function.Extension == "Core" ? "Core" : category]
+                            .Add
+                            (
+                                "I" + NativeIdentifierTranslator.TranslateIdentifierName(category),
+                                new List<FunctionSignature>()
+                            );
+                    }
+
+                    // add the function to the interface
+                    projects[function.Extension == "Core" ? "Core" : category]
+                        ["I" + NativeIdentifierTranslator.TranslateIdentifierName(category)]
+                        .Add(function);
+                }
             }
 
-            await sw.WriteLineAsync();
-            await sw.WriteLineAsync("    {");
-            await sw.WriteLineAsync("    }");
-            await sw.WriteLineAsync("}");
-            await sw.FlushAsync();
-            sw.Close();
+            return projects.Select
+            (
+                x =>
+                (
+                    x.Key,
+                    x.Value.Select(y => new Interface(y.Key, y.Value)),
+                    x.Value.SelectMany(y => OverloadBaker.GetOverloads(y.Value))
+                )
+            );
         }
     }
 }

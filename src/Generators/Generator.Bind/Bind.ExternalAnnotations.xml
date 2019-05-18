@@ -278,11 +278,6 @@
       <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
     </parameter>
   </member>
-  <member name="M:Bind.Overloaders.IFunctionOverloader.IsApplicable(Bind.XML.Signatures.Functions.FunctionSignature)">
-    <parameter name="function">
-      <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
-    </parameter>
-  </member>
   <member name="M:Bind.Translation.Mappers.IMapper`1.HasMapping(`0)">
     <parameter name="input">
       <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />

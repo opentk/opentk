@@ -15,7 +15,11 @@ namespace Bind.Overloaders
     /// </summary>
     public class ArrayParameterConvenienceOverloader : IFunctionOverloader
     {
-        /// <inheritdoc/>
+        /// <summary>
+        /// Determines whether or not the overloader is applicable for the given function.
+        /// </summary>
+        /// <param name="function">The function.</param>
+        /// <returns>true if the overloader is applicable; otherwise, false.</returns>
         public bool IsApplicable(FunctionSignature function)
         {
             // function has exactly two parameters
@@ -71,6 +75,11 @@ namespace Bind.Overloaders
         /// <inheritdoc/>
         public IEnumerable<(FunctionSignature, StringBuilder)> CreateOverloads(FunctionSignature function)
         {
+            if (!IsApplicable(function))
+            {
+                yield break;
+            }
+
             var arrayParameter = function.Parameters.Last();
             var arrayParameterType = arrayParameter.Type;
 

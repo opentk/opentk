@@ -10,8 +10,6 @@ using AdvancedDLSupport;
 using OpenToolkit.Core.Extensions;
 using OpenToolkit.Core.Loader;
 using OpenToolkit.Mathematics;
-using OpenToolkit.OpenAL.Attributes;
-using OpenToolkit.OpenAL.Extensions;
 using OpenToolkit.OpenAL.Interfaces;
 
 namespace OpenToolkit.OpenAL

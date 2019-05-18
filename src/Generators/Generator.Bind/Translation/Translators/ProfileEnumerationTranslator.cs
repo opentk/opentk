@@ -5,7 +5,6 @@ using Bind.XML.Overrides;
 using Bind.XML.Overrides.Enumerations;
 using Bind.XML.Signatures;
 using Bind.XML.Signatures.Enumerations;
-using Bind.XML.Signatures.Functions;
 
 namespace Bind.Translation.Translators
 {

@@ -1,5 +1,3 @@
-using System;
-
 namespace Bind.XML.Overrides.Functions
 {
     /// <summary>

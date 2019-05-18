@@ -1,11 +1,7 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Bind.Builders;
-using Bind.XML.Signatures;
 using Bind.XML.Signatures.Functions;
-using JetBrains.Annotations;
 
 namespace Bind.Baking.Overloading
 {
@@ -23,7 +19,7 @@ namespace Bind.Baking.Overloading
         {
             var pipeline = new OverloaderPipeline();
 
-            var functionsThatNeedOverloads = sigs.Where(f => pipeline.HasApplicableStage(f));
+            var functionsThatNeedOverloads = sigs.ToList();
             var newOverloads = pipeline.ConsumeSignatures(functionsThatNeedOverloads).ToList();
 
             // Discard duplicate overloads
@@ -38,7 +34,7 @@ namespace Bind.Baking.Overloading
                 uniqueOverloads.Add(function);
             }
 
-            return uniqueOverloads.Where(x => sigs.All(y => !y.HasSameSignatureAs(x.Item1))).ToList();
+            return uniqueOverloads.Where(x => functionsThatNeedOverloads.All(y => !y.HasSameSignatureAs(x.Item1))).ToList();
         }
     }
 }

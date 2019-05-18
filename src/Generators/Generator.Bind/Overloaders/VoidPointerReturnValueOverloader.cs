@@ -15,14 +15,13 @@ namespace Bind.Overloaders
     public class VoidPointerReturnValueOverloader : IFunctionOverloader
     {
         /// <inheritdoc/>
-        public bool IsApplicable(FunctionSignature function)
-        {
-            return function.ReturnType.IsVoidPointer();
-        }
-
-        /// <inheritdoc/>
         public IEnumerable<(FunctionSignature, StringBuilder)> CreateOverloads(FunctionSignature function)
         {
+            if (!function.ReturnType.IsVoidPointer())
+            {
+                yield break;
+            }
+
             var newReturnType = new TypeSignatureBuilder(function.ReturnType)
                 .WithIndirectionLevel(0)
                 .WithName(nameof(IntPtr))

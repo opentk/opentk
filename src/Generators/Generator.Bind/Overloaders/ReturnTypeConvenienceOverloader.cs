@@ -15,8 +15,7 @@ namespace Bind.Overloaders
     /// </summary>
     public class ReturnTypeConvenienceOverloader : IFunctionOverloader
     {
-        /// <inheritdoc/>
-        public bool IsApplicable(FunctionSignature function)
+        private static bool IsApplicable(FunctionSignature function)
         {
             // function has 1 - 2 parameters
             var parameterCount = function.Parameters.Count;
@@ -73,6 +72,11 @@ namespace Bind.Overloaders
         /// <inheritdoc/>
         public IEnumerable<(FunctionSignature, StringBuilder)> CreateOverloads(FunctionSignature function)
         {
+            if (!IsApplicable(function))
+            {
+                yield break;
+            }
+
             var lastParameterType = function.Parameters.Last().Type;
             var newReturnType = new TypeSignatureBuilder(lastParameterType)
                 .WithIndirectionLevel(lastParameterType.IndirectionLevel - 1)

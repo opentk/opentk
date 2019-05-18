@@ -4,7 +4,6 @@ using Bind.Extensions;
 using Bind.Versioning;
 using Bind.XML.Overrides.Enumerations;
 using Bind.XML.Overrides.Functions;
-using Bind.XML.Signatures.Functions;
 using JetBrains.Annotations;
 
 namespace Bind.XML.Overrides

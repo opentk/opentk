@@ -14,14 +14,13 @@ namespace Bind.Overloaders
     public class VoidPointerParameterOverloader : IFunctionOverloader
     {
         /// <inheritdoc/>
-        public bool IsApplicable(FunctionSignature function)
-        {
-            return function.Parameters.Any(p => p.Type.IsVoidPointer());
-        }
-
-        /// <inheritdoc/>
         public IEnumerable<(FunctionSignature, StringBuilder)> CreateOverloads(FunctionSignature function)
         {
+            if (!function.Parameters.Any(p => p.Type.IsVoidPointer()))
+            {
+                yield break;
+            }
+
             var baseParameters = function.Parameters;
 
             var newIntPtrParameters = new List<ParameterSignature>(baseParameters);

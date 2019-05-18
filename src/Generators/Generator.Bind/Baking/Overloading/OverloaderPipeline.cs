@@ -40,16 +40,6 @@ namespace Bind.Baking.Overloading
         }
 
         /// <summary>
-        /// Determines whether or not a given function signature has an applicable stage.
-        /// </summary>
-        /// <param name="signature">The signature.</param>
-        /// <returns>True if the function has an applicable stage; otherwise, false.</returns>
-        public bool HasApplicableStage(FunctionSignature signature)
-        {
-            return _pipeline.Any(s => s.IsApplicable(signature));
-        }
-
-        /// <summary>
         /// Consumes a set of signatures, passing them through the given pipeline.
         /// </summary>
         /// <param name="signatures">The signatures to process.</param>
@@ -64,7 +54,6 @@ namespace Bind.Baking.Overloading
             return signatures.SelectMany
             (
                 x => (pipeline ?? _pipeline)
-                    .Where(y => y.IsApplicable(x))
                     .Select
                     (
                         y => y.CreateOverloads(x).Select
