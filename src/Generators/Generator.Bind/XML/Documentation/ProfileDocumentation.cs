@@ -47,7 +47,8 @@ namespace Bind.XML.Documentation
             [CanBeNull] out FunctionDocumentation documentation
         )
         {
-            return _documentedFunctions.TryGetValue(function.NativeEntrypoint, out documentation);
+            documentation = GetDocumentation(function);
+            return HasDocumentation(function);
         }
 
         /// <summary>
@@ -55,10 +56,11 @@ namespace Bind.XML.Documentation
         /// </summary>
         /// <param name="function">The function.</param>
         /// <returns>The documentation.</returns>
-        [NotNull]
+        [CanBeNull]
         public FunctionDocumentation GetDocumentation([NotNull] FunctionSignature function)
         {
-            return _documentedFunctions[function.NativeEntrypoint];
+            return HasDocumentation(function) ? _documentedFunctions.First
+                (x => Utilities.GetNameVariations(function.NativeEntrypoint).Contains(x.Key)).Value : null;
         }
 
         /// <summary>
@@ -68,7 +70,12 @@ namespace Bind.XML.Documentation
         /// <returns>true if the function has documentation; otherwise, false.</returns>
         public bool HasDocumentation([NotNull] FunctionSignature function)
         {
-            return _documentedFunctions.ContainsKey(function.NativeEntrypoint);
+            if (_documentedFunctions.Any(x => Utilities.GetNameVariations(function.NativeEntrypoint).Contains(x.Key)))
+            {
+                return true;
+            }
+
+            return false;
         }
     }
 }

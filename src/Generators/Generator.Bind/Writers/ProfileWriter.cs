@@ -152,7 +152,7 @@ namespace Bind.Writers
                 await ProjectFileWriter.WriteProjectFileAsync(ns, dir, settings.OutputSubfolder, settings.Namespace, project.Extension != "Core");
             }
 
-            await ClassWriter.WriteMixedModeClassAsync(project, settings);
+            await ClassWriter.WriteMixedModeClassAsync(project, settings, doc);
         }
 
         /// <summary>

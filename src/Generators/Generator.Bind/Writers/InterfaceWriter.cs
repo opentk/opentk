@@ -85,6 +85,22 @@ namespace Bind.Writers
                         }
                     }
 
+                    if (function.IsDeprecated)
+                    {
+                        var str = "Deprecated";
+                        if (function.DeprecatedIn != null)
+                        {
+                            str += " since " + function.DeprecatedIn.ToString(2);
+                        }
+
+                        if (!string.IsNullOrWhiteSpace(function.DeprecationReason))
+                        {
+                            str += " - " + function.DeprecationReason;
+                        }
+
+                        sw.WriteLine($"        [Obsolete(\"{str}\")]");
+                    }
+
                     sw.WriteLine
                     (
                         "        [NativeSymbol(\"" + prefix + function.NativeEntrypoint + "\")]"

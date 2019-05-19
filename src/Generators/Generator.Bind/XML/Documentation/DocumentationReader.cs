@@ -65,21 +65,10 @@ namespace Bind.XML.Documentation
 
             var document = new HtmlDocument();
             document.LoadHtml(file);
-            var div = document.DocumentNode.ChildNodes.FirstOrDefault(x => x.Name == "div")
-                ?.ChildNodes.FirstOrDefault
-                (
-                    x => x.HasClass("refsect1") && x.ChildNodes.Any(y => y.Name == "h2" && y.InnerText == "Parameters")
-                );
-
+            var variableList = document.DocumentNode.SelectNodes("//dl[contains(@class, 'variablelist')]")?.FirstOrDefault()?.ChildNodes;
             var parameters = new Dictionary<string, ParameterDocumentation>();
-            if (div != null)
+            if (variableList != null)
             {
-                var variableList = div?.ChildNodes.FirstOrDefault(x => x.HasClass("variablelist"))
-                    ?
-                    .ChildNodes
-                    .FirstOrDefault(x => x.Name == "dl")
-                    ?
-                    .ChildNodes;
                 var dt = string.Empty; // parameter name
                 foreach (var child in variableList)
                 {
@@ -89,13 +78,23 @@ namespace Bind.XML.Documentation
                     }
                     else if (child.Name == "dd")
                     {
-                        parameters[dt] = new ParameterDocumentation(dt, "<p>" + child.InnerText + "</p>");
+                        var names = new[] { dt.Trim() };
+                        if (dt.Contains(", "))
+                        {
+                            names = dt.Split(", ".ToCharArray());
+                        }
+
+                        foreach (var name in names)
+                        {
+                            parameters[name.Trim()] = new ParameterDocumentation(name, $"<p>{child.InnerText}</p>");
+                        }
+
                         dt = string.Empty;
                     }
                 }
             }
 
-            div = document.DocumentNode.ChildNodes.FirstOrDefault(x => x.Name == "div")
+            var div = document.DocumentNode.ChildNodes.FirstOrDefault(x => x.Name == "div")
                 ?.ChildNodes.FirstOrDefault
                 (
                     x => x.HasClass("refnamediv") && x.ChildNodes.Any(y => y.Name == "h2" && y.InnerText == "Name")

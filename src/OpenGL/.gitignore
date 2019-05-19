@@ -8,6 +8,3 @@ Extensions/*
 # Ignore the generated signatures and overloads
 **/GL/GL.Native.cs
 **/GL/GL.Overloads.cs
-
-# Ignore the name container
-**/GL/*NameContainer.cs

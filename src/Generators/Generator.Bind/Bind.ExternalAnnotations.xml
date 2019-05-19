@@ -416,7 +416,7 @@
     <attribute ctor="M:JetBrains.Annotations.ItemNotNullAttribute.#ctor" />
   </member>
   <member name="M:Bind.XML.Documentation.ProfileDocumentation.GetDocumentation(Bind.XML.Signatures.Functions.FunctionSignature)">
-    <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
+    <attribute ctor="M:JetBrains.Annotations.CanBeNullAttribute.#ctor" />
     <parameter name="function">
       <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
     </parameter>

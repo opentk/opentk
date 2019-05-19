@@ -32,6 +32,18 @@ namespace Bind.Writers
                 sw.WriteLine();
                 sw.WriteLine("namespace " + ns);
                 sw.WriteLine("{");
+                sw.WriteLine("    /// <summary>");
+                sw.Write("    /// An OpenGL enum");
+                if (@enum.Tokens.Any())
+                {
+                    sw.Write(" containing values ");
+                    sw.Write(@enum.Tokens.FirstOrDefault()?.Value);
+                    sw.Write(" through ");
+                    sw.Write(@enum.Tokens.LastOrDefault()?.Value);
+                }
+
+                sw.WriteLine(".");
+                sw.WriteLine("    /// </summary>");
                 sw.WriteLine("    public enum " + @enum.Name);
                 sw.WriteLine("    {");
                 WriteTokens(sw, @enum.Tokens, prefix);
@@ -66,6 +78,17 @@ namespace Bind.Writers
                 {
                     Debug.WriteLine($"Warning: casting overflowing enum value \"{token.Name}\" from 64-bit to 32-bit.");
                     valueString = $"unchecked((int){valueString})";
+                }
+
+                if (token.IsDeprecated)
+                {
+                    sw.Write("        [Obsolete(\"Deprecated");
+                    if (token.DeprecatedIn != null)
+                    {
+                        sw.Write(" since " + token.DeprecatedIn);
+                    }
+
+                    sw.WriteLine("\")]");
                 }
 
                 if (token != tokens.Last())

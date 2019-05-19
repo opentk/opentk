@@ -27,6 +27,6 @@ namespace OpenToolkit.OpenGL.Core
         /// <summary>
         /// Gets the library name container for this profile.
         /// </summary>
-        public IPlatformLibraryNameContainer NameContainer => new CoreLibraryNameContainer();
+        public IPlatformLibraryNameContainer NameContainer => new OpenGLLibraryNameContainer();
     }
 }

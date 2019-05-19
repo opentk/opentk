@@ -31,12 +31,6 @@ namespace Bind
         public string DocumentationPath { get; set; } = Path.Combine("src", "Generators", "Generator.Bind", "Specifications", "Docs", "docs.gl");
 
         /// <summary>
-        /// Gets or sets the path to the license file to use for headers.
-        /// </summary>
-        [Option('l', "license-file", HelpText = "The path to the license file to use for headers.")]
-        public string LicenseFile { get; set; } = Path.Combine("src", "Generators", "Generator.Bind", "Specifications", "License.txt");
-
-        /// <summary>
         /// Gets or sets the APIs that should be generated.
         /// </summary>
         [Option('a', "apis", Default = new[] { All }, HelpText = "The APIs that should be generated.")]

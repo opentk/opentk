@@ -247,7 +247,7 @@ namespace Bind
 
             foreach (var parameter in function.Parameters)
             {
-                sw.WriteLine($"/// <param name=\"{parameter.Name}\">To be added.</param>");
+                sw.WriteLine($"/// <param name=\"{parameter.Name}\">See summary.</param>");
             }
 
             if (function.HasGenericTypeParameters)
@@ -265,7 +265,7 @@ namespace Bind
 
             if (!function.ReturnType.Name.Equals(typeof(void).Name, StringComparison.OrdinalIgnoreCase))
             {
-                sw.WriteLine("/// <returns>To be added.</returns>");
+                sw.WriteLine("/// <returns>See summary.</returns>");
             }
         }
 
@@ -306,7 +306,7 @@ namespace Bind
                 var parameterDocumentation = documentation.Parameters.FirstOrDefault(dp => dp.Name == parameter.Name);
                 if (parameterDocumentation is null)
                 {
-                    sw.WriteLine($"/// <param name=\"{parameter.Name}\">To be added.</param>");
+                    sw.WriteLine($"/// <param name=\"{parameter.Name}\">See summary.</param>");
                     continue;
                 }
 
@@ -347,9 +347,10 @@ namespace Bind
                 var descriptionLines = parameterDocumentation.Description.TrimEnd().Split('\n');
                 foreach (var descriptionLine in descriptionLines)
                 {
-                    sw.WriteLine($"/// {descriptionLine}");
+                    sw.Write($"/// {descriptionLine}");
                 }
 
+                sw.WriteLine();
                 sw.WriteLine("/// </param>");
             }
 
@@ -365,7 +366,7 @@ namespace Bind
 
             if (!function.ReturnType.Name.Equals(typeof(void).Name, StringComparison.OrdinalIgnoreCase))
             {
-                sw.WriteLine("/// <returns>See online documentation.</returns>");
+                sw.WriteLine("/// <returns>See summary.</returns>");
             }
 
             return sw.ToString();
