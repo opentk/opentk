@@ -37,9 +37,9 @@ namespace Bind.Writers
                 if (@enum.Tokens.Any())
                 {
                     sw.Write(" containing values ");
-                    sw.Write(@enum.Tokens.FirstOrDefault()?.Value);
+                    sw.Write(@enum.Tokens.OrderBy(x => x.Value).FirstOrDefault()?.Value);
                     sw.Write(" through ");
-                    sw.Write(@enum.Tokens.LastOrDefault()?.Value);
+                    sw.Write(@enum.Tokens.OrderBy(x => x.Value).LastOrDefault()?.Value);
                 }
 
                 sw.WriteLine(".");
