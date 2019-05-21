@@ -503,30 +503,6 @@ namespace OpenToolkit.Mathematics
         }
 
         /// <summary>
-        /// Returns the Vector3 with the minimum magnitude.
-        /// </summary>
-        /// <param name="left">Left operand.</param>
-        /// <param name="right">Right operand.</param>
-        /// <returns>The minimum Vector3.</returns>
-        [Obsolete("Use MagnitudeMin() instead.")]
-        public static Vector3 Min(Vector3 left, Vector3 right)
-        {
-            return left.LengthSquared < right.LengthSquared ? left : right;
-        }
-
-        /// <summary>
-        /// Returns the Vector3 with the minimum magnitude.
-        /// </summary>
-        /// <param name="left">Left operand.</param>
-        /// <param name="right">Right operand.</param>
-        /// <returns>The minimum Vector3.</returns>
-        [Obsolete("Use MagnitudeMax() instead.")]
-        public static Vector3 Max(Vector3 left, Vector3 right)
-        {
-            return left.LengthSquared >= right.LengthSquared ? left : right;
-        }
-
-        /// <summary>
         /// Clamp a vector to the given minimum and maximum vectors.
         /// </summary>
         /// <param name="vec">Input vector.</param>
