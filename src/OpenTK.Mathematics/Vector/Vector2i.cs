@@ -1,24 +1,11 @@
-/*
-Copyright (c) 2006 - 2008 The Open Toolkit library.
-
-Permission is hereby granted, free of charge, to any person obtaining a copy of
-this software and associated documentation files (the "Software"), to deal in
-the Software without restriction, including without limitation the rights to
-use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies
-of the Software, and to permit persons to whom the Software is furnished to do
-so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
- */
+//
+//  Vector3i.cs
+//
+//  Copyright (C) OpenTK
+//
+//  This software may be modified and distributed under the terms
+//  of the MIT license. See the LICENSE file for details.
+//
 
 using System;
 using System.Globalization;
@@ -239,7 +226,7 @@ namespace OpenToolkit.Mathematics
         }
 
         /// <summary>
-        /// Divides a vector by a scalar.
+        /// Divides a vector by a scalar using integer division, floor(a/b).
         /// </summary>
         /// <param name="vector">Left operand.</param>
         /// <param name="scale">Right operand.</param>
@@ -251,7 +238,7 @@ namespace OpenToolkit.Mathematics
         }
 
         /// <summary>
-        /// Divides a vector by a scalar.
+        /// Divides a vector by a scalar using integer division, floor(a/b).
         /// </summary>
         /// <param name="vector">Left operand.</param>
         /// <param name="scale">Right operand.</param>
@@ -263,7 +250,7 @@ namespace OpenToolkit.Mathematics
         }
 
         /// <summary>
-        /// Divides a vector by the components of a vector (scale).
+        /// Divides a vector by the components of a vector using integer division, floor(a/b).
         /// </summary>
         /// <param name="vector">Left operand.</param>
         /// <param name="scale">Right operand.</param>
@@ -275,7 +262,7 @@ namespace OpenToolkit.Mathematics
         }
 
         /// <summary>
-        /// Divide a vector by the components of a vector (scale).
+        /// Divides a vector by the components of a vector using integer division, floor(a/b).
         /// </summary>
         /// <param name="vector">Left operand.</param>
         /// <param name="scale">Right operand.</param>
@@ -361,52 +348,6 @@ namespace OpenToolkit.Mathematics
         {
             result.X = vec.X < min.X ? min.X : vec.X > max.X ? max.X : vec.X;
             result.Y = vec.Y < min.Y ? min.Y : vec.Y > max.Y ? max.Y : vec.Y;
-        }
-
-        /// <summary>
-        /// Compute the euclidean distance between two vectors.
-        /// </summary>
-        /// <param name="vec1">The first vector.</param>
-        /// <param name="vec2">The second vector.</param>
-        /// <returns>The distance.</returns>
-        public static float Distance(Vector2i vec1, Vector2i vec2)
-        {
-            Distance(ref vec1, ref vec2, out float result);
-            return result;
-        }
-
-        /// <summary>
-        /// Compute the euclidean distance between two vectors.
-        /// </summary>
-        /// <param name="vec1">The first vector.</param>
-        /// <param name="vec2">The second vector.</param>
-        /// <param name="result">The distance.</param>
-        public static void Distance(ref Vector2i vec1, ref Vector2i vec2, out float result)
-        {
-            result = (float)Math.Sqrt(((vec2.X - vec1.X) * (vec2.X - vec1.X)) + ((vec2.Y - vec1.Y) * (vec2.Y - vec1.Y)));
-        }
-
-        /// <summary>
-        /// Compute the squared euclidean distance between two vectors.
-        /// </summary>
-        /// <param name="vec1">The first vector.</param>
-        /// <param name="vec2">The second vector.</param>
-        /// <returns>The squared distance.</returns>
-        public static float DistanceSquared(Vector2i vec1, Vector2i vec2)
-        {
-            DistanceSquared(ref vec1, ref vec2, out float result);
-            return result;
-        }
-
-        /// <summary>
-        /// Compute the squared euclidean distance between two vectors.
-        /// </summary>
-        /// <param name="vec1">The first vector.</param>
-        /// <param name="vec2">The second vector.</param>
-        /// <param name="result">The squared distance.</param>
-        public static void DistanceSquared(ref Vector2i vec1, ref Vector2i vec2, out float result)
-        {
-            result = ((vec2.X - vec1.X) * (vec2.X - vec1.X)) + ((vec2.Y - vec1.Y) * (vec2.Y - vec1.Y));
         }
 
         /// <summary>
@@ -521,7 +462,7 @@ namespace OpenToolkit.Mathematics
         }
 
         /// <summary>
-        /// Divides the specified instance by a scalar.
+        /// Divides the instance by a scalar using integer division, floor(a/b).
         /// </summary>
         /// <param name="vec">Left operand.</param>
         /// <param name="scale">Right operand.</param>
