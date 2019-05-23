@@ -487,6 +487,8 @@ namespace OpenToolkit.Windowing.Desktop
                     WindowPtr = Glfw.CreateWindow(settings.Width, settings.Height, _title, null, null);
                 }
 
+                Glfw.MakeContextCurrent(WindowPtr);
+
                 RegisterWindowCallbacks();
 
                 IsFocused = settings.IsFocused;
