@@ -1,7 +1,5 @@
 language: csharp
 
-dist: xenial
-
 mono: preview
 dotnet: 2.1.401
 
