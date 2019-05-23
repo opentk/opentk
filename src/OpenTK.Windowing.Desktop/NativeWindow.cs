@@ -121,16 +121,14 @@ namespace OpenToolkit.Windowing.Desktop
             {
                 var monitor = value.ToUnsafePtr<GraphicsLibraryFramework.Monitor>();
                 var mode = Glfw.GetVideoMode(monitor);
-                Glfw.SetWindowMonitor
-                (
+                Glfw.SetWindowMonitor(
                     WindowPtr,
                     monitor,
                     (int)_location.X,
                     (int)_location.Y,
                     (int)_size.X,
                     (int)_size.Y,
-                    mode->RefreshRate
-                );
+                    mode->RefreshRate);
             }
         }
 
@@ -167,6 +165,7 @@ namespace OpenToolkit.Windowing.Desktop
                     {
                         Glfw.HideWindow(WindowPtr);
                     }
+
                     OnVisibleChanged(this, new VisibilityChangedEventArgs(value));
                 }
             }
@@ -413,12 +412,10 @@ namespace OpenToolkit.Windowing.Desktop
             }
 
             set =>
-                Glfw.SetInputMode
-                (
+                Glfw.SetInputMode(
                     WindowPtr,
                     CursorStateAttribute.Cursor,
-                    value ? CursorModeValue.CursorNormal : CursorModeValue.CursorHidden
-                );
+                    value ? CursorModeValue.CursorNormal : CursorModeValue.CursorHidden);
         }
 
         /// <inheritdoc />
@@ -551,7 +548,7 @@ namespace OpenToolkit.Windowing.Desktop
                         Key = (Key)key,
                         ScanCode = scancode,
                         IsRepeat = action == InputAction.Repeat,
-                        Modifiers = (KeyModifiers)mods
+                        Modifiers = (KeyModifiers)mods,
                     };
 
                     if (action == InputAction.Release)
