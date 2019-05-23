@@ -51,7 +51,7 @@ namespace OpenToolkit.Windowing.Common
         /// occurs when the update thread has started. This would be a good place to initialize thread specific stuff (like
         /// setting a synchronization context).
         /// </summary>
-        event EventHandler<EventArgs> UpdateThreadStarted;
+        event EventHandler<EventArgs> RenderThreadStarted;
 
         /// <summary>
         /// Occurs before the window is displayed for the first time.

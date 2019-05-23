@@ -55,7 +55,7 @@ namespace OpenToolkit.Windowing.Desktop
         public event EventHandler<FrameEventArgs> UpdateFrame;
 
         /// <inheritdoc/>
-        public event EventHandler<EventArgs> UpdateThreadStarted;
+        public event EventHandler<EventArgs> RenderThreadStarted;
 
         /// <inheritdoc/>
         public event EventHandler<FrameEventArgs> RenderFrame;
@@ -82,7 +82,7 @@ namespace OpenToolkit.Windowing.Desktop
         private double _renderFrequency;
         private double _updateFrequency;
 
-        private Thread _updateThread;
+        private Thread _renderThread;
 
         /// <inheritdoc/>
         public bool IsExiting { get; protected set; }
@@ -200,8 +200,8 @@ namespace OpenToolkit.Windowing.Desktop
             Debug.Print("Entering main loop.");
             if (!IsSingleThreaded)
             {
-                _updateThread = new Thread(UpdateThread);
-                _updateThread.Start();
+                _renderThread = new Thread(StartRenderThread);
+                _renderThread.Start();
             }
 
             _watchRender.Start();
@@ -214,22 +214,22 @@ namespace OpenToolkit.Windowing.Desktop
                     return;
                 }
 
+                DispatchUpdateFrame();
+
                 if (IsSingleThreaded)
                 {
-                    DispatchUpdateFrame();
+                    DispatchRenderFrame();
                 }
-
-                DispatchRenderFrame();
             }
         }
 
-        private void UpdateThread()
+        private void StartRenderThread()
         {
-            OnUpdateThreadStarted(this, EventArgs.Empty);
-            _watchUpdate.Start();
+            OnRenderThreadStarted(this, EventArgs.Empty);
+            _watchRender.Start();
             while (Exists && !IsExiting)
             {
-                DispatchUpdateFrame();
+                DispatchRenderFrame();
             }
         }
 
@@ -301,9 +301,9 @@ namespace OpenToolkit.Windowing.Desktop
         /// </summary>
         /// <param name="sender">A reference to the window that ran the function.</param>
         /// <param name="args">The event arguments. Always empty for this function.</param>
-        protected virtual void OnUpdateThreadStarted(object sender, EventArgs args)
+        protected virtual void OnRenderThreadStarted(object sender, EventArgs args)
         {
-            UpdateThreadStarted?.Invoke(sender, args);
+            RenderThreadStarted?.Invoke(sender, args);
         }
 
         /// <summary>
