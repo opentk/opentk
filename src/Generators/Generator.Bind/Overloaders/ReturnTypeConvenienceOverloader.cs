@@ -1,3 +1,12 @@
+//
+// ReturnTypeConvenienceOverloader.cs
+//
+// Copyright (C) 2019 OpenTK
+//
+// This software may be modified and distributed under the terms
+// of the MIT license. See the LICENSE file for details.
+//
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -98,7 +107,7 @@ namespace Bind.Overloaders
             sb.Append(function.Name + "(");
             sb.Append(string.Join(", ", strParams));
             sb.AppendLine(");");
-            sb.AppendLine($"return *ret;");
+            sb.AppendLine("return *ret;");
 
             if (!newParameters.Any())
             {

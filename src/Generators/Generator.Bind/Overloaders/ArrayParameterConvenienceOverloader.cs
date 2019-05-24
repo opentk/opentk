@@ -1,3 +1,12 @@
+//
+// ArrayParameterConvenienceOverloader.cs
+//
+// Copyright (C) 2019 OpenTK
+//
+// This software may be modified and distributed under the terms
+// of the MIT license. See the LICENSE file for details.
+//
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,7 +29,7 @@ namespace Bind.Overloaders
         /// </summary>
         /// <param name="function">The function.</param>
         /// <returns>true if the overloader is applicable; otherwise, false.</returns>
-        public bool IsApplicable(FunctionSignature function)
+        public static bool IsApplicable(FunctionSignature function)
         {
             // function has exactly two parameters
             var parameterCount = function.Parameters.Count;

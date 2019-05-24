@@ -1,3 +1,12 @@
+//
+// VoidPointerReturnValueOverloader.cs
+//
+// Copyright (C) 2019 OpenTK
+//
+// This software may be modified and distributed under the terms
+// of the MIT license. See the LICENSE file for details.
+//
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,21 +36,17 @@ namespace Bind.Overloaders
                 .WithName(nameof(IntPtr))
                 .Build();
 
-            yield return Cast
-            (
+            yield return Cast(
                 new FunctionSignatureBuilder(function)
                     .WithReturnType(newReturnType)
                     .WithName(function.Name + "Ptr")
                     .Build(),
-                function
-            );
+                function);
         }
 
-        private static (FunctionSignature, StringBuilder) Cast
-        (
+        private static (FunctionSignature, StringBuilder) Cast(
             FunctionSignature function,
-            INamedExtensionScopedEntity oldFunction
-        )
+            INamedExtensionScopedEntity oldFunction)
         {
             var sb = new StringBuilder();
             sb.Append("return (IntPtr) " + oldFunction.Name + "(");

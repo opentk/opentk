@@ -1,3 +1,12 @@
+//
+// VoidPointerParameterOverloader.cs
+//
+// Copyright (C) 2019 OpenTK
+//
+// This software may be modified and distributed under the terms
+// of the MIT license. See the LICENSE file for details.
+//
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,7 +38,7 @@ namespace Bind.Overloaders
             var newGenericArray3DParameters = new List<ParameterSignature>(baseParameters);
 
             var newGenericTypeParameters = new List<GenericTypeParameterSignature>();
-            for (int i = 0; i < baseParameters.Count; ++i)
+            for (var i = 0; i < baseParameters.Count; ++i)
             {
                 var parameter = baseParameters[i];
                 if (!parameter.Type.IsVoidPointer())
@@ -37,21 +46,12 @@ namespace Bind.Overloaders
                     continue;
                 }
 
-                string genericTypeParameterName;
-                if (baseParameters.Count(p => p.Type.IsVoidPointer()) > 1)
-                {
-                    genericTypeParameterName = $"T{newGenericTypeParameters.Count + 1}";
-                }
-                else
-                {
-                    genericTypeParameterName = "T";
-                }
+                var genericTypeParameterName = baseParameters.Count(p => p.Type.IsVoidPointer()) > 1
+                    ? $"T{newGenericTypeParameters.Count + 1}" : "T";
 
-                var genericTypeParameter = new GenericTypeParameterSignature
-                (
+                var genericTypeParameter = new GenericTypeParameterSignature(
                     genericTypeParameterName,
-                    new[] { "unmanaged" }
-                );
+                    new[] { "unmanaged" });
 
                 newGenericTypeParameters.Add(genericTypeParameter);
 
@@ -96,13 +96,11 @@ namespace Bind.Overloaders
                     .Build();
             }
 
-            yield return ToPointer
-            (
+            yield return ToPointer(
                 new FunctionSignatureBuilder(function)
                     .WithParameters(newIntPtrParameters)
                     .Build(),
-                function
-            );
+                function);
 
             yield return Fixed(new FunctionSignatureBuilder(function)
                 .WithParameters(newGenericArray1DParameters)
@@ -120,7 +118,7 @@ namespace Bind.Overloaders
                 .Build());
         }
 
-        private (FunctionSignature, StringBuilder) ToPointer(FunctionSignature function, FunctionSignature old)
+        private static (FunctionSignature, StringBuilder) ToPointer(FunctionSignature function, FunctionSignature old)
         {
             var sb = new StringBuilder();
             if (function.ReturnType.ToString() != "void")
@@ -148,7 +146,7 @@ namespace Bind.Overloaders
             return (function, sb);
         }
 
-        private (FunctionSignature, StringBuilder) Fixed(FunctionSignature function)
+        private static (FunctionSignature, StringBuilder) Fixed(FunctionSignature function)
         {
             var sb = new StringBuilder();
             var parameters = new List<string>();
