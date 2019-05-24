@@ -1,6 +1,11 @@
-/* Copyright (c) 2006, 2007 Stefanos Apostolopoulos
- * See license.txt for license info
- */
+//
+// Program.cs
+//
+// Copyright (C) 2019 OpenTK
+//
+// This software may be modified and distributed under the terms
+// of the MIT license. See the LICENSE file for details.
+//
 
 using System;
 using System.Collections.Concurrent;
@@ -119,18 +124,14 @@ namespace Bind
                 .ToList();
 
             var baker = new ProfileBaker(profiles, profileOverrides);
-            var bakedProfile = baker.BakeProfile
-            (
+            var bakedProfile = baker.BakeProfile(
                 generatorSettings.ProfileName,
                 generatorSettings.Versions,
-                generatorSettings.BaseProfileName
-            );
+                generatorSettings.BaseProfileName);
 
-            var documentationPath = Path.Combine
-            (
+            var documentationPath = Path.Combine(
                 Arguments.DocumentationPath,
-                generatorSettings.SpecificationDocumentationPath
-            );
+                generatorSettings.SpecificationDocumentationPath);
 
             var doc = DocumentationReader.ReadProfileDocumentation(documentationPath, generatorSettings.FunctionPrefix);
             var bakedDocs = new DocumentationBaker(bakedProfile).BakeDocumentation(doc);
@@ -162,13 +163,11 @@ namespace Bind
 
             // var bindingsWriter = new BindingWriter(generatorSettings, overloadedProfile, bakedDocs);
             // await bindingsWriter.WriteBindingsAsync();
-            await ProfileWriter.WriteAsync
-            (
+            await ProfileWriter.WriteAsync(
                 generatorSettings,
                 mappedProfile,
                 bakedDocs,
-                generatorSettings.NameContainer
-            );
+                generatorSettings.NameContainer);
         }
 
         /// <summary>

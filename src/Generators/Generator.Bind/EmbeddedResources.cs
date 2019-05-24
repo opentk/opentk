@@ -1,6 +1,11 @@
- /* Copyright (c) 2006, 2007 Stefanos Apostolopoulos
-  * See license.txt for license info
- */
+//
+// EmbeddedResources.cs
+//
+// Copyright (C) 2019 OpenTK
+//
+// This software may be modified and distributed under the terms
+// of the MIT license. See the LICENSE file for details.
+//
 
 using System;
 using System.IO;
@@ -16,7 +21,7 @@ namespace Bind
         private static readonly Lazy<string> _licenseText = new Lazy<string>(() =>
         {
             using (var streamReader = new StreamReader(Assembly.GetAssembly(typeof(Program))
-                   .GetManifestResourceStream("Bind.Specifications.License.txt")))
+                .GetManifestResourceStream("Bind.Specifications.License.txt") ?? throw new NullReferenceException()))
             {
                 return streamReader.ReadToEnd();
             }

@@ -1,6 +1,11 @@
-﻿/* Copyright (c) 2006, 2007 Stefanos Apostolopoulos
- * See license.txt for license info
- */
+﻿//
+// Utilities.cs
+//
+// Copyright (C) 2019 OpenTK
+//
+// This software may be modified and distributed under the terms
+// of the MIT license. See the LICENSE file for details.
+//
 
 using System;
 using System.Collections.Generic;
@@ -106,7 +111,7 @@ namespace Bind
             "static",
             "enum",
             "namespace",
-            "string"
+            "string",
         };
 
         /// <summary>
@@ -142,7 +147,8 @@ namespace Bind
         /// </summary>
         /// <param name="functionOverride">The override to create variations of.</param>
         /// <returns>The name variations, ordered by length, starting with the longest.</returns>
-        [NotNull, ItemNotNull]
+        [NotNull]
+        [ItemNotNull]
         public static IEnumerable<string> GetNameVariations([NotNull] FunctionOverride functionOverride)
         {
             if (functionOverride.NameType == OverrideNameType.EntryPoint)
@@ -184,7 +190,8 @@ namespace Bind
         /// </summary>
         /// <param name="functionOverride">The override to create variations of.</param>
         /// <returns>The name variations, ordered by length, starting with the longest.</returns>
-        [NotNull, ItemNotNull]
+        [NotNull]
+        [ItemNotNull]
         public static IEnumerable<string> GetNameVariations([NotNull] RemoveOverride functionOverride)
         {
             return functionOverride.NameType == OverrideNameType.EntryPoint
@@ -204,7 +211,8 @@ namespace Bind
         /// </summary>
         /// <param name="functionEntrypoint">The entrypoint to create variations of.</param>
         /// <returns>The name variations, ordered by length, starting with the longest.</returns>
-        [NotNull, ItemNotNull]
+        [NotNull]
+        [ItemNotNull]
         public static IEnumerable<string> GetNameVariations(string functionEntrypoint)
         {
             var extensionTrimmer = new OpenGLFunctionExtensionTrimmer();
@@ -235,11 +243,9 @@ namespace Bind
         /// </summary>
         /// <param name="sw">The StringWriter to write the documentation to.</param>
         /// <param name="function">The function to which the documentation regards.</param>
-        public static void WritePlaceholderDocumentation
-        (
+        public static void WritePlaceholderDocumentation(
             [NotNull] StringWriter sw,
-            [NotNull] FunctionSignature function
-        )
+            [NotNull] FunctionSignature function)
         {
             sw.WriteLine("/// <summary>");
             sw.WriteLine("/// To be added.");
@@ -255,11 +261,9 @@ namespace Bind
                 foreach (var genericTypeParameter in function.GenericTypeParameters)
                 {
                     var referencingParameter = function.Parameters.First(f => f.Type.Name == genericTypeParameter.Name);
-                    sw.WriteLine
-                    (
+                    sw.WriteLine(
                         $"/// <typeparam name=\"{genericTypeParameter.Name}\">The generic type of " +
-                        $"{referencingParameter.Name}.</typeparam>"
-                    );
+                        $"{referencingParameter.Name}.</typeparam>");
                 }
             }
 
@@ -281,11 +285,9 @@ namespace Bind
             var sw = new StringWriter();
             if (!doc.TryGetDocumentation(function, out var documentation))
             {
-                Debug.WriteLine
-                (
+                Debug.WriteLine(
                     $"The function \"{function.Name}\" lacks documentation. Consider adding a documentation file for " +
-                    $"the function."
-                );
+                    "the function.");
 
                 WritePlaceholderDocumentation(sw, function);
                 return sw.ToString();
@@ -300,10 +302,10 @@ namespace Bind
 
             sw.WriteLine("/// </summary>");
 
-            for (int i = 0; i < function.Parameters.Count; ++i)
+            foreach (var parameter in function.Parameters)
             {
-                var parameter = function.Parameters[i];
-                var parameterDocumentation = documentation.Parameters.FirstOrDefault(dp => dp.Name == parameter.Name);
+                var parameter1 = parameter;
+                var parameterDocumentation = documentation.Parameters.FirstOrDefault(dp => dp.Name == parameter1.Name);
                 if (parameterDocumentation is null)
                 {
                     sw.WriteLine($"/// <param name=\"{parameter.Name}\">See summary.</param>");
@@ -313,11 +315,9 @@ namespace Bind
                 // XML documentation doesn't require keyword escaping.
                 if (parameter.Name.TrimStart('@') != parameterDocumentation.Name)
                 {
-                    Debug.WriteLine
-                    (
+                    Debug.WriteLine(
                         $"Parameter {parameter.Name} in function {function.Name} has incorrect documentation name " +
-                        $"{parameterDocumentation.Name}."
-                    );
+                        $"{parameterDocumentation.Name}.");
                 }
 
                 sw.WriteLine($"/// <param name=\"{parameterDocumentation.Name}\">");
@@ -357,11 +357,9 @@ namespace Bind
             foreach (var genericTypeParameter in function.GenericTypeParameters)
             {
                 var referencingParameter = function.Parameters.First(f => f.Type.Name == genericTypeParameter.Name);
-                sw.WriteLine
-                (
+                sw.WriteLine(
                     $"/// <typeparam name=\"{genericTypeParameter.Name}\">The generic type of " +
-                    $"{referencingParameter.Name}.</typeparam>"
-                );
+                    $"{referencingParameter.Name}.</typeparam>");
             }
 
             if (!function.ReturnType.Name.Equals(typeof(void).Name, StringComparison.OrdinalIgnoreCase))
@@ -387,7 +385,7 @@ namespace Bind
                 sb.Append("unsafe ");
             }
 
-            sb.Append(function.ReturnType.ToString());
+            sb.Append(function.ReturnType);
             sb.Append(" ");
 
             sb.Append(function.Name);
@@ -472,7 +470,7 @@ namespace Bind
                 sb.Append("] ");
             }
 
-            sb.Append(parameter.Type.ToString());
+            sb.Append(parameter.Type);
 
             sb.Append(" ");
             sb.Append(CheckName(parameter.Name));
