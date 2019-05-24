@@ -131,11 +131,13 @@ namespace OpenToolkit.OpenAL.Extensions.EXT.Capture
         /// <param name="sampleFormat">The capture sample format.</param>
         /// <param name="bufferSize">The size of the ring buffer.</param>
         /// <returns>An object wrapping a capture capability.</returns>
-        public AudioCapture<TBufferFormat> CreateCapture<TBufferFormat>(
+        public AudioCapture<TBufferFormat> CreateCapture<TBufferFormat>
+        (
             string deviceName = null,
             uint frequency = 22050,
             TBufferFormat? sampleFormat = null,
-            int bufferSize = 4096)
+            int bufferSize = 4096
+        )
             where TBufferFormat : struct, Enum
         {
             return new AudioCapture<TBufferFormat>(this, deviceName, frequency, sampleFormat, bufferSize);
