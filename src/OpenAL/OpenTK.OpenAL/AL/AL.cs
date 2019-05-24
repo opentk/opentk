@@ -11,7 +11,6 @@ using System;
 using AdvancedDLSupport;
 using OpenToolkit.Core.Loader;
 using OpenToolkit.Mathematics;
-using OpenToolkit.OpenAL.Attributes;
 using OpenToolkit.OpenAL.Extensions;
 using OpenToolkit.OpenAL.Interfaces;
 

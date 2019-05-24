@@ -7,11 +7,9 @@
 // of the MIT license. See the LICENSE file for details.
 //
 
-using System;
 using AdvancedDLSupport;
 using OpenToolkit.Core;
 using OpenToolkit.Core.Loader;
-using OpenToolkit.OpenAL.Attributes;
 using OpenToolkit.OpenAL.Extensions;
 using OpenToolkit.OpenAL.Interfaces;
 
