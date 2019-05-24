@@ -7,6 +7,7 @@
 // of the MIT license. See the LICENSE file for details.
 //
 
+using System;
 using AdvancedDLSupport;
 using OpenToolkit.Core;
 using OpenToolkit.Core.Loader;
@@ -114,6 +115,6 @@ namespace OpenToolkit.OpenAL
         public abstract unsafe string GetContextProperty(Device* device, GetContextString param);
 
         /// <inheritdoc />
-        public abstract unsafe void GetContextProperty(Device* device, GetContextInteger param, int count, void* data);
+        public abstract unsafe void GetContextProperty(Device* device, GetContextInteger param, int count, IntPtr data);
     }
 }

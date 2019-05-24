@@ -12,7 +12,7 @@ using OpenToolkit.OpenAL.Interfaces;
 namespace OpenToolkit.OpenAL
 {
     /// <summary>
-    /// Defines available parameters for <see cref="IContextState.GetContextProperty(OpenToolkit.OpenAL.Device*,GetContextInteger,int,void*)" />.
+    /// Defines available parameters for <see cref="IContextState.GetContextProperty(Device*, GetContextInteger, int, System.IntPtr)"/>.
     /// </summary>
     public enum GetContextInteger
     {

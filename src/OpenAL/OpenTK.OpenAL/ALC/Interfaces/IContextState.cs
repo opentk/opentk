@@ -7,6 +7,7 @@
 // of the MIT license. See the LICENSE file for details.
 //
 
+using System;
 using AdvancedDLSupport;
 
 namespace OpenToolkit.OpenAL.Interfaces
@@ -34,6 +35,6 @@ namespace OpenToolkit.OpenAL.Interfaces
         /// <param name="count">The size of the output buffer.</param>
         /// <param name="data">The output buffer.</param>
         [NativeSymbol("GetIntegerv")]
-        unsafe void GetContextProperty(Device* device, GetContextInteger param, int count, void* data);
+        unsafe void GetContextProperty(Device* device, GetContextInteger param, int count, IntPtr data);
     }
 }
