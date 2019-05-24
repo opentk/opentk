@@ -10,7 +10,7 @@
 namespace OpenToolkit.OpenAL.Extensions.EXT.Capture.Enumeration
 {
     /// <summary>
-    /// Defines available parameters for <see cref="ICaptureContextState.GetContextProperty(Device*,GetCaptureEnumerationContextString, int, void*)" />.
+    /// Defines available parameters for <see cref="ICaptureEnumerationContextState.GetString(Device*,GetCaptureEnumerationContextString)" />.
     /// </summary>
     public enum GetCaptureEnumerationContextString
     {
