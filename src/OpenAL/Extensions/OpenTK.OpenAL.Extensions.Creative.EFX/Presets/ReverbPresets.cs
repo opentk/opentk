@@ -19,8 +19,7 @@ namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
         /// <summary>
         /// A reverb preset (approximating a generic location).
         /// </summary>
-        public static readonly ReverbProperties Generic = new ReverbProperties
-        (
+        public static readonly ReverbProperties Generic = new ReverbProperties(
             1.0000f,
             1.0000f,
             0.3162f,
@@ -43,14 +42,12 @@ namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
             5000.0000f,
             250.0000f,
             0.0000f,
-            0x1
-        );
+            0x1);
 
         /// <summary>
         /// A reverb preset (approximating a padded cell).
         /// </summary>
-        public static readonly ReverbProperties PaddedCell = new ReverbProperties
-        (
+        public static readonly ReverbProperties PaddedCell = new ReverbProperties(
             0.1715f,
             1.0000f,
             0.3162f,
@@ -73,14 +70,12 @@ namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
             5000.0000f,
             250.0000f,
             0.0000f,
-            0x1
-        );
+            0x1);
 
         /// <summary>
         /// A reverb preset (approximating a room).
         /// </summary>
-        public static readonly ReverbProperties Room = new ReverbProperties
-        (
+        public static readonly ReverbProperties Room = new ReverbProperties(
             0.4287f,
             1.0000f,
             0.3162f,
@@ -103,14 +98,12 @@ namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
             5000.0000f,
             250.0000f,
             0.0000f,
-            0x1
-        );
+            0x1);
 
         /// <summary>
         /// A reverb preset (approximating a bathroom).
         /// </summary>
-        public static readonly ReverbProperties Bathroom = new ReverbProperties
-        (
+        public static readonly ReverbProperties Bathroom = new ReverbProperties(
             0.1715f,
             1.0000f,
             0.3162f,
@@ -133,14 +126,12 @@ namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
             5000.0000f,
             250.0000f,
             0.0000f,
-            0x1
-        );
+            0x1);
 
         /// <summary>
         /// A reverb preset (approximating a living room).
         /// </summary>
-        public static readonly ReverbProperties LivingRoom = new ReverbProperties
-        (
+        public static readonly ReverbProperties LivingRoom = new ReverbProperties(
             0.9766f,
             1.0000f,
             0.3162f,
@@ -163,14 +154,12 @@ namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
             5000.0000f,
             250.0000f,
             0.0000f,
-            0x1
-        );
+            0x1);
 
         /// <summary>
         /// A reverb preset (approximating a stone room).
         /// </summary>
-        public static readonly ReverbProperties StoneRoom = new ReverbProperties
-        (
+        public static readonly ReverbProperties StoneRoom = new ReverbProperties(
             1.0000f,
             1.0000f,
             0.3162f,
@@ -193,14 +182,12 @@ namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
             5000.0000f,
             250.0000f,
             0.0000f,
-            0x1
-        );
+            0x1);
 
         /// <summary>
         /// A reverb preset (approximating an auditorium).
         /// </summary>
-        public static readonly ReverbProperties Auditorium = new ReverbProperties
-        (
+        public static readonly ReverbProperties Auditorium = new ReverbProperties(
             1.0000f,
             1.0000f,
             0.3162f,
@@ -223,14 +210,12 @@ namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
             5000.0000f,
             250.0000f,
             0.0000f,
-            0x1
-        );
+            0x1);
 
         /// <summary>
         /// A reverb preset (approximating a concert hall).
         /// </summary>
-        public static readonly ReverbProperties ConcertHall = new ReverbProperties
-        (
+        public static readonly ReverbProperties ConcertHall = new ReverbProperties(
             1.0000f,
             1.0000f,
             0.3162f,
@@ -253,14 +238,12 @@ namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
             5000.0000f,
             250.0000f,
             0.0000f,
-            0x1
-        );
+            0x1);
 
         /// <summary>
         /// A reverb preset (approximating a cave).
         /// </summary>
-        public static readonly ReverbProperties Cave = new ReverbProperties
-        (
+        public static readonly ReverbProperties Cave = new ReverbProperties(
             1.0000f,
             1.0000f,
             0.3162f,
@@ -283,14 +266,12 @@ namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
             5000.0000f,
             250.0000f,
             0.0000f,
-            0x0
-        );
+            0x0);
 
         /// <summary>
         /// A reverb preset (approximating an arena).
         /// </summary>
-        public static readonly ReverbProperties Arena = new ReverbProperties
-        (
+        public static readonly ReverbProperties Arena = new ReverbProperties(
             1.0000f,
             1.0000f,
             0.3162f,
@@ -313,14 +294,12 @@ namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
             5000.0000f,
             250.0000f,
             0.0000f,
-            0x1
-        );
+            0x1);
 
         /// <summary>
         /// A reverb preset (approximating a hangar).
         /// </summary>
-        public static readonly ReverbProperties Hangar = new ReverbProperties
-        (
+        public static readonly ReverbProperties Hangar = new ReverbProperties(
             1.0000f,
             1.0000f,
             0.3162f,
@@ -343,14 +322,12 @@ namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
             5000.0000f,
             250.0000f,
             0.0000f,
-            0x1
-        );
+            0x1);
 
         /// <summary>
         /// A reverb preset (approximating a carpeted hallway).
         /// </summary>
-        public static readonly ReverbProperties CarpetedHallway = new ReverbProperties
-        (
+        public static readonly ReverbProperties CarpetedHallway = new ReverbProperties(
             0.4287f,
             1.0000f,
             0.3162f,
@@ -373,14 +350,12 @@ namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
             5000.0000f,
             250.0000f,
             0.0000f,
-            0x1
-        );
+            0x1);
 
         /// <summary>
         /// A reverb preset (approximating a hallway).
         /// </summary>
-        public static readonly ReverbProperties Hallway = new ReverbProperties
-        (
+        public static readonly ReverbProperties Hallway = new ReverbProperties(
             0.3645f,
             1.0000f,
             0.3162f,
@@ -403,14 +378,12 @@ namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
             5000.0000f,
             250.0000f,
             0.0000f,
-            0x1
-        );
+            0x1);
 
         /// <summary>
         /// A reverb preset (approximating a stone corridor).
         /// </summary>
-        public static readonly ReverbProperties StoneCorridor = new ReverbProperties
-        (
+        public static readonly ReverbProperties StoneCorridor = new ReverbProperties(
             1.0000f,
             1.0000f,
             0.3162f,
@@ -433,14 +406,12 @@ namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
             5000.0000f,
             250.0000f,
             0.0000f,
-            0x1
-        );
+            0x1);
 
         /// <summary>
         /// A reverb preset (approximating an alley).
         /// </summary>
-        public static readonly ReverbProperties Alley = new ReverbProperties
-        (
+        public static readonly ReverbProperties Alley = new ReverbProperties(
             1.0000f,
             0.3000f,
             0.3162f,
@@ -463,14 +434,12 @@ namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
             5000.0000f,
             250.0000f,
             0.0000f,
-            0x1
-        );
+            0x1);
 
         /// <summary>
         /// A reverb preset (approximating a forest).
         /// </summary>
-        public static readonly ReverbProperties Forest = new ReverbProperties
-        (
+        public static readonly ReverbProperties Forest = new ReverbProperties(
             1.0000f,
             0.3000f,
             0.3162f,
@@ -493,14 +462,12 @@ namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
             5000.0000f,
             250.0000f,
             0.0000f,
-            0x1
-        );
+            0x1);
 
         /// <summary>
         /// A reverb preset (approximating a city).
         /// </summary>
-        public static readonly ReverbProperties City = new ReverbProperties
-        (
+        public static readonly ReverbProperties City = new ReverbProperties(
             1.0000f,
             0.5000f,
             0.3162f,
@@ -523,14 +490,12 @@ namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
             5000.0000f,
             250.0000f,
             0.0000f,
-            0x1
-        );
+            0x1);
 
         /// <summary>
         /// A reverb preset (approximating a mountain).
         /// </summary>
-        public static readonly ReverbProperties Mountains = new ReverbProperties
-        (
+        public static readonly ReverbProperties Mountains = new ReverbProperties(
             1.0000f,
             0.2700f,
             0.3162f,
@@ -553,14 +518,12 @@ namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
             5000.0000f,
             250.0000f,
             0.0000f,
-            0x0
-        );
+            0x0);
 
         /// <summary>
         /// A reverb preset (approximating a quarry).
         /// </summary>
-        public static readonly ReverbProperties Quarry = new ReverbProperties
-        (
+        public static readonly ReverbProperties Quarry = new ReverbProperties(
             1.0000f,
             1.0000f,
             0.3162f,
@@ -583,14 +546,12 @@ namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
             5000.0000f,
             250.0000f,
             0.0000f,
-            0x1
-        );
+            0x1);
 
         /// <summary>
         /// A reverb preset (approximating a plain).
         /// </summary>
-        public static readonly ReverbProperties Plain = new ReverbProperties
-        (
+        public static readonly ReverbProperties Plain = new ReverbProperties(
             1.0000f,
             0.2100f,
             0.3162f,
@@ -613,14 +574,12 @@ namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
             5000.0000f,
             250.0000f,
             0.0000f,
-            0x1
-        );
+            0x1);
 
         /// <summary>
         /// A reverb preset (approximating a parking lot).
         /// </summary>
-        public static readonly ReverbProperties ParkingLot = new ReverbProperties
-        (
+        public static readonly ReverbProperties ParkingLot = new ReverbProperties(
             1.0000f,
             1.0000f,
             0.3162f,
@@ -643,14 +602,12 @@ namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
             5000.0000f,
             250.0000f,
             0.0000f,
-            0x0
-        );
+            0x0);
 
         /// <summary>
         /// A reverb preset (approximating a sewer pipe).
         /// </summary>
-        public static readonly ReverbProperties Sewerpipe = new ReverbProperties
-        (
+        public static readonly ReverbProperties Sewerpipe = new ReverbProperties(
             0.3071f,
             0.8000f,
             0.3162f,
@@ -673,14 +630,12 @@ namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
             5000.0000f,
             250.0000f,
             0.0000f,
-            0x1
-        );
+            0x1);
 
         /// <summary>
         /// A reverb preset (approximating an underwater location).
         /// </summary>
-        public static readonly ReverbProperties Underwater = new ReverbProperties
-        (
+        public static readonly ReverbProperties Underwater = new ReverbProperties(
             0.3645f,
             1.0000f,
             0.3162f,
@@ -703,14 +658,12 @@ namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
             5000.0000f,
             250.0000f,
             0.0000f,
-            0x1
-        );
+            0x1);
 
         /// <summary>
         /// A reverb preset (approximating a drugged state).
         /// </summary>
-        public static readonly ReverbProperties Drugged = new ReverbProperties
-        (
+        public static readonly ReverbProperties Drugged = new ReverbProperties(
             0.4287f,
             0.5000f,
             0.3162f,
@@ -733,14 +686,12 @@ namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
             5000.0000f,
             250.0000f,
             0.0000f,
-            0x0
-        );
+            0x0);
 
         /// <summary>
         /// A reverb preset (approximating a dizzy state).
         /// </summary>
-        public static readonly ReverbProperties Dizzy = new ReverbProperties
-        (
+        public static readonly ReverbProperties Dizzy = new ReverbProperties(
             0.3645f,
             0.6000f,
             0.3162f,
@@ -763,14 +714,12 @@ namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
             5000.0000f,
             250.0000f,
             0.0000f,
-            0x0
-        );
+            0x0);
 
         /// <summary>
         /// A reverb preset (approximating a psychotic state).
         /// </summary>
-        public static readonly ReverbProperties Psychotic = new ReverbProperties
-        (
+        public static readonly ReverbProperties Psychotic = new ReverbProperties(
             0.0625f,
             0.5000f,
             0.3162f,
@@ -793,16 +742,14 @@ namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
             5000.0000f,
             250.0000f,
             0.0000f,
-            0x0
-        );
+            0x0);
 
         /* Castle Presets */
 
         /// <summary>
         /// A reverb preset (approximating a small room in a castle).
         /// </summary>
-        public static readonly ReverbProperties CastleSmallRoom = new ReverbProperties
-        (
+        public static readonly ReverbProperties CastleSmallRoom = new ReverbProperties(
             1.0000f,
             0.8900f,
             0.3162f,
@@ -825,14 +772,12 @@ namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
             5168.6001f,
             139.5000f,
             0.0000f,
-            0x1
-        );
+            0x1);
 
         /// <summary>
         /// A reverb preset (approximating a short passage in a castle).
         /// </summary>
-        public static readonly ReverbProperties CastleShortPassage = new ReverbProperties
-        (
+        public static readonly ReverbProperties CastleShortPassage = new ReverbProperties(
             1.0000f,
             0.8900f,
             0.3162f,
@@ -855,14 +800,12 @@ namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
             5168.6001f,
             139.5000f,
             0.0000f,
-            0x1
-        );
+            0x1);
 
         /// <summary>
         /// A reverb preset (approximating a medium room in a castle).
         /// </summary>
-        public static readonly ReverbProperties CastleMediumRoom = new ReverbProperties
-        (
+        public static readonly ReverbProperties CastleMediumRoom = new ReverbProperties(
             1.0000f,
             0.9300f,
             0.3162f,
@@ -885,14 +828,12 @@ namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
             5168.6001f,
             139.5000f,
             0.0000f,
-            0x1
-        );
+            0x1);
 
         /// <summary>
         /// A reverb preset (approximating a large room in a castle).
         /// </summary>
-        public static readonly ReverbProperties CastleLargeRoom = new ReverbProperties
-        (
+        public static readonly ReverbProperties CastleLargeRoom = new ReverbProperties(
             1.0000f,
             0.8200f,
             0.3162f,
@@ -915,14 +856,12 @@ namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
             5168.6001f,
             139.5000f,
             0.0000f,
-            0x1
-        );
+            0x1);
 
         /// <summary>
         /// A reverb preset (approximating a long passage in a castle).
         /// </summary>
-        public static readonly ReverbProperties CastleLongPassage = new ReverbProperties
-        (
+        public static readonly ReverbProperties CastleLongPassage = new ReverbProperties(
             1.0000f,
             0.8900f,
             0.3162f,
@@ -945,14 +884,12 @@ namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
             5168.6001f,
             139.5000f,
             0.0000f,
-            0x1
-        );
+            0x1);
 
         /// <summary>
         /// A reverb preset (approximating a hall in a castle).
         /// </summary>
-        public static readonly ReverbProperties CastleHall = new ReverbProperties
-        (
+        public static readonly ReverbProperties CastleHall = new ReverbProperties(
             1.0000f,
             0.8100f,
             0.3162f,
@@ -975,14 +912,12 @@ namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
             5168.6001f,
             139.5000f,
             0.0000f,
-            0x1
-        );
+            0x1);
 
         /// <summary>
         /// A reverb preset (approximating a cupboard in a castle).
         /// </summary>
-        public static readonly ReverbProperties CastleCupboard = new ReverbProperties
-        (
+        public static readonly ReverbProperties CastleCupboard = new ReverbProperties(
             1.0000f,
             0.8900f,
             0.3162f,
@@ -1005,14 +940,12 @@ namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
             5168.6001f,
             139.5000f,
             0.0000f,
-            0x1
-        );
+            0x1);
 
         /// <summary>
         /// A reverb preset (approximating a castle courtyard).
         /// </summary>
-        public static readonly ReverbProperties CastleCourtyard = new ReverbProperties
-        (
+        public static readonly ReverbProperties CastleCourtyard = new ReverbProperties(
             1.0000f,
             0.4200f,
             0.3162f,
@@ -1035,14 +968,12 @@ namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
             5000.0000f,
             250.0000f,
             0.0000f,
-            0x0
-        );
+            0x0);
 
         /// <summary>
         /// A reverb preset (approximating an alcove in a castle).
         /// </summary>
-        public static readonly ReverbProperties CastleAlcove = new ReverbProperties
-        (
+        public static readonly ReverbProperties CastleAlcove = new ReverbProperties(
             1.0000f,
             0.8900f,
             0.3162f,
@@ -1065,16 +996,14 @@ namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
             5168.6001f,
             139.5000f,
             0.0000f,
-            0x1
-        );
+            0x1);
 
         /* Factory Presets */
 
         /// <summary>
         /// A reverb preset (approximating a small room in a factory).
         /// </summary>
-        public static readonly ReverbProperties FactorySmallRoom = new ReverbProperties
-        (
+        public static readonly ReverbProperties FactorySmallRoom = new ReverbProperties(
             0.3645f,
             0.8200f,
             0.3162f,
@@ -1097,14 +1026,12 @@ namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
             3762.6001f,
             362.5000f,
             0.0000f,
-            0x1
-        );
+            0x1);
 
         /// <summary>
         /// A reverb preset (approximating a short passage in a factory).
         /// </summary>
-        public static readonly ReverbProperties FactoryShortPassage = new ReverbProperties
-        (
+        public static readonly ReverbProperties FactoryShortPassage = new ReverbProperties(
             0.3645f,
             0.6400f,
             0.2512f,
@@ -1127,14 +1054,12 @@ namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
             3762.6001f,
             362.5000f,
             0.0000f,
-            0x1
-        );
+            0x1);
 
         /// <summary>
         /// A reverb preset (approximating a medium room in a factory).
         /// </summary>
-        public static readonly ReverbProperties FactoryMediumRoom = new ReverbProperties
-        (
+        public static readonly ReverbProperties FactoryMediumRoom = new ReverbProperties(
             0.4287f,
             0.8200f,
             0.2512f,
@@ -1157,14 +1082,12 @@ namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
             3762.6001f,
             362.5000f,
             0.0000f,
-            0x1
-        );
+            0x1);
 
         /// <summary>
         /// A reverb preset (approximating a large room in a factory).
         /// </summary>
-        public static readonly ReverbProperties FactoryLargeRoom = new ReverbProperties
-        (
+        public static readonly ReverbProperties FactoryLargeRoom = new ReverbProperties(
             0.4287f,
             0.7500f,
             0.2512f,
@@ -1187,14 +1110,12 @@ namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
             3762.6001f,
             362.5000f,
             0.0000f,
-            0x1
-        );
+            0x1);
 
         /// <summary>
         /// A reverb preset (approximating a long passage in a factory).
         /// </summary>
-        public static readonly ReverbProperties FactoryLongPassage = new ReverbProperties
-        (
+        public static readonly ReverbProperties FactoryLongPassage = new ReverbProperties(
             0.3645f,
             0.6400f,
             0.2512f,
@@ -1217,14 +1138,12 @@ namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
             3762.6001f,
             362.5000f,
             0.0000f,
-            0x1
-        );
+            0x1);
 
         /// <summary>
         /// A reverb preset (approximating a hall in a factory).
         /// </summary>
-        public static readonly ReverbProperties FactoryHall = new ReverbProperties
-        (
+        public static readonly ReverbProperties FactoryHall = new ReverbProperties(
             0.4287f,
             0.7500f,
             0.3162f,
@@ -1247,14 +1166,12 @@ namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
             3762.6001f,
             362.5000f,
             0.0000f,
-            0x1
-        );
+            0x1);
 
         /// <summary>
         /// A reverb preset (approximating a cupboard in a factory).
         /// </summary>
-        public static readonly ReverbProperties FactoryCupboard = new ReverbProperties
-        (
+        public static readonly ReverbProperties FactoryCupboard = new ReverbProperties(
             0.3071f,
             0.6300f,
             0.2512f,
@@ -1277,14 +1194,12 @@ namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
             3762.6001f,
             362.5000f,
             0.0000f,
-            0x1
-        );
+            0x1);
 
         /// <summary>
         /// A reverb preset (approximating a factory courtyard).
         /// </summary>
-        public static readonly ReverbProperties FactoryCourtyard = new ReverbProperties
-        (
+        public static readonly ReverbProperties FactoryCourtyard = new ReverbProperties(
             0.3071f,
             0.5700f,
             0.3162f,
@@ -1307,14 +1222,12 @@ namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
             3762.6001f,
             362.5000f,
             0.0000f,
-            0x1
-        );
+            0x1);
 
         /// <summary>
         /// A reverb preset (approximating an alcove in a factory).
         /// </summary>
-        public static readonly ReverbProperties FactoryAlcove = new ReverbProperties
-        (
+        public static readonly ReverbProperties FactoryAlcove = new ReverbProperties(
             0.3645f,
             0.5900f,
             0.2512f,
@@ -1337,16 +1250,14 @@ namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
             3762.6001f,
             362.5000f,
             0.0000f,
-            0x1
-        );
+            0x1);
 
         /* Ice Palace Presets */
 
         /// <summary>
         /// A reverb preset (approximating a small room in an ice palace).
         /// </summary>
-        public static readonly ReverbProperties IcePalaceSmallRoom = new ReverbProperties
-        (
+        public static readonly ReverbProperties IcePalaceSmallRoom = new ReverbProperties(
             1.0000f,
             0.8400f,
             0.3162f,
@@ -1369,14 +1280,12 @@ namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
             12428.5000f,
             99.6000f,
             0.0000f,
-            0x1
-        );
+            0x1);
 
         /// <summary>
         /// A reverb preset (approximating a short passage in an ice palace).
         /// </summary>
-        public static readonly ReverbProperties IcePalaceShortPassage = new ReverbProperties
-        (
+        public static readonly ReverbProperties IcePalaceShortPassage = new ReverbProperties(
             1.0000f,
             0.7500f,
             0.3162f,
@@ -1399,14 +1308,12 @@ namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
             12428.5000f,
             99.6000f,
             0.0000f,
-            0x1
-        );
+            0x1);
 
         /// <summary>
         /// A reverb preset (approximating a medium room in an ice palace).
         /// </summary>
-        public static readonly ReverbProperties IcePalaceMediumRoom = new ReverbProperties
-        (
+        public static readonly ReverbProperties IcePalaceMediumRoom = new ReverbProperties(
             1.0000f,
             0.8700f,
             0.3162f,
@@ -1429,14 +1336,12 @@ namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
             12428.5000f,
             99.6000f,
             0.0000f,
-            0x1
-        );
+            0x1);
 
         /// <summary>
         /// A reverb preset (approximating a large room in an ice palace).
         /// </summary>
-        public static readonly ReverbProperties IcePalaceLargeRoom = new ReverbProperties
-        (
+        public static readonly ReverbProperties IcePalaceLargeRoom = new ReverbProperties(
             1.0000f,
             0.8100f,
             0.3162f,
@@ -1459,14 +1364,12 @@ namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
             12428.5000f,
             99.6000f,
             0.0000f,
-            0x1
-        );
+            0x1);
 
         /// <summary>
         /// A reverb preset (approximating a long passage in an ice palace).
         /// </summary>
-        public static readonly ReverbProperties IcePalaceLongPassage = new ReverbProperties
-        (
+        public static readonly ReverbProperties IcePalaceLongPassage = new ReverbProperties(
             1.0000f,
             0.7700f,
             0.3162f,
@@ -1489,14 +1392,12 @@ namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
             12428.5000f,
             99.6000f,
             0.0000f,
-            0x1
-        );
+            0x1);
 
         /// <summary>
         /// A reverb preset (approximating a hall in an ice palace).
         /// </summary>
-        public static readonly ReverbProperties IcePalaceHall = new ReverbProperties
-        (
+        public static readonly ReverbProperties IcePalaceHall = new ReverbProperties(
             1.0000f,
             0.7600f,
             0.3162f,
@@ -1519,14 +1420,12 @@ namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
             12428.5000f,
             99.6000f,
             0.0000f,
-            0x1
-        );
+            0x1);
 
         /// <summary>
         /// A reverb preset (approximating a cupboard in an ice palace).
         /// </summary>
-        public static readonly ReverbProperties IcePalaceCupboard = new ReverbProperties
-        (
+        public static readonly ReverbProperties IcePalaceCupboard = new ReverbProperties(
             1.0000f,
             0.8300f,
             0.3162f,
@@ -1549,14 +1448,12 @@ namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
             12428.5000f,
             99.6000f,
             0.0000f,
-            0x1
-        );
+            0x1);
 
         /// <summary>
         /// A reverb preset (approximating an ice palace courtyard).
         /// </summary>
-        public static readonly ReverbProperties IcePalaceCourtyard = new ReverbProperties
-        (
+        public static readonly ReverbProperties IcePalaceCourtyard = new ReverbProperties(
             1.0000f,
             0.5900f,
             0.3162f,
@@ -1579,14 +1476,12 @@ namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
             12428.5000f,
             99.6000f,
             0.0000f,
-            0x1
-        );
+            0x1);
 
         /// <summary>
         /// A reverb preset (approximating an alcove in an ice palace).
         /// </summary>
-        public static readonly ReverbProperties IcePalaceAlcove = new ReverbProperties
-        (
+        public static readonly ReverbProperties IcePalaceAlcove = new ReverbProperties(
             1.0000f,
             0.8400f,
             0.3162f,
@@ -1609,16 +1504,14 @@ namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
             12428.5000f,
             99.6000f,
             0.0000f,
-            0x1
-        );
+            0x1);
 
         /* Space Station Presets */
 
         /// <summary>
         /// A reverb preset (approximating a small room in a space station).
         /// </summary>
-        public static readonly ReverbProperties SpaceStationSmallRoom = new ReverbProperties
-        (
+        public static readonly ReverbProperties SpaceStationSmallRoom = new ReverbProperties(
             0.2109f,
             0.7000f,
             0.3162f,
@@ -1641,14 +1534,12 @@ namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
             3316.1001f,
             458.2000f,
             0.0000f,
-            0x1
-        );
+            0x1);
 
         /// <summary>
         /// A reverb preset (approximating a short passage in a space station).
         /// </summary>
-        public static readonly ReverbProperties SpaceStationShortPassage = new ReverbProperties
-        (
+        public static readonly ReverbProperties SpaceStationShortPassage = new ReverbProperties(
             0.2109f,
             0.8700f,
             0.3162f,
@@ -1671,14 +1562,12 @@ namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
             3316.1001f,
             458.2000f,
             0.0000f,
-            0x1
-        );
+            0x1);
 
         /// <summary>
         /// A reverb preset (approximating a medium room in a space station).
         /// </summary>
-        public static readonly ReverbProperties SpaceStationMediumRoom = new ReverbProperties
-        (
+        public static readonly ReverbProperties SpaceStationMediumRoom = new ReverbProperties(
             0.2109f,
             0.7500f,
             0.3162f,
@@ -1701,14 +1590,12 @@ namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
             3316.1001f,
             458.2000f,
             0.0000f,
-            0x1
-        );
+            0x1);
 
         /// <summary>
         /// A reverb preset (approximating a large room in a space station).
         /// </summary>
-        public static readonly ReverbProperties SpaceStationLargeRoom = new ReverbProperties
-        (
+        public static readonly ReverbProperties SpaceStationLargeRoom = new ReverbProperties(
             0.3645f,
             0.8100f,
             0.3162f,
@@ -1731,14 +1618,12 @@ namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
             3316.1001f,
             458.2000f,
             0.0000f,
-            0x1
-        );
+            0x1);
 
         /// <summary>
         /// A reverb preset (approximating a long passage in a space station).
         /// </summary>
-        public static readonly ReverbProperties SpaceStationLongPassage = new ReverbProperties
-        (
+        public static readonly ReverbProperties SpaceStationLongPassage = new ReverbProperties(
             0.4287f,
             0.8200f,
             0.3162f,
@@ -1761,14 +1646,12 @@ namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
             3316.1001f,
             458.2000f,
             0.0000f,
-            0x1
-        );
+            0x1);
 
         /// <summary>
         /// A reverb preset (approximating a hall in a space station).
         /// </summary>
-        public static readonly ReverbProperties SpaceStationHall = new ReverbProperties
-        (
+        public static readonly ReverbProperties SpaceStationHall = new ReverbProperties(
             0.4287f,
             0.8700f,
             0.3162f,
@@ -1791,14 +1674,12 @@ namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
             3316.1001f,
             458.2000f,
             0.0000f,
-            0x1
-        );
+            0x1);
 
         /// <summary>
         /// A reverb preset (approximating a cupboard in a space station).
         /// </summary>
-        public static readonly ReverbProperties SpaceStationCupboard = new ReverbProperties
-        (
+        public static readonly ReverbProperties SpaceStationCupboard = new ReverbProperties(
             0.1715f,
             0.5600f,
             0.3162f,
@@ -1821,14 +1702,12 @@ namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
             3316.1001f,
             458.2000f,
             0.0000f,
-            0x1
-        );
+            0x1);
 
         /// <summary>
         /// A reverb preset (approximating an alcove in a space station).
         /// </summary>
-        public static readonly ReverbProperties SpaceStationAlcove = new ReverbProperties
-        (
+        public static readonly ReverbProperties SpaceStationAlcove = new ReverbProperties(
             0.2109f,
             0.7800f,
             0.3162f,
@@ -1851,16 +1730,14 @@ namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
             3316.1001f,
             458.2000f,
             0.0000f,
-            0x1
-        );
+            0x1);
 
         /* Wooden Galleon Presets */
 
         /// <summary>
         /// A reverb preset (approximating a small room in a wooden galleon).
         /// </summary>
-        public static readonly ReverbProperties WoodenGalleonSmallRoom = new ReverbProperties
-        (
+        public static readonly ReverbProperties WoodenGalleonSmallRoom = new ReverbProperties(
             1.0000f,
             1.0000f,
             0.3162f,
@@ -1883,14 +1760,12 @@ namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
             4705.0000f,
             99.6000f,
             0.0000f,
-            0x1
-        );
+            0x1);
 
         /// <summary>
         /// A reverb preset (approximating a short passage in a wooden galleon).
         /// </summary>
-        public static readonly ReverbProperties WoodenGalleonShortPassage = new ReverbProperties
-        (
+        public static readonly ReverbProperties WoodenGalleonShortPassage = new ReverbProperties(
             1.0000f,
             1.0000f,
             0.3162f,
@@ -1913,14 +1788,12 @@ namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
             4705.0000f,
             99.6000f,
             0.0000f,
-            0x1
-        );
+            0x1);
 
         /// <summary>
         /// A reverb preset (approximating a medium room in a wooden galleon).
         /// </summary>
-        public static readonly ReverbProperties WoodenGalleonMediumRoom = new ReverbProperties
-        (
+        public static readonly ReverbProperties WoodenGalleonMediumRoom = new ReverbProperties(
             1.0000f,
             1.0000f,
             0.3162f,
@@ -1943,14 +1816,12 @@ namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
             4705.0000f,
             99.6000f,
             0.0000f,
-            0x1
-        );
+            0x1);
 
         /// <summary>
         /// A reverb preset (approximating a large room in a wooden galleon).
         /// </summary>
-        public static readonly ReverbProperties WoodenGalleonLargeRoom = new ReverbProperties
-        (
+        public static readonly ReverbProperties WoodenGalleonLargeRoom = new ReverbProperties(
             1.0000f,
             1.0000f,
             0.3162f,
@@ -1973,14 +1844,12 @@ namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
             4705.0000f,
             99.6000f,
             0.0000f,
-            0x1
-        );
+            0x1);
 
         /// <summary>
         /// A reverb preset (approximating a long passsage in a wooden galleon).
         /// </summary>
-        public static readonly ReverbProperties WoodenGalleonLongPassage = new ReverbProperties
-        (
+        public static readonly ReverbProperties WoodenGalleonLongPassage = new ReverbProperties(
             1.0000f,
             1.0000f,
             0.3162f,
@@ -2003,14 +1872,12 @@ namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
             4705.0000f,
             99.6000f,
             0.0000f,
-            0x1
-        );
+            0x1);
 
         /// <summary>
         /// A reverb preset (approximating a hall in a wooden galleon).
         /// </summary>
-        public static readonly ReverbProperties WoodenGalleonHall = new ReverbProperties
-        (
+        public static readonly ReverbProperties WoodenGalleonHall = new ReverbProperties(
             1.0000f,
             1.0000f,
             0.3162f,
@@ -2033,14 +1900,12 @@ namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
             4705.0000f,
             99.6000f,
             0.0000f,
-            0x1
-        );
+            0x1);
 
         /// <summary>
         /// A reverb preset (approximating a cupboard in a wooden galleon).
         /// </summary>
-        public static readonly ReverbProperties WoodenGalleonCupboard = new ReverbProperties
-        (
+        public static readonly ReverbProperties WoodenGalleonCupboard = new ReverbProperties(
             1.0000f,
             1.0000f,
             0.3162f,
@@ -2063,14 +1928,12 @@ namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
             4705.0000f,
             99.6000f,
             0.0000f,
-            0x1
-        );
+            0x1);
 
         /// <summary>
         /// A reverb preset (approximating a courtyard on a wooden galleon).
         /// </summary>
-        public static readonly ReverbProperties WoodenGalleonCourtyard = new ReverbProperties
-        (
+        public static readonly ReverbProperties WoodenGalleonCourtyard = new ReverbProperties(
             1.0000f,
             0.6500f,
             0.3162f,
@@ -2093,14 +1956,12 @@ namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
             4705.0000f,
             99.6000f,
             0.0000f,
-            0x1
-        );
+            0x1);
 
         /// <summary>
         /// A reverb preset (approximating an alcove in a wooden galleon).
         /// </summary>
-        public static readonly ReverbProperties WoodenGalleonAlcove = new ReverbProperties
-        (
+        public static readonly ReverbProperties WoodenGalleonAlcove = new ReverbProperties(
             1.0000f,
             1.0000f,
             0.3162f,
@@ -2123,16 +1984,14 @@ namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
             4705.0000f,
             99.6000f,
             0.0000f,
-            0x1
-        );
+            0x1);
 
         /* Sports Presets */
 
         /// <summary>
         /// A reverb preset (approximating an empty sports stadium).
         /// </summary>
-        public static readonly ReverbProperties SportEmptyStadium = new ReverbProperties
-        (
+        public static readonly ReverbProperties SportEmptyStadium = new ReverbProperties(
             1.0000f,
             1.0000f,
             0.3162f,
@@ -2155,14 +2014,12 @@ namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
             5000.0000f,
             250.0000f,
             0.0000f,
-            0x1
-        );
+            0x1);
 
         /// <summary>
         /// A reverb preset (approximating a squash court).
         /// </summary>
-        public static readonly ReverbProperties SportSquashCourt = new ReverbProperties
-        (
+        public static readonly ReverbProperties SportSquashCourt = new ReverbProperties(
             1.0000f,
             0.7500f,
             0.3162f,
@@ -2185,14 +2042,12 @@ namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
             7176.8999f,
             211.2000f,
             0.0000f,
-            0x1
-        );
+            0x1);
 
         /// <summary>
         /// A reverb preset (approximating a small swimming pool).
         /// </summary>
-        public static readonly ReverbProperties SportSmallSwimmingPool = new ReverbProperties
-        (
+        public static readonly ReverbProperties SportSmallSwimmingPool = new ReverbProperties(
             1.0000f,
             0.7000f,
             0.3162f,
@@ -2215,14 +2070,12 @@ namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
             5000.0000f,
             250.0000f,
             0.0000f,
-            0x0
-        );
+            0x0);
 
         /// <summary>
         /// A reverb preset (approximating a large swimming pool).
         /// </summary>
-        public static readonly ReverbProperties SportLargeSwimmingPool = new ReverbProperties
-        (
+        public static readonly ReverbProperties SportLargeSwimmingPool = new ReverbProperties(
             1.0000f,
             0.8200f,
             0.3162f,
@@ -2245,14 +2098,12 @@ namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
             5000.0000f,
             250.0000f,
             0.0000f,
-            0x0
-        );
+            0x0);
 
         /// <summary>
         /// A reverb preset (approximating a gymnasium).
         /// </summary>
-        public static readonly ReverbProperties SportGymnasium = new ReverbProperties
-        (
+        public static readonly ReverbProperties SportGymnasium = new ReverbProperties(
             1.0000f,
             0.8100f,
             0.3162f,
@@ -2275,14 +2126,12 @@ namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
             7176.8999f,
             211.2000f,
             0.0000f,
-            0x1
-        );
+            0x1);
 
         /// <summary>
         /// A reverb preset (approximating a full stadium).
         /// </summary>
-        public static readonly ReverbProperties SportFullStadium = new ReverbProperties
-        (
+        public static readonly ReverbProperties SportFullStadium = new ReverbProperties(
             1.0000f,
             1.0000f,
             0.3162f,
@@ -2305,14 +2154,12 @@ namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
             5000.0000f,
             250.0000f,
             0.0000f,
-            0x1
-        );
+            0x1);
 
         /// <summary>
         /// A reverb preset (approximating a tannoy stadium).
         /// </summary>
-        public static readonly ReverbProperties SportStadiumTannoy = new ReverbProperties
-        (
+        public static readonly ReverbProperties SportStadiumTannoy = new ReverbProperties(
             1.0000f,
             0.7800f,
             0.3162f,
@@ -2335,16 +2182,14 @@ namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
             5000.0000f,
             250.0000f,
             0.0000f,
-            0x1
-        );
+            0x1);
 
         /* Prefab Presets */
 
         /// <summary>
         /// A reverb preset (approximating a workshop).
         /// </summary>
-        public static readonly ReverbProperties PrefabWorkshop = new ReverbProperties
-        (
+        public static readonly ReverbProperties PrefabWorkshop = new ReverbProperties(
             0.4287f,
             1.0000f,
             0.3162f,
@@ -2367,14 +2212,12 @@ namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
             5000.0000f,
             250.0000f,
             0.0000f,
-            0x0
-        );
+            0x0);
 
         /// <summary>
         /// A reverb preset (approximating a school room).
         /// </summary>
-        public static readonly ReverbProperties PrefabSchoolRoom = new ReverbProperties
-        (
+        public static readonly ReverbProperties PrefabSchoolRoom = new ReverbProperties(
             0.4022f,
             0.6900f,
             0.3162f,
@@ -2397,14 +2240,12 @@ namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
             7176.8999f,
             211.2000f,
             0.0000f,
-            0x1
-        );
+            0x1);
 
         /// <summary>
         /// A reverb preset (approximating a practise room).
         /// </summary>
-        public static readonly ReverbProperties PrefabPractiseRoom = new ReverbProperties
-        (
+        public static readonly ReverbProperties PrefabPractiseRoom = new ReverbProperties(
             0.4022f,
             0.8700f,
             0.3162f,
@@ -2427,14 +2268,12 @@ namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
             7176.8999f,
             211.2000f,
             0.0000f,
-            0x1
-        );
+            0x1);
 
         /// <summary>
         /// A reverb preset (approximating an outhouse).
         /// </summary>
-        public static readonly ReverbProperties PrefabOuthouse = new ReverbProperties
-        (
+        public static readonly ReverbProperties PrefabOuthouse = new ReverbProperties(
             1.0000f,
             0.8200f,
             0.3162f,
@@ -2457,14 +2296,12 @@ namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
             2854.3999f,
             107.5000f,
             0.0000f,
-            0x0
-        );
+            0x0);
 
         /// <summary>
         /// A reverb preset (approximating a caravan).
         /// </summary>
-        public static readonly ReverbProperties PrefabCaravan = new ReverbProperties
-        (
+        public static readonly ReverbProperties PrefabCaravan = new ReverbProperties(
             1.0000f,
             1.0000f,
             0.3162f,
@@ -2487,16 +2324,14 @@ namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
             5000.0000f,
             250.0000f,
             0.0000f,
-            0x0
-        );
+            0x0);
 
         /* Dome and Pipe Presets */
 
         /// <summary>
         /// A reverb preset (approximating a dome in a tomb).
         /// </summary>
-        public static readonly ReverbProperties DomeTomb = new ReverbProperties
-        (
+        public static readonly ReverbProperties DomeTomb = new ReverbProperties(
             1.0000f,
             0.7900f,
             0.3162f,
@@ -2519,14 +2354,12 @@ namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
             2854.3999f,
             20.0000f,
             0.0000f,
-            0x0
-        );
+            0x0);
 
         /// <summary>
         /// A reverb preset (approximating a small pipe).
         /// </summary>
-        public static readonly ReverbProperties PipeSmall = new ReverbProperties
-        (
+        public static readonly ReverbProperties PipeSmall = new ReverbProperties(
             1.0000f,
             1.0000f,
             0.3162f,
@@ -2549,14 +2382,12 @@ namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
             2854.3999f,
             20.0000f,
             0.0000f,
-            0x1
-        );
+            0x1);
 
         /// <summary>
         /// A reverb preset (approximating the dome in St. Paul's Cathedral, London).
         /// </summary>
-        public static readonly ReverbProperties DomeSaintPauls = new ReverbProperties
-        (
+        public static readonly ReverbProperties DomeSaintPauls = new ReverbProperties(
             1.0000f,
             0.8700f,
             0.3162f,
@@ -2579,14 +2410,12 @@ namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
             2854.3999f,
             20.0000f,
             0.0000f,
-            0x1
-        );
+            0x1);
 
         /// <summary>
         /// A reverb preset (approximating a long, thin pipe).
         /// </summary>
-        public static readonly ReverbProperties PipeLongThin = new ReverbProperties
-        (
+        public static readonly ReverbProperties PipeLongThin = new ReverbProperties(
             0.2560f,
             0.9100f,
             0.3162f,
@@ -2609,14 +2438,12 @@ namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
             2854.3999f,
             20.0000f,
             0.0000f,
-            0x0
-        );
+            0x0);
 
         /// <summary>
         /// A reverb preset (approximating a large pipe).
         /// </summary>
-        public static readonly ReverbProperties PipeLarge = new ReverbProperties
-        (
+        public static readonly ReverbProperties PipeLarge = new ReverbProperties(
             1.0000f,
             1.0000f,
             0.3162f,
@@ -2639,14 +2466,12 @@ namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
             2854.3999f,
             20.0000f,
             0.0000f,
-            0x1
-        );
+            0x1);
 
         /// <summary>
         /// A reverb preset (approximating a resonant pipe).
         /// </summary>
-        public static readonly ReverbProperties PipeResonant = new ReverbProperties
-        (
+        public static readonly ReverbProperties PipeResonant = new ReverbProperties(
             0.1373f,
             0.9100f,
             0.3162f,
@@ -2669,16 +2494,14 @@ namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
             2854.3999f,
             20.0000f,
             0.0000f,
-            0x0
-        );
+            0x0);
 
         /* Outdoors Presets */
 
         /// <summary>
         /// A reverb preset (approximating an outdoors backyard).
         /// </summary>
-        public static readonly ReverbProperties OutdoorsBackyard = new ReverbProperties
-        (
+        public static readonly ReverbProperties OutdoorsBackyard = new ReverbProperties(
             1.0000f,
             0.4500f,
             0.3162f,
@@ -2701,14 +2524,12 @@ namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
             4399.1001f,
             242.9000f,
             0.0000f,
-            0x0
-        );
+            0x0);
 
         /// <summary>
         /// A reverb preset (approximating rolling plains).
         /// </summary>
-        public static readonly ReverbProperties OutdoorsRollingPlains = new ReverbProperties
-        (
+        public static readonly ReverbProperties OutdoorsRollingPlains = new ReverbProperties(
             1.0000f,
             0.0000f,
             0.3162f,
@@ -2731,14 +2552,12 @@ namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
             4399.1001f,
             242.9000f,
             0.0000f,
-            0x0
-        );
+            0x0);
 
         /// <summary>
         /// A reverb preset (approximating a deep canyon).
         /// </summary>
-        public static readonly ReverbProperties OutdoorsDeepCanyon = new ReverbProperties
-        (
+        public static readonly ReverbProperties OutdoorsDeepCanyon = new ReverbProperties(
             1.0000f,
             0.7400f,
             0.3162f,
@@ -2761,14 +2580,12 @@ namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
             4399.1001f,
             242.9000f,
             0.0000f,
-            0x0
-        );
+            0x0);
 
         /// <summary>
         /// A reverb preset (approximating a creek).
         /// </summary>
-        public static readonly ReverbProperties OutdoorsCreek = new ReverbProperties
-        (
+        public static readonly ReverbProperties OutdoorsCreek = new ReverbProperties(
             1.0000f,
             0.3500f,
             0.3162f,
@@ -2791,14 +2608,12 @@ namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
             4399.1001f,
             242.9000f,
             0.0000f,
-            0x0
-        );
+            0x0);
 
         /// <summary>
         /// A reverb preset (approximating a valley).
         /// </summary>
-        public static readonly ReverbProperties OutdoorsValley = new ReverbProperties
-        (
+        public static readonly ReverbProperties OutdoorsValley = new ReverbProperties(
             1.0000f,
             0.2800f,
             0.3162f,
@@ -2821,16 +2636,14 @@ namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
             2854.3999f,
             107.5000f,
             0.0000f,
-            0x0
-        );
+            0x0);
 
         /* Mood Presets */
 
         /// <summary>
         /// A reverb preset (approximating a heavenly mood).
         /// </summary>
-        public static readonly ReverbProperties MoodHeaven = new ReverbProperties
-        (
+        public static readonly ReverbProperties MoodHeaven = new ReverbProperties(
             1.0000f,
             0.9400f,
             0.3162f,
@@ -2853,14 +2666,12 @@ namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
             5000.0000f,
             250.0000f,
             0.0000f,
-            0x1
-        );
+            0x1);
 
         /// <summary>
         /// A reverb preset (approximating a hellish mood).
         /// </summary>
-        public static readonly ReverbProperties MoodHell = new ReverbProperties
-        (
+        public static readonly ReverbProperties MoodHell = new ReverbProperties(
             1.0000f,
             0.5700f,
             0.3162f,
@@ -2883,14 +2694,12 @@ namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
             5000.0000f,
             139.5000f,
             0.0000f,
-            0x0
-        );
+            0x0);
 
         /// <summary>
         /// A reverb preset (approximating an abstract memory).
         /// </summary>
-        public static readonly ReverbProperties MoodMemory = new ReverbProperties
-        (
+        public static readonly ReverbProperties MoodMemory = new ReverbProperties(
             1.0000f,
             0.8500f,
             0.3162f,
@@ -2913,16 +2722,14 @@ namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
             5000.0000f,
             250.0000f,
             0.0000f,
-            0x0
-        );
+            0x0);
 
         /* Driving Presets */
 
         /// <summary>
         /// A reverb preset (approximating a person in the commentator's seat).
         /// </summary>
-        public static readonly ReverbProperties DrivingCommentator = new ReverbProperties
-        (
+        public static readonly ReverbProperties DrivingCommentator = new ReverbProperties(
             1.0000f,
             0.0000f,
             0.3162f,
@@ -2945,14 +2752,12 @@ namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
             5000.0000f,
             250.0000f,
             0.0000f,
-            0x1
-        );
+            0x1);
 
         /// <summary>
         /// A reverb preset (approximating a pit or garage).
         /// </summary>
-        public static readonly ReverbProperties DrivingPitGarage = new ReverbProperties
-        (
+        public static readonly ReverbProperties DrivingPitGarage = new ReverbProperties(
             0.4287f,
             0.5900f,
             0.3162f,
@@ -2975,14 +2780,12 @@ namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
             5000.0000f,
             250.0000f,
             0.0000f,
-            0x0
-        );
+            0x0);
 
         /// <summary>
         /// A reverb preset (approximating driving in a race car).
         /// </summary>
-        public static readonly ReverbProperties DrivingInCarRacer = new ReverbProperties
-        (
+        public static readonly ReverbProperties DrivingInCarRacer = new ReverbProperties(
             0.0832f,
             0.8000f,
             0.3162f,
@@ -3005,14 +2808,12 @@ namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
             10268.2002f,
             251.0000f,
             0.0000f,
-            0x1
-        );
+            0x1);
 
         /// <summary>
         /// A reverb preset (approximating driving in a sports car).
         /// </summary>
-        public static readonly ReverbProperties DrivingInCarSports = new ReverbProperties
-        (
+        public static readonly ReverbProperties DrivingInCarSports = new ReverbProperties(
             0.0832f,
             0.8000f,
             0.3162f,
@@ -3035,14 +2836,12 @@ namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
             10268.2002f,
             251.0000f,
             0.0000f,
-            0x1
-        );
+            0x1);
 
         /// <summary>
         /// A reverb preset (approximating driving in a luxury car).
         /// </summary>
-        public static readonly ReverbProperties DrivingInCarLuxury = new ReverbProperties
-        (
+        public static readonly ReverbProperties DrivingInCarLuxury = new ReverbProperties(
             0.2560f,
             1.0000f,
             0.3162f,
@@ -3065,14 +2864,12 @@ namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
             10268.2002f,
             251.0000f,
             0.0000f,
-            0x1
-        );
+            0x1);
 
         /// <summary>
         /// A reverb preset (approximating driving on a course with a full grand stand).
         /// </summary>
-        public static readonly ReverbProperties DrivingFullGrandStand = new ReverbProperties
-        (
+        public static readonly ReverbProperties DrivingFullGrandStand = new ReverbProperties(
             1.0000f,
             1.0000f,
             0.3162f,
@@ -3095,14 +2892,12 @@ namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
             10420.2002f,
             250.0000f,
             0.0000f,
-            0x0
-        );
+            0x0);
 
         /// <summary>
         /// A reverb preset (approximating an empty grand stand).
         /// </summary>
-        public static readonly ReverbProperties DrivingEmptyGrandStand = new ReverbProperties
-        (
+        public static readonly ReverbProperties DrivingEmptyGrandStand = new ReverbProperties(
             1.0000f,
             1.0000f,
             0.3162f,
@@ -3125,14 +2920,12 @@ namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
             10420.2002f,
             250.0000f,
             0.0000f,
-            0x0
-        );
+            0x0);
 
         /// <summary>
         /// A reverb preset (approximating driving in a tunnel).
         /// </summary>
-        public static readonly ReverbProperties DrivingTunnel = new ReverbProperties
-        (
+        public static readonly ReverbProperties DrivingTunnel = new ReverbProperties(
             1.0000f,
             0.8100f,
             0.3162f,
@@ -3155,16 +2948,14 @@ namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
             5000.0000f,
             155.3000f,
             0.0000f,
-            0x1
-        );
+            0x1);
 
         /* City Presets */
 
         /// <summary>
         /// A reverb preset (approximating city streets).
         /// </summary>
-        public static readonly ReverbProperties CityStreets = new ReverbProperties
-        (
+        public static readonly ReverbProperties CityStreets = new ReverbProperties(
             1.0000f,
             0.7800f,
             0.3162f,
@@ -3187,14 +2978,12 @@ namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
             5000.0000f,
             250.0000f,
             0.0000f,
-            0x1
-        );
+            0x1);
 
         /// <summary>
         /// A reverb preset (approximating a subway).
         /// </summary>
-        public static readonly ReverbProperties CitySubway = new ReverbProperties
-        (
+        public static readonly ReverbProperties CitySubway = new ReverbProperties(
             1.0000f,
             0.7400f,
             0.3162f,
@@ -3217,14 +3006,12 @@ namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
             5000.0000f,
             250.0000f,
             0.0000f,
-            0x1
-        );
+            0x1);
 
         /// <summary>
         /// A reverb preset (approximating a museum).
         /// </summary>
-        public static readonly ReverbProperties CityMuseum = new ReverbProperties
-        (
+        public static readonly ReverbProperties CityMuseum = new ReverbProperties(
             1.0000f,
             0.8200f,
             0.3162f,
@@ -3247,14 +3034,12 @@ namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
             2854.3999f,
             107.5000f,
             0.0000f,
-            0x0
-        );
+            0x0);
 
         /// <summary>
         /// A reverb preset (approximating a library).
         /// </summary>
-        public static readonly ReverbProperties CityLibrary = new ReverbProperties
-        (
+        public static readonly ReverbProperties CityLibrary = new ReverbProperties(
             1.0000f,
             0.8200f,
             0.3162f,
@@ -3277,14 +3062,12 @@ namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
             2854.3999f,
             107.5000f,
             0.0000f,
-            0x0
-        );
+            0x0);
 
         /// <summary>
         /// A reverb preset (approximating an underpass).
         /// </summary>
-        public static readonly ReverbProperties CityUnderpass = new ReverbProperties
-        (
+        public static readonly ReverbProperties CityUnderpass = new ReverbProperties(
             1.0000f,
             0.8200f,
             0.3162f,
@@ -3307,14 +3090,12 @@ namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
             5000.0000f,
             250.0000f,
             0.0000f,
-            0x1
-        );
+            0x1);
 
         /// <summary>
         /// A reverb preset (approximating an abandoned location).
         /// </summary>
-        public static readonly ReverbProperties CityAbandoned = new ReverbProperties
-        (
+        public static readonly ReverbProperties CityAbandoned = new ReverbProperties(
             1.0000f,
             0.6900f,
             0.3162f,
@@ -3337,16 +3118,14 @@ namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
             5000.0000f,
             250.0000f,
             0.0000f,
-            0x1
-        );
+            0x1);
 
         /* Misc. Presets */
 
         /// <summary>
         /// A reverb preset (approximating a dusty room).
         /// </summary>
-        public static readonly ReverbProperties DustyRoom = new ReverbProperties
-        (
+        public static readonly ReverbProperties DustyRoom = new ReverbProperties(
             0.3645f,
             0.5600f,
             0.3162f,
@@ -3369,14 +3148,12 @@ namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
             13046.0000f,
             163.3000f,
             0.0000f,
-            0x1
-        );
+            0x1);
 
         /// <summary>
         /// A reverb preset (approximating a chapel).
         /// </summary>
-        public static readonly ReverbProperties Chapel = new ReverbProperties
-        (
+        public static readonly ReverbProperties Chapel = new ReverbProperties(
             1.0000f,
             0.8400f,
             0.3162f,
@@ -3399,14 +3176,12 @@ namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
             5000.0000f,
             250.0000f,
             0.0000f,
-            0x1
-        );
+            0x1);
 
         /// <summary>
         /// A reverb preset (approximating a small, water-filled room).
         /// </summary>
-        public static readonly ReverbProperties SmallWaterRoom = new ReverbProperties
-        (
+        public static readonly ReverbProperties SmallWaterRoom = new ReverbProperties(
             1.0000f,
             0.7000f,
             0.3162f,
@@ -3429,7 +3204,6 @@ namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
             5000.0000f,
             250.0000f,
             0.0000f,
-            0x0
-        );
+            0x0);
     }
 }
