@@ -1,3 +1,12 @@
+//
+// Project.cs
+//
+// Copyright (C) 2019 OpenTK
+//
+// This software may be modified and distributed under the terms
+// of the MIT license. See the LICENSE file for details.
+//
+
 using System.Collections.Generic;
 using System.Text;
 using Bind.XML.Signatures.Enumerations;
@@ -17,13 +26,11 @@ namespace Bind.Structure
         /// <param name="interfaces">The interfaces within this project.</param>
         /// <param name="enums">The enums within this project.</param>
         /// <param name="overloads">The overloads within this project.</param>
-        public Project
-        (
+        public Project(
             string extension,
             IEnumerable<Interface> interfaces,
             IEnumerable<EnumerationSignature> enums,
-            IEnumerable<(FunctionSignature, StringBuilder)> overloads
-        )
+            IEnumerable<(FunctionSignature, StringBuilder)> overloads)
         {
             Extension = extension;
             Interfaces = interfaces;
