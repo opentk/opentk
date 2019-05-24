@@ -10,7 +10,7 @@
 namespace OpenToolkit.OpenAL.Extensions.EXT.Capture
 {
     /// <summary>
-    /// Defines valid values for the <see cref="ICaptureContext.GetContextProperty"/> method.
+    /// Defines valid values for the <see cref="ICaptureContextState.GetContextProperty"/> method.
     /// </summary>
     public enum GetCaptureContextInteger
     {

@@ -30,13 +30,11 @@ namespace OpenToolkit.OpenAL.Extensions.EXT.Capture
         public abstract unsafe Device* CaptureOpenDevice(string deviceName, uint frequency, BufferFormat format, int size);
 
         /// <inheritdoc cref="CaptureOpenDevice"/>
-        public unsafe Device* CaptureOpenDevice<TBufferFormat>
-        (
+        public unsafe Device* CaptureOpenDevice<TBufferFormat>(
             string deviceName,
             uint frequency,
             TBufferFormat format,
-            int size
-        )
+            int size)
             where TBufferFormat : struct, Enum
         {
             return CaptureOpenDevice(deviceName, frequency, (BufferFormat)(object)format, size);
@@ -63,12 +61,10 @@ namespace OpenToolkit.OpenAL.Extensions.EXT.Capture
         /// <param name="bufferFormat">The data format of the buffer.</param>
         /// <param name="sampleCount">The number of samples to retrieve.</param>
         /// <returns>The captured samples.</returns>
-        public unsafe TManagedFormat[] CaptureSamples<TManagedFormat, TBufferFormat>
-        (
+        public unsafe TManagedFormat[] CaptureSamples<TManagedFormat, TBufferFormat>(
             Device* device,
             TBufferFormat bufferFormat,
-            int sampleCount
-        )
+            int sampleCount)
             where TBufferFormat : struct, Enum
             where TManagedFormat : unmanaged
         {
@@ -93,13 +89,11 @@ namespace OpenToolkit.OpenAL.Extensions.EXT.Capture
         /// <param name="bufferFormat">The data format of the buffer.</param>
         /// <param name="sampleCount">The number of samples to retrieve.</param>
         /// <param name="buffer">The buffer to fill. </param>
-        public unsafe void CaptureSamples<TManagedFormat, TBufferFormat>
-        (
+        public unsafe void CaptureSamples<TManagedFormat, TBufferFormat>(
             Device* device,
             TBufferFormat bufferFormat,
             int sampleCount,
-            in TManagedFormat[] buffer
-        )
+            in TManagedFormat[] buffer)
             where TBufferFormat : struct, Enum
             where TManagedFormat : unmanaged
         {
@@ -111,11 +105,9 @@ namespace OpenToolkit.OpenAL.Extensions.EXT.Capture
 
             if (buffer.Length < managedBufferElementCount)
             {
-                throw new ArgumentException
-                (
+                throw new ArgumentException(
                     "The buffer wasn't large enough to contain all of the requested samples.",
-                    nameof(buffer)
-                );
+                    nameof(buffer));
             }
 
             fixed (void* ptr = buffer)
@@ -133,13 +125,11 @@ namespace OpenToolkit.OpenAL.Extensions.EXT.Capture
         /// <param name="sampleFormat">The capture sample format.</param>
         /// <param name="bufferSize">The size of the ring buffer.</param>
         /// <returns>An object wrapping a capture capability.</returns>
-        public AudioCapture<TBufferFormat> CreateCapture<TBufferFormat>
-        (
+        public AudioCapture<TBufferFormat> CreateCapture<TBufferFormat>(
             string deviceName = null,
             uint frequency = 22050,
             TBufferFormat? sampleFormat = null,
-            int bufferSize = 4096
-        )
+            int bufferSize = 4096)
             where TBufferFormat : struct, Enum
         {
             return new AudioCapture<TBufferFormat>(this, deviceName, frequency, sampleFormat, bufferSize);

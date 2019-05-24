@@ -69,14 +69,12 @@ namespace OpenToolkit.OpenAL.Extensions.EXT.Capture
         /// The size of OpenAL's capture internal ring-buffer. This value expects number of samples, not
         /// bytes.
         /// </param>
-        public unsafe AudioCapture
-        (
+        public unsafe AudioCapture(
             Capture captureAPI,
             string deviceName = null,
             uint frequency = 22050,
             TBufferFormat? sampleFormat = null,
-            int bufferSize = 4096
-        )
+            int bufferSize = 4096)
         {
             if (frequency <= 0)
             {
@@ -108,10 +106,8 @@ namespace OpenToolkit.OpenAL.Extensions.EXT.Capture
                 // Everything we tried failed. Capture may not be supported, bail out.
                 CurrentDevice = "None";
 
-                throw new AudioDeviceException
-                (
-                    "All attempts to open capture devices returned IntPtr.Zero. See debug log for verbose list."
-                );
+                throw new AudioDeviceException(
+                    "All attempts to open capture devices returned IntPtr.Zero. See debug log for verbose list.");
             }
 
             // handle is not null, check for some Alc Error
