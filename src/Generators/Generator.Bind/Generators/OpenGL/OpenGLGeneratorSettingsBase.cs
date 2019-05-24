@@ -1,6 +1,11 @@
-/* Copyright (c) 2006, 2007 Stefanos Apostolopoulos
- * See license.txt for license info
- */
+//
+// OpenGLGeneratorSettingsBase.cs
+//
+// Copyright (C) 2019 OpenTK
+//
+// This software may be modified and distributed under the terms
+// of the MIT license. See the LICENSE file for details.
+//
 
 using System.IO;
 using System.Linq;
@@ -54,7 +59,7 @@ namespace Bind.Generators.Bases
             Windows = "opengl32.dll",
             ClassName = "OpenGLLibraryNameContainer",
             IOS = "/System/Library/Frameworks/OpenGL.framework/OpenGL",
-            MacOS = "/System/Library/Frameworks/OpenGL.framework/OpenGL"
+            MacOS = "/System/Library/Frameworks/OpenGL.framework/OpenGL",
         };
 
         /// <summary>
@@ -66,10 +71,9 @@ namespace Bind.Generators.Bases
             var extraOverrides = Directory.GetFiles(overrideFileDirectoryPath, "*.xml", SearchOption.AllDirectories);
 
             OverrideFiles = new[]
-                {
-                    Path.Combine(Program.Arguments.InputPath, "OpenGL", "overrides.xml")
-                }
-                .Concat(extraOverrides);
+            {
+                Path.Combine(Program.Arguments.InputPath, "OpenGL", "overrides.xml"),
+            }.Concat(extraOverrides);
         }
     }
 }

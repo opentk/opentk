@@ -1,4 +1,13 @@
-﻿using System;
+﻿//
+// EmbeddedSettings.cs
+//
+// Copyright (C) 2019 OpenTK
+//
+// This software may be modified and distributed under the terms
+// of the MIT license. See the LICENSE file for details.
+//
+
+using System;
 using System.IO;
 using System.Linq;
 using Bind.Generators.Bases;
@@ -15,7 +24,7 @@ namespace Bind.Generators.ES
         public override string APIIdentifier => "OpenGLES";
 
         /// <inheritdoc/>
-        public override string Namespace => $"OpenToolkit.OpenGLES";
+        public override string Namespace => "OpenToolkit.OpenGLES";
 
         /// <inheritdoc/>
         public override string SpecificationDocumentationPath => "es3";
@@ -34,7 +43,7 @@ namespace Bind.Generators.ES
             Windows = "libGLESv2.dll",
             ClassName = "OpenGLESLibraryNameContainer",
             IOS = "/System/Library/Frameworks/OpenGLES.framework/OpenGLES",
-            MacOS = "/System/Library/Frameworks/OpenGLES.framework/OpenGLES"
+            MacOS = "/System/Library/Frameworks/OpenGLES.framework/OpenGLES",
         };
 
         /// <summary>
@@ -47,7 +56,7 @@ namespace Bind.Generators.ES
 
             OverrideFiles = new[]
             {
-                Path.Combine(Program.Arguments.InputPath, "OpenGL", "overrides.xml")
+                Path.Combine(Program.Arguments.InputPath, "OpenGL", "overrides.xml"),
             }
             .Concat(extraOverrides);
         }
