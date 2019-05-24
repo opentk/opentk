@@ -1,3 +1,12 @@
+//
+// ProjectFileWriter.cs
+//
+// Copyright (C) 2019 OpenTK
+//
+// This software may be modified and distributed under the terms
+// of the MIT license. See the LICENSE file for details.
+//
+
 using System.IO;
 using System.Threading.Tasks;
 
@@ -39,31 +48,22 @@ namespace Bind.Writers
                 csproj.WriteLine("  <ItemGroup>");
                 if (ext)
                 {
-                    csproj.WriteLine
-                    (
+                    csproj.WriteLine(
                         "    <ProjectReference Include=\"$(OpenTKSolutionRoot)\\src\\" +
                         subDir + "\\" + coreProj
-                        + "\\" + coreProj + ".csproj\" />"
-                    );
+                        + "\\" + coreProj + ".csproj\" />");
                 }
                 else
                 {
-                    csproj.WriteLine
-                    (
-                        "    <ProjectReference Include=\"$(OpenTKSolutionRoot)\\src\\OpenTK.Core\\OpenTK.Core.csproj\" />"
-                    );
+                    csproj.WriteLine(
+                        "    <ProjectReference Include=\"$(OpenTKSolutionRoot)\\src\\OpenTK.Core\\OpenTK.Core.csproj\" />");
                 }
 
                 csproj.WriteLine("  </ItemGroup>");
                 csproj.WriteLine();
-                if (ext)
-                {
-                    csproj.WriteLine("  <Import Project=\"..\\..\\..\\..\\props\\common.props\" />");
-                }
-                else
-                {
-                    csproj.WriteLine("  <Import Project=\"..\\..\\..\\props\\common.props\" />");
-                }
+                csproj.WriteLine(ext
+                    ? "  <Import Project=\"..\\..\\..\\..\\props\\common.props\" />"
+                    : "  <Import Project=\"..\\..\\..\\props\\common.props\" />");
 
                 csproj.WriteLine("  <Import Project=\"$(OpenTKSolutionRoot)\\props\\nuget-common.props\" />");
                 csproj.WriteLine("  <Import Project=\"$(OpenTKSolutionRoot)\\props\\stylecop.props\" />");

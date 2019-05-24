@@ -1,3 +1,12 @@
+//
+// EnumWriter.cs
+//
+// Copyright (C) 2019 OpenTK
+//
+// This software may be modified and distributed under the terms
+// of the MIT license. See the LICENSE file for details.
+//
+
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -53,12 +62,10 @@ namespace Bind.Writers
             }
         }
 
-        private static void WriteTokens
-        (
+        private static void WriteTokens(
             [NotNull] StreamWriter sw,
             [NotNull] IEnumerable<TokenSignature> tokens,
-            [NotNull] string prefix
-        )
+            [NotNull] string prefix)
         {
             // Make sure everything is sorted. This will avoid random changes between
             // consecutive runs of the program.
@@ -91,14 +98,9 @@ namespace Bind.Writers
                     sw.WriteLine("\")]");
                 }
 
-                if (token != tokens.Last())
-                {
-                    sw.WriteLine($"        {token.Name} = {valueString},");
-                }
-                else
-                {
-                    sw.WriteLine($"        {token.Name} = {valueString}");
-                }
+                sw.WriteLine(token != tokens.Last()
+                    ? $"        {token.Name} = {valueString},"
+                    : $"        {token.Name} = {valueString}");
             }
         }
     }
