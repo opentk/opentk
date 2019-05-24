@@ -1,3 +1,12 @@
+//
+// ProfileDocumentation.cs
+//
+// Copyright (C) 2019 OpenTK
+//
+// This software may be modified and distributed under the terms
+// of the MIT license. See the LICENSE file for details.
+//
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,7 +29,8 @@ namespace Bind.XML.Documentation
         /// <summary>
         /// Gets the function documentations in the profile.
         /// </summary>
-        [NotNull, ItemNotNull]
+        [NotNull]
+        [ItemNotNull]
         public IReadOnlyList<FunctionDocumentation> Functions { get; }
 
         /// <summary>
@@ -41,11 +51,9 @@ namespace Bind.XML.Documentation
         /// <param name="documentation">The documentation, if any.</param>
         /// <returns>true if the function has documentation; otherwise, false.</returns>
         [ContractAnnotation("true, documentation : notnull <=; false, documentation : null <=")]
-        public bool TryGetDocumentation
-        (
+        public bool TryGetDocumentation(
             [NotNull] FunctionSignature function,
-            [CanBeNull] out FunctionDocumentation documentation
-        )
+            [CanBeNull] out FunctionDocumentation documentation)
         {
             documentation = GetDocumentation(function);
             return HasDocumentation(function);
@@ -59,8 +67,8 @@ namespace Bind.XML.Documentation
         [CanBeNull]
         public FunctionDocumentation GetDocumentation([NotNull] FunctionSignature function)
         {
-            return HasDocumentation(function) ? _documentedFunctions.First
-                (x => Utilities.GetNameVariations(function.NativeEntrypoint).Contains(x.Key)).Value : null;
+            return HasDocumentation(function) ? _documentedFunctions.First(
+                x => Utilities.GetNameVariations(function.NativeEntrypoint).Contains(x.Key)).Value : null;
         }
 
         /// <summary>
@@ -70,12 +78,7 @@ namespace Bind.XML.Documentation
         /// <returns>true if the function has documentation; otherwise, false.</returns>
         public bool HasDocumentation([NotNull] FunctionSignature function)
         {
-            if (_documentedFunctions.Any(x => Utilities.GetNameVariations(function.NativeEntrypoint).Contains(x.Key)))
-            {
-                return true;
-            }
-
-            return false;
+            return _documentedFunctions.Any(x => Utilities.GetNameVariations(function.NativeEntrypoint).Contains(x.Key));
         }
     }
 }

@@ -1,3 +1,12 @@
+//
+// FunctionOverride.cs
+//
+// Copyright (C) 2019 OpenTK
+//
+// This software may be modified and distributed under the terms
+// of the MIT license. See the LICENSE file for details.
+//
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -62,16 +71,14 @@ namespace Bind.XML.Overrides.Functions
         /// <param name="obsoletionReason">The reason the function has been made obsolete.</param>
         /// <param name="newReturnType">The new return type.</param>
         /// <param name="parameterOverrides">The parameter overrides.</param>
-        public FunctionOverride
-        (
+        public FunctionOverride(
             [NotNull] string baseName,
             OverrideNameType nameType,
             [CanBeNull] string baseExtension,
             [CanBeNull] Version newVersion,
             [CanBeNull] string obsoletionReason,
             [CanBeNull] TypeSignature newReturnType,
-            [NotNull] IReadOnlyList<ParameterOverride> parameterOverrides
-        )
+            [NotNull] IReadOnlyList<ParameterOverride> parameterOverrides)
         {
             BaseName = baseName ?? throw new ArgumentNullException(nameof(baseName));
             NameType = nameType;

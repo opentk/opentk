@@ -1,3 +1,12 @@
+//
+// OverrideReader.cs
+//
+// Copyright (C) 2019 OpenTK
+//
+// This software may be modified and distributed under the terms
+// of the MIT license. See the LICENSE file for details.
+//
+
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -23,7 +32,8 @@ namespace Bind.XML.Overrides
         /// </summary>
         /// <param name="overrideFilePath">The document containing the overrides.</param>
         /// <returns>A set of profiles.</returns>
-        [NotNull, ItemNotNull]
+        [NotNull]
+        [ItemNotNull]
         public static IEnumerable<ApiProfileOverride> GetProfileOverrides([NotNull] string overrideFilePath)
         {
             var doc = LoadOverrideDocument(overrideFilePath);
@@ -35,7 +45,8 @@ namespace Bind.XML.Overrides
         /// </summary>
         /// <param name="overrideFilePaths">The files to load.</param>
         /// <returns>A set of profiles.</returns>
-        [NotNull, ItemNotNull]
+        [NotNull]
+        [ItemNotNull]
         public static IEnumerable<ApiProfileOverride> GetProfileOverrides([NotNull] params string[] overrideFilePaths)
         {
             var documents = overrideFilePaths.Select(LoadOverrideDocument);
@@ -70,11 +81,10 @@ namespace Bind.XML.Overrides
         /// </summary>
         /// <param name="signatureDocuments">The documents that contain overrides.</param>
         /// <returns>A set of profiles.</returns>
-        [NotNull, ItemNotNull]
-        public static IEnumerable<ApiProfileOverride> GetProfileOverrides
-        (
-            [NotNull] params XDocument[] signatureDocuments
-        )
+        [NotNull]
+        [ItemNotNull]
+        public static IEnumerable<ApiProfileOverride> GetProfileOverrides(
+            [NotNull] params XDocument[] signatureDocuments)
         {
             var foundProfiles = new Dictionary
             <
@@ -89,13 +99,11 @@ namespace Bind.XML.Overrides
             var profileElements = signatureDocuments.Select(GetOverridesRoot).Elements().Where(e => e.Name == "add" || e.Name == "overload" || e.Name == "replace" || e.Name == "remove");
             foreach (var profileElement in profileElements)
             {
-                var profileNamesAndVersions = (Names: ParseProfileNames(profileElement), Versions: ParseProfileVersions(profileElement));
+                var (names, versions) = (Names: ParseProfileNames(profileElement), Versions: ParseProfileVersions(profileElement));
 
-                var profilePairs = profileNamesAndVersions.Names.SelectMany
-                (
+                var profilePairs = names.SelectMany(
                     n =>
-                        new[] { n }.Zip(profileNamesAndVersions.Versions, (x, y) => (x, y))
-                );
+                        new[] { n }.Zip(versions, (x, y) => (x, y)));
 
                 foreach (var (profileName, profileVersion) in profilePairs)
                 {
@@ -113,14 +121,12 @@ namespace Bind.XML.Overrides
                     }
 
                     // We don't have it registered
-                    foundProfiles.Add
-                    (
+                    foundProfiles.Add(
                         profileName,
                         new Dictionary<Version, List<XElement>>
                         {
-                            { profileVersion, new List<XElement> { profileElement } }
-                        }
-                    );
+                            { profileVersion, new List<XElement> { profileElement } },
+                        });
                 }
             }
 
@@ -142,33 +148,31 @@ namespace Bind.XML.Overrides
                                 enumerationAdditions.AddRange(element.Elements("enum").Select(ParseEnumeration));
                                 break;
                             }
+
                             case "replace":
                             {
                                 functionReplacements.AddRange(element.Elements("function").Select(ParseFunctionOverride));
                                 break;
                             }
+
                             case "overload":
                             {
-                                Console.WriteLine
-                                (
-                                    "Warning: Overloads defined in overrides are ignored, use helper files instead."
-                                );
+                                Console.WriteLine(
+                                    "Warning: Overloads defined in overrides are ignored, use helper files instead.");
                                 break;
                             }
+
                             case "remove":
                             {
-                                removedFunctions.AddRange
-                                (
+                                removedFunctions.AddRange(
                                     element.Elements("name")
-                                        .Select(x => new RemoveOverride(x.Value, OverrideNameType.Name))
-                                );
-                                removedFunctions.AddRange
-                                (
+                                        .Select(x => new RemoveOverride(x.Value, OverrideNameType.Name)));
+                                removedFunctions.AddRange(
                                     element.Elements("entrypoint")
-                                        .Select(x => new RemoveOverride(x.Value, OverrideNameType.EntryPoint))
-                                );
+                                        .Select(x => new RemoveOverride(x.Value, OverrideNameType.EntryPoint)));
                                 break;
                             }
+
                             default:
                             {
                                 throw new InvalidDataException("Invalid element found in profile.");
@@ -176,14 +180,12 @@ namespace Bind.XML.Overrides
                         }
                     }
 
-                    yield return new ApiProfileOverride
-                    (
+                    yield return new ApiProfileOverride(
                         profileName,
                         new VersionRange(version, version),
                         enumerationAdditions,
                         functionReplacements,
-                        removedFunctions
-                    );
+                        removedFunctions);
                 }
             }
         }
@@ -206,10 +208,8 @@ namespace Bind.XML.Overrides
                 var parameterOverride = ParseParameterSignature(parameterElement);
                 if (parameters.Any(p => p.BaseName == parameterOverride.BaseName))
                 {
-                    throw new InvalidDataException
-                    (
-                        $"Duplicate parameter override with name \"{parameterOverride.BaseName}\" found."
-                    );
+                    throw new InvalidDataException(
+                        $"Duplicate parameter override with name \"{parameterOverride.BaseName}\" found.");
                 }
 
                 parameters.Add(parameterOverride);
@@ -223,16 +223,14 @@ namespace Bind.XML.Overrides
                 ? null
                 : ParseTypeSignature(returnElement.Value);
 
-            return new FunctionOverride
-            (
+            return new FunctionOverride(
                 baseFunctionName,
                 nameType,
                 baseFunctionExtensions,
                 newVersion,
                 obsoletionReason,
                 newReturnType,
-                parameters
-            );
+                parameters);
         }
 
         /// <summary>
@@ -241,10 +239,7 @@ namespace Bind.XML.Overrides
         /// <param name="paramElement">The parameter element.</param>
         /// <returns>A parsed parameter.</returns>
         [NotNull]
-        private static ParameterOverride ParseParameterSignature
-        (
-            [NotNull] XElement paramElement
-        )
+        private static ParameterOverride ParseParameterSignature([NotNull] XElement paramElement)
         {
             var baseName = paramElement.GetRequiredAttribute("name").Value;
 
@@ -268,14 +263,12 @@ namespace Bind.XML.Overrides
 
             var newCount = paramElement.Element("count")?.Value;
 
-            return new ParameterOverride
-            (
+            return new ParameterOverride(
                 baseName,
                 newName,
                 newType,
                 newFlow,
-                newCount
-            );
+                newCount);
         }
 
         [NotNull]
@@ -313,7 +306,6 @@ namespace Bind.XML.Overrides
         {
             var tokenName = useElement.GetRequiredAttribute("token").Value;
             var enumName = useElement.Attribute("enum")?.Value;
-            var isOptionalValue = useElement.Attribute("optional")?.Value;
 
             return new UseTokenOverride(tokenName, enumName);
         }
@@ -335,7 +327,8 @@ namespace Bind.XML.Overrides
         /// </summary>
         /// <param name="profileElement">The element.</param>
         /// <returns>The names.</returns>
-        [NotNull, ItemNotNull]
+        [NotNull]
+        [ItemNotNull]
         private static IEnumerable<string> ParseProfileNames([NotNull] XElement profileElement)
         {
             var profileNameString = profileElement.Attribute("name")?.Value
@@ -350,19 +343,18 @@ namespace Bind.XML.Overrides
         /// </summary>
         /// <param name="profileElement">The element.</param>
         /// <returns>The versions.</returns>
-        [NotNull, ItemNotNull]
+        [NotNull]
+        [ItemNotNull]
         private static IEnumerable<Version> ParseProfileVersions([NotNull] XElement profileElement)
         {
             var profileVersionString = profileElement.Attribute("version")?.Value ?? string.Empty;
             var profileVersionStrings = profileVersionString.Split('|');
 
-            return profileVersionStrings.Select
-            (
+            return profileVersionStrings.Select(
                 s =>
                     string.IsNullOrWhiteSpace(s)
                         ? new Version(0, 0)
-                        : new Version(s)
-            );
+                        : new Version(s));
         }
     }
 }

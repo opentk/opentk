@@ -1,3 +1,12 @@
+//
+// DocumentationReader.cs
+//
+// Copyright (C) 2019 OpenTK
+//
+// This software may be modified and distributed under the terms
+// of the MIT license. See the LICENSE file for details.
+//
+
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -14,8 +23,7 @@ namespace Bind.XML.Documentation
     /// </summary>
     public class DocumentationReader
     {
-        private static readonly Regex RedirectRegex = new Regex
-            ("<script>window\\.location\\.replace\\(\"(?<redirect>.*)\"\\);<\\/script>");
+        private static readonly Regex RedirectRegex = new Regex("<script>window\\.location\\.replace\\(\"(?<redirect>.*)\"\\);<\\/script>");
 
         /// <summary>
         /// Reads function documentation from a directory containing docs.gl XHTML files.
@@ -24,30 +32,22 @@ namespace Bind.XML.Documentation
         /// <returns>A dictionary where the function name is the key, and its documentation is the value.</returns>
         public static async Task<ProfileDocumentation> ReadDocumentationAsync(string directory)
         {
-            return new ProfileDocumentation
-            (
-                await Task.WhenAll
-                (
+            return new ProfileDocumentation(
+                await Task.WhenAll(
                     Directory.GetFiles(directory, "*.xhtml")
-                        .Select(x => ReadFunctionDocumentationAsync(x))
-                )
-            );
+                        .Select(x => ReadFunctionDocumentationAsync(x))));
         }
 
         private static Task<FunctionDocumentation> ReadFunctionDocumentationAsync(string xhtmlFile, string nameO = null)
         {
             if (!File.Exists(xhtmlFile))
             {
-                return Task.FromResult
-                (
-                    new FunctionDocumentation
-                    (
+                return Task.FromResult(
+                    new FunctionDocumentation(
                         nameO ?? Path.GetFileNameWithoutExtension(xhtmlFile),
                         "To be added.",
                         new ParameterDocumentation[0],
-                        null
-                    )
-                );
+                        null));
             }
 
             var file = File.ReadAllText(xhtmlFile);
@@ -55,12 +55,10 @@ namespace Bind.XML.Documentation
             {
                 var m = RedirectRegex.Match(file);
                 var redirected = Path.Combine(Path.GetDirectoryName(xhtmlFile), m.Groups["redirect"].Value + ".xhtml");
-                return Task.FromResult
-                (
+                return Task.FromResult(
                     ReadFunctionDocumentationAsync(redirected, Path.GetFileNameWithoutExtension(xhtmlFile))
                         .GetAwaiter()
-                        .GetResult()
-                );
+                        .GetResult());
             }
 
             var document = new HtmlDocument();
@@ -95,36 +93,24 @@ namespace Bind.XML.Documentation
             }
 
             var div = document.DocumentNode.ChildNodes.FirstOrDefault(x => x.Name == "div")
-                ?.ChildNodes.FirstOrDefault
-                (
-                    x => x.HasClass("refnamediv") && x.ChildNodes.Any(y => y.Name == "h2" && y.InnerText == "Name")
-                );
+                ?.ChildNodes.FirstOrDefault(
+                    x => x.HasClass("refnamediv") && x.ChildNodes.Any(y => y.Name == "h2" && y.InnerText == "Name"));
             div.RemoveChild(div.ChildNodes.FirstOrDefault(x => x.Name == "h2"));
-            var description = StyleGuideCompliance
-                                  (
-                                      FixWhitespace
-                                      (
-                                          MegaTrim
-                                          (
-                                              div.InnerText.Substring
-                                                      (div.InnerText.IndexOf("—", StringComparison.Ordinal) + 2)
-                                                  .Transform(To.SentenceCase)
-                                                  .Trim()
-                                          )
-                                      )
-                                  )
-                                  .TrimEnd('.') + ".";
 
-            return Task.FromResult
-            (
-                new FunctionDocumentation
-                (
+            var description = StyleGuideCompliance(
+                FixWhitespace(
+                    MegaTrim(
+                        div.InnerText.Substring(
+                            div.InnerText.IndexOf("—", StringComparison.Ordinal) + 2)
+                                .Transform(To.SentenceCase)
+                                .Trim()))).TrimEnd('.') + ".";
+
+            return Task.FromResult(
+                new FunctionDocumentation(
                     nameO ?? Path.GetFileNameWithoutExtension(xhtmlFile),
                     description,
                     parameters.Values.ToArray(),
-                    null
-                )
-            );
+                    null));
         }
 
         private static string FixWhitespace(string str)
@@ -134,18 +120,16 @@ namespace Bind.XML.Documentation
 
         private static string MegaTrim(string str)
         {
-            return string.Join
-                (" ", str.Split("\r\n".ToCharArray(), StringSplitOptions.RemoveEmptyEntries).Select(x => x.Trim()));
+            return string.Join(
+                " ", str.Split("\r\n".ToCharArray(), StringSplitOptions.RemoveEmptyEntries).Select(x => x.Trim()));
         }
 
         private static string StyleGuideCompliance(string longString)
         {
             var s = Regex.Split(longString, @"(.{1,100})(?:\s|$)");
-            return string.Join
-            (
+            return string.Join(
                 "\n",
-                s.Where(x => !string.IsNullOrWhiteSpace(x)).ToList()
-            );
+                s.Where(x => !string.IsNullOrWhiteSpace(x)).ToList());
         }
 
         /// <summary>

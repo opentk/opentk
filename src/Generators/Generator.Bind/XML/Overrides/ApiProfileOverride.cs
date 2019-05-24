@@ -1,3 +1,12 @@
+//
+// ApiProfileOverride.cs
+//
+// Copyright (C) 2019 OpenTK
+//
+// This software may be modified and distributed under the terms
+// of the MIT license. See the LICENSE file for details.
+//
+
 using System;
 using System.Collections.Generic;
 using Bind.Extensions;
@@ -53,15 +62,13 @@ namespace Bind.XML.Overrides
         /// <param name="functionOverloads">The function overloads.</param>
         /// <param name="removedFunctions">The removed functions.</param>
         [Obsolete("Use the constructor without overloads instead.")]
-        public ApiProfileOverride
-        (
+        public ApiProfileOverride(
             [NotNull] string name,
             [NotNull] VersionRange versions,
             [NotNull] IReadOnlyList<EnumerationOverride> addedEnumerations,
             [NotNull] IReadOnlyList<FunctionOverride> replacedFunctions,
             [NotNull] IReadOnlyList<FunctionOverride> functionOverloads,
-            [NotNull] IReadOnlyList<RemoveOverride> removedFunctions
-        )
+            [NotNull] IReadOnlyList<RemoveOverride> removedFunctions)
         : this(name, versions, addedEnumerations, replacedFunctions, removedFunctions)
         {
         }
@@ -74,14 +81,12 @@ namespace Bind.XML.Overrides
         /// <param name="addedEnumerations">The added enumerations.</param>
         /// <param name="replacedFunctions">The replaced functions.</param>
         /// <param name="removedFunctions">The removed functions.</param>
-        public ApiProfileOverride
-        (
+        public ApiProfileOverride(
             [NotNull] string name,
             [NotNull] VersionRange versions,
             [NotNull] IReadOnlyList<EnumerationOverride> addedEnumerations,
             [NotNull] IReadOnlyList<FunctionOverride> replacedFunctions,
-            [NotNull] IReadOnlyList<RemoveOverride> removedFunctions
-        )
+            [NotNull] IReadOnlyList<RemoveOverride> removedFunctions)
         {
             Name = name ?? throw new ArgumentNullException(nameof(name));
             Versions = versions ?? throw new ArgumentNullException(nameof(versions));

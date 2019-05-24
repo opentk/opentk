@@ -1,3 +1,12 @@
+//
+// FunctionDocumentation.cs
+//
+// Copyright (C) 2019 OpenTK
+//
+// This software may be modified and distributed under the terms
+// of the MIT license. See the LICENSE file for details.
+//
+
 using System;
 using System.Collections.Generic;
 using JetBrains.Annotations;
@@ -31,7 +40,8 @@ namespace Bind.XML.Documentation
         /// <summary>
         /// Gets the function's parameters.
         /// </summary>
-        [NotNull, ItemNotNull]
+        [NotNull]
+        [ItemNotNull]
         public IReadOnlyList<ParameterDocumentation> Parameters { get; }
 
         /// <summary>
@@ -41,13 +51,11 @@ namespace Bind.XML.Documentation
         /// <param name="purpose">The purpose of the function.</param>
         /// <param name="parameters">The parameters of the function.</param>
         /// <param name="functionGroup">The group of functions the function belongs to.</param>
-        public FunctionDocumentation
-        (
+        public FunctionDocumentation(
             [NotNull] string name,
             [NotNull] string purpose,
             [NotNull, ItemNotNull] IReadOnlyList<ParameterDocumentation> parameters,
-            [NotNull] string functionGroup
-        )
+            [NotNull] string functionGroup)
         {
             Name = name ?? throw new ArgumentNullException(nameof(name));
             Purpose = purpose ?? throw new ArgumentNullException(nameof(purpose));

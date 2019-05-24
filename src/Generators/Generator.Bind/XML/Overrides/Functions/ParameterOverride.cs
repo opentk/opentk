@@ -1,3 +1,12 @@
+//
+// ParameterOverride.cs
+//
+// Copyright (C) 2019 OpenTK
+//
+// This software may be modified and distributed under the terms
+// of the MIT license. See the LICENSE file for details.
+//
+
 using System;
 using Bind.XML.Signatures;
 using Bind.XML.Signatures.Functions;
@@ -49,14 +58,12 @@ namespace Bind.XML.Overrides.Functions
         /// <param name="newType">The new type of the parameter.</param>
         /// <param name="newFlow">The new flow of the parameter.</param>
         /// <param name="newCount">The new count of the parameter.</param>
-        public ParameterOverride
-        (
+        public ParameterOverride(
             [NotNull] string name,
             [CanBeNull] string newName,
             [CanBeNull] TypeSignature newType,
             FlowDirection? newFlow,
-            [CanBeNull] string newCount
-        )
+            [CanBeNull] string newCount)
         {
             BaseName = name ?? throw new ArgumentNullException(nameof(name));
             NewName = newName;
