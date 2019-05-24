@@ -51,7 +51,7 @@ namespace OpenToolkit.Core.Loader
                 return MacOS;
             }
 
-            throw new NotImplementedException("The library name couldn't be resolved for the given platform.");
+            throw new NotSupportedException("The library name couldn't be resolved for the given platform.");
         }
     }
 }

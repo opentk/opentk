@@ -1,6 +1,4 @@
-using System;
 using AdvancedDLSupport;
-using OpenToolkit.OpenAL.Extensions;
 
 namespace OpenToolkit.OpenAL.Interfaces
 {

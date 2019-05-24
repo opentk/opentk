@@ -7,10 +7,9 @@
 
 using System;
 using AdvancedDLSupport;
+using OpenToolkit.Core.Extensions;
 using OpenToolkit.Core.Loader;
 using OpenToolkit.Mathematics;
-using OpenToolkit.OpenAL.Attributes;
-using OpenToolkit.OpenAL.Extensions;
 using OpenToolkit.OpenAL.Interfaces;
 
 namespace OpenToolkit.OpenAL
@@ -182,6 +181,9 @@ namespace OpenToolkit.OpenAL
 
         /// <inheritdoc />
         public abstract AudioError GetError();
+
+        /// <inheritdoc />
+        public IPlatformLibraryNameContainer NameContainer { get; } = new OpenALLibraryNameContainer();
 
         /// <inheritdoc />
         public abstract bool IsExtensionPresent(string name);
@@ -519,7 +521,7 @@ namespace OpenToolkit.OpenAL
         /// <returns>The instance.</returns>
         public static AL GetAPI()
         {
-            return APILoader.Load<AL, OpenALLibraryNameContainer>();
+            return APILoader.Load<AL>(new OpenALLibraryNameContainer());
         }
     }
 }

@@ -1,5 +1,5 @@
-using System;
 using AdvancedDLSupport;
+using OpenToolkit.Core.Extensions;
 
 namespace OpenToolkit.OpenAL.Extensions.Soft.DeferredUpdates
 {
