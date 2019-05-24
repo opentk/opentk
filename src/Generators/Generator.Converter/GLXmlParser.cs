@@ -28,42 +28,80 @@ namespace OpenTK.Convert
             @"3DFX|(?!(?<=[1-4])D)[A-Z]{2,}$",
             RegexOptions.Compiled);
 
-        /// <summary>
-        /// Parses and formats an XML file.
-        /// </summary>
-        /// <param name="lines">The lines contained within the XML file.</param>
-        /// <returns>A formatted XML file.</returns>
-        public override IEnumerable<XElement> Parse(string[] lines)
+        private static void Merge(XElement api, XElement function)
         {
-            var input = XDocument.Parse(string.Join(" ", lines));
-
-            var elements = new SortedDictionary<string, XElement>();
-            foreach (var e in ParseEnums(input).Concat(ParseFunctions(input)))
+            var type = function.Name.LocalName;
+            var name = function.Attribute("name")?.Value;
+            var f = api.Elements(type).FirstOrDefault(p => p.Attribute("name")?.Value == name);
+            if (f != null)
             {
-                var name = e.Attribute("name").Value;
-                var version = (e.Attribute("version") ?? new XAttribute("version", string.Empty)).Value;
-                var key = name + version;
-                if (!elements.ContainsKey(key))
+                f.SetAttributeValue(
+                    "category",
+                    string.Join("|", f.Attribute("category")?.Value, function.Attribute("category")?.Value));
+                f.SetAttributeValue(
+                    "version",
+                    (f.Attribute("version") ?? function.Attribute("version")).ValueOrDefault());
+
+                // Sanity check: one function cannot belong to two different extensions
+                if (f.Attribute("extension")?.Value != function.Attribute("extension")?.Value)
                 {
-                    elements.Add(key, e);
-                }
-                else
-                {
-                    elements[key].Add(e.Elements());
+                    throw new InvalidOperationException("Different extensions for the same function");
                 }
             }
-
-            return elements.Values;
+            else
+            {
+                api.Add(function);
+            }
         }
 
-        private static string[] GetApiNames(XElement feature)
+        private static string FunctionParameterType(XElement e)
         {
-            string[] apinames = null;
+            // Parse the C-like <proto> element. Possible instances:
+            // Return types:
+            // - <proto>void <name>glGetSharpenTexFuncSGIS</name></proto>
+            //   -> <returns>void</returns>
+            // - <proto group="String">const <ptype>GLubyte</ptype> *<name>glGetString</name></proto>
+            //   -> <returns>String</returns>
+            // Note: group attribute takes precedence if it exists. This matches the old .spec file format.
+            // Parameter types:
+            // - <param><ptype>GLenum</ptype> <name>shadertype</name></param>
+            //   -> <param name="shadertype" type="GLenum" />
+            // - <param len="1"><ptype>GLsizei</ptype> *<name>length</name></param>
+            //   -> <param name="length" type="GLsizei" count="1" />
+            var proto = e.Value;
+            var name = e.Element("name")?.Value;
+            var group = e.Attribute("group");
+
+            var ret = proto.Remove(proto.LastIndexOf(name, StringComparison.Ordinal)).Trim();
+
+            if (group == null)
+            {
+                return ret;
+            }
+
+            var words = ret.Split(" ".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            if (words[0] == "struct" || words[0] == "const")
+            {
+                words[1] = group.Value;
+            }
+            else
+            {
+                words[0] = group.Value;
+            }
+
+            ret = string.Join(" ", words);
+
+            return ret;
+        }
+
+        private static IEnumerable<string> GetApiNames(XElement feature)
+        {
+            string[] apinames;
             switch (feature.Name.LocalName)
             {
                 case "feature":
                 {
-                    var v = feature.Attribute("api") != null ? feature.Attribute("api").Value : "gl|glcore";
+                    var v = feature.Attribute("api") != null ? feature.Attribute("api")?.Value : "gl|glcore";
                     if (v == "gl")
                     {
                         // Add all gl features to both compatibility (gl) and core (glcore) profiles.
@@ -72,20 +110,23 @@ namespace OpenTK.Convert
                         v = "gl|glcore";
                     }
 
-                    apinames = v.Split('|');
+                    apinames = v?.Split('|');
                     break;
                 }
+
                 case "extension":
                 {
-                    var v = feature.Attribute("supported") != null ? feature.Attribute("supported").Value : "gl|glcore";
-                    apinames = v.Split('|');
+                    var v = feature.Attribute("supported") != null ? feature.Attribute("supported")?.Value : "gl|glcore";
+                    apinames = v?.Split('|');
                     break;
                 }
+
                 case "group":
                 {
                     apinames = new[] { "gl", "glcore", "gles1", "gles2" };
                     break;
                 }
+
                 default:
                 {
                     throw new NotSupportedException("Unknown feature type");
@@ -97,10 +138,18 @@ namespace OpenTK.Convert
 
         private IEnumerable<XElement> ParseEnums(XDocument input)
         {
-            var features = input.Root.Elements("feature");
-            var extensions = input.Root.Elements("extensions").Elements("extension");
-            var enumerations = input.Root.Elements("enums").Elements("enum");
-            var groups = input.Root.Elements("groups").Elements("group");
+            var root = input.Root;
+
+            if (root == null)
+            {
+                throw new NullReferenceException();
+            }
+
+            var features = root.Elements("feature");
+            var extensions = root.Elements("extensions").Elements("extension");
+            var enumerations = root.Elements("enums").Elements("enum");
+            var groups = root.Elements("groups").Elements("group");
+
             var apis = new SortedDictionary<string, XElement>();
 
             // Build a list of all available tokens.
@@ -117,8 +166,8 @@ namespace OpenTK.Convert
                 }
 
                 enums[api].Add(
-                    TrimName(e.Attribute("name").Value),
-                    e.Attribute("value").Value);
+                    TrimName(e.Attribute("name")?.Value),
+                    e.Attribute("value")?.Value);
             }
 
             // Now we go through each feature, extension and group
@@ -130,9 +179,9 @@ namespace OpenTK.Convert
             foreach (var feature in
                 features.Concat(extensions)
                     .Concat(groups)
-                    .OrderBy(f => TrimName(f.Attribute("name").Value)))
+                    .OrderBy(f => TrimName(f.Attribute("name")?.Value)))
             {
-                var version = feature.Attribute("number") != null ? feature.Attribute("number").Value : null;
+                var version = feature.Attribute("number") != null ? feature.Attribute("number")?.Value : null;
                 var apinames = GetApiNames(feature);
 
                 // An enum may belong to one or more APIs.
@@ -152,14 +201,14 @@ namespace OpenTK.Convert
 
                     var api = apis[key];
 
-                    var enum_name = TrimName(feature.Attribute("name").Value);
+                    var enum_name = TrimName(feature.Attribute("name")?.Value);
 
                     var e = new XElement("enum", new XAttribute("name", enum_name));
                     foreach (var token in
                         feature.Elements("enum")
                             .Concat(feature.Elements("require").Elements("enum")))
                     {
-                        var token_name = TrimName(token.Attribute("name").Value);
+                        var token_name = TrimName(token.Attribute("name")?.Value);
                         var token_value =
                             enums.ContainsKey(apiname) && enums[apiname].ContainsKey(token_name)
                                 ? enums[apiname][token_name]
@@ -187,30 +236,37 @@ namespace OpenTK.Convert
 
                 foreach (var api in apis.Values)
                 {
-                    var apiname = api.Attribute("name").Value;
+                    var apiname = api.Attribute("name")?.Value;
 
                     // Mark deprecated enums
                     foreach (var token in feature.Elements("remove").Elements("enum"))
                     {
-                        var token_name = TrimName(token.Attribute("name").Value);
+                        var token_name = TrimName(token.Attribute("name")?.Value);
                         var deprecated =
                             api.Elements("enum").Elements("token")
-                                .FirstOrDefault(t => t.Attribute("name").Value == token_name);
+                                .FirstOrDefault(t => t.Attribute("name")?.Value == token_name);
 
-                        if (deprecated != null)
+                        if (deprecated == null)
                         {
-                            if (apiname == "glcore")
+                            continue;
+                        }
+
+                        if (apiname == "glcore")
+                        {
+                            // These tokens do not exist in the glcore profile, remove them
+                            api.Elements("enum").Elements("token")
+                                .First(t => t.Attribute("name")?.Value == token_name)
+                                .Remove();
+                        }
+                        else
+                        {
+                            // These tokens exist in all other profiles, mark them as deprecated.
+                            if (version == null)
                             {
-                                // These tokens do not exist in the glcore profile, remove them
-                                api.Elements("enum").Elements("token")
-                                    .First(t => t.Attribute("name").Value == token_name)
-                                    .Remove();
+                                throw new NullReferenceException();
                             }
-                            else
-                            {
-                                // These tokens exist in all other profiles, mark them as deprecated.
-                                deprecated.Add(new XAttribute("deprecated", version));
-                            }
+
+                            deprecated.Add(new XAttribute("deprecated", version));
                         }
                     }
                 }
@@ -219,22 +275,57 @@ namespace OpenTK.Convert
             return apis.Values;
         }
 
+        /// <summary>
+        /// Parses and formats an XML file.
+        /// </summary>
+        /// <param name="lines">The lines contained within the XML file.</param>
+        /// <returns>A formatted XML file.</returns>
+        public override IEnumerable<XElement> Parse(string[] lines)
+        {
+            var input = XDocument.Parse(string.Join(" ", lines));
+
+            var elements = new SortedDictionary<string, XElement>();
+            foreach (var e in ParseEnums(input).Concat(ParseFunctions(input)))
+            {
+                var name = e.Attribute("name")?.Value;
+                var version = (e.Attribute("version") ?? new XAttribute("version", string.Empty)).Value;
+                var key = name + version;
+                if (!elements.ContainsKey(key))
+                {
+                    elements.Add(key, e);
+                }
+                else
+                {
+                    elements[key].Add(e.Elements());
+                }
+            }
+
+            return elements.Values;
+        }
+
         private IEnumerable<XElement> ParseFunctions(XDocument input)
         {
+            var root = input.Root;
+
+            if (root == null)
+            {
+                throw new NullReferenceException();
+            }
+
             // Go through the list of commands and build OpenTK functions out of those.
             // Every function has a number of attributes that define which API version and
             // category (see above) they belong to.
             // It also includes information about the return type and parameters. These
             // are then parsed by the binding generator in order to create the necessary
             // overloads for correct use.
-            var features = input.Root.Elements("feature");
-            var extensions = input.Root.Elements("extensions").Elements("extension");
+            var features = root.Elements("feature");
+            var extensions = root.Elements("extensions").Elements("extension");
             var apis = new SortedDictionary<string, XElement>();
 
             // First we build a list of all available commands,
             // including their parameters and return types.
             var commands = new SortedDictionary<string, XElement>();
-            foreach (var command in input.Root.Elements("commands").Elements("command"))
+            foreach (var command in root.Elements("commands").Elements("command"))
             {
                 commands.Add(FunctionName(command), command);
             }
@@ -245,11 +336,11 @@ namespace OpenTK.Convert
             // information about versioning, extension support and deprecation.
             foreach (var feature in features.Concat(extensions))
             {
-                var category = TrimName(feature.Attribute("name").Value);
+                var category = TrimName(feature.Attribute("name")?.Value);
                 var apinames = GetApiNames(feature);
 
                 var version =
-                    (feature.Attribute("number") != null ? feature.Attribute("number").Value : string.Empty)
+                    (feature.Attribute("number") != null ? feature.Attribute("number")?.Value : string.Empty)?
                     .Split('|');
 
                 var i = -1;
@@ -258,11 +349,16 @@ namespace OpenTK.Convert
                     i++;
 
                     var cmd_category = category;
-                    var cmd_version = version.Length > i ? version[i] : version[0];
+                    var cmd_version = version?.Length > i ? version[i] : version?[0];
 
                     var key = apiname + cmd_version;
                     if (!apis.ContainsKey(key))
                     {
+                        if (cmd_version == null)
+                        {
+                            throw new NullReferenceException();
+                        }
+
                         apis.Add(
                             key,
                             new XElement(
@@ -275,10 +371,8 @@ namespace OpenTK.Convert
 
                     foreach (var command in feature.Elements("require").Elements("command"))
                     {
-                        var cmd_name = TrimName(command.Attribute("name").Value);
-                        var cmd_extension =
-                            ExtensionRegex.Match(cmd_name).Value ??
-                            (feature.Name == "extension" ? category.Substring(0, category.IndexOf("_")) : "Core");
+                        var cmd_name = TrimName(command.Attribute("name")?.Value);
+                        var cmd_extension = ExtensionRegex.Match(cmd_name).Value;
                         if (string.IsNullOrEmpty(cmd_extension))
                         {
                             cmd_extension = "Core";
@@ -300,67 +394,42 @@ namespace OpenTK.Convert
                 foreach (var api in apis.Values)
                 {
                     i++;
-                    var apiname = api.Attribute("name").Value;
-                    var cmd_version = version.Length > i ? version[i] : version[0];
+                    var apiname = api.Attribute("name")?.Value;
+                    var cmd_version = version?.Length > i ? version[i] : version?[0];
+
+                    if (cmd_version == null)
+                    {
+                        throw new NullReferenceException();
+                    }
 
                     // Mark all deprecated functions as such
                     foreach (var command in feature.Elements("remove").Elements("command"))
                     {
-                        var deprecated_name = TrimName(command.Attribute("name").Value);
+                        var deprecated_name = TrimName(command.Attribute("name")?.Value);
                         var deprecated =
                             api.Elements("function")
-                                .FirstOrDefault(t => t.Attribute("name").Value == deprecated_name);
+                                .FirstOrDefault(t => t.Attribute("name")?.Value == deprecated_name);
 
-                        if (deprecated != null)
+                        if (deprecated == null)
                         {
-                            if (apiname == "glcore")
-                            {
-                                // These tokens do not exist in the glcore profile, remove them
-                                api.Elements("function")
-                                    .First(t => t.Attribute("name").Value == deprecated_name)
-                                    .Remove();
-                            }
-                            else
-                            {
-                                // These tokens exist in all other profiles, mark them as deprecated.
-                                deprecated.Add(new XAttribute("deprecated", cmd_version));
-                            }
+                            continue;
                         }
+
+                        if (apiname != "glcore")
+                        {
+                            // These tokens exist in all other profiles, mark them as deprecated.
+                            deprecated.Add(new XAttribute("deprecated", cmd_version));
+                        }
+
+                        // These tokens do not exist in the glcore profile, remove them
+                        api.Elements("function")
+                            .First(t => t.Attribute("name")?.Value == deprecated_name)
+                            .Remove();
                     }
                 }
             }
 
             return apis.Values;
-        }
-
-        private void Merge(XElement api, XElement function)
-        {
-            var type = function.Name.LocalName;
-            var name = function.Attribute("name").Value;
-            var f = api.Elements(type).FirstOrDefault(p => p.Attribute("name").Value == name);
-            if (f != null)
-            {
-                f.SetAttributeValue
-                (
-                    "category",
-                    string.Join("|", f.Attribute("category").Value, function.Attribute("category").Value)
-                );
-                f.SetAttributeValue
-                (
-                    "version",
-                    (f.Attribute("version") ?? function.Attribute("version")).ValueOrDefault()
-                );
-
-                // Sanity check: one function cannot belong to two different extensions
-                if (f.Attribute("extension").Value != function.Attribute("extension").Value)
-                {
-                    throw new InvalidOperationException("Different extensions for the same function");
-                }
-            }
-            else
-            {
-                api.Add(function);
-            }
         }
 
         private XElement TranslateCommand(XElement command)
@@ -385,7 +454,7 @@ namespace OpenTK.Convert
                 var param = FunctionParameterType(parameter);
 
                 var p = new XElement("param");
-                var pname = new XAttribute("name", parameter.Element("name").Value);
+                var pname = new XAttribute("name", parameter.Element("name")?.Value ?? throw new NullReferenceException());
                 var type = new XAttribute(
                     "type",
                     param
@@ -394,7 +463,7 @@ namespace OpenTK.Convert
                         .Trim());
 
                 var count = parameter.Attribute("len") != null
-                    ? new XAttribute("count", parameter.Attribute("len").Value)
+                    ? new XAttribute("count", parameter.Attribute("len")?.Value ?? throw new NullReferenceException())
                     : null;
 
                 var flow = new XAttribute("flow", param.Contains("*") && !param.Contains("const") ? "out" : "in");
@@ -415,75 +484,7 @@ namespace OpenTK.Convert
 
         private string FunctionName(XElement e)
         {
-            return TrimName(e.Element("proto").Element("name").Value);
-        }
-
-        private string FunctionParameterType(XElement e)
-        {
-            // Parse the C-like <proto> element. Possible instances:
-            // Return types:
-            // - <proto>void <name>glGetSharpenTexFuncSGIS</name></proto>
-            //   -> <returns>void</returns>
-            // - <proto group="String">const <ptype>GLubyte</ptype> *<name>glGetString</name></proto>
-            //   -> <returns>String</returns>
-            // Note: group attribute takes precedence if it exists. This matches the old .spec file format.
-            // Parameter types:
-            // - <param><ptype>GLenum</ptype> <name>shadertype</name></param>
-            //   -> <param name="shadertype" type="GLenum" />
-            // - <param len="1"><ptype>GLsizei</ptype> *<name>length</name></param>
-            //   -> <param name="length" type="GLsizei" count="1" />
-            var proto = e.Value;
-            var name = e.Element("name").Value;
-            var group = e.Attribute("group");
-
-            var ret = proto.Remove(proto.LastIndexOf(name)).Trim();
-
-            if (group != null)
-            {
-                var words = ret.Split(" ".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-                if (words[0] == "struct" || words[0] == "const")
-                {
-                    words[1] = group.Value;
-                }
-                else
-                {
-                    words[0] = group.Value;
-                }
-
-                ret = string.Join(" ", words);
-            }
-
-            return ret;
-        }
-
-        private static string Join(string left, string right)
-        {
-            if (!string.IsNullOrEmpty(left) && !string.IsNullOrEmpty(right))
-            {
-                return left + "|" + right;
-            }
-
-            if (!string.IsNullOrEmpty(left))
-            {
-                return left;
-            }
-
-            if (!string.IsNullOrEmpty(right))
-            {
-                return right;
-            }
-
-            return string.Empty;
-        }
-
-        private static XAttribute Lookup(IDictionary<string, XElement> categories, string cmd_name, string attribute)
-        {
-            if (categories.ContainsKey(cmd_name))
-            {
-                return categories[cmd_name].Attribute(attribute);
-            }
-
-            return null;
+            return TrimName(e.Element("proto")?.Element("name")?.Value);
         }
     }
 }

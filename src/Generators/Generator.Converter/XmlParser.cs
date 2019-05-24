@@ -49,7 +49,7 @@ namespace OpenTK.Convert
         /// <returns>The formatted elements.</returns>
         public IEnumerable<XElement> Parse(string path)
         {
-            string[] contents = null;
+            string[] contents;
             if (path.StartsWith("http://") || path.StartsWith("https://"))
             {
                 // Download from the specified url into a temporary file

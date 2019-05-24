@@ -1,3 +1,12 @@
+//
+// EntryPoint.cs
+//
+// Copyright (C) 2019 OpenTK
+//
+// This software may be modified and distributed under the terms
+// of the MIT license. See the LICENSE file for details.
+//
+
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -31,18 +40,16 @@ namespace OpenTK.Convert
             {
                 XmlParser xmlParser = new GLXmlParser { Prefix = CLIOptions.Prefix };
 
-                var sigs = CLIOptions.InputFiles.Select(h => xmlParser.Parse((string)h)).ToList();
+                var sigs = CLIOptions.InputFiles.Select(h => xmlParser.Parse(h)).ToList();
 
                 // Merge any duplicate enum entries (in case an enum is declared
                 // in multiple files with different entries in each file).
                 var entries = MergeDuplicates(sigs);
                 SortTokens(entries);
 
-                var settings = new XmlWriterSettings();
-                settings.Indent = true;
-                settings.Encoding = Encoding.UTF8;
+                var settings = new XmlWriterSettings { Indent = true, Encoding = Encoding.UTF8 };
 
-                TextWriter out_stream = null;
+                TextWriter out_stream;
                 if (CLIOptions.OutputFile == null)
                 {
                     out_stream = Console.Out;
@@ -62,22 +69,19 @@ namespace OpenTK.Convert
                     foreach (var api in sigs.SelectMany(s => s))
                     {
 #pragma warning disable SA1118
-                        output.Add
-                        (
-                            new XElement
-                            (
+                        output.Add(
+                            new XElement(
                                 "add",
-                                new XAttribute("name", api.Attribute("name").Value),
+                                new XAttribute("name", api.Attribute("name")?.Value ?? throw new NullReferenceException()),
                                 api.Attribute("version") != null
-                                    ? new XAttribute("version", api.Attribute("version").Value)
+                                    ? new XAttribute("version", api.Attribute("version")?.Value ?? throw new NullReferenceException())
                                     : null,
                                 api.Elements()
                                     .OrderBy(s => s.Name.LocalName)
                                     .ThenBy(s => (string)s.Attribute("value") ?? string.Empty)
                                     .ThenBy(s => (string)s.Attribute("name") ?? string.Empty)
                                     .ThenBy(s => (string)s.Attribute("version") ?? string.Empty)
-                                    .ThenBy(s => (string)s.Attribute("extension") ?? string.Empty)
-                            ));
+                                    .ThenBy(s => (string)s.Attribute("extension") ?? string.Empty)));
                     }
 #pragma warning restore SA1118
 

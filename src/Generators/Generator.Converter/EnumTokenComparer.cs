@@ -23,6 +23,17 @@ namespace OpenTK.Convert
         {
             var a_attr = ((XElement)a).Attribute("name") ?? ((XElement)a).Attribute("token");
             var b_attr = ((XElement)b).Attribute("name") ?? ((XElement)b).Attribute("token");
+
+            if (a_attr == null)
+            {
+                throw new NullReferenceException();
+            }
+
+            if (b_attr == null)
+            {
+                throw new NullReferenceException();
+            }
+
             return a_attr.Value == b_attr.Value;
         }
 
@@ -30,17 +41,37 @@ namespace OpenTK.Convert
         public int GetHashCode(XNode a)
         {
             var e = (XElement)a;
+
+            if (e == null)
+            {
+                throw new NullReferenceException();
+            }
+
             if (e.Name == "enum" || e.Name == "token" || e.Name == "function")
             {
-                return ((XElement)a).Attribute("name").Value.GetHashCode() ^ e.Name.LocalName.GetHashCode();
+                var name = e.Attribute("name");
+
+                if (name == null)
+                {
+                    throw new NullReferenceException();
+                }
+
+                return name.Value.GetHashCode() ^ e.Name.LocalName.GetHashCode();
             }
 
-            if (e.Name == "use")
+            if (e.Name != "use")
             {
-                return ((XElement)a).Attribute("token").Value.GetHashCode();
+                throw new InvalidOperationException($"Unknown element type: {e}");
             }
 
-            throw new InvalidOperationException($"Unknown element type: {e}");
+            var token = e.Attribute("token");
+
+            if (token == null)
+            {
+                throw new NullReferenceException();
+            }
+
+            return token.Value.GetHashCode();
         }
     }
 }
