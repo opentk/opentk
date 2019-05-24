@@ -25,20 +25,24 @@ namespace Bind.Translation.Trimmers
         /// lookbehind workaround for difficult-to-match names. The primary set matches the actual function ending,
         /// while the lookbehind asserts that the ending match will not overreach into the end of a word.
         /// </summary>
-        private static readonly Regex Endings = new Regex(
+        private static readonly Regex Endings = new Regex
+        (
             @"(?<!xe)([fd]v?|u?[isb](64)?v?|v|i_v|fi)$",
-            RegexOptions.Compiled);
+            RegexOptions.Compiled
+        );
 
         /// <summary>
         /// This regex acts like a whitelist for endings that could have been matched in some way by the main
         /// expression, but should be exempt from trimming altogether.
         /// </summary>
-        private static readonly Regex EndingsNotToTrim = new Regex(
+        private static readonly Regex EndingsNotToTrim = new Regex
+        (
             "(sh|ib|[tdrey]s|[eE]n[vd]|bled" +
             "|Attrib|Access|Boolean|Coord|Depth|Feedbacks|Finish|Flag" +
             "|Groups|IDs|Indexed|Instanced|Pixels|Queries|Status|Tess|Through" +
             "|Uniforms|Varyings|Weight|Width|Bias|Id)$",
-            RegexOptions.Compiled);
+            RegexOptions.Compiled
+        );
 
         /// <inheritdoc/>
         public bool IsRelevant(FunctionSignature trimmable)
@@ -56,7 +60,8 @@ namespace Bind.Translation.Trimmers
         {
             var newName = Trim(trimmable.Name);
 
-            return new FunctionSignature(
+            return new FunctionSignature
+            (
                 newName,
                 trimmable.NativeEntrypoint,
                 trimmable.Categories,
@@ -65,7 +70,8 @@ namespace Bind.Translation.Trimmers
                 trimmable.ReturnType,
                 trimmable.Parameters,
                 trimmable.DeprecatedIn,
-                trimmable.DeprecationReason);
+                trimmable.DeprecationReason
+            );
         }
 
         /// <inheritdoc/>

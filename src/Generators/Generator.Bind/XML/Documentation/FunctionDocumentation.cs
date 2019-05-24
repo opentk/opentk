@@ -51,11 +51,13 @@ namespace Bind.XML.Documentation
         /// <param name="purpose">The purpose of the function.</param>
         /// <param name="parameters">The parameters of the function.</param>
         /// <param name="functionGroup">The group of functions the function belongs to.</param>
-        public FunctionDocumentation(
+        public FunctionDocumentation
+        (
             [NotNull] string name,
             [NotNull] string purpose,
             [NotNull, ItemNotNull] IReadOnlyList<ParameterDocumentation> parameters,
-            [NotNull] string functionGroup)
+            [NotNull] string functionGroup
+        )
         {
             Name = name ?? throw new ArgumentNullException(nameof(name));
             Purpose = purpose ?? throw new ArgumentNullException(nameof(purpose));

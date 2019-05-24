@@ -54,11 +54,13 @@ namespace Bind.XML.Overrides.Enumerations
         /// <param name="directTokens">The tokens contained in the enumeration.</param>
         /// <param name="useTokens">The set of token references contained in the enumeration.</param>
         /// <param name="reuseEnumerations">The set of enumeration reuse references contained in the enumeration.</param>
-        public EnumerationOverride(
+        public EnumerationOverride
+        (
             [NotNull] string name,
             [CanBeNull, ItemNotNull] List<TokenSignature> directTokens = null,
             [CanBeNull, ItemNotNull] IReadOnlyList<UseTokenOverride> useTokens = null,
-            [CanBeNull, ItemNotNull] IReadOnlyList<ReuseEnumerationOverride> reuseEnumerations = null)
+            [CanBeNull, ItemNotNull] IReadOnlyList<ReuseEnumerationOverride> reuseEnumerations = null
+        )
         {
             Name = name ?? throw new ArgumentNullException(nameof(name));
 

@@ -48,22 +48,29 @@ namespace Bind.Writers
                 csproj.WriteLine("  <ItemGroup>");
                 if (ext)
                 {
-                    csproj.WriteLine(
+                    csproj.WriteLine
+                    (
                         "    <ProjectReference Include=\"$(OpenTKSolutionRoot)\\src\\" +
                         subDir + "\\" + coreProj
-                        + "\\" + coreProj + ".csproj\" />");
+                        + "\\" + coreProj + ".csproj\" />"
+                    );
                 }
                 else
                 {
-                    csproj.WriteLine(
-                        "    <ProjectReference Include=\"$(OpenTKSolutionRoot)\\src\\OpenTK.Core\\OpenTK.Core.csproj\" />");
+                    csproj.WriteLine
+                    (
+                        "    <ProjectReference Include=\"$(OpenTKSolutionRoot)\\src\\OpenTK.Core\\OpenTK.Core.csproj\" />"
+                    );
                 }
 
                 csproj.WriteLine("  </ItemGroup>");
                 csproj.WriteLine();
-                csproj.WriteLine(ext
+                csproj.WriteLine
+                (
+                    ext
                     ? "  <Import Project=\"..\\..\\..\\..\\props\\common.props\" />"
-                    : "  <Import Project=\"..\\..\\..\\props\\common.props\" />");
+                    : "  <Import Project=\"..\\..\\..\\props\\common.props\" />"
+                );
 
                 csproj.WriteLine("  <Import Project=\"$(OpenTKSolutionRoot)\\props\\nuget-common.props\" />");
                 csproj.WriteLine("  <Import Project=\"$(OpenTKSolutionRoot)\\props\\stylecop.props\" />");

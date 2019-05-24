@@ -191,12 +191,16 @@ namespace OpenTK.Convert
                     var key = apiname + version;
                     if (!apis.ContainsKey(key))
                     {
-                        apis.Add(
+                        apis.Add
+                        (
                             key,
-                            new XElement(
+                            new XElement
+                            (
                                 "api",
                                 new XAttribute("name", apiname),
-                                string.IsNullOrEmpty(version) ? null : new XAttribute("version", version)));
+                                string.IsNullOrEmpty(version) ? null : new XAttribute("version", version)
+                            )
+                        );
                     }
 
                     var api = apis[key];
@@ -242,8 +246,7 @@ namespace OpenTK.Convert
                     foreach (var token in feature.Elements("remove").Elements("enum"))
                     {
                         var token_name = TrimName(token.Attribute("name")?.Value);
-                        var deprecated =
-                            api.Elements("enum").Elements("token")
+                        var deprecated = api.Elements("enum").Elements("token")
                                 .FirstOrDefault(t => t.Attribute("name")?.Value == token_name);
 
                         if (deprecated == null)
@@ -359,12 +362,14 @@ namespace OpenTK.Convert
                             throw new NullReferenceException();
                         }
 
-                        apis.Add(
+                        apis.Add
+                        (
                             key,
                             new XElement(
                                 "api",
                                 new XAttribute("name", apiname),
-                                new XAttribute("version", cmd_version)));
+                                new XAttribute("version", cmd_version))
+                        );
                     }
 
                     var api = apis[key];
@@ -406,8 +411,7 @@ namespace OpenTK.Convert
                     foreach (var command in feature.Elements("remove").Elements("command"))
                     {
                         var deprecated_name = TrimName(command.Attribute("name")?.Value);
-                        var deprecated =
-                            api.Elements("function")
+                        var deprecated = api.Elements("function")
                                 .FirstOrDefault(t => t.Attribute("name")?.Value == deprecated_name);
 
                         if (deprecated == null)
@@ -439,15 +443,19 @@ namespace OpenTK.Convert
             var cmd_name = FunctionName(command);
             var name = new XAttribute("name", cmd_name);
 
-            var returns = new XElement(
+            var returns = new XElement
+            (
                 "returns",
-                new XAttribute(
+                new XAttribute
+                (
                     "type",
                     FunctionParameterType(command.Element("proto"))
                         .Replace("const", string.Empty)
                         .Replace("struct", string.Empty)
                         .Replace("String *", "String")
-                        .Trim()));
+                        .Trim()
+                )
+            );
 
             foreach (var parameter in command.Elements("param"))
             {
@@ -455,12 +463,14 @@ namespace OpenTK.Convert
 
                 var p = new XElement("param");
                 var pname = new XAttribute("name", parameter.Element("name")?.Value ?? throw new NullReferenceException());
-                var type = new XAttribute(
+                var type = new XAttribute
+                (
                     "type",
                     param
                         .Replace("const", string.Empty)
                         .Replace("struct", string.Empty)
-                        .Trim());
+                        .Trim()
+                );
 
                 var count = parameter.Attribute("len") != null
                     ? new XAttribute("count", parameter.Attribute("len")?.Value ?? throw new NullReferenceException())

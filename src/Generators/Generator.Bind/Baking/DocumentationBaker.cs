@@ -34,9 +34,11 @@ namespace Bind.Baking
         /// </summary>
         /// <param name="descriptionBuilder">The builder to append to.</param>
         /// <param name="parameterNode">The node.</param>
-        private static void AppendParameterNode(
+        private static void AppendParameterNode
+        (
             [NotNull] StringBuilder descriptionBuilder,
-            [NotNull] XElement parameterNode)
+            [NotNull] XElement parameterNode
+        )
         {
             var parameterName = parameterNode.GetRequiredElement("code").Value;
             descriptionBuilder.Append($"<paramref name=\"{parameterName}\"/>");
@@ -47,9 +49,11 @@ namespace Bind.Baking
         /// </summary>
         /// <param name="descriptionBuilder">The builder to append to.</param>
         /// <param name="emphasisNode">The node.</param>
-        private static void AppendEmphasisNode(
+        private static void AppendEmphasisNode
+        (
             [NotNull] StringBuilder descriptionBuilder,
-            [NotNull] XElement emphasisNode)
+            [NotNull] XElement emphasisNode
+        )
         {
             descriptionBuilder.Append($"<i>{emphasisNode.Value}</i>");
         }
@@ -132,9 +136,11 @@ namespace Bind.Baking
         /// <param name="parameter">The parameter documentation to bake.</param>
         /// <returns>The baked parameter.</returns>
         [NotNull]
-        private ParameterDocumentation BakeParameterDocumentation(
+        private ParameterDocumentation BakeParameterDocumentation
+        (
             [NotNull] FunctionDocumentation function,
-            [NotNull] ParameterDocumentation parameter)
+            [NotNull] ParameterDocumentation parameter
+        )
         {
             var readerSettings = new XmlReaderSettings
             {
@@ -234,9 +240,11 @@ namespace Bind.Baking
 
                                     default:
                                     {
-                                        throw new ArgumentOutOfRangeException(
+                                        throw new ArgumentOutOfRangeException
+                                        (
                                             nameof(node),
-                                            $"Unrecognized element class\"{elementClass}\".");
+                                            $"Unrecognized element class\"{elementClass}\"."
+                                        );
                                     }
                                 }
 
@@ -245,7 +253,11 @@ namespace Bind.Baking
 
                             default:
                             {
-                                throw new ArgumentOutOfRangeException(nameof(node), "Unrecognized node type.");
+                                throw new ArgumentOutOfRangeException
+                                (
+                                    nameof(node),
+                                    "Unrecognized node type."
+                                );
                             }
                         }
                     }
@@ -288,12 +300,14 @@ namespace Bind.Baking
         /// <param name="parameter">The parameter the node is in.</param>
         /// <param name="constantNode">The node.</param>
         /// <param name="greedilyConsumedNodes">Nodes that have been greedily consumed.</param>
-        private void AppendConstantNode(
+        private void AppendConstantNode
+        (
             [NotNull] StringBuilder descriptionBuilder,
             [NotNull] FunctionDocumentation function,
             [NotNull] ParameterDocumentation parameter,
             [NotNull] XElement constantNode,
-            [NotNull, ItemNotNull] ICollection<XNode> greedilyConsumedNodes)
+            [NotNull, ItemNotNull] ICollection<XNode> greedilyConsumedNodes
+        )
         {
             var constantName = constantNode.Value;
             if (constantName.StartsWith("GL_"))
@@ -343,8 +357,10 @@ namespace Bind.Baking
 
                 if (actualFunction is null)
                 {
-                    throw new InvalidOperationException(
-                        $"Could not find a function named \"{functionNameWithoutPrefix}\"");
+                    throw new InvalidOperationException
+                    (
+                        $"Could not find a function named \"{functionNameWithoutPrefix}\""
+                    );
                 }
 
                 var actualParameter =
@@ -353,10 +369,12 @@ namespace Bind.Baking
                 var typeName = actualParameter?.Type.Name;
                 if (typeName is null)
                 {
-                    Debug.WriteLine(
+                    Debug.WriteLine
+                    (
                         $"Could not find the parameter named \"{parameter.Name}\" in " +
                         $"\"{actualFunction.Name}\". Consider adding a name override to " +
-                        "match the documentation.");
+                        "match the documentation."
+                    );
                 }
 
                 if (typeName is null || _apiProfile.Enumerations.All(e => e.Name != typeName))
@@ -365,9 +383,11 @@ namespace Bind.Baking
 
                     typeName = containingEnum is null ? "Unknown" : containingEnum.Name;
 
-                    Debug.WriteLine(
-                        $"Falling back to a manual enum type search for " +
-                        $"\"{translatedName}\".");
+                    Debug.WriteLine
+                    (
+                        "Falling back to a manual enum type search for " +
+                        $"\"{translatedName}\"."
+                    );
                 }
 
                 descriptionBuilder.Append($"<see cref=\"{typeName}.{translatedName}\"/>");

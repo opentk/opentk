@@ -27,8 +27,10 @@ namespace Bind.Typemap
         /// <param name="typemaps">The set of typemaps.</param>
         /// <returns>The baked set of typemaps.</returns>
         [NotNull]
-        public static IReadOnlyDictionary<TypeSignature, TypeSignature> BakeTypemaps(
-            [NotNull, ItemNotNull] params IReadOnlyDictionary<TypeSignature, TypeSignature>[] typemaps)
+        public static IReadOnlyDictionary<TypeSignature, TypeSignature> BakeTypemaps
+        (
+            [NotNull, ItemNotNull] params IReadOnlyDictionary<TypeSignature, TypeSignature>[] typemaps
+        )
         {
             // First, we combine the typemaps into one monolithic map
             var ambiguousEntries = new List<KeyValuePair<TypeSignature, TypeSignature>>();

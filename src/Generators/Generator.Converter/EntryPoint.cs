@@ -69,8 +69,10 @@ namespace OpenTK.Convert
                     foreach (var api in sigs.SelectMany(s => s))
                     {
 #pragma warning disable SA1118
-                        output.Add(
-                            new XElement(
+                        output.Add
+                        (
+                            new XElement
+                            (
                                 "add",
                                 new XAttribute("name", api.Attribute("name")?.Value ?? throw new NullReferenceException()),
                                 api.Attribute("version") != null
@@ -81,7 +83,9 @@ namespace OpenTK.Convert
                                     .ThenBy(s => (string)s.Attribute("value") ?? string.Empty)
                                     .ThenBy(s => (string)s.Attribute("name") ?? string.Empty)
                                     .ThenBy(s => (string)s.Attribute("version") ?? string.Empty)
-                                    .ThenBy(s => (string)s.Attribute("extension") ?? string.Empty)));
+                                    .ThenBy(s => (string)s.Attribute("extension") ?? string.Empty)
+                            )
+                        );
                     }
 #pragma warning restore SA1118
 

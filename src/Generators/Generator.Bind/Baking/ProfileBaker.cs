@@ -46,9 +46,11 @@ namespace Bind.Baking
         /// <returns>An overridden function.</returns>
         [NotNull]
         [Pure]
-        private static FunctionSignature CreateOverriddenFunction(
+        private static FunctionSignature CreateOverriddenFunction
+        (
             [NotNull] FunctionSignature functionBase,
-            [NotNull] FunctionOverride functionOverride)
+            [NotNull] FunctionOverride functionOverride
+        )
         {
             var newVersion = functionOverride.NewVersion ?? functionBase.IntroducedIn;
             var newReturnType = functionOverride.NewReturnType ?? functionBase.ReturnType;
@@ -57,7 +59,8 @@ namespace Bind.Baking
 
             var newDeprecationReason = functionOverride.ObsoletionReason ?? functionBase.DeprecationReason;
 
-            return new FunctionSignature(
+            return new FunctionSignature
+            (
                 functionBase.Name,
                 functionBase.NativeEntrypoint,
                 functionBase.Categories,
@@ -66,7 +69,8 @@ namespace Bind.Baking
                 newReturnType,
                 newParameters,
                 functionBase.DeprecatedIn,
-                newDeprecationReason);
+                newDeprecationReason
+            );
         }
 
         /// <summary>
@@ -76,9 +80,11 @@ namespace Bind.Baking
         /// <param name="coalescedOverrides">The coalesced overrides relevant to the profile.</param>
         /// <returns>A new profile with the applied overrides.</returns>
         [NotNull]
-        private static ApiProfile ApplyOverridesToProfile(
+        private static ApiProfile ApplyOverridesToProfile
+        (
             [NotNull] ApiProfile coalescedProfile,
-            [NotNull] ApiProfileOverride coalescedOverrides)
+            [NotNull] ApiProfileOverride coalescedOverrides
+        )
         {
             var newEnums = coalescedOverrides.AddedEnumerations
                 .Select(
@@ -140,8 +146,10 @@ namespace Bind.Baking
                 var baseParameter = functionBase.Parameters.FirstOrDefault(p => p.Name == overrideParameter.BaseName);
                 if (baseParameter is null)
                 {
-                    throw new InvalidDataException(
-                        $"Could not find target parameter with name \"{overrideParameter.BaseName}\" to override.");
+                    throw new InvalidDataException
+                    (
+                        $"Could not find target parameter with name \"{overrideParameter.BaseName}\" to override."
+                    );
                 }
 
                 var overriddenParameter = CreateOverriddenParameter(
@@ -191,14 +199,16 @@ namespace Bind.Baking
         /// <returns>An overriden parameter.</returns>
         [NotNull]
         [ContractAnnotation("hasComputedCount : true => computedCountParameterNames : notnull; hasValueReference : true => valueReferenceName : notnull")]
-        private static ParameterSignature CreateOverriddenParameter(
+        private static ParameterSignature CreateOverriddenParameter
+        (
             [NotNull] ParameterSignature baseParameter,
             [NotNull] ParameterOverride parameterOverride,
             out bool hasComputedCount,
             [CanBeNull] out IReadOnlyList<string> computedCountParameterNames,
             out bool hasValueReference,
             [CanBeNull] out string valueReferenceName,
-            [CanBeNull] out string valueReferenceExpression)
+            [CanBeNull] out string valueReferenceExpression
+        )
         {
             computedCountParameterNames = null;
             valueReferenceName = null;
@@ -213,13 +223,15 @@ namespace Bind.Baking
 
             var newCount = parameterOverride.NewCount is null
                 ? baseParameter.Count
-                : ParsingHelpers.ParseCountSignature(
+                : ParsingHelpers.ParseCountSignature
+                (
                     parameterOverride.NewCount,
                     out hasComputedCount,
                     out computedCountParameterNames,
                     out hasValueReference,
                     out valueReferenceName,
-                    out valueReferenceExpression);
+                    out valueReferenceExpression
+                );
 
             return new ParameterSignature(newName, newType, newFlow, newCount);
         }
@@ -238,31 +250,36 @@ namespace Bind.Baking
         /// <exception cref="InvalidDataException">Thrown if no base function could be found.</exception>
         /// <exception cref="AmbiguousMatchException">Thrown if multiple accepted bases were found.</exception>
         [NotNull]
-        private static IEnumerable<FunctionSignature> FindBaseFunctions(
+        private static IEnumerable<FunctionSignature> FindBaseFunctions
+        (
             [NotNull, ItemNotNull] IReadOnlyCollection<FunctionSignature> existingFunctions,
-            [NotNull] FunctionOverride functionOverride)
+            [NotNull] FunctionOverride functionOverride
+        )
         {
             // First, build the list of candidate names
             var variations = Utilities.GetNameVariations(functionOverride).ToList();
             foreach (var variation in variations)
             {
-                var baseFunctionCandidates = existingFunctions.Where(
+                var baseFunctionCandidates = existingFunctions.Where
+                (
                     f =>
                         (f.Name == variation || f.NativeEntrypoint == variation)
-                        && f.Extension == functionOverride.BaseExtension).ToList();
+                        && f.Extension == functionOverride.BaseExtension
+                ).ToList();
 
                 if (!baseFunctionCandidates.Any())
                 {
                     baseFunctionCandidates = existingFunctions
-                        .Where(
-                            f => f.Name == variation || f.NativeEntrypoint == variation)
-                        .ToList();
+                        .Where
+                        (
+                            f => f.Name == variation || f.NativeEntrypoint == variation
+                        ).ToList();
                 }
 
-                baseFunctionCandidates = baseFunctionCandidates.Where(
-                    f =>
-                        functionOverride.ParameterOverrides.All(po => f.Parameters.Any(p => p.Name == po.BaseName)))
-                    .ToList();
+                baseFunctionCandidates = baseFunctionCandidates.Where
+                (
+                    f => functionOverride.ParameterOverrides.All(po => f.Parameters.Any(p => p.Name == po.BaseName))
+                ).ToList();
 
                 // If we have a set of candidates at this point, we've found the most specific set of functions that are
                 // applicable.
@@ -279,10 +296,12 @@ namespace Bind.Baking
                 var noFunctionsWithThatName = existingFunctions.All(f => f.Name != variation);
                 if (noFunctionsWithThatName)
                 {
-                    throw new InvalidDataException(
+                    throw new InvalidDataException
+                    (
                         $"No base function found for the override with the name \"{functionOverride.BaseName}\" when " +
                         $"considering the variation \"{variation}\". " +
-                        "Specify another name.");
+                        "Specify another name."
+                    );
                 }
 
                 var parameterNames = new List<string>();
@@ -290,22 +309,23 @@ namespace Bind.Baking
                 foreach (var functionWithThatName in functionsWithThatName)
                 {
                     var parameterNamesNotFound = functionOverride.ParameterOverrides
-                        .Where(
-                            po =>
-                                functionWithThatName.Parameters
-                                    .All(p => p.Name != po.BaseName))
-                        .Select(po => po.BaseName);
+                        .Where
+                        (
+                            po => functionWithThatName.Parameters.All(p => p.Name != po.BaseName)
+                        ).Select(po => po.BaseName);
 
                     parameterNames.AddRange(parameterNamesNotFound);
                 }
 
                 if (parameterNames.Any())
                 {
-                    throw new InvalidDataException(
+                    throw new InvalidDataException
+                    (
                         $"No base function found for the override with the name \"{functionOverride.BaseName}\" when " +
                         $"considering the variation \"{variation}\" that had the following parameters: " +
                         $"({string.Join(", ", parameterNames.ToArray())})" +
-                        "Specify other parameter names.");
+                        "Specify other parameter names."
+                    );
                 }
             }
 
@@ -326,9 +346,11 @@ namespace Bind.Baking
         /// <exception cref="InvalidDataException">Thrown if no base function could be found.</exception>
         /// <exception cref="AmbiguousMatchException">Thrown if multiple accepted bases were found.</exception>
         [NotNull]
-        private static IEnumerable<FunctionSignature> FindBaseFunctions(
+        private static IEnumerable<FunctionSignature> FindBaseFunctions
+        (
             [NotNull, ItemNotNull] IReadOnlyCollection<FunctionSignature> existingFunctions,
-            [NotNull] RemoveOverride functionOverride)
+            [NotNull] RemoveOverride functionOverride
+        )
         {
             return functionOverride.NameType == OverrideNameType.EntryPoint
                 ? existingFunctions.Where(x => x.NativeEntrypoint == functionOverride.Name)
@@ -354,9 +376,11 @@ namespace Bind.Baking
         /// </summary>
         /// <param name="profiles">The profiles to use in the baking.</param>
         /// <param name="overrides">The overrides to use in the baking.</param>
-        public ProfileBaker(
+        public ProfileBaker
+        (
             [NotNull, ItemNotNull] IReadOnlyList<ApiProfile> profiles,
-            [NotNull, ItemNotNull] IReadOnlyList<ApiProfileOverride> overrides)
+            [NotNull, ItemNotNull] IReadOnlyList<ApiProfileOverride> overrides
+        )
         {
             _profiles = profiles ?? throw new ArgumentNullException(nameof(profiles));
             _overrides = overrides ?? throw new ArgumentNullException(nameof(overrides));
@@ -370,10 +394,12 @@ namespace Bind.Baking
         /// <param name="baseProfileName">The name of the base profile, if any.</param>
         /// <returns>A baked profile.</returns>
         [NotNull]
-        public ApiProfile BakeProfile(
+        public ApiProfile BakeProfile
+        (
             [NotNull] string profileName,
             [NotNull] VersionRange versionRange,
-            [CanBeNull] string baseProfileName = null)
+            [CanBeNull] string baseProfileName = null
+        )
         {
             // Coalesce profile and overrides
             var coalescedProfile = CoalesceProfile(profileName, versionRange);
@@ -435,10 +461,12 @@ namespace Bind.Baking
         /// <exception cref="InvalidDataException">Thrown if the directive couldn't be resolved.</exception>
         [NotNull]
         [ItemNotNull]
-        private static IEnumerable<TokenSignature> ResolveReuseEnumerationToken(
+        private static IEnumerable<TokenSignature> ResolveReuseEnumerationToken
+        (
             [NotNull] string reusedEnumeration,
             [NotNull] ApiProfile coalescedProfile,
-            [NotNull] ApiProfileOverride coalescedOverrides)
+            [NotNull] ApiProfileOverride coalescedOverrides
+        )
         {
             var profileEnum = coalescedProfile.Enumerations.FirstOrDefault(e => e.Name == reusedEnumeration);
             if (!(profileEnum is null))
@@ -456,9 +484,10 @@ namespace Bind.Baking
 
             foreach (var recursiveReuse in overrideEnum.ReuseEnumerations)
             {
-                results = results.Concat(
-                    ResolveReuseEnumerationToken(recursiveReuse.Enumeration, coalescedProfile, coalescedOverrides))
-                    .ToList();
+                results = results.Concat
+                    (
+                        ResolveReuseEnumerationToken(recursiveReuse.Enumeration, coalescedProfile, coalescedOverrides)
+                    ).ToList();
             }
 
             return results;
@@ -478,12 +507,14 @@ namespace Bind.Baking
         /// <returns>The token.</returns>
         /// <exception cref="InvalidDataException">Thrown if the directive couldn't be resolved.</exception>
         [CanBeNull]
-        private static TokenSignature ResolveEnumerationTokenReference(
+        private static TokenSignature ResolveEnumerationTokenReference
+        (
             [NotNull] string tokenName,
             [CanBeNull] string targetEnumName,
             [NotNull] ApiProfile coalescedProfile,
             [NotNull] ApiProfileOverride coalescedOverrides,
-            [CanBeNull] List<string> visitedEnumerations = null)
+            [CanBeNull] List<string> visitedEnumerations = null
+        )
         {
             visitedEnumerations = visitedEnumerations ?? new List<string>();
 
@@ -572,9 +603,11 @@ namespace Bind.Baking
         /// <param name="baseProfileName">The name of the base profile to check for deprecated functions and tokens.</param>
         /// <returns>The trimmed overrides.</returns>
         [NotNull]
-        private ApiProfileOverride TrimDeprecatedOverrides(
+        private ApiProfileOverride TrimDeprecatedOverrides
+        (
             [NotNull] ApiProfileOverride coalescedOverrides,
-            [NotNull] string baseProfileName)
+            [NotNull] string baseProfileName
+        )
         {
             var coalescedBaseProfile = CoalesceProfile(baseProfileName, coalescedOverrides.Versions);
             var deprecatedTokens = coalescedBaseProfile.Enumerations
@@ -613,11 +646,13 @@ namespace Bind.Baking
                     newUseTokens.Add(useToken);
                 }
 
-                var newEnumeration = new EnumerationOverride(
+                var newEnumeration = new EnumerationOverride
+                (
                     addedEnumeration.Name,
                     newDirectTokens,
                     newUseTokens,
-                    addedEnumeration.ReuseEnumerations);
+                    addedEnumeration.ReuseEnumerations
+                );
 
                 newEnumerations.Add(newEnumeration);
             }
@@ -646,12 +681,14 @@ namespace Bind.Baking
                 }
             }
 
-            return new ApiProfileOverride(
+            return new ApiProfileOverride
+            (
                 coalescedOverrides.Name,
                 coalescedOverrides.Versions,
                 newEnumerations,
                 newFunctionReplacements,
-                newFunctionRemovals);
+                newFunctionRemovals
+            );
         }
 
         /// <summary>
@@ -676,9 +713,11 @@ namespace Bind.Baking
 
                     if (foundToken is null)
                     {
-                        throw new InvalidDataException(
+                        throw new InvalidDataException
+                        (
                             $"Failed to resolve token \"{tokenName}\". Consider using the optional attribute to " +
-                            "suppress this message, or fix the override.");
+                            "suppress this message, or fix the override."
+                        );
                     }
 
                     resolvedTokens.Add(foundToken);
@@ -770,9 +809,11 @@ namespace Bind.Baking
                 {
                     if (removals.Any(f => Utilities.GetNameVariations(function).Contains(f.Name)))
                     {
-                        throw new InvalidOperationException(
+                        throw new InvalidOperationException
+                        (
                             "Duplicate removal redefinition in overrides detected" +
-                            " - generator error or schema change.");
+                            " - generator error or schema change."
+                        );
                     }
 
                     removals.Add(function);
@@ -782,21 +823,25 @@ namespace Bind.Baking
                 {
                     if (replacedFunctions.Any(f => f.HasSameSignatureAs(function) && f.BaseExtension == function.BaseExtension))
                     {
-                        throw new InvalidOperationException(
+                        throw new InvalidOperationException
+                        (
                             "Duplicate replaced function redefinition in overrides detected" +
-                            " - generator error or schema change.");
+                            " - generator error or schema change."
+                        );
                     }
 
                     replacedFunctions.Add(function);
                 }
             }
 
-            return new ApiProfileOverride(
+            return new ApiProfileOverride
+            (
                 profileName,
                 versionRange,
                 enums.Values.ToList(),
                 replacedFunctions,
-                removals);
+                removals
+            );
         }
 
         /// <summary>
@@ -850,9 +895,11 @@ namespace Bind.Baking
                 {
                     if (functions.ContainsKey(function.Name))
                     {
-                        Debug.WriteLine(
+                        Debug.WriteLine
+                        (
                             $"Function redefinition of \"{function.Name}\" in profile \"{profile.GetFriendlyName()} " +
-                            $"v{profile.Versions}\" detected - replacing existing definition.");
+                            $"v{profile.Versions}\" detected - replacing existing definition."
+                        );
 
                         functions[function.Name] = function;
                         continue;
@@ -881,10 +928,12 @@ namespace Bind.Baking
         {
             var zeroVersion = new Version(0, 0);
             return _profiles
-                .Where(
+                .Where
+                (
                     p =>
                         p.Name == profileName &&
-                        (versionRange.IsInRange(p.Versions.Maximum) || p.Versions.Maximum == zeroVersion));
+                        (versionRange.IsInRange(p.Versions.Maximum) || p.Versions.Maximum == zeroVersion)
+                );
         }
 
         /// <summary>
@@ -897,16 +946,21 @@ namespace Bind.Baking
         [NotNull]
         [ItemNotNull]
         [Pure]
-        private IEnumerable<ApiProfileOverride> GetOverridesInRange(
+        private IEnumerable<ApiProfileOverride> GetOverridesInRange
+        (
             [NotNull] string profileName,
-            [NotNull] VersionRange versionRange)
+            [NotNull] VersionRange versionRange
+        )
         {
             var zeroVersion = new Version(0, 0);
+
             return _overrides
-                .Where(
+                .Where
+                (
                     p =>
                         p.Name == profileName &&
-                        (versionRange.IsInRange(p.Versions.Maximum) || p.Versions.Maximum == zeroVersion));
+                        (versionRange.IsInRange(p.Versions.Maximum) || p.Versions.Maximum == zeroVersion)
+                );
         }
     }
 }

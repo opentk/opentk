@@ -97,8 +97,10 @@ namespace Bind.Versioning
             var eitherAreNonInclusive = !minInclusive | !maxInclusive;
             if (minVersion == maxVersion && eitherAreNonInclusive)
             {
-                throw new ArgumentException(
-                    "If Min and Max are the same, and any of them are non-inclusive, the resulting range is invalid.");
+                throw new ArgumentException
+                (
+                    "If Min and Max are the same, and any of them are non-inclusive, the resulting range is invalid."
+                );
             }
 
             IsMaximumVersionInclusive = maxInclusive;

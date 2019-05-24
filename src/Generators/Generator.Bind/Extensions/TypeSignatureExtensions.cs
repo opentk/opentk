@@ -25,9 +25,11 @@ namespace Bind.Extensions
         /// <returns>true if the type is a void pointer; otherwise, false.</returns>
         public static bool IsVoidPointer([NotNull] this TypeSignature typeSignature)
         {
-            return typeSignature.Name.Equals(
+            return typeSignature.Name.Equals
+                   (
                        typeof(void).Name.ToLowerInvariant(),
-                       StringComparison.OrdinalIgnoreCase)
+                       StringComparison.OrdinalIgnoreCase
+                   )
                    && typeSignature.IndirectionLevel == 1;
         }
     }

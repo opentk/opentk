@@ -96,26 +96,37 @@ namespace Bind.Overloaders
                     .Build();
             }
 
-            yield return ToPointer(
+            yield return ToPointer
+            (
                 new FunctionSignatureBuilder(function)
                     .WithParameters(newIntPtrParameters)
                     .Build(),
-                function);
+                function
+            );
 
-            yield return Fixed(new FunctionSignatureBuilder(function)
-                .WithParameters(newGenericArray1DParameters)
-                .WithGenericTypeParameters(newGenericTypeParameters)
-                .Build());
+            yield return Fixed
+            (    
+                new FunctionSignatureBuilder(function)
+                    .WithParameters(newGenericArray1DParameters)
+                    .WithGenericTypeParameters(newGenericTypeParameters)
+                    .Build()
+            );
 
-            yield return Fixed(new FunctionSignatureBuilder(function)
-                .WithParameters(newGenericArray2DParameters)
-                .WithGenericTypeParameters(newGenericTypeParameters)
-                .Build());
+            yield return Fixed
+            (
+                new FunctionSignatureBuilder(function)
+                    .WithParameters(newGenericArray2DParameters)
+                    .WithGenericTypeParameters(newGenericTypeParameters)
+                    .Build()
+            );
 
-            yield return Fixed(new FunctionSignatureBuilder(function)
-                .WithParameters(newGenericArray3DParameters)
-                .WithGenericTypeParameters(newGenericTypeParameters)
-                .Build());
+            yield return Fixed
+            (
+                new FunctionSignatureBuilder(function)
+                    .WithParameters(newGenericArray3DParameters)
+                    .WithGenericTypeParameters(newGenericTypeParameters)
+                    .Build()
+            );
         }
 
         private static (FunctionSignature, StringBuilder) ToPointer(FunctionSignature function, FunctionSignature old)

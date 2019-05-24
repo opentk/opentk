@@ -130,9 +130,12 @@ namespace Bind.Overloaders
             }
 
             newParameters = SkipLastExtension.SkipLast(newParameters, 1).ToList();
-            yield return (functionBuilder
+            yield return 
+            (
+                functionBuilder
                     .WithParameters(newParameters)
-                    .Build(), sb);
+                    .Build(), sb
+            );
         }
     }
 }

@@ -55,16 +55,23 @@ namespace Bind.Baking.Overloading
         /// <param name="signatures">The signatures to process.</param>
         /// <param name="pipeline">A sorted list of generators, acting as the process pipeline.</param>
         /// <returns>The augmented overload list.</returns>
-        public IEnumerable<(FunctionSignature, StringBuilder)> ConsumeSignatures(
+        public IEnumerable<(FunctionSignature, StringBuilder)> ConsumeSignatures
+        (
             [NotNull] IEnumerable<FunctionSignature> signatures,
-            [CanBeNull] IReadOnlyList<IFunctionOverloader> pipeline = null)
+            [CanBeNull] IReadOnlyList<IFunctionOverloader> pipeline = null
+        )
         {
-            return signatures.SelectMany(
-                x => (pipeline ?? _pipeline)
-                    .Select(
-                        y => y.CreateOverloads(x).Select(
-                            z => (new FunctionSignatureBuilder(z.Item1).WithSource(y.GetType().Name).Build(), z.Item2))))
-            .SelectMany(x => x);
+            return signatures.SelectMany
+                (
+                    x => (pipeline ?? _pipeline)
+                        .Select
+                        (
+                            y => y.CreateOverloads(x).Select
+                            (
+                                z => (new FunctionSignatureBuilder(z.Item1).WithSource(y.GetType().Name).Build(), z.Item2)
+                            )
+                        )
+                ).SelectMany(x => x);
         }
     }
 }

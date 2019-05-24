@@ -62,10 +62,12 @@ namespace Bind.Writers
             }
         }
 
-        private static void WriteTokens(
+        private static void WriteTokens
+        (
             [NotNull] StreamWriter sw,
             [NotNull] IEnumerable<TokenSignature> tokens,
-            [NotNull] string prefix)
+            [NotNull] string prefix
+        )
         {
             // Make sure everything is sorted. This will avoid random changes between
             // consecutive runs of the program.

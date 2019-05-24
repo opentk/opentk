@@ -101,9 +101,10 @@ namespace Bind.XML.Overrides
             {
                 var (names, versions) = (Names: ParseProfileNames(profileElement), Versions: ParseProfileVersions(profileElement));
 
-                var profilePairs = names.SelectMany(
-                    n =>
-                        new[] { n }.Zip(versions, (x, y) => (x, y)));
+                var profilePairs = names.SelectMany
+                (
+                    n => new[] { n }.Zip(versions, (x, y) => (x, y))
+                );
 
                 foreach (var (profileName, profileVersion) in profilePairs)
                 {
@@ -121,12 +122,14 @@ namespace Bind.XML.Overrides
                     }
 
                     // We don't have it registered
-                    foundProfiles.Add(
+                    foundProfiles.Add
+                    (
                         profileName,
                         new Dictionary<Version, List<XElement>>
                         {
                             { profileVersion, new List<XElement> { profileElement } },
-                        });
+                        }
+                    );
                 }
             }
 
@@ -164,12 +167,18 @@ namespace Bind.XML.Overrides
 
                             case "remove":
                             {
-                                removedFunctions.AddRange(
+                                removedFunctions.AddRange
+                                (
                                     element.Elements("name")
-                                        .Select(x => new RemoveOverride(x.Value, OverrideNameType.Name)));
-                                removedFunctions.AddRange(
+                                        .Select(x => new RemoveOverride(x.Value, OverrideNameType.Name))
+                                );
+
+                                removedFunctions.AddRange
+                                (
                                     element.Elements("entrypoint")
-                                        .Select(x => new RemoveOverride(x.Value, OverrideNameType.EntryPoint)));
+                                        .Select(x => new RemoveOverride(x.Value, OverrideNameType.EntryPoint))
+                                );
+
                                 break;
                             }
 
@@ -180,12 +189,14 @@ namespace Bind.XML.Overrides
                         }
                     }
 
-                    yield return new ApiProfileOverride(
+                    yield return new ApiProfileOverride
+                    (
                         profileName,
                         new VersionRange(version, version),
                         enumerationAdditions,
                         functionReplacements,
-                        removedFunctions);
+                        removedFunctions
+                    );
                 }
             }
         }
@@ -208,8 +219,10 @@ namespace Bind.XML.Overrides
                 var parameterOverride = ParseParameterSignature(parameterElement);
                 if (parameters.Any(p => p.BaseName == parameterOverride.BaseName))
                 {
-                    throw new InvalidDataException(
-                        $"Duplicate parameter override with name \"{parameterOverride.BaseName}\" found.");
+                    throw new InvalidDataException
+                    (
+                        $"Duplicate parameter override with name \"{parameterOverride.BaseName}\" found."
+                    );
                 }
 
                 parameters.Add(parameterOverride);
@@ -263,12 +276,14 @@ namespace Bind.XML.Overrides
 
             var newCount = paramElement.Element("count")?.Value;
 
-            return new ParameterOverride(
+            return new ParameterOverride
+            (
                 baseName,
                 newName,
                 newType,
                 newFlow,
-                newCount);
+                newCount
+            );
         }
 
         [NotNull]
@@ -350,11 +365,13 @@ namespace Bind.XML.Overrides
             var profileVersionString = profileElement.Attribute("version")?.Value ?? string.Empty;
             var profileVersionStrings = profileVersionString.Split('|');
 
-            return profileVersionStrings.Select(
+            return profileVersionStrings.Select
+            (
                 s =>
                     string.IsNullOrWhiteSpace(s)
                         ? new Version(0, 0)
-                        : new Version(s));
+                        : new Version(s)
+            );
         }
     }
 }

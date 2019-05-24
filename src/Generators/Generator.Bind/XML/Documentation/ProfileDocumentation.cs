@@ -51,9 +51,11 @@ namespace Bind.XML.Documentation
         /// <param name="documentation">The documentation, if any.</param>
         /// <returns>true if the function has documentation; otherwise, false.</returns>
         [ContractAnnotation("true, documentation : notnull <=; false, documentation : null <=")]
-        public bool TryGetDocumentation(
+        public bool TryGetDocumentation
+        (
             [NotNull] FunctionSignature function,
-            [CanBeNull] out FunctionDocumentation documentation)
+            [CanBeNull] out FunctionDocumentation documentation
+        )
         {
             documentation = GetDocumentation(function);
             return HasDocumentation(function);
@@ -67,8 +69,10 @@ namespace Bind.XML.Documentation
         [CanBeNull]
         public FunctionDocumentation GetDocumentation([NotNull] FunctionSignature function)
         {
-            return HasDocumentation(function) ? _documentedFunctions.First(
-                x => Utilities.GetNameVariations(function.NativeEntrypoint).Contains(x.Key)).Value : null;
+            return HasDocumentation(function) ? _documentedFunctions.First
+            (
+                x => Utilities.GetNameVariations(function.NativeEntrypoint).Contains(x.Key)
+            ).Value : null;
         }
 
         /// <summary>

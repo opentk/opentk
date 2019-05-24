@@ -28,10 +28,12 @@ namespace Bind.Extensions
         /// <exception cref="InvalidDataException">Thrown if the attribute is not present.</exception>
         /// <returns>The attribute.</returns>
         [NotNull]
-        public static XAttribute GetRequiredAttribute(
+        public static XAttribute GetRequiredAttribute
+        (
             [NotNull] this XElement element,
             [NotNull] string attributeName,
-            bool ignoreNamespace = true)
+            bool ignoreNamespace = true
+        )
         {
             var attribute = ignoreNamespace
                 ? element.Attributes().FirstOrDefault(a => a.Name.LocalName == attributeName)

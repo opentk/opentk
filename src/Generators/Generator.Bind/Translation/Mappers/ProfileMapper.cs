@@ -92,9 +92,11 @@ namespace Bind.Translation.Mappers
         /// <returns>The mapped generic functions.</returns>
         [NotNull]
         [ItemNotNull]
-        private IEnumerable<FunctionSignature> MapGenericEnumFunctions(
+        private IEnumerable<FunctionSignature> MapGenericEnumFunctions
+        (
             [NotNull] ApiProfile profile,
-            [NotNull, ItemNotNull] IReadOnlyList<FunctionSignature> genericEnumFunctions)
+            [NotNull, ItemNotNull] IReadOnlyList<FunctionSignature> genericEnumFunctions
+        )
         {
             var mappedGenericEnumFunctions = new List<FunctionSignature>();
             foreach (var functionWithGenericEnum in genericEnumFunctions)
@@ -129,9 +131,11 @@ namespace Bind.Translation.Mappers
 
                 mappedGenericEnumFunctions.Add(newFunction);
 
-                Debug.WriteLine(
+                Debug.WriteLine
+                (
                     $"Mapped parameters in \"{functionWithGenericEnum.Name}\" to generic enum types. Consider adding" +
-                    " an override to a more specialized enum.");
+                    " an override to a more specialized enum."
+                );
             }
 
             return mappedGenericEnumFunctions;
@@ -147,10 +151,12 @@ namespace Bind.Translation.Mappers
         /// <param name="baseParameterType">The type of the base parameter.</param>
         /// <returns>The mapped type.</returns>
         [NotNull]
-        private TypeSignature MapGenericEnumerationType(
+        private TypeSignature MapGenericEnumerationType
+        (
             [NotNull] ApiProfile profile,
             [NotNull] FunctionSignature containingFunction,
-            [NotNull] TypeSignature baseParameterType)
+            [NotNull] TypeSignature baseParameterType
+        )
         {
             foreach (var categoryName in containingFunction.Categories)
             {

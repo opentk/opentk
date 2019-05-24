@@ -41,7 +41,8 @@ namespace Bind.Translation.Trimmers
         {
             var newName = Trim(trimmable as INamedExtensionScopedEntity);
 
-            return new FunctionSignature(
+            return new FunctionSignature
+            (
                 newName,
                 trimmable.NativeEntrypoint,
                 trimmable.Categories,
@@ -50,7 +51,8 @@ namespace Bind.Translation.Trimmers
                 trimmable.ReturnType,
                 trimmable.Parameters,
                 trimmable.DeprecatedIn,
-                trimmable.DeprecationReason);
+                trimmable.DeprecationReason
+            );
         }
 
         /// <summary>

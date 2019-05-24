@@ -173,8 +173,10 @@ namespace Bind.Builders
         /// <param name="newGenericTypeParameters">The new generic type parameters.</param>
         /// <returns>The builder, with the change applied.</returns>
         [NotNull]
-        public FunctionSignatureBuilder WithGenericTypeParameters(
-            [NotNull] IReadOnlyList<GenericTypeParameterSignature> newGenericTypeParameters)
+        public FunctionSignatureBuilder WithGenericTypeParameters
+        (
+            [NotNull] IReadOnlyList<GenericTypeParameterSignature> newGenericTypeParameters
+        )
         {
             _newGenericTypeParameters = newGenericTypeParameters;
             return this;
