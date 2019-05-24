@@ -12,7 +12,7 @@ using OpenToolkit.OpenAL.Interfaces;
 namespace OpenToolkit.OpenAL.Extensions.Soft.DeferredUpdates
 {
     /// <summary>
-    /// A list of valid <see cref="bool"/> <see cref="IState.GetBoolean"/> parameters.
+    /// A list of valid <see cref="bool"/> <see cref="IDeferredUpdatesState.GetBoolean"/> parameters.
     /// </summary>
     public enum DeferredStateBoolean
     {
