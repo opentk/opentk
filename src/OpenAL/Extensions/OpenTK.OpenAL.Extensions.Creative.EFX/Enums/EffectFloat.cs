@@ -1,9 +1,11 @@
-﻿/* EfxTokens.cs
- * C headers: \OpenAL 1.1 SDK\include\ "efx.h", "efx-creative.h", "Efx-Util.h"
- * Spec: Effects Extension Guide.pdf (bundled with OpenAL SDK)
- * Copyright (c) 2008 Christoph Brandtner and Stefanos Apostolopoulos
- * See license.txt for license details
- * http://www.OpenTK.net */
+﻿//
+// EffectFloat.cs
+//
+// Copyright (C) 2019 OpenTK
+//
+// This software may be modified and distributed under the terms
+// of the MIT license. See the LICENSE file for details.
+//
 
 namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
 {
