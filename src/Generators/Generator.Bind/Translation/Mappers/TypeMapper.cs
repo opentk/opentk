@@ -1,3 +1,12 @@
+//
+// TypeMapper.cs
+//
+// Copyright (C) 2019 OpenTK
+//
+// This software may be modified and distributed under the terms
+// of the MIT license. See the LICENSE file for details.
+//
+
 using System.Collections.Generic;
 using Bind.Builders;
 using Bind.XML.Signatures.Functions;
@@ -28,20 +37,17 @@ namespace Bind.Translation.Mappers
         /// <inheritdoc/>
         public bool HasMapping(TypeSignature input)
         {
-            if (input.IsArray || input.IsPointer)
+            if (!input.IsArray && !input.IsPointer)
             {
-                var baseType = new TypeSignatureBuilder(input)
-                    .WithArrayDimensions(0)
-                    .WithIndirectionLevel(0)
-                    .Build();
-
-                if (_typemap.TryGetValue(baseType, out _))
-                {
-                    return true;
-                }
+                return _typemap.ContainsKey(input);
             }
 
-            return _typemap.ContainsKey(input);
+            var baseType = new TypeSignatureBuilder(input)
+                .WithArrayDimensions(0)
+                .WithIndirectionLevel(0)
+                .Build();
+
+            return _typemap.TryGetValue(baseType, out _) || _typemap.ContainsKey(input);
         }
 
         /// <inheritdoc/>

@@ -1,3 +1,12 @@
+//
+// OpenGLFunctionExtensionTrimmer.cs
+//
+// Copyright (C) 2019 OpenTK
+//
+// This software may be modified and distributed under the terms
+// of the MIT license. See the LICENSE file for details.
+//
+
 using System;
 using System.Text;
 using Bind.XML;
@@ -11,6 +20,16 @@ namespace Bind.Translation.Trimmers
     /// </summary>
     public class OpenGLFunctionExtensionTrimmer : ITrimmer<FunctionSignature>, ITrimmer<string>
     {
+        /// <summary>
+        /// Determines if the name trimmer is relevant for the given type.
+        /// </summary>
+        /// <param name="trimmable">The type to check.</param>
+        /// <returns>true if the name trimmer is relevant; otherwise, false.</returns>
+        public static bool IsRelevant([NotNull] INamedExtensionScopedEntity trimmable)
+        {
+            return !(trimmable.Extension is null) && trimmable.Name.EndsWith(trimmable.Extension);
+        }
+
         /// <inheritdoc/>
         public bool IsRelevant(FunctionSignature trimmable)
         {
@@ -22,8 +41,7 @@ namespace Bind.Translation.Trimmers
         {
             var newName = Trim(trimmable as INamedExtensionScopedEntity);
 
-            return new FunctionSignature
-            (
+            return new FunctionSignature(
                 newName,
                 trimmable.NativeEntrypoint,
                 trimmable.Categories,
@@ -32,23 +50,7 @@ namespace Bind.Translation.Trimmers
                 trimmable.ReturnType,
                 trimmable.Parameters,
                 trimmable.DeprecatedIn,
-                trimmable.DeprecationReason
-            );
-        }
-
-        /// <summary>
-        /// Determines if the name trimmer is relevant for the given type.
-        /// </summary>
-        /// <param name="trimmable">The type to check.</param>
-        /// <returns>true if the name trimmer is relevant; otherwise, false.</returns>
-        public bool IsRelevant([NotNull] INamedExtensionScopedEntity trimmable)
-        {
-            if (trimmable.Extension is null)
-            {
-                return false;
-            }
-
-            return trimmable.Name.EndsWith(trimmable.Extension);
+                trimmable.DeprecationReason);
         }
 
         /// <summary>
@@ -57,7 +59,8 @@ namespace Bind.Translation.Trimmers
         /// </summary>
         /// <param name="trimmable">The trimmable object.</param>
         /// <returns>The trimmed name.</returns>
-        [NotNull, Pure]
+        [NotNull]
+        [Pure]
         public string Trim([NotNull] INamedExtensionScopedEntity trimmable)
         {
             if (trimmable.Extension is null)

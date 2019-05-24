@@ -1,3 +1,12 @@
+//
+// OpenGLFunctionDataTypeTrimmer.cs
+//
+// Copyright (C) 2019 OpenTK
+//
+// This software may be modified and distributed under the terms
+// of the MIT license. See the LICENSE file for details.
+//
+
 using System.Linq;
 using System.Text.RegularExpressions;
 using Bind.XML.Signatures.Functions;
@@ -47,8 +56,7 @@ namespace Bind.Translation.Trimmers
         {
             var newName = Trim(trimmable.Name);
 
-            return new FunctionSignature
-            (
+            return new FunctionSignature(
                 newName,
                 trimmable.NativeEntrypoint,
                 trimmable.Categories,
@@ -57,8 +65,7 @@ namespace Bind.Translation.Trimmers
                 trimmable.ReturnType,
                 trimmable.Parameters,
                 trimmable.DeprecatedIn,
-                trimmable.DeprecationReason
-            );
+                trimmable.DeprecationReason);
         }
 
         /// <inheritdoc/>

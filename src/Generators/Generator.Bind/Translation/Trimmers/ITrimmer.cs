@@ -1,3 +1,12 @@
+//
+// ITrimmer.cs
+//
+// Copyright (C) 2019 OpenTK
+//
+// This software may be modified and distributed under the terms
+// of the MIT license. See the LICENSE file for details.
+//
+
 using JetBrains.Annotations;
 
 namespace Bind.Translation.Trimmers
@@ -20,7 +29,8 @@ namespace Bind.Translation.Trimmers
         /// </summary>
         /// <param name="trimmable">The type to trim.</param>
         /// <returns>The trimmed type.</returns>
-        [NotNull, Pure]
+        [NotNull]
+        [Pure]
         TTrimmable Trim([NotNull] TTrimmable trimmable);
     }
 }

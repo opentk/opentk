@@ -1,3 +1,12 @@
+//
+// ProfileEnumerationTranslator.cs
+//
+// Copyright (C) 2019 OpenTK
+//
+// This software may be modified and distributed under the terms
+// of the MIT license. See the LICENSE file for details.
+//
+
 using System.Collections.Generic;
 using System.Linq;
 using Bind.Builders;
@@ -38,25 +47,17 @@ namespace Bind.Translation.Translators
                 newEnumerations.Add(new EnumerationSignature(newEnumerationName, newTokens));
             }
 
-            var newNativeSignatures = profile.NativeSignatures.Select
-            (
-                signature => new FunctionSignatureBuilder(signature).WithParameters
-                (
-                    signature.Parameters.Select
-                    (
+            var newNativeSignatures = profile.NativeSignatures.Select(
+                signature => new FunctionSignatureBuilder(signature).WithParameters(
+                    signature.Parameters.Select(
                         x => newEnumerationNames.ContainsKey(x.Type.Name)
-                            ? new ParameterSignatureBuilder(x).WithType
-                                (
+                            ? new ParameterSignatureBuilder(x).WithType(
                                     new TypeSignatureBuilder(x.Type).WithName(newEnumerationNames[x.Type.Name])
-                                        .Build()
-                                )
+                                        .Build())
                               .Build()
-                            : x
-                    )
-                    .ToList()
-                )
-                .Build()
-            )
+                            : x)
+                    .ToList())
+                .Build())
             .ToList();
 
             return new ApiProfileBuilder(profile)
@@ -88,14 +89,12 @@ namespace Bind.Translation.Translators
                 newEnumerations.Add(new EnumerationOverride(newEnumerationName, newTokens));
             }
 
-            return new ApiProfileOverride
-            (
+            return new ApiProfileOverride(
                 overrides.Name,
                 overrides.Versions,
                 newEnumerations,
                 overrides.ReplacedFunctions,
-                overrides.RemovedFunctions
-            );
+                overrides.RemovedFunctions);
         }
     }
 }

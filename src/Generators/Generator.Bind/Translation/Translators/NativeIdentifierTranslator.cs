@@ -1,3 +1,12 @@
+//
+// NativeIdentifierTranslator.cs
+//
+// Copyright (C) 2019 OpenTK
+//
+// This software may be modified and distributed under the terms
+// of the MIT license. See the LICENSE file for details.
+//
+
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -34,14 +43,8 @@ namespace Bind.Translation.Translators
         {
             { "CMAAINTEL", "CmaaIntel" },
             { "QCOM", "QCom" },
-            { "SNORM", "SNorm" }
+            { "SNORM", "SNorm" },
         };
-
-        /// <inheritdoc/>
-        public string Translate(string input)
-        {
-            return TranslateIdentifierName(input);
-        }
 
         /// <summary>
         /// Translates an identifier name into a C#-style PascalCase name.
@@ -83,6 +86,12 @@ namespace Bind.Translation.Translators
 
             var newName = builder.ToString().Pascalize();
             return newName;
+        }
+
+        /// <inheritdoc/>
+        public string Translate(string input)
+        {
+            return TranslateIdentifierName(input);
         }
     }
 }

@@ -1,3 +1,12 @@
+//
+// ProfileMapper.cs
+//
+// Copyright (C) 2019 OpenTK
+//
+// This software may be modified and distributed under the terms
+// of the MIT license. See the LICENSE file for details.
+//
+
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -81,18 +90,17 @@ namespace Bind.Translation.Mappers
         /// <param name="profile">The profile to map functions in.</param>
         /// <param name="genericEnumFunctions">The functions with generic enum parameters.</param>
         /// <returns>The mapped generic functions.</returns>
-        [NotNull, ItemNotNull]
-        private IEnumerable<FunctionSignature> MapGenericEnumFunctions
-        (
+        [NotNull]
+        [ItemNotNull]
+        private IEnumerable<FunctionSignature> MapGenericEnumFunctions(
             [NotNull] ApiProfile profile,
-            [NotNull, ItemNotNull] IReadOnlyList<FunctionSignature> genericEnumFunctions
-        )
+            [NotNull, ItemNotNull] IReadOnlyList<FunctionSignature> genericEnumFunctions)
         {
             var mappedGenericEnumFunctions = new List<FunctionSignature>();
             foreach (var functionWithGenericEnum in genericEnumFunctions)
             {
                 var newParameters = new List<ParameterSignature>(functionWithGenericEnum.Parameters);
-                for (int i = 0; i < newParameters.Count; ++i)
+                for (var i = 0; i < newParameters.Count; ++i)
                 {
                     var parameter = newParameters[i];
                     var parameterType = parameter.Type;
@@ -121,11 +129,9 @@ namespace Bind.Translation.Mappers
 
                 mappedGenericEnumFunctions.Add(newFunction);
 
-                Debug.WriteLine
-                (
+                Debug.WriteLine(
                     $"Mapped parameters in \"{functionWithGenericEnum.Name}\" to generic enum types. Consider adding" +
-                    $" an override to a more specialized enum."
-                );
+                    " an override to a more specialized enum.");
             }
 
             return mappedGenericEnumFunctions;
@@ -141,12 +147,10 @@ namespace Bind.Translation.Mappers
         /// <param name="baseParameterType">The type of the base parameter.</param>
         /// <returns>The mapped type.</returns>
         [NotNull]
-        private TypeSignature MapGenericEnumerationType
-        (
+        private TypeSignature MapGenericEnumerationType(
             [NotNull] ApiProfile profile,
             [NotNull] FunctionSignature containingFunction,
-            [NotNull] TypeSignature baseParameterType
-        )
+            [NotNull] TypeSignature baseParameterType)
         {
             foreach (var categoryName in containingFunction.Categories)
             {

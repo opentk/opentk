@@ -273,7 +273,6 @@
   </member>
   <member name="M:Bind.Overloaders.IFunctionOverloader.CreateOverloads(Bind.XML.Signatures.Functions.FunctionSignature)">
     <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
-    <attribute ctor="M:JetBrains.Annotations.ItemNotNullAttribute.#ctor" />
     <parameter name="function">
       <attribute ctor="M:JetBrains.Annotations.NotNullAttribute.#ctor" />
     </parameter>

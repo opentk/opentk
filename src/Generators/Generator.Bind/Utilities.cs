@@ -158,7 +158,7 @@ namespace Bind
 
             variations.Add(currentVariation);
 
-            if (extensionTrimmer.IsRelevant(functionOverride))
+            if (OpenGLFunctionExtensionTrimmer.IsRelevant(functionOverride))
             {
                 currentVariation = extensionTrimmer.Trim(functionOverride);
                 variations.Add(currentVariation);

@@ -1,3 +1,12 @@
+//
+// FunctionMapper.cs
+//
+// Copyright (C) 2019 OpenTK
+//
+// This software may be modified and distributed under the terms
+// of the MIT license. See the LICENSE file for details.
+//
+
 using System.Collections.Generic;
 using System.Linq;
 using Bind.Builders;
@@ -26,12 +35,7 @@ namespace Bind.Translation.Mappers
         /// <inheritdoc/>
         public bool HasMapping(FunctionSignature input)
         {
-            if (_glTypeMapper.HasMapping(input.ReturnType))
-            {
-                return true;
-            }
-
-            return input.Parameters.Any(p => _glParameterMapper.HasMapping(p));
+            return _glTypeMapper.HasMapping(input.ReturnType) || input.Parameters.Any(p => _glParameterMapper.HasMapping(p));
         }
 
         /// <inheritdoc/>
