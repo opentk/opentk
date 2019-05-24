@@ -1,3 +1,12 @@
+//
+// VersionRange.cs
+//
+// Copyright (C) 2019 OpenTK
+//
+// This software may be modified and distributed under the terms
+// of the MIT license. See the LICENSE file for details.
+//
+
 using System;
 using JetBrains.Annotations;
 
@@ -88,10 +97,8 @@ namespace Bind.Versioning
             var eitherAreNonInclusive = !minInclusive | !maxInclusive;
             if (minVersion == maxVersion && eitherAreNonInclusive)
             {
-                throw new ArgumentException
-                (
-                    "If Min and Max are the same, and any of them are non-inclusive, the resulting range is invalid."
-                );
+                throw new ArgumentException(
+                    "If Min and Max are the same, and any of them are non-inclusive, the resulting range is invalid.");
             }
 
             IsMaximumVersionInclusive = maxInclusive;
@@ -120,12 +127,7 @@ namespace Bind.Versioning
                 return false;
             }
 
-            if (!IsMaximumVersionInclusive && version == Maximum)
-            {
-                return false;
-            }
-
-            return true;
+            return IsMaximumVersionInclusive || version != Maximum;
         }
 
         /// <summary>
@@ -197,12 +199,7 @@ namespace Bind.Versioning
         /// <inheritdoc/>
         public override string ToString()
         {
-            if (Minimum == Maximum)
-            {
-                return Minimum.ToString();
-            }
-
-            return $"{Minimum} - {Maximum}";
+            return Minimum == Maximum ? Minimum.ToString() : $"{Minimum} - {Maximum}";
         }
     }
 }

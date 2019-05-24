@@ -1,3 +1,12 @@
+//
+// TypemapBaker.cs
+//
+// Copyright (C) 2019 OpenTK
+//
+// This software may be modified and distributed under the terms
+// of the MIT license. See the LICENSE file for details.
+//
+
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -18,10 +27,8 @@ namespace Bind.Typemap
         /// <param name="typemaps">The set of typemaps.</param>
         /// <returns>The baked set of typemaps.</returns>
         [NotNull]
-        public static IReadOnlyDictionary<TypeSignature, TypeSignature> BakeTypemaps
-        (
-            [NotNull, ItemNotNull] params IReadOnlyDictionary<TypeSignature, TypeSignature>[] typemaps
-        )
+        public static IReadOnlyDictionary<TypeSignature, TypeSignature> BakeTypemaps(
+            [NotNull, ItemNotNull] params IReadOnlyDictionary<TypeSignature, TypeSignature>[] typemaps)
         {
             // First, we combine the typemaps into one monolithic map
             var ambiguousEntries = new List<KeyValuePair<TypeSignature, TypeSignature>>();
@@ -85,10 +92,8 @@ namespace Bind.Typemap
                     continue;
                 }
 
-                throw new AmbiguousMatchException
-                (
-                    "Same-type remapping found in two or more maps, but they didn't map to the same type."
-                );
+                throw new AmbiguousMatchException(
+                    "Same-type remapping found in two or more maps, but they didn't map to the same type.");
             }
 
             return newTypemap;
