@@ -88,6 +88,6 @@ namespace OpenToolkit.OpenAL.Extensions.Creative.MultiChannelBuffers
         /// <summary>
         /// 1 Channel rear speaker, 8-bit data. See Quadrophonic setups.
         /// </summary>
-        MultiRear8 = 0x1207
+        MultiRear8 = 0x1207,
     }
 }
