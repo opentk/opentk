@@ -20,6 +20,6 @@ namespace OpenToolkit.OpenAL.Extensions.Soft
         /// <summary>
         /// Gets the gain limit of the context.
         /// </summary>
-        GainLimit = 0x200E
+        GainLimit = 0x200E,
     }
 }

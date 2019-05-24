@@ -25,6 +25,6 @@ namespace OpenToolkit.OpenAL.Extensions.Soft
         /// Gets the default resampler. The return value corresponds to one of the members in
         /// <see cref="Resampler"/>.
         /// </summary>
-        DefaultResampler = 0x1211
+        DefaultResampler = 0x1211,
     }
 }

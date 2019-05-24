@@ -24,6 +24,6 @@ namespace OpenToolkit.OpenAL.Extensions.Soft
         /// <summary>
         /// Gets a pointer to the set event callback user parameter.
         /// </summary>
-        EventCallbackUserParameter = 0x1221
+        EventCallbackUserParameter = 0x1221,
     }
 }

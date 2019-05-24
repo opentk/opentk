@@ -30,6 +30,6 @@ namespace OpenToolkit.OpenAL.Extensions.Soft
         /// <summary>
         /// Determines whether the default resampler is set.
         /// </summary>
-        IsResamplerDefault = 0x1211
+        IsResamplerDefault = 0x1211,
     }
 }
