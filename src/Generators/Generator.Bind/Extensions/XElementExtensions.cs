@@ -1,3 +1,12 @@
+//
+// XElementExtensions.cs
+//
+// Copyright (C) 2019 OpenTK
+//
+// This software may be modified and distributed under the terms
+// of the MIT license. See the LICENSE file for details.
+//
+
 using System.IO;
 using System.Linq;
 using System.Xml.Linq;
@@ -19,12 +28,10 @@ namespace Bind.Extensions
         /// <exception cref="InvalidDataException">Thrown if the attribute is not present.</exception>
         /// <returns>The attribute.</returns>
         [NotNull]
-        public static XAttribute GetRequiredAttribute
-        (
+        public static XAttribute GetRequiredAttribute(
             [NotNull] this XElement element,
             [NotNull] string attributeName,
-            bool ignoreNamespace = true
-        )
+            bool ignoreNamespace = true)
         {
             var attribute = ignoreNamespace
                 ? element.Attributes().FirstOrDefault(a => a.Name.LocalName == attributeName)

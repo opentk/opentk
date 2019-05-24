@@ -1,3 +1,12 @@
+//
+// XContainerExtensions.cs
+//
+// Copyright (C) 2019 OpenTK
+//
+// This software may be modified and distributed under the terms
+// of the MIT license. See the LICENSE file for details.
+//
+
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -22,12 +31,10 @@ namespace Bind.Extensions
         /// <returns>The section.</returns>
         /// <exception cref="InvalidDataException">Thrown if the section couldn't be found.</exception>
         /// <exception cref="AmbiguousMatchException">Thrown if more than one matching section was found.</exception>
-        public static XElement GetRequiredSectionByClass
-        (
+        public static XElement GetRequiredSectionByClass(
             [NotNull] this XContainer container,
             [NotNull] string className,
-            [NotNull] string sectionName = "div"
-        )
+            [NotNull] string sectionName = "div")
         {
             var sectionElements = container.Elements();
             if (!string.IsNullOrWhiteSpace(sectionName))
@@ -60,13 +67,12 @@ namespace Bind.Extensions
         /// <returns>The section.</returns>
         /// <exception cref="InvalidDataException">Thrown if the section couldn't be found.</exception>
         /// <exception cref="AmbiguousMatchException">Thrown if more than one matching section was found.</exception>
-        [NotNull, ItemNotNull]
-        public static IEnumerable<XElement> GetRequiredSectionsByClass
-        (
+        [NotNull]
+        [ItemNotNull]
+        public static IEnumerable<XElement> GetRequiredSectionsByClass(
             [NotNull] this XContainer container,
             [NotNull] string className,
-            [NotNull] string sectionName = "div"
-        )
+            [NotNull] string sectionName = "div")
         {
             var sectionElements = container.Elements(sectionName);
             var targetSections = sectionElements.Where(e => e.GetRequiredAttribute("class").Value == className).ToList();
@@ -88,12 +94,10 @@ namespace Bind.Extensions
         /// <exception cref="InvalidDataException">Thrown if the element is not present.</exception>
         /// <returns>The element.</returns>
         [NotNull]
-        public static XElement GetRequiredElement
-        (
+        public static XElement GetRequiredElement(
             [NotNull] this XContainer container,
             [NotNull] string elementName,
-            bool ignoreNamespace = true
-        )
+            bool ignoreNamespace = true)
         {
             var element = ignoreNamespace
                 ? container.Elements().FirstOrDefault(a => a.Name.LocalName == elementName)
@@ -114,13 +118,12 @@ namespace Bind.Extensions
         /// <param name="elementName">The name of the element.</param>
         /// <param name="ignoreNamespace">Whether or not the namespace should be ignored.</param>
         /// <returns>The elements.</returns>
-        [NotNull, ItemNotNull]
-        public static IEnumerable<XElement> GetRequiredElements
-        (
+        [NotNull]
+        [ItemNotNull]
+        public static IEnumerable<XElement> GetRequiredElements(
             [NotNull] this XContainer container,
             [NotNull] string elementName,
-            bool ignoreNamespace = true
-        )
+            bool ignoreNamespace = true)
         {
             var elements = ignoreNamespace
                 ? container.Elements().Where(a => a.Name.LocalName == elementName)

@@ -1,3 +1,12 @@
+//
+// ApiProfileExtensions.cs
+//
+// Copyright (C) 2019 OpenTK
+//
+// This software may be modified and distributed under the terms
+// of the MIT license. See the LICENSE file for details.
+//
+
 using System;
 using System.Collections.Generic;
 using Bind.XML;
@@ -15,12 +24,12 @@ namespace Bind.Extensions
         /// Gets a dictionary of profile names, mapping to human-friendly names.
         /// </summary>
         [NotNull]
-        private static IDictionary<string, string> FriendlyNames = new Dictionary<string, string>
+        private static IDictionary<string, string> friendlyNames = new Dictionary<string, string>
         {
             { "gl", "OpenGL (Compatibility Profile)" },
             { "glcore", "OpenGL (Core Profile)" },
             { "gles2", "OpenGL ES 2.0" },
-            { "glsc2", "OpenGL SC 2.0" }
+            { "glsc2", "OpenGL SC 2.0" },
         };
 
         /// <summary>
@@ -32,12 +41,7 @@ namespace Bind.Extensions
         [NotNull]
         public static string GetFriendlyName([NotNull] this IApiProfile profile)
         {
-            if (FriendlyNames.TryGetValue(profile.Name, out var value))
-            {
-                return value;
-            }
-
-            return "Unknown";
+            return friendlyNames.TryGetValue(profile.Name, out var value) ? value : "Unknown";
         }
     }
 }
