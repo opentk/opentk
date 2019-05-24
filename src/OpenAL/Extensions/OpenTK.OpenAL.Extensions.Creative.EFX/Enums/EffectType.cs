@@ -92,6 +92,6 @@ namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
         /// The EAX Reverb has a more advanced parameter set than EfxEffectType.Reverb, but is only natively supported on
         /// devices that support the EAX 3.0 or above.
         /// </summary>
-        EaxReverb = 0x8000
+        EaxReverb = 0x8000,
     }
 }

@@ -33,7 +33,7 @@ namespace OpenToolkit.OpenAL.Extensions.Enumeration
         /// <inheritdoc />
         public abstract unsafe char* GetStringList(Device* device, GetEnumerationContextStringList param);
 
-        /// <inheritdoc cref="GetString(void*, GetEnumerationContextStringList)"/>
+        /// <inheritdoc cref="GetString(Device*, GetEnumerationContextString)"/>
         public IEnumerable<string> GetStringList(GetEnumerationContextStringList param)
         {
             unsafe

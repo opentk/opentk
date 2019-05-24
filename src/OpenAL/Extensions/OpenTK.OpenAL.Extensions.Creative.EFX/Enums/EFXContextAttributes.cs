@@ -22,6 +22,6 @@ namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
         /// number of sends will be available, so an application should query this property after creating the context
         /// using alcGetIntergerv.
         /// </summary>
-        MaxAuxiliarySends = 0x20003
+        MaxAuxiliarySends = 0x20003,
     }
 }

@@ -164,6 +164,6 @@ namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
         /// <summary>
         /// The Z phoneme of the vocal morpher.
         /// </summary>
-        VocalMorpherPhonemeZ = 29
+        VocalMorpherPhonemeZ = 29,
     }
 }

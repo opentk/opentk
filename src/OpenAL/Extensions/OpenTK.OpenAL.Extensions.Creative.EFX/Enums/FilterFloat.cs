@@ -47,6 +47,6 @@ namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
         /// <summary>
         /// Range [0.0f .. 1.0f] Default: 1.0f
         /// </summary>
-        BandpassGainHF = 0x0003
+        BandpassGainHF = 0x0003,
     }
 }

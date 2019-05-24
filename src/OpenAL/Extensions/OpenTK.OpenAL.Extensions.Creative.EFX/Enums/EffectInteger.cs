@@ -123,6 +123,6 @@ namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
         /// <summary>
         /// Used with the enum EfxEffectType as it's parameter.
         /// </summary>
-        EffectType = 0x8001
+        EffectType = 0x8001,
     }
 }

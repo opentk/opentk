@@ -24,6 +24,6 @@ namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
         /// This setting is critical if Air Absorption effects are enabled because the amount of Air
         /// Absorption applied is directly related to the real-world distance between the Source and the Listener.
         /// </summary>
-        EfxMetersPerUnit = 0x20004
+        EfxMetersPerUnit = 0x20004,
     }
 }

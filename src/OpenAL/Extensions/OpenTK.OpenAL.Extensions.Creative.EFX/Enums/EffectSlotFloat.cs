@@ -21,6 +21,6 @@ namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
         /// This property is used to specify an output level for the Auxiliary Effect Slot. Setting the gain to 0.0f mutes
         /// the output.
         /// </summary>
-        Gain = 0x0002
+        Gain = 0x0002,
     }
 }

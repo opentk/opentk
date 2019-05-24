@@ -27,6 +27,6 @@ namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
         /// sources and the listener. This property should be enabled when an application wishes to use a reverb effect
         /// to simulate the environment surrounding a listener or a collection of Sources.
         /// </summary>
-        AuxiliarySendAuto = 0x0003
+        AuxiliarySendAuto = 0x0003,
     }
 }

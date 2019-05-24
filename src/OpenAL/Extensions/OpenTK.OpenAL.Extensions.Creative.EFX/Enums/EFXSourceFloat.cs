@@ -42,6 +42,6 @@ namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
         /// listener is directly in front of the source; it is attenuated as the listener circles the Source away from the
         /// front.
         /// </summary>
-        ConeOuterGainHighFrequency = 0x20009
+        ConeOuterGainHighFrequency = 0x20009,
     }
 }

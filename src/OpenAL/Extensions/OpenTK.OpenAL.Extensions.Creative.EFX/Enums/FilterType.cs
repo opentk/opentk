@@ -32,6 +32,6 @@ namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
         /// <summary>
         /// Currently not implemented. A band-pass filter is used to remove high and low frequency content from a signal.
         /// </summary>
-        Bandpass = 0x0003
+        Bandpass = 0x0003,
     }
 }

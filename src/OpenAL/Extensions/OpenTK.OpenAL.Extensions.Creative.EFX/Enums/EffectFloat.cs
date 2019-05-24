@@ -444,6 +444,6 @@ namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
         /// both reflections and reverberation) according to source-listener distance. It's defined the same way as OpenAL
         /// Rolloff Factor, but operates on reverb sound instead of direct-path sound. Range [0.0f .. 10.0f] Default: 0.0f
         /// </summary>
-        EaxReverbRoomRolloffFactor = 0x0016
+        EaxReverbRoomRolloffFactor = 0x0016,
     }
 }

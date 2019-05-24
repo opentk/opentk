@@ -26,6 +26,6 @@ namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
         /// are towards this direction. For legacy reasons this Vector3 follows a left-handed co-ordinate system! Note that
         /// OpenAL uses a right-handed coordinate system. Unit: Vector3 of length 0f to 1f Default: {0.0f, 0.0f, 0.0f}
         /// </summary>
-        EaxReverbReflectionsPan = 0x000B
+        EaxReverbReflectionsPan = 0x000B,
     }
 }

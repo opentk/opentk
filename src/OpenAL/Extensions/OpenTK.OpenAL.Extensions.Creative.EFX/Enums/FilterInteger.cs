@@ -17,6 +17,6 @@ namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
         /// <summary>
         /// Used with the enum EfxFilterType as Parameter to select a filter logic.
         /// </summary>
-        FilterType = 0x8001
+        FilterType = 0x8001,
     }
 }

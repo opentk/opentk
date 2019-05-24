@@ -20,6 +20,6 @@ namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
         /// configure one of the Source’s auxiliary sends. This process involves setting 3 variables – the destination
         /// Auxiliary Effect Slot ID, the Auxiliary Send number, and an optional Filter ID.
         /// </summary>
-        AuxiliarySendFilter = 0x20006
+        AuxiliarySendFilter = 0x20006,
     }
 }

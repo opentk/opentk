@@ -17,6 +17,6 @@ namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
         /// <summary>
         /// This Source property is used to apply filtering on the direct-path (dry signal) of a Source.
         /// </summary>
-        DirectFilter = 0x20005
+        DirectFilter = 0x20005,
     }
 }

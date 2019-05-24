@@ -38,6 +38,6 @@ namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
         /// <summary>
         /// Four sends per source.
         /// </summary>
-        Four = 4
+        Four = 4,
     }
 }

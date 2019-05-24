@@ -40,6 +40,6 @@ namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
         /// directivity as set by the Sourcef.ConeOuterGainHF property. If this property is AL_FALSE, the Source’s reflected
         /// sound is not filtered at all according to the Source’s directivity.
         /// </summary>
-        AuxiliarySendFilterGainHighFrequencyAuto = 0x2000C
+        AuxiliarySendFilterGainHighFrequencyAuto = 0x2000C,
     }
 }
