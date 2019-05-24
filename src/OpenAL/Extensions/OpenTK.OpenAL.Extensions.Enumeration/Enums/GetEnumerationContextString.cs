@@ -10,7 +10,7 @@
 namespace OpenToolkit.OpenAL.Extensions.Enumeration
 {
     /// <summary>
-    /// Defines available parameters for <see cref="ALContext.GetString(System.IntPtr,GetEnumerationContextString)" />.
+    /// Defines available parameters for <see cref="IEnumerationContextState.GetString(Device*, GetEnumerationContextString)" />.
     /// </summary>
     public enum GetEnumerationContextString
     {
