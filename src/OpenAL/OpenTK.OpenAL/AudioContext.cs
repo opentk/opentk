@@ -37,6 +37,64 @@ namespace OpenToolkit.OpenAL
         private bool _isSynchronized;
 
         /// <summary>
+        /// Gets the OpenToolkit.Audio.AudioContext which is current in the application.
+        /// </summary>
+        /// <remarks>
+        /// Only one AudioContext can be current in the application at any time,
+        ///  <b>regardless of the number of threads</b>.
+        /// </remarks>
+        public static AudioContext CurrentContext
+        {
+            get
+            {
+                lock (AudioContextLock)
+                {
+                    if (AvailableContexts.Count == 0)
+                    {
+                        return null;
+                    }
+
+                    AvailableContexts.TryGetValue(ContextAPI.GetCurrentContextHandle(), out var context);
+                    return context;
+                }
+            }
+        }
+
+        /// \internal
+        /// <summary>
+        /// Makes the specified AudioContext current in the calling thread.
+        /// </summary>
+        /// <param name="context">The OpenToolkit.Audio.AudioContext to make current, or null.</param>
+        /// <exception cref="ObjectDisposedException">
+        /// Occurs if this function is called after the AudioContext has been disposed.
+        /// </exception>
+        /// <exception cref="AudioContextException">
+        /// Occurs when the AudioContext could not be made current.
+        /// </exception>
+        private static void MakeCurrent(AudioContext context)
+        {
+            lock (AudioContextLock)
+            {
+                unsafe
+                {
+                    var contextHandle = context?._contextHandle ?? ContextHandle.Zero;
+
+                    if (ContextAPI.MakeContextCurrent(contextHandle))
+                    {
+                        return;
+                    }
+
+                    var contextPtr = (Context*)contextHandle.Handle;
+                    var deviceHandle = ContextAPI.GetContextsDevice(contextPtr);
+                    var error = ContextAPI.GetError(deviceHandle);
+
+                    throw new AudioContextException(
+                        $"ALC {error} error detected at {(context != null ? context.ToString() : "null")}.");
+                }
+            }
+        }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="AudioContext"/> class using the default audio device.
         /// </summary>
         public AudioContext()
@@ -129,11 +187,9 @@ namespace OpenToolkit.OpenAL
         /// For maximum compatibility, you are strongly recommended to use the default constructor.<para/>
         /// Multiple AudioContexts are not supported at this point.<para/>
         /// </remarks>
-        public AudioContext
-        (
+        public AudioContext(
             string device,
-            IEnumerable<int> attributes
-        )
+            IEnumerable<int> attributes)
         {
             CreateContext(device, attributes);
         }
@@ -240,30 +296,6 @@ namespace OpenToolkit.OpenAL
         }
 
         /// <summary>
-        /// Gets the OpenToolkit.Audio.AudioContext which is current in the application.
-        /// </summary>
-        /// <remarks>
-        /// Only one AudioContext can be current in the application at any time,
-        ///  <b>regardless of the number of threads</b>.
-        /// </remarks>
-        public static AudioContext CurrentContext
-        {
-            get
-            {
-                lock (AudioContextLock)
-                {
-                    if (AvailableContexts.Count == 0)
-                    {
-                        return null;
-                    }
-
-                    AvailableContexts.TryGetValue(ContextAPI.GetCurrentContextHandle(), out var context);
-                    return context;
-                }
-            }
-        }
-
-        /// <summary>
         /// Creates the audio context using the specified device.
         /// </summary>
         /// <param name="device">
@@ -291,22 +323,18 @@ namespace OpenToolkit.OpenAL
         {
             if (frequency < 0)
             {
-                throw new ArgumentOutOfRangeException
-                (
+                throw new ArgumentOutOfRangeException(
                     nameof(frequency),
                     frequency,
-                    "The frequency must be greater than zero"
-                );
+                    "The frequency must be greater than zero");
             }
 
             if (refreshRate < 0)
             {
-                throw new ArgumentOutOfRangeException
-                (
+                throw new ArgumentOutOfRangeException(
                     nameof(refreshRate),
                     refreshRate,
-                    "The refresh rate must be greater than zero."
-                );
+                    "The refresh rate must be greater than zero.");
             }
 
             // Build the attribute list
@@ -354,11 +382,9 @@ namespace OpenToolkit.OpenAL
         ///  <para>For maximum compatibility, you are strongly recommended to use the default constructor.</para>
         ///  <para>Multiple AudioContexts are not supported at this point.</para>
         /// </remarks>
-        private unsafe void CreateContext
-        (
+        private unsafe void CreateContext(
             string device,
-            IEnumerable<int> attributes
-        )
+            IEnumerable<int> attributes)
         {
             if (_contextExists)
             {
@@ -380,11 +406,9 @@ namespace OpenToolkit.OpenAL
             if (Device == null)
             {
                 _deviceName = "None";
-                throw new AudioDeviceException
-                (
+                throw new AudioDeviceException(
                     $"Audio device '{(string.IsNullOrEmpty(device) ? "default" : device)}' does not exist or" +
-                    "is tied up by another application."
-                );
+                    "is tied up by another application.");
             }
 
             CheckErrors();
@@ -397,10 +421,8 @@ namespace OpenToolkit.OpenAL
             if (_contextHandle == ContextHandle.Zero)
             {
                 ContextAPI.CloseDevice(Device);
-                throw new AudioContextException
-                (
-                    "The audio context could not be created with the specified parameters."
-                );
+                throw new AudioContextException(
+                    "The audio context could not be created with the specified parameters.");
             }
 
             CheckErrors();
@@ -415,39 +437,6 @@ namespace OpenToolkit.OpenAL
             {
                 AvailableContexts.Add(_contextHandle, this);
                 _contextExists = true;
-            }
-        }
-
-        /// \internal
-        /// <summary>
-        /// Makes the specified AudioContext current in the calling thread.
-        /// </summary>
-        /// <param name="context">The OpenToolkit.Audio.AudioContext to make current, or null.</param>
-        /// <exception cref="ObjectDisposedException">
-        /// Occurs if this function is called after the AudioContext has been disposed.
-        /// </exception>
-        /// <exception cref="AudioContextException">
-        /// Occurs when the AudioContext could not be made current.
-        /// </exception>
-        private static void MakeCurrent(AudioContext context)
-        {
-            lock (AudioContextLock)
-            {
-                unsafe
-                {
-                    var contextHandle = context?._contextHandle ?? ContextHandle.Zero;
-                    if (!ContextAPI.MakeContextCurrent(contextHandle))
-                    {
-                        var contextPtr = (Context*)contextHandle.Handle;
-                        var deviceHandle = ContextAPI.GetContextsDevice(contextPtr);
-                        var error = ContextAPI.GetError(deviceHandle);
-
-                        throw new AudioContextException
-                        (
-                            $"ALC {error} error detected at {(context != null ? context.ToString() : "null")}."
-                        );
-                    }
-                }
             }
         }
 
@@ -607,6 +596,7 @@ namespace OpenToolkit.OpenAL
                         ContextAPI.CloseDevice(Device);
                     }
                 }
+
                 _disposed = true;
             }
         }

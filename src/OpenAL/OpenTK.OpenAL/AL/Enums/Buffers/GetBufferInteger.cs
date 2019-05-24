@@ -34,6 +34,6 @@ namespace OpenToolkit.OpenAL
         /// <summary>
         /// size of the Buffer in bytes.
         /// </summary>
-        Size = 0x2004
+        Size = 0x2004,
     }
 }

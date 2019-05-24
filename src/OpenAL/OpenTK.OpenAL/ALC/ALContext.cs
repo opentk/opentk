@@ -20,6 +20,15 @@ namespace OpenToolkit.OpenAL
     /// </summary>
     public abstract class ALContext : NativeLibraryBase, IALC
     {
+        /// <summary>
+        /// Gets an instance of the API.
+        /// </summary>
+        /// <returns>The instance.</returns>
+        public static ALContext GetAPI()
+        {
+            return APILoader.Load<ALContext, OpenALLibraryNameContainer>();
+        }
+
         /// <inheritdoc cref="NativeLibraryBase"/>
         protected ALContext(string path, ImplementationOptions options)
             : base(path, options)
@@ -32,7 +41,8 @@ namespace OpenToolkit.OpenAL
         /// <typeparam name="TContextExtension">The extension type.</typeparam>
         /// <param name="device">The device the context is on.</param>
         /// <returns>The extension.</returns>
-        public unsafe TContextExtension GetExtension<TContextExtension>(Device* device) where TContextExtension : ContextExtensionBase
+        public unsafe TContextExtension GetExtension<TContextExtension>(Device* device)
+            where TContextExtension : ContextExtensionBase
         {
             return ExtensionLoader.LoadContextExtension<TContextExtension>(device, this);
         }
@@ -105,14 +115,5 @@ namespace OpenToolkit.OpenAL
 
         /// <inheritdoc />
         public abstract unsafe void GetContextProperty(Device* device, GetContextInteger param, int count, void* data);
-
-        /// <summary>
-        /// Gets an instance of the API.
-        /// </summary>
-        /// <returns>The instance.</returns>
-        public static ALContext GetAPI()
-        {
-            return APILoader.Load<ALContext, OpenALLibraryNameContainer>();
-        }
     }
 }

@@ -18,6 +18,6 @@ namespace OpenToolkit.OpenAL
         /// Gets the distance model. The return value corresponds to one of the members in
         /// <see cref="OpenAL.DistanceModel"/>.
         /// </summary>
-        DistanceModel = 0xD000
+        DistanceModel = 0xD000,
     }
 }

@@ -17,6 +17,6 @@ namespace OpenToolkit.OpenAL
         /// <summary>
         /// Currently no state toggles exist for vanilla OpenAL and no Extension uses it.
         /// </summary>
-        Invalid = -1
+        Invalid = -1,
     }
 }

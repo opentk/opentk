@@ -22,6 +22,6 @@ namespace OpenToolkit.OpenAL
         /// <summary>
         /// Speed of Sound in units per second. Default: 343.3f.
         /// </summary>
-        SpeedOfSound = 0xC003
+        SpeedOfSound = 0xC003,
     }
 }

@@ -263,7 +263,7 @@ namespace OpenToolkit.OpenAL.Interfaces
         /// <summary>
         /// Queues a set of buffers on the source. All buffers attached to a source will be played in sequence, and the
         /// number of processed buffers can be detected using a call to
-        /// <see cref="GetSourceProperty(uint,OpenToolkit.OpenAL.SourceFloat,out int)"/>.
+        /// <see cref="GetSourceProperty(uint, SourceFloat ,out float)"/>.
         /// </summary>
         /// <param name="source">The source.</param>
         /// <param name="count">The number of buffers to queue.</param>
@@ -272,7 +272,7 @@ namespace OpenToolkit.OpenAL.Interfaces
 
         /// <summary>
         /// Unqueues a set of buffers on the source. The number of processed buffers can be detected using a call to
-        /// <see cref="GetSourceProperty(uint,SourceInteger,out int)"/>, which is the maximum number of
+        /// <see cref="GetSourceProperty(uint, GetSourceInteger,out int)"/>, which is the maximum number of
         /// buffers that can be unqueued during this call.
         /// </summary>
         /// <param name="source">The source.</param>

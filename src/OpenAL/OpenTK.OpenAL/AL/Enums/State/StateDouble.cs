@@ -24,6 +24,6 @@ namespace OpenToolkit.OpenAL
         /// <summary>
         /// The speed at which sound waves are assumed to travel, when calculating the doppler effect.
         /// </summary>
-        SpeedOfSound = 0xC003
+        SpeedOfSound = 0xC003,
     }
 }

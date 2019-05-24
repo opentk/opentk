@@ -52,6 +52,6 @@ namespace OpenToolkit.OpenAL
         /// <summary>
         /// No OpenAL memory left.
         /// </summary>
-        OutOfMemory = 0xA005
+        OutOfMemory = 0xA005,
     }
 }

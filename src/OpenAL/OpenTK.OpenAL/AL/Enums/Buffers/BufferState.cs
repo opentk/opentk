@@ -27,6 +27,6 @@ namespace OpenToolkit.OpenAL
         /// <summary>
         /// Buffer state. Not supported for public use (yet).
         /// </summary>
-        Processed = 0x2012
+        Processed = 0x2012,
     }
 }

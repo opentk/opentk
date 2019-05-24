@@ -32,6 +32,6 @@ namespace OpenToolkit.OpenAL
         /// <summary>
         /// The source is not playing.
         /// </summary>
-        Stopped = 0x1014
+        Stopped = 0x1014,
     }
 }

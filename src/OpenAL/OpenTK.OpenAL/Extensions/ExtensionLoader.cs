@@ -70,7 +70,8 @@ namespace OpenToolkit.OpenAL.Extensions
         /// <exception cref="InvalidOperationException">
         /// Thrown if the API type doesn't have a metadata attribute.
         /// </exception>
-        private static ExtensionAttribute GetAPIExtensionMetadata<TAPIExtension>() where TAPIExtension : NativeLibraryBase
+        private static ExtensionAttribute GetAPIExtensionMetadata<TAPIExtension>()
+            where TAPIExtension : NativeLibraryBase
         {
             var apiType = typeof(TAPIExtension);
 

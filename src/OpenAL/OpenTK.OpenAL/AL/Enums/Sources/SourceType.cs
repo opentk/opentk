@@ -27,6 +27,6 @@ namespace OpenToolkit.OpenAL
         /// <summary>
         /// Source is undetermined when it has a null Buffer attached.
         /// </summary>
-        Undetermined = 0x1030
+        Undetermined = 0x1030,
     }
 }

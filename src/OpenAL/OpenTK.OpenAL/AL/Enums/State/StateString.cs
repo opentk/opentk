@@ -32,6 +32,6 @@ namespace OpenToolkit.OpenAL
         /// <summary>
         /// Gets a list of all available Extensions, separated with spaces.
         /// </summary>
-        Extensions = 0xB004
+        Extensions = 0xB004,
     }
 }

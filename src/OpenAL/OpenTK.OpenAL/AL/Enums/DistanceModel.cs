@@ -50,6 +50,6 @@ namespace OpenToolkit.OpenAL
         /// <summary>
         /// AL_EXT_EXPONENT_DISTANCE extension.
         /// </summary>
-        ExponentDistanceClamped = 0xD006
+        ExponentDistanceClamped = 0xD006,
     }
 }

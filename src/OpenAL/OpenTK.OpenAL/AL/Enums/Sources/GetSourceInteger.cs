@@ -47,6 +47,6 @@ namespace OpenToolkit.OpenAL
         /// <summary>
         /// Source type (Static, Streaming or undetermined). Use enum AlSourceType for comparison.
         /// </summary>
-        SourceType = 0x1027
+        SourceType = 0x1027,
     }
 }

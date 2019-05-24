@@ -18,8 +18,8 @@ namespace OpenToolkit.OpenAL
     /// </summary>
     public struct AudioDeviceErrorChecker : IDisposable
     {
-        private readonly unsafe Device* _device;
         private static readonly IContextErrors ErrorAPI = APILoader.Load<ALContext, OpenALLibraryNameContainer>();
+        private readonly unsafe Device* _device;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AudioDeviceErrorChecker"/> struct.
@@ -66,14 +66,17 @@ namespace OpenToolkit.OpenAL
                     {
                         throw new OutOfMemoryException(message);
                     }
+
                     case ContextError.InvalidValue:
                     {
                         throw new AudioValueException(message);
                     }
+
                     case ContextError.InvalidDevice:
                     {
                         throw new AudioDeviceException(message);
                     }
+
                     case ContextError.InvalidContext:
                     {
                         throw new AudioContextException(message);

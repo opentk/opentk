@@ -24,7 +24,8 @@ namespace OpenToolkit.OpenAL.Attributes
         /// <typeparam name="TFormat">The format type.</typeparam>
         /// <param name="format">The format.</param>
         /// <returns>The size.</returns>
-        public static int GetFormatSize<TFormat>(TFormat format) where TFormat : struct, Enum
+        public static int GetFormatSize<TFormat>(TFormat format)
+            where TFormat : struct, Enum
         {
             var enumType = typeof(TFormat);
             var member = enumType.GetMember(format.ToString()).First();

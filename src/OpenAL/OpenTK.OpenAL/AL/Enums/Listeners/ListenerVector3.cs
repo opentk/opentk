@@ -25,6 +25,6 @@ namespace OpenToolkit.OpenAL
         /// <summary>
         /// Specify the current velocity in three dimensional space.
         /// </summary>
-        Velocity = 0x1006
+        Velocity = 0x1006,
     }
 }

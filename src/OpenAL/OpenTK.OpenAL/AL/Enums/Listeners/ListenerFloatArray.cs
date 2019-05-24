@@ -17,6 +17,6 @@ namespace OpenToolkit.OpenAL
         /// <summary>
         /// Indicate Listener orientation. Expects two Vector3, At followed by Up.
         /// </summary>
-        Orientation = 0x100F
+        Orientation = 0x100F,
     }
 }

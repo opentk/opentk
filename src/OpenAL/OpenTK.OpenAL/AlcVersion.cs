@@ -22,6 +22,6 @@ namespace OpenToolkit.OpenAL
         /// <summary>
         /// OpenAL 1.1.
         /// </summary>
-        Alc11
+        Alc11,
     }
 }

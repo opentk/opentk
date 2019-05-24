@@ -30,6 +30,6 @@ namespace OpenToolkit.OpenAL
         /// <summary>
         /// Specify the current direction vector.
         /// </summary>
-        Direction = 0x1005
+        Direction = 0x1005,
     }
 }
