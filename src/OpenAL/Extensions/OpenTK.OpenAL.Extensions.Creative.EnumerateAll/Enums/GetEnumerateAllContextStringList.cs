@@ -10,13 +10,13 @@
 namespace OpenToolkit.OpenAL.Extensions.Creative.EnumerateAll
 {
     /// <summary>
-    /// Defines available parameters for <see cref="IEnumerateAllContextState.GetString(System.IntPtr,GetEnumerateAllContextStringList)" />.
+    /// Defines available parameters for <see cref="IEnumerateAllContextState.GetStringList" />.
     /// </summary>
     public enum GetEnumerateAllContextStringList
     {
         /// <summary>
         /// Gets the specifier strings for all available devices.
         /// </summary>
-        AllDevicesSpecifier = 0x1013
+        AllDevicesSpecifier = 0x1013,
     }
 }

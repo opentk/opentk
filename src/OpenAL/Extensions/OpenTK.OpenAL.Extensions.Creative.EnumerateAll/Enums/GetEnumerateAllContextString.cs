@@ -10,7 +10,7 @@
 namespace OpenToolkit.OpenAL.Extensions.Creative.EnumerateAll
 {
     /// <summary>
-    /// Defines available parameters for <see cref="ALContext.GetString(System.IntPtr,GetEnumerateAllContextString)" />.
+    /// Defines available parameters for <see cref="IEnumerateAllContextState.GetString" />.
     /// </summary>
     public enum GetEnumerateAllContextString
     {
@@ -22,6 +22,6 @@ namespace OpenToolkit.OpenAL.Extensions.Creative.EnumerateAll
         /// <summary>
         /// Gets the specifier of the first available device.
         /// </summary>
-        AllDevicesSpecifier = 0x1013
+        AllDevicesSpecifier = 0x1013,
     }
 }
