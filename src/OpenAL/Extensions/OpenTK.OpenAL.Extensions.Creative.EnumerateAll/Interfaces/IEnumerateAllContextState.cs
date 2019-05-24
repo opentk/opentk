@@ -8,8 +8,8 @@
 //
 
 using AdvancedDLSupport;
-// ReSharper disable ExplicitCallerInfoArgument
 
+// ReSharper disable ExplicitCallerInfoArgument
 namespace OpenToolkit.OpenAL.Extensions.Creative.EnumerateAll
 {
     /// <summary>

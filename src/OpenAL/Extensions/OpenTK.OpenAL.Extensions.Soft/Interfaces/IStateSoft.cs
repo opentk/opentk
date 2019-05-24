@@ -12,7 +12,6 @@ using AdvancedDLSupport;
 using OpenToolkit.OpenAL.Interfaces;
 
 // ReSharper disable ExplicitCallerInfoArgument
-
 namespace OpenToolkit.OpenAL.Extensions.Soft
 {
     /// <summary>

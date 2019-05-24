@@ -14,7 +14,6 @@ using AdvancedDLSupport;
 using OpenToolkit.Core.Loader;
 
 // ReSharper disable VirtualMemberCallInConstructor
-
 namespace OpenToolkit.OpenAL.Extensions.Creative.XRam
 {
     /// <summary>

@@ -11,7 +11,6 @@ using System.Runtime.InteropServices;
 using AdvancedDLSupport;
 
 // ReSharper disable ExplicitCallerInfoArgument
-
 namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
 {
     /// <summary>

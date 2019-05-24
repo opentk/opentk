@@ -11,7 +11,6 @@ using AdvancedDLSupport;
 using OpenToolkit.Mathematics;
 
 // ReSharper disable ExplicitCallerInfoArgument
-
 namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
 {
     /// <summary>
