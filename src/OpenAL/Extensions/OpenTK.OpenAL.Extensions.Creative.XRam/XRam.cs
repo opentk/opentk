@@ -44,7 +44,16 @@ namespace OpenToolkit.OpenAL.Extensions.Creative.XRam
         /// <inheritdoc cref="GetInteger(int)"/>
         public int GetInteger(XRamGetInteger param) => GetInteger(GetValueForEnum(param));
 
-        /// <inheritdoc cref="XRam.SetBufferMode(int, uint[], int)"/>
+        /// <summary>
+        /// Sets the storage mode of an array of OpenAL buffers.
+        /// </summary>
+        /// <param name="count">The number of buffers pointed to by <paramref name="buffers"/>.</param>
+        /// <param name="buffers">An array of OpenAL buffer handles.</param>
+        /// <param name="mode">The storage mode that should be used for all the given buffers.</param>
+        /// <returns>
+        /// true if all buffers were successfully set to the requested storage mode; otherwise, false.
+        /// </returns>
+        /// <seealso cref="GetBufferMode(uint)"/>
         public bool SetBufferMode(int count, in uint[] buffers, BufferStorageMode mode)
         {
             return SetBufferMode(count, in buffers, GetValueForEnum(mode));
