@@ -12,7 +12,7 @@ using OpenToolkit.OpenAL.Interfaces;
 namespace OpenToolkit.OpenAL.Extensions.Soft
 {
     /// <summary>
-    /// A list of valid <see cref="bool"/> parameters for <see cref="IState.GetBoolean"/>. These enumeration members
+    /// A list of valid <see cref="bool"/> parameters for <see cref="IStateSoft.GetBoolean"/>. These enumeration members
     /// are defined as extensions in the OpenAL Soft library.
     /// </summary>
     public enum SoftStateBoolean
