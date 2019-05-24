@@ -1,3 +1,12 @@
+//
+// ApiProfileBuilder.cs
+//
+// Copyright (C) 2019 OpenTK
+//
+// This software may be modified and distributed under the terms
+// of the MIT license. See the LICENSE file for details.
+//
+
 using System.Collections.Generic;
 using System.Text;
 using Bind.Versioning;
@@ -108,14 +117,12 @@ namespace Bind.Builders
         [NotNull]
         public ApiProfile Build()
         {
-            return new ApiProfile
-            (
+            return new ApiProfile(
                 _newName,
                 _newVersions,
                 _newNativeSignatures,
                 _newEnumerations,
-                _newOverloads
-            );
+                _newOverloads);
         }
     }
 }

@@ -1,3 +1,12 @@
+//
+// FunctionSignatureBuilder.cs
+//
+// Copyright (C) 2019 OpenTK
+//
+// This software may be modified and distributed under the terms
+// of the MIT license. See the LICENSE file for details.
+//
+
 using System;
 using System.Collections.Generic;
 using Bind.XML.Signatures.Functions;
@@ -164,10 +173,8 @@ namespace Bind.Builders
         /// <param name="newGenericTypeParameters">The new generic type parameters.</param>
         /// <returns>The builder, with the change applied.</returns>
         [NotNull]
-        public FunctionSignatureBuilder WithGenericTypeParameters
-        (
-            [NotNull] IReadOnlyList<GenericTypeParameterSignature> newGenericTypeParameters
-        )
+        public FunctionSignatureBuilder WithGenericTypeParameters(
+            [NotNull] IReadOnlyList<GenericTypeParameterSignature> newGenericTypeParameters)
         {
             _newGenericTypeParameters = newGenericTypeParameters;
             return this;
@@ -204,8 +211,7 @@ namespace Bind.Builders
         [NotNull]
         public FunctionSignature Build()
         {
-            return new FunctionSignature
-            (
+            return new FunctionSignature(
                 _newName,
                 _newNativeEntrypoint,
                 _newCategory,
@@ -216,8 +222,7 @@ namespace Bind.Builders
                 _newDeprecatedIn,
                 _newDeprecationReason,
                 _newGenericTypeParameters,
-                _newSource
-            );
+                _newSource);
         }
     }
 }
