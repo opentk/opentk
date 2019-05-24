@@ -88,8 +88,10 @@ namespace OpenToolkit.OpenAL
                     var deviceHandle = ContextAPI.GetContextsDevice(contextPtr);
                     var error = ContextAPI.GetError(deviceHandle);
 
-                    throw new AudioContextException(
-                        $"ALC {error} error detected at {(context != null ? context.ToString() : "null")}.");
+                    throw new AudioContextException
+                    (
+                        $"ALC {error} error detected at {(context != null ? context.ToString() : "null")}."
+                    );
                 }
             }
         }
@@ -187,9 +189,11 @@ namespace OpenToolkit.OpenAL
         /// For maximum compatibility, you are strongly recommended to use the default constructor.<para/>
         /// Multiple AudioContexts are not supported at this point.<para/>
         /// </remarks>
-        public AudioContext(
+        public AudioContext
+        (
             string device,
-            IEnumerable<int> attributes)
+            IEnumerable<int> attributes
+        )
         {
             CreateContext(device, attributes);
         }
@@ -382,9 +386,11 @@ namespace OpenToolkit.OpenAL
         ///  <para>For maximum compatibility, you are strongly recommended to use the default constructor.</para>
         ///  <para>Multiple AudioContexts are not supported at this point.</para>
         /// </remarks>
-        private unsafe void CreateContext(
+        private unsafe void CreateContext
+        (
             string device,
-            IEnumerable<int> attributes)
+            IEnumerable<int> attributes
+        )
         {
             if (_contextExists)
             {
