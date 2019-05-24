@@ -30,6 +30,31 @@ namespace Bind.Baking
     public class DocumentationBaker
     {
         /// <summary>
+        /// Appends the contents of a parameter reference node, transformed into its best-matching XMLDoc equivalent.
+        /// </summary>
+        /// <param name="descriptionBuilder">The builder to append to.</param>
+        /// <param name="parameterNode">The node.</param>
+        private static void AppendParameterNode(
+            [NotNull] StringBuilder descriptionBuilder,
+            [NotNull] XElement parameterNode)
+        {
+            var parameterName = parameterNode.GetRequiredElement("code").Value;
+            descriptionBuilder.Append($"<paramref name=\"{parameterName}\"/>");
+        }
+
+        /// <summary>
+        /// Appends the contents of an emphasis node, transformed into its best-matching XMLDoc equivalent.
+        /// </summary>
+        /// <param name="descriptionBuilder">The builder to append to.</param>
+        /// <param name="emphasisNode">The node.</param>
+        private static void AppendEmphasisNode(
+            [NotNull] StringBuilder descriptionBuilder,
+            [NotNull] XElement emphasisNode)
+        {
+            descriptionBuilder.Append($"<i>{emphasisNode.Value}</i>");
+        }
+
+        /// <summary>
         /// Gets the <see cref="ApiProfile"/> that is relevant for the documentation set. Typically, this is a coalesced
         /// profile from a previous stage.
         /// </summary>
@@ -107,17 +132,15 @@ namespace Bind.Baking
         /// <param name="parameter">The parameter documentation to bake.</param>
         /// <returns>The baked parameter.</returns>
         [NotNull]
-        private ParameterDocumentation BakeParameterDocumentation
-        (
+        private ParameterDocumentation BakeParameterDocumentation(
             [NotNull] FunctionDocumentation function,
-            [NotNull] ParameterDocumentation parameter
-        )
+            [NotNull] ParameterDocumentation parameter)
         {
             var readerSettings = new XmlReaderSettings
             {
                 ConformanceLevel = ConformanceLevel.Fragment,
                 IgnoreComments = true,
-                IgnoreWhitespace = true
+                IgnoreWhitespace = true,
             };
 
             var descriptionBuilder = new StringBuilder();
@@ -156,6 +179,7 @@ namespace Bind.Baking
 
                                 break;
                             }
+
                             case XElement element:
                             {
                                 if (element.Name == "math")
@@ -180,11 +204,13 @@ namespace Bind.Baking
                                         AppendParameterNode(descriptionBuilder, element);
                                         break;
                                     }
+
                                     case "constant":
                                     {
                                         AppendConstantNode(descriptionBuilder, function, parameter, element, greedilyConsumedNodes);
                                         break;
                                     }
+
                                     case "replaceable":
                                     case "code":
                                     case "emphasis":
@@ -192,29 +218,31 @@ namespace Bind.Baking
                                         AppendEmphasisNode(descriptionBuilder, element);
                                         break;
                                     }
+
                                     case "citerefentry":
                                     case "function":
                                     {
                                         AppendFunctionNode(descriptionBuilder, element);
                                         break;
                                     }
+
                                     case "footnote":
                                     {
                                         // Skip footnotes
                                         break;
                                     }
+
                                     default:
                                     {
-                                        throw new ArgumentOutOfRangeException
-                                        (
+                                        throw new ArgumentOutOfRangeException(
                                             nameof(node),
-                                            $"Unrecognized element class\"{elementClass}\"."
-                                        );
+                                            $"Unrecognized element class\"{elementClass}\".");
                                     }
                                 }
 
                                 break;
                             }
+
                             default:
                             {
                                 throw new ArgumentOutOfRangeException(nameof(node), "Unrecognized node type.");
@@ -235,35 +263,6 @@ namespace Bind.Baking
         }
 
         /// <summary>
-        /// Appends the contents of a parameter reference node, transformed into its best-matching XMLDoc equivalent.
-        /// </summary>
-        /// <param name="descriptionBuilder">The builder to append to.</param>
-        /// <param name="parameterNode">The node.</param>
-        private static void AppendParameterNode
-        (
-            [NotNull] StringBuilder descriptionBuilder,
-            [NotNull] XElement parameterNode
-        )
-        {
-            var parameterName = parameterNode.GetRequiredElement("code").Value;
-            descriptionBuilder.Append($"<paramref name=\"{parameterName}\"/>");
-        }
-
-        /// <summary>
-        /// Appends the contents of an emphasis node, transformed into its best-matching XMLDoc equivalent.
-        /// </summary>
-        /// <param name="descriptionBuilder">The builder to append to.</param>
-        /// <param name="emphasisNode">The node.</param>
-        private static void AppendEmphasisNode
-        (
-            [NotNull] StringBuilder descriptionBuilder,
-            [NotNull] XElement emphasisNode
-        )
-        {
-            descriptionBuilder.Append($"<i>{emphasisNode.Value}</i>");
-        }
-
-        /// <summary>
         /// Appends the contents of a function reference node, transformed into its best-matching XMLDoc equivalent.
         /// </summary>
         /// <param name="descriptionBuilder">The builder to append to.</param>
@@ -276,17 +275,9 @@ namespace Bind.Baking
             var referencedFunction =
                 _apiProfile.FindFunctionWithEntrypoint(functionNameWithoutPrefix);
 
-            if (referencedFunction is null)
-            {
-                descriptionBuilder.Append($"a function in the {functionNode.Value} set");
-            }
-            else
-            {
-                descriptionBuilder.Append
-                (
-                    $"<see cref=\"{referencedFunction.Name}\"/>"
-                );
-            }
+            descriptionBuilder.Append(referencedFunction is null
+                ? $"a function in the {functionNode.Value} set"
+                : $"<see cref=\"{referencedFunction.Name}\"/>");
         }
 
         /// <summary>
@@ -297,23 +288,19 @@ namespace Bind.Baking
         /// <param name="parameter">The parameter the node is in.</param>
         /// <param name="constantNode">The node.</param>
         /// <param name="greedilyConsumedNodes">Nodes that have been greedily consumed.</param>
-        private void AppendConstantNode
-        (
+        private void AppendConstantNode(
             [NotNull] StringBuilder descriptionBuilder,
             [NotNull] FunctionDocumentation function,
             [NotNull] ParameterDocumentation parameter,
             [NotNull] XElement constantNode,
-            [NotNull, ItemNotNull] ICollection<XNode> greedilyConsumedNodes
-        )
+            [NotNull, ItemNotNull] ICollection<XNode> greedilyConsumedNodes)
         {
             var constantName = constantNode.Value;
             if (constantName.StartsWith("GL_"))
             {
                 // It's an enum - transform its name, and look it up
-                var translatedName = _identifierTranslator.Translate
-                (
-                    constantName.Remove(0, 3)
-                );
+                var translatedName = _identifierTranslator.Translate(
+                    constantName.Remove(0, 3));
 
                 // Arbitrary number handling
                 string arbitraryNumberName = null;
@@ -356,10 +343,8 @@ namespace Bind.Baking
 
                 if (actualFunction is null)
                 {
-                    throw new InvalidOperationException
-                    (
-                        $"Could not find a function named \"{functionNameWithoutPrefix}\""
-                    );
+                    throw new InvalidOperationException(
+                        $"Could not find a function named \"{functionNameWithoutPrefix}\"");
                 }
 
                 var actualParameter =
@@ -368,37 +353,24 @@ namespace Bind.Baking
                 var typeName = actualParameter?.Type.Name;
                 if (typeName is null)
                 {
-                    Debug.WriteLine
-                    (
+                    Debug.WriteLine(
                         $"Could not find the parameter named \"{parameter.Name}\" in " +
                         $"\"{actualFunction.Name}\". Consider adding a name override to " +
-                        $"match the documentation."
-                    );
+                        "match the documentation.");
                 }
 
                 if (typeName is null || _apiProfile.Enumerations.All(e => e.Name != typeName))
                 {
                     var containingEnum = _apiProfile.FindContainingEnumeration(translatedName);
-                    if (containingEnum is null)
-                    {
-                        typeName = "Unknown";
-                    }
-                    else
-                    {
-                        typeName = containingEnum.Name;
-                    }
 
-                    Debug.WriteLine
-                    (
+                    typeName = containingEnum is null ? "Unknown" : containingEnum.Name;
+
+                    Debug.WriteLine(
                         $"Falling back to a manual enum type search for " +
-                        $"\"{translatedName}\"."
-                    );
+                        $"\"{translatedName}\".");
                 }
 
-                descriptionBuilder.Append
-                (
-                    $"<see cref=\"{typeName}.{translatedName}\"/>"
-                );
+                descriptionBuilder.Append($"<see cref=\"{typeName}.{translatedName}\"/>");
 
                 if (hasArbitraryNumberInsert)
                 {
@@ -408,10 +380,7 @@ namespace Bind.Baking
             else
             {
                 // It's a constant value of some sort - transform it to lower, and inline
-                descriptionBuilder.Append
-                (
-                    $"<value>{constantName.Transform(To.LowerCase)}</value>"
-                );
+                descriptionBuilder.Append($"<value>{constantName.Transform(To.LowerCase)}</value>");
             }
         }
     }
