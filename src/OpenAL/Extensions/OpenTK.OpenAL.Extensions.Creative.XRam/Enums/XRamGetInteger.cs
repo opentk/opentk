@@ -22,6 +22,6 @@ namespace OpenToolkit.OpenAL.Extensions.Creative.XRam
         /// <summary>
         /// Gets the amount of free X-RAM in bytes.
         /// </summary>
-        FreeRam
+        FreeRam,
     }
 }

@@ -44,7 +44,7 @@ namespace OpenToolkit.OpenAL.Extensions.Creative.XRam
         /// <inheritdoc cref="GetInteger(int)"/>
         public int GetInteger(XRamGetInteger param) => GetInteger(GetValueForEnum(param));
 
-        /// <inheritdoc cref="SetBufferMode(int, uint[], int)"/>
+        /// <inheritdoc cref="XRam.SetBufferMode(int, uint[], int)"/>
         public bool SetBufferMode(int count, in uint[] buffers, BufferStorageMode mode)
         {
             return SetBufferMode(count, in buffers, GetValueForEnum(mode));
@@ -115,10 +115,12 @@ namespace OpenToolkit.OpenAL.Extensions.Creative.XRam
                 {
                     return _ramSize;
                 }
+
                 case XRamGetInteger.FreeRam:
                 {
                     return _ramFree;
                 }
+
                 default:
                 {
                     throw new InvalidEnumArgumentException(nameof(param), (int)param, typeof(XRamGetInteger));
@@ -140,14 +142,17 @@ namespace OpenToolkit.OpenAL.Extensions.Creative.XRam
                 {
                     return _bufferStorageModeAutomatic;
                 }
+
                 case BufferStorageMode.Hardware:
                 {
                     return _bufferStorageModeHardware;
                 }
+
                 case BufferStorageMode.Accessible:
                 {
                     return _bufferStorageModeAccessible;
                 }
+
                 default:
                 {
                     throw new InvalidEnumArgumentException(nameof(mode), (int)mode, typeof(BufferStorageMode));

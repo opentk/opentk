@@ -28,6 +28,6 @@ namespace OpenToolkit.OpenAL.Extensions.Creative.XRam
         /// <summary>
         /// Force an Open AL Buffer into 'accessible' (currently host) RAM, good for streaming buffers.
         /// </summary>
-        Accessible
+        Accessible,
     }
 }
