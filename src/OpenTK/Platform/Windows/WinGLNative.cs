@@ -134,6 +134,7 @@ namespace OpenTK.Platform.Windows
                         scale_x, scale_y, scale_width, scale_height,
                         title, options, device, IntPtr.Zero),
                     null);
+
                 Functions.DragAcceptFiles(window.Handle, true);
 
                 exists = true;
@@ -753,8 +754,18 @@ namespace OpenTK.Platform.Windows
                     break;
 
                 case WindowMessage.CHAR:
+                case WindowMessage.UNICHAR:
+                    if (message == WindowMessage.UNICHAR && (int)wParam == 0xffff)
+                    {
+                        // WM_UNICHAR is not sent by Windows, but is sent by some
+                        // third-party input method engine
+                        // Returning TRUE here announces support for this message
+                        return (IntPtr)1;
+                    }
+
                     HandleChar(handle, message, wParam, lParam);
-                    break;
+
+                    return IntPtr.Zero;
 
                 case WindowMessage.MOUSEMOVE:
                     HandleMouseMove(handle, message, wParam, lParam);
