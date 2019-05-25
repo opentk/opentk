@@ -186,33 +186,8 @@ namespace OpenTK.Platform.Windows
             [MarshalAs(UnmanagedType.Bool)] bool bMenu,
             ExtendedWindowStyle dwExStyle);
 
-        [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
-        internal static extern IntPtr CreateWindowEx(
-            ExtendedWindowStyle ExStyle,
-            [MarshalAs(UnmanagedType.LPTStr)] string className,
-            [MarshalAs(UnmanagedType.LPTStr)] string windowName,
-            WindowStyle Style,
-            int X, int Y,
-            int Width, int Height,
-            IntPtr HandleToParentWindow,
-            IntPtr Menu,
-            IntPtr Instance,
-            IntPtr Param);
-        /*
-        [DllImport("user32.dll", SetLastError = true)]
-        internal static extern int CreateWindowEx(
-            [In]ExtendedWindowStyle ExStyle,
-            [In]IntPtr ClassName,
-            [In]IntPtr WindowName,
-            [In]WindowStyle Style,
-            [In]int X, [In]int Y,
-            [In]int Width, [In]int Height,
-            [In]IntPtr HandleToParentWindow,
-            [In]IntPtr Menu,
-            [In]IntPtr Instance,
-            [In]IntPtr Param);
-        */
-        [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
+       
+        [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
         internal static extern IntPtr CreateWindowEx(
             ExtendedWindowStyle ExStyle,
             IntPtr ClassAtom,
@@ -229,19 +204,22 @@ namespace OpenTK.Platform.Windows
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool DestroyWindow(IntPtr windowHandle);
 
-        [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
+        [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
         internal static extern ushort RegisterClass(ref WindowClass window_class);
 
-        [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
+        [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
         internal static extern ushort RegisterClassEx(ref ExtendedWindowClass window_class);
 
-        [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
+        [DllImport("user32.dll", SetLastError = true)]
+        internal static extern BOOL IsWindowUnicode(HWND hwnd);
+
+        [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
         internal static extern short UnregisterClass([MarshalAs(UnmanagedType.LPTStr)] LPCTSTR className, IntPtr instance);
 
-        [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
+        [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
         internal static extern short UnregisterClass(IntPtr className, IntPtr instance);
 
-        [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
+        [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
         internal static extern BOOL GetClassInfoEx(HINSTANCE hinst,
             [MarshalAs(UnmanagedType.LPTStr)] LPCTSTR lpszClass, ref ExtendedWindowClass lpwcx);
 
@@ -249,7 +227,7 @@ namespace OpenTK.Platform.Windows
         internal static extern BOOL GetClassInfoEx(HINSTANCE hinst, UIntPtr lpszClass, ref ExtendedWindowClass lpwcx);
 
         [SuppressUnmanagedCodeSecurity]
-        [DllImport("user32.dll", SetLastError = true)]
+        [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
         internal static extern LRESULT CallWindowProc(WNDPROC lpPrevWndFunc, HWND hWnd, WindowMessage Msg,
             WPARAM wParam, LPARAM lParam);
 
@@ -336,7 +314,7 @@ namespace OpenTK.Platform.Windows
         /// <param name="flags">Not used</param>
         /// <returns>True if there is a message pending.</returns>
         [System.Security.SuppressUnmanagedCodeSecurity]
-        [DllImport("User32.dll"), CLSCompliant(false)]
+        [DllImport("User32.dll", CharSet = CharSet.Unicode), CLSCompliant(false)]
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool PeekMessage(ref MSG msg, IntPtr hWnd, int messageFilterMin, int messageFilterMax, PeekMessageFlags flags);
 
@@ -354,7 +332,7 @@ namespace OpenTK.Platform.Windows
         /// To get extended error information, call GetLastError.
         /// </returns>
         [System.Security.SuppressUnmanagedCodeSecurity]
-        [DllImport("User32.dll", CharSet = CharSet.Auto), CLSCompliant(false)]
+        [DllImport("User32.dll", CharSet = CharSet.Unicode), CLSCompliant(false)]
         //[return: MarshalAs(UnmanagedType.Bool)]
         internal static extern INT GetMessage(ref MSG msg,
             IntPtr windowHandle, int messageFilterMin, int messageFilterMax);
@@ -370,12 +348,12 @@ namespace OpenTK.Platform.Windows
         [DllImport("User32.dll")]
         internal static extern int GetMessageTime();
 
-        [DllImport("user32.dll", CharSet = CharSet.Auto)]
+        [DllImport("user32.dll", CharSet = CharSet.Unicode)]
         internal static extern LRESULT SendMessage(HWND hWnd, WindowMessage Msg, WPARAM wParam, LPARAM lParam);
 
         [CLSCompliant(false)]
         [System.Security.SuppressUnmanagedCodeSecurity]
-        [DllImport("User32.dll", CharSet = CharSet.Auto)]
+        [DllImport("User32.dll", CharSet = CharSet.Unicode)]
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern BOOL PostMessage(
             HWND hWnd,
@@ -388,11 +366,11 @@ namespace OpenTK.Platform.Windows
         internal static extern void PostQuitMessage(int exitCode);
 
         [SuppressUnmanagedCodeSecurity]
-        [DllImport("User32.dll", CharSet = CharSet.Auto), CLSCompliant(false)]
+        [DllImport("User32.dll", CharSet = CharSet.Unicode), CLSCompliant(false)]
         internal static extern LRESULT DispatchMessage(ref MSG msg);
 
         [SuppressUnmanagedCodeSecurity]
-        [DllImport("User32.dll", CharSet = CharSet.Auto), CLSCompliant(false)]
+        [DllImport("User32.dll", CharSet = CharSet.Unicode), CLSCompliant(false)]
         internal static extern BOOL TranslateMessage(ref MSG lpMsg);
 
         /// <summary>
@@ -422,7 +400,7 @@ namespace OpenTK.Platform.Windows
         [DllImport("User32.dll", CharSet = CharSet.Auto)]
         internal static extern DWORD GetQueueStatus([MarshalAs(UnmanagedType.U4)] QueueStatusFlags flags);
 
-        [DllImport("User32.dll", CharSet = CharSet.Auto)]
+        [DllImport("User32.dll", CharSet = CharSet.Unicode)]
         public extern static IntPtr DefWindowProc(HWND hWnd, WindowMessage msg, IntPtr wParam, IntPtr lParam);
 
         /// <summary>
@@ -3682,6 +3660,10 @@ namespace OpenTK.Platform.Windows
         SYSCHAR = 0x0106,
         SYSDEADCHAR = 0x0107,
         KEYLAST = 0x0108,
+        UNICHAR = 0x0109,
+
+        
+
         IME_STARTCOMPOSITION = 0x010D,
         IME_ENDCOMPOSITION = 0x010E,
         IME_COMPOSITION = 0x010F,
