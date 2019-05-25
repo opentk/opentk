@@ -1,3 +1,7 @@
+### 3.1.0
+    * Fix all major bugs on mac os
+	* Fix keypress events not delivering unicode characters
+
 ### 3.0.0-pre
 	* Support for OpenGL 4.6
 	* Replaced JoystickButton enum with simple long. (breaking API change)

@@ -29,7 +29,7 @@ let project = "OpenTK"
 
 // Short summary of the project
 // (used as description in AssemblyInfo and as a short summary for NuGet package)
-let summary = "A set of fast, low-level C# bindings for OpenGL, OpenGL ES and OpenAL."
+let summary = "A set of fast, low-level C# bindings for OpenGL, OpenGL ES and OpenAL. Forked by Anego Studios."
 
 // Longer description of the project
 // (used as a description for NuGet package; line breaks are automatically cleaned up)

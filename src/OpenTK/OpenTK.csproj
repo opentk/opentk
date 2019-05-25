@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="12.0">
   <PropertyGroup>
     <ProjectType>Local</ProjectType>
     <ProductVersion>8.0.30703</ProductVersion>
@@ -783,10 +783,10 @@
     <Compile Include="Platform\MacOS\CoreVideo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <AdditionalFiles Include="$(SolutionDir)\stylecop.json">
+    <AdditionalFiles Include="$(ProjectDir)..\..\stylecop.json">
       <Link>stylecop.json</Link>
     </AdditionalFiles>
-    <AdditionalFiles Include="$(SolutionDir)\stylecop.ruleset">
+    <AdditionalFiles Include="$(ProjectDir)..\..\stylecop.ruleset">
       <Link>stylecop.ruleset</Link>
     </AdditionalFiles>
   </ItemGroup>
@@ -798,10 +798,10 @@
     </PostBuildEvent>
   </PropertyGroup>
   <Target Name="AfterBuild">
-    <Exec Condition="$(OS) == 'Windows_NT' and $(Configuration) == 'Debug'" Command="$(SolutionDir)\src\Generator.Rewrite\bin\Debug\Rewrite.exe --assembly $(TargetDir)\OpenTK.dll --signing-key $(SolutionDir)\OpenTK.snk --debug" />
-    <Exec Condition="$(OS) == 'Windows_NT' and $(Configuration) == 'Release'" Command="$(SolutionDir)\src\Generator.Rewrite\bin\Release\Rewrite.exe --assembly $(TargetDir)\OpenTK.dll --signing-key $(SolutionDir)\OpenTK.snk" />
-    <Exec Condition="$(OS) != 'Windows_NT' and $(Configuration) == 'Debug'" Command="mono $(SolutionDir)/src/Generator.Rewrite/bin/Debug/Rewrite.exe --assembly $(TargetDir)/OpenTK.dll --signing-key $(SolutionDir)/OpenTK.snk --debug" />
-    <Exec Condition="$(OS) != 'Windows_NT' and $(Configuration) == 'Release'" Command="mono $(SolutionDir)/src/Generator.Rewrite/bin/Release/Rewrite.exe --assembly $(TargetDir)/OpenTK.dll --signing-key $(SolutionDir)/OpenTK.snk" />
+    <Exec Condition="$(OS) == 'Windows_NT' and $(Configuration) == 'Debug'" Command="$(ProjectDir)..\..\src\Generator.Rewrite\bin\Debug\Rewrite.exe --assembly $(TargetDir)\OpenTK.dll --signing-key $(ProjectDir)..\..\OpenTK.snk --debug" />
+    <Exec Condition="$(OS) == 'Windows_NT' and $(Configuration) == 'Release'" Command="$(ProjectDir)..\..\src\Generator.Rewrite\bin\Release\Rewrite.exe --assembly $(TargetDir)\OpenTK.dll --signing-key $(ProjectDir)..\..\OpenTK.snk" />
+    <Exec Condition="$(OS) != 'Windows_NT' and $(Configuration) == 'Debug'" Command="mono $(ProjectDir)../../src/Generator.Rewrite/bin/Debug/Rewrite.exe --assembly $(TargetDir)/OpenTK.dll --signing-key $(ProjectDir)../../OpenTK.snk --debug" />
+    <Exec Condition="$(OS) != 'Windows_NT' and $(Configuration) == 'Release'" Command="mono $(ProjectDir)../../src/Generator.Rewrite/bin/Release/Rewrite.exe --assembly $(TargetDir)/OpenTK.dll --signing-key $(ProjectDir)../../OpenTK.snk" />
   </Target>
   <ProjectExtensions>
     <MonoDevelop>
