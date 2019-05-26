@@ -7,7 +7,6 @@
 // of the MIT license. See the LICENSE file for details.
 //
 
-using System;
 using AdvancedDLSupport;
 using OpenToolkit.Core;
 using OpenToolkit.Core.Loader;
@@ -45,7 +44,7 @@ namespace OpenToolkit.OpenAL
         public unsafe TContextExtension GetExtension<TContextExtension>(Device* device)
             where TContextExtension : ContextExtensionBase
         {
-            return ExtensionLoader.LoadContextExtension<TContextExtension>(device, this);
+            return ALExtensionLoader.LoadContextExtension<TContextExtension>(device, this);
         }
 
         /// <inheritdoc />

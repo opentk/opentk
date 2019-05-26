@@ -21,7 +21,7 @@ namespace OpenToolkit.OpenAL
     /// </summary>
     public sealed class AudioContext : IDisposable
     {
-        private static readonly ALContext ContextAPI = APILoader.Load<ALContext, OpenALLibraryNameContainer>();
+        private static readonly ALContext ContextAPI = APILoader.Load<ALContext>(new OpenALLibraryNameContainer());
 
         private static readonly object AudioContextLock = new object();
 

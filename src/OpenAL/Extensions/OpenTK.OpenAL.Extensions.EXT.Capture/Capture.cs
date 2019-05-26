@@ -9,6 +9,7 @@
 
 using System;
 using AdvancedDLSupport;
+using OpenToolkit.Core.Extensions;
 using OpenToolkit.Core.Loader;
 using OpenToolkit.OpenAL.Attributes;
 

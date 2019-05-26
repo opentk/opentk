@@ -1,0 +1,2 @@
+dotnet run -f netcoreapp20 -p "src/generators/generator.converter/generator.convert.csproj" -i https://raw.githubusercontent.com/KhronosGroup/OpenGL-Registry/master/xml/gl.xml -o src/generators/generator.bind/specifications/OpenGL/signatures.xml --prefix gl
+pause

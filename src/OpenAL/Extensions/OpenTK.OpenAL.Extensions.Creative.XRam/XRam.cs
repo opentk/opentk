@@ -11,6 +11,7 @@ using System;
 using System.Buffers;
 using System.ComponentModel;
 using AdvancedDLSupport;
+using OpenToolkit.Core.Extensions;
 using OpenToolkit.Core.Loader;
 
 // ReSharper disable VirtualMemberCallInConstructor
