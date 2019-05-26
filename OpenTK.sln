@@ -89,11 +89,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenToolkit.OpenGLES", "src
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Windowing", "Windowing", "{BBBE802B-9F6E-4299-97CE-97CDA43802B9}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenTK.Windowing.Common", "src\OpenTK.Windowing.Common\OpenTK.Windowing.Common.csproj", "{619434D1-477D-40E7-A691-AAF510D8A209}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenTK.Windowing.Common", "src\Windowing\OpenTK.Windowing.Common\OpenTK.Windowing.Common.csproj", "{619434D1-477D-40E7-A691-AAF510D8A209}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenTK.GraphicsLibraryFramework", "src\OpenTK.GraphicsLibraryFramework\OpenTK.GraphicsLibraryFramework.csproj", "{CA7C55A9-B86F-4467-A655-14D04C573E89}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenTK.GraphicsLibraryFramework", "src\Windowing\OpenTK.GraphicsLibraryFramework\OpenTK.GraphicsLibraryFramework.csproj", "{CA7C55A9-B86F-4467-A655-14D04C573E89}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenTK.Windowing.Desktop", "src\OpenTK.Windowing.Desktop\OpenTK.Windowing.Desktop.csproj", "{BB7FF73F-5143-4D57-B228-770B10CA80C6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenTK.Windowing.Desktop", "src\Windowing\OpenTK.Windowing.Desktop\OpenTK.Windowing.Desktop.csproj", "{BB7FF73F-5143-4D57-B228-770B10CA80C6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
