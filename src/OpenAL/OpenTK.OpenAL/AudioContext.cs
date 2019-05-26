@@ -327,10 +327,12 @@ namespace OpenToolkit.OpenAL
         {
             if (frequency < 0)
             {
-                throw new ArgumentOutOfRangeException(
+                throw new ArgumentOutOfRangeException
+                (
                     nameof(frequency),
                     frequency,
-                    "The frequency must be greater than zero");
+                    "The frequency must be greater than zero"
+                );
             }
 
             if (refreshRate < 0)
