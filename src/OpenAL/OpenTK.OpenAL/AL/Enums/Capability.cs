@@ -1,4 +1,13 @@
-﻿namespace OpenToolkit.OpenAL
+﻿//
+// Capability.cs
+//
+// Copyright (C) 2019 OpenTK
+//
+// This software may be modified and distributed under the terms
+// of the MIT license. See the LICENSE file for details.
+//
+
+namespace OpenToolkit.OpenAL
 {
     /// <summary>
     /// A list of valid Enable/Disable/IsEnabled parameters.
@@ -8,6 +17,6 @@
         /// <summary>
         /// Currently no state toggles exist for vanilla OpenAL and no Extension uses it.
         /// </summary>
-        Invalid = -1
+        Invalid = -1,
     }
 }

@@ -1,3 +1,12 @@
+//
+// MultiChannelBufferFormat.cs
+//
+// Copyright (C) 2019 OpenTK
+//
+// This software may be modified and distributed under the terms
+// of the MIT license. See the LICENSE file for details.
+//
+
 namespace OpenToolkit.OpenAL.Extensions.Creative.MultiChannelBuffers
 {
     /// <summary>
@@ -79,6 +88,6 @@ namespace OpenToolkit.OpenAL.Extensions.Creative.MultiChannelBuffers
         /// <summary>
         /// 1 Channel rear speaker, 8-bit data. See Quadrophonic setups.
         /// </summary>
-        MultiRear8 = 0x1207
+        MultiRear8 = 0x1207,
     }
 }

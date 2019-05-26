@@ -1,4 +1,13 @@
-﻿using OpenToolkit.Mathematics;
+﻿//
+// ReverbProperties.cs
+//
+// Copyright (C) 2019 OpenTK
+//
+// This software may be modified and distributed under the terms
+// of the MIT license. See the LICENSE file for details.
+//
+
+using OpenToolkit.Mathematics;
 
 namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
 {
@@ -118,7 +127,7 @@ namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
         public float RoomRolloffFactor { get; }
 
         /// <summary>
-        /// Gets the preset value for <see cref="Effect."/>.
+        /// Gets the preset value for <see cref="EffectInteger.ReverbDecayHFLimit"/>.
         /// </summary>
         public int DecayHFLimit { get; }
 

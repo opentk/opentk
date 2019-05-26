@@ -1,3 +1,12 @@
+//
+// EnumerateAll.cs
+//
+// Copyright (C) 2019 OpenTK
+//
+// This software may be modified and distributed under the terms
+// of the MIT license. See the LICENSE file for details.
+//
+
 using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
@@ -25,7 +34,7 @@ namespace OpenToolkit.OpenAL.Extensions.Creative.EnumerateAll
         /// <inheritdoc />
         public abstract unsafe char* GetStringList(Device* device, GetEnumerateAllContextStringList param);
 
-        /// <inheritdoc cref="GetString(void*, GetEnumerateAllContextStringList)"/>
+        /// <inheritdoc cref="GetStringList(Device*, GetEnumerateAllContextStringList)"/>
         public IEnumerable<string> GetStringList(GetEnumerateAllContextStringList param)
         {
             unsafe

@@ -1,9 +1,11 @@
-﻿/* AlFunctions.cs
- * C header: \OpenAL 1.1 SDK\include\Al.h
- * Spec: http://www.openal.org/openal_webstf/specs/Open<see cref="AL11Specification.pdf"/>
- * Copyright (c) 2008 Christoph Brandtner and Stefanos Apostolopoulos
- * See license.txt for license details
- * http://www.OpenTK.net */
+﻿//
+// AL.cs
+//
+// Copyright (C) 2019 OpenTK
+//
+// This software may be modified and distributed under the terms
+// of the MIT license. See the LICENSE file for details.
+//
 
 using System;
 using AdvancedDLSupport;
@@ -19,6 +21,15 @@ namespace OpenToolkit.OpenAL
     /// </summary>
     public abstract class AL : NativeLibraryBase, IAL
     {
+        /// <summary>
+        /// Gets an instance of the API.
+        /// </summary>
+        /// <returns>The instance.</returns>
+        public static AL GetAPI()
+        {
+            return APILoader.Load<AL, OpenALLibraryNameContainer>();
+        }
+
         /// <inheritdoc cref="NativeLibraryBase"/>
         protected AL(string path, ImplementationOptions options)
             : base(path, options)
@@ -30,7 +41,8 @@ namespace OpenToolkit.OpenAL
         /// </summary>
         /// <typeparam name="TExtension">The extension type.</typeparam>
         /// <returns>The extension.</returns>
-        public TExtension GetExtension<TExtension>() where TExtension : ExtensionBase
+        public TExtension GetExtension<TExtension>()
+            where TExtension : ExtensionBase
         {
             return ExtensionLoader.LoadExtension<TExtension>(this);
         }
@@ -446,7 +458,7 @@ namespace OpenToolkit.OpenAL
         /// <summary>
         /// Queues a set of buffers on the source. All buffers attached to a source will be played in sequence, and the
         /// number of processed buffers can be detected using a call to
-        /// <see cref="GetSourceProperty(uint,OpenToolkit.OpenAL.SourceFloat,out int)"/>.
+        /// <see cref="GetSourceProperty(uint, SourceFloat, out float)"/>.
         /// </summary>
         /// <param name="source">The source.</param>
         /// <param name="buffers">The buffers.</param>
@@ -466,7 +478,7 @@ namespace OpenToolkit.OpenAL
 
         /// <summary>
         /// Unqueues a set of buffers on the source. The number of processed buffers can be detected using a call to
-        /// <see cref="GetSourceProperty(uint,SourceInteger,out int)"/>, which is the maximum number of
+        /// <see cref="GetSourceProperty(uint, GetSourceInteger, out int)"/>, which is the maximum number of
         /// buffers that can be unqueued during this call.
         /// </summary>
         /// <param name="source">The source.</param>
@@ -514,14 +526,5 @@ namespace OpenToolkit.OpenAL
 
         /// <inheritdoc />
         public abstract void SpeedOfSound(float value);
-
-        /// <summary>
-        /// Gets an instance of the API.
-        /// </summary>
-        /// <returns>The instance.</returns>
-        public static AL GetAPI()
-        {
-            return APILoader.Load<AL>(new OpenALLibraryNameContainer());
-        }
     }
 }

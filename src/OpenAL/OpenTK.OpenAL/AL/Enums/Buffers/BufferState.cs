@@ -1,4 +1,13 @@
-﻿namespace OpenToolkit.OpenAL
+﻿//
+// BufferState.cs
+//
+// Copyright (C) 2019 OpenTK
+//
+// This software may be modified and distributed under the terms
+// of the MIT license. See the LICENSE file for details.
+//
+
+namespace OpenToolkit.OpenAL
 {
     /// <summary>
     /// Buffer state. Not supported for public use (yet).
@@ -18,6 +27,6 @@
         /// <summary>
         /// Buffer state. Not supported for public use (yet).
         /// </summary>
-        Processed = 0x2012
+        Processed = 0x2012,
     }
 }

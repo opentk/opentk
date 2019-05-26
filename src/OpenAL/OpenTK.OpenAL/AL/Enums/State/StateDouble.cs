@@ -1,4 +1,13 @@
-﻿using OpenToolkit.OpenAL.Interfaces;
+﻿//
+// StateDouble.cs
+//
+// Copyright (C) 2019 OpenTK
+//
+// This software may be modified and distributed under the terms
+// of the MIT license. See the LICENSE file for details.
+//
+
+using OpenToolkit.OpenAL.Interfaces;
 
 namespace OpenToolkit.OpenAL
 {
@@ -15,6 +24,6 @@ namespace OpenToolkit.OpenAL
         /// <summary>
         /// The speed at which sound waves are assumed to travel, when calculating the doppler effect.
         /// </summary>
-        SpeedOfSound = 0xC003
+        SpeedOfSound = 0xC003,
     }
 }

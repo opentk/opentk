@@ -1,4 +1,13 @@
-﻿namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
+﻿//
+// EffectInteger.cs
+//
+// Copyright (C) 2019 OpenTK
+//
+// This software may be modified and distributed under the terms
+// of the MIT license. See the LICENSE file for details.
+//
+
+namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
 {
     /// <summary>
     /// A list of valid Int32 Effect/GetEffect parameters.
@@ -114,6 +123,6 @@
         /// <summary>
         /// Used with the enum EfxEffectType as it's parameter.
         /// </summary>
-        EffectType = 0x8001
+        EffectType = 0x8001,
     }
 }

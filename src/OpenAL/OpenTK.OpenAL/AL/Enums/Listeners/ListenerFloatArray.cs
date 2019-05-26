@@ -1,4 +1,13 @@
-﻿namespace OpenToolkit.OpenAL
+﻿//
+// ListenerFloatArray.cs
+//
+// Copyright (C) 2019 OpenTK
+//
+// This software may be modified and distributed under the terms
+// of the MIT license. See the LICENSE file for details.
+//
+
+namespace OpenToolkit.OpenAL
 {
     /// <summary>
     /// A list of valid float[] Listener/GetListener parameters.
@@ -8,6 +17,6 @@
         /// <summary>
         /// Indicate Listener orientation. Expects two Vector3, At followed by Up.
         /// </summary>
-        Orientation = 0x100F
+        Orientation = 0x100F,
     }
 }

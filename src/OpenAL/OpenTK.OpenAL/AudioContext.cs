@@ -1,26 +1,10 @@
 ﻿//
-// The Open Toolkit Library License
+// AudioContext.cs
 //
-// Copyright (c) 2006 - 2009 the Open Toolkit library.
+// Copyright (C) 2019 OpenTK
 //
-// Permission is hereby granted, free of charge, to any person obtaining a copy
-// of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights to
-// use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
-// the Software, and to permit persons to whom the Software is furnished to do
-// so, subject to the following conditions:
-//
-// The above copyright notice and this permission notice shall be included in all
-// copies or substantial portions of the Software.
-//
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-// EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
-// OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-// NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
-// HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
-// WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
-// FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
-// OTHER DEALINGS IN THE SOFTWARE.
+// This software may be modified and distributed under the terms
+// of the MIT license. See the LICENSE file for details.
 //
 
 using System;
@@ -51,6 +35,66 @@ namespace OpenToolkit.OpenAL
         private bool _disposed;
         private bool _isProcessing;
         private bool _isSynchronized;
+
+        /// <summary>
+        /// Gets the OpenToolkit.Audio.AudioContext which is current in the application.
+        /// </summary>
+        /// <remarks>
+        /// Only one AudioContext can be current in the application at any time,
+        ///  <b>regardless of the number of threads</b>.
+        /// </remarks>
+        public static AudioContext CurrentContext
+        {
+            get
+            {
+                lock (AudioContextLock)
+                {
+                    if (AvailableContexts.Count == 0)
+                    {
+                        return null;
+                    }
+
+                    AvailableContexts.TryGetValue(ContextAPI.GetCurrentContextHandle(), out var context);
+                    return context;
+                }
+            }
+        }
+
+        /// \internal
+        /// <summary>
+        /// Makes the specified AudioContext current in the calling thread.
+        /// </summary>
+        /// <param name="context">The OpenToolkit.Audio.AudioContext to make current, or null.</param>
+        /// <exception cref="ObjectDisposedException">
+        /// Occurs if this function is called after the AudioContext has been disposed.
+        /// </exception>
+        /// <exception cref="AudioContextException">
+        /// Occurs when the AudioContext could not be made current.
+        /// </exception>
+        private static void MakeCurrent(AudioContext context)
+        {
+            lock (AudioContextLock)
+            {
+                unsafe
+                {
+                    var contextHandle = context?._contextHandle ?? ContextHandle.Zero;
+
+                    if (ContextAPI.MakeContextCurrent(contextHandle))
+                    {
+                        return;
+                    }
+
+                    var contextPtr = (Context*)contextHandle.Handle;
+                    var deviceHandle = ContextAPI.GetContextsDevice(contextPtr);
+                    var error = ContextAPI.GetError(deviceHandle);
+
+                    throw new AudioContextException
+                    (
+                        $"ALC {error} error detected at {(context != null ? context.ToString() : "null")}."
+                    );
+                }
+            }
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AudioContext"/> class using the default audio device.
@@ -256,30 +300,6 @@ namespace OpenToolkit.OpenAL
         }
 
         /// <summary>
-        /// Gets the OpenToolkit.Audio.AudioContext which is current in the application.
-        /// </summary>
-        /// <remarks>
-        /// Only one AudioContext can be current in the application at any time,
-        ///  <b>regardless of the number of threads</b>.
-        /// </remarks>
-        public static AudioContext CurrentContext
-        {
-            get
-            {
-                lock (AudioContextLock)
-                {
-                    if (AvailableContexts.Count == 0)
-                    {
-                        return null;
-                    }
-
-                    AvailableContexts.TryGetValue(ContextAPI.GetCurrentContextHandle(), out var context);
-                    return context;
-                }
-            }
-        }
-
-        /// <summary>
         /// Creates the audio context using the specified device.
         /// </summary>
         /// <param name="device">
@@ -431,39 +451,6 @@ namespace OpenToolkit.OpenAL
             {
                 AvailableContexts.Add(_contextHandle, this);
                 _contextExists = true;
-            }
-        }
-
-        /// \internal
-        /// <summary>
-        /// Makes the specified AudioContext current in the calling thread.
-        /// </summary>
-        /// <param name="context">The OpenToolkit.Audio.AudioContext to make current, or null.</param>
-        /// <exception cref="ObjectDisposedException">
-        /// Occurs if this function is called after the AudioContext has been disposed.
-        /// </exception>
-        /// <exception cref="AudioContextException">
-        /// Occurs when the AudioContext could not be made current.
-        /// </exception>
-        private static void MakeCurrent(AudioContext context)
-        {
-            lock (AudioContextLock)
-            {
-                unsafe
-                {
-                    var contextHandle = context?._contextHandle ?? ContextHandle.Zero;
-                    if (!ContextAPI.MakeContextCurrent(contextHandle))
-                    {
-                        var contextPtr = (Context*)contextHandle.Handle;
-                        var deviceHandle = ContextAPI.GetContextsDevice(contextPtr);
-                        var error = ContextAPI.GetError(deviceHandle);
-
-                        throw new AudioContextException
-                        (
-                            $"ALC {error} error detected at {(context != null ? context.ToString() : "null")}."
-                        );
-                    }
-                }
             }
         }
 
@@ -623,6 +610,7 @@ namespace OpenToolkit.OpenAL
                         ContextAPI.CloseDevice(Device);
                     }
                 }
+
                 _disposed = true;
             }
         }

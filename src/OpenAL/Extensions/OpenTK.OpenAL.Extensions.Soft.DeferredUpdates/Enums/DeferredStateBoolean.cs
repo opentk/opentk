@@ -1,9 +1,16 @@
-using OpenToolkit.OpenAL.Interfaces;
+//
+// DeferredStateBoolean.cs
+//
+// Copyright (C) 2019 OpenTK
+//
+// This software may be modified and distributed under the terms
+// of the MIT license. See the LICENSE file for details.
+//
 
 namespace OpenToolkit.OpenAL.Extensions.Soft.DeferredUpdates
 {
     /// <summary>
-    /// A list of valid <see cref="bool"/> <see cref="IState.GetBoolean"/> parameters.
+    /// A list of valid <see cref="bool"/> <see cref="IDeferredUpdatesState.GetBoolean"/> parameters.
     /// </summary>
     public enum DeferredStateBoolean
     {

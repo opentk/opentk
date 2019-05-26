@@ -1,3 +1,12 @@
+//
+// EFXSourceFloat.cs
+//
+// Copyright (C) 2019 OpenTK
+//
+// This software may be modified and distributed under the terms
+// of the MIT license. See the LICENSE file for details.
+//
+
 namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
 {
     /// <summary>
@@ -33,6 +42,6 @@ namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
         /// listener is directly in front of the source; it is attenuated as the listener circles the Source away from the
         /// front.
         /// </summary>
-        ConeOuterGainHighFrequency = 0x20009
+        ConeOuterGainHighFrequency = 0x20009,
     }
 }

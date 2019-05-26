@@ -1,4 +1,13 @@
-﻿namespace OpenToolkit.OpenAL
+﻿//
+// SourceVector3.cs
+//
+// Copyright (C) 2019 OpenTK
+//
+// This software may be modified and distributed under the terms
+// of the MIT license. See the LICENSE file for details.
+//
+
+namespace OpenToolkit.OpenAL
 {
     /// <summary>
     /// A list of valid Math.Vector3 Source/GetSource parameters.
@@ -21,6 +30,6 @@
         /// <summary>
         /// Specify the current direction vector.
         /// </summary>
-        Direction = 0x1005
+        Direction = 0x1005,
     }
 }

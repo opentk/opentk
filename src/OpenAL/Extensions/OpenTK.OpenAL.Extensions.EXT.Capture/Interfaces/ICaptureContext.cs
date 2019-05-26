@@ -1,3 +1,12 @@
+//
+// ICaptureContext
+//
+// Copyright (C) 2019 OpenTK
+//
+// This software may be modified and distributed under the terms
+// of the MIT license. See the LICENSE file for details.
+//
+
 using AdvancedDLSupport;
 
 namespace OpenToolkit.OpenAL.Extensions.EXT.Capture
@@ -30,7 +39,7 @@ namespace OpenToolkit.OpenAL.Extensions.EXT.Capture
         ///
         /// CaptureStart will begin recording to an internal ring buffer of the size specified when opening the capture
         /// device. The application can then retrieve the number of samples currently available using
-        /// <see cref="GetCaptureContextInteger.CaptureSamples"/> with <see cref="IContextState.GetInteger"/>
+        /// <see cref="GetCaptureContextInteger.CaptureSamples"/> with <see cref="ICaptureContextState.GetContextProperty"/>
         ///
         /// When the application determines that enough samples are available for processing, then it can obtain them
         /// with a call to <see cref="CaptureSamples"/>.

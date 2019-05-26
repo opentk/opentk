@@ -1,4 +1,13 @@
-﻿namespace OpenToolkit.OpenAL
+﻿//
+// DistanceModel.cs
+//
+// Copyright (C) 2019 OpenTK
+//
+// This software may be modified and distributed under the terms
+// of the MIT license. See the LICENSE file for details.
+//
+
+namespace OpenToolkit.OpenAL
 {
     /// <summary>
     /// Used by AL.DistanceModel(), the distance model can be retrieved by AL.Get() with
@@ -41,6 +50,6 @@
         /// <summary>
         /// AL_EXT_EXPONENT_DISTANCE extension.
         /// </summary>
-        ExponentDistanceClamped = 0xD006
+        ExponentDistanceClamped = 0xD006,
     }
 }

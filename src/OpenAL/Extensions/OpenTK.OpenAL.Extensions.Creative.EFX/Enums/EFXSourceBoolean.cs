@@ -1,3 +1,12 @@
+//
+// EFXSourceBoolean.cs
+//
+// Copyright (C) 2019 OpenTK
+//
+// This software may be modified and distributed under the terms
+// of the MIT license. See the LICENSE file for details.
+//
+
 namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
 {
     /// <summary>
@@ -31,6 +40,6 @@ namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
         /// directivity as set by the Sourcef.ConeOuterGainHF property. If this property is AL_FALSE, the Source’s reflected
         /// sound is not filtered at all according to the Source’s directivity.
         /// </summary>
-        AuxiliarySendFilterGainHighFrequencyAuto = 0x2000C
+        AuxiliarySendFilterGainHighFrequencyAuto = 0x2000C,
     }
 }

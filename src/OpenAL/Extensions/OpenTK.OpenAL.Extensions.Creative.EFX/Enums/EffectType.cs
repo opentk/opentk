@@ -1,4 +1,13 @@
-﻿namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
+﻿//
+// EffectType.cs
+//
+// Copyright (C) 2019 OpenTK
+//
+// This software may be modified and distributed under the terms
+// of the MIT license. See the LICENSE file for details.
+//
+
+namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
 {
     /// <summary>
     /// Effect type definitions to be used with EfxEffecti.EffectType.
@@ -83,6 +92,6 @@
         /// The EAX Reverb has a more advanced parameter set than EfxEffectType.Reverb, but is only natively supported on
         /// devices that support the EAX 3.0 or above.
         /// </summary>
-        EaxReverb = 0x8000
+        EaxReverb = 0x8000,
     }
 }
