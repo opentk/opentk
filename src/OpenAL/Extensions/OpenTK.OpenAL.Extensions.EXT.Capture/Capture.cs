@@ -111,9 +111,11 @@ namespace OpenToolkit.OpenAL.Extensions.EXT.Capture
 
             if (buffer.Length < managedBufferElementCount)
             {
-                throw new ArgumentException(
+                throw new ArgumentException
+                (
                     "The buffer wasn't large enough to contain all of the requested samples.",
-                    nameof(buffer));
+                    nameof(buffer)
+                );
             }
 
             fixed (void* ptr = buffer)

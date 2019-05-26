@@ -157,7 +157,8 @@ namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
         /// <param name="lfReference">See <see cref="LFReference"/>.</param>
         /// <param name="roomRolloffFactor">See <see cref="RoomRolloffFactor"/>.</param>
         /// <param name="decayHFLimit">See <see cref="DecayHFLimit"/>.</param>
-        public ReverbProperties(
+        public ReverbProperties
+        (
             float density,
             float diffusion,
             float gain,
@@ -180,7 +181,8 @@ namespace OpenToolkit.OpenAL.Extensions.Creative.EFX
             float hfReference,
             float lfReference,
             float roomRolloffFactor,
-            int decayHFLimit)
+            int decayHFLimit
+        )
         {
             Density = density;
             Diffusion = diffusion;

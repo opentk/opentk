@@ -335,10 +335,12 @@ namespace OpenToolkit.OpenAL
 
             if (refreshRate < 0)
             {
-                throw new ArgumentOutOfRangeException(
+                throw new ArgumentOutOfRangeException
+                (
                     nameof(refreshRate),
                     refreshRate,
-                    "The refresh rate must be greater than zero.");
+                    "The refresh rate must be greater than zero."
+                );
             }
 
             // Build the attribute list
@@ -412,9 +414,11 @@ namespace OpenToolkit.OpenAL
             if (Device == null)
             {
                 _deviceName = "None";
-                throw new AudioDeviceException(
+                throw new AudioDeviceException
+                (
                     $"Audio device '{(string.IsNullOrEmpty(device) ? "default" : device)}' does not exist or" +
-                    "is tied up by another application.");
+                    "is tied up by another application."
+                );
             }
 
             CheckErrors();
@@ -427,8 +431,10 @@ namespace OpenToolkit.OpenAL
             if (_contextHandle == ContextHandle.Zero)
             {
                 ContextAPI.CloseDevice(Device);
-                throw new AudioContextException(
-                    "The audio context could not be created with the specified parameters.");
+                throw new AudioContextException
+                (
+                    "The audio context could not be created with the specified parameters."
+                );
             }
 
             CheckErrors();
