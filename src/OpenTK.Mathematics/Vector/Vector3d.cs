@@ -22,6 +22,7 @@ SOFTWARE.
 
 using System;
 using System.Globalization;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Xml.Serialization;
 
@@ -492,30 +493,6 @@ namespace OpenToolkit.Mathematics
         public static void MagnitudeMax(ref Vector3d left, ref Vector3d right, out Vector3d result)
         {
             result = left.LengthSquared >= right.LengthSquared ? left : right;
-        }
-
-        /// <summary>
-        /// Returns the Vector3d with the minimum magnitude.
-        /// </summary>
-        /// <param name="left">Left operand.</param>
-        /// <param name="right">Right operand.</param>
-        /// <returns>The minimum Vector3.</returns>
-        [Obsolete("Use MagnitudeMin() instead.")]
-        public static Vector3d Min(Vector3d left, Vector3d right)
-        {
-            return left.LengthSquared < right.LengthSquared ? left : right;
-        }
-
-        /// <summary>
-        /// Returns the Vector3d with the minimum magnitude.
-        /// </summary>
-        /// <param name="left">Left operand.</param>
-        /// <param name="right">Right operand.</param>
-        /// <returns>The minimum Vector3.</returns>
-        [Obsolete("Use MagnitudeMax() instead.")]
-        public static Vector3d Max(Vector3d left, Vector3d right)
-        {
-            return left.LengthSquared >= right.LengthSquared ? left : right;
         }
 
         /// <summary>
@@ -1049,7 +1026,7 @@ namespace OpenToolkit.Mathematics
         [XmlIgnore]
         public Vector2d Xy
         {
-            get => new Vector2d(X, Y);
+            get => Unsafe.As<Vector3d, Vector2d>(ref this);
             set
             {
                 X = value.X;

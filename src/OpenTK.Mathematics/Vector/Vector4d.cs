@@ -22,6 +22,7 @@ SOFTWARE.
 
 using System;
 using System.Globalization;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Xml.Serialization;
 
@@ -445,68 +446,6 @@ namespace OpenToolkit.Mathematics
         }
 
         /// <summary>
-        /// Calculate the component-wise minimum of two vectors.
-        /// </summary>
-        /// <param name="a">First operand.</param>
-        /// <param name="b">Second operand.</param>
-        /// <returns>The component-wise minimum.</returns>
-        [Obsolete("Use ComponentMin() instead.")]
-        public static Vector4d Min(Vector4d a, Vector4d b)
-        {
-            a.X = a.X < b.X ? a.X : b.X;
-            a.Y = a.Y < b.Y ? a.Y : b.Y;
-            a.Z = a.Z < b.Z ? a.Z : b.Z;
-            a.W = a.W < b.W ? a.W : b.W;
-            return a;
-        }
-
-        /// <summary>
-        /// Calculate the component-wise minimum of two vectors.
-        /// </summary>
-        /// <param name="a">First operand.</param>
-        /// <param name="b">Second operand.</param>
-        /// <param name="result">The component-wise minimum.</param>
-        [Obsolete("Use ComponentMin() instead.")]
-        public static void Min(ref Vector4d a, ref Vector4d b, out Vector4d result)
-        {
-            result.X = a.X < b.X ? a.X : b.X;
-            result.Y = a.Y < b.Y ? a.Y : b.Y;
-            result.Z = a.Z < b.Z ? a.Z : b.Z;
-            result.W = a.W < b.W ? a.W : b.W;
-        }
-
-        /// <summary>
-        /// Calculate the component-wise maximum of two vectors.
-        /// </summary>
-        /// <param name="a">First operand.</param>
-        /// <param name="b">Second operand.</param>
-        /// <returns>The component-wise maximum.</returns>
-        [Obsolete("Use ComponentMax() instead.")]
-        public static Vector4d Max(Vector4d a, Vector4d b)
-        {
-            a.X = a.X > b.X ? a.X : b.X;
-            a.Y = a.Y > b.Y ? a.Y : b.Y;
-            a.Z = a.Z > b.Z ? a.Z : b.Z;
-            a.W = a.W > b.W ? a.W : b.W;
-            return a;
-        }
-
-        /// <summary>
-        /// Calculate the component-wise maximum of two vectors.
-        /// </summary>
-        /// <param name="a">First operand.</param>
-        /// <param name="b">Second operand.</param>
-        /// <param name="result">The component-wise maximum.</param>
-        [Obsolete("Use ComponentMax() instead.")]
-        public static void Max(ref Vector4d a, ref Vector4d b, out Vector4d result)
-        {
-            result.X = a.X > b.X ? a.X : b.X;
-            result.Y = a.Y > b.Y ? a.Y : b.Y;
-            result.Z = a.Z > b.Z ? a.Z : b.Z;
-            result.W = a.W > b.W ? a.W : b.W;
-        }
-
-        /// <summary>
         /// Returns a vector created from the smallest of the corresponding components of the given vectors.
         /// </summary>
         /// <param name="a">First operand.</param>
@@ -863,7 +802,7 @@ namespace OpenToolkit.Mathematics
         [XmlIgnore]
         public Vector2d Xy
         {
-            get => new Vector2d(X, Y);
+            get => Unsafe.As<Vector4d, Vector2d>(ref this);
             set
             {
                 X = value.X;
@@ -1031,7 +970,7 @@ namespace OpenToolkit.Mathematics
         [XmlIgnore]
         public Vector3d Xyz
         {
-            get => new Vector3d(X, Y, Z);
+            get => Unsafe.As<Vector4d, Vector3d>(ref this);
             set
             {
                 X = value.X;

@@ -58,16 +58,6 @@ stringstyle=\color{redstrings},
 basicstyle=\ttfamily\small,
 }
 
-\newsavebox\mybox
-\savebox\mybox{\tikz[color=gray,opacity=0.3]\node{DRAFT};}
-\newwatermark*[
-  allpages,
-  angle=45,
-  scale=6,
-  xpos=-20,
-  ypos=15
-]{\usebox\mybox}
-
 % ======
 % Custom lists
 % ======
@@ -252,7 +242,7 @@ basicstyle=\ttfamily\small,
 \date
 {
     \today\\
-    Version 1.0.0
+    Version 1.0.1
 }
 
 \begin{document}
@@ -634,7 +624,7 @@ Files shall contain a file header, containing the following text.
 // 
 //  <filename>
 //
-//  Copyright (C) <year of creation> OpenTK
+//  Copyright (C) OpenTK
 //
 //  This software may be modified and distributed under the terms
 //  of the MIT license. See the LICENSE file for details.

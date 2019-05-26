@@ -450,68 +450,6 @@ namespace OpenToolkit.Mathematics
         }
 
         /// <summary>
-        /// Calculate the component-wise minimum of two vectors.
-        /// </summary>
-        /// <param name="a">First operand.</param>
-        /// <param name="b">Second operand.</param>
-        /// <returns>The component-wise minimum.</returns>
-        [Obsolete("Use ComponentMin() instead.")]
-        public static Vector4 Min(Vector4 a, Vector4 b)
-        {
-            a.X = a.X < b.X ? a.X : b.X;
-            a.Y = a.Y < b.Y ? a.Y : b.Y;
-            a.Z = a.Z < b.Z ? a.Z : b.Z;
-            a.W = a.W < b.W ? a.W : b.W;
-            return a;
-        }
-
-        /// <summary>
-        /// Calculate the component-wise minimum of two vectors.
-        /// </summary>
-        /// <param name="a">First operand.</param>
-        /// <param name="b">Second operand.</param>
-        /// <param name="result">The component-wise minimum.</param>
-        [Obsolete("Use ComponentMin() instead.")]
-        public static void Min(ref Vector4 a, ref Vector4 b, out Vector4 result)
-        {
-            result.X = a.X < b.X ? a.X : b.X;
-            result.Y = a.Y < b.Y ? a.Y : b.Y;
-            result.Z = a.Z < b.Z ? a.Z : b.Z;
-            result.W = a.W < b.W ? a.W : b.W;
-        }
-
-        /// <summary>
-        /// Calculate the component-wise maximum of two vectors.
-        /// </summary>
-        /// <param name="a">First operand.</param>
-        /// <param name="b">Second operand.</param>
-        /// <returns>The component-wise maximum.</returns>
-        [Obsolete("Use ComponentMax() instead.")]
-        public static Vector4 Max(Vector4 a, Vector4 b)
-        {
-            a.X = a.X > b.X ? a.X : b.X;
-            a.Y = a.Y > b.Y ? a.Y : b.Y;
-            a.Z = a.Z > b.Z ? a.Z : b.Z;
-            a.W = a.W > b.W ? a.W : b.W;
-            return a;
-        }
-
-        /// <summary>
-        /// Calculate the component-wise maximum of two vectors.
-        /// </summary>
-        /// <param name="a">First operand.</param>
-        /// <param name="b">Second operand.</param>
-        /// <param name="result">The component-wise maximum.</param>
-        [Obsolete("Use ComponentMax() instead.")]
-        public static void Max(ref Vector4 a, ref Vector4 b, out Vector4 result)
-        {
-            result.X = a.X > b.X ? a.X : b.X;
-            result.Y = a.Y > b.Y ? a.Y : b.Y;
-            result.Z = a.Z > b.Z ? a.Z : b.Z;
-            result.W = a.W > b.W ? a.W : b.W;
-        }
-
-        /// <summary>
         /// Returns a vector created from the smallest of the corresponding components of the given vectors.
         /// </summary>
         /// <param name="a">First operand.</param>
@@ -899,7 +837,7 @@ namespace OpenToolkit.Mathematics
         [XmlIgnore]
         public Vector2 Xy
         {
-            get => new Vector2(X, Y);
+            get => Unsafe.As<Vector4, Vector2>(ref this);
             set
             {
                 X = value.X;
@@ -1067,7 +1005,7 @@ namespace OpenToolkit.Mathematics
         [XmlIgnore]
         public Vector3 Xyz
         {
-            get => new Vector3(X, Y, Z);
+            get => Unsafe.As<Vector4, Vector3>(ref this);
             set
             {
                 X = value.X;
@@ -2042,16 +1980,11 @@ namespace OpenToolkit.Mathematics
         /// Returns this Vector4 as a Color4. The resulting struct will have RGBA mapped to XYZW, in that order.
         /// </summary>
         /// <param name="v">The Vector4 to convert.</param>
-        /// <returns>The Vector4 converted to a Color4.</returns>
+        /// <returns>The Vector4, converted to a Color4.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static explicit operator Color4(Vector4 v)
         {
-            unsafe
-            {
-                // Because these structs are identical on the byte-level (due to the StructLayout above),
-                // we can use pointer-casting to convert this into a Color4, which lets us reinterpret the data instead of copying it to a new struct.
-                return *((Color4*)&v);
-            }
+            return Unsafe.As<Vector4, Color4>(ref v);
         }
 
         private static readonly string ListSeparator = CultureInfo.CurrentCulture.TextInfo.ListSeparator;

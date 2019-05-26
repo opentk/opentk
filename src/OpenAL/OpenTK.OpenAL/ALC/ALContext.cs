@@ -32,7 +32,7 @@ namespace OpenToolkit.OpenAL
         /// <returns>The extension.</returns>
         public unsafe TContextExtension GetExtension<TContextExtension>(Device* device) where TContextExtension : ContextExtensionBase
         {
-            return ExtensionLoader.LoadContextExtension<TContextExtension>(device, this);
+            return ALExtensionLoader.LoadContextExtension<TContextExtension>(device, this);
         }
 
         /// <inheritdoc />
@@ -110,7 +110,7 @@ namespace OpenToolkit.OpenAL
         /// <returns>The instance.</returns>
         public static ALContext GetAPI()
         {
-            return APILoader.Load<ALContext, OpenALLibraryNameContainer>();
+            return APILoader.Load<ALContext>(new OpenALLibraryNameContainer());
         }
     }
 }

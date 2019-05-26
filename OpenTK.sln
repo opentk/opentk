@@ -15,11 +15,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "project", "project", "{5EEE
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "documentation", "documentation", "{4EAF040E-2FBB-4D5A-8DE0-ED5872F173E2}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Generator.Bind", "src\Generator.Bind\Generator.Bind.csproj", "{4828A378-F24E-4BB0-BF5F-C4C6C9082081}"
+
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Generator.Bind", "src\Generators\Generator.Bind\Generator.Bind.csproj", "{4828A378-F24E-4BB0-BF5F-C4C6C9082081}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenTK.Input", "src\OpenTK.Input\OpenTK.Input.csproj", "{FD2151DE-0663-4100-9AB5-D1E22CF2144D}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenTK.NT", "src\OpenTK.NT\OpenTK.NT.csproj", "{E970F684-E8B3-4FDD-BC8F-7B12A8EBA403}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenTK.Mathematics", "src\OpenTK.Mathematics\OpenTK.Mathematics.csproj", "{517AC4BF-6AF5-415D-B11C-FC6FE6710336}"
 EndProject
@@ -41,8 +40,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ci-config", "ci-config", "{
 		.travis.yml = .travis.yml
 		appveyor.yml = appveyor.yml
 	EndProjectSection
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Generator.Rewrite", "src\Generator.Rewrite\Generator.Rewrite.csproj", "{D7C9759E-D5D6-49EA-A993-CA2EDDE8277C}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "OpenAL", "OpenAL", "{96B6F0C8-BB91-4092-8561-F6801910DCEF}"
 EndProject
@@ -80,6 +77,16 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenTK.OpenAL.Extensions.EX
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenTK.OpenAL.Extensions.EXT.Capture.Enumeration", "src\OpenAL\Extensions\OpenTK.OpenAL.Extensions.EXT.Capture.Enumeration\OpenTK.OpenAL.Extensions.EXT.Capture.Enumeration.csproj", "{2E39B827-1513-4B77-B80A-0BA87DBC199F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Generator.Convert", "src\Generators\Generator.Converter\Generator.Convert.csproj", "{79AAF02C-CACC-46FC-BADB-8CA3858C3CA2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "OpenGL", "OpenGL", "{00962052-26B6-4B29-BA72-6EF98E944EE1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenToolkit.OpenGL", "src\OpenGL\OpenToolkit.OpenGL\OpenToolkit.OpenGL.csproj", "{1FC04DAC-DF84-41BB-921A-35227FBF58DF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenToolkit.OpenGL.Core", "src\OpenGL\OpenToolkit.OpenGL.Core\OpenToolkit.OpenGL.Core.csproj", "{1BA5A86D-8EB9-4ADE-AFB1-67E849F9990B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenToolkit.OpenGLES", "src\OpenGL\OpenToolkit.OpenGLES\OpenToolkit.OpenGLES.csproj", "{C3968522-8B64-48D6-A2BF-06B37D04CCF0}"
+EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Windowing", "Windowing", "{BBBE802B-9F6E-4299-97CE-97CDA43802B9}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenTK.Windowing.Common", "src\OpenTK.Windowing.Common\OpenTK.Windowing.Common.csproj", "{619434D1-477D-40E7-A691-AAF510D8A209}"
@@ -102,10 +109,6 @@ Global
 		{FD2151DE-0663-4100-9AB5-D1E22CF2144D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FD2151DE-0663-4100-9AB5-D1E22CF2144D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FD2151DE-0663-4100-9AB5-D1E22CF2144D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E970F684-E8B3-4FDD-BC8F-7B12A8EBA403}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E970F684-E8B3-4FDD-BC8F-7B12A8EBA403}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E970F684-E8B3-4FDD-BC8F-7B12A8EBA403}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E970F684-E8B3-4FDD-BC8F-7B12A8EBA403}.Release|Any CPU.Build.0 = Release|Any CPU
 		{517AC4BF-6AF5-415D-B11C-FC6FE6710336}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{517AC4BF-6AF5-415D-B11C-FC6FE6710336}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{517AC4BF-6AF5-415D-B11C-FC6FE6710336}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -118,10 +121,6 @@ Global
 		{30B46B07-2836-4862-B7FA-A158B581F83E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{30B46B07-2836-4862-B7FA-A158B581F83E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{30B46B07-2836-4862-B7FA-A158B581F83E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D7C9759E-D5D6-49EA-A993-CA2EDDE8277C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D7C9759E-D5D6-49EA-A993-CA2EDDE8277C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D7C9759E-D5D6-49EA-A993-CA2EDDE8277C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D7C9759E-D5D6-49EA-A993-CA2EDDE8277C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{ED3C687C-6FDC-47EE-81BE-314A3A4CD892}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{ED3C687C-6FDC-47EE-81BE-314A3A4CD892}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ED3C687C-6FDC-47EE-81BE-314A3A4CD892}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -198,6 +197,22 @@ Global
 		{BB7FF73F-5143-4D57-B228-770B10CA80C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BB7FF73F-5143-4D57-B228-770B10CA80C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BB7FF73F-5143-4D57-B228-770B10CA80C6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{79AAF02C-CACC-46FC-BADB-8CA3858C3CA2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{79AAF02C-CACC-46FC-BADB-8CA3858C3CA2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{79AAF02C-CACC-46FC-BADB-8CA3858C3CA2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{79AAF02C-CACC-46FC-BADB-8CA3858C3CA2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1FC04DAC-DF84-41BB-921A-35227FBF58DF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1FC04DAC-DF84-41BB-921A-35227FBF58DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1FC04DAC-DF84-41BB-921A-35227FBF58DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1FC04DAC-DF84-41BB-921A-35227FBF58DF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1BA5A86D-8EB9-4ADE-AFB1-67E849F9990B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1BA5A86D-8EB9-4ADE-AFB1-67E849F9990B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1BA5A86D-8EB9-4ADE-AFB1-67E849F9990B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1BA5A86D-8EB9-4ADE-AFB1-67E849F9990B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C3968522-8B64-48D6-A2BF-06B37D04CCF0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C3968522-8B64-48D6-A2BF-06B37D04CCF0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C3968522-8B64-48D6-A2BF-06B37D04CCF0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C3968522-8B64-48D6-A2BF-06B37D04CCF0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -224,6 +239,9 @@ Global
 		{619434D1-477D-40E7-A691-AAF510D8A209} = {BBBE802B-9F6E-4299-97CE-97CDA43802B9}
 		{CA7C55A9-B86F-4467-A655-14D04C573E89} = {BBBE802B-9F6E-4299-97CE-97CDA43802B9}
 		{BB7FF73F-5143-4D57-B228-770B10CA80C6} = {BBBE802B-9F6E-4299-97CE-97CDA43802B9}
+		{1FC04DAC-DF84-41BB-921A-35227FBF58DF} = {00962052-26B6-4B29-BA72-6EF98E944EE1}
+		{1BA5A86D-8EB9-4ADE-AFB1-67E849F9990B} = {00962052-26B6-4B29-BA72-6EF98E944EE1}
+		{C3968522-8B64-48D6-A2BF-06B37D04CCF0} = {00962052-26B6-4B29-BA72-6EF98E944EE1}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {82DDE6D6-0D55-49B4-9C64-B31B4A6E729F}

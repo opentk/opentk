@@ -22,6 +22,7 @@ SOFTWARE.
 
 using System;
 using System.Globalization;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Xml.Serialization;
 
@@ -499,30 +500,6 @@ namespace OpenToolkit.Mathematics
         public static void MagnitudeMax(ref Vector3 left, ref Vector3 right, out Vector3 result)
         {
             result = left.LengthSquared >= right.LengthSquared ? left : right;
-        }
-
-        /// <summary>
-        /// Returns the Vector3 with the minimum magnitude.
-        /// </summary>
-        /// <param name="left">Left operand.</param>
-        /// <param name="right">Right operand.</param>
-        /// <returns>The minimum Vector3.</returns>
-        [Obsolete("Use MagnitudeMin() instead.")]
-        public static Vector3 Min(Vector3 left, Vector3 right)
-        {
-            return left.LengthSquared < right.LengthSquared ? left : right;
-        }
-
-        /// <summary>
-        /// Returns the Vector3 with the minimum magnitude.
-        /// </summary>
-        /// <param name="left">Left operand.</param>
-        /// <param name="right">Right operand.</param>
-        /// <returns>The minimum Vector3.</returns>
-        [Obsolete("Use MagnitudeMax() instead.")]
-        public static Vector3 Max(Vector3 left, Vector3 right)
-        {
-            return left.LengthSquared >= right.LengthSquared ? left : right;
         }
 
         /// <summary>
@@ -1200,7 +1177,7 @@ namespace OpenToolkit.Mathematics
         [XmlIgnore]
         public Vector2 Xy
         {
-            get => new Vector2(X, Y);
+            get => Unsafe.As<Vector3, Vector2>(ref this);
             set
             {
                 X = value.X;
