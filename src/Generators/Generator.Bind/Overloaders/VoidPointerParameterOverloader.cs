@@ -105,7 +105,7 @@ namespace Bind.Overloaders
             );
 
             yield return Fixed
-            (    
+            (
                 new FunctionSignatureBuilder(function)
                     .WithParameters(newGenericArray1DParameters)
                     .WithGenericTypeParameters(newGenericTypeParameters)

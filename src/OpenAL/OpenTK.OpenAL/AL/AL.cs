@@ -28,7 +28,7 @@ namespace OpenToolkit.OpenAL
         /// <returns>The instance.</returns>
         public static AL GetAPI()
         {
-            return APILoader.Load<AL, OpenALLibraryNameContainer>();
+            return APILoader.Load<AL>(new OpenALLibraryNameContainer());
         }
 
         /// <inheritdoc cref="NativeLibraryBase"/>

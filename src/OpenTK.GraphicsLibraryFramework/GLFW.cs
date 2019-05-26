@@ -24,7 +24,7 @@ namespace OpenToolkit.GraphicsLibraryFramework
         /// <returns>The instance.</returns>
         public static GLFW GetAPI()
         {
-            return APILoader.Load<GLFW, GLFWLibraryNameContainer>();
+            return APILoader.Load<GLFW>(new GLFWLibraryNameContainer());
         }
 
         /// <summary>

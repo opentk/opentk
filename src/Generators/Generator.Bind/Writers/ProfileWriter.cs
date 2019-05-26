@@ -152,7 +152,7 @@ namespace Bind.Writers
                 await NameContainerWriter.WriteNameContainerAsync
                 (
                     Path.Combine(dir, $"{settings.APIIdentifier}LibraryNameContainer.cs"),
-                    ns, 
+                    ns,
                     settings.APIIdentifier,
                     nc
                 );

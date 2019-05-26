@@ -7,6 +7,7 @@
 // of the MIT license. See the LICENSE file for details.
 //
 
+using System;
 using AdvancedDLSupport;
 using OpenToolkit.Core;
 using OpenToolkit.Core.Loader;
@@ -26,7 +27,7 @@ namespace OpenToolkit.OpenAL
         /// <returns>The instance.</returns>
         public static ALContext GetAPI()
         {
-            return APILoader.Load<ALContext, OpenALLibraryNameContainer>();
+            return APILoader.Load<ALContext>(new OpenALLibraryNameContainer());
         }
 
         /// <inheritdoc cref="NativeLibraryBase"/>
