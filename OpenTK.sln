@@ -18,13 +18,13 @@ EndProject
 
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Generator.Bind", "src\Generators\Generator.Bind\Generator.Bind.csproj", "{4828A378-F24E-4BB0-BF5F-C4C6C9082081}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenTK.Input", "src\OpenTK.Input\OpenTK.Input.csproj", "{FD2151DE-0663-4100-9AB5-D1E22CF2144D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenToolkit.Input", "src\OpenToolkit.Input\OpenToolkit.Input.csproj", "{FD2151DE-0663-4100-9AB5-D1E22CF2144D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenTK.Mathematics", "src\OpenTK.Mathematics\OpenTK.Mathematics.csproj", "{517AC4BF-6AF5-415D-B11C-FC6FE6710336}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenToolkit.Mathematics", "src\OpenToolkit.Mathematics\OpenToolkit.Mathematics.csproj", "{517AC4BF-6AF5-415D-B11C-FC6FE6710336}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenTK.OpenAL", "src\OpenAL\OpenTK.OpenAL\OpenTK.OpenAL.csproj", "{6E833F6A-F48D-444C-A44B-FB489137E233}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenToolkit.OpenAL", "src\OpenAL\OpenToolkit.OpenAL\OpenToolkit.OpenAL.csproj", "{6E833F6A-F48D-444C-A44B-FB489137E233}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenTK.Core", "src\OpenTK.Core\OpenTK.Core.csproj", "{30B46B07-2836-4862-B7FA-A158B581F83E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenToolkit.Core", "src\OpenToolkit.Core\OpenToolkit.Core.csproj", "{30B46B07-2836-4862-B7FA-A158B581F83E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "props", "props", "{9A58BE7A-02D3-4B94-B648-BDF421CC77EF}"
 	ProjectSection(SolutionItems) = preProject
@@ -45,37 +45,37 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "OpenAL", "OpenAL", "{96B6F0
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Extensions", "Extensions", "{EA863589-4B76-455C-9F91-87CD642BC7F0}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenTK.OpenAL.Extensions.Creative.EFX", "src\OpenAL\Extensions\OpenTK.OpenAL.Extensions.Creative.EFX\OpenTK.OpenAL.Extensions.Creative.EFX.csproj", "{ED3C687C-6FDC-47EE-81BE-314A3A4CD892}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenToolkit.OpenAL.Extensions.Creative.EFX", "src\OpenAL\Extensions\OpenToolkit.OpenAL.Extensions.Creative.EFX\OpenToolkit.OpenAL.Extensions.Creative.EFX.csproj", "{ED3C687C-6FDC-47EE-81BE-314A3A4CD892}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenTK.OpenAL.Extensions.Creative.MultiChannelBuffers", "src\OpenAL\Extensions\OpenTK.OpenAL.Extensions.Creative.MultiChannelBuffers\OpenTK.OpenAL.Extensions.Creative.MultiChannelBuffers.csproj", "{1CC058D0-87CF-4613-B902-F174762BD368}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenToolkit.OpenAL.Extensions.Creative.MultiChannelBuffers", "src\OpenAL\Extensions\OpenToolkit.OpenAL.Extensions.Creative.MultiChannelBuffers\OpenToolkit.OpenAL.Extensions.Creative.MultiChannelBuffers.csproj", "{1CC058D0-87CF-4613-B902-F174762BD368}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenTK.OpenAL.Extensions.Creative.XRam", "src\OpenAL\Extensions\OpenTK.OpenAL.Extensions.Creative.XRam\OpenTK.OpenAL.Extensions.Creative.XRam.csproj", "{BC0F90E1-23B5-4268-B713-4786B55C2350}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenToolkit.OpenAL.Extensions.Creative.XRam", "src\OpenAL\Extensions\OpenToolkit.OpenAL.Extensions.Creative.XRam\OpenToolkit.OpenAL.Extensions.Creative.XRam.csproj", "{BC0F90E1-23B5-4268-B713-4786B55C2350}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenTK.OpenAL.Extensions.EXT.ALAWFormat", "src\OpenAL\Extensions\OpenTK.OpenAL.Extensions.EXT.ALAWFormat\OpenTK.OpenAL.Extensions.EXT.ALAWFormat.csproj", "{A24DE67A-07CE-48C1-A6E6-9E7A9DDB947D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenToolkit.OpenAL.Extensions.EXT.ALAWFormat", "src\OpenAL\Extensions\OpenToolkit.OpenAL.Extensions.EXT.ALAWFormat\OpenToolkit.OpenAL.Extensions.EXT.ALAWFormat.csproj", "{A24DE67A-07CE-48C1-A6E6-9E7A9DDB947D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenTK.OpenAL.Extensions.EXT.DoubleFormat", "src\OpenAL\Extensions\OpenTK.OpenAL.Extensions.EXT.DoubleFormat\OpenTK.OpenAL.Extensions.EXT.DoubleFormat.csproj", "{D62BEAC2-D79F-4DE8-BF66-702BBBB883A8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenToolkit.OpenAL.Extensions.EXT.DoubleFormat", "src\OpenAL\Extensions\OpenToolkit.OpenAL.Extensions.EXT.DoubleFormat\OpenToolkit.OpenAL.Extensions.EXT.DoubleFormat.csproj", "{D62BEAC2-D79F-4DE8-BF66-702BBBB883A8}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenTK.OpenAL.Extensions.EXT.FloatFormat", "src\OpenAL\Extensions\OpenTK.OpenAL.Extensions.EXT.FloatFormat\OpenTK.OpenAL.Extensions.EXT.FloatFormat.csproj", "{12FAABF1-5719-46AA-8E8A-29C169ECE68E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenToolkit.OpenAL.Extensions.EXT.FloatFormat", "src\OpenAL\Extensions\OpenToolkit.OpenAL.Extensions.EXT.FloatFormat\OpenToolkit.OpenAL.Extensions.EXT.FloatFormat.csproj", "{12FAABF1-5719-46AA-8E8A-29C169ECE68E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenTK.OpenAL.Extensions.EXT.IMA4Format", "src\OpenAL\Extensions\OpenTK.OpenAL.Extensions.EXT.IMA4Format\OpenTK.OpenAL.Extensions.EXT.IMA4Format.csproj", "{636DDA47-B71A-4BC6-BD42-08843FEA38F7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenToolkit.OpenAL.Extensions.EXT.IMA4Format", "src\OpenAL\Extensions\OpenToolkit.OpenAL.Extensions.EXT.IMA4Format\OpenToolkit.OpenAL.Extensions.EXT.IMA4Format.csproj", "{636DDA47-B71A-4BC6-BD42-08843FEA38F7}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenTK.OpenAL.Extensions.EXT.MP3Format", "src\OpenAL\Extensions\OpenTK.OpenAL.Extensions.EXT.MP3Format\OpenTK.OpenAL.Extensions.EXT.MP3Format.csproj", "{C3BA1896-0AD9-465B-9A58-27762FBB4181}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenToolkit.OpenAL.Extensions.EXT.MP3Format", "src\OpenAL\Extensions\OpenToolkit.OpenAL.Extensions.EXT.MP3Format\OpenToolkit.OpenAL.Extensions.EXT.MP3Format.csproj", "{C3BA1896-0AD9-465B-9A58-27762FBB4181}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenTK.OpenAL.Extensions.EXT.MULAWFormat", "src\OpenAL\Extensions\OpenTK.OpenAL.Extensions.EXT.MULAWFormat\OpenTK.OpenAL.Extensions.EXT.MULAWFormat.csproj", "{2EE32184-190A-4D0D-8394-5275C241658E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenToolkit.OpenAL.Extensions.EXT.MULAWFormat", "src\OpenAL\Extensions\OpenToolkit.OpenAL.Extensions.EXT.MULAWFormat\OpenToolkit.OpenAL.Extensions.EXT.MULAWFormat.csproj", "{2EE32184-190A-4D0D-8394-5275C241658E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenTK.OpenAL.Extensions.EXT.VorbisFormat", "src\OpenAL\Extensions\OpenTK.OpenAL.Extensions.EXT.VorbisFormat\OpenTK.OpenAL.Extensions.EXT.VorbisFormat.csproj", "{652BEC89-F9AF-487D-BE24-8F58E285D0D9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenToolkit.OpenAL.Extensions.EXT.VorbisFormat", "src\OpenAL\Extensions\OpenToolkit.OpenAL.Extensions.EXT.VorbisFormat\OpenToolkit.OpenAL.Extensions.EXT.VorbisFormat.csproj", "{652BEC89-F9AF-487D-BE24-8F58E285D0D9}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenTK.OpenAL.Extensions.Soft", "src\OpenAL\Extensions\OpenTK.OpenAL.Extensions.Soft\OpenTK.OpenAL.Extensions.Soft.csproj", "{C4DA366A-78CC-4DCA-B465-45F71B34A907}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenToolkit.OpenAL.Extensions.Soft", "src\OpenAL\Extensions\OpenToolkit.OpenAL.Extensions.Soft\OpenToolkit.OpenAL.Extensions.Soft.csproj", "{C4DA366A-78CC-4DCA-B465-45F71B34A907}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenTK.OpenAL.Extensions.Soft.DeferredUpdates", "src\OpenAL\Extensions\OpenTK.OpenAL.Extensions.Soft.DeferredUpdates\OpenTK.OpenAL.Extensions.Soft.DeferredUpdates.csproj", "{DC7C9285-3BE1-41A6-98F1-71D7DB3C030A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenToolkit.OpenAL.Extensions.Soft.DeferredUpdates", "src\OpenAL\Extensions\OpenToolkit.OpenAL.Extensions.Soft.DeferredUpdates\OpenToolkit.OpenAL.Extensions.Soft.DeferredUpdates.csproj", "{DC7C9285-3BE1-41A6-98F1-71D7DB3C030A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenTK.OpenAL.Extensions.Enumeration", "src\OpenAL\Extensions\OpenTK.OpenAL.Extensions.Enumeration\OpenTK.OpenAL.Extensions.Enumeration.csproj", "{8A8918DC-5ECD-4B81-9BB7-36CB7E5FE5B1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenToolkit.OpenAL.Extensions.Enumeration", "src\OpenAL\Extensions\OpenToolkit.OpenAL.Extensions.Enumeration\OpenToolkit.OpenAL.Extensions.Enumeration.csproj", "{8A8918DC-5ECD-4B81-9BB7-36CB7E5FE5B1}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenTK.OpenAL.Extensions.Creative.EnumerateAll", "src\OpenAL\Extensions\OpenTK.OpenAL.Extensions.Creative.EnumerateAll\OpenTK.OpenAL.Extensions.Creative.EnumerateAll.csproj", "{2B0BF65F-F712-4792-8B01-52D3C88834FE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenToolkit.OpenAL.Extensions.Creative.EnumerateAll", "src\OpenAL\Extensions\OpenToolkit.OpenAL.Extensions.Creative.EnumerateAll\OpenToolkit.OpenAL.Extensions.Creative.EnumerateAll.csproj", "{2B0BF65F-F712-4792-8B01-52D3C88834FE}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenTK.OpenAL.Extensions.EXT.Capture", "src\OpenAL\Extensions\OpenTK.OpenAL.Extensions.EXT.Capture\OpenTK.OpenAL.Extensions.EXT.Capture.csproj", "{86CE656C-0D40-4014-B97B-102C9C259FDA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenToolkit.OpenAL.Extensions.EXT.Capture", "src\OpenAL\Extensions\OpenToolkit.OpenAL.Extensions.EXT.Capture\OpenToolkit.OpenAL.Extensions.EXT.Capture.csproj", "{86CE656C-0D40-4014-B97B-102C9C259FDA}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenTK.OpenAL.Extensions.EXT.Capture.Enumeration", "src\OpenAL\Extensions\OpenTK.OpenAL.Extensions.EXT.Capture.Enumeration\OpenTK.OpenAL.Extensions.EXT.Capture.Enumeration.csproj", "{2E39B827-1513-4B77-B80A-0BA87DBC199F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenToolkit.OpenAL.Extensions.EXT.Capture.Enumeration", "src\OpenAL\Extensions\OpenToolkit.OpenAL.Extensions.EXT.Capture.Enumeration\OpenToolkit.OpenAL.Extensions.EXT.Capture.Enumeration.csproj", "{2E39B827-1513-4B77-B80A-0BA87DBC199F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Generator.Convert", "src\Generators\Generator.Converter\Generator.Convert.csproj", "{79AAF02C-CACC-46FC-BADB-8CA3858C3CA2}"
 EndProject
@@ -89,11 +89,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenToolkit.OpenGLES", "src
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Windowing", "Windowing", "{BBBE802B-9F6E-4299-97CE-97CDA43802B9}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenTK.Windowing.Common", "src\Windowing\OpenTK.Windowing.Common\OpenTK.Windowing.Common.csproj", "{619434D1-477D-40E7-A691-AAF510D8A209}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenToolkit.Windowing.Common", "src\Windowing\OpenToolkit.Windowing.Common\OpenToolkit.Windowing.Common.csproj", "{619434D1-477D-40E7-A691-AAF510D8A209}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenTK.GraphicsLibraryFramework", "src\Windowing\OpenTK.GraphicsLibraryFramework\OpenTK.GraphicsLibraryFramework.csproj", "{CA7C55A9-B86F-4467-A655-14D04C573E89}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenToolkit.GraphicsLibraryFramework", "src\Windowing\OpenToolkit.GraphicsLibraryFramework\OpenToolkit.GraphicsLibraryFramework.csproj", "{CA7C55A9-B86F-4467-A655-14D04C573E89}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenTK.Windowing.Desktop", "src\Windowing\OpenTK.Windowing.Desktop\OpenTK.Windowing.Desktop.csproj", "{BB7FF73F-5143-4D57-B228-770B10CA80C6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenToolkit.Windowing.Desktop", "src\Windowing\OpenToolkit.Windowing.Desktop\OpenToolkit.Windowing.Desktop.csproj", "{BB7FF73F-5143-4D57-B228-770B10CA80C6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
