@@ -9,7 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="$(OpenTKSolutionRoot)\src\OpenTK.Core\OpenTK.Core.csproj" />
+    <ProjectReference Include="$(OpenTKSolutionRoot)\src\OpenToolkit.Core\OpenToolkit.Core.csproj" />
   </ItemGroup>
 
   <Import Project="..\..\..\props\common.props" />
