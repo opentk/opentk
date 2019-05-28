@@ -32,6 +32,6 @@ namespace OpenToolkit.Windowing.Common
         /// <summary>
         /// The window covers the whole screen, including all taskbars and/or panels.
         /// </summary>
-        Fullscreen
+        Fullscreen,
     }
 }

@@ -98,19 +98,19 @@ namespace OpenToolkit.Windowing.Desktop
             }
         }
 
-        private Vector2 _location;
+        private Vector2i _location;
 
         /// <inheritdoc />
-        public Vector2 Location
+        public Vector2i Location
         {
             get => _location;
             set => _location = value;
         }
 
-        private Vector2 _size;
+        private Vector2i _size;
 
         /// <inheritdoc />
-        public Vector2 Size
+        public Vector2i Size
         {
             get => _size;
             set => _size = value;
@@ -119,28 +119,28 @@ namespace OpenToolkit.Windowing.Desktop
         /// <inheritdoc />
         public int X
         {
-            get => (int)Location.X;
+            get => Location.X;
             set => _location.X = value;
         }
 
         /// <inheritdoc />
         public int Y
         {
-            get => (int)Location.Y;
+            get => Location.Y;
             set => _location.Y = value;
         }
 
         /// <inheritdoc />
         public int Width
         {
-            get => (int)Size.X;
+            get => Size.X;
             set => _size.X = value;
         }
 
         /// <inheritdoc />
         public int Height
         {
-            get => (int)Size.Y;
+            get => Size.Y;
             set => _size.Y = value;
         }
 
@@ -151,8 +151,8 @@ namespace OpenToolkit.Windowing.Desktop
 
             set
             {
-                Location = new Vector2(value.Right, value.Top);
-                Size = new Vector2(value.Width, value.Height);
+                Location = new Vector2i(value.Right, value.Top);
+                Size = new Vector2i(value.Width, value.Height);
             }
         }
 

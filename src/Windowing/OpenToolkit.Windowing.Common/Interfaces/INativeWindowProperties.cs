@@ -88,12 +88,12 @@ namespace OpenToolkit.Windowing.Common
         /// Gets or sets a <see cref="OpenToolkit.Mathematics.Vector2" /> structure that contains the location of this window on the
         /// desktop.
         /// </summary>
-        Vector2 Location { get; set; }
+        Vector2i Location { get; set; }
 
         /// <summary>
         /// Gets or sets a <see cref="OpenToolkit.Mathematics.Vector2" /> structure that contains the external size of this window.
         /// </summary>
-        Vector2 Size { get; set; }
+        Vector2i Size { get; set; }
 
         /// <summary>
         /// Gets or sets the horizontal location of this window on the desktop.
