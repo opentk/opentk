@@ -1,6 +1,11 @@
-// Copyright (c) Open Toolkit library.
-// This file is subject to the terms and conditions defined in
-// file 'License.txt', which is part of this source code package.
+//
+// Box2i.cs
+//
+// Copyright (C) 2019 OpenTK
+//
+// This software may be modified and distributed under the terms
+// of the MIT license. See the LICENSE file for details.
+//
 
 using System;
 using System.Globalization;
