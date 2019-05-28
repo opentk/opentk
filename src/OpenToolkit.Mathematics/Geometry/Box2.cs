@@ -110,22 +110,12 @@ namespace OpenToolkit.Mathematics
         public float Height => Math.Abs(Bottom - Top);
 
         /// <summary>
-        /// Returns whether the box contains the specified point on the closed region described by this Box2.
-        /// </summary>
-        /// <param name="point">The point to query.</param>
-        /// <returns>Whether this box contains the point.</returns>
-        public bool Contains(Vector2 point)
-        {
-            return Contains(point, true);
-        }
-
-        /// <summary>
         /// Returns whether the box contains the specified point.
         /// </summary>
         /// <param name="point">The point to query.</param>
         /// <param name="closedRegion">Whether to include the box boundary in the test region.</param>
         /// <returns>Whether this box contains the point.</returns>
-        public bool Contains(Vector2 point, bool closedRegion)
+        public bool Contains(Vector2 point, bool closedRegion = true)
         {
             var containsX = closedRegion == Left <= Right
                 ? point.X >= Left != point.X > Right
@@ -167,8 +157,10 @@ namespace OpenToolkit.Mathematics
         /// <param name="right">The right operand.</param>
         public static bool operator ==(Box2 left, Box2 right)
         {
-            return left.Bottom == right.Bottom && left.Top == right.Top &&
-                   left.Left == right.Left && left.Right == right.Right;
+            return MathHelper.ApproximatelyEqualEpsilon(left.Bottom, right.Bottom, 0.0001f)
+                && MathHelper.ApproximatelyEqualEpsilon(left.Top, right.Top, 0.0001f)
+                && MathHelper.ApproximatelyEqualEpsilon(left.Left, right.Left, 0.0001f)
+                && MathHelper.ApproximatelyEqualEpsilon(left.Bottom, right.Bottom, 0.0001f);
         }
 
         /// <summary>
