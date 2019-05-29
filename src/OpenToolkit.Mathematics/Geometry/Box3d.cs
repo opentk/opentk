@@ -71,9 +71,9 @@ namespace OpenToolkit.Mathematics
         /// <summary>
         /// Initializes a new instance of the <see cref="Box3d"/> struct.
         /// </summary>
-        /// <param name="frontTopLeft">An OpenToolkit.Vector3 describing the front-top-left corner of the Box3d.</param>
-        /// <param name="backBottomRight">An OpenToolkit.Vector3 describing the back-bottom-right corner of the Box3d.</param>
-        public Box3d(Vector3 frontTopLeft, Vector3 backBottomRight)
+        /// <param name="frontTopLeft">An OpenToolkit.Vector3d describing the front-top-left corner of the Box3d.</param>
+        /// <param name="backBottomRight">An OpenToolkit.Vector3d describing the back-bottom-right corner of the Box3d.</param>
+        public Box3d(Vector3d frontTopLeft, Vector3d backBottomRight)
         {
             Left = frontTopLeft.X;
             Top = frontTopLeft.Y;
@@ -104,7 +104,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="position">The position of the front top left corner.</param>
         /// <param name="size">The size of the box.</param>
         /// <returns>A new OpenToolkit.Box3d with the specified dimensions</returns>
-        public static Box3d FromDimensions(Vector3 position, Vector3 size)
+        public static Box3d FromDimensions(Vector3d position, Vector3d size)
         {
             return FromDimensions(position.X, position.Y, position.Z, size.X, size.Y, size.Z);
         }
@@ -120,7 +120,7 @@ namespace OpenToolkit.Mathematics
         public double Height => Math.Abs(Bottom - Top);
 
         /// <summary>
-        /// Gets a double describing the depth of the box3 structure.
+        /// Gets a double describing the depth of the box3d structure.
         /// </summary>
         public double Depth => Math.Abs(Back - Front);
         
@@ -130,7 +130,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="point">The point to query.</param>
         /// <param name="closedRegion">Whether to include the box boundary in the test region.</param>
         /// <returns>Whether this box contains the point.</returns>
-        public bool Contains(Vector3 point, bool closedRegion = true)
+        public bool Contains(Vector3d point, bool closedRegion = true)
         {
             var containsX = closedRegion == Left <= Right
                 ? point.X >= Left != point.X > Right
@@ -152,7 +152,7 @@ namespace OpenToolkit.Mathematics
         /// </summary>
         /// <param name="point">The distance to translate the box.</param>
         /// <returns>The translated box.</returns>
-        public Box3d Translated(Vector3 point)
+        public Box3d Translated(Vector3d point)
         {
             return new Box3d(Left + point.X, Top + point.Y,Front + point.Z , Right + point.X, Bottom + point.Y, Front + point.Z);
         }
@@ -161,7 +161,7 @@ namespace OpenToolkit.Mathematics
         /// Translates this Box3d by the given amount.
         /// </summary>
         /// <param name="point">The distance to translate the box.</param>
-        public void Translate(Vector3 point)
+        public void Translate(Vector3d point)
         {
             Left += point.X;
             Right += point.X;
