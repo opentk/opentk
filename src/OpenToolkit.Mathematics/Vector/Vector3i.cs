@@ -8,6 +8,7 @@
 //
 
 using System;
+using System.Diagnostics.Contracts;
 using System.Globalization;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
@@ -149,6 +150,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="a">Left operand.</param>
         /// <param name="b">Right operand.</param>
         /// <returns>Result of operation.</returns>
+        [Pure]
         public static Vector3i Add(Vector3i a, Vector3i b)
         {
             Add(ref a, ref b, out a);
@@ -174,6 +176,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="a">First operand.</param>
         /// <param name="b">Second operand.</param>
         /// <returns>Result of subtraction.</returns>
+        [Pure]
         public static Vector3i Subtract(Vector3i a, Vector3i b)
         {
             Subtract(ref a, ref b, out a);
@@ -199,6 +202,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="vector">Left operand.</param>
         /// <param name="scale">Right operand.</param>
         /// <returns>Result of the operation.</returns>
+        [Pure]
         public static Vector3i Multiply(Vector3i vector, int scale)
         {
             Multiply(ref vector, scale, out vector);
@@ -224,6 +228,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="vector">Left operand.</param>
         /// <param name="scale">Right operand.</param>
         /// <returns>Result of the operation.</returns>
+        [Pure]
         public static Vector3i Multiply(Vector3i vector, Vector3i scale)
         {
             Multiply(ref vector, ref scale, out vector);
@@ -249,6 +254,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="vector">Left operand.</param>
         /// <param name="scale">Right operand.</param>
         /// <returns>Result of the operation.</returns>
+        [Pure]
         public static Vector3i Divide(Vector3i vector, int scale)
         {
             Divide(ref vector, scale, out vector);
@@ -274,6 +280,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="vector">Left operand.</param>
         /// <param name="scale">Right operand.</param>
         /// <returns>Result of the operation.</returns>
+        [Pure]
         public static Vector3i Divide(Vector3i vector, Vector3i scale)
         {
             Divide(ref vector, ref scale, out vector);
@@ -299,6 +306,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="a">First operand.</param>
         /// <param name="b">Second operand.</param>
         /// <returns>The component-wise minimum.</returns>
+        [Pure]
         public static Vector3i ComponentMin(Vector3i a, Vector3i b)
         {
             a.X = a.X < b.X ? a.X : b.X;
@@ -326,6 +334,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="a">First operand.</param>
         /// <param name="b">Second operand.</param>
         /// <returns>The component-wise maximum.</returns>
+        [Pure]
         public static Vector3i ComponentMax(Vector3i a, Vector3i b)
         {
             a.X = a.X > b.X ? a.X : b.X;
@@ -354,6 +363,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="min">Minimum vector.</param>
         /// <param name="max">Maximum vector.</param>
         /// <returns>The clamped vector.</returns>
+        [Pure]
         public static Vector3i Clamp(Vector3i vec, Vector3i min, Vector3i max)
         {
             vec.X = vec.X < min.X ? min.X : vec.X > max.X ? max.X : vec.X;
@@ -562,6 +572,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="left">The first instance.</param>
         /// <param name="right">The second instance.</param>
         /// <returns>The result of the calculation.</returns>
+        [Pure]
         public static Vector3i operator +(Vector3i left, Vector3i right)
         {
             left.X += right.X;
@@ -576,6 +587,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="left">The first instance.</param>
         /// <param name="right">The second instance.</param>
         /// <returns>The result of the calculation.</returns>
+        [Pure]
         public static Vector3i operator -(Vector3i left, Vector3i right)
         {
             left.X -= right.X;
@@ -589,6 +601,7 @@ namespace OpenToolkit.Mathematics
         /// </summary>
         /// <param name="vec">The instance.</param>
         /// <returns>The result of the calculation.</returns>
+        [Pure]
         public static Vector3i operator -(Vector3i vec)
         {
             vec.X = -vec.X;
@@ -603,6 +616,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="vec">The instance.</param>
         /// <param name="scale">The scalar.</param>
         /// <returns>The result of the calculation.</returns>
+        [Pure]
         public static Vector3i operator *(Vector3i vec, int scale)
         {
             vec.X *= scale;
@@ -617,6 +631,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="scale">The scalar.</param>
         /// <param name="vec">The instance.</param>
         /// <returns>The result of the calculation.</returns>
+        [Pure]
         public static Vector3i operator *(int scale, Vector3i vec)
         {
             vec.X *= scale;
@@ -631,6 +646,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="scale">Left operand.</param>
         /// <param name="vec">Right operand.</param>
         /// <returns>Result of multiplication.</returns>
+        [Pure]
         public static Vector3i operator *(Vector3i vec, Vector3i scale)
         {
             vec.X *= scale.X;
@@ -645,6 +661,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="vec">The instance.</param>
         /// <param name="scale">The scalar.</param>
         /// <returns>The result of the calculation.</returns>
+        [Pure]
         public static Vector3i operator /(Vector3i vec, int scale)
         {
             vec.X /= scale;
@@ -659,6 +676,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="left">The first instance.</param>
         /// <param name="right">The second instance.</param>
         /// <returns>True, if left equals right; false otherwise.</returns>
+        [Pure]
         public static bool operator ==(Vector3i left, Vector3i right)
         {
             return left.Equals(right);
@@ -670,6 +688,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="left">The first instance.</param>
         /// <param name="right">The second instance.</param>
         /// <returns>True, if left does not equal right; false otherwise.</returns>
+        [Pure]
         public static bool operator !=(Vector3i left, Vector3i right)
         {
             return !left.Equals(right);
@@ -703,6 +722,7 @@ namespace OpenToolkit.Mathematics
         /// </summary>
         /// <param name="obj">The object to compare to.</param>
         /// <returns>True if the instances are equal; false otherwise.</returns>
+        [Pure]
         public override bool Equals(object obj)
         {
             if (!(obj is Vector3i))
@@ -718,6 +738,7 @@ namespace OpenToolkit.Mathematics
         /// </summary>
         /// <param name="other">A vector to compare with this vector.</param>
         /// <returns>true if the current vector is equal to the vector parameter; otherwise, false.</returns>
+        [Pure]
         public bool Equals(Vector3i other)
         {
             return
