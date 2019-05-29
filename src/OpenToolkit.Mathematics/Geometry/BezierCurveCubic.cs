@@ -7,6 +7,7 @@
  */
 
 using System;
+using System.Diagnostics.Contracts;
 
 namespace OpenToolkit.Mathematics
 {
@@ -98,6 +99,7 @@ namespace OpenToolkit.Mathematics
         /// </summary>
         /// <param name="t">The t value, between 0.0f and 1.0f.</param>
         /// <returns>Resulting point.</returns>
+        [Pure]
         public Vector2 CalculatePoint(float t)
         {
             var c = 1.0f - t;
@@ -134,6 +136,7 @@ namespace OpenToolkit.Mathematics
         /// </summary>
         /// <param name="t">The t, value between 0.0f and 1.0f.</param>
         /// <returns>Resulting point.</returns>
+        [Pure]
         private Vector2 CalculatePointOfDerivative(float t)
         {
             var c = 1.0f - t;
@@ -155,6 +158,7 @@ namespace OpenToolkit.Mathematics
         /// The precision gets better when the <paramref name="precision"/>
         /// value gets smaller.
         /// </remarks>
+        [Pure]
         public float CalculateLength(float precision)
         {
             var length = 0.0f;
