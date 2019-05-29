@@ -8,6 +8,7 @@
 //
 
 using System;
+using System.Diagnostics.Contracts;
 using System.Globalization;
 using System.Runtime.InteropServices;
 
@@ -75,6 +76,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="right">The position of the right boundary.</param>
         /// <param name="bottom">The position of the bottom boundary.</param>
         /// <returns>A new OpenToolkit.Box2 with the specfied dimensions.</returns>
+        [Pure]
         public static Box2i FromTLRB(int top, int left, int right, int bottom)
         {
             return new Box2i(left, top, right, bottom);
@@ -88,6 +90,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="width">The width of the box.</param>
         /// <param name="height">The height of the box.</param>
         /// <returns>A new OpenToolkit.Box2 with the specfied dimensions.</returns>
+        [Pure]
         public static Box2i FromDimensions(int left, int top, int width, int height)
         {
             return new Box2i(left, top, left + width, top + height);
@@ -99,6 +102,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="position">The position of the top left corner.</param>
         /// <param name="size">The size of the box.</param>
         /// <returns>A new OpenToolkit.Box2 with the specfied dimensions.</returns>
+        [Pure]
         public static Box2i FromDimensions(Vector2i position, Vector2i size)
         {
             return FromDimensions(position.X, position.Y, size.X, size.Y);
@@ -120,6 +124,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="point">The point to query.</param>
         /// <param name="closedRegion">Whether to include the box boundary in the test region.</param>
         /// <returns>Whether this box contains the point.</returns>
+        [Pure]
         public bool Contains(Vector2i point, bool closedRegion = true)
         {
             var containsX = closedRegion == Left <= Right
@@ -138,6 +143,7 @@ namespace OpenToolkit.Mathematics
         /// </summary>
         /// <param name="point">The distance to translate the box.</param>
         /// <returns>The translated box.</returns>
+        [Pure]
         public Box2 Translated(Vector2i point)
         {
             return new Box2(Left + point.X, Top + point.Y, Right + point.X, Bottom + point.Y);
@@ -160,6 +166,7 @@ namespace OpenToolkit.Mathematics
         /// </summary>
         /// <param name="left">The left operand.</param>
         /// <param name="right">The right operand.</param>
+        [Pure]
         public static bool operator ==(Box2i left, Box2i right)
         {
             return left.Bottom == right.Bottom && left.Top == right.Top &&
@@ -171,18 +178,21 @@ namespace OpenToolkit.Mathematics
         /// </summary>
         /// <param name="left">The left operand.</param>
         /// <param name="right">The right operand.</param>
+        [Pure]
         public static bool operator !=(Box2i left, Box2i right)
         {
             return !(left == right);
         }
 
         /// <inheritdoc/>
+        [Pure]
         public bool Equals(Box2i other)
         {
             return this == other;
         }
 
         /// <inheritdoc/>
+        [Pure]
         public override bool Equals(object obj)
         {
             return obj is Box2i box && Equals(box);
