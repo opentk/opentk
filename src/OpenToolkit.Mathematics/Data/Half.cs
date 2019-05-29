@@ -55,6 +55,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
 using System;
+using System.Diagnostics.Contracts;
 using System.Globalization;
 using System.IO;
 using System.Runtime.InteropServices;
@@ -180,6 +181,7 @@ namespace OpenToolkit.Mathematics
         /// <summary>
         /// Ported from OpenEXR's IlmBase 1.0.1.
         /// </summary>
+        [Pure]
         private ushort SingleToHalf(int si32)
         {
             // Our floating point number, F, is represented by the bit pattern in integer i.
@@ -276,6 +278,7 @@ namespace OpenToolkit.Mathematics
         /// <summary>
         /// Ported from OpenEXR's IlmBase 1.0.1.
         /// </summary>
+        [Pure]
         private int HalfToFloat(ushort ui16)
         {
             var sign = (ui16 >> 15) & 0x00000001;
@@ -329,6 +332,7 @@ namespace OpenToolkit.Mathematics
         /// <returns>
         /// The <see cref="Half"/> result of the conversion.
         /// </returns>
+        [Pure]
         public static explicit operator Half(float f)
         {
             return new Half(f);
@@ -343,6 +347,7 @@ namespace OpenToolkit.Mathematics
         /// <returns>
         /// The <see cref="Half"/> result of the conversion.
         /// </returns>
+        [Pure]
         public static explicit operator Half(double d)
         {
             return new Half(d);
@@ -357,6 +362,7 @@ namespace OpenToolkit.Mathematics
         /// <returns>
         /// The <see cref="float"/> result of the conversion.
         /// </returns>
+        [Pure]
         public static implicit operator float(Half h)
         {
             return h.ToSingle();
@@ -371,6 +377,7 @@ namespace OpenToolkit.Mathematics
         /// <returns>
         /// The <see cref="double"/> result of the conversion.
         /// </returns>
+        [Pure]
         public static implicit operator double(Half h)
         {
             return h.ToSingle();
@@ -443,6 +450,7 @@ namespace OpenToolkit.Mathematics
         /// </summary>
         /// <param name="other">OpenToolkit.Half object to compare to this instance..</param>
         /// <returns>True, if other is equal to this instance; false otherwise.</returns>
+        [Pure]
         public bool Equals(Half other)
         {
             const int maxUlps = 1;
@@ -495,6 +503,7 @@ namespace OpenToolkit.Mathematics
         /// and other is not a number (OpenToolkit.Half.NaN).
         ///  </para>
         /// </returns>
+        [Pure]
         public int CompareTo(Half other)
         {
             return ((float)this).CompareTo(other);
@@ -515,6 +524,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="format">Formatting for the output string.</param>
         /// <param name="formatProvider">Culture-specific formatting information.</param>
         /// <returns>The string representation of this instance.</returns>
+        [Pure]
         public string ToString(string format, IFormatProvider formatProvider)
         {
             return ToSingle().ToString(format, formatProvider);
@@ -525,6 +535,7 @@ namespace OpenToolkit.Mathematics
         /// </summary>
         /// <param name="s">String representation of the number to convert.</param>
         /// <returns>A new Half instance.</returns>
+        [Pure]
         public static Half Parse(string s)
         {
             return (Half)float.Parse(s);
@@ -537,6 +548,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="style">Specifies the format of s.</param>
         /// <param name="provider">Culture-specific formatting information.</param>
         /// <returns>A new Half instance.</returns>
+        [Pure]
         public static Half Parse(string s, NumberStyles style, IFormatProvider provider)
         {
             return (Half)float.Parse(s, style, provider);
@@ -548,6 +560,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="s">String representation of the number to convert.</param>
         /// <param name="result">The Half instance to write to.</param>
         /// <returns>Success.</returns>
+        [Pure]
         public static bool TryParse(string s, out Half result)
         {
             var b = float.TryParse(s, out float f);
@@ -563,6 +576,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="provider">Culture-specific formatting information.</param>
         /// <param name="result">The Half instance to write to.</param>
         /// <returns>Success.</returns>
+        [Pure]
         public static bool TryParse(string s, NumberStyles style, IFormatProvider provider, out Half result)
         {
             var b = float.TryParse(s, style, provider, out float f);
@@ -575,6 +589,7 @@ namespace OpenToolkit.Mathematics
         /// </summary>
         /// <param name="h">The Half to convert.</param>
         /// <returns>The input as byte array.</returns>
+        [Pure]
         public static byte[] GetBytes(Half h)
         {
             return BitConverter.GetBytes(h._bits);
@@ -586,6 +601,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="value">A Half in it's byte[] representation.</param>
         /// <param name="startIndex">The starting position within value.</param>
         /// <returns>A new Half instance.</returns>
+        [Pure]
         public static Half FromBytes(byte[] value, int startIndex)
         {
             Half h;

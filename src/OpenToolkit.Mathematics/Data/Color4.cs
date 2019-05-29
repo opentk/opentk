@@ -24,6 +24,7 @@
 //
 
 using System;
+using System.Diagnostics.Contracts;
 using System.Drawing;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
@@ -112,6 +113,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="left">The left-hand side of the comparison.</param>
         /// <param name="right">The right-hand side of the comparison.</param>
         /// <returns>True if left is equal to right; false otherwise.</returns>
+        [Pure]
         public static bool operator ==(Color4 left, Color4 right)
         {
             return left.Equals(right);
@@ -123,6 +125,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="left">The left-hand side of the comparison.</param>
         /// <param name="right">The right-hand side of the comparison.</param>
         /// <returns>True if left is not equal to right; false otherwise.</returns>
+        [Pure]
         public static bool operator !=(Color4 left, Color4 right)
         {
             return !left.Equals(right);
@@ -133,6 +136,7 @@ namespace OpenToolkit.Mathematics
         /// </summary>
         /// <param name="color">The System.Drawing.Color to convert.</param>
         /// <returns>A new Color4 structure containing the converted components.</returns>
+        [Pure]
         public static implicit operator Color4(Color color)
         {
             return new Color4(color.R, color.G, color.B, color.A);
@@ -143,6 +147,7 @@ namespace OpenToolkit.Mathematics
         /// </summary>
         /// <param name="color">The Color4 to convert.</param>
         /// <returns>A new System.Drawing.Color structure containing the converted components.</returns>
+        [Pure]
         public static explicit operator Color(Color4 color)
         {
             return Color.FromArgb(
@@ -158,6 +163,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="c">The Color4 to convert.</param>
         /// <returns>The Color4, converted into a Vector4.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [Pure]
         public static explicit operator Vector4(Color4 c)
         {
             return Unsafe.As<Color4, Vector4>(ref c);
@@ -168,6 +174,7 @@ namespace OpenToolkit.Mathematics
         /// </summary>
         /// <param name="obj">An object to compare to.</param>
         /// <returns>True obj is a Color4 structure with the same components as this Color4; false otherwise.</returns>
+        [Pure]
         public override bool Equals(object obj)
         {
             if (!(obj is Color4))
@@ -910,6 +917,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="srgb">
         /// Color value to convert in sRGB.
         /// </param>
+        [Pure]
         public static Color4 FromSrgb(Color4 srgb)
         {
             float r, g, b;
@@ -951,6 +959,7 @@ namespace OpenToolkit.Mathematics
         /// Returns the converted color value.
         /// </returns>
         /// <param name="rgb">Color value to convert.</param>
+        [Pure]
         public static Color4 ToSrgb(Color4 rgb)
         {
             float r, g, b;
@@ -997,6 +1006,7 @@ namespace OpenToolkit.Mathematics
         /// Alpha (which is copied to the output's Alpha value).
         /// Each has a range of 0.0 to 1.0.
         /// </param>
+        [Pure]
         public static Color4 FromHsl(Vector4 hsl)
         {
             var hue = hsl.X * 360.0f;
@@ -1066,6 +1076,7 @@ namespace OpenToolkit.Mathematics
         /// Each has a range of 0.0 to 1.0.
         /// </returns>
         /// <param name="rgb">Color value to convert.</param>
+        [Pure]
         public static Vector4 ToHsl(Color4 rgb)
         {
             var max = Math.Max(rgb.R, Math.Max(rgb.G, rgb.B));
@@ -1115,6 +1126,7 @@ namespace OpenToolkit.Mathematics
         /// (which is copied to the output's Alpha value).
         /// Each has a range of 0.0 to 1.0.
         /// </param>
+        [Pure]
         public static Color4 FromHsv(Vector4 hsv)
         {
             var hue = hsv.X * 360.0f;
@@ -1184,6 +1196,7 @@ namespace OpenToolkit.Mathematics
         /// Each has a range of 0.0 to 1.0.
         /// </returns>
         /// <param name="rgb">Color value to convert.</param>
+        [Pure]
         public static Vector4 ToHsv(Color4 rgb)
         {
             var max = Math.Max(rgb.R, Math.Max(rgb.G, rgb.B));
@@ -1227,6 +1240,7 @@ namespace OpenToolkit.Mathematics
         /// Each has a range of 0.0 to 1.0.
         /// </param>
         /// <remarks>Uses the CIE XYZ colorspace.</remarks>
+        [Pure]
         public static Color4 FromXyz(Vector4 xyz)
         {
             var r = (0.41847f * xyz.X) + (-0.15866f * xyz.Y) + (-0.082835f * xyz.Z);
@@ -1245,6 +1259,7 @@ namespace OpenToolkit.Mathematics
         /// </returns>
         /// <param name="rgb">Color value to convert.</param>
         /// <remarks>Uses the CIE XYZ colorspace.</remarks>
+        [Pure]
         public static Vector4 ToXyz(Color4 rgb)
         {
             var x = ((0.49f * rgb.R) + (0.31f * rgb.G) + (0.20f * rgb.B)) / 0.17697f;
@@ -1266,6 +1281,7 @@ namespace OpenToolkit.Mathematics
         /// to the output's Alpha value).
         /// </param>
         /// <remarks>Converts using ITU-R BT.601/CCIR 601 W(r) = 0.299 W(b) = 0.114 U(max) = 0.436 V(max) = 0.615.</remarks>
+        [Pure]
         public static Color4 FromYcbcr(Vector4 ycbcr)
         {
             var r = (1.0f * ycbcr.X) + (0.0f * ycbcr.Y) + (1.402f * ycbcr.Z);
@@ -1286,6 +1302,7 @@ namespace OpenToolkit.Mathematics
         /// </returns>
         /// <param name="rgb">Color value to convert.</param>
         /// <remarks>Converts using ITU-R BT.601/CCIR 601 W(r) = 0.299 W(b) = 0.114 U(max) = 0.436 V(max) = 0.615.</remarks>
+        [Pure]
         public static Vector4 ToYcbcr(Color4 rgb)
         {
             var y = (0.299f * rgb.R) + (0.587f * rgb.G) + (0.114f * rgb.B);
@@ -1306,6 +1323,7 @@ namespace OpenToolkit.Mathematics
         /// (which is copied to the output's Alpha value).
         /// Each has a range of 0.0 to 1.0.
         /// </param>
+        [Pure]
         public static Color4 FromHcy(Vector4 hcy)
         {
             var hue = hcy.X * 360.0f;
@@ -1373,6 +1391,7 @@ namespace OpenToolkit.Mathematics
         /// Each has a range of 0.0 to 1.0.
         /// </returns>
         /// <param name="rgb">Color value to convert.</param>
+        [Pure]
         public static Vector4 ToHcy(Color4 rgb)
         {
             var max = Math.Max(rgb.R, Math.Max(rgb.G, rgb.B));
@@ -1405,6 +1424,7 @@ namespace OpenToolkit.Mathematics
         /// </summary>
         /// <param name="other">The Color4 structure to compare to.</param>
         /// <returns>True if both Color4 structures contain the same components; false otherwise.</returns>
+        [Pure]
         public bool Equals(Color4 other)
         {
             return
