@@ -88,13 +88,13 @@ namespace OpenToolkit.Windowing.Desktop
         public WindowBorder WindowBorder { get; set; }
 
         /// <inheritdoc />
-        public Box2 Bounds
+        public Box2i Bounds
         {
-            get => Box2.FromDimensions(Location, Size);
+            get => Box2i.FromDimensions(Location, Size);
             set
             {
-                _location = new Vector2(value.Left, value.Left);
-                _size = new Vector2(value.Width, value.Height);
+                _location = new Vector2i(value.Left, value.Left);
+                _size = new Vector2i(value.Width, value.Height);
             }
         }
 
@@ -145,9 +145,9 @@ namespace OpenToolkit.Windowing.Desktop
         }
 
         /// <inheritdoc />
-        public Box2 ClientRectangle
+        public Box2i ClientRectangle
         {
-            get => Box2.FromDimensions(Location, Size);
+            get => Box2i.FromDimensions(Location, Size);
 
             set
             {
@@ -157,7 +157,7 @@ namespace OpenToolkit.Windowing.Desktop
         }
 
         /// <inheritdoc />
-        public Vector2 ClientSize { get; }
+        public Vector2i ClientSize { get; }
 
         /// <inheritdoc />
         public bool IsFullscreen { get; set; }
