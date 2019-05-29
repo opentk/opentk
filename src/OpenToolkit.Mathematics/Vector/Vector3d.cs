@@ -21,6 +21,7 @@ SOFTWARE.
 */
 
 using System;
+using System.Diagnostics.Contracts;
 using System.Globalization;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
@@ -253,6 +254,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="a">Left operand.</param>
         /// <param name="b">Right operand.</param>
         /// <returns>Result of operation.</returns>
+        [Pure]
         public static Vector3d Add(Vector3d a, Vector3d b)
         {
             Add(ref a, ref b, out a);
@@ -278,6 +280,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="a">First operand.</param>
         /// <param name="b">Second operand.</param>
         /// <returns>Result of subtraction.</returns>
+        [Pure]
         public static Vector3d Subtract(Vector3d a, Vector3d b)
         {
             Subtract(ref a, ref b, out a);
@@ -303,6 +306,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="vector">Left operand.</param>
         /// <param name="scale">Right operand.</param>
         /// <returns>Result of the operation.</returns>
+        [Pure]
         public static Vector3d Multiply(Vector3d vector, double scale)
         {
             Multiply(ref vector, scale, out vector);
@@ -328,6 +332,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="vector">Left operand.</param>
         /// <param name="scale">Right operand.</param>
         /// <returns>Result of the operation.</returns>
+        [Pure]
         public static Vector3d Multiply(Vector3d vector, Vector3d scale)
         {
             Multiply(ref vector, ref scale, out vector);
@@ -353,6 +358,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="vector">Left operand.</param>
         /// <param name="scale">Right operand.</param>
         /// <returns>Result of the operation.</returns>
+        [Pure]
         public static Vector3d Divide(Vector3d vector, double scale)
         {
             Divide(ref vector, scale, out vector);
@@ -378,6 +384,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="vector">Left operand.</param>
         /// <param name="scale">Right operand.</param>
         /// <returns>Result of the operation.</returns>
+        [Pure]
         public static Vector3d Divide(Vector3d vector, Vector3d scale)
         {
             Divide(ref vector, ref scale, out vector);
@@ -403,6 +410,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="a">First operand.</param>
         /// <param name="b">Second operand.</param>
         /// <returns>The component-wise minimum.</returns>
+        [Pure]
         public static Vector3d ComponentMin(Vector3d a, Vector3d b)
         {
             a.X = a.X < b.X ? a.X : b.X;
@@ -430,6 +438,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="a">First operand.</param>
         /// <param name="b">Second operand.</param>
         /// <returns>The component-wise maximum.</returns>
+        [Pure]
         public static Vector3d ComponentMax(Vector3d a, Vector3d b)
         {
             a.X = a.X > b.X ? a.X : b.X;
@@ -457,6 +466,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="left">Left operand.</param>
         /// <param name="right">Right operand.</param>
         /// <returns>The minimum Vector3d.</returns>
+        [Pure]
         public static Vector3d MagnitudeMin(Vector3d left, Vector3d right)
         {
             return left.LengthSquared < right.LengthSquared ? left : right;
@@ -479,6 +489,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="left">Left operand.</param>
         /// <param name="right">Right operand.</param>
         /// <returns>The minimum Vector3d.</returns>
+        [Pure]
         public static Vector3d MagnitudeMax(Vector3d left, Vector3d right)
         {
             return left.LengthSquared >= right.LengthSquared ? left : right;
@@ -502,6 +513,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="min">Minimum vector.</param>
         /// <param name="max">Maximum vector.</param>
         /// <returns>The clamped vector.</returns>
+        [Pure]
         public static Vector3d Clamp(Vector3d vec, Vector3d min, Vector3d max)
         {
             vec.X = vec.X < min.X ? min.X : vec.X > max.X ? max.X : vec.X;
@@ -530,6 +542,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="vec1">The first vector.</param>
         /// <param name="vec2">The second vector.</param>
         /// <returns>The distance.</returns>
+        [Pure]
         public static double Distance(Vector3d vec1, Vector3d vec2)
         {
             Distance(ref vec1, ref vec2, out double result);
@@ -554,6 +567,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="vec1">The first vector.</param>
         /// <param name="vec2">The second vector.</param>
         /// <returns>The squared distance.</returns>
+        [Pure]
         public static double DistanceSquared(Vector3d vec1, Vector3d vec2)
         {
             DistanceSquared(ref vec1, ref vec2, out double result);
@@ -577,6 +591,7 @@ namespace OpenToolkit.Mathematics
         /// </summary>
         /// <param name="vec">The input vector.</param>
         /// <returns>The normalized copy.</returns>
+        [Pure]
         public static Vector3d Normalize(Vector3d vec)
         {
             var scale = 1.0 / vec.Length;
@@ -604,6 +619,7 @@ namespace OpenToolkit.Mathematics
         /// </summary>
         /// <param name="vec">The input vector.</param>
         /// <returns>The normalized copy.</returns>
+        [Pure]
         public static Vector3d NormalizeFast(Vector3d vec)
         {
             var scale = MathHelper.InverseSqrtFast((vec.X * vec.X) + (vec.Y * vec.Y) + (vec.Z * vec.Z));
@@ -632,6 +648,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="left">First operand.</param>
         /// <param name="right">Second operand.</param>
         /// <returns>The dot product of the two inputs.</returns>
+        [Pure]
         public static double Dot(Vector3d left, Vector3d right)
         {
             return (left.X * right.X) + (left.Y * right.Y) + (left.Z * right.Z);
@@ -654,6 +671,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="left">First operand.</param>
         /// <param name="right">Second operand.</param>
         /// <returns>The cross product of the two inputs.</returns>
+        [Pure]
         public static Vector3d Cross(Vector3d left, Vector3d right)
         {
             Cross(ref left, ref right, out Vector3d result);
@@ -685,6 +703,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="b">Second input vector.</param>
         /// <param name="blend">The blend factor. a when blend=0, b when blend=1.</param>
         /// <returns>a when blend=0, b when blend=1, and a linear combination otherwise.</returns>
+        [Pure]
         public static Vector3d Lerp(Vector3d a, Vector3d b, double blend)
         {
             a.X = (blend * (b.X - a.X)) + a.X;
@@ -716,6 +735,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="u">First Barycentric Coordinate.</param>
         /// <param name="v">Second Barycentric Coordinate.</param>
         /// <returns>a when u=v=0, b when u=1,v=0, c when u=0,v=1, and a linear combination of a,b,c otherwise.</returns>
+        [Pure]
         public static Vector3d BaryCentric(Vector3d a, Vector3d b, Vector3d c, double u, double v)
         {
             return a + (u * (b - a)) + (v * (c - a));
@@ -733,6 +753,7 @@ namespace OpenToolkit.Mathematics
         /// Output Vector. a when u=v=0, b when u=1,v=0, c when u=0,v=1, and a linear combination of a,b,c
         /// otherwise.
         /// </param>
+        [Pure]
         public static void BaryCentric
         (
             ref Vector3d a,
@@ -763,6 +784,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="vec">The vector to transform.</param>
         /// <param name="mat">The desired transformation.</param>
         /// <returns>The transformed vector.</returns>
+        [Pure]
         public static Vector3d TransformVector(Vector3d vec, Matrix4d mat)
         {
             TransformVector(ref vec, ref mat, out Vector3d result);
@@ -805,6 +827,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="norm">The normal to transform.</param>
         /// <param name="mat">The desired transformation.</param>
         /// <returns>The transformed normal.</returns>
+        [Pure]
         public static Vector3d TransformNormal(Vector3d norm, Matrix4d mat)
         {
             mat.Invert();
@@ -837,6 +860,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="norm">The normal to transform.</param>
         /// <param name="invMat">The inverse of the desired transformation.</param>
         /// <returns>The transformed normal.</returns>
+        [Pure]
         public static Vector3d TransformNormalInverse(Vector3d norm, Matrix4d invMat)
         {
             TransformNormalInverse(ref norm, ref invMat, out Vector3d result);
@@ -874,6 +898,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="pos">The position to transform.</param>
         /// <param name="mat">The desired transformation.</param>
         /// <returns>The transformed position.</returns>
+        [Pure]
         public static Vector3d TransformPosition(Vector3d pos, Matrix4d mat)
         {
             TransformPosition(ref pos, ref mat, out Vector3d result);
@@ -910,6 +935,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="vec">The vector to transform.</param>
         /// <param name="mat">The desired transformation.</param>
         /// <returns>The transformed vector.</returns>
+        [Pure]
         public static Vector3d Transform(Vector3d vec, Matrix4d mat)
         {
             Transform(ref vec, ref mat, out Vector3d result);
@@ -942,6 +968,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="vec">The vector to transform.</param>
         /// <param name="quat">The quaternion to rotate the vector by.</param>
         /// <returns>The result of the operation.</returns>
+        [Pure]
         public static Vector3d Transform(Vector3d vec, Quaterniond quat)
         {
             Transform(ref vec, ref quat, out Vector3d result);
@@ -973,6 +1000,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="vec">The vector to transform.</param>
         /// <param name="mat">The desired transformation.</param>
         /// <returns>The transformed vector.</returns>
+        [Pure]
         public static Vector3d TransformPerspective(Vector3d vec, Matrix4d mat)
         {
             TransformPerspective(ref vec, ref mat, out Vector3d result);
@@ -1001,6 +1029,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="second">The second vector.</param>
         /// <returns>Angle (in radians) between the vectors.</returns>
         /// <remarks>Note that the returned angle is never bigger than the constant Pi.</remarks>
+        [Pure]
         public static double CalculateAngle(Vector3d first, Vector3d second)
         {
             CalculateAngle(ref first, ref second, out double result);
@@ -1185,6 +1214,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="left">The first instance.</param>
         /// <param name="right">The second instance.</param>
         /// <returns>The result of the calculation.</returns>
+        [Pure]
         public static Vector3d operator +(Vector3d left, Vector3d right)
         {
             left.X += right.X;
@@ -1199,6 +1229,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="left">The first instance.</param>
         /// <param name="right">The second instance.</param>
         /// <returns>The result of the calculation.</returns>
+        [Pure]
         public static Vector3d operator -(Vector3d left, Vector3d right)
         {
             left.X -= right.X;
@@ -1212,6 +1243,7 @@ namespace OpenToolkit.Mathematics
         /// </summary>
         /// <param name="vec">The instance.</param>
         /// <returns>The result of the calculation.</returns>
+        [Pure]
         public static Vector3d operator -(Vector3d vec)
         {
             vec.X = -vec.X;
@@ -1226,6 +1258,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="vec">The instance.</param>
         /// <param name="scale">The scalar.</param>
         /// <returns>The result of the calculation.</returns>
+        [Pure]
         public static Vector3d operator *(Vector3d vec, double scale)
         {
             vec.X *= scale;
@@ -1240,6 +1273,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="scale">The scalar.</param>
         /// <param name="vec">The instance.</param>
         /// <returns>The result of the calculation.</returns>
+        [Pure]
         public static Vector3d operator *(double scale, Vector3d vec)
         {
             vec.X *= scale;
@@ -1254,6 +1288,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="scale">Left operand.</param>
         /// <param name="vec">Right operand.</param>
         /// <returns>Result of multiplication.</returns>
+        [Pure]
         public static Vector3d operator *(Vector3d vec, Vector3d scale)
         {
             vec.X *= scale.X;
@@ -1268,6 +1303,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="quat">The quaternion to rotate the vector by.</param>
         /// <param name="vec">The vector to transform.</param>
         /// <returns>The transformed vector.</returns>
+        [Pure]
         public static Vector3d operator *(Quaterniond quat, Vector3d vec)
         {
             Transform(ref vec, ref quat, out Vector3d result);
@@ -1280,6 +1316,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="vec">The instance.</param>
         /// <param name="scale">The scalar.</param>
         /// <returns>The result of the calculation.</returns>
+        [Pure]
         public static Vector3d operator /(Vector3d vec, double scale)
         {
             vec.X /= scale;
@@ -1294,6 +1331,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="left">The first instance.</param>
         /// <param name="right">The second instance.</param>
         /// <returns>True, if left equals right; false otherwise.</returns>
+        [Pure]
         public static bool operator ==(Vector3d left, Vector3d right)
         {
             return left.Equals(right);
@@ -1305,6 +1343,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="left">The first instance.</param>
         /// <param name="right">The second instance.</param>
         /// <returns>True, if left does not equa lright; false otherwise.</returns>
+        [Pure]
         public static bool operator !=(Vector3d left, Vector3d right)
         {
             return !left.Equals(right);
@@ -1315,6 +1354,7 @@ namespace OpenToolkit.Mathematics
         /// </summary>
         /// <param name="v3">The Vector3 to convert.</param>
         /// <returns>The resulting Vector3d.</returns>
+        [Pure]
         public static explicit operator Vector3d(Vector3 v3)
         {
             return new Vector3d(v3.X, v3.Y, v3.Z);
@@ -1325,6 +1365,7 @@ namespace OpenToolkit.Mathematics
         /// </summary>
         /// <param name="v3d">The Vector3d to convert.</param>
         /// <returns>The resulting Vector3.</returns>
+        [Pure]
         public static explicit operator Vector3(Vector3d v3d)
         {
             return new Vector3((float)v3d.X, (float)v3d.Y, (float)v3d.Z);
@@ -1358,6 +1399,7 @@ namespace OpenToolkit.Mathematics
         /// </summary>
         /// <param name="obj">The object to compare to.</param>
         /// <returns>True if the instances are equal; false otherwise.</returns>
+        [Pure]
         public override bool Equals(object obj)
         {
             if (!(obj is Vector3d))
@@ -1373,6 +1415,7 @@ namespace OpenToolkit.Mathematics
         /// </summary>
         /// <param name="other">A vector to compare with this vector.</param>
         /// <returns>true if the current vector is equal to the vector parameter; otherwise, false.</returns>
+        [Pure]
         public bool Equals(Vector3d other)
         {
             return
