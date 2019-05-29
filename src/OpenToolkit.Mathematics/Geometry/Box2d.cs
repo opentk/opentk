@@ -1,6 +1,11 @@
-﻿// Copyright (c) Open Toolkit library.
-// This file is subject to the terms and conditions defined in
-// file 'License.txt', which is part of this source code package.
+﻿//
+// Box2d.cs
+//
+// Copyright (C) 2019 OpenTK
+//
+// This software may be modified and distributed under the terms
+// of the MIT license. See the LICENSE file for details.
+//
 
 using System;
 using System.Globalization;
@@ -110,22 +115,12 @@ namespace OpenToolkit.Mathematics
         public double Height => Math.Abs(Bottom - Top);
 
         /// <summary>
-        /// Returns whether the box contains the specified point on the closed region described by this Box2.
-        /// </summary>
-        /// <param name="point">The point to query.</param>
-        /// <returns>Whether this box contains the point.</returns>
-        public bool Contains(Vector2d point)
-        {
-            return Contains(point, true);
-        }
-
-        /// <summary>
         /// Returns whether the box contains the specified point.
         /// </summary>
         /// <param name="point">The point to query.</param>
         /// <param name="closedRegion">Whether to include the box boundary in the test region.</param>
         /// <returns>Whether this box contains the point.</returns>
-        public bool Contains(Vector2d point, bool closedRegion)
+        public bool Contains(Vector2d point, bool closedRegion = true)
         {
             var containsX = closedRegion == Left <= Right
                 ? point.X >= Left != point.X > Right
@@ -167,8 +162,10 @@ namespace OpenToolkit.Mathematics
         /// <param name="right">The right operand.</param>
         public static bool operator ==(Box2d left, Box2d right)
         {
-            return left.Bottom == right.Bottom && left.Top == right.Top &&
-                   left.Left == right.Left && left.Right == right.Right;
+            return MathHelper.ApproximatelyEqualEpsilon(left.Bottom, right.Bottom, 0.0001f)
+                   && MathHelper.ApproximatelyEqualEpsilon(left.Top, right.Top, 0.0001f)
+                   && MathHelper.ApproximatelyEqualEpsilon(left.Left, right.Left, 0.0001f)
+                   && MathHelper.ApproximatelyEqualEpsilon(left.Bottom, right.Bottom, 0.0001f);
         }
 
         /// <summary>
@@ -190,7 +187,7 @@ namespace OpenToolkit.Mathematics
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            return obj is Box2d && Equals((Box2d)obj);
+            return obj is Box2d d && Equals(d);
         }
 
         /// <inheritdoc/>
