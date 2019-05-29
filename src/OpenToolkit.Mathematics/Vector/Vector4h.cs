@@ -21,6 +21,7 @@ SOFTWARE.
  */
 
 using System;
+using System.Diagnostics.Contracts;
 using System.Globalization;
 using System.IO;
 using System.Runtime.CompilerServices;
@@ -1210,6 +1211,7 @@ namespace OpenToolkit.Mathematics
         /// </summary>
         /// <param name="v4f">The Vector4 to convert.</param>
         /// <returns>The resulting Half vector.</returns>
+        [Pure]
         public static explicit operator Vector4h(Vector4 v4f)
         {
             return new Vector4h(v4f);
@@ -1220,6 +1222,7 @@ namespace OpenToolkit.Mathematics
         /// </summary>
         /// <param name="v4d">The Vector4d to convert.</param>
         /// <returns>The resulting Half vector.</returns>
+        [Pure]
         public static explicit operator Vector4h(Vector4d v4d)
         {
             return new Vector4h(v4d);
@@ -1230,6 +1233,7 @@ namespace OpenToolkit.Mathematics
         /// </summary>
         /// <param name="h4">The Half4 to convert.</param>
         /// <returns>The resulting Vector4.</returns>
+        [Pure]
         public static explicit operator Vector4(Vector4h h4)
         {
             return new Vector4(
@@ -1244,6 +1248,7 @@ namespace OpenToolkit.Mathematics
         /// </summary>
         /// <param name="h4">The Half4 to convert.</param>
         /// <returns>The resulting Vector4d.</returns>
+        [Pure]
         public static explicit operator Vector4d(Vector4h h4)
         {
             return new Vector4d(
@@ -1309,6 +1314,7 @@ namespace OpenToolkit.Mathematics
         /// </summary>
         /// <param name="other">OpenToolkit.Half4 to compare to this instance..</param>
         /// <returns>True, if other is equal to this instance; false otherwise.</returns>
+        [Pure]
         public bool Equals(Vector4h other)
         {
             return X.Equals(other.X) && Y.Equals(other.Y) && Z.Equals(other.Z) && W.Equals(other.W);
@@ -1335,6 +1341,7 @@ namespace OpenToolkit.Mathematics
         /// </summary>
         /// <param name="h">The Half4 to convert.</param>
         /// <returns>The input as byte array.</returns>
+        [Pure]
         public static byte[] GetBytes(Vector4h h)
         {
             var result = new byte[SizeInBytes];
@@ -1361,6 +1368,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="value">A Half4 in it's byte[] representation.</param>
         /// <param name="startIndex">The starting position within value.</param>
         /// <returns>A new Half4 instance.</returns>
+        [Pure]
         public static Vector4h FromBytes(byte[] value, int startIndex)
         {
             return new Vector4h(
