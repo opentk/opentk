@@ -108,6 +108,9 @@ namespace OpenToolkit.Windowing.Desktop
             }
         }
 
+        /// <inheritdoc />
+        public OpenGLVersion Version { get; }
+
         private Monitor _currentMonitor;
 
         /// <summary>

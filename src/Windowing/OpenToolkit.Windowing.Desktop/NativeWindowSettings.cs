@@ -52,6 +52,8 @@ namespace OpenToolkit.Windowing.Desktop
             Width = 640;
             Height = 360;
 
+            Version = OpenGLVersion.OPENGL_3_3_CORE;
+
             IsFullscreen = false;
 
             Exists = true;
@@ -65,6 +67,11 @@ namespace OpenToolkit.Windowing.Desktop
 
         /// <inheritdoc />
         public string ClipboardString { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value representing the current OpenGL version.
+        /// </summary>
+        public OpenGLVersion Version { get; set; }
 
         /// <inheritdoc />
         public Monitor CurrentMonitor { get; set; }
