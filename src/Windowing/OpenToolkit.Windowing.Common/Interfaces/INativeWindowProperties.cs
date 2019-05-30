@@ -38,7 +38,7 @@ namespace OpenToolkit.Windowing.Common
         /// Gets or sets the current monitor.
         /// </summary>
         Monitor CurrentMonitor { get; set; }
-        
+
         /// <summary>
         /// Gets a value representing the current OpenGL version.
         /// </summary>
