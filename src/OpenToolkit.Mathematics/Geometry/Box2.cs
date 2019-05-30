@@ -20,51 +20,37 @@ namespace OpenToolkit.Mathematics
     public struct Box2 : IEquatable<Box2>
     {
         /// <summary>
-        /// The left boundary of the structure.
+        /// The minimum boundary of the structure.
         /// </summary>
-        public float Left;
+        public Vector2 Min;
 
         /// <summary>
-        /// The right boundary of the structure.
+        /// The maximum boundary of the structure.
         /// </summary>
-        public float Right;
-
-        /// <summary>
-        /// The top boundary of the structure.
-        /// </summary>
-        public float Top;
-
-        /// <summary>
-        /// The bottom boundary of the structure.
-        /// </summary>
-        public float Bottom;
+        public Vector2 Max;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Box2"/> struct.
         /// </summary>
-        /// <param name="topLeft">An OpenToolkit.Vector2 describing the top-left corner of the Box2.</param>
-        /// <param name="bottomRight">An OpenToolkit.Vector2 describing the bottom-right corner of the Box2.</param>
-        public Box2(Vector2 topLeft, Vector2 bottomRight)
+        /// <param name="min">An Vector2 describing the top-left corner of the Box2.</param>
+        /// <param name="max">A Vector2 describing the bottom-right corner of the Box2.</param>
+        public Box2(Vector2 min, Vector2 max)
         {
-            Left = topLeft.X;
-            Top = topLeft.Y;
-            Right = bottomRight.X;
-            Bottom = bottomRight.Y;
+            Min = min;
+            Max = max;
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Box2"/> struct.
         /// </summary>
-        /// <param name="left">The position of the left boundary.</param>
-        /// <param name="top">The position of the top boundary.</param>
-        /// <param name="right">The position of the right boundary.</param>
-        /// <param name="bottom">The position of the bottom boundary.</param>
-        public Box2(float left, float top, float right, float bottom)
+        /// <param name="minX">The position of the left boundary.</param>
+        /// <param name="minY">The position of the top boundary.</param>
+        /// <param name="maxX">The position of the right boundary.</param>
+        /// <param name="maxY">The position of the bottom boundary.</param>
+        public Box2(float minX, float minY, float maxX, float maxY)
         {
-            Left = left;
-            Top = top;
-            Right = right;
-            Bottom = bottom;
+            Min = new Vector2(minX, minY);
+            Max = new Vector2(maxX, maxY);
         }
 
         /// <summary>
@@ -74,7 +60,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="left">The position of the left boundary.</param>
         /// <param name="right">The position of the right boundary.</param>
         /// <param name="bottom">The position of the bottom boundary.</param>
-        /// <returns>A new OpenToolkit.Box2 with the specfied dimensions.</returns>
+        /// <returns>A new OpenToolkit.Box2 with the specified dimensions.</returns>
         public static Box2 FromTLRB(float top, float left, float right, float bottom)
         {
             return new Box2(left, top, right, bottom);
@@ -83,22 +69,22 @@ namespace OpenToolkit.Mathematics
         /// <summary>
         /// Creates a new Box2 with the specified dimensions.
         /// </summary>
-        /// <param name="left">The position of the left boundary.</param>
-        /// <param name="top">The position of the top boundary.</param>
+        /// <param name="minX">The position of the left boundary.</param>
+        /// <param name="minY">The position of the top boundary.</param>
         /// <param name="width">The width of the box.</param>
         /// <param name="height">The height of the box.</param>
-        /// <returns>A new OpenToolkit.Box2 with the specfied dimensions.</returns>
-        public static Box2 FromDimensions(float left, float top, float width, float height)
+        /// <returns>A new OpenToolkit.Box2 with the specified dimensions.</returns>
+        public static Box2 FromDimensions(float minX, float minY, float width, float height)
         {
-            return new Box2(left, top, left + width, top + height);
+            return new Box2(minX, minY, minX + width, minY + height);
         }
 
         /// <summary>
         /// Creates a new Box2 with the specified dimensions.
         /// </summary>
-        /// <param name="position">The position of the top left corner.</param>
+        /// <param name="position">The position of the top-left corner.</param>
         /// <param name="size">The size of the box.</param>
-        /// <returns>A new OpenToolkit.Box2 with the specfied dimensions.</returns>
+        /// <returns>A new OpenToolkit.Box2 with the specified dimensions.</returns>
         public static Box2 FromDimensions(Vector2 position, Vector2 size)
         {
             return FromDimensions(position.X, position.Y, size.X, size.Y);
@@ -107,12 +93,12 @@ namespace OpenToolkit.Mathematics
         /// <summary>
         /// Gets a float describing the width of the Box2 structure.
         /// </summary>
-        public float Width => Math.Abs(Right - Left);
+        public float Width => Math.Abs(Min.X - Max.X);
 
         /// <summary>
         /// Gets a float describing the height of the Box2 structure.
         /// </summary>
-        public float Height => Math.Abs(Bottom - Top);
+        public float Height => Math.Abs(Min.Y - Max.Y);
 
         /// <summary>
         /// Returns whether the box contains the specified point.
@@ -122,13 +108,13 @@ namespace OpenToolkit.Mathematics
         /// <returns>Whether this box contains the point.</returns>
         public bool Contains(Vector2 point, bool closedRegion = true)
         {
-            var containsX = closedRegion == Left <= Right
-                ? point.X >= Left != point.X > Right
-                : point.X > Left != point.X >= Right;
+            var containsX = closedRegion == Min.X <= Max.X
+                ? point.X >= Min.X != point.X > Max.X
+                : point.X > Min.X != point.X >= Max.X;
 
-            var containsY = closedRegion == Top <= Bottom
-                ? point.Y >= Top != point.Y > Bottom
-                : point.Y > Top != point.Y >= Bottom;
+            var containsY = closedRegion == Min.Y <= Max.Y
+                ? point.Y >= Min.Y != point.Y > Min.X
+                : point.Y > Min.Y != point.Y >= Max.Y;
 
             return containsX && containsY;
         }
@@ -136,23 +122,21 @@ namespace OpenToolkit.Mathematics
         /// <summary>
         /// Returns a Box2 translated by the given amount.
         /// </summary>
-        /// <param name="point">The distance to translate the box.</param>
+        /// <param name="distance">The distance to translate the box.</param>
         /// <returns>The translated box.</returns>
-        public Box2 Translated(Vector2 point)
+        public Box2 Translated(Vector2 distance)
         {
-            return new Box2(Left + point.X, Top + point.Y, Right + point.X, Bottom + point.Y);
+            return new Box2(Min + distance, Max + distance);
         }
 
         /// <summary>
         /// Translates this Box2 by the given amount.
         /// </summary>
-        /// <param name="point">The distance to translate the box.</param>
-        public void Translate(Vector2 point)
+        /// <param name="distance">The distance to translate the box.</param>
+        public void Translate(Vector2 distance)
         {
-            Left += point.X;
-            Right += point.X;
-            Top += point.Y;
-            Bottom += point.Y;
+            Min += distance;
+            Max += distance;
         }
 
         /// <summary>
@@ -162,10 +146,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="right">The right operand.</param>
         public static bool operator ==(Box2 left, Box2 right)
         {
-            return MathHelper.ApproximatelyEqualEpsilon(left.Bottom, right.Bottom, 0.0001f)
-                && MathHelper.ApproximatelyEqualEpsilon(left.Top, right.Top, 0.0001f)
-                && MathHelper.ApproximatelyEqualEpsilon(left.Left, right.Left, 0.0001f)
-                && MathHelper.ApproximatelyEqualEpsilon(left.Bottom, right.Bottom, 0.0001f);
+            return left.Min == right.Min && left.Max == right.Max;
         }
 
         /// <summary>
@@ -195,10 +176,10 @@ namespace OpenToolkit.Mathematics
         {
             unchecked
             {
-                var hashCode = Left.GetHashCode();
-                hashCode = (hashCode * 397) ^ Right.GetHashCode();
-                hashCode = (hashCode * 397) ^ Top.GetHashCode();
-                hashCode = (hashCode * 397) ^ Bottom.GetHashCode();
+                var hashCode = Min.X.GetHashCode();
+                hashCode = (hashCode * 397) ^ Min.Y.GetHashCode();
+                hashCode = (hashCode * 397) ^ Max.X.GetHashCode();
+                hashCode = (hashCode * 397) ^ Max.Y.GetHashCode();
                 return hashCode;
             }
         }
@@ -208,7 +189,7 @@ namespace OpenToolkit.Mathematics
         /// <inheritdoc/>
         public override string ToString()
         {
-            return string.Format("({0}{4} {1}) - ({2}{4} {3})", Left, Top, Right, Bottom, ListSeparator);
+            return string.Format("({0}{4} {1}) - ({2}{4} {3})", Min.X, Min.Y, Max.X, Max.Y, ListSeparator);
         }
     }
 }
