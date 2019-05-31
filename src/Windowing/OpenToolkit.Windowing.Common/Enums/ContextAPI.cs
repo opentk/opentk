@@ -1,5 +1,5 @@
 //
-// OpenGLVersion.cs
+// ContextAPI.cs
 //
 // Copyright (C) 2019 OpenTK
 //
@@ -10,18 +10,18 @@
 namespace OpenToolkit.Windowing.Common
 {
     /// <summary>
-    /// Describes the OpenGL version you want the window to use.
+    /// Describes the graphics API and version you want the context to use.
     /// </summary>
-    public enum OpenGLVersion
+    public enum ContextAPI
     {
         /// <summary>
-        /// Selects core profile OpenGL 3.3
+        /// Selects OpenGL 3.3
         /// </summary>
-        OPENGL_3_3_CORE,
+        GLVersion33,
 
         /// <summary>
-        /// Selects compatability profile OpenGL 3.3
+        /// Selects OpenGL 4.0
         /// </summary>
-        OPENGL_3_3_COMPAT,
+        GLVersion40,
     }
 }

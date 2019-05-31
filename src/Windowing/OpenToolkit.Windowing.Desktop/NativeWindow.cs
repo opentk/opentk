@@ -109,7 +109,10 @@ namespace OpenToolkit.Windowing.Desktop
         }
 
         /// <inheritdoc />
-        public OpenGLVersion Version { get; }
+        public ContextAPI API { get; }
+
+        /// <inheritdoc />
+        public ContextProfile Profile { get; }
 
         private Monitor _currentMonitor;
 
@@ -470,20 +473,17 @@ namespace OpenToolkit.Windowing.Desktop
                 }
 
                 int major, minor;
-                bool isCompat;
 
-                switch (Version)
+                switch (API)
                 {
-                    case OpenGLVersion.OPENGL_3_3_CORE:
+                    case ContextAPI.GLVersion33:
                         major = 3;
                         minor = 3;
-                        isCompat = false;
                         break;
 
-                    case OpenGLVersion.OPENGL_3_3_COMPAT:
-                        major = 3;
-                        minor = 3;
-                        isCompat = true;
+                    case ContextAPI.GLVersion40:
+                        major = 4;
+                        minor = 0;
                         break;
 
                     default:
@@ -495,8 +495,7 @@ namespace OpenToolkit.Windowing.Desktop
 
                 Glfw.WindowHint
                 (
-                    WindowHintOpenGlProfile.OpenGlProfile,
-                    isCompat ? OpenGlProfile.Compat : OpenGlProfile.Core
+                    WindowHintOpenGlProfile.OpenGlProfile, (OpenGlProfile)Profile
                 );
 
                 Glfw.WindowHint(WindowHintBool.Focused, settings.IsFocused);

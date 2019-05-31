@@ -52,7 +52,7 @@ namespace OpenToolkit.Windowing.Desktop
             Width = 640;
             Height = 360;
 
-            Version = OpenGLVersion.OPENGL_3_3_CORE;
+            API = ContextAPI.GLVersion33;
 
             IsFullscreen = false;
 
@@ -69,9 +69,14 @@ namespace OpenToolkit.Windowing.Desktop
         public string ClipboardString { get; set; }
 
         /// <summary>
-        /// Gets or sets a value representing the current OpenGL version.
+        /// Gets or sets a value representing the current graphics API and version.
         /// </summary>
-        public OpenGLVersion Version { get; set; }
+        public ContextAPI API { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value representing the current graphics API profile.
+        /// </summary>
+        public ContextProfile Profile { get; set; }
 
         /// <inheritdoc />
         public Monitor CurrentMonitor { get; set; }

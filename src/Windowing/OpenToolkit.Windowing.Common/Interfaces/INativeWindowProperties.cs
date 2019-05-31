@@ -40,9 +40,14 @@ namespace OpenToolkit.Windowing.Common
         Monitor CurrentMonitor { get; set; }
 
         /// <summary>
-        /// Gets a value representing the current OpenGL version.
+        /// Gets a value representing the current graphics API and version.
         /// </summary>
-        OpenGLVersion Version { get; }
+        ContextAPI API { get; }
+
+        /// <summary>
+        /// Gets a value representing the current graphics API profile.
+        /// </summary>
+        ContextProfile Profile { get; }
 
         /// <summary>
         /// Gets or sets the clipboard string.
