@@ -52,9 +52,10 @@ namespace OpenToolkit.Windowing.Desktop
             Width = 640;
             Height = 360;
 
-            API = ContextAPI.GLVersion3_3;
+            API = ContextAPI.OpenGL;
             Profile = ContextProfile.Core;
             Flags = ContextFlags.Default;
+            APIVersion = new Version(3, 3);
 
             IsFullscreen = false;
 
@@ -71,7 +72,7 @@ namespace OpenToolkit.Windowing.Desktop
         public string ClipboardString { get; set; }
 
         /// <summary>
-        /// Gets or sets a value representing the current graphics API and version.
+        /// Gets or sets a value representing the current graphics API.
         /// </summary>
         public ContextAPI API { get; set; }
 
@@ -84,6 +85,11 @@ namespace OpenToolkit.Windowing.Desktop
         /// Gets or sets a value representing the current graphics profile flags.
         /// </summary>
         public ContextFlags Flags { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value representing the current version of the graphics API
+        /// </summary>
+        public Version APIVersion { get; set; }
 
         /// <inheritdoc />
         public Monitor CurrentMonitor { get; set; }

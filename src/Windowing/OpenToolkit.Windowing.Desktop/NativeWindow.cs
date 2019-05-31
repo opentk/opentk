@@ -117,6 +117,9 @@ namespace OpenToolkit.Windowing.Desktop
         /// <inheritdoc />
         public ContextFlags Flags { get; }
 
+        /// <inheritdoc />
+        public Version APIVersion { get; }
+
         private Monitor _currentMonitor;
 
         /// <summary>
@@ -475,91 +478,26 @@ namespace OpenToolkit.Windowing.Desktop
                         break;
                 }
 
-                (ClientApi, int, int) versions;
-
                 switch (API)
                 {
                     case ContextAPI.NoContext:
-                        versions = (ClientApi.NoApi, 0, 0);
+                        Glfw.WindowHint(WindowHintClientApi.ClientApi, ClientApi.NoApi);
                         break;
 
-                    case ContextAPI.GLESVersion2_0:
-                        versions = (ClientApi.OpenGlEsApi, 2, 0);
+                    case ContextAPI.OpenGLES:
+                        Glfw.WindowHint(WindowHintClientApi.ClientApi, ClientApi.OpenGlEsApi);
                         break;
 
-                    case ContextAPI.GLESVersion3_0:
-                        versions = (ClientApi.OpenGlEsApi, 3, 0);
-                        break;
-
-                    case ContextAPI.GLESVersion3_1:
-                        versions = (ClientApi.OpenGlEsApi, 3, 1);
-                        break;
-
-                    case ContextAPI.GLESVersion3_2:
-                        versions = (ClientApi.OpenGlEsApi, 3, 2);
-                        break;
-
-                    case ContextAPI.GLVersion2_0:
-                        versions = (ClientApi.OpenGlApi, 2, 0);
-                        break;
-
-                    case ContextAPI.GLVersion2_1:
-                        versions = (ClientApi.OpenGlApi, 2, 1);
-                        break;
-
-                    case ContextAPI.GLVersion3_0:
-                        versions = (ClientApi.OpenGlApi, 3, 0);
-                        break;
-
-                    case ContextAPI.GLVersion3_1:
-                        versions = (ClientApi.OpenGlApi, 3, 1);
-                        break;
-
-                    case ContextAPI.GLVersion3_2:
-                        versions = (ClientApi.OpenGlApi, 3, 2);
-                        break;
-
-                    case ContextAPI.GLVersion3_3:
-                        versions = (ClientApi.OpenGlApi, 3, 3);
-                        break;
-
-                    case ContextAPI.GLVersion4_0:
-                        versions = (ClientApi.OpenGlApi, 4, 0);
-                        break;
-
-                    case ContextAPI.GLVersion4_1:
-                        versions = (ClientApi.OpenGlApi, 4, 1);
-                        break;
-
-                    case ContextAPI.GLVersion4_2:
-                        versions = (ClientApi.OpenGlApi, 4, 2);
-                        break;
-
-                    case ContextAPI.GLVersion4_3:
-                        versions = (ClientApi.OpenGlApi, 4, 3);
-                        break;
-
-                    case ContextAPI.GLVersion4_4:
-                        versions = (ClientApi.OpenGlApi, 4, 4);
-                        break;
-
-                    case ContextAPI.GLVersion4_5:
-                        versions = (ClientApi.OpenGlApi, 4, 5);
-                        break;
-
-                    case ContextAPI.GLVersion4_6:
-                        versions = (ClientApi.OpenGlApi, 4, 6);
+                    case ContextAPI.OpenGL:
+                        Glfw.WindowHint(WindowHintClientApi.ClientApi, ClientApi.OpenGlApi);
                         break;
 
                     default:
                         throw new Exception("Could not find version requested");
                 }
 
-                var (api, major, minor) = versions;
-
-                Glfw.WindowHint(WindowHintClientApi.ClientApi, api);
-                Glfw.WindowHint(WindowHintInt.ContextVersionMajor, major);
-                Glfw.WindowHint(WindowHintInt.ContextVersionMinor, minor);
+                Glfw.WindowHint(WindowHintInt.ContextVersionMajor, APIVersion.Major);
+                Glfw.WindowHint(WindowHintInt.ContextVersionMinor, APIVersion.Minor);
 
                 if (Flags.HasFlag(ContextFlags.ForwardCompatible))
                 {

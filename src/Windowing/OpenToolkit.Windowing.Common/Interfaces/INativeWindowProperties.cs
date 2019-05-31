@@ -7,6 +7,7 @@
 // of the MIT license. See the LICENSE file for details.
 //
 
+using System;
 using OpenToolkit.Mathematics;
 using OpenToolkit.Windowing.Common.Input;
 
@@ -40,7 +41,7 @@ namespace OpenToolkit.Windowing.Common
         Monitor CurrentMonitor { get; set; }
 
         /// <summary>
-        /// Gets a value representing the current graphics API and version.
+        /// Gets a value representing the current graphics API.
         /// </summary>
         ContextAPI API { get; }
 
@@ -53,6 +54,11 @@ namespace OpenToolkit.Windowing.Common
         /// Gets a value representing the current graphics profile flags.
         /// </summary>
         ContextFlags Flags { get; }
+
+        /// <summary>
+        /// Gets a value representing the current version of the graphics API.
+        /// </summary>
+        Version APIVersion { get; }
 
         /// <summary>
         /// Gets or sets the clipboard string.
