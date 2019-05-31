@@ -475,24 +475,89 @@ namespace OpenToolkit.Windowing.Desktop
                         break;
                 }
 
-                (int, int) versions;
+                (ClientApi, int, int) versions;
 
                 switch (API)
                 {
+                    case ContextAPI.NoContext:
+                        versions = (ClientApi.NoApi, 0, 0);
+                        break;
+
+                    case ContextAPI.GLESVersion2_0:
+                        versions = (ClientApi.OpenGlEsApi, 2, 0);
+                        break;
+
+                    case ContextAPI.GLESVersion3_0:
+                        versions = (ClientApi.OpenGlEsApi, 3, 0);
+                        break;
+
+                    case ContextAPI.GLESVersion3_1:
+                        versions = (ClientApi.OpenGlEsApi, 3, 1);
+                        break;
+
+                    case ContextAPI.GLESVersion3_2:
+                        versions = (ClientApi.OpenGlEsApi, 3, 2);
+                        break;
+
+                    case ContextAPI.GLVersion2_0:
+                        versions = (ClientApi.OpenGlApi, 2, 0);
+                        break;
+
+                    case ContextAPI.GLVersion2_1:
+                        versions = (ClientApi.OpenGlApi, 2, 1);
+                        break;
+
+                    case ContextAPI.GLVersion3_0:
+                        versions = (ClientApi.OpenGlApi, 3, 0);
+                        break;
+
+                    case ContextAPI.GLVersion3_1:
+                        versions = (ClientApi.OpenGlApi, 3, 1);
+                        break;
+
+                    case ContextAPI.GLVersion3_2:
+                        versions = (ClientApi.OpenGlApi, 3, 2);
+                        break;
+
                     case ContextAPI.GLVersion3_3:
-                        versions = (3, 3);
+                        versions = (ClientApi.OpenGlApi, 3, 3);
                         break;
 
                     case ContextAPI.GLVersion4_0:
-                        versions = (4, 0);
+                        versions = (ClientApi.OpenGlApi, 4, 0);
+                        break;
+
+                    case ContextAPI.GLVersion4_1:
+                        versions = (ClientApi.OpenGlApi, 4, 1);
+                        break;
+
+                    case ContextAPI.GLVersion4_2:
+                        versions = (ClientApi.OpenGlApi, 4, 2);
+                        break;
+
+                    case ContextAPI.GLVersion4_3:
+                        versions = (ClientApi.OpenGlApi, 4, 3);
+                        break;
+
+                    case ContextAPI.GLVersion4_4:
+                        versions = (ClientApi.OpenGlApi, 4, 4);
+                        break;
+
+                    case ContextAPI.GLVersion4_5:
+                        versions = (ClientApi.OpenGlApi, 4, 5);
+                        break;
+
+                    case ContextAPI.GLVersion4_6:
+                        versions = (ClientApi.OpenGlApi, 4, 6);
                         break;
 
                     default:
                         throw new Exception("Could not find version requested");
                 }
-                
-                var (major, minor) = versions;
 
+                var (api, major, minor) = versions;
+
+                Glfw.WindowHint(WindowHintClientApi.ClientApi, api);
                 Glfw.WindowHint(WindowHintInt.ContextVersionMajor, major);
                 Glfw.WindowHint(WindowHintInt.ContextVersionMinor, minor);
 
