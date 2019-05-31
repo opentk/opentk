@@ -87,7 +87,7 @@ namespace OpenToolkit.Windowing.Desktop
         public ContextFlags Flags { get; set; }
 
         /// <summary>
-        /// Gets or sets a value representing the current version of the graphics API
+        /// Gets or sets a value representing the current version of the graphics API.
         /// </summary>
         public Version APIVersion { get; set; }
 
