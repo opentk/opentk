@@ -18,5 +18,10 @@ namespace OpenToolkit.Windowing.Common
         /// Selects core profile OpenGL 3.3
         /// </summary>
         OPENGL_3_3_CORE,
+        
+        /// <summary>
+        /// Selects compatability profile OpenGL 3.3
+        /// </summary>
+        OPENGL_3_3_COMPAT,
     }
 }

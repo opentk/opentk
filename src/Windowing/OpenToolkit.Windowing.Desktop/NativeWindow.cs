@@ -469,6 +469,36 @@ namespace OpenToolkit.Windowing.Desktop
                         break;
                 }
 
+                int major, minor;
+                bool isCompat;
+
+                switch (Version)
+                {
+                    case OpenGLVersion.OPENGL_3_3_CORE:
+                        major = 3;
+                        minor = 3;
+                        isCompat = false;
+                        break;
+
+                    case OpenGLVersion.OPENGL_3_3_COMPAT:
+                        major = 3;
+                        minor = 3;
+                        isCompat = true;
+                        break;
+
+                    default:
+                        throw new Exception("Could not find version requested");
+                }
+
+                Glfw.WindowHint(WindowHintInt.ContextVersionMajor, major);
+                Glfw.WindowHint(WindowHintInt.ContextVersionMinor, minor);
+
+                Glfw.WindowHint
+                (
+                    WindowHintOpenGlProfile.OpenGlProfile,
+                    isCompat ? OpenGlProfile.Compat : OpenGlProfile.Core
+                );
+
                 Glfw.WindowHint(WindowHintBool.Focused, settings.IsFocused);
                 _windowBorder = settings.WindowBorder;
 
