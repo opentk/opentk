@@ -15,6 +15,11 @@ namespace OpenToolkit.Windowing.Common
     public enum ContextAPI
     {
         /// <summary>
+        /// Selects no context. You'll have to create your own context externally.
+        /// </summary>
+        NoContext,
+
+        /// <summary>
         /// Selects OpenGL 3.3
         /// </summary>
         GLVersion33,
