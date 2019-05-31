@@ -50,6 +50,11 @@ namespace OpenToolkit.Windowing.Common
         ContextProfile Profile { get; }
 
         /// <summary>
+        /// Gets a value representing the current graphics profile flags.
+        /// </summary>
+        ContextFlags Flags { get; }
+
+        /// <summary>
         /// Gets or sets the clipboard string.
         /// </summary>
         string ClipboardString { get; set; }

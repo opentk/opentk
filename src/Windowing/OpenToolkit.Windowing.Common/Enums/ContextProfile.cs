@@ -10,15 +10,10 @@
 namespace OpenToolkit.Windowing.Common
 {
     /// <summary>
-    /// Selects the profile for the context's graphics API.
+    /// Selects the profile for the context's graphics API. This only applies on OpenGL 3.2 upwards, and has no effect on older versions.
     /// </summary>
     public enum ContextProfile
     {
-        /// <summary>
-        /// Allow the profile to be chosen by the implementation.
-        /// </summary>
-        DontCare,
-
         /// <summary>
         /// Selects compatability profile. You should only use this if maintaining legacy code.
         /// </summary>

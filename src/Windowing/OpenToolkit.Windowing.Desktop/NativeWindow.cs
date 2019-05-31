@@ -114,6 +114,9 @@ namespace OpenToolkit.Windowing.Desktop
         /// <inheritdoc />
         public ContextProfile Profile { get; }
 
+        /// <inheritdoc />
+        public ContextFlags Flags { get; }
+
         private Monitor _currentMonitor;
 
         /// <summary>
@@ -472,23 +475,23 @@ namespace OpenToolkit.Windowing.Desktop
                         break;
                 }
 
-                int major, minor;
+                (int, int) versions;
 
                 switch (API)
                 {
-                    case ContextAPI.GLVersion33:
-                        major = 3;
-                        minor = 3;
+                    case ContextAPI.GLVersion3_3:
+                        versions = (3, 3);
                         break;
 
-                    case ContextAPI.GLVersion40:
-                        major = 4;
-                        minor = 0;
+                    case ContextAPI.GLVersion4_0:
+                        versions = (4, 0);
                         break;
 
                     default:
                         throw new Exception("Could not find version requested");
                 }
+                
+                var (major, minor) = versions;
 
                 Glfw.WindowHint(WindowHintInt.ContextVersionMajor, major);
                 Glfw.WindowHint(WindowHintInt.ContextVersionMinor, minor);

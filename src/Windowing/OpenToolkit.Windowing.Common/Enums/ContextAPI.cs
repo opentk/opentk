@@ -7,36 +7,22 @@
 // of the MIT license. See the LICENSE file for details.
 //
 
+using System.Diagnostics.CodeAnalysis;
+
+#pragma warning disable 1591
+
 namespace OpenToolkit.Windowing.Common
 {
     /// <summary>
     /// Describes the graphics API and version you want the context to use.
     /// </summary>
+    [SuppressMessage("ReSharper", "SA1602", Justification = "Should be obvious based on the names")]
     public enum ContextAPI
     {
-        /// <summary>
-        /// Selects no context. You'll have to create your own context externally.
-        /// </summary>
         NoContext,
-
-        /// <summary>
-        /// Selects OpenGL ES 2.0
-        /// </summary>
-        GLESVersion20,
-
-        /// <summary>
-        /// Selects OpenGL ES 3.0
-        /// </summary>
-        GLESVersion30,
-
-        /// <summary>
-        /// Selects OpenGL 3.3
-        /// </summary>
-        GLVersion33,
-
-        /// <summary>
-        /// Selects OpenGL 4.0
-        /// </summary>
-        GLVersion40,
+        GLESVersion2_0,
+        GLESVersion3_0,
+        GLVersion3_3,
+        GLVersion4_0,
     }
 }

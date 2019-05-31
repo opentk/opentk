@@ -52,7 +52,9 @@ namespace OpenToolkit.Windowing.Desktop
             Width = 640;
             Height = 360;
 
-            API = ContextAPI.GLVersion33;
+            API = ContextAPI.GLVersion3_3;
+            Profile = ContextProfile.Core;
+            Flags = ContextFlags.Default;
 
             IsFullscreen = false;
 
@@ -77,6 +79,11 @@ namespace OpenToolkit.Windowing.Desktop
         /// Gets or sets a value representing the current graphics API profile.
         /// </summary>
         public ContextProfile Profile { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value representing the current graphics profile flags.
+        /// </summary>
+        public ContextFlags Flags { get; set; }
 
         /// <inheritdoc />
         public Monitor CurrentMonitor { get; set; }
