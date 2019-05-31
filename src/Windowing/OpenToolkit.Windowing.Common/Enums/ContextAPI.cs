@@ -20,6 +20,16 @@ namespace OpenToolkit.Windowing.Common
         NoContext,
 
         /// <summary>
+        /// Selects OpenGL ES 2.0
+        /// </summary>
+        GLESVersion20,
+
+        /// <summary>
+        /// Selects OpenGL ES 3.0
+        /// </summary>
+        GLESVersion30,
+
+        /// <summary>
         /// Selects OpenGL 3.3
         /// </summary>
         GLVersion33,
