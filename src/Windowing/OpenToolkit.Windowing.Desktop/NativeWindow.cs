@@ -561,6 +561,16 @@ namespace OpenToolkit.Windowing.Desktop
                 Glfw.WindowHint(WindowHintInt.ContextVersionMajor, major);
                 Glfw.WindowHint(WindowHintInt.ContextVersionMinor, minor);
 
+                if (Flags.HasFlag(ContextFlags.ForwardCompatible))
+                {
+                    Glfw.WindowHint(WindowHintBool.OpenGLForwardCompat, true);
+                }
+
+                if (Flags.HasFlag(ContextFlags.Debug))
+                {
+                    Glfw.WindowHint(WindowHintBool.OpenGLDebugContext, true);
+                }
+
                 Glfw.WindowHint
                 (
                     WindowHintOpenGlProfile.OpenGlProfile, (OpenGlProfile)Profile
