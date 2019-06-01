@@ -480,7 +480,7 @@ namespace OpenToolkit.Windowing.Desktop
 
                 switch (API)
                 {
-                    case ContextAPI.NoContext:
+                    case ContextAPI.NoAPI:
                         Glfw.WindowHint(WindowHintClientApi.ClientApi, ClientApi.NoApi);
                         break;
 
