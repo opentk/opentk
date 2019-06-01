@@ -22,6 +22,7 @@ SOFTWARE.
 
 using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.Contracts;
 
 namespace OpenToolkit.Mathematics
 {
@@ -307,6 +308,7 @@ namespace OpenToolkit.Mathematics
         /// </summary>
         /// <param name="angle">The counter-clockwise angle in radians.</param>
         /// <returns>The resulting Matrix3x2 instance.</returns>
+        [Pure]
         public static Matrix4x2d CreateRotation(double angle)
         {
             CreateRotation(angle, out Matrix4x2d result);
@@ -335,6 +337,7 @@ namespace OpenToolkit.Mathematics
         /// </summary>
         /// <param name="scale">Single scale factor for the x and y axes.</param>
         /// <returns>A scale matrix.</returns>
+        [Pure]
         public static Matrix4x2d CreateScale(double scale)
         {
             CreateScale(scale, out Matrix4x2d result);
@@ -363,6 +366,7 @@ namespace OpenToolkit.Mathematics
         /// </summary>
         /// <param name="scale">Scale factors for the x and y axes.</param>
         /// <returns>A scale matrix.</returns>
+        [Pure]
         public static Matrix4x2d CreateScale(Vector2d scale)
         {
             CreateScale(scale, out Matrix4x2d result);
@@ -393,6 +397,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="x">Scale factor for the x axis.</param>
         /// <param name="y">Scale factor for the y axis.</param>
         /// <returns>A scale matrix.</returns>
+        [Pure]
         public static Matrix4x2d CreateScale(double x, double y)
         {
             CreateScale(x, y, out Matrix4x2d result);
@@ -423,6 +428,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="left">The left operand of the multiplication.</param>
         /// <param name="right">The right operand of the multiplication.</param>
         /// <returns>A new instance that is the result of the multiplication.</returns>
+        [Pure]
         public static Matrix4x2d Mult(Matrix4x2d left, double right)
         {
             Mult(ref left, right, out Matrix4x2d result);
@@ -466,6 +472,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="left">The left operand of the multiplication.</param>
         /// <param name="right">The right operand of the multiplication.</param>
         /// <returns>A new instance that is the result of the multiplication.</returns>
+        [Pure]
         public static Matrix4x2d Mult(Matrix4x2d left, Matrix2d right)
         {
             Mult(ref left, ref right, out Matrix4x2d result);
@@ -515,6 +522,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="left">The left operand of the multiplication.</param>
         /// <param name="right">The right operand of the multiplication.</param>
         /// <returns>A new instance that is the result of the multiplication.</returns>
+        [Pure]
         public static Matrix4x3d Mult(Matrix4x2d left, Matrix2x3d right)
         {
             Mult(ref left, ref right, out Matrix4x3d result);
@@ -570,6 +578,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="left">The left operand of the multiplication.</param>
         /// <param name="right">The right operand of the multiplication.</param>
         /// <returns>A new instance that is the result of the multiplication.</returns>
+        [Pure]
         public static Matrix4d Mult(Matrix4x2d left, Matrix2x4d right)
         {
             Mult(ref left, ref right, out Matrix4d result);
@@ -600,6 +609,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="left">The left operand of the addition.</param>
         /// <param name="right">The right operand of the addition.</param>
         /// <returns>A new instance that is the result of the addition.</returns>
+        [Pure]
         public static Matrix4x2d Add(Matrix4x2d left, Matrix4x2d right)
         {
             Add(ref left, ref right, out Matrix4x2d result);
@@ -630,6 +640,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="left">The left operand of the subtraction.</param>
         /// <param name="right">The right operand of the subtraction.</param>
         /// <returns>A new instance that is the result of the subtraction.</returns>
+        [Pure]
         public static Matrix4x2d Subtract(Matrix4x2d left, Matrix4x2d right)
         {
             Subtract(ref left, ref right, out Matrix4x2d result);
@@ -658,6 +669,7 @@ namespace OpenToolkit.Mathematics
         /// </summary>
         /// <param name="mat">The matrix to transpose.</param>
         /// <returns>The transpose of the given matrix.</returns>
+        [Pure]
         public static Matrix2x4d Transpose(Matrix4x2d mat)
         {
             Transpose(ref mat, out Matrix2x4d result);
@@ -670,6 +682,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="left">left-hand operand.</param>
         /// <param name="right">right-hand operand.</param>
         /// <returns>A new Matrix4x2d which holds the result of the multiplication.</returns>
+        [Pure]
         public static Matrix4x2d operator *(double left, Matrix4x2d right)
         {
             return Mult(right, left);
@@ -681,6 +694,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="left">left-hand operand.</param>
         /// <param name="right">right-hand operand.</param>
         /// <returns>A new Matrix4x2d which holds the result of the multiplication.</returns>
+        [Pure]
         public static Matrix4x2d operator *(Matrix4x2d left, double right)
         {
             return Mult(left, right);
@@ -692,6 +706,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="left">left-hand operand.</param>
         /// <param name="right">right-hand operand.</param>
         /// <returns>A new Matrix2d which holds the result of the multiplication.</returns>
+        [Pure]
         public static Matrix4x2d operator *(Matrix4x2d left, Matrix2d right)
         {
             return Mult(left, right);
@@ -703,6 +718,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="left">left-hand operand.</param>
         /// <param name="right">right-hand operand.</param>
         /// <returns>A new Matrix4x3d which holds the result of the multiplication.</returns>
+        [Pure]
         public static Matrix4x3d operator *(Matrix4x2d left, Matrix2x3d right)
         {
             return Mult(left, right);
@@ -714,6 +730,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="left">left-hand operand.</param>
         /// <param name="right">right-hand operand.</param>
         /// <returns>A new Matrix4d which holds the result of the multiplication.</returns>
+        [Pure]
         public static Matrix4d operator *(Matrix4x2d left, Matrix2x4d right)
         {
             return Mult(left, right);
@@ -725,6 +742,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="left">left-hand operand.</param>
         /// <param name="right">right-hand operand.</param>
         /// <returns>A new Matrix4x2d which holds the result of the addition.</returns>
+        [Pure]
         public static Matrix4x2d operator +(Matrix4x2d left, Matrix4x2d right)
         {
             return Add(left, right);
@@ -736,6 +754,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="left">left-hand operand.</param>
         /// <param name="right">right-hand operand.</param>
         /// <returns>A new Matrix4x2d which holds the result of the subtraction.</returns>
+        [Pure]
         public static Matrix4x2d operator -(Matrix4x2d left, Matrix4x2d right)
         {
             return Subtract(left, right);
@@ -747,6 +766,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="left">The first instance.</param>
         /// <param name="right">The second instance.</param>
         /// <returns>True, if left equals right; false otherwise.</returns>
+        [Pure]
         public static bool operator ==(Matrix4x2d left, Matrix4x2d right)
         {
             return left.Equals(right);
@@ -758,6 +778,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="left">The first instance.</param>
         /// <param name="right">The second instance.</param>
         /// <returns>True, if left does not equal right; false otherwise.</returns>
+        [Pure]
         public static bool operator !=(Matrix4x2d left, Matrix4x2d right)
         {
             return !left.Equals(right);
@@ -793,6 +814,7 @@ namespace OpenToolkit.Mathematics
         /// </summary>
         /// <param name="obj">The object to compare to.</param>
         /// <returns>True if the instances are equal; false otherwise.</returns>
+        [Pure]
         public override bool Equals(object obj)
         {
             if (!(obj is Matrix4x2d))
@@ -808,6 +830,7 @@ namespace OpenToolkit.Mathematics
         /// </summary>
         /// <param name="other">An matrix to compare with this matrix.</param>
         /// <returns>true if the current matrix is equal to the matrix parameter; otherwise, false.</returns>
+        [Pure]
         public bool Equals(Matrix4x2d other)
         {
             return

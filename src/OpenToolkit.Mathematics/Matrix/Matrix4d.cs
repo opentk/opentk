@@ -22,6 +22,7 @@ SOFTWARE.
 
 using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.Contracts;
 using System.Runtime.InteropServices;
 
 namespace OpenToolkit.Mathematics
@@ -561,6 +562,7 @@ namespace OpenToolkit.Mathematics
         /// you know it's already normalized.
         /// </param>
         /// <returns>The rotation.</returns>
+        [Pure]
         public Quaterniond ExtractRotation(bool rowNormalize = true)
         {
             var row0 = Row0.Xyz;
@@ -682,6 +684,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="axis">The axis to rotate about.</param>
         /// <param name="angle">Angle in radians to rotate counter-clockwise (looking in the direction of the given axis).</param>
         /// <returns>A matrix instance.</returns>
+        [Pure]
         public static Matrix4d CreateFromAxisAngle(Vector3d axis, double angle)
         {
             CreateFromAxisAngle(axis, angle, out Matrix4d result);
@@ -709,6 +712,7 @@ namespace OpenToolkit.Mathematics
         /// </summary>
         /// <param name="angle">The counter-clockwise angle in radians.</param>
         /// <returns>The resulting Matrix4d instance.</returns>
+        [Pure]
         public static Matrix4d CreateRotationX(double angle)
         {
             CreateRotationX(angle, out Matrix4d result);
@@ -736,6 +740,7 @@ namespace OpenToolkit.Mathematics
         /// </summary>
         /// <param name="angle">The counter-clockwise angle in radians.</param>
         /// <returns>The resulting Matrix4d instance.</returns>
+        [Pure]
         public static Matrix4d CreateRotationY(double angle)
         {
             CreateRotationY(angle, out Matrix4d result);
@@ -763,6 +768,7 @@ namespace OpenToolkit.Mathematics
         /// </summary>
         /// <param name="angle">The counter-clockwise angle in radians.</param>
         /// <returns>The resulting Matrix4d instance.</returns>
+        [Pure]
         public static Matrix4d CreateRotationZ(double angle)
         {
             CreateRotationZ(angle, out Matrix4d result);
@@ -800,6 +806,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="y">Y translation.</param>
         /// <param name="z">Z translation.</param>
         /// <returns>The resulting Matrix4d instance.</returns>
+        [Pure]
         public static Matrix4d CreateTranslation(double x, double y, double z)
         {
             CreateTranslation(x, y, z, out Matrix4d result);
@@ -811,6 +818,7 @@ namespace OpenToolkit.Mathematics
         /// </summary>
         /// <param name="vector">The translation vector.</param>
         /// <returns>The resulting Matrix4d instance.</returns>
+        [Pure]
         public static Matrix4d CreateTranslation(Vector3d vector)
         {
             CreateTranslation(vector.X, vector.Y, vector.Z, out Matrix4d result);
@@ -845,6 +853,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="depthNear">The near edge of the projection volume.</param>
         /// <param name="depthFar">The far edge of the projection volume.</param>
         /// <returns>The resulting Matrix4d instance.</returns>
+        [Pure]
         public static Matrix4d CreateOrthographic(double width, double height, double depthNear, double depthFar)
         {
             CreateOrthographicOffCenter(-width / 2, width / 2, -height / 2, height / 2, depthNear, depthFar, out Matrix4d result);
@@ -899,6 +908,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="depthNear">The near edge of the projection volume.</param>
         /// <param name="depthFar">The far edge of the projection volume.</param>
         /// <returns>The resulting Matrix4d instance.</returns>
+        [Pure]
         public static Matrix4d CreateOrthographicOffCenter
         (
             double left,
@@ -986,6 +996,7 @@ namespace OpenToolkit.Mathematics
         ///  <item>depthNear is larger than depthFar</item>
         ///  </list>
         /// </exception>
+        [Pure]
         public static Matrix4d CreatePerspectiveFieldOfView(double fovy, double aspect, double depthNear, double depthFar)
         {
             CreatePerspectiveFieldOfView(fovy, aspect, depthNear, depthFar, out Matrix4d result);
@@ -1072,6 +1083,7 @@ namespace OpenToolkit.Mathematics
         ///  <item>depthNear is larger than depthFar</item>
         ///  </list>
         /// </exception>
+        [Pure]
         public static Matrix4d CreatePerspectiveOffCenter
         (
             double left,
@@ -1102,6 +1114,7 @@ namespace OpenToolkit.Mathematics
         /// </summary>
         /// <param name="q">The quaternion to rotate by.</param>
         /// <returns>A matrix instance.</returns>
+        [Pure]
         public static Matrix4d CreateFromQuaternion(Quaterniond q)
         {
             CreateFromQuaternion(ref q, out Matrix4d result);
@@ -1113,6 +1126,7 @@ namespace OpenToolkit.Mathematics
         /// </summary>
         /// <param name="scale">Single scale factor for x,y and z axes.</param>
         /// <returns>A scaling matrix.</returns>
+        [Pure]
         public static Matrix4d Scale(double scale)
         {
             return Scale(scale, scale, scale);
@@ -1123,6 +1137,7 @@ namespace OpenToolkit.Mathematics
         /// </summary>
         /// <param name="scale">Scale factors for x,y and z axes.</param>
         /// <returns>A scaling matrix.</returns>
+        [Pure]
         public static Matrix4d Scale(Vector3d scale)
         {
             return Scale(scale.X, scale.Y, scale.Z);
@@ -1135,6 +1150,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="y">Scale factor for y-axis.</param>
         /// <param name="z">Scale factor for z-axis.</param>
         /// <returns>A scaling matrix.</returns>
+        [Pure]
         public static Matrix4d Scale(double x, double y, double z)
         {
             Matrix4d result;
@@ -1150,6 +1166,7 @@ namespace OpenToolkit.Mathematics
         /// </summary>
         /// <param name="angle">The angle in radians to rotate counter-clockwise around the x-axis.</param>
         /// <returns>A rotation matrix.</returns>
+        [Pure]
         public static Matrix4d RotateX(double angle)
         {
             var cos = Math.Cos(angle);
@@ -1168,6 +1185,7 @@ namespace OpenToolkit.Mathematics
         /// </summary>
         /// <param name="angle">The angle in radians to rotate counter-clockwise around the y-axis.</param>
         /// <returns>A rotation matrix.</returns>
+        [Pure]
         public static Matrix4d RotateY(double angle)
         {
             var cos = Math.Cos(angle);
@@ -1186,6 +1204,7 @@ namespace OpenToolkit.Mathematics
         /// </summary>
         /// <param name="angle">The angle in radians to rotate counter-clockwise around the z-axis.</param>
         /// <returns>A rotation matrix.</returns>
+        [Pure]
         public static Matrix4d RotateZ(double angle)
         {
             var cos = Math.Cos(angle);
@@ -1207,6 +1226,7 @@ namespace OpenToolkit.Mathematics
         /// angle in radians to rotate counter-clockwise (looking in the direction of the given axis).
         /// </param>
         /// <returns>A rotation matrix.</returns>
+        [Pure]
         public static Matrix4d Rotate(Vector3d axis, double angle)
         {
             var cos = Math.Cos(-angle);
@@ -1247,6 +1267,7 @@ namespace OpenToolkit.Mathematics
         /// </summary>
         /// <param name="q">The quaternion.</param>
         /// <returns>A rotation matrix.</returns>
+        [Pure]
         public static Matrix4d Rotate(Quaterniond q)
         {
             q.ToAxisAngle(out Vector3d axis, out double angle);
@@ -1260,6 +1281,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="target">Target position in world space.</param>
         /// <param name="up">Up vector in world space (should not be parallel to the camera direction, that is target - eye).</param>
         /// <returns>A Matrix that transforms world space to camera space.</returns>
+        [Pure]
         public static Matrix4d LookAt(Vector3d eye, Vector3d target, Vector3d up)
         {
             var z = Vector3d.Normalize(eye - target);
@@ -1298,6 +1320,7 @@ namespace OpenToolkit.Mathematics
         /// Z of the up vector in world space (should not be parallel to the camera direction, that is target - eye).
         /// </param>
         /// <returns>A Matrix4 that transforms world space to camera space.</returns>
+        [Pure]
         public static Matrix4d LookAt
         (
             double eyeX,
@@ -1329,6 +1352,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="depthNear">Distance to the near clip plane.</param>
         /// <param name="depthFar">Distance to the far clip plane.</param>
         /// <returns>A projection matrix that transforms camera space to raster space.</returns>
+        [Pure]
         public static Matrix4d Frustum(double left, double right, double bottom, double top, double depthNear, double depthFar)
         {
             var invRL = 1.0 / (right - left);
@@ -1351,6 +1375,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="depthNear">Distance to the near clip plane.</param>
         /// <param name="depthFar">Distance to the far clip plane.</param>
         /// <returns>A projection matrix that transforms camera space to raster space.</returns>
+        [Pure]
         public static Matrix4d Perspective(double fovy, double aspect, double depthNear, double depthFar)
         {
             var yMax = depthNear * Math.Tan(0.5f * fovy);
@@ -1367,6 +1392,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="left">The left operand of the addition.</param>
         /// <param name="right">The right operand of the addition.</param>
         /// <returns>A new instance that is the result of the addition.</returns>
+        [Pure]
         public static Matrix4d Add(Matrix4d left, Matrix4d right)
         {
             Add(ref left, ref right, out Matrix4d result);
@@ -1393,6 +1419,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="left">The left operand of the subraction.</param>
         /// <param name="right">The right operand of the subraction.</param>
         /// <returns>A new instance that is the result of the subraction.</returns>
+        [Pure]
         public static Matrix4d Subtract(Matrix4d left, Matrix4d right)
         {
             Subtract(ref left, ref right, out Matrix4d result);
@@ -1419,6 +1446,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="left">The left operand of the multiplication.</param>
         /// <param name="right">The right operand of the multiplication.</param>
         /// <returns>A new instance that is the result of the multiplication.</returns>
+        [Pure]
         public static Matrix4d Mult(Matrix4d left, Matrix4d right)
         {
             Mult(ref left, ref right, out Matrix4d result);
@@ -1490,6 +1518,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="left">The left operand of the multiplication.</param>
         /// <param name="right">The right operand of the multiplication.</param>
         /// <returns>A new instance that is the result of the multiplication.</returns>
+        [Pure]
         public static Matrix4d Mult(Matrix4d left, double right)
         {
             Mult(ref left, right, out Matrix4d result);
@@ -1516,6 +1545,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="mat">The matrix to invert.</param>
         /// <returns>The inverse of the given matrix.</returns>
         /// <exception cref="InvalidOperationException">Thrown if the Matrix4d is singular.</exception>
+        [Pure]
         public static Matrix4d Invert(Matrix4d mat)
         {
             int[] colIdx = { 0, 0, 0, 0 };
@@ -1632,6 +1662,7 @@ namespace OpenToolkit.Mathematics
         /// </summary>
         /// <param name="mat">The matrix to transpose.</param>
         /// <returns>The transpose of the given matrix.</returns>
+        [Pure]
         public static Matrix4d Transpose(Matrix4d mat)
         {
             return new Matrix4d(mat.Column0, mat.Column1, mat.Column2, mat.Column3);
@@ -1656,6 +1687,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="left">left-hand operand.</param>
         /// <param name="right">right-hand operand.</param>
         /// <returns>A new Matrix4d which holds the result of the multiplication.</returns>
+        [Pure]
         public static Matrix4d operator *(Matrix4d left, Matrix4d right)
         {
             return Mult(left, right);
@@ -1667,6 +1699,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="left">left-hand operand.</param>
         /// <param name="right">right-hand operand.</param>
         /// <returns>A new Matrix4d which holds the result of the multiplication.</returns>
+        [Pure]
         public static Matrix4d operator *(Matrix4d left, float right)
         {
             return Mult(left, right);
@@ -1678,6 +1711,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="left">left-hand operand.</param>
         /// <param name="right">right-hand operand.</param>
         /// <returns>A new Matrix4d which holds the result of the addition.</returns>
+        [Pure]
         public static Matrix4d operator +(Matrix4d left, Matrix4d right)
         {
             return Add(left, right);
@@ -1689,6 +1723,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="left">left-hand operand.</param>
         /// <param name="right">right-hand operand.</param>
         /// <returns>A new Matrix4d which holds the result of the subtraction.</returns>
+        [Pure]
         public static Matrix4d operator -(Matrix4d left, Matrix4d right)
         {
             return Subtract(left, right);
@@ -1700,6 +1735,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="left">The first instance.</param>
         /// <param name="right">The second instance.</param>
         /// <returns>True, if left equals right; false otherwise.</returns>
+        [Pure]
         public static bool operator ==(Matrix4d left, Matrix4d right)
         {
             return left.Equals(right);
@@ -1711,6 +1747,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="left">The first instance.</param>
         /// <param name="right">The second instance.</param>
         /// <returns>True, if left does not equal right; false otherwise.</returns>
+        [Pure]
         public static bool operator !=(Matrix4d left, Matrix4d right)
         {
             return !left.Equals(right);
@@ -1743,6 +1780,7 @@ namespace OpenToolkit.Mathematics
         /// </summary>
         /// <param name="obj">The object to compare to.</param>
         /// <returns>True if the instances are equal; false otherwise.</returns>
+        [Pure]
         public override bool Equals(object obj)
         {
             if (!(obj is Matrix4d))
@@ -1758,6 +1796,7 @@ namespace OpenToolkit.Mathematics
         /// </summary>
         /// <param name="other">A matrix to compare with this matrix.</param>
         /// <returns>true if the current matrix is equal to the matrix parameter; otherwise, false.</returns>
+        [Pure]
         public bool Equals(Matrix4d other)
         {
             return
