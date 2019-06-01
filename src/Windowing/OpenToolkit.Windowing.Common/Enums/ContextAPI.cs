@@ -19,7 +19,7 @@ namespace OpenToolkit.Windowing.Common
     [SuppressMessage("ReSharper", "SA1602", Justification = "Should be obvious based on the names")]
     public enum ContextAPI
     {
-        NoContext,
+        NoAPI,
         OpenGLES,
         OpenGL,
     }

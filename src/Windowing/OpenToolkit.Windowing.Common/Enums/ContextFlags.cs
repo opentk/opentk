@@ -36,13 +36,8 @@ namespace OpenToolkit.Windowing.Common
         ForwardCompatible = 2,
 
         /// <summary>
-        /// Indicates that this GraphicsContext is targeting OpenGL|ES.
-        /// </summary>
-        Embedded = 4,
-
-        /// <summary>
         /// Indicates that this GraphicsContext is intended for offscreen rendering.
         /// </summary>
-        Offscreen = 8,
+        Offscreen = 4,
     }
 }

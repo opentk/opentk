@@ -493,7 +493,7 @@ namespace OpenToolkit.Windowing.Desktop
                         break;
 
                     default:
-                        throw new Exception("Could not find version requested");
+                        throw new ArgumentOutOfRangeException();
                 }
 
                 Glfw.WindowHint(WindowHintInt.ContextVersionMajor, APIVersion.Major);
