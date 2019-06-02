@@ -126,19 +126,31 @@ namespace OpenToolkit.Mathematics
         }
 
         /// <summary>
-        /// Gets a vector describing the size of the Box2 structure.
+        /// Gets or sets a vector describing the size of the Box2 structure.
         /// </summary>
-        public Vector2 Size => Max - Min;
+        public Vector2 Size
+        {
+            get => Max - Min;
+            set => Scale(Size - value, Center);
+        }
 
         /// <summary>
-        /// Gets a vector describing half the size of the box.
+        /// Gets or sets a vector describing half the size of the box.
         /// </summary>
-        public Vector2 HalfSize => Size / 2;
+        public Vector2 HalfSize
+        {   
+            get => Size / 2;
+            set => Size = value / 2;
+        }
 
         /// <summary>
-        /// Gets a vector describing the center of the box.
+        /// Gets or sets a vector describing the center of the box.
         /// </summary>
-        public Vector2 Center => _min + HalfSize;
+        public Vector2 Center
+        {
+            get => (_min + _max) * 0.5f;
+            set => Translate(Center - value);
+        }
 
         /// <summary>
         /// Returns whether the box contains the specified point (borders inclusive).
@@ -158,7 +170,8 @@ namespace OpenToolkit.Mathematics
         /// <returns>Whether this box contains the other box.</returns>
         public bool Contains(Box2 other)
         {
-            return Contains(other._max) && Contains(other._max);
+            return _max.X >= other._min.X && _min.X <= other._max.X &&
+                   _max.Y >= other._min.Y && _min.Y <= other._max.Y;
         }
 
         /// <summary>
@@ -175,26 +188,6 @@ namespace OpenToolkit.Mathematics
         }
 
         /// <summary>
-        /// Returns the distance between the center of this box and the specified point.
-        /// </summary>
-        /// <param name="point">The point to find distance for.</param>
-        /// <returns>The distance between the specified point and the center.</returns>
-        public float DistanceToCenter(Vector2 point)
-        {
-            return Vector2.Distance(point, Center);
-        }
-
-        /// <summary>
-        /// Returns a Box2 translated by the given amount.
-        /// </summary>
-        /// <param name="distance">The distance to translate the box.</param>
-        /// <returns>The translated box.</returns>
-        public Box2 Translated(Vector2 distance)
-        {
-            return new Box2(Min + distance, Max + distance);
-        }
-
-        /// <summary>
         /// Translates this Box2 by the given amount.
         /// </summary>
         /// <param name="distance">The distance to translate the box.</param>
@@ -205,24 +198,16 @@ namespace OpenToolkit.Mathematics
         }
 
         /// <summary>
-        /// Returns a Box2 scaled by a given amount from an anchor point.
+        /// Returns a Box2 translated by the given amount.
         /// </summary>
-        /// <param name="scale">The scale to scale the box.</param>
-        /// <param name="anchor">The anchor to scale the box from.</param>
-        /// <returns>The scaled box.</returns>
-        public Box2 Scaled(Vector2 scale, Vector2 anchor)
+        /// <param name="distance">The distance to translate the box.</param>
+        /// <returns>The translated box.</returns>
+        public Box2 Translated(Vector2 distance)
         {
-            var newDistMin = (anchor - _min) * scale;
-            var min = new Vector2(
-                anchor.X + _min.X > anchor.X ? newDistMin.X : -newDistMin.X,
-                anchor.Y + _min.Y > anchor.Y ? newDistMin.Y : -newDistMin.Y);
-
-            var newDistMax = (anchor - _max) * scale;
-            var max = new Vector2(
-                anchor.X + _max.X > anchor.X ? newDistMax.X : -newDistMax.X,
-                anchor.Y + _max.Y > anchor.Y ? newDistMax.Y : -newDistMax.Y);
-
-            return new Box2(min, max);
+            // create a local copy of this box
+            Box2 box = this;
+            box.Translate(distance);
+            return box;
         }
 
         /// <summary>
@@ -244,17 +229,17 @@ namespace OpenToolkit.Mathematics
         }
 
         /// <summary>
-        /// Inflate this Box2 to encapsulate a given point.
+        /// Returns a Box2 scaled by a given amount from an anchor point.
         /// </summary>
-        /// <param name="point">The point to query.</param>
-        /// <returns>The inflated box.</returns>
-        public Box2 Inflated(Vector2 point)
+        /// <param name="scale">The scale to scale the box.</param>
+        /// <param name="anchor">The anchor to scale the box from.</param>
+        /// <returns>The scaled box.</returns>
+        public Box2 Scaled(Vector2 scale, Vector2 anchor)
         {
-            var distMin = _min - point;
-            var distMax = point - _max;
-            var x = distMin.X < distMax.X;
-            var y = distMin.Y < distMax.Y;
-            return new Box2(x ? point.X : _min.X, y ? point.Y : _min.Y, x ? _max.X : point.X, y ? _max.Y : point.Y);
+            // create a local copy of this box
+            Box2 box = this;
+            box.Scale(scale, anchor);
+            return box;
         }
 
         /// <summary>
@@ -283,6 +268,19 @@ namespace OpenToolkit.Mathematics
             {
                 _max.Y = point.Y;
             }
+        }
+
+        /// <summary>
+        /// Inflate this Box2 to encapsulate a given point.
+        /// </summary>
+        /// <param name="point">The point to query.</param>
+        /// <returns>The inflated box.</returns>
+        public Box2 Inflated(Vector2 point)
+        {
+            // create a local copy of this box
+            Box2 box = this;
+            box.Inflate(point);
+            return box;
         }
 
         /// <summary>
