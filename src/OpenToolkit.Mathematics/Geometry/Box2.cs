@@ -138,7 +138,7 @@ namespace OpenToolkit.Mathematics
         /// Gets or sets a vector describing half the size of the box.
         /// </summary>
         public Vector2 HalfSize
-        {   
+        {
             get => Size / 2;
             set => Size = value / 2;
         }
