@@ -33,15 +33,5 @@ namespace OpenToolkit.Windowing.Common
         /// Indicates that the context should be created for OpenGL.
         /// </summary>
         OpenGL,
-        
-        /// <summary>
-        /// Indicates that the context should be created for Vulkan.
-        /// </summary>
-        /// <remarks>
-        /// <para>
-        /// As of right now, this does the same thing as <see cref="NoAPI"/>
-        /// </para>
-        /// </remarks>
-        Vulkan,
     }
 }
