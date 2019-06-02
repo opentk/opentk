@@ -7,20 +7,41 @@
 // of the MIT license. See the LICENSE file for details.
 //
 
-using System.Diagnostics.CodeAnalysis;
-
-#pragma warning disable 1591
-
 namespace OpenToolkit.Windowing.Common
 {
     /// <summary>
     /// Describes the graphics API you want the context to use.
     /// </summary>
-    [SuppressMessage("ReSharper", "SA1602", Justification = "Should be obvious based on the names")]
     public enum ContextAPI
     {
+        /// <summary>
+        /// Indicates that an API has not been specifically requested for context creation.
+        /// </summary>
+        /// <remarks>
+        /// <para>
+        /// This is primarily for integrating an external API with this window, such as Vulkan.
+        /// </para>
+        /// </remarks>
         NoAPI,
+
+        /// <summary>
+        /// Indicates that the context should be created for OpenGL ES.
+        /// </summary>
         OpenGLES,
+
+        /// <summary>
+        /// Indicates that the context should be created for OpenGL.
+        /// </summary>
         OpenGL,
+        
+        /// <summary>
+        /// Indicates that the context should be created for Vulkan.
+        /// </summary>
+        /// <remarks>
+        /// <para>
+        /// As of right now, this does the same thing as <see cref="NoAPI"/>
+        /// </para>
+        /// </remarks>
+        Vulkan,
     }
 }

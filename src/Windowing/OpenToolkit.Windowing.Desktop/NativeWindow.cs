@@ -480,6 +480,7 @@ namespace OpenToolkit.Windowing.Desktop
 
                 switch (API)
                 {
+                    case ContextAPI.Vulkan:
                     case ContextAPI.NoAPI:
                         Glfw.WindowHint(WindowHintClientApi.ClientApi, ClientApi.NoApi);
                         break;
