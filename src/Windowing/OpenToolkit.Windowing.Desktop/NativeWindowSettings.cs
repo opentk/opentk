@@ -74,11 +74,22 @@ namespace OpenToolkit.Windowing.Desktop
         /// <summary>
         /// Gets or sets a value representing the current graphics API.
         /// </summary>
+        /// <remarks>
+        /// <para>
+        /// If this is changed, you'll have to modify the API version as well, as the versioning of OpenGL and OpenGL ES
+        /// do not match.
+        /// </para>
+        /// </remarks>
         public ContextAPI API { get; set; }
 
         /// <summary>
         /// Gets or sets a value representing the current graphics API profile.
         /// </summary>
+        /// <remarks>
+        /// <para>
+        /// This only has an effect on OpenGL 3.2 and higher. On older versions, this setting does nothing.
+        /// </para>
+        /// </remarks>
         public ContextProfile Profile { get; set; }
 
         /// <summary>
@@ -89,6 +100,24 @@ namespace OpenToolkit.Windowing.Desktop
         /// <summary>
         /// Gets or sets a value representing the current version of the graphics API.
         /// </summary>
+        /// <remarks>
+        /// <para>
+        /// OpenGL 3.3 is selected by default, and runs on almost any hardware made within the last ten years.
+        /// This will run on Windows, Mac OS, and Linux.
+        /// </para>
+        /// <para>
+        /// OpenGL 4.1 is suggested for modern apps meant to run on more modern hardware.
+        /// This will run on Windows, Mac OS, and Linux.
+        /// </para>
+        /// <para>
+        /// OpenGL 4.6 is suggested for modern apps that only intend to run on Windows and Linux;
+        /// Mac OS doesn't support it.
+        /// </para>
+        /// <para>
+        /// Note that if you choose an API other than base OpenGL, this will need to be updated accordingly,
+        /// as the versioning of OpenGL and OpenGL ES do not match.
+        /// </para>
+        /// </remarks>
         public Version APIVersion { get; set; }
 
         /// <inheritdoc />
