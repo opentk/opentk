@@ -19,104 +19,168 @@ namespace OpenToolkit.Mathematics
     [StructLayout(LayoutKind.Sequential)]
     public struct Box2 : IEquatable<Box2>
     {
+        private Vector2 _min;
         /// <summary>
         /// The minimum boundary of the structure.
         /// </summary>
-        public Vector2 Min;
+        public Vector2 Min
+        {
+            get => _min;
+            set
+            {
+                if (value.X > _max.X)
+                {
+                    _min.X = _max.X;
+                    _max.X = value.X;
+                }
+                else
+                {
+                    _min.X = value.X;
+                }
 
+                if (value.Y > _max.Y)
+                {
+                    _min.Y = _max.Y;
+                    _max.Y = value.Y;
+                }
+                else
+                {
+                    _min.X = value.Y;
+                }
+            }
+        }
+
+        private Vector2 _max;
         /// <summary>
         /// The maximum boundary of the structure.
         /// </summary>
-        public Vector2 Max;
+        public Vector2 Max
+        {
+            get => _min;
+            set
+            {
+                if (value.X < _min.X)
+                {
+                    _max.X = _min.X;
+                    _min.X = value.X;
+                }
+                else
+                {
+                    _max.X = value.X;
+                }
+
+                if (value.Y < _min.Y)
+                {
+                    _max.Y = _min.Y;
+                    _min.Y = value.Y;
+                }
+                else
+                {
+                    _max.X = value.Y;
+                }
+            }
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Box2"/> struct.
         /// </summary>
-        /// <param name="min">An Vector2 describing the top-left corner of the Box2.</param>
-        /// <param name="max">A Vector2 describing the bottom-right corner of the Box2.</param>
+        /// <param name="min">The minimum point on the XY plane this box encloses.</param>
+        /// <param name="max">The maximum point on the XY plane this box encloses.</param>
         public Box2(Vector2 min, Vector2 max)
         {
-            Min = min;
-            Max = max;
+            if (min.X < max.X)
+            {
+                _min.X = min.X;
+                _max.X = max.X;
+            }
+            else
+            {
+                _min.X = max.X;
+                _max.X = min.X;
+            }
+
+            if (min.Y < max.Y)
+            {
+                _min.Y = min.Y;
+                _max.Y = max.Y;
+            }
+            else
+            {
+                _min.Y = max.Y;
+                _max.Y = min.Y;
+            }
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Box2"/> struct.
         /// </summary>
-        /// <param name="minX">The position of the left boundary.</param>
-        /// <param name="minY">The position of the top boundary.</param>
-        /// <param name="maxX">The position of the right boundary.</param>
-        /// <param name="maxY">The position of the bottom boundary.</param>
+        /// <param name="minX">The minimum X value to be enclosed</param>
+        /// <param name="minY">The maximum Y value to be enclosed</param>
+        /// <param name="maxX">The minimum X value to be enclosed</param>
+        /// <param name="maxY">The maximum Y value to be enclosed</param>
         public Box2(float minX, float minY, float maxX, float maxY)
+            : this(new Vector2(minX, minY), new Vector2(maxX, maxY))
         {
-            Min = new Vector2(minX, minY);
-            Max = new Vector2(maxX, maxY);
+
         }
 
         /// <summary>
-        /// Creates a new Box2 with the specified dimensions.
+        /// Gets a vector describing the size of the Box2 structure.
         /// </summary>
-        /// <param name="top">The position of the top boundary.</param>
-        /// <param name="left">The position of the left boundary.</param>
-        /// <param name="right">The position of the right boundary.</param>
-        /// <param name="bottom">The position of the bottom boundary.</param>
-        /// <returns>A new OpenToolkit.Box2 with the specified dimensions.</returns>
-        public static Box2 FromTLRB(float top, float left, float right, float bottom)
-        {
-            return new Box2(left, top, right, bottom);
-        }
+        public Vector2 Size => Max - Min;
 
         /// <summary>
-        /// Creates a new Box2 with the specified dimensions.
+        /// Gets a vector describing half the size of the box.
         /// </summary>
-        /// <param name="minX">The position of the left boundary.</param>
-        /// <param name="minY">The position of the top boundary.</param>
-        /// <param name="width">The width of the box.</param>
-        /// <param name="height">The height of the box.</param>
-        /// <returns>A new OpenToolkit.Box2 with the specified dimensions.</returns>
-        public static Box2 FromDimensions(float minX, float minY, float width, float height)
-        {
-            return new Box2(minX, minY, minX + width, minY + height);
-        }
+        public Vector2 HalfSize => Size / 2;
 
         /// <summary>
-        /// Creates a new Box2 with the specified dimensions.
+        /// Gets a vector describing the center of the box.
         /// </summary>
-        /// <param name="position">The position of the top-left corner.</param>
-        /// <param name="size">The size of the box.</param>
-        /// <returns>A new OpenToolkit.Box2 with the specified dimensions.</returns>
-        public static Box2 FromDimensions(Vector2 position, Vector2 size)
-        {
-            return FromDimensions(position.X, position.Y, size.X, size.Y);
-        }
+        public Vector2 Center => _min + HalfSize;
 
         /// <summary>
-        /// Gets a float describing the width of the Box2 structure.
-        /// </summary>
-        public float Width => Math.Abs(Min.X - Max.X);
-
-        /// <summary>
-        /// Gets a float describing the height of the Box2 structure.
-        /// </summary>
-        public float Height => Math.Abs(Min.Y - Max.Y);
-
-        /// <summary>
-        /// Returns whether the box contains the specified point.
+        /// Returns whether the box contains the specified point (borders inclusive).
         /// </summary>
         /// <param name="point">The point to query.</param>
-        /// <param name="closedRegion">Whether to include the box boundary in the test region.</param>
         /// <returns>Whether this box contains the point.</returns>
-        public bool Contains(Vector2 point, bool closedRegion = true)
+        public bool Contains(Vector2 point)
         {
-            var containsX = closedRegion == Min.X <= Max.X
-                ? point.X >= Min.X != point.X > Max.X
-                : point.X > Min.X != point.X >= Max.X;
+            return _min.X <= point.X && point.X <= _max.X &&
+                   _min.Y <= point.X && point.Y <= _max.Y;
+        }
 
-            var containsY = closedRegion == Min.Y <= Max.Y
-                ? point.Y >= Min.Y != point.Y > Min.X
-                : point.Y > Min.Y != point.Y >= Max.Y;
+        /// <summary>
+        /// Returns whether the box contains the specified box (borders inclusive).
+        /// </summary>
+        /// <param name="other">The box to query.</param>
+        /// <returns>Whether this box contains the other box</returns>
+        public bool Contains(Box2 other)
+        {
+            return Contains(other._max) && Contains(other._max);
+        }
 
-            return containsX && containsY;
+        /// <summary>
+        /// Returns the distance between the nearest edge and the specified point.
+        /// </summary>
+        /// <param name="point">The point to find distance for.</param>
+        /// <returns>The distance between the specified point and the nearest edge.</returns>
+        public float DistanceToNearestEdge(Vector2 point)
+        {
+            var distMin = _min - point;
+            var distMax = point - _max;
+            var dist = new Vector2(MathHelper.Min(distMin.X, distMax.X), MathHelper.Min(distMin.Y, distMax.Y));
+            return dist.Length;
+        }
+
+        /// <summary>
+        /// Returns the distance between the center of this box and the specified point.
+        /// </summary>
+        /// <param name="point">The point to find distance for.</param>
+        /// <returns>The distance between the specified point and the center.</returns>
+        public float DistanceToCenter(Vector2 point)
+        {
+            return Vector2.Distance(point, Center);
         }
 
         /// <summary>
@@ -137,6 +201,82 @@ namespace OpenToolkit.Mathematics
         {
             Min += distance;
             Max += distance;
+        }
+
+        /// <summary>
+        /// Returns a Box2 scaled by a given amount from an anchor point.
+        /// </summary>
+        /// <param name="scale">The scale to scale the box.</param>
+        /// <param name="anchor">The anchor to scale the box from.</param>
+        /// <returns>The scaled box.</returns>
+        public Box2 Scaled(Vector2 scale, Vector2 anchor)
+        {
+            var newDistMin = (anchor - _min) * scale;
+            var min = new Vector2(anchor.X + _min.X > anchor.X ? newDistMin.X : -newDistMin.X,
+                anchor.Y + _min.Y > anchor.Y ? newDistMin.Y : -newDistMin.Y);
+
+            var newDistMax = (anchor - _max) * scale;
+            var max = new Vector2(anchor.X + _max.X > anchor.X ? newDistMax.X : -newDistMax.X,
+                anchor.Y + _max.Y > anchor.Y ? newDistMax.Y : -newDistMax.Y);
+
+            return new Box2(min, max);
+        }
+
+        /// <summary>
+        /// Scales this Box2 by the given amount.
+        /// </summary>
+        /// <param name="scale">The scale to scale the box.</param>
+        /// <param name="anchor">The anchor to scale the box from.</param>
+        public void Scale(Vector2 scale, Vector2 anchor)
+        {
+            var newDistMin = (anchor - _min) * scale;
+            _min = new Vector2(anchor.X + _min.X > anchor.X ? newDistMin.X : -newDistMin.X,
+                anchor.Y + _min.Y > anchor.Y ? newDistMin.Y : -newDistMin.Y);
+
+            var newDistMax = (anchor - _max) * scale;
+            _max = new Vector2(anchor.X + _max.X > anchor.X ? newDistMax.X : -newDistMax.X,
+                anchor.Y + _min.Y > anchor.Y ? newDistMax.Y : -newDistMax.Y);
+        }
+
+        /// <summary>
+        /// Inflate this Box2 to encapsulate a given point.
+        /// </summary>
+        /// <param name="point">The point to query.</param>
+        public Box2 Inflated(Vector2 point)
+        {
+            var distMin = _min - point;
+            var distMax = point - _max;
+            var x = distMin.X < distMax.X;
+            var y = distMin.Y < distMax.Y;
+            return new Box2(x ? point.X : _min.X, y ? point.Y : _min.Y, x ? _max.X : point.X, y ? _max.Y : point.Y);
+        }
+
+        /// <summary>
+        /// Inflate this Box2 to encapsulate a given point.
+        /// </summary>
+        /// <param name="point">The point to query.</param>
+        public void Inflate(Vector2 point)
+        {
+            var distMin = _min - point;
+            var distMax = point - _max;
+
+            if (distMin.X < distMax.X)
+            {
+                _min.X = point.X;
+            }
+            else
+            {
+                _max.X = point.X;
+            }
+
+            if (distMin.Y < distMax.Y)
+            {
+                _min.Y = point.Y;
+            }
+            else
+            {
+                _max.Y = point.Y;
+            }
         }
 
         /// <summary>
@@ -162,13 +302,14 @@ namespace OpenToolkit.Mathematics
         /// <inheritdoc/>
         public bool Equals(Box2 other)
         {
-            return this == other;
+            return Min.Equals(other.Min) && Max.Equals(other.Max);
         }
 
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            return obj is Box2 box && Equals(box);
+            if (ReferenceEquals(null, obj)) return false;
+            return obj is Box2 other && Equals(other);
         }
 
         /// <inheritdoc/>
@@ -176,11 +317,7 @@ namespace OpenToolkit.Mathematics
         {
             unchecked
             {
-                var hashCode = Min.X.GetHashCode();
-                hashCode = (hashCode * 397) ^ Min.Y.GetHashCode();
-                hashCode = (hashCode * 397) ^ Max.X.GetHashCode();
-                hashCode = (hashCode * 397) ^ Max.Y.GetHashCode();
-                return hashCode;
+                return (Min.GetHashCode() * 397) ^ Max.GetHashCode();
             }
         }
 
@@ -189,7 +326,7 @@ namespace OpenToolkit.Mathematics
         /// <inheritdoc/>
         public override string ToString()
         {
-            return string.Format("({0}{4} {1}) - ({2}{4} {3})", Min.X, Min.Y, Max.X, Max.Y, ListSeparator);
+            return $"({Min.X}{ListSeparator} {Min.Y}) - ({Max.X}{ListSeparator} {Max.Y})";
         }
     }
 }
