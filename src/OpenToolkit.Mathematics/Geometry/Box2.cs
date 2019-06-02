@@ -20,8 +20,9 @@ namespace OpenToolkit.Mathematics
     public struct Box2 : IEquatable<Box2>
     {
         private Vector2 _min;
+
         /// <summary>
-        /// The minimum boundary of the structure.
+        /// Gets or sets the minimum boundary of the structure.
         /// </summary>
         public Vector2 Min
         {
@@ -51,8 +52,9 @@ namespace OpenToolkit.Mathematics
         }
 
         private Vector2 _max;
+
         /// <summary>
-        /// The maximum boundary of the structure.
+        /// Gets or sets the maximum boundary of the structure.
         /// </summary>
         public Vector2 Max
         {
@@ -114,14 +116,13 @@ namespace OpenToolkit.Mathematics
         /// <summary>
         /// Initializes a new instance of the <see cref="Box2"/> struct.
         /// </summary>
-        /// <param name="minX">The minimum X value to be enclosed</param>
-        /// <param name="minY">The maximum Y value to be enclosed</param>
-        /// <param name="maxX">The minimum X value to be enclosed</param>
-        /// <param name="maxY">The maximum Y value to be enclosed</param>
+        /// <param name="minX">The minimum X value to be enclosed.</param>
+        /// <param name="minY">The minimum Y value to be enclosed.</param>
+        /// <param name="maxX">The maximum X value to be enclosed.</param>
+        /// <param name="maxY">The maximum Y value to be enclosed.</param>
         public Box2(float minX, float minY, float maxX, float maxY)
             : this(new Vector2(minX, minY), new Vector2(maxX, maxY))
         {
-
         }
 
         /// <summary>
@@ -154,7 +155,7 @@ namespace OpenToolkit.Mathematics
         /// Returns whether the box contains the specified box (borders inclusive).
         /// </summary>
         /// <param name="other">The box to query.</param>
-        /// <returns>Whether this box contains the other box</returns>
+        /// <returns>Whether this box contains the other box.</returns>
         public bool Contains(Box2 other)
         {
             return Contains(other._max) && Contains(other._max);
@@ -212,11 +213,13 @@ namespace OpenToolkit.Mathematics
         public Box2 Scaled(Vector2 scale, Vector2 anchor)
         {
             var newDistMin = (anchor - _min) * scale;
-            var min = new Vector2(anchor.X + _min.X > anchor.X ? newDistMin.X : -newDistMin.X,
+            var min = new Vector2(
+                anchor.X + _min.X > anchor.X ? newDistMin.X : -newDistMin.X,
                 anchor.Y + _min.Y > anchor.Y ? newDistMin.Y : -newDistMin.Y);
 
             var newDistMax = (anchor - _max) * scale;
-            var max = new Vector2(anchor.X + _max.X > anchor.X ? newDistMax.X : -newDistMax.X,
+            var max = new Vector2(
+                anchor.X + _max.X > anchor.X ? newDistMax.X : -newDistMax.X,
                 anchor.Y + _max.Y > anchor.Y ? newDistMax.Y : -newDistMax.Y);
 
             return new Box2(min, max);
@@ -230,11 +233,13 @@ namespace OpenToolkit.Mathematics
         public void Scale(Vector2 scale, Vector2 anchor)
         {
             var newDistMin = (anchor - _min) * scale;
-            _min = new Vector2(anchor.X + _min.X > anchor.X ? newDistMin.X : -newDistMin.X,
+            _min = new Vector2(
+                anchor.X + _min.X > anchor.X ? newDistMin.X : -newDistMin.X,
                 anchor.Y + _min.Y > anchor.Y ? newDistMin.Y : -newDistMin.Y);
 
             var newDistMax = (anchor - _max) * scale;
-            _max = new Vector2(anchor.X + _max.X > anchor.X ? newDistMax.X : -newDistMax.X,
+            _max = new Vector2(
+                anchor.X + _max.X > anchor.X ? newDistMax.X : -newDistMax.X,
                 anchor.Y + _min.Y > anchor.Y ? newDistMax.Y : -newDistMax.Y);
         }
 
@@ -242,6 +247,7 @@ namespace OpenToolkit.Mathematics
         /// Inflate this Box2 to encapsulate a given point.
         /// </summary>
         /// <param name="point">The point to query.</param>
+        /// <returns>The inflated box.</returns>
         public Box2 Inflated(Vector2 point)
         {
             var distMin = _min - point;
@@ -308,7 +314,10 @@ namespace OpenToolkit.Mathematics
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(null, obj))
+            {
+                return false;
+            }
             return obj is Box2 other && Equals(other);
         }
 
