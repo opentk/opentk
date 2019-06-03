@@ -90,11 +90,11 @@ namespace OpenToolkit.Windowing.Desktop
         /// <inheritdoc />
         public Box2 Bounds
         {
-            get => Box2.FromDimensions(Location, Size);
+            get => new Box2(Location, Location + Size);
             set
             {
-                _location = new Vector2(value.Left, value.Left);
-                _size = new Vector2(value.Width, value.Height);
+                _location = value.Min;
+                _size = value.Size;
             }
         }
 
@@ -147,12 +147,11 @@ namespace OpenToolkit.Windowing.Desktop
         /// <inheritdoc />
         public Box2 ClientRectangle
         {
-            get => Box2.FromDimensions(Location, Size);
-
+            get => new Box2(Location, Location + Size);
             set
             {
-                Location = new Vector2(value.Right, value.Top);
-                Size = new Vector2(value.Width, value.Height);
+                Location = value.Min;
+                Size = value.Size;
             }
         }
 

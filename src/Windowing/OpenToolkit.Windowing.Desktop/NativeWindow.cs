@@ -280,11 +280,11 @@ namespace OpenToolkit.Windowing.Desktop
         /// <inheritdoc />
         public unsafe Box2 Bounds
         {
-            get => Box2.FromDimensions(Location, Size);
+            get => new Box2(Location, Location + Size);
             set
             {
-                Glfw.SetWindowSize(WindowPtr, (int)value.Width, (int)value.Height);
-                Glfw.SetWindowPos(WindowPtr, (int)value.Left, (int)value.Top);
+                Glfw.SetWindowSize(WindowPtr, (int)value.Size.X, (int)value.Size.Y);
+                Glfw.SetWindowPos(WindowPtr, (int)value.Min.X, (int)value.Min.Y);
             }
         }
 
@@ -357,11 +357,11 @@ namespace OpenToolkit.Windowing.Desktop
         /// <inheritdoc />
         public Box2 ClientRectangle
         {
-            get => Box2.FromDimensions(Location, Size);
+            get => new Box2(Location, Location + Size);
             set
             {
-                Location = new Vector2(value.Right, value.Top);
-                Size = new Vector2(value.Width, value.Height);
+                Location = value.Min;
+                Size = value.Size;
             }
         }
 
