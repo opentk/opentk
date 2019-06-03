@@ -46,7 +46,7 @@ namespace OpenToolkit.Mathematics
                 }
                 else
                 {
-                    _min.X = value.Y;
+                    _min.Y = value.Y;
                 }
             }
         }
@@ -78,7 +78,7 @@ namespace OpenToolkit.Mathematics
                 }
                 else
                 {
-                    _max.X = value.Y;
+                    _max.Y = value.Y;
                 }
             }
         }
