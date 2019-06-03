@@ -1011,8 +1011,8 @@ namespace OpenToolkit.Mathematics
         /// </summary>
         /// <param name="other">An matrix to compare with this matrix.</param>
         /// <returns>true if the current matrix is equal to the matrix parameter; otherwise, false.</returns>
-       [Pure]
-                public bool Equals(Matrix3x4 other)
+        [Pure]
+        public bool Equals(Matrix3x4 other)
         {
             return
                 Row0 == other.Row0 &&
