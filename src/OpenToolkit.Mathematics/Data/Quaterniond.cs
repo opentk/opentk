@@ -149,18 +149,18 @@ namespace OpenToolkit.Mathematics
         public Vector4d ToAxisAngle()
         {
             var q = this;
-            if (Math.Abs(q.W) > 1.0f)
+            if (Math.Abs(q.W) > 1.0d)
             {
                 q.Normalize();
             }
 
             var result = new Vector4d
             {
-                W = 2.0f * (float)Math.Acos(q.W) // angle
+                W = 2.0d * Math.Acos(q.W) // angle
             };
 
-            var den = (float)Math.Sqrt(1.0 - (q.W * q.W));
-            if (den > 0.0001f)
+            var den = Math.Sqrt(1.0 - (q.W * q.W));
+            if (den > 0.0001d)
             {
                 result.Xyz = q.Xyz / den;
             }
@@ -172,6 +172,63 @@ namespace OpenToolkit.Mathematics
             }
 
             return result;
+        }
+
+        /// <summary>
+        /// Convert the current quaternion to Euler angle representation.
+        /// </summary>
+        /// <param name="angles">The Euler angles in radians.</param>
+        public void ToEulerAngles(out Vector3d angles)
+        {
+            angles = ToEulerAngles();
+        }
+
+        /// <summary>
+        /// Convert this instance to an Euler angle representation.
+        /// </summary>
+        /// <returns>The Euler angles in radians.</returns>
+        public Vector3d ToEulerAngles()
+        {
+            /*
+            reference
+            http://en.wikipedia.org/wiki/Conversion_between_qernions_and_Euler_angles
+            http://www.euclideanspace.com/maths/geometry/rotations/conversions/qernionToEuler/
+            */
+
+            var q = this;
+
+            q.Normalize();
+
+            double singularityTest = (q.Z * q.X) - (q.W * q.Y);
+            double yawY = 2d * ((q.W * q.Z) + (q.X * q.Y));
+            double yawX = 1d - (2d * ((q.Y * q.Y) + (q.Z * q.Z)));
+
+            // Threshold for the singularities found at the north/south poles.
+            // TODO: Think about how this threshold should change with the added precision
+            const double SINGULARITY_THRESHOLD = 0.4999995d;
+
+            Vector3d eulerAngles;
+
+            if (singularityTest < -SINGULARITY_THRESHOLD)
+            {
+                eulerAngles.X = -Math.PI / 2d; // -90 degrees
+                eulerAngles.Y = Math.Atan2(yawY, yawX);
+                eulerAngles.Z = MathHelper.NormalizeRadians(-eulerAngles.Y - (2d * Math.Atan2(q.X, q.W)));
+            }
+            else if (singularityTest > SINGULARITY_THRESHOLD)
+            {
+                eulerAngles.X = Math.PI / 2d; // 90 degrees
+                eulerAngles.Y = Math.Atan2(yawY, yawX);
+                eulerAngles.Z = MathHelper.NormalizeRadians(eulerAngles.Y - (2d * Math.Atan2(q.X, q.W)));
+            }
+            else
+            {
+                eulerAngles.X = Math.Asin(2d * singularityTest);
+                eulerAngles.Y = Math.Atan2(yawY, yawX);
+                eulerAngles.Z = Math.Atan2(-2d * ((q.W * q.X) + (q.Y * q.Z)), 1d - (2d * ((q.X * q.X) + (q.Y * q.Y))));
+            }
+
+            return eulerAngles;
         }
 
         /// <summary>
@@ -220,7 +277,7 @@ namespace OpenToolkit.Mathematics
         /// </summary>
         public void Normalize()
         {
-            var scale = 1.0f / Length;
+            var scale = 1.0d / Length;
             Xyz *= scale;
             W *= scale;
         }
@@ -396,7 +453,7 @@ namespace OpenToolkit.Mathematics
             var lengthSq = q.LengthSquared;
             if (lengthSq != 0.0)
             {
-                var i = 1.0f / lengthSq;
+                var i = 1.0d / lengthSq;
                 result = new Quaterniond(q.Xyz * -i, q.W * i);
             }
             else
@@ -424,7 +481,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="result">The normalized Quaterniond.</param>
         public static void Normalize(ref Quaterniond q, out Quaterniond result)
         {
-            var scale = 1.0f / q.Length;
+            var scale = 1.0d / q.Length;
             result = new Quaterniond(q.Xyz * scale, q.W * scale);
         }
 
@@ -437,14 +494,14 @@ namespace OpenToolkit.Mathematics
         [Pure]
         public static Quaterniond FromAxisAngle(Vector3d axis, double angle)
         {
-            if (axis.LengthSquared == 0.0f)
+            if (axis.LengthSquared == 0.0d)
             {
                 return Identity;
             }
 
             var result = Identity;
 
-            angle *= 0.5f;
+            angle *= 0.5d;
             axis.Normalize();
             result.Xyz = axis * Math.Sin(angle);
             result.W = Math.Cos(angle);
@@ -575,9 +632,9 @@ namespace OpenToolkit.Mathematics
         public static Quaterniond Slerp(Quaterniond q1, Quaterniond q2, double blend)
         {
             // if either input is zero, return the other.
-            if (q1.LengthSquared == 0.0f)
+            if (q1.LengthSquared == 0.0d)
             {
-                if (q2.LengthSquared == 0.0f)
+                if (q2.LengthSquared == 0.0d)
                 {
                     return Identity;
                 }
@@ -585,20 +642,20 @@ namespace OpenToolkit.Mathematics
                 return q2;
             }
 
-            if (q2.LengthSquared == 0.0f)
+            if (q2.LengthSquared == 0.0d)
             {
                 return q1;
             }
 
             var cosHalfAngle = (q1.W * q2.W) + Vector3d.Dot(q1.Xyz, q2.Xyz);
 
-            if (cosHalfAngle >= 1.0f || cosHalfAngle <= -1.0f)
+            if (cosHalfAngle >= 1.0d || cosHalfAngle <= -1.0d)
             {
-                // angle = 0.0f, so just return one input.
+                // angle = 0.0d, so just return one input.
                 return q1;
             }
 
-            if (cosHalfAngle < 0.0f)
+            if (cosHalfAngle < 0.0d)
             {
                 q2.Xyz = -q2.Xyz;
                 q2.W = -q2.W;
@@ -607,24 +664,24 @@ namespace OpenToolkit.Mathematics
 
             double blendA;
             double blendB;
-            if (cosHalfAngle < 0.99f)
+            if (cosHalfAngle < 0.99d)
             {
                 // do proper slerp for big angles
                 var halfAngle = Math.Acos(cosHalfAngle);
                 var sinHalfAngle = Math.Sin(halfAngle);
-                var oneOverSinHalfAngle = 1.0f / sinHalfAngle;
-                blendA = Math.Sin(halfAngle * (1.0f - blend)) * oneOverSinHalfAngle;
+                var oneOverSinHalfAngle = 1.0d / sinHalfAngle;
+                blendA = Math.Sin(halfAngle * (1.0d - blend)) * oneOverSinHalfAngle;
                 blendB = Math.Sin(halfAngle * blend) * oneOverSinHalfAngle;
             }
             else
             {
                 // do lerp if angle is really small.
-                blendA = 1.0f - blend;
+                blendA = 1.0d - blend;
                 blendB = blend;
             }
 
             var result = new Quaterniond((blendA * q1.Xyz) + (blendB * q2.Xyz), (blendA * q1.W) + (blendB * q2.W));
-            if (result.LengthSquared > 0.0f)
+            if (result.LengthSquared > 0.0d)
             {
                 return Normalize(result);
             }

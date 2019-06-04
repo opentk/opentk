@@ -179,6 +179,62 @@ namespace OpenToolkit.Mathematics
         }
 
         /// <summary>
+        /// Convert the current quaternion to Euler angle representation.
+        /// </summary>
+        /// <param name="angles">The Euler angles in radians.</param>
+        public void ToEulerAngles(out Vector3 angles)
+        {
+            angles = ToEulerAngles();
+        }
+
+        /// <summary>
+        /// Convert this instance to an Euler angle representation.
+        /// </summary>
+        /// <returns>The Euler angles in radians.</returns>
+        public Vector3 ToEulerAngles()
+        {
+            /*
+            reference
+            http://en.wikipedia.org/wiki/Conversion_between_qernions_and_Euler_angles
+            http://www.euclideanspace.com/maths/geometry/rotations/conversions/qernionToEuler/
+            */
+
+            var q = this;
+
+            q.Normalize();
+
+            float singularityTest = (q.Z * q.X) - (q.W * q.Y);
+            float yawY = 2f * ((q.W * q.Z) + (q.X * q.Y));
+            float yawX = 1f - (2f * ((q.Y * q.Y) + (q.Z * q.Z)));
+
+            // Threshold for the singularities found at the north/south poles.
+            const float SINGULARITY_THRESHOLD = 0.4999995f;
+
+            Vector3 eulerAngles;
+
+            if (singularityTest < -SINGULARITY_THRESHOLD)
+            {
+                eulerAngles.X = -MathHelper.PiOver2; // -90 degrees
+                eulerAngles.Y = (float)Math.Atan2(yawY, yawX);
+                eulerAngles.Z = MathHelper.NormalizeRadians(-eulerAngles.Y - (2f * (float)Math.Atan2(q.X, q.W)));
+            }
+            else if (singularityTest > SINGULARITY_THRESHOLD)
+            {
+                eulerAngles.X = MathHelper.PiOver2; // 90 degrees
+                eulerAngles.Y = (float)Math.Atan2(yawY, yawX);
+                eulerAngles.Z = MathHelper.NormalizeRadians(eulerAngles.Y - (2f * (float)Math.Atan2(q.X, q.W)));
+            }
+            else
+            {
+                eulerAngles.X = (float)Math.Asin(2f * singularityTest);
+                eulerAngles.Y = (float)Math.Atan2(yawY, yawX);
+                eulerAngles.Z = (float)Math.Atan2(-2f * ((q.W * q.X) + (q.Y * q.Z)), 1f - (2f * ((q.X * q.X) + (q.Y * q.Y))));
+            }
+
+            return eulerAngles;
+        }
+
+        /// <summary>
         /// Gets the length (magnitude) of the quaternion.
         /// </summary>
         /// <seealso cref="LengthSquared"/>
