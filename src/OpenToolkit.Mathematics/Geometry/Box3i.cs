@@ -8,6 +8,7 @@
 //
 
 using System;
+using System.Diagnostics.Contracts;
 using System.Globalization;
 using System.Runtime.InteropServices;
 
@@ -190,6 +191,7 @@ namespace OpenToolkit.Mathematics
         /// </summary>
         /// <param name="point">The point to query.</param>
         /// <returns>Whether this box contains the point.</returns>
+        [Pure]
         public bool Contains(Vector3i point)
         {
             return _min.X <= point.X && point.X <= _max.X &&
@@ -202,6 +204,7 @@ namespace OpenToolkit.Mathematics
         /// </summary>
         /// <param name="other">The box to query.</param>
         /// <returns>Whether this box contains the other box.</returns>
+        [Pure]
         public bool Contains(Box3i other)
         {
             return _max.X >= other._min.X && _min.X <= other._max.X &&
@@ -214,6 +217,7 @@ namespace OpenToolkit.Mathematics
         /// </summary>
         /// <param name="point">The point to find distance for.</param>
         /// <returns>The distance between the specified point and the nearest edge.</returns>
+        [Pure]
         public float DistanceToNearestEdge(Vector3i point)
         {
             var distMin = _min - point;
@@ -237,6 +241,7 @@ namespace OpenToolkit.Mathematics
         /// </summary>
         /// <param name="distance">The distance to translate the box.</param>
         /// <returns>The translated box.</returns>
+        [Pure]
         public Box3i Translated(Vector3i distance)
         {
             // create a local copy of this box
@@ -271,6 +276,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="scale">The scale to scale the box.</param>
         /// <param name="anchor">The anchor to scale the box from.</param>
         /// <returns>The scaled box.</returns>
+        [Pure]
         public Box3i Scaled(Vector3i scale, Vector3i anchor)
         {
             // create a local copy of this box
@@ -312,6 +318,7 @@ namespace OpenToolkit.Mathematics
         /// </summary>
         /// <param name="point">The point to query.</param>
         /// <returns>The inflated box.</returns>
+        [Pure]
         public Box3i Inflated(Vector3i point)
         {
             // create a local copy of this box
@@ -325,6 +332,7 @@ namespace OpenToolkit.Mathematics
         /// </summary>
         /// <param name="left">The left operand.</param>
         /// <param name="right">The right operand.</param>
+        [Pure]
         public static bool operator ==(Box3i left, Box3i right)
         {
             return left.Min == right.Min && left.Max == right.Max;
@@ -335,18 +343,21 @@ namespace OpenToolkit.Mathematics
         /// </summary>
         /// <param name="left">The left operand.</param>
         /// <param name="right">The right operand.</param>
+        [Pure]
         public static bool operator !=(Box3i left, Box3i right)
         {
             return !(left == right);
         }
 
         /// <inheritdoc/>
+        [Pure]
         public bool Equals(Box3i other)
         {
             return Min.Equals(other.Min) && Max.Equals(other.Max);
         }
 
         /// <inheritdoc/>
+        [Pure]
         public override bool Equals(object obj)
         {
             if (ReferenceEquals(null, obj))

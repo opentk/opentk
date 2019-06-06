@@ -506,6 +506,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="a">The first of two floats to compare.</param>
         /// <param name="b">The second of two floats to compare.</param>
         /// <returns>Parameter a or b, whichever is smaller.</returns>
+        [Pure]
         public static double Min(double a, double b) => Math.Min(a, b);
 
         /// <summary>
