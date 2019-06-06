@@ -58,7 +58,7 @@ namespace OpenToolkit.Mathematics
         /// </summary>
         public Vector2 Max
         {
-            get => _min;
+            get => _max;
             set
             {
                 if (value.X < _min.X)
@@ -90,27 +90,8 @@ namespace OpenToolkit.Mathematics
         /// <param name="max">The maximum point on the XY plane this box encloses.</param>
         public Box2(Vector2 min, Vector2 max)
         {
-            if (min.X < max.X)
-            {
-                _min.X = min.X;
-                _max.X = max.X;
-            }
-            else
-            {
-                _min.X = max.X;
-                _max.X = min.X;
-            }
-
-            if (min.Y < max.Y)
-            {
-                _min.Y = min.Y;
-                _max.Y = max.Y;
-            }
-            else
-            {
-                _min.Y = max.Y;
-                _max.Y = min.Y;
-            }
+            _min = Vector2.ComponentMin(min, max);
+            _max = Vector2.ComponentMax(min, max);
         }
 
         /// <summary>
