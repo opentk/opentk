@@ -11,6 +11,7 @@
 
   <ItemGroup>
     <Compile Include="Assertions.fs" />
+    <Compile Include="Box2Tests.fs" />
     <Compile Include="Generators.fs" />
     <Compile Include="HalfTests.fs" />
     <Compile Include="MathHelperTests.fs" />
