@@ -95,6 +95,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenToolkit.GraphicsLibrary
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenToolkit.Windowing.Desktop", "src\Windowing\OpenToolkit.Windowing.Desktop\OpenToolkit.Windowing.Desktop.csproj", "{BB7FF73F-5143-4D57-B228-770B10CA80C6}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{0B9B71A1-29F7-4CC5-9A9D-9DF122BE8B28}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "OpenToolkit.Tests", "tests\OpenToolkit.Tests\OpenToolkit.Tests.fsproj", "{0100EDA0-A134-4D9E-AE6B-470169BD8B94}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -213,6 +217,10 @@ Global
 		{C3968522-8B64-48D6-A2BF-06B37D04CCF0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C3968522-8B64-48D6-A2BF-06B37D04CCF0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C3968522-8B64-48D6-A2BF-06B37D04CCF0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0100EDA0-A134-4D9E-AE6B-470169BD8B94}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0100EDA0-A134-4D9E-AE6B-470169BD8B94}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0100EDA0-A134-4D9E-AE6B-470169BD8B94}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0100EDA0-A134-4D9E-AE6B-470169BD8B94}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -242,6 +250,7 @@ Global
 		{1FC04DAC-DF84-41BB-921A-35227FBF58DF} = {00962052-26B6-4B29-BA72-6EF98E944EE1}
 		{1BA5A86D-8EB9-4ADE-AFB1-67E849F9990B} = {00962052-26B6-4B29-BA72-6EF98E944EE1}
 		{C3968522-8B64-48D6-A2BF-06B37D04CCF0} = {00962052-26B6-4B29-BA72-6EF98E944EE1}
+		{0100EDA0-A134-4D9E-AE6B-470169BD8B94} = {0B9B71A1-29F7-4CC5-9A9D-9DF122BE8B28}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {82DDE6D6-0D55-49B4-9C64-B31B4A6E729F}
