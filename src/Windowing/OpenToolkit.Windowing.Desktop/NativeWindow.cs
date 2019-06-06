@@ -280,11 +280,11 @@ namespace OpenToolkit.Windowing.Desktop
         /// <inheritdoc />
         public unsafe Box2i Bounds
         {
-            get => Box2i.FromDimensions(Location, Size);
+            get => new Box2i(Location, Location + Size);
             set
             {
-                Glfw.SetWindowSize(WindowPtr, value.Width, value.Height);
-                Glfw.SetWindowPos(WindowPtr, value.Left, value.Top);
+                Glfw.SetWindowSize(WindowPtr, (int)value.Size.X, (int)value.Size.Y);
+                Glfw.SetWindowPos(WindowPtr, (int)value.Min.X, (int)value.Min.Y);
             }
         }
 
@@ -357,11 +357,11 @@ namespace OpenToolkit.Windowing.Desktop
         /// <inheritdoc />
         public Box2i ClientRectangle
         {
-            get => Box2i.FromDimensions(Location, Size);
+            get => new Box2i(Location, Location + Size);
             set
             {
-                Location = new Vector2i(value.Right, value.Top);
-                Size = new Vector2i(value.Width, value.Height);
+                Location = value.Min;
+                Size = value.Size;
             }
         }
 
