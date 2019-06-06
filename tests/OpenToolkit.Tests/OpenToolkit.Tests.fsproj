@@ -18,6 +18,8 @@
     <Compile Include="Vector2Tests.fs" />
     <Compile Include="Vector3Tests.fs" />
     <Compile Include="Vector4Tests.fs" />
+    <Compile Include="QuaternionTests.fs" />
+    <Compile Include="BezierCurveTest.fs" />
   </ItemGroup>
 
   <ItemGroup>
