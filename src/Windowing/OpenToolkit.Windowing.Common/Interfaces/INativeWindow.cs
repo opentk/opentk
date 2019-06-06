@@ -41,7 +41,7 @@ namespace OpenToolkit.Windowing.Common
         /// <returns>
         /// The point transformed to client coordinates.
         /// </returns>
-        Vector2 PointToClient(Vector2 point);
+        Vector2i PointToClient(Vector2i point);
 
         /// <summary>
         /// Transforms the specified point from client to screen coordinates.
@@ -52,6 +52,6 @@ namespace OpenToolkit.Windowing.Common
         /// <returns>
         /// The point transformed to screen coordinates.
         /// </returns>
-        Vector2 PointToScreen(Vector2 point);
+        Vector2i PointToScreen(Vector2i point);
     }
 }

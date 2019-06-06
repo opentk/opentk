@@ -124,10 +124,10 @@ namespace OpenToolkit.Windowing.Desktop
                 Glfw.SetWindowMonitor(
                     WindowPtr,
                     monitor,
-                    (int)_location.X,
-                    (int)_location.Y,
-                    (int)_size.X,
-                    (int)_size.Y,
+                    _location.X,
+                    _location.Y,
+                    _size.X,
+                    _size.Y,
                     mode->RefreshRate);
             }
         }
@@ -278,9 +278,9 @@ namespace OpenToolkit.Windowing.Desktop
         }
 
         /// <inheritdoc />
-        public unsafe Box2 Bounds
+        public unsafe Box2i Bounds
         {
-            get => new Box2(Location, Location + Size);
+            get => new Box2i(Location, Location + Size);
             set
             {
                 Glfw.SetWindowSize(WindowPtr, (int)value.Size.X, (int)value.Size.Y);
@@ -288,76 +288,76 @@ namespace OpenToolkit.Windowing.Desktop
             }
         }
 
-        private Vector2 _location;
+        private Vector2i _location;
 
         /// <inheritdoc />
-        public unsafe Vector2 Location
+        public unsafe Vector2i Location
         {
             get => _location;
-            set => Glfw.SetWindowPos(WindowPtr, (int)value.X, (int)value.Y);
+            set => Glfw.SetWindowPos(WindowPtr, value.X, value.Y);
         }
 
-        private Vector2 _size;
+        private Vector2i _size;
 
         /// <inheritdoc />
-        public unsafe Vector2 Size
+        public unsafe Vector2i Size
         {
             get => _size;
-            set => Glfw.SetWindowSize(WindowPtr, (int)value.X, (int)value.Y);
+            set => Glfw.SetWindowSize(WindowPtr, value.X, value.Y);
         }
 
         /// <inheritdoc />
         public unsafe int X
         {
-            get => (int)Location.X;
+            get => Location.X;
             set
             {
                 _location.X = value;
 
-                Glfw.SetWindowPos(WindowPtr, value, (int)_location.Y);
+                Glfw.SetWindowPos(WindowPtr, value, _location.Y);
             }
         }
 
         /// <inheritdoc />
         public unsafe int Y
         {
-            get => (int)Location.Y;
+            get => Location.Y;
             set
             {
                 _location.Y = value;
 
-                Glfw.SetWindowPos(WindowPtr, (int)_location.X, value);
+                Glfw.SetWindowPos(WindowPtr, _location.X, value);
             }
         }
 
         /// <inheritdoc />
         public unsafe int Width
         {
-            get => (int)Size.X;
+            get => Size.X;
             set
             {
                 _size.X = value;
 
-                Glfw.SetWindowSize(WindowPtr, value, (int)_size.Y);
+                Glfw.SetWindowSize(WindowPtr, value, _size.Y);
             }
         }
 
         /// <inheritdoc />
         public unsafe int Height
         {
-            get => (int)Size.Y;
+            get => Size.Y;
             set
             {
                 _size.Y = value;
 
-                Glfw.SetWindowSize(WindowPtr, (int)_size.Y, value);
+                Glfw.SetWindowSize(WindowPtr, _size.Y, value);
             }
         }
 
         /// <inheritdoc />
-        public Box2 ClientRectangle
+        public Box2i ClientRectangle
         {
-            get => new Box2(Location, Location + Size);
+            get => new Box2i(Location, Location + Size);
             set
             {
                 Location = value.Min;
@@ -366,7 +366,7 @@ namespace OpenToolkit.Windowing.Desktop
         }
 
         /// <inheritdoc />
-        public Vector2 ClientSize { get; }
+        public Vector2i ClientSize { get; }
 
         private MouseCursor _cursor;
 
@@ -497,7 +497,7 @@ namespace OpenToolkit.Windowing.Desktop
                 Location = settings.Location;
 
                 Glfw.GetFramebufferSize(WindowPtr, out var width, out var height);
-                ClientSize = new Vector2(width, height);
+                ClientSize = new Vector2i(width, height);
             }
 
             Interlocked.Increment(ref _numberOfUsers);
@@ -682,13 +682,13 @@ namespace OpenToolkit.Windowing.Desktop
         }
 
         /// <inheritdoc />
-        public Vector2 PointToClient(Vector2 point)
+        public Vector2i PointToClient(Vector2i point)
         {
             return point - Location;
         }
 
         /// <inheritdoc />
-        public Vector2 PointToScreen(Vector2 point)
+        public Vector2i PointToScreen(Vector2i point)
         {
             return point + Location;
         }
