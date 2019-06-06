@@ -1,12 +1,12 @@
-namespace OpenTK.Tests
+namespace OpenToolkit.Tests
 
 open Xunit
 open FsCheck
 open FsCheck.Xunit
 open System
 open System.Runtime.InteropServices
-open OpenTK
-open OpenTK.Mathematics
+open OpenToolkit
+open OpenToolkit.Mathematics
 
 module Vector3 =
     [<Properties(Arbitrary = [| typeof<OpenTKGen> |])>]
