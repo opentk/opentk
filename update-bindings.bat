@@ -1,2 +1,2 @@
-dotnet run -f netcoreapp20 -p "src/generators/generator.bind/generator.bind.csproj" %*
+dotnet run -f netcoreapp20 -p "src/Generators/Generator.Bind/Generator.Bind.csproj" %*
 pause

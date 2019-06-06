@@ -1,5 +1,5 @@
-﻿//
-// Box2.cs
+//
+// Box3d.cs
 //
 // Copyright (C) 2019 OpenTK
 //
@@ -8,7 +8,6 @@
 //
 
 using System;
-using System.Diagnostics.Contracts;
 using System.Globalization;
 using System.Runtime.InteropServices;
 
@@ -18,14 +17,14 @@ namespace OpenToolkit.Mathematics
     /// Defines an axis-aligned 2d box (rectangle).
     /// </summary>
     [StructLayout(LayoutKind.Sequential)]
-    public struct Box2 : IEquatable<Box2>
+    public struct Box3d : IEquatable<Box3d>
     {
-        private Vector2 _min;
+        private Vector3d _min;
 
         /// <summary>
         /// Gets or sets the minimum boundary of the structure.
         /// </summary>
-        public Vector2 Min
+        public Vector3d Min
         {
             get => _min;
             set
@@ -49,15 +48,25 @@ namespace OpenToolkit.Mathematics
                 {
                     _min.Y = value.Y;
                 }
+
+                if (value.Z > _max.Z)
+                {
+                    _min.Z = _max.Z;
+                    _max.Z = value.Z;
+                }
+                else
+                {
+                    _min.Z = value.Z;
+                }
             }
         }
 
-        private Vector2 _max;
+        private Vector3d _max;
 
         /// <summary>
         /// Gets or sets the maximum boundary of the structure.
         /// </summary>
-        public Vector2 Max
+        public Vector3d Max
         {
             get => _min;
             set
@@ -81,15 +90,25 @@ namespace OpenToolkit.Mathematics
                 {
                     _max.Y = value.Y;
                 }
+
+                if (value.Z < _min.Z)
+                {
+                    _max.Z = _min.Z;
+                    _min.Z = value.Z;
+                }
+                else
+                {
+                    _max.Z = value.Z;
+                }
             }
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Box2"/> struct.
+        /// Initializes a new instance of the <see cref="Box3d"/> struct.
         /// </summary>
         /// <param name="min">The minimum point on the XY plane this box encloses.</param>
         /// <param name="max">The maximum point on the XY plane this box encloses.</param>
-        public Box2(Vector2 min, Vector2 max)
+        public Box3d(Vector3d min, Vector3d max)
         {
             if (min.X < max.X)
             {
@@ -112,24 +131,37 @@ namespace OpenToolkit.Mathematics
                 _min.Y = max.Y;
                 _max.Y = min.Y;
             }
+
+            if (min.Z < max.Z)
+            {
+                _min.Z = min.Z;
+                _max.Z = max.Z;
+            }
+            else
+            {
+                _min.Z = max.Z;
+                _max.Z = min.Z;
+            }
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Box2"/> struct.
+        /// Initializes a new instance of the <see cref="Box3d"/> struct.
         /// </summary>
         /// <param name="minX">The minimum X value to be enclosed.</param>
         /// <param name="minY">The minimum Y value to be enclosed.</param>
+        /// <param name="minZ">The minimum Z value to be enclosed.</param>
         /// <param name="maxX">The maximum X value to be enclosed.</param>
         /// <param name="maxY">The maximum Y value to be enclosed.</param>
-        public Box2(float minX, float minY, float maxX, float maxY)
-            : this(new Vector2(minX, minY), new Vector2(maxX, maxY))
+        /// <param name="maxZ">The maximum Z value to be enclosed.</param>
+        public Box3d(double minX, double minY, double minZ, double maxX, double maxY, double maxZ)
+            : this(new Vector3d(minX, minY, minZ), new Vector3d(maxX, maxY, maxZ))
         {
         }
 
         /// <summary>
         /// Gets or sets a vector describing the size of the Box2 structure.
         /// </summary>
-        public Vector2 Size
+        public Vector3d Size
         {
             get => Max - Min;
             set => Scale(Size - value, Center);
@@ -138,7 +170,7 @@ namespace OpenToolkit.Mathematics
         /// <summary>
         /// Gets or sets a vector describing half the size of the box.
         /// </summary>
-        public Vector2 HalfSize
+        public Vector3d HalfSize
         {
             get => Size / 2;
             set => Size = value / 2;
@@ -147,7 +179,7 @@ namespace OpenToolkit.Mathematics
         /// <summary>
         /// Gets or sets a vector describing the center of the box.
         /// </summary>
-        public Vector2 Center
+        public Vector3d Center
         {
             get => (_min + _max) * 0.5f;
             set => Translate(Center - value);
@@ -158,10 +190,11 @@ namespace OpenToolkit.Mathematics
         /// </summary>
         /// <param name="point">The point to query.</param>
         /// <returns>Whether this box contains the point.</returns>
-        public bool Contains(Vector2 point)
+        public bool Contains(Vector3d point)
         {
             return _min.X <= point.X && point.X <= _max.X &&
-                   _min.Y <= point.Y && point.Y <= _max.Y;
+                   _min.Y <= point.Z && point.Y <= _max.Y &&
+                   _min.Z <= point.Z && point.Z <= _max.Z;
         }
 
         /// <summary>
@@ -169,10 +202,11 @@ namespace OpenToolkit.Mathematics
         /// </summary>
         /// <param name="other">The box to query.</param>
         /// <returns>Whether this box contains the other box.</returns>
-        public bool Contains(Box2 other)
+        public bool Contains(Box3d other)
         {
             return _max.X >= other._min.X && _min.X <= other._max.X &&
-                   _max.Y >= other._min.Y && _min.Y <= other._max.Y;
+                   _max.Y >= other._min.Y && _min.Y <= other._max.Y &&
+                   _max.Z >= other._min.Z && _min.Z <= other._max.Z;
         }
 
         /// <summary>
@@ -180,11 +214,11 @@ namespace OpenToolkit.Mathematics
         /// </summary>
         /// <param name="point">The point to find distance for.</param>
         /// <returns>The distance between the specified point and the nearest edge.</returns>
-        public float DistanceToNearestEdge(Vector2 point)
+        public double DistanceToNearestEdge(Vector3d point)
         {
             var distMin = _min - point;
             var distMax = point - _max;
-            var dist = new Vector2(MathHelper.Min(distMin.X, distMax.X), MathHelper.Min(distMin.Y, distMax.Y));
+            var dist = new Vector2d(MathHelper.Min(distMin.X, distMax.X), MathHelper.Min(distMin.Y, distMax.Y));
             return dist.Length;
         }
 
@@ -192,7 +226,7 @@ namespace OpenToolkit.Mathematics
         /// Translates this Box2 by the given amount.
         /// </summary>
         /// <param name="distance">The distance to translate the box.</param>
-        public void Translate(Vector2 distance)
+        public void Translate(Vector3d distance)
         {
             Min += distance;
             Max += distance;
@@ -203,10 +237,10 @@ namespace OpenToolkit.Mathematics
         /// </summary>
         /// <param name="distance">The distance to translate the box.</param>
         /// <returns>The translated box.</returns>
-        public Box2 Translated(Vector2 distance)
+        public Box3d Translated(Vector3d distance)
         {
             // create a local copy of this box
-            Box2 box = this;
+            Box3d box = this;
             box.Translate(distance);
             return box;
         }
@@ -216,17 +250,19 @@ namespace OpenToolkit.Mathematics
         /// </summary>
         /// <param name="scale">The scale to scale the box.</param>
         /// <param name="anchor">The anchor to scale the box from.</param>
-        public void Scale(Vector2 scale, Vector2 anchor)
+        public void Scale(Vector3d scale, Vector3d anchor)
         {
             var newDistMin = (anchor - _min) * scale;
-            _min = new Vector2(
+            _min = new Vector3d(
                 anchor.X + _min.X > anchor.X ? newDistMin.X : -newDistMin.X,
-                anchor.Y + _min.Y > anchor.Y ? newDistMin.Y : -newDistMin.Y);
+                anchor.Y + _min.Y > anchor.Y ? newDistMin.Y : -newDistMin.Y,
+                anchor.Z + _min.Z > anchor.Z ? newDistMin.Z : -newDistMin.Z);
 
             var newDistMax = (anchor - _max) * scale;
-            _max = new Vector2(
+            _max = new Vector3d(
                 anchor.X + _max.X > anchor.X ? newDistMax.X : -newDistMax.X,
-                anchor.Y + _min.Y > anchor.Y ? newDistMax.Y : -newDistMax.Y);
+                anchor.Y + _min.Y > anchor.Y ? newDistMax.Y : -newDistMax.Y,
+                anchor.Z + _min.Z > anchor.Z ? newDistMax.Z : -newDistMax.Z);
         }
 
         /// <summary>
@@ -235,10 +271,10 @@ namespace OpenToolkit.Mathematics
         /// <param name="scale">The scale to scale the box.</param>
         /// <param name="anchor">The anchor to scale the box from.</param>
         /// <returns>The scaled box.</returns>
-        public Box2 Scaled(Vector2 scale, Vector2 anchor)
+        public Box3d Scaled(Vector3d scale, Vector3d anchor)
         {
             // create a local copy of this box
-            Box2 box = this;
+            Box3d box = this;
             box.Scale(scale, anchor);
             return box;
         }
@@ -247,7 +283,7 @@ namespace OpenToolkit.Mathematics
         /// Inflate this Box2 to encapsulate a given point.
         /// </summary>
         /// <param name="point">The point to query.</param>
-        public void Inflate(Vector2 point)
+        public void Inflate(Vector3d point)
         {
             var distMin = _min - point;
             var distMax = point - _max;
@@ -276,10 +312,10 @@ namespace OpenToolkit.Mathematics
         /// </summary>
         /// <param name="point">The point to query.</param>
         /// <returns>The inflated box.</returns>
-        public Box2 Inflated(Vector2 point)
+        public Box3d Inflated(Vector3d point)
         {
             // create a local copy of this box
-            Box2 box = this;
+            Box3d box = this;
             box.Inflate(point);
             return box;
         }
@@ -289,8 +325,7 @@ namespace OpenToolkit.Mathematics
         /// </summary>
         /// <param name="left">The left operand.</param>
         /// <param name="right">The right operand.</param>
-        [Pure]
-        public static bool operator ==(Box2 left, Box2 right)
+        public static bool operator ==(Box3d left, Box3d right)
         {
             return left.Min == right.Min && left.Max == right.Max;
         }
@@ -300,28 +335,25 @@ namespace OpenToolkit.Mathematics
         /// </summary>
         /// <param name="left">The left operand.</param>
         /// <param name="right">The right operand.</param>
-        [Pure]
-        public static bool operator !=(Box2 left, Box2 right)
+        public static bool operator !=(Box3d left, Box3d right)
         {
             return !(left == right);
         }
 
         /// <inheritdoc/>
-        [Pure]
-        public bool Equals(Box2 other)
+        public bool Equals(Box3d other)
         {
             return Min.Equals(other.Min) && Max.Equals(other.Max);
         }
 
         /// <inheritdoc/>
-        [Pure]
         public override bool Equals(object obj)
         {
             if (ReferenceEquals(null, obj))
             {
                 return false;
             }
-            return obj is Box2 other && Equals(other);
+            return obj is Box3d other && Equals(other);
         }
 
         /// <inheritdoc/>
