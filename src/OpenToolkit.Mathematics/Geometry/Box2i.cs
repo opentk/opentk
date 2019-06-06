@@ -14,7 +14,7 @@ using System.Runtime.InteropServices;
 namespace OpenToolkit.Mathematics
 {
     /// <summary>
-    /// Defines a 2d box (rectangle).
+    /// Defines an axis-aligned 2d box (rectangle).
     /// </summary>
     [StructLayout(LayoutKind.Sequential)]
     public struct Box2i : IEquatable<Box2i>
