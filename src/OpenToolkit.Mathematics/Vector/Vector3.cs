@@ -21,6 +21,7 @@ SOFTWARE.
  */
 
 using System;
+using System.Diagnostics.Contracts;
 using System.Globalization;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
@@ -256,6 +257,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="a">Left operand.</param>
         /// <param name="b">Right operand.</param>
         /// <returns>Result of operation.</returns>
+        [Pure]
         public static Vector3 Add(Vector3 a, Vector3 b)
         {
             Add(ref a, ref b, out a);
@@ -281,6 +283,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="a">First operand.</param>
         /// <param name="b">Second operand.</param>
         /// <returns>Result of subtraction.</returns>
+        [Pure]
         public static Vector3 Subtract(Vector3 a, Vector3 b)
         {
             Subtract(ref a, ref b, out a);
@@ -306,6 +309,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="vector">Left operand.</param>
         /// <param name="scale">Right operand.</param>
         /// <returns>Result of the operation.</returns>
+        [Pure]
         public static Vector3 Multiply(Vector3 vector, float scale)
         {
             Multiply(ref vector, scale, out vector);
@@ -331,6 +335,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="vector">Left operand.</param>
         /// <param name="scale">Right operand.</param>
         /// <returns>Result of the operation.</returns>
+        [Pure]
         public static Vector3 Multiply(Vector3 vector, Vector3 scale)
         {
             Multiply(ref vector, ref scale, out vector);
@@ -356,6 +361,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="vector">Left operand.</param>
         /// <param name="scale">Right operand.</param>
         /// <returns>Result of the operation.</returns>
+        [Pure]
         public static Vector3 Divide(Vector3 vector, float scale)
         {
             Divide(ref vector, scale, out vector);
@@ -381,6 +387,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="vector">Left operand.</param>
         /// <param name="scale">Right operand.</param>
         /// <returns>Result of the operation.</returns>
+        [Pure]
         public static Vector3 Divide(Vector3 vector, Vector3 scale)
         {
             Divide(ref vector, ref scale, out vector);
@@ -406,6 +413,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="a">First operand.</param>
         /// <param name="b">Second operand.</param>
         /// <returns>The component-wise minimum.</returns>
+        [Pure]
         public static Vector3 ComponentMin(Vector3 a, Vector3 b)
         {
             a.X = a.X < b.X ? a.X : b.X;
@@ -433,6 +441,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="a">First operand.</param>
         /// <param name="b">Second operand.</param>
         /// <returns>The component-wise maximum.</returns>
+        [Pure]
         public static Vector3 ComponentMax(Vector3 a, Vector3 b)
         {
             a.X = a.X > b.X ? a.X : b.X;
@@ -461,6 +470,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="left">Left operand.</param>
         /// <param name="right">Right operand.</param>
         /// <returns>The minimum Vector3.</returns>
+        [Pure]
         public static Vector3 MagnitudeMin(Vector3 left, Vector3 right)
         {
             return left.LengthSquared < right.LengthSquared ? left : right;
@@ -485,6 +495,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="left">Left operand.</param>
         /// <param name="right">Right operand.</param>
         /// <returns>The maximum Vector3.</returns>
+        [Pure]
         public static Vector3 MagnitudeMax(Vector3 left, Vector3 right)
         {
             return left.LengthSquared >= right.LengthSquared ? left : right;
@@ -509,6 +520,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="min">Minimum vector.</param>
         /// <param name="max">Maximum vector.</param>
         /// <returns>The clamped vector.</returns>
+        [Pure]
         public static Vector3 Clamp(Vector3 vec, Vector3 min, Vector3 max)
         {
             vec.X = vec.X < min.X ? min.X : vec.X > max.X ? max.X : vec.X;
@@ -537,6 +549,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="vec1">The first vector.</param>
         /// <param name="vec2">The second vector.</param>
         /// <returns>The distance.</returns>
+        [Pure]
         public static float Distance(Vector3 vec1, Vector3 vec2)
         {
             Distance(ref vec1, ref vec2, out float result);
@@ -561,6 +574,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="vec1">The first vector.</param>
         /// <param name="vec2">The second vector.</param>
         /// <returns>The squared distance.</returns>
+        [Pure]
         public static float DistanceSquared(Vector3 vec1, Vector3 vec2)
         {
             DistanceSquared(ref vec1, ref vec2, out float result);
@@ -584,6 +598,7 @@ namespace OpenToolkit.Mathematics
         /// </summary>
         /// <param name="vec">The input vector.</param>
         /// <returns>The normalized copy.</returns>
+        [Pure]
         public static Vector3 Normalize(Vector3 vec)
         {
             var scale = 1.0f / vec.Length;
@@ -611,6 +626,7 @@ namespace OpenToolkit.Mathematics
         /// </summary>
         /// <param name="vec">The input vector.</param>
         /// <returns>The normalized copy.</returns>
+        [Pure]
         public static Vector3 NormalizeFast(Vector3 vec)
         {
             var scale = MathHelper.InverseSqrtFast((vec.X * vec.X) + (vec.Y * vec.Y) + (vec.Z * vec.Z));
@@ -639,6 +655,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="left">First operand.</param>
         /// <param name="right">Second operand.</param>
         /// <returns>The dot product of the two inputs.</returns>
+        [Pure]
         public static float Dot(Vector3 left, Vector3 right)
         {
             return (left.X * right.X) + (left.Y * right.Y) + (left.Z * right.Z);
@@ -661,6 +678,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="left">First operand.</param>
         /// <param name="right">Second operand.</param>
         /// <returns>The cross product of the two inputs.</returns>
+        [Pure]
         public static Vector3 Cross(Vector3 left, Vector3 right)
         {
             Cross(ref left, ref right, out Vector3 result);
@@ -692,6 +710,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="b">Second input vector.</param>
         /// <param name="blend">The blend factor. a when blend=0, b when blend=1.</param>
         /// <returns>a when blend=0, b when blend=1, and a linear combination otherwise.</returns>
+        [Pure]
         public static Vector3 Lerp(Vector3 a, Vector3 b, float blend)
         {
             a.X = (blend * (b.X - a.X)) + a.X;
@@ -723,6 +742,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="u">First Barycentric Coordinate.</param>
         /// <param name="v">Second Barycentric Coordinate.</param>
         /// <returns>a when u=v=0, b when u=1,v=0, c when u=0,v=1, and a linear combination of a,b,c otherwise.</returns>
+        [Pure]
         public static Vector3 BaryCentric(Vector3 a, Vector3 b, Vector3 c, float u, float v)
         {
             return a + (u * (b - a)) + (v * (c - a));
@@ -740,6 +760,7 @@ namespace OpenToolkit.Mathematics
         /// Output Vector. a when u=v=0, b when u=1,v=0, c when u=0,v=1, and a linear combination of a,b,c
         /// otherwise.
         /// </param>
+        [Pure]
         public static void BaryCentric
         (
             ref Vector3 a,
@@ -770,6 +791,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="vec">The vector to transform.</param>
         /// <param name="mat">The desired transformation.</param>
         /// <returns>The transformed vector.</returns>
+        [Pure]
         public static Vector3 TransformVector(Vector3 vec, Matrix4 mat)
         {
             TransformVector(ref vec, ref mat, out Vector3 result);
@@ -812,6 +834,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="norm">The normal to transform.</param>
         /// <param name="mat">The desired transformation.</param>
         /// <returns>The transformed normal.</returns>
+        [Pure]
         public static Vector3 TransformNormal(Vector3 norm, Matrix4 mat)
         {
             TransformNormal(ref norm, ref mat, out Vector3 result);
@@ -844,6 +867,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="norm">The normal to transform.</param>
         /// <param name="invMat">The inverse of the desired transformation.</param>
         /// <returns>The transformed normal.</returns>
+        [Pure]
         public static Vector3 TransformNormalInverse(Vector3 norm, Matrix4 invMat)
         {
             TransformNormalInverse(ref norm, ref invMat, out Vector3 result);
@@ -881,6 +905,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="pos">The position to transform.</param>
         /// <param name="mat">The desired transformation.</param>
         /// <returns>The transformed position.</returns>
+        [Pure]
         public static Vector3 TransformPosition(Vector3 pos, Matrix4 mat)
         {
             TransformPosition(ref pos, ref mat, out Vector3 result);
@@ -917,6 +942,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="vec">The vector to transform.</param>
         /// <param name="mat">The desired transformation.</param>
         /// <returns>The transformed vector.</returns>
+        [Pure]
         public static Vector3 Transform(Vector3 vec, Matrix3 mat)
         {
             Transform(ref vec, ref mat, out Vector3 result);
@@ -942,6 +968,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="vec">The vector to transform.</param>
         /// <param name="quat">The quaternion to rotate the vector by.</param>
         /// <returns>The result of the operation.</returns>
+        [Pure]
         public static Vector3 Transform(Vector3 vec, Quaternion quat)
         {
             Transform(ref vec, ref quat, out Vector3 result);
@@ -973,6 +1000,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="mat">The desired transformation.</param>
         /// <param name="vec">The vector to transform.</param>
         /// <returns>The transformed vector.</returns>
+        [Pure]
         public static Vector3 Transform(Matrix3 mat, Vector3 vec)
         {
             Transform(ref vec, ref mat, out Vector3 result);
@@ -998,6 +1026,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="vec">The vector to transform.</param>
         /// <param name="mat">The desired transformation.</param>
         /// <returns>The transformed vector.</returns>
+        [Pure]
         public static Vector3 TransformPerspective(Vector3 vec, Matrix4 mat)
         {
             TransformPerspective(ref vec, ref mat, out Vector3 result);
@@ -1026,6 +1055,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="second">The second vector.</param>
         /// <returns>Angle (in radians) between the vectors.</returns>
         /// <remarks>Note that the returned angle is never bigger than the constant Pi.</remarks>
+        [Pure]
         public static float CalculateAngle(Vector3 first, Vector3 second)
         {
             CalculateAngle(ref first, ref second, out float result);
@@ -1061,6 +1091,7 @@ namespace OpenToolkit.Mathematics
         /// To project to normalized device coordinates (NDC) use the following parameters:
         /// Project(vector, -1, -1, 2, 2, -1, 1, worldViewProjection).
         /// </remarks>
+        [Pure]
         public static Vector3 Project
         (
             Vector3 vector,
@@ -1124,6 +1155,7 @@ namespace OpenToolkit.Mathematics
         /// To project from normalized device coordinates (NDC) use the following parameters:
         /// Project(vector, -1, -1, 2, 2, -1, 1, inverseWorldViewProjection).
         /// </remarks>
+        [Pure]
         public static Vector3 Unproject
         (
             Vector3 vector,
@@ -1336,6 +1368,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="left">The first instance.</param>
         /// <param name="right">The second instance.</param>
         /// <returns>The result of the calculation.</returns>
+        [Pure]
         public static Vector3 operator +(Vector3 left, Vector3 right)
         {
             left.X += right.X;
@@ -1350,6 +1383,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="left">The first instance.</param>
         /// <param name="right">The second instance.</param>
         /// <returns>The result of the calculation.</returns>
+        [Pure]
         public static Vector3 operator -(Vector3 left, Vector3 right)
         {
             left.X -= right.X;
@@ -1363,6 +1397,7 @@ namespace OpenToolkit.Mathematics
         /// </summary>
         /// <param name="vec">The instance.</param>
         /// <returns>The result of the calculation.</returns>
+        [Pure]
         public static Vector3 operator -(Vector3 vec)
         {
             vec.X = -vec.X;
@@ -1377,6 +1412,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="vec">The instance.</param>
         /// <param name="scale">The scalar.</param>
         /// <returns>The result of the calculation.</returns>
+        [Pure]
         public static Vector3 operator *(Vector3 vec, float scale)
         {
             vec.X *= scale;
@@ -1391,6 +1427,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="scale">The scalar.</param>
         /// <param name="vec">The instance.</param>
         /// <returns>The result of the calculation.</returns>
+        [Pure]
         public static Vector3 operator *(float scale, Vector3 vec)
         {
             vec.X *= scale;
@@ -1405,6 +1442,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="scale">Left operand.</param>
         /// <param name="vec">Right operand.</param>
         /// <returns>Result of multiplication.</returns>
+        [Pure]
         public static Vector3 operator *(Vector3 vec, Vector3 scale)
         {
             vec.X *= scale.X;
@@ -1419,6 +1457,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="vec">The vector to transform.</param>
         /// <param name="mat">The desired transformation.</param>
         /// <returns>The transformed vector.</returns>
+        [Pure]
         public static Vector3 operator *(Vector3 vec, Matrix3 mat)
         {
             Transform(ref vec, ref mat, out Vector3 result);
@@ -1431,6 +1470,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="mat">The desired transformation.</param>
         /// <param name="vec">The vector to transform.</param>
         /// <returns>The transformed vector.</returns>
+        [Pure]
         public static Vector3 operator *(Matrix3 mat, Vector3 vec)
         {
             Transform(ref mat, ref vec, out Vector3 result);
@@ -1443,6 +1483,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="vec">The vector to transform.</param>
         /// <param name="quat">The quaternion to rotate the vector by.</param>
         /// <returns>The multiplied vector.</returns>
+        [Pure]
         public static Vector3 operator *(Quaternion quat, Vector3 vec)
         {
             Transform(ref vec, ref quat, out Vector3 result);
@@ -1455,6 +1496,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="vec">The instance.</param>
         /// <param name="scale">The scalar.</param>
         /// <returns>The result of the calculation.</returns>
+        [Pure]
         public static Vector3 operator /(Vector3 vec, float scale)
         {
             vec.X /= scale;
@@ -1469,6 +1511,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="left">The first instance.</param>
         /// <param name="right">The second instance.</param>
         /// <returns>True, if left equals right; false otherwise.</returns>
+        [Pure]
         public static bool operator ==(Vector3 left, Vector3 right)
         {
             return left.Equals(right);
@@ -1480,6 +1523,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="left">The first instance.</param>
         /// <param name="right">The second instance.</param>
         /// <returns>True, if left does not equal right; false otherwise.</returns>
+        [Pure]
         public static bool operator !=(Vector3 left, Vector3 right)
         {
             return !left.Equals(right);
@@ -1513,6 +1557,7 @@ namespace OpenToolkit.Mathematics
         /// </summary>
         /// <param name="obj">The object to compare to.</param>
         /// <returns>True if the instances are equal; false otherwise.</returns>
+        [Pure]
         public override bool Equals(object obj)
         {
             if (!(obj is Vector3))
@@ -1528,6 +1573,7 @@ namespace OpenToolkit.Mathematics
         /// </summary>
         /// <param name="other">A vector to compare with this vector.</param>
         /// <returns>true if the current vector is equal to the vector parameter; otherwise, false.</returns>
+        [Pure]
         public bool Equals(Vector3 other)
         {
             return

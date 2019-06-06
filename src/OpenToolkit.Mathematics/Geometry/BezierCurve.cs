@@ -8,6 +8,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 
 namespace OpenToolkit.Mathematics
 {
@@ -103,6 +104,7 @@ namespace OpenToolkit.Mathematics
         /// </summary>
         /// <param name="t">The t value, between 0.0f and 1.0f.</param>
         /// <returns>Resulting point.</returns>
+        [Pure]
         public Vector2 CalculatePoint(float t)
         {
             return CalculatePoint(_points, t, Parallel);
@@ -117,6 +119,7 @@ namespace OpenToolkit.Mathematics
         /// The precision gets better as the <paramref name="precision"/>
         /// value gets smaller.
         /// </remarks>
+        [Pure]
         public float CalculateLength(float precision)
         {
             return CalculateLength(_points, precision, Parallel);
@@ -131,6 +134,7 @@ namespace OpenToolkit.Mathematics
         /// The precision gets better as the <paramref name="precision"/>
         /// value gets smaller.
         /// </returns>
+        [Pure]
         public static float CalculateLength(IList<Vector2> points, float precision)
         {
             return CalculateLength(points, precision, 0.0f);
@@ -155,6 +159,7 @@ namespace OpenToolkit.Mathematics
         /// of 5.0f to the orignal curve.
         ///  </para>
         /// </remarks>
+        [Pure]
         public static float CalculateLength(IList<Vector2> points, float precision, float parallel)
         {
             var length = 0.0f;
@@ -176,6 +181,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="points">The points.</param>
         /// <param name="t">The t parameter, a value between 0.0f and 1.0f.</param>
         /// <returns>Resulting point.</returns>
+        [Pure]
         public static Vector2 CalculatePoint(IList<Vector2> points, float t)
         {
             return CalculatePoint(points, t, 0.0f);
@@ -194,6 +200,7 @@ namespace OpenToolkit.Mathematics
         /// the original curve, 5.0f represents a curve that has always a distance
         /// of 5.0f to the orignal curve.
         /// </remarks>
+        [Pure]
         public static Vector2 CalculatePoint(IList<Vector2> points, float t, float parallel)
         {
             var r = default(Vector2);
@@ -238,6 +245,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="points">The points.</param>
         /// <param name="t">The t parameter, value between 0.0f and 1.0f.</param>
         /// <returns>Resulting point.</returns>
+        [Pure]
         private static Vector2 CalculatePointOfDerivative(IList<Vector2> points, float t)
         {
             var r = default(Vector2);

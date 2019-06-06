@@ -21,6 +21,7 @@ SOFTWARE.
  */
 
 using System;
+using System.Diagnostics.Contracts;
 using System.Runtime.InteropServices;
 using System.Xml.Serialization;
 
@@ -247,6 +248,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="left">The first operand.</param>
         /// <param name="right">The second operand.</param>
         /// <returns>The result of the addition.</returns>
+        [Pure]
         public static Quaternion Add(Quaternion left, Quaternion right)
         {
             return new Quaternion(
@@ -273,6 +275,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="left">The left instance.</param>
         /// <param name="right">The right instance.</param>
         /// <returns>The result of the operation.</returns>
+        [Pure]
         public static Quaternion Sub(Quaternion left, Quaternion right)
         {
             return new Quaternion(
@@ -299,6 +302,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="left">The first instance.</param>
         /// <param name="right">The second instance.</param>
         /// <returns>A new instance containing the result of the calculation.</returns>
+        [Pure]
         public static Quaternion Multiply(Quaternion left, Quaternion right)
         {
             Multiply(ref left, ref right, out Quaternion result);
@@ -341,6 +345,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="quaternion">The instance.</param>
         /// <param name="scale">The scalar.</param>
         /// <returns>A new instance containing the result of the calculation.</returns>
+        [Pure]
         public static Quaternion Multiply(Quaternion quaternion, float scale)
         {
             return new Quaternion
@@ -357,6 +362,7 @@ namespace OpenToolkit.Mathematics
         /// </summary>
         /// <param name="q">The quaternion.</param>
         /// <returns>The conjugate of the given quaternion.</returns>
+        [Pure]
         public static Quaternion Conjugate(Quaternion q)
         {
             return new Quaternion(-q.Xyz, q.W);
@@ -377,6 +383,7 @@ namespace OpenToolkit.Mathematics
         /// </summary>
         /// <param name="q">The quaternion to invert.</param>
         /// <returns>The inverse of the given quaternion.</returns>
+        [Pure]
         public static Quaternion Invert(Quaternion q)
         {
             Invert(ref q, out Quaternion result);
@@ -407,6 +414,7 @@ namespace OpenToolkit.Mathematics
         /// </summary>
         /// <param name="q">The quaternion to normalize.</param>
         /// <returns>The normalized copy.</returns>
+        [Pure]
         public static Quaternion Normalize(Quaternion q)
         {
             Normalize(ref q, out Quaternion result);
@@ -430,6 +438,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="axis">The axis to rotate about.</param>
         /// <param name="angle">The rotation angle in radians.</param>
         /// <returns>The equivalent quaternion.</returns>
+        [Pure]
         public static Quaternion FromAxisAngle(Vector3 axis, float angle)
         {
             if (axis.LengthSquared == 0.0f)
@@ -456,6 +465,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="yaw">The yaw (heading), counterclockwise rotation around Y axis.</param>
         /// <param name="roll">The roll (bank), counterclockwise rotation around Z axis.</param>
         /// <returns>The quaternion.</returns>
+        [Pure]
         public static Quaternion FromEulerAngles(float pitch, float yaw, float roll)
         {
             return new Quaternion(pitch, yaw, roll);
@@ -468,6 +478,7 @@ namespace OpenToolkit.Mathematics
         /// </summary>
         /// <param name="eulerAngles">The counterclockwise euler angles as a vector.</param>
         /// <returns>The equivalent Quaternion.</returns>
+        [Pure]
         public static Quaternion FromEulerAngles(Vector3 eulerAngles)
         {
             return new Quaternion(eulerAngles);
@@ -500,6 +511,7 @@ namespace OpenToolkit.Mathematics
         /// </summary>
         /// <param name="matrix">A rotation matrix.</param>
         /// <returns>The equivalent quaternion.</returns>
+        [Pure]
         public static Quaternion FromMatrix(Matrix3 matrix)
         {
             FromMatrix(ref matrix, out Quaternion result);
@@ -569,6 +581,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="q2">The second quaternion.</param>
         /// <param name="blend">The blend factor.</param>
         /// <returns>A smooth blend between the given quaternions.</returns>
+        [Pure]
         public static Quaternion Slerp(Quaternion q1, Quaternion q2, float blend)
         {
             // if either input is zero, return the other.
@@ -635,6 +648,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="left">The first instance.</param>
         /// <param name="right">The second instance.</param>
         /// <returns>The result of the calculation.</returns>
+        [Pure]
         public static Quaternion operator +(Quaternion left, Quaternion right)
         {
             left.Xyz += right.Xyz;
@@ -648,6 +662,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="left">The first instance.</param>
         /// <param name="right">The second instance.</param>
         /// <returns>The result of the calculation.</returns>
+        [Pure]
         public static Quaternion operator -(Quaternion left, Quaternion right)
         {
             left.Xyz -= right.Xyz;
@@ -661,6 +676,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="left">The first instance.</param>
         /// <param name="right">The second instance.</param>
         /// <returns>The result of the calculation.</returns>
+        [Pure]
         public static Quaternion operator *(Quaternion left, Quaternion right)
         {
             Multiply(ref left, ref right, out left);
@@ -673,6 +689,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="quaternion">The instance.</param>
         /// <param name="scale">The scalar.</param>
         /// <returns>A new instance containing the result of the calculation.</returns>
+        [Pure]
         public static Quaternion operator *(Quaternion quaternion, float scale)
         {
             Multiply(ref quaternion, scale, out quaternion);
@@ -685,6 +702,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="quaternion">The instance.</param>
         /// <param name="scale">The scalar.</param>
         /// <returns>A new instance containing the result of the calculation.</returns>
+        [Pure]
         public static Quaternion operator *(float scale, Quaternion quaternion)
         {
             return new Quaternion
@@ -702,6 +720,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="left">The first instance.</param>
         /// <param name="right">The second instance.</param>
         /// <returns>True, if left equals right; false otherwise.</returns>
+        [Pure]
         public static bool operator ==(Quaternion left, Quaternion right)
         {
             return left.Equals(right);
@@ -713,6 +732,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="left">The first instance.</param>
         /// <param name="right">The second instance.</param>
         /// <returns>True, if left does not equal right; false otherwise.</returns>
+        [Pure]
         public static bool operator !=(Quaternion left, Quaternion right)
         {
             return !left.Equals(right);
@@ -732,6 +752,7 @@ namespace OpenToolkit.Mathematics
         /// </summary>
         /// <param name="other">The other object to be used in the comparison.</param>
         /// <returns>True if both objects are Quaternions of equal value. Otherwise it returns false.</returns>
+        [Pure]
         public override bool Equals(object other)
         {
             if (other is Quaternion == false)
@@ -759,6 +780,7 @@ namespace OpenToolkit.Mathematics
         /// </summary>
         /// <param name="other">The other Quaternion to be used in the comparison.</param>
         /// <returns>True if both instances are equal; false otherwise.</returns>
+        [Pure]
         public bool Equals(Quaternion other)
         {
             return Xyz == other.Xyz && W == other.W;

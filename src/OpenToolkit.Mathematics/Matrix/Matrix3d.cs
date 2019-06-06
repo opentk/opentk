@@ -22,6 +22,7 @@ SOFTWARE.
 
 using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.Contracts;
 using System.Runtime.InteropServices;
 
 namespace OpenToolkit.Mathematics
@@ -386,6 +387,7 @@ namespace OpenToolkit.Mathematics
         /// you know it's already normalized.
         /// </param>
         /// <returns>The rotation.</returns>
+        [Pure]
         public Quaterniond ExtractRotation(bool rowNormalize = true)
         {
             var row0 = Row0;
@@ -494,6 +496,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="axis">The axis to rotate about.</param>
         /// <param name="angle">Angle in radians to rotate counter-clockwise (looking in the direction of the given axis).</param>
         /// <returns>A matrix instance.</returns>
+        [Pure]
         public static Matrix3d CreateFromAxisAngle(Vector3d axis, double angle)
         {
             CreateFromAxisAngle(axis, angle, out Matrix3d result);
@@ -516,6 +519,7 @@ namespace OpenToolkit.Mathematics
         /// </summary>
         /// <param name="q">Quaternion to translate.</param>
         /// <returns>A matrix instance.</returns>
+        [Pure]
         public static Matrix3d CreateFromQuaternion(Quaterniond q)
         {
             CreateFromQuaternion(ref q, out Matrix3d result);
@@ -544,6 +548,7 @@ namespace OpenToolkit.Mathematics
         /// </summary>
         /// <param name="angle">The counter-clockwise angle in radians.</param>
         /// <returns>The resulting Matrix3d instance.</returns>
+        [Pure]
         public static Matrix3d CreateRotationX(double angle)
         {
             CreateRotationX(angle, out Matrix3d result);
@@ -572,6 +577,7 @@ namespace OpenToolkit.Mathematics
         /// </summary>
         /// <param name="angle">The counter-clockwise angle in radians.</param>
         /// <returns>The resulting Matrix3d instance.</returns>
+        [Pure]
         public static Matrix3d CreateRotationY(double angle)
         {
             CreateRotationY(angle, out Matrix3d result);
@@ -600,6 +606,7 @@ namespace OpenToolkit.Mathematics
         /// </summary>
         /// <param name="angle">The counter-clockwise angle in radians.</param>
         /// <returns>The resulting Matrix3d instance.</returns>
+        [Pure]
         public static Matrix3d CreateRotationZ(double angle)
         {
             CreateRotationZ(angle, out Matrix3d result);
@@ -611,6 +618,7 @@ namespace OpenToolkit.Mathematics
         /// </summary>
         /// <param name="scale">Single scale factor for the x, y, and z axes.</param>
         /// <returns>A scale matrix.</returns>
+        [Pure]
         public static Matrix3d CreateScale(double scale)
         {
             CreateScale(scale, out Matrix3d result);
@@ -622,6 +630,7 @@ namespace OpenToolkit.Mathematics
         /// </summary>
         /// <param name="scale">Scale factors for the x, y, and z axes.</param>
         /// <returns>A scale matrix.</returns>
+        [Pure]
         public static Matrix3d CreateScale(Vector3d scale)
         {
             CreateScale(ref scale, out Matrix3d result);
@@ -635,6 +644,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="y">Scale factor for the y axis.</param>
         /// <param name="z">Scale factor for the z axis.</param>
         /// <returns>A scale matrix.</returns>
+        [Pure]
         public static Matrix3d CreateScale(double x, double y, double z)
         {
             CreateScale(x, y, z, out Matrix3d result);
@@ -688,6 +698,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="left">The left operand of the addition.</param>
         /// <param name="right">The right operand of the addition.</param>
         /// <returns>A new instance that is the result of the addition.</returns>
+        [Pure]
         public static Matrix3d Add(Matrix3d left, Matrix3d right)
         {
             Add(ref left, ref right, out Matrix3d result);
@@ -713,6 +724,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="left">The left operand of the multiplication.</param>
         /// <param name="right">The right operand of the multiplication.</param>
         /// <returns>A new instance that is the result of the multiplication.</returns>
+        [Pure]
         public static Matrix3d Mult(Matrix3d left, Matrix3d right)
         {
             Mult(ref left, ref right, out Matrix3d result);
@@ -878,6 +890,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="mat">The matrix to invert.</param>
         /// <returns>The inverse of the given matrix.</returns>
         /// <exception cref="InvalidOperationException">Thrown if the Matrix4 is singular.</exception>
+        [Pure]
         public static Matrix3d Invert(Matrix3d mat)
         {
             Invert(ref mat, out Matrix3d result);
@@ -889,6 +902,7 @@ namespace OpenToolkit.Mathematics
         /// </summary>
         /// <param name="mat">The matrix to transpose.</param>
         /// <returns>The transpose of the given matrix.</returns>
+        [Pure]
         public static Matrix3d Transpose(Matrix3d mat)
         {
             return new Matrix3d(mat.Column0, mat.Column1, mat.Column2);
@@ -912,6 +926,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="left">left-hand operand.</param>
         /// <param name="right">right-hand operand.</param>
         /// <returns>A new Matrix3d which holds the result of the multiplication.</returns>
+        [Pure]
         public static Matrix3d operator *(Matrix3d left, Matrix3d right)
         {
             return Mult(left, right);
@@ -923,6 +938,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="left">The first instance.</param>
         /// <param name="right">The second instance.</param>
         /// <returns>True, if left equals right; false otherwise.</returns>
+        [Pure]
         public static bool operator ==(Matrix3d left, Matrix3d right)
         {
             return left.Equals(right);
@@ -934,6 +950,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="left">The first instance.</param>
         /// <param name="right">The second instance.</param>
         /// <returns>True, if left does not equal right; false otherwise.</returns>
+        [Pure]
         public static bool operator !=(Matrix3d left, Matrix3d right)
         {
             return !left.Equals(right);
@@ -968,6 +985,7 @@ namespace OpenToolkit.Mathematics
         /// </summary>
         /// <param name="obj">The object to compare to.</param>
         /// <returns>True if the instances are equal; false otherwise.</returns>
+        [Pure]
         public override bool Equals(object obj)
         {
             if (!(obj is Matrix3d))
@@ -983,6 +1001,7 @@ namespace OpenToolkit.Mathematics
         /// </summary>
         /// <param name="other">A matrix to compare with this matrix.</param>
         /// <returns>true if the current matrix is equal to the matrix parameter; otherwise, false.</returns>
+        [Pure]
         public bool Equals(Matrix3d other)
         {
             return

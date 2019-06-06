@@ -21,6 +21,7 @@ SOFTWARE.
 */
 
 using System;
+using System.Diagnostics.Contracts;
 using System.Runtime.InteropServices;
 using System.Xml.Serialization;
 
@@ -243,6 +244,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="left">The first operand.</param>
         /// <param name="right">The second operand.</param>
         /// <returns>The result of the addition.</returns>
+        [Pure]
         public static Quaterniond Add(Quaterniond left, Quaterniond right)
         {
             return new Quaterniond(
@@ -269,6 +271,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="left">The left instance.</param>
         /// <param name="right">The right instance.</param>
         /// <returns>The result of the operation.</returns>
+        [Pure]
         public static Quaterniond Sub(Quaterniond left, Quaterniond right)
         {
             return new Quaterniond(
@@ -295,6 +298,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="left">The first instance.</param>
         /// <param name="right">The second instance.</param>
         /// <returns>A new instance containing the result of the calculation.</returns>
+        [Pure]
         public static Quaterniond Multiply(Quaterniond left, Quaterniond right)
         {
             Multiply(ref left, ref right, out Quaterniond result);
@@ -337,6 +341,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="quaternion">The instance.</param>
         /// <param name="scale">The scalar.</param>
         /// <returns>A new instance containing the result of the calculation.</returns>
+        [Pure]
         public static Quaterniond Multiply(Quaterniond quaternion, double scale)
         {
             return new Quaterniond
@@ -353,6 +358,7 @@ namespace OpenToolkit.Mathematics
         /// </summary>
         /// <param name="q">The Quaterniond.</param>
         /// <returns>The conjugate of the given Quaterniond.</returns>
+        [Pure]
         public static Quaterniond Conjugate(Quaterniond q)
         {
             return new Quaterniond(-q.Xyz, q.W);
@@ -373,6 +379,7 @@ namespace OpenToolkit.Mathematics
         /// </summary>
         /// <param name="q">The Quaterniond to invert.</param>
         /// <returns>The inverse of the given Quaterniond.</returns>
+        [Pure]
         public static Quaterniond Invert(Quaterniond q)
         {
             Invert(ref q, out Quaterniond result);
@@ -403,6 +410,7 @@ namespace OpenToolkit.Mathematics
         /// </summary>
         /// <param name="q">The Quaterniond to normalize.</param>
         /// <returns>The normalized copy.</returns>
+        [Pure]
         public static Quaterniond Normalize(Quaterniond q)
         {
             Normalize(ref q, out Quaterniond result);
@@ -426,6 +434,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="axis">The axis to rotate about.</param>
         /// <param name="angle">The rotation angle in radians.</param>
         /// <returns>The quaternion.</returns>
+        [Pure]
         public static Quaterniond FromAxisAngle(Vector3d axis, double angle)
         {
             if (axis.LengthSquared == 0.0f)
@@ -450,6 +459,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="yaw">The yaw (heading), rotation around Y axis.</param>
         /// <param name="roll">The roll (bank), rotation around Z axis.</param>
         /// <returns>The quaternion.</returns>
+        [Pure]
         public static Quaterniond FromEulerAngles(double pitch, double yaw, double roll)
         {
             return new Quaterniond(pitch, yaw, roll);
@@ -460,6 +470,7 @@ namespace OpenToolkit.Mathematics
         /// </summary>
         /// <param name="eulerAngles">The euler angles as a vector.</param>
         /// <returns>The equivalent Quaterniond.</returns>
+        [Pure]
         public static Quaterniond FromEulerAngles(Vector3d eulerAngles)
         {
             return new Quaterniond(eulerAngles);
@@ -490,6 +501,7 @@ namespace OpenToolkit.Mathematics
         /// </summary>
         /// <param name="matrix">A rotation matrix.</param>
         /// <returns>The equivalent quaternion.</returns>
+        [Pure]
         public static Quaterniond FromMatrix(Matrix3d matrix)
         {
             FromMatrix(ref matrix, out Quaterniond result);
@@ -559,6 +571,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="q2">The second Quaterniond.</param>
         /// <param name="blend">The blend factor.</param>
         /// <returns>A smooth blend between the given quaternions.</returns>
+        [Pure]
         public static Quaterniond Slerp(Quaterniond q1, Quaterniond q2, double blend)
         {
             // if either input is zero, return the other.
@@ -625,6 +638,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="left">The first instance.</param>
         /// <param name="right">The second instance.</param>
         /// <returns>The result of the calculation.</returns>
+        [Pure]
         public static Quaterniond operator +(Quaterniond left, Quaterniond right)
         {
             left.Xyz += right.Xyz;
@@ -638,6 +652,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="left">The first instance.</param>
         /// <param name="right">The second instance.</param>
         /// <returns>The result of the calculation.</returns>
+        [Pure]
         public static Quaterniond operator -(Quaterniond left, Quaterniond right)
         {
             left.Xyz -= right.Xyz;
@@ -651,6 +666,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="left">The first instance.</param>
         /// <param name="right">The second instance.</param>
         /// <returns>The result of the calculation.</returns>
+        [Pure]
         public static Quaterniond operator *(Quaterniond left, Quaterniond right)
         {
             Multiply(ref left, ref right, out left);
@@ -663,6 +679,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="quaternion">The instance.</param>
         /// <param name="scale">The scalar.</param>
         /// <returns>A new instance containing the result of the calculation.</returns>
+        [Pure]
         public static Quaterniond operator *(Quaterniond quaternion, double scale)
         {
             Multiply(ref quaternion, scale, out quaternion);
@@ -675,6 +692,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="quaternion">The instance.</param>
         /// <param name="scale">The scalar.</param>
         /// <returns>A new instance containing the result of the calculation.</returns>
+        [Pure]
         public static Quaterniond operator *(double scale, Quaterniond quaternion)
         {
             return new Quaterniond
@@ -692,6 +710,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="left">The first instance.</param>
         /// <param name="right">The second instance.</param>
         /// <returns>True, if left equals right; false otherwise.</returns>
+        [Pure]
         public static bool operator ==(Quaterniond left, Quaterniond right)
         {
             return left.Equals(right);
@@ -703,6 +722,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="left">The first instance.</param>
         /// <param name="right">The second instance.</param>
         /// <returns>True, if left does not equal right; false otherwise.</returns>
+        [Pure]
         public static bool operator !=(Quaterniond left, Quaterniond right)
         {
             return !left.Equals(right);
@@ -722,6 +742,7 @@ namespace OpenToolkit.Mathematics
         /// </summary>
         /// <param name="other">The other object to be used in the comparison.</param>
         /// <returns>True if both objects are Quaternions of equal value. Otherwise it returns false.</returns>
+        [Pure]
         public override bool Equals(object other)
         {
             if (other is Quaterniond == false)
@@ -749,6 +770,7 @@ namespace OpenToolkit.Mathematics
         /// </summary>
         /// <param name="other">The other Quaterniond to be used in the comparison.</param>
         /// <returns>True if both instances are equal; false otherwise.</returns>
+        [Pure]
         public bool Equals(Quaterniond other)
         {
             return Xyz == other.Xyz && W == other.W;
