@@ -1,11 +1,12 @@
-﻿namespace OpenTK.Tests
+﻿namespace OpenToolkit.Tests
 
 open Xunit
 open FsCheck
 open FsCheck.Xunit
 open System
-open OpenTK
-open OpenTK.Mathematics
+open OpenToolkit
+open OpenToolkit.Mathematics
+open OpenToolkit.Tests
 
 module MathHelper =
     [<Properties(Arbitrary = [| typeof<OpenTKGen> |])>]

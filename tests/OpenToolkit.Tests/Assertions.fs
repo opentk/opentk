@@ -1,11 +1,11 @@
-﻿namespace OpenTK.Tests
+﻿namespace OpenToolkit.Tests
 
 open Xunit
 open FsCheck
 open FsCheck.Xunit
 open System
-open OpenTK
-open OpenTK.Mathematics
+open OpenToolkit
+open OpenToolkit.Mathematics
 
 [<AutoOpen>]
 module private AssertHelpers =
