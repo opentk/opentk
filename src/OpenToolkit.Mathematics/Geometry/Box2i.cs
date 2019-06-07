@@ -31,23 +31,14 @@ namespace OpenToolkit.Mathematics
             {
                 if (value.X > _max.X)
                 {
-                    _min.X = _max.X;
                     _max.X = value.X;
                 }
-                else
-                {
-                    _min.X = value.X;
-                }
-
                 if (value.Y > _max.Y)
                 {
-                    _min.Y = _max.Y;
                     _max.Y = value.Y;
                 }
-                else
-                {
-                    _min.Y = value.Y;
-                }
+
+                _min = value;
             }
         }
 
@@ -58,28 +49,19 @@ namespace OpenToolkit.Mathematics
         /// </summary>
         public Vector2i Max
         {
-            get => _min;
+            get => _max;
             set
             {
                 if (value.X < _min.X)
                 {
-                    _max.X = _min.X;
                     _min.X = value.X;
                 }
-                else
-                {
-                    _max.X = value.X;
-                }
-
                 if (value.Y < _min.Y)
                 {
-                    _max.Y = _min.Y;
                     _min.Y = value.Y;
                 }
-                else
-                {
-                    _max.Y = value.Y;
-                }
+
+                _max = value;
             }
         }
 
@@ -90,27 +72,8 @@ namespace OpenToolkit.Mathematics
         /// <param name="max">The maximum point on the XY plane this box encloses.</param>
         public Box2i(Vector2i min, Vector2i max)
         {
-            if (min.X < max.X)
-            {
-                _min.X = min.X;
-                _max.X = max.X;
-            }
-            else
-            {
-                _min.X = max.X;
-                _max.X = min.X;
-            }
-
-            if (min.Y < max.Y)
-            {
-                _min.Y = min.Y;
-                _max.Y = max.Y;
-            }
-            else
-            {
-                _min.Y = max.Y;
-                _max.Y = min.Y;
-            }
+            _min = Vector2i.ComponentMin(min, max);
+            _max = Vector2i.ComponentMax(min, max);
         }
 
         /// <summary>

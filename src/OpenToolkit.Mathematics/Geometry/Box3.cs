@@ -31,33 +31,18 @@ namespace OpenToolkit.Mathematics
             {
                 if (value.X > _max.X)
                 {
-                    _min.X = _max.X;
                     _max.X = value.X;
                 }
-                else
-                {
-                    _min.X = value.X;
-                }
-
                 if (value.Y > _max.Y)
                 {
-                    _min.Y = _max.Y;
                     _max.Y = value.Y;
                 }
-                else
-                {
-                    _min.Y = value.Y;
-                }
-
                 if (value.Z > _max.Z)
                 {
-                    _min.Z = _max.Z;
                     _max.Z = value.Z;
                 }
-                else
-                {
-                    _min.Z = value.Z;
-                }
+
+                _min = value;
             }
         }
 
@@ -68,38 +53,23 @@ namespace OpenToolkit.Mathematics
         /// </summary>
         public Vector3 Max
         {
-            get => _min;
+            get => _max;
             set
             {
                 if (value.X < _min.X)
                 {
-                    _max.X = _min.X;
                     _min.X = value.X;
                 }
-                else
-                {
-                    _max.X = value.X;
-                }
-
                 if (value.Y < _min.Y)
                 {
-                    _max.Y = _min.Y;
                     _min.Y = value.Y;
                 }
-                else
-                {
-                    _max.Y = value.Y;
-                }
-
                 if (value.Z < _min.Z)
                 {
-                    _max.Z = _min.Z;
                     _min.Z = value.Z;
                 }
-                else
-                {
-                    _max.Z = value.Z;
-                }
+
+                _max = value;
             }
         }
 
@@ -110,38 +80,8 @@ namespace OpenToolkit.Mathematics
         /// <param name="max">The maximum point on the XY plane this box encloses.</param>
         public Box3(Vector3 min, Vector3 max)
         {
-            if (min.X < max.X)
-            {
-                _min.X = min.X;
-                _max.X = max.X;
-            }
-            else
-            {
-                _min.X = max.X;
-                _max.X = min.X;
-            }
-
-            if (min.Y < max.Y)
-            {
-                _min.Y = min.Y;
-                _max.Y = max.Y;
-            }
-            else
-            {
-                _min.Y = max.Y;
-                _max.Y = min.Y;
-            }
-
-            if (min.Z < max.Z)
-            {
-                _min.Z = min.Z;
-                _max.Z = max.Z;
-            }
-            else
-            {
-                _min.Z = max.Z;
-                _max.Z = min.Z;
-            }
+            _min = Vector3.ComponentMin(min, max);
+            _max = Vector3.ComponentMax(min, max);
         }
 
         /// <summary>
