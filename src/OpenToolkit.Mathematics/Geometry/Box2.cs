@@ -31,23 +31,14 @@ namespace OpenToolkit.Mathematics
             {
                 if (value.X > _max.X)
                 {
-                    _min.X = _max.X;
                     _max.X = value.X;
                 }
-                else
-                {
-                    _min.X = value.X;
-                }
-
                 if (value.Y > _max.Y)
                 {
-                    _min.Y = _max.Y;
                     _max.Y = value.Y;
                 }
-                else
-                {
-                    _min.Y = value.Y;
-                }
+
+                _min = value;
             }
         }
 
@@ -63,23 +54,14 @@ namespace OpenToolkit.Mathematics
             {
                 if (value.X < _min.X)
                 {
-                    _max.X = _min.X;
                     _min.X = value.X;
                 }
-                else
-                {
-                    _max.X = value.X;
-                }
-
                 if (value.Y < _min.Y)
                 {
-                    _max.Y = _min.Y;
                     _min.Y = value.Y;
                 }
-                else
-                {
-                    _max.Y = value.Y;
-                }
+
+                _max = value;
             }
         }
 

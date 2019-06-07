@@ -26,8 +26,36 @@ module Box2 =
             let b2 = Box2(Vector2(f1, f2), Vector2(f3, f4))
 
             Assert.Equal(b1, b2)
+
     [<Properties(Arbitrary = [| typeof<OpenTKGen> |])>]
     module Size =
         [<Property>]
         let ``The size of a given box must be greater than or equal to 0`` (b : Box2) =
             Assert.True(b.Size.X * b.Size.Y >= (float32)0)
+
+    [<Properties(Arbitrary = [| typeof<OpenTKGen> |])>]
+    module Properties =
+        [<Property>]
+        let ``Using the properties should always result in a valid box (size >= 0)`` (v1 : Vector2, v2 : Vector2, v3 : Vector2, v4 : Vector2) =
+            let mutable b = Box2(v1, v2)
+
+            b.Min <- v3
+            b.Max <- v4
+
+            Assert.True(b.Size.X * b.Size.Y >= (float32)0)
+
+        [<Property>]
+        let ``Setting a min value higher than max moves the max`` (b1 : Box2, v1 : Vector2) =
+            let mutable b = b1
+
+            b.Min <- v1
+
+            Assert.Equal(b.Max, Vector2.ComponentMax(v1, b1.Max))
+
+        [<Property>]
+        let ``Setting a max value lower than min moves the min`` (b1 : Box2, v1 : Vector2) =
+            let mutable b = b1
+
+            b.Max <- v1
+
+            Assert.Equal(b.Min, Vector2.ComponentMin(v1, b1.Min))
