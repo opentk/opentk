@@ -108,6 +108,18 @@ namespace OpenToolkit.Windowing.Desktop
             }
         }
 
+        /// <inheritdoc />
+        public ContextAPI API { get; }
+
+        /// <inheritdoc />
+        public ContextProfile Profile { get; }
+
+        /// <inheritdoc />
+        public ContextFlags Flags { get; }
+
+        /// <inheritdoc />
+        public Version APIVersion { get; }
+
         private Monitor _currentMonitor;
 
         /// <summary>
@@ -465,6 +477,42 @@ namespace OpenToolkit.Windowing.Desktop
                         Glfw.WindowHint(WindowHintBool.Resizable, false);
                         break;
                 }
+
+                switch (API)
+                {
+                    case ContextAPI.NoAPI:
+                        Glfw.WindowHint(WindowHintClientApi.ClientApi, ClientApi.NoApi);
+                        break;
+
+                    case ContextAPI.OpenGLES:
+                        Glfw.WindowHint(WindowHintClientApi.ClientApi, ClientApi.OpenGlEsApi);
+                        break;
+
+                    case ContextAPI.OpenGL:
+                        Glfw.WindowHint(WindowHintClientApi.ClientApi, ClientApi.OpenGlApi);
+                        break;
+
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
+
+                Glfw.WindowHint(WindowHintInt.ContextVersionMajor, APIVersion.Major);
+                Glfw.WindowHint(WindowHintInt.ContextVersionMinor, APIVersion.Minor);
+
+                if (Flags.HasFlag(ContextFlags.ForwardCompatible))
+                {
+                    Glfw.WindowHint(WindowHintBool.OpenGLForwardCompat, true);
+                }
+
+                if (Flags.HasFlag(ContextFlags.Debug))
+                {
+                    Glfw.WindowHint(WindowHintBool.OpenGLDebugContext, true);
+                }
+
+                Glfw.WindowHint
+                (
+                    WindowHintOpenGlProfile.OpenGlProfile, (OpenGlProfile)Profile
+                );
 
                 Glfw.WindowHint(WindowHintBool.Focused, settings.IsFocused);
                 _windowBorder = settings.WindowBorder;
