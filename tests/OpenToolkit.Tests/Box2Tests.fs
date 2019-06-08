@@ -33,6 +33,19 @@ module Box2 =
         let ``The size of a given box must be greater than or equal to 0`` (b : Box2) =
             Assert.True(b.Size.X * b.Size.Y >= (float32)0)
 
+        [<Property>]
+        let ``The size should follow max-min`` (b : Box2) =
+           Assert.Equal(b.Size, b.Max - b.Min)
+
+        [<Property>]
+        let ``The size should be equal to the set size`` (b1 : Box2, v1 : Vector2) =
+           let mutable b = b1
+           let v = new Vector2(Math.Abs(v1.X), Math.Abs(v1.Y))
+
+           b.Size <- v
+           
+           Assert.ApproximatelyEquivalent(v, b.Size)
+
     [<Properties(Arbitrary = [| typeof<OpenTKGen> |])>]
     module Properties =
         [<Property>]

@@ -94,7 +94,12 @@ namespace OpenToolkit.Mathematics
         public Vector2 Size
         {
             get => Max - Min;
-            set => Scale(Size - value, Center);
+            set
+            {
+                Vector2 center = Center;
+                _min = center - (value * 0.5f);
+                _max = center + (value * 0.5f);
+            }
         }
 
         /// <summary>
@@ -188,7 +193,7 @@ namespace OpenToolkit.Mathematics
             var newDistMax = (anchor - _max) * scale;
             _max = new Vector2(
                 anchor.X + _max.X > anchor.X ? newDistMax.X : -newDistMax.X,
-                anchor.Y + _min.Y > anchor.Y ? newDistMax.Y : -newDistMax.Y);
+                anchor.Y + _max.Y > anchor.Y ? newDistMax.Y : -newDistMax.Y);
         }
 
         /// <summary>
