@@ -89,7 +89,7 @@ namespace OpenToolkit.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets a vector describing the size of the Box2 structure.
+        /// Gets a vector describing the size of the Box2 structure.
         /// </summary>
         public Vector2i Size
         {
