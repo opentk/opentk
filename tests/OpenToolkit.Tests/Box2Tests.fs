@@ -142,3 +142,9 @@ module Box2 =
             let c = b1.Min.X < v1.X && v1.X < b1.Max.X && b1.Min.Y < v1.Y && v1.Y < b1.Max.Y
             
             Assert.Equal(c, b1.Contains(v1))
+
+        [<Property>]
+        let ``Box2.Contains should only return true if the other box is partly within in the box`` (b1 : Box2, b2 : Box2) =
+            let c = b1.Min.X <= b2.Max.X && b1.Max.X >= b2.Min.X && b1.Min.Y <= b2.Max.Y && b1.Max.Y >= b2.Min.Y
+            
+            Assert.Equal(c, b1.Contains(b2))
