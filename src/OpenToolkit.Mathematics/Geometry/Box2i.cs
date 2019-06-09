@@ -94,7 +94,13 @@ namespace OpenToolkit.Mathematics
         public Vector2i Size
         {
             get => Max - Min;
-            set => Scale(Size - value, new Vector2i((int)Center.X, (int)Center.Y));
+            set
+            {
+                Vector2i center = new Vector2i((int)Center.X, (int)Center.Y);
+                Vector2 halfSize = new Vector2(value.X, value.Y) * 0.5f;
+                _min = center - new Vector2i((int)halfSize.X, (int)halfSize.Y);
+                _max = center + new Vector2i((int)halfSize.X, (int)halfSize.Y);
+            }
         }
 
         /// <summary>
@@ -180,15 +186,8 @@ namespace OpenToolkit.Mathematics
         /// <param name="anchor">The anchor to scale the box from.</param>
         public void Scale(Vector2i scale, Vector2i anchor)
         {
-            var newDistMin = (anchor - _min) * scale;
-            _min = new Vector2i(
-                anchor.X + _min.X > anchor.X ? newDistMin.X : -newDistMin.X,
-                anchor.Y + _min.Y > anchor.Y ? newDistMin.Y : -newDistMin.Y);
-
-            var newDistMax = (anchor - _max) * scale;
-            _max = new Vector2i(
-                anchor.X + _max.X > anchor.X ? newDistMax.X : -newDistMax.X,
-                anchor.Y + _min.Y > anchor.Y ? newDistMax.Y : -newDistMax.Y);
+            _min = anchor + ((_min - anchor) * scale);
+            _max = anchor + ((_max - anchor) * scale);
         }
 
         /// <summary>

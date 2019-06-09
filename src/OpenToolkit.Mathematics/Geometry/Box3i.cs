@@ -104,7 +104,13 @@ namespace OpenToolkit.Mathematics
         public Vector3i Size
         {
             get => Max - Min;
-            set => Scale(Size - value, new Vector3i((int)Center.X, (int)Center.Y, (int)Center.Z));
+            set
+            {
+                Vector3i center = new Vector3i((int)Center.X, (int)Center.Y, (int)Center.Z);
+                Vector3 halfSize = new Vector3(value.X, value.Y, value.Z) * 0.5f;
+                _min = center - new Vector3i((int)halfSize.X, (int)halfSize.Y, (int)halfSize.Z);
+                _max = center + new Vector3i((int)halfSize.X, (int)halfSize.Y, (int)halfSize.Z);
+            }
         }
 
         /// <summary>
@@ -192,17 +198,8 @@ namespace OpenToolkit.Mathematics
         /// <param name="anchor">The anchor to scale the box from.</param>
         public void Scale(Vector3i scale, Vector3i anchor)
         {
-            var newDistMin = (anchor - _min) * scale;
-            _min = new Vector3i(
-                anchor.X + _min.X > anchor.X ? newDistMin.X : -newDistMin.X,
-                anchor.Y + _min.Y > anchor.Y ? newDistMin.Y : -newDistMin.Y,
-                anchor.Z + _min.Z > anchor.Z ? newDistMin.Z : -newDistMin.Z);
-
-            var newDistMax = (anchor - _max) * scale;
-            _max = new Vector3i(
-                anchor.X + _max.X > anchor.X ? newDistMax.X : -newDistMax.X,
-                anchor.Y + _min.Y > anchor.Y ? newDistMax.Y : -newDistMax.Y,
-                anchor.Z + _min.Z > anchor.Z ? newDistMax.Z : -newDistMax.Z);
+            _min = anchor + ((_min - anchor) * scale);
+            _max = anchor + ((_max - anchor) * scale);
         }
 
         /// <summary>

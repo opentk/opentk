@@ -185,15 +185,8 @@ namespace OpenToolkit.Mathematics
         /// <param name="anchor">The anchor to scale the box from.</param>
         public void Scale(Vector2 scale, Vector2 anchor)
         {
-            var newDistMin = (anchor - _min) * scale;
-            _min = new Vector2(
-                anchor.X + _min.X > anchor.X ? newDistMin.X : -newDistMin.X,
-                anchor.Y + _min.Y > anchor.Y ? newDistMin.Y : -newDistMin.Y);
-
-            var newDistMax = (anchor - _max) * scale;
-            _max = new Vector2(
-                anchor.X + _max.X > anchor.X ? newDistMax.X : -newDistMax.X,
-                anchor.Y + _max.Y > anchor.Y ? newDistMax.Y : -newDistMax.Y);
+            _min = anchor + ((_min - anchor) * scale);
+            _max = anchor + ((_max - anchor) * scale);
         }
 
         /// <summary>

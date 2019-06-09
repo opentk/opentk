@@ -104,7 +104,12 @@ namespace OpenToolkit.Mathematics
         public Vector3d Size
         {
             get => Max - Min;
-            set => Scale(Size - value, Center);
+            set
+            {
+                Vector3d center = Center;
+                _min = center - (value * 0.5f);
+                _max = center + (value * 0.5f);
+            }
         }
 
         /// <summary>
@@ -192,17 +197,8 @@ namespace OpenToolkit.Mathematics
         /// <param name="anchor">The anchor to scale the box from.</param>
         public void Scale(Vector3d scale, Vector3d anchor)
         {
-            var newDistMin = (anchor - _min) * scale;
-            _min = new Vector3d(
-                anchor.X + _min.X > anchor.X ? newDistMin.X : -newDistMin.X,
-                anchor.Y + _min.Y > anchor.Y ? newDistMin.Y : -newDistMin.Y,
-                anchor.Z + _min.Z > anchor.Z ? newDistMin.Z : -newDistMin.Z);
-
-            var newDistMax = (anchor - _max) * scale;
-            _max = new Vector3d(
-                anchor.X + _max.X > anchor.X ? newDistMax.X : -newDistMax.X,
-                anchor.Y + _min.Y > anchor.Y ? newDistMax.Y : -newDistMax.Y,
-                anchor.Z + _min.Z > anchor.Z ? newDistMax.Z : -newDistMax.Z);
+            _min = anchor + ((_min - anchor) * scale);
+            _max = anchor + ((_max - anchor) * scale);
         }
 
         /// <summary>
