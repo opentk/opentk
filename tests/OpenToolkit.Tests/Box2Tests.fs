@@ -134,3 +134,11 @@ module Box2 =
             let v1 = (b1.Max - b1.Min) * 0.5f + b1.Min
             
             Assert.Equal(v1, b1.Center)
+    
+    [<Properties(Arbitrary = [|typeof<OpenTKGen>|])>]
+    module Contains =
+        [<Property>]
+        let ``Box2.Contains should only return true if the point is enclosed in the box`` (b1 : Box2, v1 : Vector2) =
+            let c = b1.Min.X < v1.X && v1.X < b1.Max.X && b1.Min.Y < v1.Y && v1.Y < b1.Max.Y
+            
+            Assert.Equal(c, b1.Contains(v1))
