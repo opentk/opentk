@@ -128,7 +128,7 @@ namespace OpenToolkit.Mathematics
         /// to avoid annoying off-by-one errors in box placement, no setter is provided for this property
         public Vector3 Center
         {
-            get => (_min + _max).ToVector3() * 0.5f + _min.ToVector3();
+            get => ((_min + _max).ToVector3() * 0.5f) + _min.ToVector3();
         }
 
         /// <summary>
