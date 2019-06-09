@@ -104,13 +104,6 @@ namespace OpenToolkit.Mathematics
         public Vector3i Size
         {
             get => Max - Min;
-            set
-            {
-                Vector3i center = new Vector3i((int)Center.X, (int)Center.Y, (int)Center.Z);
-                Vector3 halfSize = new Vector3(value.X, value.Y, value.Z) * 0.5f;
-                _min = center - new Vector3i((int)halfSize.X, (int)halfSize.Y, (int)halfSize.Z);
-                _max = center + new Vector3i((int)halfSize.X, (int)halfSize.Y, (int)halfSize.Z);
-            }
         }
 
         /// <summary>
@@ -119,7 +112,12 @@ namespace OpenToolkit.Mathematics
         public Vector3i HalfSize
         {
             get => Size / 2;
-            set => Size = value * 2;
+            set
+            {
+                Vector3i center = new Vector3i((int)Center.X, (int)Center.Y, (int)Center.Z);
+                _min = center - value;
+                _max = center + value;
+            }
         }
 
         /// <summary>
