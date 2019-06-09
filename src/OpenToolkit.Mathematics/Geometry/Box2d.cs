@@ -108,12 +108,7 @@ namespace OpenToolkit.Mathematics
         public Vector2d HalfSize
         {
             get => Size / 2;
-            set
-            {
-                Vector2d center = Center;
-                _min = center - (value * 0.5f);
-                _max = center + (value * 0.5f);
-            }
+            set => Size = value / 2f;
         }
 
         /// <summary>
