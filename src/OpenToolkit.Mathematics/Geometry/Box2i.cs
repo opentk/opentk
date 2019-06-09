@@ -109,7 +109,7 @@ namespace OpenToolkit.Mathematics
         public Vector2i HalfSize
         {
             get => Size / 2;
-            set => Size = value / 2;
+            set => Size = value * 2;
         }
 
         /// <summary>

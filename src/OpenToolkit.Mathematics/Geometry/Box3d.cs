@@ -118,7 +118,7 @@ namespace OpenToolkit.Mathematics
         public Vector3d HalfSize
         {
             get => Size / 2;
-            set => Size = value / 2;
+            set => Size = value * 2;
         }
 
         /// <summary>
