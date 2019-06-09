@@ -203,9 +203,9 @@ namespace OpenToolkit.Mathematics
 
             q.Normalize();
 
-            float singularityTest = (q.Z * q.X) - (q.W * q.Y);
-            float yawY = 2f * ((q.W * q.Z) + (q.X * q.Y));
-            float yawX = 1f - (2f * ((q.Y * q.Y) + (q.Z * q.Z)));
+            float singularityTest = (q.X * q.Y) - (q.W * q.Z);
+            float yawY = 2f * ((q.W * q.X) + (q.Y * q.Z));
+            float yawX = 1f - (2f * ((q.Z * q.Z) + (q.X * q.X)));
 
             // Threshold for the singularities found at the north/south poles.
             const float SINGULARITY_THRESHOLD = 0.4999995f;
@@ -214,21 +214,21 @@ namespace OpenToolkit.Mathematics
 
             if (singularityTest < -SINGULARITY_THRESHOLD)
             {
-                eulerAngles.X = -MathHelper.PiOver2; // -90 degrees
+                eulerAngles.Z = -MathHelper.PiOver2; // -90 degrees
                 eulerAngles.Y = (float)Math.Atan2(yawY, yawX);
-                eulerAngles.Z = MathHelper.NormalizeRadians(-eulerAngles.Y - (2f * (float)Math.Atan2(q.X, q.W)));
+                eulerAngles.X = MathHelper.NormalizeRadians(-eulerAngles.Y - (2f * (float)Math.Atan2(q.Y, q.W)));
             }
             else if (singularityTest > SINGULARITY_THRESHOLD)
             {
-                eulerAngles.X = MathHelper.PiOver2; // 90 degrees
+                eulerAngles.Z = MathHelper.PiOver2; // 90 degrees
                 eulerAngles.Y = (float)Math.Atan2(yawY, yawX);
-                eulerAngles.Z = MathHelper.NormalizeRadians(eulerAngles.Y - (2f * (float)Math.Atan2(q.X, q.W)));
+                eulerAngles.X = MathHelper.NormalizeRadians(eulerAngles.Y - (2f * (float)Math.Atan2(q.Y, q.W)));
             }
             else
             {
-                eulerAngles.X = (float)Math.Asin(2f * singularityTest);
-                eulerAngles.Y = (float)Math.Atan2(yawY, yawX);
-                eulerAngles.Z = (float)Math.Atan2(-2f * ((q.W * q.X) + (q.Y * q.Z)), 1f - (2f * ((q.X * q.X) + (q.Y * q.Y))));
+                eulerAngles.Z = (float)Math.Asin(2f * singularityTest);
+                eulerAngles.X = (float)Math.Atan2(yawY, yawX);
+                eulerAngles.Y = (float)Math.Atan2(-2f * ((q.W * q.Y) + (q.Z * q.X)), 1f - (2f * ((q.Y * q.Y) + (q.Z * q.Z))));
             }
 
             return eulerAngles;
