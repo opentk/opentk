@@ -29,6 +29,8 @@ module Box2 =
 
     [<Properties(Arbitrary = [| typeof<OpenTKGen> |])>]
     module Size =
+        open OpenToolkit.Mathematics
+
         [<Property>]
         let ``The size of a given box must be greater than or equal to 0`` (b : Box2) =
             Assert.True(b.Size.X * b.Size.Y >= (float32)0)
@@ -54,6 +56,15 @@ module Box2 =
            b.Size <- v1
            
            Assert.ApproximatelyEquivalent(v, b.Center)
+        
+        [<Property>]
+        let ``The halfsize should always be equal to half the size`` (b1 : Box2, v1 : Vector2) =
+            let mutable b = b1
+            
+            b.Size <- v1
+            
+            Assert.Equal(b1.Size/(float32)2, b1.HalfSize)
+            Assert.Equal(b.Size/(float32)2, b.HalfSize)
 
     [<Properties(Arbitrary = [| typeof<OpenTKGen> |])>]
     module Properties =
