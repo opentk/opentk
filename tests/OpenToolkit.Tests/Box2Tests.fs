@@ -118,3 +118,19 @@ module Box2 =
             b1.Scale(v1, b1.Center)
             
             Assert.ApproximatelyEqualEpsilon(b1.Size, v2, (float32)0.0001)
+            
+    [<Properties(Arbitrary = [|typeof<OpenTKGen>|])>]
+    module Center =
+        [<Property>]
+        let ``When setting the center property the center should change to the new value`` (b1 : Box2, v1 : Vector2) =
+            let mutable b = b1
+            
+            b.Center <- v1
+            
+            Assert.ApproximatelyEquivalent(v1, b.Center)
+        
+        [<Property>]
+        let ``The center should be half the distance between min and max points`` (b1 : Box2) =
+            let v1 = (b1.Max - b1.Min) * 0.5f + b1.Min
+            
+            Assert.Equal(v1, b1.Center)

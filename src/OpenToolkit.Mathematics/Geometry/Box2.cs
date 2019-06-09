@@ -116,8 +116,8 @@ namespace OpenToolkit.Mathematics
         /// </summary>
         public Vector2 Center
         {
-            get => (_min + _max) * 0.5f;
-            set => Translate(Center - value);
+            get => HalfSize + _min;
+            set => Translate(value - Center);
         }
 
         /// <summary>
@@ -151,7 +151,7 @@ namespace OpenToolkit.Mathematics
         {
             var distMin = _min - point;
             var distMax = point - _max;
-            var dist = new Vector2(MathHelper.Min(distMin.X, distMax.X), MathHelper.Min(distMin.Y, distMax.Y));
+            var dist = Vector2.ComponentMin(distMin, distMax);
             return dist.Length;
         }
 
@@ -161,8 +161,8 @@ namespace OpenToolkit.Mathematics
         /// <param name="distance">The distance to translate the box.</param>
         public void Translate(Vector2 distance)
         {
-            Min += distance;
-            Max += distance;
+            _min += distance;
+            _max += distance;
         }
 
         /// <summary>

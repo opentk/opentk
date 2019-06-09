@@ -116,8 +116,8 @@ namespace OpenToolkit.Mathematics
         /// </summary>
         public Vector2d Center
         {
-            get => (_min + _max) * 0.5f;
-            set => Translate(Center - value);
+            get => HalfSize + _min;
+            set => Translate(value - Center);
         }
 
         /// <summary>
