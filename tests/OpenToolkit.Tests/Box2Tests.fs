@@ -45,6 +45,15 @@ module Box2 =
            b.Size <- v
            
            Assert.ApproximatelyEquivalent(v, b.Size)
+        
+        [<Property>]
+        let ``Changing the size should not change the center`` (b1 : Box2, v1 : Vector2) =
+           let mutable b = b1
+           let v = b.Center
+           
+           b.Size <- v1
+           
+           Assert.ApproximatelyEquivalent(v, b.Center)
 
     [<Properties(Arbitrary = [| typeof<OpenTKGen> |])>]
     module Properties =
@@ -72,3 +81,22 @@ module Box2 =
             b.Max <- v1
 
             Assert.Equal(b.Min, Vector2.ComponentMin(v1, b1.Min))
+    
+    [<Properties(Arbitrary = [|typeof<OpenTKGen>|])>]
+    module Scale =
+        [<Property>]
+        let ``When scaling the size should change accordingly`` (b1 : Box2, v1 : Vector2, v2 : Vector2) =
+            let mutable b = b1
+            let f = b.Size
+            let v = new Vector2(Math.Abs(v1.X), Math.Abs(v1.Y))
+            
+            b.Scale(v, v2)
+            
+            Assert.ApproximatelyEqualEpsilon(v * f, b.Size, (float32)0.0001)
+            
+        [<Property>]
+        let ``Scaling from the center of a box should have the same result as multiplying the size`` (b1 : Box2, v1 : Vector2) =
+            let v2 = b1.Size * v1
+            b1.Scale(v1, b1.Center)
+            
+            Assert.ApproximatelyEqualEpsilon(b1.Size, v2, (float32)0.0001)
