@@ -148,3 +148,17 @@ module Box2 =
             let c = b1.Min.X <= b2.Max.X && b1.Max.X >= b2.Min.X && b1.Min.Y <= b2.Max.Y && b1.Max.Y >= b2.Min.Y
             
             Assert.Equal(c, b1.Contains(b2))
+                
+    [<Properties(Arbitrary = [|typeof<OpenTKGen>|])>]
+    module DistanceToNearestEdge =
+        [<Property>]
+        let ``The distance should always return the smallest possible distance`` (b1 : Box2, v1 : Vector2) =
+            let v2 = b1.Min - v1
+            let v3 = v1 - b1.Max
+            let v4 = Vector2.ComponentMin(v2, v3)
+            
+            Assert.Equal(b1.DistanceToNearestEdge(v1), v4.Length)
+            
+        [<Property>]
+        let ``The distance should never be negative`` (b1 : Box2, v1 : Vector2) =            
+            Assert.True(b1.DistanceToNearestEdge(v1) >= (float32)0)
