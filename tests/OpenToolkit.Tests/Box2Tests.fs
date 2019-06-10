@@ -119,6 +119,30 @@ module Box2 =
             
             Assert.ApproximatelyEqualEpsilon(b1.Size, v2, (float32)0.0001)
             
+        [<Property>]
+        let ``Box2.Scale is equivelant to Box2.Scaled`` (b1 : Box2, v1 : Vector2, v2 : Vector2) =
+            let mutable b = b1
+            
+            b.Scale(v1, v2)
+            
+            Assert.Equal(b, b1.Scaled(v1, v2))
+
+    [<Properties(Arbitrary = [|typeof<OpenTKGen>|])>]
+    module Translate =
+        [<Property>]
+        let ``Translating is the same as adding to the min and max value`` (b1 : Box2, v1 : Vector2) =
+            let b = Box2(b1.Min + v1, b1.Max + v1)
+            
+            Assert.Equal(b, b1.Translated(v1))
+        
+        [<Property>]
+        let ``Box2.Translate is equivelant to Box2.Translated`` (b1 : Box2, v1 : Vector2) =
+            let mutable b = b1
+            
+            b.Translate(v1)
+            
+            Assert.Equal(b, b1.Translated(v1))
+            
     [<Properties(Arbitrary = [|typeof<OpenTKGen>|])>]
     module Center =
         [<Property>]
