@@ -37,14 +37,6 @@ namespace OpenToolkit.Windowing.Common.Input
         }
 
         /// <summary>
-        /// Gets a <see cref="bool" /> indicating whether the specified
-        ///  <see cref="OpenToolkit.Windowing.Common.Input.Key" /> is pressed.
-        /// </summary>
-        /// <param name="code">The scancode to check.</param>
-        /// <returns><c>true</c> if code is pressed; <c>false</c> otherwise.</returns>
-        public bool this[short code] => IsKeyDown((Key)code);
-
-        /// <summary>
         /// Gets a <see cref="bool" /> indicating whether this key is down.
         /// </summary>
         /// <param name="key">The <see cref="Key" /> to check.</param>
