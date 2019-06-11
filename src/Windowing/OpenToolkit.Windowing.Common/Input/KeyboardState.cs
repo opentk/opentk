@@ -1,4 +1,4 @@
-//
+﻿//
 // KeyboardState.cs
 //
 // Copyright (C) 2018 OpenTK
@@ -8,6 +8,7 @@
 //
 
 using System;
+using System.Text;
 
 namespace OpenToolkit.Windowing.Common.Input
 {
@@ -194,6 +195,35 @@ namespace OpenToolkit.Windowing.Common.Input
                     return hashcode;
                 }
             }
+        }
+
+        /// <inheritdoc />
+        public override string ToString()
+        {
+            var builder = new StringBuilder();
+            builder.Append('{');
+            var first = true;
+
+            for (var key = (Key)1; key <= Key.LastKey; ++key)
+            {
+                if (ReadBit((int)key))
+                {
+                    if (!first)
+                    {
+                        builder.Append(',');
+                    }
+                    else
+                    {
+                        first = false;
+                    }
+
+                    builder.Append(key);
+                }
+            }
+
+            builder.Append('}');
+
+            return builder.ToString();
         }
 
         /// <summary>
