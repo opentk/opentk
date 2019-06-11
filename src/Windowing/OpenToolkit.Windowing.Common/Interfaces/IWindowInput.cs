@@ -7,8 +7,8 @@
 // of the MIT license. See the LICENSE file for details.
 //
 
- using OpenToolkit.Mathematics;
- using OpenToolkit.Windowing.Common.Input;
+using OpenToolkit.Mathematics;
+using OpenToolkit.Windowing.Common.Input;
 
 namespace OpenToolkit.Windowing.Common
 {
@@ -74,6 +74,10 @@ namespace OpenToolkit.Windowing.Common
         /// <value><c>true</c> if any key is down; otherwise, <c>false</c>.</value>
         bool IsAnyKeyDown { get; }
 
+        /// <summary>
+        /// Gets a value indicating whether any mouse button is pressed.
+        /// </summary>
+        /// <value><c>true</c> if any button is pressed; otherwise, <c>false</c>.</value>
         bool IsAnyMouseButtonDown { get; }
 
         /// <summary>
@@ -110,12 +114,38 @@ namespace OpenToolkit.Windowing.Common
         /// <returns>True if the key is released in this frame, but pressed the last frame.</returns>
         bool IsKeyJustReleased(Key key);
 
+        /// <summary>
+        /// Gets a <see cref="bool" /> indicating whether this button is down.
+        /// </summary>
+        /// <param name="button">The <see cref="MouseButton" /> to check.</param>
+        /// <returns><c>true</c> if <paramref name="button"/> is in the down state; otherwise, <c>false</c>.</returns>
         bool IsMouseButtonDown(MouseButton button);
 
+        /// <summary>
+        /// Gets a <see cref="bool" /> indicating whether this mouse button is up.
+        /// </summary>
+        /// <param name="button">The <see cref="MouseButton" /> to check.</param>
+        /// <returns><c>true</c> if <paramref name="button"/> is in the up state; otherwise, <c>false</c>.</returns>
         bool IsMouseButtonUp(MouseButton button);
 
+        /// <summary>
+        ///     Gets whether the specified mouse button is pressed in the current frame but released in the previous frame.
+        /// </summary>
+        /// <remarks>
+        ///     "Frame" refers to invocations of <see cref="INativeWindow.ProcessEvents"/> here.
+        /// </remarks>
+        /// <param name="button">The button to check.</param>
+        /// <returns>True if the button is pressed in this frame, but not the last frame.</returns>
         bool IsMouseButtonJustPressed(MouseButton button);
 
+        /// <summary>
+        ///     Gets whether the specified mouse button is released in the current frame but pressed in the previous frame.
+        /// </summary>
+        /// <remarks>
+        ///     "Frame" refers to invocations of <see cref="INativeWindow.ProcessEvents"/> here.
+        /// </remarks>
+        /// <param name="button">The button to check.</param>
+        /// <returns>True if the button is released in this frame, but pressed the last frame.</returns>
         bool IsMouseButtonJustReleased(MouseButton button);
     }
 }
