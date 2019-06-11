@@ -13,6 +13,8 @@ using OpenToolkit.Windowing.Common.Input;
 using InputAction = OpenToolkit.GraphicsLibraryFramework.InputAction;
 using KeyModifiers = OpenToolkit.Windowing.Common.Input.KeyModifiers;
 using Monitor = OpenToolkit.Windowing.Common.Monitor;
+using GlfwKeyModifiers = OpenToolkit.GraphicsLibraryFramework.KeyModifiers;
+using MouseButton = OpenToolkit.Windowing.Common.Input.MouseButton;
 
 namespace OpenToolkit.Windowing.Desktop
 {
@@ -592,12 +594,20 @@ namespace OpenToolkit.Windowing.Desktop
 
                 _keyCallback = (window, key, scancode, action, mods) =>
                 {
+                    var ourKey = _glfwKeyMapping[(int)key];
+
+                    // If GLFW sends us a key we don't have a mapping for, just ignore it.
+                    if (ourKey == Key.Unknown)
+                    {
+                        return;
+                    }
+
                     var args = new KeyboardKeyEventArgs
                     {
-                        Key = (Key)key,
+                        Key = ourKey,
                         ScanCode = scancode,
                         IsRepeat = action == InputAction.Repeat,
-                        Modifiers = (KeyModifiers)mods,
+                        Modifiers = _mapGlfwKeyModifiers(mods),
                     };
 
                     if (action == InputAction.Release)
@@ -630,7 +640,7 @@ namespace OpenToolkit.Windowing.Desktop
                     {
                         Button = (MouseButton)button,
                         Action = (Common.InputAction)action,
-                        Modifiers = (KeyModifiers)mods,
+                        Modifiers = _mapGlfwKeyModifiers(mods),
                     };
 
                     if (action == InputAction.Release)
@@ -680,7 +690,7 @@ namespace OpenToolkit.Windowing.Desktop
 
                 _charModsCallback = (window, codepoint, mods) =>
                 {
-                    OnKeyboardCharMod(this, new KeyboardCharModEventArgs(codepoint, (KeyModifiers)mods));
+                    OnKeyboardCharMod(this, new KeyboardCharModEventArgs(codepoint, _mapGlfwKeyModifiers(mods)));
                 };
                 Glfw.SetCharModsCallback(WindowPtr, _charModsCallback);
 
@@ -1282,6 +1292,33 @@ namespace OpenToolkit.Windowing.Desktop
             map[(int)Keys.RightSuper] = Key.WinRight;
             map[(int)Keys.Menu] = Key.Menu;
             return map;
+        }
+
+        private static KeyModifiers _mapGlfwKeyModifiers(GlfwKeyModifiers modifiers)
+        {
+            KeyModifiers value = default;
+
+            if (modifiers.HasFlag(GlfwKeyModifiers.Alt))
+            {
+                value |= KeyModifiers.Alt;
+            }
+
+            if (modifiers.HasFlag(GlfwKeyModifiers.Shift))
+            {
+                value |= KeyModifiers.Shift;
+            }
+
+            if (modifiers.HasFlag(GlfwKeyModifiers.Control))
+            {
+                value |= KeyModifiers.Control;
+            }
+
+            if (modifiers.HasFlag(GlfwKeyModifiers.Super))
+            {
+                value |= KeyModifiers.Command;
+            }
+
+            return value;
         }
     }
 }
