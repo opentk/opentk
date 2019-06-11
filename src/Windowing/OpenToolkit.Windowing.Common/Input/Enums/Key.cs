@@ -9,8 +9,12 @@
 
 namespace OpenToolkit.Windowing.Common.Input
 {
+    // TODO: This enum is kind of a mess.
+    // Could use a clean up.
+    // Need to fix the exact enum values explicitly for one.
+
     /// <summary>
-    /// The available keyboard keys.
+    ///     The available keyboard keys.
     /// </summary>
     public enum Key
     {
@@ -517,6 +521,11 @@ namespace OpenToolkit.Windowing.Common.Input
         KeypadAdd,
 
         /// <summary>
+        /// The keypad equal key.
+        /// </summary>
+        KeypadEqual,
+
+        /// <summary>
         /// The keypad plus key (equivalent to KeypadAdd).
         /// </summary>
         KeypadPlus = KeypadAdd,
@@ -738,6 +747,8 @@ namespace OpenToolkit.Windowing.Common.Input
         Minus,
 
         // Equal,
+
+        // TODO: This should really be Equal, not Plus.
 
         /// <summary>
         /// The plus key.
