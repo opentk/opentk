@@ -611,7 +611,6 @@ namespace OpenToolkit.Windowing.Desktop
         private GLFWCallbacks.CursorPosCallback _cursorPosCallback;
         private GLFWCallbacks.ScrollCallback _scrollCallback;
         private GLFWCallbacks.DropCallback _dropCallback;
-        private GLFWCallbacks.CharModsCallback _charModsCallback;
         private GLFWCallbacks.JoystickCallback _joystickCallback;
         private GLFWCallbacks.MonitorCallback _monitorCallback;
 
@@ -634,7 +633,7 @@ namespace OpenToolkit.Windowing.Desktop
                 _focusCallback = (window, focused) => OnFocusedChanged(this, new FocusedChangedEventArgs(focused));
                 Glfw.SetWindowFocusCallback(WindowPtr, _focusCallback);
 
-                _charCallback = (window, codepoint) => OnKeyPress(this, new KeyPressEventArgs((char)codepoint));
+                _charCallback = (window, codepoint) => OnTextInput(this, new TextInputEventArgs((int)codepoint));
                 Glfw.SetCharCallback(WindowPtr, _charCallback);
 
                 _keyCallback = (window, key, scancode, action, mods) =>
@@ -740,12 +739,6 @@ namespace OpenToolkit.Windowing.Desktop
                     OnFileDrop(this, new FileDropEventArgs(arrayOfPaths));
                 };
                 Glfw.SetDropCallback(WindowPtr, _dropCallback);
-
-                _charModsCallback = (window, codepoint, mods) =>
-                {
-                    OnKeyboardCharMod(this, new KeyboardCharModEventArgs(codepoint, MapGlfwKeyModifiers(mods)));
-                };
-                Glfw.SetCharModsCallback(WindowPtr, _charModsCallback);
 
                 _joystickCallback = (joy, eventCode) =>
                 {
@@ -858,10 +851,7 @@ namespace OpenToolkit.Windowing.Desktop
         public event EventHandler<KeyboardKeyEventArgs> KeyDown;
 
         /// <inheritdoc />
-        public event EventHandler<KeyPressEventArgs> KeyPress;
-
-        /// <inheritdoc />
-        public event EventHandler<KeyboardCharModEventArgs> KeyboardCharMod;
+        public event EventHandler<TextInputEventArgs> TextInput;
 
         /// <inheritdoc />
         public event EventHandler<KeyboardKeyEventArgs> KeyUp;
@@ -1081,23 +1071,13 @@ namespace OpenToolkit.Windowing.Desktop
         }
 
         /// <summary>
-        /// Raises the <see cref="KeyPress"/> event.
+        /// Raises the <see cref="TextInput"/> event.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
-        /// <param name="e">A <see cref="KeyPressEventArgs"/> that contains the event data.</param>
-        protected virtual void OnKeyPress(object sender, KeyPressEventArgs e)
+        /// <param name="e">A <see cref="TextInputEventArgs"/> that contains the event data.</param>
+        protected virtual void OnTextInput(object sender, TextInputEventArgs e)
         {
-            KeyPress?.Invoke(sender, e);
-        }
-
-        /// <summary>
-        /// Raises the <see cref="KeyboardCharMod"/> event.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">A <see cref="KeyboardCharModEventArgs"/> that contains the event data.</param>
-        protected virtual void OnKeyboardCharMod(object sender, KeyboardCharModEventArgs e)
-        {
-            KeyboardCharMod?.Invoke(sender, e);
+            TextInput?.Invoke(sender, e);
         }
 
         /// <summary>
