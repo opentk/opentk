@@ -813,6 +813,6 @@ namespace OpenToolkit.Windowing.Common.Input
         /// <summary>
         /// Indicates the last available keyboard key.
         /// </summary>
-        LastKey
+        LastKey = NonUSBackSlash
     }
 }

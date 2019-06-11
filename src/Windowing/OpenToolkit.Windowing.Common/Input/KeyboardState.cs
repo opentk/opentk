@@ -1,4 +1,4 @@
-﻿//
+//
 // KeyboardState.cs
 //
 // Copyright (C) 2018 OpenTK
@@ -19,7 +19,7 @@ namespace OpenToolkit.Windowing.Common.Input
         // Allocate enough ints to store all keyboard keys
         private const int IntSize = sizeof(int) * 8;
 
-        private const int NumInts = ((int)Key.LastKey + IntSize - 1) / IntSize;
+        private const int NumInts = ((int)Key.LastKey + IntSize) / IntSize;
 
         private unsafe fixed int _keys[NumInts];
 
