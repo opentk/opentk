@@ -144,6 +144,28 @@ module Box2 =
             Assert.Equal(b, b1.Translated(v1))
             
     [<Properties(Arbitrary = [|typeof<OpenTKGen>|])>]
+    module Inflate =
+        [<Property>]
+        let ``After inflating a box the point should be either on the edge of the box or the box shouldn't change size`` (b1 : Box2, v1 : Vector2) =
+            let v2 = b1.Size
+            
+            b1.Inflate(v1)
+            
+            Assert.True(b1.DistanceToNearestEdge(v1) = (float32)0 || v2 = b1.Size)
+        
+        [<Property>]
+        let ``After inflating the point should be enclosed in the box`` (b1 : Box2, v1 : Vector2) =
+            Assert.True(b1.Inflated(v1).Contains(v1))
+
+        [<Property>]
+        let ``Box2.Inflate is equivelant to Box2.Inflated`` (b1 : Box2, v1 : Vector2) =
+            let mutable b = b1
+            
+            b.Inflate(v1)
+            
+            Assert.Equal(b, b1.Inflated(v1))
+        
+    [<Properties(Arbitrary = [|typeof<OpenTKGen>|])>]
     module Center =
         [<Property>]
         let ``When setting the center property the center should change to the new value`` (b1 : Box2, v1 : Vector2) =
@@ -177,11 +199,8 @@ module Box2 =
     module DistanceToNearestEdge =
         [<Property>]
         let ``The distance should always return the smallest possible distance`` (b1 : Box2, v1 : Vector2) =
-            let v2 = b1.Min - v1
-            let v3 = v1 - b1.Max
-            let v4 = Vector2.ComponentMin(v2, v3)
-            
-            Assert.Equal(b1.DistanceToNearestEdge(v1), v4.Length)
+           let v2 = Vector2(Math.Max((float32)0, Math.Max(b1.Min.X - v1.X, v1.X - b1.Max.X)), Math.Max((float32)0, Math.Max(b1.Min.Y - v1.Y,  v1.Y - b1.Max.Y)));
+           Assert.Equal(b1.DistanceToNearestEdge(v1), v2.Length)
             
         [<Property>]
         let ``The distance should never be negative`` (b1 : Box2, v1 : Vector2) =            

@@ -149,10 +149,10 @@ namespace OpenToolkit.Mathematics
         /// <returns>The distance between the specified point and the nearest edge.</returns>
         public double DistanceToNearestEdge(Vector2d point)
         {
-            var distMin = _min - point;
-            var distMax = point - _max;
-            var dist = new Vector2d(MathHelper.Min(distMin.X, distMax.X), MathHelper.Min(distMin.Y, distMax.Y));
-            return dist.Length;
+            var distX = new Vector2d(
+                Math.Max(0f, Math.Max(_min.X - point.X, point.X - _max.X)),
+                Math.Max(0f, Math.Max(_min.Y - point.Y, point.Y - _max.Y)));
+            return distX.Length;
         }
 
         /// <summary>

@@ -160,10 +160,11 @@ namespace OpenToolkit.Mathematics
         /// <returns>The distance between the specified point and the nearest edge.</returns>
         public float DistanceToNearestEdge(Vector3i point)
         {
-            var distMin = _min - point;
-            var distMax = point - _max;
-            var dist = new Vector2(MathHelper.Min(distMin.X, distMax.X), MathHelper.Min(distMin.Y, distMax.Y));
-            return dist.Length;
+            var distX = new Vector3(
+                Math.Max(0f, Math.Max(_min.X - point.X, point.X - _max.X)),
+                Math.Max(0f, Math.Max(_min.Y - point.Y, point.Y - _max.Y)),
+                Math.Max(0f, Math.Max(_min.Z - point.Z, point.Z - _max.Z)));
+            return distX.Length;
         }
 
         /// <summary>
