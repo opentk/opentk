@@ -480,7 +480,8 @@ namespace OpenToolkit.Windowing.Desktop
                         break;
                 }
 
-                switch (API)
+                var makeContextCurrent = false;
+                switch (settings.API)
                 {
                     case ContextAPI.NoAPI:
                         Glfw.WindowHint(WindowHintClientApi.ClientApi, ClientApi.NoApi);
@@ -488,33 +489,42 @@ namespace OpenToolkit.Windowing.Desktop
 
                     case ContextAPI.OpenGLES:
                         Glfw.WindowHint(WindowHintClientApi.ClientApi, ClientApi.OpenGlEsApi);
+                        makeContextCurrent = true;
                         break;
 
                     case ContextAPI.OpenGL:
                         Glfw.WindowHint(WindowHintClientApi.ClientApi, ClientApi.OpenGlApi);
+                        makeContextCurrent = true;
                         break;
 
                     default:
                         throw new ArgumentOutOfRangeException();
                 }
 
-                Glfw.WindowHint(WindowHintInt.ContextVersionMajor, APIVersion.Major);
-                Glfw.WindowHint(WindowHintInt.ContextVersionMinor, APIVersion.Minor);
+                Glfw.WindowHint(WindowHintInt.ContextVersionMajor, settings.APIVersion.Major);
+                Glfw.WindowHint(WindowHintInt.ContextVersionMinor, settings.APIVersion.Minor);
 
-                if (Flags.HasFlag(ContextFlags.ForwardCompatible))
+                if (settings.Flags.HasFlag(ContextFlags.ForwardCompatible))
                 {
                     Glfw.WindowHint(WindowHintBool.OpenGLForwardCompat, true);
                 }
 
-                if (Flags.HasFlag(ContextFlags.Debug))
+                if (settings.Flags.HasFlag(ContextFlags.Debug))
                 {
                     Glfw.WindowHint(WindowHintBool.OpenGLDebugContext, true);
                 }
 
-                Glfw.WindowHint
-                (
-                    WindowHintOpenGlProfile.OpenGlProfile, (OpenGlProfile)Profile
-                );
+                switch (settings.Profile)
+                {
+                    case ContextProfile.Compatability:
+                        Glfw.WindowHint(WindowHintOpenGlProfile.OpenGlProfile, OpenGlProfile.Compat);
+                        break;
+                    case ContextProfile.Core:
+                        Glfw.WindowHint(WindowHintOpenGlProfile.OpenGlProfile, OpenGlProfile.Core);
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
 
                 Glfw.WindowHint(WindowHintBool.Focused, settings.IsFocused);
                 _windowBorder = settings.WindowBorder;
@@ -534,7 +544,10 @@ namespace OpenToolkit.Windowing.Desktop
                     WindowPtr = Glfw.CreateWindow(settings.Width, settings.Height, _title, null, null);
                 }
 
-                Glfw.MakeContextCurrent(WindowPtr);
+                if (makeContextCurrent)
+                {
+                    Glfw.MakeContextCurrent(WindowPtr);
+                }
 
                 RegisterWindowCallbacks();
 
