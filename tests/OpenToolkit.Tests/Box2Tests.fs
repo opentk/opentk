@@ -205,3 +205,10 @@ module Box2 =
         [<Property>]
         let ``The distance should never be negative`` (b1 : Box2, v1 : Vector2) =            
             Assert.True(b1.DistanceToNearestEdge(v1) >= (float32)0)
+            
+    [<Properties(Arbitrary = [|typeof<OpenTKGen>|])>]
+    module Equality =
+        [<Property>]
+        let ``Any box should be equal to itself`` (b1 : Box2) =
+            Assert.Equal(b1, b1)
+            Assert.True(b1.Equals(b1))
