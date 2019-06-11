@@ -52,6 +52,12 @@ namespace OpenToolkit.Windowing.Desktop
         /// <inheritdoc />
         public KeyboardState KeyboardState => _keyboardState;
 
+        /// <inheritdoc />
+        public KeyboardState LastKeyboardState { get; private set; }
+
+        /// <inheritdoc />
+        public bool IsAnyKeyDown => _keyboardState.IsAnyKeyDown;
+
         private WindowIcon _icon;
 
         /// <inheritdoc />
@@ -751,6 +757,8 @@ namespace OpenToolkit.Windowing.Desktop
         /// <inheritdoc />
         public virtual void ProcessEvents()
         {
+            LastKeyboardState = KeyboardState;
+
             if (IsEventDriven)
             {
                 Glfw.WaitEvents();
@@ -847,6 +855,30 @@ namespace OpenToolkit.Windowing.Desktop
 
         /// <inheritdoc />
         public event EventHandler<FileDropEventArgs> FileDrop;
+
+        /// <inheritdoc />
+        public bool IsKeyDown(Key key)
+        {
+            return _keyboardState.IsKeyDown(key);
+        }
+
+        /// <inheritdoc />
+        public bool IsKeyUp(Key key)
+        {
+            return _keyboardState.IsKeyUp(key);
+        }
+
+        /// <inheritdoc />
+        public bool IsKeyJustPressed(Key key)
+        {
+            return _keyboardState.IsKeyDown(key) && !LastKeyboardState.IsKeyDown(key);
+        }
+
+        /// <inheritdoc />
+        public bool IsKeyJustReleased(Key key)
+        {
+            return !_keyboardState.IsKeyDown(key) && LastKeyboardState.IsKeyDown(key);
+        }
 
         /// <summary>
         /// Raises the <see cref="Move"/> event.
