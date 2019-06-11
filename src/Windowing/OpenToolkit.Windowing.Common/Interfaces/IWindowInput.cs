@@ -1,4 +1,4 @@
-﻿//
+﻿﻿//
 // IWindowInput.cs
 //
 // Copyright (C) 2018 OpenTK
@@ -12,7 +12,7 @@ using OpenToolkit.Windowing.Common.Input;
 namespace OpenToolkit.Windowing.Common
 {
     /// <summary>
-    /// Describes mouse input and cursor related information.
+    ///     Describes mouse and keyboard input and cursor related information.
     /// </summary>
     public interface IWindowInput
     {
@@ -31,5 +31,10 @@ namespace OpenToolkit.Windowing.Common
         /// Gets or sets a value indicating whether the mouse cursor is confined inside the window size.
         /// </summary>
         bool CursorGrabbed { get; set; }
+
+        /// <summary>
+        ///     Gets the current state of the keyboard as of the last time the window processed events.
+        /// </summary>
+        KeyboardState KeyboardState { get; }
     }
 }

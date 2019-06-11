@@ -1,4 +1,4 @@
-// Copyright (c) OpenTK. All Rights Reserved.
+﻿// Copyright (c) OpenTK. All Rights Reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
@@ -46,6 +46,11 @@ namespace OpenToolkit.Windowing.Desktop
         /// The Y position of the mouse on the last update. Used to calculate the mouse delta.
         /// </summary>
         private double _lastMousePositionY;
+
+        private KeyboardState _keyboardState = default;
+
+        /// <inheritdoc />
+        public KeyboardState KeyboardState => _keyboardState;
 
         private WindowIcon _icon;
 
@@ -618,10 +623,20 @@ namespace OpenToolkit.Windowing.Desktop
 
                     if (action == InputAction.Release)
                     {
+                        if (ourKey != Key.Unknown)
+                        {
+                            _keyboardState.SetKeyState(ourKey, false);
+                        }
+
                         OnKeyUp(this, args);
                     }
                     else
                     {
+                        if (ourKey != Key.Unknown)
+                        {
+                            _keyboardState.SetKeyState(ourKey, true);
+                        }
+
                         OnKeyDown(this, args);
                     }
                 };
