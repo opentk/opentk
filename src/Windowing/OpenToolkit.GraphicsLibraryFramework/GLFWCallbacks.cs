@@ -89,7 +89,7 @@ namespace OpenToolkit.GraphicsLibraryFramework
         /// <param name="action">One of <see cref="InputAction.Press"/> or <see cref="InputAction.Release"/>.</param>
         /// <param name="mods">Bit field describing which modifier keys were held down.</param>
         /// <seealso cref="IGLFW.SetMouseButtonCallback"/>
-        public delegate void MouseButtonCallback(Window* window, int button, InputAction action, KeyModifiers mods); // TODO: Make enums for int params in callback
+        public delegate void MouseButtonCallback(Window* window, MouseButton button, InputAction action, KeyModifiers mods); // TODO: Make enums for int params in callback
 
         /// <summary>
         /// The function signature for scroll callback functions.
