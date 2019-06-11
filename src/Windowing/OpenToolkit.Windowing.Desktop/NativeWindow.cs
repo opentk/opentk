@@ -1,8 +1,7 @@
-﻿// Copyright (c) OpenTK. All Rights Reserved.
+// Copyright (c) OpenTK. All Rights Reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Threading;
@@ -10,10 +9,10 @@ using OpenToolkit.GraphicsLibraryFramework;
 using OpenToolkit.Mathematics;
 using OpenToolkit.Windowing.Common;
 using OpenToolkit.Windowing.Common.Input;
+using GlfwKeyModifiers = OpenToolkit.GraphicsLibraryFramework.KeyModifiers;
 using InputAction = OpenToolkit.GraphicsLibraryFramework.InputAction;
 using KeyModifiers = OpenToolkit.Windowing.Common.Input.KeyModifiers;
 using Monitor = OpenToolkit.Windowing.Common.Monitor;
-using GlfwKeyModifiers = OpenToolkit.GraphicsLibraryFramework.KeyModifiers;
 using MouseButton = OpenToolkit.Windowing.Common.Input.MouseButton;
 
 namespace OpenToolkit.Windowing.Desktop
@@ -594,14 +593,14 @@ namespace OpenToolkit.Windowing.Desktop
 
                 _keyCallback = (window, key, scancode, action, mods) =>
                 {
-                    var ourKey = _glfwKeyMapping[(int)key];
+                    var ourKey = GlfwKeyMapping[(int)key];
 
                     var args = new KeyboardKeyEventArgs
                     {
                         Key = ourKey,
                         ScanCode = scancode,
                         IsRepeat = action == InputAction.Repeat,
-                        Modifiers = _mapGlfwKeyModifiers(mods),
+                        Modifiers = MapGlfwKeyModifiers(mods),
                     };
 
                     if (action == InputAction.Release)
@@ -634,7 +633,7 @@ namespace OpenToolkit.Windowing.Desktop
                     {
                         Button = (MouseButton)button,
                         Action = (Common.InputAction)action,
-                        Modifiers = _mapGlfwKeyModifiers(mods),
+                        Modifiers = MapGlfwKeyModifiers(mods),
                     };
 
                     if (action == InputAction.Release)
@@ -684,7 +683,7 @@ namespace OpenToolkit.Windowing.Desktop
 
                 _charModsCallback = (window, codepoint, mods) =>
                 {
-                    OnKeyboardCharMod(this, new KeyboardCharModEventArgs(codepoint, _mapGlfwKeyModifiers(mods)));
+                    OnKeyboardCharMod(this, new KeyboardCharModEventArgs(codepoint, MapGlfwKeyModifiers(mods)));
                 };
                 Glfw.SetCharModsCallback(WindowPtr, _charModsCallback);
 
@@ -1132,37 +1131,14 @@ namespace OpenToolkit.Windowing.Desktop
             GC.SuppressFinalize(this);
         }
 
-        /*
-        private static readonly Dictionary<Keys, Key> _glfwKeyMapping = new Dictionary<Keys, Key>
-        {
-            { Keys.Space, Key.Space },
-            { Keys.Apostrophe, Key.Quote},
-            { Keys.Comma, Key.Comma },
-            { Keys.Minus, Key.Minus },
-            { Keys.Period, Key.Period },
-            { Keys.Slash, Key.Slash },
-            { Keys.D0, Key.Keypad0 },
-            { Keys.D0, Key.Keypad1 },
-            { Keys.D0, Key.Keypad2 },
-            { Keys.D0, Key.Keypad3 },
-            { Keys.D0, Key.Keypad4 },
-            { Keys.D0, Key.Keypad5 },
-            { Keys.D0, Key.Keypad6 },
-            { Keys.D0, Key.Keypad7 },
-            { Keys.D0, Key.Keypad8 },
-            { Keys.D0, Key.Keypad9 },
-            { Keys.D0, Key.Keypad0 },
-        };
-        */
-
         // Maps GLFW's key enum to our key enum.
         // There's a few gaps here and there since this is a direct array.
         // Those default to Unknown.
-        private static readonly Key[] _glfwKeyMapping = _genGlfwKeyMapping();
+        private static readonly Key[] GlfwKeyMapping = GenerateGlfwKeyMapping();
 
-        private static Key[] _genGlfwKeyMapping()
+        private static Key[] GenerateGlfwKeyMapping()
         {
-            var map = new Key[(int)Keys.LastKey];
+            var map = new Key[(int)Keys.LastKey + 1];
             map[(int)Keys.Space] = Key.Space;
             map[(int)Keys.Apostrophe] = Key.Quote;
             map[(int)Keys.Comma] = Key.Comma;
@@ -1288,7 +1264,7 @@ namespace OpenToolkit.Windowing.Desktop
             return map;
         }
 
-        private static KeyModifiers _mapGlfwKeyModifiers(GlfwKeyModifiers modifiers)
+        private static KeyModifiers MapGlfwKeyModifiers(GlfwKeyModifiers modifiers)
         {
             KeyModifiers value = default;
 
