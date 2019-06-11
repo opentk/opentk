@@ -596,12 +596,6 @@ namespace OpenToolkit.Windowing.Desktop
                 {
                     var ourKey = _glfwKeyMapping[(int)key];
 
-                    // If GLFW sends us a key we don't have a mapping for, just ignore it.
-                    if (ourKey == Key.Unknown)
-                    {
-                        return;
-                    }
-
                     var args = new KeyboardKeyEventArgs
                     {
                         Key = ourKey,
