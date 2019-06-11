@@ -35,6 +35,16 @@ namespace OpenToolkit.GraphicsLibraryFramework
         /// <summary>
         /// If one or more Super keys were held down.
         /// </summary>
-        Super = 0x0008
+        Super = 0x0008,
+
+        /// <summary>
+        ///     If caps lock is enabled.
+        /// </summary>
+        CapsLock = 0x0010,
+
+        /// <summary>
+        ///     If num lock is enabled.
+        /// </summary>
+        NumLock = 0x0020,
     }
 }
