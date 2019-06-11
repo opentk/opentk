@@ -50,6 +50,11 @@ namespace OpenToolkit.Windowing.Common.Input
         /// <returns><c>true</c> if <paramref name="key"/> is in the down state; otherwise, <c>false</c>.</returns>
         public bool IsKeyDown(Key key)
         {
+            if (key == Key.Unknown)
+            {
+                throw new ArgumentException("Cannot get the unknown key", nameof(key));
+            }
+
             return ReadBit((int)key);
         }
 
@@ -60,6 +65,11 @@ namespace OpenToolkit.Windowing.Common.Input
         /// <returns><c>true</c> if <paramref name="key"/> is in the up state; otherwise, <c>false</c>.</returns>
         public bool IsKeyUp(Key key)
         {
+            if (key == Key.Unknown)
+            {
+                throw new ArgumentException("Cannot get the unknown key", nameof(key));
+            }
+
             return !ReadBit((int)key);
         }
 
@@ -193,6 +203,11 @@ namespace OpenToolkit.Windowing.Common.Input
         /// <param name="down">The new state the key should be changed to.</param>
         internal void SetKeyState(Key key, bool down)
         {
+            if (key == Key.Unknown)
+            {
+                throw new ArgumentException("Cannot set the unknown key", nameof(key));
+            }
+
             if (down)
             {
                 EnableBit((int)key);
