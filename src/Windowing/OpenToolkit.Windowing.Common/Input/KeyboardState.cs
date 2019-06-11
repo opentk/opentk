@@ -21,7 +21,6 @@ namespace OpenToolkit.Windowing.Common.Input
 
         private const int NumInts = ((int)Key.LastKey + IntSize - 1) / IntSize;
 
-        // The following line triggers bogus CS0214 in gmcs 2.0.1, sigh...
         private unsafe fixed int _keys[NumInts];
 
         /// <summary>
@@ -55,19 +54,6 @@ namespace OpenToolkit.Windowing.Common.Input
         }
 
         /// <summary>
-        /// Gets a <see cref="bool" /> indicating whether this scan code is down.
-        /// </summary>
-        /// <param name="code">The scan code to check.</param>
-        /// <returns>
-        /// <c>true</c> if the key given by the <paramref name="code"/> parameter is in the down state;
-        /// otherwise, <c>false</c>.
-        /// </returns>
-        public bool IsKeyDown(short code)
-        {
-            return code >= 0 && code < (short)Key.LastKey && ReadBit(code);
-        }
-
-        /// <summary>
         /// Gets a <see cref="bool" /> indicating whether this key is up.
         /// </summary>
         /// <param name="key">The <see cref="Key" /> to check.</param>
@@ -75,19 +61,6 @@ namespace OpenToolkit.Windowing.Common.Input
         public bool IsKeyUp(Key key)
         {
             return !ReadBit((int)key);
-        }
-
-        /// <summary>
-        /// Gets a <see cref="bool" /> indicating whether this scan code is down.
-        /// </summary>
-        /// <param name="code">The scan code to check.</param>
-        /// <returns>
-        /// <c>true</c> if the key given by the <paramref name="code"/> parameter is in the up state;
-        /// otherwise, <c>false</c>.
-        /// </returns>
-        public bool IsKeyUp(short code)
-        {
-            return !IsKeyDown(code);
         }
 
         /// <summary>
@@ -101,14 +74,11 @@ namespace OpenToolkit.Windowing.Common.Input
                 // If any bit is set then a key is down.
                 unsafe
                 {
-                    fixed (int* k = _keys)
+                    for (var i = 0; i < NumInts; ++i)
                     {
-                        for (var i = 0; i < NumInts; ++i)
+                        if (_keys[i] != 0)
                         {
-                            if (k[i] != 0)
-                            {
-                                return true;
-                            }
+                            return true;
                         }
                     }
                 }
@@ -116,12 +86,6 @@ namespace OpenToolkit.Windowing.Common.Input
                 return false;
             }
         }
-
-        /// <summary>
-        /// Gets a value indicating whether this keyboard
-        /// is connected.
-        /// </summary>
-        public bool IsConnected { get; internal set; }
 
         /// <summary>
         /// Checks whether two <see cref="KeyboardState" /> instances are equal.
@@ -168,12 +132,35 @@ namespace OpenToolkit.Windowing.Common.Input
         /// </returns>
         public override bool Equals(object obj)
         {
-            if (obj is KeyboardState)
+            if (obj is KeyboardState state)
             {
-                return this == (KeyboardState)obj;
+                return Equals(state);
             }
 
             return false;
+        }
+
+        /// <summary>
+        /// Compares two KeyboardState instances.
+        /// </summary>
+        /// <param name="other">The instance to compare two.</param>
+        /// <returns><c>true</c>, if both instances are equal; <c>false</c> otherwise.</returns>
+        public bool Equals(KeyboardState other)
+        {
+            var equal = true;
+            unsafe
+            {
+                var k2 = other._keys;
+                fixed (int* k1 = _keys)
+                {
+                    for (var i = 0; equal && i < NumInts; i++)
+                    {
+                        equal &= *(k1 + i) == *(k2 + i);
+                    }
+                }
+            }
+
+            return equal;
         }
 
         /// <summary>
@@ -276,65 +263,12 @@ namespace OpenToolkit.Windowing.Common.Input
             }
         }
 
-        /// <summary>
-        /// Merges this <see cref="KeyboardState"/> with an <paramref name="other"/>.
-        /// </summary>
-        /// <param name="other">The <paramref name="other"/> <see cref="KeyboardState"/> with which to merge.</param>
-        internal void MergeBits(KeyboardState other)
-        {
-            unsafe
-            {
-                var k2 = other._keys;
-                fixed (int* k1 = _keys)
-                {
-                    for (var i = 0; i < NumInts; i++)
-                    {
-                        *(k1 + i) |= *(k2 + i);
-                    }
-                }
-            }
-
-            IsConnected |= other.IsConnected;
-        }
-
-        /// <summary>
-        /// Sets the <see cref="IsConnected"/> value to the given <paramref name="value"/>.
-        /// </summary>
-        /// <param name="value">The value to set the <see cref="IsConnected"/> property to.</param>
-        internal void SetIsConnected(bool value)
-        {
-            IsConnected = value;
-        }
-
         private static void ValidateOffset(int offset)
         {
             if (offset < 0 || offset >= NumInts * IntSize)
             {
                 throw new ArgumentOutOfRangeException();
             }
-        }
-
-        /// <summary>
-        /// Compares two KeyboardState instances.
-        /// </summary>
-        /// <param name="other">The instance to compare two.</param>
-        /// <returns><c>true</c>, if both instances are equal; <c>false</c> otherwise.</returns>
-        public bool Equals(KeyboardState other)
-        {
-            var equal = true;
-            unsafe
-            {
-                var k2 = other._keys;
-                fixed (int* k1 = _keys)
-                {
-                    for (var i = 0; equal && i < NumInts; i++)
-                    {
-                        equal &= *(k1 + i) == *(k2 + i);
-                    }
-                }
-            }
-
-            return equal;
         }
     }
 }
