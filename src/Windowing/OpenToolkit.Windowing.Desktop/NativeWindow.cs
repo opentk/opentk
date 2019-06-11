@@ -628,7 +628,7 @@ namespace OpenToolkit.Windowing.Desktop
                 _closeCallback = window => OnClosing(this, new CancelEventArgs());
                 Glfw.SetWindowCloseCallback(WindowPtr, _closeCallback);
 
-                _iconifyCallback = (window, iconified) => OnIconChanged(this, new MinimizedEventArgs(iconified));
+                _iconifyCallback = (window, iconified) => OnMinimized(this, new MinimizedEventArgs(iconified));
                 Glfw.SetWindowIconifyCallback(WindowPtr, _iconifyCallback);
 
                 _focusCallback = (window, focused) => OnFocusedChanged(this, new FocusedChangedEventArgs(focused));
@@ -831,7 +831,7 @@ namespace OpenToolkit.Windowing.Desktop
         public event EventHandler<EventArgs> Disposed;
 
         /// <inheritdoc />
-        public event EventHandler<MinimizedEventArgs> Iconified;
+        public event EventHandler<MinimizedEventArgs> Minimized;
 
         /// <inheritdoc />
         public event EventHandler<EventArgs> IconChanged;
@@ -1181,13 +1181,13 @@ namespace OpenToolkit.Windowing.Desktop
         }
 
         /// <summary>
-        /// Raises the <see cref="OnIconified"/> event.
+        /// Raises the <see cref="OnMinimized"/> event.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">A <see cref="MouseWheelEventArgs"/> that contains the event data.</param>
-        protected virtual void OnIconified(object sender, MinimizedEventArgs e)
+        protected virtual void OnMinimized(object sender, MinimizedEventArgs e)
         {
-            Iconified?.Invoke(sender, e);
+            Minimized?.Invoke(sender, e);
         }
 
         /// <summary>

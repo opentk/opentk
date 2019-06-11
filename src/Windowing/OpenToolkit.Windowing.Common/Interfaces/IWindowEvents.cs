@@ -44,9 +44,9 @@ namespace OpenToolkit.Windowing.Common
         event EventHandler<EventArgs> Disposed;
 
         /// <summary>
-        /// Occurs when the window is iconified (minimized)
+        /// Occurs when the window is minimized.
         /// </summary>
-        event EventHandler<MinimizedEventArgs> Iconified;
+        event EventHandler<MinimizedEventArgs> Minimized;
 
         /// <summary>
         /// Occurs when the icon of the window changes.
