@@ -37,15 +37,8 @@ namespace OpenToolkit.Windowing.Desktop
         /// </summary>
         protected unsafe Window* WindowPtr { get; }
 
-        /// <summary>
-        /// The X position of the mouse on the last update. Used to calculate the mouse delta.
-        /// </summary>
-        private double _lastMousePositionX;
-
-        /// <summary>
-        /// The Y position of the mouse on the last update. Used to calculate the mouse delta.
-        /// </summary>
-        private double _lastMousePositionY;
+        // Used for delta calculation in the mouse pos changed event.
+        private Vector2 _lastReportedMousePos;
 
         private KeyboardState _keyboardState = default;
 
@@ -56,7 +49,36 @@ namespace OpenToolkit.Windowing.Desktop
         public KeyboardState LastKeyboardState { get; private set; }
 
         /// <inheritdoc />
+        public Vector2 MousePosition
+        {
+            get => _mouseState.Position;
+            set
+            {
+                unsafe
+                {
+                    Glfw.SetCursorPos(WindowPtr, value.X, value.Y);
+                }
+
+                _mouseState.Position = value;
+            }
+        }
+
+        private MouseState _mouseState = default;
+
+        /// <inheritdoc />
+        public Vector2 MouseDelta { get; private set; }
+
+        /// <inheritdoc />
+        public MouseState MouseState => _mouseState;
+
+        /// <inheritdoc />
+        public MouseState LastMouseState { get; private set; }
+
+        /// <inheritdoc />
         public bool IsAnyKeyDown => _keyboardState.IsAnyKeyDown;
+
+        /// <inheritdoc />
+        public bool IsAnyMouseButtonDown => _mouseState.IsAnyButtonDown;
 
         private WindowIcon _icon;
 
@@ -663,19 +685,22 @@ namespace OpenToolkit.Windowing.Desktop
 
                 _mouseButtonCallback = (window, button, action, mods) =>
                 {
+                    var ourButton = (MouseButton)button;
                     var args = new MouseButtonEventArgs
                     {
-                        Button = (MouseButton)button,
-                        Action = (Common.InputAction)action,
+                        Button = ourButton,
+                        Action = MapGlfwInputAction(action),
                         Modifiers = MapGlfwKeyModifiers(mods),
                     };
 
                     if (action == InputAction.Release)
                     {
+                        _mouseState[ourButton] = false;
                         OnMouseUp(this, args);
                     }
                     else
                     {
+                        _mouseState[ourButton] = true;
                         OnMouseDown(this, args);
                     }
                 };
@@ -683,13 +708,14 @@ namespace OpenToolkit.Windowing.Desktop
 
                 _cursorPosCallback = (window, xpos, ypos) =>
                 {
-                    var deltaX = _lastMousePositionX - xpos;
-                    var deltaY = _lastMousePositionY - ypos;
+                    var deltaX = _lastReportedMousePos.X - (float)xpos;
+                    var deltaY = _lastReportedMousePos.Y - (float)ypos;
+
+                    MouseDelta += new Vector2(deltaX, deltaY);
+
+                    _lastReportedMousePos = _mouseState.Position = new Vector2((float)xpos, (float)ypos);
 
                     OnMouseMove(this, new MouseMoveEventArgs(xpos, ypos, deltaX, deltaY));
-
-                    _lastMousePositionX = xpos;
-                    _lastMousePositionY = ypos;
                 };
                 Glfw.SetCursorPosCallback(WindowPtr, _cursorPosCallback);
 
@@ -758,6 +784,8 @@ namespace OpenToolkit.Windowing.Desktop
         public virtual void ProcessEvents()
         {
             LastKeyboardState = KeyboardState;
+            LastMouseState = MouseState;
+            MouseDelta = Vector2.Zero;
 
             if (IsEventDriven)
             {
@@ -766,6 +794,12 @@ namespace OpenToolkit.Windowing.Desktop
             else
             {
                 Glfw.PollEvents();
+            }
+
+            unsafe
+            {
+                Glfw.GetCursorPos(WindowPtr, out var x, out var y);
+                _mouseState.Position = new Vector2((float)x, (float)y);
             }
         }
 
@@ -878,6 +912,30 @@ namespace OpenToolkit.Windowing.Desktop
         public bool IsKeyJustReleased(Key key)
         {
             return !_keyboardState.IsKeyDown(key) && LastKeyboardState.IsKeyDown(key);
+        }
+
+        /// <inheritdoc />
+        public bool IsMouseButtonDown(MouseButton button)
+        {
+            return _mouseState.IsButtonDown(button);
+        }
+
+        /// <inheritdoc />
+        public bool IsMouseButtonUp(MouseButton button)
+        {
+            return _mouseState.IsButtonUp(button);
+        }
+
+        /// <inheritdoc />
+        public bool IsMouseButtonJustPressed(MouseButton button)
+        {
+            return _mouseState.IsButtonDown(button) && !LastMouseState.IsButtonDown(button);
+        }
+
+        /// <inheritdoc />
+        public bool IsMouseButtonJustReleased(MouseButton button)
+        {
+            return !_mouseState.IsButtonDown(button) && LastMouseState.IsButtonDown(button);
         }
 
         /// <summary>
@@ -1349,6 +1407,21 @@ namespace OpenToolkit.Windowing.Desktop
             }
 
             return value;
+        }
+
+        private static Common.InputAction MapGlfwInputAction(InputAction action)
+        {
+            switch (action)
+            {
+                case InputAction.Release:
+                    return Common.InputAction.Release;
+                case InputAction.Press:
+                    return Common.InputAction.Press;
+                case InputAction.Repeat:
+                    return Common.InputAction.Repeat;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(action), action, null);
+            }
         }
     }
 }

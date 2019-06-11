@@ -7,7 +7,8 @@
 // of the MIT license. See the LICENSE file for details.
 //
 
-using OpenToolkit.Windowing.Common.Input;
+ using OpenToolkit.Mathematics;
+ using OpenToolkit.Windowing.Common.Input;
 
 namespace OpenToolkit.Windowing.Common
 {
@@ -44,10 +45,36 @@ namespace OpenToolkit.Windowing.Common
         KeyboardState LastKeyboardState { get; }
 
         /// <summary>
+        ///     Gets or sets the position of the mouse relative to the content area of this window.
+        /// </summary>
+        Vector2 MousePosition { get; set; }
+
+        /// <summary>
+        ///     Gets the amount that the mouse moved since the last frame.
+        /// </summary>
+        /// <summary>
+        ///     This does not necessarily correspond to pixels, for example in the case of raw input.
+        /// </summary>
+        Vector2 MouseDelta { get; }
+
+        /// <summary>
+        ///     Gets the current state of the mouse as of the last time the window processed events.
+        /// </summary>
+        MouseState MouseState { get; }
+
+        /// <summary>
+        ///     Gets the previous keyboard state.
+        ///     This value is updated with the new state every time the window processes events.
+        /// </summary>
+        MouseState LastMouseState { get; }
+
+        /// <summary>
         /// Gets a value indicating whether any key is down.
         /// </summary>
         /// <value><c>true</c> if any key is down; otherwise, <c>false</c>.</value>
         bool IsAnyKeyDown { get; }
+
+        bool IsAnyMouseButtonDown { get; }
 
         /// <summary>
         /// Gets a <see cref="bool" /> indicating whether this key is down.
@@ -82,5 +109,13 @@ namespace OpenToolkit.Windowing.Common
         /// <param name="key">The key to check.</param>
         /// <returns>True if the key is released in this frame, but pressed the last frame.</returns>
         bool IsKeyJustReleased(Key key);
+
+        bool IsMouseButtonDown(MouseButton button);
+
+        bool IsMouseButtonUp(MouseButton button);
+
+        bool IsMouseButtonJustPressed(MouseButton button);
+
+        bool IsMouseButtonJustReleased(MouseButton button);
     }
 }
