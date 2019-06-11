@@ -7,11 +7,14 @@
 // of the MIT license. See the LICENSE file for details.
 //
 
+using System;
+
 namespace OpenToolkit.GraphicsLibraryFramework
 {
     /// <summary>
     /// Key modifiers, such as Shift or CTRL.
     /// </summary>
+    [Flags]
     public enum KeyModifiers
     {
         /// <summary>
