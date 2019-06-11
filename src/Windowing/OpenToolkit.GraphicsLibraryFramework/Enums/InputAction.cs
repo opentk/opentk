@@ -16,14 +16,14 @@ namespace OpenToolkit.GraphicsLibraryFramework
     public enum InputAction
     {
         /// <summary>
-        /// The key or mouse button was pressed.
-        /// </summary>
-        Press = 0,
-
-        /// <summary>
         /// The key or mouse button was released.
         /// </summary>
-        Release = 1,
+        Release = 0,
+
+        /// <summary>
+        /// The key or mouse button was pressed.
+        /// </summary>
+        Press = 1,
 
         /// <summary>
         /// The key was held down until it repeated.
