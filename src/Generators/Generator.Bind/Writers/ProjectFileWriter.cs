@@ -25,8 +25,7 @@ namespace Bind.Writers
         /// <param name="subDir">The subdirectory of the "src" folder to which the current profile is contained.</param>
         /// <param name="coreProj">The subdirectory of subDir containing the project for the core specification.</param>
         /// <param name="ext">Whether or not this project file is for an extension or not.</param>
-        /// <returns>An asynchronous task.</returns>
-        public static async Task WriteProjectFileAsync(string ns, string dir, string subDir, string coreProj, bool ext)
+        public static void WriteProjectFile(string ns, string dir, string subDir, string coreProj, bool ext)
         {
             if (File.Exists(Path.Combine(dir, ns + ".csproj")))
             {
@@ -75,7 +74,6 @@ namespace Bind.Writers
                 csproj.WriteLine("  <Import Project=\"$(OpenTKSolutionRoot)\\props\\nuget-common.props\" />");
                 csproj.WriteLine("  <Import Project=\"$(OpenTKSolutionRoot)\\props\\stylecop.props\" />");
                 csproj.WriteLine("</Project>");
-                await csproj.FlushAsync();
             }
         }
     }

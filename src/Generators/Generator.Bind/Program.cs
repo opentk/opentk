@@ -65,7 +65,7 @@ namespace Bind
         /// </summary>
         /// <param name="args">A set of command-line arguments and switches to be parsed.</param>
         /// <returns>An integer, indicating success or failure. On a failure, a nonzero value is returned.</returns>
-        private static async Task<int> Main(string[] args)
+        private static int Main(string[] args)
         {
             // force the GC to a suitable mode.
             GCSettings.LatencyMode = GCLatencyMode.Batch;
@@ -84,8 +84,7 @@ namespace Bind
             CreateGenerators();
 
             var stopwatch = Stopwatch.StartNew();
-            var generatorTasks = Generators.Select(GenerateBindingsAsync);
-            await Task.WhenAll(generatorTasks);
+            Generators.ForEach(GenerateBindings);
             stopwatch.Stop();
 
             Console.WriteLine();
@@ -109,8 +108,7 @@ namespace Bind
         ///
         /// </summary>
         /// <param name="generatorSettings">The settings describing the API.</param>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
-        private static async Task GenerateBindingsAsync([NotNull] IGeneratorSettings generatorSettings)
+        private static void GenerateBindings([NotNull] IGeneratorSettings generatorSettings)
         {
             var signaturePath = Path.Combine(Arguments.InputPath, generatorSettings.SpecificationFile);
             if (!_cachedProfiles.TryGetValue(signaturePath, out var profiles))
@@ -163,7 +161,7 @@ namespace Bind
 
             // var bindingsWriter = new BindingWriter(generatorSettings, overloadedProfile, bakedDocs);
             // await bindingsWriter.WriteBindingsAsync();
-            await ProfileWriter.WriteAsync(
+            ProfileWriter.Write(
                 generatorSettings,
                 mappedProfile,
                 bakedDocs,

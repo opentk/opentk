@@ -25,8 +25,7 @@ namespace Bind.Writers
         /// <param name="ns">The namespace of the name container.</param>
         /// <param name="name">The full name of the profile (i.e. OpenGL, OpenGLES).</param>
         /// <param name="val">The name container to write.</param>
-        /// <returns>An asynchronous task.</returns>
-        public static async Task WriteNameContainerAsync(string file, string ns, string name, NameContainer val)
+        public static void WriteNameContainer(string file, string ns, string name, NameContainer val)
         {
             using (var sw = new StreamWriter(File.Open(file, FileMode.Create, FileAccess.ReadWrite, FileShare.Inheritable)))
             {
@@ -55,7 +54,6 @@ namespace Bind.Writers
                 sw.WriteLine($"        public override string Windows => \"{val.Windows}\";");
                 sw.WriteLine("    }");
                 sw.WriteLine("}");
-                await sw.FlushAsync();
             }
         }
     }

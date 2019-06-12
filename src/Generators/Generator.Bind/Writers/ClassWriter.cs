@@ -29,8 +29,7 @@ namespace Bind.Writers
         /// <param name="project">The project to write a mixed-mode class for.</param>
         /// <param name="settings">The generator settings used to configure the mixed-mode class writer.</param>
         /// <param name="docs">The profile's documentation, used to write summaries to overloads.</param>
-        /// <returns>An asynchronous task.</returns>
-        public static async Task WriteMixedModeClassAsync(Project project, IGeneratorSettings settings, ProfileDocumentation docs)
+        public static void WriteMixedModeClass(Project project, IGeneratorSettings settings, ProfileDocumentation docs)
         {
             var ext = project.Extension != "Core";
             var ns = project.Extension == "Core"
@@ -39,15 +38,15 @@ namespace Bind.Writers
             var dir = project.Extension == "Core"
                 ? Path.Combine(Program.Arguments.OutputPath, settings.OutputSubfolder, settings.Namespace, settings.ClassName)
                 : Path.Combine(Program.Arguments.OutputPath, settings.OutputSubfolder, ProfileWriter.ExtensionsFolder, ns);
-            await WriteOverloadsMixedModePartAsync(project, settings, docs);
-            await WriteNativeMixedModePartAsync(project, settings);
+            WriteOverloadsMixedModePart(project, settings, docs);
+            WriteNativeMixedModePart(project, settings);
             if (!File.Exists(Path.Combine(dir, $"{settings.ClassName}.cs")) && !ext)
             {
-                await WriteTemplateMixedModePartAsync(project, settings);
+                WriteTemplateMixedModePart(project, settings);
             }
         }
 
-        private static async Task WriteNativeMixedModePartAsync(Project project, IGeneratorSettings settings)
+        private static void WriteNativeMixedModePart(Project project, IGeneratorSettings settings)
         {
             var ns = project.Extension == "Core"
                 ? settings.Namespace
@@ -123,11 +122,10 @@ namespace Bind.Writers
 
                 sw.WriteLine("    }");
                 sw.WriteLine("}");
-                await sw.FlushAsync();
             }
         }
 
-        private static async Task WriteOverloadsMixedModePartAsync(Project project, IGeneratorSettings settings, ProfileDocumentation docs)
+        private static void WriteOverloadsMixedModePart(Project project, IGeneratorSettings settings, ProfileDocumentation docs)
         {
             var file = project.Extension == "Core"
                 ? settings.ClassName
@@ -217,11 +215,10 @@ namespace Bind.Writers
 
                 sw.WriteLine("    }");
                 sw.WriteLine("}");
-                await sw.FlushAsync();
             }
         }
 
-        private static async Task WriteTemplateMixedModePartAsync(
+        private static void WriteTemplateMixedModePart(
             Project project,
             IGeneratorSettings settings)
         {
@@ -254,7 +251,6 @@ namespace Bind.Writers
                 sw.WriteLine(" " + nm + "();");
                 sw.WriteLine("    }");
                 sw.WriteLine("}");
-                await sw.FlushAsync();
             }
         }
     }

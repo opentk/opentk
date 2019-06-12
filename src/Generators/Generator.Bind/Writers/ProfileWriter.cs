@@ -44,14 +44,13 @@ namespace Bind.Writers
         public const string EnumsFolder = "Enums";
 
         /// <summary>
-        /// Asynchronously writes the given profile to a directory.
+        /// Writes the given profile to a directory.
         /// </summary>
         /// <param name="generatorSettings">The generator settings to use for the profile writer.</param>
         /// <param name="profile">The profile to write.</param>
         /// <param name="docs">The profile's documentation.</param>
         /// <param name="nc">The name container for this profile.</param>
-        /// <returns>An asynchronous task.</returns>
-        public static Task WriteAsync
+        public static void Write
         (
             IGeneratorSettings generatorSettings,
             ApiProfile profile,
@@ -76,21 +75,13 @@ namespace Bind.Writers
                 Directory.CreateDirectory(Path.Combine(rootFolder, ExtensionsFolder));
             }
 
-            return Task.WhenAll
-            (
-                GetProjects(profile)
-                    .Select
-                    (
-                        x => WriteProjectAsync(
-                            x,
-                            generatorSettings,
-                            nc,
-                            docs)
-                    )
-            );
+            foreach (var project in GetProjects(profile))
+            {
+                WriteProject(project, generatorSettings, nc, docs);
+            }
         }
 
-        private static async Task WriteProjectAsync
+        private static void WriteProject
         (
             Project project,
             IGeneratorSettings settings,
@@ -118,30 +109,21 @@ namespace Bind.Writers
                 Directory.CreateDirectory(Path.Combine(dir, EnumsFolder));
             }
 
-            await Task.WhenAll(
-                project.Interfaces.Select
-                (
-                    x => InterfaceWriter.WriteInterfaceAsync
-                    (
-                        x, Path.Combine(dir, InterfacesFolder, x.InterfaceName + ".cs"), ns, settings.FunctionPrefix, doc, settings.Namespace
-                    )
-                ).Concat
-                (
-                    project.Enums.Select(
-                        x => EnumWriter.WriteEnumAsync
-                        (
-                            x,
-                            Path.Combine(dir, EnumsFolder, x.Name + ".cs"),
-                            ns,
-                            settings.ConstantPrefix
-                        )
-                    )
-                )
-            );
+            foreach (var interfaceDef in project.Interfaces)
+            {
+                var path = Path.Combine(dir, InterfacesFolder, interfaceDef.InterfaceName + ".cs");
+                InterfaceWriter.WriteInterface(interfaceDef, path, ns, settings.FunctionPrefix, doc, settings.Namespace);
+            }
+
+            foreach (var enumSignature in project.Enums)
+            {
+                var path = Path.Combine(dir, EnumsFolder, enumSignature.Name + ".cs");
+                EnumWriter.WriteEnum(enumSignature, path, ns, settings.ConstantPrefix);
+            }
 
             if (project.Extension == "Core")
             {
-                await InterfaceWriter.WriteMetaInterfaceAsync
+                InterfaceWriter.WriteMetaInterface
                 (
                     ns,
                     Path.Combine(dir, InterfacesFolder, "I" + settings.ClassName + ".cs"),
@@ -149,7 +131,7 @@ namespace Bind.Writers
                     project.Interfaces.Select(x => x.InterfaceName)
                 );
 
-                await NameContainerWriter.WriteNameContainerAsync
+                NameContainerWriter.WriteNameContainer
                 (
                     Path.Combine(dir, $"{settings.APIIdentifier}LibraryNameContainer.cs"),
                     ns,
@@ -160,10 +142,10 @@ namespace Bind.Writers
             else
             {
                 // we expect the project file to already be created
-                await ProjectFileWriter.WriteProjectFileAsync(ns, dir, settings.OutputSubfolder, settings.Namespace, project.Extension != "Core");
+                ProjectFileWriter.WriteProjectFile(ns, dir, settings.OutputSubfolder, settings.Namespace, project.Extension != "Core");
             }
 
-            await ClassWriter.WriteMixedModeClassAsync(project, settings, doc);
+            ClassWriter.WriteMixedModeClass(project, settings, doc);
         }
 
         /// <summary>
