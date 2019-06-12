@@ -395,12 +395,12 @@ namespace OpenToolkit.GraphicsLibraryFramework
         public abstract unsafe byte** GetRequiredInstanceExtensions(out uint count);
 
         /// <inheritdoc />
-        public abstract unsafe IntPtr GetInstanceProcAddress(IntPtr instance, byte* procName);
+        public abstract unsafe IntPtr GetInstanceProcAddress(VkHandle instance, byte* procName);
 
         /// <inheritdoc />
-        public abstract bool GetPhysicalDevicePresentationSupport(IntPtr instance, IntPtr device, int queueFamily);
+        public abstract bool GetPhysicalDevicePresentationSupport(VkHandle instance, VkHandle device, int queueFamily);
 
         /// <inheritdoc />
-        public abstract unsafe int CreateWindowSurface(IntPtr instance, Window* window, IntPtr allocator, IntPtr surface);
+        public abstract unsafe int CreateWindowSurface(VkHandle instance, Window* window, void* allocator, VkHandle surface);
     }
 }

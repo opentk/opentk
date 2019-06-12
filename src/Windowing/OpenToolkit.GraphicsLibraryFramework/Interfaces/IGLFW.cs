@@ -3407,7 +3407,7 @@ namespace OpenToolkit.GraphicsLibraryFramework
         /// </param>
         /// <param name="procName">The ASCII encoded name of the function.</param>
         /// <returns>The address of the function, or <c>null</c> if an error occurred.</returns>
-        unsafe IntPtr GetInstanceProcAddress(IntPtr instance, byte* procName);
+        unsafe IntPtr GetInstanceProcAddress(VkHandle instance, byte* procName);
 
         /// <summary>
         /// Returns whether the specified queue family can present images.
@@ -3440,7 +3440,7 @@ namespace OpenToolkit.GraphicsLibraryFramework
         /// <param name="device">The physical device that the queue family belongs to.</param>
         /// <param name="queueFamily">The index of the queue family to query.</param>
         /// <returns><c>true</c> if the queue family supports presentation, or <c>false</c> otherwise.</returns>
-        bool GetPhysicalDevicePresentationSupport(IntPtr instance, IntPtr device, int queueFamily);
+        bool GetPhysicalDevicePresentationSupport(VkHandle instance, VkHandle device, int queueFamily);
 
         /// <summary>
         /// Creates a Vulkan surface for the specified window.
@@ -3503,6 +3503,6 @@ namespace OpenToolkit.GraphicsLibraryFramework
         /// <returns>
         /// <c>VK_SUCCESS</c> if successful, or a Vulkan error code if an error occurred.
         /// </returns>
-        unsafe int CreateWindowSurface(IntPtr instance, Window* window, IntPtr allocator, IntPtr surface);
+        unsafe int CreateWindowSurface(VkHandle instance, Window* window, void* allocator, VkHandle surface);
     }
 }
