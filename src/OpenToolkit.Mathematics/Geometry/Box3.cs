@@ -99,7 +99,7 @@ namespace OpenToolkit.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets a vector describing the size of the Box2 structure.
+        /// Gets or sets a vector describing the size of the Box3 structure.
         /// </summary>
         public Vector3 Size
         {
@@ -169,7 +169,7 @@ namespace OpenToolkit.Mathematics
         }
 
         /// <summary>
-        /// Translates this Box2 by the given amount.
+        /// Translates this Box3 by the given amount.
         /// </summary>
         /// <param name="distance">The distance to translate the box.</param>
         public void Translate(Vector3 distance)
@@ -179,7 +179,7 @@ namespace OpenToolkit.Mathematics
         }
 
         /// <summary>
-        /// Returns a Box2 translated by the given amount.
+        /// Returns a Box3 translated by the given amount.
         /// </summary>
         /// <param name="distance">The distance to translate the box.</param>
         /// <returns>The translated box.</returns>
@@ -192,7 +192,7 @@ namespace OpenToolkit.Mathematics
         }
 
         /// <summary>
-        /// Scales this Box2 by the given amount.
+        /// Scales this Box3 by the given amount.
         /// </summary>
         /// <param name="scale">The scale to scale the box.</param>
         /// <param name="anchor">The anchor to scale the box from.</param>
@@ -203,7 +203,7 @@ namespace OpenToolkit.Mathematics
         }
 
         /// <summary>
-        /// Returns a Box2 scaled by a given amount from an anchor point.
+        /// Returns a Box3 scaled by a given amount from an anchor point.
         /// </summary>
         /// <param name="scale">The scale to scale the box.</param>
         /// <param name="anchor">The anchor to scale the box from.</param>
@@ -217,7 +217,7 @@ namespace OpenToolkit.Mathematics
         }
 
         /// <summary>
-        /// Inflate this Box2 to encapsulate a given point.
+        /// Inflate this Box3 to encapsulate a given point.
         /// </summary>
         /// <param name="point">The point to query.</param>
         public void Inflate(Vector3 point)
@@ -227,7 +227,7 @@ namespace OpenToolkit.Mathematics
         }
 
         /// <summary>
-        /// Inflate this Box2 to encapsulate a given point.
+        /// Inflate this Box3 to encapsulate a given point.
         /// </summary>
         /// <param name="point">The point to query.</param>
         /// <returns>The inflated box.</returns>
