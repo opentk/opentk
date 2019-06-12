@@ -209,26 +209,8 @@ namespace OpenToolkit.Mathematics
         /// <param name="point">The point to query.</param>
         public void Inflate(Vector2d point)
         {
-            var distMin = _min - point;
-            var distMax = point - _max;
-
-            if (distMin.X < distMax.X)
-            {
-                _min.X = point.X;
-            }
-            else
-            {
-                _max.X = point.X;
-            }
-
-            if (distMin.Y < distMax.Y)
-            {
-                _min.Y = point.Y;
-            }
-            else
-            {
-                _max.Y = point.Y;
-            }
+            _min = Vector2d.ComponentMin(_min, point);
+            _max = Vector2d.ComponentMax(_max, point);
         }
 
         /// <summary>

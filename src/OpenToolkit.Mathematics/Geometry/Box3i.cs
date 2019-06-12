@@ -173,8 +173,8 @@ namespace OpenToolkit.Mathematics
         /// <param name="distance">The distance to translate the box.</param>
         public void Translate(Vector3i distance)
         {
-            Min += distance;
-            Max += distance;
+            _min += distance;
+            _max += distance;
         }
 
         /// <summary>
@@ -221,26 +221,8 @@ namespace OpenToolkit.Mathematics
         /// <param name="point">The point to query.</param>
         public void Inflate(Vector3i point)
         {
-            var distMin = _min - point;
-            var distMax = point - _max;
-
-            if (distMin.X < distMax.X)
-            {
-                _min.X = point.X;
-            }
-            else
-            {
-                _max.X = point.X;
-            }
-
-            if (distMin.Y < distMax.Y)
-            {
-                _min.Y = point.Y;
-            }
-            else
-            {
-                _max.Y = point.Y;
-            }
+            _min = Vector3i.ComponentMin(_min, point);
+            _max = Vector3i.ComponentMax(_max, point);
         }
 
         /// <summary>
@@ -306,7 +288,7 @@ namespace OpenToolkit.Mathematics
         /// <inheritdoc/>
         public override string ToString()
         {
-            return $"({Min.X}{ListSeparator} {Min.Y}) - ({Max.X}{ListSeparator} {Max.Y})";
+            return $"({Min.X}{ListSeparator} {Min.Y}{ListSeparator} {Min.Z}) - ({Max.X}{ListSeparator} {Max.Y}{ListSeparator} {Max.Z})";
         }
     }
 }

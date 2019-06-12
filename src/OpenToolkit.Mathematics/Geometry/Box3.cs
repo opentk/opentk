@@ -138,7 +138,7 @@ namespace OpenToolkit.Mathematics
         public bool Contains(Vector3 point)
         {
             return _min.X <= point.X && point.X <= _max.X &&
-                   _min.Y <= point.Z && point.Y <= _max.Y &&
+                   _min.Y <= point.Y && point.Y <= _max.Y &&
                    _min.Z <= point.Z && point.Z <= _max.Z;
         }
 
@@ -174,8 +174,8 @@ namespace OpenToolkit.Mathematics
         /// <param name="distance">The distance to translate the box.</param>
         public void Translate(Vector3 distance)
         {
-            Min += distance;
-            Max += distance;
+            _min += distance;
+            _max += distance;
         }
 
         /// <summary>
@@ -222,26 +222,8 @@ namespace OpenToolkit.Mathematics
         /// <param name="point">The point to query.</param>
         public void Inflate(Vector3 point)
         {
-            var distMin = _min - point;
-            var distMax = point - _max;
-
-            if (distMin.X < distMax.X)
-            {
-                _min.X = point.X;
-            }
-            else
-            {
-                _max.X = point.X;
-            }
-
-            if (distMin.Y < distMax.Y)
-            {
-                _min.Y = point.Y;
-            }
-            else
-            {
-                _max.Y = point.Y;
-            }
+            _min = Vector3.ComponentMin(_min, point);
+            _max = Vector3.ComponentMax(_max, point);
         }
 
         /// <summary>
@@ -307,7 +289,7 @@ namespace OpenToolkit.Mathematics
         /// <inheritdoc/>
         public override string ToString()
         {
-            return $"({Min.X}{ListSeparator} {Min.Y}) - ({Max.X}{ListSeparator} {Max.Y})";
+            return $"({Min.X}{ListSeparator} {Min.Y}{ListSeparator} {Min.Z}) - ({Max.X}{ListSeparator} {Max.Y}{ListSeparator} {Max.Z})";
         }
     }
 }
