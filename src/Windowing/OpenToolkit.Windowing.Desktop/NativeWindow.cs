@@ -889,13 +889,13 @@ namespace OpenToolkit.Windowing.Desktop
         }
 
         /// <inheritdoc />
-        public bool IsKeyJustPressed(Key key)
+        public bool IsKeyPressed(Key key)
         {
             return _keyboardState.IsKeyDown(key) && !LastKeyboardState.IsKeyDown(key);
         }
 
         /// <inheritdoc />
-        public bool IsKeyJustReleased(Key key)
+        public bool IsKeyReleased(Key key)
         {
             return !_keyboardState.IsKeyDown(key) && LastKeyboardState.IsKeyDown(key);
         }
@@ -913,13 +913,13 @@ namespace OpenToolkit.Windowing.Desktop
         }
 
         /// <inheritdoc />
-        public bool IsMouseButtonJustPressed(MouseButton button)
+        public bool IsMouseButtonPressed(MouseButton button)
         {
             return _mouseState.IsButtonDown(button) && !LastMouseState.IsButtonDown(button);
         }
 
         /// <inheritdoc />
-        public bool IsMouseButtonJustReleased(MouseButton button)
+        public bool IsMouseButtonReleased(MouseButton button)
         {
             return !_mouseState.IsButtonDown(button) && LastMouseState.IsButtonDown(button);
         }
