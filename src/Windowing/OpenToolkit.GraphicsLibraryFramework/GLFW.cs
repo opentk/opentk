@@ -387,5 +387,20 @@ namespace OpenToolkit.GraphicsLibraryFramework
 
         /// <inheritdoc />
         public abstract unsafe void SetClipboardString(Window* window, string data);
+
+        /// <inheritdoc />
+        public abstract bool VulkanSupported();
+
+        /// <inheritdoc />
+        public abstract unsafe byte** GetRequiredInstanceExtensions(out uint count);
+
+        /// <inheritdoc />
+        public abstract unsafe IntPtr GetInstanceProcAddress(VkHandle instance, byte* procName);
+
+        /// <inheritdoc />
+        public abstract bool GetPhysicalDevicePresentationSupport(VkHandle instance, VkHandle device, int queueFamily);
+
+        /// <inheritdoc />
+        public abstract unsafe int CreateWindowSurface(VkHandle instance, Window* window, void* allocator, VkHandle surface);
     }
 }

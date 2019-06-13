@@ -3294,5 +3294,215 @@ namespace OpenToolkit.GraphicsLibraryFramework
         /// </para>
         /// </remarks>
         unsafe bool WindowShouldClose(Window* window);
+
+        /// <summary>
+        /// Returns whether the Vulkan loader and an ICD have been found.
+        /// </summary>
+        /// <remarks>
+        /// <para>
+        /// This function returns whether the Vulkan loader and any minimally functional ICD have been found.
+        /// </para>
+        /// <para>
+        /// The availability of a Vulkan loader and even an ICD does not by itself
+        /// guarantee that surface creation or even instance creation is possible.
+        /// For example, on Fermi systems Nvidia will install an ICD that provides no actual Vulkan support.
+        /// Call <see cref="GetRequiredInstanceExtensions"/> to check whether the extensions necessary
+        /// for Vulkan surface creation are available and <see cref="GetPhysicalDevicePresentationSupport"/>
+        /// to check whether a queue family of a physical device supports image presentation.
+        /// </para>
+        /// <para>
+        /// Possible errors include <see cref="ErrorCode.NotInitialized"/>.
+        /// </para>
+        /// <para>
+        /// This function may be called from any thread.
+        /// </para>
+        /// </remarks>
+        /// <returns>
+        /// <c>true</c> if Vulkan is minimally available, or <c>false</c> otherwise.
+        /// </returns>
+        bool VulkanSupported();
+
+        /// <summary>
+        /// Returns the Vulkan instance extensions required by GLFW.
+        /// </summary>
+        /// <remarks>
+        /// <para>
+        /// This function returns an array of names of Vulkan instance extensions required by GLFW for
+        /// creating Vulkan surfaces for GLFW windows. If successful, the list will always contains
+        /// <c>VK_KHR_surface</c>, so if you don't require any additional extensions you can
+        /// pass this list directly to the <c>VkInstanceCreateInfo</c> struct.
+        /// </para>
+        /// <para>
+        /// If Vulkan is not available on the machine, this function returns <c>null</c> and generates
+        /// a <see cref="ErrorCode.NotInitialized"/> error. Call <see cref="VulkanSupported"/> to check
+        /// whether Vulkan is at least minimally available.
+        /// </para>
+        /// <para>
+        /// If Vulkan is available but no set of extensions allowing window surface creation was found,
+        /// this function returns <c>null</c>. You may still use Vulkan for off-screen rendering and compute work.
+        /// </para>
+        /// <para>
+        /// Additional extensions may be required by future versions of GLFW.
+        /// You should check if any extensions you wish to enable are already in the returned array,
+        /// as it is an error to specify an extension more than once in the <c>VkInstanceCreateInfo</c> struct.
+        /// </para>
+        /// <para>
+        /// macOS: This function currently only supports the <c>VK_MVK_macos_surface</c> extension from MoltenVK.
+        /// </para>
+        /// <para>
+        /// Possible errors include <see cref="ErrorCode.NotInitialized"/> and <see cref="ErrorCode.ApiUnavailable"/>.
+        /// </para>
+        /// <para>
+        /// The returned array is allocated and freed by GLFW. You should not free it yourself.
+        /// It is guaranteed to be valid only until the library is terminated.
+        /// </para>
+        /// <para>
+        /// This function may be called from any thread.
+        /// </para>
+        /// </remarks>
+        /// <param name="count">
+        /// Where to store the number of extensions in the returned array.
+        /// This is set to zero if an error occurred.
+        /// </param>
+        /// <returns>
+        /// An array of ASCII encoded extension names, or <c>null</c> if an error occurred.
+        /// </returns>
+        unsafe byte** GetRequiredInstanceExtensions(out uint count);
+
+        /// <summary>
+        /// Returns the address of the specified Vulkan instance function.
+        /// </summary>
+        /// <remarks>
+        /// <para>
+        /// This function returns the address of the specified Vulkan core or extension function for
+        /// the specified instance. If instance is set to <c>null</c> it can return any function exported
+        /// from the Vulkan loader, including at least the following functions:
+        /// </para>
+        /// <list type="bullet">
+        /// <item>
+        /// <description><c>vkEnumerateInstanceExtensionProperties</c></description>
+        /// <description><c>vkEnumerateInstanceLayerProperties</c></description>
+        /// <description><c>vkCreateInstance</c></description>
+        /// <description><c>vkGetInstanceProcAddr</c></description>
+        /// </item>
+        /// </list>
+        /// <para>
+        /// If Vulkan is not available on the machine, this function returns <c>null</c> and generates
+        /// a <see cref="ErrorCode.NotInitialized"/> error. Call <see cref="VulkanSupported"/> to check
+        /// whether Vulkan is at least minimally available.
+        /// </para>
+        /// <para>
+        /// This function is equivalent to calling <c>vkGetInstanceProcAddr</c> with a platform-specific
+        /// query of the Vulkan loader as a fallback.
+        /// </para>
+        /// <para>
+        /// Possible errors include <see cref="ErrorCode.NotInitialized"/> and <see cref="ErrorCode.ApiUnavailable"/>.
+        /// </para>
+        /// <para>
+        /// The returned function pointer is valid until the library is terminated.
+        /// </para>
+        /// </remarks>
+        /// <param name="instance">
+        /// The Vulkan instance to query, or <c>null</c> to retrieve functions related to instance creation.
+        /// </param>
+        /// <param name="procName">The ASCII encoded name of the function.</param>
+        /// <returns>The address of the function, or <c>null</c> if an error occurred.</returns>
+        unsafe IntPtr GetInstanceProcAddress(VkHandle instance, byte* procName);
+
+        /// <summary>
+        /// Returns whether the specified queue family can present images.
+        /// </summary>
+        /// <remarks>
+        /// <para>
+        /// This function returns whether the specified queue family of the specified physical device
+        /// supports presentation to the platform GLFW was built for.
+        /// </para>
+        /// <para>
+        /// If Vulkan or the required window surface creation instance extensions are not available
+        /// on the machine, or if the specified instance was not created with the required extensions,
+        /// this function returns <c>false</c> and generates a <see cref="ErrorCode.ApiUnavailable"/> error.
+        /// Call <see cref="VulkanSupported"/> to check whether Vulkan is at least minimally available and
+        /// <see cref="GetRequiredInstanceExtensions"/> to check what instance extensions are required.
+        /// </para>
+        /// <para>
+        /// Possible errors include <see cref="ErrorCode.NotInitialized"/> and <see cref="ErrorCode.ApiUnavailable"/>.
+        /// </para>
+        /// <para>
+        /// macOS: This function currently always returns <c>true</c>, as the <c>VK_MVK_macos_surface</c>
+        /// extension does not provide a <c>vkGetPhysicalDevice*PresentationSupport</c> type function.
+        /// </para>
+        /// <para>
+        /// This function may be called from any thread.
+        /// For synchronization details of Vulkan objects, see the Vulkan specification.
+        /// </para>
+        /// </remarks>
+        /// <param name="instance">The instance that the physical device belongs to.</param>
+        /// <param name="device">The physical device that the queue family belongs to.</param>
+        /// <param name="queueFamily">The index of the queue family to query.</param>
+        /// <returns><c>true</c> if the queue family supports presentation, or <c>false</c> otherwise.</returns>
+        bool GetPhysicalDevicePresentationSupport(VkHandle instance, VkHandle device, int queueFamily);
+
+        /// <summary>
+        /// Creates a Vulkan surface for the specified window.
+        /// </summary>
+        /// <remarks>
+        /// <para>
+        /// This function creates a Vulkan surface for the specified window.
+        /// </para>
+        /// <para>
+        /// If the Vulkan loader or at least one minimally functional ICD were not found,
+        /// this function returns <c>VK_ERROR_INITIALIZATION_FAILED</c> and generates a
+        /// <see cref="ErrorCode.ApiUnavailable"/> error.
+        /// Call <see cref="VulkanSupported"/> to check whether Vulkan is at least minimally available.
+        /// </para>
+        /// <para>
+        /// If the required window surface creation instance extensions are not available or
+        /// if the specified instance was not created with these extensions enabled,
+        /// this function returns <c>VK_ERROR_EXTENSION_NOT_PRESENT</c> and generates a
+        /// <see cref="ErrorCode.ApiUnavailable"/> error.
+        /// Call <see cref="GetRequiredInstanceExtensions"/> to check what instance extensions are required.
+        /// </para>
+        /// <para>
+        /// The window surface cannot be shared with another API so the window must have been created with
+        /// the client api hint set to <see cref="ClientApi.NoApi"/> otherwise it generates a
+        /// <see cref="ErrorCode.InvalidValue"/> error and returns <c>VK_ERROR_NATIVE_WINDOW_IN_USE_KHR</c>.
+        /// </para>
+        /// <para>
+        /// The window surface must be destroyed before the specified Vulkan instance.
+        /// It is the responsibility of the caller to destroy the window surface.
+        /// GLFW does not destroy it for you. Call <c>vkDestroySurfaceKHR</c> to destroy the surface.
+        /// </para>
+        /// <para>
+        /// Possible errors include <see cref="ErrorCode.NotInitialized"/>, <see cref="ErrorCode.ApiUnavailable"/>,
+        /// <see cref="ErrorCode.PlatformError"/> and <see cref="ErrorCode.InvalidValue"/>.
+        /// </para>
+        /// <para>
+        /// If an error occurs before the creation call is made, GLFW returns the Vulkan error code most
+        /// appropriate for the error. Appropriate use of <see cref="VulkanSupported"/> and
+        /// <see cref="GetRequiredInstanceExtensions"/> should eliminate almost all occurrences of these errors.
+        /// </para>
+        /// <para>
+        /// macOS: This function currently only supports the <c>VK_MVK_macos_surface</c> extension from MoltenVK.
+        /// </para>
+        /// <para>
+        /// macOS: This function creates and sets a <c>CAMetalLayer</c> instance for the window content view,
+        /// which is required for MoltenVK to function.
+        /// </para>
+        /// <para>
+        /// This function may be called from any thread.
+        /// For synchronization details of Vulkan objects, see the Vulkan specification.
+        /// </para>
+        /// </remarks>
+        /// <param name="instance">The Vulkan instance to create the surface in.</param>
+        /// <param name="window">The window to create the surface for.</param>
+        /// <param name="allocator">The allocator to use, or <c>null</c> to use the default allocator.</param>
+        /// <param name="surface">
+        /// Where to store the handle of the surface.
+        /// This is set to <c>VK_NULL_HANDLE</c> if an error occurred.
+        /// </param>
+        /// <returns>
+        /// <c>VK_SUCCESS</c> if successful, or a Vulkan error code if an error occurred.
+        /// </returns>
+        unsafe int CreateWindowSurface(VkHandle instance, Window* window, void* allocator, VkHandle surface);
     }
 }
