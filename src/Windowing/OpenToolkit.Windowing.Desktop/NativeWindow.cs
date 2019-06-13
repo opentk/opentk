@@ -237,7 +237,7 @@ namespace OpenToolkit.Windowing.Desktop
             {
                 if (Glfw.GetWindowAttrib(WindowPtr, WindowAttributeGetter.Iconified))
                 {
-                    return WindowState.Minimized;
+                    return WindowState.Iconified;
                 }
 
                 if (Glfw.GetWindowAttrib(WindowPtr, WindowAttributeGetter.Maximized))
@@ -269,7 +269,7 @@ namespace OpenToolkit.Windowing.Desktop
                     case WindowState.Normal:
                         Glfw.RestoreWindow(WindowPtr);
                         break;
-                    case WindowState.Minimized:
+                    case WindowState.Iconified:
                         Glfw.IconifyWindow(WindowPtr);
                         break;
                     case WindowState.Maximized:
@@ -627,7 +627,7 @@ namespace OpenToolkit.Windowing.Desktop
                 _closeCallback = window => OnClosing(this, new CancelEventArgs());
                 Glfw.SetWindowCloseCallback(WindowPtr, _closeCallback);
 
-                _iconifyCallback = (window, iconified) => OnMinimized(this, new MinimizedEventArgs(iconified));
+                _iconifyCallback = (window, iconified) => OnIconified(this, new IconifiedEventArgs(iconified));
                 Glfw.SetWindowIconifyCallback(WindowPtr, _iconifyCallback);
 
                 _focusCallback = (window, focused) => OnFocusedChanged(this, new FocusedChangedEventArgs(focused));
@@ -820,7 +820,7 @@ namespace OpenToolkit.Windowing.Desktop
         public event EventHandler<EventArgs> Disposed;
 
         /// <inheritdoc />
-        public event EventHandler<MinimizedEventArgs> Minimized;
+        public event EventHandler<IconifiedEventArgs> Iconified;
 
         /// <inheritdoc />
         public event EventHandler<EventArgs> IconChanged;
@@ -1157,13 +1157,13 @@ namespace OpenToolkit.Windowing.Desktop
         }
 
         /// <summary>
-        /// Raises the <see cref="OnMinimized"/> event.
+        /// Raises the <see cref="OnIconified"/> event.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">A <see cref="MouseWheelEventArgs"/> that contains the event data.</param>
-        protected virtual void OnMinimized(object sender, MinimizedEventArgs e)
+        protected virtual void OnIconified(object sender, IconifiedEventArgs e)
         {
-            Minimized?.Invoke(sender, e);
+            Iconified?.Invoke(sender, e);
         }
 
         /// <summary>
