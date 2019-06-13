@@ -32,33 +32,18 @@ namespace OpenToolkit.Mathematics
             {
                 if (value.X > _max.X)
                 {
-                    _min.X = _max.X;
                     _max.X = value.X;
                 }
-                else
-                {
-                    _min.X = value.X;
-                }
-
                 if (value.Y > _max.Y)
                 {
-                    _min.Y = _max.Y;
                     _max.Y = value.Y;
                 }
-                else
-                {
-                    _min.Y = value.Y;
-                }
-
                 if (value.Z > _max.Z)
                 {
-                    _min.Z = _max.Z;
                     _max.Z = value.Z;
                 }
-                else
-                {
-                    _min.Z = value.Z;
-                }
+
+                _min = value;
             }
         }
 
@@ -69,38 +54,23 @@ namespace OpenToolkit.Mathematics
         /// </summary>
         public Vector3i Max
         {
-            get => _min;
+            get => _max;
             set
             {
                 if (value.X < _min.X)
                 {
-                    _max.X = _min.X;
                     _min.X = value.X;
                 }
-                else
-                {
-                    _max.X = value.X;
-                }
-
                 if (value.Y < _min.Y)
                 {
-                    _max.Y = _min.Y;
                     _min.Y = value.Y;
                 }
-                else
-                {
-                    _max.Y = value.Y;
-                }
-
                 if (value.Z < _min.Z)
                 {
-                    _max.Z = _min.Z;
                     _min.Z = value.Z;
                 }
-                else
-                {
-                    _max.Z = value.Z;
-                }
+
+                _max = value;
             }
         }
 
@@ -111,38 +81,8 @@ namespace OpenToolkit.Mathematics
         /// <param name="max">The maximum point on the XY plane this box encloses.</param>
         public Box3i(Vector3i min, Vector3i max)
         {
-            if (min.X < max.X)
-            {
-                _min.X = min.X;
-                _max.X = max.X;
-            }
-            else
-            {
-                _min.X = max.X;
-                _max.X = min.X;
-            }
-
-            if (min.Y < max.Y)
-            {
-                _min.Y = min.Y;
-                _max.Y = max.Y;
-            }
-            else
-            {
-                _min.Y = max.Y;
-                _max.Y = min.Y;
-            }
-
-            if (min.Z < max.Z)
-            {
-                _min.Z = min.Z;
-                _max.Z = max.Z;
-            }
-            else
-            {
-                _min.Z = max.Z;
-                _max.Z = min.Z;
-            }
+            _min = Vector3i.ComponentMin(min, max);
+            _max = Vector3i.ComponentMax(min, max);
         }
 
         /// <summary>
@@ -160,12 +100,11 @@ namespace OpenToolkit.Mathematics
         }
 
         /// <summary>
-        /// Gets or sets a vector describing the size of the Box2 structure.
+        /// Gets a vector describing the size of the Box3i structure.
         /// </summary>
         public Vector3i Size
         {
             get => Max - Min;
-            set => Scale(Size - value, new Vector3i((int)Center.X, (int)Center.Y, (int)Center.Z));
         }
 
         /// <summary>
@@ -174,7 +113,12 @@ namespace OpenToolkit.Mathematics
         public Vector3i HalfSize
         {
             get => Size / 2;
-            set => Size = value / 2;
+            set
+            {
+                Vector3i center = new Vector3i((int)Center.X, (int)Center.Y, (int)Center.Z);
+                _min = center - value;
+                _max = center + value;
+            }
         }
 
         /// <summary>
@@ -183,7 +127,7 @@ namespace OpenToolkit.Mathematics
         /// to avoid annoying off-by-one errors in box placement, no setter is provided for this property
         public Vector3 Center
         {
-            get => (_min + _max).ToVector3() * 0.5f;
+            get => ((_min + _max).ToVector3() * 0.5f) + _min.ToVector3();
         }
 
         /// <summary>
@@ -220,24 +164,25 @@ namespace OpenToolkit.Mathematics
         [Pure]
         public float DistanceToNearestEdge(Vector3i point)
         {
-            var distMin = _min - point;
-            var distMax = point - _max;
-            var dist = new Vector2(MathHelper.Min(distMin.X, distMax.X), MathHelper.Min(distMin.Y, distMax.Y));
-            return dist.Length;
+            var distX = new Vector3(
+                Math.Max(0f, Math.Max(_min.X - point.X, point.X - _max.X)),
+                Math.Max(0f, Math.Max(_min.Y - point.Y, point.Y - _max.Y)),
+                Math.Max(0f, Math.Max(_min.Z - point.Z, point.Z - _max.Z)));
+            return distX.Length;
         }
 
         /// <summary>
-        /// Translates this Box2 by the given amount.
+        /// Translates this Box3i by the given amount.
         /// </summary>
         /// <param name="distance">The distance to translate the box.</param>
         public void Translate(Vector3i distance)
         {
-            Min += distance;
-            Max += distance;
+            _min += distance;
+            _max += distance;
         }
 
         /// <summary>
-        /// Returns a Box2 translated by the given amount.
+        /// Returns a Box3i translated by the given amount.
         /// </summary>
         /// <param name="distance">The distance to translate the box.</param>
         /// <returns>The translated box.</returns>
@@ -251,27 +196,18 @@ namespace OpenToolkit.Mathematics
         }
 
         /// <summary>
-        /// Scales this Box2 by the given amount.
+        /// Scales this Box3i by the given amount.
         /// </summary>
         /// <param name="scale">The scale to scale the box.</param>
         /// <param name="anchor">The anchor to scale the box from.</param>
         public void Scale(Vector3i scale, Vector3i anchor)
         {
-            var newDistMin = (anchor - _min) * scale;
-            _min = new Vector3i(
-                anchor.X + _min.X > anchor.X ? newDistMin.X : -newDistMin.X,
-                anchor.Y + _min.Y > anchor.Y ? newDistMin.Y : -newDistMin.Y,
-                anchor.Z + _min.Z > anchor.Z ? newDistMin.Z : -newDistMin.Z);
-
-            var newDistMax = (anchor - _max) * scale;
-            _max = new Vector3i(
-                anchor.X + _max.X > anchor.X ? newDistMax.X : -newDistMax.X,
-                anchor.Y + _min.Y > anchor.Y ? newDistMax.Y : -newDistMax.Y,
-                anchor.Z + _min.Z > anchor.Z ? newDistMax.Z : -newDistMax.Z);
+            _min = anchor + ((_min - anchor) * scale);
+            _max = anchor + ((_max - anchor) * scale);
         }
 
         /// <summary>
-        /// Returns a Box2 scaled by a given amount from an anchor point.
+        /// Returns a Box3i scaled by a given amount from an anchor point.
         /// </summary>
         /// <param name="scale">The scale to scale the box.</param>
         /// <param name="anchor">The anchor to scale the box from.</param>
@@ -286,35 +222,17 @@ namespace OpenToolkit.Mathematics
         }
 
         /// <summary>
-        /// Inflate this Box2 to encapsulate a given point.
+        /// Inflate this Box3i to encapsulate a given point.
         /// </summary>
         /// <param name="point">The point to query.</param>
         public void Inflate(Vector3i point)
         {
-            var distMin = _min - point;
-            var distMax = point - _max;
-
-            if (distMin.X < distMax.X)
-            {
-                _min.X = point.X;
-            }
-            else
-            {
-                _max.X = point.X;
-            }
-
-            if (distMin.Y < distMax.Y)
-            {
-                _min.Y = point.Y;
-            }
-            else
-            {
-                _max.Y = point.Y;
-            }
+            _min = Vector3i.ComponentMin(_min, point);
+            _max = Vector3i.ComponentMax(_max, point);
         }
 
         /// <summary>
-        /// Inflate this Box2 to encapsulate a given point.
+        /// Inflate this Box3i to encapsulate a given point.
         /// </summary>
         /// <param name="point">The point to query.</param>
         /// <returns>The inflated box.</returns>
@@ -381,7 +299,7 @@ namespace OpenToolkit.Mathematics
         /// <inheritdoc/>
         public override string ToString()
         {
-            return $"({Min.X}{ListSeparator} {Min.Y}) - ({Max.X}{ListSeparator} {Max.Y})";
+            return $"({Min.X}{ListSeparator} {Min.Y}{ListSeparator} {Min.Z}) - ({Max.X}{ListSeparator} {Max.Y}{ListSeparator} {Max.Z})";
         }
     }
 }

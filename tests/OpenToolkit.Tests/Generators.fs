@@ -67,6 +67,20 @@ module private Generators =
         |> Gen.map Matrix4
         |> Arb.fromGen
 
+    let box2 =
+        vec2
+        |> Arb.toGen
+        |> Gen.two
+        |> Gen.map Box2
+        |> Arb.fromGen
+
+    let box3 =
+        vec3
+        |> Arb.toGen
+        |> Gen.two
+        |> Gen.map Box3
+        |> Arb.fromGen
+
 type OpenTKGen =
     static member Single() = single
     static member float32() = single
@@ -79,3 +93,5 @@ type OpenTKGen =
     static member Matrix2() = mat2
     static member Matrix3() = mat3
     static member Matrix4() = mat4
+    static member Box2() = box2
+    static member Box3() = box3

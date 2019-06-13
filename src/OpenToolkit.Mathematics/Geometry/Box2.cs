@@ -32,23 +32,14 @@ namespace OpenToolkit.Mathematics
             {
                 if (value.X > _max.X)
                 {
-                    _min.X = _max.X;
                     _max.X = value.X;
                 }
-                else
-                {
-                    _min.X = value.X;
-                }
-
                 if (value.Y > _max.Y)
                 {
-                    _min.Y = _max.Y;
                     _max.Y = value.Y;
                 }
-                else
-                {
-                    _min.Y = value.Y;
-                }
+
+                _min = value;
             }
         }
 
@@ -59,28 +50,19 @@ namespace OpenToolkit.Mathematics
         /// </summary>
         public Vector2 Max
         {
-            get => _min;
+            get => _max;
             set
             {
                 if (value.X < _min.X)
                 {
-                    _max.X = _min.X;
                     _min.X = value.X;
                 }
-                else
-                {
-                    _max.X = value.X;
-                }
-
                 if (value.Y < _min.Y)
                 {
-                    _max.Y = _min.Y;
                     _min.Y = value.Y;
                 }
-                else
-                {
-                    _max.Y = value.Y;
-                }
+
+                _max = value;
             }
         }
 
@@ -91,27 +73,8 @@ namespace OpenToolkit.Mathematics
         /// <param name="max">The maximum point on the XY plane this box encloses.</param>
         public Box2(Vector2 min, Vector2 max)
         {
-            if (min.X < max.X)
-            {
-                _min.X = min.X;
-                _max.X = max.X;
-            }
-            else
-            {
-                _min.X = max.X;
-                _max.X = min.X;
-            }
-
-            if (min.Y < max.Y)
-            {
-                _min.Y = min.Y;
-                _max.Y = max.Y;
-            }
-            else
-            {
-                _min.Y = max.Y;
-                _max.Y = min.Y;
-            }
+            _min = Vector2.ComponentMin(min, max);
+            _max = Vector2.ComponentMax(min, max);
         }
 
         /// <summary>
@@ -132,7 +95,12 @@ namespace OpenToolkit.Mathematics
         public Vector2 Size
         {
             get => Max - Min;
-            set => Scale(Size - value, Center);
+            set
+            {
+                Vector2 center = Center;
+                _min = center - (value * 0.5f);
+                _max = center + (value * 0.5f);
+            }
         }
 
         /// <summary>
@@ -141,7 +109,7 @@ namespace OpenToolkit.Mathematics
         public Vector2 HalfSize
         {
             get => Size / 2;
-            set => Size = value / 2;
+            set => Size = value * 2;
         }
 
         /// <summary>
@@ -149,8 +117,8 @@ namespace OpenToolkit.Mathematics
         /// </summary>
         public Vector2 Center
         {
-            get => (_min + _max) * 0.5f;
-            set => Translate(Center - value);
+            get => HalfSize + _min;
+            set => Translate(value - Center);
         }
 
         /// <summary>
@@ -185,10 +153,10 @@ namespace OpenToolkit.Mathematics
         [Pure]
         public float DistanceToNearestEdge(Vector2 point)
         {
-            var distMin = _min - point;
-            var distMax = point - _max;
-            var dist = new Vector2(MathHelper.Min(distMin.X, distMax.X), MathHelper.Min(distMin.Y, distMax.Y));
-            return dist.Length;
+            var distX = new Vector2(
+                Math.Max(0f, Math.Max(_min.X - point.X, point.X - _max.X)),
+                Math.Max(0f, Math.Max(_min.Y - point.Y, point.Y - _max.Y)));
+            return distX.Length;
         }
 
         /// <summary>
@@ -197,8 +165,8 @@ namespace OpenToolkit.Mathematics
         /// <param name="distance">The distance to translate the box.</param>
         public void Translate(Vector2 distance)
         {
-            Min += distance;
-            Max += distance;
+            _min += distance;
+            _max += distance;
         }
 
         /// <summary>
@@ -222,15 +190,8 @@ namespace OpenToolkit.Mathematics
         /// <param name="anchor">The anchor to scale the box from.</param>
         public void Scale(Vector2 scale, Vector2 anchor)
         {
-            var newDistMin = (anchor - _min) * scale;
-            _min = new Vector2(
-                anchor.X + _min.X > anchor.X ? newDistMin.X : -newDistMin.X,
-                anchor.Y + _min.Y > anchor.Y ? newDistMin.Y : -newDistMin.Y);
-
-            var newDistMax = (anchor - _max) * scale;
-            _max = new Vector2(
-                anchor.X + _max.X > anchor.X ? newDistMax.X : -newDistMax.X,
-                anchor.Y + _min.Y > anchor.Y ? newDistMax.Y : -newDistMax.Y);
+            _min = anchor + ((_min - anchor) * scale);
+            _max = anchor + ((_max - anchor) * scale);
         }
 
         /// <summary>
@@ -254,26 +215,8 @@ namespace OpenToolkit.Mathematics
         /// <param name="point">The point to query.</param>
         public void Inflate(Vector2 point)
         {
-            var distMin = _min - point;
-            var distMax = point - _max;
-
-            if (distMin.X < distMax.X)
-            {
-                _min.X = point.X;
-            }
-            else
-            {
-                _max.X = point.X;
-            }
-
-            if (distMin.Y < distMax.Y)
-            {
-                _min.Y = point.Y;
-            }
-            else
-            {
-                _max.Y = point.Y;
-            }
+            _min = Vector2.ComponentMin(_min, point);
+            _max = Vector2.ComponentMax(_max, point);
         }
 
         /// <summary>
