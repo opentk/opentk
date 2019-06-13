@@ -4,6 +4,8 @@ open Xunit
 open FsCheck
 open FsCheck.Xunit
 open System
+open System
+open System
 open OpenToolkit
 open OpenToolkit.Mathematics
 
@@ -75,6 +77,8 @@ type internal Assert =
         if approxEqDoubleEpsilonWithError(a, b, c) then raise <| new Xunit.Sdk.EqualException(a,b)
 
     static member ThrowsIndexExn(f:unit -> unit) = Assert.Throws<IndexOutOfRangeException>(f) |> ignore
+
+    static member ThrowsArgOutOfRangeExn(f:unit -> unit) = Assert.Throws<ArgumentOutOfRangeException>(f) |> ignore
 
     static member ApproximatelyEqual(a : float32, b : float32) =
         if not <| approxEqDelta a b then raise <| new Xunit.Sdk.EqualException(a, b)
