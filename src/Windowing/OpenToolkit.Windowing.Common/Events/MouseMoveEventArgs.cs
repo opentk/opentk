@@ -7,31 +7,17 @@
 // of the MIT license. See the LICENSE file for details.
 //
 
-using OpenToolkit.Windowing.Common;
-
 namespace OpenToolkit.Windowing.Common
 {
+    // TODO: This really does not need double precision. Can cut the struct size in half.
+
     /// <summary>
     /// Defines the event data for <see cref="IWindowEvents.add_MouseMove" /> events.
     /// </summary>
-    /// <remarks>
-    ///  <para>
-    /// Do not cache instances of this type outside their event handler.
-    /// If necessary, you can clone an instance using the
-    ///  <see cref="MouseMoveEventArgs" /> constructor.
-    ///  </para>
-    /// </remarks>
-    public class MouseMoveEventArgs
+    public readonly struct MouseMoveEventArgs
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="MouseMoveEventArgs"/> class.
-        /// </summary>
-        public MouseMoveEventArgs()
-        {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="MouseMoveEventArgs"/> class.
+        /// Initializes a new instance of the <see cref="MouseMoveEventArgs"/> struct.
         /// </summary>
         /// <param name="x">The X position.</param>
         /// <param name="y">The Y position.</param>
@@ -39,37 +25,30 @@ namespace OpenToolkit.Windowing.Common
         /// <param name="deltaY">The change in Y position produced by this event.</param>
         public MouseMoveEventArgs(double x, double y, double deltaX, double deltaY)
         {
+            X = x;
+            Y = y;
             DeltaX = deltaX;
             DeltaY = deltaY;
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="MouseMoveEventArgs"/> class.
-        /// </summary>
-        /// <param name="args">The <see cref="MouseMoveEventArgs" /> instance to clone.</param>
-        public MouseMoveEventArgs(MouseMoveEventArgs args)
-            : this(args.X, args.Y, args.DeltaX, args.DeltaY)
-        {
-        }
-
-        /// <summary>
         /// Gets the new X position produced by this event.
         /// </summary>
-        public double X { get; internal set; }
+        public double X { get; }
 
         /// <summary>
         /// Gets the new Y position produced by this event.
         /// </summary>
-        public double Y { get; internal set; }
+        public double Y { get; }
 
         /// <summary>
         /// Gets the change in X position produced by this event.
         /// </summary>
-        public double DeltaX { get; internal set; }
+        public double DeltaX { get; }
 
         /// <summary>
         /// Gets the change in Y position produced by this event.
         /// </summary>
-        public double DeltaY { get; internal set; }
+        public double DeltaY { get; }
     }
 }

@@ -14,45 +14,24 @@ namespace OpenToolkit.Windowing.Common
     /// <summary>
     /// Defines the arguments for frame events.
     /// </summary>
-    /// <remarks>
-    /// A FrameEventArgs instance is only valid for the duration of the relevant event;
-    /// do not store references to FrameEventArgs outside this event.
-    /// </remarks>
-    public class FrameEventArgs : EventArgs
+    public readonly struct FrameEventArgs
     {
-        private double _elapsed;
-
         /// <summary>
-        /// Initializes a new instance of the <see cref="FrameEventArgs"/> class.
-        /// </summary>
-        public FrameEventArgs()
-        {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="FrameEventArgs"/> class.
+        /// Initializes a new instance of the <see cref="FrameEventArgs"/> struct.
         /// </summary>
         /// <param name="elapsed">The amount of time that has elapsed since the previous event, in seconds.</param>
         public FrameEventArgs(double elapsed)
         {
+            if (elapsed <= 0)
+            {
+                throw new ArgumentOutOfRangeException();
+            }
             Time = elapsed;
         }
 
         /// <summary>
-        /// Gets a <see cref="double" /> that indicates how many seconds of time elapsed since the previous event.
+        /// Gets how many seconds of time elapsed since the previous event.
         /// </summary>
-        public double Time
-        {
-            get => _elapsed;
-            internal set
-            {
-                if (value <= 0)
-                {
-                    throw new ArgumentOutOfRangeException();
-                }
-
-                _elapsed = value;
-            }
-        }
+        public double Time { get; }
     }
 }

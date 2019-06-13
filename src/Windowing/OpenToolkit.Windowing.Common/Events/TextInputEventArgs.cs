@@ -7,17 +7,15 @@
 // of the MIT license. See the LICENSE file for details.
 //
 
-using System;
-
 namespace OpenToolkit.Windowing.Common
 {
     /// <summary>
     ///     Raised when a single unicode code point is input.
     /// </summary>
-    public class TextInputEventArgs : EventArgs
+    public struct TextInputEventArgs
     {
         /// <summary>
-        ///     Initializes a new instance of the <see cref="TextInputEventArgs"/> class.
+        /// Initializes a new instance of the <see cref="TextInputEventArgs"/> struct.
         /// </summary>
         /// <param name="unicode">The unicode code point that was input.</param>
         public TextInputEventArgs(int unicode)

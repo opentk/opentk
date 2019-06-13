@@ -7,52 +7,32 @@
 // of the MIT license. See the LICENSE file for details.
 //
 
-using System;
-
 namespace OpenToolkit.Windowing.Common
 {
     /// <summary>
     /// Defines the event data for the window resize event.
     /// </summary>
-    public class ResizeEventArgs : EventArgs
+    public readonly struct ResizeEventArgs
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="ResizeEventArgs"/> class.
-        /// </summary>
-        public ResizeEventArgs()
-        {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ResizeEventArgs"/> class
-        /// from a second <see cref="ResizeEventArgs"/> which is copied.
-        /// </summary>
-        /// <param name="other">The <see cref="ResizeEventArgs"/> to copy.</param>
-        public ResizeEventArgs(ResizeEventArgs other)
-        {
-            this.Width = other.Width;
-            this.Height = other.Height;
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ResizeEventArgs"/> class.
+        /// Initializes a new instance of the <see cref="ResizeEventArgs"/> struct.
         /// </summary>
         /// <param name="width">The new window width.</param>
         /// <param name="height">The new window height.</param>
-        internal ResizeEventArgs(int width, int height)
+        public ResizeEventArgs(int width, int height)
         {
-            this.Width = width;
-            this.Height = height;
+            Width = width;
+            Height = height;
         }
 
         /// <summary>
         /// Gets the new window width.
         /// </summary>
-        public int Width { get; internal set; }
+        public int Width { get; }
 
         /// <summary>
         /// Gets the new window height.
         /// </summary>
-        public int Height { get; internal set; }
+        public int Height { get; }
     }
 }

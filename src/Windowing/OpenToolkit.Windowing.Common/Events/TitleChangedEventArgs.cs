@@ -7,44 +7,25 @@
 // of the MIT license. See the LICENSE file for details.
 //
 
-using System;
-
 namespace OpenToolkit.Windowing.Common
 {
     /// <summary>
     /// Defines the event data for the window title changed event.
     /// </summary>
-    public class TitleChangedEventArgs : EventArgs
+    public readonly struct TitleChangedEventArgs
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="TitleChangedEventArgs"/> class.
-        /// </summary>
-        public TitleChangedEventArgs()
-        {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="TitleChangedEventArgs"/> class
-        /// from a second <see cref="TitleChangedEventArgs"/> which is copied.
-        /// </summary>
-        /// <param name="other">The <see cref="TitleChangedEventArgs"/> to copy.</param>
-        public TitleChangedEventArgs(TitleChangedEventArgs other)
-        {
-            this.Title = other.Title;
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="TitleChangedEventArgs"/> class.
+        /// Initializes a new instance of the <see cref="TitleChangedEventArgs"/> struct.
         /// </summary>
         /// <param name="title">The new window title.</param>
-        internal TitleChangedEventArgs(string title)
+        public TitleChangedEventArgs(string title)
         {
-            this.Title = title;
+            Title = title;
         }
 
         /// <summary>
         /// Gets the new window title.
         /// </summary>
-        public string Title { get; internal set; }
+        public string Title { get; }
     }
 }

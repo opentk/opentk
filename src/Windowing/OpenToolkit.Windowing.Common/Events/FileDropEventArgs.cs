@@ -14,10 +14,10 @@ namespace OpenToolkit.Windowing.Common
     /// <summary>
     /// Defines the event data for files being dropped onto the window.
     /// </summary>
-    public class FileDropEventArgs : EventArgs
+    public readonly struct FileDropEventArgs
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="FileDropEventArgs"/> class.
+        /// Initializes a new instance of the <see cref="FileDropEventArgs"/> struct.
         /// </summary>
         /// <param name="paths">
         /// The <see cref="System.Array" /> of strings giving the names of all files dropped.
@@ -28,18 +28,9 @@ namespace OpenToolkit.Windowing.Common
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="FileDropEventArgs"/> class.
-        /// </summary>
-        /// <param name="other">The <see cref="FileDropEventArgs" /> instance to clone.</param>
-        public FileDropEventArgs(FileDropEventArgs other)
-        {
-            FileNames = other.FileNames;
-        }
-
-        /// <summary>
         /// Gets the names of the files.
         /// </summary>
         /// <value>An <see cref="System.Array" /> of strings giving the names of all files dropped.</value>
-        public string[] FileNames { get; internal set; }
+        public string[] FileNames { get; }
     }
 }

@@ -14,37 +14,20 @@ namespace OpenToolkit.Windowing.Common
     /// <summary>
     /// Defines the event data for the window focus changing.
     /// </summary>
-    public class FocusedChangedEventArgs : EventArgs
+    public readonly struct FocusedChangedEventArgs
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="FocusedChangedEventArgs"/> class.
-        /// </summary>
-        public FocusedChangedEventArgs()
-        {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="FocusedChangedEventArgs"/> class
-        /// from a second <see cref="FocusedChangedEventArgs"/> which is copied.
-        /// </summary>
-        /// <param name="other">The <see cref="FocusedChangedEventArgs"/> to copy.</param>
-        public FocusedChangedEventArgs(FocusedChangedEventArgs other)
-        {
-            this.IsFocused = other.IsFocused;
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="FocusedChangedEventArgs"/> class.
+        /// Initializes a new instance of the <see cref="FocusedChangedEventArgs"/> struct.
         /// </summary>
         /// <param name="isFocused">A value indicating whether the window is focused.</param>
-        internal FocusedChangedEventArgs(bool isFocused)
+        public FocusedChangedEventArgs(bool isFocused)
         {
-            this.IsFocused = isFocused;
+            IsFocused = isFocused;
         }
 
         /// <summary>
         /// Gets a value indicating whether the window is focused.
         /// </summary>
-        public bool IsFocused { get; internal set; }
+        public bool IsFocused { get; }
     }
 }

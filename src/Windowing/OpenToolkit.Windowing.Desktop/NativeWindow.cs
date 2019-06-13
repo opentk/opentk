@@ -640,13 +640,11 @@ namespace OpenToolkit.Windowing.Desktop
                 {
                     var ourKey = GlfwKeyMapping[(int)key];
 
-                    var args = new KeyboardKeyEventArgs
-                    {
-                        Key = ourKey,
-                        ScanCode = scancode,
-                        IsRepeat = action == InputAction.Repeat,
-                        Modifiers = MapGlfwKeyModifiers(mods),
-                    };
+                    var args = new KeyboardKeyEventArgs(
+                        ourKey,
+                        scancode,
+                        MapGlfwKeyModifiers(mods),
+                        action == InputAction.Repeat);
 
                     if (action == InputAction.Release)
                     {
@@ -685,12 +683,10 @@ namespace OpenToolkit.Windowing.Desktop
                 _mouseButtonCallback = (window, button, action, mods) =>
                 {
                     var ourButton = (MouseButton)button;
-                    var args = new MouseButtonEventArgs
-                    {
-                        Button = ourButton,
-                        Action = MapGlfwInputAction(action),
-                        Modifiers = MapGlfwKeyModifiers(mods),
-                    };
+                    var args = new MouseButtonEventArgs(
+                        ourButton,
+                        MapGlfwInputAction(action),
+                        MapGlfwKeyModifiers(mods));
 
                     if (action == InputAction.Release)
                     {
