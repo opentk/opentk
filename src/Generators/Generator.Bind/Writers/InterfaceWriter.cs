@@ -29,8 +29,7 @@ namespace Bind.Writers
         /// <param name="file">The source file to write the meta-interface to.</param>
         /// <param name="name">The name of the meta-interface, without the "I" prefix.</param>
         /// <param name="ints">A set of child interfaces to implement.</param>
-        /// <returns>An asynchronous task.</returns>
-        public static async Task WriteMetaInterfaceAsync(string ns, string file, string name, IEnumerable<string> ints)
+        public static void WriteMetaInterface(string ns, string file, string name, IEnumerable<string> ints)
         {
             var interfaces = ints.ToArray();
             using (var sw = new StreamWriter(File.Open(file, FileMode.Create, FileAccess.ReadWrite, FileShare.Inheritable)))
@@ -51,12 +50,11 @@ namespace Bind.Writers
                 sw.WriteLine("    {");
                 sw.WriteLine("    }");
                 sw.WriteLine("}");
-                await sw.FlushAsync();
             }
         }
 
         /// <summary>
-        /// Asynchronously writes this interface to a file.
+        /// Writes this interface to a file.
         /// </summary>
         /// <param name="i">The interface.</param>
         /// <param name="file">The file to write to.</param>
@@ -64,8 +62,7 @@ namespace Bind.Writers
         /// <param name="prefix">The function prefix for this interface.</param>
         /// <param name="doc">The profile's documentation.</param>
         /// <param name="rootNamespace">The profile's root namespace.</param>
-        /// <returns>The asynchronous task.</returns>
-        public static async Task WriteInterfaceAsync(this Interface i, string file, string ns, string prefix, ProfileDocumentation doc, string rootNamespace)
+        public static void WriteInterface(this Interface i, string file, string ns, string prefix, ProfileDocumentation doc, string rootNamespace)
         {
             using (var sw = new StreamWriter(File.Open(file, FileMode.Create, FileAccess.ReadWrite, FileShare.Inheritable)))
             {
@@ -88,7 +85,7 @@ namespace Bind.Writers
                     using (var sr = new StringReader(Utilities.GetDocumentation(function, doc)))
                     {
                         string line;
-                        while ((line = await sr.ReadLineAsync()) != null)
+                        while ((line = sr.ReadLine()) != null)
                         {
                             sw.WriteLine("        " + line);
                         }
@@ -129,7 +126,7 @@ namespace Bind.Writers
                     using (var sr = new StringReader(Utilities.GetDeclarationString(function) + ";"))
                     {
                         string line;
-                        while ((line = await sr.ReadLineAsync()) != null)
+                        while ((line = sr.ReadLine()) != null)
                         {
                             sw.WriteLine("        " + line);
                         }
@@ -138,7 +135,6 @@ namespace Bind.Writers
 
                 sw.WriteLine("    }");
                 sw.WriteLine("}");
-                await sw.FlushAsync();
             }
         }
     }

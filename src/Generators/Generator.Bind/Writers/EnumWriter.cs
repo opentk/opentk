@@ -24,14 +24,13 @@ namespace Bind.Writers
     public static class EnumWriter
     {
         /// <summary>
-        /// Asynchronously writes an enum to a file.
+        /// Writes an enum to a file.
         /// </summary>
         /// <param name="enum">The enum to write.</param>
         /// <param name="file">The file to write to.</param>
         /// <param name="ns">The namespace of this enum.</param>
         /// <param name="prefix">The constant prefix for the profile.</param>
-        /// <returns>The asynchronous task.</returns>
-        public static async Task WriteEnumAsync(EnumerationSignature @enum, string file, string ns, string prefix)
+        public static void WriteEnum(EnumerationSignature @enum, string file, string ns, string prefix)
         {
             using (var sw = new StreamWriter(File.Open(file, FileMode.Create, FileAccess.ReadWrite, FileShare.ReadWrite)))
             {
@@ -58,7 +57,6 @@ namespace Bind.Writers
                 WriteTokens(sw, @enum.Tokens, prefix);
                 sw.WriteLine("    }");
                 sw.WriteLine("}");
-                await sw.FlushAsync();
             }
         }
 
