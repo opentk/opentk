@@ -54,7 +54,7 @@ namespace OpenToolkit.Windowing.Common.Input
 
             var intOffset = offset / ByteSize;
             var bitOffset = offset % ByteSize;
-            return (_keys[intOffset] & (1 << bitOffset)) != 0;
+            return (this._keys[intOffset] & (1 << bitOffset)) != 0;
         }
 
         /// <summary>
@@ -77,7 +77,7 @@ namespace OpenToolkit.Windowing.Common.Input
             {
                 for (var i = 0; i < NumBytes; ++i)
                 {
-                    if (_keys[i] != 0)
+                    if (this._keys[i] != 0)
                     {
                         return true;
                     }
@@ -107,11 +107,11 @@ namespace OpenToolkit.Windowing.Common.Input
 
             if (down)
             {
-                _keys[intOffset] |= 1 << bitOffset;
+                this._keys[intOffset] |= 1 << bitOffset;
             }
             else
             {
-                _keys[intOffset] &= ~(1 << bitOffset);
+                this._keys[intOffset] &= ~(1 << bitOffset);
             }
         }
 
@@ -177,7 +177,7 @@ namespace OpenToolkit.Windowing.Common.Input
         {
             for (var i = 0; i < NumBytes; i++)
             {
-                if (_keys[i] != other._keys[i])
+                if (this._keys[i] != other._keys[i])
                 {
                     return false;
                 }
@@ -197,7 +197,7 @@ namespace OpenToolkit.Windowing.Common.Input
             var hashcode = 0;
             for (var i = 0; i < NumBytes; i++)
             {
-                hashcode ^= 397 * _keys[i];
+                hashcode ^= 397 * this._keys[i];
             }
 
             return hashcode;
