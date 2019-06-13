@@ -563,6 +563,16 @@ namespace OpenToolkit.Mathematics
         }
 
         /// <summary>
+        /// Converts a quaternion to it's euler angle representation.
+        /// </summary>
+        /// <param name="q">The Quaternion.</param>
+        /// <param name="result">The resulting euler angles in radians.</param>
+        public static void ToEulerAngles(in Quaternion q, out Vector3 result)
+        {
+            q.ToEulerAngles(out result);
+        }
+
+        /// <summary>
         /// Builds a quaternion from the given rotation matrix.
         /// </summary>
         /// <param name="matrix">A rotation matrix.</param>

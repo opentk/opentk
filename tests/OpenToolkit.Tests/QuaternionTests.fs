@@ -20,7 +20,38 @@ module Quaternion =
             Vector3.UnitY
             Vector3.UnitZ
         ]
-    
+        
+    [<Properties(Arbitrary = [| typeof<OpenTKGen> |])>]
+    module Constructors =
+        [<Property>]
+        let ``Constructors using equivalent constructors should be equivalent``(f1 : float32, f2 : float32, f3 : float32, f4 : float32) =
+            let q1 = Quaternion(f1, f2, f3, f4)
+            let q2 = Quaternion(Vector3(f1, f2, f3), f4)
+            
+            Assert.Equal(q1, q2)
+
+            // Euler angles
+            let q3 = Quaternion(f1, f2, f3)
+            let q4 = Quaternion(Vector3(f1, f2, f3))
+
+            Assert.Equal(q3, q4)
+
+    [<Properties(Arbitrary = [| typeof<OpenTKGen> |])>]
+    module EulerAngles =
+        [<Property>]
+        let ``AcuteAngle is in the correct range`` (AcuteAngle f) =
+            Assert.True(f <= MathHelper.DegreesToRadians 89.0f)
+            Assert.True(f >= MathHelper.DegreesToRadians -89.0f)
+
+        [<Property>]
+        let ``Quaternions produce approximatly the same values in euler angle roundtrip``(AcuteAngle a1, AcuteAngle a2, AcuteAngle a3) =
+            let v1 = Vector3(a1, a2, a3)
+            let q1 = Quaternion.FromEulerAngles(v1)
+            let v2 = Quaternion.ToEulerAngles(&q1)
+            let q2 = Quaternion.FromEulerAngles(v2)
+
+            Assert.ApproximatelyEqual(0.0f, (q1 * q2.Inverted()).Xyz.LengthSquared)
+            
     [<Fact>]
     let ``Single axis as euler angles is converted to correct quaternion components``() =
         let test(v:Vector3) =
@@ -50,7 +81,7 @@ module Quaternion =
         let cases = [q2; q3; q4; q5]
         for case in cases do
              Assert.Equal(q1, case)
-        
+    
     [<Fact>]
     let ``Single rotation axis quaternion converts to correct axis angle representation``() =
         let test(v:Vector3) =
@@ -61,3 +92,13 @@ module Quaternion =
             verifyDirection v vec
             
         axes |> List.iter test
+
+    //[<Property>]
+    //let ``Quaternion to euler angle``(q:Quaternion) =
+    //    let v1 = q.ToEulerAngles()
+    //    let mutable inQ = q
+    //    let mutable v2 = Vector3.Zero
+    //    Quaternion.ToEulerAngles(&inQ, &v2)
+
+    //    Assert.Equal(v1, v2)
+

@@ -7,6 +7,10 @@ open System
 open OpenToolkit
 open OpenToolkit.Mathematics
 
+/// An angle from -89 to +89
+[<Struct>]
+type AcuteAngle = AcuteAngle of float32
+
 [<AutoOpen>]
 module private Generators =
     let private isValidFloat f = not (Single.IsNaN f || Single.IsInfinity f || Single.IsInfinity (f * f) || f = Single.MinValue || f = Single.MaxValue )
@@ -81,6 +85,11 @@ module private Generators =
         |> Gen.map Box3
         |> Arb.fromGen
 
+    /// Magical value taken from FsCheck source.
+    /// Generates a float in the range [0;1] in a roughly uniform distribution.
+    let stdFloatGen = Arb.generate<DoNotSize<uint64>> |> Gen.map (fun (DoNotSize n) -> (float (n >>> 11)) * (1.0 / float (1UL <<< 53)))     
+    let acuteAngle = stdFloatGen |> Gen.map (fun f -> (float32 f - 0.5f) * MathHelper.DegreesToRadians 178.0f |> AcuteAngle) |> Arb.fromGen
+
 type OpenTKGen =
     static member Single() = single
     static member float32() = single
@@ -95,3 +104,4 @@ type OpenTKGen =
     static member Matrix4() = mat4
     static member Box2() = box2
     static member Box3() = box3
+    static member AcuteAngle() = acuteAngle
