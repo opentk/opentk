@@ -8,6 +8,7 @@
 //
 
 using System;
+using System.Diagnostics;
 using System.Text;
 
 namespace OpenToolkit.Windowing.Common.Input
@@ -18,75 +19,99 @@ namespace OpenToolkit.Windowing.Common.Input
     public struct KeyboardState : IEquatable<KeyboardState>
     {
         // Allocate enough ints to store all keyboard keys
-        private const int IntSize = sizeof(int) * 8;
+        private const int ByteSize = 8;
 
-        private const int NumInts = ((int)Key.LastKey + IntSize) / IntSize;
+        private const int NumBytes = ((int)Key.LastKey + ByteSize) / ByteSize;
 
-        private unsafe fixed int _keys[NumInts];
+        private unsafe fixed int _keys[NumBytes];
 
         /// <summary>
         /// Gets a <see cref="bool" /> indicating whether the specified
-        ///  <see cref="Key" /> is pressed.
+        ///  <see cref="Key" /> is currently down.
         /// </summary>
         /// <param name="key">The <see cref="Key" /> to check.</param>
-        /// <returns><c>true</c> if key is pressed; <c>false</c> otherwise.</returns>
+        /// <returns><c>true</c> if key is down; <c>false</c> otherwise.</returns>
         public bool this[Key key]
         {
             get => IsKeyDown(key);
-            internal set => SetKeyState(key, value);
+            set => SetKeyState(key, value);
         }
 
         /// <summary>
-        /// Gets a <see cref="bool" /> indicating whether this key is down.
+        /// Gets a <see cref="bool" /> indicating whether this key is currently down.
         /// </summary>
         /// <param name="key">The <see cref="Key" /> to check.</param>
         /// <returns><c>true</c> if <paramref name="key"/> is in the down state; otherwise, <c>false</c>.</returns>
-        public bool IsKeyDown(Key key)
+        public unsafe bool IsKeyDown(Key key)
         {
-            if (key == Key.Unknown)
+            if (key <= Key.Unknown || key > Key.LastKey)
             {
-                throw new ArgumentException("Cannot get the unknown key", nameof(key));
+                throw new ArgumentOutOfRangeException(nameof(key), "Invalid key");
             }
 
-            return ReadBit((int)key);
+            var offset = (int)key;
+            ValidateOffset(offset);
+
+            var intOffset = offset / ByteSize;
+            var bitOffset = offset % ByteSize;
+            return (_keys[intOffset] & (1 << bitOffset)) != 0;
         }
 
         /// <summary>
-        /// Gets a <see cref="bool" /> indicating whether this key is up.
+        /// Gets a <see cref="bool" /> indicating whether this key is currently up.
         /// </summary>
         /// <param name="key">The <see cref="Key" /> to check.</param>
         /// <returns><c>true</c> if <paramref name="key"/> is in the up state; otherwise, <c>false</c>.</returns>
         public bool IsKeyUp(Key key)
         {
-            if (key == Key.Unknown)
-            {
-                throw new ArgumentException("Cannot get the unknown key", nameof(key));
-            }
-
-            return !ReadBit((int)key);
+            return !IsKeyDown(key);
         }
 
         /// <summary>
-        /// Gets a value indicating whether any key is down.
+        /// Gets a value indicating whether any key is currently down.
         /// </summary>
         /// <value><c>true</c> if any key is down; otherwise, <c>false</c>.</value>
-        public bool IsAnyKeyDown
+        public unsafe bool IsAnyKeyDown
         {
             get
             {
-                // If any bit is set then a key is down.
-                unsafe
+                for (var i = 0; i < NumBytes; ++i)
                 {
-                    for (var i = 0; i < NumInts; ++i)
+                    if (_keys[i] != 0)
                     {
-                        if (_keys[i] != 0)
-                        {
-                            return true;
-                        }
+                        return true;
                     }
                 }
 
                 return false;
+            }
+        }
+
+        /// <summary>
+        /// Sets the key state of the <paramref name="key"/> depending on the given <paramref name="down"/> value.
+        /// </summary>
+        /// <param name="key">The <see cref="Key"/> which state should be changed.</param>
+        /// <param name="down">The new state the key should be changed to.</param>
+        public unsafe void SetKeyState(Key key, bool down)
+        {
+            if (key <= Key.Unknown || key > Key.LastKey)
+            {
+                throw new ArgumentOutOfRangeException(nameof(key), "Invalid key");
+            }
+
+            var offset = (int)key;
+            ValidateOffset(offset);
+
+            var intOffset = offset / ByteSize;
+            var bitOffset = offset % ByteSize;
+
+            if (down)
+            {
+                _keys[intOffset] |= 1 << bitOffset;
+            }
+            else
+            {
+                _keys[intOffset] &= ~(1 << bitOffset);
             }
         }
 
@@ -148,22 +173,17 @@ namespace OpenToolkit.Windowing.Common.Input
         /// </summary>
         /// <param name="other">The instance to compare two.</param>
         /// <returns><c>true</c>, if both instances are equal; <c>false</c> otherwise.</returns>
-        public bool Equals(KeyboardState other)
+        public unsafe bool Equals(KeyboardState other)
         {
-            var equal = true;
-            unsafe
+            for (var i = 0; i < NumBytes; i++)
             {
-                var k2 = other._keys;
-                fixed (int* k1 = _keys)
+                if (_keys[i] != other._keys[i])
                 {
-                    for (var i = 0; equal && i < NumInts; i++)
-                    {
-                        equal &= *(k1 + i) == *(k2 + i);
-                    }
+                    return false;
                 }
             }
 
-            return equal;
+            return true;
         }
 
         /// <summary>
@@ -172,21 +192,15 @@ namespace OpenToolkit.Windowing.Common.Input
         /// <returns>
         /// A <see cref="int" /> representing the hashcode for this instance.
         /// </returns>
-        public override int GetHashCode()
+        public override unsafe int GetHashCode()
         {
-            unsafe
+            var hashcode = 0;
+            for (var i = 0; i < NumBytes; i++)
             {
-                fixed (int* k = _keys)
-                {
-                    var hashcode = 0;
-                    for (var i = 0; i < NumInts; i++)
-                    {
-                        hashcode ^= (k + i)->GetHashCode();
-                    }
-
-                    return hashcode;
-                }
+                hashcode ^= 397 * _keys[i];
             }
+
+            return hashcode;
         }
 
         /// <inheritdoc />
@@ -198,7 +212,7 @@ namespace OpenToolkit.Windowing.Common.Input
 
             for (var key = (Key)1; key <= Key.LastKey; ++key)
             {
-                if (ReadBit((int)key))
+                if (IsKeyDown(key))
                 {
                     if (!first)
                     {
@@ -218,91 +232,11 @@ namespace OpenToolkit.Windowing.Common.Input
             return builder.ToString();
         }
 
-        /// <summary>
-        /// Sets the key state of the <paramref name="key"/> depending on the given <paramref name="down"/> value.
-        /// </summary>
-        /// <param name="key">The <see cref="Key"/> which state should be changed.</param>
-        /// <param name="down">The new state the key should be changed to.</param>
-        internal void SetKeyState(Key key, bool down)
-        {
-            if (key == Key.Unknown)
-            {
-                throw new ArgumentException("Cannot set the unknown key", nameof(key));
-            }
-
-            if (down)
-            {
-                EnableBit((int)key);
-            }
-            else
-            {
-                DisableBit((int)key);
-            }
-        }
-
-        /// <summary>
-        /// Gets whether a single key is pressed using an offset corresponding to a <see cref="Key"/>.
-        /// </summary>
-        /// <param name="offset">The offset corresponding to a <see cref="Key"/>.</param>
-        /// <returns>
-        /// <c>true</c> when the key given by <paramref name="offset"/> is pressed; otherwise, <c>false</c>.
-        /// </returns>
-        internal bool ReadBit(int offset)
-        {
-            ValidateOffset(offset);
-
-            var intOffset = offset / IntSize;
-            var bitOffset = offset % IntSize;
-            unsafe
-            {
-                fixed (int* k = _keys)
-                {
-                    return (*(k + intOffset) & (1 << bitOffset)) != 0u;
-                }
-            }
-        }
-
-        /// <summary>
-        /// Enable a single key using an offset corresponding to a <see cref="Key"/>.
-        /// </summary>
-        /// <param name="offset">The offset corresponding to a <see cref="Key"/>.</param>
-        internal void EnableBit(int offset)
-        {
-            ValidateOffset(offset);
-
-            var intOffset = offset / IntSize;
-            var bitOffset = offset % IntSize;
-            unsafe
-            {
-                fixed (int* k = _keys)
-                {
-                    *(k + intOffset) |= 1 << bitOffset;
-                }
-            }
-        }
-
-        /// <summary>
-        /// Disables a single key using an offset corresponding to a <see cref="Key"/>.
-        /// </summary>
-        /// <param name="offset">The offset corresponding to a <see cref="Key"/>.</param>
-        internal void DisableBit(int offset)
-        {
-            ValidateOffset(offset);
-
-            var intOffset = offset / IntSize;
-            var bitOffset = offset % IntSize;
-            unsafe
-            {
-                fixed (int* k = _keys)
-                {
-                    *(k + intOffset) &= ~(1 << bitOffset);
-                }
-            }
-        }
-
+        // This shouldn't be necessary but I'll keep it in just in case.
+        [Conditional("DEBUG")]
         private static void ValidateOffset(int offset)
         {
-            if (offset < 0 || offset >= NumInts * IntSize)
+            if (offset < 0 || offset >= NumBytes * ByteSize)
             {
                 throw new ArgumentOutOfRangeException();
             }
