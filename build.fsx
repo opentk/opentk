@@ -71,7 +71,6 @@ let release = LoadReleaseNotes "RELEASE_NOTES.md"
 
 let isXamarinPlatform = false //EnvironmentHelper.isMacOS || Environment.OSVersion.Platform = PlatformID.Win32NT
 
-
 // Helper active pattern for project types
 let (|Fsproj|Csproj|Vbproj|) (projFileName:string) =
     match projFileName with
@@ -171,16 +170,16 @@ Target "UpdateSignatures" (fun _ ->
     |> MSBuildRelease "" "Build"
     |> ignore
     
+    let specUrl = @"https://raw.githubusercontent.com/KhronosGroup/OpenGL-Registry/master/xml/gl.xml"
+//    let wglSpecUrl = @"https://raw.githubusercontent.com/KhronosGroup/OpenGL-Registry/master/xml/gl.xml"
+    let output = @"src/Generator.Bind/Specifications/GL2/signatures.xml" 
     
-    let bindingProcess = new Process()
-    bindingProcess.StartInfo.FileName <- Path.Combine("src", "Generator.Bind", "bin", "Release", "Bind.exe")
-    if bindingProcess.Start() then
-        bindingProcess.WaitForExit()
-    else
-        failwith "Could not start Bind.exe"
+    let args = sprintf "--prefix gl --input-files %s --output-file %s" specUrl output
+    
+    let result = Shell.Exec("src/Generator.Converter/bin/Release/Convert.exe", args)
+    if result <> 0 then
+        failwith "Error running Convert.exe"
 )
-
-
 
 // --------------------------------------------------------------------------------------
 // Build generator projects, and generates the bindings.
