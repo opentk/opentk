@@ -22,7 +22,7 @@ namespace OpenToolkit.Windowing.Common
         /// <summary>
         /// The window is minimized to the taskbar (also known as 'iconified').
         /// </summary>
-        Iconified,
+        Minimized,
 
         /// <summary>
         /// The window covers the whole working area, which includes the desktop but not the taskbar and/or panels.

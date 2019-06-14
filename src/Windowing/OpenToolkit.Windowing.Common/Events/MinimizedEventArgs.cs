@@ -12,22 +12,22 @@ namespace OpenToolkit.Windowing.Common
     /// <summary>
     /// Defines the event data for the window minimizing event.
     /// </summary>
-    public readonly struct IconifiedEventArgs
+    public readonly struct MinimizedEventArgs
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="IconifiedEventArgs"/> struct.
+        /// Initializes a new instance of the <see cref="MinimizedEventArgs"/> struct.
         /// </summary>
-        /// <param name="isIconified">
-        /// A value indicating whether the window is iconified (minimized).
+        /// <param name="isMinimized">
+        /// A value indicating whether the window is minimized.
         /// </param>
-        public IconifiedEventArgs(bool isIconified)
+        public MinimizedEventArgs(bool isMinimized)
         {
-            IsIconified = isIconified;
+            IsMinimized = isMinimized;
         }
 
         /// <summary>
-        /// Gets a value indicating whether the window is iconified (minimized).
+        /// Gets a value indicating whether the window is minimized.
         /// </summary>
-        public bool IsIconified { get; }
+        public bool IsMinimized { get; }
     }
 }
