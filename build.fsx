@@ -98,6 +98,18 @@ let runtimeProjects =
 
 let activeProjects =
     Seq.concat [buildProjects; runtimeProjects]
+    
+    
+let generateBindings() =
+    buildProjects
+        |> MSBuildRelease "" "Build"
+        |> ignore
+    let bindingProcess = new Process()
+    bindingProcess.StartInfo.FileName <- Path.Combine("src", "Generator.Bind", "bin", "Release", "Bind.exe")
+    if bindingProcess.Start() then
+        bindingProcess.WaitForExit()
+    else
+        failwith "Could not start Bind.exe"
 
 
 // Generate assembly info files with the right version & up-to-date information
@@ -152,19 +164,16 @@ Target "Clean" (fun _ ->
 )
 
 // --------------------------------------------------------------------------------------
-// Build generator projects, and generate bindings if neccesary
+// Build generator projects, and generates the bindings.
 Target "GenerateBindings" (fun _ ->
-    if not (File.Exists(".bindingsGenerated")) then
-        buildProjects
-            |> MSBuildRelease "" "Build"
-            |> ignore
-        let bindingProcess = new Process()
-        bindingProcess.StartInfo.FileName <- Path.Combine("src", "Generator.Bind", "bin", "Release", "Bind.exe")
-        if bindingProcess.Start() then
-            bindingProcess.WaitForExit()
-            File.Create(".bindingsGenerated").Close()
-        else
-            failwith "Could not start Bind.exe"
+    generateBindings()
+)
+
+// --------------------------------------------------------------------------------------
+// Build generator projects, and generate bindings if they do not exist.
+Target "GenerateBindingsIfNeeded" (fun _ ->
+    if not (File.Exists("src/OpenTK/Graphics/OpenGL/GL.cs")) then
+        generateBindings()
 )
 
 // --------------------------------------------------------------------------------------
@@ -218,7 +227,7 @@ Target "All" DoNothing
 
 "Clean"
   ==> "AssemblyInfo"
-  ==> "GenerateBindings"
+  ==> "GenerateBindingsIfNeeded"
   ==> "Build"
   ==> "CopyBinaries"
   ==> "RunTests"
