@@ -1,3 +1,5 @@
+open Fake
+
 // --------------------------------------------------------------------------------------
 // FAKE build script
 // --------------------------------------------------------------------------------------
@@ -104,12 +106,11 @@ let generateBindings() =
     buildProjects
         |> MSBuildRelease "" "Build"
         |> ignore
-    let bindingProcess = new Process()
-    bindingProcess.StartInfo.FileName <- Path.Combine("src", "Generator.Bind", "bin", "Release", "Bind.exe")
-    if bindingProcess.Start() then
-        bindingProcess.WaitForExit()
-    else
-        failwith "Could not start Bind.exe"
+        
+        
+    let result = Shell.Exec("src/Generator.Bind/bin/Release/Bind.exe")
+    if result <> 0 then
+        failwith "Error running Bind.exe"
 
 
 // Generate assembly info files with the right version & up-to-date information
@@ -162,6 +163,24 @@ Target "CopyBinaries" (fun _ ->
 Target "Clean" (fun _ ->
     CleanDirs ["bin"; "temp"]
 )
+
+// --------------------------------------------------------------------------------------
+// Build Converter project and updates the signatures.xml file.
+Target "UpdateSignatures" (fun _ ->
+    buildProjects
+    |> MSBuildRelease "" "Build"
+    |> ignore
+    
+    
+    let bindingProcess = new Process()
+    bindingProcess.StartInfo.FileName <- Path.Combine("src", "Generator.Bind", "bin", "Release", "Bind.exe")
+    if bindingProcess.Start() then
+        bindingProcess.WaitForExit()
+    else
+        failwith "Could not start Bind.exe"
+)
+
+
 
 // --------------------------------------------------------------------------------------
 // Build generator projects, and generates the bindings.
