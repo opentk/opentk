@@ -50,7 +50,7 @@ namespace OpenTK.Convert
                 yield return new Example
                 (
                     "Converting latest remote specification",
-                    new Options { Prefix = "gl", OutputFile = "signatures.xml", InputFiles = new []{ "https://cvs.khronos.org/svn/repos/ogl/trunk/doc/registry/public/api/gl.xml" } }
+                    new Options { Prefix = "gl", OutputFile = "signatures.xml", InputFiles = new []{ "https://raw.githubusercontent.com/KhronosGroup/OpenGL-Registry/master/xml/gl.xml" } }
                 );
             }
         }
