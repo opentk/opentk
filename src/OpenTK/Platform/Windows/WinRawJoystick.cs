@@ -81,6 +81,8 @@ namespace OpenTK.Platform.Windows
                     if ((int)usage != 1)
                     {
                         int axis = GetAxis(collection, page, usage);
+                        // Skip axes that we couldn't map to any of our known joystick axes
+                        if (axis == -1) return;
                         State.SetAxis(axis, value);
                     }
                 }
