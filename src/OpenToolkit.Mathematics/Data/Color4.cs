@@ -1088,7 +1088,7 @@ namespace OpenToolkit.Mathematics
             {
                 h = 0.0f;
             }
-            if (max == rgb.R)
+            else if (max == rgb.R)
             {
                 h = (rgb.G - rgb.B) / diff;
             }
@@ -1212,7 +1212,7 @@ namespace OpenToolkit.Mathematics
             {
                 h = 0.0f;
             }
-            if (max == rgb.R)
+            else if (max == rgb.R)
             {
                 h = ((rgb.G - rgb.B) / diff) % 6.0f;
             }
