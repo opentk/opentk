@@ -1084,6 +1084,10 @@ namespace OpenToolkit.Mathematics
             var diff = max - min;
 
             var h = 0.0f;
+            if (diff == 0)
+            {
+                h = 0.0f;
+            }
             if (max == rgb.R)
             {
                 h = (rgb.G - rgb.B) / diff;
@@ -1204,6 +1208,10 @@ namespace OpenToolkit.Mathematics
             var diff = max - min;
 
             var h = 0.0f;
+            if (diff == 0)
+            {
+                h = 0.0f;
+            }
             if (max == rgb.R)
             {
                 h = ((rgb.G - rgb.B) / diff) % 6.0f;
