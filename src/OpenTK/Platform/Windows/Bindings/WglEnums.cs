@@ -262,12 +262,32 @@ namespace OpenTK.Platform.Windows
         Aux2Arb = ((int)0x2089),
     }
 
+    public enum WGL_NV_DX_interop
+    {
+        AccessReadOnly = ((int)0x0000),
+        AccessReadWrite = ((int)0x0001),
+        AccessWriteDiscard = ((int)0x0002),
+    }
+    
+    public enum WGL_NV_DX_interop_ResourceName
+    {
+        Texture2D = 1,
+        Texture3D = 2,
+        TextureCubeMap = 3,
+        TextureRectnagle = 4,
+        RenderBuffer = 5,
+        None = 6,
+        IndexBuffer = 7,
+        ForceDWORD = 0x7fffffff
+    }
+    
     public enum WGL_NV_render_texture_rectangle
     {
         BindToTextureRectangleRgbNv = ((int)0x20a0),
         BindToTextureRectangleRgbaNv = ((int)0x20a1),
         TextureRectangleNv = ((int)0x20a2),
     }
+    
 
     public enum WGL_NV_render_depth_texture
     {
