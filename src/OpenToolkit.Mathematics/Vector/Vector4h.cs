@@ -1259,6 +1259,18 @@ namespace OpenToolkit.Mathematics
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="Vector4h"/> struct using a tuple containing the component
+        /// values.
+        /// </summary>
+        /// <param name="values">A tuple containing the component values.</param>
+        /// <returns>A new instance of the <see cref="Vector4h"/> struct with the given component values.</returns>
+        [Pure]
+        public static implicit operator Vector4h((Half X, Half Y, Half Z, Half W) values)
+        {
+            return new Vector4h(values.X, values.Y, values.Z, values.W);
+        }
+
+        /// <summary>
         /// The size in bytes for an instance of the Half4 struct is 8.
         /// </summary>
         public static readonly int SizeInBytes = 8;
@@ -1376,6 +1388,22 @@ namespace OpenToolkit.Mathematics
                 Half.FromBytes(value, startIndex + 2),
                 Half.FromBytes(value, startIndex + 4),
                 Half.FromBytes(value, startIndex + 6));
+        }
+
+        /// <summary>
+        /// Deconstructs the vector into it's individual components.
+        /// </summary>
+        /// <param name="x">The X component of the vector.</param>
+        /// <param name="y">The Y component of the vector.</param>
+        /// <param name="z">The Z component of the vector.</param>
+        /// <param name="w">The W component of the vector.</param>
+        [Pure]
+        public void Deconstruct(out Half x, out Half y, out Half z, out Half w)
+        {
+            x = X;
+            y = Y;
+            z = Z;
+            w = W;
         }
     }
 }
