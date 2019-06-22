@@ -31,6 +31,6 @@ namespace OpenToolkit.Windowing.Common
         /// <summary>
         ///     Gets the string representation of the input Unicode code point.
         /// </summary>
-        public string String => char.ConvertFromUtf32(Unicode);
+        public string AsString => char.ConvertFromUtf32(Unicode);
     }
 }
