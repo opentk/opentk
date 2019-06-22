@@ -19,11 +19,11 @@ namespace OpenToolkit.Windowing.Common.Input
     public struct KeyboardState : IEquatable<KeyboardState>
     {
         // Allocate enough ints to store all keyboard keys
-        private const int ByteSize = 8;
+        private const int IntSize = 32;
 
-        private const int NumBytes = ((int)Key.LastKey + ByteSize) / ByteSize;
+        private const int NumInts = ((int)Key.LastKey / IntSize) + 1;
 
-        private unsafe fixed int _keys[NumBytes];
+        private unsafe fixed int _keys[NumInts];
 
         /// <summary>
         /// Gets a <see cref="bool" /> indicating whether the specified
@@ -44,16 +44,8 @@ namespace OpenToolkit.Windowing.Common.Input
         /// <returns><c>true</c> if <paramref name="key"/> is in the down state; otherwise, <c>false</c>.</returns>
         public unsafe bool IsKeyDown(Key key)
         {
-            if (key <= Key.Unknown || key > Key.LastKey)
-            {
-                throw new ArgumentOutOfRangeException(nameof(key), "Invalid key");
-            }
+            var (intOffset, bitOffset) = GetOffsets(key);
 
-            var offset = (int)key;
-            ValidateOffset(offset);
-
-            var intOffset = offset / ByteSize;
-            var bitOffset = offset % ByteSize;
             return (this._keys[intOffset] & (1 << bitOffset)) != 0;
         }
 
@@ -75,7 +67,7 @@ namespace OpenToolkit.Windowing.Common.Input
         {
             get
             {
-                for (var i = 0; i < NumBytes; ++i)
+                for (var i = 0; i < NumInts; ++i)
                 {
                     if (this._keys[i] != 0)
                     {
@@ -94,16 +86,7 @@ namespace OpenToolkit.Windowing.Common.Input
         /// <param name="down">The new state the key should be changed to.</param>
         public unsafe void SetKeyState(Key key, bool down)
         {
-            if (key <= Key.Unknown || key > Key.LastKey)
-            {
-                throw new ArgumentOutOfRangeException(nameof(key), "Invalid key");
-            }
-
-            var offset = (int)key;
-            ValidateOffset(offset);
-
-            var intOffset = offset / ByteSize;
-            var bitOffset = offset % ByteSize;
+            var (intOffset, bitOffset) = GetOffsets(key);
 
             if (down)
             {
@@ -175,7 +158,7 @@ namespace OpenToolkit.Windowing.Common.Input
         /// <returns><c>true</c>, if both instances are equal; <c>false</c> otherwise.</returns>
         public unsafe bool Equals(KeyboardState other)
         {
-            for (var i = 0; i < NumBytes; i++)
+            for (var i = 0; i < NumInts; i++)
             {
                 if (this._keys[i] != other._keys[i])
                 {
@@ -195,7 +178,7 @@ namespace OpenToolkit.Windowing.Common.Input
         public override unsafe int GetHashCode()
         {
             var hashcode = 0;
-            for (var i = 0; i < NumBytes; i++)
+            for (var i = 0; i < NumInts; i++)
             {
                 hashcode ^= 397 * this._keys[i];
             }
@@ -236,10 +219,26 @@ namespace OpenToolkit.Windowing.Common.Input
         [Conditional("DEBUG")]
         private static void ValidateOffset(int offset)
         {
-            if (offset < 0 || offset >= NumBytes * ByteSize)
+            if (offset < 0 || offset >= NumInts * IntSize)
             {
                 throw new ArgumentOutOfRangeException();
             }
+        }
+
+        private static (int intOffset, int bitOffset) GetOffsets(Key key)
+        {
+            if (key <= Key.Unknown || key > Key.LastKey)
+            {
+                throw new ArgumentOutOfRangeException(nameof(key), "Invalid key");
+            }
+
+            var offset = (int)key;
+            ValidateOffset(offset);
+
+            var intOffset = offset / IntSize;
+            var bitOffset = offset % IntSize;
+
+            return (intOffset, bitOffset);
         }
     }
 }
