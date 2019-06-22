@@ -7,8 +7,6 @@
 // of the MIT license. See the LICENSE file for details.
 //
 
-using System;
-
 namespace OpenToolkit.Windowing.Common
 {
     /// <summary>
@@ -22,10 +20,6 @@ namespace OpenToolkit.Windowing.Common
         /// <param name="elapsed">The amount of time that has elapsed since the previous event, in seconds.</param>
         public FrameEventArgs(double elapsed)
         {
-            if (elapsed <= 0)
-            {
-                throw new ArgumentOutOfRangeException();
-            }
             Time = elapsed;
         }
 
