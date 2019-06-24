@@ -44,9 +44,9 @@ namespace OpenToolkit.Windowing.Common
         event EventHandler<EventArgs> Disposed;
 
         /// <summary>
-        /// Occurs when the window is iconified (minimized)
+        /// Occurs when the window is minimized.
         /// </summary>
-        event EventHandler<MinimizedEventArgs> Iconified;
+        event EventHandler<MinimizedEventArgs> Minimized;
 
         /// <summary>
         /// Occurs when the icon of the window changes.
@@ -89,17 +89,9 @@ namespace OpenToolkit.Windowing.Common
         event EventHandler<KeyboardKeyEventArgs> KeyDown;
 
         /// <summary>
-        /// Occurs whenever a character is typed.
+        /// Occurs whenever a Unicode code point is typed.
         /// </summary>
-        event EventHandler<KeyPressEventArgs> KeyPress;
-
-        /// <summary>
-        /// Occurs whenever a character is typed. Used for implementing custom Unicode input.
-        /// </summary>
-        /// <remarks>
-        /// If you don't need custom unicode input, use <see cref="KeyPress"/> instead.
-        /// </remarks>
-        event EventHandler<KeyboardCharModEventArgs> KeyboardCharMod;
+        event EventHandler<TextInputEventArgs> TextInput;
 
         /// <summary>
         /// Occurs whenever a keyboard key is released.

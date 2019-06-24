@@ -15,17 +15,10 @@ namespace OpenToolkit.Windowing.Common
     /// <summary>
     /// Defines the event data for the <see cref="IWindowEvents.JoystickConnected"/> event.
     /// </summary>
-    public class JoystickEventArgs : EventArgs
+    public readonly struct JoystickEventArgs
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="JoystickEventArgs"/> class.
-        /// </summary>
-        public JoystickEventArgs()
-        {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="JoystickEventArgs"/> class.
+        /// Initializes a new instance of the <see cref="JoystickEventArgs"/> struct.
         /// </summary>
         /// <param name="joystickId">The Id of the joystick which triggered this event.</param>
         /// <param name="isConnected">
@@ -35,16 +28,6 @@ namespace OpenToolkit.Windowing.Common
         {
             JoystickId = joystickId;
             IsConnected = isConnected;
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="JoystickEventArgs"/> class.
-        /// </summary>
-        /// <param name="other">The <see cref="JoystickEventArgs" /> instance to clone.</param>
-        public JoystickEventArgs(JoystickEventArgs other)
-        {
-            JoystickId = other.JoystickId;
-            IsConnected = other.IsConnected;
         }
 
         /// <summary>

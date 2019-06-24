@@ -8,51 +8,47 @@
 //
 
 using System;
+using OpenToolkit.Mathematics;
 
 namespace OpenToolkit.Windowing.Common
 {
     /// <summary>
     /// Defines the event data for the window position event.
     /// </summary>
-    public class WindowPositionEventArgs : EventArgs
+    public readonly struct WindowPositionEventArgs
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="WindowPositionEventArgs"/> class.
+        /// Initializes a new instance of the <see cref="WindowPositionEventArgs"/> struct.
         /// </summary>
-        public WindowPositionEventArgs()
+        /// <param name="position">The new window position.</param>
+        public WindowPositionEventArgs(Vector2i position)
         {
+            Position = position;
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="WindowPositionEventArgs"/> class
-        /// from a second <see cref="WindowPositionEventArgs"/> which is copied.
-        /// </summary>
-        /// <param name="other">The <see cref="WindowPositionEventArgs"/> to copy.</param>
-        public WindowPositionEventArgs(WindowPositionEventArgs other)
-        {
-            this.X = other.X;
-            this.Y = other.Y;
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="WindowPositionEventArgs"/> class with given coordinate.
+        /// Initializes a new instance of the <see cref="WindowPositionEventArgs"/> struct with given coordinate.
         /// </summary>
         /// <param name="x">The new window x position.</param>
         /// <param name="y">The new window y position.</param>
         public WindowPositionEventArgs(int x, int y)
+            : this(new Vector2i(x, y))
         {
-            this.X = x;
-            this.Y = y;
         }
+
+        /// <summary>
+        /// Gets the new window position, in pixels relative to the top left corner of the current monitor.
+        /// </summary>
+        public Vector2i Position { get; }
 
         /// <summary>
         /// Gets the new window x position.
         /// </summary>
-        public int X { get; internal set; }
+        public int X => Position.X;
 
         /// <summary>
         /// Gets the new window y position.
         /// </summary>
-        public int Y { get; internal set; }
+        public int Y => Position.Y;
     }
 }

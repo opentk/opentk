@@ -7,11 +7,14 @@
 // of the MIT license. See the LICENSE file for details.
 //
 
+using System;
+
 namespace OpenToolkit.GraphicsLibraryFramework
 {
     /// <summary>
     /// Key modifiers, such as Shift or CTRL.
     /// </summary>
+    [Flags]
     public enum KeyModifiers
     {
         /// <summary>
@@ -32,6 +35,16 @@ namespace OpenToolkit.GraphicsLibraryFramework
         /// <summary>
         /// If one or more Super keys were held down.
         /// </summary>
-        Super = 0x0008
+        Super = 0x0008,
+
+        /// <summary>
+        ///     If caps lock is enabled.
+        /// </summary>
+        CapsLock = 0x0010,
+
+        /// <summary>
+        ///     If num lock is enabled.
+        /// </summary>
+        NumLock = 0x0020,
     }
 }

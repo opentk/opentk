@@ -7,58 +7,47 @@
 // of the MIT license. See the LICENSE file for details.
 //
 
-using System;
-using OpenToolkit.Windowing.Common;
+using OpenToolkit.Mathematics;
 
 namespace OpenToolkit.Windowing.Common
 {
     /// <summary>
     /// Defines the event data for <see cref="IWindowEvents.MouseWheel" /> events.
     /// </summary>
-    /// <remarks>
-    ///  <para>
-    /// Do not cache instances of this type outside their event handler.
-    /// If necessary, you can clone an instance using the
-    ///  <see cref="MouseWheelEventArgs" /> constructor.
-    ///  </para>
-    /// </remarks>
-    public class MouseWheelEventArgs
+    public readonly struct MouseWheelEventArgs
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="MouseWheelEventArgs"/> class.
+        /// Initializes a new instance of the <see cref="MouseWheelEventArgs"/> struct.
         /// </summary>
-        public MouseWheelEventArgs()
+        /// <param name="offset">The offset the mouse wheel was moved.</param>
+        public MouseWheelEventArgs(Vector2 offset)
         {
+            Offset = offset;
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="MouseWheelEventArgs"/> class.
+        /// Initializes a new instance of the <see cref="MouseWheelEventArgs"/> struct.
         /// </summary>
         /// <param name="offsetX">The offset on the X axis.</param>
         /// <param name="offsetY">The offset on the Y axis.</param>
-        public MouseWheelEventArgs(double offsetX, double offsetY)
-        {
-            OffsetX = offsetX;
-            OffsetY = offsetY;
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="MouseWheelEventArgs"/> class.
-        /// </summary>
-        /// <param name="args">The <see cref="MouseWheelEventArgs" /> instance to clone.</param>
-        public MouseWheelEventArgs(MouseWheelEventArgs args)
-            : this(args.OffsetX, args.OffsetY)
+        public MouseWheelEventArgs(float offsetX, float offsetY)
+            : this(new Vector2(offsetX, offsetY))
         {
         }
 
         /// <summary>
-        /// Gets the offset on the X axis. Not many mice have this.
+        /// Gets the offset the mouse wheel was moved.
         /// </summary>
-        public double OffsetX { get; internal set; }
+        public Vector2 Offset { get; }
 
         /// <summary>
-        /// Gets the offset on the Y axis. Most mice only have this.
+        /// Gets the offset on the X axis.
         /// </summary>
-        public double OffsetY { get; internal set; }
+        public float OffsetX => Offset.X;
+
+        /// <summary>
+        /// Gets the offset on the Y axis.
+        /// </summary>
+        public float OffsetY => Offset.Y;
     }
 }

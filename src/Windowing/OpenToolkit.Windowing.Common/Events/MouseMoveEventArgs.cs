@@ -7,69 +7,69 @@
 // of the MIT license. See the LICENSE file for details.
 //
 
-using OpenToolkit.Windowing.Common;
+using OpenToolkit.Mathematics;
 
 namespace OpenToolkit.Windowing.Common
 {
     /// <summary>
-    /// Defines the event data for <see cref="IWindowEvents.add_MouseMove" /> events.
+    /// Defines the event data for <see cref="IWindowEvents.MouseMove" /> events.
     /// </summary>
-    /// <remarks>
-    ///  <para>
-    /// Do not cache instances of this type outside their event handler.
-    /// If necessary, you can clone an instance using the
-    ///  <see cref="MouseMoveEventArgs" /> constructor.
-    ///  </para>
-    /// </remarks>
-    public class MouseMoveEventArgs
+    public readonly struct MouseMoveEventArgs
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="MouseMoveEventArgs"/> class.
+        /// Initializes a new instance of the <see cref="MouseMoveEventArgs"/> struct.
         /// </summary>
-        public MouseMoveEventArgs()
+        /// <param name="position">The new mouse position.</param>
+        /// <param name="delta">The change in position produced by this event.</param>
+        public MouseMoveEventArgs(Vector2 position, Vector2 delta)
         {
+            Position = position;
+            Delta = delta;
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="MouseMoveEventArgs"/> class.
+        /// Initializes a new instance of the <see cref="MouseMoveEventArgs"/> struct.
         /// </summary>
-        /// <param name="x">The X position.</param>
-        /// <param name="y">The Y position.</param>
+        /// <param name="x">The new mouse X position.</param>
+        /// <param name="y">The new mouse Y position.</param>
         /// <param name="deltaX">The change in X position produced by this event.</param>
         /// <param name="deltaY">The change in Y position produced by this event.</param>
-        public MouseMoveEventArgs(double x, double y, double deltaX, double deltaY)
-        {
-            DeltaX = deltaX;
-            DeltaY = deltaY;
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="MouseMoveEventArgs"/> class.
-        /// </summary>
-        /// <param name="args">The <see cref="MouseMoveEventArgs" /> instance to clone.</param>
-        public MouseMoveEventArgs(MouseMoveEventArgs args)
-            : this(args.X, args.Y, args.DeltaX, args.DeltaY)
+        public MouseMoveEventArgs(float x, float y, float deltaX, float deltaY)
+            : this(new Vector2(x, y), new Vector2(deltaX, deltaY))
         {
         }
 
         /// <summary>
         /// Gets the new X position produced by this event.
+        /// This position is relative to the top-left corner of the contents of the window.
         /// </summary>
-        public double X { get; internal set; }
+        public float X => Position.X;
 
         /// <summary>
         /// Gets the new Y position produced by this event.
+        /// This position is relative to the top-left corner of the contents of the window.
         /// </summary>
-        public double Y { get; internal set; }
+        public float Y => Position.Y;
+
+        /// <summary>
+        /// Gets the new position produced by this event.
+        /// This position is relative to the top-left corner of the contents of the window.
+        /// </summary>
+        public Vector2 Position { get; }
 
         /// <summary>
         /// Gets the change in X position produced by this event.
         /// </summary>
-        public double DeltaX { get; internal set; }
+        public float DeltaX => Delta.X;
 
         /// <summary>
         /// Gets the change in Y position produced by this event.
         /// </summary>
-        public double DeltaY { get; internal set; }
+        public float DeltaY => Delta.Y;
+
+        /// <summary>
+        /// Gets the change in position produced by this event.
+        /// </summary>
+        public Vector2 Delta { get; }
     }
 }

@@ -6,46 +6,28 @@
 // This software may be modified and distributed under the terms
 // of the MIT license. See the LICENSE file for details.
 //
-using System;
 
 namespace OpenToolkit.Windowing.Common
 {
     /// <summary>
     /// Defines the event data for the window minimizing event.
     /// </summary>
-    public class MinimizedEventArgs : EventArgs
+    public readonly struct MinimizedEventArgs
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="MinimizedEventArgs"/> class.
+        /// Initializes a new instance of the <see cref="MinimizedEventArgs"/> struct.
         /// </summary>
-        public MinimizedEventArgs()
-        {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="MinimizedEventArgs"/> class
-        /// from a second <see cref="MinimizedEventArgs"/> which is copied.
-        /// </summary>
-        /// <param name="other">The <see cref="MinimizedEventArgs"/> to copy.</param>
-        public MinimizedEventArgs(MinimizedEventArgs other)
-        {
-            this.IsIconified = other.IsIconified;
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="MinimizedEventArgs"/> class.
-        /// </summary>
-        /// <param name="isIconified">
-        /// A value indicating whether the window is iconified (minimized).
+        /// <param name="isMinimized">
+        /// A value indicating whether the window is minimized.
         /// </param>
-        internal MinimizedEventArgs(bool isIconified)
+        public MinimizedEventArgs(bool isMinimized)
         {
-            this.IsIconified = isIconified;
+            IsMinimized = isMinimized;
         }
 
         /// <summary>
-        /// Gets a value indicating whether the window is iconified (minimized).
+        /// Gets a value indicating whether the window is minimized.
         /// </summary>
-        public bool IsIconified { get; internal set; }
+        public bool IsMinimized { get; }
     }
 }
