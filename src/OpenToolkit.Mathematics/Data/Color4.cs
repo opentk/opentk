@@ -1121,9 +1121,6 @@ namespace OpenToolkit.Mathematics
             if ((1.0f - Math.Abs((2.0f * lightness) - 1.0f)) != 0)
             {
                 saturation = diff / (1.0f - Math.Abs((2.0f * lightness) - 1.0f));
-                if (saturation < 0)
-                {
-                }
             }
 
             return new Vector4(hue, saturation, lightness, rgb.A);
