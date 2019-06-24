@@ -8,6 +8,7 @@
 //
 
 using System;
+using OpenToolkit.Mathematics;
 
 namespace OpenToolkit.Windowing.Common
 {
@@ -17,24 +18,37 @@ namespace OpenToolkit.Windowing.Common
     public readonly struct WindowPositionEventArgs
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="WindowPositionEventArgs"/> struct.
+        /// </summary>
+        /// <param name="position">The new window position.</param>
+        public WindowPositionEventArgs(Vector2i position)
+        {
+            Position = position;
+        }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="WindowPositionEventArgs"/> struct with given coordinate.
         /// </summary>
         /// <param name="x">The new window x position.</param>
         /// <param name="y">The new window y position.</param>
         public WindowPositionEventArgs(int x, int y)
+            : this(new Vector2i(x, y))
         {
-            X = x;
-            Y = y;
         }
+
+        /// <summary>
+        /// Gets the new window position, in pixels relative to the top left corner of the current monitor.
+        /// </summary>
+        public Vector2i Position { get; }
 
         /// <summary>
         /// Gets the new window x position.
         /// </summary>
-        public int X { get; }
+        public int X => Position.X;
 
         /// <summary>
         /// Gets the new window y position.
         /// </summary>
-        public int Y { get; }
+        public int Y => Position.Y;
     }
 }

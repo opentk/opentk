@@ -7,6 +7,8 @@
 // of the MIT license. See the LICENSE file for details.
 //
 
+using OpenToolkit.Mathematics;
+
 namespace OpenToolkit.Windowing.Common
 {
     /// <summary>
@@ -17,22 +19,35 @@ namespace OpenToolkit.Windowing.Common
         /// <summary>
         /// Initializes a new instance of the <see cref="ResizeEventArgs"/> struct.
         /// </summary>
+        /// <param name="size">The new window size.</param>
+        public ResizeEventArgs(Vector2i size)
+        {
+            Size = size;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ResizeEventArgs"/> struct.
+        /// </summary>
         /// <param name="width">The new window width.</param>
         /// <param name="height">The new window height.</param>
         public ResizeEventArgs(int width, int height)
+            : this(new Vector2i(width, height))
         {
-            Width = width;
-            Height = height;
         }
+
+        /// <summary>
+        /// Gets the new window size.
+        /// </summary>
+        public Vector2i Size { get; }
 
         /// <summary>
         /// Gets the new window width.
         /// </summary>
-        public int Width { get; }
+        public int Width => Size.X;
 
         /// <summary>
         /// Gets the new window height.
         /// </summary>
-        public int Height { get; }
+        public int Height => Size.Y;
     }
 }

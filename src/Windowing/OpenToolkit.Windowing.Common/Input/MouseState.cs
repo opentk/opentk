@@ -25,7 +25,7 @@ namespace OpenToolkit.Windowing.Common.Input
 
         /// <summary>
         /// Gets or sets or a <see cref="Vector2"/> representing the absolute position of the pointer,
-        /// relative to the contents of the window.
+        /// relative to the top-left corner of the contents of the window.
         /// </summary>
         public Vector2 Position { get; set; }
 

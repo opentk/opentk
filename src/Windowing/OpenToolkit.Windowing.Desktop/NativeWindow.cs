@@ -701,21 +701,21 @@ namespace OpenToolkit.Windowing.Desktop
                 };
                 Glfw.SetMouseButtonCallback(WindowPtr, _mouseButtonCallback);
 
-                _cursorPosCallback = (window, xpos, ypos) =>
+                _cursorPosCallback = (window, posX, posY) =>
                 {
-                    var deltaX = _lastReportedMousePos.X - (float)xpos;
-                    var deltaY = _lastReportedMousePos.Y - (float)ypos;
+                    var newPos = new Vector2((float)posX, (float)posY);
+                    var delta = _lastReportedMousePos - newPos;
 
-                    MouseDelta += new Vector2(deltaX, deltaY);
+                    MouseDelta += delta;
 
-                    _lastReportedMousePos = _mouseState.Position = new Vector2((float)xpos, (float)ypos);
+                    _lastReportedMousePos = _mouseState.Position = newPos;
 
-                    OnMouseMove(this, new MouseMoveEventArgs(xpos, ypos, deltaX, deltaY));
+                    OnMouseMove(this, new MouseMoveEventArgs(newPos, delta));
                 };
                 Glfw.SetCursorPosCallback(WindowPtr, _cursorPosCallback);
 
                 _scrollCallback = (window, offsetX, offsetY) =>
-                    OnMouseWheel(this, new MouseWheelEventArgs(offsetX, offsetY));
+                    OnMouseWheel(this, new MouseWheelEventArgs((float)offsetX, (float)offsetY));
                 Glfw.SetScrollCallback(WindowPtr, _scrollCallback);
 
                 _dropCallback = (window, count, paths) =>
