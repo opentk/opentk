@@ -7,6 +7,9 @@ open System
 open OpenToolkit
 open OpenToolkit.Mathematics
 
+[<Struct>]
+type Color4LDR = Color4LDR of Color4
+
 [<AutoOpen>]
 module private Generators =
     let private isValidFloat f = not (Single.IsNaN f || Single.IsInfinity f || Single.IsInfinity (f * f) || f = Single.MinValue || f = Single.MaxValue )
@@ -81,6 +84,20 @@ module private Generators =
         |> Gen.map Box3
         |> Arb.fromGen
 
+    let color4HDR =
+        singleArb
+        |> Gen.filter (fun x -> x >= 0.0f)
+        |> Gen.four
+        |> Gen.map Color4
+        |> Arb.fromGen
+
+    let color4LDR =
+        singleArb
+        |> Gen.filter (fun x -> (x >= 0.0f && x <= 1.0f))
+        |> Gen.four
+        |> Gen.map Color4
+        |> Arb.fromGen
+   
 type OpenTKGen =
     static member Single() = single
     static member float32() = single
@@ -95,3 +112,5 @@ type OpenTKGen =
     static member Matrix4() = mat4
     static member Box2() = box2
     static member Box3() = box3
+    static member Color4LDR() = color4LDR
+    static member Color4() = color4HDR

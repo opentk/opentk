@@ -62,6 +62,10 @@ type internal Assert =
         if neqEpsilon a.X b.X epsilon || neqEpsilon a.Y b.Y epsilon || neqEpsilon a.Z b.Z epsilon || neqEpsilon a.W b.W epsilon then
             raise <| new Xunit.Sdk.EqualException(a,b)
 
+    static member ApproximatelyEqualEpsilon(a : Color4, b : Color4, epsilon:float32) =
+        if neqEpsilon a.R b.R epsilon || neqEpsilon a.G b.G epsilon || neqEpsilon a.B b.B epsilon || neqEpsilon a.A b.A epsilon then
+            raise <| new Xunit.Sdk.EqualException(a,b)
+
     static member ApproximatelyEqualEpsilon(a : float32, b : float32) =
         if not <| approxEqSingleEpsilon a b then raise <| new Xunit.Sdk.EqualException(a,b)
 

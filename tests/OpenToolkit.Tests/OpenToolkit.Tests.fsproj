@@ -22,6 +22,7 @@
     <Compile Include="BezierCurveTest.fs" />
     <Compile Include="Box3Tests.fs" />
     <Compile Include="Box2Tests.fs" />
+    <Compile Include="Color4Tests.fs" />
   </ItemGroup>
 
   <ItemGroup>

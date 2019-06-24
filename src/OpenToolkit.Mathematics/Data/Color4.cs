@@ -1063,6 +1063,10 @@ namespace OpenToolkit.Mathematics
             }
 
             var m = lightness - (c / 2.0f);
+            if (m < 0)
+            {
+                m = 0;
+            }
             return new Color4(r + m, g + m, b + m, hsl.W);
         }
 
@@ -1090,7 +1094,11 @@ namespace OpenToolkit.Mathematics
             }
             else if (max == rgb.R)
             {
-                h = (rgb.G - rgb.B) / diff;
+                h = ((rgb.G - rgb.B) / diff) % 6;
+                if (h < 0)
+                {
+                    h += 6;
+                }
             }
             else if (max == rgb.G)
             {
@@ -1110,9 +1118,12 @@ namespace OpenToolkit.Mathematics
             var lightness = (max + min) / 2.0f;
 
             var saturation = 0.0f;
-            if (lightness != 0.0f && lightness != 1.0f)
+            if ((1.0f - Math.Abs((2.0f * lightness) - 1.0f)) != 0)
             {
                 saturation = diff / (1.0f - Math.Abs((2.0f * lightness) - 1.0f));
+                if (saturation < 0)
+                {
+                }
             }
 
             return new Vector4(hue, saturation, lightness, rgb.A);
@@ -1215,6 +1226,10 @@ namespace OpenToolkit.Mathematics
             else if (max == rgb.R)
             {
                 h = ((rgb.G - rgb.B) / diff) % 6.0f;
+                if (h < 0)
+                {
+                    h += 6f;
+                }
             }
             else if (max == rgb.G)
             {
