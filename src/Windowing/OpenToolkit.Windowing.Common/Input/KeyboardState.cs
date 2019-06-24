@@ -42,11 +42,14 @@ namespace OpenToolkit.Windowing.Common.Input
         /// </summary>
         /// <param name="key">The <see cref="Key" /> to check.</param>
         /// <returns><c>true</c> if <paramref name="key"/> is in the down state; otherwise, <c>false</c>.</returns>
-        public unsafe bool IsKeyDown(Key key)
+        public bool IsKeyDown(Key key)
         {
             var (intOffset, bitOffset) = GetOffsets(key);
 
-            return (this._keys[intOffset] & (1 << bitOffset)) != 0;
+            unsafe
+            {
+                return (this._keys[intOffset] & (1 << bitOffset)) != 0;
+            }
         }
 
         /// <summary>
@@ -63,15 +66,18 @@ namespace OpenToolkit.Windowing.Common.Input
         /// Gets a value indicating whether any key is currently down.
         /// </summary>
         /// <value><c>true</c> if any key is down; otherwise, <c>false</c>.</value>
-        public unsafe bool IsAnyKeyDown
+        public bool IsAnyKeyDown
         {
             get
             {
                 for (var i = 0; i < NumInts; ++i)
                 {
-                    if (this._keys[i] != 0)
+                    unsafe
                     {
-                        return true;
+                        if (this._keys[i] != 0)
+                        {
+                            return true;
+                        }
                     }
                 }
 
@@ -84,17 +90,23 @@ namespace OpenToolkit.Windowing.Common.Input
         /// </summary>
         /// <param name="key">The <see cref="Key"/> which state should be changed.</param>
         /// <param name="down">The new state the key should be changed to.</param>
-        public unsafe void SetKeyState(Key key, bool down)
+        public void SetKeyState(Key key, bool down)
         {
             var (intOffset, bitOffset) = GetOffsets(key);
 
             if (down)
             {
-                this._keys[intOffset] |= 1 << bitOffset;
+                unsafe
+                {
+                    this._keys[intOffset] |= 1 << bitOffset;
+                }
             }
             else
             {
-                this._keys[intOffset] &= ~(1 << bitOffset);
+                unsafe
+                {
+                    this._keys[intOffset] &= ~(1 << bitOffset);
+                }
             }
         }
 
@@ -156,13 +168,16 @@ namespace OpenToolkit.Windowing.Common.Input
         /// </summary>
         /// <param name="other">The instance to compare two.</param>
         /// <returns><c>true</c>, if both instances are equal; <c>false</c> otherwise.</returns>
-        public unsafe bool Equals(KeyboardState other)
+        public bool Equals(KeyboardState other)
         {
             for (var i = 0; i < NumInts; i++)
             {
-                if (this._keys[i] != other._keys[i])
+                unsafe
                 {
-                    return false;
+                    if (this._keys[i] != other._keys[i])
+                    {
+                        return false;
+                    }
                 }
             }
 
@@ -175,12 +190,15 @@ namespace OpenToolkit.Windowing.Common.Input
         /// <returns>
         /// A <see cref="int" /> representing the hashcode for this instance.
         /// </returns>
-        public override unsafe int GetHashCode()
+        public override int GetHashCode()
         {
             var hashcode = 0;
             for (var i = 0; i < NumInts; i++)
             {
-                hashcode ^= 397 * this._keys[i];
+                unsafe
+                {
+                    hashcode ^= 397 * this._keys[i];
+                }
             }
 
             return hashcode;
