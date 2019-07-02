@@ -706,3 +706,4 @@ NUGET
       System.Xml.ReaderWriter (>= 4.3)
       System.Xml.XmlDocument (>= 4.3)
       System.Xml.XPath (>= 4.3)
+    xunit.runner.console (2.4.1)
