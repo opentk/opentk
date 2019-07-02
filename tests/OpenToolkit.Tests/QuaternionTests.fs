@@ -46,7 +46,8 @@ module Quaternion =
         [<Property>]
         let ``Quaternions produce approximatly the same values in euler angle roundtrip``(AcuteAngle a1, AcuteAngle a2, AcuteAngle a3) =
             let v1 = Vector3(a1, a2, a3)
-            let q1 = Quaternion.FromEulerAngles(v1)
+            // q1 is mutable because CI is probably not recognizing the C# 'in' keyword and just treats it as a byref
+            let mutable q1 = Quaternion.FromEulerAngles(v1)
             let v2 = Quaternion.ToEulerAngles(&q1)
             let q2 = Quaternion.FromEulerAngles(v2)
 
