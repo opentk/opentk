@@ -107,7 +107,6 @@ ProjectSection(SolutionItems) = preProject
 	build.cmd = build.cmd
 	build.fsx = build.fsx
 	build-bootstrap.csproj = build-bootstrap.csproj
-	Directory.Build.Props = Directory.Build.Props
 EndProjectSection
 EndProject
 Global
