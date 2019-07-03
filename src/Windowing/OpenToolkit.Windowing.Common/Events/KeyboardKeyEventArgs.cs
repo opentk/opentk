@@ -15,47 +15,37 @@ namespace OpenToolkit.Windowing.Common
     /// <summary>
     /// Defines the event data for <see cref="IWindowEvents.KeyDown"/> and <see cref="IWindowEvents.KeyUp"/> events.
     /// </summary>
-    /// <remarks>
-    ///  <para>
-    /// Do not cache instances of this type outside their event handler.
-    /// If necessary, you can clone a KeyboardEventArgs instance using the
-    ///  <see cref="KeyboardKeyEventArgs" /> constructor.
-    ///  </para>
-    /// </remarks>
-    public class KeyboardKeyEventArgs : EventArgs
+    public readonly struct KeyboardKeyEventArgs
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="KeyboardKeyEventArgs"/> class.
+        /// Initializes a new instance of the <see cref="KeyboardKeyEventArgs"/> struct.
         /// </summary>
-        public KeyboardKeyEventArgs()
+        /// <param name="key">The key that generated this event.</param>
+        /// <param name="scanCode">The scan code of the key that generated this event.</param>
+        /// <param name="modifiers">The key modifiers that were active when this event was generated.</param>
+        /// <param name="isRepeat">Whether this event is a repeat from the user holding the key down.</param>
+        public KeyboardKeyEventArgs(Key key, int scanCode, KeyModifiers modifiers, bool isRepeat)
         {
+            Key = key;
+            ScanCode = scanCode;
+            Modifiers = modifiers;
+            IsRepeat = isRepeat;
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="KeyboardKeyEventArgs"/> class.
+        /// Gets the key that generated this event.
         /// </summary>
-        /// <param name="args">An existing <see cref="KeyboardKeyEventArgs"/> instance to clone.</param>
-        public KeyboardKeyEventArgs(KeyboardKeyEventArgs args)
-        {
-            Key = args.Key;
-        }
+        public Key Key { get; }
 
         /// <summary>
-        /// Gets the <see cref="Key" /> that generated this event.
+        /// Gets the keyboard scan code of the key that generated this event.
         /// </summary>
-        public Key Key { get; internal set; }
+        public int ScanCode { get; }
 
         /// <summary>
-        /// Gets the Unicode scancode which generated this event.
+        /// Gets a bitwise combination representing the key modifiers were active when this event was generated.
         /// </summary>
-        public int ScanCode { get; internal set; }
-
-        /// <summary>
-        /// Gets a bitwise combination representing the <see cref="OpenToolkit.Windowing.Common.Input.KeyModifiers" />
-        /// that are currently pressed.
-        /// </summary>
-        /// <value>The modifiers.</value>
-        public KeyModifiers Modifiers { get; internal set; }
+        public KeyModifiers Modifiers { get; }
 
         /// <summary>
         /// Gets a value indicating whether
@@ -66,24 +56,30 @@ namespace OpenToolkit.Windowing.Common
         /// a key; false, if this was caused by the user pressing a
         /// key for the first time.
         /// </value>
-        public bool IsRepeat { get; internal set; }
+        public bool IsRepeat { get; }
 
         /// <summary>
         /// Gets a value indicating whether <see cref="OpenToolkit.Windowing.Common.Input.KeyModifiers.Alt" /> is pressed.
         /// </summary>
         /// <value><c>true</c> if pressed; otherwise, <c>false</c>.</value>
-        public bool Alt => (Modifiers & KeyModifiers.Alt) != 0;
+        public bool Alt => Modifiers.HasFlag(KeyModifiers.Alt);
 
         /// <summary>
         /// Gets a value indicating whether <see cref="OpenToolkit.Windowing.Common.Input.KeyModifiers.Control" /> is pressed.
         /// </summary>
         /// <value><c>true</c> if pressed; otherwise, <c>false</c>.</value>
-        public bool Control => (Modifiers & KeyModifiers.Control) != 0;
+        public bool Control => Modifiers.HasFlag(KeyModifiers.Control);
 
         /// <summary>
         /// Gets a value indicating whether <see cref="OpenToolkit.Windowing.Common.Input.KeyModifiers.Shift" /> is pressed.
         /// </summary>
         /// <value><c>true</c> if pressed; otherwise, <c>false</c>.</value>
-        public bool Shift => (Modifiers & KeyModifiers.Shift) != 0;
+        public bool Shift => Modifiers.HasFlag(KeyModifiers.Shift);
+
+        /// <summary>
+        /// Gets a value indicating whether <see cref="OpenToolkit.Windowing.Common.Input.KeyModifiers.Shift" /> is pressed.
+        /// </summary>
+        /// <value><c>true</c> if pressed; otherwise, <c>false</c>.</value>
+        public bool Command => Modifiers.HasFlag(KeyModifiers.Command);
     }
 }

@@ -9,9 +9,11 @@ using OpenToolkit.GraphicsLibraryFramework;
 using OpenToolkit.Mathematics;
 using OpenToolkit.Windowing.Common;
 using OpenToolkit.Windowing.Common.Input;
+using GlfwKeyModifiers = OpenToolkit.GraphicsLibraryFramework.KeyModifiers;
 using InputAction = OpenToolkit.GraphicsLibraryFramework.InputAction;
 using KeyModifiers = OpenToolkit.Windowing.Common.Input.KeyModifiers;
 using Monitor = OpenToolkit.Windowing.Common.Monitor;
+using MouseButton = OpenToolkit.Windowing.Common.Input.MouseButton;
 
 namespace OpenToolkit.Windowing.Desktop
 {
@@ -35,15 +37,48 @@ namespace OpenToolkit.Windowing.Desktop
         /// </summary>
         protected unsafe Window* WindowPtr { get; }
 
-        /// <summary>
-        /// The X position of the mouse on the last update. Used to calculate the mouse delta.
-        /// </summary>
-        private double _lastMousePositionX;
+        // Used for delta calculation in the mouse pos changed event.
+        private Vector2 _lastReportedMousePos;
 
-        /// <summary>
-        /// The Y position of the mouse on the last update. Used to calculate the mouse delta.
-        /// </summary>
-        private double _lastMousePositionY;
+        private KeyboardState _keyboardState = default;
+
+        /// <inheritdoc />
+        public KeyboardState KeyboardState => _keyboardState;
+
+        /// <inheritdoc />
+        public KeyboardState LastKeyboardState { get; private set; }
+
+        /// <inheritdoc />
+        public Vector2 MousePosition
+        {
+            get => _mouseState.Position;
+            set
+            {
+                unsafe
+                {
+                    Glfw.SetCursorPos(WindowPtr, value.X, value.Y);
+                }
+
+                _mouseState.Position = value;
+            }
+        }
+
+        private MouseState _mouseState = default;
+
+        /// <inheritdoc />
+        public Vector2 MouseDelta { get; private set; }
+
+        /// <inheritdoc />
+        public MouseState MouseState => _mouseState;
+
+        /// <inheritdoc />
+        public MouseState LastMouseState { get; private set; }
+
+        /// <inheritdoc />
+        public bool IsAnyKeyDown => _keyboardState.IsAnyKeyDown;
+
+        /// <inheritdoc />
+        public bool IsAnyMouseButtonDown => _mouseState.IsAnyButtonDown;
 
         private WindowIcon _icon;
 
@@ -478,7 +513,8 @@ namespace OpenToolkit.Windowing.Desktop
                         break;
                 }
 
-                switch (API)
+                var makeContextCurrent = false;
+                switch (settings.API)
                 {
                     case ContextAPI.NoAPI:
                         Glfw.WindowHint(WindowHintClientApi.ClientApi, ClientApi.NoApi);
@@ -486,33 +522,42 @@ namespace OpenToolkit.Windowing.Desktop
 
                     case ContextAPI.OpenGLES:
                         Glfw.WindowHint(WindowHintClientApi.ClientApi, ClientApi.OpenGlEsApi);
+                        makeContextCurrent = true;
                         break;
 
                     case ContextAPI.OpenGL:
                         Glfw.WindowHint(WindowHintClientApi.ClientApi, ClientApi.OpenGlApi);
+                        makeContextCurrent = true;
                         break;
 
                     default:
                         throw new ArgumentOutOfRangeException();
                 }
 
-                Glfw.WindowHint(WindowHintInt.ContextVersionMajor, APIVersion.Major);
-                Glfw.WindowHint(WindowHintInt.ContextVersionMinor, APIVersion.Minor);
+                Glfw.WindowHint(WindowHintInt.ContextVersionMajor, settings.APIVersion.Major);
+                Glfw.WindowHint(WindowHintInt.ContextVersionMinor, settings.APIVersion.Minor);
 
-                if (Flags.HasFlag(ContextFlags.ForwardCompatible))
+                if (settings.Flags.HasFlag(ContextFlags.ForwardCompatible))
                 {
                     Glfw.WindowHint(WindowHintBool.OpenGLForwardCompat, true);
                 }
 
-                if (Flags.HasFlag(ContextFlags.Debug))
+                if (settings.Flags.HasFlag(ContextFlags.Debug))
                 {
                     Glfw.WindowHint(WindowHintBool.OpenGLDebugContext, true);
                 }
 
-                Glfw.WindowHint
-                (
-                    WindowHintOpenGlProfile.OpenGlProfile, (OpenGlProfile)Profile
-                );
+                switch (settings.Profile)
+                {
+                    case ContextProfile.Compatability:
+                        Glfw.WindowHint(WindowHintOpenGlProfile.OpenGlProfile, OpenGlProfile.Compat);
+                        break;
+                    case ContextProfile.Core:
+                        Glfw.WindowHint(WindowHintOpenGlProfile.OpenGlProfile, OpenGlProfile.Core);
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
 
                 Glfw.WindowHint(WindowHintBool.Focused, settings.IsFocused);
                 _windowBorder = settings.WindowBorder;
@@ -532,7 +577,10 @@ namespace OpenToolkit.Windowing.Desktop
                     WindowPtr = Glfw.CreateWindow(settings.Width, settings.Height, _title, null, null);
                 }
 
-                Glfw.MakeContextCurrent(WindowPtr);
+                if (makeContextCurrent)
+                {
+                    Glfw.MakeContextCurrent(WindowPtr);
+                }
 
                 RegisterWindowCallbacks();
 
@@ -563,7 +611,6 @@ namespace OpenToolkit.Windowing.Desktop
         private GLFWCallbacks.CursorPosCallback _cursorPosCallback;
         private GLFWCallbacks.ScrollCallback _scrollCallback;
         private GLFWCallbacks.DropCallback _dropCallback;
-        private GLFWCallbacks.CharModsCallback _charModsCallback;
         private GLFWCallbacks.JoystickCallback _joystickCallback;
         private GLFWCallbacks.MonitorCallback _monitorCallback;
 
@@ -580,31 +627,41 @@ namespace OpenToolkit.Windowing.Desktop
                 _closeCallback = window => OnClosing(this, new CancelEventArgs());
                 Glfw.SetWindowCloseCallback(WindowPtr, _closeCallback);
 
-                _iconifyCallback = (window, iconified) => OnIconChanged(this, new MinimizedEventArgs(iconified));
+                _iconifyCallback = (window, iconified) => OnMinimized(this, new MinimizedEventArgs(iconified));
                 Glfw.SetWindowIconifyCallback(WindowPtr, _iconifyCallback);
 
                 _focusCallback = (window, focused) => OnFocusedChanged(this, new FocusedChangedEventArgs(focused));
                 Glfw.SetWindowFocusCallback(WindowPtr, _focusCallback);
 
-                _charCallback = (window, codepoint) => OnKeyPress(this, new KeyPressEventArgs((char)codepoint));
+                _charCallback = (window, codepoint) => OnTextInput(this, new TextInputEventArgs((int)codepoint));
                 Glfw.SetCharCallback(WindowPtr, _charCallback);
 
                 _keyCallback = (window, key, scancode, action, mods) =>
                 {
-                    var args = new KeyboardKeyEventArgs
-                    {
-                        Key = (Key)key,
-                        ScanCode = scancode,
-                        IsRepeat = action == InputAction.Repeat,
-                        Modifiers = (KeyModifiers)mods,
-                    };
+                    var ourKey = GlfwKeyMapping[(int)key];
+
+                    var args = new KeyboardKeyEventArgs(
+                        ourKey,
+                        scancode,
+                        MapGlfwKeyModifiers(mods),
+                        action == InputAction.Repeat);
 
                     if (action == InputAction.Release)
                     {
+                        if (ourKey != Key.Unknown)
+                        {
+                            _keyboardState.SetKeyState(ourKey, false);
+                        }
+
                         OnKeyUp(this, args);
                     }
                     else
                     {
+                        if (ourKey != Key.Unknown)
+                        {
+                            _keyboardState.SetKeyState(ourKey, true);
+                        }
+
                         OnKeyDown(this, args);
                     }
                 };
@@ -625,38 +682,40 @@ namespace OpenToolkit.Windowing.Desktop
 
                 _mouseButtonCallback = (window, button, action, mods) =>
                 {
-                    var args = new MouseButtonEventArgs
-                    {
-                        Button = (MouseButton)button,
-                        Action = (Common.InputAction)action,
-                        Modifiers = (KeyModifiers)mods,
-                    };
+                    var ourButton = (MouseButton)button;
+                    var args = new MouseButtonEventArgs(
+                        ourButton,
+                        MapGlfwInputAction(action),
+                        MapGlfwKeyModifiers(mods));
 
                     if (action == InputAction.Release)
                     {
+                        _mouseState[ourButton] = false;
                         OnMouseUp(this, args);
                     }
                     else
                     {
+                        _mouseState[ourButton] = true;
                         OnMouseDown(this, args);
                     }
                 };
                 Glfw.SetMouseButtonCallback(WindowPtr, _mouseButtonCallback);
 
-                _cursorPosCallback = (window, xpos, ypos) =>
+                _cursorPosCallback = (window, posX, posY) =>
                 {
-                    var deltaX = _lastMousePositionX - xpos;
-                    var deltaY = _lastMousePositionY - ypos;
+                    var newPos = new Vector2((float)posX, (float)posY);
+                    var delta = _lastReportedMousePos - newPos;
 
-                    OnMouseMove(this, new MouseMoveEventArgs(xpos, ypos, deltaX, deltaY));
+                    MouseDelta += delta;
 
-                    _lastMousePositionX = xpos;
-                    _lastMousePositionY = ypos;
+                    _lastReportedMousePos = _mouseState.Position = newPos;
+
+                    OnMouseMove(this, new MouseMoveEventArgs(newPos, delta));
                 };
                 Glfw.SetCursorPosCallback(WindowPtr, _cursorPosCallback);
 
                 _scrollCallback = (window, offsetX, offsetY) =>
-                    OnMouseWheel(this, new MouseWheelEventArgs(offsetX, offsetY));
+                    OnMouseWheel(this, new MouseWheelEventArgs((float)offsetX, (float)offsetY));
                 Glfw.SetScrollCallback(WindowPtr, _scrollCallback);
 
                 _dropCallback = (window, count, paths) =>
@@ -676,12 +735,6 @@ namespace OpenToolkit.Windowing.Desktop
                     OnFileDrop(this, new FileDropEventArgs(arrayOfPaths));
                 };
                 Glfw.SetDropCallback(WindowPtr, _dropCallback);
-
-                _charModsCallback = (window, codepoint, mods) =>
-                {
-                    OnKeyboardCharMod(this, new KeyboardCharModEventArgs(codepoint, (KeyModifiers)mods));
-                };
-                Glfw.SetCharModsCallback(WindowPtr, _charModsCallback);
 
                 _joystickCallback = (joy, eventCode) =>
                 {
@@ -719,6 +772,10 @@ namespace OpenToolkit.Windowing.Desktop
         /// <inheritdoc />
         public virtual void ProcessEvents()
         {
+            LastKeyboardState = KeyboardState;
+            LastMouseState = MouseState;
+            MouseDelta = Vector2.Zero;
+
             if (IsEventDriven)
             {
                 Glfw.WaitEvents();
@@ -726,6 +783,12 @@ namespace OpenToolkit.Windowing.Desktop
             else
             {
                 Glfw.PollEvents();
+            }
+
+            unsafe
+            {
+                Glfw.GetCursorPos(WindowPtr, out var x, out var y);
+                _mouseState.Position = new Vector2((float)x, (float)y);
             }
         }
 
@@ -757,7 +820,7 @@ namespace OpenToolkit.Windowing.Desktop
         public event EventHandler<EventArgs> Disposed;
 
         /// <inheritdoc />
-        public event EventHandler<MinimizedEventArgs> Iconified;
+        public event EventHandler<MinimizedEventArgs> Minimized;
 
         /// <inheritdoc />
         public event EventHandler<EventArgs> IconChanged;
@@ -784,10 +847,7 @@ namespace OpenToolkit.Windowing.Desktop
         public event EventHandler<KeyboardKeyEventArgs> KeyDown;
 
         /// <inheritdoc />
-        public event EventHandler<KeyPressEventArgs> KeyPress;
-
-        /// <inheritdoc />
-        public event EventHandler<KeyboardCharModEventArgs> KeyboardCharMod;
+        public event EventHandler<TextInputEventArgs> TextInput;
 
         /// <inheritdoc />
         public event EventHandler<KeyboardKeyEventArgs> KeyUp;
@@ -815,6 +875,54 @@ namespace OpenToolkit.Windowing.Desktop
 
         /// <inheritdoc />
         public event EventHandler<FileDropEventArgs> FileDrop;
+
+        /// <inheritdoc />
+        public bool IsKeyDown(Key key)
+        {
+            return _keyboardState.IsKeyDown(key);
+        }
+
+        /// <inheritdoc />
+        public bool IsKeyUp(Key key)
+        {
+            return _keyboardState.IsKeyUp(key);
+        }
+
+        /// <inheritdoc />
+        public bool IsKeyPressed(Key key)
+        {
+            return _keyboardState.IsKeyDown(key) && !LastKeyboardState.IsKeyDown(key);
+        }
+
+        /// <inheritdoc />
+        public bool IsKeyReleased(Key key)
+        {
+            return !_keyboardState.IsKeyDown(key) && LastKeyboardState.IsKeyDown(key);
+        }
+
+        /// <inheritdoc />
+        public bool IsMouseButtonDown(MouseButton button)
+        {
+            return _mouseState.IsButtonDown(button);
+        }
+
+        /// <inheritdoc />
+        public bool IsMouseButtonUp(MouseButton button)
+        {
+            return _mouseState.IsButtonUp(button);
+        }
+
+        /// <inheritdoc />
+        public bool IsMouseButtonPressed(MouseButton button)
+        {
+            return _mouseState.IsButtonDown(button) && !LastMouseState.IsButtonDown(button);
+        }
+
+        /// <inheritdoc />
+        public bool IsMouseButtonReleased(MouseButton button)
+        {
+            return !_mouseState.IsButtonDown(button) && LastMouseState.IsButtonDown(button);
+        }
 
         /// <summary>
         /// Raises the <see cref="Move"/> event.
@@ -959,23 +1067,13 @@ namespace OpenToolkit.Windowing.Desktop
         }
 
         /// <summary>
-        /// Raises the <see cref="KeyPress"/> event.
+        /// Raises the <see cref="TextInput"/> event.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
-        /// <param name="e">A <see cref="KeyPressEventArgs"/> that contains the event data.</param>
-        protected virtual void OnKeyPress(object sender, KeyPressEventArgs e)
+        /// <param name="e">A <see cref="TextInputEventArgs"/> that contains the event data.</param>
+        protected virtual void OnTextInput(object sender, TextInputEventArgs e)
         {
-            KeyPress?.Invoke(sender, e);
-        }
-
-        /// <summary>
-        /// Raises the <see cref="KeyboardCharMod"/> event.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">A <see cref="KeyboardCharModEventArgs"/> that contains the event data.</param>
-        protected virtual void OnKeyboardCharMod(object sender, KeyboardCharModEventArgs e)
-        {
-            KeyboardCharMod?.Invoke(sender, e);
+            TextInput?.Invoke(sender, e);
         }
 
         /// <summary>
@@ -1059,13 +1157,13 @@ namespace OpenToolkit.Windowing.Desktop
         }
 
         /// <summary>
-        /// Raises the <see cref="OnIconified"/> event.
+        /// Raises the <see cref="OnMinimized"/> event.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">A <see cref="MouseWheelEventArgs"/> that contains the event data.</param>
-        protected virtual void OnIconified(object sender, MinimizedEventArgs e)
+        protected virtual void OnMinimized(object sender, MinimizedEventArgs e)
         {
-            Iconified?.Invoke(sender, e);
+            Minimized?.Invoke(sender, e);
         }
 
         /// <summary>
@@ -1125,6 +1223,181 @@ namespace OpenToolkit.Windowing.Desktop
         {
             Dispose(true);
             GC.SuppressFinalize(this);
+        }
+
+        // Maps GLFW's key enum to our key enum.
+        // There's a few gaps here and there since this is a direct array.
+        // Those default to Unknown.
+        private static readonly Key[] GlfwKeyMapping = GenerateGlfwKeyMapping();
+
+        private static Key[] GenerateGlfwKeyMapping()
+        {
+            var map = new Key[(int)Keys.LastKey + 1];
+            map[(int)Keys.Space] = Key.Space;
+            map[(int)Keys.Apostrophe] = Key.Quote;
+            map[(int)Keys.Comma] = Key.Comma;
+            map[(int)Keys.Minus] = Key.Minus;
+            map[(int)Keys.Period] = Key.Period;
+            map[(int)Keys.Slash] = Key.Slash;
+            map[(int)Keys.D0] = Key.Number0;
+            map[(int)Keys.D1] = Key.Number1;
+            map[(int)Keys.D2] = Key.Number2;
+            map[(int)Keys.D3] = Key.Number3;
+            map[(int)Keys.D4] = Key.Number4;
+            map[(int)Keys.D5] = Key.Number5;
+            map[(int)Keys.D6] = Key.Number6;
+            map[(int)Keys.D7] = Key.Number7;
+            map[(int)Keys.D8] = Key.Number8;
+            map[(int)Keys.D9] = Key.Number9;
+            map[(int)Keys.Semicolon] = Key.Semicolon;
+            map[(int)Keys.Equal] = Key.Plus;
+            map[(int)Keys.A] = Key.A;
+            map[(int)Keys.B] = Key.B;
+            map[(int)Keys.C] = Key.C;
+            map[(int)Keys.D] = Key.D;
+            map[(int)Keys.E] = Key.E;
+            map[(int)Keys.F] = Key.F;
+            map[(int)Keys.G] = Key.G;
+            map[(int)Keys.H] = Key.H;
+            map[(int)Keys.I] = Key.I;
+            map[(int)Keys.J] = Key.J;
+            map[(int)Keys.K] = Key.K;
+            map[(int)Keys.L] = Key.L;
+            map[(int)Keys.M] = Key.M;
+            map[(int)Keys.N] = Key.N;
+            map[(int)Keys.O] = Key.O;
+            map[(int)Keys.P] = Key.P;
+            map[(int)Keys.Q] = Key.Q;
+            map[(int)Keys.R] = Key.R;
+            map[(int)Keys.S] = Key.S;
+            map[(int)Keys.T] = Key.T;
+            map[(int)Keys.U] = Key.U;
+            map[(int)Keys.V] = Key.V;
+            map[(int)Keys.W] = Key.W;
+            map[(int)Keys.X] = Key.X;
+            map[(int)Keys.Y] = Key.Y;
+            map[(int)Keys.Z] = Key.Z;
+            map[(int)Keys.LeftBracket] = Key.BracketLeft;
+            map[(int)Keys.Backslash] = Key.BackSlash;
+            map[(int)Keys.RightBracket] = Key.BracketRight;
+            map[(int)Keys.GraveAccent] = Key.Grave;
+
+            // TODO: What are these world keys and how do I handle them.
+            // map[(int)Keys.World1] = Key.Z;
+            // map[(int)Keys.World2] = Key.Z;
+            map[(int)Keys.Escape] = Key.Escape;
+            map[(int)Keys.Enter] = Key.Enter;
+            map[(int)Keys.Tab] = Key.Tab;
+            map[(int)Keys.Backspace] = Key.BackSpace;
+            map[(int)Keys.Insert] = Key.Insert;
+            map[(int)Keys.Delete] = Key.Delete;
+            map[(int)Keys.Right] = Key.Right;
+            map[(int)Keys.Left] = Key.Left;
+            map[(int)Keys.Down] = Key.Down;
+            map[(int)Keys.Up] = Key.Up;
+            map[(int)Keys.PageUp] = Key.PageUp;
+            map[(int)Keys.PageDown] = Key.PageDown;
+            map[(int)Keys.Home] = Key.Home;
+            map[(int)Keys.End] = Key.End;
+            map[(int)Keys.CapsLock] = Key.CapsLock;
+            map[(int)Keys.ScrollLock] = Key.ScrollLock;
+            map[(int)Keys.NumLock] = Key.NumLock;
+            map[(int)Keys.PrintScreen] = Key.PrintScreen;
+            map[(int)Keys.Pause] = Key.Pause;
+            map[(int)Keys.F1] = Key.F1;
+            map[(int)Keys.F2] = Key.F2;
+            map[(int)Keys.F3] = Key.F3;
+            map[(int)Keys.F4] = Key.F4;
+            map[(int)Keys.F5] = Key.F5;
+            map[(int)Keys.F6] = Key.F6;
+            map[(int)Keys.F7] = Key.F7;
+            map[(int)Keys.F8] = Key.F8;
+            map[(int)Keys.F9] = Key.F9;
+            map[(int)Keys.F10] = Key.F10;
+            map[(int)Keys.F11] = Key.F11;
+            map[(int)Keys.F12] = Key.F12;
+            map[(int)Keys.F13] = Key.F13;
+            map[(int)Keys.F14] = Key.F14;
+            map[(int)Keys.F15] = Key.F15;
+            map[(int)Keys.F16] = Key.F16;
+            map[(int)Keys.F17] = Key.F17;
+            map[(int)Keys.F18] = Key.F18;
+            map[(int)Keys.F19] = Key.F19;
+            map[(int)Keys.F20] = Key.F20;
+            map[(int)Keys.F21] = Key.F21;
+            map[(int)Keys.F22] = Key.F22;
+            map[(int)Keys.F23] = Key.F23;
+            map[(int)Keys.F24] = Key.F24;
+            map[(int)Keys.F25] = Key.F25;
+            map[(int)Keys.KeyPad0] = Key.Keypad0;
+            map[(int)Keys.KeyPad1] = Key.Keypad1;
+            map[(int)Keys.KeyPad2] = Key.Keypad2;
+            map[(int)Keys.KeyPad3] = Key.Keypad3;
+            map[(int)Keys.KeyPad4] = Key.Keypad4;
+            map[(int)Keys.KeyPad5] = Key.Keypad5;
+            map[(int)Keys.KeyPad6] = Key.Keypad6;
+            map[(int)Keys.KeyPad7] = Key.Keypad7;
+            map[(int)Keys.KeyPad8] = Key.Keypad8;
+            map[(int)Keys.KeyPad9] = Key.Keypad9;
+            map[(int)Keys.KeyPadDecimal] = Key.KeypadDecimal;
+            map[(int)Keys.KeyPadDivide] = Key.KeypadDivide;
+            map[(int)Keys.KeyPadMultiply] = Key.KeypadMultiply;
+            map[(int)Keys.KeyPadSubtract] = Key.KeypadSubtract;
+            map[(int)Keys.KeyPadAdd] = Key.KeypadAdd;
+            map[(int)Keys.KeyPadEnter] = Key.KeypadEnter;
+            map[(int)Keys.KeyPadEqual] = Key.KeypadEqual;
+            map[(int)Keys.LeftShift] = Key.ShiftLeft;
+            map[(int)Keys.LeftControl] = Key.ControlLeft;
+            map[(int)Keys.LeftAlt] = Key.AltLeft;
+            map[(int)Keys.LeftSuper] = Key.WinLeft;
+            map[(int)Keys.RightShift] = Key.ShiftRight;
+            map[(int)Keys.RightControl] = Key.ControlRight;
+            map[(int)Keys.RightAlt] = Key.AltRight;
+            map[(int)Keys.RightSuper] = Key.WinRight;
+            map[(int)Keys.Menu] = Key.Menu;
+            return map;
+        }
+
+        private static KeyModifiers MapGlfwKeyModifiers(GlfwKeyModifiers modifiers)
+        {
+            KeyModifiers value = default;
+
+            if (modifiers.HasFlag(GlfwKeyModifiers.Alt))
+            {
+                value |= KeyModifiers.Alt;
+            }
+
+            if (modifiers.HasFlag(GlfwKeyModifiers.Shift))
+            {
+                value |= KeyModifiers.Shift;
+            }
+
+            if (modifiers.HasFlag(GlfwKeyModifiers.Control))
+            {
+                value |= KeyModifiers.Control;
+            }
+
+            if (modifiers.HasFlag(GlfwKeyModifiers.Super))
+            {
+                value |= KeyModifiers.Command;
+            }
+
+            return value;
+        }
+
+        private static Common.InputAction MapGlfwInputAction(InputAction action)
+        {
+            switch (action)
+            {
+                case InputAction.Release:
+                    return Common.InputAction.Release;
+                case InputAction.Press:
+                    return Common.InputAction.Press;
+                case InputAction.Repeat:
+                    return Common.InputAction.Repeat;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(action), action, null);
+            }
         }
     }
 }

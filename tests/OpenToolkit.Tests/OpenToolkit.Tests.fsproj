@@ -13,6 +13,7 @@
     <Compile Include="Assertions.fs" />
     <Compile Include="Generators.fs" />
     <Compile Include="HalfTests.fs" />
+    <Compile Include="KeyboardStateTest.fs" />
     <Compile Include="MathHelperTests.fs" />
     <Compile Include="Matrix4Tests.fs" />
     <Compile Include="Vector2Tests.fs" />
@@ -22,6 +23,7 @@
     <Compile Include="BezierCurveTest.fs" />
     <Compile Include="Box3Tests.fs" />
     <Compile Include="Box2Tests.fs" />
+    <Compile Include="Color4Tests.fs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -39,6 +41,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\OpenToolkit.Mathematics\OpenToolkit.Mathematics.csproj" />
+    <ProjectReference Include="..\..\src\Windowing\OpenToolkit.Windowing.Common\OpenToolkit.Windowing.Common.csproj" />
   </ItemGroup>
 
   <Import Project="..\..\props\common.props" />

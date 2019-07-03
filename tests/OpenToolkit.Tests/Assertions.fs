@@ -4,6 +4,8 @@ open Xunit
 open FsCheck
 open FsCheck.Xunit
 open System
+open System
+open System
 open OpenToolkit
 open OpenToolkit.Mathematics
 
@@ -16,6 +18,7 @@ module private AssertHelpers =
     let private EquivalenceTolerance = 0.00005f
 
     let approxEq a b = MathHelper.ApproximatelyEquivalent(a, b, EquivalenceTolerance)
+    let approxEqEpsilon a b eps = MathHelper.ApproximatelyEquivalent(a, b, float32(eps))
 
     let approxEqDelta a b = MathHelper.ApproximatelyEqual(a, b, BitAccuracy)
 
@@ -49,6 +52,9 @@ type internal Assert =
     static member ApproximatelyEquivalent(a : float32,b : float32) =
         if not <| approxEq a b then raise <| new Xunit.Sdk.EqualException(a,b)
 
+    static member ApproximatelyEquivalent(a : Color4, b : Color4, epsilon:float32) =
+        if not <| approxEqEpsilon a.R b.R epsilon && approxEqEpsilon a.G b.G epsilon && approxEqEpsilon a.B b.B epsilon && approxEqEpsilon a.A b.A epsilon then
+            raise <| new Xunit.Sdk.EqualException(a,b)
 
     static member ApproximatelyEqualEpsilon(a : Vector2, b : Vector2, epsilon:float32) =
         if neqEpsilon a.X b.X epsilon || neqEpsilon a.Y b.Y epsilon then
@@ -89,6 +95,8 @@ type internal Assert =
         if approxEqDoubleEpsilonWithError(a, b, c) then raise <| new Xunit.Sdk.EqualException(a,b)
 
     static member ThrowsIndexExn(f:unit -> unit) = Assert.Throws<IndexOutOfRangeException>(f) |> ignore
+
+    static member ThrowsArgOutOfRangeExn(f:unit -> unit) = Assert.Throws<ArgumentOutOfRangeException>(f) |> ignore
 
     static member ApproximatelyEqual(a : float32, b : float32) =
         if not <| approxEqDelta a b then raise <| new Xunit.Sdk.EqualException(a, b)

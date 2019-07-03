@@ -262,6 +262,18 @@ namespace OpenToolkit.Mathematics
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="Vector2h"/> struct using a tuple containing the component
+        /// values.
+        /// </summary>
+        /// <param name="values">A tuple containing the component values.</param>
+        /// <returns>A new instance of the <see cref="Vector2h"/> struct with the given component values.</returns>
+        [Pure]
+        public static implicit operator Vector2h((Half X, Half Y) values)
+        {
+            return new Vector2h(values.X, values.Y);
+        }
+
+        /// <summary>
         /// The size in bytes for an instance of the Half2 struct is 4.
         /// </summary>
         public static readonly int SizeInBytes = 4;
@@ -355,6 +367,18 @@ namespace OpenToolkit.Mathematics
             return new Vector2h(
                 Half.FromBytes(value, startIndex),
                 Half.FromBytes(value, startIndex + 2));
+        }
+
+        /// <summary>
+        /// Deconstructs the vector into it's individual components.
+        /// </summary>
+        /// <param name="x">The X component of the vector.</param>
+        /// <param name="y">The Y component of the vector.</param>
+        [Pure]
+        public void Deconstruct(out Half x, out Half y)
+        {
+            x = X;
+            y = Y;
         }
     }
 }

@@ -7,41 +7,22 @@
 // of the MIT license. See the LICENSE file for details.
 //
 
-using System;
-
 namespace OpenToolkit.Windowing.Common
 {
     /// <summary>
     /// Defines the event data for the <see cref="IWindowEvents.MonitorConnected"/> event.
     /// </summary>
-    public class MonitorEventArgs : EventArgs // TODO: merge with JoystickEventArgs?
+    public readonly struct MonitorEventArgs // TODO: merge with JoystickEventArgs?
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="MonitorEventArgs"/> class.
-        /// </summary>
-        public MonitorEventArgs()
-        {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="MonitorEventArgs"/> class.
+        /// Initializes a new instance of the <see cref="MonitorEventArgs"/> struct.
         /// </summary>
         /// <param name="monitor">The <see cref="Monitor"/> which triggered the event.</param>
         /// <param name="isConnected">Whether the <see cref="Monitor"/> is connected.</param>
         public MonitorEventArgs(Monitor monitor, bool isConnected)
         {
-            this.Monitor = monitor;
-            this.IsConnected = isConnected;
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="MonitorEventArgs"/> class.
-        /// </summary>
-        /// <param name="other">The <see cref="MonitorEventArgs" /> instance to clone.</param>
-        public MonitorEventArgs(MonitorEventArgs other)
-        {
-            this.Monitor = other.Monitor;
-            this.IsConnected = other.IsConnected;
+            Monitor = monitor;
+            IsConnected = isConnected;
         }
 
         /// <summary>

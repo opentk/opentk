@@ -7,52 +7,47 @@
 // of the MIT license. See the LICENSE file for details.
 //
 
-using System;
+using OpenToolkit.Mathematics;
 
 namespace OpenToolkit.Windowing.Common
 {
     /// <summary>
     /// Defines the event data for the window resize event.
     /// </summary>
-    public class ResizeEventArgs : EventArgs
+    public readonly struct ResizeEventArgs
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="ResizeEventArgs"/> class.
+        /// Initializes a new instance of the <see cref="ResizeEventArgs"/> struct.
         /// </summary>
-        public ResizeEventArgs()
+        /// <param name="size">The new window size.</param>
+        public ResizeEventArgs(Vector2i size)
         {
+            Size = size;
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ResizeEventArgs"/> class
-        /// from a second <see cref="ResizeEventArgs"/> which is copied.
-        /// </summary>
-        /// <param name="other">The <see cref="ResizeEventArgs"/> to copy.</param>
-        public ResizeEventArgs(ResizeEventArgs other)
-        {
-            this.Width = other.Width;
-            this.Height = other.Height;
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ResizeEventArgs"/> class.
+        /// Initializes a new instance of the <see cref="ResizeEventArgs"/> struct.
         /// </summary>
         /// <param name="width">The new window width.</param>
         /// <param name="height">The new window height.</param>
-        internal ResizeEventArgs(int width, int height)
+        public ResizeEventArgs(int width, int height)
+            : this(new Vector2i(width, height))
         {
-            this.Width = width;
-            this.Height = height;
         }
+
+        /// <summary>
+        /// Gets the new window size.
+        /// </summary>
+        public Vector2i Size { get; }
 
         /// <summary>
         /// Gets the new window width.
         /// </summary>
-        public int Width { get; internal set; }
+        public int Width => Size.X;
 
         /// <summary>
         /// Gets the new window height.
         /// </summary>
-        public int Height { get; internal set; }
+        public int Height => Size.Y;
     }
 }

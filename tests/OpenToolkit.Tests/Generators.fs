@@ -11,6 +11,9 @@ open OpenToolkit.Mathematics
 [<Struct>]
 type AcuteAngle = AcuteAngle of float32
 
+[<Struct>]
+type Color4LDR = Color4LDR of Color4
+
 [<AutoOpen>]
 module private Generators =
     let private isValidFloat f = not (Single.IsNaN f || Single.IsInfinity f || Single.IsInfinity (f * f) || f = Single.MinValue || f = Single.MaxValue )
@@ -89,7 +92,21 @@ module private Generators =
     /// Generates a float in the range [0;1] in a roughly uniform distribution.
     let stdFloatGen = Arb.generate<DoNotSize<uint64>> |> Gen.map (fun (DoNotSize n) -> (float (n >>> 11)) * (1.0 / float (1UL <<< 53)))     
     let acuteAngle = stdFloatGen |> Gen.map (fun f -> (float32 f - 0.5f) * MathHelper.DegreesToRadians 178.0f |> AcuteAngle) |> Arb.fromGen
+    
+    let color4HDR =
+        singleArb
+        |> Gen.filter (fun x -> x >= 0.0f)
+        |> Gen.four
+        |> Gen.map Color4
+        |> Arb.fromGen
 
+    let color4LDR =
+        singleArb
+        |> Gen.filter (fun x -> (x >= 0.0f && x <= 1.0f))
+        |> Gen.four
+        |> Gen.map Color4
+        |> Arb.fromGen
+        
 type OpenTKGen =
     static member Single() = single
     static member float32() = single
@@ -105,3 +122,5 @@ type OpenTKGen =
     static member Box2() = box2
     static member Box3() = box3
     static member AcuteAngle() = acuteAngle
+    static member Color4LDR() = color4LDR
+    static member Color4() = color4HDR

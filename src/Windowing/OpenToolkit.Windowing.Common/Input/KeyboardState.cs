@@ -8,6 +8,8 @@
 //
 
 using System;
+using System.Diagnostics;
+using System.Text;
 
 namespace OpenToolkit.Windowing.Common.Input
 {
@@ -17,98 +19,64 @@ namespace OpenToolkit.Windowing.Common.Input
     public struct KeyboardState : IEquatable<KeyboardState>
     {
         // Allocate enough ints to store all keyboard keys
-        private const int IntSize = sizeof(int) * 8;
+        private const int IntSize = 32;
 
-        private const int NumInts = ((int)Key.LastKey + IntSize - 1) / IntSize;
+        private const int NumInts = ((int)Key.LastKey / IntSize) + 1;
 
-        // The following line triggers bogus CS0214 in gmcs 2.0.1, sigh...
         private unsafe fixed int _keys[NumInts];
 
         /// <summary>
         /// Gets a <see cref="bool" /> indicating whether the specified
-        ///  <see cref="Key" /> is pressed.
+        ///  <see cref="Key" /> is currently down.
         /// </summary>
         /// <param name="key">The <see cref="Key" /> to check.</param>
-        /// <returns><c>true</c> if key is pressed; <c>false</c> otherwise.</returns>
+        /// <returns><c>true</c> if key is down; <c>false</c> otherwise.</returns>
         public bool this[Key key]
         {
             get => IsKeyDown(key);
-            internal set => SetKeyState(key, value);
+            set => SetKeyState(key, value);
         }
 
         /// <summary>
-        /// Gets a <see cref="bool" /> indicating whether the specified
-        ///  <see cref="OpenToolkit.Windowing.Common.Input.Key" /> is pressed.
-        /// </summary>
-        /// <param name="code">The scancode to check.</param>
-        /// <returns><c>true</c> if code is pressed; <c>false</c> otherwise.</returns>
-        public bool this[short code] => IsKeyDown((Key)code);
-
-        /// <summary>
-        /// Gets a <see cref="bool" /> indicating whether this key is down.
+        /// Gets a <see cref="bool" /> indicating whether this key is currently down.
         /// </summary>
         /// <param name="key">The <see cref="Key" /> to check.</param>
         /// <returns><c>true</c> if <paramref name="key"/> is in the down state; otherwise, <c>false</c>.</returns>
         public bool IsKeyDown(Key key)
         {
-            return ReadBit((int)key);
+            var (intOffset, bitOffset) = GetOffsets(key);
+
+            unsafe
+            {
+                return (this._keys[intOffset] & (1 << bitOffset)) != 0;
+            }
         }
 
         /// <summary>
-        /// Gets a <see cref="bool" /> indicating whether this scan code is down.
-        /// </summary>
-        /// <param name="code">The scan code to check.</param>
-        /// <returns>
-        /// <c>true</c> if the key given by the <paramref name="code"/> parameter is in the down state;
-        /// otherwise, <c>false</c>.
-        /// </returns>
-        public bool IsKeyDown(short code)
-        {
-            return code >= 0 && code < (short)Key.LastKey && ReadBit(code);
-        }
-
-        /// <summary>
-        /// Gets a <see cref="bool" /> indicating whether this key is up.
+        /// Gets a <see cref="bool" /> indicating whether this key is currently up.
         /// </summary>
         /// <param name="key">The <see cref="Key" /> to check.</param>
         /// <returns><c>true</c> if <paramref name="key"/> is in the up state; otherwise, <c>false</c>.</returns>
         public bool IsKeyUp(Key key)
         {
-            return !ReadBit((int)key);
+            return !IsKeyDown(key);
         }
 
         /// <summary>
-        /// Gets a <see cref="bool" /> indicating whether this scan code is down.
-        /// </summary>
-        /// <param name="code">The scan code to check.</param>
-        /// <returns>
-        /// <c>true</c> if the key given by the <paramref name="code"/> parameter is in the up state;
-        /// otherwise, <c>false</c>.
-        /// </returns>
-        public bool IsKeyUp(short code)
-        {
-            return !IsKeyDown(code);
-        }
-
-        /// <summary>
-        /// Gets a value indicating whether any key is down.
+        /// Gets a value indicating whether any key is currently down.
         /// </summary>
         /// <value><c>true</c> if any key is down; otherwise, <c>false</c>.</value>
         public bool IsAnyKeyDown
         {
             get
             {
-                // If any bit is set then a key is down.
-                unsafe
+                for (var i = 0; i < NumInts; ++i)
                 {
-                    fixed (int* k = _keys)
+                    unsafe
                     {
-                        for (var i = 0; i < NumInts; ++i)
+                        if (this._keys[i] != 0)
                         {
-                            if (k[i] != 0)
-                            {
-                                return true;
-                            }
+                            return true;
                         }
                     }
                 }
@@ -118,10 +86,29 @@ namespace OpenToolkit.Windowing.Common.Input
         }
 
         /// <summary>
-        /// Gets a value indicating whether this keyboard
-        /// is connected.
+        /// Sets the key state of the <paramref name="key"/> depending on the given <paramref name="down"/> value.
         /// </summary>
-        public bool IsConnected { get; internal set; }
+        /// <param name="key">The <see cref="Key"/> which state should be changed.</param>
+        /// <param name="down">The new state the key should be changed to.</param>
+        public void SetKeyState(Key key, bool down)
+        {
+            var (intOffset, bitOffset) = GetOffsets(key);
+
+            if (down)
+            {
+                unsafe
+                {
+                    this._keys[intOffset] |= 1 << bitOffset;
+                }
+            }
+            else
+            {
+                unsafe
+                {
+                    this._keys[intOffset] &= ~(1 << bitOffset);
+                }
+            }
+        }
 
         /// <summary>
         /// Checks whether two <see cref="KeyboardState" /> instances are equal.
@@ -168,12 +155,33 @@ namespace OpenToolkit.Windowing.Common.Input
         /// </returns>
         public override bool Equals(object obj)
         {
-            if (obj is KeyboardState)
+            if (obj is KeyboardState state)
             {
-                return this == (KeyboardState)obj;
+                return Equals(state);
             }
 
             return false;
+        }
+
+        /// <summary>
+        /// Compares two KeyboardState instances.
+        /// </summary>
+        /// <param name="other">The instance to compare two.</param>
+        /// <returns><c>true</c>, if both instances are equal; <c>false</c> otherwise.</returns>
+        public bool Equals(KeyboardState other)
+        {
+            for (var i = 0; i < NumInts; i++)
+            {
+                unsafe
+                {
+                    if (this._keys[i] != other._keys[i])
+                    {
+                        return false;
+                    }
+                }
+            }
+
+            return true;
         }
 
         /// <summary>
@@ -184,128 +192,49 @@ namespace OpenToolkit.Windowing.Common.Input
         /// </returns>
         public override int GetHashCode()
         {
-            unsafe
+            var hashcode = 0;
+            for (var i = 0; i < NumInts; i++)
             {
-                fixed (int* k = _keys)
+                unsafe
                 {
-                    var hashcode = 0;
-                    for (var i = 0; i < NumInts; i++)
+                    hashcode ^= 397 * this._keys[i];
+                }
+            }
+
+            return hashcode;
+        }
+
+        /// <inheritdoc />
+        public override string ToString()
+        {
+            var builder = new StringBuilder();
+            builder.Append('{');
+            var first = true;
+
+            for (var key = (Key)1; key <= Key.LastKey; ++key)
+            {
+                if (IsKeyDown(key))
+                {
+                    if (!first)
                     {
-                        hashcode ^= (k + i)->GetHashCode();
+                        builder.Append(',');
+                    }
+                    else
+                    {
+                        first = false;
                     }
 
-                    return hashcode;
-                }
-            }
-        }
-
-        /// <summary>
-        /// Sets the key state of the <paramref name="key"/> depending on the given <paramref name="down"/> value.
-        /// </summary>
-        /// <param name="key">The <see cref="Key"/> which state should be changed.</param>
-        /// <param name="down">The new state the key should be changed to.</param>
-        internal void SetKeyState(Key key, bool down)
-        {
-            if (down)
-            {
-                EnableBit((int)key);
-            }
-            else
-            {
-                DisableBit((int)key);
-            }
-        }
-
-        /// <summary>
-        /// Gets whether a single key is pressed using an offset corresponding to a <see cref="Key"/>.
-        /// </summary>
-        /// <param name="offset">The offset corresponding to a <see cref="Key"/>.</param>
-        /// <returns>
-        /// <c>true</c> when the key given by <paramref name="offset"/> is pressed; otherwise, <c>false</c>.
-        /// </returns>
-        internal bool ReadBit(int offset)
-        {
-            ValidateOffset(offset);
-
-            var intOffset = offset / IntSize;
-            var bitOffset = offset % IntSize;
-            unsafe
-            {
-                fixed (int* k = _keys)
-                {
-                    return (*(k + intOffset) & (1 << bitOffset)) != 0u;
-                }
-            }
-        }
-
-        /// <summary>
-        /// Enable a single key using an offset corresponding to a <see cref="Key"/>.
-        /// </summary>
-        /// <param name="offset">The offset corresponding to a <see cref="Key"/>.</param>
-        internal void EnableBit(int offset)
-        {
-            ValidateOffset(offset);
-
-            var intOffset = offset / IntSize;
-            var bitOffset = offset % IntSize;
-            unsafe
-            {
-                fixed (int* k = _keys)
-                {
-                    *(k + intOffset) |= 1 << bitOffset;
-                }
-            }
-        }
-
-        /// <summary>
-        /// Disables a single key using an offset corresponding to a <see cref="Key"/>.
-        /// </summary>
-        /// <param name="offset">The offset corresponding to a <see cref="Key"/>.</param>
-        internal void DisableBit(int offset)
-        {
-            ValidateOffset(offset);
-
-            var intOffset = offset / IntSize;
-            var bitOffset = offset % IntSize;
-            unsafe
-            {
-                fixed (int* k = _keys)
-                {
-                    *(k + intOffset) &= ~(1 << bitOffset);
-                }
-            }
-        }
-
-        /// <summary>
-        /// Merges this <see cref="KeyboardState"/> with an <paramref name="other"/>.
-        /// </summary>
-        /// <param name="other">The <paramref name="other"/> <see cref="KeyboardState"/> with which to merge.</param>
-        internal void MergeBits(KeyboardState other)
-        {
-            unsafe
-            {
-                var k2 = other._keys;
-                fixed (int* k1 = _keys)
-                {
-                    for (var i = 0; i < NumInts; i++)
-                    {
-                        *(k1 + i) |= *(k2 + i);
-                    }
+                    builder.Append(key);
                 }
             }
 
-            IsConnected |= other.IsConnected;
+            builder.Append('}');
+
+            return builder.ToString();
         }
 
-        /// <summary>
-        /// Sets the <see cref="IsConnected"/> value to the given <paramref name="value"/>.
-        /// </summary>
-        /// <param name="value">The value to set the <see cref="IsConnected"/> property to.</param>
-        internal void SetIsConnected(bool value)
-        {
-            IsConnected = value;
-        }
-
+        // This shouldn't be necessary but I'll keep it in just in case.
+        [Conditional("DEBUG")]
         private static void ValidateOffset(int offset)
         {
             if (offset < 0 || offset >= NumInts * IntSize)
@@ -314,27 +243,20 @@ namespace OpenToolkit.Windowing.Common.Input
             }
         }
 
-        /// <summary>
-        /// Compares two KeyboardState instances.
-        /// </summary>
-        /// <param name="other">The instance to compare two.</param>
-        /// <returns><c>true</c>, if both instances are equal; <c>false</c> otherwise.</returns>
-        public bool Equals(KeyboardState other)
+        private static (int intOffset, int bitOffset) GetOffsets(Key key)
         {
-            var equal = true;
-            unsafe
+            if (key <= Key.Unknown || key > Key.LastKey)
             {
-                var k2 = other._keys;
-                fixed (int* k1 = _keys)
-                {
-                    for (var i = 0; equal && i < NumInts; i++)
-                    {
-                        equal &= *(k1 + i) == *(k2 + i);
-                    }
-                }
+                throw new ArgumentOutOfRangeException(nameof(key), "Invalid key");
             }
 
-            return equal;
+            var offset = (int)key;
+            ValidateOffset(offset);
+
+            var intOffset = offset / IntSize;
+            var bitOffset = offset % IntSize;
+
+            return (intOffset, bitOffset);
         }
     }
 }

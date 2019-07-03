@@ -694,6 +694,18 @@ namespace OpenToolkit.Mathematics
             return !left.Equals(right);
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Vector3i"/> struct using a tuple containing the component
+        /// values.
+        /// </summary>
+        /// <param name="values">A tuple containing the component values.</param>
+        /// <returns>A new instance of the <see cref="Vector3i"/> struct with the given component values.</returns>
+        [Pure]
+        public static implicit operator Vector3i((int X, int Y, int Z) values)
+        {
+            return new Vector3i(values.X, values.Y, values.Z);
+        }
+
         private static readonly string ListSeparator = CultureInfo.CurrentCulture.TextInfo.ListSeparator;
 
         /// <inheritdoc />
@@ -745,6 +757,20 @@ namespace OpenToolkit.Mathematics
                 X == other.X &&
                 Y == other.Y &&
                 Z == other.Z;
+        }
+
+        /// <summary>
+        /// Deconstructs the vector into it's individual components.
+        /// </summary>
+        /// <param name="x">The X component of the vector.</param>
+        /// <param name="y">The Y component of the vector.</param>
+        /// <param name="z">The Z component of the vector.</param>
+        [Pure]
+        public void Deconstruct(out int x, out int y, out int z)
+        {
+            x = X;
+            y = Y;
+            z = Z;
         }
     }
 }

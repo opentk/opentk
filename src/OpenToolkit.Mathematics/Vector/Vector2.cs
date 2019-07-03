@@ -872,6 +872,18 @@ namespace OpenToolkit.Mathematics
             return !left.Equals(right);
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Vector2"/> struct using a tuple containing the component
+        /// values.
+        /// </summary>
+        /// <param name="values">A tuple containing the component values.</param>
+        /// <returns>A new instance of the <see cref="Vector2"/> struct with the given component values.</returns>
+        [Pure]
+        public static implicit operator Vector2((float X, float Y) values)
+        {
+            return new Vector2(values.X, values.Y);
+        }
+
         private static readonly string ListSeparator = CultureInfo.CurrentCulture.TextInfo.ListSeparator;
 
         /// <inheritdoc/>
@@ -919,6 +931,18 @@ namespace OpenToolkit.Mathematics
             return
                 X == other.X &&
                 Y == other.Y;
+        }
+
+        /// <summary>
+        /// Deconstructs the vector into it's individual components.
+        /// </summary>
+        /// <param name="x">The X component of the vector.</param>
+        /// <param name="y">The Y component of the vector.</param>
+        [Pure]
+        public void Deconstruct(out float x, out float y)
+        {
+            x = X;
+            y = Y;
         }
     }
 }
