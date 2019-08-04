@@ -43,7 +43,7 @@ let authors = [ "Stefanos Apostolopoulos" ]
 // Tags for your project (for NuGet package)
 let tags = "OpenTK OpenGL OpenGLES GLES OpenAL C# F# VB .NET Mono Vector Math Game Graphics Sound"
 
-let copyright = "Copyright (c) 2006 - 2016 Stefanos Apostolopoulos <stapostol@gmail.com> for the Open Toolkit library."
+let copyright = "Copyright (c) 2006 - 2019 Stefanos Apostolopoulos <stapostol@gmail.com> for the Open Toolkit library."
 
 // File system information
 let solutionFile  = "OpenTK.sln"
