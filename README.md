@@ -52,6 +52,17 @@ and then enable the "Copy to Output Directory" option (as in step 3 below).
 News
 ===
 
+
+### 2019-08-04
+
+OpenTK 3.1.0 is available.
+
+https://www.nuget.org/packages/OpenTK/3.1.0
+
+https://www.nuget.org/packages/OpenTK.GLControl/3.1.0
+
+
+
 ### 2018-10-19
 
 Work is well underway on OpenTK 4.0, which targets .netstandard 2.0.
