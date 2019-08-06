@@ -8,7 +8,10 @@ nuget Fake.DotNet.MSBuild
 nuget Fake.DotNet.Testing.XUnit2
 nuget Fake.DotNet.AssemblyInfoFile
 nuget Fake.DotNet.NuGet
+nuget Fake.DotNet.Cli
+nuget FSharp.Core
 nuget Fake.Core.Target
+nuget Fake.DotNet.Cli
 nuget xunit.runner.console
 nuget Fake.Core.ReleaseNotes //"
 
@@ -138,14 +141,38 @@ Target.create "CopyBinaries" (fun _ ->
     |>  Seq.iter (fun (fromDir, toDir) -> Shell.copyDir toDir fromDir (fun _ -> true))
 )
 
+open System.IO
+open Fake.Core
+open Fake.IO.Globbing.Operators
+open Fake.DotNet
+
 Target.create "RunTests" (fun _ ->
+  Trace.log " --- Testing projects in parallel --- "
+  let setDotNetOptions (projectDirectory:string) : (DotNet.TestOptions-> DotNet.TestOptions) =
+    fun (dotNetTestOptions:DotNet.TestOptions) -> 
+      { dotNetTestOptions with
+          Common        = { dotNetTestOptions.Common with WorkingDirectory = projectDirectory}
+          Configuration = DotNet.BuildConfiguration.Release
+          ResultsDirectory = Some "./result.xml"
+      }.WithRedirectOutput true
+
+  //Looks overkill for only one csproj but just add 2 or 3 csproj and this will scale a lot better
+  testProjects
+  |> Seq.iter (
+    fun fullCsProjName -> 
+      printfn "TESTING %A" fullCsProjName
+      let projectDirectory = Path.GetDirectoryName(fullCsProjName)
+      DotNet.test (setDotNetOptions projectDirectory) ""
+    )
+//    Shell.Exec("dotnet", "test tests/OpenToolkit.Tests") |> ignore
+//    Shell.Exec("dotnet", "test tests/OpenToolkit.Tests.Integration") |> ignore
 //    !! testAssemblies
 //    |> XUnit2.run (fun p ->
 //        { p with
 //            ShadowCopy = true
 //            TimeOut = TimeSpan.FromMinutes 2.
 //            XmlOutputPath = Some "TestResults.xml" })
-    Trace.traceError "Unimplemented."
+//     Trace.traceError "Unimplemented."
 )
 
 Target.create "CreateNuGetPackage" (fun _ ->
