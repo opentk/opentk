@@ -9,7 +9,6 @@ nuget Fake.DotNet.Testing.XUnit2
 nuget Fake.DotNet.AssemblyInfoFile
 nuget Fake.DotNet.NuGet
 nuget Fake.DotNet.Cli
-nuget FSharp.Core
 nuget Fake.Core.Target
 nuget Fake.DotNet.Cli
 nuget xunit.runner.console
