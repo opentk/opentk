@@ -90,12 +90,20 @@ let testAssemblies = "tests/**/obj/Release/*Tests*.dll"
 // ---------
 
 Target.create "UpdateBindings" (fun _ ->
-    Trace.traceError "Unimplemented."
+    Trace.log " --- Updating bindings --- "
+    DotNet.exec id
+        "run"
+        "-f netcoreapp20 -p \"src/Generators/Generator.Bind/Generator.Bind.csproj\" %*"
+    |> ignore
 )
 
 
 Target.create "UpdateSpec" (fun _ ->
-    Trace.traceError "Unimplemented."
+    Trace.log " --- Updating spec --- "
+    DotNet.exec id
+        "run"
+        "-f netcoreapp20 -p \"src/Generators/Generator.Converter/Generator.Convert.csproj\" -i https://raw.githubusercontent.com/KhronosGroup/OpenGL-Registry/master/xml/gl.xml -o src/Generators/Generator.Bind/Specifications/OpenGL/signatures.xml --prefix gl"
+    |> ignore
 )
 
 // ---------
@@ -159,7 +167,6 @@ Target.create "RunTests" (fun _ ->
   testProjects
   |> Seq.iter (
     fun fullCsProjName -> 
-      printfn "TESTING %A" fullCsProjName
       let projectDirectory = Path.GetDirectoryName(fullCsProjName)
       DotNet.test (setDotNetOptions projectDirectory) ""
     )
@@ -202,7 +209,6 @@ Target.create "ReleaseOnNuGetGallery" (fun _ ->
 )
 
 Target.create "ReleaseOnAll" ignore
-
 
 // ---------
 // Target relations
