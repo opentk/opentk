@@ -48,6 +48,14 @@ namespace OpenToolkit.Windowing.Desktop
         /// <inheritdoc />
         public KeyboardState LastKeyboardState { get; private set; }
 
+        private JoystickState[] _joystickStates = new JoystickState[16];
+
+        /// <inheritdoc/>
+        public JoystickState[] JoystickStates => throw new NotImplementedException();
+
+        /// <inheritdoc/>
+        public JoystickState[] LastJoystickStates => throw new NotImplementedException();
+
         /// <inheritdoc />
         public Vector2 MousePosition
         {
