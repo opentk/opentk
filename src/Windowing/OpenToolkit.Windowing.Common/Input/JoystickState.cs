@@ -8,6 +8,7 @@
 //
 
 using System;
+using OpenToolkit.GraphicsLibraryFramework;
 
 namespace OpenToolkit.Windowing.Common.Input
 {
@@ -16,16 +17,65 @@ namespace OpenToolkit.Windowing.Common.Input
     /// </summary>
     public struct JoystickState : IEquatable<JoystickState>
     {
-        private HatState[] _hats;
+        private JoystickHats[] _hats;
         private float[] _axes;
         private byte[] _buttons;
+
+        /// <summary>
+        /// Gets the identity of the joystick this state describes.
+        /// </summary>
+        public int Id { get; }
+
+        /// <summary>
+        /// Gets the name of the joystick this state describes.
+        /// </summary>
+        public string Name { get; }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="JoystickState"/> struct.
+        /// </summary>
+        /// <param name="hatCount">The amount of hats.</param>
+        /// <param name="axesCount">The amount of axes.</param>
+        /// <param name="buttonCount">The amount of buttons.</param>
+        /// <param name="id">The id of the joystick.</param>
+        /// <param name="name">The name of the joystick.</param>
+        public JoystickState(int hatCount, int axesCount, int buttonCount, int id, string name)
+        {
+            _hats = new JoystickHats[hatCount];
+            _axes = new float[axesCount];
+            _buttons = new byte[buttonCount / 8];
+            Id = id;
+            Name = name;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="JoystickState"/> struct.
+        /// </summary>
+        /// <param name="hats">The hats belonging to the joystick.</param>
+        /// <param name="axes">The axes belonging to the joystick.</param>
+        /// <param name="buttons">The buttons belonging to the joystick.</param>
+        /// <param name="id">The id of the joystick.</param>
+        /// <param name="name">The name of the joystick.</param>
+        public JoystickState(JoystickHats[] hats, float[] axes, bool[] buttons, int id, string name)
+        {
+            _hats = hats;
+            _axes = axes;
+            Id = id;
+            Name = name;
+
+            _buttons = new byte[buttons.Length / 8];
+            for (int i = 0; i < buttons.Length; i++)
+            {
+                SetButtonDown(i, buttons[i]);
+            }
+        }
 
         /// <summary>
         /// Gets a <see cref="HatState"/> describing the state of a hat.
         /// </summary>
         /// <param name="index">The index of the hat to check.</param>
         /// <returns>A <see cref="HatState"/> describing the hat state.</returns>
-        public HatState GetHat(int index)
+        public JoystickHats GetHat(int index)
         {
             return _hats[index];
         }
@@ -35,7 +85,7 @@ namespace OpenToolkit.Windowing.Common.Input
         /// </summary>
         /// <param name="index">The hat which position should be changed.</param>
         /// <param name="value">The new state the hat should be changed to.</param>
-        internal void SetHat(int index, HatState value)
+        internal void SetHat(int index, JoystickHats value)
         {
             _hats[index] = value;
         }
@@ -58,13 +108,19 @@ namespace OpenToolkit.Windowing.Common.Input
         /// </summary>
         /// <param name="index">The index of the button which should be changed.</param>
         /// <param name="value"><c>true</c> if the button is down; <c>false</c> otherwise.</param>
-        internal void SetButtonDown(int index, bool value)
+        private void SetButtonDown(int index, bool value)
         {
-            int i = index / 8;
-            byte b = _buttons[i];
-            int pow = (int)Math.Pow(2, index % 8);
+            int byteOffSet = index / 8;
+            int bitOffset = index % 8;
 
-            _buttons[i] = (byte)(b ^ pow);
+            if (value)
+            {
+                _buttons[byteOffSet] |= (byte)(1 << bitOffset);
+            }
+            else
+            {
+                _buttons[byteOffSet] &= (byte)~(1 << bitOffset);
+            }
         }
 
         /// <summary>
@@ -82,7 +138,7 @@ namespace OpenToolkit.Windowing.Common.Input
         /// </summary>
         /// <param name="index">The index of the axis which position should be changed.</param>
         /// <param name="value">The new state the key should be changed to.</param>
-        internal void SetAxis(int index, float value)
+        private void SetAxis(int index, float value)
         {
             _axes[index] = value < -1 ? -1 : (value > 1 ? 1 : value);
         }
@@ -130,7 +186,7 @@ namespace OpenToolkit.Windowing.Common.Input
         /// <returns><c>true</c> if both instances are equal; <c>false</c> otherwise.</returns>
         public bool Equals(JoystickState other)
         {
-            return false;
+            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -139,12 +195,13 @@ namespace OpenToolkit.Windowing.Common.Input
         /// <returns>A <see cref="int"/> representing the hashcode for this instance.</returns>
         public override int GetHashCode()
         {
+            throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
         public override string ToString()
         {
-
+            throw new NotImplementedException();
         }
     }
 }
