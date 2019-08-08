@@ -70,10 +70,10 @@ namespace OpenToolkit.Windowing.Common.Input
         }
 
         /// <summary>
-        /// Gets a <see cref="HatState"/> describing the state of a hat.
+        /// Gets a <see cref="Hat"/> describing the state of a hat.
         /// </summary>
         /// <param name="index">The index of the hat to check.</param>
-        /// <returns>A <see cref="HatState"/> describing the hat state.</returns>
+        /// <returns>A <see cref="Hat"/> describing the hat state.</returns>
         public Hat GetHat(int index)
         {
             return _hats[index];
