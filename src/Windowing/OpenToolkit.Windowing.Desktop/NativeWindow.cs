@@ -826,26 +826,29 @@ namespace OpenToolkit.Windowing.Desktop
                     }
 
                     int count = 0;
-                    Ttype[] PointerToArray<Ttype>(Ttype* pointer) where Ttype : unmanaged
+
+                    var h = Glfw.GetJoystickHats(joy.Id, out count);
+                    Hat[] hats = new Hat[count];
+                    for (int j = 0; j < count; j++)
                     {
-                        Ttype[] type = new Ttype[count];
-                        for (int j = 0; j < count; j++)
-                        {
-                            type[j] = pointer[j];
-                        }
-                        return type;
+                        hats[j] = (Hat)h[j];
                     }
 
-                    var hats = PointerToArray(Glfw.GetJoystickHats(joy.Id, out count));
-                    var axes = PointerToArray(Glfw.GetJoystickAxes(joy.Id, out count));
-                    var buttonsByte = PointerToArray(Glfw.GetJoystickButtons(joy.Id, out count));
-                    var buttons = new bool[buttonsByte.Length];
-                    for (int k = 0; k < buttons.Length; k++)
+                    var a = Glfw.GetJoystickAxes(joy.Id, out count);
+                    float[] axes = new float[count];
+                    for (int j = 0; j < count; j++)
                     {
-                       buttons[k] = (bool)buttonsByte[k];
+                        axes[j] = a[j];
                     }
 
-                    joy = new JoystickState(hats, axes, );
+                    var b = Glfw.GetJoystickButtons(joy.Id, out count);
+                    var buttons = new bool[count];
+                    for (int j = 0; j < buttons.Length; j++)
+                    {
+                       buttons[j] = b[j] == 1;
+                    }
+
+                    JoystickStates[i] = new JoystickState(hats, axes, buttons, joy.Id, joy.Name);
                 }
             }
         }

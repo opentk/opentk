@@ -8,7 +8,6 @@
 //
 
 using System;
-using OpenToolkit.GraphicsLibraryFramework;
 
 namespace OpenToolkit.Windowing.Common.Input
 {
@@ -17,7 +16,7 @@ namespace OpenToolkit.Windowing.Common.Input
     /// </summary>
     public struct JoystickState : IEquatable<JoystickState>
     {
-        private JoystickHats[] _hats;
+        private Hat[] _hats;
         private float[] _axes;
         private byte[] _buttons;
 
@@ -41,7 +40,7 @@ namespace OpenToolkit.Windowing.Common.Input
         /// <param name="name">The name of the joystick.</param>
         public JoystickState(int hatCount, int axesCount, int buttonCount, int id, string name)
         {
-            _hats = new JoystickHats[hatCount];
+            _hats = new Hat[hatCount];
             _axes = new float[axesCount];
             _buttons = new byte[buttonCount / 8];
             Id = id;
@@ -56,7 +55,7 @@ namespace OpenToolkit.Windowing.Common.Input
         /// <param name="buttons">The buttons belonging to the joystick.</param>
         /// <param name="id">The id of the joystick.</param>
         /// <param name="name">The name of the joystick.</param>
-        public JoystickState(JoystickHats[] hats, float[] axes, bool[] buttons, int id, string name)
+        public JoystickState(Hat[] hats, float[] axes, bool[] buttons, int id, string name)
         {
             _hats = hats;
             _axes = axes;
@@ -75,7 +74,7 @@ namespace OpenToolkit.Windowing.Common.Input
         /// </summary>
         /// <param name="index">The index of the hat to check.</param>
         /// <returns>A <see cref="HatState"/> describing the hat state.</returns>
-        public JoystickHats GetHat(int index)
+        public Hat GetHat(int index)
         {
             return _hats[index];
         }
@@ -85,7 +84,7 @@ namespace OpenToolkit.Windowing.Common.Input
         /// </summary>
         /// <param name="index">The hat which position should be changed.</param>
         /// <param name="value">The new state the hat should be changed to.</param>
-        internal void SetHat(int index, JoystickHats value)
+        internal void SetHat(int index, Hat value)
         {
             _hats[index] = value;
         }
