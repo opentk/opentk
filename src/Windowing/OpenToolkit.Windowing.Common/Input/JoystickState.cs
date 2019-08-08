@@ -8,6 +8,7 @@
 //
 
 using System;
+using System.Text;
 
 namespace OpenToolkit.Windowing.Common.Input
 {
@@ -185,7 +186,7 @@ namespace OpenToolkit.Windowing.Common.Input
         /// <returns><c>true</c> if both instances are equal; <c>false</c> otherwise.</returns>
         public bool Equals(JoystickState other)
         {
-            throw new NotImplementedException();
+            return _axes == other._axes && _hats == other._hats && _buttons == other._buttons && Id == other.Id && Name == other.Name;
         }
 
         /// <summary>
@@ -194,13 +195,51 @@ namespace OpenToolkit.Windowing.Common.Input
         /// <returns>A <see cref="int"/> representing the hashcode for this instance.</returns>
         public override int GetHashCode()
         {
-            throw new NotImplementedException();
+            int hashCode = _axes.GetHashCode();
+            hashCode ^= _hats.GetHashCode();
+            hashCode ^= _buttons.GetHashCode();
+            hashCode ^= Id.GetHashCode();
+            hashCode ^= Name.GetHashCode();
+
+            return hashCode;
         }
 
         /// <inheritdoc/>
         public override string ToString()
         {
-            throw new NotImplementedException();
+            var builder = new StringBuilder();
+
+            builder.Append("{hats: [");
+            builder.Append(_hats[0]);
+            for (int i = 1; i < _hats.Length; i++)
+            {
+                builder.Append(", ");
+                builder.Append(_hats[i]);
+            }
+
+            builder.Append("], axes: [");
+            builder.Append(_axes[0]);
+            for (int i = 1; i < _axes.Length; i++)
+            {
+                builder.Append(", ");
+                builder.Append(_axes[i]);
+            }
+
+            builder.Append("], buttons: [");
+            builder.Append(IsButtonDown(0) ? "down" : "up");
+            for (int i = 0; i < _buttons.Length * 8; i++)
+            {
+                builder.Append(", ");
+                builder.Append(IsButtonDown(0) ? "down" : "up");
+            }
+
+            builder.Append("], id: ");
+            builder.Append(Id);
+            builder.Append(", name: ");
+            builder.Append(Name);
+            builder.Append("}");
+
+            return builder.ToString();
         }
     }
 }
