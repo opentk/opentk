@@ -89,21 +89,59 @@ let testAssemblies = "tests/**/obj/Release/*Tests*.dll"
 // Other Targets
 // ---------
 
+module DotNet =
+    let run optionsFn framework projFile args =
+        DotNet.exec optionsFn
+            "run"
+            (sprintf "-f %s -p \"%s\" %s" framework projFile args)
+
+    let runWithDefaultOptions framework projFile args =
+        run id framework projFile args
+
+let pathToSpec =
+    "src/Generators/Generator.Bind/Specifications"
+
+let specSource =
+    "https://raw.githubusercontent.com/KhronosGroup/OpenGL-Registry/master/xml/gl.xml"
+
+//let bindingsOutputPath =
+//    ""
+
+let asArgs args =
+    args |> String.concat " "
+
 Target.create "UpdateBindings" (fun _ ->
     Trace.log " --- Updating bindings --- "
-    DotNet.exec id
-        "run"
-        "-f netcoreapp20 -p \"src/Generators/Generator.Bind/Generator.Bind.csproj\" %*"
+    let framework = "netcoreapp20"
+    let projFile = "src/Generators/Generator.Bind/Generator.Bind.csproj"
+    let args =
+        [ sprintf "-i %s" (System.IO.Path.GetFullPath pathToSpec)
+          "-a Desktop"
+        ] |> asArgs
+    DotNet.runWithDefaultOptions framework projFile args
     |> ignore
 )
 
 
 Target.create "UpdateSpec" (fun _ ->
     Trace.log " --- Updating spec --- "
-    DotNet.exec id
-        "run"
-        "-f netcoreapp20 -p \"src/Generators/Generator.Converter/Generator.Convert.csproj\" -i https://raw.githubusercontent.com/KhronosGroup/OpenGL-Registry/master/xml/gl.xml -o src/Generators/Generator.Bind/Specifications/OpenGL/signatures.xml --prefix gl"
-    |> ignore
+    let framework = "netcoreapp20"
+    let projFile = "src/Generators/Generator.Converter/Generator.Convert.csproj"
+    let relativePathToSpecification = "OpenGL/GL/4.6"
+    let fetchSpec relativePathToSpecification =
+        let relativePathToSpecificationFile = relativePathToSpecification </> "specification.xml"
+        let fullPathToSpecificationFile = System.IO.Path.GetFullPath(pathToSpec </> relativePathToSpecificationFile)
+        Directory.create (pathToSpec </> relativePathToSpecification)
+        let args =
+            [   sprintf "-i %s" specSource
+                sprintf "-o %s" fullPathToSpecificationFile
+                "--prefix gl"
+            ] |> asArgs
+        DotNet.runWithDefaultOptions framework projFile args
+        |> ignore
+    [ "OpenGL/GL/4.6"
+      "OpenGL/ES/3.2" ]
+    |> List.iter fetchSpec
 )
 
 // ---------
@@ -221,20 +259,18 @@ open Fake.Core.TargetOperators
 "Clean"
   ==> "Restore"
   ==> "AssemblyInfo"
-  ==> "Build"
-  ==> "CopyBinaries"
-  ==> "RunTests"
-  ==> "All"
-  ==> "CreateNuGetPackage"
-  ==> "ReleaseOnGithub"
-  ==> "ReleaseOnNugetGallery"
-  ==> "ReleaseOnAll"
-
-"Build"
-  ==> "UpdateBindings"
-
-"Build"
+  //==> "Build"
   ==> "UpdateSpec"
+  ==> "UpdateBindings"
+  ==> "CopyBinaries"
+  //==> "RunTests"
+  ==> "All"
+  //==> "CreateNuGetPackage"
+  //==> "ReleaseOnGithub"
+  //==> "ReleaseOnNugetGallery"
+  //==> "ReleaseOnAll"
+
+//"Build"
 
 
 // ---------
