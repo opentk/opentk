@@ -57,7 +57,14 @@ namespace OpenToolkit.Windowing.Common
         /// <summary>
         /// Gets the current monitor's pixel-per-inch count.
         /// </summary>
-        /// <returns>The current monitor ppi.</returns>
+        /// <value>The current monitor ppi.</value>
+        /// <remarks>
+        /// This function will return -1 when:
+        /// * The CurrentMonitor is null.
+        /// * The VideoMode of CurrentMonitor is null. 
+        /// * The reported size in any dimension is non-positive.
+        /// * The reported resolution in any dimension is non-positive.
+        /// </remarks>
         int CurrentMonitorPpi { get; }
     }
 }

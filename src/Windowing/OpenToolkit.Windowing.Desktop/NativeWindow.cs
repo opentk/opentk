@@ -498,6 +498,12 @@ namespace OpenToolkit.Windowing.Desktop
                 float horizontalPpi;
                 float verticalPpi;
 
+                if (CurrentMonitor.Pointer == IntPtr.Zero)
+                {
+                    // Return -1 as documented.
+                    return -1;
+                }
+
                 unsafe
                 {
                     GraphicsLibraryFramework.Monitor* monitor =
@@ -507,12 +513,23 @@ namespace OpenToolkit.Windowing.Desktop
                     GLFWProvider.GLFW.Value.GetMonitorPhysicalSize(monitor, out widthInMm, out heightInMm);
                     videoMode = GLFWProvider.GLFW.Value.GetVideoMode(monitor);
 
+                    if (videoMode == (VideoMode*)0)
+                    {
+                        return -1;
+                    }
+
                     widthInPixels = videoMode->Width;
                     heightInPixels = videoMode->Height;
                 }
 
+                if (widthInMm <= 0 || heightInMm<= 0 || widthInPixels <= 0 || heightInPixels <= 0)
+                {
+                    return -1;
+                }
+
                 horizontalPpi = (float)widthInPixels / ((float)widthInMm / 25.4f);
                 verticalPpi = (float)heightInPixels / ((float)heightInMm / 25.4f);
+
 
                 // What to do if ppi does not match?
                 return (int)horizontalPpi;
