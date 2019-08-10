@@ -105,6 +105,12 @@ module GameWindow =
             use gw = openGW()
             Assert.Equal(Vector2i(gw.Width, gw.Height), gw.ClientSize)
 
+        [<Fact>]
+        let ``Can query screen dpi`` () =
+            use gw = openGW()
+            printf "%d" gw.CurrentMonitorPpi
+            Assert.NotEqual(gw.CurrentMonitorPpi, 0)
+
     module Locations =
         [<Fact>]
         let ``Updates to X take effect`` () =
