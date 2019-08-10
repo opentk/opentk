@@ -53,5 +53,11 @@ namespace OpenToolkit.Windowing.Common
         /// The point transformed to screen coordinates.
         /// </returns>
         Vector2i PointToScreen(Vector2i point);
+
+        /// <summary>
+        /// Gets the current monitor's pixel-per-inch count.
+        /// </summary>
+        /// <returns>The current monitor ppi.</returns>
+        int CurrentMonitorPpi { get; }
     }
 }
