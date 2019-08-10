@@ -55,16 +55,37 @@ namespace OpenToolkit.Windowing.Common
         Vector2i PointToScreen(Vector2i point);
 
         /// <summary>
-        /// Gets the current monitor's pixel-per-inch count.
+        /// Gets the current monitor scale.
         /// </summary>
-        /// <value>The current monitor ppi.</value>
+        /// <returns><c>true</c>, if current monitor scale was gotten correctly, <c>false</c> otherwise.</returns>
+        /// <param name="horizontalScale">Horizontal scale.</param>
+        /// <param name="verticalScale">Vertical scale.</param>
+        bool GetCurrentMonitorScale(out float horizontalScale, out float verticalScale);
+
+        /// <summary>
+        /// Gets the dpi of the current monitor.
+        /// </summary>
+        /// <returns><c>true</c>, if current monitor's dpi was gotten correctly, <c>false</c> otherwise.</returns>
+        /// <param name="horizontalDpi">Horizontal dpi.</param>
+        /// <param name="verticalDpi">Vertical dpi.</param>
         /// <remarks>
-        /// This function will return -1 when:
-        /// * The CurrentMonitor is null.
-        /// * The VideoMode of CurrentMonitor is null.
-        /// * The reported size in any dimension is non-positive.
-        /// * The reported resolution in any dimension is non-positive.
+        /// This methods approximates the dpi of the monitor by multiplying
+        /// the monitor scale recieved from <see cref="GetCurrentMonitorScale(out float, out float)"/>
+        /// by each platforms respective default dpi (72 for macOS and 96 for other systems).
         /// </remarks>
-        int CurrentMonitorDpi { get; }
+        bool GetCurrentMonitorDpi(out float horizontalDpi, out float verticalDpi);
+
+        /// <summary>
+        /// Gets the raw dpi of current monitor.
+        /// </summary>
+        /// <returns><c>true</c>, if current monitor's raw dpi was gotten correctly, <c>false</c> otherwise.</returns>
+        /// <param name="horizontalDpi">Horizontal dpi.</param>
+        /// <param name="verticalDpi">Vertical dpi.</param>
+        /// <remarks>
+        /// This method calculates dpi by retrieving monitor dimensions and resolution.
+        /// However on certain platforms (such as Windows) these values may not
+        /// be scaled correctly.
+        /// </remarks>
+        bool GetCurrentMonitorDpiRaw(out float horizontalDpi, out float verticalDpi);
     }
 }

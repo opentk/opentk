@@ -4,6 +4,7 @@
 using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using System.Threading;
 using OpenToolkit.GraphicsLibraryFramework;
 using OpenToolkit.Mathematics;
@@ -486,55 +487,6 @@ namespace OpenToolkit.Windowing.Desktop
             }
         }
 
-        /// <inheritdoc />
-        public int CurrentMonitorDpi
-        {
-            get
-            {
-                int widthInMm;
-                int heightInMm;
-                int widthInPixels;
-                int heightInPixels;
-                float horizontalPpi;
-                float verticalPpi;
-
-                if (CurrentMonitor.Pointer == IntPtr.Zero)
-                {
-                    // Return -1 as documented.
-                    return -1;
-                }
-
-                unsafe
-                {
-                    GraphicsLibraryFramework.Monitor* monitor =
-                        CurrentMonitor.ToUnsafePtr<GraphicsLibraryFramework.Monitor>();
-                    VideoMode* videoMode;
-
-                    GLFWProvider.GLFW.Value.GetMonitorPhysicalSize(monitor, out widthInMm, out heightInMm);
-                    videoMode = GLFWProvider.GLFW.Value.GetVideoMode(monitor);
-
-                    if (videoMode == (VideoMode*)0)
-                    {
-                        return -1;
-                    }
-
-                    widthInPixels = videoMode->Width;
-                    heightInPixels = videoMode->Height;
-                }
-
-                if (widthInMm <= 0 || heightInMm <= 0 || widthInPixels <= 0 || heightInPixels <= 0)
-                {
-                    return -1;
-                }
-
-                horizontalPpi = (float)widthInPixels / ((float)widthInMm / 25.4f);
-                verticalPpi = (float)heightInPixels / ((float)heightInMm / 25.4f);
-
-                // What to do if ppi does not match?
-                return (int)horizontalPpi;
-            }
-        }
-
         /// <summary>
         /// Initializes a new instance of the <see cref="NativeWindow"/> class.
         /// </summary>
@@ -973,6 +925,94 @@ namespace OpenToolkit.Windowing.Desktop
             return !_mouseState.IsButtonDown(button) && LastMouseState.IsButtonDown(button);
         }
 
+        /// <inheritdoc />
+        public bool GetCurrentMonitorScale(out float horizontalScale, out float verticalScale)
+        {
+            if (CurrentMonitor.Pointer != IntPtr.Zero)
+            {
+                unsafe
+                {
+                    GLFWProvider.GLFW.Value.GetMonitorContentScale(
+                        CurrentMonitor.ToUnsafePtr<GraphicsLibraryFramework.Monitor>(),
+                        out horizontalScale,
+                        out verticalScale
+                    );
+                }
+                return true;
+            }
+            else
+            {
+                horizontalScale = 1f;
+                verticalScale = 1f;
+                return false;
+            }
+        }
+
+        /// <inheritdoc />
+        public bool GetCurrentMonitorDpi(out float horizontalDpi, out float verticalDpi)
+        {
+            float defaultDpi = GetPlatformDefaultDpi();
+            bool success = GetCurrentMonitorScale(out float horizontalScale, out float verticalScale);
+
+            horizontalDpi = defaultDpi * horizontalScale;
+            verticalDpi = defaultDpi * verticalScale;
+            return success;
+        }
+
+        /// <inheritdoc />
+        public bool GetCurrentMonitorDpiRaw(out float horizontalDpi, out float verticalDpi)
+        {
+            horizontalDpi = verticalDpi = GetPlatformDefaultDpi();
+
+            if (CurrentMonitor.Pointer == IntPtr.Zero)
+            {
+                return false;
+            }
+
+            int widthInMm, heightInMm;
+            int widthInPixels, heightInPixels;
+
+            unsafe
+            {
+                GraphicsLibraryFramework.Monitor* monitor =
+                    CurrentMonitor.ToUnsafePtr<GraphicsLibraryFramework.Monitor>();
+                VideoMode* videoMode;
+
+                // According to GLFW documentation, physical dimensions are reported in millimeters.
+                GLFWProvider.GLFW.Value.GetMonitorPhysicalSize(monitor, out widthInMm, out heightInMm);
+
+                videoMode = GLFWProvider.GLFW.Value.GetVideoMode(monitor);
+
+                if (videoMode == (VideoMode*)0)
+                {
+                    return false;
+                }
+
+                widthInPixels = videoMode->Width;
+                heightInPixels = videoMode->Height;
+            }
+
+            if (widthInMm <= 0 || heightInMm <= 0 || widthInPixels <= 0 || heightInPixels <= 0)
+            {
+                return false;
+            }
+
+            /*
+             * How does this formula calculate dpi?
+             *
+             * 1. 1" = 25.4mm thus dInMm / 25.4 = dInInches
+             * 2. dpi = pixelCount/dInInches
+             *
+             * Ergo:
+             *     pixelCount / (dInMm / 25.4)
+             *   = (pixelCount / dInMm) * 25.4
+             */
+
+            horizontalDpi = ((float)widthInPixels / (float)widthInMm) * 25.4f;
+            verticalDpi = ((float)heightInPixels / (float)heightInMm) * 25.4f;
+            return true;
+        }
+
         /// <summary>
         /// Raises the <see cref="Move"/> event.
         /// </summary>
@@ -1223,6 +1263,26 @@ namespace OpenToolkit.Windowing.Desktop
         protected virtual void OnFileDrop(object sender, FileDropEventArgs e)
         {
             FileDrop?.Invoke(sender, e);
+        }
+
+        /// <summary>
+        /// Gets the default dpi for platforms.
+        /// </summary>
+        /// <returns>The platform default dpi.</returns>
+        /// <remarks>
+        /// For historical reasons macOS has a default dpi of 72, and other
+        /// platforms have a default dpi of 96.
+        /// </remarks>
+        private float GetPlatformDefaultDpi()
+        {
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+            {
+                return 72f;
+            }
+            else
+            {
+                return 96f;
+            }
         }
 
         private bool _disposedValue; // To detect redundant calls
