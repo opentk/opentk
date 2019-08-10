@@ -486,6 +486,39 @@ namespace OpenToolkit.Windowing.Desktop
             }
         }
 
+        /// <inheritdoc />
+        public int CurrentMonitorPpi
+        {
+            get
+            {
+                int widthInMm;
+                int heightInMm;
+                int widthInPixels;
+                int heightInPixels;
+                float horizontalPpi;
+                float verticalPpi;
+
+                unsafe
+                {
+                    GraphicsLibraryFramework.Monitor* monitor =
+                        CurrentMonitor.ToUnsafePtr<GraphicsLibraryFramework.Monitor>();
+                    VideoMode* videoMode;
+
+                    GLFWProvider.GLFW.Value.GetMonitorPhysicalSize(monitor, out widthInMm, out heightInMm);
+                    videoMode = GLFWProvider.GLFW.Value.GetVideoMode(monitor);
+
+                    widthInPixels = videoMode->Width;
+                    heightInPixels = videoMode->Height;
+                }
+
+                horizontalPpi = (float)widthInPixels / ((float)widthInMm / 25.4f);
+                verticalPpi = (float)heightInPixels / ((float)heightInMm / 25.4f);
+
+                // What to do if ppi does not match?
+                return (int)horizontalPpi;
+            }
+        }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="NativeWindow"/> class.
         /// </summary>
