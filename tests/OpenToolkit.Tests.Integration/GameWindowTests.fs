@@ -106,10 +106,10 @@ module GameWindow =
             Assert.Equal(Vector2i(gw.Width, gw.Height), gw.ClientSize)
 
         [<Fact>]
-        let ``Can query screen dpi`` () =
+        let ``CurrentMonitorDpi is never 0`` () =
             use gw = openGW()
-            printf "%d" gw.CurrentMonitorPpi
-            Assert.NotEqual(gw.CurrentMonitorPpi, 0)
+            printf "%d" gw.CurrentMonitorDpi
+            Assert.NotEqual(gw.CurrentMonitorDpi, 0)
 
     module Locations =
         [<Fact>]
