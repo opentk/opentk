@@ -65,6 +65,6 @@ namespace OpenToolkit.Windowing.Common
         /// * The reported size in any dimension is non-positive.
         /// * The reported resolution in any dimension is non-positive.
         /// </remarks>
-        int CurrentMonitorPpi { get; }
+        int CurrentMonitorDpi { get; }
     }
 }

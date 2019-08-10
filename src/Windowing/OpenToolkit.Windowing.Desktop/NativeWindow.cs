@@ -487,7 +487,7 @@ namespace OpenToolkit.Windowing.Desktop
         }
 
         /// <inheritdoc />
-        public int CurrentMonitorPpi
+        public int CurrentMonitorDpi
         {
             get
             {
