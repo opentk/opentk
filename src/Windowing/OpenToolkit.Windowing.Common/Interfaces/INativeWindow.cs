@@ -61,7 +61,7 @@ namespace OpenToolkit.Windowing.Common
         /// <remarks>
         /// This function will return -1 when:
         /// * The CurrentMonitor is null.
-        /// * The VideoMode of CurrentMonitor is null. 
+        /// * The VideoMode of CurrentMonitor is null.
         /// * The reported size in any dimension is non-positive.
         /// * The reported resolution in any dimension is non-positive.
         /// </remarks>

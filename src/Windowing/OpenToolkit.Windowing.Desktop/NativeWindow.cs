@@ -522,14 +522,13 @@ namespace OpenToolkit.Windowing.Desktop
                     heightInPixels = videoMode->Height;
                 }
 
-                if (widthInMm <= 0 || heightInMm<= 0 || widthInPixels <= 0 || heightInPixels <= 0)
+                if (widthInMm <= 0 || heightInMm <= 0 || widthInPixels <= 0 || heightInPixels <= 0)
                 {
                     return -1;
                 }
 
                 horizontalPpi = (float)widthInPixels / ((float)widthInMm / 25.4f);
                 verticalPpi = (float)heightInPixels / ((float)heightInMm / 25.4f);
-
 
                 // What to do if ppi does not match?
                 return (int)horizontalPpi;
