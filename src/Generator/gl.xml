@@ -82,6 +82,210 @@ typedef unsigned int GLhandleARB;
     <!-- SECTION: GL parameter class type definitions. -->
 
     <groups>
+        <group name="EvalMapsModeNV">
+            <enum name="GL_FILL_NV"/>
+        </group>
+
+        <group name="ProgramTarget">
+            <enum name="GL_TEXT_FRAGMENT_SHADER"/>
+        </group>
+
+        <group name="CombinerStageNV">
+            <enum name="GL_COMBINER0_NV"/>
+            <enum name="GL_COMBINER1_NV"/>
+            <enum name="GL_COMBINER2_NV"/>
+            <enum name="GL_COMBINER3_NV"/>
+            <enum name="GL_COMBINER4_NV"/>
+            <enum name="GL_COMBINER5_NV"/>
+            <enum name="GL_COMBINER6_NV"/>
+            <enum name="GL_COMBINER7_NV"/>
+        </group>
+
+        <group name="CombinerPortionNV">
+            <enum name="GL_RGB_NV"/>
+            <enum name="GL_ALPHA_NV"/>
+        </group>
+
+        <group name="MapTypeNV">
+            <enum name="GL_FLOAT_NV"/>
+            <enum name="GL_DOUBLE_NV"/>
+        </group>
+
+        <group name="ScalarType">
+            <enum name="GL_UNSIGNED_BYTE"/>
+            <enum name="GL_UNSIGNED_SHORT"/>
+            <enum name="GL_UNSIGNED_INT"/>
+        </group>
+
+        <group name="VertexShaderTextureUnitParameter">
+            <enum name="GL_CURRENT_TEXTURE_COORDS"/>
+            <enum name="GL_TEXTURE_MATRIX"/>
+        </group>
+
+        <group name="ProgramStringProperty">
+            <enum name="GL_PROGRAM_STRING"/>
+        </group>
+
+        <group name="ProgramFormat">
+            <enum name="GL_PROGRAM_FORMAT_ASCII"/>
+        </group>
+
+        <group name="PathColorFormat">
+            <enum name="GL_NONE"/>
+            <enum name="GL_LUMINANCE"/>
+            <enum name="GL_ALPHA"/>
+            <enum name="GL_INTENSITY"/>
+            <enum name="GL_LUMINANCE_ALPHA"/>
+            <enum name="GL_RGB"/>
+            <enum name="GL_RGBA"/>
+        </group>
+
+        <group name="ReplacementCodeTypeSUN">
+            <enum name="GL_UNSIGNED_BYTE_SUN"/>
+            <enum name="GL_UNSIGNED_SHORT_SUN"/>
+            <enum name="GL_UNSIGNED_INT_SUN"/>
+        </group>
+
+        <group name="SecondaryColorPointerTypeIBM">
+            <enum name="GL_SHORT_IBM"/>
+            <enum name="GL_INT_IBM"/>
+            <enum name="GL_FLOAT_IBM"/>
+            <enum name="GL_DOUBLE_IBM"/>
+        </group>
+
+        <group name="FragmentLightNameSGIX">
+            <enum name="GL_FRAGMENT_LIGHT0_SGIX"/>
+            <enum name="GL_FRAGMENT_LIGHT1_SGIX"/>
+            <enum name="GL_FRAGMENT_LIGHT2_SGIX"/>
+            <enum name="GL_FRAGMENT_LIGHT3_SGIX"/>
+            <enum name="GL_FRAGMENT_LIGHT4_SGIX"/>
+            <enum name="GL_FRAGMENT_LIGHT5_SGIX"/>
+            <enum name="GL_FRAGMENT_LIGHT6_SGIX"/>
+            <enum name="GL_FRAGMENT_LIGHT7_SGIX"/>
+        </group>
+
+        <group name="FragmentLightParameterSGIX">
+            <enum name="GL_SPOT_EXPONENT_SGIX"/>
+            <enum name="GL_SPOT_CUTOFF_SGIX"/>
+            <enum name="GL_CONSTANT_ATTENUATION_SGIX"/>
+            <enum name="GL_LINEAR_ATTENUATION_SGIX"/>
+            <enum name="GL_QUADRATIC_ATTENUATION_SGIX"/>
+            <enum name="GL_AMBIENT_SGIX"/>
+            <enum name="GL_DIFFUSE_SGIX"/>
+            <enum name="GL_SPECULAR_SGIX"/>
+            <enum name="GL_POSITION_SGIX"/>
+            <enum name="GL_SPOT_DIRECTION_SGIX"/>
+            <enum name="GL_SPOT_EXPONENT_SGIX"/>
+            <enum name="GL_SPOT_CUTOFF_SGIX"/>
+            <enum name="GL_CONSTANT_ATTENUATION_SGIX"/>
+            <enum name="GL_LINEAR_ATTENUATION_SGIX"/>
+            <enum name="GL_QUADRATIC_ATTENUATION_SGIX"/>
+        </group>
+
+        <group name="ElementPointerTypeATI">
+            <enum name="GL_UNSIGNED_BYTE_ATI"/>
+            <enum name="GL_UNSIGNED_SHORT_ATI"/>
+            <enum name="GL_UNSIGNED_INT_ATI"/>
+        </group>
+
+        <group name="MatrixIndexPointerTypeARB">
+            <enum name="GL_UNSIGNED_BYTE_ARB"/>
+            <enum name="GL_UNSIGNED_SHORT_ARB"/>
+            <enum name="GL_UNSIGNED_INT_ARB"/>
+        </group>
+
+        <group name="WeightPointerTypeARB">
+            <enum name="GL_BYTE_ARB"/>
+            <enum name="GL_UNSIGNED_BYTE_ARB"/>
+            <enum name="GL_SHORT_ARB"/>
+            <enum name="GL_UNSIGNED_SHORT_ARB"/>
+            <enum name="GL_INT_ARB"/>
+            <enum name="GL_UNSIGNED_INT_ARB"/>
+            <enum name="GL_FLOAT_ARB"/>
+            <enum name="GL_DOUBLE_ARB"/>
+        </group>
+
+        <group name="CullParameterEXT">
+            <enum name="GL_CULL_VERTEX_EYE_POSITION_EXT"/>
+            <enum name="GL_CULL_VERTEX_OBJECT_POSITION_EXT"/>
+        </group>
+
+        <group name="DataTypeEXT">
+            <enum name="GL_SCALAR_EXT"/>
+            <enum name="GL_VECTOR_EXT"/>
+            <enum name="GL_MATRIX_EXT"/>
+        </group>
+
+        <group name="ParameterRangeEXT">
+            <enum name="GL_NORMALIZED_RANGE_EXT"/>
+            <enum name="GL_FULL_RANGE_EXT"/>
+        </group>
+
+        <group name="GetVariantValueEXT">
+            <enum name="GL_VARIANT_VALUE_EXT"/>
+            <enum name="GL_VARIANT_DATATYPE_EXT"/>
+            <enum name="GL_VARIANT_ARRAY_STRIDE_EXT"/>
+            <enum name="GL_VARIANT_ARRAY_TYPE_EXT"/>
+        </group>
+
+        <group name="IndexFunctionEXT">
+            <enum name="GL_NEVER_EXT"/>
+            <enum name="GL_ALWAYS_EXT"/>
+            <enum name="GL_LESS_EXT"/>
+            <enum name="GL_LEQUAL_EXT"/>
+            <enum name="GL_EQUAL_EXT"/>
+            <enum name="GL_GEQUAL_EXT"/>
+            <enum name="GL_GREATER_EXT"/>
+            <enum name="GL_NOTEQUAL_EXT"/>
+        </group>
+
+        <group name="IndexMaterialParameterEXT">
+            <enum name="GL_INDEX_OFFSET"/>
+        </group>
+
+        <group name="VariantCapEXT">
+            <enum name="GL_VARIANT_ARRAY_EXT"/>
+        </group>
+
+        <group name="PixelTransformTargetEXT">
+            <enum name="GL_PIXEL_TRANSFORM_2D_EXT"/>
+        </group>
+
+        <group name="PixelTransformPNameEXT">
+            <enum name="GL_PIXEL_MAG_FILTER_EXT"/>
+            <enum name="GL_PIXEL_MIN_FILTER_EXT"/>
+            <enum name="GL_PIXEL_CUBIC_WEIGHT_EXT"/>
+        </group>
+
+        <group name="VertexWeightPointerTypeEXT">
+            <enum name="GL_FLOAT_EXT"/>
+        </group>
+
+        <group name=" VertexShaderWriteMaskEXT">
+            <enum name="GL_TRUE_EXT"/>
+            <enum name="GL_FALSE_EXT"/>
+        </group>
+
+        <group name="CombinerComponentUsageNV">
+            <enum name="GL_RGB_NV"/>
+            <enum name="GL_ALPHA_NV"/>
+            <enum name="GL_BLUE_NV"/>
+        </group>
+
+        <group name="TangentPointerTypeEXT">
+            <enum name="GL_BYTE_EXT"/>
+            <enum name="GL_SHORT_EXT"/>
+            <enum name="GL_FLOAT_EXT"/>
+            <enum name="GL_DOUBLE_EXT"/>
+        </group>
+
+        <group name="BinormalPointerTypeEXT">
+            <enum name="GL_BYTE_EXT"/>
+            <enum name="GL_SHORT_EXT"/>
+            <enum name="GL_FLOAT_EXT"/>
+            <enum name="GL_DOUBLE_EXT"/>
+        </group>
+
         <group name="TextureNormalModeEXT">
             <enum name="GL_PERTURB_EXT"/>
         </group>

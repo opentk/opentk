@@ -12,18 +12,25 @@ type EnumGroup =
     { groupName: string
       cases: Enum[] }
 
+[<RequireQualifiedAccess>]
+type LooseType =
+    { typ: string
+      group: string option }
+
+let looseType typ group = { typ = typ; group = group } : LooseType
+
 type ParameterInfo =
     { paramName: string
-      paramType: string }
+      paramType: LooseType }
 
 type FunctionDeclaration =
     { funcName: string
       parameters: ParameterInfo[]
-      retType: string }
+      retType: LooseType }
 
 type GLType =
     | Pointer of GLType
-    | GLenum
+    | GLenum of EnumGroup
     | GLint
     | GLboolean
     | GLdouble

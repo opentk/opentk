@@ -46,22 +46,39 @@ let getEnumsFromSpecification (spec: Types.OpenGL_Specification.Registry) =
     )
 
 open System.Text.RegularExpressions
-let paramsTypeRegex = new Regex("<param.*?>(?<f>.*?)(<ptype>(?<t>.*?)<\/ptype>(?<b>.*?))?(<name>.+?<\/name>)<\/param>")
+let paramsTypeRegex = new Regex("<param(.*?(group=\"(?<group>.*?)\").*?|.*?)>(?<f>.*?)(<ptype>(?<t>.*?)<\/ptype>(?<b>.*?))?(<name>.+?<\/name>)<\/param>")
+let protoTypeRegex = new Regex("<proto(.*?(group=\"(?<group>.*?)\").*?|.*?)>(?<f>.*?)(<ptype>(?<t>.*?)<\/ptype>(?<b>.*?))?(<name>.+?<\/name>)<\/proto>")
 let getGroupValue (group: string) (matching: Match) =
     matching.Groups.[group].Value
 
+let getRawElementDataWithoutLineBreaks (v: Xml.Linq.XElement) =
+    v.ToString().Replace("\n", "").Replace("\t", "").Replace("\r", "")
+
 let extractTypeFromPtype (param: Types.OpenGL_Specification.Param) =
-    let str = param.XElement.ToString().Replace("\n", "").Replace("\t", "").Replace("\r", "")
-    //printfn "%s" str
+    let str = getRawElementDataWithoutLineBreaks param.XElement
     let res = paramsTypeRegex.Match str
+    let groupName =
+        let str = getGroupValue "group" res
+        if str |> String.IsNullOrWhiteSpace then None
+        else Some str
     let ty =
         getGroupValue "f" res +
         getGroupValue "t" res +
         getGroupValue "b" res
-    ty
+    groupName, ty
 
 let extractTypeFromProto (proto: Types.OpenGL_Specification.Proto) =
-    proto.XElement.Value.Replace(" " + proto.Name, "").Replace(proto.Name, "")
+    let str = getRawElementDataWithoutLineBreaks proto.XElement
+    let res = protoTypeRegex.Match str
+    let groupName =
+        let str = getGroupValue "group" res
+        if str |> String.IsNullOrWhiteSpace then None
+        else Some str
+    let ty =
+        getGroupValue "f" res +
+        getGroupValue "t" res +
+        getGroupValue "b" res
+    groupName, ty
 
 let getFunctions (spec: Types.OpenGL_Specification.Registry) =
     spec.Commands.Commands
@@ -78,29 +95,29 @@ let getFunctions (spec: Types.OpenGL_Specification.Registry) =
             let parameters =
                 cmd.Params
                 |> Array.Parallel.map(fun p ->
-                    let ty = extractTypeFromPtype p
+                    let group, ty = extractTypeFromPtype p
                     if String.IsNullOrWhiteSpace ty then
                         let str = p.XElement.ToString()
                         printfn "failed parsing %A, value: %s" (funcName) str
                     { paramName = p.Name
-                      paramType = ty }
+                      paramType = looseType ty group }
                 )
-            let retType = extractTypeFromProto cmd.Proto
+            let group, ty = extractTypeFromProto cmd.Proto
             let ret =
                 { funcName = funcName 
                   parameters = parameters
-                  retType = retType }
+                  retType = looseType ty group }
             ret
     )
 
-let looslyTypedFunctionsToTypedFunctions functions =
+let looslyTypedFunctionsToTypedFunctions enumMap functions =
     let typecheckParams parameters =
         let len = (parameters |> Array.length)
         let res = Array.zeroCreate len
         let rec typecheck index =
             if index < len then
                 let currParam = parameters.[index]
-                match currParam.paramType |> Parsing.tryParseType with
+                match currParam.paramType |> Parsing.tryParseType enumMap currParam.paramName with
                 | Some ty ->
                     res.[index] <-
                         typedParameterInfo
@@ -115,7 +132,7 @@ let looslyTypedFunctionsToTypedFunctions functions =
     functions
     |> Array.Parallel.choose(fun func ->
         maybe {
-            let! retType = func.retType |> Parsing.tryParseType
+            let! retType = func.retType |> Parsing.tryParseType enumMap func.funcName
             let! parameters =
                 func.parameters
                 |> typecheckParams
@@ -138,6 +155,12 @@ let main argv =
     let test = Types.OpenGL_Specification.Load path
     let enums = getEnumsFromSpecification test
     printfn "Enum group count: %d" enums.Length
+    let enumMap =
+        enums
+        |> Array.Parallel.map(fun group ->
+            group.groupName, group
+        )
+        |> Map.ofArray
     //enums
     //|> Seq.iter(fun enum ->
     //    printfn "-- enum group name: %A --" enum.groupName
@@ -170,16 +193,16 @@ let main argv =
             |> Array.Parallel.map(fun p -> p.paramType)
         )
         |> Set.ofArray
-    for possibleType in possibleTypes do
-        printfn "%A" possibleType
+    //for possibleType in possibleTypes do
+    //    printfn "%A" possibleType
     let checkedTypes =
         possibleTypes
-        |> Set.map(fun v -> v, Parsing.tryParseType v)
-    for possibleType in checkedTypes do
-        printfn "%A" possibleType
-    let typecheckedFunctions = looslyTypedFunctionsToTypedFunctions functions
+        |> Set.map(fun v -> v, Parsing.tryParseType enumMap "<unknown>" v)
+    //for possibleType in checkedTypes do
+    //    printfn "%A" possibleType
+    let typecheckedFunctions = looslyTypedFunctionsToTypedFunctions enumMap functions
     printfn "overall correct function specifications: %d" typecheckedFunctions.Length
-    for func in typecheckedFunctions |> Array.take 100 do
-        printfn "%A" func
+    //for func in typecheckedFunctions |> Array.take 100 do
+    //    printfn "%A" func
 
     0 // return an integer exit code

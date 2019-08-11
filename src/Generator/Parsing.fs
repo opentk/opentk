@@ -10,19 +10,27 @@ let (|IsPointerType|_|) input =
 
 open Types
 
-let tryParseType (str:string) =
-    let str = str.Replace("const", "").Replace(" ", "")
+let tryParseType enumMap funcOrParamName (ty:LooseType) =
+    let str = ty.typ.Replace("const", "").Replace(" ", "")
     let rec tryParse str =
         match str with
         | IsPointerType inner ->
             tryParse inner
             |> Option.map Pointer
+        | "GLenum" ->
+            ty.group
+            |> Option.bind(fun group ->
+                match enumMap |> Map.tryFind group with
+                | Some entry -> GLenum entry |> Some
+                | None ->
+                    printfn "Function or param %s references enum group %s which does not exist" funcOrParamName group
+                    None
+            )
         | "GLboolean" -> Some GLboolean
         | "GLbyte" -> Some GLbyte
         | "GLchar" -> Some GLchar
         | "GLcharARB" -> Some GLcharARB
         | "GLclampf" -> Some GLclampf
-        | "GLenum" -> Some GLenum
         | "GLdouble" -> Some GLdouble
         | "GLfixed" -> Some GLfixed
         | "GLfloat" -> Some GLfloat
