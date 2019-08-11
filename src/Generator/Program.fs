@@ -20,8 +20,7 @@ let getEnumsFromSpecification (spec: Types.OpenGL_Specification.Registry) =
             e.Enums
             |> Array.Parallel.choose(fun case ->
                 case.Value.String
-                |> Option.map(fun value -> (case.Name, value))
-            )
+                |> Option.map(fun value -> (case.Name, value)))
         )
         |> Map.ofArray
 
@@ -37,6 +36,12 @@ let getEnumsFromSpecification (spec: Types.OpenGL_Specification.Registry) =
                     |> Option.map(fun value ->
                         { name = case.Name
                           value =  value })
+                )
+                |> Array.groupBy(fun case -> case.value)
+                |> Array.Parallel.choose(fun (_, cases) ->
+                    cases
+                    |> Array.tryFind(fun case -> (case.name.Contains "EXT" || case.name.Contains "NV") |> not)
+                    |> Option.orElse (cases |> Array.tryHead)
                 )
             let res =
                 { groupName = group
