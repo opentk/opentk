@@ -926,7 +926,7 @@ namespace OpenToolkit.Windowing.Desktop
         }
 
         /// <inheritdoc />
-        public bool GetCurrentMonitorScale(out float horizontalScale, out float verticalScale)
+        public bool TryGetCurrentMonitorScale(out float horizontalScale, out float verticalScale)
         {
             if (CurrentMonitor.Pointer != IntPtr.Zero)
             {
@@ -949,10 +949,10 @@ namespace OpenToolkit.Windowing.Desktop
         }
 
         /// <inheritdoc />
-        public bool GetCurrentMonitorDpi(out float horizontalDpi, out float verticalDpi)
+        public bool TryGetCurrentMonitorDpi(out float horizontalDpi, out float verticalDpi)
         {
             float defaultDpi = GetPlatformDefaultDpi();
-            bool success = GetCurrentMonitorScale(out float horizontalScale, out float verticalScale);
+            bool success = TryGetCurrentMonitorScale(out float horizontalScale, out float verticalScale);
 
             horizontalDpi = defaultDpi * horizontalScale;
             verticalDpi = defaultDpi * verticalScale;
@@ -960,7 +960,7 @@ namespace OpenToolkit.Windowing.Desktop
         }
 
         /// <inheritdoc />
-        public bool GetCurrentMonitorDpiRaw(out float horizontalDpi, out float verticalDpi)
+        public bool TryGetCurrentMonitorDpiRaw(out float horizontalDpi, out float verticalDpi)
         {
             horizontalDpi = verticalDpi = GetPlatformDefaultDpi();
 

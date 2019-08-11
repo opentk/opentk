@@ -60,7 +60,7 @@ namespace OpenToolkit.Windowing.Common
         /// <param name="horizontalScale">Horizontal scale.</param>
         /// <param name="verticalScale">Vertical scale.</param>
         /// <returns><c>true</c>, if current monitor scale was gotten correctly, <c>false</c> otherwise.</returns>
-        bool GetCurrentMonitorScale(out float horizontalScale, out float verticalScale);
+        bool TryGetCurrentMonitorScale(out float horizontalScale, out float verticalScale);
 
         /// <summary>
         /// Gets the dpi of the current monitor.
@@ -70,10 +70,10 @@ namespace OpenToolkit.Windowing.Common
         /// <returns><c>true</c>, if current monitor's dpi was gotten correctly, <c>false</c> otherwise.</returns>
         /// <remarks>
         /// This methods approximates the dpi of the monitor by multiplying
-        /// the monitor scale recieved from <see cref="GetCurrentMonitorScale(out float, out float)"/>
+        /// the monitor scale recieved from <see cref="TryGetCurrentMonitorScale(out float, out float)"/>
         /// by each platforms respective default dpi (72 for macOS and 96 for other systems).
         /// </remarks>
-        bool GetCurrentMonitorDpi(out float horizontalDpi, out float verticalDpi);
+        bool TryGetCurrentMonitorDpi(out float horizontalDpi, out float verticalDpi);
 
         /// <summary>
         /// Gets the raw dpi of current monitor.
@@ -86,6 +86,6 @@ namespace OpenToolkit.Windowing.Common
         /// However on certain platforms (such as Windows) these values may not
         /// be scaled correctly.
         /// </remarks>
-        bool GetCurrentMonitorDpiRaw(out float horizontalDpi, out float verticalDpi);
+        bool TryGetCurrentMonitorDpiRaw(out float horizontalDpi, out float verticalDpi);
     }
 }
