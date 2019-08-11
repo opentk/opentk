@@ -3,15 +3,18 @@ open System
 open Fake.DotNet.Testing
 
 #r "paket:
+storage: packages
 nuget Fake.IO.FileSystem
 nuget Fake.DotNet.MSBuild
 nuget Fake.DotNet.Testing.XUnit2
-nuget Fake.DotNet.AssemblyInfoFile
-nuget Fake.DotNet.NuGet
+nuget Fake.DotNet.AssemblyInfoFile 
+nuget Fake.DotNet.NuGet prerelease
 nuget Fake.DotNet.Cli
 nuget Fake.Core.Target
 nuget Fake.DotNet.Cli
+nuget Fake.Api.Github
 nuget xunit.runner.console
+nuget NuGet.CommandLine
 nuget Fake.Core.ReleaseNotes //"
 
 #load "./.fake/build.fsx/intellisense.fsx"
@@ -84,6 +87,7 @@ let allProjects =
 
 let testAssemblies = "tests/**/obj/Release/*Tests*.dll"
 
+let nugetCommandRunnerPath = ".fake/build.fsx/packages/NuGet.CommandLine/tools/NuGet.exe" |> Fake.IO.Path.convertWindowsToCurrentPath
 
 // ---------
 // Other Targets
@@ -102,7 +106,7 @@ let pathToSpec =
     "src/Generators/Generator.Bind/Specifications"
 
 let specSource =
-    "https://raw.githubusercontent.com/KhronosGroup/OpenGL-Registry/master/xml/gl.xml"
+    "https://raw.githubusercontent.com/frederikja163/OpenGL-Registry/master/xml/gl.xml"
 
 //let bindingsOutputPath =
 //    ""
@@ -208,38 +212,36 @@ Target.create "RunTests" (fun _ ->
       let projectDirectory = Path.GetDirectoryName(fullCsProjName)
       DotNet.test (setDotNetOptions projectDirectory) ""
     )
-//    Shell.Exec("dotnet", "test tests/OpenToolkit.Tests") |> ignore
-//    Shell.Exec("dotnet", "test tests/OpenToolkit.Tests.Integration") |> ignore
-//    !! testAssemblies
-//    |> XUnit2.run (fun p ->
-//        { p with
-//            ShadowCopy = true
-//            TimeOut = TimeSpan.FromMinutes 2.
-//            XmlOutputPath = Some "TestResults.xml" })
-//     Trace.traceError "Unimplemented."
 )
 
 Target.create "CreateNuGetPackage" (fun _ ->
+    let optsFn options =
+        { options with DotNet.PackOptions.OutputPath = Some "Bin" }
     releaseProjects
-    |> Seq.iter (NuGet.NuGet(fun p ->
-        { p with
-            Copyright = copyright
-            Authors = authors
-            OutputPath = "bin"
-            Version = release.NugetVersion
-            ReleaseNotes = Fake.Core.String.toLines release.Notes}))
+    |> Seq.iter(DotNet.pack optsFn)
 )
 
 // ---------
 // Release Targets
 // ---------
 
-Target.create "ReleaseOnGithub" (fun _ ->
-    Trace.traceError "Unimplemented."
-)
+open Fake.Api
 
-Target.create "ReleaseOnNuGetDotOrg" (fun _ ->
-    Trace.traceError "Unimplemented."
+Target.create "ReleaseOnGitHub" (fun _ ->
+    let token =
+        match Environment.environVarOrDefault "github_token" "" with
+        | s when not (System.String.IsNullOrWhiteSpace s) -> s
+        | _ -> failwith "please set the github_token environment variable to a github personal access token with repro access."
+
+    let files =
+        !! "bin/*"
+        |> Seq.toList
+
+    GitHub.createClientWithToken token
+    |> GitHub.draftNewRelease gitOwner gitName release.NugetVersion (release.SemVer.PreRelease <> None) release.Notes
+    |> GitHub.uploadFiles files
+    |> GitHub.publishDraft
+    |> Async.RunSynchronously
 )
 
 Target.create "ReleaseOnNuGetGallery" (fun _ ->
@@ -259,16 +261,16 @@ open Fake.Core.TargetOperators
 "Clean"
   ==> "Restore"
   ==> "AssemblyInfo"
-  //==> "Build"
   ==> "UpdateSpec"
   ==> "UpdateBindings"
+  ==> "Build"
   ==> "CopyBinaries"
-  //==> "RunTests"
+  ==> "RunTests"
   ==> "All"
-  //==> "CreateNuGetPackage"
-  //==> "ReleaseOnGithub"
-  //==> "ReleaseOnNugetGallery"
-  //==> "ReleaseOnAll"
+  ==> "CreateNuGetPackage"
+  ==> "ReleaseOnGithub"
+  ==> "ReleaseOnNugetGallery"
+  ==> "ReleaseOnAll"
 
 //"Build"
 
