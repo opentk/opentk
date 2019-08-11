@@ -216,7 +216,9 @@ Target.create "RunTests" (fun _ ->
 
 Target.create "CreateNuGetPackage" (fun _ ->
     let optsFn options =
-        { options with DotNet.PackOptions.OutputPath = Some "Bin" }
+        { options with
+            DotNet.PackOptions.OutputPath = (Some "Bin")
+        }
     releaseProjects
     |> Seq.iter(DotNet.pack optsFn)
 )
@@ -242,10 +244,27 @@ Target.create "ReleaseOnGitHub" (fun _ ->
     |> GitHub.uploadFiles files
     |> GitHub.publishDraft
     |> Async.RunSynchronously
+
 )
 
 Target.create "ReleaseOnNuGetGallery" (fun _ ->
-    Trace.traceError "Unimplemented."
+    let apiKey =
+        match Environment.environVarOrDefault "nuget_api_key" "" with
+        | s when not (System.String.IsNullOrWhiteSpace s) -> s
+        | _ -> failwith "please set the nuget_api_key environment variable to a nuget access token."
+
+    !! "bin/*.nupkg"
+    |> Seq.iter(
+        DotNet.nugetPush (fun opts ->
+            { opts with
+                PushParams =
+                    { opts.PushParams with
+                        ApiKey = Some apiKey
+                        Source = Some "nuget.org"
+                    }
+            }
+        )
+    )
 )
 
 Target.create "ReleaseOnAll" ignore
@@ -268,8 +287,8 @@ open Fake.Core.TargetOperators
   ==> "RunTests"
   ==> "All"
   ==> "CreateNuGetPackage"
+  ==> "ReleaseOnNuGetGallery"
   ==> "ReleaseOnGithub"
-  ==> "ReleaseOnNugetGallery"
   ==> "ReleaseOnAll"
 
 //"Build"
