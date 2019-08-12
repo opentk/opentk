@@ -417,6 +417,17 @@ let specTypeToCSharpType =
         "cl_work_group_info","WorkGroupInfo"
     |] |> Map.ofArray
 
+let reservedKeywords = 
+    [|
+        "ref"
+        "object"
+        "string"
+        "event"
+        "params"
+        "base"
+        "in"
+    |]
+
 open System.IO
 
 let rec typeToString (ty: GLType) =
@@ -465,13 +476,24 @@ let generateInterface enums (functions: TypedFunctionDeclaration[]) =
     writeLine "{"
     indent()
 
+    let formatParam (p: TypedParameterInfo) =
+        let name =
+            reservedKeywords
+            |> Array.tryFind (fun n -> p.name = n)
+            |> Option.map(fun keyword ->
+                p.name.Replace(keyword, keyword.ToUpper())
+            )
+            |> Option.defaultValue p.name
+            
+        sprintf "%s %s" (p.typ |> typeToString) name
+
     functions
     |> Seq.iter(fun func ->
         let retTypeAsString = func.retType |> typeToString
         
         let formattedParams =
             func.parameters
-            |> Array.Parallel.map(fun p -> sprintf "%s %s" (p.typ |> typeToString) p.name)
+            |> Array.Parallel.map formatParam
             |> String.concat ", "
         sprintf "%s %s(%s);" retTypeAsString func.name formattedParams
         |> writeLine
