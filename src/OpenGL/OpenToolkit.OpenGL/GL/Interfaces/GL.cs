@@ -49,6 +49,7 @@ namespace OpenToolkit.OpenGL
     {
         public int Count { get; set; }
         public string Parameter { get; set; }
+        public string Computed { get;set; }
     }
 
     partial interface GL
