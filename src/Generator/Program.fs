@@ -303,7 +303,7 @@ let specTypeToCSharpType =
 
         // ARB_sync (introduced in 3.2)
         "sync","IntPtr"
-        "GLsync","		        IntPtr"
+        "GLsync","IntPtr"
 
         // Debug callbacks
         "GLDEBUGPROC","DebugProc"
@@ -417,6 +417,36 @@ let specTypeToCSharpType =
         "cl_work_group_info","WorkGroupInfo"
     |] |> Map.ofArray
 
+type DummyType =
+    { _namespace: string option
+      name: string }
+
+let additionalTypesToGenerate =
+    [|
+        { _namespace = Some "OpenToolkit.Mathematics"; name = "Half" }
+        { _namespace = None; name = "DebugProc" }
+        { _namespace = None; name = "DebugProcAmd" }
+        { _namespace = None; name = "DebugProcArb" }
+        { _namespace = None; name = "DebugProcKhr" }
+        { _namespace = None; name = "Struct_cl_context" }
+        { _namespace = None; name = "Struct_cl_event" }
+        { _namespace = None; name = "ElementPointerTypeATI" }
+        { _namespace = None; name = "CombinerPortionNV" }
+        { _namespace = None; name = "FragmentLightParameterSGIX" }
+        { _namespace = None; name = "MapTypeNV" }
+        { _namespace = None; name = "ProgramTarget" }
+        { _namespace = None; name = "ProgramStringProperty" }
+        { _namespace = None; name = "IglooFunctionSelectSGIX" }
+        { _namespace = None; name = "IndexFunctionEXT" }
+        { _namespace = None; name = "ProgramFormat" }
+        { _namespace = None; name = "MatrixIndexPointerTypeARB" }
+        { _namespace = None; name = "ReplacementCodeTypeSUN" }
+        { _namespace = None; name = "SecondaryColorPointerTypeIBM" }
+        { _namespace = None; name = "VertexWeightPointerTypeEXT" }
+        { _namespace = None; name = "WeightPointerTypeARB" }
+        { _namespace = None; name = "VertexShaderWriteMaskEXT" }
+    |] |> Set.ofArray |> Set.toArray
+
 let reservedKeywords = 
     [|
         "ref"
@@ -435,7 +465,7 @@ let rec typeToString (ty: GLType) =
     | GLType.Void -> "void"
     | GLType.GLenum inner -> inner.groupName
     | GLType.Pointer inner ->
-        typeToString inner + "*"
+        typeToString inner + " *"
     | other ->
         let fallback = other.ToString()
         specTypeToCSharpType
@@ -453,26 +483,87 @@ let formatParam (p: TypedParameterInfo) =
     let name = formatName p.name
     sprintf "%s %s" (p.typ |> typeToString) name
 
-let generateInterface enums (functions: TypedFunctionDeclaration[]) =
+let outputPath = "../binding/Binding"
+
+let generateDummyTypes () =
     use backing = new StringWriter()
     use writer = new System.CodeDom.Compiler.IndentedTextWriter(backing)
     let writeLine (str: string) = writer.WriteLine str
     let indent() = writer.Indent <- writer.Indent + 1
     let unindent() = writer.Indent <- writer.Indent - 1
+    let usings = 
+        [
+            "System"
+        ]
+    for using in usings do
+        sprintf "using %s;" using
+        |> writeLine
+
+    writeLine ""
+    writeLine "namespace FooBar"
+    writeLine "{"
+    indent()
+    
+    let formatDummyType ty =
+        sprintf "public struct %s {}" ty.name
+
+    for ty in additionalTypesToGenerate do
+        match ty._namespace with
+        | Some n ->
+            sprintf "namespace %s" n
+            |> writeLine
+            writeLine "{"
+            indent()
+            formatDummyType ty
+            |> writeLine
+            unindent()
+            writeLine "}"
+        | None ->
+            formatDummyType ty
+            |> writeLine
+
+    unindent()
+    writeLine "}"
+    backing.Flush()
+    File.WriteAllText(outputPath + "/" + "Types.cs", backing.ToString())
+    
+
+let generateEnums enums =
+    use backing = new StringWriter()
+    use writer = new System.CodeDom.Compiler.IndentedTextWriter(backing)
+    let writeLine (str: string) = writer.WriteLine str
+    let indent() = writer.Indent <- writer.Indent + 1
+    let unindent() = writer.Indent <- writer.Indent - 1
+    let usings = 
+        [
+            "System"
+        ]
+    for using in usings do
+        sprintf "using %s;" using
+        |> writeLine
+
+    writeLine ""
     writeLine "namespace FooBar"
     writeLine "{"
     indent()
     
     for enum in enums do
         if enum.cases.Length > 0 then
-            sprintf "enum %s" enum.groupName
+            sprintf "public enum %s" enum.groupName
             |> writeLine
             writeLine "{"
             indent()
             let formattedCases =
+                let valueToString value =
+                    match value with
+                    | "0xFFFFFFFF" -> "-1"
+                    | "0x80000000" ->
+                        let value = 0x80000000
+                        value |> string
+                    | _ -> value
                 enum.cases
                 |> Array.Parallel.map(fun case ->
-                    sprintf "%s = %s" case.name case.value
+                    sprintf "%s = %s" case.name (valueToString case.value)
                 )
             if formattedCases.Length > 2 then
                 for case in formattedCases.[..formattedCases.Length - 2] do
@@ -481,7 +572,30 @@ let generateInterface enums (functions: TypedFunctionDeclaration[]) =
             |> writeLine
             unindent()
             writeLine "}"
-        
+
+    unindent()
+    writeLine "}"
+    backing.Flush()
+    File.WriteAllText(outputPath + "/" + "Enums.cs", backing.ToString())
+
+let generateInterface (functions: TypedFunctionDeclaration[]) =
+    use backing = new StringWriter()
+    use writer = new System.CodeDom.Compiler.IndentedTextWriter(backing)
+    let writeLine (str: string) = writer.WriteLine str
+    let indent() = writer.Indent <- writer.Indent + 1
+    let unindent() = writer.Indent <- writer.Indent - 1
+    let usings = 
+        [
+            "System"
+        ]
+    for using in usings do
+        sprintf "using %s;" using
+        |> writeLine
+
+    writeLine ""
+    writeLine "namespace FooBar"
+    writeLine "{"
+    indent()
 
     writeLine "public interface IGL"
     writeLine "{"
@@ -495,7 +609,7 @@ let generateInterface enums (functions: TypedFunctionDeclaration[]) =
             func.parameters
             |> Array.Parallel.map formatParam
             |> String.concat ", "
-        sprintf "%s %s(%s);" retTypeAsString func.name formattedParams
+        sprintf "unsafe %s %s(%s);" retTypeAsString func.name formattedParams
         |> writeLine
         writeLine ""
     )
@@ -504,7 +618,7 @@ let generateInterface enums (functions: TypedFunctionDeclaration[]) =
     unindent()
     writeLine "}"
     backing.Flush()
-    File.WriteAllText("./functions.cs", backing.ToString())
+    File.WriteAllText(outputPath + "/" + "Functions.cs", backing.ToString())
 
 let generateStaticClass (functions: TypedFunctionDeclaration[]) =
    use backing = new StringWriter()
@@ -512,6 +626,13 @@ let generateStaticClass (functions: TypedFunctionDeclaration[]) =
    let writeLine (str: string) = writer.WriteLine str
    let indent() = writer.Indent <- writer.Indent + 1
    let unindent() = writer.Indent <- writer.Indent - 1
+   let usings = 
+        [
+            "System"
+        ]
+   for using in usings do
+        sprintf "using %s;" using
+        |> writeLine
    writeLine "namespace FooBar"
    writeLine "{"
    indent()
@@ -530,7 +651,7 @@ let generateStaticClass (functions: TypedFunctionDeclaration[]) =
            |> String.concat ", "
        let funcName = func.name
        let formattedParamNames = func.parameters |> Array.Parallel.map(fun p -> p.name |> formatName) |> String.concat ", "
-       sprintf "public static %s %s(%s) => instance.%s(%s);" retTypeAsString funcName formattedParams funcName formattedParamNames
+       sprintf "static unsafe %s %s(%s) => instance.%s(%s);" retTypeAsString funcName formattedParams funcName formattedParamNames
        |> writeLine
        writeLine ""
    )
@@ -539,12 +660,12 @@ let generateStaticClass (functions: TypedFunctionDeclaration[]) =
    unindent()
    writeLine "}"
    backing.Flush()
-   File.WriteAllText("./GL.cs", backing.ToString())
+   File.WriteAllText(outputPath + "/" + "GL.cs", backing.ToString())
 
 [<EntryPoint>]
 let main argv =
     printfn "Hello World from F//!"
-    let path = @"D:\repos\opentk\src\Generator\gl.xml"
+    let path = @"../../../gl.xml"
     let test = Types.OpenGL_Specification.Load path
     let enums = getEnumsFromSpecification test
     printfn "Enum group count: %d" enums.Length
@@ -581,8 +702,10 @@ let main argv =
     //    printfn "%A" possibleType
     let typecheckedFunctions = looslyTypedFunctionsToTypedFunctions enumMap functions
     printfn "overall correct function specifications: %d" typecheckedFunctions.Length
-    generateInterface enums typecheckedFunctions
+    generateEnums enums
+    generateInterface typecheckedFunctions
     generateStaticClass typecheckedFunctions
+    generateDummyTypes()
     //for func in typecheckedFunctions |> Array.take 100 do
     //    printfn "%A" func
 

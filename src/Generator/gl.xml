@@ -261,7 +261,7 @@ typedef unsigned int GLhandleARB;
             <enum name="GL_FLOAT_EXT"/>
         </group>
 
-        <group name=" VertexShaderWriteMaskEXT">
+        <group name="VertexShaderWriteMaskEXT">
             <enum name="GL_TRUE_EXT"/>
             <enum name="GL_FALSE_EXT"/>
         </group>
