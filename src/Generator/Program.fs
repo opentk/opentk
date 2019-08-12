@@ -441,6 +441,17 @@ let rec typeToString (ty: GLType) =
         specTypeToCSharpType
         |> Map.tryFind fallback
         |> Option.defaultValue fallback
+        
+        
+let formatName name =
+    reservedKeywords
+    |> Array.tryFind (fun n -> name = n)
+    |> Option.map(fun keyword -> keyword.ToUpper())
+    |> Option.defaultValue name
+
+let formatParam (p: TypedParameterInfo) =
+    let name = formatName p.name
+    sprintf "%s %s" (p.typ |> typeToString) name
 
 let generateInterface enums (functions: TypedFunctionDeclaration[]) =
     use backing = new StringWriter()
@@ -476,17 +487,6 @@ let generateInterface enums (functions: TypedFunctionDeclaration[]) =
     writeLine "{"
     indent()
 
-    let formatParam (p: TypedParameterInfo) =
-        let name =
-            reservedKeywords
-            |> Array.tryFind (fun n -> p.name = n)
-            |> Option.map(fun keyword ->
-                p.name.Replace(keyword, keyword.ToUpper())
-            )
-            |> Option.defaultValue p.name
-            
-        sprintf "%s %s" (p.typ |> typeToString) name
-
     functions
     |> Seq.iter(fun func ->
         let retTypeAsString = func.retType |> typeToString
@@ -505,6 +505,41 @@ let generateInterface enums (functions: TypedFunctionDeclaration[]) =
     writeLine "}"
     backing.Flush()
     File.WriteAllText("./functions.cs", backing.ToString())
+
+let generateStaticClass (functions: TypedFunctionDeclaration[]) =
+   use backing = new StringWriter()
+   use writer = new System.CodeDom.Compiler.IndentedTextWriter(backing)
+   let writeLine (str: string) = writer.WriteLine str
+   let indent() = writer.Indent <- writer.Indent + 1
+   let unindent() = writer.Indent <- writer.Indent - 1
+   writeLine "namespace FooBar"
+   writeLine "{"
+   indent()
+
+   writeLine "public static partial class GL"
+   writeLine "{"
+   indent()
+
+   functions
+   |> Seq.iter(fun func ->
+       let retTypeAsString = func.retType |> typeToString
+       
+       let formattedParams =
+           func.parameters
+           |> Array.Parallel.map formatParam
+           |> String.concat ", "
+       let funcName = func.name
+       let formattedParamNames = func.parameters |> Array.Parallel.map(fun p -> p.name |> formatName) |> String.concat ", "
+       sprintf "public static %s %s(%s) => instance.%s(%s);" retTypeAsString funcName formattedParams funcName formattedParamNames
+       |> writeLine
+       writeLine ""
+   )
+   unindent()
+   writeLine "}"
+   unindent()
+   writeLine "}"
+   backing.Flush()
+   File.WriteAllText("./GL.cs", backing.ToString())
 
 [<EntryPoint>]
 let main argv =
@@ -547,6 +582,7 @@ let main argv =
     let typecheckedFunctions = looslyTypedFunctionsToTypedFunctions enumMap functions
     printfn "overall correct function specifications: %d" typecheckedFunctions.Length
     generateInterface enums typecheckedFunctions
+    generateStaticClass typecheckedFunctions
     //for func in typecheckedFunctions |> Array.take 100 do
     //    printfn "%A" func
 
