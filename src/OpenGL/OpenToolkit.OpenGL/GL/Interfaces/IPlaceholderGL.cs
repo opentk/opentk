@@ -52,7 +52,7 @@ namespace OpenToolkit.OpenGL
         public string Computed { get;set; }
     }
 
-    partial interface GL
+    partial interface IPlaceholderGL
     {
         /// <summary>[requires: v1.0][deprecated: v3.2]
         /// Operate on the accumulation buffer
