@@ -651,7 +651,7 @@ let generateStaticClass (functions: TypedFunctionDeclaration[]) =
            |> String.concat ", "
        let funcName = func.name
        let formattedParamNames = func.parameters |> Array.Parallel.map(fun p -> p.name |> formatName) |> String.concat ", "
-       sprintf "static unsafe %s %s(%s) => instance.%s(%s);" retTypeAsString funcName formattedParams funcName formattedParamNames
+       sprintf "public static unsafe %s %s(%s) => instance.%s(%s);" retTypeAsString funcName formattedParams funcName formattedParamNames
        |> writeLine
        writeLine ""
    )
