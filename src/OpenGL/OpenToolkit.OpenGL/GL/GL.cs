@@ -11,7 +11,6 @@ using System;
 using System.Runtime.InteropServices;
 using System.Text;
 using AdvancedDLSupport;
-using OpenTK.Graphics.OpenGL;
 using OpenToolkit.Core.Loader;
 using OpenToolkit.Core.Native;
 
