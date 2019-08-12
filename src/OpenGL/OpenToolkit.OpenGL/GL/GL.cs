@@ -11,12 +11,13 @@ using System;
 using System.Runtime.InteropServices;
 using System.Text;
 using AdvancedDLSupport;
+using OpenTK.Graphics.OpenGL;
 using OpenToolkit.Core.Loader;
 using OpenToolkit.Core.Native;
 
 namespace OpenToolkit.OpenGL
 {
-    public partial class GL : NativeLibraryBase, IGL
+    public partial class GL : NativeLibraryBase, IPlaceholderGL
     {
         /// <inheritdoc cref="NativeLibraryBase"/>
         protected GL(string path, ImplementationOptions options)
