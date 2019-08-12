@@ -26,7 +26,7 @@
 
 
 
-namespace OpenTK.Graphics.OpenGL
+namespace OpenToolkit.OpenGL
 {
     using System;
     using System.Text;
