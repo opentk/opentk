@@ -983,7 +983,7 @@ namespace OpenToolkit.Windowing.Desktop
 
                 videoMode = GLFWProvider.GLFW.Value.GetVideoMode(monitor);
 
-                if (videoMode == (VideoMode*)0)
+                if (videoMode == null)
                 {
                     return false;
                 }
