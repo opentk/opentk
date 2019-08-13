@@ -48,6 +48,14 @@ namespace OpenToolkit.Windowing.Desktop
         /// <inheritdoc />
         public KeyboardState LastKeyboardState { get; private set; }
 
+        private JoystickState[] _joystickStates = new JoystickState[16];
+
+        /// <inheritdoc/>
+        public JoystickState[] JoystickStates { get => JoystickStates; }
+
+        /// <inheritdoc/>
+        public JoystickState[] LastJoystickStates { get; private set; }
+
         /// <inheritdoc />
         public Vector2 MousePosition
         {
@@ -738,6 +746,24 @@ namespace OpenToolkit.Windowing.Desktop
 
                 _joystickCallback = (joy, eventCode) =>
                 {
+                    if (eventCode == ConnectedState.Connected)
+                    {
+                        // Initialize the first joystick state.
+                        int hatCount = 0;
+                        Glfw.GetJoystickHats(joy, out hatCount);
+                        int axisCount = 0;
+                        Glfw.GetJoystickAxes(joy, out hatCount);
+                        int buttonCount = 0;
+                        Glfw.GetJoystickButtons(joy, out buttonCount);
+                        string name = Glfw.GetJoystickName(joy);
+
+                        JoystickStates[joy] = new JoystickState(hatCount, axisCount, buttonCount, joy, name);
+                    }
+                    else
+                    {
+                        // Remove the joystick state from the array of joysticks.
+                        JoystickStates[joy] = default;
+                    }
                     OnJoystickConnected(this, new JoystickEventArgs(joy, eventCode == ConnectedState.Connected));
                 };
                 Glfw.SetJoystickCallback(_joystickCallback);
@@ -774,6 +800,7 @@ namespace OpenToolkit.Windowing.Desktop
         {
             LastKeyboardState = KeyboardState;
             LastMouseState = MouseState;
+            LastJoystickStates = JoystickStates;
             MouseDelta = Vector2.Zero;
 
             if (IsEventDriven)
@@ -789,6 +816,40 @@ namespace OpenToolkit.Windowing.Desktop
             {
                 Glfw.GetCursorPos(WindowPtr, out var x, out var y);
                 _mouseState.Position = new Vector2((float)x, (float)y);
+
+                for (int i = 0; i < JoystickStates.Length; i++)
+                {
+                    JoystickState joy = JoystickStates[i];
+                    if (joy == default)
+                    {
+                        continue;
+                    }
+
+                    int count = 0;
+
+                    var h = Glfw.GetJoystickHats(joy.Id, out count);
+                    Hat[] hats = new Hat[count];
+                    for (int j = 0; j < count; j++)
+                    {
+                        hats[j] = (Hat)h[j];
+                    }
+
+                    var a = Glfw.GetJoystickAxes(joy.Id, out count);
+                    float[] axes = new float[count];
+                    for (int j = 0; j < count; j++)
+                    {
+                        axes[j] = a[j];
+                    }
+
+                    var b = Glfw.GetJoystickButtons(joy.Id, out count);
+                    var buttons = new bool[count];
+                    for (int j = 0; j < buttons.Length; j++)
+                    {
+                       buttons[j] = b[j] == 1;
+                    }
+
+                    JoystickStates[i] = new JoystickState(hats, axes, buttons, joy.Id, joy.Name);
+                }
             }
         }
 
