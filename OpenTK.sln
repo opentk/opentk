@@ -110,6 +110,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{471E0D18
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Generator", "src\Generator\Generator.fsproj", "{17868C80-6FD6-4A5A-908A-FA4FDCFB416E}"
 EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "SpecificationOpenGL", "src\SpecificationOpenGL\SpecificationOpenGL.fsproj", "{808BD056-6B35-4DB3-93E2-78243CC51A6A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -240,6 +242,10 @@ Global
 		{17868C80-6FD6-4A5A-908A-FA4FDCFB416E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{17868C80-6FD6-4A5A-908A-FA4FDCFB416E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{17868C80-6FD6-4A5A-908A-FA4FDCFB416E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{808BD056-6B35-4DB3-93E2-78243CC51A6A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{808BD056-6B35-4DB3-93E2-78243CC51A6A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{808BD056-6B35-4DB3-93E2-78243CC51A6A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{808BD056-6B35-4DB3-93E2-78243CC51A6A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -272,6 +278,7 @@ Global
 		{0100EDA0-A134-4D9E-AE6B-470169BD8B94} = {0B9B71A1-29F7-4CC5-9A9D-9DF122BE8B28}
 		{48936313-63D4-4A26-87F0-040AA15FF4A6} = {0B9B71A1-29F7-4CC5-9A9D-9DF122BE8B28}
 		{17868C80-6FD6-4A5A-908A-FA4FDCFB416E} = {0B9B71A1-29F7-4CC5-9A9D-9DF122BE8B28}
+		{808BD056-6B35-4DB3-93E2-78243CC51A6A} = {0B9B71A1-29F7-4CC5-9A9D-9DF122BE8B28}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {82DDE6D6-0D55-49B4-9C64-B31B4A6E729F}

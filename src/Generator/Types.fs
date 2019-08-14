@@ -1,8 +1,5 @@
 ﻿module Types
 
-open FSharp.Data
-
-type OpenGL_Specification = XmlProvider<"./gl.xml">
 
 type Enum =
     { name: string
@@ -89,3 +86,17 @@ let typedFunctionDeclaration name parameters retType =
     { name = name 
       parameters = parameters
       retType = retType } : TypedFunctionDeclaration
+
+type DummyType =
+    { _namespace: string option
+      name: string }
+
+[<RequireQualifiedAccess>]
+type RawOpenGLSpecificationDetails =
+    { version: string
+      functions: string[]
+      enumCases: string[] }
+
+type Either<'a, 'b> =
+    | Left of 'a
+    | Right of 'b

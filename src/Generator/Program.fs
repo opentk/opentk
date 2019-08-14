@@ -1,19 +1,18 @@
 ﻿// Learn more about F// at http://fsharp.org
 
-open System
 open Types
+open SpecificationOpenGL
+open TypeMapping
+open Util
+open Constants
 
-type MaybeBuilder() =
-    member __.Bind(v, fn) = Option.bind fn v
+open System
+open System.IO
+open System.Text.RegularExpressions
 
-    member __.ReturnFrom v = v
+let readSpec (path:string) = OpenGL_Specification.Load path
 
-
-let maybe = MaybeBuilder()
-
-let readSpec (path:string) = Types.OpenGL_Specification.Load path
-
-let getEnumsFromSpecification (spec: Types.OpenGL_Specification.Registry) =
+let getEnumsFromSpecification (spec: OpenGL_Specification.Registry) =
     let valueForName =
         spec.Enums
         |> Array.Parallel.collect(fun e ->
@@ -50,7 +49,6 @@ let getEnumsFromSpecification (spec: Types.OpenGL_Specification.Registry) =
         }
     )
 
-open System.Text.RegularExpressions
 let paramsTypeRegex = new Regex("<param(.*?(group=\"(?<group>.*?)\").*?|.*?)>(?<f>.*?)(<ptype>(?<t>.*?)<\/ptype>(?<b>.*?))?(<name>.+?<\/name>)<\/param>")
 let protoTypeRegex = new Regex("<proto(.*?(group=\"(?<group>.*?)\").*?|.*?)>(?<f>.*?)(<ptype>(?<t>.*?)<\/ptype>(?<b>.*?))?(<name>.+?<\/name>)<\/proto>")
 let getGroupValue (group: string) (matching: Match) =
@@ -59,7 +57,7 @@ let getGroupValue (group: string) (matching: Match) =
 let getRawElementDataWithoutLineBreaks (v: Xml.Linq.XElement) =
     v.ToString().Replace("\n", "").Replace("\t", "").Replace("\r", "")
 
-let extractTypeFromPtype (param: Types.OpenGL_Specification.Param) =
+let extractTypeFromPtype (param: OpenGL_Specification.Param) =
     let str = getRawElementDataWithoutLineBreaks param.XElement
     let res = paramsTypeRegex.Match str
     let groupName =
@@ -72,7 +70,7 @@ let extractTypeFromPtype (param: Types.OpenGL_Specification.Param) =
         getGroupValue "b" res
     groupName, ty
 
-let extractTypeFromProto (proto: Types.OpenGL_Specification.Proto) =
+let extractTypeFromProto (proto: OpenGL_Specification.Proto) =
     let str = getRawElementDataWithoutLineBreaks proto.XElement
     let res = protoTypeRegex.Match str
     let groupName =
@@ -85,7 +83,7 @@ let extractTypeFromProto (proto: Types.OpenGL_Specification.Proto) =
         getGroupValue "b" res
     groupName, ty
 
-let getFunctions (spec: Types.OpenGL_Specification.Registry) =
+let getFunctions (spec: OpenGL_Specification.Registry) =
     spec.Commands.Commands
     |> Array.Parallel.map(fun cmd ->
         //let isInvalid =
@@ -151,522 +149,80 @@ let looslyTypedFunctionsToTypedFunctions enumMap functions =
         }
     )
 
-let csharpTypeToSpecType =
-    [|
-        "BooleanPointer","GLboolean*"
-        "Boolean","GLboolean"
-        "Char","GLchar"
-        "CharPointer","GLchar*"
-        "ConstCharPointer","GLchar* const"
-        "CheckedFloat32","GLfloat"
-        "CheckedInt32","GLint"
-        "ClampedFixed","GLfixed"
-        "ClampedFloat32","GLclampf"
-        "ClampedFloat64","GLclampd"
-        "ClampedStencilValue","GLint"
-        "ColorB","GLbyte"
-        "ColorD","GLdouble"
-        "ColorF","GLfloat"
-        "ColorI","GLint"
-        "ColorIndexValueD","GLdouble"
-        "ColorIndexValueF","GLfloat"
-        "ColorIndexValueI","GLint"
-        "ColorIndexValueS","GLshort"
-        "ColorIndexValueUB","GLubyte"
-        "ColorS","GLshort"
-        "ColorUB","GLubyte"
-        "ColorUI","GLuint"
-        "ColorUS","GLushort"
-        "CompressedTextureARB","GLvoid*"
-        "CoordD","GLdouble"
-        "CoordF","GLfloat"
-        "CoordI","GLint"
-        "CoordS","GLshort"
-        "DrawBufferName","GLint"
-        "FeedbackElement","GLfloat"
-        "FenceNV","GLuint"
-        "Float32","GLfloat"
-        "Float32Pointer","GLfloat*"
-        "Float64","GLdouble"
-        "Float64Pointer","GLdouble*"
-        "Fixed","GLfixed"
-        "ConstFixed","GLfixed"
-        "FunctionPointer","_GLfuncptr"
-        "IglooParameterSGIX","GLvoid*"
-        "Int16","GLshort"
-        "Int32","GLint"
-        "Int8","GLbyte"
-        "LineStipple","GLushort"
-        "List","GLuint"
-        "MaskedColorIndexValueF","GLfloat"
-        "MaskedColorIndexValueI","GLuint"
-        "MaskedStencilValue","GLuint"
-        "ProgramCharacterNV","GLubyte"
-        "ReplacementCodeSUN","GLuint"
-        "SelectName","GLuint"
-        "SizeI","GLsizei"
-        "StencilValue","GLint"
-        "Texture","GLuint"
-        "UInt16","GLushort"
-        "UInt32","GLuint"
-        "UInt8","GLubyte"
-        "Void","GLvoid"
-        "VoidPointer","GLvoid*"
-        "ConstVoidPointer","GLvoid* const"
-        "WinCoord","GLint"
-        "ConstByte","GLbyte"
-        "ConstUByte","GLubyte"
-        "ConstFloat32","GLfloat"
-        "ConstInt32","GLint"
-        "ConstUInt32","GLuint"
-        "ConstVoid","GLvoid"
-        // ARB_vertex_buffer_object types and core equivalents for new types
-        "BufferOffset","GLintptr"
-        "BufferSize","GLsizeiptr"
-        "BufferOffsetARB","GLintptrARB"
-        "BufferSizeARB","GLsizeiptrARB"
-        // NV_half
-        "Half16NV","GLhalfNV"
-        // Generic types for as-yet-unspecified enums
-        "TypeEnum","GLenum"
-        "Int64","GLint64"
-        "UInt64","GLuint64"
-        // Object handle & data pointers
-        "handleARB","GLhandleARB"
-        "charARB","GLcharARB"
-        "charPointerARB","GLcharARB*"
-        "sync","GLsync"
-        // EXT_timer_query
-        "Int64EXT","GLint64EXT"
-        "UInt64EXT","GLuint64EXT"
-        // EXT_direct_state_access
-        "Framebuffer","GLuint"
-        "Intptr","GLintptr"
-        "Renderbuffer","GLuint"
-        "Sizeiptr","GLsizeiptr"
-        // NV_vdpau_interop
-        "vdpauSurfaceNV","GLvdpauSurfaceNV"
-        // External API types
-        "Path","GLuint"
-        "PathCommand","GLubyte"
-        "PathElement","GLvoid*"
-    |] |> Map.ofArray
+let getEnumCasesAndCommandsPerVersion (data: OpenGL_Specification.Registry) =
+    let featuresSortedAscendingByVersion = 
+        data.Features
+        |> Array.sortBy(fun data -> data.Number)
+    let versions =
+        featuresSortedAscendingByVersion
+        |> Array.Parallel.map(fun data -> data.Number)
+    let resultsByVersion = Array.zeroCreate versions.Length
+    let aggregatedResultByVersion = Array.zeroCreate versions.Length
+    let getVersionBefore index = aggregatedResultByVersion.[index - 1]
 
-let specTypeToCSharpType =
-    [|
-        // Normal types.
-        "GLsizei","uint"
-        "GLsizeiptr","UIntPtr"
-        "GLintptr","IntPtr"
-        "GLboolean","bool" // Boolean // Int32
-        "GLbitfield","uint"
-        "GLvoid","void" //Object
-        "GLchar","char"
-        "GLbyte","sbyte"
-        "GLubyte","byte"
-        "GLshort","short"
-        "GLushort","ushort"
-        "GLint","int"
-        "GLuint","uint"
-        "GLfloat","float"
-        "GLclampf","float"
-        "GLdouble","double"
-        "GLclampd","double"
-        "GLstring","string"
-        "String","string"
-
-        // Pointer types
-        "GLvoid*","void*"
-        "GLchar*","string"
-        "GLcharARB*","string"
-        "GLfloat*","float*"
-        "GLdouble*","double*"
-        "GLboolean*","bool*"
-
-        // Note: ADL cannot marshal arrays as return types.
-        // There's no function in the spec that does but if one's added we need to look into this.
-        "GLchar**","string[]"
-
-        // ARB and NV types.
-        "GLsizeiptrARB","UIntPtr"
-        "GLintptrARB","IntPtr"
-        "GLhandleARB","uint"
-        "GLhalfARB","OpenToolkit.Mathematics.Half"
-        "GLhalfNV","OpenToolkit.Mathematics.Half"
-        "GLcharARB","char"
-
-        // 64 bit types (introduced in 2.1)
-        "GLint64EXT","long"
-        "GLuint64EXT","ulong"
-        "GLint64","long"
-        "GLuint64","ulong"
-
-        // ARB_sync (introduced in 3.2)
-        "sync","IntPtr"
-        "GLsync","IntPtr"
-
-        // Debug callbacks
-        "GLDEBUGPROC","DebugProc"
-        "GLDEBUGPROCAMD","DebugProcAmd"
-        "GLDEBUGPROCARB","DebugProcArb"
-        "GLDEBUGPROCKHR","DebugProcKhr"
-
-        // NV_vdpau
-        "GLvdpauSurfaceNV","IntPtr"
-
-        // Wgl types.
-        "PROC","IntPtr"
-        "LPCSTR","string"
-        "COLORREF","int"
-        "BOOL","bool"
-        "DWORD","int"
-        "FLOAT","float"
-        "HANDLE","IntPtr"
-        "HDC","IntPtr"
-        "HGLRC","IntPtr"
-        "HPBUFFERARB","IntPtr" //HPBUFFERARB
-        "HPBUFFEREXT","IntPtr" //HPBUFFEREXT
-        "INT32","int"
-        "INT64","long"
-        "LPVOID","void*"
-        "UINT","uint"
-        "USHORT","ushort"
-        "VOID","void"
-        "VoidPointer","void*"
-
-        // Glu types.
-        "Float64","double"
-        "Float64Pointer","double*"
-        "Float32","float"
-        "Float32Pointer","float*"
-
-        // Glx types.
-        "Void","void"
-        "Bool","bool"
-        "int64_t","long"
-        "int32_t","int"
-
-        "Display","IntPtr"
-        "Window","IntPtr"
-        "Pixmap","IntPtr"
-        "Colormap","IntPtr"
-
-        "GLXWindow","IntPtr"
-        "GLXContext","IntPtr"
-        "GLXDrawable","IntPtr"
-        "GLXPixmap","IntPtr"
-        "__GLXextFuncPtr","IntPtr"
-
-        "VLServer","IntPtr"
-        "VLPath","IntPtr"
-        "VLNode","IntPtr"
-
-        // OpenGL|ES types.
-        "GLclampx","int"
-        "GLfixed","int"
-        "GLeglImageOES","IntPtr"
-
-        // External egl buffer type added in OpenGL 4.6
-        "GLeglClientBufferEXT","IntPtr"
-
-        // nVidia vulkan entry point added by NV_draw_vulkan_image extension
-        "GLVULKANPROCNV","IntPtr"
-
-        // OpenCL types.
-        "_cl_context","IntPtr"
-        "_cl_event","IntPtr"
-        "cl_command_queue","IntPtr"
-        "cl_context","IntPtr"
-        "cl_device_id","IntPtr"
-        "cl_event","IntPtr"
-        "cl_kernel","IntPtr"
-        "cl_mem","IntPtr"
-        "cl_platform_id","IntPtr"
-        "cl_program","IntPtr"
-        "cl_sampler","IntPtr"
-        "size_t","IntPtr"
-
-        "cl_bool","bool"
-        "cl_int","int"
-        "cl_uint","uint"
-        "uchar","byte"
-
-        "cl_addressing_mode","AddressingMode"
-        "cl_command_queue_info","CommandQueueInfo"
-        "cl_command_queue_properties","CommandQueueProperties"
-        "cl_context_info","ContextInfo"
-        "cl_context_properties","IntPtr" // ContextProperties
-        "cl_device_info","DeviceInfo"
-        "cl_device_type","DeviceType"
-        "cl_event_info","EventInfo"
-        "cl_filter_mode","FilterMode"
-        "cl_image_format","ImageFormat"
-        "cl_image_info","ImageInfo"
-        "cl_kernel_group_info","KernelGroupInfo"
-        "cl_kernel_info","KernelInfo"
-        "cl_kernel_work_group_info","KernelWorkGroupInfo"
-        "cl_map_flags","MapFlags"
-        "cl_mem_info","MemInfo"
-        "cl_mem_flags","MemFlags"
-        "cl_mem_object_type","MemObjectType"
-        "cl_platform_info","PlatformInfo"
-        "cl_profiling_info","ProfilingInfo"
-        "cl_program_build_info","ProgramBuildInfo"
-        "cl_program_info","ProgramInfo"
-        "cl_sampler_info","SamplerInfo"
-        "cl_work_group_info","WorkGroupInfo"
-    |] |> Map.ofArray
-
-type DummyType =
-    { _namespace: string option
-      name: string }
-
-let additionalTypesToGenerate =
-    [|
-        { _namespace = Some "OpenToolkit.Mathematics"; name = "Half" }
-        { _namespace = None; name = "DebugProc" }
-        { _namespace = None; name = "DebugProcAmd" }
-        { _namespace = None; name = "DebugProcArb" }
-        { _namespace = None; name = "DebugProcKhr" }
-        { _namespace = None; name = "Struct_cl_context" }
-        { _namespace = None; name = "Struct_cl_event" }
-        { _namespace = None; name = "ElementPointerTypeATI" }
-        { _namespace = None; name = "CombinerPortionNV" }
-        { _namespace = None; name = "FragmentLightParameterSGIX" }
-        { _namespace = None; name = "MapTypeNV" }
-        { _namespace = None; name = "ProgramTarget" }
-        { _namespace = None; name = "ProgramStringProperty" }
-        { _namespace = None; name = "IglooFunctionSelectSGIX" }
-        { _namespace = None; name = "IndexFunctionEXT" }
-        { _namespace = None; name = "ProgramFormat" }
-        { _namespace = None; name = "MatrixIndexPointerTypeARB" }
-        { _namespace = None; name = "ReplacementCodeTypeSUN" }
-        { _namespace = None; name = "SecondaryColorPointerTypeIBM" }
-        { _namespace = None; name = "VertexWeightPointerTypeEXT" }
-        { _namespace = None; name = "WeightPointerTypeARB" }
-        { _namespace = None; name = "VertexShaderWriteMaskEXT" }
-    |] |> Set.ofArray |> Set.toArray
-
-let reservedKeywords = 
-    [|
-        "ref"
-        "object"
-        "string"
-        "event"
-        "params"
-        "base"
-        "in"
-    |]
-
-open System.IO
-
-let rec typeToString (ty: GLType) =
-    match ty with
-    | GLType.Void -> "void"
-    | GLType.GLenum inner -> inner.groupName
-    | GLType.Pointer inner ->
-        typeToString inner + " *"
-    | other ->
-        let fallback = other.ToString()
-        specTypeToCSharpType
-        |> Map.tryFind fallback
-        |> Option.defaultValue fallback
+    let extractAddedAndRemoved(data: OpenGL_Specification.Feature) =
+        let addedFunctions, addedEnums =
+            data.Requires
+            |> Array.Parallel.collectEither(fun e ->
+                [| Left(e.Commands |> Array.Parallel.map(fun inner -> inner.Name))
+                   Right(e.Enums |> Array.Parallel.map(fun e -> e.Name)) |])
+        let removedFunctions, removedEnums =
+            data.Removes
+            |> Array.Parallel.collectEither(fun e ->
+                [| Left(e.Commands |> Array.Parallel.map(fun inner -> inner.Name))
+                   Right(e.Enums |> Array.Parallel.map(fun e -> e.Name)) |])
         
-        
-let formatName name =
-    reservedKeywords
-    |> Array.tryFind (fun n -> name = n)
-    |> Option.map(fun keyword -> keyword.ToUpper())
-    |> Option.defaultValue name
+        {| addedFunctions = addedFunctions
+           addedEnums = addedEnums
+           removedFunctions = removedFunctions
+           removedEnums = removedEnums |}
 
-let formatParam (p: TypedParameterInfo) =
-    let name = formatName p.name
-    sprintf "%s %s" (p.typ |> typeToString) name
+    let extractAddedAndRemovedAndSaveBack index =
+        let data = featuresSortedAscendingByVersion.[index]
+        let res = extractAddedAndRemoved data
+        resultsByVersion.[index] <- res
+        res
 
-let outputPath = "../binding/Binding"
+    let startIndex = 0
+    let res = extractAddedAndRemovedAndSaveBack startIndex
+    aggregatedResultByVersion.[startIndex] <-
+        {| functions = res.addedFunctions
+           enumCases = res.addedEnums |}
 
-let generateDummyTypes () =
-    use backing = new StringWriter()
-    use writer = new System.CodeDom.Compiler.IndentedTextWriter(backing)
-    let writeLine (str: string) = writer.WriteLine str
-    let indent() = writer.Indent <- writer.Indent + 1
-    let unindent() = writer.Indent <- writer.Indent - 1
-    let usings = 
-        [
-            "System"
-        ]
-    for using in usings do
-        sprintf "using %s;" using
-        |> writeLine
+    let rec aggregateFunctions index =
+        if index < featuresSortedAscendingByVersion.Length then
+            let res = extractAddedAndRemovedAndSaveBack index
+            let removedFunctionsSet = res.removedFunctions |> Set.ofArray
+            let removedEnumCasesSet = res.removedEnums |> Set.ofArray
+            let versionBefore = getVersionBefore index
+            let functions =
+                versionBefore.functions
+                |> Array.Parallel.updateState
+                    res.addedFunctions
+                    removedFunctionsSet
+            let enumCases =
+                versionBefore.enumCases
+                |> Array.Parallel.updateState
+                    res.addedEnums
+                    removedEnumCasesSet
+            aggregatedResultByVersion.[index] <-
+                {| functions = functions
+                   enumCases = enumCases |}
+            aggregateFunctions (index + 1)
 
-    writeLine ""
-    writeLine "namespace FooBar"
-    writeLine "{"
-    indent()
-    
-    let formatDummyType ty =
-        sprintf "public struct %s {}" ty.name
+    aggregateFunctions 1
+    Array.Parallel.init (versions.Length) <| fun i ->
+        let curr = aggregatedResultByVersion.[i]
+        {| versionName = versions.[i]
+           functions = curr.functions
+           enumCases = curr.enumCases |}
 
-    for ty in additionalTypesToGenerate do
-        match ty._namespace with
-        | Some n ->
-            sprintf "namespace %s" n
-            |> writeLine
-            writeLine "{"
-            indent()
-            formatDummyType ty
-            |> writeLine
-            unindent()
-            writeLine "}"
-        | None ->
-            formatDummyType ty
-            |> writeLine
-
-    unindent()
-    writeLine "}"
-    backing.Flush()
-    File.WriteAllText(outputPath + "/" + "Types.cs", backing.ToString())
-    
-
-let generateEnums enums =
-    use backing = new StringWriter()
-    use writer = new System.CodeDom.Compiler.IndentedTextWriter(backing)
-    let writeLine (str: string) = writer.WriteLine str
-    let indent() = writer.Indent <- writer.Indent + 1
-    let unindent() = writer.Indent <- writer.Indent - 1
-    let usings = 
-        [
-            "System"
-        ]
-    for using in usings do
-        sprintf "using %s;" using
-        |> writeLine
-
-    writeLine ""
-    writeLine "namespace FooBar"
-    writeLine "{"
-    indent()
-    
-    for enum in enums do
-        if enum.cases.Length > 0 then
-            sprintf "public enum %s" enum.groupName
-            |> writeLine
-            writeLine "{"
-            indent()
-            let formattedCases =
-                let valueToString value =
-                    match value with
-                    | "0xFFFFFFFF" -> "-1"
-                    | "0x80000000" ->
-                        let value = 0x80000000
-                        value |> string
-                    | _ -> value
-                enum.cases
-                |> Array.Parallel.map(fun case ->
-                    sprintf "%s = %s" case.name (valueToString case.value)
-                )
-            if formattedCases.Length > 2 then
-                for case in formattedCases.[..formattedCases.Length - 2] do
-                    writeLine (case + ",")
-            formattedCases.[formattedCases.Length - 1]
-            |> writeLine
-            unindent()
-            writeLine "}"
-
-    unindent()
-    writeLine "}"
-    backing.Flush()
-    File.WriteAllText(outputPath + "/" + "Enums.cs", backing.ToString())
-
-let generateInterface (functions: TypedFunctionDeclaration[]) =
-    use backing = new StringWriter()
-    use writer = new System.CodeDom.Compiler.IndentedTextWriter(backing)
-    let writeLine (str: string) = writer.WriteLine str
-    let indent() = writer.Indent <- writer.Indent + 1
-    let unindent() = writer.Indent <- writer.Indent - 1
-    let usings = 
-        [
-            "System"
-        ]
-    for using in usings do
-        sprintf "using %s;" using
-        |> writeLine
-
-    writeLine ""
-    writeLine "namespace FooBar"
-    writeLine "{"
-    indent()
-
-    writeLine "public interface IGL"
-    writeLine "{"
-    indent()
-
-    functions
-    |> Seq.iter(fun func ->
-        let retTypeAsString = func.retType |> typeToString
-        
-        let formattedParams =
-            func.parameters
-            |> Array.Parallel.map formatParam
-            |> String.concat ", "
-        sprintf "unsafe %s %s(%s);" retTypeAsString func.name formattedParams
-        |> writeLine
-        writeLine ""
-    )
-    unindent()
-    writeLine "}"
-    unindent()
-    writeLine "}"
-    backing.Flush()
-    File.WriteAllText(outputPath + "/" + "Functions.cs", backing.ToString())
-
-let generateStaticClass (functions: TypedFunctionDeclaration[]) =
-   use backing = new StringWriter()
-   use writer = new System.CodeDom.Compiler.IndentedTextWriter(backing)
-   let writeLine (str: string) = writer.WriteLine str
-   let indent() = writer.Indent <- writer.Indent + 1
-   let unindent() = writer.Indent <- writer.Indent - 1
-   let usings = 
-        [
-            "System"
-        ]
-   for using in usings do
-        sprintf "using %s;" using
-        |> writeLine
-   writeLine "namespace FooBar"
-   writeLine "{"
-   indent()
-
-   writeLine "public static partial class GL"
-   writeLine "{"
-   indent()
-
-   functions
-   |> Seq.iter(fun func ->
-       let retTypeAsString = func.retType |> typeToString
-       
-       let formattedParams =
-           func.parameters
-           |> Array.Parallel.map formatParam
-           |> String.concat ", "
-       let funcName = func.name
-       let formattedParamNames = func.parameters |> Array.Parallel.map(fun p -> p.name |> formatName) |> String.concat ", "
-       sprintf "public static unsafe %s %s(%s) => instance.%s(%s);" retTypeAsString funcName formattedParams funcName formattedParamNames
-       |> writeLine
-       writeLine ""
-   )
-   unindent()
-   writeLine "}"
-   unindent()
-   writeLine "}"
-   backing.Flush()
-   File.WriteAllText(outputPath + "/" + "GL.cs", backing.ToString())
 
 [<EntryPoint>]
 let main argv =
     printfn "Hello World from F//!"
     let path = @"../../../gl.xml"
-    let test = Types.OpenGL_Specification.Load path
+    let test = OpenGL_Specification.Load path
     let enums = getEnumsFromSpecification test
     printfn "Enum group count: %d" enums.Length
     let enumMap =
@@ -702,10 +258,12 @@ let main argv =
     //    printfn "%A" possibleType
     let typecheckedFunctions = looslyTypedFunctionsToTypedFunctions enumMap functions
     printfn "overall correct function specifications: %d" typecheckedFunctions.Length
-    generateEnums enums
-    generateInterface typecheckedFunctions
-    generateStaticClass typecheckedFunctions
-    generateDummyTypes()
+    let openGlSpecVersions = getEnumCasesAndCommandsPerVersion test
+    for currOpenGL_Spec in openGlSpecVersions do
+        generateEnums enums
+        generateInterface typecheckedFunctions
+        generateStaticClass typecheckedFunctions
+        generateDummyTypes()
     //for func in typecheckedFunctions |> Array.take 100 do
     //    printfn "%A" func
 

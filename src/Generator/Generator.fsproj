@@ -7,15 +7,21 @@
 
   <ItemGroup>
     <Compile Include="Types.fs" />
+    <Compile Include="Util.fs" />
     <Compile Include="Parsing.fs" />
+    <Compile Include="Constants.fs" />
+    <Compile Include="TypeMapping.fs" />
+    <Compile Include="Formatting.fs" />
     <Compile Include="Program.fs" />
     <None Include="Script1.fsx" />
   </ItemGroup>
 
-  <ItemGroup />
-
   <ItemGroup>
     <PackageReference Include="FSharp.Data" Version="3.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SpecificationOpenGL\SpecificationOpenGL.fsproj" />
   </ItemGroup>
 
 </Project>
