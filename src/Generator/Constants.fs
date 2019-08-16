@@ -37,3 +37,18 @@ let reservedKeywords =
         "base"
         "in"
     |]
+
+let graphicsNamespace = "OpenToolkit.Graphics"
+    
+let dummyTypesFileName = "DummyTypes"
+
+let dummyTypesNamespace = graphicsNamespace + "." + "GL"
+
+let prefixToRemove =
+    [|
+        "gl"
+    |]
+
+let reservedKeywordsUpper =
+    reservedKeywords
+    |> Array.Parallel.map(fun k -> k.ToUpper())

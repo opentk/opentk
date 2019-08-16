@@ -10,12 +10,15 @@ type WriteStatement =
     | Unindent
 
 module WriteStatement =
+    type Configuration =
+        { IndentSize : int }
+        static member Default = { IndentSize = 1 }
     let writeLine s = WriteLine s
     let write s = Write s
     let indent = Indent
     let unindent = Unindent
 
-    let execute statements =
+    let executeWith conf statements =
         use backing = new System.IO.StringWriter()
         use writer = new System.CodeDom.Compiler.IndentedTextWriter(backing)
         let executeStatement statement =
@@ -30,58 +33,81 @@ module WriteStatement =
         backing.Flush()
         backing.ToString()
 
+    let execute statements = executeWith Configuration.Default statements
+
 let inline specTypeToCSharpTypeWithFallback fallback =
     specTypeToCSharpType
     |> Map.tryFind fallback
     |> Option.defaultValue fallback
 
-let rec typeToString (ty: GLType) =
-    match ty with
-    | GLType.Void -> "void"
-    | GLType.GLenum inner -> inner.groupName
-    | GLType.Pointer inner -> typeToString inner + " *"
-    | GLType.GLint -> specTypeToCSharpTypeWithFallback "GLint"
-    | GLType.GLboolean -> specTypeToCSharpTypeWithFallback "GLboolean"
-    | GLType.GLdouble -> specTypeToCSharpTypeWithFallback "GLdouble"
-    | GLType.GLbyte -> specTypeToCSharpTypeWithFallback "GLbyte"
-    | GLType.GLfloat -> specTypeToCSharpTypeWithFallback "GLfloat"
-    | GLType.GLchar -> specTypeToCSharpTypeWithFallback "GLchar"
-    | GLType.GLcharARB -> specTypeToCSharpTypeWithFallback "GLcharARB"
-    | GLType.GLclampf -> specTypeToCSharpTypeWithFallback "GLclampf"
-    | GLType.GLfixed -> specTypeToCSharpTypeWithFallback "GLfixed"
-    | GLType.GLint64 -> specTypeToCSharpTypeWithFallback "GLint64"
-    | GLType.GLint64EXT -> specTypeToCSharpTypeWithFallback "GLint64EXT"
-    | GLType.GLintptr -> specTypeToCSharpTypeWithFallback "GLintptr"
-    | GLType.GLshort -> specTypeToCSharpTypeWithFallback "GLshort"
-    | GLType.GLsizei -> specTypeToCSharpTypeWithFallback "GLsizei"
-    | GLType.GLsizeiptr -> specTypeToCSharpTypeWithFallback "GLsizeiptr"
-    | GLType.GLubyte -> specTypeToCSharpTypeWithFallback "GLubyte"
-    | GLType.GLuint -> specTypeToCSharpTypeWithFallback "GLuint"
-    | GLType.GLuint64 -> specTypeToCSharpTypeWithFallback "GLuint64"
-    | GLType.GLuint64EXT -> specTypeToCSharpTypeWithFallback "GLuint64EXT"
-    | GLType.GLushort -> specTypeToCSharpTypeWithFallback "GLushort"
-    | GLType.GLvdpauSurfaceNV -> specTypeToCSharpTypeWithFallback "GLvdpauSurfaceNV"
-    | GLType.GLhalfNV -> specTypeToCSharpTypeWithFallback "GLhalfNV"
-    | GLType.GLbitfield -> specTypeToCSharpTypeWithFallback "GLbitfield"
-    | GLType.GLclampd -> specTypeToCSharpTypeWithFallback "GLclampd"
-    | GLType.GLclampx -> specTypeToCSharpTypeWithFallback "GLclampx"
-    | GLType.GLeglClientBufferEXT -> specTypeToCSharpTypeWithFallback "GLeglClientBufferEXT"
-    | GLType.GLeglImageOES -> specTypeToCSharpTypeWithFallback "GLeglImageOES"
-    | GLType.GLhandleARB -> specTypeToCSharpTypeWithFallback "GLhandleARB"
-    | GLType.GLintptrARB -> specTypeToCSharpTypeWithFallback "GLintptrARB"
-    | GLType.GLsizeiptrARB -> specTypeToCSharpTypeWithFallback "GLsizeiptrARB"
-    | GLType.GLsync -> specTypeToCSharpTypeWithFallback "GLsync"
-    | GLType.Struct_cl_context -> specTypeToCSharpTypeWithFallback "Struct_cl_context"
-    | GLType.Struct_cl_event -> specTypeToCSharpTypeWithFallback "Struct_cl_event"
-    | GLType.GLDEBUGPROC -> specTypeToCSharpTypeWithFallback "GLDEBUGPROC"
-    | GLType.GLDEBUGPROCAMD -> specTypeToCSharpTypeWithFallback "GLDEBUGPROCAMD"
-    | GLType.GLDEBUGPROCARB -> specTypeToCSharpTypeWithFallback "GLDEBUGPROCARB"
-    | GLType.GLDEBUGPROCKHR -> specTypeToCSharpTypeWithFallback "GLDEBUGPROCKHR"
-        
-let formatName name =
+module TypeToString =
+    let private cache = System.Collections.Concurrent.ConcurrentDictionary()
+
+    let rec private typeToString (ty: GLType) =
+        match ty with
+        | GLType.Void -> "void"
+        | GLType.GLenum inner -> inner.groupName
+        | GLType.Pointer inner -> typeToString inner + " *"
+        | GLType.GLint -> specTypeToCSharpTypeWithFallback "GLint"
+        | GLType.GLboolean -> specTypeToCSharpTypeWithFallback "GLboolean"
+        | GLType.GLdouble -> specTypeToCSharpTypeWithFallback "GLdouble"
+        | GLType.GLbyte -> specTypeToCSharpTypeWithFallback "GLbyte"
+        | GLType.GLfloat -> specTypeToCSharpTypeWithFallback "GLfloat"
+        | GLType.GLchar -> specTypeToCSharpTypeWithFallback "GLchar"
+        | GLType.GLcharARB -> specTypeToCSharpTypeWithFallback "GLcharARB"
+        | GLType.GLclampf -> specTypeToCSharpTypeWithFallback "GLclampf"
+        | GLType.GLfixed -> specTypeToCSharpTypeWithFallback "GLfixed"
+        | GLType.GLint64 -> specTypeToCSharpTypeWithFallback "GLint64"
+        | GLType.GLint64EXT -> specTypeToCSharpTypeWithFallback "GLint64EXT"
+        | GLType.GLintptr -> specTypeToCSharpTypeWithFallback "GLintptr"
+        | GLType.GLshort -> specTypeToCSharpTypeWithFallback "GLshort"
+        | GLType.GLsizei -> specTypeToCSharpTypeWithFallback "GLsizei"
+        | GLType.GLsizeiptr -> specTypeToCSharpTypeWithFallback "GLsizeiptr"
+        | GLType.GLubyte -> specTypeToCSharpTypeWithFallback "GLubyte"
+        | GLType.GLuint -> specTypeToCSharpTypeWithFallback "GLuint"
+        | GLType.GLuint64 -> specTypeToCSharpTypeWithFallback "GLuint64"
+        | GLType.GLuint64EXT -> specTypeToCSharpTypeWithFallback "GLuint64EXT"
+        | GLType.GLushort -> specTypeToCSharpTypeWithFallback "GLushort"
+        | GLType.GLvdpauSurfaceNV -> specTypeToCSharpTypeWithFallback "GLvdpauSurfaceNV"
+        | GLType.GLhalfNV -> specTypeToCSharpTypeWithFallback "GLhalfNV"
+        | GLType.GLbitfield -> specTypeToCSharpTypeWithFallback "GLbitfield"
+        | GLType.GLclampd -> specTypeToCSharpTypeWithFallback "GLclampd"
+        | GLType.GLclampx -> specTypeToCSharpTypeWithFallback "GLclampx"
+        | GLType.GLeglClientBufferEXT -> specTypeToCSharpTypeWithFallback "GLeglClientBufferEXT"
+        | GLType.GLeglImageOES -> specTypeToCSharpTypeWithFallback "GLeglImageOES"
+        | GLType.GLhandleARB -> specTypeToCSharpTypeWithFallback "GLhandleARB"
+        | GLType.GLintptrARB -> specTypeToCSharpTypeWithFallback "GLintptrARB"
+        | GLType.GLsizeiptrARB -> specTypeToCSharpTypeWithFallback "GLsizeiptrARB"
+        | GLType.GLsync -> specTypeToCSharpTypeWithFallback "GLsync"
+        | GLType.Struct_cl_context -> specTypeToCSharpTypeWithFallback "Struct_cl_context"
+        | GLType.Struct_cl_event -> specTypeToCSharpTypeWithFallback "Struct_cl_event"
+        | GLType.GLDEBUGPROC -> specTypeToCSharpTypeWithFallback "GLDEBUGPROC"
+        | GLType.GLDEBUGPROCAMD -> specTypeToCSharpTypeWithFallback "GLDEBUGPROCAMD"
+        | GLType.GLDEBUGPROCARB -> specTypeToCSharpTypeWithFallback "GLDEBUGPROCARB"
+        | GLType.GLDEBUGPROCKHR -> specTypeToCSharpTypeWithFallback "GLDEBUGPROCKHR"
+    
+    let typeToStringCached ty =
+        match cache.TryGetValue ty with
+        | true, value -> value
+        | false, _ ->
+            let res = typeToString ty
+            cache.[ty] <- res
+            res
+
+let inline typeToString ty = TypeToString.typeToStringCached ty
+
+let formatName (name: string) =
+    let name =
+        prefixToRemove
+        |> Array.fold(fun (name:string) prefix ->
+            if name.StartsWith prefix then
+                name.Substring prefix.Length
+            else name
+        ) name
+
     reservedKeywords
-    |> Array.tryFind (fun n -> name = n)
-    |> Option.map(fun keyword -> keyword.ToUpper())
+    |> Array.tryFindIndex (fun n -> name = n)
+    |> Option.map(fun i -> reservedKeywordsUpper |> Array.item i)
     |> Option.defaultValue name
 
 let formatParam (p: TypedParameterInfo) =
@@ -96,12 +122,28 @@ let writeLeftBracket = WriteLine "{"
 let writeRightBracket = WriteLine "}"
 let writeEmptyLine = WriteLine ""
 
-
 let namespaceForGlSpecification (openGl: RawOpenGLSpecificationDetails) =
     openGl.version.Replace(".", "_")
     |> sprintf "GL%s"
 
-let generateDummyTypes (openGl: RawOpenGLSpecificationDetails) =
+module PrintReady =
+
+    let formatTypeInfo (typeInfo: GLType) =
+        { typ = typeInfo
+          prettyTypeName = typeInfo |> typeToString } : PrintReadyTypeInfo
+
+    let formatTypeTypeParameterInfo (typedParameterInfo: TypedParameterInfo) =
+        { actualName = typedParameterInfo.name
+          prettyName = typedParameterInfo |> formatParam
+          typ = typedParameterInfo.typ |> formatTypeInfo } : PrintReadyTypedParameterInfo
+
+    let formatTypedFunctionDeclaration (typedFunctionDeclaration: TypedFunctionDeclaration) =
+        { actualName = typedFunctionDeclaration.name
+          prettyName = typedFunctionDeclaration.name |> formatName 
+          parameters = typedFunctionDeclaration.parameters |> Array.Parallel.map formatTypeTypeParameterInfo
+          retType = typedFunctionDeclaration.retType |> formatTypeInfo } : PrintReadyTypedFunctionDeclaration
+
+let generateDummyTypes =
     let usings = 
         [
             "System"
@@ -110,14 +152,12 @@ let generateDummyTypes (openGl: RawOpenGLSpecificationDetails) =
     let formatDummyType ty =
         sprintf "public struct %s {}" ty.name
 
-    let _namespace = namespaceForGlSpecification openGl
-
     seq {
         for using in usings ->
             writeLine (sprintf "using %s;" using)
             
         yield writeEmptyLine
-        yield writeLine ("namespace " + _namespace)
+        yield "namespace " + dummyTypesNamespace |> writeLine
         yield writeLeftBracket
         yield indent
         for ty in additionalTypesToGenerate do
@@ -149,7 +189,7 @@ let generateEnums enums (openGl: RawOpenGLSpecificationDetails) =
     
         yield writeEmptyLine
         
-        yield writeLine ("namespace " + _namespace)
+        yield "namespace " + graphicsNamespace + "." + _namespace |> writeLine
         yield writeLeftBracket
         yield indent
     
@@ -189,10 +229,11 @@ let generateEnums enums (openGl: RawOpenGLSpecificationDetails) =
         yield writeRightBracket
     } |> execute
 
-let generateInterface (functions: TypedFunctionDeclaration[]) (openGl: RawOpenGLSpecificationDetails) =
+let generateInterface (functions: PrintReadyTypedFunctionDeclaration[]) (openGl: RawOpenGLSpecificationDetails) =
     let usings = 
         [
             "System"
+            dummyTypesNamespace
         ]
     let _namespace = namespaceForGlSpecification openGl
     seq {
@@ -202,7 +243,7 @@ let generateInterface (functions: TypedFunctionDeclaration[]) (openGl: RawOpenGL
 
         yield writeEmptyLine
         
-        yield writeLine ("namespace " + _namespace)
+        yield "namespace " + graphicsNamespace + "." + _namespace |> writeLine
         yield writeLeftBracket
         yield indent
 
@@ -214,13 +255,14 @@ let generateInterface (functions: TypedFunctionDeclaration[]) (openGl: RawOpenGL
             functions
             |> Array.Parallel.collect(fun func ->
                 [|
-                    let retTypeAsString = func.retType |> typeToString
+                    let retTypeAsString = func.retType.prettyTypeName
                     
                     let formattedParams =
                         func.parameters
-                        |> Array.Parallel.map formatParam
+                        |> Array.Parallel.map(fun p -> p.prettyName)
                         |> String.concat ", "
-                    yield "unsafe " + retTypeAsString + " " + func.name + "(" + formattedParams + ");"
+                    yield ("[NativeSymbol(\"" + func.actualName + "\")]") |> writeLine
+                    yield "unsafe " + retTypeAsString + " " + func.prettyName + "(" + formattedParams + ");"
                     |> writeLine
                     yield writeEmptyLine
                 |])
@@ -230,10 +272,11 @@ let generateInterface (functions: TypedFunctionDeclaration[]) (openGl: RawOpenGL
         yield writeRightBracket
     } |> execute
 
-let generateStaticClass (functions: TypedFunctionDeclaration[]) (openGl: RawOpenGLSpecificationDetails) =
+let generateStaticClass (functions: PrintReadyTypedFunctionDeclaration[]) (openGl: RawOpenGLSpecificationDetails) =
     let usings = 
         [
             "System"
+            dummyTypesNamespace
         ]
     let _namespace = namespaceForGlSpecification openGl
     seq {
@@ -241,7 +284,7 @@ let generateStaticClass (functions: TypedFunctionDeclaration[]) (openGl: RawOpen
             sprintf "using %s;" using
             |> writeLine
         
-        yield writeLine ("namespace " + _namespace)
+        yield "namespace " + graphicsNamespace + "." + _namespace |> writeLine
         yield writeLeftBracket
         yield indent
 
@@ -250,15 +293,15 @@ let generateStaticClass (functions: TypedFunctionDeclaration[]) (openGl: RawOpen
         yield indent
 
         for func in functions do
-            let retTypeAsString = func.retType |> typeToString
+            let retTypeAsString = func.retType.prettyTypeName
        
             let formattedParams =
                 func.parameters
-                |> Array.Parallel.map formatParam
+                |> Array.Parallel.map(fun p -> p.prettyName)
                 |> String.concat ", "
-            let funcName = func.name
+            let funcName = func.prettyName
             // Parameters are so less that running in parallel hurts rather then helps.
-            let formattedParamNames = func.parameters |> Array.map(fun p -> p.name |> formatName) |> String.concat ", "
+            let formattedParamNames = func.parameters |> Array.Parallel.map(fun p -> p.prettyName) |> String.concat ", "
             yield
                 sprintf "public static unsafe %s %s(%s) => instance.%s(%s);" retTypeAsString funcName formattedParams funcName formattedParamNames
                 |> writeLine
@@ -268,3 +311,55 @@ let generateStaticClass (functions: TypedFunctionDeclaration[]) (openGl: RawOpen
         yield unindent
         yield writeRightBracket
     } |> execute
+
+let generateLibraryLoaderFor (openGl: RawOpenGLSpecificationDetails) =
+    let libraryLoaderFor _namespace =
+        sprintf
+                """using AdvancedDLSupport;
+
+namespace %s
+{
+    public static partial class %s
+    {
+        public static IGL instance = new NativeLibraryBuilder(ImplementationOptions.SuppressSecurity |
+                                                     ImplementationOptions.GenerateDisposalChecks |
+                                                     ImplementationOptions.UseLazyBinding |
+                                                     ImplementationOptions.EnableOptimizations).ActivateInterface<IGL>("libGL.so");
+    }
+}"""
+            graphicsNamespace _namespace
+    openGl
+    |> namespaceForGlSpecification
+    |> libraryLoaderFor
+
+open Util
+let generateCsProjectFileFor (openGl: RawOpenGLSpecificationDetails) dummyTypesFilename =
+    let baseString additional =
+        sprintf """<Project Sdk="Microsoft.NET.Sdk">
+
+<PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+</PropertyGroup>
+
+<ItemGroup>
+    <PackageReference Include="AdvancedDLSupport" Version="3.0.0" />
+</ItemGroup>
+
+%s
+
+</Project>""" additional
+    let startTag tag = "<" + tag + ">"
+    let endTag tag = "</" + tag ">"
+    let includeFile file = "<Compile Include=\"" + file + "\"/>"
+    let pathToDummyFile = "../" </> dummyTypesFileName + ".cs"
+    let additionalIncludes =
+        seq {
+            yield "<ItemGroup>" |> writeLine
+            yield indent
+            yield pathToDummyFile |> includeFile |> writeLine
+
+            yield unindent
+            yield "</ItemGroup>" |> writeLine
+        } |> execute
+    baseString additionalIncludes

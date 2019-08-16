@@ -835,3 +835,4 @@ auto/*
 ### LaTeX Patch ###
 # glossaries
 *.glstex
+src/Generator/output

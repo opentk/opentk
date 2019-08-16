@@ -82,6 +82,24 @@ type TypedFunctionDeclaration =
       parameters: TypedParameterInfo[]
       retType: GLType }
 
+[<RequireQualifiedAccess>]
+type PrintReadyTypeInfo =
+    { prettyTypeName: string
+      typ: GLType }
+
+[<RequireQualifiedAccess>]
+type PrintReadyTypedParameterInfo =
+    { actualName: string
+      prettyName: string
+      typ: PrintReadyTypeInfo }
+
+[<RequireQualifiedAccess>]
+type PrintReadyTypedFunctionDeclaration =
+    { actualName: string
+      prettyName: string
+      parameters: PrintReadyTypedParameterInfo[]
+      retType: PrintReadyTypeInfo }
+
 let typedFunctionDeclaration name parameters retType =
     { name = name 
       parameters = parameters

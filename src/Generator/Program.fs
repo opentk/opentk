@@ -263,12 +263,14 @@ let main argv =
         |> Set.ofArray
     //for possibleType in possibleTypes do
     //    printfn "%A" possibleType
-    let checkedTypes =
-        possibleTypes
-        |> Set.map(fun v -> v, Parsing.tryParseType enumMap "<unknown>" v)
+    // let checkedTypes =
+    //     possibleTypes
+    //     |> Set.map(fun v -> v, Parsing.tryParseType enumMap "<unknown>" v)
     //for possibleType in checkedTypes do
     //    printfn "%A" possibleType
-    let typecheckedFunctions = looslyTypedFunctionsToTypedFunctions enumMap functions
+    let typecheckedFunctions =
+        looslyTypedFunctionsToTypedFunctions enumMap functions
+        |> Array.Parallel.map Formatting.PrintReady.formatTypedFunctionDeclaration
     printfn "overall correct function specifications: %d" typecheckedFunctions.Length
     let openGlSpecVersions = getEnumCasesAndCommandsPerVersion test
     let basePath = "./"
@@ -277,7 +279,18 @@ let main argv =
         let fileName = topic + ".cs"
         Directory.CreateDirectory pathToFile |> ignore
         File.WriteAllText(pathToFile </> fileName, content)
-    openGlSpecVersions 
+    Formatting.generateDummyTypes
+    |> fun content -> 
+        File.WriteAllText(basePath </> dummyTypesFileName + ".cs", content)
+
+    let writeCsProjFile openGlVersion content =
+        let path = basePath </> openGlVersion
+        let fileName = sprintf "OpenGL_Bindings_%s.csproj" openGlVersion
+        let fullPathToFile = path </> fileName
+        File.WriteAllText(fullPathToFile, content)
+
+
+    openGlSpecVersions
     |> Array.Parallel.iter (fun currOpenGL_Spec ->
         let inline writeToFile topic content = writeToFile currOpenGL_Spec.version topic content
         let enums =
@@ -292,15 +305,17 @@ let main argv =
             )
         let typecheckedFunctions =
             typecheckedFunctions
-            |> Array.filter(fun func -> currOpenGL_Spec.functions.Contains func.name)
+            |> Array.filter(fun func -> currOpenGL_Spec.functions.Contains func.actualName)
         Formatting.generateEnums enums currOpenGL_Spec
         |> writeToFile "Enums"
         Formatting.generateInterface typecheckedFunctions currOpenGL_Spec
         |> writeToFile "Interface"
         Formatting.generateStaticClass typecheckedFunctions currOpenGL_Spec
         |> writeToFile "StaticClass"
-        Formatting.generateDummyTypes currOpenGL_Spec
-        |> writeToFile "DummyTypes"
+        Formatting.generateLibraryLoaderFor currOpenGL_Spec
+        |> writeToFile "LibraryLoader"
+        Formatting.generateCsProjectFileFor currOpenGL_Spec dummyTypesFileName
+        |> writeCsProjFile currOpenGL_Spec.version
         printfn "Done writing OpenGL Version %s files." currOpenGL_Spec.version
     )
     //for func in typecheckedFunctions |> Array.take 100 do
