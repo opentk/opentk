@@ -18,6 +18,14 @@ namespace OpenToolkit.Windowing.Common
     public interface INativeWindow : INativeWindowProperties, IWindowEvents, IWindowInput, IDisposable
     {
         /// <summary>
+        /// Gets a value indicating whether the shutdown sequence has been initiated
+        /// for this window, by calling GameWindow.Exit() or hitting the 'close' button.
+        /// If this property is true, it is no longer safe to use any OpenTK.Input or
+        /// OpenTK.Graphics.OpenGL functions or properties.
+        /// </summary>
+        bool IsExiting { get; }
+
+        /// <summary>
         /// Closes this window.
         /// </summary>
         void Close();
@@ -26,6 +34,14 @@ namespace OpenToolkit.Windowing.Common
         /// Processes pending window events.
         /// </summary>
         void ProcessEvents();
+
+        /// <summary>
+        /// Processes pending window events and waits <paramref cref="timeout"/> seconds for events.
+        /// </summary>
+        /// <param name="timeout">The timeout in seconds.</param>
+        /// <returns><c>true</c> if events where processed; otherwise <c>false</c>
+        /// (Event processing not possible anymore, window is about to be destroyed).</returns>
+        bool ProcessEvents(double timeout);
 
         /// <summary>
         /// Makes the GraphicsContext current on the calling thread.
