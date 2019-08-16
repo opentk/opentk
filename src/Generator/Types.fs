@@ -94,8 +94,8 @@ type DummyType =
 [<RequireQualifiedAccess>]
 type RawOpenGLSpecificationDetails =
     { version: string
-      functions: string[]
-      enumCases: string[] }
+      functions: string Set
+      enumCases: string Set }
 
 type Either<'a, 'b> =
     | Left of 'a

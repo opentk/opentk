@@ -1,6 +1,8 @@
 ﻿module Util
 open Types
 
+let inline (</>) path1 path2 = System.IO.Path.Combine(path1, path2)
+
 type MaybeBuilder() =
     member __.Bind(v, fn) = Option.bind fn v
 
@@ -35,15 +37,18 @@ module Array =
                 if isLeft.[i] then
                     leftCount <- leftCount + 1
             let rightCount = inputLength - leftCount
-            let leftOutput = Array.zeroCreate leftCount
-            let rightOutput = Array.zeroCreate rightCount
-            input
-            |> Array.Parallel.iteri(fun i e ->
+            let leftOutput = if leftCount = 0 then Array.empty else Array.zeroCreate leftCount
+            let rightOutput = if rightCount = 0 then Array.empty else Array.zeroCreate rightCount
+            let mutable leftCounter = 0
+            let mutable rightCounter = 0
+            for i in 0..(inputLength - 1) do
                 if isLeft.[i] then
-                    leftOutput.[i] <- left.[i]
+                    leftOutput.[leftCounter] <- left.[i]
+                    leftCounter <- leftCounter + 1
                 else
-                    rightOutput.[i] <- right.[i]
-            )
+                    rightOutput.[rightCounter] <- right.[i]
+                    rightCounter <- rightCounter + 1
+
             leftOutput, rightOutput
 
         let collectEither (f: 'T -> Either<'U, 'V>[]) (input: 'T[]) =

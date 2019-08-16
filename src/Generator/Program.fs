@@ -161,16 +161,26 @@ let getEnumCasesAndCommandsPerVersion (data: OpenGL_Specification.Registry) =
     let getVersionBefore index = aggregatedResultByVersion.[index - 1]
 
     let extractAddedAndRemoved(data: OpenGL_Specification.Feature) =
-        let addedFunctions, addedEnums =
-            data.Requires
-            |> Array.Parallel.collectEither(fun e ->
-                [| Left(e.Commands |> Array.Parallel.map(fun inner -> inner.Name))
-                   Right(e.Enums |> Array.Parallel.map(fun e -> e.Name)) |])
+        let (addedFunctions: string[], addedEnums : string[]) =
+            let a, b =
+                data.Requires
+                |> Array.Parallel.collectEither(fun e ->
+                    [| Left(e.Commands |> Array.Parallel.map(fun inner ->
+                        let res = inner.Name
+                        if res |> String.IsNullOrEmpty then failwith "unallowed"
+                        else res))
+                       Right(e.Enums |> Array.Parallel.map(fun e -> 
+                           let res = e.Name
+                           if res |> String.IsNullOrEmpty then failwith "unallowed"
+                           else res)) |])
+            a |> Array.Parallel.collect id, b |> Array.Parallel.collect id
         let removedFunctions, removedEnums =
-            data.Removes
-            |> Array.Parallel.collectEither(fun e ->
-                [| Left(e.Commands |> Array.Parallel.map(fun inner -> inner.Name))
-                   Right(e.Enums |> Array.Parallel.map(fun e -> e.Name)) |])
+            let a, b =
+                data.Removes
+                |> Array.Parallel.collectEither(fun e ->
+                    [| Left(e.Commands |> Array.Parallel.map(fun inner -> inner.Name))
+                       Right(e.Enums |> Array.Parallel.map(fun e -> e.Name)) |])
+            a |> Array.Parallel.collect id, b |> Array.Parallel.collect id
         
         {| addedFunctions = addedFunctions
            addedEnums = addedEnums
@@ -213,15 +223,17 @@ let getEnumCasesAndCommandsPerVersion (data: OpenGL_Specification.Registry) =
     aggregateFunctions 1
     Array.Parallel.init (versions.Length) <| fun i ->
         let curr = aggregatedResultByVersion.[i]
-        {| versionName = versions.[i]
-           functions = curr.functions
-           enumCases = curr.enumCases |}
-
+        { version = versions.[i] |> string
+          functions = curr.functions |> Set
+          enumCases = curr.enumCases |> Set } : RawOpenGLSpecificationDetails
 
 [<EntryPoint>]
 let main argv =
     printfn "Hello World from F//!"
-    let path = @"../../../gl.xml"
+
+    System.Runtime.GCSettings.LatencyMode <- System.Runtime.GCLatencyMode.SustainedLowLatency
+    let startTime = System.Diagnostics.Stopwatch.StartNew()
+    let path = @"../../../../gl.xml"
     let test = OpenGL_Specification.Load path
     let enums = getEnumsFromSpecification test
     printfn "Enum group count: %d" enums.Length
@@ -259,12 +271,44 @@ let main argv =
     let typecheckedFunctions = looslyTypedFunctionsToTypedFunctions enumMap functions
     printfn "overall correct function specifications: %d" typecheckedFunctions.Length
     let openGlSpecVersions = getEnumCasesAndCommandsPerVersion test
-    for currOpenGL_Spec in openGlSpecVersions do
-        generateEnums enums
-        generateInterface typecheckedFunctions
-        generateStaticClass typecheckedFunctions
-        generateDummyTypes()
+    let basePath = "./"
+    let inline writeToFile openGlVersion topic content =
+        let pathToFile = basePath </> openGlVersion
+        let fileName = topic + ".cs"
+        Directory.CreateDirectory pathToFile |> ignore
+        File.WriteAllText(pathToFile </> fileName, content)
+    openGlSpecVersions 
+    |> Array.Parallel.iter (fun currOpenGL_Spec ->
+        let inline writeToFile topic content = writeToFile currOpenGL_Spec.version topic content
+        let enums =
+            enums
+            |> Array.Parallel.choose(fun enum ->
+                let cases = enum.cases |> Array.filter (fun case -> currOpenGL_Spec.enumCases.Contains case.name)
+                if cases.Length > 0 then
+                    { enum with
+                        EnumGroup.cases = cases }
+                    |> Some
+                else None
+            )
+        let typecheckedFunctions =
+            typecheckedFunctions
+            |> Array.filter(fun func -> currOpenGL_Spec.functions.Contains func.name)
+        Formatting.generateEnums enums currOpenGL_Spec
+        |> writeToFile "Enums"
+        Formatting.generateInterface typecheckedFunctions currOpenGL_Spec
+        |> writeToFile "Interface"
+        Formatting.generateStaticClass typecheckedFunctions currOpenGL_Spec
+        |> writeToFile "StaticClass"
+        Formatting.generateDummyTypes currOpenGL_Spec
+        |> writeToFile "DummyTypes"
+        printfn "Done writing OpenGL Version %s files." currOpenGL_Spec.version
+    )
     //for func in typecheckedFunctions |> Array.take 100 do
     //    printfn "%A" func
+
+    printfn "Generating files took %s seconds" (startTime.Elapsed.Seconds |> string)  
+
+    printfn "Please press any key..."
+    System.Console.ReadKey() |> ignore
 
     0 // return an integer exit code
