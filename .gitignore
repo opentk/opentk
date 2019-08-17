@@ -835,3 +835,5 @@ auto/*
 ### LaTeX Patch ###
 # glossaries
 *.glstex
+src/OpenGL/*.*/
+gl.xml
