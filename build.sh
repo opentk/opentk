@@ -20,7 +20,7 @@ function version_compare() {
     return 0
 }
 
-MINIMAL_DOTNET_VERSION=2.2.109
+MINIMAL_DOTNET_VERSION=2.2.401
 
 CURRENT_DOTNET_VERSION=$(dotnet --version)
 

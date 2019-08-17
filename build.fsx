@@ -81,13 +81,6 @@ let releaseProjects =
 let testProjects =
     !! "tests/**/*.??proj"
 
-let allProjects =
-    [toolProjects ; releaseProjects; testProjects ]
-    |> Seq.concat
-    |> Seq.toList
-
-let testAssemblies = "tests/**/obj/Release/*Tests*.dll"
-
 let nugetCommandRunnerPath = ".fake/build.fsx/packages/NuGet.CommandLine/tools/NuGet.exe" |> Fake.IO.Path.convertWindowsToCurrentPath
 
 // ---------
@@ -164,7 +157,6 @@ Target.create "AssemblyInfo" (fun _ ->
     // see https://docs.microsoft.com/en-us/visualstudio/msbuild/customize-your-build?view=vs-2019#directorybuildprops-and-directorybuildtargets
     Trace.traceError "Unimplemented."
 )
-
 
 
 Target.create "Build" (fun _ ->
@@ -276,13 +268,13 @@ Target.create "All" ignore
 open Fake.Core.TargetOperators
 
 "Clean"
-  //==> "Restore"
-  //==> "AssemblyInfo"
+  ==> "Restore"
+  ==> "AssemblyInfo"
   ==> "UpdateSpec"
   ==> "UpdateBindings"
-  //==> "Build"
-  //==> "CopyBinaries"
-  //==> "RunTests"
+  ==> "Build"
+  ==> "CopyBinaries"
+  ==> "RunTests"
   ==> "All"
   ==> "CreateNuGetPackage"
   ==> "ReleaseOnNuGetGallery"
