@@ -3,7 +3,6 @@ open Types
 
 let additionalTypesToGenerate =
     [|
-        { _namespace = None; name = "DebugProc" }
         { _namespace = None; name = "DebugProcAmd" }
         { _namespace = None; name = "DebugProcArb" }
         { _namespace = None; name = "DebugProcKhr" }

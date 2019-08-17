@@ -133,12 +133,21 @@ let writeLeftBracket = WriteLine "{"
 let writeRightBracket = WriteLine "}"
 let writeEmptyLine = WriteLine ""
 
+let (|StartsWith|_|) (pattern:string) (str:string) =
+    if str.StartsWith pattern then str.Substring(pattern.Length) |> Some
+    else None
+
 let namespaceForGlSpecification (openGl: RawOpenGLSpecificationDetails) =
     let prettyName =
-        let temp =openGl.version.Replace(".", "_")
-        if temp.StartsWith "GL" then
-            temp.Substring(2)
-        else temp
+        let temp = openGl.version
+        let versionAsString =
+            let str = openGl.versionNumber |> string
+            str.Replace(".", "")
+        match temp with
+        | StartsWith "GL_ES_VERSION" _
+        | StartsWith "GL_VERSION_ES_CM_1_0" _ -> ".ES" + versionAsString
+        | StartsWith "GL_VERSION" _ -> versionAsString
+        | _ -> temp
     prettyName
     |> sprintf "GL%s"
 
@@ -182,7 +191,9 @@ let generateDummyTypes =
     seq {
         for using in usings ->
             writeLine (sprintf "using %s;" using)
-            
+        yield "namespace " + dummyTypesNamespace |> writeLine
+        yield writeLeftBracket
+        yield indent
         yield writeEmptyLine
         for ty in additionalTypesToGenerate do
             match ty._namespace with
@@ -195,12 +206,15 @@ let generateDummyTypes =
                 yield writeRightBracket
             | None ->
                 yield formatDummyType ty |> writeLine
+        yield unindent
+        yield writeRightBracket
     } |> execute
 
 let generateEnums (enums: PrintReadyEnumGroup[]) (openGl: RawOpenGLSpecificationDetails) =
     let usings = 
         [
             "System"
+            dummyTypesNamespace
         ]
     let _namespace = namespaceForGlSpecification openGl
     seq {
@@ -256,6 +270,7 @@ let generateInterface (functions: PrintReadyTypedFunctionDeclaration[]) (openGl:
             "System"
             advancedDlSupport
             mathematicsNamespace
+            dummyTypesNamespace
         ]
     let _namespace = namespaceForGlSpecification openGl
     seq {
@@ -299,6 +314,7 @@ let generateStaticClass (functions: PrintReadyTypedFunctionDeclaration[]) (openG
         [
             "System"
             mathematicsNamespace
+            dummyTypesNamespace
         ]
     let _namespace = namespaceForGlSpecification openGl
     seq {
@@ -345,7 +361,7 @@ let generateLibraryLoaderFor (openGl: RawOpenGLSpecificationDetails) =
     let libraryLoaderFor _namespace =
         sprintf
                 """using AdvancedDLSupport;
-
+                   using OpenToolkit.Graphics.GL;
 namespace %s.%s
 {
     public static partial class GL
@@ -353,7 +369,7 @@ namespace %s.%s
         public static IGL instance = new NativeLibraryBuilder(ImplementationOptions.SuppressSecurity |
                                                      ImplementationOptions.GenerateDisposalChecks |
                                                      ImplementationOptions.UseLazyBinding |
-                                                     ImplementationOptions.EnableOptimizations).ActivateInterface<IGL>("libGL.so");
+                                                     ImplementationOptions.EnableOptimizations).ActivateInterface<IGL>(LibraryNameContainer.GetLibraryNameForCurrentPlatform());
     }
 }"""
             graphicsNamespace _namespace
@@ -362,6 +378,8 @@ namespace %s.%s
     |> libraryLoaderFor
 
 open Util
+
+/// <deprecated>
 let generateCsProjectFileForAllVersions (versions: RawOpenGLSpecificationDetails[]) dummyTypesFilename files =
     let baseString additional =
         sprintf """<Project Sdk="Microsoft.NET.Sdk">

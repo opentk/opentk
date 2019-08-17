@@ -178,8 +178,8 @@ let main argv =
         generatedFiles
     ) |> ignore
     
-    Formatting.generateCsProjectFileForAllVersions openGlSpecVersions dummyTypesFileName [||]
-    |> writeCsProjFile
+    //Formatting.generateCsProjectFileForAllVersions openGlSpecVersions dummyTypesFileName [||]
+    //|> writeCsProjFile
 
     printfn "Generating files took %s seconds" (startTime.Elapsed.Seconds |> string)  
 
