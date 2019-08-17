@@ -51,7 +51,31 @@ let prefixToRemove =
         "gl"
         "GL_"
     |]
-
+    
+let sufixToRemove =
+    [|
+        "1"
+        "2"
+        "3"
+        "4"
+        "fv"
+        "ubv"
+        "u"
+        "uiv"
+        "ui"
+        "usv"
+        "us"
+        "i"
+        "iv"
+        "f"
+        "b"
+        "d"
+        "dv"
+        "s"
+        "sv"
+        "ub"
+        "v"
+    |] |> Array.sortByDescending(fun s -> s.Length)
 let reservedKeywordsUpper =
     reservedKeywords
     |> Array.Parallel.map(fun k -> k.ToUpper())
@@ -89,6 +113,47 @@ let functionOverloads =
     [|
         vectorOverload1 "glGetFloatv" "GetFloat"
         vectorOverload1 "glGetDoublev" "GetDouble"
+        functionOverloadsWith "glGetQueryBufferObjecti64v" "GetQueryBufferObjecti64v"
+           [|
+                functionSignature Void
+                    [|
+                        typedParameterInfo "id" GLuint
+                        typedParameterInfo "buffer" GLuint
+                        dummyEnumGroupTy "QueryObjectParameterName" |> typedParameterInfo "pname"
+                        typedParameterInfo "offset" GLintptr
+                    |]
+           |]
+        functionOverloadsWith "glGetQueryBufferObjectv" "GetQueryBufferObjectv"
+           [|
+                functionSignature Void
+                    [|
+                        typedParameterInfo "id" GLuint
+                        typedParameterInfo "buffer" GLuint
+                        dummyEnumGroupTy "QueryObjectParameterName" |> typedParameterInfo "pname"
+                        typedParameterInfo "offset" GLintptr
+                    |]
+           |]
+        functionOverloadsWith "glGetQueryBufferObjectui64v" "GetQueryBufferObjectui64v"
+           [|
+                functionSignature Void
+                    [|
+                        typedParameterInfo "id" GLuint
+                        typedParameterInfo "buffer" GLuint
+                        dummyEnumGroupTy "QueryObjectParameterName" |> typedParameterInfo "pname"
+                        typedParameterInfo "offset" GLintptr
+                    |]
+           |]
+        functionOverloadsWith "glGetQueryBufferObjectuiv" "GetQueryBufferObjectuiv"
+           [|
+                functionSignature Void
+                    [|
+                        typedParameterInfo "id" GLuint
+                        typedParameterInfo "buffer" GLuint
+                        dummyEnumGroupTy "QueryObjectParameterName" |> typedParameterInfo "pname"
+                        typedParameterInfo "offset" GLintptr
+                    |]
+           |]
+        
     |]
     |> Array.Parallel.map(fun overload -> overload.expectedName, overload)
     |> Map.ofArray

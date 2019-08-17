@@ -40,6 +40,14 @@ let inline specTypeToCSharpTypeWithFallback fallback =
     |> Map.tryFind fallback
     |> Option.defaultValue fallback
 
+let outputPath = "../binding/Binding"
+
+open WriteStatement
+
+let writeLeftBracket = WriteLine "{"
+let writeRightBracket = WriteLine "}"
+let writeEmptyLine = WriteLine ""
+
 module TypeToString =
     let private cache = System.Collections.Concurrent.ConcurrentDictionary()
 
@@ -104,38 +112,46 @@ module TypeToString =
 
 let inline typeToString ty = TypeToString.typeToStringCached ty
 
-let formatName (name: string) =
-    let name =
-        prefixToRemove
-        |> Array.fold(fun (name:string) prefix ->
-            if name.StartsWith prefix then
-                let res = name.Substring prefix.Length
-                match res.[0] with
-                | '1' | '2' | '3' | '4' | '5'
-                | '6' | '7' | '8' | '9' ->
-                    "_" + res
-                | _ -> res
-            else name
-        ) name
 
+let (|StartsWith|_|) (pattern:string) (str:string) =
+    if str.StartsWith pattern then str.Substring(pattern.Length) |> Some
+    else None
+
+let (|EndsWith|_|) (pattern: string) (str: string) =
+    if str.EndsWith pattern then str.Substring(0, str.Length - pattern.Length) |> Some
+    else None
+
+let formatNameRemovingPrefix (name: string) =
+    let prefix =
+        prefixToRemove
+        |> Array.tryFind(fun prefix -> name.StartsWith prefix)
+    match prefix with
+    | Some prefix ->
+        let res = name.Substring prefix.Length
+        match res.[0] with
+        | '1' | '2' | '3' | '4' | '5'
+        | '6' | '7' | '8' | '9' ->
+            "_" + res
+        | _ -> res
+    | _ -> name
+
+let formatFunctionName (name: string) =
+    let nameWithRemovedPrefix =
+        formatNameRemovingPrefix name
+    let sufix =
+        sufixToRemove
+        |> Array.tryFind(fun sufix -> nameWithRemovedPrefix.EndsWith sufix)
+    match sufix with
+    | Some sufix -> nameWithRemovedPrefix.Substring(0, nameWithRemovedPrefix.Length - sufix.Length)
+    | _ -> nameWithRemovedPrefix
+
+let formatParameterName (name: string) =
     reservedKeywords
     |> Array.tryFindIndex (fun n -> name = n)
     |> Option.map(fun i -> reservedKeywordsUpper |> Array.item i)
     |> Option.defaultValue name
 
-let formatParam (p: TypedParameterInfo) = formatName p.name
-
-let outputPath = "../binding/Binding"
-
-open WriteStatement
-
-let writeLeftBracket = WriteLine "{"
-let writeRightBracket = WriteLine "}"
-let writeEmptyLine = WriteLine ""
-
-let (|StartsWith|_|) (pattern:string) (str:string) =
-    if str.StartsWith pattern then str.Substring(pattern.Length) |> Some
-    else None
+let formatParam (p: TypedParameterInfo) = formatParameterName p.name
 
 let namespaceForGlSpecification (openGl: RawOpenGLSpecificationDetails) =
     let prettyName =
@@ -158,7 +174,7 @@ module PrintReady =
             enumGroup.cases
             |> Array.Parallel.map(fun case -> 
                 { actualName = case.name
-                  prettyName = case.name |> formatName
+                  prettyName = case.name |> formatNameRemovingPrefix
                   value = case.value } : PrintReadyEnum
             )
         { groupName = enumGroup.groupName
@@ -174,9 +190,12 @@ module PrintReady =
           typ = typedParameterInfo.typ |> formatTypeInfo } : PrintReadyTypedParameterInfo
 
     let formatTypedFunctionDeclaration (typedFunctionDeclaration: TypedFunctionDeclaration) =
+        let parameters =
+            typedFunctionDeclaration.parameters
+            |> Array.Parallel.map formatTypeTypeParameterInfo
         { actualName = typedFunctionDeclaration.name
-          prettyName = typedFunctionDeclaration.name |> formatName 
-          parameters = typedFunctionDeclaration.parameters |> Array.Parallel.map formatTypeTypeParameterInfo
+          prettyName = typedFunctionDeclaration.name |> formatFunctionName 
+          parameters = parameters
           retType = typedFunctionDeclaration.retType |> formatTypeInfo } : PrintReadyTypedFunctionDeclaration
 
 let generateDummyTypes =

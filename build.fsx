@@ -89,7 +89,9 @@ let nugetCommandRunnerPath = ".fake/build.fsx/packages/NuGet.CommandLine/tools/N
 // ---------
 
 // Lazily install DotNet SDK in the correct version if not available
-let install = lazy DotNet.install DotNet.Versions.FromGlobalJson
+let install = lazy(
+    if (DotNet.getVersion id).StartsWith "3" then id
+    else DotNet.install (fun options -> { options with Version = DotNet.Version "2.2.401" }))
 
 // Define general properties across various commands (with arguments)
 let inline withWorkDir wd =
@@ -162,7 +164,7 @@ Target.create "AssemblyInfo" (fun _ ->
 
 Target.create "Build" (fun _ ->
     releaseProjects
-    |> DotNet.run id "Build"
+    |> MSBuild.runRelease id "" "Build"
     |> Trace.logItems "Build-Output: "
 )
 
