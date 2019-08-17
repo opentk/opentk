@@ -110,9 +110,7 @@ let formatName (name: string) =
     |> Option.map(fun i -> reservedKeywordsUpper |> Array.item i)
     |> Option.defaultValue name
 
-let formatParam (p: TypedParameterInfo) =
-    let name = formatName p.name
-    sprintf "%s %s" (p.typ |> typeToString) name
+let formatParam (p: TypedParameterInfo) = formatName p.name
 
 let outputPath = "../binding/Binding"
 
@@ -123,7 +121,12 @@ let writeRightBracket = WriteLine "}"
 let writeEmptyLine = WriteLine ""
 
 let namespaceForGlSpecification (openGl: RawOpenGLSpecificationDetails) =
-    openGl.version.Replace(".", "_")
+    let prettyName =
+        let temp =openGl.version.Replace(".", "_")
+        if temp.StartsWith "GL" then
+            temp.Substring(2)
+        else temp
+    prettyName
     |> sprintf "GL%s"
 
 module PrintReady =
@@ -157,9 +160,6 @@ let generateDummyTypes =
             writeLine (sprintf "using %s;" using)
             
         yield writeEmptyLine
-        yield "namespace " + dummyTypesNamespace |> writeLine
-        yield writeLeftBracket
-        yield indent
         for ty in additionalTypesToGenerate do
             match ty._namespace with
             | Some n ->
@@ -171,9 +171,6 @@ let generateDummyTypes =
                 yield writeRightBracket
             | None ->
                 yield formatDummyType ty |> writeLine
-
-        yield unindent
-        yield writeRightBracket
     } |> execute
 
 let generateEnums enums (openGl: RawOpenGLSpecificationDetails) =
@@ -233,7 +230,7 @@ let generateInterface (functions: PrintReadyTypedFunctionDeclaration[]) (openGl:
     let usings = 
         [
             "System"
-            dummyTypesNamespace
+            advancedDlSupport
         ]
     let _namespace = namespaceForGlSpecification openGl
     seq {
@@ -259,7 +256,7 @@ let generateInterface (functions: PrintReadyTypedFunctionDeclaration[]) (openGl:
                     
                     let formattedParams =
                         func.parameters
-                        |> Array.Parallel.map(fun p -> p.prettyName)
+                        |> Array.Parallel.map(fun p -> p.typ.prettyTypeName + " " + p.prettyName)
                         |> String.concat ", "
                     yield ("[NativeSymbol(\"" + func.actualName + "\")]") |> writeLine
                     yield "unsafe " + retTypeAsString + " " + func.prettyName + "(" + formattedParams + ");"
@@ -276,7 +273,6 @@ let generateStaticClass (functions: PrintReadyTypedFunctionDeclaration[]) (openG
     let usings = 
         [
             "System"
-            dummyTypesNamespace
         ]
     let _namespace = namespaceForGlSpecification openGl
     seq {
@@ -297,7 +293,7 @@ let generateStaticClass (functions: PrintReadyTypedFunctionDeclaration[]) (openG
        
             let formattedParams =
                 func.parameters
-                |> Array.Parallel.map(fun p -> p.prettyName)
+                |> Array.Parallel.map(fun p -> p.typ.prettyTypeName + " " + p.prettyName)
                 |> String.concat ", "
             let funcName = func.prettyName
             // Parameters are so less that running in parallel hurts rather then helps.
@@ -317,9 +313,9 @@ let generateLibraryLoaderFor (openGl: RawOpenGLSpecificationDetails) =
         sprintf
                 """using AdvancedDLSupport;
 
-namespace %s
+namespace %s.%s
 {
-    public static partial class %s
+    public static partial class GL
     {
         public static IGL instance = new NativeLibraryBuilder(ImplementationOptions.SuppressSecurity |
                                                      ImplementationOptions.GenerateDisposalChecks |

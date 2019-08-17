@@ -42,6 +42,8 @@ let graphicsNamespace = "OpenToolkit.Graphics"
     
 let dummyTypesFileName = "DummyTypes"
 
+let advancedDlSupport = "AdvancedDLSupport"
+
 let dummyTypesNamespace = graphicsNamespace + "." + "GL"
 
 let prefixToRemove =

@@ -1,6 +1,6 @@
 using System;
 
-namespace FooBar
+namespace OpenToolkit.Graphics.GL
 {
     public struct CombinerPortionNV {}
     public struct DebugProc {}

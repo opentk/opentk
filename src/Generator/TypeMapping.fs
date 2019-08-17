@@ -265,3 +265,48 @@ let specTypeToCSharpType =
         "cl_sampler_info","SamplerInfo"
         "cl_work_group_info","WorkGroupInfo"
     |] |> Map.ofArray
+
+open Util
+open Types
+
+let looslyTypedFunctionsToTypedFunctions enumMap functions =
+    let typecheckParams parameters =
+        let len = (parameters |> Array.length)
+        let res = Array.zeroCreate len
+        let rec typecheck index =
+            if index < len then
+                let currParam = parameters.[index]
+                match currParam.paramType |> Parsing.tryParseType enumMap currParam.paramName with
+                | Some ty ->
+                    res.[index] <-
+                        typedParameterInfo
+                            currParam.paramName
+                            ty
+                    typecheck (index + 1)
+                | None -> false
+            else true
+        if typecheck 0 then Some res
+        else None
+
+    functions
+    |> Array.Parallel.choose(fun func ->
+        maybe {
+            let! retType = func.retType |> Parsing.tryParseType enumMap func.funcName
+            let! parameters =
+                func.parameters
+                |> typecheckParams
+            let res =
+                typedFunctionDeclaration
+                    func.funcName
+                    parameters
+                    retType
+            return!
+                Some res
+        }
+    )
+
+let rec tryGetEnumType (ty: GLType) =
+    match ty with
+    | GLType.Pointer inner -> tryGetEnumType inner
+    | GLType.GLenum group -> Some group
+    | _ -> None

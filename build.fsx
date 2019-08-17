@@ -12,6 +12,7 @@ nuget Fake.DotNet.NuGet prerelease
 nuget Fake.DotNet.Cli
 nuget Fake.Core.Target
 nuget Fake.DotNet.Cli
+nuget Fake.Net.Http
 nuget Fake.Api.Github
 nuget xunit.runner.console
 nuget NuGet.CommandLine
@@ -102,8 +103,7 @@ module DotNet =
     let runWithDefaultOptions framework projFile args =
         run id framework projFile args
 
-let pathToSpec =
-    "src/Generators/Generator.Bind/Specifications"
+let pathToSpec = "src" </> "gl.xml"
 
 let specSource =
     "https://raw.githubusercontent.com/frederikja163/OpenGL-Registry/master/xml/gl.xml"
@@ -114,38 +114,25 @@ let specSource =
 let asArgs args =
     args |> String.concat " "
 
-Target.create "UpdateBindings" (fun _ ->
-    Trace.log " --- Updating bindings --- "
-    let framework = "netcoreapp20"
-    let projFile = "src/Generators/Generator.Bind/Generator.Bind.csproj"
-    let args =
-        [ sprintf "-i %s" (System.IO.Path.GetFullPath pathToSpec)
-          "-a Desktop"
-        ] |> asArgs
-    DotNet.runWithDefaultOptions framework projFile args
-    |> ignore
-)
-
 
 Target.create "UpdateSpec" (fun _ ->
     Trace.log " --- Updating spec --- "
-    let framework = "netcoreapp20"
-    let projFile = "src/Generators/Generator.Converter/Generator.Convert.csproj"
-    let relativePathToSpecification = "OpenGL/GL/4.6"
-    let fetchSpec relativePathToSpecification =
-        let relativePathToSpecificationFile = relativePathToSpecification </> "specification.xml"
-        let fullPathToSpecificationFile = System.IO.Path.GetFullPath(pathToSpec </> relativePathToSpecificationFile)
-        Directory.create (pathToSpec </> relativePathToSpecification)
-        let args =
-            [   sprintf "-i %s" specSource
-                sprintf "-o %s" fullPathToSpecificationFile
-                "--prefix gl"
-            ] |> asArgs
-        DotNet.runWithDefaultOptions framework projFile args
-        |> ignore
-    [ "OpenGL/GL/4.6"
-      "OpenGL/ES/3.2" ]
-    |> List.iter fetchSpec
+    specSource
+    |> Fake.Net.Http.downloadFile ("src" </> "gl.xml")
+    |> Trace.logfn "Saved spec at %s"
+    ()
+)
+
+Target.create "UpdateBindings" (fun _ ->
+    Trace.log " --- Updating bindings --- "
+    let framework = "netcoreapp22"
+    let projFile = "src/Generator/Generator.fsproj"
+    let args =
+        [ sprintf "-i %s" (System.IO.Path.GetFullPath pathToSpec)
+          "-o " + (System.IO.Path.GetFullPath "src" </> "Bindings")
+        ] |> asArgs
+    DotNet.runWithDefaultOptions framework projFile args
+    |> ignore
 )
 
 // ---------
@@ -278,13 +265,13 @@ Target.create "All" ignore
 open Fake.Core.TargetOperators
 
 "Clean"
-  ==> "Restore"
-  ==> "AssemblyInfo"
+  //==> "Restore"
+  //==> "AssemblyInfo"
   ==> "UpdateSpec"
   ==> "UpdateBindings"
-  ==> "Build"
-  ==> "CopyBinaries"
-  ==> "RunTests"
+  //==> "Build"
+  //==> "CopyBinaries"
+  //==> "RunTests"
   ==> "All"
   ==> "CreateNuGetPackage"
   ==> "ReleaseOnNuGetGallery"

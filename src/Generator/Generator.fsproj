@@ -7,16 +7,18 @@
 
   <ItemGroup>
     <Compile Include="Types.fs" />
+    <Compile Include="Constants.fs" />
     <Compile Include="Util.fs" />
     <Compile Include="Parsing.fs" />
-    <Compile Include="Constants.fs" />
     <Compile Include="TypeMapping.fs" />
     <Compile Include="Formatting.fs" />
+    <Compile Include="Aggregator.fs" />
     <Compile Include="Program.fs" />
     <None Include="Script1.fsx" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="CommandLineParser.FSharp" Version="2.6.0" />
     <PackageReference Include="FSharp.Data" Version="3.1.1" />
   </ItemGroup>
 

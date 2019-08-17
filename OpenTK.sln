@@ -15,8 +15,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "project", "project", "{5EEE
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "documentation", "documentation", "{4EAF040E-2FBB-4D5A-8DE0-ED5872F173E2}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Generator.Bind", "src\Generators\Generator.Bind\Generator.Bind.csproj", "{4828A378-F24E-4BB0-BF5F-C4C6C9082081}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenToolkit.Input", "src\OpenToolkit.Input\OpenToolkit.Input.csproj", "{FD2151DE-0663-4100-9AB5-D1E22CF2144D}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenToolkit.Mathematics", "src\OpenToolkit.Mathematics\OpenToolkit.Mathematics.csproj", "{517AC4BF-6AF5-415D-B11C-FC6FE6710336}"
@@ -76,8 +74,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenToolkit.OpenAL.Extensio
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenToolkit.OpenAL.Extensions.EXT.Capture.Enumeration", "src\OpenAL\Extensions\OpenToolkit.OpenAL.Extensions.EXT.Capture.Enumeration\OpenToolkit.OpenAL.Extensions.EXT.Capture.Enumeration.csproj", "{2E39B827-1513-4B77-B80A-0BA87DBC199F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Generator.Convert", "src\Generators\Generator.Converter\Generator.Convert.csproj", "{79AAF02C-CACC-46FC-BADB-8CA3858C3CA2}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "OpenGL", "OpenGL", "{00962052-26B6-4B29-BA72-6EF98E944EE1}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenToolkit.OpenGL", "src\OpenGL\OpenToolkit.OpenGL\OpenToolkit.OpenGL.csproj", "{1FC04DAC-DF84-41BB-921A-35227FBF58DF}"
@@ -108,9 +104,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{471E0D18
 		build.sh = build.sh
 	EndProjectSection
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Generator", "src\Generator\Generator.fsproj", "{17868C80-6FD6-4A5A-908A-FA4FDCFB416E}"
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Generator", "src\Generator\Generator.fsproj", "{17868C80-6FD6-4A5A-908A-FA4FDCFB416E}"
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "SpecificationOpenGL", "src\SpecificationOpenGL\SpecificationOpenGL.fsproj", "{808BD056-6B35-4DB3-93E2-78243CC51A6A}"
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "SpecificationOpenGL", "src\SpecificationOpenGL\SpecificationOpenGL.fsproj", "{808BD056-6B35-4DB3-93E2-78243CC51A6A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -118,10 +114,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{4828A378-F24E-4BB0-BF5F-C4C6C9082081}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4828A378-F24E-4BB0-BF5F-C4C6C9082081}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4828A378-F24E-4BB0-BF5F-C4C6C9082081}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4828A378-F24E-4BB0-BF5F-C4C6C9082081}.Release|Any CPU.Build.0 = Release|Any CPU
 		{FD2151DE-0663-4100-9AB5-D1E22CF2144D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{FD2151DE-0663-4100-9AB5-D1E22CF2144D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FD2151DE-0663-4100-9AB5-D1E22CF2144D}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -202,10 +194,6 @@ Global
 		{2E39B827-1513-4B77-B80A-0BA87DBC199F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2E39B827-1513-4B77-B80A-0BA87DBC199F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2E39B827-1513-4B77-B80A-0BA87DBC199F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{79AAF02C-CACC-46FC-BADB-8CA3858C3CA2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{79AAF02C-CACC-46FC-BADB-8CA3858C3CA2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{79AAF02C-CACC-46FC-BADB-8CA3858C3CA2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{79AAF02C-CACC-46FC-BADB-8CA3858C3CA2}.Release|Any CPU.Build.0 = Release|Any CPU
 		{1FC04DAC-DF84-41BB-921A-35227FBF58DF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{1FC04DAC-DF84-41BB-921A-35227FBF58DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1FC04DAC-DF84-41BB-921A-35227FBF58DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
