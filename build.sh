@@ -28,7 +28,7 @@ if version_compare "$MINIMAL_DOTNET_VERSION" "$CURRENT_DOTNET_VERSION"; then
     echo "dotnet command already installed"
 else
     # Install .NET Core (https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-install-script)
-    curl -sSL https://dot.net/v1/dotnet-install.sh | bash /dev/stdin --runtime dotnet --version 2.2.401
+    curl -sSL https://dot.net/v1/dotnet-install.sh | bash /dev/stdin --version 2.2.401
 fi
 
 
