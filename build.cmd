@@ -1,6 +1,12 @@
 
-REM Install .NET Core (https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-install-script)
-@powershell -NoProfile -ExecutionPolicy unrestricted -Command "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; &([scriptblock]::Create((Invoke-WebRequest -useb 'https://dot.net/v1/dotnet-install.ps1')))-Channel Current"
-SET PATH=%LOCALAPPDATA%\Microsoft\dotnet;%PATH%
+where dotnet.exe >nul 2>nul
+IF NOT ERRORLEVEL 0 (
+  REM Install .NET Core (https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-install-script)
+  @powershell -NoProfile -ExecutionPolicy unrestricted -Command "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; &([scriptblock]::Create((Invoke-WebRequest -useb 'https://dot.net/v1/dotnet-install.ps1')))-Channel Current"
+  SET PATH="%LOCALAPPDATA%\Microsoft\dotnet;%PATH%"
+) ELSE (
+  @echo dotnet.exe is installed
+)
 dotnet restore build-bootstrap.csproj
 dotnet fake run build.fsx %*
+  
