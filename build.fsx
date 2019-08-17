@@ -162,7 +162,7 @@ Target.create "AssemblyInfo" (fun _ ->
 
 Target.create "Build" (fun _ ->
     releaseProjects
-    |> MSBuild.runRelease id "" "Build"
+    |> DotNet.run id "Build"
     |> Trace.logItems "Build-Output: "
 )
 
