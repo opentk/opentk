@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <PackageReference Include="FSharp.Data" Version="3.1.1" />
+    <PackageReference Include="FSharp.Core" Version="4.6" />
   </ItemGroup>
 
 </Project>
