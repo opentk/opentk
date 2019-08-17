@@ -3,7 +3,6 @@ open Types
 
 let additionalTypesToGenerate =
     [|
-        { _namespace = Some "OpenToolkit.Mathematics"; name = "Half" }
         { _namespace = None; name = "DebugProc" }
         { _namespace = None; name = "DebugProcAmd" }
         { _namespace = None; name = "DebugProcArb" }
@@ -44,13 +43,54 @@ let dummyTypesFileName = "DummyTypes"
 
 let advancedDlSupport = "AdvancedDLSupport"
 
+let mathematicsNamespace = "OpenToolkit.Mathematics"
+
 let dummyTypesNamespace = graphicsNamespace + "." + "GL"
 
 let prefixToRemove =
     [|
         "gl"
+        "GL_"
     |]
 
 let reservedKeywordsUpper =
     reservedKeywords
     |> Array.Parallel.map(fun k -> k.ToUpper())
+
+let functionOverloads =
+    let dummyEnumGroupTy name =
+        { groupName = name
+          cases = Array.empty }
+        |> GLenum
+    let tkTy ty = GLType.OpenToolkit ty
+    let vectorOverload1 name betterName =
+        functionOverloadsWith name betterName
+            [|
+                functionSignature Void
+                    [|
+                        dummyEnumGroupTy "GetPName" |> typedParameterInfo "pname" 
+                        tkTy Vector4 |> RefPointer |> typedParameterInfo "vector" 
+                    |]
+                functionSignature Void
+                    [|
+                        dummyEnumGroupTy "GetPName" |> typedParameterInfo "pname" 
+                        tkTy Vector3 |> RefPointer |> typedParameterInfo "vector" 
+                    |]
+                functionSignature Void
+                    [|
+                        dummyEnumGroupTy "GetPName" |> typedParameterInfo "pname" 
+                        tkTy Vector2 |> RefPointer |> typedParameterInfo "vector" 
+                    |]
+                functionSignature Void
+                    [|
+                        dummyEnumGroupTy "GetPName" |> typedParameterInfo "pname" 
+                        tkTy Matrix4 |> RefPointer |> typedParameterInfo "vector" 
+                    |]
+            |]
+    [|
+        vectorOverload1 "glGetFloatv" "GetFloat"
+        vectorOverload1 "glGetDoublev" "GetDouble"
+    |]
+    |> Array.Parallel.map(fun overload -> overload.expectedName, overload)
+    |> Map.ofArray
+    

@@ -14,7 +14,6 @@
     <Compile Include="Formatting.fs" />
     <Compile Include="Aggregator.fs" />
     <Compile Include="Program.fs" />
-    <None Include="Script1.fsx" />
   </ItemGroup>
 
   <ItemGroup>

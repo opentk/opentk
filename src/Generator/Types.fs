@@ -20,10 +20,20 @@ type ParameterInfo =
     { paramName: string
       paramType: LooseType }
 
+let parameterInfo name typ =
+    { paramName = name
+      paramType = typ }
+
 type FunctionDeclaration =
     { funcName: string
       parameters: ParameterInfo[]
       retType: LooseType }
+
+type OpenToolkitType =
+    | Vector4
+    | Vector3
+    | Vector2
+    | Matrix4
 
 type GLType =
     | Pointer of GLType
@@ -66,6 +76,8 @@ type GLType =
     | GLDEBUGPROCAMD
     | GLDEBUGPROCARB
     | GLDEBUGPROCKHR
+    | OpenToolkit of OpenToolkitType
+    | RefPointer of GLType
     
 [<RequireQualifiedAccess>]
 type TypedParameterInfo =
@@ -100,6 +112,17 @@ type PrintReadyTypedFunctionDeclaration =
       parameters: PrintReadyTypedParameterInfo[]
       retType: PrintReadyTypeInfo }
 
+[<RequireQualifiedAccess>]
+type PrintReadyEnum =
+    { actualName: string
+      prettyName: string
+      value: string }
+      
+[<RequireQualifiedAccess>]
+type PrintReadyEnumGroup =
+    { groupName: string
+      enumCases: PrintReadyEnum[] }
+
 let typedFunctionDeclaration name parameters retType =
     { name = name 
       parameters = parameters
@@ -125,3 +148,27 @@ type ExtensionInfo =
 type Either<'a, 'b> =
     | Left of 'a
     | Right of 'b
+    
+[<RequireQualifiedAccess>]
+type FunctionSignature =
+    { retType: GLType
+      parameters: TypedParameterInfo[] }
+
+let functionSignature retType parameters =
+    { retType = retType
+      parameters = parameters } : FunctionSignature
+
+type FunctionOverload =
+    { expectedName: string
+      alternativeName: string option
+      overloads: FunctionSignature[] }
+
+let functionOverloads name overloads = 
+    { expectedName = name
+      alternativeName = None
+      overloads = overloads }
+
+let functionOverloadsWith name alternativeName overloads =
+    { expectedName = name
+      alternativeName = Some alternativeName
+      overloads = overloads }

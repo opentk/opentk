@@ -29,7 +29,8 @@ let main argv =
     let startTime = System.Diagnostics.Stopwatch.StartNew()
     let path = options.pathToSpecificationFile
     let test = OpenGL_Specification.Load path
-    let enums = Parsing.getEnumsFromSpecification test
+    let enums =
+        Parsing.getEnumsFromSpecification test
     printfn "Enum group count: %d" enums.Length
     let enumMap =
         enums
@@ -63,6 +64,30 @@ let main argv =
     let typecheckedFunctions =
         TypeMapping.looslyTypedFunctionsToTypedFunctions enumMap functions
         |> Array.Parallel.map Formatting.PrintReady.formatTypedFunctionDeclaration
+        |> Array.Parallel.collect(fun func ->
+            match functionOverloads |> Map.tryFind func.actualName with
+            | Some overload ->
+                overload.overloads
+                |> Array.Parallel.map(fun currOverload ->
+                    { func with
+                        prettyName = overload.alternativeName |> Option.defaultValue func.prettyName
+                        parameters = currOverload.parameters |> Array.map Formatting.PrintReady.formatTypeTypeParameterInfo
+                        retType = currOverload.retType |> Formatting.PrintReady.formatTypeInfo }
+                )
+            | None -> func |> Array.singleton
+        )
+
+    let prettyEnumGroups =
+        enums
+        |> Array.Parallel.map Formatting.PrintReady.formatEnumGroup
+
+    let prettyEnumGroupMap =
+        prettyEnumGroups
+        |> Array.Parallel.map(fun group ->
+            group.groupName, group
+        )
+        |> Map.ofArray
+
     printfn "overall correct function specifications: %d" typecheckedFunctions.Length
     let openGlSpecVersions = Aggregator.getEnumCasesAndCommandsPerVersion test
     let basePath = options.pathToOutputDirectory
@@ -118,19 +143,20 @@ let main argv =
                     func.parameters
                     |> Array.Parallel.choose(fun param ->
                         TypeMapping.tryGetEnumType param.typ.typ
+                        |> Option.bind(fun group -> prettyEnumGroupMap |> Map.tryFind group.groupName)
                     )
                 )
-            enums
+            prettyEnumGroups
             |> Array.Parallel.choose(fun enum ->
                 // if enum.groupName = "ClipPlaneName" then System.Diagnostics.Debugger.Break()
                 let cases =
-                    enum.cases
+                    enum.enumCases
                     |> Array.filter (fun case ->
-                        currOpenGL_Spec.enumCases.Contains case.name
-                        || (enumCaseToExtensionMapper |> Map.containsKey case.name))
+                        currOpenGL_Spec.enumCases.Contains case.actualName
+                        || (enumCaseToExtensionMapper |> Map.containsKey case.actualName))
                 if cases.Length > 0 then
                     { enum with
-                        EnumGroup.cases = cases }
+                        enumCases = cases }
                     |> Some
                 else None
             )

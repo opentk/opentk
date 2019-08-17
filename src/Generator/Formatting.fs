@@ -85,6 +85,14 @@ module TypeToString =
         | GLType.GLDEBUGPROCAMD -> specTypeToCSharpTypeWithFallback "GLDEBUGPROCAMD"
         | GLType.GLDEBUGPROCARB -> specTypeToCSharpTypeWithFallback "GLDEBUGPROCARB"
         | GLType.GLDEBUGPROCKHR -> specTypeToCSharpTypeWithFallback "GLDEBUGPROCKHR"
+        | GLType.RefPointer ty ->
+             "ref " + typeToString ty
+        | GLType.OpenToolkit ty ->
+            match ty with
+            | Vector2 -> "Vector2"
+            | Vector3 -> "Vector3"
+            | Vector4 -> "Vector4"
+            | Matrix4 -> "Matrix4"
     
     let typeToStringCached ty =
         match cache.TryGetValue ty with
@@ -101,7 +109,12 @@ let formatName (name: string) =
         prefixToRemove
         |> Array.fold(fun (name:string) prefix ->
             if name.StartsWith prefix then
-                name.Substring prefix.Length
+                let res = name.Substring prefix.Length
+                match res.[0] with
+                | '1' | '2' | '3' | '4' | '5'
+                | '6' | '7' | '8' | '9' ->
+                    "_" + res
+                | _ -> res
             else name
         ) name
 
@@ -130,6 +143,17 @@ let namespaceForGlSpecification (openGl: RawOpenGLSpecificationDetails) =
     |> sprintf "GL%s"
 
 module PrintReady =
+
+    let formatEnumGroup (enumGroup: EnumGroup) =
+        let prettyEnumCases =
+            enumGroup.cases
+            |> Array.Parallel.map(fun case -> 
+                { actualName = case.name
+                  prettyName = case.name |> formatName
+                  value = case.value } : PrintReadyEnum
+            )
+        { groupName = enumGroup.groupName
+          enumCases = prettyEnumCases } : PrintReadyEnumGroup
 
     let formatTypeInfo (typeInfo: GLType) =
         { typ = typeInfo
@@ -173,7 +197,7 @@ let generateDummyTypes =
                 yield formatDummyType ty |> writeLine
     } |> execute
 
-let generateEnums enums (openGl: RawOpenGLSpecificationDetails) =
+let generateEnums (enums: PrintReadyEnumGroup[]) (openGl: RawOpenGLSpecificationDetails) =
     let usings = 
         [
             "System"
@@ -194,7 +218,7 @@ let generateEnums enums (openGl: RawOpenGLSpecificationDetails) =
             enums
             |> Array.Parallel.collect(fun enum ->
                 [|
-                    if enum.cases.Length > 0 then
+                    if enum.enumCases.Length > 0 then
                         yield
                             sprintf "public enum %s" enum.groupName
                             |> writeLine
@@ -208,9 +232,9 @@ let generateEnums enums (openGl: RawOpenGLSpecificationDetails) =
                                     let value = 0x80000000
                                     value |> string
                                 | _ -> value
-                            enum.cases
+                            enum.enumCases
                             |> Array.Parallel.map(fun case ->
-                                sprintf "%s = %s" case.name (valueToString case.value)
+                                sprintf "%s = %s" case.prettyName (valueToString case.value)
                             )
                         if formattedCases.Length > 2 then
                             for case in formattedCases.[..formattedCases.Length - 2] ->
@@ -231,6 +255,7 @@ let generateInterface (functions: PrintReadyTypedFunctionDeclaration[]) (openGl:
         [
             "System"
             advancedDlSupport
+            mathematicsNamespace
         ]
     let _namespace = namespaceForGlSpecification openGl
     seq {
@@ -273,6 +298,7 @@ let generateStaticClass (functions: PrintReadyTypedFunctionDeclaration[]) (openG
     let usings = 
         [
             "System"
+            mathematicsNamespace
         ]
     let _namespace = namespaceForGlSpecification openGl
     seq {
@@ -297,7 +323,14 @@ let generateStaticClass (functions: PrintReadyTypedFunctionDeclaration[]) (openG
                 |> String.concat ", "
             let funcName = func.prettyName
             // Parameters are so less that running in parallel hurts rather then helps.
-            let formattedParamNames = func.parameters |> Array.Parallel.map(fun p -> p.prettyName) |> String.concat ", "
+            let formattedParamNames =
+                func.parameters
+                |> Array.Parallel.map(fun p ->
+                    let possiblePrefix =
+                        match p.typ.typ with
+                        | RefPointer _ -> "ref "
+                        | _ -> ""
+                    possiblePrefix + p.prettyName) |> String.concat ", "
             yield
                 sprintf "public static unsafe %s %s(%s) => instance.%s(%s);" retTypeAsString funcName formattedParams funcName formattedParamNames
                 |> writeLine
@@ -340,6 +373,7 @@ let generateCsProjectFileFor (openGl: RawOpenGLSpecificationDetails) dummyTypesF
 
 <ItemGroup>
     <PackageReference Include="AdvancedDLSupport" Version="3.0.0" />
+    <ProjectReference Include="..\..\OpenToolkit.Mathematics\OpenToolkit.Mathematics.csproj" />
 </ItemGroup>
 
 %s
