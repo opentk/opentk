@@ -105,7 +105,7 @@ let typedFunctionDeclaration name parameters retType =
       parameters = parameters
       retType = retType } : TypedFunctionDeclaration
 
-type DummyType =
+type DummyTypeDescriptor =
     { _namespace: string option
       name: string }
 

@@ -148,8 +148,6 @@ let main argv =
         |> writeCsProjFile currOpenGL_Spec
         printfn "Done writing OpenGL Version %s files." currOpenGL_Spec.version
     )
-    //for func in typecheckedFunctions |> Array.take 100 do
-    //    printfn "%A" func
 
     printfn "Generating files took %s seconds" (startTime.Elapsed.Seconds |> string)  
 

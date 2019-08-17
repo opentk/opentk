@@ -836,3 +836,4 @@ auto/*
 # glossaries
 *.glstex
 src/Bindings
+gl.xml
