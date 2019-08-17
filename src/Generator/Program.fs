@@ -15,6 +15,7 @@ type options = {
   [<Option('o', "output", Required = true, HelpText = "Path to output directory.")>] pathToOutputDirectory: string
 }
 
+
 [<EntryPoint>]
 let main argv =
     printfn "Hello World from F# and welcome to the OpenTK4.0 binding generator!"
@@ -116,20 +117,15 @@ let main argv =
         let fileName = topic + ".cs"
         Directory.CreateDirectory pathToFile |> ignore
         File.WriteAllText(pathToFile </> fileName, content)
+        pathToFile </> fileName
 
-    let writeCsProjFile (openGl: RawOpenGLSpecificationDetails) content =
-        let path = getPathForOpenGlVersion openGl
-        path
-        |> Directory.CreateDirectory
-        |> ignore
-        let versionAsString = getShortTagForOpenGlVersion openGl
-        let fileName = sprintf "OpenGL_Bindings_%s.csproj" versionAsString
-        let fullPathToFile = path </> fileName
+    let writeCsProjFile content =
+        let fileName = sprintf "OpenGL_Bindings.csproj"
+        let fullPathToFile = basePath </> fileName
         File.WriteAllText(fullPathToFile, content)
 
-
     openGlSpecVersions
-    |> Array.Parallel.iter (fun currOpenGL_Spec ->
+    |> Array.Parallel.collect (fun currOpenGL_Spec ->
         let inline writeToFile topic content = writeToFile currOpenGL_Spec topic content
         let typecheckedFunctions =
             typecheckedFunctions
@@ -162,18 +158,28 @@ let main argv =
             )
             |> Array.append requiredEnumsFromFunctions
             |> Array.distinctBy(fun e -> e.groupName)
-        Formatting.generateEnums enums currOpenGL_Spec
-        |> writeToFile "Enums"
-        Formatting.generateInterface typecheckedFunctions currOpenGL_Spec
-        |> writeToFile "Interface"
-        Formatting.generateStaticClass typecheckedFunctions currOpenGL_Spec
-        |> writeToFile "StaticClass"
-        Formatting.generateLibraryLoaderFor currOpenGL_Spec
-        |> writeToFile "LibraryLoader"
-        Formatting.generateCsProjectFileFor currOpenGL_Spec dummyTypesFileName
-        |> writeCsProjFile currOpenGL_Spec
+
+        let generatedFiles =
+            [|
+                yield
+                    Formatting.generateEnums enums currOpenGL_Spec
+                    |> writeToFile "Enums"
+                yield
+                    Formatting.generateInterface typecheckedFunctions currOpenGL_Spec
+                    |> writeToFile "Interface"
+                yield
+                    Formatting.generateStaticClass typecheckedFunctions currOpenGL_Spec
+                    |> writeToFile "StaticClass"
+                yield
+                    Formatting.generateLibraryLoaderFor currOpenGL_Spec
+                    |> writeToFile "LibraryLoader"
+            |]
         printfn "Done writing OpenGL Version %s files." currOpenGL_Spec.version
-    )
+        generatedFiles
+    ) |> ignore
+    
+    Formatting.generateCsProjectFileForAllVersions openGlSpecVersions dummyTypesFileName [||]
+    |> writeCsProjFile
 
     printfn "Generating files took %s seconds" (startTime.Elapsed.Seconds |> string)  
 

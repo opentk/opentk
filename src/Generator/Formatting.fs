@@ -362,7 +362,7 @@ namespace %s.%s
     |> libraryLoaderFor
 
 open Util
-let generateCsProjectFileFor (openGl: RawOpenGLSpecificationDetails) dummyTypesFilename =
+let generateCsProjectFileForAllVersions (versions: RawOpenGLSpecificationDetails[]) dummyTypesFilename files =
     let baseString additional =
         sprintf """<Project Sdk="Microsoft.NET.Sdk">
 
@@ -373,7 +373,7 @@ let generateCsProjectFileFor (openGl: RawOpenGLSpecificationDetails) dummyTypesF
 
 <ItemGroup>
     <PackageReference Include="AdvancedDLSupport" Version="3.0.0" />
-    <ProjectReference Include="..\..\OpenToolkit.Mathematics\OpenToolkit.Mathematics.csproj" />
+    <ProjectReference Include="..\OpenToolkit.Mathematics\OpenToolkit.Mathematics.csproj" />
 </ItemGroup>
 
 %s
@@ -382,13 +382,12 @@ let generateCsProjectFileFor (openGl: RawOpenGLSpecificationDetails) dummyTypesF
     let startTag tag = "<" + tag + ">"
     let endTag tag = "</" + tag ">"
     let includeFile file = "<Compile Include=\"" + file + "\"/>"
-    let pathToDummyFile = "../" </> dummyTypesFileName + ".cs"
+    let pathToDummyFile = dummyTypesFileName + ".cs"
     let additionalIncludes =
         seq {
             yield "<ItemGroup>" |> writeLine
             yield indent
-            yield pathToDummyFile |> includeFile |> writeLine
-
+            for file in files -> includeFile file |> writeLine
             yield unindent
             yield "</ItemGroup>" |> writeLine
         } |> execute
