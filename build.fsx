@@ -94,9 +94,20 @@ let nugetCommandRunnerPath = ".fake/build.fsx/packages/NuGet.CommandLine/tools/N
 // Other Targets
 // ---------
 
+// Lazily install DotNet SDK in the correct version if not available
+let install = lazy DotNet.install DotNet.Versions.FromGlobalJson
+
+// Define general properties across various commands (with arguments)
+let inline withWorkDir wd =
+    DotNet.Options.lift install.Value
+    >> DotNet.Options.withWorkingDirectory wd
+
+// Set general properties without arguments
+let inline dotnetSimple arg = DotNet.Options.lift install.Value arg
+
 module DotNet =
     let run optionsFn framework projFile args =
-        DotNet.exec optionsFn
+        DotNet.exec (dotnetSimple >> optionsFn)
             "run"
             (sprintf "-f %s -p \"%s\" %s" framework projFile args)
 
