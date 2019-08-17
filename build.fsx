@@ -76,7 +76,8 @@ let toolProjects =
 
 let releaseProjects =
     !! "src/**/*.??proj"
-    -- "src/Generators/**"
+    -- "src/Generator/**"
+    -- "src/SpecificationOpenGL/**"
 
 let testProjects =
     !! "tests/**/*.??proj"
