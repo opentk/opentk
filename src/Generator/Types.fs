@@ -30,10 +30,18 @@ type FunctionDeclaration =
       retType: LooseType }
 
 type OpenToolkitType =
-    | Vector4
-    | Vector3
     | Vector2
+    | Vector3
+    | Vector4
+    | Vector2d
+    | Vector3d
+    | Vector4d
+    | Matrix2
+    | Matrix3
     | Matrix4
+    | Matrix2d
+    | Matrix3d
+    | Matrix4d
 
 type GLType =
     | Pointer of GLType

@@ -15,6 +15,58 @@ type options = {
   [<Option('o', "output", Required = true, HelpText = "Path to output directory.")>] pathToOutputDirectory: string
 }
 
+open Formatting
+
+let autoGenerateOverloadForType (func: PrintReadyTypedFunctionDeclaration) =
+    let keep = func
+    let injectTkTy ty adjustedName expectedPointerTy =
+        let name =
+            adjustedName
+            |> formatNameRemovingPrefix
+        let parameters =
+            func.parameters
+            |> Array.Parallel.map(fun param ->
+                let typ =
+                    match param.typ.typ with
+                    | Pointer(currTy) when currTy = expectedPointerTy -> ty |> OpenToolkit |> RefPointer
+                    | ty -> ty
+                { param with
+                    typ = typ |> PrintReady.formatTypeInfo }
+            )
+        { func with
+            parameters = parameters
+            prettyName = name }
+
+    // The order here is very important.
+    // The longer sufixes are checked first before the shorter ones
+    match func.actualName with
+    | EndsWith "Matrix2fv" adjustedName ->
+        injectTkTy (OpenToolkitType.Matrix2) (adjustedName + "Matrix") GLfloat
+    | EndsWith "Matrix3fv" adjustedName ->
+        injectTkTy (OpenToolkitType.Matrix3) (adjustedName + "Matrix") GLfloat
+    | EndsWith "Matrix4fv" adjustedName ->
+        injectTkTy (OpenToolkitType.Matrix4) (adjustedName + "Matrix") GLfloat
+    | EndsWith "Matrix2dv" adjustedName ->
+        injectTkTy (OpenToolkitType.Matrix2d) (adjustedName + "Matrix") GLdouble  
+    | EndsWith "Matrix3dv" adjustedName ->
+        injectTkTy (OpenToolkitType.Matrix3d) (adjustedName + "Matrix") GLdouble  
+    | EndsWith "Matrix4dv" adjustedName ->
+        injectTkTy (OpenToolkitType.Matrix4d) (adjustedName + "Matrix") GLdouble
+    | EndsWith "udv" _ -> keep
+    | EndsWith "2dv" adjustedName ->
+        injectTkTy (OpenToolkitType.Vector2d) (adjustedName) GLdouble
+    | EndsWith "3dv" adjustedName ->
+        injectTkTy (OpenToolkitType.Vector3d) (adjustedName) GLdouble
+    | EndsWith "4dv" adjustedName ->
+        injectTkTy (OpenToolkitType.Vector4d) (adjustedName) GLdouble
+    | EndsWith "ufv" _ -> keep
+    | EndsWith "2fv" adjustedName ->
+        injectTkTy (OpenToolkitType.Vector2) (adjustedName) GLfloat
+    | EndsWith "3fv" adjustedName ->
+        injectTkTy (OpenToolkitType.Vector3) (adjustedName) GLfloat
+    | EndsWith "4fv" adjustedName ->
+        injectTkTy (OpenToolkitType.Vector4) (adjustedName) GLfloat
+    | _ -> keep
 
 [<EntryPoint>]
 let main argv =
@@ -75,7 +127,7 @@ let main argv =
                         parameters = currOverload.parameters |> Array.map Formatting.PrintReady.formatTypeTypeParameterInfo
                         retType = currOverload.retType |> Formatting.PrintReady.formatTypeInfo }
                 )
-            | None -> func |> Array.singleton
+            | None -> func |> autoGenerateOverloadForType |> Array.singleton
         )
 
     let prettyEnumGroups =

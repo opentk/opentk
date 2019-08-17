@@ -100,7 +100,15 @@ module TypeToString =
             | Vector2 -> "Vector2"
             | Vector3 -> "Vector3"
             | Vector4 -> "Vector4"
+            | Vector2d -> "Vector2d"
+            | Vector3d -> "Vector3d"
+            | Vector4d -> "Vector4d"
+            | Matrix2 -> "Matrix2"
+            | Matrix3 -> "Matrix3"
             | Matrix4 -> "Matrix4"
+            | Matrix2d -> "Matrix2d"
+            | Matrix3d -> "Matrix3d"
+            | Matrix4d -> "Matrix4d"
     
     let typeToStringCached ty =
         match cache.TryGetValue ty with
