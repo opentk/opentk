@@ -22,9 +22,9 @@ function version_compare() {
 
 MINIMAL_DOTNET_VERSION=2.2.401
 
-CURRENT_DOTNET_VERSION=$(dotnet --version)
+CURRENT_DOTNET_VERSION=$(dotnet --version 2> /dev/null || EXIT_CODE=$?)
 
-if version_compare "$MINIMAL_DOTNET_VERSION" "$CURRENT_DOTNET_VERSION"; then
+if [ $EXIT_CODE ] && [ version_compare "$MINIMAL_DOTNET_VERSION" "$CURRENT_DOTNET_VERSION" ]; then
     echo "dotnet command already installed"
 else
     # Install .NET Core (https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-install-script)
