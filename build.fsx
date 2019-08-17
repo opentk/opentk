@@ -129,7 +129,7 @@ Target.create "UpdateBindings" (fun _ ->
     let projFile = "src/Generator/Generator.fsproj"
     let args =
         [ sprintf "-i %s" (System.IO.Path.GetFullPath pathToSpec)
-          "-o " + (System.IO.Path.GetFullPath "src" </> "Bindings")
+          "-o " + (System.IO.Path.GetFullPath "src" </> "OpenGL")
         ] |> asArgs
     DotNet.runWithDefaultOptions framework projFile args
     |> ignore
