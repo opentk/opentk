@@ -318,12 +318,26 @@ let generateEnums (enums: PrintReadyEnumGroup [])
     }
     |> execute
 
+let rec isPointerType ty =
+    match ty with
+    | ArrayType inner
+    | RefPointer inner -> isPointerType inner
+    | Pointer(Pointer _ as inner) -> isPointerType inner
+    | Pointer _ -> true
+    | _ -> false
+
 let generateInterface (functions: PrintReadyTypedFunctionDeclaration [])
     (details: GenerateDetails) =
-    let _namespace =
+    let _namespace, documentationFor =
         match details with
-        | OpenGlVersion openGl -> namespaceForGlSpecification openGl
-        | Extensions -> "EXT"
+        | OpenGlVersion openGl ->
+            let v = openGl.versionNumber |> floor |> int
+            let baseUrl = sprintf "http://docs.gl/gl%d/" v
+            namespaceForGlSpecification openGl,
+            fun str -> "/// See documentation online here: "+ baseUrl + str
+        | Extensions ->
+            "EXT",
+            fun _ -> "/// No documentation for extension functions available yet."
     let usings =
         [ "System"; advancedDlSupport; mathematicsNamespace; dummyTypesNamespace ]
         //@ [ if extensionsOnly then yield graphicsNamespace + "." + _namespace ]
@@ -346,6 +360,7 @@ let generateInterface (functions: PrintReadyTypedFunctionDeclaration [])
                               (fun p ->
                               p.typ.prettyTypeName + " " + p.prettyName)
                           |> String.concat ", "
+                      yield documentationFor func.actualName |> writeLine
                       yield ("[NativeSymbol(\"" + func.actualName + "\")]")
                             |> writeLine
                       let additional =
@@ -355,7 +370,11 @@ let generateInterface (functions: PrintReadyTypedFunctionDeclaration [])
                                 |> String.concat ", "
                             "<" + inner + ">"
                           else ""
-                      yield "unsafe " + retTypeAsString + " " + func.prettyName
+                      let prefix =
+                          if func.parameters |> Array.exists (fun p -> isPointerType p.typ.typ)
+                             || isPointerType func.retType.typ then "unsafe "
+                          else ""
+                      yield prefix + retTypeAsString + " " + func.prettyName
                             + additional
                             + "(" + formattedParams + ");" |> writeLine
                       yield writeEmptyLine |])
@@ -368,10 +387,16 @@ let generateInterface (functions: PrintReadyTypedFunctionDeclaration [])
 
 let generateStaticClass (functions: PrintReadyTypedFunctionDeclaration [])
     (details: GenerateDetails) =
-    let _namespace =
+    let _namespace, documentationFor =
         match details with
-        | OpenGlVersion openGl -> namespaceForGlSpecification openGl
-        | Extensions -> "EXT"
+        | OpenGlVersion openGl ->
+            let v = openGl.versionNumber |> floor |> int
+            let baseUrl = sprintf "http://docs.gl/gl%d/" v
+            namespaceForGlSpecification openGl,
+            fun str -> "/// See documentation online here: "+ baseUrl + str
+        | Extensions ->
+            "EXT",
+            fun _ -> "/// No documentation for extension functions available yet."
     let usings =
         [ "System"; mathematicsNamespace; dummyTypesNamespace ]
         //@ [ if extensionsOnly then yield graphicsNamespace + "." + rawNamespace ]
@@ -411,8 +436,13 @@ let generateStaticClass (functions: PrintReadyTypedFunctionDeclaration [])
                         |> String.concat ", "
                     "<" + inner + ">"
                 else ""
-            yield sprintf "public static unsafe %s %s%s(%s) => instance.%s(%s);"
-                      retTypeAsString funcName additional formattedParams
+            yield documentationFor func.actualName |> writeLine
+            let prefix =
+                if func.parameters |> Array.exists (fun p -> isPointerType p.typ.typ)
+                   || isPointerType func.retType.typ then " unsafe"
+                else ""
+            yield sprintf "public static%s %s %s%s(%s) => instance.%s(%s);"
+                      prefix retTypeAsString funcName additional formattedParams
                       funcName formattedParamNames |> writeLine
             yield writeEmptyLine
         yield unindent

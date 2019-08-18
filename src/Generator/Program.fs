@@ -21,18 +21,22 @@ let autoGenerateAdditionalOverloadForType (func: PrintReadyTypedFunctionDeclarat
         func.parameters
         |> Array.choose(fun p -> p.lengthParamName)
         |> Set.ofArray
+
+    let rec unwrapTyFromPointer ty =
+        match ty with
+        | Pointer ty -> unwrapTyFromPointer ty
+        | _ -> ty
     let transformPointerTy i transform ty =
         let transformPointerTy ty =
             match ty with
-            | Pointer(inner)
-            | Pointer(Pointer(inner)) ->
-                let res = inner |> transform
-                if res = inner then ty
+            | Pointer(inner) ->
+                let flattenedTy = unwrapTyFromPointer inner
+                let res = flattenedTy |> transform
+                if res = flattenedTy then ty
                 else res
             | inner -> inner
         match ty with
-        | Pointer(Void)
-        | Pointer(Pointer(Void)) ->
+        | Pointer(_) when unwrapTyFromPointer ty = Void ->
             let name = 
                 ("T" + string i)
             let inner = name |> StructGenericType
