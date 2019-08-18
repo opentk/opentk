@@ -142,7 +142,7 @@ Target.create "UpdateBindings" (fun _ ->
 
 Target.create "Clean" (fun _ -> Shell.cleanDir binDir)
 
-Target.create "Restore" (fun _ -> Shell.Exec("dotnet", "restore OpenTK.sln") |> ignore)
+Target.create "Restore" (fun _ -> DotNet.restore dotnetSimple "OpenTK.sln" |> ignore)
 
 // Generate assembly info files with the right version & up-to-date information
 Target.create "AssemblyInfo" (fun _ ->
