@@ -10,6 +10,15 @@ type MaybeBuilder() =
 
 let maybe = MaybeBuilder()
 
+module String =
+    let firstToUpper (str: string) =
+        if str |> System.String.IsNullOrEmpty |> not then
+            if str.Length = 1 then str.ToUpper()
+            else
+                let upper = System.Char.ToUpper <| str.Chars(0)
+                upper.ToString() + str.Substring(1).ToLower()
+        else ""
+
 module Array =
     module Parallel =
         let partitionEither f (input: 'T []) =

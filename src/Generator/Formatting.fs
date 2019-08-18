@@ -45,6 +45,7 @@ let inline specTypeToCSharpTypeWithFallback fallback =
 let outputPath = "../binding/Binding"
 
 open WriteStatement
+open Util
 
 let writeLeftBracket = WriteLine "{"
 let writeRightBracket = WriteLine "}"
@@ -141,23 +142,26 @@ let (|EndsWith|_|) (pattern: string) (str: string) =
         str.Substring(0, str.Length - pattern.Length) |> Some
     else None
 
+let addUnderscoreIfBeginsWithNumber (res: string) =
+    match res.[0] with
+    | '1'
+    | '2'
+    | '3'
+    | '4'
+    | '5'
+    | '6'
+    | '7'
+    | '8'
+    | '9' -> "_" + res
+    | _ -> res
+
 let formatNameRemovingPrefix (name: string) =
     let prefix =
         prefixToRemove |> Array.tryFind (fun prefix -> name.StartsWith prefix)
     match prefix with
     | Some prefix ->
         let res = name.Substring prefix.Length
-        match res.[0] with
-        | '1'
-        | '2'
-        | '3'
-        | '4'
-        | '5'
-        | '6'
-        | '7'
-        | '8'
-        | '9' -> "_" + res
-        | _ -> res
+        addUnderscoreIfBeginsWithNumber res
     | _ -> name
 
 let formatFunctionName (name: string) =
@@ -194,12 +198,28 @@ let namespaceForGlSpecification (openGl: RawOpenGLSpecificationDetails) =
     prettyName |> sprintf "GL%s"
 
 module PrintReady =
+    let private enumRegex = System.Text.RegularExpressions.Regex("[a-zA-Z0-9]+")
+
+    let formatEnumCase (str:string) =
+        let firstPart =
+            str
+            |> formatNameRemovingPrefix
+        enumRegex.Matches firstPart
+        |> Seq.choose(fun m ->
+            if m.Success then
+                m.Value.ToLower()
+                |> String.firstToUpper
+                |> Some
+            else None)
+        |> String.concat ""
+        |> addUnderscoreIfBeginsWithNumber
+
     let formatEnumGroup (enumGroup: EnumGroup) =
         let prettyEnumCases =
             enumGroup.cases
             |> Array.Parallel.map (fun case ->
                 { actualName = case.name
-                  prettyName = case.name |> formatNameRemovingPrefix
+                  prettyName = case.name |> formatEnumCase
                   value = case.value }: PrintReadyEnum)
         { groupName = enumGroup.groupName
           enumCases = prettyEnumCases }: PrintReadyEnumGroup
@@ -248,10 +268,17 @@ let generateDummyTypes =
     }
     |> execute
 
+type GenerateDetails =
+    | Extensions
+    | OpenGlVersion of RawOpenGLSpecificationDetails
+
 let generateEnums (enums: PrintReadyEnumGroup [])
-    (openGl: RawOpenGLSpecificationDetails) =
+    (details: GenerateDetails) =
     let usings = [ "System"; dummyTypesNamespace ]
-    let _namespace = namespaceForGlSpecification openGl
+    let _namespace =
+        match details with
+        | OpenGlVersion openGl -> namespaceForGlSpecification openGl
+        | Extensions -> "EXT"
     seq {
         for using in usings -> sprintf "using %s;" using |> writeLine
         yield writeEmptyLine
@@ -292,10 +319,14 @@ let generateEnums (enums: PrintReadyEnumGroup [])
     |> execute
 
 let generateInterface (functions: PrintReadyTypedFunctionDeclaration [])
-    (openGl: RawOpenGLSpecificationDetails) =
+    (details: GenerateDetails) =
+    let _namespace =
+        match details with
+        | OpenGlVersion openGl -> namespaceForGlSpecification openGl
+        | Extensions -> "EXT"
     let usings =
         [ "System"; advancedDlSupport; mathematicsNamespace; dummyTypesNamespace ]
-    let _namespace = namespaceForGlSpecification openGl
+        //@ [ if extensionsOnly then yield graphicsNamespace + "." + _namespace ]
     seq {
         for using in usings -> sprintf "using %s;" using |> writeLine
         yield writeEmptyLine
@@ -336,9 +367,14 @@ let generateInterface (functions: PrintReadyTypedFunctionDeclaration [])
     |> execute
 
 let generateStaticClass (functions: PrintReadyTypedFunctionDeclaration [])
-    (openGl: RawOpenGLSpecificationDetails) =
-    let usings = [ "System"; mathematicsNamespace; dummyTypesNamespace ]
-    let _namespace = namespaceForGlSpecification openGl
+    (details: GenerateDetails) =
+    let _namespace =
+        match details with
+        | OpenGlVersion openGl -> namespaceForGlSpecification openGl
+        | Extensions -> "EXT"
+    let usings =
+        [ "System"; mathematicsNamespace; dummyTypesNamespace ]
+        //@ [ if extensionsOnly then yield graphicsNamespace + "." + rawNamespace ]
     seq {
         for using in usings -> sprintf "using %s;" using |> writeLine
         yield "namespace " + graphicsNamespace + "." + _namespace |> writeLine
@@ -376,8 +412,8 @@ let generateStaticClass (functions: PrintReadyTypedFunctionDeclaration [])
                     "<" + inner + ">"
                 else ""
             yield sprintf "public static unsafe %s %s%s(%s) => instance.%s(%s);"
-                      retTypeAsString funcName additional formattedParams funcName
-                      formattedParamNames |> writeLine
+                      retTypeAsString funcName additional formattedParams
+                      funcName formattedParamNames |> writeLine
             yield writeEmptyLine
         yield unindent
         yield writeRightBracket
@@ -386,11 +422,15 @@ let generateStaticClass (functions: PrintReadyTypedFunctionDeclaration [])
     }
     |> execute
 
-let generateLibraryLoaderFor (openGl: RawOpenGLSpecificationDetails) =
+let generateLibraryLoaderFor (details: GenerateDetails) =
+    let _namespace =
+        match details with
+        | OpenGlVersion openGl -> namespaceForGlSpecification openGl
+        | Extensions -> "EXT"
     let libraryLoaderFor _namespace =
         let call =
             sprintf """using AdvancedDLSupport;
-                   using OpenToolkit.Graphics.GL;
+using OpenToolkit.Graphics.GL;
 namespace %s.%s
 {
     public static partial class GL
@@ -402,8 +442,7 @@ namespace %s.%s
     }
 }"""
         call graphicsNamespace _namespace
-    openGl
-    |> namespaceForGlSpecification
+    _namespace
     |> libraryLoaderFor
 
 open Util

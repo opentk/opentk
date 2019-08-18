@@ -216,8 +216,7 @@ let main argv =
     Formatting.generateDummyTypes
     |> fun content ->
         File.WriteAllText(basePath </> dummyTypesFileName + ".cs", content)
-    let inline writeToFile (openGl: RawOpenGLSpecificationDetails) topic content =
-        let pathToFile = getPathForOpenGlVersion openGl
+    let inline writeToFile pathToFile topic content =
         pathToFile
         |> Directory.CreateDirectory
         |> ignore
@@ -225,26 +224,73 @@ let main argv =
         Directory.CreateDirectory pathToFile |> ignore
         File.WriteAllText(pathToFile </> fileName, content)
         pathToFile </> fileName
+    let inline writeToFileSpec (openGl: RawOpenGLSpecificationDetails) topic content =
+        let pathToFile = getPathForOpenGlVersion openGl
+        writeToFile pathToFile topic content
 
     let writeCsProjFile content =
         let fileName = sprintf "OpenGL_Bindings.csproj"
         let fullPathToFile = basePath </> fileName
         File.WriteAllText(fullPathToFile, content)
+    let typecheckedFunctionsExtensionsOnly =
+        typecheckedFunctions
+        |> Array.filter
+            (fun func -> (functionToExtensionMapper |> Map.containsKey func.actualName))
+    let enumsWithExtensionsOnly =
+        let requiredEnumsFromFunctions =
+            typecheckedFunctionsExtensionsOnly
+            |> Array.Parallel.collect
+                (fun func ->
+                func.parameters
+                |> Array.Parallel.choose
+                    (fun param ->
+                    TypeMapping.tryGetEnumType param.typ.typ
+                    |> Option.bind
+                        (fun group ->
+                        prettyEnumGroupMap |> Map.tryFind group.groupName)))
+        prettyEnumGroups
+        |> Array.Parallel.choose (fun enum ->
+            // if enum.groupName = "ClipPlaneName" then System.Diagnostics.Debugger.Break()
+            let cases =
+                enum.enumCases
+                |> Array.filter
+                    (fun case ->
+                        enumCaseToExtensionMapper
+                        |> Map.containsKey case.actualName)
+            if cases.Length > 0 then { enum with enumCases = cases } |> Some
+            else None)
+        |> Array.append requiredEnumsFromFunctions
+        |> Array.distinctBy (fun e -> e.groupName)
+    
 
+    [|  let path = basePath </> "Extensions"
+        yield Formatting.generateEnums enumsWithExtensionsOnly (GenerateDetails.Extensions)
+            |> writeToFile path "EnumsExtensionsOnly"
+
+        yield Formatting.generateInterface typecheckedFunctionsExtensionsOnly (GenerateDetails.Extensions)
+            |> writeToFile path "InterfaceExtensionsOnly"
+
+        yield Formatting.generateStaticClass typecheckedFunctionsExtensionsOnly
+                    (GenerateDetails.Extensions)
+                        |> writeToFile path "StaticClassExtensionsOnly"
+
+        yield Formatting.generateLibraryLoaderFor (GenerateDetails.Extensions)
+            |> writeToFile path "LibraryLoaderExtensionsOnly" |]
+    |> ignore
     openGlVersions
     |> Array.Parallel.collect (fun glVersion ->
         let inline writeToFile topic content =
-            writeToFile glVersion topic content
-        let typecheckedFunctions =
+            writeToFileSpec glVersion topic content
+        let typecheckedFunctionsWithoutExtensions =
             typecheckedFunctions
             |> Array.filter
                 (fun func ->
                 glVersion.functions.Contains func.actualName
-                || (functionToExtensionMapper |> Map.containsKey func.actualName))
+                && (functionToExtensionMapper |> Map.containsKey func.actualName |> not))
 
-        let enums =
+        let enumsWithoutExtensions =
             let requiredEnumsFromFunctions =
-                typecheckedFunctions
+                typecheckedFunctionsWithoutExtensions
                 |> Array.Parallel.collect
                     (fun func ->
                     func.parameters
@@ -262,25 +308,28 @@ let main argv =
                     |> Array.filter
                         (fun case ->
                         glVersion.enumCases.Contains case.actualName
-                        || (enumCaseToExtensionMapper
-                            |> Map.containsKey case.actualName))
+                        && (enumCaseToExtensionMapper
+                            |> Map.containsKey case.actualName
+                            |> not))
                 if cases.Length > 0 then { enum with enumCases = cases } |> Some
                 else None)
             |> Array.append requiredEnumsFromFunctions
             |> Array.distinctBy (fun e -> e.groupName)
+                
 
         let generatedFiles =
-            [| yield Formatting.generateEnums enums glVersion
-                     |> writeToFile "Enums"
+            [| yield Formatting.generateEnums enumsWithoutExtensions (GenerateDetails.OpenGlVersion glVersion)
+                    |> writeToFile "EnumsWithoutExtensions"
 
-               yield Formatting.generateInterface typecheckedFunctions glVersion
-                     |> writeToFile "Interface"
+               yield Formatting.generateInterface typecheckedFunctionsWithoutExtensions (GenerateDetails.OpenGlVersion glVersion)
+                    |> writeToFile "InterfaceWithoutExtensions"
 
-               yield Formatting.generateStaticClass typecheckedFunctions
-                         glVersion |> writeToFile "StaticClass"
+               yield Formatting.generateStaticClass typecheckedFunctionsWithoutExtensions
+                         (GenerateDetails.OpenGlVersion glVersion)
+                                |> writeToFile "StaticClassWithoutExtensions"
 
-               yield Formatting.generateLibraryLoaderFor glVersion
-                     |> writeToFile "LibraryLoader" |]
+               yield Formatting.generateLibraryLoaderFor (GenerateDetails.OpenGlVersion glVersion)
+                    |> writeToFile "LibraryLoaderWithoutExtensions" |]
 
         printfn "Done writing OpenGL Version %s files." glVersion.version
         generatedFiles)
