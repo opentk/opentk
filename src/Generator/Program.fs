@@ -1,41 +1,41 @@
-﻿// Learn more about F// at http://fsharp.org
-
+// Learn more about F// at http://fsharp.org
 open Types
 open SpecificationOpenGL
 open Util
 open Constants
-
 open System.IO
-
 open CommandLine
 
-type options = {
-  [<Option('i', "input", Required = true, HelpText = "Path to specification file.")>] pathToSpecificationFile: string
-  [<Option('o', "output", Required = true, HelpText = "Path to output directory.")>] pathToOutputDirectory: string
-}
+type options =
+    { [<Option('i', "input", Required = true,
+               HelpText = "Path to specification file.")>]
+      pathToSpecificationFile: string
+      [<Option('o', "output", Required = true,
+               HelpText = "Path to output directory.")>]
+      pathToOutputDirectory: string }
 
 open Formatting
 
 let autoGenerateOverloadForType (func: PrintReadyTypedFunctionDeclaration) =
     let keep = func
+
     let injectTkTy ty adjustedName expectedPointerTy =
-        let name =
-            adjustedName
-            |> formatNameRemovingPrefix
+        let name = adjustedName |> formatNameRemovingPrefix
+
         let parameters =
             func.parameters
-            |> Array.Parallel.map(fun param ->
+            |> Array.Parallel.map (fun param ->
                 let typ =
                     match param.typ.typ with
-                    | Pointer(currTy) when currTy = expectedPointerTy -> ty |> OpenToolkit |> RefPointer
+                    | Pointer(currTy) when currTy = expectedPointerTy ->
+                        ty
+                        |> OpenToolkit
+                        |> RefPointer
                     | ty -> ty
-                { param with
-                    typ = typ |> PrintReady.formatTypeInfo }
-            )
+                { param with typ = typ |> PrintReady.formatTypeInfo })
         { func with
-            parameters = parameters
-            prettyName = name }
-
+              parameters = parameters
+              prettyName = name }
     // The order here is very important.
     // The longer sufixes are checked first before the shorter ones
     match func.actualName with
@@ -46,9 +46,9 @@ let autoGenerateOverloadForType (func: PrintReadyTypedFunctionDeclaration) =
     | EndsWith "Matrix4fv" adjustedName ->
         injectTkTy (OpenToolkitType.Matrix4) (adjustedName + "Matrix") GLfloat
     | EndsWith "Matrix2dv" adjustedName ->
-        injectTkTy (OpenToolkitType.Matrix2d) (adjustedName + "Matrix") GLdouble  
+        injectTkTy (OpenToolkitType.Matrix2d) (adjustedName + "Matrix") GLdouble
     | EndsWith "Matrix3dv" adjustedName ->
-        injectTkTy (OpenToolkitType.Matrix3d) (adjustedName + "Matrix") GLdouble  
+        injectTkTy (OpenToolkitType.Matrix3d) (adjustedName + "Matrix") GLdouble
     | EndsWith "Matrix4dv" adjustedName ->
         injectTkTy (OpenToolkitType.Matrix4d) (adjustedName + "Matrix") GLdouble
     | EndsWith "udv" _ -> keep
@@ -69,75 +69,83 @@ let autoGenerateOverloadForType (func: PrintReadyTypedFunctionDeclaration) =
 
 [<EntryPoint>]
 let main argv =
-    printfn "Hello World from F# and welcome to the OpenTK4.0 binding generator!"
+    printfn
+        "Hello World from F# and welcome to the OpenTK4.0 binding generator!"
     let result = CommandLine.Parser.Default.ParseArguments<options>(argv)
+
     let options =
         match result with
-        | :? Parsed<options> as parsed -> parsed.Value
-        | :? NotParsed<options> as notParsed -> failwithf "Error %A" (notParsed.Errors)
+        | :? (Parsed<options>) as parsed -> parsed.Value
+        | :? (NotParsed<options>) as notParsed ->
+            failwithf "Error %A" (notParsed.Errors)
         | _ -> failwith "No options given"
-
     System.Runtime.GCSettings.LatencyMode <- System.Runtime.GCLatencyMode.SustainedLowLatency
     let startTime = System.Diagnostics.Stopwatch.StartNew()
     let path = options.pathToSpecificationFile
     let test = OpenGL_Specification.Load path
-    let enums =
-        Parsing.getEnumsFromSpecification test
+    let enums = Parsing.getEnumsFromSpecification test
     printfn "Enum group count: %d" enums.Length
     let enumMap =
         enums
-        |> Array.Parallel.map(fun group ->
-            group.groupName, group
-        )
+        |> Array.Parallel.map (fun group -> group.groupName, group)
         |> Map.ofArray
+
     let functions = Parsing.getFunctions test
     printfn "Function count: %d" functions.Length
-    
     let extensions = Parsing.getExtensions test
     printfn "Extension count: %d" extensions.Length
-
     let getMapper fn =
         extensions
-        |> Array.Parallel.collect(fun extension ->
-            fn extension |> Array.Parallel.map(fun value -> extension.name, value))
+        |> Array.Parallel.collect
+            (fun extension ->
+            fn extension
+            |> Array.Parallel.map (fun value -> extension.name, value))
         |> Array.groupBy snd
-        |> Array.Parallel.map(fun (value, extensions) -> value, extensions |> Array.Parallel.map fst)
+        |> Array.Parallel.map
+            (fun (value, extensions) ->
+            value, extensions |> Array.Parallel.map fst)
         |> Map.ofArray
 
     let functionToExtensionMapper =
         getMapper (fun extension -> extension.functions)
-
     let enumCaseToExtensionMapper =
         getMapper (fun extension -> extension.enumCases)
-            
+
     let typecheckedFunctions =
         TypeMapping.looslyTypedFunctionsToTypedFunctions enumMap functions
-        |> Array.Parallel.map Formatting.PrintReady.formatTypedFunctionDeclaration
-        |> Array.Parallel.collect(fun func ->
+        |> Array.Parallel.map
+            Formatting.PrintReady.formatTypedFunctionDeclaration
+        |> Array.Parallel.collect (fun func ->
             match functionOverloads |> Map.tryFind func.actualName with
             | Some overload ->
                 overload.overloads
-                |> Array.Parallel.map(fun currOverload ->
+                |> Array.Parallel.map
+                    (fun currOverload ->
                     { func with
-                        prettyName = overload.alternativeName |> Option.defaultValue func.prettyName
-                        parameters = currOverload.parameters |> Array.map Formatting.PrintReady.formatTypeTypeParameterInfo
-                        retType = currOverload.retType |> Formatting.PrintReady.formatTypeInfo }
-                )
-            | None -> func |> autoGenerateOverloadForType |> Array.singleton
-        )
+                          prettyName =
+                              overload.alternativeName
+                              |> Option.defaultValue func.prettyName
+                          parameters =
+                              currOverload.parameters
+                              |> Array.map
+                                  Formatting.PrintReady.formatTypeTypeParameterInfo
+                          retType =
+                              currOverload.retType
+                              |> Formatting.PrintReady.formatTypeInfo })
+            | None ->
+                func
+                |> autoGenerateOverloadForType
+                |> Array.singleton)
 
     let prettyEnumGroups =
-        enums
-        |> Array.Parallel.map Formatting.PrintReady.formatEnumGroup
+        enums |> Array.Parallel.map Formatting.PrintReady.formatEnumGroup
 
     let prettyEnumGroupMap =
         prettyEnumGroups
-        |> Array.Parallel.map(fun group ->
-            group.groupName, group
-        )
+        |> Array.Parallel.map (fun group -> group.groupName, group)
         |> Map.ofArray
-
-    printfn "overall correct function specifications: %d" typecheckedFunctions.Length
+    printfn "overall correct function specifications: %d"
+        typecheckedFunctions.Length
     let openGlVersions = Aggregator.getEnumCasesAndCommandsPerVersion test
     let basePath = options.pathToOutputDirectory
 
@@ -148,15 +156,12 @@ let main argv =
 
     let getPathForOpenGlVersion (openGl: RawOpenGLSpecificationDetails) =
         basePath </> (getShortTagForOpenGlVersion openGl)
-
     basePath
     |> Directory.CreateDirectory
     |> ignore
-
     Formatting.generateDummyTypes
-    |> fun content -> 
+    |> fun content ->
         File.WriteAllText(basePath </> dummyTypesFileName + ".cs", content)
-
     let inline writeToFile (openGl: RawOpenGLSpecificationDetails) topic content =
         let pathToFile = getPathForOpenGlVersion openGl
         pathToFile
@@ -174,58 +179,58 @@ let main argv =
 
     openGlVersions
     |> Array.Parallel.collect (fun glVersion ->
-        let inline writeToFile topic content = writeToFile glVersion topic content
+        let inline writeToFile topic content =
+            writeToFile glVersion topic content
         let typecheckedFunctions =
             typecheckedFunctions
-            |> Array.filter(fun func ->
+            |> Array.filter
+                (fun func ->
                 glVersion.functions.Contains func.actualName
                 || (functionToExtensionMapper |> Map.containsKey func.actualName))
+
         let enums =
             let requiredEnumsFromFunctions =
                 typecheckedFunctions
-                |> Array.Parallel.collect(fun func ->
+                |> Array.Parallel.collect
+                    (fun func ->
                     func.parameters
-                    |> Array.Parallel.choose(fun param ->
+                    |> Array.Parallel.choose
+                        (fun param ->
                         TypeMapping.tryGetEnumType param.typ.typ
-                        |> Option.bind(fun group -> prettyEnumGroupMap |> Map.tryFind group.groupName)
-                    )
-                )
+                        |> Option.bind
+                            (fun group ->
+                            prettyEnumGroupMap |> Map.tryFind group.groupName)))
             prettyEnumGroups
-            |> Array.Parallel.choose(fun enum ->
+            |> Array.Parallel.choose (fun enum ->
                 // if enum.groupName = "ClipPlaneName" then System.Diagnostics.Debugger.Break()
                 let cases =
                     enum.enumCases
-                    |> Array.filter (fun case ->
+                    |> Array.filter
+                        (fun case ->
                         glVersion.enumCases.Contains case.actualName
-                        || (enumCaseToExtensionMapper |> Map.containsKey case.actualName))
-                if cases.Length > 0 then
-                    { enum with
-                        enumCases = cases }
-                    |> Some
-                else None
-            )
+                        || (enumCaseToExtensionMapper
+                            |> Map.containsKey case.actualName))
+                if cases.Length > 0 then { enum with enumCases = cases } |> Some
+                else None)
             |> Array.append requiredEnumsFromFunctions
-            |> Array.distinctBy(fun e -> e.groupName)
+            |> Array.distinctBy (fun e -> e.groupName)
 
         let generatedFiles =
-            [|
-                yield
-                    Formatting.generateEnums enums glVersion
-                    |> writeToFile "Enums"
-                yield
-                    Formatting.generateInterface typecheckedFunctions glVersion
-                    |> writeToFile "Interface"
-                yield
-                    Formatting.generateStaticClass typecheckedFunctions glVersion
-                    |> writeToFile "StaticClass"
-                yield
-                    Formatting.generateLibraryLoaderFor glVersion
-                    |> writeToFile "LibraryLoader"
-            |]
+            [| yield Formatting.generateEnums enums glVersion
+                     |> writeToFile "Enums"
+
+               yield Formatting.generateInterface typecheckedFunctions glVersion
+                     |> writeToFile "Interface"
+
+               yield Formatting.generateStaticClass typecheckedFunctions
+                         glVersion |> writeToFile "StaticClass"
+
+               yield Formatting.generateLibraryLoaderFor glVersion
+                     |> writeToFile "LibraryLoader" |]
+
         printfn "Done writing OpenGL Version %s files." glVersion.version
-        generatedFiles
-    ) |> ignore
-
-    printfn "Generating files took %s seconds" (startTime.Elapsed.Seconds |> string)
-
+        generatedFiles)
+    |> ignore
+    printfn "Generating files took %s seconds"
+        (startTime.Elapsed.Seconds |> string)
     0 // return an integer exit code

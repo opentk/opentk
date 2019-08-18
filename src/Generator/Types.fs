@@ -1,5 +1,4 @@
-﻿module Types
-
+module Types
 
 type Enum =
     { name: string
@@ -7,14 +6,16 @@ type Enum =
 
 type EnumGroup =
     { groupName: string
-      cases: Enum[] }
+      cases: Enum [] }
 
 [<RequireQualifiedAccess>]
 type LooseType =
     { typ: string
       group: string option }
 
-let looseType typ group = { typ = typ; group = group } : LooseType
+let looseType typ group: LooseType =
+    { typ = typ
+      group = group }
 
 type ParameterInfo =
     { paramName: string
@@ -26,7 +27,7 @@ let parameterInfo name typ =
 
 type FunctionDeclaration =
     { funcName: string
-      parameters: ParameterInfo[]
+      parameters: ParameterInfo []
       retType: LooseType }
 
 type OpenToolkitType =
@@ -86,20 +87,20 @@ type GLType =
     | GLDEBUGPROCKHR
     | OpenToolkit of OpenToolkitType
     | RefPointer of GLType
-    
+
 [<RequireQualifiedAccess>]
 type TypedParameterInfo =
     { name: string
       typ: GLType }
-      
-let typedParameterInfo name typ =
-    { name = name 
-      typ = typ } : TypedParameterInfo
-    
+
+let typedParameterInfo name typ: TypedParameterInfo =
+    { name = name
+      typ = typ }
+
 [<RequireQualifiedAccess>]
 type TypedFunctionDeclaration =
     { name: string
-      parameters: TypedParameterInfo[]
+      parameters: TypedParameterInfo []
       retType: GLType }
 
 [<RequireQualifiedAccess>]
@@ -117,7 +118,7 @@ type PrintReadyTypedParameterInfo =
 type PrintReadyTypedFunctionDeclaration =
     { actualName: string
       prettyName: string
-      parameters: PrintReadyTypedParameterInfo[]
+      parameters: PrintReadyTypedParameterInfo []
       retType: PrintReadyTypeInfo }
 
 [<RequireQualifiedAccess>]
@@ -125,16 +126,16 @@ type PrintReadyEnum =
     { actualName: string
       prettyName: string
       value: string }
-      
+
 [<RequireQualifiedAccess>]
 type PrintReadyEnumGroup =
     { groupName: string
-      enumCases: PrintReadyEnum[] }
+      enumCases: PrintReadyEnum [] }
 
-let typedFunctionDeclaration name parameters retType =
-    { name = name 
+let typedFunctionDeclaration name parameters retType: TypedFunctionDeclaration =
+    { name = name
       parameters = parameters
-      retType = retType } : TypedFunctionDeclaration
+      retType = retType }
 
 type DummyTypeDescriptor =
     { _namespace: string option
@@ -150,28 +151,28 @@ type RawOpenGLSpecificationDetails =
 [<RequireQualifiedAccess>]
 type ExtensionInfo =
     { name: string
-      functions: string[]
-      enumCases: string[] }
+      functions: string []
+      enumCases: string [] }
 
 type Either<'a, 'b> =
     | Left of 'a
     | Right of 'b
-    
+
 [<RequireQualifiedAccess>]
 type FunctionSignature =
     { retType: GLType
-      parameters: TypedParameterInfo[] }
+      parameters: TypedParameterInfo [] }
 
-let functionSignature retType parameters =
+let functionSignature retType parameters: FunctionSignature =
     { retType = retType
-      parameters = parameters } : FunctionSignature
+      parameters = parameters }
 
 type FunctionOverload =
     { expectedName: string
       alternativeName: string option
-      overloads: FunctionSignature[] }
+      overloads: FunctionSignature [] }
 
-let functionOverloads name overloads = 
+let functionOverloads name overloads =
     { expectedName = name
       alternativeName = None
       overloads = overloads }
