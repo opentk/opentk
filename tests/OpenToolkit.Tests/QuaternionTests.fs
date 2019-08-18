@@ -51,7 +51,10 @@ module Quaternion =
             let v2 = Quaternion.ToEulerAngles(&q1)
             let q2 = Quaternion.FromEulerAngles(v2)
 
-            Assert.ApproximatelyEqual(0.0f, (q1 * q2.Inverted()).Xyz.LengthSquared)
+            Assert.ApproximatelyEqual(q1.X, q2.X);
+            Assert.ApproximatelyEqual(q1.Y, q2.Y);
+            Assert.ApproximatelyEqual(q1.Z, q2.Z);
+            Assert.ApproximatelyEqual(q1.W, q2.W);
             
     [<Fact>]
     let ``Single axis as euler angles is converted to correct quaternion components``() =

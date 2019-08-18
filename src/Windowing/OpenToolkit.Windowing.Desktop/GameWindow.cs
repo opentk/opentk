@@ -85,9 +85,6 @@ namespace OpenToolkit.Windowing.Desktop
         private Thread _renderThread;
 
         /// <inheritdoc/>
-        public bool IsExiting { get; protected set; }
-
-        /// <inheritdoc/>
         public bool IsSingleThreaded { get; }
 
         /// <inheritdoc />
@@ -205,6 +202,7 @@ namespace OpenToolkit.Windowing.Desktop
             }
 
             _watchRender.Start();
+            _watchUpdate.Start();
             while (true)
             {
                 ProcessEvents();
@@ -238,7 +236,7 @@ namespace OpenToolkit.Windowing.Desktop
             var isRunningSlowlyRetries = 4;
             var elapsed = _watchUpdate.Elapsed.TotalMilliseconds;
 
-            var updatePeriod = 1 / UpdateFrequency;
+            var updatePeriod = UpdateFrequency == 0 ? 0 : 1 / UpdateFrequency;
 
             while (elapsed > 0 && elapsed + _updateEpsilon >= updatePeriod)
             {
@@ -271,6 +269,8 @@ namespace OpenToolkit.Windowing.Desktop
             {
                 Glfw.SwapInterval(IsRunningSlowly ? 0 : 1);
             }
+
+            _watchUpdate.Restart();
         }
 
         private void DispatchRenderFrame()

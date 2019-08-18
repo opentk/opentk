@@ -48,6 +48,14 @@ namespace OpenToolkit.Windowing.Desktop
         /// <inheritdoc />
         public KeyboardState LastKeyboardState { get; private set; }
 
+        private JoystickState[] _joystickStates = new JoystickState[16];
+
+        /// <inheritdoc/>
+        public JoystickState[] JoystickStates { get => _joystickStates; }
+
+        /// <inheritdoc/>
+        public JoystickState[] LastJoystickStates { get; private set; }
+
         /// <inheritdoc />
         public Vector2 MousePosition
         {
@@ -219,16 +227,10 @@ namespace OpenToolkit.Windowing.Desktop
         }
 
         /// <inheritdoc />
-        public bool Exists
-        {
-            get
-            {
-                unsafe
-                {
-                    return WindowPtr != null && !Glfw.WindowShouldClose(WindowPtr);
-                }
-            }
-        }
+        public bool Exists { get; private set; }
+
+        /// <inheritdoc />
+        public bool IsExiting { get; private set; }
 
         /// <inheritdoc />
         public unsafe WindowState WindowState
@@ -359,8 +361,6 @@ namespace OpenToolkit.Windowing.Desktop
             get => Location.X;
             set
             {
-                _location.X = value;
-
                 Glfw.SetWindowPos(WindowPtr, value, _location.Y);
             }
         }
@@ -371,8 +371,6 @@ namespace OpenToolkit.Windowing.Desktop
             get => Location.Y;
             set
             {
-                _location.Y = value;
-
                 Glfw.SetWindowPos(WindowPtr, _location.X, value);
             }
         }
@@ -383,8 +381,6 @@ namespace OpenToolkit.Windowing.Desktop
             get => Size.X;
             set
             {
-                _size.X = value;
-
                 Glfw.SetWindowSize(WindowPtr, value, _size.Y);
             }
         }
@@ -395,9 +391,7 @@ namespace OpenToolkit.Windowing.Desktop
             get => Size.Y;
             set
             {
-                _size.Y = value;
-
-                Glfw.SetWindowSize(WindowPtr, _size.Y, value);
+                Glfw.SetWindowSize(WindowPtr, _size.X, value);
             }
         }
 
@@ -577,6 +571,8 @@ namespace OpenToolkit.Windowing.Desktop
                     WindowPtr = Glfw.CreateWindow(settings.Width, settings.Height, _title, null, null);
                 }
 
+                Exists = true;
+
                 if (makeContextCurrent)
                 {
                     Glfw.MakeContextCurrent(WindowPtr);
@@ -594,6 +590,12 @@ namespace OpenToolkit.Windowing.Desktop
 
                 Glfw.GetFramebufferSize(WindowPtr, out var width, out var height);
                 ClientSize = new Vector2i(width, height);
+
+                Glfw.GetWindowSize(WindowPtr, out width, out height);
+                _size = new Vector2i(width, height);
+
+                Glfw.GetWindowPos(WindowPtr, out var x, out var y);
+                _location = new Vector2i(x, y);
             }
 
             Interlocked.Increment(ref _numberOfUsers);
@@ -613,6 +615,7 @@ namespace OpenToolkit.Windowing.Desktop
         private GLFWCallbacks.DropCallback _dropCallback;
         private GLFWCallbacks.JoystickCallback _joystickCallback;
         private GLFWCallbacks.MonitorCallback _monitorCallback;
+        private GLFWCallbacks.WindowRefreshCallback _refreshCallback;
 
         private void RegisterWindowCallbacks()
         {
@@ -624,7 +627,7 @@ namespace OpenToolkit.Windowing.Desktop
                 _sizeCallback = (window, width, height) => OnResize(this, new ResizeEventArgs(width, height));
                 Glfw.SetWindowSizeCallback(WindowPtr, _sizeCallback);
 
-                _closeCallback = window => OnClosing(this, new CancelEventArgs());
+                _closeCallback = OnCloseCallback;
                 Glfw.SetWindowCloseCallback(WindowPtr, _closeCallback);
 
                 _iconifyCallback = (window, iconified) => OnMinimized(this, new MinimizedEventArgs(iconified));
@@ -738,6 +741,24 @@ namespace OpenToolkit.Windowing.Desktop
 
                 _joystickCallback = (joy, eventCode) =>
                 {
+                    if (eventCode == ConnectedState.Connected)
+                    {
+                        // Initialize the first joystick state.
+                        int hatCount = 0;
+                        Glfw.GetJoystickHats(joy, out hatCount);
+                        int axisCount = 0;
+                        Glfw.GetJoystickAxes(joy, out hatCount);
+                        int buttonCount = 0;
+                        Glfw.GetJoystickButtons(joy, out buttonCount);
+                        string name = Glfw.GetJoystickName(joy);
+
+                        JoystickStates[joy] = new JoystickState(hatCount, axisCount, buttonCount, joy, name);
+                    }
+                    else
+                    {
+                        // Remove the joystick state from the array of joysticks.
+                        JoystickStates[joy] = default;
+                    }
                     OnJoystickConnected(this, new JoystickEventArgs(joy, eventCode == ConnectedState.Connected));
                 };
                 Glfw.SetJoystickCallback(_joystickCallback);
@@ -747,6 +768,23 @@ namespace OpenToolkit.Windowing.Desktop
                     OnMonitorConnected(this, new MonitorEventArgs(new Monitor((IntPtr)monitor), eventCode == ConnectedState.Connected));
                 };
                 Glfw.SetMonitorCallback(_monitorCallback);
+
+                _refreshCallback = (window) => OnRefresh(this, EventArgs.Empty);
+                Glfw.SetWindowRefreshCallback(WindowPtr, _refreshCallback);
+            }
+        }
+
+        private unsafe void OnCloseCallback(Window* window)
+        {
+            var c = new CancelEventArgs();
+            OnClosing(this, c);
+            if (c.Cancel)
+            {
+                Glfw.SetWindowShouldClose(WindowPtr, false);
+            }
+            else
+            {
+                IsExiting = true;
             }
         }
 
@@ -755,8 +793,7 @@ namespace OpenToolkit.Windowing.Desktop
         {
             unsafe
             {
-                Glfw.SetWindowShouldClose(WindowPtr, true);
-                OnClosed(this, EventArgs.Empty);
+                OnCloseCallback(WindowPtr);
             }
         }
 
@@ -769,12 +806,54 @@ namespace OpenToolkit.Windowing.Desktop
             }
         }
 
-        /// <inheritdoc />
-        public virtual void ProcessEvents()
+        private unsafe void DestroyWindow()
+        {
+            if (Exists)
+            {
+                Exists = false;
+                Glfw.DestroyWindow(WindowPtr);
+
+                OnClosed(this, EventArgs.Empty);
+            }
+        }
+
+        private bool PreProcessEvents()
         {
             LastKeyboardState = KeyboardState;
             LastMouseState = MouseState;
+            LastJoystickStates = JoystickStates;
             MouseDelta = Vector2.Zero;
+
+            if (IsExiting)
+            {
+                DestroyWindow();
+                return false;
+            }
+
+            return true;
+        }
+
+        /// <inheritdoc />
+        public bool ProcessEvents(double timeout)
+        {
+            if (!PreProcessEvents())
+            {
+                return false;
+            }
+
+            Glfw.WaitEventsTimeout(timeout);
+            ProcessInputEvents();
+
+            return true;
+        }
+
+        /// <inheritdoc />
+        public virtual void ProcessEvents()
+        {
+            if (!PreProcessEvents())
+            {
+                return;
+            }
 
             if (IsEventDriven)
             {
@@ -785,10 +864,46 @@ namespace OpenToolkit.Windowing.Desktop
                 Glfw.PollEvents();
             }
 
-            unsafe
+            ProcessInputEvents();
+        }
+
+        private unsafe void ProcessInputEvents()
+        {
+            Glfw.GetCursorPos(WindowPtr, out var x, out var y);
+            _mouseState.Position = new Vector2((float)x, (float)y);
+
+            for (int i = 0; i < JoystickStates.Length; i++)
             {
-                Glfw.GetCursorPos(WindowPtr, out var x, out var y);
-                _mouseState.Position = new Vector2((float)x, (float)y);
+                JoystickState joy = JoystickStates[i];
+                if (joy == default)
+                {
+                    continue;
+                }
+
+                int count = 0;
+
+                var h = Glfw.GetJoystickHats(joy.Id, out count);
+                Hat[] hats = new Hat[count];
+                for (int j = 0; j < count; j++)
+                {
+                    hats[j] = (Hat)h[j];
+                }
+
+                var a = Glfw.GetJoystickAxes(joy.Id, out count);
+                float[] axes = new float[count];
+                for (int j = 0; j < count; j++)
+                {
+                    axes[j] = a[j];
+                }
+
+                var b = Glfw.GetJoystickButtons(joy.Id, out count);
+                var buttons = new bool[count];
+                for (int j = 0; j < buttons.Length; j++)
+                {
+                    buttons[j] = b[j] == 1;
+                }
+
+                JoystickStates[i] = new JoystickState(hats, axes, buttons, joy.Id, joy.Name);
             }
         }
 
@@ -809,6 +924,9 @@ namespace OpenToolkit.Windowing.Desktop
 
         /// <inheritdoc />
         public event EventHandler<ResizeEventArgs> Resize;
+
+        /// <inheritdoc />
+        public event EventHandler<EventArgs> Refresh;
 
         /// <inheritdoc />
         public event EventHandler<CancelEventArgs> Closing;
@@ -948,6 +1066,16 @@ namespace OpenToolkit.Windowing.Desktop
 
             _size.X = e.Width;
             _size.Y = e.Height;
+        }
+
+        /// <summary>
+        /// Raises the <see cref="Refresh"/> event.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">A <see cref="EventArgs"/> that contains the event data.</param>
+        protected virtual void OnRefresh(object sender, EventArgs e)
+        {
+            Refresh?.Invoke(sender, e);
         }
 
         /// <summary>
@@ -1191,14 +1319,7 @@ namespace OpenToolkit.Windowing.Desktop
             }
 
             // Free unmanaged resources
-            unsafe
-            {
-                if (WindowPtr != null)
-                {
-                    Glfw.DestroyWindow(WindowPtr);
-                    Closed?.Invoke(this, EventArgs.Empty);
-                }
-            }
+            DestroyWindow();
 
             _disposedValue = true;
             Disposed?.Invoke(this, EventArgs.Empty);

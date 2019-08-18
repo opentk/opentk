@@ -29,6 +29,11 @@ namespace OpenToolkit.Windowing.Common
         event EventHandler<ResizeEventArgs> Resize;
 
         /// <summary>
+        /// Occurs whenever the window is refreshed.
+        /// </summary>
+        event EventHandler<EventArgs> Refresh;
+
+        /// <summary>
         /// Occurs when the window is about to close.
         /// </summary>
         event EventHandler<CancelEventArgs> Closing;
