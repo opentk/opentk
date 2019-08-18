@@ -28,14 +28,6 @@ namespace OpenToolkit.Windowing.Common
         void SwapBuffers();
 
         /// <summary>
-        /// Gets a value indicating whether the shutdown sequence has been initiated
-        /// for this window, by calling GameWindow.Exit() or hitting the 'close' button.
-        /// If this property is true, it is no longer safe to use any OpenTK.Input or
-        /// OpenTK.Graphics.OpenGL functions or properties.
-        /// </summary>
-        bool IsExiting { get; }
-
-        /// <summary>
         /// Gets a double representing the time spent in the RenderFrame function, in seconds.
         /// </summary>
         double RenderTime { get; }
