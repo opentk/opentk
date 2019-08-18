@@ -105,6 +105,8 @@ module TypeToString =
         | GLType.GLDEBUGPROCKHR ->
             specTypeToCSharpTypeWithFallback "GLDEBUGPROCKHR"
         | GLType.RefPointer ty -> "ref " + typeToString ty
+        | GLType.StructGenericType s -> s
+        | GLType.ArrayType ty -> typeToString ty + "[]"
         | GLType.OpenToolkit ty ->
             match ty with
             | Vector2 -> "Vector2"
@@ -209,6 +211,7 @@ module PrintReady =
     let formatTypeTypeParameterInfo (typedParameterInfo: TypedParameterInfo): PrintReadyTypedParameterInfo =
         { actualName = typedParameterInfo.name
           prettyName = typedParameterInfo |> formatParam
+          lengthParamName = typedParameterInfo.lengthParamName
           typ = typedParameterInfo.typ |> formatTypeInfo }
 
     let formatTypedFunctionDeclaration (typedFunctionDeclaration: TypedFunctionDeclaration) =
@@ -218,6 +221,7 @@ module PrintReady =
         { actualName = typedFunctionDeclaration.name
           prettyName = typedFunctionDeclaration.name |> formatFunctionName
           parameters = parameters
+          genericTypes = typedFunctionDeclaration.genericTypes
           retType = typedFunctionDeclaration.retType |> formatTypeInfo }: PrintReadyTypedFunctionDeclaration
 
 let generateDummyTypes =
@@ -313,7 +317,15 @@ let generateInterface (functions: PrintReadyTypedFunctionDeclaration [])
                           |> String.concat ", "
                       yield ("[NativeSymbol(\"" + func.actualName + "\")]")
                             |> writeLine
+                      let additional =
+                          if func.genericTypes.Length > 0 then
+                            let inner =
+                                func.genericTypes
+                                |> String.concat ", "
+                            "<" + inner + ">"
+                          else ""
                       yield "unsafe " + retTypeAsString + " " + func.prettyName
+                            + additional
                             + "(" + formattedParams + ");" |> writeLine
                       yield writeEmptyLine |])
         yield unindent
@@ -356,8 +368,15 @@ let generateStaticClass (functions: PrintReadyTypedFunctionDeclaration [])
                         | _ -> ""
                     possiblePrefix + p.prettyName)
                 |> String.concat ", "
-            yield sprintf "public static unsafe %s %s(%s) => instance.%s(%s);"
-                      retTypeAsString funcName formattedParams funcName
+            let additional =
+                if func.genericTypes.Length > 0 then
+                    let inner =
+                        func.genericTypes
+                        |> String.concat ", "
+                    "<" + inner + ">"
+                else ""
+            yield sprintf "public static unsafe %s %s%s(%s) => instance.%s(%s);"
+                      retTypeAsString funcName additional formattedParams funcName
                       formattedParamNames |> writeLine
             yield writeEmptyLine
         yield unindent

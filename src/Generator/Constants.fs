@@ -61,6 +61,9 @@ let sufixToRemove =
 let reservedKeywordsUpper =
     reservedKeywords |> Array.Parallel.map (fun k -> k.ToUpper())
 
+let pointerTypeMappings =
+    [| RefPointer; ArrayType; (function | GLint -> GLintptr | keep -> keep) |]
+
 let functionOverloads =
     let dummyEnumGroupTy name =
         { groupName = name

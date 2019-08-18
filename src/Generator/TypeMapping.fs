@@ -259,7 +259,7 @@ let looslyTypedFunctionsToTypedFunctions enumMap functions =
                 match currParam.paramType
                       |> Parsing.tryParseType enumMap currParam.paramName with
                 | Some ty ->
-                    res.[index] <- typedParameterInfo currParam.paramName ty
+                    res.[index] <- typedParameterInfoWith currParam.paramName ty currParam.lengthParamName
                     typecheck (index + 1)
                 | None -> false
             else true
@@ -271,7 +271,7 @@ let looslyTypedFunctionsToTypedFunctions enumMap functions =
             let! retType = func.retType
                            |> Parsing.tryParseType enumMap func.funcName
             let! parameters = func.parameters |> typecheckParams
-            let res = typedFunctionDeclaration func.funcName parameters retType
+            let res = typedFunctionDeclaration func.funcName parameters retType [||]
             return! Some res
         })
 

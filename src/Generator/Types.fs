@@ -19,10 +19,17 @@ let looseType typ group: LooseType =
 
 type ParameterInfo =
     { paramName: string
+      lengthParamName: string option
       paramType: LooseType }
 
 let parameterInfo name typ =
     { paramName = name
+      lengthParamName = None
+      paramType = typ }
+
+let parameterInfoWith name typ lengthParamName =
+    { paramName = name
+      lengthParamName = Some lengthParamName
       paramType = typ }
 
 type FunctionDeclaration =
@@ -87,20 +94,30 @@ type GLType =
     | GLDEBUGPROCKHR
     | OpenToolkit of OpenToolkitType
     | RefPointer of GLType
+    | StructGenericType of string
+    | ArrayType of GLType
 
 [<RequireQualifiedAccess>]
 type TypedParameterInfo =
     { name: string
+      lengthParamName: string option
       typ: GLType }
 
 let typedParameterInfo name typ: TypedParameterInfo =
     { name = name
+      lengthParamName = None
+      typ = typ }
+
+let typedParameterInfoWith name typ lengthParamName: TypedParameterInfo =
+    { name = name
+      lengthParamName = lengthParamName
       typ = typ }
 
 [<RequireQualifiedAccess>]
 type TypedFunctionDeclaration =
     { name: string
       parameters: TypedParameterInfo []
+      genericTypes: string []
       retType: GLType }
 
 [<RequireQualifiedAccess>]
@@ -112,6 +129,7 @@ type PrintReadyTypeInfo =
 type PrintReadyTypedParameterInfo =
     { actualName: string
       prettyName: string
+      lengthParamName: string option
       typ: PrintReadyTypeInfo }
 
 [<RequireQualifiedAccess>]
@@ -119,6 +137,7 @@ type PrintReadyTypedFunctionDeclaration =
     { actualName: string
       prettyName: string
       parameters: PrintReadyTypedParameterInfo []
+      genericTypes: string []
       retType: PrintReadyTypeInfo }
 
 [<RequireQualifiedAccess>]
@@ -132,9 +151,10 @@ type PrintReadyEnumGroup =
     { groupName: string
       enumCases: PrintReadyEnum [] }
 
-let typedFunctionDeclaration name parameters retType: TypedFunctionDeclaration =
+let typedFunctionDeclaration name parameters retType genericTypes : TypedFunctionDeclaration =
     { name = name
       parameters = parameters
+      genericTypes = genericTypes
       retType = retType }
 
 type DummyTypeDescriptor =

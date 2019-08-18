@@ -16,6 +16,57 @@ type options =
 
 open Formatting
 
+let autoGenerateAdditionalOverloadForType (func: PrintReadyTypedFunctionDeclaration) =
+    let lengthParamsSet =
+        func.parameters
+        |> Array.choose(fun p -> p.lengthParamName)
+        |> Set.ofArray
+    let transformPointerTy i transform ty =
+        let transformPointerTy ty =
+            match ty with
+            | Pointer(inner)
+            | Pointer(Pointer(inner)) ->
+                let res = inner |> transform
+                if res = inner then ty
+                else res
+            | inner -> inner
+        match ty with
+        | Pointer(Void)
+        | Pointer(Pointer(Void)) ->
+            let name = 
+                ("T" + string i)
+            let inner = name |> StructGenericType
+            let res = inner |> transform 
+            if res = inner then None, ty
+            else Some name, res
+        | _ -> None, transformPointerTy ty
+    if lengthParamsSet.Count = 0 then [||]
+    else
+        let overloadWithMapping tyMapper =
+            let adjustedParameters =
+                func.parameters
+                |> Array.mapi(fun i currParameter ->
+                    maybe {
+                        if lengthParamsSet.Contains currParameter.actualName then
+                            let _, newParameterType =
+                                currParameter.typ.typ
+                                |> transformPointerTy i RefPointer
+                            return! Some(None, { currParameter with typ = newParameterType |> PrintReady.formatTypeInfo })
+                        else
+                            let (genericName, newParameterType) =
+                                currParameter.typ.typ 
+                                |> transformPointerTy i tyMapper
+                            return! Some(genericName, { currParameter with typ = newParameterType |> PrintReady.formatTypeInfo })
+                    } |> Option.defaultValue (None, currParameter))
+            let genericTypes = adjustedParameters |> Array.choose fst
+            let parameters = adjustedParameters |> Array.map snd
+            { func with
+                genericTypes = genericTypes
+                parameters = parameters }
+        pointerTypeMappings
+        |> Array.Parallel.map overloadWithMapping
+
+
 let autoGenerateOverloadForType (func: PrintReadyTypedFunctionDeclaration) =
     let keep = func
 
@@ -133,9 +184,12 @@ let main argv =
                               currOverload.retType
                               |> Formatting.PrintReady.formatTypeInfo })
             | None ->
-                func
-                |> autoGenerateOverloadForType
-                |> Array.singleton)
+                let res =
+                    func |> autoGenerateOverloadForType
+                res
+                |> Array.singleton
+                |> Array.append (autoGenerateAdditionalOverloadForType res)
+                |> Array.distinct)
 
     let prettyEnumGroups =
         enums |> Array.Parallel.map Formatting.PrintReady.formatEnumGroup

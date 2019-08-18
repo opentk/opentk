@@ -136,9 +136,12 @@ let getResFromRegexMatch res =
     groupName, ty
 
 let extractTypeFromPtype (param: OpenGL_Specification.Param) =
+    let possibleLengthParam = param.Len.String
     let str = getRawElementDataWithoutLineBreaks param.XElement
-    let res = paramsTypeRegex.Match str
-    getResFromRegexMatch res
+    let a, b =
+        paramsTypeRegex.Match str
+        |> getResFromRegexMatch
+    possibleLengthParam, a, b
 
 let extractTypeFromProto (proto: OpenGL_Specification.Proto) =
     let str = getRawElementDataWithoutLineBreaks proto.XElement
@@ -153,11 +156,12 @@ let getFunctions (spec: OpenGL_Specification.Registry) =
         let parameters =
             cmd.Params
             |> Array.Parallel.map (fun p ->
-                let group, ty = extractTypeFromPtype p
+                let lengthParamName, group, ty = extractTypeFromPtype p
                 if String.IsNullOrWhiteSpace ty then
                     let str = p.XElement.ToString()
                     printfn "failed parsing %A, value: %s" (funcName) str
                 { paramName = p.Name
+                  lengthParamName = lengthParamName
                   paramType = looseType ty group })
 
         let group, ty = extractTypeFromProto cmd.Proto

@@ -231,7 +231,7 @@ Target.create "ReleaseOnNuGetGallery" (fun _ ->
                 PushParams =
                     { opts.PushParams with
                         ApiKey = Some apiKey
-                            Source = Some "nuget.org" } })))
+                        Source = Some "nuget.org" } })))
 
 Target.create "ReleaseOnAll" ignore
 
