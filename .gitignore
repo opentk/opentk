@@ -837,3 +837,4 @@ auto/*
 *.glstex
 src/OpenGL/*.*/
 gl.xml
+src/OpenGL/Extensions

@@ -140,7 +140,13 @@ Target.create "UpdateBindings" (fun _ ->
 // Build Targets
 // ---------
 
-Target.create "Clean" (fun _ -> Shell.cleanDir binDir)
+Target.create "Clean" <| fun _ ->
+    !! ("src" </> "OpenGL" </> "**/*.*")
+    -- ("src" </> "OpenGL" </> "Enums/*.*")
+    -- ("src" </> "OpenGL" </> "*.cs")
+    -- ("src" </> "OpenGL" </> "*.csproj")
+    |> Seq.map Fake.IO.Path.getDirectory
+    |> Shell.deleteDirs
 
 Target.create "Restore" (fun _ -> DotNet.restore dotnetSimple "OpenTK.sln" |> ignore)
 
