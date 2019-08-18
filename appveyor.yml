@@ -7,5 +7,5 @@ init:
 
 configuration: Release
 
-build:
-  - cmd: build.cmd
+build_script:
+  - build.cmd
