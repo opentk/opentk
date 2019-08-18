@@ -5,7 +5,6 @@ open SpecificationOpenGL
 open Util
 open Constants
 
-open System
 open System.IO
 
 open CommandLine
@@ -97,23 +96,20 @@ let main argv =
     let extensions = Parsing.getExtensions test
     printfn "Extension count: %d" extensions.Length
 
-    let functionToExtensionMapper =
+    let getMapper fn =
         extensions
         |> Array.Parallel.collect(fun extension ->
-            extension.functions |> Array.Parallel.map(fun func -> extension.name, func))
+            fn extension |> Array.Parallel.map(fun value -> extension.name, value))
         |> Array.groupBy snd
-        |> Array.Parallel.map(fun (func, extensions) -> func, extensions |> Array.Parallel.map fst)
+        |> Array.Parallel.map(fun (value, extensions) -> value, extensions |> Array.Parallel.map fst)
         |> Map.ofArray
+
+    let functionToExtensionMapper =
+        getMapper (fun extension -> extension.functions)
 
     let enumCaseToExtensionMapper =
-        extensions
-        |> Array.Parallel.collect(fun extension ->
-            extension.enumCases |> Array.Parallel.map(fun enumCase -> extension.name, enumCase))
-        |> Array.groupBy snd
-        |> Array.Parallel.map(fun (enumCase, extensions) -> enumCase, extensions |> Array.Parallel.map fst)
-        |> Map.ofArray
+        getMapper (fun extension -> extension.enumCases)
             
-
     let typecheckedFunctions =
         TypeMapping.looslyTypedFunctionsToTypedFunctions enumMap functions
         |> Array.Parallel.map Formatting.PrintReady.formatTypedFunctionDeclaration
@@ -142,7 +138,7 @@ let main argv =
         |> Map.ofArray
 
     printfn "overall correct function specifications: %d" typecheckedFunctions.Length
-    let openGlSpecVersions = Aggregator.getEnumCasesAndCommandsPerVersion test
+    let openGlVersions = Aggregator.getEnumCasesAndCommandsPerVersion test
     let basePath = options.pathToOutputDirectory
 
     let getShortTagForOpenGlVersion (openGl: RawOpenGLSpecificationDetails) =
@@ -176,13 +172,13 @@ let main argv =
         let fullPathToFile = basePath </> fileName
         File.WriteAllText(fullPathToFile, content)
 
-    openGlSpecVersions
-    |> Array.Parallel.collect (fun currOpenGL_Spec ->
-        let inline writeToFile topic content = writeToFile currOpenGL_Spec topic content
+    openGlVersions
+    |> Array.Parallel.collect (fun glVersion ->
+        let inline writeToFile topic content = writeToFile glVersion topic content
         let typecheckedFunctions =
             typecheckedFunctions
             |> Array.filter(fun func ->
-                currOpenGL_Spec.functions.Contains func.actualName
+                glVersion.functions.Contains func.actualName
                 || (functionToExtensionMapper |> Map.containsKey func.actualName))
         let enums =
             let requiredEnumsFromFunctions =
@@ -200,7 +196,7 @@ let main argv =
                 let cases =
                     enum.enumCases
                     |> Array.filter (fun case ->
-                        currOpenGL_Spec.enumCases.Contains case.actualName
+                        glVersion.enumCases.Contains case.actualName
                         || (enumCaseToExtensionMapper |> Map.containsKey case.actualName))
                 if cases.Length > 0 then
                     { enum with
@@ -214,28 +210,22 @@ let main argv =
         let generatedFiles =
             [|
                 yield
-                    Formatting.generateEnums enums currOpenGL_Spec
+                    Formatting.generateEnums enums glVersion
                     |> writeToFile "Enums"
                 yield
-                    Formatting.generateInterface typecheckedFunctions currOpenGL_Spec
+                    Formatting.generateInterface typecheckedFunctions glVersion
                     |> writeToFile "Interface"
                 yield
-                    Formatting.generateStaticClass typecheckedFunctions currOpenGL_Spec
+                    Formatting.generateStaticClass typecheckedFunctions glVersion
                     |> writeToFile "StaticClass"
                 yield
-                    Formatting.generateLibraryLoaderFor currOpenGL_Spec
+                    Formatting.generateLibraryLoaderFor glVersion
                     |> writeToFile "LibraryLoader"
             |]
-        printfn "Done writing OpenGL Version %s files." currOpenGL_Spec.version
+        printfn "Done writing OpenGL Version %s files." glVersion.version
         generatedFiles
     ) |> ignore
-    
-    //Formatting.generateCsProjectFileForAllVersions openGlSpecVersions dummyTypesFileName [||]
-    //|> writeCsProjFile
 
-    printfn "Generating files took %s seconds" (startTime.Elapsed.Seconds |> string)  
-
-    //printfn "Please press any key..."
-    //System.Console.ReadKey() |> ignore
+    printfn "Generating files took %s seconds" (startTime.Elapsed.Seconds |> string)
 
     0 // return an integer exit code

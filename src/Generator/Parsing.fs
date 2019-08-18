@@ -126,9 +126,7 @@ let getGroupValue (group: string) (matching: Match) =
 let getRawElementDataWithoutLineBreaks (v: Xml.Linq.XElement) =
     v.ToString().Replace("\n", "").Replace("\t", "").Replace("\r", "")
 
-let extractTypeFromPtype (param: OpenGL_Specification.Param) =
-    let str = getRawElementDataWithoutLineBreaks param.XElement
-    let res = paramsTypeRegex.Match str
+let getResFromRegexMatch res =
     let groupName =
         let str = getGroupValue "group" res
         if str |> String.IsNullOrWhiteSpace then None
@@ -138,31 +136,20 @@ let extractTypeFromPtype (param: OpenGL_Specification.Param) =
         getGroupValue "t" res +
         getGroupValue "b" res
     groupName, ty
+
+let extractTypeFromPtype (param: OpenGL_Specification.Param) =
+    let str = getRawElementDataWithoutLineBreaks param.XElement
+    let res = paramsTypeRegex.Match str
+    getResFromRegexMatch res
 
 let extractTypeFromProto (proto: OpenGL_Specification.Proto) =
     let str = getRawElementDataWithoutLineBreaks proto.XElement
     let res = protoTypeRegex.Match str
-    let groupName =
-        let str = getGroupValue "group" res
-        if str |> String.IsNullOrWhiteSpace then None
-        else Some str
-    let ty =
-        getGroupValue "f" res +
-        getGroupValue "t" res +
-        getGroupValue "b" res
-    groupName, ty
+    getResFromRegexMatch res
 
 let getFunctions (spec: OpenGL_Specification.Registry) =
     spec.Commands.Commands
     |> Array.Parallel.map(fun cmd ->
-        //let isInvalid =
-        //    cmd.Params |> Array.exists(fun p -> p.Ptype |> Option.isNone)
-        //    || Option.isNone cmd.Proto.Ptype 
-        //if isInvalid then
-        //    printfn "Function specification %A is invalid" cmd.Proto.Name
-        //    cmd.Params |> Seq.iter (fun p -> printfn "%A" p.XElement.Value)
-        //    None
-        //else
             let funcName = cmd.Proto.Name
             let parameters =
                 cmd.Params

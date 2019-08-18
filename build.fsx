@@ -64,8 +64,8 @@ let release = ReleaseNotes.load "RELEASE_NOTES.md"
 // ---------
 
 let binDir = "./bin/"
-let buildDir = "./bin/build/"
-let testDir  = "./bin/test/"
+let buildDir = binDir </> "build"
+let testDir  = binDir </> "test"
 
 // ---------
 // Projects & Assemblies

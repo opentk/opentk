@@ -323,7 +323,7 @@ let generateInterface (functions: PrintReadyTypedFunctionDeclaration[]) (openGl:
                     
                     let formattedParams =
                         func.parameters
-                        |> Array.Parallel.map(fun p -> p.typ.prettyTypeName + " " + p.prettyName)
+                        |> Array.map(fun p -> p.typ.prettyTypeName + " " + p.prettyName)
                         |> String.concat ", "
                     yield ("[NativeSymbol(\"" + func.actualName + "\")]") |> writeLine
                     yield "unsafe " + retTypeAsString + " " + func.prettyName + "(" + formattedParams + ");"

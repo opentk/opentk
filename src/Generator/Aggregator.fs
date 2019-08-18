@@ -4,6 +4,9 @@ open Util
 open SpecificationOpenGL
 open System
 
+// Generically take the field name
+let inline nameField a = ((^a) : (member Name: string)(a))
+
 let getEnumCasesAndCommandsPerVersion (data: OpenGL_Specification.Registry) =
     let featuresSortedAscendingByVersion = 
         data.Features
@@ -16,25 +19,24 @@ let getEnumCasesAndCommandsPerVersion (data: OpenGL_Specification.Registry) =
     let getVersionBefore index = aggregatedResultByVersion.[index - 1]
 
     let extractAddedAndRemoved(data: OpenGL_Specification.Feature) =
+        let inline divideIntoCommandsAndEnums cmd enum e =
+            [| Left(cmd e |> Array.Parallel.map nameField)
+               Right(enum e |> Array.Parallel.map nameField) |]
         let (addedFunctions: string[], addedEnums : string[]) =
             let a, b =
                 data.Requires
-                |> Array.Parallel.collectEither(fun e ->
-                    [| Left(e.Commands |> Array.Parallel.map(fun inner ->
-                        let res = inner.Name
-                        if res |> String.IsNullOrEmpty then failwith "unallowed"
-                        else res))
-                       Right(e.Enums |> Array.Parallel.map(fun e -> 
-                           let res = e.Name
-                           if res |> String.IsNullOrEmpty then failwith "unallowed"
-                           else res)) |])
+                |> Array.Parallel.collectEither
+                    (divideIntoCommandsAndEnums
+                        (fun (e:OpenGL_Specification.Require) -> e.Commands)
+                        (fun (e:OpenGL_Specification.Require) -> e.Enums))
             a |> Array.Parallel.collect id, b |> Array.Parallel.collect id
         let removedFunctions, removedEnums =
             let a, b =
                 data.Removes
-                |> Array.Parallel.collectEither(fun e ->
-                    [| Left(e.Commands |> Array.Parallel.map(fun inner -> inner.Name))
-                       Right(e.Enums |> Array.Parallel.map(fun e -> e.Name)) |])
+                |> Array.Parallel.collectEither
+                    (divideIntoCommandsAndEnums
+                        (fun (e:OpenGL_Specification.Remove) -> e.Commands)
+                        (fun (e:OpenGL_Specification.Remove) -> e.Enums))
             a |> Array.Parallel.collect id, b |> Array.Parallel.collect id
         
         {| addedFunctions = addedFunctions
