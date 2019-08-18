@@ -151,16 +151,15 @@ Target.create "AssemblyInfo" (fun _ ->
     Trace.traceError "Unimplemented.")
 
 
-Target.create "Build" (fun _ ->
+Target.create "Build" <| fun _ ->
     releaseProjects
-    |> MSBuild.runRelease id "" "Build"
-    |> Trace.logItems "Build-Output: ")
+    |> Seq.iter(DotNet.build dotnetSimple)
 
-Target.create "BuildTest" (fun _ ->
+Target.create "BuildTest" <| fun _ ->
     !!"tests/**/*.??proj"
-    |> MSBuild.runDebug id testDir "Build"
-    |> Trace.logItems "TestBuild-Output: ")
-
+    |> Seq.map(fun proj ->
+        DotNet.runWithDefaultOptions "netcoreapp2.2" proj "" |> string)
+    |> Trace.logItems "TestBuild-Output: "
 
 // Copies binaries from default VS location to expected bin folder
 // This preserves subdirectories.
