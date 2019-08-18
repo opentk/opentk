@@ -13,5 +13,13 @@
 <ItemGroup>
 </ItemGroup>
 
+  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+    <Exec Command="build.cmd -t UpdateBindings" WorkingDirectory="../../" />
+  </Target>
+
+  <Target Name="PreBuild" BeforeTargets="PreBuildEvent" Condition="'$(OS)' != 'Windows_NT' ">
+    <Exec Command="build.sh -t UpdateBindings" WorkingDirectory="../../" />
+  </Target>
+
 
 </Project>
