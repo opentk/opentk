@@ -195,7 +195,7 @@ Target.create "RunTests" (fun _ ->
     testProjects
     |> Seq.iter (fun fullCsProjName ->
         let projectDirectory = Path.GetDirectoryName(fullCsProjName)
-        DotNet.test (setDotNetOptions projectDirectory) ""))
+        DotNet.test (setDotNetOptions projectDirectory >> dotnetSimple) ""))
 
 Target.create "CreateNuGetPackage" (fun _ ->
     let optsFn options = { options with DotNet.PackOptions.OutputPath = (Some "Bin") }
