@@ -101,6 +101,14 @@ Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "OpenToolkit.Tests", "tests\
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "OpenToolkit.Tests.Integration", "tests\OpenToolkit.Tests.Integration\OpenToolkit.Tests.Integration.fsproj", "{48936313-63D4-4A26-87F0-040AA15FF4A6}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{471E0D18-D620-4CBE-A471-F3DB470E6D49}"
+ProjectSection(SolutionItems) = preProject
+	build.sh = build.sh
+	build.cmd = build.cmd
+	build.fsx = build.fsx
+	build-bootstrap.csproj = build-bootstrap.csproj
+EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

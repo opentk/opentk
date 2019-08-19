@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <!-- Add DotnetCliToolTargetFramework, see https://github.com/fsharp/FAKE/issues/2097 -->
+    <DotnetCliToolTargetFramework>netcoreapp2.0</DotnetCliToolTargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <DotNetCliToolReference Include="dotnet-fake" Version="5.*" />
+  </ItemGroup>
+</Project>
