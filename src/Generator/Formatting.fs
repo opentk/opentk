@@ -108,6 +108,7 @@ module TypeToString =
         | GLType.RefPointer ty -> "ref " + typeToString ty
         | GLType.StructGenericType s -> s
         | GLType.ArrayType ty -> typeToString ty + "[]"
+        | GLType.GLString -> "string"
         | GLType.OpenToolkit ty ->
             match ty with
             | Vector2 -> "Vector2"
@@ -122,6 +123,18 @@ module TypeToString =
             | Matrix2d -> "Matrix2d"
             | Matrix3d -> "Matrix3d"
             | Matrix4d -> "Matrix4d"
+            | Matrix2x3 -> "Matrix2x3"
+            | Matrix2x4 -> "Matrix2x4"
+            | Matrix3x2 -> "Matrix3x2"
+            | Matrix3x4 -> "Matrix3x4"
+            | Matrix4x2 -> "Matrix4x2"
+            | Matrix4x3 -> "Matrix4x3"
+            | Matrix2x3d -> "Matrix2x3d"
+            | Matrix2x4d -> "Matrix2x4d"
+            | Matrix3x2d -> "Matrix3x2d"
+            | Matrix3x4d -> "Matrix3x4d"
+            | Matrix4x2d -> "Matrix4x2d"
+            | Matrix4x3d -> "Matrix4x3d"
 
     let typeToStringCached ty =
         match cache.TryGetValue ty with
@@ -165,15 +178,15 @@ let formatNameRemovingPrefix (name: string) =
     | _ -> name
 
 let formatFunctionName (name: string) =
-    let nameWithRemovedPrefix = formatNameRemovingPrefix name
-    let sufix =
-        sufixToRemove
-        |> Array.tryFind (fun sufix -> nameWithRemovedPrefix.EndsWith sufix)
-    match sufix with
-    | Some sufix ->
-        nameWithRemovedPrefix.Substring
-            (0, nameWithRemovedPrefix.Length - sufix.Length)
-    | _ -> nameWithRemovedPrefix
+    formatNameRemovingPrefix name
+    //let sufix =
+    //    sufixToRemove
+    //    |> Array.tryFind (fun sufix -> nameWithRemovedPrefix.EndsWith sufix)
+    //match sufix with
+    //| Some sufix ->
+    //    nameWithRemovedPrefix.Substring
+    //        (0, nameWithRemovedPrefix.Length - sufix.Length)
+    //| _ -> nameWithRemovedPrefix
 
 let formatParameterName (name: string) =
     reservedKeywords

@@ -93,8 +93,9 @@ let functionOverloads =
                       |> RefPointer
                       |> typedParameterInfo "vector" |] |]
 
-    [| vectorOverload1 "glGetFloatv" "GetFloat"
-       vectorOverload1 "glGetDoublev" "GetDouble"
+    [| 
+       // vectorOverload1 "glGetFloatv" "GetFloat"
+       // vectorOverload1 "glGetDoublev" "GetDouble"
        functionOverloadsWith "glGetQueryBufferObjecti64v"
            "GetQueryBufferObjecti64v"
            [| functionSignature Void

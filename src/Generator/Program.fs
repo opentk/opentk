@@ -1,4 +1,4 @@
-// Learn more about F// at http://fsharp.org
+﻿// Learn more about F// at http://fsharp.org
 open Types
 open SpecificationOpenGL
 open Util
@@ -15,6 +15,30 @@ type options =
       pathToOutputDirectory: string }
 
 open Formatting
+
+[<RequireQualifiedAccess>]
+type VectorKind =
+    | Vector2 of isDouble:bool
+    | Vector3 of isDouble:bool
+    | Vector4 of isDouble:bool
+
+[<RequireQualifiedAccess>]
+type MatrixKind =
+    | Matrix2 of isDouble:bool
+    | Matrix3 of isDouble:bool
+    | Matrix4 of isDouble:bool
+    | Matrix2x3 of isDouble:bool
+    | Matrix2x4 of isDouble:bool
+    | Matrix3x2 of isDouble:bool
+    | Matrix3x4 of isDouble:bool
+    | Matrix4x2 of isDouble:bool
+    | Matrix4x3 of isDouble:bool
+
+type FunctionNameKind =
+    | IsVector of VectorKind * adjustedName: string
+    | IsMatrix of MatrixKind * adjustedName: string
+    | HasAFuckingAnnoyingSuffixWhichIsRemoved of adjustedName: string
+    | IsSimple
 
 let autoGenerateAdditionalOverloadForType (func: PrintReadyTypedFunctionDeclaration) =
     let lengthParamsSet =
@@ -36,32 +60,48 @@ let autoGenerateAdditionalOverloadForType (func: PrintReadyTypedFunctionDeclarat
                 else res
             | inner -> inner
         match ty with
+        | Pointer(GLchar) ->
+            None, GLString
+        | Pointer(Pointer(GLchar)) ->
+            None, GLString |> ArrayType
         | Pointer(_) when unwrapTyFromPointer ty = Void ->
             let name = 
-                ("T" + string i)
+                ("TElement" + string i)
             let inner = name |> StructGenericType
             let res = inner |> transform 
             if res = inner then None, ty
             else Some name, res
         | _ -> None, transformPointerTy ty
-    if lengthParamsSet.Count = 0 then [||]
+    if lengthParamsSet.Count = 0 then
+        let adjustedParameters =
+            func.parameters
+            |> Array.map(fun currParameter ->
+                match currParameter.typ.typ with
+                | Pointer(GLchar) ->
+                    { currParameter with
+                        PrintReadyTypedParameterInfo.typ = GLString |> PrintReady.formatTypeInfo }
+                | Pointer(Pointer(GLchar)) ->
+                    { currParameter with
+                        PrintReadyTypedParameterInfo.typ = GLString |> ArrayType |> PrintReady.formatTypeInfo }
+                | _ -> currParameter)
+        { func with parameters = adjustedParameters } |> Array.singleton
     else
         let overloadWithMapping tyMapper =
+            let mutable i = 1
             let adjustedParameters =
                 func.parameters
-                |> Array.mapi(fun i currParameter ->
-                    maybe {
-                        if lengthParamsSet.Contains currParameter.actualName then
-                            let _, newParameterType =
-                                currParameter.typ.typ
-                                |> transformPointerTy i RefPointer
-                            return! Some(None, { currParameter with typ = newParameterType |> PrintReady.formatTypeInfo })
-                        else
-                            let (genericName, newParameterType) =
-                                currParameter.typ.typ 
-                                |> transformPointerTy i tyMapper
-                            return! Some(genericName, { currParameter with typ = newParameterType |> PrintReady.formatTypeInfo })
-                    } |> Option.defaultValue (None, currParameter))
+                |> Array.map(fun currParameter ->
+                    if lengthParamsSet.Contains currParameter.actualName then
+                        let _, newParameterType =
+                            currParameter.typ.typ
+                            |> transformPointerTy 0 RefPointer
+                        None, { currParameter with typ = newParameterType |> PrintReady.formatTypeInfo }
+                    else
+                        let (genericName, newParameterType) =
+                            currParameter.typ.typ 
+                            |> transformPointerTy i tyMapper
+                        genericName |> Option.iter(fun _ -> i <- i + 1)
+                        genericName, { currParameter with typ = newParameterType |> PrintReady.formatTypeInfo })
             let genericTypes = adjustedParameters |> Array.choose fst
             let parameters = adjustedParameters |> Array.map snd
             { func with
@@ -70,6 +110,10 @@ let autoGenerateAdditionalOverloadForType (func: PrintReadyTypedFunctionDeclarat
         pointerTypeMappings
         |> Array.Parallel.map overloadWithMapping
 
+[<RequireQualifiedAccess>]
+type PointerCanidate =
+    | Yeah
+    | ``No please NOOO!``
 
 let autoGenerateOverloadForType (func: PrintReadyTypedFunctionDeclaration) =
     let keep = func
@@ -88,39 +132,119 @@ let autoGenerateOverloadForType (func: PrintReadyTypedFunctionDeclaration) =
                         |> RefPointer
                     | ty -> ty
                 { param with typ = typ |> PrintReady.formatTypeInfo })
+        // This is definitely no candidate for the pointers
+        Some adjustedName,
         { func with
               parameters = parameters
               prettyName = name }
+
+    let (|EndsWithOneOf|_|) suffixes name =
+        suffixes
+        |> Array.tryPick(fun suffix ->
+            match name with
+            | EndsWith suffix adjustedName -> Some adjustedName
+            | _ -> None
+        )
+
     // The order here is very important.
     // The longer sufixes are checked first before the shorter ones
-    match func.actualName with
-    | EndsWith "Matrix2fv" adjustedName ->
-        injectTkTy (OpenToolkitType.Matrix2) (adjustedName + "Matrix") GLfloat
-    | EndsWith "Matrix3fv" adjustedName ->
-        injectTkTy (OpenToolkitType.Matrix3) (adjustedName + "Matrix") GLfloat
-    | EndsWith "Matrix4fv" adjustedName ->
-        injectTkTy (OpenToolkitType.Matrix4) (adjustedName + "Matrix") GLfloat
-    | EndsWith "Matrix2dv" adjustedName ->
-        injectTkTy (OpenToolkitType.Matrix2d) (adjustedName + "Matrix") GLdouble
-    | EndsWith "Matrix3dv" adjustedName ->
-        injectTkTy (OpenToolkitType.Matrix3d) (adjustedName + "Matrix") GLdouble
-    | EndsWith "Matrix4dv" adjustedName ->
-        injectTkTy (OpenToolkitType.Matrix4d) (adjustedName + "Matrix") GLdouble
-    | EndsWith "udv" _ -> keep
-    | EndsWith "2dv" adjustedName ->
-        injectTkTy (OpenToolkitType.Vector2d) (adjustedName) GLdouble
-    | EndsWith "3dv" adjustedName ->
-        injectTkTy (OpenToolkitType.Vector3d) (adjustedName) GLdouble
-    | EndsWith "4dv" adjustedName ->
-        injectTkTy (OpenToolkitType.Vector4d) (adjustedName) GLdouble
-    | EndsWith "ufv" _ -> keep
-    | EndsWith "2fv" adjustedName ->
-        injectTkTy (OpenToolkitType.Vector2) (adjustedName) GLfloat
-    | EndsWith "3fv" adjustedName ->
-        injectTkTy (OpenToolkitType.Vector3) (adjustedName) GLfloat
-    | EndsWith "4fv" adjustedName ->
-        injectTkTy (OpenToolkitType.Vector4) (adjustedName) GLfloat
-    | _ -> keep
+
+    match func.prettyName with
+    // Matrix and Vector mappings
+    | EndsWith "Matrix2fv" adjustedName -> injectTkTy (OpenToolkitType.Matrix2) (adjustedName + "Matrix2") GLfloat
+    | EndsWith "Matrix3fv" adjustedName -> injectTkTy (OpenToolkitType.Matrix3) (adjustedName + "Matrix3") GLfloat
+    | EndsWith "Matrix4fv" adjustedName -> injectTkTy (OpenToolkitType.Matrix4) (adjustedName + "Matrix4") GLfloat
+    | EndsWith "Matrix2dv" adjustedName -> injectTkTy (OpenToolkitType.Matrix2d) (adjustedName + "Matrix2") GLdouble
+    | EndsWith "Matrix3dv" adjustedName -> injectTkTy (OpenToolkitType.Matrix3d) (adjustedName + "Matrix3") GLdouble
+    | EndsWith "Matrix4dv" adjustedName -> injectTkTy (OpenToolkitType.Matrix4d) (adjustedName + "Matrix4") GLdouble
+    | EndsWith "Matrix2x3fv" adjustedName -> injectTkTy (OpenToolkitType.Matrix2x3) (adjustedName + "Matrix2x3") GLfloat
+    | EndsWith "Matrix2x4fv" adjustedName -> injectTkTy (OpenToolkitType.Matrix2x4) (adjustedName + "Matrix2x4") GLfloat
+    | EndsWith "Matrix3x2fv" adjustedName -> injectTkTy (OpenToolkitType.Matrix3x2) (adjustedName + "Matrix3x2") GLfloat
+    | EndsWith "Matrix3x4fv" adjustedName -> injectTkTy (OpenToolkitType.Matrix3x4) (adjustedName + "Matrix3x4") GLfloat
+    | EndsWith "Matrix4x2fv" adjustedName -> injectTkTy (OpenToolkitType.Matrix4x2) (adjustedName + "Matrix4x2") GLfloat
+    | EndsWith "Matrix4x3fv" adjustedName -> injectTkTy (OpenToolkitType.Matrix4x3) (adjustedName + "Matrix4x3") GLfloat
+    | EndsWith "Matrix2x3dv" adjustedName -> injectTkTy (OpenToolkitType.Matrix2x3d) (adjustedName + "Matrix2x3") GLdouble
+    | EndsWith "Matrix2x4dv" adjustedName -> injectTkTy (OpenToolkitType.Matrix2x4d) (adjustedName + "Matrix2x4") GLdouble
+    | EndsWith "Matrix3x2dv" adjustedName -> injectTkTy (OpenToolkitType.Matrix3x2d) (adjustedName + "Matrix3x2") GLdouble
+    | EndsWith "Matrix3x4dv" adjustedName -> injectTkTy (OpenToolkitType.Matrix3x4d) (adjustedName + "Matrix3x4") GLdouble
+    | EndsWith "Matrix4x2dv" adjustedName -> injectTkTy (OpenToolkitType.Matrix4x2d) (adjustedName + "Matrix4x2") GLdouble
+    | EndsWith "Matrix4x3dv" adjustedName -> injectTkTy (OpenToolkitType.Matrix4x3d) (adjustedName + "Matrix4x3") GLdouble
+    | EndsWith "2dv" adjustedName -> injectTkTy (OpenToolkitType.Vector2d) (adjustedName + "2") GLdouble
+    | EndsWith "3dv" adjustedName -> injectTkTy (OpenToolkitType.Vector3d) (adjustedName + "3") GLdouble
+    | EndsWith "4dv" adjustedName -> injectTkTy (OpenToolkitType.Vector4d) (adjustedName + "4") GLdouble
+    | EndsWith "2fv" adjustedName -> injectTkTy (OpenToolkitType.Vector2) (adjustedName + "2") GLfloat
+    | EndsWith "3fv" adjustedName -> injectTkTy (OpenToolkitType.Vector3) (adjustedName + "3") GLfloat
+    | EndsWith "4fv" adjustedName -> injectTkTy (OpenToolkitType.Vector4) (adjustedName + "4") GLfloat
+    // We don't want to remove the Plural
+    | EndsWith "ib" _
+    | EndsWith "ts" _
+    | EndsWith "ls" _
+    | EndsWith "ys" _
+    | EndsWith "rs" _
+    | EndsWith "ed" _
+    | EndsWith "es" _
+    | EndsWith "ufv" _
+    | EndsWith "udv" _ -> None, keep
+    | EndsWithOneOf sufixToRemove adjustedName -> Some adjustedName, { func with prettyName = adjustedName }
+    | _ -> None, keep
+
+//let generateVectorOverload (func: PrintReadyTypedFunctionDeclaration) kind adjustedName =
+
+
+//let getFunctionNameKind (func: PrintReadyTypedFunctionDeclaration) =
+//    match func.name with
+//    | EndsWith "Matrix2fv" adjustedName -> IsMatrix(MatrixKind.Matrix2 false, adjustedName + "Matrix")
+//    | EndsWith "Matrix3fv" adjustedName -> IsMatrix(MatrixKind.Matrix3 false, adjustedName + "Matrix")
+//    | EndsWith "Matrix4fv" adjustedName -> IsMatrix(MatrixKind.Matrix4 false, adjustedName + "Matrix")
+//    | EndsWith "Matrix2dv" adjustedName -> IsMatrix(MatrixKind.Matrix2 true, adjustedName + "Matrix")
+//    | EndsWith "Matrix3dv" adjustedName -> IsMatrix(MatrixKind.Matrix3 true, adjustedName + "Matrix")
+//    | EndsWith "Matrix4dv" adjustedName -> IsMatrix(MatrixKind.Matrix4 true, adjustedName + "Matrix")
+//    | EndsWith "Matrix3x2fv" adjustedName -> IsMatrix(MatrixKind.Matrix3x2 false, adjustedName + "Matrix")
+//    | EndsWith "Matrix4x2fv" adjustedName -> IsMatrix(MatrixKind.Matrix4x2 false, adjustedName + "Matrix")
+//    | EndsWith "Matrix3x2dv" adjustedName -> IsMatrix(MatrixKind.Matrix3x2 true, adjustedName + "Matrix")
+//    | EndsWith "Matrix4x2dv" adjustedName -> IsMatrix(MatrixKind.Matrix4x2 true, adjustedName + "Matrix")
+//    | EndsWith "Matrix3x4fv" adjustedName -> IsMatrix(MatrixKind.Matrix3x4 false, adjustedName + "Matrix")
+//    | EndsWith "Matrix4x2fv" adjustedName -> IsMatrix(MatrixKind.Matrix4x2 false, adjustedName + "Matrix")
+//    | EndsWith "Matrix3x4dv" adjustedName -> IsMatrix(MatrixKind.Matrix3x4 true, adjustedName + "Matrix")
+//    | EndsWith "Matrix4x2dv" adjustedName -> IsMatrix(MatrixKind.Matrix4x2 true, adjustedName + "Matrix")
+//    | EndsWith "ed" _
+//    | EndsWith "es" _
+//    | EndsWith "ufv" _
+//    | EndsWith "udv" _ -> IsSimple
+//    | EndsWith "2dv" adjustedName ->
+//        IsVector(VectorKind.Vector2 true, adjustedName)
+//    | EndsWith "3dv" adjustedName ->
+//        IsVector(VectorKind.Vector3 true, adjustedName)
+//    | EndsWith "4dv" adjustedName ->
+//        IsVector(VectorKind.Vector4 true, adjustedName)
+//    | EndsWith "2fv" adjustedName ->
+//        IsVector(VectorKind.Vector2 false, adjustedName)
+//    | EndsWith "3fv" adjustedName ->
+//        IsVector(VectorKind.Vector3 false, adjustedName)
+//    | EndsWith "4fv" adjustedName ->
+//        IsVector(VectorKind.Vector4 false, adjustedName)
+//    | EndsWith "1" adjustedName
+//    | EndsWith "2" adjustedName
+//    | EndsWith "3" adjustedName
+//    | EndsWith "4" adjustedName
+//    | EndsWith "fv" adjustedName
+//    | EndsWith "ubv" adjustedName
+//    | EndsWith "u" adjustedName
+//    | EndsWith "uiv" adjustedName
+//    | EndsWith "ui" adjustedName
+//    | EndsWith "usv" adjustedName
+//    | EndsWith "us" adjustedName
+//    | EndsWith "i" adjustedName
+//    | EndsWith "iv" adjustedName
+//    | EndsWith "f" adjustedName
+//    | EndsWith "b" adjustedName
+//    | EndsWith "d" adjustedName
+//    | EndsWith "dv" adjustedName
+//    | EndsWith "s" adjustedName
+//    | EndsWith "sv" adjustedName
+//    | EndsWith "ub" adjustedName
+//    | EndsWith "v" adjustedName -> HasAFuckingAnnoyingSuffixWhichIsRemoved adjustedName
+//    | _ -> IsSimple
 
 [<EntryPoint>]
 let main argv =
@@ -168,9 +292,8 @@ let main argv =
 
     let typecheckedFunctions =
         TypeMapping.looslyTypedFunctionsToTypedFunctions enumMap functions
-        |> Array.Parallel.map
-            Formatting.PrintReady.formatTypedFunctionDeclaration
-        |> Array.Parallel.collect (fun func ->
+        |> Array.Parallel.collect (fun func ->            
+            let func = Formatting.PrintReady.formatTypedFunctionDeclaration func
             match functionOverloads |> Map.tryFind func.actualName with
             | Some overload ->
                 overload.overloads
@@ -188,11 +311,17 @@ let main argv =
                               currOverload.retType
                               |> Formatting.PrintReady.formatTypeInfo })
             | None ->
-                let res =
-                    func |> autoGenerateOverloadForType
-                res
-                |> Array.singleton
-                |> Array.append (autoGenerateAdditionalOverloadForType res)
+                let newName, primaryOverload =
+                    func
+                    |> autoGenerateOverloadForType
+                let funcWithOriginalSignature =
+                    newName
+                    |> Option.map(fun newName -> { func with prettyName = newName })
+                    |> Option.defaultValue func
+                let additionalOverloads = autoGenerateAdditionalOverloadForType funcWithOriginalSignature
+                [| funcWithOriginalSignature
+                   primaryOverload |]
+                |> Array.append additionalOverloads
                 |> Array.distinct)
 
     let prettyEnumGroups =
