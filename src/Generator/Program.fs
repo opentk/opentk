@@ -16,30 +16,6 @@ type options =
 
 open Formatting
 
-[<RequireQualifiedAccess>]
-type VectorKind =
-    | Vector2 of isDouble:bool
-    | Vector3 of isDouble:bool
-    | Vector4 of isDouble:bool
-
-[<RequireQualifiedAccess>]
-type MatrixKind =
-    | Matrix2 of isDouble:bool
-    | Matrix3 of isDouble:bool
-    | Matrix4 of isDouble:bool
-    | Matrix2x3 of isDouble:bool
-    | Matrix2x4 of isDouble:bool
-    | Matrix3x2 of isDouble:bool
-    | Matrix3x4 of isDouble:bool
-    | Matrix4x2 of isDouble:bool
-    | Matrix4x3 of isDouble:bool
-
-type FunctionNameKind =
-    | IsVector of VectorKind * adjustedName: string
-    | IsMatrix of MatrixKind * adjustedName: string
-    | HasAFuckingAnnoyingSuffixWhichIsRemoved of adjustedName: string
-    | IsSimple
-
 let autoGenerateAdditionalOverloadForType (func: PrintReadyTypedFunctionDeclaration) =
     let lengthParamsSet =
         func.parameters
@@ -187,64 +163,6 @@ let autoGenerateOverloadForType (func: PrintReadyTypedFunctionDeclaration) =
     | EndsWith "udv" _ -> None, keep
     | EndsWithOneOf sufixToRemove adjustedName -> Some adjustedName, { func with prettyName = adjustedName }
     | _ -> None, keep
-
-//let generateVectorOverload (func: PrintReadyTypedFunctionDeclaration) kind adjustedName =
-
-
-//let getFunctionNameKind (func: PrintReadyTypedFunctionDeclaration) =
-//    match func.name with
-//    | EndsWith "Matrix2fv" adjustedName -> IsMatrix(MatrixKind.Matrix2 false, adjustedName + "Matrix")
-//    | EndsWith "Matrix3fv" adjustedName -> IsMatrix(MatrixKind.Matrix3 false, adjustedName + "Matrix")
-//    | EndsWith "Matrix4fv" adjustedName -> IsMatrix(MatrixKind.Matrix4 false, adjustedName + "Matrix")
-//    | EndsWith "Matrix2dv" adjustedName -> IsMatrix(MatrixKind.Matrix2 true, adjustedName + "Matrix")
-//    | EndsWith "Matrix3dv" adjustedName -> IsMatrix(MatrixKind.Matrix3 true, adjustedName + "Matrix")
-//    | EndsWith "Matrix4dv" adjustedName -> IsMatrix(MatrixKind.Matrix4 true, adjustedName + "Matrix")
-//    | EndsWith "Matrix3x2fv" adjustedName -> IsMatrix(MatrixKind.Matrix3x2 false, adjustedName + "Matrix")
-//    | EndsWith "Matrix4x2fv" adjustedName -> IsMatrix(MatrixKind.Matrix4x2 false, adjustedName + "Matrix")
-//    | EndsWith "Matrix3x2dv" adjustedName -> IsMatrix(MatrixKind.Matrix3x2 true, adjustedName + "Matrix")
-//    | EndsWith "Matrix4x2dv" adjustedName -> IsMatrix(MatrixKind.Matrix4x2 true, adjustedName + "Matrix")
-//    | EndsWith "Matrix3x4fv" adjustedName -> IsMatrix(MatrixKind.Matrix3x4 false, adjustedName + "Matrix")
-//    | EndsWith "Matrix4x2fv" adjustedName -> IsMatrix(MatrixKind.Matrix4x2 false, adjustedName + "Matrix")
-//    | EndsWith "Matrix3x4dv" adjustedName -> IsMatrix(MatrixKind.Matrix3x4 true, adjustedName + "Matrix")
-//    | EndsWith "Matrix4x2dv" adjustedName -> IsMatrix(MatrixKind.Matrix4x2 true, adjustedName + "Matrix")
-//    | EndsWith "ed" _
-//    | EndsWith "es" _
-//    | EndsWith "ufv" _
-//    | EndsWith "udv" _ -> IsSimple
-//    | EndsWith "2dv" adjustedName ->
-//        IsVector(VectorKind.Vector2 true, adjustedName)
-//    | EndsWith "3dv" adjustedName ->
-//        IsVector(VectorKind.Vector3 true, adjustedName)
-//    | EndsWith "4dv" adjustedName ->
-//        IsVector(VectorKind.Vector4 true, adjustedName)
-//    | EndsWith "2fv" adjustedName ->
-//        IsVector(VectorKind.Vector2 false, adjustedName)
-//    | EndsWith "3fv" adjustedName ->
-//        IsVector(VectorKind.Vector3 false, adjustedName)
-//    | EndsWith "4fv" adjustedName ->
-//        IsVector(VectorKind.Vector4 false, adjustedName)
-//    | EndsWith "1" adjustedName
-//    | EndsWith "2" adjustedName
-//    | EndsWith "3" adjustedName
-//    | EndsWith "4" adjustedName
-//    | EndsWith "fv" adjustedName
-//    | EndsWith "ubv" adjustedName
-//    | EndsWith "u" adjustedName
-//    | EndsWith "uiv" adjustedName
-//    | EndsWith "ui" adjustedName
-//    | EndsWith "usv" adjustedName
-//    | EndsWith "us" adjustedName
-//    | EndsWith "i" adjustedName
-//    | EndsWith "iv" adjustedName
-//    | EndsWith "f" adjustedName
-//    | EndsWith "b" adjustedName
-//    | EndsWith "d" adjustedName
-//    | EndsWith "dv" adjustedName
-//    | EndsWith "s" adjustedName
-//    | EndsWith "sv" adjustedName
-//    | EndsWith "ub" adjustedName
-//    | EndsWith "v" adjustedName -> HasAFuckingAnnoyingSuffixWhichIsRemoved adjustedName
-//    | _ -> IsSimple
 
 [<EntryPoint>]
 let main argv =

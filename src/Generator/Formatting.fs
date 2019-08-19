@@ -389,7 +389,17 @@ let generateInterface (functions: PrintReadyTypedFunctionDeclaration [])
                           else ""
                       yield prefix + retTypeAsString + " " + func.prettyName
                             + additional
-                            + "(" + formattedParams + ");" |> writeLine
+                            + "(" + formattedParams + ")" |> write
+                      if func.genericTypes.Length > 0 then
+                        yield indent
+                        yield writeLine ""
+                        for ty in func.genericTypes |> Seq.take (max 0 (func.genericTypes.Length - 2)) do
+                            yield "where " + ty + " : struct" |> writeLine
+                        let last = func.genericTypes |> Seq.last
+                        yield "where " + last + " : struct;" |> writeLine
+                        yield unindent
+                      else
+                        yield writeLine ";"
                       yield writeEmptyLine |])
         yield unindent
         yield writeRightBracket
@@ -454,9 +464,19 @@ let generateStaticClass (functions: PrintReadyTypedFunctionDeclaration [])
                 if func.parameters |> Array.exists (fun p -> isPointerType p.typ.typ)
                    || isPointerType func.retType.typ then " unsafe"
                 else ""
-            yield sprintf "public static%s %s %s%s(%s) => instance.%s(%s);"
+            yield sprintf "public static%s %s %s%s(%s) => instance.%s(%s)"
                       prefix retTypeAsString funcName additional formattedParams
                       funcName formattedParamNames |> writeLine
+            if func.genericTypes.Length > 0 then
+                yield indent
+                yield writeLine ""
+                for ty in func.genericTypes |> Seq.take (max 0 (func.genericTypes.Length - 2)) do
+                    yield "where " + ty + " : struct" |> writeLine
+                let last = func.genericTypes |> Seq.last
+                yield "where " + last + " : struct;" |> writeLine
+                yield unindent
+            else
+                yield writeLine ";"
             yield writeEmptyLine
         yield unindent
         yield writeRightBracket
