@@ -52,32 +52,7 @@ let functionOverloads =
           cases = Array.empty }
         |> GLenum
 
-    let vectorOverload1 name betterName =
-        functionOverloadsWith name betterName
-            [| functionSignature Void
-                   [| dummyEnumGroupTy "GetPName" |> typedParameterInfo "pname"
-                      GLType.OpenToolkit Vector4
-                      |> RefPointer
-                      |> typedParameterInfo "vector" |]
-               functionSignature Void
-                   [| dummyEnumGroupTy "GetPName" |> typedParameterInfo "pname"
-                      GLType.OpenToolkit Vector3
-                      |> RefPointer
-                      |> typedParameterInfo "vector" |]
-               functionSignature Void
-                   [| dummyEnumGroupTy "GetPName" |> typedParameterInfo "pname"
-                      GLType.OpenToolkit Vector2
-                      |> RefPointer
-                      |> typedParameterInfo "vector" |]
-               functionSignature Void
-                   [| dummyEnumGroupTy "GetPName" |> typedParameterInfo "pname"
-                      GLType.OpenToolkit Matrix4
-                      |> RefPointer
-                      |> typedParameterInfo "vector" |] |]
-
     [| 
-       // vectorOverload1 "glGetFloatv" "GetFloat"
-       // vectorOverload1 "glGetDoublev" "GetDouble"
        functionOverloadsWith "glGetQueryBufferObjecti64v"
            "GetQueryBufferObjecti64v"
            [| functionSignature Void
