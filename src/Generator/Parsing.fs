@@ -8,7 +8,7 @@ let (|IsPointerType|_|) input =
 
 open Types
 
-let tryParseType enumMap funcOrParamName (typ: LooseType) =
+let tryParseType enumMap funcOrParamName (typ: GLLooseType) =
     let str = typ.typ.Replace("const", "").Replace(" ", "")
 
     let rec tryParse str =

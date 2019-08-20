@@ -218,7 +218,7 @@ module PrintReady =
         |> String.concat ""
         |> addUnderscoreIfBeginsWithNumber
 
-    let formatEnumGroup (enumGroup: EnumGroup) =
+    let formatEnumGroup (enumGroup: GLEnumGroup) =
         let prettyEnumCases =
             enumGroup.cases
             |> Array.Parallel.map (fun case ->

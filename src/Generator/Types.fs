@@ -1,26 +1,26 @@
 module Types
 
-type Enum =
+type GLEnum =
     { name: string
       value: string }
 
-type EnumGroup =
+type GLEnumGroup =
     { groupName: string
-      cases: Enum [] }
+      cases: GLEnum [] }
 
 [<RequireQualifiedAccess>]
-type LooseType =
+type GLLooseType =
     { typ: string
       group: string option }
 
-let looseType typ group: LooseType =
+let looseType typ group: GLLooseType =
     { typ = typ
       group = group }
 
-type ParameterInfo =
+type GLParameterInfo =
     { paramName: string
       lengthParamName: string option
-      paramType: LooseType }
+      paramType: GLLooseType }
 
 let parameterInfo name typ =
     { paramName = name
@@ -32,10 +32,10 @@ let parameterInfoWith name typ lengthParamName =
       lengthParamName = Some lengthParamName
       paramType = typ }
 
-type FunctionDeclaration =
+type GLFunctionDeclaration =
     { funcName: string
-      parameters: ParameterInfo []
-      retType: LooseType }
+      parameters: GLParameterInfo []
+      retType: GLLooseType }
 
 type OpenToolkitType =
     | Vector2
@@ -65,7 +65,7 @@ type OpenToolkitType =
 
 type GLType =
     | Pointer of GLType
-    | GLenum of EnumGroup
+    | GLenum of GLEnumGroup
     | GLint
     | GLboolean
     | GLdouble
