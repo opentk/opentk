@@ -54,8 +54,8 @@ let writeEmptyLine = WriteLine ""
 module TypeToString =
     let private cache = System.Collections.Concurrent.ConcurrentDictionary()
 
-    let rec private typeToString (ty: GLType) =
-        match ty with
+    let rec private typeToString (typ: GLType) =
+        match typ with
         | GLType.Void -> "void"
         | GLType.GLenum inner -> inner.groupName
         | GLType.Pointer inner -> typeToString inner + " *"
@@ -105,12 +105,12 @@ module TypeToString =
             specTypeToCSharpTypeWithFallback "GLDEBUGPROCARB"
         | GLType.GLDEBUGPROCKHR ->
             specTypeToCSharpTypeWithFallback "GLDEBUGPROCKHR"
-        | GLType.RefPointer ty -> "ref " + typeToString ty
+        | GLType.RefPointer typ -> "ref " + typeToString typ
         | GLType.StructGenericType s -> s
-        | GLType.ArrayType ty -> typeToString ty + "[]"
+        | GLType.ArrayType typ -> typeToString typ + "[]"
         | GLType.GLString -> "string"
-        | GLType.OpenToolkit ty ->
-            match ty with
+        | GLType.OpenToolkit typ ->
+            match typ with
             | Vector2 -> "Vector2"
             | Vector3 -> "Vector3"
             | Vector4 -> "Vector4"
@@ -136,15 +136,15 @@ module TypeToString =
             | Matrix4x2d -> "Matrix4x2d"
             | Matrix4x3d -> "Matrix4x3d"
 
-    let typeToStringCached ty =
-        match cache.TryGetValue ty with
+    let typeToStringCached typ =
+        match cache.TryGetValue typ with
         | true, value -> value
         | false, _ ->
-            let res = typeToString ty
-            cache.[ty] <- res
+            let res = typeToString typ
+            cache.[typ] <- res
             res
 
-let inline typeToString ty = TypeToString.typeToStringCached ty
+let inline typeToString typ = TypeToString.typeToStringCached typ
 
 let (|StartsWith|_|) (pattern: string) (str: string) =
     if str.StartsWith pattern then str.Substring(pattern.Length) |> Some
@@ -177,16 +177,7 @@ let formatNameRemovingPrefix (name: string) =
         addUnderscoreIfBeginsWithNumber res
     | _ -> name
 
-let formatFunctionName (name: string) =
-    formatNameRemovingPrefix name
-    //let sufix =
-    //    sufixToRemove
-    //    |> Array.tryFind (fun sufix -> nameWithRemovedPrefix.EndsWith sufix)
-    //match sufix with
-    //| Some sufix ->
-    //    nameWithRemovedPrefix.Substring
-    //        (0, nameWithRemovedPrefix.Length - sufix.Length)
-    //| _ -> nameWithRemovedPrefix
+let formatFunctionName (name: string) = formatNameRemovingPrefix name
 
 let formatParameterName (name: string) =
     reservedKeywords
@@ -259,23 +250,23 @@ module PrintReady =
 
 let generateDummyTypes =
     let usings = [ "System" ]
-    let formatDummyType ty = sprintf "public struct %s {}" ty.name
+    let formatDummyType typ = sprintf "public struct %s {}" typ.name
     seq {
         for using in usings -> writeLine (sprintf "using %s;" using)
         yield "namespace " + dummyTypesNamespace |> writeLine
         yield writeLeftBracket
         yield indent
         yield writeEmptyLine
-        for ty in additionalTypesToGenerate do
-            match ty._namespace with
+        for typ in additionalTypesToGenerate do
+            match typ._namespace with
             | Some n ->
                 yield writeLine (sprintf "namespace %s" n)
                 yield writeLeftBracket
                 yield indent
-                yield formatDummyType ty |> writeLine
+                yield formatDummyType typ |> writeLine
                 yield unindent
                 yield writeRightBracket
-            | None -> yield formatDummyType ty |> writeLine
+            | None -> yield formatDummyType typ |> writeLine
         yield unindent
         yield writeRightBracket
     }
@@ -331,29 +322,30 @@ let generateEnums (enums: PrintReadyEnumGroup [])
     }
     |> execute
 
-let rec isPointerType ty =
-    match ty with
+let rec isPointerType typ =
+    match typ with
     | ArrayType inner
     | RefPointer inner -> isPointerType inner
     | Pointer(Pointer _ as inner) -> isPointerType inner
     | Pointer _ -> true
     | _ -> false
 
+let namespaceAndDocumentationFor (details: GenerateDetails) =
+    match details with
+    | OpenGlVersion openGl ->
+        let version = openGl.versionNumber |> floor |> int
+        let baseUrl = sprintf "http://docs.gl/gl%d/" version
+        namespaceForGlSpecification openGl,
+        fun str -> "/// See documentation online here: "+ baseUrl + str
+    | Extensions ->
+        "EXT",
+        fun _ -> "/// No documentation for extension functions available yet."
+
 let generateInterface (functions: PrintReadyTypedFunctionDeclaration [])
     (details: GenerateDetails) =
-    let _namespace, documentationFor =
-        match details with
-        | OpenGlVersion openGl ->
-            let v = openGl.versionNumber |> floor |> int
-            let baseUrl = sprintf "http://docs.gl/gl%d/" v
-            namespaceForGlSpecification openGl,
-            fun str -> "/// See documentation online here: "+ baseUrl + str
-        | Extensions ->
-            "EXT",
-            fun _ -> "/// No documentation for extension functions available yet."
+    let _namespace, documentationFor = namespaceAndDocumentationFor details
     let usings =
         [ "System"; advancedDlSupport; mathematicsNamespace; dummyTypesNamespace ]
-        //@ [ if extensionsOnly then yield graphicsNamespace + "." + _namespace ]
     seq {
         for using in usings -> sprintf "using %s;" using |> writeLine
         yield writeEmptyLine
@@ -393,8 +385,8 @@ let generateInterface (functions: PrintReadyTypedFunctionDeclaration [])
                       if func.genericTypes.Length > 0 then
                         yield indent
                         yield writeLine ""
-                        for ty in func.genericTypes |> Seq.take (max 0 (func.genericTypes.Length - 2)) do
-                            yield "where " + ty + " : struct" |> writeLine
+                        for typ in func.genericTypes |> Seq.take (max 0 (func.genericTypes.Length - 2)) do
+                            yield "where " + typ + " : struct" |> writeLine
                         let last = func.genericTypes |> Seq.last
                         yield "where " + last + " : struct;" |> writeLine
                         yield unindent
@@ -410,19 +402,9 @@ let generateInterface (functions: PrintReadyTypedFunctionDeclaration [])
 
 let generateStaticClass (functions: PrintReadyTypedFunctionDeclaration [])
     (details: GenerateDetails) =
-    let _namespace, documentationFor =
-        match details with
-        | OpenGlVersion openGl ->
-            let v = openGl.versionNumber |> floor |> int
-            let baseUrl = sprintf "http://docs.gl/gl%d/" v
-            namespaceForGlSpecification openGl,
-            fun str -> "/// See documentation online here: "+ baseUrl + str
-        | Extensions ->
-            "EXT",
-            fun _ -> "/// No documentation for extension functions available yet."
+    let _namespace, documentationFor = namespaceAndDocumentationFor details
     let usings =
         [ "System"; mathematicsNamespace; dummyTypesNamespace ]
-        //@ [ if extensionsOnly then yield graphicsNamespace + "." + rawNamespace ]
     seq {
         for using in usings -> sprintf "using %s;" using |> writeLine
         yield "namespace " + graphicsNamespace + "." + _namespace |> writeLine
@@ -470,8 +452,8 @@ let generateStaticClass (functions: PrintReadyTypedFunctionDeclaration [])
             if func.genericTypes.Length > 0 then
                 yield indent
                 yield writeLine ""
-                for ty in func.genericTypes |> Seq.take (max 0 (func.genericTypes.Length - 2)) do
-                    yield "where " + ty + " : struct" |> writeLine
+                for typ in func.genericTypes |> Seq.take (max 0 (func.genericTypes.Length - 2)) do
+                    yield "where " + typ + " : struct" |> writeLine
                 let last = func.genericTypes |> Seq.last
                 yield "where " + last + " : struct;" |> writeLine
                 yield unindent

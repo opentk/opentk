@@ -258,8 +258,8 @@ let looslyTypedFunctionsToTypedFunctions enumMap functions =
                 let currParam = parameters.[index]
                 match currParam.paramType
                       |> Parsing.tryParseType enumMap currParam.paramName with
-                | Some ty ->
-                    res.[index] <- typedParameterInfoWith currParam.paramName ty currParam.lengthParamName
+                | Some typ ->
+                    res.[index] <- typedParameterInfoWith currParam.paramName typ currParam.lengthParamName
                     typecheck (index + 1)
                 | None -> false
             else true
@@ -275,8 +275,8 @@ let looslyTypedFunctionsToTypedFunctions enumMap functions =
             return! Some res
         })
 
-let rec tryGetEnumType (ty: GLType) =
-    match ty with
+let rec tryGetEnumType (typ: GLType) =
+    match typ with
     | GLType.Pointer inner -> tryGetEnumType inner
     | GLType.GLenum group -> Some group
     | _ -> None

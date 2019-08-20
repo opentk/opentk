@@ -8,14 +8,14 @@ let (|IsPointerType|_|) input =
 
 open Types
 
-let tryParseType enumMap funcOrParamName (ty: LooseType) =
-    let str = ty.typ.Replace("const", "").Replace(" ", "")
+let tryParseType enumMap funcOrParamName (typ: LooseType) =
+    let str = typ.typ.Replace("const", "").Replace(" ", "")
 
     let rec tryParse str =
         match str with
         | IsPointerType inner -> tryParse inner |> Option.map Pointer
         | "GLenum" ->
-            ty.group
+            typ.group
             |> Option.bind (fun group ->
                 match enumMap |> Map.tryFind group with
                 | Some entry -> GLenum entry |> Some
@@ -102,6 +102,12 @@ let getEnumsFromSpecification (spec: OpenGL_Specification.Registry) =
                           value = value }))
                 |> Array.groupBy (fun case -> case.value)
                 |> Array.Parallel.choose (fun (_, cases) ->
+                    // This is for picking the best enum case name
+                    // for an enum case which has multiple names with the same value.
+                    // We prefer names which are not from extensions
+                    // neither from NVIDIA or so.
+                    // If no case was found meeting this standard
+                    // just pick the first case (lucky pick!)
                     cases
                     |> Array.tryFind
                         (fun case ->
@@ -131,11 +137,11 @@ let getResFromRegexMatch res =
         if str |> String.IsNullOrWhiteSpace then None
         else Some str
 
-    let ty =
+    let typ =
         getGroupValue "f" res + getGroupValue "t" res + getGroupValue "b" res
-    groupName, ty
+    groupName, typ
 
-let extractTypeFromPtype (param: OpenGL_Specification.Param) =
+let extractTypeFromPtypeTag (param: OpenGL_Specification.Param) =
     let possibleLengthParam = param.Len.String
     let str = getRawElementDataWithoutLineBreaks param.XElement
     let a, b =
@@ -156,20 +162,20 @@ let getFunctions (spec: OpenGL_Specification.Registry) =
         let parameters =
             cmd.Params
             |> Array.Parallel.map (fun p ->
-                let lengthParamName, group, ty = extractTypeFromPtype p
-                if String.IsNullOrWhiteSpace ty then
+                let lengthParamName, group, typ = extractTypeFromPtypeTag p
+                if String.IsNullOrWhiteSpace typ then
                     let str = p.XElement.ToString()
                     printfn "failed parsing %A, value: %s" (funcName) str
                 { paramName = p.Name
                   lengthParamName = lengthParamName
-                  paramType = looseType ty group })
+                  paramType = looseType typ group })
 
-        let group, ty = extractTypeFromProto cmd.Proto
+        let group, typ = extractTypeFromProto cmd.Proto
 
         let ret =
             { funcName = funcName
               parameters = parameters
-              retType = looseType ty group }
+              retType = looseType typ group }
         ret)
 
 let getExtensions (spec: OpenGL_Specification.Registry) =
