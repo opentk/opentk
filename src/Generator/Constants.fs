@@ -3,48 +3,30 @@ module Constants
 open Types
 
 let additionalTypesToGenerate =
-    [| { _namespace = None
-         name = "DebugProcAmd" }
-       { _namespace = None
-         name = "DebugProcArb" }
-       { _namespace = None
-         name = "DebugProcKhr" }
-       { _namespace = None
-         name = "Struct_cl_context" }
-       { _namespace = None
-         name = "Struct_cl_event" }
-       { _namespace = None
-         name = "ElementPointerTypeATI" }
-       { _namespace = None
-         name = "CombinerPortionNV" }
-       { _namespace = None
-         name = "FragmentLightParameterSGIX" }
-       { _namespace = None
-         name = "MapTypeNV" }
-       { _namespace = None
-         name = "ProgramTarget" }
-       { _namespace = None
-         name = "ProgramStringProperty" }
-       { _namespace = None
-         name = "IglooFunctionSelectSGIX" }
-       { _namespace = None
-         name = "IndexFunctionEXT" }
-       { _namespace = None
-         name = "ProgramFormat" }
-       { _namespace = None
-         name = "MatrixIndexPointerTypeARB" }
-       { _namespace = None
-         name = "ReplacementCodeTypeSUN" }
-       { _namespace = None
-         name = "SecondaryColorPointerTypeIBM" }
-       { _namespace = None
-         name = "VertexWeightPointerTypeEXT" }
-       { _namespace = None
-         name = "WeightPointerTypeARB" }
-       { _namespace = None
-         name = "VertexShaderWriteMaskEXT" } |]
+    [|
+      "DebugProcAmd"
+      "DebugProcArb"
+      "DebugProcKhr"
+      "Struct_cl_context"
+      "Struct_cl_event"
+      "ElementPointerTypeATI"
+      "CombinerPortionNV"
+      "FragmentLightParameterSGIX"
+      "MapTypeNV"
+      "ProgramTarget"
+      "ProgramStringProperty"
+      "IglooFunctionSelectSGIX"
+      "IndexFunctionEXT"
+      "ProgramFormat"
+      "MatrixIndexPointerTypeARB"
+      "ReplacementCodeTypeSUN"
+      "SecondaryColorPointerTypeIBM"
+      "VertexWeightPointerTypeEXT"
+      "WeightPointerTypeARB"
+      "VertexShaderWriteMaskEXT"
+    |]
+    |> Array.map (fun n -> { _namespace = None; name = n })
     |> Set.ofArray
-    |> Set.toArray
 
 let reservedKeywords =
     [| "ref"; "object"; "string"; "event"; "params"; "base"; "in" |]
