@@ -384,6 +384,5 @@ let main argv =
         printfn "Done writing OpenGL Version %s files." glVersion.version
         generatedFiles)
     |> ignore
-    printfn "Generating files took %s seconds"
-        (startTime.Elapsed.Seconds |> string)
+    printfn "Generating files took %f seconds" startTime.Elapsed.TotalSeconds
     0 // return an integer exit code
