@@ -6,9 +6,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include="Util.fs" />
     <Compile Include="Types.fs" />
     <Compile Include="Constants.fs" />
-    <Compile Include="Util.fs" />
     <Compile Include="Parsing.fs" />
     <Compile Include="TypeMapping.fs" />
     <Compile Include="Formatting.fs" />

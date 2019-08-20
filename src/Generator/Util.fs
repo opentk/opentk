@@ -1,7 +1,5 @@
 module Util
 
-open Types
-
 let inline (</>) path1 path2 = System.IO.Path.Combine(path1, path2)
 
 type MaybeBuilder() =
