@@ -3,7 +3,6 @@ module Aggregator
 open Types
 open Util
 open SpecificationOpenGL
-open System
 
 // Generically take the field name
 let inline nameField a = (^a: (member Name: string) (a))

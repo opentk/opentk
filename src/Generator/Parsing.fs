@@ -67,11 +67,9 @@ let tryParseType enumMap funcOrParamName (typ: GLLooseType) =
             None
     tryParse str
 
-open Types
 open SpecificationOpenGL
 open Util
 open System
-open System.IO
 open System.Text.RegularExpressions
 
 let readSpec (path: string) = OpenGL_Specification.Load path
