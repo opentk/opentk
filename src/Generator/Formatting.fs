@@ -446,19 +446,22 @@ let generateStaticClass (functions: PrintReadyTypedFunctionDeclaration [])
                 if func.parameters |> Array.exists (fun p -> isPointerType p.typ.typ)
                    || isPointerType func.retType.typ then " unsafe"
                 else ""
-            yield sprintf "public static%s %s %s%s(%s) => instance.%s(%s)"
-                      prefix retTypeAsString funcName additional formattedParams
-                      funcName formattedParamNames |> writeLine
             if func.genericTypes.Length > 0 then
+                yield sprintf "public static%s %s %s%s(%s)"
+                          prefix retTypeAsString funcName additional formattedParams |> writeLine
                 yield indent
                 yield writeLine ""
                 for typ in func.genericTypes |> Seq.take (max 0 (func.genericTypes.Length - 2)) do
                     yield "where " + typ + " : struct" |> writeLine
                 let last = func.genericTypes |> Seq.last
-                yield "where " + last + " : struct;" |> writeLine
+                yield "where " + last + " : struct" |> write
+                yield sprintf " => instance.%s(%s);" funcName formattedParamNames |> writeLine
+
                 yield unindent
             else
-                yield writeLine ";"
+                yield sprintf "public static%s %s %s%s(%s) => instance.%s(%s);"
+                          prefix retTypeAsString funcName additional formattedParams
+                          funcName formattedParamNames |> writeLine
             yield writeEmptyLine
         yield unindent
         yield writeRightBracket
