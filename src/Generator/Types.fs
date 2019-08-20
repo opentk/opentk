@@ -187,10 +187,6 @@ type ExtensionInfo =
       functions: string []
       enumCases: string [] }
 
-type Either<'a, 'b> =
-    | Left of 'a
-    | Right of 'b
-
 [<RequireQualifiedAccess>]
 type FunctionSignature =
     { retType: GLType

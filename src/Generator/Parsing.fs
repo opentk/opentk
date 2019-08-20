@@ -187,10 +187,10 @@ let getExtensions (spec: OpenGL_Specification.Registry) =
                 |> Array.Parallel.collectEither (fun entry ->
                     [| entry.Commands
                        |> Array.Parallel.map (fun cmd -> cmd.Name)
-                       |> Left
+                       |> Choice1Of2
                        entry.Enums
                        |> Array.Parallel.map (fun cmd -> cmd.Name)
-                       |> Right |])
+                       |> Choice2Of2 |])
             functions |> Array.Parallel.collect id,
             enums |> Array.Parallel.collect id
         { name = extension.Name

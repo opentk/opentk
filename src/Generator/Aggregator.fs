@@ -29,8 +29,8 @@ let getEnumCasesAndCommandsPerVersion (data: OpenGL_Specification.Registry) =
 
     let extractAddedAndRemoved (data: OpenGL_Specification.Feature) =
         let inline divideIntoCommandsAndEnums cmd enum e =
-            [| Left(cmd e |> Array.Parallel.map nameField)
-               Right(enum e |> Array.Parallel.map nameField) |]
+            [| Choice1Of2(cmd e |> Array.Parallel.map nameField)
+               Choice2Of2(enum e |> Array.Parallel.map nameField) |]
 
         let (addedFunctions: string [], addedEnums: string []) =
             data.Requires
