@@ -6,6 +6,7 @@ open SpecificationOpenGL
 open Util
 open Constants
 open System.IO
+open System.Runtime
 open CommandLine
 
 type options =
@@ -176,7 +177,8 @@ let main argv =
         | :? (NotParsed<options>) as notParsed ->
             failwithf "Error %A" (notParsed.Errors)
         | _ -> failwith "No options given"
-    System.Runtime.GCSettings.LatencyMode <- System.Runtime.GCLatencyMode.SustainedLowLatency
+        
+    System.Runtime.GCSettings.LatencyMode <- System.Runtime.GCLatencyMode.Batch
     let startTime = System.Diagnostics.Stopwatch.StartNew()
     let path = options.pathToSpecificationFile
     let test = OpenGL_Specification.Load path
