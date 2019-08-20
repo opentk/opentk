@@ -179,11 +179,12 @@ let formatNameRemovingPrefix (name: string) =
 
 let formatFunctionName (name: string) = formatNameRemovingPrefix name
 
-let formatParameterName (name: string) =
-    reservedKeywords
-    |> Array.tryFindIndex (fun n -> name = n)
-    |> Option.map (fun i -> reservedKeywordsUpper |> Array.item i)
-    |> Option.defaultValue name
+let inline formatParameterName (name: string) =
+    let idx = System.Array.IndexOf(reservedKeywords, name)
+    if idx <> -1 then
+        reservedKeywordsUpper.[idx]
+    else
+        name
 
 let formatParam (p: TypedParameterInfo) = formatParameterName p.name
 

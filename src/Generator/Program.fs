@@ -1,4 +1,6 @@
 ﻿// Learn more about F// at http://fsharp.org
+open System
+open Formatting
 open Types
 open SpecificationOpenGL
 open Util
@@ -14,7 +16,6 @@ type options =
                HelpText = "Path to output directory.")>]
       pathToOutputDirectory: string }
 
-open Formatting
 
 let autoGenerateAdditionalOverloadForType (func: PrintReadyTypedFunctionDeclaration) =
     let lengthParamsSet =

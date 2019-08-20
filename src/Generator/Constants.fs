@@ -41,7 +41,7 @@ let sufixToRemove =
        "f"; "b"; "d"; "dv"; "s"; "sv"; "ub"; "v" |]
     |> Array.sortByDescending (fun s -> s.Length)
 let reservedKeywordsUpper =
-    reservedKeywords |> Array.Parallel.map (fun k -> k.ToUpper())
+    reservedKeywords |> Array.map (fun k -> k.ToUpper())
 
 let pointerTypeMappings =
     [| RefPointer; ArrayType; (function | GLint -> GLintptr | keep -> keep) |]
