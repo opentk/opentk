@@ -155,10 +155,10 @@ module Box2 =
         
         [<Property>]
         let ``After inflating the point should be enclosed in the box`` (b1 : Box2, v1 : Vector2) =
-            Assert.True(b1.Inflated(v1).Contains(v1))
+            Assert.True(b1.Inflated(v1).Contains(v1, true))
 
         [<Property>]
-        let ``Box2.Inflate is equivelant to Box2.Inflated`` (b1 : Box2, v1 : Vector2) =
+        let ``Box2.Inflate is equivalent to Box2.Inflated`` (b1 : Box2, v1 : Vector2) =
             let mutable b = b1
             
             b.Inflate(v1)

@@ -122,15 +122,35 @@ namespace OpenToolkit.Mathematics
         }
 
         /// <summary>
-        /// Returns whether the box contains the specified point (borders inclusive).
+        /// Returns whether the box contains the specified point (borders exclusive).
         /// </summary>
         /// <param name="point">The point to query.</param>
         /// <returns>Whether this box contains the point.</returns>
         [Pure]
         public bool Contains(Vector2 point)
         {
-            return _min.X <= point.X && point.X <= _max.X &&
-                   _min.Y <= point.Y && point.Y <= _max.Y;
+            return _min.X < point.X && point.X < _max.X &&
+                   _min.Y < point.Y && point.Y < _max.Y;
+        }
+
+        /// <summary>
+        /// Returns whether the box contains the specified point.
+        /// </summary>
+        /// <param name="point">The point to query.</param>
+        /// <param name="boundaryInclusive">
+        /// Whether points on the box boundary should be recognised as contained as well.
+        /// </param>
+        /// <returns>Whether this box contains the point.</returns>
+        [Pure]
+        public bool Contains(Vector2 point, bool boundaryInclusive)
+        {
+            if (boundaryInclusive)
+            {
+                return _min.X <= point.X && point.X <= _max.X &&
+                       _min.Y <= point.Y && point.Y <= _max.Y;
+            }
+            return _min.X < point.X && point.X < _max.X &&
+                   _min.Y < point.Y && point.Y < _max.Y;
         }
 
         /// <summary>

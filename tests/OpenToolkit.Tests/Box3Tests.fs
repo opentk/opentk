@@ -155,10 +155,10 @@ module Box3 =
         
         [<Property>]
         let ``After inflating the point should be enclosed in the box`` (b1 : Box3, v1 : Vector3) =
-            Assert.True(b1.Inflated(v1).Contains(v1))
+            Assert.True(b1.Inflated(v1).Contains(v1, true))
 
         [<Property>]
-        let ``Box2.Inflate is equivelant to Box2.Inflated`` (b1 : Box3, v1 : Vector3) =
+        let ``Box2.Inflate is equivalent to Box2.Inflated`` (b1 : Box3, v1 : Vector3) =
             let mutable b = b1
             
             b.Inflate(v1)
@@ -184,13 +184,13 @@ module Box3 =
     [<Properties(Arbitrary = [|typeof<OpenTKGen>|])>]
     module Contains =
         [<Property>]
-        let ``Box2.Contains should only return true if the point is enclosed in the box`` (b1 : Box3, v1 : Vector3) =
+        let ``Box3.Contains should only return true if the point is enclosed in the box`` (b1 : Box3, v1 : Vector3) =
             let c = b1.Min.X < v1.X && v1.X < b1.Max.X && b1.Min.Y < v1.Y && v1.Y < b1.Max.Y && b1.Min.Z < v1.Z && v1.Z < b1.Max.Z
             
             Assert.Equal(c, b1.Contains(v1))
 
         [<Property>]
-        let ``Box2.Contains should only return true if the other box is partly within in the box`` (b1 : Box3, b2 : Box3) =
+        let ``Box3.Contains should only return true if the other box is partly within in the box`` (b1 : Box3, b2 : Box3) =
             let c = b1.Min.X <= b2.Max.X && b1.Max.X >= b2.Min.X && b1.Min.Y <= b2.Max.Y && b1.Max.Y >= b2.Min.Y && b1.Min.Z <= b2.Max.Z && b1.Max.Z >= b2.Min.Z
             
             Assert.Equal(c, b1.Contains(b2))
