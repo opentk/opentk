@@ -166,7 +166,7 @@ let autoGenerateOverloadForType (func: PrintReadyTypedFunctionDeclaration) =
 [<EntryPoint>]
 let main argv =
     printfn
-        "Hello World from F# and welcome to the OpenTK4.0 binding generator!"
+        "Welcome to the OpenTK4.0 binding generator F#ast edition!"
     let result = CommandLine.Parser.Default.ParseArguments<options>(argv)
 
     let options =
