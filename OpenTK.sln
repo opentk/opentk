@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27703.2042
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29123.88
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "project", "project", "{5EEEC96B-BD2F-45B0-935D-19E9E6D7D969}"
 	ProjectSection(SolutionItems) = preProject
@@ -12,11 +12,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "project", "project", "{5EEE
 		stylecop.json = stylecop.json
 		stylecop.ruleset = stylecop.ruleset
 	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "documentation", "documentation", "{4EAF040E-2FBB-4D5A-8DE0-ED5872F173E2}"
-EndProject
-
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Generator.Bind", "src\Generators\Generator.Bind\Generator.Bind.csproj", "{4828A378-F24E-4BB0-BF5F-C4C6C9082081}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenToolkit.Input", "src\OpenToolkit.Input\OpenToolkit.Input.csproj", "{FD2151DE-0663-4100-9AB5-D1E22CF2144D}"
 EndProject
@@ -77,37 +72,37 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenToolkit.OpenAL.Extensio
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenToolkit.OpenAL.Extensions.EXT.Capture.Enumeration", "src\OpenAL\Extensions\OpenToolkit.OpenAL.Extensions.EXT.Capture.Enumeration\OpenToolkit.OpenAL.Extensions.EXT.Capture.Enumeration.csproj", "{2E39B827-1513-4B77-B80A-0BA87DBC199F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Generator.Convert", "src\Generators\Generator.Converter\Generator.Convert.csproj", "{79AAF02C-CACC-46FC-BADB-8CA3858C3CA2}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "OpenGL", "OpenGL", "{00962052-26B6-4B29-BA72-6EF98E944EE1}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenToolkit.OpenGL", "src\OpenGL\OpenToolkit.OpenGL\OpenToolkit.OpenGL.csproj", "{1FC04DAC-DF84-41BB-921A-35227FBF58DF}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenToolkit.OpenGL.Core", "src\OpenGL\OpenToolkit.OpenGL.Core\OpenToolkit.OpenGL.Core.csproj", "{1BA5A86D-8EB9-4ADE-AFB1-67E849F9990B}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenToolkit.OpenGLES", "src\OpenGL\OpenToolkit.OpenGLES\OpenToolkit.OpenGLES.csproj", "{C3968522-8B64-48D6-A2BF-06B37D04CCF0}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Windowing", "Windowing", "{BBBE802B-9F6E-4299-97CE-97CDA43802B9}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenToolkit.Windowing.Common", "src\Windowing\OpenToolkit.Windowing.Common\OpenToolkit.Windowing.Common.csproj", "{619434D1-477D-40E7-A691-AAF510D8A209}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenToolkit.GraphicsLibraryFramework", "src\Windowing\OpenToolkit.GraphicsLibraryFramework\OpenToolkit.GraphicsLibraryFramework.csproj", "{CA7C55A9-B86F-4467-A655-14D04C573E89}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenToolkit.GraphicsLibraryFramework", "src\Windowing\OpenToolkit.GraphicsLibraryFramework\OpenToolkit.GraphicsLibraryFramework.csproj", "{CA7C55A9-B86F-4467-A655-14D04C573E89}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenToolkit.Windowing.Desktop", "src\Windowing\OpenToolkit.Windowing.Desktop\OpenToolkit.Windowing.Desktop.csproj", "{BB7FF73F-5143-4D57-B228-770B10CA80C6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenToolkit.Windowing.Desktop", "src\Windowing\OpenToolkit.Windowing.Desktop\OpenToolkit.Windowing.Desktop.csproj", "{BB7FF73F-5143-4D57-B228-770B10CA80C6}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{0B9B71A1-29F7-4CC5-9A9D-9DF122BE8B28}"
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "OpenToolkit.Tests", "tests\OpenToolkit.Tests\OpenToolkit.Tests.fsproj", "{0100EDA0-A134-4D9E-AE6B-470169BD8B94}"
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "OpenToolkit.Tests", "tests\OpenToolkit.Tests\OpenToolkit.Tests.fsproj", "{0100EDA0-A134-4D9E-AE6B-470169BD8B94}"
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "OpenToolkit.Tests.Integration", "tests\OpenToolkit.Tests.Integration\OpenToolkit.Tests.Integration.fsproj", "{48936313-63D4-4A26-87F0-040AA15FF4A6}"
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "OpenToolkit.Tests.Integration", "tests\OpenToolkit.Tests.Integration\OpenToolkit.Tests.Integration.fsproj", "{48936313-63D4-4A26-87F0-040AA15FF4A6}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{471E0D18-D620-4CBE-A471-F3DB470E6D49}"
-ProjectSection(SolutionItems) = preProject
-	build.sh = build.sh
-	build.cmd = build.cmd
-	build.fsx = build.fsx
-	build-bootstrap.csproj = build-bootstrap.csproj
-EndProjectSection
+	ProjectSection(SolutionItems) = preProject
+		build-bootstrap.csproj = build-bootstrap.csproj
+		build.cmd = build.cmd
+		build.fsx = build.fsx
+		build.sh = build.sh
+	EndProjectSection
+EndProject
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Generator", "src\Generator\Generator.fsproj", "{17868C80-6FD6-4A5A-908A-FA4FDCFB416E}"
+EndProject
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "SpecificationOpenGL", "src\SpecificationOpenGL\SpecificationOpenGL.fsproj", "{808BD056-6B35-4DB3-93E2-78243CC51A6A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{A2469728-6488-483E-86A7-BE926F02713B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenGL_Bindings", "src\OpenGL\OpenGL_Bindings.csproj", "{38599D4C-97B2-404F-926C-2643E47A0967}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "OpenGL", "OpenGL", "{755F039C-B4EB-46A0-91F7-B503F7C38F4A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -115,10 +110,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{4828A378-F24E-4BB0-BF5F-C4C6C9082081}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4828A378-F24E-4BB0-BF5F-C4C6C9082081}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4828A378-F24E-4BB0-BF5F-C4C6C9082081}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4828A378-F24E-4BB0-BF5F-C4C6C9082081}.Release|Any CPU.Build.0 = Release|Any CPU
 		{FD2151DE-0663-4100-9AB5-D1E22CF2144D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{FD2151DE-0663-4100-9AB5-D1E22CF2144D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FD2151DE-0663-4100-9AB5-D1E22CF2144D}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -211,22 +202,6 @@ Global
 		{BB7FF73F-5143-4D57-B228-770B10CA80C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BB7FF73F-5143-4D57-B228-770B10CA80C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BB7FF73F-5143-4D57-B228-770B10CA80C6}.Release|Any CPU.Build.0 = Release|Any CPU
-		{79AAF02C-CACC-46FC-BADB-8CA3858C3CA2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{79AAF02C-CACC-46FC-BADB-8CA3858C3CA2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{79AAF02C-CACC-46FC-BADB-8CA3858C3CA2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{79AAF02C-CACC-46FC-BADB-8CA3858C3CA2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1FC04DAC-DF84-41BB-921A-35227FBF58DF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1FC04DAC-DF84-41BB-921A-35227FBF58DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1FC04DAC-DF84-41BB-921A-35227FBF58DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1FC04DAC-DF84-41BB-921A-35227FBF58DF}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1BA5A86D-8EB9-4ADE-AFB1-67E849F9990B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1BA5A86D-8EB9-4ADE-AFB1-67E849F9990B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1BA5A86D-8EB9-4ADE-AFB1-67E849F9990B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1BA5A86D-8EB9-4ADE-AFB1-67E849F9990B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C3968522-8B64-48D6-A2BF-06B37D04CCF0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C3968522-8B64-48D6-A2BF-06B37D04CCF0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C3968522-8B64-48D6-A2BF-06B37D04CCF0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C3968522-8B64-48D6-A2BF-06B37D04CCF0}.Release|Any CPU.Build.0 = Release|Any CPU
 		{0100EDA0-A134-4D9E-AE6B-470169BD8B94}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{0100EDA0-A134-4D9E-AE6B-470169BD8B94}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0100EDA0-A134-4D9E-AE6B-470169BD8B94}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -235,6 +210,18 @@ Global
 		{48936313-63D4-4A26-87F0-040AA15FF4A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{48936313-63D4-4A26-87F0-040AA15FF4A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{48936313-63D4-4A26-87F0-040AA15FF4A6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{17868C80-6FD6-4A5A-908A-FA4FDCFB416E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{17868C80-6FD6-4A5A-908A-FA4FDCFB416E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{17868C80-6FD6-4A5A-908A-FA4FDCFB416E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{17868C80-6FD6-4A5A-908A-FA4FDCFB416E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{808BD056-6B35-4DB3-93E2-78243CC51A6A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{808BD056-6B35-4DB3-93E2-78243CC51A6A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{808BD056-6B35-4DB3-93E2-78243CC51A6A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{808BD056-6B35-4DB3-93E2-78243CC51A6A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{38599D4C-97B2-404F-926C-2643E47A0967}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{38599D4C-97B2-404F-926C-2643E47A0967}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{38599D4C-97B2-404F-926C-2643E47A0967}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{38599D4C-97B2-404F-926C-2643E47A0967}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -261,11 +248,11 @@ Global
 		{619434D1-477D-40E7-A691-AAF510D8A209} = {BBBE802B-9F6E-4299-97CE-97CDA43802B9}
 		{CA7C55A9-B86F-4467-A655-14D04C573E89} = {BBBE802B-9F6E-4299-97CE-97CDA43802B9}
 		{BB7FF73F-5143-4D57-B228-770B10CA80C6} = {BBBE802B-9F6E-4299-97CE-97CDA43802B9}
-		{1FC04DAC-DF84-41BB-921A-35227FBF58DF} = {00962052-26B6-4B29-BA72-6EF98E944EE1}
-		{1BA5A86D-8EB9-4ADE-AFB1-67E849F9990B} = {00962052-26B6-4B29-BA72-6EF98E944EE1}
-		{C3968522-8B64-48D6-A2BF-06B37D04CCF0} = {00962052-26B6-4B29-BA72-6EF98E944EE1}
 		{0100EDA0-A134-4D9E-AE6B-470169BD8B94} = {0B9B71A1-29F7-4CC5-9A9D-9DF122BE8B28}
 		{48936313-63D4-4A26-87F0-040AA15FF4A6} = {0B9B71A1-29F7-4CC5-9A9D-9DF122BE8B28}
+		{808BD056-6B35-4DB3-93E2-78243CC51A6A} = {0B9B71A1-29F7-4CC5-9A9D-9DF122BE8B28}
+		{38599D4C-97B2-404F-926C-2643E47A0967} = {755F039C-B4EB-46A0-91F7-B503F7C38F4A}
+		{755F039C-B4EB-46A0-91F7-B503F7C38F4A} = {A2469728-6488-483E-86A7-BE926F02713B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {82DDE6D6-0D55-49B4-9C64-B31B4A6E729F}
