@@ -11,8 +11,9 @@
     <Compile Include="Util.fs" />
     <Compile Include="Parsing.fs" />
     <Compile Include="TypeMapping.fs" />
-    <Compile Include="Formatting.fs" />
     <Compile Include="Aggregator.fs" />
+    <Compile Include="Formatting.fs" />
+    <Compile Include="OverloadGeneration.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>
 
