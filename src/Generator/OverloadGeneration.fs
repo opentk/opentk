@@ -1,5 +1,7 @@
 ﻿module OverloadGeneration
 open Formatting
+open Types
+open Constants
 
 
 let autoGenerateAdditionalOverloadForType (func: PrintReadyTypedFunctionDeclaration) =

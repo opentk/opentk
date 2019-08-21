@@ -20,7 +20,8 @@ open Formatting
 type ParseResult =
     { enums: EnumGroup[]
       functions: FunctionDeclaration[]
-      extensions: ExtensionInfo[] }
+      extensions: ExtensionInfo[]
+      data: OpenGL_Specification.Registry }
 
 let parse (pathToSpec: string) =
     let test = OpenGL_Specification.Load pathToSpec
@@ -34,34 +35,24 @@ let parse (pathToSpec: string) =
 
     { enums = enums
       functions = functions
-      extensions = extensions } : ParseResult
+      extensions = extensions
+      data = test } : ParseResult
 
 [<RequireQualifiedAccess>]
 type TypecheckAndFormatWithOverloadGenerationResult =
-    { functions: PrintReadyTypedFunctionDeclaration[]
-      enums: PrintReadyEnumGroup[] }
+    { prettyFunctions: PrintReadyTypedFunctionDeclaration[]
+      prettyEnumGroups: PrintReadyEnumGroup[]
+      functionToExtensionMapper: Map<string, string[]>
+      enumCaseToExtensionMapper: Map<string, string[]>
+      prettyEnumGroupMap: Map<string, PrintReadyEnumGroup>
+      extensionsOnlyFunctions: PrintReadyTypedFunctionDeclaration[]
+      extensionsOnlyEnumCases: PrintReadyEnumGroup[]
+      data: OpenGL_Specification.Registry }
 
-let typecheckAndFormatAndGenerateOverloads (parseResult: ParseResult) =
+let ``typecheck, format and generate overloads`` (parseResult: ParseResult) =
     let enums = parseResult.enums
     let functions = parseResult.functions
     let extensions = parseResult.extensions
-    let getMapper fn =
-        extensions
-        |> Array.Parallel.collect
-            (fun extension ->
-            fn extension
-            |> Array.Parallel.map (fun value -> extension.name, value))
-        |> Array.groupBy snd
-        |> Array.Parallel.map
-            (fun (value, extensions) ->
-            value, extensions |> Array.Parallel.map fst)
-        |> Map.ofArray
-
-    let functionToExtensionMapper =
-        getMapper (fun extension -> extension.functions)
-
-    let enumCaseToExtensionMapper =
-        getMapper (fun extension -> extension.enumCases)
 
     let enumMap =
         enums
@@ -105,45 +96,6 @@ let typecheckAndFormatAndGenerateOverloads (parseResult: ParseResult) =
     let prettyEnumGroups =
         enums |> Array.Parallel.map Formatting.PrintReady.formatEnumGroup
 
-    let prettyEnumGroupMap =
-        prettyEnumGroups
-        |> Array.Parallel.map (fun group -> group.groupName, group)
-        |> Map.ofArray
-    {|
-        prettyEnumGroups = prettyEnumGroups
-        prettyFunctions = prettyFunctions
-        extensions = extensions
-    |}
-
-let aggregateFunctionsAndEnums () = ()
-
-[<EntryPoint>]
-let main argv =
-    printfn
-        "Hello World from F# and welcome to the OpenTK4.0 binding generator!"
-    let result = CommandLine.Parser.Default.ParseArguments<options>(argv)
-
-    let options =
-        match result with
-        | :? (Parsed<options>) as parsed -> parsed.Value
-        | :? (NotParsed<options>) as notParsed ->
-            failwithf "Error %A" (notParsed.Errors)
-        | _ -> failwith "No options given"
-    System.Runtime.GCSettings.LatencyMode <- System.Runtime.GCLatencyMode.SustainedLowLatency
-    let startTime = System.Diagnostics.Stopwatch.StartNew()
-    let path = options.pathToSpecificationFile
-    let test = OpenGL_Specification.Load path
-    let enums = Parsing.getEnumsFromSpecification test
-    printfn "Enum group count: %d" enums.Length
-    let enumMap =
-        enums
-        |> Array.Parallel.map (fun group -> group.groupName, group)
-        |> Map.ofArray
-
-    let functions = Parsing.getFunctions test
-    printfn "Function count: %d" functions.Length
-    let extensions = Parsing.getExtensions test
-    printfn "Extension count: %d" extensions.Length
     let getMapper fn =
         extensions
         |> Array.Parallel.collect
@@ -158,80 +110,15 @@ let main argv =
 
     let functionToExtensionMapper =
         getMapper (fun extension -> extension.functions)
+
     let enumCaseToExtensionMapper =
         getMapper (fun extension -> extension.enumCases)
-
-    let prettyFunctions =
-        TypeMapping.looslyTypedFunctionsToTypedFunctions enumMap functions
-        |> Array.Parallel.collect (fun func ->            
-            let func = Formatting.PrintReady.formatTypedFunctionDeclaration func
-            match functionOverloads |> Map.tryFind func.actualName with
-            | Some overload ->
-                overload.overloads
-                |> Array.Parallel.map
-                    (fun currOverload ->
-                    { func with
-                          prettyName =
-                              overload.alternativeName
-                              |> Option.defaultValue func.prettyName
-                          parameters =
-                              currOverload.parameters
-                              |> Array.map
-                                  Formatting.PrintReady.formatTypeTypeParameterInfo
-                          retType =
-                              currOverload.retType
-                              |> Formatting.PrintReady.formatTypeInfo })
-            | None ->
-                let newName, primaryOverload =
-                    func
-                    |> OverloadGeneration.autoGenerateOverloadForType
-                let funcWithOriginalSignature =
-                    newName
-                    |> Option.map(fun newName -> { func with prettyName = newName })
-                    |> Option.defaultValue func
-                let additionalOverloads = OverloadGeneration.autoGenerateAdditionalOverloadForType funcWithOriginalSignature
-                [| funcWithOriginalSignature
-                   primaryOverload |]
-                |> Array.append additionalOverloads
-                |> Array.distinct)
-
-    let prettyEnumGroups =
-        enums |> Array.Parallel.map Formatting.PrintReady.formatEnumGroup
+        
 
     let prettyEnumGroupMap =
         prettyEnumGroups
         |> Array.Parallel.map (fun group -> group.groupName, group)
         |> Map.ofArray
-    printfn "overall correct function specifications: %d"
-        prettyFunctions.Length
-    let openGlVersions = Aggregator.getEnumCasesAndCommandsPerVersion test
-    let basePath = options.pathToOutputDirectory
-
-    let getShortTagForOpenGlVersion (openGl: RawOpenGLSpecificationDetails) =
-        let str = sprintf "%M" openGl.versionNumber
-        if openGl.version.Contains "ES" then str + "_ES"
-        else str
-
-    let getPathForOpenGlVersion (openGl: RawOpenGLSpecificationDetails) =
-        basePath </> (getShortTagForOpenGlVersion openGl)
-    basePath
-    |> Directory.CreateDirectory
-    |> ignore
-    Formatting.generateDummyTypes
-    |> fun content ->
-        File.WriteAllText(basePath </> dummyTypesFileName + ".cs", content)
-    let inline writeToFile pathToFile topic content =
-        pathToFile
-        |> Directory.CreateDirectory
-        |> ignore
-        let fileName = topic + ".cs"
-        Directory.CreateDirectory pathToFile |> ignore
-        File.WriteAllText(pathToFile </> fileName, content)
-        //pathToFile </> fileName
-
-    let inline writeToFileSpec (openGl: RawOpenGLSpecificationDetails) topic content =
-        let pathToFile = getPathForOpenGlVersion openGl
-        writeToFile pathToFile topic content
 
     let typecheckedFunctionsExtensionsOnly =
         prettyFunctions
@@ -262,22 +149,90 @@ let main argv =
             else None)
         |> Array.append requiredEnumsFromFunctions
         |> Array.distinctBy (fun e -> e.groupName)
+    {
+        prettyEnumGroups = prettyEnumGroups
+        prettyFunctions = prettyFunctions
+        prettyEnumGroupMap = prettyEnumGroupMap
+        functionToExtensionMapper = functionToExtensionMapper
+        enumCaseToExtensionMapper = enumCaseToExtensionMapper
+        extensionsOnlyEnumCases = enumsWithExtensionsOnly
+        extensionsOnlyFunctions = typecheckedFunctionsExtensionsOnly
+        data = parseResult.data
+    } : TypecheckAndFormatWithOverloadGenerationResult
+
+type TypecheckAndAggregateResults =
+    { prettyFunctions: PrintReadyTypedFunctionDeclaration[]
+      prettyEnumGroups: PrintReadyEnumGroup[]
+      functionToExtensionMapper: Map<string, string[]>
+      enumCaseToExtensionMapper: Map<string, string[]>
+      prettyEnumGroupMap: Map<string, PrintReadyEnumGroup>
+      extensionsOnlyFunctions: PrintReadyTypedFunctionDeclaration[]
+      extensionsOnlyEnumCases: PrintReadyEnumGroup[]
+      openGlVersions: RawOpenGLSpecificationDetails[] }
+
+let aggregateFunctionsAndEnums (typecheckResults: TypecheckAndFormatWithOverloadGenerationResult) =
+    let openGlVersions = Aggregator.getEnumCasesAndCommandsPerVersion typecheckResults.data
+    { prettyFunctions = typecheckResults.prettyFunctions
+      prettyEnumGroups = typecheckResults.prettyEnumGroups
+      openGlVersions = openGlVersions
+      prettyEnumGroupMap = typecheckResults.prettyEnumGroupMap
+      functionToExtensionMapper = typecheckResults.functionToExtensionMapper
+      enumCaseToExtensionMapper = typecheckResults.enumCaseToExtensionMapper
+      extensionsOnlyEnumCases = typecheckResults.extensionsOnlyEnumCases
+      extensionsOnlyFunctions = typecheckResults.extensionsOnlyFunctions } : TypecheckAndAggregateResults
+
+let generateCode basePath (typecheckAndAggregateResults: TypecheckAndAggregateResults) =
+    let enumsWithExtensionsOnly = typecheckAndAggregateResults.extensionsOnlyEnumCases
+    let typecheckedFunctionsExtensionsOnly = typecheckAndAggregateResults.extensionsOnlyFunctions
+    let openGlVersions = typecheckAndAggregateResults.openGlVersions
+    let prettyFunctions = typecheckAndAggregateResults.prettyFunctions
+    let prettyEnumGroups = typecheckAndAggregateResults.prettyEnumGroups
+    let prettyEnumGroupMap = typecheckAndAggregateResults.prettyEnumGroupMap
+    let functionToExtensionMapper = typecheckAndAggregateResults.functionToExtensionMapper
+    let enumCaseToExtensionMapper = typecheckAndAggregateResults.enumCaseToExtensionMapper
     
+    
+    let inline writeToFile pathToFile topic content =
+        pathToFile
+        |> Directory.CreateDirectory
+        |> ignore
+        let fileName = topic + ".cs"
+        Directory.CreateDirectory pathToFile |> ignore
+        File.WriteAllText(pathToFile </> fileName, content)
+    
+    let getShortTagForOpenGlVersion (openGl: RawOpenGLSpecificationDetails) =
+        let str = sprintf "%M" openGl.versionNumber
+        if openGl.version.Contains "ES" then str + "_ES"
+        else str
+    
+    let getPathForOpenGlVersion (openGl: RawOpenGLSpecificationDetails) =
+        basePath </> (getShortTagForOpenGlVersion openGl)
+    
+    let inline writeToFileSpec (openGl: RawOpenGLSpecificationDetails) topic content =
+        let pathToFile = getPathForOpenGlVersion openGl
+        writeToFile pathToFile topic content
 
-    [|  let path = basePath </> "Extensions"
-        yield Formatting.generateEnums enumsWithExtensionsOnly (GenerateDetails.Extensions)
-            |> writeToFile path "EnumsExtensionsOnly"
-
-        yield Formatting.generateInterface typecheckedFunctionsExtensionsOnly (GenerateDetails.Extensions)
-            |> writeToFile path "InterfaceExtensionsOnly"
-
-        yield Formatting.generateStaticClass typecheckedFunctionsExtensionsOnly
-                    (GenerateDetails.Extensions)
-                        |> writeToFile path "StaticClassExtensionsOnly"
-
-        yield Formatting.generateLibraryLoaderFor (GenerateDetails.Extensions)
-            |> writeToFile path "LibraryLoaderExtensionsOnly" |]
+    basePath
+    |> Directory.CreateDirectory
     |> ignore
+    Formatting.generateDummyTypes
+    |> fun content ->
+        File.WriteAllText(basePath </> dummyTypesFileName + ".cs", content)
+
+    let path = basePath </> "Extensions"
+    Formatting.generateEnums enumsWithExtensionsOnly (GenerateDetails.Extensions)
+    |> writeToFile path "EnumsExtensionsOnly"
+
+    Formatting.generateInterface typecheckedFunctionsExtensionsOnly (GenerateDetails.Extensions)
+    |> writeToFile path "InterfaceExtensionsOnly"
+
+    Formatting.generateStaticClass typecheckedFunctionsExtensionsOnly
+        (GenerateDetails.Extensions)
+    |> writeToFile path "StaticClassExtensionsOnly"
+
+    Formatting.generateLibraryLoaderFor (GenerateDetails.Extensions)
+    |> writeToFile path "LibraryLoaderExtensionsOnly"
+
     openGlVersions
     |> Array.Parallel.iter (fun glVersion ->
         let inline writeToFile topic content =
@@ -329,6 +284,29 @@ let main argv =
         |> writeToFile "LibraryLoaderWithoutExtensions"
 
         printfn "Done writing OpenGL Version %s files." glVersion.version)
+
+[<EntryPoint>]
+let main argv =
+    printfn
+        "Hello World from F# and welcome to the OpenTK4.0 binding generator!"
+    let result = CommandLine.Parser.Default.ParseArguments<options>(argv)
+
+    let options =
+        match result with
+        | :? (Parsed<options>) as parsed -> parsed.Value
+        | :? (NotParsed<options>) as notParsed ->
+            failwithf "Error %A" (notParsed.Errors)
+        | _ -> failwith "No options given"
+    System.Runtime.GCSettings.LatencyMode <- System.Runtime.GCLatencyMode.SustainedLowLatency
+    let startTime = System.Diagnostics.Stopwatch.StartNew()
+    let path = options.pathToSpecificationFile
+
+    path
+    |> parse
+    |> ``typecheck, format and generate overloads``
+    |> aggregateFunctionsAndEnums
+    |> generateCode options.pathToOutputDirectory
+    
 
     printfn "Generating files took %s seconds"
         (startTime.Elapsed.Seconds |> string)
