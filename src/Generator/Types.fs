@@ -104,6 +104,7 @@ type GLType =
     | GLDEBUGPROCAMD
     | GLDEBUGPROCARB
     | GLDEBUGPROCKHR
+    | GLVULKANPROCNV
     | OpenToolkit of OpenToolkitType
     | RefPointer of GLType
     | StructGenericType of string

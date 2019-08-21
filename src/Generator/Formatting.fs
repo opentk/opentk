@@ -105,6 +105,8 @@ module TypeToString =
             specTypeToCSharpTypeWithFallback "GLDEBUGPROCARB"
         | GLType.GLDEBUGPROCKHR ->
             specTypeToCSharpTypeWithFallback "GLDEBUGPROCKHR"
+        | GLType.GLVULKANPROCNV ->
+            specTypeToCSharpTypeWithFallback "GLVULKANPROCNV"
         | GLType.RefPointer typ -> "ref " + typeToString typ
         | GLType.StructGenericType s -> s
         | GLType.ArrayType typ -> typeToString typ + "[]"

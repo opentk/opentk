@@ -62,6 +62,7 @@ let tryParseType enumMap funcOrParamName (typ: GLLooseType) =
         | "GLDEBUGPROCAMD" -> Some GLDEBUGPROCAMD
         | "GLDEBUGPROCARB" -> Some GLDEBUGPROCARB
         | "GLDEBUGPROCKHR" -> Some GLDEBUGPROCKHR
+        | "GLVULKANPROCNV" -> Some GLVULKANPROCNV
         | _ ->
             printfn "input %s is not a valid type" str
             None
@@ -121,9 +122,9 @@ let getEnumsFromSpecification (spec: OpenGL_Specification.Registry) =
         })
 
 let paramsTypeRegex =
-    new Regex("<param(.*?(group=\"(?<group>.*?)\").*?|.*?)>(?<f>.*?)(<ptype>(?<t>.*?)<\/ptype>(?<b>.*?))?(<name>.+?<\/name>)<\/param>")
+    new Regex("<param(.*?(group=\"(?<group>.*?)\").*?|.*?)>(?<f>.*?)(<ptype>(?<t>.*?)<\/ptype>(?<b>.*?))?(<name>.+?<\/name>).*?<\/param>")
 let protoTypeRegex =
-    new Regex("<proto(.*?(group=\"(?<group>.*?)\").*?|.*?)>(?<f>.*?)(<ptype>(?<t>.*?)<\/ptype>(?<b>.*?))?(<name>.+?<\/name>)<\/proto>")
+    new Regex("<proto(.*?(group=\"(?<group>.*?)\").*?|.*?)>(?<f>.*?)(<ptype>(?<t>.*?)<\/ptype>(?<b>.*?))?(<name>.+?<\/name>).*?<\/proto>")
 let getGroupValue (group: string) (matching: Match) =
     matching.Groups.[group].Value
 let getRawElementDataWithoutLineBreaks (v: Xml.Linq.XElement) =
