@@ -1,7 +1,5 @@
 module Util
 
-open Types
-
 let inline (</>) path1 path2 = System.IO.Path.Combine(path1, path2)
 
 type MaybeBuilder() =
@@ -21,7 +19,7 @@ module String =
 
 module Array =
     module Parallel =
-        let partitionEither f (input: 'T []) =
+        let partitionChoice f (input: 'T []) =
             let inputLength = input.Length
             let isLeft: bool [] = Array.zeroCreate inputLength
             let left: 'U [] = Array.zeroCreate inputLength
@@ -29,10 +27,10 @@ module Array =
             input
             |> Array.Parallel.iteri (fun i e ->
                 match f e with
-                | Left v ->
+                | Choice1Of2 v ->
                     isLeft.[i] <- true
                     left.[i] <- v
-                | Right v ->
+                | Choice2Of2 v ->
                     isLeft.[i] <- false
                     right.[i] <- v)
             let mutable leftCount = 0
@@ -59,10 +57,10 @@ module Array =
                     rightCounter <- rightCounter + 1
             leftOutput, rightOutput
 
-        let collectEither (f: 'T -> Either<'U, 'V> []) (input: 'T []) =
+        let collectEither (f: 'T -> Choice<'U, 'V> []) (input: 'T []) =
             input
             |> Array.Parallel.collect f
-            |> partitionEither id
+            |> partitionChoice id
 
         let updateState toAdd toRemove currentState =
             currentState

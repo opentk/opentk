@@ -1,9 +1,12 @@
 ﻿// Learn more about F// at http://fsharp.org
+open System
+open Formatting
 open Types
 open SpecificationOpenGL
 open Util
 open Constants
 open System.IO
+open System.Runtime
 open CommandLine
 
 type options =
@@ -14,7 +17,6 @@ type options =
                HelpText = "Path to output directory.")>]
       pathToOutputDirectory: string }
 
-open Formatting
 
 [<RequireQualifiedAccess>]
 type ParseResult =
@@ -22,7 +24,7 @@ type ParseResult =
       functions: FunctionDeclaration[]
       extensions: ExtensionInfo[]
       data: OpenGL_Specification.Registry }
-
+ 
 let parse (pathToSpec: string) =
     let test = OpenGL_Specification.Load pathToSpec
     let enums = Parsing.getEnumsFromSpecification test
@@ -288,7 +290,7 @@ let generateCode basePath (typecheckAndAggregateResults: TypecheckAndAggregateRe
 [<EntryPoint>]
 let main argv =
     printfn
-        "Hello World from F# and welcome to the OpenTK4.0 binding generator!"
+        "Welcome to the OpenTK4.0 binding generator F#ast edition!"
     let result = CommandLine.Parser.Default.ParseArguments<options>(argv)
 
     let options =
@@ -297,7 +299,8 @@ let main argv =
         | :? (NotParsed<options>) as notParsed ->
             failwithf "Error %A" (notParsed.Errors)
         | _ -> failwith "No options given"
-    System.Runtime.GCSettings.LatencyMode <- System.Runtime.GCLatencyMode.SustainedLowLatency
+        
+    System.Runtime.GCSettings.LatencyMode <- System.Runtime.GCLatencyMode.Batch
     let startTime = System.Diagnostics.Stopwatch.StartNew()
     let path = options.pathToSpecificationFile
 
@@ -307,7 +310,5 @@ let main argv =
     |> aggregateFunctionsAndEnums
     |> generateCode options.pathToOutputDirectory
     
-
-    printfn "Generating files took %s seconds"
-        (startTime.Elapsed.Seconds |> string)
+    printfn "Generating files took %f seconds" startTime.Elapsed.TotalSeconds
     0 // return an integer exit code

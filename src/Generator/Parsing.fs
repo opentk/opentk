@@ -8,7 +8,7 @@ let (|IsPointerType|_|) input =
 
 open Types
 
-let tryParseType enumMap funcOrParamName (typ: LooseType) =
+let tryParseType enumMap funcOrParamName (typ: GLLooseType) =
     let str = typ.typ.Replace("const", "").Replace(" ", "")
 
     let rec tryParse str =
@@ -67,11 +67,9 @@ let tryParseType enumMap funcOrParamName (typ: LooseType) =
             None
     tryParse str
 
-open Types
 open SpecificationOpenGL
 open Util
 open System
-open System.IO
 open System.Text.RegularExpressions
 
 let readSpec (path: string) = OpenGL_Specification.Load path
@@ -187,10 +185,10 @@ let getExtensions (spec: OpenGL_Specification.Registry) =
                 |> Array.Parallel.collectEither (fun entry ->
                     [| entry.Commands
                        |> Array.Parallel.map (fun cmd -> cmd.Name)
-                       |> Left
+                       |> Choice1Of2
                        entry.Enums
                        |> Array.Parallel.map (fun cmd -> cmd.Name)
-                       |> Right |])
+                       |> Choice2Of2 |])
             functions |> Array.Parallel.collect id,
             enums |> Array.Parallel.collect id
         { name = extension.Name
