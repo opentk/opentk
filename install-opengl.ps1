@@ -4,7 +4,7 @@
 # Original script: https://github.com/glue-viz/glue-vispy-viewers/blob/master/.install-opengl.ps1
 
 #$MESA_GL_URL = "https://github.com/vispy/demo-data/raw/master/mesa/"
-$MESA_GL_URL = "https://ci.appveyor.com/api/projects/jvbsl/mesabinary/artifacts/opengl_win_dll.zip?branch=master"
+$MESA_GL_URL = "https://github.com/jvbsl/MesaBinary/releases/download/19/opengl_win_dll.zip"
 # Mesa DLLs found linked from:
 #     http://qt-project.org/wiki/Cross-compiling-Mesa-for-Windows
 # to:
@@ -12,7 +12,7 @@ $MESA_GL_URL = "https://ci.appveyor.com/api/projects/jvbsl/mesabinary/artifacts/
 
 function grantRights($file) {
         takeown /f $file
-        icacls $file /grant Users:`(F,WDAC`)
+        icacls $file /grant "${env:ComputerName}\${env:UserName}:F"
 }
 function revokeRights($file) {
         icacls "$file" /C /reset
