@@ -110,7 +110,7 @@ module Box3 =
             
             b.Scale(v, v2)
             
-            Assert.ApproximatelyEqualEpsilon(v * f, b.Size, (float32)0.0001)
+            Assert.ApproximatelyEqualEpsilon(v * f, b.Size, (float32)0.001)
             
         [<Property>]
         let ``Scaling from the center of a box should have the same result as multiplying the size`` (b1 : Box3, v1 : Vector3) =
