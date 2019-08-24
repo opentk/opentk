@@ -348,14 +348,15 @@ let generateInterface (functions: PrintReadyTypedFunctionDeclaration [])
     (details: GenerateDetails) =
     let _namespace, documentationFor = namespaceAndDocumentationFor details
     let usings =
-        [ "System"; advancedDlSupport; mathematicsNamespace; dummyTypesNamespace ]
+        [ "System"; advancedDlSupport; mathematicsNamespace; dummyTypesNamespace; openTKCoreNamespace + ".API"; openTKCoreNamespace + ".Loader" ]
     seq {
         for using in usings -> sprintf "using %s;" using |> writeLine
         yield writeEmptyLine
         yield "namespace " + graphicsNamespace + "." + _namespace |> writeLine
         yield writeLeftBracket
         yield indent
-        yield writeLine "public interface IGL"
+        yield writeLine "[DefaultPlatformLibrary(typeof(LibraryNameContainer))]"
+        yield writeLine "public interface IGL : IAPI"
         yield writeLeftBracket
         yield indent
         yield! functions
@@ -482,14 +483,12 @@ let generateLibraryLoaderFor (details: GenerateDetails) =
         let call =
             sprintf """using AdvancedDLSupport;
 using OpenToolkit.Graphics.GL;
+using OpenToolkit.Core.Loader;
 namespace %s.%s
 {
     public static partial class GL
     {
-        public static IGL instance = new NativeLibraryBuilder(ImplementationOptions.SuppressSecurity |
-                                                     ImplementationOptions.GenerateDisposalChecks |
-                                                     ImplementationOptions.UseLazyBinding |
-                                                     ImplementationOptions.EnableOptimizations).ActivateInterface<IGL>(LibraryNameContainer.GetLibraryNameForCurrentPlatform());
+        public static IGL instance = APILoader.Load<IGL>();
     }
 }"""
         call graphicsNamespace _namespace
@@ -511,6 +510,7 @@ let generateCsProjectFileForAllVersions (versions: RawOpenGLSpecificationDetails
 
 <ItemGroup>
     <PackageReference Include="AdvancedDLSupport" Version="3.0.0" />
+    <ProjectReference Include="..\OpenToolkit.Core\OpenToolkit.Core.csproj" />
     <ProjectReference Include="..\OpenToolkit.Mathematics\OpenToolkit.Mathematics.csproj" />
 </ItemGroup>
 

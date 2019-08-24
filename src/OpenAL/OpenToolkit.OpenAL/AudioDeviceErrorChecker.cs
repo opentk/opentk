@@ -18,7 +18,7 @@ namespace OpenToolkit.OpenAL
     /// </summary>
     public struct AudioDeviceErrorChecker : IDisposable
     {
-        private static readonly IContextErrors ErrorAPI = APILoader.Load<ALContext>(new OpenALLibraryNameContainer());
+        private static readonly IContextErrors ErrorAPI = APILoader.Load<ALContext>();
         private readonly unsafe Device* _device;
 
         /// <summary>

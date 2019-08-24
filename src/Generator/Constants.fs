@@ -33,6 +33,7 @@ let reservedKeywords =
 let graphicsNamespace = "OpenToolkit.Graphics"
 let dummyTypesFileName = "DummyTypes"
 let advancedDlSupport = "AdvancedDLSupport"
+let openTKCoreNamespace = "OpenToolkit.Core"
 let mathematicsNamespace = "OpenToolkit.Mathematics"
 let dummyTypesNamespace = graphicsNamespace + "." + "GL"
 let prefixToRemove = [| "gl"; "GL_" |]

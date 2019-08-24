@@ -9,6 +9,7 @@
 
 using System;
 using AdvancedDLSupport;
+using OpenToolkit.Core.API;
 using OpenToolkit.Core.Extensions;
 using OpenToolkit.Core.Loader;
 using OpenToolkit.Mathematics;
@@ -20,7 +21,7 @@ namespace OpenToolkit.OpenAL
     /// <summary>
     /// Provides access to the OpenAL 1.1 API.
     /// </summary>
-    public abstract class AL : NativeLibraryBase, IAL
+    public abstract class AL : APIBase, IAL
     {
         /// <summary>
         /// Gets an instance of the API.
@@ -28,7 +29,7 @@ namespace OpenToolkit.OpenAL
         /// <returns>The instance.</returns>
         public static AL GetAPI()
         {
-            return APILoader.Load<AL>(new OpenALLibraryNameContainer());
+            return APILoader.Load<AL>();
         }
 
         /// <inheritdoc cref="NativeLibraryBase"/>

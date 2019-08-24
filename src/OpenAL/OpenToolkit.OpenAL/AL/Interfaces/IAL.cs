@@ -8,6 +8,8 @@
 //
 
 using AdvancedDLSupport;
+using OpenToolkit.Core.API;
+using OpenToolkit.Core.Loader;
 
 namespace OpenToolkit.OpenAL.Interfaces
 {
@@ -15,7 +17,8 @@ namespace OpenToolkit.OpenAL.Interfaces
     /// Defines the public interface of the OpenAL 1.1 library.
     /// </summary>
     [NativeSymbols(Prefix = "al")]
-    internal interface IAL : IBuffers, IErrors, IExtensions, IListener, ISources, IState
+    [DefaultPlatformLibrary(typeof(OpenALLibraryNameContainer))]
+    internal interface IAL : IAPI, IBuffers, IErrors, IExtensions, IListener, ISources, IState
     {
     }
 }

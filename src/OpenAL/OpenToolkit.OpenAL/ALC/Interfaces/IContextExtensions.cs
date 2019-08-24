@@ -8,6 +8,7 @@
 //
 
 using AdvancedDLSupport;
+using OpenToolkit.Core.API;
 
 namespace OpenToolkit.OpenAL.Interfaces
 {
@@ -16,7 +17,7 @@ namespace OpenToolkit.OpenAL.Interfaces
     /// used to constrain extension implementation classes.
     /// </summary>
     [NativeSymbols(Prefix = "alc")]
-    internal interface IContextExtensions
+    internal interface IContextExtensions : IAPI
     {
         /// <summary>
         /// Determines whether or not the named extension is available.

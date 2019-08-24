@@ -10,6 +10,7 @@
 using System;
 using AdvancedDLSupport;
 using OpenToolkit.Core;
+using OpenToolkit.Core.API;
 using OpenToolkit.Core.Loader;
 using OpenToolkit.OpenAL.Extensions;
 using OpenToolkit.OpenAL.Interfaces;
@@ -19,7 +20,7 @@ namespace OpenToolkit.OpenAL
     /// <summary>
     /// Provides access to the OpenAL 1.1 context API.
     /// </summary>
-    public abstract class ALContext : NativeLibraryBase, IALC
+    public abstract class ALContext : APIBase, IALC
     {
         /// <summary>
         /// Gets an instance of the API.
@@ -27,7 +28,7 @@ namespace OpenToolkit.OpenAL
         /// <returns>The instance.</returns>
         public static ALContext GetAPI()
         {
-            return APILoader.Load<ALContext>(new OpenALLibraryNameContainer());
+            return APILoader.Load<ALContext>();
         }
 
         /// <inheritdoc cref="NativeLibraryBase"/>

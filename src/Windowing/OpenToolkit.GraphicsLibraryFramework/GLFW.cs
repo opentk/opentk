@@ -9,6 +9,7 @@
 
 using System;
 using AdvancedDLSupport;
+using OpenToolkit.Core.API;
 using OpenToolkit.Core.Loader;
 
 namespace OpenToolkit.GraphicsLibraryFramework
@@ -16,7 +17,7 @@ namespace OpenToolkit.GraphicsLibraryFramework
     /// <summary>
     /// Provides access to the GLFW API.
     /// </summary>
-    public abstract class GLFW : NativeLibraryBase, IGLFW
+    public abstract class GLFW : APIBase, IGLFW
     {
         /// <summary>
         /// Gets an instance of the API.
@@ -24,7 +25,7 @@ namespace OpenToolkit.GraphicsLibraryFramework
         /// <returns>The instance.</returns>
         public static GLFW GetAPI()
         {
-            return APILoader.Load<GLFW>(new GLFWLibraryNameContainer());
+            return APILoader.Load<GLFW>();
         }
 
         /// <summary>

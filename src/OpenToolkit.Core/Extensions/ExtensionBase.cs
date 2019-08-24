@@ -9,6 +9,7 @@
 
 using System;
 using AdvancedDLSupport;
+using OpenToolkit.Core.API;
 using OpenToolkit.Core.Loader;
 
 namespace OpenToolkit.Core.Extensions
@@ -16,7 +17,7 @@ namespace OpenToolkit.Core.Extensions
     /// <summary>
     /// Base class for extensions.
     /// </summary>
-    public abstract class ExtensionBase : NativeLibraryBase, IAPIExtension
+    public abstract class ExtensionBase : APIBase, IAPIExtension
     {
         /// <inheritdoc cref="NativeLibraryBase"/>
         protected ExtensionBase(string path, ImplementationOptions options)

@@ -9,6 +9,8 @@
 
 using System;
 using AdvancedDLSupport;
+using OpenToolkit.Core.API;
+using OpenToolkit.Core.Loader;
 
 namespace OpenToolkit.GraphicsLibraryFramework
 {
@@ -18,7 +20,8 @@ namespace OpenToolkit.GraphicsLibraryFramework
     /// Defines the public interface of the GLFW library.
     /// </summary>
     [NativeSymbols(Prefix = "glfw")]
-    internal interface IGLFW
+    [DefaultPlatformLibrary(typeof(GLFWLibraryNameContainer))]
+    internal interface IGLFW : IAPI
     {
         // XML-documentation is from https://www.glfw.org/docs/latest/
         // Still missing in documentation

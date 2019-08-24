@@ -8,6 +8,7 @@
 //
 
 using AdvancedDLSupport;
+using OpenToolkit.Core.API;
 using OpenToolkit.OpenAL.Interfaces;
 
 namespace OpenToolkit.OpenAL.Extensions
@@ -15,7 +16,7 @@ namespace OpenToolkit.OpenAL.Extensions
     /// <summary>
     /// Base class for OpenAL context extensions.
     /// </summary>
-    public abstract class ContextExtensionBase : NativeLibraryBase, IContextExtensions
+    public abstract class ContextExtensionBase : APIBase, IContextExtensions
     {
         /// <inheritdoc cref="NativeLibraryBase"/>
         protected ContextExtensionBase(string path, ImplementationOptions options)

@@ -8,6 +8,8 @@
 //
 
 using AdvancedDLSupport;
+using OpenToolkit.Core.API;
+using OpenToolkit.Core.Loader;
 
 namespace OpenToolkit.OpenAL.Interfaces
 {
@@ -15,7 +17,8 @@ namespace OpenToolkit.OpenAL.Interfaces
     /// Defines the public interface of the context in the OpenAL 1.1 library.
     /// </summary>
     [NativeSymbols(Prefix = "alc")]
-    internal interface IALC : IContext, IContextDevices, IContextErrors, IContextExtensions, IContextState
+    [DefaultPlatformLibrary(typeof(OpenALLibraryNameContainer))]
+    internal interface IALC : IAPI, IContext, IContextDevices, IContextErrors, IContextExtensions, IContextState
     {
     }
 }
