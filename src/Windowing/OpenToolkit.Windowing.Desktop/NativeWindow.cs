@@ -1314,7 +1314,7 @@ namespace OpenToolkit.Windowing.Desktop
         /// <inheritdoc cref="IDisposable.Dispose" />
         protected virtual void Dispose(bool disposing)
         {
-            if (!_disposedValue)
+            if (_disposedValue)
             {
                 return;
             }
