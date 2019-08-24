@@ -20,7 +20,7 @@ module KeyboardState =
 
     [<Fact>]
     let ``Test setting keys️`` () =
-        let keyboardState = KeyboardState()
+        let mutable keyboardState = KeyboardState()
 
         for value in seq { 1 .. LanguagePrimitives.EnumToValue Key.LastKey } do
             let value = LanguagePrimitives.EnumOfValue value
@@ -33,8 +33,8 @@ module KeyboardState =
 
     [<Fact>]
     let ``Equality`` () =
-        let a = KeyboardState()
-        let b = KeyboardState()
+        let mutable a = KeyboardState()
+        let mutable b = KeyboardState()
 
         Assert.Equal(a, b);
         Assert.Equal(a.GetHashCode(), b.GetHashCode());
@@ -46,7 +46,7 @@ module KeyboardState =
 
     [<Fact>]
     let ``Any Key Down`` () =
-        let a = KeyboardState()
+        let mutable a = KeyboardState()
 
         Assert.False a.IsAnyKeyDown
         a.SetKeyState(Key.A, true)
