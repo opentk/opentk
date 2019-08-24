@@ -486,6 +486,11 @@ namespace OpenToolkit.Windowing.Desktop
         /// <param name="settings">The <see cref="INativeWindow"/> related settings.</param>
         public NativeWindow(INativeWindowProperties settings)
         {
+            if (!GLFWProvider.IsOnMainThread)
+            {
+                throw new GLFWException("Can only create windows on the Glfw main thread. (Thread from which Glfw was first created).");
+            }
+
             _title = settings.Title;
 
             unsafe
@@ -1309,7 +1314,7 @@ namespace OpenToolkit.Windowing.Desktop
         /// <inheritdoc cref="IDisposable.Dispose" />
         protected virtual void Dispose(bool disposing)
         {
-            if (!_disposedValue)
+            if (_disposedValue)
             {
                 return;
             }

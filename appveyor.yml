@@ -5,7 +5,13 @@ version: 4.0.0.{build}
 init:
   - git config --global core.autocrlf input
 
+install:
+  # Install OpenGL
+  - "powershell ./install-opengl.ps1"
 configuration: Release
 
 build_script:
   - build.cmd
+
+on_finish:
+  - "powershell ./install-opengl.ps1 uninstall"
