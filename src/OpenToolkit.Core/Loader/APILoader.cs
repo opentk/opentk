@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using AdvancedDLSupport;
 using OpenToolkit.Core.API;
@@ -17,15 +19,22 @@ namespace OpenToolkit.Core.Loader
             _options = ImplementationOptions.EnableOptimizations |
                        ImplementationOptions.SuppressSecurity |
                        ImplementationOptions.GenerateDisposalChecks |
-                       ImplementationOptions.EnableDllMapSupport;
+                       ImplementationOptions.UseLazyBinding;
 
             _builder = new NativeLibraryBuilder(_options);
         }
 
+        private static IEnumerable<T> GetCustomAttributesIncludingBaseInterfaces<T>(Type type)
+        {
+            var attributeType = typeof(T);
+            return type.GetCustomAttributes(attributeType, true).
+                Union(type.GetInterfaces().
+                    SelectMany(interfaceType => interfaceType.GetCustomAttributes(attributeType, true))).Cast<T>();
+        }
+
         private static IPlatformLibraryNameContainer GetDefaultLibraryNameContainer<TAPI>()
         {
-            var attributes = typeof(TAPI).GetCustomAttributes(typeof(DefaultPlatformLibraryAttribute), true)
-                .OfType<DefaultPlatformLibraryAttribute>().ToArray();
+            var attributes = GetCustomAttributesIncludingBaseInterfaces<DefaultPlatformLibraryAttribute>(typeof(TAPI)).ToArray();
             if (attributes.Length > 1)
             {
                 throw new APILoadingException($"Only one {nameof(DefaultPlatformLibraryAttribute)} allowed: {typeof(TAPI).Name}");
