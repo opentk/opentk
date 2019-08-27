@@ -33,8 +33,11 @@ let autoGenerateAdditionalOverloadForType (func: PrintReadyTypedFunctionDeclarat
                 ("TElement" + string i)
             let inner = name |> StructGenericType
             let res = inner |> transformGLTypeFun 
-            if res = inner then None, typ
-            else Some name, res
+            //if res = inner then
+            //    None, typ
+            //else
+            //    Some name, res
+            None, Pointer(Void)
         | _ -> None, transformPointerTy typ
     if lengthParamsSet.Count = 0 then
         let adjustedParameters =
