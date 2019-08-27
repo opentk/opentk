@@ -37,10 +37,38 @@ let openTKCoreNamespace = "OpenToolkit.Core"
 let mathematicsNamespace = "OpenToolkit.Mathematics"
 let dummyTypesNamespace = graphicsNamespace + "." + "GL"
 let prefixToRemove = [| "gl"; "GL_" |]
+
+let rec getBaseGLType t =
+    match t with
+    | Pointer(s) -> getBaseGLType s
+    | RefPointer(s) -> getBaseGLType s
+    | ArrayType(s) -> getBaseGLType s
+    | _ -> t 
 let sufixToRemove =
-    [| "1"; "2"; "3"; "4"; "fv"; "ubv"; "u"; "uiv"; "ui"; "usv"; "us"; "i"; "iv";
-       "f"; "b"; "d"; "dv"; "s"; "sv"; "ub"; "v" |]
-    |> Array.sortByDescending (fun s -> s.Length)
+    [| ("1", fun (d : PrintReadyTypedFunctionDeclaration) -> true);
+       ("2", fun (d : PrintReadyTypedFunctionDeclaration) -> true);
+       ("3", fun (d : PrintReadyTypedFunctionDeclaration) -> true);
+       ("4", fun (d : PrintReadyTypedFunctionDeclaration) -> true);
+       ("fv", fun (d : PrintReadyTypedFunctionDeclaration) -> true);
+       ("ubv", fun (d : PrintReadyTypedFunctionDeclaration) -> true);
+       ("u", fun (d : PrintReadyTypedFunctionDeclaration) -> true);
+       ("uiv", fun (d : PrintReadyTypedFunctionDeclaration) -> true);
+       ("ui", fun (d : PrintReadyTypedFunctionDeclaration) -> true);
+       ("usv", fun (d : PrintReadyTypedFunctionDeclaration) -> true);
+       ("us", fun (d : PrintReadyTypedFunctionDeclaration) -> (Array.exists (fun (p : PrintReadyTypedParameterInfo) -> (getBaseGLType p.typ.typ) = GLType.GLushort) d.parameters ));
+       ("i", fun (d : PrintReadyTypedFunctionDeclaration) -> true);
+       ("iv", fun (d : PrintReadyTypedFunctionDeclaration) -> true);
+       ("f", fun (d : PrintReadyTypedFunctionDeclaration) -> true);
+       ("b", fun (d : PrintReadyTypedFunctionDeclaration) -> true);
+       ("d", fun (d : PrintReadyTypedFunctionDeclaration) -> true);
+       ("dv", fun (d : PrintReadyTypedFunctionDeclaration) -> true);
+       ("s", fun (d : PrintReadyTypedFunctionDeclaration) -> (Array.exists (fun (p : PrintReadyTypedParameterInfo) -> (getBaseGLType p.typ.typ) = GLType.GLshort) d.parameters ));
+       ("sv", fun (d : PrintReadyTypedFunctionDeclaration) -> true);
+       ("ub", fun (d : PrintReadyTypedFunctionDeclaration) -> true);
+       ("v", fun (d : PrintReadyTypedFunctionDeclaration) -> true)
+       |]
+    |> Array.sortByDescending (fun (s,f) -> s.Length)
+
 let reservedKeywordsUpper =
     reservedKeywords |> Array.map (fun k -> k.ToUpper())
 

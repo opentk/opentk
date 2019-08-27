@@ -1,4 +1,5 @@
 ﻿module OverloadGeneration
+open System
 open Formatting
 open Types
 open Constants
@@ -104,11 +105,15 @@ let autoGenerateOverloadForType (func: PrintReadyTypedFunctionDeclaration) =
               parameters = parameters
               prettyName = name }
 
-    let (|EndsWithOneOf|_|) suffixes name =
+    let (|EndsWithOneOf|_|) suffixes func name =
         suffixes
-        |> Array.tryPick(fun suffix ->
+        |> Array.tryPick(fun (suffix, f) ->
             match name with
-            | EndsWith suffix adjustedName -> Some adjustedName
+            | EndsWith suffix adjustedName ->
+                if f func then
+                    Some adjustedName
+                else
+                    None
             | _ -> None
         )
 
@@ -152,5 +157,6 @@ let autoGenerateOverloadForType (func: PrintReadyTypedFunctionDeclaration) =
     | EndsWith "es" _
     | EndsWith "ufv" _
     | EndsWith "udv" _ -> None, keep
-    | EndsWithOneOf sufixToRemove adjustedName -> Some adjustedName, { func with prettyName = adjustedName }
-    | _ -> None, keep
+    | EndsWithOneOf sufixToRemove func adjustedName -> Some adjustedName, { func with prettyName = adjustedName }
+    | _ ->
+            None, keep
