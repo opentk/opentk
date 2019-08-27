@@ -239,25 +239,47 @@ let generateCode basePath (typecheckAndAggregateResults: TypecheckAndAggregateRe
     |> Array.Parallel.iter (fun glVersion ->
         let inline writeToFile topic content =
             writeToFileSpec glVersion topic content
+        //let typecheckedFunctionsWithoutExtensions =
+        //    prettyFunctions
+        //    |> Array.filter
+        //        (fun func ->
+        //        glVersion.functions.Contains func.actualName
+        //        && (functionToExtensionMapper |> Map.containsKey func.actualName |> not))
         let typecheckedFunctionsWithoutExtensions =
-            prettyFunctions
-            |> Array.filter
-                (fun func ->
-                glVersion.functions.Contains func.actualName
-                && (functionToExtensionMapper |> Map.containsKey func.actualName |> not))
+                                                    prettyFunctions
+                                                    |> Array.filter
+                                                        (fun func -> glVersion.functions.Contains func.actualName);
 
         let enumsWithoutExtensions =
             let requiredEnumsFromFunctions =
                 typecheckedFunctionsWithoutExtensions
                 |> Array.Parallel.collect
                     (fun func ->
-                    func.parameters
-                    |> Array.Parallel.choose
-                        (fun param ->
-                        TypeMapping.tryGetEnumType param.typ.typ
-                        |> Option.bind
-                            (fun group ->
-                            prettyEnumGroupMap |> Map.tryFind group.groupName)))
+                        let m1 = func.parameters
+                                |> Array.Parallel.choose
+                                    (fun param ->
+                                    TypeMapping.tryGetEnumType param.typ.typ
+                                    |> Option.bind
+                                        (fun group ->
+                                        prettyEnumGroupMap |> Map.tryFind group.groupName));
+                            
+                        let m2 = [| TypeMapping.tryGetEnumType func.retType.typ
+                                    |> Option.bind
+                                        (fun group -> prettyEnumGroupMap |> Map.tryFind group.groupName) |] |> Array.choose id
+                        Array.concat [| m1 ; m2 |]
+                    )
+//        let enumsWithoutExtensions =
+//            let requiredEnumsFromFunctions =
+//                typecheckedFunctionsWithoutExtensions
+//                |> Array.Parallel.collect
+//                    (fun func ->
+//                    func.parameters
+//                    |> Array.Parallel.choose
+//                        (fun param ->
+//                        TypeMapping.tryGetEnumType param.typ.typ
+//                        |> Option.bind
+//                            (fun group ->
+//                            prettyEnumGroupMap |> Map.tryFind group.groupName)))
             prettyEnumGroups
             |> Array.Parallel.choose (fun enum ->
                 // if enum.groupName = "ClipPlaneName" then System.Diagnostics.Debugger.Break()
