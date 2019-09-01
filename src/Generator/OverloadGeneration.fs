@@ -7,8 +7,8 @@ open Constants
 
 let autoGenerateAdditionalOverloadForType (func: PrintReadyTypedFunctionDeclaration) =
     let lengthParamsSet =
-        func.parameters
-        |> Array.choose(fun p -> p.lengthParamName)
+        func.Parameters
+        |> Array.choose(fun p -> p.LengthParamName)
         |> Set.ofArray
 
     let rec unwrapTyFromPointer typ =
@@ -42,43 +42,43 @@ let autoGenerateAdditionalOverloadForType (func: PrintReadyTypedFunctionDeclarat
         | _ -> None, transformPointerTy typ
     if lengthParamsSet.Count = 0 then
         let adjustedParameters =
-            func.parameters
+            func.Parameters
             |> Array.map(fun currParameter ->
-                match currParameter.typ.typ with
+                match currParameter.Type.Type with
                 | Pointer(GLchar) ->
                     { currParameter with
-                        PrintReadyTypedParameterInfo.typ = GLString |> PrintReady.formatTypeInfo }
+                        PrintReadyTypedParameterInfo.Type = GLString |> PrintReady.formatTypeInfo }
                 | Pointer(Pointer(GLchar)) ->
                     { currParameter with
-                        PrintReadyTypedParameterInfo.typ = GLString |> ArrayType |> PrintReady.formatTypeInfo }
+                        PrintReadyTypedParameterInfo.Type = GLString |> ArrayType |> PrintReady.formatTypeInfo }
                 | _ -> currParameter)
-        { func with parameters = adjustedParameters } |> Array.singleton
+        { func with Parameters = adjustedParameters } |> Array.singleton
     else
         let overloadWithMapping tyMapper =
             // Easiest solution to get
             // incrementing generic type parameter names.
             let mutable i = 1
             let adjustedParameters =
-                func.parameters
+                func.Parameters
                 |> Array.map(fun currParameter ->
-                    if lengthParamsSet.Contains currParameter.actualName then
+                    if lengthParamsSet.Contains currParameter.ActualName then
                         let _, newParameterType =
-                            currParameter.typ.typ
+                            currParameter.Type.Type
                             |> transformPointerTy 0 RefPointer
-                        None, { currParameter with typ = newParameterType |> PrintReady.formatTypeInfo }
+                        None, { currParameter with Type = newParameterType |> PrintReady.formatTypeInfo }
                     else
                         let (genericName, newParameterType) =
-                            currParameter.typ.typ 
+                            currParameter.Type.Type 
                             |> transformPointerTy i tyMapper
                         // Yes this is a bit evil, I'm sorry but this was easiest here.
                         // without hurting performance.
                         genericName |> Option.iter(fun _ -> i <- i + 1)
-                        genericName, { currParameter with typ = newParameterType |> PrintReady.formatTypeInfo })
+                        genericName, { currParameter with Type = newParameterType |> PrintReady.formatTypeInfo })
             let genericTypes = adjustedParameters |> Array.choose fst
             let parameters = adjustedParameters |> Array.map snd
             { func with
-                genericTypes = genericTypes
-                parameters = parameters }
+                GenericTypes = genericTypes
+                Parameters = parameters }
         pointerTypeMappings
         |> Array.Parallel.map overloadWithMapping
 
@@ -89,21 +89,21 @@ let autoGenerateOverloadForType (func: PrintReadyTypedFunctionDeclaration) =
         let name = adjustedName |> formatNameRemovingPrefix
 
         let parameters =
-            func.parameters
+            func.Parameters
             |> Array.Parallel.map (fun param ->
                 let typ =
-                    match param.typ.typ with
+                    match param.Type.Type with
                     | Pointer(currTy) when currTy = expectedPointerTy ->
                         typ
                         |> OpenToolkit
                         |> RefPointer
                     | typ -> typ
-                { param with typ = typ |> PrintReady.formatTypeInfo })
+                { param with Type = typ |> PrintReady.formatTypeInfo })
         // This is definitely no candidate for the pointers
         Some adjustedName,
         { func with
-              parameters = parameters
-              prettyName = name }
+              Parameters = parameters
+              PrettyName = name }
 
     let (|EndsWithOneOf|_|) suffixes func name =
         suffixes
@@ -120,7 +120,7 @@ let autoGenerateOverloadForType (func: PrintReadyTypedFunctionDeclaration) =
     // The order here is very important.
     // The longer sufixes are checked first before the shorter ones
 
-    match func.prettyName with
+    match func.PrettyName with
     // Matrix and Vector mappings
     | EndsWith "Matrix2fv" adjustedName -> injectTkType (OpenToolkitType.Matrix2) (adjustedName + "Matrix2") GLfloat
     | EndsWith "Matrix3fv" adjustedName -> injectTkType (OpenToolkitType.Matrix3) (adjustedName + "Matrix3") GLfloat
@@ -157,6 +157,6 @@ let autoGenerateOverloadForType (func: PrintReadyTypedFunctionDeclaration) =
     | EndsWith "es" _
     | EndsWith "ufv" _
     | EndsWith "udv" _ -> None, keep
-    | EndsWithOneOf sufixToRemove func adjustedName -> Some adjustedName, { func with prettyName = adjustedName }
+    | EndsWithOneOf sufixToRemove func adjustedName -> Some adjustedName, { func with PrettyName = adjustedName }
     | _ ->
             None, keep

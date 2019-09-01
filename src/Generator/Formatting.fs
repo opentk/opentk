@@ -57,7 +57,7 @@ module TypeToString =
     let rec private typeToString (typ: GLType) =
         match typ with
         | GLType.Void -> "void"
-        | GLType.GLenum inner -> inner.groupName
+        | GLType.GLenum inner -> inner.GroupName
         | GLType.Pointer inner -> typeToString inner + " *"
         | GLType.GLint -> specTypeToCSharpTypeWithFallback "GLint"
         | GLType.GLboolean -> specTypeToCSharpTypeWithFallback "GLboolean"
@@ -188,14 +188,14 @@ let inline formatParameterName (name: string) =
     else
         name
 
-let formatParam (p: TypedParameterInfo) = formatParameterName p.name
+let formatParam (p: TypedParameterInfo) = formatParameterName p.Name
 
 let namespaceForGlSpecification (openGl: RawOpenGLSpecificationDetails) =
     let prettyName =
-        let temp = openGl.version
+        let temp = openGl.Version
 
         let versionAsString =
-            let str = openGl.versionNumber |> string
+            let str = openGl.VersionNumber |> string
             str.Replace(".", "")
         match temp with
         | StartsWith "GL_ES_VERSION" _
@@ -223,37 +223,37 @@ module PrintReady =
 
     let formatEnumGroup (enumGroup: GLEnumGroup) =
         let prettyEnumCases =
-            enumGroup.cases
+            enumGroup.Cases
             |> Array.Parallel.map (fun case ->
-                { actualName = case.name
-                  prettyName = case.name |> formatEnumCase
-                  value = case.value }: PrintReadyEnum)
-        { groupName = enumGroup.groupName
-          enumCases = prettyEnumCases }: PrintReadyEnumGroup
+                { ActualName = case.Name
+                  PrettyName = case.Name |> formatEnumCase
+                  Value = case.Value }: PrintReadyEnum)
+        { GroupName = enumGroup.GroupName
+          EnumCases = prettyEnumCases }: PrintReadyEnumGroup
 
     let formatTypeInfo (typeInfo: GLType): PrintReadyTypeInfo =
-        { typ = typeInfo
-          prettyTypeName = typeInfo |> typeToString }
+        { Type = typeInfo
+          PrettyTypeName = typeInfo |> typeToString }
 
     let formatTypeTypeParameterInfo (typedParameterInfo: TypedParameterInfo): PrintReadyTypedParameterInfo =
-        { actualName = typedParameterInfo.name
-          prettyName = typedParameterInfo |> formatParam
-          lengthParamName = typedParameterInfo.lengthParamName
-          typ = typedParameterInfo.typ |> formatTypeInfo }
+        { ActualName = typedParameterInfo.Name
+          PrettyName = typedParameterInfo |> formatParam
+          LengthParamName = typedParameterInfo.LengthParamName
+          Type = typedParameterInfo.Type |> formatTypeInfo }
 
     let formatTypedFunctionDeclaration (typedFunctionDeclaration: TypedFunctionDeclaration) =
         let parameters =
-            typedFunctionDeclaration.parameters
+            typedFunctionDeclaration.Parameters
             |> Array.Parallel.map formatTypeTypeParameterInfo
-        { actualName = typedFunctionDeclaration.name
-          prettyName = typedFunctionDeclaration.name |> formatFunctionName
-          parameters = parameters
-          genericTypes = typedFunctionDeclaration.genericTypes
-          retType = typedFunctionDeclaration.retType |> formatTypeInfo }: PrintReadyTypedFunctionDeclaration
+        { ActualName = typedFunctionDeclaration.Name
+          PrettyName = typedFunctionDeclaration.Name |> formatFunctionName
+          Parameters = parameters
+          GenericTypes = typedFunctionDeclaration.GenericTypes
+          RetType = typedFunctionDeclaration.RetType |> formatTypeInfo }: PrintReadyTypedFunctionDeclaration
 
 let generateDummyTypes =
     let usings = [ "System" ]
-    let formatDummyType typ = sprintf "public struct %s {}" typ.name
+    let formatDummyType typ = sprintf "public struct %s {}" typ.Name
     seq {
         for using in usings -> writeLine (sprintf "using %s;" using)
         yield "namespace " + dummyTypesNamespace |> writeLine
@@ -261,7 +261,7 @@ let generateDummyTypes =
         yield indent
         yield writeEmptyLine
         for typ in additionalTypesToGenerate do
-            match typ._namespace with
+            match typ.Namespace with
             | Some n ->
                 yield writeLine (sprintf "namespace %s" n)
                 yield writeLeftBracket
@@ -294,8 +294,8 @@ let generateEnums (enums: PrintReadyEnumGroup [])
         yield indent
         yield! enums
                |> Array.Parallel.collect (fun enum ->
-                   [| if enum.enumCases.Length > 0 then
-                       yield sprintf "public enum %s" enum.groupName
+                   [| if enum.EnumCases.Length > 0 then
+                       yield sprintf "public enum %s" enum.GroupName
                              |> writeLine
                        yield writeLeftBracket
                        yield indent
@@ -307,11 +307,11 @@ let generateEnums (enums: PrintReadyEnumGroup [])
                                    let value = 0x80000000
                                    value |> string
                                | _ -> value
-                           enum.enumCases
+                           enum.EnumCases
                            |> Array.Parallel.map
                                (fun case ->
-                               sprintf "%s = %s" case.prettyName
-                                   (valueToString case.value))
+                               sprintf "%s = %s" case.PrettyName
+                                   (valueToString case.Value))
                        if formattedCases.Length > 2 then
                            for case in formattedCases.[..formattedCases.Length
                                                          - 2] ->
@@ -336,7 +336,7 @@ let rec isPointerType typ =
 let namespaceAndDocumentationFor (details: GenerateDetails) =
     match details with
     | OpenGlVersion openGl ->
-        let version = openGl.versionNumber |> floor |> int
+        let version = openGl.VersionNumber |> floor |> int
         let baseUrl = sprintf "http://docs.gl/gl%d/" version
         namespaceForGlSpecification openGl,
         fun str -> "/// See documentation online here: "+ baseUrl + str
@@ -361,37 +361,37 @@ let generateInterface (functions: PrintReadyTypedFunctionDeclaration [])
         yield indent
         yield! functions
                |> Array.Parallel.collect (fun func ->
-                   [| let retTypeAsString = func.retType.prettyTypeName
+                   [| let retTypeAsString = func.RetType.PrettyTypeName
 
                       let formattedParams =
-                          func.parameters
+                          func.Parameters
                           |> Array.map
                               (fun p ->
-                              p.typ.prettyTypeName + " " + p.prettyName)
+                              p.Type.PrettyTypeName + " " + p.PrettyName)
                           |> String.concat ", "
-                      yield documentationFor func.actualName |> writeLine
-                      yield ("[NativeSymbol(\"" + func.actualName + "\")]")
+                      yield documentationFor func.ActualName |> writeLine
+                      yield ("[NativeSymbol(\"" + func.ActualName + "\")]")
                             |> writeLine
                       let additional =
-                          if func.genericTypes.Length > 0 then
+                          if func.GenericTypes.Length > 0 then
                             let inner =
-                                func.genericTypes
+                                func.GenericTypes
                                 |> String.concat ", "
                             "<" + inner + ">"
                           else ""
                       let prefix =
-                          if func.parameters |> Array.exists (fun p -> isPointerType p.typ.typ)
-                             || isPointerType func.retType.typ then "unsafe "
+                          if func.Parameters |> Array.exists (fun p -> isPointerType p.Type.Type)
+                             || isPointerType func.RetType.Type then "unsafe "
                           else ""
-                      yield prefix + retTypeAsString + " " + func.prettyName
+                      yield prefix + retTypeAsString + " " + func.PrettyName
                             + additional
                             + "(" + formattedParams + ")" |> write
-                      if func.genericTypes.Length > 0 then
+                      if func.GenericTypes.Length > 0 then
                         yield indent
                         yield writeLine ""
-                        for typ in func.genericTypes |> Seq.take (max 0 (func.genericTypes.Length - 2)) do
+                        for typ in func.GenericTypes |> Seq.take (max 0 (func.GenericTypes.Length - 2)) do
                             yield "where " + typ + " : struct" |> writeLine
-                        let last = func.genericTypes |> Seq.last
+                        let last = func.GenericTypes |> Seq.last
                         yield "where " + last + " : struct;" |> writeLine
                         yield unindent
                       else
@@ -418,46 +418,46 @@ let generateStaticClass (functions: PrintReadyTypedFunctionDeclaration [])
         yield writeLeftBracket
         yield indent
         for func in functions do
-            let retTypeAsString = func.retType.prettyTypeName
+            let retTypeAsString = func.RetType.PrettyTypeName
 
             let formattedParams =
-                func.parameters
+                func.Parameters
                 |> Array.Parallel.map
-                    (fun p -> p.typ.prettyTypeName + " " + p.prettyName)
+                    (fun p -> p.Type.PrettyTypeName + " " + p.PrettyName)
                 |> String.concat ", "
 
-            let funcName = func.prettyName
+            let funcName = func.PrettyName
 
             // Parameters are so less that running in parallel hurts rather then helps.
             let formattedParamNames =
-                func.parameters
+                func.Parameters
                 |> Array.Parallel.map (fun p ->
                     let possiblePrefix =
-                        match p.typ.typ with
+                        match p.Type.Type with
                         | RefPointer _ -> "ref "
                         | _ -> ""
-                    possiblePrefix + p.prettyName)
+                    possiblePrefix + p.PrettyName)
                 |> String.concat ", "
             let additional =
-                if func.genericTypes.Length > 0 then
+                if func.GenericTypes.Length > 0 then
                     let inner =
-                        func.genericTypes
+                        func.GenericTypes
                         |> String.concat ", "
                     "<" + inner + ">"
                 else ""
-            yield documentationFor func.actualName |> writeLine
+            yield documentationFor func.ActualName |> writeLine
             let prefix =
-                if func.parameters |> Array.exists (fun p -> isPointerType p.typ.typ)
-                   || isPointerType func.retType.typ then " unsafe"
+                if func.Parameters |> Array.exists (fun p -> isPointerType p.Type.Type)
+                   || isPointerType func.RetType.Type then " unsafe"
                 else ""
-            if func.genericTypes.Length > 0 then
+            if func.GenericTypes.Length > 0 then
                 yield sprintf "public static%s %s %s%s(%s)"
                           prefix retTypeAsString funcName additional formattedParams |> writeLine
                 yield indent
                 yield writeLine ""
-                for typ in func.genericTypes |> Seq.take (max 0 (func.genericTypes.Length - 2)) do
+                for typ in func.GenericTypes |> Seq.take (max 0 (func.GenericTypes.Length - 2)) do
                     yield "where " + typ + " : struct" |> writeLine
-                let last = func.genericTypes |> Seq.last
+                let last = func.GenericTypes |> Seq.last
                 yield "where " + last + " : struct" |> write
                 yield sprintf " => instance.%s(%s);" funcName formattedParamNames |> writeLine
 

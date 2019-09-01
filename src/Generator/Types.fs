@@ -1,41 +1,42 @@
 module Types
 
 type GLEnum =
-    { name: string
-      value: string }
+    { Name: string
+      Value: string }
 
 type GLEnumGroup =
-    { groupName: string
-      cases: GLEnum [] }
+    { GroupName: string
+      Cases: GLEnum [] }
 
 [<RequireQualifiedAccess>]
 type GLLooseType =
-    { typ: string
-      group: string option }
-
-let looseType typ group: GLLooseType =
-    { typ = typ
-      group = group }
+    { Type: string
+      Group: string option }
+    
+    static member mk ``type`` group =
+        { Type = ``type``
+          Group = group }
+    
 
 type GLParameterInfo =
-    { paramName: string
-      lengthParamName: string option
-      paramType: GLLooseType }
-
-let parameterInfo name typ =
-    { paramName = name
-      lengthParamName = None
-      paramType = typ }
-
-let parameterInfoWith name typ lengthParamName =
-    { paramName = name
-      lengthParamName = Some lengthParamName
-      paramType = typ }
+    { ParamName: string
+      LengthParamName: string option
+      ParamType: GLLooseType }
+    
+    static member mk paramName lengthParamName paramType =
+        { ParamName = paramName
+          LengthParamName = lengthParamName
+          ParamType = paramType }
+        
+    static member parameterInfoWith name ``type`` lengthParamName =
+        { ParamName = name
+          LengthParamName = Some lengthParamName
+          ParamType = ``type`` } 
 
 type GLFunctionDeclaration =
-    { funcName: string
-      parameters: GLParameterInfo []
-      retType: GLLooseType }
+    { FuncName: string
+      Parameters: GLParameterInfo []
+      RetType: GLLooseType }
 
 type OpenToolkitType =
     | Vector2
@@ -113,101 +114,101 @@ type GLType =
 
 [<RequireQualifiedAccess>]
 type TypedParameterInfo =
-    { name: string
-      lengthParamName: string option
-      typ: GLType }
+    { Name: string
+      LengthParamName: string option
+      Type: GLType }
+    
+    static member mk name ``type`` =
+        { Name = name
+          LengthParamName = None
+          Type = ``type`` }
 
-let typedParameterInfo name typ: TypedParameterInfo =
-    { name = name
-      lengthParamName = None
-      typ = typ }
-
-let typedParameterInfoWith name typ lengthParamName: TypedParameterInfo =
-    { name = name
-      lengthParamName = lengthParamName
-      typ = typ }
+    static member typedParameterInfoWith name ``type`` lengthParamName =
+        { Name = name
+          LengthParamName = lengthParamName
+          Type = ``type`` }
 
 [<RequireQualifiedAccess>]
 type TypedFunctionDeclaration =
-    { name: string
-      parameters: TypedParameterInfo []
-      genericTypes: string []
-      retType: GLType }
+    { Name: string
+      Parameters: TypedParameterInfo []
+      GenericTypes: string []
+      RetType: GLType }
 
 [<RequireQualifiedAccess>]
 type PrintReadyTypeInfo =
-    { prettyTypeName: string
-      typ: GLType }
+    { PrettyTypeName: string
+      Type: GLType }
 
 [<RequireQualifiedAccess>]
 type PrintReadyTypedParameterInfo =
-    { actualName: string
-      prettyName: string
-      lengthParamName: string option
-      typ: PrintReadyTypeInfo }
+    { ActualName: string
+      PrettyName: string
+      LengthParamName: string option
+      Type: PrintReadyTypeInfo }
 
 [<RequireQualifiedAccess>]
 type PrintReadyTypedFunctionDeclaration =
-    { actualName: string
-      prettyName: string
-      parameters: PrintReadyTypedParameterInfo []
-      genericTypes: string []
-      retType: PrintReadyTypeInfo }
+    { ActualName: string
+      PrettyName: string
+      Parameters: PrintReadyTypedParameterInfo []
+      GenericTypes: string []
+      RetType: PrintReadyTypeInfo }
 
 [<RequireQualifiedAccess>]
 type PrintReadyEnum =
-    { actualName: string
-      prettyName: string
-      value: string }
+    { ActualName: string
+      PrettyName: string
+      Value: string }
 
 [<RequireQualifiedAccess>]
 type PrintReadyEnumGroup =
-    { groupName: string
-      enumCases: PrintReadyEnum [] }
+    { GroupName: string
+      EnumCases: PrintReadyEnum [] }
 
 let typedFunctionDeclaration name parameters retType genericTypes : TypedFunctionDeclaration =
-    { name = name
-      parameters = parameters
-      genericTypes = genericTypes
-      retType = retType }
+    { Name = name
+      Parameters = parameters
+      GenericTypes = genericTypes
+      RetType = retType }
 
 type DummyTypeDescriptor =
-    { _namespace: string option
-      name: string }
+    { Namespace: string option
+      Name: string }
 
 [<RequireQualifiedAccess>]
 type RawOpenGLSpecificationDetails =
-    { version: string
-      versionNumber: decimal
-      functions: string Set
-      enumCases: string Set }
+    { Version: string
+      VersionNumber: decimal
+      Functions: string Set
+      EnumCases: string Set }
 
 [<RequireQualifiedAccess>]
 type ExtensionInfo =
-    { name: string
-      functions: string []
-      enumCases: string [] }
+    { Name: string
+      Functions: string []
+      EnumCases: string [] }
 
 [<RequireQualifiedAccess>]
 type FunctionSignature =
-    { retType: GLType
-      parameters: TypedParameterInfo [] }
+    { RetType: GLType
+      Parameters: TypedParameterInfo [] }
 
 let functionSignature retType parameters: FunctionSignature =
-    { retType = retType
-      parameters = parameters }
+    { RetType = retType
+      Parameters = parameters }
 
 type FunctionOverload =
-    { expectedName: string
-      alternativeName: string option
-      overloads: FunctionSignature [] }
+    { ExpectedName: string
+      AlternativeName: string option
+      Overloads: FunctionSignature [] }
 
 let functionOverloads name overloads =
-    { expectedName = name
-      alternativeName = None
-      overloads = overloads }
+    { ExpectedName = name
+      AlternativeName = None
+      Overloads = overloads }
 
 let functionOverloadsWith name alternativeName overloads =
-    { expectedName = name
-      alternativeName = Some alternativeName
-      overloads = overloads }
+    { ExpectedName = name
+      AlternativeName = Some alternativeName
+      Overloads = overloads }

@@ -9,13 +9,13 @@ let (|IsPointerType|_|) input =
 open Types
 
 let tryParseType enumMap funcOrParamName (typ: GLLooseType) =
-    let str = typ.typ.Replace("const", "").Replace(" ", "")
+    let str = typ.Type.Replace("const", "").Replace(" ", "")
 
     let rec tryParse str =
         match str with
         | IsPointerType inner -> tryParse inner |> Option.map Pointer
         | "GLenum" ->
-            typ.group
+            typ.Group
             |> Option.bind (fun group ->
                 match enumMap |> Map.tryFind group with
                 | Some entry -> GLenum entry |> Some
@@ -72,6 +72,7 @@ open SpecificationOpenGL
 open Util
 open System
 open System.Text.RegularExpressions
+open Types
 
 let readSpec (path: string) = OpenGL_Specification.Load path
 
@@ -97,9 +98,9 @@ let getEnumsFromSpecification (spec: OpenGL_Specification.Registry) =
                     valueForName
                     |> Map.tryFind case.Name
                     |> Option.map (fun value ->
-                        { name = case.Name
-                          value = value }))
-                |> Array.groupBy (fun case -> case.value)
+                        { Name = case.Name
+                          Value = value }))
+                |> Array.groupBy (fun case -> case.Value)
                 |> Array.Parallel.choose (fun (_, cases) ->
                     // This is for picking the best enum case name
                     // for an enum case which has multiple names with the same value.
@@ -110,13 +111,13 @@ let getEnumsFromSpecification (spec: OpenGL_Specification.Registry) =
                     cases
                     |> Array.tryFind
                         (fun case ->
-                        (case.name.Contains "EXT" || case.name.Contains "NV")
+                        (case.Name.Contains "EXT" || case.Name.Contains "NV")
                         |> not)
                     |> Option.orElse (cases |> Array.tryHead))
 
             let res =
-                { groupName = group
-                  cases = cases }
+                { GroupName = group
+                  Cases = cases }
 
             return! Some res
         })
@@ -165,16 +166,16 @@ let getFunctions (spec: OpenGL_Specification.Registry) =
                 if String.IsNullOrWhiteSpace typ then
                     let str = p.XElement.ToString()
                     printfn "failed parsing %A, value: %s" (funcName) str
-                { paramName = p.Name
-                  lengthParamName = lengthParamName
-                  paramType = looseType typ group })
+                { ParamName = p.Name
+                  LengthParamName = lengthParamName
+                  ParamType = GLLooseType.mk typ group })
 
         let group, typ = extractTypeFromProto cmd.Proto
 
         let ret =
-            { funcName = funcName
-              parameters = parameters
-              retType = looseType typ group }
+            { FuncName = funcName
+              Parameters = parameters
+              RetType = GLLooseType.mk typ group }
         ret)
 
 let getExtensions (spec: OpenGL_Specification.Registry) =
@@ -192,6 +193,6 @@ let getExtensions (spec: OpenGL_Specification.Registry) =
                        |> Choice2Of2 |])
             functions |> Array.Parallel.collect id,
             enums |> Array.Parallel.collect id
-        { name = extension.Name
-          functions = functions
-          enumCases = enums }: ExtensionInfo)
+        { Name = extension.Name
+          Functions = functions
+          EnumCases = enums }: ExtensionInfo)
