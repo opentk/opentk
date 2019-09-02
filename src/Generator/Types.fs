@@ -37,33 +37,48 @@ type GLFunctionDeclaration =
     { FuncName: string
       Parameters: GLParameterInfo []
       RetType: GLLooseType }
+
+/// The size of a matrix/vector in a single dimension.
+type Size =
+    | S2
+    | S3
+    | S4
+    
+    member x.Number =
+        match x with
+        | S2 -> 2
+        | S3 -> 3
+        | S4 -> 4
+    
+module Size =
+    let parse =
+        function
+        | "2" -> S2
+        | "3" -> S3
+        | "4" -> S4
+        | x -> failwithf "impossible size %s found!" x
+
+type TKType =
+    | Vector of Size
+    | Vectord of Size
+    | Matrix of Size * Size
+    | Matrixd of Size * Size
+    
+    override x.ToString() =
+        match x with
+        | Vector v -> sprintf "Vector%d" v.Number
+        | Vectord v -> sprintf "Vector%id" v.Number
+        | Matrix (x,y) -> sprintf "Matrix%dx%dd" x.Number y.Number
+        | Matrixd (x,y) -> sprintf "Matrix%dx%dd" x.Number y.Number
+        
+    
+module Matrix =
+    let square size = Matrix(size, size)
+
+module Matrixd =
+    let square size = Matrixd(size, size)
     
 
-type OpenToolkitType =
-    | Vector2
-    | Vector3
-    | Vector4
-    | Vector2d
-    | Vector3d
-    | Vector4d
-    | Matrix2
-    | Matrix3
-    | Matrix4
-    | Matrix2d
-    | Matrix3d
-    | Matrix4d
-    | Matrix2x3
-    | Matrix2x4
-    | Matrix3x2
-    | Matrix3x4
-    | Matrix4x2
-    | Matrix4x3
-    | Matrix2x3d
-    | Matrix2x4d
-    | Matrix3x2d
-    | Matrix3x4d
-    | Matrix4x2d
-    | Matrix4x3d
 
 type GLType =
     | Pointer of GLType
@@ -108,7 +123,7 @@ type GLType =
     | GLDEBUGPROCKHR
     | GLVULKANPROCNV
     | GLString
-    | OpenToolkit of OpenToolkitType
+    | OpenToolkit of TKType
     | RefPointer of GLType
     | StructGenericType of string
     | ArrayType of GLType

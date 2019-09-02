@@ -111,32 +111,7 @@ module TypeToString =
         | GLType.StructGenericType s -> s
         | GLType.ArrayType typ -> typeToString typ + "[]"
         | GLType.GLString -> "string"
-        | GLType.OpenToolkit typ ->
-            match typ with
-            | Vector2 -> "Vector2"
-            | Vector3 -> "Vector3"
-            | Vector4 -> "Vector4"
-            | Vector2d -> "Vector2d"
-            | Vector3d -> "Vector3d"
-            | Vector4d -> "Vector4d"
-            | Matrix2 -> "Matrix2"
-            | Matrix3 -> "Matrix3"
-            | Matrix4 -> "Matrix4"
-            | Matrix2d -> "Matrix2d"
-            | Matrix3d -> "Matrix3d"
-            | Matrix4d -> "Matrix4d"
-            | Matrix2x3 -> "Matrix2x3"
-            | Matrix2x4 -> "Matrix2x4"
-            | Matrix3x2 -> "Matrix3x2"
-            | Matrix3x4 -> "Matrix3x4"
-            | Matrix4x2 -> "Matrix4x2"
-            | Matrix4x3 -> "Matrix4x3"
-            | Matrix2x3d -> "Matrix2x3d"
-            | Matrix2x4d -> "Matrix2x4d"
-            | Matrix3x2d -> "Matrix3x2d"
-            | Matrix3x4d -> "Matrix3x4d"
-            | Matrix4x2d -> "Matrix4x2d"
-            | Matrix4x3d -> "Matrix4x3d"
+        | GLType.OpenToolkit typ -> string typ
 
     let typeToStringCached typ =
         match cache.TryGetValue typ with
