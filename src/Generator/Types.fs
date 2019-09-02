@@ -37,6 +37,7 @@ type GLFunctionDeclaration =
     { FuncName: string
       Parameters: GLParameterInfo []
       RetType: GLLooseType }
+    
 
 type OpenToolkitType =
     | Vector2
@@ -106,11 +107,11 @@ type GLType =
     | GLDEBUGPROCARB
     | GLDEBUGPROCKHR
     | GLVULKANPROCNV
+    | GLString
     | OpenToolkit of OpenToolkitType
     | RefPointer of GLType
     | StructGenericType of string
     | ArrayType of GLType
-    | GLString
 
 [<RequireQualifiedAccess>]
 type TypedParameterInfo =

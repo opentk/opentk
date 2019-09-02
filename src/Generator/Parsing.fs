@@ -1,4 +1,21 @@
 module Parsing
+open System
+open System.Collections.Generic
+open Types
+open Util
+
+let private simpleGLTypes =
+    [|GLint; GLboolean; GLdouble; GLbyte; GLfloat; GLchar; GLcharARB; GLclampf; GLfixed; GLint64; GLint64EXT; GLintptr;
+      GLshort; GLsizei; GLsizeiptr; GLubyte; GLuint; GLuint64; GLuint64EXT; GLushort; GLvdpauSurfaceNV; Void; GLhalfNV;
+      GLbitfield; GLclampd; GLclampx; GLeglClientBufferEXT; GLeglImageOES; GLhandleARB; GLintptrARB; GLsizeiptrARB; GLsync;
+      Struct_cl_context; Struct_cl_event; GLDEBUGPROC; GLDEBUGPROCAMD; GLDEBUGPROCARB; GLDEBUGPROCKHR; GLVULKANPROCNV; GLString|]
+    |> Array.map (fun s -> KeyValuePair.Create((string s).ToLowerInvariant(), s))
+    |> fun s -> new Dictionary<_,_>(s, StringComparer.OrdinalIgnoreCase)
+
+let (|IsSimpleGLType|_|) input =
+    match simpleGLTypes.TryGetValue input with
+    | true, v -> Some v
+    | _ -> None
 
 let (|IsPointerType|_|) input =
     match input with
@@ -6,73 +23,31 @@ let (|IsPointerType|_|) input =
     | _ when input.EndsWith('*') -> input.Substring(0, input.Length - 1) |> Some
     | _ -> None
 
-open Types
-
 let tryParseType enumMap funcOrParamName (typ: GLLooseType) =
     let str = typ.Type.Replace("const", "").Replace(" ", "")
 
     let rec tryParse str =
         match str with
         | IsPointerType inner -> tryParse inner |> Option.map Pointer
+        | IsSimpleGLType t -> Some t 
         | "GLenum" ->
-            typ.Group
-            |> Option.bind (fun group ->
+            match typ.Group with
+            | Some group -> 
                 match enumMap |> Map.tryFind group with
                 | Some entry -> GLenum entry |> Some
                 | None ->
                     printfn
                         "Function or param %s references enum group %s which does not exist"
                         funcOrParamName group
-                    None)
-        | "GLboolean" -> Some GLboolean
-        | "GLbyte" -> Some GLbyte
-        | "GLchar" -> Some GLchar
-        | "GLcharARB" -> Some GLcharARB
-        | "GLclampf" -> Some GLclampf
-        | "GLdouble" -> Some GLdouble
-        | "GLfixed" -> Some GLfixed
-        | "GLfloat" -> Some GLfloat
-        | "GLhalfNV" -> Some GLhalfNV
-        | "GLint" -> Some GLint
-        | "GLint64" -> Some GLint64
-        | "GLint64EXT" -> Some GLint64EXT
-        | "GLuint" -> Some GLuint
-        | "GLuint64" -> Some GLuint64
-        | "GLuint64EXT" -> Some GLuint64EXT
-        | "GLintptr" -> Some GLintptr
-        | "GLshort" -> Some GLshort
-        | "GLushort" -> Some GLushort
-        | "GLsizei" -> Some GLsizei
-        | "GLubyte" -> Some GLubyte
-        | "GLsizeiptr" -> Some GLsizeiptr
-        | "GLvdpauSurfaceNV" -> Some GLvdpauSurfaceNV
-        | "void" -> Some Void
-        | "GLbitfield" -> Some GLbitfield
-        | "GLclampd" -> Some GLclampd
-        | "GLclampx" -> Some GLclampx
-        | "GLeglClientBufferEXT" -> Some GLeglClientBufferEXT
-        | "GLeglImageOES" -> Some GLeglImageOES
-        | "GLhandleARB" -> Some GLhandleARB
-        | "GLintptrARB" -> Some GLintptrARB
-        | "GLsizeiptrARB" -> Some GLsizeiptrARB
-        | "GLsync" -> Some GLsync
-        | "struct_cl_context" -> Some Struct_cl_context
-        | "struct_cl_event" -> Some Struct_cl_event
-        | "GLDEBUGPROC" -> Some GLDEBUGPROC
-        | "GLDEBUGPROCAMD" -> Some GLDEBUGPROCAMD
-        | "GLDEBUGPROCARB" -> Some GLDEBUGPROCARB
-        | "GLDEBUGPROCKHR" -> Some GLDEBUGPROCKHR
-        | "GLVULKANPROCNV" -> Some GLVULKANPROCNV
+                    None
+            | _ -> None
         | _ ->
             printfn "input %s is not a valid type" str
             None
     tryParse str
 
 open SpecificationOpenGL
-open Util
-open System
 open System.Text.RegularExpressions
-open Types
 
 let readSpec (path: string) = OpenGL_Specification.Load path
 
