@@ -3,7 +3,62 @@ open System
 open Formatting
 open Types
 open Constants
+open Formatting
 
+
+module Helpers =
+    /// Retrieves the underlying type from a pointer type (recursively).
+    let rec unwrapTypeFromPointer =
+        function
+        | Pointer t -> unwrapTypeFromPointer t
+        | t -> t
+        
+    /// transforms the type of that a pointer points to, recursively.
+    /// The number of pointers is preserved in the output, only the root type is changed.
+    let rec transformPointer newRootType ptrType =
+        match ptrType with
+        | Pointer inner ->
+            Pointer (transformPointer newRootType inner)
+        | _ -> newRootType
+
+type private Overload = PrintReadyTypedFunctionDeclaration -> PrintReadyTypedFunctionDeclaration array
+
+module Overloads =
+    
+    let typeMap =
+        [|
+            Pointer(GLchar), GLString
+            Pointer(Pointer(GLchar)), ArrayType(GLString)
+        |]
+        
+    let charArrayToString (func:PrintReadyTypedFunctionDeclaration) =
+        let adjustedParameters =
+            func.Parameters
+            |> Array.map(fun parm ->
+                match parm.Type.Type with
+                | Pointer(GLchar) ->
+                    { parm with
+                        PrintReadyTypedParameterInfo.Type = GLString |> PrintReady.formatTypeInfo }
+                | Pointer(Pointer(GLchar)) ->
+                    { parm with
+                        PrintReadyTypedParameterInfo.Type = GLString |> ArrayType |> PrintReady.formatTypeInfo }
+                | _ -> parm)
+        { func with Parameters = adjustedParameters } |> Array.singleton
+    
+    let doNothing _ = [||]
+
+
+let private allOverloads: Overload array =
+    [|
+        Overloads.doNothing
+        Overloads.charArrayToString
+    |]
+    
+    
+let applyAllOverloads func =
+    allOverloads
+    |> Array.collect (fun overload -> overload func)
+    |> Array.distinct
 
 let autoGenerateAdditionalOverloadForType (func: PrintReadyTypedFunctionDeclaration) =
     let lengthParamsSet =
@@ -11,25 +66,14 @@ let autoGenerateAdditionalOverloadForType (func: PrintReadyTypedFunctionDeclarat
         |> Array.choose(fun p -> p.LengthParamName)
         |> Set.ofArray
 
-    let rec unwrapTyFromPointer typ =
-        match typ with
-        | Pointer typ -> unwrapTyFromPointer typ
-        | _ -> typ
     let transformPointerTy i transformGLTypeFun typ =
-        let transformPointerTy typ =
-            match typ with
-            | Pointer(inner) ->
-                let flattenedTy = unwrapTyFromPointer inner
-                let res = flattenedTy |> transformGLTypeFun
-                if res = flattenedTy then typ
-                else res
-            | inner -> inner
+        
         match typ with
         | Pointer(GLchar) ->
             None, GLString
         | Pointer(Pointer(GLchar)) ->
             None, GLString |> ArrayType
-        | Pointer(_) when unwrapTyFromPointer typ = Void ->
+        | Pointer(_) when Helpers.unwrapTypeFromPointer typ = Void ->
             let name = 
                 ("TElement" + string i)
             let inner = name |> StructGenericType
@@ -82,6 +126,10 @@ let autoGenerateAdditionalOverloadForType (func: PrintReadyTypedFunctionDeclarat
         pointerTypeMappings
         |> Array.Parallel.map overloadWithMapping
 
+
+
+
+
 let autoGenerateOverloadForType (func: PrintReadyTypedFunctionDeclaration) =
     let keep = func
 
@@ -120,6 +168,7 @@ let autoGenerateOverloadForType (func: PrintReadyTypedFunctionDeclaration) =
     // The order here is very important.
     // The longer sufixes are checked first before the shorter ones
 
+    //this can be de-duplicated with some string parsing or a LUT.
     match func.PrettyName with
     // Matrix and Vector mappings
     | EndsWith "Matrix2fv" adjustedName -> injectTkType (Matrix.square S2) (adjustedName + "Matrix2") GLfloat
