@@ -6,7 +6,7 @@ open Constants
 open Formatting
 
 
-module Helpers =
+module private Helpers =
     /// Retrieves the underlying type from a pointer type (recursively).
     let rec unwrapTypeFromPointer =
         function
@@ -23,14 +23,7 @@ module Helpers =
 
 type private Overload = PrintReadyTypedFunctionDeclaration -> PrintReadyTypedFunctionDeclaration array
 
-module Overloads =
-    
-    let typeMap =
-        [|
-            Pointer(GLchar), GLString
-            Pointer(Pointer(GLchar)), ArrayType(GLString)
-        |]
-        
+module private Overloads =
     let charArrayToString (func:PrintReadyTypedFunctionDeclaration) =
         let adjustedParameters =
             func.Parameters
@@ -67,7 +60,14 @@ let autoGenerateAdditionalOverloadForType (func: PrintReadyTypedFunctionDeclarat
         |> Set.ofArray
 
     let transformPointerTy i transformGLTypeFun typ =
-        
+        let transformPointerTy typ =
+            match typ with
+            | Pointer(inner) ->
+                let flattenedTy = Helpers.unwrapTypeFromPointer inner
+                let res = flattenedTy |> transformGLTypeFun
+                if res = flattenedTy then typ
+                else res
+            | inner -> inner
         match typ with
         | Pointer(GLchar) ->
             None, GLString
