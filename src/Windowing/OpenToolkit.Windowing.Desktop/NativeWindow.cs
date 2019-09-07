@@ -951,7 +951,7 @@ namespace OpenToolkit.Windowing.Desktop
         /// <inheritdoc />
         public bool TryGetCurrentMonitorDpi(out float horizontalDpi, out float verticalDpi)
         {
-            float defaultDpi = GetPlatformDefaultDpi();
+            float defaultDpi = DpiCalculator.GetPlatformDefaultDpi();
             bool success = TryGetCurrentMonitorScale(out float horizontalScale, out float verticalScale);
 
             horizontalDpi = defaultDpi * horizontalScale;
@@ -962,7 +962,7 @@ namespace OpenToolkit.Windowing.Desktop
         /// <inheritdoc />
         public bool TryGetCurrentMonitorDpiRaw(out float horizontalDpi, out float verticalDpi)
         {
-            horizontalDpi = verticalDpi = GetPlatformDefaultDpi();
+            horizontalDpi = verticalDpi = DpiCalculator.GetPlatformDefaultDpi();
 
             if (CurrentMonitor.Pointer == IntPtr.Zero)
             {
@@ -1263,26 +1263,6 @@ namespace OpenToolkit.Windowing.Desktop
         protected virtual void OnFileDrop(object sender, FileDropEventArgs e)
         {
             FileDrop?.Invoke(sender, e);
-        }
-
-        /// <summary>
-        /// Gets the default dpi for platforms.
-        /// </summary>
-        /// <returns>The platform default dpi.</returns>
-        /// <remarks>
-        /// For historical reasons macOS has a default dpi of 72, and other
-        /// platforms have a default dpi of 96.
-        /// </remarks>
-        private float GetPlatformDefaultDpi()
-        {
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
-            {
-                return 72f;
-            }
-            else
-            {
-                return 96f;
-            }
         }
 
         private bool _disposedValue; // To detect redundant calls
