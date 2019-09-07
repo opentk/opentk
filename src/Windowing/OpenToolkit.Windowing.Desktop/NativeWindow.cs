@@ -926,92 +926,28 @@ namespace OpenToolkit.Windowing.Desktop
         }
 
         /// <inheritdoc />
-        public bool TryGetCurrentMonitorScale(out float horizontalScale, out float verticalScale)
-        {
-            if (CurrentMonitor.Pointer != IntPtr.Zero)
-            {
-                unsafe
-                {
-                    GLFWProvider.GLFW.Value.GetMonitorContentScale(
-                        CurrentMonitor.ToUnsafePtr<GraphicsLibraryFramework.Monitor>(),
-                        out horizontalScale,
-                        out verticalScale
-                    );
-                }
-                return true;
-            }
-            else
-            {
-                horizontalScale = 1f;
-                verticalScale = 1f;
-                return false;
-            }
-        }
+        public unsafe bool TryGetCurrentMonitorScale(out float horizontalScale, out float verticalScale) =>
+            DpiCalculator.TryGetMonitorScale(
+                CurrentMonitor.ToUnsafePtr<GraphicsLibraryFramework.Monitor>(),
+                out horizontalScale,
+                out verticalScale
+            );
 
         /// <inheritdoc />
-        public bool TryGetCurrentMonitorDpi(out float horizontalDpi, out float verticalDpi)
-        {
-            float defaultDpi = DpiCalculator.GetPlatformDefaultDpi();
-            bool success = TryGetCurrentMonitorScale(out float horizontalScale, out float verticalScale);
-
-            horizontalDpi = defaultDpi * horizontalScale;
-            verticalDpi = defaultDpi * verticalScale;
-            return success;
-        }
+        public unsafe bool TryGetCurrentMonitorDpi(out float horizontalDpi, out float verticalDpi) =>
+            DpiCalculator.TryGetMonitorDpi(
+                CurrentMonitor.ToUnsafePtr<GraphicsLibraryFramework.Monitor>(),
+                out horizontalDpi,
+                out verticalDpi
+            );
 
         /// <inheritdoc />
-        public bool TryGetCurrentMonitorDpiRaw(out float horizontalDpi, out float verticalDpi)
-        {
-            horizontalDpi = verticalDpi = DpiCalculator.GetPlatformDefaultDpi();
-
-            if (CurrentMonitor.Pointer == IntPtr.Zero)
-            {
-                return false;
-            }
-
-            int widthInMm, heightInMm;
-            int widthInPixels, heightInPixels;
-
-            unsafe
-            {
-                GraphicsLibraryFramework.Monitor* monitor =
-                    CurrentMonitor.ToUnsafePtr<GraphicsLibraryFramework.Monitor>();
-                VideoMode* videoMode;
-
-                // According to GLFW documentation, physical dimensions are reported in millimeters.
-                GLFWProvider.GLFW.Value.GetMonitorPhysicalSize(monitor, out widthInMm, out heightInMm);
-
-                videoMode = GLFWProvider.GLFW.Value.GetVideoMode(monitor);
-
-                if (videoMode == null)
-                {
-                    return false;
-                }
-
-                widthInPixels = videoMode->Width;
-                heightInPixels = videoMode->Height;
-            }
-
-            if (widthInMm <= 0 || heightInMm <= 0 || widthInPixels <= 0 || heightInPixels <= 0)
-            {
-                return false;
-            }
-
-            /*
-             * How does this formula calculate dpi?
-             *
-             * 1. 1" = 25.4mm thus dInMm / 25.4 = dInInches
-             * 2. dpi = pixelCount/dInInches
-             *
-             * Ergo:
-             *     pixelCount / (dInMm / 25.4)
-             *   = (pixelCount / dInMm) * 25.4
-             */
-
-            horizontalDpi = ((float)widthInPixels / (float)widthInMm) * 25.4f;
-            verticalDpi = ((float)heightInPixels / (float)heightInMm) * 25.4f;
-            return true;
-        }
+        public unsafe bool TryGetCurrentMonitorDpiRaw(out float horizontalDpi, out float verticalDpi) =>
+            DpiCalculator.TryGetMonitorDpiRaw(
+                CurrentMonitor.ToUnsafePtr<GraphicsLibraryFramework.Monitor>(),
+                out horizontalDpi,
+                out verticalDpi
+            );
 
         /// <summary>
         /// Raises the <see cref="Move"/> event.
