@@ -1,3 +1,6 @@
+using System;
+using System.Collections.Generic;
+using System.Drawing;
 using System.Runtime.InteropServices;
 using OpenToolkit.GraphicsLibraryFramework;
 
@@ -137,6 +140,67 @@ namespace OpenToolkit.Windowing.Desktop
             {
                 return 96f;
             }
+        }
+
+        private static unsafe Rectangle[] GetMonitorClientAreas(Monitor** monitors, int monitorCount)
+        {
+            Rectangle[] areas = new Rectangle[monitorCount];
+
+            VideoMode* videoMode;
+            int positionX, positionY;
+            for (int i = 0; i < monitorCount; i++)
+            {
+                videoMode = GLFWProvider.GLFW.Value.GetVideoMode(*(monitors + i));
+                GLFWProvider.GLFW.Value.GetMonitorPos(*(monitors + i), out positionX, out positionY);
+                areas[i] = new Rectangle(positionX, positionY, videoMode->Width, videoMode->Height);
+            }
+
+            return areas;
+        }
+
+        private static int GetRectangleIntersectionArea(Rectangle a, Rectangle b)
+        {
+            var area = Rectangle.Intersect(a, b);
+            return area.Width * area.Height;
+        }
+
+        /// <summary>
+        /// Returns the monitor a window intersects with the most.
+        /// </summary>
+        /// <param name="window">The window calculate the monitor for.</param>
+        /// <returns>The monitor which the window intersects with the most.</returns>
+        public static unsafe Monitor* GetWindowMonitorByArea(Window* window)
+        {
+            var monitors = GLFWProvider.GLFW.Value.GetMonitors(out int monitorCount);
+
+            if (monitorCount == 0)
+            {
+                return null;
+            }
+
+            var monitorAreas = GetMonitorClientAreas(monitors, monitorCount);
+
+            Rectangle windowArea;
+            {
+                int windowX, windowY, windowWidth, windowHeight;
+                GLFWProvider.GLFW.Value.GetWindowPos(window, out windowX, out windowY);
+                GLFWProvider.GLFW.Value.GetWindowSize(window, out windowWidth, out windowHeight);
+                windowArea = new Rectangle(windowX, windowY, windowWidth, windowHeight);
+            }
+
+            int selectedIndex = 0;
+            for (int i = 0; i < monitorCount; i++)
+            {
+                if (
+                    GetRectangleIntersectionArea(monitorAreas[i], windowArea) >
+                    GetRectangleIntersectionArea(monitorAreas[selectedIndex], windowArea)
+                )
+                {
+                    selectedIndex = i;
+                }
+            }
+
+            return monitors[selectedIndex];
         }
     }
 }
