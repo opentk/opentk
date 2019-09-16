@@ -925,10 +925,27 @@ namespace OpenToolkit.Windowing.Desktop
             return !_mouseState.IsButtonDown(button) && LastMouseState.IsButtonDown(button);
         }
 
+        private unsafe GraphicsLibraryFramework.Monitor* GetDpiMonitor()
+        {
+            /*
+             * According to the GLFW documentation, glfwGetWindowMonitor will return a value only
+             * when the window is fullscreen.
+             *
+             * If the window is not fullscreen, find the monitor manually.
+             */
+            GraphicsLibraryFramework.Monitor* value = GLFWProvider.GLFW.Value.GetWindowMonitor(WindowPtr);
+            if (value == null)
+            {
+                value = DpiCalculator.GetWindowMonitorByArea(WindowPtr);
+            }
+
+            return value;
+        }
+
         /// <inheritdoc />
         public unsafe bool TryGetCurrentMonitorScale(out float horizontalScale, out float verticalScale) =>
             DpiCalculator.TryGetMonitorScale(
-                CurrentMonitor.ToUnsafePtr<GraphicsLibraryFramework.Monitor>(),
+                GetDpiMonitor(),
                 out horizontalScale,
                 out verticalScale
             );
@@ -936,7 +953,7 @@ namespace OpenToolkit.Windowing.Desktop
         /// <inheritdoc />
         public unsafe bool TryGetCurrentMonitorDpi(out float horizontalDpi, out float verticalDpi) =>
             DpiCalculator.TryGetMonitorDpi(
-                CurrentMonitor.ToUnsafePtr<GraphicsLibraryFramework.Monitor>(),
+                GetDpiMonitor(),
                 out horizontalDpi,
                 out verticalDpi
             );
@@ -944,7 +961,7 @@ namespace OpenToolkit.Windowing.Desktop
         /// <inheritdoc />
         public unsafe bool TryGetCurrentMonitorDpiRaw(out float horizontalDpi, out float verticalDpi) =>
             DpiCalculator.TryGetMonitorDpiRaw(
-                CurrentMonitor.ToUnsafePtr<GraphicsLibraryFramework.Monitor>(),
+                GetDpiMonitor(),
                 out horizontalDpi,
                 out verticalDpi
             );
