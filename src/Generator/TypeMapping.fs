@@ -254,6 +254,7 @@ type GLType with
             |> Map.tryFind fallback
             |> Option.defaultValue fallback
         match x with
+        | GLType.Void -> "void"
         | Pointer elementType -> elementType.PrettyName + "*"
         | GLenum elementType -> elementType.GroupName
         | GLint -> specTypeToCSharpTypeWithFallback "GLint"
@@ -299,6 +300,7 @@ type GLType with
         | RefPointer elementType -> "ref " + elementType.PrettyName
         | StructGenericType s -> s
         | ArrayType elementType -> elementType.PrettyName + "[]"
+        | GLType.GLString -> "string"
 
 open Util
 
