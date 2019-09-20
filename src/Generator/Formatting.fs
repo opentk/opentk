@@ -148,8 +148,7 @@ module PrintReady =
     let formatTypedFunctionDeclaration (fDeclr: FunctionDeclaration) =
         { fDeclr with
             PrettyName = fDeclr.Name |> formatFunctionName
-            Parameters = fDeclr.Parameters |> Array.map formatParam
-           }
+            Parameters = fDeclr.Parameters |> Array.map formatParam }
 
 let generateDummyTypes =
     let usings = [ "System" ]
