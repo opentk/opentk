@@ -134,9 +134,7 @@ type GLType =
     | RefPointer of GLType
     | StructGenericType of string
     | ArrayType of GLType
-    
-       member x.PrettyName:string = "lol"
-        
+
 [<RequireQualifiedAccess>]
 type ParameterInfo =
     { Name: string
@@ -162,16 +160,14 @@ type FunctionDeclaration =
       PrettyName: string
       Parameters: ParameterInfo []
       GenericTypes: string []
-      RetType: GLType
-      Body: string }
+      RetType: GLType }
 
 let typedFunctionDeclaration name parameters retType genericTypes : FunctionDeclaration =
     { Name = name
       PrettyName = name
       Parameters = parameters
       GenericTypes = genericTypes
-      RetType = retType
-      Body = "" }
+      RetType = retType }
 
 type DummyTypeDescriptor =
     { Namespace: string option

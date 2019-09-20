@@ -244,9 +244,63 @@ let specTypeToCSharpType =
        "cl_sampler_info", "SamplerInfo"
        "cl_work_group_info", "WorkGroupInfo" |]
     |> Map.ofArray
+    
+open Types
+
+type GLType with
+    member x.PrettyName =
+        let inline specTypeToCSharpTypeWithFallback fallback =
+            specTypeToCSharpType
+            |> Map.tryFind fallback
+            |> Option.defaultValue fallback
+        match x with
+        | Pointer elementType -> elementType.PrettyName + "*"
+        | GLenum elementType -> elementType.GroupName
+        | GLint -> specTypeToCSharpTypeWithFallback "GLint"
+        | GLboolean -> specTypeToCSharpTypeWithFallback "GLboolean"
+        | GLdouble -> specTypeToCSharpTypeWithFallback "GLdouble"
+        | GLbyte -> specTypeToCSharpTypeWithFallback "GLbyte"
+        | GLfloat -> specTypeToCSharpTypeWithFallback "GLfloat"
+        | GLchar -> specTypeToCSharpTypeWithFallback "GLchar"
+        | GLcharARB -> specTypeToCSharpTypeWithFallback "GLcharARB"
+        | GLclampf -> specTypeToCSharpTypeWithFallback "GLclampf"
+        | GLfixed -> specTypeToCSharpTypeWithFallback "GLfixed"
+        | GLint64 -> specTypeToCSharpTypeWithFallback "GLint64"
+        | GLint64EXT -> specTypeToCSharpTypeWithFallback "GLint64EXT"
+        | GLintptr -> specTypeToCSharpTypeWithFallback "GLintptr"
+        | GLshort -> specTypeToCSharpTypeWithFallback "GLshort"
+        | GLsizei -> specTypeToCSharpTypeWithFallback "GLsizei"
+        | GLsizeiptr -> specTypeToCSharpTypeWithFallback "GLsizeiptr"
+        | GLubyte -> specTypeToCSharpTypeWithFallback "GLubyte"
+        | GLuint -> specTypeToCSharpTypeWithFallback "GLuint"
+        | GLuint64 -> specTypeToCSharpTypeWithFallback "GLuint64"
+        | GLuint64EXT -> specTypeToCSharpTypeWithFallback "GLuint64EXT"
+        | GLushort -> specTypeToCSharpTypeWithFallback "GLushort"
+        | GLvdpauSurfaceNV -> specTypeToCSharpTypeWithFallback "GLvdpauSurfaceNV"
+        | GLhalfNV -> specTypeToCSharpTypeWithFallback "GLhalfNV"
+        | GLbitfield -> specTypeToCSharpTypeWithFallback "GLbitfield"
+        | GLclampd -> specTypeToCSharpTypeWithFallback "GLclampd"
+        | GLclampx -> specTypeToCSharpTypeWithFallback "GLclampx"
+        | GLeglClientBufferEXT -> specTypeToCSharpTypeWithFallback "GLeglClientBufferEXT"
+        | GLeglImageOES -> specTypeToCSharpTypeWithFallback "GLeglImageOES"
+        | GLhandleARB -> specTypeToCSharpTypeWithFallback "GLhandleARB"
+        | GLintptrARB -> specTypeToCSharpTypeWithFallback "GLintptrARB"
+        | GLsizeiptrARB -> specTypeToCSharpTypeWithFallback "GLsizeiptrARB"
+        | GLsync -> specTypeToCSharpTypeWithFallback "GLsync"
+        | Struct_cl_context -> specTypeToCSharpTypeWithFallback "Struct_cl_context"
+        | Struct_cl_event -> specTypeToCSharpTypeWithFallback "Struct_cl_event"
+        | GLDEBUGPROC -> specTypeToCSharpTypeWithFallback "GLDEBUGPROC"
+        | GLDEBUGPROCAMD -> specTypeToCSharpTypeWithFallback "GLDEBUGPROCAMD"
+        | GLDEBUGPROCARB -> specTypeToCSharpTypeWithFallback "GLDEBUGPROCARB"
+        | GLDEBUGPROCKHR -> specTypeToCSharpTypeWithFallback "GLDEBUGPROCKHR"
+        | GLVULKANPROCNV -> specTypeToCSharpTypeWithFallback "GLVULKANPROCNV"
+        | OpenToolkit elementType -> string elementType
+        | RefPointer (RefPointer _) ->  failwithf "ref pointers should never occur"
+        | RefPointer elementType -> "ref " + elementType.PrettyName
+        | StructGenericType s -> s
+        | ArrayType elementType -> elementType.PrettyName + "[]"
 
 open Util
-open Types
 
 let looslyTypedFunctionsToTypedFunctions enumMap functions =
     let typecheckParams parameters =

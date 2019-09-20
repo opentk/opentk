@@ -53,71 +53,11 @@ let writeEmptyLine = WriteLine ""
 
 module TypeToString =
     let private cache = System.Collections.Concurrent.ConcurrentDictionary()
-
-    let rec private typeToString (typ: GLType) =
-        match typ with
-        | GLType.Void -> "void"
-        | GLType.GLenum inner -> inner.GroupName
-        | GLType.Pointer inner -> typeToString inner + " *"
-        | GLType.GLint -> specTypeToCSharpTypeWithFallback "GLint"
-        | GLType.GLboolean -> specTypeToCSharpTypeWithFallback "GLboolean"
-        | GLType.GLdouble -> specTypeToCSharpTypeWithFallback "GLdouble"
-        | GLType.GLbyte -> specTypeToCSharpTypeWithFallback "GLbyte"
-        | GLType.GLfloat -> specTypeToCSharpTypeWithFallback "GLfloat"
-        | GLType.GLchar -> specTypeToCSharpTypeWithFallback "GLchar"
-        | GLType.GLcharARB -> specTypeToCSharpTypeWithFallback "GLcharARB"
-        | GLType.GLclampf -> specTypeToCSharpTypeWithFallback "GLclampf"
-        | GLType.GLfixed -> specTypeToCSharpTypeWithFallback "GLfixed"
-        | GLType.GLint64 -> specTypeToCSharpTypeWithFallback "GLint64"
-        | GLType.GLint64EXT -> specTypeToCSharpTypeWithFallback "GLint64EXT"
-        | GLType.GLintptr -> specTypeToCSharpTypeWithFallback "GLintptr"
-        | GLType.GLshort -> specTypeToCSharpTypeWithFallback "GLshort"
-        | GLType.GLsizei -> specTypeToCSharpTypeWithFallback "GLsizei"
-        | GLType.GLsizeiptr -> specTypeToCSharpTypeWithFallback "GLsizeiptr"
-        | GLType.GLubyte -> specTypeToCSharpTypeWithFallback "GLubyte"
-        | GLType.GLuint -> specTypeToCSharpTypeWithFallback "GLuint"
-        | GLType.GLuint64 -> specTypeToCSharpTypeWithFallback "GLuint64"
-        | GLType.GLuint64EXT -> specTypeToCSharpTypeWithFallback "GLuint64EXT"
-        | GLType.GLushort -> specTypeToCSharpTypeWithFallback "GLushort"
-        | GLType.GLvdpauSurfaceNV ->
-            specTypeToCSharpTypeWithFallback "GLvdpauSurfaceNV"
-        | GLType.GLhalfNV -> specTypeToCSharpTypeWithFallback "GLhalfNV"
-        | GLType.GLbitfield -> specTypeToCSharpTypeWithFallback "GLbitfield"
-        | GLType.GLclampd -> specTypeToCSharpTypeWithFallback "GLclampd"
-        | GLType.GLclampx -> specTypeToCSharpTypeWithFallback "GLclampx"
-        | GLType.GLeglClientBufferEXT ->
-            specTypeToCSharpTypeWithFallback "GLeglClientBufferEXT"
-        | GLType.GLeglImageOES ->
-            specTypeToCSharpTypeWithFallback "GLeglImageOES"
-        | GLType.GLhandleARB -> specTypeToCSharpTypeWithFallback "GLhandleARB"
-        | GLType.GLintptrARB -> specTypeToCSharpTypeWithFallback "GLintptrARB"
-        | GLType.GLsizeiptrARB ->
-            specTypeToCSharpTypeWithFallback "GLsizeiptrARB"
-        | GLType.GLsync -> specTypeToCSharpTypeWithFallback "GLsync"
-        | GLType.Struct_cl_context ->
-            specTypeToCSharpTypeWithFallback "Struct_cl_context"
-        | GLType.Struct_cl_event ->
-            specTypeToCSharpTypeWithFallback "Struct_cl_event"
-        | GLType.GLDEBUGPROC -> specTypeToCSharpTypeWithFallback "GLDEBUGPROC"
-        | GLType.GLDEBUGPROCAMD ->
-            specTypeToCSharpTypeWithFallback "GLDEBUGPROCAMD"
-        | GLType.GLDEBUGPROCARB ->
-            specTypeToCSharpTypeWithFallback "GLDEBUGPROCARB"
-        | GLType.GLDEBUGPROCKHR ->
-            specTypeToCSharpTypeWithFallback "GLDEBUGPROCKHR"
-        | GLType.GLVULKANPROCNV ->
-            specTypeToCSharpTypeWithFallback "GLVULKANPROCNV"
-        | GLType.RefPointer typ -> "ref " + typeToString typ
-        | GLType.StructGenericType s -> s
-        | GLType.ArrayType typ -> typeToString typ + "[]"
-        | GLType.GLString -> "string"
-        | GLType.OpenToolkit typ -> string typ
-
-    let typeToStringCached typ =
+    let typeToStringCached (typ : GLType) =
         match cache.TryGetValue typ with
         | true, value -> value
         | false, _ ->
-            let res = typeToString typ
+            let res = typ.PrettyName
             cache.[typ] <- res
             res
 
@@ -313,11 +253,11 @@ let generateInterface (functions: FunctionDeclaration [])
         yield writeLeftBracket
         yield indent
         yield writeLine "[DefaultPlatformLibrary(typeof(LibraryNameContainer))]"
-        yield writeLine "public interface IGL : IAPI"
+        yield writeLine "private interface IGL : IAPI"
         yield writeLeftBracket
         yield indent
         yield! functions
-               |> Array.Parallel.collect (fun func ->
+               |> Array.collect (fun func ->
                    [| let retTypeAsString = func.RetType.PrettyName
 
                       let formattedParams =
@@ -445,7 +385,7 @@ namespace %s.%s
 {
     public static partial class GL
     {
-        public static IGL instance = APILoader.Load<IGL>();
+        private static IGL instance = APILoader.Load<IGL>();
     }
 }"""
         call graphicsNamespace _namespace
