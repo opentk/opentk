@@ -264,7 +264,7 @@ let generateInterface (functions: FunctionDeclaration [])
                           func.Parameters
                           |> Array.map
                               (fun p ->
-                              p.Type.PrettyName + " " + p.PrettyName.Value)
+                              p.Type.PrettyName + " " + p.PrettyName)
                           |> String.concat ", "
                       yield documentationFor func.Name |> writeLine
                       yield ("[NativeSymbol(\"" + func.Name + "\")]")
@@ -320,7 +320,7 @@ let generateStaticClass (functions: FunctionDeclaration [])
             let formattedParams =
                 func.Parameters
                 |> Array.Parallel.map
-                    (fun p -> p.Type.PrettyName + " " + p.PrettyName.Value)
+                    (fun p -> p.Type.PrettyName + " " + p.PrettyName)
                 |> String.concat ", "
 
             let funcName = func.PrettyName
@@ -333,7 +333,7 @@ let generateStaticClass (functions: FunctionDeclaration [])
                         match p.Type with
                         | RefPointer _ -> "ref "
                         | _ -> ""
-                    possiblePrefix + p.PrettyName.Value)
+                    possiblePrefix + p.PrettyName)
                 |> String.concat ", "
             let additional =
                 if func.GenericTypes.Length > 0 then

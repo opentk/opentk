@@ -138,19 +138,19 @@ type GLType =
 [<RequireQualifiedAccess>]
 type ParameterInfo =
     { Name: string
-      PrettyName: string option
+      PrettyName: string
       LengthParamName: string option
       Type: GLType }
     
     static member mk name ``type`` =
         { Name = name
-          PrettyName = None
+          PrettyName = name
           LengthParamName = None
           Type = ``type`` }
 
     static member typedParameterInfoWith name ``type`` lengthParamName =
         { Name = name
-          PrettyName = None
+          PrettyName = name
           LengthParamName = lengthParamName
           Type = ``type`` }
 
