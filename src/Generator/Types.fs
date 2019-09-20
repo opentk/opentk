@@ -68,8 +68,8 @@ type TKType =
         match x with
         | Vector v -> sprintf "Vector%d" v.Number
         | Vectord v -> sprintf "Vector%id" v.Number
-        | Matrix (x,y) -> sprintf "Matrix%dx%dd" x.Number y.Number
-        | Matrixd (x,y) -> sprintf "Matrix%dx%dd" x.Number y.Number
+        | Matrix (x,y) -> if x.Number = y.Number then  sprintf "Matrix%d" x.Number else sprintf "Matrix%dx%d" x.Number y.Number
+        | Matrixd (x,y) -> if x.Number = y.Number then  sprintf "Matrix%dd" x.Number else sprintf "Matrix%dx%dd" x.Number y.Number
         
     
 module Matrix =
