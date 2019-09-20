@@ -20,8 +20,8 @@ type options =
 
 [<RequireQualifiedAccess>]
 type ParseResult =
-    { enums: GLEnumGroup[]
-      functions: GLFunctionDeclaration[]
+    { enums: RawGLEnumGroup[]
+      functions: RawGLFunctionDeclaration[]
       extensions: ExtensionInfo[]
       data: OpenGL_Specification.Registry }
  

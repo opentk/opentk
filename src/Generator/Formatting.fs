@@ -196,7 +196,7 @@ module PrintReady =
         |> String.concat ""
         |> addUnderscoreIfBeginsWithNumber
 
-    let formatEnumGroup (enumGroup: GLEnumGroup) =
+    let formatEnumGroup (enumGroup: RawGLEnumGroup) =
         let prettyEnumCases =
             enumGroup.Cases
             |> Array.Parallel.map (fun case ->
@@ -206,7 +206,7 @@ module PrintReady =
         { GroupName = enumGroup.GroupName
           EnumCases = prettyEnumCases }: PrintReadyEnumGroup
 
-    let formatTypeInfo (typeInfo: GLType): PrintReadyTypeInfo =
+    let formatTypeInfo (typeInfo: GLType): TypeInfo =
         { Type = typeInfo
           PrettyTypeName = typeInfo |> typeToString }
 

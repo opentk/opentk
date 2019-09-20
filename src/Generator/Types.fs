@@ -1,12 +1,14 @@
 module Types
 
-type GLEnum =
+/// Loosely typed enum from the specification.
+type RawGLEnum =
     { Name: string
       Value: string }
 
-type GLEnumGroup =
+/// Group of loosely typed enums from the specification.
+type RawGLEnumGroup =
     { GroupName: string
-      Cases: GLEnum [] }
+      Cases: RawGLEnum [] }
 
 [<RequireQualifiedAccess>]
 type GLLooseType =
@@ -18,7 +20,8 @@ type GLLooseType =
           Group = group }
     
 
-type GLParameterInfo =
+/// Loosely typed parameter info from the specification.
+type RawGLParameterInfo =
     { ParamName: string
       LengthParamName: string option
       ParamType: GLLooseType }
@@ -33,9 +36,11 @@ type GLParameterInfo =
           LengthParamName = Some lengthParamName
           ParamType = ``type`` } 
 
-type GLFunctionDeclaration =
+
+/// Loosely typed enums from the specification.
+type RawGLFunctionDeclaration =
     { FuncName: string
-      Parameters: GLParameterInfo []
+      Parameters: RawGLParameterInfo []
       RetType: GLLooseType }
 
 /// The size of a matrix/vector in a single dimension.
@@ -78,11 +83,9 @@ module Matrix =
 module Matrixd =
     let square size = Matrixd(size, size)
     
-
-
 type GLType =
     | Pointer of GLType
-    | GLenum of GLEnumGroup
+    | GLenum of RawGLEnumGroup
     | GLint
     | GLboolean
     | GLdouble
@@ -152,7 +155,7 @@ type TypedFunctionDeclaration =
       RetType: GLType }
 
 [<RequireQualifiedAccess>]
-type PrintReadyTypeInfo =
+type TypeInfo =
     { PrettyTypeName: string
       Type: GLType }
 
@@ -161,7 +164,7 @@ type PrintReadyTypedParameterInfo =
     { ActualName: string
       PrettyName: string
       LengthParamName: string option
-      Type: PrintReadyTypeInfo }
+      Type: TypeInfo }
 
 [<RequireQualifiedAccess>]
 type PrintReadyTypedFunctionDeclaration =
@@ -169,7 +172,7 @@ type PrintReadyTypedFunctionDeclaration =
       PrettyName: string
       Parameters: PrintReadyTypedParameterInfo []
       GenericTypes: string []
-      RetType: PrintReadyTypeInfo
+      RetType: TypeInfo
       Body: string }
 
 [<RequireQualifiedAccess>]
