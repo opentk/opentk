@@ -78,6 +78,7 @@ let pointerTypeMappings =
 let functionOverloads =
     let dummyEnumGroupTy name =
         { GroupName = name
+          PrettyName = name
           Cases = Array.empty }
         |> GLenum
 

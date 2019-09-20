@@ -196,15 +196,14 @@ module PrintReady =
         |> String.concat ""
         |> addUnderscoreIfBeginsWithNumber
 
-    let formatEnumGroup (enumGroup: RawGLEnumGroup) =
-        let prettyEnumCases =
+    let formatEnumGroup (enumGroup: GLEnumGroup) =
+        let prettyCases =
             enumGroup.Cases
             |> Array.Parallel.map (fun case ->
-                { ActualName = case.Name
+                { Name = case.Name
                   PrettyName = case.Name |> formatEnumCase
-                  Value = case.Value }: PrintReadyEnum)
-        { GroupName = enumGroup.GroupName
-          EnumCases = prettyEnumCases }: PrintReadyEnumGroup
+                  Value = case.Value })
+        { enumGroup with Cases = prettyCases }
 
     let formatTypedFunctionDeclaration (fDeclr: FunctionDeclaration) =
         { fDeclr with PrettyName = fDeclr.Name |> formatFunctionName }
@@ -237,7 +236,7 @@ type GenerateDetails =
     | Extensions
     | OpenGlVersion of RawOpenGLSpecificationDetails
 
-let generateEnums (enums: PrintReadyEnumGroup [])
+let generateEnums (enums: GLEnumGroup [])
     (details: GenerateDetails) =
     let usings = [ "System"; dummyTypesNamespace ]
     let _namespace =
@@ -252,7 +251,7 @@ let generateEnums (enums: PrintReadyEnumGroup [])
         yield indent
         yield! enums
                |> Array.Parallel.collect (fun enum ->
-                   [| if enum.EnumCases.Length > 0 then
+                   [| if enum.Cases.Length > 0 then
                        yield sprintf "public enum %s" enum.GroupName
                              |> writeLine
                        yield writeLeftBracket
@@ -265,7 +264,7 @@ let generateEnums (enums: PrintReadyEnumGroup [])
                                    let value = 0x80000000
                                    value |> string
                                | _ -> value
-                           enum.EnumCases
+                           enum.Cases
                            |> Array.Parallel.map
                                (fun case ->
                                sprintf "%s = %s" case.PrettyName

@@ -20,7 +20,7 @@ type options =
 
 [<RequireQualifiedAccess>]
 type ParseResult =
-    { enums: RawGLEnumGroup[]
+    { enums: GLEnumGroup[]
       functions: RawGLFunctionDeclaration[]
       extensions: ExtensionInfo[]
       data: OpenGL_Specification.Registry }
@@ -43,12 +43,12 @@ let parse (pathToSpec: string) =
 [<RequireQualifiedAccess>]
 type TypecheckAndFormatWithOverloadGenerationResult =
     { prettyFunctions: FunctionDeclaration[]
-      prettyEnumGroups: PrintReadyEnumGroup[]
+      prettyEnumGroups: GLEnumGroup[]
       functionToExtensionMapper: Map<string, string[]>
       enumCaseToExtensionMapper: Map<string, string[]>
-      prettyEnumGroupMap: Map<string, PrintReadyEnumGroup>
+      prettyEnumGroupMap: Map<string, GLEnumGroup>
       extensionsOnlyFunctions: FunctionDeclaration[]
-      extensionsOnlyEnumCases: PrintReadyEnumGroup[]
+      extensionsOnlyCases: GLEnumGroup[]
       data: OpenGL_Specification.Registry }
 
 let ``typecheck, format and generate overloads`` (parseResult: ParseResult) =
@@ -107,7 +107,7 @@ let ``typecheck, format and generate overloads`` (parseResult: ParseResult) =
         getMapper (fun extension -> extension.Functions)
 
     let enumCaseToExtensionMapper =
-        getMapper (fun extension -> extension.EnumCases)
+        getMapper (fun extension -> extension.Cases)
         
 
     let prettyEnumGroupMap =
@@ -135,12 +135,12 @@ let ``typecheck, format and generate overloads`` (parseResult: ParseResult) =
         |> Array.Parallel.choose (fun enum ->
             // if enum.groupName = "ClipPlaneName" then System.Diagnostics.Debugger.Break()
             let cases =
-                enum.EnumCases
+                enum.Cases
                 |> Array.filter
                     (fun case ->
                         enumCaseToExtensionMapper
-                        |> Map.containsKey case.ActualName)
-            if cases.Length > 0 then { enum with EnumCases = cases } |> Some
+                        |> Map.containsKey case.Name)
+            if cases.Length > 0 then { enum with Cases = cases } |> Some
             else None)
         |> Array.append requiredEnumsFromFunctions
         |> Array.distinctBy (fun e -> e.GroupName)
@@ -150,19 +150,19 @@ let ``typecheck, format and generate overloads`` (parseResult: ParseResult) =
         prettyEnumGroupMap = prettyEnumGroupMap
         functionToExtensionMapper = functionToExtensionMapper
         enumCaseToExtensionMapper = enumCaseToExtensionMapper
-        extensionsOnlyEnumCases = enumsWithExtensionsOnly
+        extensionsOnlyCases = enumsWithExtensionsOnly
         extensionsOnlyFunctions = typecheckedFunctionsExtensionsOnly
         data = parseResult.data
     } : TypecheckAndFormatWithOverloadGenerationResult
 
 type TypecheckAndAggregateResults =
     { prettyFunctions: FunctionDeclaration[]
-      prettyEnumGroups: PrintReadyEnumGroup[]
+      prettyEnumGroups: GLEnumGroup[]
       functionToExtensionMapper: Map<string, string[]>
       enumCaseToExtensionMapper: Map<string, string[]>
-      prettyEnumGroupMap: Map<string, PrintReadyEnumGroup>
+      prettyEnumGroupMap: Map<string, GLEnumGroup>
       extensionsOnlyFunctions: FunctionDeclaration[]
-      extensionsOnlyEnumCases: PrintReadyEnumGroup[]
+      extensionsOnlyCases: GLEnumGroup[]
       openGlVersions: RawOpenGLSpecificationDetails[] }
 
 let aggregateFunctionsAndEnums (typecheckResults: TypecheckAndFormatWithOverloadGenerationResult) =
@@ -173,11 +173,11 @@ let aggregateFunctionsAndEnums (typecheckResults: TypecheckAndFormatWithOverload
       prettyEnumGroupMap = typecheckResults.prettyEnumGroupMap
       functionToExtensionMapper = typecheckResults.functionToExtensionMapper
       enumCaseToExtensionMapper = typecheckResults.enumCaseToExtensionMapper
-      extensionsOnlyEnumCases = typecheckResults.extensionsOnlyEnumCases
+      extensionsOnlyCases = typecheckResults.extensionsOnlyCases
       extensionsOnlyFunctions = typecheckResults.extensionsOnlyFunctions } : TypecheckAndAggregateResults
 
 let generateCode basePath (typecheckAndAggregateResults: TypecheckAndAggregateResults) =
-    let enumsWithExtensionsOnly = typecheckAndAggregateResults.extensionsOnlyEnumCases
+    let enumsWithExtensionsOnly = typecheckAndAggregateResults.extensionsOnlyCases
     let typecheckedFunctionsExtensionsOnly = typecheckAndAggregateResults.extensionsOnlyFunctions
     let openGlVersions = typecheckAndAggregateResults.openGlVersions
     let prettyFunctions = typecheckAndAggregateResults.prettyFunctions
@@ -277,14 +277,14 @@ let generateCode basePath (typecheckAndAggregateResults: TypecheckAndAggregateRe
             |> Array.Parallel.choose (fun enum ->
                 // if enum.groupName = "ClipPlaneName" then System.Diagnostics.Debugger.Break()
                 let cases =
-                    enum.EnumCases
+                    enum.Cases
                     |> Array.filter
                         (fun case ->
-                        glVersion.EnumCases.Contains case.ActualName
+                        glVersion.Cases.Contains case.Name
                         && (enumCaseToExtensionMapper
-                            |> Map.containsKey case.ActualName
+                            |> Map.containsKey case.Name
                             |> not))
-                if cases.Length > 0 then { enum with EnumCases = cases } |> Some
+                if cases.Length > 0 then { enum with Cases = cases } |> Some
                 else None)
             |> Array.append requiredEnumsFromFunctions
             |> Array.distinctBy (fun e -> e.GroupName)

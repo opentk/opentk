@@ -1,14 +1,18 @@
 module Types
 
-/// Loosely typed enum from the specification.
-type RawGLEnum =
+/// A named enum from the specification.
+/// This corresponds to a single case within an enum in C#.
+type GLEnum =
     { Name: string
+      PrettyName: string
       Value: string }
 
-/// Group of loosely typed enums from the specification.
-type RawGLEnumGroup =
+/// A group of enums, from the specification.
+/// This corresponds to the general enum type, where the case.
+type GLEnumGroup =
     { GroupName: string
-      Cases: RawGLEnum [] }
+      PrettyName: string
+      Cases: GLEnum [] }
 
 [<RequireQualifiedAccess>]
 type GLLooseType =
@@ -85,7 +89,7 @@ module Matrixd =
     
 type GLType =
     | Pointer of GLType
-    | GLenum of RawGLEnumGroup
+    | GLenum of GLEnumGroup
     | GLint
     | GLboolean
     | GLdouble
@@ -161,17 +165,6 @@ type FunctionDeclaration =
       RetType: GLType
       Body: string }
 
-[<RequireQualifiedAccess>]
-type PrintReadyEnum =
-    { ActualName: string
-      PrettyName: string
-      Value: string }
-
-[<RequireQualifiedAccess>]
-type PrintReadyEnumGroup =
-    { GroupName: string
-      EnumCases: PrintReadyEnum [] }
-
 let typedFunctionDeclaration name parameters retType genericTypes : FunctionDeclaration =
     { Name = name
       PrettyName = name
@@ -189,13 +182,13 @@ type RawOpenGLSpecificationDetails =
     { Version: string
       VersionNumber: decimal
       Functions: string Set
-      EnumCases: string Set }
+      Cases: string Set }
 
 [<RequireQualifiedAccess>]
 type ExtensionInfo =
     { Name: string
       Functions: string []
-      EnumCases: string [] }
+      Cases: string [] }
 
 [<RequireQualifiedAccess>]
 type FunctionSignature =

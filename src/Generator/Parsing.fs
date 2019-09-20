@@ -74,6 +74,7 @@ let getEnumsFromSpecification (spec: OpenGL_Specification.Registry) =
                     |> Map.tryFind case.Name
                     |> Option.map (fun value ->
                         { Name = case.Name
+                          PrettyName = case.Name
                           Value = value }))
                 |> Array.groupBy (fun case -> case.Value)
                 |> Array.Parallel.choose (fun (_, cases) ->
@@ -92,6 +93,7 @@ let getEnumsFromSpecification (spec: OpenGL_Specification.Registry) =
 
             let res =
                 { GroupName = group
+                  PrettyName = group
                   Cases = cases }
 
             return! Some res
@@ -170,4 +172,4 @@ let getExtensions (spec: OpenGL_Specification.Registry) =
             enums |> Array.Parallel.collect id
         { Name = extension.Name
           Functions = functions
-          EnumCases = enums }: ExtensionInfo)
+          Cases = enums }: ExtensionInfo)

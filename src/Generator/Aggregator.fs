@@ -84,6 +84,6 @@ let getEnumCasesAndCommandsPerVersion (data: OpenGL_Specification.Registry) =
         { Version = versions.[i] |> string
           VersionNumber = featuresSortedAscendingByVersion.[i].Number
           Functions = curr.functions |> Set
-          EnumCases = curr.enumCases |> Set }: RawOpenGLSpecificationDetails
+          Cases = curr.enumCases |> Set }: RawOpenGLSpecificationDetails
     |> Array.groupBy (fun info -> info.Version)
     |> Array.map (fun (version, infos) -> infos |> Array.last)
