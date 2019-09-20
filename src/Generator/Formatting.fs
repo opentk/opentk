@@ -163,7 +163,7 @@ let inline formatParameterName (name: string) =
     else
         name
 
-let formatParam (p: TypedParameterInfo) = formatParameterName p.Name
+let formatParam (p: ParameterInfo) = formatParameterName p.Name
 
 let namespaceForGlSpecification (openGl: RawOpenGLSpecificationDetails) =
     let prettyName =
@@ -206,25 +206,8 @@ module PrintReady =
         { GroupName = enumGroup.GroupName
           EnumCases = prettyEnumCases }: PrintReadyEnumGroup
 
-    let formatTypeInfo (typeInfo: GLType): TypeInfo =
-        { Type = typeInfo
-          PrettyTypeName = typeInfo |> typeToString }
-
-    let formatTypeTypeParameterInfo (typedParameterInfo: TypedParameterInfo): PrintReadyTypedParameterInfo =
-        { ActualName = typedParameterInfo.Name
-          PrettyName = typedParameterInfo |> formatParam
-          LengthParamName = typedParameterInfo.LengthParamName
-          Type = typedParameterInfo.Type |> formatTypeInfo }
-
-    let formatTypedFunctionDeclaration (typedFunctionDeclaration: TypedFunctionDeclaration) =
-        let parameters =
-            typedFunctionDeclaration.Parameters
-            |> Array.Parallel.map formatTypeTypeParameterInfo
-        { ActualName = typedFunctionDeclaration.Name
-          PrettyName = typedFunctionDeclaration.Name |> formatFunctionName
-          Parameters = parameters
-          GenericTypes = typedFunctionDeclaration.GenericTypes
-          RetType = typedFunctionDeclaration.RetType |> formatTypeInfo }: PrintReadyTypedFunctionDeclaration
+    let formatTypedFunctionDeclaration (fDeclr: FunctionDeclaration) =
+        { fDeclr with PrettyName = fDeclr.Name |> formatFunctionName }
 
 let generateDummyTypes =
     let usings = [ "System" ]
@@ -319,7 +302,7 @@ let namespaceAndDocumentationFor (details: GenerateDetails) =
         "EXT",
         fun _ -> "/// No documentation for extension functions available yet."
 
-let generateInterface (functions: PrintReadyTypedFunctionDeclaration [])
+let generateInterface (functions: FunctionDeclaration [])
     (details: GenerateDetails) =
     let _namespace, documentationFor = namespaceAndDocumentationFor details
     let usings =
@@ -336,16 +319,16 @@ let generateInterface (functions: PrintReadyTypedFunctionDeclaration [])
         yield indent
         yield! functions
                |> Array.Parallel.collect (fun func ->
-                   [| let retTypeAsString = func.RetType.PrettyTypeName
+                   [| let retTypeAsString = func.RetType.PrettyName
 
                       let formattedParams =
                           func.Parameters
                           |> Array.map
                               (fun p ->
-                              p.Type.PrettyTypeName + " " + p.PrettyName)
+                              p.Type.PrettyName + " " + p.PrettyName.Value)
                           |> String.concat ", "
-                      yield documentationFor func.ActualName |> writeLine
-                      yield ("[NativeSymbol(\"" + func.ActualName + "\")]")
+                      yield documentationFor func.Name |> writeLine
+                      yield ("[NativeSymbol(\"" + func.Name + "\")]")
                             |> writeLine
                       let additional =
                           if func.GenericTypes.Length > 0 then
@@ -355,8 +338,8 @@ let generateInterface (functions: PrintReadyTypedFunctionDeclaration [])
                             "<" + inner + ">"
                           else ""
                       let prefix =
-                          if func.Parameters |> Array.exists (fun p -> isPointerType p.Type.Type)
-                             || isPointerType func.RetType.Type then "unsafe "
+                          if func.Parameters |> Array.exists (fun p -> isPointerType p.Type)
+                             || isPointerType func.RetType then "unsafe "
                           else ""
                       yield prefix + retTypeAsString + " " + func.PrettyName
                             + additional
@@ -379,7 +362,7 @@ let generateInterface (functions: PrintReadyTypedFunctionDeclaration [])
     }
     |> execute
 
-let generateStaticClass (functions: PrintReadyTypedFunctionDeclaration [])
+let generateStaticClass (functions: FunctionDeclaration [])
     (details: GenerateDetails) =
     let _namespace, documentationFor = namespaceAndDocumentationFor details
     let usings =
@@ -393,12 +376,12 @@ let generateStaticClass (functions: PrintReadyTypedFunctionDeclaration [])
         yield writeLeftBracket
         yield indent
         for func in functions do
-            let retTypeAsString = func.RetType.PrettyTypeName
+            let retTypeAsString = func.RetType.PrettyName
 
             let formattedParams =
                 func.Parameters
                 |> Array.Parallel.map
-                    (fun p -> p.Type.PrettyTypeName + " " + p.PrettyName)
+                    (fun p -> p.Type.PrettyName + " " + p.PrettyName.Value)
                 |> String.concat ", "
 
             let funcName = func.PrettyName
@@ -408,10 +391,10 @@ let generateStaticClass (functions: PrintReadyTypedFunctionDeclaration [])
                 func.Parameters
                 |> Array.Parallel.map (fun p ->
                     let possiblePrefix =
-                        match p.Type.Type with
+                        match p.Type with
                         | RefPointer _ -> "ref "
                         | _ -> ""
-                    possiblePrefix + p.PrettyName)
+                    possiblePrefix + p.PrettyName.Value)
                 |> String.concat ", "
             let additional =
                 if func.GenericTypes.Length > 0 then
@@ -420,10 +403,10 @@ let generateStaticClass (functions: PrintReadyTypedFunctionDeclaration [])
                         |> String.concat ", "
                     "<" + inner + ">"
                 else ""
-            yield documentationFor func.ActualName |> writeLine
+            yield documentationFor func.Name |> writeLine
             let prefix =
-                if func.Parameters |> Array.exists (fun p -> isPointerType p.Type.Type)
-                   || isPointerType func.RetType.Type then " unsafe"
+                if func.Parameters |> Array.exists (fun p -> isPointerType p.Type)
+                   || isPointerType func.RetType then " unsafe"
                 else ""
             if func.GenericTypes.Length > 0 then
                 yield sprintf "public static%s %s %s%s(%s)"

@@ -42,12 +42,12 @@ let parse (pathToSpec: string) =
 
 [<RequireQualifiedAccess>]
 type TypecheckAndFormatWithOverloadGenerationResult =
-    { prettyFunctions: PrintReadyTypedFunctionDeclaration[]
+    { prettyFunctions: FunctionDeclaration[]
       prettyEnumGroups: PrintReadyEnumGroup[]
       functionToExtensionMapper: Map<string, string[]>
       enumCaseToExtensionMapper: Map<string, string[]>
       prettyEnumGroupMap: Map<string, PrintReadyEnumGroup>
-      extensionsOnlyFunctions: PrintReadyTypedFunctionDeclaration[]
+      extensionsOnlyFunctions: FunctionDeclaration[]
       extensionsOnlyEnumCases: PrintReadyEnumGroup[]
       data: OpenGL_Specification.Registry }
 
@@ -65,7 +65,7 @@ let ``typecheck, format and generate overloads`` (parseResult: ParseResult) =
         TypeMapping.looslyTypedFunctionsToTypedFunctions enumMap functions
         |> Array.Parallel.collect (fun func ->            
             let func = Formatting.PrintReady.formatTypedFunctionDeclaration func
-            match functionOverloads |> Map.tryFind func.ActualName with
+            match functionOverloads |> Map.tryFind func.Name with
             | Some overload ->
                 overload.Overloads
                 |> Array.Parallel.map
@@ -73,14 +73,7 @@ let ``typecheck, format and generate overloads`` (parseResult: ParseResult) =
                     { func with
                           PrettyName =
                               overload.AlternativeName
-                              |> Option.defaultValue func.PrettyName
-                          Parameters =
-                              currOverload.Parameters
-                              |> Array.map
-                                  Formatting.PrintReady.formatTypeTypeParameterInfo
-                          RetType =
-                              currOverload.RetType
-                              |> Formatting.PrintReady.formatTypeInfo })
+                              |> Option.defaultValue func.PrettyName })
             | None ->
                 let newName, primaryOverload =
                     func
@@ -125,7 +118,7 @@ let ``typecheck, format and generate overloads`` (parseResult: ParseResult) =
     let typecheckedFunctionsExtensionsOnly =
         prettyFunctions
         |> Array.filter
-            (fun func -> (functionToExtensionMapper |> Map.containsKey func.ActualName))
+            (fun func -> (functionToExtensionMapper |> Map.containsKey func.Name))
     let enumsWithExtensionsOnly =
         let requiredEnumsFromFunctions =
             typecheckedFunctionsExtensionsOnly
@@ -134,7 +127,7 @@ let ``typecheck, format and generate overloads`` (parseResult: ParseResult) =
                 func.Parameters
                 |> Array.Parallel.choose
                     (fun param ->
-                    TypeMapping.tryGetEnumType param.Type.Type
+                    TypeMapping.tryGetEnumType param.Type
                     |> Option.bind
                         (fun group ->
                         prettyEnumGroupMap |> Map.tryFind group.GroupName)))
@@ -163,12 +156,12 @@ let ``typecheck, format and generate overloads`` (parseResult: ParseResult) =
     } : TypecheckAndFormatWithOverloadGenerationResult
 
 type TypecheckAndAggregateResults =
-    { prettyFunctions: PrintReadyTypedFunctionDeclaration[]
+    { prettyFunctions: FunctionDeclaration[]
       prettyEnumGroups: PrintReadyEnumGroup[]
       functionToExtensionMapper: Map<string, string[]>
       enumCaseToExtensionMapper: Map<string, string[]>
       prettyEnumGroupMap: Map<string, PrintReadyEnumGroup>
-      extensionsOnlyFunctions: PrintReadyTypedFunctionDeclaration[]
+      extensionsOnlyFunctions: FunctionDeclaration[]
       extensionsOnlyEnumCases: PrintReadyEnumGroup[]
       openGlVersions: RawOpenGLSpecificationDetails[] }
 
@@ -248,7 +241,7 @@ let generateCode basePath (typecheckAndAggregateResults: TypecheckAndAggregateRe
         let typecheckedFunctionsWithoutExtensions =
                                                     prettyFunctions
                                                     |> Array.filter
-                                                        (fun func -> glVersion.Functions.Contains func.ActualName);
+                                                        (fun func -> glVersion.Functions.Contains func.Name);
 
         let enumsWithoutExtensions =
             let requiredEnumsFromFunctions =
@@ -258,12 +251,12 @@ let generateCode basePath (typecheckAndAggregateResults: TypecheckAndAggregateRe
                         let m1 = func.Parameters
                                 |> Array.Parallel.choose
                                     (fun param ->
-                                    TypeMapping.tryGetEnumType param.Type.Type
+                                    TypeMapping.tryGetEnumType param.Type
                                     |> Option.bind
                                         (fun group ->
                                         prettyEnumGroupMap |> Map.tryFind group.GroupName));
                             
-                        let m2 = [| TypeMapping.tryGetEnumType func.RetType.Type
+                        let m2 = [| TypeMapping.tryGetEnumType func.RetType
                                     |> Option.bind
                                         (fun group -> prettyEnumGroupMap |> Map.tryFind group.GroupName) |] |> Array.choose id
                         Array.concat [| m1 ; m2 |]

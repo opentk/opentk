@@ -45,7 +45,7 @@ let rec getBaseGLType t =
     | ArrayType(s) -> getBaseGLType s
     | _ -> t 
 let sufixToRemove =
-    [| ("1", fun (_ : PrintReadyTypedFunctionDeclaration) -> true);
+    [| ("1", fun (_ : FunctionDeclaration) -> true);
        ("2", fun _ -> true);
        ("3", fun _ -> true);
        ("4", fun _ -> true);
@@ -55,14 +55,14 @@ let sufixToRemove =
        ("uiv", fun _ -> true);
        ("ui", fun _ -> true);
        ("usv", fun _ -> true);
-       ("us", fun d -> (Array.exists (fun (p : PrintReadyTypedParameterInfo) -> (getBaseGLType p.Type.Type) = GLType.GLushort) d.Parameters ));
+       ("us", fun d -> (Array.exists (fun (p : ParameterInfo) -> (getBaseGLType p.Type) = GLType.GLushort) d.Parameters ));
        ("i", fun _ -> true);
        ("iv", fun _ -> true);
        ("f", fun _ -> true);
        ("b", fun _ -> true);
        ("d", fun _ -> true);
        ("dv", fun _ -> true);
-       ("s", fun d -> (Array.exists (fun (p : PrintReadyTypedParameterInfo) -> (getBaseGLType p.Type.Type) = GLType.GLshort) d.Parameters ));
+       ("s", fun d -> (Array.exists (fun (p : ParameterInfo) -> (getBaseGLType p.Type) = GLType.GLshort) d.Parameters ));
        ("sv", fun _ -> true);
        ("ub", fun _ -> true);
        ("v", fun _ -> true)
@@ -85,37 +85,37 @@ let functionOverloads =
        functionOverloadsWith "glGetQueryBufferObjecti64v"
            "GetQueryBufferObjecti64v"
            [| functionSignature Void
-                  [| TypedParameterInfo.mk "id" GLuint
-                     TypedParameterInfo.mk "buffer" GLuint
+                  [| ParameterInfo.mk "id" GLuint
+                     ParameterInfo.mk "buffer" GLuint
 
                      dummyEnumGroupTy "QueryObjectParameterName"
-                     |> TypedParameterInfo.mk "pname"
-                     TypedParameterInfo.mk "offset" GLintptr |] |]
+                     |> ParameterInfo.mk "pname"
+                     ParameterInfo.mk "offset" GLintptr |] |]
        functionOverloadsWith "glGetQueryBufferObjectv" "GetQueryBufferObjectv"
            [| functionSignature Void
-                  [| TypedParameterInfo.mk "id" GLuint
-                     TypedParameterInfo.mk "buffer" GLuint
+                  [| ParameterInfo.mk "id" GLuint
+                     ParameterInfo.mk "buffer" GLuint
 
                      dummyEnumGroupTy "QueryObjectParameterName"
-                     |> TypedParameterInfo.mk "pname"
-                     TypedParameterInfo.mk "offset" GLintptr |] |]
+                     |> ParameterInfo.mk "pname"
+                     ParameterInfo.mk "offset" GLintptr |] |]
        functionOverloadsWith "glGetQueryBufferObjectui64v"
            "GetQueryBufferObjectui64v"
            [| functionSignature Void
-                  [| TypedParameterInfo.mk "id" GLuint
-                     TypedParameterInfo.mk "buffer" GLuint
+                  [| ParameterInfo.mk "id" GLuint
+                     ParameterInfo.mk "buffer" GLuint
 
                      dummyEnumGroupTy "QueryObjectParameterName"
-                     |> TypedParameterInfo.mk "pname"
-                     TypedParameterInfo.mk "offset" GLintptr |] |]
+                     |> ParameterInfo.mk "pname"
+                     ParameterInfo.mk "offset" GLintptr |] |]
        functionOverloadsWith "glGetQueryBufferObjectuiv"
            "GetQueryBufferObjectuiv"
            [| functionSignature Void
-                  [| TypedParameterInfo.mk "id" GLuint
-                     TypedParameterInfo.mk "buffer" GLuint
+                  [| ParameterInfo.mk "id" GLuint
+                     ParameterInfo.mk "buffer" GLuint
 
                      dummyEnumGroupTy "QueryObjectParameterName"
-                     |> TypedParameterInfo.mk "pname"
-                     TypedParameterInfo.mk "offset" GLintptr |] |] |]
+                     |> ParameterInfo.mk "pname"
+                     ParameterInfo.mk "offset" GLintptr |] |] |]
     |> Array.Parallel.map (fun overload -> overload.ExpectedName, overload)
     |> Map.ofArray

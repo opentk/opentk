@@ -130,49 +130,35 @@ type GLType =
     | RefPointer of GLType
     | StructGenericType of string
     | ArrayType of GLType
-
+    
+       member x.PrettyName:string = "lol"
+        
 [<RequireQualifiedAccess>]
-type TypedParameterInfo =
+type ParameterInfo =
     { Name: string
+      PrettyName: string option
       LengthParamName: string option
       Type: GLType }
     
     static member mk name ``type`` =
         { Name = name
+          PrettyName = None
           LengthParamName = None
           Type = ``type`` }
 
     static member typedParameterInfoWith name ``type`` lengthParamName =
         { Name = name
+          PrettyName = None
           LengthParamName = lengthParamName
           Type = ``type`` }
 
 [<RequireQualifiedAccess>]
-type TypedFunctionDeclaration =
+type FunctionDeclaration =
     { Name: string
-      Parameters: TypedParameterInfo []
-      GenericTypes: string []
-      RetType: GLType }
-
-[<RequireQualifiedAccess>]
-type TypeInfo =
-    { PrettyTypeName: string
-      Type: GLType }
-
-[<RequireQualifiedAccess>]
-type PrintReadyTypedParameterInfo =
-    { ActualName: string
       PrettyName: string
-      LengthParamName: string option
-      Type: TypeInfo }
-
-[<RequireQualifiedAccess>]
-type PrintReadyTypedFunctionDeclaration =
-    { ActualName: string
-      PrettyName: string
-      Parameters: PrintReadyTypedParameterInfo []
+      Parameters: ParameterInfo []
       GenericTypes: string []
-      RetType: TypeInfo
+      RetType: GLType
       Body: string }
 
 [<RequireQualifiedAccess>]
@@ -186,11 +172,13 @@ type PrintReadyEnumGroup =
     { GroupName: string
       EnumCases: PrintReadyEnum [] }
 
-let typedFunctionDeclaration name parameters retType genericTypes : TypedFunctionDeclaration =
+let typedFunctionDeclaration name parameters retType genericTypes : FunctionDeclaration =
     { Name = name
+      PrettyName = name
       Parameters = parameters
       GenericTypes = genericTypes
-      RetType = retType }
+      RetType = retType
+      Body = "" }
 
 type DummyTypeDescriptor =
     { Namespace: string option
@@ -212,7 +200,7 @@ type ExtensionInfo =
 [<RequireQualifiedAccess>]
 type FunctionSignature =
     { RetType: GLType
-      Parameters: TypedParameterInfo [] }
+      Parameters: ParameterInfo [] }
 
 let functionSignature retType parameters: FunctionSignature =
     { RetType = retType
