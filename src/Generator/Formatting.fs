@@ -103,7 +103,7 @@ let inline formatParameterName (name: string) =
     else
         name
 
-let formatParam (p: ParameterInfo) = formatParameterName p.Name
+let formatParam (p: ParameterInfo) = { p with PrettyName = formatParameterName p.Name }
 
 let namespaceForGlSpecification (openGl: RawOpenGLSpecificationDetails) =
     let prettyName =
@@ -146,7 +146,10 @@ module PrintReady =
         { enumGroup with Cases = prettyCases }
 
     let formatTypedFunctionDeclaration (fDeclr: FunctionDeclaration) =
-        { fDeclr with PrettyName = fDeclr.Name |> formatFunctionName }
+        { fDeclr with
+            PrettyName = fDeclr.Name |> formatFunctionName
+            Parameters = fDeclr.Parameters |> Array.map formatParam
+           }
 
 let generateDummyTypes =
     let usings = [ "System" ]
