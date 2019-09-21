@@ -255,7 +255,7 @@ let generateInterface (functions: FunctionDeclaration [])
         yield writeLeftBracket
         yield indent
         yield writeLine "[DefaultPlatformLibrary(typeof(LibraryNameContainer))]"
-        yield writeLine "private interface IGL : IAPI"
+        yield writeLine "internal interface IGL : IAPI"
         yield writeLeftBracket
         yield indent
         yield! functions
