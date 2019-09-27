@@ -1029,7 +1029,7 @@ namespace OpenTK.Platform.MacOS
                 }
             }
 
-            CG.WarpMouseCursorPosition(p);
+            CG.DisplayMoveCursorToPoint(IntPtr.Zero, p);
         }
 
         KeyboardState IKeyboardDriver2.GetState()

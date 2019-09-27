@@ -1,3 +1,5 @@
+open Fake
+
 // --------------------------------------------------------------------------------------
 // FAKE build script
 // --------------------------------------------------------------------------------------
@@ -41,7 +43,7 @@ let authors = [ "Stefanos Apostolopoulos" ]
 // Tags for your project (for NuGet package)
 let tags = "OpenTK OpenGL OpenGLES GLES OpenAL C# F# VB .NET Mono Vector Math Game Graphics Sound"
 
-let copyright = "Copyright (c) 2006 - 2016 Stefanos Apostolopoulos <stapostol@gmail.com> for the Open Toolkit library."
+let copyright = "Copyright (c) 2006 - 2019 Stefanos Apostolopoulos <stapostol@gmail.com> for the Open Toolkit library."
 
 // File system information
 let solutionFile  = "OpenTK.sln"
@@ -68,7 +70,6 @@ let gitRaw = environVarOrDefault "gitRaw" "https://raw.github.com/opentk"
 let release = LoadReleaseNotes "RELEASE_NOTES.md"
 
 let isXamarinPlatform = false //EnvironmentHelper.isMacOS || Environment.OSVersion.Platform = PlatformID.Win32NT
-
 
 // Helper active pattern for project types
 let (|Fsproj|Csproj|Vbproj|) (projFileName:string) =
@@ -98,6 +99,17 @@ let runtimeProjects =
 
 let activeProjects =
     Seq.concat [buildProjects; runtimeProjects]
+    
+    
+let generateBindings() =
+    buildProjects
+        |> MSBuildRelease "" "Build"
+        |> ignore
+        
+        
+    let result = Shell.Exec("src/Generator.Bind/bin/Release/Bind.exe")
+    if result <> 0 then
+        failwith "Error running Bind.exe"
 
 
 // Generate assembly info files with the right version & up-to-date information
@@ -152,19 +164,34 @@ Target "Clean" (fun _ ->
 )
 
 // --------------------------------------------------------------------------------------
-// Build generator projects, and generate bindings if neccesary
+// Build Converter project and updates the signatures.xml file.
+Target "UpdateSignatures" (fun _ ->
+    buildProjects
+    |> MSBuildRelease "" "Build"
+    |> ignore
+    
+    let specUrl = @"https://raw.githubusercontent.com/KhronosGroup/OpenGL-Registry/master/xml/gl.xml"
+//    let wglSpecUrl = @"https://raw.githubusercontent.com/KhronosGroup/OpenGL-Registry/master/xml/gl.xml"
+    let output = @"src/Generator.Bind/Specifications/GL2/signatures.xml" 
+    
+    let args = sprintf "--prefix gl --input-files %s --output-file %s" specUrl output
+    
+    let result = Shell.Exec("src/Generator.Converter/bin/Release/Convert.exe", args)
+    if result <> 0 then
+        failwith "Error running Convert.exe"
+)
+
+// --------------------------------------------------------------------------------------
+// Build generator projects, and generates the bindings.
 Target "GenerateBindings" (fun _ ->
-    if not (File.Exists(".bindingsGenerated")) then
-        buildProjects
-            |> MSBuildRelease "" "Build"
-            |> ignore
-        let bindingProcess = new Process()
-        bindingProcess.StartInfo.FileName <- Path.Combine("src", "Generator.Bind", "bin", "Release", "Bind.exe")
-        if bindingProcess.Start() then
-            bindingProcess.WaitForExit()
-            File.Create(".bindingsGenerated").Close()
-        else
-            failwith "Could not start Bind.exe"
+    generateBindings()
+)
+
+// --------------------------------------------------------------------------------------
+// Build generator projects, and generate bindings if they do not exist.
+Target "GenerateBindingsIfNeeded" (fun _ ->
+    if not (File.Exists("src/OpenTK/Graphics/OpenGL/GL.cs")) then
+        generateBindings()
 )
 
 // --------------------------------------------------------------------------------------
@@ -218,7 +245,7 @@ Target "All" DoNothing
 
 "Clean"
   ==> "AssemblyInfo"
-  ==> "GenerateBindings"
+  ==> "GenerateBindingsIfNeeded"
   ==> "Build"
   ==> "CopyBinaries"
   ==> "RunTests"
