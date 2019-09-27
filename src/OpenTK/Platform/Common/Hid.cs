@@ -95,7 +95,7 @@ namespace OpenTK.Platform.Common
             }
 
             Debug.Print("[Input] Unknown axis with HID page/usage {0}/{1}", page, usage);
-            return 0;
+            return -1;
         }
     }
 

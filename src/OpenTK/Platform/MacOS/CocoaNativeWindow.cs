@@ -70,7 +70,7 @@ namespace OpenTK.Platform.MacOS
         private static readonly IntPtr selKeyCode = Selector.Get("keyCode");
         private static readonly IntPtr selModifierFlags = Selector.Get("modifierFlags");
         private static readonly IntPtr selIsARepeat = Selector.Get("isARepeat");
-        private static readonly IntPtr selCharactersIgnoringModifiers = Selector.Get("charactersIgnoringModifiers");
+        private static readonly IntPtr selCharacters = Selector.Get("characters");
         private static readonly IntPtr selAddTrackingArea = Selector.Get("addTrackingArea:");
         private static readonly IntPtr selRemoveTrackingArea = Selector.Get("removeTrackingArea:");
         private static readonly IntPtr selTrackingArea = Selector.Get("trackingArea");
@@ -143,6 +143,7 @@ namespace OpenTK.Platform.MacOS
         private IntPtr current_icon_handle;
         private bool disposed = false;
         private bool exists;
+        private bool cursorGrabbed = false;
         private bool cursorVisible = true;
         private Icon icon;
         private WindowBorder windowBorder = WindowBorder.Resizable;
@@ -605,6 +606,11 @@ namespace OpenTK.Platform.MacOS
             {
                 modifiers |= OpenTK.Input.KeyModifiers.Alt;
             }
+            if ((mask & NSEventModifierMask.CommandKeyMask) != 0)
+            {
+                modifiers |= OpenTK.Input.KeyModifiers.Command;
+            }
+
             return modifiers;
         }
 
@@ -630,6 +636,8 @@ namespace OpenTK.Platform.MacOS
             return (MouseButton)cocoaButtonIndex;
         }
 
+
+
         public override void ProcessEvents()
         {
             base.ProcessEvents();
@@ -654,15 +662,18 @@ namespace OpenTK.Platform.MacOS
 
                             OnKeyDown(key, isARepeat);
 
-                            var s = Cocoa.FromNSString(Cocoa.SendIntPtr(e, selCharactersIgnoringModifiers));
-                            foreach (var c in s)
+                            if (IsKeyPressEvent(key))
                             {
-                                int intVal = (int)c;
-                                if (!Char.IsControl(c) && (intVal < 63232 || intVal > 63235))
+                                var s = Cocoa.FromNSString(Cocoa.SendIntPtr(e, selCharacters));
+                                foreach (var c in s)
                                 {
-                                    // For some reason, arrow keys (mapped 63232-63235)
-                                    // are seen as non-control characters, so get rid of those.
-                                    OnKeyPress(c);
+                                    int intVal = (int)c;
+                                    if (!Char.IsControl(c) && (intVal < 63232 || intVal > 63235))
+                                    {
+                                        // For some reason, arrow keys (mapped 63232-63235)
+                                        // are seen as non-control characters, so get rid of those.
+                                        OnKeyPress(c);
+                                    }
                                 }
                             }
                         }
@@ -721,30 +732,33 @@ namespace OpenTK.Platform.MacOS
                     case NSEventType.MouseMoved:
                         {
                             Point p = new Point(MouseState.X, MouseState.Y);
-                            if (CursorVisible)
+                            // Use absolute coordinates
+                            var pf = Cocoa.SendPoint(e, selLocationInWindowOwner);
+
+                            // Convert from points to pixel coordinates
+                            var rf = Cocoa.SendRect(
+                                windowInfo.Handle,
+                                selConvertRectToBacking,
+                                new RectangleF(pf.X, pf.Y, 0, 0));
+
+                            // See CocoaDrawingGuide under "Converting from Window to View Coordinates"
+                            p = new Point(
+                                MathHelper.Clamp((int)Math.Round(rf.X), 0, Width),
+                                MathHelper.Clamp((int)Math.Round(Height - rf.Y), 0, Height));
+
+                            // This code used for relative mouse movement which is currently disabled
+                            // Mouse has been disassociated,
+                            // use relative coordinates
+                            // var dx = Cocoa.SendFloat(e, selDeltaX);
+                            //   var dy = Cocoa.SendFloat(e, selDeltaY);
+
+                            //   p = new Point(
+                            //       MathHelper.Clamp((int)Math.Round(p.X + dx), 0, Width),
+                            //       MathHelper.Clamp((int)Math.Round(p.Y + dy), 0, Height);
+
+                            if (cursorGrabbed)
                             {
-                                // Use absolute coordinates
-                                var pf = Cocoa.SendPoint(e, selLocationInWindowOwner);
-
-                                // Convert from points to pixel coordinates
-                                var rf = Cocoa.SendRect(windowInfo.Handle, selConvertRectToBacking,
-                                    new RectangleF(pf.X, pf.Y, 0, 0));
-
-                                // See CocoaDrawingGuide under "Converting from Window to View Coordinates"
-                                p = new Point(
-                                    MathHelper.Clamp((int)Math.Round(rf.X), 0, Width),
-                                    MathHelper.Clamp((int)Math.Round(Height - rf.Y), 0, Height));
-                            }
-                            else
-                            {
-                                // Mouse has been disassociated,
-                                // use relative coordinates
-                                var dx = Cocoa.SendFloat(e, selDeltaX);
-                                var dy = Cocoa.SendFloat(e, selDeltaY);
-
-                                p = new Point(
-                                    MathHelper.Clamp((int)Math.Round(p.X + dx), 0, Width),
-                                    MathHelper.Clamp((int)Math.Round(p.Y + dy), 0, Height));
+                                MoveCursorInWindow(p);
                             }
 
                             // Only raise events when the mouse has actually moved
@@ -811,6 +825,16 @@ namespace OpenTK.Platform.MacOS
                 shouldClose = false;
                 CloseWindow(false);
             }
+        }
+
+
+        bool IsKeyPressEvent(Key key)
+        {
+            // Cut, Copy and Paste Events should not trigger a key press event
+            return
+                !KeyboardState[Key.Command] ||
+                (key != Key.V && key != Key.C && key != Key.X)
+            ;
         }
 
         public override Point PointToClient(Point point)
@@ -952,6 +976,22 @@ namespace OpenTK.Platform.MacOS
             SetWindowBorder(WindowBorder.Hidden);
             ProcessEvents();
             suppressResize--;
+        }
+
+        // Use when point use window related coordinate system
+        private void MoveCursorInWindow(Point p)
+        {
+            var r = Cocoa.SendRect(
+                windowInfo.Handle,
+                Selector.Get("contentRectForFrameRect:"),
+                Cocoa.SendRect(
+                    windowInfo.Handle,
+                    Selector.Get("frame")));
+
+            var screenPoint = new NSPoint();
+            screenPoint.X = r.X + p.X;
+            screenPoint.Y = r.Y + p.Y;
+            CG.DisplayMoveCursorToPoint(WindowInfo.Handle, screenPoint);
         }
 
         private void RestoreBorder()
@@ -1124,6 +1164,10 @@ namespace OpenTK.Platform.MacOS
             }
             set
             {
+                if (value == selectedCursor)
+                {
+                    return;
+                }
                 selectedCursor = value;
                 InvalidateCursorRects();
             }
@@ -1145,15 +1189,15 @@ namespace OpenTK.Platform.MacOS
                     cursor.Height,
                     8,
                     4,
-                    1,
-                    0,
+                    true,
+                    false,
                     NSDeviceRGBColorSpace,
                     NSBitmapFormat.AlphaFirst,
                     4 * cursor.Width,
                     32);
             if (imgdata == IntPtr.Zero)
             {
-                Debug.Print("Failed to create NSBitmapImageRep with size ({0},{1]})",
+                Debug.Print("Failed to create NSBitmapImageRep with size ({0},{1})",
                     cursor.Width, cursor.Height);
                 return IntPtr.Zero;
             }
@@ -1234,6 +1278,24 @@ namespace OpenTK.Platform.MacOS
             Cocoa.SendVoid(windowInfo.Handle, selInvalidateCursorRectsForView, windowInfo.ViewHandle);
         }
 
+        public override bool CursorGrabbed
+        {
+            get
+            {
+                return cursorGrabbed;
+            }
+            set
+            {
+                if (value == cursorGrabbed)
+                {
+                    return;
+                }
+
+                SetCursorGrab(value);
+                cursorGrabbed = value;
+            }
+        }
+
         public override bool CursorVisible
         {
             get
@@ -1242,10 +1304,31 @@ namespace OpenTK.Platform.MacOS
             }
             set
             {
-                if (value != cursorVisible)
+                if (value == cursorVisible)
                 {
-                    SetCursorVisible(value);
-                    cursorVisible = value;
+                    return;
+                }
+                cursorVisible = value;
+
+                if (!cursorVisible)
+                {
+                    // The mac os feature "Shake mouse pointer to locate" seems to still be visible when calling hide only once
+                    // but calling it multiple times seems to resolve the issue
+                    CG.DisplayHideCursor (WindowInfo.Handle);
+                    CG.DisplayHideCursor (WindowInfo.Handle);
+                    CG.DisplayHideCursor (WindowInfo.Handle);
+                    CG.DisplayHideCursor (WindowInfo.Handle);
+
+                    CG.AssociateMouseAndMouseCursorPosition (false);
+                } else
+                {
+                    CG.DisplayShowCursor (WindowInfo.Handle);
+                    CG.DisplayShowCursor (WindowInfo.Handle);
+                    CG.DisplayShowCursor (WindowInfo.Handle);
+                    CG.DisplayShowCursor (WindowInfo.Handle);
+                   
+
+                    CG.AssociateMouseAndMouseCursorPosition (true);
                 }
             }
         }
@@ -1318,27 +1401,15 @@ namespace OpenTK.Platform.MacOS
             return Cocoa.SendRect(GetCurrentScreen(), selVisibleFrame);
         }
 
-        private void SetCursorVisible(bool visible)
+        private void SetCursorGrab(bool shouldGrab)
         {
-            // If the mouse is outside the window and we want to hide it,
-            // move it inside the window first.
-            // Otherwise, if we are making the cursor visible again,
-            // we place it in the same spot as reported in the current
-            // MouseState to avoid sudden jumps.
-            if (!visible && !Bounds.Contains(new Point(MouseState.X, MouseState.Y)))
+            if (shouldGrab)
             {
-                Mouse.SetPosition(
-                    (Bounds.Left + Bounds.Right) / 2,
-                    (Bounds.Top + Bounds.Bottom) / 2);
+                var p = new Point();
+                p.X = MouseState.X;
+                p.Y = MouseState.Y;
+                MoveCursorInWindow(p);
             }
-            else if (visible)
-            {
-                var p = PointToScreen(new Point(MouseState.X, MouseState.Y));
-                Mouse.SetPosition((int)p.X, (int)p.Y);
-            }
-
-            CG.AssociateMouseAndMouseCursorPosition(visible);
-            Cocoa.SendVoid(NSCursor, visible ? selUnhide : selHide);
         }
 
         private void SetMenuVisible(bool visible)

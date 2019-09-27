@@ -47,6 +47,7 @@ namespace OpenTK
         private readonly INativeWindow implementation;
 
         private bool events;
+        private bool previous_cursor_grabbed = false;
         private bool previous_cursor_visible = true;
 
         /// <summary>
@@ -486,6 +487,22 @@ namespace OpenTK
         }
 
         /// <summary>
+        /// Gets or sets a value indicating whether the mouse cursor is grabbed.
+        /// </summary>
+        /// <exception cref="PlatformNotSupportedException">Throw on native Linux platform when trying to set false value</exception>
+        public bool CursorGrabbed
+        {
+            get
+            {
+                return implementation.CursorGrabbed;
+            }
+            set
+            {
+                implementation.CursorGrabbed = value;
+            }
+        }
+
+        /// <summary>
         /// Occurs after the window has closed.
         /// </summary>
         public event EventHandler<EventArgs> Closed = delegate { };
@@ -668,17 +685,17 @@ namespace OpenTK
         {
             if (!Focused)
             {
-                // Release cursor when losing focus, to ensure
-                // IDEs continue working as expected.
+                // Release cursor and make it visible when losing focus,
+                // to ensure IDEs continue working as expected.
+                previous_cursor_grabbed = CursorGrabbed;
                 previous_cursor_visible = CursorVisible;
+                CursorGrabbed = false;
                 CursorVisible = true;
             }
-            else if (!previous_cursor_visible)
+            else
             {
-                // Make cursor invisible when focus is regained
-                // if cursor was invisible on previous focus loss.
-                previous_cursor_visible = true;
-                CursorVisible = false;
+                CursorGrabbed = previous_cursor_grabbed;
+                CursorVisible = previous_cursor_visible;
             }
             FocusedChanged(this, e);
         }

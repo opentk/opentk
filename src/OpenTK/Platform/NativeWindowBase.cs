@@ -168,6 +168,7 @@ namespace OpenTK.Platform
             bool alt = (mods & KeyModifiers.Alt) != 0;
             bool control = (mods & KeyModifiers.Control) != 0;
             bool shift = (mods & KeyModifiers.Shift) != 0;
+            var command = (mods & KeyModifiers.Command) != 0;
 
             if (alt)
             {
@@ -188,8 +189,8 @@ namespace OpenTK.Platform
 
             if (control)
             {
-                OnKeyDown(Key.ControlLeft, KeyboardState[Key.AltLeft]);
-                OnKeyDown(Key.ControlRight, KeyboardState[Key.AltLeft]);
+                OnKeyDown(Key.ControlLeft, KeyboardState[Key.ControlLeft]);
+                OnKeyDown(Key.ControlRight, KeyboardState[Key.ControlRight]);
             }
             else
             {
@@ -205,8 +206,8 @@ namespace OpenTK.Platform
 
             if (shift)
             {
-                OnKeyDown(Key.ShiftLeft, KeyboardState[Key.AltLeft]);
-                OnKeyDown(Key.ShiftRight, KeyboardState[Key.AltLeft]);
+                OnKeyDown(Key.ShiftLeft, KeyboardState[Key.ShiftLeft]);
+                OnKeyDown(Key.ShiftRight, KeyboardState[Key.ShiftRight]);
             }
             else
             {
@@ -217,6 +218,18 @@ namespace OpenTK.Platform
                 if (KeyboardState[Key.ShiftRight])
                 {
                     OnKeyUp(Key.ShiftRight);
+                }
+            }
+
+            if (command)
+            {
+                OnKeyDown(Key.Command, KeyboardState[Key.Command]);
+            }
+            else
+            {
+                if (KeyboardState[Key.Command])
+                {
+                    OnKeyUp(Key.Command);
                 }
             }
         }
@@ -444,6 +457,8 @@ namespace OpenTK.Platform
         public abstract Size ClientSize { get; set; }
 
         public abstract bool CursorVisible { get; set; }
+
+        public abstract bool CursorGrabbed { get; set; }
 
         public abstract MouseCursor Cursor { get; set; }
 
