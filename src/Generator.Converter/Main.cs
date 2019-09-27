@@ -1,5 +1,5 @@
 //
-// Copyright (C) 2009 the Open Toolkit (http://www.opentk.com)
+// Copyright (C) 2009 the Open Toolkit (http://www.opentk.net)
 //
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
