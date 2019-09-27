@@ -177,7 +177,7 @@ namespace OpenTK.Platform.Windows
                 int mouse_handle = rawids.ContainsKey(handle) ? rawids[handle] : 0;
                 mouse = mice[mouse_handle];
 
-                // Set and release capture of the mouse to fix http://www.opentk.com/node/2133, Patch by Artfunkel
+                // Set and release capture of the mouse to fix http://www.opentk.net/node/2133, Patch by Artfunkel
                 if ((raw.ButtonFlags & RawInputMouseState.LEFT_BUTTON_DOWN) != 0)
                 {
                     mouse.EnableBit((int)MouseButton.Left);
