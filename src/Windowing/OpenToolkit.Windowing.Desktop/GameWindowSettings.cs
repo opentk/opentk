@@ -23,7 +23,7 @@ namespace OpenToolkit.Windowing.Desktop
         public static readonly GameWindowSettings Default = new GameWindowSettings();
 
         /// <inheritdoc/>
-        public bool IsSingleThreaded { get; set; } = false;
+        public bool IsMultiThreaded { get; set; } = false;
 
         /// <inheritdoc/>
         public double RenderFrequency { get; set; } = 0.0;
