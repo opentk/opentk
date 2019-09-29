@@ -85,7 +85,7 @@ namespace OpenToolkit.Windowing.Desktop
         private Thread _renderThread;
 
         /// <inheritdoc/>
-        public bool IsSingleThreaded { get; }
+        public bool IsMultiThreaded { get; }
 
         /// <inheritdoc />
         public double RenderFrequency
@@ -176,7 +176,7 @@ namespace OpenToolkit.Windowing.Desktop
         public GameWindow(IGameWindowProperties gameWindowSettings, INativeWindowProperties nativeWindowSettings)
             : base(nativeWindowSettings)
         {
-            IsSingleThreaded = gameWindowSettings.IsSingleThreaded;
+            IsMultiThreaded = gameWindowSettings.IsMultiThreaded;
 
             RenderFrequency = gameWindowSettings.RenderFrequency;
             UpdateFrequency = gameWindowSettings.UpdateFrequency;
@@ -195,7 +195,7 @@ namespace OpenToolkit.Windowing.Desktop
             OnResize(this, new ResizeEventArgs(Width, Height));
 
             Debug.Print("Entering main loop.");
-            if (!IsSingleThreaded)
+            if (IsMultiThreaded)
             {
                 _renderThread = new Thread(StartRenderThread);
                 _renderThread.Start();
@@ -214,7 +214,7 @@ namespace OpenToolkit.Windowing.Desktop
 
                 DispatchUpdateFrame();
 
-                if (IsSingleThreaded)
+                if (!IsMultiThreaded)
                 {
                     DispatchRenderFrame();
                 }

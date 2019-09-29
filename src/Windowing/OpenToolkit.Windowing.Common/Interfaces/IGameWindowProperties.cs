@@ -15,14 +15,15 @@ namespace OpenToolkit.Windowing.Common
     public interface IGameWindowProperties
     {
         /// <summary>
-        /// Gets a value indicating whether or not the NativeWindow should use a single-threaded context.
+        /// Gets a value indicating whether or not the GameWindow should use a separate thread for rendering.
         /// </summary>
         /// <remarks>
         ///   <para>
-        /// This should generally be false.
+        ///     If this is true, render frames will be processed in a separate thread.
+        ///     Do not enable this unless your code is thread safe.
         ///   </para>
         /// </remarks>
-        bool IsSingleThreaded { get; }
+        bool IsMultiThreaded { get; }
 
         /// <summary>
         /// Gets or sets a double representing the render frequency, in hertz.
