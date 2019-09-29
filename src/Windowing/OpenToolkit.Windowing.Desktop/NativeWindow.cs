@@ -146,8 +146,6 @@ namespace OpenToolkit.Windowing.Desktop
                 {
                     Glfw.SetWindowTitle(WindowPtr, value);
                 }
-
-                OnTitleChanged(this, new TitleChangedEventArgs(value));
             }
         }
 
@@ -220,8 +218,6 @@ namespace OpenToolkit.Windowing.Desktop
                     {
                         Glfw.HideWindow(WindowPtr);
                     }
-
-                    OnVisibleChanged(this, new VisibilityChangedEventArgs(value));
                 }
             }
         }
@@ -626,22 +622,22 @@ namespace OpenToolkit.Windowing.Desktop
         {
             unsafe
             {
-                _posCallback = (window, x, y) => OnMove(this, new WindowPositionEventArgs(x, y));
+                _posCallback = (window, x, y) => OnMove(new WindowPositionEventArgs(x, y));
                 Glfw.SetWindowPosCallback(WindowPtr, _posCallback);
 
-                _sizeCallback = (window, width, height) => OnResize(this, new ResizeEventArgs(width, height));
+                _sizeCallback = (window, width, height) => OnResize(new ResizeEventArgs(width, height));
                 Glfw.SetWindowSizeCallback(WindowPtr, _sizeCallback);
 
                 _closeCallback = OnCloseCallback;
                 Glfw.SetWindowCloseCallback(WindowPtr, _closeCallback);
 
-                _iconifyCallback = (window, iconified) => OnMinimized(this, new MinimizedEventArgs(iconified));
+                _iconifyCallback = (window, iconified) => OnMinimized(new MinimizedEventArgs(iconified));
                 Glfw.SetWindowIconifyCallback(WindowPtr, _iconifyCallback);
 
-                _focusCallback = (window, focused) => OnFocusedChanged(this, new FocusedChangedEventArgs(focused));
+                _focusCallback = (window, focused) => OnFocusedChanged(new FocusedChangedEventArgs(focused));
                 Glfw.SetWindowFocusCallback(WindowPtr, _focusCallback);
 
-                _charCallback = (window, codepoint) => OnTextInput(this, new TextInputEventArgs((int)codepoint));
+                _charCallback = (window, codepoint) => OnTextInput(new TextInputEventArgs((int)codepoint));
                 Glfw.SetCharCallback(WindowPtr, _charCallback);
 
                 _keyCallback = (window, key, scancode, action, mods) =>
@@ -661,7 +657,7 @@ namespace OpenToolkit.Windowing.Desktop
                             _keyboardState.SetKeyState(ourKey, false);
                         }
 
-                        OnKeyUp(this, args);
+                        OnKeyUp(args);
                     }
                     else
                     {
@@ -670,7 +666,7 @@ namespace OpenToolkit.Windowing.Desktop
                             _keyboardState.SetKeyState(ourKey, true);
                         }
 
-                        OnKeyDown(this, args);
+                        OnKeyDown(args);
                     }
                 };
                 Glfw.SetKeyCallback(WindowPtr, _keyCallback);
@@ -679,11 +675,11 @@ namespace OpenToolkit.Windowing.Desktop
                 {
                     if (entered)
                     {
-                        OnMouseEnter(this, EventArgs.Empty);
+                        OnMouseEnter();
                     }
                     else
                     {
-                        OnMouseLeave(this, EventArgs.Empty);
+                        OnMouseLeave();
                     }
                 };
                 Glfw.SetCursorEnterCallback(WindowPtr, _cursorEnterCallback);
@@ -699,12 +695,12 @@ namespace OpenToolkit.Windowing.Desktop
                     if (action == InputAction.Release)
                     {
                         _mouseState[ourButton] = false;
-                        OnMouseUp(this, args);
+                        OnMouseUp(args);
                     }
                     else
                     {
                         _mouseState[ourButton] = true;
-                        OnMouseDown(this, args);
+                        OnMouseDown(args);
                     }
                 };
                 Glfw.SetMouseButtonCallback(WindowPtr, _mouseButtonCallback);
@@ -718,12 +714,12 @@ namespace OpenToolkit.Windowing.Desktop
 
                     _lastReportedMousePos = _mouseState.Position = newPos;
 
-                    OnMouseMove(this, new MouseMoveEventArgs(newPos, delta));
+                    OnMouseMove(new MouseMoveEventArgs(newPos, delta));
                 };
                 Glfw.SetCursorPosCallback(WindowPtr, _cursorPosCallback);
 
                 _scrollCallback = (window, offsetX, offsetY) =>
-                    OnMouseWheel(this, new MouseWheelEventArgs((float)offsetX, (float)offsetY));
+                    OnMouseWheel(new MouseWheelEventArgs((float)offsetX, (float)offsetY));
                 Glfw.SetScrollCallback(WindowPtr, _scrollCallback);
 
                 _dropCallback = (window, count, paths) =>
@@ -740,7 +736,7 @@ namespace OpenToolkit.Windowing.Desktop
                         }
                     }
 
-                    OnFileDrop(this, new FileDropEventArgs(arrayOfPaths));
+                    OnFileDrop(new FileDropEventArgs(arrayOfPaths));
                 };
                 Glfw.SetDropCallback(WindowPtr, _dropCallback);
 
@@ -764,17 +760,17 @@ namespace OpenToolkit.Windowing.Desktop
                         // Remove the joystick state from the array of joysticks.
                         JoystickStates[joy] = default;
                     }
-                    OnJoystickConnected(this, new JoystickEventArgs(joy, eventCode == ConnectedState.Connected));
+                    OnJoystickConnected(new JoystickEventArgs(joy, eventCode == ConnectedState.Connected));
                 };
                 Glfw.SetJoystickCallback(_joystickCallback);
 
                 _monitorCallback = (monitor, eventCode) =>
                 {
-                    OnMonitorConnected(this, new MonitorEventArgs(new Monitor((IntPtr)monitor), eventCode == ConnectedState.Connected));
+                    OnMonitorConnected(new MonitorEventArgs(new Monitor((IntPtr)monitor), eventCode == ConnectedState.Connected));
                 };
                 Glfw.SetMonitorCallback(_monitorCallback);
 
-                _refreshCallback = (window) => OnRefresh(this, EventArgs.Empty);
+                _refreshCallback = (window) => OnRefresh();
                 Glfw.SetWindowRefreshCallback(WindowPtr, _refreshCallback);
             }
         }
@@ -782,7 +778,7 @@ namespace OpenToolkit.Windowing.Desktop
         private unsafe void OnCloseCallback(Window* window)
         {
             var c = new CancelEventArgs();
-            OnClosing(this, c);
+            OnClosing(c);
             if (c.Cancel)
             {
                 Glfw.SetWindowShouldClose(WindowPtr, false);
@@ -818,7 +814,7 @@ namespace OpenToolkit.Windowing.Desktop
                 Exists = false;
                 Glfw.DestroyWindow(WindowPtr);
 
-                OnClosed(this, EventArgs.Empty);
+                OnClosed();
             }
         }
 
@@ -925,79 +921,61 @@ namespace OpenToolkit.Windowing.Desktop
         }
 
         /// <inheritdoc />
-        public event EventHandler<WindowPositionEventArgs> Move;
+        public event Action<WindowPositionEventArgs> Move;
 
         /// <inheritdoc />
-        public event EventHandler<ResizeEventArgs> Resize;
+        public event Action<ResizeEventArgs> Resize;
 
         /// <inheritdoc />
-        public event EventHandler<EventArgs> Refresh;
+        public event Action Refresh;
 
         /// <inheritdoc />
-        public event EventHandler<CancelEventArgs> Closing;
+        public event Action<CancelEventArgs> Closing;
 
         /// <inheritdoc />
-        public event EventHandler<EventArgs> Closed;
+        public event Action Closed;
 
         /// <inheritdoc />
-        public event EventHandler<EventArgs> Disposed;
+        public event Action<MinimizedEventArgs> Minimized;
 
         /// <inheritdoc />
-        public event EventHandler<MinimizedEventArgs> Minimized;
+        public event Action<JoystickEventArgs> JoystickConnected;
 
         /// <inheritdoc />
-        public event EventHandler<EventArgs> IconChanged;
+        public event Action<FocusedChangedEventArgs> FocusedChanged;
 
         /// <inheritdoc />
-        public event EventHandler<JoystickEventArgs> JoystickConnected;
+        public event Action<KeyboardKeyEventArgs> KeyDown;
 
         /// <inheritdoc />
-        public event EventHandler<TitleChangedEventArgs> TitleChanged;
+        public event Action<TextInputEventArgs> TextInput;
 
         /// <inheritdoc />
-        public event EventHandler<VisibilityChangedEventArgs> VisibleChanged;
+        public event Action<KeyboardKeyEventArgs> KeyUp;
 
         /// <inheritdoc />
-        public event EventHandler<FocusedChangedEventArgs> FocusedChanged;
+        public event Action<MonitorEventArgs> MonitorConnected;
 
         /// <inheritdoc />
-        public event EventHandler<EventArgs> WindowBorderChanged;
+        public event Action MouseLeave;
 
         /// <inheritdoc />
-        public event EventHandler<EventArgs> WindowStateChanged;
+        public event Action MouseEnter;
 
         /// <inheritdoc />
-        public event EventHandler<KeyboardKeyEventArgs> KeyDown;
+        public event Action<MouseButtonEventArgs> MouseDown;
 
         /// <inheritdoc />
-        public event EventHandler<TextInputEventArgs> TextInput;
+        public event Action<MouseButtonEventArgs> MouseUp;
 
         /// <inheritdoc />
-        public event EventHandler<KeyboardKeyEventArgs> KeyUp;
+        public event Action<MouseMoveEventArgs> MouseMove;
 
         /// <inheritdoc />
-        public event EventHandler<MonitorEventArgs> MonitorConnected;
+        public event Action<MouseWheelEventArgs> MouseWheel;
 
         /// <inheritdoc />
-        public event EventHandler<EventArgs> MouseLeave;
-
-        /// <inheritdoc />
-        public event EventHandler<EventArgs> MouseEnter;
-
-        /// <inheritdoc />
-        public event EventHandler<MouseButtonEventArgs> MouseDown;
-
-        /// <inheritdoc />
-        public event EventHandler<MouseButtonEventArgs> MouseUp;
-
-        /// <inheritdoc />
-        public event EventHandler<MouseMoveEventArgs> MouseMove;
-
-        /// <inheritdoc />
-        public event EventHandler<MouseWheelEventArgs> MouseWheel;
-
-        /// <inheritdoc />
-        public event EventHandler<FileDropEventArgs> FileDrop;
+        public event Action<FileDropEventArgs> FileDrop;
 
         /// <inheritdoc />
         public bool IsKeyDown(Key key)
@@ -1050,11 +1028,10 @@ namespace OpenToolkit.Windowing.Desktop
         /// <summary>
         /// Raises the <see cref="Move"/> event.
         /// </summary>
-        /// <param name="sender">The source of the event.</param>
         /// <param name="e">A <see cref="WindowPositionEventArgs"/> that contains the event data.</param>
-        protected virtual void OnMove(object sender, WindowPositionEventArgs e)
+        protected virtual void OnMove(WindowPositionEventArgs e)
         {
-            Move?.Invoke(sender, e);
+            Move?.Invoke(e);
 
             _location.X = e.X;
             _location.Y = e.Y;
@@ -1063,11 +1040,10 @@ namespace OpenToolkit.Windowing.Desktop
         /// <summary>
         /// Raises the <see cref="Resize"/> event.
         /// </summary>
-        /// <param name="sender">The source of the event.</param>
         /// <param name="e">A <see cref="ResizeEventArgs"/> that contains the event data.</param>
-        protected virtual void OnResize(object sender, ResizeEventArgs e)
+        protected virtual void OnResize(ResizeEventArgs e)
         {
-            Resize?.Invoke(sender, e);
+            Resize?.Invoke(e);
 
             _size.X = e.Width;
             _size.Y = e.Height;
@@ -1076,157 +1052,84 @@ namespace OpenToolkit.Windowing.Desktop
         /// <summary>
         /// Raises the <see cref="Refresh"/> event.
         /// </summary>
-        /// <param name="sender">The source of the event.</param>
         /// <param name="e">A <see cref="EventArgs"/> that contains the event data.</param>
-        protected virtual void OnRefresh(object sender, EventArgs e)
+        protected virtual void OnRefresh()
         {
-            Refresh?.Invoke(sender, e);
+            Refresh?.Invoke();
         }
 
         /// <summary>
         /// Raises the <see cref="Closing"/> event.
         /// </summary>
-        /// <param name="sender">The source of the event.</param>
         /// <param name="e">A <see cref="CancelEventArgs"/> that contains the event data.</param>
-        protected virtual void OnClosing(object sender, CancelEventArgs e)
+        protected virtual void OnClosing(CancelEventArgs e)
         {
-            Closing?.Invoke(sender, e);
+            Closing?.Invoke(e);
         }
 
         /// <summary>
         /// Raises the <see cref="Closed"/> event.
         /// </summary>
-        /// <param name="sender">The source of the event.</param>
         /// <param name="e">A <see cref="EventArgs"/> that contains the event data.</param>
-        protected virtual void OnClosed(object sender, EventArgs e)
+        protected virtual void OnClosed()
         {
-            Closed?.Invoke(sender, e);
-        }
-
-        /// <summary>
-        /// Raises the <see cref="Disposed"/> event.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">A <see cref="EventArgs"/> that contains the event data.</param>
-        protected virtual void OnDisposed(object sender, EventArgs e)
-        {
-            Disposed?.Invoke(sender, e);
-        }
-
-        /// <summary>
-        /// Raises the <see cref="IconChanged"/> event.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">A <see cref="EventArgs"/> that contains the event data.</param>
-        protected virtual void OnIconChanged(object sender, EventArgs e)
-        {
-            IconChanged?.Invoke(sender, e);
+            Closed?.Invoke();
         }
 
         /// <summary>
         /// Raises the <see cref="JoystickConnected"/> event.
         /// </summary>
-        /// <param name="sender">The source of the event.</param>
         /// <param name="e">A <see cref="JoystickEventArgs"/> that contains the event data.</param>
-        protected virtual void OnJoystickConnected(object sender, JoystickEventArgs e)
+        protected virtual void OnJoystickConnected(JoystickEventArgs e)
         {
-            JoystickConnected?.Invoke(sender, e);
-        }
-
-        /// <summary>
-        /// Raises the <see cref="TitleChanged"/> event.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">A <see cref="TitleChangedEventArgs"/> that contains the event data.</param>
-        protected virtual void OnTitleChanged(object sender, TitleChangedEventArgs e)
-        {
-            TitleChanged?.Invoke(sender, e);
-
-            _title = e.Title;
-        }
-
-        /// <summary>
-        /// Raises the <see cref="VisibleChanged"/> event.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">A <see cref="VisibilityChangedEventArgs"/> that contains the event data.</param>
-        protected virtual void OnVisibleChanged(object sender, VisibilityChangedEventArgs e)
-        {
-            VisibleChanged?.Invoke(sender, e);
-
-            _isVisible = e.IsVisible;
+            JoystickConnected?.Invoke(e);
         }
 
         /// <summary>
         /// Raises the <see cref="FocusedChanged"/> event.
         /// </summary>
-        /// <param name="sender">The source of the event.</param>
         /// <param name="e">A <see cref="FocusedChangedEventArgs"/> that contains the event data.</param>
-        protected virtual void OnFocusedChanged(object sender, FocusedChangedEventArgs e)
+        protected virtual void OnFocusedChanged(FocusedChangedEventArgs e)
         {
-            FocusedChanged?.Invoke(sender, e);
+            FocusedChanged?.Invoke(e);
 
             _isFocused = e.IsFocused;
         }
 
         /// <summary>
-        /// Raises the <see cref="WindowBorderChanged"/> event.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">A <see cref="EventArgs"/> that contains the event data.</param>
-        protected virtual void OnWindowBorderChanged(object sender, EventArgs e)
-        {
-            WindowBorderChanged?.Invoke(sender, e);
-        }
-
-        /// <summary>
-        /// Raises the <see cref="WindowStateChanged"/> event.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">A <see cref="EventArgs"/> that contains the event data.</param>
-        protected virtual void OnWindowStateChanged(object sender, EventArgs e)
-        {
-            WindowStateChanged?.Invoke(sender, e);
-        }
-
-        /// <summary>
         /// Raises the <see cref="KeyDown"/> event.
         /// </summary>
-        /// <param name="sender">The source of the event.</param>
         /// <param name="e">A <see cref="KeyboardKeyEventArgs"/> that contains the event data.</param>
-        protected virtual void OnKeyDown(object sender, KeyboardKeyEventArgs e)
+        protected virtual void OnKeyDown(KeyboardKeyEventArgs e)
         {
-            KeyDown?.Invoke(sender, e);
+            KeyDown?.Invoke(e);
         }
 
         /// <summary>
         /// Raises the <see cref="TextInput"/> event.
         /// </summary>
-        /// <param name="sender">The source of the event.</param>
         /// <param name="e">A <see cref="TextInputEventArgs"/> that contains the event data.</param>
-        protected virtual void OnTextInput(object sender, TextInputEventArgs e)
+        protected virtual void OnTextInput(TextInputEventArgs e)
         {
-            TextInput?.Invoke(sender, e);
+            TextInput?.Invoke(e);
         }
 
         /// <summary>
         /// Raises the <see cref="KeyUp"/> event.
         /// </summary>
-        /// <param name="sender">The source of the event.</param>
         /// <param name="e">A <see cref="KeyboardKeyEventArgs"/> that contains the event data.</param>
-        protected virtual void OnKeyUp(object sender, KeyboardKeyEventArgs e)
+        protected virtual void OnKeyUp(KeyboardKeyEventArgs e)
         {
-            KeyUp?.Invoke(sender, e);
+            KeyUp?.Invoke(e);
         }
 
         /// <summary>
         /// Raises the <see cref="MonitorConnected"/> event.
         /// </summary>
-        /// <param name="sender">The source of the event.</param>
         /// <param name="e">A <see cref="MonitorEventArgs"/> that contains the event data.</param>
-        protected virtual void OnMonitorConnected(object sender, MonitorEventArgs e)
+        protected virtual void OnMonitorConnected(MonitorEventArgs e)
         {
-            MonitorConnected?.Invoke(sender, e);
+            MonitorConnected?.Invoke(e);
         }
 
         /// <summary>
@@ -1234,9 +1137,9 @@ namespace OpenToolkit.Windowing.Desktop
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">A <see cref="EventArgs"/> that contains the event data.</param>
-        protected virtual void OnMouseLeave(object sender, EventArgs e)
+        protected virtual void OnMouseLeave()
         {
-            MouseLeave?.Invoke(sender, e);
+            MouseLeave?.Invoke();
         }
 
         /// <summary>
@@ -1244,69 +1147,63 @@ namespace OpenToolkit.Windowing.Desktop
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">A <see cref="EventArgs"/> that contains the event data.</param>
-        protected virtual void OnMouseEnter(object sender, EventArgs e)
+        protected virtual void OnMouseEnter()
         {
-            MouseEnter?.Invoke(sender, e);
+            MouseEnter?.Invoke();
         }
 
         /// <summary>
         /// Raises the <see cref="MouseDown"/> event.
         /// </summary>
-        /// <param name="sender">The source of the event.</param>
         /// <param name="e">A <see cref="MouseButtonEventArgs"/> that contains the event data.</param>
-        protected virtual void OnMouseDown(object sender, MouseButtonEventArgs e)
+        protected virtual void OnMouseDown(MouseButtonEventArgs e)
         {
-            MouseDown?.Invoke(sender, e);
+            MouseDown?.Invoke(e);
         }
 
         /// <summary>
         /// Raises the <see cref="MouseUp"/> event.
         /// </summary>
-        /// <param name="sender">The source of the event.</param>
         /// <param name="e">A <see cref="MouseButtonEventArgs"/> that contains the event data.</param>
-        protected virtual void OnMouseUp(object sender, MouseButtonEventArgs e)
+        protected virtual void OnMouseUp(MouseButtonEventArgs e)
         {
-            MouseUp?.Invoke(sender, e);
+            MouseUp?.Invoke(e);
         }
 
         /// <summary>
         /// Raises the <see cref="MouseMove"/> event.
         /// </summary>
-        /// <param name="sender">The source of the event.</param>
         /// <param name="e">A <see cref="MouseMoveEventArgs"/> that contains the event data.</param>
-        protected virtual void OnMouseMove(object sender, MouseMoveEventArgs e)
+        protected virtual void OnMouseMove(MouseMoveEventArgs e)
         {
-            MouseMove?.Invoke(sender, e);
+            MouseMove?.Invoke(e);
         }
 
         /// <summary>
         /// Raises the <see cref="MouseWheel"/> event.
         /// </summary>
-        /// <param name="sender">The source of the event.</param>
         /// <param name="e">A <see cref="MouseWheelEventArgs"/> that contains the event data.</param>
-        protected virtual void OnMouseWheel(object sender, MouseWheelEventArgs e)
+        protected virtual void OnMouseWheel(MouseWheelEventArgs e)
         {
-            MouseWheel?.Invoke(sender, e);
+            MouseWheel?.Invoke(e);
         }
 
         /// <summary>
         /// Raises the <see cref="OnMinimized"/> event.
         /// </summary>
-        /// <param name="sender">The source of the event.</param>
         /// <param name="e">A <see cref="MouseWheelEventArgs"/> that contains the event data.</param>
-        protected virtual void OnMinimized(object sender, MinimizedEventArgs e)
+        protected virtual void OnMinimized(MinimizedEventArgs e)
         {
-            Minimized?.Invoke(sender, e);
+            Minimized?.Invoke(e);
         }
 
         /// <summary>
         /// Raises the <see cref="FileDrop"/> event.
         /// </summary>
-        /// <param name="sender">The source of the event.</param>
         /// <param name="e">A <see cref="FileDropEventArgs"/> that contains the event data.</param>
-        protected virtual void OnFileDrop(object sender, FileDropEventArgs e)
+        protected virtual void OnFileDrop(FileDropEventArgs e)
         {
-            FileDrop?.Invoke(sender, e);
+            FileDrop?.Invoke(e);
         }
 
         private bool _disposedValue; // To detect redundant calls
@@ -1327,7 +1224,6 @@ namespace OpenToolkit.Windowing.Desktop
             DestroyWindow();
 
             _disposedValue = true;
-            Disposed?.Invoke(this, EventArgs.Empty);
 
             // Unloading twice impossible if no one did e.g. multiple disposes.
             if (Interlocked.Decrement(ref _numberOfUsers) <= 0)

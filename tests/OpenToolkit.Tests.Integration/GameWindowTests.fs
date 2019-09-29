@@ -42,15 +42,15 @@ module GameWindow =
         [<Fact()>]
         let ``Can close GameWindow on UpdateFrame`` () =
             use gw = openGW()
-            gw.UpdateFrame.Add(fun _ -> gw.Close())
+            gw.add_UpdateFrame(fun _ -> gw.Close())
             gw.Run()
 
         [<Fact>]
         let ``Closing event is sent before closed`` () =
             use gw = openGW()
             let signals = System.Collections.Generic.List<string>()
-            gw.Closing.Add(fun _ -> signals.Add("Closing"))
-            gw.Closed.Add(fun _ -> signals.Add("Closed"))
+            gw.add_Closing(fun _ -> signals.Add("Closing"))
+            gw.add_Closed(fun _ -> signals.Add("Closed"))
             
             Assert.Equal([], signals)
             gw.Close()
