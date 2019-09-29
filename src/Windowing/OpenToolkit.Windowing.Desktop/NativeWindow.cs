@@ -433,7 +433,7 @@ namespace OpenToolkit.Windowing.Desktop
                     {
                         fixed (byte* ptr = value.Data)
                         {
-                            var cursorImg = new GraphicsLibraryFramework.Image(value.Width, value.Height, (IntPtr)ptr);
+                            var cursorImg = new GraphicsLibraryFramework.Image(value.Width, value.Height, ptr);
                             var cursor = Glfw.CreateCursor(&cursorImg, value.X, value.Y);
                             Glfw.SetCursor(WindowPtr, cursor);
                         }
