@@ -42,6 +42,10 @@ namespace OpenToolkit.Windowing.Desktop
 
         private KeyboardState _keyboardState = default;
 
+        // Current cursor we assigned to the GLFW window.
+        // Null if the cursor is default.
+        private unsafe Cursor* _currentCursor;
+
         /// <inheritdoc />
         public KeyboardState KeyboardState => _keyboardState;
 
@@ -409,7 +413,7 @@ namespace OpenToolkit.Windowing.Desktop
         /// <inheritdoc />
         public Vector2i ClientSize { get; }
 
-        private MouseCursor _cursor;
+        private MouseCursor _cursor = MouseCursor.Default;
 
         /// <inheritdoc />
         public bool IsFullscreen { get; set; }
@@ -420,23 +424,40 @@ namespace OpenToolkit.Windowing.Desktop
             get => _cursor;
             set
             {
-                _cursor = value;
+                _cursor = value ?? throw new ArgumentNullException(
+                              nameof(value),
+                              "Cursor cannot be null. To reset to default cursor, set it to MouseCursor.Default instead.");
 
                 unsafe
                 {
-                    if (value == MouseCursor.Default)
+                    var oldCursor = _currentCursor;
+                    _currentCursor = null;
+
+                    if (value.Shape == MouseCursor.StandardShape.CustomShape)
                     {
-                        var cursor = Glfw.CreateStandardCursor(CursorShape.Arrow);
-                        Glfw.SetCursor(WindowPtr, cursor);
-                    }
-                    else
-                    {
+                        // User provided mouse cursor.
                         fixed (byte* ptr = value.Data)
                         {
                             var cursorImg = new GraphicsLibraryFramework.Image(value.Width, value.Height, ptr);
-                            var cursor = Glfw.CreateCursor(&cursorImg, value.X, value.Y);
-                            Glfw.SetCursor(WindowPtr, cursor);
+                            _currentCursor = Glfw.CreateCursor(&cursorImg, value.X, value.Y);
                         }
+                    }
+                    else
+                    {
+                        // Standard mouse cursor.
+                        _currentCursor = Glfw.CreateStandardCursor(MapStandardCursorShape(value.Shape));
+                    }
+
+                    if (value != MouseCursor.Default)
+                    {
+                        Glfw.SetCursor(WindowPtr, _currentCursor);
+                    }
+
+                    if (oldCursor != null)
+                    {
+                        // Make sure to destroy the old cursor AFTER assigning the new one (if there is a new one).
+                        // Otherwise the user might briefly see their OS cursor during the reassignment.
+                        Glfw.DestroyCursor(oldCursor);
                     }
                 }
             }
@@ -1523,6 +1544,27 @@ namespace OpenToolkit.Windowing.Desktop
                     return Common.InputAction.Repeat;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(action), action, null);
+            }
+        }
+
+        private static CursorShape MapStandardCursorShape(MouseCursor.StandardShape shape)
+        {
+            switch (shape)
+            {
+                case MouseCursor.StandardShape.Arrow:
+                    return CursorShape.Arrow;
+                case MouseCursor.StandardShape.IBeam:
+                    return CursorShape.IBeam;
+                case MouseCursor.StandardShape.Crosshair:
+                    return CursorShape.Crosshair;
+                case MouseCursor.StandardShape.Hand:
+                    return CursorShape.Hand;
+                case MouseCursor.StandardShape.HResize:
+                    return CursorShape.HResize;
+                case MouseCursor.StandardShape.VResize:
+                    return CursorShape.VResize;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(shape), shape, null);
             }
         }
     }
