@@ -64,6 +64,59 @@ namespace OpenToolkit.Mathematics.Rotors
         }
 
         /// <summary>
+        /// 
+        /// </summary>
+        public float MagnitudeSquared => (NotX * NotX) + (NotY * NotY) + (NotZ * NotZ);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public float Magnitude => Math.Sqrt(MagnitudeSquared);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="bv"></param>
+        public static void Normalize(ref BiVector3d bv)
+        {
+            float mag = bv.Magnitude;
+            bv.NotX /= mag;
+            bv.NotY /= mag;
+            bv.NotZ /= mag;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="bv"></param>
+        /// <param name="result"></param>
+        public static void Normalize(in BiVector3d bv, out BiVector3d result)
+        {
+            float mag = bv.Magnitude;
+            result.NotX = bv.NotX / mag;
+            result.NotY = bv.NotY / mag;
+            result.NotZ = bv.NotZ / mag;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public void Normalize()
+        {
+            Normalize(ref this);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public BiVector3d Normalized()
+        {
+            Normalize(this, out BiVector3d bv);
+            return bv;
+        }
+
+        /// <summary>
         /// Functionally the same as dot product in more 'conventional' algebra.
         /// </summary>
         /// <param name="bv"></param>
@@ -86,5 +139,6 @@ namespace OpenToolkit.Mathematics.Rotors
         {
             return (v.X * bv.NotX) + (v.Y * bv.NotY) + (v.Z * bv.NotZ);
         }
+        
     }
 }

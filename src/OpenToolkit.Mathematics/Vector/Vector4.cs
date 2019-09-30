@@ -20,6 +20,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
  */
 
+using OpenToolkit.Mathematics.Rotors;
 using System;
 using System.Diagnostics.Contracts;
 using System.Globalization;
@@ -679,6 +680,33 @@ namespace OpenToolkit.Mathematics
         public static void Dot(ref Vector4 left, ref Vector4 right, out float result)
         {
             result = (left.X * right.X) + (left.Y * right.Y) + (left.Z * right.Z) + (left.W * right.W);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="p"></param>
+        /// <param name="q"></param>
+        /// <param name="bv"></param>
+        public static void Wedge(in Vector4 p, in Vector4 q, out BiVector4d bv)
+        {
+            bv.WX = q.X - p.X;
+            bv.WY = q.Y - p.Y;
+            bv.WZ = q.Z - p.Z;
+            bv.YZ = (p.Y * q.Z) - (p.Z * q.Y);
+            bv.ZX = (p.Z * q.X) - (p.X * q.Z);
+            bv.XY = (p.X * q.Y) - (p.Y * q.Y);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="v"></param>
+        /// <param name="tv"></param>
+        /// <param name="s"></param>
+        public static void AntiWedge(in Vector4 v, in AntiVector4d tv, out float s)
+        {
+            s = (v.X * tv.NotX) + (v.Y * tv.NotY) + (v.Z * tv.NotZ);
         }
 
         /// <summary>
