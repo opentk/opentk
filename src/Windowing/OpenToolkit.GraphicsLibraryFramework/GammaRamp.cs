@@ -17,17 +17,17 @@ namespace OpenToolkit.GraphicsLibraryFramework
         /// <summary>
         /// Red components of the gamma ramp.
         /// </summary>
-        public short* Red;
+        public ushort* Red;
 
         /// <summary>
         /// Green components of the gamma ramp.
         /// </summary>
-        public short* Green;
+        public ushort* Green;
 
         /// <summary>
         /// Blue components of the gamma ramp.
         /// </summary>
-        public short* Blue;
+        public ushort* Blue;
 
         /// <summary>
         /// Length of the arrays.
