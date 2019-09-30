@@ -724,16 +724,11 @@ namespace OpenToolkit.Windowing.Desktop
 
                 _dropCallback = (window, count, paths) =>
                 {
-                    var pathsStrings = (char**)paths;
-
                     var arrayOfPaths = new string[count];
 
                     for (var i = 0; i < count; i++)
                     {
-                        if (pathsStrings != null)
-                        {
-                            arrayOfPaths[i] = new string(pathsStrings[i]);
-                        }
+                        arrayOfPaths[i] = Utility.PtrToStringUTF8(paths[i]);
                     }
 
                     OnFileDrop(new FileDropEventArgs(arrayOfPaths));
