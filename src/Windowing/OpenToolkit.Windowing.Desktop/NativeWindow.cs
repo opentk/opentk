@@ -1052,7 +1052,6 @@ namespace OpenToolkit.Windowing.Desktop
         /// <summary>
         /// Raises the <see cref="Refresh"/> event.
         /// </summary>
-        /// <param name="e">A <see cref="EventArgs"/> that contains the event data.</param>
         protected virtual void OnRefresh()
         {
             Refresh?.Invoke();
@@ -1070,7 +1069,6 @@ namespace OpenToolkit.Windowing.Desktop
         /// <summary>
         /// Raises the <see cref="Closed"/> event.
         /// </summary>
-        /// <param name="e">A <see cref="EventArgs"/> that contains the event data.</param>
         protected virtual void OnClosed()
         {
             Closed?.Invoke();
@@ -1135,8 +1133,6 @@ namespace OpenToolkit.Windowing.Desktop
         /// <summary>
         /// Raises the <see cref="MouseLeave"/> event.
         /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">A <see cref="EventArgs"/> that contains the event data.</param>
         protected virtual void OnMouseLeave()
         {
             MouseLeave?.Invoke();
@@ -1145,8 +1141,6 @@ namespace OpenToolkit.Windowing.Desktop
         /// <summary>
         /// Raises the <see cref="MouseEnter"/> event.
         /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">A <see cref="EventArgs"/> that contains the event data.</param>
         protected virtual void OnMouseEnter()
         {
             MouseEnter?.Invoke();
