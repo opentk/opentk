@@ -62,7 +62,7 @@ namespace OpenToolkit.GraphicsLibraryFramework
         public abstract string GetVersionString();
 
         /// <inheritdoc />
-        public abstract unsafe ErrorCode GetError(out char* description);
+        public abstract unsafe ErrorCode GetError(out byte* description);
 
         /// <inheritdoc />
         public abstract unsafe Monitor** GetMonitors(out int count);
