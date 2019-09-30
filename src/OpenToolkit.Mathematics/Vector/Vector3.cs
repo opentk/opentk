@@ -20,6 +20,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
  */
 
+using OpenToolkit.Mathematics.Rotors;
 using System;
 using System.Diagnostics.Contracts;
 using System.Globalization;
@@ -701,6 +702,30 @@ namespace OpenToolkit.Mathematics
             result.X = (left.Y * right.Z) - (left.Z * right.Y);
             result.Y = (left.Z * right.X) - (left.X * right.Z);
             result.Z = (left.X * right.Y) - (left.Y * right.X);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="v1"></param>
+        /// <param name="v2"></param>
+        public static BiVector3d Wedge(Vector3 v1, Vector3 v2)
+        {
+            Wedge(v1, v2, out BiVector3d bv);
+            return bv;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="v1"></param>
+        /// <param name="v2"></param>
+        /// <param name="bv"></param>
+        public static void Wedge(in Vector3 v1, in Vector3 v2, out BiVector3d bv)
+        {
+            bv.NotX = (v1.Y * v2.Z) - (v1.Z * v2.Y);
+            bv.NotY = (v1.Z * v2.X) - (v1.X * v2.Z);
+            bv.NotZ = (v1.X * v2.Y) - (v1.Y * v2.X);
         }
 
         /// <summary>
