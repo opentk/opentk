@@ -12,23 +12,42 @@ using OpenToolkit.Windowing.Common;
 namespace OpenToolkit.Windowing.Desktop
 {
     /// <summary>
-    /// Implementation of <see cref="IGameWindowProperties"/>.
     /// <see cref="GameWindow"/> related settings.
     /// </summary>
-    public class GameWindowSettings : IGameWindowProperties
+    public class GameWindowSettings
     {
         /// <summary>
         /// The default <see cref="GameWindowSettings"/>.
         /// </summary>
         public static readonly GameWindowSettings Default = new GameWindowSettings();
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Gets or sets a value indicating whether the game window should use a separate thread for render events.
+        /// </summary>
         public bool IsMultiThreaded { get; set; } = false;
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Gets or sets a double representing the render frequency, in hertz.
+        /// </summary>
+        /// <remarks>
+        ///  <para>
+        /// A value of 0.0 indicates that RenderFrame events are generated at the maximum possible frequency (i.e. only
+        /// limited by the hardware's capabilities).
+        ///  </para>
+        ///  <para>Values lower than 1.0Hz are clamped to 0.0. Values higher than 500.0Hz are clamped to 200.0Hz.</para>
+        /// </remarks>
         public double RenderFrequency { get; set; } = 0.0;
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Gets or sets a double representing the update frequency, in hertz.
+        /// </summary>
+        /// <remarks>
+        ///  <para>
+        /// A value of 0.0 indicates that UpdateFrame events are generated at the maximum possible frequency (i.e. only
+        /// limited by the hardware's capabilities).
+        ///  </para>
+        ///  <para>Values lower than 1.0Hz are clamped to 0.0. Values higher than 500.0Hz are clamped to 500.0Hz.</para>
+        /// </remarks>
         public double UpdateFrequency { get; set; } = 0.0;
     }
 }

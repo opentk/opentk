@@ -173,7 +173,7 @@ namespace OpenToolkit.Windowing.Desktop
         /// Use GameWindowSettings.Default and NativeWindowSettings.Default to get some sensible default attributes.
         /// </para>
         /// </remarks>
-        public GameWindow(IGameWindowProperties gameWindowSettings, INativeWindowProperties nativeWindowSettings)
+        public GameWindow(GameWindowSettings gameWindowSettings, NativeWindowSettings nativeWindowSettings)
             : base(nativeWindowSettings)
         {
             IsMultiThreaded = gameWindowSettings.IsMultiThreaded;

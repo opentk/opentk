@@ -480,7 +480,7 @@ namespace OpenToolkit.Windowing.Desktop
         /// Initializes a new instance of the <see cref="NativeWindow"/> class.
         /// </summary>
         /// <param name="settings">The <see cref="INativeWindow"/> related settings.</param>
-        public NativeWindow(INativeWindowProperties settings)
+        public unsafe NativeWindow(NativeWindowSettings settings)
         {
             if (!GLFWProvider.IsOnMainThread)
             {
@@ -489,115 +489,122 @@ namespace OpenToolkit.Windowing.Desktop
 
             _title = settings.Title;
 
-            unsafe
+            _currentMonitor = settings.CurrentMonitor;
+
+            switch (settings.WindowBorder)
             {
-                _currentMonitor = settings.CurrentMonitor;
+                case WindowBorder.Hidden:
+                    Glfw.WindowHint(WindowHintBool.Decorated, false);
+                    break;
 
-                switch (settings.WindowBorder)
-                {
-                    case WindowBorder.Hidden:
-                        Glfw.WindowHint(WindowHintBool.Decorated, false);
-                        break;
+                case WindowBorder.Resizable:
+                    Glfw.WindowHint(WindowHintBool.Resizable, true);
+                    break;
 
-                    case WindowBorder.Resizable:
-                        Glfw.WindowHint(WindowHintBool.Resizable, true);
-                        break;
-
-                    case WindowBorder.Fixed:
-                        Glfw.WindowHint(WindowHintBool.Resizable, false);
-                        break;
-                }
-
-                var makeContextCurrent = false;
-                switch (settings.API)
-                {
-                    case ContextAPI.NoAPI:
-                        Glfw.WindowHint(WindowHintClientApi.ClientApi, ClientApi.NoApi);
-                        break;
-
-                    case ContextAPI.OpenGLES:
-                        Glfw.WindowHint(WindowHintClientApi.ClientApi, ClientApi.OpenGlEsApi);
-                        makeContextCurrent = true;
-                        break;
-
-                    case ContextAPI.OpenGL:
-                        Glfw.WindowHint(WindowHintClientApi.ClientApi, ClientApi.OpenGlApi);
-                        makeContextCurrent = true;
-                        break;
-
-                    default:
-                        throw new ArgumentOutOfRangeException();
-                }
-
-                Glfw.WindowHint(WindowHintInt.ContextVersionMajor, settings.APIVersion.Major);
-                Glfw.WindowHint(WindowHintInt.ContextVersionMinor, settings.APIVersion.Minor);
-
-                if (settings.Flags.HasFlag(ContextFlags.ForwardCompatible))
-                {
-                    Glfw.WindowHint(WindowHintBool.OpenGLForwardCompat, true);
-                }
-
-                if (settings.Flags.HasFlag(ContextFlags.Debug))
-                {
-                    Glfw.WindowHint(WindowHintBool.OpenGLDebugContext, true);
-                }
-
-                switch (settings.Profile)
-                {
-                    case ContextProfile.Compatability:
-                        Glfw.WindowHint(WindowHintOpenGlProfile.OpenGlProfile, OpenGlProfile.Compat);
-                        break;
-                    case ContextProfile.Core:
-                        Glfw.WindowHint(WindowHintOpenGlProfile.OpenGlProfile, OpenGlProfile.Core);
-                        break;
-                    default:
-                        throw new ArgumentOutOfRangeException();
-                }
-
-                Glfw.WindowHint(WindowHintBool.Focused, settings.IsFocused);
-                _windowBorder = settings.WindowBorder;
-
-                if (settings.WindowState == WindowState.Fullscreen)
-                {
-                    var monitor = settings.CurrentMonitor.ToUnsafePtr<GraphicsLibraryFramework.Monitor>();
-                    var modePtr = Glfw.GetVideoMode(monitor);
-                    Glfw.WindowHint(WindowHintInt.RedBits, modePtr->RedBits);
-                    Glfw.WindowHint(WindowHintInt.GreenBits, modePtr->GreenBits);
-                    Glfw.WindowHint(WindowHintInt.BlueBits, modePtr->BlueBits);
-                    Glfw.WindowHint(WindowHintInt.RefreshRate, modePtr->RefreshRate);
-                    WindowPtr = Glfw.CreateWindow(modePtr->Width, modePtr->Height, _title, monitor, null);
-                }
-                else
-                {
-                    WindowPtr = Glfw.CreateWindow(settings.Width, settings.Height, _title, null, null);
-                }
-
-                Exists = true;
-
-                if (makeContextCurrent)
-                {
-                    Glfw.MakeContextCurrent(WindowPtr);
-                }
-
-                RegisterWindowCallbacks();
-
-                IsFocused = settings.IsFocused;
-                IsVisible = settings.IsVisible;
-                WindowState = settings.WindowState;
-
-                IsEventDriven = settings.IsEventDriven;
-
-                Location = settings.Location;
-
-                Glfw.GetFramebufferSize(WindowPtr, out var width, out var height);
-                ClientSize = new Vector2i(width, height);
-
-                Glfw.GetWindowSize(WindowPtr, out width, out height);
-                _size = new Vector2i(width, height);
-
-                Glfw.GetWindowPos(WindowPtr, out var x, out var y);
-                _location = new Vector2i(x, y);
+                case WindowBorder.Fixed:
+                    Glfw.WindowHint(WindowHintBool.Resizable, false);
+                    break;
             }
+
+            var makeContextCurrent = false;
+            switch (settings.API)
+            {
+                case ContextAPI.NoAPI:
+                    Glfw.WindowHint(WindowHintClientApi.ClientApi, ClientApi.NoApi);
+                    break;
+
+                case ContextAPI.OpenGLES:
+                    Glfw.WindowHint(WindowHintClientApi.ClientApi, ClientApi.OpenGlEsApi);
+                    makeContextCurrent = true;
+                    break;
+
+                case ContextAPI.OpenGL:
+                    Glfw.WindowHint(WindowHintClientApi.ClientApi, ClientApi.OpenGlApi);
+                    makeContextCurrent = true;
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+
+            Glfw.WindowHint(WindowHintInt.ContextVersionMajor, settings.APIVersion.Major);
+            Glfw.WindowHint(WindowHintInt.ContextVersionMinor, settings.APIVersion.Minor);
+
+            if (settings.Flags.HasFlag(ContextFlags.ForwardCompatible))
+            {
+                Glfw.WindowHint(WindowHintBool.OpenGLForwardCompat, true);
+            }
+
+            if (settings.Flags.HasFlag(ContextFlags.Debug))
+            {
+                Glfw.WindowHint(WindowHintBool.OpenGLDebugContext, true);
+            }
+
+            switch (settings.Profile)
+            {
+                case ContextProfile.Compatability:
+                    Glfw.WindowHint(WindowHintOpenGlProfile.OpenGlProfile, OpenGlProfile.Compat);
+                    break;
+                case ContextProfile.Core:
+                    Glfw.WindowHint(WindowHintOpenGlProfile.OpenGlProfile, OpenGlProfile.Core);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+
+            Glfw.WindowHint(WindowHintBool.Focused, settings.StartFocused);
+            _windowBorder = settings.WindowBorder;
+
+            _isVisible = settings.StartVisible;
+            Glfw.WindowHint(WindowHintBool.Visible, _isVisible);
+
+            if (settings.WindowState == WindowState.Fullscreen)
+            {
+                var monitor = settings.CurrentMonitor.ToUnsafePtr<GraphicsLibraryFramework.Monitor>();
+                var modePtr = Glfw.GetVideoMode(monitor);
+                Glfw.WindowHint(WindowHintInt.RedBits, modePtr->RedBits);
+                Glfw.WindowHint(WindowHintInt.GreenBits, modePtr->GreenBits);
+                Glfw.WindowHint(WindowHintInt.BlueBits, modePtr->BlueBits);
+                Glfw.WindowHint(WindowHintInt.RefreshRate, modePtr->RefreshRate);
+                WindowPtr = Glfw.CreateWindow(modePtr->Width, modePtr->Height, _title, monitor, null);
+            }
+            else
+            {
+                WindowPtr = Glfw.CreateWindow(settings.Width, settings.Height, _title, null, null);
+            }
+
+            Exists = true;
+
+            if (makeContextCurrent)
+            {
+                Glfw.MakeContextCurrent(WindowPtr);
+            }
+
+            RegisterWindowCallbacks();
+
+            IsFocused = settings.StartFocused;
+            WindowState = settings.WindowState;
+
+            IsEventDriven = settings.IsEventDriven;
+
+            if (settings.Icon != null)
+            {
+                Icon = settings.Icon;
+            }
+
+            if (settings.Location.HasValue)
+            {
+                Location = settings.Location.Value;
+            }
+
+            Glfw.GetFramebufferSize(WindowPtr, out var width, out var height);
+            ClientSize = new Vector2i(width, height);
+
+            Glfw.GetWindowSize(WindowPtr, out width, out height);
+            _size = new Vector2i(width, height);
+
+            Glfw.GetWindowPos(WindowPtr, out var x, out var y);
+            _location = new Vector2i(x, y);
 
             Interlocked.Increment(ref _numberOfUsers);
         }
