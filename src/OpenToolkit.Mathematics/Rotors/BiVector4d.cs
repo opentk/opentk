@@ -18,7 +18,7 @@ namespace OpenToolkit.Mathematics.Rotors
 
         public BiVector4d()
         {
-            XY = YZ = ZX = WX = WY = WZ;
+            XY = YZ = ZX = WX = WY = WZ = 0;
         }
 
         public BiVector4d(float xy, float yz, float zx, float wx, float wy, float wz)
@@ -44,14 +44,27 @@ namespace OpenToolkit.Mathematics.Rotors
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="bv"></param>
-        /// <param name="v"></param>
-        /// <param name="tv"></param>
+        public float MagnitudeSqr => (XY * XY) + (YZ * YZ) + (ZX * ZX) + (WX * WX) + (WY * WY) + (WZ * WZ);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public float Magnitude => (float)Math.Sqrt(Magnitude);
+
+        /// <summary>
+        /// Creates a AntiVector4 (plane) from a BiVector4 (line) and a Vector4 (point).
+        /// </summary>
+        /// <param name="bv">The BiVector4 (line).</param>
+        /// <param name="v">The Vector4 (point).</param>
+        /// <param name="tv">The result AntiVector4 (plane).</param>
         public static Wedge(in BiVector4d bv, in Vector4 v, out AntiVector4d tv)
         {
-            // FIXME: Implement this!!
-            tv = default;
-            throw new NotImplementedException();
+            tv.NotX = (bv.WY * v.Z) + (bv.YZ * v.W) - (bv.WZ * v.Y);
+            tv.NotY = (bv.ZX * v.W) + (bv.WZ * v.X) - (bv.WX * v.Z);
+            tv.NotZ = (bv.XY * v.W) + (bv.WX * v.Y) - (bv.WY * v.X);
+
+            // Note the dubble minus
+            tv.NotW = (bv.YZ * v.X) - (bv.XY * v.Z) - (bv.ZX * v.Y);
         }
     }
 }
