@@ -57,7 +57,7 @@ namespace OpenToolkit.Mathematics.Rotors
         /// <param name="bv">The BiVector4 (line).</param>
         /// <param name="v">The Vector4 (point).</param>
         /// <param name="tv">The result AntiVector4 (plane).</param>
-        public static Wedge(in BiVector4d bv, in Vector4 v, out AntiVector4d tv)
+        public static void Wedge(in BiVector4d bv, in Vector4 v, out AntiVector4d tv)
         {
             tv.NotX = (bv.WY * v.Z) + (bv.YZ * v.W) - (bv.WZ * v.Y);
             tv.NotY = (bv.ZX * v.W) + (bv.WZ * v.X) - (bv.WX * v.Z);
