@@ -21,129 +21,96 @@ namespace OpenToolkit.Windowing.Common
         /// <summary>
         /// Occurs whenever the window is moved.
         /// </summary>
-        event EventHandler<WindowPositionEventArgs> Move;
+        event Action<WindowPositionEventArgs> Move;
 
         /// <summary>
         /// Occurs whenever the window is resized.
         /// </summary>
-        event EventHandler<ResizeEventArgs> Resize;
+        event Action<ResizeEventArgs> Resize;
 
         /// <summary>
         /// Occurs whenever the window is refreshed.
         /// </summary>
-        event EventHandler<EventArgs> Refresh;
+        event Action Refresh;
 
         /// <summary>
         /// Occurs when the window is about to close.
         /// </summary>
-        event EventHandler<CancelEventArgs> Closing;
+        event Action<CancelEventArgs> Closing;
 
         /// <summary>
         /// Occurs after the window has closed.
         /// </summary>
-        event EventHandler<EventArgs> Closed;
-
-        /// <summary>
-        /// Occurs when the window is disposed.
-        /// </summary>
-        event EventHandler<EventArgs> Disposed;
+        event Action Closed;
 
         /// <summary>
         /// Occurs when the window is minimized.
         /// </summary>
-        event EventHandler<MinimizedEventArgs> Minimized;
-
-        /// <summary>
-        /// Occurs when the icon of the window changes.
-        /// </summary>
-        event EventHandler<EventArgs> IconChanged;
+        event Action<MinimizedEventArgs> Minimized;
 
         /// <summary>
         /// Occurs when a joystick is connected or disconnected.
         /// </summary>
-        event EventHandler<JoystickEventArgs> JoystickConnected;
-
-        /// <summary>
-        /// Occurs when the <see cref="INativeWindowProperties.Title" /> property of the window changes.
-        /// </summary>
-        event EventHandler<TitleChangedEventArgs> TitleChanged;
-
-        /// <summary>
-        /// Occurs when the <see cref="INativeWindowProperties.IsVisible" /> property of the window changes.
-        /// </summary>
-        event EventHandler<VisibilityChangedEventArgs> VisibleChanged;
+        event Action<JoystickEventArgs> JoystickConnected;
 
         /// <summary>
         /// Occurs when the <see cref="INativeWindowProperties.IsFocused" /> property of the window changes.
         /// </summary>
-        event EventHandler<FocusedChangedEventArgs> FocusedChanged;
-
-        /// <summary>
-        /// Occurs when the <see cref="WindowBorder" /> property of the window changes.
-        /// </summary>
-        event EventHandler<EventArgs> WindowBorderChanged;
-
-        /// <summary>
-        /// Occurs when the <see cref="WindowState" /> property of the window changes.
-        /// </summary>
-        event EventHandler<EventArgs> WindowStateChanged;
+        event Action<FocusedChangedEventArgs> FocusedChanged;
 
         /// <summary>
         /// Occurs whenever a keyboard key is pressed.
         /// </summary>
-        event EventHandler<KeyboardKeyEventArgs> KeyDown;
+        event Action<KeyboardKeyEventArgs> KeyDown;
 
         /// <summary>
         /// Occurs whenever a Unicode code point is typed.
         /// </summary>
-        event EventHandler<TextInputEventArgs> TextInput;
+        event Action<TextInputEventArgs> TextInput;
 
         /// <summary>
         /// Occurs whenever a keyboard key is released.
         /// </summary>
-        event EventHandler<KeyboardKeyEventArgs> KeyUp;
+        event Action<KeyboardKeyEventArgs> KeyUp;
 
         /// <summary>
         /// Occurs when a <see cref="Monitor"/> is connected or disconnected.
         /// </summary>
-        event EventHandler<MonitorEventArgs> MonitorConnected;
+        event Action<MonitorEventArgs> MonitorConnected;
 
         /// <summary>
         /// Occurs whenever the mouse cursor leaves the window <see cref="INativeWindowProperties.Bounds" />.
         /// </summary>
-        event EventHandler<EventArgs> MouseLeave;
+        event Action MouseLeave;
 
         /// <summary>
         /// Occurs whenever the mouse cursor enters the window <see cref="INativeWindowProperties.Bounds" />.
         /// </summary>
-        event EventHandler<EventArgs> MouseEnter;
+        event Action MouseEnter;
 
         /// <summary>
         /// Occurs whenever a <see cref="Input.MouseButton" /> is clicked.
         /// </summary>
-        event EventHandler<MouseButtonEventArgs> MouseDown;
+        event Action<MouseButtonEventArgs> MouseDown;
 
         /// <summary>
         /// Occurs whenever a <see cref="Input.MouseButton" /> is released.
         /// </summary>
-        event EventHandler<MouseButtonEventArgs> MouseUp;
+        event Action<MouseButtonEventArgs> MouseUp;
 
         /// <summary>
         /// Occurs whenever the mouse cursor is moved;
         /// </summary>
-        event EventHandler<MouseMoveEventArgs> MouseMove;
+        event Action<MouseMoveEventArgs> MouseMove;
 
         /// <summary>
         /// Occurs whenever a mouse wheel is moved;
         /// </summary>
-        event EventHandler<MouseWheelEventArgs> MouseWheel;
-
-        // event EventHandler<MouseEventArgs> MouseClick;
-        // event EventHandler<MouseEventArgs> MouseDoubleClick;
+        event Action<MouseWheelEventArgs> MouseWheel;
 
         /// <summary>
         /// Occurs whenever file dropped on window.
         /// </summary>
-        event EventHandler<FileDropEventArgs> FileDrop;
+        event Action<FileDropEventArgs> FileDrop;
     }
 }

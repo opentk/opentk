@@ -43,26 +43,26 @@ namespace OpenToolkit.Windowing.Common
         /// occurs when the update thread has started. This would be a good place to initialize thread specific stuff (like
         /// setting a synchronization context).
         /// </summary>
-        event EventHandler<EventArgs> RenderThreadStarted;
+        event Action RenderThreadStarted;
 
         /// <summary>
         /// Occurs before the window is displayed for the first time.
         /// </summary>
-        event EventHandler<EventArgs> Load;
+        event Action Load;
 
         /// <summary>
         /// Occurs before the window is destroyed.
         /// </summary>
-        event EventHandler<EventArgs> Unload;
+        event Action Unload;
 
         /// <summary>
         /// Occurs when it is time to update a frame.
         /// </summary>
-        event EventHandler<FrameEventArgs> UpdateFrame;
+        event Action<FrameEventArgs> UpdateFrame;
 
         /// <summary>
         /// Occurs when it is time to render a frame.
         /// </summary>
-        event EventHandler<FrameEventArgs> RenderFrame;
+        event Action<FrameEventArgs> RenderFrame;
     }
 }
