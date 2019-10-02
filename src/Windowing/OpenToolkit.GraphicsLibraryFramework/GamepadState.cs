@@ -17,11 +17,11 @@ namespace OpenToolkit.GraphicsLibraryFramework
         /// <summary>
         /// State of each of the 15 gamepad buttons, equal to <see cref="InputAction.Press"/> or <see cref="InputAction.Release"/>.
         /// </summary>
-        public byte[] Buttons;
+        public unsafe fixed byte Buttons[15];
 
         /// <summary>
         /// State of each of the 6 gamepad axes, ranging from -1.0 to 1.0.
         /// </summary>
-        public float[] Axes;
+        public unsafe fixed float Axes[6];
     }
 }
