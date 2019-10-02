@@ -369,46 +369,6 @@ namespace OpenToolkit.Windowing.Desktop
         }
 
         /// <inheritdoc />
-        public unsafe int X
-        {
-            get => Location.X;
-            set
-            {
-                Glfw.SetWindowPos(WindowPtr, value, _location.Y);
-            }
-        }
-
-        /// <inheritdoc />
-        public unsafe int Y
-        {
-            get => Location.Y;
-            set
-            {
-                Glfw.SetWindowPos(WindowPtr, _location.X, value);
-            }
-        }
-
-        /// <inheritdoc />
-        public unsafe int Width
-        {
-            get => Size.X;
-            set
-            {
-                Glfw.SetWindowSize(WindowPtr, value, _size.Y);
-            }
-        }
-
-        /// <inheritdoc />
-        public unsafe int Height
-        {
-            get => Size.Y;
-            set
-            {
-                Glfw.SetWindowSize(WindowPtr, _size.X, value);
-            }
-        }
-
-        /// <inheritdoc />
         public Box2i ClientRectangle
         {
             get => new Box2i(Location, Location + Size);
@@ -587,7 +547,7 @@ namespace OpenToolkit.Windowing.Desktop
             }
             else
             {
-                WindowPtr = Glfw.CreateWindow(settings.Width, settings.Height, _title, null, null);
+                WindowPtr = Glfw.CreateWindow(settings.Size.X, settings.Size.Y, _title, null, null);
             }
 
             Exists = true;

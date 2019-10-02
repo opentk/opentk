@@ -192,7 +192,7 @@ namespace OpenToolkit.Windowing.Desktop
             OnLoad();
 
             // Send a redundant OnResize event, to make sure all user code has the correct values.
-            OnResize(new ResizeEventArgs(Width, Height));
+            OnResize(new ResizeEventArgs(Size));
 
             Debug.Print("Entering main loop.");
             if (IsMultiThreaded)

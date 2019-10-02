@@ -141,34 +141,10 @@ namespace OpenToolkit.Windowing.Desktop
         /// </remarks>
         public Vector2i? Location { get; set; }
 
-        private Vector2i _size = new Vector2i(640, 360);
-
         /// <summary>
         ///     Gets or sets the initial size of the contents of the window.
         /// </summary>
-        public Vector2i Size
-        {
-            get => _size;
-            set => _size = value;
-        }
-
-        /// <summary>
-        ///     Gets or sets the initial width of the contents of the window.
-        /// </summary>
-        public int Width
-        {
-            get => Size.X;
-            set => _size.X = value;
-        }
-
-        /// <summary>
-        ///     Gets or sets the initial height of the contents of the window.
-        /// </summary>
-        public int Height
-        {
-            get => Size.Y;
-            set => _size.Y = value;
-        }
+        public Vector2i Size { get; set; } = new Vector2i(640, 360);
 
         /// <summary>
         /// Gets or sets a value indicating whether the window should start fullscreen.
