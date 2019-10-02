@@ -74,16 +74,34 @@ namespace OpenToolkit.Mathematics.Rotors
         public float Magnitude => (float)Math.Sqrt(MagnitudeSquared);
 
         /// <summary>
+        /// Functionally the same as dot product in more 'conventional' algebra.
+        /// </summary>
+        /// <param name="bv"></param>
+        /// <param name="v"></param>
+        /// <returns></returns>
+        /// <remarks>Returns a AntiScalar3D which is a one component vector (i.e a float) that flips sign when reflected.</remarks>
+        public static AntiScalar3d Wedge(BiVector3d bv, Vector3 v)
+        {
+            return (bv.NotX * v.X) + (bv.NotY * v.Y) + (bv.NotZ * v.Z);
+        }
+
+        /// <summary>
+        /// Functionally the same as dot product in more 'conventional' algebra.
+        /// </summary>
+        /// <param name="v"></param>
+        /// <param name="bv"></param>
+        /// <returns></returns>
+        /// <remarks>Returns a scalar which is a one component vector (i.e a float) that retains sign on reflection.</remarks>
+        public static float AntiWedge(in Vector3 v, in BiVector3d bv)
+        {
+            return (v.X * bv.NotX) + (v.Y * bv.NotY) + (v.Z * bv.NotZ);
+        }
+
+        /// <summary>
         /// 
         /// </summary>
         /// <param name="bv"></param>
-        public static void Normalize(ref BiVector3d bv)
-        {
-            float mag = bv.Magnitude;
-            bv.NotX /= mag;
-            bv.NotY /= mag;
-            bv.NotZ /= mag;
-        }
+        public static void Normalize(ref BiVector3d bv) => Normalize(bv, out bv);
 
         /// <summary>
         /// 
@@ -101,10 +119,7 @@ namespace OpenToolkit.Mathematics.Rotors
         /// <summary>
         /// 
         /// </summary>
-        public void Normalize()
-        {
-            Normalize(ref this);
-        }
+        public void Normalize() => Normalize(ref this);
 
         /// <summary>
         /// 
@@ -114,30 +129,6 @@ namespace OpenToolkit.Mathematics.Rotors
         {
             Normalize(this, out BiVector3d bv);
             return bv;
-        }
-
-        /// <summary>
-        /// Functionally the same as dot product in more 'conventional' algebra.
-        /// </summary>
-        /// <param name="bv"></param>
-        /// <param name="v"></param>
-        /// <returns></returns>
-        /// <remarks>Returns a TriVector3D which is a one component vector (i.e a float) that flips sign when reflected.</remarks>
-        public AntiScalar3d Wedge(BiVector3d bv, Vector3 v)
-        {
-            return (bv.NotX * v.X) + (bv.NotY * v.Y) + (bv.NotZ * v.Z);
-        }
-
-        /// <summary>
-        /// Functionally the same as dot product in more 'conventional' algebra.
-        /// </summary>
-        /// <param name="v"></param>
-        /// <param name="bv"></param>
-        /// <returns></returns>
-        /// <remarks>Returns a scalar which is a one component vector (i.e a float) that retains sign on reflection.</remarks>
-        public float AntiWedge(Vector3 v, BiVector3d bv)
-        {
-            return (v.X * bv.NotX) + (v.Y * bv.NotY) + (v.Z * bv.NotZ);
         }
     }
 }

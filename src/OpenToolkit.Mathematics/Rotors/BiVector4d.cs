@@ -39,7 +39,7 @@ namespace OpenToolkit.Mathematics.Rotors
         /// <summary>
         /// 
         /// </summary>
-        public Vector3 Moment => new Vector3(XY, YZ, ZX);
+        public BiVector3d Moment => new BiVector3d(XY, YZ, ZX);
 
         /// <summary>
         /// 
@@ -65,6 +65,80 @@ namespace OpenToolkit.Mathematics.Rotors
 
             // Note the dubble minus
             tv.NotW = (bv.YZ * v.X) - (bv.XY * v.Z) - (bv.ZX * v.Y);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="bv1"></param>
+        /// <param name="bv2"></param>
+        /// <param name="f"></param>
+        public static void AntiWedge(in BiVector4d bv1, in BiVector4d bv2, out float f)
+        {
+            float a = BiVector3d.AntiWedge(bv1.Tangent, bv2.Moment);
+            float b = BiVector3d.AntiWedge(bv2.Tangent, bv1.Moment);
+            f = a + b;
+        }
+
+        /// <summary>
+        /// Calcualtes the signed minimum distance between two lines.
+        /// </summary>
+        /// <param name="bv1"></param>
+        /// <param name="bv2"></param>
+        /// <returns></returns>
+        public static float SignedMinDist(in BiVector4d bv1, in BiVector4d bv2)
+        {
+            // TODO: Optimize
+            AntiWedge(bv1, bv2, out float signedCrossingValue);
+            Vector3.Wedge(bv1.Tangent, bv2.Tangent, out BiVector3d bi);
+            return signedCrossingValue / bi.Magnitude;
+        }
+
+        /// <summary>
+        /// Normalizes a BiVector4 so that the norm one.
+        /// This does not normalize the "weight" of the represented line.
+        /// </summary>
+        /// <param name="bv">The BiVector to normalize.</param>
+        public static void Normalize(ref BiVector4d bv) => Normalize(bv, out bv);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="bv"></param>
+        /// <param name="result"></param>
+        public static void Normalize(in BiVector4d bv, out BiVector4d result)
+        {
+            float mag = bv.Magnitude;
+            result.XY = bv.XY / mag;
+            result.YZ = bv.YZ / mag;
+            result.ZX = bv.ZX / mag;
+            result.WX = bv.WX / mag;
+            result.WY = bv.WY / mag;
+            result.WZ = bv.WZ / mag;
+        }
+
+        /// <summary>
+        /// Normalizes the tangent direction for this line while keeping it's position in space the same.
+        /// </summary>
+        /// <param name="bv">The BiVector4 to normalize the weight of.</param>
+        public static void NormalizeWeight(ref BiVector4d bv) => NormalizeWeight(bv, out bv);
+
+        /// <summary>
+        /// Normalizes the tangent direction for this line while keeping it's position in space the same.
+        /// </summary>
+        /// <param name="bv">The BiVector4 to normalize the weight of.</param>
+        /// <param name="result"'>The resulting BiVector4.</param>
+        public static void NormalizeWeight(in BiVector4d bv, out BiVector4d result)
+        {
+            float mag = (float)Math.Sqrt((bv.WX * bv.WX) + (bv.WY * bv.WY) + (bv.WZ * bv.WZ));
+            result.WX = bv.WX / mag;
+            result.WY = bv.WY / mag;
+            result.WZ = bv.WZ / mag;
+
+            // TODO: Make sure this is correct
+            result.XY = bv.XY * mag;
+            result.YZ = bv.YZ * mag;
+            result.ZX = bv.ZX * mag;
         }
     }
 }

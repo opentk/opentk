@@ -42,15 +42,20 @@ namespace OpenToolkit.Mathematics.Rotors
 
         public float Magnitude => (float)Math.Sqrt(Magnitude);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="av"></param>
         public static void Normalize(ref AntiVector4d av)
         {
-            float mag = av.Magnitude;
-            av.NotX /= mag;
-            av.NotY /= mag;
-            av.NotZ /= mag;
-            av.NotW /= mag;
+            Normalize(av, out av);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="av"></param>
+        /// <param name="result"></param>
         public static void Normalize(in AntiVector4d av, out AntiVector4d result)
         {
             float mag = av.Magnitude;
@@ -65,14 +70,7 @@ namespace OpenToolkit.Mathematics.Rotors
         /// but normalize the orientation so that the NotW represents the distance the plane is from the origin.
         /// </summary>
         /// <param name="av"></param>
-        public static void NormalizeWeight(ref AntiVector4d av)
-        {
-            float mag = (float)Math.Sqrt((av.NotX * av.NotX) + (av.NotY * av.NotY) + (av.NotZ * av.NotZ));
-            av.NotX /= mag;
-            av.NotY /= mag;
-            av.NotZ /= mag;
-            av.NotW *= mag;
-        }
+        public static void NormalizeWeight(ref AntiVector4d av) => NormalizeWeight(av, out av);
 
         /// <summary>
         /// Keep the plane in it's current position and orientation,
