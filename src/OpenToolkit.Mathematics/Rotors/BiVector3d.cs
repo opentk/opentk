@@ -5,7 +5,7 @@ using System.Text;
 namespace OpenToolkit.Mathematics.Rotors
 {
     // This will not ensure type safety :'(
-    using TriVector3d = float;
+    using AntiScalar3d = float;
 
     /// <summary>
     /// 
@@ -71,7 +71,7 @@ namespace OpenToolkit.Mathematics.Rotors
         /// <summary>
         /// 
         /// </summary>
-        public float Magnitude => Math.Sqrt(MagnitudeSquared);
+        public float Magnitude => (float)Math.Sqrt(MagnitudeSquared);
 
         /// <summary>
         /// 
@@ -123,7 +123,7 @@ namespace OpenToolkit.Mathematics.Rotors
         /// <param name="v"></param>
         /// <returns></returns>
         /// <remarks>Returns a TriVector3D which is a one component vector (i.e a float) that flips sign when reflected.</remarks>
-        public TriVector3d Wedge(BiVector3d bv, Vector3 v)
+        public AntiScalar3d Wedge(BiVector3d bv, Vector3 v)
         {
             return (bv.NotX * v.X) + (bv.NotY * v.Y) + (bv.NotZ * v.Z);
         }
@@ -139,6 +139,5 @@ namespace OpenToolkit.Mathematics.Rotors
         {
             return (v.X * bv.NotX) + (v.Y * bv.NotY) + (v.Z * bv.NotZ);
         }
-        
     }
 }
