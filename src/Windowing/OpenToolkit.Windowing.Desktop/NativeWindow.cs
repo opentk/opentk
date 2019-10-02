@@ -42,6 +42,14 @@ namespace OpenToolkit.Windowing.Desktop
 
         private KeyboardState _keyboardState = default;
 
+        // GLFW cursor we assigned to the window.
+        // Null if the cursor is default.
+        private unsafe Cursor* _glfwCursor;
+
+        // Actual managed cursor instance for the public API.
+        // Never null.
+        private MouseCursor _managedCursor = MouseCursor.Default;
+
         /// <inheritdoc />
         public KeyboardState KeyboardState => _keyboardState;
 
@@ -422,34 +430,50 @@ namespace OpenToolkit.Windowing.Desktop
         /// <inheritdoc />
         public Vector2i ClientSize { get; }
 
-        private MouseCursor _cursor;
-
         /// <inheritdoc />
         public bool IsFullscreen { get; set; }
 
         /// <inheritdoc />
         public MouseCursor Cursor
         {
-            get => _cursor;
+            get => _managedCursor;
             set
             {
-                _cursor = value;
+                _managedCursor = value ?? throw new ArgumentNullException(
+                              nameof(value),
+                              "Cursor cannot be null. To reset to default cursor, set it to MouseCursor.Default instead.");
 
                 unsafe
                 {
-                    if (value == MouseCursor.Default)
+                    var oldCursor = _glfwCursor;
+                    _glfwCursor = null;
+
+                    // Create the new GLFW cursor
+                    if (value.Shape == MouseCursor.StandardShape.CustomShape)
                     {
-                        var cursor = Glfw.CreateStandardCursor(CursorShape.Arrow);
-                        Glfw.SetCursor(WindowPtr, cursor);
-                    }
-                    else
-                    {
+                        // User provided mouse cursor.
                         fixed (byte* ptr = value.Data)
                         {
                             var cursorImg = new GraphicsLibraryFramework.Image(value.Width, value.Height, ptr);
-                            var cursor = Glfw.CreateCursor(&cursorImg, value.X, value.Y);
-                            Glfw.SetCursor(WindowPtr, cursor);
+                            _glfwCursor = Glfw.CreateCursor(&cursorImg, value.X, value.Y);
                         }
+                    }
+
+                    // If this is the default cursor, we don't need to run CreateStandardCursor.
+                    // GLFW will reset the window to default if we assign null as cursor.
+                    else if (value != MouseCursor.Default)
+                    {
+                        // Standard mouse cursor.
+                        _glfwCursor = Glfw.CreateStandardCursor(MapStandardCursorShape(value.Shape));
+                    }
+
+                    Glfw.SetCursor(WindowPtr, _glfwCursor);
+
+                    if (oldCursor != null)
+                    {
+                        // Make sure to destroy the old cursor AFTER assigning the new one.
+                        // Otherwise the user might briefly see their OS cursor during the reassignment.
+                        Glfw.DestroyCursor(oldCursor);
                     }
                 }
             }
@@ -1425,6 +1449,27 @@ namespace OpenToolkit.Windowing.Desktop
                     return Common.InputAction.Repeat;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(action), action, null);
+            }
+        }
+
+        private static CursorShape MapStandardCursorShape(MouseCursor.StandardShape shape)
+        {
+            switch (shape)
+            {
+                case MouseCursor.StandardShape.Arrow:
+                    return CursorShape.Arrow;
+                case MouseCursor.StandardShape.IBeam:
+                    return CursorShape.IBeam;
+                case MouseCursor.StandardShape.Crosshair:
+                    return CursorShape.Crosshair;
+                case MouseCursor.StandardShape.Hand:
+                    return CursorShape.Hand;
+                case MouseCursor.StandardShape.HResize:
+                    return CursorShape.HResize;
+                case MouseCursor.StandardShape.VResize:
+                    return CursorShape.VResize;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(shape), shape, null);
             }
         }
     }
