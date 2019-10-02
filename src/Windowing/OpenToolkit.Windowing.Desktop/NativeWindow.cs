@@ -42,9 +42,13 @@ namespace OpenToolkit.Windowing.Desktop
 
         private KeyboardState _keyboardState = default;
 
-        // Current cursor we assigned to the GLFW window.
+        // GLFW cursor we assigned to the window.
         // Null if the cursor is default.
-        private unsafe Cursor* _currentCursor;
+        private unsafe Cursor* _glfwCursor;
+
+        // Actual managed cursor instance for the public API.
+        // Never null.
+        private MouseCursor _managedCursor = MouseCursor.Default;
 
         /// <inheritdoc />
         public KeyboardState KeyboardState => _keyboardState;
@@ -413,49 +417,48 @@ namespace OpenToolkit.Windowing.Desktop
         /// <inheritdoc />
         public Vector2i ClientSize { get; }
 
-        private MouseCursor _cursor = MouseCursor.Default;
-
         /// <inheritdoc />
         public bool IsFullscreen { get; set; }
 
         /// <inheritdoc />
         public MouseCursor Cursor
         {
-            get => _cursor;
+            get => _managedCursor;
             set
             {
-                _cursor = value ?? throw new ArgumentNullException(
+                _managedCursor = value ?? throw new ArgumentNullException(
                               nameof(value),
                               "Cursor cannot be null. To reset to default cursor, set it to MouseCursor.Default instead.");
 
                 unsafe
                 {
-                    var oldCursor = _currentCursor;
-                    _currentCursor = null;
+                    var oldCursor = _glfwCursor;
+                    _glfwCursor = null;
 
+                    // Create the new GLFW cursor
                     if (value.Shape == MouseCursor.StandardShape.CustomShape)
                     {
                         // User provided mouse cursor.
                         fixed (byte* ptr = value.Data)
                         {
                             var cursorImg = new GraphicsLibraryFramework.Image(value.Width, value.Height, ptr);
-                            _currentCursor = Glfw.CreateCursor(&cursorImg, value.X, value.Y);
+                            _glfwCursor = Glfw.CreateCursor(&cursorImg, value.X, value.Y);
                         }
                     }
-                    else
+
+                    // If this is the default cursor, we don't need to run CreateStandardCursor.
+                    // GLFW will reset the window to default if we assign null as cursor.
+                    else if (value != MouseCursor.Default)
                     {
                         // Standard mouse cursor.
-                        _currentCursor = Glfw.CreateStandardCursor(MapStandardCursorShape(value.Shape));
+                        _glfwCursor = Glfw.CreateStandardCursor(MapStandardCursorShape(value.Shape));
                     }
 
-                    if (value != MouseCursor.Default)
-                    {
-                        Glfw.SetCursor(WindowPtr, _currentCursor);
-                    }
+                    Glfw.SetCursor(WindowPtr, _glfwCursor);
 
                     if (oldCursor != null)
                     {
-                        // Make sure to destroy the old cursor AFTER assigning the new one (if there is a new one).
+                        // Make sure to destroy the old cursor AFTER assigning the new one.
                         // Otherwise the user might briefly see their OS cursor during the reassignment.
                         Glfw.DestroyCursor(oldCursor);
                     }
