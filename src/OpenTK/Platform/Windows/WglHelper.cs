@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace OpenTK.Platform.Windows
 {
-    internal partial class Wgl
+    public partial class Wgl
     {
         private static IntPtr[] EntryPoints;
         private static string[] EntryPointNames;
