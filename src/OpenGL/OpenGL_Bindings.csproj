@@ -18,7 +18,7 @@
 </Target>
 
 <Target Name="PreBuild" BeforeTargets="PreBuildEvent" Condition="'$(OS)' != 'Windows_NT' ">
-  <Exec Command="sh build.sh -t UpdateBindings" WorkingDirectory="../../" />
+  <Exec Command="bash build.sh -t UpdateBindings" WorkingDirectory="../../" />
 </Target>
 
 

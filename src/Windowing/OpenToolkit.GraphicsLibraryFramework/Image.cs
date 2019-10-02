@@ -14,7 +14,7 @@ namespace OpenToolkit.GraphicsLibraryFramework
     /// <summary>
     ///     Contains GLFW Image data.
     /// </summary>
-    public readonly unsafe struct Image
+    public unsafe struct Image
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="Image"/> struct.
@@ -30,18 +30,18 @@ namespace OpenToolkit.GraphicsLibraryFramework
         }
 
         /// <summary>
-        /// Gets the width, in pixels, of this <see cref="Image"/>.
+        /// The width, in pixels, of this <see cref="Image"/>.
         /// </summary>
-        public int Width { get; }
+        public int Width;
 
         /// <summary>
-        /// Gets the height, in pixels, of this <see cref="Image"/>.
+        /// The height, in pixels, of this <see cref="Image"/>.
         /// </summary>
-        public int Height { get; }
+        public int Height;
 
         /// <summary>
-        /// Gets a <see cref="byte"/> pointer pointing to the RGBA pixel data.
+        /// A <see cref="byte"/> pointer pointing to the RGBA pixel data.
         /// </summary>
-        public byte* Pixels { get; }
+        public byte* Pixels;
     }
 }

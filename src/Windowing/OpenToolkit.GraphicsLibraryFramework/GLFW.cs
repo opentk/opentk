@@ -28,14 +28,6 @@ namespace OpenToolkit.GraphicsLibraryFramework
         }
 
         /// <summary>
-        /// Gets the default callback which gets called when a GLFW-Error occurs.
-        /// </summary>
-        /// <seealso cref="SetErrorCallback"/>
-        /// TODO: pretty sure this callback should not be settable, because if we exchange values it will still call the old value,
-        /// TODO: we would need to set the new callback with SetErrorCallback-function
-        public static GLFWCallbacks.ErrorCallback ErrorCallback { get; } = (errorCode, description) => throw new GLFWException(description) { ErrorCode = errorCode };
-
-        /// <summary>
         /// Gets an integer equal to GLFW_DONT_CARE. This can be used for several window hints to use the platform default.
         /// </summary>
         public const int DontCare = -1;
@@ -62,7 +54,7 @@ namespace OpenToolkit.GraphicsLibraryFramework
         public abstract string GetVersionString();
 
         /// <inheritdoc />
-        public abstract unsafe ErrorCode GetError(out char* description);
+        public abstract unsafe ErrorCode GetError(out byte* description);
 
         /// <inheritdoc />
         public abstract unsafe Monitor** GetMonitors(out int count);

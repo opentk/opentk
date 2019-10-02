@@ -3,7 +3,7 @@
 
 using System;
 using System.ComponentModel;
-using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using System.Threading;
 using OpenToolkit.GraphicsLibraryFramework;
 using OpenToolkit.Mathematics;
@@ -98,10 +98,27 @@ namespace OpenToolkit.Windowing.Desktop
             {
                 unsafe
                 {
-                    fixed (GraphicsLibraryFramework.Image* ptr =
-                        Unsafe.As<GraphicsLibraryFramework.Image[]>(value.Images))
+                    var images = value.Images;
+                    Span<GCHandle> handles = stackalloc GCHandle[images.Length];
+                    Span<GraphicsLibraryFramework.Image> glfwImages =
+                        stackalloc GraphicsLibraryFramework.Image[images.Length];
+
+                    for (var i = 0; i < images.Length; i++)
                     {
-                        Glfw.SetWindowIcon(WindowPtr, value.Images.Length, ptr);
+                        var image = images[i];
+                        handles[i] = GCHandle.Alloc(image.Data, GCHandleType.Pinned);
+                        var addrOfPinnedObject = (byte*)handles[i].AddrOfPinnedObject();
+                        glfwImages[i] = new GraphicsLibraryFramework.Image(image.Width, image.Height, addrOfPinnedObject);
+                    }
+
+                    fixed (GraphicsLibraryFramework.Image* ptr = glfwImages)
+                    {
+                        Glfw.SetWindowIcon(WindowPtr, images.Length, ptr);
+                    }
+
+                    foreach (var handle in handles)
+                    {
+                        handle.Free();
                     }
                 }
 
@@ -731,16 +748,11 @@ namespace OpenToolkit.Windowing.Desktop
 
                 _dropCallback = (window, count, paths) =>
                 {
-                    var pathsStrings = (char**)paths;
-
                     var arrayOfPaths = new string[count];
 
                     for (var i = 0; i < count; i++)
                     {
-                        if (pathsStrings != null)
-                        {
-                            arrayOfPaths[i] = new string(pathsStrings[i]);
-                        }
+                        arrayOfPaths[i] = Utility.PtrToStringUTF8(paths[i]);
                     }
 
                     OnFileDrop(new FileDropEventArgs(arrayOfPaths));

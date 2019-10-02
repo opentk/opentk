@@ -440,7 +440,7 @@ namespace OpenToolkit.Windowing.Common
         event Action<MouseWheelEventArgs> MouseWheel;
 
         /// <summary>
-        /// Occurs whenever file dropped on window.
+        /// Occurs whenever one or more files are dropped on the window.
         /// </summary>
         event Action<FileDropEventArgs> FileDrop;
     }

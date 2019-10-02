@@ -19,9 +19,9 @@ namespace OpenToolkit.GraphicsLibraryFramework
     public class GLFWException : Exception
     {
         /// <summary>
-        /// Gets or sets the underlying GLFW-error code.
+        /// Gets the underlying GLFW-error code.
         /// </summary>
-        public ErrorCode ErrorCode { get; set; }
+        public ErrorCode ErrorCode { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="GLFWException"/> class.
@@ -37,6 +37,18 @@ namespace OpenToolkit.GraphicsLibraryFramework
         public GLFWException(string message)
             : base(message)
         {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GLFWException"/> class
+        /// with the specified detailed description and GLFW error code.
+        /// </summary>
+        /// <param name="message">A detailed description of the error.</param>
+        /// <param name="errorCode">The GLFW error code causing the exception.</param>
+        public GLFWException(string message, ErrorCode errorCode)
+            : base(message)
+        {
+            ErrorCode = errorCode;
         }
 
         /// <summary>
