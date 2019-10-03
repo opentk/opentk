@@ -59,26 +59,6 @@ module GameWindow =
 
     module Sizes =
         [<Fact>]
-        let ``Updates to Width take effect`` () =
-            use gw = openGW()
-            let oldWidth = gw.Width
-            let newWidth = oldWidth + 1
-            gw.Width <- newWidth
-            TryProcessEvents(gw)
-            Assert.Equal(newWidth, gw.Width)
-//
-        [<Fact>]
-        let ``Updates to Height take effect`` () =
-            use gw = openGW()
-            let oldHeight = gw.Height
-            let newHeight = oldHeight + 1
-            Console.WriteLine("Did not set yet")
-            gw.Height <- newHeight
-            Console.WriteLine("Did not process yet")
-            TryProcessEvents(gw)
-            Assert.Equal(newHeight, gw.Height)
-//
-        [<Fact>]
         let ``Updates to Size take effect`` () =
             use gw = openGW()
             let oldSize = gw.Size
@@ -117,30 +97,7 @@ module GameWindow =
             use gw = openGW()
             Assert.Equal(gw.Size, gw.Bounds.Size)
 
-        [<Fact>]
-        let ``Width and Height equals ClientSize`` () =
-            use gw = openGW()
-            Assert.Equal(Vector2i(gw.Width, gw.Height), gw.ClientSize)
-
     module Locations =
-        [<Fact>]
-        let ``Updates to X take effect`` () =
-            use gw = openGW()
-            let oldX = gw.X
-            let newX = oldX + 1
-            gw.X <- newX
-            TryProcessEvents(gw)
-            Assert.Equal(newX, gw.X)
-
-        [<Fact>]
-        let ``Updates to Y take effect`` () =
-            use gw = openGW()
-            let oldY = gw.Y
-            let newY = oldY + 1
-            gw.Y <- newY
-            TryProcessEvents(gw)
-            Assert.Equal(newY, gw.Y)
-
         [<Fact>]
         let ``Updates to Location take effect`` () =
             use gw = openGW()
@@ -154,11 +111,6 @@ module GameWindow =
         let ``Location equals Bounds.Min`` () =
             use gw = openGW()
             Assert.Equal(gw.Location, gw.Bounds.Min)
-
-        [<Fact>]
-        let ``X and Y equals Location`` () =
-            use gw = openGW()
-            Assert.Equal(Vector2i(gw.X, gw.Y), gw.Location)
 
         [<Fact(Skip = "Initial position not correct on some systems.")>]
         let ``ClientRectangle.Location is zero`` () =
