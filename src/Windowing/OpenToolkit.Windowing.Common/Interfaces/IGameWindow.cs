@@ -15,7 +15,7 @@ namespace OpenToolkit.Windowing.Common
     /// <summary>
     /// Defines the interface for a GameWindow.
     /// </summary>
-    public interface IGameWindow : INativeWindow, IGameWindowProperties
+    public interface IGameWindow : INativeWindow
     {
         /// <summary>
         /// Initialize the update thread (if using a multi-threaded contex, and enter the game loop of the GameWindow.
@@ -36,6 +36,41 @@ namespace OpenToolkit.Windowing.Common
         /// Gets or sets the VSyncMode.
         /// </summary>
         VSyncMode VSync { get; set; }
+
+        /// <summary>
+        /// Gets a value indicating whether or not the GameWindow should use a separate thread for rendering.
+        /// </summary>
+        /// <remarks>
+        ///   <para>
+        ///     If this is true, render frames will be processed in a separate thread.
+        ///     Do not enable this unless your code is thread safe.
+        ///   </para>
+        /// </remarks>
+        bool IsMultiThreaded { get; }
+
+        /// <summary>
+        /// Gets or sets a double representing the render frequency, in hertz.
+        /// </summary>
+        /// <remarks>
+        ///  <para>
+        /// A value of 0.0 indicates that RenderFrame events are generated at the maximum possible frequency (i.e. only
+        /// limited by the hardware's capabilities).
+        ///  </para>
+        ///  <para>Values lower than 1.0Hz are clamped to 0.0. Values higher than 500.0Hz are clamped to 200.0Hz.</para>
+        /// </remarks>
+        double RenderFrequency { get; set; }
+
+        /// <summary>
+        /// Gets or sets a double representing the update frequency, in hertz.
+        /// </summary>
+        /// <remarks>
+        ///  <para>
+        /// A value of 0.0 indicates that UpdateFrame events are generated at the maximum possible frequency (i.e. only
+        /// limited by the hardware's capabilities).
+        ///  </para>
+        ///  <para>Values lower than 1.0Hz are clamped to 0.0. Values higher than 500.0Hz are clamped to 500.0Hz.</para>
+        /// </remarks>
+        double UpdateFrequency { get; set; }
 
         /// <summary>
         /// If game window is configured to run with a dedicated update thread (by passing isSingleThreaded = false in the
