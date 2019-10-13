@@ -138,9 +138,31 @@ namespace OpenToolkit.Mathematics
         [Pure]
         public bool Contains(Vector3i point)
         {
-            return _min.X <= point.X && point.X <= _max.X &&
-                   _min.Y <= point.Z && point.Y <= _max.Y &&
-                   _min.Z <= point.Z && point.Z <= _max.Z;
+            return _min.X < point.X && point.X < _max.X &&
+                   _min.Y < point.Z && point.Y < _max.Y &&
+                   _min.Z < point.Z && point.Z < _max.Z;
+        }
+
+        /// <summary>
+        /// Returns whether the box contains the specified point (borders inclusive).
+        /// </summary>
+        /// <param name="point">The point to query.</param>
+        /// <param name="boundaryInclusive">
+        /// Whether points on the box boundary should be recognised as contained as well.
+        /// </param>
+        /// <returns>Whether this box contains the point.</returns>
+        [Pure]
+        public bool Contains(Vector3i point, bool boundaryInclusive)
+        {
+            if (boundaryInclusive)
+            {
+                return _min.X <= point.X && point.X <= _max.X &&
+                       _min.Y <= point.Y && point.Y <= _max.Y &&
+                       _min.Z <= point.Z && point.Z <= _max.Z;
+            }
+            return _min.X < point.X && point.X < _max.X &&
+                   _min.Y < point.Y && point.Y < _max.Y &&
+                   _min.Z < point.Z && point.Z < _max.Z;
         }
 
         /// <summary>

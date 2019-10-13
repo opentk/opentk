@@ -21,6 +21,7 @@
     
     <ItemGroup>
       <PackageReference Include="opentoolkit.redist.glfw" Version="3.3.0-pre20190419183326" />
+      <PackageReference Include="System.Memory" Version="4.5.1" />
     </ItemGroup>
 
     <Import Project="..\..\..\props\common.props" />

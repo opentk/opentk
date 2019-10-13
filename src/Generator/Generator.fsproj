@@ -1,0 +1,29 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="Util.fs" />
+    <Compile Include="Types.fs" />
+    <Compile Include="Constants.fs" />
+    <Compile Include="Parsing.fs" />
+    <Compile Include="TypeMapping.fs" />
+    <Compile Include="Formatting.fs" />
+    <Compile Include="OverloadGeneration.fs" />
+    <Compile Include="Aggregator.fs" />
+    <Compile Include="Program.fs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CommandLineParser.FSharp" Version="2.6.0" />
+    <PackageReference Include="FSharp.Core" Version="4.6" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SpecificationOpenGL\SpecificationOpenGL.fsproj" />
+  </ItemGroup>
+
+</Project>

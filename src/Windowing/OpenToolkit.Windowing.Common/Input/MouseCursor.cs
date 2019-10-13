@@ -19,7 +19,32 @@ namespace OpenToolkit.Windowing.Common.Input
         /// <summary>
         /// Gets the default mouse cursor for this platform.
         /// </summary>
-        public static MouseCursor Default { get; } = new MouseCursor();
+        public static MouseCursor Default { get; } = new MouseCursor(StandardShape.Arrow);
+
+        /// <summary>
+        /// Gets the default I beam cursor for this platform.
+        /// </summary>
+        public static MouseCursor IBeam { get; } = new MouseCursor(StandardShape.IBeam);
+
+        /// <summary>
+        /// Gets the default crosshair cursor for this platform.
+        /// </summary>
+        public static MouseCursor Crosshair { get; } = new MouseCursor(StandardShape.Crosshair);
+
+        /// <summary>
+        /// Gets the default hand cursor for this platform.
+        /// </summary>
+        public static MouseCursor Hand { get; } = new MouseCursor(StandardShape.Hand);
+
+        /// <summary>
+        /// Gets the default vertical resize cursor for this platform.
+        /// </summary>
+        public static MouseCursor VResize { get; } = new MouseCursor(StandardShape.VResize);
+
+        /// <summary>
+        /// Gets the default horizontal cursor for this platform.
+        /// </summary>
+        public static MouseCursor HResize { get; } = new MouseCursor(StandardShape.HResize);
 
         /// <summary>
         /// Gets an empty (invisible) mouse cursor.
@@ -27,8 +52,9 @@ namespace OpenToolkit.Windowing.Common.Input
         public static MouseCursor Empty { get; } = new MouseCursor(
             0, 0, 16, 16, new byte[16 * 16 * 4]);
 
-        private MouseCursor()
+        private MouseCursor(StandardShape shape)
         {
+            Shape = shape;
         }
 
         /// <summary>
@@ -64,6 +90,11 @@ namespace OpenToolkit.Windowing.Common.Input
         }
 
         /// <summary>
+        ///     Gets the shape for standard preset cursors.
+        /// </summary>
+        internal StandardShape Shape { get; }
+
+        /// <summary>
         /// Gets the x-coordinate of the cursor hotspot.
         /// </summary>
         public int X { get; }
@@ -72,5 +103,23 @@ namespace OpenToolkit.Windowing.Common.Input
         /// Gets the y-coordinate of the cursor hotspot.
         /// </summary>
         public int Y { get; }
+
+        /// <summary>
+        ///     Standard cursor shapes.
+        /// </summary>
+        internal enum StandardShape
+        {
+            /// <summary>
+            ///     Default standard shape for user-created cursors.
+            /// </summary>
+            CustomShape = 0,
+
+            Arrow,
+            IBeam,
+            Crosshair,
+            Hand,
+            HResize,
+            VResize,
+        }
     }
 }

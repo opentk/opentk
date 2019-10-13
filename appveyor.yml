@@ -4,12 +4,14 @@ version: 4.0.0.{build}
 
 init:
   - git config --global core.autocrlf input
-before_build:
-  - cmd: nuget restore -Verbosity quiet OpenTK.sln
 
+install:
+  # Install OpenGL
+  - "powershell ./install-opengl.ps1"
 configuration: Release
 
-build:
-  project: OpenTK.sln
-  parallel: true
-  verbosity: minimal
+build_script:
+  - build.cmd
+
+on_finish:
+  - "powershell ./install-opengl.ps1 uninstall"

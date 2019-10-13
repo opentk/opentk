@@ -195,40 +195,41 @@ namespace OpenToolkit.Mathematics
         {
             /*
             reference
-            http://en.wikipedia.org/wiki/Conversion_between_qernions_and_Euler_angles
-            http://www.euclideanspace.com/maths/geometry/rotations/conversions/qernionToEuler/
+            http://en.wikipedia.org/wiki/Conversion_between_quaternions_and_Euler_angles
+            http://www.euclideanspace.com/maths/geometry/rotations/conversions/quaternionToEuler/
             */
 
             var q = this;
 
-            q.Normalize();
-
-            float singularityTest = (q.X * q.Y) - (q.W * q.Z);
-            float yawY = 2f * ((q.W * q.X) + (q.Y * q.Z));
-            float yawX = 1f - (2f * ((q.Z * q.Z) + (q.X * q.X)));
+            Vector3 eulerAngles;
 
             // Threshold for the singularities found at the north/south poles.
             const float SINGULARITY_THRESHOLD = 0.4999995f;
 
-            Vector3 eulerAngles;
+            var sqw = q.W * q.W;
+            var sqx = q.X * q.X;
+            var sqy = q.Y * q.Y;
+            var sqz = q.Z * q.Z;
+            var unit = sqx + sqy + sqz + sqw; // if normalised is one, otherwise is correction factor
+            var singularityTest = (q.X * q.Z) + (q.W * q.Y);
 
-            if (singularityTest < -SINGULARITY_THRESHOLD)
+            if (singularityTest > SINGULARITY_THRESHOLD * unit)
             {
-                eulerAngles.Z = -MathHelper.PiOver2; // -90 degrees
-                eulerAngles.Y = (float)Math.Atan2(yawY, yawX);
-                eulerAngles.X = MathHelper.NormalizeRadians(-eulerAngles.Y - (2f * (float)Math.Atan2(q.Y, q.W)));
+                eulerAngles.Z = (float)(2 * Math.Atan2(q.X, q.W));
+                eulerAngles.Y = MathHelper.PiOver2;
+                eulerAngles.X = 0;
             }
-            else if (singularityTest > SINGULARITY_THRESHOLD)
+            else if (singularityTest < -SINGULARITY_THRESHOLD * unit)
             {
-                eulerAngles.Z = MathHelper.PiOver2; // 90 degrees
-                eulerAngles.Y = (float)Math.Atan2(yawY, yawX);
-                eulerAngles.X = MathHelper.NormalizeRadians(eulerAngles.Y - (2f * (float)Math.Atan2(q.Y, q.W)));
+                eulerAngles.Z = (float)(-2 * Math.Atan2(q.X, q.W));
+                eulerAngles.Y = -MathHelper.PiOver2;
+                eulerAngles.X = 0;
             }
             else
             {
-                eulerAngles.Z = (float)Math.Asin(2f * singularityTest);
-                eulerAngles.X = (float)Math.Atan2(yawY, yawX);
-                eulerAngles.Y = (float)Math.Atan2(-2f * ((q.W * q.Y) + (q.Z * q.X)), 1f - (2f * ((q.Y * q.Y) + (q.Z * q.Z))));
+                eulerAngles.Z = (float)Math.Atan2(2 * ((q.W * q.Z) - (q.X * q.Y)), sqw + sqx - sqy - sqz);
+                eulerAngles.Y = (float)Math.Asin(2 * singularityTest / unit);
+                eulerAngles.X = (float)Math.Atan2(2 * ((q.W * q.X) - (q.Y * q.Z)), sqw - sqx - sqy + sqz);
             }
 
             return eulerAngles;
@@ -257,15 +258,15 @@ namespace OpenToolkit.Mathematics
         }
 
         /// <summary>
-        /// Reverses the rotation angle of this Quaterniond.
+        /// Inverts this Quaternion.
         /// </summary>
         public void Invert()
         {
-            W = -W;
+            Invert(ref this, out this);
         }
 
         /// <summary>
-        /// Returns a copy of this Quaterniond with its rotation angle reversed.
+        /// Returns the inverse of this Quaternion.
         /// </summary>
         /// <returns>The inverted copy.</returns>
         public Quaternion Inverted()
