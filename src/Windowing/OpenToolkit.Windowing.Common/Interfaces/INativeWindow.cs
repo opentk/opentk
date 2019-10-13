@@ -294,6 +294,8 @@ namespace OpenToolkit.Windowing.Common
         /// be scaled correctly.
         /// </remarks>
         bool TryGetCurrentMonitorDpiRaw(out float horizontalDpi, out float verticalDpi);
+
+        /// <summary>
         /// Gets a <see cref="bool" /> indicating whether this key is currently down.
         /// </summary>
         /// <param name="key">The <see cref="Key" /> to check.</param>
