@@ -152,3 +152,41 @@ module GameWindow =
             gw.Size <- newSize
             TryProcessEvents(gw)
             Assert.Equal(newSize, gw.Size)
+//
+    module Dpi =
+        [<Fact>]
+        let ``Can get monitor dpi`` () =
+            use gw = openGW()
+            let (success, dpix, dpiy) = gw.TryGetCurrentMonitorDpi()
+            () |> ignore
+
+        [<Fact>]
+        let ``Can get monitor scale`` () =
+            use gw = openGW()
+            let (success, scalex, scaley) = gw.TryGetCurrentMonitorScale()
+            () |> ignore
+
+        [<Fact>]
+        let ``Can get monitor raw dpi`` () =
+            use gw = openGW()
+            let (success, dpix, dpiy) = gw.TryGetCurrentMonitorScale()
+            () |> ignore
+
+        let defaultDpi () =
+            if RuntimeInformation.IsOSPlatform(OSPlatform.OSX) then
+                72.0f
+            else
+                96.0f
+    
+        let fuzzyequals(a : float32, b : float32, epsilon : float32) =
+            -epsilon < a - b && a - b < epsilon
+
+        [<Fact>]
+        let ``Does scale and monitor dpi match`` () =
+            use gw = openGW()
+            let (dpisuccess, dpix, dpiy) = gw.TryGetCurrentMonitorDpi()
+            let (scalesuccess, scalex, scaley) = gw.TryGetCurrentMonitorScale()
+            Assert.Equal(dpisuccess, scalesuccess) // basically a fake xor.
+            if dpisuccess && scalesuccess then
+                Assert.True(fuzzyequals(dpix/scalex, defaultDpi(), 1.0f)) // precision is up to discussion.
+                Assert.True(fuzzyequals(dpiy/scaley, defaultDpi(), 1.0f))
