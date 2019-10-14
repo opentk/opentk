@@ -11,6 +11,45 @@ namespace OpenToolkit.Windowing.Desktop
     /// </summary>
     internal static class DpiCalculator
     {
+        private static Rectangle[] monitorClientAreas = null;
+        private static unsafe Monitor** monitors = null;
+        private static int monitorCount;
+
+        private static unsafe Rectangle[] MonitorClientAreas
+        {
+            get
+            {
+                Cache();
+
+                return monitorClientAreas;
+            }
+        }
+
+        private static bool isCacheValid = false; // To detect redundant calls.
+
+        private static unsafe void Cache()
+        {
+            // Don't handle redundant calls.
+            if (isCacheValid)
+            {
+                return;
+            }
+
+            monitors = GLFWProvider.GLFW.Value.GetMonitors(out monitorCount);
+            monitorClientAreas = GetMonitorClientAreas(monitors, monitorCount);
+
+            isCacheValid = true;
+        }
+
+        /// <summary>
+        /// Invalidates local monitor cache.
+        /// </summary>
+        /// <remarks>
+        /// This function should be called when the monitor configuration is changed to ensure
+        /// some such as <see cref="GetWindowMonitorByArea(Window*)"/> work correctly.
+        /// </remarks>
+        public static void InvalidateCache() => isCacheValid = false;
+
         /// <summary>
         /// Gets the current monitor scale.
         /// </summary>
@@ -171,14 +210,12 @@ namespace OpenToolkit.Windowing.Desktop
         /// <returns>The monitor which the window intersects with the most.</returns>
         public static unsafe Monitor* GetWindowMonitorByArea(Window* window)
         {
-            var monitors = GLFWProvider.GLFW.Value.GetMonitors(out int monitorCount);
+            var monitorAreas = MonitorClientAreas;
 
             if (monitorCount == 0)
             {
                 return null;
             }
-
-            var monitorAreas = GetMonitorClientAreas(monitors, monitorCount);
 
             Rectangle windowArea;
             {
