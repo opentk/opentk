@@ -156,7 +156,7 @@ namespace OpenToolkit.Windowing.Desktop
         /// </summary>
         /// <param name="window">The window calculate the monitor for.</param>
         /// <returns>The monitor which the window intersects with the most.</returns>
-        public static unsafe Monitor* GetWindowMonitorByArea(Window* window)
+        public static unsafe Monitor* GetMonitorFromWindow(Window* window)
         {
             if (!CheckCache())
             {

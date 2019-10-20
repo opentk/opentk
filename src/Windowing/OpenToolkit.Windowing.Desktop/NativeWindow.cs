@@ -1039,7 +1039,7 @@ namespace OpenToolkit.Windowing.Desktop
             GraphicsLibraryFramework.Monitor* value = GLFWProvider.GLFW.Value.GetWindowMonitor(WindowPtr);
             if (value == null)
             {
-                value = DpiCalculator.GetWindowMonitorByArea(WindowPtr);
+                value = DpiCalculator.GetMonitorFromWindow(WindowPtr);
             }
 
             return value;
