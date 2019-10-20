@@ -129,22 +129,6 @@ namespace OpenToolkit.Windowing.Desktop
             }
         }
 
-        private static unsafe Rectangle[] GetMonitorClientAreas(Monitor** monitors, int monitorCount)
-        {
-            Rectangle[] areas = new Rectangle[monitorCount];
-
-            VideoMode* videoMode;
-            int positionX, positionY;
-            for (int i = 0; i < monitorCount; i++)
-            {
-                videoMode = GLFWProvider.GLFW.Value.GetVideoMode(*(monitors + i));
-                GLFWProvider.GLFW.Value.GetMonitorPos(*(monitors + i), out positionX, out positionY);
-                areas[i] = new Rectangle(positionX, positionY, videoMode->Width, videoMode->Height);
-            }
-
-            return areas;
-        }
-
         private static int GetRectangleIntersectionArea(Rectangle a, Rectangle b)
         {
             var area = Rectangle.Intersect(a, b);
