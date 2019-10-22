@@ -178,7 +178,7 @@ namespace OpenToolkit.Windowing.Desktop
         {
             if (!_isCacheBuilt && GLFWProvider.IsOnMainThread)
             {
-                BuildMonitorChache();
+                BuildMonitorCache();
             }
 
             return _isCacheBuilt;
@@ -216,11 +216,11 @@ namespace OpenToolkit.Windowing.Desktop
         /// <summary>
         /// Builds the monitor cache (again if called before).
         /// </summary>
-        public static unsafe void BuildMonitorChache()
+        public static unsafe void BuildMonitorCache()
         {
             if (!GLFWProvider.IsOnMainThread)
             {
-                throw new InvalidOperationException("Only GLFW main thread can build the monitor chache.");
+                throw new InvalidOperationException("Only GLFW main thread can build the monitor cache.");
             }
 
             // The function needs exclusive rights to the list (and the index lookup), no other thread should read
