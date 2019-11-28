@@ -27,6 +27,7 @@ namespace OpenToolkit.Windowing.Desktop
         private static Dictionary<IntPtr, int> _dpiIndexLookup = new Dictionary<IntPtr, int>();
 
         private static bool _isCacheBuilt = false;
+        private static bool _isHookSet = false;
 
         /// <summary>
         /// Gets the current monitor scale.
@@ -174,11 +175,16 @@ namespace OpenToolkit.Windowing.Desktop
         /// Checks wheter the cache has been built or builds it if it can.
         /// </summary>
         /// <returns>Wether the current cache is valid or not.</returns>
-        public static bool CheckCache()
+        public static unsafe bool CheckCache()
         {
             if (!_isCacheBuilt && GLFWProvider.IsOnMainThread)
             {
                 BuildMonitorCache();
+            }
+
+            if (!_isHookSet && GLFWProvider.IsOnMainThread)
+            {
+                GLFWProvider.GLFW.Value.SetMonitorCallback(DpiMonitorCallback);
             }
 
             return _isCacheBuilt;
@@ -253,6 +259,13 @@ namespace OpenToolkit.Windowing.Desktop
             }
 
             _isCacheBuilt = true;
+        }
+
+        private static unsafe void DpiMonitorCallback(Monitor* monitor, ConnectedState state)
+        {
+            // Normally, adding or removing from the cache would be nice, but this breaks
+            // getting the info from an index, thus the cache must be built from scratch.
+            BuildMonitorCache();
         }
     }
 }
