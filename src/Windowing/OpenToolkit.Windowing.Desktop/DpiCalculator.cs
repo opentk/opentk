@@ -192,7 +192,15 @@ namespace OpenToolkit.Windowing.Desktop
         /// <returns>True when the object was retrieved from cache successfully.</returns>
         public static bool TryGetFromCache(int index, out DpiInfo info)
         {
-            info = _dpiInfos.ElementAtOrDefault(index);
+            if (CheckCache())
+            {
+                info = _dpiInfos.ElementAtOrDefault(index);
+            }
+            else
+            {
+                info = null;
+            }
+
             return info != null;
         }
 
