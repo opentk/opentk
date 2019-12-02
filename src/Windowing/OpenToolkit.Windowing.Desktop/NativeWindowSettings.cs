@@ -17,10 +17,9 @@ using Monitor = OpenToolkit.Windowing.Common.Monitor;
 namespace OpenToolkit.Windowing.Desktop
 {
     /// <summary>
-    /// Implementation of <see cref="INativeWindowProperties"/>.
     /// <see cref="NativeWindow"/> related settings.
     /// </summary>
-    public class NativeWindowSettings : INativeWindowProperties
+    public class NativeWindowSettings
     {
         /// <summary>
         /// Gets the default settings for a <see cref="NativeWindow"/>.
@@ -32,44 +31,28 @@ namespace OpenToolkit.Windowing.Desktop
         /// </summary>
         public NativeWindowSettings()
         {
-            IsEventDriven = false;
-
             unsafe
             {
                 CurrentMonitor = new Monitor((IntPtr)GLFWProvider.GLFW.Value.GetPrimaryMonitor());
             }
-
-            Title = "OpenTK Window";
-            IsFocused = true;
-            IsVisible = true;
-
-            WindowState = WindowState.Normal;
-            WindowBorder = WindowBorder.Resizable;
-
-            X = 0;
-            Y = 0;
-
-            Width = 640;
-            Height = 360;
-
-            API = ContextAPI.OpenGL;
-            Profile = ContextProfile.Core;
-            Flags = ContextFlags.Default;
-            APIVersion = new Version(3, 3);
-
-            IsFullscreen = false;
-
-            Exists = true;
         }
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Gets or sets the current <see cref="WindowIcon" /> for this window.
+        /// </summary>
+        /// <remarks>
+        /// <para>
+        /// This does nothing on macOS; on that platform, the icon is determined by the application bundle.
+        /// </para>
+        /// </remarks>
         public WindowIcon Icon { get; set; }
 
-        /// <inheritdoc />
-        public bool IsEventDriven { get; set; }
-
-        /// <inheritdoc />
-        public string ClipboardString { get; set; }
+        /// <summary>
+        /// Gets or sets a value indicating whether or not this window is event-driven.
+        /// An event-driven window will wait for events before updating/rendering. It is useful for non-game applications,
+        /// where the program only needs to do any processing after the user inputs something.
+        /// </summary>
+        public bool IsEventDriven { get; set; } = false;
 
         /// <summary>
         /// Gets or sets a value representing the current graphics API.
@@ -80,7 +63,7 @@ namespace OpenToolkit.Windowing.Desktop
         /// do not match.
         /// </para>
         /// </remarks>
-        public ContextAPI API { get; set; }
+        public ContextAPI API { get; set; } = ContextAPI.OpenGL;
 
         /// <summary>
         /// Gets or sets a value representing the current graphics API profile.
@@ -90,12 +73,12 @@ namespace OpenToolkit.Windowing.Desktop
         /// This only has an effect on OpenGL 3.2 and higher. On older versions, this setting does nothing.
         /// </para>
         /// </remarks>
-        public ContextProfile Profile { get; set; }
+        public ContextProfile Profile { get; set; } = ContextProfile.Core;
 
         /// <summary>
         /// Gets or sets a value representing the current graphics profile flags.
         /// </summary>
-        public ContextFlags Flags { get; set; }
+        public ContextFlags Flags { get; set; } = ContextFlags.Default;
 
         /// <summary>
         /// Gets or sets a value representing the current version of the graphics API.
@@ -118,101 +101,54 @@ namespace OpenToolkit.Windowing.Desktop
         /// as the versioning of OpenGL and OpenGL ES do not match.
         /// </para>
         /// </remarks>
-        public Version APIVersion { get; set; }
+        public Version APIVersion { get; set; } = new Version(3, 3);
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Gets or sets the monitor to open the new window on.
+        /// </summary>
         public Monitor CurrentMonitor { get; set; }
 
-        /// <inheritdoc />
-        public string Title { get; set; }
+        /// <summary>
+        /// Gets or sets the title of the new window.
+        /// </summary>
+        public string Title { get; set; } = "OpenTK Window";
 
-        /// <inheritdoc />
-        public bool IsFocused { get; set; }
+        /// <summary>
+        /// Gets or sets a value indicating whether this window should start with focus when created.
+        /// </summary>
+        public bool StartFocused { get; set; } = true;
 
-        /// <inheritdoc />
-        public bool IsVisible { get; set; }
+        /// <summary>
+        /// Gets or sets a value indicating whether the new window should start visible.
+        /// </summary>
+        public bool StartVisible { get; set; } = true;
 
-        /// <inheritdoc />
-        public bool Exists { get; }
+        /// <summary>
+        ///     Gets or sets the initial value for <see cref="INativeWindow.WindowState"/> on the new window.
+        /// </summary>
+        public WindowState WindowState { get; set; } = WindowState.Normal;
 
-        /// <inheritdoc />
-        public WindowState WindowState { get; set; }
+        /// <summary>
+        ///     Gets or sets the initial value for <see cref="INativeWindow.WindowBorder"/> on the new window.
+        /// </summary>
+        public WindowBorder WindowBorder { get; set; } = WindowBorder.Resizable;
 
-        /// <inheritdoc />
-        public WindowBorder WindowBorder { get; set; }
+        /// <summary>
+        /// Gets or sets the location to open the new window on.
+        /// </summary>
+        /// <remarks>
+        /// If null, the window will be placed by the OS.
+        /// </remarks>
+        public Vector2i? Location { get; set; }
 
-        /// <inheritdoc />
-        public Box2i Bounds
-        {
-            get => new Box2i(Location, Location + Size);
-            set
-            {
-                _location = value.Min;
-                _size = value.Size;
-            }
-        }
+        /// <summary>
+        ///     Gets or sets the initial size of the contents of the window.
+        /// </summary>
+        public Vector2i Size { get; set; } = new Vector2i(640, 360);
 
-        private Vector2i _location;
-
-        /// <inheritdoc />
-        public Vector2i Location
-        {
-            get => _location;
-            set => _location = value;
-        }
-
-        private Vector2i _size;
-
-        /// <inheritdoc />
-        public Vector2i Size
-        {
-            get => _size;
-            set => _size = value;
-        }
-
-        /// <inheritdoc />
-        public int X
-        {
-            get => Location.X;
-            set => _location.X = value;
-        }
-
-        /// <inheritdoc />
-        public int Y
-        {
-            get => Location.Y;
-            set => _location.Y = value;
-        }
-
-        /// <inheritdoc />
-        public int Width
-        {
-            get => Size.X;
-            set => _size.X = value;
-        }
-
-        /// <inheritdoc />
-        public int Height
-        {
-            get => Size.Y;
-            set => _size.Y = value;
-        }
-
-        /// <inheritdoc />
-        public Box2i ClientRectangle
-        {
-            get => new Box2i(Location, Location + Size);
-            set
-            {
-                Location = value.Min;
-                Size = value.Size;
-            }
-        }
-
-        /// <inheritdoc />
-        public Vector2i ClientSize { get; }
-
-        /// <inheritdoc />
-        public bool IsFullscreen { get; set; }
+        /// <summary>
+        /// Gets or sets a value indicating whether the window should start fullscreen.
+        /// </summary>
+        public bool IsFullscreen { get; set; } = false;
     }
 }

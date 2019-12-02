@@ -196,7 +196,7 @@ namespace OpenToolkit.GraphicsLibraryFramework
         /// </para>
         /// </remarks>
         /// <seealso cref="SetErrorCallback"/>
-        unsafe ErrorCode GetError(out char* description);
+        unsafe ErrorCode GetError(out byte* description);
 
         /// <summary>
         /// <para>

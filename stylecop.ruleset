@@ -154,7 +154,7 @@
     <!-- Documentation rules -->
     <Rule Id="SA1600" Action="Error" /> <!-- Elements must be documented -->
     <Rule Id="SA1601" Action="None" Intentional="true" /> <!-- Partial elements must be documented -->
-    <Rule Id="SA1602" Action="Error" /> <!-- Enumeration items must be documented -->
+    <Rule Id="SA1602" Action="None" /> <!-- Enumeration items must be documented -->
     <Rule Id="SA1604" Action="Error" /> <!-- Element documentation must have summary -->
     <Rule Id="SA1605" Action="Error" /> <!-- Partial element documentation must have summary -->
     <Rule Id="SA1606" Action="Error" /> <!-- Element documentation must have summary text -->

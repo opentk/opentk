@@ -9,15 +9,21 @@
 
 using System;
 using System.Threading;
+using OpenToolkit.GraphicsLibraryFramework;
 
-namespace OpenToolkit.GraphicsLibraryFramework
+namespace OpenToolkit.Windowing.Desktop
 {
     /// <summary>
     /// Singleton providing easy GLFW implementation access.
     /// </summary>
-    public static class GLFWProvider
+    internal static class GLFWProvider
     {
+        // NOTE: This assumption about "main thread" is flat wrong.
+        // We literally can't tell whether this is actually the main thread.
         private static Thread _mainThread;
+
+        private static GLFWCallbacks.ErrorCallback ErrorCallback { get; } =
+            (errorCode, description) => throw new GLFWException(description, errorCode);
 
         private static GLFW CreateGlfw()
         {
@@ -28,22 +34,19 @@ namespace OpenToolkit.GraphicsLibraryFramework
             }
             var glfw = GraphicsLibraryFramework.GLFW.GetAPI();
             glfw.Init();
-            glfw.SetErrorCallback(GraphicsLibraryFramework.GLFW.ErrorCallback);
+            glfw.SetErrorCallback(ErrorCallback);
             return glfw;
         }
 
         /// <summary>
         /// Gets a GLFW interface implementation lazily.
         /// </summary>
-        public static Lazy<GLFW> GLFW { get; internal set; } = new Lazy<GLFW>(CreateGlfw);
+        public static Lazy<GLFW> GLFW { get; private set; } = new Lazy<GLFW>(CreateGlfw);
 
         /// <summary>
         /// Gets a value indicating whether the <see cref="Thread.CurrentThread"/> is the same as the GLFW main thread.
         /// </summary>
-        public static bool IsOnMainThread
-        {
-            get => GLFW.Value != null && _mainThread == Thread.CurrentThread;
-        }
+        public static bool IsOnMainThread => GLFW.Value != null && _mainThread == Thread.CurrentThread;
 
         /// <summary>
         /// Unloads the loaded <see cref="GLFW"/> interface implementation.
