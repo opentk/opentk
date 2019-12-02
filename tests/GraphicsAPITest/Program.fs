@@ -1,9 +1,8 @@
 ﻿namespace OpenToolkit.Tests
 
 open System
-open System.Collections.Generic
+open System.IO
 open System.Reflection
-open System.Runtime.InteropServices
 
 /// This module is responsible for comparing and checking the API surface difference between 3.x and 4.x.
 ///
@@ -77,14 +76,22 @@ module GraphicsAPITest =
                     
     [<EntryPoint>]
     let main _ =
-            
+        
+        
+        printfn "---------------------"
+        printfn "Legacy API Diff Tool"
+        printfn "---------------------"
+
+        
+        use writer = new StreamWriter("difflog.txt")
+        let wprintfn x = Printf.kprintf (writer.WriteLine) x
+        
         let legacyApi = findGraphicsMethods typeof<OpenTK.Graphics.OpenGL4.GL> |> Array.sortBy (fun m -> m.Name)
         let newApi = findGraphicsMethods typeof<OpenToolkit.Graphics.GL46.GL>
         
         let findBestMatch (m:MethodInfo) =
             let diffToScore o =
                 let diffs = diff m o
-                let score = diffs |> List.sumBy scoreDiff
                 { Legacy = m
                   Nearest = o
                   Diff = diffs
@@ -103,14 +110,19 @@ module GraphicsAPITest =
         
         for m in matches do
             if m.Score > 0.0f then
-                printfn ""
-                eprintfn "Method %A is missing in new API." m.Legacy
+                wprintfn ""
+                wprintfn "Method %A is missing in new API." m.Legacy
                 if m.Score < 1000.0f then
-                    printfn "Nearest match is %A" m.Nearest
-                    printfn "Diff:"
+                    wprintfn "Nearest match is %A" m.Nearest
+                    wprintfn "Diff:"
                     for d in m.Diff do
-                        printfn "\t%A" d
+                        wprintfn "\t%A" d
                     
+        let matches, notMatches = matches |> Array.partition (fun m -> m.Score <= 0.0f)
+        writer.Flush()
+        printfn "match count: %d" (matches.Length)
+        printfn "mismatch count: %d" (notMatches.Length)
+        printfn "Log location: %s" (Path.GetFullPath "difflog.txt") 
         printfn "Press enter to exit..."
         Console.ReadLine() |> ignore
         0
