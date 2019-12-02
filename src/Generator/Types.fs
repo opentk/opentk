@@ -1,5 +1,10 @@
 module Types
 
+open FSharp.Data
+
+type OpenGL_Specification = XmlProvider<"./../gl.xml">
+
+
 /// A named enum from the specification.
 /// This corresponds to a single case within an enum in C#.
 type GLEnum =
