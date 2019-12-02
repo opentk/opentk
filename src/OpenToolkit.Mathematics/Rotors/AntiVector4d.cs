@@ -7,7 +7,6 @@ namespace OpenToolkit.Mathematics.Rotors
     /// <summary>
     /// A four dimentional anti-vector i.e a plane.
     /// </summary>
-    /// <remarks>Should maybe be called AntiVector4d.</remarks>
     public struct AntiVector4d
     {
         public float NotX;
@@ -60,9 +59,9 @@ namespace OpenToolkit.Mathematics.Rotors
         {
             float mag = av.Magnitude;
             result.NotX = av.NotX / mag;
-            result.NotX = av.NotY / mag;
-            result.NotX = av.NotZ / mag;
-            result.NotX = av.NotW / mag;
+            result.NotY = av.NotY / mag;
+            result.NotZ = av.NotZ / mag;
+            result.NotW = av.NotW / mag;
         }
 
         /// <summary>

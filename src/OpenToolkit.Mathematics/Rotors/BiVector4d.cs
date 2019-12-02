@@ -53,6 +53,7 @@ namespace OpenToolkit.Mathematics.Rotors
 
         /// <summary>
         /// Creates a AntiVector4 (plane) from a BiVector4 (line) and a Vector4 (point).
+        /// Assuming there is no linear dependancy between the line and the point.
         /// </summary>
         /// <param name="bv">The BiVector4 (line).</param>
         /// <param name="v">The Vector4 (point).</param>

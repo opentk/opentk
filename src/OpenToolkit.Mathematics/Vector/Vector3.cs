@@ -20,13 +20,13 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
  */
 
-using OpenToolkit.Mathematics.Rotors;
 using System;
 using System.Diagnostics.Contracts;
 using System.Globalization;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Xml.Serialization;
+using OpenToolkit.Mathematics.Rotors;
 
 namespace OpenToolkit.Mathematics
 {
@@ -705,10 +705,12 @@ namespace OpenToolkit.Mathematics
         }
 
         /// <summary>
-        /// 
+        /// The wedge product of two vectors.
+        /// This creates a bivector that represents the plane formed by these vectors.
         /// </summary>
-        /// <param name="v1"></param>
-        /// <param name="v2"></param>
+        /// <param name="v1">The first vector.</param>
+        /// <param name="v2">The second vector.</param>
+        /// <returns>The resulting bivector.</returns>
         public static BiVector3d Wedge(Vector3 v1, Vector3 v2)
         {
             Wedge(v1, v2, out BiVector3d bv);
@@ -716,11 +718,12 @@ namespace OpenToolkit.Mathematics
         }
 
         /// <summary>
-        /// 
+        /// The wedge product of two vectors.
+        /// This creates a bivector that represents the plane formed by these vectors.
         /// </summary>
-        /// <param name="v1"></param>
-        /// <param name="v2"></param>
-        /// <param name="bv"></param>
+        /// <param name="v1">The first vector.</param>
+        /// <param name="v2">The second vector.</param>
+        /// <param name="bv">The resulting bivector.</param>
         public static void Wedge(in Vector3 v1, in Vector3 v2, out BiVector3d bv)
         {
             bv.NotX = (v1.Y * v2.Z) - (v1.Z * v2.Y);

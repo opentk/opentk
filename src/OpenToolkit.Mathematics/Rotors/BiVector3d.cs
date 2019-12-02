@@ -1,16 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using System.Text;
 
 namespace OpenToolkit.Mathematics.Rotors
 {
-    // This will not ensure type safety :'(
-    using AntiScalar3d = float;
-
     /// <summary>
-    /// 
+    /// A three dimentional bivector i.e. a plane at origin.
+    /// Could also be though of as the normal to a plane.
     /// </summary>
-    public struct BiVector3d
+    public struct BiVector3d : IEquatable<BiVector3d>
     {
         /// <summary>
         /// 
@@ -53,6 +52,17 @@ namespace OpenToolkit.Mathematics.Rotors
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="v"></param>
+        public BiVector3d(Vector3 v)
+        {
+            NotX = v.X;
+            NotY = v.Y;
+            NotZ = v.Z;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <param name="nx"></param>
         /// <param name="ny"></param>
         /// <param name="nz"></param>
@@ -64,12 +74,12 @@ namespace OpenToolkit.Mathematics.Rotors
         }
 
         /// <summary>
-        /// 
+        /// Gets the square magnitude (length) of this bivector.
         /// </summary>
         public float MagnitudeSquared => (NotX * NotX) + (NotY * NotY) + (NotZ * NotZ);
 
         /// <summary>
-        /// 
+        /// Gets the magnitude (length) of this bivector.
         /// </summary>
         public float Magnitude => (float)Math.Sqrt(MagnitudeSquared);
 
@@ -80,7 +90,7 @@ namespace OpenToolkit.Mathematics.Rotors
         /// <param name="v"></param>
         /// <returns></returns>
         /// <remarks>Returns a AntiScalar3D which is a one component vector (i.e a float) that flips sign when reflected.</remarks>
-        public static AntiScalar3d Wedge(BiVector3d bv, Vector3 v)
+        public static float Wedge(BiVector3d bv, Vector3 v)
         {
             return (bv.NotX * v.X) + (bv.NotY * v.Y) + (bv.NotZ * v.Z);
         }
@@ -130,5 +140,34 @@ namespace OpenToolkit.Mathematics.Rotors
             Normalize(this, out BiVector3d bv);
             return bv;
         }
+
+        /// <inheritdoc/>
+        public bool Equals(BiVector3d other)
+        {
+            return NotX == other.NotX && NotY == other.NotY && NotZ == other.NotZ;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="a"></param>
+        /// <param name="b"></param>
+        /// <returns></returns>
+        public static bool operator ==(in BiVector3d a, in BiVector3d b) => a.Equals(b);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="a"></param>
+        /// <param name="b"></param>
+        /// <returns></returns>
+        public static bool operator !=(in BiVector3d a, in BiVector3d b) => !a.Equals(b);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="v"></param>
+        [Pure]
+        public static explicit operator BiVector3d(in Vector3 v) => new BiVector3d(v);
     }
 }
