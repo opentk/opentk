@@ -262,6 +262,40 @@ namespace OpenToolkit.Windowing.Common
         Vector2i PointToScreen(Vector2i point);
 
         /// <summary>
+        /// Gets the current monitor scale.
+        /// </summary>
+        /// <param name="horizontalScale">Horizontal scale.</param>
+        /// <param name="verticalScale">Vertical scale.</param>
+        /// <returns><c>true</c>, if current monitor scale was gotten correctly, <c>false</c> otherwise.</returns>
+        bool TryGetCurrentMonitorScale(out float horizontalScale, out float verticalScale);
+
+        /// <summary>
+        /// Gets the dpi of the current monitor.
+        /// </summary>
+        /// <param name="horizontalDpi">Horizontal dpi.</param>
+        /// <param name="verticalDpi">Vertical dpi.</param>
+        /// <returns><c>true</c>, if current monitor's dpi was gotten correctly, <c>false</c> otherwise.</returns>
+        /// <remarks>
+        /// This methods approximates the dpi of the monitor by multiplying
+        /// the monitor scale recieved from <see cref="TryGetCurrentMonitorScale(out float, out float)"/>
+        /// by each platforms respective default dpi (72 for macOS and 96 for other systems).
+        /// </remarks>
+        bool TryGetCurrentMonitorDpi(out float horizontalDpi, out float verticalDpi);
+
+        /// <summary>
+        /// Gets the raw dpi of current monitor.
+        /// </summary>
+        /// <param name="horizontalDpi">Horizontal dpi.</param>
+        /// <param name="verticalDpi">Vertical dpi.</param>
+        /// <returns><c>true</c>, if current monitor's raw dpi was gotten correctly, <c>false</c> otherwise.</returns>
+        /// <remarks>
+        /// This method calculates dpi by retrieving monitor dimensions and resolution.
+        /// However on certain platforms (such as Windows) these values may not
+        /// be scaled correctly.
+        /// </remarks>
+        bool TryGetCurrentMonitorDpiRaw(out float horizontalDpi, out float verticalDpi);
+
+        /// <summary>
         /// Gets a <see cref="bool" /> indicating whether this key is currently down.
         /// </summary>
         /// <param name="key">The <see cref="Key" /> to check.</param>

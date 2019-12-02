@@ -1028,6 +1028,47 @@ namespace OpenToolkit.Windowing.Desktop
             return !_mouseState.IsButtonDown(button) && LastMouseState.IsButtonDown(button);
         }
 
+        private unsafe GraphicsLibraryFramework.Monitor* GetDpiMonitor()
+        {
+            /*
+             * According to the GLFW documentation, glfwGetWindowMonitor will return a value only
+             * when the window is fullscreen.
+             *
+             * If the window is not fullscreen, find the monitor manually.
+             */
+            GraphicsLibraryFramework.Monitor* value = GLFWProvider.GLFW.Value.GetWindowMonitor(WindowPtr);
+            if (value == null)
+            {
+                value = DpiCalculator.GetMonitorFromWindow(WindowPtr);
+            }
+
+            return value;
+        }
+
+        /// <inheritdoc />
+        public unsafe bool TryGetCurrentMonitorScale(out float horizontalScale, out float verticalScale) =>
+            DpiCalculator.TryGetMonitorScale(
+                GetDpiMonitor(),
+                out horizontalScale,
+                out verticalScale
+            );
+
+        /// <inheritdoc />
+        public unsafe bool TryGetCurrentMonitorDpi(out float horizontalDpi, out float verticalDpi) =>
+            DpiCalculator.TryGetMonitorDpi(
+                GetDpiMonitor(),
+                out horizontalDpi,
+                out verticalDpi
+            );
+
+        /// <inheritdoc />
+        public unsafe bool TryGetCurrentMonitorDpiRaw(out float horizontalDpi, out float verticalDpi) =>
+            DpiCalculator.TryGetMonitorDpiRaw(
+                GetDpiMonitor(),
+                out horizontalDpi,
+                out verticalDpi
+            );
+
         /// <summary>
         /// Raises the <see cref="Move"/> event.
         /// </summary>
