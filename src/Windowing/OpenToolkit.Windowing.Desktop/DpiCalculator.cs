@@ -237,26 +237,21 @@ namespace OpenToolkit.Windowing.Desktop
                 throw new InvalidOperationException("Only GLFW main thread can build the monitor cache.");
             }
 
-            // The function needs exclusive rights to the list (and the index lookup), no other thread should read
-            // from or write to the list.
-            // A separate object is not used because it would not inhibit other threads from reading the list
-            // without the performance cost of locking the separate object to read.
-            lock (_dpiInfos)
-            lock (_dpiIndexLookup)
+            var newInfos = new List<DpiInfo>();
+            var newIndexLookup = new Dictionary<IntPtr, int>();
+
+            var monitors = GLFWProvider.GLFW.Value.GetMonitors(out int monitorCount);
+
+            for (int i = 0; i < monitorCount; i++)
             {
-                _dpiInfos.Clear(); // Just in case it was built before.
-                _dpiIndexLookup.Clear();
+                var monitor = *(monitors + i);
 
-                var monitors = GLFWProvider.GLFW.Value.GetMonitors(out int monitorCount);
-
-                for (int i = 0; i < monitorCount; i++)
-                {
-                    var monitor = *(monitors + i);
-
-                    _dpiInfos.Add(new DpiInfo(monitor));
-                    _dpiIndexLookup.Add((IntPtr)monitor, i);
-                }
+                newInfos.Add(new DpiInfo(monitor));
+                newIndexLookup.Add((IntPtr)monitor, i);
             }
+
+            _dpiInfos = newInfos;
+            _dpiIndexLookup = newIndexLookup;
 
             _isCacheBuilt = true;
         }
