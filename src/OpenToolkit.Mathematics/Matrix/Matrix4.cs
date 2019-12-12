@@ -23,7 +23,6 @@ SOFTWARE.
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 namespace OpenToolkit.Mathematics
@@ -1380,7 +1379,6 @@ namespace OpenToolkit.Mathematics
         /// <param name="left">The left operand of the multiplication.</param>
         /// <param name="right">The right operand of the multiplication.</param>
         /// <param name="result">A new instance that is the result of the multiplication.</param>
-        [MethodImpl((MethodImplOptions)512 | MethodImplOptions.NoInlining)]
         public static void Mult(ref Matrix4 left, ref Matrix4 right, out Matrix4 result)
         {
             float leftM11 = left.Row0.X;
