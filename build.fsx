@@ -127,7 +127,7 @@ Target.create "UpdateSpec" (fun _ ->
 
 Target.create "UpdateBindings" (fun _ ->
     Trace.log " --- Updating bindings --- "
-    let framework = "netcoreapp22"
+    let framework = "netcoreapp31"
     let projFile = "src/Generator/Generator.fsproj"
 
     let args =
@@ -164,7 +164,7 @@ Target.create "Build" <| fun _ ->
 Target.create "BuildTest" <| fun _ ->
     !!"tests/**/*.??proj"
     |> Seq.map(fun proj ->
-        DotNet.runWithDefaultOptions "netcoreapp2.2" proj "" |> string)
+        DotNet.runWithDefaultOptions "netcoreapp3.1" proj "" |> string)
     |> Trace.logItems "TestBuild-Output: "
 
 // Copies binaries from default VS location to expected bin folder
