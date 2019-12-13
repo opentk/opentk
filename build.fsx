@@ -1,4 +1,6 @@
 open Fake.Core
+open Fake.Core
+open Fake.DotNet
 open System
 open Fake.DotNet.Testing
 
@@ -156,10 +158,12 @@ Target.create "AssemblyInfo" (fun _ ->
     // see https://docs.microsoft.com/en-us/visualstudio/msbuild/customize-your-build?view=vs-2019#directorybuildprops-and-directorybuildtargets
     Trace.traceError "Unimplemented.")
 
+let noBindProp a =
+    DotNet.Options.withCustomParams (Some "/p:DontGenBindings=true") (dotnetSimple a)
 
 Target.create "Build" <| fun _ ->
     releaseProjects
-    |> Seq.iter(DotNet.build dotnetSimple)
+    |> Seq.iter(DotNet.build noBindProp)
 
 Target.create "BuildTest" <| fun _ ->
     !!"tests/**/*.??proj"
@@ -198,8 +202,9 @@ Target.create "RunTests" (fun _ ->
         DotNet.test (setDotNetOptions projectDirectory >> dotnetSimple) ""))
 
 Target.create "CreateNuGetPackage" (fun _ ->
-    let optsFn options = { options with DotNet.PackOptions.OutputPath = (Some "Bin") }
-    releaseProjects |> Seq.iter (DotNet.pack optsFn))
+    let optsFn options = { options with DotNet.PackOptions.OutputPath = (Some "bin") }
+    let disableBuild options = { (optsFn options) with DotNet.PackOptions.NoBuild = true }
+    releaseProjects |> Seq.iter (DotNet.pack disableBuild))
 
 // ---------
 // Release Targets
@@ -254,7 +259,7 @@ open Fake.Core.TargetOperators
   ==> "UpdateSpec"
   ==> "UpdateBindings"
   ==> "Build"
-  ==> "CopyBinaries"
+//  ==> "CopyBinaries" // Disabled for now, it isn't necessary and doesn't work.
   ==> "RunTests"
   ==> "All"
   ==> "CreateNuGetPackage"
