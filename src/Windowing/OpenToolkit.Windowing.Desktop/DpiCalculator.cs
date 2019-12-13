@@ -151,8 +151,8 @@ namespace OpenToolkit.Windowing.Desktop
             Rectangle windowArea;
             {
                 int windowX, windowY, windowWidth, windowHeight;
-                GLFWProvider.GLFW.Value.GetWindowPos(window, out windowX, out windowY);
-                GLFWProvider.GLFW.Value.GetWindowSize(window, out windowWidth, out windowHeight);
+                GLFW.GetWindowPos(window, out windowX, out windowY);
+                GLFW.GetWindowSize(window, out windowWidth, out windowHeight);
                 windowArea = new Rectangle(windowX, windowY, windowWidth, windowHeight);
             }
 
@@ -184,7 +184,7 @@ namespace OpenToolkit.Windowing.Desktop
 
             if (!_isHookSet && GLFWProvider.IsOnMainThread)
             {
-                GLFWProvider.GLFW.Value.SetMonitorCallback(DpiMonitorCallback);
+                GLFW.SetMonitorCallback(DpiMonitorCallback);
             }
 
             return _isCacheBuilt;
@@ -240,7 +240,7 @@ namespace OpenToolkit.Windowing.Desktop
             var newInfos = new List<DpiInfo>();
             var newIndexLookup = new Dictionary<IntPtr, int>();
 
-            var monitors = GLFWProvider.GLFW.Value.GetMonitors(out int monitorCount);
+            var monitors = GLFW.GetMonitors(out int monitorCount);
 
             for (int i = 0; i < monitorCount; i++)
             {

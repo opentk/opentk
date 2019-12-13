@@ -1013,7 +1013,7 @@ namespace OpenToolkit.Windowing.Desktop
              *
              * If the window is not fullscreen, find the monitor manually.
              */
-            GraphicsLibraryFramework.Monitor* value = GLFWProvider.GLFW.Value.GetWindowMonitor(WindowPtr);
+            GraphicsLibraryFramework.Monitor* value = GLFW.GetWindowMonitor(WindowPtr);
             if (value == null)
             {
                 value = DpiCalculator.GetMonitorFromWindow(WindowPtr);

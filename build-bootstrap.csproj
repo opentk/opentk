@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <!-- Add DotnetCliToolTargetFramework, see https://github.com/fsharp/FAKE/issues/2097 -->
-    <DotnetCliToolTargetFramework>netcoreapp2.2</DotnetCliToolTargetFramework>
+    <DotnetCliToolTargetFramework>netcoreapp3.1</DotnetCliToolTargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
