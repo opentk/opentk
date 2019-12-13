@@ -120,17 +120,12 @@ namespace OpenToolkit.Windowing.Desktop
         }
 
         /// <summary>
-        /// Gets GLFW for this thread.
-        /// </summary>
-        private GLFW GetGLFW() => GLFWProvider.GLFW.Value;
-
-        /// <summary>
         /// Queries GLFW to get the client area of the monitor.
         /// </summary>
         private unsafe void GetClientArea()
         {
-            GetGLFW().GetMonitorPos(_handle, out int x, out int y);
-            var videoMode = GetGLFW().GetVideoMode(_handle);
+            GLFW.GetMonitorPos(_handle, out int x, out int y);
+            var videoMode = GLFW.GetVideoMode(_handle);
 
             ClientArea = new Rectangle(x, y, videoMode->Width, videoMode->Height);
         }
@@ -140,7 +135,7 @@ namespace OpenToolkit.Windowing.Desktop
         /// </summary>
         private void GetPhysicalSize()
         {
-            GetGLFW().GetMonitorPhysicalSize(_handle, out int width, out int height);
+            GLFW.GetMonitorPhysicalSize(_handle, out int width, out int height);
 
             PhysicalWidth = width;
             PhysicalHeight = height;
@@ -151,7 +146,7 @@ namespace OpenToolkit.Windowing.Desktop
         /// </summary>
         private void GetScale()
         {
-            GetGLFW().GetMonitorContentScale(_handle, out float horizontalScale, out float verticalScale);
+            GLFW.GetMonitorContentScale(_handle, out float horizontalScale, out float verticalScale);
 
             HorizontalScale = horizontalScale;
             VerticalScale = verticalScale;
