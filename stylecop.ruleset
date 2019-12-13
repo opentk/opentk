@@ -96,18 +96,18 @@
     <Rule Id="SA1217" Action="Error" /> <!-- Using static directives must be ordered alphabetically -->
 
     <!-- Naming rules -->
-    <Rule Id="SA1300" Action="Error" /> <!-- Element must begin with upper-case letter -->
+    <Rule Id="SA1300" Action="None" /> <!-- Element must begin with upper-case letter -->
     <Rule Id="SA1302" Action="Error" /> <!-- Interface names must begin with I -->
     <Rule Id="SA1303" Action="Error" /> <!-- Const field names must begin with upper-case letter -->
     <Rule Id="SA1304" Action="Error" /> <!-- Non-private readonly fields must begin with upper-case letter -->
-    <Rule Id="SA1305" Action="Error" /> <!-- Field names must not use Hungarian notation -->
+    <Rule Id="SA1305" Action="None" /> <!-- Field names must not use Hungarian notation -->
     <Rule Id="SA1306" Action="None" Intentional="true" Reason="Field names should begin with upper-case latter"/> <!-- Field names must begin with lower-case letter -->
     <Rule Id="SA1307" Action="Error" /> <!-- Accessible fields must begin with upper-case letter -->
     <Rule Id="SA1308" Action="Error" /> <!-- Variable names must not be prefixed -->
     <Rule Id="SA1309" Action="None" /> <!-- Field names must not begin with underscore -->
     <Rule Id="SX1309" Action="Error" Intentional="true" /> <!-- Field names must begin with underscore -->
     <Rule Id="SX1309S" Action="None" Intentional="true" /> <!-- Static field names must begin with underscore -->
-    <Rule Id="SA1310" Action="Error" /> <!-- Field names must not contain underscore -->
+    <Rule Id="SA1310" Action="None" /> <!-- Field names must not contain underscore -->
     <Rule Id="SA1311" Action="Error" /> <!-- Static readonly fields must begin with upper-case letter -->
     <Rule Id="SA1312" Action="Error" /> <!-- Variable names must begin with lower-case letter -->
     <Rule Id="SA1313" Action="Error" /> <!-- Parameter names must begin with lower-case letter -->
@@ -152,7 +152,7 @@
     <Rule Id="SA1520" Action="Error" /> <!-- Use braces consistently -->
 
     <!-- Documentation rules -->
-    <Rule Id="SA1600" Action="Error" /> <!-- Elements must be documented -->
+    <Rule Id="SA1600" Action="None" /> <!-- Elements must be documented -->
     <Rule Id="SA1601" Action="None" Intentional="true" /> <!-- Partial elements must be documented -->
     <Rule Id="SA1602" Action="None" /> <!-- Enumeration items must be documented -->
     <Rule Id="SA1604" Action="Error" /> <!-- Element documentation must have summary -->

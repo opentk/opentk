@@ -10,6 +10,7 @@
 using System;
 using System.Diagnostics;
 using System.Threading;
+using OpenToolkit.GraphicsLibraryFramework;
 using OpenToolkit.Windowing.Common;
 
 namespace OpenToolkit.Windowing.Desktop
@@ -147,15 +148,15 @@ namespace OpenToolkit.Windowing.Desktop
                 switch (value)
                 {
                     case VSyncMode.On:
-                        Glfw.SwapInterval(1);
+                        GLFW.SwapInterval(1);
                         break;
 
                     case VSyncMode.Off:
-                        Glfw.SwapInterval(0);
+                        GLFW.SwapInterval(0);
                         break;
 
                     case VSyncMode.Adaptive:
-                        Glfw.SwapInterval(IsRunningSlowly ? 0 : 1);
+                        GLFW.SwapInterval(IsRunningSlowly ? 0 : 1);
                         break;
                     }
 
@@ -267,7 +268,7 @@ namespace OpenToolkit.Windowing.Desktop
             // Update VSync if set to adaptive
             if (_vSync == VSyncMode.Adaptive)
             {
-                Glfw.SwapInterval(IsRunningSlowly ? 0 : 1);
+                GLFW.SwapInterval(IsRunningSlowly ? 0 : 1);
             }
 
             _watchUpdate.Restart();
@@ -285,7 +286,7 @@ namespace OpenToolkit.Windowing.Desktop
         {
             unsafe
             {
-                Glfw.SwapBuffers(WindowPtr);
+                GLFW.SwapBuffers(WindowPtr);
             }
         }
 
