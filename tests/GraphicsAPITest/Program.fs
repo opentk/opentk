@@ -1,6 +1,7 @@
 ﻿namespace OpenToolkit.Tests
 
 open System
+open System
 open System.IO
 open System.Reflection
 
@@ -37,6 +38,32 @@ module GraphicsAPITest =
         | ParameterCount of int * int
         | ParameterType of idx:int * string * string
         | ParameterName of idx:int * string * string
+        
+        
+    let forcedEquivalenceTable =
+        let baseTypes = [|
+            typeof<UInt32>, typeof<Int32>
+            typeof<UIntPtr>, typeof<IntPtr>
+            |]
+            
+        let mkPointerTypes (a:Type,b:Type) =
+            [|
+                a, b
+                a.MakePointerType(), b.MakePointerType()
+                a.MakePointerType().MakePointerType(), b.MakePointerType().MakePointerType()
+                a.MakeByRefType(), b.MakeByRefType()
+            |]
+            
+            
+        baseTypes |> Array.collect mkPointerTypes
+            
+        
+    let areTypesEquivalent (a:Type) (b:Type) =
+        if a.Name = b.Name then
+            true
+        else
+            forcedEquivalenceTable |> Array.exists (fun (x,y) -> a = x && b = y || a = y && b = x)
+        
 
     let diff(a:MethodInfo) (b:MethodInfo) =
         [
@@ -51,7 +78,7 @@ module GraphicsAPITest =
                 for i = 0 to aps.Length - 1 do
                     let ap = aps.[i] 
                     let bp = bps.[i]
-                    if ap.ParameterType.Name <> bp.ParameterType.Name then
+                    if not (areTypesEquivalent ap.ParameterType bp.ParameterType) then
                         yield ParameterType(i, ap.ParameterType.Name, bp.ParameterType.Name)
                     
                     if ap.Name <> bp.Name then
