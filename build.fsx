@@ -82,8 +82,14 @@ let releaseProjects =
     -- "src/Generator/**"
     -- "src/SpecificationOpenGL/**"
 
-let testProjects =
+// Absolutely all test projects.
+let allTestProjects =
     !! "tests/**/*.??proj"
+
+// Test projects excluding integration tests (don't run on CI).
+let ciTestProjects =
+    allTestProjects
+    -- "tests/**/*.Integration.??proj"
 
 let nugetCommandRunnerPath =
     ".fake/build.fsx/packages/NuGet.CommandLine/tools/NuGet.exe" |> Fake.IO.Path.convertWindowsToCurrentPath
@@ -186,8 +192,7 @@ open Fake.Core
 open Fake.IO.Globbing.Operators
 open Fake.DotNet
 
-Target.create "RunTests" (fun _ ->
-    Trace.log " --- Testing projects in parallel --- "
+let runTests tests =
     let setDotNetOptions (projectDirectory: string): DotNet.TestOptions -> DotNet.TestOptions =
         fun (dotNetTestOptions: DotNet.TestOptions) ->
         { dotNetTestOptions with
@@ -195,11 +200,24 @@ Target.create "RunTests" (fun _ ->
                     Configuration = DotNet.BuildConfiguration.Release
                     ResultsDirectory = Some "./result.xml" }.WithRedirectOutput true
 
+    tests
+    |> Seq.iter (fun (fullCsProjName: string) ->
+            let projectDirectory = Path.GetDirectoryName(fullCsProjName)
+            DotNet.test (setDotNetOptions projectDirectory >> dotnetSimple) "")
+
+Target.create "RunCITests" (fun _ ->
+    Trace.log " --- Testing CI-safe projects in parallel --- "
+
+
     //Looks overkill for only one csproj but just add 2 or 3 csproj and this will scale a lot better
-    testProjects
-    |> Seq.iter (fun fullCsProjName ->
-        let projectDirectory = Path.GetDirectoryName(fullCsProjName)
-        DotNet.test (setDotNetOptions projectDirectory >> dotnetSimple) ""))
+    runTests ciTestProjects)
+
+Target.create "RunAllTests" (fun _ ->
+    Trace.log " --- Testing ALL projects in parallel --- "
+
+    //Looks overkill for only one csproj but just add 2 or 3 csproj and this will scale a lot better
+    runTests allTestProjects)
+
 
 Target.create "CreateNuGetPackage" (fun _ ->
     let optsFn options = { options with DotNet.PackOptions.OutputPath = (Some "bin") }
@@ -259,13 +277,15 @@ open Fake.Core.TargetOperators
   ==> "UpdateSpec"
   ==> "UpdateBindings"
   ==> "Build"
-//  ==> "CopyBinaries" // Disabled for now, it isn't necessary and doesn't work.
-  ==> "RunTests"
+  ==> "RunAllTests"
   ==> "All"
   ==> "CreateNuGetPackage"
   ==> "ReleaseOnNuGetGallery"
   ==> "ReleaseOnGithub"
   ==> "ReleaseOnAll"
+
+"Build"
+  ==> "RunCITests"
 
 //"Build"
 

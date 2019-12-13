@@ -11,4 +11,4 @@ env:
 install: [] # Travis tries to do NuGet restore, don't.
 
 script:
-- ./build.sh
+- ./build.sh -t RunCITests
