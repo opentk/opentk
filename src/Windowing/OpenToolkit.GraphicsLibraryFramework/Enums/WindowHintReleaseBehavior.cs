@@ -12,7 +12,7 @@ namespace OpenToolkit.GraphicsLibraryFramework
     /// <summary>
     /// Used to specify the release behavior used by the local context.
     /// </summary>
-    /// <seealso cref="IGLFW.WindowHint(WindowHintReleaseBehavior,ReleaseBehavior)"/>
+    /// <seealso cref="GLFW.WindowHint(WindowHintReleaseBehavior,ReleaseBehavior)"/>
     public enum WindowHintReleaseBehavior
     {
         /// <summary>
