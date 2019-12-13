@@ -20,7 +20,7 @@ namespace OpenToolkit.GraphicsLibraryFramework
         NoError = 0,
 
         /// <summary>
-        /// Called a function before calling <see cref="IGLFW.Init"/>. Initialize GLFW and then try again.
+        /// Called a function before calling <see cref="GLFW.Init"/>. Initialize GLFW and then try again.
         /// </summary>
         NotInitialized = 0x00010001,
 

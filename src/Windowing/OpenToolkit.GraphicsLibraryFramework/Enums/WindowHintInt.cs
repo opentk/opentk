@@ -12,7 +12,7 @@ namespace OpenToolkit.GraphicsLibraryFramework
     /// <summary>
     /// Context related attributes.
     /// </summary>
-    /// <seealso cref="IGLFW.WindowHint(WindowHintInt,int)"/>
+    /// <seealso cref="GLFW.WindowHint(WindowHintInt,int)"/>
     public enum WindowHintInt
     {
         /// <summary>
