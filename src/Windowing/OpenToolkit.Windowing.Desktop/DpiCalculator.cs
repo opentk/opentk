@@ -240,7 +240,7 @@ namespace OpenToolkit.Windowing.Desktop
             var newInfos = new List<DpiInfo>();
             var newIndexLookup = new Dictionary<IntPtr, int>();
 
-            var monitors = GLFW.GetMonitors(out int monitorCount);
+            var monitors = GLFW.GetMonitorsRaw(out int monitorCount);
 
             for (int i = 0; i < monitorCount; i++)
             {
