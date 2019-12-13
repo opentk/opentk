@@ -206,6 +206,9 @@ namespace OpenToolkit.GraphicsLibraryFramework
         public static extern int glfwExtensionSupported(byte* extensionName);
 
         [DllImport(LibraryName)]
+        public static extern IntPtr glfwGetProcAddress(byte* procame);
+
+        [DllImport(LibraryName)]
         public static extern Window* glfwCreateWindow(int width, int height, byte* title, Monitor* monitor, Window* share);
 
         [DllImport(LibraryName)]

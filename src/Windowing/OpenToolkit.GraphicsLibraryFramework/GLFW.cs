@@ -2824,6 +2824,75 @@ namespace OpenToolkit.GraphicsLibraryFramework
         }
 
         /// <summary>
+        /// This function returns the address of the specified OpenGL or OpenGL ES core or extension function, if it is supported by the current context.
+        /// A context must be current on the calling thread. Calling this function without a current context will cause a <see cref="ErrorCode.NoContext"/> error.
+        /// </summary>
+        /// <remarks>
+        /// <para>
+        /// This function does not apply to Vulkan. If you are rendering with Vulkan, see <see cref="GetInstanceProcAddress"/>, <c>vkGetInstanceProcAddr</c> and <c>vkGetDeviceProcAddr</c> instead.
+        /// </para>
+        /// <para>
+        /// Possible errors include <see cref="ErrorCode.NotInitialized"/>, <see cref="ErrorCode.NoContext"/> and <see cref="ErrorCode.PlatformError"/>.
+        /// </para>
+        /// <para>
+        /// The address of a given function is not guaranteed to be the same between contexts.
+        /// This function may return a non-<c>null</c> address despite the associated version or extension not being available. Always check the context version or extension string first.
+        /// </para>
+        /// <para>
+        /// The returned function pointer is valid until the context is destroyed or the library is terminated.
+        /// </para>
+        /// <para>
+        /// This function may be called from any thread.
+        /// </para>
+        /// </remarks>
+        /// <param name="procName">The name of the function.</param>
+        /// <returns>The address of the function, or <c>null</c> if an error occurred.</returns>
+        /// <seealso cref="ExtensionSupported" />
+        public static unsafe IntPtr GetProcAddress(string procName)
+        {
+            var ptr = StringToCoTaskMemUTF8(procName);
+
+            try
+            {
+                return glfwGetProcAddress((byte*)ptr);
+            }
+            finally
+            {
+                Marshal.FreeCoTaskMem(ptr);
+            }
+        }
+
+        /// <summary>
+        /// This function returns the address of the specified OpenGL or OpenGL ES core or extension function, if it is supported by the current context.
+        /// A context must be current on the calling thread. Calling this function without a current context will cause a <see cref="ErrorCode.NoContext"/> error.
+        /// </summary>
+        /// <remarks>
+        /// <para>
+        /// This function does not apply to Vulkan. If you are rendering with Vulkan, see <see cref="GetInstanceProcAddress"/>, <c>vkGetInstanceProcAddr</c> and <c>vkGetDeviceProcAddr</c> instead.
+        /// </para>
+        /// <para>
+        /// Possible errors include <see cref="ErrorCode.NotInitialized"/>, <see cref="ErrorCode.NoContext"/> and <see cref="ErrorCode.PlatformError"/>.
+        /// </para>
+        /// <para>
+        /// The address of a given function is not guaranteed to be the same between contexts.
+        /// This function may return a non-<c>null</c> address despite the associated version or extension not being available. Always check the context version or extension string first.
+        /// </para>
+        /// <para>
+        /// The returned function pointer is valid until the context is destroyed or the library is terminated.
+        /// </para>
+        /// <para>
+        /// This function may be called from any thread.
+        /// </para>
+        /// </remarks>
+        /// <param name="procName">The ASCII-encoded name of the function.</param>
+        /// <returns>The address of the function, or <c>null</c> if an error occurred.</returns>
+        /// <seealso cref="ExtensionSupported" />
+        public static unsafe IntPtr GetProcAddressRaw(byte* procName)
+        {
+            return glfwGetProcAddress(procName);
+        }
+
+        /// <summary>
         /// <para>
         /// This function returns whether the specified API extension is supported
         /// by the current OpenGL or OpenGL ES context.
