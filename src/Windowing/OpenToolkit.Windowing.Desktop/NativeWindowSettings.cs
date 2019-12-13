@@ -33,7 +33,8 @@ namespace OpenToolkit.Windowing.Desktop
         {
             unsafe
             {
-                CurrentMonitor = new Monitor((IntPtr)GLFWProvider.GLFW.Value.GetPrimaryMonitor());
+                GLFWProvider.EnsureInitialized();
+                CurrentMonitor = new Monitor((IntPtr)GLFW.GetPrimaryMonitor());
             }
         }
 

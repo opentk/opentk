@@ -18,48 +18,29 @@ namespace OpenToolkit.Windowing.Desktop
     /// </summary>
     internal static class GLFWProvider
     {
-        // NOTE: This assumption about "main thread" is flat wrong.
-        // We literally can't tell whether this is actually the main thread.
-        private static Thread _mainThread;
-
-        private static GLFWCallbacks.ErrorCallback ErrorCallback { get; } =
+        private static readonly GLFWCallbacks.ErrorCallback ErrorCallback =
             (errorCode, description) => throw new GLFWException(description, errorCode);
 
-        private static GLFW CreateGlfw()
-        {
-            var mainThread = Interlocked.CompareExchange(ref _mainThread, Thread.CurrentThread, null);
-            if (mainThread != null && mainThread == Thread.CurrentThread)
-            {
-                throw new GLFWException("Initialization on wrong thread(should never happen).");
-            }
-            var glfw = GraphicsLibraryFramework.GLFW.GetAPI();
-            glfw.Init();
-            glfw.SetErrorCallback(ErrorCallback);
-            return glfw;
-        }
-
-        /// <summary>
-        /// Gets a GLFW interface implementation lazily.
-        /// </summary>
-        public static Lazy<GLFW> GLFW { get; private set; } = new Lazy<GLFW>(CreateGlfw);
+        // NOTE: This assumption about "main thread" is flat wrong.
+        // We literally can't tell whether this is actually the main thread.
+        // We keep it around as a tiny safe guard in case the first window IS done correctly and further ones aren't.
+        private static Thread _mainThread;
 
         /// <summary>
         /// Gets a value indicating whether the <see cref="Thread.CurrentThread"/> is the same as the GLFW main thread.
         /// </summary>
-        public static bool IsOnMainThread => GLFW.Value != null && _mainThread == Thread.CurrentThread;
+        public static bool IsOnMainThread => _mainThread == Thread.CurrentThread;
 
-        /// <summary>
-        /// Unloads the loaded <see cref="GLFW"/> interface implementation.
-        /// </summary>
-        public static void Unload()
+        public static void EnsureInitialized()
         {
-            var mainThread = Interlocked.CompareExchange(ref _mainThread, null, Thread.CurrentThread);
-            if (mainThread != Thread.CurrentThread)
+            if (_mainThread != null)
             {
-                throw new GLFWException("Glfw termination only possible from glfw main thread.");
+                return;
             }
-            GLFW.Value.Terminate();
-            GLFW = new Lazy<GLFW>(CreateGlfw);
+
+            _mainThread = Thread.CurrentThread;
+            GLFW.Init();
+            GLFW.SetErrorCallback(ErrorCallback);
         }
     }
 }
