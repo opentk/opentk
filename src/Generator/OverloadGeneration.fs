@@ -37,6 +37,18 @@ module private Overloads =
                         Type = ArrayType GLString }
                 | _ -> parm)
         { func with Parameters = adjustedParameters } |> Array.singleton
+
+    
+    let pointerToArray (func:FunctionDeclaration) =
+        let adjustedParameters =
+            func.Parameters
+            |> Array.map(fun parm ->
+                match parm.Type with
+                | Pointer(x) when x <> Void ->
+                    { parm with
+                        Type = GLType.ArrayType x }
+                | _ -> parm)
+        { func with Parameters = adjustedParameters } |> Array.singleton
     
 //    let voidPointerToGeneric (func:FunctionDeclaration) =
 //        let adjustedParameters =
@@ -61,6 +73,7 @@ let private allOverloads: Overload array =
     [|
         Overloads.doNothing
         Overloads.charArrayToString
+        Overloads.pointerToArray
     |]
     
     
