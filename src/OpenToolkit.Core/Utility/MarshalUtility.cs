@@ -3,7 +3,7 @@ using System.Runtime.InteropServices;
 
 namespace OpenToolkit.Core
 {
-    internal static class MarshalUtility
+    public static class MarshalUtility
     {
         public static unsafe IntPtr StringToCoTaskMemUTF8(string str)
         {
