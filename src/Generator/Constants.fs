@@ -70,7 +70,7 @@ let sufixToRemove =
     |> Array.sortByDescending (fun (s,f) -> s.Length)
 
 let reservedKeywordsUpper =
-    reservedKeywords |> Array.map (fun k -> k.ToUpper())
+    reservedKeywords |> Array.map (fun k -> "@"+k)
 
 let pointerTypeMappings =
     [| RefPointer; ArrayType; (function | GLint -> GLintptr | keep -> keep) |]
