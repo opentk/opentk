@@ -23,7 +23,7 @@ let (|IsPointerType|_|) input =
     | _ when input.EndsWith('*') -> input.Substring(0, input.Length - 1) |> Some
     | _ -> None
 
-let tryParseType enumMap funcOrParamName (typ: GLLooseType) =
+let tryParseType enumMap funcOrParamName (typ: RawGLType) =
     let str = typ.Type.Replace("const", "").Replace(" ", "")
 
     let rec tryParse str =
@@ -144,14 +144,14 @@ let getFunctions (spec: OpenGL_Specification.Registry) =
                     printfn "failed parsing %A, value: %s" (funcName) str
                 { ParamName = p.Name
                   LengthParamName = lengthParamName
-                  ParamType = GLLooseType.mk typ group })
+                  ParamType = RawGLType.mk typ group })
 
         let group, typ = extractTypeFromProto cmd.Proto
 
         let ret =
             { FuncName = funcName
               Parameters = parameters
-              RetType = GLLooseType.mk typ group }
+              RetType = RawGLType.mk typ group }
         ret)
 
 let getExtensions (spec: OpenGL_Specification.Registry) =

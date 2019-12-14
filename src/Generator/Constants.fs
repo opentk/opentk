@@ -1,7 +1,6 @@
 module Constants
 
 open Types
-open Types
 
 let additionalTypesToGenerate =
     [|

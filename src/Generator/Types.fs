@@ -19,8 +19,9 @@ type GLEnumGroup =
       PrettyName: string
       Cases: GLEnum [] }
 
+/// Stringly-typed GL type from the specification.
 [<RequireQualifiedAccess>]
-type GLLooseType =
+type RawGLType =
     { Type: string
       Group: string option }
     
@@ -33,7 +34,7 @@ type GLLooseType =
 type RawGLParameterInfo =
     { ParamName: string
       LengthParamName: string option
-      ParamType: GLLooseType }
+      ParamType: RawGLType }
     
     static member mk paramName lengthParamName paramType =
         { ParamName = paramName
@@ -50,7 +51,7 @@ type RawGLParameterInfo =
 type RawGLFunctionDeclaration =
     { FuncName: string
       Parameters: RawGLParameterInfo []
-      RetType: GLLooseType }
+      RetType: RawGLType }
 
 /// The size of a matrix/vector in a single dimension.
 type Size =
@@ -140,7 +141,6 @@ type GLType =
     | StructGenericType of string
     | ArrayType of GLType
     | IntPtrType
-    | UnmanagedIntPtrType
 
 [<RequireQualifiedAccess>]
 type ParameterDeclaration =
@@ -176,6 +176,7 @@ let typedFunctionDeclaration name parameters retType genericTypes : FunctionDecl
       GenericTypes = genericTypes
       RetType = retType }
 
+/// An empty type used for... ?
 type DummyTypeDescriptor =
     { Namespace: string option
       Name: string }

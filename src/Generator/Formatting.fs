@@ -37,11 +37,6 @@ module WriteStatement =
 
     let execute statements = executeWith Configuration.Default statements
 
-let inline specTypeToCSharpTypeWithFallback fallback =
-    specTypeToCSharpType
-    |> Map.tryFind fallback
-    |> Option.defaultValue fallback
-
 let outputPath = "../binding/Binding"
 
 open WriteStatement
