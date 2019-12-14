@@ -103,7 +103,7 @@ let inline formatParameterName (name: string) =
     else
         name
 
-let formatParam (p: ParameterInfo) = { p with PrettyName = formatParameterName p.Name }
+let formatParam (p: ParameterDeclaration) = { p with PrettyName = formatParameterName p.Name }
 
 let namespaceForGlSpecification (openGl: RawOpenGLSpecificationDetails) =
     let prettyName =

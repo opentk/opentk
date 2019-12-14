@@ -25,7 +25,7 @@ type private Overload = FunctionDeclaration -> FunctionDeclaration
 
 module private Overloads =
     
-    let mapParameters (mapf: ParameterInfo -> ParameterInfo) (func:FunctionDeclaration) =
+    let mapParameters (mapf: ParameterDeclaration -> ParameterDeclaration) (func:FunctionDeclaration) =
         { func with Parameters = func.Parameters |> Array.map mapf }
         
     let mapParameterType (mapf: GLType -> GLType) =

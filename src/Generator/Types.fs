@@ -143,7 +143,7 @@ type GLType =
     | UnmanagedIntPtrType
 
 [<RequireQualifiedAccess>]
-type ParameterInfo =
+type ParameterDeclaration =
     { Name: string
       PrettyName: string
       LengthParamName: string option
@@ -165,7 +165,7 @@ type ParameterInfo =
 type FunctionDeclaration =
     { Name: string
       PrettyName: string
-      Parameters: ParameterInfo []
+      Parameters: ParameterDeclaration []
       GenericTypes: string []
       RetType: GLType }
 
@@ -196,23 +196,29 @@ type ExtensionInfo =
 [<RequireQualifiedAccess>]
 type FunctionSignature =
     { RetType: GLType
-      Parameters: ParameterInfo [] }
+      Parameters: ParameterDeclaration [] }
+    
+module FunctionSignature =
+    let mk retType parameters: FunctionSignature =
+        { RetType = retType
+          Parameters = parameters }
 
-let functionSignature retType parameters: FunctionSignature =
-    { RetType = retType
-      Parameters = parameters }
 
 type FunctionOverload =
     { ExpectedName: string
       AlternativeName: string option
       Overloads: FunctionSignature [] }
+    
+module FunctionOverloads =
+    let mk name alternativeName overloads =
+        { ExpectedName = name
+          AlternativeName = alternativeName
+          Overloads = overloads }
+        
+    let mkAltName name alternativeName overloads =
+        { ExpectedName = name
+          AlternativeName = Some alternativeName
+          Overloads = overloads }
 
-let functionOverloads name overloads =
-    { ExpectedName = name
-      AlternativeName = None
-      Overloads = overloads }
-
-let functionOverloadsWith name alternativeName overloads =
-    { ExpectedName = name
-      AlternativeName = Some alternativeName
-      Overloads = overloads }
+    let mkNoAltName name overloads =
+        mk name None overloads

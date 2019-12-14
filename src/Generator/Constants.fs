@@ -1,6 +1,7 @@
 module Constants
 
 open Types
+open Types
 
 let additionalTypesToGenerate =
     [|
@@ -55,14 +56,14 @@ let sufixToRemove =
        ("uiv", fun _ -> true);
        ("ui", fun _ -> true);
        ("usv", fun _ -> true);
-       ("us", fun d -> (Array.exists (fun (p : ParameterInfo) -> (getBaseGLType p.Type) = GLType.GLushort) d.Parameters ));
+       ("us", fun d -> (Array.exists (fun (p : ParameterDeclaration) -> (getBaseGLType p.Type) = GLType.GLushort) d.Parameters ));
        ("i", fun _ -> true);
        ("iv", fun _ -> true);
        ("f", fun _ -> true);
        ("b", fun _ -> true);
        ("d", fun _ -> true);
        ("dv", fun _ -> true);
-       ("s", fun d -> (Array.exists (fun (p : ParameterInfo) -> (getBaseGLType p.Type) = GLType.GLshort) d.Parameters ));
+       ("s", fun d -> (Array.exists (fun (p : ParameterDeclaration) -> (getBaseGLType p.Type) = GLType.GLshort) d.Parameters ));
        ("sv", fun _ -> true);
        ("ub", fun _ -> true);
        ("v", fun _ -> true)
@@ -83,40 +84,40 @@ let functionOverloads =
         |> GLenum
 
     [| 
-       functionOverloadsWith "glGetQueryBufferObjecti64v"
+       FunctionOverloads.mkAltName "glGetQueryBufferObjecti64v"
            "GetQueryBufferObjecti64v"
-           [| functionSignature Void
-                  [| ParameterInfo.mk "id" GLuint
-                     ParameterInfo.mk "buffer" GLuint
+           [| FunctionSignature.mk Void
+                  [| ParameterDeclaration.mk "id" GLuint
+                     ParameterDeclaration.mk "buffer" GLuint
 
                      dummyEnumGroupTy "QueryObjectParameterName"
-                     |> ParameterInfo.mk "pname"
-                     ParameterInfo.mk "offset" GLintptr |] |]
-       functionOverloadsWith "glGetQueryBufferObjectv" "GetQueryBufferObjectv"
-           [| functionSignature Void
-                  [| ParameterInfo.mk "id" GLuint
-                     ParameterInfo.mk "buffer" GLuint
+                     |> ParameterDeclaration.mk "pname"
+                     ParameterDeclaration.mk "offset" GLintptr |] |]
+       FunctionOverloads.mkAltName "glGetQueryBufferObjectv" "GetQueryBufferObjectv"
+           [| FunctionSignature.mk Void
+                  [| ParameterDeclaration.mk "id" GLuint
+                     ParameterDeclaration.mk "buffer" GLuint
 
                      dummyEnumGroupTy "QueryObjectParameterName"
-                     |> ParameterInfo.mk "pname"
-                     ParameterInfo.mk "offset" GLintptr |] |]
-       functionOverloadsWith "glGetQueryBufferObjectui64v"
+                     |> ParameterDeclaration.mk "pname"
+                     ParameterDeclaration.mk "offset" GLintptr |] |]
+       FunctionOverloads.mkAltName "glGetQueryBufferObjectui64v"
            "GetQueryBufferObjectui64v"
-           [| functionSignature Void
-                  [| ParameterInfo.mk "id" GLuint
-                     ParameterInfo.mk "buffer" GLuint
+           [| FunctionSignature.mk Void
+                  [| ParameterDeclaration.mk "id" GLuint
+                     ParameterDeclaration.mk "buffer" GLuint
 
                      dummyEnumGroupTy "QueryObjectParameterName"
-                     |> ParameterInfo.mk "pname"
-                     ParameterInfo.mk "offset" GLintptr |] |]
-       functionOverloadsWith "glGetQueryBufferObjectuiv"
+                     |> ParameterDeclaration.mk "pname"
+                     ParameterDeclaration.mk "offset" GLintptr |] |]
+       FunctionOverloads.mkAltName "glGetQueryBufferObjectuiv"
            "GetQueryBufferObjectuiv"
-           [| functionSignature Void
-                  [| ParameterInfo.mk "id" GLuint
-                     ParameterInfo.mk "buffer" GLuint
+           [| FunctionSignature.mk Void
+                  [| ParameterDeclaration.mk "id" GLuint
+                     ParameterDeclaration.mk "buffer" GLuint
 
                      dummyEnumGroupTy "QueryObjectParameterName"
-                     |> ParameterInfo.mk "pname"
-                     ParameterInfo.mk "offset" GLintptr |] |] |]
+                     |> ParameterDeclaration.mk "pname"
+                     ParameterDeclaration.mk "offset" GLintptr |] |] |]
     |> Array.Parallel.map (fun overload -> overload.ExpectedName, overload)
     |> Map.ofArray
