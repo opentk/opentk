@@ -139,6 +139,8 @@ type GLType =
     | RefPointer of GLType
     | StructGenericType of string
     | ArrayType of GLType
+    | IntPtrType
+    | UnmanagedIntPtrType
 
 [<RequireQualifiedAccess>]
 type ParameterInfo =
