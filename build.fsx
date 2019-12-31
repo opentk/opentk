@@ -1,4 +1,6 @@
 open Fake.Core
+open Fake.Core
+open Fake.DotNet
 open System
 open Fake.DotNet.Testing
 
@@ -7,7 +9,7 @@ storage: packages
 nuget Fake.IO.FileSystem
 nuget Fake.DotNet.MSBuild
 nuget Fake.DotNet.Testing.XUnit2
-nuget Fake.DotNet.AssemblyInfoFile 
+nuget Fake.DotNet.AssemblyInfoFile
 nuget Fake.DotNet.NuGet prerelease
 nuget Fake.DotNet.Cli
 nuget Fake.Core.Target
@@ -80,8 +82,14 @@ let releaseProjects =
     -- "src/Generator/**"
     -- "src/SpecificationOpenGL/**"
 
-let testProjects =
+// Absolutely all test projects.
+let allTestProjects =
     !! "tests/**/*.??proj"
+
+// Test projects excluding integration tests (don't run on CI).
+let ciTestProjects =
+    allTestProjects
+    -- "tests/**/*.Integration.??proj"
 
 let nugetCommandRunnerPath =
     ".fake/build.fsx/packages/NuGet.CommandLine/tools/NuGet.exe" |> Fake.IO.Path.convertWindowsToCurrentPath
@@ -94,7 +102,7 @@ let nugetCommandRunnerPath =
 let install =
     lazy
         (if (DotNet.getVersion id).StartsWith "3" then id
-    else DotNet.install (fun options -> { options with Version = DotNet.Version "2.2.401" }))
+    else DotNet.install (fun options -> { options with Version = DotNet.Version "3.1.100" }))
 
 // Define general properties across various commands (with arguments)
 let inline withWorkDir wd = DotNet.Options.lift install.Value >> DotNet.Options.withWorkingDirectory wd
@@ -127,7 +135,7 @@ Target.create "UpdateSpec" (fun _ ->
 
 Target.create "UpdateBindings" (fun _ ->
     Trace.log " --- Updating bindings --- "
-    let framework = "netcoreapp22"
+    let framework = "netcoreapp31"
     let projFile = "src/Generator/Generator.fsproj"
 
     let args =
@@ -156,15 +164,17 @@ Target.create "AssemblyInfo" (fun _ ->
     // see https://docs.microsoft.com/en-us/visualstudio/msbuild/customize-your-build?view=vs-2019#directorybuildprops-and-directorybuildtargets
     Trace.traceError "Unimplemented.")
 
+let noBindProp a =
+    DotNet.Options.withCustomParams (Some "/p:DontGenBindings=true") (dotnetSimple a)
 
 Target.create "Build" <| fun _ ->
     releaseProjects
-    |> Seq.iter(DotNet.build dotnetSimple)
+    |> Seq.iter(DotNet.build noBindProp)
 
 Target.create "BuildTest" <| fun _ ->
     !!"tests/**/*.??proj"
     |> Seq.map(fun proj ->
-        DotNet.runWithDefaultOptions "netcoreapp2.2" proj "" |> string)
+        DotNet.runWithDefaultOptions "netcoreapp3.1" proj "" |> string)
     |> Trace.logItems "TestBuild-Output: "
 
 // Copies binaries from default VS location to expected bin folder
@@ -182,8 +192,7 @@ open Fake.Core
 open Fake.IO.Globbing.Operators
 open Fake.DotNet
 
-Target.create "RunTests" (fun _ ->
-    Trace.log " --- Testing projects in parallel --- "
+let runTests tests =
     let setDotNetOptions (projectDirectory: string): DotNet.TestOptions -> DotNet.TestOptions =
         fun (dotNetTestOptions: DotNet.TestOptions) ->
         { dotNetTestOptions with
@@ -191,15 +200,29 @@ Target.create "RunTests" (fun _ ->
                     Configuration = DotNet.BuildConfiguration.Release
                     ResultsDirectory = Some "./result.xml" }.WithRedirectOutput true
 
+    tests
+    |> Seq.iter (fun (fullCsProjName: string) ->
+            let projectDirectory = Path.GetDirectoryName(fullCsProjName)
+            DotNet.test (setDotNetOptions projectDirectory >> dotnetSimple) "")
+
+Target.create "RunCITests" (fun _ ->
+    Trace.log " --- Testing CI-safe projects in parallel --- "
+
+
     //Looks overkill for only one csproj but just add 2 or 3 csproj and this will scale a lot better
-    testProjects
-    |> Seq.iter (fun fullCsProjName ->
-        let projectDirectory = Path.GetDirectoryName(fullCsProjName)
-        DotNet.test (setDotNetOptions projectDirectory >> dotnetSimple) ""))
+    runTests ciTestProjects)
+
+Target.create "RunAllTests" (fun _ ->
+    Trace.log " --- Testing ALL projects in parallel --- "
+
+    //Looks overkill for only one csproj but just add 2 or 3 csproj and this will scale a lot better
+    runTests allTestProjects)
+
 
 Target.create "CreateNuGetPackage" (fun _ ->
-    let optsFn options = { options with DotNet.PackOptions.OutputPath = (Some "Bin") }
-    releaseProjects |> Seq.iter (DotNet.pack optsFn))
+    let optsFn options = { options with DotNet.PackOptions.OutputPath = (Some "bin") }
+    let disableBuild options = { (optsFn options) with DotNet.PackOptions.NoBuild = true }
+    releaseProjects |> Seq.iter (DotNet.pack disableBuild))
 
 // ---------
 // Release Targets
@@ -254,13 +277,15 @@ open Fake.Core.TargetOperators
   ==> "UpdateSpec"
   ==> "UpdateBindings"
   ==> "Build"
-  ==> "CopyBinaries"
-  ==> "RunTests"
+  ==> "RunAllTests"
   ==> "All"
   ==> "CreateNuGetPackage"
   ==> "ReleaseOnNuGetGallery"
   ==> "ReleaseOnGithub"
   ==> "ReleaseOnAll"
+
+"Build"
+  ==> "RunCITests"
 
 //"Build"
 

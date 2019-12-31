@@ -14,12 +14,6 @@ using static OpenToolkit.GraphicsLibraryFramework.GLFWNative;
 
 namespace OpenToolkit.GraphicsLibraryFramework
 {
-    // TODO: Make a final pass over this API to ensure consistency in:
-    // * Usage of enums instead of integers.
-    // * In/out/ref parameters and equivalents taking pointers.
-    // * String methods having byte* alternatives.
-    // * Correct handling of nullability with string/ref marshalling!
-
     /// <summary>
     /// Provides access to the GLFW API.
     /// </summary>
@@ -114,8 +108,8 @@ namespace OpenToolkit.GraphicsLibraryFramework
         /// Other platforms will ignore them. Setting these hints requires no platform specific headers or functions.
         /// </para>
         /// </summary>
-        /// <param name="hint">The <see cref="GraphicsLibraryFramework.InitHint"/> to set.</param>
-        /// <param name="value">The new value of the <see cref="GraphicsLibraryFramework.InitHint"/>.</param>
+        /// <param name="hintBool">The <see cref="InitHintBool"/> to set.</param>
+        /// <param name="value">The new value of the <see cref="InitHintBool"/>.</param>
         /// <remarks>
         /// <para>
         /// This function may be called before <see cref="Init"/>.
@@ -127,7 +121,39 @@ namespace OpenToolkit.GraphicsLibraryFramework
         /// Possible errors include <see cref="ErrorCode.InvalidEnum"/> and <see cref="ErrorCode.InvalidValue"/>.
         /// </para>
         /// </remarks>
-        public static void InitHint(InitHint hint, bool value) => glfwInitHint(hint, value ? GLFW_TRUE : GLFW_FALSE);
+        public static void InitHint(InitHintBool hintBool, bool value) =>
+            glfwInitHint((int)hintBool, value ? GLFW_TRUE : GLFW_FALSE);
+
+        /// <summary>
+        /// <para>
+        /// This function sets hints for the next initialization of GLFW.
+        /// </para>
+        /// <para>
+        /// The values you set hints to are never reset by GLFW, but they only take effect during initialization.
+        /// </para>
+        /// <para>
+        /// Once GLFW has been initialized,
+        /// any values you set will be ignored until the library is terminated and initialized again.
+        /// </para>
+        /// <para>Some hints are platform specific.
+        /// These may be set on any platform but they will only affect their specific platform.
+        /// Other platforms will ignore them. Setting these hints requires no platform specific headers or functions.
+        /// </para>
+        /// </summary>
+        /// <param name="hintInt">The <see cref="InitHintInt"/> to set.</param>
+        /// <param name="value">The new value of the <see cref="InitHintBool"/>.</param>
+        /// <remarks>
+        /// <para>
+        /// This function may be called before <see cref="Init"/>.
+        /// </para>
+        /// <para>
+        /// This function must only be called from the main thread.
+        /// </para>
+        /// <para>
+        /// Possible errors include <see cref="ErrorCode.InvalidEnum"/> and <see cref="ErrorCode.InvalidValue"/>.
+        /// </para>
+        /// </remarks>
+        public static void InitHint(InitHintInt hintInt, int value) => glfwInitHint((int)hintInt, value);
 
         /// <summary>
         /// <para>
@@ -275,7 +301,7 @@ namespace OpenToolkit.GraphicsLibraryFramework
         /// </para>
         /// </remarks>
         /// <seealso cref="SetErrorCallback"/>
-        public static unsafe ErrorCode GetError(out byte* description)
+        public static unsafe ErrorCode GetErrorRaw(out byte* description)
         {
             byte* desc;
             var code = glfwGetError(&desc);
@@ -311,12 +337,89 @@ namespace OpenToolkit.GraphicsLibraryFramework
         /// </para>
         /// </remarks>
         /// <seealso cref="GetPrimaryMonitor"/>
-        public static unsafe Monitor** GetMonitors(out int count)
+        public static unsafe Monitor** GetMonitorsRaw(out int count)
         {
-            int value;
-            var ptr = glfwGetMonitors(&value);
-            count = value;
-            return ptr;
+            fixed (int* ptr = &count)
+            {
+                return glfwGetMonitors(ptr);
+            }
+        }
+
+        /// <summary>
+        /// <para>
+        /// This function returns an array of handles for all currently connected monitors.
+        /// The primary monitor is always first in the returned array.
+        /// </para>
+        /// <para>
+        /// If no monitors were found, this function returns <c>null</c>.
+        /// </para>
+        /// </summary>
+        /// <param name="count">
+        /// Where to store the number of monitors in the returned array. This is set to zero if an error occurred.
+        /// </param>
+        /// <returns>
+        /// An array of monitor handles, or <c>null</c> if no monitors were found or if an error occurred.
+        /// </returns>
+        /// <remarks>
+        /// <para>
+        /// The returned array is allocated and freed by GLFW. You should not free it yourself.
+        /// It is only guaranteed to be valid until the monitor configuration changes or the library is terminated.
+        /// </para>
+        /// <para>
+        /// This function must only be called from the main thread.
+        /// </para>
+        /// <para>
+        /// Possible errors include <see cref="ErrorCode.NotInitialized"/>.
+        /// </para>
+        /// </remarks>
+        /// <seealso cref="GetPrimaryMonitor"/>
+        public static unsafe Monitor** GetMonitorsRaw(int* count)
+        {
+            return glfwGetMonitors(count);
+        }
+
+        /// <summary>
+        /// <para>
+        /// This function returns an array of handles for all currently connected monitors.
+        /// The primary monitor is always first in the returned array.
+        /// </para>
+        /// <para>
+        /// If no monitors were found, this function returns <c>null</c>.
+        /// </para>
+        /// </summary>
+        /// <returns>
+        /// An array of monitor handles, or <c>null</c> if no monitors were found or if an error occurred.
+        /// </returns>
+        /// <remarks>
+        /// <para>
+        /// The returned array is allocated and freed by GLFW. You should not free it yourself.
+        /// It is only guaranteed to be valid until the monitor configuration changes or the library is terminated.
+        /// </para>
+        /// <para>
+        /// This function must only be called from the main thread.
+        /// </para>
+        /// <para>
+        /// Possible errors include <see cref="ErrorCode.NotInitialized"/>.
+        /// </para>
+        /// </remarks>
+        /// <seealso cref="GetPrimaryMonitor"/>
+        public static unsafe Monitor*[] GetMonitors()
+        {
+            var ptr = GetMonitorsRaw(out var count);
+
+            if (ptr == null)
+            {
+                return null;
+            }
+
+            var array = new Monitor*[count];
+
+            for (var i = 0; i < count; i++)
+            {
+                array[i] = ptr[i];
+            }
+
+            return array;
         }
 
         /// <summary>
@@ -343,6 +446,27 @@ namespace OpenToolkit.GraphicsLibraryFramework
 
             x = localX;
             y = localY;
+        }
+
+        /// <summary>
+        /// <para>
+        /// This function returns the position, in screen coordinates, of the upper-left corner of the specified monitor.
+        /// </para>
+        /// </summary>
+        /// <param name="monitor">The monitor to query.</param>
+        /// <param name="x">Where to store the monitor x-coordinate.</param>
+        /// <param name="y">Where to store the monitor y-coordinate.</param>
+        /// <remarks>
+        /// <para>
+        /// This function must only be called from the main thread.
+        /// </para>
+        /// <para>
+        /// Possible errors include <see cref="ErrorCode.NotInitialized"/> and <see cref="ErrorCode.PlatformError"/>.
+        /// </para>
+        /// </remarks>
+        public static unsafe void GetMonitorPos(Monitor* monitor, int* x, int* y)
+        {
+            glfwGetMonitorPos(monitor, x, y);
         }
 
         /// <summary>
@@ -416,6 +540,31 @@ namespace OpenToolkit.GraphicsLibraryFramework
 
             xScale = localX;
             yScale = localY;
+        }
+
+        /// <summary>
+        /// <para>
+        /// This function retrieves the content scale for the specified monitor.
+        /// </para>
+        /// <para>
+        /// The content scale is the ratio between the current DPI and the platform's default DPI.
+        /// </para>
+        /// <para>
+        /// If you scale all pixel dimensions by this scale then your content should appear at an appropriate size.
+        /// This is especially important for text and any UI elements.
+        /// </para>
+        ///
+        /// <para>
+        /// The content scale may depend on both the monitor resolution and pixel density and on user settings.
+        /// It may be very different from the raw DPI calculated from the physical size and current resolution.
+        /// </para>
+        /// </summary>
+        /// <param name="monitor">The monitor to query.</param>
+        /// <param name="xScale">Where to store the x-axis content scale, or <c>out _</c>.</param>
+        /// <param name="yScale">Where to store the y-axis content scale, or <c>out _</c>.</param>
+        public static unsafe void GetMonitorContentScaleRaw(Monitor* monitor, float* xScale, float* yScale)
+        {
+            glfwGetMonitorContentScale(monitor, xScale, yScale);
         }
 
         /// <summary>
@@ -546,18 +695,91 @@ namespace OpenToolkit.GraphicsLibraryFramework
         /// </para>
         /// </remarks>
         /// <seealso cref="GetVideoMode"/>
-        public static unsafe VideoMode* GetVideoModes(Monitor* monitor, out int count)
+        public static unsafe VideoMode* GetVideoModesRaw(Monitor* monitor, out int count)
         {
-            int localCount;
-            var ptr = glfwGetVideoModes(monitor, &localCount);
-            count = localCount;
-            return ptr;
+            fixed (int* ptr = &count)
+            {
+                return glfwGetVideoModes(monitor, ptr);
+            }
+        }
+
+        /// <summary>
+        /// <para>
+        /// This function returns an array of all video modes supported by the specified monitor.
+        /// The returned array is sorted in ascending order, first by color bit depth (the sum of all channel depths)
+        /// and then by resolution area (the product of width and height).
+        /// </para>
+        /// </summary>
+        /// <param name="monitor">The monitor to query.</param>
+        /// <param name="count">
+        /// Where to store the number of video modes in the returned array.
+        /// This is set to zero if an error occurred.
+        /// </param>
+        /// <returns>An array of video modes, or <c>null</c> if an error occurred.</returns>
+        /// <remarks>
+        /// <para>
+        /// The returned array is allocated and freed by GLFW. You should not free it yourself.
+        /// It is valid until the specified monitor is disconnected,
+        /// this function is called again for that monitor, or the library is terminated.
+        /// </para>
+        /// <para>
+        /// This function must only be called from the main thread.
+        /// </para>
+        /// <para>
+        /// Possible errors include <see cref="ErrorCode.NotInitialized"/> and <see cref="ErrorCode.PlatformError"/>.
+        /// </para>
+        /// </remarks>
+        /// <seealso cref="GetVideoMode"/>
+        public static unsafe VideoMode* GetVideoModesRaw(Monitor* monitor, int* count)
+        {
+            return glfwGetVideoModes(monitor, count);
+        }
+
+        /// <summary>
+        /// <para>
+        /// This function returns an array of all video modes supported by the specified monitor.
+        /// The returned array is sorted in ascending order, first by color bit depth (the sum of all channel depths)
+        /// and then by resolution area (the product of width and height).
+        /// </para>
+        /// </summary>
+        /// <param name="monitor">The monitor to query.</param>
+        /// <returns>An array of video modes, or <c>null</c> if an error occurred.</returns>
+        /// <remarks>
+        /// <para>
+        /// The returned array is allocated and freed by GLFW. You should not free it yourself.
+        /// It is valid until the specified monitor is disconnected,
+        /// this function is called again for that monitor, or the library is terminated.
+        /// </para>
+        /// <para>
+        /// This function must only be called from the main thread.
+        /// </para>
+        /// <para>
+        /// Possible errors include <see cref="ErrorCode.NotInitialized"/> and <see cref="ErrorCode.PlatformError"/>.
+        /// </para>
+        /// </remarks>
+        /// <seealso cref="GetVideoMode"/>
+        public static unsafe VideoMode[] GetVideoModes(Monitor* monitor)
+        {
+            var ptr = GetVideoModesRaw(monitor, out var count);
+
+            if (ptr == null)
+            {
+                return null;
+            }
+
+            var array = new VideoMode[count];
+            for (var i = 0; i < count; i++)
+            {
+                array[i] = ptr[i];
+            }
+
+            return array;
         }
 
         /// <summary>
         /// <para>
         /// This function generates a 256-element gamma ramp from the specified exponent and then calls
-        /// <see cref="Setgamma"/> with it. The value must be a finite number greater than zero.
+        /// <see cref="SetGamma"/> with it. The value must be a finite number greater than zero.
         /// </para>
         /// </summary>
         /// <param name="monitor">The monitor whose gamma ramp to set.</param>
@@ -678,18 +900,56 @@ namespace OpenToolkit.GraphicsLibraryFramework
         /// This function must only be called from the main thread.
         /// </para>
         /// </remarks>
-        public static unsafe void WindowHintString(int hint, string value)
+        public static unsafe void WindowHint(WindowHintString hint, string value)
         {
             var ptr = StringToCoTaskMemUTF8(value);
 
             try
             {
-                glfwWindowHintString(hint, (byte*)ptr);
+                glfwWindowHintString((int)hint, (byte*)ptr);
             }
             finally
             {
                 Marshal.FreeCoTaskMem(ptr);
             }
+        }
+
+        /// <summary>
+        /// <para>
+        /// Sets the specified window hint to the desired value.
+        /// </para>
+        /// <para>
+        /// This function sets hints for the next call to @ref glfwCreateWindow.  The
+        /// hints, once set, retain their values until changed by a call to this
+        /// function or <see cref="DefaultWindowHints"/>, or until the library is terminated.
+        /// </para>
+        /// <para>
+        /// This function does not check whether the specified hint values are valid.
+        /// If you set hints to invalid values this will instead be reported by the next
+        /// call to <see cref="CreateWindow"/>.
+        /// </para>
+        /// <para>
+        /// Some hints are platform specific.  These may be set on any platform but they
+        /// will only affect their specific platform.  Other platforms will ignore them.
+        /// Setting these hints requires no platform specific headers or functions.
+        /// </para>
+        /// </summary>
+        /// <param name="hint">The window hint to set.</param>
+        /// <param name="value">The new value of the set hint.</param>
+        /// <remarks>
+        /// <para>
+        /// Possible errors include <see cref="ErrorCode.NotInitialized"/> <see cref="ErrorCode.InvalidEnum"/>.
+        /// </para>
+        /// <para>
+        /// The string is copied before this function returns.
+        /// </para>
+        /// <para>
+        /// This function must only be called from the main thread.
+        /// </para>
+        /// </remarks>
+        public static unsafe void WindowHintRaw(WindowHintString hint, byte* value)
+        {
+            glfwWindowHintString((int)hint, value);
         }
 
         /// <summary>
@@ -1059,9 +1319,82 @@ namespace OpenToolkit.GraphicsLibraryFramework
         /// Possible errors include <see cref="ErrorCode.NotInitialized"/> and <see cref="ErrorCode.PlatformError"/>.
         /// </para>
         /// </remarks>
-        public static unsafe string GetKeyName(int key, int scanCode)
+        public static unsafe string GetKeyName(Keys key, int scanCode)
         {
             return PtrToStringUTF8(glfwGetKeyName(key, scanCode));
+        }
+
+        /// <summary>
+        /// <para>
+        /// This function returns the name of the specified printable key, encoded as UTF-8.
+        /// This is typically the character that key would produce without any modifier keys,
+        /// intended for displaying key bindings to the user.
+        /// </para>
+        /// <para>
+        /// For dead keys, it is typically the diacritic it would add to a character.
+        /// </para>
+        /// <para>
+        /// Do not use this function for text input.
+        /// You will break text input for many languages even if it happens to work for yours.
+        /// </para>
+        /// <para>
+        /// If the key is <see cref="Keys.Unknown"/>, the scancode is used to identify the key, otherwise the scancode is ignored.
+        /// If you specify a non-printable key, or <see cref="Keys.Unknown"/> and a scancode that maps to a non-printable key,
+        /// this function returns <c>null</c> but does not emit an error.
+        /// </para>
+        /// <para>
+        /// This behavior allows you to always pass in the arguments in the key callback without modification.
+        /// </para>
+        /// <para>
+        /// The printable keys are:
+        /// <list type="">
+        /// <item><term><see cref="Keys.Apostrophe"/></term></item>
+        /// <item><term><see cref="Keys.Comma"/></term></item>
+        /// <item><term><see cref="Keys.Minus"/></term></item>
+        /// <item><term><see cref="Keys.Period"/></term></item>
+        /// <item><term><see cref="Keys.Slash"/></term></item>
+        /// <item><term><see cref="Keys.Semicolon"/></term></item>
+        /// <item><term><see cref="Keys.Equal"/></term></item>
+        /// <item><term><see cref="Keys.LeftBracket"/></term></item>
+        /// <item><term><see cref="Keys.RightBracket"/></term></item>
+        /// <item><term><see cref="Keys.Backslash"/></term></item>
+        /// <item><term><see cref="Keys.World1"/></term></item>
+        /// <item><term><see cref="Keys.World2"/></term></item>
+        /// <item><term><see cref="Keys.D0"/> to <see cref="Keys.D9"/></term></item>
+        /// <item><term><see cref="Keys.A"/> to <see cref="Keys.Z"/></term></item>
+        /// <item><term><see cref="Keys.KeyPad0"/> to <see cref="Keys.KeyPad9"/></term></item>
+        /// <item><term><see cref="Keys.KeyPadDecimal"/></term></item>
+        /// <item><term><see cref="Keys.KeyPadDivide"/></term></item>
+        /// <item><term><see cref="Keys.KeyPadMultiply"/></term></item>
+        /// <item><term><see cref="Keys.KeyPadSubtract"/></term></item>
+        /// <item><term><see cref="Keys.KeyPadAdd"/></term></item>
+        /// <item><term><see cref="Keys.KeyPadEqual"/></term></item>
+        /// </list>
+        /// </para>
+        /// <para>
+        /// Names for printable keys depend on keyboard layout,
+        /// while names for non-printable keys are the same across layouts but depend on the application language
+        /// and should be localized along with other user interface text.
+        /// </para>
+        /// </summary>
+        /// <param name="key">The key to query, or <see cref="Keys.Unknown"/>.</param>
+        /// <param name="scancode">The scancode of the key to query.</param>
+        /// <returns>The UTF-8 encoded, layout-specific name of the key, or <c>null</c>.</returns>
+        /// <remarks>
+        /// <para>
+        /// The returned string is allocated and freed by GLFW. You should not free it yourself.
+        /// It is valid until the next call to <see cref="GetKeyName"/>, or until the library is terminated.
+        /// </para>
+        /// <para>
+        /// This function must only be called from the main thread.
+        /// </para>
+        /// <para>
+        /// Possible errors include <see cref="ErrorCode.NotInitialized"/> and <see cref="ErrorCode.PlatformError"/>.
+        /// </para>
+        /// </remarks>
+        public static unsafe byte* GetKeyNameRaw(Keys key, int scancode)
+        {
+            return glfwGetKeyName(key, scancode);
         }
 
         /// <summary>
@@ -1082,7 +1415,7 @@ namespace OpenToolkit.GraphicsLibraryFramework
         /// Possible errors include <see cref="ErrorCode.NotInitialized"/>, <see cref="ErrorCode.InvalidEnum"/> and <see cref="ErrorCode.PlatformError"/>.
         /// </para>
         /// </remarks>
-        public static int GetKeyScancode(int key)
+        public static int GetKeyScancode(Keys key)
         {
             return glfwGetKeyScancode(key);
         }
@@ -1123,9 +1456,9 @@ namespace OpenToolkit.GraphicsLibraryFramework
         /// Possible errors include <see cref="ErrorCode.NotInitialized"/> and <see cref="ErrorCode.InvalidEnum"/>.
         /// </para>
         /// </remarks>
-        public static unsafe InputAction GetKey(Window* window, int key)
+        public static unsafe InputAction GetKey(Window* window, Keys key)
         {
-            return (InputAction)glfwGetKey(window, key);
+            return glfwGetKey(window, key);
         }
 
         /// <summary>
@@ -1150,9 +1483,9 @@ namespace OpenToolkit.GraphicsLibraryFramework
         /// Possible errors include <see cref="ErrorCode.NotInitialized"/> and <see cref="ErrorCode.InvalidEnum"/>.
         /// </para>
         /// </remarks>
-        public static unsafe InputAction GetMouseButton(Window* window, int button)
+        public static unsafe InputAction GetMouseButton(Window* window, MouseButton button)
         {
-            return (InputAction)glfwGetMouseButton(window, button);
+            return glfwGetMouseButton(window, button);
         }
 
         /// <summary>
@@ -1194,6 +1527,44 @@ namespace OpenToolkit.GraphicsLibraryFramework
             glfwGetCursorPos(window, &x, &y);
             xPos = x;
             yPos = y;
+        }
+
+        /// <summary>
+        /// <para>
+        /// This function returns the position of the cursor,
+        /// in screen coordinates, relative to the upper-left corner of the client area of the specified window.
+        /// </para>
+        /// <para>
+        /// If the cursor is disabled (with <see cref="CursorModeValue.CursorDisabled"/>) then the cursor position
+        /// is unbounded and limited only by the minimum and maximum values of a double.
+        /// </para>
+        /// <para>
+        /// The coordinate can be converted to their integer equivalents with the floor function.
+        /// Casting directly to an integer type works for positive coordinates, but fails for negative ones.
+        /// </para>
+        /// <para>
+        /// Any or all of the position arguments may be <c>out _</c>.
+        /// If an error occurs, all non-<c>out _</c> position arguments will be set to zero.
+        /// </para>
+        /// </summary>
+        /// <param name="window">The desired window.</param>
+        /// <param name="xPos">
+        /// Where to store the cursor x-coordinate, relative to the left edge of the client area, or <c>out _</c>.
+        /// </param>
+        /// <param name="yPos">
+        /// Where to store the cursor y-coordinate, relative to the to top edge of the client area, or <c>out _</c>.
+        /// </param>
+        /// <remarks>
+        /// <para>
+        /// This function must only be called from the main thread.
+        /// </para>
+        /// <para>
+        /// Possible errors include <see cref="ErrorCode.NotInitialized"/> and <see cref="ErrorCode.PlatformError"/>.
+        /// </para>
+        /// </remarks>
+        public static unsafe void GetCursorPosRaw(Window* window, double* xPos, double* yPos)
+        {
+            glfwGetCursorPos(window, xPos, yPos);
         }
 
         /// <summary>
@@ -1269,7 +1640,48 @@ namespace OpenToolkit.GraphicsLibraryFramework
         /// Possible errors include <see cref="ErrorCode.NotInitialized"/> and <see cref="ErrorCode.PlatformError"/>.
         /// </para>
         /// </remarks>
-        public static unsafe Cursor* CreateCursor(Image* image, int xHot, int yHot)
+        public static unsafe Cursor* CreateCursor(in Image image, int xHot, int yHot)
+        {
+            fixed (Image* ptr = &image)
+            {
+                return CreateCursorRaw(ptr, xHot, yHot);
+            }
+        }
+
+        /// <summary>
+        /// <para>
+        /// Creates a new custom cursor image that can be set for a window with <see cref="SetCursor"/>.
+        /// </para>
+        /// <para>
+        /// The cursor can be destroyed with <see cref="DestroyCursor"/>.
+        /// Any remaining cursors are destroyed by <see cref="Terminate"/>.
+        /// </para>
+        /// <para>
+        /// The pixels are 32-bit, little-endian, non-premultiplied RGBA,
+        /// i.e. eight bits per channel with the red channel first.
+        /// They are arranged canonically as packed sequential rows, starting from the top-left corner.
+        /// </para>
+        /// <para>
+        /// The cursor hotspot is specified in pixels, relative to the upper-left corner of the cursor image.
+        /// Like all other coordinate systems in GLFW, the X-axis points to the right and the Y-axis points down.
+        /// </para>
+        /// </summary>
+        /// <param name="image">The desired cursor image.</param>
+        /// <param name="xHot">The desired x-coordinate, in pixels, of the cursor hotspot.</param>
+        /// <param name="yHot">The desired y-coordinate, in pixels, of the cursor hotspot.</param>
+        /// <returns>The handle of the created cursor, or <c>null</c> if an error occurred.</returns>
+        /// <remarks>
+        /// <para>
+        /// The specified image data is copied before this function returns.
+        /// </para>
+        /// <para>
+        /// This function must only be called from the main thread.
+        /// </para>
+        /// <para>
+        /// Possible errors include <see cref="ErrorCode.NotInitialized"/> and <see cref="ErrorCode.PlatformError"/>.
+        /// </para>
+        /// </remarks>
+        public static unsafe Cursor* CreateCursorRaw(Image* image, int xHot, int yHot)
         {
             return glfwCreateCursor(image, xHot, yHot);
         }
@@ -1382,6 +1794,52 @@ namespace OpenToolkit.GraphicsLibraryFramework
         /// </para>
         /// </summary>
         /// <param name="jid">The joystick to query.</param>
+        /// <returns>
+        /// An array of axis values, or <c>null</c> if the joystick is not present or an error occurred.
+        /// </returns>
+        /// <remarks>
+        /// <para>
+        /// The returned array is allocated and freed by GLFW.
+        /// You should not free it yourself.
+        /// It is valid until the specified joystick is disconnected or the library is terminated.
+        /// </para>
+        /// <para>
+        /// This function must only be called from the main thread.
+        /// </para>
+        /// <para>
+        /// Possible errors include <see cref="ErrorCode.NotInitialized"/>, <see cref="ErrorCode.InvalidEnum"/> and <see cref="ErrorCode.PlatformError"/>.
+        /// </para>
+        /// </remarks>
+        public static unsafe float[] GetJoystickAxes(int jid)
+        {
+            var ptr = GetJoystickAxesRaw(jid, out var count);
+
+            if (ptr == null)
+            {
+                return null;
+            }
+
+            var array = new float[count];
+            for (var i = 0; i < count; i++)
+            {
+                array[i] = ptr[i];
+            }
+
+            return array;
+        }
+
+        /// <summary>
+        /// <para>
+        /// This function returns the values of all axes of the specified joystick.
+        /// Each element in the array is a value between -1.0 and 1.0.
+        /// </para>
+        /// <para>
+        /// If the specified joystick is not present
+        /// this function will return <c>null</c> but will not generate an error.
+        /// This can be used instead of first calling <see cref="JoystickPresent"/>.
+        /// </para>
+        /// </summary>
+        /// <param name="jid">The joystick to query.</param>
         /// <param name="count">
         /// Where to store the number of axis values in the returned array.
         /// This is set to zero if the joystick is not present or an error occurred.
@@ -1402,12 +1860,49 @@ namespace OpenToolkit.GraphicsLibraryFramework
         /// Possible errors include <see cref="ErrorCode.NotInitialized"/>, <see cref="ErrorCode.InvalidEnum"/> and <see cref="ErrorCode.PlatformError"/>.
         /// </para>
         /// </remarks>
-        public static unsafe float* GetJoystickAxes(int jid, out int count)
+        public static unsafe float* GetJoystickAxesRaw(int jid, out int count)
         {
-            int c;
-            var ptr = glfwGetJoystickAxes(jid, &c);
-            count = c;
-            return ptr;
+            fixed (int* ptr = &count)
+            {
+                return GetJoystickAxesRaw(jid, ptr);
+            }
+        }
+
+        /// <summary>
+        /// <para>
+        /// This function returns the values of all axes of the specified joystick.
+        /// Each element in the array is a value between -1.0 and 1.0.
+        /// </para>
+        /// <para>
+        /// If the specified joystick is not present
+        /// this function will return <c>null</c> but will not generate an error.
+        /// This can be used instead of first calling <see cref="JoystickPresent"/>.
+        /// </para>
+        /// </summary>
+        /// <param name="jid">The joystick to query.</param>
+        /// <param name="count">
+        /// Where to store the number of axis values in the returned array.
+        /// This is set to zero if the joystick is not present or an error occurred.
+        /// </param>
+        /// <returns>
+        /// An array of axis values, or <c>null</c> if the joystick is not present or an error occurred.
+        /// </returns>
+        /// <remarks>
+        /// <para>
+        /// The returned array is allocated and freed by GLFW.
+        /// You should not free it yourself.
+        /// It is valid until the specified joystick is disconnected or the library is terminated.
+        /// </para>
+        /// <para>
+        /// This function must only be called from the main thread.
+        /// </para>
+        /// <para>
+        /// Possible errors include <see cref="ErrorCode.NotInitialized"/>, <see cref="ErrorCode.InvalidEnum"/> and <see cref="ErrorCode.PlatformError"/>.
+        /// </para>
+        /// </remarks>
+        public static unsafe float* GetJoystickAxesRaw(int jid, int* count)
+        {
+            return glfwGetJoystickAxes(jid, count);
         }
 
         /// <summary>
@@ -1424,7 +1919,63 @@ namespace OpenToolkit.GraphicsLibraryFramework
         /// up, right, down and left.
         /// </para>
         /// <para>
-        /// To disable these extra buttons, set the <see cref="GraphicsLibraryFramework.InitHint.JoystickHatButtons"/>
+        /// To disable these extra buttons, set the <see cref="InitHintBool.JoystickHatButtons"/>
+        /// init hint before initialization.
+        /// </para>
+        /// <para>
+        /// If the specified joystick is not present this function will return <c>null</c> but will not generate an error.
+        /// This can be used instead of first calling <see cref="JoystickPresent"/>.
+        /// </para>
+        /// </summary>
+        /// <param name="jid">The joystick to query.</param>
+        /// <returns>
+        /// An array of button states, or <c>null</c> if the joystick is not present or an error occurred.
+        /// </returns>
+        /// <remarks>
+        /// <para>
+        /// The returned array is allocated and freed by GLFW. You should not free it yourself.
+        /// It is valid until the specified joystick is disconnected or the library is terminated.
+        /// </para>
+        /// <para>
+        /// This function must only be called from the main thread.
+        /// </para>
+        /// <para>
+        /// Possible errors include <see cref="ErrorCode.NotInitialized"/>, <see cref="ErrorCode.InvalidEnum"/> and <see cref="ErrorCode.PlatformError"/>.
+        /// </para>
+        /// </remarks>
+        public static unsafe InputAction[] GetJoystickButtons(int jid)
+        {
+            var ptr = GetJoystickButtonsRaw(jid, out var count);
+
+            if (ptr == null)
+            {
+                return null;
+            }
+
+            var array = new InputAction[count];
+            for (var i = 0; i < count; i++)
+            {
+                array[i] = ptr[i];
+            }
+
+            return array;
+        }
+
+        /// <summary>
+        /// <para>
+        /// This function returns the state of all buttons of the specified joystick.
+        /// Each element in the array is either <see cref="InputAction.Press"/> or <see cref="InputAction.Release"/>.
+        /// </para>
+        /// <para>
+        /// For backward compatibility with earlier versions that did not have <see cref="GetJoystickHats"/>,
+        /// the button array also includes all hats, each represented as four buttons.
+        /// </para>
+        /// <para>
+        /// The hats are in the same order as returned by <see cref="GetJoystickHats"/> and are in the order
+        /// up, right, down and left.
+        /// </para>
+        /// <para>
+        /// To disable these extra buttons, set the <see cref="InitHintBool.JoystickHatButtons"/>
         /// init hint before initialization.
         /// </para>
         /// <para>
@@ -1452,12 +2003,114 @@ namespace OpenToolkit.GraphicsLibraryFramework
         /// Possible errors include <see cref="ErrorCode.NotInitialized"/>, <see cref="ErrorCode.InvalidEnum"/> and <see cref="ErrorCode.PlatformError"/>.
         /// </para>
         /// </remarks>
-        public static unsafe byte* GetJoystickButtons(int jid, out int count)
+        public static unsafe InputAction* GetJoystickButtonsRaw(int jid, out int count)
         {
-            int c;
-            var ptr = glfwGetJoystickButtons(jid, &c);
-            count = c;
-            return ptr;
+            fixed (int* ptr = &count)
+            {
+                return GetJoystickButtonsRaw(jid, ptr);
+            }
+        }
+
+        /// <summary>
+        /// <para>
+        /// This function returns the state of all buttons of the specified joystick.
+        /// Each element in the array is either <see cref="InputAction.Press"/> or <see cref="InputAction.Release"/>.
+        /// </para>
+        /// <para>
+        /// For backward compatibility with earlier versions that did not have <see cref="GetJoystickHats"/>,
+        /// the button array also includes all hats, each represented as four buttons.
+        /// </para>
+        /// <para>
+        /// The hats are in the same order as returned by <see cref="GetJoystickHats"/> and are in the order
+        /// up, right, down and left.
+        /// </para>
+        /// <para>
+        /// To disable these extra buttons, set the <see cref="InitHintBool.JoystickHatButtons"/>
+        /// init hint before initialization.
+        /// </para>
+        /// <para>
+        /// If the specified joystick is not present this function will return <c>null</c> but will not generate an error.
+        /// This can be used instead of first calling <see cref="JoystickPresent"/>.
+        /// </para>
+        /// </summary>
+        /// <param name="jid">The joystick to query.</param>
+        /// <param name="count">
+        /// Where to store the number of button states in the returned array.
+        /// This is set to zero if the joystick is not present or an error occurred.
+        /// </param>
+        /// <returns>
+        /// An array of button states, or <c>null</c> if the joystick is not present or an error occurred.
+        /// </returns>
+        /// <remarks>
+        /// <para>
+        /// The returned array is allocated and freed by GLFW. You should not free it yourself.
+        /// It is valid until the specified joystick is disconnected or the library is terminated.
+        /// </para>
+        /// <para>
+        /// This function must only be called from the main thread.
+        /// </para>
+        /// <para>
+        /// Possible errors include <see cref="ErrorCode.NotInitialized"/>, <see cref="ErrorCode.InvalidEnum"/> and <see cref="ErrorCode.PlatformError"/>.
+        /// </para>
+        /// </remarks>
+        public static unsafe InputAction* GetJoystickButtonsRaw(int jid, int* count)
+        {
+            return glfwGetJoystickButtons(jid, count);
+        }
+
+        /// <summary>
+        /// <para>
+        /// This function returns the state of all hats of the specified joystick.
+        /// Each element in the array is one of the <see cref="JoystickHats"/>.
+        /// </para>
+        /// <para>
+        /// The diagonal directions are bitwise combinations of the primary (up, right, down and left) directions
+        /// and you can test for these individually by ANDing it with the corresponding direction.
+        /// <code>
+        /// if (hats[2].HasFlag(JoystickHats.Right))
+        /// {
+        ///    // State of hat 2 could be right-up, right or right-down
+        /// }
+        /// </code>
+        /// </para>
+        /// <para>
+        /// If the specified joystick is not present, this function will return NULL but will not generate an error.
+        /// This can be used instead of first calling <see cref="JoystickPresent"/>.
+        /// </para>
+        /// </summary>
+        /// <param name="jid">The joystick to query.</param>
+        /// <returns>
+        /// An array of hat states, or <c>null</c> if the joystick is not present or an error occurred.
+        /// </returns>
+        /// <remarks>
+        /// <para>
+        /// The returned array is allocated and freed by GLFW. You should not free it yourself
+        /// It is valid until the specified joystick is disconnected,
+        /// this function is called again for that joystick or the library is terminated.
+        /// </para>
+        /// <para>
+        /// This function must only be called from the main thread.
+        /// </para>
+        /// <para>
+        /// Possible errors include <see cref="ErrorCode.NotInitialized"/>, <see cref="ErrorCode.InvalidEnum"/> and <see cref="ErrorCode.PlatformError"/>.
+        /// </para>
+        /// </remarks>
+        public static unsafe JoystickHats[] GetJoystickHats(int jid)
+        {
+            var ptr = GetJoystickHatsRaw(jid, out var count);
+
+            if (ptr == null)
+            {
+                return null;
+            }
+
+            var array = new JoystickHats[count];
+            for (var i = 0; i < count; i++)
+            {
+                array[i] = ptr[i];
+            }
+
+            return array;
         }
 
         /// <summary>
@@ -1501,12 +2154,58 @@ namespace OpenToolkit.GraphicsLibraryFramework
         /// Possible errors include <see cref="ErrorCode.NotInitialized"/>, <see cref="ErrorCode.InvalidEnum"/> and <see cref="ErrorCode.PlatformError"/>.
         /// </para>
         /// </remarks>
-        public static unsafe JoystickHats* GetJoystickHats(int jid, out int count)
+        public static unsafe JoystickHats* GetJoystickHatsRaw(int jid, out int count)
         {
-            int c;
-            var ptr = glfwGetJoystickHats(jid, &c);
-            count = c;
-            return ptr;
+            fixed (int* ptr = &count)
+            {
+                return glfwGetJoystickHats(jid, ptr);
+            }
+        }
+
+        /// <summary>
+        /// <para>
+        /// This function returns the state of all hats of the specified joystick.
+        /// Each element in the array is one of the <see cref="JoystickHats"/>.
+        /// </para>
+        /// <para>
+        /// The diagonal directions are bitwise combinations of the primary (up, right, down and left) directions
+        /// and you can test for these individually by ANDing it with the corresponding direction.
+        /// <code>
+        /// if (hats[2].HasFlag(JoystickHats.Right))
+        /// {
+        ///    // State of hat 2 could be right-up, right or right-down
+        /// }
+        /// </code>
+        /// </para>
+        /// <para>
+        /// If the specified joystick is not present, this function will return NULL but will not generate an error.
+        /// This can be used instead of first calling <see cref="JoystickPresent"/>.
+        /// </para>
+        /// </summary>
+        /// <param name="jid">The joystick to query.</param>
+        /// <param name="count">
+        /// Where to store the number of hat states in the returned array.
+        /// This is set to zero if the joystick is not present or an error occurred.
+        /// </param>
+        /// <returns>
+        /// An array of hat states, or <c>null</c> if the joystick is not present or an error occurred.
+        /// </returns>
+        /// <remarks>
+        /// <para>
+        /// The returned array is allocated and freed by GLFW. You should not free it yourself
+        /// It is valid until the specified joystick is disconnected,
+        /// this function is called again for that joystick or the library is terminated.
+        /// </para>
+        /// <para>
+        /// This function must only be called from the main thread.
+        /// </para>
+        /// <para>
+        /// Possible errors include <see cref="ErrorCode.NotInitialized"/>, <see cref="ErrorCode.InvalidEnum"/> and <see cref="ErrorCode.PlatformError"/>.
+        /// </para>
+        /// </remarks>
+        public static unsafe JoystickHats* GetJoystickHatsRaw(int jid, int* count)
+        {
+            return glfwGetJoystickHats(jid, count);
         }
 
         /// <summary>
@@ -1537,6 +2236,36 @@ namespace OpenToolkit.GraphicsLibraryFramework
         public static unsafe string GetJoystickName(int jid)
         {
             return PtrToStringUTF8(glfwGetJoystickName(jid));
+        }
+
+        /// <summary>
+        /// <para>
+        /// This function returns the name, encoded as UTF-8, of the specified joystick.
+        /// </para>
+        /// <para>
+        /// If the specified joystick is not present this function will return <c>null</c> but will not generate an error.
+        /// This can be used instead of first calling <see cref="JoystickPresent"/>.
+        /// </para>
+        /// </summary>
+        /// <param name="jid">The joystick to query.</param>
+        /// <returns>
+        /// The UTF-8 encoded name of the joystick, or <c>null</c> if the joystick is not present or an error occurred.
+        /// </returns>
+        /// <remarks>
+        /// <para>
+        /// The returned string is allocated and freed by GLFW. You should not free it yourself.
+        /// It is valid until the specified joystick is disconnected or the library is terminated.
+        /// </para>
+        /// <para>
+        /// This function must only be called from the main thread.
+        /// </para>
+        /// <para>
+        /// Possible errors include <see cref="ErrorCode.NotInitialized"/>, <see cref="ErrorCode.InvalidEnum"/> and <see cref="ErrorCode.PlatformError"/>.
+        /// </para>
+        /// </remarks>
+        public static unsafe byte* GetJoystickNameRaw(int jid)
+        {
+            return glfwGetJoystickName(jid);
         }
 
         /// <summary>
@@ -1580,6 +2309,49 @@ namespace OpenToolkit.GraphicsLibraryFramework
         public static unsafe string GetJoystickGUID(int jid)
         {
             return PtrToStringUTF8(glfwGetJoystickGUID(jid));
+        }
+
+        /// <summary>
+        /// <para>
+        /// This function returns the SDL compatible GUID, as a UTF-8 encoded hexadecimal string,
+        /// of the specified joystick.
+        /// The returned string is allocated and freed by GLFW. You should not free it yourself.
+        /// </para>
+        /// <para>
+        /// The GUID is what connects a joystick to a gamepad mapping.
+        /// A connected joystick will always have a GUID even if there is no gamepad mapping assigned to it.
+        /// </para>
+        /// <para>
+        /// If the specified joystick is not present this function will return <c>null</c> but will not generate an error.
+        /// This can be used instead of first calling <see cref="JoystickPresent"/>.
+        /// </para>
+        /// <para>
+        /// The GUID uses the format introduced in SDL 2.0.5.
+        /// This GUID tries to uniquely identify the make and model of a joystick but does not identify a specific unit,
+        /// e.g. all wired Xbox 360 controllers will have the same GUID on that platform.
+        /// The GUID for a unit may vary between platforms
+        /// depending on what hardware information the platform specific APIs provide.
+        /// </para>
+        /// </summary>
+        /// <param name="jid">The joystick to query.</param>
+        /// <returns>
+        /// The UTF-8 encoded GUID of the joystick, or <c>null</c> if the joystick is not present or an error occurred.
+        /// </returns>
+        /// <remarks>
+        /// <para>
+        /// The returned string is allocated and freed by GLFW. You should not free it yourself.
+        /// It is valid until the specified joystick is disconnected or the library is terminated.
+        /// </para>
+        /// <para>
+        /// This function must only be called from the main thread.
+        /// </para>
+        /// <para>
+        /// Possible errors include <see cref="ErrorCode.NotInitialized"/>, <see cref="ErrorCode.InvalidEnum"/> and <see cref="ErrorCode.PlatformError"/>.
+        /// </para>
+        /// </remarks>
+        public static unsafe byte* GetJoystickGUIDRaw(int jid)
+        {
+            return glfwGetJoystickGUID(jid);
         }
 
         /// <summary>
@@ -1707,6 +2479,41 @@ namespace OpenToolkit.GraphicsLibraryFramework
 
         /// <summary>
         /// <para>
+        /// This function parses the specified ASCII encoded string
+        /// and updates the internal list with any gamepad mappings it finds.
+        /// </para>
+        /// <para>
+        /// This string may contain either a single gamepad mapping or many mappings separated by newlines.
+        /// </para>
+        /// <para>
+        /// The parser supports the full format of the gamecontrollerdb.txt source file
+        /// including empty lines and comments.
+        /// </para>
+        /// <para>
+        /// See <a href="https://www.glfw.org/docs/3.3/input_guide.html#gamepad_mapping">Gamepad mappings</a>
+        /// for a description of the format.
+        /// </para>
+        /// <para>
+        /// If there is already a gamepad mapping for a given GUID in the internal list, it will be replaced by the one passed to this function. If the library is terminated and re-initialized the internal list will revert to the built-in default.
+        /// </para>
+        /// </summary>
+        /// <param name="newMapping">The string containing the gamepad mappings.</param>
+        /// <returns><c>true</c> if successful, or <c>false</c> if an error occurred.</returns>
+        /// <remarks>
+        /// <para>
+        /// This function must only be called from the main thread.
+        /// </para>
+        /// <para>
+        /// Possible errors include <see cref="ErrorCode.NotInitialized"/> and <see cref="ErrorCode.InvalidValue"/>.
+        /// </para>
+        /// </remarks>
+        public static unsafe bool UpdateGamepadMappingsRaw(byte* newMapping)
+        {
+            return glfwUpdateGamepadMappings(newMapping) == GLFW_TRUE;
+        }
+
+        /// <summary>
+        /// <para>
         /// This function returns the human-readable name of the gamepad
         /// from the gamepad mapping assigned to the specified joystick.
         /// </para>
@@ -1736,6 +2543,39 @@ namespace OpenToolkit.GraphicsLibraryFramework
         public static unsafe string GetGamepadName(int jid)
         {
             return PtrToStringUTF8(glfwGetGamepadName(jid));
+        }
+
+        /// <summary>
+        /// <para>
+        /// This function returns the human-readable name of the gamepad
+        /// from the gamepad mapping assigned to the specified joystick.
+        /// </para>
+        /// <para>
+        /// If the specified joystick is not present or does not have a gamepad mapping
+        /// this function will return <c>null</c> but will not generate an error.
+        /// </para>
+        /// </summary>
+        /// <param name="jid">The joystick to query.</param>
+        /// <returns>
+        /// The UTF-8 encoded name of the gamepad, or <c>null</c> if the joystick is not present,
+        /// does not have a mapping or an error occurred.
+        /// </returns>
+        /// <remarks>
+        /// <para>
+        /// Call <see cref="JoystickPresent"/> to check whether it is present regardless of whether it has a mapping.
+        /// </para>
+        /// <para>
+        /// The returned string is allocated and freed by GLFW. You should not free it yourself.
+        /// It is valid until the specified joystick is disconnected,
+        /// the gamepad mappings are updated or the library is terminated.
+        /// </para>
+        /// <para>
+        /// This function must only be called from the main thread.
+        /// </para>
+        /// </remarks>
+        public static unsafe byte* GetGamepadNameRaw(int jid)
+        {
+            return glfwGetGamepadName(jid);
         }
 
         /// <summary>
@@ -1775,6 +2615,42 @@ namespace OpenToolkit.GraphicsLibraryFramework
             {
                 return glfwGetGamepadState(jid, ptr) == GLFW_TRUE;
             }
+        }
+
+        /// <summary>
+        /// <para>
+        /// This function retrieves the state of the specified joystick remapped to an Xbox-like gamepad.
+        /// </para>
+        /// <para>
+        /// If the specified joystick is not present or does not have a gamepad mapping
+        /// this function will return <c>false</c> but will not generate an error.
+        /// Call <see cref="JoystickPresent"/> to check whether it is present regardless of whether it has a mapping.
+        /// </para>
+        /// <para>
+        /// The Guide button may not be available for input as it is often hooked by the system or the Steam client.
+        /// </para>
+        /// <para>
+        /// Not all devices have all the buttons or axes provided by <see cref="GamepadState"/>.
+        /// Unavailable buttons and axes will always report <see cref="InputAction.Release"/> and 0.0 respectively.
+        /// </para>
+        /// </summary>
+        /// <param name="jid">The joystick to query.</param>
+        /// <param name="state">The gamepad input state of the joystick.</param>
+        /// <returns>
+        /// <c>true</c> if successful, or <c>false</c> if no joystick is connected,
+        /// it has no gamepad mapping or an error occurred.
+        /// </returns>
+        /// <remarks>
+        /// <para>
+        /// This function must only be called from the main thread.
+        /// </para>
+        /// <para>
+        /// Possible errors include <see cref="ErrorCode.NotInitialized"/> and <see cref="ErrorCode.InvalidEnum"/>.
+        /// </para>
+        /// </remarks>
+        public static unsafe bool GetGamepadStateRaw(int jid, GamepadState* state)
+        {
+            return glfwGetGamepadState(jid, state) == GLFW_TRUE;
         }
 
         /// <summary>
@@ -1948,6 +2824,106 @@ namespace OpenToolkit.GraphicsLibraryFramework
         }
 
         /// <summary>
+        /// This function returns the address of the specified OpenGL or OpenGL ES core or extension function, if it is supported by the current context.
+        /// A context must be current on the calling thread. Calling this function without a current context will cause a <see cref="ErrorCode.NoContext"/> error.
+        /// </summary>
+        /// <remarks>
+        /// <para>
+        /// This function does not apply to Vulkan. If you are rendering with Vulkan, see <see cref="GetInstanceProcAddress"/>, <c>vkGetInstanceProcAddr</c> and <c>vkGetDeviceProcAddr</c> instead.
+        /// </para>
+        /// <para>
+        /// Possible errors include <see cref="ErrorCode.NotInitialized"/>, <see cref="ErrorCode.NoContext"/> and <see cref="ErrorCode.PlatformError"/>.
+        /// </para>
+        /// <para>
+        /// The address of a given function is not guaranteed to be the same between contexts.
+        /// This function may return a non-<c>null</c> address despite the associated version or extension not being available. Always check the context version or extension string first.
+        /// </para>
+        /// <para>
+        /// The returned function pointer is valid until the context is destroyed or the library is terminated.
+        /// </para>
+        /// <para>
+        /// This function may be called from any thread.
+        /// </para>
+        /// </remarks>
+        /// <param name="procName">The name of the function.</param>
+        /// <returns>The address of the function, or <c>null</c> if an error occurred.</returns>
+        /// <seealso cref="ExtensionSupported" />
+        public static unsafe IntPtr GetProcAddress(string procName)
+        {
+            var ptr = StringToCoTaskMemUTF8(procName);
+
+            try
+            {
+                return glfwGetProcAddress((byte*)ptr);
+            }
+            finally
+            {
+                Marshal.FreeCoTaskMem(ptr);
+            }
+        }
+
+        /// <summary>
+        /// This function returns the address of the specified OpenGL or OpenGL ES core or extension function, if it is supported by the current context.
+        /// A context must be current on the calling thread. Calling this function without a current context will cause a <see cref="ErrorCode.NoContext"/> error.
+        /// </summary>
+        /// <remarks>
+        /// <para>
+        /// This function does not apply to Vulkan. If you are rendering with Vulkan, see <see cref="GetInstanceProcAddress"/>, <c>vkGetInstanceProcAddr</c> and <c>vkGetDeviceProcAddr</c> instead.
+        /// </para>
+        /// <para>
+        /// Possible errors include <see cref="ErrorCode.NotInitialized"/>, <see cref="ErrorCode.NoContext"/> and <see cref="ErrorCode.PlatformError"/>.
+        /// </para>
+        /// <para>
+        /// The address of a given function is not guaranteed to be the same between contexts.
+        /// This function may return a non-<c>null</c> address despite the associated version or extension not being available. Always check the context version or extension string first.
+        /// </para>
+        /// <para>
+        /// The returned function pointer is valid until the context is destroyed or the library is terminated.
+        /// </para>
+        /// <para>
+        /// This function may be called from any thread.
+        /// </para>
+        /// </remarks>
+        /// <param name="procName">The ASCII-encoded name of the function.</param>
+        /// <returns>The address of the function, or <c>null</c> if an error occurred.</returns>
+        /// <seealso cref="ExtensionSupported" />
+        public static unsafe IntPtr GetProcAddressRaw(byte* procName)
+        {
+            return glfwGetProcAddress(procName);
+        }
+
+        /// <summary>
+        /// <para>
+        /// This function returns whether the specified API extension is supported
+        /// by the current OpenGL or OpenGL ES context.
+        /// It searches both for client API extension and context creation API extensions.
+        /// </para>
+        /// <para>
+        /// A context must be current on the calling thread.
+        /// Calling this function without a current context will cause a <see cref="ErrorCode.NoWindowContext"/> error.
+        /// </para>
+        /// <para>
+        /// As this functions retrieves and searches one or more extension strings each call,
+        /// it is recommended that you cache its results if it is going to be used frequently.
+        /// The extension strings will not change during the lifetime of a context, so there is no danger in doing this.
+        /// </para>
+        /// </summary>
+        /// <param name="extensionName">The ASCII encoded name of the extension.</param>
+        /// <returns><c>true</c> if the extension is available, or <c>false</c> otherwise.</returns>
+        /// <remarks>
+        /// <para>
+        /// This function may be called from any thread.
+        /// </para>
+        /// <para>
+        /// Possible errors include <see cref="ErrorCode.NotInitialized"/>, <see cref="ErrorCode.NoContext"/>, <see cref="ErrorCode.InvalidValue"/> and <see cref="ErrorCode.PlatformError"/>.
+        /// </para>
+        /// </remarks>
+        public static unsafe bool ExtensionSupportedRaw(byte* extensionName)
+        {
+            return glfwExtensionSupported(extensionName) == GLFW_TRUE;
+        }
+
+        /// <summary>
         /// <para>
         /// This function creates a window and its associated OpenGL or OpenGL ES context.
         /// Most of the options controlling how the window and its context should be created
@@ -2083,6 +3059,133 @@ namespace OpenToolkit.GraphicsLibraryFramework
 
         /// <summary>
         /// <para>
+        /// This function creates a window and its associated OpenGL or OpenGL ES context.
+        /// Most of the options controlling how the window and its context should be created
+        /// are specified with window hints.
+        /// </para>
+        /// <para>
+        /// Successful creation does not change which context is current.
+        /// Before you can use the newly created context, you need to make it current.
+        /// For information about the share parameter, see
+        /// <a href="">Context object sharing</a>.
+        /// </para>
+        /// <para>
+        /// The created window, framebuffer and context may differ from what you requested,
+        /// as not all parameters and hints are
+        /// <a href="https://www.glfw.org/docs/latest/window_guide.html#window_hints_hard">hard constraints</a>.
+        /// This includes the size of the window, especially for full screen windows.
+        /// To query the actual attributes of the created window, framebuffer and context,
+        /// see <see cref="GetWindowAttrib" />, <see cref="GetWindowSize" /> and <see cref="GetFramebufferSize" />.
+        /// </para>
+        /// <para>
+        /// To create a full screen window, you need to specify the monitor the window will cover.
+        /// If no monitor is specified, the window will be windowed mode.
+        /// Unless you have a way for the user to choose a specific monitor,
+        /// it is recommended that you pick the primary monitor.
+        /// For more information on how to query connected monitors, see
+        /// <a href="https://www.glfw.org/docs/latest/monitor_guide.html#monitor_monitors">Retrieving monitors</a>.
+        /// </para>
+        /// <para>
+        /// For full screen windows, the specified size becomes the resolution of the window's desired video mode.
+        /// As long as a full screen window is not iconified,
+        /// the supported video mode most closely matching the desired video mode is set for the specified monitor.
+        /// For more information about full screen windows, including the creation of so called windowed full screen
+        /// or borderless full screen windows, see
+        /// <a href="https://www.glfw.org/docs/latest/window_guide.html#window_windowed_full_screen">
+        /// "Windowed full screen" windows
+        /// </a>.
+        /// </para>
+        /// <para>
+        /// Once you have created the window, you can switch it between windowed and full screen mode
+        /// with <see cref="SetWindowMonitor"/>. If the window has an OpenGL or OpenGL ES context, it will be unaffected.
+        /// </para>
+        /// <para>
+        /// By default, newly created windows use the placement recommended by the window system.
+        /// To create the window at a specific position,
+        /// make it initially invisible using the <see cref="WindowHintBool.Visible"/> window hint,
+        /// set its position(see <see cref="SetWindowPos"/>) and then show it
+        /// (see <see cref="ShowWindow"/>).
+        /// </para>
+        /// <para>
+        /// As long as at least one full screen window is not iconified, the screensaver is prohibited from starting.
+        /// </para>
+        /// <para>
+        /// Window systems put limits on window sizes.
+        /// Very large or very small window dimensions may be overridden by the window system on creation.
+        /// Check the actual size after creation(see <see cref="GetWindowSize" /> or <see cref="SetWindowSizeCallback"/>.
+        /// </para>
+        /// <para>
+        /// The <a href="https://www.glfw.org/docs/latest/window_guide.html#buffer_swap">swap interval</a>
+        /// is not set during window creation and the initial value may vary
+        /// depending on driver settings and defaults.
+        /// </para>
+        /// </summary>
+        /// <param name="width">
+        /// The desired width, in screen coordinates, of the window. This must be greater than zero.
+        /// </param>
+        /// <param name="height">
+        /// The desired height, in screen coordinates, of the window. This must be greater than zero.
+        /// </param>
+        /// <param name="title">The initial, UTF-8 encoded window title.</param>
+        /// <param name="monitor">The monitor to use for full screen mode, or <c>null</c> for windowed mode.</param>
+        /// <param name="share">
+        /// The window whose context to share resources with, or <c>null</c> to not share resources.
+        /// </param>
+        /// <returns>The handle of the created window, or <c>null</c> if an error occurred.</returns>
+        /// <remarks>
+        /// <para>
+        /// Windows: Window creation will fail if the Microsoft GDI software OpenGL implementation is the only one available.
+        /// </para>
+        /// <para>
+        /// Windows: If the executable has an icon resource named GLFW_ICON, it will be set as the initial icon for the window.
+        ///          If no such icon is present, the IDI_WINLOGO icon will be used instead. To set a different icon, see <see cref="SetWindowIcon"/>.
+        /// </para>
+        /// <para>
+        /// Windows: The context to share resources with must not be current on any other thread.
+        /// </para>
+        /// <para>
+        /// OS X: The GLFW window has no icon, as it is not a document window, but the dock icon will be the same as the application bundle's icon.
+        /// For more information on bundles, see the Bundle Programming Guide in the Mac Developer Library.
+        /// </para>
+        /// <para>
+        /// OS X: The first time a window is created the menu bar is populated with common commands like Hide, Quit and About.
+        ///       The About entry opens a minimal about dialog with information from the application's bundle.
+        ///       The menu bar can be disabled with a compile-time option.
+        /// </para>
+        /// <para>
+        /// OS X: On OS X 10.10 and later the window frame will not be rendered at full resolution on Retina displays
+        ///       unless the NSHighResolutionCapable key is enabled in the application bundle's Info.plist.
+        ///       For more information, see High Resolution Guidelines for OS X in the Mac Developer Library.
+        ///       The GLFW test and example programs use a custom Info.plist template for this, which can be found as CMake/MacOSXBundleInfo.plist.in in the source tree.
+        /// </para>
+        /// <para>
+        /// X11: Some window managers will not respect the placement of initially hidden windows.
+        /// X11: Due to the asynchronous nature of X11, it may take a moment for a window to reach its requested state.
+        ///      This means you may not be able to query the final size, position or other attributes directly after window creation.
+        /// </para>
+        /// <para>
+        /// This function must not be called from a callback.
+        /// </para>
+        /// <para>
+        /// This function must only be called from the main thread.
+        /// </para>
+        /// <para>
+        /// Possible errors include <see cref="ErrorCode.NotInitialized"/>, <see cref="ErrorCode.InvalidEnum"/>, <see cref="ErrorCode.InvalidValue"/>, <see cref="ErrorCode.ApiUnavailable"/>,
+        /// <see cref="ErrorCode.VersionUnavailable"/>, <see cref="ErrorCode.FormatUnavailable"/> and <see cref="ErrorCode.PlatformError"/>.
+        /// </para>
+        /// </remarks>
+        public static unsafe Window* CreateWindowRaw(
+            int width,
+            int height,
+            byte* title,
+            Monitor* monitor,
+            Window* share)
+        {
+            return glfwCreateWindow(width, height, title, monitor, share);
+        }
+
+        /// <summary>
+        /// <para>
         /// This function destroys the specified window and its context. On calling this function,
         /// no further callbacks will be called for that window.
         /// </para>
@@ -2165,6 +3268,35 @@ namespace OpenToolkit.GraphicsLibraryFramework
 
         /// <summary>
         /// <para>
+        /// This function returns the contents of the system clipboard,
+        /// if it contains or is convertible to a UTF-8 encoded string.
+        /// </para>
+        /// </summary>
+        /// <param name="window">The window that will request the clipboard contents.</param>
+        /// <returns>
+        /// The contents of the clipboard as a UTF-8 encoded string, or <c>null</c> if an error occurred.
+        /// </returns>
+        /// <remarks>
+        /// <para>
+        /// This function may only be called from the main thread.
+        /// </para>
+        /// <para>
+        /// The returned string is allocated and freed by GLFW. You should not free it yourself.
+        /// The returned string is valid only until the next call to <see cref="GetClipboardString"/> or
+        /// <see cref="SetClipboardString"/>.
+        /// </para>
+        /// <para>
+        /// Possible errors include <see cref="ErrorCode.NotInitialized"/> and <see cref="ErrorCode.PlatformError"/>.
+        /// </para>
+        /// </remarks>
+        /// <seealso cref="SetClipboardString"/>
+        public static unsafe byte* GetClipboardStringRaw(Window* window)
+        {
+            return glfwGetClipboardString(window);
+        }
+
+        /// <summary>
+        /// <para>
         /// This function retrieves the size, in pixels, of the framebuffer of the specified window.
         /// If you wish to retrieve the size of the window in screen coordinates, see <see cref="GetWindowSize"/>.
         /// </para>
@@ -2190,6 +3322,32 @@ namespace OpenToolkit.GraphicsLibraryFramework
             glfwGetFramebufferSize(window, &w, &h);
             width = w;
             height = h;
+        }
+
+        /// <summary>
+        /// <para>
+        /// This function retrieves the size, in pixels, of the framebuffer of the specified window.
+        /// If you wish to retrieve the size of the window in screen coordinates, see <see cref="GetWindowSize"/>.
+        /// </para>
+        /// <para>
+        /// Any or all of the size arguments may be <c>out _</c>.
+        /// If an error occurs, all non-<c>out _</c> size arguments will be set to zero.
+        /// </para>
+        /// </summary>
+        /// <param name="window">The window whose framebuffer to query.</param>
+        /// <param name="width">Where to store the width, in pixels, of the framebuffer.</param>
+        /// <param name="height">Where to store the height, in pixels, of the framebuffer.</param>
+        /// <remarks>
+        /// <para>
+        /// This function must only be called from the main thread.
+        /// </para>
+        /// <para>
+        /// Possible errors include <see cref="ErrorCode.NotInitialized"/> and <see cref="ErrorCode.PlatformError"/>.
+        /// </para>
+        /// </remarks>
+        public static unsafe void GetFramebufferSizeRaw(Window* window, int* width, int* height)
+        {
+            glfwGetFramebufferSize(window, width, height);
         }
 
         /// <summary>
@@ -2351,6 +3509,33 @@ namespace OpenToolkit.GraphicsLibraryFramework
 
         /// <summary>
         /// <para>
+        /// This function retrieves the size, in screen coordinates, of the client area of the specified window.
+        /// If you wish to retrieve the size of the framebuffer of the window in pixels, see <see cref="GetFramebufferSize"/>.
+        /// </para>
+        /// <para>
+        /// Any or all of the size arguments may be <c>out _</c>.
+        /// If an error occurs, all non-<c>out _</c> size arguments will be set to zero.
+        /// </para>
+        /// </summary>
+        /// <param name="window">The window whose size to retrieve.</param>
+        /// <param name="width">Where to store the width, in screen coordinates, of the client area.</param>
+        /// <param name="height">Where to store the height, in screen coordinates, of the client area.</param>
+        /// <remarks>
+        /// <para>
+        /// This function must only be called from the main thread.
+        /// </para>
+        /// <para>
+        /// Possible errors include <see cref="ErrorCode.NotInitialized"/> and <see cref="ErrorCode.PlatformError"/>.
+        /// </para>
+        /// </remarks>
+        /// <seealso cref="SetWindowSize"/>
+        public static unsafe void GetWindowSizeRaw(Window* window, int* width, int* height)
+        {
+            glfwGetWindowSize(window, width, height);
+        }
+
+        /// <summary>
+        /// <para>
         /// This function retrieves the position, in screen coordinates,
         /// of the upper-left corner of the client area of the specified window.
         /// </para>
@@ -2377,6 +3562,33 @@ namespace OpenToolkit.GraphicsLibraryFramework
             glfwGetWindowPos(window, &lX, &lY);
             x = lX;
             y = lY;
+        }
+
+        /// <summary>
+        /// <para>
+        /// This function retrieves the position, in screen coordinates,
+        /// of the upper-left corner of the client area of the specified window.
+        /// </para>
+        /// <para>
+        /// Any or all of the position arguments may be <c>out _</c>.
+        /// If an error occurs, all non-<c>out _</c> position arguments will be set to zero.
+        /// </para>
+        /// </summary>
+        /// <param name="window">The window to query.</param>
+        /// <param name="x">Where to store the x-coordinate of the upper-left corner of the client area.</param>
+        /// <param name="y">Where to store the y-coordinate of the upper-left corner of the client area.</param>
+        /// <remarks>
+        /// <para>
+        /// This function must only be called from the main thread.
+        /// </para>
+        /// <para>
+        /// Possible errors include <see cref="ErrorCode.NotInitialized"/> and <see cref="ErrorCode.PlatformError"/>.
+        /// </para>
+        /// </remarks>
+        /// <seealso cref="SetWindowPos"/>
+        public static unsafe void GetWindowPosRaw(Window* window, int* x, int* y)
+        {
+            glfwGetWindowPos(window, x, y);
         }
 
         /// <summary>
@@ -2672,6 +3884,30 @@ namespace OpenToolkit.GraphicsLibraryFramework
             {
                 Marshal.FreeCoTaskMem(ptr);
             }
+        }
+
+        /// <summary>
+        /// <para>
+        /// This function sets the system clipboard to the specified, UTF-8 encoded string.
+        /// </para>
+        /// </summary>
+        /// <param name="window">The window that will own the clipboard contents. </param>
+        /// <param name="data">A UTF-8 encoded string.</param>
+        /// <remarks>
+        /// <para>
+        /// The specified string is copied before this function returns.
+        /// </para>
+        /// <para>
+        /// This function must only be called from the main thread.
+        /// </para>
+        /// <para>
+        /// Possible errors include <see cref="ErrorCode.NotInitialized"/> and <see cref="ErrorCode.PlatformError"/>.
+        /// </para>
+        /// </remarks>
+        /// <seealso cref="GetClipboardString"/>
+        public static unsafe void SetClipboardStringRaw(Window* window, byte* data)
+        {
+            glfwSetClipboardString(window, data);
         }
 
         /// <summary>
@@ -3102,6 +4338,44 @@ namespace OpenToolkit.GraphicsLibraryFramework
         /// </para>
         /// </summary>
         /// <param name="window">The window whose icon to set.</param>
+        /// <param name="images">The images to create the icon from. If zero images are passed, the window is reset to the default icon.</param>
+        /// <remarks>
+        /// <para>
+        /// This function must only be called from the main thread.
+        /// </para>
+        /// <para>
+        /// The specified image data is copied before this function returns.
+        /// </para>
+        /// <para>
+        /// OS X: The GLFW window has no icon, as it is not a document window, so this function does nothing.
+        /// The dock icon will be the same as the application bundle's icon. For more information on bundles,
+        /// see the Bundle Programming Guide in the Mac Developer Library.
+        /// </para>
+        /// </remarks>
+        public static unsafe void SetWindowIcon(Window* window, ReadOnlySpan<Image> images)
+        {
+            fixed (Image* ptr = images)
+            {
+                glfwSetWindowIcon(window, images.Length, ptr);
+            }
+        }
+
+        /// <summary>
+        /// <para>
+        /// This function sets the icon of the specified window.
+        /// </para>
+        /// <para>
+        /// If passed an array of candidate images, those of or closest to the sizes desired by the system are selected.
+        /// </para>
+        /// <para>
+        /// If no images are specified, the window reverts to its default icon.
+        /// </para>
+        /// <para>
+        /// The desired image sizes varies depending on platform and system settings.
+        /// The selected images will be rescaled as needed. Good sizes include 16x16, 32x32 and 48x48.
+        /// </para>
+        /// </summary>
+        /// <param name="window">The window whose icon to set.</param>
         /// <param name="count">The number of images in the specified array, or zero to revert to the default window icon.</param>
         /// <param name="images">The images to create the icon from. This is ignored if count is zero.</param>
         /// <remarks>
@@ -3117,7 +4391,7 @@ namespace OpenToolkit.GraphicsLibraryFramework
         /// see the Bundle Programming Guide in the Mac Developer Library.
         /// </para>
         /// </remarks>
-        public static unsafe void SetWindowIcon(Window* window, int count, Image* images)
+        public static unsafe void SetWindowIconRaw(Window* window, int count, Image* images)
         {
             glfwSetWindowIcon(window, count, images);
         }
@@ -3419,6 +4693,29 @@ namespace OpenToolkit.GraphicsLibraryFramework
             {
                 Marshal.FreeCoTaskMem(ptr);
             }
+        }
+
+        /// <summary>
+        /// <para>
+        /// This function sets the window title, encoded as UTF-8, of the specified window.
+        /// </para>
+        /// </summary>
+        /// <param name="window">The window whose title to change.</param>
+        /// <param name="title">The UTF-8 encoded window title.</param>
+        /// <remarks>
+        /// <para>
+        /// This function must only be called from the main thread.
+        /// </para>
+        /// <para>
+        /// OS X: The window title will not be updated until the next time you process events.
+        /// </para>
+        /// <para>
+        /// Possible errors include <see cref="ErrorCode.NotInitialized"/> and <see cref="ErrorCode.PlatformError"/>.
+        /// </para>
+        /// </remarks>
+        public static unsafe void SetWindowTitleRaw(Window* window, byte* title)
+        {
+            glfwSetWindowTitle(window, title);
         }
 
         /// <summary>
@@ -3869,12 +5166,116 @@ namespace OpenToolkit.GraphicsLibraryFramework
         /// <returns>
         /// An array of ASCII encoded extension names, or <c>null</c> if an error occurred.
         /// </returns>
-        public static unsafe byte** GetRequiredInstanceExtensions(out uint count)
+        public static unsafe byte** GetRequiredInstanceExtensionsRaw(out uint count)
         {
-            uint c;
-            var ptr = glfwGetRequiredInstanceExtensions(&c);
-            count = c;
-            return ptr;
+            fixed (uint* ptr = &count)
+            {
+                return glfwGetRequiredInstanceExtensions(ptr);
+            }
+        }
+
+        /// <summary>
+        /// Returns the Vulkan instance extensions required by GLFW.
+        /// </summary>
+        /// <remarks>
+        /// <para>
+        /// This function returns an array of names of Vulkan instance extensions required by GLFW for
+        /// creating Vulkan surfaces for GLFW windows. If successful, the list will always contains
+        /// <c>VK_KHR_surface</c>, so if you don't require any additional extensions you can
+        /// pass this list directly to the <c>VkInstanceCreateInfo</c> struct.
+        /// </para>
+        /// <para>
+        /// If Vulkan is not available on the machine, this function returns <c>null</c> and generates
+        /// a <see cref="ErrorCode.NotInitialized"/> error. Call <see cref="VulkanSupported"/> to check
+        /// whether Vulkan is at least minimally available.
+        /// </para>
+        /// <para>
+        /// If Vulkan is available but no set of extensions allowing window surface creation was found,
+        /// this function returns <c>null</c>. You may still use Vulkan for off-screen rendering and compute work.
+        /// </para>
+        /// <para>
+        /// Additional extensions may be required by future versions of GLFW.
+        /// You should check if any extensions you wish to enable are already in the returned array,
+        /// as it is an error to specify an extension more than once in the <c>VkInstanceCreateInfo</c> struct.
+        /// </para>
+        /// <para>
+        /// macOS: This function currently only supports the <c>VK_MVK_macos_surface</c> extension from MoltenVK.
+        /// </para>
+        /// <para>
+        /// Possible errors include <see cref="ErrorCode.NotInitialized"/> and <see cref="ErrorCode.ApiUnavailable"/>.
+        /// </para>
+        /// <para>
+        /// The returned array is allocated and freed by GLFW. You should not free it yourself.
+        /// It is guaranteed to be valid only until the library is terminated.
+        /// </para>
+        /// <para>
+        /// This function may be called from any thread.
+        /// </para>
+        /// </remarks>
+        /// <param name="count">
+        /// Where to store the number of extensions in the returned array.
+        /// This is set to zero if an error occurred.
+        /// </param>
+        /// <returns>
+        /// An array of ASCII encoded extension names, or <c>null</c> if an error occurred.
+        /// </returns>
+        public static unsafe byte** GetRequiredInstanceExtensionsRaw(uint* count)
+        {
+            return glfwGetRequiredInstanceExtensions(count);
+        }
+
+        /// <summary>
+        /// Returns the Vulkan instance extensions required by GLFW.
+        /// </summary>
+        /// <remarks>
+        /// <para>
+        /// This function returns an array of names of Vulkan instance extensions required by GLFW for
+        /// creating Vulkan surfaces for GLFW windows. If successful, the list will always contains
+        /// <c>VK_KHR_surface</c>, so if you don't require any additional extensions you can
+        /// pass this list directly to the <c>VkInstanceCreateInfo</c> struct.
+        /// </para>
+        /// <para>
+        /// If Vulkan is not available on the machine, this function returns <c>null</c> and generates
+        /// a <see cref="ErrorCode.NotInitialized"/> error. Call <see cref="VulkanSupported"/> to check
+        /// whether Vulkan is at least minimally available.
+        /// </para>
+        /// <para>
+        /// If Vulkan is available but no set of extensions allowing window surface creation was found,
+        /// this function returns <c>null</c>. You may still use Vulkan for off-screen rendering and compute work.
+        /// </para>
+        /// <para>
+        /// Additional extensions may be required by future versions of GLFW.
+        /// You should check if any extensions you wish to enable are already in the returned array,
+        /// as it is an error to specify an extension more than once in the <c>VkInstanceCreateInfo</c> struct.
+        /// </para>
+        /// <para>
+        /// macOS: This function currently only supports the <c>VK_MVK_macos_surface</c> extension from MoltenVK.
+        /// </para>
+        /// <para>
+        /// Possible errors include <see cref="ErrorCode.NotInitialized"/> and <see cref="ErrorCode.ApiUnavailable"/>.
+        /// </para>
+        /// <para>
+        /// The returned array is allocated and freed by GLFW. You should not free it yourself.
+        /// It is guaranteed to be valid only until the library is terminated.
+        /// </para>
+        /// <para>
+        /// This function may be called from any thread.
+        /// </para>
+        /// </remarks>
+        /// <returns>
+        /// An array of ASCII encoded extension names, or <c>null</c> if an error occurred.
+        /// </returns>
+        public static unsafe string[] GetRequiredInstanceExtensions()
+        {
+            var ptr = GetRequiredInstanceExtensionsRaw(out var count);
+
+            var array = new string[count];
+            for (var i = 0; i < count; i++)
+            {
+                array[i] = PtrToStringUTF8(ptr[i]);
+            }
+
+            return array;
         }
 
         /// <summary>
@@ -3927,6 +5328,49 @@ namespace OpenToolkit.GraphicsLibraryFramework
             {
                 Marshal.FreeCoTaskMem(ptr);
             }
+        }
+
+        /// <summary>
+        /// Returns the address of the specified Vulkan instance function.
+        /// </summary>
+        /// <remarks>
+        /// <para>
+        /// This function returns the address of the specified Vulkan core or extension function for
+        /// the specified instance. If instance is set to <c>null</c> it can return any function exported
+        /// from the Vulkan loader, including at least the following functions:
+        /// </para>
+        /// <list type="bullet">
+        /// <item>
+        /// <description><c>vkEnumerateInstanceExtensionProperties</c></description>
+        /// <description><c>vkEnumerateInstanceLayerProperties</c></description>
+        /// <description><c>vkCreateInstance</c></description>
+        /// <description><c>vkGetInstanceProcAddr</c></description>
+        /// </item>
+        /// </list>
+        /// <para>
+        /// If Vulkan is not available on the machine, this function returns <c>null</c> and generates
+        /// a <see cref="ErrorCode.NotInitialized"/> error. Call <see cref="VulkanSupported"/> to check
+        /// whether Vulkan is at least minimally available.
+        /// </para>
+        /// <para>
+        /// This function is equivalent to calling <c>vkGetInstanceProcAddr</c> with a platform-specific
+        /// query of the Vulkan loader as a fallback.
+        /// </para>
+        /// <para>
+        /// Possible errors include <see cref="ErrorCode.NotInitialized"/> and <see cref="ErrorCode.ApiUnavailable"/>.
+        /// </para>
+        /// <para>
+        /// The returned function pointer is valid until the library is terminated.
+        /// </para>
+        /// </remarks>
+        /// <param name="instance">
+        /// The Vulkan instance to query, or <c>null</c> to retrieve functions related to instance creation.
+        /// </param>
+        /// <param name="procName">The ASCII encoded name of the function.</param>
+        /// <returns>The address of the function, or <c>null</c> if an error occurred.</returns>
+        public static unsafe IntPtr GetInstanceProcAddressRaw(VkHandle instance, byte* procName)
+        {
+            return glfwGetInstanceProcAddress(instance, procName);
         }
 
         /// <summary>
@@ -4026,7 +5470,11 @@ namespace OpenToolkit.GraphicsLibraryFramework
         /// <returns>
         /// <c>VK_SUCCESS</c> if successful, or a Vulkan error code if an error occurred.
         /// </returns>
-        public static unsafe int CreateWindowSurface(VkHandle instance, Window* window, void* allocator, VkHandle surface)
+        public static unsafe int CreateWindowSurface(
+            VkHandle instance,
+            Window* window,
+            void* allocator,
+            VkHandle surface)
         {
             return glfwCreateWindowSurface(instance, window, allocator, surface);
         }

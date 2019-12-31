@@ -12,7 +12,7 @@ namespace OpenToolkit.GraphicsLibraryFramework
     /// <summary>
     /// Used to set context robustness attribute.
     /// </summary>
-    /// <seealso cref="IGLFW.WindowHint(WindowHintRobustness,Robustness)"/>
+    /// <seealso cref="GLFW.WindowHint(WindowHintRobustness,Robustness)"/>
     public enum WindowHintRobustness
     {
         /// <summary>

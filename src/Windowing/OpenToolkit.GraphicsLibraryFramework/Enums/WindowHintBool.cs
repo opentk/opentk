@@ -12,7 +12,7 @@ namespace OpenToolkit.GraphicsLibraryFramework
     /// <summary>
     /// Context related boolean attributes.
     /// </summary>
-    /// <seealso cref="IGLFW.WindowHint(WindowHintBool,bool)"/>
+    /// <seealso cref="GLFW.WindowHint(WindowHintBool,bool)"/>
     public enum WindowHintBool
     {
         /// <summary>
@@ -23,7 +23,7 @@ namespace OpenToolkit.GraphicsLibraryFramework
 
         /// <summary>
         /// Indicates whether the specified window is iconified,
-        /// whether by the user or with <see cref="IGLFW.IconifyWindow"/>.
+        /// whether by the user or with <see cref="GLFW.IconifyWindow"/>.
         /// </summary>
         Iconified = 0x00020002,
 
@@ -35,7 +35,7 @@ namespace OpenToolkit.GraphicsLibraryFramework
 
         /// <summary>
         /// Indicates whether the specified window is visible.
-        /// Window visibility can be controlled with <see cref="IGLFW.ShowWindow"/> and <see cref="IGLFW.HideWindow"/>
+        /// Window visibility can be controlled with <see cref="GLFW.ShowWindow"/> and <see cref="GLFW.HideWindow"/>
         /// and initial visibility is controlled by the window hint with the same name.
         /// </summary>
         Visible = 0x00020004,
@@ -61,7 +61,7 @@ namespace OpenToolkit.GraphicsLibraryFramework
 
         /// <summary>
         /// Indicates whether the specified window is maximized,
-        /// whether by the user or with <see cref="IGLFW.MaximizeWindow"/>.
+        /// whether by the user or with <see cref="GLFW.MaximizeWindow"/>.
         /// </summary>
         Maximized = 0x00020008,
 
@@ -88,7 +88,7 @@ namespace OpenToolkit.GraphicsLibraryFramework
         Hovered = 0x0002000B,
 
         /// <summary>
-        /// Specifies whether the window will be given input focus when <see cref="IGLFW.ShowWindow"/> is called.
+        /// Specifies whether the window will be given input focus when <see cref="GLFW.ShowWindow"/> is called.
         /// Possible values are <c>true</c> and <c>false</c>.
         /// </summary>
         FocusOnShow = 0x0002000C,

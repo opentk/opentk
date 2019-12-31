@@ -1,4 +1,4 @@
-image: Visual Studio 2017
+image: Visual Studio 2019
 
 version: 4.0.0.{build}
 
@@ -11,7 +11,7 @@ install:
 configuration: Release
 
 build_script:
-  - build.cmd
+  - build.cmd -t RunCITests
 
 on_finish:
   - "powershell ./install-opengl.ps1 uninstall"

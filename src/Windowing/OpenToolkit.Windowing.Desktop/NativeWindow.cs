@@ -110,10 +110,7 @@ namespace OpenToolkit.Windowing.Desktop
                         glfwImages[i] = new GraphicsLibraryFramework.Image(image.Width, image.Height, addrOfPinnedObject);
                     }
 
-                    fixed (GraphicsLibraryFramework.Image* ptr = glfwImages)
-                    {
-                        GLFW.SetWindowIcon(WindowPtr, images.Length, ptr);
-                    }
+                    GLFW.SetWindowIcon(WindowPtr, glfwImages);
 
                     foreach (var handle in handles)
                     {
@@ -406,7 +403,7 @@ namespace OpenToolkit.Windowing.Desktop
                         fixed (byte* ptr = value.Data)
                         {
                             var cursorImg = new GraphicsLibraryFramework.Image(value.Width, value.Height, ptr);
-                            _glfwCursor = GLFW.CreateCursor(&cursorImg, value.X, value.Y);
+                            _glfwCursor = GLFW.CreateCursor(cursorImg, value.X, value.Y);
                         }
                     }
 
@@ -738,13 +735,10 @@ namespace OpenToolkit.Windowing.Desktop
                     if (eventCode == ConnectedState.Connected)
                     {
                         // Initialize the first joystick state.
-                        int hatCount = 0;
-                        GLFW.GetJoystickHats(joy, out hatCount);
-                        int axisCount = 0;
-                        GLFW.GetJoystickAxes(joy, out hatCount);
-                        int buttonCount = 0;
-                        GLFW.GetJoystickButtons(joy, out buttonCount);
-                        string name = GLFW.GetJoystickName(joy);
+                        GLFW.GetJoystickHatsRaw(joy, out var hatCount);
+                        GLFW.GetJoystickAxesRaw(joy, out var axisCount);
+                        GLFW.GetJoystickButtonsRaw(joy, out var buttonCount);
+                        var name = GLFW.GetJoystickName(joy);
 
                         JoystickStates[joy] = new JoystickState(hatCount, axisCount, buttonCount, joy, name);
                     }
@@ -866,35 +860,28 @@ namespace OpenToolkit.Windowing.Desktop
             GLFW.GetCursorPos(WindowPtr, out var x, out var y);
             _mouseState.Position = new Vector2((float)x, (float)y);
 
-            for (int i = 0; i < JoystickStates.Length; i++)
+            for (var i = 0; i < JoystickStates.Length; i++)
             {
-                JoystickState joy = JoystickStates[i];
+                var joy = JoystickStates[i];
                 if (joy == default)
                 {
                     continue;
                 }
 
-                int count = 0;
-
-                var h = GLFW.GetJoystickHats(joy.Id, out count);
-                Hat[] hats = new Hat[count];
-                for (int j = 0; j < count; j++)
+                var h = GLFW.GetJoystickHatsRaw(joy.Id, out var count);
+                var hats = new Hat[count];
+                for (var j = 0; j < count; j++)
                 {
                     hats[j] = (Hat)h[j];
                 }
 
-                var a = GLFW.GetJoystickAxes(joy.Id, out count);
-                float[] axes = new float[count];
-                for (int j = 0; j < count; j++)
-                {
-                    axes[j] = a[j];
-                }
+                var axes = GLFW.GetJoystickAxes(joy.Id);
 
-                var b = GLFW.GetJoystickButtons(joy.Id, out count);
+                var b = GLFW.GetJoystickButtonsRaw(joy.Id, out count);
                 var buttons = new bool[count];
-                for (int j = 0; j < buttons.Length; j++)
+                for (var j = 0; j < buttons.Length; j++)
                 {
-                    buttons[j] = b[j] == 1;
+                    buttons[j] = b[j] == InputAction.Press;
                 }
 
                 JoystickStates[i] = new JoystickState(hats, axes, buttons, joy.Id, joy.Name);
@@ -1026,7 +1013,7 @@ namespace OpenToolkit.Windowing.Desktop
              *
              * If the window is not fullscreen, find the monitor manually.
              */
-            GraphicsLibraryFramework.Monitor* value = GLFWProvider.GLFW.Value.GetWindowMonitor(WindowPtr);
+            GraphicsLibraryFramework.Monitor* value = GLFW.GetWindowMonitor(WindowPtr);
             if (value == null)
             {
                 value = DpiCalculator.GetMonitorFromWindow(WindowPtr);

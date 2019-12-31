@@ -44,7 +44,7 @@ namespace OpenToolkit.GraphicsLibraryFramework
         public static extern void glfwTerminate();
 
         [DllImport(LibraryName)]
-        public static extern void glfwInitHint(InitHint hint, int value);
+        public static extern void glfwInitHint(int hint, int value);
 
         [DllImport(LibraryName)]
         public static extern void glfwGetVersion(int* major, int* minor, int* revision);
@@ -119,16 +119,16 @@ namespace OpenToolkit.GraphicsLibraryFramework
         public static extern int glfwRawMouseMotionSupported();
 
         [DllImport(LibraryName)]
-        public static extern byte* glfwGetKeyName(int key, int scancode);
+        public static extern byte* glfwGetKeyName(Keys key, int scancode);
 
         [DllImport(LibraryName)]
-        public static extern int glfwGetKeyScancode(int key);
+        public static extern int glfwGetKeyScancode(Keys key);
 
         [DllImport(LibraryName)]
-        public static extern int glfwGetKey(Window* window, int key);
+        public static extern InputAction glfwGetKey(Window* window, Keys key);
 
         [DllImport(LibraryName)]
-        public static extern int glfwGetMouseButton(Window* window, int button);
+        public static extern InputAction glfwGetMouseButton(Window* window, MouseButton button);
 
         [DllImport(LibraryName)]
         public static extern void glfwGetCursorPos(Window* window, double* xpos, double* ypos);
@@ -155,7 +155,7 @@ namespace OpenToolkit.GraphicsLibraryFramework
         public static extern float* glfwGetJoystickAxes(int jid, int* count);
 
         [DllImport(LibraryName)]
-        public static extern byte* glfwGetJoystickButtons(int jid, int* count);
+        public static extern InputAction* glfwGetJoystickButtons(int jid, int* count);
 
         [DllImport(LibraryName)]
         public static extern JoystickHats* glfwGetJoystickHats(int jid, int* count);
@@ -204,6 +204,9 @@ namespace OpenToolkit.GraphicsLibraryFramework
 
         [DllImport(LibraryName)]
         public static extern int glfwExtensionSupported(byte* extensionName);
+
+        [DllImport(LibraryName)]
+        public static extern IntPtr glfwGetProcAddress(byte* procame);
 
         [DllImport(LibraryName)]
         public static extern Window* glfwCreateWindow(int width, int height, byte* title, Monitor* monitor, Window* share);

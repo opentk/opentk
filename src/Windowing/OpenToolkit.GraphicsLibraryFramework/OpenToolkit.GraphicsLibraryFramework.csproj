@@ -8,7 +8,6 @@
     
     <ItemGroup>
       <ProjectReference Include="..\..\OpenToolkit.Core\OpenToolkit.Core.csproj" />
-      <ProjectReference Include="..\..\OpenToolkit.Mathematics\OpenToolkit.Mathematics.csproj" />
     </ItemGroup>
     
     <ItemGroup>
@@ -16,6 +15,7 @@
         <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         <PrivateAssets>all</PrivateAssets>
       </PackageReference>
+      <PackageReference Condition="'$(TargetFramework)' == 'net472'" Include="System.Memory" Version="4.5" />
       <PackageReference Include="opentoolkit.redist.glfw" Version="3.3.0-pre20190419183326" />
     </ItemGroup>
 

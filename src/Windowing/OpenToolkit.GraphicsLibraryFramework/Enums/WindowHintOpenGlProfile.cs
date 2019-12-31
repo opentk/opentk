@@ -12,7 +12,7 @@ namespace OpenToolkit.GraphicsLibraryFramework
     /// <summary>
     /// Used to set the OpenGlProfile attribute.
     /// </summary>
-    /// <seealso cref="IGLFW.WindowHint(WindowHintOpenGlProfile,OpenGlProfile)"/>
+    /// <seealso cref="GLFW.WindowHint(WindowHintOpenGlProfile,OpenGlProfile)"/>
     public enum WindowHintOpenGlProfile
     {
         /// <summary>
