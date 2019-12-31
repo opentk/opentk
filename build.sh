@@ -35,5 +35,5 @@ else
     PATH="~/.dotnet:$PATH"
 fi
 
-dotnet restore build-bootstrap.csproj
+dotnet tool restore
 dotnet fake run build.fsx $@

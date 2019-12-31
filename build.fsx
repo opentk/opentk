@@ -102,7 +102,7 @@ let nugetCommandRunnerPath =
 let install =
     lazy
         (if (DotNet.getVersion id).StartsWith "3" then id
-    else DotNet.install (fun options -> { options with Version = DotNet.Version "3.1.100" }))
+         else DotNet.install (fun options -> { options with Version = DotNet.Version "3.1.100" }))
 
 // Define general properties across various commands (with arguments)
 let inline withWorkDir wd = DotNet.Options.lift install.Value >> DotNet.Options.withWorkingDirectory wd
