@@ -1101,6 +1101,49 @@ namespace OpenToolkit.GraphicsLibraryFramework
 
         /// <summary>
         /// <para>
+        /// This function retrieves the content scale for the specified window.
+        /// </para>
+        /// <para>
+        /// The content scale is the ratio between the current DPI and the platform's default DPI.
+        /// This is especially important for text and any UI elements.
+        /// If the pixel dimensions of your UI scaled by this look appropriate on your machine then it should
+        /// appear at a reasonable size on other machines regardless of their DPI and scaling settings.
+        /// This relies on the system DPI and scaling settings being somewhat correct.
+        /// </para>
+        ///
+        /// <para>
+        /// On systems where each monitors can have its own content scale,
+        /// the window content scale will depend on which monitor the system considers the window to be on.
+        /// </para>
+        /// </summary>
+        /// <param name="window">The window to query.</param>
+        /// <param name="xScale">
+        /// Where to store the x-axis content scale, or <c>out _</c>.
+        /// </param>
+        /// <param name="yScale">
+        /// Where to store the y-axis content scale, or <c>out _</c>.
+        /// </param>
+        /// <remarks>
+        /// <para>
+        /// This function must only be called from the main thread.
+        /// </para>
+        /// <para>
+        /// Possible errors include <see cref="ErrorCode.NotInitialized"/> and <see cref="ErrorCode.PlatformError"/>.
+        /// </para>
+        /// </remarks>
+        public static unsafe void GetWindowContentScale(
+            Window* window,
+            out float xScale,
+            out float yScale)
+        {
+            float x, y;
+            glfwGetWindowContentScale(window, &x, &y);
+            xScale = x;
+            yScale = y;
+        }
+
+        /// <summary>
+        /// <para>
         /// This function returns the opacity of the window, including any decorations.
         /// </para>
         /// <para>
@@ -3479,6 +3522,53 @@ namespace OpenToolkit.GraphicsLibraryFramework
 
         /// <summary>
         /// <para>
+        /// This function sets the user-defined pointer of the specified window.
+        /// </para>
+        /// <para>
+        /// The current value is retained until the window is destroyed.
+        /// The initial value is <see cref="IntPtr.Zero"/>.
+        /// </para>
+        /// </summary>
+        /// <param name="window">The window whose pointer to set.</param>
+        /// <param name="pointer">The new value.</param>
+        /// <remarks>
+        /// <para>
+        /// This function may be called from any thread. Access is not synchronized.
+        /// </para>
+        /// <para>
+        /// Possible errors include <see cref="ErrorCode.NotInitialized"/>.
+        /// </para>
+        /// </remarks>
+        public static unsafe void SetWindowUserPointer(Window* window, void* pointer)
+        {
+            glfwSetWindowUserPointer(window, pointer);
+        }
+
+        /// <summary>
+        /// <para>
+        /// This function returns the current value of the user-defined pointer of the specified window.
+        /// </para>
+        /// <para>
+        /// The initial value is <see cref="IntPtr.Zero"/>.
+        /// </para>
+        /// </summary>
+        /// <param name="window">The window whose pointer to return.</param>
+        /// <returns>The user-defined pointer of the given <paramref name="window"/>.</returns>
+        /// <remarks>
+        /// <para>
+        /// This function may be called from any thread. Access is not synchronized.
+        /// </para>
+        /// <para>
+        /// Possible errors include <see cref="ErrorCode.NotInitialized"/>.
+        /// </para>
+        /// </remarks>
+        public static unsafe void* GetWindowUserPointer(Window* window)
+        {
+            return glfwGetWindowUserPointer(window);
+        }
+
+        /// <summary>
+        /// <para>
         /// This function retrieves the size, in screen coordinates, of the client area of the specified window.
         /// If you wish to retrieve the size of the framebuffer of the window in pixels, see <see cref="GetFramebufferSize"/>.
         /// </para>
@@ -3701,6 +3791,78 @@ namespace OpenToolkit.GraphicsLibraryFramework
         /// </para>
         /// </remarks>
         public static unsafe void MaximizeWindow(Window* window) => glfwMaximizeWindow(window);
+
+        /// <summary>
+        /// <para>
+        /// This function sets the maximization callback of the specified window,
+        /// which is called when the window is maximized or restored.
+        /// </para>
+        /// </summary>
+        /// <param name="window">The window whose callback to set.</param>
+        /// <param name="callback">The new callback, or <c>null</c> to remove the currently set callback.</param>
+        /// <remarks>
+        /// <para>
+        /// This function may only be called from the main thread.
+        /// </para>
+        /// <para>
+        /// Possible errors include <see cref="ErrorCode.NotInitialized"/>.
+        /// </para>
+        /// </remarks>
+        /// <seealso cref="MaximizeWindow"/>
+        public static unsafe IntPtr SetWindowMaximizeCallback(
+            Window* window,
+            GLFWCallbacks.WindowMaximizeCallback callback)
+        {
+            return glfwSetWindowMaximizeCallback(window, Marshal.GetFunctionPointerForDelegate(callback));
+        }
+
+        /// <summary>
+        /// <para>
+        /// This function sets the framebuffer resize callback of the specified window,
+        /// which is called when the framebuffer of the specified window is resized.
+        /// </para>
+        /// </summary>
+        /// <param name="window">The window whose content scale changed.</param>
+        /// <param name="callback">The new callback, or <c>null</c> to remove the currently set callback.</param>
+        /// <remarks>
+        /// <para>
+        /// This function must only be called from the main thread.
+        /// </para>
+        /// <para>
+        /// Possible errors include <see cref="ErrorCode.NotInitialized"/>.
+        /// </para>
+        /// </remarks>
+        /// <seealso cref="GetFramebufferSize"/>
+        public static unsafe IntPtr SetFramebufferSizeCallback(
+            Window* window,
+            GLFWCallbacks.FramebufferSizeCallback callback)
+        {
+            return glfwSetFramebufferSizeCallback(window, Marshal.GetFunctionPointerForDelegate(callback));
+        }
+
+        /// <summary>
+        /// <para>
+        /// This function sets the window content scale callback of the specified window,
+        /// which is called when the content scale of the specified window changes.
+        /// </para>
+        /// </summary>
+        /// <param name="window">The window whose content scale changed.</param>
+        /// <param name="callback">The new callback, or <c>null</c> to remove the currently set callback.</param>
+        /// <remarks>
+        /// <para>
+        /// This function must only be called from the main thread.
+        /// </para>
+        /// <para>
+        /// Possible errors include <see cref="ErrorCode.NotInitialized"/>.
+        /// </para>
+        /// </remarks>
+        /// <seealso cref="GetWindowContentScale"/>
+        public static unsafe IntPtr SetWindowContentScaleCallback(
+            Window* window,
+            GLFWCallbacks.WindowContentScaleCallback callback)
+        {
+            return glfwSetWindowContentScaleCallback(window, Marshal.GetFunctionPointerForDelegate(callback));
+        }
 
         /// <summary>
         /// <para>
