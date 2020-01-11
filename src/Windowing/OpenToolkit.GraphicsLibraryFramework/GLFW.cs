@@ -1117,12 +1117,8 @@ namespace OpenToolkit.GraphicsLibraryFramework
         /// </para>
         /// </summary>
         /// <param name="window">The window to query.</param>
-        /// <param name="xScale">
-        /// Where to store the x-axis content scale, or <c>out _</c>.
-        /// </param>
-        /// <param name="yScale">
-        /// Where to store the y-axis content scale, or <c>out _</c>.
-        /// </param>
+        /// <param name="xScale">Where to store the x-axis content scale, or <c>out _</c>.</param>
+        /// <param name="yScale">Where to store the y-axis content scale, or <c>out _</c>.</param>
         /// <remarks>
         /// <para>
         /// This function must only be called from the main thread.
@@ -3800,6 +3796,9 @@ namespace OpenToolkit.GraphicsLibraryFramework
         /// </summary>
         /// <param name="window">The window whose callback to set.</param>
         /// <param name="callback">The new callback, or <c>null</c> to remove the currently set callback.</param>
+        /// <returns>
+        /// The previously set callback, or <c>null</c> if no callback was set or the library had not been initialized.
+        /// </returns>
         /// <remarks>
         /// <para>
         /// This function may only be called from the main thread.
@@ -3824,6 +3823,9 @@ namespace OpenToolkit.GraphicsLibraryFramework
         /// </summary>
         /// <param name="window">The window whose content scale changed.</param>
         /// <param name="callback">The new callback, or <c>null</c> to remove the currently set callback.</param>
+        /// <returns>
+        /// The previously set callback, or <c>null</c> if no callback was set or the library had not been initialized.
+        /// </returns>
         /// <remarks>
         /// <para>
         /// This function must only be called from the main thread.
@@ -3848,6 +3850,9 @@ namespace OpenToolkit.GraphicsLibraryFramework
         /// </summary>
         /// <param name="window">The window whose content scale changed.</param>
         /// <param name="callback">The new callback, or <c>null</c> to remove the currently set callback.</param>
+        /// <returns>
+        /// The previously set callback, or <c>null</c> if no callback was set or the library had not been initialized.
+        /// </returns>
         /// <remarks>
         /// <para>
         /// This function must only be called from the main thread.
