@@ -134,6 +134,32 @@ namespace OpenToolkit.GraphicsLibraryFramework
         public delegate void WindowIconifyCallback(Window* window, bool iconified);
 
         /// <summary>
+        /// The function signature for window maximize/restore callback functions.
+        /// </summary>
+        /// <param name="window">The window that was maximized or restored.</param>
+        /// <param name="maximized"><c>true</c> if the window was maximized, or <c>false</c> if it was restored.</param>
+        /// <seealso cref="GLFW.SetWindowMaximizeCallback"/>
+        public delegate void WindowMaximizeCallback(Window* window, bool maximized);
+
+        /// <summary>
+        /// The function signature for framebuffer size callback functions.
+        /// </summary>
+        /// <param name="window">The window whose framebuffer was resized.</param>
+        /// <param name="width">The new width, in pixels, of the framebuffer.</param>
+        /// <param name="height">The new height, in pixels, of the framebuffer.</param>
+        /// <seealso cref="GLFW.SetFramebufferSizeCallback"/>
+        public delegate void FramebufferSizeCallback(Window* window, int width, int height);
+
+        /// <summary>
+        /// This is the function pointer type for window content scale callbacks.
+        /// </summary>
+        /// <param name="window">The window whose content scale changed. </param>
+        /// <param name="xscale">The new x-axis content scale of the window. </param>
+        /// <param name="yscale">The new y-axis content scale of the window.</param>
+        /// <seealso cref="GLFW.SetWindowContentScaleCallback"/>
+        public delegate void WindowContentScaleCallback(Window* window, float xscale, float yscale);
+
+        /// <summary>
         /// The function signature for window position callback functions.
         /// </summary>
         /// <param name="window">The window that was moved.</param>
