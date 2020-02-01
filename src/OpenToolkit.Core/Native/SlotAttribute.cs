@@ -1,7 +1,7 @@
 //
 // The Open Toolkit Library License
 //
-// Copyright (c) 2006 - 2010 the Open Toolkit library.
+// Copyright (c) 2006 - 2013 Stefanos Apostolopoulos for the Open Toolkit library
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -23,32 +23,32 @@
 // OTHER DEALINGS IN THE SOFTWARE.
 //
 
-using System.IO;
+using System;
+using System.Diagnostics.CodeAnalysis;
 
-namespace Bind.GL2
+namespace OpenToolkit.Core.Native
 {
-    internal class GL4Generator : Generator
+    /// <summary>
+    /// Defines the slot index for a wrapper function.
+    /// This type supports OpenTK and should not be
+    /// used in user code.
+    /// </summary>
+    [AttributeUsage(AttributeTargets.Method, AllowMultiple = false, Inherited = false)]
+    public class SlotAttribute : Attribute
     {
-        public GL4Generator(Settings settings)
-            : base(settings)
+        /// <summary>
+        /// Defines the slot index for a wrapper function.
+        /// </summary>
+        [SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1401:Fields should be private", Justification = "This field is used in legacy internal rewriting logic. We don't want to change visibility just yet.")]
+        internal int Slot;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SlotAttribute"/> class.
+        /// </summary>
+        /// <param name="index">The slot index for a wrapper function.</param>
+        public SlotAttribute(int index)
         {
-            Settings.DefaultOutputPath = Path.Combine(
-                Settings.DefaultOutputPath, "./OpenGL4");
-            Settings.DefaultOutputNamespace = "OpenToolkit.Graphics.OpenGL4";
-            Settings.DefaultImportsFile = "GL4Core.cs";
-            Settings.DefaultDelegatesFile = "GL4Delegates.cs";
-            Settings.DefaultEnumsFile = "GL4Enums.cs";
-            Settings.DefaultWrappersFile = "GL4.cs";
-            Settings.DefaultDocPath = Path.Combine(
-                Settings.DefaultDocPath, "GL");
-
-            Settings.OverridesFiles.Add("GL2/overrides.xml");
-            Settings.OverridesFiles.Add("GL2/GL/");
-
-            Profile = "glcore";
-
-            //Settings.DefaultCompatibility |=
-            //    Settings.Legacy.UseDllImports | Settings.Legacy.UseWindowsCompatibleGL;
+            Slot = index;
         }
     }
 }

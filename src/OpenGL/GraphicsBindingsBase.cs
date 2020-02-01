@@ -1,7 +1,7 @@
 //
 // The Open Toolkit Library License
 //
-// Copyright (c) 2006 - 2010 the Open Toolkit library.
+// Copyright (c) 2006 - 2009 the Open Toolkit library.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -23,32 +23,18 @@
 // OTHER DEALINGS IN THE SOFTWARE.
 //
 
-using System.IO;
+using System;
+using System.Diagnostics;
 
-namespace Bind.GL2
+namespace OpenToolkit.Graphics
 {
-    internal class GL4Generator : Generator
+    /// <summary>
+    /// Implements BindingsBase for the OpenTK.Graphics namespace (OpenGL and OpenGL|ES).
+    /// </summary>
+    public abstract class GraphicsBindingsBase : BindingsBase
     {
-        public GL4Generator(Settings settings)
-            : base(settings)
-        {
-            Settings.DefaultOutputPath = Path.Combine(
-                Settings.DefaultOutputPath, "./OpenGL4");
-            Settings.DefaultOutputNamespace = "OpenToolkit.Graphics.OpenGL4";
-            Settings.DefaultImportsFile = "GL4Core.cs";
-            Settings.DefaultDelegatesFile = "GL4Delegates.cs";
-            Settings.DefaultEnumsFile = "GL4Enums.cs";
-            Settings.DefaultWrappersFile = "GL4.cs";
-            Settings.DefaultDocPath = Path.Combine(
-                Settings.DefaultDocPath, "GL");
-
-            Settings.OverridesFiles.Add("GL2/overrides.xml");
-            Settings.OverridesFiles.Add("GL2/GL/");
-
-            Profile = "glcore";
-
-            //Settings.DefaultCompatibility |=
-            //    Settings.Legacy.UseDllImports | Settings.Legacy.UseWindowsCompatibleGL;
-        }
+        internal IntPtr[] _EntryPointsInstance;
+        internal byte[] _EntryPointNamesInstance;
+        internal int[] _EntryPointNameOffsetsInstance;
     }
 }

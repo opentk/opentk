@@ -118,6 +118,9 @@ namespace Bind
                 sw.WriteLine("using System;");
                 sw.WriteLine("using System.Text;");
                 sw.WriteLine("using System.Runtime.InteropServices;");
+                sw.WriteLine("using OpenToolkit.Core.Native;");
+                sw.WriteLine("using OpenToolkit.Core.Exceptions;");
+                sw.WriteLine("using OpenToolkit.Mathematics;");
 
                 WriteWrappers(sw, wrappers, delegates, enums, Generator.CSTypes);
 

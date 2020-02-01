@@ -1,7 +1,7 @@
-//
+﻿//
 // The Open Toolkit Library License
 //
-// Copyright (c) 2006 - 2010 the Open Toolkit library.
+// Copyright (c) 2006 - 2009 the Open Toolkit library.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -23,32 +23,21 @@
 // OTHER DEALINGS IN THE SOFTWARE.
 //
 
-using System.IO;
+using System;
 
-namespace Bind.GL2
+namespace OpenToolkit.Core.Exceptions
 {
-    internal class GL4Generator : Generator
+    /// <summary>
+    /// Represents exceptions thrown when a binding method is called and the bindings have not been rewritten by Rewrite.exe.
+    /// </summary>
+    public class BindingsNotRewrittenException : Exception
     {
-        public GL4Generator(Settings settings)
-            : base(settings)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BindingsNotRewrittenException"/> class.
+        /// </summary>
+        public BindingsNotRewrittenException()
+            : base("Rewrite.exe has not been run.")
         {
-            Settings.DefaultOutputPath = Path.Combine(
-                Settings.DefaultOutputPath, "./OpenGL4");
-            Settings.DefaultOutputNamespace = "OpenToolkit.Graphics.OpenGL4";
-            Settings.DefaultImportsFile = "GL4Core.cs";
-            Settings.DefaultDelegatesFile = "GL4Delegates.cs";
-            Settings.DefaultEnumsFile = "GL4Enums.cs";
-            Settings.DefaultWrappersFile = "GL4.cs";
-            Settings.DefaultDocPath = Path.Combine(
-                Settings.DefaultDocPath, "GL");
-
-            Settings.OverridesFiles.Add("GL2/overrides.xml");
-            Settings.OverridesFiles.Add("GL2/GL/");
-
-            Profile = "glcore";
-
-            //Settings.DefaultCompatibility |=
-            //    Settings.Legacy.UseDllImports | Settings.Legacy.UseWindowsCompatibleGL;
         }
     }
 }

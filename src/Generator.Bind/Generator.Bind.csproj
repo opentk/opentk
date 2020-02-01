@@ -4,6 +4,7 @@
     <TargetFrameworks>netcoreapp3.1</TargetFrameworks>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <RootNamespace>Bind</RootNamespace>
+    <AssemblyName>Bind</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>
