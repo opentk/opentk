@@ -153,7 +153,6 @@ namespace Bind
                         Generators.Add(new ESGenerator(Settings));
                         Generators.Add(new ES2Generator(Settings));
                         Generators.Add(new ES3Generator(Settings));
-                        Generators.Add(new ES31Generator(Settings));
                         break;
 
                     case GeneratorMode.GL2:
