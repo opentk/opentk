@@ -6,11 +6,6 @@
     <RootNamespace>OpenTK.Rewrite</RootNamespace>
   </PropertyGroup>
 
-  <PropertyGroup>
-    <RunAnalyzersDuringBuild>false</RunAnalyzersDuringBuild>
-    <RunAnalyzersDuringLiveAnalysis>false</RunAnalyzersDuringLiveAnalysis>
-  </PropertyGroup>
-
   <ItemGroup>
     <PackageReference Include="CommandLineParser" Version="2.7.82" />
     <PackageReference Include="Mono.Cecil" Version="0.11.1" />
@@ -18,5 +13,4 @@
 
   <Import Project="..\..\props\common.props" />
   <Import Project="..\..\props\nuget-common.props" />
-  <Import Project="..\..\props\stylecop.props" />
 </Project>
