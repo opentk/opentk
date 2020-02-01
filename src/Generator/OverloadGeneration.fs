@@ -1,5 +1,6 @@
 ﻿module OverloadGeneration
 open System
+open System
 open Formatting
 open Types
 open Constants
@@ -51,7 +52,30 @@ module private Overloads =
         | Pointer(Pointer(Void)) -> IntPtrType
         | x -> x
         |> mapParameterType
-    
+        
+    let singularFromArray (fd:FunctionDeclaration) =
+        // OpenGL provides a specific overload DrawBuffer, which we explicitly filter out here.
+        if not <| fd.Name.Contains("DrawBuffers", StringComparison.OrdinalIgnoreCase) then
+            let parmList = fd.Parameters |> Array.toList
+            match parmList |> List.map (fun pd -> pd.Type) with
+            | GLType.GLsizei :: Pointer ptrType :: _ when ptrType <> Void ->
+                let newName =
+                    if fd.PrettyName.EndsWith("ies") then
+                        fd.PrettyName.Substring(0,fd.PrettyName.Length-3) + "y"
+                    elif fd.PrettyName.EndsWith("s") then
+                        fd.PrettyName.Substring(0, fd.PrettyName.Length-1)
+                    else
+                        fd.PrettyName
+                let p1 = parmList.Tail.Head
+                let mp1 = { p1 with Type = Helpers.unwrapTypeFromPointer p1.Type }
+                let rest = parmList.Tail.Tail
+                let newParms = mp1 :: rest
+                { fd with PrettyName = newName
+                          Parameters = newParms |> List.toArray }
+            | _ ->
+                fd
+        else fd
+            
     let doNothing x = x
 
 
@@ -60,13 +84,20 @@ let private allOverloads: Overload array =
         Overloads.doNothing
         Overloads.charArrayToString
         Overloads.pointerToArray
+        Overloads.singularFromArray
     |]
+    
+let signatureOnly (fd:FunctionDeclaration) =
+    let pTypeOnly (p:ParameterDeclaration) =
+        { p with Name = ""
+                 PrettyName = "" }
+    { fd with Parameters = fd.Parameters |> Array.map pTypeOnly } 
     
     
 let applyAllOverloads func =
     allOverloads
     |> Array.map (fun overload -> overload func)
-    |> Array.distinct
+    |> Array.distinctBy signatureOnly
 
 let autoGenerateAdditionalOverloadForType (func: FunctionDeclaration) =
     applyAllOverloads func

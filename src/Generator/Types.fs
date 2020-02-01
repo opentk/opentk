@@ -46,7 +46,6 @@ type RawGLParameterInfo =
           LengthParamName = Some lengthParamName
           ParamType = ``type`` } 
 
-
 /// Loosely typed enums from the specification.
 type RawGLFunctionDeclaration =
     { FuncName: string

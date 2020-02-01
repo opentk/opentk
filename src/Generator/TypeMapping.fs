@@ -53,7 +53,6 @@ type GLType with
         | ArrayType elementType -> elementType.PrettyName + "[]"
         | GLType.GLString -> "string"
         | IntPtrType -> "IntPtr"
-        
 
 open Util
 
