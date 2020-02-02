@@ -73,10 +73,16 @@ namespace OpenTK.Rewrite
             var read_params = new ReaderParameters();
             var write_params = new WriterParameters();
 
-            read_params.AssemblyResolver = new OpenTKAssemblyResolver();
+            var resolver = new OpenTKAssemblyResolver();
+            read_params.AssemblyResolver = resolver;
             read_params.ReadSymbols = true;
             read_params.ReadWrite = true;
             write_params.WriteSymbols = true;
+
+            if (File.Exists(Options.TargetAssembly))
+            {
+                resolver.AddProbingPath(Path.GetDirectoryName(Options.TargetAssembly));
+            }
 
             if (!String.IsNullOrEmpty(Options.StrongNameKey) && File.Exists(Options.StrongNameKey))
             {

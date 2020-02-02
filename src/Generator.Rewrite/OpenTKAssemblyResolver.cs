@@ -23,6 +23,11 @@ namespace OpenTK.Rewrite
             directories = new List<string>(2) { ".", "bin" };
         }
 
+        public void AddProbingPath(string path)
+        {
+            directories.Add(path);
+        }
+
         AssemblyDefinition GetAssembly(string file, ReaderParameters parameters)
         {
             if (parameters.AssemblyResolver == null)
@@ -263,7 +268,7 @@ namespace OpenTK.Rewrite
             var gacs = new[] { "GAC_MSIL", "GAC_32", "GAC_64", "GAC" };
             var prefixes = new[] { string.Empty, "v4.0_" };
 
-            for (int i = 0; i < 2; i++)
+            for (int i = 0; i < prefixes.Length && i < gac_paths.Count; i++)
             {
                 for (int j = 0; j < gacs.Length; j++)
                 {
