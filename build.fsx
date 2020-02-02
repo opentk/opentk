@@ -159,9 +159,13 @@ Target.create "UpdateBindingsRewrite" (fun _ ->
 Target.create "Clean" <| fun _ ->
     !! ("src" </> "OpenGL" </> "**/*.*")
     -- ("src" </> "OpenGL" </> "Enums/*.*")
-    -- ("src" </> "OpenGL" </> "*/Helper.*")
     -- ("src" </> "OpenGL" </> "*.cs")
     -- ("src" </> "OpenGL" </> "*.csproj")
+    -- ("src" </> "OpenGL" </> "ES11/Helper.cs")
+    -- ("src" </> "OpenGL" </> "ES20/Helper.cs")
+    -- ("src" </> "OpenGL" </> "ES30/Helper.cs")
+    -- ("src" </> "OpenGL" </> "OpenGL2/Helper.cs")
+    -- ("src" </> "OpenGL" </> "OpenGL4/Helper.cs")
     |> Seq.map Fake.IO.Path.getDirectory
     |> Shell.deleteDirs
 
