@@ -152,6 +152,18 @@ Target.create "UpdateBindingsRewrite" (fun _ ->
     let args = [  ] |> asArgs
     DotNet.runWithDefaultOptions framework projFile args |> ignore)
 
+Target.create "RewriteBindings" (fun _ ->
+    Trace.log " --- Rewriting bindings (calli) --- "
+    let framework = "netcoreapp31"
+    let projFile = "src/Generator.Rewrite/Generator.Rewrite.csproj"
+    let bindingsFile = "OpenGL_Bindings.dll"
+    let bindingsOutput = "src/OpenGL/bin/Release/netstandard2.0"
+
+    let args =
+        [ "-a " + (System.IO.Path.GetFullPath bindingsOutput </> bindingsFile)
+        ] |> asArgs
+    DotNet.runWithDefaultOptions framework projFile args |> ignore)
+
 // ---------
 // Build Targets
 // ---------
@@ -290,6 +302,7 @@ open Fake.Core.TargetOperators
   ==> "UpdateSpec"
   ==> "UpdateBindingsRewrite"
   ==> "Build"
+  ==> "RewriteBindings"
   ==> "RunAllTests"
   ==> "All"
   ==> "CreateNuGetPackage"
