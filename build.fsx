@@ -144,6 +144,14 @@ Target.create "UpdateBindings" (fun _ ->
         |> asArgs
     DotNet.runWithDefaultOptions framework projFile args |> ignore)
 
+Target.create "UpdateBindingsRewrite" (fun _ ->
+    Trace.log " --- Updating bindings (rewrite) --- "
+    let framework = "netcoreapp31"
+    let projFile = "src/Generator.Bind/Generator.Bind.csproj"
+
+    let args = [  ] |> asArgs
+    DotNet.runWithDefaultOptions framework projFile args |> ignore)
+
 // ---------
 // Build Targets
 // ---------
@@ -151,6 +159,7 @@ Target.create "UpdateBindings" (fun _ ->
 Target.create "Clean" <| fun _ ->
     !! ("src" </> "OpenGL" </> "**/*.*")
     -- ("src" </> "OpenGL" </> "Enums/*.*")
+    -- ("src" </> "OpenGL" </> "*/Helper.*")
     -- ("src" </> "OpenGL" </> "*.cs")
     -- ("src" </> "OpenGL" </> "*.csproj")
     |> Seq.map Fake.IO.Path.getDirectory
@@ -275,7 +284,7 @@ open Fake.Core.TargetOperators
   ==> "Restore"
   ==> "AssemblyInfo"
   ==> "UpdateSpec"
-  ==> "UpdateBindings"
+  ==> "UpdateBindingsRewrite"
   ==> "Build"
   ==> "RunAllTests"
   ==> "All"
