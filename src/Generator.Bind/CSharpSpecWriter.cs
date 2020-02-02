@@ -161,6 +161,7 @@ namespace Bind
             Trace.WriteLine(String.Format("Writing wrappers to:\t{0}.{1}", Settings.OutputNamespace, Settings.OutputClass));
 
             sw.WriteLine("#pragma warning disable 3019"); // CLSCompliant attribute
+            sw.WriteLine("#pragma warning disable 3021"); // Unnecessary CLSCompliant attribute
             sw.WriteLine("#pragma warning disable 1591"); // Missing doc comments
             sw.WriteLine("#pragma warning disable 1572"); // Wrong param comments
             sw.WriteLine("#pragma warning disable 1573"); // Missing param comments
