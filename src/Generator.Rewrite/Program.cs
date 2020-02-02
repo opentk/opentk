@@ -101,25 +101,8 @@ namespace OpenTK.Rewrite
                     var rewritten = assembly.CustomAttributes.FirstOrDefault(a => a.AttributeType.Name == "RewrittenAttribute");
                     if (rewritten == null)
                     {
-                        foreach (var module in assembly.Modules)
-                        {
-                            foreach (var reference in module.AssemblyReferences)
-                            {
-                                try
-                                {
-                                    var resolved = module.AssemblyResolver.Resolve(reference);
-                                    if (reference.Name == "mscorlib")
-                                    {
-                                        mscorlib = resolved;
-                                    }
-                                }
-                                catch (Exception e)
-                                {
-                                    Console.Error.WriteLine(e.ToString());
-                                }
-                            }
-                        }
-
+                        var corLib = new AssemblyNameReference("mscorlib", typeof(object).Assembly.GetName().Version);
+                        mscorlib = assembly.MainModule.AssemblyResolver.Resolve(corLib);
                         if (mscorlib == null)
                         {
                             Console.Error.WriteLine("Failed to locate mscorlib");
