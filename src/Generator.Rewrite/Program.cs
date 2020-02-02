@@ -130,7 +130,7 @@ namespace OpenTK.Rewrite
                         TypeIntPtr = mscorlib.MainModule.GetType("System.IntPtr");
                         TypeInt32 = mscorlib.MainModule.GetType("System.Int32");
 
-                        TypeBindingsBase = assembly.Modules.Select(m => m.GetType("OpenTK.BindingsBase")).First();
+                        TypeBindingsBase = assembly.Modules.Select(m => m.GetType("OpenToolkit.Graphics.BindingsBase")).First();
 
                         foreach (var module in assembly.Modules)
                         {
