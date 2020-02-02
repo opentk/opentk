@@ -36,5 +36,34 @@ namespace OpenToolkit.Graphics
         internal IntPtr[] _EntryPointsInstance;
         internal byte[] _EntryPointNamesInstance;
         internal int[] _EntryPointNameOffsetsInstance;
+
+        /// <summary>
+        /// Loads all the available bindings for the current context.
+        /// </summary>
+        /// <param name="context">The context used to query the available bindings.</param>
+        /// <remarks>
+        /// Loads all available entry points for the current OpenGL context.
+        /// </remarks>
+        public override void LoadBindings(IBindingsContext context)
+        {
+            Debug.Print("Loading entry points for {0}", GetType().FullName);
+
+            if (context == null)
+            {
+                throw new ArgumentNullException(nameof(context));
+            }
+
+            unsafe
+            {
+                fixed (byte* name = _EntryPointNamesInstance)
+                {
+                    for (int i = 0; i < _EntryPointsInstance.Length; i++)
+                    {
+                        _EntryPointsInstance[i] = context.GetAddress(
+                            new IntPtr(name + _EntryPointNameOffsetsInstance[i]));
+                    }
+                }
+            }
+        }
     }
 }

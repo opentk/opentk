@@ -187,5 +187,11 @@ namespace OpenToolkit.Graphics
             }
             Marshal.FreeHGlobal(ptr);
         }
+
+        /// <summary>
+        /// Loads all the available bindings for the current context.
+        /// </summary>
+        /// <param name="context">The context used to query the available bindings.</param>
+        public abstract void LoadBindings(IBindingsContext context);
     }
 }
