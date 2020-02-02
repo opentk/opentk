@@ -4,6 +4,7 @@
     <TargetFrameworks>netcoreapp3.1</TargetFrameworks>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <RootNamespace>OpenTK.Convert</RootNamespace>
+    <AssemblyName>Convert</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>
