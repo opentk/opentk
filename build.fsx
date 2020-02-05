@@ -156,7 +156,7 @@ Target.create "RewriteBindings" (fun _ ->
     Trace.log " --- Rewriting bindings (calli) --- "
     let framework = "netcoreapp31"
     let projFile = "src/Generator.Rewrite/Generator.Rewrite.csproj"
-    let bindingsFile = "OpenGL_Bindings.dll"
+    let bindingsFile = "OpenToolkit.OpenGL.dll"
     let bindingsOutput = "src/OpenGL/bin/Release/netstandard2.0"
 
     let args =
