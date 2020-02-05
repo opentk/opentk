@@ -303,7 +303,7 @@ open Fake.Core.TargetOperators
   ==> "UpdateBindingsRewrite"
   ==> "Build"
   ==> "RewriteBindings"
-  ==> "RunAllTests"
+//  ==> "RunAllTests"
   ==> "All"
   ==> "CreateNuGetPackage"
   ==> "ReleaseOnNuGetGallery"
