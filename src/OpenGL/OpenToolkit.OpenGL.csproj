@@ -7,7 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AdvancedDLSupport" Version="3.0.0" />
     <ProjectReference Include="..\OpenToolkit.Core\OpenToolkit.Core.csproj" />
     <ProjectReference Include="..\OpenToolkit.Mathematics\OpenToolkit.Mathematics.csproj" />
   </ItemGroup>
