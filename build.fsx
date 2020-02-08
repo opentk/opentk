@@ -156,8 +156,8 @@ Target.create "RewriteBindings" (fun _ ->
     Trace.log " --- Rewriting bindings (calli) --- "
     let framework = "netcoreapp31"
     let projFile = "src/Generator.Rewrite/Generator.Rewrite.csproj"
-    let bindingsFile = "OpenToolkit.OpenGL.dll"
-    let bindingsOutput = "src/OpenGL/bin/Release/netstandard2.0"
+    let bindingsFile = "OpenToolkit.Graphics.dll"
+    let bindingsOutput = "src/OpenToolkit.Graphics/bin/Release/netstandard2.0"
 
     let args =
         [ "-a " + (System.IO.Path.GetFullPath bindingsOutput </> bindingsFile)
@@ -169,15 +169,15 @@ Target.create "RewriteBindings" (fun _ ->
 // ---------
 
 Target.create "Clean" <| fun _ ->
-    !! ("./src" </> "OpenGL" </> "**/*.*")
-    -- ("./src" </> "OpenGL" </> "Enums/*.cs")
-    -- ("./src" </> "OpenGL" </> "*.cs")
-    -- ("./src" </> "OpenGL" </> "*.csproj")
-    -- ("./src" </> "OpenGL" </> "ES11/Helper.cs")
-    -- ("./src" </> "OpenGL" </> "ES20/Helper.cs")
-    -- ("./src" </> "OpenGL" </> "ES30/Helper.cs")
-    -- ("./src" </> "OpenGL" </> "OpenGL2/Helper.cs")
-    -- ("./src" </> "OpenGL" </> "OpenGL4/Helper.cs")
+    !! ("./src" </> "OpenToolkit.Graphics" </> "**/*.*")
+    -- ("./src" </> "OpenToolkit.Graphics" </> "Enums/*.cs")
+    -- ("./src" </> "OpenToolkit.Graphics" </> "*.cs")
+    -- ("./src" </> "OpenToolkit.Graphics" </> "*.csproj")
+    -- ("./src" </> "OpenToolkit.Graphics" </> "ES11/Helper.cs")
+    -- ("./src" </> "OpenToolkit.Graphics" </> "ES20/Helper.cs")
+    -- ("./src" </> "OpenToolkit.Graphics" </> "ES30/Helper.cs")
+    -- ("./src" </> "OpenToolkit.Graphics" </> "OpenGL2/Helper.cs")
+    -- ("./src" </> "OpenToolkit.Graphics" </> "OpenGL4/Helper.cs")
     |> Seq.map Fake.IO.Path.getDirectory
     |> Shell.deleteDirs
 
