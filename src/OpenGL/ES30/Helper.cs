@@ -45,8 +45,7 @@ namespace OpenToolkit.Graphics.ES30
         private static readonly object sync_root = new object();
 
         private static IntPtr[] EntryPoints;
-        private static byte[] EntryPointNames;
-        private static int[] EntryPointNameOffsets;
+        private static string[] EntryPointNames;
 
         /// <summary>
         /// Constructs a new instance.
@@ -55,7 +54,6 @@ namespace OpenToolkit.Graphics.ES30
         {
             _EntryPointsInstance = EntryPoints;
             _EntryPointNamesInstance = EntryPointNames;
-            _EntryPointNameOffsetsInstance = EntryPointNameOffsets;
         }
 
         /// <summary>

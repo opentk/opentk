@@ -34,8 +34,7 @@ namespace OpenToolkit.Graphics
     public abstract class GraphicsBindingsBase : BindingsBase
     {
         internal IntPtr[] _EntryPointsInstance;
-        internal byte[] _EntryPointNamesInstance;
-        internal int[] _EntryPointNameOffsetsInstance;
+        internal string[] _EntryPointNamesInstance;
 
         /// <summary>
         /// Loads all the available bindings for the current context.
@@ -53,16 +52,9 @@ namespace OpenToolkit.Graphics
                 throw new ArgumentNullException(nameof(context));
             }
 
-            unsafe
+            for (int i = 0; i < _EntryPointsInstance.Length; i++)
             {
-                fixed (byte* name = _EntryPointNamesInstance)
-                {
-                    for (int i = 0; i < _EntryPointsInstance.Length; i++)
-                    {
-                        _EntryPointsInstance[i] = context.GetAddress(
-                            new IntPtr(name + _EntryPointNameOffsetsInstance[i]));
-                    }
-                }
+                _EntryPointsInstance[i] = context.GetAddress(_EntryPointNamesInstance[i]);
             }
         }
     }
