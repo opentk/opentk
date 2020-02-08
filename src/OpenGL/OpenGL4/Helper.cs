@@ -24,6 +24,7 @@
 //
 
 using System;
+using System.Diagnostics;
 #if !MINIMAL
 using System.Drawing;
 #endif
@@ -35,38 +36,39 @@ namespace OpenToolkit.Graphics.OpenGL4
     /// <summary>
     /// Provides access to OpenGL 4.x methods for the core profile.
     /// </summary>
-    public sealed partial class GL : GraphicsBindingsBase
+    public sealed partial class GL : BindingsBase
     {
         private const string Library = "opengl32.dll";
-        private static readonly object sync_root = new object();
 
-        private static IntPtr[] EntryPoints;
-        private static string[] EntryPointNames;
-
-        /// <summary>
-        /// Constructs a new instance.
-        /// </summary>
-        public GL()
-        {
-            _EntryPointsInstance = EntryPoints;
-            _EntryPointNamesInstance = EntryPointNames;
-        }
+        private static readonly IntPtr[] EntryPoints;
+        private static readonly string[] EntryPointNames;
 
         /// <summary>
-        /// Returns a synchronization token unique for the GL class.
+        /// Loads all the available bindings for the current context.
         /// </summary>
-        protected override object SyncRoot
+        /// <param name="context">The context used to query the available bindings.</param>
+        /// <remarks>
+        /// Loads all available entry points for the current OpenGL context.
+        /// </remarks>
+        public static void LoadBindings(IBindingsContext context)
         {
-            get { return sync_root; }
+            Debug.Print("Loading entry points for {0}", typeof(GL).FullName);
+
+            if (context == null)
+            {
+                throw new ArgumentNullException(nameof(context));
+            }
+
+            for (int i = 0; i < EntryPoints.Length; i++)
+            {
+                EntryPoints[i] = context.GetAddress(EntryPointNames[i]);
+            }
         }
 
 #pragma warning disable 3019
 #pragma warning disable 1591
 #pragma warning disable 1572
 #pragma warning disable 1573
-
-        // Note: Mono 1.9.1 truncates StringBuilder results (for 'out string' parameters).
-        // We work around this issue by doubling the StringBuilder capacity.
 
         public static void ClearColor(Color color)
         {

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Runtime.InteropServices;
 
 namespace OpenToolkit.Graphics.ES11
@@ -7,35 +8,38 @@ namespace OpenToolkit.Graphics.ES11
     /// Provides access to OpenGL ES 1.1 methods.
     /// </summary>
 
-    public sealed partial class GL : GraphicsBindingsBase
+    public sealed partial class GL : BindingsBase
     {
 #if IPHONE
         private const string Library = "/System/Library/Frameworks/OpenGLES.framework/OpenGLES";
 #else
         private const string Library = "GLESv1_CM";
 #endif
-        private static readonly object sync_root = new object();
 
         private static IntPtr[] EntryPoints;
         private static string[] EntryPointNames;
 
         /// <summary>
-        /// Constructs a new instance.
+        /// Loads all the available bindings for the current context.
         /// </summary>
-        public GL()
+        /// <param name="context">The context used to query the available bindings.</param>
+        /// <remarks>
+        /// Loads all available entry points for the current OpenGL context.
+        /// </remarks>
+        public static void LoadBindings(IBindingsContext context)
         {
-            _EntryPointsInstance = EntryPoints;
-            _EntryPointNamesInstance = EntryPointNames;
-        }
+            Debug.Print("Loading entry points for {0}", typeof(GL).FullName);
 
-        /// <summary>
-        /// Returns a synchronization token unique for the GL class.
-        /// </summary>
-        protected override object SyncRoot
-        {
-            get { return sync_root; }
-        }
+            if (context == null)
+            {
+                throw new ArgumentNullException(nameof(context));
+            }
 
+            for (int i = 0; i < EntryPoints.Length; i++)
+            {
+                EntryPoints[i] = context.GetAddress(EntryPointNames[i]);
+            }
+        }
     }
 
     /// <summary>

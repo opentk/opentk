@@ -42,19 +42,6 @@ namespace OpenToolkit.Graphics
         }
 
         /// <summary>
-        /// Gets or sets a <see cref="System.Boolean"/> that indicates whether the list of supported extensions may have changed.
-        /// </summary>
-        protected bool RebuildExtensionList { get; set; } = true;
-
-        /// <summary>
-        /// Gets an object that can be used to synchronize access to the bindings implementation.
-        /// </summary>
-        /// <remarks>This object should be unique across bindings but consistent between bindings
-        /// of the same type. For example, ES10.GL, OpenGL.GL and CL10.CL should all return
-        /// unique objects, but all instances of ES10.GL should return the same object.</remarks>
-        protected abstract object SyncRoot { get; }
-
-        /// <summary>
         /// Marshals a pointer to a null-terminated byte array to a new <c>System.String</c>.
         /// This method supports OpenTK and is not intended to be called by user code.
         /// </summary>
@@ -187,11 +174,5 @@ namespace OpenToolkit.Graphics
             }
             Marshal.FreeHGlobal(ptr);
         }
-
-        /// <summary>
-        /// Loads all the available bindings for the current context.
-        /// </summary>
-        /// <param name="context">The context used to query the available bindings.</param>
-        public abstract void LoadBindings(IBindingsContext context);
     }
 }

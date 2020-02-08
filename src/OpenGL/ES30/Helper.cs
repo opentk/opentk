@@ -24,6 +24,7 @@
 //
 
 using System;
+using System.Diagnostics;
 #if !MINIMAL
 using System.Drawing;
 #endif
@@ -35,42 +36,43 @@ namespace OpenToolkit.Graphics.ES30
     /// <summary>
     /// Provides access to OpenGL ES 3.0 methods.
     /// </summary>
-    public sealed partial class GL : GraphicsBindingsBase
+    public sealed partial class GL : BindingsBase
     {
 #if IPHONE
         private const string Library = "/System/Library/Frameworks/OpenGLES.framework/OpenGLES";
 #else
         private const string Library = "libGLESv2.dll";
 #endif
-        private static readonly object sync_root = new object();
 
         private static IntPtr[] EntryPoints;
         private static string[] EntryPointNames;
-
-        /// <summary>
-        /// Constructs a new instance.
-        /// </summary>
-        public GL()
-        {
-            _EntryPointsInstance = EntryPoints;
-            _EntryPointNamesInstance = EntryPointNames;
-        }
-
-        /// <summary>
-        /// Returns a synchronization token unique for the GL class.
-        /// </summary>
-        protected override object SyncRoot
-        {
-            get { return sync_root; }
-        }
 
 #pragma warning disable 3019
 #pragma warning disable 1591
 #pragma warning disable 1572
 #pragma warning disable 1573
 
-        // Note: Mono 1.9.1 truncates StringBuilder results (for 'out string' parameters).
-        // We work around this issue by doubling the StringBuilder capacity.
+        /// <summary>
+        /// Loads all the available bindings for the current context.
+        /// </summary>
+        /// <param name="context">The context used to query the available bindings.</param>
+        /// <remarks>
+        /// Loads all available entry points for the current OpenGL context.
+        /// </remarks>
+        public static void LoadBindings(IBindingsContext context)
+        {
+            Debug.Print("Loading entry points for {0}", typeof(GL).FullName);
+
+            if (context == null)
+            {
+                throw new ArgumentNullException(nameof(context));
+            }
+
+            for (int i = 0; i < EntryPoints.Length; i++)
+            {
+                EntryPoints[i] = context.GetAddress(EntryPointNames[i]);
+            }
+        }
 
         public static void ClearColor(Color color)
         {

@@ -25,6 +25,7 @@
 
 
 using System;
+using System.Diagnostics;
 #if !MINIMAL
 using System.Drawing;
 #endif
@@ -59,34 +60,34 @@ namespace OpenToolkit.Graphics.OpenGL
     /// </para>
     /// </remarks>
     /// <see href="http://opengl.org/registry/"/>
-    public sealed partial class GL : GraphicsBindingsBase
+    public sealed partial class GL : BindingsBase
     {
         internal const string Library = "opengl32.dll";
-
-        private static readonly object sync_root = new object();
 
         private static IntPtr[] EntryPoints;
         private static string[] EntryPointNames;
 
         /// <summary>
-        /// Constructs a new instance.
+        /// Loads all the available bindings for the current context.
         /// </summary>
-        public GL()
+        /// <param name="context">The context used to query the available bindings.</param>
+        /// <remarks>
+        /// Loads all available entry points for the current OpenGL context.
+        /// </remarks>
+        public static void LoadBindings(IBindingsContext context)
         {
-            _EntryPointsInstance = EntryPoints;
-            _EntryPointNamesInstance = EntryPointNames;
-        }
+            Debug.Print("Loading entry points for {0}", typeof(GL).FullName);
 
-        /// <summary>
-        /// Returns a synchronization token unique for the GL class.
-        /// </summary>
-        protected override object SyncRoot
-        {
-            get { return sync_root; }
-        }
+            if (context == null)
+            {
+                throw new ArgumentNullException(nameof(context));
+            }
 
-        // Note: Mono 1.9.1 truncates StringBuilder results (for 'out string' parameters).
-        // We work around this issue by doubling the StringBuilder capacity.
+            for (int i = 0; i < EntryPoints.Length; i++)
+            {
+                EntryPoints[i] = context.GetAddress(EntryPointNames[i]);
+            }
+        }
 
         /// <summary>
         /// [requires: v1.0][deprecated: v3.2]
