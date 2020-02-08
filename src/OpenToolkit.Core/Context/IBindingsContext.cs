@@ -1,20 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace OpenToolkit.Graphics
+namespace OpenToolkit
 {
     /// <summary>
-    /// Provides methods for querying the available bindings of an OpenGL context.
+    /// Provides methods for querying available functions in a bindings context.
     /// </summary>
     public interface IBindingsContext
     {
         /// <summary>
         /// Retrieves an unmanaged function pointer to the specified function on the specified bindings context.
         /// </summary>
-        /// <param name="funcname">An ASCII-encoded string that defines the name of the function.</param>
+        /// <param name="procName">An ASCII-encoded string that defines the name of the function.</param>
         /// <returns>
-        /// A <see cref="System.IntPtr"/> that contains the address of funcname or IntPtr.Zero,
+        /// A <see cref="System.IntPtr"/> that contains the address of procName or IntPtr.Zero,
         /// if the function is not supported by the drivers.
         /// </returns>
         /// <remarks>
@@ -22,6 +20,6 @@ namespace OpenToolkit.Graphics
         /// Typical values include 1 and 2 - inheritors are advised to check for and ignore these
         /// values.
         /// </remarks>
-        IntPtr GetAddress(string funcname);
+        IntPtr GetAddress(string procName);
     }
 }
