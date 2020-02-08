@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <RootNamespace>OpenToolkit.OpenGL</RootNamespace>
+    <RootNamespace>OpenToolkit.Graphics</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
