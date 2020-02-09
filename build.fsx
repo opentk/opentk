@@ -169,15 +169,15 @@ Target.create "RewriteBindings" (fun _ ->
 // ---------
 
 Target.create "Clean" <| fun _ ->
-    !! ("./src" </> "OpenToolkit.Graphics" </> "**/*.*")
-    -- ("./src" </> "OpenToolkit.Graphics" </> "Enums/*.cs")
-    -- ("./src" </> "OpenToolkit.Graphics" </> "*.cs")
-    -- ("./src" </> "OpenToolkit.Graphics" </> "*.csproj")
-    -- ("./src" </> "OpenToolkit.Graphics" </> "ES11/Helper.cs")
-    -- ("./src" </> "OpenToolkit.Graphics" </> "ES20/Helper.cs")
-    -- ("./src" </> "OpenToolkit.Graphics" </> "ES30/Helper.cs")
-    -- ("./src" </> "OpenToolkit.Graphics" </> "OpenGL2/Helper.cs")
-    -- ("./src" </> "OpenToolkit.Graphics" </> "OpenGL4/Helper.cs")
+    !! ("src" </> "OpenToolkit.Graphics" </> "**/*.*")
+    -- ("src" </> "OpenToolkit.Graphics" </> "Enums/*.cs")
+    -- ("src" </> "OpenToolkit.Graphics" </> "*.cs")
+    -- ("src" </> "OpenToolkit.Graphics" </> "*.csproj")
+    -- ("src" </> "OpenToolkit.Graphics" </> "ES11/Helper.cs")
+    -- ("src" </> "OpenToolkit.Graphics" </> "ES20/Helper.cs")
+    -- ("src" </> "OpenToolkit.Graphics" </> "ES30/Helper.cs")
+    -- ("src" </> "OpenToolkit.Graphics" </> "OpenGL2/Helper.cs")
+    -- ("src" </> "OpenToolkit.Graphics" </> "OpenGL4/Helper.cs")
     |> Seq.map Fake.IO.Path.getDirectory
     |> Shell.deleteDirs
 
