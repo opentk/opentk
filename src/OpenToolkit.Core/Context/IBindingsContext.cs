@@ -20,6 +20,6 @@ namespace OpenToolkit
         /// Typical values include 1 and 2 - inheritors are advised to check for and ignore these
         /// values.
         /// </remarks>
-        IntPtr GetAddress(string procName);
+        IntPtr GetProcAddress(string procName);
     }
 }

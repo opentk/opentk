@@ -70,7 +70,7 @@ namespace OpenToolkit.Graphics.ES30
 
             for (int i = 0; i < EntryPoints.Length; i++)
             {
-                EntryPoints[i] = context.GetAddress(EntryPointNames[i]);
+                EntryPoints[i] = context.GetProcAddress(EntryPointNames[i]);
             }
         }
 

@@ -20,7 +20,7 @@ namespace OpenToolkit.GraphicsLibraryFramework
         /// Typical values include 1 and 2 - inheritors are advised to check for and ignore these
         /// values.
         /// </remarks>
-        public IntPtr GetAddress(string procName)
+        public IntPtr GetProcAddress(string procName)
         {
             return GLFW.GetProcAddress(procName);
         }
