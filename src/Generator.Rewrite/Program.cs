@@ -836,11 +836,11 @@ namespace OpenTK.Rewrite
             return generatedVariables;
         }
 
-        private static object GetAttributeField(CustomAttribute attribute, string name)
+        private static object GetAttributeProperty(CustomAttribute attribute, string name)
         {
             try
             {
-                var field = attribute.Fields.First(f => f.Name == name);
+                var field = attribute.Properties.First(f => f.Name == name);
                 return field.Argument.Value;
             }
             catch (InvalidOperationException)
@@ -858,9 +858,9 @@ namespace OpenTK.Rewrite
             if (attribute != null)
             {
                 count = new CountAttribute();
-                count.Count = (int)(GetAttributeField(attribute, "Count") ?? 0);
-                count.Parameter = (string)(GetAttributeField(attribute, "Parameter"));
-                count.Computed = (string)(GetAttributeField(attribute, "Computed"));
+                count.Count = (int)(GetAttributeProperty(attribute, "Count") ?? 0);
+                count.Parameter = (string)(GetAttributeProperty(attribute, "Parameter"));
+                count.Computed = (string)(GetAttributeProperty(attribute, "Computed"));
             }
             return count;
         }
