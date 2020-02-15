@@ -1003,7 +1003,7 @@ namespace OpenToolkit.Mathematics
         [Pure]
         public static Vector3 Transform(Matrix3 mat, Vector3 vec)
         {
-            Transform(ref vec, ref mat, out Vector3 result);
+            Transform(ref mat, ref vec, out Vector3 result);
             return result;
         }
 
