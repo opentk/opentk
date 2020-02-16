@@ -8,10 +8,12 @@
 //
 
 using System;
+using System.Runtime.InteropServices;
 using AdvancedDLSupport;
 using OpenToolkit.Core.Extensions;
 using OpenToolkit.Core.Loader;
 using OpenToolkit.Mathematics;
+using OpenToolkit.Native;
 using OpenToolkit.OpenAL.Attributes;
 using OpenToolkit.OpenAL.Interfaces;
 
@@ -20,7 +22,8 @@ namespace OpenToolkit.OpenAL
     /// <summary>
     /// Provides access to the OpenAL 1.1 API.
     /// </summary>
-    public abstract class AL : NativeLibraryBase, IAL
+    [Api(Prefix = "al")]
+    public abstract class AL : ApiContainer, IAL
     {
         /// <summary>
         /// Gets an instance of the API.
@@ -28,7 +31,9 @@ namespace OpenToolkit.OpenAL
         /// <returns>The instance.</returns>
         public static AL GetAPI()
         {
-            return APILoader.Load<AL>(new OpenALLibraryNameContainer());
+            // return APILoader.Load<AL>(new OpenALLibraryNameContainer());
+            // FIXME!
+            return null;
         }
 
         /// <inheritdoc cref="NativeLibraryBase"/>
@@ -78,7 +83,7 @@ namespace OpenToolkit.OpenAL
         /// <returns>The slot.</returns>
         /// <seealso cref="DeleteBuffer"/>
         /// <seealso cref="IsBuffer"/>
-        public uint GenBuffer()
+        public uint GenBuffers()
         {
             uint result = 0;
             unsafe
