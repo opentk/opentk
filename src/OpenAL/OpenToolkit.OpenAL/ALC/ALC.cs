@@ -15,60 +15,6 @@ using OpenToolkit.Core;
 using OpenToolkit.Core.Native;
 using OpenToolkit.OpenAL;
 
-/* Type Mapping
-// 8-bit boolean
-typedef char ALCboolean;
- * byte
-// character
-typedef char ALCchar;
- * byte
-// signed 8-bit 2's complement integer
-typedef char ALCbyte;
- * byte
-
-// unsigned 8-bit integer
-typedef unsigned char ALCubyte;
- * ubyte
-
-// signed 16-bit 2's complement integer
-typedef short ALCshort;
- * short
-
-// unsigned 16-bit integer
-typedef unsigned short ALCushort;
- * ushort
-
-// unsigned 32-bit integer
-typedef unsigned int ALCuint;
- * uint
-
-// signed 32-bit 2's complement integer
-typedef int ALCint;
- * int
-// non-negative 32-bit binary integer size
-typedef int ALCsizei;
- * int
-// enumerated 32-bit value
-typedef int ALCenum;
- * int
-
-// 32-bit IEEE754 floating-point
-typedef float ALCfloat;
- * float
-
-// 64-bit IEEE754 floating-point
-typedef double ALCdouble;
- * double
-
-// void type (for opaque pointers only)
-typedef void ALCvoid;
- * void
-
- * ALCdevice
- * ALCcontext *context
- * IntPtr
-*/
-
 namespace OpenToolkit.Audio.OpenAL
 {
     /// <summary>Alc = Audio Library Context.</summary>

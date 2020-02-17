@@ -13,7 +13,14 @@ namespace OpenToolkit.Audio.OpenAL
 
         public ApiAttribute(string dllName, Type platformNameContainerType)
         {
-            DllName = dllName;
+            if (string.IsNullOrEmpty(dllName))
+            {
+                throw new ArgumentNullException(nameof(dllName));
+            }
+            else
+            {
+                DllName = dllName;
+            }
 
             if (typeof(IPlatformLibraryNameContainer).IsAssignableFrom(platformNameContainerType) == false)
             {
