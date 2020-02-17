@@ -15,56 +15,6 @@ using OpenToolkit.Core.Native;
 using OpenToolkit.Mathematics;
 using OpenToolkit.OpenAL;
 
-/* Type Mapping
-// 8-bit boolean
-typedef char ALboolean;
- * bool
-// character
-typedef char ALchar;
- * byte
-// signed 8-bit 2's complement integer
-typedef char ALbyte;
- * byte
-
-// unsigned 8-bit integer
-typedef unsigned char ALubyte;
- * byte
-
-// signed 16-bit 2's complement integer
-typedef short ALshort;
- * short
-
-// unsigned 16-bit integer
-typedef unsigned short ALushort;
- * ushort
-
-// unsigned 32-bit integer
-typedef unsigned int ALuint;
- * uint
-
-// signed 32-bit 2's complement integer
-typedef int ALint;
- * int
-// non-negative 32-bit binary integer size
-typedef int ALsizei;
- * int
-// enumerated 32-bit value
-typedef int ALenum;
- * int
-
-// 32-bit IEEE754 floating-point
-typedef float ALfloat;
- * float
-
-// 64-bit IEEE754 floating-point
-typedef double ALdouble;
- * double
-
-// void type (for opaque pointers only)
-typedef void ALvoid;
- * void
-*/
-
 namespace OpenToolkit.Audio.OpenAL
 {
     /// <summary>

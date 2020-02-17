@@ -243,6 +243,38 @@ namespace OpenToolkit.Audio.OpenAL
         public static extern void GetInteger(IntPtr device, AlcGetInteger param, int size, out int data);
         // ALC_API void            ALC_APIENTRY alcGetIntegerv( ALCdevice *device, ALCenum param, ALCsizei size, ALCint *buffer );
 
+        /// <summary>This function returns integers related to the context.</summary>
+        /// <param name="device">A pointer to the device to be queried.</param>
+        /// <param name="param">An attribute to be retrieved: ALC_MAJOR_VERSION, ALC_MINOR_VERSION, ALC_ATTRIBUTES_SIZE, ALC_ALL_ATTRIBUTES.</param>
+        /// <param name="data">A pointer to the buffer to be returned.</param>
+        public static void GetInteger(IntPtr device, AlcGetInteger param, out int data)
+        {
+            GetInteger(device, param, 1, out data);
+        }
+
+        /// <summary>This function returns integers related to the context.</summary>
+        /// <param name="device">A pointer to the device to be queried.</param>
+        /// <param name="param">An attribute to be retrieved: ALC_MAJOR_VERSION, ALC_MINOR_VERSION, ALC_ATTRIBUTES_SIZE, ALC_ALL_ATTRIBUTES.</param>
+        /// <returns>The value returned.</returns>
+        public static int GetInteger(IntPtr device, AlcGetInteger param)
+        {
+            GetInteger(device, param, 1, out int data);
+            return data;
+        }
+
+        /// <summary>
+        /// Returns a list of attributes for the specified device.
+        /// </summary>
+        /// <param name="device">The device to get attributes from.</param>
+        /// <returns>A list of attributes for the device.</returns>
+        public static int[] GetAttributes(IntPtr device)
+        {
+            GetInteger(device, AlcGetInteger.AttributesSize, out int size);
+            int[] attributes = new int[size];
+            GetInteger(device, AlcGetInteger.AllAttributes, size, attributes);
+            return attributes;
+        }
+
         /// <summary>This function opens a capture device by name. </summary>
         /// <param name="devicename">a pointer to a device name string.</param>
         /// <param name="frequency">the frequency that the buffer should be captured at.</param>
