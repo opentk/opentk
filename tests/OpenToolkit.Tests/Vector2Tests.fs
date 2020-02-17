@@ -216,6 +216,46 @@ module Vector2 =
             Assert.Equal(a.Y * f,r.Y)
 
         [<Property>]
+        let ``Vector2-Matrix2 multiplication using right-handed notation is the same as vector/row multiplication and summation`` (a : Matrix2, b : Vector2) =
+            let res = a*b
+
+            let c1 = b.X * a.M11 + b.Y * a.M12
+            let c2 = b.X * a.M21 + b.Y * a.M22
+
+            let exp = Vector2(c1, c2)
+
+            Assert.Equal(exp, res)
+
+        [<Property>]
+        let ``Vector2-Matrix2 multiplication using right-handed notation is consistent across overloads`` (a : Matrix2, b : Vector2) =
+            let r1 = a * b;
+            let r2 = Vector2.Transform(a, b);
+            let r3 = Vector2.Transform(ref a, ref b);
+
+            Assert.Equal(r1, r2)
+            Assert.Equal(r2, r3)
+
+        [<Property>]
+        let ``Vector2-Matrix2 multiplication using left-handed notation is the same as vector/column multiplication and summation`` (a : Matrix2, b : Vector2) =
+            let res = b*a
+
+            let c1 = b.X * a.M11 + b.Y * a.M21
+            let c2 = b.X * a.M12 + b.Y * a.M22
+
+            let exp = Vector2(c1, c2)
+
+            Assert.Equal(exp, res)
+
+        [<Property>]
+        let ``Vector2-Matrix2 multiplication using left-handed notation is consistent across overloads`` (a : Matrix2, b : Vector2) =
+            let r1 = a * b;
+            let r2 = Vector2.Transform(a, b);
+            let r3 = Vector2.Transform(ref a, ref b);
+
+            Assert.Equal(r1, r2)
+            Assert.Equal(r2, r3)
+
+        [<Property>]
         let ``Static Vector2 multiplication method is the same as component multiplication`` (a : Vector2, b : Vector2) =
 
             let v1 = Vector2(a.X * b.X, a.Y * b.Y)
@@ -602,6 +642,16 @@ module Vector2 =
             let transformedVector = Vector2(transformedQuat.X, transformedQuat.Y)
 
             Assert.ApproximatelyEquivalent(transformedVector, Vector2.Transform(ref v, ref q))
+
+        [<Property>]
+        let ``Transformation by quaternion by multiplication using right-handed notation is the same as multiplication by quaternion and its conjugate`` (v : Vector2, q : Quaternion) =
+            let vectorQuat = Quaternion(v.X, v.Y, 0.0f, 0.0f)
+            let inverse = Quaternion.Invert(q)
+
+            let transformedQuat = q * vectorQuat * inverse
+            let transformedVector = Vector2(transformedQuat.X, transformedQuat.Y)
+
+            Assert.ApproximatelyEquivalent(transformedVector, q * v)
 
     [<Properties(Arbitrary = [| typeof<OpenTKGen> |])>]
     module Serialization =
