@@ -218,7 +218,7 @@ namespace OpenToolkit.Audio.OpenAL
             set => MakeCurrent(value ? this : null);
         }
 
-        private unsafe ALDevice Device { get; set; }
+        private ALDevice Device { get; set; }
 
         /// <summary>
         /// Gets the ALC error code for this instance.

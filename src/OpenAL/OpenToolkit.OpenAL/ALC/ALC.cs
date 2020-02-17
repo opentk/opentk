@@ -51,7 +51,7 @@ namespace OpenToolkit.Audio.OpenAL
         /// <returns>Returns a pointer to the new context (NULL on failure).</returns>
         /// <remarks>The attribute list can be NULL, or a zero terminated list of integer pairs composed of valid ALC attribute tokens and requested values.</remarks>
         [DllImport(Lib, EntryPoint = "alcCreateContext", ExactSpelling = true, CallingConvention = AlcCalliningConv)]
-        public static unsafe extern ALContext CreateContext([In] ALDevice device, [In] int[] attrlist);
+        public static extern ALContext CreateContext([In] ALDevice device, [In] int[] attrlist);
         // ALC_API ALCcontext *    ALC_APIENTRY alcCreateContext( ALCdevice *device, const ALCint* attrlist );
 
         /// <summary>This function makes a specified context the current context.</summary>
