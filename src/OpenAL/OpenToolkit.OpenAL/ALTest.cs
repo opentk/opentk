@@ -40,7 +40,7 @@ namespace OpenToolkit.Audio.OpenAL
 
             Console.WriteLine("Goodbye!");
 
-            ALC.MakeContextCurrent(ALContextHandle.Zero);
+            ALC.MakeContextCurrent(ALContext.Zero);
             ALC.DestroyContext(context);
             ALC.CloseDevice(device);
         }

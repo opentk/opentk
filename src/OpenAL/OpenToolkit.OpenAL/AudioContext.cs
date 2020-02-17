@@ -21,11 +21,11 @@ namespace OpenToolkit.Audio.OpenAL
     {
         private static readonly object AudioContextLock = new object();
 
-        private static readonly Dictionary<ALContextHandle, AudioContext> AvailableContexts =
-            new Dictionary<ALContextHandle, AudioContext>();
+        private static readonly Dictionary<ALContext, AudioContext> AvailableContexts =
+            new Dictionary<ALContext, AudioContext>();
 
         private bool _contextExists;
-        private ALContextHandle _contextHandle;
+        private ALContext _contextHandle;
 
         private string _deviceName;
         private bool _disposed;
@@ -73,7 +73,7 @@ namespace OpenToolkit.Audio.OpenAL
             {
                 unsafe
                 {
-                    var contextHandle = context?._contextHandle ?? ALContextHandle.Zero;
+                    var contextHandle = context?._contextHandle ?? ALContext.Zero;
 
                     if (ALC.MakeContextCurrent(contextHandle))
                     {
@@ -218,7 +218,7 @@ namespace OpenToolkit.Audio.OpenAL
             set => MakeCurrent(value ? this : null);
         }
 
-        private unsafe Device* Device { get; set; }
+        private unsafe ALDevice Device { get; set; }
 
         /// <summary>
         /// Gets the ALC error code for this instance.
@@ -234,7 +234,7 @@ namespace OpenToolkit.Audio.OpenAL
 
                 unsafe
                 {
-                    return ALC.GetError((IntPtr)Device);
+                    return ALC.GetError(Device);
                 }
             }
         }
@@ -399,13 +399,13 @@ namespace OpenToolkit.Audio.OpenAL
             if (!string.IsNullOrEmpty(device))
             {
                 _deviceName = device;
-                Device = (Device*)ALC.OpenDevice(device); // try to open device by name
+                Device = ALC.OpenDevice(device); // try to open device by name
             }
 
             if (Device == null)
             {
                 _deviceName = "IntPtr.Zero (null string)";
-                Device = (Device*)ALC.OpenDevice(null); // try to open unnamed default device
+                Device = ALC.OpenDevice(null); // try to open unnamed default device
             }
 
             if (Device == null)
@@ -422,12 +422,12 @@ namespace OpenToolkit.Audio.OpenAL
 
             fixed (int* ptr = attributes.ToArray())
             {
-                _contextHandle = ALC.CreateContext((IntPtr)Device, ptr);
+                _contextHandle = ALC.CreateContext(Device, ptr);
             }
 
-            if (_contextHandle == ALContextHandle.Zero)
+            if (_contextHandle == ALContext.Zero)
             {
-                ALC.CloseDevice((IntPtr)Device);
+                ALC.CloseDevice(Device);
                 throw new AudioContextException
                 (
                     "The audio context could not be created with the specified parameters."
@@ -440,7 +440,7 @@ namespace OpenToolkit.Audio.OpenAL
 
             CheckErrors();
 
-            _deviceName = ALC.GetString((IntPtr)Device, AlcGetString.DeviceSpecifier);
+            _deviceName = ALC.GetString(Device, AlcGetString.DeviceSpecifier);
 
             lock (AudioContextLock)
             {
@@ -571,7 +571,7 @@ namespace OpenToolkit.Audio.OpenAL
 
             unsafe
             {
-                return ALC.IsExtensionPresent((IntPtr)Device, extension);
+                return ALC.IsExtensionPresent(Device, extension);
             }
         }
 
@@ -585,7 +585,7 @@ namespace OpenToolkit.Audio.OpenAL
                     IsCurrent = false;
                 }
 
-                if (_contextHandle != ALContextHandle.Zero)
+                if (_contextHandle != ALContext.Zero)
                 {
                     AvailableContexts.Remove(_contextHandle);
 
@@ -599,7 +599,7 @@ namespace OpenToolkit.Audio.OpenAL
                 {
                     if (Device != null)
                     {
-                        ALC.CloseDevice((IntPtr)Device);
+                        ALC.CloseDevice(Device);
                     }
                 }
 
@@ -623,7 +623,7 @@ namespace OpenToolkit.Audio.OpenAL
         {
             unsafe
             {
-                return $"{_deviceName} (handle: {_contextHandle}, device: {(long)Device})";
+                return $"{_deviceName} (handle: {_contextHandle}, device: {(long)Device.Handle})";
             }
         }
     }

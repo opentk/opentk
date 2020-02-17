@@ -1,35 +1,37 @@
-﻿// ALContextHandle.cs
+﻿//
+// ALDevice.cs
 //
-// Copyright (C) 2020 OpenTK
+// Copyright (C) 2019 OpenTK
 //
 // This software may be modified and distributed under the terms
 // of the MIT license. See the LICENSE file for details.
 //
 
 using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Text;
 
 namespace OpenToolkit.Audio.OpenAL
 {
-    public struct ALContextHandle : IEquatable<ALContextHandle>
+    /// <summary>
+    /// Opaque handle to an OpenAL device.
+    /// </summary>
+    public struct ALDevice : IEquatable<ALDevice>
     {
-        public static readonly ALContextHandle Zero = new ALContextHandle(IntPtr.Zero);
+        public static readonly ALDevice Null = new ALDevice(IntPtr.Zero);
 
         public IntPtr Handle;
 
-        public ALContextHandle(IntPtr handle)
+        public ALDevice(IntPtr handle)
         {
             Handle = handle;
         }
 
         public override bool Equals(object obj)
         {
-            return obj is ALContextHandle handle && Equals(handle);
+            return obj is ALDevice device && Equals(device);
         }
 
-        public bool Equals([AllowNull] ALContextHandle other)
+        public bool Equals([AllowNull] ALDevice other)
         {
             return Handle.Equals(other.Handle);
         }
@@ -39,12 +41,12 @@ namespace OpenToolkit.Audio.OpenAL
             return HashCode.Combine(Handle);
         }
 
-        public static bool operator ==(ALContextHandle left, ALContextHandle right)
+        public static bool operator ==(ALDevice left, ALDevice right)
         {
             return left.Equals(right);
         }
 
-        public static bool operator !=(ALContextHandle left, ALContextHandle right)
+        public static bool operator !=(ALDevice left, ALDevice right)
         {
             return !(left == right);
         }

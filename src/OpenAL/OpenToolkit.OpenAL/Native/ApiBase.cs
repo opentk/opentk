@@ -12,7 +12,7 @@ namespace OpenToolkit.Audio.OpenAL
     /// </summary>
     public abstract class ApiBase
     {
-        private static Dictionary<string, IPlatformLibraryNameContainer> DllIntercepts = new Dictionary<string, IPlatformLibraryNameContainer>();
+        private static readonly Dictionary<string, IPlatformLibraryNameContainer> DllIntercepts = new Dictionary<string, IPlatformLibraryNameContainer>();
 
         static ApiBase()
         {

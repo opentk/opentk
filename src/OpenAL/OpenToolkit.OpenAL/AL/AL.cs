@@ -40,7 +40,7 @@ namespace OpenToolkit.Audio.OpenAL
         /// <param name="capability">The name of a capability to enable.</param>
         [DllImport(Lib, EntryPoint = "alEnable", ExactSpelling = true, CallingConvention = ALCallingConvention)]
         public static extern void Enable(ALCapability capability);
-        //AL_API void AL_APIENTRY alEnable( ALenum capability );
+        // AL_API void AL_APIENTRY alEnable( ALenum capability );
 
         /// <summary>This function disables a feature of the OpenAL driver.</summary>
         /// <param name="capability">The name of a capability to disable.</param>
@@ -354,9 +354,8 @@ namespace OpenToolkit.Audio.OpenAL
         /// <returns>Pointer to an int value which will store the name of the new source.</returns>
         public static int GenSource()
         {
-            int temp;
-            GenSources(1, out temp);
-            return (int)temp;
+            GenSources(1, out int temp);
+            return temp;
         }
 
         /// <summary>This function generates one source only. References to sources are uint values, which are used wherever a source reference is needed (in calls such as AL.DeleteSources and AL.Source with parameter ALSourcei).</summary>

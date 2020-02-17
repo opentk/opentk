@@ -29,9 +29,9 @@ namespace OpenToolkit.Audio.OpenAL.Extensions.Creative.EnumerateAll
         /// Checks whether the extension is present.
         /// </summary>
         /// <returns>Whether the extension was present or not.</returns>
-        public static unsafe bool IsExtensionPresent()
+        public static bool IsExtensionPresent()
         {
-            return ALC.IsExtensionPresent(IntPtr.Zero, "ALC_ENUMERATE_ALL_EXT");
+            return ALC.IsExtensionPresent(ALDevice.Null, "ALC_ENUMERATE_ALL_EXT");
         }
 
         /// <summary>
@@ -39,9 +39,9 @@ namespace OpenToolkit.Audio.OpenAL.Extensions.Creative.EnumerateAll
         /// </summary>
         /// <param name="device">The device to be queried.</param>
         /// <returns>Whether the extension was present or not.</returns>
-        public static unsafe bool IsExtensionPresent(Device* device)
+        public static bool IsExtensionPresent(ALDevice device)
         {
-            return ALC.IsExtensionPresent((IntPtr)device, "ALC_ENUMERATE_ALL_EXT");
+            return ALC.IsExtensionPresent(device, "ALC_ENUMERATE_ALL_EXT");
         }
 
         /// <summary>
@@ -51,7 +51,7 @@ namespace OpenToolkit.Audio.OpenAL.Extensions.Creative.EnumerateAll
         /// <param name="param">The named property.</param>
         /// <returns>The value.</returns>
         [DllImport(ALC.Lib, EntryPoint = "alcGetString", ExactSpelling = true, CallingConvention = ALC.AlcCalliningConv)]
-        public static extern unsafe string GetString(Device* device, GetEnumerateAllContextString param);
+        public static extern string GetString(ALDevice device, GetEnumerateAllContextString param);
 
         /// <summary>
         /// Gets a named property on the context.
@@ -60,14 +60,14 @@ namespace OpenToolkit.Audio.OpenAL.Extensions.Creative.EnumerateAll
         /// <param name="param">The named property.</param>
         /// <returns>The value.</returns>
         [DllImport(ALC.Lib, EntryPoint = "alcGetString", ExactSpelling = true, CallingConvention = ALC.AlcCalliningConv)]
-        public static extern unsafe byte* GetStringList(Device* device, GetEnumerateAllContextStringList param);
+        public static extern unsafe byte* GetStringList(ALDevice device, GetEnumerateAllContextStringList param);
 
-        /// <inheritdoc cref="GetStringList(Device*, GetEnumerateAllContextStringList)"/>
+        /// <inheritdoc cref="GetStringList(ALDevice, GetEnumerateAllContextStringList)"/>
         public static IEnumerable<string> GetStringList(GetEnumerateAllContextStringList param)
         {
             unsafe
             {
-                byte* result = GetStringList(null, param);
+                byte* result = GetStringList(ALDevice.Null, param);
                 if (result == (byte*)0)
                 {
                     return new List<string>();
