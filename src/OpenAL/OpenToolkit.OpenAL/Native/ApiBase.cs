@@ -7,6 +7,9 @@ using OpenToolkit.Core.Loader;
 
 namespace OpenToolkit.Audio.OpenAL
 {
+    /// <summary>
+    /// Provides a base for ApiContext so that it can register dll intercepts.
+    /// </summary>
     public abstract class ApiBase
     {
         private static Dictionary<string, IPlatformLibraryNameContainer> DllIntercepts = new Dictionary<string, IPlatformLibraryNameContainer>();
@@ -16,7 +19,7 @@ namespace OpenToolkit.Audio.OpenAL
             NativeLibrary.SetDllImportResolver(typeof(ApiBase).Assembly, ImportResolver);
         }
 
-        protected static IntPtr ImportResolver(string libraryName, Assembly assembly, DllImportSearchPath? searchPath)
+        private static IntPtr ImportResolver(string libraryName, Assembly assembly, DllImportSearchPath? searchPath)
         {
             IntPtr libHandle = IntPtr.Zero;
             if (DllIntercepts.TryGetValue(libraryName, out var libraryNameContainer))
@@ -29,20 +32,25 @@ namespace OpenToolkit.Audio.OpenAL
             return libHandle;
         }
 
-        protected static void AddDllIntercept(string dllName, Type containerType)
+        /// <summary>
+        /// Correlates a dllName string with a IPlatformLibraryNameContainer so that when a dll is loaded with the dllName it gets resolved using the name container.
+        /// </summary>
+        /// <param name="dllName">The dll name to intercept.</param>
+        /// <param name="nameContainer">The platform name provider to use for the intercept.</param>
+        protected static void AddDllIntercept(string dllName, IPlatformLibraryNameContainer nameContainer)
         {
             if (DllIntercepts.TryGetValue(dllName, out var existing))
             {
-                if (existing.GetType() != containerType)
+                if (existing.GetType() != nameContainer.GetType())
                 {
-                    throw new Exception("TODO: figure out message");
+                    throw new InvalidOperationException($"There is already a dll intercept with this name using the platform name provider '{existing.GetType()}'. (Passed '{nameContainer.GetType()}')");
                 }
 
-                // We didn't need to do anything :)
+                // If we get here there was no conflict in the intercept, so we don't have to do anything
             }
             else
             {
-                DllIntercepts.Add(dllName, (IPlatformLibraryNameContainer)Activator.CreateInstance(containerType));
+                DllIntercepts.Add(dllName, nameContainer);
             }
         }
     }
