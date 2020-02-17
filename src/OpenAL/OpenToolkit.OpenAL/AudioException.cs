@@ -9,7 +9,7 @@
 
 using System;
 
-namespace OpenToolkit.OpenAL
+namespace OpenToolkit.Audio.OpenAL
 {
     /// <summary>
     /// Represents exceptions related to the OpenToolkit.Audio subsystem.

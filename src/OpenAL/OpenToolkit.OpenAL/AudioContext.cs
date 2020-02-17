@@ -10,10 +10,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using OpenToolkit.Core;
-using OpenToolkit.Core.Loader;
 
-namespace OpenToolkit.OpenAL
+namespace OpenToolkit.Audio.OpenAL
 {
     /// <summary>
     /// Provides methods to instantiate, use and destroy an audio context for playback.
@@ -21,15 +19,13 @@ namespace OpenToolkit.OpenAL
     /// </summary>
     public sealed class AudioContext : IDisposable
     {
-        private static readonly ALContext ContextAPI = APILoader.Load<ALContext>(new OpenALLibraryNameContainer());
-
         private static readonly object AudioContextLock = new object();
 
-        private static readonly Dictionary<ContextHandle, AudioContext> AvailableContexts =
-            new Dictionary<ContextHandle, AudioContext>();
+        private static readonly Dictionary<ALContextHandle, AudioContext> AvailableContexts =
+            new Dictionary<ALContextHandle, AudioContext>();
 
         private bool _contextExists;
-        private ContextHandle _contextHandle;
+        private ALContextHandle _contextHandle;
 
         private string _deviceName;
         private bool _disposed;
@@ -54,7 +50,7 @@ namespace OpenToolkit.OpenAL
                         return null;
                     }
 
-                    AvailableContexts.TryGetValue(ContextAPI.GetCurrentContextHandle(), out var context);
+                    AvailableContexts.TryGetValue(ALC.GetCurrentContext(), out var context);
                     return context;
                 }
             }
@@ -77,16 +73,15 @@ namespace OpenToolkit.OpenAL
             {
                 unsafe
                 {
-                    var contextHandle = context?._contextHandle ?? ContextHandle.Zero;
+                    var contextHandle = context?._contextHandle ?? ALContextHandle.Zero;
 
-                    if (ContextAPI.MakeContextCurrent(contextHandle))
+                    if (ALC.MakeContextCurrent(contextHandle))
                     {
                         return;
                     }
 
-                    var contextPtr = (Context*)contextHandle.Handle;
-                    var deviceHandle = ContextAPI.GetContextsDevice(contextPtr);
-                    var error = ContextAPI.GetError(deviceHandle);
+                    var deviceHandle = ALC.GetContextsDevice(contextHandle);
+                    var error = ALC.GetError(deviceHandle);
 
                     throw new AudioContextException
                     (
@@ -228,7 +223,7 @@ namespace OpenToolkit.OpenAL
         /// <summary>
         /// Gets the ALC error code for this instance.
         /// </summary>
-        public ContextError CurrentError
+        public AlcError CurrentError
         {
             get
             {
@@ -239,7 +234,7 @@ namespace OpenToolkit.OpenAL
 
                 unsafe
                 {
-                    return ContextAPI.GetError(Device);
+                    return ALC.GetError((IntPtr)Device);
                 }
             }
         }
@@ -350,17 +345,17 @@ namespace OpenToolkit.OpenAL
 
             if (frequency != 0)
             {
-                attributes.Add((int)ContextAttributes.Frequency);
+                attributes.Add((int)AlcContextAttributes.Frequency);
                 attributes.Add(frequency);
             }
 
             if (refreshRate != 0)
             {
-                attributes.Add((int)ContextAttributes.Refresh);
+                attributes.Add((int)AlcContextAttributes.Refresh);
                 attributes.Add(refreshRate);
             }
 
-            attributes.Add((int)ContextAttributes.Sync);
+            attributes.Add((int)AlcContextAttributes.Sync);
             attributes.Add(isSynchronous ? 1 : 0);
 
             attributes.Add(0);
@@ -404,13 +399,13 @@ namespace OpenToolkit.OpenAL
             if (!string.IsNullOrEmpty(device))
             {
                 _deviceName = device;
-                Device = ContextAPI.OpenDevice(device); // try to open device by name
+                Device = (Device*)ALC.OpenDevice(device); // try to open device by name
             }
 
             if (Device == null)
             {
                 _deviceName = "IntPtr.Zero (null string)";
-                Device = ContextAPI.OpenDevice(null); // try to open unnamed default device
+                Device = (Device*)ALC.OpenDevice(null); // try to open unnamed default device
             }
 
             if (Device == null)
@@ -427,12 +422,12 @@ namespace OpenToolkit.OpenAL
 
             fixed (int* ptr = attributes.ToArray())
             {
-                _contextHandle = ContextAPI.CreateContextHandle(Device, ptr);
+                _contextHandle = ALC.CreateContext((IntPtr)Device, ptr);
             }
 
-            if (_contextHandle == ContextHandle.Zero)
+            if (_contextHandle == ALContextHandle.Zero)
             {
-                ContextAPI.CloseDevice(Device);
+                ALC.CloseDevice((IntPtr)Device);
                 throw new AudioContextException
                 (
                     "The audio context could not be created with the specified parameters."
@@ -445,7 +440,7 @@ namespace OpenToolkit.OpenAL
 
             CheckErrors();
 
-            _deviceName = ContextAPI.GetContextProperty(Device, GetContextString.DeviceSpecifier);
+            _deviceName = ALC.GetString((IntPtr)Device, AlcGetString.DeviceSpecifier);
 
             lock (AudioContextLock)
             {
@@ -468,10 +463,7 @@ namespace OpenToolkit.OpenAL
                 throw new ObjectDisposedException(GetType().FullName);
             }
 
-            unsafe
-            {
-                new AudioDeviceErrorChecker(Device).Dispose();
-            }
+            throw new NotSupportedException("This is no longer supported!");
         }
 
         /// <summary>
@@ -524,7 +516,7 @@ namespace OpenToolkit.OpenAL
 
             unsafe
             {
-                ContextAPI.ProcessContext((Context*)_contextHandle.Handle);
+                ALC.ProcessContext(_contextHandle);
             }
 
             IsProcessing = true;
@@ -559,7 +551,7 @@ namespace OpenToolkit.OpenAL
 
             unsafe
             {
-                ContextAPI.SuspendContext((Context*)_contextHandle.Handle);
+                ALC.SuspendContext(_contextHandle);
             }
 
             IsProcessing = false;
@@ -579,7 +571,7 @@ namespace OpenToolkit.OpenAL
 
             unsafe
             {
-                return ContextAPI.IsExtensionPresent(Device, extension);
+                return ALC.IsExtensionPresent((IntPtr)Device, extension);
             }
         }
 
@@ -593,13 +585,13 @@ namespace OpenToolkit.OpenAL
                     IsCurrent = false;
                 }
 
-                if (_contextHandle != ContextHandle.Zero)
+                if (_contextHandle != ALContextHandle.Zero)
                 {
                     AvailableContexts.Remove(_contextHandle);
 
                     unsafe
                     {
-                        ContextAPI.DestroyContext((Context*)_contextHandle.Handle);
+                        ALC.DestroyContext(_contextHandle);
                     }
                 }
 
@@ -607,7 +599,7 @@ namespace OpenToolkit.OpenAL
                 {
                     if (Device != null)
                     {
-                        ContextAPI.CloseDevice(Device);
+                        ALC.CloseDevice((IntPtr)Device);
                     }
                 }
 

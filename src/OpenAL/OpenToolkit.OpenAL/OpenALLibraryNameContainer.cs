@@ -9,12 +9,12 @@
 
 using OpenToolkit.Core.Loader;
 
-namespace OpenToolkit.OpenAL
+namespace OpenToolkit.Audio.OpenAL
 {
     /// <summary>
     /// Contains the library name of OpenAL.
     /// </summary>
-    internal class OpenALLibraryNameContainer : PlatformLibraryNameContainerBase
+    public class OpenALLibraryNameContainer : PlatformLibraryNameContainerBase
     {
         /// <inheritdoc />
         public override string Linux => "libopenal.so.1";
