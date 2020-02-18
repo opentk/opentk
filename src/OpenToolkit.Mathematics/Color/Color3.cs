@@ -311,7 +311,7 @@ namespace OpenToolkit
             }
 
             float s = (v == 0) ? 0 : (c / v);
-            return new Color3<Hsv>(h, s, v);
+            return new Color3<Hsv>(h / 360f, s, v);
         }
 
         /// <summary>
@@ -376,7 +376,7 @@ namespace OpenToolkit
             }
 
             float s = (l == 0 || l == 1) ? 0 : ((v - l) / Math.Min(l, 1 - l));
-            return new Color3<Hsl>(h, s, l);
+            return new Color3<Hsl>(h / 360f, s, l);
         }
     }
 }
