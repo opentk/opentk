@@ -133,13 +133,99 @@ namespace OpenToolkit
     public static class Color4
     {
         /// <summary>
+        /// Converts a color into <see cref="Rgb"/> color space.
+        /// </summary>
+        /// <param name="color">The color to convert.</param>
+        /// <returns>The converted color.</returns>
+        public static Color3<Rgb> ToRgb(this in Color4<Argb> color) =>
+            new Color3<Rgb>(color.Y, color.Z, color.W);
+
+        /// <summary>
+        /// Converts a color into <see cref="Argb"/> color space.
+        /// </summary>
+        /// <param name="color">The color to convert.</param>
+        /// <returns>The converted color.</returns>
+        public static Color4<Argb> ToArgb(this in Color4<Rgba> color) =>
+            new Color4<Argb>(color.W, color.X, color.Y, color.Z);
+
+        /// <summary>
+        /// Converts a color into <see cref="Rgb"/> color space.
+        /// </summary>
+        /// <param name="color">The color to convert.</param>
+        /// <returns>The converted color.</returns>
+        public static Color3<Rgb> ToRgb(this in Color4<Rgba> color) =>
+            new Color3<Rgb>(color.X, color.Y, color.Z);
+
+        /// <summary>
         /// Converts a color into <see cref="Rgba"/> color space.
         /// </summary>
         /// <param name="color">The color to convert.</param>
         /// <returns>The converted color.</returns>
-        public static Color4<Rgba> ToRgba(Color4<Argb> color)
-        {
-            return new Color4<Rgba>(color.Y, color.Z, color.W, color.X);
-        }
+        public static Color4<Rgba> ToRgba(this in Color4<Argb> color) =>
+            new Color4<Rgba>(color.Y, color.Z, color.W, color.X);
+
+        /// <summary>
+        /// Converts a color into <see cref="Rgba"/> color space.
+        /// </summary>
+        /// <param name="color">The color to convert.</param>
+        /// <returns>The converted color.</returns>
+        public static Color4<Rgba> ToRgba(this in Color4<Hsva> color) =>
+            color.ToHsv().ToRgb().ToRgba(color.W);
+
+        /// <summary>
+        /// Converts a color into <see cref="Rgba"/> color space.
+        /// </summary>
+        /// <param name="color">The color to convert.</param>
+        /// <returns>The converted color.</returns>
+        public static Color4<Rgba> ToRgba(this in Color4<Hsla> color) =>
+            color.ToHsl().ToRgb().ToRgba(color.W);
+
+        /// <summary>
+        /// Converts a color into <see cref="Hsv"/> color space.
+        /// </summary>
+        /// <param name="color">The color to convert.</param>
+        /// <returns>The converted color.</returns>
+        public static Color3<Hsv> ToHsv(this in Color4<Hsva> color) =>
+            new Color3<Hsv>(color.X, color.Y, color.Z);
+
+        /// <summary>
+        /// Converts a color into <see cref="Hsva"/> color space.
+        /// </summary>
+        /// <param name="color">The color to convert.</param>
+        /// <returns>The converted color.</returns>
+        public static Color4<Hsva> ToHsva(this in Color4<Rgba> color) =>
+            color.ToRgb().ToHsv().ToHsva(color.W);
+
+        /// <summary>
+        /// Converts a color into <see cref="Hsva"/> color space.
+        /// </summary>
+        /// <param name="color">The color to convert.</param>
+        /// <returns>The converted color.</returns>
+        public static Color4<Hsva> ToHsva(this in Color4<Hsla> color) =>
+            color.ToHsl().ToHsv().ToHsva(color.W);
+
+        /// <summary>
+        /// Converts a color into <see cref="Hsl"/> color space.
+        /// </summary>
+        /// <param name="color">The color to convert.</param>
+        /// <returns>The converted color.</returns>
+        public static Color3<Hsl> ToHsl(this in Color4<Hsla> color) =>
+            new Color3<Hsl>(color.X, color.Y, color.Z);
+
+        /// <summary>
+        /// Converts a color into <see cref="Hsla"/> color space.
+        /// </summary>
+        /// <param name="color">The color to convert.</param>
+        /// <returns>The converted color.</returns>
+        public static Color4<Hsla> ToHsla(this in Color4<Rgba> color) =>
+            color.ToRgb().ToHsl().ToHsla(color.W);
+
+        /// <summary>
+        /// Converts a color into <see cref="Hsla"/> color space.
+        /// </summary>
+        /// <param name="color">The color to convert.</param>
+        /// <returns>The converted color.</returns>
+        public static Color4<Hsla> ToHsla(this in Color4<Hsva> color) =>
+            color.ToHsv().ToHsl().ToHsla(color.W);
     }
 }

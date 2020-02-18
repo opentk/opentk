@@ -157,11 +157,33 @@ namespace OpenToolkit
         }
 
         /// <summary>
-        /// Converts a color into <see cref="Rga"/> color space.
+        /// Converts a color into <see cref="Argb"/> color space.
+        /// </summary>
+        /// <param name="color">The color to convert.</param>
+        /// <param name="alpha">The alpha of the color.</param>
+        /// <returns>The converted color.</returns>
+        public static Color4<Argb> ToArgb(this in Color3<Rgb> color, float alpha)
+        {
+            return new Color4<Argb>(alpha, color.X, color.Y, color.Z);
+        }
+
+        /// <summary>
+        /// Converts a color into <see cref="Rgba"/> color space.
+        /// </summary>
+        /// <param name="color">The color to convert.</param>
+        /// <param name="alpha">The alpha of the color.</param>
+        /// <returns>The converted color.</returns>
+        public static Color4<Rgba> ToRgba(this in Color3<Rgb> color, float alpha)
+        {
+            return new Color4<Rgba>(color.X, color.Y, color.Z, alpha);
+        }
+
+        /// <summary>
+        /// Converts a color into <see cref="Rgb"/> color space.
         /// </summary>
         /// <param name="color">The color to convert.</param>
         /// <returns>The converted color.</returns>
-        public static Color3<Rgb> ToRgb(Color3<Hsl> color)
+        public static Color3<Rgb> ToRgb(this in Color3<Hsl> color)
         {
             float h = color.X;
             float s = color.Y;
@@ -185,7 +207,7 @@ namespace OpenToolkit
         /// </summary>
         /// <param name="color">The color to convert.</param>
         /// <returns>The converted color.</returns>
-        public static Color3<Rgb> ToRgb(Color3<Hsv> color)
+        public static Color3<Rgb> ToRgb(this in Color3<Hsv> color)
         {
             float h = color.X;
             float s = color.Y;
@@ -209,7 +231,7 @@ namespace OpenToolkit
         /// </summary>
         /// <param name="color">The color to convert.</param>
         /// <returns>The converted color.</returns>
-        public static Color3<Rgb> ToRgb(Color3<Hcy> color)
+        public static Color3<Rgb> ToRgb(this in Color3<Hcy> color)
         {
             float h = color.X;
             float c = color.Y;
@@ -228,11 +250,22 @@ namespace OpenToolkit
         }
 
         /// <summary>
+        /// Converts a color into <see cref="Hsva"/> color space.
+        /// </summary>
+        /// <param name="color">The color to convert.</param>
+        /// <param name="alpha">The alpha of this color.</param>
+        /// <returns>The converted color.</returns>
+        public static Color4<Hsva> ToHsva(this in Color3<Hsv> color, float alpha)
+        {
+            return new Color4<Hsva>(color.X, color.Y, color.Z, alpha);
+        }
+
+        /// <summary>
         /// Converts a color into <see cref="Hsv"/> color space.
         /// </summary>
         /// <param name="color">The color to convert.</param>
         /// <returns>The converted color.</returns>
-        public static Color3<Hsv> ToHsv(Color3<Hsl> color)
+        public static Color3<Hsv> ToHsv(this in Color3<Hsl> color)
         {
             float hl = color.X;
             float sl = color.Y;
@@ -246,11 +279,58 @@ namespace OpenToolkit
         }
 
         /// <summary>
+        /// Converts a color into <see cref="Hsv"/> color space.
+        /// </summary>
+        /// <param name="color">The color to convert.</param>
+        /// <returns>The converted color.</returns>
+        public static Color3<Hsv> ToHsv(this in Color3<Rgb> color)
+        {
+            float r = color.X;
+            float g = color.Y;
+            float b = color.Z;
+
+            float v = Math.Max(r, Math.Max(g, b));
+            float c = Math.Min(r, Math.Min(g, b));
+            float l = v - (c / 2);
+
+            float h = 0;
+            if (c != 0)
+            {
+                if (v == r)
+                {
+                    h = 60 * (0 + ((g - b) / c));
+                }
+                else if (v == g)
+                {
+                    h = 60 * (2 + ((b - r) / c));
+                }
+                else if (v == b)
+                {
+                    h = 60 * (4 + ((r - g) / c));
+                }
+            }
+
+            float s = (v == 0) ? 0 : (c / v);
+            return new Color3<Hsv>(h, s, v);
+        }
+
+        /// <summary>
+        /// Converts a color into <see cref="Hsla"/> color space.
+        /// </summary>
+        /// <param name="color">The color to convert.</param>
+        /// <param name="alpha">The alpha of this color.</param>
+        /// <returns>The converted color.</returns>
+        public static Color4<Hsla> ToHsla(this in Color3<Hsl> color, float alpha)
+        {
+            return new Color4<Hsla>(color.X, color.Y, color.Z, alpha);
+        }
+
+        /// <summary>
         /// Converts a color into <see cref="Hsl"/> color space.
         /// </summary>
         /// <param name="color">The color to convert.</param>
         /// <returns>The converted color.</returns>
-        public static Color3<Hsl> ToHsv(Color3<Hsv> color)
+        public static Color3<Hsl> ToHsl(this in Color3<Hsv> color)
         {
             float hv = color.X;
             float sv = color.Y;
@@ -261,6 +341,42 @@ namespace OpenToolkit
             float sl = (ll == 0 || ll == 1) ? 0 : ((vv - ll) / MathHelper.Min(ll, 1 - ll));
 
             return new Color3<Hsl>(hl, sl, ll);
+        }
+
+        /// <summary>
+        /// Converts a color into <see cref="Hsl"/> color space.
+        /// </summary>
+        /// <param name="color">The color to convert.</param>
+        /// <returns>The converted color.</returns>
+        public static Color3<Hsl> ToHsl(this in Color3<Rgb> color)
+        {
+            float r = color.X;
+            float g = color.Y;
+            float b = color.Z;
+
+            float v = Math.Max(r, Math.Max(g, b));
+            float c = Math.Min(r, Math.Min(g, b));
+            float l = v - (c / 2);
+
+            float h = 0;
+            if (c != 0)
+            {
+                if (v == r)
+                {
+                    h = 60 * (0 + ((g - b) / c));
+                }
+                else if (v == g)
+                {
+                    h = 60 * (2 + ((b - r) / c));
+                }
+                else if (v == b)
+                {
+                    h = 60 * (4 + ((r - g) / c));
+                }
+            }
+
+            float s = (l == 0 || l == 1) ? 0 : ((v - l) / Math.Min(l, 1 - l));
+            return new Color3<Hsl>(h, s, l);
         }
     }
 }
