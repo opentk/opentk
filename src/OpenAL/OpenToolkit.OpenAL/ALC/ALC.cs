@@ -32,7 +32,7 @@ namespace OpenToolkit.Audio.OpenAL
             _ = ApiContainer<ALC>.StaticConstructorTrigger;
         }
 
-        protected ALC()
+        private ALC()
         {
         }
 

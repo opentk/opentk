@@ -73,7 +73,7 @@ namespace OpenToolkit.Audio.OpenAL
             {
                 unsafe
                 {
-                    var contextHandle = context?._contextHandle ?? ALContext.Zero;
+                    var contextHandle = context?._contextHandle ?? ALContext.Null;
 
                     if (ALC.MakeContextCurrent(contextHandle))
                     {
@@ -425,7 +425,7 @@ namespace OpenToolkit.Audio.OpenAL
                 _contextHandle = ALC.CreateContext(Device, ptr);
             }
 
-            if (_contextHandle == ALContext.Zero)
+            if (_contextHandle == ALContext.Null)
             {
                 ALC.CloseDevice(Device);
                 throw new AudioContextException
@@ -585,7 +585,7 @@ namespace OpenToolkit.Audio.OpenAL
                     IsCurrent = false;
                 }
 
-                if (_contextHandle != ALContext.Zero)
+                if (_contextHandle != ALContext.Null)
                 {
                     AvailableContexts.Remove(_contextHandle);
 

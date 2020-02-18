@@ -16,7 +16,7 @@ namespace OpenToolkit.Audio.OpenAL
 {
     public struct ALContext : IEquatable<ALContext>
     {
-        public static readonly ALContext Zero = new ALContext(IntPtr.Zero);
+        public static readonly ALContext Null = new ALContext(IntPtr.Zero);
 
         public IntPtr Handle;
 
@@ -49,5 +49,7 @@ namespace OpenToolkit.Audio.OpenAL
         {
             return !(left == right);
         }
+
+        public static implicit operator IntPtr(ALContext context) => context.Handle;
     }
 }
