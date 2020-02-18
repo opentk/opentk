@@ -2017,9 +2017,9 @@ namespace OpenToolkit.Mathematics
         /// <returns>The Vector4, converted to a Color4.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         [Pure]
-        public static explicit operator Color4(Vector4 v)
+        public static explicit operator OldColor4(Vector4 v)
         {
-            return Unsafe.As<Vector4, Color4>(ref v);
+            return Unsafe.As<Vector4, OldColor4>(ref v);
         }
 
         /// <summary>

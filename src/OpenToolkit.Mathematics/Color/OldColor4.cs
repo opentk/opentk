@@ -28,15 +28,16 @@ using System.Diagnostics.Contracts;
 using System.Drawing;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using OpenToolkit.Mathematics;
 
-namespace OpenToolkit.Mathematics
+namespace OpenToolkit
 {
     /// <summary>
     /// Represents a color with 4 floating-point components (R, G, B, A).
     /// </summary>
     [Serializable]
     [StructLayout(LayoutKind.Sequential)]
-    public struct Color4 : IEquatable<Color4>
+    public struct OldColor4 : IEquatable<OldColor4>
     {
         /// <summary>
         /// The red component of this Color4 structure.
@@ -59,13 +60,13 @@ namespace OpenToolkit.Mathematics
         public float A;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Color4"/> struct.
+        /// Initializes a new instance of the <see cref="OldColor4"/> struct.
         /// </summary>
         /// <param name="r">The red component of the new Color4 structure.</param>
         /// <param name="g">The green component of the new Color4 structure.</param>
         /// <param name="b">The blue component of the new Color4 structure.</param>
         /// <param name="a">The alpha component of the new Color4 structure.</param>
-        public Color4(float r, float g, float b, float a)
+        public OldColor4(float r, float g, float b, float a)
         {
             R = r;
             G = g;
@@ -74,13 +75,13 @@ namespace OpenToolkit.Mathematics
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Color4"/> struct.
+        /// Initializes a new instance of the <see cref="OldColor4"/> struct.
         /// </summary>
         /// <param name="r">The red component of the new Color4 structure.</param>
         /// <param name="g">The green component of the new Color4 structure.</param>
         /// <param name="b">The blue component of the new Color4 structure.</param>
         /// <param name="a">The alpha component of the new Color4 structure.</param>
-        public Color4(byte r, byte g, byte b, byte a)
+        public OldColor4(byte r, byte g, byte b, byte a)
         {
             R = r / (float)byte.MaxValue;
             G = g / (float)byte.MaxValue;
@@ -114,7 +115,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="right">The right-hand side of the comparison.</param>
         /// <returns>True if left is equal to right; false otherwise.</returns>
         [Pure]
-        public static bool operator ==(Color4 left, Color4 right)
+        public static bool operator ==(OldColor4 left, OldColor4 right)
         {
             return left.Equals(right);
         }
@@ -126,7 +127,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="right">The right-hand side of the comparison.</param>
         /// <returns>True if left is not equal to right; false otherwise.</returns>
         [Pure]
-        public static bool operator !=(Color4 left, Color4 right)
+        public static bool operator !=(OldColor4 left, OldColor4 right)
         {
             return !left.Equals(right);
         }
@@ -137,9 +138,9 @@ namespace OpenToolkit.Mathematics
         /// <param name="color">The System.Drawing.Color to convert.</param>
         /// <returns>A new Color4 structure containing the converted components.</returns>
         [Pure]
-        public static implicit operator Color4(Color color)
+        public static implicit operator OldColor4(Color color)
         {
-            return new Color4(color.R, color.G, color.B, color.A);
+            return new OldColor4(color.R, color.G, color.B, color.A);
         }
 
         /// <summary>
@@ -148,7 +149,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="color">The Color4 to convert.</param>
         /// <returns>A new System.Drawing.Color structure containing the converted components.</returns>
         [Pure]
-        public static explicit operator Color(Color4 color)
+        public static explicit operator Color(OldColor4 color)
         {
             return Color.FromArgb(
                 (int)(color.A * byte.MaxValue),
@@ -164,9 +165,9 @@ namespace OpenToolkit.Mathematics
         /// <returns>The Color4, converted into a Vector4.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         [Pure]
-        public static explicit operator Vector4(Color4 c)
+        public static explicit operator Vector4(OldColor4 c)
         {
-            return Unsafe.As<Color4, Vector4>(ref c);
+            return Unsafe.As<OldColor4, Vector4>(ref c);
         }
 
         /// <summary>
@@ -177,12 +178,12 @@ namespace OpenToolkit.Mathematics
         [Pure]
         public override bool Equals(object obj)
         {
-            if (!(obj is Color4))
+            if (!(obj is OldColor4))
             {
                 return false;
             }
 
-            return Equals((Color4)obj);
+            return Equals((OldColor4)obj);
         }
 
         /// <summary>
@@ -206,707 +207,707 @@ namespace OpenToolkit.Mathematics
         /// <summary>
         /// Gets the system color with (R, G, B, A) = (255, 255, 255, 0).
         /// </summary>
-        public static Color4 Transparent => new Color4(255, 255, 255, 0);
+        public static OldColor4 Transparent => new OldColor4(255, 255, 255, 0);
 
         /// <summary>
         /// Gets the system color with (R, G, B, A) = (240, 248, 255, 255).
         /// </summary>
-        public static Color4 AliceBlue => new Color4(240, 248, 255, 255);
+        public static OldColor4 AliceBlue => new OldColor4(240, 248, 255, 255);
 
         /// <summary>
         /// Gets the system color with (R, G, B, A) = (250, 235, 215, 255).
         /// </summary>
-        public static Color4 AntiqueWhite => new Color4(250, 235, 215, 255);
+        public static OldColor4 AntiqueWhite => new OldColor4(250, 235, 215, 255);
 
         /// <summary>
         /// Gets the system color with (R, G, B, A) = (0, 255, 255, 255).
         /// </summary>
-        public static Color4 Aqua => new Color4(0, 255, 255, 255);
+        public static OldColor4 Aqua => new OldColor4(0, 255, 255, 255);
 
         /// <summary>
         /// Gets the system color with (R, G, B, A) = (127, 255, 212, 255).
         /// </summary>
-        public static Color4 Aquamarine => new Color4(127, 255, 212, 255);
+        public static OldColor4 Aquamarine => new OldColor4(127, 255, 212, 255);
 
         /// <summary>
         /// Gets the system color with (R, G, B, A) = (240, 255, 255, 255).
         /// </summary>
-        public static Color4 Azure => new Color4(240, 255, 255, 255);
+        public static OldColor4 Azure => new OldColor4(240, 255, 255, 255);
 
         /// <summary>
         /// Gets the system color with (R, G, B, A) = (245, 245, 220, 255).
         /// </summary>
-        public static Color4 Beige => new Color4(245, 245, 220, 255);
+        public static OldColor4 Beige => new OldColor4(245, 245, 220, 255);
 
         /// <summary>
         /// Gets the system color with (R, G, B, A) = (255, 228, 196, 255).
         /// </summary>
-        public static Color4 Bisque => new Color4(255, 228, 196, 255);
+        public static OldColor4 Bisque => new OldColor4(255, 228, 196, 255);
 
         /// <summary>
         /// Gets the system color with (R, G, B, A) = (0, 0, 0, 255).
         /// </summary>
-        public static Color4 Black => new Color4(0, 0, 0, 255);
+        public static OldColor4 Black => new OldColor4(0, 0, 0, 255);
 
         /// <summary>
         /// Gets the system color with (R, G, B, A) = (255, 235, 205, 255).
         /// </summary>
-        public static Color4 BlanchedAlmond => new Color4(255, 235, 205, 255);
+        public static OldColor4 BlanchedAlmond => new OldColor4(255, 235, 205, 255);
 
         /// <summary>
         /// Gets the system color with (R, G, B, A) = (0, 0, 255, 255).
         /// </summary>
-        public static Color4 Blue => new Color4(0, 0, 255, 255);
+        public static OldColor4 Blue => new OldColor4(0, 0, 255, 255);
 
         /// <summary>
         /// Gets the system color with (R, G, B, A) = (138, 43, 226, 255).
         /// </summary>
-        public static Color4 BlueViolet => new Color4(138, 43, 226, 255);
+        public static OldColor4 BlueViolet => new OldColor4(138, 43, 226, 255);
 
         /// <summary>
         /// Gets the system color with (R, G, B, A) = (165, 42, 42, 255).
         /// </summary>
-        public static Color4 Brown => new Color4(165, 42, 42, 255);
+        public static OldColor4 Brown => new OldColor4(165, 42, 42, 255);
 
         /// <summary>
         /// Gets the system color with (R, G, B, A) = (222, 184, 135, 255).
         /// </summary>
-        public static Color4 BurlyWood => new Color4(222, 184, 135, 255);
+        public static OldColor4 BurlyWood => new OldColor4(222, 184, 135, 255);
 
         /// <summary>
         /// Gets the system color with (R, G, B, A) = (95, 158, 160, 255).
         /// </summary>
-        public static Color4 CadetBlue => new Color4(95, 158, 160, 255);
+        public static OldColor4 CadetBlue => new OldColor4(95, 158, 160, 255);
 
         /// <summary>
         /// Gets the system color with (R, G, B, A) = (127, 255, 0, 255).
         /// </summary>
-        public static Color4 Chartreuse => new Color4(127, 255, 0, 255);
+        public static OldColor4 Chartreuse => new OldColor4(127, 255, 0, 255);
 
         /// <summary>
         /// Gets the system color with (R, G, B, A) = (210, 105, 30, 255).
         /// </summary>
-        public static Color4 Chocolate => new Color4(210, 105, 30, 255);
+        public static OldColor4 Chocolate => new OldColor4(210, 105, 30, 255);
 
         /// <summary>
         /// Gets the system color with (R, G, B, A) = (255, 127, 80, 255).
         /// </summary>
-        public static Color4 Coral => new Color4(255, 127, 80, 255);
+        public static OldColor4 Coral => new OldColor4(255, 127, 80, 255);
 
         /// <summary>
         /// Gets the system color with (R, G, B, A) = (100, 149, 237, 255).
         /// </summary>
-        public static Color4 CornflowerBlue => new Color4(100, 149, 237, 255);
+        public static OldColor4 CornflowerBlue => new OldColor4(100, 149, 237, 255);
 
         /// <summary>
         /// Gets the system color with (R, G, B, A) = (255, 248, 220, 255).
         /// </summary>
-        public static Color4 Cornsilk => new Color4(255, 248, 220, 255);
+        public static OldColor4 Cornsilk => new OldColor4(255, 248, 220, 255);
 
         /// <summary>
         /// Gets the system color with (R, G, B, A) = (220, 20, 60, 255).
         /// </summary>
-        public static Color4 Crimson => new Color4(220, 20, 60, 255);
+        public static OldColor4 Crimson => new OldColor4(220, 20, 60, 255);
 
         /// <summary>
         /// Gets the system color with (R, G, B, A) = (0, 255, 255, 255).
         /// </summary>
-        public static Color4 Cyan => new Color4(0, 255, 255, 255);
+        public static OldColor4 Cyan => new OldColor4(0, 255, 255, 255);
 
         /// <summary>
         /// Gets the system color with (R, G, B, A) = (0, 0, 139, 255).
         /// </summary>
-        public static Color4 DarkBlue => new Color4(0, 0, 139, 255);
+        public static OldColor4 DarkBlue => new OldColor4(0, 0, 139, 255);
 
         /// <summary>
         /// Gets the system color with (R, G, B, A) = (0, 139, 139, 255).
         /// </summary>
-        public static Color4 DarkCyan => new Color4(0, 139, 139, 255);
+        public static OldColor4 DarkCyan => new OldColor4(0, 139, 139, 255);
 
         /// <summary>
         /// Gets the system color with (R, G, B, A) = (184, 134, 11, 255).
         /// </summary>
-        public static Color4 DarkGoldenrod => new Color4(184, 134, 11, 255);
+        public static OldColor4 DarkGoldenrod => new OldColor4(184, 134, 11, 255);
 
         /// <summary>
         /// Gets the system color with (R, G, B, A) = (169, 169, 169, 255).
         /// </summary>
-        public static Color4 DarkGray => new Color4(169, 169, 169, 255);
+        public static OldColor4 DarkGray => new OldColor4(169, 169, 169, 255);
 
         /// <summary>
         /// Gets the system color with (R, G, B, A) = (0, 100, 0, 255).
         /// </summary>
-        public static Color4 DarkGreen => new Color4(0, 100, 0, 255);
+        public static OldColor4 DarkGreen => new OldColor4(0, 100, 0, 255);
 
         /// <summary>
         /// Gets the system color with (R, G, B, A) = (189, 183, 107, 255).
         /// </summary>
-        public static Color4 DarkKhaki => new Color4(189, 183, 107, 255);
+        public static OldColor4 DarkKhaki => new OldColor4(189, 183, 107, 255);
 
         /// <summary>
         /// Gets the system color with (R, G, B, A) = (139, 0, 139, 255).
         /// </summary>
-        public static Color4 DarkMagenta => new Color4(139, 0, 139, 255);
+        public static OldColor4 DarkMagenta => new OldColor4(139, 0, 139, 255);
 
         /// <summary>
         /// Gets the system color with (R, G, B, A) = (85, 107, 47, 255).
         /// </summary>
-        public static Color4 DarkOliveGreen => new Color4(85, 107, 47, 255);
+        public static OldColor4 DarkOliveGreen => new OldColor4(85, 107, 47, 255);
 
         /// <summary>
         /// Gets the system color with (R, G, B, A) = (255, 140, 0, 255).
         /// </summary>
-        public static Color4 DarkOrange => new Color4(255, 140, 0, 255);
+        public static OldColor4 DarkOrange => new OldColor4(255, 140, 0, 255);
 
         /// <summary>
         /// Gets the system color with (R, G, B, A) = (153, 50, 204, 255).
         /// </summary>
-        public static Color4 DarkOrchid => new Color4(153, 50, 204, 255);
+        public static OldColor4 DarkOrchid => new OldColor4(153, 50, 204, 255);
 
         /// <summary>
         /// Gets the system color with (R, G, B, A) = (139, 0, 0, 255).
         /// </summary>
-        public static Color4 DarkRed => new Color4(139, 0, 0, 255);
+        public static OldColor4 DarkRed => new OldColor4(139, 0, 0, 255);
 
         /// <summary>
         /// Gets the system color with (R, G, B, A) = (233, 150, 122, 255).
         /// </summary>
-        public static Color4 DarkSalmon => new Color4(233, 150, 122, 255);
+        public static OldColor4 DarkSalmon => new OldColor4(233, 150, 122, 255);
 
         /// <summary>
         /// Gets the system color with (R, G, B, A) = (143, 188, 139, 255).
         /// </summary>
-        public static Color4 DarkSeaGreen => new Color4(143, 188, 139, 255);
+        public static OldColor4 DarkSeaGreen => new OldColor4(143, 188, 139, 255);
 
         /// <summary>
         /// Gets the system color with (R, G, B, A) = (72, 61, 139, 255).
         /// </summary>
-        public static Color4 DarkSlateBlue => new Color4(72, 61, 139, 255);
+        public static OldColor4 DarkSlateBlue => new OldColor4(72, 61, 139, 255);
 
         /// <summary>
         /// Gets the system color with (R, G, B, A) = (47, 79, 79, 255).
         /// </summary>
-        public static Color4 DarkSlateGray => new Color4(47, 79, 79, 255);
+        public static OldColor4 DarkSlateGray => new OldColor4(47, 79, 79, 255);
 
         /// <summary>
         /// Gets the system color with (R, G, B, A) = (0, 206, 209, 255).
         /// </summary>
-        public static Color4 DarkTurquoise => new Color4(0, 206, 209, 255);
+        public static OldColor4 DarkTurquoise => new OldColor4(0, 206, 209, 255);
 
         /// <summary>
         /// Gets the system color with (R, G, B, A) = (148, 0, 211, 255).
         /// </summary>
-        public static Color4 DarkViolet => new Color4(148, 0, 211, 255);
+        public static OldColor4 DarkViolet => new OldColor4(148, 0, 211, 255);
 
         /// <summary>
         /// Gets the system color with (R, G, B, A) = (255, 20, 147, 255).
         /// </summary>
-        public static Color4 DeepPink => new Color4(255, 20, 147, 255);
+        public static OldColor4 DeepPink => new OldColor4(255, 20, 147, 255);
 
         /// <summary>
         /// Gets the system color with (R, G, B, A) = (0, 191, 255, 255).
         /// </summary>
-        public static Color4 DeepSkyBlue => new Color4(0, 191, 255, 255);
+        public static OldColor4 DeepSkyBlue => new OldColor4(0, 191, 255, 255);
 
         /// <summary>
         /// Gets the system color with (R, G, B, A) = (105, 105, 105, 255).
         /// </summary>
-        public static Color4 DimGray => new Color4(105, 105, 105, 255);
+        public static OldColor4 DimGray => new OldColor4(105, 105, 105, 255);
 
         /// <summary>
         /// Gets the system color with (R, G, B, A) = (30, 144, 255, 255).
         /// </summary>
-        public static Color4 DodgerBlue => new Color4(30, 144, 255, 255);
+        public static OldColor4 DodgerBlue => new OldColor4(30, 144, 255, 255);
 
         /// <summary>
         /// Gets the system color with (R, G, B, A) = (178, 34, 34, 255).
         /// </summary>
-        public static Color4 Firebrick => new Color4(178, 34, 34, 255);
+        public static OldColor4 Firebrick => new OldColor4(178, 34, 34, 255);
 
         /// <summary>
         /// Gets the system color with (R, G, B, A) = (255, 250, 240, 255).
         /// </summary>
-        public static Color4 FloralWhite => new Color4(255, 250, 240, 255);
+        public static OldColor4 FloralWhite => new OldColor4(255, 250, 240, 255);
 
         /// <summary>
         /// Gets the system color with (R, G, B, A) = (34, 139, 34, 255).
         /// </summary>
-        public static Color4 ForestGreen => new Color4(34, 139, 34, 255);
+        public static OldColor4 ForestGreen => new OldColor4(34, 139, 34, 255);
 
         /// <summary>
         /// Gets the system color with (R, G, B, A) = (255, 0, 255, 255).
         /// </summary>
-        public static Color4 Fuchsia => new Color4(255, 0, 255, 255);
+        public static OldColor4 Fuchsia => new OldColor4(255, 0, 255, 255);
 
         /// <summary>
         /// Gets the system color with (R, G, B, A) = (220, 220, 220, 255).
         /// </summary>
-        public static Color4 Gainsboro => new Color4(220, 220, 220, 255);
+        public static OldColor4 Gainsboro => new OldColor4(220, 220, 220, 255);
 
         /// <summary>
         /// Gets the system color with (R, G, B, A) = (248, 248, 255, 255).
         /// </summary>
-        public static Color4 GhostWhite => new Color4(248, 248, 255, 255);
+        public static OldColor4 GhostWhite => new OldColor4(248, 248, 255, 255);
 
         /// <summary>
         /// Gets the system color with (R, G, B, A) = (255, 215, 0, 255).
         /// </summary>
-        public static Color4 Gold => new Color4(255, 215, 0, 255);
+        public static OldColor4 Gold => new OldColor4(255, 215, 0, 255);
 
         /// <summary>
         /// Gets the system color with (R, G, B, A) = (218, 165, 32, 255).
         /// </summary>
-        public static Color4 Goldenrod => new Color4(218, 165, 32, 255);
+        public static OldColor4 Goldenrod => new OldColor4(218, 165, 32, 255);
 
         /// <summary>
         /// Gets the system color with (R, G, B, A) = (128, 128, 128, 255).
         /// </summary>
-        public static Color4 Gray => new Color4(128, 128, 128, 255);
+        public static OldColor4 Gray => new OldColor4(128, 128, 128, 255);
 
         /// <summary>
         /// Gets the system color with (R, G, B, A) = (0, 128, 0, 255).
         /// </summary>
-        public static Color4 Green => new Color4(0, 128, 0, 255);
+        public static OldColor4 Green => new OldColor4(0, 128, 0, 255);
 
         /// <summary>
         /// Gets the system color with (R, G, B, A) = (173, 255, 47, 255).
         /// </summary>
-        public static Color4 GreenYellow => new Color4(173, 255, 47, 255);
+        public static OldColor4 GreenYellow => new OldColor4(173, 255, 47, 255);
 
         /// <summary>
         /// Gets the system color with (R, G, B, A) = (240, 255, 240, 255).
         /// </summary>
-        public static Color4 Honeydew => new Color4(240, 255, 240, 255);
+        public static OldColor4 Honeydew => new OldColor4(240, 255, 240, 255);
 
         /// <summary>
         /// Gets the system color with (R, G, B, A) = (255, 105, 180, 255).
         /// </summary>
-        public static Color4 HotPink => new Color4(255, 105, 180, 255);
+        public static OldColor4 HotPink => new OldColor4(255, 105, 180, 255);
 
         /// <summary>
         /// Gets the system color with (R, G, B, A) = (205, 92, 92, 255).
         /// </summary>
-        public static Color4 IndianRed => new Color4(205, 92, 92, 255);
+        public static OldColor4 IndianRed => new OldColor4(205, 92, 92, 255);
 
         /// <summary>
         /// Gets the system color with (R, G, B, A) = (75, 0, 130, 255).
         /// </summary>
-        public static Color4 Indigo => new Color4(75, 0, 130, 255);
+        public static OldColor4 Indigo => new OldColor4(75, 0, 130, 255);
 
         /// <summary>
         /// Gets the system color with (R, G, B, A) = (255, 255, 240, 255).
         /// </summary>
-        public static Color4 Ivory => new Color4(255, 255, 240, 255);
+        public static OldColor4 Ivory => new OldColor4(255, 255, 240, 255);
 
         /// <summary>
         /// Gets the system color with (R, G, B, A) = (240, 230, 140, 255).
         /// </summary>
-        public static Color4 Khaki => new Color4(240, 230, 140, 255);
+        public static OldColor4 Khaki => new OldColor4(240, 230, 140, 255);
 
         /// <summary>
         /// Gets the system color with (R, G, B, A) = (230, 230, 250, 255).
         /// </summary>
-        public static Color4 Lavender => new Color4(230, 230, 250, 255);
+        public static OldColor4 Lavender => new OldColor4(230, 230, 250, 255);
 
         /// <summary>
         /// Gets the system color with (R, G, B, A) = (255, 240, 245, 255).
         /// </summary>
-        public static Color4 LavenderBlush => new Color4(255, 240, 245, 255);
+        public static OldColor4 LavenderBlush => new OldColor4(255, 240, 245, 255);
 
         /// <summary>
         /// Gets the system color with (R, G, B, A) = (124, 252, 0, 255).
         /// </summary>
-        public static Color4 LawnGreen => new Color4(124, 252, 0, 255);
+        public static OldColor4 LawnGreen => new OldColor4(124, 252, 0, 255);
 
         /// <summary>
         /// Gets the system color with (R, G, B, A) = (255, 250, 205, 255).
         /// </summary>
-        public static Color4 LemonChiffon => new Color4(255, 250, 205, 255);
+        public static OldColor4 LemonChiffon => new OldColor4(255, 250, 205, 255);
 
         /// <summary>
         /// Gets the system color with (R, G, B, A) = (173, 216, 230, 255).
         /// </summary>
-        public static Color4 LightBlue => new Color4(173, 216, 230, 255);
+        public static OldColor4 LightBlue => new OldColor4(173, 216, 230, 255);
 
         /// <summary>
         /// Gets the system color with (R, G, B, A) = (240, 128, 128, 255).
         /// </summary>
-        public static Color4 LightCoral => new Color4(240, 128, 128, 255);
+        public static OldColor4 LightCoral => new OldColor4(240, 128, 128, 255);
 
         /// <summary>
         /// Gets the system color with (R, G, B, A) = (224, 255, 255, 255).
         /// </summary>
-        public static Color4 LightCyan => new Color4(224, 255, 255, 255);
+        public static OldColor4 LightCyan => new OldColor4(224, 255, 255, 255);
 
         /// <summary>
         /// Gets the system color with (R, G, B, A) = (250, 250, 210, 255).
         /// </summary>
-        public static Color4 LightGoldenrodYellow => new Color4(250, 250, 210, 255);
+        public static OldColor4 LightGoldenrodYellow => new OldColor4(250, 250, 210, 255);
 
         /// <summary>
         /// Gets the system color with (R, G, B, A) = (144, 238, 144, 255).
         /// </summary>
-        public static Color4 LightGreen => new Color4(144, 238, 144, 255);
+        public static OldColor4 LightGreen => new OldColor4(144, 238, 144, 255);
 
         /// <summary>
         /// Gets the system color with (R, G, B, A) = (211, 211, 211, 255).
         /// </summary>
-        public static Color4 LightGray => new Color4(211, 211, 211, 255);
+        public static OldColor4 LightGray => new OldColor4(211, 211, 211, 255);
 
         /// <summary>
         /// Gets the system color with (R, G, B, A) = (255, 182, 193, 255).
         /// </summary>
-        public static Color4 LightPink => new Color4(255, 182, 193, 255);
+        public static OldColor4 LightPink => new OldColor4(255, 182, 193, 255);
 
         /// <summary>
         /// Gets the system color with (R, G, B, A) = (255, 160, 122, 255).
         /// </summary>
-        public static Color4 LightSalmon => new Color4(255, 160, 122, 255);
+        public static OldColor4 LightSalmon => new OldColor4(255, 160, 122, 255);
 
         /// <summary>
         /// Gets the system color with (R, G, B, A) = (32, 178, 170, 255).
         /// </summary>
-        public static Color4 LightSeaGreen => new Color4(32, 178, 170, 255);
+        public static OldColor4 LightSeaGreen => new OldColor4(32, 178, 170, 255);
 
         /// <summary>
         /// Gets the system color with (R, G, B, A) = (135, 206, 250, 255).
         /// </summary>
-        public static Color4 LightSkyBlue => new Color4(135, 206, 250, 255);
+        public static OldColor4 LightSkyBlue => new OldColor4(135, 206, 250, 255);
 
         /// <summary>
         /// Gets the system color with (R, G, B, A) = (119, 136, 153, 255).
         /// </summary>
-        public static Color4 LightSlateGray => new Color4(119, 136, 153, 255);
+        public static OldColor4 LightSlateGray => new OldColor4(119, 136, 153, 255);
 
         /// <summary>
         /// Gets the system color with (R, G, B, A) = (176, 196, 222, 255).
         /// </summary>
-        public static Color4 LightSteelBlue => new Color4(176, 196, 222, 255);
+        public static OldColor4 LightSteelBlue => new OldColor4(176, 196, 222, 255);
 
         /// <summary>
         /// Gets the system color with (R, G, B, A) = (255, 255, 224, 255).
         /// </summary>
-        public static Color4 LightYellow => new Color4(255, 255, 224, 255);
+        public static OldColor4 LightYellow => new OldColor4(255, 255, 224, 255);
 
         /// <summary>
         /// Gets the system color with (R, G, B, A) = (0, 255, 0, 255).
         /// </summary>
-        public static Color4 Lime => new Color4(0, 255, 0, 255);
+        public static OldColor4 Lime => new OldColor4(0, 255, 0, 255);
 
         /// <summary>
         /// Gets the system color with (R, G, B, A) = (50, 205, 50, 255).
         /// </summary>
-        public static Color4 LimeGreen => new Color4(50, 205, 50, 255);
+        public static OldColor4 LimeGreen => new OldColor4(50, 205, 50, 255);
 
         /// <summary>
         /// Gets the system color with (R, G, B, A) = (250, 240, 230, 255).
         /// </summary>
-        public static Color4 Linen => new Color4(250, 240, 230, 255);
+        public static OldColor4 Linen => new OldColor4(250, 240, 230, 255);
 
         /// <summary>
         /// Gets the system color with (R, G, B, A) = (255, 0, 255, 255).
         /// </summary>
-        public static Color4 Magenta => new Color4(255, 0, 255, 255);
+        public static OldColor4 Magenta => new OldColor4(255, 0, 255, 255);
 
         /// <summary>
         /// Gets the system color with (R, G, B, A) = (128, 0, 0, 255).
         /// </summary>
-        public static Color4 Maroon => new Color4(128, 0, 0, 255);
+        public static OldColor4 Maroon => new OldColor4(128, 0, 0, 255);
 
         /// <summary>
         /// Gets the system color with (R, G, B, A) = (102, 205, 170, 255).
         /// </summary>
-        public static Color4 MediumAquamarine => new Color4(102, 205, 170, 255);
+        public static OldColor4 MediumAquamarine => new OldColor4(102, 205, 170, 255);
 
         /// <summary>
         /// Gets the system color with (R, G, B, A) = (0, 0, 205, 255).
         /// </summary>
-        public static Color4 MediumBlue => new Color4(0, 0, 205, 255);
+        public static OldColor4 MediumBlue => new OldColor4(0, 0, 205, 255);
 
         /// <summary>
         /// Gets the system color with (R, G, B, A) = (186, 85, 211, 255).
         /// </summary>
-        public static Color4 MediumOrchid => new Color4(186, 85, 211, 255);
+        public static OldColor4 MediumOrchid => new OldColor4(186, 85, 211, 255);
 
         /// <summary>
         /// Gets the system color with (R, G, B, A) = (147, 112, 219, 255).
         /// </summary>
-        public static Color4 MediumPurple => new Color4(147, 112, 219, 255);
+        public static OldColor4 MediumPurple => new OldColor4(147, 112, 219, 255);
 
         /// <summary>
         /// Gets the system color with (R, G, B, A) = (60, 179, 113, 255).
         /// </summary>
-        public static Color4 MediumSeaGreen => new Color4(60, 179, 113, 255);
+        public static OldColor4 MediumSeaGreen => new OldColor4(60, 179, 113, 255);
 
         /// <summary>
         /// Gets the system color with (R, G, B, A) = (123, 104, 238, 255).
         /// </summary>
-        public static Color4 MediumSlateBlue => new Color4(123, 104, 238, 255);
+        public static OldColor4 MediumSlateBlue => new OldColor4(123, 104, 238, 255);
 
         /// <summary>
         /// Gets the system color with (R, G, B, A) = (0, 250, 154, 255).
         /// </summary>
-        public static Color4 MediumSpringGreen => new Color4(0, 250, 154, 255);
+        public static OldColor4 MediumSpringGreen => new OldColor4(0, 250, 154, 255);
 
         /// <summary>
         /// Gets the system color with (R, G, B, A) = (72, 209, 204, 255).
         /// </summary>
-        public static Color4 MediumTurquoise => new Color4(72, 209, 204, 255);
+        public static OldColor4 MediumTurquoise => new OldColor4(72, 209, 204, 255);
 
         /// <summary>
         /// Gets the system color with (R, G, B, A) = (199, 21, 133, 255).
         /// </summary>
-        public static Color4 MediumVioletRed => new Color4(199, 21, 133, 255);
+        public static OldColor4 MediumVioletRed => new OldColor4(199, 21, 133, 255);
 
         /// <summary>
         /// Gets the system color with (R, G, B, A) = (25, 25, 112, 255).
         /// </summary>
-        public static Color4 MidnightBlue => new Color4(25, 25, 112, 255);
+        public static OldColor4 MidnightBlue => new OldColor4(25, 25, 112, 255);
 
         /// <summary>
         /// Gets the system color with (R, G, B, A) = (245, 255, 250, 255).
         /// </summary>
-        public static Color4 MintCream => new Color4(245, 255, 250, 255);
+        public static OldColor4 MintCream => new OldColor4(245, 255, 250, 255);
 
         /// <summary>
         /// Gets the system color with (R, G, B, A) = (255, 228, 225, 255).
         /// </summary>
-        public static Color4 MistyRose => new Color4(255, 228, 225, 255);
+        public static OldColor4 MistyRose => new OldColor4(255, 228, 225, 255);
 
         /// <summary>
         /// Gets the system color with (R, G, B, A) = (255, 228, 181, 255).
         /// </summary>
-        public static Color4 Moccasin => new Color4(255, 228, 181, 255);
+        public static OldColor4 Moccasin => new OldColor4(255, 228, 181, 255);
 
         /// <summary>
         /// Gets the system color with (R, G, B, A) = (255, 222, 173, 255).
         /// </summary>
-        public static Color4 NavajoWhite => new Color4(255, 222, 173, 255);
+        public static OldColor4 NavajoWhite => new OldColor4(255, 222, 173, 255);
 
         /// <summary>
         /// Gets the system color with (R, G, B, A) = (0, 0, 128, 255).
         /// </summary>
-        public static Color4 Navy => new Color4(0, 0, 128, 255);
+        public static OldColor4 Navy => new OldColor4(0, 0, 128, 255);
 
         /// <summary>
         /// Gets the system color with (R, G, B, A) = (253, 245, 230, 255).
         /// </summary>
-        public static Color4 OldLace => new Color4(253, 245, 230, 255);
+        public static OldColor4 OldLace => new OldColor4(253, 245, 230, 255);
 
         /// <summary>
         /// Gets the system color with (R, G, B, A) = (128, 128, 0, 255).
         /// </summary>
-        public static Color4 Olive => new Color4(128, 128, 0, 255);
+        public static OldColor4 Olive => new OldColor4(128, 128, 0, 255);
 
         /// <summary>
         /// Gets the system color with (R, G, B, A) = (107, 142, 35, 255).
         /// </summary>
-        public static Color4 OliveDrab => new Color4(107, 142, 35, 255);
+        public static OldColor4 OliveDrab => new OldColor4(107, 142, 35, 255);
 
         /// <summary>
         /// Gets the system color with (R, G, B, A) = (255, 165, 0, 255).
         /// </summary>
-        public static Color4 Orange => new Color4(255, 165, 0, 255);
+        public static OldColor4 Orange => new OldColor4(255, 165, 0, 255);
 
         /// <summary>
         /// Gets the system color with (R, G, B, A) = (255, 69, 0, 255).
         /// </summary>
-        public static Color4 OrangeRed => new Color4(255, 69, 0, 255);
+        public static OldColor4 OrangeRed => new OldColor4(255, 69, 0, 255);
 
         /// <summary>
         /// Gets the system color with (R, G, B, A) = (218, 112, 214, 255).
         /// </summary>
-        public static Color4 Orchid => new Color4(218, 112, 214, 255);
+        public static OldColor4 Orchid => new OldColor4(218, 112, 214, 255);
 
         /// <summary>
         /// Gets the system color with (R, G, B, A) = (238, 232, 170, 255).
         /// </summary>
-        public static Color4 PaleGoldenrod => new Color4(238, 232, 170, 255);
+        public static OldColor4 PaleGoldenrod => new OldColor4(238, 232, 170, 255);
 
         /// <summary>
         /// Gets the system color with (R, G, B, A) = (152, 251, 152, 255).
         /// </summary>
-        public static Color4 PaleGreen => new Color4(152, 251, 152, 255);
+        public static OldColor4 PaleGreen => new OldColor4(152, 251, 152, 255);
 
         /// <summary>
         /// Gets the system color with (R, G, B, A) = (175, 238, 238, 255).
         /// </summary>
-        public static Color4 PaleTurquoise => new Color4(175, 238, 238, 255);
+        public static OldColor4 PaleTurquoise => new OldColor4(175, 238, 238, 255);
 
         /// <summary>
         /// Gets the system color with (R, G, B, A) = (219, 112, 147, 255).
         /// </summary>
-        public static Color4 PaleVioletRed => new Color4(219, 112, 147, 255);
+        public static OldColor4 PaleVioletRed => new OldColor4(219, 112, 147, 255);
 
         /// <summary>
         /// Gets the system color with (R, G, B, A) = (255, 239, 213, 255).
         /// </summary>
-        public static Color4 PapayaWhip => new Color4(255, 239, 213, 255);
+        public static OldColor4 PapayaWhip => new OldColor4(255, 239, 213, 255);
 
         /// <summary>
         /// Gets the system color with (R, G, B, A) = (255, 218, 185, 255).
         /// </summary>
-        public static Color4 PeachPuff => new Color4(255, 218, 185, 255);
+        public static OldColor4 PeachPuff => new OldColor4(255, 218, 185, 255);
 
         /// <summary>
         /// Gets the system color with (R, G, B, A) = (205, 133, 63, 255).
         /// </summary>
-        public static Color4 Peru => new Color4(205, 133, 63, 255);
+        public static OldColor4 Peru => new OldColor4(205, 133, 63, 255);
 
         /// <summary>
         /// Gets the system color with (R, G, B, A) = (255, 192, 203, 255).
         /// </summary>
-        public static Color4 Pink => new Color4(255, 192, 203, 255);
+        public static OldColor4 Pink => new OldColor4(255, 192, 203, 255);
 
         /// <summary>
         /// Gets the system color with (R, G, B, A) = (221, 160, 221, 255).
         /// </summary>
-        public static Color4 Plum => new Color4(221, 160, 221, 255);
+        public static OldColor4 Plum => new OldColor4(221, 160, 221, 255);
 
         /// <summary>
         /// Gets the system color with (R, G, B, A) = (176, 224, 230, 255).
         /// </summary>
-        public static Color4 PowderBlue => new Color4(176, 224, 230, 255);
+        public static OldColor4 PowderBlue => new OldColor4(176, 224, 230, 255);
 
         /// <summary>
         /// Gets the system color with (R, G, B, A) = (128, 0, 128, 255).
         /// </summary>
-        public static Color4 Purple => new Color4(128, 0, 128, 255);
+        public static OldColor4 Purple => new OldColor4(128, 0, 128, 255);
 
         /// <summary>
         /// Gets the system color with (R, G, B, A) = (255, 0, 0, 255).
         /// </summary>
-        public static Color4 Red => new Color4(255, 0, 0, 255);
+        public static OldColor4 Red => new OldColor4(255, 0, 0, 255);
 
         /// <summary>
         /// Gets the system color with (R, G, B, A) = (188, 143, 143, 255).
         /// </summary>
-        public static Color4 RosyBrown => new Color4(188, 143, 143, 255);
+        public static OldColor4 RosyBrown => new OldColor4(188, 143, 143, 255);
 
         /// <summary>
         /// Gets the system color with (R, G, B, A) = (65, 105, 225, 255).
         /// </summary>
-        public static Color4 RoyalBlue => new Color4(65, 105, 225, 255);
+        public static OldColor4 RoyalBlue => new OldColor4(65, 105, 225, 255);
 
         /// <summary>
         /// Gets the system color with (R, G, B, A) = (139, 69, 19, 255).
         /// </summary>
-        public static Color4 SaddleBrown => new Color4(139, 69, 19, 255);
+        public static OldColor4 SaddleBrown => new OldColor4(139, 69, 19, 255);
 
         /// <summary>
         /// Gets the system color with (R, G, B, A) = (250, 128, 114, 255).
         /// </summary>
-        public static Color4 Salmon => new Color4(250, 128, 114, 255);
+        public static OldColor4 Salmon => new OldColor4(250, 128, 114, 255);
 
         /// <summary>
         /// Gets the system color with (R, G, B, A) = (244, 164, 96, 255).
         /// </summary>
-        public static Color4 SandyBrown => new Color4(244, 164, 96, 255);
+        public static OldColor4 SandyBrown => new OldColor4(244, 164, 96, 255);
 
         /// <summary>
         /// Gets the system color with (R, G, B, A) = (46, 139, 87, 255).
         /// </summary>
-        public static Color4 SeaGreen => new Color4(46, 139, 87, 255);
+        public static OldColor4 SeaGreen => new OldColor4(46, 139, 87, 255);
 
         /// <summary>
         /// Gets the system color with (R, G, B, A) = (255, 245, 238, 255).
         /// </summary>
-        public static Color4 SeaShell => new Color4(255, 245, 238, 255);
+        public static OldColor4 SeaShell => new OldColor4(255, 245, 238, 255);
 
         /// <summary>
         /// Gets the system color with (R, G, B, A) = (160, 82, 45, 255).
         /// </summary>
-        public static Color4 Sienna => new Color4(160, 82, 45, 255);
+        public static OldColor4 Sienna => new OldColor4(160, 82, 45, 255);
 
         /// <summary>
         /// Gets the system color with (R, G, B, A) = (192, 192, 192, 255).
         /// </summary>
-        public static Color4 Silver => new Color4(192, 192, 192, 255);
+        public static OldColor4 Silver => new OldColor4(192, 192, 192, 255);
 
         /// <summary>
         /// Gets the system color with (R, G, B, A) = (135, 206, 235, 255).
         /// </summary>
-        public static Color4 SkyBlue => new Color4(135, 206, 235, 255);
+        public static OldColor4 SkyBlue => new OldColor4(135, 206, 235, 255);
 
         /// <summary>
         /// Gets the system color with (R, G, B, A) = (106, 90, 205, 255).
         /// </summary>
-        public static Color4 SlateBlue => new Color4(106, 90, 205, 255);
+        public static OldColor4 SlateBlue => new OldColor4(106, 90, 205, 255);
 
         /// <summary>
         /// Gets the system color with (R, G, B, A) = (112, 128, 144, 255).
         /// </summary>
-        public static Color4 SlateGray => new Color4(112, 128, 144, 255);
+        public static OldColor4 SlateGray => new OldColor4(112, 128, 144, 255);
 
         /// <summary>
         /// Gets the system color with (R, G, B, A) = (255, 250, 250, 255).
         /// </summary>
-        public static Color4 Snow => new Color4(255, 250, 250, 255);
+        public static OldColor4 Snow => new OldColor4(255, 250, 250, 255);
 
         /// <summary>
         /// Gets the system color with (R, G, B, A) = (0, 255, 127, 255).
         /// </summary>
-        public static Color4 SpringGreen => new Color4(0, 255, 127, 255);
+        public static OldColor4 SpringGreen => new OldColor4(0, 255, 127, 255);
 
         /// <summary>
         /// Gets the system color with (R, G, B, A) = (70, 130, 180, 255).
         /// </summary>
-        public static Color4 SteelBlue => new Color4(70, 130, 180, 255);
+        public static OldColor4 SteelBlue => new OldColor4(70, 130, 180, 255);
 
         /// <summary>
         /// Gets the system color with (R, G, B, A) = (210, 180, 140, 255).
         /// </summary>
-        public static Color4 Tan => new Color4(210, 180, 140, 255);
+        public static OldColor4 Tan => new OldColor4(210, 180, 140, 255);
 
         /// <summary>
         /// Gets the system color with (R, G, B, A) = (0, 128, 128, 255).
         /// </summary>
-        public static Color4 Teal => new Color4(0, 128, 128, 255);
+        public static OldColor4 Teal => new OldColor4(0, 128, 128, 255);
 
         /// <summary>
         /// Gets the system color with (R, G, B, A) = (216, 191, 216, 255).
         /// </summary>
-        public static Color4 Thistle => new Color4(216, 191, 216, 255);
+        public static OldColor4 Thistle => new OldColor4(216, 191, 216, 255);
 
         /// <summary>
         /// Gets the system color with (R, G, B, A) = (255, 99, 71, 255).
         /// </summary>
-        public static Color4 Tomato => new Color4(255, 99, 71, 255);
+        public static OldColor4 Tomato => new OldColor4(255, 99, 71, 255);
 
         /// <summary>
         /// Gets the system color with (R, G, B, A) = (64, 224, 208, 255).
         /// </summary>
-        public static Color4 Turquoise => new Color4(64, 224, 208, 255);
+        public static OldColor4 Turquoise => new OldColor4(64, 224, 208, 255);
 
         /// <summary>
         /// Gets the system color with (R, G, B, A) = (238, 130, 238, 255).
         /// </summary>
-        public static Color4 Violet => new Color4(238, 130, 238, 255);
+        public static OldColor4 Violet => new OldColor4(238, 130, 238, 255);
 
         /// <summary>
         /// Gets the system color with (R, G, B, A) = (245, 222, 179, 255).
         /// </summary>
-        public static Color4 Wheat => new Color4(245, 222, 179, 255);
+        public static OldColor4 Wheat => new OldColor4(245, 222, 179, 255);
 
         /// <summary>
         /// Gets the system color with (R, G, B, A) = (255, 255, 255, 255).
         /// </summary>
-        public static Color4 White => new Color4(255, 255, 255, 255);
+        public static OldColor4 White => new OldColor4(255, 255, 255, 255);
 
         /// <summary>
         /// Gets the system color with (R, G, B, A) = (245, 245, 245, 255).
         /// </summary>
-        public static Color4 WhiteSmoke => new Color4(245, 245, 245, 255);
+        public static OldColor4 WhiteSmoke => new OldColor4(245, 245, 245, 255);
 
         /// <summary>
         /// Gets the system color with (R, G, B, A) = (255, 255, 0, 255).
         /// </summary>
-        public static Color4 Yellow => new Color4(255, 255, 0, 255);
+        public static OldColor4 Yellow => new OldColor4(255, 255, 0, 255);
 
         /// <summary>
         /// Gets the system color with (R, G, B, A) = (154, 205, 50, 255).
         /// </summary>
-        public static Color4 YellowGreen => new Color4(154, 205, 50, 255);
+        public static OldColor4 YellowGreen => new OldColor4(154, 205, 50, 255);
 
         /// <summary>
         /// Converts sRGB color values to RGB color values.
@@ -918,7 +919,7 @@ namespace OpenToolkit.Mathematics
         /// Color value to convert in sRGB.
         /// </param>
         [Pure]
-        public static Color4 FromSrgb(Color4 srgb)
+        public static OldColor4 FromSrgb(OldColor4 srgb)
         {
             float r, g, b;
 
@@ -949,7 +950,7 @@ namespace OpenToolkit.Mathematics
                 b = (float)Math.Pow((srgb.B + 0.055f) / (1.0f + 0.055f), 2.4f);
             }
 
-            return new Color4(r, g, b, srgb.A);
+            return new OldColor4(r, g, b, srgb.A);
         }
 
         /// <summary>
@@ -960,7 +961,7 @@ namespace OpenToolkit.Mathematics
         /// </returns>
         /// <param name="rgb">Color value to convert.</param>
         [Pure]
-        public static Color4 ToSrgb(Color4 rgb)
+        public static OldColor4 ToSrgb(OldColor4 rgb)
         {
             float r, g, b;
 
@@ -991,7 +992,7 @@ namespace OpenToolkit.Mathematics
                 b = ((1.0f + 0.055f) * (float)Math.Pow(rgb.B, 1.0f / 2.4f)) - 0.055f;
             }
 
-            return new Color4(r, g, b, rgb.A);
+            return new OldColor4(r, g, b, rgb.A);
         }
 
         /// <summary>
@@ -1007,7 +1008,7 @@ namespace OpenToolkit.Mathematics
         /// Each has a range of 0.0 to 1.0.
         /// </param>
         [Pure]
-        public static Color4 FromHsl(Vector4 hsl)
+        public static OldColor4 FromHsl(Vector4 hsl)
         {
             var hue = hsl.X * 360.0f;
             var saturation = hsl.Y;
@@ -1067,7 +1068,7 @@ namespace OpenToolkit.Mathematics
             {
                 m = 0;
             }
-            return new Color4(r + m, g + m, b + m, hsl.W);
+            return new OldColor4(r + m, g + m, b + m, hsl.W);
         }
 
         /// <summary>
@@ -1081,7 +1082,7 @@ namespace OpenToolkit.Mathematics
         /// </returns>
         /// <param name="rgb">Color value to convert.</param>
         [Pure]
-        public static Vector4 ToHsl(Color4 rgb)
+        public static Vector4 ToHsl(OldColor4 rgb)
         {
             var max = Math.Max(rgb.R, Math.Max(rgb.G, rgb.B));
             var min = Math.Min(rgb.R, Math.Min(rgb.G, rgb.B));
@@ -1139,7 +1140,7 @@ namespace OpenToolkit.Mathematics
         /// Each has a range of 0.0 to 1.0.
         /// </param>
         [Pure]
-        public static Color4 FromHsv(Vector4 hsv)
+        public static OldColor4 FromHsv(Vector4 hsv)
         {
             var hue = hsv.X * 360.0f;
             var saturation = hsv.Y;
@@ -1195,7 +1196,7 @@ namespace OpenToolkit.Mathematics
             }
 
             var m = value - c;
-            return new Color4(r + m, g + m, b + m, hsv.W);
+            return new OldColor4(r + m, g + m, b + m, hsv.W);
         }
 
         /// <summary>
@@ -1209,7 +1210,7 @@ namespace OpenToolkit.Mathematics
         /// </returns>
         /// <param name="rgb">Color value to convert.</param>
         [Pure]
-        public static Vector4 ToHsv(Color4 rgb)
+        public static Vector4 ToHsv(OldColor4 rgb)
         {
             var max = Math.Max(rgb.R, Math.Max(rgb.G, rgb.B));
             var min = Math.Min(rgb.R, Math.Min(rgb.G, rgb.B));
@@ -1261,12 +1262,12 @@ namespace OpenToolkit.Mathematics
         /// </param>
         /// <remarks>Uses the CIE XYZ colorspace.</remarks>
         [Pure]
-        public static Color4 FromXyz(Vector4 xyz)
+        public static OldColor4 FromXyz(Vector4 xyz)
         {
             var r = (0.41847f * xyz.X) + (-0.15866f * xyz.Y) + (-0.082835f * xyz.Z);
             var g = (-0.091169f * xyz.X) + (0.25243f * xyz.Y) + (0.015708f * xyz.Z);
             var b = (0.00092090f * xyz.X) + (-0.0025498f * xyz.Y) + (0.17860f * xyz.Z);
-            return new Color4(r, g, b, xyz.W);
+            return new OldColor4(r, g, b, xyz.W);
         }
 
         /// <summary>
@@ -1280,7 +1281,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="rgb">Color value to convert.</param>
         /// <remarks>Uses the CIE XYZ colorspace.</remarks>
         [Pure]
-        public static Vector4 ToXyz(Color4 rgb)
+        public static Vector4 ToXyz(OldColor4 rgb)
         {
             var x = ((0.49f * rgb.R) + (0.31f * rgb.G) + (0.20f * rgb.B)) / 0.17697f;
             var y = ((0.17697f * rgb.R) + (0.81240f * rgb.G) + (0.01063f * rgb.B)) / 0.17697f;
@@ -1302,12 +1303,12 @@ namespace OpenToolkit.Mathematics
         /// </param>
         /// <remarks>Converts using ITU-R BT.601/CCIR 601 W(r) = 0.299 W(b) = 0.114 U(max) = 0.436 V(max) = 0.615.</remarks>
         [Pure]
-        public static Color4 FromYcbcr(Vector4 ycbcr)
+        public static OldColor4 FromYcbcr(Vector4 ycbcr)
         {
             var r = (1.0f * ycbcr.X) + (0.0f * ycbcr.Y) + (1.402f * ycbcr.Z);
             var g = (1.0f * ycbcr.X) + (-0.344136f * ycbcr.Y) + (-0.714136f * ycbcr.Z);
             var b = (1.0f * ycbcr.X) + (1.772f * ycbcr.Y) + (0.0f * ycbcr.Z);
-            return new Color4(r, g, b, ycbcr.W);
+            return new OldColor4(r, g, b, ycbcr.W);
         }
 
         /// <summary>
@@ -1323,7 +1324,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="rgb">Color value to convert.</param>
         /// <remarks>Converts using ITU-R BT.601/CCIR 601 W(r) = 0.299 W(b) = 0.114 U(max) = 0.436 V(max) = 0.615.</remarks>
         [Pure]
-        public static Vector4 ToYcbcr(Color4 rgb)
+        public static Vector4 ToYcbcr(OldColor4 rgb)
         {
             var y = (0.299f * rgb.R) + (0.587f * rgb.G) + (0.114f * rgb.B);
             var u = (-0.168736f * rgb.R) + (-0.331264f * rgb.G) + (0.5f * rgb.B);
@@ -1344,7 +1345,7 @@ namespace OpenToolkit.Mathematics
         /// Each has a range of 0.0 to 1.0.
         /// </param>
         [Pure]
-        public static Color4 FromHcy(Vector4 hcy)
+        public static OldColor4 FromHcy(Vector4 hcy)
         {
             var hue = hcy.X * 360.0f;
             var y = hcy.Y;
@@ -1398,7 +1399,7 @@ namespace OpenToolkit.Mathematics
             }
 
             var m = luminance - (0.30f * r) + (0.59f * g) + (0.11f * b);
-            return new Color4(r + m, g + m, b + m, hcy.W);
+            return new OldColor4(r + m, g + m, b + m, hcy.W);
         }
 
         /// <summary>
@@ -1412,7 +1413,7 @@ namespace OpenToolkit.Mathematics
         /// </returns>
         /// <param name="rgb">Color value to convert.</param>
         [Pure]
-        public static Vector4 ToHcy(Color4 rgb)
+        public static Vector4 ToHcy(OldColor4 rgb)
         {
             var max = Math.Max(rgb.R, Math.Max(rgb.G, rgb.B));
             var min = Math.Min(rgb.R, Math.Min(rgb.G, rgb.B));
@@ -1445,7 +1446,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="other">The Color4 structure to compare to.</param>
         /// <returns>True if both Color4 structures contain the same components; false otherwise.</returns>
         [Pure]
-        public bool Equals(Color4 other)
+        public bool Equals(OldColor4 other)
         {
             return
                 R == other.R &&
