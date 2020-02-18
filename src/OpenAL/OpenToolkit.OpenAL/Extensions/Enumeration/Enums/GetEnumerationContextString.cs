@@ -10,7 +10,7 @@
 namespace OpenToolkit.Audio.OpenAL.Extensions.Enumeration
 {
     /// <summary>
-    /// Defines available parameters for <see cref="IEnumerationContextState.GetString(ALDevice, GetEnumerationContextString)" />.
+    /// Defines available parameters for <see cref="Enumeration.GetString(ALDevice, GetEnumerationContextString)" />.
     /// </summary>
     public enum GetEnumerationContextString
     {

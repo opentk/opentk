@@ -10,7 +10,7 @@
 namespace OpenToolkit.Audio.OpenAL.Extensions.Creative.EnumerateAll
 {
     /// <summary>
-    /// Defines available parameters for <see cref="IEnumerateAllContextState.GetStringList" />.
+    /// Defines available parameters for <see cref="EnumerateAll.GetStringList(ALDevice, GetEnumerateAllContextStringList)" />.
     /// </summary>
     public enum GetEnumerateAllContextStringList
     {

@@ -38,21 +38,50 @@ namespace OpenToolkit.Audio.OpenAL
 
         /// <summary>This function creates a context using a specified device.</summary>
         /// <param name="device">A pointer to a device.</param>
-        /// <param name="attrlist">An array of a set of attributes: ALC_FREQUENCY, ALC_MONO_SOURCES, ALC_REFRESH, ALC_STEREO_SOURCES, ALC_SYNC.</param>
+        /// <param name="attributeList">A zero terminated array of a set of attributes: ALC_FREQUENCY, ALC_MONO_SOURCES, ALC_REFRESH, ALC_STEREO_SOURCES, ALC_SYNC.</param>
         /// <returns>Returns a pointer to the new context (NULL on failure).</returns>
         /// <remarks>The attribute list can be NULL, or a zero terminated list of integer pairs composed of valid ALC attribute tokens and requested values.</remarks>
         [DllImport(Lib, EntryPoint = "alcCreateContext", ExactSpelling = true, CallingConvention = AlcCalliningConv)]
-        public static unsafe extern ALContext CreateContext([In] ALDevice device, [In] int* attrlist);
+        public static unsafe extern ALContext CreateContext([In] ALDevice device, [In] int* attributeList);
         // ALC_API ALCcontext *    ALC_APIENTRY alcCreateContext( ALCdevice *device, const ALCint* attrlist );
 
         /// <summary>This function creates a context using a specified device.</summary>
-        /// <param name="device">a pointer to a device.</param>
-        /// <param name="attrlist">an array of a set of attributes: ALC_FREQUENCY, ALC_MONO_SOURCES, ALC_REFRESH, ALC_STEREO_SOURCES, ALC_SYNC.</param>
+        /// <param name="device">A pointer to a device.</param>
+        /// <param name="attributeList">A zero terminated array of a set of attributes: ALC_FREQUENCY, ALC_MONO_SOURCES, ALC_REFRESH, ALC_STEREO_SOURCES, ALC_SYNC.</param>
         /// <returns>Returns a pointer to the new context (NULL on failure).</returns>
         /// <remarks>The attribute list can be NULL, or a zero terminated list of integer pairs composed of valid ALC attribute tokens and requested values.</remarks>
         [DllImport(Lib, EntryPoint = "alcCreateContext", ExactSpelling = true, CallingConvention = AlcCalliningConv)]
-        public static extern ALContext CreateContext([In] ALDevice device, [In] int[] attrlist);
+        public static extern ALContext CreateContext([In] ALDevice device, [In] ref int attributeList);
         // ALC_API ALCcontext *    ALC_APIENTRY alcCreateContext( ALCdevice *device, const ALCint* attrlist );
+
+        /// <summary>This function creates a context using a specified device.</summary>
+        /// <param name="device">A pointer to a device.</param>
+        /// <param name="attributeList">A zero terminated array of a set of attributes: ALC_FREQUENCY, ALC_MONO_SOURCES, ALC_REFRESH, ALC_STEREO_SOURCES, ALC_SYNC.</param>
+        /// <returns>Returns a pointer to the new context (NULL on failure).</returns>
+        /// <remarks>The attribute list can be NULL, or a zero terminated list of integer pairs composed of valid ALC attribute tokens and requested values.</remarks>
+        [DllImport(Lib, EntryPoint = "alcCreateContext", ExactSpelling = true, CallingConvention = AlcCalliningConv)]
+        public static extern ALContext CreateContext([In] ALDevice device, [In] int[] attributeList);
+        // ALC_API ALCcontext *    ALC_APIENTRY alcCreateContext( ALCdevice *device, const ALCint* attrlist );
+
+        /// <summary>This function creates a context using a specified device.</summary>
+        /// <param name="device">A pointer to a device.</param>
+        /// <param name="attributeList">A zero terminated span of a set of attributes: ALC_FREQUENCY, ALC_MONO_SOURCES, ALC_REFRESH, ALC_STEREO_SOURCES, ALC_SYNC.</param>
+        /// <returns>Returns a pointer to the new context (NULL on failure).</returns>
+        /// <remarks>The attribute list can be NULL, or a zero terminated list of integer pairs composed of valid ALC attribute tokens and requested values.</remarks>
+        public static ALContext CreateContext(ALDevice device, Span<int> attributeList)
+        {
+            return CreateContext(device, ref attributeList[0]);
+        }
+
+        /// <summary>This function creates a context using a specified device.</summary>
+        /// <param name="device">a pointer to a device.</param>
+        /// <param name="attributes">The ALContext attributes to request.</param>
+        /// <returns>Returns a pointer to the new context (NULL on failure).</returns>
+        /// <remarks>The attribute list can be NULL, or a zero terminated list of integer pairs composed of valid ALC attribute tokens and requested values.</remarks>
+        public static ALContext CreateContext(ALDevice device, ALContextAttributes attributes)
+        {
+            return CreateContext(device, attributes.CreateAttributeList());
+        }
 
         /// <summary>This function makes a specified context the current context.</summary>
         /// <param name="context">A pointer to the new context.</param>
@@ -263,16 +292,29 @@ namespace OpenToolkit.Audio.OpenAL
         }
 
         /// <summary>
-        /// Returns a list of attributes for the specified device.
+        /// Returns a list of attributes for the current context of the specified device.
         /// </summary>
         /// <param name="device">The device to get attributes from.</param>
         /// <returns>A list of attributes for the device.</returns>
-        public static int[] GetAttributes(ALDevice device)
+        public static int[] GetAttributeArray(ALDevice device)
         {
             GetInteger(device, AlcGetInteger.AttributesSize, 1, out int size);
             int[] attributes = new int[size];
             GetInteger(device, AlcGetInteger.AllAttributes, size, attributes);
             return attributes;
+        }
+
+        /// <summary>
+        /// Returns a list of attributes for the current context of the specified device.
+        /// </summary>
+        /// <param name="device">The device to get attributes from.</param>
+        /// <returns>A list of attributes for the device.</returns>
+        public static ALContextAttributes GetContextAttributes(ALDevice device)
+        {
+            GetInteger(device, AlcGetInteger.AttributesSize, 1, out int size);
+            int[] attributes = new int[size];
+            GetInteger(device, AlcGetInteger.AllAttributes, size, attributes);
+            return ALContextAttributes.FromArray(attributes);
         }
 
         /// <summary>This function opens a capture device by name. </summary>

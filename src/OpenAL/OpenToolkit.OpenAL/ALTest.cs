@@ -20,12 +20,8 @@ namespace OpenToolkit.Audio.OpenAL
             ALC.GetInteger(device, AlcGetInteger.MinorVersion, 1, out int alcMinorVersion);
             string alcExts = ALC.GetString(device, AlcGetString.Extensions);
 
-            int[] attrs = ALC.GetAttributes(device);
-            Console.WriteLine("Attributes:");
-            foreach (var attr in attrs)
-            {
-                Console.WriteLine("  " + (AlcContextAttributes)attr);
-            }
+            var attrs = ALC.GetContextAttributes(device);
+            Console.WriteLine($"Attributes: {attrs}");
 
             string exts = AL.Get(ALGetString.Extensions);
             string rend = AL.Get(ALGetString.Renderer);
