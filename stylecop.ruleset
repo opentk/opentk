@@ -116,7 +116,7 @@
     <!-- Maintainability rules -->
     <Rule Id="SA1400" Action="Error" /> <!-- Access modifier must be declared -->
     <Rule Id="SA1401" Action="Error" /> <!-- Fields must be private -->
-    <Rule Id="SA1402" Action="Error" /> <!-- File may only contain a single class -->
+    <Rule Id="SA1402" Action="None" /> <!-- File may only contain a single class -->
     <Rule Id="SA1403" Action="Error" /> <!-- File may only contain a single namespace -->
     <Rule Id="SA1404" Action="Error" /> <!-- Code analysis suppression must have justification -->
     <Rule Id="SA1405" Action="Error" /> <!-- Debug.Assert must provide message text -->
@@ -193,7 +193,7 @@
     <Rule Id="SA1643" Action="Error" /> <!-- Destructor summary documentation must begin with standard text -->
     <Rule Id="SA1644" Action="None" Intentional="true" /> <!-- Documentation header must not contain blank lines -->
     <Rule Id="SA1648" Action="Error" /> <!-- inheritdoc must be used with inheriting class -->
-    <Rule Id="SA1649" Action="Error" /> <!-- File name must match first type name -->
+    <Rule Id="SA1649" Action="None" /> <!-- File name must match first type name -->
     <Rule Id="SA1651" Action="Error" /> <!-- Do not use placeholder elements -->
   </Rules>
 </RuleSet>
