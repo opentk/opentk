@@ -10,6 +10,7 @@
 using System;
 using System.Diagnostics;
 using System.Threading;
+using OpenToolkit.GraphicsLibraryFramework;
 using OpenToolkit.Windowing.Common;
 
 namespace OpenToolkit.Windowing.Desktop
@@ -46,19 +47,19 @@ namespace OpenToolkit.Windowing.Desktop
     public class GameWindow : NativeWindow, IGameWindow
     {
         /// <inheritdoc/>
-        public event EventHandler<EventArgs> Load;
+        public event Action Load;
 
         /// <inheritdoc/>
-        public event EventHandler<EventArgs> Unload;
+        public event Action Unload;
 
         /// <inheritdoc/>
-        public event EventHandler<FrameEventArgs> UpdateFrame;
+        public event Action<FrameEventArgs> UpdateFrame;
 
         /// <inheritdoc/>
-        public event EventHandler<EventArgs> RenderThreadStarted;
+        public event Action RenderThreadStarted;
 
         /// <inheritdoc/>
-        public event EventHandler<FrameEventArgs> RenderFrame;
+        public event Action<FrameEventArgs> RenderFrame;
 
         /// <summary>
         /// Frequency cap for Update/RenderFrame events.
@@ -85,7 +86,7 @@ namespace OpenToolkit.Windowing.Desktop
         private Thread _renderThread;
 
         /// <inheritdoc/>
-        public bool IsSingleThreaded { get; }
+        public bool IsMultiThreaded { get; }
 
         /// <inheritdoc />
         public double RenderFrequency
@@ -147,15 +148,15 @@ namespace OpenToolkit.Windowing.Desktop
                 switch (value)
                 {
                     case VSyncMode.On:
-                        Glfw.SwapInterval(1);
+                        GLFW.SwapInterval(1);
                         break;
 
                     case VSyncMode.Off:
-                        Glfw.SwapInterval(0);
+                        GLFW.SwapInterval(0);
                         break;
 
                     case VSyncMode.Adaptive:
-                        Glfw.SwapInterval(IsRunningSlowly ? 0 : 1);
+                        GLFW.SwapInterval(IsRunningSlowly ? 0 : 1);
                         break;
                     }
 
@@ -173,10 +174,10 @@ namespace OpenToolkit.Windowing.Desktop
         /// Use GameWindowSettings.Default and NativeWindowSettings.Default to get some sensible default attributes.
         /// </para>
         /// </remarks>
-        public GameWindow(IGameWindowProperties gameWindowSettings, INativeWindowProperties nativeWindowSettings)
+        public GameWindow(GameWindowSettings gameWindowSettings, NativeWindowSettings nativeWindowSettings)
             : base(nativeWindowSettings)
         {
-            IsSingleThreaded = gameWindowSettings.IsSingleThreaded;
+            IsMultiThreaded = gameWindowSettings.IsMultiThreaded;
 
             RenderFrequency = gameWindowSettings.RenderFrequency;
             UpdateFrequency = gameWindowSettings.UpdateFrequency;
@@ -189,13 +190,13 @@ namespace OpenToolkit.Windowing.Desktop
             IsVisible = true;
 
             // Send the OnLoad event, to load all user code.
-            OnLoad(this, EventArgs.Empty);
+            OnLoad();
 
             // Send a redundant OnResize event, to make sure all user code has the correct values.
-            OnResize(this, new ResizeEventArgs(Width, Height));
+            OnResize(new ResizeEventArgs(Size));
 
             Debug.Print("Entering main loop.");
-            if (!IsSingleThreaded)
+            if (IsMultiThreaded)
             {
                 _renderThread = new Thread(StartRenderThread);
                 _renderThread.Start();
@@ -214,7 +215,7 @@ namespace OpenToolkit.Windowing.Desktop
 
                 DispatchUpdateFrame();
 
-                if (IsSingleThreaded)
+                if (!IsMultiThreaded)
                 {
                     DispatchRenderFrame();
                 }
@@ -223,7 +224,7 @@ namespace OpenToolkit.Windowing.Desktop
 
         private void StartRenderThread()
         {
-            OnRenderThreadStarted(this, EventArgs.Empty);
+            OnRenderThreadStarted();
             _watchRender.Start();
             while (Exists && !IsExiting)
             {
@@ -240,7 +241,7 @@ namespace OpenToolkit.Windowing.Desktop
 
             while (elapsed > 0 && elapsed + _updateEpsilon >= updatePeriod)
             {
-                OnUpdateFrame(this, new FrameEventArgs(elapsed));
+                OnUpdateFrame(new FrameEventArgs(elapsed));
 
                 // Calculate difference (positive or negative) between
                 // actual elapsed time and target elapsed time. We must
@@ -267,7 +268,7 @@ namespace OpenToolkit.Windowing.Desktop
             // Update VSync if set to adaptive
             if (_vSync == VSyncMode.Adaptive)
             {
-                Glfw.SwapInterval(IsRunningSlowly ? 0 : 1);
+                GLFW.SwapInterval(IsRunningSlowly ? 0 : 1);
             }
 
             _watchUpdate.Restart();
@@ -276,7 +277,7 @@ namespace OpenToolkit.Windowing.Desktop
         private void DispatchRenderFrame()
         {
             var timestamp = _watchRender.Elapsed.TotalMilliseconds;
-            OnRenderFrame(this, new FrameEventArgs(timestamp));
+            OnRenderFrame(new FrameEventArgs(timestamp));
             _watchRender.Restart();
         }
 
@@ -285,65 +286,57 @@ namespace OpenToolkit.Windowing.Desktop
         {
             unsafe
             {
-                Glfw.SwapBuffers(WindowPtr);
+                GLFW.SwapBuffers(WindowPtr);
             }
         }
 
         /// <inheritdoc />
         public override void Close()
         {
-            OnUnload(this, EventArgs.Empty);
+            OnUnload();
             base.Close();
         }
 
         /// <summary>
         /// Run when the update thread is started. This will never run if you set IsSingleThreaded to true.
         /// </summary>
-        /// <param name="sender">A reference to the window that ran the function.</param>
-        /// <param name="args">The event arguments. Always empty for this function.</param>
-        protected virtual void OnRenderThreadStarted(object sender, EventArgs args)
+        protected virtual void OnRenderThreadStarted()
         {
-            RenderThreadStarted?.Invoke(sender, args);
+            RenderThreadStarted?.Invoke();
         }
 
         /// <summary>
         /// Run immediately after Run() is called.
         /// </summary>
-        /// <param name="sender">A reference to the window that ran the function.</param>
-        /// <param name="args">The event arguments. Always empty for this function.</param>
-        protected virtual void OnLoad(object sender, EventArgs args)
+        protected virtual void OnLoad()
         {
-            Load?.Invoke(sender, args);
+            Load?.Invoke();
         }
 
         /// <summary>
         /// Run when the window is about to close.
         /// </summary>
-        /// <param name="sender">A reference to the window that ran the function.</param>
-        /// <param name="args">The event arguments. Always empty for this function.</param>
-        protected virtual void OnUnload(object sender, EventArgs args)
+        protected virtual void OnUnload()
         {
-            Unload?.Invoke(sender, args);
+            Unload?.Invoke();
         }
 
         /// <summary>
         /// Run when the window is ready to update.
         /// </summary>
-        /// <param name="sender">A reference to the window that ran the function.</param>
         /// <param name="args">The event arguments for this frame.</param>
-        protected virtual void OnUpdateFrame(object sender, FrameEventArgs args)
+        protected virtual void OnUpdateFrame(FrameEventArgs args)
         {
-            UpdateFrame?.Invoke(sender, args);
+            UpdateFrame?.Invoke(args);
         }
 
         /// <summary>
         /// Run when the window is ready to update.
         /// </summary>
-        /// <param name="sender">A reference to the window that ran the function.</param>
         /// <param name="args">The event arguments for this frame.</param>
-        protected virtual void OnRenderFrame(object sender, FrameEventArgs args)
+        protected virtual void OnRenderFrame(FrameEventArgs args)
         {
-            RenderFrame?.Invoke(sender, args);
+            RenderFrame?.Invoke(args);
         }
     }
 }

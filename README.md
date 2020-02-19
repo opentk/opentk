@@ -94,7 +94,7 @@ Building from source
 ```
 git clone https://github.com/opentk/opentk   # Download source code from git
 cd opentk                                    # Enter the source directory
-dotnet build                                 # Build using .Net Core
+./build.cmd / ./build.sh                     # Run the bootstrap/build script for your platform
 ```
 
 

@@ -12,7 +12,7 @@ namespace OpenToolkit.Windowing.Common
     /// <summary>
     ///     Raised when a single unicode code point is input.
     /// </summary>
-    public struct TextInputEventArgs
+    public readonly struct TextInputEventArgs
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="TextInputEventArgs"/> struct.

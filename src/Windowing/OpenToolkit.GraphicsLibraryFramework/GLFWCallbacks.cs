@@ -21,7 +21,7 @@ namespace OpenToolkit.GraphicsLibraryFramework
         /// </summary>
         /// <param name="window">The window that received the event.</param>
         /// <param name="codepoint">The Unicode code point of the character.</param>
-        /// <seealso cref="IGLFW.SetCharCallback"/>
+        /// <seealso cref="GLFW.SetCharCallback"/>
         public delegate void CharCallback(Window* window, uint codepoint);
 
         /// <summary>
@@ -31,7 +31,7 @@ namespace OpenToolkit.GraphicsLibraryFramework
         /// <param name="window">The window that received the event.</param>
         /// <param name="codepoint">The Unicode code point of the character.</param>
         /// <param name="modifiers">Bit field describing which modifier keys were held down.</param>
-        /// <seealso cref="IGLFW.SetCharModsCallback"/>
+        /// <seealso cref="GLFW.SetCharModsCallback"/>
         public delegate void CharModsCallback(Window* window, uint codepoint, KeyModifiers modifiers);
 
         /// <summary>
@@ -39,7 +39,7 @@ namespace OpenToolkit.GraphicsLibraryFramework
         /// </summary>
         /// <param name="window">The window that received the event.</param>
         /// <param name="entered"><c>true</c> if the cursor entered the window's client area, or <c>false</c> if it left it.</param>
-        /// <seealso cref="IGLFW.SetCursorEnterCallback"/>
+        /// <seealso cref="GLFW.SetCursorEnterCallback"/>
         public delegate void CursorEnterCallback(Window* window, bool entered);
 
         /// <summary>
@@ -48,7 +48,7 @@ namespace OpenToolkit.GraphicsLibraryFramework
         /// <param name="window">The window that received the event.</param>
         /// <param name="x">The new cursor x-coordinate, relative to the left edge of the client area.</param>
         /// <param name="y">The new cursor y-coordinate, relative to the top edge of the client area.</param>
-        /// <seealso cref="IGLFW.SetCursorPosCallback"/>
+        /// <seealso cref="GLFW.SetCursorPosCallback"/>
         public delegate void CursorPosCallback(Window* window, double x, double y);
 
         /// <summary>
@@ -57,8 +57,8 @@ namespace OpenToolkit.GraphicsLibraryFramework
         /// <param name="window">The window that received the event.</param>
         /// <param name="count">The number of dropped files.</param>
         /// <param name="paths">The UTF-8 encoded file and/or directory path names.</param>
-        /// <seealso cref="IGLFW.SetDropCallback"/>
-        public delegate void DropCallback(Window* window, int count, IntPtr paths);
+        /// <seealso cref="GLFW.SetDropCallback"/>
+        public delegate void DropCallback(Window* window, int count, byte** paths);
 
         /// <summary>
         /// The function signature for joystick configuration callback functions.
@@ -67,7 +67,7 @@ namespace OpenToolkit.GraphicsLibraryFramework
         /// <param name="state">
         /// One of <see cref="ConnectedState.Connected"/> or <see cref="ConnectedState.Disconnected"/>.
         /// </param>
-        /// <seealso cref="IGLFW.SetJoystickCallback"/>
+        /// <seealso cref="GLFW.SetJoystickCallback"/>
         public delegate void JoystickCallback(int joystick, ConnectedState state);
 
         /// <summary>
@@ -78,7 +78,7 @@ namespace OpenToolkit.GraphicsLibraryFramework
         /// <param name="scanCode">The system-specific scancode of the key.</param>
         /// <param name="action">The <see cref="InputAction"/> for that <paramref name="key"/>.</param>
         /// <param name="mods">Bit field describing which modifier keys were held down.</param>
-        /// <seealso cref="IGLFW.SetKeyCallback"/>
+        /// <seealso cref="GLFW.SetKeyCallback"/>
         public delegate void KeyCallback(Window* window, Keys key, int scanCode, InputAction action, KeyModifiers mods);
 
         /// <summary>
@@ -88,7 +88,7 @@ namespace OpenToolkit.GraphicsLibraryFramework
         /// <param name="button">The mouse button that was pressed or released.</param>
         /// <param name="action">One of <see cref="InputAction.Press"/> or <see cref="InputAction.Release"/>.</param>
         /// <param name="mods">Bit field describing which modifier keys were held down.</param>
-        /// <seealso cref="IGLFW.SetMouseButtonCallback"/>
+        /// <seealso cref="GLFW.SetMouseButtonCallback"/>
         public delegate void MouseButtonCallback(Window* window, MouseButton button, InputAction action, KeyModifiers mods); // TODO: Make enums for int params in callback
 
         /// <summary>
@@ -97,7 +97,7 @@ namespace OpenToolkit.GraphicsLibraryFramework
         /// <param name="window">The window that received the event.</param>
         /// <param name="offsetX">The scroll offset along the x-axis.</param>
         /// <param name="offsetY">The scroll offset along the y-axis.</param>
-        /// <seealso cref="IGLFW.SetScrollCallback"/>
+        /// <seealso cref="GLFW.SetScrollCallback"/>
         public delegate void ScrollCallback(Window* window, double offsetX, double offsetY);
 
         /// <summary>
@@ -107,14 +107,14 @@ namespace OpenToolkit.GraphicsLibraryFramework
         /// <param name="state">
         /// One <see cref="ConnectedState.Connected"/> of  or <see cref="ConnectedState.Disconnected"/>.
         /// </param>
-        /// <seealso cref="IGLFW.SetMonitorCallback"/>
+        /// <seealso cref="GLFW.SetMonitorCallback"/>
         public delegate void MonitorCallback(Monitor* monitor, ConnectedState state);
 
         /// <summary>
         /// The function signature for window close callback functions.
         /// </summary>
         /// <param name="window">The window that the user attempted to close.</param>
-        /// <seealso cref="IGLFW.SetWindowCloseCallback"/>
+        /// <seealso cref="GLFW.SetWindowCloseCallback"/>
         public delegate void WindowCloseCallback(Window* window);
 
         /// <summary>
@@ -122,7 +122,7 @@ namespace OpenToolkit.GraphicsLibraryFramework
         /// </summary>
         /// <param name="window">The window that gained or lost input focus.</param>
         /// <param name="focused"><c>true</c> if the window was given input focus, or <c>false</c> if it lost it.</param>
-        /// <seealso cref="IGLFW.SetWindowFocusCallback"/>
+        /// <seealso cref="GLFW.SetWindowFocusCallback"/>
         public delegate void WindowFocusCallback(Window* window, bool focused);
 
         /// <summary>
@@ -130,8 +130,34 @@ namespace OpenToolkit.GraphicsLibraryFramework
         /// </summary>
         /// <param name="window">The window that was iconified or restored.</param>
         /// <param name="iconified"><c>true</c> if the window was iconified(minimized), or <c>false</c> if it was restored.</param>
-        /// <seealso cref="IGLFW.SetWindowIconifyCallback"/>
+        /// <seealso cref="GLFW.SetWindowIconifyCallback"/>
         public delegate void WindowIconifyCallback(Window* window, bool iconified);
+
+        /// <summary>
+        /// The function signature for window maximize/restore callback functions.
+        /// </summary>
+        /// <param name="window">The window that was maximized or restored.</param>
+        /// <param name="maximized"><c>true</c> if the window was maximized, or <c>false</c> if it was restored.</param>
+        /// <seealso cref="GLFW.SetWindowMaximizeCallback"/>
+        public delegate void WindowMaximizeCallback(Window* window, bool maximized);
+
+        /// <summary>
+        /// The function signature for framebuffer size callback functions.
+        /// </summary>
+        /// <param name="window">The window whose framebuffer was resized.</param>
+        /// <param name="width">The new width, in pixels, of the framebuffer.</param>
+        /// <param name="height">The new height, in pixels, of the framebuffer.</param>
+        /// <seealso cref="GLFW.SetFramebufferSizeCallback"/>
+        public delegate void FramebufferSizeCallback(Window* window, int width, int height);
+
+        /// <summary>
+        /// This is the function pointer type for window content scale callbacks.
+        /// </summary>
+        /// <param name="window">The window whose content scale changed. </param>
+        /// <param name="xscale">The new x-axis content scale of the window. </param>
+        /// <param name="yscale">The new y-axis content scale of the window.</param>
+        /// <seealso cref="GLFW.SetWindowContentScaleCallback"/>
+        public delegate void WindowContentScaleCallback(Window* window, float xscale, float yscale);
 
         /// <summary>
         /// The function signature for window position callback functions.
@@ -143,7 +169,7 @@ namespace OpenToolkit.GraphicsLibraryFramework
         /// <param name="y">
         /// The new y-coordinate, in screen coordinates, of the upper-left corner of the client area of the window.
         /// </param>
-        /// <seealso cref="IGLFW.SetWindowPosCallback"/>
+        /// <seealso cref="GLFW.SetWindowPosCallback"/>
         public delegate void WindowPosCallback(Window* window, int x, int y);
 
         /// <summary>
@@ -152,7 +178,7 @@ namespace OpenToolkit.GraphicsLibraryFramework
         /// <param name="window">The window that was resized.</param>
         /// <param name="width">The new width, in screen coordinates, of the window.</param>
         /// <param name="height">The new height, in screen coordinates, of the window.</param>
-        /// <seealso cref="IGLFW.SetWindowSizeCallback"/>
+        /// <seealso cref="GLFW.SetWindowSizeCallback"/>
         public delegate void WindowSizeCallback(Window* window, int width, int height);
 
         /// <summary>

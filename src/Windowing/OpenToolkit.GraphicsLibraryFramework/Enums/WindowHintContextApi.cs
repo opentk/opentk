@@ -12,7 +12,7 @@ namespace OpenToolkit.GraphicsLibraryFramework
     /// <summary>
     /// Used to specify the context creation API.
     /// </summary>
-    /// <seealso cref="IGLFW.WindowHint(WindowHintContextApi,ContextApi)"/>
+    /// <seealso cref="GLFW.WindowHint(WindowHintContextApi,ContextApi)"/>
     public enum WindowHintContextApi
     {
         /// <summary>

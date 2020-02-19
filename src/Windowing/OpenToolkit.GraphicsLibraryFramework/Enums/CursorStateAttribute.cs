@@ -12,8 +12,8 @@ namespace OpenToolkit.GraphicsLibraryFramework
     /// <summary>
     /// Attribute for setting <see cref="CursorModeValue"/> of the cursor.
     /// </summary>
-    /// <seealso cref="IGLFW.SetInputMode(Window*,CursorStateAttribute,CursorModeValue)"/>
-    /// <seealso cref="IGLFW.GetInputMode(Window*,CursorStateAttribute)"/>
+    /// <seealso cref="GLFW.SetInputMode(Window*,CursorStateAttribute,CursorModeValue)"/>
+    /// <seealso cref="GLFW.GetInputMode(Window*,CursorStateAttribute)"/>
     public enum CursorStateAttribute
     {
         /// <summary>

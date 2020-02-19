@@ -41,7 +41,7 @@ namespace OpenToolkit.Core.Loader
                 return Windows;
             }
 
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
             {
                 if (RuntimeInformation.IsOSPlatform(OSPlatform.Create("IOS")))
                 {

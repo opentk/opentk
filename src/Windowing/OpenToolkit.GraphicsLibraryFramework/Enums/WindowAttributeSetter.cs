@@ -12,7 +12,7 @@ namespace OpenToolkit.GraphicsLibraryFramework
     /// <summary>
     /// Used to set window related attributes.
     /// </summary>
-    /// <seealso cref="IGLFW.SetWindowAttrib"/>
+    /// <seealso cref="GLFW.SetWindowAttrib"/>
     public enum WindowAttributeSetter
     {
         /// <summary>
@@ -41,7 +41,7 @@ namespace OpenToolkit.GraphicsLibraryFramework
         Floating = WindowHintBool.Floating,
 
         /// <summary>
-        /// Specifies whether the window will be given input focus when <see cref="IGLFW.ShowWindow"/> is called.
+        /// Specifies whether the window will be given input focus when <see cref="GLFW.ShowWindow"/> is called.
         /// Possible values are <c>true</c> and <c>false</c>.
         /// </summary>
         FocusOnShow = WindowHintBool.FocusOnShow

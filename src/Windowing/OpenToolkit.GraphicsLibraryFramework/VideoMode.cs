@@ -17,41 +17,34 @@ namespace OpenToolkit.GraphicsLibraryFramework
     [StructLayout(LayoutKind.Sequential, Pack = 1)]
     public struct VideoMode
     {
-        private int _width;
-        private int _height;
-        private int _redBits;
-        private int _greenBits;
-        private int _blueBits;
-        private int _refreshRate;
+        /// <summary>
+        /// The width, in screen coordinates, of the <see cref="VideoMode"/>.
+        /// </summary>
+        public int Width;
 
         /// <summary>
-        /// Gets the width, in screen coordinates, of the <see cref="VideoMode"/>.
+        /// The height, in screen coordinates, of the <see cref="VideoMode"/>.
         /// </summary>
-        public int Width => _width;
+        public int Height;
 
         /// <summary>
-        /// Gets the height, in screen coordinates, of the <see cref="VideoMode"/>.
+        /// The bit depth of the red channel of the <see cref="VideoMode"/>.
         /// </summary>
-        public int Height => _height;
+        public int RedBits;
 
         /// <summary>
-        /// Gets the bit depth of the red channel of the <see cref="VideoMode"/>.
+        /// The bit depth of the green channel of the <see cref="VideoMode"/>.
         /// </summary>
-        public int RedBits => _redBits;
+        public int GreenBits;
 
         /// <summary>
-        /// Gets the bit depth of the green channel of the <see cref="VideoMode"/>.
+        /// The bit depth of the blue channel of the <see cref="VideoMode"/>.
         /// </summary>
-        public int GreenBits => _greenBits;
+        public int BlueBits;
 
         /// <summary>
-        /// Gets the bit depth of the blue channel of the <see cref="VideoMode"/>.
+        /// The refresh rate, in Hz, of the <see cref="VideoMode"/>.
         /// </summary>
-        public int BlueBits => _blueBits;
-
-        /// <summary>
-        /// Gets the refresh rate, in Hz, of the <see cref="VideoMode"/>.
-        /// </summary>
-        public int RefreshRate => _refreshRate;
+        public int RefreshRate;
     }
 }

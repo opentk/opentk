@@ -12,8 +12,8 @@ namespace OpenToolkit.GraphicsLibraryFramework
     /// <summary>
     /// Attributes related to sticky keys and buttons.
     /// </summary>
-    /// <seealso cref="IGLFW.SetInputMode(Window*,StickyAttributes,bool)"/>
-    /// <seealso cref="IGLFW.GetInputMode(Window*,StickyAttributes)"/>
+    /// <seealso cref="GLFW.SetInputMode(Window*,StickyAttributes,bool)"/>
+    /// <seealso cref="GLFW.GetInputMode(Window*,StickyAttributes)"/>
     public enum StickyAttributes
     {
         /// <summary>

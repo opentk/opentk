@@ -258,15 +258,15 @@ namespace OpenToolkit.Mathematics
         }
 
         /// <summary>
-        /// Reverses the rotation angle of this Quaterniond.
+        /// Inverts this Quaternion.
         /// </summary>
         public void Invert()
         {
-            W = -W;
+            Invert(ref this, out this);
         }
 
         /// <summary>
-        /// Returns a copy of this Quaterniond with its rotation angle reversed.
+        /// Returns the inverse of this Quaternion.
         /// </summary>
         /// <returns>The inverted copy.</returns>
         public Quaternion Inverted()
