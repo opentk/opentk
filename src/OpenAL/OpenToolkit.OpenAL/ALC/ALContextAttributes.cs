@@ -22,9 +22,9 @@ namespace OpenToolkit.Audio.OpenAL
         {
         }
 
-        public ALContextAttributes(int? freq, int? monoSources, int? stereoSources, int? refresh, bool? sync)
+        public ALContextAttributes(int? frequency, int? monoSources, int? stereoSources, int? refresh, bool? sync)
         {
-            Frequency = freq;
+            Frequency = frequency;
             MonoSources = monoSources;
             StereoSources = stereoSources;
             Refresh = refresh;
