@@ -35,7 +35,7 @@ namespace OpenToolkit.Audio.OpenAL
         /// Converts these context attributes to a <see cref="ALC.CreateContext(ALDevice, Span{int})"/> compatible list.
         /// </summary>
         /// <returns>The attibute list in the form of a span.</returns>
-        public Span<int> CreateAttributeList()
+        public int[] CreateAttributeList()
         {
             // The number of members * 2 + AdditionalAttributes
             int[] attributeList = new int[(5 * 2) + (AdditionalAttributes?.Length ?? 0) + 1];
@@ -68,7 +68,7 @@ namespace OpenToolkit.Audio.OpenAL
             // Add the trailing null byte.
             attributeList[index++] = 0;
 
-            return new Span<int>(attributeList, 0, index);
+            return attributeList;
         }
 
         internal static ALContextAttributes FromArray(int[] attributeArray)
