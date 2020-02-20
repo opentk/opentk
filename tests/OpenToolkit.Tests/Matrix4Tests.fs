@@ -195,7 +195,7 @@ module Matrix4 =
             let R3 = Vector4(i, j, k, l) * scalar
             let R4 = Vector4(m, n, o, p) * scalar
 
-            let AScaled = Matrix4.Mult(ref A, scalar)
+            let AScaled = Matrix4.Mult(&A, scalar)
 
             Assert.Equal(R1, AScaled.Row0)
             Assert.Equal(R2, AScaled.Row1)

@@ -720,7 +720,7 @@ namespace OpenToolkit.Mathematics
         /// </summary>
         /// <param name="q">The quaternion to rotate by.</param>
         /// <param name="result">A matrix instance.</param>
-        public static void CreateFromQuaternion(ref Quaternion q, out Matrix4 result)
+        public static void CreateFromQuaternion(in Quaternion q, out Matrix4 result)
         {
             q.ToAxisAngle(out Vector3 axis, out float angle);
             CreateFromAxisAngle(axis, angle, out result);
@@ -734,7 +734,7 @@ namespace OpenToolkit.Mathematics
         [Pure]
         public static Matrix4 CreateFromQuaternion(Quaternion q)
         {
-            CreateFromQuaternion(ref q, out Matrix4 result);
+            CreateFromQuaternion(in q, out Matrix4 result);
             return result;
         }
 
@@ -845,7 +845,7 @@ namespace OpenToolkit.Mathematics
         /// </summary>
         /// <param name="vector">The translation vector.</param>
         /// <param name="result">The resulting Matrix4 instance.</param>
-        public static void CreateTranslation(ref Vector3 vector, out Matrix4 result)
+        public static void CreateTranslation(in Vector3 vector, out Matrix4 result)
         {
             result = Identity;
             result.Row3.X = vector.X;
@@ -899,7 +899,7 @@ namespace OpenToolkit.Mathematics
         [Pure]
         public static Matrix4 CreateScale(Vector3 scale)
         {
-            CreateScale(ref scale, out Matrix4 result);
+            CreateScale(in scale, out Matrix4 result);
             return result;
         }
 
@@ -935,7 +935,7 @@ namespace OpenToolkit.Mathematics
         /// </summary>
         /// <param name="scale">Scale factors for the x, y, and z axes.</param>
         /// <param name="result">A scale matrix.</param>
-        public static void CreateScale(ref Vector3 scale, out Matrix4 result)
+        public static void CreateScale(in Vector3 scale, out Matrix4 result)
         {
             result = Identity;
             result.Row0.X = scale.X;
@@ -1315,7 +1315,7 @@ namespace OpenToolkit.Mathematics
         [Pure]
         public static Matrix4 Add(Matrix4 left, Matrix4 right)
         {
-            Add(ref left, ref right, out Matrix4 result);
+            Add(in left, in right, out Matrix4 result);
             return result;
         }
 
@@ -1325,7 +1325,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="left">The left operand of the addition.</param>
         /// <param name="right">The right operand of the addition.</param>
         /// <param name="result">A new instance that is the result of the addition.</param>
-        public static void Add(ref Matrix4 left, ref Matrix4 right, out Matrix4 result)
+        public static void Add(in Matrix4 left, in Matrix4 right, out Matrix4 result)
         {
             result.Row0 = left.Row0 + right.Row0;
             result.Row1 = left.Row1 + right.Row1;
@@ -1342,7 +1342,7 @@ namespace OpenToolkit.Mathematics
         [Pure]
         public static Matrix4 Subtract(Matrix4 left, Matrix4 right)
         {
-            Subtract(ref left, ref right, out Matrix4 result);
+            Subtract(in left, in right, out Matrix4 result);
             return result;
         }
 
@@ -1352,7 +1352,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="left">The left operand of the subraction.</param>
         /// <param name="right">The right operand of the subraction.</param>
         /// <param name="result">A new instance that is the result of the subraction.</param>
-        public static void Subtract(ref Matrix4 left, ref Matrix4 right, out Matrix4 result)
+        public static void Subtract(in Matrix4 left, in Matrix4 right, out Matrix4 result)
         {
             result.Row0 = left.Row0 - right.Row0;
             result.Row1 = left.Row1 - right.Row1;
@@ -1369,7 +1369,7 @@ namespace OpenToolkit.Mathematics
         [Pure]
         public static Matrix4 Mult(Matrix4 left, Matrix4 right)
         {
-            Mult(ref left, ref right, out Matrix4 result);
+            Mult(in left, in right, out Matrix4 result);
             return result;
         }
 
@@ -1379,7 +1379,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="left">The left operand of the multiplication.</param>
         /// <param name="right">The right operand of the multiplication.</param>
         /// <param name="result">A new instance that is the result of the multiplication.</param>
-        public static void Mult(ref Matrix4 left, ref Matrix4 right, out Matrix4 result)
+        public static void Mult(in Matrix4 left, in Matrix4 right, out Matrix4 result)
         {
             float leftM11 = left.Row0.X;
             float leftM12 = left.Row0.Y;
@@ -1441,7 +1441,7 @@ namespace OpenToolkit.Mathematics
         [Pure]
         public static Matrix4 Mult(Matrix4 left, float right)
         {
-            Mult(ref left, right, out Matrix4 result);
+            Mult(in left, right, out Matrix4 result);
             return result;
         }
 
@@ -1451,7 +1451,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="left">The left operand of the multiplication.</param>
         /// <param name="right">The right operand of the multiplication.</param>
         /// <param name="result">A new instance that is the result of the multiplication.</param>
-        public static void Mult(ref Matrix4 left, float right, out Matrix4 result)
+        public static void Mult(in Matrix4 left, float right, out Matrix4 result)
         {
             result.Row0 = left.Row0 * right;
             result.Row1 = left.Row1 * right;
@@ -1465,7 +1465,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="mat">The matrix to invert.</param>
         /// <param name="result">The inverse of the given matrix if it has one, or the input if it is singular.</param>
         /// <exception cref="InvalidOperationException">Thrown if the Matrix4 is singular.</exception>
-        public static void Invert(ref Matrix4 mat, out Matrix4 result)
+        public static void Invert(in Matrix4 mat, out Matrix4 result)
         {
             int[] colIdx = { 0, 0, 0, 0 };
             int[] rowIdx = { 0, 0, 0, 0 };
@@ -1597,7 +1597,7 @@ namespace OpenToolkit.Mathematics
         [Pure]
         public static Matrix4 Invert(Matrix4 mat)
         {
-            Invert(ref mat, out Matrix4 result);
+            Invert(in mat, out Matrix4 result);
             return result;
         }
 
@@ -1617,7 +1617,7 @@ namespace OpenToolkit.Mathematics
         /// </summary>
         /// <param name="mat">The matrix to transpose.</param>
         /// <param name="result">The result of the calculation.</param>
-        public static void Transpose(ref Matrix4 mat, out Matrix4 result)
+        public static void Transpose(in Matrix4 mat, out Matrix4 result)
         {
             result.Row0 = mat.Column0;
             result.Row1 = mat.Column1;
