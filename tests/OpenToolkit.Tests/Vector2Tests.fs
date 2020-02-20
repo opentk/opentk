@@ -217,7 +217,7 @@ module Vector2 =
 
         [<Property>]
         let ``Vector2-Matrix2 multiplication using right-handed notation is the same as vector/row multiplication and summation`` (a : Matrix2, b : Vector2) =
-            let res = a*b
+            let res = a * b
 
             let c1 = b.X * a.M11 + b.Y * a.M12
             let c2 = b.X * a.M21 + b.Y * a.M22
@@ -237,7 +237,7 @@ module Vector2 =
 
         [<Property>]
         let ``Vector2-Matrix2 multiplication using left-handed notation is the same as vector/column multiplication and summation`` (a : Matrix2, b : Vector2) =
-            let res = b*a
+            let res = b * a
 
             let c1 = b.X * a.M11 + b.Y * a.M21
             let c2 = b.X * a.M12 + b.Y * a.M22
