@@ -40,6 +40,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\src\OpenToolkit.Core\OpenToolkit.Core.csproj" />
     <ProjectReference Include="..\..\src\OpenToolkit.Mathematics\OpenToolkit.Mathematics.csproj" />
     <ProjectReference Include="..\..\src\Windowing\OpenToolkit.Windowing.Common\OpenToolkit.Windowing.Common.csproj" />
   </ItemGroup>

@@ -369,8 +369,10 @@ namespace OpenToolkit
             float g = color.Y;
             float b = color.Z;
 
-            float v = Math.Max(r, Math.Max(g, b));
-            float c = Math.Min(r, Math.Min(g, b));
+            float xMax = Math.Max(r, Math.Max(g, b));
+            float xMin = Math.Min(r, Math.Min(g, b));
+            float v = xMax;
+            float c = xMax - Math.Min(r, Math.Min(g, b));
             float l = v - (c / 2);
 
             float h = 0;
