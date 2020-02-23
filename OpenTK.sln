@@ -58,25 +58,21 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{471E0D18
 EndProject
 Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Generator", "src\Generator\Generator.fsproj", "{17868C80-6FD6-4A5A-908A-FA4FDCFB416E}"
 EndProject
-Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "SpecificationOpenGL", "src\SpecificationOpenGL\SpecificationOpenGL.fsproj", "{808BD056-6B35-4DB3-93E2-78243CC51A6A}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenToolkit.Graphics", "src\OpenToolkit.Graphics\OpenToolkit.Graphics.csproj", "{38599D4C-97B2-404F-926C-2643E47A0967}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Generator.Bind", "src\Generator.Bind\Generator.Bind.csproj", "{31D19132-0000-0000-0000-000000000000}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Generator.Convert", "src\Generator.Converter\Generator.Convert.csproj", "{5FDFF4B6-0000-0000-0000-000000000000}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Generator.Rewrite", "src\Generator.Rewrite\Generator.Rewrite.csproj", "{C426C9D1-8857-4E52-BAC7-4C05EE6070AB}"
+EndProject
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "SpecificationOpenGL", "src\SpecificationOpenGL\SpecificationOpenGL.fsproj", "{808BD056-6B35-4DB3-93E2-78243CC51A6A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenToolkit.Graphics", "src\OpenToolkit.Graphics\OpenToolkit.Graphics.csproj", "{38599D4C-97B2-404F-926C-2643E47A0967}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "OpenAL", "OpenAL", "{BF0E6BAA-C31F-4481-924B-3EE9826BEE4D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenToolkit.OpenAL", "src\OpenAL\OpenToolkit.OpenAL\OpenToolkit.OpenAL.csproj", "{40349C84-AAF1-4159-B118-0565F7351523}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenToolkit.OpenAL.Extensions", "src\OpenAL\OpenToolkit.OpenAL.Extensions\OpenToolkit.OpenAL.Extensions.csproj", "{CB4028A7-A449-4452-9FC5-78CDB545FEB9}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Generator.Bind", "src\Generator.Bind\Generator.Bind.csproj", "{31D19132-0000-0000-0000-000000000000}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Generator.Convert", "src\Generator.Converter\Generator.Convert.csproj", "{5FDFF4B6-0000-0000-0000-000000000000}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Generator.Rewrite", "src\Generator.Rewrite\Generator.Rewrite.csproj", "{C426C9D1-8857-4E52-BAC7-4C05EE6070AB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
