@@ -130,7 +130,7 @@ Target "AssemblyInfo" (fun _ ->
         ]
 
     let getProjectDetails projectPath =
-        let projectName = System.IO.Path.GetFileNameWithoutExtension(projectPath)
+        let projectName = System.IO.Path.GetFileNameWithoutExtension(projectPath: string)
         ( projectPath,
           projectName,
           System.IO.Path.GetDirectoryName(projectPath),
