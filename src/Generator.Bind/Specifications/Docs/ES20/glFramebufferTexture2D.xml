@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+	      "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+<refentry id="glFramebufferTexture2D">
+    <refmeta>
+	<refentrytitle>glFramebufferTexture2D</refentrytitle>
+	<manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+	<refname>glFramebufferTexture2D</refname>
+	<refpurpose>attach a texture image to a framebuffer object</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+	<funcsynopsis>
+	    <funcprototype>
+		<funcdef>void <function>glFramebufferTexture2D</function></funcdef>
+		<paramdef>GLenum <parameter>target</parameter></paramdef>
+		<paramdef>GLenum <parameter>attachment</parameter></paramdef>
+		<paramdef>GLenum <parameter>textarget</parameter></paramdef>
+		<paramdef>GLuint <parameter>texture</parameter></paramdef>
+		<paramdef>GLint <parameter>level</parameter></paramdef>
+	    </funcprototype>
+	</funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 id="parameters"><title>Parameters</title>
+	<variablelist>
+	    <varlistentry>
+		<term><parameter>target</parameter></term>
+		<listitem>
+		    <para>Specifies the framebuffer target. The symbolic constant must be
+		    <constant>GL_FRAMEBUFFER</constant>.</para>
+		</listitem>
+	    </varlistentry>
+	    <varlistentry>
+		<term><parameter>attachment</parameter></term>
+		<listitem>
+		    <para>Specifies the attachment point to which an image from
+		    <parameter>texture</parameter> should be attached. Must be one of the
+		    following symbolic constants:
+		    <constant>GL_COLOR_ATTACHMENT0</constant>,
+		    <constant>GL_DEPTH_ATTACHMENT</constant>, or
+		    <constant>GL_STENCIL_ATTACHMENT</constant>.</para>
+		</listitem>
+	    </varlistentry>
+	    <varlistentry>
+		<term><parameter>textarget</parameter></term>
+		<listitem>
+		    <para>Specifies the texture target. Must be one of the
+		    following symbolic constants:
+		    <constant>GL_TEXTURE_2D</constant>,
+		    <constant>GL_TEXTURE_CUBE_MAP_POSITIVE_X</constant>,
+		    <constant>GL_TEXTURE_CUBE_MAP_NEGATIVE_X</constant>,
+		    <constant>GL_TEXTURE_CUBE_MAP_POSITIVE_Y</constant>,
+		    <constant>GL_TEXTURE_CUBE_MAP_NEGATIVE_Y</constant>,
+		    <constant>GL_TEXTURE_CUBE_MAP_POSITIVE_Z</constant>, or
+		    <constant>GL_TEXTURE_CUBE_MAP_NEGATIVE_Z</constant>.</para>
+		</listitem>
+	    </varlistentry>
+	    <varlistentry>
+		<term><parameter>texture</parameter></term>
+		<listitem>
+		    <para>Specifies the texture object whose image is to be attached.</para>
+		</listitem>
+	    </varlistentry>
+	    <varlistentry>
+		<term><parameter>level</parameter></term>
+		<listitem>
+		    <para>Specifies the mipmap level of the texture image to be attached,
+		    which must be 0.</para>
+		</listitem>
+	    </varlistentry>
+	</variablelist>
+    </refsect1>
+    <refsect1 id="description"><title>Description</title>
+	<para><function>glFramebufferTexture2D</function> attaches the 
+	texture image specified by <parameter>texture</parameter> and 
+	<parameter>level</parameter> as 
+	one of the logical buffers of the currently bound framebuffer object.
+	<parameter>attachment</parameter> specifies whether the texture image
+	should be attached to the framebuffer object's color, depth, or 
+	stencil buffer. A texture image may not be attached to the default
+	framebuffer object name 0.</para>
+
+	<para>If <parameter>texture</parameter> is not 0, the value of
+	<constant>GL_FRAMEBUFFER_ATTACHMENT_OBJECT_TYPE</constant> for the
+	specified attachment point is set to <constant>GL_TEXTURE</constant>,
+	the value of <constant>GL_FRAMEBUFFER_ATTACHMENT_OBJECT_NAME</constant>
+	is set to <parameter>texture</parameter>, and the value of 
+	<constant>GL_FRAMEBUFFER_ATTACHMENT_TEXTURE_LEVEL</constant> is set to
+	<parameter>level</parameter>. If <parameter>texture</parameter> is a cube map
+	texture, the value of <constant>GL_FRAMEBUFFER_ATTACHMENT_TEXTURE_CUBE_MAP_FACE</constant> 
+	is set to <parameter>textarget</parameter>; otherwise it is set to the default value
+	<constant>GL_TEXTURE_CUBE_MAP_POSITIVE_X</constant>. Any previous attachment to the 
+	<parameter>attachment</parameter> logical buffer of the currently bound framebuffer 
+	object is broken.</para>
+
+	<para>If <parameter>texture</parameter> is 0, the current image, if any, attached to
+	the <parameter>attachment</parameter> logical buffer of the currently bound
+	framebuffer object is detached. The value of 
+	<constant>GL_FRAMEBUFFER_ATTACHMENT_OBJECT_TYPE</constant> is set to 
+	<constant>GL_NONE</constant>. The value of 
+	<constant>GL_FRAMEBUFFER_ATTACHMENT_OBJECT_NAME</constant> is set to 0.
+	<constant>GL_FRAMEBUFFER_ATTACHMENT_TEXTURE_LEVEL</constant> and
+	<constant>GL_FRAMEBUFFER_ATTACHMENT_TEXTURE_CUBE_MAP_FACE</constant> are
+	set to the default values 0 and <constant>GL_TEXTURE_CUBE_MAP_POSITIVE_X</constant>, 
+	respectively.</para>
+    </refsect1>
+    <refsect1 id="notes"><title>Notes</title>
+        <para>
+            Special precautions need to be taken to avoid attaching a texture image to the
+            currently bound framebuffer while the texture object is currently bound and
+            potentially sampled by the current vertex or fragment shader. Doing so could lead to 
+            the creation of a &quot;feedback loop&quot; between the writing of pixels by rendering operations
+            and the simultaneous reading of those same pixels when used as texels in the
+            currently bound texture. In this scenario, the framebuffer will be considered
+            framebuffer complete, but the values of fragments rendered while in this state will
+            be undefined. The values of texture samples may be undefined as well.
+        </para>
+
+        <para>
+            If a texture object is deleted while its image is attached to the currently
+            bound framebuffer, then it is as if <function>glFramebufferTexture2D</function>
+            had been called with a <parameter>texture</parameter> of 0 for the attachment
+            point to which this image was attached in the currently bound framebuffer object.
+            In other words, the texture image is detached from the currently bound
+            framebuffer. Note that the texture image is specifically <emphasis>not</emphasis>
+            detached from any non-bound framebuffers. Detaching the image from any non-bound 
+            framebuffers is the responsibility of the application.
+        </para>
+    </refsect1>
+    <refsect1 id="errors"><title>Errors</title>
+	<para><constant>GL_INVALID_ENUM</constant> is generated if
+	<parameter>target</parameter> is not <constant>GL_FRAMEBUFFER</constant>.</para>
+
+	<para><constant>GL_INVALID_ENUM</constant> is generated if
+	<parameter>textarget</parameter> is not an accepted texture target and
+	<parameter>texture</parameter> is not 0.</para>
+
+	<para><constant>GL_INVALID_ENUM</constant> is generated if
+	<parameter>attachment</parameter> is not an accepted attachment point.</para>
+
+	<para><constant>GL_INVALID_VALUE</constant> is generated if
+	<parameter>level</parameter> is not 0 and
+	<parameter>texture</parameter> is not 0.</para>
+
+	<para><constant>GL_INVALID_OPERATION</constant> is generated if
+	the default framebuffer object name 0 is bound.</para>
+
+	<para><constant>GL_INVALID_OPERATION</constant> is generated if
+	<parameter>texture</parameter> is neither 0 nor the name of an existing 
+	texture object.</para>
+
+	<para><constant>GL_INVALID_OPERATION</constant> is generated if
+	<parameter>texture</parameter> is the name of an existing two-dimensional 
+	texture object but <parameter>textarget</parameter> is not 
+	<constant>GL_TEXTURE_2D</constant> or if <parameter>texture</parameter> is 
+	the name of an existing cube map texture object but <parameter>textarget</parameter>
+	is <constant>GL_TEXTURE_2D</constant>.</para>
+    </refsect1>
+    <refsect1 id="associatedgets"><title>Associated Gets</title>
+	<para><citerefentry><refentrytitle>glGetFramebufferAttachmentParameteriv</refentrytitle></citerefentry></para>
+    </refsect1>
+    <refsect1 id="seealso"><title>See Also</title>
+	<para><citerefentry><refentrytitle>glBindFramebuffer</refentrytitle></citerefentry>,
+	<citerefentry><refentrytitle>glBindTexture</refentrytitle></citerefentry>,
+	<citerefentry><refentrytitle>glCheckFramebufferStatus</refentrytitle></citerefentry>,
+	<citerefentry><refentrytitle>glDeleteFramebuffers</refentrytitle></citerefentry>,
+	<citerefentry><refentrytitle>glDeleteTextures</refentrytitle></citerefentry>,
+	<citerefentry><refentrytitle>glFramebufferRenderbuffer</refentrytitle></citerefentry>,
+	<citerefentry><refentrytitle>glGenerateMipmap</refentrytitle></citerefentry>,
+	<citerefentry><refentrytitle>glGetFramebufferAttachmentParameteriv</refentrytitle></citerefentry>,
+	<citerefentry><refentrytitle>glTexImage2D</refentrytitle></citerefentry></para>
+    </refsect1>
+    <refsect1 id="copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"></trademark> 2008 Khronos Group. 
+            This material may be distributed subject to the terms and conditions set forth in 
+            the Open Publication License, v 1.0, 8 June 1999.
+            <ulink url="http://opencontent.org/openpub/">http://opencontent.org/openpub/</ulink>.
+        </para>
+    </refsect1>
+</refentry>

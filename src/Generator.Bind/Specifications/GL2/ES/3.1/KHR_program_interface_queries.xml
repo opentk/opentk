@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<signatures version="2">
+
+  <replace name="gles2" version="3.1">
+    <function name="GetProgramInterfaceiv">
+      <param name="programInterface"><type>ProgramInterface</type></param>
+      <param name="pname"><type>ProgramInterfaceParameter</type></param>
+    </function>
+
+    <function name="GetProgramResourceIndex">
+      <param name="programInterface"><type>ProgramInterface</type></param>
+    </function>
+
+    <function name="GetProgramResourceName">
+      <param name="programInterface"><type>ProgramInterface</type></param>
+    </function>
+
+    <function name="GetProgramResourceiv">
+      <param name="programInterface"><type>ProgramInterface</type></param>
+      <param name="props"><type>ProgramProperty</type></param>
+    </function>
+
+    <function name="GetProgramResourceLocation">
+      <param name="programInterface"><type>ProgramInterface</type></param>
+    </function>
+  </replace>
+
+  <add name="gles2" version="3.1">
+    <enum name="ProgramInterface">
+      <use token="UNIFORM" />
+      <use token="UNIFORM_BLOCK" />
+      <use token="ATOMIC_COUNTER_BUFFER" />
+      <use token="PROGRAM_INPUT" />
+      <use token="PROGRAM_OUTPUT" />
+      <use token="TRANSFORM_FEEDBACK_VARYING" />
+      <use token="BUFFER_VARIABLE" />
+      <use token="SHADER_STORAGE_BLOCK" />
+    </enum>
+    <enum name="ProgramInterfaceParameter">
+      <use token="ACTIVE_RESOURCES" />
+      <use token="MAX_NAME_LENGTH" />
+      <use token="MAX_NUM_ACTIVE_VARIABLES" />
+    </enum>
+    <enum name="ProgramProperty">
+      <use token="ACTIVE_VARIABLES" />
+      <use token="BUFFER_BINDING" />
+      <use token="NUM_ACTIVE_VARIABLES" />
+      <use token="ARRAY_SIZE" />
+      <use token="ARRAY_STRIDE" />
+      <use token="BLOCK_INDEX" />
+      <use token="IS_ROW_MAJOR" />
+      <use token="MATRIX_STRIDE" />
+      <use token="ATOMIC_COUNTER_BUFFER_INDEX" />
+      <use token="BUFFER_DATA_SIZE" />
+      <use token="LOCATION" />
+      <use token="NAME_LENGTH" />
+      <use token="OFFSET" />
+      <use token="REFERENCED_BY_VERTEX_SHADER" />
+      <use token="REFERENCED_BY_FRAGMENT_SHADER" />
+      <use token="REFERENCED_BY_COMPUTE_SHADER" />
+      <use token="TOP_LEVEL_ARRAY_SIZE" />
+      <use token="TOP_LEVEL_ARRAY_STRIDE" />
+      <use token="TYPE" />
+    </enum>
+  </add>
+
+</signatures>

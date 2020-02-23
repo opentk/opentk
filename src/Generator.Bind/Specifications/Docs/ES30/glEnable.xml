@@ -1,0 +1,261 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<!-- Converted by db4-upgrade version 1.1 -->
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glEnable">
+    <info>
+        <copyright>
+            <year>1991-2006</year>
+            <holder>Silicon Graphics, Inc.</holder>
+        </copyright>
+        <copyright>
+            <year>2010-2014</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </info>
+    <refmeta>
+        <refentrytitle>glEnable</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glEnable</refname>
+        <refpurpose>enable or disable server-side GL capabilities</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glEnable</function></funcdef>
+                <paramdef>GLenum <parameter>cap</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glDisable</function></funcdef>
+                <paramdef>GLenum <parameter>cap</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 xml:id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>cap</parameter></term>
+            <listitem>
+                <para>
+                    Specifies a symbolic constant indicating a GL capability.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 xml:id="description"><title>Description</title>
+        <para>
+            <function>glEnable</function> and
+            <citerefentry><refentrytitle>glDisable</refentrytitle></citerefentry>
+            enable and disable various capabilities. Use
+            <citerefentry><refentrytitle>glIsEnabled</refentrytitle></citerefentry>
+            or
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry>
+            to determine the current setting of any capability. The initial
+            value for each capability with the exception of
+            <constant>GL_DITHER</constant> is <constant>GL_FALSE</constant>.
+            The initial value for <constant>GL_DITHER</constant> is
+            <constant>GL_TRUE</constant>.
+        </para>
+        <para>
+            Both <function>glEnable</function> and <citerefentry><refentrytitle>glDisable</refentrytitle></citerefentry> take a single argument, <parameter>cap</parameter>,
+            which can assume one of the following values:
+        </para>
+        <variablelist>
+            <varlistentry>
+                <term><constant>GL_BLEND</constant></term>
+                <listitem>
+                    <para>
+                        If enabled,
+                        blend the computed fragment color values with the values in the color
+                        buffers. See <citerefentry><refentrytitle>glBlendFunc</refentrytitle></citerefentry>.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_CULL_FACE</constant></term>
+                <listitem>
+                <para>
+                </para>
+                    <para>
+                        If enabled,
+                        cull polygons based on their winding in window coordinates.
+                        See <citerefentry><refentrytitle>glCullFace</refentrytitle></citerefentry>.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_DEPTH_TEST</constant></term>
+                <listitem>
+                    <para>
+                        If enabled,
+                        do depth comparisons and update the depth buffer. Note that even if
+                        the depth buffer exists and the depth mask is non-zero, the
+                        depth buffer is not updated if the depth test is disabled. See
+                        <citerefentry><refentrytitle>glDepthFunc</refentrytitle></citerefentry> and
+                        <citerefentry><refentrytitle>glDepthRangef</refentrytitle></citerefentry>.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_DITHER</constant>    </term>
+                <listitem>
+                    <para>
+                        If enabled,
+                        dither color components or indices before they are written to the
+                        color buffer.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_POLYGON_OFFSET_FILL</constant></term>
+                <listitem>
+                    <para>
+                        If enabled, an offset is added to depth values of a polygon's
+                        fragments before the depth comparison is performed.
+                        See <citerefentry><refentrytitle>glPolygonOffset</refentrytitle></citerefentry>.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_PRIMITIVE_RESTART_FIXED_INDEX</constant></term>
+                <listitem>
+                    <para>
+                        Enables primitive restarting.  If enabled, any one of the draw commands
+                        which transfers a set of generic attribute array elements to the GL will restart
+                        the primitive when the index of the vertex is equal to
+                        <inlineequation>
+                            <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                                <mml:msup>
+                                    <mml:mn>2</mml:mn>
+                                    <mml:mi>n</mml:mi>
+                                </mml:msup>
+                                <mml:mo>&minus;</mml:mo>
+                                <mml:mn>1</mml:mn>
+                            </mml:math>
+                        </inlineequation>
+                        where <emphasis>n</emphasis> is 8, 16 or 32 if the type is
+                        <constant>GL_UNSIGNED_BYTE</constant>,
+                        <constant>GL_UNSIGNED_SHORT</constant>, or
+                        <constant>GL_UNSIGNED_INT</constant>, respectively.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_RASTERIZER_DISCARD</constant></term>
+                <listitem>
+                    <para>
+                        If enabled, primitives are discarded immediately before the rasterization stage,
+                        but after the optional transform feedback stage.
+                        <citerefentry><refentrytitle>glClear</refentrytitle></citerefentry> and
+                        <citerefentry><refentrytitle>glClearBuffer</refentrytitle></citerefentry>* commands
+                        are also ignored.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_SAMPLE_ALPHA_TO_COVERAGE</constant></term>
+                <listitem>
+                    <para>
+                        If enabled,
+                        compute a temporary coverage value where each bit is determined by the
+                        alpha value at the corresponding sample location.  The temporary coverage
+                        value is then ANDed with the fragment coverage value.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_SAMPLE_COVERAGE</constant></term>
+                <listitem>
+                    <para>
+                        If enabled,
+                        the fragment's coverage is ANDed with the temporary coverage value.  If
+                        <constant>GL_SAMPLE_COVERAGE_INVERT</constant> is set to <constant>GL_TRUE</constant>, invert the coverage
+                        value.
+                        See <citerefentry><refentrytitle>glSampleCoverage</refentrytitle></citerefentry>.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_SCISSOR_TEST</constant></term>
+                <listitem>
+                    <para>
+                        If enabled,
+                        discard fragments that are outside the scissor rectangle.
+                        See <citerefentry><refentrytitle>glScissor</refentrytitle></citerefentry>.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_STENCIL_TEST</constant></term>
+                <listitem>
+                    <para>
+                        If enabled,
+                        do stencil testing and update the stencil buffer.
+                        See <citerefentry><refentrytitle>glStencilFunc</refentrytitle></citerefentry> and <citerefentry><refentrytitle>glStencilOp</refentrytitle></citerefentry>.
+                    </para>
+                </listitem>
+            </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 xml:id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_ENUM</constant> is generated if <parameter>cap</parameter> is not one of the values
+            listed previously.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="associatedgets"><title>Associated Gets</title>
+        <para>
+            <citerefentry><refentrytitle>glIsEnabled</refentrytitle></citerefentry>
+        </para>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 xml:id="versions">
+        <title>API Version Support</title>
+        <informaltable>
+            <tgroup cols="3" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry><function>glEnable</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='es20']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glDisable</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='es20']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+    <refsect1 xml:id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glBlendFunc</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glCullFace</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glDepthFunc</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glDepthRangef</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glIsEnabled</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glPolygonOffset</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glSampleCoverage</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glScissor</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glStencilFunc</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glStencilOp</refentrytitle></citerefentry>,
+        </para>
+    </refsect1>
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 1991-2006 Silicon Graphics, Inc.
+            Copyright <trademark class="copyright"/> 2010-2014 Khronos Group.
+            This document is licensed under the SGI Free Software B License.
+            For details, see
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://oss.sgi.com/projects/FreeB/">http://oss.sgi.com/projects/FreeB/</link>.
+        </para>
+    </refsect1>
+</refentry>

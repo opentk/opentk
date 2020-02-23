@@ -1,0 +1,175 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<!-- Converted by db4-upgrade version 1.1 -->
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glDrawElementsInstanced">
+    <info>
+        <copyright>
+            <year>2010-2014</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </info>
+    <refmeta>
+        <refentrytitle>glDrawElementsInstanced</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glDrawElementsInstanced</refname>
+        <refpurpose>draw multiple instances of a set of elements</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv>
+        <title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glDrawElementsInstanced</function></funcdef>
+                <paramdef>GLenum <parameter>mode</parameter></paramdef>
+                <paramdef>GLsizei <parameter>count</parameter></paramdef>
+                <paramdef>GLenum <parameter>type</parameter></paramdef>
+                <paramdef>const void * <parameter>indices</parameter></paramdef>
+                <paramdef>GLsizei <parameter>primcount</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 xml:id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>mode</parameter></term>
+            <listitem>
+                <para>
+                    Specifies what kind of primitives to render.
+                    Symbolic constants
+                    <constant>GL_POINTS</constant>,
+                    <constant>GL_LINE_STRIP</constant>,
+                    <constant>GL_LINE_LOOP</constant>,
+                    <constant>GL_LINES</constant>,
+                    <constant>GL_TRIANGLE_STRIP</constant>,
+                    <constant>GL_TRIANGLE_FAN</constant> and
+                    <constant>GL_TRIANGLES</constant>
+                    are accepted.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>count</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the number of elements to be rendered.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>type</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the type of the values in <parameter>indices</parameter>. Must be one of <constant>GL_UNSIGNED_BYTE</constant>,
+                    <constant>GL_UNSIGNED_SHORT</constant>, or <constant>GL_UNSIGNED_INT</constant>.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>indices</parameter></term>
+            <listitem>
+                <para>
+                    Specifies a pointer to the location where the indices are stored.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>primcount</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the number of instances of the specified range of indices to be rendered.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 xml:id="description"><title>Description</title>
+        <para>
+            <function>glDrawElementsInstanced</function> behaves identically to <citerefentry><refentrytitle>glDrawElements</refentrytitle></citerefentry>
+            except that <parameter>primcount</parameter> instances of the set of elements are executed. Those attributes
+                        that have divisor N where N is other than zero
+                        (as specified by <citerefentry><refentrytitle>glVertexAttribDivisor</refentrytitle></citerefentry>)
+                        advance once every N instances. Thus, the element transferred from instanced
+                        vertex attributes is given by:
+            <informalequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                <!-- eqn: instance over divisor:-->
+                <mml:mrow>
+                                        <mml:mfrac>
+                                                <mml:mi mathvariant="italic">instance</mml:mi>
+                                                <mml:mn>divisor</mml:mn>
+                                        </mml:mfrac>
+                </mml:mrow>
+            </mml:math></informalequation>
+
+                        The value of <parameter>instance</parameter> may be read by a vertex shader as <constant>gl_InstanceID</constant>.
+        </para>
+        <para>
+                        To enable and disable a generic vertex attribute array, call
+                        <citerefentry><refentrytitle>glEnableVertexAttribArray</refentrytitle></citerefentry> and
+                        <citerefentry><refentrytitle>glDisableVertexAttribArray</refentrytitle></citerefentry>.
+        </para>
+        <para>
+                        If an array corresponding to a generic attribute required by a vertex shader
+                        is not enabled, then the corresponding element is taken from the current generic
+                        attribute state.
+        </para>
+
+    </refsect1>
+    <refsect1 xml:id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_ENUM</constant> is generated if <parameter>mode</parameter> is not one of <constant>GL_POINTS</constant>,
+            <constant>GL_LINE_STRIP</constant>, <constant>GL_LINE_LOOP</constant>, <constant>GL_LINES</constant>,
+            <constant>GL_TRIANGLE_STRIP</constant>, <constant>GL_TRIANGLE_FAN</constant>, or <constant>GL_TRIANGLES</constant>.
+        </para>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if <parameter>count</parameter> or <parameter>primcount</parameter> are negative.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if a non-zero buffer object name is bound to an
+            enabled array and the buffer object's data store is currently mapped.
+        </para>
+        <para>
+                        <constant>GL_INVALID_FRAMEBUFFER_OPERATION</constant> is generated if the currently bound framebuffer is not
+                        framebuffer complete (i.e. the return value from
+                        <citerefentry><refentrytitle>glCheckFramebufferStatus</refentrytitle></citerefentry> is not <constant>GL_FRAMEBUFFER_COMPLETE</constant>).
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if transform feedback is active and not paused.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="versions">
+        <title>API Version Support</title>
+        <informaltable>
+            <tgroup cols="4" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry>glDrawElementsInstanced</entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='es30']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+    <refsect1 xml:id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glCheckFramebufferStatus</refentrytitle></citerefentry>,
+                        <citerefentry><refentrytitle>glDisableVertexAttribArray</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glDrawElements</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glDrawArrays</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glDrawArraysInstanced</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glDrawRangeElements</refentrytitle></citerefentry>,
+                        <citerefentry><refentrytitle>glEnableVertexAttribArray</refentrytitle></citerefentry>,
+                        <citerefentry><refentrytitle>glVertexAttribDivisor</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 2010-2014 Khronos Group.
+            This material may be distributed subject to the terms and conditions set forth in
+            the Open Publication License, v 1.0, 8 June 1999.
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://opencontent.org/openpub/">http://opencontent.org/openpub/</link>.
+        </para>
+    </refsect1>
+</refentry>

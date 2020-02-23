@@ -2889,16 +2889,7 @@ namespace OpenToolkit.GraphicsLibraryFramework
         /// <seealso cref="ExtensionSupported" />
         public static unsafe IntPtr GetProcAddress(string procName)
         {
-            var ptr = StringToCoTaskMemUTF8(procName);
-
-            try
-            {
-                return glfwGetProcAddress((byte*)ptr);
-            }
-            finally
-            {
-                Marshal.FreeCoTaskMem(ptr);
-            }
+            return glfwGetProcAddress(procName);
         }
 
         /// <summary>

@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+<refentry id="glCheckFramebufferStatus">
+    <refmeta>
+        <refmetainfo>
+            <copyright>
+                <year>2005</year>
+                <holder>Sams Publishing</holder>
+            </copyright>
+        </refmetainfo>
+        <refentrytitle>glCheckFramebufferStatus</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glCheckFramebufferStatus</refname>
+        <refpurpose>return the framebuffer completeness status of a framebuffer object</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>GLenum <function>glCheckFramebufferStatus</function></funcdef>
+                <paramdef>GLenum <parameter>target</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>target</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the target framebuffer object.
+                    The symbolic constant must be <constant>GL_FRAMEBUFFER</constant>.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 id="description"><title>Description</title>
+        <para>
+            <function>glCheckFramebufferStatus</function> returns a symbolic
+            constant that identifies whether or not the currently bound
+            framebuffer is framebuffer complete, and if not, which of the rules
+            of framebuffer completeness is violated.
+        </para>
+        <para>
+            If the framebuffer is complete, then 
+            <constant>GL_FRAMEBUFFER_COMPLETE</constant> is returned. 
+            If the framebuffer is not complete, the return values are as follows:
+        </para>
+        <variablelist>
+            <varlistentry>
+                <term><constant>GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT</constant></term>
+                <listitem>
+                    <para>
+                        Not all framebuffer attachment points are framebuffer
+                        attachment complete. This means that at least one
+                        attachment point with a renderbuffer or texture 
+                        attached has its attached object no longer in existence
+                        or has an attached image with a width or height of 
+                        zero, or the color attachment point has a 
+                        non-color-renderable image attached, or the
+                        depth attachment point has a non-depth-renderable
+                        image attached, or the stencil attachment point has a
+                        non-stencil-renderable image attached.
+                    </para>
+                    <para>
+                        Color-renderable formats include <constant>GL_RGBA4</constant>,
+                        <constant>GL_RGB5_A1</constant>, and
+                        <constant>GL_RGB565</constant>.
+                        <constant>GL_DEPTH_COMPONENT16</constant> is the only
+                        depth-renderable format. 
+                        <constant>GL_STENCIL_INDEX8</constant> is the only
+                        stencil-renderable format.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_FRAMEBUFFER_INCOMPLETE_DIMENSIONS</constant></term>
+                <listitem>
+                    <para>
+                        Not all attached images have the same width and height.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT</constant></term>
+                <listitem>
+                    <para>
+                        No images are attached to the framebuffer.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_FRAMEBUFFER_UNSUPPORTED</constant></term>
+                <listitem>
+                    <para>
+                        The combination of internal formats of the attached
+                        images violates an implementation-dependent set of
+                        restrictions.
+                    </para>
+                </listitem>
+            </varlistentry>
+        </variablelist>
+        <para>
+            If the currently bound framebuffer is not framebuffer complete, 
+            then it is an error to attempt to use the framebuffer for
+            writing or reading. This means that rendering commands
+            (<citerefentry><refentrytitle>glClear</refentrytitle></citerefentry>,
+			<citerefentry><refentrytitle>glDrawArrays</refentrytitle></citerefentry>, and
+            <citerefentry><refentrytitle>glDrawElements</refentrytitle></citerefentry>)
+            as well as commands that read the framebuffer
+            (<citerefentry><refentrytitle>glReadPixels</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glCopyTexImage2D</refentrytitle></citerefentry>, and
+            <citerefentry><refentrytitle>glCopyTexSubImage2D</refentrytitle></citerefentry>)
+            will generate the error <constant>GL_INVALID_FRAMEBUFFER_OPERATION</constant>
+            if called while the framebuffer is not framebuffer complete.
+        </para>
+    </refsect1>
+    <refsect1 id="notes"><title>Notes</title>
+        <para>
+            It is strongly advised, thought not required, that an application
+            call <function>glCheckFramebufferStatus</function> to see if the
+            framebuffer is complete prior to rendering. This is because some
+            implementations may not support rendering to particular combinations
+            of internal formats. In this case, 
+            <constant>GL_FRAMEBUFFER_UNSUPPORTED</constant>
+            is returned.
+        </para>
+        <para>
+            The default window-system-provided framebuffer is always
+            framebuffer complete, and thus <constant>GL_FRAMEBUFFER_COMPLETE</constant>
+            is returned when <constant>GL_FRAMEBUFFER_BINDING</constant> is 0.
+        </para>
+        <para>
+            Additionally, if an error occurs, zero is returned.
+        </para>
+    </refsect1>
+    <refsect1 id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_ENUM</constant> is generated if <parameter>target</parameter> is not <constant>GL_FRAMEBUFFER</constant>.
+        </para>
+    </refsect1>
+    <refsect1 id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glBindRenderbuffer</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glCopyTexImage2D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glCopyTexSubImage2D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glDrawArrays</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glDrawElements</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glReadPixels</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glRenderbufferStorage</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 id="copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"></trademark> 2008 Khronos Group. 
+            This material may be distributed subject to the terms and conditions set forth in 
+            the Open Publication License, v 1.0, 8 June 1999.
+            <ulink url="http://opencontent.org/openpub/">http://opencontent.org/openpub/</ulink>.
+        </para>
+    </refsect1>
+</refentry>

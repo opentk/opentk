@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<signatures version="2">
+
+  <replace name="gl|glcore" version="4.5">
+    <function name="MemoryBarrierByRegion">
+      <param name="barriers"><type>MemoryBarrierRegionFlags</type></param>
+    </function>
+  </replace>
+
+  <add name="gl|glcore" version="4.5">
+    <enum name="MemoryBarrierRegionFlags">
+      <use token="GL_ATOMIC_COUNTER_BARRIER_BIT"/>
+      <use token="GL_FRAMEBUFFER_BARRIER_BIT"/>
+      <use token="GL_SHADER_IMAGE_ACCESS_BARRIER_BIT"/>
+      <use token="GL_TEXTURE_FETCH_BARRIER_BIT"/>
+      <use token="GL_UNIFORM_BARRIER_BIT"/>
+      <use token="GL_ALL_BARRIER_BITS"/>
+    </enum>
+  </add>
+
+</signatures>

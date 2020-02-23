@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<signatures version="2">
+
+  <add name="gles2" version="3.1">
+    <enum name="ActiveUniformType">
+      <use token="UNSIGNED_INT_ATOMIC_COUNTER" />
+    </enum>
+    <enum name="BufferTarget">
+      <use token="GL_ATOMIC_COUNTER_BUFFER"/>
+    </enum>
+    <enum name="GetIndexedPName">
+      <use token="GL_ATOMIC_COUNTER_BUFFER_START"/>
+      <use token="GL_ATOMIC_COUNTER_BUFFER_SIZE"/>
+    </enum>
+    <enum name="GetPName">
+      <use token="GL_ATOMIC_COUNTER_BUFFER_BINDING"/>
+      <use token="GL_MAX_VERTEX_ATOMIC_COUNTER_BUFFERS"/>
+      <use token="GL_MAX_FRAGMENT_ATOMIC_COUNTER_BUFFERS"/>
+      <use token="GL_MAX_COMPUTE_ATOMIC_COUNTER_BUFFERS"/>
+      <use token="GL_MAX_COMBINED_ATOMIC_COUNTER_BUFFERS"/>
+      <use token="GL_MAX_VERTEX_ATOMIC_COUNTERS"/>
+      <use token="GL_MAX_FRAGMENT_ATOMIC_COUNTERS"/>
+      <use token="GL_MAX_COMPUTE_ATOMIC_COUNTERS"/>
+      <use token="GL_MAX_COMBINED_ATOMIC_COUNTERS"/>
+      <use token="GL_MAX_ATOMIC_COUNTER_BUFFER_SIZE"/>
+      <use token="GL_MAX_ATOMIC_COUNTER_BUFFER_BINDINGS"/>
+    </enum>
+    <enum name="GetProgramParameterName">
+      <use token="GL_ACTIVE_ATOMIC_COUNTER_BUFFERS"/>
+    </enum>
+    <enum name="ActiveVariableType">
+      <use token="UNSIGNED_INT_ATOMIC_COUNTER" />
+    </enum>
+  </add>
+
+</signatures>
