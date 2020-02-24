@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.Contracts;
 using OpenToolkit.Mathematics;
 
 namespace OpenToolkit
@@ -35,7 +36,7 @@ namespace OpenToolkit
     /// Implementation of a color3 colorspace.
     /// </summary>
     /// <typeparam name="T">The color space of the given color.</typeparam>
-    public struct Color3<T>
+    public struct Color3<T> : IEquatable<Color3<T>>
         where T : IColorSpace3
     {
         /// <summary>
@@ -113,6 +114,7 @@ namespace OpenToolkit
         /// </summary>
         /// <param name="vec">The vector which the instantiated color will use the X, Y and Z from, in that order.</param>
         /// <returns>The color that was instantiated.</returns>
+        [Pure]
         public static explicit operator Color3<T>(Vector3 vec) => new Color3<T>(vec.X, vec.Y, vec.Z);
 
         /// <summary>
@@ -120,7 +122,94 @@ namespace OpenToolkit
         /// </summary>
         /// <param name="col">The color which the instantiated vector will use the X, Y and Z from, in that order.</param>
         /// <returns>The vector that was instantiated.</returns>
+        [Pure]
         public static explicit operator Vector3(Color3<T> col) => new Vector3(col.X, col.Y, col.Z);
+
+        /// <summary>
+        /// Deconstructs this color3 and turns it into a tuple containing 3 floats.
+        /// </summary>
+        /// <param name="x">The x component of this color, defined by the color space.</param>
+        /// <param name="y">The y component of this color, defined by the color space.</param>
+        /// <param name="z">The z component of this color, defined by the color space.</param>
+        [Pure]
+        public void Deconstruct(out float x, out float y, out float z)
+        {
+            x = X;
+            y = Y;
+            z = Z;
+        }
+
+        /// <summary>
+        /// Compares the specified Color4 structures for equality.
+        /// </summary>
+        /// <param name="left">The left-hand side of the comparison.</param>
+        /// <param name="right">The right-hand side of the comparison.</param>
+        /// <returns>True if left is equal to right; false otherwise.</returns>
+        [Pure]
+        public static bool operator ==(Color3<T> left, Color3<T> right)
+        {
+            return left.Equals(right);
+        }
+
+        /// <summary>
+        /// Compares the specified Color4 structures for inequality.
+        /// </summary>
+        /// <param name="left">The left-hand side of the comparison.</param>
+        /// <param name="right">The right-hand side of the comparison.</param>
+        /// <returns>True if left is not equal to right; false otherwise.</returns>
+        [Pure]
+        public static bool operator !=(Color3<T> left, Color3<T> right)
+        {
+            return !left.Equals(right);
+        }
+
+        /// <summary>
+        /// Compares whether this Color4 structure is equal to the specified Color4.
+        /// </summary>
+        /// <param name="other">The Color4 structure to compare to.</param>
+        /// <returns>True if both Color4 structures contain the same components; false otherwise.</returns>
+        [Pure]
+        public bool Equals(Color3<T> other)
+        {
+            return X.Equals(other.X) && Y.Equals(other.Y) && Z.Equals(other.Z);
+        }
+
+        /// <summary>
+        /// Creates a <see cref="string"/> that describes this Color4 structure.
+        /// </summary>
+        /// <returns>A <see cref="string"/> that describes this Color4 structure.</returns>
+        [Pure]
+        public override string ToString()
+        {
+            return $"({X}, {Y}, {Z})";
+        }
+
+        /// <summary>
+        /// Compares whether this Color4 structure is equal to the specified object.
+        /// </summary>
+        /// <param name="obj">An object to compare to.</param>
+        /// <returns>True obj is a Color4 structure with the same components as this Color4; false otherwise.</returns>
+        [Pure]
+        public override bool Equals(object obj)
+        {
+            return obj is Color3<T> other && Equals(other);
+        }
+
+        /// <summary>
+        /// Calculates the hash code for this Color4 structure.
+        /// </summary>
+        /// <returns>A System.Int32 containing the hashcode of this Color4 structure.</returns>
+        [Pure]
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                var hashCode = X.GetHashCode();
+                hashCode = (hashCode * 397) ^ Y.GetHashCode();
+                hashCode = (hashCode * 397) ^ Z.GetHashCode();
+                return hashCode;
+            }
+        }
     }
 
     /// <summary>
@@ -129,11 +218,57 @@ namespace OpenToolkit
     public static class Color3
     {
         /// <summary>
+        /// Adds all the elements of left to all the elements of right.
+        /// </summary>
+        /// <param name="left">The left hand operand.</param>
+        /// <param name="right">The right hand operand.</param>
+        /// <returns>The element generated by adding the two colors together.</returns>
+        public static Color3<Rgb> Add(this in Color3<Rgb> left, in Color3<Rgb> right) =>
+            new Color3<Rgb>(left.X + right.X, left.Y + right.Y, left.Z + right.Z);
+
+        /// <summary>
+        /// Subtracts all the elements of right from all the elements of left.
+        /// </summary>
+        /// <param name="left">The left hand operand.</param>
+        /// <param name="right">The right hand operand.</param>
+        /// <returns>The element generated by subtracting all elements of right with all elements from left.</returns>
+        public static Color3<Rgb> Subtract(this in Color4<Rgba> left, in Color3<Rgb> right) =>
+            new Color3<Rgb>(left.X - right.X, left.Y - right.Y, left.Z - right.Z);
+
+        /// <summary>
+        /// Multiplies all the elements of left with all the elements of right.
+        /// </summary>
+        /// <param name="left">The left hand operand.</param>
+        /// <param name="right">The right hand operand.</param>
+        /// <returns>The element generated by multiplying the two colors together.</returns>
+        public static Color3<Rgb> Multiply(this in Color3<Rgb> left, in Color3<Rgb> right) =>
+            new Color3<Rgb>(left.X * right.X, left.Y * right.Y, left.Z * right.Z);
+
+        /// <summary>
+        /// Multiplies all the elements of left with right.
+        /// </summary>
+        /// <param name="left">The left hand operand.</param>
+        /// <param name="right">The right hand operand.</param>
+        /// <returns>The element generated by multiplying all elements of left with right.</returns>
+        public static Color3<Rgb> Multiply(this in Color3<Rgb> left, in float right) =>
+            new Color3<Rgb>(left.X * right, left.Y * right, left.Z * right);
+
+        /// <summary>
+        /// Divides all the elements of left with right.
+        /// </summary>
+        /// <param name="left">The left hand operand.</param>
+        /// <param name="right">The right hand operand.</param>
+        /// <returns>The element generated by dividing all elements of left with right.</returns>
+        public static Color3<Rgb> Divide(this in Color3<Rgb> left, in float right) =>
+            new Color3<Rgb>(left.X / right, left.Y / right, left.Z / right);
+
+        /// <summary>
         /// Converts a color into <see cref="Argb"/> color space.
         /// </summary>
         /// <param name="color">The color to convert.</param>
         /// <param name="alpha">The alpha of the color.</param>
         /// <returns>The converted color.</returns>
+        [Pure]
         public static Color4<Argb> ToArgb(this in Color3<Rgb> color, float alpha)
         {
             return new Color4<Argb>(alpha, color.X, color.Y, color.Z);
@@ -145,6 +280,7 @@ namespace OpenToolkit
         /// <param name="color">The color to convert.</param>
         /// <param name="alpha">The alpha of the color.</param>
         /// <returns>The converted color.</returns>
+        [Pure]
         public static Color4<Rgba> ToRgba(this in Color3<Rgb> color, float alpha)
         {
             return new Color4<Rgba>(color.X, color.Y, color.Z, alpha);
@@ -155,6 +291,7 @@ namespace OpenToolkit
         /// </summary>
         /// <param name="color">The color to convert.</param>
         /// <returns>The converted color.</returns>
+        [Pure]
         public static Color3<Rgb> ToRgb(this in Color3<Hsl> color)
         {
             float h = color.X;
@@ -207,6 +344,7 @@ namespace OpenToolkit
         /// </summary>
         /// <param name="color">The color to convert.</param>
         /// <returns>The converted color.</returns>
+        [Pure]
         public static Color3<Rgb> ToRgb(this in Color3<Hsv> color)
         {
             float h = color.X;
@@ -259,6 +397,7 @@ namespace OpenToolkit
         /// <param name="color">The color to convert.</param>
         /// <param name="alpha">The alpha of this color.</param>
         /// <returns>The converted color.</returns>
+        [Pure]
         public static Color4<Hsva> ToHsva(this in Color3<Hsv> color, float alpha)
         {
             return new Color4<Hsva>(color.X, color.Y, color.Z, alpha);
@@ -269,6 +408,7 @@ namespace OpenToolkit
         /// </summary>
         /// <param name="color">The color to convert.</param>
         /// <returns>The converted color.</returns>
+        [Pure]
         public static Color3<Hsv> ToHsv(this in Color3<Hsl> color)
         {
             float hl = color.X;
@@ -287,6 +427,7 @@ namespace OpenToolkit
         /// </summary>
         /// <param name="color">The color to convert.</param>
         /// <returns>The converted color.</returns>
+        [Pure]
         public static Color3<Hsv> ToHsv(this in Color3<Rgb> color)
         {
             float r = color.X;
@@ -324,6 +465,7 @@ namespace OpenToolkit
         /// <param name="color">The color to convert.</param>
         /// <param name="alpha">The alpha of this color.</param>
         /// <returns>The converted color.</returns>
+        [Pure]
         public static Color4<Hsla> ToHsla(this in Color3<Hsl> color, float alpha)
         {
             return new Color4<Hsla>(color.X, color.Y, color.Z, alpha);
@@ -352,6 +494,7 @@ namespace OpenToolkit
         /// </summary>
         /// <param name="color">The color to convert.</param>
         /// <returns>The converted color.</returns>
+        [Pure]
         public static Color3<Hsl> ToHsl(this in Color3<Rgb> color)
         {
             float r = color.X;
