@@ -32,13 +32,6 @@ namespace OpenToolkit
     }
 
     /// <summary>
-    /// Hue, chroma, luma colorspace.
-    /// </summary>
-    public sealed class Hcy : IColorSpace3
-    {
-    }
-
-    /// <summary>
     /// Implementation of a color3 colorspace.
     /// </summary>
     /// <typeparam name="T">The color space of the given color.</typeparam>
@@ -135,42 +128,6 @@ namespace OpenToolkit
     /// </summary>
     public static class Color3
     {
-        private static Color3<Rgb> PartConvertHc(byte hi, float c)
-        {
-            float x = c * (1 - MathHelper.Abs((hi % 2) - 1));
-
-            float r1 = 0, g1 = 0, b1 = 0;
-            switch (hi)
-            {
-                case 1:
-                    r1 = c;
-                    g1 = x;
-                    break;
-                case 2:
-                    r1 = x;
-                    g1 = c;
-                    break;
-                case 3:
-                    g1 = c;
-                    b1 = x;
-                    break;
-                case 4:
-                    g1 = x;
-                    b1 = c;
-                    break;
-                case 5:
-                    r1 = x;
-                    b1 = c;
-                    break;
-                case 6:
-                    r1 = c;
-                    b1 = x;
-                    break;
-            }
-
-            return new Color3<Rgb>(r1, g1, b1);
-        }
-
         /// <summary>
         /// Converts a color into <see cref="Argb"/> color space.
         /// </summary>
@@ -204,10 +161,38 @@ namespace OpenToolkit
             float s = color.Y;
             float l = color.Z;
 
-            byte hi = (byte)(h * 6f);
+            float hi = h * 6f;
             float c = (1 - MathHelper.Abs((2 * l) - 1)) * s;
+            float x = c * (1 - MathHelper.Abs((hi % 2) - 1));
 
-            Color3<Rgb> rgb = PartConvertHc(hi, c);
+            Color3<Rgb> rgb = new Color3<Rgb>(0, 0, 0);
+            switch (hi)
+            {
+                case 0:
+                    rgb.X = c;
+                    rgb.Y = x;
+                    break;
+                case 1:
+                    rgb.X = x;
+                    rgb.Y = c;
+                    break;
+                case 2:
+                    rgb.Y = c;
+                    rgb.Z = x;
+                    break;
+                case 3:
+                    rgb.Y = x;
+                    rgb.Z = c;
+                    break;
+                case 4:
+                    rgb.X = x;
+                    rgb.Z = c;
+                    break;
+                case 5:
+                    rgb.X = c;
+                    rgb.Z = x;
+                    break;
+            }
 
             float m = l - (c / 2);
             rgb.X += m;
@@ -230,33 +215,37 @@ namespace OpenToolkit
 
             float c = v * s;
             byte hi = (byte)(h * 6);
+            float x = c * (1 - MathHelper.Abs((hi % 2) - 1));
 
-            Color3<Rgb> rgb = PartConvertHc(hi, c);
-
+            Color3<Rgb> rgb = new Color3<Rgb>(0, 0, 0);
+            switch (hi)
+            {
+                case 1:
+                    rgb.X = c;
+                    rgb.Y = x;
+                    break;
+                case 2:
+                    rgb.X = x;
+                    rgb.Y = c;
+                    break;
+                case 3:
+                    rgb.Y = c;
+                    rgb.Z = x;
+                    break;
+                case 4:
+                    rgb.Y = x;
+                    rgb.Z = c;
+                    break;
+                case 5:
+                    rgb.X = x;
+                    rgb.Z = c;
+                    break;
+                case 6:
+                    rgb.X = c;
+                    rgb.Z = x;
+                    break;
+            }
             float m = v - c;
-            rgb.X += m;
-            rgb.Y += m;
-            rgb.Z += m;
-
-            return rgb;
-        }
-
-        /// <summary>
-        /// Converts a color into <see cref="Rgb"/> color space.
-        /// </summary>
-        /// <param name="color">The color to convert.</param>
-        /// <returns>The converted color.</returns>
-        public static Color3<Rgb> ToRgb(this in Color3<Hcy> color)
-        {
-            float h = color.X;
-            float c = color.Y;
-            float y = color.Z;
-
-            byte hi = (byte)(h * 6);
-
-            Color3<Rgb> rgb = PartConvertHc(hi, c);
-
-            float m = y - (0.30f * rgb.X) + (0.59f * rgb.Y) + (0.11f * rgb.Z);
             rgb.X += m;
             rgb.Y += m;
             rgb.Z += m;
