@@ -46,11 +46,5 @@ namespace OpenToolkit.Benchmarks.Mathematics.Vector
         {
             _result = _left / Scalar;
         }
-
-        [Benchmark(Description = "Vector3 / Vector3")]
-        public void Vector3_DivideByOperator_Vector3()
-        {
-            _result = _left * _right;
-        }
     }
 }
