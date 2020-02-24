@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BenchmarkDotNet.Attributes;
+﻿using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Jobs;
 using OpenToolkit.Mathematics;
 
@@ -25,9 +20,9 @@ namespace OpenToolkit.Benchmarks.Mathematics.Matrix
         }
 
         [Benchmark(Description = "Matrix4.Invert(Matrix4 mat)")]
-        public Matrix4 Matrix4_InvertByValue()
+        public void Matrix4_InvertByValue()
         {
-            return Matrix4.Invert(_matrix);
+            _result = Matrix4.Invert(_matrix);
         }
 
         [Benchmark(Description = "Matrix4.Invert(ref Matrix4 mat, out Matrix4 result)")]
