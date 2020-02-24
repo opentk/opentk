@@ -14,35 +14,33 @@ namespace OpenToolkit.Benchmarks.Mathematics.Vector
         private Vector3 _b = new Vector3(3, 2, 1);
         private Vector3 _c = new Vector3(4, 5, 6);
 
+        private Vector3 _result;
+
         private const float U = 0.4f;
         private const float V = 0.8f;
 
         [Benchmark(Description = "Vector3.Lerp(Vector3 a, Vector3 b, float blend)")]
-        public Vector3 Vector3_LerpByValue()
+        public void Vector3_LerpByValue()
         {
-            return Vector3.Lerp(_a, _b, U);
+            _result = Vector3.Lerp(_a, _b, U);
         }
 
         [Benchmark(Description = "Vector3.Lerp(ref Vector3 a, ref Vector3 b, float blend, out Vector3 result)")]
-        public Vector3 Vector3_LerpByReference()
+        public void Vector3_LerpByReference()
         {
-            Vector3.Lerp(ref _a, ref _b, U, out var result);
-
-            return result;
+            Vector3.Lerp(ref _a, ref _b, U, out _result);
         }
 
         [Benchmark(Description = "Vector3.BaryCentric(Vector3 a, Vector3 b, Vector3 c, float u, float v)")]
-        public Vector3 Vector3_BarycentricByValue()
+        public void Vector3_BarycentricByValue()
         {
-            return Vector3.BaryCentric(_a, _b, _c, U, V);
+            _result = Vector3.BaryCentric(_a, _b, _c, U, V);
         }
 
         [Benchmark(Description = "Vector3.BaryCentric(ref Vector3 a, ref Vector3 b, ref Vector3 c, float u, float v, out Vector3 result)")]
-        public Vector3 Vector3_BarycentricByReference()
+        public void Vector3_BarycentricByReference()
         {
-            Vector3.BaryCentric(ref _a, ref _b, ref _c, U, V, out var result);
-
-            return result;
+            Vector3.BaryCentric(ref _a, ref _b, ref _c, U, V, out _result);
         }
     }
 }

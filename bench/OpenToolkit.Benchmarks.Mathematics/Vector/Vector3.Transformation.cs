@@ -11,6 +11,7 @@ namespace OpenToolkit.Benchmarks.Mathematics.Vector
     public class Vector3Transformation
     {
         private Vector3 _vector = new Vector3(50, 50, 0);
+        private Vector3 _result;
 
         private Matrix3 _matrix;
         private Quaternion _quaternion;
@@ -23,63 +24,57 @@ namespace OpenToolkit.Benchmarks.Mathematics.Vector
         }
 
         [Benchmark(Description = "Vector3.Transform(Vector3 vec, Matrix3 mat)")]
-        public Vector3 Vector3_TransformByValue_Matrix3_LH()
+        public void Vector3_TransformByValue_Matrix3_LH()
         {
-            return Vector3.Transform(_vector, _matrix);
+            _result = Vector3.Transform(_vector, _matrix);
         }
 
         [Benchmark(Description = "Vector3.Transform(Matrix3 mat, Vector3 vec)")]
-        public Vector3 Vector3_TransformByValue_Matrix3_RH()
+        public void Vector3_TransformByValue_Matrix3_RH()
         {
-            return Vector3.Transform(_matrix, _vector);
+            _result = Vector3.Transform(_matrix, _vector);
         }
 
         [Benchmark(Description = "Vector3.Transform(Vector3 vec, Quaternion quat)")]
-        public Vector3 Vector3_TransformByValue_Quaternion()
+        public void Vector3_TransformByValue_Quaternion()
         {
-            return Vector3.Transform(_vector, _quaternion);
+            _result = Vector3.Transform(_vector, _quaternion);
         }
 
         [Benchmark(Description = "Vector3.Transform(ref Vector3 vec, ref Matrix3 mat, out Vector3 result)")]
-        public Vector3 Vector3_TransformByReference_Matrix3_LH()
+        public void Vector3_TransformByReference_Matrix3_LH()
         {
-            Vector3.Transform(ref _vector, ref _matrix, out var result);
-
-            return result;
+            Vector3.Transform(ref _vector, ref _matrix, out _result);
         }
 
         [Benchmark(Description = "Vector3.Transform(ref Matrix3 mat, ref Vector3 vec, out Vector3 result)")]
-        public Vector3 Vector3_TransformByReference_Matrix3_RH()
+        public void Vector3_TransformByReference_Matrix3_RH()
         {
-            Vector3.Transform(ref _matrix, ref _vector, out var result);
-
-            return result;
+            Vector3.Transform(ref _matrix, ref _vector, out _result);
         }
 
         [Benchmark(Description = "Vector3.Transform(ref Vector3 vec, ref Quaternion quat, out Vector3 result)")]
-        public Vector3 Vector3_TransformByReference_Quaternion()
+        public void Vector3_TransformByReference_Quaternion()
         {
-            Vector3.Transform(ref _vector, ref _quaternion, out var result);
-
-            return result;
+            Vector3.Transform(ref _vector, ref _quaternion, out _result);
         }
 
         [Benchmark(Description = "Vector3 * Matrix3")]
-        public Vector3 Vector3_TransformByOperator_Matrix3_LH()
+        public void Vector3_TransformByOperator_Matrix3_LH()
         {
-            return _vector * _matrix;
+            _result = _vector * _matrix;
         }
 
         [Benchmark(Description = "Matrix3 * Vector3")]
-        public Vector3 Vector3_TransformByOperator_Matrix3_RH()
+        public void Vector3_TransformByOperator_Matrix3_RH()
         {
-            return _matrix * _vector;
+            _result = _matrix * _vector;
         }
 
         [Benchmark(Description = "Quaternion * Vector3")]
-        public Vector3 Vector3_TransformByOperator_Quaternion()
+        public void Vector3_TransformByOperator_Quaternion()
         {
-            return _quaternion * _vector;
+            _result = _quaternion * _vector;
         }
     }
 }

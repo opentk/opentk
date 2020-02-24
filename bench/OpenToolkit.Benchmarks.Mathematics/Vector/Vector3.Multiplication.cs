@@ -13,52 +13,50 @@ namespace OpenToolkit.Benchmarks.Mathematics.Vector
         private Vector3 _left = new Vector3(1, 2, 3);
         private Vector3 _right = new Vector3(3, 2, 1);
 
+        private Vector3 _result;
+
         private const float Scalar = 2;
 
         [Benchmark(Description = "Vector3.Multiply(Vector3 vector, float scale)")]
-        public Vector3 Vector3_MultiplyByValue_Single()
+        public void Vector3_MultiplyByValue_Single()
         {
-            return Vector3.Multiply(_left, Scalar);
+            _result = Vector3.Multiply(_left, Scalar);
         }
 
         [Benchmark(Description = "Vector3.Multiply(Vector3 vector, Vector3 scale)")]
-        public Vector3 Vector3_MultiplyByValue_Vector3()
+        public void Vector3_MultiplyByValue_Vector3()
         {
-            return Vector3.Multiply(_left, _right);
+            _result = Vector3.Multiply(_left, _right);
         }
 
         [Benchmark(Description = "Vector3.Multiply(ref Vector3 vector, ref float scale, out Vector3 result)")]
-        public Vector3 Vector3_MultiplyByReference_Single()
+        public void Vector3_MultiplyByReference_Single()
         {
-            Vector3.Multiply(ref _left, Scalar, out var result);
-
-            return result;
+            Vector3.Multiply(ref _left, Scalar, out _result);
         }
 
         [Benchmark(Description = "Vector3.Multiply(ref Vector3 vector, ref Vector3 scale, out Vector3 result)")]
-        public Vector3 Vector3_MultiplyByReference_Vector3()
+        public void Vector3_MultiplyByReference_Vector3()
         {
-            Vector3.Multiply(ref _left, ref _right, out var result);
-
-            return result;
+            Vector3.Multiply(ref _left, ref _right, out _result);
         }
 
         [Benchmark(Description = "Single * Vector3")]
-        public Vector3 Vector3_MultiplyByOperator_Single_LH()
+        public void Vector3_MultiplyByOperator_Single_LH()
         {
-            return Scalar * _right;
+            _result = Scalar * _right;
         }
 
         [Benchmark(Description = "Vector3 * Single")]
-        public Vector3 Vector3_MultiplyByOperator_Single_RH()
+        public void Vector3_MultiplyByOperator_Single_RH()
         {
-            return _left * Scalar;
+            _result = _left * Scalar;
         }
 
         [Benchmark(Description = "Vector3 * Vector3")]
-        public Vector3 Vector3_MultiplyByOperator_Vector3()
+        public void Vector3_MultiplyByOperator_Vector3()
         {
-            return _left * _right;
+            _result = _left * _right;
         }
     }
 }

@@ -18,32 +18,30 @@ namespace OpenToolkit.Benchmarks.Mathematics.Vector
         private Vector3 _left = new Vector3(1, 2, 3);
         private Vector3 _right = new Vector3(3, 2, 1);
 
+        private Vector3 _result;
+
         [Benchmark(Description = "Vector3.ComponentMin(Vector3 left, Vector3 right)")]
-        public Vector3 Vector3_ComponentMinByValue()
+        public void Vector3_ComponentMinByValue()
         {
-            return Vector3.ComponentMin(_left, _right);
+            _result = Vector3.ComponentMin(_left, _right);
         }
 
         [Benchmark(Description = "Vector3.ComponentMax(Vector3 left, Vector3 right)")]
-        public Vector3 Vector3_ComponentMaxByValue()
+        public void Vector3_ComponentMaxByValue()
         {
-            return Vector3.ComponentMax(_left, _right);
+            _result = Vector3.ComponentMax(_left, _right);
         }
 
         [Benchmark(Description = "Vector3.ComponentMin(ref Vector3 left, ref Vector3 right, out Vector3 result)")]
-        public Vector3 Vector3_ComponentMinByReference()
+        public void Vector3_ComponentMinByReference()
         {
-            Vector3.ComponentMin(ref _left, ref _right, out var result);
-
-            return result;
+            Vector3.ComponentMin(ref _left, ref _right, out _result);
         }
 
         [Benchmark(Description = "Vector3.ComponentMax(ref Vector3 left, ref Vector3 right, out Vector3 result)")]
-        public Vector3 Vector3_ComponentMaxByReference()
+        public void Vector3_ComponentMaxByReference()
         {
-            Vector3.ComponentMax(ref _left, ref _right, out var result);
-
-            return result;
+            Vector3.ComponentMax(ref _left, ref _right, out _result);
         }
     }
 }

@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
@@ -18,8 +18,26 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Matrix\Matrix3.*.cs">
+      <DependentUpon>Matrix\Matrix3.cs</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Matrix\Matrix4.*.cs">
+      <DependentUpon>Matrix\Matrix4.cs</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Update="Vector\Vector3.*.cs">
       <DependentUpon>Vector\Vector3.cs</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Vector\Vector4.*.cs">
+      <DependentUpon>Vector\Vector4.cs</DependentUpon>
     </Compile>
   </ItemGroup>
 

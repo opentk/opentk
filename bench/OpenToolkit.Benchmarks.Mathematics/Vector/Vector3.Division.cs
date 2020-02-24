@@ -13,46 +13,44 @@ namespace OpenToolkit.Benchmarks.Mathematics.Vector
         private Vector3 _left = new Vector3(1, 2, 3);
         private Vector3 _right = new Vector3(3, 2, 1);
 
+        private Vector3 _result;
+
         private const float Scalar = 2;
 
         [Benchmark(Description = "Vector3.Divide(Vector3 vector, float scale)")]
-        public Vector3 Vector3_DivideByValue_Single()
+        public void Vector3_DivideByValue_Single()
         {
-            return Vector3.Divide(_left, Scalar);
+            _result = Vector3.Divide(_left, Scalar);
         }
 
         [Benchmark(Description = "Vector3.Divide(Vector3 vector, Vector3 scale)")]
-        public Vector3 Vector3_DivideByValue_Vector3()
+        public void Vector3_DivideByValue_Vector3()
         {
-            return Vector3.Divide(_left, _right);
+            _result = Vector3.Divide(_left, _right);
         }
 
         [Benchmark(Description = "Vector3.Divide(ref Vector3 vector, ref float scale, out Vector3 result)")]
-        public Vector3 Vector3_DivideByReference_Single()
+        public void Vector3_DivideByReference_Single()
         {
-            Vector3.Divide(ref _left, Scalar, out var result);
-
-            return result;
+            Vector3.Divide(ref _left, Scalar, out _result);
         }
 
         [Benchmark(Description = "Vector3.Divide(ref Vector3 vector, ref Vector3 scale, out Vector3 result)")]
-        public Vector3 Vector3_DivideByReference_Vector3()
+        public void Vector3_DivideByReference_Vector3()
         {
-            Vector3.Divide(ref _left, ref _right, out var result);
-
-            return result;
+            Vector3.Divide(ref _left, ref _right, out _result);
         }
 
         [Benchmark(Description = "Vector3 / Single")]
-        public Vector3 Vector3_DivideByOperator_Single()
+        public void Vector3_DivideByOperator_Single()
         {
-            return _left / Scalar;
+            _result = _left / Scalar;
         }
 
         [Benchmark(Description = "Vector3 / Vector3")]
-        public Vector3 Vector3_DivideByOperator_Vector3()
+        public void Vector3_DivideByOperator_Vector3()
         {
-            return _left * _right;
+            _result = _left * _right;
         }
     }
 }

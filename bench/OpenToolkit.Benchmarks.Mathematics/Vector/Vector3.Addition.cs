@@ -13,24 +13,24 @@ namespace OpenToolkit.Benchmarks.Mathematics.Vector
         private Vector3 _first = new Vector3(1,2,3);
         private Vector3 _second = new Vector3(3, 2, 1);
 
+        private Vector3 _result;
+
         [Benchmark(Description = "Vector3.Add(Vector3 a, Vector3 b)")]
-        public Vector3 Vector3_AddByValue()
+        public void Vector3_AddByValue()
         {
-            return Vector3.Add(_first, _second);
+            _result = Vector3.Add(_first, _second);
         }
 
         [Benchmark(Description = "Vector3.Add(ref Vector3 a, ref Vector3 b, out Vector3 result)")]
-        public Vector3 Vector3_AddByReference()
+        public void Vector3_AddByReference()
         {
-            Vector3.Add(ref _first, ref _second, out var result);
-
-            return result;
+            Vector3.Add(ref _first, ref _second, out _result);
         }
 
         [Benchmark(Description = "Vector3 + Vector3")]
-        public Vector3 Vector3_AddByOperator()
+        public void Vector3_AddByOperator()
         {
-            return _first + _second;
+            _result = _first + _second;
         }
     }
 }

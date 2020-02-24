@@ -18,32 +18,30 @@ namespace OpenToolkit.Benchmarks.Mathematics.Vector
         private Vector3 _left = new Vector3(1, 2, 3);
         private Vector3 _right = new Vector3(3, 2, 1);
 
+        private Vector3 _result;
+
         [Benchmark(Description = "Vector3.MagnitudeMin(Vector3 left, Vector3 right)")]
-        public Vector3 Vector3_MagnitudeMinByValue()
+        public void Vector3_MagnitudeMinByValue()
         {
-            return Vector3.MagnitudeMin(_left, _right);
+            _result = Vector3.MagnitudeMin(_left, _right);
         }
 
         [Benchmark(Description = "Vector3.MagnitudeMax(Vector3 left, Vector3 right)")]
-        public Vector3 Vector3_MagnitudeMaxByValue()
+        public void Vector3_MagnitudeMaxByValue()
         {
-            return Vector3.MagnitudeMax(_left, _right);
+            _result = Vector3.MagnitudeMax(_left, _right);
         }
 
         [Benchmark(Description = "Vector3.MagnitudeMin(ref Vector3 left, ref Vector3 right, out Vector3 result)")]
-        public Vector3 Vector3_MagnitudeMinByReference()
+        public void Vector3_MagnitudeMinByReference()
         {
-            Vector3.MagnitudeMin(ref _left, ref _right, out var result);
-
-            return result;
+            Vector3.MagnitudeMin(ref _left, ref _right, out _result);
         }
 
         [Benchmark(Description = "Vector3.MagnitudeMax(ref Vector3 left, ref Vector3 right, out Vector3 result)")]
-        public Vector3 Vector3_MagnitudeMaxByReference()
+        public void Vector3_MagnitudeMaxByReference()
         {
-            Vector3.MagnitudeMax(ref _left, ref _right, out var result);
-
-            return result;
+            Vector3.MagnitudeMax(ref _left, ref _right, out _result);
         }
     }
 }
