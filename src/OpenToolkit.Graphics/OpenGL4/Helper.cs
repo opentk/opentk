@@ -75,9 +75,9 @@ namespace OpenToolkit.Graphics.OpenGL4
             GL.ClearColor(color.R / 255.0f, color.G / 255.0f, color.B / 255.0f, color.A / 255.0f);
         }
 
-        public static void ClearColor(Color4 color)
+        public static void ClearColor(Color4<Rgba> color)
         {
-            GL.ClearColor(color.R, color.G, color.B, color.A);
+            GL.ClearColor(color.X, color.Y, color.Z, color.W);
         }
 
         public static void BlendColor(Color color)
@@ -85,9 +85,9 @@ namespace OpenToolkit.Graphics.OpenGL4
             GL.BlendColor(color.R / 255.0f, color.G / 255.0f, color.B / 255.0f, color.A / 255.0f);
         }
 
-        public static void BlendColor(Color4 color)
+        public static void BlendColor(Color4<Rgba> color)
         {
-            GL.BlendColor(color.R, color.G, color.B, color.A);
+            GL.BlendColor(color.X, color.Y, color.Z, color.W);
         }
 
         [CLSCompliant(false)]
@@ -123,9 +123,9 @@ namespace OpenToolkit.Graphics.OpenGL4
             GL.Uniform4(location, vector.X, vector.Y, vector.Z, vector.W);
         }
 
-        public static void Uniform4(int location, Color4 color)
+        public static void Uniform4(int location, Color4<Rgba> color)
         {
-            GL.Uniform4(location, color.R, color.G, color.B, color.A);
+            GL.Uniform4(location, color.X, color.Y, color.Z, color.W);
         }
 
         public static void Uniform4(int location, Quaternion quaternion)
@@ -199,9 +199,9 @@ namespace OpenToolkit.Graphics.OpenGL4
             GL.ProgramUniform4(program, location, vector.X, vector.Y, vector.Z, vector.W);
         }
 
-        public static void ProgramUniform4(int program, int location, Color4 color)
+        public static void ProgramUniform4(int program, int location, Color4<Rgba> color)
         {
-            GL.ProgramUniform4(program, location, color.R, color.G, color.B, color.A);
+            GL.ProgramUniform4(program, location, color.X, color.Y, color.Z, color.W);
         }
 
         public static void ProgramUniform4(int program, int location, Quaternion quaternion)
