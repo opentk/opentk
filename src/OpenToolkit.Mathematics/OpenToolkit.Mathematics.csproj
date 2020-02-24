@@ -1,20 +1,20 @@
-﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="Current">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <Deterministic>true</Deterministic>
     <RootNamespace>OpenToolkit.Mathematics</RootNamespace>
-    <FileUpgradeFlags>40</FileUpgradeFlags>
-    <UpgradeBackupLocation>C:\Users\fjapl\Documents\projects\opentk\Backup\src\OpenToolkit.Mathematics\</UpgradeBackupLocation>
-    <OldToolsVersion>2.0</OldToolsVersion>
   </PropertyGroup>
+  
   <PropertyGroup>
     <Version>1.0.0</Version>
     <Description>Mathematical structures and algorithms, provided and used by OpenTK.</Description>
   </PropertyGroup>
+  
   <ItemGroup>
     <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="4.5.2" />
   </ItemGroup>
+  
   <Import Project="..\..\props\common.props" />
   <Import Project="..\..\props\nuget-common.props" />
   <Import Project="..\..\props\stylecop.props" />

@@ -2865,7 +2865,7 @@ namespace OpenToolkit.Graphics.OpenGL
             Color4<Rgba> c = new Color4<Rgba>(color.R, color.G, color.B, color.A);
             unsafe
             {
-                TexEnv(target, pname, &c.R);
+                TexEnv(target, pname, &c.X);
             }
         }
 

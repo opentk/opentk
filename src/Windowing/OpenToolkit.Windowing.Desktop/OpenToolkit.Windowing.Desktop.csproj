@@ -1,12 +1,10 @@
-﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="Current">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>net472;netcoreapp3.0</TargetFrameworks>
     <RootNamespace>OpenToolkit.Windowing.Desktop</RootNamespace>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <FileUpgradeFlags>40</FileUpgradeFlags>
-    <UpgradeBackupLocation>C:\Users\fjapl\Documents\projects\opentk\Backup\src\Windowing\OpenToolkit.Windowing.Desktop\</UpgradeBackupLocation>
-    <OldToolsVersion>2.0</OldToolsVersion>
   </PropertyGroup>
+  
   <ItemGroup>
     <ProjectReference Include="..\..\OpenToolkit.Core\OpenToolkit.Core.csproj" />
     <!-- The PrivateAssets thing is to ensure the .dll.config file gets copied transitively. -->
@@ -14,6 +12,7 @@
     <ProjectReference Include="..\..\OpenToolkit.Mathematics\OpenToolkit.Mathematics.csproj" />
     <ProjectReference Include="..\OpenToolkit.Windowing.Common\OpenToolkit.Windowing.Common.csproj" />
   </ItemGroup>
+  
   <ItemGroup>
     <PackageReference Condition="'$(TargetFramework)' == 'net472'" Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.0-preview.2">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -22,6 +21,7 @@
     <PackageReference Include="opentoolkit.redist.glfw" Version="3.3.0-pre20190419183326" />
     <PackageReference Condition="'$(TargetFramework)' == 'net472'" Include="System.Memory" Version="4.5" />
   </ItemGroup>
+  
   <Import Project="..\..\..\props\common.props" />
   <Import Project="..\..\..\props\nuget-common.props" />
   <Import Project="..\..\..\props\stylecop.props" />

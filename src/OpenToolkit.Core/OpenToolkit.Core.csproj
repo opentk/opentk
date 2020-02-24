@@ -1,27 +1,29 @@
-﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="Current">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <RootNamespace>OpenToolkit.Core</RootNamespace>
-    <FileUpgradeFlags>40</FileUpgradeFlags>
-    <UpgradeBackupLocation>C:\Users\fjapl\Documents\projects\opentk\Backup\src\OpenToolkit.Core\</UpgradeBackupLocation>
-    <OldToolsVersion>2.0</OldToolsVersion>
   </PropertyGroup>
+  
   <ItemGroup>
     <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
       <_Parameter1>OpenToolkit.GraphicsLibraryFramework</_Parameter1>
     </AssemblyAttribute>
+    
     <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
       <_Parameter1>OpenToolkit.Windowing.Desktop</_Parameter1>
     </AssemblyAttribute>
   </ItemGroup>
+  
   <PropertyGroup>
     <Version>1.0.0</Version>
     <Description>Core shared functionality for the OpenTK library.</Description>
   </PropertyGroup>
+  
   <ItemGroup>
     <PackageReference Include="AdvancedDLSupport" Version="2.3.0" />
   </ItemGroup>
+  
   <Import Project="..\..\props\common.props" />
   <Import Project="..\..\props\nuget-common.props" />
   <Import Project="..\..\props\stylecop.props" />

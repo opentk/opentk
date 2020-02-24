@@ -1,11 +1,8 @@
-﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="Current">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>net472;netcoreapp3.0</TargetFrameworks>
     <RootNamespace>OpenToolkit.GraphicsLibraryFramework</RootNamespace>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <FileUpgradeFlags>40</FileUpgradeFlags>
-    <UpgradeBackupLocation>C:\Users\fjapl\Documents\projects\opentk\Backup\src\Windowing\OpenToolkit.GraphicsLibraryFramework\</UpgradeBackupLocation>
-    <OldToolsVersion>2.0</OldToolsVersion>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\OpenToolkit.Core\OpenToolkit.Core.csproj" />
