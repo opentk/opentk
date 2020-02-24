@@ -24,7 +24,7 @@ namespace OpenToolkit.Audio.OpenAL
     public partial class AL : ApiContainer<AL>
     {
         internal const string Lib = nameof(AL);
-        private const CallingConvention ALCallingConvention = CallingConvention.Cdecl;
+        internal const CallingConvention ALCallingConvention = CallingConvention.Cdecl;
 
         static AL()
         {
@@ -738,7 +738,7 @@ namespace OpenToolkit.Audio.OpenAL
 
         /// <summary>This function unqueues a set of buffers attached to a source. The number of processed buffers can be detected using AL.GetSource with parameter ALGetSourcei.BuffersProcessed, which is the maximum number of buffers that can be unqueued using this call. The unqueue operation will only take place if all n buffers can be removed from the queue.</summary>
         /// <param name="sid">The name of the source to unqueue buffers from.</param>
-        /// <param name="bids">Span to fill with buffer names that were removed.</param>
+        /// <param name="bids">Array to fill with buffer names that were removed.</param>
         public static void SourceUnqueueBuffers(int sid, int[] bids)
         {
             SourceUnqueueBuffers(sid, bids.Length, bids);
@@ -930,6 +930,16 @@ namespace OpenToolkit.Audio.OpenAL
         public static extern void BufferData(int bid, ALFormat format, ref byte buffer, int size, int freq);
         // AL_API void AL_APIENTRY alBufferData( ALuint bid, ALenum format, const ALvoid* buffer, ALsizei size, ALsizei freq );
 
+        /// <summary>This function fills a buffer with audio buffer. All the pre-defined formats are PCM buffer, but this function may be used by extensions to load other buffer types as well.</summary>
+        /// <param name="bid">buffer Handle/Name to be filled with buffer.</param>
+        /// <param name="format">Format type from among the following: ALFormat.Mono8, ALFormat.Mono16, ALFormat.Stereo8, ALFormat.Stereo16.</param>
+        /// <param name="buffer">Pointer to a pinned audio buffer.</param>
+        /// <param name="bytes">The size of the audio buffer in bytes.</param>
+        /// <param name="freq">The frequency of the audio buffer.</param>
+        [DllImport(Lib, EntryPoint = "alBufferData", ExactSpelling = true, CallingConvention = ALCallingConvention)]
+        public static extern void BufferData(int bid, ALFormat format, ref short buffer, int bytes, int freq);
+        // AL_API void AL_APIENTRY alBufferData( ALuint bid, ALenum format, const ALvoid* buffer, ALsizei size, ALsizei freq );
+
         ///
         /// <summary>This function fills a buffer with audio buffer. All the pre-defined formats are PCM buffer, but this function may be used by extensions to load other buffer types as well.</summary>
         /// <typeparam name="TBuffer">The type of the data buffer.</typeparam>
@@ -938,6 +948,7 @@ namespace OpenToolkit.Audio.OpenAL
         /// <param name="buffer">The audio buffer.</param>
         /// <param name="size">The size of the audio buffer in bytes.</param>
         /// <param name="freq">The frequency of the audio buffer.</param>
+        /// FIXME: Should "size" be changed to "elements"?
         public static void BufferData<TBuffer>(int bid, ALFormat format, TBuffer[] buffer, int size, int freq)
             where TBuffer : unmanaged
         {

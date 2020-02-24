@@ -16,6 +16,12 @@ namespace OpenToolkit.Audio.OpenAL
 
             CheckALError("Start");
 
+            var devices = Extensions.Enumeration.Enumeration.GetStringList(Extensions.Enumeration.GetEnumerationContextStringList.DeviceSpecifier);
+            Console.WriteLine($"Devices: {string.Join(", ", devices)}");
+
+            var allDevices = Extensions.Creative.EnumerateAll.EnumerateAll.GetStringList(Extensions.Creative.EnumerateAll.GetEnumerateAllContextStringList.AllDevicesSpecifier);
+            Console.WriteLine($"All Devices: {string.Join(", ", allDevices)}");
+
             ALC.GetInteger(device, AlcGetInteger.MajorVersion, 1, out int alcMajorVersion);
             ALC.GetInteger(device, AlcGetInteger.MinorVersion, 1, out int alcMinorVersion);
             string alcExts = ALC.GetString(device, AlcGetString.Extensions);
@@ -37,11 +43,33 @@ namespace OpenToolkit.Audio.OpenAL
                 Console.WriteLine("  " + item);
             }
 
+            // Record a second of data
+            CheckALError("Before record");
+            short[] recording = new short[44100 * 4];
+            ALCaptureDevice captureDevice = Extensions.EXT.Capture.Capture.CaptureOpenDevice(null, 44100, ALFormat.Mono16, 1024);
+            {
+                Extensions.EXT.Capture.Capture.CaptureStart(captureDevice);
+
+                int current = 0;
+                while (current < recording.Length)
+                {
+                    int samplesAvailable = Extensions.EXT.Capture.Capture.GetAvailableSamples(captureDevice);
+                    int samplesToRead = Math.Min(samplesAvailable, recording.Length - current);
+                    Extensions.EXT.Capture.Capture.CaptureSamples(captureDevice, ref recording[current], samplesToRead);
+                    current += samplesToRead;
+                }
+
+                Extensions.EXT.Capture.Capture.CaptureStop(captureDevice);
+            }
+            CheckALError("After record");
+
+            // Playback the recorded data
             CheckALError("Before data");
             AL.GenBuffer(out int alBuffer);
-            short[] sine = new short[44100 * 1];
-            FillSine(sine, 4400, 44100);
-            AL.BufferData(alBuffer, ALFormat.Mono16, sine.AsSpan(), 14400);
+            //short[] sine = new short[44100 * 1];
+            //FillSine(sine, 4400, 44100);
+            //FillSine(recording, 440, 44100);
+            AL.BufferData(alBuffer, ALFormat.Mono16, ref recording[0], recording.Length * 2, 14400);
             CheckALError("After data");
 
             AL.Listener(ALListenerf.Gain, 0.1f);

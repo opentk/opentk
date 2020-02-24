@@ -10,15 +10,21 @@
 using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
+using OpenToolkit.Audio.OpenAL.Native;
 
 namespace OpenToolkit.Audio.OpenAL.Extensions.Enumeration
 {
     /// <summary>
     /// Exposes the API in the Enumeration extension.
     /// </summary>
-    [Api("AL", typeof(OpenALLibraryNameContainer))]
+    [Api(AL.Lib, typeof(OpenALLibraryNameContainer))]
     public abstract class Enumeration : ApiContainer<Enumeration>
     {
+        /// <summary>
+        /// The name of this AL extension.
+        /// </summary>
+        public const string ExtensionName = "ALC_ENUMERATION_EXT";
+
         static Enumeration()
         {
             _ = ApiContainer<Enumeration>.StaticConstructorTrigger;
@@ -34,7 +40,7 @@ namespace OpenToolkit.Audio.OpenAL.Extensions.Enumeration
         /// <returns>Whether the extension was present or not.</returns>
         public static bool IsExtensionPresent()
         {
-            return ALC.IsExtensionPresent(ALDevice.Null, "ALC_ENUMERATION_EXT");
+            return ALC.IsExtensionPresent(ALDevice.Null, ExtensionName);
         }
 
         /// <summary>
@@ -44,7 +50,7 @@ namespace OpenToolkit.Audio.OpenAL.Extensions.Enumeration
         /// <returns>Whether the extension was present or not.</returns>
         public static bool IsExtensionPresent(ALDevice device)
         {
-            return ALC.IsExtensionPresent(device, "ALC_ENUMERATION_EXT");
+            return ALC.IsExtensionPresent(device, ExtensionName);
         }
 
         /// <summary>
@@ -53,7 +59,8 @@ namespace OpenToolkit.Audio.OpenAL.Extensions.Enumeration
         /// <param name="device">The device for the context.</param>
         /// <param name="param">The named property.</param>
         /// <returns>The value.</returns>
-        [DllImport("AL", EntryPoint = "alcGetString", ExactSpelling = true, CallingConvention = ALC.AlcCalliningConv)]
+        [DllImport(AL.Lib, EntryPoint = "alcGetString", ExactSpelling = true, CallingConvention = ALC.AlcCalliningConv)]
+        [return: MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(ConstCharPtrMarshaler))]
         public static extern string GetString(ALDevice device, GetEnumerationContextString param);
 
         /// <summary>

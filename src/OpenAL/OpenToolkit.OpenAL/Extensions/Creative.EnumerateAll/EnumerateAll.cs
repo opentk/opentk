@@ -21,6 +21,16 @@ namespace OpenToolkit.Audio.OpenAL.Extensions.Creative.EnumerateAll
     [Api(ALC.Lib, typeof(OpenALLibraryNameContainer))]
     public class EnumerateAll : ApiContainer<EnumerateAll>
     {
+        /// <summary>
+        /// The name of this AL extension.
+        /// </summary>
+        public const string ExtensionName = "ALC_ENUMERATE_ALL_EXT";
+
+        static EnumerateAll()
+        {
+            _ = ApiContainer<EnumerateAll>.StaticConstructorTrigger;
+        }
+
         private EnumerateAll()
         {
         }
@@ -31,7 +41,7 @@ namespace OpenToolkit.Audio.OpenAL.Extensions.Creative.EnumerateAll
         /// <returns>Whether the extension was present or not.</returns>
         public static bool IsExtensionPresent()
         {
-            return ALC.IsExtensionPresent(ALDevice.Null, "ALC_ENUMERATE_ALL_EXT");
+            return ALC.IsExtensionPresent(ALDevice.Null, ExtensionName);
         }
 
         /// <summary>
@@ -41,7 +51,7 @@ namespace OpenToolkit.Audio.OpenAL.Extensions.Creative.EnumerateAll
         /// <returns>Whether the extension was present or not.</returns>
         public static bool IsExtensionPresent(ALDevice device)
         {
-            return ALC.IsExtensionPresent(device, "ALC_ENUMERATE_ALL_EXT");
+            return ALC.IsExtensionPresent(device, ExtensionName);
         }
 
         /// <summary>

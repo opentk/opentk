@@ -23,8 +23,8 @@ namespace OpenToolkit.Audio.OpenAL
     [Api(Lib, typeof(OpenALLibraryNameContainer))]
     public class ALC : ApiContainer<ALC>
     {
-        public const string Lib = AL.Lib;
-        public const CallingConvention AlcCalliningConv = CallingConvention.Cdecl;
+        internal const string Lib = AL.Lib;
+        internal const CallingConvention AlcCalliningConv = CallingConvention.Cdecl;
 
         static ALC()
         {
