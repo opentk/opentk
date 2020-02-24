@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFrameworks>net472;netcoreapp3.1</TargetFrameworks>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net472|AnyCPU'">
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="BenchmarkDotNet" Version="0.12.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\OpenToolkit.Mathematics\OpenToolkit.Mathematics.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Vector\Vector3.*.cs">
+      <DependentUpon>Vector\Vector3.cs</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+</Project>

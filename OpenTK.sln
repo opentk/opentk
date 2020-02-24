@@ -62,7 +62,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Generator.Bind", "src\Gener
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Generator.Convert", "src\Generator.Converter\Generator.Convert.csproj", "{5FDFF4B6-0000-0000-0000-000000000000}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Generator.Rewrite", "src\Generator.Rewrite\Generator.Rewrite.csproj", "{C426C9D1-8857-4E52-BAC7-4C05EE6070AB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Generator.Rewrite", "src\Generator.Rewrite\Generator.Rewrite.csproj", "{C426C9D1-8857-4E52-BAC7-4C05EE6070AB}"
 EndProject
 Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "SpecificationOpenGL", "src\SpecificationOpenGL\SpecificationOpenGL.fsproj", "{808BD056-6B35-4DB3-93E2-78243CC51A6A}"
 EndProject
@@ -70,9 +70,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenToolkit.Graphics", "src
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "OpenAL", "OpenAL", "{BF0E6BAA-C31F-4481-924B-3EE9826BEE4D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenToolkit.OpenAL", "src\OpenAL\OpenToolkit.OpenAL\OpenToolkit.OpenAL.csproj", "{40349C84-AAF1-4159-B118-0565F7351523}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenToolkit.OpenAL", "src\OpenAL\OpenToolkit.OpenAL\OpenToolkit.OpenAL.csproj", "{40349C84-AAF1-4159-B118-0565F7351523}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenToolkit.OpenAL.Extensions", "src\OpenAL\OpenToolkit.OpenAL.Extensions\OpenToolkit.OpenAL.Extensions.csproj", "{CB4028A7-A449-4452-9FC5-78CDB545FEB9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenToolkit.OpenAL.Extensions", "src\OpenAL\OpenToolkit.OpenAL.Extensions\OpenToolkit.OpenAL.Extensions.csproj", "{CB4028A7-A449-4452-9FC5-78CDB545FEB9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenToolkit.Benchmarks.Mathematics", "bench\OpenToolkit.Benchmarks.Mathematics\OpenToolkit.Benchmarks.Mathematics.csproj", "{79677977-BADE-4586-BF45-6A1E83E4A6DC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "bench", "bench", "{54569058-B453-44DD-A433-DB26E4857FBD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -116,6 +120,18 @@ Global
 		{17868C80-6FD6-4A5A-908A-FA4FDCFB416E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{17868C80-6FD6-4A5A-908A-FA4FDCFB416E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{17868C80-6FD6-4A5A-908A-FA4FDCFB416E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{31D19132-0000-0000-0000-000000000000}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{31D19132-0000-0000-0000-000000000000}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{31D19132-0000-0000-0000-000000000000}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{31D19132-0000-0000-0000-000000000000}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5FDFF4B6-0000-0000-0000-000000000000}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5FDFF4B6-0000-0000-0000-000000000000}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5FDFF4B6-0000-0000-0000-000000000000}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5FDFF4B6-0000-0000-0000-000000000000}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C426C9D1-8857-4E52-BAC7-4C05EE6070AB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C426C9D1-8857-4E52-BAC7-4C05EE6070AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C426C9D1-8857-4E52-BAC7-4C05EE6070AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C426C9D1-8857-4E52-BAC7-4C05EE6070AB}.Release|Any CPU.Build.0 = Release|Any CPU
 		{808BD056-6B35-4DB3-93E2-78243CC51A6A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{808BD056-6B35-4DB3-93E2-78243CC51A6A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{808BD056-6B35-4DB3-93E2-78243CC51A6A}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -132,18 +148,10 @@ Global
 		{CB4028A7-A449-4452-9FC5-78CDB545FEB9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CB4028A7-A449-4452-9FC5-78CDB545FEB9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CB4028A7-A449-4452-9FC5-78CDB545FEB9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{31D19132-0000-0000-0000-000000000000}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{31D19132-0000-0000-0000-000000000000}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{31D19132-0000-0000-0000-000000000000}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{31D19132-0000-0000-0000-000000000000}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5FDFF4B6-0000-0000-0000-000000000000}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5FDFF4B6-0000-0000-0000-000000000000}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5FDFF4B6-0000-0000-0000-000000000000}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5FDFF4B6-0000-0000-0000-000000000000}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C426C9D1-8857-4E52-BAC7-4C05EE6070AB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C426C9D1-8857-4E52-BAC7-4C05EE6070AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C426C9D1-8857-4E52-BAC7-4C05EE6070AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C426C9D1-8857-4E52-BAC7-4C05EE6070AB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{79677977-BADE-4586-BF45-6A1E83E4A6DC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{79677977-BADE-4586-BF45-6A1E83E4A6DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{79677977-BADE-4586-BF45-6A1E83E4A6DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{79677977-BADE-4586-BF45-6A1E83E4A6DC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -157,6 +165,7 @@ Global
 		{808BD056-6B35-4DB3-93E2-78243CC51A6A} = {0B9B71A1-29F7-4CC5-9A9D-9DF122BE8B28}
 		{40349C84-AAF1-4159-B118-0565F7351523} = {BF0E6BAA-C31F-4481-924B-3EE9826BEE4D}
 		{CB4028A7-A449-4452-9FC5-78CDB545FEB9} = {BF0E6BAA-C31F-4481-924B-3EE9826BEE4D}
+		{79677977-BADE-4586-BF45-6A1E83E4A6DC} = {54569058-B453-44DD-A433-DB26E4857FBD}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {82DDE6D6-0D55-49B4-9C64-B31B4A6E729F}
