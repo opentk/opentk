@@ -25,9 +25,6 @@
 
 using System;
 using System.Diagnostics;
-#if !MINIMAL
-using System.Drawing;
-#endif
 using System.Runtime.InteropServices;
 using OpenToolkit.Mathematics;
 
@@ -74,19 +71,9 @@ namespace OpenToolkit.Graphics.ES30
             }
         }
 
-        public static void ClearColor(Color color)
-        {
-            GL.ClearColor(color.R / 255.0f, color.G / 255.0f, color.B / 255.0f, color.A / 255.0f);
-        }
-
         public static void ClearColor(Color4<Rgba> color)
         {
             GL.ClearColor(color.X, color.Y, color.Z, color.W);
-        }
-
-        public static void BlendColor(Color color)
-        {
-            GL.BlendColor(color.R / 255.0f, color.G / 255.0f, color.B / 255.0f, color.A / 255.0f);
         }
 
         public static void BlendColor(Color4<Rgba> color)
