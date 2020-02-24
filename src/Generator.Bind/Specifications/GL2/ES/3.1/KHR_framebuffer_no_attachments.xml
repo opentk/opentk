@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<signatures version="2">
+
+  <replace name="gles2" version="3.1">
+    <function name="FramebufferParameter">
+      <param name="target"><type>FramebufferTarget</type></param>
+      <param name="pname"><type>FramebufferDefaultParameter</type></param>
+    </function>
+    <function name="glGetFramebufferParameteriv">
+      <param name="target"><type>FramebufferTarget</type></param>
+      <param name="pname"><type>FramebufferDefaultParameter</type></param>
+    </function>
+  </replace>
+
+  <add name="gles2" version="3.1">
+    <enum name="FramebufferDefaultParameter">
+      <use token="GL_FRAMEBUFFER_DEFAULT_WIDTH"/>
+      <use token="GL_FRAMEBUFFER_DEFAULT_HEIGHT"/>
+      <use token="GL_FRAMEBUFFER_DEFAULT_SAMPLES"/>
+      <use token="GL_FRAMEBUFFER_DEFAULT_FIXED_SAMPLE_LOCATIONS"/>
+    </enum>
+    <enum name="GetPName">
+      <use token="GL_MAX_FRAMEBUFFER_WIDTH"/>
+      <use token="GL_MAX_FRAMEBUFFER_HEIGHT"/>
+      <use token="GL_MAX_FRAMEBUFFER_SAMPLES"/>
+    </enum>
+  </add>
+
+</signatures>

@@ -1,0 +1,173 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<!-- Converted by db4-upgrade version 1.1 -->
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glBufferSubData">
+    <info>
+        <copyright>
+            <year>2005</year>
+            <holder>Sams Publishing</holder>
+        </copyright>
+        <copyright>
+            <year>2010-2014</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </info>
+    <refmeta>
+        <refentrytitle>glBufferSubData</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glBufferSubData</refname>
+        <refpurpose>updates a subset of a buffer object's data store</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv>
+        <title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glBufferSubData</function></funcdef>
+                <paramdef>GLenum <parameter>target</parameter></paramdef>
+                <paramdef>GLintptr <parameter>offset</parameter></paramdef>
+                <paramdef>GLsizeiptr <parameter>size</parameter></paramdef>
+                <paramdef>const GLvoid * <parameter>data</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 xml:id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>target</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the target buffer object.
+                    The symbolic constant must be 
+                    <constant>GL_ARRAY_BUFFER</constant>,
+                    <constant>GL_ATOMIC_COUNTER_BUFFER</constant>,
+                    <constant>GL_COPY_READ_BUFFER</constant>,
+                    <constant>GL_COPY_WRITE_BUFFER</constant>,
+                    <constant>GL_DRAW_INDIRECT_BUFFER</constant>,
+                    <constant>GL_DISPATCH_INDIRECT_BUFFER</constant>,
+                    <constant>GL_ELEMENT_ARRAY_BUFFER</constant>,
+                    <constant>GL_PIXEL_PACK_BUFFER</constant>,
+                    <constant>GL_PIXEL_UNPACK_BUFFER</constant>,
+                    <constant>GL_SHADER_STORAGE_BUFFER</constant>,
+                    <constant>GL_TRANSFORM_FEEDBACK_BUFFER</constant>, or
+                    <constant>GL_UNIFORM_BUFFER</constant>.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>offset</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the offset into the buffer object's data store where data replacement will begin,
+                    measured in bytes.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>size</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the size in bytes of the data store region being replaced.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>data</parameter></term>
+            <listitem>
+                <para>
+                    Specifies a pointer to the new data that will be copied into the data store.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 xml:id="description"><title>Description</title>
+        <para>
+            <function>glBufferSubData</function> redefines some or all of the data store for the buffer object currently
+            bound to <parameter>target</parameter>. Data starting at byte offset <parameter>offset</parameter> and
+            extending for <parameter>size</parameter> bytes is copied to the data store from the memory pointed to by
+            <parameter>data</parameter>.  An error is thrown if <parameter>offset</parameter> and <parameter>size</parameter>
+            together define a range beyond the bounds of the buffer object's data store.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="notes"><title>Notes</title>
+        <para>
+            When replacing the entire data store, consider using <function>glBufferSubData</function> rather
+            than completely recreating the data store with <function>glBufferData</function>.  This avoids the cost of
+            reallocating the data store.
+        </para>
+        <para>
+            Consider using multiple buffer objects to avoid stalling the rendering pipeline during data store updates.
+            If any rendering in the pipeline makes reference to data in the buffer object being updated by
+            <function>glBufferSubData</function>, especially from the specific region being updated, that rendering must
+            drain from the pipeline before the data store can be updated.
+        </para>
+        <para>
+            Clients must align data elements consistently with the requirements of the client
+            platform, with an additional base-level requirement that an offset within a buffer to
+            a datum comprising <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mml:mi mathvariant="italic">N</mml:mi></mml:math></inlineequation> bytes be a
+            multiple of <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mml:mi mathvariant="italic">N</mml:mi></mml:math></inlineequation>.
+        </para>
+        <para>
+            The <constant>GL_COPY_READ_BUFFER</constant>, <constant>GL_COPY_WRITE_BUFFER</constant>, 
+            <constant>GL_PIXEL_PACK_BUFFER</constant>,<constant>GL_PIXEL_UNPACK_READ_BUFFER</constant>,
+           <constant>GL_TRANSFORM_FEEDBACK_BUFFER</constant> and <constant>GL_UNIFORM_BUFFER</constant> 
+           targets are available only if the GL ES version is 3.0 or greater.
+        </para>
+        <para>
+            The <constant>GL_ATOMIC_COUNTER_BUFFER</constant>, <constant>GL_DISPATCH_INDIRECT_BUFFER</constant>,
+            <constant>GL_DRAW_INDIRECT_BUFFER</constant> and <constant>GL_SHADER_STORAGE_BUFFER</constant> 
+            targets are available only if the GL ES version is 3.1 or greater.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_ENUM</constant> is generated if <parameter>target</parameter> is not
+            one of the accepted buffer targets.
+        </para>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if <parameter>offset</parameter> or
+            <parameter>size</parameter> is negative, or if together they define a region of memory
+            that extends beyond the buffer object's allocated data store.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if the reserved buffer object name 0 is bound to <parameter>target</parameter>.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if the buffer object being updated is mapped.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="versions">
+        <title>API Version Support</title>
+        <informaltable>
+            <tgroup cols="4" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry>glBufferSubData</entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='es20']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+    <refsect1 xml:id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glBindBuffer</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glBufferData</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glMapBufferRange</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glUnmapBuffer</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 2005 Addison-Wesley.
+            Copyright <trademark class="copyright"/> 2010-2014 Khronos Group.
+            This material may be distributed subject to the terms and conditions set forth in
+            the Open Publication License, v 1.0, 8 June 1999.
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://opencontent.org/openpub/">http://opencontent.org/openpub/</link>.
+        </para>
+    </refsect1>
+</refentry>

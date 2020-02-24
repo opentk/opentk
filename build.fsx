@@ -144,17 +144,41 @@ Target.create "UpdateBindings" (fun _ ->
         |> asArgs
     DotNet.runWithDefaultOptions framework projFile args |> ignore)
 
+Target.create "UpdateBindingsRewrite" (fun _ ->
+    Trace.log " --- Updating bindings (rewrite) --- "
+    let framework = "netcoreapp31"
+    let projFile = "src/Generator.Bind/Generator.Bind.csproj"
+
+    let args = [  ] |> asArgs
+    DotNet.runWithDefaultOptions framework projFile args |> ignore)
+
+Target.create "RewriteBindings" (fun _ ->
+    Trace.log " --- Rewriting bindings (calli) --- "
+    let framework = "netcoreapp31"
+    let projFile = "src/Generator.Rewrite/Generator.Rewrite.csproj"
+    let bindingsFile = "OpenToolkit.Graphics.dll"
+    let bindingsOutput = "src/OpenToolkit.Graphics/bin/Release/netstandard2.0"
+
+    let args =
+        [ "-a " + (System.IO.Path.GetFullPath bindingsOutput </> bindingsFile)
+        ] |> asArgs
+    DotNet.runWithDefaultOptions framework projFile args |> ignore)
+
 // ---------
 // Build Targets
 // ---------
 
 Target.create "Clean" <| fun _ ->
-    !! ("src" </> "OpenGL" </> "**/*.*")
-    -- ("src" </> "OpenGL" </> "Enums/*.*")
-    -- ("src" </> "OpenGL" </> "*.cs")
-    -- ("src" </> "OpenGL" </> "*.csproj")
-    |> Seq.map Fake.IO.Path.getDirectory
-    |> Shell.deleteDirs
+    !! ("./src" </> "OpenToolkit.Graphics" </> "**/*.*")
+    -- ("./src" </> "OpenToolkit.Graphics" </> "Enums/*.cs")
+    -- ("./src" </> "OpenToolkit.Graphics" </> "*.cs")
+    -- ("./src" </> "OpenToolkit.Graphics" </> "*.csproj")
+    -- ("./src" </> "OpenToolkit.Graphics" </> "ES11/Helper.cs")
+    -- ("./src" </> "OpenToolkit.Graphics" </> "ES20/Helper.cs")
+    -- ("./src" </> "OpenToolkit.Graphics" </> "ES30/Helper.cs")
+    -- ("./src" </> "OpenToolkit.Graphics" </> "OpenGL2/Helper.cs")
+    -- ("./src" </> "OpenToolkit.Graphics" </> "OpenGL4/Helper.cs")
+    |> Seq.iter(Shell.rm)
 
 Target.create "Restore" (fun _ -> DotNet.restore dotnetSimple "OpenTK.sln" |> ignore)
 
@@ -275,9 +299,10 @@ open Fake.Core.TargetOperators
   ==> "Restore"
   ==> "AssemblyInfo"
   ==> "UpdateSpec"
-  ==> "UpdateBindings"
+  ==> "UpdateBindingsRewrite"
   ==> "Build"
-  ==> "RunAllTests"
+  ==> "RewriteBindings"
+//  ==> "RunAllTests"
   ==> "All"
   ==> "CreateNuGetPackage"
   ==> "ReleaseOnNuGetGallery"

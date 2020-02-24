@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<signatures version="2">
+
+  <replace name="gles2" version="3.1">
+    <function name="glDrawArraysIndirect">
+      <param name="mode"><type>PrimitiveType</type></param>
+    </function>
+    <function name="glDrawElementsIndirect">
+      <param name="mode"><type>PrimitiveType</type></param>
+    </function>
+  </replace>
+
+  <add name="gles2" version="3.1">
+    <enum name="BufferTarget">
+      <use token="GL_DRAW_INDIRECT_BUFFER" />
+    </enum>
+    <enum name="GetPName">
+      <use token="GL_DRAW_INDIRECT_BUFFER_BINDING" />
+    </enum>
+  </add>
+
+</signatures>

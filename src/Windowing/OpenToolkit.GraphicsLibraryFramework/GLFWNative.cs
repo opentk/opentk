@@ -17,7 +17,7 @@ namespace OpenToolkit.GraphicsLibraryFramework
             // On net472, we rely on Mono's DllMap for this. See the .dll.config file.
             NativeLibrary.SetDllImportResolver(typeof(GLFWNative).Assembly, (name, assembly, path) =>
             {
-                if (name != "glfw3.dll")
+                if (name != LibraryName)
                 {
                     return IntPtr.Zero;
                 }
@@ -30,6 +30,16 @@ namespace OpenToolkit.GraphicsLibraryFramework
                 if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
                 {
                     return NativeLibrary.Load("libglfw.3.dylib", assembly, path);
+                }
+
+                if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+                {
+                    if (IntPtr.Size == 8)
+                    {
+                        return NativeLibrary.Load("glfw3-x64.dll", assembly, path);
+                    }
+
+                    return NativeLibrary.Load("glfw3-x86.dll", assembly, path);
                 }
 
                 return IntPtr.Zero;
@@ -209,7 +219,10 @@ namespace OpenToolkit.GraphicsLibraryFramework
         public static extern int glfwExtensionSupported(byte* extensionName);
 
         [DllImport(LibraryName)]
-        public static extern IntPtr glfwGetProcAddress(byte* procame);
+        public static extern IntPtr glfwGetProcAddress(byte* procName);
+
+        [DllImport(LibraryName, CharSet = CharSet.Ansi)]
+        public static extern IntPtr glfwGetProcAddress(string procName);
 
         [DllImport(LibraryName)]
         public static extern Window* glfwCreateWindow(int width, int height, byte* title, Monitor* monitor, Window* share);

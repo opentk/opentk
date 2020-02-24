@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<signatures version="2">
+
+  <add name="gles2" version="3.1">
+    <enum name="BufferTarget">
+      <use token="SHADER_STORAGE_BUFFER" />
+    </enum>
+    <enum name="GetPName">
+      <use token="SHADER_STORAGE_BUFFER_BINDING" />
+      <use token="GL_MAX_VERTEX_SHADER_STORAGE_BLOCKS"/>
+      <use token="GL_MAX_FRAGMENT_SHADER_STORAGE_BLOCKS"/>
+      <use token="GL_MAX_COMPUTE_SHADER_STORAGE_BLOCKS"/>
+      <use token="GL_MAX_COMBINED_SHADER_STORAGE_BLOCKS"/>
+      <use token="GL_MAX_SHADER_STORAGE_BUFFER_BINDINGS"/>
+      <use token="GL_MAX_SHADER_STORAGE_BLOCK_SIZE"/>
+      <use token="GL_SHADER_STORAGE_BUFFER_OFFSET_ALIGNMENT"/>
+      <use token="GL_MAX_COMBINED_SHADER_OUTPUT_RESOURCES"/>
+    </enum>
+    <enum name="GetIndexedPName">
+      <use token="SHADER_STORAGE_BUFFER_START" />
+      <use token="SHADER_STORAGE_BUFFER_SIZE" />
+    </enum>
+    <enum name="MemoryBarrierMask">
+      <use token="SHADER_STORAGE_BARRIER_BIT" />
+    </enum>
+    <enum name="MemoryBarrierRegionMask">
+      <use token="SHADER_STORAGE_BARRIER_BIT" />
+    </enum>
+  </add>
+
+</signatures>

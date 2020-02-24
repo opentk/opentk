@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+<refentry id="glPixelStorei">
+    <refmeta>
+        <refmetainfo>
+            <copyright>
+                <year>1991-2006</year>
+                <holder>Silicon Graphics, Inc.</holder>
+            </copyright>
+        </refmetainfo>
+        <refentrytitle>glPixelStorei</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glPixelStorei</refname>
+        <refpurpose>set pixel storage modes</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glPixelStorei</function></funcdef>
+                <paramdef>GLenum <parameter>pname</parameter></paramdef>
+                <paramdef>GLint <parameter>param</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <!-- eqn: ignoring delim $$ -->
+    <refsect1 id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>pname</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the symbolic name of the parameter to be set.
+                    One value affects the packing of pixel data into memory:
+                    <constant>GL_PACK_ALIGNMENT</constant>.
+                    The other affects the unpacking of pixel data <emphasis>from</emphasis> memory:
+                    <constant>GL_UNPACK_ALIGNMENT</constant>.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>param</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the value that <parameter>pname</parameter> is set to.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 id="description"><title>Description</title>
+        <para>
+            <function>glPixelStorei</function> sets pixel storage modes that affect the operation of subsequent
+            <citerefentry><refentrytitle>glReadPixels</refentrytitle></citerefentry> as well as the unpacking of
+            texture patterns (see <citerefentry><refentrytitle>glTexImage2D</refentrytitle></citerefentry> and
+            <citerefentry><refentrytitle>glTexSubImage2D</refentrytitle></citerefentry>).
+        </para>
+        <para>
+            <parameter>pname</parameter> is a symbolic constant indicating the parameter to be set, and
+            <parameter>param</parameter> is the new value.  One storage parameter affects
+            how pixel data is returned to client memory:
+        </para>
+        <variablelist>
+            <varlistentry>
+                <term><constant>GL_PACK_ALIGNMENT</constant></term>
+                <listitem>
+                    <para>
+                        Specifies the alignment requirements for the start of each pixel row in memory.
+                        The allowable values are
+                        1 (byte-alignment),
+                        2 (rows aligned to even-numbered bytes),
+                        4 (word-alignment), and
+                        8 (rows start on double-word boundaries).
+                    </para>
+                </listitem>
+            </varlistentry>
+        </variablelist>
+        <para>
+            The other storage parameter affects how pixel data is
+            read from client memory:
+        </para>
+        <variablelist>
+            <varlistentry>
+                <term><constant>GL_UNPACK_ALIGNMENT</constant></term>
+                <listitem>
+                    <para>
+                        Specifies the alignment requirements for the start of each pixel row in memory.
+                        The allowable values are
+                        1 (byte-alignment),
+                        2 (rows aligned to even-numbered bytes),
+                        4 (word-alignment), and
+                        8 (rows start on double-word boundaries).
+                    </para>
+                </listitem>
+            </varlistentry>
+        </variablelist>
+        <para>
+            The following table gives the type,
+            initial value,
+            and range of valid values for each storage parameter
+            that can be set with <function>glPixelStorei</function>.
+        </para>
+        <para>
+        </para>
+        <informaltable frame="topbot">
+            <tgroup cols="4" align="left">
+                <colspec/>
+                <colspec align="center"/>
+                <colspec align="center"/>
+                <colspec align="center"/>
+                <thead>
+                    <row>
+                        <entry rowsep="1" align="left"><emphasis role="bold">
+                        <parameter>pname</parameter>
+                        </emphasis></entry>
+                        <entry rowsep="1" align="center"><emphasis role="bold">
+                        Type
+                        </emphasis></entry>
+                        <entry rowsep="1" align="center"><emphasis role="bold">
+                        Initial Value
+                        </emphasis></entry>
+                        <entry rowsep="1" align="center"><emphasis role="bold">
+                        Valid Range
+                        </emphasis></entry>
+                    </row>
+                </thead>
+                <tbody>
+                    <row>
+                        <entry align="left">
+                        <constant>GL_PACK_ALIGNMENT</constant>
+                        </entry>
+                        <entry align="center">
+                        integer
+                        </entry>
+                        <entry align="center">
+                        4
+                        </entry>
+                        <entry align="center">
+                        1, 2, 4, or 8
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        <constant>GL_UNPACK_ALIGNMENT</constant>
+                        </entry>
+                        <entry align="center">
+                        integer
+                        </entry>
+                        <entry align="center">
+                        4
+                        </entry>
+                        <entry align="center">
+                        1, 2, 4, or 8
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+        <para>
+            Boolean parameters are set to false if <parameter>param</parameter> is 0 and true otherwise.
+        </para>
+    </refsect1>
+    <refsect1 id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_ENUM</constant> is generated if <parameter>pname</parameter> is not an accepted value.
+        </para>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if alignment is specified as other than 1, 2, 4, or 8.
+        </para>
+    </refsect1>
+    <refsect1 id="associatedgets"><title>Associated Gets</title>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument 
+            <constant>GL_PACK_ALIGNMENT</constant> or <constant>GL_UNPACK_ALIGNMENT</constant>
+        </para>
+    </refsect1>
+    <refsect1 id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glReadPixels</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glTexImage2D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glTexSubImage2D</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 id="copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"></trademark> 1991-2006
+            Silicon Graphics, Inc. This document is licensed under the SGI
+            Free Software B License. For details, see
+            <ulink url="http://oss.sgi.com/projects/FreeB/">http://oss.sgi.com/projects/FreeB/</ulink>.
+        </para>
+    </refsect1>
+</refentry>
