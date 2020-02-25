@@ -26,8 +26,10 @@ namespace OpenToolkit.Audio.OpenAL
             {
                 string libName = libraryNameContainer.GetLibraryName();
 
-                // FIXME: Figure out the search path stuf
-                NativeLibrary.TryLoad(libName, assembly, searchPath, out libHandle);
+                if (NativeLibrary.TryLoad(libName, assembly, searchPath, out libHandle) == false)
+                {
+                    throw new DllNotFoundException($"Could not load the dll '{libName}' (this load is intercepted, specified in DllImport as '{libraryName}').");
+                }
             }
             return libHandle;
         }
