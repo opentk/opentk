@@ -53,20 +53,20 @@ namespace OpenToolkit.Audio.OpenAL
             // Record a second of data
             CheckALError("Before record");
             short[] recording = new short[44100 * 4];
-            ALCaptureDevice captureDevice = Extensions.EXT.Capture.Capture.CaptureOpenDevice(null, 44100, ALFormat.Mono16, 1024);
+            ALCaptureDevice captureDevice = ALC.CaptureOpenDevice(null, 44100, ALFormat.Mono16, 1024);
             {
-                Extensions.EXT.Capture.Capture.CaptureStart(captureDevice);
+                ALC.CaptureStart(captureDevice);
 
                 int current = 0;
                 while (current < recording.Length)
                 {
-                    int samplesAvailable = Extensions.EXT.Capture.Capture.GetAvailableSamples(captureDevice);
+                    int samplesAvailable = ALC.GetAvailableSamples(captureDevice);
                     int samplesToRead = Math.Min(samplesAvailable, recording.Length - current);
-                    Extensions.EXT.Capture.Capture.CaptureSamples(captureDevice, ref recording[current], samplesToRead);
+                    ALC.CaptureSamples(captureDevice, ref recording[current], samplesToRead);
                     current += samplesToRead;
                 }
 
-                Extensions.EXT.Capture.Capture.CaptureStop(captureDevice);
+                ALC.CaptureStop(captureDevice);
             }
             CheckALError("After record");
 

@@ -75,7 +75,7 @@ namespace OpenToolkit.Audio.OpenAL
         }
 
         /// <summary>This function creates a context using a specified device.</summary>
-        /// <param name="device">a pointer to a device.</param>
+        /// <param name="device">A pointer to a device.</param>
         /// <param name="attributes">The ALContext attributes to request.</param>
         /// <returns>Returns a pointer to the new context (NULL on failure).</returns>
         /// <remarks>The attribute list can be NULL, or a zero terminated list of integer pairs composed of valid ALC attribute tokens and requested values.</remarks>
@@ -98,13 +98,13 @@ namespace OpenToolkit.Audio.OpenAL
         // ALC_API void            ALC_APIENTRY alcProcessContext( ALCcontext *context );
 
         /// <summary>This function suspends processing on a specified context. When a context is suspended, changes in OpenAL state will be accepted but will not be processed. A typical use of alcSuspendContext would be to suspend a context, apply all the OpenAL state changes at once, and then call alcProcessContext to apply all the state changes at once. In some cases, this procedure may be more efficient than application of properties in a non-suspended state. In some implementations, process and suspend calls are each a NOP.</summary>
-        /// <param name="context">a pointer to the context to be suspended.</param>
+        /// <param name="context">A pointer to the context to be suspended.</param>
         [DllImport(Lib, EntryPoint = "alcSuspendContext", ExactSpelling = true, CallingConvention = AlcCallingConv)]
         public static extern void SuspendContext(ALContext context);
         // ALC_API void            ALC_APIENTRY alcSuspendContext( ALCcontext *context );
 
         /// <summary>This function destroys a context.</summary>
-        /// <param name="context">a pointer to the new context.</param>
+        /// <param name="context">A pointer to the new context.</param>
         [DllImport(Lib, EntryPoint = "alcDestroyContext", ExactSpelling = true, CallingConvention = AlcCallingConv)]
         public static extern void DestroyContext(ALContext context);
         // ALC_API void            ALC_APIENTRY alcDestroyContext( ALCcontext *context );
@@ -116,39 +116,47 @@ namespace OpenToolkit.Audio.OpenAL
         // ALC_API ALCcontext *    ALC_APIENTRY alcGetCurrentContext( void );
 
         /// <summary>This function retrieves a context's device pointer.</summary>
-        /// <param name="context">a pointer to a context.</param>
+        /// <param name="context">A pointer to a context.</param>
         /// <returns>Returns a pointer to the specified context's device.</returns>
         [DllImport(Lib, EntryPoint = "alcGetContextsDevice", ExactSpelling = true, CallingConvention = AlcCallingConv)]
         public static extern ALDevice GetContextsDevice(ALContext context);
         // ALC_API ALCdevice*      ALC_APIENTRY alcGetContextsDevice( ALCcontext *context );
 
         /// <summary>This function opens a device by name.</summary>
-        /// <param name="devicename">a null-terminated string describing a device.</param>
+        /// <param name="devicename">A null-terminated string describing a device.</param>
         /// <returns>Returns a pointer to the opened device. The return value will be NULL if there is an error.</returns>
         [DllImport(Lib, EntryPoint = "alcOpenDevice", ExactSpelling = true, CallingConvention = AlcCallingConv, CharSet = CharSet.Ansi)]
         public static extern ALDevice OpenDevice([In] string devicename);
         // ALC_API ALCdevice *     ALC_APIENTRY alcOpenDevice( const ALCchar *devicename );
 
         /// <summary>This function closes a device by name.</summary>
-        /// <param name="device">a pointer to an opened device.</param>
+        /// <param name="device">A pointer to an opened device.</param>
         /// <returns>True will be returned on success or False on failure. Closing a device will fail if the device contains any contexts or buffers.</returns>
         [DllImport(Lib, EntryPoint = "alcCloseDevice", ExactSpelling = true, CallingConvention = AlcCallingConv)]
         public static extern bool CloseDevice([In] ALDevice device);
         // ALC_API ALCboolean      ALC_APIENTRY alcCloseDevice( ALCdevice *device );
 
         /// <summary>This function retrieves the current context error state.</summary>
-        /// <param name="device">a pointer to the device to retrieve the error state from.</param>
+        /// <param name="device">A pointer to the device to retrieve the error state from.</param>
         /// <returns>Errorcode Int32.</returns>
         [DllImport(Lib, EntryPoint = "alcGetError", ExactSpelling = true, CallingConvention = AlcCallingConv)]
         public static extern AlcError GetError([In] ALDevice device);
         // ALC_API ALCenum         ALC_APIENTRY alcGetError( ALCdevice *device );
 
         /// <summary>This function queries if a specified context extension is available.</summary>
-        /// <param name="device">a pointer to the device to be queried for an extension.</param>
-        /// <param name="extname">a null-terminated string describing the extension.</param>
+        /// <param name="device">A pointer to the device to be queried for an extension.</param>
+        /// <param name="extname">A null-terminated string describing the extension.</param>
         /// <returns>Returns True if the extension is available, False if the extension is not available.</returns>
         [DllImport(Lib, EntryPoint = "alcIsExtensionPresent", ExactSpelling = true, CallingConvention = AlcCallingConv, CharSet = CharSet.Ansi)]
         public static extern bool IsExtensionPresent([In] ALDevice device, [In] string extname);
+        // ALC_API ALCboolean      ALC_APIENTRY alcIsExtensionPresent( ALCdevice *device, const ALCchar *extname );
+
+        /// <summary>This function queries if a specified context extension is available.</summary>
+        /// <param name="device">A pointer to the device to be queried for an extension.</param>
+        /// <param name="extname">A null-terminated string describing the extension.</param>
+        /// <returns>Returns True if the extension is available, False if the extension is not available.</returns>
+        [DllImport(Lib, EntryPoint = "alcIsExtensionPresent", ExactSpelling = true, CallingConvention = AlcCallingConv, CharSet = CharSet.Ansi)]
+        public static extern bool IsExtensionPresent([In] ALCaptureDevice device, [In] string extname);
         // ALC_API ALCboolean      ALC_APIENTRY alcIsExtensionPresent( ALCdevice *device, const ALCchar *extname );
 
         /// <summary>This function retrieves the address of a specified context extension function.</summary>
@@ -330,68 +338,94 @@ namespace OpenToolkit.Audio.OpenAL
             return IsExtensionPresent(device, "ALC_EXT_CAPTURE");
         }
 
+        /// <summary>
+        /// Checks to see that the ALC_EXT_CAPTURE extension is present. This will always be available in 1.1 devices or later.
+        /// </summary>
+        /// <param name="device">The device to check the extension is present for.</param>
+        /// <returns>If the ALC_EXT_CAPTURE extension was present.</returns>
+        public static bool IsCaptureExtensionPresent(ALCaptureDevice device)
+        {
+            return IsExtensionPresent(device, "ALC_EXT_CAPTURE");
+        }
+
         /// <summary>This function opens a capture device by name. </summary>
-        /// <param name="devicename">a pointer to a device name string.</param>
-        /// <param name="frequency">the frequency that the buffer should be captured at.</param>
-        /// <param name="format">the requested capture buffer format.</param>
-        /// <param name="buffersize">the size of the capture buffer in samples, not bytes.</param>
-        /// <returns>Returns the capture device pointer, or NULL on failure.</returns>
+        /// <param name="devicename">A pointer to a device name string.</param>
+        /// <param name="frequency">The frequency that the buffer should be captured at.</param>
+        /// <param name="format">The requested capture buffer format.</param>
+        /// <param name="buffersize">The size of the capture buffer in samples, not bytes.</param>
+        /// <returns>Returns the capture device pointer, or <see cref="ALCaptureDevice.Null"/> on failure.</returns>
         [DllImport(Lib, EntryPoint = "alcCaptureOpenDevice", ExactSpelling = true, CallingConvention = AlcCallingConv, CharSet = CharSet.Ansi)]
-        public static extern IntPtr CaptureOpenDevice(string devicename, uint frequency, ALFormat format, int buffersize);
+        public static extern ALCaptureDevice CaptureOpenDevice(string devicename, uint frequency, ALFormat format, int buffersize);
         // ALC_API ALCdevice*      ALC_APIENTRY alcCaptureOpenDevice( const ALCchar *devicename, ALCuint frequency, ALCenum format, ALCsizei buffersize );
 
         /// <summary>This function opens a capture device by name. </summary>
-        /// <param name="devicename">a pointer to a device name string.</param>
-        /// <param name="frequency">the frequency that the buffer should be captured at.</param>
-        /// <param name="format">the requested capture buffer format.</param>
-        /// <param name="buffersize">the size of the capture buffer in samples, not bytes.</param>
-        /// <returns>Returns the capture device pointer, or NULL on failure.</returns>
+        /// <param name="devicename">A pointer to a device name string.</param>
+        /// <param name="frequency">The frequency that the buffer should be captured at.</param>
+        /// <param name="format">The requested capture buffer format.</param>
+        /// <param name="buffersize">The size of the capture buffer in samples, not bytes.</param>
+        /// <returns>Returns the capture device pointer, or <see cref="ALCaptureDevice.Null"/> on failure.</returns>
         [DllImport(Lib, EntryPoint = "alcCaptureOpenDevice", ExactSpelling = true, CallingConvention = AlcCallingConv, CharSet = CharSet.Ansi)]
-        public static extern IntPtr CaptureOpenDevice(string devicename, int frequency, ALFormat format, int buffersize);
+        public static extern ALCaptureDevice CaptureOpenDevice(string devicename, int frequency, ALFormat format, int buffersize);
         // ALC_API ALCdevice*      ALC_APIENTRY alcCaptureOpenDevice( const ALCchar *devicename, ALCuint frequency, ALCenum format, ALCsizei buffersize );
 
         /// <summary>This function closes the specified capture device.</summary>
-        /// <param name="device">a pointer to a capture device.</param>
+        /// <param name="device">A pointer to a capture device.</param>
         /// <returns>Returns True if the close operation was successful, False on failure.</returns>
         [DllImport(Lib, EntryPoint = "alcCaptureCloseDevice", ExactSpelling = true, CallingConvention = AlcCallingConv)]
-        public static extern bool CaptureCloseDevice([In] ALDevice device);
+        public static extern bool CaptureCloseDevice([In] ALCaptureDevice device);
         // ALC_API ALCboolean      ALC_APIENTRY alcCaptureCloseDevice( ALCdevice *device );
 
         /// <summary>This function begins a capture operation.</summary>
         /// <remarks>alcCaptureStart will begin recording to an internal ring buffer of the size specified when opening the capture device. The application can then retrieve the number of samples currently available using the ALC_CAPTURE_SAPMPLES token with alcGetIntegerv. When the application determines that enough samples are available for processing, then it can obtain them with a call to alcCaptureSamples.</remarks>
-        /// <param name="device">a pointer to a capture device.</param>
+        /// <param name="device">A pointer to a capture device.</param>
         [DllImport(Lib, EntryPoint = "alcCaptureStart", ExactSpelling = true, CallingConvention = AlcCallingConv)]
-        public static extern void CaptureStart([In] ALDevice device);
+        public static extern void CaptureStart([In] ALCaptureDevice device);
         // ALC_API void            ALC_APIENTRY alcCaptureStart( ALCdevice *device );
 
         /// <summary>This function stops a capture operation.</summary>
-        /// <param name="device">a pointer to a capture device.</param>
+        /// <param name="device">A pointer to a capture device.</param>
         [DllImport(Lib, EntryPoint = "alcCaptureStop", ExactSpelling = true, CallingConvention = AlcCallingConv)]
-        public static extern void CaptureStop([In] ALDevice device);
+        public static extern void CaptureStop([In] ALCaptureDevice device);
         // ALC_API void            ALC_APIENTRY alcCaptureStop( ALCdevice *device );
 
         /// <summary>This function completes a capture operation, and does not block.</summary>
-        /// <param name="device">a pointer to a capture device.</param>
-        /// <param name="buffer">a pointer to a buffer, which must be large enough to accommodate the number of samples.</param>
-        /// <param name="samples">the number of samples to be retrieved.</param>
+        /// <param name="device">A pointer to a capture device.</param>
+        /// <param name="buffer">A pointer to a buffer, which must be large enough to accommodate the number of samples.</param>
+        /// <param name="samples">The number of samples to be retrieved.</param>
         [DllImport(Lib, EntryPoint = "alcCaptureSamples", ExactSpelling = true, CallingConvention = AlcCallingConv)]
-        public static extern void CaptureSamples(ALDevice device, IntPtr buffer, int samples);
+        public static extern void CaptureSamples(ALCaptureDevice device, IntPtr buffer, int samples);
         // ALC_API void            ALC_APIENTRY alcCaptureSamples( ALCdevice *device, ALCvoid *buffer, ALCsizei samples );
 
         /// <summary>This function completes a capture operation, and does not block.</summary>
-        /// <param name="device">a pointer to a capture device.</param>
-        /// <param name="buffer">a pointer to a buffer, which must be large enough to accommodate the number of samples.</param>
-        /// <param name="samples">the number of samples to be retrieved.</param>
+        /// <param name="device">A pointer to a capture device.</param>
+        /// <param name="buffer">A pointer to a buffer, which must be large enough to accommodate the number of samples.</param>
+        /// <param name="samples">The number of samples to be retrieved.</param>
         [DllImport(Lib, EntryPoint = "alcCaptureSamples", ExactSpelling = true, CallingConvention = AlcCallingConv)]
-        public static unsafe extern void CaptureSamples(ALDevice device, void* buffer, int samples);
+        public static unsafe extern void CaptureSamples(ALCaptureDevice device, void* buffer, int samples);
+        // ALC_API void            ALC_APIENTRY alcCaptureSamples( ALCdevice *device, ALCvoid *buffer, ALCsizei samples );
+
+        /// <summary>This function completes a capture operation, and does not block.</summary>
+        /// <param name="device">A pointer to a capture device.</param>
+        /// <param name="buffer">A pointer to a buffer, which must be large enough to accommodate the number of samples.</param>
+        /// <param name="samples">The number of samples to be retrieved.</param>
+        [DllImport(Lib, EntryPoint = "alcCaptureSamples", ExactSpelling = true, CallingConvention = AlcCallingConv)]
+        public static extern void CaptureSamples(ALCaptureDevice device, ref byte buffer, int samples);
+        // ALC_API void            ALC_APIENTRY alcCaptureSamples( ALCdevice *device, ALCvoid *buffer, ALCsizei samples );
+
+        /// <summary>This function completes a capture operation, and does not block.</summary>
+        /// <param name="device">A pointer to a capture device.</param>
+        /// <param name="buffer">A pointer to a buffer, which must be large enough to accommodate the number of samples.</param>
+        /// <param name="samples">The number of samples to be retrieved.</param>
+        [DllImport(Lib, EntryPoint = "alcCaptureSamples", ExactSpelling = true, CallingConvention = AlcCallingConv)]
+        public static extern void CaptureSamples(ALCaptureDevice device, ref short buffer, int samples);
         // ALC_API void            ALC_APIENTRY alcCaptureSamples( ALCdevice *device, ALCvoid *buffer, ALCsizei samples );
 
         /// <summary>This function completes a capture operation, and does not block.</summary>
         /// <typeparam name="T">The buffer datatype.</typeparam>
-        /// <param name="device">a pointer to a capture device.</param>
-        /// <param name="buffer">a reference to a buffer, which must be large enough to accommodate the number of samples.</param>
-        /// <param name="samples">the number of samples to be retrieved.</param>
-        public static void CaptureSamples<T>(ALDevice device, ref T buffer, int samples)
+        /// <param name="device">A pointer to a capture device.</param>
+        /// <param name="buffer">A reference to a buffer, which must be large enough to accommodate the number of samples.</param>
+        /// <param name="samples">The number of samples to be retrieved.</param>
+        public static void CaptureSamples<T>(ALCaptureDevice device, ref T buffer, int samples)
             where T : unmanaged
         {
             GCHandle handle = GCHandle.Alloc(buffer, GCHandleType.Pinned);
@@ -407,35 +441,13 @@ namespace OpenToolkit.Audio.OpenAL
 
         /// <summary>This function completes a capture operation, and does not block.</summary>
         /// <typeparam name="T">The buffer datatype.</typeparam>
-        /// <param name="device">a pointer to a capture device.</param>
-        /// <param name="buffer">a buffer, which must be large enough to accommodate the number of samples.</param>
-        /// <param name="samples">the number of samples to be retrieved.</param>
-        public static void CaptureSamples<T>(ALDevice device, T[] buffer, int samples)
+        /// <param name="device">A pointer to a capture device.</param>
+        /// <param name="buffer">A buffer, which must be large enough to accommodate the number of samples.</param>
+        /// <param name="samples">The number of samples to be retrieved.</param>
+        public static void CaptureSamples<T>(ALCaptureDevice device, T[] buffer, int samples)
             where T : unmanaged
         {
             CaptureSamples(device, ref buffer[0], samples);
-        }
-
-        /// <summary>This function completes a capture operation, and does not block.</summary>
-        /// <typeparam name="T">The buffer datatype.</typeparam>
-        /// <param name="device">a pointer to a capture device.</param>
-        /// <param name="buffer">a buffer, which must be large enough to accommodate the number of samples.</param>
-        /// <param name="samples">the number of samples to be retrieved.</param>
-        public static void CaptureSamples<T>(ALDevice device, T[,] buffer, int samples)
-            where T : unmanaged
-        {
-            CaptureSamples(device, ref buffer[0, 0], samples);
-        }
-
-        /// <summary>This function completes a capture operation, and does not block.</summary>
-        /// <typeparam name="T">The buffer datatype.</typeparam>
-        /// <param name="device">a pointer to a capture device.</param>
-        /// <param name="buffer">a buffer, which must be large enough to accommodate the number of samples.</param>
-        /// <param name="samples">the number of samples to be retrieved.</param>
-        public static void CaptureSamples<T>(ALDevice device, T[,,] buffer, int samples)
-            where T : unmanaged
-        {
-            CaptureSamples(device, ref buffer[0, 0, 0], samples);
         }
 
         /// <summary>This function returns integers related to the context.</summary>
@@ -489,6 +501,16 @@ namespace OpenToolkit.Audio.OpenAL
         }
 
         /// <summary>
+        /// Checks to see that the ALC_ENUMERATION_EXT extension is present. This will always be available in 1.1 devices or later.
+        /// </summary>
+        /// <param name="device">The device to check the extension is present for.</param>
+        /// <returns>If the ALC_ENUMERATION_EXT extension was present.</returns>
+        public static bool IsEnumerationExtensionPresent(ALCaptureDevice device)
+        {
+            return IsExtensionPresent(device, "ALC_ENUMERATION_EXT");
+        }
+
+        /// <summary>
         /// Gets a named property on the context.
         /// </summary>
         /// <param name="device">The device for the context.</param>
@@ -517,6 +539,11 @@ namespace OpenToolkit.Audio.OpenAL
             }
         }
 
+        /// <summary>
+        /// Used to convert a OpenAL string list to a C# List.
+        /// </summary>
+        /// <param name="alList">A pointer to the AL list. Usually returned from GetStringList like AL functions.</param>
+        /// <returns>The string list.</returns>
         internal static unsafe List<string> ALStringListToList(byte* alList)
         {
             if (alList == (byte*)0)

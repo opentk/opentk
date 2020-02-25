@@ -434,7 +434,7 @@ namespace OpenToolkit.Audio.OpenAL
 
         /// <summary>This function sets a floating-point property of a source.</summary>
         /// <param name="sid">Source name whose attribute is being set.</param>
-        /// <param name="param">The name of the attribute to set: ALSourcef.Pitch, Gain, MinGain, MaxGain, MaxDistance, RolloffFactor, ConeOuterGain, ConeInnerAngle, ConeOuterAngle, ReferenceDistance, EfxAirAbsorptionFactor, EfxRoomRolloffFactor, EfxConeOuterGainHighFrequency.</param>
+        /// <param name="param">The name of the attribute to set: ALSourcef.Pitch, Gain, MinGain, MaxGain, MaxDistance, RolloffFactor, ConeOuterGain, ConeInnerAngle, ConeOuterAngle, SecOffset, ReferenceDistance, EfxAirAbsorptionFactor, EfxRoomRolloffFactor, EfxConeOuterGainHighFrequency.</param>
         /// <param name="value">The value to set the attribute to.</param>
         [DllImport(Lib, EntryPoint = "alSourcef", ExactSpelling = true, CallingConvention = ALCallingConvention)]
         public static extern void Source(int sid, ALSourcef param, float value);
@@ -499,7 +499,7 @@ namespace OpenToolkit.Audio.OpenAL
 
         /// <summary>This function retrieves a floating-point property of a source.</summary>
         /// <param name="sid">Source name whose attribute is being retrieved.</param>
-        /// <param name="param">The name of the attribute to set: ALSourcef.Pitch, Gain, MinGain, MaxGain, MaxDistance, RolloffFactor, ConeOuterGain, ConeInnerAngle, ConeOuterAngle, ReferenceDistance, EfxAirAbsorptionFactor, EfxRoomRolloffFactor, EfxConeOuterGainHighFrequency.</param>
+        /// <param name="param">The name of the attribute to set: ALSourcef.Pitch, Gain, MinGain, MaxGain, MaxDistance, RolloffFactor, ConeOuterGain, ConeInnerAngle, ConeOuterAngle, SecOffset, ReferenceDistance, EfxAirAbsorptionFactor, EfxRoomRolloffFactor, EfxConeOuterGainHighFrequency.</param>
         /// <param name="value">A pointer to the floating-point value being retrieved.</param>
         [DllImport(Lib, EntryPoint = "alGetSourcef", ExactSpelling = true, CallingConvention = ALCallingConvention)]
         public static extern void GetSource(int sid, ALSourcef param, out float value);

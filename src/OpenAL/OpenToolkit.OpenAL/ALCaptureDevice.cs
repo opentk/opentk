@@ -13,7 +13,7 @@ using System.Diagnostics.CodeAnalysis;
 namespace OpenToolkit.Audio.OpenAL
 {
     /// <summary>
-    /// Opaque handle to an OpenAL device.
+    /// Handle to an OpenAL capture device.
     /// </summary>
     public struct ALCaptureDevice : IEquatable<ALCaptureDevice>
     {
