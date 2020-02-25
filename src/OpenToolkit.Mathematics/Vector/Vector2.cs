@@ -669,7 +669,8 @@ namespace OpenToolkit.Mathematics
         [Pure]
         public static Vector2 BaryCentric(Vector2 a, Vector2 b, Vector2 c, float u, float v)
         {
-            return a + (u * (b - a)) + (v * (c - a));
+            BaryCentric(ref a, ref b, ref c, u, v, out var result);
+            return result;
         }
 
         /// <summary>
