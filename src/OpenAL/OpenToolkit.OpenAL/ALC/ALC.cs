@@ -424,5 +424,71 @@ namespace OpenToolkit.Audio.OpenAL
         {
             CaptureSamples(device, ref buffer[0, 0, 0], samples);
         }
+
+        // -------- ALC_ENUMERATION_EXT --------
+
+        /// <summary>
+        /// Checks to see that the ALC_ENUMERATION_EXT extension is present. This will always be available in 1.1 devices or later.
+        /// </summary>
+        /// <param name="device">The device to check the extension is present for.</param>
+        /// <returns>If the ALC_ENUMERATION_EXT extension was present.</returns>
+        public static bool IsEnumerationExtensionPresent(ALDevice device)
+        {
+            return IsExtensionPresent(device, "ALC_ENUMERATION_EXT");
+        }
+
+        /// <summary>
+        /// Gets a named property on the context.
+        /// </summary>
+        /// <param name="device">The device for the context.</param>
+        /// <param name="param">The named property.</param>
+        /// <returns>The value.</returns>
+        [DllImport(Lib, EntryPoint = "alcGetString", ExactSpelling = true, CallingConvention = AlcCalliningConv)]
+        [return: MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(ConstCharPtrMarshaler))]
+        public static extern string GetString(ALDevice device, GetEnumerationString param);
+
+        /// <summary>
+        /// Gets a named property on the context.
+        /// </summary>
+        /// <param name="device">The device for the context.</param>
+        /// <param name="param">The named property.</param>
+        /// <returns>The value.</returns>
+        [DllImport(Lib, EntryPoint = "alcGetString", ExactSpelling = true, CallingConvention = AlcCalliningConv)]
+        public static extern unsafe byte* GetStringList(ALDevice device, GetEnumerationStringList param);
+
+        /// <inheritdoc cref="GetString(ALDevice, GetEnumerationString)"/>
+        public static IEnumerable<string> GetStringList(GetEnumerationStringList param)
+        {
+            unsafe
+            {
+                byte* result = GetStringList(ALDevice.Null, param);
+                return ALStringListToList(result);
+            }
+        }
+
+        internal static unsafe List<string> ALStringListToList(byte* alList)
+        {
+            if (alList == (byte*)0)
+            {
+                return new List<string>();
+            }
+
+            var strings = new List<string>();
+
+            byte* currentPos = alList;
+            while (true)
+            {
+                var currentString = Marshal.PtrToStringAnsi(new IntPtr(currentPos));
+                if (string.IsNullOrEmpty(currentString))
+                {
+                    break;
+                }
+
+                strings.Add(currentString);
+                currentPos += currentString.Length + 1;
+            }
+
+            return strings;
+        }
     }
 }

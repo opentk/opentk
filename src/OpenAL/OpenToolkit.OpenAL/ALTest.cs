@@ -7,7 +7,7 @@ namespace OpenToolkit.Audio.OpenAL
 {
     internal class ALTest
     {
-        public static void Main(string[] args)
+        public static void Main()
         {
             Console.WriteLine("Hello!");
             var device = ALC.OpenDevice(string.Empty);
@@ -16,7 +16,7 @@ namespace OpenToolkit.Audio.OpenAL
 
             CheckALError("Start");
 
-            var devices = Extensions.Enumeration.Enumeration.GetStringList(Extensions.Enumeration.GetEnumerationContextStringList.DeviceSpecifier);
+            var devices = ALC.GetStringList(GetEnumerationStringList.DeviceSpecifier);
             Console.WriteLine($"Devices: {string.Join(", ", devices)}");
 
             var allDevices = Extensions.Creative.EnumerateAll.EnumerateAll.GetStringList(Extensions.Creative.EnumerateAll.GetEnumerateAllContextStringList.AllDevicesSpecifier);
@@ -38,6 +38,13 @@ namespace OpenToolkit.Audio.OpenAL
 
             Console.WriteLine("Available devices: ");
             var list = Extensions.Creative.EnumerateAll.EnumerateAll.GetStringList(Extensions.Creative.EnumerateAll.GetEnumerateAllContextStringList.AllDevicesSpecifier);
+            foreach (var item in list)
+            {
+                Console.WriteLine("  " + item);
+            }
+
+            Console.WriteLine("Available capture devices: ");
+            list = ALC.GetStringList(GetEnumerationStringList.CaptureDeviceSpecifier);
             foreach (var item in list)
             {
                 Console.WriteLine("  " + item);
@@ -66,9 +73,9 @@ namespace OpenToolkit.Audio.OpenAL
             // Playback the recorded data
             CheckALError("Before data");
             AL.GenBuffer(out int alBuffer);
-            //short[] sine = new short[44100 * 1];
-            //FillSine(sine, 4400, 44100);
-            //FillSine(recording, 440, 44100);
+            // short[] sine = new short[44100 * 1];
+            // FillSine(sine, 4400, 44100);
+            // FillSine(recording, 440, 44100);
             AL.BufferData(alBuffer, ALFormat.Mono16, ref recording[0], recording.Length * 2, 14400);
             CheckALError("After data");
 

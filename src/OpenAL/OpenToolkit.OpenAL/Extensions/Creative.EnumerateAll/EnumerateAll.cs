@@ -78,27 +78,7 @@ namespace OpenToolkit.Audio.OpenAL.Extensions.Creative.EnumerateAll
             unsafe
             {
                 byte* result = GetStringList(ALDevice.Null, param);
-                if (result == (byte*)0)
-                {
-                    return new List<string>();
-                }
-
-                var strings = new List<string>();
-
-                byte* currentPos = result;
-                while (true)
-                {
-                    var currentString = Marshal.PtrToStringAnsi(new IntPtr(currentPos));
-                    if (string.IsNullOrEmpty(currentString))
-                    {
-                        break;
-                    }
-
-                    strings.Add(currentString);
-                    currentPos += currentString.Length + 1;
-                }
-
-                return strings;
+                return ALC.ALStringListToList(result);
             }
         }
     }

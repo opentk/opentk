@@ -132,5 +132,51 @@ namespace OpenToolkit.Audio.OpenAL
         /// <summary>(EFX Extension) This Context property can be passed to OpenAL during Context creation (alcCreateContext) to request a maximum number of Auxiliary Sends desired on each Source. It is not guaranteed that the desired number of sends will be available, so an application should query this property after creating the context using alcGetIntergerv. Default: 2</summary>
         EfxMaxAuxiliarySends = 0x20003,
     }
+
+    /// <summary>
+    /// Defines available parameters for <see cref="ALC.GetString(ALDevice, GetEnumerationString)" />.
+    /// </summary>
+    public enum GetEnumerationString
+    {
+        /// <summary>
+        /// Gets the specifier for the default device. ALC_ENUMERATION_EXT
+        /// </summary>
+        DefaultDeviceSpecifier = 0x1004,
+
+        /// <summary>
+        /// Gets a specific output device's specifier.
+        /// Can also be used without a device to get a list of all available output devices, see <see cref="GetEnumerationStringList.DeviceSpecifier"/>. ALC_ENUMERATION_EXT
+        /// </summary>
+        DeviceSpecifier = 0x1005,
+
+        /// <summary>
+        /// Gets the specifier for the default capture device. ALC_ENUMERATION_EXT
+        /// </summary>
+        DefaultCaptureDeviceSpecifier = 0x311,
+
+        /// <summary>
+        /// Gets a specific capture device's specifier.
+        /// Can also be used without a device to get a list of all available capture devices, see <see cref="GetEnumerationStringList.CaptureDeviceSpecifier"/>. ALC_ENUMERATION_EXT
+        /// </summary>
+        CaptureDeviceSpecifier = 0x310,
+    }
+
+    /// <summary>
+    /// Defines available parameters for <see cref="ALC.GetStringList(ALDevice, GetEnumerationStringList)" />.
+    /// </summary>
+    public enum GetEnumerationStringList
+    {
+        /// <summary>
+        /// Gets the specifier strings for all available output devices.
+        /// Can also be used to get the specifier for a specific device, see <see cref="GetEnumerationString.DeviceSpecifier"/>. ALC_ENUMERATION_EXT
+        /// </summary>
+        DeviceSpecifier = 0x1005,
+
+        /// <summary>
+        /// Gets the specifier strings for all available capture devices.
+        /// Can also be used to get the specifier for a specific capture device, see <see cref="GetEnumerationString.DeviceSpecifier"/>. ALC_ENUMERATION_EXT
+        /// </summary>
+        CaptureDeviceSpecifier = 0x310,
+    }
 #pragma warning restore SA1402 // File may only contain a single type
 }
