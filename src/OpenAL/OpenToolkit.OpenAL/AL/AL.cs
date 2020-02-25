@@ -964,7 +964,6 @@ namespace OpenToolkit.Audio.OpenAL
             }
         }
 
-#if NETCOREAPP3_1
         /// <summary>This function fills a buffer with audio buffer. All the pre-defined formats are PCM buffer, but this function may be used by extensions to load other buffer types as well.</summary>
         /// <typeparam name="TBuffer">The type of the buffer elements.</typeparam>
         /// <param name="bid">buffer Handle/Name to be filled with buffer.</param>
@@ -974,11 +973,21 @@ namespace OpenToolkit.Audio.OpenAL
         public static void BufferData<TBuffer>(int bid, ALFormat format, Span<TBuffer> buffer, int freq)
             where TBuffer : unmanaged
         {
+#if NETCOREAPP3_1
             // This is the only reason this is NETCOREAPP3_1 dependent
             var bytes = MemoryMarshal.AsBytes(buffer);
             BufferData(bid, format, ref bytes[0], bytes.Length, freq);
-        }
+#else
+            unsafe
+            {
+                fixed (TBuffer* fixedBuffer = &buffer[0])
+                {
+                    byte* bytePointer = (byte*)fixedBuffer;
+                    BufferData(bid, format, bytePointer, buffer.Length * sizeof(TBuffer), freq);
+                }
+            }
 #endif
+        }
 
         /*
         Remarks (from Manual)

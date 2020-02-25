@@ -160,7 +160,6 @@ namespace OpenToolkit.Audio.OpenAL.Extensions.EXT.Capture
             }
         }
 
-#if NETCOREAPP3_1
         /// <summary>
         /// Completes a capture operation. This call does not block.
         /// </summary>
@@ -171,11 +170,21 @@ namespace OpenToolkit.Audio.OpenAL.Extensions.EXT.Capture
         public static void CaptureSamples<TBuffer>(ALCaptureDevice device, Span<TBuffer> buffer, int sampleCount)
             where TBuffer : unmanaged
         {
+#if NETCOREAPP3_1
             // This is the only reason this is NETCOREAPP3_1 dependent
             var bytes = MemoryMarshal.AsBytes(buffer);
             CaptureSamples(device, ref bytes[0], sampleCount);
-        }
+#else
+            unsafe
+            {
+                fixed (TBuffer* fixedBuffer = &buffer[0])
+                {
+                    byte* bytePointer = (byte*)fixedBuffer;
+                    CaptureSamples(device, bytePointer, sampleCount);
+                }
+            }
 #endif
+        }
 
         /// <summary>
         /// Gets a named value from the state.
