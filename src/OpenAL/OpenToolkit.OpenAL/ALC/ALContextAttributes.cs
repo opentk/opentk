@@ -1,4 +1,13 @@
-﻿using System;
+﻿//
+// ALContextAttributes.cs
+//
+// Copyright (C) 2020 OpenTK
+//
+// This software may be modified and distributed under the terms
+// of the MIT license. See the LICENSE file for details.
+//
+
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -101,7 +110,6 @@ namespace OpenToolkit.Audio.OpenAL
                 }
             }
 
-            // The last int is a zero
             for (int i = 0; i < attributeArray.Length - 1; i += 2)
             {
                 ParseAttribute(attributeArray[i], attributeArray[i + 1]);

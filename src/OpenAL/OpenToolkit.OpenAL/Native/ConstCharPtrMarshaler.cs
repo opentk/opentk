@@ -1,4 +1,13 @@
-﻿using System;
+﻿//
+// ConstCharPtrMarshaler.cs
+//
+// Copyright (C) 2020 OpenTK
+//
+// This software may be modified and distributed under the terms
+// of the MIT license. See the LICENSE file for details.
+//
+
+using System;
 using System.Runtime.InteropServices;
 
 namespace OpenToolkit.Audio.OpenAL.Native
@@ -37,9 +46,8 @@ namespace OpenToolkit.Audio.OpenAL.Native
         }
 
         // See https://docs.microsoft.com/en-us/dotnet/api/system.runtime.interopservices.custommarshalers.typetotypeinfomarshaler.getinstance
-        public static ICustomMarshaler GetInstance(string cookie)
-        {
-            return Instance;
-        }
+#pragma warning disable IDE0060 // Remove unused parameter
+        public static ICustomMarshaler GetInstance(string cookie) => Instance;
+#pragma warning restore IDE0060 // Remove unused parameter
     }
 }

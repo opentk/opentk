@@ -9,10 +9,6 @@
 
 using System;
 using System.Runtime.InteropServices;
-using AdvancedDLSupport;
-using OpenToolkit.Core.Extensions;
-using OpenToolkit.Core.Loader;
-using OpenToolkit.OpenAL.Attributes;
 
 namespace OpenToolkit.Audio.OpenAL.Extensions.EXT.Capture
 {

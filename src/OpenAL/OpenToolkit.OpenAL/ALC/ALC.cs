@@ -1,4 +1,5 @@
-﻿// ALC.cs
+﻿//
+// ALC.cs
 //
 // Copyright (C) 2020 OpenTK
 //

@@ -1,4 +1,5 @@
-﻿// ALCEnums.cs
+﻿//
+// ALCEnums.cs
 //
 // Copyright (C) 2020 OpenTK
 //

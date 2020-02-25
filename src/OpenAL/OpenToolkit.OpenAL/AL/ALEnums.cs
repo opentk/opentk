@@ -1,4 +1,5 @@
-﻿// ALEnums.cs
+﻿//
+// ALEnums.cs
 //
 // Copyright (C) 2020 OpenTK
 //

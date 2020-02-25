@@ -1,4 +1,5 @@
-﻿// AL.cs
+﻿//
+// AL.cs
 //
 // Copyright (C) 2020 OpenTK
 //
