@@ -5,7 +5,7 @@ using OpenToolkit.Mathematics;
 namespace OpenToolkit
 {
     /// <summary>
-    /// Interface for ColorSpaces with 4 elements.
+    /// Interface for ColorSpace phantom types with 4 elements.
     /// </summary>
     public interface IColorSpace4
     {
@@ -40,7 +40,14 @@ namespace OpenToolkit
     }
 
     /// <summary>
-    /// Implementation of a color4 colorspace.
+    /// To provide type-safety between different color spaces and allow extension by users to include additional and future color spaces, colors are marked with a special _phantom_ type parameter that indicates their color space.<br/>
+    /// Typically these are four-letter abbreviations that indicate the components of the colors, such as <see cref="Rgba"/> or <see cref="Hsva"/>.<br/><br/>
+    ///
+    /// In any of these cases, letters in the color space correspond to the order of the components in the color vector. For example, color Rgba maps as follows:<br/>
+    /// X -> R
+    /// Y -> G
+    /// Z -> B
+    /// W -> A.
     /// </summary>
     /// <typeparam name="T">The color space of the given color.</typeparam>
     public struct Color4<T> : IEquatable<Color4<T>>
@@ -134,7 +141,7 @@ namespace OpenToolkit
         /// <param name="vec">The vector which the instantiated color will use the X,Y,Z and W from, in that order.</param>
         /// <returns>The color that was instantiated.</returns>
         [Pure]
-        public static explicit operator Color4<T>(Vector4 vec) => new Color4<T>(vec.X, vec.Y, vec.Z, vec.W);
+        public static explicit operator Color4<T>(in Vector4 vec) => new Color4<T>(vec.X, vec.Y, vec.Z, vec.W);
 
         /// <summary>
         /// Instantiates a new <see cref="Vector4"/> from the X, Y, Z and W components of a <see cref="Color4{T}"/>.
@@ -142,7 +149,7 @@ namespace OpenToolkit
         /// <param name="col">The color which the instantiated vector will use the X,Y,Z and W from, in that order.</param>
         /// <returns>The vector that was instantiated.</returns>
         [Pure]
-        public static explicit operator Vector4(Color4<T> col) => new Vector4(col.X, col.Y, col.Z, col.W);
+        public static explicit operator Vector4(in Color4<T> col) => new Vector4(col.X, col.Y, col.Z, col.W);
 
         /// <summary>
         /// Deconstructs this color4 and turns it into a tuple containing 4 floats.
@@ -167,7 +174,7 @@ namespace OpenToolkit
         /// <param name="right">The right-hand side of the comparison.</param>
         /// <returns>True if left is equal to right; false otherwise.</returns>
         [Pure]
-        public static bool operator ==(Color4<T> left, Color4<T> right)
+        public static bool operator ==(in Color4<T> left, in Color4<T> right)
         {
             return left.Equals(right);
         }
@@ -179,7 +186,7 @@ namespace OpenToolkit
         /// <param name="right">The right-hand side of the comparison.</param>
         /// <returns>True if left is not equal to right; false otherwise.</returns>
         [Pure]
-        public static bool operator !=(Color4<T> left, Color4<T> right)
+        public static bool operator !=(in Color4<T> left, in Color4<T> right)
         {
             return !left.Equals(right);
         }
@@ -235,7 +242,7 @@ namespace OpenToolkit
     }
 
     /// <summary>
-    /// Factory for conversion between color types.
+    /// Companion type for conversion between color types.
     /// </summary>
     public static class Color4
     {
