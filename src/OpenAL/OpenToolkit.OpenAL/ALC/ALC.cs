@@ -80,7 +80,7 @@ namespace OpenToolkit.Audio.OpenAL
         /// <remarks>The attribute list can be NULL, or a zero terminated list of integer pairs composed of valid ALC attribute tokens and requested values.</remarks>
         public static ALContext CreateContext(ALDevice device, ALContextAttributes attributes)
         {
-            return CreateContext(device, attributes.CreateAttributeList());
+            return CreateContext(device, attributes.CreateAttributeArray());
         }
 
         /// <summary>This function makes a specified context the current context.</summary>
