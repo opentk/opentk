@@ -57,7 +57,7 @@ namespace OpenToolkit.Audio.OpenAL.Extensions.Creative.EnumerateAll
         /// <param name="device">The device for the context.</param>
         /// <param name="param">The named property.</param>
         /// <returns>The value.</returns>
-        [DllImport(ALC.Lib, EntryPoint = "alcGetString", ExactSpelling = true, CallingConvention = ALC.AlcCalliningConv)]
+        [DllImport(ALC.Lib, EntryPoint = "alcGetString", ExactSpelling = true, CallingConvention = ALC.AlcCallingConv)]
         public static extern string GetString(ALDevice device, GetEnumerateAllContextString param);
 
         /// <summary>
@@ -66,7 +66,7 @@ namespace OpenToolkit.Audio.OpenAL.Extensions.Creative.EnumerateAll
         /// <param name="device">The device for the context.</param>
         /// <param name="param">The named property.</param>
         /// <returns>The value.</returns>
-        [DllImport(ALC.Lib, EntryPoint = "alcGetString", ExactSpelling = true, CallingConvention = ALC.AlcCalliningConv)]
+        [DllImport(ALC.Lib, EntryPoint = "alcGetString", ExactSpelling = true, CallingConvention = ALC.AlcCallingConv)]
         public static extern unsafe byte* GetStringList(ALDevice device, GetEnumerateAllContextStringList param);
 
         /// <inheritdoc cref="GetStringList(ALDevice, GetEnumerateAllContextStringList)"/>
