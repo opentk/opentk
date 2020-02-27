@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading;
+using OpenToolkit.Audio.OpenAL.Extensions.Creative.EFX;
 
 namespace OpenToolkit.Audio.OpenAL
 {
@@ -50,6 +51,14 @@ namespace OpenToolkit.Audio.OpenAL
                 Console.WriteLine("  " + item);
             }
 
+            if (EFX.IsEFXExtensionPresent(device))
+            {
+                Console.WriteLine("EFX extension is present!!");
+                var a = AL.GetProcAddress("alGenEffects");
+                Console.WriteLine($"EFX glGenEffects: {a}");
+                EFX.GenEffect(out int effect);
+            }
+
             // Record a second of data
             CheckALError("Before record");
             short[] recording = new short[44100 * 4];
@@ -61,9 +70,13 @@ namespace OpenToolkit.Audio.OpenAL
                 while (current < recording.Length)
                 {
                     int samplesAvailable = ALC.GetAvailableSamples(captureDevice);
-                    int samplesToRead = Math.Min(samplesAvailable, recording.Length - current);
-                    ALC.CaptureSamples(captureDevice, ref recording[current], samplesToRead);
-                    current += samplesToRead;
+                    if (samplesAvailable > 512)
+                    {
+                        int samplesToRead = Math.Min(samplesAvailable, recording.Length - current);
+                        ALC.CaptureSamples(captureDevice, ref recording[current], samplesToRead);
+                        current += samplesToRead;
+                    }
+                    Thread.Yield();
                 }
 
                 ALC.CaptureStop(captureDevice);
@@ -76,7 +89,7 @@ namespace OpenToolkit.Audio.OpenAL
             // short[] sine = new short[44100 * 1];
             // FillSine(sine, 4400, 44100);
             // FillSine(recording, 440, 44100);
-            AL.BufferData(alBuffer, ALFormat.Mono16, ref recording[0], recording.Length * 2, 14400);
+            AL.BufferData(alBuffer, ALFormat.Mono16, ref recording[0], recording.Length * 2, 44100);
             CheckALError("After data");
 
             AL.Listener(ALListenerf.Gain, 0.1f);
@@ -86,7 +99,10 @@ namespace OpenToolkit.Audio.OpenAL
             AL.Source(alSource, ALSourcei.Buffer, alBuffer);
             AL.SourcePlay(alSource);
 
-            Thread.Sleep(1000);
+            while (AL.GetSourceState(alSource) == ALSourceState.Playing)
+            {
+                Thread.Sleep(1);
+            }
 
             AL.SourceStop(alSource);
 
