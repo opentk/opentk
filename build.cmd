@@ -13,7 +13,7 @@ if errorlevel 1 (
 
 IF NOT EXIST build.fsx (
   .paket\paket.exe update
-  packages\FAKE\tools\FAKE.exe init.fsx
+  packages\FAKE.4.64.18\tools\FAKE.exe init.fsx
 )
 
 SET BuildTarget=
@@ -25,4 +25,4 @@ if "%BuildRunner%" == "MyGet" (
   echo 	* git build >> RELEASE_NOTES.md
 )
 
-packages\FAKE\tools\FAKE.exe build.fsx %* %BuildTarget%
+packages\FAKE.4.64.18\tools\FAKE.exe build.fsx %* %BuildTarget%
