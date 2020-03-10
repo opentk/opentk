@@ -579,20 +579,16 @@ TestResults.xml
 
 ### OpenTK Binding files ###
 .bindingsGenerated
-src/OpenTK/Graphics/ES10/Enums
-src/OpenTK/Graphics/ES10/Wrappers
-src/OpenTK/Graphics/ES11/Enums
-src/OpenTK/Graphics/ES11/Wrappers
-src/OpenTK/Graphics/ES20/Enums
-src/OpenTK/Graphics/ES20/Wrappers
-src/OpenTK/Graphics/ES30/Enums
-src/OpenTK/Graphics/ES30/Wrappers
-src/OpenTK/Graphics/ES31/Enums
-src/OpenTK/Graphics/ES31/Wrappers
-src/OpenTK/Graphics/OpenGL/Enums
-src/OpenTK/Graphics/OpenGL/Wrappers
-src/OpenTK/Graphics/OpenGL4/Enums
-src/OpenTK/Graphics/OpenGL4/Wrappers
+src/OpenToolkit.Graphics/ES11/ES11.cs
+src/OpenToolkit.Graphics/ES11/ES11Enums.cs
+src/OpenToolkit.Graphics/ES20/ES20.cs
+src/OpenToolkit.Graphics/ES20/ES20Enums.cs
+src/OpenToolkit.Graphics/ES30/ES30.cs
+src/OpenToolkit.Graphics/ES30/ES30Enums.cs
+src/OpenToolkit.Graphics/OpenGL2/GL.cs
+src/OpenToolkit.Graphics/OpenGL2/GLEnums.cs
+src/OpenToolkit.Graphics/OpenGL4/GL4.cs
+src/OpenToolkit.Graphics/OpenGL4/GL4Enums.cs
 
 ### OpenTK AssemblyInfo files ###
 **/AssemblyInfo.cs
