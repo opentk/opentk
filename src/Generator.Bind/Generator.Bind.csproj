@@ -1,10 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFrameworks>netcoreapp3.1</TargetFrameworks>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <RootNamespace>Bind</RootNamespace>
     <AssemblyName>Bind</AssemblyName>
+    <PackageVersion>4.0.0-pre</PackageVersion>
   </PropertyGroup>
 
   <ItemGroup>

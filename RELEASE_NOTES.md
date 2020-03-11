@@ -1,58 +1,72 @@
 ### 4.0-pre
- * Change: Make Command a valid modifier on OS-X #759 
+ Key Changes:
+ * Added support for .Net Core
+ * Removed all platform-specific backends.
+ * Brand new GLFW-based windowing system.
+ * Brand new GLFW-based input system.
+ * Math library performance improvements and fixes.
+ * Changed root namespace to OpenToolkit for future Xamarin compatibility - (https://github.com/mono/opentk/issues/19)
+
+Note:
+- 4.0-pre does not include any version of openAl, as that still depends on ADL
+
+OpenTK 4.x is entirely MIT licensed and does not use ADL.
+
+Full Log:
+* Change: Make Command a valid modifier on OS-X #759
  * Splitting Platform/Windows/API.cs into OpenTK.NT #765
  * Immediately return after restoring resolution #766
  * Fix OpenTK.Mathematics assembly name #768
- * Implement 'unmanaged' constraint #771 
+ * [4.0] Implement 'unmanaged' constraint #771 
  * Close display connection for X11 on dispose #773
- * Fix StyleCop analysis not working on Windows #775
+ * [4.0] Fix StyleCop analysis not working on Windows #775
  * Fixed incorrect Quaternion/Vector rotation #777
- * Build Cleanup #778
+ * [4.0] Build Cleanup #778
  * Fixed type for VertexAttribPointer #779
- * Fix numerous binder errors #781
+ * [4.0] Fix numerous binder errors #781
  * Fix #USE_SDL2_GAMECONTROLLER code path #782
- * Refactor Generator.Rewrite #783
- * Fix two typos in CONTRIBUTING.md #785
+ * [4.0] Refactor Generator.Rewrite #783
+ * [4.0] Fix two typos in CONTRIBUTING.md #785
  * Add common.props for use in all projects #786
- * Auto-update OpenTK.sln (done by VS2017) #787
+ * [4.0] Auto-update OpenTK.sln (done by VS2017) #787
  * Add missing build configs (VS2017) #788
  * Fixed OpenGL 3.2+ Context Creation (Mixed up Profile Mask / Flags) #790
- * Create new .sln file for all new projects #791
- * Fix CI scripts #792
- * Fix general StyleCop errors #793
- * Some more small rewriter changes #794
- * Refactor Generator.Bind#795
- * Get CI to succeed #796
+ * [4.0] Create new .sln file for all new projects #791
+ * [4.0] Fix CI scripts #792
+ * [4.0] Fix general StyleCop errors #793
+ * [4.0] Some more small rewriter changes #794
+ * [4.0] Refactor Generator.Bind#795
+ * [4.0] Get CI to succeed #796
  * Fix: Custom cursors not working under OS-X and dotnet #797
- * Fix stylecop errors in OpenTK.Mathematics.#798
+ * [4.0] Fix stylecop errors in OpenTK.Mathematics.#798
  * Fix OpenTK.NT compilation errors #799
- * Fix OpenTK.AL compilation errors #800 
+ * [4.0] Fix OpenTK.AL compilation errors #800 
  * 4.0 #802
  * Fix csproj references to target netstandard2.0 instead of net461. #803
  * Style guide#804
- * Integrate OpenTK.OpenAL#805
- * refactored .Math stylecop errors #806
+ * [4.0] Integrate OpenTK.OpenAL#805
+ * [4.0] refactored .Math stylecop errors #806
  * Use props/ directory directly #813
  * Add #814 to 4.0 #815
  * Fix document typo #818
  * Binder Docs + Performance#826
- * Embedded license handling for binding generator #836
- * Adding directory safety to the binder. #837
+ * [4.0] Embedded license handling for binding generator #836
+ * [4.0] Adding directory safety to the binder. #837
  * Update README after branch changes #839
- * Add StructLayout to Color4#840
- * Change root namespace to OpenToolkit #842
+ * [4.0] Add StructLayout to Color4#840
+ * [4.0] Change root namespace to OpenToolkit #842
  * Fix the aftermath of merging #842 #843
- * Impliment Vectord * Quaterniond #844
+ * [4.0] Impliment Vectord * Quaterniond #844
  * Fix aftermath of #842 #846
- * Minor edits to README.md #848
- * Update SDL2 version check #849
- * Remove big chunk of unused code from Quaterniond.cs #852
- * Remove GLES 1.0 and 1.1 support #856
- * Add explicit operators for Color4/Vector4 conversions #858
- * Remove unused code #860
- * Begin moving Input to OpenTK.Input#861
- * Begin moving Platform to OpenTK.Platform #862
- * Add RootNamespace tags to projects#863
+ * [4.0] Minor edits to README.md #848
+ * [4.0] Update SDL2 version check #849
+ * [4.0] Remove big chunk of unused code from Quaterniond.cs #852
+ * [4.0] Remove GLES 1.0 and 1.1 support #856
+ * [4.0] Add explicit operators for Color4/Vector4 conversions #858
+ * [4.0] Remove unused code #860
+ * [4.0] Begin moving Input to OpenTK.Input#861
+ * [4.0] Begin moving Platform to OpenTK.Platform #862
+ * [4.0] Add RootNamespace tags to projects#863
  * OpenGL Reimplementation #864
  * Input and Windowing via GLFW #867
  * Bindings generator for modularity and ADL#871
@@ -64,7 +78,7 @@
  * Ignoring MouseMoveEx errors and fall back to passed point. #883
  * Rename license files to avoid confusion. #885
  * Emergency fix in short license terms #887
- * Adding Lerp function in the math helper #895
+ * [4.0] Adding Lerp function in the math helper #895
  * System.Math and OpenToolkit.MathHelper symmetry #897
  * Shorten float literals to the actual float value #898
  * Reflect 22/04/2019 development discussion #902
@@ -119,7 +133,6 @@
  * Remove reference to Mathematics from GLFW bind. #990
  * Revised boostrap process + update build tools #992
  * Add remaining GLFW Window functions #996
- * Fix loading of glfw3.dll on windows, Unit-Testing of glfw3 functional… #1000
  * Bring forward 3.x binding generators to 4.0 #1004
  * Add matrix multiplication + missing operator to Vector2/Vector2d #1011
  * Optimize barycentric interpolation #1019

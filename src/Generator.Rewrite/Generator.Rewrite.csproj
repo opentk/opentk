@@ -5,6 +5,7 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <RootNamespace>OpenTK.Rewrite</RootNamespace>
     <AssemblyName>Rewrite</AssemblyName>
+    <PackageVersion>4.0.0-pre</PackageVersion>
   </PropertyGroup>
 
   <ItemGroup>
