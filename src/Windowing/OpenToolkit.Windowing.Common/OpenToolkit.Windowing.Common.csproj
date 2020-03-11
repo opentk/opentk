@@ -4,6 +4,7 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <RootNamespace>OpenToolkit.Windowing.Common</RootNamespace>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <PackageVersion>4.0.0-pre</PackageVersion>
   </PropertyGroup>
 
   <ItemGroup>

@@ -81,6 +81,7 @@ let releaseProjects =
     !! "src/**/*.??proj"
     -- "src/Generator/**"
     -- "src/SpecificationOpenGL/**"
+    -- "src/OpenAL/**"
 
 // Absolutely all test projects.
 let allTestProjects =
