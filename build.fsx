@@ -82,7 +82,6 @@ let releaseProjects =
     -- "src/Generator.Rewrite/**"
     -- "src/SpecificationOpenGL/**"
     -- "src/OpenAL/**"
-    -- "src/Generator.*/**"
 
 
 // Absolutely all test projects.
@@ -254,8 +253,8 @@ Target.create "CreateNuGetPackage" (fun _ ->
                 Version = release.NugetVersion
                 Authors = authors
                 Project = project
-                Summary = summary
-                Description = description
+//                Summary = summary
+//                Description = description
                 Copyright = copyright
                 WorkingDir = binDir
                 OutputPath = nugetDir
@@ -324,7 +323,7 @@ open Fake.Core.TargetOperators
   ==> "RewriteBindings"
 //  ==> "RunAllTests"
   ==> "All"
-//  ==> "CreateNuGetPackage"
+  ==> "CreateNuGetPackage"
   ==> "ReleaseOnNuGetGallery"
   ==> "ReleaseOnGithub"
   ==> "ReleaseOnAll"
