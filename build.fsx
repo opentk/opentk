@@ -1,8 +1,7 @@
 open Fake.Core
-open Fake.Core
 open Fake.DotNet
-open System
-open Fake.DotNet.Testing
+open Fake.DotNet.NuGet
+open Fake.IO
 
 #r "paket:
 storage: packages
@@ -22,12 +21,9 @@ nuget Fake.Core.ReleaseNotes //"
 
 #load "./.fake/build.fsx/intellisense.fsx"
 
-open Fake.Core
 open Fake.IO
 open Fake.IO.FileSystemOperators
 open Fake.IO.Globbing.Operators
-open Fake.DotNet
-open Fake.DotNet.NuGet
 
 // ---------
 // Configuration
@@ -68,6 +64,7 @@ let release = ReleaseNotes.load "RELEASE_NOTES.md"
 
 let binDir = "./bin/"
 let buildDir = binDir </> "build"
+let nugetDir = binDir </> "nuget"
 let testDir = binDir </> "test"
 
 // ---------
@@ -82,6 +79,8 @@ let releaseProjects =
     -- "src/Generator/**"
     -- "src/SpecificationOpenGL/**"
     -- "src/OpenAL/**"
+    -- "src/Generator.*/**"
+
 
 // Absolutely all test projects.
 let allTestProjects =
@@ -213,9 +212,6 @@ Target.create "CopyBinaries" (fun _ ->
     |> Seq.iter (fun (fromDir, toDir) -> Shell.copyDir toDir fromDir (fun _ -> true)))
 
 open System.IO
-open Fake.Core
-open Fake.IO.Globbing.Operators
-open Fake.DotNet
 
 let runTests tests =
     let setDotNetOptions (projectDirectory: string): DotNet.TestOptions -> DotNet.TestOptions =
@@ -245,9 +241,29 @@ Target.create "RunAllTests" (fun _ ->
 
 
 Target.create "CreateNuGetPackage" (fun _ ->
-    let optsFn options = { options with DotNet.PackOptions.OutputPath = (Some "bin") }
-    let disableBuild options = { (optsFn options) with DotNet.PackOptions.NoBuild = true }
-    releaseProjects |> Seq.iter (DotNet.pack disableBuild))
+
+    Directory.create nugetDir
+    let notes = release.Notes |> List.reduce (fun s1 s2 -> s1 + "\n" + s2)
+
+    for proj in releaseProjects do
+        let setParams (p:NuGet.NuGetParams) =
+            { p with
+                Version = release.NugetVersion
+                Authors = authors
+                Project = project
+                Summary = summary
+                Description = description
+                Copyright = copyright
+                WorkingDir = binDir
+                OutputPath = nugetDir
+//                AccessKey = myAccessKey
+                Publish = false
+                ReleaseNotes = notes
+                Tags = tags
+            }
+        Trace.logf "Creating nuget package for Project: %s" proj
+        NuGet.NuGet setParams proj
+    )
 
 // ---------
 // Release Targets
@@ -305,7 +321,7 @@ open Fake.Core.TargetOperators
   ==> "RewriteBindings"
 //  ==> "RunAllTests"
   ==> "All"
-  ==> "CreateNuGetPackage"
+//  ==> "CreateNuGetPackage"
   ==> "ReleaseOnNuGetGallery"
   ==> "ReleaseOnGithub"
   ==> "ReleaseOnAll"
