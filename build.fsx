@@ -77,6 +77,9 @@ let toolProjects =
 let releaseProjects =
     !! "src/**/*.??proj"
     -- "src/Generator/**"
+    -- "src/Generator.Bind/**"
+    -- "src/Generator.Converter/**"
+    -- "src/Generator.Rewrite/**"
     -- "src/SpecificationOpenGL/**"
     -- "src/OpenAL/**"
     -- "src/Generator.*/**"

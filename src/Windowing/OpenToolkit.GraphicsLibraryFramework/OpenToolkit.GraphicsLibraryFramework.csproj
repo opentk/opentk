@@ -4,7 +4,6 @@
       <TargetFrameworks>net472;netcoreapp3.0</TargetFrameworks>
       <RootNamespace>OpenToolkit.GraphicsLibraryFramework</RootNamespace>
       <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-      <PackageVersion>4.0.0-pre</PackageVersion>
     </PropertyGroup>
     
     <ItemGroup>
