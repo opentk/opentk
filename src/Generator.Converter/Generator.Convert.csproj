@@ -5,7 +5,6 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <RootNamespace>OpenTK.Convert</RootNamespace>
     <AssemblyName>Convert</AssemblyName>
-    <PackageVersion>4.0.0-pre</PackageVersion>
   </PropertyGroup>
 
   <ItemGroup>
