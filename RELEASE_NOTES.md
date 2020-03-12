@@ -1,4 +1,4 @@
-### 4.0-pre
+### 4.0.0-pre
  Key Changes:
  * Added support for .Net Core
  * Removed all platform-specific backends.
@@ -8,7 +8,7 @@
  * Changed root namespace to OpenToolkit for future Xamarin compatibility - (https://github.com/mono/opentk/issues/19)
 
 Note:
-- 4.0-pre does not include any version of openAl, as that still depends on ADL
+- 4.0.0-pre does not include any version of openAl, as that still depends on ADL
 
 OpenTK 4.x is entirely MIT licensed and does not use ADL.
 
