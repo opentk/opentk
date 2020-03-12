@@ -7,7 +7,6 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <Version>1.0.0</Version>
     <Description>Mathematical structures and algorithms, provided and used by OpenTK.</Description>
   </PropertyGroup>
 

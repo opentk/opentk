@@ -5,7 +5,6 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <RootNamespace>Bind</RootNamespace>
     <AssemblyName>Bind</AssemblyName>
-    <PackageVersion>4.0.0-pre</PackageVersion>
   </PropertyGroup>
 
   <ItemGroup>
