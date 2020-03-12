@@ -4,9 +4,6 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <Deterministic>true</Deterministic>
     <RootNamespace>OpenToolkit.Mathematics</RootNamespace>
-    <PackageVersion>4.0.0-pre</PackageVersion>
-    <AssemblyVersion>4.0.0.0</AssemblyVersion>
-    <FileVersion>4.0.0.0</FileVersion>
   </PropertyGroup>
 
   <PropertyGroup>
