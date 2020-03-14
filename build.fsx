@@ -1,4 +1,8 @@
 open System.Configuration
+open System.IO
+open System.IO
+open System.Security.AccessControl
+open System.Security.AccessControl
 open Fake.Core
 open Fake.Core
 open Fake.DotNet
@@ -245,8 +249,7 @@ Target.create "RunAllTests" (fun _ ->
 
 
 Target.create "CreateNuGetPackage" (fun _ ->
-
-    Directory.create nugetDir
+    Directory.CreateDirectory nugetDir
     let notes = release.Notes |> List.reduce (fun s1 s2 -> s1 + "\n" + s2)
 
     for proj in releaseProjects do
@@ -269,7 +272,7 @@ Target.create "CreateNuGetPackage" (fun _ ->
                 ]
             }
         Trace.logf "Creating nuget package for Project: %s" proj
-        NuGet.NuGet setParams nugetDir
+        NuGet.NuGet setParams proj
     )
 
 // ---------
