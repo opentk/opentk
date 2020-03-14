@@ -1,3 +1,5 @@
+open System.Configuration
+open Fake.Core
 open Fake.Core
 open Fake.DotNet
 open Fake.DotNet.NuGet
@@ -262,9 +264,12 @@ Target.create "CreateNuGetPackage" (fun _ ->
                 Publish = false
                 ReleaseNotes = notes
                 Tags = tags
+                Properties = [
+                    "Configuration", Environment.environVarOrDefault "buildMode" "Release"
+                ]
             }
         Trace.logf "Creating nuget package for Project: %s" proj
-        NuGet.NuGet setParams proj
+        NuGet.NuGet setParams nugetDir
     )
 
 // ---------
