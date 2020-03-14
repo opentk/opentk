@@ -20,7 +20,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <Content Include="OpenToolkit.GraphicsLibraryFramework.dll.config">
+        <Content Include="OpenToolkit.Windowing.GLFW.dll.config">
           <PackageCopyToOutput>true</PackageCopyToOutput>
           <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
           <!-- Make sure the file gets copied for Framework only. -->
