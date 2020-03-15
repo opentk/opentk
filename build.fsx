@@ -8,6 +8,7 @@ open Fake.Core
 open Fake.DotNet
 open Fake.DotNet
 open Fake.DotNet
+open Fake.DotNet
 open Fake.DotNet.NuGet
 open Fake.IO
 
@@ -276,13 +277,16 @@ Target.create "CreateNuGetPackage" (fun _ ->
 //        Trace.logf "Creating nuget package for Project: %s" proj
 //        NuGet.NuGet setParams proj
 
-        let params (p:DotNet.PackOptions) =
+        let setParams (p:DotNet.PackOptions) =
             { p with
-                BuildBasePath = Some(proj)
-                OutputPath = Some(nugetDir)
-                VersionSuffix = Some("-pre")
+                BuildBasePath = Some proj
+                Configuration = DotNet.BuildConfiguration.fromString "Release"
+                OutputPath = Some nugetDir
+                VersionSuffix = Some "-pre"
+                NoBuild = true
             }
-        DotNet.pack params proj
+        Trace.logf "Creating nuget package for Project: %s" proj
+        DotNet.pack setParams proj
     )
 
 // ---------
