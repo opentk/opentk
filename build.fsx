@@ -277,16 +277,19 @@ Target.create "CreateNuGetPackage" (fun _ ->
 //        Trace.logf "Creating nuget package for Project: %s" proj
 //        NuGet.NuGet setParams proj
 
-        let setParams (p:DotNet.PackOptions) =
-            { p with
-                BuildBasePath = Some proj
-                Configuration = DotNet.BuildConfiguration.fromString "Release"
-                OutputPath = Some nugetDir
-                VersionSuffix = Some "-pre"
-                NoBuild = true
-            }
-        Trace.logf "Creating nuget package for Project: %s" proj
-        DotNet.pack setParams proj
+        try
+            let setParams (p:DotNet.PackOptions) =
+                { p with
+                    BuildBasePath = Some proj
+                    Configuration = DotNet.BuildConfiguration.fromString "Release"
+                    OutputPath = Some nugetDir
+                    VersionSuffix = Some "-pre"
+                    NoBuild = true
+                }
+            Trace.logf "Creating nuget package for Project: %s" proj
+            DotNet.pack setParams proj
+        with e ->
+            Trace.logf "Error: %s" e.Message
     )
 
 // ---------
