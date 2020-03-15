@@ -2,16 +2,12 @@
 
     <PropertyGroup>
       <TargetFrameworks>net472;netcoreapp3.0</TargetFrameworks>
-      <RootNamespace>OpenToolkit.Windowing.Desktop</RootNamespace>
+      <RootNamespace>OpenToolkit.GraphicsLibraryFramework</RootNamespace>
       <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     </PropertyGroup>
     
     <ItemGroup>
       <ProjectReference Include="..\OpenToolkit.Core\OpenToolkit.Core.csproj" />
-      <!-- The PrivateAssets thing is to ensure the .dll.config file gets copied transitively. -->
-      <ProjectReference Include="..\OpenToolkit.Mathematics\OpenToolkit.Mathematics.csproj" />
-      <ProjectReference Include="..\OpenToolkit.Windowing.Common\OpenToolkit.Windowing.Common.csproj" />
-      <ProjectReference Include="..\OpenToolkit.Windowing.GraphicsLibraryFramework\OpenToolkit.Windowing.GraphicsLibraryFramework.csproj"  PrivateAssets="analyzers;build" />
     </ItemGroup>
     
     <ItemGroup>
@@ -19,8 +15,17 @@
         <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         <PrivateAssets>all</PrivateAssets>
       </PackageReference>
-      <PackageReference Include="opentoolkit.redist.glfw" Version="3.3.0-pre20190419183326" />
       <PackageReference Condition="'$(TargetFramework)' == 'net472'" Include="System.Memory" Version="4.5" />
+      <PackageReference Include="opentoolkit.redist.glfw" Version="3.3.0-pre20190419183326" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <Content Include="OpenToolkit.Windowing.GLFW.dll.config">
+          <PackageCopyToOutput>true</PackageCopyToOutput>
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+          <!-- Make sure the file gets copied for Framework only. -->
+          <PackagePath>contentFiles/any/net472/</PackagePath>
+        </Content>
     </ItemGroup>
 
     <Import Project="..\..\props\common.props" />

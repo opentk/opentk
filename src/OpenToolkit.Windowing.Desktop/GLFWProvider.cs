@@ -9,7 +9,7 @@
 
 using System;
 using System.Threading;
-using OpenToolkit.GraphicsLibraryFramework;
+using OpenToolkit.Windowing.GraphicsLibraryFramework;
 
 namespace OpenToolkit.Windowing.Desktop
 {

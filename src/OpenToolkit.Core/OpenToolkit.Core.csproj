@@ -7,7 +7,7 @@
 
   <ItemGroup>
     <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
-      <_Parameter1>OpenToolkit.GraphicsLibraryFramework</_Parameter1>
+      <_Parameter1>OpenToolkit.Windowing.GraphicsLibraryFramework</_Parameter1>
     </AssemblyAttribute>
 
     <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">

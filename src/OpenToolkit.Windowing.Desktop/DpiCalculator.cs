@@ -12,7 +12,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Runtime.InteropServices;
-using OpenToolkit.GraphicsLibraryFramework;
+using OpenToolkit.Windowing.GraphicsLibraryFramework;
 
 namespace OpenToolkit.Windowing.Desktop
 {

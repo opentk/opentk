@@ -6,6 +6,8 @@ open System.Security.AccessControl
 open Fake.Core
 open Fake.Core
 open Fake.DotNet
+open Fake.DotNet
+open Fake.DotNet
 open Fake.DotNet.NuGet
 open Fake.IO
 
@@ -253,26 +255,34 @@ Target.create "CreateNuGetPackage" (fun _ ->
     let notes = release.Notes |> List.reduce (fun s1 s2 -> s1 + "\n" + s2)
 
     for proj in releaseProjects do
-        let setParams (p:NuGet.NuGetParams) =
+//        let setParams (p:NuGet.NuGetParams) =
+//            { p with
+//                Version = release.NugetVersion
+//                Authors = authors
+//                Project = project
+////                Summary = summary
+////                Description = description
+//                Copyright = copyright
+//                WorkingDir = binDir
+//                OutputPath = nugetDir
+////                AccessKey = myAccessKey
+//                Publish = false
+//                ReleaseNotes = notes
+//                Tags = tags
+//                Properties = [
+//                    "Configuration", Environment.environVarOrDefault "buildMode" "Release"
+//                ]
+//            }
+//        Trace.logf "Creating nuget package for Project: %s" proj
+//        NuGet.NuGet setParams proj
+
+        let params (p:DotNet.PackOptions) =
             { p with
-                Version = release.NugetVersion
-                Authors = authors
-                Project = project
-//                Summary = summary
-//                Description = description
-                Copyright = copyright
-                WorkingDir = binDir
-                OutputPath = nugetDir
-//                AccessKey = myAccessKey
-                Publish = false
-                ReleaseNotes = notes
-                Tags = tags
-                Properties = [
-                    "Configuration", Environment.environVarOrDefault "buildMode" "Release"
-                ]
+                BuildBasePath = Some(proj)
+                OutputPath = Some(nugetDir)
+                VersionSuffix = Some("-pre")
             }
-        Trace.logf "Creating nuget package for Project: %s" proj
-        NuGet.NuGet setParams proj
+        DotNet.pack params proj
     )
 
 // ---------

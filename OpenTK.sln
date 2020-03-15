@@ -69,7 +69,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenToolkit.OpenAL.Extensio
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenToolkit.Windowing.Common", "src\OpenToolkit.Windowing.Common\OpenToolkit.Windowing.Common.csproj", "{9A0D02D2-0834-42F8-9610-8221CF803708}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenToolkit.Windowing.GLFW", "src\OpenToolkit.Windowing.GLFW\OpenToolkit.Windowing.GLFW.csproj", "{ECC7271C-A5E5-4CDC-BA9F-A38A150CD2D4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenToolkit.Windowing.GraphicsLibraryFramework", "src\OpenToolkit.Windowing.GraphicsLibraryFramework\OpenToolkit.Windowing.GraphicsLibraryFramework.csproj", "{ECC7271C-A5E5-4CDC-BA9F-A38A150CD2D4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenToolkit.Windowing.Desktop", "src\OpenToolkit.Windowing.Desktop\OpenToolkit.Windowing.Desktop.csproj", "{172C1E62-DA67-4203-BBCB-9DA4D9111EF0}"
 EndProject

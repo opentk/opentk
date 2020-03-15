@@ -8,10 +8,10 @@
 //
 
 using System;
-using OpenToolkit.GraphicsLibraryFramework;
 using OpenToolkit.Mathematics;
 using OpenToolkit.Windowing.Common;
 using OpenToolkit.Windowing.Common.Input;
+using OpenToolkit.Windowing.GraphicsLibraryFramework;
 using Monitor = OpenToolkit.Windowing.Common.Monitor;
 
 namespace OpenToolkit.Windowing.Desktop
