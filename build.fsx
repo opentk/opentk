@@ -1,15 +1,6 @@
-open System.Configuration
 open System.IO
-open System.IO
-open System.Security.AccessControl
-open System.Security.AccessControl
-open Fake.Core
 open Fake.Core
 open Fake.DotNet
-open Fake.DotNet
-open Fake.DotNet
-open Fake.DotNet
-open Fake.DotNet.NuGet
 open Fake.IO
 
 #r "paket:
@@ -19,9 +10,9 @@ nuget Fake.DotNet.MSBuild
 nuget Fake.DotNet.Testing.XUnit2
 nuget Fake.DotNet.AssemblyInfoFile
 nuget Fake.DotNet.NuGet prerelease
+nuget Fake.DotNet.Paket
 nuget Fake.DotNet.Cli
 nuget Fake.Core.Target
-nuget Fake.DotNet.Cli
 nuget Fake.Net.Http
 nuget Fake.Api.Github
 nuget xunit.runner.console
@@ -199,12 +190,14 @@ Target.create "AssemblyInfo" (fun _ ->
     // see https://docs.microsoft.com/en-us/visualstudio/msbuild/customize-your-build?view=vs-2019#directorybuildprops-and-directorybuildtargets
     Trace.traceError "Unimplemented.")
 
-let noBindProp a =
-    DotNet.Options.withCustomParams (Some "/p:DontGenBindings=true") (dotnetSimple a)
+Target.create "Build"( fun _ ->
+    let setOptions a =
+        let customParams = "/p:DontGenBindings=true/p:PackageVersion=4.0.0-pre"
+        DotNet.Options.withCustomParams (Some customParams) (dotnetSimple a)
 
-Target.create "Build" <| fun _ ->
-    releaseProjects
-    |> Seq.iter(DotNet.build noBindProp)
+    for proj in releaseProjects do
+        DotNet.build setOptions proj
+    )
 
 Target.create "BuildTest" <| fun _ ->
     !!"tests/**/*.??proj"
@@ -252,7 +245,7 @@ Target.create "RunAllTests" (fun _ ->
 
 
 Target.create "CreateNuGetPackage" (fun _ ->
-    Directory.CreateDirectory nugetDir
+    Directory.CreateDirectory nugetDir |> ignore
     let notes = release.Notes |> List.reduce (fun s1 s2 -> s1 + "\n" + s2)
 
     for proj in releaseProjects do
@@ -280,7 +273,6 @@ Target.create "CreateNuGetPackage" (fun _ ->
         try
             let setParams (p:DotNet.PackOptions) =
                 { p with
-                    BuildBasePath = Some proj
                     Configuration = DotNet.BuildConfiguration.fromString "Release"
                     OutputPath = Some nugetDir
                     VersionSuffix = Some "-pre"
@@ -289,7 +281,7 @@ Target.create "CreateNuGetPackage" (fun _ ->
             Trace.logf "Creating nuget package for Project: %s" proj
             DotNet.pack setParams proj
         with e ->
-            Trace.logf "Error: %s" e.Message
+            Trace.traceErrorfn "Error: %s" e.Message
     )
 
 // ---------
