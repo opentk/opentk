@@ -1,6 +1,8 @@
 open System.IO
 open Fake.Core
 open Fake.DotNet
+open Fake.DotNet
+open Fake.DotNet
 open Fake.IO
 
 #r "paket:
@@ -34,6 +36,12 @@ let project = "OpenTK"
 let authors = [ "Team OpenTK" ]
 
 let summary = "A set of fast, low-level C# bindings for OpenGL, OpenGL ES and OpenAL."
+
+let license = "https://opensource.org/licenses/MIT"
+
+let projectUrl = "https://github.com/opentk/opentk"
+
+let iconUrl = "https://raw.githubusercontent.com/opentk/opentk/master/docs/files/img/logo.png"
 
 let description =
     "The Open Toolkit is set of fast, low-level C# bindings for OpenGL, OpenGL ES and OpenAL. It runs on all major platforms and powers hundreds of apps, games and scientific research."
@@ -192,7 +200,7 @@ Target.create "AssemblyInfo" (fun _ ->
 
 Target.create "Build"( fun _ ->
     let setOptions a =
-        let customParams = "/p:DontGenBindings=true/p:PackageVersion=4.0.0-pre"
+        let customParams = sprintf "/p:DontGenBindings=true/p:PackageVersion=%s/p:ProductVersion=%s" release.AssemblyVersion release.NugetVersion
         DotNet.Options.withCustomParams (Some customParams) (dotnetSimple a)
 
     for proj in releaseProjects do
@@ -249,6 +257,15 @@ Target.create "CreateNuGetPackage" (fun _ ->
     let notes = release.Notes |> List.reduce (fun s1 s2 -> s1 + "\n" + s2)
 
     for proj in releaseProjects do
+        Trace.logf "Creating nuget package for Project: %s" proj
+//        let setParams (p:Paket.PaketPackParams) =
+//            {p with
+//                ReleaseNotes = notes
+//                OutputPath = nugetDir
+//                WorkingDir = binDir
+//                Version = "4.0.0-pre"
+//            }
+//            Paket.pack setParams
 //        let setParams (p:NuGet.NuGetParams) =
 //            { p with
 //                Version = release.NugetVersion
@@ -267,7 +284,6 @@ Target.create "CreateNuGetPackage" (fun _ ->
 //                    "Configuration", Environment.environVarOrDefault "buildMode" "Release"
 //                ]
 //            }
-//        Trace.logf "Creating nuget package for Project: %s" proj
 //        NuGet.NuGet setParams proj
 
         try
@@ -275,10 +291,20 @@ Target.create "CreateNuGetPackage" (fun _ ->
                 { p with
                     Configuration = DotNet.BuildConfiguration.fromString "Release"
                     OutputPath = Some nugetDir
-                    VersionSuffix = Some "-pre"
                     NoBuild = true
+                    MSBuildParams = {MSBuild.CliArguments.Create()
+                                     with Properties = [
+                                         "releaseNotes", notes
+                                         "owners", authors |> List.reduce (fun s a -> s + " " + a)
+                                         "authors", authors |> List.reduce (fun s a -> s + " " + a)
+                                         "description", description
+                                         "licenseUrl", license
+                                         "projectUrl", projectUrl
+                                         "iconUrl", iconUrl
+                                         "copyRight", copyright
+                                         "tags", tags
+                                     ]}
                 }
-            Trace.logf "Creating nuget package for Project: %s" proj
             DotNet.pack setParams proj
         with e ->
             Trace.traceErrorfn "Error: %s" e.Message

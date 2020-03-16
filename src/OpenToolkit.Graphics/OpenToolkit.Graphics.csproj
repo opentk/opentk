@@ -3,7 +3,6 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <Version>4.0.0-pre</Version>
     <RootNamespace>OpenToolkit.Graphics</RootNamespace>
   </PropertyGroup>
 
