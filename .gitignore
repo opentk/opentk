@@ -315,8 +315,6 @@ typings/
 _Pvt_Extensions
 
 # Paket dependency manager
-.paket/paket.exe
-paket-files/
 *.Restore.targets
 
 # FAKE - F# Make
