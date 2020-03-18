@@ -1,3 +1,4 @@
+open System
 open System.IO
 open Fake.Core
 open Fake.DotNet
@@ -258,56 +259,22 @@ Target.create "CreateNuGetPackage" (fun _ ->
 
     for proj in releaseProjects do
         Trace.logf "Creating nuget package for Project: %s" proj
-//        let setParams (p:Paket.PaketPackParams) =
-//            {p with
-//                ReleaseNotes = notes
-//                OutputPath = nugetDir
-//                WorkingDir = binDir
-//                Version = "4.0.0-pre"
-//            }
-//            Paket.pack setParams
-//        let setParams (p:NuGet.NuGetParams) =
-//            { p with
-//                Version = release.NugetVersion
-//                Authors = authors
-//                Project = project
-////                Summary = summary
-////                Description = description
-//                Copyright = copyright
-//                WorkingDir = binDir
-//                OutputPath = nugetDir
-////                AccessKey = myAccessKey
-//                Publish = false
-//                ReleaseNotes = notes
-//                Tags = tags
-//                Properties = [
-//                    "Configuration", Environment.environVarOrDefault "buildMode" "Release"
-//                ]
-//            }
-//        NuGet.NuGet setParams proj
 
-        try
-            let setParams (p:DotNet.PackOptions) =
-                { p with
-                    Configuration = DotNet.BuildConfiguration.fromString "Release"
-                    OutputPath = Some nugetDir
-                    NoBuild = true
-                    MSBuildParams = {MSBuild.CliArguments.Create()
-                                     with Properties = [
-                                         "releaseNotes", notes
-                                         "owners", authors |> List.reduce (fun s a -> s + " " + a)
-                                         "authors", authors |> List.reduce (fun s a -> s + " " + a)
-                                         "description", description
-                                         "licenseUrl", license
-                                         "projectUrl", projectUrl
-                                         "iconUrl", iconUrl
-                                         "copyRight", copyright
-                                         "tags", tags
-                                     ]}
-                }
-            DotNet.pack setParams proj
-        with e ->
-            Trace.traceErrorfn "Error: %s" e.Message
+        let projId = Path.GetFileNameWithoutExtension proj
+        let dir = Path.GetDirectoryName proj
+        let templatePath = Path.Combine(dir, "paket")
+        let oldTmplCont = File.ReadAllText templatePath
+        let newTmplCont = oldTmplCont.Replace("#VERSION#", release.NugetVersion)
+                            .Replace("#AUTHORS#", authors |> List.reduce (fun s a -> s + " " + a))
+        File.WriteAllText(templatePath + ".template", newTmplCont)
+        let setParams (p:Paket.PaketPackParams) =
+            { p with
+                //ReleaseNotes = notes
+                OutputPath = nugetDir
+                WorkingDir = "src\OpenToolkit.Core"
+                Version = "4.0.0-pre"
+            }
+        Paket.pack setParams
     )
 
 // ---------
@@ -358,6 +325,7 @@ Target.create "All" ignore
 open Fake.Core.TargetOperators
 
 "Clean"
+  //==> "CreateNuGetPackage"
   ==> "Restore"
   ==> "AssemblyInfo"
   ==> "UpdateSpec"
