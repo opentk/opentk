@@ -1,0 +1,8 @@
+﻿type file
+id OpenToolkit.Graphics
+dependencies
+    OpenToolkit.Core ~= #VERSION#
+    OpenToolkit.Mathematics ~= #VERSION#
+files
+  bin\Release\netstandard2.0\OpenToolkit.Core.dll ==> lib\netstandard2.0
+  bin\Release\netstandard2.0\OpenToolkit.Core.xml ==> lib\netstandard2.0

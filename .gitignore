@@ -415,7 +415,6 @@ anaconda-mode/
 lib/debug
 lib/release
 *.exe
-!.paket/paket.bootstrapper.exe
 
 ### Intellij+all ###
 # Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio and Webstorm

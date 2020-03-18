@@ -269,7 +269,7 @@ Target.create "CreateNuGetPackage" (fun _ ->
                 description %s"""
                 release.NugetVersion
                 (authors |> List.reduce (fun s a -> s + " " + a))
-                description)
+                description).Replace("#VERSION#", release.NugetVersion)
         File.WriteAllText(templatePath + ".template", newTmplCont)
         let setParams (p:Paket.PaketPackParams) =
             { p with
