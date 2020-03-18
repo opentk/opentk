@@ -260,12 +260,16 @@ Target.create "CreateNuGetPackage" (fun _ ->
     for proj in releaseProjects do
         Trace.logf "Creating nuget package for Project: %s" proj
 
-        let projId = Path.GetFileNameWithoutExtension proj
         let dir = Path.GetDirectoryName proj
         let templatePath = Path.Combine(dir, "paket")
         let oldTmplCont = File.ReadAllText templatePath
-        let newTmplCont = oldTmplCont.Replace("#VERSION#", release.NugetVersion)
-                            .Replace("#AUTHORS#", authors |> List.reduce (fun s a -> s + " " + a))
+        let newTmplCont = oldTmplCont.Insert(oldTmplCont.Length, sprintf """
+                version %s\
+                authors %s\
+                description %s"""
+                release.NugetVersion
+                (authors |> List.reduce (fun s a -> s + " " + a))
+                description)
         File.WriteAllText(templatePath + ".template", newTmplCont)
         let setParams (p:Paket.PaketPackParams) =
             { p with

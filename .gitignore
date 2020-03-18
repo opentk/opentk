@@ -638,6 +638,8 @@ tools/
 *.synctex.gz
 *.synctex.gz(busy)
 *.pdfsync
+/paket.template
+.paket/paket.exe
 
 ## Build tool directories for auxiliary files
 # latexrun
