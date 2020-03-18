@@ -270,8 +270,8 @@ Target.create "CreateNuGetPackage" (fun _ ->
         let setParams (p:Paket.PaketPackParams) =
             { p with
                 //ReleaseNotes = notes
-                OutputPath = nugetDir
-                WorkingDir = "src\OpenToolkit.Core"
+                OutputPath = Path.GetFullPath(nugetDir)
+                WorkingDir = dir
                 Version = "4.0.0-pre"
             }
         Paket.pack setParams
@@ -325,7 +325,7 @@ Target.create "All" ignore
 open Fake.Core.TargetOperators
 
 "Clean"
-  //==> "CreateNuGetPackage"
+  ==> "CreateNuGetPackage"
   ==> "Restore"
   ==> "AssemblyInfo"
   ==> "UpdateSpec"
@@ -334,7 +334,7 @@ open Fake.Core.TargetOperators
   ==> "RewriteBindings"
 //  ==> "RunAllTests"
   ==> "All"
-  ==> "CreateNuGetPackage"
+  //==> "CreateNuGetPackage"
   ==> "ReleaseOnNuGetGallery"
   ==> "ReleaseOnGithub"
   ==> "ReleaseOnAll"

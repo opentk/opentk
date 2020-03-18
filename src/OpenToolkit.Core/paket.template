@@ -1,0 +1,9 @@
+type file
+id OpenToolkit.Core
+version 4.0.0-pre
+authors Team OpenTK
+description
+  description of this test package
+files
+  bin\Release\netstandard2.0\OpenToolkit.Core.dll ==> lib\netstandard2.0
+  bin\Release\netstandard2.0\OpenToolkit.Core.xml ==> lib\netstandard2.0
