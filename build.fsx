@@ -333,7 +333,7 @@ open Fake.Core.TargetOperators
   ==> "UpdateSpec"
   ==> "UpdateBindingsRewrite"
   ==> "Build"
-  //==> "RewriteBindings"
+  ==> "RewriteBindings"
 //  ==> "RunAllTests"
   ==> "All"
   ==> "CreateNuGetPackage"
