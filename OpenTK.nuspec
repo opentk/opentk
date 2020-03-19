@@ -9,7 +9,7 @@
         <tags>@tags@</tags>
         <description>@description@</description>
         <authors>@authors@</authors>
-
+        <releaseNotes>@releaseNotes@</releaseNotes>
         <projectUrl>https://github.com/opentk/opentk</projectUrl>
         <license type="expression">MIT</license>
         <iconUrl>https://api.nuget.org/v3-flatcontainer/opentk/3.1.0/icon</iconUrl>
