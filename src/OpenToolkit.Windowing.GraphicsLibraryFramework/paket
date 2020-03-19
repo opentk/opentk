@@ -2,12 +2,9 @@ type file
 id OpenToolkit.Windowing.GraphicsLibraryFramework
 dependencies
     OpenToolkit.Core ~> #VERSION#
+    opentoolkit.redist.glfw ~> 3.3.0-pre20190419183326
 files
   bin\Release\netcoreapp3.0\OpenToolkit.Windowing.GraphicsLibraryFramework.dll ==> lib\netcoreapp3.0
   bin\Release\netcoreapp3.0\OpenToolkit.Windowing.GraphicsLibraryFramework.xml ==> lib\netcoreapp3.0
-  bin\Release\netcoreapp3.0\glfw3-x64.dll ==> lib\net472
-  bin\Release\netcoreapp3.0\glfw3-x86.dll ==> lib\net472
   bin\Release\net472\OpenToolkit.Windowing.GraphicsLibraryFramework.dll ==> lib\net472
   bin\Release\net472\OpenToolkit.Windowing.GraphicsLibraryFramework.xml ==> lib\net472
-  bin\Release\net472\glfw3-x64.dll ==> lib\net472
-  bin\Release\net472\glfw3-x86.dll ==> lib\net472
