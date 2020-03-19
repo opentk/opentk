@@ -8,5 +8,7 @@ dependencies
 files
   bin\Release\netcoreapp3.0\OpenToolkit.Windowing.Desktop.dll ==> lib\netcoreapp3.0
   bin\Release\netcoreapp3.0\OpenToolkit.Windowing.Desktop.xml ==> lib\netcoreapp3.0
+  bin\Release\netcoreapp3.0\OpenToolkit.Windowing.Desktop.pdb ==> lib\netcoreapp3.0
   bin\Release\net472\OpenToolkit.Windowing.Desktop.dll ==> lib\net472
   bin\Release\net472\OpenToolkit.Windowing.Desktop.xml ==> lib\net472
+  bin\Release\net472\OpenToolkit.Windowing.Desktop.pdb ==> lib\net472

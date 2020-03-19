@@ -3,3 +3,4 @@ id OpenToolkit.Input
 files
   bin\Release\netstandard2.0\OpenToolkit.Input.dll ==> lib\netstandard2.0
   bin\Release\netstandard2.0\OpenToolkit.Input.xml ==> lib\netstandard2.0
+  bin\Release\netstandard2.0\OpenToolkit.Input.pdb ==> lib\netstandard2.0

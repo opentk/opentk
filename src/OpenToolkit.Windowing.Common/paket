@@ -6,3 +6,4 @@ dependencies
 files
   bin\Release\netstandard2.0\OpenToolkit.Windowing.Common.dll ==> lib\netstandard2.0
   bin\Release\netstandard2.0\OpenToolkit.Windowing.Common.xml ==> lib\netstandard2.0
+  bin\Release\netstandard2.0\OpenToolkit.Windowing.Common.pdb ==> lib\netstandard2.0

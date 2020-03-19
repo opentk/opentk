@@ -10,8 +10,8 @@
         <projectUrl>https://github.com/opentk/opentk</projectUrl>
 
         <license type="expression">MIT</license>
-        
-        <icon>icon.png</icon>
+
+        <iconUrl>https://api.nuget.org/v3-flatcontainer/opentk/3.1.0/icon</iconUrl>
 
         <description>The Open Toolkit is set of fast, low-level C# bindings for OpenGL, OpenGL ES and OpenAL. It runs on all major platforms and powers hundreds of apps, games and scientific research.</description>
 

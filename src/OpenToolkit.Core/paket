@@ -2,4 +2,5 @@ type file
 id OpenToolkit.Core
 files
     bin\Release\netstandard2.0\OpenToolkit.Core.dll ==> lib\netstandard2.0
-    bin\Release\netstandard2.0\OpenToolkit.Core.xml ==> lib\netstandard2.0
+    bin\Release\netstandard2.0\OpenToolkit.Core.xml ==> lib\netstandard2.0 
+    bin\Release\netstandard2.0\OpenToolkit.Core.pdb ==> lib\netstandard2.0

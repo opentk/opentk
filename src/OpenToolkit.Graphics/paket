@@ -5,3 +5,5 @@ dependencies
     OpenToolkit.Mathematics ~> #VERSION#
 files
     bin\Release\netstandard2.0\OpenToolkit.Graphics.dll ==> lib\netstandard2.0
+    bin\Release\netstandard2.0\OpenToolkit.Graphics.xml ==> lib\netstandard2.0
+    bin\Release\netstandard2.0\OpenToolkit.Graphics.pdb ==> lib\netstandard2.0
