@@ -1,8 +1,10 @@
-open Fake.Core
+open System
+open System.IO
+open System.Threading
 open Fake.Core
 open Fake.DotNet
-open System
-open Fake.DotNet.Testing
+open Fake.DotNet.NuGet
+open Fake.IO
 
 #r "paket:
 storage: packages
@@ -11,9 +13,9 @@ nuget Fake.DotNet.MSBuild
 nuget Fake.DotNet.Testing.XUnit2
 nuget Fake.DotNet.AssemblyInfoFile
 nuget Fake.DotNet.NuGet prerelease
+nuget Fake.DotNet.Paket
 nuget Fake.DotNet.Cli
 nuget Fake.Core.Target
-nuget Fake.DotNet.Cli
 nuget Fake.Net.Http
 nuget Fake.Api.Github
 nuget xunit.runner.console
@@ -22,12 +24,9 @@ nuget Fake.Core.ReleaseNotes //"
 
 #load "./.fake/build.fsx/intellisense.fsx"
 
-open Fake.Core
 open Fake.IO
 open Fake.IO.FileSystemOperators
 open Fake.IO.Globbing.Operators
-open Fake.DotNet
-open Fake.DotNet.NuGet
 
 // ---------
 // Configuration
@@ -38,6 +37,12 @@ let project = "OpenTK"
 let authors = [ "Team OpenTK" ]
 
 let summary = "A set of fast, low-level C# bindings for OpenGL, OpenGL ES and OpenAL."
+
+let license = "https://opensource.org/licenses/MIT"
+
+let projectUrl = "https://github.com/opentk/opentk"
+
+let iconUrl = "https://raw.githubusercontent.com/opentk/opentk/master/docs/files/img/logo.png"
 
 let description =
     "The Open Toolkit is set of fast, low-level C# bindings for OpenGL, OpenGL ES and OpenAL. It runs on all major platforms and powers hundreds of apps, games and scientific research."
@@ -68,6 +73,7 @@ let release = ReleaseNotes.load "RELEASE_NOTES.md"
 
 let binDir = "./bin/"
 let buildDir = binDir </> "build"
+let nugetDir = binDir </> "nuget"
 let testDir = binDir </> "test"
 
 // ---------
@@ -80,7 +86,12 @@ let toolProjects =
 let releaseProjects =
     !! "src/**/*.??proj"
     -- "src/Generator/**"
+    -- "src/Generator.Bind/**"
+    -- "src/Generator.Converter/**"
+    -- "src/Generator.Rewrite/**"
     -- "src/SpecificationOpenGL/**"
+    -- "src/OpenAL/**"
+
 
 // Absolutely all test projects.
 let allTestProjects =
@@ -178,6 +189,7 @@ Target.create "Clean" <| fun _ ->
     -- ("./src" </> "OpenToolkit.Graphics" </> "ES30/Helper.cs")
     -- ("./src" </> "OpenToolkit.Graphics" </> "OpenGL2/Helper.cs")
     -- ("./src" </> "OpenToolkit.Graphics" </> "OpenGL4/Helper.cs")
+    -- ("./src" </> "OpenToolkit.Graphics" </> "paket")
     |> Seq.iter(Shell.rm)
 
 Target.create "Restore" (fun _ -> DotNet.restore dotnetSimple "OpenTK.sln" |> ignore)
@@ -188,12 +200,14 @@ Target.create "AssemblyInfo" (fun _ ->
     // see https://docs.microsoft.com/en-us/visualstudio/msbuild/customize-your-build?view=vs-2019#directorybuildprops-and-directorybuildtargets
     Trace.traceError "Unimplemented.")
 
-let noBindProp a =
-    DotNet.Options.withCustomParams (Some "/p:DontGenBindings=true") (dotnetSimple a)
+Target.create "Build"( fun _ ->
+    let setOptions a =
+        let customParams = sprintf "/p:DontGenBindings=true/p:PackageVersion=%s/p:ProductVersion=%s" release.AssemblyVersion release.NugetVersion
+        DotNet.Options.withCustomParams (Some customParams) (dotnetSimple a)
 
-Target.create "Build" <| fun _ ->
-    releaseProjects
-    |> Seq.iter(DotNet.build noBindProp)
+    for proj in releaseProjects do
+        DotNet.build setOptions proj
+    )
 
 Target.create "BuildTest" <| fun _ ->
     !!"tests/**/*.??proj"
@@ -212,9 +226,6 @@ Target.create "CopyBinaries" (fun _ ->
     |> Seq.iter (fun (fromDir, toDir) -> Shell.copyDir toDir fromDir (fun _ -> true)))
 
 open System.IO
-open Fake.Core
-open Fake.IO.Globbing.Operators
-open Fake.DotNet
 
 let runTests tests =
     let setDotNetOptions (projectDirectory: string): DotNet.TestOptions -> DotNet.TestOptions =
@@ -244,9 +255,54 @@ Target.create "RunAllTests" (fun _ ->
 
 
 Target.create "CreateNuGetPackage" (fun _ ->
-    let optsFn options = { options with DotNet.PackOptions.OutputPath = (Some "bin") }
-    let disableBuild options = { (optsFn options) with DotNet.PackOptions.NoBuild = true }
-    releaseProjects |> Seq.iter (DotNet.pack disableBuild))
+    Directory.CreateDirectory nugetDir |> ignore
+    let notes = release.Notes |> List.reduce (fun s1 s2 -> s1 + "\n" + s2)
+
+    for proj in releaseProjects do
+        Trace.logf "Creating nuget package for Project: %s" proj
+
+        let dir = Path.GetDirectoryName proj
+        let templatePath = Path.Combine(dir, "paket")
+        let oldTmplCont = File.ReadAllText templatePath
+        let newTmplCont = oldTmplCont.Insert(oldTmplCont.Length, sprintf "\nversion \n\t%s\nauthors \n\t%s\nowners \n\t%s\ndescription \n\t%s"
+                release.NugetVersion
+                (authors |> List.reduce (fun s a -> s + " " + a))
+                (authors |> List.reduce (fun s a -> s + " " + a))
+                description).Replace("#VERSION#", release.NugetVersion)
+        File.WriteAllText(templatePath + ".template", newTmplCont)
+        let setParams (p:Paket.PaketPackParams) =
+            { p with
+                ReleaseNotes = notes
+                OutputPath = Path.GetFullPath(nugetDir)
+                WorkingDir = dir
+                Version = "4.0.0-pre"
+            }
+        Paket.pack setParams
+    )
+
+Target.create "CreateMetaPackage" (fun _ ->
+    let notes = release.Notes |> List.reduce (fun s1 s2 -> s1 + "\n" + s2)
+    let setParams (p:NuGet.NuGetParams) =
+        { p with
+            Version = release.NugetVersion
+            Authors = authors
+            Project = project
+//                Summary = summary
+//                Description = description
+            Copyright = copyright
+            WorkingDir = binDir
+            OutputPath = nugetDir
+//                AccessKey = myAccessKey
+            Publish = false
+            ReleaseNotes = notes
+            Tags = tags
+            Properties = [
+                "Configuration", Environment.environVarOrDefault "buildMode" "Release"
+            ]
+        }
+    Trace.logf "Creating metapackage from opentk.nuspec"
+    NuGet.NuGet setParams "opentk.nuspec"
+    )
 
 // ---------
 // Release Targets
@@ -256,7 +312,7 @@ open Fake.Api
 
 Target.create "ReleaseOnGitHub" (fun _ ->
     let token =
-        match Environment.environVarOrDefault "github_token" "" with
+        match Environment.environVarOrDefault "opentk_github_token" "" with
         | s when not (System.String.IsNullOrWhiteSpace s) -> s
         | _ ->
             failwith
@@ -266,13 +322,13 @@ Target.create "ReleaseOnGitHub" (fun _ ->
 
     GitHub.createClientWithToken token
     |> GitHub.draftNewRelease gitOwner gitName release.NugetVersion (release.SemVer.PreRelease <> None) release.Notes
-    |> GitHub.uploadFiles files
+    //|> GitHub.uploadFiles files
     |> GitHub.publishDraft
     |> Async.RunSynchronously)
 
 Target.create "ReleaseOnNuGetGallery" (fun _ ->
     let apiKey =
-        match Environment.environVarOrDefault "nuget_api_key" "" with
+        match Environment.environVarOrDefault "opentk_nuget_api_key" "" with
         | s when not (System.String.IsNullOrWhiteSpace s) -> s
         | _ -> failwith "please set the nuget_api_key environment variable to a nuget access token."
 
@@ -305,6 +361,7 @@ open Fake.Core.TargetOperators
 //  ==> "RunAllTests"
   ==> "All"
   ==> "CreateNuGetPackage"
+  ==> "CreateMetaPackage"
   ==> "ReleaseOnNuGetGallery"
   ==> "ReleaseOnGithub"
   ==> "ReleaseOnAll"
