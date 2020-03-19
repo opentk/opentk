@@ -20,13 +20,13 @@
         <tags>OpenTK OpenGL OpenGLES GLES OpenAL C# F# .NET Mono Vector Math Game Graphics Sound</tags>
 
         <dependencies>
-            <dependency id="OpenToolkit.Core" version="4.0.0-pre"/>
-            <dependency id="OpenToolkit.Mathematics" version="4.0.0-pre"/>
-            <dependency id="OpenToolkit.Input" version="4.0.0-pre"/>
-            <dependency id="OpenToolkit.Graphics" version="4.0.0-pre"/>
-            <dependency id="OpenToolkit.Windowing.Desktop" version="4.0.0-pre"/>
-            <dependency id="OpenToolkit.Windowing.Common" version="4.0.0-pre"/>
-            <dependency id="OpenToolkit.Windowing.GraphicsLibraryFramework" version="4.0.0-pre"/>
+            <dependency id="OpenToolkit.Core" version="4.0.0-pre2"/>
+            <dependency id="OpenToolkit.Mathematics" version="4.0.0-pre2"/>
+            <dependency id="OpenToolkit.Input" version="4.0.0-pre2"/>
+            <dependency id="OpenToolkit.Graphics" version="4.0.0-pre2"/>
+            <dependency id="OpenToolkit.Windowing.Desktop" version="4.0.0-pre2"/>
+            <dependency id="OpenToolkit.Windowing.Common" version="4.0.0-pre2"/>
+            <dependency id="OpenToolkit.Windowing.GraphicsLibraryFramework" version="4.0.0-pre2"/>
         </dependencies>
     </metadata>
 </package>

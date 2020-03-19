@@ -1,5 +1,5 @@
 ### 4.0.0-pre2
- * Test build system
+ * Test and fix build system
  * Fix package metadata
 
 ### 4.0.0-pre

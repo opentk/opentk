@@ -181,6 +181,7 @@ Target.create "RewriteBindings" (fun _ ->
 
 Target.create "Clean" <| fun _ ->
     !! ("./src" </> "OpenToolkit.Graphics" </> "**/*.*")
+    ++ (nugetDir </> "*.nupkg")
     -- ("./src" </> "OpenToolkit.Graphics" </> "Enums/*.cs")
     -- ("./src" </> "OpenToolkit.Graphics" </> "*.cs")
     -- ("./src" </> "OpenToolkit.Graphics" </> "*.csproj")
@@ -275,7 +276,7 @@ Target.create "CreateNuGetPackage" (fun _ ->
                 ReleaseNotes = notes
                 OutputPath = Path.GetFullPath(nugetDir)
                 WorkingDir = dir
-                Version = "4.0.0-pre"
+                Version = release.NugetVersion
             }
         Paket.pack setParams
     )
