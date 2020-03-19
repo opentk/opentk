@@ -369,7 +369,7 @@ open Fake.Core.TargetOperators
 //  ==> "RunAllTests"
   ==> "All"
   ==> "CreateNuGetPackage"
-//  ==> "CreateMetaPackage"
+  ==> "CreateMetaPackage"
   ==> "ReleaseOnNuGet"
   ==> "ReleaseOnGithub"
   ==> "ReleaseOnAll"
