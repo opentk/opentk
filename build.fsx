@@ -189,6 +189,7 @@ Target.create "Clean" <| fun _ ->
     -- ("./src" </> "OpenToolkit.Graphics" </> "ES30/Helper.cs")
     -- ("./src" </> "OpenToolkit.Graphics" </> "OpenGL2/Helper.cs")
     -- ("./src" </> "OpenToolkit.Graphics" </> "OpenGL4/Helper.cs")
+    -- ("./src" </> "OpenToolkit.Graphics" </> "paket")
     |> Seq.iter(Shell.rm)
 
 Target.create "Restore" (fun _ -> DotNet.restore dotnetSimple "OpenTK.sln" |> ignore)
