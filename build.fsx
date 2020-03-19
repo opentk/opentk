@@ -49,7 +49,7 @@ let description =
 
 let tags = "OpenTK OpenGL OpenGLES GLES OpenAL C# F# .NET Mono Vector Math Game Graphics Sound"
 
-let copyright = "Copyright (c) 2006 - 2019 Stefanos Apostolopoulos <stapostol@gmail.com> for the Open Toolkit library."
+let copyright = "Copyright (c) 2006 - 2020 Stefanos Apostolopoulos <stapostol@gmail.com> for the Open Toolkit library."
 
 let solutionFile = "OpenTK.sln"
 
@@ -326,13 +326,13 @@ Target.create "ReleaseOnGitHub" (fun _ ->
     |> GitHub.publishDraft
     |> Async.RunSynchronously)
 
-Target.create "ReleaseOnNuGetGallery" (fun _ ->
+Target.create "ReleaseOnNuGet" (fun _ ->
     let apiKey =
         match Environment.environVarOrDefault "opentk_nuget_api_key" "" with
         | s when not (System.String.IsNullOrWhiteSpace s) -> s
         | _ -> failwith "please set the nuget_api_key environment variable to a nuget access token."
 
-    !!"bin/*.nupkg"
+    !! (nugetDir </> "*.nupkg")
     |> Seq.iter
         (DotNet.nugetPush (fun opts ->
             { opts with
@@ -362,7 +362,7 @@ open Fake.Core.TargetOperators
   ==> "All"
   ==> "CreateNuGetPackage"
   ==> "CreateMetaPackage"
-  ==> "ReleaseOnNuGetGallery"
+  ==> "ReleaseOnNuGet"
   ==> "ReleaseOnGithub"
   ==> "ReleaseOnAll"
 
