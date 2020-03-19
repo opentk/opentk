@@ -1,3 +1,7 @@
+### 4.0.0-pre2
+ * Test build system
+ * Fix package metadata
+
 ### 4.0.0-pre
  Key Changes:
  * Added support for .Net Core
