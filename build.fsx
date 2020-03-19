@@ -312,7 +312,7 @@ open Fake.Api
 
 Target.create "ReleaseOnGitHub" (fun _ ->
     let token =
-        match Environment.environVarOrDefault "github_token" "" with
+        match Environment.environVarOrDefault "opentk_github_token" "" with
         | s when not (System.String.IsNullOrWhiteSpace s) -> s
         | _ ->
             failwith
@@ -322,13 +322,13 @@ Target.create "ReleaseOnGitHub" (fun _ ->
 
     GitHub.createClientWithToken token
     |> GitHub.draftNewRelease gitOwner gitName release.NugetVersion (release.SemVer.PreRelease <> None) release.Notes
-    |> GitHub.uploadFiles files
+    //|> GitHub.uploadFiles files
     |> GitHub.publishDraft
     |> Async.RunSynchronously)
 
 Target.create "ReleaseOnNuGetGallery" (fun _ ->
     let apiKey =
-        match Environment.environVarOrDefault "nuget_api_key" "" with
+        match Environment.environVarOrDefault "opentk_nuget_api_key" "" with
         | s when not (System.String.IsNullOrWhiteSpace s) -> s
         | _ -> failwith "please set the nuget_api_key environment variable to a nuget access token."
 
