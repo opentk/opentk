@@ -11,7 +11,7 @@
       <!-- The PrivateAssets thing is to ensure the .dll.config file gets copied transitively. -->
       <ProjectReference Include="..\OpenToolkit.Mathematics\OpenToolkit.Mathematics.csproj" />
       <ProjectReference Include="..\OpenToolkit.Windowing.Common\OpenToolkit.Windowing.Common.csproj" />
-      <ProjectReference Include="..\OpenToolkit.Windowing.GraphicsLibraryFramework\OpenToolkit.Windowing.GraphicsLibraryFramework.csproj"  PrivateAssets="analyzers;build" />
+      <ProjectReference Include="..\OpenToolkit.Windowing.GraphicsLibraryFramework\OpenToolkit.Windowing.GraphicsLibraryFramework.csproj" PrivateAssets="analyzers;build" />
     </ItemGroup>
     
     <ItemGroup>

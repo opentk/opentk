@@ -263,17 +263,14 @@ Target.create "CreateNuGetPackage" (fun _ ->
         let dir = Path.GetDirectoryName proj
         let templatePath = Path.Combine(dir, "paket")
         let oldTmplCont = File.ReadAllText templatePath
-        let newTmplCont = oldTmplCont.Insert(oldTmplCont.Length, sprintf """
-                version %s\
-                authors %s\
-                description %s"""
+        let newTmplCont = oldTmplCont.Insert(oldTmplCont.Length, sprintf "\nversion %s\nauthors %s\ndescription %s"
                 release.NugetVersion
                 (authors |> List.reduce (fun s a -> s + " " + a))
                 description).Replace("#VERSION#", release.NugetVersion)
         File.WriteAllText(templatePath + ".template", newTmplCont)
         let setParams (p:Paket.PaketPackParams) =
             { p with
-                //ReleaseNotes = notes
+                ReleaseNotes = notes
                 OutputPath = Path.GetFullPath(nugetDir)
                 WorkingDir = dir
                 Version = "4.0.0-pre"
@@ -329,7 +326,6 @@ Target.create "All" ignore
 open Fake.Core.TargetOperators
 
 "Clean"
-  ==> "CreateNuGetPackage"
   ==> "Restore"
   ==> "AssemblyInfo"
   ==> "UpdateSpec"
@@ -338,7 +334,7 @@ open Fake.Core.TargetOperators
   ==> "RewriteBindings"
 //  ==> "RunAllTests"
   ==> "All"
-  //==> "CreateNuGetPackage"
+  ==> "CreateNuGetPackage"
   ==> "ReleaseOnNuGetGallery"
   ==> "ReleaseOnGithub"
   ==> "ReleaseOnAll"

@@ -1,0 +1,10 @@
+type file
+id OpenToolkit.Windowing.Desktop
+dependencies
+    OpenToolkit.Core ~> #VERSION#
+    OpenToolkit.Mathematics ~> #VERSION#
+    OpenToolkit.Windowing.Common ~> #VERSION#
+    OpenToolkit.Windowing.GraphicsLibraryFramework ~> #VERSION#
+files
+  bin\Release\netstandard2.0\OpenToolkit.Windowing.Desktop.dll ==> lib\netstandard2.0
+  bin\Release\netstandard2.0\OpenToolkit.Windowing.Desktop.xml ==> lib\netstandard2.0

@@ -1,0 +1,7 @@
+type file
+id OpenToolkit.Windowing.GraphicsLibraryFramework
+dependencies
+    OpenToolkit.Core ~> #VERSION#
+files
+  bin\Release\netstandard2.0\OpenToolkit.Windowing.GraphicsLibraryFramework.dll ==> lib\netstandard2.0
+  bin\Release\netstandard2.0\OpenToolkit.Windowing.GraphicsLibraryFramework.xml ==> lib\netstandard2.0
