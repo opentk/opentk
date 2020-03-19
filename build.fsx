@@ -287,7 +287,7 @@ Target.create "CreateMetaPackage" (fun _ ->
     let deps =
         releaseProjects
         |> Seq.toList
-        |> List.map (fun p -> p, release.NugetVersion)
+        |> List.map (fun p -> Path.GetFileNameWithoutExtension(p), release.NugetVersion)
 
     let setParams (p:NuGet.NuGetParams) =
         { p with
@@ -295,8 +295,8 @@ Target.create "CreateMetaPackage" (fun _ ->
             Authors = authors
             Project = project
             Dependencies = deps
-//                Summary = summary
-//                Description = description
+            Summary = summary
+            Description = description
             Copyright = copyright
             WorkingDir = binDir
             OutputPath = nugetDir
@@ -369,7 +369,7 @@ open Fake.Core.TargetOperators
 //  ==> "RunAllTests"
   ==> "All"
   ==> "CreateNuGetPackage"
-  ==> "CreateMetaPackage"
+//  ==> "CreateMetaPackage"
   ==> "ReleaseOnNuGet"
   ==> "ReleaseOnGithub"
   ==> "ReleaseOnAll"

@@ -2,17 +2,17 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
     <metadata>
         <id>OpenTK</id>
-        
+
+        <version>1</version>
+
+        <copyright>@copyright@</copyright>
+        <tags>@tags@</tags>
+        <description>@description@</description>
+        <authors>@authors@</authors>
+
         <projectUrl>https://github.com/opentk/opentk</projectUrl>
-
         <license type="expression">MIT</license>
-
         <iconUrl>https://api.nuget.org/v3-flatcontainer/opentk/3.1.0/icon</iconUrl>
-
-        <description>The Open Toolkit is set of fast, low-level C# bindings for OpenGL, OpenGL ES and OpenAL. It runs on all major platforms and powers hundreds of apps, games and scientific research.</description>
-
-        <copyright>Copyright (c) 2006 - 2019 Stefanos Apostolopoulos stapostol@gmail.com for the Open Toolkit library.</copyright>
-
-        <tags>OpenTK OpenGL OpenGLES GLES OpenAL C# F# .NET Mono Vector Math Game Graphics Sound</tags>
+        @dependencies@
     </metadata>
 </package>
