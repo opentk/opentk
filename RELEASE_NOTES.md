@@ -1,3 +1,6 @@
+### 4.0.0-pre3
+ * Build System improvements to fully automatic pipeline.
+
 ### 4.0.0-pre2
  * Test and fix build system
  * Fix package metadata
