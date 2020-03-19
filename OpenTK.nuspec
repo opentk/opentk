@@ -2,10 +2,6 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
     <metadata>
         <id>OpenTK</id>
-
-        <version>4.0-pre</version>
-
-        <authors>Team OpenTK</authors>
         
         <projectUrl>https://github.com/opentk/opentk</projectUrl>
 
@@ -18,15 +14,5 @@
         <copyright>Copyright (c) 2006 - 2019 Stefanos Apostolopoulos stapostol@gmail.com for the Open Toolkit library.</copyright>
 
         <tags>OpenTK OpenGL OpenGLES GLES OpenAL C# F# .NET Mono Vector Math Game Graphics Sound</tags>
-
-        <dependencies>
-            <dependency id="OpenToolkit.Core" version="4.0.0-pre2"/>
-            <dependency id="OpenToolkit.Mathematics" version="4.0.0-pre2"/>
-            <dependency id="OpenToolkit.Input" version="4.0.0-pre2"/>
-            <dependency id="OpenToolkit.Graphics" version="4.0.0-pre2"/>
-            <dependency id="OpenToolkit.Windowing.Desktop" version="4.0.0-pre2"/>
-            <dependency id="OpenToolkit.Windowing.Common" version="4.0.0-pre2"/>
-            <dependency id="OpenToolkit.Windowing.GraphicsLibraryFramework" version="4.0.0-pre2"/>
-        </dependencies>
     </metadata>
 </package>
