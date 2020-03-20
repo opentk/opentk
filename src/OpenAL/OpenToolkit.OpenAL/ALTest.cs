@@ -50,13 +50,16 @@ namespace OpenToolkit.Audio.OpenAL
             {
                 Console.WriteLine("  " + item);
             }
-
+            int auxSlot = 0;
             if (EFX.IsEFXExtensionPresent(device))
             {
                 Console.WriteLine("EFX extension is present!!");
                 var a = AL.GetProcAddress("alGenEffects");
                 Console.WriteLine($"EFX glGenEffects: {a}");
                 EFX.GenEffect(out int effect);
+                EFX.Effect(effect, EffectInteger.EffectType, (int)EffectType.Reverb);
+                EFX.GenAuxiliaryEffectSlot(out auxSlot);
+                EFX.AuxiliaryEffectSlot(auxSlot, EffectSlotInteger.Effect, effect);
             }
 
             // Record a second of data
@@ -97,6 +100,10 @@ namespace OpenToolkit.Audio.OpenAL
             AL.GenSource(out int alSource);
             AL.Source(alSource, ALSourcef.Gain, 1f);
             AL.Source(alSource, ALSourcei.Buffer, alBuffer);
+            if (EFX.IsEFXExtensionPresent(device))
+            {
+                EFX.Source(alSource, EFXSourceInteger3.AuxiliarySendFilter, auxSlot, 0, 0);
+            }
             AL.SourcePlay(alSource);
 
             while (AL.GetSourceState(alSource) == ALSourceState.Playing)
