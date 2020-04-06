@@ -1,4 +1,4 @@
-﻿//
+//
 // MouseButton.cs
 //
 // Copyright (C) 2018 OpenTK
@@ -16,7 +16,7 @@ namespace OpenToolkit.Windowing.Common.Input
     {
         // This mirrors GLFW behaviour,
         // see https://www.glfw.org/docs/latest/group__buttons.html
-        
+
         /// <summary>
         /// The left mouse button. Equivalent to Button1.
         /// </summary>
