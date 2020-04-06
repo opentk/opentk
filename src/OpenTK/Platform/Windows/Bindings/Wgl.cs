@@ -38,33 +38,33 @@ namespace OpenTK.Platform.Windows
         {
             EntryPointNames = new string[]
             {
-                "wglCreateContextAttribsARB",
+                "wglCreateContextAttribsARB", // 0
                 "wglGetExtensionsStringARB",
                 "wglGetPixelFormatAttribivARB",
                 "wglGetPixelFormatAttribfvARB",
-                "wglChoosePixelFormatARB",
+                "wglChoosePixelFormatARB", // 4
                 "wglMakeContextCurrentARB",
                 "wglGetCurrentReadDCARB",
                 "wglCreatePbufferARB",
                 "wglGetPbufferDCARB",
-                "wglReleasePbufferDCARB",
+                "wglReleasePbufferDCARB", // 9
                 "wglDestroyPbufferARB",
                 "wglQueryPbufferARB",
                 "wglBindTexImageARB",
                 "wglReleaseTexImageARB",
-                "wglSetPbufferAttribARB",
+                "wglSetPbufferAttribARB", // 14
                 "wglGetExtensionsStringEXT",
                 "wglSwapIntervalEXT",
                 "wglGetSwapIntervalEXT",
                 // DX_interop extension:
-                "wglDXSetResourceShareHandleNV",
-                "wglDXOpenDeviceNV",
+                "wglDXSetResourceShareHandleNV", // 19
+                "wglDXOpenDeviceNV", // 20
                 "wglDXCloseDeviceNV",
                 "wglDXRegisterObjectNV",
                 "wglDXUnregisterObjectNV",
                 "wglDXObjectAccessNV",
-                "wglDXLockObjectsNV",
-                "wglDXUnlockObjectsNV",
+                "wglDXLockObjectsNV", // 25
+                "wglDXUnlockObjectsNV", // 26
                 // magical value?
                 "wgl",
             };
