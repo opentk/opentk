@@ -370,7 +370,7 @@ namespace OpenTK.Platform.MacOS
                     {
                         // The device is not normally available in the InputValueCallback (HandleDeviceValueReceived), so we include
                         // the device identifier as the context variable, so we can identify it and figure out the device later.
-                        // Thanks to Jase: http://www.opentk.com/node/2800
+                        // Thanks to Jase: http://www.opentk.net/node/2800
                         NativeMethods.IOHIDDeviceRegisterInputValueCallback(device,
                             HandleDeviceValueReceived, device);
 
@@ -1029,7 +1029,7 @@ namespace OpenTK.Platform.MacOS
                 }
             }
 
-            CG.WarpMouseCursorPosition(p);
+            CG.DisplayMoveCursorToPoint(IntPtr.Zero, p);
         }
 
         KeyboardState IKeyboardDriver2.GetState()

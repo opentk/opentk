@@ -81,6 +81,8 @@ namespace OpenTK.Platform.Windows
                     if ((int)usage != 1)
                     {
                         int axis = GetAxis(collection, page, usage);
+                        // Skip axes that we couldn't map to any of our known joystick axes
+                        if (axis == -1) return;
                         State.SetAxis(axis, value);
                     }
                 }
@@ -223,7 +225,8 @@ namespace OpenTK.Platform.Windows
 
             // Discover joystick devices
             int xinput_device_count = 0;
-            foreach (RawInputDeviceList dev in WinRawInput.GetDeviceList())
+            RawInputDeviceList[] deviceList = WinRawInput.GetDeviceList();
+            foreach (RawInputDeviceList dev in deviceList)
             {
                 // Skip non-joystick devices
                 if (dev.Type != RawInputDeviceType.HID)
@@ -251,36 +254,43 @@ namespace OpenTK.Platform.Windows
                 }
                 else
                 {
-                    device = new Device(handle, guid, is_xinput,
-                        is_xinput ? xinput_device_count++ : 0);
-
-                    // This is a new device, query its capabilities and add it
-                    // to the device list
-                    if (!QueryDeviceCaps(device) && !is_xinput)
+                    try
                     {
-                        continue;
-                    }
-                    device.SetConnected(true);
+                        device = new Device(handle, guid, is_xinput,
+                            is_xinput ? xinput_device_count++ : 0);
 
-                    // Check if a disconnected device with identical GUID already exists.
-                    // If so, replace that device with this instance.
-                    Device match = null;
-                    foreach (Device candidate in Devices)
-                    {
-                        if (candidate.GetGuid() == guid && !candidate.GetCapabilities().IsConnected)
+                        // This is a new device, query its capabilities and add it
+                        // to the device list
+                        if (!QueryDeviceCaps(device) && !is_xinput)
                         {
-                            match = candidate;
+                            continue;
                         }
-                    }
-                    if (match != null)
+                        device.SetConnected(true);
+
+                        // Check if a disconnected device with identical GUID already exists.
+                        // If so, replace that device with this instance.
+                        Device match = null;
+                        foreach (Device candidate in Devices)
+                        {
+                            if (candidate.GetGuid() == guid && !candidate.GetCapabilities().IsConnected)
+                            {
+                                match = candidate;
+                            }
+                        }
+                        if (match != null)
+                        {
+                            Devices.Remove(match.Handle.ToInt64());
+                        }
+
+                        Devices.Add(hardware_id, device);
+
+                        Debug.Print("[{0}] Connected joystick {1} ({2})",
+                            GetType().Name, device.GetGuid(), device.GetCapabilities());
+                    } catch (Exception e)
                     {
-                        Devices.Remove(match.Handle.ToInt64());
+                        Debug.Print("Exception thrown while trying to connect a joystick: {0}", e);
+                        device.SetConnected(false);
                     }
-
-                    Devices.Add(hardware_id, device);
-
-                    Debug.Print("[{0}] Connected joystick {1} ({2})",
-                        GetType().Name, device.GetGuid(), device.GetCapabilities());
                 }
             }
         }
@@ -515,138 +525,140 @@ namespace OpenTK.Platform.Windows
             Debug.Print("[{0}] Querying joystick {1}",
                 TypeName, stick.GetGuid());
 
+            bool anyInputDetected = false;
             try
             {
                 Debug.Indent();
                 HidProtocolCaps caps;
 
-                if (GetPreparsedData(stick.Handle, ref PreparsedData) &&
-                    GetDeviceCaps(stick, PreparsedData, out caps))
+                if (!GetPreparsedData(stick.Handle, ref PreparsedData) ||
+                    !GetDeviceCaps(stick, PreparsedData, out caps))
+                    return false;
+
+                if (stick.AxisCaps.Count >= JoystickState.MaxAxes ||
+                    stick.ButtonCaps.Count >= JoystickState.MaxButtons)
                 {
-                    if (stick.AxisCaps.Count >= JoystickState.MaxAxes ||
-                        stick.ButtonCaps.Count >= JoystickState.MaxButtons)
+                    Debug.Print("Device {0} has {1} and {2} buttons. This might be a touch device - skipping.",
+                        stick.Handle, stick.AxisCaps.Count, stick.ButtonCaps.Count);
+                    return false;
+                }
+
+                for (int i = 0; i < stick.AxisCaps.Count; i++)
+                {
+                    Debug.Print("Analyzing value collection {0} {1} {2}",
+                        i,
+                        stick.AxisCaps[i].IsRange ? "range" : "",
+                        stick.AxisCaps[i].IsAlias ? "alias" : "");
+
+                    if (stick.AxisCaps[i].IsRange || stick.AxisCaps[i].IsAlias)
                     {
-                        Debug.Print("Device {0} has {1} and {2} buttons. This might be a touch device - skipping.",
-                            stick.Handle, stick.AxisCaps.Count, stick.ButtonCaps.Count);
-                        return false;
+                        Debug.Print("Skipping value collection {0}", i);
+                        continue;
                     }
 
-                    for (int i = 0; i < stick.AxisCaps.Count; i++)
+                    HIDPage page = stick.AxisCaps[i].UsagePage;
+                    short collection = stick.AxisCaps[i].LinkCollection;
+                    switch (page)
                     {
-                        Debug.Print("Analyzing value collection {0} {1} {2}",
-                            i,
-                            stick.AxisCaps[i].IsRange ? "range" : "",
-                            stick.AxisCaps[i].IsAlias ? "alias" : "");
+                        case HIDPage.GenericDesktop:
+                            HIDUsageGD gd_usage = (HIDUsageGD)stick.AxisCaps[i].NotRange.Usage;
+                            switch (gd_usage)
+                            {
+                                case HIDUsageGD.X:
+                                case HIDUsageGD.Y:
+                                case HIDUsageGD.Z:
+                                case HIDUsageGD.Rx:
+                                case HIDUsageGD.Ry:
+                                case HIDUsageGD.Rz:
+                                case HIDUsageGD.Slider:
+                                case HIDUsageGD.Dial:
+                                case HIDUsageGD.Wheel:
+                                    Debug.Print("Found axis {0} ({1} / {2})",
+                                        stick.GetCapabilities().AxisCount,
+                                        page, (HIDUsageGD)stick.AxisCaps[i].NotRange.Usage);
+                                    stick.SetAxis(collection, page, stick.AxisCaps[i].NotRange.Usage, 0);
+                                    anyInputDetected = true;
+                                    break;
 
-                        if (stick.AxisCaps[i].IsRange || stick.AxisCaps[i].IsAlias)
-                        {
-                            Debug.Print("Skipping value collection {0}", i);
-                            continue;
-                        }
+                                case HIDUsageGD.Hatswitch:
+                                    Debug.Print("Found hat {0} ({1} / {2})",
+                                        JoystickHat.Hat0 + stick.GetCapabilities().HatCount,
+                                        page, (HIDUsageGD)stick.AxisCaps[i].NotRange.Usage);
+                                    stick.SetHat(collection, page, stick.AxisCaps[i].NotRange.Usage, HatPosition.Centered);
+                                    anyInputDetected = true;
+                                    break;
 
-                        HIDPage page = stick.AxisCaps[i].UsagePage;
-                        short collection = stick.AxisCaps[i].LinkCollection;
-                        switch (page)
-                        {
-                            case HIDPage.GenericDesktop:
-                                HIDUsageGD gd_usage = (HIDUsageGD)stick.AxisCaps[i].NotRange.Usage;
-                                switch (gd_usage)
-                                {
-                                    case HIDUsageGD.X:
-                                    case HIDUsageGD.Y:
-                                    case HIDUsageGD.Z:
-                                    case HIDUsageGD.Rx:
-                                    case HIDUsageGD.Ry:
-                                    case HIDUsageGD.Rz:
-                                    case HIDUsageGD.Slider:
-                                    case HIDUsageGD.Dial:
-                                    case HIDUsageGD.Wheel:
-                                        Debug.Print("Found axis {0} ({1} / {2})",
-                                            stick.GetCapabilities().AxisCount,
-                                            page, (HIDUsageGD)stick.AxisCaps[i].NotRange.Usage);
-                                        stick.SetAxis(collection, page, stick.AxisCaps[i].NotRange.Usage, 0);
-                                        break;
+                                default:
+                                    Debug.Print("Unknown usage {0} for page {1}",
+                                        gd_usage, page);
+                                    break;
+                            }
+                            break;
 
-                                    case HIDUsageGD.Hatswitch:
-                                        Debug.Print("Found hat {0} ({1} / {2})",
-                                            JoystickHat.Hat0 + stick.GetCapabilities().HatCount,
-                                            page, (HIDUsageGD)stick.AxisCaps[i].NotRange.Usage);
-                                        stick.SetHat(collection, page, stick.AxisCaps[i].NotRange.Usage, HatPosition.Centered);
-                                        break;
+                        case HIDPage.Simulation:
+                            switch ((HIDUsageSim)stick.AxisCaps[i].NotRange.Usage)
+                            {
+                                case HIDUsageSim.Rudder:
+                                case HIDUsageSim.Throttle:
+                                    Debug.Print("Found simulation axis {0} ({1} / {2})",
+                                        stick.GetCapabilities().AxisCount,
+                                        page, (HIDUsageSim)stick.AxisCaps[i].NotRange.Usage);
+                                    stick.SetAxis(collection, page, stick.AxisCaps[i].NotRange.Usage, 0);
+                                    anyInputDetected = true;
+                                    break;
+                            }
+                            break;
 
-                                    default:
-                                        Debug.Print("Unknown usage {0} for page {1}",
-                                            gd_usage, page);
-                                        break;
-                                }
-                                break;
+                        default:
+                            Debug.Print("Unknown page {0}", page);
+                            break;
+                    }
+                }
 
-                            case HIDPage.Simulation:
-                                switch ((HIDUsageSim)stick.AxisCaps[i].NotRange.Usage)
-                                {
-                                    case HIDUsageSim.Rudder:
-                                    case HIDUsageSim.Throttle:
-                                        Debug.Print("Found simulation axis {0} ({1} / {2})",
-                                            stick.GetCapabilities().AxisCount,
-                                            page, (HIDUsageSim)stick.AxisCaps[i].NotRange.Usage);
-                                        stick.SetAxis(collection, page, stick.AxisCaps[i].NotRange.Usage, 0);
-                                        break;
-                                }
-                                break;
+                for (int i = 0; i < stick.ButtonCaps.Count; i++)
+                {
+                    Debug.Print("Analyzing button collection {0} {1} {2}",
+                        i,
+                        stick.ButtonCaps[i].IsRange ? "range" : "",
+                        stick.ButtonCaps[i].IsAlias ? "alias" : "");
 
-                            default:
-                                Debug.Print("Unknown page {0}", page);
-                                break;
-                        }
+                    if (stick.ButtonCaps[i].IsAlias)
+                    {
+                        Debug.Print("Skipping button collection {0}", i);
+                        continue;
                     }
 
-                    for (int i = 0; i < stick.ButtonCaps.Count; i++)
+                    bool is_range = stick.ButtonCaps[i].IsRange;
+                    HIDPage page = stick.ButtonCaps[i].UsagePage;
+                    short collection = stick.ButtonCaps[i].LinkCollection;
+                    switch (page)
                     {
-                        Debug.Print("Analyzing button collection {0} {1} {2}",
-                            i,
-                            stick.ButtonCaps[i].IsRange ? "range" : "",
-                            stick.ButtonCaps[i].IsAlias ? "alias" : "");
-
-                        if (stick.ButtonCaps[i].IsAlias)
-                        {
-                            Debug.Print("Skipping button collection {0}", i);
-                            continue;
-                        }
-
-                        bool is_range = stick.ButtonCaps[i].IsRange;
-                        HIDPage page = stick.ButtonCaps[i].UsagePage;
-                        short collection = stick.ButtonCaps[i].LinkCollection;
-                        switch (page)
-                        {
-                            case HIDPage.Button:
-                                if (is_range)
-                                {
-                                    for (short usage = stick.ButtonCaps[i].Range.UsageMin; usage <= stick.ButtonCaps[i].Range.UsageMax; usage++)
-                                    {
-                                        Debug.Print("Found button {0} ({1} / {2})",
-                                            stick.GetCapabilities().ButtonCount,
-                                            page, usage);
-                                        stick.SetButton(collection, page, usage, false);
-                                    }
-                                }
-                                else
+                        case HIDPage.Button:
+                            if (is_range)
+                            {
+                                for (short usage = stick.ButtonCaps[i].Range.UsageMin; usage <= stick.ButtonCaps[i].Range.UsageMax; usage++)
                                 {
                                     Debug.Print("Found button {0} ({1} / {2})",
                                         stick.GetCapabilities().ButtonCount,
-                                        page, stick.ButtonCaps[i].NotRange.Usage);
-                                    stick.SetButton(collection, page, stick.ButtonCaps[i].NotRange.Usage, false);
+                                        page, usage);
+                                    stick.SetButton(collection, page, usage, false);
+                                    anyInputDetected = true;
                                 }
-                                break;
+                            }
+                            else
+                            {
+                                Debug.Print("Found button {0} ({1} / {2})",
+                                    stick.GetCapabilities().ButtonCount,
+                                    page, stick.ButtonCaps[i].NotRange.Usage);
+                                stick.SetButton(collection, page, stick.ButtonCaps[i].NotRange.Usage, false);
+                                anyInputDetected = true;
+                            }
+                            break;
 
-                            default:
-                                Debug.Print("Unknown page {0} for button.", page);
-                                break;
-                        }
+                        default:
+                            Debug.Print("Unknown page {0} for button.", page);
+                            break;
                     }
-                }
-                else
-                {
-                    return false;
                 }
             }
             finally
@@ -654,8 +666,9 @@ namespace OpenTK.Platform.Windows
                 Debug.Unindent();
             }
 
-            return true;
+            return anyInputDetected;
         }
+
 
         private static bool GetDeviceCaps(Device stick, byte[] preparsed_data, out HidProtocolCaps caps)
         {

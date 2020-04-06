@@ -5,15 +5,15 @@ owners
 authors
     The Open Toolkit Team
 projectUrl
-    http://www.opentk.com
+    http://www.opentk.net
 iconUrl
-    https://raw.githubusercontent.com/opentk/opentk/master/docs/files/img/logo.png
+    https://raw.githubusercontent.com/opentk/opentk.net/docfx/assets/opentk.png
 licenseUrl
     http://github.com/opentk/opentk/blob/master/License.txt
 requireLicenseAcceptance
     false
 copyright
-    Copyright (c) 2006 - 2016 Stefanos Apostolopoulos <stapostol@gmail.com> for the Open Toolkit library.
+    Copyright (c) 2006 - 2019 Stefanos Apostolopoulos <stapostol@gmail.com> for the Open Toolkit library.
 tags
     OpenTK OpenGL OpenAL OpenCL C# F# VB .Net Mono Graphics Game Scientific Science 3D 2D Math Input Gamepad Joystick
 summary

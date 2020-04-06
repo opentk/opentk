@@ -95,6 +95,16 @@ namespace OpenTK.Input
         }
 
         /// <summary>
+        /// Gets a value indicating whether <see cref="OpenTK.Input.KeyModifiers.Command"/> is pressed. Mac OS only.
+        /// </summary>
+        /// <value><c>true</c> if pressed; otherwise, <c>false</c>.</value>
+        public bool Command
+        {
+            get { return Keyboard[Key.Command]; }
+        }
+
+
+        /// <summary>
         /// Gets a bitwise combination representing the <see cref="OpenTK.Input.KeyModifiers"/>
         /// that are currently pressed.
         /// </summary>
@@ -107,6 +117,7 @@ namespace OpenTK.Input
                 mods |= Alt ? KeyModifiers.Alt : 0;
                 mods |= Control ? KeyModifiers.Control : 0;
                 mods |= Shift ? KeyModifiers.Shift : 0;
+                mods |= Command ? KeyModifiers.Command : 0;
                 return mods;
             }
         }

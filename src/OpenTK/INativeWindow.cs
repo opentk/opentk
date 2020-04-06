@@ -135,10 +135,10 @@ namespace OpenTK
         /// </summary>
         bool CursorVisible { get; set; }
 
-//        /// <summary>
-//        /// Gets or sets a value, indicating whether the mouse cursor is confined inside the window size.
-//        /// </summary>
-//        bool CursorGrabbed { get; set; }
+        /// <summary>
+        /// Gets or sets a value, indicating whether the mouse cursor is confined inside the window size.
+        /// </summary>
+        bool CursorGrabbed { get; set; }
 
         /// <summary>
         /// Closes this window.

@@ -13,7 +13,6 @@
     <TargetFSharpCoreVersion>4.4.0.0</TargetFSharpCoreVersion>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Name>OpenTK.Tests</Name>
-    <Deterministic>true</Deterministic>
     <StartAction>Program</StartAction>
     <StartProgram>packages\xunit.runner.console\tools\xunit.console.exe</StartProgram>
     <StartArguments>OpenTK.Tests.dll</StartArguments>
