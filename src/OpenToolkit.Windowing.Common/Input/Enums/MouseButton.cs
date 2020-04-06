@@ -18,68 +18,63 @@ namespace OpenToolkit.Windowing.Common.Input
         // see https://www.glfw.org/docs/latest/group__buttons.html
         
         /// <summary>
-        /// The left mouse button.
+        /// The left mouse button. Equivalent to Button1.
         /// </summary>
         Left = Button1,
 
         /// <summary>
-        /// The middle mouse button.
+        /// The middle mouse button. Equivalent to Button2.
         /// </summary>
         Middle = Button3,
 
         /// <summary>
-        /// The right mouse button.
+        /// The right mouse button. Equivalent to Button3.
         /// </summary>
         Right = Button2,
 
         /// <summary>
-        /// The first extra mouse button.
+        /// The first mouse button. Equivalent to Left.
         /// </summary>
         Button1 = 0,
 
         /// <summary>
-        /// The second extra mouse button.
+        /// The second mouse button. Equivalent to Right.
         /// </summary>
         Button2,
 
         /// <summary>
-        /// The third extra mouse button.
+        /// The third mouse button. Equivalent to Middle.
         /// </summary>
         Button3,
 
         /// <summary>
-        /// The fourth extra mouse button.
+        /// The fourth mouse button.
         /// </summary>
         Button4,
 
         /// <summary>
-        /// The fifth extra mouse button.
+        /// The fifth mouse button.
         /// </summary>
         Button5,
 
         /// <summary>
-        /// The sixth extra mouse button.
+        /// The sixth mouse button.
         /// </summary>
         Button6,
 
         /// <summary>
-        /// The seventh extra mouse button.
+        /// The seventh mouse button.
         /// </summary>
         Button7,
 
         /// <summary>
-        /// The eigth extra mouse button.
+        /// The eigth mouse button.
         /// </summary>
         Button8,
 
         /// <summary>
-        /// The ninth extra mouse button.
-        /// </summary>
-        Button9,
-
-        /// <summary>
         /// Indicates the last available mouse button.
         /// </summary>
-        LastButton = Button9
+        LastButton = Button8
     }
 }
