@@ -154,6 +154,7 @@
     <None Include="..\..\OpenTK.snk">
       <Link>OpenTK.snk</Link>
     </None>
+    <None Include="packages.config" />
     <None Include="paket.references" />
     <None Include="Specifications\GL2\gl.tm" />
     <None Include="Specifications\Glx\glx.spec">
