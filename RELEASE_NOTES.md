@@ -1,3 +1,6 @@
+### 4.0.0-pre4
+* Fix error with GLFW Mouse button mapping (Thanks @GeorchW)
+
 ### 4.0.0-pre3
  * Build System improvements to fully automatic pipeline.
 
