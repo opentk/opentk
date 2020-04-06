@@ -1,3 +1,7 @@
+### 3.2
+    * Fix Input crash if >64 buttons. (Thanks @tyronx)
+    * Add provisional dx_interop bindings for use in GLWPFControl.
+
 ### 3.1.0
 
 	General:
