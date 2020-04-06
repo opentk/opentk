@@ -14,25 +14,28 @@ namespace OpenToolkit.Windowing.Common.Input
     /// </summary>
     public enum MouseButton
     {
+        // This mirrors GLFW behaviour,
+        // see https://www.glfw.org/docs/latest/group__buttons.html
+        
         /// <summary>
         /// The left mouse button.
         /// </summary>
-        Left = 0,
+        Left = Button1,
 
         /// <summary>
         /// The middle mouse button.
         /// </summary>
-        Middle,
+        Middle = Button3,
 
         /// <summary>
         /// The right mouse button.
         /// </summary>
-        Right,
+        Right = Button2,
 
         /// <summary>
         /// The first extra mouse button.
         /// </summary>
-        Button1,
+        Button1 = 0,
 
         /// <summary>
         /// The second extra mouse button.
@@ -77,6 +80,6 @@ namespace OpenToolkit.Windowing.Common.Input
         /// <summary>
         /// Indicates the last available mouse button.
         /// </summary>
-        LastButton
+        LastButton = Button9
     }
 }
