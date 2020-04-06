@@ -52,6 +52,21 @@ and then enable the "Copy to Output Directory" option (as in step 3 below).
 News
 ===
 
+### 2020-04-06
+
+Oops! Forgot to update the news! OpenTK 4.0.0 PREVIEW is now available on Nuget.
+
+https://www.nuget.org/packages/OpenTK
+
+
+### 2020-04-06
+
+OpenTK 3.2.0 is available. 
+
+This adds bindings for the wgl_dx_interop extension and support for joysticks with > 64 buttons.
+
+https://www.nuget.org/packages/OpenTK/3.2.0
+
 
 ### 2019-08-04
 
