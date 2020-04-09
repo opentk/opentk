@@ -532,6 +532,9 @@ namespace OpenToolkit.Windowing.Desktop
 
             switch (settings.Profile)
             {
+                case ContextProfile.Any:
+                    GLFW.WindowHint(WindowHintOpenGlProfile.OpenGlProfile, OpenGlProfile.Any);
+                    break;
                 case ContextProfile.Compatability:
                     GLFW.WindowHint(WindowHintOpenGlProfile.OpenGlProfile, OpenGlProfile.Compat);
                     break;
