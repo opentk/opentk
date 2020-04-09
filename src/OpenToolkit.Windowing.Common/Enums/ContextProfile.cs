@@ -18,6 +18,7 @@ namespace OpenToolkit.Windowing.Common
         /// Used for unknown OpenGL profile or OpenGL ES.
         /// </summary>
         Any,
+
         /// <summary>
         /// Selects compatability profile. You should only use this if maintaining legacy code.
         /// </summary>
