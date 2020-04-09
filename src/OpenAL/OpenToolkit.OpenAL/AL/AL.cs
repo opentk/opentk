@@ -483,12 +483,12 @@ namespace OpenToolkit.Audio.OpenAL
             Source(source, ALSourcei.Buffer, buffer);
         }
 
-        /// <summary>This function sets 3 integer properties of a source. This property is used to establish connections between Sources and Auxiliary Effect Slots.</summary>
+        /// <summary>This function sets 3 integer properties of a source.</summary>
         /// <param name="sid">Source name whose attribute is being set.</param>
         /// <param name="param">The name of the attribute to set: EfxAuxiliarySendFilter..</param>
-        /// <param name="value1">The value to set the attribute to. (EFX Extension) The destination Auxiliary Effect Slot ID.</param>
-        /// <param name="value2">The value to set the attribute to. (EFX Extension) The Auxiliary Send number.</param>
-        /// <param name="value3">The value to set the attribute to. (EFX Extension) optional Filter ID.</param>
+        /// <param name="value1">The first value to set the attribute to.</param>
+        /// <param name="value2">The second value to set the attribute to.</param>
+        /// <param name="value3">The third value to set the attribute to.</param>
         [DllImport(Lib, EntryPoint = "alSource3i", ExactSpelling = true, CallingConvention = ALCallingConvention)]
         public static extern void Source(int sid, ALSource3i param, int value1, int value2, int value3);
         // AL_API void AL_APIENTRY alSource3i( ALuint sid, ALenum param, ALint value1, ALint value2, ALint value3 );
@@ -506,7 +506,7 @@ namespace OpenToolkit.Audio.OpenAL
 
         /// <summary>This function retrieves three floating-point values representing a property of a source.</summary>
         /// <param name="sid">Source name whose attribute is being retrieved.</param>
-        /// <param name="param">the name of the attribute being retrieved: ALSource3f.Position, Velocity, Direction.</param>
+        /// <param name="param">The name of the attribute being retrieved: ALSource3f.Position, Velocity, Direction.</param>
         /// <param name="value1">Pointer to the first value to retrieve.</param>
         /// <param name="value2">Pointer to the second value to retrieve.</param>
         /// <param name="value3">Pointer to the third value to retrieve.</param>
@@ -516,12 +516,32 @@ namespace OpenToolkit.Audio.OpenAL
 
         /// <summary>This function retrieves three floating-point values representing a property of a source.</summary>
         /// <param name="sid">Source name whose attribute is being retrieved.</param>
-        /// <param name="param">the name of the attribute being retrieved: ALSource3f.Position, Velocity, Direction.</param>
+        /// <param name="param">The name of the attribute being retrieved: ALSource3f.Position, Velocity, Direction.</param>
         /// <param name="values">A Math.Vector3 to retrieve the values to.</param>
         public static void GetSource(int sid, ALSource3f param, out Vector3 values)
         {
             GetSource(sid, param, out values.X, out values.Y, out values.Z);
         }
+
+        /// <summary>This function retrieves three integer-point values representing a property of a source.</summary>
+        /// <param name="sid">Source name whose attribute is being retrieved.</param>
+        /// <param name="param">The name of the attribute being retrieved: ALSource3f.Position, Velocity, Direction.</param>
+        /// <param name="value1">Pointer to the first value to retrieve.</param>
+        /// <param name="value2">Pointer to the second value to retrieve.</param>
+        /// <param name="value3">Pointer to the third value to retrieve.</param>
+        [DllImport(Lib, EntryPoint = "alGetSource3i", ExactSpelling = true, CallingConvention = ALCallingConvention)]
+        public static extern void GetSource(int sid, ALSource3i param, out int value1, out int value2, out int value3);
+        // AL_API void AL_APIENTRY alGetSource3i( ALuint sid, ALenum param, ALint* value1, ALint* value2, ALint* value3);
+
+        /// <summary>This function retrieves three integer-point values representing a property of a source.</summary>
+        /// <param name="sid">Source name whose attribute is being retrieved.</param>
+        /// <param name="param">The name of the attribute being retrieved: ALSource3f.Position, Velocity, Direction.</param>
+        /// <param name="values">A Math.Vector3i to retrieve the values to.</param>
+        public static void GetSource(int sid, ALSource3i param, out Vector3i values)
+        {
+            GetSource(sid, param, out values.X, out values.Y, out values.Z);
+        }
+        // AL_API void AL_APIENTRY alGetSource3i( ALuint sid, ALenum param, ALint* value1, ALint* value2, ALint* value3);
 
         /// <summary>This function retrieves an integer property of a source.</summary>
         /// <param name="sid">Source name whose attribute is being retrieved.</param>

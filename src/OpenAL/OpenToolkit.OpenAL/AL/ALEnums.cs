@@ -144,8 +144,14 @@ namespace OpenToolkit.Audio.OpenAL
     /// <summary>A list of valid 3x Int32 Source/GetSource parameters.</summary>
     public enum ALSource3i : int
     {
-        /// <summary>(EFX Extension) This Source property is used to establish connections between Sources and Auxiliary Effect Slots. For a Source to feed an Effect that has been loaded into an Auxiliary Effect Slot the application must configure one of the Source’s auxiliary sends. This process involves setting 3 variables – the destination Auxiliary Effect Slot ID, the Auxiliary Send number, and an optional Filter ID. Type: uint Range: any valid Filter Handle.</summary>
-        EfxAuxiliarySendFilter = 0x20006,
+        /// <summary>Specify the current location in three dimensional space. OpenAL, like OpenGL, uses a right handed coordinate system, where in a frontal default view X (thumb) points right, Y points up (index finger), and Z points towards the viewer/camera (middle finger). To switch from a left handed coordinate system, flip the sign on the Z coordinate. Listener position is always in the world coordinate system.</summary>
+        Position = 0x1004,
+
+        /// <summary>Specify the current velocity in three dimensional space.</summary>
+        Velocity = 0x1006,
+
+        /// <summary>Specify the current direction vector.</summary>
+        Direction = 0x1005,
     }
 
     /// <summary>A list of valid Int32 GetSource parameters.</summary>

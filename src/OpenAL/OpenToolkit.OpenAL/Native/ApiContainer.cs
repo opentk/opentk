@@ -9,6 +9,7 @@
 
 using System;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using OpenToolkit.Core.Loader;
 
 namespace OpenToolkit.Audio.OpenAL
@@ -39,6 +40,18 @@ namespace OpenToolkit.Audio.OpenAL
             }
 
             AddDllIntercept(apiAttribute.DllName, (IPlatformLibraryNameContainer)Activator.CreateInstance(apiAttribute.PlatformNameContainerType));
+        }
+
+        /// <summary>
+        /// Calls alGetProcAddress and converts the resulting pointer into a delegate.
+        /// </summary>
+        /// <typeparam name="TDelegate">The delegate type to create.</typeparam>
+        /// <param name="name">The name of the AL proc.</param>
+        /// <returns>The created delegate.</returns>
+        protected internal static TDelegate LoadDelegate<TDelegate>(string name) where TDelegate : Delegate
+        {
+            IntPtr ptr = AL.GetProcAddress(name);
+            return Marshal.GetDelegateForFunctionPointer<TDelegate>(ptr);
         }
     }
 }

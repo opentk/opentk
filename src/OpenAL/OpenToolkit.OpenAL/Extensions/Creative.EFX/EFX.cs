@@ -36,18 +36,12 @@ namespace OpenToolkit.Audio.OpenAL.Extensions.Creative.EFX
         {
         }
 
-        private static T LoadDelegate<T>(string name) where T : Delegate
-        {
-            IntPtr ptr = AL.GetProcAddress(name);
-            return Marshal.GetDelegateForFunctionPointer<T>(ptr);
-        }
-
         /// <summary>
-        /// Checks if the EFX extension is present.
+        /// Checks if this extension is present.
         /// </summary>
         /// <param name="device">The device to query.</param>
         /// <returns>Whether the extension was present or not.</returns>
-        public static bool IsEFXExtensionPresent(ALDevice device)
+        public static bool IsExtensionPresent(ALDevice device)
         {
             return ALC.IsExtensionPresent(device, ExtensionName);
         }
@@ -1077,14 +1071,12 @@ namespace OpenToolkit.Audio.OpenAL.Extensions.Creative.EFX
         /// <param name="value">The value to set the property to.</param>
         public static void GetEffect(int effect, EffectVector3 param, out Vector3 value)
         {
-            unsafe
-            {
-                // This is so the compiler won't complain
-                value.Y = 0;
-                value.Z = 0;
-                // This will fill the whole struct, not just the x field.
-                GetEffect(effect, param, out value.X);
-            }
+            // This is so the compiler won't complain
+            value.Y = 0;
+            value.Z = 0;
+
+            // This will fill the whole struct, not just the x field.
+            GetEffect(effect, param, out value.X);
         }
 
         /// <summary>

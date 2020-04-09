@@ -13,6 +13,8 @@ namespace OpenALGenerator
         public string EntryPoint;
         public string OverloadName;
         public bool OutParams;
+        public bool GenerateArrayOverload = true;
+        public bool PrivateRefOverload = false;
 
         public EntryPointAttribute(string entryPoint, bool outParams)
         {
@@ -166,6 +168,74 @@ namespace OpenALGenerator
         unsafe delegate void GetListenerf(int listener, EFXListenerFloat param, float* value);
     }
 
+    class SOFT_source_latency
+    {
+        enum SourceLatencyInteger
+        {
+            //AL_SAMPLE_OFFSET_LATENCY_SOFT = 0x1200,
+            SampleOffsetLatency = 0x1200,
+        }
+
+        enum SourceLatencyLong
+        {
+            //AL_SAMPLE_OFFSET_LATENCY_SOFT = 0x1200,
+            SampleOffsetLatency = 0x1200,
+        }
+
+        enum SourceLatencyFloat
+        {
+            //AL_SEC_OFFSET_LATENCY_SOFT = 0x1201
+            SecOffsetLatency = 0x1201,
+        }
+
+        enum SourceLatencyVector2i
+        {
+            //AL_SEC_OFFSET_LATENCY_SOFT = 0x1201
+            SecOffsetLatency = 0x1201,
+        }
+
+        enum SourceLatencyVector2d
+        {
+
+        }
+
+        [EntryPoint("alGetSourcei64vSOFT", "GetSource", true, PrivateRefOverload = true)]
+        unsafe delegate void GetSourcei64v(int source, SourceLatencyVector2i param, long* values);
+
+        // void alGetSourcedvSOFT(ALuint source, ALenum param, ALdouble *values);
+        [EntryPoint("alGetSourcedvSOFT", "GetSource", true, PrivateRefOverload = true)]
+        unsafe delegate void GetSourcedv(int source, SourceLatencyVector2d param, double* values);
+    }
+
+    class SOFT_device_clock
+    {
+        enum GetInteger64 { }
+
+        enum SourceInteger64 { }
+        enum SourceDouble { }
+
+        //[EntryPoint("alGetSourcei64vSOFT", "GetSource", true)]
+        //unsafe delegate void GetSourcei64v(int source, SourceLatencyVector2i param, long* values);
+
+        struct ALDevice { }
+
+        // void alcGetInteger64vSOFT(ALCdevice *device, ALCenum pname, ALsizei size, ALCint64SOFT* values);
+        [EntryPoint("alcGetInteger64vSOFT", "GetInteger", true, PrivateRefOverload = true)]
+        unsafe delegate void GetInteger(ALDevice device, GetInteger64 param, int size, long* values);
+
+        //void alGetSourcei64vSOFT(ALuint source, ALenum param, ALint64SOFT* values);
+        [EntryPoint("alGetSourcei64vSOFT", "GetSource", true, PrivateRefOverload = true)]
+        unsafe delegate void GetSourcei64v(int source, SourceInteger64 param, long* values);
+
+        //void alGetSourcedvSOFT(ALuint source, ALenum param, ALdouble *values);
+        [EntryPoint("alGetSourcedvSOFT", "GetSource", true, PrivateRefOverload = true)]
+        unsafe delegate void GetSourcedv(int source, SourceDouble param, double* values);
+
+        // void alGetSourcedvSOFT(ALuint source, ALenum param, ALdouble *values);
+        //[EntryPoint("alGetSourcedvSOFT", "GetSource", true)]
+        //unsafe delegate void GetSourcedv(int source, SourceLatencyVector2d param, double* values);
+    }
+
     class Program
     {
         public struct Parameter
@@ -182,6 +252,8 @@ namespace OpenALGenerator
             public Type ReturnType;
             public Parameter[] Params;
             public bool OutOverloads;
+            public bool GenerateArrayOverload;
+            public bool PrivateRefOverload;
 
             public bool ContainsPointer()
             {
@@ -208,6 +280,8 @@ namespace OpenALGenerator
                 ReturnType = info.ReturnType,
                 Params = info.GetParameters().Select(p => new Parameter() { Name = p.Name, Type = p.ParameterType }).ToArray(),
                 OutOverloads = attr?.OutParams ?? false,
+                GenerateArrayOverload = attr?.GenerateArrayOverload ?? true,
+                PrivateRefOverload = attr?.PrivateRefOverload ?? false,
             };
         }
 
@@ -239,6 +313,9 @@ namespace OpenALGenerator
                 return $"{(outParam ? "out" : "ref")} {GetTypeName(type.GetElementType(), false)}";
             else if (type.IsArray)
                 return $"{GetTypeName(type.GetElementType(), false)}[]";
+            else if (type.IsGenericType)
+                // Print the generic type not as "Span`1" but as "Span<T>"
+                return $"{type.Name.Split('`')[0]}<{string.Join(", ", type.GenericTypeArguments.Select(t => GetTypeName(t, false)))}>";
             else return type.Name;
         }
 
@@ -248,6 +325,7 @@ namespace OpenALGenerator
             Pointer,
             Array,
             ByRef,
+            //Span,
         }
 
         public static Type GetOverloadType(Type elementType, OverloadType overload)
@@ -260,6 +338,8 @@ namespace OpenALGenerator
                     return elementType.MakeArrayType();
                 case OverloadType.ByRef:
                     return elementType.MakeByRefType();
+                //case OverloadType.Span:
+                //    return typeof(Span<>).MakeGenericType(elementType);
                 default:
                     throw new Exception();
             }
@@ -313,7 +393,7 @@ namespace OpenALGenerator
 
         public static string GenerateDelegateDeclaration(string name, string callingConv, string returnType, string paramsString, bool @unsafe)
         {
-            return $"[UnmanagedFunctionPointer({callingConv})]\nprivate {(@unsafe ? "unsafe" : "")} delegate {returnType} {name}Delegate({paramsString});";
+            return $"[UnmanagedFunctionPointer({callingConv})]\nprivate {(@unsafe ? "unsafe " : "")}delegate {returnType} {name}Delegate({paramsString});";
         }
 
         public static string GenerateDelegateField(string name, string loadFunction, string entryPoint)
@@ -321,10 +401,10 @@ namespace OpenALGenerator
             return $"private static readonly {name}Delegate _{name} = {loadFunction}<{name}Delegate>(\"{entryPoint}\");";
         }
 
-        public static string GenerateStaticFunction(string name, string delegateName, string returnType, string paramsString, string callParams, bool @unsafe)
+        public static string GenerateStaticFunction(string name, bool @private, string delegateName, string returnType, string paramsString, string callParams, bool @unsafe)
         {
 
-            return $"public static {(@unsafe ? "unsafe" : "")} {returnType} {name}({paramsString}) => _{delegateName}({callParams});";
+            return $"{(@private ? "private" : "public")} static {(@unsafe ? "unsafe " : "")}{returnType} {name}({paramsString}) => _{delegateName}({callParams});";
         }
 
         public static string GetOverloadSuffix(OverloadType overload)
@@ -339,6 +419,8 @@ namespace OpenALGenerator
                     return "Array";
                 case OverloadType.ByRef:
                     return "Ref";
+                //case OverloadType.Span:
+                //    return "Span";
                 default:
                     throw new Exception();
             }
@@ -352,7 +434,8 @@ namespace OpenALGenerator
             string returnType = GetTypeName(signature.ReturnType, signature.OutOverloads);
             string callString = GenerateCallParamString(Params, signature.OutOverloads);
             bool @unsafe = overload == OverloadType.Pointer;
-            builder.AppendLine(GenerateStaticFunction(signature.OverloadName, delegateName, returnType, paramsString, callString, @unsafe));
+            bool @private = overload == OverloadType.ByRef && signature.PrivateRefOverload;
+            builder.AppendLine(GenerateStaticFunction(signature.OverloadName, @private, delegateName, returnType, paramsString, callString, @unsafe));
             builder.AppendLine(GenerateDelegateDeclaration(delegateName, "AL.ALCallingConvention", returnType, paramsString, @unsafe));
             // FIXME: Entrypoint should be done better!!!
             builder.AppendLine(GenerateDelegateField(delegateName, "LoadDelegate", signature.EntryPoint));
@@ -365,28 +448,29 @@ namespace OpenALGenerator
             foreach (var t in types)
             {
                 if (t.IsEnum) continue;
+                if (t.IsClass == false) continue;
                 else Signatures.Add(GetSignature(t));
             }
             return Signatures.ToArray();
         }
 
-        static void Main(string[] args)
+        public static string GenerateProcs (Type containgType)
         {
             StringBuilder sb = new StringBuilder();
-
-            foreach (var sig in GetSignaturesFromType(typeof(EFXExtension)))
+            foreach (var sig in GetSignaturesFromType(containgType))
             {
-                if (sig.OutOverloads == false) continue;
-
+                //if (sig.OutOverloads == false) continue;
                 if (HasPointerTypes(sig.ReturnType, sig.Params))
                 {
                     GenerateOverload(sb, sig, OverloadType.Pointer);
                     sb.AppendLine();
+                    //GenerateOverload(sb, sig, OverloadType.Span);
+                    //sb.AppendLine();
                     GenerateOverload(sb, sig, OverloadType.ByRef);
                     sb.AppendLine();
 
                     // We don't want array overloads for out parameters
-                    if (sig.OutOverloads == false)
+                    if (sig.GenerateArrayOverload)
                     {
                         GenerateOverload(sb, sig, OverloadType.Array);
                         sb.AppendLine();
@@ -397,12 +481,18 @@ namespace OpenALGenerator
                     GenerateOverload(sb, sig, OverloadType.Default);
                     sb.AppendLine();
                 }
-                
             }
-            Console.WriteLine(sb);
+            return sb.ToString();
         }
 
-        private static T LoadDelegate<T>(string s) => default;
+        static void Main(string[] args)
+        {
+            //Console.WriteLine(GenerateProcs(typeof(EFXExtension)));
 
+            //Console.WriteLine();
+
+            //Console.WriteLine(GenerateProcs(typeof(SOFT_source_latency)));
+            Console.WriteLine(GenerateProcs(typeof(SOFT_device_clock)));
+        }
     }
 }

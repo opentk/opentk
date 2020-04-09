@@ -10,7 +10,7 @@
     <Version>4.0.0</Version>
     <Description>OpenAL bindings, and audio utility classes.</Description>
     <ApplicationIcon />
-    <OutputType>Exe</OutputType>
+    <OutputType>Library</OutputType>
     <StartupObject />
   </PropertyGroup>
 
