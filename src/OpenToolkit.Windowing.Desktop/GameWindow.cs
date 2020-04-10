@@ -235,12 +235,13 @@ namespace OpenToolkit.Windowing.Desktop
         private void DispatchUpdateFrame()
         {
             var isRunningSlowlyRetries = 4;
-            var elapsed = _watchUpdate.Elapsed.TotalMilliseconds;
+            var elapsed = _watchUpdate.Elapsed.TotalSeconds;
 
             var updatePeriod = UpdateFrequency == 0 ? 0 : 1 / UpdateFrequency;
 
             while (elapsed > 0 && elapsed + _updateEpsilon >= updatePeriod)
             {
+                _watchUpdate.Restart();
                 OnUpdateFrame(new FrameEventArgs(elapsed));
 
                 // Calculate difference (positive or negative) between
@@ -263,6 +264,8 @@ namespace OpenToolkit.Windowing.Desktop
                     // stop raising events to avoid hanging inside the UpdateFrame loop.
                     break;
                 }
+
+                elapsed = _watchUpdate.Elapsed.TotalSeconds;
             }
 
             // Update VSync if set to adaptive
@@ -270,15 +273,17 @@ namespace OpenToolkit.Windowing.Desktop
             {
                 GLFW.SwapInterval(IsRunningSlowly ? 0 : 1);
             }
-
-            _watchUpdate.Restart();
         }
 
         private void DispatchRenderFrame()
         {
-            var timestamp = _watchRender.Elapsed.TotalMilliseconds;
-            OnRenderFrame(new FrameEventArgs(timestamp));
-            _watchRender.Restart();
+            var elapsed = _watchRender.Elapsed.TotalSeconds;
+            var renderPeriod = RenderFrequency == 0 ? 0 : 1 / RenderFrequency;
+            if (elapsed > 0 && elapsed >= renderPeriod)
+            {
+                _watchRender.Restart();
+                OnRenderFrame(new FrameEventArgs(elapsed));
+            }
         }
 
         /// <inheritdoc />
