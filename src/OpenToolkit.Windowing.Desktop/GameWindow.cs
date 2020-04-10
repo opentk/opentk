@@ -277,9 +277,13 @@ namespace OpenToolkit.Windowing.Desktop
 
         private void DispatchRenderFrame()
         {
-            var timestamp = _watchRender.Elapsed.TotalMilliseconds;
-            OnRenderFrame(new FrameEventArgs(timestamp));
-            _watchRender.Restart();
+            var elapsed = _watchRender.Elapsed.TotalSeconds;
+            var renderPeriod = RenderFrequency == 0 ? 0 : 1 / RenderFrequency;
+            if (elapsed > 0 && elapsed >= renderPeriod)
+            {
+                _watchRender.Restart();
+                OnRenderFrame(new FrameEventArgs(elapsed));
+            }
         }
 
         /// <inheritdoc />
