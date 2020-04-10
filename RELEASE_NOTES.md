@@ -1,8 +1,12 @@
+### 4.0.0-pre6
+ * Fixed GameWindow update frequency (Thanks @MerickOWA)
+ * Throw an InvalidOperationException if bindings are uninitialized. (Thanks @PJB)
+
 ### 4.0.0-pre5
-* Added Profile Any (Thanks @arakis)
+ * Added Profile Any (Thanks @arakis)
 
 ### 4.0.0-pre4
-* Fix error with GLFW Mouse button mapping (Thanks @GeorchW)
+ * Fix error with GLFW Mouse button mapping (Thanks @GeorchW)
 
 ### 4.0.0-pre3
  * Build System improvements to fully automatic pipeline.
