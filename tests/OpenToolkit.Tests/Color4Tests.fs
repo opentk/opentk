@@ -10,8 +10,8 @@ open OpenToolkit.Mathematics
 
 module Color4 =
     [<Literal>]
-    let private epsilon:float32 = 1e-6f
-    let private epsilonXYZ:float32 = 1e-4f
+    let private epsilon:float32 = 1.0e-6f
+    let private epsilonXYZ:float32 = 1.0e-4f
 
     [<Properties(Arbitrary = [| typeof<OpenTKGen> |])>]
     module Covertions =
