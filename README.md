@@ -20,6 +20,7 @@ When using the OpenTK 4.0 preview packages you need to initialize the opengl bin
 ```cs
 Gl.LoadBindings(new GLFWBindingsContext());
 ```
+If you do not run this code before you call OpenGL functions you will get a `AccessViolationException`.
 
 Build Status
 ========
