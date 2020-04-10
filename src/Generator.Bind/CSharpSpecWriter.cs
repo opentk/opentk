@@ -191,6 +191,7 @@ namespace Bind
             sw.Unindent();
             sw.WriteLine("};");
             sw.WriteLine("EntryPoints = new IntPtr[EntryPointNames.Length];");
+            sw.WriteLine("InitializeDummyEntryPoints(EntryPoints);");
             sw.Unindent();
             sw.WriteLine("}");
             sw.WriteLine();
