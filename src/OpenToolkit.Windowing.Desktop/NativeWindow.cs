@@ -3,6 +3,7 @@
 
 using System;
 using System.ComponentModel;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Threading;
 using OpenToolkit.Core;
@@ -496,7 +497,7 @@ namespace OpenToolkit.Windowing.Desktop
                     break;
             }
 
-            var makeContextCurrent = false;
+            var isOpenGl = false;
             switch (settings.API)
             {
                 case ContextAPI.NoAPI:
@@ -505,12 +506,12 @@ namespace OpenToolkit.Windowing.Desktop
 
                 case ContextAPI.OpenGLES:
                     GLFW.WindowHint(WindowHintClientApi.ClientApi, ClientApi.OpenGlEsApi);
-                    makeContextCurrent = true;
+                    isOpenGl = true;
                     break;
 
                 case ContextAPI.OpenGL:
                     GLFW.WindowHint(WindowHintClientApi.ClientApi, ClientApi.OpenGlApi);
-                    makeContextCurrent = true;
+                    isOpenGl = true;
                     break;
 
                 default:
@@ -568,9 +569,14 @@ namespace OpenToolkit.Windowing.Desktop
 
             Exists = true;
 
-            if (makeContextCurrent)
+            if (isOpenGl)
             {
                 GLFW.MakeContextCurrent(WindowPtr);
+
+                if (settings.AutoLoadBindings)
+                {
+                    InitializeGlBindings();
+                }
             }
 
             RegisterWindowCallbacks();
@@ -598,6 +604,46 @@ namespace OpenToolkit.Windowing.Desktop
 
             GLFW.GetWindowPos(WindowPtr, out var x, out var y);
             _location = new Vector2i(x, y);
+        }
+
+        private static void InitializeGlBindings()
+        {
+            // We don't put a hard dependency on OpenToolkit.Graphics here.
+            // So we need to use reflection to initialize the GL bindings, so users don't have to.
+
+            // Try to load OpenToolkit.Graphics assembly.
+            Assembly assembly;
+            try
+            {
+                assembly = Assembly.Load("OpenToolkit.Graphics");
+            }
+            catch
+            {
+                // Failed to load graphics, oh well.
+                // Up to the user I guess?
+                // TODO: Should we expose this load failure to the user better?
+                return;
+            }
+
+            var provider = new GLFWBindingsContext();
+
+            void LoadBindings(string typeNamespace)
+            {
+                var type = assembly.GetType($"OpenToolkit.Graphics.{typeNamespace}.GL");
+                if (type == null)
+                {
+                    return;
+                }
+
+                var load = type.GetMethod("LoadBindings");
+                load.Invoke(null, new object[] { provider });
+            }
+
+            LoadBindings("ES11");
+            LoadBindings("ES20");
+            LoadBindings("ES30");
+            LoadBindings("OpenGL2");
+            LoadBindings("OpenGL4");
         }
 
         private GLFWCallbacks.WindowPosCallback _posCallback;

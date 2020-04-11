@@ -82,6 +82,12 @@ namespace OpenToolkit.Windowing.Desktop
         public ContextFlags Flags { get; set; } = ContextFlags.Default;
 
         /// <summary>
+        /// Gets or sets a value indicating whether or not OpenGL bindings should be automatically loaded
+        /// when the window is created.
+        /// </summary>
+        public bool AutoLoadBindings { get; set; } = true;
+
+        /// <summary>
         /// Gets or sets a value representing the current version of the graphics API.
         /// </summary>
         /// <remarks>
