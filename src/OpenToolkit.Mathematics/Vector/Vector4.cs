@@ -20,13 +20,13 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
  */
 
-using OpenToolkit.Mathematics.Rotors;
 using System;
 using System.Diagnostics.Contracts;
 using System.Globalization;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Xml.Serialization;
+using OpenToolkit.Mathematics.Rotors;
 
 namespace OpenToolkit.Mathematics
 {
@@ -682,12 +682,6 @@ namespace OpenToolkit.Mathematics
             result = (left.X * right.X) + (left.Y * right.Y) + (left.Z * right.Z) + (left.W * right.W);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="p"></param>
-        /// <param name="q"></param>
-        /// <param name="bv"></param>
         public static void Wedge(in Vector4 p, in Vector4 q, out BiVector4d bv)
         {
             bv.WX = q.X - p.X;
@@ -698,12 +692,6 @@ namespace OpenToolkit.Mathematics
             bv.XY = (p.X * q.Y) - (p.Y * q.Y);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="v"></param>
-        /// <param name="tv"></param>
-        /// <param name="s"></param>
         public static void AntiWedge(in Vector4 v, in AntiVector4d tv, out float s)
         {
             s = (v.X * tv.NotX) + (v.Y * tv.NotY) + (v.Z * tv.NotZ);

@@ -16,11 +16,6 @@ namespace OpenToolkit.Mathematics.Rotors
         public float WY;
         public float WZ;
 
-        public BiVector4d()
-        {
-            XY = YZ = ZX = WX = WY = WZ = 0;
-        }
-
         public BiVector4d(float xy, float yz, float zx, float wx, float wy, float wz)
         {
             XY = xy;
@@ -31,24 +26,12 @@ namespace OpenToolkit.Mathematics.Rotors
             WZ = wz;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public Vector3 Tangent => new Vector3(WX, WY, WZ);
 
-        /// <summary>
-        /// 
-        /// </summary>
         public BiVector3d Moment => new BiVector3d(XY, YZ, ZX);
 
-        /// <summary>
-        /// 
-        /// </summary>
         public float MagnitudeSqr => (XY * XY) + (YZ * YZ) + (ZX * ZX) + (WX * WX) + (WY * WY) + (WZ * WZ);
 
-        /// <summary>
-        /// 
-        /// </summary>
         public float Magnitude => (float)Math.Sqrt(Magnitude);
 
         /// <summary>
@@ -68,12 +51,6 @@ namespace OpenToolkit.Mathematics.Rotors
             tv.NotW = (bv.YZ * v.X) - (bv.XY * v.Z) - (bv.ZX * v.Y);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="bv1"></param>
-        /// <param name="bv2"></param>
-        /// <param name="f"></param>
         public static void AntiWedge(in BiVector4d bv1, in BiVector4d bv2, out float f)
         {
             float a = BiVector3d.AntiWedge(bv1.Tangent, bv2.Moment);
@@ -84,9 +61,9 @@ namespace OpenToolkit.Mathematics.Rotors
         /// <summary>
         /// Calcualtes the signed minimum distance between two lines.
         /// </summary>
-        /// <param name="bv1"></param>
-        /// <param name="bv2"></param>
-        /// <returns></returns>
+        /// <param name="bv1">The fist line.</param>
+        /// <param name="bv2">The second line.</param>
+        /// <returns>The signed distance between the lines.</returns>
         public static float SignedMinDist(in BiVector4d bv1, in BiVector4d bv2)
         {
             // TODO: Optimize
@@ -102,11 +79,6 @@ namespace OpenToolkit.Mathematics.Rotors
         /// <param name="bv">The BiVector to normalize.</param>
         public static void Normalize(ref BiVector4d bv) => Normalize(bv, out bv);
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="bv"></param>
-        /// <param name="result"></param>
         public static void Normalize(in BiVector4d bv, out BiVector4d result)
         {
             float mag = bv.Magnitude;
