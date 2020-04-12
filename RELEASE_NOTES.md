@@ -1,6 +1,10 @@
+### 4.0.0-pre7
+* Add framework specification to paket files. (Thanks @frederikja163)
+
 ### 4.0.0-pre6
- * Fixed GameWindow update frequency (Thanks @MerickOWA)
- * Throw an InvalidOperationException if bindings are uninitialized. (Thanks @PJB)
+* Fixed GameWindow update frequency (Thanks @MerickOWA)
+* Throw an InvalidOperationException if bindings are uninitialized. (Thanks @PJB)
+
 
 ### 4.0.0-pre5
  * Added Profile Any (Thanks @arakis)
