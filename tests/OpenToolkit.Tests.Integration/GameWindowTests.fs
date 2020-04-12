@@ -152,3 +152,78 @@ module GameWindow =
             gw.Size <- newSize
             TryProcessEvents(gw)
             Assert.Equal(newSize, gw.Size)
+//
+    module Dpi =
+        [<Fact>]
+        let ``Can get monitor dpi`` () =
+            use gw = openGW()
+            let (success, dpix, dpiy) = gw.TryGetCurrentMonitorDpi()
+            () |> ignore
+
+        [<Fact>]
+        let ``Can get monitor scale`` () =
+            use gw = openGW()
+            let (success, scalex, scaley) = gw.TryGetCurrentMonitorScale()
+            () |> ignore
+
+        [<Fact>]
+        let ``Can get monitor raw dpi`` () =
+            use gw = openGW()
+            let (success, dpix, dpiy) = gw.TryGetCurrentMonitorScale()
+            () |> ignore
+
+        let defaultDpi () =
+            if RuntimeInformation.IsOSPlatform(OSPlatform.OSX) then
+                72.0f
+            else
+                96.0f
+    
+        let fuzzyequals(a : float32, b : float32, epsilon : float32) =
+            -epsilon < a - b && a - b < epsilon
+
+        [<Fact>]
+        let ``Does scale and monitor dpi match`` () =
+            use gw = openGW()
+            let (dpisuccess, dpix, dpiy) = gw.TryGetCurrentMonitorDpi()
+            let (scalesuccess, scalex, scaley) = gw.TryGetCurrentMonitorScale()
+            Assert.Equal(dpisuccess, scalesuccess) // basically a fake xor.
+            if dpisuccess && scalesuccess then
+                Assert.True(fuzzyequals(dpix/scalex, defaultDpi(), 1.0f)) // precision is up to discussion.
+                Assert.True(fuzzyequals(dpiy/scaley, defaultDpi(), 1.0f))
+
+// module UpdateFrequency =
+        [<Fact>]
+        let ``Does UpdateFrequency limit the timing of UpdateFrame`` () =
+            use gw = openGW()
+            gw.UpdateFrequency <- 10.0
+            let mutable calls = 0
+            let mutable reportedElapsed = 0.0
+            let totalCalls = 10
+            let expectedElapsed = 1.0/gw.UpdateFrequency * (float totalCalls)
+            gw.add_UpdateFrame(fun e -> calls <- calls+1; reportedElapsed <- reportedElapsed+e.Time; if calls = totalCalls then gw.Close())
+            let st = new Stopwatch()
+            st.Start()
+            gw.Run()
+            st.Stop();
+            let realElapsed = st.Elapsed.TotalSeconds
+            Assert.True(Math.Abs(realElapsed - reportedElapsed) <= 0.1, sprintf "Reported %f but actually took %f" reportedElapsed realElapsed)
+            Assert.True(Math.Abs(expectedElapsed - realElapsed) <= 0.1, sprintf "Took %f instead of the expected %f" realElapsed expectedElapsed)
+
+//
+    module RenderFrequency =
+        [<Fact>]
+        let ``Does RenderFrequency limit the timing of RenderFrame`` () =
+            use gw = openGW()
+            gw.RenderFrequency <- 10.0
+            let mutable calls = 0
+            let mutable reportedElapsed = 0.0
+            let totalCalls = 10
+            let expectedElapsed = 1.0/gw.RenderFrequency * (float totalCalls)
+            gw.add_RenderFrame(fun e -> calls <- calls+1; reportedElapsed <- reportedElapsed+e.Time; if calls = totalCalls then gw.Close())
+            let st = new Stopwatch()
+            st.Start()
+            gw.Run()
+            st.Stop();
+            let realElapsed = st.Elapsed.TotalSeconds
+            Assert.True(Math.Abs(realElapsed - reportedElapsed) <= 0.1, sprintf "Reported %f but actually took %f" reportedElapsed realElapsed)
+            Assert.True(Math.Abs(expectedElapsed - realElapsed) <= 0.1, sprintf "Took %f instead of the expected %f" realElapsed expectedElapsed)

@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<signatures version="2">
+
+  <replace name="gles2" version="3.1">
+    <function name="TexStorage2DMultisample">
+      <param name="target"><type>TextureTargetMultisample2d</type></param>
+      <param name="internalformat"><type>SizedInternalFormat</type></param>
+    </function>
+    <function name="GetMultisample">
+      <param name="pname"><type>GetMultisamplePName</type></param>
+    </function>
+    <function name="GetTexLevelParameter">
+      <param name="target"><type>TextureTarget</type></param>
+      <param name="pname"><type>GetTextureParameterName</type></param>
+    </function>
+  </replace>
+
+  <add name="gles2" version="3.1">
+    <enum name="ActiveUniformType">
+      <use token="GL_SAMPLER_2D_MULTISAMPLE"/>
+      <use token="GL_INT_SAMPLER_2D_MULTISAMPLE"/>
+      <use token="GL_UNSIGNED_INT_SAMPLER_2D_MULTISAMPLE"/>
+    </enum>
+    <enum name="EnableCap">
+      <use token="GL_SAMPLE_MASK" />
+    </enum>
+    <enum name="GetIndexedPName">
+      <use token="GL_SAMPLE_MASK_VALUE" />
+    </enum>
+    <enum name="GetPName">
+      <use token="GL_MAX_SAMPLE_MASK_WORDS"/>
+      <use token="GL_MAX_COLOR_TEXTURE_SAMPLES"/>
+      <use token="GL_MAX_DEPTH_TEXTURE_SAMPLES"/>
+      <use token="GL_MAX_INTEGER_SAMPLES"/>
+      <use token="GL_TEXTURE_BINDING_2D_MULTISAMPLE"/>
+    </enum>
+    <enum name="GetMultisamplePName">
+      <use token="GL_SAMPLE_POSITION" />
+    </enum>
+    <enum name="GetTextureParameterName">
+      <use token="GL_TEXTURE_SAMPLES" />
+      <use token="GL_TEXTURE_FIXED_SAMPLE_LOCATIONS"/>
+      <use token="GL_TEXTURE_WIDTH"/>
+      <use token="GL_TEXTURE_HEIGHT"/>
+      <use token="GL_TEXTURE_DEPTH"/>
+      <use token="GL_TEXTURE_INTERNAL_FORMAT"/>
+      <use token="GL_TEXTURE_RED_SIZE"/>
+      <use token="GL_TEXTURE_GREEN_SIZE"/>
+      <use token="GL_TEXTURE_BLUE_SIZE"/>
+      <use token="GL_TEXTURE_ALPHA_SIZE"/>
+      <use token="GL_TEXTURE_DEPTH_SIZE"/>
+      <use token="GL_TEXTURE_STENCIL_SIZE"/>
+      <use token="GL_TEXTURE_SHARED_SIZE"/>
+      <use token="GL_TEXTURE_RED_TYPE"/>
+      <use token="GL_TEXTURE_GREEN_TYPE"/>
+      <use token="GL_TEXTURE_BLUE_TYPE"/>
+      <use token="GL_TEXTURE_ALPHA_TYPE"/>
+      <use token="GL_TEXTURE_DEPTH_TYPE"/>
+      <use token="GL_TEXTURE_COMPRESSED"/>
+    </enum>
+    <enum name="TextureTargetMultisample2d">
+      <use token="GL_TEXTURE_2D_MULTISAMPLE" />
+    </enum>
+  </add>
+
+
+</signatures>

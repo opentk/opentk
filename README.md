@@ -11,11 +11,16 @@ The Open Toolkit library is a fast, low-level C# binding for OpenGL, OpenGL ES a
 
 Use OpenTK to add cross-platform 3d graphics, audio, compute and haptics to your C# application. Integrate it into your existing user interface or use it standalone without any external dependencies.
 
-
-
 Project website: https://opentk.net
 
 Official git repository: https://github.com/opentk/opentk
+
+## NOTICE: When using OpenTK 4.0-preN packages!
+When using the OpenTK 4.0 preview packages you need to initialize the opengl bindings before you can use them. To initialize them run the following code once on load/startup.
+```cs
+Gl.LoadBindings(new GLFWBindingsContext());
+```
+If you do not run this code before you call OpenGL functions you will get a `AccessViolationException`.
 
 Build Status
 ========
@@ -51,6 +56,21 @@ and then enable the "Copy to Output Directory" option (as in step 3 below).
 
 News
 ===
+
+### 2020-04-06
+
+Oops! Forgot to update the news! OpenTK 4.0.0 PREVIEW is now available on Nuget.
+
+https://www.nuget.org/packages/OpenTK
+
+
+### 2020-04-06
+
+OpenTK 3.2.0 is available. 
+
+This adds bindings for the wgl_dx_interop extension and support for joysticks with > 64 buttons.
+
+https://www.nuget.org/packages/OpenTK/3.2.0
 
 
 ### 2019-08-04
@@ -94,7 +114,7 @@ Building from source
 ```
 git clone https://github.com/opentk/opentk   # Download source code from git
 cd opentk                                    # Enter the source directory
-dotnet build                                 # Build using .Net Core
+./build.cmd / ./build.sh                     # Run the bootstrap/build script for your platform
 ```
 
 

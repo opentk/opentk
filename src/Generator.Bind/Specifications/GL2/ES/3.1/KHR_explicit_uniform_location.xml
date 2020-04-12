@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<signatures version="2">
+
+  <add name="gles2" version="3.1">
+    <enum name="GetPName">
+      <use token="GL_MAX_UNIFORM_LOCATIONS"/>
+    </enum>
+  </add>
+
+</signatures>

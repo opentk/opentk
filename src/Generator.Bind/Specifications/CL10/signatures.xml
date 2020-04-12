@@ -1,0 +1,843 @@
+<?xml version="1.0" encoding="utf-8"?>
+<signatures>
+  <add>
+    <enum name="AddressingMode" type="int">
+      <token name="ADDRESS_CLAMP" value="0x1132" />
+      <token name="ADDRESS_CLAMP_TO_EDGE" value="0x1131" />
+      <token name="ADDRESS_NONE" value="0x1130" />
+      <token name="ADDRESS_REPEAT" value="0x1133" />
+    </enum>
+    <enum name="Bool" type="int">
+      <token name="FALSE" value="0" />
+      <token name="TRUE" value="1" />
+    </enum>
+    <enum name="BuildStatus" type="int">
+      <token name="BUILD_ERROR" value="-2" />
+      <token name="BUILD_IN_PROGRESS" value="-3" />
+      <token name="BUILD_NONE" value="-1" />
+      <token name="BUILD_SUCCESS" value="0" />
+    </enum>
+    <enum name="ChannelOrder" type="int">
+      <token name="A" value="0x10B1" />
+      <token name="ARGB" value="0x10B7" />
+      <token name="BGRA" value="0x10B6" />
+      <token name="INTENSITY" value="0x10B8" />
+      <token name="LUMINANCE" value="0x10B9" />
+      <token name="R" value="0x10B0" />
+      <token name="RA" value="0x10B3" />
+      <token name="RG" value="0x10B2" />
+      <token name="RGB" value="0x10B4" />
+      <token name="RGBA" value="0x10B5" />
+    </enum>
+    <enum name="ChannelType" type="int">
+      <token name="FLOAT" value="0x10DE" />
+      <token name="HALF_FLOAT" value="0x10DD" />
+      <token name="SIGNED_INT16" value="0x10D8" />
+      <token name="SIGNED_INT32" value="0x10D9" />
+      <token name="SIGNED_INT8" value="0x10D7" />
+      <token name="SNORM_INT16" value="0x10D1" />
+      <token name="SNORM_INT8" value="0x10D0" />
+      <token name="UNORM_INT_101010" value="0x10D6" />
+      <token name="UNORM_INT16" value="0x10D3" />
+      <token name="UNORM_INT8" value="0x10D2" />
+      <token name="UNORM_SHORT_555" value="0x10D5" />
+      <token name="UNORM_SHORT_565" value="0x10D4" />
+      <token name="UNSIGNED_INT16" value="0x10DB" />
+      <token name="UNSIGNED_INT32" value="0x10DC" />
+      <token name="UNSIGNED_INT8" value="0x10DA" />
+    </enum>
+    <enum name="CommandExecutionStatus" type="int">
+      <token name="COMPLETE" value="0x0" />
+      <token name="QUEUED" value="0x3" />
+      <token name="RUNNING" value="0x1" />
+      <token name="SUBMITTED" value="0x2" />
+    </enum>
+    <enum name="CommandQueueInfo" type="int">
+      <token name="QUEUE_CONTEXT" value="0x1090" />
+      <token name="QUEUE_DEVICE" value="0x1091" />
+      <token name="QUEUE_PROPERTIES" value="0x1093" />
+      <token name="QUEUE_REFERENCE_COUNT" value="0x1092" />
+    </enum>
+    <enum name="CommandQueuePropertiesFlags" type="long">
+      <token name="QUEUE_OUT_OF_ORDER_EXEC_MODE_ENABLE" value="(1 &lt;&lt; 0)" />
+      <token name="QUEUE_PROFILING_ENABLE" value="(1 &lt;&lt; 1)" />
+    </enum>
+    <enum name="CommandType" type="int">
+      <token name="COMMAND_ACQUIRE_GL_OBJECTS" value="0x11FF" />
+      <token name="COMMAND_COPY_BUFFER" value="0x11F5" />
+      <token name="COMMAND_COPY_BUFFER_TO_IMAGE" value="0x11FA" />
+      <token name="COMMAND_COPY_IMAGE" value="0x11F8" />
+      <token name="COMMAND_COPY_IMAGE_TO_BUFFER" value="0x11F9" />
+      <token name="COMMAND_MAP_BUFFER" value="0x11FB" />
+      <token name="COMMAND_MAP_IMAGE" value="0x11FC" />
+      <token name="COMMAND_MARKER" value="0x11FE" />
+      <token name="COMMAND_NATIVE_KERNEL" value="0x11F2" />
+      <token name="COMMAND_NDRANGE_KERNEL" value="0x11F0" />
+      <token name="COMMAND_READ_BUFFER" value="0x11F3" />
+      <token name="COMMAND_READ_IMAGE" value="0x11F6" />
+      <token name="COMMAND_RELEASE_GL_OBJECTS" value="0x1200" />
+      <token name="COMMAND_TASK" value="0x11F1" />
+      <token name="COMMAND_UNMAP_MEM_OBJECT" value="0x11FD" />
+      <token name="COMMAND_WRITE_BUFFER" value="0x11F4" />
+      <token name="COMMAND_WRITE_IMAGE" value="0x11F7" />
+    </enum>
+    <enum name="ContextInfo" type="int">
+      <token name="CONTEXT_DEVICES" value="0x1081" />
+      <token name="CONTEXT_PROPERTIES" value="0x1082" />
+      <token name="CONTEXT_REFERENCE_COUNT" value="0x1080" />
+    </enum>
+    <enum name="ContextProperties" type="int">
+      <token name="CONTEXT_PLATFORM" value="0x1084" />
+    </enum>
+    <enum name="DeviceExecCapabilitiesFlags" type="long">
+      <token name="EXEC_KERNEL" value="(1 &lt;&lt; 0)" />
+      <token name="EXEC_NATIVE_KERNEL" value="(1 &lt;&lt; 1)" />
+    </enum>
+    <enum name="DeviceFpConfigFlags" type="long">
+      <token name="FP_DENORM" value="(1 &lt;&lt; 0)" />
+      <token name="FP_FMA" value="(1 &lt;&lt; 5)" />
+      <token name="FP_INF_NAN" value="(1 &lt;&lt; 1)" />
+      <token name="FP_ROUND_TO_INF" value="(1 &lt;&lt; 4)" />
+      <token name="FP_ROUND_TO_NEAREST" value="(1 &lt;&lt; 2)" />
+      <token name="FP_ROUND_TO_ZERO" value="(1 &lt;&lt; 3)" />
+    </enum>
+    <enum name="DeviceInfo" type="int">
+      <token name="DEVICE_ADDRESS_BITS" value="0x100D" />
+      <token name="DEVICE_AVAILABLE" value="0x1027" />
+      <token name="DEVICE_COMPILER_AVAILABLE" value="0x1028" />
+      <token name="DEVICE_ENDIAN_LITTLE" value="0x1026" />
+      <token name="DEVICE_ERROR_CORRECTION_SUPPORT" value="0x1024" />
+      <token name="DEVICE_EXECUTION_CAPABILITIES" value="0x1029" />
+      <token name="DEVICE_EXTENSIONS" value="0x1030" />
+      <token name="DEVICE_GLOBAL_MEM_CACHE_SIZE" value="0x101E" />
+      <token name="DEVICE_GLOBAL_MEM_CACHE_TYPE" value="0x101C" />
+      <token name="DEVICE_GLOBAL_MEM_CACHELINE_SIZE" value="0x101D" />
+      <token name="DEVICE_GLOBAL_MEM_SIZE" value="0x101F" />
+      <token name="DEVICE_IMAGE_SUPPORT" value="0x1016" />
+      <token name="DEVICE_IMAGE2D_MAX_HEIGHT" value="0x1012" />
+      <token name="DEVICE_IMAGE2D_MAX_WIDTH" value="0x1011" />
+      <token name="DEVICE_IMAGE3D_MAX_DEPTH" value="0x1015" />
+      <token name="DEVICE_IMAGE3D_MAX_HEIGHT" value="0x1014" />
+      <token name="DEVICE_IMAGE3D_MAX_WIDTH" value="0x1013" />
+      <token name="DEVICE_LOCAL_MEM_SIZE" value="0x1023" />
+      <token name="DEVICE_LOCAL_MEM_TYPE" value="0x1022" />
+      <token name="DEVICE_MAX_CLOCK_FREQUENCY" value="0x100C" />
+      <token name="DEVICE_MAX_COMPUTE_UNITS" value="0x1002" />
+      <token name="DEVICE_MAX_CONSTANT_ARGS" value="0x1021" />
+      <token name="DEVICE_MAX_CONSTANT_BUFFER_SIZE" value="0x1020" />
+      <token name="DEVICE_MAX_MEM_ALLOC_SIZE" value="0x1010" />
+      <token name="DEVICE_MAX_PARAMETER_SIZE" value="0x1017" />
+      <token name="DEVICE_MAX_READ_IMAGE_ARGS" value="0x100E" />
+      <token name="DEVICE_MAX_SAMPLERS" value="0x1018" />
+      <token name="DEVICE_MAX_WORK_GROUP_SIZE" value="0x1004" />
+      <token name="DEVICE_MAX_WORK_ITEM_DIMENSIONS" value="0x1003" />
+      <token name="DEVICE_MAX_WORK_ITEM_SIZES" value="0x1005" />
+      <token name="DEVICE_MAX_WRITE_IMAGE_ARGS" value="0x100F" />
+      <token name="DEVICE_MEM_BASE_ADDR_ALIGN" value="0x1019" />
+      <token name="DEVICE_MIN_DATA_TYPE_ALIGN_SIZE" value="0x101A" />
+      <token name="DEVICE_NAME" value="0x102B" />
+      <token name="DEVICE_PLATFORM" value="0x1031" />
+      <token name="DEVICE_PREFERRED_VECTOR_WIDTH_CHAR" value="0x1006" />
+      <token name="DEVICE_PREFERRED_VECTOR_WIDTH_DOUBLE" value="0x100B" />
+      <token name="DEVICE_PREFERRED_VECTOR_WIDTH_FLOAT" value="0x100A" />
+      <token name="DEVICE_PREFERRED_VECTOR_WIDTH_INT" value="0x1008" />
+      <token name="DEVICE_PREFERRED_VECTOR_WIDTH_LONG" value="0x1009" />
+      <token name="DEVICE_PREFERRED_VECTOR_WIDTH_SHORT" value="0x1007" />
+      <token name="DEVICE_PROFILE" value="0x102E" />
+      <token name="DEVICE_PROFILING_TIMER_RESOLUTION" value="0x1025" />
+      <token name="DEVICE_QUEUE_PROPERTIES" value="0x102A" />
+      <token name="DEVICE_SINGLE_FP_CONFIG" value="0x101B" />
+      <token name="DEVICE_TYPE" value="0x1000" />
+      <token name="DEVICE_VENDOR" value="0x102C" />
+      <token name="DEVICE_VENDOR_ID" value="0x1001" />
+      <token name="DEVICE_VERSION" value="0x102F" />
+      <token name="DRIVER_VERSION" value="0x102D" />
+    </enum>
+    <enum name="DeviceLocalMemType" type="int">
+      <token name="GLOBAL" value="0x2" />
+      <token name="LOCAL" value="0x1" />
+    </enum>
+    <enum name="DeviceMemCacheType" type="int">
+      <token name="NONE" value="0x0" />
+      <token name="READ_ONLY_CACHE" value="0x1" />
+      <token name="READ_WRITE_CACHE" value="0x2" />
+    </enum>
+    <enum name="DeviceTypeFlags" type="long">
+      <token name="DEVICE_TYPE_ACCELERATOR" value="(1 &lt;&lt; 3)" />
+      <token name="DEVICE_TYPE_ALL" value="0xFFFFFFFF" />
+      <token name="DEVICE_TYPE_CPU" value="(1 &lt;&lt; 1)" />
+      <token name="DEVICE_TYPE_DEFAULT" value="(1 &lt;&lt; 0)" />
+      <token name="DEVICE_TYPE_GPU" value="(1 &lt;&lt; 2)" />
+    </enum>
+    <enum name="ErrorCodes" type="int">
+      <token name="BUILD_PROGRAM_FAILURE" value="-11" />
+      <token name="COMPILER_NOT_AVAILABLE" value="-3" />
+      <token name="DEVICE_NOT_AVAILABLE" value="-2" />
+      <token name="DEVICE_NOT_FOUND" value="-1" />
+      <token name="IMAGE_FORMAT_MISMATCH" value="-9" />
+      <token name="IMAGE_FORMAT_NOT_SUPPORTED" value="-10" />
+      <token name="INVALID_ARG_INDEX" value="-49" />
+      <token name="INVALID_ARG_SIZE" value="-51" />
+      <token name="INVALID_ARG_VALUE" value="-50" />
+      <token name="INVALID_BINARY" value="-42" />
+      <token name="INVALID_BUFFER_SIZE" value="-61" />
+      <token name="INVALID_BUILD_OPTIONS" value="-43" />
+      <token name="INVALID_COMMAND_QUEUE" value="-36" />
+      <token name="INVALID_CONTEXT" value="-34" />
+      <token name="INVALID_DEVICE" value="-33" />
+      <token name="INVALID_DEVICE_TYPE" value="-31" />
+      <token name="INVALID_EVENT" value="-58" />
+      <token name="INVALID_EVENT_WAIT_LIST" value="-57" />
+      <token name="INVALID_GL_OBJECT" value="-60" />
+      <token name="INVALID_GLOBAL_OFFSET" value="-56" />
+      <token name="INVALID_HOST_PTR" value="-37" />
+      <token name="INVALID_IMAGE_FORMAT_DESCRIPTOR" value="-39" />
+      <token name="INVALID_IMAGE_SIZE" value="-40" />
+      <token name="INVALID_KERNEL" value="-48" />
+      <token name="INVALID_KERNEL_ARGS" value="-52" />
+      <token name="INVALID_KERNEL_DEFINITION" value="-47" />
+      <token name="INVALID_KERNEL_NAME" value="-46" />
+      <token name="INVALID_MEM_OBJECT" value="-38" />
+      <token name="INVALID_MIP_LEVEL" value="-62" />
+      <token name="INVALID_OPERATION" value="-59" />
+      <token name="INVALID_PLATFORM" value="-32" />
+      <token name="INVALID_PROGRAM" value="-44" />
+      <token name="INVALID_PROGRAM_EXECUTABLE" value="-45" />
+      <token name="INVALID_QUEUE_PROPERTIES" value="-35" />
+      <token name="INVALID_SAMPLER" value="-41" />
+      <token name="INVALID_VALUE" value="-30" />
+      <token name="INVALID_WORK_DIMENSION" value="-53" />
+      <token name="INVALID_WORK_GROUP_SIZE" value="-54" />
+      <token name="INVALID_WORK_ITEM_SIZE" value="-55" />
+      <token name="MAP_FAILURE" value="-12" />
+      <token name="MEM_COPY_OVERLAP" value="-8" />
+      <token name="MEM_OBJECT_ALLOCATION_FAILURE" value="-4" />
+      <token name="OUT_OF_HOST_MEMORY" value="-6" />
+      <token name="OUT_OF_RESOURCES" value="-5" />
+      <token name="PROFILING_INFO_NOT_AVAILABLE" value="-7" />
+      <token name="SUCCESS" value="0" />
+    </enum>
+    <enum name="EventInfo" type="int">
+      <token name="EVENT_COMMAND_EXECUTION_STATUS" value="0x11D3" />
+      <token name="EVENT_COMMAND_QUEUE" value="0x11D0" />
+      <token name="EVENT_COMMAND_TYPE" value="0x11D1" />
+      <token name="EVENT_REFERENCE_COUNT" value="0x11D2" />
+    </enum>
+    <enum name="FilterMode" type="int">
+      <token name="FILTER_LINEAR" value="0x1141" />
+      <token name="FILTER_NEAREST" value="0x1140" />
+    </enum>
+    <enum name="ImageInfo" type="int">
+      <token name="IMAGE_DEPTH" value="0x1116" />
+      <token name="IMAGE_ELEMENT_SIZE" value="0x1111" />
+      <token name="IMAGE_FORMAT" value="0x1110" />
+      <token name="IMAGE_HEIGHT" value="0x1115" />
+      <token name="IMAGE_ROW_PITCH" value="0x1112" />
+      <token name="IMAGE_SLICE_PITCH" value="0x1113" />
+      <token name="IMAGE_WIDTH" value="0x1114" />
+    </enum>
+    <enum name="KernelInfo" type="int">
+      <token name="KERNEL_CONTEXT" value="0x1193" />
+      <token name="KERNEL_FUNCTION_NAME" value="0x1190" />
+      <token name="KERNEL_NUM_ARGS" value="0x1191" />
+      <token name="KERNEL_PROGRAM" value="0x1194" />
+      <token name="KERNEL_REFERENCE_COUNT" value="0x1192" />
+    </enum>
+    <enum name="KernelWorkGroupInfo" type="int">
+      <token name="KERNEL_COMPILE_WORK_GROUP_SIZE" value="0x11B1" />
+      <token name="KERNEL_LOCAL_MEM_SIZE" value="0x11B2" />
+      <token name="KERNEL_WORK_GROUP_SIZE" value="0x11B0" />
+    </enum>
+    <enum name="MapFlags" type="long">
+      <token name="MAP_READ" value="(1 &lt;&lt; 0)" />
+      <token name="MAP_WRITE" value="(1 &lt;&lt; 1)" />
+    </enum>
+    <enum name="MemFlags" type="long">
+      <token name="MEM_ALLOC_HOST_PTR" value="(1 &lt;&lt; 4)" />
+      <token name="MEM_COPY_HOST_PTR" value="(1 &lt;&lt; 5)" />
+      <token name="MEM_READ_ONLY" value="(1 &lt;&lt; 2)" />
+      <token name="MEM_READ_WRITE" value="(1 &lt;&lt; 0)" />
+      <token name="MEM_USE_HOST_PTR" value="(1 &lt;&lt; 3)" />
+      <token name="MEM_WRITE_ONLY" value="(1 &lt;&lt; 1)" />
+    </enum>
+    <enum name="MemInfo" type="int">
+      <token name="MEM_CONTEXT" value="0x1106" />
+      <token name="MEM_FLAGS" value="0x1101" />
+      <token name="MEM_HOST_PTR" value="0x1103" />
+      <token name="MEM_MAP_COUNT" value="0x1104" />
+      <token name="MEM_REFERENCE_COUNT" value="0x1105" />
+      <token name="MEM_SIZE" value="0x1102" />
+      <token name="MEM_TYPE" value="0x1100" />
+    </enum>
+    <enum name="MemObjectType" type="int">
+      <token name="MEM_OBJECT_BUFFER" value="0x10F0" />
+      <token name="MEM_OBJECT_IMAGE2D" value="0x10F1" />
+      <token name="MEM_OBJECT_IMAGE3D" value="0x10F2" />
+    </enum>
+    <enum name="PlatformInfo" type="int">
+      <token name="PLATFORM_EXTENSIONS" value="0x0904" />
+      <token name="PLATFORM_NAME" value="0x0902" />
+      <token name="PLATFORM_PROFILE" value="0x0900" />
+      <token name="PLATFORM_VENDOR" value="0x0903" />
+      <token name="PLATFORM_VERSION" value="0x0901" />
+    </enum>
+    <enum name="ProfilingInfo" type="int">
+      <token name="PROFILING_COMMAND_END" value="0x1283" />
+      <token name="PROFILING_COMMAND_QUEUED" value="0x1280" />
+      <token name="PROFILING_COMMAND_START" value="0x1282" />
+      <token name="PROFILING_COMMAND_SUBMIT" value="0x1281" />
+    </enum>
+    <enum name="ProgramBuildInfo" type="int">
+      <token name="PROGRAM_BUILD_LOG" value="0x1183" />
+      <token name="PROGRAM_BUILD_OPTIONS" value="0x1182" />
+      <token name="PROGRAM_BUILD_STATUS" value="0x1181" />
+    </enum>
+    <enum name="ProgramInfo" type="int">
+      <token name="PROGRAM_BINARIES" value="0x1166" />
+      <token name="PROGRAM_BINARY_SIZES" value="0x1165" />
+      <token name="PROGRAM_CONTEXT" value="0x1161" />
+      <token name="PROGRAM_DEVICES" value="0x1163" />
+      <token name="PROGRAM_NUM_DEVICES" value="0x1162" />
+      <token name="PROGRAM_REFERENCE_COUNT" value="0x1160" />
+      <token name="PROGRAM_SOURCE" value="0x1164" />
+    </enum>
+    <enum name="SamplerInfo" type="int">
+      <token name="SAMPLER_ADDRESSING_MODE" value="0x1153" />
+      <token name="SAMPLER_CONTEXT" value="0x1151" />
+      <token name="SAMPLER_FILTER_MODE" value="0x1154" />
+      <token name="SAMPLER_NORMALIZED_COORDS" value="0x1152" />
+      <token name="SAMPLER_REFERENCE_COUNT" value="0x1150" />
+    </enum>
+    <enum name="Unknown">
+      <token name="CHAR_BIT" value="8" />
+      <token name="CHAR_MAX" value="CL_SCHAR_MAX" />
+      <token name="CHAR_MIN" value="CL_SCHAR_MIN" />
+      <token name="DBL_DIG" value="15" />
+      <token name="DBL_MANT_DIG" value="53" />
+      <token name="DBL_MIN_10_EXP" value="-307" />
+      <token name="DBL_MIN_EXP" value="-1021" />
+      <token name="DBL_RADIX" value="2" />
+      <token name="FLT_DIG" value="6" />
+      <token name="FLT_MANT_DIG" value="24" />
+      <token name="FLT_MIN_10_EXP" value="-37" />
+      <token name="FLT_MIN_EXP" value="-125" />
+      <token name="FLT_RADIX" value="2" />
+      <token name="INT_MAX" value="2147483647" />
+      <token name="INT_MIN" value="(-2147483647-1)" />
+      <token name="SCHAR_MAX" value="127" />
+      <token name="SCHAR_MIN" value="(-127-1)" />
+      <token name="SHRT_MAX" value="32767" />
+      <token name="SHRT_MIN" value="(-32767-1)" />
+      <token name="UCHAR_MAX" value="255" />
+      <token name="UINT_MAX" value="0xffffffffU" />
+      <token name="USHRT_MAX" value="65535" />
+    </enum>
+    <enum name="Version" type="int">
+      <token name="VERSION_1_0" value="1" />
+    </enum>
+    <function name="BuildProgram" extension="Core" profile="" category="1.0" version="1.0">
+      <returns type="cl_int" />
+      <param type="cl_program" name="program" flow="in" />
+      <param type="cl_uint" name="num_devices" flow="in" />
+      <param type="cl_device_id*" name="device_list" flow="in" />
+      <param type="char*" name="options" flow="in" />
+      <param type="IntPtr" name="pfn_notify" flow="in" />
+      <param type="void*" name="user_data" flow="in" />
+    </function>
+    <function name="CreateBuffer" extension="Core" profile="" category="1.0" version="1.0">
+      <returns type="cl_mem" />
+      <param type="cl_context" name="context" flow="in" />
+      <param type="cl_mem_flags" name="flags" flow="in" />
+      <param type="size_t" name="size" flow="in" />
+      <param type="void*" name="host_ptr" flow="in" />
+      <param type="cl_int*" name="errcode_ret" flow="out" />
+    </function>
+    <function name="CreateCommandQueue" extension="Core" profile="" category="1.0" version="1.0">
+      <returns type="cl_command_queue" />
+      <param type="cl_context" name="context" flow="in" />
+      <param type="cl_device_id" name="device" flow="in" />
+      <param type="cl_command_queue_properties" name="properties" flow="in" />
+      <param type="cl_int*" name="errcode_ret" flow="out" />
+    </function>
+    <function name="CreateContext" extension="Core" profile="" category="1.0" version="1.0">
+      <returns type="cl_context" />
+      <param type="cl_context_properties*" name="properties" flow="in" />
+      <param type="cl_uint" name="num_devices" flow="in" />
+      <param type="cl_device_id*" name="devices" flow="in" />
+      <param type="IntPtr" name="pfn_notify" flow="in" />
+      <param type="void*" name="user_data" flow="in" />
+      <param type="cl_int*" name="errcode_ret" flow="out" />
+    </function>
+    <function name="CreateContextFromType" extension="Core" profile="" category="1.0" version="1.0">
+      <returns type="cl_context" />
+      <param type="cl_context_properties*" name="properties" flow="in" />
+      <param type="cl_device_type" name="device_type" flow="in" />
+      <param type="IntPtr" name="pfn_notify" flow="in" />
+      <param type="void*" name="user_data" flow="in" />
+      <param type="cl_int*" name="errcode_ret" flow="out" />
+    </function>
+    <function name="CreateImage2D" extension="Core" profile="" category="1.0" version="1.0">
+      <returns type="cl_mem" />
+      <param type="cl_context" name="context" flow="in" />
+      <param type="cl_mem_flags" name="flags" flow="in" />
+      <param type="cl_image_format*" name="image_format" flow="in" />
+      <param type="size_t" name="image_width" flow="in" />
+      <param type="size_t" name="image_height" flow="in" />
+      <param type="size_t" name="image_row_pitch" flow="in" />
+      <param type="void*" name="host_ptr" flow="in" />
+      <param type="cl_int*" name="errcode_ret" flow="out" />
+    </function>
+    <function name="CreateImage3D" extension="Core" profile="" category="1.0" version="1.0">
+      <returns type="cl_mem" />
+      <param type="cl_context" name="context" flow="in" />
+      <param type="cl_mem_flags" name="flags" flow="in" />
+      <param type="cl_image_format*" name="image_format" flow="in" />
+      <param type="size_t" name="image_width" flow="in" />
+      <param type="size_t" name="image_height" flow="in" />
+      <param type="size_t" name="image_depth" flow="in" />
+      <param type="size_t" name="image_row_pitch" flow="in" />
+      <param type="size_t" name="image_slice_pitch" flow="in" />
+      <param type="void*" name="host_ptr" flow="in" />
+      <param type="cl_int*" name="errcode_ret" flow="out" />
+    </function>
+    <function name="CreateKernel" extension="Core" profile="" category="1.0" version="1.0">
+      <returns type="cl_kernel" />
+      <param type="cl_program" name="program" flow="in" />
+      <param type="char*" name="kernel_name" flow="in" />
+      <param type="cl_int*" name="errcode_ret" flow="out" />
+    </function>
+    <function name="CreateKernelsInProgram" extension="Core" profile="" category="1.0" version="1.0">
+      <returns type="cl_int" />
+      <param type="cl_program" name="program" flow="in" />
+      <param type="cl_uint" name="num_kernels" flow="in" />
+      <param type="cl_kernel*" name="kernels" flow="in" />
+      <param type="cl_uint*" name="num_kernels_ret" flow="out" />
+    </function>
+    <function name="CreateProgramWithBinary" extension="Core" profile="" category="1.0" version="1.0">
+      <returns type="cl_program" />
+      <param type="cl_context" name="context" flow="in" />
+      <param type="cl_uint" name="num_devices" flow="in" />
+      <param type="cl_device_id*" name="device_list" flow="in" />
+      <param type="size_t*" name="lengths" flow="in" />
+      <param type="uchar**" name="binaries" flow="in" />
+      <param type="cl_int*" name="binary_status" flow="in" />
+      <param type="cl_int*" name="errcode_ret" flow="out" />
+    </function>
+    <function name="CreateProgramWithSource" extension="Core" profile="" category="1.0" version="1.0">
+      <returns type="cl_program" />
+      <param type="cl_context" name="context" flow="in" />
+      <param type="cl_uint" name="count" flow="in" />
+      <param type="char**" name="strings" flow="in" />
+      <param type="size_t*" name="lengths" flow="in" />
+      <param type="cl_int*" name="errcode_ret" flow="out" />
+    </function>
+    <function name="CreateSampler" extension="Core" profile="" category="1.0" version="1.0">
+      <returns type="cl_sampler" />
+      <param type="cl_context" name="context" flow="in" />
+      <param type="cl_bool" name="normalized_coords" flow="in" />
+      <param type="cl_addressing_mode" name="addressing_mode" flow="in" />
+      <param type="cl_filter_mode" name="filter_mode" flow="in" />
+      <param type="cl_int*" name="errcode_ret" flow="out" />
+    </function>
+    <function name="EnqueueBarrier" extension="Core" profile="" category="1.0" version="1.0">
+      <returns type="cl_int" />
+      <param type="cl_command_queue" name="command_queue" flow="in" />
+    </function>
+    <function name="EnqueueCopyBuffer" extension="Core" profile="" category="1.0" version="1.0">
+      <returns type="cl_int" />
+      <param type="cl_command_queue" name="command_queue" flow="in" />
+      <param type="cl_mem" name="src_buffer" flow="in" />
+      <param type="cl_mem" name="dst_buffer" flow="in" />
+      <param type="size_t" name="src_offset" flow="in" />
+      <param type="size_t" name="dst_offset" flow="in" />
+      <param type="size_t" name="cb" flow="in" />
+      <param type="cl_uint" name="num_events_in_wait_list" flow="in" />
+      <param type="cl_event*" name="event_wait_list" flow="in" />
+      <param type="cl_event*" name="event" flow="in" />
+    </function>
+    <function name="EnqueueCopyBufferToImage" extension="Core" profile="" category="1.0" version="1.0">
+      <returns type="cl_int" />
+      <param type="cl_command_queue" name="command_queue" flow="in" />
+      <param type="cl_mem" name="src_buffer" flow="in" />
+      <param type="cl_mem" name="dst_image" flow="in" />
+      <param type="size_t" name="src_offset" flow="in" />
+      <param type="size_t**" name="dst_origin" count="3" flow="in" />
+      <param type="size_t**" name="region" count="3" flow="in" />
+      <param type="cl_uint" name="num_events_in_wait_list" flow="in" />
+      <param type="cl_event*" name="event_wait_list" flow="in" />
+      <param type="cl_event*" name="event" flow="in" />
+    </function>
+    <function name="EnqueueCopyImage" extension="Core" profile="" category="1.0" version="1.0">
+      <returns type="cl_int" />
+      <param type="cl_command_queue" name="command_queue" flow="in" />
+      <param type="cl_mem" name="src_image" flow="in" />
+      <param type="cl_mem" name="dst_image" flow="in" />
+      <param type="size_t**" name="src_origin" count="3" flow="in" />
+      <param type="size_t**" name="dst_origin" count="3" flow="in" />
+      <param type="size_t**" name="region" count="3" flow="in" />
+      <param type="cl_uint" name="num_events_in_wait_list" flow="in" />
+      <param type="cl_event*" name="event_wait_list" flow="in" />
+      <param type="cl_event*" name="event" flow="in" />
+    </function>
+    <function name="EnqueueCopyImageToBuffer" extension="Core" profile="" category="1.0" version="1.0">
+      <returns type="cl_int" />
+      <param type="cl_command_queue" name="command_queue" flow="in" />
+      <param type="cl_mem" name="src_image" flow="in" />
+      <param type="cl_mem" name="dst_buffer" flow="in" />
+      <param type="size_t**" name="src_origin" count="3" flow="in" />
+      <param type="size_t**" name="region" count="3" flow="in" />
+      <param type="size_t" name="dst_offset" flow="in" />
+      <param type="cl_uint" name="num_events_in_wait_list" flow="in" />
+      <param type="cl_event*" name="event_wait_list" flow="in" />
+      <param type="cl_event*" name="event" flow="in" />
+    </function>
+    <function name="EnqueueMapBuffer" extension="Core" profile="" category="1.0" version="1.0">
+      <returns type="void*" />
+      <param type="cl_command_queue" name="command_queue" flow="in" />
+      <param type="cl_mem" name="buffer" flow="in" />
+      <param type="cl_bool" name="blocking_map" flow="in" />
+      <param type="cl_map_flags" name="map_flags" flow="in" />
+      <param type="size_t" name="offset" flow="in" />
+      <param type="size_t" name="cb" flow="in" />
+      <param type="cl_uint" name="num_events_in_wait_list" flow="in" />
+      <param type="cl_event*" name="event_wait_list" flow="in" />
+      <param type="cl_event*" name="event" flow="in" />
+      <param type="cl_int*" name="errcode_ret" flow="out" />
+    </function>
+    <function name="EnqueueMapImage" extension="Core" profile="" category="1.0" version="1.0">
+      <returns type="void*" />
+      <param type="cl_command_queue" name="command_queue" flow="in" />
+      <param type="cl_mem" name="image" flow="in" />
+      <param type="cl_bool" name="blocking_map" flow="in" />
+      <param type="cl_map_flags" name="map_flags" flow="in" />
+      <param type="size_t**" name="origin" count="3" flow="in" />
+      <param type="size_t**" name="region" count="3" flow="in" />
+      <param type="size_t*" name="image_row_pitch" flow="in" />
+      <param type="size_t*" name="image_slice_pitch" flow="in" />
+      <param type="cl_uint" name="num_events_in_wait_list" flow="in" />
+      <param type="cl_event*" name="event_wait_list" flow="in" />
+      <param type="cl_event*" name="event" flow="in" />
+      <param type="cl_int*" name="errcode_ret" flow="out" />
+    </function>
+    <function name="EnqueueMarker" extension="Core" profile="" category="1.0" version="1.0">
+      <returns type="cl_int" />
+      <param type="cl_command_queue" name="command_queue" flow="in" />
+      <param type="cl_event*" name="event" flow="in" />
+    </function>
+    <function name="EnqueueNativeKernel" extension="Core" profile="" category="1.0" version="1.0">
+      <returns type="cl_int" />
+      <param type="cl_command_queue" name="command_queue" flow="in" />
+      <param type="IntPtr" name="user_func" flow="in" />
+      <param type="void*" name="args" flow="in" />
+      <param type="size_t" name="cb_args" flow="in" />
+      <param type="cl_uint" name="num_mem_objects" flow="in" />
+      <param type="cl_mem*" name="mem_list" flow="in" />
+      <param type="void**" name="args_mem_loc" flow="in" />
+      <param type="cl_uint" name="num_events_in_wait_list" flow="in" />
+      <param type="cl_event*" name="event_wait_list" flow="in" />
+      <param type="cl_event*" name="event" flow="in" />
+    </function>
+    <function name="EnqueueNDRangeKernel" extension="Core" profile="" category="1.0" version="1.0">
+      <returns type="cl_int" />
+      <param type="cl_command_queue" name="command_queue" flow="in" />
+      <param type="cl_kernel" name="kernel" flow="in" />
+      <param type="cl_uint" name="work_dim" flow="in" />
+      <param type="size_t*" name="global_work_offset" flow="in" />
+      <param type="size_t*" name="global_work_size" flow="in" />
+      <param type="size_t*" name="local_work_size" flow="in" />
+      <param type="cl_uint" name="num_events_in_wait_list" flow="in" />
+      <param type="cl_event*" name="event_wait_list" flow="in" />
+      <param type="cl_event*" name="event" flow="in" />
+    </function>
+    <function name="EnqueueReadBuffer" extension="Core" profile="" category="1.0" version="1.0">
+      <returns type="cl_int" />
+      <param type="cl_command_queue" name="command_queue" flow="in" />
+      <param type="cl_mem" name="buffer" flow="in" />
+      <param type="cl_bool" name="blocking_read" flow="in" />
+      <param type="size_t" name="offset" flow="in" />
+      <param type="size_t" name="cb" flow="in" />
+      <param type="void*" name="ptr" flow="in" />
+      <param type="cl_uint" name="num_events_in_wait_list" flow="in" />
+      <param type="cl_event*" name="event_wait_list" flow="in" />
+      <param type="cl_event*" name="event" flow="in" />
+    </function>
+    <function name="EnqueueReadImage" extension="Core" profile="" category="1.0" version="1.0">
+      <returns type="cl_int" />
+      <param type="cl_command_queue" name="command_queue" flow="in" />
+      <param type="cl_mem" name="image" flow="in" />
+      <param type="cl_bool" name="blocking_read" flow="in" />
+      <param type="size_t**" name="origin" count="3" flow="in" />
+      <param type="size_t**" name="region" count="3" flow="in" />
+      <param type="size_t" name="row_pitch" flow="in" />
+      <param type="size_t" name="slice_pitch" flow="in" />
+      <param type="void*" name="ptr" flow="in" />
+      <param type="cl_uint" name="num_events_in_wait_list" flow="in" />
+      <param type="cl_event*" name="event_wait_list" flow="in" />
+      <param type="cl_event*" name="event" flow="in" />
+    </function>
+    <function name="EnqueueTask" extension="Core" profile="" category="1.0" version="1.0">
+      <returns type="cl_int" />
+      <param type="cl_command_queue" name="command_queue" flow="in" />
+      <param type="cl_kernel" name="kernel" flow="in" />
+      <param type="cl_uint" name="num_events_in_wait_list" flow="in" />
+      <param type="cl_event*" name="event_wait_list" flow="in" />
+      <param type="cl_event*" name="event" flow="in" />
+    </function>
+    <function name="EnqueueUnmapMemObject" extension="Core" profile="" category="1.0" version="1.0">
+      <returns type="cl_int" />
+      <param type="cl_command_queue" name="command_queue" flow="in" />
+      <param type="cl_mem" name="memobj" flow="in" />
+      <param type="void*" name="mapped_ptr" flow="in" />
+      <param type="cl_uint" name="num_events_in_wait_list" flow="in" />
+      <param type="cl_event*" name="event_wait_list" flow="in" />
+      <param type="cl_event*" name="event" flow="in" />
+    </function>
+    <function name="EnqueueWaitForEvents" extension="Core" profile="" category="1.0" version="1.0">
+      <returns type="cl_int" />
+      <param type="cl_command_queue" name="command_queue" flow="in" />
+      <param type="cl_uint" name="num_events" flow="in" />
+      <param type="cl_event*" name="event_list" flow="in" />
+    </function>
+    <function name="EnqueueWriteBuffer" extension="Core" profile="" category="1.0" version="1.0">
+      <returns type="cl_int" />
+      <param type="cl_command_queue" name="command_queue" flow="in" />
+      <param type="cl_mem" name="buffer" flow="in" />
+      <param type="cl_bool" name="blocking_write" flow="in" />
+      <param type="size_t" name="offset" flow="in" />
+      <param type="size_t" name="cb" flow="in" />
+      <param type="void*" name="ptr" flow="in" />
+      <param type="cl_uint" name="num_events_in_wait_list" flow="in" />
+      <param type="cl_event*" name="event_wait_list" flow="in" />
+      <param type="cl_event*" name="event" flow="in" />
+    </function>
+    <function name="EnqueueWriteImage" extension="Core" profile="" category="1.0" version="1.0">
+      <returns type="cl_int" />
+      <param type="cl_command_queue" name="command_queue" flow="in" />
+      <param type="cl_mem" name="image" flow="in" />
+      <param type="cl_bool" name="blocking_write" flow="in" />
+      <param type="size_t**" name="origin" count="3" flow="in" />
+      <param type="size_t**" name="region" count="3" flow="in" />
+      <param type="size_t" name="input_row_pitch" flow="in" />
+      <param type="size_t" name="input_slice_pitch" flow="in" />
+      <param type="void*" name="ptr" flow="in" />
+      <param type="cl_uint" name="num_events_in_wait_list" flow="in" />
+      <param type="cl_event*" name="event_wait_list" flow="in" />
+      <param type="cl_event*" name="event" flow="in" />
+    </function>
+    <function name="Finish" extension="Core" profile="" category="1.0" version="1.0">
+      <returns type="cl_int" />
+      <param type="cl_command_queue" name="command_queue" flow="in" />
+    </function>
+    <function name="Flush" extension="Core" profile="" category="1.0" version="1.0">
+      <returns type="cl_int" />
+      <param type="cl_command_queue" name="command_queue" flow="in" />
+    </function>
+    <function name="GetCommandQueueInfo" extension="Core" profile="" category="1.0" version="1.0">
+      <returns type="cl_int" />
+      <param type="cl_command_queue" name="command_queue" flow="in" />
+      <param type="cl_command_queue_info" name="param_name" flow="in" />
+      <param type="size_t" name="param_value_size" flow="in" />
+      <param type="void*" name="param_value" flow="in" />
+      <param type="size_t*" name="param_value_size_ret" flow="out" />
+    </function>
+    <function name="GetContextInfo" extension="Core" profile="" category="1.0" version="1.0">
+      <returns type="cl_int" />
+      <param type="cl_context" name="context" flow="in" />
+      <param type="cl_context_info" name="param_name" flow="in" />
+      <param type="size_t" name="param_value_size" flow="in" />
+      <param type="void*" name="param_value" flow="in" />
+      <param type="size_t*" name="param_value_size_ret" flow="out" />
+    </function>
+    <function name="GetDeviceIDs" extension="Core" profile="" category="1.0" version="1.0">
+      <returns type="cl_int" />
+      <param type="cl_platform_id" name="platform" flow="in" />
+      <param type="cl_device_type" name="device_type" flow="in" />
+      <param type="cl_uint" name="num_entries" flow="in" />
+      <param type="cl_device_id*" name="devices" flow="in" />
+      <param type="cl_uint*" name="num_devices" flow="in" />
+    </function>
+    <function name="GetDeviceInfo" extension="Core" profile="" category="1.0" version="1.0">
+      <returns type="cl_int" />
+      <param type="cl_device_id" name="device" flow="in" />
+      <param type="cl_device_info" name="param_name" flow="in" />
+      <param type="size_t" name="param_value_size" flow="in" />
+      <param type="void*" name="param_value" flow="in" />
+      <param type="size_t*" name="param_value_size_ret" flow="out" />
+    </function>
+    <function name="GetEventInfo" extension="Core" profile="" category="1.0" version="1.0">
+      <returns type="cl_int" />
+      <param type="cl_event" name="event" flow="in" />
+      <param type="cl_event_info" name="param_name" flow="in" />
+      <param type="size_t" name="param_value_size" flow="in" />
+      <param type="void*" name="param_value" flow="in" />
+      <param type="size_t*" name="param_value_size_ret" flow="out" />
+    </function>
+    <function name="GetEventProfilingInfo" extension="Core" profile="" category="1.0" version="1.0">
+      <returns type="cl_int" />
+      <param type="cl_event" name="event" flow="in" />
+      <param type="cl_profiling_info" name="param_name" flow="in" />
+      <param type="size_t" name="param_value_size" flow="in" />
+      <param type="void*" name="param_value" flow="in" />
+      <param type="size_t*" name="param_value_size_ret" flow="out" />
+    </function>
+    <function name="GetImageInfo" extension="Core" profile="" category="1.0" version="1.0">
+      <returns type="cl_int" />
+      <param type="cl_mem" name="image" flow="in" />
+      <param type="cl_image_info" name="param_name" flow="in" />
+      <param type="size_t" name="param_value_size" flow="in" />
+      <param type="void*" name="param_value" flow="in" />
+      <param type="size_t*" name="param_value_size_ret" flow="out" />
+    </function>
+    <function name="GetKernelInfo" extension="Core" profile="" category="1.0" version="1.0">
+      <returns type="cl_int" />
+      <param type="cl_kernel" name="kernel" flow="in" />
+      <param type="cl_kernel_info" name="param_name" flow="in" />
+      <param type="size_t" name="param_value_size" flow="in" />
+      <param type="void*" name="param_value" flow="in" />
+      <param type="size_t*" name="param_value_size_ret" flow="out" />
+    </function>
+    <function name="GetKernelWorkGroupInfo" extension="Core" profile="" category="1.0" version="1.0">
+      <returns type="cl_int" />
+      <param type="cl_kernel" name="kernel" flow="in" />
+      <param type="cl_device_id" name="device" flow="in" />
+      <param type="cl_kernel_work_group_info" name="param_name" flow="in" />
+      <param type="size_t" name="param_value_size" flow="in" />
+      <param type="void*" name="param_value" flow="in" />
+      <param type="size_t*" name="param_value_size_ret" flow="out" />
+    </function>
+    <function name="GetMemObjectInfo" extension="Core" profile="" category="1.0" version="1.0">
+      <returns type="cl_int" />
+      <param type="cl_mem" name="memobj" flow="in" />
+      <param type="cl_mem_info" name="param_name" flow="in" />
+      <param type="size_t" name="param_value_size" flow="in" />
+      <param type="void*" name="param_value" flow="in" />
+      <param type="size_t*" name="param_value_size_ret" flow="out" />
+    </function>
+    <function name="GetPlatformIDs" extension="Core" profile="" category="1.0" version="1.0">
+      <returns type="cl_int" />
+      <param type="cl_uint" name="num_entries" flow="in" />
+      <param type="cl_platform_id*" name="platforms" flow="in" />
+      <param type="cl_uint*" name="num_platforms" flow="in" />
+    </function>
+    <function name="GetPlatformInfo" extension="Core" profile="" category="1.0" version="1.0">
+      <returns type="cl_int" />
+      <param type="cl_platform_id" name="platform" flow="in" />
+      <param type="cl_platform_info" name="param_name" flow="in" />
+      <param type="size_t" name="param_value_size" flow="in" />
+      <param type="void*" name="param_value" flow="in" />
+      <param type="size_t*" name="param_value_size_ret" flow="out" />
+    </function>
+    <function name="GetProgramBuildInfo" extension="Core" profile="" category="1.0" version="1.0">
+      <returns type="cl_int" />
+      <param type="cl_program" name="program" flow="in" />
+      <param type="cl_device_id" name="device" flow="in" />
+      <param type="cl_program_build_info" name="param_name" flow="in" />
+      <param type="size_t" name="param_value_size" flow="in" />
+      <param type="void*" name="param_value" flow="in" />
+      <param type="size_t*" name="param_value_size_ret" flow="out" />
+    </function>
+    <function name="GetProgramInfo" extension="Core" profile="" category="1.0" version="1.0">
+      <returns type="cl_int" />
+      <param type="cl_program" name="program" flow="in" />
+      <param type="cl_program_info" name="param_name" flow="in" />
+      <param type="size_t" name="param_value_size" flow="in" />
+      <param type="void*" name="param_value" flow="in" />
+      <param type="size_t*" name="param_value_size_ret" flow="out" />
+    </function>
+    <function name="GetSamplerInfo" extension="Core" profile="" category="1.0" version="1.0">
+      <returns type="cl_int" />
+      <param type="cl_sampler" name="sampler" flow="in" />
+      <param type="cl_sampler_info" name="param_name" flow="in" />
+      <param type="size_t" name="param_value_size" flow="in" />
+      <param type="void*" name="param_value" flow="in" />
+      <param type="size_t*" name="param_value_size_ret" flow="out" />
+    </function>
+    <function name="GetSupportedImageFormats" extension="Core" profile="" category="1.0" version="1.0">
+      <returns type="cl_int" />
+      <param type="cl_context" name="context" flow="in" />
+      <param type="cl_mem_flags" name="flags" flow="in" />
+      <param type="cl_mem_object_type" name="image_type" flow="in" />
+      <param type="cl_uint" name="num_entries" flow="in" />
+      <param type="cl_image_format*" name="image_formats" flow="in" />
+      <param type="cl_uint*" name="num_image_formats" flow="in" />
+    </function>
+    <function name="ReleaseCommandQueue" extension="Core" profile="" category="1.0" version="1.0">
+      <returns type="cl_int" />
+      <param type="cl_command_queue" name="command_queue" flow="in" />
+    </function>
+    <function name="ReleaseContext" extension="Core" profile="" category="1.0" version="1.0">
+      <returns type="cl_int" />
+      <param type="cl_context" name="context" flow="in" />
+    </function>
+    <function name="ReleaseEvent" extension="Core" profile="" category="1.0" version="1.0">
+      <returns type="cl_int" />
+      <param type="cl_event" name="event" flow="in" />
+    </function>
+    <function name="ReleaseKernel" extension="Core" profile="" category="1.0" version="1.0">
+      <returns type="cl_int" />
+      <param type="cl_kernel" name="kernel" flow="in" />
+    </function>
+    <function name="ReleaseMemObject" extension="Core" profile="" category="1.0" version="1.0">
+      <returns type="cl_int" />
+      <param type="cl_mem" name="memobj" flow="in" />
+    </function>
+    <function name="ReleaseProgram" extension="Core" profile="" category="1.0" version="1.0">
+      <returns type="cl_int" />
+      <param type="cl_program" name="program" flow="in" />
+    </function>
+    <function name="ReleaseSampler" extension="Core" profile="" category="1.0" version="1.0">
+      <returns type="cl_int" />
+      <param type="cl_sampler" name="sampler" flow="in" />
+    </function>
+    <function name="RetainCommandQueue" extension="Core" profile="" category="1.0" version="1.0">
+      <returns type="cl_int" />
+      <param type="cl_command_queue" name="command_queue" flow="in" />
+    </function>
+    <function name="RetainContext" extension="Core" profile="" category="1.0" version="1.0">
+      <returns type="cl_int" />
+      <param type="cl_context" name="context" flow="in" />
+    </function>
+    <function name="RetainEvent" extension="Core" profile="" category="1.0" version="1.0">
+      <returns type="cl_int" />
+      <param type="cl_event" name="event" flow="in" />
+    </function>
+    <function name="RetainKernel" extension="Core" profile="" category="1.0" version="1.0">
+      <returns type="cl_int" />
+      <param type="cl_kernel" name="kernel" flow="in" />
+    </function>
+    <function name="RetainMemObject" extension="Core" profile="" category="1.0" version="1.0">
+      <returns type="cl_int" />
+      <param type="cl_mem" name="memobj" flow="in" />
+    </function>
+    <function name="RetainProgram" extension="Core" profile="" category="1.0" version="1.0">
+      <returns type="cl_int" />
+      <param type="cl_program" name="program" flow="in" />
+    </function>
+    <function name="RetainSampler" extension="Core" profile="" category="1.0" version="1.0">
+      <returns type="cl_int" />
+      <param type="cl_sampler" name="sampler" flow="in" />
+    </function>
+    <function name="SetCommandQueueProperty" extension="Core" profile="" category="1.0" version="1.0">
+      <returns type="cl_int" />
+      <param type="cl_command_queue" name="command_queue" flow="in" />
+      <param type="cl_command_queue_properties" name="properties" flow="in" />
+      <param type="cl_bool" name="enable" flow="in" />
+      <param type="cl_command_queue_properties*" name="old_properties" flow="in" />
+    </function>
+    <function name="SetKernelArg" extension="Core" profile="" category="1.0" version="1.0">
+      <returns type="cl_int" />
+      <param type="cl_kernel" name="kernel" flow="in" />
+      <param type="cl_uint" name="arg_index" flow="in" />
+      <param type="size_t" name="arg_size" flow="in" />
+      <param type="void*" name="arg_value" flow="in" />
+    </function>
+    <function name="UnloadCompiler" extension="Core" profile="" category="1.0" version="1.0">
+      <returns type="cl_int" />
+    </function>
+    <function name="WaitForEvents" extension="Core" profile="" category="1.0" version="1.0">
+      <returns type="cl_int" />
+      <param type="cl_uint" name="num_events" flow="in" />
+      <param type="cl_event*" name="event_list" flow="in" />
+    </function>
+  </add>
+</signatures>

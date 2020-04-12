@@ -1,0 +1,335 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<!-- Converted by db4-upgrade version 1.1 -->
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glGetProgramiv">
+    <info>
+        <copyright>
+            <year>2003-2005</year>
+            <holder>3Dlabs Inc. Ltd.</holder>
+        </copyright>
+        <copyright>
+            <year>2010-2014</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </info>
+    <refmeta>
+        <refentrytitle>glGetProgramiv</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glGetProgramiv</refname>
+        <refpurpose>Returns a parameter from a program object</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+    <funcsynopsis>
+        <funcprototype>
+        <funcdef>void <function>glGetProgramiv</function></funcdef>
+        <paramdef>GLuint <parameter>program</parameter></paramdef>
+        <paramdef>GLenum <parameter>pname</parameter></paramdef>
+        <paramdef>GLint *<parameter>params</parameter></paramdef>
+        </funcprototype>
+    </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 xml:id="parameters"><title>Parameters</title>
+    <variablelist>
+        <varlistentry>
+        <term><parameter>program</parameter></term>
+        <listitem>
+            <para>Specifies the program object to be
+            queried.</para>
+        </listitem>
+        </varlistentry>
+        <varlistentry>
+        <term><parameter>pname</parameter></term>
+        <listitem>
+            <para>Specifies the object parameter. Accepted
+            symbolic names are
+            <constant>GL_ACTIVE_ATTRIBUTES</constant>,
+            <constant>GL_ACTIVE_ATTRIBUTE_MAX_LENGTH</constant>,
+            <constant>GL_ACTIVE_UNIFORMS</constant>,
+            <constant>GL_ACTIVE_UNIFORM_BLOCKS</constant>,
+            <constant>GL_ACTIVE_UNIFORM_BLOCK_MAX_NAME_LENGTH</constant>,
+            <constant>GL_ACTIVE_UNIFORM_MAX_LENGTH</constant>,
+            <constant>GL_ATTACHED_SHADERS</constant>,
+            <constant>GL_DELETE_STATUS</constant>,
+            <constant>GL_INFO_LOG_LENGTH</constant>,
+            <constant>GL_LINK_STATUS</constant>,
+                        <constant>GL_PROGRAM_BINARY_RETRIEVABLE_HINT</constant>,
+            <constant>GL_TRANSFORM_FEEDBACK_BUFFER_MODE</constant>,
+            <constant>GL_TRANSFORM_FEEDBACK_VARYINGS</constant>, 
+            <constant>GL_TRANSFORM_FEEDBACK_VARYING_MAX_LENGTH</constant> and
+            <constant>GL_VALIDATE_STATUS</constant>.</para>
+        </listitem>
+        </varlistentry>
+        <varlistentry>
+        <term><parameter>params</parameter></term>
+        <listitem>
+            <para>Returns the requested object parameter.</para>
+        </listitem>
+        </varlistentry>
+    </variablelist>
+    </refsect1>
+    <refsect1 xml:id="description"><title>Description</title>
+    <para><function>glGetProgramiv</function>
+    returns in <parameter>params</parameter>
+    the value of a parameter for a specific program object. The following parameters are defined:</para>
+
+    <variablelist>
+
+        <varlistentry>
+        <term><constant>GL_ACTIVE_ATTRIBUTES</constant></term>
+        <listitem>
+            <para>
+            </para>
+            <para> <parameter>params</parameter> returns the
+            number of active attribute variables for
+            <parameter>program</parameter>.</para>
+        </listitem>
+        </varlistentry>
+
+        <varlistentry>
+        <term><constant>GL_ACTIVE_ATTRIBUTE_MAX_LENGTH</constant></term>
+        <listitem>
+            <para>
+            </para>
+            <para> <parameter>params</parameter> returns the
+            length of the longest active attribute name for
+            <parameter>program</parameter>, including the null
+            termination character (i.e., the size of the
+            character buffer required to store the longest
+            attribute name). If no active attributes exist, 0 is
+            returned.</para>
+        </listitem>
+        </varlistentry>
+
+        <varlistentry>
+        <term><constant>GL_ACTIVE_UNIFORM_BLOCKS</constant></term>
+        <listitem>
+            <para>
+            </para>
+            <para> <parameter>params</parameter> returns the
+            number of uniform blocks for <parameter>program</parameter> 
+                        containing active uniforms.</para>
+        </listitem>
+        </varlistentry>
+                
+        <varlistentry>
+        <term><constant>GL_ACTIVE_UNIFORM_BLOCK_MAX_NAME_LENGTH</constant></term>
+        <listitem>
+            <para>
+            </para>
+            <para> <parameter>params</parameter> returns the
+            length of the longest active uniform block name
+            for <parameter>program</parameter>, including the
+            null termination character (i.e., the size of the
+            character buffer required to store the longest
+            uniform block name). If no active uniform
+            blocks exist, 0 is returned.</para>
+        </listitem>
+        </varlistentry>
+
+        <varlistentry>
+        <term><constant>GL_ACTIVE_UNIFORMS</constant></term>
+        <listitem>
+            <para>
+            </para>
+            <para> <parameter>params</parameter> returns the
+            number of active uniform variables for
+            <parameter>program</parameter>.</para>
+        </listitem>
+        </varlistentry>
+
+        <varlistentry>
+        <term><constant>GL_ACTIVE_UNIFORM_MAX_LENGTH</constant></term>
+        <listitem>
+            <para>
+            </para>
+            <para> <parameter>params</parameter> returns the
+            length of the longest active uniform variable name
+            for <parameter>program</parameter>, including the
+            null termination character (i.e., the size of the
+            character buffer required to store the longest
+            uniform variable name). If no active uniform
+            variables exist, 0 is returned.</para>
+        </listitem>
+        </varlistentry>
+
+        <varlistentry>
+        <term><constant>GL_ATTACHED_SHADERS</constant></term>
+        <listitem>
+            <para>
+            </para>
+            <para> <parameter>params</parameter> returns the
+            number of shader objects attached to
+            <parameter>program</parameter>.</para>
+        </listitem>
+        </varlistentry>
+
+        <varlistentry>
+        <term><constant>GL_DELETE_STATUS</constant></term>
+        <listitem>
+            <para>
+            </para>
+            <para> <parameter>params</parameter> returns
+            <constant>GL_TRUE</constant> if
+            <parameter>program</parameter> is currently flagged
+            for deletion, and <constant>GL_FALSE</constant>
+            otherwise.</para>
+        </listitem>
+        </varlistentry>
+
+        <varlistentry>
+        <term><constant>GL_INFO_LOG_LENGTH</constant></term>
+        <listitem>
+            <para>
+            </para>
+            <para> <parameter>params</parameter> returns the
+            number of characters in the information log for
+            <parameter>program</parameter> including the null
+            termination character (i.e., the size of the
+            character buffer required to store the information
+            log). If <parameter>program</parameter> has no
+            information log, a value of 0 is
+            returned.</para>
+        </listitem>
+        </varlistentry>
+
+        <varlistentry>
+        <term><constant>GL_LINK_STATUS</constant></term>
+        <listitem>
+            <para>
+            </para>
+            <para> <parameter>params</parameter> returns
+            <constant>GL_TRUE</constant> if the last link
+            operation on <parameter>program</parameter> was
+            successful, and <constant>GL_FALSE</constant>
+            otherwise.</para>
+        </listitem>
+        </varlistentry>
+        <varlistentry>
+        <term><constant>GL_PROGRAM_BINARY_RETRIEVABLE_HINT</constant></term>
+        <listitem>
+            <para>
+            </para>
+            <para> <parameter>params</parameter> returns the
+            current value of whether the binary retrieval
+            hint is enabled for <parameter>program</parameter>.
+                        </para>
+        </listitem>
+        </varlistentry>
+
+        <varlistentry>
+        <term><constant>GL_TRANSFORM_FEEDBACK_BUFFER_MODE</constant></term>
+        <listitem>
+            <para>
+            </para>
+            <para> <parameter>params</parameter> returns a symbolic constant
+            indicating the buffer mode used when transform feedback is active.
+            This may be <constant>GL_SEPARATE_ATTRIBS</constant> or
+            <constant>GL_INTERLEAVED_ATTRIBS</constant>.</para>
+        </listitem>
+        </varlistentry>
+
+        <varlistentry>
+        <term><constant>GL_TRANSFORM_FEEDBACK_VARYINGS</constant></term>
+        <listitem>
+            <para>
+            </para>
+            <para> <parameter>params</parameter> returns the number of varying
+            variables to capture in transform feedback mode for the program.</para>
+        </listitem>
+        </varlistentry>
+
+        <varlistentry>
+        <term><constant>GL_TRANSFORM_FEEDBACK_VARYING_MAX_LENGTH</constant></term>
+        <listitem>
+            <para>
+            </para>
+            <para> <parameter>params</parameter> returns the length of the longest
+            variable name to be used for transform feedback, including the null-terminator.</para>
+        </listitem>
+        </varlistentry>
+
+                <varlistentry>
+        <term><constant>GL_VALIDATE_STATUS</constant></term>
+        <listitem>
+            <para>
+            </para>
+            <para> <parameter>params</parameter> returns
+            <constant>GL_TRUE</constant> or if the last
+            validation operation on
+            <parameter>program</parameter> was successful, and
+            <constant>GL_FALSE</constant>
+            otherwise.</para>
+        </listitem>
+        </varlistentry>
+
+    </variablelist>
+    </refsect1>
+    <refsect1 xml:id="notes"><title>Notes</title>
+    <para>If an error is generated, no change is made to the
+    contents of <parameter>params</parameter>.</para>
+    </refsect1>
+    <refsect1 xml:id="errors"><title>Errors</title>
+    <para><constant>GL_INVALID_VALUE</constant>
+    is generated if <parameter>program</parameter>
+    is not a value generated by OpenGL.</para>
+
+    <para><constant>GL_INVALID_OPERATION</constant>
+    is generated if <parameter>program</parameter>
+    does not refer to a program object.</para>
+
+    <para><constant>GL_INVALID_ENUM</constant>
+    is generated if <parameter>pname</parameter>
+    is not an accepted value.</para>
+
+    </refsect1>
+    <refsect1 xml:id="associatedgets"><title>Associated Gets</title>
+    <para><citerefentry><refentrytitle>glGetActiveAttrib</refentrytitle></citerefentry>
+    with argument <parameter>program</parameter></para>
+
+    <para><citerefentry><refentrytitle>glGetActiveUniform</refentrytitle></citerefentry>
+    with argument <parameter>program</parameter></para>
+
+    <para><citerefentry><refentrytitle>glGetAttachedShaders</refentrytitle></citerefentry>
+    with argument <parameter>program</parameter></para>
+
+    <para><citerefentry><refentrytitle>glGetProgramInfoLog</refentrytitle></citerefentry>
+    with argument <parameter>program</parameter></para>
+
+    <para><citerefentry><refentrytitle>glIsProgram</refentrytitle></citerefentry>
+    <parameter/></para>
+    </refsect1>
+    <refsect1 xml:id="versions">
+        <title>API Version Support</title>
+        <informaltable>
+            <tgroup cols="3" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry>glGetProgramiv</entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='es20']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+    <refsect1 xml:id="seealso"><title>See Also</title>
+    <para><citerefentry><refentrytitle>glAttachShader</refentrytitle></citerefentry>,
+    <citerefentry><refentrytitle>glCreateProgram</refentrytitle></citerefentry>,
+    <citerefentry><refentrytitle>glDeleteProgram</refentrytitle></citerefentry>,
+    <citerefentry><refentrytitle>glGetShaderiv</refentrytitle></citerefentry>,
+    <citerefentry><refentrytitle>glLinkProgram</refentrytitle></citerefentry>,
+    <citerefentry><refentrytitle>glValidateProgram</refentrytitle></citerefentry></para>
+    </refsect1>
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 2003-2005 3Dlabs Inc. Ltd. 
+            Copyright <trademark class="copyright"/> 2010-2014 Khronos Group.
+            This material may be distributed subject to the terms and conditions set forth in 
+            the Open Publication License, v 1.0, 8 June 1999.
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://opencontent.org/openpub/">http://opencontent.org/openpub/</link>.
+        </para>
+    </refsect1>
+</refentry>

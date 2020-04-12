@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<signatures>
+
+  <replace>
+    <function name="GetString" extension="Core">
+      <returns>String</returns>
+    </function>
+  </replace>
+  
+</signatures>

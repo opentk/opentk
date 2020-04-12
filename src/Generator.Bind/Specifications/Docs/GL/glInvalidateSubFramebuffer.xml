@@ -1,0 +1,170 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<!-- Converted by db4-upgrade version 1.1 -->
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glInvalidateSubFramebuffer">
+    <info>
+        <copyright>
+            <year>2013</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </info>
+    <refmeta>
+        <refentrytitle>glInvalidateSubFramebuffer</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glInvalidateSubFramebuffer</refname>
+        <refpurpose>invalidate the content of a region of some or all of a framebuffer object's attachments</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glInvalidateSubFramebuffer</function></funcdef>
+                <paramdef>GLenum <parameter>target</parameter></paramdef>
+                <paramdef>GLsizei <parameter>numAttachments</parameter></paramdef>
+                <paramdef>const GLenum * <parameter>attachments</parameter></paramdef>
+                <paramdef>GLint <parameter>x</parameter></paramdef>
+                <paramdef>GLint <parameter>y</parameter></paramdef>
+                <paramdef>GLint <parameter>width</parameter></paramdef>
+                <paramdef>GLint <parameter>height</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 xml:id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>target</parameter></term>
+            <listitem>
+                <para>
+                    The target to which the framebuffer is attached. <parameter>target</parameter> must be
+                    <constant>GL_FRAMEBUFFER</constant>, <constant>GL_DRAW_FRAMEBUFFER</constant>, or <constant>GL_READ_FRAMEBUFFER</constant>.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>numAttachments</parameter></term>
+            <listitem>
+                <para>
+                    The number of entries in the <parameter>attachments</parameter> array.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>attachments</parameter></term>
+            <listitem>
+                <para>
+                    The address of an array identifying the attachments to be invalidated.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>x</parameter></term>
+            <listitem>
+                <para>
+                    The X offset of the region to be invalidated.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>y</parameter></term>
+            <listitem>
+                <para>
+                    The Y offset of the region to be invalidated.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>width</parameter></term>
+            <listitem>
+                <para>
+                    The width of the region to be invalidated.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>height</parameter></term>
+            <listitem>
+                <para>
+                    The height of the region to be invalidated.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 xml:id="description"><title>Description</title>
+        <para>
+            <function>glInvalidateSubFramebuffer</function> invalidates the content of a region
+            of a specified set of attachments of a framebuffer. The framebuffer
+            whose content to invalidate is indicated by setting <parameter>target</parameter>
+            to the target to which it is bound. <parameter>target</parameter> may be
+            <constant>GL_FRAMEBUFFER</constant>, <constant>GL_READ_FRAMEBUFFER</constant> or
+            <constant>GL_DRAW_FRAMEBUFFER</constant>. <constant>GL_FRAMEBUFFER</constant>
+            is treated as if it were <constant>GL_DRAW_FRAMEBUFFER</constant>.
+        </para>
+        <para>
+            A region within a subset of the framebuffer's attachments may be invalidated.
+            This set of attachments are specified in an array whose address is given
+            by <parameter>attachments</parameter> and which contains <parameter>numAttachments</parameter>
+            elements. The elements of <parameter>attachments</parameter> must be
+            <constant>GL_DEPTH_ATTACHMENT</constant>, <constant>GL_STENCIL_ATTACHMENT</constant>
+            <constant>GL_DEPTH_STENCIL_ATTACHMENT</constant>, or <constant>GL_COLOR_ATTACHMENT</constant><emphasis>i</emphasis>,
+            where <emphasis>i</emphasis> is between zero and the value of <constant>GL_MAX_FRAMEBUFFER_ATTACHMENTS</constant> minus one.
+            Furthermore, if the default framebuffer is bound to <parameter>target</parameter>, then
+            <parameter>attachments</parameter> may contain <constant>GL_FRONT_LEFT</constant>,
+            <constant>GL_FRONT_RIGHT</constant>, <constant>GL_BACK_LEFT</constant>, <constant>GL_BACK_RIGHT</constant>,
+            <constant>GL_AUX</constant><emphasis>i</emphasis>, <constant>GL_ACCUM</constant>,
+            <constant>GL_COLOR</constant>, <constant>GL_DEPTH</constant>, or <constant>GL_STENCIL</constant>, identifying that specific buffer.
+            <constant>GL_COLOR</constant>, is treated as <constant>GL_BACK_LEFT</constant> for a double-buffered context and
+            <constant>GL_FRONT_LEFT</constant> for a single-buffered context.
+        </para>
+        <para>
+            The region of the framebuffer attachments to be invalidated is specified
+            by <parameter>x</parameter>, <parameter>y</parameter>, <parameter>width</parameter> and <parameter>height</parameter>
+            where <parameter>x</parameter> and <parameter>y</parameter> give the offset from the origin (with
+            lower-left corner at (0, 0)) and <parameter>width</parameter> and <parameter>height</parameter>
+            give the size. Any pixels lying outside of the window allocated
+            to the current GL context, or outside of the attachments of the currently
+            bound framebuffer object, are ignored.
+            After <function>glInvalidateFramebuffer</function> is executed, the contents
+            of the specified region of the specified attachments become undefined.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_ENUM</constant> is generated if <parameter>target</parameter> is not one of the
+            accepted framebuffer target tokens.
+        </para>
+        <para>
+            <constant>GL_INVALID_ENUM</constant> is generated if any element of <parameter>attachments</parameter> is
+            not one of the accepted framebuffer attachment tokens.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if element of <parameter>attachments</parameter> is
+            <constant>GL_COLOR_ATTACHMENT</constant><emphasis>i</emphasis> where <emphasis>i</emphasis> is greater than or equal
+            to the value of <constant>GL_MAX_COLOR_ATTACHMENTS</constant>.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="associatedgets"><title>Associated Gets</title>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_MAX_COLOR_ATTACHMENTS</constant>
+        </para>
+    </refsect1>
+    <refsect1 xml:id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glInvalidateTexSubImage</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glInvalidateTexImage</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glInvalidateBufferSubData</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glInvalidateBufferData</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glInvalidateFramebuffer</refentrytitle></citerefentry>.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 2013 Khronos Group.
+            This material may be distributed subject to the terms and conditions set forth in
+            the Open Publication License, v 1.0, 8 June 1999.
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://opencontent.org/openpub/">http://opencontent.org/openpub/</link>.
+        </para>
+    </refsect1>
+</refentry>

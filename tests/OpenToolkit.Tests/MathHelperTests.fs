@@ -112,15 +112,15 @@ module MathHelper =
             Assert.NotApproximatelyEqualEpsilon(-0.00000001f, 0.0f);
             Assert.NotApproximatelyEqualEpsilon(0.0f, -0.00000001f);
 
-            Assert.ApproximatelyEqualEpsilon(0.0f, 1e-40f, 0.01f);
-            Assert.ApproximatelyEqualEpsilon(1e-40f, 0.0f, 0.01f);
-            Assert.NotApproximatelyEqualEpsilon(1e-40f, 0.0f, 0.000001f);
-            Assert.NotApproximatelyEqualEpsilon(0.0f, 1e-40f, 0.000001f);
+            Assert.ApproximatelyEqualEpsilon(0.0f, 1.0e-40f, 0.01f);
+            Assert.ApproximatelyEqualEpsilon(1.0e-40f, 0.0f, 0.01f);
+            Assert.NotApproximatelyEqualEpsilon(1.0e-40f, 0.0f, 0.000001f);
+            Assert.NotApproximatelyEqualEpsilon(0.0f, 1.0e-40f, 0.000001f);
 
-            Assert.ApproximatelyEqualEpsilon(0.0f, -1e-40f, 0.1f);
-            Assert.ApproximatelyEqualEpsilon(-1e-40f, 0.0f, 0.1f);
-            Assert.NotApproximatelyEqualEpsilon(-1e-40f, 0.0f, 0.00000001f);
-            Assert.NotApproximatelyEqualEpsilon(0.0f, -1e-40f, 0.00000001f);
+            Assert.ApproximatelyEqualEpsilon(0.0f, -1.0e-40f, 0.1f);
+            Assert.ApproximatelyEqualEpsilon(-1.0e-40f, 0.0f, 0.1f);
+            Assert.NotApproximatelyEqualEpsilon(-1.0e-40f, 0.0f, 0.00000001f);
+            Assert.NotApproximatelyEqualEpsilon(0.0f, -1.0e-40f, 0.00000001f);
 
         [<Fact>]
         let ``ApproximatelyEqual (single precision) is correct for extreme values with overflow potential``() =

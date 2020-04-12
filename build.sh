@@ -20,19 +20,20 @@ function version_compare() {
     return 0
 }
 
-MINIMAL_DOTNET_VERSION=2.2.401
+MINIMAL_DOTNET_VERSION=3.1.100
 
-CURRENT_DOTNET_VERSION=$(dotnet --version 2> /dev/null || EXIT_CODE=$?)
+EXIT_CODE=0
 
-if [ $EXIT_CODE ] && [ version_compare "$MINIMAL_DOTNET_VERSION" "$CURRENT_DOTNET_VERSION" ]; then
+CURRENT_DOTNET_VERSION=$(dotnet --version 2> /dev/null) || EXIT_CODE=$?
+
+if (($EXIT_CODE == 0)) && version_compare "$MINIMAL_DOTNET_VERSION" "$CURRENT_DOTNET_VERSION"; then
     echo "dotnet command already installed"
 else
     # Install .NET Core (https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-install-script)
-    curl -sSL https://dot.net/v1/dotnet-install.sh | bash /dev/stdin --version 2.2.401
+    curl -sSL https://dot.net/v1/dotnet-install.sh | bash /dev/stdin --version 3.1.100
+
+    PATH="~/.dotnet:$PATH"
 fi
 
-
-
-PATH="~/.dotnet:$PATH"
-dotnet restore build-bootstrap.csproj
+dotnet tool restore
 dotnet fake run build.fsx $@

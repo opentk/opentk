@@ -1,0 +1,106 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<!-- Converted by db4-upgrade version 1.1 -->
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glEnableVertexAttribArray">
+    <info>
+        <copyright>
+            <year>2003-2005</year>
+            <holder>3Dlabs Inc. Ltd.</holder>
+        </copyright>
+        <copyright>
+            <year>2010-2013</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </info>
+    <refmeta>
+        <refentrytitle>glEnableVertexAttribArray</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+    <refdescriptor>glEnableVertexAttribArray</refdescriptor>
+        <refname>glEnableVertexAttribArray</refname>
+        <refname>glDisableVertexAttribArray</refname>
+        <refpurpose>Enable or disable a generic vertex attribute array</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+    <funcsynopsis>
+        <funcprototype>
+        <funcdef>void <function>glEnableVertexAttribArray</function></funcdef>
+        <paramdef>GLuint <parameter>index</parameter></paramdef>
+        </funcprototype>
+        <funcprototype>
+        <funcdef>void <function>glDisableVertexAttribArray</function></funcdef>
+        <paramdef>GLuint <parameter>index</parameter></paramdef>
+        </funcprototype>
+    </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 xml:id="parameters"><title>Parameters</title>
+    <variablelist>
+        <varlistentry>
+        <term><parameter>index</parameter></term>
+        <listitem>
+            <para>Specifies the index of the generic vertex
+            attribute to be enabled or disabled.</para>
+        </listitem>
+        </varlistentry>
+    </variablelist>
+    </refsect1>
+    <refsect1 xml:id="description"><title>Description</title>
+    <para><function>glEnableVertexAttribArray</function> enables the
+    generic vertex attribute array specified by
+    <parameter>index</parameter>.
+    <function>glDisableVertexAttribArray</function> disables the
+    generic vertex attribute array specified by
+    <parameter>index</parameter>. By default, all client-side
+    capabilities are disabled, including all generic vertex
+    attribute arrays. If enabled, the values in the generic vertex
+    attribute array will be accessed and used for rendering when
+    calls are made to vertex array commands such as
+    <citerefentry><refentrytitle>glDrawArrays</refentrytitle></citerefentry>,
+    <citerefentry><refentrytitle>glDrawElements</refentrytitle></citerefentry>,
+    <citerefentry><refentrytitle>glDrawRangeElements</refentrytitle></citerefentry>,
+    <citerefentry><refentrytitle>glMultiDrawElements</refentrytitle></citerefentry>,
+    or
+    <citerefentry><refentrytitle>glMultiDrawArrays</refentrytitle></citerefentry>.</para>
+    </refsect1>
+    <refsect1 xml:id="errors"><title>Errors</title>
+    <para><constant>GL_INVALID_VALUE</constant> is generated if
+    <parameter>index</parameter> is greater than or equal to
+    <constant>GL_MAX_VERTEX_ATTRIBS</constant>.</para>
+
+    </refsect1>
+    <refsect1 xml:id="associatedgets"><title>Associated Gets</title>
+    <para><citerefentry><refentrytitle>glGet</refentrytitle></citerefentry>
+    with argument <constant>GL_MAX_VERTEX_ATTRIBS</constant></para>
+
+    <para><citerefentry><refentrytitle>glGetVertexAttrib</refentrytitle></citerefentry>
+    with arguments <parameter>index</parameter> and
+    <constant>GL_VERTEX_ATTRIB_ARRAY_ENABLED</constant>
+    <parameter/></para>
+
+    <para><citerefentry><refentrytitle>glGetVertexAttribPointerv</refentrytitle></citerefentry>
+    with arguments <parameter>index</parameter> and
+    <constant>GL_VERTEX_ATTRIB_ARRAY_POINTER</constant></para>
+    </refsect1>
+    <refsect1 xml:id="seealso"><title>See Also</title>
+    <para>
+    <citerefentry><refentrytitle>glBindAttribLocation</refentrytitle></citerefentry>,
+    <citerefentry><refentrytitle>glDrawArrays</refentrytitle></citerefentry>,
+    <citerefentry><refentrytitle>glDrawElements</refentrytitle></citerefentry>,
+    <citerefentry><refentrytitle>glDrawRangeElements</refentrytitle></citerefentry>,
+    <citerefentry><refentrytitle>glMultiDrawElements</refentrytitle></citerefentry>,
+    <citerefentry><refentrytitle>glVertexAttrib</refentrytitle></citerefentry>,
+    <citerefentry><refentrytitle>glVertexAttribPointer</refentrytitle></citerefentry>
+    </para>
+    </refsect1>
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 2003-2005 3Dlabs Inc. Ltd.
+            Copyright <trademark class="copyright"/> 2010-2013 Khronos Group.
+            This material may be distributed subject to the terms and conditions set forth in
+            the Open Publication License, v 1.0, 8 June 1999.
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://opencontent.org/openpub/">http://opencontent.org/openpub/</link>.
+        </para>
+    </refsect1>
+</refentry>

@@ -669,7 +669,8 @@ namespace OpenToolkit.Mathematics
         [Pure]
         public static Vector2 BaryCentric(Vector2 a, Vector2 b, Vector2 c, float u, float v)
         {
-            return a + (u * (b - a)) + (v * (c - a));
+            BaryCentric(ref a, ref b, ref c, u, v, out var result);
+            return result;
         }
 
         /// <summary>
@@ -708,6 +709,32 @@ namespace OpenToolkit.Mathematics
         }
 
         /// <summary>
+        /// Transform a Vector by the given Matrix.
+        /// </summary>
+        /// <param name="vec">The vector to transform.</param>
+        /// <param name="mat">The desired transformation.</param>
+        /// <returns>The transformed vector.</returns>
+        [Pure]
+        public static Vector2 Transform(Vector2 vec, Matrix2 mat)
+        {
+            Transform(ref vec, ref mat, out Vector2 result);
+            return result;
+        }
+
+        /// <summary>
+        /// Transform a Vector by the given Matrix.
+        /// </summary>
+        /// <param name="vec">The vector to transform.</param>
+        /// <param name="mat">The desired transformation.</param>
+        /// <param name="result">The transformed vector.</param>
+        public static void Transform(ref Vector2 vec, ref Matrix2 mat, out Vector2 result)
+        {
+            result = new Vector2(
+                (vec.X * mat.Row0.X) + (vec.Y * mat.Row1.X),
+                (vec.X * mat.Row0.Y) + (vec.Y * mat.Row1.Y));
+        }
+
+        /// <summary>
         /// Transforms a vector by a quaternion rotation.
         /// </summary>
         /// <param name="vec">The vector to transform.</param>
@@ -735,6 +762,31 @@ namespace OpenToolkit.Mathematics
 
             result.X = v.X;
             result.Y = v.Y;
+        }
+
+        /// <summary>
+        /// Transform a Vector by the given Matrix using right-handed notation.
+        /// </summary>
+        /// <param name="mat">The desired transformation.</param>
+        /// <param name="vec">The vector to transform.</param>
+        /// <returns>The transformed vector.</returns>
+        [Pure]
+        public static Vector2 Transform(Matrix2 mat, Vector2 vec)
+        {
+            Transform(ref mat, ref vec, out Vector2 result);
+            return result;
+        }
+
+        /// <summary>
+        /// Transform a Vector by the given Matrix using right-handed notation.
+        /// </summary>
+        /// <param name="mat">The desired transformation.</param>
+        /// <param name="vec">The vector to transform.</param>
+        /// <param name="result">The transformed vector.</param>
+        public static void Transform(ref Matrix2 mat, ref Vector2 vec, out Vector2 result)
+        {
+            result.X = (mat.Row0.X * vec.X) + (mat.Row0.Y * vec.Y);
+            result.Y = (mat.Row1.X * vec.X) + (mat.Row1.Y * vec.Y);
         }
 
         /// <summary>
@@ -832,6 +884,45 @@ namespace OpenToolkit.Mathematics
             vec.X *= scale.X;
             vec.Y *= scale.Y;
             return vec;
+        }
+
+        /// <summary>
+        /// Transform a Vector by the given Matrix.
+        /// </summary>
+        /// <param name="vec">The vector to transform.</param>
+        /// <param name="mat">The desired transformation.</param>
+        /// <returns>The transformed vector.</returns>
+        [Pure]
+        public static Vector2 operator *(Vector2 vec, Matrix2 mat)
+        {
+            Transform(ref vec, ref mat, out Vector2 result);
+            return result;
+        }
+
+        /// <summary>
+        /// Transform a Vector by the given Matrix using right-handed notation.
+        /// </summary>
+        /// <param name="mat">The desired transformation.</param>
+        /// <param name="vec">The vector to transform.</param>
+        /// <returns>The transformed vector.</returns>
+        [Pure]
+        public static Vector2 operator *(Matrix2 mat, Vector2 vec)
+        {
+            Transform(ref mat, ref vec, out Vector2 result);
+            return result;
+        }
+
+        /// <summary>
+        /// Transforms a vector by a quaternion rotation.
+        /// </summary>
+        /// <param name="vec">The vector to transform.</param>
+        /// <param name="quat">The quaternion to rotate the vector by.</param>
+        /// <returns>The multiplied vector.</returns>
+        [Pure]
+        public static Vector2 operator *(Quaternion quat, Vector2 vec)
+        {
+            Transform(ref vec, ref quat, out Vector2 result);
+            return result;
         }
 
         /// <summary>

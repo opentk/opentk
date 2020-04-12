@@ -1,17 +1,21 @@
-open Fake.Core
 open System
-open Fake.DotNet.Testing
+open System.IO
+open System.Threading
+open Fake.Core
+open Fake.DotNet
+open Fake.DotNet.NuGet
+open Fake.IO
 
 #r "paket:
 storage: packages
 nuget Fake.IO.FileSystem
 nuget Fake.DotNet.MSBuild
 nuget Fake.DotNet.Testing.XUnit2
-nuget Fake.DotNet.AssemblyInfoFile 
+nuget Fake.DotNet.AssemblyInfoFile
 nuget Fake.DotNet.NuGet prerelease
+nuget Fake.DotNet.Paket
 nuget Fake.DotNet.Cli
 nuget Fake.Core.Target
-nuget Fake.DotNet.Cli
 nuget Fake.Net.Http
 nuget Fake.Api.Github
 nuget xunit.runner.console
@@ -20,12 +24,9 @@ nuget Fake.Core.ReleaseNotes //"
 
 #load "./.fake/build.fsx/intellisense.fsx"
 
-open Fake.Core
 open Fake.IO
 open Fake.IO.FileSystemOperators
 open Fake.IO.Globbing.Operators
-open Fake.DotNet
-open Fake.DotNet.NuGet
 
 // ---------
 // Configuration
@@ -37,12 +38,18 @@ let authors = [ "Team OpenTK" ]
 
 let summary = "A set of fast, low-level C# bindings for OpenGL, OpenGL ES and OpenAL."
 
+let license = "https://opensource.org/licenses/MIT"
+
+let projectUrl = "https://github.com/opentk/opentk"
+
+let iconUrl = "https://raw.githubusercontent.com/opentk/opentk/master/docs/files/img/logo.png"
+
 let description =
     "The Open Toolkit is set of fast, low-level C# bindings for OpenGL, OpenGL ES and OpenAL. It runs on all major platforms and powers hundreds of apps, games and scientific research."
 
 let tags = "OpenTK OpenGL OpenGLES GLES OpenAL C# F# .NET Mono Vector Math Game Graphics Sound"
 
-let copyright = "Copyright (c) 2006 - 2019 Stefanos Apostolopoulos <stapostol@gmail.com> for the Open Toolkit library."
+let copyright = "Copyright (c) 2006 - 2020 Stefanos Apostolopoulos <stapostol@gmail.com> for the Open Toolkit library."
 
 let solutionFile = "OpenTK.sln"
 
@@ -66,6 +73,7 @@ let release = ReleaseNotes.load "RELEASE_NOTES.md"
 
 let binDir = "./bin/"
 let buildDir = binDir </> "build"
+let nugetDir = binDir </> "nuget"
 let testDir = binDir </> "test"
 
 // ---------
@@ -78,10 +86,21 @@ let toolProjects =
 let releaseProjects =
     !! "src/**/*.??proj"
     -- "src/Generator/**"
+    -- "src/Generator.Bind/**"
+    -- "src/Generator.Converter/**"
+    -- "src/Generator.Rewrite/**"
     -- "src/SpecificationOpenGL/**"
+    -- "src/OpenAL/**"
 
-let testProjects =
+
+// Absolutely all test projects.
+let allTestProjects =
     !! "tests/**/*.??proj"
+
+// Test projects excluding integration tests (don't run on CI).
+let ciTestProjects =
+    allTestProjects
+    -- "tests/**/*.Integration.??proj"
 
 let nugetCommandRunnerPath =
     ".fake/build.fsx/packages/NuGet.CommandLine/tools/NuGet.exe" |> Fake.IO.Path.convertWindowsToCurrentPath
@@ -94,7 +113,7 @@ let nugetCommandRunnerPath =
 let install =
     lazy
         (if (DotNet.getVersion id).StartsWith "3" then id
-    else DotNet.install (fun options -> { options with Version = DotNet.Version "2.2.401" }))
+         else DotNet.install (fun options -> { options with Version = DotNet.Version "3.1.100" }))
 
 // Define general properties across various commands (with arguments)
 let inline withWorkDir wd = DotNet.Options.lift install.Value >> DotNet.Options.withWorkingDirectory wd
@@ -127,7 +146,7 @@ Target.create "UpdateSpec" (fun _ ->
 
 Target.create "UpdateBindings" (fun _ ->
     Trace.log " --- Updating bindings --- "
-    let framework = "netcoreapp22"
+    let framework = "netcoreapp31"
     let projFile = "src/Generator/Generator.fsproj"
 
     let args =
@@ -136,17 +155,43 @@ Target.create "UpdateBindings" (fun _ ->
         |> asArgs
     DotNet.runWithDefaultOptions framework projFile args |> ignore)
 
+Target.create "UpdateBindingsRewrite" (fun _ ->
+    Trace.log " --- Updating bindings (rewrite) --- "
+    let framework = "netcoreapp31"
+    let projFile = "src/Generator.Bind/Generator.Bind.csproj"
+
+    let args = [  ] |> asArgs
+    DotNet.runWithDefaultOptions framework projFile args |> ignore)
+
+Target.create "RewriteBindings" (fun _ ->
+    Trace.log " --- Rewriting bindings (calli) --- "
+    let framework = "netcoreapp31"
+    let projFile = "src/Generator.Rewrite/Generator.Rewrite.csproj"
+    let bindingsFile = "OpenToolkit.Graphics.dll"
+    let bindingsOutput = "src/OpenToolkit.Graphics/bin/Release/netstandard2.0"
+
+    let args =
+        [ "-a " + (System.IO.Path.GetFullPath bindingsOutput </> bindingsFile)
+        ] |> asArgs
+    DotNet.runWithDefaultOptions framework projFile args |> ignore)
+
 // ---------
 // Build Targets
 // ---------
 
 Target.create "Clean" <| fun _ ->
-    !! ("src" </> "OpenGL" </> "**/*.*")
-    -- ("src" </> "OpenGL" </> "Enums/*.*")
-    -- ("src" </> "OpenGL" </> "*.cs")
-    -- ("src" </> "OpenGL" </> "*.csproj")
-    |> Seq.map Fake.IO.Path.getDirectory
-    |> Shell.deleteDirs
+    !! ("./src" </> "OpenToolkit.Graphics" </> "**/*.*")
+    ++ (nugetDir </> "*.nupkg")
+    -- ("./src" </> "OpenToolkit.Graphics" </> "Enums/*.cs")
+    -- ("./src" </> "OpenToolkit.Graphics" </> "*.cs")
+    -- ("./src" </> "OpenToolkit.Graphics" </> "*.csproj")
+    -- ("./src" </> "OpenToolkit.Graphics" </> "ES11/Helper.cs")
+    -- ("./src" </> "OpenToolkit.Graphics" </> "ES20/Helper.cs")
+    -- ("./src" </> "OpenToolkit.Graphics" </> "ES30/Helper.cs")
+    -- ("./src" </> "OpenToolkit.Graphics" </> "OpenGL2/Helper.cs")
+    -- ("./src" </> "OpenToolkit.Graphics" </> "OpenGL4/Helper.cs")
+    -- ("./src" </> "OpenToolkit.Graphics" </> "paket")
+    |> Seq.iter(Shell.rm)
 
 Target.create "Restore" (fun _ -> DotNet.restore dotnetSimple "OpenTK.sln" |> ignore)
 
@@ -156,15 +201,19 @@ Target.create "AssemblyInfo" (fun _ ->
     // see https://docs.microsoft.com/en-us/visualstudio/msbuild/customize-your-build?view=vs-2019#directorybuildprops-and-directorybuildtargets
     Trace.traceError "Unimplemented.")
 
+Target.create "Build"( fun _ ->
+    let setOptions a =
+        let customParams = sprintf "/p:DontGenBindings=true/p:PackageVersion=%s/p:ProductVersion=%s" release.AssemblyVersion release.NugetVersion
+        DotNet.Options.withCustomParams (Some customParams) (dotnetSimple a)
 
-Target.create "Build" <| fun _ ->
-    releaseProjects
-    |> Seq.iter(DotNet.build dotnetSimple)
+    for proj in releaseProjects do
+        DotNet.build setOptions proj
+    )
 
 Target.create "BuildTest" <| fun _ ->
     !!"tests/**/*.??proj"
     |> Seq.map(fun proj ->
-        DotNet.runWithDefaultOptions "netcoreapp2.2" proj "" |> string)
+        DotNet.runWithDefaultOptions "netcoreapp3.1" proj "" |> string)
     |> Trace.logItems "TestBuild-Output: "
 
 // Copies binaries from default VS location to expected bin folder
@@ -178,12 +227,8 @@ Target.create "CopyBinaries" (fun _ ->
     |> Seq.iter (fun (fromDir, toDir) -> Shell.copyDir toDir fromDir (fun _ -> true)))
 
 open System.IO
-open Fake.Core
-open Fake.IO.Globbing.Operators
-open Fake.DotNet
 
-Target.create "RunTests" (fun _ ->
-    Trace.log " --- Testing projects in parallel --- "
+let runTests tests =
     let setDotNetOptions (projectDirectory: string): DotNet.TestOptions -> DotNet.TestOptions =
         fun (dotNetTestOptions: DotNet.TestOptions) ->
         { dotNetTestOptions with
@@ -191,15 +236,81 @@ Target.create "RunTests" (fun _ ->
                     Configuration = DotNet.BuildConfiguration.Release
                     ResultsDirectory = Some "./result.xml" }.WithRedirectOutput true
 
+    tests
+    |> Seq.iter (fun (fullCsProjName: string) ->
+            let projectDirectory = Path.GetDirectoryName(fullCsProjName)
+            DotNet.test (setDotNetOptions projectDirectory >> dotnetSimple) "")
+
+Target.create "RunCITests" (fun _ ->
+    Trace.log " --- Testing CI-safe projects in parallel --- "
+
+
     //Looks overkill for only one csproj but just add 2 or 3 csproj and this will scale a lot better
-    testProjects
-    |> Seq.iter (fun fullCsProjName ->
-        let projectDirectory = Path.GetDirectoryName(fullCsProjName)
-        DotNet.test (setDotNetOptions projectDirectory >> dotnetSimple) ""))
+    runTests ciTestProjects)
+
+Target.create "RunAllTests" (fun _ ->
+    Trace.log " --- Testing ALL projects in parallel --- "
+
+    //Looks overkill for only one csproj but just add 2 or 3 csproj and this will scale a lot better
+    runTests allTestProjects)
+
 
 Target.create "CreateNuGetPackage" (fun _ ->
-    let optsFn options = { options with DotNet.PackOptions.OutputPath = (Some "Bin") }
-    releaseProjects |> Seq.iter (DotNet.pack optsFn))
+    Directory.CreateDirectory nugetDir |> ignore
+    let notes = release.Notes |> List.reduce (fun s1 s2 -> s1 + "\n" + s2)
+
+    for proj in releaseProjects do
+        Trace.logf "Creating nuget package for Project: %s" proj
+
+        let dir = Path.GetDirectoryName proj
+        let templatePath = Path.Combine(dir, "paket")
+        let oldTmplCont = File.ReadAllText templatePath
+        let newTmplCont = oldTmplCont.Insert(oldTmplCont.Length, sprintf "\nversion \n\t%s\nauthors \n\t%s\nowners \n\t%s\ndescription \n\t%s"
+                release.NugetVersion
+                (authors |> List.reduce (fun s a -> s + " " + a))
+                (authors |> List.reduce (fun s a -> s + " " + a))
+                description).Replace("#VERSION#", release.NugetVersion)
+        File.WriteAllText(templatePath + ".template", newTmplCont)
+        let setParams (p:Paket.PaketPackParams) =
+            { p with
+                ReleaseNotes = notes
+                OutputPath = Path.GetFullPath(nugetDir)
+                WorkingDir = dir
+                Version = release.NugetVersion
+            }
+        Paket.pack setParams
+    )
+
+Target.create "CreateMetaPackage" (fun _ ->
+    let notes = release.Notes |> List.reduce (fun s1 s2 -> s1 + "\n" + s2)
+
+    let deps =
+        releaseProjects
+        |> Seq.toList
+        |> List.map (fun p -> Path.GetFileNameWithoutExtension(p), release.NugetVersion)
+
+    let setParams (p:NuGet.NuGetParams) =
+        { p with
+            Version = release.NugetVersion
+            Authors = authors
+            Project = project
+            Dependencies = deps
+            Summary = summary
+            Description = description
+            Copyright = copyright
+            WorkingDir = binDir
+            OutputPath = nugetDir
+//                AccessKey = myAccessKey
+            Publish = false
+            ReleaseNotes = notes
+            Tags = tags
+            Properties = [
+                "Configuration", Environment.environVarOrDefault "buildMode" "Release"
+            ]
+        }
+    Trace.logf "Creating metapackage from opentk.nuspec"
+    NuGet.NuGet setParams "opentk.nuspec"
+    )
 
 // ---------
 // Release Targets
@@ -209,7 +320,7 @@ open Fake.Api
 
 Target.create "ReleaseOnGitHub" (fun _ ->
     let token =
-        match Environment.environVarOrDefault "github_token" "" with
+        match Environment.environVarOrDefault "opentk_github_token" "" with
         | s when not (System.String.IsNullOrWhiteSpace s) -> s
         | _ ->
             failwith
@@ -219,17 +330,17 @@ Target.create "ReleaseOnGitHub" (fun _ ->
 
     GitHub.createClientWithToken token
     |> GitHub.draftNewRelease gitOwner gitName release.NugetVersion (release.SemVer.PreRelease <> None) release.Notes
-    |> GitHub.uploadFiles files
+    //|> GitHub.uploadFiles files
     |> GitHub.publishDraft
     |> Async.RunSynchronously)
 
-Target.create "ReleaseOnNuGetGallery" (fun _ ->
+Target.create "ReleaseOnNuGet" (fun _ ->
     let apiKey =
-        match Environment.environVarOrDefault "nuget_api_key" "" with
+        match Environment.environVarOrDefault "opentk_nuget_api_key" "" with
         | s when not (System.String.IsNullOrWhiteSpace s) -> s
         | _ -> failwith "please set the nuget_api_key environment variable to a nuget access token."
 
-    !!"bin/*.nupkg"
+    !! (nugetDir </> "*.nupkg")
     |> Seq.iter
         (DotNet.nugetPush (fun opts ->
             { opts with
@@ -252,15 +363,19 @@ open Fake.Core.TargetOperators
   ==> "Restore"
   ==> "AssemblyInfo"
   ==> "UpdateSpec"
-  ==> "UpdateBindings"
+  ==> "UpdateBindingsRewrite"
   ==> "Build"
-  ==> "CopyBinaries"
-  ==> "RunTests"
+  ==> "RewriteBindings"
+//  ==> "RunAllTests"
   ==> "All"
   ==> "CreateNuGetPackage"
-  ==> "ReleaseOnNuGetGallery"
+  ==> "CreateMetaPackage"
+  ==> "ReleaseOnNuGet"
   ==> "ReleaseOnGithub"
   ==> "ReleaseOnAll"
+
+"Build"
+  ==> "RunCITests"
 
 //"Build"
 

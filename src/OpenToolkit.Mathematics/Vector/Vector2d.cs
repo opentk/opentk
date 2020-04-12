@@ -620,7 +620,8 @@ namespace OpenToolkit.Mathematics
         [Pure]
         public static Vector2d BaryCentric(Vector2d a, Vector2d b, Vector2d c, double u, double v)
         {
-            return a + (u * (b - a)) + (v * (c - a));
+            BaryCentric(ref a, ref b, ref c, u, v, out var result);
+            return result;
         }
 
         /// <summary>
@@ -659,6 +660,32 @@ namespace OpenToolkit.Mathematics
         }
 
         /// <summary>
+        /// Transform a Vector by the given Matrix.
+        /// </summary>
+        /// <param name="vec">The vector to transform.</param>
+        /// <param name="mat">The desired transformation.</param>
+        /// <returns>The transformed vector.</returns>
+        [Pure]
+        public static Vector2d Transform(Vector2d vec, Matrix2d mat)
+        {
+            Transform(ref vec, ref mat, out Vector2d result);
+            return result;
+        }
+
+        /// <summary>
+        /// Transform a Vector by the given Matrix.
+        /// </summary>
+        /// <param name="vec">The vector to transform.</param>
+        /// <param name="mat">The desired transformation.</param>
+        /// <param name="result">The transformed vector.</param>
+        public static void Transform(ref Vector2d vec, ref Matrix2d mat, out Vector2d result)
+        {
+            result = new Vector2d(
+                (vec.X * mat.Row0.X) + (vec.Y * mat.Row1.X),
+                (vec.X * mat.Row0.Y) + (vec.Y * mat.Row1.Y));
+        }
+
+        /// <summary>
         /// Transforms a vector by a quaternion rotation.
         /// </summary>
         /// <param name="vec">The vector to transform.</param>
@@ -686,6 +713,31 @@ namespace OpenToolkit.Mathematics
 
             result.X = v.X;
             result.Y = v.Y;
+        }
+
+        /// <summary>
+        /// Transform a Vector by the given Matrix using right-handed notation.
+        /// </summary>
+        /// <param name="mat">The desired transformation.</param>
+        /// <param name="vec">The vector to transform.</param>
+        /// <returns>The transformed vector.</returns>
+        [Pure]
+        public static Vector2d Transform(Matrix2d mat, Vector2d vec)
+        {
+            Transform(ref mat, ref vec, out Vector2d result);
+            return result;
+        }
+
+        /// <summary>
+        /// Transform a Vector by the given Matrix using right-handed notation.
+        /// </summary>
+        /// <param name="mat">The desired transformation.</param>
+        /// <param name="vec">The vector to transform.</param>
+        /// <param name="result">The transformed vector.</param>
+        public static void Transform(ref Matrix2d mat, ref Vector2d vec, out Vector2d result)
+        {
+            result.X = (mat.Row0.X * vec.X) + (mat.Row0.Y * vec.Y);
+            result.Y = (mat.Row1.X * vec.X) + (mat.Row1.Y * vec.Y);
         }
 
         /// <summary>
@@ -783,6 +835,32 @@ namespace OpenToolkit.Mathematics
             vec.X *= scale.X;
             vec.Y *= scale.Y;
             return vec;
+        }
+
+        /// <summary>
+        /// Transform a Vector by the given Matrix.
+        /// </summary>
+        /// <param name="vec">The vector to transform.</param>
+        /// <param name="mat">The desired transformation.</param>
+        /// <returns>The transformed vector.</returns>
+        [Pure]
+        public static Vector2d operator *(Vector2d vec, Matrix2d mat)
+        {
+            Transform(ref vec, ref mat, out Vector2d result);
+            return result;
+        }
+
+        /// <summary>
+        /// Transform a Vector by the given Matrix using right-handed notation.
+        /// </summary>
+        /// <param name="mat">The desired transformation.</param>
+        /// <param name="vec">The vector to transform.</param>
+        /// <returns>The transformed vector.</returns>
+        [Pure]
+        public static Vector2d operator *(Matrix2d mat, Vector2d vec)
+        {
+            Transform(ref mat, ref vec, out Vector2d result);
+            return result;
         }
 
         /// <summary>
