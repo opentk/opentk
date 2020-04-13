@@ -47,6 +47,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{471E0D18
 		build.cmd = build.cmd
 		build.fsx = build.fsx
 		build.sh = build.sh
+		RELEASE_NOTES.md = RELEASE_NOTES.md
 	EndProjectSection
 EndProject
 Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Generator", "src\Generator\Generator.fsproj", "{17868C80-6FD6-4A5A-908A-FA4FDCFB416E}"

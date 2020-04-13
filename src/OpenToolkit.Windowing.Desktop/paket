@@ -1,10 +1,16 @@
 type file
 id OpenToolkit.Windowing.Desktop
 dependencies
-    OpenToolkit.Core ~> #VERSION#
-    OpenToolkit.Mathematics ~> #VERSION#
-    OpenToolkit.Windowing.Common ~> #VERSION#
-    OpenToolkit.Windowing.GraphicsLibraryFramework ~> #VERSION#
+    framework: netcoreapp3.0
+        OpenToolkit.Core ~> #VERSION#
+        OpenToolkit.Mathematics ~> #VERSION#
+        OpenToolkit.Windowing.Common ~> #VERSION#
+        OpenToolkit.Windowing.GraphicsLibraryFramework ~> #VERSION#
+    framework: net472
+        OpenToolkit.Core ~> #VERSION#
+        OpenToolkit.Mathematics ~> #VERSION#
+        OpenToolkit.Windowing.Common ~> #VERSION#
+        OpenToolkit.Windowing.GraphicsLibraryFramework ~> #VERSION#
 files
   bin\Release\netcoreapp3.0\OpenToolkit.Windowing.Desktop.dll ==> lib\netcoreapp3.0
   bin\Release\netcoreapp3.0\OpenToolkit.Windowing.Desktop.xml ==> lib\netcoreapp3.0
