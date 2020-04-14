@@ -15,13 +15,6 @@ Project website: https://opentk.net
 
 Official git repository: https://github.com/opentk/opentk
 
-## NOTICE: When using OpenTK 4.0-preN packages!
-When using the OpenTK 4.0 preview packages you need to initialize the opengl bindings before you can use them. To initialize them run the following code once on load/startup.
-```cs
-Gl.LoadBindings(new GLFWBindingsContext());
-```
-If you do not run this code before you call OpenGL functions you will get a `AccessViolationException`.
-
 Build Status
 ========
 
@@ -146,18 +139,6 @@ Requirements
 - To develop Android applications: Visual Studio and Xamarin
 - To develop iOS applications: Visual Studio, Xamarin and XCode
 
-
-Known issues
-============
-
-1. The SDL2 backend has a number of limitations compared to the native platform backends. In particular, SDL2 does not support:
-   - `OpenTK.GLControl`. OpenTK will automatically switch to a native platform backend instead.
-   - `DisplayDevice.ChangeResolution()` without a fullscreen `INativeWindow`.
-   - Switching between `WindowBorder.Fixed` and `WindowBorder.Resizable`.
-   - High-resolution mouse input. Additionally, it is limited to a single keyboard and mouse device.
-2. OpenTK.Input.GamePad.SetVibration is currently not implemented. This API will be implemented in a future release.
-
-
 Documentation
 =============
 
@@ -168,7 +149,6 @@ You can also browse the full API on the official website
 Additional information can be found in the [OpenTK Manual](http://web.archive.org/web/20150325224427/http://www.opentk.com/doc).
 
 Technical documentation about the implementation of OpenTK can be found in the [Technical Wiki](https://github.com/opentk/opentk/wiki).
-
 
 
 Need Help?
