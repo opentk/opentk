@@ -639,11 +639,11 @@ namespace OpenToolkit.Windowing.Desktop
                 load.Invoke(null, new object[] { provider });
             }
 
-            LoadBindings("ES11");
-            LoadBindings("ES20");
-            LoadBindings("ES30");
-            LoadBindings("OpenGL2");
-            LoadBindings("OpenGL4");
+            LoadBindings(nameof(OpenToolkit.Graphics.ES11));
+            LoadBindings(nameof(OpenToolkit.Graphics.ES20));
+            LoadBindings(nameof(OpenToolkit.Graphics.ES30));
+            LoadBindings(nameof(OpenToolkit.Graphics.OpenGL));
+            LoadBindings(nameof(OpenToolkit.Graphics.OpenGL4));
         }
 
         private GLFWCallbacks.WindowPosCallback _posCallback;
