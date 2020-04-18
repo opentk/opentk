@@ -642,7 +642,7 @@ namespace OpenToolkit.Windowing.Desktop
             LoadBindings("ES11");
             LoadBindings("ES20");
             LoadBindings("ES30");
-            LoadBindings("OpenGL2");
+            LoadBindings("OpenGL");
             LoadBindings("OpenGL4");
         }
 
