@@ -90,6 +90,16 @@ namespace OpenToolkit.Mathematics
         public static readonly Vector4 One = new Vector4(1, 1, 1, 1);
 
         /// <summary>
+        /// Defines an instance with all components set to positive infinity.
+        /// </summary>
+        public static readonly Vector4 PositiveInfinity = new Vector4(float.PositiveInfinity, float.PositiveInfinity, float.PositiveInfinity, float.PositiveInfinity);
+
+        /// <summary>
+        /// Defines an instance with all components set to negative infinity.
+        /// </summary>
+        public static readonly Vector4 NegativeInfinity = new Vector4(float.NegativeInfinity, float.NegativeInfinity, float.NegativeInfinity, float.NegativeInfinity);
+
+        /// <summary>
         /// Defines the size of the Vector4 struct in bytes.
         /// </summary>
         public static readonly int SizeInBytes = Marshal.SizeOf<Vector4>();

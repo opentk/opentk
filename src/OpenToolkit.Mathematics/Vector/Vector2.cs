@@ -199,6 +199,16 @@ namespace OpenToolkit.Mathematics
         public static readonly Vector2 One = new Vector2(1, 1);
 
         /// <summary>
+        /// Defines an instance with all components set to positive infinity.
+        /// </summary>
+        public static readonly Vector2 PositiveInfinity = new Vector2(float.PositiveInfinity, float.PositiveInfinity);
+
+        /// <summary>
+        /// Defines an instance with all components set to negative infinity.
+        /// </summary>
+        public static readonly Vector2 NegativeInfinity = new Vector2(float.NegativeInfinity, float.NegativeInfinity);
+
+        /// <summary>
         /// Defines the size of the Vector2 struct in bytes.
         /// </summary>
         public static readonly int SizeInBytes = Marshal.SizeOf<Vector2>();
