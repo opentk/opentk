@@ -1,3 +1,6 @@
+### 4.0.0-pre8
+ * Fix automatic bindings initialization for GL2 (Thanks @Phyyl)
+
 ### 4.0.0-pre7
 * Add framework specification to paket files. (Thanks @frederikja163)
 
