@@ -377,7 +377,7 @@ namespace OpenToolkit.Windowing.Desktop
         }
 
         /// <inheritdoc />
-        public Vector2i ClientSize { get; }
+        public Vector2i ClientSize { get; private set; }
 
         /// <inheritdoc />
         public bool IsFullscreen { get; set; }
@@ -596,11 +596,9 @@ namespace OpenToolkit.Windowing.Desktop
                 Location = settings.Location.Value;
             }
 
-            GLFW.GetFramebufferSize(WindowPtr, out var width, out var height);
-            ClientSize = new Vector2i(width, height);
+            GLFW.GetWindowSize(WindowPtr, out var width, out var height);
 
-            GLFW.GetWindowSize(WindowPtr, out width, out height);
-            _size = new Vector2i(width, height);
+            HandleResize(width, height);
 
             GLFW.GetWindowPos(WindowPtr, out var x, out var y);
             _location = new Vector2i(x, y);
@@ -661,6 +659,16 @@ namespace OpenToolkit.Windowing.Desktop
         private GLFWCallbacks.JoystickCallback _joystickCallback;
         private GLFWCallbacks.MonitorCallback _monitorCallback;
         private GLFWCallbacks.WindowRefreshCallback _refreshCallback;
+
+        private unsafe void HandleResize(int width, int height)
+        {
+            _size.X = width;
+            _size.Y = height;
+
+            GLFW.GetFramebufferSize(WindowPtr, out width, out height);
+
+            ClientSize = new Vector2i(width, height);
+        }
 
         private void RegisterWindowCallbacks()
         {
@@ -1113,10 +1121,9 @@ namespace OpenToolkit.Windowing.Desktop
         /// <param name="e">A <see cref="ResizeEventArgs"/> that contains the event data.</param>
         protected virtual void OnResize(ResizeEventArgs e)
         {
-            Resize?.Invoke(e);
+            HandleResize(e.Width, e.Height);
 
-            _size.X = e.Width;
-            _size.Y = e.Height;
+            Resize?.Invoke(e);
         }
 
         /// <summary>
