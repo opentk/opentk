@@ -78,6 +78,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenToolkit.Windowing.Graph
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenToolkit.Windowing.Desktop", "src\OpenToolkit.Windowing.Desktop\OpenToolkit.Windowing.Desktop.csproj", "{172C1E62-DA67-4203-BBCB-9DA4D9111EF0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenToolkit.OpenAL.Extensions.Creative.EFX", "src\OpenAL\Extensions\OpenToolkit.OpenAL.Extensions.Creative.EFX\OpenToolkit.OpenAL.Extensions.Creative.EFX.csproj", "{EB8523E3-04A7-485B-960A-352204492642}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -156,6 +158,10 @@ Global
 		{5F47DB55-4BFC-4832-A68F-AB36CE7431CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5F47DB55-4BFC-4832-A68F-AB36CE7431CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5F47DB55-4BFC-4832-A68F-AB36CE7431CE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EB8523E3-04A7-485B-960A-352204492642}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EB8523E3-04A7-485B-960A-352204492642}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EB8523E3-04A7-485B-960A-352204492642}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EB8523E3-04A7-485B-960A-352204492642}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -171,6 +177,7 @@ Global
 		{172C1E62-DA67-4203-BBCB-9DA4D9111EF0} = {BBBE802B-9F6E-4299-97CE-97CDA43802B9}
 		{17FB3437-BD1A-423B-B333-B2D7F775BC79} = {BF0E6BAA-C31F-4481-924B-3EE9826BEE4D}
 		{5F47DB55-4BFC-4832-A68F-AB36CE7431CE} = {BF0E6BAA-C31F-4481-924B-3EE9826BEE4D}
+		{EB8523E3-04A7-485B-960A-352204492642} = {BF0E6BAA-C31F-4481-924B-3EE9826BEE4D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {82DDE6D6-0D55-49B4-9C64-B31B4A6E729F}
