@@ -1,8 +1,6 @@
 ### 4.0.0-pre9
- - OpenAL Reintroduced
  * Added PositiveInfinity and NegativeInfinity to vector structs (Thanks @arakis)
  * Fixed ClientSize not getting updated in OnResize (Thanks @Phyyl)
- * Making AL great (again?) (Thanks @NogginBops)
 
 ### 4.0.0-pre8
  * Fix automatic bindings initialization for GL2 (Thanks @Phyyl)
