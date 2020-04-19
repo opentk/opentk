@@ -265,11 +265,10 @@ Target.create "CreateNuGetPackage" (fun _ ->
         let dir = Path.GetDirectoryName proj
         let templatePath = Path.Combine(dir, "paket")
         let oldTmplCont = File.ReadAllText templatePath
-        let newTmplCont = oldTmplCont.Insert(oldTmplCont.Length, sprintf "\nversion \n\t%s\nauthors \n\t%s\nowners \n\t%s\ndescription \n\t%s"
+        let newTmplCont = oldTmplCont.Insert(oldTmplCont.Length, sprintf "\nversion \n\t%s\nauthors \n\t%s\nowners \n\t%s\n"
                 release.NugetVersion
                 (authors |> List.reduce (fun s a -> s + " " + a))
-                (authors |> List.reduce (fun s a -> s + " " + a))
-                description).Replace("#VERSION#", release.NugetVersion)
+                (authors |> List.reduce (fun s a -> s + " " + a))).Replace("#VERSION#", release.NugetVersion)
         File.WriteAllText(templatePath + ".template", newTmplCont)
         let setParams (p:Paket.PaketPackParams) =
             { p with
