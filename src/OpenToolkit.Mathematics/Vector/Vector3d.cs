@@ -244,6 +244,16 @@ namespace OpenToolkit.Mathematics
         public static readonly Vector3d One = new Vector3d(1, 1, 1);
 
         /// <summary>
+        /// Defines an instance with all components set to positive infinity.
+        /// </summary>
+        public static readonly Vector3d PositiveInfinity = new Vector3d(double.PositiveInfinity, double.PositiveInfinity, double.PositiveInfinity);
+
+        /// <summary>
+        /// Defines an instance with all components set to negative infinity.
+        /// </summary>
+        public static readonly Vector3d NegativeInfinity = new Vector3d(double.NegativeInfinity, double.NegativeInfinity, double.NegativeInfinity);
+
+        /// <summary>
         /// Defines the size of the Vector3d struct in bytes.
         /// </summary>
         public static readonly int SizeInBytes = Marshal.SizeOf<Vector3d>();
