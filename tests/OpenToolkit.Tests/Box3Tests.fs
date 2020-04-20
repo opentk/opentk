@@ -117,7 +117,7 @@ module Box3 =
             let v2 = b1.Size * v1
             b1.Scale(v1, b1.Center)
             
-            Assert.ApproximatelyEqualEpsilon(b1.Size, v2, (float32)0.0001)
+            Assert.ApproximatelyEqualEpsilon(b1.Size, v2, (float32)0.001)
             
         [<Property>]
         let ``Box2.Scale is equivelant to Box2.Scaled`` (b1 : Box3, v1 : Vector3, v2 : Vector3) =
