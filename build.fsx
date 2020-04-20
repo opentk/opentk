@@ -90,7 +90,9 @@ let releaseProjects =
     -- "src/Generator.Converter/**"
     -- "src/Generator.Rewrite/**"
     -- "src/SpecificationOpenGL/**"
-    -- "src/OpenAL/**"
+    -- "src/OpenAL/OpenALGenerator/**"
+    -- "src/OpenAL/OpenALTest/**"
+    -- "src/OpenAL/OpenToolkit.OpenAL.Extensions/**"
 
 
 // Absolutely all test projects.

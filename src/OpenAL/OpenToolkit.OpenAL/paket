@@ -1,0 +1,10 @@
+type file
+id OpenToolkit.OpenAL
+dependencies
+    framework: netcoreapp3.1
+        OpenToolkit.Core ~> #VERSION#
+        OpenToolkit.Mathematics ~> #VERSION#
+files
+    bin\Release\netcoreapp3.1\OpenToolkit.OpenAL.dll ==> lib\netcoreapp3.1
+    bin\Release\netcoreapp3.1\OpenToolkit.OpenAL.xml ==> lib\netcoreapp3.1
+    bin\Release\netcoreapp3.1\OpenToolkit.OpenAL.pdb ==> lib\netcoreapp3.1

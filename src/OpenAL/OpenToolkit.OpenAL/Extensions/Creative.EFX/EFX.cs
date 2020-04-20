@@ -9,9 +9,6 @@
 
 using System;
 using System.Runtime.InteropServices;
-using AdvancedDLSupport;
-using OpenToolkit.Core.Extensions;
-using OpenToolkit.Core.Loader;
 using OpenToolkit.Mathematics;
 
 namespace OpenToolkit.Audio.OpenAL.Extensions.Creative.EFX
