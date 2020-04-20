@@ -1,6 +1,3 @@
-### 4.0.0-pre9.1
- * OpenAL test
-
 ### 4.0.0-pre9
  * Added PositiveInfinity and NegativeInfinity to vector structs (Thanks @arakis)
  * Fixed ClientSize not getting updated in OnResize (Thanks @Phyyl)
