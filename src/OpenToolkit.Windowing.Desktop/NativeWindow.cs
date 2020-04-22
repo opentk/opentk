@@ -696,12 +696,12 @@ namespace OpenToolkit.Windowing.Desktop
                 {
                     int index = (int)key;
 
-                    if (index < 0 || index >= GlfwKeyMapping.Length)
-                    {
-                        return;
-                    }
+                    var ourKey = Key.Unknown;
 
-                    var ourKey = GlfwKeyMapping[index];
+                    if (index >= 0 && index < GlfwKeyMapping.Length)
+                    {
+                        ourKey = GlfwKeyMapping[index];
+                    }
 
                     var args = new KeyboardKeyEventArgs(
                         ourKey,
