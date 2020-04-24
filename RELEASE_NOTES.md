@@ -1,3 +1,10 @@
+### 4.0.0-pre9.1
+ * OpenTK now includes **OPENAL!** (Biggest thanks to *@NogginBops*)
+ * Added check for invalid keys in window key callback (Thanks @Phyyl)
+ * Fix rounding errors on tests
+ * Add individual project descriptions
+ * Add openAL to the build sequence.
+
 ### 4.0.0-pre9
  * Added PositiveInfinity and NegativeInfinity to vector structs (Thanks @arakis)
  * Fixed ClientSize not getting updated in OnResize (Thanks @Phyyl)
@@ -11,7 +18,6 @@
 ### 4.0.0-pre6
 * Fixed GameWindow update frequency (Thanks @MerickOWA)
 * Throw an InvalidOperationException if bindings are uninitialized. (Thanks @PJB)
-
 
 ### 4.0.0-pre5
  * Added Profile Any (Thanks @arakis)

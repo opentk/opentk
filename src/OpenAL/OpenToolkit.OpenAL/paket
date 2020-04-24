@@ -1,5 +1,7 @@
 type file
 id OpenToolkit.OpenAL
+description
+    OpenAL bindings for dotnet from the Khronos openAL c library.
 dependencies
     framework: netcoreapp3.1
         OpenToolkit.Core ~> #VERSION#
