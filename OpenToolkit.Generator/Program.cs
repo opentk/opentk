@@ -16,6 +16,8 @@ namespace OpenToolkit.Generator
 
             var rawClass = Parser.Parse(rawSpec);
 
+            Writer.Write(rawClass);
+
             Logger.Dispose();
         }
     }

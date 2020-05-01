@@ -10,13 +10,13 @@ namespace OpenToolkit.Generator
         public Parameter[] Parameters { get; }
         public string[] Body { get; }
 
-        public Method(string summary, Type returnType, string name, Parameter[] parameters, string[] body)
+        public Method(string summary, Type returnType, string name, Parameter[] parameters, string[] body = null)
         {
             Summary = summary;
             ReturnType = returnType;
             Name = name;
             Parameters = parameters;
-            Body = body;
+            Body = body ?? new string[]{"throw new System.NotImplementedException();"};
         }
     }
 }
