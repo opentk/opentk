@@ -2,7 +2,7 @@ using System;
 
 namespace OpenToolkit.Generator
 {
-    public struct Method
+    public struct Overload : IMethod
     {
         public string Summary { get; }
         public Type ReturnType { get; }
@@ -10,7 +10,7 @@ namespace OpenToolkit.Generator
         public Parameter[] Parameters { get; }
         public string[] Body { get; }
 
-        public Method(string summary, Type returnType, string name, Parameter[] parameters, string[] body = null)
+        public Overload(string summary, Type returnType, string name, Parameter[] parameters, string[] body = null)
         {
             Summary = summary;
             ReturnType = returnType;

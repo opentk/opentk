@@ -1,21 +1,20 @@
 using System;
 using System.Xml;
+using System.Xml.Linq;
 
 namespace OpenToolkit.Generator
 {
     public static class Parser
     {
-        public static Class Parse(string spec)
+        public static Class Parse(in XDocument doc)
         {
             Logger.Info("Parsing spec into xml document.");
 
-            var doc = new XmlDocument();
-            doc.LoadXml(spec);
-            var reg = doc.LastChild;
+            var reg = doc.LastNode;
 
             Logger.Info("Parsing commands.");
-            var commands = reg.SelectSingleNode("commands").ChildNodes;
-            Method[] methods = new Method[commands.Count];
+            var commands = reg.sel("commands").ChildNodes;
+            IMethod[] methods = new IMethod[commands.Count];
             for (int i = 0; i < commands.Count; i++)
             {
                 methods[i] = ParseCommand(commands[i]);
@@ -24,28 +23,39 @@ namespace OpenToolkit.Generator
             return new Class("OpenToolkit.Graphics", "GL", methods);
         }
 
-        public static Method ParseCommand(XmlNode command)
+        public static IMethod ParseCommand(XmlNode command)
         {
             var proto = command.FirstChild;
             var strType = proto.SelectSingleNode("ptype")?.InnerText.Trim() ?? proto.FirstChild.InnerText.Trim();
-            var name = proto.SelectSingleNode("name").InnerText.Substring(2);
+            var entryPoint = proto.SelectSingleNode("name").InnerText;
+            var name = entryPoint.Substring(2);
 
             var parameterNodes = command.SelectNodes("param");
             var parameters = new Parameter[parameterNodes.Count];
             for (int i = 0; i < parameterNodes.Count; i++)
             {
-                var pName = parameterNodes[i].SelectSingleNode("name").InnerText;
-
-                var pType = parameterNodes[i].SelectSingleNode("ptype")?.InnerText ?? parameterNodes[i].FirstChild.InnerText;
-                parameters[i] = new Parameter("", StringToType(pType), pName);
+                parameters[i] = ParseParameter(parameterNodes[i]);
             }
 
-            return new Method("", StringToType(strType), name, parameters);
+            return new Extern("opengl32.dll", entryPoint, "", ParseType(strType), name, parameters);
         }
 
-        public static Type StringToType(string type)
+        public static Parameter ParseParameter(XmlNode parameter)
         {
-            type = type.StartsWith("const") ? type.Substring(6) : type;
+            var pName = parameter.SelectSingleNode("name").InnerText;
+
+            var pType = parameter.InnerText.Remove(parameter.InnerText.Length - pName.Length);
+            var modifier = ParameterModifer.None;
+            if (pType.StartsWith("const"))
+            {
+                pType = pType.Substring(6);
+                modifier = ParameterModifer.In;
+            }
+            return new Parameter("", modifier, ParseType(pType), pName);
+        }
+
+        public static Type ParseType(string type)
+        {
             var t = type switch
             {
                 "void" => typeof(void),
@@ -71,15 +81,15 @@ namespace OpenToolkit.Generator
                 "GLeglImageOES" => typeof(void *),
                 "GLchar" => typeof(char),
                 "GLcharARB" => typeof(char),
-                "*GLhandleARB" => typeof(void),
-                "GLhandleARB" => typeof(uint),
+                "*GLhandleARB" => typeof(void), //OS dependent
+                "GLhandleARB" => typeof(uint), //OS dependent
                 "GLhalf" => typeof(short),
                 "GLhalfARB" => typeof(short),
                 "GLfixed" => typeof(int),
                 "GLintptr" => typeof(IntPtr),
                 "GLintptrARB" => typeof(IntPtr),
-                "GLsizeiptr" => typeof(uint), //What type?
-                "GLsizeiptrARB" => typeof(uint), //What type?
+                "GLsizeiptr" => typeof(UIntPtr), //What type?
+                "GLsizeiptrARB" => typeof(UIntPtr), //What type?
                 "GLint64" => typeof(int),
                 "GLint64EXT" => typeof(int),
                 "GLuint64" => typeof(uint),
