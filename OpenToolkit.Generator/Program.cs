@@ -8,8 +8,10 @@ namespace OpenToolkit.Generator
         {
             //Step1: Read specification from github.
             //Step2: Parse information to methods and class structs.
-            //Step3: Generate overloads.
-            //Step4: Write generated classes to .cs files.
+            //Step3: Implement methods
+            //Step4: Generate overloads.
+            //Step5: Write generated classes to .cs files.
+
             Logger.Initialize();
 
             var rawSpec = Reader.ReadSpecFromGithub();
