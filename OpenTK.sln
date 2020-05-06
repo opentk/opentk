@@ -63,13 +63,17 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenToolkit.OpenAL.Extensio
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenALGenerator", "OpenALGenerator\OpenALGenerator.csproj", "{17FB3437-BD1A-423B-B333-B2D7F775BC79}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenALTest", "OpenALTest\OpenALTest.csproj", "{5F47DB55-4BFC-4832-A68F-AB36CE7431CE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenALTest", "OpenALTest\OpenALTest.csproj", "{5F47DB55-4BFC-4832-A68F-AB36CE7431CE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenToolkit.Windowing.Common", "src\OpenToolkit.Windowing.Common\OpenToolkit.Windowing.Common.csproj", "{9A0D02D2-0834-42F8-9610-8221CF803708}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenToolkit.Windowing.Common", "src\OpenToolkit.Windowing.Common\OpenToolkit.Windowing.Common.csproj", "{9A0D02D2-0834-42F8-9610-8221CF803708}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenToolkit.Windowing.GraphicsLibraryFramework", "src\OpenToolkit.Windowing.GraphicsLibraryFramework\OpenToolkit.Windowing.GraphicsLibraryFramework.csproj", "{ECC7271C-A5E5-4CDC-BA9F-A38A150CD2D4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenToolkit.Windowing.GraphicsLibraryFramework", "src\OpenToolkit.Windowing.GraphicsLibraryFramework\OpenToolkit.Windowing.GraphicsLibraryFramework.csproj", "{ECC7271C-A5E5-4CDC-BA9F-A38A150CD2D4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenToolkit.Windowing.Desktop", "src\OpenToolkit.Windowing.Desktop\OpenToolkit.Windowing.Desktop.csproj", "{172C1E62-DA67-4203-BBCB-9DA4D9111EF0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenToolkit.Windowing.Desktop", "src\OpenToolkit.Windowing.Desktop\OpenToolkit.Windowing.Desktop.csproj", "{172C1E62-DA67-4203-BBCB-9DA4D9111EF0}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenToolkit.Generator", "OpenToolkit.Generator\OpenToolkit.Generator.csproj", "{256CFC25-B4C3-4428-8AC0-41CCF763FA17}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeneratorV2", "GeneratorV2\GeneratorV2.csproj", "{86AE12D9-404C-4CDB-9396-985F24E2836E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -113,6 +117,14 @@ Global
 		{CB4028A7-A449-4452-9FC5-78CDB545FEB9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CB4028A7-A449-4452-9FC5-78CDB545FEB9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CB4028A7-A449-4452-9FC5-78CDB545FEB9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{17FB3437-BD1A-423B-B333-B2D7F775BC79}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{17FB3437-BD1A-423B-B333-B2D7F775BC79}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{17FB3437-BD1A-423B-B333-B2D7F775BC79}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{17FB3437-BD1A-423B-B333-B2D7F775BC79}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5F47DB55-4BFC-4832-A68F-AB36CE7431CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5F47DB55-4BFC-4832-A68F-AB36CE7431CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5F47DB55-4BFC-4832-A68F-AB36CE7431CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5F47DB55-4BFC-4832-A68F-AB36CE7431CE}.Release|Any CPU.Build.0 = Release|Any CPU
 		{9A0D02D2-0834-42F8-9610-8221CF803708}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{9A0D02D2-0834-42F8-9610-8221CF803708}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9A0D02D2-0834-42F8-9610-8221CF803708}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -133,6 +145,10 @@ Global
 		{5F47DB55-4BFC-4832-A68F-AB36CE7431CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5F47DB55-4BFC-4832-A68F-AB36CE7431CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5F47DB55-4BFC-4832-A68F-AB36CE7431CE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{256CFC25-B4C3-4428-8AC0-41CCF763FA17}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{256CFC25-B4C3-4428-8AC0-41CCF763FA17}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{256CFC25-B4C3-4428-8AC0-41CCF763FA17}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{256CFC25-B4C3-4428-8AC0-41CCF763FA17}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -147,9 +163,8 @@ Global
 		{9A0D02D2-0834-42F8-9610-8221CF803708} = {BBBE802B-9F6E-4299-97CE-97CDA43802B9}
 		{ECC7271C-A5E5-4CDC-BA9F-A38A150CD2D4} = {BBBE802B-9F6E-4299-97CE-97CDA43802B9}
 		{172C1E62-DA67-4203-BBCB-9DA4D9111EF0} = {BBBE802B-9F6E-4299-97CE-97CDA43802B9}
-		{51A92F39-3444-4E07-9C4F-99C2D8F11879} = {0B9B71A1-29F7-4CC5-9A9D-9DF122BE8B28}
-		{A31363E2-783D-4F6A-B447-130E7A344442} = {0B9B71A1-29F7-4CC5-9A9D-9DF122BE8B28}
-		{B2A8C618-E2D7-45BD-B751-37CD7EA315B9} = {0B9B71A1-29F7-4CC5-9A9D-9DF122BE8B28}
+		{17FB3437-BD1A-423B-B333-B2D7F775BC79} = {BF0E6BAA-C31F-4481-924B-3EE9826BEE4D}
+		{5F47DB55-4BFC-4832-A68F-AB36CE7431CE} = {BF0E6BAA-C31F-4481-924B-3EE9826BEE4D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {82DDE6D6-0D55-49B4-9C64-B31B4A6E729F}
