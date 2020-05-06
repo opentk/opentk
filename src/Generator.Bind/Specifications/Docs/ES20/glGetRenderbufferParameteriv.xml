@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+<refentry id="glGetRenderbufferParameteriv">
+    <refmeta>
+        <refmetainfo>
+            <copyright>
+                <year>2005</year>
+                <holder>Sams Publishing</holder>
+            </copyright>
+        </refmetainfo>
+        <refentrytitle>glGetRenderbufferParameteriv</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glGetRenderbufferParameteriv</refname>
+        <refpurpose>return parameters of a renderbuffer object</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glGetRenderbufferParameteriv</function></funcdef>
+                <paramdef>GLenum <parameter>target</parameter></paramdef>
+                <paramdef>GLenum <parameter>pname</parameter></paramdef>
+                <paramdef>GLint * <parameter>params</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>target</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the target renderbuffer object.
+                    The symbolic constant must be <constant>GL_RENDERBUFFER</constant>.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>pname</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the symbolic name of a renderbuffer object parameter.
+                    Accepted values are <constant>GL_RENDERBUFFER_WIDTH</constant>,
+                    <constant>GL_RENDERBUFFER_HEIGHT</constant>,
+                    <constant>GL_RENDERBUFFER_INTERNAL_FORMAT</constant>,
+                    <constant>GL_RENDERBUFFER_RED_SIZE</constant>,
+                    <constant>GL_RENDERBUFFER_GREEN_SIZE</constant>,
+                    <constant>GL_RENDERBUFFER_BLUE_SIZE</constant>,
+                    <constant>GL_RENDERBUFFER_ALPHA_SIZE</constant>,
+                    <constant>GL_RENDERBUFFER_DEPTH_SIZE</constant>, or
+                    <constant>GL_RENDERBUFFER_STENCIL_SIZE</constant>.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>params</parameter></term>
+            <listitem>
+                <para>
+                    Returns the requested parameter.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 id="description"><title>Description</title>
+        <para>
+            <function>glGetRenderbufferParameteriv</function> returns in 
+            <parameter>params</parameter> a selected parameter of the 
+            currently bound renderbuffer object.
+        </para>
+        <para>
+            <parameter>pname</parameter> names a specific renderbuffer object parameter, as follows:
+        </para>
+        <variablelist>
+            <varlistentry>
+                <term><constant>GL_RENDERBUFFER_WIDTH</constant></term>
+                <listitem>
+                    <para>
+                        <parameter>params</parameter> returns the width in pixels
+                        of the image of the currently bound renderbuffer.
+                        The initial value is 0.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_RENDERBUFFER_HEIGHT</constant></term>
+                <listitem>
+                    <para>
+                        <parameter>params</parameter> returns the height in pixels
+                        of the image of the currently bound renderbuffer.
+                        The initial value is 0.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_RENDERBUFFER_INTERNAL_FORMAT</constant></term>
+                <listitem>
+                    <para>
+                        <parameter>params</parameter> returns the internal format
+                        of the image of the currently bound renderbuffer.
+                        The initial value is <constant>GL_RGBA4</constant>.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_RENDERBUFFER_RED_SIZE</constant></term>
+                <listitem>
+                    <para>
+                        <parameter>params</parameter> returns the resolution in bits 
+                        for the red component of the image of the currently 
+                        bound renderbuffer.
+                        The initial value is 0.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_RENDERBUFFER_GREEN_SIZE</constant></term>
+                <listitem>
+                    <para>
+                        <parameter>params</parameter> returns the resolution in bits 
+                        for the green component of the image of the currently 
+                        bound renderbuffer.
+                        The initial value is 0.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_RENDERBUFFER_BLUE_SIZE</constant></term>
+                <listitem>
+                    <para>
+                        <parameter>params</parameter> returns the resolution in bits 
+                        for the blue component of the image of the currently 
+                        bound renderbuffer.
+                        The initial value is 0.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_RENDERBUFFER_ALPHA_SIZE</constant></term>
+                <listitem>
+                    <para>
+                        <parameter>params</parameter> returns the resolution in bits 
+                        for the alpha component of the image of the currently 
+                        bound renderbuffer.
+                        The initial value is 0.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_RENDERBUFFER_DEPTH_SIZE</constant></term>
+                <listitem>
+                    <para>
+                        <parameter>params</parameter> returns the resolution in bits 
+                        for the depth component of the image of the currently 
+                        bound renderbuffer.
+                        The initial value is 0.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_RENDERBUFFER_STENCIL_SIZE</constant></term>
+                <listitem>
+                    <para>
+                        <parameter>params</parameter> returns the resolution in bits 
+                        for the stencil component of the image of the currently 
+                        bound renderbuffer.
+                        The initial value is 0.
+                    </para>
+                </listitem>
+            </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 id="notes"><title>Notes</title>
+        <para>
+            The resolution of components reported by 
+            <function>glGetRenderbufferParameteriv</function> are the actual
+            resolutions at which the components are stored, which may be
+            different than those requested by the <parameter>internalformat</parameter>
+            parameter of <citerefentry><refentrytitle>glRenderbufferStorage</refentrytitle></citerefentry>.
+        </para>
+        <para>
+            If an error is generated,
+            no change is made to the contents of <parameter>params</parameter>.
+        </para>
+    </refsect1>
+    <refsect1 id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_ENUM</constant> is generated if <parameter>target</parameter> is not <constant>GL_RENDERBUFFER</constant>.
+        </para>
+        <para>
+            <constant>GL_INVALID_ENUM</constant> is generated if <parameter>pname</parameter> is not 
+            <constant>GL_RENDERBUFFER_WIDTH</constant>,
+            <constant>GL_RENDERBUFFER_HEIGHT</constant>,
+            <constant>GL_RENDERBUFFER_INTERNAL_FORMAT</constant>,
+            <constant>GL_RENDERBUFFER_RED_SIZE</constant>,
+            <constant>GL_RENDERBUFFER_GREEN_SIZE</constant>,
+            <constant>GL_RENDERBUFFER_BLUE_SIZE</constant>,
+            <constant>GL_RENDERBUFFER_ALPHA_SIZE</constant>,
+            <constant>GL_RENDERBUFFER_DEPTH_SIZE</constant>, or
+            <constant>GL_RENDERBUFFER_STENCIL_SIZE</constant>.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if the reserved renderbuffer object name 0 is bound.
+        </para>
+    </refsect1>
+    <refsect1 id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glBindRenderBuffer</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glRenderbufferStorage</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 id="copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"></trademark> 2008 Khronos Group. 
+            This material may be distributed subject to the terms and conditions set forth in 
+            the Open Publication License, v 1.0, 8 June 1999.
+            <ulink url="http://opencontent.org/openpub/">http://opencontent.org/openpub/</ulink>.
+        </para>
+    </refsect1>
+</refentry>

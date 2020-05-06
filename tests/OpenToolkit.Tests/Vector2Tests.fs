@@ -643,6 +643,16 @@ module Vector2 =
 
             Assert.ApproximatelyEquivalent(transformedVector, Vector2.Transform(ref v, ref q))
 
+        [<Property>]
+        let ``Transformation by quaternion by multiplication using right-handed notation is the same as multiplication by quaternion and its conjugate`` (v : Vector2, q : Quaternion) =
+            let vectorQuat = Quaternion(v.X, v.Y, 0.0f, 0.0f)
+            let inverse = Quaternion.Invert(q)
+
+            let transformedQuat = q * vectorQuat * inverse
+            let transformedVector = Vector2(transformedQuat.X, transformedQuat.Y)
+
+            Assert.ApproximatelyEquivalent(transformedVector, q * v)
+
     [<Properties(Arbitrary = [| typeof<OpenTKGen> |])>]
     module Serialization =
         //

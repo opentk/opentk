@@ -1,0 +1,8 @@
+type file
+id OpenToolkit.Mathematics
+description
+    A basic mathematics library developed primarily for rendering in 3d and 2d.
+files
+    bin\Release\netstandard2.0\OpenToolkit.Mathematics.dll ==> lib\netstandard2.0
+    bin\Release\netstandard2.0\OpenToolkit.Mathematics.xml ==> lib\netstandard2.0
+    bin\Release\netstandard2.0\OpenToolkit.Mathematics.pdb ==> lib\netstandard2.0

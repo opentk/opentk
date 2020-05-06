@@ -244,6 +244,16 @@ namespace OpenToolkit.Mathematics
         public static readonly Vector3d One = new Vector3d(1, 1, 1);
 
         /// <summary>
+        /// Defines an instance with all components set to positive infinity.
+        /// </summary>
+        public static readonly Vector3d PositiveInfinity = new Vector3d(double.PositiveInfinity, double.PositiveInfinity, double.PositiveInfinity);
+
+        /// <summary>
+        /// Defines an instance with all components set to negative infinity.
+        /// </summary>
+        public static readonly Vector3d NegativeInfinity = new Vector3d(double.NegativeInfinity, double.NegativeInfinity, double.NegativeInfinity);
+
+        /// <summary>
         /// Defines the size of the Vector3d struct in bytes.
         /// </summary>
         public static readonly int SizeInBytes = Marshal.SizeOf<Vector3d>();
@@ -738,7 +748,8 @@ namespace OpenToolkit.Mathematics
         [Pure]
         public static Vector3d BaryCentric(Vector3d a, Vector3d b, Vector3d c, double u, double v)
         {
-            return a + (u * (b - a)) + (v * (c - a));
+            BaryCentric(ref a, ref b, ref c, u, v, out var result);
+            return result;
         }
 
         /// <summary>

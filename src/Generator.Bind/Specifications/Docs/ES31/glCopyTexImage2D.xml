@@ -1,0 +1,267 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<!-- Converted by db4-upgrade version 1.1 -->
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glCopyTexImage2D">
+    <info>
+        <copyright>
+            <year>1991-2006</year>
+            <holder>Silicon Graphics, Inc.</holder>
+        </copyright>
+        <copyright>
+            <year>2010-2014</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </info>
+    <refmeta>
+        <refentrytitle>glCopyTexImage2D</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glCopyTexImage2D</refname>
+        <refpurpose>copy pixels into a 2D texture image</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv>
+        <title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glCopyTexImage2D</function></funcdef>
+                <paramdef>GLenum <parameter>target</parameter></paramdef>
+                <paramdef>GLint <parameter>level</parameter></paramdef>
+                <paramdef>GLenum <parameter>internalformat</parameter></paramdef>
+                <paramdef>GLint <parameter>x</parameter></paramdef>
+                <paramdef>GLint <parameter>y</parameter></paramdef>
+                <paramdef>GLsizei <parameter>width</parameter></paramdef>
+                <paramdef>GLsizei <parameter>height</parameter></paramdef>
+                <paramdef>GLint <parameter>border</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 xml:id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>target</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the target texture.
+                    Must be <constant>GL_TEXTURE_2D</constant>,
+                    <constant>GL_TEXTURE_CUBE_MAP_POSITIVE_X</constant>,
+                    <constant>GL_TEXTURE_CUBE_MAP_NEGATIVE_X</constant>,
+                    <constant>GL_TEXTURE_CUBE_MAP_POSITIVE_Y</constant>,
+                    <constant>GL_TEXTURE_CUBE_MAP_NEGATIVE_Y</constant>,
+                    <constant>GL_TEXTURE_CUBE_MAP_POSITIVE_Z</constant>, or
+                    <constant>GL_TEXTURE_CUBE_MAP_NEGATIVE_Z</constant>.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>level</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the level-of-detail number.
+                    Level 0 is the base image level.
+                    Level <emphasis>n</emphasis> is the <emphasis>n</emphasis>th mipmap reduction image.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>internalformat</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the internal format of the texture.
+                    Must be one of the following symbolic constants:
+                    <constant>GL_ALPHA</constant>,
+                    <constant>GL_LUMINANCE</constant>,
+                    <constant>GL_LUMINANCE_ALPHA</constant>,
+                    <constant>GL_RGB</constant>,
+                    <constant>GL_RGBA</constant>,
+                    <constant>GL_R8</constant>,
+                    <constant>GL_RG8</constant>,
+                    <constant>GL_RGB565</constant>,
+                    <constant>GL_RGB8</constant>,
+                    <constant>GL_RGBA4</constant>,
+                    <constant>GL_RGB5_A1</constant>,
+                    <constant>GL_RGBA8</constant>,
+                    <constant>GL_RGB10_A2</constant>,
+                    <constant>GL_SRGB8</constant>,
+                    <constant>GL_SRGB8_ALPHA8</constant>,
+                                        <constant>GL_R8I</constant>,
+                                        <constant>GL_R8UI</constant>,
+                                        <constant>GL_R16I</constant>,
+                                        <constant>GL_R16UI</constant>,
+                                        <constant>GL_R32I</constant>,
+                                        <constant>GL_R32UI</constant>,
+                                        <constant>GL_RG8I</constant>,
+                                        <constant>GL_RG8UI</constant>,
+                                        <constant>GL_RG16I</constant>,
+                                        <constant>GL_RG16UI</constant>,
+                                        <constant>GL_RG32I</constant>,
+                                        <constant>GL_RG32UI</constant>,
+                                        <constant>GL_RGBA8I</constant>,
+                                        <constant>GL_RGBA8UI</constant>,
+                    <constant>GL_RGB10_A2UI</constant>,
+                                        <constant>GL_RGBA16I</constant>,
+                                        <constant>GL_RGBA16UI</constant>,
+                                        <constant>GL_RGBA32I</constant>,
+                                        <constant>GL_RGBA32UI</constant>.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>x</parameter></term>
+            <term><parameter>y</parameter></term>
+            <listitem>
+                <para>
+                    Specify the window coordinates of the lower left corner
+                    of the rectangular region of pixels to be copied.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>width</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the width of the texture image.
+              </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>height</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the height of the texture image.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>border</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the width of the border.
+                    Must be 0.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 xml:id="description"><title>Description</title>
+        <para>
+            <function>glCopyTexImage2D</function> defines a two-dimensional texture image, or cube-map texture image
+            with pixels from the current
+            <constant>GL_READ_BUFFER</constant>.
+        </para>
+        <para>
+            The screen-aligned pixel rectangle with lower left corner at (<parameter>x</parameter>,
+            <parameter>y</parameter>) and with a width of <parameter>width</parameter>
+            and a height of <parameter>height</parameter> defines the texture array
+            at the mipmap level specified by <parameter>level</parameter>.
+            <parameter>internalformat</parameter> specifies the internal format of the texture array.
+        </para>
+        <para>
+            The pixels in the rectangle are processed exactly as if
+            <citerefentry><refentrytitle>glReadPixels</refentrytitle></citerefentry> had been called, but the process stops after
+            conversion to RGBA values. The error <constant>GL_INVALID_OPERATION</constant> is generated if integer RGBA data is
+                        required and the format of the current color buffer is not integer; or if floating- or fixed-point RGBA
+                        data is required and the format of the current color buffer is integer.
+        </para>
+        <para>
+            Pixel ordering is such that lower
+            <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mml:mi mathvariant="italic">x</mml:mi></mml:math></inlineequation>
+            and
+            <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mml:mi mathvariant="italic">y</mml:mi></mml:math></inlineequation>
+            screen coordinates correspond to
+            lower
+            <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mml:mi mathvariant="italic">s</mml:mi></mml:math></inlineequation>
+            and
+            <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mml:mi mathvariant="italic">t</mml:mi></mml:math></inlineequation>
+            texture coordinates.
+        </para>
+        <para>
+            If any of the pixels within the specified rectangle of the current
+            <constant>GL_READ_BUFFER</constant> are outside the window associated with the current
+            rendering context, then the values obtained for those pixels are undefined.
+        </para>
+         <para>
+            When <parameter>internalformat</parameter> is one of the sRGB types, the GL does not automatically convert the source pixels to the sRGB color space.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="notes"><title>Notes</title>
+        <para>
+            An image with height or width of 0 indicates a NULL texture.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_ENUM</constant> is generated if <parameter>target</parameter> is not <constant>GL_TEXTURE_2D</constant>,
+            <constant>GL_TEXTURE_CUBE_MAP_POSITIVE_X</constant>,
+            <constant>GL_TEXTURE_CUBE_MAP_NEGATIVE_X</constant>,
+            <constant>GL_TEXTURE_CUBE_MAP_POSITIVE_Y</constant>,
+            <constant>GL_TEXTURE_CUBE_MAP_NEGATIVE_Y</constant>,
+            <constant>GL_TEXTURE_CUBE_MAP_POSITIVE_Z</constant>, or
+            <constant>GL_TEXTURE_CUBE_MAP_NEGATIVE_Z</constant>.
+        </para>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if <parameter>level</parameter> is less than 0.
+        </para>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> may be generated if <parameter>level</parameter> is greater
+            than
+            <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                <!-- eqn: log sub 2 max: -->
+                <mml:mrow>
+                    <mml:msub><mml:mi mathvariant="italic">log</mml:mi>
+                    <mml:mn>2</mml:mn>
+                    </mml:msub>
+                    <mml:mo>&it;</mml:mo>
+                    <mml:mi mathvariant="italic">max</mml:mi>
+                </mml:mrow>
+            </mml:math></inlineequation>,
+            where
+            <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mml:mi mathvariant="italic">max</mml:mi></mml:math></inlineequation>
+            is the returned value of <constant>GL_MAX_TEXTURE_SIZE</constant>.
+        </para>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if <parameter>width</parameter> or
+                        <parameter>height</parameter> is less than 0 or greater than <constant>GL_MAX_TEXTURE_SIZE</constant>.
+        </para>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if <parameter>border</parameter> is not 0.
+        </para>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if <parameter>internalformat</parameter> is not an
+            accepted format.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="versions">
+        <title>API Version Support</title>
+        <informaltable>
+            <tgroup cols="4" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry>glCopyTexImage2D</entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='es20']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+    <refsect1 xml:id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glCopyTexSubImage2D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glPixelStorei</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glTexImage2D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glTexSubImage2D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glTexParameter</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 1991-2006 Silicon Graphics, Inc.
+            Copyright <trademark class="copyright"/> 2010-2014 Khronos Group.
+            This document is licensed under the SGI Free Software B License.
+            For details, see
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://oss.sgi.com/projects/FreeB/">http://oss.sgi.com/projects/FreeB/</link>.
+        </para>
+    </refsect1>
+</refentry>

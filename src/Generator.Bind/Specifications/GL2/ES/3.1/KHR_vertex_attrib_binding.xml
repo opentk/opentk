@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<signatures version="2">
+
+  <replace name="gles2" version="3.1">
+    <function name="VertexAttribFormat" extension="Core">
+      <param name="type"><type>VertexAttribType</type></param>
+    </function>
+    <function name="VertexAttribIFormat" extension="Core">
+      <param name="type"><type>VertexAttribIntegerType</type></param>
+    </function>
+  </replace>
+
+  <add name="gles2" version="3.1">
+    <enum name="VertexAttribType">
+      <use token="BYTE" />
+      <use token="UNSIGNED_BYTE" />
+      <use token="SHORT" />
+      <use token="UNSIGNED_SHORT" />
+      <use token="INT" />
+      <use token="UNSIGNED_INT" />
+      <use token="FIXED" />
+      <use token="FLOAT" />
+      <use token="HALF_FLOAT" />
+      <use token="UNSIGNED_INT_2_10_10_10_REV" />
+      <use token="INT_2_10_10_10_REV" />
+    </enum>
+    <enum name="VertexAttribIntegerType">
+      <use token="BYTE" />
+      <use token="UNSIGNED_BYTE" />
+      <use token="SHORT" />
+      <use token="UNSIGNED_SHORT" />
+      <use token="INT" />
+      <use token="UNSIGNED_INT" />
+    </enum>
+  </add>
+
+</signatures>

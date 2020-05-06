@@ -1,0 +1,196 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<!-- Converted by db4-upgrade version 1.1 -->
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glClearBuffer">
+    <info>
+        <copyright>
+            <year>2010-2014</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </info>
+    <refmeta>
+        <refentrytitle>glClearBuffer</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glClearBuffer</refname>
+        <refpurpose>clear individual buffers of the currently bound draw framebuffer</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glClearBufferiv</function></funcdef>
+                <paramdef>GLenum <parameter>buffer</parameter></paramdef>
+                <paramdef>GLint <parameter>drawBuffer</parameter></paramdef>
+                <paramdef>const GLint * <parameter>value</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glClearBufferuiv</function></funcdef>
+                <paramdef>GLenum <parameter>buffer</parameter></paramdef>
+                <paramdef>GLint <parameter>drawBuffer</parameter></paramdef>
+                <paramdef>const GLuint * <parameter>value</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glClearBufferfv</function></funcdef>
+                <paramdef>GLenum <parameter>buffer</parameter></paramdef>
+                <paramdef>GLint <parameter>drawBuffer</parameter></paramdef>
+                <paramdef>const GLfloat * <parameter>value</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glClearBufferfi</function></funcdef>
+                <paramdef>GLenum <parameter>buffer</parameter></paramdef>
+                <paramdef>GLint <parameter>drawBuffer</parameter></paramdef>
+                <paramdef>GLfloat <parameter>depth</parameter></paramdef>
+                <paramdef>GLint <parameter>stencil</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 xml:id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>buffer</parameter></term>
+            <listitem>
+                <para>
+                    Specify the buffer to clear.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>drawBuffer</parameter></term>
+            <listitem>
+                <para>
+                    Specify a particular draw buffer to clear.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>value</parameter></term>
+            <listitem>
+                <para>
+                    For color buffers, a pointer to a four-element vector specifying R, G, B and A values to clear the buffer to.
+                    For depth buffers, a pointer to a single depth value to clear the buffer to.
+                    For stencil buffers, a pointer to a single stencil value to clear the buffer to.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>depth</parameter></term>
+            <listitem>
+                <para>
+                    The value to clear a depth render buffer to.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>stencil</parameter></term>
+            <listitem>
+                <para>
+                    The value to clear a stencil render buffer to.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 xml:id="description"><title>Description</title>
+        <para>
+            <function>glClearBuffer*</function> clears the specified buffer to the specified value(s). If <parameter>buffer</parameter> is
+            <constant>GL_COLOR</constant>, a particular draw buffer <constant>GL_DRAWBUFFER</constant><parameter>i</parameter> is specified
+            by passing <parameter>i</parameter> as <parameter>drawBuffer</parameter>. In this case, <parameter>value</parameter> points to
+            a four-element vector specifying the R, G, B and A color to clear that draw buffer to. The <function>glClearBufferfv</function>,
+            <function>glClearBufferiv</function>, and <function>glClearBufferuiv</function> commands should be used to clear fixed-point,
+            signed integer, and unsigned integer color buffers respectively. Clamping and conversion for fixed-point color
+            buffers are performed in the same fashion as <citerefentry><refentrytitle>glClearColor</refentrytitle></citerefentry>.
+        </para>
+        <para>
+            If <parameter>buffer</parameter> is <constant>GL_DEPTH</constant>, <parameter>drawBuffer</parameter> must be zero, and <parameter>value</parameter>
+            points to a single value to clear the depth buffer to. Only <function>glClearBufferfv</function> should be used to clear
+            depth buffers. Clamping and conversion for fixed-point depth buffers are performed in the same fashion as
+            <citerefentry><refentrytitle>glClearDepthf</refentrytitle></citerefentry>.
+        </para>
+        <para>
+            If <parameter>buffer</parameter> is <constant>GL_STENCIL</constant>, <parameter>drawBuffer</parameter> must be zero, and <parameter>value</parameter>
+            points to a single value to clear the stencil buffer to. Only <function>glClearBufferiv</function> should be used to clear
+            stencil buffers. Masing and type conversion are performed in the same fashion as
+            <citerefentry><refentrytitle>glClearStencil</refentrytitle></citerefentry>.
+        </para>
+        <para>
+            <function>glClearBufferfi</function> may be used to clear the depth and stencil buffers. <parameter>buffer</parameter> must be
+            <constant>GL_DEPTH_STENCIL</constant> and <parameter>drawBuffer</parameter> must be zero. <parameter>depth</parameter> and
+            <parameter>stencil</parameter> are the depth and stencil values, respectively.
+        </para>
+        <para>
+            The result of <function>glClearBuffer</function> is undefined if no conversion between the type of <parameter>value</parameter>
+            and the buffer being cleared is defined. However, this is not an error.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_ENUM</constant> is generated by <function>glClearBufferif</function>, <function>glClearBufferfv</function>
+            and <function>glClearBufferuiv</function> if <parameter>buffer</parameter> is not <constant>GL_COLOR</constant>,
+            <constant>GL_FRONT</constant>, <constant>GL_BACK</constant>, <constant>GL_LEFT</constant>, <constant>GL_RIGHT</constant>,
+            <constant>GL_FRONT_AND_BACK</constant>, <constant>GL_DEPTH</constant> or <constant>GL_STENCIL</constant>.
+        </para>
+        <para>
+            <constant>GL_INVALID_ENUM</constant> is generated by <function>glClearBufferfi</function> if <parameter>buffer</parameter>
+            is not <constant>GL_DEPTH_STENCIL</constant>.
+        </para>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if <parameter>buffer</parameter> is <constant>GL_COLOR</constant>,
+            <constant>GL_FRONT</constant>, <constant>GL_BACK</constant>, <constant>GL_LEFT</constant>, <constant>GL_RIGHT</constant>,
+            or <constant>GL_FRONT_AND_BACK</constant> and <parameter>drawBuffer</parameter> is greater than or equal to <constant>GL_MAX_DRAW_BUFFERS</constant>.
+        </para>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if <parameter>buffer</parameter> is <constant>GL_DEPTH</constant>,
+             <constant>GL_STENCIL</constant> or <constant>GL_DEPTH_STENCIL</constant> and <parameter>drawBuffer</parameter> is not zero.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="versions">
+        <title>API Version Support</title>
+        <informaltable>
+            <tgroup cols="3" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry><function>glClearBufferiv</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='es30']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glClearBufferuiv</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='es30']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glClearBufferfv</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='es30']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glClearBufferfi</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='es30']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+    <refsect1 xml:id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glClearColor</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glClearDepthf</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glClearStencil</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glClear</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 2010-2014 Khronos Group.
+            This material may be distributed subject to the terms and conditions set forth in
+            the Open Publication License, v 1.0, 8 June 1999.
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://opencontent.org/openpub/">http://opencontent.org/openpub/</link>.
+        </para>
+    </refsect1>
+</refentry>

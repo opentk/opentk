@@ -1,0 +1,336 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<signatures version="2">
+
+  <!-- Transform Feedback object functions -->
+  <replace name="gl|glcore">
+    <function name="GetTransformFeedbackiv">
+      <param name="pname"><type>TransformFeedbackParameter</type></param>
+    </function>
+    <function name="GetTransformFeedbacki_v">
+      <param name="pname"><type>TransformFeedbackIndexedParameter</type></param>
+    </function>
+    <function name="GetTransformFeedbacki64_v">
+      <param name="pname"><type>TransformFeedbackIndexedParameter</type></param>
+    </function>
+  </replace>
+
+  <add name="gl|glcore">
+    <enum name="TransformFeedbackIndexedParameter">
+      <use token="TRANSFORM_FEEDBACK_BUFFER_BINDING" />
+      <use token="TRANSFORM_FEEDBACK_BUFFER_SIZE" />
+      <use token="TRANSFORM_FEEDBACK_BUFFER_START" />
+    </enum>
+
+    <enum name="TransformFeedbackParameter">
+      <use token="TRANSFORM_FEEDBACK_PAUSED" />
+      <use token="TRANSFORM_FEEDBACK_ACTIVE" />
+    </enum>
+  </add>
+
+  <!-- Buffer object functions -->
+  <replace name="gl|glcore">
+    <function name="ClearNamedBufferData">
+      <param name="target"><type>BufferTarget</type></param>
+      <param name="internalformat"><type>PixelInternalFormat</type></param>
+      <param name="format"><type>PixelFormat</type></param>
+    </function>
+    <function name="ClearNamedBufferSubData">
+      <param name="target"><type>BufferTarget</type></param>
+      <param name="internalformat"><type>PixelInternalFormat</type></param>
+      <param name="format"><type>PixelFormat</type></param>
+    </function>
+    <function name="GetNamedBufferParameter">
+      <param name="pname"><type>BufferParameterName</type></param>
+    </function>
+    <function name="GetNamedBufferPointer">
+      <param name="pname"><type>BufferPointer</type></param>
+    </function>
+    <function name="MapNamedBuffer">
+      <param name="access"><type>BufferAccess</type></param>
+    </function>
+    <function name="MapNamedBufferRange">
+      <param name="access"><type>BufferAccessMask</type></param>
+    </function>
+    <function name="NamedBufferData">
+      <param name="usage"><type>BufferUsageHint</type></param>
+    </function>
+    <function name="NamedBufferStorage">
+      <param name="flags"><type>BufferStorageFlags</type></param>
+    </function>
+  </replace>
+
+  <!-- Framebuffer object functions -->
+  <replace name="gl|glcore">
+    <function name="BlitNamedFramebuffer" extension="Core">
+      <param name="mask"><type>ClearBufferMask</type></param>
+      <param name="filter"><type>BlitFramebufferFilter</type></param>
+    </function>
+    <function name="CheckNamedFramebufferStatus">
+      <param name="target"><type>FramebufferTarget</type></param>
+    </function>
+    <function name="ClearNamedFramebuffer">
+      <param name="buffer"><type>ClearBuffer</type></param>
+    </function>
+    <function name="ClearNamedFramebufferfi">
+      <param name="buffer"><type>ClearBufferCombined</type></param>
+    </function>
+    <function name="InvalidateNamedFramebufferSubData">
+      <param name="attachments"><type>FramebufferAttachment</type></param>
+    </function>
+    <function name="InvalidateNamedFramebufferData">
+      <param name="attachments"><type>FramebufferAttachment</type></param>
+    </function>
+    <function name="GetNamedFramebufferAttachmentParameter" extension="Core">
+      <param name="attachment"><type>FramebufferAttachment</type></param>
+      <param name="pname"><type>FramebufferParameterName</type></param>
+    </function>
+    <function name="GetNamedFramebufferParameter" extension="Core">
+      <param name="pname"><type>FramebufferDefaultParameter</type></param>
+    </function>
+    <function name="NamedFramebufferDrawBuffer">
+      <param name="buf"><type>DrawBufferMode</type></param>
+    </function>
+    <function name="NamedFramebufferDrawBuffers">
+      <param name="bufs"><type>DrawBuffersEnum</type></param>
+    </function>
+    <function name="NamedFramebufferParameteri">
+      <param name="pname"><type>FramebufferDefaultParameter</type></param>
+    </function>
+    <function name="NamedFramebufferReadBuffer">
+      <param name="src"><type>ReadBufferMode</type></param>
+    </function>
+    <function name="NamedFramebufferRenderbuffer">
+      <param name="attachment"><type>FramebufferAttachment</type></param>
+      <param name="renderbuffertarget"><type>RenderbufferTarget</type></param>
+    </function>
+    <function name="NamedFramebufferTexture">
+      <param name="attachment"><type>FramebufferAttachment</type></param>
+    </function>
+    <function name="NamedFramebufferTextureLayer">
+      <param name="attachment"><type>FramebufferAttachment</type></param>
+    </function>
+  </replace>
+
+  <!-- Renderbuffer object functions -->
+  <replace name="gl|glcore">
+    <function name="GetNamedRenderbufferParameteriv">
+      <param name="pname"><type>RenderbufferParameterName</type></param>
+    </function>
+    <function name="NamedRenderbufferStorage">
+      <param name="internalformat"><type>RenderbufferStorage</type></param>
+    </function>
+    <function name="NamedRenderbufferStorageMultisample">
+      <param name="internalformat"><type>RenderbufferStorage</type></param>
+    </function>
+  </replace>
+
+  <!-- Texture object functions -->
+  <replace name="gl|glcore">
+    <function name="CompressedTextureSubImage1D">
+      <param name="format"><type>PixelFormat</type></param>
+    </function>
+    <function name="CompressedTextureSubImage2D">
+      <param name="format"><type>PixelFormat</type></param>
+    </function>
+    <function name="CompressedTextureSubImage3D">
+      <param name="format"><type>PixelFormat</type></param>
+    </function>
+    <function name="CreateTextures">
+      <param name="target"><type>TextureTarget</type></param>
+    </function>
+    <function name="GetTextureImage">
+      <param name="format"><type>PixelFormat</type></param>
+      <param name="type"><type>PixelType</type></param>
+    </function>
+    <function name="GetTextureLevelParameter">
+      <param name="pname"><type>GetTextureParameter</type></param>
+    </function>
+    <function name="GetTextureParameter">
+      <param name="pname"><type>GetTextureParameter</type></param>
+    </function>
+    <function name="TextureBuffer">
+      <param name="internalformat"><type>SizedInternalFormat</type></param>
+    </function>
+    <function name="TextureBufferRange">
+      <param name="internalformat"><type>SizedInternalFormat</type></param>
+    </function>
+    <function name="TextureParameter">
+      <param name="pname"><type>TextureParameterName</type></param>
+    </function>
+    <function name="TextureStorage1D">
+      <param name="internalformat"><type>SizedInternalFormat</type></param>
+    </function>
+    <function name="TextureStorage2D">
+      <param name="internalformat"><type>SizedInternalFormat</type></param>
+    </function>
+    <function name="TextureStorage3D">
+      <param name="internalformat"><type>SizedInternalFormat</type></param>
+    </function>
+    <function name="TextureStorage2DMultisample">
+      <param name="internalformat"><type>SizedInternalFormat</type></param>
+    </function>
+    <function name="TextureStorage3DMultisample">
+      <param name="internalformat"><type>SizedInternalFormat</type></param>
+    </function>
+    <function name="TextureSubImage1D">
+      <param name="format"><type>PixelFormat</type></param>
+      <param name="type"><type>PixelType</type></param>
+    </function>
+    <function name="TextureSubImage2D">
+      <param name="format"><type>PixelFormat</type></param>
+      <param name="type"><type>PixelType</type></param>
+    </function>
+    <function name="TextureSubImage3D">
+      <param name="format"><type>PixelFormat</type></param>
+      <param name="type"><type>PixelType</type></param>
+    </function>
+
+
+      </replace>
+
+  <add name="gl|glcore">
+    <enum name="GetIndexedPName">
+      <use token="TEXTURE_BINDING_1D" />
+      <use token="TEXTURE_BINDING_1D_ARRAY" />
+      <use token="TEXTURE_BINDING_2D" />
+      <use token="TEXTURE_BINDING_2D_ARRAY" />
+      <use token="TEXTURE_BINDING_3D" />
+      <use token="TEXTURE_BINDING_BUFFER" />
+      <use token="TEXTURE_BINDING_CUBE_MAP" />
+      <use token="TEXTURE_BINDING_CUBE_MAP_ARRAY" />
+      <use token="TEXTURE_BINDING_RECTANGLE" />
+      <use token="TEXTURE_BINDING" />
+    </enum>
+    <enum name="GetTextureParameter">
+      <use enum="VERSION_4_5" token="TEXTURE_TARGET" />
+    </enum>
+  </add>
+
+  <!-- Vertex Array object functions -->
+  <replace name="gl|glcore">
+    <function name="GetVertexArrayiv">
+      <param name="pname"><type>VertexArrayParameter</type></param>
+    </function>
+    <function name="GetVertexArrayIndexediv">
+      <param name="pname"><type>VertexArrayIndexedParameter</type></param>
+    </function>
+    <function name="GetVertexArrayIndexed64iv">
+      <param name="pname"><type>VertexArrayIndexed64Parameter</type></param>
+    </function>
+    <function name="VertexArrayAttribFormat">
+      <param name="type"><type>VertexAttribType</type></param>
+    </function>
+    <function name="VertexArrayAttribIFormat">
+      <param name="type"><type>VertexAttribType</type></param>
+    </function>
+
+  </replace>
+
+  <add name="gl|glcore">
+    <enum name="VertexArrayParameter">
+      <use token="ELEMENT_ARRAY_BUFFER_BINDING" />
+    </enum>
+    <enum name="VertexArrayIndexedParameter">
+      <use token="VERTEX_ATTRIB_ARRAY_ENABLED" />
+      <use token="VERTEX_ATTRIB_ARRAY_SIZE" />
+      <use token="VERTEX_ATTRIB_ARRAY_STRIDE" />
+      <use token="VERTEX_ATTRIB_ARRAY_TYPE" />
+      <use token="VERTEX_ATTRIB_ARRAY_NORMALIZED" />
+      <use token="VERTEX_ATTRIB_ARRAY_INTEGER" />
+      <use token="VERTEX_ATTRIB_ARRAY_LONG" />
+      <use token="VERTEX_ATTRIB_ARRAY_DIVISOR" />
+      <use token="VERTEX_ATTRIB_RELATIVE_OFFSET" />
+    </enum>
+    <enum name="VertexArrayIndexed64Parameter">
+      <use token="VERTEX_BINDING_OFFSET" />
+    </enum>
+  </add>
+
+  <!-- Query object functions -->
+  <replace name="gl|glcore">
+    <function name="CreateQueries">
+      <param name="target"><type>QueryTarget</type></param>
+    </function>
+  </replace>
+
+  <add name="gl|glcore">
+    <enum name="GetQueryObjectParam">
+      <use token="QUERY_TARGET" />
+    </enum>
+  </add>
+
+  <overload name="gl|glcore">
+    <function name="ClearNamedBufferData" extension="Ext" obsolete="Use strongly typed overload instead">
+      <param name="internalformat"><type>ExtDirectStateAccess</type></param>
+    </function>
+    <function name="ClearNamedBufferSubData" extension="Ext" obsolete="Use strongly typed overload instead">
+      <param name="internalformat"><type>ExtDirectStateAccess</type></param>
+      <param name="format"><type>PixelFormat</type></param>
+    </function>
+    <function name="ClearNamedBufferSubData" extension="Ext" obsolete="Use strongly typed overload instead">
+      <param name="internalformat"><type>ExtDirectStateAccess</type></param>
+      <param name="format"><type>int</type></param>
+    </function>
+    <function name="GetNamedBufferParameter" extension="Ext" obsolete="Use strongly typed overload instead">
+      <param name="pname"><type>ExtDirectStateAccess</type></param>
+    </function>
+    <function name="GetNamedBufferParameter" extension="NV" obsolete="Use strongly typed overload instead">
+      <param name="pname"><type>NvShaderBufferLoad</type></param>
+    </function>
+    <function name="GetNamedBufferPointer" extension="Ext" obsolete="Use strongly typed overload instead">
+      <param name="pname"><type>ExtDirectStateAccess</type></param>
+    </function>
+    <function name="MapNamedBuffer" extension="Ext" obsolete="Use strongly typed overload instead">
+      <param name="access"><type>ExtDirectStateAccess</type></param>
+    </function>
+    <function name="NamedBufferData" extension="Ext" obsolete="Use strongly typed overload instead">
+      <param name="usage"><type>ExtDirectStateAccess</type></param>
+    </function>
+    <function name="NamedBufferStorage" extension="Ext" obsolete="Use strongly typed overload instead">
+      <param name="flags"><type>ExtDirectStateAccess</type></param>
+    </function>
+    <function name="NamedBufferStorage" extension="Ext" obsolete="Use strongly typed overload instead">
+      <param name="flags"><type>uint</type></param>
+    </function>
+    <function name="NamedFramebufferParameter" extension="Ext" obsolete="Use strongly typed overload instead">
+      <param name="pname"><type>ExtDirectStateAccess</type></param>
+    </function>
+    <function name="NamedFramebufferParameter" extension="Ext" obsolete="Use strongly typed overload instead">
+      <param name="pname"><type>FramebufferParameterName</type></param>
+    </function>
+    <function name="NamedRenderbufferStorage" extension="Ext" obsolete="Use strongly typed overload instead">
+      <param name="internalformat"><type>ExtDirectStateAccess</type></param>
+    </function>
+    <function name="NamedRenderbufferStorage" extension="Ext" obsolete="Use strongly typed overload instead">
+      <param name="internalformat"><type>PixelInternalFormat</type></param>
+    </function>
+    <function name="NamedRenderbufferStorageMultisample" extension="Ext" obsolete="Use strongly typed overload instead">
+      <param name="internalformat"><type>ExtDirectStateAccess</type></param>
+    </function>
+    <function name="NamedRenderbufferStorageMultisample" extension="Ext" obsolete="Use strongly typed overload instead">
+      <param name="internalformat"><type>PixelInternalFormat</type></param>
+    </function>
+    <function name="TextureBuffer" extension="Ext" obsolete="Use strongly typed overload instead">
+      <param name="internalformat"><type>ExtDirectStateAccess</type></param>
+    </function>
+    <function name="TextureBufferRange" extension="Ext" obsolete="Use strongly typed overload instead">
+      <param name="internalformat"><type>ExtDirectStateAccess</type></param>
+    </function>
+    <function name="TextureStorage1D" extension="Ext" obsolete="Use strongly typed overload instead">
+      <param name="internalformat"><type>ExtDirectStateAccess</type></param>
+    </function>
+    <function name="TextureStorage2D" extension="Ext" obsolete="Use strongly typed overload instead">
+      <param name="internalformat"><type>ExtDirectStateAccess</type></param>
+    </function>
+    <function name="TextureStorage3D" extension="Ext" obsolete="Use strongly typed overload instead">
+      <param name="internalformat"><type>ExtDirectStateAccess</type></param>
+    </function>
+    <function name="TextureStorage2DMultisample" extension="Ext" obsolete="Use strongly typed overload instead">
+      <param name="internalformat"><type>ExtDirectStateAccess</type></param>
+    </function>
+    <function name="TextureStorage3DMultisample" extension="Ext" obsolete="Use strongly typed overload instead">
+      <param name="internalformat"><type>ExtDirectStateAccess</type></param>
+    </function>
+  </overload>
+
+</signatures>

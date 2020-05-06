@@ -1,0 +1,193 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<!-- Converted by db4-upgrade version 1.1 -->
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glVertexAttribFormat">
+    <info>
+        <copyright>
+            <year>2012-2014</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </info>
+    <refmeta>
+        <refentrytitle>glVertexAttribFormat</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glVertexAttribFormat</refname>
+        <refpurpose>specify the organization of vertex arrays</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv>
+        <title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glVertexAttribFormat</function></funcdef>
+                <paramdef>GLuint <parameter>attribindex</parameter></paramdef>
+                <paramdef>GLint <parameter>size</parameter></paramdef>
+                <paramdef>GLenum <parameter>type</parameter></paramdef>
+                <paramdef>GLboolean <parameter>normalized</parameter></paramdef>
+                <paramdef>GLuint <parameter>relativeoffset</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glVertexAttribIFormat</function></funcdef>
+                <paramdef>GLuint <parameter>attribindex</parameter></paramdef>
+                <paramdef>GLint <parameter>size</parameter></paramdef>
+                <paramdef>GLenum <parameter>type</parameter></paramdef>
+                <paramdef>GLuint <parameter>relativeoffset</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 xml:id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>attribindex</parameter></term>
+            <listitem>
+                <para>
+                    The generic vertex attribute array being described.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>size</parameter></term>
+            <listitem>
+                <para>
+                    The number of values per vertex that are stored in the array.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>type</parameter></term>
+            <listitem>
+                <para>
+                    The type of the data stored in the array.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>normalized</parameter></term>
+            <listitem>
+                <para>
+                    The distance between elements within the buffer.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>relativeoffset</parameter></term>
+            <listitem>
+                <para>
+                    The distance between elements within the buffer.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 xml:id="description"><title>Description</title>
+        <para>
+            <function>glVertexAttribFormat</function> and <function>glVertexAttribIFormat</function>
+                        specify the organization of data in vertex arrays.
+            <parameter>attribindex</parameter> specifies the index of the generic vertex attribute
+            array whose data layout is being described, and must be less
+            than the value of <constant>GL_MAX_VERTEX_ATTRIBS</constant>.
+        </para>
+        <para>
+            <parameter>size</parameter> determines the number of components per vertex are allocated
+            to the specifed attribute and must be 1, 2, 3 or 4. <parameter>type</parameter> indicates
+            the type of the data. If <parameter>type</parameter> is one of <constant>GL_BYTE</constant>,
+            <constant>GL_SHORT</constant>, <constant>GL_INT</constant>, <constant>GL_FIXED</constant>,
+            <constant>GL_FLOAT</constant> and <constant>GL_HALF_FLOAT</constant>
+                        indicate types <code>GLbyte</code>, <code>GLshort</code>,
+            <code>GLint</code>, <code>GLfixed</code>, <code>GLfloat</code>, and <code>GLhalf</code>
+                        respectively; the values <constant>GL_UNSIGNED_BYTE</constant>,
+            <constant>GL_UNSIGNED_SHORT</constant>, and <constant>GL_UNSIGNED_INT</constant> indicate types
+            <code>GLubyte</code>, <code>GLushort</code>, and <code>GLuint</code>, 
+            respectively; the values <constant>GL_INT_2_10_10_10_REV</constant> and
+            <constant>GL_UNSIGNED_INT_2_10_10_10_REV</constant> indicating respectively four signed or
+            unsigned elements packed into a single <code>GLuint</code>.
+        </para>
+        <para>
+            For <function>glVertexAttribFormat</function>, if <parameter>normalized</parameter> is
+            <constant>GL_TRUE</constant>, then integer data is normalized to the range [-1, 1] or
+            [0, 1] if it is signed or unsigned, respectively. If <parameter>noramlized</parameter> is
+            <constant>GL_FALSE</constant> then integer data is directly converted to floating point.
+        </para>
+        <para>
+            <parameter>relativeoffset</parameter> is the offset, measured in basic machine units
+            of the first element relative to the start of the vertex buffer binding this attribute
+            fetches from.
+        </para>
+        <para>
+            <function>glVertexAttribFormat</function> should be used to describe vertex attribute
+            layout for floating-point vertex attributes and <function>glVertexAttribIFormat</function>
+            should be used to describe vertex attribute layout for integer vertex attributes.
+                        Data for an array specified by <function>glVertexAttribIFormat</function> will always be 
+                        left as integer values; such data are referred to as pure integers.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if <parameter>attribindex</parameter> is greater than
+            or equal to the value of <constant>GL_MAX_VERTEX_ATTRIBS</constant>.
+        </para>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if <parameter>size</parameter> is not
+            one of the accepted values.
+        </para>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if <parameter>relativeoffset</parameter> is greater
+            than the value of <constant>GL_MAX_VERTEX_ATTRIB_RELATIVE_OFFSET</constant>.
+        </para>
+        <para>
+            <constant>GL_INVALID_ENUM</constant> is generated if <parameter>type</parameter> is not
+            one of the accepted tokens.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if no vertex array object is bound.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="associatedgets"><title>Associated Gets</title>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with arguments <constant>GL_MAX_VERTEX_ATTRIB_BINDINGS</constant>,
+            or <constant>GL_MAX_VERTEX_ATTRIB_RELATIVE_OFFSET</constant>.
+        </para>
+        <para>
+            <citerefentry><refentrytitle>glGetVertexAttrib</refentrytitle></citerefentry> with argument <constant>GL_VERTEX_ATTRIB_RELATIVE_OFFSET</constant>.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="versions">
+        <title>API Version Support</title>
+        <informaltable>
+            <tgroup cols="4" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry><function>glVertexAttribFormat</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='es31']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glVertexAttribIFormat</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='es31']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+    <refsect1 xml:id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glBindVertexBuffer</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glVertexAttribBinding</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glVertexAttribPointer</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glVertexBindingDivisor</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glVertexAttribPointer</refentrytitle></citerefentry>.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 2012-2014 Khronos Group. 
+            This material may be distributed subject to the terms and conditions set forth in 
+            the Open Publication License, v 1.0, 8 June 1999.
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://opencontent.org/openpub/">http://opencontent.org/openpub/</link>.
+        </para>
+    </refsect1>
+</refentry>

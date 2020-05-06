@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<signatures version="2">
+
+  <replace name="gles2" version="3.1">
+    <function name="CreateShaderProgramv">
+      <param name="type"><type>ShaderType</type></param>
+    </function>
+    <function name="GetProgramPipelineiv">
+      <param name="pname"><type>ProgramPipelineParameter</type></param>
+    </function>
+    <function name="UseProgramStages">
+      <param name="stages"><type>ProgramStageMask</type></param>
+    </function>
+  </replace>
+
+  <add name="gles2" version="3.1">
+    <enum name="GetPName">
+      <use token="PROGRAM_PIPELINE_BINDING" />
+    </enum>
+    <enum name="GetProgramParameterName">
+      <use token="PROGRAM_SEPARABLE" />
+    </enum>
+    <enum name="ProgramParameterName">
+      <use token="PROGRAM_SEPARABLE" />
+    </enum>
+    <enum name="ProgramPipelineParameter">
+      <use token="ACTIVE_PROGRAM" />
+      <use token="VERTEX_SHADER" />
+      <use token="FRAGMENT_SHADER" />
+      <use token="COMPUTE_SHADER" />
+      <use token="VALIDATE_STATUS" />
+      <use token="INFO_LOG_LENGTH" />
+    </enum>
+    <enum name="ProgramStageMask">
+      <use token="VERTEX_SHADER_BIT" />
+      <use token="FRAGMENT_SHADER_BIT" />
+      <use token="COMPUTE_SHADER_BIT" />
+      <use token="ALL_SHADER_BITS" />
+    </enum>
+  </add>
+
+  </signatures>

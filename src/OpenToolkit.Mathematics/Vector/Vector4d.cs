@@ -87,6 +87,16 @@ namespace OpenToolkit.Mathematics
         public static readonly Vector4d One = new Vector4d(1, 1, 1, 1);
 
         /// <summary>
+        /// Defines an instance with all components set to positive infinity.
+        /// </summary>
+        public static readonly Vector4d PositiveInfinity = new Vector4d(double.PositiveInfinity, double.PositiveInfinity, double.PositiveInfinity, double.PositiveInfinity);
+
+        /// <summary>
+        /// Defines an instance with all components set to negative infinity.
+        /// </summary>
+        public static readonly Vector4d NegativeInfinity = new Vector4d(double.NegativeInfinity, double.NegativeInfinity, double.NegativeInfinity, double.NegativeInfinity);
+
+        /// <summary>
         /// Defines the size of the Vector4d struct in bytes.
         /// </summary>
         public static readonly int SizeInBytes = Marshal.SizeOf<Vector4d>();
@@ -717,7 +727,8 @@ namespace OpenToolkit.Mathematics
         [Pure]
         public static Vector4d BaryCentric(Vector4d a, Vector4d b, Vector4d c, double u, double v)
         {
-            return a + (u * (b - a)) + (v * (c - a));
+            BaryCentric(ref a, ref b, ref c, u, v, out var result);
+            return result;
         }
 
         /// <summary>
