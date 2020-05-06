@@ -3,7 +3,7 @@ using System.Text;
 
 namespace OpenToolkit.Generator
 {
-    public struct Extern : IMethod
+    public struct Extern
     {
         public string DllName { get; }
         public string EntryPoint { get; }
@@ -12,7 +12,8 @@ namespace OpenToolkit.Generator
         public string Name { get; }
         public Parameter[] Parameters { get; }
 
-        public Extern(string dllName, string entryPoint, string summary, Type returnType, string name, Parameter[] parameters)
+        public Extern(string dllName, string entryPoint, string summary, Type returnType, string name,
+            Parameter[] parameters)
         {
             DllName = dllName;
             EntryPoint = entryPoint;

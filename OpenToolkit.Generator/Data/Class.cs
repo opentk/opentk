@@ -1,3 +1,4 @@
+using System;
 using System.Text;
 
 namespace OpenToolkit.Generator
@@ -5,9 +6,9 @@ namespace OpenToolkit.Generator
     public struct Class
     {
         public string Name { get; }
-        public IMethod[] Methods { get; }
+        public Method[] Methods { get; }
 
-        public Class(string ns, string name, IMethod[] methods)
+        public Class(string ns, string name, Method[] methods)
         {
             Name = name;
             Methods = methods;

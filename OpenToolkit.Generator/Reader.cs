@@ -13,8 +13,7 @@ namespace OpenToolkit.Generator
             try
             {
                 Logger.Info($"Beggining to download openGL spec from {link}");
-                var request =
-                    HttpWebRequest.CreateHttp(
+                var request = HttpWebRequest.CreateHttp(
                         "https://raw.githubusercontent.com/KhronosGroup/OpenGL-Registry/master/xml/gl.xml");
                 Logger.Info($"File downloaded.");
                 var response = request.GetResponse();
