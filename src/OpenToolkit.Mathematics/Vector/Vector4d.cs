@@ -762,9 +762,9 @@ namespace OpenToolkit.Mathematics
         /// <param name="mat">The desired transformation.</param>
         /// <returns>The transformed vector.</returns>
         [Pure]
-        public static Vector4d Transform(Vector4d vec, Matrix4d mat)
+        public static Vector4d TransformColumn(Vector4d vec, Matrix4d mat)
         {
-            Transform(ref vec, ref mat, out Vector4d result);
+            TransformColumn(ref vec, ref mat, out Vector4d result);
             return result;
         }
 
@@ -774,7 +774,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="vec">The vector to transform.</param>
         /// <param name="mat">The desired transformation.</param>
         /// <param name="result">The transformed vector.</param>
-        public static void Transform(ref Vector4d vec, ref Matrix4d mat, out Vector4d result)
+        public static void TransformColumn(ref Vector4d vec, ref Matrix4d mat, out Vector4d result)
         {
             result = new Vector4d(
                 (vec.X * mat.Row0.X) + (vec.Y * mat.Row1.X) + (vec.Z * mat.Row2.X) + (vec.W * mat.Row3.X),

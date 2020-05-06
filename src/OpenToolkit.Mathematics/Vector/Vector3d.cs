@@ -936,9 +936,9 @@ namespace OpenToolkit.Mathematics
         /// <param name="mat">The desired transformation.</param>
         /// <returns>The transformed vector.</returns>
         [Pure]
-        public static Vector3d Transform(Vector3d vec, Matrix4d mat)
+        public static Vector3d TransformColumn(Vector3d vec, Matrix4d mat)
         {
-            Transform(ref vec, ref mat, out Vector3d result);
+            TransformColumn(ref vec, ref mat, out Vector3d result);
             return result;
         }
 
@@ -953,10 +953,10 @@ namespace OpenToolkit.Mathematics
         /// <param name="vec">The vector to transform.</param>
         /// <param name="mat">The desired transformation.</param>
         /// <param name="result">The transformed vector.</param>
-        public static void Transform(ref Vector3d vec, ref Matrix4d mat, out Vector3d result)
+        public static void TransformColumn(ref Vector3d vec, ref Matrix4d mat, out Vector3d result)
         {
             var v4 = new Vector4d(vec.X, vec.Y, vec.Z, 1.0);
-            Vector4d.Transform(ref v4, ref mat, out v4);
+            Vector4d.TransformColumn(ref v4, ref mat, out v4);
             result.X = v4.X;
             result.Y = v4.Y;
             result.Z = v4.Z;
@@ -1016,7 +1016,7 @@ namespace OpenToolkit.Mathematics
         public static void TransformPerspective(ref Vector3d vec, ref Matrix4d mat, out Vector3d result)
         {
             var v = new Vector4d(vec.X, vec.Y, vec.Z, 1);
-            Vector4d.Transform(ref v, ref mat, out v);
+            Vector4d.TransformColumn(ref v, ref mat, out v);
             result.X = v.X / v.W;
             result.Y = v.Y / v.W;
             result.Z = v.Z / v.W;
