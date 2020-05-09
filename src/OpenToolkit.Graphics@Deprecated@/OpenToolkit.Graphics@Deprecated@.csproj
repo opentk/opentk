@@ -1,0 +1,28 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <RootNamespace>OpenToolkit.Graphics</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\OpenToolkit.Core\OpenToolkit.Core.csproj" />
+    <ProjectReference Include="..\OpenToolkit.Mathematics\OpenToolkit.Mathematics.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+  </ItemGroup>
+
+  <Target Name="PreBuild" BeforeTargets="PreBuildEvent" Condition="'$(OS)' == 'Windows_NT' and '$(DontGenBindings)' != 'true'">
+    <Exec Command="build.cmd -t UpdateBindings" WorkingDirectory="../../" />
+  </Target>
+
+  <Target Name="PreBuild" BeforeTargets="PreBuildEvent" Condition="'$(OS)' != 'Windows_NT' and '$(DontGenBindings)' != 'true'">
+    <Exec Command="bash build.sh -t UpdateBindings" WorkingDirectory="../../" />
+  </Target>
+
+  <Import Project="..\..\props\common.props" />
+  <Import Project="..\..\props\nuget-common.props" />
+
+</Project>
