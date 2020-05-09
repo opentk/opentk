@@ -4,17 +4,23 @@ using System.Text;
 
 namespace GeneratorV2.Data
 {
-    public class Parameter
+    public enum PModifier
     {
-        public string Type { get; }
+        None = 0,
+        ReadOnlySpan = 1,
+        In = 2,
+    }
+    public class PType
+    {
         public string Name { get; }
+        public PModifier Modifier { get; }
         public string? Group { get; }
         public string? Length { get; }
 
-        public Parameter (string type, string name, string? group = null, string? length = null)
+        public PType(string name, PModifier modifier = PModifier.None, string? group = null, string? length = null)
         {
-            Type = type;
             Name = name;
+            Modifier = modifier;
             Group = group;
             Length = length;
         }

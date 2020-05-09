@@ -15,25 +15,30 @@ namespace GeneratorV2
                 //Parsing
                 var parser = new Parser(stream);
                 var commands = parser.ParseCommands();
+                var enums = parser.ParseEnums();
+                var versions = parser.ParseFeatures(commands, enums);
+
                 //Overloading
 
                 //Writing
-                Writer.Write(commands);
+                Writer.Write(versions);
             }
         }
     }
 }
 
+//TODO:
+//Load version information
+//Do overloads
+//Output path/multiple projects
+
 /*
- * EnumGroups[]
- * {
- *      EnumEntries[]
- * }
  * 
  * EnumEntries[]
  * {
  *      Name
  *      Value
+ *      Groups
  * }
  * Command[]
  * {
@@ -43,7 +48,7 @@ namespace GeneratorV2
  *
  * Version[]
  * {
- *   EnumGroupVersion
+ *      EnumGroup
  * }
  * 
  *
