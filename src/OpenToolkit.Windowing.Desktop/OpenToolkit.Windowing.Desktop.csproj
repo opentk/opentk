@@ -26,4 +26,15 @@
     <Import Project="..\..\props\common.props" />
     <Import Project="..\..\props\nuget-common.props" />
     <Import Project="..\..\props\stylecop.props" />
+
+    <!-- Fix adapted from https://jaylee.org/archive/2019/03/31/using-span-of-t-in-xamarin-cross-targeted-projects.html
+        Remove System.Memory if mono is installed at default location
+    -->
+    <Target Name="VS16_RemoveSystemMemory" BeforeTargets="FindReferenceAssembliesForReferences" Condition="$(Path.Contains('/usr/lib/mono')) Or $(FrameworkPathOverride.Contains('/usr/lib/mono'))">
+      <ItemGroup>
+        <_ReferencePathToRemove Include="@(ReferencePath)" Condition="'%(ReferencePath.NuGetPackageId)'=='System.Memory'" />
+        <ReferencePath Remove="@(_ReferencePathToRemove)" />
+      </ItemGroup>
+      <Message Text="Removing System.Memory for mono compatibility" Importance="high"/>
+    </Target>
 </Project>
