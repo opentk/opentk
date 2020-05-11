@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Diagnostics;
+
 
 namespace GeneratorV2
 {
@@ -6,6 +8,8 @@ namespace GeneratorV2
     {
         static void Main(string[] args)
         {
+            var st = new Stopwatch();
+            st.Start();
             using (Logger.CreateLogger("log.txt"))
             {
                 //TODO: Documentation.
@@ -17,18 +21,23 @@ namespace GeneratorV2
                 var commands = parser.ParseCommands();
                 var enums = parser.ParseEnums();
                 var versions = parser.ParseFeatures(commands, enums);
+                var extensions = parser.ParseExtensions(commands, enums);
 
                 //Overloading
 
                 //Writing
                 Writer.Write(versions);
+
+                st.Stop();
+
+                Logger.Info($"{st.ElapsedMilliseconds}");
             }
         }
     }
 }
 
 //TODO:
-//Load version information
+//Load extensions
 //Do overloads
 //Output path/multiple projects
 

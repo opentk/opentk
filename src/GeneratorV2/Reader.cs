@@ -9,9 +9,8 @@ namespace GeneratorV2
         public static Stream ReadSpecFromGithub()
         {
             var link = "https://raw.githubusercontent.com/KhronosGroup/OpenGL-Registry/master/xml/gl.xml";
-            Logger.Info($"Beggining to download openGL spec from {link}");
+            Logger.Info($"Beginning to download openGL spec from {link}");
             var request = HttpWebRequest.CreateHttp(link);
-            Logger.Info($"File downloaded.");
 
             var response = request.GetResponse();
             return response.GetResponseStream();
