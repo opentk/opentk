@@ -5,6 +5,8 @@ using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using System.Reflection;
+using System.Threading;
 
 namespace GeneratorV2
 {
@@ -12,18 +14,26 @@ namespace GeneratorV2
     {
         public static void Write(Feature[] features)
         {
-            WriteProject("OpenToolkit.Graphics.csproj");
+            string folderPath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
+                "..", "..",  "..", "..", "OpenToolkit.Graphics");
+
+            if (Directory.Exists(folderPath))
+            {
+                Directory.Delete(folderPath, true);
+            }
+            Directory.CreateDirectory(folderPath);
+            WriteProject(Path.Combine(folderPath, "OpenToolkit.Graphics.csproj"));
             Logger.Info("Writing features to file");
 
             foreach(var f in features)
             {
-                WriteCommands($"{f.Name}.cs", $"{f.Api.ToUpper()}{f.Version.Major}{f.Version.Minor}", f.Commands);
+                WriteCommands(Path.Combine(folderPath, $"{f.Name}.cs"), $"{f.Api.ToUpper()}{f.Version.Major}{f.Version.Minor}", f.Commands);
             }
         }
 
         public static void WriteCommands(string filePath, string namespacePostfix, Dictionary<string, Command> commands)
         {
-            using var stream = File.OpenWrite(filePath);
+            using var stream = new FileStream(filePath, FileMode.Create);
             using var streamWriter = new StreamWriter(stream);
             using var writer = new IndentedTextWriter(streamWriter);
 

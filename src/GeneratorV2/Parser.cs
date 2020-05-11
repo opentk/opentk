@@ -248,6 +248,7 @@ namespace GeneratorV2
 
         #endregion Enum
 
+        #region Features
         public Feature[] ParseFeatures(Dictionary<string, Command> commands, Dictionary<string, EnumEntry> enums)
         {
             Logger.Info("Beggining parsing of features.");
@@ -273,7 +274,7 @@ namespace GeneratorV2
                 var excludeCommands = new HashSet<string>();
                 foreach (var excludes in f.Elements("remove"))
                 {
-                    ParseExclude(f, excludeEnums, excludeCommands);
+                    ParseExclude(excludes, excludeEnums, excludeCommands);
                 }
 
                 var feature = new Feature(api, name, version);
@@ -296,6 +297,12 @@ namespace GeneratorV2
         }
         private static void ParseExclude(XElement excludes, HashSet<string> excludeEnums, HashSet<string> excludeCommands)
         {
+            var profile = excludes.Attribute("profile")?.Value;
+            if (profile != "compatibility" && profile != null)
+            {
+                return;
+            }
+
             foreach(var e in excludes.Elements("enum"))
             {
                 var eName = e.Attribute("name")?.Value;
@@ -321,6 +328,12 @@ namespace GeneratorV2
         private static void ParseInclude(Dictionary<string, EnumEntry> enums, Dictionary<string, Command> commands,
             Feature feature, XElement includes)
         {
+            var profile = includes.Attribute("profile")?.Value;
+            if (profile != "compatibility" && profile != null)
+            {
+                return;
+            }
+
             foreach (var e in includes.Elements("enum"))
             {
                 var eName = e.Attribute("name")?.Value;
@@ -341,6 +354,15 @@ namespace GeneratorV2
                 }
                 feature.Add(command);
             }
+        }
+        #endregion Features
+
+
+        public Dictionary<string, Extension[]> ParseExtensions(Dictionary<string, Command> commands, Dictionary<string, EnumEntry> enums)
+        {
+            var reg = _document.
+
+            return null;
         }
     }
 }
