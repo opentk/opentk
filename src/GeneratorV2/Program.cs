@@ -24,9 +24,9 @@ namespace GeneratorV2
                 var extensions = parser.ParseExtensions(commands, enums);
 
                 //Overloading
-
+                
                 //Writing
-                Writer.Write(versions);
+                Writer.Write(versions, extensions);
 
                 st.Stop();
 
@@ -37,9 +37,9 @@ namespace GeneratorV2
 }
 
 //TODO:
-//Load extensions
-//Do overloads
-//Output path/multiple projects
+//Overloading
+// - Enums
+//Documentation
 
 /*
  * 
@@ -61,6 +61,14 @@ namespace GeneratorV2
  * }
  * 
  *
+ */
+
+/* 
+ *  OpenToolkit.Graphics.OpenGL.V46.GL.Function
+ *  OpenToolkit.Graphics.OpenGL.Extensions.EXT.Function
+ *  OpenToolkit.Graphics.OpenGLES1.Extensions.NV.Function
+ *  OpenToolkit.Graphics.OpenGLES2.V30.GL.Function
+ * 
  */
 
 /*

@@ -1,17 +1,20 @@
 ﻿using GeneratorV2.Data;
 using System;
+using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Xml.Linq;
+using GeneratorV2.Extensions;
 
 namespace GeneratorV2
 {
     public class Parser
     {
         private readonly XDocument _document;
+        private const string PlatformSpecificGlHandleArbFlag = "\x1A";
 
         public Parser(Stream stream)
         {
@@ -20,6 +23,108 @@ namespace GeneratorV2
         }
 
         #region Command
+
+        private static void CreatePlatformSpecificGlHandleArb(Dictionary<string, Command> coms, Command commandBase)
+        {
+            var method = commandBase.Method;
+            var success = true;
+
+            PType ClonePType(PType original, string newType)
+            {
+                if (original.Name.StartsWith(PlatformSpecificGlHandleArbFlag))
+                {
+                    if (original.Name.Length > PlatformSpecificGlHandleArbFlag.Length && method.EntryPoint != "glGetAttachedObjectsARB")
+                    {
+                        success = false;
+                    }
+                    return new PType(newType + original.Name.Substring(1), original.Modifier, original.Group, original.Length);
+                }
+                return original;
+            }
+            var appleMethodReturnType = ClonePType(method.ReturnType, "IntPtr");
+            var otherMethodReturnType = ClonePType(method.ReturnType, "uint");
+            var overloadMethodReturnType = ClonePType(method.ReturnType, "GLhandleARB");
+            var appleParameters = new Parameter[method.Parameters.Length];
+            var otherParameters = new Parameter[method.Parameters.Length];
+            var overloadParameters = new Parameter[method.Parameters.Length];
+            for (int i = 0; i < method.Parameters.Length; i++)
+            {
+                var parameter = method.Parameters[i];
+                var paramName = parameter.Name;
+                appleParameters[i] = new Parameter(ClonePType(parameter.Type, "IntPtr"), paramName);
+                otherParameters[i] = new Parameter(ClonePType(parameter.Type, "uint"), paramName);
+                overloadParameters[i] = new Parameter(ClonePType(parameter.Type, "GLhandleARB"), paramName);
+            }
+
+            if (!success)
+            {
+                Logger.Error($"Function {commandBase.Name} has a GLhandleARB* which is not passed correctly");
+                return;
+            }
+
+            var appleMethod = new Method(appleMethodReturnType, method.EntryPoint, appleParameters);
+            var otherMethod = new Method(otherMethodReturnType, method.EntryPoint, otherParameters);
+
+            Action<IndentedTextWriter> bodyWriter = (IndentedTextWriter writer) =>
+            {
+                void WriteCommand(string name)
+                {
+                    if (commandBase.Method.ReturnType.Name != "void")
+                    {
+                        writer.Write("return ");
+                    }
+                    writer.Write($"{name}{commandBase.Name}(");
+                    for (int i = 0; i < overloadParameters.Length; i++)
+                    {
+                        writer.Write(overloadParameters[i].Name);
+                        if (i != overloadParameters.Length - 1)
+                        {
+                            writer.Write(", ");
+                        }
+                    }
+                }
+                void WriteGetAttachedObjects(string name, string type)
+                {
+                    writer.Write("var len = maxCount.ToInt32();");
+                    writer.Write($"{type}* tmp = stackalloc {type}[len];");
+                    writer.Write($"{name}{commandBase.Name}(containerObj, maxCount, count, tmp);");
+                    writer.Write("for (int i = 0; i < len; i++)");
+                    using (writer.Scope())
+                    {
+                        writer.Write("obj[i] = tmp[i]");
+                    }
+                }
+
+                writer.WriteLine("if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))");
+                using (writer.Scope())
+                {
+                    if (method.EntryPoint == "glGetAttachedObjectsARB")
+                    {
+                        WriteGetAttachedObjects("__APPLE_", "uint");
+                    }
+                    else
+                    {
+                        WriteCommand("__APPLE_");
+                    }
+                }
+                writer.WriteLine("else");
+                using (writer.Scope())
+                {
+                    if (otherMethod.EntryPoint == "glGetAttachedObjectsARB")
+                    {
+                        WriteGetAttachedObjects("__GOOD_", "IntPtr");
+                    }
+                    else
+                    {
+                        WriteCommand("__GOOD_");
+                    }
+                }
+            };
+            var overload = new Overload(overloadMethodReturnType, bodyWriter, overloadParameters);
+            coms.Add(method.EntryPoint, new HandleARBCommand(otherMethod, commandBase.Name, appleMethod, overload));
+        }
+
+
         public Dictionary<string, Command> ParseCommands()
         {
             Logger.Info("Beggining parsing of commands.");
@@ -30,39 +135,46 @@ namespace GeneratorV2
             var coms = new Dictionary<string, Command>();
             foreach (var c in commands.Elements("command"))
             {
-                var com = ParseCommand(c);
+                var com = ParseCommand(c, out var isGLhandleArb);
                 if (com != null)
                 {
-                    coms.Add(com.Method.EntryPoint, com);
+                    if (isGLhandleArb)
+                    {
+                        CreatePlatformSpecificGlHandleArb(coms, com);
+                    }
+                    else
+                    {
+                        coms.Add(com.Method.EntryPoint, com);
+                    }
                 }
             }
 
             return coms;
         }
 
-        private Command? ParseCommand(XElement c)
+        private Command? ParseCommand(XElement c, out bool isGLhandleArb)
         {
+            isGLhandleArb = false;
             var entryPoint = string.Empty;
             try
             {
                 var prototypeBase = c.Element("proto");
                 entryPoint = prototypeBase.Element("name").Value;
                 var methodName = entryPoint.Substring(2);
-                var returnType = prototypeBase.Element("ptype")?.Value
-                                        ?? prototypeBase.GetXmlText(element => string.Empty);
-
-                returnType = returnType.Trim();
 
                 var parameters = new List<Parameter>();
                 foreach (var p in c.Elements("param"))
                 {
                     var paramName = MangleParameterName(p.Element("name").Value);
                     var paramType = ParsePType(p);
-                
+                    isGLhandleArb |= paramType.Name == PlatformSpecificGlHandleArbFlag;
                     parameters.Add(new Parameter(paramType, paramName));
                 }
-                var method = new Method(ParsePType(prototypeBase), methodName, entryPoint, parameters.ToArray());
-                return new Command(method);
+                var returnType = ParsePType(prototypeBase);
+                isGLhandleArb |= returnType.Name == PlatformSpecificGlHandleArbFlag;
+
+                var method = new Method(returnType, entryPoint, parameters.ToArray());
+                return new Command(method, methodName);
             }
             catch(NullReferenceException)
             {
@@ -161,8 +273,6 @@ namespace GeneratorV2
                 "GLeglImageOES" => "void*",
                 "GLchar" => "char",
                 "GLcharARB" => "char",
-                "*GLhandleARB" => "void*", //OS dependent
-                "GLhandleARB" => "uint", //OS dependent
                 "GLhalf" => "short",
                 "GLhalfARB" => "short",
                 "GLfixed" => "int",
@@ -177,11 +287,12 @@ namespace GeneratorV2
                 "GLhalfNV" => "ushort",
                 "GLvdpauSurfaceNV" => "IntPtr",
                 "GLVULKANPROCNV" => "void",
+                "GLhandleARB" => PlatformSpecificGlHandleArbFlag, //This type is platform specific on apple.
 
                 //The following have a custom c# implementation in the writer.
-                "GLsync" => "GLsync",
-                "_cl_context" => "_cl_context",
-                "_cl_event" => "_cl_event",
+                "GLsync" => "GLsync*",
+                "_cl_context" => "CLContext",
+                "_cl_event" => "CLEvent",
                 "GLDEBUGPROC" => "GLDEBUGPROC",
                 "GLDEBUGPROCARB" => "GLDEBUGPROCARB",
                 "GLDEBUGPROCKHR" => "GLDEBUGPROCKHR",
@@ -357,12 +468,101 @@ namespace GeneratorV2
         }
         #endregion Features
 
-
-        public Dictionary<string, Extension[]> ParseExtensions(Dictionary<string, Command> commands, Dictionary<string, EnumEntry> enums)
+        public Dictionary<(string api, string vendor), Extension[]> ParseExtensions(Dictionary<string, Command> commands, Dictionary<string, EnumEntry> enums)
         {
-            var reg = _document.
+            var extensions = new ApiExtension();
+            var reg = _document.Root;
 
-            return null;
+            foreach(var ext in reg.Element("extensions").Elements("extension"))
+            {
+                var extName = ext.Attribute("name")?.Value?.Substring(3);
+                if (extName == null)
+                {
+                    Logger.Error($"Extension did not parse correctly");
+                    continue;
+                }
+                int ind = extName.IndexOf('_', StringComparison.Ordinal);
+                if (ind == -1)
+                {
+                    Logger.Error($"Extension '{extName}' is missing an underscore.");
+                    continue;
+                }
+
+                var vendor = extName.Remove(ind);
+                extName = MangleExtensionName(extName.Substring(ind + 1));
+
+                var supportedApis = ext.Attribute("supported")?.Value?.Split('|', StringSplitOptions.RemoveEmptyEntries) ?? new string[] {};
+
+                foreach(var api in supportedApis)
+                {
+                    var extension = new Extension(MangleClassName(vendor), extName, supportedApis);
+                    foreach(var includes in ext.Elements("require"))
+                    {
+                        var includesApi = includes.Attribute("api")?.Value;
+                        if (includesApi == api || includesApi == null)
+                        {
+                            ParseInclude(enums, commands, extension, includes, vendor);
+                        }
+                    }
+
+                    extensions.AddExtension(api, extension);
+                }
+            }
+
+            return extensions.ToDictionaryArray();
+        }
+
+        private static string MangleClassName(string name)
+        {
+            return (char.IsDigit(name[0]) ? $"_{name}" : name);
+        }
+
+        private static string MangleExtensionName(string name)
+        {
+            var str = new StringBuilder(name.Length);
+            bool capitalize = true;
+            for (int i=0;i<name.Length;i++)
+            {
+                var chr = name[i];
+                if (chr == '_')
+                {
+                    capitalize = true;
+                }
+                else
+                {
+                    str.Append(capitalize ? char.ToUpper(chr) : char.ToLower(chr));
+                    capitalize = false;
+                }
+            }
+            return MangleClassName(str.ToString());
+        }
+
+        private static void ParseInclude(Dictionary<string, EnumEntry> enums, Dictionary<string, Command> commands,
+            Extension extension, XElement includes, string vendorName)
+        {
+            foreach (var e in includes.Elements("enum"))
+            {
+                var eName = e.Attribute("name")?.Value;
+                if (!enums.TryGetValue(eName, out var enumEntry))
+                {
+                    Logger.Error($"Extension command include did not parse correctly.");
+                    continue;
+                }
+                extension.Add(enumEntry);
+            }
+            foreach (var e in includes.Elements("command"))
+            {
+                var cName = e.Attribute("name")?.Value;
+                if (!commands.TryGetValue(cName, out var command))
+                {
+                    Logger.Error($"Extension command include did not parse correctly.");
+                    continue;
+                }
+
+                extension.Add(command.CloneCommand("Gl" + (command.Name.EndsWith(vendorName) ?
+                                                            command.Name.Remove(command.Name.Length - vendorName.Length) :
+                                                            command.Name)));
+            }
         }
     }
 }

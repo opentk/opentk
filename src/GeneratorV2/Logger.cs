@@ -88,7 +88,8 @@ namespace GeneratorV2
             byte[] data = Encoding.UTF8.GetBytes(info.ToString());
             _fileStream?.Write(data, 0, data.Length);
             Console.ForegroundColor = info.GetColor();
-            Console.Write(info.ToString());
+            //Console.Write(info.ToString());
+            Console.Error.Write(info.ToString());
             Console.ResetColor();
         }
     }
