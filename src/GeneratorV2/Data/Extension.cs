@@ -1,23 +1,22 @@
-﻿using System;
+using GeneratorV2.Data;
 using System.Collections.Generic;
-using System.Text;
 
-namespace GeneratorV2.Data
+namespace GeneratorV2
 {
-    public class Feature
+    public class Extension
     {
-        public string Name {get;}
-        public string Api {get;}
-        public Version Version {get;}
+        public string Vendor { get; }
+        public string Name { get; }
+        public string[] SupportedApis { get; }
         public Dictionary<string, List<EnumEntry>> EnumGroups { get; } = new Dictionary<string, List<EnumEntry>>();
         public Dictionary<string, EnumEntry> EnumEntries { get; } = new Dictionary<string, EnumEntry>();
         public Dictionary<string, Command> Commands { get; } = new Dictionary<string, Command>();
 
-        public Feature(string api, string name, Version version)
+        public Extension(string vendorName, string name, string[] supportedApis)
         {
-            Api = api;
+            Vendor = vendorName;
             Name = name;
-            Version = version;
+            SupportedApis = supportedApis;
         }
 
         public void Add(EnumEntry entry)
@@ -36,23 +35,6 @@ namespace GeneratorV2.Data
         public void Add(Command command)
         {
             Commands.TryAdd(command.Method.EntryPoint, command);
-        }
-        public void Add(Feature feature, HashSet<string> excludeEnums, HashSet<string> excludeCommands)
-        {
-            foreach(var (eName, eEntry) in feature.EnumEntries)
-            {
-                if (!excludeEnums.Contains(eName))
-                {
-                    Add(eEntry);
-                }
-            }
-            foreach(var (cName, cEntry) in feature.Commands)
-            {
-                if (!excludeCommands.Contains(cName))
-                {
-                    Add(cEntry);
-                }
-            }
         }
     }
 }

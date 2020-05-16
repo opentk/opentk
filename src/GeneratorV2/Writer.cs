@@ -8,6 +8,7 @@ using System.Text;
 using System.Reflection;
 using System.Threading;
 using System.Runtime.InteropServices;
+using System.Linq;
 
 namespace GeneratorV2
 {
@@ -30,7 +31,7 @@ namespace GeneratorV2
 
             foreach(var f in features)
             {
-                WriteCommands(Path.Combine(folderPath, $"{f.Name}.cs"), $"{f.Api.ToUpper()}{f.Version.Major}{f.Version.Minor}", f.Commands);
+                
             }
 
             Logger.Info("Writing extensions to files");
@@ -73,6 +74,20 @@ namespace GeneratorV2
             }
         }
 
+        public static void WriteFeatures(string folderPath, Feature feature)
+        {
+            folderPath = Path.Combine(folderPath, feature.Name);
+            if (!Directory.Exists(folderPath))
+            {
+                Directory.CreateDirectory(folderPath);
+            }
+
+            var namespacePostfix = $"{feature.Api.ToUpper()}{feature.Version.Major}{feature.Version.Minor}";
+            WriteCommands(Path.Combine(folderPath, $"GL.Methods.cs"),namespacePostfix , feature.Commands);
+
+            WriteEnumGroups(Path.Combine(folderPath, $"GL.Enums.cs"), namespacePostfix, feature.EnumGroups);
+        }
+
         public static void WriteCommands(string filePath, string namespacePostfix, Dictionary<string, Command> commands)
         {
             using var stream = new FileStream(filePath, FileMode.Create);
@@ -87,7 +102,7 @@ namespace GeneratorV2
                 using (writer.Scope())
                 {
                     foreach (var (cName, c) in commands)
-                    {t
+                    {
                         WriteCommand(writer, c);
                     }
                 }
@@ -143,6 +158,24 @@ namespace GeneratorV2
             writer.WriteLine("using System;");
             writer.WriteLine("using OpenToolkit.Graphics.Types;");
             writer.WriteLine();
+        }
+
+        public static void WriteEnumGroups(string filePath, string namespacePostfix, Dictionary<string, EnumEntry> allEnum, Dictionary<string, List<EnumEntry>> enumGroups)
+        {
+            var all = allEnum.Select(x => x.Value).ToList();
+        }
+
+        public static void WriteEnumGroup(IndentedTextWriter writer, string groupName, List<EnumEntry> group)
+        {
+            
+            writer.WriteLine($"public enum {groupName} : uint");
+            using (writer.Scope())
+            {
+                for (int i = 0; i < group.Count; i++)
+                {
+                    writer.WriteLine($"{group[i].Name} = 0x{group[i].Value:X}{(i != group.Count - 1 ? "," : string.Empty)}");
+                }
+            }
         }
 
         private static void WriteCommand(IndentedTextWriter writer, Command c)
