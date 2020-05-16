@@ -164,6 +164,8 @@ namespace GeneratorV2
                     }
                     writer.WriteLine("public static implicit operator GLhandleARB(uint val) => new GLhandleARB(val);");
                     writer.WriteLine("public static implicit operator GLhandleARB(IntPtr val) => new GLhandleARB(val);");
+                    writer.WriteLine("public static implicit operator uint(GLhandleARB val) => val._value1;");
+                    writer.WriteLine("public static implicit operator IntPtr(GLhandleARB val) => val._value2;");
                 }
             }
         }
@@ -246,11 +248,33 @@ namespace GeneratorV2
                 var handle = (HandleARBCommand)c;
                 WriteMethod(writer, handle.Apple, $"__APPLE_{c.Name}");
                 WriteMethod(writer, handle.Method, $"__GOOD_{c.Name}");
-                //TODO: Write overload
+                WriteOverload(writer, handle.BaseOverload, c.Name);
                 return;
             }
 
             WriteMethod(writer, c.Method, c.Name);
+        }
+
+        private static void WriteOverload(IndentedTextWriter writer, Overload o, string name)
+        {
+            writer.Write($"public static {o.ReturnType.Name} {name}(");
+
+            for (int i = 0; i < o.Parameters.Length; i++)
+            {
+                var parameter = o.Parameters[i];
+                var type = parameter.Type.Name.Replace("const", "").Trim();
+                writer.Write($"{type} {parameter.Name}");
+                if (i != o.Parameters.Length - 1)
+                {
+                    writer.Write(", ");
+                }
+            }
+            writer.WriteLine(")");
+            using(writer.Scope())
+            {
+                o.BodyWriter(writer);
+            }
+            writer.WriteLine();
         }
 
         private static void WriteMethod(IndentedTextWriter writer, Method m, string name)

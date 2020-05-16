@@ -72,7 +72,7 @@ namespace GeneratorV2
                     {
                         writer.Write("return ");
                     }
-                    writer.Write($"{name}{commandBase.Name}(");
+                    writer.Write($"{name}Gl{commandBase.Name.Remove(commandBase.Name.Length - 3)}(");
                     for (int i = 0; i < overloadParameters.Length; i++)
                     {
                         writer.Write(overloadParameters[i].Name);
@@ -81,16 +81,16 @@ namespace GeneratorV2
                             writer.Write(", ");
                         }
                     }
+                    writer.WriteLine(");");
                 }
                 void WriteGetAttachedObjects(string name, string type)
                 {
-                    writer.Write("var len = maxCount.ToInt32();");
-                    writer.Write($"{type}* tmp = stackalloc {type}[len];");
-                    writer.Write($"{name}{commandBase.Name}(containerObj, maxCount, count, tmp);");
-                    writer.Write("for (int i = 0; i < len; i++)");
+                    writer.WriteLine($"{type}* tmp = stackalloc {type}[maxCount];");
+                    writer.WriteLine($"{name}Gl{commandBase.Name.Remove(commandBase.Name.Length - 3)}(containerObj, maxCount, count, tmp);");
+                    writer.WriteLine("for (int i = 0; i < maxCount; i++)");
                     using (writer.Scope())
                     {
-                        writer.Write("obj[i] = tmp[i]");
+                        writer.WriteLine("obj[i] = tmp[i];");
                     }
                 }
 
@@ -99,7 +99,7 @@ namespace GeneratorV2
                 {
                     if (method.EntryPoint == "glGetAttachedObjectsARB")
                     {
-                        WriteGetAttachedObjects("__APPLE_", "uint");
+                        WriteGetAttachedObjects("__APPLE_", "IntPtr");
                     }
                     else
                     {
@@ -111,7 +111,7 @@ namespace GeneratorV2
                 {
                     if (otherMethod.EntryPoint == "glGetAttachedObjectsARB")
                     {
-                        WriteGetAttachedObjects("__GOOD_", "IntPtr");
+                        WriteGetAttachedObjects("__GOOD_", "uint");
                     }
                     else
                     {
@@ -327,7 +327,7 @@ namespace GeneratorV2
                     var entry = ParseEnumEntry(superGroups, eEntry);
                     if (entry != null)
                     {
-                        parsedEnums.Add(entry); // TODO: fix duplicate
+                        parsedEnums.Add(entry);
                     }
                 }
             }
