@@ -1,5 +1,6 @@
 ﻿using GeneratorV2.Data;
 using System;
+using System.Linq;
 using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.IO;
@@ -310,32 +311,40 @@ namespace GeneratorV2
         #endregion Commands
 
         #region Enum
-        public Dictionary<string, EnumEntry> ParseEnums()
+        public EnumEntryCollection ParseEnums()
         {
             Logger.Info("Beggining parsing of enums.");
 
-            var parsedEnums = new Dictionary<string, EnumEntry>();
+            var parsedEnums = new EnumEntryCollection();
 
             var reg = _document.Root;
 
             foreach(var e in reg.Elements("enums"))
             {
+                var superGroups = e.Attribute("group")?.Value?.Split(',') ?? new string[0];
                 foreach(var eEntry in e.Elements("enum"))
                 {
-                    var entry = ParseEnumEntry(eEntry);
+                    var entry = ParseEnumEntry(superGroups, eEntry);
                     if (entry != null)
                     {
-                        parsedEnums.TryAdd(entry.Name, entry); // TODO: fix duplicate
+                        parsedEnums.Add(entry); // TODO: fix duplicate
                     }
                 }
             }
             return parsedEnums;
         }
-        public static ulong ConvertToUInt64(string val)
+        public static ulong ConvertToUInt64(string val, string? type)
         {
-            return (ulong)(long)new System.ComponentModel.Int64Converter().ConvertFromString(val);
+            switch(type)
+            {
+                case "ull":
+                case "ll":
+                    return (ulong)(long)new System.ComponentModel.Int64Converter().ConvertFromString(val);
+                default:
+                    return (uint)(int)new System.ComponentModel.Int32Converter().ConvertFromString(val);
+            }
         }
-        public EnumEntry? ParseEnumEntry(XElement e)
+        public EnumEntry? ParseEnumEntry(string[] parentGroups, XElement e)
         {
             var entryName = e.Attribute("name")?.Value;
             var valueStr = e.Attribute("value")?.Value;
@@ -344,21 +353,28 @@ namespace GeneratorV2
                 Logger.Error($"Enum {entryName} did not pass correctly");
                 return null;
             }
-            var value = ConvertToUInt64(valueStr);
-            var groups = (e.Attribute("group")?.Value ?? string.Empty).Split(',', StringSplitOptions.RemoveEmptyEntries);
+            var mangledName = MangleEnumName(entryName);
+            var value = ConvertToUInt64(valueStr, e.Attribute("type")?.Value);
+            var groups = (e.Attribute("group")?.Value?.Split(',', StringSplitOptions.RemoveEmptyEntries) ?? new string[0]).Concat(parentGroups).ToArray();
+            var api = e.Attribute("api")?.Value;
 
             var enumType = e.Parent.Attribute("type")?.Value switch
             {
                 "bitmask" => EnumType.Bitmask,
                 _ => EnumType.None
             };
-            return new EnumEntry(entryName, value, groups, enumType);
+            return new EnumEntry(entryName, api, mangledName, value, groups, enumType);
+        }
+
+        public static string MangleEnumName(string name)
+        {
+            return MangleExtensionName(name.Substring(3));
         }
 
         #endregion Enum
 
         #region Features
-        public Feature[] ParseFeatures(Dictionary<string, Command> commands, Dictionary<string, EnumEntry> enums)
+        public Feature[] ParseFeatures(Dictionary<string, Command> commands, EnumEntryCollection enums)
         {
             Logger.Info("Beggining parsing of features.");
 
@@ -434,7 +450,7 @@ namespace GeneratorV2
                 excludeCommands.Add(cName);
             }
         }
-        private static void ParseInclude(Dictionary<string, EnumEntry> enums, Dictionary<string, Command> commands,
+        private static void ParseInclude(EnumEntryCollection enums, Dictionary<string, Command> commands,
             Feature feature, XElement includes)
         {
             var profile = includes.Attribute("profile")?.Value;
@@ -445,8 +461,8 @@ namespace GeneratorV2
 
             foreach (var e in includes.Elements("enum"))
             {
-                var eName = e.Attribute("name")?.Value;
-                if (!enums.TryGetValue(eName, out var enumEntry))
+                var eName = e.Attribute("name").Value;
+                if (!enums.TryGetValue(eName, feature.Api, out var enumEntry))
                 {
                     Logger.Error($"Feature command include did not parse correctly.");
                     continue;
@@ -455,7 +471,7 @@ namespace GeneratorV2
             }
             foreach (var e in includes.Elements("command"))
             {
-                var cName = e.Attribute("name")?.Value;
+                var cName = e.Attribute("name").Value;
                 if (!commands.TryGetValue(cName, out var command))
                 {
                     Logger.Error($"Feature command include did not parse correctly.");
@@ -466,7 +482,7 @@ namespace GeneratorV2
         }
         #endregion Features
 
-        public Dictionary<(string api, string vendor), Extension[]> ParseExtensions(Dictionary<string, Command> commands, Dictionary<string, EnumEntry> enums)
+        public Dictionary<(string api, string vendor), Extension[]> ParseExtensions(Dictionary<string, Command> commands, EnumEntryCollection enums)
         {
             var extensions = new ApiExtension();
             var reg = _document.Root;
@@ -535,22 +551,26 @@ namespace GeneratorV2
             return MangleClassName(str.ToString());
         }
 
-        private static void ParseInclude(Dictionary<string, EnumEntry> enums, Dictionary<string, Command> commands,
+        private static void ParseInclude(EnumEntryCollection enums, Dictionary<string, Command> commands,
             Extension extension, XElement includes, string vendorName)
         {
             foreach (var e in includes.Elements("enum"))
             {
-                var eName = e.Attribute("name")?.Value;
-                if (!enums.TryGetValue(eName, out var enumEntry))
+                var eName = e.Attribute("name").Value;
+                var enumEntries = enums.GetValues(eName, extension.SupportedApis);
+                if (enumEntries.Length == 0)
                 {
                     Logger.Error($"Extension command include did not parse correctly.");
                     continue;
                 }
-                extension.Add(enumEntry);
+                foreach(var enumEntry in enumEntries)
+                {
+                    extension.Add(enumEntry);
+                }
             }
             foreach (var e in includes.Elements("command"))
             {
-                var cName = e.Attribute("name")?.Value;
+                var cName = e.Attribute("name").Value;
                 if (!commands.TryGetValue(cName, out var command))
                 {
                     Logger.Error($"Extension command include did not parse correctly.");
