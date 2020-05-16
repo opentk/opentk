@@ -4,14 +4,11 @@ using System.Text;
 
 namespace GeneratorV2.Data
 {
-    public class Feature
+    public class Feature : CommandEnumCollection
     {
         public string Name {get;}
         public string Api {get;}
         public Version Version {get;}
-        public Dictionary<string, List<EnumEntry>> EnumGroups { get; } = new Dictionary<string, List<EnumEntry>>();
-        public Dictionary<string, EnumEntry> EnumEntries { get; } = new Dictionary<string, EnumEntry>();
-        public Dictionary<string, Command> Commands { get; } = new Dictionary<string, Command>();
 
         public Feature(string api, string name, Version version)
         {
@@ -20,23 +17,6 @@ namespace GeneratorV2.Data
             Version = version;
         }
 
-        public void Add(EnumEntry entry)
-        {
-            foreach (var group in entry.Groups)
-            {
-                if (!EnumGroups.TryGetValue(group, out var groupEntries))
-                {
-                    groupEntries = new List<EnumEntry>();
-                    EnumGroups.Add(group, groupEntries);
-                }
-                groupEntries.Add(entry);
-            }
-            EnumEntries.TryAdd(entry.Name, entry);
-        }
-        public void Add(Command command)
-        {
-            Commands.TryAdd(command.Method.EntryPoint, command);
-        }
         public void Add(Feature feature, HashSet<string> excludeEnums, HashSet<string> excludeCommands)
         {
             foreach(var (eName, eEntry) in feature.EnumEntries)
