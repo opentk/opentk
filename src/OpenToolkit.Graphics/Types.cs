@@ -28,5 +28,7 @@ namespace OpenToolkit.Graphics.Types
         }
         public static implicit operator GLhandleARB(uint val) => new GLhandleARB(val);
         public static implicit operator GLhandleARB(IntPtr val) => new GLhandleARB(val);
+        public static implicit operator uint(GLhandleARB val) => val._value1;
+        public static implicit operator IntPtr(GLhandleARB val) => val._value2;
     }
 }

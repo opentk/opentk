@@ -7,9 +7,9 @@ namespace GeneratorV2
 {
     public static class Overloader
     {
-        public static Command[] OverloadCommands(Command[] command)
+        public static void OverloadCommands(Dictionary<string, Command> command)
         {
-            return null;
+            
         }
     }
 }
