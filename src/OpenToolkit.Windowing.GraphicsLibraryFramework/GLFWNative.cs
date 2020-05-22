@@ -10,9 +10,9 @@ namespace OpenToolkit.Windowing.GraphicsLibraryFramework
         public const int GLFW_TRUE = 1;
         public const int GLFW_FALSE = 0;
 
-#if NETCOREAPP
         static GLFWNative()
         {
+#if NETCOREAPP
             // Register DllImport resolver so that the correct dynamic library is loaded on all platforms.
             // On net472, we rely on Mono's DllMap for this. See the .dll.config file.
             NativeLibrary.SetDllImportResolver(typeof(GLFWNative).Assembly, (name, assembly, path) =>
@@ -34,18 +34,45 @@ namespace OpenToolkit.Windowing.GraphicsLibraryFramework
 
                 if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
                 {
-                    if (IntPtr.Size == 8)
+                    if (Environment.Is64BitProcess)
                     {
                         return NativeLibrary.Load("glfw3-x64.dll", assembly, path);
                     }
-
-                    return NativeLibrary.Load("glfw3-x86.dll", assembly, path);
+                    else
+                    {
+                        return NativeLibrary.Load("glfw3-x86.dll", assembly, path);
+                    }
                 }
 
                 return IntPtr.Zero;
             });
-        }
+#elif NETFRAMEWORK
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                if (Environment.Is64BitProcess)
+                {
+                    // FIXME: Implement a proper glfw nuget package that has the desired structure.
+                    // FIXME: Change these paths so that they correspond to the nuget package referenced above.
+                    // FIXME: Change the NativeLibrary loading to handle this change.
+
+                    // By loading the library into the process here DllImport won't look for
+                    // a dll with this name because there already is one that is loaded into the process.
+                    if (Environment.Is64BitProcess)
+                    {
+                        LoadLibrary("win64/glfw3.dll");
+                    }
+                    else
+                    {
+                        LoadLibrary("win32/glfw3.dll");
+                    }
+                }
+            }
 #endif
+        }
+
+        // FIXME: I can't find a proper place for this p/invoke.
+        [DllImport("kernel32.dll")]
+        private static extern IntPtr LoadLibrary(string dllToLoad);
 
         [DllImport(LibraryName)]
         public static extern int glfwInit();
