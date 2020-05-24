@@ -13,13 +13,15 @@ namespace GeneratorV2.Data
     public class PType
     {
         public string Name { get; }
+        public string OriginalTypeName { get; }
         public PModifier Modifier { get; }
         public string? Group { get; }
         public string? Length { get; }
 
-        public PType(string name, PModifier modifier = PModifier.None, string? group = null, string? length = null)
+        public PType(string name, string originalTypeName, PModifier modifier = PModifier.None, string? group = null, string? length = null)
         {
             Name = name;
+            OriginalTypeName = originalTypeName;
             Modifier = modifier;
             Group = group;
             Length = length;

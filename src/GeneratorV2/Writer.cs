@@ -14,7 +14,7 @@ namespace GeneratorV2
 {
     public static class Writer
     {
-        public static void Write(Feature[] features, Dictionary<(string api, string vendor), Extension[]> extensions)
+        public static void Write(Specification spec)
         {
             string folderPath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
                 "..", "..", "..", "..", "OpenToolkit.Graphics");
@@ -25,29 +25,53 @@ namespace GeneratorV2
             }
             Directory.CreateDirectory(folderPath);
             WriteProject(Path.Combine(folderPath, "OpenToolkit.Graphics.csproj"));
-            Logger.Info("Writing features to file");
 
             WriteDelegates(Path.Combine(folderPath, "Types.cs"));
 
-            foreach (var f in features)
+            foreach (var (apiName, api) in spec.Apis)
+            {
+                WriteApi(api, folderPath);
+            }
+        }
+
+        private static void WriteApi(Api api, string folderPath)
+        {
+            Logger.Info("Writing features to file");
+            folderPath = Path.Combine(folderPath, api.Name);
+            if (!Directory.Exists(folderPath)) //TODO: Move to a function
+            {
+                Directory.CreateDirectory(folderPath);
+            }
+            foreach (var f in api.Features)
             {
                 WriteFeatures(folderPath, f);
             }
 
             Logger.Info("Writing extensions to files");
             Directory.CreateDirectory(Path.Combine(folderPath, "Extensions"));
-            foreach (var (k, v) in extensions)
+            foreach (var (vendor, extension) in api.Extensions)
             {
-                var extensionPath = Path.Combine(folderPath, "Extensions", k.api, k.vendor);
-                if (!Directory.Exists(extensionPath))
-                {
-                    Directory.CreateDirectory(extensionPath);
-                }
-                WriteExtensions(extensionPath, k.api, k.vendor, v);
+                WriteExtensions(folderPath, api.Name, vendor, extension);
+            }
+
+            WriteAllEnum(folderPath, api.Name, api.AllEnum);
+        }
+
+        public static void WriteAllEnum(string folderPath, string api, EnumEntryCollection enums)
+        {
+            using var stream = new FileStream(Path.Combine(folderPath, "All.cs"), FileMode.Create);
+            using var streamWriter = new StreamWriter(stream);
+            using var writer = new IndentedTextWriter(streamWriter);
+
+            var allEnum = enums.Where(x => x.Value.Value <= uint.MaxValue).Select(x => x.Value).ToHashSet();
+            writer.WriteLine($"namespace OpenToolkit.Graphics.Open{api.ToUpper()}");
+            using (writer.Scope())
+            {
+                WriteEnumGroup(writer, "All", allEnum);
             }
         }
 
-        public static void WriteExtensionBaseDocument(string filePath, string api, string vendor, Extension[] extensions, Action<IndentedTextWriter, Extension> extensionBodyWriter)
+        public static void WriteExtensionBaseDocument(string filePath, string api, string vendor, List<Extension> extensions, Action<IndentedTextWriter, Extension> extensionBodyWriter)
         {
             using var stream = new FileStream(filePath, FileMode.Create);
             using var streamWriter = new StreamWriter(stream);
@@ -72,8 +96,14 @@ namespace GeneratorV2
             }
         }
 
-        public static void WriteExtensions(string folderPath, string api, string vendor, Extension[] extensions)
+        public static void WriteExtensions(string folderPath, string api, string vendor, List<Extension> extensions)
         {
+            folderPath = Path.Combine(folderPath, "Extensions", vendor);
+            if (!Directory.Exists(folderPath))
+            {
+                Directory.CreateDirectory(folderPath);
+            }
+
             WriteExtensionBaseDocument(Path.Combine(folderPath, $"Methods.cs"), api, vendor, extensions,
                     (writer, ext) => {
                         foreach (var (cName, c) in ext.Commands)
@@ -81,27 +111,63 @@ namespace GeneratorV2
                             WriteCommand(writer, c);
                         }
                     });
+            WriteExtensionBaseDocument(Path.Combine(folderPath, $"Overloads.cs"), api, vendor, extensions,
+                    (writer, ext) => {
+                        foreach (var (cName, c) in ext.Commands)
+                        {
+                            foreach (var o in c.Overloads)
+                            {
+                                WriteOverload(writer, o, c.Name);
+                            }
+                        }
+                    });
             WriteExtensionBaseDocument(Path.Combine(folderPath, $"Enums.cs"), api, vendor, extensions,
                     (writer, ext) => {
                         if (ext.EnumEntries.Count != 0)
                         {
-                            WriteEnumGroups(writer, ext.EnumEntries, ext.EnumGroups);
+                            WriteEnumGroups(writer, ext.EnumGroups);
                         }
                     });
         }
 
         public static void WriteFeatures(string folderPath, Feature feature)
         {
-            folderPath = Path.Combine(folderPath, feature.Name);
+            folderPath = Path.Combine(folderPath, "versions", "V" + feature.Version.Major.ToString() + feature.Version.Minor.ToString());
             if (!Directory.Exists(folderPath))
             {
                 Directory.CreateDirectory(folderPath);
             }
 
-            var namespacePostfix = $"{feature.Api.ToUpper()}{feature.Version.Major}{feature.Version.Minor}";
-            WriteCommands(Path.Combine(folderPath, $"GL.Methods.cs"),namespacePostfix , feature.Commands);
+            var namespacePostfix = $"Open{feature.Api.ToUpper()}.V{feature.Version.Major}{feature.Version.Minor}";
+            WriteCommands(Path.Combine(folderPath, $"GL.Methods.cs"), namespacePostfix , feature.Commands);
 
-            WriteEnumGroups(Path.Combine(folderPath, $"Enums.cs"), namespacePostfix, feature.EnumEntries, feature.EnumGroups);
+            WriteEnumGroups(Path.Combine(folderPath, $"Enums.cs"), namespacePostfix, feature.EnumGroups);
+
+            WriteOverloads(Path.Combine(folderPath, $"GL.Overloads.cs"), namespacePostfix, feature.Commands);
+        }
+
+        public static void WriteOverloads(string filePath, string namespacePostfix, Dictionary<string, Command> commands)
+        {
+            using var stream = new FileStream(filePath, FileMode.Create);
+            using var streamWriter = new StreamWriter(stream);
+            using var writer = new IndentedTextWriter(streamWriter);
+
+            WriteUsings(writer);
+            writer.WriteLine("namespace OpenToolkit.Graphics." + namespacePostfix);
+            using (writer.Scope())
+            {
+                writer.WriteLine("public unsafe static partial class GL");
+                using (writer.Scope())
+                {
+                    foreach (var (cName, c) in commands)
+                    {
+                        foreach (var o in c.Overloads)
+                        {
+                            WriteOverload(writer, o, c.Name);
+                        }
+                    }
+                }
+            }
         }
 
         public static void WriteCommands(string filePath, string namespacePostfix, Dictionary<string, Command> commands)
@@ -178,7 +244,7 @@ namespace GeneratorV2
             writer.WriteLine();
         }
 
-        public static void WriteEnumGroups(string filePath, string namespacePostfix, EnumEntryCollection allEnum, Dictionary<string, HashSet<EnumEntry>> enumGroups)
+        public static void WriteEnumGroups(string filePath, string namespacePostfix, Dictionary<string, HashSet<EnumEntry>> enumGroups)
         {
             using var stream = new FileStream(filePath, FileMode.Create);
             using var streamWriter = new StreamWriter(stream);
@@ -187,14 +253,12 @@ namespace GeneratorV2
             writer.WriteLine("namespace OpenToolkit.Graphics." + namespacePostfix);
             using (writer.Scope())
             {
-                WriteEnumGroups(writer, allEnum, enumGroups);
+                WriteEnumGroups(writer, enumGroups);
             }
         }
 
-        private static void WriteEnumGroups(IndentedTextWriter writer, EnumEntryCollection allEnum, Dictionary<string, HashSet<EnumEntry>> enumGroups)
+        private static void WriteEnumGroups(IndentedTextWriter writer, Dictionary<string, HashSet<EnumEntry>> enumGroups)
         {
-            var all = allEnum.Select(x => x.Value).Where(x => x.Value <= uint.MaxValue).ToHashSet();
-            WriteEnumGroup(writer, "All", all);
             foreach (var (groupName, group) in enumGroups)
             {
                 if (groupName == "SpecialNumbers")
@@ -272,7 +336,7 @@ namespace GeneratorV2
             writer.WriteLine(")");
             using(writer.Scope())
             {
-                o.BodyWriter(writer);
+                o.BodyWriter(writer, name);
             }
             writer.WriteLine();
         }
