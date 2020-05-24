@@ -9,9 +9,9 @@ namespace GeneratorV2.Data
     {
         public PType ReturnType { get; }
         public Parameter[] Parameters { get; }
-        public Action<IndentedTextWriter> BodyWriter { get; }
+        public Action<IndentedTextWriter, string> BodyWriter { get; }
 
-        public Overload(PType returnType, Action<IndentedTextWriter> bodyWriter, params Parameter[] parameters)
+        public Overload(PType returnType, Action<IndentedTextWriter, string> bodyWriter, params Parameter[] parameters)
         {
             ReturnType = returnType;
             Parameters = parameters;

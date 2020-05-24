@@ -6,23 +6,25 @@ namespace GeneratorV2.Data
 {
     public class Command
     {
-        public Method Method { get; }
+        public Method Method { get; set; }
 
         public string Name { get; }
 
-        public Overload[] Overloads { get; }
+        public List<Overload> Overloads { get; }
 
-        public Command(Method method, string name)
+        public Command(Method method, string name, List<Overload>? overloads = null)
         {
             Method = method;
             Name = name;
+            Overloads = overloads ?? new List<Overload>();
         }
 
         public virtual bool IsHandleArb => false;
 
         public virtual Command CloneCommand(string newName)
         {
-            return new Command(Method, newName);
+            var clonedCommand = new Command(Method, newName, Overloads);
+            return clonedCommand;
         }
     }
 
@@ -32,8 +34,8 @@ namespace GeneratorV2.Data
 
         public Overload BaseOverload { get; }
 
-        public HandleARBCommand(Method other, string name, Method apple, Overload baseOverload)
-            : base(other, name)
+        public HandleARBCommand(Method other, string name, Method apple, Overload baseOverload, List<Overload>? overloads = null)
+            : base(other, name, overloads)
         {
             Apple = apple;
             BaseOverload = baseOverload;
@@ -43,7 +45,7 @@ namespace GeneratorV2.Data
 
         public override Command CloneCommand(string newName)
         {
-            return new HandleARBCommand(Method, newName, Apple, BaseOverload);
+            return new HandleARBCommand(Method, newName, Apple, BaseOverload, Overloads);
         }
     }
 }
