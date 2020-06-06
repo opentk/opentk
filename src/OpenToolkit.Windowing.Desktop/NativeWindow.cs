@@ -364,8 +364,7 @@ namespace OpenToolkit.Windowing.Desktop
             get => _size;
             set
             {
-                _size.X = value.X;
-                _size.Y = value.Y;
+                _size = value;
                 GLFW.SetWindowSize(WindowPtr, value.X, value.Y);
             }
         }
