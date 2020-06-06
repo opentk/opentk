@@ -362,7 +362,12 @@ namespace OpenToolkit.Windowing.Desktop
         public unsafe Vector2i Size
         {
             get => _size;
-            set => GLFW.SetWindowSize(WindowPtr, value.X, value.Y);
+            set
+            {
+                _size.X = value.X;
+                _size.Y = value.Y;
+                GLFW.SetWindowSize(WindowPtr, value.X, value.Y);
+            }
         }
 
         /// <inheritdoc />
