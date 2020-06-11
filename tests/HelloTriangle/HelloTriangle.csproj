@@ -7,6 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="OpenTK" Version="4.0.0-pre9.1" />
+    <ProjectReference Include="..\..\src\OpenAL\OpenToolkit.OpenAL\OpenToolkit.OpenAL.csproj" />
+    <ProjectReference Include="..\..\src\OpenToolkit.Core\OpenToolkit.Core.csproj" />
+    <ProjectReference Include="..\..\src\OpenToolkit.Graphics\OpenToolkit.Graphics.csproj" />
+    <ProjectReference Include="..\..\src\OpenToolkit.Input\OpenToolkit.Input.csproj" />
+    <ProjectReference Include="..\..\src\OpenToolkit.Mathematics\OpenToolkit.Mathematics.csproj" />
+    <ProjectReference Include="..\..\src\OpenToolkit.Windowing.Common\OpenToolkit.Windowing.Common.csproj" />
+    <ProjectReference Include="..\..\src\OpenToolkit.Windowing.Desktop\OpenToolkit.Windowing.Desktop.csproj" />
+    <ProjectReference Include="..\..\src\OpenToolkit.Windowing.GraphicsLibraryFramework\OpenToolkit.Windowing.GraphicsLibraryFramework.csproj" />
   </ItemGroup>
 </Project>
