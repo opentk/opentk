@@ -1,6 +1,8 @@
 
 # Created by https://www.gitignore.io/api/vim,osx,linux,macos,emacs,fsharp,csharp,windows,android,monodevelop,intellij+all,visualstudio,xamarinstudio,visualstudiocode
 
+src/OpenToolkit.Graphics/
+
 ### Android ###
 # Built application files
 *.apk
