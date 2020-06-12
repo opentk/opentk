@@ -10,7 +10,7 @@ namespace GeneratorV2
         {
             var link = "https://raw.githubusercontent.com/KhronosGroup/OpenGL-Registry/master/xml/gl.xml";
             Logger.Info($"Beginning to download openGL spec from {link}");
-            var request = HttpWebRequest.CreateHttp(link);
+            var request = WebRequest.CreateHttp(link);
 
             var response = request.GetResponse();
             return response.GetResponseStream();

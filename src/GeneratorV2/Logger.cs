@@ -62,7 +62,7 @@ namespace GeneratorV2
         {
             _fileStream = File.Create(logPath);
 
-            Logger.Info("Logger initialized.");
+            Info("Logger initialized.");
         }
 
         public void Dispose()
@@ -85,7 +85,7 @@ namespace GeneratorV2
 
         private void WriteLog(MessageInfo info)
         {
-            byte[] data = Encoding.UTF8.GetBytes(info.ToString());
+            var data = Encoding.UTF8.GetBytes(info.ToString());
             _fileStream?.Write(data, 0, data.Length);
             Console.ForegroundColor = info.GetColor();
             Console.Write(info.ToString());

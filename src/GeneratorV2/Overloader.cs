@@ -1,4 +1,5 @@
 ﻿using GeneratorV2.Data;
+using GeneratorV2.Parsing;
 using System;
 using System.CodeDom.Compiler;
 using System.Collections.Generic;
@@ -37,8 +38,8 @@ namespace GeneratorV2
             }
 
             var sb = new StringBuilder();
-            PType retType = m.ReturnType;
-            bool isReturnOverload = false;
+            var retType = m.ReturnType;
+            var isReturnOverload = false;
             if (m.ReturnType.Name != "void")
             {
                 sb.Append("return ");
@@ -51,8 +52,8 @@ namespace GeneratorV2
             sb.Append("{0}");
             sb.Append("(");
             var newParameters = new Parameter[m.Parameters.Length];
-            bool isParameterOverload = false;
-            for (int i = 0; i < m.Parameters.Length; i++)
+            var isParameterOverload = false;
+            for (var i = 0; i < m.Parameters.Length; i++)
             {
                 var p = m.Parameters[i];
                 if (ConvertEnumType(p.Type, out var type))
@@ -98,8 +99,8 @@ namespace GeneratorV2
             }
 
             var sb = new StringBuilder();
-            PType retType = m.ReturnType;
-            bool isReturnOverload = false;
+            var retType = m.ReturnType;
+            var isReturnOverload = false;
             if (m.ReturnType.Name != "void")
             {
                 sb.Append("return ");
@@ -112,8 +113,8 @@ namespace GeneratorV2
             sb.Append("{0}");
             sb.Append("(");
             var newParameters = new Parameter[m.Parameters.Length];
-            bool isParameterOverload = false;
-            for (int i = 0; i < m.Parameters.Length; i++)
+            var isParameterOverload = false;
+            for (var i = 0; i < m.Parameters.Length; i++)
             {
                 var p = m.Parameters[i];
                 if (ConvertEnumType(p.Type, out var type))

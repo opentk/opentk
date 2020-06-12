@@ -9,6 +9,7 @@ using System.Reflection;
 using System.Threading;
 using System.Runtime.InteropServices;
 using System.Linq;
+using GeneratorV2.Parsing;
 
 namespace GeneratorV2
 {
@@ -16,7 +17,7 @@ namespace GeneratorV2
     {
         public static void Write(Specification spec)
         {
-            string folderPath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
+            var folderPath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
                 "..", "..", "..", "..", "OpenToolkit.Graphics");
 
             if (Directory.Exists(folderPath))
@@ -278,12 +279,12 @@ namespace GeneratorV2
             using (writer.Scope())
             {
                 var groupEnumerator = group.GetEnumerator();
-                bool hasNext = groupEnumerator.MoveNext();
+                var hasNext = groupEnumerator.MoveNext();
                 do
                 {
                     var curEntry = groupEnumerator.Current;
                     hasNext = groupEnumerator.MoveNext();
-                    string type = curEntry.Value > uint.MaxValue ? "ulong" : "uint";
+                    var type = curEntry.Value > uint.MaxValue ? "ulong" : "uint";
                     writer.WriteLine($"public const {type} {curEntry.MangledName} = 0x{curEntry.Value:X};");
                 } while (hasNext);
             }
@@ -295,7 +296,7 @@ namespace GeneratorV2
             using (writer.Scope())
             {
                 var groupEnumerator = group.GetEnumerator();
-                bool hasNext = groupEnumerator.MoveNext();
+                var hasNext = groupEnumerator.MoveNext();
                 do
                 {
                     var curEntry = groupEnumerator.Current;
@@ -323,7 +324,7 @@ namespace GeneratorV2
         {
             writer.Write($"public static {o.ReturnType.Name} {name}(");
 
-            for (int i = 0; i < o.Parameters.Length; i++)
+            for (var i = 0; i < o.Parameters.Length; i++)
             {
                 var parameter = o.Parameters[i];
                 var type = parameter.Type.Name.Replace("const", "").Trim();
@@ -346,7 +347,7 @@ namespace GeneratorV2
             writer.WriteLine($"[DllImport(\"opengl32.dll\", EntryPoint = \"{m.EntryPoint}\")]");
             writer.Write($"public static extern {m.ReturnType.Name} {name}(");
 
-            for (int i = 0; i < m.Parameters.Length; i++)
+            for (var i = 0; i < m.Parameters.Length; i++)
             {
                 var parameter = m.Parameters[i];
                 var type = parameter.Type.Name.Replace("const", "").Trim();
