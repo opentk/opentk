@@ -1,8 +1,5 @@
-﻿using System;
-using System.Diagnostics;
-using GeneratorV2.Data;
+﻿using System.Diagnostics;
 using GeneratorV2.Parsing;
-
 
 namespace GeneratorV2
 {

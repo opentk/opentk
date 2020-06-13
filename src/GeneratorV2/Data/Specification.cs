@@ -1,5 +1,4 @@
 ﻿using GeneratorV2.Data;
-using System;
 using System.Collections.Generic;
 
 namespace GeneratorV2.Parsing

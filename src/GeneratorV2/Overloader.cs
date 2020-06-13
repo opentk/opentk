@@ -2,7 +2,6 @@
 using GeneratorV2.Parsing;
 using System;
 using System.CodeDom.Compiler;
-using System.Collections.Generic;
 using System.Text;
 
 namespace GeneratorV2

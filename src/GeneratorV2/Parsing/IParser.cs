@@ -1,5 +1,3 @@
-using GeneratorV2.Data;
-
 namespace GeneratorV2.Parsing
 {
     public interface IParser<T>
