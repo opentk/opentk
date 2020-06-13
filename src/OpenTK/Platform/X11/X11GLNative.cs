@@ -215,6 +215,10 @@ namespace OpenTK.Platform.X11
                 if (title != null)
                 {
                     Functions.XStoreName(window.Display, window.Handle, title);
+                    //Set window title via XChangeProperty too- This makes Unicode window titles work nicely
+                    IntPtr windowTitle = Functions.XInternAtom(window.Display, "_NET_WM_NAME", false);
+                    IntPtr propertyType = Functions.XInternAtom(window.Display, "UTF8_STRING", false);
+                    Functions.XChangeProperty(window.Display, window.Handle, windowTitle, propertyType, 8, PropertyMode.Replace, title, title.Length);
                 }
             }
 
@@ -1792,6 +1796,9 @@ namespace OpenTK.Platform.X11
                     using (new XLock(window.Display))
                     {
                         Functions.XStoreName(window.Display, window.Handle, value);
+                        IntPtr windowTitle = Functions.XInternAtom(window.Display, "_NET_WM_NAME", false);
+                        IntPtr propertyType = Functions.XInternAtom(window.Display, "UTF8_STRING", false);
+                        Functions.XChangeProperty(window.Display, window.Handle, windowTitle, propertyType, 8, PropertyMode.Replace, value, value.Length);
                     }
                 }
 
