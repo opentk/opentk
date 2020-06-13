@@ -7,26 +7,9 @@ namespace GeneratorV2.Writing
 {
     public class MethodWriter : OverloadWriter
     {
-        public void Write(string namespaceName, string outputPath, CommandEnumCollection input)
+        public override void Write(Command input, IndentedTextWriter writer)
         {
-            using var stream = new FileStream(outputPath, FileMode.Create);
-            using var streamWriter = new StreamWriter(stream);
-            using var writer = new IndentedTextWriter(streamWriter);
 
-            WriterUtility.WriteUsings(writer);
-
-            writer.WriteLine("namespace " + namespaceName);
-            using (writer.Scope())
-            {
-                writer.WriteLine("public unsafe static partial class GL");
-                using (writer.Scope())
-                {
-                    foreach (var (cName, c) in input.Commands)
-                    {
-                        WriteMethod(writer, c);
-                    }
-                }
-            }
         }
 
         private static void WriteMethod(IndentedTextWriter writer, Command c)
