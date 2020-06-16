@@ -33,7 +33,7 @@ namespace GeneratorV2.Parsing
 
                 foreach (var api in supportedApis)
                 {
-                    var extension = new Extension(NameMangler.MangleClassName(vendor), extName, supportedApis);
+                    var extension = new Extension(NameMangler.MangleClassName(vendor), extName, api);
                     foreach (var includes in ext.Elements("require"))
                     {
                         var includesApi = includes.Attribute("api")?.Value;
@@ -54,7 +54,7 @@ namespace GeneratorV2.Parsing
             foreach (var e in includes.Elements("enum"))
             {
                 var eName = e.Attribute("name").Value;
-                var enumEntries = enums.GetValues(eName, extension.SupportedApis);
+                var enumEntries = enums.GetValues(eName, extension.SupportedApi);
                 if (enumEntries.Length == 0)
                 {
                     Logger.Error($"Extension command include did not parse correctly.");

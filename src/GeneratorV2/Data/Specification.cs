@@ -28,13 +28,9 @@ namespace GeneratorV2.Parsing
 
         public void AddExtension(Extension extension)
         {
-            string[] supportedApis = extension.SupportedApis;
-            foreach (string apiName in supportedApis)
-            {
-                Api orCreateApi = GetOrCreateApi(apiName);
-                orCreateApi.AddEnums(extension);
-                orCreateApi.Extensions.AddExtension(extension);
-            }
+            Api orCreateApi = GetOrCreateApi(extension.SupportedApi);
+            orCreateApi.AddEnums(extension);
+            orCreateApi.Extensions.AddExtension(extension);
         }
     }
 }

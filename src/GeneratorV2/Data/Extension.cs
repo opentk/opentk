@@ -6,13 +6,13 @@ namespace GeneratorV2
     {
         public string Vendor { get; }
         public string Name { get; }
-        public string[] SupportedApis { get; }
+        public string SupportedApi { get; }
 
-        public Extension(string vendorName, string name, string[] supportedApis)
+        public Extension(string vendorName, string name, string supportedApi)
         {
             Vendor = vendorName;
             Name = name;
-            SupportedApis = supportedApis;
+            SupportedApi = supportedApi;
         }
     }
 }
