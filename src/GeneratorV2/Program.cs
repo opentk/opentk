@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using GeneratorV2.Parsing;
+using GeneratorV2.Writing;
 
 namespace GeneratorV2
 {
@@ -24,7 +25,7 @@ namespace GeneratorV2
                 Overloader.OverloadCommands(specification);
 
                 //Writing
-                Writer.Write(specification);
+                new Writer(specification).Write();
 
                 st.Stop();
 

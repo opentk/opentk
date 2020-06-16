@@ -54,7 +54,7 @@ namespace GeneratorV2.Data
             return entry != null;
         }
 
-        public EnumEntry[] GetValues(string name, string[] apis)
+        public EnumEntry[] GetValues(string name, string api)
         {
             EnumEntry enumEntry;
             List<EnumEntry> source;
@@ -64,7 +64,7 @@ namespace GeneratorV2.Data
             }
             if (ApiSpecificEnums.TryGetValue(name, out source))
             {
-                return source.Where(e => e.Api == null || ((IEnumerable<string>)apis).Any(a => a == e.Api)).ToArray();
+                return source.Where(e => e.Api == null || api == e.Api).ToArray();
             }
             return new EnumEntry[0];
         }

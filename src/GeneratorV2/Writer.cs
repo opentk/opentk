@@ -8,13 +8,13 @@ using System.Reflection;
 using System.Linq;
 using GeneratorV2.Parsing;
 
-namespace GeneratorV2
+namespace GeneratorV2.asdjkl
 {
     public static class Writer
     {
         public static void Write(Specification spec)
         {
-            var folderPath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
+            var folderPath = Path.Combine(
                 "..", "..", "..", "..", "OpenToolkit.Graphics");
 
             if (Directory.Exists(folderPath))
