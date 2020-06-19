@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace GeneratorV2.Data
 {
@@ -21,7 +22,7 @@ namespace GeneratorV2.Data
 
         public virtual Command CloneCommand(string newName)
         {
-            var clonedCommand = new Command(Method, newName, Overloads);
+            var clonedCommand = new Command(Method, newName, Overloads.ToList());
             return clonedCommand;
         }
     }

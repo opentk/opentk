@@ -50,6 +50,7 @@ namespace GeneratorV2.Parsing
             var mangledName = NameMangler.MangleEnumName(entryName);
             var value = ConvertToUInt64(valueStr, e.Attribute("type")?.Value);
             var groups = (e.Attribute("group")?.Value?.Split(',', StringSplitOptions.RemoveEmptyEntries) ?? new string[0]).Concat(parentGroups).ToArray();
+            
             var api = e.Attribute("api")?.Value;
 
             var enumType = e.Parent.Attribute("type")?.Value switch

@@ -2,6 +2,7 @@
 using GeneratorV2.Parsing;
 using System;
 using System.CodeDom.Compiler;
+using System.Collections.Generic;
 using System.Text;
 
 namespace GeneratorV2
@@ -10,18 +11,28 @@ namespace GeneratorV2
     {
         public static void OverloadCommands(Specification spec)
         {
+            var alreadyOverloadedCommands = new HashSet<string>();
+            foreach (var (apiName, api) in spec.Apis)
+            {
+                foreach (var feature in api.Features)
+                {
+                    foreach (var (commandName, c) in feature.Commands)
+                    {
+                        if (!alreadyOverloadedCommands.Contains(commandName))
+                        {
+                            alreadyOverloadedCommands.Add(commandName);
+                            OverloadEnums(c);
+                        }
+                    }
+                }
+            }
+
             foreach (var (cName, c) in spec.Commands)
             {
-                OverloadEnums(c);
                 OverloadAllEnum(c);
             }
         }
 
-        //public uint BaseMethod(uint enum1, uint enum2);
-        //public GLEnum Overload(GLEnum enum1, GLEnum enum2)
-        //{
-        //    return (GLEnum)BaseMethod((uint)enum1, (uint)enum2));
-        //}
         public static void OverloadAllEnum(Command c)
         {
             var m = c.Method;
