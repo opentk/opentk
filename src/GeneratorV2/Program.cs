@@ -34,6 +34,12 @@ namespace GeneratorV2
         }
     }
 }
+/*TODO: Look into enum overloads for extensions
+ * 1) Only use the ALL enum
+ * 2) Create a struct with implicit conversions
+ * 3) Create a ton of overloads
+ * 4) Extra enum group per extension (downside: name collision)
+ * */
 
 //TODO: Next time
 //Project cleanup
