@@ -143,32 +143,6 @@ namespace GeneratorV2.Overloading
             }
         }
     }
-
-    //public class SpanOverloader : IOverloader
-    //{
-    //    public bool TryOverloadParameter(OverloadContext context, ref ILayer topLayer, int paramIndex)
-    //    {
-    //        throw new NotImplementedException();
-    //        //var parameters = context.Parameters[paramIndex];
-
-    //    }
-
-    //    class SpanLayer : ILayer
-    //    {
-
-    //        private ILayer _nestedLayer;
-    //        public SpanLayer(ILayer nestedLayer)
-    //        {
-    //            _nestedLayer = nestedLayer;
-    //        }
-    //        public void WriteLayer(IndentedTextWriter writer)
-    //        {
-    //            using (writer.Scope())
-    //            {
-    //                NestedLayer.WriteLayer(writer);
-    //            }
-    //        }
-    //    }
     //public extern unsafe void Test(int** array, int count, uint enm);
 
     //void Test(Span<int>* p1, SomeEnum enm)
