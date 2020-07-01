@@ -54,7 +54,7 @@ namespace GeneratorV2.Parsing
                 isGLhandleArb |= ptype1.Name == PlatformSpecificGlHandleArbFlag;
                 return new Command(new Method(ptype1, empty, parameterList.ToArray()), methodName);
             }
-            catch (NullReferenceException ex)
+            catch (NullReferenceException)
             {
                 Logger.Error("Error in parsing method \"" + empty + "\"");
                 return null;

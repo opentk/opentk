@@ -29,8 +29,7 @@ namespace GeneratorV2.Data
             }
             else
             {
-                List<EnumEntry> enumEntryList;
-                if (!ApiSpecificEnums.TryGetValue(entry.Name, out enumEntryList))
+                if (!ApiSpecificEnums.TryGetValue(entry.Name, out var enumEntryList))
                 {
                     enumEntryList = new List<EnumEntry>();
                     ApiSpecificEnums.Add(entry.Name, enumEntryList);
@@ -39,14 +38,13 @@ namespace GeneratorV2.Data
             }
         }
 
-        public bool TryGetValue(string name, string api, out EnumEntry entry)
+        public bool TryGetValue(string name, string api, out EnumEntry? entry)
         {
             if (Enums.TryGetValue(name, out entry))
             {
                 return true;
             }
-            List<EnumEntry> source;
-            if (!ApiSpecificEnums.TryGetValue(name, out source))
+            if (!ApiSpecificEnums.TryGetValue(name, out var source))
             {
                 return false;
             }
@@ -56,13 +54,11 @@ namespace GeneratorV2.Data
 
         public EnumEntry[] GetValues(string name, string api)
         {
-            EnumEntry enumEntry;
-            List<EnumEntry> source;
-            if (Enums.TryGetValue(name, out enumEntry))
+            if (Enums.TryGetValue(name, out var enumEntry))
             {
                 return new [] { enumEntry };
             }
-            if (ApiSpecificEnums.TryGetValue(name, out source))
+            if (ApiSpecificEnums.TryGetValue(name, out var source))
             {
                 return source.Where(e => e.Api == null || api == e.Api).ToArray();
             }

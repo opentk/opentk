@@ -11,7 +11,7 @@ namespace GeneratorV2.Data
 
         private Api GetOrCreateApi(string apiName)
         {
-            if (!Apis.TryGetValue(apiName, out Api value))
+            if (!Apis.TryGetValue(apiName, out Api? value))
             {
                 value = new Api(apiName);
                 Apis.Add(apiName, value);
