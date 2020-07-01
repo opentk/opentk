@@ -2,13 +2,22 @@
 
 namespace GeneratorV2.Data
 {
-    public class CommandEnumCollection
+    public abstract class CommandEnumCollection
     {
         public Dictionary<string, HashSet<EnumEntry>> EnumGroups { get; } = new Dictionary<string, HashSet<EnumEntry>>();
 
         public EnumEntryCollection EnumEntries { get; } = new EnumEntryCollection();
 
         public Dictionary<string, Command> Commands { get; } = new Dictionary<string, Command>();
+
+        public string Api { get; }
+        public string Name { get; }
+
+        protected CommandEnumCollection(string api, string name)
+        {
+            Api = api;
+            Name = name;
+        }
 
         public void Add(EnumEntry entry)
         {

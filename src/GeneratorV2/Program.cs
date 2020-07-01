@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using GeneratorV2.Data;
 using GeneratorV2.Parsing;
 using GeneratorV2.Writing;
 
@@ -19,10 +20,11 @@ namespace GeneratorV2
                 //Parsing
                 var specification = new Specification();
                 new Parser().Parse(stream, specification);
-                
+
 
                 //Overloading
-                Overloader.OverloadCommands(specification);
+                new GeneratorV2.Overloading.Overloader(specification).Overload();
+                //Overloader.OverloadCommands(specification);
 
                 //Writing
                 new Writer(specification).Write();
