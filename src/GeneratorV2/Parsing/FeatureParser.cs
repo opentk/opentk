@@ -12,7 +12,7 @@ namespace GeneratorV2.Parsing
             Logger.Info("Beggining parsing of features.");
             var commands = output.Commands;
             EnumEntryCollection enums = output.Enums;
-            Feature previousFeature = null;
+            Feature? previousFeature = null;
             foreach (var element1 in input.Elements("feature"))
             {
                 var api = element1.Attribute("api")?.Value;
@@ -89,12 +89,16 @@ namespace GeneratorV2.Parsing
             foreach (var e in includes.Elements("enum"))
             {
                 var eName = e.Attribute("name").Value;
-                if (!enums.TryGetValue(eName, feature.Api, out var enumEntry))
+                if (enums.TryGetValue(eName, feature.Api, out var enumEntry))
+                {
+#pragma warning disable CS8604 // Possible null reference argument.
+                    feature.Add(enumEntry);
+#pragma warning restore CS8604 // Possible null reference argument.
+                }
+                else
                 {
                     Logger.Error($"Feature command include did not parse correctly.");
-                    continue;
                 }
-                feature.Add(enumEntry);
             }
             foreach (var e in includes.Elements("command"))
             {
