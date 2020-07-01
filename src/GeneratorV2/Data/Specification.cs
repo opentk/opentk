@@ -1,7 +1,7 @@
 ﻿using GeneratorV2.Data;
 using System.Collections.Generic;
 
-namespace GeneratorV2.Parsing
+namespace GeneratorV2.Data
 {
     public class Specification
     {
@@ -28,7 +28,7 @@ namespace GeneratorV2.Parsing
 
         public void AddExtension(Extension extension)
         {
-            Api orCreateApi = GetOrCreateApi(extension.SupportedApi);
+            Api orCreateApi = GetOrCreateApi(extension.Api);
             orCreateApi.AddEnums(extension);
             orCreateApi.Extensions.AddExtension(extension);
         }

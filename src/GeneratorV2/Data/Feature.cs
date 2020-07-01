@@ -5,14 +5,11 @@ namespace GeneratorV2.Data
 {
     public class Feature : CommandEnumCollection
     {
-        public string Name {get;}
-        public string Api {get;}
         public Version Version {get;}
 
         public Feature(string api, string name, Version version)
+            : base(api, name)
         {
-            Api = api;
-            Name = name;
             Version = version;
         }
 
