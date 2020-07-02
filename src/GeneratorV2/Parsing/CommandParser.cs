@@ -143,7 +143,7 @@ namespace GeneratorV2.Parsing
                         writer.WriteLine(");");
                     }
                 };
-                var baseOverload = new Overload(overloadMethodReturnType, bodyWriter, overloadParameters);
+                var baseOverload = new Overload(overloadMethodReturnType, bodyWriter, 0, overloadParameters);
                 coms.Add(method.EntryPoint, new HandleARBCommand(otherMethod, commandBase.Name, apple, baseOverload, null));
             }
 
@@ -233,8 +233,8 @@ namespace GeneratorV2.Parsing
                 "GLclampd" => "double",
                 "GLeglClientBufferEXT" => "void*",
                 "GLeglImageOES" => "void*",
-                "GLchar" => "char",
-                "GLcharARB" => "char",
+                "GLchar" => "byte",
+                "GLcharARB" => "byte",
                 "GLhalf" => "short",
                 "GLhalfARB" => "short",
                 "GLfixed" => "int",

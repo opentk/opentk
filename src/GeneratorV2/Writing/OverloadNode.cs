@@ -25,7 +25,21 @@ namespace GeneratorV2.Writing
 
         protected void WriteOverload(Overload o)
         {
-            Writer.Write($"public static {o.ReturnType.Name} {_command.Name}(");
+            Writer.Write($"public static {o.ReturnType.Name} {_command.Name}");
+            if (o.TypeParameterCount > 0)
+            {
+                Writer.Write("<");
+                for (int i = 1; i <= o.TypeParameterCount; i++)
+                {
+                    Writer.Write("T" + i);
+                    if (i != o.TypeParameterCount)
+                    {
+                        Writer.Write(", ");
+                    }
+                }
+                Writer.Write(">");
+            }
+            Writer.Write("(");
 
             for (var i = 0; i < o.Parameters.Length; i++)
             {
@@ -38,6 +52,18 @@ namespace GeneratorV2.Writing
                 }
             }
             Writer.WriteLine(")");
+
+            if (o.TypeParameterCount > 0)
+            {
+                using (Writer.Indentation())
+                {
+                    for (int i = 1; i <= o.TypeParameterCount; i++)
+                    {
+                        Writer.WriteLine($"where T{i} : unmanaged");
+                    }
+                }
+            }
+
             using (Writer.Scope())
             {
                 o.BodyWriter(Writer, _command.Name);
