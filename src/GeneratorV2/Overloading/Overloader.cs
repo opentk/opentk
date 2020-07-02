@@ -7,10 +7,9 @@ using System.Text;
 
 namespace GeneratorV2.Overloading
 {
-
     public class Overloader
     {
-        private readonly IOverloader[] _overloaders = { new EnumOverloader() };
+        private readonly IOverloader[] _overloaders = { new EnumOverloader(), new SpanOverloader() };
         private readonly Specification _spec;
         private readonly HashSet<string> _overloadedCommandNames = new HashSet<string>();
 
@@ -23,7 +22,9 @@ namespace GeneratorV2.Overloading
                 _context = context;
             }
 
-            public void WriteLayer(IndentedTextWriter writer, string methodName)
+            public ILayer? NestedLayer => null;
+
+            public void WriteLayer(IndentedTextWriter writer, string methodName, Argument[] args)
             {
                 if (_context.Method.ReturnType.Name != "void")
                 {
@@ -31,11 +32,10 @@ namespace GeneratorV2.Overloading
                 }
                 writer.Write(methodName);
                 writer.Write('(');
-                var args = _context.Arguments;
-                for (int i = 0; i < args.Count; i++)
+                for (int i = 0; i < args.Length; i++)
                 {
-                    writer.Write(args[i]);
-                    if (i != args.Count - 1)
+                    writer.Write(args[i].Name);
+                    if (i != args.Length - 1)
                     {
                         writer.Write(", ");
                     }
@@ -91,9 +91,12 @@ namespace GeneratorV2.Overloading
             do
             {
                 overloadHappened = false;
-                int i = 0;
-                while (i < context.Parameters.Count) //Could be for loop.
+                for (int i = 0; i < context.Parameters.Length; i++)
                 {
+                    if (context.Parameters[i] == null)
+                    {
+                        continue;
+                    }
                     foreach (var overloader in _overloaders)
                     {
                         if (overloader.TryOverloadParameter(context, ref currentLayer, i))
@@ -103,7 +106,6 @@ namespace GeneratorV2.Overloading
                             break;
                         }
                     }
-                    ++i;
                 }
             } while (overloadHappened);
 
@@ -112,24 +114,35 @@ namespace GeneratorV2.Overloading
                 return;
             }
 
-            Action<IndentedTextWriter, string> bodyWriter = (writer, commandName) =>
-            {
-                currentLayer.WriteLayer(writer, commandName);
-            };
-            command.Overloads.Add(new Overload(method.ReturnType, bodyWriter, context.Parameters.ToArray()));
+            CreateOverload(command, context, currentLayer);
+
             if (isFeatureCommand)
             {
-                CreateGroupedOverload(command, method, context, bodyWriter);
+                if (TryCreateGroupedParameters(context))
+                {
+                    CreateOverload(command, context, currentLayer);
+                }
             }
         }
 
-        private static void CreateGroupedOverload(Command command, Method method, OverloadContext context, Action<IndentedTextWriter, string> bodyWriter)
+        private static void CreateOverload(Command command, OverloadContext context, ILayer currentLayer)
+        {
+            var method = command.Method;
+            var args = context.Parameters.Zip(method.Parameters, (contextParam, methodParam) => new Argument(contextParam ?? methodParam)).ToArray();
+            Action<IndentedTextWriter, string> bodyWriter = (writer, commandName) =>
+            {
+                currentLayer.WriteLayer(writer, commandName, args.ToArray());
+            };
+            command.Overloads.Add(new Overload(method.ReturnType, bodyWriter, context.TypeParameterCount, context.Parameters.Where(x => x != null).OfType<Parameter>().ToArray()));
+        }
+
+        private static bool TryCreateGroupedParameters(OverloadContext context)
         {
             bool hasGroupedEnum = false;
-            for (int i = 0; i < context.Parameters.Count; i++)
+            for (int i = 0; i < context.Parameters.Length; i++)
             {
                 var parameter = context.Parameters[i];
-                if (parameter.Type.Group != null && parameter.Type.OriginalTypeName.Contains("GLenum"))
+                if (parameter != null && parameter.Type.Group != null && parameter.Type.OriginalTypeName.Contains("GLenum"))
                 {
                     hasGroupedEnum = true;
                     var type = parameter.Type;
@@ -137,14 +150,11 @@ namespace GeneratorV2.Overloading
                         type.Modifier, type.Group, type.Length), parameter.Name);
                 }
             }
-            if (hasGroupedEnum)
-            {
-                command.Overloads.Add(new Overload(method.ReturnType, bodyWriter, context.Parameters.ToArray()));
-            }
+            return hasGroupedEnum;
         }
     }
-    //public extern unsafe void Test(int** array, int count, uint enm);
 
+    //public extern unsafe void Test(int** array, int count, uint enm);
     //void Test(Span<int>* p1, SomeEnum enm)
     //{
     //    var count = p1.Length;

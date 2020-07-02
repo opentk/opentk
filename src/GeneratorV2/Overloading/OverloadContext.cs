@@ -9,18 +9,20 @@ namespace GeneratorV2.Overloading
     public class OverloadContext
     {
         public Command Command { get; }
+        public int TypeParameterCount { get; set; } = 0;
 
-        public List<Parameter> Parameters { get; } = new List<Parameter>();
-        public List<string> Arguments { get; } = new List<string>();
+        public Parameter?[] Parameters { get; }
 
         public OverloadContext(Command command)
         {
             Command = command;
 
-            foreach(var p in Method.Parameters)
+            var parameters = Command.Method.Parameters;
+            Parameters = new Parameter?[parameters.Length];
+            for (int i = 0; i < parameters.Length; i++)
             {
-                Parameters.Add(p);
-                Arguments.Add(p.Name);
+                var p = parameters[i];
+                Parameters[i] = p;
             }
         }
 
