@@ -87,8 +87,8 @@ namespace OpenToolkit.Mathematics
 
             W = (c1 * c2 * c3) - (s1 * s2 * s3);
             Xyz.X = (s1 * s2 * c3) + (c1 * c2 * s3);
-            Xyz.Y = (s1 * c2 * c3) + (c1 * s2 * s3);
-            Xyz.Z = (c1 * s2 * c3) - (s1 * c2 * s3);
+            Xyz.Y = (s1 * c2 * c3) - (c1 * s2 * s3);
+            Xyz.Z = (c1 * s2 * c3) + (s1 * c2 * s3);
         }
 
         /// <summary>
