@@ -1179,39 +1179,38 @@ namespace OpenToolkit.Mathematics
             Matrix4 inverseWorldViewProjection
         )
         {
-            Vector4 result;
+            float tempX = ((vector.X - x) / width * 2.0f) - 1.0f;
+            float tempY = ((vector.Y - y) / height * 2.0f) - 1.0f;
+            float tempZ = (vector.Z / (maxZ - minZ) * 2.0f) - 1.0f;
 
-            result.X = ((vector.X - x) / width * 2.0f) - 1.0f;
-            result.Y = ((vector.Y - y) / height * 2.0f) - 1.0f;
-            result.Z = (vector.Z / (maxZ - minZ) * 2.0f) - 1.0f;
-
+            Vector3 result;
             result.X =
-                (result.X * inverseWorldViewProjection.M11) +
-                (result.Y * inverseWorldViewProjection.M21) +
-                (result.Z * inverseWorldViewProjection.M31) +
+                (tempX * inverseWorldViewProjection.M11) +
+                (tempY * inverseWorldViewProjection.M21) +
+                (tempZ * inverseWorldViewProjection.M31) +
                 inverseWorldViewProjection.M41;
 
             result.Y =
-                (result.X * inverseWorldViewProjection.M12) +
-                (result.Y * inverseWorldViewProjection.M22) +
-                (result.Z * inverseWorldViewProjection.M32) +
+                (tempX * inverseWorldViewProjection.M12) +
+                (tempY * inverseWorldViewProjection.M22) +
+                (tempZ * inverseWorldViewProjection.M32) +
                 inverseWorldViewProjection.M42;
 
             result.Z =
-                (result.X * inverseWorldViewProjection.M13) +
-                (result.Y * inverseWorldViewProjection.M23) +
-                (result.Z * inverseWorldViewProjection.M33) +
+                (tempX * inverseWorldViewProjection.M13) +
+                (tempY * inverseWorldViewProjection.M23) +
+                (tempZ * inverseWorldViewProjection.M33) +
                 inverseWorldViewProjection.M43;
 
-            result.W =
-                (result.X * inverseWorldViewProjection.M14) +
-                (result.Y * inverseWorldViewProjection.M24) +
-                (result.Z * inverseWorldViewProjection.M34) +
+            float tempW =
+                (tempX * inverseWorldViewProjection.M14) +
+                (tempY * inverseWorldViewProjection.M24) +
+                (tempZ * inverseWorldViewProjection.M34) +
                 inverseWorldViewProjection.M44;
 
-            result /= result.W;
+            result /= tempW;
 
-            return new Vector3(result.X, result.Y, result.Z);
+            return result;
         }
 
         /// <summary>
