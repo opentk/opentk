@@ -345,7 +345,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="left">The left operand of the multiplication.</param>
         /// <param name="right">The right operand of the multiplication.</param>
         /// <param name="result">A new instance that is the result of the multiplication.</param>
-        public static void Mult(ref Matrix2d left, double right, out Matrix2d result)
+        public static void Mult(in Matrix2d left, double right, out Matrix2d result)
         {
             result.Row0.X = left.Row0.X * right;
             result.Row0.Y = left.Row0.Y * right;
@@ -362,7 +362,7 @@ namespace OpenToolkit.Mathematics
         [Pure]
         public static Matrix2d Mult(Matrix2d left, double right)
         {
-            Mult(ref left, right, out Matrix2d result);
+            Mult(in left, right, out Matrix2d result);
             return result;
         }
 
@@ -372,7 +372,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="left">The left operand of the multiplication.</param>
         /// <param name="right">The right operand of the multiplication.</param>
         /// <param name="result">A new instance that is the result of the multiplication.</param>
-        public static void Mult(ref Matrix2d left, ref Matrix2d right, out Matrix2d result)
+        public static void Mult(in Matrix2d left, in Matrix2d right, out Matrix2d result)
         {
             double leftM11 = left.Row0.X;
             double leftM12 = left.Row0.Y;
@@ -398,7 +398,7 @@ namespace OpenToolkit.Mathematics
         [Pure]
         public static Matrix2d Mult(Matrix2d left, Matrix2d right)
         {
-            Mult(ref left, ref right, out Matrix2d result);
+            Mult(in left, in right, out Matrix2d result);
             return result;
         }
 
@@ -408,7 +408,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="left">The left operand of the multiplication.</param>
         /// <param name="right">The right operand of the multiplication.</param>
         /// <param name="result">A new instance that is the result of the multiplication.</param>
-        public static void Mult(ref Matrix2d left, ref Matrix2x3d right, out Matrix2x3d result)
+        public static void Mult(in Matrix2d left, in Matrix2x3d right, out Matrix2x3d result)
         {
             double leftM11 = left.Row0.X;
             double leftM12 = left.Row0.Y;
@@ -438,7 +438,7 @@ namespace OpenToolkit.Mathematics
         [Pure]
         public static Matrix2x3d Mult(Matrix2d left, Matrix2x3d right)
         {
-            Mult(ref left, ref right, out Matrix2x3d result);
+            Mult(in left, in right, out Matrix2x3d result);
             return result;
         }
 
@@ -448,7 +448,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="left">The left operand of the multiplication.</param>
         /// <param name="right">The right operand of the multiplication.</param>
         /// <param name="result">A new instance that is the result of the multiplication.</param>
-        public static void Mult(ref Matrix2d left, ref Matrix2x4d right, out Matrix2x4d result)
+        public static void Mult(in Matrix2d left, in Matrix2x4d right, out Matrix2x4d result)
         {
             double leftM11 = left.Row0.X;
             double leftM12 = left.Row0.Y;
@@ -482,7 +482,7 @@ namespace OpenToolkit.Mathematics
         [Pure]
         public static Matrix2x4d Mult(Matrix2d left, Matrix2x4d right)
         {
-            Mult(ref left, ref right, out Matrix2x4d result);
+            Mult(in left, in right, out Matrix2x4d result);
             return result;
         }
 
@@ -492,7 +492,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="left">The left operand of the addition.</param>
         /// <param name="right">The right operand of the addition.</param>
         /// <param name="result">A new instance that is the result of the addition.</param>
-        public static void Add(ref Matrix2d left, ref Matrix2d right, out Matrix2d result)
+        public static void Add(in Matrix2d left, in Matrix2d right, out Matrix2d result)
         {
             result.Row0.X = left.Row0.X + right.Row0.X;
             result.Row0.Y = left.Row0.Y + right.Row0.Y;
@@ -509,7 +509,7 @@ namespace OpenToolkit.Mathematics
         [Pure]
         public static Matrix2d Add(Matrix2d left, Matrix2d right)
         {
-            Add(ref left, ref right, out Matrix2d result);
+            Add(in left, in right, out Matrix2d result);
             return result;
         }
 
@@ -519,7 +519,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="left">The left operand of the subtraction.</param>
         /// <param name="right">The right operand of the subtraction.</param>
         /// <param name="result">A new instance that is the result of the subtraction.</param>
-        public static void Subtract(ref Matrix2d left, ref Matrix2d right, out Matrix2d result)
+        public static void Subtract(in Matrix2d left, in Matrix2d right, out Matrix2d result)
         {
             result.Row0.X = left.Row0.X - right.Row0.X;
             result.Row0.Y = left.Row0.Y - right.Row0.Y;
@@ -536,7 +536,7 @@ namespace OpenToolkit.Mathematics
         [Pure]
         public static Matrix2d Subtract(Matrix2d left, Matrix2d right)
         {
-            Subtract(ref left, ref right, out Matrix2d result);
+            Subtract(in left, in right, out Matrix2d result);
             return result;
         }
 
@@ -546,7 +546,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="mat">The matrix to invert.</param>
         /// <param name="result">The inverse of the given matrix if it has one, or the input if it is singular.</param>
         /// <exception cref="InvalidOperationException">Thrown if the Matrix2d is singular.</exception>
-        public static void Invert(ref Matrix2d mat, out Matrix2d result)
+        public static void Invert(in Matrix2d mat, out Matrix2d result)
         {
             var det = mat.Determinant;
 
@@ -573,7 +573,7 @@ namespace OpenToolkit.Mathematics
         [Pure]
         public static Matrix2d Invert(Matrix2d mat)
         {
-            Invert(ref mat, out Matrix2d result);
+            Invert(in mat, out Matrix2d result);
             return result;
         }
 
@@ -582,7 +582,7 @@ namespace OpenToolkit.Mathematics
         /// </summary>
         /// <param name="mat">The matrix to transpose.</param>
         /// <param name="result">The transpose of the given matrix.</param>
-        public static void Transpose(ref Matrix2d mat, out Matrix2d result)
+        public static void Transpose(in Matrix2d mat, out Matrix2d result)
         {
             result.Row0.X = mat.Row0.X;
             result.Row0.Y = mat.Row1.X;
@@ -598,7 +598,7 @@ namespace OpenToolkit.Mathematics
         [Pure]
         public static Matrix2d Transpose(Matrix2d mat)
         {
-            Transpose(ref mat, out Matrix2d result);
+            Transpose(in mat, out Matrix2d result);
             return result;
         }
 
