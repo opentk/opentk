@@ -126,7 +126,7 @@ namespace OpenToolkit.Mathematics
         /// Initializes a new instance of the <see cref="Vector2h"/> struct.
         /// </summary>
         /// <param name="v">The <see cref="Vector2"/> to convert.</param>
-        public Vector2h(ref Vector2 v)
+        public Vector2h(in Vector2 v)
         {
             X = new Half(v.X);
             Y = new Half(v.Y);
@@ -137,7 +137,7 @@ namespace OpenToolkit.Mathematics
         /// </summary>
         /// <param name="v">The <see cref="Vector2"/> to convert.</param>
         /// <param name="throwOnError">Enable checks that will throw if the conversion result is not meaningful.</param>
-        public Vector2h(ref Vector2 v, bool throwOnError)
+        public Vector2h(in Vector2 v, bool throwOnError)
         {
             X = new Half(v.X, throwOnError);
             Y = new Half(v.Y, throwOnError);
@@ -168,7 +168,7 @@ namespace OpenToolkit.Mathematics
         /// Initializes a new instance of the <see cref="Vector2h"/> struct.
         /// </summary>
         /// <param name="v">The <see cref="Vector2d"/> to convert.</param>
-        public Vector2h(ref Vector2d v)
+        public Vector2h(in Vector2d v)
         {
             X = new Half(v.X);
             Y = new Half(v.Y);
@@ -179,7 +179,7 @@ namespace OpenToolkit.Mathematics
         /// </summary>
         /// <param name="v">The <see cref="Vector2d"/> to convert.</param>
         /// <param name="throwOnError">Enable checks that will throw if the conversion result is not meaningful.</param>
-        public Vector2h(ref Vector2d v, bool throwOnError)
+        public Vector2h(in Vector2d v, bool throwOnError)
         {
             X = new Half(v.X, throwOnError);
             Y = new Half(v.Y, throwOnError);

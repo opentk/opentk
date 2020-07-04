@@ -33,7 +33,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Windowing\OpenToolkit.Windowing.Desktop\OpenToolkit.Windowing.Desktop.csproj" />
+    <ProjectReference Include="..\..\src\OpenToolkit.Windowing.Desktop\OpenToolkit.Windowing.Desktop.csproj" />
   </ItemGroup>
 
   <Import Project="..\..\props\common.props" />

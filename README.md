@@ -11,8 +11,6 @@ The Open Toolkit library is a fast, low-level C# binding for OpenGL, OpenGL ES a
 
 Use OpenTK to add cross-platform 3d graphics, audio, compute and haptics to your C# application. Integrate it into your existing user interface or use it standalone without any external dependencies.
 
-
-
 Project website: https://opentk.net
 
 Official git repository: https://github.com/opentk/opentk
@@ -51,6 +49,21 @@ and then enable the "Copy to Output Directory" option (as in step 3 below).
 
 News
 ===
+
+### 2020-04-06
+
+Oops! Forgot to update the news! OpenTK 4.0.0 PREVIEW is now available on Nuget.
+
+https://www.nuget.org/packages/OpenTK
+
+
+### 2020-04-06
+
+OpenTK 3.2.0 is available. 
+
+This adds bindings for the wgl_dx_interop extension and support for joysticks with > 64 buttons.
+
+https://www.nuget.org/packages/OpenTK/3.2.0
 
 
 ### 2019-08-04
@@ -126,18 +139,6 @@ Requirements
 - To develop Android applications: Visual Studio and Xamarin
 - To develop iOS applications: Visual Studio, Xamarin and XCode
 
-
-Known issues
-============
-
-1. The SDL2 backend has a number of limitations compared to the native platform backends. In particular, SDL2 does not support:
-   - `OpenTK.GLControl`. OpenTK will automatically switch to a native platform backend instead.
-   - `DisplayDevice.ChangeResolution()` without a fullscreen `INativeWindow`.
-   - Switching between `WindowBorder.Fixed` and `WindowBorder.Resizable`.
-   - High-resolution mouse input. Additionally, it is limited to a single keyboard and mouse device.
-2. OpenTK.Input.GamePad.SetVibration is currently not implemented. This API will be implemented in a future release.
-
-
 Documentation
 =============
 
@@ -148,7 +149,6 @@ You can also browse the full API on the official website
 Additional information can be found in the [OpenTK Manual](http://web.archive.org/web/20150325224427/http://www.opentk.com/doc).
 
 Technical documentation about the implementation of OpenTK can be found in the [Technical Wiki](https://github.com/opentk/opentk/wiki).
-
 
 
 Need Help?

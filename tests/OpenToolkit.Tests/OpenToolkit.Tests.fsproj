@@ -41,7 +41,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\OpenToolkit.Mathematics\OpenToolkit.Mathematics.csproj" />
-    <ProjectReference Include="..\..\src\Windowing\OpenToolkit.Windowing.Common\OpenToolkit.Windowing.Common.csproj" />
+    <ProjectReference Include="..\..\src\OpenToolkit.Windowing.Common\OpenToolkit.Windowing.Common.csproj" />
   </ItemGroup>
 
   <Import Project="..\..\props\common.props" />

@@ -1,7 +1,7 @@
 //
 // OpenALLibrarynameContainer.cs
 //
-// Copyright (C) 2019 OpenTK
+// Copyright (C) 2020 OpenTK
 //
 // This software may be modified and distributed under the terms
 // of the MIT license. See the LICENSE file for details.
@@ -9,12 +9,12 @@
 
 using OpenToolkit.Core.Loader;
 
-namespace OpenToolkit.OpenAL
+namespace OpenToolkit.Audio.OpenAL
 {
     /// <summary>
     /// Contains the library name of OpenAL.
     /// </summary>
-    internal class OpenALLibraryNameContainer : PlatformLibraryNameContainerBase
+    public class OpenALLibraryNameContainer : PlatformLibraryNameContainerBase
     {
         /// <inheritdoc />
         public override string Linux => "libopenal.so.1";

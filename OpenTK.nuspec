@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+    <metadata>
+        <id>OpenTK</id>
+
+        <version>1</version>
+
+        <copyright>@copyright@</copyright>
+        <tags>@tags@</tags>
+        <description>@description@</description>
+        <authors>@authors@</authors>
+        <releaseNotes>@releaseNotes@</releaseNotes>
+        <projectUrl>https://github.com/opentk/opentk</projectUrl>
+        <license type="expression">MIT</license>
+        <iconUrl>https://api.nuget.org/v3-flatcontainer/opentk/3.1.0/icon</iconUrl>
+        @dependencies@
+    </metadata>
+</package>

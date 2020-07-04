@@ -181,7 +181,7 @@ module Vector3 =
             // Zero-length vectors can't be normalized
             if not (approxEq a.Length 0.0f) then
                 let norm = a / a.Length
-                let vRes = Vector3.Normalize(ref a)
+                let vRes = Vector3.Normalize(&a)
 
                 Assert.ApproximatelyEquivalent(norm, vRes)
 
@@ -198,7 +198,7 @@ module Vector3 =
             let scale = MathHelper.InverseSqrtFast(a.X * a.X + a.Y * a.Y + a.Z * a.Z)
 
             let norm = a * scale
-            let vRes = Vector3.NormalizeFast(ref a)
+            let vRes = Vector3.NormalizeFast(&a)
 
             Assert.ApproximatelyEquivalent(norm, vRes)
 
@@ -247,7 +247,7 @@ module Vector3 =
         let ``Static Vector3 addition method by reference is the same as component addition`` (a : Vector3, b : Vector3) =
 
             let v1 = Vector3(a.X + b.X, a.Y + b.Y, a.Z + b.Z)
-            let sum = Vector3.Add(ref a, ref b)
+            let sum = Vector3.Add(&a, &b)
 
             Assert.ApproximatelyEquivalent(v1, sum)
 
@@ -274,7 +274,7 @@ module Vector3 =
         let ``Static Vector3 subtraction method by reference is the same as component addition`` (a : Vector3, b : Vector3) =
 
             let v1 = Vector3(a.X - b.X, a.Y - b.Y, a.Z - b.Z)
-            let sum = Vector3.Subtract(ref a, ref b)
+            let sum = Vector3.Subtract(&a, &b)
 
             Assert.ApproximatelyEquivalent(v1, sum)
 
@@ -355,7 +355,7 @@ module Vector3 =
         let ``Static Vector3 multiplication method by reference is the same as component multiplication`` (a : Vector3, b : Vector3) =
 
             let v1 = Vector3(a.X * b.X, a.Y * b.Y, a.Z * b.Z)
-            let sum = Vector3.Multiply(ref a, ref b)
+            let sum = Vector3.Multiply(&a, &b)
 
             Assert.ApproximatelyEquivalent(v1, sum)
 
@@ -383,7 +383,7 @@ module Vector3 =
         let ``Static Vector3-Vector3 divison method by reference is the same as component division`` (a : Vector3, b : Vector3) =
             if not (anyZero3 a || anyZero3 b) then
                 let v1 = Vector3(a.X / b.X, a.Y / b.Y, a.Z / b.Z)
-                let sum = Vector3.Divide(ref a, ref b)
+                let sum = Vector3.Divide(&a, &b)
 
                 Assert.ApproximatelyEquivalent(v1, sum)
 
@@ -399,7 +399,7 @@ module Vector3 =
         let ``Static Vector3-scalar divison method by reference is the same as component division`` (a : Vector3, b : float32) =
             if not (approxEq b 0.0f) then // we don't support diving by zero.
                 let v1 = Vector3(a.X / b, a.Y / b, a.Z / b)
-                let sum = Vector3.Divide(ref a, b)
+                let sum = Vector3.Divide(&a, b)
 
                 Assert.ApproximatelyEquivalent(v1, sum)
 
@@ -505,7 +505,7 @@ module Vector3 =
 
             Assert.Equal(vExp, Vector3.Lerp(a, b, q))
 
-            let vRes = Vector3.Lerp(ref a, ref b, q)
+            let vRes = Vector3.Lerp(&a, &b, q)
             Assert.Equal(vExp, vRes)
 
         [<Property>]
@@ -515,7 +515,7 @@ module Vector3 =
 
             Assert.Equal(r, Vector3.BaryCentric(a, b, c, u, v))
 
-            let vRes = Vector3.BaryCentric(ref a, ref b, ref c, u, v)
+            let vRes = Vector3.BaryCentric(&a, &b, &c, u, v)
             Assert.Equal(r, vRes)
 
     [<Properties(Arbitrary = [| typeof<OpenTKGen> |])>]
@@ -527,7 +527,7 @@ module Vector3 =
 
             Assert.Equal(dot, Vector3.Dot(a, b));
 
-            let vRes = Vector3.Dot(ref a, ref b)
+            let vRes = Vector3.Dot(&a, &b)
             Assert.Equal(dot, vRes)
 
         [<Property>]
@@ -539,7 +539,7 @@ module Vector3 =
 
             Assert.Equal(cross, Vector3.Cross(a, b));
 
-            let vRes = Vector3.Cross(ref a, ref b)
+            let vRes = Vector3.Cross(&a, &b)
             Assert.Equal(cross, vRes)
 
     [<Properties(Arbitrary = [| typeof<OpenTKGen> |])>]
@@ -584,7 +584,7 @@ module Vector3 =
                 let l1 = v1.LengthSquared
                 let l2 = v2.LengthSquared
 
-                let vMin = Vector3.MagnitudeMin(ref v1, ref v2)
+                let vMin = Vector3.MagnitudeMin(&v1, &v2)
 
                 if vMin = v1 then
                     let v1ShorterThanv2 = l1 < l2
@@ -600,7 +600,7 @@ module Vector3 =
                 let l1 = v1.LengthSquared
                 let l2 = v2.LengthSquared
 
-                let vMin = Vector3.MagnitudeMax(ref v1, ref v2)
+                let vMin = Vector3.MagnitudeMax(&v1, &v2)
 
                 if vMin = v1 then
                     let v1LongerThanOrEqualTov2 = l1 >= l2
@@ -632,7 +632,7 @@ module Vector3 =
 
         [<Property>]
         let ``ComponentMin by reference creates a new vector from the smallest components of given vectors`` (v1 : Vector3, v2: Vector3) =
-            let vMin = Vector3.ComponentMin(ref v1, ref v2)
+            let vMin = Vector3.ComponentMin(&v1, &v2)
             let isComponentSmallest smallComp comp1 comp2 = smallComp <= comp1 && smallComp <= comp2
 
             Assert.True(isComponentSmallest vMin.X v1.X v2.X)
@@ -641,7 +641,7 @@ module Vector3 =
 
         [<Property>]
         let ``ComponentMax by reference creates a new vector from the greatest components of given vectors`` (v1 : Vector3, v2: Vector3) =
-            let vMax = Vector3.ComponentMax(ref v1, ref v2)
+            let vMax = Vector3.ComponentMax(&v1, &v2)
             let isComponentLargest largeComp comp1 comp2 = largeComp >= comp1 && largeComp >= comp2
 
             Assert.True(isComponentLargest vMax.X v1.X v2.X)
@@ -665,7 +665,7 @@ module Vector3 =
 
         [<Property>]
         let ``Clamping one vector between two other vectors by reference clamps all components between corresponding components`` (a : Vector3, b : Vector3, w : Vector3) =
-            let res = Vector3.Clamp(ref w, ref a, ref b)
+            let res = Vector3.Clamp(&w, &a, &b)
 
             let expX = if w.X < a.X then a.X else if w.X > b.X then b.X else w.X
             let expY = if w.Y < a.Y then a.Y else if w.Y > b.Y then b.Y else w.Y
@@ -739,7 +739,7 @@ module Vector3 =
             let transformedQuat = q * vectorQuat * inverse
             let transformedVector = transformedQuat.Xyz
 
-            Assert.ApproximatelyEquivalent(transformedVector, Vector3.Transform(ref v, ref q))
+            Assert.ApproximatelyEquivalent(transformedVector, Vector3.Transform(&v, &q))
 
         [<Property>]
         let ``Transformation by quaternion by multiplication using right-handed notation is the same as multiplication by quaternion and its conjugate`` (v : Vector3, q : Quaternion) =

@@ -1,0 +1,22 @@
+type file
+id OpenToolkit.Windowing.Desktop
+description
+    An abstraction over OpenToolkit.GraphicsLibraryFramework to provide a ready-to-go easy-to-use windowing and input abstraction.
+dependencies
+    framework: netcoreapp3.0
+        OpenToolkit.Core ~> #VERSION#
+        OpenToolkit.Mathematics ~> #VERSION#
+        OpenToolkit.Windowing.Common ~> #VERSION#
+        OpenToolkit.Windowing.GraphicsLibraryFramework ~> #VERSION#
+    framework: net472
+        OpenToolkit.Core ~> #VERSION#
+        OpenToolkit.Mathematics ~> #VERSION#
+        OpenToolkit.Windowing.Common ~> #VERSION#
+        OpenToolkit.Windowing.GraphicsLibraryFramework ~> #VERSION#
+files
+    bin\Release\netcoreapp3.0\OpenToolkit.Windowing.Desktop.dll ==> lib\netcoreapp3.0
+    bin\Release\netcoreapp3.0\OpenToolkit.Windowing.Desktop.xml ==> lib\netcoreapp3.0
+    bin\Release\netcoreapp3.0\OpenToolkit.Windowing.Desktop.pdb ==> lib\netcoreapp3.0
+    bin\Release\net472\OpenToolkit.Windowing.Desktop.dll ==> lib\net472
+    bin\Release\net472\OpenToolkit.Windowing.Desktop.xml ==> lib\net472
+    bin\Release\net472\OpenToolkit.Windowing.Desktop.pdb ==> lib\net472

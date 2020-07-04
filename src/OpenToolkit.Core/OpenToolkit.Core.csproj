@@ -1,13 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFrameworks>netstandard2.0;netstandard2.1</TargetFrameworks>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <RootNamespace>OpenToolkit.Core</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
     <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
-      <_Parameter1>OpenToolkit.GraphicsLibraryFramework</_Parameter1>
+      <_Parameter1>OpenToolkit.Windowing.GraphicsLibraryFramework</_Parameter1>
     </AssemblyAttribute>
 
     <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
@@ -16,13 +16,8 @@
   </ItemGroup>
 
   <PropertyGroup>
-    <Version>1.0.0</Version>
     <Description>Core shared functionality for the OpenTK library.</Description>
   </PropertyGroup>
-
-  <ItemGroup>
-    <PackageReference Include="AdvancedDLSupport" Version="2.3.0" />
-  </ItemGroup>
 
   <Import Project="..\..\props\common.props" />
   <Import Project="..\..\props\nuget-common.props" />

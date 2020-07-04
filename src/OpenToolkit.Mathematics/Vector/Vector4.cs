@@ -90,6 +90,16 @@ namespace OpenToolkit.Mathematics
         public static readonly Vector4 One = new Vector4(1, 1, 1, 1);
 
         /// <summary>
+        /// Defines an instance with all components set to positive infinity.
+        /// </summary>
+        public static readonly Vector4 PositiveInfinity = new Vector4(float.PositiveInfinity, float.PositiveInfinity, float.PositiveInfinity, float.PositiveInfinity);
+
+        /// <summary>
+        /// Defines an instance with all components set to negative infinity.
+        /// </summary>
+        public static readonly Vector4 NegativeInfinity = new Vector4(float.NegativeInfinity, float.NegativeInfinity, float.NegativeInfinity, float.NegativeInfinity);
+
+        /// <summary>
         /// Defines the size of the Vector4 struct in bytes.
         /// </summary>
         public static readonly int SizeInBytes = Marshal.SizeOf<Vector4>();
@@ -303,7 +313,7 @@ namespace OpenToolkit.Mathematics
         [Pure]
         public static Vector4 Add(Vector4 a, Vector4 b)
         {
-            Add(ref a, ref b, out a);
+            Add(in a, in b, out a);
             return a;
         }
 
@@ -313,7 +323,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="a">Left operand.</param>
         /// <param name="b">Right operand.</param>
         /// <param name="result">Result of operation.</param>
-        public static void Add(ref Vector4 a, ref Vector4 b, out Vector4 result)
+        public static void Add(in Vector4 a, in Vector4 b, out Vector4 result)
         {
             result.X = a.X + b.X;
             result.Y = a.Y + b.Y;
@@ -330,7 +340,7 @@ namespace OpenToolkit.Mathematics
         [Pure]
         public static Vector4 Subtract(Vector4 a, Vector4 b)
         {
-            Subtract(ref a, ref b, out a);
+            Subtract(in a, in b, out a);
             return a;
         }
 
@@ -340,7 +350,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="a">First operand.</param>
         /// <param name="b">Second operand.</param>
         /// <param name="result">Result of subtraction.</param>
-        public static void Subtract(ref Vector4 a, ref Vector4 b, out Vector4 result)
+        public static void Subtract(in Vector4 a, in Vector4 b, out Vector4 result)
         {
             result.X = a.X - b.X;
             result.Y = a.Y - b.Y;
@@ -357,7 +367,7 @@ namespace OpenToolkit.Mathematics
         [Pure]
         public static Vector4 Multiply(Vector4 vector, float scale)
         {
-            Multiply(ref vector, scale, out vector);
+            Multiply(in vector, scale, out vector);
             return vector;
         }
 
@@ -367,7 +377,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="vector">Left operand.</param>
         /// <param name="scale">Right operand.</param>
         /// <param name="result">Result of the operation.</param>
-        public static void Multiply(ref Vector4 vector, float scale, out Vector4 result)
+        public static void Multiply(in Vector4 vector, float scale, out Vector4 result)
         {
             result.X = vector.X * scale;
             result.Y = vector.Y * scale;
@@ -384,7 +394,7 @@ namespace OpenToolkit.Mathematics
         [Pure]
         public static Vector4 Multiply(Vector4 vector, Vector4 scale)
         {
-            Multiply(ref vector, ref scale, out vector);
+            Multiply(in vector, in scale, out vector);
             return vector;
         }
 
@@ -394,7 +404,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="vector">Left operand.</param>
         /// <param name="scale">Right operand.</param>
         /// <param name="result">Result of the operation.</param>
-        public static void Multiply(ref Vector4 vector, ref Vector4 scale, out Vector4 result)
+        public static void Multiply(in Vector4 vector, in Vector4 scale, out Vector4 result)
         {
             result.X = vector.X * scale.X;
             result.Y = vector.Y * scale.Y;
@@ -411,7 +421,7 @@ namespace OpenToolkit.Mathematics
         [Pure]
         public static Vector4 Divide(Vector4 vector, float scale)
         {
-            Divide(ref vector, scale, out vector);
+            Divide(in vector, scale, out vector);
             return vector;
         }
 
@@ -421,7 +431,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="vector">Left operand.</param>
         /// <param name="scale">Right operand.</param>
         /// <param name="result">Result of the operation.</param>
-        public static void Divide(ref Vector4 vector, float scale, out Vector4 result)
+        public static void Divide(in Vector4 vector, float scale, out Vector4 result)
         {
             result.X = vector.X / scale;
             result.Y = vector.Y / scale;
@@ -438,7 +448,7 @@ namespace OpenToolkit.Mathematics
         [Pure]
         public static Vector4 Divide(Vector4 vector, Vector4 scale)
         {
-            Divide(ref vector, ref scale, out vector);
+            Divide(in vector, in scale, out vector);
             return vector;
         }
 
@@ -448,7 +458,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="vector">Left operand.</param>
         /// <param name="scale">Right operand.</param>
         /// <param name="result">Result of the operation.</param>
-        public static void Divide(ref Vector4 vector, ref Vector4 scale, out Vector4 result)
+        public static void Divide(in Vector4 vector, in Vector4 scale, out Vector4 result)
         {
             result.X = vector.X / scale.X;
             result.Y = vector.Y / scale.Y;
@@ -478,7 +488,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="a">First operand.</param>
         /// <param name="b">Second operand.</param>
         /// <param name="result">The component-wise minimum.</param>
-        public static void ComponentMin(ref Vector4 a, ref Vector4 b, out Vector4 result)
+        public static void ComponentMin(in Vector4 a, in Vector4 b, out Vector4 result)
         {
             result.X = a.X < b.X ? a.X : b.X;
             result.Y = a.Y < b.Y ? a.Y : b.Y;
@@ -508,7 +518,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="a">First operand.</param>
         /// <param name="b">Second operand.</param>
         /// <param name="result">The component-wise maximum.</param>
-        public static void ComponentMax(ref Vector4 a, ref Vector4 b, out Vector4 result)
+        public static void ComponentMax(in Vector4 a, in Vector4 b, out Vector4 result)
         {
             result.X = a.X > b.X ? a.X : b.X;
             result.Y = a.Y > b.Y ? a.Y : b.Y;
@@ -536,7 +546,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="left">Left operand.</param>
         /// <param name="right">Right operand.</param>
         /// <param name="result">The magnitude-wise minimum.</param>
-        public static void MagnitudeMin(ref Vector4 left, ref Vector4 right, out Vector4 result)
+        public static void MagnitudeMin(in Vector4 left, in Vector4 right, out Vector4 result)
         {
             result = left.LengthSquared < right.LengthSquared ? left : right;
         }
@@ -561,7 +571,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="left">Left operand.</param>
         /// <param name="right">Right operand.</param>
         /// <param name="result">The magnitude-wise maximum.</param>
-        public static void MagnitudeMax(ref Vector4 left, ref Vector4 right, out Vector4 result)
+        public static void MagnitudeMax(in Vector4 left, in Vector4 right, out Vector4 result)
         {
             result = left.LengthSquared >= right.LengthSquared ? left : right;
         }
@@ -590,7 +600,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="min">Minimum vector.</param>
         /// <param name="max">Maximum vector.</param>
         /// <param name="result">The clamped vector.</param>
-        public static void Clamp(ref Vector4 vec, ref Vector4 min, ref Vector4 max, out Vector4 result)
+        public static void Clamp(in Vector4 vec, in Vector4 min, in Vector4 max, out Vector4 result)
         {
             result.X = vec.X < min.X ? min.X : vec.X > max.X ? max.X : vec.X;
             result.Y = vec.Y < min.Y ? min.Y : vec.Y > max.Y ? max.Y : vec.Y;
@@ -619,7 +629,7 @@ namespace OpenToolkit.Mathematics
         /// </summary>
         /// <param name="vec">The input vector.</param>
         /// <param name="result">The normalized vector.</param>
-        public static void Normalize(ref Vector4 vec, out Vector4 result)
+        public static void Normalize(in Vector4 vec, out Vector4 result)
         {
             var scale = 1.0f / vec.Length;
             result.X = vec.X * scale;
@@ -649,7 +659,7 @@ namespace OpenToolkit.Mathematics
         /// </summary>
         /// <param name="vec">The input vector.</param>
         /// <param name="result">The normalized copy.</param>
-        public static void NormalizeFast(ref Vector4 vec, out Vector4 result)
+        public static void NormalizeFast(in Vector4 vec, out Vector4 result)
         {
             var scale = MathHelper.InverseSqrtFast((vec.X * vec.X) + (vec.Y * vec.Y) + (vec.Z * vec.Z) + (vec.W * vec.W));
             result.X = vec.X * scale;
@@ -676,7 +686,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="left">First operand.</param>
         /// <param name="right">Second operand.</param>
         /// <param name="result">The dot product of the two inputs.</param>
-        public static void Dot(ref Vector4 left, ref Vector4 right, out float result)
+        public static void Dot(in Vector4 left, in Vector4 right, out float result)
         {
             result = (left.X * right.X) + (left.Y * right.Y) + (left.Z * right.Z) + (left.W * right.W);
         }
@@ -705,7 +715,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="b">Second input vector.</param>
         /// <param name="blend">The blend factor. a when blend=0, b when blend=1.</param>
         /// <param name="result">a when blend=0, b when blend=1, and a linear combination otherwise.</param>
-        public static void Lerp(ref Vector4 a, ref Vector4 b, float blend, out Vector4 result)
+        public static void Lerp(in Vector4 a, in Vector4 b, float blend, out Vector4 result)
         {
             result.X = (blend * (b.X - a.X)) + a.X;
             result.Y = (blend * (b.Y - a.Y)) + a.Y;
@@ -725,7 +735,8 @@ namespace OpenToolkit.Mathematics
         [Pure]
         public static Vector4 BaryCentric(Vector4 a, Vector4 b, Vector4 c, float u, float v)
         {
-            return a + (u * (b - a)) + (v * (c - a));
+            BaryCentric(ref a, ref b, ref c, u, v, out var result);
+            return result;
         }
 
         /// <summary>
@@ -742,9 +753,9 @@ namespace OpenToolkit.Mathematics
         /// </param>
         public static void BaryCentric
         (
-            ref Vector4 a,
-            ref Vector4 b,
-            ref Vector4 c,
+            in Vector4 a,
+            in Vector4 b,
+            in Vector4 c,
             float u,
             float v,
             out Vector4 result
@@ -753,14 +764,14 @@ namespace OpenToolkit.Mathematics
             result = a; // copy
 
             var temp = b; // copy
-            Subtract(ref temp, ref a, out temp);
-            Multiply(ref temp, u, out temp);
-            Add(ref result, ref temp, out result);
+            Subtract(in temp, in a, out temp);
+            Multiply(in temp, u, out temp);
+            Add(in result, in temp, out result);
 
             temp = c; // copy
-            Subtract(ref temp, ref a, out temp);
-            Multiply(ref temp, v, out temp);
-            Add(ref result, ref temp, out result);
+            Subtract(in temp, in a, out temp);
+            Multiply(in temp, v, out temp);
+            Add(in result, in temp, out result);
         }
 
         /// <summary>
@@ -772,7 +783,7 @@ namespace OpenToolkit.Mathematics
         [Pure]
         public static Vector4 Transform(Vector4 vec, Matrix4 mat)
         {
-            Transform(ref vec, ref mat, out Vector4 result);
+            Transform(in vec, in mat, out Vector4 result);
             return result;
         }
 
@@ -782,7 +793,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="vec">The vector to transform.</param>
         /// <param name="mat">The desired transformation.</param>
         /// <param name="result">The transformed vector.</param>
-        public static void Transform(ref Vector4 vec, ref Matrix4 mat, out Vector4 result)
+        public static void Transform(in Vector4 vec, in Matrix4 mat, out Vector4 result)
         {
             result = new Vector4(
                 (vec.X * mat.Row0.X) + (vec.Y * mat.Row1.X) + (vec.Z * mat.Row2.X) + (vec.W * mat.Row3.X),
@@ -800,7 +811,7 @@ namespace OpenToolkit.Mathematics
         [Pure]
         public static Vector4 Transform(Vector4 vec, Quaternion quat)
         {
-            Transform(ref vec, ref quat, out Vector4 result);
+            Transform(in vec, in quat, out Vector4 result);
             return result;
         }
 
@@ -810,12 +821,12 @@ namespace OpenToolkit.Mathematics
         /// <param name="vec">The vector to transform.</param>
         /// <param name="quat">The quaternion to rotate the vector by.</param>
         /// <param name="result">The result of the operation.</param>
-        public static void Transform(ref Vector4 vec, ref Quaternion quat, out Vector4 result)
+        public static void Transform(in Vector4 vec, in Quaternion quat, out Vector4 result)
         {
             Quaternion v = new Quaternion(vec.X, vec.Y, vec.Z, vec.W);
-            Quaternion.Invert(ref quat, out Quaternion i);
-            Quaternion.Multiply(ref quat, ref v, out Quaternion t);
-            Quaternion.Multiply(ref t, ref i, out v);
+            Quaternion.Invert(in quat, out Quaternion i);
+            Quaternion.Multiply(in quat, in v, out Quaternion t);
+            Quaternion.Multiply(in t, in i, out v);
 
             result.X = v.X;
             result.Y = v.Y;
@@ -832,7 +843,7 @@ namespace OpenToolkit.Mathematics
         [Pure]
         public static Vector4 Transform(Matrix4 mat, Vector4 vec)
         {
-            Transform(ref mat, ref vec, out Vector4 result);
+            Transform(in mat, in vec, out Vector4 result);
             return result;
         }
 
@@ -842,7 +853,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="mat">The desired transformation.</param>
         /// <param name="vec">The vector to transform.</param>
         /// <param name="result">The transformed vector.</param>
-        public static void Transform(ref Matrix4 mat, ref Vector4 vec, out Vector4 result)
+        public static void Transform(in Matrix4 mat, in Vector4 vec, out Vector4 result)
         {
             result = new Vector4(
                 (mat.Row0.X * vec.X) + (mat.Row0.Y * vec.Y) + (mat.Row0.Z * vec.Z) + (mat.Row0.W * vec.W),
@@ -1915,7 +1926,7 @@ namespace OpenToolkit.Mathematics
         [Pure]
         public static Vector4 operator *(Vector4 vec, Matrix4 mat)
         {
-            Transform(ref vec, ref mat, out Vector4 result);
+            Transform(in vec, in mat, out Vector4 result);
             return result;
         }
 
@@ -1928,7 +1939,7 @@ namespace OpenToolkit.Mathematics
         [Pure]
         public static Vector4 operator *(Matrix4 mat, Vector4 vec)
         {
-            Transform(ref mat, ref vec, out Vector4 result);
+            Transform(in mat, in vec, out Vector4 result);
             return result;
         }
 
@@ -1941,7 +1952,7 @@ namespace OpenToolkit.Mathematics
         [Pure]
         public static Vector4 operator *(Quaternion quat, Vector4 vec)
         {
-            Transform(ref vec, ref quat, out Vector4 result);
+            Transform(in vec, in quat, out Vector4 result);
             return result;
         }
 

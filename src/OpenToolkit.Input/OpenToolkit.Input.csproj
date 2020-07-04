@@ -6,7 +6,6 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <Version>4.0.0</Version>
     <Description>Shared input functionality for the OpenTK library.</Description>
   </PropertyGroup>
 

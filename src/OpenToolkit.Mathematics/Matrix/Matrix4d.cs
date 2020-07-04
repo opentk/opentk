@@ -793,7 +793,7 @@ namespace OpenToolkit.Mathematics
         /// </summary>
         /// <param name="vector">The translation vector.</param>
         /// <param name="result">The resulting Matrix4d instance.</param>
-        public static void CreateTranslation(ref Vector3d vector, out Matrix4d result)
+        public static void CreateTranslation(in Vector3d vector, out Matrix4d result)
         {
             result = Identity;
             result.Row3 = new Vector4d(vector.X, vector.Y, vector.Z, 1);
@@ -1103,7 +1103,7 @@ namespace OpenToolkit.Mathematics
         /// </summary>
         /// <param name="q">Quaternion to translate.</param>
         /// <param name="result">Matrix result.</param>
-        public static void CreateFromQuaternion(ref Quaterniond q, out Matrix4d result)
+        public static void CreateFromQuaternion(in Quaterniond q, out Matrix4d result)
         {
             q.ToAxisAngle(out Vector3d axis, out double angle);
             CreateFromAxisAngle(axis, angle, out result);
@@ -1117,7 +1117,7 @@ namespace OpenToolkit.Mathematics
         [Pure]
         public static Matrix4d CreateFromQuaternion(Quaterniond q)
         {
-            CreateFromQuaternion(ref q, out Matrix4d result);
+            CreateFromQuaternion(in q, out Matrix4d result);
             return result;
         }
 
@@ -1395,7 +1395,7 @@ namespace OpenToolkit.Mathematics
         [Pure]
         public static Matrix4d Add(Matrix4d left, Matrix4d right)
         {
-            Add(ref left, ref right, out Matrix4d result);
+            Add(in left, in right, out Matrix4d result);
             return result;
         }
 
@@ -1405,7 +1405,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="left">The left operand of the addition.</param>
         /// <param name="right">The right operand of the addition.</param>
         /// <param name="result">A new instance that is the result of the addition.</param>
-        public static void Add(ref Matrix4d left, ref Matrix4d right, out Matrix4d result)
+        public static void Add(in Matrix4d left, in Matrix4d right, out Matrix4d result)
         {
             result.Row0 = left.Row0 + right.Row0;
             result.Row1 = left.Row1 + right.Row1;
@@ -1422,7 +1422,7 @@ namespace OpenToolkit.Mathematics
         [Pure]
         public static Matrix4d Subtract(Matrix4d left, Matrix4d right)
         {
-            Subtract(ref left, ref right, out Matrix4d result);
+            Subtract(in left, in right, out Matrix4d result);
             return result;
         }
 
@@ -1432,7 +1432,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="left">The left operand of the subraction.</param>
         /// <param name="right">The right operand of the subraction.</param>
         /// <param name="result">A new instance that is the result of the subraction.</param>
-        public static void Subtract(ref Matrix4d left, ref Matrix4d right, out Matrix4d result)
+        public static void Subtract(in Matrix4d left, in Matrix4d right, out Matrix4d result)
         {
             result.Row0 = left.Row0 - right.Row0;
             result.Row1 = left.Row1 - right.Row1;
@@ -1449,7 +1449,7 @@ namespace OpenToolkit.Mathematics
         [Pure]
         public static Matrix4d Mult(Matrix4d left, Matrix4d right)
         {
-            Mult(ref left, ref right, out Matrix4d result);
+            Mult(in left, in right, out Matrix4d result);
             return result;
         }
 
@@ -1459,7 +1459,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="left">The left operand of the multiplication.</param>
         /// <param name="right">The right operand of the multiplication.</param>
         /// <param name="result">A new instance that is the result of the multiplication.</param>
-        public static void Mult(ref Matrix4d left, ref Matrix4d right, out Matrix4d result)
+        public static void Mult(in Matrix4d left, in Matrix4d right, out Matrix4d result)
         {
             double leftM11 = left.Row0.X;
             double leftM12 = left.Row0.Y;
@@ -1521,7 +1521,7 @@ namespace OpenToolkit.Mathematics
         [Pure]
         public static Matrix4d Mult(Matrix4d left, double right)
         {
-            Mult(ref left, right, out Matrix4d result);
+            Mult(in left, right, out Matrix4d result);
             return result;
         }
 
@@ -1531,7 +1531,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="left">The left operand of the multiplication.</param>
         /// <param name="right">The right operand of the multiplication.</param>
         /// <param name="result">A new instance that is the result of the multiplication.</param>
-        public static void Mult(ref Matrix4d left, double right, out Matrix4d result)
+        public static void Mult(in Matrix4d left, double right, out Matrix4d result)
         {
             result.Row0 = left.Row0 * right;
             result.Row1 = left.Row1 * right;
@@ -1673,7 +1673,7 @@ namespace OpenToolkit.Mathematics
         /// </summary>
         /// <param name="mat">The matrix to transpose.</param>
         /// <param name="result">The result of the calculation.</param>
-        public static void Transpose(ref Matrix4d mat, out Matrix4d result)
+        public static void Transpose(in Matrix4d mat, out Matrix4d result)
         {
             result.Row0 = mat.Column0;
             result.Row1 = mat.Column1;

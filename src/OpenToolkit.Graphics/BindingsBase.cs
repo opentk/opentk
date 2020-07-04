@@ -174,5 +174,22 @@ namespace OpenToolkit.Graphics
             }
             Marshal.FreeHGlobal(ptr);
         }
+
+        private protected static void InitializeDummyEntryPoints(IntPtr[] entryPoints)
+        {
+            var ptr = Marshal.GetFunctionPointerForDelegate(UninitializedDelegate);
+
+            for (var i = 0; i < entryPoints.Length; i++)
+            {
+                entryPoints[i] = ptr;
+            }
+        }
+
+        private static readonly Action UninitializedDelegate = Uninitialized;
+
+        private static void Uninitialized()
+        {
+            throw new InvalidOperationException("You need to initialize the OpenGL binding first by calling LoadBindings() or creating a compatible OpenGL window.");
+        }
     }
 }
