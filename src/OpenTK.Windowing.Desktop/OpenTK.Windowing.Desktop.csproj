@@ -35,6 +35,6 @@
         <_ReferencePathToRemove Include="@(ReferencePath)" Condition="'%(ReferencePath.NuGetPackageId)'=='System.Memory'" />
         <ReferencePath Remove="@(_ReferencePathToRemove)" />
       </ItemGroup>
-      <Message Text="Removing System.Memory for mono compatibility" Importance="high"/>
+      <Message Text="Removing System.Memory for mono compatibility" Importance="high" />
     </Target>
 </Project>
