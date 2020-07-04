@@ -334,8 +334,8 @@ module Vector3 =
         [<Property>]
         let ``Vector3-Matrix3 multiplication using right-handed notation is consistent across overloads`` (a : Matrix3, b : Vector3) =
             let r1 = a * b;
-            let r2 = Vector3.Transform(a, b);
-            let r3 = Vector3.Transform(ref a, ref b);
+            let r2 = Vector3.TransformRow(a, b);
+            let r3 = Vector3.TransformRow(a, b);
 
             Assert.Equal(r1, r2)
             Assert.Equal(r2, r3)
@@ -355,8 +355,8 @@ module Vector3 =
         [<Property>]
         let ``Vector3-Matrix3 multiplication using left-handed notation is consistent across overloads`` (a : Matrix3, b : Vector3) =
             let r1 = b * a;
-            let r2 = Vector3.Transform(b, a);
-            let r3 = Vector3.Transform(ref b, ref a);
+            let r2 = Vector3.TransformColumn(b, a);
+            let r3 = Vector3.TransformColumn(&b, &a);
 
             Assert.Equal(r1, r2)
             Assert.Equal(r2, r3)
