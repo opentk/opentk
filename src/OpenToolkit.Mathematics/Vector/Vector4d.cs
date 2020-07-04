@@ -727,7 +727,7 @@ namespace OpenToolkit.Mathematics
         [Pure]
         public static Vector4d BaryCentric(Vector4d a, Vector4d b, Vector4d c, double u, double v)
         {
-            BaryCentric(ref a, ref b, ref c, u, v, out var result);
+            BaryCentric(in a, in b, in c, u, v, out var result);
             return result;
         }
 
@@ -745,25 +745,21 @@ namespace OpenToolkit.Mathematics
         /// </param>
         public static void BaryCentric
         (
-            ref Vector4d a,
-            ref Vector4d b,
-            ref Vector4d c,
+            in Vector4d a,
+            in Vector4d b,
+            in Vector4d c,
             double u,
             double v,
             out Vector4d result
         )
         {
-            result = a; // copy
+            Subtract(in b, in a, out var ab);
+            Multiply(in ab, u, out var abU);
+            Add(in a, in abU, out var uPos);
 
-            var temp = b; // copy
-            Subtract(in temp, in a, out temp);
-            Multiply(in temp, u, out temp);
-            Add(in result, in temp, out result);
-
-            temp = c; // copy
-            Subtract(in temp, in a, out temp);
-            Multiply(in temp, v, out temp);
-            Add(in result, in temp, out result);
+            Subtract(in c, in a, out var ac);
+            Multiply(in ac, v, out var acV);
+            Add(in uPos, in acV, out result);
         }
 
         /// <summary>
