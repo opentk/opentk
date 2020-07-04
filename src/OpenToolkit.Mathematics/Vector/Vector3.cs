@@ -755,7 +755,7 @@ namespace OpenToolkit.Mathematics
         [Pure]
         public static Vector3 BaryCentric(Vector3 a, Vector3 b, Vector3 c, float u, float v)
         {
-            BaryCentric(ref a, ref b, ref c, u, v, out var result);
+            BaryCentric(in a, in b, in c, u, v, out var result);
             return result;
         }
 
@@ -782,17 +782,13 @@ namespace OpenToolkit.Mathematics
             out Vector3 result
         )
         {
-            result = a; // copy
+            Subtract(in b, in a, out var ab);
+            Multiply(in ab, u, out var abU);
+            Add(in a, in abU, out var uPos);
 
-            var temp = b; // copy
-            Subtract(in temp, in a, out temp);
-            Multiply(in temp, u, out temp);
-            Add(in result, in temp, out result);
-
-            temp = c; // copy
-            Subtract(in temp, in a, out temp);
-            Multiply(in temp, v, out temp);
-            Add(in result, in temp, out result);
+            Subtract(in c, in a, out var ac);
+            Multiply(in ac, v, out var acV);
+            Add(in uPos, in acV, out result);
         }
 
         /// <summary>
