@@ -258,7 +258,7 @@ namespace OpenToolkit.Mathematics
         /// </summary>
         public void Invert()
         {
-            Invert(ref this, out this);
+            Invert(in this, out this);
         }
 
         /// <summary>
@@ -315,7 +315,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="left">The first operand.</param>
         /// <param name="right">The second operand.</param>
         /// <param name="result">The result of the addition.</param>
-        public static void Add(ref Quaterniond left, ref Quaterniond right, out Quaterniond result)
+        public static void Add(in Quaterniond left, in Quaterniond right, out Quaterniond result)
         {
             result = new Quaterniond(
                 left.Xyz + right.Xyz,
@@ -342,7 +342,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="left">The left instance.</param>
         /// <param name="right">The right instance.</param>
         /// <param name="result">The result of the operation.</param>
-        public static void Sub(ref Quaterniond left, ref Quaterniond right, out Quaterniond result)
+        public static void Sub(in Quaterniond left, in Quaterniond right, out Quaterniond result)
         {
             result = new Quaterniond(
                 left.Xyz - right.Xyz,
@@ -358,7 +358,7 @@ namespace OpenToolkit.Mathematics
         [Pure]
         public static Quaterniond Multiply(Quaterniond left, Quaterniond right)
         {
-            Multiply(ref left, ref right, out Quaterniond result);
+            Multiply(in left, in right, out Quaterniond result);
             return result;
         }
 
@@ -368,7 +368,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="left">The first instance.</param>
         /// <param name="right">The second instance.</param>
         /// <param name="result">A new instance containing the result of the calculation.</param>
-        public static void Multiply(ref Quaterniond left, ref Quaterniond right, out Quaterniond result)
+        public static void Multiply(in Quaterniond left, in Quaterniond right, out Quaterniond result)
         {
             result = new Quaterniond(
                 (right.W * left.Xyz) + (left.W * right.Xyz) + Vector3d.Cross(left.Xyz, right.Xyz),
@@ -381,7 +381,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="quaternion">The instance.</param>
         /// <param name="scale">The scalar.</param>
         /// <param name="result">A new instance containing the result of the calculation.</param>
-        public static void Multiply(ref Quaterniond quaternion, double scale, out Quaterniond result)
+        public static void Multiply(in Quaterniond quaternion, double scale, out Quaterniond result)
         {
             result = new Quaterniond
             (
@@ -426,7 +426,7 @@ namespace OpenToolkit.Mathematics
         /// </summary>
         /// <param name="q">The Quaterniond.</param>
         /// <param name="result">The conjugate of the given Quaterniond.</param>
-        public static void Conjugate(ref Quaterniond q, out Quaterniond result)
+        public static void Conjugate(in Quaterniond q, out Quaterniond result)
         {
             result = new Quaterniond(-q.Xyz, q.W);
         }
@@ -439,7 +439,7 @@ namespace OpenToolkit.Mathematics
         [Pure]
         public static Quaterniond Invert(Quaterniond q)
         {
-            Invert(ref q, out Quaterniond result);
+            Invert(in q, out Quaterniond result);
             return result;
         }
 
@@ -448,7 +448,7 @@ namespace OpenToolkit.Mathematics
         /// </summary>
         /// <param name="q">The Quaterniond to invert.</param>
         /// <param name="result">The inverse of the given Quaterniond.</param>
-        public static void Invert(ref Quaterniond q, out Quaterniond result)
+        public static void Invert(in Quaterniond q, out Quaterniond result)
         {
             var lengthSq = q.LengthSquared;
             if (lengthSq != 0.0)
@@ -470,7 +470,7 @@ namespace OpenToolkit.Mathematics
         [Pure]
         public static Quaterniond Normalize(Quaterniond q)
         {
-            Normalize(ref q, out Quaterniond result);
+            Normalize(in q, out Quaterniond result);
             return result;
         }
 
@@ -479,7 +479,7 @@ namespace OpenToolkit.Mathematics
         /// </summary>
         /// <param name="q">The Quaterniond to normalize.</param>
         /// <param name="result">The normalized Quaterniond.</param>
-        public static void Normalize(ref Quaterniond q, out Quaterniond result)
+        public static void Normalize(in Quaterniond q, out Quaterniond result)
         {
             var scale = 1.0d / q.Length;
             result = new Quaterniond(q.Xyz * scale, q.W * scale);
@@ -538,7 +538,7 @@ namespace OpenToolkit.Mathematics
         /// </summary>
         /// <param name="eulerAngles">The euler angles as a vector.</param>
         /// <param name="result">The equivalent Quaterniond.</param>
-        public static void FromEulerAngles(ref Vector3d eulerAngles, out Quaterniond result)
+        public static void FromEulerAngles(in Vector3d eulerAngles, out Quaterniond result)
         {
             var c1 = Math.Cos(eulerAngles.Y * 0.5);
             var c2 = Math.Cos(eulerAngles.X * 0.5);
@@ -571,7 +571,7 @@ namespace OpenToolkit.Mathematics
         [Pure]
         public static Quaterniond FromMatrix(Matrix3d matrix)
         {
-            FromMatrix(ref matrix, out Quaterniond result);
+            FromMatrix(in matrix, out Quaterniond result);
             return result;
         }
 
@@ -580,7 +580,7 @@ namespace OpenToolkit.Mathematics
         /// </summary>
         /// <param name="matrix">A rotation matrix.</param>
         /// <param name="result">The equivalent quaternion.</param>
-        public static void FromMatrix(ref Matrix3d matrix, out Quaterniond result)
+        public static void FromMatrix(in Matrix3d matrix, out Quaterniond result)
         {
             var trace = matrix.Trace;
 
@@ -736,7 +736,7 @@ namespace OpenToolkit.Mathematics
         [Pure]
         public static Quaterniond operator *(Quaterniond left, Quaterniond right)
         {
-            Multiply(ref left, ref right, out left);
+            Multiply(in left, in right, out left);
             return left;
         }
 
@@ -749,7 +749,7 @@ namespace OpenToolkit.Mathematics
         [Pure]
         public static Quaterniond operator *(Quaterniond quaternion, double scale)
         {
-            Multiply(ref quaternion, scale, out quaternion);
+            Multiply(in quaternion, scale, out quaternion);
             return quaternion;
         }
 

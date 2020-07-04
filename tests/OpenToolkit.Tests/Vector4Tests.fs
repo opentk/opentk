@@ -196,7 +196,7 @@ module Vector4 =
             // Zero-length vectors can't be normalized
             if not (approxEq a.Length 0.0f) then
                 let norm = a / a.Length
-                let vRes = Vector4.Normalize(ref a)
+                let vRes = Vector4.Normalize(&a)
 
                 Assert.ApproximatelyEquivalent(norm, vRes)
 
@@ -213,7 +213,7 @@ module Vector4 =
             let scale = MathHelper.InverseSqrtFast(a.X * a.X + a.Y * a.Y + a.Z * a.Z + a.W * a.W)
 
             let norm = a * scale
-            let vRes = Vector4.NormalizeFast(ref a)
+            let vRes = Vector4.NormalizeFast(&a)
 
             Assert.ApproximatelyEquivalent(norm, vRes)
 
@@ -262,7 +262,7 @@ module Vector4 =
         let ``Static Vector4 addition method by reference is the same as component addition`` (a : Vector4, b : Vector4) =
 
             let v1 = Vector4(a.X + b.X, a.Y + b.Y, a.Z + b.Z, a.W + b.W)
-            let sum = Vector4.Add(ref a, ref b)
+            let sum = Vector4.Add(&a, &b)
 
             Assert.ApproximatelyEquivalent(v1, sum)
 
@@ -290,7 +290,7 @@ module Vector4 =
         let ``Static Vector4 subtraction method by reference is the same as component addition`` (a : Vector4, b : Vector4) =
 
             let v1 = Vector4(a.X - b.X, a.Y - b.Y, a.Z - b.Z, a.W - b.W)
-            let sum = Vector4.Subtract(ref a, ref b)
+            let sum = Vector4.Subtract(&a, &b)
 
             Assert.ApproximatelyEquivalent(v1, sum)
 
@@ -378,7 +378,7 @@ module Vector4 =
         let ``Static Vector4 multiplication method by reference is the same as component multiplication`` (a : Vector4, b : Vector4) =
 
             let v1 = Vector4(a.X * b.X, a.Y * b.Y, a.Z * b.Z, a.W * b.W)
-            let sum = Vector4.Multiply(ref a, ref b)
+            let sum = Vector4.Multiply(&a, &b)
 
             Assert.ApproximatelyEquivalent(v1, sum)
 
@@ -407,7 +407,7 @@ module Vector4 =
         let ``Static Vector4-Vector4 divison method by reference is the same as component division`` (a : Vector4, b : Vector4) =
             if not (anyZero4 a || anyZero4 b) then
                 let v1 = Vector4(a.X / b.X, a.Y / b.Y, a.Z / b.Z, a.W / b.W)
-                let sum = Vector4.Divide(ref a, ref b)
+                let sum = Vector4.Divide(&a, &b)
 
                 Assert.ApproximatelyEquivalent(v1, sum)
 
@@ -423,7 +423,7 @@ module Vector4 =
         let ``Static Vector4-scalar divison method by reference is the same as component division`` (a : Vector4, b : float32) =
             if not (approxEq b 0.0f) then // we don't support diving by zero.
                 let v1 = Vector4(a.X / b, a.Y / b, a.Z / b, a.W / b)
-                let sum = Vector4.Divide(ref a, b)
+                let sum = Vector4.Divide(&a, b)
 
                 Assert.ApproximatelyEquivalent(v1, sum)
 
@@ -674,7 +674,7 @@ module Vector4 =
 
             Assert.Equal(vExp, Vector4.Lerp(a, b, q))
 
-            let vRes = Vector4.Lerp(ref a, ref b, q)
+            let vRes = Vector4.Lerp(&a, &b, q)
             Assert.Equal(vExp, vRes)
 
         [<Property>]
@@ -684,7 +684,7 @@ module Vector4 =
 
             Assert.Equal(r, Vector4.BaryCentric(a, b, c, u, v))
 
-            let vRes = Vector4.BaryCentric(ref a, ref b, ref c, u, v)
+            let vRes = Vector4.BaryCentric(&a, &b, &c, u, v)
             Assert.Equal(r, vRes)
 
     [<Properties(Arbitrary = [| typeof<OpenTKGen> |])>]
@@ -696,7 +696,7 @@ module Vector4 =
 
             Assert.Equal(dot, Vector4.Dot(a, b));
 
-            let vRes = Vector4.Dot(ref a, ref b)
+            let vRes = Vector4.Dot(&a, &b)
             Assert.Equal(dot, vRes)
 
     [<Properties(Arbitrary = [| typeof<OpenTKGen> |])>]
@@ -741,7 +741,7 @@ module Vector4 =
                 let l1 = v1.LengthSquared
                 let l2 = v2.LengthSquared
 
-                let vMin = Vector4.MagnitudeMin(ref v1, ref v2)
+                let vMin = Vector4.MagnitudeMin(&v1, &v2)
 
                 if vMin = v1 then
                     let v1ShorterThanv2 = l1 < l2
@@ -757,7 +757,7 @@ module Vector4 =
                 let l1 = v1.LengthSquared
                 let l2 = v2.LengthSquared
 
-                let vMin = Vector4.MagnitudeMax(ref v1, ref v2)
+                let vMin = Vector4.MagnitudeMax(&v1, &v2)
 
                 if vMin = v1 then
                     let v1LongerThanOrEqualTov2 = l1 >= l2
@@ -791,7 +791,7 @@ module Vector4 =
 
         [<Property>]
         let ``ComponentMin by reference creates a new vector from the smallest components of given vectors`` (v1 : Vector4, v2: Vector4) =
-            let vMin = Vector4.ComponentMin(ref v1, ref v2)
+            let vMin = Vector4.ComponentMin(&v1, &v2)
             let isComponentSmallest smallComp comp1 comp2 = smallComp <= comp1 && smallComp <= comp2
 
             Assert.True(isComponentSmallest vMin.X v1.X v2.X)
@@ -801,7 +801,7 @@ module Vector4 =
 
         [<Property>]
         let ``ComponentMax by reference creates a new vector from the greatest components of given vectors`` (v1 : Vector4, v2: Vector4) =
-            let vMax = Vector4.ComponentMax(ref v1, ref v2)
+            let vMax = Vector4.ComponentMax(&v1, &v2)
             let isComponentLargest largeComp comp1 comp2 = largeComp >= comp1 && largeComp >= comp2
 
             Assert.True(isComponentLargest vMax.X v1.X v2.X)
@@ -834,7 +834,7 @@ module Vector4 =
             let expZ = if w.Z < a.Z then a.Z else if w.Z > b.Z then b.Z else w.Z
             let expW = if w.W < a.W then a.W else if w.W > b.W then b.W else w.W
 
-            let res = Vector4.Clamp(ref w, ref a, ref b)
+            let res = Vector4.Clamp(&w, &a, &b)
 
             Assert.Equal(expX, res.X)
             Assert.Equal(expY, res.Y)
@@ -911,7 +911,7 @@ module Vector4 =
             let transformedQuat = q * vectorQuat * inverse
             let transformedVector = Vector4(transformedQuat.X, transformedQuat.Y,transformedQuat.Z, transformedQuat.W)
 
-            Assert.ApproximatelyEquivalent(transformedVector, Vector4.Transform(ref v, ref q))
+            Assert.ApproximatelyEquivalent(transformedVector, Vector4.Transform(&v, &q))
 
         [<Property>]
         let ``Transformation by quaternion by multiplication using right-handed notation is the same as multiplication by quaternion and its conjugate`` (v : Vector4, q : Quaternion) =
