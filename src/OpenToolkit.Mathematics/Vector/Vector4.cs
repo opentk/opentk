@@ -1935,7 +1935,7 @@ namespace OpenToolkit.Mathematics
         [Pure]
         public static Vector4 operator *(Matrix4 mat, Vector4 vec)
         {
-            TransformColumn(in vec, in mat, out Vector4 result);
+            TransformRow(in mat, in vec, out Vector4 result);
             return result;
         }
 
