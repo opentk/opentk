@@ -1480,6 +1480,16 @@ namespace OpenToolkit.Windowing.Desktop
                 value |= KeyModifiers.Command;
             }
 
+            if (modifiers.HasFlag(GlfwKeyModifiers.CapsLock))
+            {
+                value |= KeyModifiers.CapsLock;
+            }
+
+            if (modifiers.HasFlag(GlfwKeyModifiers.NumLock))
+            {
+                value |= KeyModifiers.NumLock;
+            }
+
             return value;
         }
 
