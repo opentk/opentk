@@ -48,7 +48,7 @@ namespace OpenToolkit.Windowing.Desktop
         /// <inheritdoc />
         public KeyboardState LastKeyboardState { get; private set; }
 
-        private JoystickState[] _joystickStates = new JoystickState[16];
+        private readonly JoystickState[] _joystickStates = new JoystickState[16];
 
         /// <inheritdoc/>
         public JoystickState[] JoystickStates { get => _joystickStates; }
@@ -148,7 +148,7 @@ namespace OpenToolkit.Windowing.Desktop
             }
         }
 
-        private string _title;
+        private readonly string _title;
 
         /// <inheritdoc />
         public string Title
@@ -175,7 +175,7 @@ namespace OpenToolkit.Windowing.Desktop
         /// <inheritdoc />
         public Version APIVersion { get; }
 
-        private Monitor _currentMonitor;
+        private readonly Monitor _currentMonitor;
 
         /// <summary>
         /// Gets or sets the current <see cref="Monitor"/>.
@@ -214,7 +214,7 @@ namespace OpenToolkit.Windowing.Desktop
             }
         }
 
-        private bool _isVisible;
+        private readonly bool _isVisible;
 
         /// <inheritdoc />
         public bool IsVisible
