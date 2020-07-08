@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
+using System.Threading;
 
 namespace GeneratorV2.Writing
 {
@@ -15,7 +16,7 @@ namespace GeneratorV2.Writing
         public Writer(Specification spec) : base(new List<Node>())
         {
             _spec = spec;
-            _path = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? throw NullReferenceException(),
+            _path = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? throw new NullReferenceException(),
                 "..", "..", "..", "..", "OpenToolkit.Graphics");
 
             const string namespaceName = "OpenToolkit.Graphics";
@@ -30,11 +31,6 @@ namespace GeneratorV2.Writing
 
             AddNode(new FileNode(Path.Combine(_path, "OpenToolkit.Graphics.csproj")))
                 .AddNode(new ProjectNode(namespaceName));
-        }
-
-        private Exception NullReferenceException()
-        {
-            throw new NotImplementedException();
         }
 
         public override void Write()

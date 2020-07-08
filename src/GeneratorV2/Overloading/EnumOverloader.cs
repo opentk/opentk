@@ -39,6 +39,10 @@ namespace GeneratorV2.Overloading
         public bool TryOverloadParameter(OverloadContext context, ref ILayer currentLayer, int i)
         {
             var parameter = context.Parameters[i];
+            if (parameter == null)
+            {
+                return false;
+            }
             var type = parameter.Type;
 
             if (!(type.OriginalTypeName.Contains("GLenum") && type.Name.Contains("uint")))

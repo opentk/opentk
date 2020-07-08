@@ -52,13 +52,99 @@ namespace GeneratorV2.Parsing
                 }
                 var ptype1 = ParsePType(t);
                 isGLhandleArb |= ptype1.Name == PlatformSpecificGlHandleArbFlag;
-                return new Command(new Method(ptype1, empty, parameterList.ToArray()), methodName);
+
+                var method = new Method(ptype1, empty, parameterList.ToArray());
+                foreach (var p in method.Parameters)
+                {
+                    if (p.Type.Length != null)
+                    {
+                        p.Type.Length = Evaluate(p.Type.Length, method);
+                    }
+                }
+
+                return new Command(method, methodName);
             }
             catch (NullReferenceException)
             {
                 Logger.Error("Error in parsing method \"" + empty + "\"");
                 return null;
             }
+        }
+
+        public static IExpression? Evaluate(IExpression expression, Method method)
+        {
+            var lazy = expression as LazyEvaluatedExpression;
+            if (lazy == null)
+            {
+                return expression;
+            }
+            return ParseExpression(lazy.Expression, method);
+        }
+
+        private static IExpression? ParseExpression(string length, Method method)
+        {
+            if (length == null)
+            {
+                return null;
+            }
+            length = length.Trim();
+            if (int.TryParse(length, out var val))
+            {
+                return new Constant(val);
+            }
+            var str = length.Split('*', 2);
+            if (str.Length == 2)
+            {
+                return new BinaryOperation(ParseExpression(str[0], method), '*', ParseExpression(str[1], method));
+            }
+            int sInd = length.IndexOf("COMPSIZE(");
+            if (sInd != -1)
+            {
+                sInd =  sInd + "COMPSIZE(".Length;
+                int eInd = length.IndexOf(')', sInd);
+
+                if (eInd == -1)
+                {
+                    Logger.Warning("PType parsing: Missing closing bracket for 'COMPSIZE('.");
+                    return null;
+                }
+                var openingBracket = length.IndexOf('(', sInd);
+                if (openingBracket != -1 && openingBracket < eInd)
+                {
+                    Logger.Warning("PType parsing: Nested brackets not supported.");
+                    return null;
+                }
+                var subStr = length.Substring(sInd, eInd - sInd);
+                var parameters = subStr.Split(',');
+                var parsedParameter = new IExpression[string.IsNullOrEmpty(subStr) ? 0 : parameters.Length];
+                for (int i = 0; i < parsedParameter.Length; i++)
+                {
+                    parsedParameter[i] = ParseExpression(parameters[i], method);
+                }
+                return new CompSize(parsedParameter);
+            }
+
+            for (int i = 0; i < length.Length; i++)
+            {
+                var c = length[i];
+                if (i == 0 && !char.IsLetter(c) || !char.IsLetterOrDigit(c))
+                {
+                    Logger.Warning($"PType parsing: Not a valid parameter reference '{length}'.");
+                    return null;
+                }
+            }
+
+            for (int i = 0; i < method.Parameters.Length; i++)
+            {
+                var p = method.Parameters[i];
+                if (p.Name == length)
+                {
+                    return new ParameterReference(i, p);
+                }
+            }
+
+            Logger.Warning($"PType parsing: Cannot parse length - '{length}' is not supported.");
+            return null;
         }
 
         private void CreatePlatformSpecificGlHandleArb(Dictionary<string, Command> coms, Command commandBase)
@@ -164,10 +250,12 @@ namespace GeneratorV2.Parsing
         private static PType ParsePType(XElement t)
         {
             var group = t.Attribute("group")?.Value;
-            var length = t.Attribute("len")?.Value;
             var str = t.GetXmlText(element => !(element.Name == "name") ? element.Value : string.Empty).Trim();
             var modifier = PModifier.None;
-            return new PType(ParseType(str, ref modifier, ref length), str, modifier, group, length);
+
+            var length = t.Attribute("len")?.Value;
+            var pTypeLength = length == null ? null : new LazyEvaluatedExpression(length);
+            return new PType(ParseType(str, ref modifier, ref length), str, modifier, group, pTypeLength);
         }
 
         private static string ParseType(string type, ref PModifier modifier, ref string? length)
