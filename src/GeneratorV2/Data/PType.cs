@@ -12,9 +12,9 @@
         public string OriginalTypeName { get; }
         public PModifier Modifier { get; }
         public string? Group { get; }
-        public string? Length { get; }
+        public IExpression? Length { get; set; }
 
-        public PType(string name, string originalTypeName, PModifier modifier = PModifier.None, string? group = null, string? length = null)
+        public PType(string name, string originalTypeName, PModifier modifier = PModifier.None, string? group = null, IExpression? length = null)
         {
             Name = name;
             OriginalTypeName = originalTypeName;
