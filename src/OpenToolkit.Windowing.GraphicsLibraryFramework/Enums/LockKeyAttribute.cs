@@ -13,11 +13,11 @@ namespace OpenToolkit.Windowing.GraphicsLibraryFramework
     /// Attribute for setting caps and num lock bits on when setting the input mode.
     /// </summary>
     /// <seealso cref="GLFW.SetInputMode(Window*,LockKeyModAttribute,bool)"/>
-    /// <seealso cref="GLFW.GetInputMode(Window*, LockKeyModAttribute)"/>
+    /// <seealso cref="GLFW.GetInputMode(Window*,LockKeyModAttribute)"/>
     public enum LockKeyModAttribute
     {
         /// <summary>
-        /// Specify whether the lock key bits should be sued or not.
+        /// Specify whether the lock key bits should be set or not.
         /// </summary>
         LockKeyMods = 0x00033004
     }

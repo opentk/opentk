@@ -148,7 +148,7 @@ namespace OpenToolkit.Windowing.Desktop
             }
         }
 
-        private readonly string _title;
+        private string _title;
 
         /// <inheritdoc />
         public string Title
@@ -214,7 +214,7 @@ namespace OpenToolkit.Windowing.Desktop
             }
         }
 
-        private readonly bool _isVisible;
+        private bool _isVisible;
 
         /// <inheritdoc />
         public bool IsVisible
