@@ -229,8 +229,8 @@ module Vector2 =
         [<Property>]
         let ``Vector2-Matrix2 multiplication using right-handed notation is consistent across overloads`` (a : Matrix2, b : Vector2) =
             let r1 = a * b;
-            let r2 = Vector2.Transform(a, b);
-            let r3 = Vector2.Transform(ref a, ref b);
+            let r2 = Vector2.TransformColumn(a, b);
+            let r3 = Vector2.TransformColumn(&a, &b);
 
             Assert.Equal(r1, r2)
             Assert.Equal(r2, r3)
@@ -249,8 +249,8 @@ module Vector2 =
         [<Property>]
         let ``Vector2-Matrix2 multiplication using left-handed notation is consistent across overloads`` (a : Matrix2, b : Vector2) =
             let r1 = b * a;
-            let r2 = Vector2.Transform(b, a);
-            let r3 = Vector2.Transform(ref b, ref a);
+            let r2 = Vector2.TransformRow(b, a);
+            let r3 = Vector2.TransformRow(&b, &a);
 
             Assert.Equal(r1, r2)
             Assert.Equal(r2, r3)

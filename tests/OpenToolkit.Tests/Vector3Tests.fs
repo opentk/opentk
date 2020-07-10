@@ -332,6 +332,15 @@ module Vector3 =
             Assert.Equal(exp, res)
 
         [<Property>]
+        let ``Vector3-Matrix3 multiplication using right-handed notation is consistent across overloads`` (a : Matrix3, b : Vector3) =
+            let r1 = a * b;
+            let r2 = Vector3.TransformColumn(a, b);
+            let r3 = Vector3.TransformColumn(&a, &b);
+
+            Assert.Equal(r1, r2)
+            Assert.Equal(r2, r3)
+
+        [<Property>]
         let ``Vector3-Matrix3 multiplication using left-handed notation is the same as vector/column multiplication and summation`` (a : Matrix3, b : Vector3) =
             let res = b*a
 
@@ -342,6 +351,15 @@ module Vector3 =
             let exp = Vector3(c1, c2, c3)
 
             Assert.Equal(exp, res)
+
+        [<Property>]
+        let ``Vector3-Matrix3 multiplication using left-handed notation is consistent across overloads`` (a : Matrix3, b : Vector3) =
+            let r1 = b * a;
+            let r2 = Vector3.TransformRow(b, a);
+            let r3 = Vector3.TransformRow(&b, &a);
+
+            Assert.Equal(r1, r2)
+            Assert.Equal(r2, r3)
 
         [<Property>]
         let ``Static Vector3 multiplication method is the same as component multiplication`` (a : Vector3, b : Vector3) =
