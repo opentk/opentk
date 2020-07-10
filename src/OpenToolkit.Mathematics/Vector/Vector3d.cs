@@ -691,11 +691,6 @@ namespace OpenToolkit.Mathematics
         /// <summary>
         /// Caclulate the cross (vector) product of two vectors.
         /// </summary>
-        /// <remarks>
-        /// It is incorrect to call this method passing the same variable for
-        ///  <paramref name="result"/> as for <paramref name="left"/> or
-        ///  <paramref name="right"/>.
-        /// </remarks>
         /// <param name="left">First operand.</param>
         /// <param name="right">Second operand.</param>
         /// <param name="result">The cross product of the two inputs.</param>
@@ -802,10 +797,6 @@ namespace OpenToolkit.Mathematics
         /// Transform a direction vector by the given Matrix.
         /// Assumes the matrix has a bottom row of (0,0,0,1), that is the translation part is ignored.
         /// </summary>
-        /// <remarks>
-        /// It is incorrect to call this method passing the same variable for
-        ///  <paramref name="result"/> as for <paramref name="vec"/>.
-        /// </remarks>
         /// <param name="vec">The vector to transform.</param>
         /// <param name="mat">The desired transformation.</param>
         /// <param name="result">The transformed vector.</param>
@@ -943,7 +934,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="mat">The desired transformation.</param>
         /// <returns>The transformed vector.</returns>
         [Pure]
-        public static Vector3d TransformRow(Vector3d vec, Matrix4d mat)
+        public static Vector3d TransformRow(Vector3d vec, Matrix3d mat)
         {
             TransformRow(in vec, in mat, out Vector3d result);
             return result;
@@ -952,21 +943,14 @@ namespace OpenToolkit.Mathematics
         /// <summary>
         /// Transform a Vector by the given Matrix.
         /// </summary>
-        /// <remarks>
-        /// It is incorrect to call this method passing the same variable for
-        ///  <paramref name="result"/> as for <paramref name="vec"/> or
-        ///  <paramref name="result"/>.
-        /// </remarks>
         /// <param name="vec">The vector to transform.</param>
         /// <param name="mat">The desired transformation.</param>
         /// <param name="result">The transformed vector.</param>
-        public static void TransformRow(in Vector3d vec, in Matrix4d mat, out Vector3d result)
+        public static void TransformRow(in Vector3d vec, in Matrix3d mat, out Vector3d result)
         {
-            var v4 = new Vector4d(vec.X, vec.Y, vec.Z, 1.0);
-            Vector4d.TransformRow(in v4, in mat, out v4);
-            result.X = v4.X;
-            result.Y = v4.Y;
-            result.Z = v4.Z;
+            result.X = (vec.X * mat.Row0.X) + (vec.Y * mat.Row1.X) + (vec.Z * mat.Row2.X);
+            result.Y = (vec.X * mat.Row0.Y) + (vec.Y * mat.Row1.Y) + (vec.Z * mat.Row2.Y);
+            result.Z = (vec.X * mat.Row0.Z) + (vec.Y * mat.Row1.Z) + (vec.Z * mat.Row2.Z);
         }
 
         /// <summary>
@@ -1328,6 +1312,32 @@ namespace OpenToolkit.Mathematics
             vec.Y *= scale.Y;
             vec.Z *= scale.Z;
             return vec;
+        }
+
+        /// <summary>
+        /// Transform a Vector by the given Matrix.
+        /// </summary>
+        /// <param name="vec">The vector to transform.</param>
+        /// <param name="mat">The desired transformation.</param>
+        /// <returns>The transformed vector.</returns>
+        [Pure]
+        public static Vector3d operator *(Vector3d vec, Matrix3d mat)
+        {
+            TransformRow(in vec, in mat, out Vector3d result);
+            return result;
+        }
+
+        /// <summary>
+        /// Transform a Vector by the given Matrix using right-handed notation.
+        /// </summary>
+        /// <param name="mat">The desired transformation.</param>
+        /// <param name="vec">The vector to transform.</param>
+        /// <returns>The transformed vector.</returns>
+        [Pure]
+        public static Vector3d operator *(Matrix3d mat, Vector3d vec)
+        {
+            TransformColumn(in mat, in vec, out Vector3d result);
+            return result;
         }
 
         /// <summary>
