@@ -246,6 +246,9 @@ namespace OpenToolkit.Windowing.GraphicsLibraryFramework
         public static extern int glfwGetInputMode(Window* window, StickyAttributes mode);
 
         [DllImport(LibraryName)]
+        public static extern int glfwGetInputMode(Window* window, LockKeyModAttribute mode);
+
+        [DllImport(LibraryName)]
         public static extern void glfwRestoreWindow(Window* window);
 
         [DllImport(LibraryName)]
@@ -334,6 +337,9 @@ namespace OpenToolkit.Windowing.GraphicsLibraryFramework
 
         [DllImport(LibraryName)]
         public static extern void glfwSetInputMode(Window* window, StickyAttributes mode, int value);
+
+        [DllImport(LibraryName)]
+        public static extern void glfwSetInputMode(Window* window, LockKeyModAttribute mode, int value);
 
         [DllImport(LibraryName)]
         public static extern IntPtr glfwSetJoystickCallback(IntPtr callback);

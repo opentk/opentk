@@ -777,9 +777,9 @@ namespace OpenToolkit.Mathematics
         /// <param name="mat">The desired transformation.</param>
         /// <returns>The transformed vector.</returns>
         [Pure]
-        public static Vector4 Transform(Vector4 vec, Matrix4 mat)
+        public static Vector4 TransformRow(Vector4 vec, Matrix4 mat)
         {
-            Transform(in vec, in mat, out Vector4 result);
+            TransformRow(in vec, in mat, out Vector4 result);
             return result;
         }
 
@@ -789,7 +789,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="vec">The vector to transform.</param>
         /// <param name="mat">The desired transformation.</param>
         /// <param name="result">The transformed vector.</param>
-        public static void Transform(in Vector4 vec, in Matrix4 mat, out Vector4 result)
+        public static void TransformRow(in Vector4 vec, in Matrix4 mat, out Vector4 result)
         {
             result = new Vector4(
                 (vec.X * mat.Row0.X) + (vec.Y * mat.Row1.X) + (vec.Z * mat.Row2.X) + (vec.W * mat.Row3.X),
@@ -837,9 +837,9 @@ namespace OpenToolkit.Mathematics
         /// <param name="vec">The vector to transform.</param>
         /// <returns>The transformed vector.</returns>
         [Pure]
-        public static Vector4 Transform(Matrix4 mat, Vector4 vec)
+        public static Vector4 TransformColumn(Matrix4 mat, Vector4 vec)
         {
-            Transform(in mat, in vec, out Vector4 result);
+            TransformColumn(in mat, in vec, out Vector4 result);
             return result;
         }
 
@@ -849,7 +849,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="mat">The desired transformation.</param>
         /// <param name="vec">The vector to transform.</param>
         /// <param name="result">The transformed vector.</param>
-        public static void Transform(in Matrix4 mat, in Vector4 vec, out Vector4 result)
+        public static void TransformColumn(in Matrix4 mat, in Vector4 vec, out Vector4 result)
         {
             result = new Vector4(
                 (mat.Row0.X * vec.X) + (mat.Row0.Y * vec.Y) + (mat.Row0.Z * vec.Z) + (mat.Row0.W * vec.W),
@@ -1922,7 +1922,7 @@ namespace OpenToolkit.Mathematics
         [Pure]
         public static Vector4 operator *(Vector4 vec, Matrix4 mat)
         {
-            Transform(in vec, in mat, out Vector4 result);
+            TransformRow(in vec, in mat, out Vector4 result);
             return result;
         }
 
@@ -1935,7 +1935,7 @@ namespace OpenToolkit.Mathematics
         [Pure]
         public static Vector4 operator *(Matrix4 mat, Vector4 vec)
         {
-            Transform(in mat, in vec, out Vector4 result);
+            TransformColumn(in mat, in vec, out Vector4 result);
             return result;
         }
 

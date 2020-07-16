@@ -721,9 +721,9 @@ namespace OpenToolkit.Mathematics
         /// <param name="mat">The desired transformation.</param>
         /// <returns>The transformed vector.</returns>
         [Pure]
-        public static Vector2 Transform(Vector2 vec, Matrix2 mat)
+        public static Vector2 TransformRow(Vector2 vec, Matrix2 mat)
         {
-            Transform(ref vec, ref mat, out Vector2 result);
+            TransformRow(in vec, in mat, out Vector2 result);
             return result;
         }
 
@@ -733,7 +733,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="vec">The vector to transform.</param>
         /// <param name="mat">The desired transformation.</param>
         /// <param name="result">The transformed vector.</param>
-        public static void Transform(ref Vector2 vec, ref Matrix2 mat, out Vector2 result)
+        public static void TransformRow(in Vector2 vec, in Matrix2 mat, out Vector2 result)
         {
             result = new Vector2(
                 (vec.X * mat.Row0.X) + (vec.Y * mat.Row1.X),
@@ -777,9 +777,9 @@ namespace OpenToolkit.Mathematics
         /// <param name="vec">The vector to transform.</param>
         /// <returns>The transformed vector.</returns>
         [Pure]
-        public static Vector2 Transform(Matrix2 mat, Vector2 vec)
+        public static Vector2 TransformColumn(Matrix2 mat, Vector2 vec)
         {
-            Transform(ref mat, ref vec, out Vector2 result);
+            TransformColumn(in mat, in vec, out Vector2 result);
             return result;
         }
 
@@ -789,7 +789,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="mat">The desired transformation.</param>
         /// <param name="vec">The vector to transform.</param>
         /// <param name="result">The transformed vector.</param>
-        public static void Transform(ref Matrix2 mat, ref Vector2 vec, out Vector2 result)
+        public static void TransformColumn(in Matrix2 mat, in Vector2 vec, out Vector2 result)
         {
             result.X = (mat.Row0.X * vec.X) + (mat.Row0.Y * vec.Y);
             result.Y = (mat.Row1.X * vec.X) + (mat.Row1.Y * vec.Y);
@@ -901,7 +901,7 @@ namespace OpenToolkit.Mathematics
         [Pure]
         public static Vector2 operator *(Vector2 vec, Matrix2 mat)
         {
-            Transform(ref vec, ref mat, out Vector2 result);
+            TransformRow(in vec, in mat, out Vector2 result);
             return result;
         }
 
@@ -914,7 +914,7 @@ namespace OpenToolkit.Mathematics
         [Pure]
         public static Vector2 operator *(Matrix2 mat, Vector2 vec)
         {
-            Transform(ref mat, ref vec, out Vector2 result);
+            TransformColumn(in mat, in vec, out Vector2 result);
             return result;
         }
 
