@@ -583,6 +583,9 @@ namespace OpenToolkit.Windowing.Desktop
                 }
             }
 
+            // Enables the caps lock modifier to be detected and updated
+            GLFW.SetInputMode(WindowPtr, LockKeyModAttribute.LockKeyMods, true);
+
             RegisterWindowCallbacks();
 
             IsFocused = settings.StartFocused;
@@ -733,8 +736,6 @@ namespace OpenToolkit.Windowing.Desktop
                     }
                 };
 
-                // Enables the caps lock modifier to be detected and updated
-                GLFW.SetInputMode(WindowPtr, LockKeyModAttribute.LockKeyMods, true);
                 GLFW.SetKeyCallback(WindowPtr, _keyCallback);
 
                 _cursorEnterCallback = (window, entered) =>
