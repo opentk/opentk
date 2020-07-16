@@ -32,6 +32,9 @@ namespace OpenToolkit.Mathematics
     /// <summary>
     /// Represents a 4D vector using four double-precision floating-point numbers.
     /// </summary>
+    /// <remarks>
+    /// The Vector4 structure is suitable for interoperation with unmanaged code requiring four consecutive doubles.
+    /// </remarks>
     [Serializable]
     [StructLayout(LayoutKind.Sequential)]
     public struct Vector4d : IEquatable<Vector4d>
@@ -763,15 +766,15 @@ namespace OpenToolkit.Mathematics
         }
 
         /// <summary>
-        /// Transform a Vector by the given Matrix.
+        /// Transform a Vector by the given Matrix using right-handed notation.
         /// </summary>
         /// <param name="vec">The vector to transform.</param>
         /// <param name="mat">The desired transformation.</param>
         /// <returns>The transformed vector.</returns>
         [Pure]
-        public static Vector4d Transform(Vector4d vec, Matrix4d mat)
+        public static Vector4d TransformRow(Vector4d vec, Matrix4d mat)
         {
-            Transform(in vec, in mat, out Vector4d result);
+            TransformRow(in vec, in mat, out Vector4d result);
             return result;
         }
 
@@ -781,7 +784,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="vec">The vector to transform.</param>
         /// <param name="mat">The desired transformation.</param>
         /// <param name="result">The transformed vector.</param>
-        public static void Transform(in Vector4d vec, in Matrix4d mat, out Vector4d result)
+        public static void TransformRow(in Vector4d vec, in Matrix4d mat, out Vector4d result)
         {
             result = new Vector4d(
                 (vec.X * mat.Row0.X) + (vec.Y * mat.Row1.X) + (vec.Z * mat.Row2.X) + (vec.W * mat.Row3.X),
@@ -820,6 +823,34 @@ namespace OpenToolkit.Mathematics
             result.Y = v.Y;
             result.Z = v.Z;
             result.W = v.W;
+        }
+
+        /// <summary>
+        /// Transform a Vector by the given Matrix using right-handed notation.
+        /// </summary>
+        /// <param name="mat">The desired transformation.</param>
+        /// <param name="vec">The vector to transform.</param>
+        /// <returns>The transformed vector.</returns>
+        [Pure]
+        public static Vector4d TransformColumn(Matrix4d mat, Vector4d vec)
+        {
+            TransformColumn(in mat, in vec, out Vector4d result);
+            return result;
+        }
+
+        /// <summary>
+        /// Transform a Vector by the given Matrix using right-handed notation.
+        /// </summary>
+        /// <param name="mat">The desired transformation.</param>
+        /// <param name="vec">The vector to transform.</param>
+        /// <param name="result">The transformed vector.</param>
+        public static void TransformColumn(in Matrix4d mat, in Vector4d vec, out Vector4d result)
+        {
+            result = new Vector4d(
+                (mat.Row0.X * vec.X) + (mat.Row0.Y * vec.Y) + (mat.Row0.Z * vec.Z) + (mat.Row0.W * vec.W),
+                (mat.Row1.X * vec.X) + (mat.Row1.Y * vec.Y) + (mat.Row1.Z * vec.Z) + (mat.Row1.W * vec.W),
+                (mat.Row2.X * vec.X) + (mat.Row2.Y * vec.Y) + (mat.Row2.Z * vec.Z) + (mat.Row2.W * vec.W),
+                (mat.Row3.X * vec.X) + (mat.Row3.Y * vec.Y) + (mat.Row3.Z * vec.Z) + (mat.Row3.W * vec.W));
         }
 
         /// <summary>
@@ -1875,6 +1906,32 @@ namespace OpenToolkit.Mathematics
             vec.Z *= scale.Z;
             vec.W *= scale.W;
             return vec;
+        }
+
+        /// <summary>
+        /// Transform a Vector by the given Matrix.
+        /// </summary>
+        /// <param name="vec">The vector to transform.</param>
+        /// <param name="mat">The desired transformation.</param>
+        /// <returns>The transformed vector.</returns>
+        [Pure]
+        public static Vector4d operator *(Vector4d vec, Matrix4d mat)
+        {
+            TransformRow(in vec, in mat, out Vector4d result);
+            return result;
+        }
+
+        /// <summary>
+        /// Transform a Vector by the given Matrix using right-handed notation.
+        /// </summary>
+        /// <param name="mat">The desired transformation.</param>
+        /// <param name="vec">The vector to transform.</param>
+        /// <returns>The transformed vector.</returns>
+        [Pure]
+        public static Vector4d operator *(Matrix4d mat, Vector4d vec)
+        {
+            TransformColumn(in mat, in vec, out Vector4d result);
+            return result;
         }
 
         /// <summary>
