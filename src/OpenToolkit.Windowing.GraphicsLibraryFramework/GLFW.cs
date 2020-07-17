@@ -3432,6 +3432,31 @@ namespace OpenToolkit.Windowing.GraphicsLibraryFramework
 
         /// <summary>
         /// <para>
+        /// This function returns the value of an input option for the specified window.
+        /// The mode must be <see cref="LockKeyModAttribute.LockKeyMods"/>.
+        /// </para>
+        /// </summary>
+        /// <param name="window">The window to query.</param>
+        /// <param name="mode">
+        /// <see cref="LockKeyModAttribute.LockKeyMods"/>.
+        /// </param>
+        /// <returns>TODO: return value is either InputModeValue or bool dependant on <paramref name="mode"/>.</returns>
+        /// <remarks>
+        /// <para>
+        /// This function must only be called from the main thread.
+        /// </para>
+        /// <para>
+        /// Possible errors include <see cref="ErrorCode.NotInitialized"/> and <see cref="ErrorCode.InvalidEnum"/>.
+        /// </para>
+        /// </remarks>
+        /// <seealso cref="SetInputMode(Window*, LockKeyModAttribute, bool)"/>
+        public static unsafe bool GetInputMode(Window* window, LockKeyModAttribute mode)
+        {
+            return glfwGetInputMode(window, mode) == GLFW_TRUE;
+        }
+
+        /// <summary>
+        /// <para>
         /// This function returns the primary monitor.
         /// </para>
         /// <para>
@@ -4255,6 +4280,36 @@ namespace OpenToolkit.Windowing.GraphicsLibraryFramework
         /// </para>
         /// </remarks>
         public static unsafe void SetInputMode(Window* window, StickyAttributes mode, bool value)
+        {
+            glfwSetInputMode(window, mode, value ? GLFW_TRUE : GLFW_FALSE);
+        }
+
+        /// <summary>
+        /// <para>
+        /// This function sets an input mode option for the specified window.
+        /// The mode must be <see cref="LockKeyModAttribute.LockKeyMods"/>.
+        /// </para>
+        /// <para>
+        /// If the mode is <see cref="LockKeyModAttribute.LockKeyMods"/>, the value must be either true to enable lock key modifier bits,
+        /// or false to disable them. If enabled, callbacks that receive modifier bits will also have the
+        /// caps lock modifier bit set when the event was generated with Caps Lock on, and the
+        /// num lock modifier  bit when Num Lock was on.
+        /// </para>
+        /// </summary>
+        /// <param name="window">The window whose input mode to set.</param>
+        /// <param name="mode">
+        /// The value <see cref="LockKeyModAttribute.LockKeyMods"/>.
+        /// </param>
+        /// <param name="value">The new value of the specified input mode.</param>
+        /// <remarks>
+        /// <para>
+        /// This function must only be called from the main thread.
+        /// </para>
+        /// <para>
+        /// Possible errors include <see cref="ErrorCode.NotInitialized"/>, <see cref="ErrorCode.InvalidEnum"/> and <see cref="ErrorCode.PlatformError"/>.
+        /// </para>
+        /// </remarks>
+        public static unsafe void SetInputMode(Window* window, LockKeyModAttribute mode, bool value)
         {
             glfwSetInputMode(window, mode, value ? GLFW_TRUE : GLFW_FALSE);
         }

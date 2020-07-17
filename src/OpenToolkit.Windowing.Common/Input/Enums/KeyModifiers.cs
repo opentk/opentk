@@ -36,5 +36,15 @@ namespace OpenToolkit.Windowing.Common.Input
         /// The command key modifier on a Mac
         /// </summary>
         Command = 1 << 3,
+
+        /// <summary>
+        /// If the caps lock is enabled.
+        /// </summary>
+        CapsLock = 1 << 4,
+
+        /// <summary>
+        /// If the num lock is enabled.
+        /// </summary>
+        NumLock = 1 << 5,
     }
 }
