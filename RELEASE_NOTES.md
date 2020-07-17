@@ -1,3 +1,14 @@
+### 4.0.0-pre9.2
+ * Fixes reference conditions
+ * Save Size property value to _size field (thanks @devel0)
+ * Update build.fsx.lock (thanks @CallumDev)
+ * Vector3.Unproject returning incorrect result (thanks @leezer3)
+ * Incorrect parameter order in QuaternionD constructor (thanks @leezer3)
+ * Capslock value not exposed (thanks @KinsonDigital)
+ * vector transforms
+ * Start of input mode setup for caps lock (thanks @KinsonDigital)
+ * Use in parameters instead of ref (thanks @cryovat)
+
 ### 4.0.0-pre9.1
  * OpenTK now includes **OPENAL!** (Biggest thanks to *@NogginBops*)
  * Added check for invalid keys in window key callback (Thanks @Phyyl)
