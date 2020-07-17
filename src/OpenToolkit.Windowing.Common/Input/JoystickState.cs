@@ -43,7 +43,7 @@ namespace OpenToolkit.Windowing.Common.Input
         {
             _hats = new Hat[hatCount];
             _axes = new float[axesCount];
-            _buttons = new byte[buttonCount / 8];
+            _buttons = new byte[(buttonCount + 7) / 8];
             Id = id;
             Name = name;
         }
@@ -63,7 +63,7 @@ namespace OpenToolkit.Windowing.Common.Input
             Id = id;
             Name = name;
 
-            _buttons = new byte[buttons.Length / 8];
+            _buttons = new byte[(buttons.Length + 7) / 8];
             for (int i = 0; i < buttons.Length; i++)
             {
                 SetButtonDown(i, buttons[i]);
