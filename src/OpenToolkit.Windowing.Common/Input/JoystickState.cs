@@ -32,6 +32,11 @@ namespace OpenToolkit.Windowing.Common.Input
         public string Name { get; }
 
         /// <summary>
+        /// Gets a value indicating whether the joystick is active and connected.
+        /// </summary>
+        public bool IsConnected { get; }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="JoystickState"/> struct.
         /// </summary>
         /// <param name="hatCount">The amount of hats.</param>
@@ -46,6 +51,7 @@ namespace OpenToolkit.Windowing.Common.Input
             _buttons = new byte[(buttonCount + 7) / 8];
             Id = id;
             Name = name;
+            IsConnected = true;
         }
 
         /// <summary>
@@ -62,6 +68,7 @@ namespace OpenToolkit.Windowing.Common.Input
             _axes = axes;
             Id = id;
             Name = name;
+            IsConnected = true;
 
             _buttons = new byte[(buttons.Length + 7) / 8];
             for (int i = 0; i < buttons.Length; i++)
