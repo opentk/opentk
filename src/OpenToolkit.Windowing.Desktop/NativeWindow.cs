@@ -824,7 +824,7 @@ namespace OpenToolkit.Windowing.Desktop
                 GLFW.SetJoystickCallback(_joystickCallback);
 
                 // Check for Joysticks that are connected at application launch
-                for (int i = 0, j = JoystickStates.Length; i < j; i++)
+                for (int i = 0; i < JoystickStates.Length; i++)
                 {
                     if (GLFW.JoystickPresent(i))
                     {
