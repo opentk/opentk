@@ -823,6 +823,20 @@ namespace OpenToolkit.Windowing.Desktop
                 };
                 GLFW.SetJoystickCallback(_joystickCallback);
 
+                // Check for Joysticks that are connected at application launch
+                for (int i = 0; i < JoystickStates.Length; i++)
+                {
+                    if (GLFW.JoystickPresent(i))
+                    {
+                        GLFW.GetJoystickHatsRaw(i, out var hatCount);
+                        GLFW.GetJoystickAxesRaw(i, out var axisCount);
+                        GLFW.GetJoystickButtonsRaw(i, out var buttonCount);
+                        var name = GLFW.GetJoystickName(i);
+
+                        JoystickStates[i] = new JoystickState(hatCount, axisCount, buttonCount, i, name);
+                    }
+                }
+
                 _monitorCallback = (monitor, eventCode) =>
                 {
                     OnMonitorConnected(new MonitorEventArgs(new Monitor((IntPtr)monitor), eventCode == ConnectedState.Connected));
