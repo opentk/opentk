@@ -2,6 +2,7 @@
 using GeneratorV2.Data;
 using GeneratorV2.Parsing;
 using GeneratorV2.Writing;
+using GeneratorV2.Overloading;
 
 namespace GeneratorV2
 {
@@ -21,9 +22,8 @@ namespace GeneratorV2
                 var specification = new Specification();
                 new Parser().Parse(stream, specification);
 
-
                 //Overloading
-                new GeneratorV2.Overloading.Overloader(specification).Overload();
+                new Overloader(specification).Overload();
                 //Overloader.OverloadCommands(specification);
 
                 //Writing
@@ -42,12 +42,6 @@ namespace GeneratorV2
  * 3) Create a ton of overloads
  * 4) Extra enum group per extension (downside: name collision)
  * */
-
-//TODO: Next time
-//Project cleanup
-// - Closer look at parser
-// - Writer
-// - Overloader
 
 //TODO:
 //Overloading
