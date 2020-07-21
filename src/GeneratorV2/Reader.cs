@@ -7,7 +7,7 @@ namespace GeneratorV2
     {
         public static Stream ReadSpecFromGithub()
         {
-            var link = "https://raw.githubusercontent.com/KhronosGroup/OpenGL-Registry/master/xml/gl.xml";
+            var link = "https://raw.githubusercontent.com/jvbsl/OpenGL-Registry/fix/missing-and-wrong-enums/xml/gl.xml";
             Logger.Info($"Beginning to download openGL spec from {link}");
             var request = WebRequest.CreateHttp(link);
 
