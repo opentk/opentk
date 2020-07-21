@@ -581,6 +581,8 @@ namespace OpenToolkit.Windowing.Desktop
                 {
                     InitializeGlBindings();
                 }
+
+                GLFW.MakeContextCurrent(null);
             }
 
             // Enables the caps lock modifier to be detected and updated
