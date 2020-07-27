@@ -59,8 +59,8 @@ namespace Bind
                         string opt = match.Value.Substring(1).Trim();
                         string val;
 
-                        if (a.Length != match.Value.Length)
-                            val = a.Substring(match.Value.Length + 1).Trim();
+                        if (a.Contains(":"))
+                            val = a.Substring(a.IndexOf(":") + 1).Trim();
                         else
                             val = string.Empty;
 
