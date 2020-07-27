@@ -63,10 +63,10 @@ namespace Bind
 
         private void WriteBindings(DelegateCollection delegates, FunctionCollection wrappers, EnumCollection enums)
         {
-            Console.WriteLine("Writing bindings to {0}", Settings.OutputPath);
-            if (!Directory.Exists(Settings.OutputPath))
+            Console.WriteLine("Writing bindings to {0}", Settings.DefaultOutputPath);
+            if (!Directory.Exists(Settings.DefaultOutputPath))
             {
-                Directory.CreateDirectory(Settings.OutputPath);
+                Directory.CreateDirectory(Settings.DefaultOutputPath);
             }
 
             string temp_enums_file = Path.GetTempFileName();
@@ -128,10 +128,10 @@ namespace Bind
                 sw.WriteLine("}");
             }
 
-            string output_enums = Path.Combine(Settings.OutputPath, Settings.EnumsFile);
-            string output_delegates = Path.Combine(Settings.OutputPath, Settings.DelegatesFile);
-            string output_core = Path.Combine(Settings.OutputPath, Settings.ImportsFile);
-            string output_wrappers = Path.Combine(Settings.OutputPath, Settings.WrappersFile);
+            string output_enums = Path.Combine(Settings.DefaultOutputPath, Settings.EnumsFile);
+            string output_delegates = Path.Combine(Settings.DefaultOutputPath, Settings.DelegatesFile);
+            string output_core = Path.Combine(Settings.DefaultOutputPath, Settings.ImportsFile);
+            string output_wrappers = Path.Combine(Settings.DefaultOutputPath, Settings.WrappersFile);
 
             if (File.Exists(output_enums))
             {

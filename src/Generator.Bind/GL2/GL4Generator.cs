@@ -33,7 +33,7 @@ namespace Bind.GL2
             : base(settings)
         {
             Settings.DefaultOutputPath = Path.Combine(
-                Settings.DefaultOutputPath, "./OpenGL4");
+                Settings.OutputPath, "./OpenGL4");
             Settings.DefaultOutputNamespace = "OpenToolkit.Graphics.OpenGL4";
             Settings.DefaultImportsFile = "GL4Core.cs";
             Settings.DefaultDelegatesFile = "GL4Delegates.cs";
