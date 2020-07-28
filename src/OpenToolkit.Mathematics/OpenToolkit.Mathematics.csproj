@@ -3,7 +3,6 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <Deterministic>true</Deterministic>
-    <RootNamespace>OpenToolkit.Mathematics</RootNamespace>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -11,7 +10,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="4.5.2" />
+    <PackageReference Include="System.Numerics.Vectors" Version="4.5.0" />
+    <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="5.0.0-preview.7.20364.11" />
   </ItemGroup>
   <Import Project="..\..\props\common.props" />
   <Import Project="..\..\props\nuget-common.props" />

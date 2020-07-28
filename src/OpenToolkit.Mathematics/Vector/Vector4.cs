@@ -148,7 +148,7 @@ namespace OpenToolkit.Mathematics
         /// </summary>
         /// <param name="v">The Vector3 to copy components from.</param>
         /// <remarks>
-        ///  .<seealso cref="Vector4(Vector3, float)"/>
+        ///  .<seealso cref="Vector4(Vector3,float)"/>
         /// </remarks>
         public Vector4(Vector3 v)
         {
