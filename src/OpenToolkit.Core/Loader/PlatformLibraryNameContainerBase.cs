@@ -45,7 +45,7 @@ namespace OpenToolkit.Core.Loader
             {
                 if (RuntimeInformation.IsOSPlatform(OSPlatform.Create("IOS")))
                 {
-                    return Android;
+                    return IOS;
                 }
 
                 return MacOS;
