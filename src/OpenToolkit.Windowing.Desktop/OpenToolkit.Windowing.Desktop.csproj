@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-      <TargetFrameworks>net472;netcoreapp3.0</TargetFrameworks>
+      <TargetFrameworks>net48;netcoreapp3.1</TargetFrameworks>
       <RootNamespace>OpenToolkit.Windowing.Desktop</RootNamespace>
       <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     </PropertyGroup>
@@ -35,6 +35,6 @@
         <_ReferencePathToRemove Include="@(ReferencePath)" Condition="'%(ReferencePath.NuGetPackageId)'=='System.Memory'" />
         <ReferencePath Remove="@(_ReferencePathToRemove)" />
       </ItemGroup>
-      <Message Text="Removing System.Memory for mono compatibility" Importance="high"/>
+      <Message Text="Removing System.Memory for mono compatibility" Importance="high" />
     </Target>
 </Project>
