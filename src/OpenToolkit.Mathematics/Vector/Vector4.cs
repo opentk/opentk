@@ -40,6 +40,22 @@ namespace OpenToolkit.Mathematics
     public struct Vector4 : IEquatable<Vector4>
     {
         /// <summary>
+        /// Returns the System.Numerics.Vector2 representation of the given Vector.
+        /// </summary>
+        /// <param name="src">The source Vector.</param>
+        /// <returns>The System.Numerics.Vector2.</returns>
+        public static implicit operator System.Numerics.Vector4(Vector4 src) =>
+            new System.Numerics.Vector4(src.X, src.Y, src.Z, src.W);
+
+        /// <summary>
+        /// Returns the OpenTK.Mathematics.Vector2 representation of the given Vector.
+        /// </summary>
+        /// <param name="src">The source Vector.</param>
+        /// <returns>The OpenTK.Mathematics.Vector2.</returns>
+        public static implicit operator Vector4(System.Numerics.Vector4 src) =>
+            new Vector4(src.X, src.Y, src.Z, src.W);
+
+        /// <summary>
         /// The X component of the Vector4.
         /// </summary>
         public float X;
@@ -245,7 +261,7 @@ namespace OpenToolkit.Mathematics
         /// </summary>
         /// <see cref="LengthFast"/>
         /// <seealso cref="LengthSquared"/>
-        public float Length => (float)Math.Sqrt((X * X) + (Y * Y) + (Z * Z) + (W * W));
+        public float Length => MathF.Sqrt((X * X) + (Y * Y) + (Z * Z) + (W * W));
 
         /// <summary>
         /// Gets an approximation of the vector length (magnitude).

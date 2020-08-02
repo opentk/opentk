@@ -325,8 +325,8 @@ namespace OpenToolkit.Mathematics
             axis.Normalize();
             float axisX = axis.X, axisY = axis.Y, axisZ = axis.Z;
 
-            var cos = (float)Math.Cos(-angle);
-            var sin = (float)Math.Sin(-angle);
+            var cos = MathF.Cos(-angle);
+            var sin = MathF.Sin(-angle);
             var t = 1.0f - cos;
 
             float tXX = t * axisX * axisX;
@@ -424,8 +424,8 @@ namespace OpenToolkit.Mathematics
         /// <param name="result">The resulting Matrix4 instance.</param>
         public static void CreateRotationX(float angle, out Matrix4x3 result)
         {
-            var cos = (float)Math.Cos(angle);
-            var sin = (float)Math.Sin(angle);
+            var cos = MathF.Cos(angle);
+            var sin = MathF.Sin(angle);
 
             result.Row0.X = 1;
             result.Row0.Y = 0;
@@ -460,8 +460,8 @@ namespace OpenToolkit.Mathematics
         /// <param name="result">The resulting Matrix4 instance.</param>
         public static void CreateRotationY(float angle, out Matrix4x3 result)
         {
-            var cos = (float)Math.Cos(angle);
-            var sin = (float)Math.Sin(angle);
+            var cos = MathF.Cos(angle);
+            var sin = MathF.Sin(angle);
 
             result.Row0.X = cos;
             result.Row0.Y = 0;
@@ -496,8 +496,8 @@ namespace OpenToolkit.Mathematics
         /// <param name="result">The resulting Matrix4 instance.</param>
         public static void CreateRotationZ(float angle, out Matrix4x3 result)
         {
-            var cos = (float)Math.Cos(angle);
-            var sin = (float)Math.Sin(angle);
+            var cos = MathF.Cos(angle);
+            var sin = MathF.Sin(angle);
 
             result.Row0.X = cos;
             result.Row0.Y = sin;

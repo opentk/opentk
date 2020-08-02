@@ -40,6 +40,22 @@ namespace OpenToolkit.Mathematics
     public struct Vector3 : IEquatable<Vector3>
     {
         /// <summary>
+        /// Returns the System.Numerics.Vector3 representation of the given Vector.
+        /// </summary>
+        /// <param name="src">The source Vector.</param>
+        /// <returns>The System.Numerics.Vector3.</returns>
+        public static implicit operator System.Numerics.Vector3(Vector3 src) =>
+            new System.Numerics.Vector3(src.X, src.Y, src.Z);
+
+        /// <summary>
+        /// Returns the OpenTK.Mathematics.Vector3 representation of the given Vector.
+        /// </summary>
+        /// <param name="src">The source Vector.</param>
+        /// <returns>The OpenTK.Mathematics.Vector3.</returns>
+        public static implicit operator Vector3(System.Numerics.Vector3 src) =>
+            new Vector3(src.X, src.Y, src.Z);
+
+        /// <summary>
         /// The X component of the Vector3.
         /// </summary>
         public float X;
@@ -164,7 +180,7 @@ namespace OpenToolkit.Mathematics
         /// </summary>
         /// <see cref="LengthFast"/>
         /// <seealso cref="LengthSquared"/>
-        public float Length => (float)Math.Sqrt((X * X) + (Y * Y) + (Z * Z));
+        public float Length => MathF.Sqrt((X * X) + (Y * Y) + (Z * Z));
 
         /// <summary>
         /// Gets an approximation of the vector length (magnitude).
@@ -574,8 +590,8 @@ namespace OpenToolkit.Mathematics
         /// <param name="result">The distance.</param>
         public static void Distance(in Vector3 vec1, in Vector3 vec2, out float result)
         {
-            result = (float)Math.Sqrt(((vec2.X - vec1.X) * (vec2.X - vec1.X)) + ((vec2.Y - vec1.Y) * (vec2.Y - vec1.Y)) +
-                                      ((vec2.Z - vec1.Z) * (vec2.Z - vec1.Z)));
+            result = MathF.Sqrt(((vec2.X - vec1.X) * (vec2.X - vec1.X)) + ((vec2.Y - vec1.Y) * (vec2.Y - vec1.Y)) +
+                                ((vec2.Z - vec1.Z) * (vec2.Z - vec1.Z)));
         }
 
         /// <summary>
@@ -1070,7 +1086,7 @@ namespace OpenToolkit.Mathematics
         public static void CalculateAngle(in Vector3 first, in Vector3 second, out float result)
         {
             Dot(in first, in second, out float temp);
-            result = (float)Math.Acos(MathHelper.Clamp(temp / (first.Length * second.Length), -1.0, 1.0));
+            result = MathF.Acos((float)Math.Clamp(temp / (first.Length * second.Length), -1.0, 1.0));
         }
 
         /// <summary>

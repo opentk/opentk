@@ -48,7 +48,7 @@ namespace OpenToolkit.Mathematics
                 throw new ArgumentNullException(nameof(points), "Must point to a valid list of Vector2 structures.");
             }
 
-            this._points = new List<Vector2>(points);
+            _points = new List<Vector2>(points);
             Parallel = 0.0f;
         }
 
@@ -63,7 +63,7 @@ namespace OpenToolkit.Mathematics
                 throw new ArgumentNullException(nameof(points), "Must point to a valid list of Vector2 structures.");
             }
 
-            this._points = new List<Vector2>(points);
+            _points = new List<Vector2>(points);
             Parallel = 0.0f;
         }
 
@@ -80,7 +80,7 @@ namespace OpenToolkit.Mathematics
             }
 
             Parallel = parallel;
-            this._points = new List<Vector2>(points);
+            _points = new List<Vector2>(points);
         }
 
         /// <summary>
@@ -96,7 +96,7 @@ namespace OpenToolkit.Mathematics
             }
 
             Parallel = parallel;
-            this._points = new List<Vector2>(points);
+            _points = new List<Vector2>(points);
         }
 
         /// <summary>

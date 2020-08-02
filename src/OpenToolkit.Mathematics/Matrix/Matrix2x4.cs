@@ -270,8 +270,8 @@ namespace OpenToolkit.Mathematics
         /// <param name="result">The resulting Matrix2x4 instance.</param>
         public static void CreateRotation(float angle, out Matrix2x4 result)
         {
-            var cos = (float)Math.Cos(angle);
-            var sin = (float)Math.Sin(angle);
+            var cos = MathF.Cos(angle);
+            var sin = MathF.Sin(angle);
 
             result.Row0.X = cos;
             result.Row0.Y = sin;
