@@ -1063,7 +1063,7 @@ namespace OpenToolkit.Mathematics
         public static void CalculateAngle(in Vector3d first, in Vector3d second, out double result)
         {
             Dot(in first, in second, out double temp);
-            result = Math.Acos(MathHelper.Clamp(temp / (first.Length * second.Length), -1.0, 1.0));
+            result = Math.Acos(Math.Clamp(temp / (first.Length * second.Length), -1.0, 1.0));
         }
 
         /// <summary>
