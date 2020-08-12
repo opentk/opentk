@@ -22,27 +22,7 @@ namespace OpenToolkit.Windowing.GraphicsLibraryFramework
                     return IntPtr.Zero;
                 }
 
-                if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
-                {
-                    return NativeLibrary.Load("libglfw.so.3", assembly, path);
-                }
-
-                if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
-                {
-                    return NativeLibrary.Load("libglfw.3.dylib", assembly, path);
-                }
-
-                if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-                {
-                    if (IntPtr.Size == 8)
-                    {
-                        return NativeLibrary.Load("glfw3-x64.dll", assembly, path);
-                    }
-
-                    return NativeLibrary.Load("glfw3-x86.dll", assembly, path);
-                }
-
-                return IntPtr.Zero;
+                return LibraryLoadHelper.LoadLibrary("glfw", new Version(3, 3), assembly, path);
             });
         }
 #endif
