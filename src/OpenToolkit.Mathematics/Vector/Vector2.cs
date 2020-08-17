@@ -39,22 +39,6 @@ namespace OpenToolkit.Mathematics
     public struct Vector2 : IEquatable<Vector2>
     {
         /// <summary>
-        /// Returns the System.Numerics.Vector2 representation of the given Vector.
-        /// </summary>
-        /// <param name="src">The source Vector.</param>
-        /// <returns>The System.Numerics.Vector2.</returns>
-        public static implicit operator System.Numerics.Vector2(Vector2 src) =>
-            new System.Numerics.Vector2(src.X, src.Y);
-
-        /// <summary>
-        /// Returns the OpenTK.Mathematics.Vector2 representation of the given Vector.
-        /// </summary>
-        /// <param name="src">The source Vector.</param>
-        /// <returns>The OpenTK.Mathematics.Vector2.</returns>
-        public static implicit operator Vector2(System.Numerics.Vector2 src) =>
-            new Vector2(src.X, src.Y);
-
-        /// <summary>
         /// The X component of the Vector2.
         /// </summary>
         public float X;
@@ -530,8 +514,7 @@ namespace OpenToolkit.Mathematics
         /// <param name="result">The distance.</param>
         public static void Distance(in Vector2 vec1, in Vector2 vec2, out float result)
         {
-            result =
-                (float)Math.Sqrt(((vec2.X - vec1.X) * (vec2.X - vec1.X)) + ((vec2.Y - vec1.Y) * (vec2.Y - vec1.Y)));
+            result = (float)Math.Sqrt(((vec2.X - vec1.X) * (vec2.X - vec1.X)) + ((vec2.Y - vec1.Y) * (vec2.Y - vec1.Y)));
         }
 
         /// <summary>
@@ -753,8 +736,8 @@ namespace OpenToolkit.Mathematics
         public static void TransformRow(in Vector2 vec, in Matrix2 mat, out Vector2 result)
         {
             result = new Vector2(
-                                 (vec.X * mat.Row0.X) + (vec.Y * mat.Row1.X),
-                                 (vec.X * mat.Row0.Y) + (vec.Y * mat.Row1.Y));
+                (vec.X * mat.Row0.X) + (vec.Y * mat.Row1.X),
+                (vec.X * mat.Row0.Y) + (vec.Y * mat.Row1.Y));
         }
 
         /// <summary>
@@ -810,29 +793,6 @@ namespace OpenToolkit.Mathematics
         {
             result.X = (mat.Row0.X * vec.X) + (mat.Row0.Y * vec.Y);
             result.Y = (mat.Row1.X * vec.X) + (mat.Row1.Y * vec.Y);
-        }
-
-        /// <summary>
-        /// Returns a Vector where the components are the absolute values of the source Vector's elements.
-        /// </summary>
-        /// <param name="source">The source Vector.</param>
-        /// <returns>The absolute Vector.</returns>
-        [Pure]
-        public static Vector2 Abs(Vector2 source)
-        {
-            Abs(in source, out Vector2 result);
-            return result;
-        }
-
-        /// <summary>
-        /// Returns a Vector where the components are the absolute values of the source Vector's elements.
-        /// </summary>
-        /// <param name="source">The source Vector.</param>
-        /// <param name="result">The absolute Vector.</param>
-        public static void Abs(in Vector2 source, out Vector2 result)
-        {
-            result.X = Math.Abs(source.X);
-            result.Y = Math.Abs(source.Y);
         }
 
         /// <summary>
