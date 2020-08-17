@@ -671,8 +671,8 @@ namespace OpenToolkit.Mathematics
             float axisX = axis.X, axisY = axis.Y, axisZ = axis.Z;
 
             // calculate angles
-            var cos = MathF.Cos(-angle);
-            var sin = MathF.Sin(-angle);
+            var cos = (float)Math.Cos(-angle);
+            var sin = (float)Math.Sin(-angle);
             var t = 1.0f - cos;
 
             // do the conversion math once
@@ -745,8 +745,8 @@ namespace OpenToolkit.Mathematics
         /// <param name="result">The resulting Matrix4 instance.</param>
         public static void CreateRotationX(float angle, out Matrix4 result)
         {
-            var cos = MathF.Cos(angle);
-            var sin = MathF.Sin(angle);
+            var cos = (float)Math.Cos(angle);
+            var sin = (float)Math.Sin(angle);
 
             result = Identity;
             result.Row1.Y = cos;
@@ -774,8 +774,8 @@ namespace OpenToolkit.Mathematics
         /// <param name="result">The resulting Matrix4 instance.</param>
         public static void CreateRotationY(float angle, out Matrix4 result)
         {
-            var cos = MathF.Cos(angle);
-            var sin = MathF.Sin(angle);
+            var cos = (float)Math.Cos(angle);
+            var sin = (float)Math.Sin(angle);
 
             result = Identity;
             result.Row0.X = cos;
@@ -803,8 +803,8 @@ namespace OpenToolkit.Mathematics
         /// <param name="result">The resulting Matrix4 instance.</param>
         public static void CreateRotationZ(float angle, out Matrix4 result)
         {
-            var cos = MathF.Cos(angle);
-            var sin = MathF.Sin(angle);
+            var cos = (float)Math.Cos(angle);
+            var sin = (float)Math.Sin(angle);
 
             result = Identity;
             result.Row0.X = cos;
@@ -1094,7 +1094,7 @@ namespace OpenToolkit.Mathematics
                 throw new ArgumentOutOfRangeException(nameof(depthFar));
             }
 
-            var maxY = depthNear * MathF.Tan(0.5f * fovy);
+            var maxY = depthNear * (float)Math.Tan(0.5f * fovy);
             var minY = -maxY;
             var minX = minY * aspect;
             var maxX = maxY * aspect;

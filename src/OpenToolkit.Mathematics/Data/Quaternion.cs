@@ -80,12 +80,12 @@ namespace OpenToolkit.Mathematics
             rotationY *= 0.5f;
             rotationZ *= 0.5f;
 
-            var c1 = MathF.Cos(rotationX);
-            var c2 = MathF.Cos(rotationY);
-            var c3 = MathF.Cos(rotationZ);
-            var s1 = MathF.Sin(rotationX);
-            var s2 = MathF.Sin(rotationY);
-            var s3 = MathF.Sin(rotationZ);
+            var c1 = (float)Math.Cos(rotationX);
+            var c2 = (float)Math.Cos(rotationY);
+            var c3 = (float)Math.Cos(rotationZ);
+            var s1 = (float)Math.Sin(rotationX);
+            var s2 = (float)Math.Sin(rotationY);
+            var s3 = (float)Math.Sin(rotationZ);
 
             W = (c1 * c2 * c3) - (s1 * s2 * s3);
             Xyz.X = (s1 * c2 * c3) + (c1 * s2 * s3);
@@ -160,10 +160,10 @@ namespace OpenToolkit.Mathematics
 
             var result = new Vector4
             {
-                W = 2.0f * MathF.Acos(q.W) // angle
+                W = 2.0f * (float)Math.Acos(q.W) // angle
             };
 
-            var den = MathF.Sqrt(1.0f - (q.W * q.W));
+            var den = (float)Math.Sqrt(1.0 - (q.W * q.W));
             if (den > 0.0001f)
             {
                 result.Xyz = q.Xyz / den;
@@ -221,15 +221,15 @@ namespace OpenToolkit.Mathematics
             }
             else if (singularityTest < -SINGULARITY_THRESHOLD * unit)
             {
-                eulerAngles.Z = -2 * MathF.Atan2(q.X, q.W);
+                eulerAngles.Z = (float)(-2 * Math.Atan2(q.X, q.W));
                 eulerAngles.Y = -MathHelper.PiOver2;
                 eulerAngles.X = 0;
             }
             else
             {
-                eulerAngles.Z = MathF.Atan2(2 * ((q.W * q.Z) - (q.X * q.Y)), sqw + sqx - sqy - sqz);
-                eulerAngles.Y = MathF.Asin(2 * singularityTest / unit);
-                eulerAngles.X = MathF.Atan2(2 * ((q.W * q.X) - (q.Y * q.Z)), sqw - sqx - sqy + sqz);
+                eulerAngles.Z = (float)Math.Atan2(2 * ((q.W * q.Z) - (q.X * q.Y)), sqw + sqx - sqy - sqz);
+                eulerAngles.Y = (float)Math.Asin(2 * singularityTest / unit);
+                eulerAngles.X = (float)Math.Atan2(2 * ((q.W * q.X) - (q.Y * q.Z)), sqw - sqx - sqy + sqz);
             }
 
             return eulerAngles;
@@ -239,7 +239,7 @@ namespace OpenToolkit.Mathematics
         /// Gets the length (magnitude) of the quaternion.
         /// </summary>
         /// <seealso cref="LengthSquared"/>
-        public float Length => MathF.Sqrt((W * W) + Xyz.LengthSquared);
+        public float Length => (float)Math.Sqrt((W * W) + Xyz.LengthSquared);
 
         /// <summary>
         /// Gets the square of the quaternion length (magnitude).
@@ -507,8 +507,8 @@ namespace OpenToolkit.Mathematics
 
             angle *= 0.5f;
             axis.Normalize();
-            result.Xyz = axis * MathF.Sin(angle);
-            result.W = MathF.Cos(angle);
+            result.Xyz = axis * (float)Math.Sin(angle);
+            result.W = (float)Math.Cos(angle);
 
             return Normalize(result);
         }
@@ -550,12 +550,12 @@ namespace OpenToolkit.Mathematics
         /// <param name="result">The equivalent Quaternion.</param>
         public static void FromEulerAngles(in Vector3 eulerAngles, out Quaternion result)
         {
-            var c1 = MathF.Cos(eulerAngles.X * 0.5f);
-            var c2 = MathF.Cos(eulerAngles.Y * 0.5f);
-            var c3 = MathF.Cos(eulerAngles.Z * 0.5f);
-            var s1 = MathF.Sin(eulerAngles.X * 0.5f);
-            var s2 = MathF.Sin(eulerAngles.Y * 0.5f);
-            var s3 = MathF.Sin(eulerAngles.Z * 0.5f);
+            var c1 = (float)Math.Cos(eulerAngles.X * 0.5f);
+            var c2 = (float)Math.Cos(eulerAngles.Y * 0.5f);
+            var c3 = (float)Math.Cos(eulerAngles.Z * 0.5f);
+            var s1 = (float)Math.Sin(eulerAngles.X * 0.5f);
+            var s2 = (float)Math.Sin(eulerAngles.Y * 0.5f);
+            var s3 = (float)Math.Sin(eulerAngles.Z * 0.5f);
 
             result.W = (c1 * c2 * c3) - (s1 * s2 * s3);
             result.Xyz.X = (s1 * c2 * c3) + (c1 * s2 * s3);
@@ -596,7 +596,7 @@ namespace OpenToolkit.Mathematics
 
             if (trace > 0)
             {
-                var s = MathF.Sqrt(trace + 1) * 2;
+                var s = (float)Math.Sqrt(trace + 1) * 2;
                 var invS = 1f / s;
 
                 result.W = s * 0.25f;
@@ -610,7 +610,7 @@ namespace OpenToolkit.Mathematics
 
                 if (m00 > m11 && m00 > m22)
                 {
-                    var s = MathF.Sqrt(1 + m00 - m11 - m22) * 2;
+                    var s = (float)Math.Sqrt(1 + m00 - m11 - m22) * 2;
                     var invS = 1f / s;
 
                     result.W = (matrix.Row2.Y - matrix.Row1.Z) * invS;
@@ -620,7 +620,7 @@ namespace OpenToolkit.Mathematics
                 }
                 else if (m11 > m22)
                 {
-                    var s = MathF.Sqrt(1 + m11 - m00 - m22) * 2;
+                    var s = (float)Math.Sqrt(1 + m11 - m00 - m22) * 2;
                     var invS = 1f / s;
 
                     result.W = (matrix.Row0.Z - matrix.Row2.X) * invS;
@@ -630,7 +630,7 @@ namespace OpenToolkit.Mathematics
                 }
                 else
                 {
-                    var s = MathF.Sqrt(1 + m22 - m00 - m11) * 2;
+                    var s = (float)Math.Sqrt(1 + m22 - m00 - m11) * 2;
                     var invS = 1f / s;
 
                     result.W = (matrix.Row1.X - matrix.Row0.Y) * invS;
@@ -687,11 +687,11 @@ namespace OpenToolkit.Mathematics
             if (cosHalfAngle < 0.99f)
             {
                 // do proper slerp for big angles
-                var halfAngle = MathF.Acos(cosHalfAngle);
-                var sinHalfAngle = MathF.Sin(halfAngle);
+                var halfAngle = (float)Math.Acos(cosHalfAngle);
+                var sinHalfAngle = (float)Math.Sin(halfAngle);
                 var oneOverSinHalfAngle = 1.0f / sinHalfAngle;
-                blendA = MathF.Sin(halfAngle * (1.0f - blend)) * oneOverSinHalfAngle;
-                blendB = MathF.Sin(halfAngle * blend) * oneOverSinHalfAngle;
+                blendA = (float)Math.Sin(halfAngle * (1.0f - blend)) * oneOverSinHalfAngle;
+                blendB = (float)Math.Sin(halfAngle * blend) * oneOverSinHalfAngle;
             }
             else
             {

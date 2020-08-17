@@ -732,7 +732,7 @@ namespace OpenToolkit.Mathematics
                 throw new ArgumentOutOfRangeException(nameof(n), "Must be positive.");
             }
 
-            return MathF.Pow(2, MathF.Ceiling(MathF.Log(n, 2)));
+            return (float)Math.Pow(2, Math.Ceiling(Math.Log(n, 2)));
         }
 
         /// <summary>
@@ -841,7 +841,7 @@ namespace OpenToolkit.Mathematics
         [Pure]
         public static float DegreesToRadians(float degrees)
         {
-            const float degToRad = MathF.PI / 180.0f;
+            const float degToRad = (float)Math.PI / 180.0f;
             return degrees * degToRad;
         }
 
@@ -853,7 +853,7 @@ namespace OpenToolkit.Mathematics
         [Pure]
         public static float RadiansToDegrees(float radians)
         {
-            const float radToDeg = 180.0f / MathF.PI;
+            const float radToDeg = 180.0f / (float)Math.PI;
             return radians * radToDeg;
         }
 
