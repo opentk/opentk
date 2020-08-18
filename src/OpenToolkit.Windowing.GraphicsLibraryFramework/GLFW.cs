@@ -2044,7 +2044,7 @@ namespace OpenToolkit.Windowing.GraphicsLibraryFramework
         /// </remarks>
         public static unsafe JoystickInputAction* GetJoystickButtonsRaw(int jid, out int count)
         {
-            fixed (byte* ptr = &count)
+            fixed (int* ptr = &count)
             {
                 return GetJoystickButtonsRaw(jid, ptr);
             }
@@ -2092,7 +2092,7 @@ namespace OpenToolkit.Windowing.GraphicsLibraryFramework
         /// Possible errors include <see cref="ErrorCode.NotInitialized"/>, <see cref="ErrorCode.InvalidEnum"/> and <see cref="ErrorCode.PlatformError"/>.
         /// </para>
         /// </remarks>
-        public static unsafe JoystickInputAction* GetJoystickButtonsRaw(int jid, byte* count)
+        public static unsafe JoystickInputAction* GetJoystickButtonsRaw(int jid, int* count)
         {
             return glfwGetJoystickButtons(jid, count);
         }
