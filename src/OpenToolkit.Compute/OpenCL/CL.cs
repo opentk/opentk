@@ -18,7 +18,7 @@ namespace OpenToolkit.Compute.OpenCL
 		#region Platform API
 
 		[ClVersion(1, 0)]
-		[DllImport(LibName, EntryPoint = "clGetPlatformIDs")]
+        [DllImport(LibName, EntryPoint = "clGetPlatformIDs")]
 		public static extern CLResultCode GetPlatformIds(uint numberOfEntries, IntPtr[] platforms, out uint numberOfPlatforms);
 
 		[ClVersion(1, 0)]
@@ -526,7 +526,7 @@ namespace OpenToolkit.Compute.OpenCL
 		[ClVersion(1, 0)]
 		[Obsolete("Deprecated OpenCL 1.2 method, use CreateCommandQueueWithProperties.")]
 		[DllImport(LibName, EntryPoint = "clCreateCommandQueue")]
-		public static extern CLResultCode CreateCommandQueue(IntPtr context, IntPtr device, CommandQueueProperty properties, out CLResultCode errorCode);
+		public static extern IntPtr CreateCommandQueue(IntPtr context, IntPtr device, CommandQueueProperty properties, out CLResultCode errorCode);
 
 		[ClVersion(1, 0)]
 		[Obsolete("Deprecated OpenCL 1.2 method, use CreateImage.")]
