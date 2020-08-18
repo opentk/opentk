@@ -611,6 +611,8 @@ namespace OpenToolkit.Windowing.Desktop
 
             GLFW.GetWindowPos(WindowPtr, out var x, out var y);
             _location = new Vector2i(x, y);
+
+            _isFocused = GLFW.GetWindowAttrib(WindowPtr, WindowAttributeGetter.Focused);
         }
 
         private static void InitializeGlBindings()
