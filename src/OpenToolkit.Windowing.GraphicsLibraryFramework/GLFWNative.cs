@@ -168,7 +168,7 @@ namespace OpenToolkit.Windowing.GraphicsLibraryFramework
         public static extern float* glfwGetJoystickAxes(int jid, int* count);
 
         [DllImport(LibraryName)]
-        public static extern InputAction* glfwGetJoystickButtons(int jid, int* count);
+        public static extern JoystickInputAction* glfwGetJoystickButtons(int jid, byte* count);
 
         [DllImport(LibraryName)]
         public static extern JoystickHats* glfwGetJoystickHats(int jid, int* count);

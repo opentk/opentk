@@ -7,14 +7,12 @@
 // of the MIT license. See the LICENSE file for details.
 //
 
-using OpenToolkit.Windowing.Common;
-
 namespace OpenToolkit.Windowing.Common
 {
     /// <summary>
     /// Defines event information for <see cref="MouseButtonEventArgs.Action"/>.
     /// </summary>
-    public enum InputAction : byte
+    public enum InputAction
     {
         /// <summary>
         /// The key or mouse button was pressed.

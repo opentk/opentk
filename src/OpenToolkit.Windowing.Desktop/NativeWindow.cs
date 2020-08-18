@@ -969,7 +969,7 @@ namespace OpenToolkit.Windowing.Desktop
                 var buttons = new bool[count];
                 for (var j = 0; j < buttons.Length; j++)
                 {
-                    buttons[j] = b[j] == InputAction.Press;
+                    buttons[j] = b[j] == JoystickInputAction.Press;
                 }
 
                 JoystickStates[i] = new JoystickState(hats, axes, buttons, joy.Id, joy.Name);
