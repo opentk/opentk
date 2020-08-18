@@ -15,13 +15,13 @@ namespace OpenToolkit.Windowing.GraphicsLibraryFramework
     public enum JoystickInputAction : byte
     {
         /// <summary>
-        /// The joystick button was pressed.
-        /// </summary>
-        Press = 0,
-
-        /// <summary>
         /// The joystick button was released.
         /// </summary>
-        Release = 1,
+        Release = 0,
+
+        /// <summary>
+        /// The joystick button was pressed.
+        /// </summary>
+        Press = 1,
     }
 }
