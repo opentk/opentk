@@ -1,8 +1,8 @@
 using OpenToolkit.Core.Loader;
 
-namespace OpenToolkit.Compute
+namespace OpenToolkit.Compute.OpenCL
 {
-    public class OpenCLLibraryNameContainer : PlatformLibraryNameContainerBase
+    public class OpenClLibraryNameContainer : PlatformLibraryNameContainerBase
     {
         /// <inheritdoc />
         public override string Linux => "libOpenCL.so.1";

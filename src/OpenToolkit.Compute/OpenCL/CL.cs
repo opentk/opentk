@@ -2,9 +2,9 @@
 using System.Runtime.InteropServices;
 using OpenToolkit.Compute.Native;
 
-namespace OpenToolkit.Compute
+namespace OpenToolkit.Compute.OpenCL
 {
-	[Api(LibName, typeof(OpenCLLibraryNameContainer))]
+	[Api(LibName, typeof(OpenClLibraryNameContainer))]
 	public class CL : ApiContainer<CL>
 	{
 		static CL()
