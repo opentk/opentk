@@ -14,7 +14,7 @@ namespace OpenToolkit.Windowing.Common
     /// <summary>
     /// Defines event information for <see cref="MouseButtonEventArgs.Action"/>.
     /// </summary>
-    public enum InputAction
+    public enum InputAction : byte
     {
         /// <summary>
         /// The key or mouse button was pressed.
