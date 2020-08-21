@@ -1982,7 +1982,7 @@ namespace OpenToolkit.Windowing.GraphicsLibraryFramework
         /// Possible errors include <see cref="ErrorCode.NotInitialized"/>, <see cref="ErrorCode.InvalidEnum"/> and <see cref="ErrorCode.PlatformError"/>.
         /// </para>
         /// </remarks>
-        public static unsafe InputAction[] GetJoystickButtons(int jid)
+        public static unsafe JoystickInputAction[] GetJoystickButtons(int jid)
         {
             var ptr = GetJoystickButtonsRaw(jid, out var count);
 
@@ -1991,7 +1991,7 @@ namespace OpenToolkit.Windowing.GraphicsLibraryFramework
                 return null;
             }
 
-            var array = new InputAction[count];
+            var array = new JoystickInputAction[count];
             for (var i = 0; i < count; i++)
             {
                 array[i] = ptr[i];
@@ -2042,7 +2042,7 @@ namespace OpenToolkit.Windowing.GraphicsLibraryFramework
         /// Possible errors include <see cref="ErrorCode.NotInitialized"/>, <see cref="ErrorCode.InvalidEnum"/> and <see cref="ErrorCode.PlatformError"/>.
         /// </para>
         /// </remarks>
-        public static unsafe InputAction* GetJoystickButtonsRaw(int jid, out int count)
+        public static unsafe JoystickInputAction* GetJoystickButtonsRaw(int jid, out int count)
         {
             fixed (int* ptr = &count)
             {
@@ -2092,7 +2092,7 @@ namespace OpenToolkit.Windowing.GraphicsLibraryFramework
         /// Possible errors include <see cref="ErrorCode.NotInitialized"/>, <see cref="ErrorCode.InvalidEnum"/> and <see cref="ErrorCode.PlatformError"/>.
         /// </para>
         /// </remarks>
-        public static unsafe InputAction* GetJoystickButtonsRaw(int jid, int* count)
+        public static unsafe JoystickInputAction* GetJoystickButtonsRaw(int jid, int* count)
         {
             return glfwGetJoystickButtons(jid, count);
         }
