@@ -1,3 +1,6 @@
+### 4.0.0-pre9.3
+ * Fixed InputAction for getting Joystick Buttons from GLFW (@HughPH)
+
 ### 4.0.0-pre9.2
  * Fixes reference conditions
  * Save Size property value to _size field (thanks @devel0)
