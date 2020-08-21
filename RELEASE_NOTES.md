@@ -1,5 +1,8 @@
 ### 4.0.0-pre9.3
- * Fixed InputAction for getting Joystick Buttons from GLFW (@HughPH)
+ * Improved and fixed GLFW binary loading (@jvbsl)
+ * Improved mono compat (@jvbsl)
+ * Fixed GetLibraryName for iOS platform (thanks @Grizley56)
+ * Fixed InputAction for getting Joystick Buttons from GLFW (thanks @HughPH)
 
 ### 4.0.0-pre9.2
  * Fixes reference conditions
