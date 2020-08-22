@@ -225,7 +225,7 @@ namespace OpenToolkit.Compute.OpenCL
 		/// </summary>
 		/// <param name="context"></param>
 		/// <returns></returns>
-		[DllImport(LibName, EntryPoint = "clReleseContext")]
+		[DllImport(LibName, EntryPoint = "clReleaseContext")]
 		public static extern CLResultCode ReleaseContext(IntPtr context);
 
 		/// <summary>
