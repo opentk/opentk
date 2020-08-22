@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Runtime.InteropServices;
+using System.Text;
 using OpenToolkit.Compute.Native;
 
 namespace OpenToolkit.Compute.OpenCL
 {
 	[Api(LibName, typeof(OpenClLibraryNameContainer))]
-	public partial class CL : ApiContainer<CL>
+	public class CL : ApiContainer<CL>
 	{
 		static CL()
 		{
@@ -27,6 +28,13 @@ namespace OpenToolkit.Compute.OpenCL
 		[DllImport(LibName, EntryPoint = "clGetPlatformIDs")]
 		public static extern CLResultCode GetPlatformIds(uint numberOfEntries, IntPtr[] platforms, out uint numberOfPlatforms);
 
+		public static CLResultCode GetPlatformIds(out IntPtr[] platformIds)
+		{
+			GetPlatformIds(0, null, out uint platformCount);
+			platformIds = new IntPtr[platformCount];
+			return GetPlatformIds(platformCount, platformIds, out _);
+		}
+
 		/// <summary>
 		/// Introduced in OpenCL 1.0
 		/// </summary>
@@ -39,6 +47,22 @@ namespace OpenToolkit.Compute.OpenCL
 		[DllImport(LibName, EntryPoint = "clGetPlatformInfo")]
 		public static extern CLResultCode GetPlatformInfo(IntPtr platform, PlatformInfo paramName,
 			UIntPtr paramValueSize, byte[] paramValue, out UIntPtr paramValueSizeReturned);
+
+		public static CLResultCode GetPlatformInfo(IntPtr platform, PlatformInfo paramName, out byte[] paramValue)
+		{
+			GetPlatformInfo(platform, paramName, UIntPtr.Zero, null, out UIntPtr sizeReturned);
+			paramValue = new byte[sizeReturned.ToUInt64()];
+			return GetPlatformInfo(platform, paramName, sizeReturned, paramValue, out _);
+		}
+
+		/// <summary>
+		/// Helper method not present in official OpenCL specs
+		/// </summary>
+		public static string GetPlatformInfoAsString(IntPtr platform, PlatformInfo paramName, out CLResultCode result)
+		{
+			result = GetPlatformInfo(platform, paramName, out byte[] raw);
+			return Encoding.ASCII.GetString(raw);
+		}
 
 		#endregion
 
@@ -57,6 +81,13 @@ namespace OpenToolkit.Compute.OpenCL
 		public static extern CLResultCode GetDeviceIds(IntPtr platform, DeviceType deviceType, uint numberOfEntries,
 			IntPtr[] devices, out uint numberOfDevicesReturned);
 
+		public static CLResultCode GetDeviceIds(IntPtr platform, DeviceType deviceType, out IntPtr[] deviceIds)
+		{
+			GetDeviceIds(platform, deviceType, 0, null, out uint deviceCount);
+			deviceIds = new IntPtr[deviceCount];
+			return GetDeviceIds(platform, deviceType, deviceCount, deviceIds, out _);
+		}
+
 		/// <summary>
 		/// Introduced in OpenCL 1.0
 		/// </summary>
@@ -69,6 +100,22 @@ namespace OpenToolkit.Compute.OpenCL
 		[DllImport(LibName, EntryPoint = "clGetDeviceInfo")]
 		public static extern CLResultCode GetDeviceInfo(IntPtr device, DeviceInfo paramName, UIntPtr paramValueSize,
 			byte[] paramValue, out UIntPtr paramValueSizeReturned);
+
+		public static CLResultCode GetDeviceInfo(IntPtr device, DeviceInfo paramName, out byte[] paramValue)
+		{
+			GetDeviceInfo(device, paramName, UIntPtr.Zero, null, out UIntPtr sizeReturned);
+			paramValue = new byte[sizeReturned.ToUInt64()];
+			return GetDeviceInfo(device, paramName, sizeReturned, paramValue, out _);
+		}
+
+		/// <summary>
+		/// Helper method not present in official OpenCL specs
+		/// </summary>
+		public static string GetDeviceInfoAsString(IntPtr device, DeviceInfo paramName, out CLResultCode result)
+		{
+			result = GetDeviceInfo(device, paramName, out byte[] raw);
+			return Encoding.ASCII.GetString(raw);
+		}
 
 		/// <summary>
 		/// Introduced in OpenCL 1.2
@@ -107,8 +154,7 @@ namespace OpenToolkit.Compute.OpenCL
 		/// <param name="commandQueue"></param>
 		/// <returns></returns>
 		[DllImport(LibName, EntryPoint = "clSetDefaultDeviceCommandQueue")]
-		public static extern CLResultCode SetDefaultDeviceCommandQueue(IntPtr context, IntPtr device,
-			IntPtr commandQueue);
+		public static extern CLResultCode SetDefaultDeviceCommandQueue(IntPtr context, IntPtr device, IntPtr commandQueue);
 
 		/// <summary>
 		/// Introduced in OpenCL 2.1
@@ -118,8 +164,7 @@ namespace OpenToolkit.Compute.OpenCL
 		/// <param name="hostTimestamp"></param>
 		/// <returns></returns>
 		[DllImport(LibName, EntryPoint = "clGetDeviceAndHostTimer")]
-		public static extern CLResultCode GetDeviceAndHostTimer(IntPtr device, IntPtr deviceTimestamp,
-			IntPtr hostTimestamp);
+		public static extern CLResultCode GetDeviceAndHostTimer(IntPtr device, IntPtr deviceTimestamp, IntPtr hostTimestamp);
 
 		/// <summary>
 		/// Introduced in OpenCL 2.1
@@ -147,6 +192,12 @@ namespace OpenToolkit.Compute.OpenCL
 		[DllImport(LibName, EntryPoint = "clCreateContext")]
 		public static extern IntPtr CreateContext(IntPtr properties, uint numberOfDevices, IntPtr[] devices,
 			IntPtr notificationCallback, IntPtr userData, out CLResultCode errorCode);
+
+		public static IntPtr CreateContext(IntPtr properties, IntPtr[] devices, IntPtr notificationCallback,
+			IntPtr userData, out CLResultCode errorCode)
+		{
+			return CreateContext(properties, (uint)devices.Length, devices, notificationCallback, userData, out errorCode);
+		}
 
 		/// <summary>
 		/// Introduced in OpenCL 1.0
@@ -251,6 +302,14 @@ namespace OpenToolkit.Compute.OpenCL
 		[DllImport(LibName, EntryPoint = "clCreateBuffer")]
 		public static extern IntPtr CreateBuffer(IntPtr context, MemoryFlags flags, UIntPtr size, IntPtr hostPtr, out CLResultCode errorCode);
 
+		public static IntPtr CreateBuffer<T>(IntPtr context, MemoryFlags flags, T[] array, out CLResultCode errorCode)
+		{
+			GCHandle handle = GCHandle.Alloc(array, GCHandleType.Pinned);
+			IntPtr buffer = CreateBuffer(context, flags, (UIntPtr)(Marshal.SizeOf<T>() * array.Length), handle.AddrOfPinnedObject(), out errorCode);
+			handle.Free();
+			return buffer;
+		}
+
 		/// <summary>
 		/// Introduced in OpenCL 1.1
 		/// </summary>
@@ -337,6 +396,14 @@ public static extern IntPtr CreateImageWithProperties(IntPtr context, IntPtr[] p
 			MemoryObjectType imageType, uint numberOfEntries, ImageFormat[] imageFormats,
 			out uint numberOfImageFormats);
 
+		public static CLResultCode GetSupportedImageFormats(IntPtr context, MemoryFlags flags,
+			MemoryObjectType imageType, out ImageFormat[] imageFormats)
+		{
+			GetSupportedImageFormats(context, flags, imageType, 0, null, out uint count);
+			imageFormats = new ImageFormat[count];
+			return GetSupportedImageFormats(context, flags, imageType, count, imageFormats, out _);
+		}
+
 		/// <summary>
 		/// Introduced in OpenCL 1.0
 		/// </summary>
@@ -344,12 +411,18 @@ public static extern IntPtr CreateImageWithProperties(IntPtr context, IntPtr[] p
 		/// <param name="paramName"></param>
 		/// <param name="paramValueSize"></param>
 		/// <param name="paramValue"></param>
-		/// <param name="imageFormats"></param>
 		/// <param name="paramValueSizeReturned"></param>
 		/// <returns></returns>
 		[DllImport(LibName, EntryPoint = "clGetMemObjectInfo")]
 		public static extern CLResultCode GetMemObjectInfo(IntPtr memoryObject, MemoryObjectInfo paramName,
-			UIntPtr paramValueSize, byte[] paramValue, ImageFormat[] imageFormats, out UIntPtr paramValueSizeReturned);
+			UIntPtr paramValueSize, byte[] paramValue, out UIntPtr paramValueSizeReturned);
+
+		public static CLResultCode GetMemObjectInfo(IntPtr memoryObject, MemoryObjectInfo paramName, out byte[] paramValue)
+		{
+			GetMemObjectInfo(memoryObject, paramName, UIntPtr.Zero, null, out UIntPtr size);
+			paramValue = new byte[size.ToUInt64()];
+			return GetMemObjectInfo(memoryObject, paramName, size, paramValue, out _);
+		}
 
 		/// <summary>
 		/// Introduced in OpenCL 1.0
@@ -358,12 +431,18 @@ public static extern IntPtr CreateImageWithProperties(IntPtr context, IntPtr[] p
 		/// <param name="paramName"></param>
 		/// <param name="paramValueSize"></param>
 		/// <param name="paramValue"></param>
-		/// <param name="imageFormats"></param>
 		/// <param name="paramValueSizeReturned"></param>
 		/// <returns></returns>
 		[DllImport(LibName, EntryPoint = "clGetImageInfo")]
 		public static extern CLResultCode GetImageInfo(IntPtr image, ImageInfo paramName, UIntPtr paramValueSize,
-			byte[] paramValue, ImageFormat[] imageFormats, out UIntPtr paramValueSizeReturned);
+			byte[] paramValue, out UIntPtr paramValueSizeReturned);
+
+		public static CLResultCode GetImageInfo(IntPtr image, ImageInfo paramName, out byte[] paramValue)
+		{
+			GetImageInfo(image, paramName, UIntPtr.Zero, null, out UIntPtr size);
+			paramValue = new byte[size.ToUInt64()];
+			return GetImageInfo(image, paramName, size, paramValue, out _);
+		}
 
 		/// <summary>
 		/// Introduced in OpenCL 2.0
@@ -372,12 +451,19 @@ public static extern IntPtr CreateImageWithProperties(IntPtr context, IntPtr[] p
 		/// <param name="paramName"></param>
 		/// <param name="paramValueSize"></param>
 		/// <param name="paramValue"></param>
-		/// <param name="imageFormats"></param>
 		/// <param name="paramValueSizeReturned"></param>
 		/// <returns></returns>
 		[DllImport(LibName, EntryPoint = "clGetPipeInfo")]
 		public static extern CLResultCode GetPipeInfo(IntPtr pipe, PipeInfo paramName, UIntPtr paramValueSize,
-			byte[] paramValue, ImageFormat[] imageFormats, out UIntPtr paramValueSizeReturned);
+			byte[] paramValue, out UIntPtr paramValueSizeReturned);
+
+		public static CLResultCode GetPipeInfo(IntPtr pipe, PipeInfo paramName, out byte[] paramValue)
+		{
+			GetPipeInfo(pipe, paramName, UIntPtr.Zero, null, out UIntPtr size);
+			paramValue = new byte[size.ToUInt64()];
+			return GetPipeInfo(pipe, paramName, size, paramValue, out _);
+		}
+
 
 		/// <summary>
 		/// Introduced in OpenCL 1.1
@@ -458,6 +544,14 @@ public static extern IntPtr CreateImageWithProperties(IntPtr context, IntPtr[] p
 		public static extern CLResultCode GetSamplerInfo(IntPtr sampler, SamplerInfo paramName, UIntPtr paramValueSize,
 			byte[] paramValue, out UIntPtr paramValueSizeReturned);
 
+		public static CLResultCode GetSamplerInfo(IntPtr sampler, SamplerInfo paramName,out byte[] paramValue)
+		{
+			GetSamplerInfo(sampler, paramName, UIntPtr.Zero, null, out UIntPtr size);
+			paramValue = new byte[size.ToUInt64()];
+			return GetSamplerInfo(sampler, paramName, size, paramValue, out _);
+		}
+
+
 		#endregion
 
 		#region Program Object API
@@ -474,6 +568,13 @@ public static extern IntPtr CreateImageWithProperties(IntPtr context, IntPtr[] p
 		[DllImport(LibName, EntryPoint = "clCreateProgramWithSource")]
 		public static extern IntPtr CreateProgramWithSource(IntPtr context, uint count, IntPtr[] strings,
 			uint[] lengths, out CLResultCode errorCode);
+
+		public static IntPtr CreateProgramWithSource(IntPtr context, string source, out CLResultCode errorCode)
+		{
+			IntPtr[] sourceList = {Marshal.StringToHGlobalAnsi(source)};
+			uint[] sourceLengths = {(uint)source.Length};
+			return CreateProgramWithSource(context, 1, sourceList, sourceLengths, out errorCode);
+		}
 
 		/// <summary>
 		/// Introduced in OpenCL 1.0
@@ -625,6 +726,13 @@ public static extern IntPtr CreateImageWithProperties(IntPtr context, IntPtr[] p
 		public static extern CLResultCode GetProgramInfo(IntPtr program, ProgramInfo paramName, UIntPtr paramValueSize,
 			byte[] paramValue, out UIntPtr paramValueSizeReturned);
 
+		public static CLResultCode GetProgramInfo(IntPtr program, ProgramInfo paramName, out byte[] paramValue)
+		{
+			GetProgramInfo(program, paramName, UIntPtr.Zero, null, out UIntPtr size);
+			paramValue = new byte[size.ToUInt64()];
+			return GetProgramInfo(program, paramName, size, paramValue, out _);
+		}
+
 		/// <summary>
 		/// Introduced in OpenCL 1.0
 		/// </summary>
@@ -638,6 +746,14 @@ public static extern IntPtr CreateImageWithProperties(IntPtr context, IntPtr[] p
 		[DllImport(LibName, EntryPoint = "clGetProgramBuildInfo")]
 		public static extern CLResultCode GetProgramBuildInfo(IntPtr program, IntPtr device, ProgramBuildInfo paramName,
 			UIntPtr paramValueSize, byte[] paramValue, out UIntPtr paramValueSizeReturned);
+
+		public static CLResultCode GetProgramBuildInfo(IntPtr program, IntPtr device, ProgramBuildInfo paramName,
+			out byte[] paramValue)
+		{
+			GetProgramBuildInfo(program, device, paramName, UIntPtr.Zero, null, out UIntPtr size);
+			paramValue = new byte[size.ToUInt64()];
+			return GetProgramBuildInfo(program, device, paramName, size, paramValue, out _);
+		}
 
 		#endregion
 
@@ -664,6 +780,14 @@ public static extern IntPtr CreateImageWithProperties(IntPtr context, IntPtr[] p
 		[DllImport(LibName, EntryPoint = "clCreateKernelsInProgram")]
 		public static extern CLResultCode CreateKernelsInProgram(IntPtr program, uint numberOfKernels, IntPtr[] kernels,
 			out uint numberOfKernelsReturned);
+
+		public static CLResultCode CreateKernelsInProgram(IntPtr program, out IntPtr[] kernels)
+		{
+			CreateKernelsInProgram(program, 0, null, out uint count);
+			kernels = new IntPtr[count];
+			return CreateKernelsInProgram(program, count, kernels, out _);
+		}
+
 
 		/// <summary>
 		/// Introduced in OpenCL 2.1
@@ -738,6 +862,13 @@ public static extern IntPtr CreateImageWithProperties(IntPtr context, IntPtr[] p
 		public static extern CLResultCode GetKernelInfo(IntPtr kernel, KernelInfo paramName, UIntPtr paramValueSize,
 			byte[] paramValue, out UIntPtr paramSizeReturned);
 
+		public static CLResultCode GetKernelInfo(IntPtr kernel, KernelInfo paramName, out byte[] paramValue)
+		{
+			GetKernelInfo(kernel, paramName, UIntPtr.Zero, null, out UIntPtr size);
+			paramValue = new byte[size.ToUInt64()];
+			return GetKernelInfo(kernel, paramName, size, paramValue, out _);
+		}
+
 		/// <summary>
 		/// Introduced in OpenCL 1.2
 		/// </summary>
@@ -752,6 +883,13 @@ public static extern IntPtr CreateImageWithProperties(IntPtr context, IntPtr[] p
 		public static extern CLResultCode GetKernelArgInfo(IntPtr kernel, uint argumentIndex, KernelArgInfo paramName,
 			UIntPtr paramValueSize, byte[] paramValue, out UIntPtr paramSizeReturned);
 
+		public static CLResultCode GetKernelArgInfo(IntPtr kernel, uint argumentIndex, KernelArgInfo paramName, out byte[] paramValue)
+		{
+			GetKernelArgInfo(kernel, argumentIndex, paramName, UIntPtr.Zero, null, out UIntPtr size);
+			paramValue = new byte[size.ToUInt64()];
+			return GetKernelArgInfo(kernel, argumentIndex, paramName, size, paramValue, out _);
+		}
+
 		/// <summary>
 		/// Introduced in OpenCL 1.0
 		/// </summary>
@@ -765,6 +903,14 @@ public static extern IntPtr CreateImageWithProperties(IntPtr context, IntPtr[] p
 		[DllImport(LibName, EntryPoint = "clGetKernelWorkGroupInfo")]
 		public static extern CLResultCode GetKernelWorkGroupInfo(IntPtr kernel, IntPtr device,
 			KernelWorkGroupInfo paramName, UIntPtr paramValueSize, byte[] paramValue, out UIntPtr paramSizeReturned);
+
+		public static CLResultCode GetKernelWorkGroupInfo(IntPtr kernel, IntPtr device, KernelWorkGroupInfo paramName,
+			out byte[] paramValue)
+		{
+			GetKernelWorkGroupInfo(kernel, device, paramName, UIntPtr.Zero, null, out UIntPtr size);
+			paramValue = new byte[size.ToUInt64()];
+			return GetKernelWorkGroupInfo(kernel, device, paramName, size, paramValue, out _);
+		}
 
 		/// <summary>
 		/// Introduced in OpenCL 2.1
@@ -808,6 +954,13 @@ public static extern IntPtr CreateImageWithProperties(IntPtr context, IntPtr[] p
 		[DllImport(LibName, EntryPoint = "clGetEventInfo")]
 		public static extern CLResultCode GetEventInfo(IntPtr @event, EventInfo paramName, UIntPtr paramValueSize,
 			byte[] paramValue, out UIntPtr paramSizeReturned);
+
+		public static CLResultCode GetEventInfo(IntPtr @event, EventInfo paramName, out byte[] paramValue)
+		{
+			GetEventInfo(@event, paramName, UIntPtr.Zero, null, out UIntPtr size);
+			paramValue = new byte[size.ToUInt64()];
+			return GetEventInfo(@event, paramName, size, paramValue, out _);
+		}
 
 		/// <summary>
 		/// Introduced in OpenCL 1.1
@@ -872,6 +1025,13 @@ public static extern IntPtr CreateImageWithProperties(IntPtr context, IntPtr[] p
 		public static extern CLResultCode GetEventProfilingInfo(IntPtr @event, ProfilingInfo paramName,
 			UIntPtr paramValueSize, byte[] paramValue, out UIntPtr paramValueSizeReturned);
 
+		public static CLResultCode GetEventProfilingInfo(IntPtr @event, ProfilingInfo paramName, out byte[] paramValue)
+		{
+			GetEventProfilingInfo(@event, paramName, UIntPtr.Zero, null, out UIntPtr size);
+			paramValue = new byte[size.ToUInt64()];
+			return GetEventProfilingInfo(@event, paramName, size, paramValue, out _);
+		}
+
 		#endregion
 
 		#region Flush and Finish API
@@ -914,6 +1074,19 @@ public static extern IntPtr CreateImageWithProperties(IntPtr context, IntPtr[] p
 			UIntPtr offset, UIntPtr size, IntPtr pointer, uint numberOfEventsInWaitList, IntPtr[] eventWaitList,
 			out IntPtr @event);
 
+		public static CLResultCode EnqueueReadBuffer<T>(IntPtr commandQueue, IntPtr buffer, bool blockingRead,
+			UIntPtr offset, int size, out T[] array, uint numberOfEventsInWaitList, IntPtr[] eventWaitList,
+			out IntPtr @event)
+		{
+			array = new T[size];
+			GCHandle handle = GCHandle.Alloc(array, GCHandleType.Pinned);
+
+			CLResultCode resultCode = EnqueueReadBuffer(commandQueue, buffer, (uint)(blockingRead ? 1 : 0), offset,
+				(UIntPtr)(size * Marshal.SizeOf<T>()), handle.AddrOfPinnedObject(), numberOfEventsInWaitList, eventWaitList, out @event);
+
+			return resultCode;
+		}
+
 		/// <summary>
 		/// Introduced in OpenCL 1.1
 		/// </summary>
@@ -955,6 +1128,18 @@ public static extern IntPtr CreateImageWithProperties(IntPtr context, IntPtr[] p
 		public static extern CLResultCode EnqueueWriteBuffer(IntPtr commandQueue, IntPtr buffer, uint blockingWrite,
 			UIntPtr offset, UIntPtr size, IntPtr pointer, uint numberOfEventsInWaitList, IntPtr[] eventWaitList,
 			out IntPtr @event);
+
+		public static CLResultCode EnqueueWriteBuffer<T>(IntPtr commandQueue, IntPtr buffer, bool blockingRead,
+			UIntPtr offset, int size, T[] array, uint numberOfEventsInWaitList, IntPtr[] eventWaitList,
+			out IntPtr @event)
+		{
+			GCHandle handle = GCHandle.Alloc(array, GCHandleType.Pinned);
+
+			CLResultCode resultCode = EnqueueWriteBuffer(commandQueue, buffer, (uint)(blockingRead ? 1 : 0), offset,
+				(UIntPtr)(size * Marshal.SizeOf<T>()), handle.AddrOfPinnedObject(), numberOfEventsInWaitList, eventWaitList, out @event);
+
+			return resultCode;
+		}
 
 		/// <summary>
 		/// Introduced in OpenCL 1.1
@@ -1435,7 +1620,7 @@ public static extern IntPtr CreateImageWithProperties(IntPtr context, IntPtr[] p
 		/// <param name="commandQueue"></param>
 		/// <param name="event"></param>
 		/// <returns></returns>
-		[Obsolete("Deprecated OpenCL 1.1 method, use EnqueueMarkerWithWaitList.")]
+		[Obsolete("Deprecated in OpenCL 1.1, use EnqueueMarkerWithWaitList.")]
 		[DllImport(LibName, EntryPoint = "clEnqueueMarker")]
 
 		public static extern CLResultCode EnqueueMarker(IntPtr commandQueue, IntPtr @event);
@@ -1447,7 +1632,7 @@ public static extern IntPtr CreateImageWithProperties(IntPtr context, IntPtr[] p
 		/// <param name="numberOfEventsInWaitList"></param>
 		/// <param name="eventList"></param>
 		/// <returns></returns>
-		[Obsolete("Deprecated OpenCL 1.1 method, use EnqueueMarkerWithWaitList.")]
+		[Obsolete("Deprecated in OpenCL 1.1, use EnqueueMarkerWithWaitList.")]
 		[DllImport(LibName, EntryPoint = "clEnqueueWaitForEvents")]
 		public static extern CLResultCode EnqueueWaitForEvents(IntPtr commandQueue, uint numberOfEventsInWaitList,
 			IntPtr[] eventList);
@@ -1457,7 +1642,7 @@ public static extern IntPtr CreateImageWithProperties(IntPtr context, IntPtr[] p
 		/// </summary>
 		/// <param name="commandQueue"></param>
 		/// <returns></returns>
-		[Obsolete("Deprecated OpenCL 1.1 method, use EnqueueBarrierWithWaitList.")]
+		[Obsolete("Deprecated in OpenCL 1.1, use EnqueueBarrierWithWaitList.")]
 		[DllImport(LibName, EntryPoint = "clEnqueueBarrier")]
 		public static extern CLResultCode EnqueueBarrier(IntPtr commandQueue);
 
@@ -1465,7 +1650,7 @@ public static extern IntPtr CreateImageWithProperties(IntPtr context, IntPtr[] p
 		/// Introduced in OpenCL 1.0
 		/// </summary>
 		/// <returns></returns>
-		[Obsolete("Deprecated OpenCL 1.1 method, use UnloadPlatformCompiler.")]
+		[Obsolete("Deprecated in OpenCL 1.1, use UnloadPlatformCompiler.")]
 		[DllImport(LibName, EntryPoint = "clUnloadCompiler")]
 		public static extern CLResultCode UnloadCompiler();
 
@@ -1486,7 +1671,7 @@ public static extern IntPtr CreateImageWithProperties(IntPtr context, IntPtr[] p
 		/// <param name="properties"></param>
 		/// <param name="errorCode"></param>
 		/// <returns></returns>
-		[Obsolete("Deprecated OpenCL 1.2 method, use CreateCommandQueueWithProperties.")]
+		[Obsolete("Deprecated in OpenCL 1.2, use CreateCommandQueueWithProperties.")]
 		[DllImport(LibName, EntryPoint = "clCreateCommandQueue")]
 		public static extern IntPtr CreateCommandQueue(IntPtr context, IntPtr device, CommandQueueProperty properties,
 			out CLResultCode errorCode);
@@ -1500,7 +1685,7 @@ public static extern IntPtr CreateImageWithProperties(IntPtr context, IntPtr[] p
 		/// <param name="filterMode"></param>
 		/// <param name="errorCode"></param>
 		/// <returns></returns>
-		[Obsolete("Deprecated OpenCL 1.2 method, use CreateImage.")]
+		[Obsolete("Deprecated in OpenCL 1.2, use CreateImage.")]
 		[DllImport(LibName, EntryPoint = "clCreateSampler")]
 		public static extern IntPtr CreateSampler(IntPtr context, uint normalizedCoordinates,
 			AddressingMode addressingMode, FilterMode filterMode, out CLResultCode errorCode);
@@ -1514,7 +1699,7 @@ public static extern IntPtr CreateImageWithProperties(IntPtr context, IntPtr[] p
 		/// <param name="eventWaitList"></param>
 		/// <param name="event"></param>
 		/// <returns></returns>
-		[Obsolete("Deprecated OpenCL 1.2 method.")]
+		[Obsolete("Deprecated in OpenCL 1.2")]
 		[DllImport(LibName, EntryPoint = "clEnqueueBarrier")]
 		public static extern CLResultCode EnqueueTask(IntPtr commandQueue, IntPtr kernel, uint numberOfEventsInWaitList,
 			IntPtr[] eventWaitList, out IntPtr @event);
