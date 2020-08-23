@@ -1,0 +1,8 @@
+type file
+id OpenTK.Input
+description
+    Hid/Controller input library.
+files
+    bin\Release\netstandard2.0\OpenTK.Input.dll ==> lib\netstandard2.0
+    bin\Release\netstandard2.0\OpenTK.Input.xml ==> lib\netstandard2.0
+    bin\Release\netstandard2.0\OpenTK.Input.pdb ==> lib\netstandard2.0

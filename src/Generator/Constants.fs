@@ -30,10 +30,10 @@ let additionalTypesToGenerate =
 
 let reservedKeywords =
     [| "ref"; "object"; "string"; "event"; "params"; "base"; "in" |]
-let graphicsNamespace = "OpenToolkit.Graphics"
+let graphicsNamespace = "OpenTK.Graphics"
 let dummyTypesFileName = "DummyTypes"
 let advancedDlSupport = "AdvancedDLSupport"
-let mathematicsNamespace = "OpenToolkit.Mathematics"
+let mathematicsNamespace = "OpenTK.Mathematics"
 let dummyTypesNamespace = graphicsNamespace + "." + "GL"
 let prefixToRemove = [| "gl"; "GL_" |]
 let sufixToRemove =
