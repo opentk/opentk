@@ -405,6 +405,15 @@ namespace OpenToolkit.Compute.OpenCL
 		Context = 0x11D4
 	}
 
+	public enum CommandExecutionStatus : int
+	{
+		Error = -0x1,
+		Complete = 0x0,
+		Running = 0x1,
+		Submitted = 0x2,
+		Queued = 0x3
+	}
+
 	public enum ProfilingInfo : uint
 	{
 		CommandQueued = 0x1280,

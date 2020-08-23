@@ -10,7 +10,7 @@ namespace OpenToolkit.Compute.OpenCL
 	{
 		static CL()
 		{
-			// We need to trigger the static constructor of ApiContainer<CL>.
+// We need to trigger the static constructor of ApiContainer<CL>.
 			_ = ApiContainer<CL>.StaticConstructorTrigger;
 		}
 
@@ -26,7 +26,8 @@ namespace OpenToolkit.Compute.OpenCL
 		/// <param name="numberOfPlatforms"></param>
 		/// <returns></returns>
 		[DllImport(LibName, EntryPoint = "clGetPlatformIDs")]
-		public static extern CLResultCode GetPlatformIds(uint numberOfEntries, IntPtr[] platforms, out uint numberOfPlatforms);
+		public static extern CLResultCode GetPlatformIds(uint numberOfEntries, IntPtr[] platforms,
+			out uint numberOfPlatforms);
 
 		public static CLResultCode GetPlatformIds(out IntPtr[] platformIds)
 		{
@@ -154,7 +155,8 @@ namespace OpenToolkit.Compute.OpenCL
 		/// <param name="commandQueue"></param>
 		/// <returns></returns>
 		[DllImport(LibName, EntryPoint = "clSetDefaultDeviceCommandQueue")]
-		public static extern CLResultCode SetDefaultDeviceCommandQueue(IntPtr context, IntPtr device, IntPtr commandQueue);
+		public static extern CLResultCode SetDefaultDeviceCommandQueue(IntPtr context, IntPtr device,
+			IntPtr commandQueue);
 
 		/// <summary>
 		/// Introduced in OpenCL 2.1
@@ -164,7 +166,8 @@ namespace OpenToolkit.Compute.OpenCL
 		/// <param name="hostTimestamp"></param>
 		/// <returns></returns>
 		[DllImport(LibName, EntryPoint = "clGetDeviceAndHostTimer")]
-		public static extern CLResultCode GetDeviceAndHostTimer(IntPtr device, IntPtr deviceTimestamp, IntPtr hostTimestamp);
+		public static extern CLResultCode GetDeviceAndHostTimer(IntPtr device, IntPtr deviceTimestamp,
+			IntPtr hostTimestamp);
 
 		/// <summary>
 		/// Introduced in OpenCL 2.1
@@ -196,7 +199,8 @@ namespace OpenToolkit.Compute.OpenCL
 		public static IntPtr CreateContext(IntPtr properties, IntPtr[] devices, IntPtr notificationCallback,
 			IntPtr userData, out CLResultCode errorCode)
 		{
-			return CreateContext(properties, (uint)devices.Length, devices, notificationCallback, userData, out errorCode);
+			return CreateContext(properties, (uint)devices.Length, devices, notificationCallback, userData,
+				out errorCode);
 		}
 
 		/// <summary>
@@ -300,12 +304,14 @@ namespace OpenToolkit.Compute.OpenCL
 		/// <param name="errorCode"></param>
 		/// <returns></returns>
 		[DllImport(LibName, EntryPoint = "clCreateBuffer")]
-		public static extern IntPtr CreateBuffer(IntPtr context, MemoryFlags flags, UIntPtr size, IntPtr hostPtr, out CLResultCode errorCode);
+		public static extern IntPtr CreateBuffer(IntPtr context, MemoryFlags flags, UIntPtr size, IntPtr hostPtr,
+			out CLResultCode errorCode);
 
 		public static IntPtr CreateBuffer<T>(IntPtr context, MemoryFlags flags, T[] array, out CLResultCode errorCode)
 		{
 			GCHandle handle = GCHandle.Alloc(array, GCHandleType.Pinned);
-			IntPtr buffer = CreateBuffer(context, flags, (UIntPtr)(Marshal.SizeOf<T>() * array.Length), handle.AddrOfPinnedObject(), out errorCode);
+			IntPtr buffer = CreateBuffer(context, flags, (UIntPtr)(Marshal.SizeOf<T>() * array.Length),
+				handle.AddrOfPinnedObject(), out errorCode);
 			handle.Free();
 			return buffer;
 		}
@@ -417,7 +423,8 @@ public static extern IntPtr CreateImageWithProperties(IntPtr context, IntPtr[] p
 		public static extern CLResultCode GetMemObjectInfo(IntPtr memoryObject, MemoryObjectInfo paramName,
 			UIntPtr paramValueSize, byte[] paramValue, out UIntPtr paramValueSizeReturned);
 
-		public static CLResultCode GetMemObjectInfo(IntPtr memoryObject, MemoryObjectInfo paramName, out byte[] paramValue)
+		public static CLResultCode GetMemObjectInfo(IntPtr memoryObject, MemoryObjectInfo paramName,
+			out byte[] paramValue)
 		{
 			GetMemObjectInfo(memoryObject, paramName, UIntPtr.Zero, null, out UIntPtr size);
 			paramValue = new byte[size.ToUInt64()];
@@ -544,7 +551,7 @@ public static extern IntPtr CreateImageWithProperties(IntPtr context, IntPtr[] p
 		public static extern CLResultCode GetSamplerInfo(IntPtr sampler, SamplerInfo paramName, UIntPtr paramValueSize,
 			byte[] paramValue, out UIntPtr paramValueSizeReturned);
 
-		public static CLResultCode GetSamplerInfo(IntPtr sampler, SamplerInfo paramName,out byte[] paramValue)
+		public static CLResultCode GetSamplerInfo(IntPtr sampler, SamplerInfo paramName, out byte[] paramValue)
 		{
 			GetSamplerInfo(sampler, paramName, UIntPtr.Zero, null, out UIntPtr size);
 			paramValue = new byte[size.ToUInt64()];
@@ -883,7 +890,8 @@ public static extern IntPtr CreateImageWithProperties(IntPtr context, IntPtr[] p
 		public static extern CLResultCode GetKernelArgInfo(IntPtr kernel, uint argumentIndex, KernelArgInfo paramName,
 			UIntPtr paramValueSize, byte[] paramValue, out UIntPtr paramSizeReturned);
 
-		public static CLResultCode GetKernelArgInfo(IntPtr kernel, uint argumentIndex, KernelArgInfo paramName, out byte[] paramValue)
+		public static CLResultCode GetKernelArgInfo(IntPtr kernel, uint argumentIndex, KernelArgInfo paramName,
+			out byte[] paramValue)
 		{
 			GetKernelArgInfo(kernel, argumentIndex, paramName, UIntPtr.Zero, null, out UIntPtr size);
 			paramValue = new byte[size.ToUInt64()];
@@ -999,14 +1007,21 @@ public static extern IntPtr CreateImageWithProperties(IntPtr context, IntPtr[] p
 		/// <summary>
 		/// Introduced in OpenCL 1.1
 		/// </summary>
-		/// <param name="event"></param>
+		/// <param name="eventHandle"></param>
 		/// <param name="commandExecCallbackType"></param>
 		/// <param name="notifyCallback"></param>
 		/// <param name="userData"></param>
 		/// <returns></returns>
 		[DllImport(LibName, EntryPoint = "clSetEventCallback")]
-		public static extern CLResultCode SetEventCallback(IntPtr @event, int commandExecCallbackType,
+		public static extern CLResultCode SetEventCallback(IntPtr eventHandle, int commandExecCallbackType,
 			IntPtr notifyCallback, IntPtr userData);
+
+		public static CLResultCode SetEventCallback(IntPtr eventHandle, CommandExecutionStatus commandExecCallbackType,
+			ClEventCallback notifyCallback)
+		{
+			return SetEventCallback(eventHandle, (int)commandExecCallbackType,
+				Marshal.GetFunctionPointerForDelegate(notifyCallback), IntPtr.Zero);
+		}
 
 		#endregion
 
@@ -1056,6 +1071,9 @@ public static extern IntPtr CreateImageWithProperties(IntPtr context, IntPtr[] p
 
 		#region Enqueued Commands API
 
+		public delegate void ClEventCallback(IntPtr waitEvent, IntPtr userData);
+
+
 		/// <summary>
 		/// Introduced in OpenCL 1.0
 		/// </summary>
@@ -1076,13 +1094,15 @@ public static extern IntPtr CreateImageWithProperties(IntPtr context, IntPtr[] p
 
 		public static CLResultCode EnqueueReadBuffer<T>(IntPtr commandQueue, IntPtr buffer, bool blockingRead,
 			UIntPtr offset, int size, out T[] array, uint numberOfEventsInWaitList, IntPtr[] eventWaitList,
-			out IntPtr @event)
+			out IntPtr eventHandle)
 		{
 			array = new T[size];
 			GCHandle handle = GCHandle.Alloc(array, GCHandleType.Pinned);
 
 			CLResultCode resultCode = EnqueueReadBuffer(commandQueue, buffer, (uint)(blockingRead ? 1 : 0), offset,
-				(UIntPtr)(size * Marshal.SizeOf<T>()), handle.AddrOfPinnedObject(), numberOfEventsInWaitList, eventWaitList, out @event);
+				(UIntPtr)(size * Marshal.SizeOf<T>()), handle.AddrOfPinnedObject(), numberOfEventsInWaitList,
+				eventWaitList,
+				out eventHandle);
 
 			return resultCode;
 		}
@@ -1136,7 +1156,8 @@ public static extern IntPtr CreateImageWithProperties(IntPtr context, IntPtr[] p
 			GCHandle handle = GCHandle.Alloc(array, GCHandleType.Pinned);
 
 			CLResultCode resultCode = EnqueueWriteBuffer(commandQueue, buffer, (uint)(blockingRead ? 1 : 0), offset,
-				(UIntPtr)(size * Marshal.SizeOf<T>()), handle.AddrOfPinnedObject(), numberOfEventsInWaitList, eventWaitList, out @event);
+				(UIntPtr)(size * Marshal.SizeOf<T>()), handle.AddrOfPinnedObject(), numberOfEventsInWaitList,
+				eventWaitList, out @event);
 
 			return resultCode;
 		}
@@ -1299,7 +1320,7 @@ public static extern IntPtr CreateImageWithProperties(IntPtr context, IntPtr[] p
 			UIntPtr[] srcOrigin, UIntPtr[] dstOrigin, UIntPtr[] region, uint numberOfEventsInWaitList,
 			IntPtr[] eventWaitList, out IntPtr @event);
 
-		//Introduced in OpenCL 1.0
+//Introduced in OpenCL 1.0
 		[DllImport(LibName, EntryPoint = "clEnqueueCopyImageToBuffer")]
 		public static extern CLResultCode EnqueueCopyImageToBuffer(IntPtr commandQueue, IntPtr srcImage,
 			IntPtr dstBuffer, UIntPtr[] srcOrigin, UIntPtr[] region, UIntPtr dstOffset, uint numberOfEventsInWaitList,
