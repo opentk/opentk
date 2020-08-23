@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using OpenToolkit.Audio.OpenAL.Extensions.Creative.EFX;
+using OpenToolkit.Audio.OpenAL.Extensions.EXT.Float32;
+using OpenToolkit.Audio.OpenAL.Extensions.EXT.FloatFormat;
 
 namespace OpenToolkit.Audio.OpenAL
 {
@@ -155,6 +157,32 @@ namespace OpenToolkit.Audio.OpenAL
             }
 
             AL.SourceStop(alSource);
+
+            // Test float32 format extension
+            if (EXTFloat32.IsExtensionPresent()) {
+                float[] sine = new float[44100 * 2];
+                for (int i = 0; i < sine.Length; i++)
+                {
+                    sine[i] = MathF.Sin(440 * MathF.PI * 2 * (i / (float)sine.Length));
+                }
+
+                var buffer = AL.GenBuffer();
+                EXTFloat32.BufferData(buffer, FloatBufferFormat.Mono, sine, 44100);
+
+                AL.Listener(ALListenerf.Gain, 0.1f);
+
+                AL.Source(alSource, ALSourcef.Gain, 1f);
+                AL.Source(alSource, ALSourcei.Buffer, buffer);
+
+                AL.SourcePlay(alSource);
+
+                while (AL.GetSourceState(alSource) == ALSourceState.Playing)
+                {
+                    Thread.Sleep(10);
+                }
+
+                AL.SourceStop(alSource);
+            }
 
             Console.WriteLine("Goodbye!");
 

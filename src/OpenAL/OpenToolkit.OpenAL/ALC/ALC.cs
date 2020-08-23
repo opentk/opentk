@@ -219,8 +219,8 @@ namespace OpenToolkit.Audio.OpenAL
             List<string> result = new List<string>();
 
             // We cannot use Marshal.PtrToStringAnsi(),
-            //  because alcGetString is defined to return either a nul-terminated string,
-            //  or an array of nul-terminated strings terminated by an extra nul.
+            //  because alcGetString is defined to return either a null-terminated string,
+            //  or an array of null-terminated strings terminated by an extra null.
             // Marshal.PtrToStringAnsi() will fail in the latter case (it will only
             // return the very first string in the array.)
             // We'll have to marshal this ourselves.
@@ -455,7 +455,7 @@ namespace OpenToolkit.Audio.OpenAL
         /// <param name="size">The size of the destination buffer provided, in number of integers.</param>
         /// <param name="data">A pointer to the buffer to be returned.</param>
         [DllImport(Lib, EntryPoint = "alcGetIntegerv", ExactSpelling = true, CallingConvention = AlcCallingConv, CharSet = CharSet.Ansi)]
-        public static extern unsafe void GetInteger(ALCaptureDevice device, AlcGetInteger param, int size, int* data);
+        public static unsafe extern void GetInteger(ALCaptureDevice device, AlcGetInteger param, int size, int* data);
         // ALC_API void            ALC_APIENTRY alcGetIntegerv( ALCdevice *device, ALCenum param, ALCsizei size, ALCint *buffer );
 
         /// <summary>This function returns integers related to the context.</summary>
@@ -526,16 +526,13 @@ namespace OpenToolkit.Audio.OpenAL
         /// <param name="param">The named property.</param>
         /// <returns>The value.</returns>
         [DllImport(Lib, EntryPoint = "alcGetString", ExactSpelling = true, CallingConvention = AlcCallingConv)]
-        public static extern unsafe byte* GetStringList(ALDevice device, GetEnumerationStringList param);
+        public static unsafe extern byte* GetStringList(ALDevice device, GetEnumerationStringList param);
 
         /// <inheritdoc cref="GetString(ALDevice, GetEnumerationString)"/>
-        public static IEnumerable<string> GetStringList(GetEnumerationStringList param)
+        public static unsafe IEnumerable<string> GetStringList(GetEnumerationStringList param)
         {
-            unsafe
-            {
-                byte* result = GetStringList(ALDevice.Null, param);
-                return ALStringListToList(result);
-            }
+            byte* result = GetStringList(ALDevice.Null, param);
+            return ALStringListToList(result);
         }
 
         /// <summary>

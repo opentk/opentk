@@ -70,13 +70,10 @@ namespace OpenToolkit.Audio.OpenAL.Extensions.Creative.EnumerateAll
         public static extern unsafe byte* GetStringList(ALDevice device, GetEnumerateAllContextStringList param);
 
         /// <inheritdoc cref="GetStringList(ALDevice, GetEnumerateAllContextStringList)"/>
-        public static IEnumerable<string> GetStringList(GetEnumerateAllContextStringList param)
+        public static unsafe IEnumerable<string> GetStringList(GetEnumerateAllContextStringList param)
         {
-            unsafe
-            {
-                byte* result = GetStringList(ALDevice.Null, param);
-                return ALC.ALStringListToList(result);
-            }
+            byte* result = GetStringList(ALDevice.Null, param);
+            return ALC.ALStringListToList(result);
         }
     }
 }

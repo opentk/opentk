@@ -196,7 +196,7 @@ namespace OpenToolkit.Audio.OpenAL
         /// <param name="up">A Math.Vector3 for the Up-Vector.</param>
         public static void Listener(ALListenerfv param, ref Vector3 at, ref Vector3 up)
         {
-            float[] data = new float[6];
+            Span<float> data = stackalloc float[6];
 
             data[0] = at.X;
             data[1] = at.Y;
@@ -206,7 +206,7 @@ namespace OpenToolkit.Audio.OpenAL
             data[4] = up.Y;
             data[5] = up.Z;
 
-            Listener(param, data);
+            Listener(param, ref data[0]);
         }
 
         // Not used by any Enums
@@ -960,26 +960,19 @@ namespace OpenToolkit.Audio.OpenAL
         public static extern void BufferData(int bid, ALFormat format, ref short buffer, int bytes, int freq);
         // AL_API void AL_APIENTRY alBufferData( ALuint bid, ALenum format, const ALvoid* buffer, ALsizei size, ALsizei freq );
 
-        ///
         /// <summary>This function fills a buffer with audio buffer. All the pre-defined formats are PCM buffer, but this function may be used by extensions to load other buffer types as well.</summary>
         /// <typeparam name="TBuffer">The type of the data buffer.</typeparam>
         /// <param name="bid">buffer Handle/Name to be filled with buffer.</param>
         /// <param name="format">Format type from among the following: ALFormat.Mono8, ALFormat.Mono16, ALFormat.Stereo8, ALFormat.Stereo16.</param>
         /// <param name="buffer">The audio buffer.</param>
-        /// <param name="size">The size of the audio buffer in bytes.</param>
         /// <param name="freq">The frequency of the audio buffer.</param>
         /// FIXME: Should "size" be changed to "elements"?
-        public static void BufferData<TBuffer>(int bid, ALFormat format, TBuffer[] buffer, int size, int freq)
+        public static unsafe void BufferData<TBuffer>(int bid, ALFormat format, TBuffer[] buffer, int freq)
             where TBuffer : unmanaged
         {
-            GCHandle handle = GCHandle.Alloc(buffer, GCHandleType.Pinned);
-            try
+            fixed (TBuffer* b = buffer)
             {
-                BufferData(bid, format, handle.AddrOfPinnedObject(), size, freq);
-            }
-            finally
-            {
-                handle.Free();
+                BufferData(bid, format, b, buffer.Length * sizeof(TBuffer), freq);
             }
         }
 
@@ -989,23 +982,13 @@ namespace OpenToolkit.Audio.OpenAL
         /// <param name="format">Format type from among the following: ALFormat.Mono8, ALFormat.Mono16, ALFormat.Stereo8, ALFormat.Stereo16.</param>
         /// <param name="buffer">Span representing the audio buffer.</param>
         /// <param name="freq">The frequency of the audio buffer.</param>
-        public static void BufferData<TBuffer>(int bid, ALFormat format, Span<TBuffer> buffer, int freq)
+        public static unsafe void BufferData<TBuffer>(int bid, ALFormat format, Span<TBuffer> buffer, int freq)
             where TBuffer : unmanaged
         {
-#if NETCOREAPP3_1
-            // This is the only reason this is NETCOREAPP3_1 dependent
-            var bytes = MemoryMarshal.AsBytes(buffer);
-            BufferData(bid, format, ref bytes[0], bytes.Length, freq);
-#else
-            unsafe
+            fixed (TBuffer* b = buffer)
             {
-                fixed (TBuffer* fixedBuffer = &buffer[0])
-                {
-                    byte* bytePointer = (byte*)fixedBuffer;
-                    BufferData(bid, format, bytePointer, buffer.Length * sizeof(TBuffer), freq);
-                }
+                BufferData(bid, format, b, buffer.Length * sizeof(TBuffer), freq);
             }
-#endif
         }
 
         /*

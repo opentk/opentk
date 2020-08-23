@@ -883,7 +883,7 @@ namespace OpenToolkit.Audio.OpenAL.Extensions.Creative.EFX
         /// </summary>
         /// <param name="count">The number of slots to create.</param>
         /// <returns>The slots.</returns>
-        /// <seealso cref="DeleteAuxiliaryEffectSlots(uint[])"/>
+        /// <seealso cref="DeleteAuxiliaryEffectSlots(int[])"/>
         /// <seealso cref="IsAuxiliaryEffectSlot"/>
         public static int[] GenAuxiliaryEffectSlots(int count)
         {
@@ -1154,7 +1154,7 @@ namespace OpenToolkit.Audio.OpenAL.Extensions.Creative.EFX
         /// Deletes and frees resources used an filter.
         /// </summary>
         /// <param name="filter">The filter to delete.</param>
-        /// <seealso cref="GenFilter"/>
+        /// <seealso cref="GenFilter()"/>
         /// <seealso cref="IsFilter"/>
         public static void DeleteFilter(int filter)
         {

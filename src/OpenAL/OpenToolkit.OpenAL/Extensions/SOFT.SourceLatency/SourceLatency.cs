@@ -65,59 +65,45 @@ namespace OpenToolkit.Audio.OpenAL.Extensions.SOFT.SourceLatency
         private static readonly GetSourcedvArrayDelegate _GetSourcedvArray = LoadDelegate<GetSourcedvArrayDelegate>("alGetSourcedvSOFT");
 #pragma warning restore SA1516 // Elements should be separated by blank line
 
-        public static void GetSource(int source, SourceLatencyVector2i param, out long value1, out long value2)
+        public static unsafe void GetSource(int source, SourceLatencyVector2i param, out long value1, out long value2)
         {
-            Span<long> values = stackalloc long[2];
+            long* values = stackalloc long[2];
             GetSource(source, param, values);
             value1 = values[0];
             value2 = values[1];
         }
 
-        public static void GetSource(int source, SourceLatencyVector2i param, Span<long> values)
+        public static unsafe void GetSource(int source, SourceLatencyVector2i param, Span<long> values)
         {
-            unsafe
-            {
-                // Beacuse we don't know how this span is allocated we need to fix it
-                fixed (long* ptr = &values[0])
-                {
-                    GetSource(source, param, ptr);
-                }
-            }
+            GetSource(source, param, out values[0]);
         }
 
-        public static void GetSource(int source, SourceLatencyVector2i param, out int value1, out int value2, out long value3)
+        public static unsafe void GetSource(int source, SourceLatencyVector2i param, out int value1, out int value2, out long value3)
         {
             // FIXME: This might result in wrong values, though it seems to be somewhat correct...
-            Span<int> values = stackalloc int[4];
-            GetSource(source, param, out Unsafe.As<int, long>(ref values[0]));
+            int* values = stackalloc int[4];
+            GetSource(source, param, (long*)values);
             value1 = values[0];
             value2 = values[1];
-            value3 = Unsafe.As<int, long>(ref values[2]);
+            value3 = ((long*)values)[2];
         }
 
-        public static void GetSource(int source, SourceLatencyVector2d param, out double value1, out double value2)
+        public static unsafe void GetSource(int source, SourceLatencyVector2d param, out double value1, out double value2)
         {
-            Span<double> values = stackalloc double[2];
+            double* values = stackalloc double[2];
             GetSource(source, param, values);
             value1 = values[0];
             value2 = values[1];
         }
 
-        public static void GetSource(int source, SourceLatencyVector2d param, Span<double> values)
+        public static unsafe void GetSource(int source, SourceLatencyVector2d param, Span<double> values)
         {
-            unsafe
-            {
-                // Beacuse we don't know how this span is allocated we need to fix it
-                fixed (double* ptr = &values[0])
-                {
-                    GetSource(source, param, ptr);
-                }
-            }
+            GetSource(source, param, out values[0]);
         }
 
         public static void GetSource(int source, SourceLatencyVector2d param, out Vector2d values)
         {
-            values.Y = 0;
+            values.Y = default;
             GetSource(source, param, out values.X);
         }
     }
