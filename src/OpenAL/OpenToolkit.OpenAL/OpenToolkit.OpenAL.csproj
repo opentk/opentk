@@ -27,6 +27,10 @@
     <PackageReference Include="System.Buffers" Version="4.5.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Extensions\EXT.Double\Enums\" />
+  </ItemGroup>
+
   <Import Project="..\..\..\props\common.props" />
   <Import Project="$(OpenTKSolutionRoot)\props\nuget-common.props" />
   <Import Project="$(OpenTKSolutionRoot)\props\stylecop.props" />
