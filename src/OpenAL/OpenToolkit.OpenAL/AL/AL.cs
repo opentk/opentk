@@ -21,8 +21,7 @@ namespace OpenToolkit.Audio.OpenAL
     /// <summary>
     /// Provides access to the OpenAL 1.1 flat API.
     /// </summary>
-    [Api(Lib, typeof(OpenALLibraryNameContainer))]
-    public partial class AL : ApiContainer<AL>
+    public partial class AL : ALBase<AL>
     {
         internal const string Lib = nameof(AL);
         internal const CallingConvention ALCallingConvention = CallingConvention.Cdecl;
@@ -30,7 +29,7 @@ namespace OpenToolkit.Audio.OpenAL
         static AL()
         {
             // We need to trigger the static contructor of ApiContainer<AL>.
-            _ = ApiContainer<AL>.StaticConstructorTrigger;
+            _ = ALBase<AL>.StaticConstructorTrigger;
         }
 
         private AL()

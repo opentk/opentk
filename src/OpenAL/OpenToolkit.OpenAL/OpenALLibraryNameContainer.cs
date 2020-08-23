@@ -7,28 +7,73 @@
 // of the MIT license. See the LICENSE file for details.
 //
 
-using OpenToolkit.Core.Loader;
+using System;
+using System.Runtime.InteropServices;
 
 namespace OpenToolkit.Audio.OpenAL
 {
     /// <summary>
     /// Contains the library name of OpenAL.
     /// </summary>
-    public class OpenALLibraryNameContainer : PlatformLibraryNameContainerBase
+    public class OpenALLibraryNameContainer
     {
-        /// <inheritdoc />
-        public override string Linux => "libopenal.so.1";
+        /// <summary>
+        /// Gets the library name to use on Windows.
+        /// </summary>
+        public string Windows => "openal32.dll";
 
-        /// <inheritdoc />
-        public override string MacOS => "/System/Library/Frameworks/OpenAL.framework/OpenAL";
+        /// <summary>
+        /// Gets the library name to use on Linux.
+        /// </summary>
+        public string Linux => "libopenal.so.1";
 
-        /// <inheritdoc />
-        public override string Android => Linux;
+        /// <summary>
+        /// Gets the library name to use on MacOS.
+        /// </summary>
+        public string MacOS => "/System/Library/Frameworks/OpenAL.framework/OpenAL";
 
-        /// <inheritdoc />
-        public override string IOS => MacOS;
+        /// <summary>
+        /// Gets the library name to use on Android.
+        /// </summary>
+        public string Android => Linux;
 
-        /// <inheritdoc />
-        public override string Windows => "openal32.dll";
+        /// <summary>
+        /// Gets the library name to use on iOS.
+        /// </summary>
+        public string IOS => MacOS;
+
+        public string GetLibraryName()
+        {
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+            {
+                if (RuntimeInformation.IsOSPlatform(OSPlatform.Create("ANDROID")))
+                {
+                    return Android;
+                }
+                else
+                {
+                    return Linux;
+                }
+            }
+            else if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                return Windows;
+            }
+            else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+            {
+                if (RuntimeInformation.IsOSPlatform(OSPlatform.Create("IOS")))
+                {
+                    return IOS;
+                }
+                else
+                {
+                    return MacOS;
+                }
+            }
+            else
+            {
+                throw new NotSupportedException($"The library name couldn't be resolved for the given platform ('{RuntimeInformation.OSDescription}').");
+            }
+        }
     }
 }

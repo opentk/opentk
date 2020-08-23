@@ -7,8 +7,7 @@ using OpenToolkit.Mathematics;
 
 namespace OpenToolkit.Audio.OpenAL.Extensions.SOFT.SourceLatency
 {
-    [Api(AL.Lib, typeof(OpenALLibraryNameContainer))]
-    public class SourceLatency : ApiContainer<SourceLatency>
+    public class SourceLatency : ALBase<SourceLatency>
     {
         /// <summary>
         /// The name of this AL extension.
@@ -17,7 +16,7 @@ namespace OpenToolkit.Audio.OpenAL.Extensions.SOFT.SourceLatency
 
         static SourceLatency()
         {
-            _ = ApiContainer<SourceLatency>.StaticConstructorTrigger;
+            _ = ALBase<SourceLatency>.StaticConstructorTrigger;
         }
 
         private SourceLatency()

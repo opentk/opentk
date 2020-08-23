@@ -1,4 +1,6 @@
 using System;
+using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 namespace OpenToolkit.Windowing.GraphicsLibraryFramework
@@ -10,7 +12,6 @@ namespace OpenToolkit.Windowing.GraphicsLibraryFramework
         public const int GLFW_TRUE = 1;
         public const int GLFW_FALSE = 0;
 
-#if NETCOREAPP
         static GLFWNative()
         {
             // Register DllImport resolver so that the correct dynamic library is loaded on all platforms.
@@ -25,7 +26,6 @@ namespace OpenToolkit.Windowing.GraphicsLibraryFramework
                 return LibraryLoadHelper.LoadLibrary("glfw", new Version(3, 3), assembly, path);
             });
         }
-#endif
 
         [DllImport(LibraryName)]
         public static extern int glfwInit();

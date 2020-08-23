@@ -16,8 +16,7 @@ namespace OpenToolkit.Audio.OpenAL.Extensions.Creative.EFX
     /// <summary>
     /// Exposes the functions of the Effects Extension.
     /// </summary>
-    [Api(ALC.Lib, typeof(OpenALLibraryNameContainer))]
-    public class EFX : ApiContainer<EFX>
+    public class EFX : ALBase<EFX>
     {
         /// <summary>
         /// The EFX extension name.
@@ -26,7 +25,7 @@ namespace OpenToolkit.Audio.OpenAL.Extensions.Creative.EFX
 
         static EFX()
         {
-            _ = ApiContainer<EFX>.StaticConstructorTrigger;
+            _ = ALBase<EFX>.StaticConstructorTrigger;
         }
 
         private EFX()

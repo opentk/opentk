@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-      <TargetFrameworks>net472;netcoreapp3.0</TargetFrameworks>
+      <TargetFrameworks>netcoreapp3.0</TargetFrameworks>
       <RootNamespace>OpenToolkit.Windowing.GraphicsLibraryFramework</RootNamespace>
       <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     </PropertyGroup>

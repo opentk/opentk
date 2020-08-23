@@ -6,8 +6,7 @@ using System.Text;
 
 namespace OpenToolkit.Audio.OpenAL.Extensions.SOFT.DeviceClock
 {
-    [Api(AL.Lib, typeof(OpenALLibraryNameContainer))]
-    public class DeviceClock : ApiContainer<DeviceClock>
+    public class DeviceClock : ALBase<DeviceClock>
     {
         /// <summary>
         /// The name of this AL extension.
@@ -16,7 +15,7 @@ namespace OpenToolkit.Audio.OpenAL.Extensions.SOFT.DeviceClock
 
         static DeviceClock()
         {
-            _ = ApiContainer<DeviceClock>.StaticConstructorTrigger;
+            _ = ALBase<DeviceClock>.StaticConstructorTrigger;
         }
 
         private DeviceClock()
