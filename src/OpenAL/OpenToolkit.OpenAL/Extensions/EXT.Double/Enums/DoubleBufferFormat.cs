@@ -10,8 +10,7 @@
 namespace OpenToolkit.Audio.OpenAL.Extensions.EXT.Double
 {
     /// <summary>
-    /// Defines valid format specifiers for sound samples. This covers the additions from the multi-channel buffers
-    /// extension.
+    /// Defines valid format specifiers for sound samples. This covers the additions from the multi-channel buffers extension.
     /// </summary>
     public enum DoubleBufferFormat
     {
