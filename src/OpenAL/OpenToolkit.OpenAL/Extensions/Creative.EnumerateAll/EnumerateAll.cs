@@ -15,8 +15,7 @@ namespace OpenToolkit.Audio.OpenAL.Extensions.Creative.EnumerateAll
     /// <summary>
     /// Exposes the API in the EnumerateAll extension.
     /// </summary>
-    [Api(ALC.Lib, typeof(OpenALLibraryNameContainer))]
-    public class EnumerateAll : ApiContainer<EnumerateAll>
+    public class EnumerateAll : ALBase
     {
         /// <summary>
         /// The name of this AL extension.
@@ -25,7 +24,8 @@ namespace OpenToolkit.Audio.OpenAL.Extensions.Creative.EnumerateAll
 
         static EnumerateAll()
         {
-            _ = ApiContainer<EnumerateAll>.StaticConstructorTrigger;
+            // We need to register the resolver for OpenAL before we can DllImport functions.
+            ALBase.RegisterOpenALResolver();
         }
 
         private EnumerateAll()
