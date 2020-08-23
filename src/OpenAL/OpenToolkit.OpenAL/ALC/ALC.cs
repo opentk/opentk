@@ -21,15 +21,15 @@ using OpenToolkit.OpenAL;
 namespace OpenToolkit.Audio.OpenAL
 {
     /// <summary>Alc = Audio Library Context.</summary>
-    public class ALC : ALBase<ALC>
+    public class ALC : ALBase
     {
         internal const string Lib = AL.Lib;
         internal const CallingConvention AlcCallingConv = CallingConvention.Cdecl;
 
         static ALC()
         {
-            // We need to trigger the static contructor of ApiContainer<ALC>.
-            _ = ALBase<ALC>.StaticConstructorTrigger;
+            // We need to register the resolver for OpenAL before we can DllImport functions.
+            ALBase.RegisterOpenALResolver();
         }
 
         private ALC()

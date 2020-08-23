@@ -9,22 +9,22 @@
 
 using System;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 namespace OpenToolkit.Audio.OpenAL
 {
     /// <summary>
-    /// This is a base class for APIs that are using DllImport and want to resolve different dll names on different platforms. When using this class the extending class must be annotated with an ApiAttribute.
+    /// This is a base class for OpenAL APIs that are using DllImport and want to resolve different dll names on different platforms.
     /// </summary>
-    /// <typeparam name="T">The type containing the API.</typeparam>
-    public abstract class ALBase<T> where T : ALBase<T>
+    public abstract class ALBase
     {
         /// <summary>
-        /// This is here so that extending classes can trigger the static constructor of this class.
+        /// This needs to be called before trying to use any OpenAL functions.
+        /// This should be done in the static constructor of any class that DllImports OpenAL functions.
         /// </summary>
-        public static readonly Type StaticConstructorTrigger = typeof(T);
-
-        static ALBase()
+        [MethodImpl(MethodImplOptions.NoInlining)]
+        public static void RegisterOpenALResolver()
         {
             ALLoader.RegisterDllResolver();
         }

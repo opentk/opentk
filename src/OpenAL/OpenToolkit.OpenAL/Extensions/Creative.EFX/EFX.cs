@@ -16,7 +16,7 @@ namespace OpenToolkit.Audio.OpenAL.Extensions.Creative.EFX
     /// <summary>
     /// Exposes the functions of the Effects Extension.
     /// </summary>
-    public class EFX : ALBase<EFX>
+    public class EFX : ALBase
     {
         /// <summary>
         /// The EFX extension name.
@@ -25,7 +25,8 @@ namespace OpenToolkit.Audio.OpenAL.Extensions.Creative.EFX
 
         static EFX()
         {
-            _ = ALBase<EFX>.StaticConstructorTrigger;
+            // We need to register the resolver for OpenAL before we can DllImport functions.
+            ALBase.RegisterOpenALResolver();
         }
 
         private EFX()

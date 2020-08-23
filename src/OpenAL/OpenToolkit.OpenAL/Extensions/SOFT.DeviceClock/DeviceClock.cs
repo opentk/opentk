@@ -6,7 +6,7 @@ using System.Text;
 
 namespace OpenToolkit.Audio.OpenAL.Extensions.SOFT.DeviceClock
 {
-    public class DeviceClock : ALBase<DeviceClock>
+    public class DeviceClock : ALBase
     {
         /// <summary>
         /// The name of this AL extension.
@@ -15,7 +15,8 @@ namespace OpenToolkit.Audio.OpenAL.Extensions.SOFT.DeviceClock
 
         static DeviceClock()
         {
-            _ = ALBase<DeviceClock>.StaticConstructorTrigger;
+            // We need to register the resolver for OpenAL before we can DllImport functions.
+            ALBase.RegisterOpenALResolver();
         }
 
         private DeviceClock()
