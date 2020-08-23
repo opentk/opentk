@@ -28,8 +28,8 @@ namespace OpenToolkit.Audio.OpenAL
 
         static AL()
         {
-            // We need to trigger the static contructor of ALBase.
-            ALBase.StaticConstructorTrigger();
+            // We need to register the resolver for OpenAL before we can DllImport functions.
+            ALBase.RegisterOpenALResolver();
         }
 
         private AL()
