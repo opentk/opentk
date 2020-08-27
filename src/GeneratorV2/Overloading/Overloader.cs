@@ -9,7 +9,7 @@ namespace GeneratorV2.Overloading
 {
     public class Overloader
     {
-        private readonly IOverloader[] _overloaders = { new EnumOverloader(), new SpanOverloader() };
+        private readonly IOverloader[] _overloaders = { new EnumOverloader(), new SpanOverloader(), new IntPtrOverloader(), new RefOverloader() };
         private readonly Specification _spec;
         private readonly HashSet<string> _overloadedCommandNames = new HashSet<string>();
 

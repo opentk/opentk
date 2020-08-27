@@ -1,5 +1,6 @@
 ﻿using GeneratorV2.Data;
 using GeneratorV2.Extensions;
+using GeneratorV2.Overloading;
 using System;
 using System.CodeDom.Compiler;
 using System.Collections.Generic;
@@ -10,7 +11,7 @@ namespace GeneratorV2.Overloading
 {
     public class SpanOverloader : IOverloader
     {
-        private class Layer : ILayer 
+        private class Layer : ILayer
         {
             private readonly ILayer _nestedLayer;
             private readonly int _argIndex;
@@ -90,9 +91,13 @@ namespace GeneratorV2.Overloading
         {
             //TODO: Split into other functions.
             var parameter = context.Parameters[i];
-            var type = parameter?.Type;
+            if (parameter == null)
+            {
+                return false;
+            }
+            var type = parameter.Type;
             var ptrLoc = type.Name.IndexOf('*');
-            if (type.Length == null || ptrLoc == -1)
+            if (type == null || type.Length == null || ptrLoc == -1 || type.Length is Constant)
             {
                 return false;
             }
@@ -117,17 +122,6 @@ namespace GeneratorV2.Overloading
                     useParameter = false;
                 }
             }
-
-
-            //var lengthReferences = context.Method.Parameters.Count(p => p != null && p.Type.Length == type.Length);
-            //if (totalReferences == 1)
-            //{
-            //    context.Parameters[lenIdx] = null;
-            //}
-            //else
-            //{
-            //    lenIdx = -1;
-            //}
 
             var elementType = type.Name.Substring(0, ptrLoc);
             if (elementType == "void")
