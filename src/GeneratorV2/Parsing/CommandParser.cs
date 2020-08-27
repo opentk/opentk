@@ -95,7 +95,14 @@ namespace GeneratorV2.Parsing
             var str = length.Split('*', 2);
             if (str.Length == 2)
             {
-                return new BinaryOperation(ParseExpression(str[0], method), '*', ParseExpression(str[1], method));
+                var left = ParseExpression(str[0], method);
+                var right = ParseExpression(str[1], method);
+                if (left == null || right == null)
+                {
+                    Logger.Warning("Error in parsing binary operation expression for length of " + method.EntryPoint);
+                    return null;
+                }
+                return new BinaryOperation(left, '*', right);
             }
             int sInd = length.IndexOf("COMPSIZE(");
             if (sInd != -1)
@@ -116,7 +123,7 @@ namespace GeneratorV2.Parsing
                 }
                 var subStr = length.Substring(sInd, eInd - sInd);
                 var parameters = subStr.Split(',');
-                var parsedParameter = new IExpression[string.IsNullOrEmpty(subStr) ? 0 : parameters.Length];
+                var parsedParameter = new IExpression?[string.IsNullOrEmpty(subStr) ? 0 : parameters.Length];
                 for (int i = 0; i < parsedParameter.Length; i++)
                 {
                     parsedParameter[i] = ParseExpression(parameters[i], method);

@@ -3,6 +3,7 @@ using GeneratorV2.Data;
 using GeneratorV2.Parsing;
 using GeneratorV2.Writing;
 using GeneratorV2.Overloading;
+using System;
 
 namespace GeneratorV2
 {
@@ -36,8 +37,13 @@ namespace GeneratorV2
         }
     }
 }
+/*
+ * TODO:
+ * Work on some manual overloading system.
+ */
+
 /*TODO: Look into enum overloads for extensions
- * 1) Only use the ALL enum
+ * 1) Only use the ALL enum - Currently doing
  * 2) Create a struct with implicit conversions
  * 3) Create a ton of overloads
  * 4) Extra enum group per extension (downside: name collision)
@@ -56,7 +62,7 @@ namespace GeneratorV2
 
 /*
  * TODO:
- *  OpenToolkit.Graphics.OpenGL.Current.GL.Function
+ *  OpenToolkit.Graphics.OpenGL.V35.GL.Function
  *  
  *  OpenToolkit.Graphics.OpenGL.V46.GL.Function
  *  OpenToolkit.Graphics.OpenGL.Extensions.EXT.Function
