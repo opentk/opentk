@@ -15,8 +15,8 @@ namespace GeneratorV2.Writing
 
         protected override void WriteDeclaration()
         {
-            Writer.WriteLine("using System.Runtime.InteropServices;");
             Writer.WriteLine("using System;");
+            Writer.WriteLine("using System.Runtime.InteropServices;");
             Writer.WriteLine("using OpenToolkit.Graphics.Types;");
             Writer.WriteLine();
             Writer.WriteLine("namespace " + _name);

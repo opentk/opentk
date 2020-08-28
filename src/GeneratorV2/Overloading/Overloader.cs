@@ -9,10 +9,16 @@ namespace GeneratorV2.Overloading
 {
     public class Overloader
     {
-        private readonly IOverloader[] _overloaders = { new EnumOverloader(), new SpanOverloader(), new IntPtrOverloader(), new RefOverloader() };
+        private readonly IOverloader[] _overloaders = {
+            new EnumOverloader(),
+            new StringOverloader(),
+            new SpanOverloader(),
+            new IntPtrOverloader(),
+            new RefOverloader() };
         private readonly Specification _spec;
         private readonly HashSet<string> _overloadedCommandNames = new HashSet<string>();
 
+        private const string ReturnValueName = "returnValue";
         private class CallLayer : ILayer
         {
             private readonly OverloadContext _context;
@@ -28,7 +34,7 @@ namespace GeneratorV2.Overloading
             {
                 if (_context.Method.ReturnType.Name != "void")
                 {
-                    writer.Write("return ");
+                    writer.Write($"{ReturnValueName} = ");
                 }
                 writer.Write(methodName);
                 writer.Write('(');
@@ -41,6 +47,31 @@ namespace GeneratorV2.Overloading
                     }
                 }
                 writer.WriteLine(");");
+            }
+        }
+        private class ReturnVariableLayer : ILayer
+        {
+            private readonly OverloadContext _context;
+
+            public ReturnVariableLayer(OverloadContext context, ILayer nestedLayer)
+            {
+                _context = context;
+                NestedLayer = nestedLayer;
+            }
+            public ILayer? NestedLayer { get; }
+
+            public void WriteLayer(IndentedTextWriter writer, string methodName, Argument[] args)
+            {
+                bool hasReturnValue = _context.Method.ReturnType.Name != "void";
+                if (hasReturnValue)
+                {
+                    writer.WriteLine($"{_context.Method.ReturnType.Name} {ReturnValueName};");
+                }
+                NestedLayer.WriteLayer(writer, methodName, args);
+                if (hasReturnValue)
+                {
+                    writer.WriteLine($"return {ReturnValueName};");
+                }
             }
         }
 
@@ -113,6 +144,8 @@ namespace GeneratorV2.Overloading
             {
                 return;
             }
+
+            currentLayer = new ReturnVariableLayer(context, currentLayer);
 
             CreateOverload(command, context, currentLayer);
 
