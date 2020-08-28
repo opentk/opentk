@@ -96,7 +96,7 @@ namespace GeneratorV2.Overloading
                 return false;
             }
             var type = parameter.Type;
-            var ptrLoc = type.Name.IndexOf('*');
+            var ptrLoc = type.Name.LastIndexOf('*');
             if (type == null || type.Length == null || ptrLoc == -1 || type.Length is Constant)
             {
                 return false;
