@@ -39,9 +39,9 @@ namespace OpenToolkit.Audio.OpenAL.Extensions.SOFT.DeviceClock
         private unsafe delegate void GetIntegerPtrDelegate(ALDevice device, GetInteger64 param, int size, long* values);
         private static readonly GetIntegerPtrDelegate _GetIntegerPtr = LoadDelegate<GetIntegerPtrDelegate>("alcGetInteger64vSOFT");
 
-        private static void GetInteger(ALDevice device, GetInteger64 param, int size, out long values) => _GetIntegerRef(device, param, size, out values);
+        private static void GetInteger(ALDevice device, GetInteger64 param, int size, ref long values) => _GetIntegerRef(device, param, size, ref values);
         [UnmanagedFunctionPointer(AL.ALCallingConvention)]
-        private delegate void GetIntegerRefDelegate(ALDevice device, GetInteger64 param, int size, out long values);
+        private delegate void GetIntegerRefDelegate(ALDevice device, GetInteger64 param, int size, ref long values);
         private static readonly GetIntegerRefDelegate _GetIntegerRef = LoadDelegate<GetIntegerRefDelegate>("alcGetInteger64vSOFT");
 
         public static void GetInteger(ALDevice device, GetInteger64 param, int size, long[] values) => _GetIntegerArray(device, param, size, values);
@@ -54,9 +54,9 @@ namespace OpenToolkit.Audio.OpenAL.Extensions.SOFT.DeviceClock
         private unsafe delegate void GetSourcei64vPtrDelegate(int source, SourceInteger64 param, long* values);
         private static readonly GetSourcei64vPtrDelegate _GetSourcei64vPtr = LoadDelegate<GetSourcei64vPtrDelegate>("alGetSourcei64vSOFT");
 
-        private static void GetSource(int source, SourceInteger64 param, out long values) => _GetSourcei64vRef(source, param, out values);
+        private static void GetSource(int source, SourceInteger64 param, ref long values) => _GetSourcei64vRef(source, param, ref values);
         [UnmanagedFunctionPointer(AL.ALCallingConvention)]
-        private delegate void GetSourcei64vRefDelegate(int source, SourceInteger64 param, out long values);
+        private delegate void GetSourcei64vRefDelegate(int source, SourceInteger64 param, ref long values);
         private static readonly GetSourcei64vRefDelegate _GetSourcei64vRef = LoadDelegate<GetSourcei64vRefDelegate>("alGetSourcei64vSOFT");
 
         public static void GetSource(int source, SourceInteger64 param, long[] values) => _GetSourcei64vArray(source, param, values);
@@ -69,9 +69,9 @@ namespace OpenToolkit.Audio.OpenAL.Extensions.SOFT.DeviceClock
         private unsafe delegate void GetSourcedvPtrDelegate(int source, SourceDouble param, double* values);
         private static readonly GetSourcedvPtrDelegate _GetSourcedvPtr = LoadDelegate<GetSourcedvPtrDelegate>("alGetSourcedvSOFT");
 
-        private static void GetSource(int source, SourceDouble param, out double values) => _GetSourcedvRef(source, param, out values);
+        private static void GetSource(int source, SourceDouble param, ref double values) => _GetSourcedvRef(source, param, ref values);
         [UnmanagedFunctionPointer(AL.ALCallingConvention)]
-        private delegate void GetSourcedvRefDelegate(int source, SourceDouble param, out double values);
+        private delegate void GetSourcedvRefDelegate(int source, SourceDouble param, ref double values);
         private static readonly GetSourcedvRefDelegate _GetSourcedvRef = LoadDelegate<GetSourcedvRefDelegate>("alGetSourcedvSOFT");
 
         public static void GetSource(int source, SourceDouble param, double[] values) => _GetSourcedvArray(source, param, values);
@@ -87,20 +87,12 @@ namespace OpenToolkit.Audio.OpenAL.Extensions.SOFT.DeviceClock
 
         public static unsafe void GetInteger(ALDevice device, GetInteger64 param, Span<long> values)
         {
-            // Beacuse we don't know how this span is allocated we need to fix it
-            fixed (long* ptr = &values[0])
-            {
-                GetInteger(device, param, values.Length, ptr);
-            }
+            GetInteger(device, param, values.Length, ref values[0]);
         }
 
         public static unsafe void GetSource(int source, SourceInteger64 param, Span<long> values)
         {
-            // FIXME: Should we do a range check here to see that the span is big enough?
-            fixed (long* ptr = &values[0])
-            {
-                GetSource(source, param, ptr);
-            }
+            GetSource(source, param, ref values[0]);
         }
 
         public static unsafe void GetSource(int source, SourceInteger64 param, out int value1, out int value2, out long value3)
@@ -114,11 +106,7 @@ namespace OpenToolkit.Audio.OpenAL.Extensions.SOFT.DeviceClock
 
         public static unsafe void GetSource(int source, SourceDouble param, Span<double> values)
         {
-            // FIXME: Should we do a range check here to see that the span is big enough?
-            fixed (double* ptr = &values[0])
-            {
-                GetSource(source, param, ptr);
-            }
+            GetSource(source, param, ref values[0]);
         }
 
         public static unsafe void GetSource(int source, SourceDouble param, out double value1, out double value2)

@@ -1,17 +1,16 @@
 //
 // FloatBufferFormat.cs
 //
-// Copyright (C) 2019 OpenTK
+// Copyright (C) 2020 OpenTK
 //
 // This software may be modified and distributed under the terms
 // of the MIT license. See the LICENSE file for details.
 //
 
-namespace OpenToolkit.OpenAL.Extensions.EXT.FloatFormat
+namespace OpenToolkit.Audio.OpenAL.Extensions.EXT.FloatFormat
 {
     /// <summary>
-    /// Defines valid format specifiers for sound samples. This covers the additions from the multi-channel buffers
-    /// extension.
+    /// Defines valid format specifiers for sound samples. This covers the additions from the multi-channel buffers extension.
     /// </summary>
     public enum FloatBufferFormat
     {
