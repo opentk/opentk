@@ -27,10 +27,18 @@ namespace GeneratorV2.Writing
                     Writer.WriteLine("<Nullable>enable</Nullable>");
                     Writer.WriteLine($"<RootNamespace>{_rootNamespace}</RootNamespace>");
                     Writer.WriteLine("<AllowUnsafeBlocks>true</AllowUnsafeBlocks>");
-
                 }
 
                 Writer.WriteLine("</PropertyGroup>");
+
+                Writer.WriteLine("<ItemGroup>");
+
+                using (Writer.Indentation())
+                {
+                    Writer.WriteLine("<ProjectReference Include=\"../OpenToolkit.Core/OpenToolkit.Core.csproj\" />");
+                }
+
+                Writer.WriteLine("</ItemGroup>");
             }
             Writer.WriteLine("</Project>");
         }

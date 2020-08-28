@@ -163,28 +163,4 @@ namespace GeneratorV2.Overloading
             return references;
         }
     }
-
-    /*
-     * public extern unsafe void Test(int* array, int count);
-     * 
-     * void Test(Span<int> array)
-     * {
-     *      int count = array.Length;
-     *      fixed (var array_ptr = &array.GetPinnableReference())
-     *      {
-     *          Test(array_ptr, count);
-     *      }
-     * }
-     * 
-     * 
-        public static void TransformFeedbackVaryings(uint program, Span<byte>* varyings, All bufferMode)
-        {
-            var bufferMode_value = (uint)bufferMode;
-            int count = (int)varyings.Length;
-            fixed (byte* varyings_ptr = varyings)
-            {
-                TransformFeedbackVaryings(program, count, varyings_ptr, bufferMode_value);
-            }
-        }
-    */
 }

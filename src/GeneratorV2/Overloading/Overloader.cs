@@ -12,6 +12,7 @@ namespace GeneratorV2.Overloading
         private readonly IOverloader[] _overloaders = {
             new EnumOverloader(),
             new StringOverloader(),
+            new JaggedSpanOverloader(),
             new SpanOverloader(),
             new IntPtrOverloader(),
             new RefOverloader() };
