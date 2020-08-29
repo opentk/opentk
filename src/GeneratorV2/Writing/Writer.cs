@@ -29,8 +29,14 @@ namespace GeneratorV2.Writing
                 .AddNode(new NamespaceNode($"{namespaceName}.Types"))
                     .AddNode(new TypesNode());
 
+            AddNode(new FileNode(Path.Combine(_path, "GLLoader.cs")))
+                .AddNode(new NamespaceNode($"{namespaceName}"))
+                    .AddNode(new ClassNode("GLLoader"))
+                        .AddNode(new LoaderNode());
+
             AddNode(new FileNode(Path.Combine(_path, "OpenToolkit.Graphics.csproj")))
                 .AddNode(new ProjectNode(namespaceName));
+
         }
 
         public override void Write()

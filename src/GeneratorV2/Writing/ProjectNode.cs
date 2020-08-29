@@ -23,7 +23,7 @@ namespace GeneratorV2.Writing
 
                 using (Writer.Indentation())
                 {
-                    Writer.WriteLine("<TargetFramework>netcoreapp3.1</TargetFramework>");
+                    Writer.WriteLine("<TargetFramework>net5.0</TargetFramework>");
                     Writer.WriteLine("<Nullable>enable</Nullable>");
                     Writer.WriteLine($"<RootNamespace>{_rootNamespace}</RootNamespace>");
                     Writer.WriteLine("<AllowUnsafeBlocks>true</AllowUnsafeBlocks>");
