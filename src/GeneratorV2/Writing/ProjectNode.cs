@@ -27,6 +27,8 @@ namespace GeneratorV2.Writing
                     Writer.WriteLine("<Nullable>enable</Nullable>");
                     Writer.WriteLine($"<RootNamespace>{_rootNamespace}</RootNamespace>");
                     Writer.WriteLine("<AllowUnsafeBlocks>true</AllowUnsafeBlocks>");
+                    Writer.WriteLine("<PackageVersion>5.0.0-pre0.0</PackageVersion>");
+                    Writer.WriteLine("<Version>5.0.0</Version>");
                 }
 
                 Writer.WriteLine("</PropertyGroup>");

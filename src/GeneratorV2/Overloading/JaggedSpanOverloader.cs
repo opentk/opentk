@@ -1,6 +1,5 @@
 ﻿using GeneratorV2.Data;
 using GeneratorV2.Extensions;
-using GeneratorV2.Overloading;
 using System;
 using System.CodeDom.Compiler;
 using System.Collections.Generic;
@@ -9,21 +8,19 @@ using System.Text;
 
 namespace GeneratorV2.Overloading
 {
-    public class SpanOverloader : IOverloader
+    public class JaggedSpanOverloader : IOverloader
     {
         private class Layer : ILayer
         {
             private readonly ILayer _nestedLayer;
             private readonly int _argIndex;
             private readonly IExpression? _length;
-            private readonly string _castType;
 
-            public Layer(ILayer nestedLayer, int argIndex, IExpression? length, string castType)
+            public Layer(ILayer nestedLayer, int argIndex, IExpression? length)
             {
                 _nestedLayer = nestedLayer;
                 _argIndex = argIndex;
                 _length = length;
-                _castType = castType;
             }
 
             private string? ExpressionToString(IExpression? expr, Argument[] args, out int lenIdx)
@@ -72,44 +69,36 @@ namespace GeneratorV2.Overloading
                 int sInd = spanArg.Type.IndexOf('<');
                 int eInd = spanArg.Type.LastIndexOf('>');
 
-                var newType = spanArg.Type.Substring(sInd + 1, eInd - sInd - 1) + "*";
-                var newName = spanArg.Name + "_ptr";
+                var newType = spanArg.Type.Substring(sInd + 1, eInd - sInd - 1) + "**";
 
                 var lengthExpression = ExpressionToString(_length, args, out var lenIndex);
-                args[_argIndex] = spanArg.Clone(newType, newName);
+                args[_argIndex] = spanArg.Clone(newType, $"{spanArg.Name}_vptr");
                 if (lengthExpression != null && lenIndex != -1)
                 {
                     var lenArg = args[lenIndex];
                     writer.WriteLine($"{lenArg.Type} {lenArg.Name} = ({lenArg.Type})({lengthExpression});");
                 }
-                writer.WriteLine($"fixed ({newType} {newName} = {spanArg.Name})");
-                using (writer.Scope())
-                {
-                    if (newType != _castType)
-                    {
-                        writer.WriteLine($"var {newName}_casted = ({_castType}){newName};");
-                        args[_argIndex] = spanArg.Clone(newType, $"{newName}_casted");
-                    }
-                    _nestedLayer.WriteLayer(writer, methodName, args);
-                }
+                writer.WriteLine($"var {spanArg.Name}_vptr = {(newType.StartsWith("T") ? "(void**)" : string.Empty)}(({newType}){spanArg.Name});");
+                _nestedLayer.WriteLayer(writer, methodName, args);
             }
         }
 
-        public bool TryOverloadParameter(OverloadContext context, ref ILayer topLayer, int i)
+        public bool TryOverloadParameter(OverloadContext context, ref ILayer topLayer, int paramIndex)
         {
-            //TODO: Split into other functions.
-            var parameter = context.Parameters[i];
+            var parameter = context.Parameters[paramIndex];
             if (parameter == null)
             {
                 return false;
             }
             var type = parameter.Type;
-            var ptrLoc = type.Name.LastIndexOf('*');
-            if (type == null || type.Length == null || ptrLoc == -1 || type.Length is Constant)
+            var ptrLoc1 = type.Name.IndexOf('*');
+            var ptrLoc2 = type.Name.IndexOf('*', ptrLoc1 + 1);
+            if (type == null || type.Length == null || ptrLoc1 == -1 || ptrLoc2 == -1 || type.Length is Constant || type.OriginalTypeName.Contains("GLchar"))
             {
                 return false;
             }
 
+            //TODO: code deduplication
             var references = GetAllReferences(type.Length);
             var useParameter = true;
             foreach (var reference in references)
@@ -131,26 +120,21 @@ namespace GeneratorV2.Overloading
                 }
             }
 
-            var elementType = type.Name.Substring(0, ptrLoc);
-            string castType = elementType + "*";
-            
+            var elementType = type.Name.Remove(ptrLoc2, 1).Remove(ptrLoc1, 1).Trim();
             if (elementType == "void")
             {
                 elementType = $"T{++context.TypeParameterCount}";
             }
-            else if (elementType.Contains("*") && type.OriginalTypeName.Contains("GLchar"))
-            {
-                elementType = "IntPtr";
-            }
-            var typeName = (type.Modifier == PModifier.ReadOnlySpan ? "ReadOnly" : string.Empty) + $"Span<{elementType}>{type.Name.Substring(ptrLoc+1)}";
+            var typeName = $"JaggedSpan<{elementType}>";
 
-            context.Parameters[i] = new Parameter(new PType(typeName, type.OriginalTypeName,
+            context.Parameters[paramIndex] = new Parameter(new PType(typeName, type.OriginalTypeName,
                 type.Modifier, type.Group, null), parameter.Name);
 
-            topLayer = new Layer(topLayer, i, useParameter ? null : type.Length, castType);
+            topLayer = new Layer(topLayer, paramIndex, useParameter ? null : type.Length);
             return true;
         }
 
+        //TODO: code deduplication
         private List<ParameterReference> GetAllReferences(IExpression expression, List<ParameterReference>? references = null)
         {
             if (references == null)

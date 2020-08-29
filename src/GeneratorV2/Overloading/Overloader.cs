@@ -14,6 +14,7 @@ namespace GeneratorV2.Overloading
             new StringOverloader(),
             new JaggedSpanOverloader(),
             new SpanOverloader(),
+            new StringSpanOverloader(),
             new IntPtrOverloader(),
             new RefOverloader() };
         private readonly Specification _spec;
