@@ -17,13 +17,15 @@ namespace GeneratorV2.Overloading
             private readonly int _argIndex;
             private readonly IExpression? _length;
             private readonly string _castType;
+            private readonly bool _isSize;
 
-            public Layer(ILayer nestedLayer, int argIndex, IExpression? length, string castType)
+            public Layer(ILayer nestedLayer, int argIndex, IExpression? length, string castType, bool isSize)
             {
                 _nestedLayer = nestedLayer;
                 _argIndex = argIndex;
                 _length = length;
                 _castType = castType;
+                _isSize = isSize;
             }
 
             private string? ExpressionToString(IExpression? expr, Argument[] args, out int lenIdx)
@@ -80,7 +82,8 @@ namespace GeneratorV2.Overloading
                 if (lengthExpression != null && lenIndex != -1)
                 {
                     var lenArg = args[lenIndex];
-                    writer.WriteLine($"{lenArg.Type} {lenArg.Name} = ({lenArg.Type})({lengthExpression});");
+                    var sizeMult = _isSize ? $" * sizeof({newType[0..^1]})": string.Empty;
+                    writer.WriteLine($"{lenArg.Type} {lenArg.Name} = ({lenArg.Type})({lengthExpression}{sizeMult});");
                 }
                 writer.WriteLine($"fixed ({newType} {newName} = {spanArg.Name})");
                 using (writer.Scope())
@@ -110,6 +113,7 @@ namespace GeneratorV2.Overloading
                 return false;
             }
 
+            var isSize = false;
             var references = GetAllReferences(type.Length);
             var useParameter = true;
             foreach (var reference in references)
@@ -126,6 +130,7 @@ namespace GeneratorV2.Overloading
                 }
                 if (otherReferences == 0)
                 {
+                    isSize = reference.Parameter.Type.OriginalTypeName.Contains("size");
                     context.Parameters[reference.ParameterIndex] = null;
                     useParameter = false;
                 }
@@ -147,7 +152,7 @@ namespace GeneratorV2.Overloading
             context.Parameters[i] = new Parameter(new PType(typeName, type.OriginalTypeName,
                 type.Modifier, type.Group, null), parameter.Name);
 
-            topLayer = new Layer(topLayer, i, useParameter ? null : type.Length, castType);
+            topLayer = new Layer(topLayer, i, useParameter ? null : type.Length, castType, isSize);
             return true;
         }
 

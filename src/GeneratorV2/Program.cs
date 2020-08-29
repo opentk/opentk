@@ -7,7 +7,7 @@ using System;
 
 namespace GeneratorV2
 {
-    class Program
+    unsafe class Program
     {
         static void Main(string[] args)
         {
@@ -35,6 +35,27 @@ namespace GeneratorV2
                 Logger.Info($"{st.ElapsedMilliseconds}");
             }
         }
+
+        //[DllImport("opengl32.dll", EntryPoint = "glCullFace")]
+        //private static void PreloadCullFace()
+        //{
+        //    CullFace_fnptr = _bindingsContext.GetProcAddress("glCullFace");
+        //}
+        
+        //public static void Preload()
+        //{
+        //    PreloadCullFace();
+        //    ...
+        //}
+        //private static object _lock = new object();
+        //private static IBindingContext _bindingsContext;
+        //public static void LoadBindings(IBindingContext c)
+        //{
+        //    _bindingsContext = c;
+        //}
+
+        //[DllImport("opengl32.dll", EntryPoint = "glCullFace")]
+        //public static extern void CullFace(uint mode);
     }
 }
 /*
