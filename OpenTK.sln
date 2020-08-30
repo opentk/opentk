@@ -13,11 +13,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "project", "project", "{5EEE
 		stylecop.ruleset = stylecop.ruleset
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenToolkit.Input", "src\OpenToolkit.Input\OpenToolkit.Input.csproj", "{FD2151DE-0663-4100-9AB5-D1E22CF2144D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenTK.Input", "src\OpenTK.Input\OpenTK.Input.csproj", "{FD2151DE-0663-4100-9AB5-D1E22CF2144D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenToolkit.Mathematics", "src\OpenToolkit.Mathematics\OpenToolkit.Mathematics.csproj", "{517AC4BF-6AF5-415D-B11C-FC6FE6710336}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenTK.Mathematics", "src\OpenTK.Mathematics\OpenTK.Mathematics.csproj", "{517AC4BF-6AF5-415D-B11C-FC6FE6710336}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenToolkit.Core", "src\OpenToolkit.Core\OpenToolkit.Core.csproj", "{30B46B07-2836-4862-B7FA-A158B581F83E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenTK.Core", "src\OpenTK.Core\OpenTK.Core.csproj", "{30B46B07-2836-4862-B7FA-A158B581F83E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "props", "props", "{9A58BE7A-02D3-4B94-B648-BDF421CC77EF}"
 	ProjectSection(SolutionItems) = preProject
@@ -38,9 +38,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Windowing", "Windowing", "{
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{0B9B71A1-29F7-4CC5-9A9D-9DF122BE8B28}"
 EndProject
-Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "OpenToolkit.Tests", "tests\OpenToolkit.Tests\OpenToolkit.Tests.fsproj", "{0100EDA0-A134-4D9E-AE6B-470169BD8B94}"
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "OpenTK.Tests", "tests\OpenTK.Tests\OpenTK.Tests.fsproj", "{0100EDA0-A134-4D9E-AE6B-470169BD8B94}"
 EndProject
-Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "OpenToolkit.Tests.Integration", "tests\OpenToolkit.Tests.Integration\OpenToolkit.Tests.Integration.fsproj", "{48936313-63D4-4A26-87F0-040AA15FF4A6}"
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "OpenTK.Tests.Integration", "tests\OpenTK.Tests.Integration\OpenTK.Tests.Integration.fsproj", "{48936313-63D4-4A26-87F0-040AA15FF4A6}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{471E0D18-D620-4CBE-A471-F3DB470E6D49}"
 	ProjectSection(SolutionItems) = preProject
@@ -60,23 +60,23 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Generator.Rewrite", "src\Ge
 EndProject
 Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "SpecificationOpenGL", "src\SpecificationOpenGL\SpecificationOpenGL.fsproj", "{808BD056-6B35-4DB3-93E2-78243CC51A6A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenToolkit.Graphics", "src\OpenToolkit.Graphics\OpenToolkit.Graphics.csproj", "{38599D4C-97B2-404F-926C-2643E47A0967}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenTK.Graphics", "src\OpenTK.Graphics\OpenTK.Graphics.csproj", "{38599D4C-97B2-404F-926C-2643E47A0967}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "OpenAL", "OpenAL", "{BF0E6BAA-C31F-4481-924B-3EE9826BEE4D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenToolkit.OpenAL", "src\OpenAL\OpenToolkit.OpenAL\OpenToolkit.OpenAL.csproj", "{40349C84-AAF1-4159-B118-0565F7351523}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenTK.OpenAL", "src\OpenAL\OpenTK.OpenAL\OpenTK.OpenAL.csproj", "{40349C84-AAF1-4159-B118-0565F7351523}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenToolkit.OpenAL.Extensions", "src\OpenAL\OpenToolkit.OpenAL.Extensions\OpenToolkit.OpenAL.Extensions.csproj", "{CB4028A7-A449-4452-9FC5-78CDB545FEB9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenTK.OpenAL.Extensions", "src\OpenAL\OpenTK.OpenAL.Extensions\OpenTK.OpenAL.Extensions.csproj", "{CB4028A7-A449-4452-9FC5-78CDB545FEB9}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenALGenerator", "OpenALGenerator\OpenALGenerator.csproj", "{17FB3437-BD1A-423B-B333-B2D7F775BC79}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenALTest", "OpenALTest\OpenALTest.csproj", "{5F47DB55-4BFC-4832-A68F-AB36CE7431CE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenToolkit.Windowing.Common", "src\OpenToolkit.Windowing.Common\OpenToolkit.Windowing.Common.csproj", "{9A0D02D2-0834-42F8-9610-8221CF803708}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenTK.Windowing.Common", "src\OpenTK.Windowing.Common\OpenTK.Windowing.Common.csproj", "{9A0D02D2-0834-42F8-9610-8221CF803708}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenToolkit.Windowing.GraphicsLibraryFramework", "src\OpenToolkit.Windowing.GraphicsLibraryFramework\OpenToolkit.Windowing.GraphicsLibraryFramework.csproj", "{ECC7271C-A5E5-4CDC-BA9F-A38A150CD2D4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenTK.Windowing.GraphicsLibraryFramework", "src\OpenTK.Windowing.GraphicsLibraryFramework\OpenTK.Windowing.GraphicsLibraryFramework.csproj", "{ECC7271C-A5E5-4CDC-BA9F-A38A150CD2D4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenToolkit.Windowing.Desktop", "src\OpenToolkit.Windowing.Desktop\OpenToolkit.Windowing.Desktop.csproj", "{172C1E62-DA67-4203-BBCB-9DA4D9111EF0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenTK.Windowing.Desktop", "src\OpenTK.Windowing.Desktop\OpenTK.Windowing.Desktop.csproj", "{172C1E62-DA67-4203-BBCB-9DA4D9111EF0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

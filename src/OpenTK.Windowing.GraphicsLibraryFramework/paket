@@ -1,0 +1,18 @@
+type file
+id OpenTK.Windowing.GraphicsLibraryFramework
+description
+    GLFW bindings for c# from the cpp GLFW library.
+dependencies
+    framework: netcoreapp3.0
+        OpenTK.Core ~> #VERSION#
+        OpenTK.redist.glfw ~> 3.3.0-pre20190419183326
+    framework: net472
+        OpenTK.Core ~> #VERSION#
+        OpenTK.redist.glfw ~> 3.3.0-pre20190419183326
+files
+    bin\Release\netcoreapp3.0\OpenTK.Windowing.GraphicsLibraryFramework.dll ==> lib\netcoreapp3.0
+    bin\Release\netcoreapp3.0\OpenTK.Windowing.GraphicsLibraryFramework.xml ==> lib\netcoreapp3.0
+    bin\Release\netcoreapp3.0\OpenTK.Windowing.GraphicsLibraryFramework.pdb ==> lib\netcoreapp3.0
+    bin\Release\net472\OpenTK.Windowing.GraphicsLibraryFramework.dll ==> lib\net472
+    bin\Release\net472\OpenTK.Windowing.GraphicsLibraryFramework.xml ==> lib\net472
+    bin\Release\net472\OpenTK.Windowing.GraphicsLibraryFramework.pdb ==> lib\net472

@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading;
-using OpenToolkit.Audio.OpenAL.Extensions.Creative.EFX;
-using OpenToolkit.Audio.OpenAL.Extensions.EXT.Double;
-using OpenToolkit.Audio.OpenAL.Extensions.EXT.Float32;
-using OpenToolkit.Audio.OpenAL.Extensions.EXT.FloatFormat;
+using OpenTK.Audio.OpenAL.Extensions.Creative.EFX;
+using OpenTK.Audio.OpenAL.Extensions.EXT.Double;
+using OpenTK.Audio.OpenAL.Extensions.EXT.Float32;
+using OpenTK.Audio.OpenAL.Extensions.EXT.FloatFormat;
 
-namespace OpenToolkit.Audio.OpenAL
+namespace OpenTK.Audio.OpenAL
 {
     internal class ALTest
     {

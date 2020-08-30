@@ -37,7 +37,7 @@ type GLFunctionDeclaration =
       parameters: GLParameterInfo []
       retType: GLLooseType }
 
-type OpenToolkitType =
+type OpenTKType =
     | Vector2
     | Vector3
     | Vector4
@@ -105,7 +105,7 @@ type GLType =
     | GLDEBUGPROCARB
     | GLDEBUGPROCKHR
     | GLVULKANPROCNV
-    | OpenToolkit of OpenToolkitType
+    | OpenTK of OpenTKType
     | RefPointer of GLType
     | StructGenericType of string
     | ArrayType of GLType
