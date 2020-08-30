@@ -72,7 +72,7 @@ namespace OpenToolkit.OpenCL.Tests
 
 					CL.Finish(commandQueue);
 
-					CL.SetEventCallback(eventHandle, CommandExecutionStatus.Complete, (waitEvent, data) =>
+					CL.SetEventCallback(eventHandle, (int)CommandExecutionStatus.Complete, (waitEvent, data) =>
 					{
 						CL.EnqueueReadBuffer(commandQueue, resultBuffer, false, UIntPtr.Zero, arraySize,
 							out float[] resultValues, 0, null, out _);

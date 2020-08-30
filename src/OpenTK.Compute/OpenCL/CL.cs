@@ -1014,10 +1014,10 @@ public static extern IntPtr CreateImageWithProperties(IntPtr context, IntPtr[] p
 		public static extern CLResultCode SetEventCallback(IntPtr eventHandle, int commandExecCallbackType,
 			IntPtr notifyCallback, IntPtr userData);
 
-		public static CLResultCode SetEventCallback(IntPtr eventHandle, CommandExecutionStatus commandExecCallbackType,
+		public static CLResultCode SetEventCallback(IntPtr eventHandle, int callbackType,
 			ClEventCallback notifyCallback)
 		{
-			return SetEventCallback(eventHandle, (int)commandExecCallbackType,
+			return SetEventCallback(eventHandle, callbackType,
 				Marshal.GetFunctionPointerForDelegate(notifyCallback), IntPtr.Zero);
 		}
 
