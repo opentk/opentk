@@ -17,15 +17,15 @@ namespace GeneratorV2.Overloading
             private readonly int _argIndex;
             private readonly IExpression? _length;
             private readonly string _castType;
-            private readonly bool _isSize;
+            private readonly bool _isByteSize;
 
-            public Layer(ILayer nestedLayer, int argIndex, IExpression? length, string castType, bool isSize)
+            public Layer(ILayer nestedLayer, int argIndex, IExpression? length, string castType, bool isByteSize)
             {
                 _nestedLayer = nestedLayer;
                 _argIndex = argIndex;
                 _length = length;
                 _castType = castType;
-                _isSize = isSize;
+                _isByteSize = isByteSize;
             }
 
             private string? ExpressionToString(IExpression? expr, Argument[] args, out int lenIdx)
@@ -82,7 +82,7 @@ namespace GeneratorV2.Overloading
                 if (lengthExpression != null && lenIndex != -1)
                 {
                     var lenArg = args[lenIndex];
-                    var sizeMult = _isSize ? $" * sizeof({newType[0..^1]})": string.Empty;
+                    var sizeMult = _isByteSize ? $" * sizeof({newType[0..^1]})": string.Empty;
                     writer.WriteLine($"{lenArg.Type} {lenArg.Name} = ({lenArg.Type})({lengthExpression}{sizeMult});");
                 }
                 writer.WriteLine($"fixed ({newType} {newName} = {spanArg.Name})");
@@ -113,7 +113,7 @@ namespace GeneratorV2.Overloading
                 return false;
             }
 
-            var isSize = false;
+            var isByteSize = false;
             var references = GetAllReferences(type.Length);
             var useParameter = true;
             foreach (var reference in references)
@@ -130,9 +130,14 @@ namespace GeneratorV2.Overloading
                 }
                 if (otherReferences == 0)
                 {
-                    isSize = reference.Parameter.Type.OriginalTypeName.Contains("size");
+                    isByteSize = reference.Parameter.Type.OriginalTypeName.Contains("GLsizeiptr");
                     context.Parameters[reference.ParameterIndex] = null;
                     useParameter = false;
+                }
+
+                if (!(type.Length is CompSize) && reference.Parameter.Type.OriginalTypeName.Contains("GLsizei") && !reference.Parameter.Type.OriginalTypeName.Contains("GLsizeiptr"))
+                {
+                    Logger.Info(context.Command.Name);
                 }
             }
 
@@ -152,7 +157,7 @@ namespace GeneratorV2.Overloading
             context.Parameters[i] = new Parameter(new PType(typeName, type.OriginalTypeName,
                 type.Modifier, type.Group, null), parameter.Name);
 
-            topLayer = new Layer(topLayer, i, useParameter ? null : type.Length, castType, isSize);
+            topLayer = new Layer(topLayer, i, useParameter ? null : type.Length, castType, isByteSize);
             return true;
         }
 
