@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 using System.Text;
-using OpenToolkit.Compute.OpenCL;
+using OpenTK.Compute.OpenCL;
 
 namespace OpenToolkit.OpenCL.Tests
 {

@@ -2,6 +2,7 @@
 
     <PropertyGroup>
         <TargetFramework>netcoreapp3.0</TargetFramework>
+        <RootNamespace>OpenToolkit.Compute</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>

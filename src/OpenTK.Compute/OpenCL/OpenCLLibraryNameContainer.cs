@@ -1,6 +1,6 @@
 using OpenToolkit.Core.Loader;
 
-namespace OpenToolkit.Compute.OpenCL
+namespace OpenTK.Compute.OpenCL
 {
     public class OpenCLLibraryNameContainer : PlatformLibraryNameContainerBase
     {

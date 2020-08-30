@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 using System.Text;
-using OpenToolkit.Compute.Native;
+using OpenTK.Compute.Native;
 
-namespace OpenToolkit.Compute.OpenCL
+namespace OpenTK.Compute.OpenCL
 {
 	public class CL : CLBase
 	{

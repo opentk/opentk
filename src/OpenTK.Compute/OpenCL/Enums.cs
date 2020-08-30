@@ -1,6 +1,6 @@
 using System;
 
-namespace OpenToolkit.Compute.OpenCL
+namespace OpenTK.Compute.OpenCL
 {
 	public enum PlatformInfo : uint
 	{

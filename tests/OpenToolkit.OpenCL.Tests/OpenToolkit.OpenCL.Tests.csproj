@@ -6,7 +6,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\src\OpenToolkit.Compute\OpenToolkit.Compute.csproj" />
+      <ProjectReference Include="..\..\src\OpenTK.Compute\OpenTK.Compute.csproj" />
     </ItemGroup>
 
 </Project>

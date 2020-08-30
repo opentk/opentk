@@ -1,6 +1,6 @@
 using System.Runtime.CompilerServices;
 
-namespace OpenToolkit.Compute.Native
+namespace OpenTK.Compute.Native
 {
 	/// <summary>
 	/// This is a base class for OpenCL APIs that are using DllImport and want to resolve different dll names on different platforms.

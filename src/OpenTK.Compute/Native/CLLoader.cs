@@ -1,9 +1,9 @@
 using System;
 using System.Reflection;
 using System.Runtime.InteropServices;
-using OpenToolkit.Compute.OpenCL;
+using OpenTK.Compute.OpenCL;
 
-namespace OpenToolkit.Compute.Native
+namespace OpenTK.Compute.Native
 {
 	/// <summary>
 	/// Provides a base for ApiContext so that it can register dll intercepts.

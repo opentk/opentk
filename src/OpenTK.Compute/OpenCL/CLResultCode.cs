@@ -1,4 +1,4 @@
-namespace OpenToolkit.Compute.OpenCL
+namespace OpenTK.Compute.OpenCL
 {
 	public enum CLResultCode : int
 	{
