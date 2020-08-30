@@ -1,3 +1,9 @@
+## 4.0.0-pre9.4
+ * **moved to dotnetcore only**
+ * Return namespaces to the glorious OpenTK (thanks @glopes)
+ * Simplified OpenAL loading + add more extensions (@NogginBops)
+ * Fixed initial focused inconsistency between Windows and Linux(X11) (@jvbsl)
+
 ### 4.0.0-pre9.3
  * Improved and fixed GLFW binary loading (@jvbsl)
  * Improved mono compat (@jvbsl)
