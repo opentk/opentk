@@ -56,7 +56,7 @@
  * Brand new GLFW-based windowing system.
  * Brand new GLFW-based input system.
  * Math library performance improvements and fixes.
- * Changed root namespace to OpenToolkit for future Xamarin compatibility - (https://github.com/mono/opentk/issues/19)
+ * Changed root namespace to OpenTK for future Xamarin compatibility - (https://github.com/mono/opentk/issues/19)
 
 Note:
 - 4.0.0-pre does not include any version of openAl, as that still depends on ADL
@@ -105,7 +105,7 @@ Full Log:
  * [4.0] Adding directory safety to the binder. #837
  * Update README after branch changes #839
  * [4.0] Add StructLayout to Color4#840
- * [4.0] Change root namespace to OpenToolkit #842
+ * [4.0] Change root namespace to OpenTK #842
  * Fix the aftermath of merging #842 #843
  * [4.0] Impliment Vectord * Quaterniond #844
  * Fix aftermath of #842 #846
@@ -130,7 +130,7 @@ Full Log:
  * Rename license files to avoid confusion. #885
  * Emergency fix in short license terms #887
  * [4.0] Adding Lerp function in the math helper #895
- * System.Math and OpenToolkit.MathHelper symmetry #897
+ * System.Math and OpenTK.MathHelper symmetry #897
  * Shorten float literals to the actual float value #898
  * Reflect 22/04/2019 development discussion #902
  * Remove obsolete methods within Vector types. #906

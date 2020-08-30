@@ -1,8 +1,0 @@
-type file
-id OpenToolkit.Input
-description
-    Hid/Controller input library.
-files
-    bin\Release\netstandard2.0\OpenToolkit.Input.dll ==> lib\netstandard2.0
-    bin\Release\netstandard2.0\OpenToolkit.Input.xml ==> lib\netstandard2.0
-    bin\Release\netstandard2.0\OpenToolkit.Input.pdb ==> lib\netstandard2.0

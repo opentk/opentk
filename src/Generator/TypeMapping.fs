@@ -135,8 +135,8 @@ let specTypeToCSharpType =
        "GLsizeiptrARB", "UIntPtr"
        "GLintptrARB", "IntPtr"
        "GLhandleARB", "uint"
-       "GLhalfARB", "OpenToolkit.Mathematics.Half"
-       "GLhalfNV", "OpenToolkit.Mathematics.Half"
+       "GLhalfARB", "OpenTK.Mathematics.Half"
+       "GLhalfNV", "OpenTK.Mathematics.Half"
        "GLcharARB", "char"
        // 64 bit types (introduced in 2.1)
        "GLint64EXT", "long"

@@ -92,7 +92,7 @@ let releaseProjects =
     -- "src/SpecificationOpenGL/**"
     -- "src/OpenAL/OpenALGenerator/**"
     -- "src/OpenAL/OpenALTest/**"
-    -- "src/OpenAL/OpenToolkit.OpenAL.Extensions/**"
+    -- "src/OpenAL/OpenTK.OpenAL.Extensions/**"
 
 
 // Absolutely all test projects.
@@ -169,8 +169,8 @@ Target.create "RewriteBindings" (fun _ ->
     Trace.log " --- Rewriting bindings (calli) --- "
     let framework = "netcoreapp31"
     let projFile = "src/Generator.Rewrite/Generator.Rewrite.csproj"
-    let bindingsFile = "OpenToolkit.Graphics.dll"
-    let bindingsOutput = "src/OpenToolkit.Graphics/bin/Release/netstandard2.0"
+    let bindingsFile = "OpenTK.Graphics.dll"
+    let bindingsOutput = "src/OpenTK.Graphics/bin/Release/netstandard2.0"
 
     let args =
         [ "-a " + (System.IO.Path.GetFullPath bindingsOutput </> bindingsFile)
@@ -182,17 +182,17 @@ Target.create "RewriteBindings" (fun _ ->
 // ---------
 
 Target.create "Clean" <| fun _ ->
-    !! ("./src" </> "OpenToolkit.Graphics" </> "**/*.*")
+    !! ("./src" </> "OpenTK.Graphics" </> "**/*.*")
     ++ (nugetDir </> "*.nupkg")
-    -- ("./src" </> "OpenToolkit.Graphics" </> "Enums/*.cs")
-    -- ("./src" </> "OpenToolkit.Graphics" </> "*.cs")
-    -- ("./src" </> "OpenToolkit.Graphics" </> "*.csproj")
-    -- ("./src" </> "OpenToolkit.Graphics" </> "ES11/Helper.cs")
-    -- ("./src" </> "OpenToolkit.Graphics" </> "ES20/Helper.cs")
-    -- ("./src" </> "OpenToolkit.Graphics" </> "ES30/Helper.cs")
-    -- ("./src" </> "OpenToolkit.Graphics" </> "OpenGL2/Helper.cs")
-    -- ("./src" </> "OpenToolkit.Graphics" </> "OpenGL4/Helper.cs")
-    -- ("./src" </> "OpenToolkit.Graphics" </> "paket")
+    -- ("./src" </> "OpenTK.Graphics" </> "Enums/*.cs")
+    -- ("./src" </> "OpenTK.Graphics" </> "*.cs")
+    -- ("./src" </> "OpenTK.Graphics" </> "*.csproj")
+    -- ("./src" </> "OpenTK.Graphics" </> "ES11/Helper.cs")
+    -- ("./src" </> "OpenTK.Graphics" </> "ES20/Helper.cs")
+    -- ("./src" </> "OpenTK.Graphics" </> "ES30/Helper.cs")
+    -- ("./src" </> "OpenTK.Graphics" </> "OpenGL2/Helper.cs")
+    -- ("./src" </> "OpenTK.Graphics" </> "OpenGL4/Helper.cs")
+    -- ("./src" </> "OpenTK.Graphics" </> "paket")
     |> Seq.iter(Shell.rm)
 
 Target.create "Restore" (fun _ -> DotNet.restore dotnetSimple "OpenTK.sln" |> ignore)

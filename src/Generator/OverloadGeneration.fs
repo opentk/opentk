@@ -91,7 +91,7 @@ let autoGenerateOverloadForType (func: PrintReadyTypedFunctionDeclaration) =
                     match param.typ.typ with
                     | Pointer(currTy) when currTy = expectedPointerTy ->
                         typ
-                        |> OpenToolkit
+                        |> OpenTK
                         |> RefPointer
                     | typ -> typ
                 { param with typ = typ |> PrintReady.formatTypeInfo })
@@ -114,30 +114,30 @@ let autoGenerateOverloadForType (func: PrintReadyTypedFunctionDeclaration) =
 
     match func.prettyName with
     // Matrix and Vector mappings
-    | EndsWith "Matrix2fv" adjustedName -> injectTkType (OpenToolkitType.Matrix2) (adjustedName + "Matrix2") GLfloat
-    | EndsWith "Matrix3fv" adjustedName -> injectTkType (OpenToolkitType.Matrix3) (adjustedName + "Matrix3") GLfloat
-    | EndsWith "Matrix4fv" adjustedName -> injectTkType (OpenToolkitType.Matrix4) (adjustedName + "Matrix4") GLfloat
-    | EndsWith "Matrix2dv" adjustedName -> injectTkType (OpenToolkitType.Matrix2d) (adjustedName + "Matrix2") GLdouble
-    | EndsWith "Matrix3dv" adjustedName -> injectTkType (OpenToolkitType.Matrix3d) (adjustedName + "Matrix3") GLdouble
-    | EndsWith "Matrix4dv" adjustedName -> injectTkType (OpenToolkitType.Matrix4d) (adjustedName + "Matrix4") GLdouble
-    | EndsWith "Matrix2x3fv" adjustedName -> injectTkType (OpenToolkitType.Matrix2x3) (adjustedName + "Matrix2x3") GLfloat
-    | EndsWith "Matrix2x4fv" adjustedName -> injectTkType (OpenToolkitType.Matrix2x4) (adjustedName + "Matrix2x4") GLfloat
-    | EndsWith "Matrix3x2fv" adjustedName -> injectTkType (OpenToolkitType.Matrix3x2) (adjustedName + "Matrix3x2") GLfloat
-    | EndsWith "Matrix3x4fv" adjustedName -> injectTkType (OpenToolkitType.Matrix3x4) (adjustedName + "Matrix3x4") GLfloat
-    | EndsWith "Matrix4x2fv" adjustedName -> injectTkType (OpenToolkitType.Matrix4x2) (adjustedName + "Matrix4x2") GLfloat
-    | EndsWith "Matrix4x3fv" adjustedName -> injectTkType (OpenToolkitType.Matrix4x3) (adjustedName + "Matrix4x3") GLfloat
-    | EndsWith "Matrix2x3dv" adjustedName -> injectTkType (OpenToolkitType.Matrix2x3d) (adjustedName + "Matrix2x3") GLdouble
-    | EndsWith "Matrix2x4dv" adjustedName -> injectTkType (OpenToolkitType.Matrix2x4d) (adjustedName + "Matrix2x4") GLdouble
-    | EndsWith "Matrix3x2dv" adjustedName -> injectTkType (OpenToolkitType.Matrix3x2d) (adjustedName + "Matrix3x2") GLdouble
-    | EndsWith "Matrix3x4dv" adjustedName -> injectTkType (OpenToolkitType.Matrix3x4d) (adjustedName + "Matrix3x4") GLdouble
-    | EndsWith "Matrix4x2dv" adjustedName -> injectTkType (OpenToolkitType.Matrix4x2d) (adjustedName + "Matrix4x2") GLdouble
-    | EndsWith "Matrix4x3dv" adjustedName -> injectTkType (OpenToolkitType.Matrix4x3d) (adjustedName + "Matrix4x3") GLdouble
-    | EndsWith "2dv" adjustedName -> injectTkType (OpenToolkitType.Vector2d) (adjustedName + "2") GLdouble
-    | EndsWith "3dv" adjustedName -> injectTkType (OpenToolkitType.Vector3d) (adjustedName + "3") GLdouble
-    | EndsWith "4dv" adjustedName -> injectTkType (OpenToolkitType.Vector4d) (adjustedName + "4") GLdouble
-    | EndsWith "2fv" adjustedName -> injectTkType (OpenToolkitType.Vector2) (adjustedName + "2") GLfloat
-    | EndsWith "3fv" adjustedName -> injectTkType (OpenToolkitType.Vector3) (adjustedName + "3") GLfloat
-    | EndsWith "4fv" adjustedName -> injectTkType (OpenToolkitType.Vector4) (adjustedName + "4") GLfloat
+    | EndsWith "Matrix2fv" adjustedName -> injectTkType (OpenTKType.Matrix2) (adjustedName + "Matrix2") GLfloat
+    | EndsWith "Matrix3fv" adjustedName -> injectTkType (OpenTKType.Matrix3) (adjustedName + "Matrix3") GLfloat
+    | EndsWith "Matrix4fv" adjustedName -> injectTkType (OpenTKType.Matrix4) (adjustedName + "Matrix4") GLfloat
+    | EndsWith "Matrix2dv" adjustedName -> injectTkType (OpenTKType.Matrix2d) (adjustedName + "Matrix2") GLdouble
+    | EndsWith "Matrix3dv" adjustedName -> injectTkType (OpenTKType.Matrix3d) (adjustedName + "Matrix3") GLdouble
+    | EndsWith "Matrix4dv" adjustedName -> injectTkType (OpenTKType.Matrix4d) (adjustedName + "Matrix4") GLdouble
+    | EndsWith "Matrix2x3fv" adjustedName -> injectTkType (OpenTKType.Matrix2x3) (adjustedName + "Matrix2x3") GLfloat
+    | EndsWith "Matrix2x4fv" adjustedName -> injectTkType (OpenTKType.Matrix2x4) (adjustedName + "Matrix2x4") GLfloat
+    | EndsWith "Matrix3x2fv" adjustedName -> injectTkType (OpenTKType.Matrix3x2) (adjustedName + "Matrix3x2") GLfloat
+    | EndsWith "Matrix3x4fv" adjustedName -> injectTkType (OpenTKType.Matrix3x4) (adjustedName + "Matrix3x4") GLfloat
+    | EndsWith "Matrix4x2fv" adjustedName -> injectTkType (OpenTKType.Matrix4x2) (adjustedName + "Matrix4x2") GLfloat
+    | EndsWith "Matrix4x3fv" adjustedName -> injectTkType (OpenTKType.Matrix4x3) (adjustedName + "Matrix4x3") GLfloat
+    | EndsWith "Matrix2x3dv" adjustedName -> injectTkType (OpenTKType.Matrix2x3d) (adjustedName + "Matrix2x3") GLdouble
+    | EndsWith "Matrix2x4dv" adjustedName -> injectTkType (OpenTKType.Matrix2x4d) (adjustedName + "Matrix2x4") GLdouble
+    | EndsWith "Matrix3x2dv" adjustedName -> injectTkType (OpenTKType.Matrix3x2d) (adjustedName + "Matrix3x2") GLdouble
+    | EndsWith "Matrix3x4dv" adjustedName -> injectTkType (OpenTKType.Matrix3x4d) (adjustedName + "Matrix3x4") GLdouble
+    | EndsWith "Matrix4x2dv" adjustedName -> injectTkType (OpenTKType.Matrix4x2d) (adjustedName + "Matrix4x2") GLdouble
+    | EndsWith "Matrix4x3dv" adjustedName -> injectTkType (OpenTKType.Matrix4x3d) (adjustedName + "Matrix4x3") GLdouble
+    | EndsWith "2dv" adjustedName -> injectTkType (OpenTKType.Vector2d) (adjustedName + "2") GLdouble
+    | EndsWith "3dv" adjustedName -> injectTkType (OpenTKType.Vector3d) (adjustedName + "3") GLdouble
+    | EndsWith "4dv" adjustedName -> injectTkType (OpenTKType.Vector4d) (adjustedName + "4") GLdouble
+    | EndsWith "2fv" adjustedName -> injectTkType (OpenTKType.Vector2) (adjustedName + "2") GLfloat
+    | EndsWith "3fv" adjustedName -> injectTkType (OpenTKType.Vector3) (adjustedName + "3") GLfloat
+    | EndsWith "4fv" adjustedName -> injectTkType (OpenTKType.Vector4) (adjustedName + "4") GLfloat
     // We don't want to remove the Plural
     | EndsWith "ib" _
     | EndsWith "ts" _
