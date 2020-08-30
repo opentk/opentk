@@ -5,13 +5,11 @@ using OpenToolkit.Compute.Native;
 
 namespace OpenToolkit.Compute.OpenCL
 {
-	[Api(LibName, typeof(OpenClLibraryNameContainer))]
-	public class CL : ApiContainer<CL>
+	public class CL : CLBase
 	{
 		static CL()
 		{
-// We need to trigger the static constructor of ApiContainer<CL>.
-			_ = ApiContainer<CL>.StaticConstructorTrigger;
+			CLBase.RegisterOpenCLResolver();
 		}
 
 		private const string LibName = "libOpenCL";
