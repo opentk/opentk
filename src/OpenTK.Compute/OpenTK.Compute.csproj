@@ -5,8 +5,4 @@
         <RootNamespace>OpenToolkit.Compute</RootNamespace>
     </PropertyGroup>
 
-    <ItemGroup>
-      <ProjectReference Include="..\OpenToolkit.Core\OpenToolkit.Core.csproj" />
-    </ItemGroup>
-
 </Project>
