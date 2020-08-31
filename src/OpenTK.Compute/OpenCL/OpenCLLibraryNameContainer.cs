@@ -5,10 +5,14 @@ namespace OpenTK.Compute.OpenCL
 {
     public class OpenCLLibraryNameContainer
     {
-	    public string Linux => "libOpenCL.so.1";
-	    public string MacOS => "/System/Library/Frameworks/OpenCL.framework/OpenCL";
+        public string Linux => "libOpenCL.so.1";
+
+        public string MacOS => "/System/Library/Frameworks/OpenCL.framework/OpenCL";
+
         public string Android => Linux;
+
         public string IOS => MacOS;
+
         public string Windows => "OpenCL.dll";
 
         public string GetLibraryName()
