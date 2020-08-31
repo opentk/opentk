@@ -1,4 +1,4 @@
-using OpenToolkit.Core.Loader;
+using OpenTK.Core.Loader;
 
 namespace OpenTK.Compute.OpenCL
 {
