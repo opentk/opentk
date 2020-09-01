@@ -4033,7 +4033,7 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
             Window* window,
             GLFWCallbacks.CharModsCallback callback)
         {
-            return glfwSetCharCallback(window, Marshal.GetFunctionPointerForDelegate(callback));
+            return glfwSetCharModsCallback(window, Marshal.GetFunctionPointerForDelegate(callback));
         }
 
         /// <summary>
