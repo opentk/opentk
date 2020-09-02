@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Runtime.InteropServices;
-using System.Text;
 using OpenTK.Compute.Native;
 
 namespace OpenTK.Compute.OpenCL
@@ -16,6 +15,8 @@ namespace OpenTK.Compute.OpenCL
 
 		#region Platform API
 
+		/// https://www.khronos.org/registry/OpenCL/sdk/2.2/docs/man/html/clGetPlatformIDs.html
+
 		/// <summary>
 		/// Introduced in OpenCL 1.0
 		/// </summary>
@@ -23,15 +24,32 @@ namespace OpenTK.Compute.OpenCL
 		/// <param name="platforms"></param>
 		/// <param name="numberOfPlatforms"></param>
 		/// <returns></returns>
+
 		[DllImport(LibName, EntryPoint = "clGetPlatformIDs")]
 		public static extern CLResultCode GetPlatformIds(uint numberOfEntries, IntPtr[] platforms,
 			out uint numberOfPlatforms);
 
+		/// <summary>
+		/// Introduced in OpenCL 1.0
+		/// </summary>
 		public static CLResultCode GetPlatformIds(out IntPtr[] platformIds)
 		{
 			GetPlatformIds(0, null, out uint platformCount);
 			platformIds = new IntPtr[platformCount];
 			return GetPlatformIds(platformCount, platformIds, out _);
+		}
+
+		public static CLResultCode GetPlatforms(out CLPlatform[] platforms)
+		{
+			GetPlatformIds(0, null, out uint platformCount);
+			IntPtr[] platformIds = new IntPtr[platformCount];
+			CLResultCode r = GetPlatformIds(platformCount, platformIds, out _);
+			platforms = new CLPlatform[platformCount];
+			for (int i = 0; i < platformCount; i++)
+			{
+				platforms[i] = new CLPlatform(platformIds[i]);
+			}
+			return r;
 		}
 
 		/// <summary>
@@ -47,20 +65,14 @@ namespace OpenTK.Compute.OpenCL
 		public static extern CLResultCode GetPlatformInfo(IntPtr platform, PlatformInfo paramName,
 			UIntPtr paramValueSize, byte[] paramValue, out UIntPtr paramValueSizeReturned);
 
+		/// <summary>
+		/// Introduced in OpenCL 1.0
+		/// </summary>
 		public static CLResultCode GetPlatformInfo(IntPtr platform, PlatformInfo paramName, out byte[] paramValue)
 		{
 			GetPlatformInfo(platform, paramName, UIntPtr.Zero, null, out UIntPtr sizeReturned);
 			paramValue = new byte[sizeReturned.ToUInt64()];
 			return GetPlatformInfo(platform, paramName, sizeReturned, paramValue, out _);
-		}
-
-		/// <summary>
-		/// Helper method not present in official OpenCL specs
-		/// </summary>
-		public static string GetPlatformInfoAsString(IntPtr platform, PlatformInfo paramName, out CLResultCode result)
-		{
-			result = GetPlatformInfo(platform, paramName, out byte[] raw);
-			return Encoding.ASCII.GetString(raw);
 		}
 
 		#endregion
@@ -80,6 +92,9 @@ namespace OpenTK.Compute.OpenCL
 		public static extern CLResultCode GetDeviceIds(IntPtr platform, DeviceType deviceType, uint numberOfEntries,
 			IntPtr[] devices, out uint numberOfDevicesReturned);
 
+		/// <summary>
+		/// Introduced in OpenCL 1.0
+		/// </summary>
 		public static CLResultCode GetDeviceIds(IntPtr platform, DeviceType deviceType, out IntPtr[] deviceIds)
 		{
 			GetDeviceIds(platform, deviceType, 0, null, out uint deviceCount);
@@ -100,20 +115,14 @@ namespace OpenTK.Compute.OpenCL
 		public static extern CLResultCode GetDeviceInfo(IntPtr device, DeviceInfo paramName, UIntPtr paramValueSize,
 			byte[] paramValue, out UIntPtr paramValueSizeReturned);
 
+		/// <summary>
+		/// Introduced in OpenCL 1.0
+		/// </summary>
 		public static CLResultCode GetDeviceInfo(IntPtr device, DeviceInfo paramName, out byte[] paramValue)
 		{
 			GetDeviceInfo(device, paramName, UIntPtr.Zero, null, out UIntPtr sizeReturned);
 			paramValue = new byte[sizeReturned.ToUInt64()];
 			return GetDeviceInfo(device, paramName, sizeReturned, paramValue, out _);
-		}
-
-		/// <summary>
-		/// Helper method not present in official OpenCL specs
-		/// </summary>
-		public static string GetDeviceInfoAsString(IntPtr device, DeviceInfo paramName, out CLResultCode result)
-		{
-			result = GetDeviceInfo(device, paramName, out byte[] raw);
-			return Encoding.ASCII.GetString(raw);
 		}
 
 		/// <summary>
@@ -194,6 +203,9 @@ namespace OpenTK.Compute.OpenCL
 		public static extern IntPtr CreateContext(IntPtr properties, uint numberOfDevices, IntPtr[] devices,
 			IntPtr notificationCallback, IntPtr userData, out CLResultCode errorCode);
 
+		/// <summary>
+		/// Introduced in OpenCL 1.0
+		/// </summary>
 		public static IntPtr CreateContext(IntPtr properties, IntPtr[] devices, IntPtr notificationCallback,
 			IntPtr userData, out CLResultCode errorCode)
 		{
@@ -305,6 +317,9 @@ namespace OpenTK.Compute.OpenCL
 		public static extern IntPtr CreateBuffer(IntPtr context, MemoryFlags flags, UIntPtr size, IntPtr hostPtr,
 			out CLResultCode errorCode);
 
+		/// <summary>
+		/// Introduced in OpenCL 1.0
+		/// </summary>
 		public static unsafe IntPtr CreateBuffer<T>(IntPtr context, MemoryFlags flags, T[] array, out CLResultCode errorCode) where T : unmanaged
 		{
 			fixed (T* b = array)
@@ -313,11 +328,15 @@ namespace OpenTK.Compute.OpenCL
 				return buffer;
 			}
 		}
-		public static unsafe IntPtr CreateBuffer<T>(IntPtr context, MemoryFlags flags, Span<T> array, out CLResultCode errorCode) where T : unmanaged
+
+		/// <summary>
+		/// Introduced in OpenCL 1.0
+		/// </summary>
+		public static unsafe IntPtr CreateBuffer<T>(IntPtr context, MemoryFlags flags, Span<T> span, out CLResultCode errorCode) where T : unmanaged
 		{
-			fixed (T* b = array)
+			fixed (T* b = span)
 			{
-				IntPtr buffer = CreateBuffer(context, flags, (UIntPtr)(Marshal.SizeOf<T>() * array.Length), (IntPtr)b, out errorCode);
+				IntPtr buffer = CreateBuffer(context, flags, (UIntPtr)(Marshal.SizeOf<T>() * span.Length), (IntPtr)b, out errorCode);
 				return buffer;
 			}
 		}
@@ -409,6 +428,9 @@ public static extern IntPtr CreateImageWithProperties(IntPtr context, IntPtr[] p
 			MemoryObjectType imageType, uint numberOfEntries, ImageFormat[] imageFormats,
 			out uint numberOfImageFormats);
 
+		/// <summary>
+		/// Not sure if it works
+		/// </summary>
 		public static CLResultCode GetSupportedImageFormats(IntPtr context, MemoryFlags flags,
 			MemoryObjectType imageType, out ImageFormat[] imageFormats)
 		{
@@ -430,6 +452,9 @@ public static extern IntPtr CreateImageWithProperties(IntPtr context, IntPtr[] p
 		public static extern CLResultCode GetMemObjectInfo(IntPtr memoryObject, MemoryObjectInfo paramName,
 			UIntPtr paramValueSize, byte[] paramValue, out UIntPtr paramValueSizeReturned);
 
+		/// <summary>
+		/// Introduced in OpenCL 1.0
+		/// </summary>
 		public static CLResultCode GetMemObjectInfo(IntPtr memoryObject, MemoryObjectInfo paramName,
 			out byte[] paramValue)
 		{
@@ -451,6 +476,9 @@ public static extern IntPtr CreateImageWithProperties(IntPtr context, IntPtr[] p
 		public static extern CLResultCode GetImageInfo(IntPtr image, ImageInfo paramName, UIntPtr paramValueSize,
 			byte[] paramValue, out UIntPtr paramValueSizeReturned);
 
+		/// <summary>
+		/// Introduced in OpenCL 1.0
+		/// </summary>
 		public static CLResultCode GetImageInfo(IntPtr image, ImageInfo paramName, out byte[] paramValue)
 		{
 			GetImageInfo(image, paramName, UIntPtr.Zero, null, out UIntPtr size);
@@ -471,6 +499,9 @@ public static extern IntPtr CreateImageWithProperties(IntPtr context, IntPtr[] p
 		public static extern CLResultCode GetPipeInfo(IntPtr pipe, PipeInfo paramName, UIntPtr paramValueSize,
 			byte[] paramValue, out UIntPtr paramValueSizeReturned);
 
+		/// <summary>
+		/// Introduced in OpenCL 2.0
+		/// </summary>
 		public static CLResultCode GetPipeInfo(IntPtr pipe, PipeInfo paramName, out byte[] paramValue)
 		{
 			GetPipeInfo(pipe, paramName, UIntPtr.Zero, null, out UIntPtr size);
@@ -558,6 +589,9 @@ public static extern IntPtr CreateImageWithProperties(IntPtr context, IntPtr[] p
 		public static extern CLResultCode GetSamplerInfo(IntPtr sampler, SamplerInfo paramName, UIntPtr paramValueSize,
 			byte[] paramValue, out UIntPtr paramValueSizeReturned);
 
+		/// <summary>
+		/// Introduced in OpenCL 1.0
+		/// </summary>
 		public static CLResultCode GetSamplerInfo(IntPtr sampler, SamplerInfo paramName, out byte[] paramValue)
 		{
 			GetSamplerInfo(sampler, paramName, UIntPtr.Zero, null, out UIntPtr size);
@@ -583,6 +617,9 @@ public static extern IntPtr CreateImageWithProperties(IntPtr context, IntPtr[] p
 		public static extern IntPtr CreateProgramWithSource(IntPtr context, uint count, IntPtr[] strings,
 			uint[] lengths, out CLResultCode errorCode);
 
+		/// <summary>
+		/// Introduced in OpenCL 1.0
+		/// </summary>
 		public static IntPtr CreateProgramWithSource(IntPtr context, string source, out CLResultCode errorCode)
 		{
 			IntPtr[] sourceList = {Marshal.StringToHGlobalAnsi(source)};
@@ -740,6 +777,9 @@ public static extern IntPtr CreateImageWithProperties(IntPtr context, IntPtr[] p
 		public static extern CLResultCode GetProgramInfo(IntPtr program, ProgramInfo paramName, UIntPtr paramValueSize,
 			byte[] paramValue, out UIntPtr paramValueSizeReturned);
 
+		/// <summary>
+		/// Introduced in OpenCL 1.0
+		/// </summary>
 		public static CLResultCode GetProgramInfo(IntPtr program, ProgramInfo paramName, out byte[] paramValue)
 		{
 			GetProgramInfo(program, paramName, UIntPtr.Zero, null, out UIntPtr size);
@@ -761,6 +801,9 @@ public static extern IntPtr CreateImageWithProperties(IntPtr context, IntPtr[] p
 		public static extern CLResultCode GetProgramBuildInfo(IntPtr program, IntPtr device, ProgramBuildInfo paramName,
 			UIntPtr paramValueSize, byte[] paramValue, out UIntPtr paramValueSizeReturned);
 
+		/// <summary>
+		/// Introduced in OpenCL 1.0
+		/// </summary>
 		public static CLResultCode GetProgramBuildInfo(IntPtr program, IntPtr device, ProgramBuildInfo paramName,
 			out byte[] paramValue)
 		{
@@ -795,6 +838,9 @@ public static extern IntPtr CreateImageWithProperties(IntPtr context, IntPtr[] p
 		public static extern CLResultCode CreateKernelsInProgram(IntPtr program, uint numberOfKernels, IntPtr[] kernels,
 			out uint numberOfKernelsReturned);
 
+		/// <summary>
+		/// Introduced in OpenCL 1.0
+		/// </summary>
 		public static CLResultCode CreateKernelsInProgram(IntPtr program, out IntPtr[] kernels)
 		{
 			CreateKernelsInProgram(program, 0, null, out uint count);
@@ -876,6 +922,9 @@ public static extern IntPtr CreateImageWithProperties(IntPtr context, IntPtr[] p
 		public static extern CLResultCode GetKernelInfo(IntPtr kernel, KernelInfo paramName, UIntPtr paramValueSize,
 			byte[] paramValue, out UIntPtr paramSizeReturned);
 
+		/// <summary>
+		/// Introduced in OpenCL 1.0
+		/// </summary>
 		public static CLResultCode GetKernelInfo(IntPtr kernel, KernelInfo paramName, out byte[] paramValue)
 		{
 			GetKernelInfo(kernel, paramName, UIntPtr.Zero, null, out UIntPtr size);
@@ -897,6 +946,9 @@ public static extern IntPtr CreateImageWithProperties(IntPtr context, IntPtr[] p
 		public static extern CLResultCode GetKernelArgInfo(IntPtr kernel, uint argumentIndex, KernelArgInfo paramName,
 			UIntPtr paramValueSize, byte[] paramValue, out UIntPtr paramSizeReturned);
 
+		/// <summary>
+		/// Introduced in OpenCL 1.2
+		/// </summary>
 		public static CLResultCode GetKernelArgInfo(IntPtr kernel, uint argumentIndex, KernelArgInfo paramName,
 			out byte[] paramValue)
 		{
@@ -919,6 +971,9 @@ public static extern IntPtr CreateImageWithProperties(IntPtr context, IntPtr[] p
 		public static extern CLResultCode GetKernelWorkGroupInfo(IntPtr kernel, IntPtr device,
 			KernelWorkGroupInfo paramName, UIntPtr paramValueSize, byte[] paramValue, out UIntPtr paramSizeReturned);
 
+		/// <summary>
+		/// Introduced in OpenCL 1.0
+		/// </summary>
 		public static CLResultCode GetKernelWorkGroupInfo(IntPtr kernel, IntPtr device, KernelWorkGroupInfo paramName,
 			out byte[] paramValue)
 		{
@@ -970,6 +1025,9 @@ public static extern IntPtr CreateImageWithProperties(IntPtr context, IntPtr[] p
 		public static extern CLResultCode GetEventInfo(IntPtr @event, EventInfo paramName, UIntPtr paramValueSize,
 			byte[] paramValue, out UIntPtr paramSizeReturned);
 
+		/// <summary>
+		/// Introduced in OpenCL 1.0
+		/// </summary>
 		public static CLResultCode GetEventInfo(IntPtr @event, EventInfo paramName, out byte[] paramValue)
 		{
 			GetEventInfo(@event, paramName, UIntPtr.Zero, null, out UIntPtr size);
@@ -1023,6 +1081,9 @@ public static extern IntPtr CreateImageWithProperties(IntPtr context, IntPtr[] p
 		public static extern CLResultCode SetEventCallback(IntPtr eventHandle, int commandExecCallbackType,
 			IntPtr notifyCallback, IntPtr userData);
 
+		/// <summary>
+		/// Introduced in OpenCL 1.1
+		/// </summary>
 		public static CLResultCode SetEventCallback(IntPtr eventHandle, int callbackType,
 			ClEventCallback notifyCallback)
 		{
@@ -1047,6 +1108,9 @@ public static extern IntPtr CreateImageWithProperties(IntPtr context, IntPtr[] p
 		public static extern CLResultCode GetEventProfilingInfo(IntPtr @event, ProfilingInfo paramName,
 			UIntPtr paramValueSize, byte[] paramValue, out UIntPtr paramValueSizeReturned);
 
+		/// <summary>
+		/// Introduced in OpenCL 1.0
+		/// </summary>
 		public static CLResultCode GetEventProfilingInfo(IntPtr @event, ProfilingInfo paramName, out byte[] paramValue)
 		{
 			GetEventProfilingInfo(@event, paramName, UIntPtr.Zero, null, out UIntPtr size);
@@ -1099,6 +1163,9 @@ public static extern IntPtr CreateImageWithProperties(IntPtr context, IntPtr[] p
 			UIntPtr offset, UIntPtr size, IntPtr pointer, uint numberOfEventsInWaitList, IntPtr[] eventWaitList,
 			out IntPtr @event);
 
+		/// <summary>
+		/// Introduced in OpenCL 1.0
+		/// </summary>
 		public static unsafe CLResultCode EnqueueReadBuffer<T>(IntPtr commandQueue, IntPtr buffer, bool blockingRead,
 			UIntPtr offset, int size, out T[] array, uint numberOfEventsInWaitList, IntPtr[] eventWaitList,
 			out IntPtr eventHandle) where T : unmanaged
@@ -1114,6 +1181,9 @@ public static extern IntPtr CreateImageWithProperties(IntPtr context, IntPtr[] p
 			}
 		}
 
+		/// <summary>
+		/// Introduced in OpenCL 1.0
+		/// </summary>
 		public static unsafe CLResultCode EnqueueReadBuffer<T>(IntPtr commandQueue, IntPtr buffer, bool blockingRead,
 			UIntPtr offset, int size, out Span<T> array, uint numberOfEventsInWaitList, IntPtr[] eventWaitList,
 			out IntPtr eventHandle) where T : unmanaged
@@ -1154,6 +1224,39 @@ public static extern IntPtr CreateImageWithProperties(IntPtr context, IntPtr[] p
 			uint numberOfEventsInWaitList, IntPtr[] eventWaitList, out IntPtr @event);
 
 		/// <summary>
+		/// Introduced in OpenCL 1.1
+		/// </summary>
+		public static unsafe CLResultCode EnqueueReadBufferRect<T>(IntPtr commandQueue, IntPtr buffer, uint blockingRead,
+			UIntPtr[] bufferOffset, UIntPtr[] hostOffset, UIntPtr[] region, UIntPtr bufferRowPitch,
+			UIntPtr bufferSlicePitch, UIntPtr hostRowPitch, UIntPtr hostSlicePitch, T[] array,
+			uint numberOfEventsInWaitList, IntPtr[] eventWaitList, out IntPtr @event) where T : unmanaged
+		{
+			fixed (T* a = array)
+			{
+				return EnqueueReadBufferRect(commandQueue, buffer, blockingRead, bufferOffset, hostOffset, region,
+					bufferRowPitch, bufferSlicePitch, hostRowPitch, hostSlicePitch, (IntPtr)a, numberOfEventsInWaitList,
+					eventWaitList, out @event);
+			}
+		}
+
+		/// <summary>
+		/// Introduced in OpenCL 1.1
+		/// </summary>
+		public static unsafe CLResultCode EnqueueReadBufferRect<T>(IntPtr commandQueue, IntPtr buffer,
+			uint blockingRead,
+			UIntPtr[] bufferOffset, UIntPtr[] hostOffset, UIntPtr[] region, UIntPtr bufferRowPitch,
+			UIntPtr bufferSlicePitch, UIntPtr hostRowPitch, UIntPtr hostSlicePitch, Span<T> span,
+			uint numberOfEventsInWaitList, IntPtr[] eventWaitList, out IntPtr @event) where T : unmanaged
+		{
+			fixed (T* a = span)
+			{
+				return EnqueueReadBufferRect(commandQueue, buffer, blockingRead, bufferOffset, hostOffset, region,
+					bufferRowPitch, bufferSlicePitch, hostRowPitch, hostSlicePitch, (IntPtr)a, numberOfEventsInWaitList,
+					eventWaitList, out @event);
+			}
+		}
+
+		/// <summary>
 		/// Introduced in OpenCL 1.0
 		/// </summary>
 		/// <param name="commandQueue"></param>
@@ -1171,17 +1274,38 @@ public static extern IntPtr CreateImageWithProperties(IntPtr context, IntPtr[] p
 			UIntPtr offset, UIntPtr size, IntPtr pointer, uint numberOfEventsInWaitList, IntPtr[] eventWaitList,
 			out IntPtr @event);
 
-		public static CLResultCode EnqueueWriteBuffer<T>(IntPtr commandQueue, IntPtr buffer, bool blockingRead,
+		/// <summary>
+		/// Introduced in OpenCL 1.0
+		/// </summary>
+		public static unsafe CLResultCode EnqueueWriteBuffer<T>(IntPtr commandQueue, IntPtr buffer, bool blockingRead,
 			UIntPtr offset, int size, T[] array, uint numberOfEventsInWaitList, IntPtr[] eventWaitList,
-			out IntPtr @event)
+			out IntPtr @event) where T : unmanaged
 		{
-			GCHandle handle = GCHandle.Alloc(array, GCHandleType.Pinned);
+			fixed (T* a = array)
+			{
+				CLResultCode resultCode = EnqueueWriteBuffer(commandQueue, buffer, (uint)(blockingRead ? 1 : 0), offset,
+					(UIntPtr)(size * Marshal.SizeOf<T>()), (IntPtr)a, numberOfEventsInWaitList,
+					eventWaitList, out @event);
 
-			CLResultCode resultCode = EnqueueWriteBuffer(commandQueue, buffer, (uint)(blockingRead ? 1 : 0), offset,
-				(UIntPtr)(size * Marshal.SizeOf<T>()), handle.AddrOfPinnedObject(), numberOfEventsInWaitList,
-				eventWaitList, out @event);
+				return resultCode;
+			}
+		}
 
-			return resultCode;
+		/// <summary>
+		/// Introduced in OpenCL 1.0
+		/// </summary>
+		public static unsafe CLResultCode EnqueueWriteBuffer<T>(IntPtr commandQueue, IntPtr buffer, bool blockingRead,
+			UIntPtr offset, int size, Span<T> span, uint numberOfEventsInWaitList, IntPtr[] eventWaitList,
+			out IntPtr @event) where T : unmanaged
+		{
+			fixed (T* a = span)
+			{
+				CLResultCode resultCode = EnqueueWriteBuffer(commandQueue, buffer, (uint)(blockingRead ? 1 : 0), offset,
+					(UIntPtr)(size * Marshal.SizeOf<T>()), (IntPtr)a, numberOfEventsInWaitList,
+					eventWaitList, out @event);
+
+				return resultCode;
+			}
 		}
 
 		/// <summary>
@@ -1209,6 +1333,40 @@ public static extern IntPtr CreateImageWithProperties(IntPtr context, IntPtr[] p
 			uint numberOfEventsInWaitList, IntPtr[] eventWaitList, out IntPtr @event);
 
 		/// <summary>
+		/// Introduced in OpenCL 1.1
+		/// </summary>
+		public static unsafe CLResultCode EnqueueWriteBufferRect<T>(IntPtr commandQueue, IntPtr buffer,
+			uint blockingWrite,
+			UIntPtr[] bufferOffset, UIntPtr[] hostOffset, UIntPtr[] region, UIntPtr bufferRowPitch,
+			UIntPtr bufferSlicePitch, UIntPtr hostRowPitch, UIntPtr hostSlicePitch, T[] array,
+			uint numberOfEventsInWaitList, IntPtr[] eventWaitList, out IntPtr @event) where T : unmanaged
+		{
+			fixed (T* a = array)
+			{
+				return EnqueueWriteBufferRect(commandQueue, buffer, blockingWrite, bufferOffset, hostOffset, region,
+					bufferRowPitch, bufferSlicePitch, hostRowPitch, hostSlicePitch, (IntPtr)a, numberOfEventsInWaitList,
+					eventWaitList, out @event);
+			}
+		}
+
+		/// <summary>
+		/// Introduced in OpenCL 1.1
+		/// </summary>
+		public static unsafe CLResultCode EnqueueWriteBufferRect<T>(IntPtr commandQueue, IntPtr buffer,
+			uint blockingWrite,
+			UIntPtr[] bufferOffset, UIntPtr[] hostOffset, UIntPtr[] region, UIntPtr bufferRowPitch,
+			UIntPtr bufferSlicePitch, UIntPtr hostRowPitch, UIntPtr hostSlicePitch, Span<T> span,
+			uint numberOfEventsInWaitList, IntPtr[] eventWaitList, out IntPtr @event) where T : unmanaged
+		{
+			fixed (T* a = span)
+			{
+				return EnqueueWriteBufferRect(commandQueue, buffer, blockingWrite, bufferOffset, hostOffset, region,
+					bufferRowPitch, bufferSlicePitch, hostRowPitch, hostSlicePitch, (IntPtr)a, numberOfEventsInWaitList,
+					eventWaitList, out @event);
+			}
+		}
+
+		/// <summary>
 		/// Introduced in OpenCL 1.2
 		/// </summary>
 		/// <param name="commandQueue"></param>
@@ -1225,6 +1383,18 @@ public static extern IntPtr CreateImageWithProperties(IntPtr context, IntPtr[] p
 		public static extern CLResultCode EnqueueFillBuffer(IntPtr commandQueue, IntPtr buffer, IntPtr pattern,
 			UIntPtr patternSize, UIntPtr offset, UIntPtr size, uint numberOfEventsInWaitList, IntPtr[] eventWaitList,
 			out IntPtr @event);
+
+		/// <summary>
+		/// Introduced in OpenCL 1.2
+		/// !!!Overload not implemented!!!
+		/// </summary>
+		/// TODO IMPLEMENT THIS
+		public static unsafe CLResultCode EnqueueFillBuffer<T>(IntPtr commandQueue, IntPtr buffer, T[] pattern,
+			UIntPtr patternSize, UIntPtr offset, UIntPtr size, uint numberOfEventsInWaitList, IntPtr[] eventWaitList,
+			out IntPtr @event) where T : unmanaged
+		{
+			throw new NotImplementedException();
+		}
 
 		/// <summary>
 		/// Introduced in OpenCL 1.0
