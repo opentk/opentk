@@ -17,8 +17,8 @@ namespace OpenToolkit.OpenCL.Tests
 			{
 				CL.GetDeviceIds(platformId, DeviceType.All, out IntPtr[] deviceIds);
 
-				IntPtr context = CL.CreateContext(IntPtr.Zero, (uint)deviceIds.Length, deviceIds, IntPtr.Zero,
-					IntPtr.Zero, out CLResultCode result);
+				CLContext context = new CLContext(CL.CreateContext(IntPtr.Zero, (uint)deviceIds.Length, deviceIds, IntPtr.Zero,
+					IntPtr.Zero, out CLResultCode result));
 				if (result != CLResultCode.Success)
 				{
 					throw new Exception("The context couldn't be created.");
@@ -28,13 +28,13 @@ namespace OpenToolkit.OpenCL.Tests
                 __kernel void add(__global float* A, __global float* B,__global float* result)
                 {
                     int i = get_global_id(0);
-                    result[i] = A[i] + B[i];
+                    result[i] = A[i] + B[i] + 2;
                 }";
 
-				IntPtr program = CL.CreateProgramWithSource(context, code, out result);
+				CLProgram program = new CLProgram(CL.CreateProgramWithSource(context, code, out result));CL.CreateProgramWithSource(context, code, out result);
 				CL.BuildProgram(program, (uint)deviceIds.Length, deviceIds, null, IntPtr.Zero, IntPtr.Zero);
 
-				IntPtr kernel = CL.CreateKernel(program, "add", out result);
+				CLKernel kernel = new CLKernel(CL.CreateKernel(program, "add", out result));CL.CreateKernel(program, "add", out result);
 
 				int arraySize = 2000;
 				float[] A = new float[arraySize];
@@ -46,12 +46,12 @@ namespace OpenToolkit.OpenCL.Tests
 					B[i] = i;
 				}
 
-				IntPtr bufferA = CL.CreateBuffer(context, MemoryFlags.ReadOnly | MemoryFlags.CopyHostPtr, A,
-					out result);
-				IntPtr bufferB = CL.CreateBuffer(context, MemoryFlags.ReadOnly | MemoryFlags.CopyHostPtr, B,
-					out result);
-				IntPtr resultBuffer = CL.CreateBuffer(context, MemoryFlags.WriteOnly,
-					new UIntPtr((uint)(arraySize * sizeof(float))), IntPtr.Zero, out result);
+				CLMemoryObject bufferA = new CLMemoryObject(CL.CreateBuffer(context, MemoryFlags.ReadOnly | MemoryFlags.CopyHostPtr, A,
+					out result));
+				CLMemoryObject bufferB =  new CLMemoryObject(CL.CreateBuffer(context, MemoryFlags.ReadOnly | MemoryFlags.CopyHostPtr, B,
+					out result));
+				CLMemoryObject resultBuffer =  new CLMemoryObject(CL.CreateBuffer(context, MemoryFlags.WriteOnly,
+					new UIntPtr((uint)(arraySize * sizeof(float))), IntPtr.Zero, out result));
 				UIntPtr bufferSize = (UIntPtr)UIntPtr.Size;
 
 				try
@@ -64,8 +64,8 @@ namespace OpenToolkit.OpenCL.Tests
 					CL.SetKernelArg(kernel, 2, bufferSize, resultGC.AddrOfPinnedObject());
 
 					// IntPtr commandQueue = CL.CreateCommandQueue(context, deviceIds[0], 0, out result);
-					IntPtr commandQueue =
-						CL.CreateCommandQueueWithProperties(context, deviceIds[0], IntPtr.Zero, out result);
+					CLCommandQueue commandQueue = new CLCommandQueue(
+						CL.CreateCommandQueueWithProperties(context, deviceIds[0], IntPtr.Zero, out result));
 
 					CL.EnqueueNDRangeKernel(commandQueue, kernel, 1, null, new IntPtr[] {new IntPtr(A.Length)},
 						null, 0, null,  out IntPtr eventHandle);
