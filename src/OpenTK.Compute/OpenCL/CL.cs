@@ -305,14 +305,23 @@ namespace OpenTK.Compute.OpenCL
 		public static extern IntPtr CreateBuffer(IntPtr context, MemoryFlags flags, UIntPtr size, IntPtr hostPtr,
 			out CLResultCode errorCode);
 
-		public static IntPtr CreateBuffer<T>(IntPtr context, MemoryFlags flags, T[] array, out CLResultCode errorCode)
+		public static unsafe IntPtr CreateBuffer<T>(IntPtr context, MemoryFlags flags, T[] array, out CLResultCode errorCode) where T : unmanaged
 		{
-			GCHandle handle = GCHandle.Alloc(array, GCHandleType.Pinned);
-			IntPtr buffer = CreateBuffer(context, flags, (UIntPtr)(Marshal.SizeOf<T>() * array.Length),
-				handle.AddrOfPinnedObject(), out errorCode);
-			handle.Free();
-			return buffer;
+			fixed (T* b = array)
+			{
+				IntPtr buffer = CreateBuffer(context, flags, (UIntPtr)(Marshal.SizeOf<T>() * array.Length), (IntPtr)b, out errorCode);
+				return buffer;
+			}
 		}
+		public static unsafe IntPtr CreateBuffer<T>(IntPtr context, MemoryFlags flags, Span<T> array, out CLResultCode errorCode) where T : unmanaged
+		{
+			fixed (T* b = array)
+			{
+				IntPtr buffer = CreateBuffer(context, flags, (UIntPtr)(Marshal.SizeOf<T>() * array.Length), (IntPtr)b, out errorCode);
+				return buffer;
+			}
+		}
+
 
 		/// <summary>
 		/// Introduced in OpenCL 1.1
@@ -1090,19 +1099,34 @@ public static extern IntPtr CreateImageWithProperties(IntPtr context, IntPtr[] p
 			UIntPtr offset, UIntPtr size, IntPtr pointer, uint numberOfEventsInWaitList, IntPtr[] eventWaitList,
 			out IntPtr @event);
 
-		public static CLResultCode EnqueueReadBuffer<T>(IntPtr commandQueue, IntPtr buffer, bool blockingRead,
+		public static unsafe CLResultCode EnqueueReadBuffer<T>(IntPtr commandQueue, IntPtr buffer, bool blockingRead,
 			UIntPtr offset, int size, out T[] array, uint numberOfEventsInWaitList, IntPtr[] eventWaitList,
-			out IntPtr eventHandle)
+			out IntPtr eventHandle) where T : unmanaged
 		{
 			array = new T[size];
-			GCHandle handle = GCHandle.Alloc(array, GCHandleType.Pinned);
+			fixed (T* b = array)
+			{
+				CLResultCode resultCode = EnqueueReadBuffer(commandQueue, buffer, (uint)(blockingRead ? 1 : 0), offset,
+					(UIntPtr)(size * Marshal.SizeOf<T>()), (IntPtr)b, numberOfEventsInWaitList,
+					eventWaitList,
+					out eventHandle);
+				return resultCode;
+			}
+		}
 
-			CLResultCode resultCode = EnqueueReadBuffer(commandQueue, buffer, (uint)(blockingRead ? 1 : 0), offset,
-				(UIntPtr)(size * Marshal.SizeOf<T>()), handle.AddrOfPinnedObject(), numberOfEventsInWaitList,
-				eventWaitList,
-				out eventHandle);
-
-			return resultCode;
+		public static unsafe CLResultCode EnqueueReadBuffer<T>(IntPtr commandQueue, IntPtr buffer, bool blockingRead,
+			UIntPtr offset, int size, out Span<T> array, uint numberOfEventsInWaitList, IntPtr[] eventWaitList,
+			out IntPtr eventHandle) where T : unmanaged
+		{
+			array = new T[size];
+			fixed (T* b = array)
+			{
+				CLResultCode resultCode = EnqueueReadBuffer(commandQueue, buffer, (uint)(blockingRead ? 1 : 0), offset,
+					(UIntPtr)(size * Marshal.SizeOf<T>()), (IntPtr)b, numberOfEventsInWaitList,
+					eventWaitList,
+					out eventHandle);
+				return resultCode;
+			}
 		}
 
 		/// <summary>
