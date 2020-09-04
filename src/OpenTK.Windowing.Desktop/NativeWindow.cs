@@ -24,6 +24,8 @@ namespace OpenTK.Windowing.Desktop
     /// </summary>
     public class NativeWindow : INativeWindow
     {
+        private const int JoystickStatesCount = 16;
+
         /// <summary>
         /// Gets the native <see cref="Window"/> pointer for use with <see cref="GLFW"/> API.
         /// </summary>
@@ -48,13 +50,15 @@ namespace OpenTK.Windowing.Desktop
         /// <inheritdoc />
         public KeyboardState LastKeyboardState { get; private set; }
 
-        private readonly JoystickState[] _joystickStates = new JoystickState[16];
+        private readonly JoystickState[] _joystickStates = new JoystickState[JoystickStatesCount];
+
+        private readonly JoystickState[] _lastJoystickStates = new JoystickState[JoystickStatesCount];
 
         /// <inheritdoc/>
         public JoystickState[] JoystickStates { get => _joystickStates; }
 
         /// <inheritdoc/>
-        public JoystickState[] LastJoystickStates { get; private set; }
+        public JoystickState[] LastJoystickStates { get => _lastJoystickStates; }
 
         /// <inheritdoc />
         public Vector2 MousePosition
