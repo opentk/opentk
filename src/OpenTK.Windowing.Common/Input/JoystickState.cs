@@ -15,7 +15,7 @@ namespace OpenTK.Windowing.Common.Input
     /// <summary>
     /// Encapsulates the state of a joystick device.
     /// </summary>
-    public struct JoystickState : IEquatable<JoystickState>
+    public struct JoystickState : IEquatable<JoystickState>, ICloneable
     {
         private Hat[] _hats;
         private float[] _axes;
@@ -209,6 +209,40 @@ namespace OpenTK.Windowing.Common.Input
             hashCode ^= Name.GetHashCode();
 
             return hashCode;
+        }
+
+        /// <summary>
+        /// Creates a copy with new arrays.
+        /// </summary>
+        /// <returns>A completely new <see cref="JoystickState"/>.</returns>
+        public object Clone()
+        {
+            Hat[] hats = null;
+            float[] axes = null;
+            bool[] buttons = null;
+
+            if (this._hats != null)
+            {
+                hats = new Hat[this._hats.Length];
+
+                Array.Copy(this._hats, hats, hats.Length);
+            }
+
+            if (this._axes != null)
+            {
+                axes = new float[this._axes.Length];
+
+                Array.Copy(this._axes, axes, axes.Length);
+            }
+
+            if (this._buttons != null)
+            {
+                buttons = new bool[this._buttons.Length];
+
+                Array.Copy(this._buttons, buttons, buttons.Length);
+            }
+
+            return new JoystickState(hats, axes, buttons, Id, Name);
         }
 
         /// <inheritdoc/>

@@ -907,7 +907,7 @@ namespace OpenTK.Windowing.Desktop
 
             for (int i = 0; i < JoystickStates.Length; i++)
             {
-                LastJoystickStates[i] = JoystickStates[i];
+                LastJoystickStates[i] = (JoystickState)JoystickStates[i].Clone();
             }
 
             if (IsExiting)
