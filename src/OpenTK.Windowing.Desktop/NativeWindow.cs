@@ -899,8 +899,12 @@ namespace OpenTK.Windowing.Desktop
         {
             LastKeyboardState = KeyboardState;
             LastMouseState = MouseState;
-            LastJoystickStates = JoystickStates;
             MouseDelta = Vector2.Zero;
+
+            for (int i = 0; i < JoystickStates.Length; i++)
+            {
+                LastJoystickStates[i] = JoystickStates[i];
+            }
 
             if (IsExiting)
             {
