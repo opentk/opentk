@@ -65,7 +65,7 @@ namespace OpenToolkit.OpenCL.Tests
 					B[i] = i;
 				}
 
-				CLBuffer bufferA =CL.CreateBuffer(context, MemoryFlags.ReadOnly | MemoryFlags.CopyHostPtr, A,
+				CLBuffer bufferA = CL.CreateBuffer(context, MemoryFlags.ReadOnly | MemoryFlags.CopyHostPtr, A,
 					out result);
 				CLBuffer bufferB =  CL.CreateBuffer(context, MemoryFlags.ReadOnly | MemoryFlags.CopyHostPtr, B,
 					out result);
