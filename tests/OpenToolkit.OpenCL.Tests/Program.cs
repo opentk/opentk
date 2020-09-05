@@ -10,18 +10,36 @@ namespace OpenToolkit.OpenCL.Tests
 		static void Main(string[] args)
 		{
 			//Get the ids of available opencl platforms
-			CL.GetPlatformIds(out IntPtr[] platformIds);
+
+			CL.GetPlatformIds(0, null, out uint platformCount);
+			CLPlatform[] platformIds = new CLPlatform[platformCount];
+			CL.GetPlatformIds(platformCount, platformIds, out _);
+
+			Console.WriteLine(platformIds.Length);
+			foreach (CLPlatform platform in platformIds)
+			{
+				Console.WriteLine(platform.Handle);
+				CL.GetPlatformInfo(platform, PlatformInfo.Name, out byte[] val);
+			}
 
 			//Get the device ids for each platform
 			foreach (IntPtr platformId in platformIds)
 			{
-				CL.GetDeviceIds(platformId, DeviceType.All, out IntPtr[] deviceIds);
+				CL.GetDeviceIds(new CLPlatform(platformId), DeviceType.All, out CLDevice[] deviceIds);
 
-				CLContext context = new CLContext(CL.CreateContext(IntPtr.Zero, (uint)deviceIds.Length, deviceIds, IntPtr.Zero,
-					IntPtr.Zero, out CLResultCode result));
+				CLContext context = CL.CreateContext(IntPtr.Zero, (uint)deviceIds.Length, deviceIds, IntPtr.Zero,
+					IntPtr.Zero, out CLResultCode result);
 				if (result != CLResultCode.Success)
 				{
 					throw new Exception("The context couldn't be created.");
+				}
+
+				CL.GetSupportedImageFormats(context, MemoryFlags.ReadOnly, MemoryObjectType.Image2D,
+					out ImageFormat[] formats);
+
+				foreach (ImageFormat imageFormat in formats)
+				{
+					Console.WriteLine($"{imageFormat.ChannelOrder} {imageFormat.ChannelType}");
 				}
 
 				string code = @"
@@ -31,12 +49,13 @@ namespace OpenToolkit.OpenCL.Tests
                     result[i] = A[i] + B[i] + 2;
                 }";
 
-				CLProgram program = new CLProgram(CL.CreateProgramWithSource(context, code, out result));CL.CreateProgramWithSource(context, code, out result);
+				CLProgram program = CL.CreateProgramWithSource(context, code, out result);
+
 				CL.BuildProgram(program, (uint)deviceIds.Length, deviceIds, null, IntPtr.Zero, IntPtr.Zero);
 
 				CLKernel kernel = new CLKernel(CL.CreateKernel(program, "add", out result));CL.CreateKernel(program, "add", out result);
 
-				int arraySize = 2000;
+				int arraySize = 20;
 				float[] A = new float[arraySize];
 				float[] B = new float[arraySize];
 
@@ -46,11 +65,11 @@ namespace OpenToolkit.OpenCL.Tests
 					B[i] = i;
 				}
 
-				CLMemoryObject bufferA = new CLMemoryObject(CL.CreateBuffer(context, MemoryFlags.ReadOnly | MemoryFlags.CopyHostPtr, A,
-					out result));
-				CLMemoryObject bufferB =  new CLMemoryObject(CL.CreateBuffer(context, MemoryFlags.ReadOnly | MemoryFlags.CopyHostPtr, B,
-					out result));
-				CLMemoryObject resultBuffer =  new CLMemoryObject(CL.CreateBuffer(context, MemoryFlags.WriteOnly,
+				CLBuffer bufferA =CL.CreateBuffer(context, MemoryFlags.ReadOnly | MemoryFlags.CopyHostPtr, A,
+					out result);
+				CLBuffer bufferB =  CL.CreateBuffer(context, MemoryFlags.ReadOnly | MemoryFlags.CopyHostPtr, B,
+					out result);
+				CLBuffer resultBuffer =  new CLBuffer(CL.CreateBuffer(context, MemoryFlags.WriteOnly,
 					new UIntPtr((uint)(arraySize * sizeof(float))), IntPtr.Zero, out result));
 				UIntPtr bufferSize = (UIntPtr)UIntPtr.Size;
 
@@ -67,15 +86,15 @@ namespace OpenToolkit.OpenCL.Tests
 					CLCommandQueue commandQueue = new CLCommandQueue(
 						CL.CreateCommandQueueWithProperties(context, deviceIds[0], IntPtr.Zero, out result));
 
-					CL.EnqueueNDRangeKernel(commandQueue, kernel, 1, null, new IntPtr[] {new IntPtr(A.Length)},
-						null, 0, null,  out IntPtr eventHandle);
+					CL.EnqueueNDRangeKernel(commandQueue, kernel, 1, null, new UIntPtr[] {new UIntPtr((uint)A.Length)},
+						null, 0, null,  out CLEvent eventHandle);
 
 					CL.Finish(commandQueue);
 
 					CL.SetEventCallback(eventHandle, (int)CommandExecutionStatus.Complete, (waitEvent, data) =>
 					{
-						CL.EnqueueReadBuffer(commandQueue, resultBuffer, false, UIntPtr.Zero, arraySize,
-							out float[] resultValues, 0, null, out _);
+						CL.EnqueueReadBuffer(commandQueue, resultBuffer, true, UIntPtr.Zero, arraySize,
+							out float[] resultValues, null, out _);
 
 						StringBuilder line = new StringBuilder();
 						foreach (float res in resultValues)
@@ -88,9 +107,9 @@ namespace OpenToolkit.OpenCL.Tests
 					});
 
 					//get rid of the buffers because we no longer need them
-					CL.ReleaseMemObject(bufferA);
-					CL.ReleaseMemObject(bufferB);
-					CL.ReleaseMemObject(resultBuffer);
+					CL.ReleaseMemoryObject(bufferA);
+					CL.ReleaseMemoryObject(bufferB);
+					CL.ReleaseMemoryObject(resultBuffer);
 
 					//Release the program kernels and queues
 					CL.ReleaseProgram(program);
