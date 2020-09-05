@@ -237,7 +237,8 @@ namespace OpenTK.Windowing.Common
         /// <summary>
         /// Makes the GraphicsContext current on the calling thread.
         /// </summary>
-        void MakeCurrent();
+        /// <param name="makeCurrent">If the GraphicsContext should be current on the calling thread. Set to false to make it so that <b>no</b> GraphicsContext is current on the calling thread.</param>
+        void MakeCurrent(bool makeCurrent);
 
         /// <summary>
         /// Transforms the specified point from screen to client coordinates.

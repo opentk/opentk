@@ -8,12 +8,14 @@
 //
 
 using System;
+using System.Runtime.InteropServices;
 
 namespace OpenTK.Windowing.GraphicsLibraryFramework
 {
     /// <summary>
     ///     Contains GLFW Image data.
     /// </summary>
+    [StructLayout(LayoutKind.Sequential, Pack = 1)]
     public unsafe struct Image
     {
         /// <summary>

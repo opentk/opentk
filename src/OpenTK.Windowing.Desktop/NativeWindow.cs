@@ -27,7 +27,7 @@ namespace OpenTK.Windowing.Desktop
         /// <summary>
         /// Gets the native <see cref="Window"/> pointer for use with <see cref="GLFW"/> API.
         /// </summary>
-        protected unsafe Window* WindowPtr { get; }
+        public unsafe Window* WindowPtr { get; }
 
         // Used for delta calculation in the mouse pos changed event.
         private Vector2 _lastReportedMousePos;
@@ -575,14 +575,14 @@ namespace OpenTK.Windowing.Desktop
 
             if (isOpenGl)
             {
-                GLFW.MakeContextCurrent(WindowPtr);
+                MakeCurrent(true);
 
                 if (settings.AutoLoadBindings)
                 {
                     InitializeGlBindings();
                 }
 
-                GLFW.MakeContextCurrent(null);
+                MakeCurrent(false);
             }
 
             // Enables the caps lock modifier to be detected and updated
@@ -876,11 +876,11 @@ namespace OpenTK.Windowing.Desktop
         }
 
         /// <inheritdoc />
-        public void MakeCurrent()
+        public void MakeCurrent(bool makeCurrent)
         {
             unsafe
             {
-                GLFW.MakeContextCurrent(WindowPtr);
+                GLFW.MakeContextCurrent(makeCurrent ? WindowPtr : null);
             }
         }
 
