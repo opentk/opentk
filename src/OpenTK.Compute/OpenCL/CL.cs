@@ -1284,7 +1284,7 @@ public static extern IntPtr CreateImageWithProperties(CLContext context, IntPtr[
 			fixed (T* b = array)
 			{
 				CLResultCode resultCode = EnqueueReadBuffer(commandQueue, buffer, (uint)(blockingRead ? 1 : 0), offset,
-					(UIntPtr)(size * sizeof(T)), (IntPtr)b, (uint)(uint)(eventWaitList?.Length ?? 0),
+					(UIntPtr)size, (IntPtr)b, (uint)(eventWaitList?.Length ?? 0),
 					eventWaitList,
 					out eventHandle);
 				return resultCode;
@@ -1303,7 +1303,7 @@ public static extern IntPtr CreateImageWithProperties(CLContext context, IntPtr[
 			fixed (T* b = array)
 			{
 				CLResultCode resultCode = EnqueueReadBuffer(commandQueue, buffer, (uint)(blockingRead ? 1 : 0), offset,
-					(UIntPtr)(size * sizeof(T)), (IntPtr)b, (uint)(uint)(eventWaitList?.Length ?? 0),
+					(UIntPtr)size, (IntPtr)b, (uint)(eventWaitList?.Length ?? 0),
 					eventWaitList, out eventHandle);
 				return resultCode;
 			}
@@ -1403,7 +1403,7 @@ public static extern IntPtr CreateImageWithProperties(CLContext context, IntPtr[
 			fixed (T* a = array)
 			{
 				CLResultCode resultCode = EnqueueWriteBuffer(commandQueue, buffer, (uint)(blockingRead ? 1 : 0), offset,
-					(UIntPtr)(size * sizeof(T)), (IntPtr)a, (uint)(uint)(eventWaitList?.Length ?? 0),
+					(UIntPtr)size, (IntPtr)a, (uint)(uint)(eventWaitList?.Length ?? 0),
 					eventWaitList, out @event);
 
 				return resultCode;
@@ -1421,7 +1421,7 @@ public static extern IntPtr CreateImageWithProperties(CLContext context, IntPtr[
 			fixed (T* a = span)
 			{
 				CLResultCode resultCode = EnqueueWriteBuffer(commandQueue, buffer, (uint)(blockingRead ? 1 : 0), offset,
-					(UIntPtr)(size * sizeof(T)), (IntPtr)a, (uint)(eventWaitList?.Length ?? 0),
+					(UIntPtr)size, (IntPtr)a, (uint)(eventWaitList?.Length ?? 0),
 					eventWaitList, out @event);
 
 				return resultCode;
