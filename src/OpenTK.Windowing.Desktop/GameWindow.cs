@@ -299,10 +299,7 @@ namespace OpenTK.Windowing.Desktop
         /// <inheritdoc />
         public virtual void SwapBuffers()
         {
-            unsafe
-            {
-                GLFW.SwapBuffers(WindowPtr);
-            }
+            Context.SwapBuffers();
         }
 
         /// <inheritdoc />

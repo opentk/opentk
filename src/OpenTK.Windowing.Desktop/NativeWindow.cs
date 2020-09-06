@@ -159,6 +159,8 @@ namespace OpenTK.Windowing.Desktop
                 unsafe
                 {
                     GLFW.SetWindowTitle(WindowPtr, value);
+
+                    _title = value;
                 }
             }
         }
@@ -178,7 +180,7 @@ namespace OpenTK.Windowing.Desktop
         /// <inheritdoc />
         public IGraphicsContext Context { get; }
 
-        private readonly Monitor _currentMonitor;
+        private Monitor _currentMonitor;
 
         /// <summary>
         /// Gets or sets the current <see cref="Monitor"/>.
@@ -199,6 +201,8 @@ namespace OpenTK.Windowing.Desktop
                     _size.X,
                     _size.Y,
                     mode->RefreshRate);
+
+                _currentMonitor = value;
             }
         }
 
@@ -235,6 +239,8 @@ namespace OpenTK.Windowing.Desktop
                     {
                         GLFW.HideWindow(WindowPtr);
                     }
+
+                    _isVisible = value;
                 }
             }
         }
@@ -365,11 +371,7 @@ namespace OpenTK.Windowing.Desktop
         public unsafe Vector2i Size
         {
             get => _size;
-            set
-            {
-                _size = value;
-                GLFW.SetWindowSize(WindowPtr, value.X, value.Y);
-            }
+            set => GLFW.SetWindowSize(WindowPtr, value.X, value.Y);
         }
 
         /// <inheritdoc />
