@@ -1,7 +1,10 @@
 using System;
 
-namespace OpenToolkit.Windowing.Common
+namespace OpenTK.Windowing.Common
 {
+    /// <summary>
+    /// Defines the interface for OpenGL context management.
+    /// </summary>
     public interface IGraphicsContext
     {
         /// <summary>

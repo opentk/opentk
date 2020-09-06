@@ -175,6 +175,9 @@ namespace OpenTK.Windowing.Desktop
         /// <inheritdoc />
         public Version APIVersion { get; }
 
+        /// <inheritdoc />
+        public IGraphicsContext Context { get; }
+
         private readonly Monitor _currentMonitor;
 
         /// <summary>
@@ -470,8 +473,6 @@ namespace OpenTK.Windowing.Desktop
             }
         }
 
-        public GLFWGraphicsContext Context { get; }
-
         /// <summary>
         /// Initializes a new instance of the <see cref="NativeWindow"/> class.
         /// </summary>
@@ -579,14 +580,14 @@ namespace OpenTK.Windowing.Desktop
 
             if (isOpenGl)
             {
-                MakeCurrent(true);
+                Context.MakeCurrent();
 
                 if (settings.AutoLoadBindings)
                 {
                     InitializeGlBindings();
                 }
 
-                MakeCurrent(false);
+                Context.MakeNoneCurrent();
             }
 
             // Enables the caps lock modifier to be detected and updated
@@ -880,12 +881,9 @@ namespace OpenTK.Windowing.Desktop
         }
 
         /// <inheritdoc />
-        public void MakeCurrent(bool makeCurrent)
+        public void MakeCurrent()
         {
-            unsafe
-            {
-                GLFW.MakeContextCurrent(makeCurrent ? WindowPtr : null);
-            }
+            Context.MakeCurrent();
         }
 
         private unsafe void DestroyWindow()

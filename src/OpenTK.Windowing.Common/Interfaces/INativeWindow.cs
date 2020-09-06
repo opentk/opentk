@@ -80,6 +80,11 @@ namespace OpenTK.Windowing.Common
         Version APIVersion { get; }
 
         /// <summary>
+        /// Gets the graphics context associated with this NativeWindow.
+        /// </summary>
+        IGraphicsContext Context { get; }
+
+        /// <summary>
         /// Gets or sets the title of the window.
         /// </summary>
         string Title { get; set; }
@@ -237,8 +242,7 @@ namespace OpenTK.Windowing.Common
         /// <summary>
         /// Makes the GraphicsContext current on the calling thread.
         /// </summary>
-        /// <param name="makeCurrent">If the GraphicsContext should be current on the calling thread. Set to false to make it so that <b>no</b> GraphicsContext is current on the calling thread.</param>
-        void MakeCurrent(bool makeCurrent);
+        void MakeCurrent();
 
         /// <summary>
         /// Transforms the specified point from screen to client coordinates.
