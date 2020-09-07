@@ -1556,6 +1556,10 @@ namespace OpenTK.Windowing.Desktop
 
         private Vector2 NormalizeMousePosition(Vector2 mousePosition)
         {
+            if (Size.X == 0 || Size.Y == 0)
+            {
+                return Vector2.Zero;
+            }
             return new Vector2((2 * mousePosition.X / Size.X) - 1, 1 - (2 * mousePosition.Y / Size.Y));
         }
     }
