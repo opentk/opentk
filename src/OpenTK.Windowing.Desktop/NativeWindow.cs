@@ -5,7 +5,6 @@ using System;
 using System.ComponentModel;
 using System.Reflection;
 using System.Runtime.InteropServices;
-using System.Threading;
 using OpenTK.Core;
 using OpenTK.Mathematics;
 using OpenTK.Windowing.Common;
@@ -68,6 +67,7 @@ namespace OpenTK.Windowing.Desktop
                 }
 
                 _mouseState.Position = value;
+                _mouseState.NormalizedPosition = NormalizeMousePosition(value);
             }
         }
 
@@ -784,6 +784,7 @@ namespace OpenTK.Windowing.Desktop
                     MouseDelta += delta;
 
                     _lastReportedMousePos = _mouseState.Position = newPos;
+                    _mouseState.NormalizedPosition = NormalizeMousePosition(newPos);
 
                     OnMouseMove(new MouseMoveEventArgs(newPos, delta));
                 };
@@ -948,7 +949,9 @@ namespace OpenTK.Windowing.Desktop
         private unsafe void ProcessInputEvents()
         {
             GLFW.GetCursorPos(WindowPtr, out var x, out var y);
-            _mouseState.Position = new Vector2((float)x, (float)y);
+            Vector2 newPos = new Vector2((float)x, (float)y);
+            _mouseState.Position = newPos;
+            _mouseState.NormalizedPosition = NormalizeMousePosition(newPos);
 
             for (var i = 0; i < JoystickStates.Length; i++)
             {
@@ -1549,6 +1552,11 @@ namespace OpenTK.Windowing.Desktop
                 default:
                     throw new ArgumentOutOfRangeException(nameof(shape), shape, null);
             }
+        }
+
+        private Vector2 NormalizeMousePosition(Vector2 mousePosition)
+        {
+            return new Vector2((2 * mousePosition.X / Size.X) - 1, 1 - (2 * mousePosition.Y / Size.Y));
         }
     }
 }

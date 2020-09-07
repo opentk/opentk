@@ -30,6 +30,18 @@ namespace OpenTK.Windowing.Common.Input
         public Vector2 Position { get; set; }
 
         /// <summary>
+        /// Gets or sets or a <see cref="Vector2"/> representing the normalized position of the pointer,
+        /// relative to the center of the contents of the window.
+        /// <para>
+        /// Both the domain and range for this property are [-1, 1].
+        /// </para>
+        /// <para>
+        /// Examples: Bottom left = (-1, -1), Top right = (1, 1).
+        /// </para>
+        /// </summary>
+        public Vector2 NormalizedPosition { get; set; }
+
+        /// <summary>
         /// Gets a <see cref="bool" /> indicating whether the specified
         ///  <see cref="MouseButton" /> is pressed.
         /// </summary>
