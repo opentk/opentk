@@ -3805,6 +3805,13 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         public static unsafe void MaximizeWindow(Window* window) => glfwMaximizeWindow(window);
 
         /// <summary>
+        /// This function returns the Windows specific window handle (HWND).
+        /// </summary>
+        /// <param name="window">The window to query.</param>
+        /// <returns>The Windows specific window handle (HWND).</returns>
+        public static unsafe IntPtr GlfwGetWin32Window(Window* window) => glfwGetWin32Window(window);
+
+        /// <summary>
         /// <para>
         /// This function sets the maximization callback of the specified window,
         /// which is called when the window is maximized or restored.

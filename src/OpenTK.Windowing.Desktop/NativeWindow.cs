@@ -29,6 +29,11 @@ namespace OpenTK.Windowing.Desktop
         /// </summary>
         protected unsafe Window* WindowPtr { get; }
 
+        /// <summary>
+        /// Gets the Windows specific window handle (HWND).
+        /// </summary>
+        protected IntPtr Hwnd { get; }
+
         // Used for delta calculation in the mouse pos changed event.
         private Vector2 _lastReportedMousePos;
 
@@ -565,10 +570,12 @@ namespace OpenTK.Windowing.Desktop
                 GLFW.WindowHint(WindowHintInt.BlueBits, modePtr->BlueBits);
                 GLFW.WindowHint(WindowHintInt.RefreshRate, modePtr->RefreshRate);
                 WindowPtr = GLFW.CreateWindow(modePtr->Width, modePtr->Height, _title, monitor, null);
+                Hwnd = GLFW.GlfwGetWin32Window(WindowPtr);
             }
             else
             {
                 WindowPtr = GLFW.CreateWindow(settings.Size.X, settings.Size.Y, _title, null, null);
+                Hwnd = GLFW.GlfwGetWin32Window(WindowPtr);
             }
 
             Exists = true;

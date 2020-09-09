@@ -259,6 +259,9 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         public static extern void glfwMaximizeWindow(Window* window);
 
         [DllImport(LibraryName)]
+        public static extern IntPtr glfwGetWin32Window(Window* window);
+
+        [DllImport(LibraryName)]
         public static extern void glfwPollEvents();
 
         [DllImport(LibraryName)]
