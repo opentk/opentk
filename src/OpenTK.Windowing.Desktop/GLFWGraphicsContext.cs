@@ -1,3 +1,4 @@
+using System;
 using OpenTK.Windowing.Common;
 using OpenTK.Windowing.GraphicsLibraryFramework;
 
@@ -6,7 +7,7 @@ namespace OpenTK.Windowing.Desktop
     /// <summary>
     /// OpenGL context implemented using GLFW.
     /// </summary>
-    public unsafe class GLFWGraphicsContext : IGraphicsContext
+    public unsafe class GLFWGraphicsContext : IGLFWGraphicsContext
     {
         private readonly Window* _windowPtr;
 
@@ -21,6 +22,9 @@ namespace OpenTK.Windowing.Desktop
 
         /// <inheritdoc />
         public bool IsCurrent => GLFW.GetCurrentContext() == _windowPtr;
+
+        /// <inheritdoc/>
+        public IntPtr NativeContex => (IntPtr)_windowPtr;
 
         /// <inheritdoc />
         public void SwapBuffers()

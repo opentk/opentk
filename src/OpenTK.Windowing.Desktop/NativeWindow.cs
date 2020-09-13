@@ -178,7 +178,10 @@ namespace OpenTK.Windowing.Desktop
         public Version APIVersion { get; }
 
         /// <inheritdoc />
-        public IGraphicsContext Context { get; }
+        IGraphicsContext INativeWindow.Context => Context;
+
+        /// <inheritdoc cref="INativeWindow.Context" />
+        public IGLFWGraphicsContext Context { get; }
 
         private Monitor _currentMonitor;
 
@@ -569,11 +572,11 @@ namespace OpenTK.Windowing.Desktop
                 GLFW.WindowHint(WindowHintInt.GreenBits, modePtr->GreenBits);
                 GLFW.WindowHint(WindowHintInt.BlueBits, modePtr->BlueBits);
                 GLFW.WindowHint(WindowHintInt.RefreshRate, modePtr->RefreshRate);
-                WindowPtr = GLFW.CreateWindow(modePtr->Width, modePtr->Height, _title, monitor, null);
+                WindowPtr = GLFW.CreateWindow(modePtr->Width, modePtr->Height, _title, monitor, (Window*)(settings.SharedContext?.NativeContex ?? IntPtr.Zero));
             }
             else
             {
-                WindowPtr = GLFW.CreateWindow(settings.Size.X, settings.Size.Y, _title, null, null);
+                WindowPtr = GLFW.CreateWindow(settings.Size.X, settings.Size.Y, _title, null, (Window*)(settings.SharedContext?.NativeContex ?? IntPtr.Zero));
             }
 
             Context = new GLFWGraphicsContext(WindowPtr);

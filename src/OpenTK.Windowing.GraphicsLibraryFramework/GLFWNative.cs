@@ -26,48 +26,47 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
 
                 return LoadLibrary("glfw", new Version(3, 3), assembly, path);
             });
+        }
 
-            // FIXME: This should be static
-            /*static*/ IntPtr LoadLibrary(string libraryName, Version version, Assembly assembly, DllImportSearchPath? searchPath)
+        private static IntPtr LoadLibrary(string libraryName, Version version, Assembly assembly, DllImportSearchPath? searchPath)
+        {
+            IEnumerable<string> GetNextVersion()
             {
-                IEnumerable<string> GetNextVersion()
+                for (var i = 2; i >= 0; i--)
                 {
-                    for (var i = 2; i >= 0; i--)
-                    {
-                        yield return version.ToString(i);
-                    }
+                    yield return version.ToString(i);
                 }
-
-                Func<string, string, string> libNameFormatter = null;
-                if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
-                {
-                    libNameFormatter = (libName, ver) =>
-                        libName + ".so" + (string.IsNullOrEmpty(ver) ? string.Empty : "." + ver);
-                }
-                else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
-                {
-                    libNameFormatter = (libName, ver) =>
-                        libName + (string.IsNullOrEmpty(ver) ? string.Empty : "." + ver) + ".dylib";
-                }
-                else if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-                {
-                    libNameFormatter = (libName, ver) =>
-                        libName + (string.IsNullOrEmpty(ver) ? string.Empty : ver) + ".dll";
-                }
-                else
-                {
-                    return IntPtr.Zero;
-                }
-
-                foreach (var ver in GetNextVersion())
-                {
-                    if (NativeLibrary.TryLoad(libNameFormatter(libraryName, ver), assembly, searchPath, out var handle))
-                    {
-                        return handle;
-                    }
-                }
-                return NativeLibrary.Load(libraryName, assembly, searchPath);
             }
+
+            Func<string, string, string> libNameFormatter = null;
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+            {
+                libNameFormatter = (libName, ver) =>
+                    libName + ".so" + (string.IsNullOrEmpty(ver) ? string.Empty : "." + ver);
+            }
+            else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+            {
+                libNameFormatter = (libName, ver) =>
+                    libName + (string.IsNullOrEmpty(ver) ? string.Empty : "." + ver) + ".dylib";
+            }
+            else if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                libNameFormatter = (libName, ver) =>
+                    libName + (string.IsNullOrEmpty(ver) ? string.Empty : ver) + ".dll";
+            }
+            else
+            {
+                return IntPtr.Zero;
+            }
+
+            foreach (var ver in GetNextVersion())
+            {
+                if (NativeLibrary.TryLoad(libNameFormatter(libraryName, ver), assembly, searchPath, out var handle))
+                {
+                    return handle;
+                }
+            }
+            return NativeLibrary.Load(libraryName, assembly, searchPath);
         }
 
         [DllImport(LibraryName)]

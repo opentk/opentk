@@ -352,7 +352,7 @@ namespace OpenTK.Windowing.Common
         ///     Gets whether the specified mouse button is pressed in the current frame but released in the previous frame.
         /// </summary>
         /// <remarks>
-        ///     "Frame" refers to invocations of <see cref="INativeWindow.ProcessEvents"/> here.
+        ///     "Frame" refers to invocations of <see cref="INativeWindow.ProcessEvents()"/> here.
         /// </remarks>
         /// <param name="button">The button to check.</param>
         /// <returns>True if the button is pressed in this frame, but not the last frame.</returns>

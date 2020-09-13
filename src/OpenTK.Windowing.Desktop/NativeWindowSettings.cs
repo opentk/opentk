@@ -39,6 +39,11 @@ namespace OpenTK.Windowing.Desktop
         }
 
         /// <summary>
+        /// Gets or sets the context to share.
+        /// </summary>
+        public IGLFWGraphicsContext SharedContext { get; set; }
+
+        /// <summary>
         /// Gets or sets the current <see cref="WindowIcon" /> for this window.
         /// </summary>
         /// <remarks>
