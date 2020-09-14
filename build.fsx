@@ -170,7 +170,7 @@ Target.create "RewriteBindings" (fun _ ->
     let framework = "netcoreapp31"
     let projFile = "src/Generator.Rewrite/Generator.Rewrite.csproj"
     let bindingsFile = "OpenTK.Graphics.dll"
-    let bindingsOutput = "src/OpenTK.Graphics/bin/Release/netstandard2.0"
+    let bindingsOutput = "src/OpenTK.Graphics/bin/Release/netstandard2.1"
 
     let args =
         [ "-a " + (System.IO.Path.GetFullPath bindingsOutput </> bindingsFile)
