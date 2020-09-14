@@ -1,3 +1,6 @@
+## 4.0.0-pre9.6
+ * Fix bindings generator for net2.1
+
 ## 4.0.0-pre9.5
  * GLFW Native Access bindings. (@RedImp1470 @NogginBops)
  * Fixed normalization in Vector3.Unproject (@burnss9)
