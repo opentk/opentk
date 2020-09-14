@@ -1,3 +1,9 @@
+## 4.0.0-pre9.5
+ * GLFW Native Access bindings. (@RedImp1470 @NogginBops)
+ * Fixed normalization in Vector3.Unproject (@burnss9)
+ * General windowing improvements and new Graphics Context API. (@NogginBops)
+ * Use correct function in SetCharModsCallback (@jvbsl)
+
 ## 4.0.0-pre9.4
  * **moved to dotnetcore only**
  * Return namespaces to the glorious OpenTK (thanks @glopes)
