@@ -27,7 +27,7 @@ namespace OpenTK.Windowing.Desktop
         /// <summary>
         /// Gets the native <see cref="Window"/> pointer for use with <see cref="GLFW"/> API.
         /// </summary>
-        protected unsafe Window* WindowPtr { get; }
+        public unsafe Window* WindowPtr { get; }
 
         // Used for delta calculation in the mouse pos changed event.
         private Vector2 _lastReportedMousePos;
@@ -159,6 +159,8 @@ namespace OpenTK.Windowing.Desktop
                 unsafe
                 {
                     GLFW.SetWindowTitle(WindowPtr, value);
+
+                    _title = value;
                 }
             }
         }
@@ -175,7 +177,13 @@ namespace OpenTK.Windowing.Desktop
         /// <inheritdoc />
         public Version APIVersion { get; }
 
-        private readonly Monitor _currentMonitor;
+        /// <inheritdoc />
+        IGraphicsContext INativeWindow.Context => Context;
+
+        /// <inheritdoc cref="INativeWindow.Context" />
+        public IGLFWGraphicsContext Context { get; }
+
+        private Monitor _currentMonitor;
 
         /// <summary>
         /// Gets or sets the current <see cref="Monitor"/>.
@@ -196,6 +204,8 @@ namespace OpenTK.Windowing.Desktop
                     _size.X,
                     _size.Y,
                     mode->RefreshRate);
+
+                _currentMonitor = value;
             }
         }
 
@@ -232,6 +242,8 @@ namespace OpenTK.Windowing.Desktop
                     {
                         GLFW.HideWindow(WindowPtr);
                     }
+
+                    _isVisible = value;
                 }
             }
         }
@@ -362,11 +374,7 @@ namespace OpenTK.Windowing.Desktop
         public unsafe Vector2i Size
         {
             get => _size;
-            set
-            {
-                _size = value;
-                GLFW.SetWindowSize(WindowPtr, value.X, value.Y);
-            }
+            set => GLFW.SetWindowSize(WindowPtr, value.X, value.Y);
         }
 
         /// <inheritdoc />
@@ -564,25 +572,27 @@ namespace OpenTK.Windowing.Desktop
                 GLFW.WindowHint(WindowHintInt.GreenBits, modePtr->GreenBits);
                 GLFW.WindowHint(WindowHintInt.BlueBits, modePtr->BlueBits);
                 GLFW.WindowHint(WindowHintInt.RefreshRate, modePtr->RefreshRate);
-                WindowPtr = GLFW.CreateWindow(modePtr->Width, modePtr->Height, _title, monitor, null);
+                WindowPtr = GLFW.CreateWindow(modePtr->Width, modePtr->Height, _title, monitor, (Window*)(settings.SharedContext?.NativeContex ?? IntPtr.Zero));
             }
             else
             {
-                WindowPtr = GLFW.CreateWindow(settings.Size.X, settings.Size.Y, _title, null, null);
+                WindowPtr = GLFW.CreateWindow(settings.Size.X, settings.Size.Y, _title, null, (Window*)(settings.SharedContext?.NativeContex ?? IntPtr.Zero));
             }
+
+            Context = new GLFWGraphicsContext(WindowPtr);
 
             Exists = true;
 
             if (isOpenGl)
             {
-                GLFW.MakeContextCurrent(WindowPtr);
+                Context.MakeCurrent();
 
                 if (settings.AutoLoadBindings)
                 {
                     InitializeGlBindings();
                 }
 
-                GLFW.MakeContextCurrent(null);
+                Context.MakeNoneCurrent();
             }
 
             // Enables the caps lock modifier to be detected and updated
@@ -878,10 +888,7 @@ namespace OpenTK.Windowing.Desktop
         /// <inheritdoc />
         public void MakeCurrent()
         {
-            unsafe
-            {
-                GLFW.MakeContextCurrent(WindowPtr);
-            }
+            Context.MakeCurrent();
         }
 
         private unsafe void DestroyWindow()

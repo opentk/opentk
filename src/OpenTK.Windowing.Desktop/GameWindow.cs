@@ -189,6 +189,9 @@ namespace OpenTK.Windowing.Desktop
             // Make sure the GameWindow is visible when it first runs.
             IsVisible = true;
 
+            // Make sure that the gl contexts is current for OnLoad and the initial OnResize
+            Context.MakeCurrent();
+
             // Send the OnLoad event, to load all user code.
             OnLoad();
 
@@ -198,6 +201,9 @@ namespace OpenTK.Windowing.Desktop
             Debug.Print("Entering main loop.");
             if (IsMultiThreaded)
             {
+                // We want to move the context to the render thread so make sure it's no longer current
+                Context.MakeNoneCurrent();
+
                 _renderThread = new Thread(StartRenderThread);
                 _renderThread.Start();
             }
@@ -224,6 +230,10 @@ namespace OpenTK.Windowing.Desktop
 
         private void StartRenderThread()
         {
+            // If we are starting a render thread we want the context to be current there.
+            // So when creating the render thead the graphics context needs to be made not current on the thread creating the render thread.
+            Context.MakeCurrent();
+
             OnRenderThreadStarted();
             _watchRender.Start();
             while (Exists && !IsExiting)
@@ -289,10 +299,7 @@ namespace OpenTK.Windowing.Desktop
         /// <inheritdoc />
         public virtual void SwapBuffers()
         {
-            unsafe
-            {
-                GLFW.SwapBuffers(WindowPtr);
-            }
+            Context.SwapBuffers();
         }
 
         /// <inheritdoc />
