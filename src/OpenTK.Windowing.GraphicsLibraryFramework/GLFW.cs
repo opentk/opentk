@@ -3809,7 +3809,35 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         /// </summary>
         /// <param name="window">The window to query.</param>
         /// <returns>The Windows specific window handle (HWND).</returns>
-        public static unsafe IntPtr GlfwGetWin32Window(Window* window) => glfwGetWin32Window(window);
+        public static unsafe IntPtr GetWin32Window(Window* window) => glfwGetWin32Window(window);
+
+        /// <summary>
+        /// This function returns the macos specific window handle (NSWindow).
+        /// </summary>
+        /// <param name="window">The window to query.</param>
+        /// <returns>The macos specific window handle (NSWindow).</returns>
+        public static unsafe IntPtr GetCocoaWindow(Window* window) => glfwGetCocoaWindow(window);
+
+        /// <summary>
+        /// This function returns the x11 specific window handle (Window).
+        /// </summary>
+        /// <param name="window">The window to query.</param>
+        /// <returns>The x11 specific window handle (Window).</returns>
+        public static unsafe uint GetX11Window(Window* window) => glfwGetX11Window(window);
+
+        /// <summary>
+        /// This function returns the glx specific window handle (Window).
+        /// </summary>
+        /// <param name="window">The window to query.</param>
+        /// <returns>The glx specific window handle (Window).</returns>
+        public static unsafe uint GetGLXWindow(Window* window) => glfwGetGLXWindow(window);
+
+        /// <summary>
+        /// This function returns the wayland specific window handle (struct wl_surface*).
+        /// </summary>
+        /// <param name="window">The window to query.</param>
+        /// <returns>The wayland specific window handle (struct wl_surface*).</returns>
+        public static unsafe IntPtr GetWaylandWindow(Window* window) => glfwGetWaylandWindow(window);
 
         /// <summary>
         /// <para>

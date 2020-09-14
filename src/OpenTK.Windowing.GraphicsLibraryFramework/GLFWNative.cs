@@ -304,6 +304,18 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         public static extern IntPtr glfwGetWin32Window(Window* window);
 
         [DllImport(LibraryName)]
+        public static extern IntPtr glfwGetCocoaWindow(Window* window);
+
+        [DllImport(LibraryName)]
+        public static extern uint glfwGetX11Window(Window* window);
+
+        [DllImport(LibraryName)]
+        public static extern uint glfwGetGLXWindow(Window* window);
+
+        [DllImport(LibraryName)]
+        public static extern IntPtr glfwGetWaylandWindow(Window* window);
+
+        [DllImport(LibraryName)]
         public static extern void glfwPollEvents();
 
         [DllImport(LibraryName)]
