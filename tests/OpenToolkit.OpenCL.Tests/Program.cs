@@ -43,17 +43,17 @@ namespace OpenToolkit.OpenCL.Tests
 				}
 
 				string code = @"
-                __kernel void add(__global float* A, __global float* B,__global float* result)
+                __kernel void add(__global float* A, __global float* B,__global float* result, const float mul)
                 {
                     int i = get_global_id(0);
-                    result[i] = A[i] + B[i];
+                    result[i] = (A[i] + B[i])*mul;
                 }";
 
 				CLProgram program = CL.CreateProgramWithSource(context, code, out result);
 
 				CL.BuildProgram(program, (uint)deviceIds.Length, deviceIds, null, IntPtr.Zero, IntPtr.Zero);
 
-				CLKernel kernel = new CLKernel(CL.CreateKernel(program, "add", out result));CL.CreateKernel(program, "add", out result);
+				CLKernel kernel = new CLKernel(CL.CreateKernel(program, "add", out result));
 
 				int arraySize = 20;
 				float[] A = new float[arraySize];
@@ -74,24 +74,19 @@ namespace OpenToolkit.OpenCL.Tests
 
 				CLBuffer resultBuffer =  new CLBuffer(CL.CreateBuffer(context, MemoryFlags.WriteOnly,
 					new UIntPtr((uint)(arraySize * sizeof(float))), IntPtr.Zero, out result));
-				UIntPtr bufferSize = (UIntPtr)UIntPtr.Size;
 
 				try
 				{
-					GCHandle inputA = GCHandle.Alloc(bufferA, GCHandleType.Pinned);
-					GCHandle inputB = GCHandle.Alloc(bufferB, GCHandleType.Pinned);
-					GCHandle resultGC = GCHandle.Alloc(resultBuffer, GCHandleType.Pinned);
-
-					CL.SetKernelArg(kernel, 0, bufferSize, inputA.AddrOfPinnedObject());
-					CL.SetKernelArg(kernel, 1, bufferSize, inputB.AddrOfPinnedObject());
-					CL.SetKernelArg(kernel, 2, bufferSize, resultGC.AddrOfPinnedObject());
+					CL.SetKernelArg(kernel, 0, bufferA);
+					CL.SetKernelArg(kernel, 1, bufferB);
+					CL.SetKernelArg(kernel, 2, resultBuffer);
+					CL.SetKernelArg(kernel, 3, 10f);
 
 					CLCommandQueue commandQueue = new CLCommandQueue(
 						CL.CreateCommandQueueWithProperties(context, deviceIds[0], IntPtr.Zero, out result));
 
 					CL.EnqueueFillBuffer(commandQueue, bufferB, pattern, UIntPtr.Zero, (UIntPtr)(arraySize * sizeof(float)), null,
 						out _);
-
 
 					CL.EnqueueNDRangeKernel(commandQueue, kernel, 1, null, new UIntPtr[] {new UIntPtr((uint)A.Length)},
 						null, 0, null,  out CLEvent eventHandle);
@@ -124,13 +119,6 @@ namespace OpenToolkit.OpenCL.Tests
 					CL.ReleaseCommandQueue(commandQueue);
 					CL.ReleaseContext(context);
 					CL.ReleaseEvent(eventHandle);
-
-
-					//Get rid of the GC handles too
-					inputA.Free();
-					inputB.Free();
-					resultGC.Free();
-
 				}
 				catch (Exception e)
 				{
