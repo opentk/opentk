@@ -100,8 +100,8 @@ namespace OpenToolkit.OpenCL.Tests
 
 					CL.SetEventCallback(eventHandle, (int)CommandExecutionStatus.Complete, (waitEvent, data) =>
 					{
-						CL.EnqueueReadBuffer(commandQueue, resultBuffer, true, UIntPtr.Zero, arraySize* sizeof(float),
-							out float[] resultValues, null, out _);
+						float[] resultValues = new float[arraySize];
+						CL.EnqueueReadBuffer(commandQueue, resultBuffer, true, UIntPtr.Zero, resultValues, null, out _);
 
 						StringBuilder line = new StringBuilder();
 						foreach (float res in resultValues)

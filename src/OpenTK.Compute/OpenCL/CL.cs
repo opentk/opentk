@@ -1277,18 +1277,26 @@ public static extern IntPtr CreateImageWithProperties(CLContext context, IntPtr[
 			[Out] out CLEvent @event);
 
 		/// <summary>
-		/// Introduced in OpenCL 1.0
+		/// Introduced in OpenCL1.0
 		/// </summary>
+		/// <param name="commandQueue"></param>
+		/// <param name="buffer"></param>
+		/// <param name="blockingRead"></param>
+		/// <param name="offset"></param>
+		/// <param name="array"></param>
+		/// <param name="eventWaitList"></param>
+		/// <param name="eventHandle"></param>
+		/// <typeparam name="T"></typeparam>
+		/// <returns></returns>
 		public static unsafe CLResultCode EnqueueReadBuffer<T>(CLCommandQueue commandQueue, CLBuffer buffer,
 			bool blockingRead,
-			UIntPtr offset, int size, out T[] array, CLEvent[] eventWaitList, out CLEvent eventHandle)
+			UIntPtr offset, T[] array, CLEvent[] eventWaitList, out CLEvent eventHandle)
 			where T : unmanaged
 		{
-			array = new T[size/sizeof(T)];
 			fixed (T* b = array)
 			{
 				CLResultCode resultCode = EnqueueReadBuffer(commandQueue, buffer, (uint)(blockingRead ? 1 : 0), offset,
-					(UIntPtr)size, (IntPtr)b, (uint)(eventWaitList?.Length ?? 0),
+					(UIntPtr)(array.Length * sizeof(float)), (IntPtr)b, (uint)(eventWaitList?.Length ?? 0),
 					eventWaitList,
 					out eventHandle);
 				return resultCode;
@@ -1300,14 +1308,13 @@ public static extern IntPtr CreateImageWithProperties(CLContext context, IntPtr[
 		/// </summary>
 		public static unsafe CLResultCode EnqueueReadBuffer<T>(CLCommandQueue commandQueue, CLBuffer buffer,
 			bool blockingRead,
-			UIntPtr offset, int size, out Span<T> array, CLEvent[] eventWaitList, out CLEvent eventHandle)
+			UIntPtr offset, Span<T> span, CLEvent[] eventWaitList, out CLEvent eventHandle)
 			where T : unmanaged
 		{
-			array = new T[size/sizeof(T)];
-			fixed (T* b = array)
+			fixed (T* b = span)
 			{
 				CLResultCode resultCode = EnqueueReadBuffer(commandQueue, buffer, (uint)(blockingRead ? 1 : 0), offset,
-					(UIntPtr)size, (IntPtr)b, (uint)(eventWaitList?.Length ?? 0),
+					(UIntPtr)(span.Length * sizeof(T)), (IntPtr)b, (uint)(eventWaitList?.Length ?? 0),
 					eventWaitList, out eventHandle);
 				return resultCode;
 			}
