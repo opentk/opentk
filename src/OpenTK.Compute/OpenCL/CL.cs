@@ -1281,14 +1281,14 @@ public static extern IntPtr CreateImageWithProperties(CLContext context, IntPtr[
 		/// </summary>
 		public static unsafe CLResultCode EnqueueReadBuffer<T>(CLCommandQueue commandQueue, CLBuffer buffer,
 			bool blockingRead,
-			UIntPtr offset, int length, out T[] array, CLEvent[] eventWaitList, out CLEvent eventHandle)
+			UIntPtr offset, int size, out T[] array, CLEvent[] eventWaitList, out CLEvent eventHandle)
 			where T : unmanaged
 		{
-			array = new T[length];
+			array = new T[size/sizeof(T)];
 			fixed (T* b = array)
 			{
 				CLResultCode resultCode = EnqueueReadBuffer(commandQueue, buffer, (uint)(blockingRead ? 1 : 0), offset,
-					(UIntPtr)(length*sizeof(T)), (IntPtr)b, (uint)(eventWaitList?.Length ?? 0),
+					(UIntPtr)size, (IntPtr)b, (uint)(eventWaitList?.Length ?? 0),
 					eventWaitList,
 					out eventHandle);
 				return resultCode;
@@ -1300,14 +1300,14 @@ public static extern IntPtr CreateImageWithProperties(CLContext context, IntPtr[
 		/// </summary>
 		public static unsafe CLResultCode EnqueueReadBuffer<T>(CLCommandQueue commandQueue, CLBuffer buffer,
 			bool blockingRead,
-			UIntPtr offset, int length, out Span<T> array, CLEvent[] eventWaitList, out CLEvent eventHandle)
+			UIntPtr offset, int size, out Span<T> array, CLEvent[] eventWaitList, out CLEvent eventHandle)
 			where T : unmanaged
 		{
-			array = new T[length];
+			array = new T[size/sizeof(T)];
 			fixed (T* b = array)
 			{
 				CLResultCode resultCode = EnqueueReadBuffer(commandQueue, buffer, (uint)(blockingRead ? 1 : 0), offset,
-					(UIntPtr)(length * sizeof(T)), (IntPtr)b, (uint)(eventWaitList?.Length ?? 0),
+					(UIntPtr)size, (IntPtr)b, (uint)(eventWaitList?.Length ?? 0),
 					eventWaitList, out eventHandle);
 				return resultCode;
 			}
