@@ -61,14 +61,17 @@ namespace OpenToolkit.OpenCL.Tests
 
 				for (int i = 0; i < arraySize; i++)
 				{
-					A[i] = i + 1;
+					A[i] = 1;
 					B[i] = i;
 				}
 
 				CLBuffer bufferA = CL.CreateBuffer(context, MemoryFlags.ReadOnly | MemoryFlags.CopyHostPtr, A,
 					out result);
-				CLBuffer bufferB =  CL.CreateBuffer(context, MemoryFlags.ReadOnly | MemoryFlags.CopyHostPtr, B,
+				CLBuffer bufferB = CL.CreateBuffer(context, MemoryFlags.ReadOnly | MemoryFlags.CopyHostPtr, B,
 					out result);
+
+				float[] pattern = new float[]{1,3,5,7};
+
 				CLBuffer resultBuffer =  new CLBuffer(CL.CreateBuffer(context, MemoryFlags.WriteOnly,
 					new UIntPtr((uint)(arraySize * sizeof(float))), IntPtr.Zero, out result));
 				UIntPtr bufferSize = (UIntPtr)UIntPtr.Size;
@@ -78,13 +81,17 @@ namespace OpenToolkit.OpenCL.Tests
 					GCHandle inputA = GCHandle.Alloc(bufferA, GCHandleType.Pinned);
 					GCHandle inputB = GCHandle.Alloc(bufferB, GCHandleType.Pinned);
 					GCHandle resultGC = GCHandle.Alloc(resultBuffer, GCHandleType.Pinned);
+
 					CL.SetKernelArg(kernel, 0, bufferSize, inputA.AddrOfPinnedObject());
 					CL.SetKernelArg(kernel, 1, bufferSize, inputB.AddrOfPinnedObject());
 					CL.SetKernelArg(kernel, 2, bufferSize, resultGC.AddrOfPinnedObject());
 
-					// IntPtr commandQueue = CL.CreateCommandQueue(context, deviceIds[0], 0, out result);
 					CLCommandQueue commandQueue = new CLCommandQueue(
 						CL.CreateCommandQueueWithProperties(context, deviceIds[0], IntPtr.Zero, out result));
+
+					CL.EnqueueFillBuffer(commandQueue, bufferB, pattern, UIntPtr.Zero, (UIntPtr)(arraySize * sizeof(float)), null,
+						out _);
+
 
 					CL.EnqueueNDRangeKernel(commandQueue, kernel, 1, null, new UIntPtr[] {new UIntPtr((uint)A.Length)},
 						null, 0, null,  out CLEvent eventHandle);

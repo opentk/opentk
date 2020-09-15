@@ -1515,17 +1515,28 @@ public static extern IntPtr CreateImageWithProperties(CLContext context, IntPtr[
 			[In] CLEvent[] eventWaitList,
 			[Out] out CLEvent @event);
 
+
 		/// <summary>
 		/// Introduced in OpenCL 1.2
-		/// !!!Overload not implemented!!!
 		/// </summary>
-		/// TODO IMPLEMENT THIS
+		/// <param name="commandQueue"></param>
+		/// <param name="buffer"></param>
+		/// <param name="pattern"></param>
+		/// <param name="offset"></param>
+		/// <param name="size">The size of the target buffer in bytes</param>
+		/// <param name="eventWaitList"></param>
+		/// <param name="event"></param>
+		/// <typeparam name="T"></typeparam>
+		/// <returns></returns>
 		public static unsafe CLResultCode EnqueueFillBuffer<T>(CLCommandQueue commandQueue, CLBuffer buffer,
-			T[] pattern,
-			UIntPtr patternSize, UIntPtr offset, UIntPtr size, uint numberOfEventsInWaitList, CLEvent[] eventWaitList,
+			T[] pattern, UIntPtr offset, UIntPtr size, CLEvent[] eventWaitList,
 			out CLEvent @event) where T : unmanaged
 		{
-			throw new NotImplementedException();
+			fixed (T* p = pattern)
+			{
+				return EnqueueFillBuffer(commandQueue, buffer, (IntPtr)p, (UIntPtr)(pattern.Length * sizeof(T)), offset,
+					size, (uint)(eventWaitList?.Length ?? 0), eventWaitList, out @event);
+			}
 		}
 
 		/// <summary>
@@ -1536,7 +1547,7 @@ public static extern IntPtr CreateImageWithProperties(CLContext context, IntPtr[
 		/// <param name="dstBuffer"></param>
 		/// <param name="srcOffset"></param>
 		/// <param name="dstOffset"></param>
-		/// <param name="size"></param>
+		/// <param name="size">The size of the buffer in bytes</param>
 		/// <param name="numberOfEventsInWaitList"></param>
 		/// <param name="eventWaitList"></param>
 		/// <param name="event"></param>
