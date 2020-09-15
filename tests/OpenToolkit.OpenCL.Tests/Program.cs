@@ -80,7 +80,7 @@ namespace OpenToolkit.OpenCL.Tests
 					CL.SetKernelArg(kernel, 0, bufferA);
 					CL.SetKernelArg(kernel, 1, bufferB);
 					CL.SetKernelArg(kernel, 2, resultBuffer);
-					CL.SetKernelArg(kernel, 3, 10f);
+					CL.SetKernelArg(kernel, 3, -1f);
 
 					CLCommandQueue commandQueue = new CLCommandQueue(
 						CL.CreateCommandQueueWithProperties(context, deviceIds[0], IntPtr.Zero, out result));

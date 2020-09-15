@@ -994,10 +994,12 @@ public static extern IntPtr CreateImageWithProperties(CLContext context, IntPtr[
 			[In] UIntPtr argumentSize,
 			[In] IntPtr argumentValuePointer);
 
-		public static unsafe CLResultCode SetKernelArg<T>(CLKernel kernel, uint argumentIndex, T argument) where T : unmanaged
+		public static unsafe CLResultCode SetKernelArg<T>(CLKernel kernel, uint argumentIndex, in T argument) where T : unmanaged
 		{
-			T* arg = &argument;
-			return SetKernelArg(kernel, argumentIndex, (UIntPtr)sizeof(T), (IntPtr)arg);
+			fixed (T* arg = &argument)
+			{
+				return SetKernelArg(kernel, argumentIndex, (UIntPtr)sizeof(T), (IntPtr)arg);
+			}
 		}
 
 		/// <summary>
