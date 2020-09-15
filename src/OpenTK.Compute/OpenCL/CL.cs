@@ -1400,14 +1400,14 @@ public static extern IntPtr CreateImageWithProperties(CLContext context, IntPtr[
 		/// Introduced in OpenCL 1.0
 		/// </summary>
 		public static unsafe CLResultCode EnqueueWriteBuffer<T>(CLCommandQueue commandQueue, CLBuffer buffer,
-			bool blockingRead,
-			UIntPtr offset, int size, T[] array, CLEvent[] eventWaitList,
+			bool blockingWrite,
+			UIntPtr offset, T[] array, CLEvent[] eventWaitList,
 			out CLEvent @event) where T : unmanaged
 		{
 			fixed (T* a = array)
 			{
-				CLResultCode resultCode = EnqueueWriteBuffer(commandQueue, buffer, (uint)(blockingRead ? 1 : 0), offset,
-					(UIntPtr)size, (IntPtr)a, (uint)(eventWaitList?.Length ?? 0),
+				CLResultCode resultCode = EnqueueWriteBuffer(commandQueue, buffer, (uint)(blockingWrite ? 1 : 0), offset,
+					(UIntPtr)(array.Length * sizeof(T)), (IntPtr)a, (uint)(eventWaitList?.Length ?? 0),
 					eventWaitList, out @event);
 
 				return resultCode;
@@ -1418,14 +1418,14 @@ public static extern IntPtr CreateImageWithProperties(CLContext context, IntPtr[
 		/// Introduced in OpenCL 1.0
 		/// </summary>
 		public static unsafe CLResultCode EnqueueWriteBuffer<T>(CLCommandQueue commandQueue, CLBuffer buffer,
-			bool blockingRead,
-			UIntPtr offset, int size, Span<T> span, CLEvent[] eventWaitList,
+			bool blockingWrite,
+			UIntPtr offset, Span<T> span, CLEvent[] eventWaitList,
 			out CLEvent @event) where T : unmanaged
 		{
 			fixed (T* a = span)
 			{
-				CLResultCode resultCode = EnqueueWriteBuffer(commandQueue, buffer, (uint)(blockingRead ? 1 : 0), offset,
-					(UIntPtr)size, (IntPtr)a, (uint)(eventWaitList?.Length ?? 0),
+				CLResultCode resultCode = EnqueueWriteBuffer(commandQueue, buffer, (uint)(blockingWrite ? 1 : 0), offset,
+					(UIntPtr)(span.Length * sizeof(T)), (IntPtr)a, (uint)(eventWaitList?.Length ?? 0),
 					eventWaitList, out @event);
 
 				return resultCode;
