@@ -276,7 +276,7 @@ namespace OpenTK.Compute.OpenCL
 		/// <param name="errorCode"></param>
 		/// <returns></returns>
 		[DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clCreateCommandQueueWithProperties")]
-		public static extern IntPtr CreateCommandQueueWithProperties([In] CLContext context, [In] IntPtr device,
+		public static extern CLCommandQueue CreateCommandQueueWithProperties([In] CLContext context, [In] IntPtr device,
 			[In] IntPtr properties,
 			[Out] out CLResultCode errorCode);
 
@@ -2013,7 +2013,7 @@ public static extern IntPtr CreateImageWithProperties(CLContext context, IntPtr[
 		/// <returns></returns>
 		[Obsolete("Deprecated method")]
 		[DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clCreateImage2D")]
-		public static extern IntPtr CreateImage2D([In] CLContext context, [In] MemoryFlags flags,
+		public static extern CLImage CreateImage2D([In] CLContext context, [In] MemoryFlags flags,
 			[In] ImageFormat imageFormat,
 			[In] UIntPtr imageWidth, [In] UIntPtr imageHeight, [In] UIntPtr imageRowPitch, [In] IntPtr hostPointer,
 			[Out] out CLResultCode errorCode);
@@ -2034,7 +2034,7 @@ public static extern IntPtr CreateImageWithProperties(CLContext context, IntPtr[
 		/// <returns></returns>
 		[Obsolete("Deprecated method")]
 		[DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clCreateImage3D")]
-		public static extern IntPtr CreateImage3D([In] CLContext context, [In] MemoryFlags flags,
+		public static extern CLImage CreateImage3D([In] CLContext context, [In] MemoryFlags flags,
 			[In] ImageFormat imageFormat,
 			[In] UIntPtr imageWidth, [In] UIntPtr imageHeight, [In] UIntPtr imageDepth, [In] UIntPtr imageRowPitch,
 			[In] UIntPtr imageSlicePitch,
@@ -2099,7 +2099,7 @@ public static extern IntPtr CreateImageWithProperties(CLContext context, IntPtr[
 		/// <returns></returns>
 		[Obsolete("Deprecated in OpenCL 1.2, use CreateCommandQueueWithProperties.")]
 		[DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clCreateCommandQueue")]
-		public static extern IntPtr CreateCommandQueue([In] CLContext context, [In] CLDevice device,
+		public static extern CLCommandQueue CreateCommandQueue([In] CLContext context, [In] CLDevice device,
 			[In] CommandQueueProperty properties,
 			[Out] out CLResultCode errorCode);
 
