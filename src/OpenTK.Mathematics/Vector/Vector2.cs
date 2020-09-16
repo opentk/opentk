@@ -981,6 +981,39 @@ namespace OpenTK.Mathematics
             return new Vector2(values.X, values.Y);
         }
 
+        /// <summary>
+        /// Converts OpenTK.Vector2 to OpenTK.Vector2d.
+        /// </summary>
+        /// <param name="vec">The Vector2 to convert.</param>
+        /// <returns>The resulting Vector2d.</returns>
+        [Pure]
+        public static implicit operator Vector2d(Vector2 vec)
+        {
+            return new Vector2d(vec.X, vec.Y);
+        }
+
+        /// <summary>
+        /// Converts OpenTK.Vector2 to OpenTK.Vector2h.
+        /// </summary>
+        /// <param name="vec">The Vector2 to convert.</param>
+        /// <returns>The resulting Vector2h.</returns>
+        [Pure]
+        public static explicit operator Vector2h(Vector2 vec)
+        {
+            return new Vector2h(vec.X, vec.Y);
+        }
+
+        /// <summary>
+        /// Converts OpenTK.Vector2 to OpenTK.Vector2i.
+        /// </summary>
+        /// <param name="vec">The Vector2 to convert.</param>
+        /// <returns>The resulting Vector2i.</returns>
+        [Pure]
+        public static explicit operator Vector2i(Vector2 vec)
+        {
+            return new Vector2i((int)vec.X, (int)vec.Y);
+        }
+
         private static readonly string ListSeparator = CultureInfo.CurrentCulture.TextInfo.ListSeparator;
 
         /// <inheritdoc/>

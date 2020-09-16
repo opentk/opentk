@@ -387,53 +387,36 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Converts OpenTK.Vector3 to OpenTK.Half3.
+        /// Converts OpenTK.Vector3h to OpenTK.Vector3.
         /// </summary>
-        /// <param name="v3f">The Vector3 to convert.</param>
-        /// <returns>The resulting Half vector.</returns>
-        [Pure]
-        public static explicit operator Vector3h(Vector3 v3f)
-        {
-            return new Vector3h(v3f);
-        }
-
-        /// <summary>
-        /// Converts OpenTK.Vector3d to OpenTK.Half3.
-        /// </summary>
-        /// <param name="v3d">The Vector3d to convert.</param>
-        /// <returns>The resulting Half vector.</returns>
-        [Pure]
-        public static explicit operator Vector3h(Vector3d v3d)
-        {
-            return new Vector3h(v3d);
-        }
-
-        /// <summary>
-        /// Converts OpenTK.Half3 to OpenTK.Vector3.
-        /// </summary>
-        /// <param name="h3">The Half3 to convert.</param>
+        /// <param name="vec">The Vector3h to convert.</param>
         /// <returns>The resulting Vector3.</returns>
         [Pure]
-        public static explicit operator Vector3(Vector3h h3)
+        public static implicit operator Vector3(Vector3h vec)
         {
-            return new Vector3(
-                h3.X.ToSingle(),
-                h3.Y.ToSingle(),
-                h3.Z.ToSingle());
+            return new Vector3(vec.X, vec.Y, vec.Z);
         }
 
         /// <summary>
-        /// Converts OpenTK.Half3 to OpenTK.Vector3d.
+        /// Converts OpenTK.Vector3h to OpenTK.Vector3d.
         /// </summary>
-        /// <param name="h3">The Half3 to convert.</param>
+        /// <param name="vec">The Vector3h to convert.</param>
         /// <returns>The resulting Vector3d.</returns>
         [Pure]
-        public static explicit operator Vector3d(Vector3h h3)
+        public static implicit operator Vector3d(Vector3h vec)
         {
-            return new Vector3d(
-                h3.X.ToSingle(),
-                h3.Y.ToSingle(),
-                h3.Z.ToSingle());
+            return new Vector3d(vec.X, vec.Y, vec.Z);
+        }
+
+        /// <summary>
+        /// Converts OpenTK.Vector3h to OpenTK.Vector3i.
+        /// </summary>
+        /// <param name="vec">The Vector3h to convert.</param>
+        /// <returns>The resulting Vector3i.</returns>
+        [Pure]
+        public static explicit operator Vector3i(Vector3h vec)
+        {
+            return new Vector3i((int)vec.X, (int)vec.Y, (int)vec.Z);
         }
 
         /// <summary>

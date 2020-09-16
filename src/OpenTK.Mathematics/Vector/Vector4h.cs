@@ -1229,33 +1229,36 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Converts OpenTK.Half4 to OpenTK.Vector4.
+        /// Converts OpenTK.Vector4h to OpenTK.Vector4.
         /// </summary>
-        /// <param name="h4">The Half4 to convert.</param>
+        /// <param name="vec">The Vector4h to convert.</param>
         /// <returns>The resulting Vector4.</returns>
         [Pure]
-        public static explicit operator Vector4(Vector4h h4)
+        public static implicit operator Vector4(Vector4h vec)
         {
-            return new Vector4(
-                h4.X.ToSingle(),
-                h4.Y.ToSingle(),
-                h4.Z.ToSingle(),
-                h4.W.ToSingle());
+            return new Vector4(vec.X, vec.Y, vec.Z, vec.W);
         }
 
         /// <summary>
-        /// Converts OpenTK.Half4 to OpenTK.Vector4d.
+        /// Converts OpenTK.Vector4h to OpenTK.Vector4d.
         /// </summary>
-        /// <param name="h4">The Half4 to convert.</param>
+        /// <param name="vec">The Vector4h to convert.</param>
         /// <returns>The resulting Vector4d.</returns>
         [Pure]
-        public static explicit operator Vector4d(Vector4h h4)
+        public static implicit operator Vector4d(Vector4h vec)
         {
-            return new Vector4d(
-                h4.X.ToSingle(),
-                h4.Y.ToSingle(),
-                h4.Z.ToSingle(),
-                h4.W.ToSingle());
+            return new Vector4d(vec.X, vec.Y, vec.Z, vec.W);
+        }
+
+        /// <summary>
+        /// Converts OpenTK.Vector4h to OpenTK.Vector4i.
+        /// </summary>
+        /// <param name="vec">The Vector4h to convert.</param>
+        /// <returns>The resulting Vector4i.</returns>
+        [Pure]
+        public static explicit operator Vector4i(Vector4h vec)
+        {
+            return new Vector4i((int)vec.X, (int)vec.Y, (int)vec.Z, (int)vec.W);
         }
 
         /// <summary>

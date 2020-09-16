@@ -218,47 +218,36 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Converts OpenTK.Vector2 to OpenTK.Half2.
+        /// Converts OpenTK.Vector2h to OpenTK.Vector2.
         /// </summary>
-        /// <param name="v">The Vector2 to convert.</param>
-        /// <returns>The resulting Half vector.</returns>
-        [Pure]
-        public static explicit operator Vector2h(Vector2 v)
-        {
-            return new Vector2h(v);
-        }
-
-        /// <summary>
-        /// Converts OpenTK.Vector2d to OpenTK.Half2.
-        /// </summary>
-        /// <param name="v">The Vector2d to convert.</param>
-        /// <returns>The resulting Half vector.</returns>
-        [Pure]
-        public static explicit operator Vector2h(Vector2d v)
-        {
-            return new Vector2h(v);
-        }
-
-        /// <summary>
-        /// Converts OpenTK.Half2 to OpenTK.Vector2.
-        /// </summary>
-        /// <param name="h">The Half2 to convert.</param>
+        /// <param name="vec">The Vector2h to convert.</param>
         /// <returns>The resulting Vector2.</returns>
         [Pure]
-        public static explicit operator Vector2(Vector2h h)
+        public static implicit operator Vector2(Vector2h vec)
         {
-            return new Vector2(h.X, h.Y);
+            return new Vector2(vec.X, vec.Y);
         }
 
         /// <summary>
-        /// Converts OpenTK.Half2 to OpenTK.Vector2d.
+        /// Converts OpenTK.Vector2h to OpenTK.Vector2d.
         /// </summary>
-        /// <param name="h">The Half2 to convert.</param>
+        /// <param name="vec">The Vector2h to convert.</param>
         /// <returns>The resulting Vector2d.</returns>
         [Pure]
-        public static explicit operator Vector2d(Vector2h h)
+        public static implicit operator Vector2d(Vector2h vec)
         {
-            return new Vector2d(h.X, h.Y);
+            return new Vector2d(vec.X, vec.Y);
+        }
+
+        /// <summary>
+        /// Converts OpenTK.Vector2h to OpenTK.Vector2i.
+        /// </summary>
+        /// <param name="vec">The Vector2h to convert.</param>
+        /// <returns>The resulting Vector2i.</returns>
+        [Pure]
+        public static explicit operator Vector2i(Vector2h vec)
+        {
+            return new Vector2i((int)vec.X, (int)vec.Y);
         }
 
         /// <summary>

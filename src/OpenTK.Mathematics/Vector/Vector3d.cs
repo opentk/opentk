@@ -1393,25 +1393,36 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Converts OpenTK.Vector3 to OpenTK.Vector3d.
+        /// Converts OpenTK.Vector3d to OpenTK.Vector3.
         /// </summary>
-        /// <param name="v3">The Vector3 to convert.</param>
-        /// <returns>The resulting Vector3d.</returns>
+        /// <param name="vec">The Vector3d to convert.</param>
+        /// <returns>The resulting Vector3.</returns>
         [Pure]
-        public static explicit operator Vector3d(Vector3 v3)
+        public static explicit operator Vector3(Vector3d vec)
         {
-            return new Vector3d(v3.X, v3.Y, v3.Z);
+            return new Vector3((float)vec.X, (float)vec.Y, (float)vec.Z);
         }
 
         /// <summary>
-        /// Converts OpenTK.Vector3d to OpenTK.Vector3.
+        /// Converts OpenTK.Vector3d to OpenTK.Vector3h.
         /// </summary>
-        /// <param name="v3d">The Vector3d to convert.</param>
-        /// <returns>The resulting Vector3.</returns>
+        /// <param name="vec">The Vector3d to convert.</param>
+        /// <returns>The resulting Vector3h.</returns>
         [Pure]
-        public static explicit operator Vector3(Vector3d v3d)
+        public static explicit operator Vector3h(Vector3d vec)
         {
-            return new Vector3((float)v3d.X, (float)v3d.Y, (float)v3d.Z);
+            return new Vector3h(new Half(vec.X), new Half(vec.Y), new Half(vec.Z));
+        }
+
+        /// <summary>
+        /// Converts OpenTK.Vector3d to OpenTK.Vector3i.
+        /// </summary>
+        /// <param name="vec">The Vector3d to convert.</param>
+        /// <returns>The resulting Vector3i.</returns>
+        [Pure]
+        public static explicit operator Vector3i(Vector3d vec)
+        {
+            return new Vector3i((int)vec.X, (int)vec.Y, (int)vec.Z);
         }
 
         /// <summary>
