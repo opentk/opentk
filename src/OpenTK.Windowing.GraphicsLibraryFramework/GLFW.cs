@@ -5758,9 +5758,9 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
             VkHandle instance,
             Window* window,
             void* allocator,
-            VkHandle surface)
+            out VkHandle surface)
         {
-            return glfwCreateWindowSurface(instance, window, allocator, surface);
+            return glfwCreateWindowSurface(instance, window, allocator, out surface);
         }
     }
 }

@@ -487,6 +487,6 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         public static extern int glfwGetPhysicalDevicePresentationSupport(VkHandle instance, VkHandle device, int queueFamily);
 
         [DllImport(LibraryName)]
-        public static extern int glfwCreateWindowSurface(VkHandle instance, Window* window, void* allocator, VkHandle surface);
+        public static extern int glfwCreateWindowSurface(VkHandle instance, Window* window, void* allocator, out VkHandle surface);
     }
 }
