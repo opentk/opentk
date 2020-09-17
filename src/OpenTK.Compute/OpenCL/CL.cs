@@ -391,8 +391,8 @@ namespace OpenTK.Compute.OpenCL
 		/// <returns></returns>
 		[DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clCreateImage")]
 		public static extern CLImage CreateImage([In] CLContext context, [In] MemoryFlags flags,
-			[In] ImageFormat imageFormat,
-			[In] ImageDescription imageDesc, [In] IntPtr hostPointer, [Out] out CLResultCode errorCode);
+			[In] in ImageFormat imageFormat,
+			[In] in ImageDescription imageDesc, [In] IntPtr hostPointer, [Out] out CLResultCode errorCode);
 
 		/// <summary>
 		/// Introduced in OpenCL 2.0
@@ -2011,11 +2011,11 @@ public static extern IntPtr CreateImageWithProperties(CLContext context, IntPtr[
 		/// <param name="hostPointer"></param>
 		/// <param name="errorCode"></param>
 		/// <returns></returns>
-		[Obsolete("Deprecated method")]
+		[Obsolete("Deprecated method, use CreateImage instead")]
 		[DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clCreateImage2D")]
 		public static extern CLImage CreateImage2D([In] CLContext context, [In] MemoryFlags flags,
-			[In] ImageFormat imageFormat,
-			[In] UIntPtr imageWidth, [In] UIntPtr imageHeight, [In] UIntPtr imageRowPitch, [In] IntPtr hostPointer,
+			[In] in ImageFormat imageFormat, [In] UIntPtr imageWidth, [In] UIntPtr imageHeight,
+			[In] UIntPtr imageRowPitch, [In] IntPtr hostPointer,
 			[Out] out CLResultCode errorCode);
 
 		/// <summary>
@@ -2035,7 +2035,7 @@ public static extern IntPtr CreateImageWithProperties(CLContext context, IntPtr[
 		[Obsolete("Deprecated method")]
 		[DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clCreateImage3D")]
 		public static extern CLImage CreateImage3D([In] CLContext context, [In] MemoryFlags flags,
-			[In] ImageFormat imageFormat,
+			[In] in ImageFormat imageFormat,
 			[In] UIntPtr imageWidth, [In] UIntPtr imageHeight, [In] UIntPtr imageDepth, [In] UIntPtr imageRowPitch,
 			[In] UIntPtr imageSlicePitch,
 			[In] IntPtr hostPointer, [Out] out CLResultCode errorCode);
