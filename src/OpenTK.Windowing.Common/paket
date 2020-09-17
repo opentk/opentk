@@ -1,0 +1,12 @@
+type file
+id OpenTK.Windowing.Common
+description
+    Common functionality for OpenTK.Windowing.* packages.
+dependencies
+    framework: netstandard2.1
+        OpenTK.Core ~> #VERSION#
+        OpenTK.Mathematics ~> #VERSION#
+files
+    bin\Release\netstandard2.1\OpenTK.Windowing.Common.dll ==> lib\netstandard2.1
+    bin\Release\netstandard2.1\OpenTK.Windowing.Common.xml ==> lib\netstandard2.1
+    bin\Release\netstandard2.1\OpenTK.Windowing.Common.pdb ==> lib\netstandard2.1

@@ -90,7 +90,9 @@ let releaseProjects =
     -- "src/Generator.Converter/**"
     -- "src/Generator.Rewrite/**"
     -- "src/SpecificationOpenGL/**"
-    -- "src/OpenAL/**"
+    -- "src/OpenAL/OpenALGenerator/**"
+    -- "src/OpenAL/OpenALTest/**"
+    -- "src/OpenAL/OpenTK.OpenAL.Extensions/**"
 
 
 // Absolutely all test projects.
@@ -167,8 +169,8 @@ Target.create "RewriteBindings" (fun _ ->
     Trace.log " --- Rewriting bindings (calli) --- "
     let framework = "netcoreapp31"
     let projFile = "src/Generator.Rewrite/Generator.Rewrite.csproj"
-    let bindingsFile = "OpenToolkit.Graphics.dll"
-    let bindingsOutput = "src/OpenToolkit.Graphics/bin/Release/netstandard2.0"
+    let bindingsFile = "OpenTK.Graphics.dll"
+    let bindingsOutput = "src/OpenTK.Graphics/bin/Release/netstandard2.1"
 
     let args =
         [ "-a " + (System.IO.Path.GetFullPath bindingsOutput </> bindingsFile)
@@ -180,17 +182,17 @@ Target.create "RewriteBindings" (fun _ ->
 // ---------
 
 Target.create "Clean" <| fun _ ->
-    !! ("./src" </> "OpenToolkit.Graphics" </> "**/*.*")
+    !! ("./src" </> "OpenTK.Graphics" </> "**/*.*")
     ++ (nugetDir </> "*.nupkg")
-    -- ("./src" </> "OpenToolkit.Graphics" </> "Enums/*.cs")
-    -- ("./src" </> "OpenToolkit.Graphics" </> "*.cs")
-    -- ("./src" </> "OpenToolkit.Graphics" </> "*.csproj")
-    -- ("./src" </> "OpenToolkit.Graphics" </> "ES11/Helper.cs")
-    -- ("./src" </> "OpenToolkit.Graphics" </> "ES20/Helper.cs")
-    -- ("./src" </> "OpenToolkit.Graphics" </> "ES30/Helper.cs")
-    -- ("./src" </> "OpenToolkit.Graphics" </> "OpenGL2/Helper.cs")
-    -- ("./src" </> "OpenToolkit.Graphics" </> "OpenGL4/Helper.cs")
-    -- ("./src" </> "OpenToolkit.Graphics" </> "paket")
+    -- ("./src" </> "OpenTK.Graphics" </> "Enums/*.cs")
+    -- ("./src" </> "OpenTK.Graphics" </> "*.cs")
+    -- ("./src" </> "OpenTK.Graphics" </> "*.csproj")
+    -- ("./src" </> "OpenTK.Graphics" </> "ES11/Helper.cs")
+    -- ("./src" </> "OpenTK.Graphics" </> "ES20/Helper.cs")
+    -- ("./src" </> "OpenTK.Graphics" </> "ES30/Helper.cs")
+    -- ("./src" </> "OpenTK.Graphics" </> "OpenGL2/Helper.cs")
+    -- ("./src" </> "OpenTK.Graphics" </> "OpenGL4/Helper.cs")
+    -- ("./src" </> "OpenTK.Graphics" </> "paket")
     |> Seq.iter(Shell.rm)
 
 Target.create "Restore" (fun _ -> DotNet.restore dotnetSimple "OpenTK.sln" |> ignore)
@@ -265,11 +267,10 @@ Target.create "CreateNuGetPackage" (fun _ ->
         let dir = Path.GetDirectoryName proj
         let templatePath = Path.Combine(dir, "paket")
         let oldTmplCont = File.ReadAllText templatePath
-        let newTmplCont = oldTmplCont.Insert(oldTmplCont.Length, sprintf "\nversion \n\t%s\nauthors \n\t%s\nowners \n\t%s\ndescription \n\t%s"
+        let newTmplCont = oldTmplCont.Insert(oldTmplCont.Length, sprintf "\nversion \n\t%s\nauthors \n\t%s\nowners \n\t%s\n"
                 release.NugetVersion
                 (authors |> List.reduce (fun s a -> s + " " + a))
-                (authors |> List.reduce (fun s a -> s + " " + a))
-                description).Replace("#VERSION#", release.NugetVersion)
+                (authors |> List.reduce (fun s a -> s + " " + a))).Replace("#VERSION#", release.NugetVersion)
         File.WriteAllText(templatePath + ".template", newTmplCont)
         let setParams (p:Paket.PaketPackParams) =
             { p with

@@ -111,7 +111,7 @@ module TypeToString =
         | GLType.StructGenericType s -> s
         | GLType.ArrayType typ -> typeToString typ + "[]"
         | GLType.GLString -> "string"
-        | GLType.OpenToolkit typ ->
+        | GLType.OpenTK typ ->
             match typ with
             | Vector2 -> "Vector2"
             | Vector3 -> "Vector3"
@@ -481,7 +481,7 @@ let generateLibraryLoaderFor (details: GenerateDetails) =
     let libraryLoaderFor _namespace =
         let call =
             sprintf """using AdvancedDLSupport;
-using OpenToolkit.Graphics.GL;
+using OpenTK.Graphics.GL;
 namespace %s.%s
 {
     public static partial class GL
@@ -511,7 +511,7 @@ let generateCsProjectFileForAllVersions (versions: RawOpenGLSpecificationDetails
 
 <ItemGroup>
     <PackageReference Include="AdvancedDLSupport" Version="3.0.0" />
-    <ProjectReference Include="..\OpenToolkit.Mathematics\OpenToolkit.Mathematics.csproj" />
+    <ProjectReference Include="..\OpenTK.Mathematics\OpenTK.Mathematics.csproj" />
 </ItemGroup>
 
 %s

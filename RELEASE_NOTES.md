@@ -1,6 +1,55 @@
+## 4.0.0-pre9.6
+ * Fix bindings generator for net2.1
+
+## 4.0.0-pre9.5
+ * GLFW Native Access bindings. (@RedImp1470 @NogginBops)
+ * Fixed normalization in Vector3.Unproject (@burnss9)
+ * General windowing improvements and new Graphics Context API. (@NogginBops)
+ * Use correct function in SetCharModsCallback (@jvbsl)
+
+## 4.0.0-pre9.4
+ * **moved to dotnetcore only**
+ * Return namespaces to the glorious OpenTK (thanks @glopes)
+ * Simplified OpenAL loading + add more extensions (@NogginBops)
+ * Fixed initial focused inconsistency between Windows and Linux(X11) (@jvbsl)
+
+### 4.0.0-pre9.3
+ * Improved and fixed GLFW binary loading (@jvbsl)
+ * Improved mono compat (@jvbsl)
+ * Fixed GetLibraryName for iOS platform (thanks @Grizley56)
+ * Fixed InputAction for getting Joystick Buttons from GLFW (thanks @HughPH)
+
+### 4.0.0-pre9.2
+ * Fixes reference conditions
+ * Save Size property value to _size field (thanks @devel0)
+ * Update build.fsx.lock (thanks @CallumDev)
+ * Vector3.Unproject returning incorrect result (thanks @leezer3)
+ * Incorrect parameter order in QuaternionD constructor (thanks @leezer3)
+ * Capslock value not exposed (thanks @KinsonDigital)
+ * vector transforms
+ * Start of input mode setup for caps lock (thanks @KinsonDigital)
+ * Use in parameters instead of ref (thanks @cryovat)
+
+### 4.0.0-pre9.1
+ * OpenTK now includes **OPENAL!** (Biggest thanks to *@NogginBops*)
+ * Added check for invalid keys in window key callback (Thanks @Phyyl)
+ * Fix rounding errors on tests
+ * Add individual project descriptions
+ * Add openAL to the build sequence.
+
+### 4.0.0-pre9
+ * Added PositiveInfinity and NegativeInfinity to vector structs (Thanks @arakis)
+ * Fixed ClientSize not getting updated in OnResize (Thanks @Phyyl)
+
+### 4.0.0-pre8
+ * Fix automatic bindings initialization for GL2 (Thanks @Phyyl)
+
+### 4.0.0-pre7
+* Add framework specification to paket files. (Thanks @frederikja163)
+
 ### 4.0.0-pre6
- * Fixed GameWindow update frequency (Thanks @MerickOWA)
- * Throw an InvalidOperationException if bindings are uninitialized. (Thanks @PJB)
+* Fixed GameWindow update frequency (Thanks @MerickOWA)
+* Throw an InvalidOperationException if bindings are uninitialized. (Thanks @PJB)
 
 ### 4.0.0-pre5
  * Added Profile Any (Thanks @arakis)
@@ -22,7 +71,7 @@
  * Brand new GLFW-based windowing system.
  * Brand new GLFW-based input system.
  * Math library performance improvements and fixes.
- * Changed root namespace to OpenToolkit for future Xamarin compatibility - (https://github.com/mono/opentk/issues/19)
+ * Changed root namespace to OpenTK for future Xamarin compatibility - (https://github.com/mono/opentk/issues/19)
 
 Note:
 - 4.0.0-pre does not include any version of openAl, as that still depends on ADL
@@ -71,7 +120,7 @@ Full Log:
  * [4.0] Adding directory safety to the binder. #837
  * Update README after branch changes #839
  * [4.0] Add StructLayout to Color4#840
- * [4.0] Change root namespace to OpenToolkit #842
+ * [4.0] Change root namespace to OpenTK #842
  * Fix the aftermath of merging #842 #843
  * [4.0] Impliment Vectord * Quaterniond #844
  * Fix aftermath of #842 #846
@@ -96,7 +145,7 @@ Full Log:
  * Rename license files to avoid confusion. #885
  * Emergency fix in short license terms #887
  * [4.0] Adding Lerp function in the math helper #895
- * System.Math and OpenToolkit.MathHelper symmetry #897
+ * System.Math and OpenTK.MathHelper symmetry #897
  * Shorten float literals to the actual float value #898
  * Reflect 22/04/2019 development discussion #902
  * Remove obsolete methods within Vector types. #906

@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <StartupObject>OpenTK.Audio.OpenAL.ALTest</StartupObject>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\src\OpenAL\OpenTK.OpenAL\OpenTK.OpenAL.csproj" />
+  </ItemGroup>
+
+</Project>
