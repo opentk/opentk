@@ -277,7 +277,25 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         public static extern VideoMode* glfwGetVideoMode(Monitor* monitor);
 
         [DllImport(LibraryName)]
-        public static extern int glfwGetWindowAttrib(Window* window, WindowAttributeGetter attribute);
+        public static extern int glfwGetWindowAttrib(Window* window, WindowAttributeGetterBool attribute);
+
+        [DllImport(LibraryName)]
+        public static extern int glfwGetWindowAttrib(Window* window, WindowAttributeGetterInt attribute);
+
+        [DllImport(LibraryName)]
+        public static extern int glfwGetWindowAttrib(Window* window, WindowAttributeGetterClientApi attribute);
+
+        [DllImport(LibraryName)]
+        public static extern int glfwGetWindowAttrib(Window* window, WindowAttributeGetterContextApi attribute);
+
+        [DllImport(LibraryName)]
+        public static extern int glfwGetWindowAttrib(Window* window, WindowAttributeGetterOpenGlProfile attribute);
+
+        [DllImport(LibraryName)]
+        public static extern int glfwGetWindowAttrib(Window* window, WindowAttributeGetterReleaseBehavior attribute);
+
+        [DllImport(LibraryName)]
+        public static extern int glfwGetWindowAttrib(Window* window, WindowAttributeGetterRobustness attribute);
 
         [DllImport(LibraryName)]
         public static extern void glfwGetWindowSize(Window* window, int* width, int* height);

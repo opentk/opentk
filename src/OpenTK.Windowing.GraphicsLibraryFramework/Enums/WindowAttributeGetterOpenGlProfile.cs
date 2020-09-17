@@ -1,5 +1,5 @@
 //
-// WindowHintOpenGlProfile.cs
+// WindowAttributeGetterOpenGlProfile.cs
 //
 // Copyright (C) 2019 OpenTK
 //
@@ -10,10 +10,10 @@
 namespace OpenTK.Windowing.GraphicsLibraryFramework
 {
     /// <summary>
-    /// Used to set the OpenGlProfile attribute.
+    /// Used to get window related attributes.
     /// </summary>
-    /// <seealso cref="GLFW.WindowHint(WindowHintOpenGlProfile,OpenGlProfile)"/>
-    public enum WindowHintOpenGlProfile
+    /// <seealso cref="GLFW.GetWindowAttrib(Window*, WindowAttributeGetterOpenGlProfile)"/>
+    public enum WindowAttributeGetterOpenGlProfile
     {
         /// <summary>
         /// Indicates the OpenGL profile used by the context.
@@ -24,6 +24,6 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         /// Note that the returned profile may not match the profile bits of the context flags,
         /// as GLFW will try other means of detecting the profile when no bits are set.
         /// </summary>
-        OpenGlProfile = 0x00022008,
+        OpenGlProfile = WindowHintOpenGlProfile.OpenGlProfile
     }
 }

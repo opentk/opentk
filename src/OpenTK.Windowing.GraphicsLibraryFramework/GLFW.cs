@@ -3527,9 +3527,45 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         /// Possible errors include <see cref="ErrorCode.NotInitialized"/>, <see cref="ErrorCode.InvalidEnum"/> and <see cref="ErrorCode.PlatformError"/>.
         /// </para>
         /// </remarks>
-        public static unsafe bool GetWindowAttrib(Window* window, WindowAttributeGetter attribute)
+        public static unsafe bool GetWindowAttrib(Window* window, WindowAttributeGetterBool attribute)
         {
             return glfwGetWindowAttrib(window, attribute) == GLFW_TRUE;
+        }
+
+        /// <inheritdoc cref="GetWindowAttrib(Window*, WindowAttributeGetterBool)"/>
+        public static unsafe int GetWindowAttrib(Window* window, WindowAttributeGetterInt attribute)
+        {
+            return glfwGetWindowAttrib(window, attribute);
+        }
+
+        /// <inheritdoc cref="GetWindowAttrib(Window*, WindowAttributeGetterBool)"/>
+        public static unsafe ClientApi GetWindowAttrib(Window* window, WindowAttributeGetterClientApi attribute)
+        {
+            return (ClientApi)glfwGetWindowAttrib(window, attribute);
+        }
+
+        /// <inheritdoc cref="GetWindowAttrib(Window*, WindowAttributeGetterBool)"/>
+        public static unsafe ContextApi GetWindowAttrib(Window* window, WindowAttributeGetterContextApi attribute)
+        {
+            return (ContextApi)glfwGetWindowAttrib(window, attribute);
+        }
+
+        /// <inheritdoc cref="GetWindowAttrib(Window*, WindowAttributeGetterBool)"/>
+        public static unsafe OpenGlProfile GetWindowAttrib(Window* window, WindowAttributeGetterOpenGlProfile attribute)
+        {
+            return (OpenGlProfile)glfwGetWindowAttrib(window, attribute);
+        }
+
+        /// <inheritdoc cref="GetWindowAttrib(Window*, WindowAttributeGetterBool)"/>
+        public static unsafe ReleaseBehavior GetWindowAttrib(Window* window, WindowAttributeGetterReleaseBehavior attribute)
+        {
+            return (ReleaseBehavior)glfwGetWindowAttrib(window, attribute);
+        }
+
+        /// <inheritdoc cref="GetWindowAttrib(Window*, WindowAttributeGetterBool)"/>
+        public static unsafe Robustness GetWindowAttrib(Window* window, WindowAttributeGetterRobustness attribute)
+        {
+            return (Robustness)glfwGetWindowAttrib(window, attribute);
         }
 
         /// <summary>
