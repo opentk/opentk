@@ -153,12 +153,7 @@ namespace OpenTK.Mathematics.Rotors
         /// <inheritdoc/>
         public override int GetHashCode()
         {
-            int hashCode = 2044032791;
-            hashCode = (hashCode * -1521134295) + A.GetHashCode();
-            hashCode = (hashCode * -1521134295) + YZ.GetHashCode();
-            hashCode = (hashCode * -1521134295) + ZX.GetHashCode();
-            hashCode = (hashCode * -1521134295) + XY.GetHashCode();
-            return hashCode;
+            return HashCode.Combine(A, YZ, ZX, XY);
         }
 
         /// <inheritdoc/>

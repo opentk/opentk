@@ -26,7 +26,7 @@ using System.Globalization;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Xml.Serialization;
-using OpenToolkit.Mathematics.Rotors;
+using OpenTK.Mathematics.Rotors;
 
 namespace OpenTK.Mathematics
 {
@@ -1580,13 +1580,7 @@ namespace OpenTK.Mathematics
         /// <returns>A System.Int32 containing the unique hashcode for this instance.</returns>
         public override int GetHashCode()
         {
-            unchecked
-            {
-                var hashCode = X.GetHashCode();
-                hashCode = (hashCode * 397) ^ Y.GetHashCode();
-                hashCode = (hashCode * 397) ^ Z.GetHashCode();
-                return hashCode;
-            }
+            return HashCode.Combine(X, Y, Z);
         }
 
         /// <summary>

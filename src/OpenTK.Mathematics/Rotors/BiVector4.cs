@@ -1,13 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace OpenTK.Mathematics.Rotors
 {
     /// <summary>
     /// A four dimentional bi-vector i.e. a line.
     /// </summary>
-    public struct BiVector4d
+    public struct BiVector4
     {
         public float XY;
         public float YZ;
@@ -16,7 +14,7 @@ namespace OpenTK.Mathematics.Rotors
         public float WY;
         public float WZ;
 
-        public BiVector4d(float xy, float yz, float zx, float wx, float wy, float wz)
+        public BiVector4(float xy, float yz, float zx, float wx, float wy, float wz)
         {
             XY = xy;
             YZ = yz;
@@ -41,7 +39,7 @@ namespace OpenTK.Mathematics.Rotors
         /// <param name="bv">The BiVector4 (line).</param>
         /// <param name="v">The Vector4 (point).</param>
         /// <param name="tv">The result AntiVector4 (plane).</param>
-        public static void Wedge(in BiVector4d bv, in Vector4 v, out AntiVector4d tv)
+        public static void Wedge(in BiVector4 bv, in Vector4 v, out AntiVector4 tv)
         {
             tv.NotX = (bv.WY * v.Z) + (bv.YZ * v.W) - (bv.WZ * v.Y);
             tv.NotY = (bv.ZX * v.W) + (bv.WZ * v.X) - (bv.WX * v.Z);
@@ -51,7 +49,7 @@ namespace OpenTK.Mathematics.Rotors
             tv.NotW = (bv.YZ * v.X) - (bv.XY * v.Z) - (bv.ZX * v.Y);
         }
 
-        public static void AntiWedge(in BiVector4d bv1, in BiVector4d bv2, out float f)
+        public static void AntiWedge(in BiVector4 bv1, in BiVector4 bv2, out float f)
         {
             float a = BiVector3d.AntiWedge(bv1.Tangent, bv2.Moment);
             float b = BiVector3d.AntiWedge(bv2.Tangent, bv1.Moment);
@@ -64,7 +62,7 @@ namespace OpenTK.Mathematics.Rotors
         /// <param name="bv1">The fist line.</param>
         /// <param name="bv2">The second line.</param>
         /// <returns>The signed distance between the lines.</returns>
-        public static float SignedMinDist(in BiVector4d bv1, in BiVector4d bv2)
+        public static float SignedMinDist(in BiVector4 bv1, in BiVector4 bv2)
         {
             // TODO: Optimize
             AntiWedge(bv1, bv2, out float signedCrossingValue);
@@ -77,9 +75,9 @@ namespace OpenTK.Mathematics.Rotors
         /// This does not normalize the "weight" of the represented line.
         /// </summary>
         /// <param name="bv">The BiVector to normalize.</param>
-        public static void Normalize(ref BiVector4d bv) => Normalize(bv, out bv);
+        public static void Normalize(ref BiVector4 bv) => Normalize(bv, out bv);
 
-        public static void Normalize(in BiVector4d bv, out BiVector4d result)
+        public static void Normalize(in BiVector4 bv, out BiVector4 result)
         {
             float mag = bv.Magnitude;
             result.XY = bv.XY / mag;
@@ -94,14 +92,14 @@ namespace OpenTK.Mathematics.Rotors
         /// Normalizes the tangent direction for this line while keeping it's position in space the same.
         /// </summary>
         /// <param name="bv">The BiVector4 to normalize the weight of.</param>
-        public static void NormalizeWeight(ref BiVector4d bv) => NormalizeWeight(bv, out bv);
+        public static void NormalizeWeight(ref BiVector4 bv) => NormalizeWeight(bv, out bv);
 
         /// <summary>
         /// Normalizes the tangent direction for this line while keeping it's position in space the same.
         /// </summary>
         /// <param name="bv">The BiVector4 to normalize the weight of.</param>
         /// <param name="result"'>The resulting BiVector4.</param>
-        public static void NormalizeWeight(in BiVector4d bv, out BiVector4d result)
+        public static void NormalizeWeight(in BiVector4 bv, out BiVector4 result)
         {
             float mag = (float)Math.Sqrt((bv.WX * bv.WX) + (bv.WY * bv.WY) + (bv.WZ * bv.WZ));
             result.WX = bv.WX / mag;
