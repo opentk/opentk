@@ -716,9 +716,9 @@ namespace OpenTK.Mathematics
         /// <param name="v1">The first vector.</param>
         /// <param name="v2">The second vector.</param>
         /// <returns>The resulting bivector.</returns>
-        public static BiVector3d Wedge(Vector3 v1, Vector3 v2)
+        public static BiVector3 Wedge(Vector3 v1, Vector3 v2)
         {
-            Wedge(v1, v2, out BiVector3d bv);
+            Wedge(v1, v2, out BiVector3 bv);
             return bv;
         }
 
@@ -729,7 +729,7 @@ namespace OpenTK.Mathematics
         /// <param name="v1">The first vector.</param>
         /// <param name="v2">The second vector.</param>
         /// <param name="bv">The resulting bivector.</param>
-        public static void Wedge(in Vector3 v1, in Vector3 v2, out BiVector3d bv)
+        public static void Wedge(in Vector3 v1, in Vector3 v2, out BiVector3 bv)
         {
             bv.NotX = (v1.Y * v2.Z) - (v1.Z * v2.Y);
             bv.NotY = (v1.Z * v2.X) - (v1.X * v2.Z);

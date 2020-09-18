@@ -26,7 +26,7 @@ namespace OpenTK.Mathematics.Rotors
 
         public Vector3 Tangent => new Vector3(WX, WY, WZ);
 
-        public BiVector3d Moment => new BiVector3d(XY, YZ, ZX);
+        public BiVector3 Moment => new BiVector3(XY, YZ, ZX);
 
         public float MagnitudeSqr => (XY * XY) + (YZ * YZ) + (ZX * ZX) + (WX * WX) + (WY * WY) + (WZ * WZ);
 
@@ -51,8 +51,8 @@ namespace OpenTK.Mathematics.Rotors
 
         public static void AntiWedge(in BiVector4 bv1, in BiVector4 bv2, out float f)
         {
-            float a = BiVector3d.AntiWedge(bv1.Tangent, bv2.Moment);
-            float b = BiVector3d.AntiWedge(bv2.Tangent, bv1.Moment);
+            float a = BiVector3.AntiWedge(bv1.Tangent, bv2.Moment);
+            float b = BiVector3.AntiWedge(bv2.Tangent, bv1.Moment);
             f = a + b;
         }
 
@@ -66,7 +66,7 @@ namespace OpenTK.Mathematics.Rotors
         {
             // TODO: Optimize
             AntiWedge(bv1, bv2, out float signedCrossingValue);
-            Vector3.Wedge(bv1.Tangent, bv2.Tangent, out BiVector3d bi);
+            Vector3.Wedge(bv1.Tangent, bv2.Tangent, out BiVector3 bi);
             return signedCrossingValue / bi.Magnitude;
         }
 

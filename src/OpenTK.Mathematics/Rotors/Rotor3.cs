@@ -23,7 +23,7 @@ namespace OpenTK.Mathematics.Rotors
             XY = xy;
         }
 
-        public Rotor3(float a, in BiVector3d bv)
+        public Rotor3(float a, in BiVector3 bv)
         {
             A = a;
             YZ = bv.NotX;
@@ -34,7 +34,7 @@ namespace OpenTK.Mathematics.Rotors
         public Rotor3(Vector3 from, Vector3 to)
         {
             A = 1 + Vector3.Dot(to, from);
-            BiVector3d bivec = Vector3.Wedge(to, from);
+            BiVector3 bivec = Vector3.Wedge(to, from);
             YZ = bivec.NotX;
             ZX = bivec.NotY;
             XY = bivec.NotZ;
@@ -44,7 +44,7 @@ namespace OpenTK.Mathematics.Rotors
 
         public float LengthSquared => (A * A) + (YZ * YZ) + (ZX * ZX) + (XY * XY);
 
-        public BiVector3d BiVector => new BiVector3d(YZ, ZX, XY);
+        public BiVector3 BiVector => new BiVector3(YZ, ZX, XY);
 
         public static Rotor3 Multiply(in Rotor3 a, in Rotor3 b)
         {
@@ -141,7 +141,7 @@ namespace OpenTK.Mathematics.Rotors
         /// <param name="res">The result rotor.</param>
         public static void Geo(in Vector3 a, in Vector3 b, out Rotor3 res)
         {
-            res = new Rotor3(Vector3.Dot(a, b), (BiVector3d)Vector3.Cross(a, b));
+            res = new Rotor3(Vector3.Dot(a, b), (BiVector3)Vector3.Cross(a, b));
         }
 
         /// <inheritdoc/>
