@@ -33,7 +33,7 @@ namespace OpenTK.Mathematics.Rotors
 
         public Rotor3(Vector3 from, Vector3 to)
         {
-            A = 1 + Vector3.Dot(to, from);
+            A = Vector3.Dot(to, from);
             BiVector3 bivec = Vector3.Wedge(to, from);
             YZ = bivec.NotX;
             ZX = bivec.NotY;

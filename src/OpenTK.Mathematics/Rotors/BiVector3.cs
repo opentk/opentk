@@ -69,6 +69,11 @@ namespace OpenTK.Mathematics.Rotors
         /// </summary>
         public float Magnitude => (float)Math.Sqrt(MagnitudeSquared);
 
+        public static float Dot(BiVector3 left, BiVector3 right)
+        {
+            return (left.NotX * right.NotX) + (left.NotY * right.NotY) + (left.NotZ * right.NotZ);
+        }
+
         /// <summary>
         /// Functionally the same as dot product in more 'conventional' algebra.
         /// </summary>
