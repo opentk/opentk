@@ -162,5 +162,14 @@ namespace OpenTK.Windowing.Desktop
         /// Gets or sets a value indicating whether the window should start fullscreen.
         /// </summary>
         public bool IsFullscreen { get; set; } = false;
+
+        /// <summary>
+        /// Gets or sets a value indicating the number of samples that should be used.
+        /// </summary>
+        /// <remarks>
+        /// <c>0</c> indicates that no multisampling should be used;
+        /// otherwise multisampling is used if available. The actual number of samples is the closest matching the given number that is supported.
+        /// </remarks>
+        public int NumberOfSamples { get; set; }
     }
 }

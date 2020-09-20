@@ -564,6 +564,8 @@ namespace OpenTK.Windowing.Desktop
             _isVisible = settings.StartVisible;
             GLFW.WindowHint(WindowHintBool.Visible, _isVisible);
 
+            GLFW.WindowHint(WindowHintInt.Samples, settings.NumberOfSamples);
+
             if (settings.WindowState == WindowState.Fullscreen)
             {
                 var monitor = settings.CurrentMonitor.ToUnsafePtr<GraphicsLibraryFramework.Monitor>();
