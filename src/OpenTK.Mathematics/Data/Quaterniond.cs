@@ -818,7 +818,7 @@ namespace OpenTK.Mathematics
         /// <returns>A human-readable representation of the quaternion.</returns>
         public override string ToString()
         {
-            return $"V: {Xyz}, W: {W}";
+            return $"V: {Xyz}{MathHelper.ListSeparator} W: {W}";
         }
     }
 }
