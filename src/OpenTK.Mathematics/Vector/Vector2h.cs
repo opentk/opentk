@@ -32,10 +32,11 @@ namespace OpenTK.Mathematics
 {
     /// <summary>
     /// 2-component Vector of the Half type. Occupies 4 Byte total.
+    /// Equality for Half types is bitwise and will not give accurate floating point equality checking.
     /// </summary>
     [Serializable]
     [StructLayout(LayoutKind.Sequential)]
-    public struct Vector2h : ISerializable, IEquatable<Vector2h>
+    public struct Vector2h : ISerializable
     {
         /// <summary>
         /// The X component of the Half2.
@@ -314,17 +315,6 @@ namespace OpenTK.Mathematics
         {
             X.ToBinaryStream(bin);
             Y.ToBinaryStream(bin);
-        }
-
-        /// <summary>
-        /// Returns a value indicating whether this instance is equal to a specified OpenTK.Half2 vector.
-        /// </summary>
-        /// <param name="other">OpenTK.Half2 to compare to this instance..</param>
-        /// <returns>True, if other is equal to this instance; false otherwise.</returns>
-        [Pure]
-        public bool Equals(Vector2h other)
-        {
-            return X.Equals(other.X) && Y.Equals(other.Y);
         }
 
         private static readonly string ListSeparator = CultureInfo.CurrentCulture.TextInfo.ListSeparator;

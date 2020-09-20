@@ -33,6 +33,7 @@ namespace OpenTK.Mathematics
 {
     /// <summary>
     /// 3-component Vector of the Half type. Occupies 6 Byte total.
+    /// Equality for Half is bitwise and will not give accurate floating point equality checking.
     /// </summary>
     [Serializable]
     [StructLayout(LayoutKind.Sequential)]

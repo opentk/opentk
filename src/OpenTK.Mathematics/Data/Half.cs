@@ -66,6 +66,7 @@ namespace OpenTK.Mathematics
     /// <summary>
     /// The name Half is derived from half-precision floating-point number.
     /// It occupies only 16 bits, which are split into 1 Sign bit, 5 Exponent bits and 10 Mantissa bits.
+    /// Equality for Half is bitwise and will not give accurate floating point equality checking.
     /// </summary>
     /// <remarks>
     /// Quote from ARB_half_float_pixel specification:

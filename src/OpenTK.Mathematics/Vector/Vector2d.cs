@@ -902,7 +902,6 @@ namespace OpenTK.Mathematics
         /// <param name="left">The left instance.</param>
         /// <param name="right">The right instance.</param>
         /// <returns>True, if both instances are equal; false otherwise.</returns>
-        [Pure]
         public static bool operator ==(Vector2d left, Vector2d right)
         {
             return left.Equals(right);
@@ -914,10 +913,9 @@ namespace OpenTK.Mathematics
         /// <param name="left">The left instance.</param>
         /// <param name="right">The right instance.</param>
         /// <returns>True, if the instances are not equal; false otherwise.</returns>
-        [Pure]
         public static bool operator !=(Vector2d left, Vector2d right)
         {
-            return !left.Equals(right);
+            return !(left == right);
         }
 
         /// <summary>
@@ -962,45 +960,23 @@ namespace OpenTK.Mathematics
             return string.Format("({0}{2} {1})", X, Y, ListSeparator);
         }
 
-        /// <summary>
-        /// Returns the hashcode for this instance.
-        /// </summary>
-        /// <returns>A System.Int32 containing the unique hashcode for this instance.</returns>
-        public override int GetHashCode()
-        {
-            unchecked
-            {
-                return (X.GetHashCode() * 397) ^ Y.GetHashCode();
-            }
-        }
-
-        /// <summary>
-        /// Indicates whether this instance and a specified object are equal.
-        /// </summary>
-        /// <param name="obj">The object to compare to.</param>
-        /// <returns>True if the instances are equal; false otherwise.</returns>
-        [Pure]
+        /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (!(obj is Vector2d))
-            {
-                return false;
-            }
-
-            return Equals((Vector2d)obj);
+            return obj is Vector2d d && Equals(d);
         }
 
-        /// <summary>
-        /// Indicates whether the current vector is equal to another vector.
-        /// </summary>
-        /// <param name="other">A vector to compare with this vector.</param>
-        /// <returns>true if the current vector is equal to the vector parameter; otherwise, false.</returns>
-        [Pure]
+        /// <inheritdoc/>
         public bool Equals(Vector2d other)
         {
-            return
-                X == other.X &&
-                Y == other.Y;
+            return X == other.X &&
+                   Y == other.Y;
+        }
+
+        /// <inheritdoc/>
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(X, Y);
         }
 
         /// <summary>
