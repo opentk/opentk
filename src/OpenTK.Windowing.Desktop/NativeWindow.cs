@@ -953,29 +953,25 @@ namespace OpenTK.Windowing.Desktop
 
             for (var i = 0; i < _joystickStates.Length; i++)
             {
-                var joy = _joystickStates[i];
-                if (joy == default)
+                if (_joystickStates[i] == default)
                 {
                     continue;
                 }
 
-                var h = GLFW.GetJoystickHatsRaw(joy.Id, out var count);
-                var hats = new Hat[count];
+                var h = GLFW.GetJoystickHatsRaw(_joystickStates[i].Id, out var count);
                 for (var j = 0; j < count; j++)
                 {
-                    hats[j] = (Hat)h[j];
+                    _joystickStates[i].SetHat(j, (Hat)h[j]);
                 }
 
-                var axes = GLFW.GetJoystickAxes(joy.Id);
+                var axes = GLFW.GetJoystickAxes(_joystickStates[i].Id);
+                _joystickStates[i].SetAxes(axes);
 
-                var b = GLFW.GetJoystickButtonsRaw(joy.Id, out count);
-                var buttons = new bool[count];
-                for (var j = 0; j < buttons.Length; j++)
+                var b = GLFW.GetJoystickButtonsRaw(_joystickStates[i].Id, out count);
+                for (var j = 0; j < count; j++)
                 {
-                    buttons[j] = b[j] == JoystickInputAction.Press;
+                    _joystickStates[i].SetButtonDown(j, b[j] == JoystickInputAction.Press);
                 }
-
-                _joystickStates[i] = new JoystickState(hats, axes, buttons, joy.Id, joy.Name);
             }
         }
 

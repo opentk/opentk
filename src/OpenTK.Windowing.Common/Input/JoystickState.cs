@@ -115,7 +115,7 @@ namespace OpenTK.Windowing.Common.Input
         /// </summary>
         /// <param name="index">The index of the button which should be changed.</param>
         /// <param name="value"><c>true</c> if the button is down; <c>false</c> otherwise.</param>
-        private void SetButtonDown(int index, bool value)
+        internal void SetButtonDown(int index, bool value)
         {
             int byteOffSet = index / 8;
             int bitOffset = index % 8;
@@ -148,6 +148,11 @@ namespace OpenTK.Windowing.Common.Input
         private void SetAxis(int index, float value)
         {
             _axes[index] = value < -1 ? -1 : (value > 1 ? 1 : value);
+        }
+
+        internal void SetAxes(float[] axes)
+        {
+            _axes = axes;
         }
 
         /// <summary>
