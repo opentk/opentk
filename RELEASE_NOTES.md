@@ -1,3 +1,10 @@
+## 4.0.0-pre9.7
+* Fix opentk.redist.glfw version warnings (@jvbsl)
+* Add support for window-level multisampling (@jvbsl)
+* Allow null delegates for GLFW callbacks (@jvbsl)
+* Add new API to get/set from GLFW window/context attributes (@jvbsl)
+* Add vulkan surface creation (@jvbsl)
+
 ## 4.0.0-pre9.6
  * Fix bindings generator for net2.1
 
