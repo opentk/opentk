@@ -1712,14 +1712,7 @@ namespace OpenTK.Mathematics
         /// <returns>A System.Int32 containing the unique hashcode for this instance.</returns>
         public override int GetHashCode()
         {
-            unchecked
-            {
-                var hashCode = Row0.GetHashCode();
-                hashCode = (hashCode * 397) ^ Row1.GetHashCode();
-                hashCode = (hashCode * 397) ^ Row2.GetHashCode();
-                hashCode = (hashCode * 397) ^ Row3.GetHashCode();
-                return hashCode;
-            }
+            return HashCode.Combine(Row0, Row1, Row2, Row3);
         }
 
         /// <summary>
@@ -1730,12 +1723,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public override bool Equals(object obj)
         {
-            if (!(obj is Matrix4))
-            {
-                return false;
-            }
-
-            return Equals((Matrix4)obj);
+            return obj is Matrix4 m && Equals(m);
         }
 
         /// <summary>
