@@ -49,12 +49,14 @@ namespace OpenTK.Windowing.Desktop
         public KeyboardState LastKeyboardState { get; private set; }
 
         private readonly JoystickState[] _joystickStates = new JoystickState[16];
+        private readonly JoystickState[] _lastJoystickStates = new JoystickState[16];
+
 
         /// <inheritdoc/>
         public JoystickState[] JoystickStates { get => _joystickStates; }
 
         /// <inheritdoc/>
-        public JoystickState[] LastJoystickStates { get; private set; }
+        public JoystickState[] LastJoystickStates { get => _lastJoystickStates; }
 
         /// <inheritdoc />
         public Vector2 MousePosition
@@ -816,19 +818,19 @@ namespace OpenTK.Windowing.Desktop
                         GLFW.GetJoystickButtonsRaw(joy, out var buttonCount);
                         var name = GLFW.GetJoystickName(joy);
 
-                        JoystickStates[joy] = new JoystickState(hatCount, axisCount, buttonCount, joy, name);
+                        _joystickStates[joy] = new JoystickState(hatCount, axisCount, buttonCount, joy, name);
                     }
                     else
                     {
                         // Remove the joystick state from the array of joysticks.
-                        JoystickStates[joy] = default;
+                        _joystickStates[joy] = default;
                     }
                     OnJoystickConnected(new JoystickEventArgs(joy, eventCode == ConnectedState.Connected));
                 };
                 GLFW.SetJoystickCallback(_joystickCallback);
 
                 // Check for Joysticks that are connected at application launch
-                for (int i = 0; i < JoystickStates.Length; i++)
+                for (int i = 0; i < _joystickStates.Length; i++)
                 {
                     if (GLFW.JoystickPresent(i))
                     {
@@ -837,7 +839,7 @@ namespace OpenTK.Windowing.Desktop
                         GLFW.GetJoystickButtonsRaw(i, out var buttonCount);
                         var name = GLFW.GetJoystickName(i);
 
-                        JoystickStates[i] = new JoystickState(hatCount, axisCount, buttonCount, i, name);
+                        _joystickStates[i] = new JoystickState(hatCount, axisCount, buttonCount, i, name);
                     }
                 }
 
@@ -899,7 +901,7 @@ namespace OpenTK.Windowing.Desktop
         {
             LastKeyboardState = KeyboardState;
             LastMouseState = MouseState;
-            LastJoystickStates = JoystickStates;
+            Array.Copy(_joystickStates, _lastJoystickStates, _joystickStates.Length);
             MouseDelta = Vector2.Zero;
 
             if (IsExiting)
@@ -950,9 +952,9 @@ namespace OpenTK.Windowing.Desktop
             GLFW.GetCursorPos(WindowPtr, out var x, out var y);
             _mouseState.Position = new Vector2((float)x, (float)y);
 
-            for (var i = 0; i < JoystickStates.Length; i++)
+            for (var i = 0; i < _joystickStates.Length; i++)
             {
-                var joy = JoystickStates[i];
+                var joy = _joystickStates[i];
                 if (joy == default)
                 {
                     continue;
@@ -974,7 +976,7 @@ namespace OpenTK.Windowing.Desktop
                     buttons[j] = b[j] == JoystickInputAction.Press;
                 }
 
-                JoystickStates[i] = new JoystickState(hats, axes, buttons, joy.Id, joy.Name);
+                _joystickStates[i] = new JoystickState(hats, axes, buttons, joy.Id, joy.Name);
             }
         }
 
