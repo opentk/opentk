@@ -1,5 +1,5 @@
 ﻿//
-// JoystickState.cs
+// IJoystickState.cs
 //
 // Copyright (C) OpenTK
 //
