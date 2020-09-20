@@ -8,6 +8,7 @@
 //
 
 using System;
+using System.Runtime.CompilerServices;
 using System.Text;
 
 namespace OpenTK.Windowing.Common.Input
@@ -92,6 +93,7 @@ namespace OpenTK.Windowing.Common.Input
         /// </summary>
         /// <param name="index">The hat which position should be changed.</param>
         /// <param name="value">The new state the hat should be changed to.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal void SetHat(int index, Hat value)
         {
             _hats[index] = value;
@@ -102,6 +104,7 @@ namespace OpenTK.Windowing.Common.Input
         /// </summary>
         /// <param name="index">The index of the button to check.</param>
         /// <returns><c>true</c> if the button is down; <c>false</c> otherwise.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool IsButtonDown(int index)
         {
             byte b = _buttons[index / 8];
@@ -115,6 +118,7 @@ namespace OpenTK.Windowing.Common.Input
         /// </summary>
         /// <param name="index">The index of the button which should be changed.</param>
         /// <param name="value"><c>true</c> if the button is down; <c>false</c> otherwise.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal void SetButtonDown(int index, bool value)
         {
             int byteOffSet = index / 8;
@@ -145,11 +149,13 @@ namespace OpenTK.Windowing.Common.Input
         /// </summary>
         /// <param name="index">The index of the axis which position should be changed.</param>
         /// <param name="value">The new state the key should be changed to.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private void SetAxis(int index, float value)
         {
             _axes[index] = value < -1 ? -1 : (value > 1 ? 1 : value);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal void SetAxes(float[] axes)
         {
             _axes = axes;
