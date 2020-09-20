@@ -10,6 +10,7 @@
 using System;
 using System.Diagnostics.Contracts;
 using System.Globalization;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Xml.Serialization;
 
@@ -128,7 +129,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Defines the size of the <see cref="Vector2i"/> struct in bytes.
         /// </summary>
-        public static readonly int SizeInBytes = Marshal.SizeOf<Vector2i>();
+        public static readonly int SizeInBytes = Unsafe.SizeOf<Vector2i>();
 
         /// <summary>
         /// Adds two vectors.
@@ -525,12 +526,10 @@ namespace OpenTK.Mathematics
             return new Vector2i(values.X, values.Y);
         }
 
-        private static readonly string ListSeparator = CultureInfo.CurrentCulture.TextInfo.ListSeparator;
-
         /// <inheritdoc/>
         public override string ToString()
         {
-            return string.Format("({0}{2} {1})", X, Y, ListSeparator);
+            return string.Format("({0}{2} {1})", X, Y, MathHelper.ListSeparator);
         }
 
         /// <inheritdoc/>

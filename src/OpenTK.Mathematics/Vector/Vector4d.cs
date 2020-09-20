@@ -2044,12 +2044,10 @@ namespace OpenTK.Mathematics
             return new Vector4d(values.X, values.Y, values.Z, values.W);
         }
 
-        private static readonly string ListSeparator = CultureInfo.CurrentCulture.TextInfo.ListSeparator;
-
         /// <inheritdoc />
         public override string ToString()
         {
-            return string.Format("({0}{4} {1}{4} {2}{4} {3})", X, Y, Z, W, ListSeparator);
+            return string.Format("({0}{4} {1}{4} {2}{4} {3})", X, Y, Z, W, MathHelper.ListSeparator);
         }
 
         /// <inheritdoc />

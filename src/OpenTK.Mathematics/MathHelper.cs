@@ -9,6 +9,7 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
+using System.Globalization;
 
 namespace OpenTK.Mathematics
 {
@@ -1287,5 +1288,7 @@ namespace OpenTK.Mathematics
 
             return angle;
         }
+
+        internal static readonly string ListSeparator = CultureInfo.CurrentCulture.TextInfo.ListSeparator;
     }
 }

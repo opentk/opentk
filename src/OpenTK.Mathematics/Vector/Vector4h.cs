@@ -1344,8 +1344,6 @@ namespace OpenTK.Mathematics
             W.ToBinaryStream(bin);
         }
 
-        private static readonly string ListSeparator = CultureInfo.CurrentCulture.TextInfo.ListSeparator;
-
         /// <inheritdoc/>
         public override string ToString()
         {
@@ -1356,7 +1354,7 @@ namespace OpenTK.Mathematics
                 Y.ToString(),
                 Z.ToString(),
                 W.ToString(),
-                ListSeparator
+                MathHelper.ListSeparator
             );
         }
 

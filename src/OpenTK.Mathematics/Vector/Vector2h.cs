@@ -24,6 +24,7 @@ using System;
 using System.Diagnostics.Contracts;
 using System.Globalization;
 using System.IO;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
@@ -36,7 +37,7 @@ namespace OpenTK.Mathematics
     /// </summary>
     [Serializable]
     [StructLayout(LayoutKind.Sequential)]
-    public struct Vector2h : ISerializable
+    public struct Vector2h : ISerializable, IEquatable<Vector2h>
     {
         /// <summary>
         /// The X component of the Half2.
@@ -275,9 +276,31 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
+        /// Compares the specified instances for equality.
+        /// </summary>
+        /// <param name="left">Left operand.</param>
+        /// <param name="right">Right operand.</param>
+        /// <returns>True if both instances are equal; false otherwise.</returns>
+        public static bool operator ==(Vector2h left, Vector2h right)
+        {
+            return left.Equals(right);
+        }
+
+        /// <summary>
+        /// Compares the specified instances for inequality.
+        /// </summary>
+        /// <param name="left">Left operand.</param>
+        /// <param name="right">Right operand.</param>
+        /// <returns>True if both instances are not equal; false otherwise.</returns>
+        public static bool operator !=(Vector2h left, Vector2h right)
+        {
+            return !(left == right);
+        }
+
+        /// <summary>
         /// The size in bytes for an instance of the Half2 struct is 4.
         /// </summary>
-        public static readonly int SizeInBytes = 4;
+        public static readonly int SizeInBytes = Unsafe.SizeOf<Vector2h>();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Vector2h"/> struct.
@@ -317,12 +340,29 @@ namespace OpenTK.Mathematics
             Y.ToBinaryStream(bin);
         }
 
-        private static readonly string ListSeparator = CultureInfo.CurrentCulture.TextInfo.ListSeparator;
-
         /// <inheritdoc/>
         public override string ToString()
         {
-            return string.Format("({0}{2} {1})", X, Y, ListSeparator);
+            return string.Format("({0}{2} {1})", X, Y, MathHelper.ListSeparator);
+        }
+
+        /// <inheritdoc/>
+        public override bool Equals(object obj)
+        {
+            return obj is Vector2h h && Equals(h);
+        }
+
+        /// <inheritdoc/>
+        public bool Equals(Vector2h other)
+        {
+            return X.Equals(other.X) &&
+                   Y.Equals(other.Y);
+        }
+
+        /// <inheritdoc/>
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(X, Y);
         }
 
         /// <summary>
