@@ -19,9 +19,10 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
     /// <inheritdoc />
     public sealed class JoystickState : IJoystickState
     {
-        private int current = 1;
         private const int maxHistory = 2;
-        private int last = 0;
+
+        private int current = maxHistory - 1;
+        private int last = maxHistory - 2;
 
         private Hat[][] _hats;
         private float[][] _axes;
@@ -42,7 +43,8 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
             _axes = new float[maxHistory][];
             _buttons = new byte[maxHistory][];
 
-            for(int i=0; i<maxHistory; i++){
+            for (int i = 0; i < maxHistory; i++)
+            {
                 _hats[i] = new Hat[hatCount];
                 _axes[i] = new float[axesCount];
                 _buttons[i] = new byte[(buttonCount + 7) / 8];
