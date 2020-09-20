@@ -12,8 +12,8 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
     /// <summary>
     /// Used to get window related attributes.
     /// </summary>
-    /// <seealso cref="GLFW.GetWindowAttrib(Window*, WindowAttributeGetterRobustness)"/>
-    public enum WindowAttributeGetterRobustness
+    /// <seealso cref="GLFW.GetWindowAttrib(Window*, WindowAttributeGetRobustness)"/>
+    public enum WindowAttributeGetRobustness
     {
         /// <summary>
         /// Indicates the robustness strategy used by the context.

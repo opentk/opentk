@@ -10,7 +10,7 @@
 namespace OpenTK.Windowing.Common
 {
     /// <summary>
-    /// Defines the event data for the <see cref="IWindowEvents.MonitorConnected"/> event.
+    /// Defines the event data for the <see cref="INativeWindow.MonitorConnected"/> event.
     /// </summary>
     public readonly struct MonitorEventArgs // TODO: merge with JoystickEventArgs?
     {

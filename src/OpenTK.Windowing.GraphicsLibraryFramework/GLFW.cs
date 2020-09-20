@@ -1227,9 +1227,9 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         /// This function sets the value of an attribute of the specified window.
         /// </para>
         /// <para>
-        /// The supported attributes are <see cref="WindowAttributeSetter.Decorated"/>,
-        /// <see cref="WindowAttributeSetter.Resizable"/>, <see cref="WindowAttributeSetter.Floating"/>,
-        /// <see cref="WindowAttributeSetter.AutoIconify"/> and <see cref="WindowAttributeSetter.FocusOnShow"/>.
+        /// The supported attributes are <see cref="WindowAttribute.Decorated"/>,
+        /// <see cref="WindowAttribute.Resizable"/>, <see cref="WindowAttribute.Floating"/>,
+        /// <see cref="WindowAttribute.AutoIconify"/> and <see cref="WindowAttribute.FocusOnShow"/>.
         /// </para>
         /// <para>
         /// Some of these attributes are ignored for full screen windows.
@@ -1245,7 +1245,7 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         /// <param name="value"><c>true</c> or <c>false</c>.</param>
         /// <remarks>
         /// <para>
-        /// Calling <see cref="GetWindowAttrib"/> will always return the latest value,
+        /// Calling <see cref="GetWindowAttrib(Window*, WindowAttributeGetBool)"/> will always return the latest value,
         /// even if that value is ignored by the current mode of the window.
         /// </para>
         /// <para>
@@ -1255,7 +1255,7 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         /// Possible errors include <see cref="ErrorCode.NotInitialized"/>, <see cref="ErrorCode.InvalidEnum"/>, <see cref="ErrorCode.InvalidValue"/> and <see cref="ErrorCode.PlatformError"/>.
         /// </para>
         /// </remarks>
-        public static unsafe void SetWindowAttrib(Window* window, WindowAttributeSetter attribute, bool value)
+        public static unsafe void SetWindowAttrib(Window* window, WindowAttribute attribute, bool value)
         {
             glfwSetWindowAttrib(window, attribute, value ? GLFW_TRUE : GLFW_FALSE);
         }
@@ -2971,7 +2971,7 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         /// <a href="https://www.glfw.org/docs/latest/window_guide.html#window_hints_hard">hard constraints</a>.
         /// This includes the size of the window, especially for full screen windows.
         /// To query the actual attributes of the created window, framebuffer and context,
-        /// see <see cref="GetWindowAttrib" />, <see cref="GetWindowSize" /> and <see cref="GetFramebufferSize" />.
+        /// see <see cref="GetWindowAttrib(Window*, WindowAttributeGetBool)" />, <see cref="GetWindowSize" /> and <see cref="GetFramebufferSize" />.
         /// </para>
         /// <para>
         /// To create a full screen window, you need to specify the monitor the window will cover.
@@ -3105,7 +3105,7 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         /// <a href="https://www.glfw.org/docs/latest/window_guide.html#window_hints_hard">hard constraints</a>.
         /// This includes the size of the window, especially for full screen windows.
         /// To query the actual attributes of the created window, framebuffer and context,
-        /// see <see cref="GetWindowAttrib" />, <see cref="GetWindowSize" /> and <see cref="GetFramebufferSize" />.
+        /// see <see cref="GetWindowAttrib(Window*, WindowAttributeGetBool)" />, <see cref="GetWindowSize" /> and <see cref="GetFramebufferSize" />.
         /// </para>
         /// <para>
         /// To create a full screen window, you need to specify the monitor the window will cover.
@@ -3527,45 +3527,45 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         /// Possible errors include <see cref="ErrorCode.NotInitialized"/>, <see cref="ErrorCode.InvalidEnum"/> and <see cref="ErrorCode.PlatformError"/>.
         /// </para>
         /// </remarks>
-        public static unsafe bool GetWindowAttrib(Window* window, WindowAttributeGetterBool attribute)
+        public static unsafe bool GetWindowAttrib(Window* window, WindowAttributeGetBool attribute)
         {
             return glfwGetWindowAttrib(window, attribute) == GLFW_TRUE;
         }
 
-        /// <inheritdoc cref="GetWindowAttrib(Window*, WindowAttributeGetterBool)"/>
-        public static unsafe int GetWindowAttrib(Window* window, WindowAttributeGetterInt attribute)
+        /// <inheritdoc cref="GetWindowAttrib(Window*, WindowAttributeGetBool)"/>
+        public static unsafe int GetWindowAttrib(Window* window, WindowAttributeGetInt attribute)
         {
             return glfwGetWindowAttrib(window, attribute);
         }
 
-        /// <inheritdoc cref="GetWindowAttrib(Window*, WindowAttributeGetterBool)"/>
-        public static unsafe ClientApi GetWindowAttrib(Window* window, WindowAttributeGetterClientApi attribute)
+        /// <inheritdoc cref="GetWindowAttrib(Window*, WindowAttributeGetBool)"/>
+        public static unsafe ClientApi GetWindowAttrib(Window* window, WindowAttributeGetClientApi attribute)
         {
-            return (ClientApi)glfwGetWindowAttrib(window, attribute);
+            return glfwGetWindowAttrib(window, attribute);
         }
 
-        /// <inheritdoc cref="GetWindowAttrib(Window*, WindowAttributeGetterBool)"/>
-        public static unsafe ContextApi GetWindowAttrib(Window* window, WindowAttributeGetterContextApi attribute)
+        /// <inheritdoc cref="GetWindowAttrib(Window*, WindowAttributeGetBool)"/>
+        public static unsafe ContextApi GetWindowAttrib(Window* window, WindowAttributeGetContextApi attribute)
         {
-            return (ContextApi)glfwGetWindowAttrib(window, attribute);
+            return glfwGetWindowAttrib(window, attribute);
         }
 
-        /// <inheritdoc cref="GetWindowAttrib(Window*, WindowAttributeGetterBool)"/>
-        public static unsafe OpenGlProfile GetWindowAttrib(Window* window, WindowAttributeGetterOpenGlProfile attribute)
+        /// <inheritdoc cref="GetWindowAttrib(Window*, WindowAttributeGetBool)"/>
+        public static unsafe OpenGlProfile GetWindowAttrib(Window* window, WindowAttributeGetOpenGlProfile attribute)
         {
-            return (OpenGlProfile)glfwGetWindowAttrib(window, attribute);
+            return glfwGetWindowAttrib(window, attribute);
         }
 
-        /// <inheritdoc cref="GetWindowAttrib(Window*, WindowAttributeGetterBool)"/>
-        public static unsafe ReleaseBehavior GetWindowAttrib(Window* window, WindowAttributeGetterReleaseBehavior attribute)
+        /// <inheritdoc cref="GetWindowAttrib(Window*, WindowAttributeGetBool)"/>
+        public static unsafe ReleaseBehavior GetWindowAttrib(Window* window, WindowAttributeGetReleaseBehavior attribute)
         {
-            return (ReleaseBehavior)glfwGetWindowAttrib(window, attribute);
+            return glfwGetWindowAttrib(window, attribute);
         }
 
-        /// <inheritdoc cref="GetWindowAttrib(Window*, WindowAttributeGetterBool)"/>
-        public static unsafe Robustness GetWindowAttrib(Window* window, WindowAttributeGetterRobustness attribute)
+        /// <inheritdoc cref="GetWindowAttrib(Window*, WindowAttributeGetBool)"/>
+        public static unsafe Robustness GetWindowAttrib(Window* window, WindowAttributeGetRobustness attribute)
         {
-            return (Robustness)glfwGetWindowAttrib(window, attribute);
+            return glfwGetWindowAttrib(window, attribute);
         }
 
         /// <summary>

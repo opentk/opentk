@@ -13,7 +13,7 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
     /// The context client APIs.
     /// </summary>
     /// <seealso cref="GLFW.WindowHint(WindowHintClientApi,ClientApi)"/>
-    public enum ClientApi
+    public enum ClientApi : int
     {
         /// <summary>
         /// No context API is created.

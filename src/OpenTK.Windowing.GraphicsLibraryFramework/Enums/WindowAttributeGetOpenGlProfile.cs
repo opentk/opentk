@@ -12,8 +12,8 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
     /// <summary>
     /// Used to get window related attributes.
     /// </summary>
-    /// <seealso cref="GLFW.GetWindowAttrib(Window*, WindowAttributeGetterOpenGlProfile)"/>
-    public enum WindowAttributeGetterOpenGlProfile
+    /// <seealso cref="GLFW.GetWindowAttrib(Window*, WindowAttributeGetOpenGlProfile)"/>
+    public enum WindowAttributeGetOpenGlProfile
     {
         /// <summary>
         /// Indicates the OpenGL profile used by the context.

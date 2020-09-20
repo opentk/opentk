@@ -69,6 +69,8 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
             return NativeLibrary.Load(libraryName, assembly, searchPath);
         }
 
+#pragma warning disable IDE1006 // Naming Styles
+
         [DllImport(LibraryName)]
         public static extern int glfwInit();
 
@@ -148,7 +150,7 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         public static extern void glfwRequestWindowAttention(Window* window);
 
         [DllImport(LibraryName)]
-        public static extern void glfwSetWindowAttrib(Window* window, WindowAttributeSetter attrib, int value);
+        public static extern void glfwSetWindowAttrib(Window* window, WindowAttribute attrib, int value);
 
         [DllImport(LibraryName)]
         public static extern int glfwRawMouseMotionSupported();
@@ -277,25 +279,25 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         public static extern VideoMode* glfwGetVideoMode(Monitor* monitor);
 
         [DllImport(LibraryName)]
-        public static extern int glfwGetWindowAttrib(Window* window, WindowAttributeGetterBool attribute);
+        public static extern int glfwGetWindowAttrib(Window* window, WindowAttributeGetBool attribute);
 
         [DllImport(LibraryName)]
-        public static extern int glfwGetWindowAttrib(Window* window, WindowAttributeGetterInt attribute);
+        public static extern int glfwGetWindowAttrib(Window* window, WindowAttributeGetInt attribute);
 
         [DllImport(LibraryName)]
-        public static extern int glfwGetWindowAttrib(Window* window, WindowAttributeGetterClientApi attribute);
+        public static extern ClientApi glfwGetWindowAttrib(Window* window, WindowAttributeGetClientApi attribute);
 
         [DllImport(LibraryName)]
-        public static extern int glfwGetWindowAttrib(Window* window, WindowAttributeGetterContextApi attribute);
+        public static extern ContextApi glfwGetWindowAttrib(Window* window, WindowAttributeGetContextApi attribute);
 
         [DllImport(LibraryName)]
-        public static extern int glfwGetWindowAttrib(Window* window, WindowAttributeGetterOpenGlProfile attribute);
+        public static extern OpenGlProfile glfwGetWindowAttrib(Window* window, WindowAttributeGetOpenGlProfile attribute);
 
         [DllImport(LibraryName)]
-        public static extern int glfwGetWindowAttrib(Window* window, WindowAttributeGetterReleaseBehavior attribute);
+        public static extern ReleaseBehavior glfwGetWindowAttrib(Window* window, WindowAttributeGetReleaseBehavior attribute);
 
         [DllImport(LibraryName)]
-        public static extern int glfwGetWindowAttrib(Window* window, WindowAttributeGetterRobustness attribute);
+        public static extern Robustness glfwGetWindowAttrib(Window* window, WindowAttributeGetRobustness attribute);
 
         [DllImport(LibraryName)]
         public static extern void glfwGetWindowSize(Window* window, int* width, int* height);
@@ -488,5 +490,7 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
 
         [DllImport(LibraryName)]
         public static extern int glfwCreateWindowSurface(VkHandle instance, Window* window, void* allocator, out VkHandle surface);
+
+#pragma warning restore IDE1006 // Naming Styles
     }
 }

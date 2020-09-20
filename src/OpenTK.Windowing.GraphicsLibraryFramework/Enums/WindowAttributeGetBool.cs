@@ -12,8 +12,8 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
     /// <summary>
     /// Used to get window related attributes.
     /// </summary>
-    /// <seealso cref="GLFW.GetWindowAttrib(Window*, WindowAttributeGetterBool)"/>
-    public enum WindowAttributeGetterBool
+    /// <seealso cref="GLFW.GetWindowAttrib(Window*, WindowAttributeGetBool)"/>
+    public enum WindowAttributeGetBool
     {
         /// <summary>
         /// Indicates whether the specified window has input focus.

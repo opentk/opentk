@@ -13,7 +13,7 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
     /// The context release behaviors.
     /// </summary>
     /// <seealso cref="GLFW.WindowHint(WindowHintReleaseBehavior,ReleaseBehavior)"/>
-    public enum ReleaseBehavior
+    public enum ReleaseBehavior : int
     {
         /// <summary>
         /// Use the default release behavior of the platform.
