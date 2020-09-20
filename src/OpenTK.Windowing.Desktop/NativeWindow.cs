@@ -48,14 +48,10 @@ namespace OpenTK.Windowing.Desktop
         /// <inheritdoc />
         public KeyboardState LastKeyboardState { get; private set; }
 
-        private readonly JoystickState[] _joystickStates = new JoystickState[16];
-        private readonly JoystickState[] _lastJoystickStates = new JoystickState[16];
+        private readonly IJoystickState[] _joystickStates = new IJoystickState[16];
 
         /// <inheritdoc/>
-        public JoystickState[] JoystickStates { get => _joystickStates; }
-
-        /// <inheritdoc/>
-        public JoystickState[] LastJoystickStates { get => _lastJoystickStates; }
+        public IJoystickState[] JoystickStates { get => _joystickStates; }
 
         /// <inheritdoc />
         public Vector2 MousePosition
@@ -900,7 +896,6 @@ namespace OpenTK.Windowing.Desktop
         {
             LastKeyboardState = KeyboardState;
             LastMouseState = MouseState;
-            Array.Copy(_joystickStates, _lastJoystickStates, _joystickStates.Length);
             MouseDelta = Vector2.Zero;
 
             if (IsExiting)
@@ -953,25 +948,12 @@ namespace OpenTK.Windowing.Desktop
 
             for (var i = 0; i < _joystickStates.Length; i++)
             {
-                if (_joystickStates[i] == default)
+                if (_joystickStates[i] == null)
                 {
                     continue;
                 }
 
-                var h = GLFW.GetJoystickHatsRaw(_joystickStates[i].Id, out var count);
-                for (var j = 0; j < count; j++)
-                {
-                    _joystickStates[i].SetHat(j, (Hat)h[j]);
-                }
-
-                var axes = GLFW.GetJoystickAxes(_joystickStates[i].Id);
-                _joystickStates[i].SetAxes(axes);
-
-                var b = GLFW.GetJoystickButtonsRaw(_joystickStates[i].Id, out count);
-                for (var j = 0; j < count; j++)
-                {
-                    _joystickStates[i].SetButtonDown(j, b[j] == JoystickInputAction.Press);
-                }
+                ((JoystickState)_joystickStates[i]).Update();
             }
         }
 

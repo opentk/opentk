@@ -8,6 +8,7 @@
     
     <ItemGroup>
       <ProjectReference Include="..\OpenTK.Core\OpenTK.Core.csproj" />
+      <ProjectReference Include="..\OpenTK.Windowing.Common\OpenTK.Windowing.Common.csproj" />
     </ItemGroup>
     
     <ItemGroup>
