@@ -13,7 +13,7 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
     /// Used to set window related attributes.
     /// </summary>
     /// <seealso cref="GLFW.SetWindowAttrib"/>
-    public enum WindowAttributeSetter
+    public enum WindowAttribute
     {
         /// <summary>
         /// Indicates whether the specified window is resizable by the user.

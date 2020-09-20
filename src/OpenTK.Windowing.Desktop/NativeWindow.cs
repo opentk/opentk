@@ -259,12 +259,12 @@ namespace OpenTK.Windowing.Desktop
         {
             get
             {
-                if (GLFW.GetWindowAttrib(WindowPtr, WindowAttributeGetterBool.Iconified))
+                if (GLFW.GetWindowAttrib(WindowPtr, WindowAttributeGetBool.Iconified))
                 {
                     return WindowState.Minimized;
                 }
 
-                if (GLFW.GetWindowAttrib(WindowPtr, WindowAttributeGetterBool.Maximized))
+                if (GLFW.GetWindowAttrib(WindowPtr, WindowAttributeGetBool.Maximized))
                 {
                     return WindowState.Maximized;
                 }
@@ -317,7 +317,7 @@ namespace OpenTK.Windowing.Desktop
 
             set
             {
-                if (!GLFW.GetWindowAttrib(WindowPtr, WindowAttributeGetterBool.Decorated))
+                if (!GLFW.GetWindowAttrib(WindowPtr, WindowAttributeGetBool.Decorated))
                 {
                     GLFW.GetVersion(out var major, out var minor, out _);
 
@@ -331,15 +331,15 @@ namespace OpenTK.Windowing.Desktop
                     switch (value)
                     {
                         case WindowBorder.Hidden:
-                            GLFW.SetWindowAttrib(WindowPtr, WindowAttributeSetter.Decorated, false);
+                            GLFW.SetWindowAttrib(WindowPtr, WindowAttribute.Decorated, false);
                             break;
 
                         case WindowBorder.Resizable:
-                            GLFW.SetWindowAttrib(WindowPtr, WindowAttributeSetter.Resizable, true);
+                            GLFW.SetWindowAttrib(WindowPtr, WindowAttribute.Resizable, true);
                             break;
 
                         case WindowBorder.Fixed:
-                            GLFW.SetWindowAttrib(WindowPtr, WindowAttributeSetter.Resizable, false);
+                            GLFW.SetWindowAttrib(WindowPtr, WindowAttribute.Resizable, false);
                             break;
                     }
                 }
@@ -624,7 +624,7 @@ namespace OpenTK.Windowing.Desktop
             GLFW.GetWindowPos(WindowPtr, out var x, out var y);
             _location = new Vector2i(x, y);
 
-            _isFocused = GLFW.GetWindowAttrib(WindowPtr, WindowAttributeGetterBool.Focused);
+            _isFocused = GLFW.GetWindowAttrib(WindowPtr, WindowAttributeGetBool.Focused);
         }
 
         private static void InitializeGlBindings()

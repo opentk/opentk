@@ -12,8 +12,8 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
     /// <summary>
     /// Used to get window related attributes.
     /// </summary>
-    /// <seealso cref="GLFW.GetWindowAttrib(Window*, WindowAttributeGetterReleaseBehavior)"/>
-    public enum WindowAttributeGetterReleaseBehavior
+    /// <seealso cref="GLFW.GetWindowAttrib(Window*, WindowAttributeGetReleaseBehavior)"/>
+    public enum WindowAttributeGetReleaseBehavior
     {
         /// <summary>
         /// Specifies the release behavior to be used by the context.

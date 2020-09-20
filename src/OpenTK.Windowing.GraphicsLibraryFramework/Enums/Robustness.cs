@@ -12,7 +12,7 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
     /// <summary>
     /// OpenGL context robustness strategy.
     /// </summary>
-    public enum Robustness
+    public enum Robustness : int
     {
         /// <summary>
         /// No context robustness strategy.

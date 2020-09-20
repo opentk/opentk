@@ -12,8 +12,8 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
     /// <summary>
     /// Used to get window related attributes.
     /// </summary>
-    /// <seealso cref="GLFW.GetWindowAttrib(Window*, WindowAttributeGetterInt)"/>
-    public enum WindowAttributeGetterInt
+    /// <seealso cref="GLFW.GetWindowAttrib(Window*, WindowAttributeGetInt)"/>
+    public enum WindowAttributeGetInt
     {
         /// <summary>
         /// Indicate the client API version(major part) of the window's context.
