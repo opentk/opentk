@@ -23,12 +23,15 @@ SOFTWARE.
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
+using System.Runtime.InteropServices;
 
 namespace OpenTK.Mathematics
 {
     /// <summary>
     /// Represents a 4x2 matrix.
     /// </summary>
+    [Serializable]
+    [StructLayout(LayoutKind.Sequential)]
     public struct Matrix4x2d : IEquatable<Matrix4x2d>
     {
         /// <summary>

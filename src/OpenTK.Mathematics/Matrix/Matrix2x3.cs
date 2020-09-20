@@ -29,6 +29,8 @@ namespace OpenTK.Mathematics
     /// <summary>
     /// Represents a 2x3 matrix.
     /// </summary>
+    [Serializable]
+    [StructLayout(LayoutKind.Sequential)]
     public struct Matrix2x3 : IEquatable<Matrix2x3>
     {
         /// <summary>

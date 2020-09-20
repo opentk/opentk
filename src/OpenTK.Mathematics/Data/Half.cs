@@ -66,7 +66,6 @@ namespace OpenTK.Mathematics
     /// <summary>
     /// The name Half is derived from half-precision floating-point number.
     /// It occupies only 16 bits, which are split into 1 Sign bit, 5 Exponent bits and 10 Mantissa bits.
-    /// Equality for Half is bitwise and will not give accurate floating point equality checking.
     /// </summary>
     /// <remarks>
     /// Quote from ARB_half_float_pixel specification:
@@ -384,6 +383,16 @@ namespace OpenTK.Mathematics
             return h.ToSingle();
         }
 
+        public static bool operator ==(Half left, Half right)
+        {
+            return left.Equals(right);
+        }
+
+        public static bool operator !=(Half left, Half right)
+        {
+            return !(left == right);
+        }
+
         /// <summary>
         /// The size in bytes for an instance of the Half struct.
         /// </summary>
@@ -444,6 +453,18 @@ namespace OpenTK.Mathematics
         public void ToBinaryStream(BinaryWriter bin)
         {
             bin.Write(_bits);
+        }
+
+        /// <inheritdoc />
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(_bits);
+        }
+
+        /// <inheritdoc />
+        public override bool Equals(object obj)
+        {
+            return base.Equals(obj);
         }
 
         /// <summary>
