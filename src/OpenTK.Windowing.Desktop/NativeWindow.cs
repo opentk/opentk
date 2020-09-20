@@ -51,7 +51,6 @@ namespace OpenTK.Windowing.Desktop
         private readonly JoystickState[] _joystickStates = new JoystickState[16];
         private readonly JoystickState[] _lastJoystickStates = new JoystickState[16];
 
-
         /// <inheritdoc/>
         public JoystickState[] JoystickStates { get => _joystickStates; }
 
