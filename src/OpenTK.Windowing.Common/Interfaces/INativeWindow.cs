@@ -232,7 +232,7 @@ namespace OpenTK.Windowing.Common
         void ProcessEvents();
 
         /// <summary>
-        /// Processes pending window events and waits <paramref cref="timeout"/> seconds for events.
+        /// Processes pending window events and waits <paramref name="timeout"/> seconds for events.
         /// </summary>
         /// <param name="timeout">The timeout in seconds.</param>
         /// <returns><c>true</c> if events where processed; otherwise <c>false</c>
@@ -318,7 +318,7 @@ namespace OpenTK.Windowing.Common
         ///     Gets whether the specified key is pressed in the current frame but released in the previous frame.
         /// </summary>
         /// <remarks>
-        ///     "Frame" refers to invocations of <see cref="INativeWindow.ProcessEvents"/> here.
+        ///     "Frame" refers to invocations of <see cref="ProcessEvents()"/> here.
         /// </remarks>
         /// <param name="key">The key to check.</param>
         /// <returns>True if the key is pressed in this frame, but not the last frame.</returns>
@@ -328,7 +328,7 @@ namespace OpenTK.Windowing.Common
         ///     Gets whether the specified key is released in the current frame but pressed in the previous frame.
         /// </summary>
         /// <remarks>
-        ///     "Frame" refers to invocations of <see cref="INativeWindow.ProcessEvents"/> here.
+        ///     "Frame" refers to invocations of <see cref="ProcessEvents()"/> here.
         /// </remarks>
         /// <param name="key">The key to check.</param>
         /// <returns>True if the key is released in this frame, but pressed the last frame.</returns>
@@ -362,7 +362,7 @@ namespace OpenTK.Windowing.Common
         ///     Gets whether the specified mouse button is released in the current frame but pressed in the previous frame.
         /// </summary>
         /// <remarks>
-        ///     "Frame" refers to invocations of <see cref="INativeWindow.ProcessEvents"/> here.
+        ///     "Frame" refers to invocations of <see cref="ProcessEvents()"/> here.
         /// </remarks>
         /// <param name="button">The button to check.</param>
         /// <returns>True if the button is released in this frame, but pressed the last frame.</returns>
@@ -404,7 +404,7 @@ namespace OpenTK.Windowing.Common
         event Action<JoystickEventArgs> JoystickConnected;
 
         /// <summary>
-        /// Occurs when the <see cref="INativeWindowProperties.IsFocused" /> property of the window changes.
+        /// Occurs when the <see cref="IsFocused" /> property of the window changes.
         /// </summary>
         event Action<FocusedChangedEventArgs> FocusedChanged;
 
@@ -429,12 +429,12 @@ namespace OpenTK.Windowing.Common
         event Action<MonitorEventArgs> MonitorConnected;
 
         /// <summary>
-        /// Occurs whenever the mouse cursor leaves the window <see cref="INativeWindowProperties.Bounds" />.
+        /// Occurs whenever the mouse cursor leaves the window <see cref="Bounds" />.
         /// </summary>
         event Action MouseLeave;
 
         /// <summary>
-        /// Occurs whenever the mouse cursor enters the window <see cref="INativeWindowProperties.Bounds" />.
+        /// Occurs whenever the mouse cursor enters the window <see cref="Bounds" />.
         /// </summary>
         event Action MouseEnter;
 
