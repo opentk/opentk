@@ -9,7 +9,6 @@
 
 using System;
 using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
 using System.Text;
 
 namespace OpenTK.Windowing.Common.Input
@@ -28,11 +27,6 @@ namespace OpenTK.Windowing.Common.Input
         /// Gets the name of the joystick this state describes.
         /// </summary>
         string Name { get; }
-
-        /// <summary>
-        /// Gets a value indicating whether the joystick is active and connected.
-        /// </summary>
-        bool IsConnected { get; }
 
         /// <summary>
         /// Gets a <see cref="Hat"/> describing the state of a hat.

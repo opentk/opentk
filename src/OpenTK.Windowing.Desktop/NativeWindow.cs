@@ -2,10 +2,10 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Reflection;
 using System.Runtime.InteropServices;
-using System.Threading;
 using OpenTK.Core;
 using OpenTK.Mathematics;
 using OpenTK.Windowing.Common;
@@ -51,7 +51,7 @@ namespace OpenTK.Windowing.Desktop
         private readonly IJoystickState[] _joystickStates = new IJoystickState[16];
 
         /// <inheritdoc/>
-        public IJoystickState[] JoystickStates { get => _joystickStates; }
+        public IReadOnlyCollection<IJoystickState> JoystickStates { get => _joystickStates; }
 
         /// <inheritdoc />
         public Vector2 MousePosition
@@ -258,15 +258,6 @@ namespace OpenTK.Windowing.Desktop
                 {
                     return WindowState.Fullscreen;
                 }
-
-                /*var mode = Glfw.GetVideoMode(CurrentMonitor.ToUnsafePtr<GraphicsLibraryFramework.Monitor>());
-
-                Glfw.GetWindowSize(WindowPtr, out var windowWidth, out var windowHeight);
-
-                if (mode->Width == windowWidth && mode->Height == windowHeight)
-                {
-                    return WindowState.Maximized;
-                }*/
 
                 return WindowState.Normal;
             }
@@ -1380,10 +1371,6 @@ namespace OpenTK.Windowing.Desktop
             map[(int)Keys.Backslash] = Key.BackSlash;
             map[(int)Keys.RightBracket] = Key.BracketRight;
             map[(int)Keys.GraveAccent] = Key.Grave;
-
-            // TODO: What are these world keys and how do I handle them.
-            // map[(int)Keys.World1] = Key.Z;
-            // map[(int)Keys.World2] = Key.Z;
             map[(int)Keys.Escape] = Key.Escape;
             map[(int)Keys.Enter] = Key.Enter;
             map[(int)Keys.Tab] = Key.Tab;

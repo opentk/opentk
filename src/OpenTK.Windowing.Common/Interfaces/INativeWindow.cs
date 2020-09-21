@@ -1,13 +1,14 @@
 ﻿//
 // INativeWindow.cs
 //
-// Copyright (C) 2018 OpenTK
+// Copyright (C) OpenTK
 //
 // This software may be modified and distributed under the terms
 // of the MIT license. See the LICENSE file for details.
 //
 
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using OpenTK.Mathematics;
 using OpenTK.Windowing.Common.Input;
@@ -161,7 +162,7 @@ namespace OpenTK.Windowing.Common
         /// <summary>
         /// Gets the current state of the joysticks as of the last time the window processed events.
         /// </summary>
-        IJoystickState[] JoystickStates { get; }
+        IReadOnlyCollection<IJoystickState> JoystickStates { get; }
 
         /// <summary>
         ///     Gets the current state of the keyboard as of the last time the window processed events.

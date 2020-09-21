@@ -7,7 +7,6 @@
 // of the MIT license. See the LICENSE file for details.
 
 using System;
-using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text;
 using OpenTK.Windowing.Common.Input;
@@ -17,12 +16,12 @@ using OpenTK.Windowing.Common.Input;
 namespace OpenTK.Windowing.GraphicsLibraryFramework
 {
     /// <inheritdoc />
-    public sealed class JoystickState : IJoystickState
+    internal sealed class JoystickState : IJoystickState
     {
-        private const int MaxHistory = 2;
+        private const int StatePositionCount = 2;
 
-        private int _current = MaxHistory - 1;
-        private int _previous = MaxHistory - 2;
+        private int _current = StatePositionCount - 1;
+        private int _previous = StatePositionCount - 2;
 
         private Hat[][] _hats;
         private float[][] _axes;
@@ -34,16 +33,13 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         /// <inheritdoc />
         public string Name { get; }
 
-        /// <inheritdoc />
-        public bool IsConnected { get; }
-
         internal JoystickState(int hatCount, int axesCount, int buttonCount, int id, string name)
         {
-            _hats = new Hat[MaxHistory][];
-            _axes = new float[MaxHistory][];
-            _buttons = new byte[MaxHistory][];
+            _hats = new Hat[StatePositionCount][];
+            _axes = new float[StatePositionCount][];
+            _buttons = new byte[StatePositionCount][];
 
-            for (int i = 0; i < MaxHistory; i++)
+            for (int i = 0; i < StatePositionCount; i++)
             {
                 _hats[i] = new Hat[hatCount];
                 _axes[i] = new float[axesCount];
@@ -52,19 +48,12 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
 
             Id = id;
             Name = name;
-            IsConnected = true;
         }
 
-        private JoystickState(JoystickState source)
+        private JoystickState(JoystickState source) :
+            this(source._hats[0].Length, source._axes[0].Length, source._buttons[0].Length, source.Id, source.Name)
         {
-            Id = source.Id;
-            Name = source.Name;
-            IsConnected = source.IsConnected;
-
-            _hats = new Hat[MaxHistory][];
-            _axes = new float[MaxHistory][];
-            _buttons = new byte[MaxHistory][];
-            for (int i = 0; i < MaxHistory; i++)
+            for (int i = 0; i < StatePositionCount; i++)
             {
                 Array.Copy(source._hats[i], _hats[i], source._hats[i].Length);
                 Array.Copy(source._axes[i], _axes[i], source._axes[i].Length);
@@ -107,11 +96,11 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool WasButtonDown(int index)
         {
-            byte b0 = _buttons[_current][index / 8];
-            byte b1 = _buttons[_previous][index / 8];
+            byte bCurrent = _buttons[_current][index / 8];
+            byte bPrevious = _buttons[_previous][index / 8];
             int pow = (int)Math.Pow(2, index % 8);
 
-            return (b0 & pow) == pow && (b1 & pow) != pow;
+            return (bCurrent & pow) != pow && (bPrevious & pow) == pow;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -154,61 +143,29 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
             _axes[_current] = axes;
         }
 
-        /// <inheritdoc />
-        public override int GetHashCode()
-        {
-            int hashCode = _axes.GetHashCode();
-            hashCode ^= _hats.GetHashCode();
-            hashCode ^= _buttons.GetHashCode();
-            hashCode ^= Id.GetHashCode();
-            hashCode ^= Name.GetHashCode();
-
-            return hashCode;
-        }
-
         /// <inheritdoc/>
         public override string ToString()
         {
-            var builder = new StringBuilder();
+            // string.Join internally uses a StringBuilder
+            var joinedHats = string.Join(", ", _hats[_current]);
+            var joinedAxes = string.Join(", ", _axes[_current]);
 
-            builder.Append("{hats: [");
-            builder.Append(_hats[_current][0]);
-            for (int i = 1; i < _hats.Length; i++)
-            {
-                builder.Append(", ");
-                builder.Append(_hats[_current][i]);
-            }
+            var buttonBuilder = new StringBuilder();
 
-            builder.Append("], axes: [");
-            builder.Append(_axes[_current][0]);
-            for (int i = 1; i < _axes.Length; i++)
-            {
-                builder.Append(", ");
-                builder.Append(_axes[_current][i]);
-            }
-
-            builder.Append("], buttons: [");
-            builder.Append(IsButtonDown(0) ? "down" : "up");
             for (int i = 0; i < _buttons.Length * 8; i++)
             {
-                builder.Append(", ");
-                builder.Append(IsButtonDown(i) ? "down" : "up");
+                buttonBuilder.Append($", {(IsButtonDown(i) ? "down" : "up")}");
             }
 
-            builder.Append("], id: ");
-            builder.Append(Id);
-            builder.Append(", name: ");
-            builder.Append(Name);
-            builder.Append("}");
-
-            return builder.ToString();
+            // String Interpolation uses string.Format which internally uses a StringBuilder
+            return $"{{hats: [{joinedHats}], axes: [{joinedAxes}], buttons: [{buttonBuilder}], id: {Id}, name: {Name}}}";
         }
 
         internal unsafe void Update()
         {
             _previous = _current;
             _current++;
-            _current %= MaxHistory;
+            _current %= StatePositionCount;
 
             var h = GLFW.GetJoystickHatsRaw(Id, out var count);
             for (var j = 0; j < count; j++)
