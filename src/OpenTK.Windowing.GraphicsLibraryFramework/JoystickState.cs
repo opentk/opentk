@@ -19,10 +19,10 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
     /// <inheritdoc />
     public sealed class JoystickState : IJoystickState
     {
-        private const int maxHistory = 2;
+        private const int MaxHistory = 2;
 
-        private int current = maxHistory - 1;
-        private int last = maxHistory - 2;
+        private int _current = MaxHistory - 1;
+        private int _previous = MaxHistory - 2;
 
         private Hat[][] _hats;
         private float[][] _axes;
@@ -39,11 +39,11 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
 
         internal JoystickState(int hatCount, int axesCount, int buttonCount, int id, string name)
         {
-            _hats = new Hat[maxHistory][];
-            _axes = new float[maxHistory][];
-            _buttons = new byte[maxHistory][];
+            _hats = new Hat[MaxHistory][];
+            _axes = new float[MaxHistory][];
+            _buttons = new byte[MaxHistory][];
 
-            for (int i = 0; i < maxHistory; i++)
+            for (int i = 0; i < MaxHistory; i++)
             {
                 _hats[i] = new Hat[hatCount];
                 _axes[i] = new float[axesCount];
@@ -61,43 +61,43 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
             Name = source.Name;
             IsConnected = source.IsConnected;
 
-            _hats = new Hat[maxHistory][];
-            _axes = new float[maxHistory][];
-            _buttons = new byte[maxHistory][];
-            for (int i = 0; i < maxHistory; i++)
+            _hats = new Hat[MaxHistory][];
+            _axes = new float[MaxHistory][];
+            _buttons = new byte[MaxHistory][];
+            for (int i = 0; i < MaxHistory; i++)
             {
                 Array.Copy(source._hats[i], _hats[i], source._hats[i].Length);
                 Array.Copy(source._axes[i], _axes[i], source._axes[i].Length);
                 Array.Copy(source._buttons[i], _buttons[i], source._buttons[i].Length);
             }
 
-            current = source.current;
-            last = source.last;
+            _current = source._current;
+            _previous = source._previous;
         }
 
         /// <inheritdoc />
         public Hat GetHat(int index)
         {
-            return _hats[current][index];
+            return _hats[_current][index];
         }
 
         /// <inheritdoc />
         public Hat GetHatPrevious(int index)
         {
-            return _hats[last][index];
+            return _hats[_previous][index];
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private void SetHat(int index, Hat value)
         {
-            _hats[current][index] = value;
+            _hats[_current][index] = value;
         }
 
         /// <inheritdoc />
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool IsButtonDown(int index)
         {
-            byte b = _buttons[current][index / 8];
+            byte b = _buttons[_current][index / 8];
             int pow = (int)Math.Pow(2, index % 8);
 
             return (b & pow) == pow;
@@ -107,8 +107,8 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool WasButtonDown(int index)
         {
-            byte b0 = _buttons[current][index / 8];
-            byte b1 = _buttons[last][index / 8];
+            byte b0 = _buttons[_current][index / 8];
+            byte b1 = _buttons[_previous][index / 8];
             int pow = (int)Math.Pow(2, index % 8);
 
             return (b0 & pow) == pow && (b1 & pow) != pow;
@@ -122,36 +122,36 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
 
             if (value)
             {
-                _buttons[current][byteOffSet] |= (byte)(1 << bitOffset);
+                _buttons[_current][byteOffSet] |= (byte)(1 << bitOffset);
             }
             else
             {
-                _buttons[current][byteOffSet] &= (byte)~(1 << bitOffset);
+                _buttons[_current][byteOffSet] &= (byte)~(1 << bitOffset);
             }
         }
 
         /// <inheritdoc />
         public float GetAxis(int index)
         {
-            return _axes[current][index];
+            return _axes[_current][index];
         }
 
         /// <inheritdoc />
         public float GetAxisPrevious(int index)
         {
-            return _axes[last][index];
+            return _axes[_previous][index];
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private void SetAxis(int index, float value)
         {
-            _axes[current][index] = value < -1 ? -1 : (value > 1 ? 1 : value);
+            _axes[_current][index] = value < -1 ? -1 : (value > 1 ? 1 : value);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private void SetAxes(float[] axes)
         {
-            _axes[current] = axes;
+            _axes[_current] = axes;
         }
 
         /// <inheritdoc />
@@ -172,19 +172,19 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
             var builder = new StringBuilder();
 
             builder.Append("{hats: [");
-            builder.Append(_hats[current][0]);
+            builder.Append(_hats[_current][0]);
             for (int i = 1; i < _hats.Length; i++)
             {
                 builder.Append(", ");
-                builder.Append(_hats[current][i]);
+                builder.Append(_hats[_current][i]);
             }
 
             builder.Append("], axes: [");
-            builder.Append(_axes[current][0]);
+            builder.Append(_axes[_current][0]);
             for (int i = 1; i < _axes.Length; i++)
             {
                 builder.Append(", ");
-                builder.Append(_axes[current][i]);
+                builder.Append(_axes[_current][i]);
             }
 
             builder.Append("], buttons: [");
@@ -206,9 +206,9 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
 
         internal unsafe void Update()
         {
-            last = current;
-            current++;
-            current %= maxHistory;
+            _previous = _current;
+            _current++;
+            _current %= MaxHistory;
 
             var h = GLFW.GetJoystickHatsRaw(Id, out var count);
             for (var j = 0; j < count; j++)
