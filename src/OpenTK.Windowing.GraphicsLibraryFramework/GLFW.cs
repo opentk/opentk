@@ -1324,8 +1324,6 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         /// <item><term><see cref="Keys.LeftBracket"/></term></item>
         /// <item><term><see cref="Keys.RightBracket"/></term></item>
         /// <item><term><see cref="Keys.Backslash"/></term></item>
-        /// <item><term><see cref="Keys.World1"/></term></item>
-        /// <item><term><see cref="Keys.World2"/></term></item>
         /// <item><term><see cref="Keys.D0"/> to <see cref="Keys.D9"/></term></item>
         /// <item><term><see cref="Keys.A"/> to <see cref="Keys.Z"/></term></item>
         /// <item><term><see cref="Keys.KeyPad0"/> to <see cref="Keys.KeyPad9"/></term></item>
@@ -1397,8 +1395,6 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         /// <item><term><see cref="Keys.LeftBracket"/></term></item>
         /// <item><term><see cref="Keys.RightBracket"/></term></item>
         /// <item><term><see cref="Keys.Backslash"/></term></item>
-        /// <item><term><see cref="Keys.World1"/></term></item>
-        /// <item><term><see cref="Keys.World2"/></term></item>
         /// <item><term><see cref="Keys.D0"/> to <see cref="Keys.D9"/></term></item>
         /// <item><term><see cref="Keys.A"/> to <see cref="Keys.Z"/></term></item>
         /// <item><term><see cref="Keys.KeyPad0"/> to <see cref="Keys.KeyPad9"/></term></item>
