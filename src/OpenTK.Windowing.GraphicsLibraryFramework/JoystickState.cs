@@ -50,8 +50,13 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
             Name = name;
         }
 
-        private JoystickState(JoystickState source) :
-            this(source._hats[0].Length, source._axes[0].Length, source._buttons[0].Length, source.Id, source.Name)
+        private JoystickState(JoystickState source)
+            : this(
+                   source._hats[0].Length,
+                   source._axes[0].Length,
+                   source._buttons[0].Length,
+                   source.Id,
+                   source.Name)
         {
             for (int i = 0; i < StatePositionCount; i++)
             {
