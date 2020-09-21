@@ -18,14 +18,13 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
     /// <inheritdoc />
     internal sealed class JoystickState : IJoystickState
     {
-        private const int StatePositionCount = 2;
+        private Hat[] _hats;
+        private float[] _axes;
+        private byte[] _buttons;
 
-        private int _current = StatePositionCount - 1;
-        private int _previous = StatePositionCount - 2;
-
-        private Hat[][] _hats;
-        private float[][] _axes;
-        private byte[][] _buttons;
+        private Hat[] _previousHats;
+        private float[] _previousAxes;
+        private byte[] _previousButtons;
 
         /// <inheritdoc />
         public int Id { get; }
@@ -35,16 +34,13 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
 
         internal JoystickState(int hatCount, int axesCount, int buttonCount, int id, string name)
         {
-            _hats = new Hat[StatePositionCount][];
-            _axes = new float[StatePositionCount][];
-            _buttons = new byte[StatePositionCount][];
+            _hats = new Hat[hatCount];
+            _axes = new float[axesCount];
+            _buttons = new byte[buttonCount];
 
-            for (int i = 0; i < StatePositionCount; i++)
-            {
-                _hats[i] = new Hat[hatCount];
-                _axes[i] = new float[axesCount];
-                _buttons[i] = new byte[(buttonCount + 7) / 8];
-            }
+            _previousHats = new Hat[hatCount];
+            _previousAxes = new float[axesCount];
+            _previousButtons = new byte[buttonCount];
 
             Id = id;
             Name = name;
@@ -52,46 +48,44 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
 
         private JoystickState(JoystickState source)
             : this(
-                   source._hats[0].Length,
-                   source._axes[0].Length,
-                   source._buttons[0].Length,
+                   source._hats.Length,
+                   source._axes.Length,
+                   source._buttons.Length,
                    source.Id,
                    source.Name)
         {
-            for (int i = 0; i < StatePositionCount; i++)
-            {
-                Array.Copy(source._hats[i], _hats[i], source._hats[i].Length);
-                Array.Copy(source._axes[i], _axes[i], source._axes[i].Length);
-                Array.Copy(source._buttons[i], _buttons[i], source._buttons[i].Length);
-            }
+                Array.Copy(source._hats, _hats, source._hats.Length);
+                Array.Copy(source._axes, _axes, source._axes.Length);
+                Array.Copy(source._buttons, _buttons, source._buttons.Length);
+                Array.Copy(source._previousHats, _previousHats, source._previousHats.Length);
+                Array.Copy(source._previousAxes, _previousAxes, source._previousAxes.Length);
+                Array.Copy(source._previousButtons, _previousButtons, source._previousButtons.Length);
 
-            _current = source._current;
-            _previous = source._previous;
         }
 
         /// <inheritdoc />
         public Hat GetHat(int index)
         {
-            return _hats[_current][index];
+            return _hats[index];
         }
 
         /// <inheritdoc />
         public Hat GetHatPrevious(int index)
         {
-            return _hats[_previous][index];
+            return _previousHats[index];
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private void SetHat(int index, Hat value)
         {
-            _hats[_current][index] = value;
+            _hats[index] = value;
         }
 
         /// <inheritdoc />
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool IsButtonDown(int index)
         {
-            byte b = _buttons[_current][index / 8];
+            byte b = _buttons[index / 8];
             int pow = (int)Math.Pow(2, index % 8);
 
             return (b & pow) == pow;
@@ -101,8 +95,8 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool WasButtonDown(int index)
         {
-            byte bCurrent = _buttons[_current][index / 8];
-            byte bPrevious = _buttons[_previous][index / 8];
+            byte bCurrent = _buttons[index / 8];
+            byte bPrevious = _previousButtons[index / 8];
             int pow = (int)Math.Pow(2, index % 8);
 
             return (bCurrent & pow) != pow && (bPrevious & pow) == pow;
@@ -116,44 +110,44 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
 
             if (value)
             {
-                _buttons[_current][byteOffSet] |= (byte)(1 << bitOffset);
+                _buttons[byteOffSet] |= (byte)(1 << bitOffset);
             }
             else
             {
-                _buttons[_current][byteOffSet] &= (byte)~(1 << bitOffset);
+                _buttons[byteOffSet] &= (byte)~(1 << bitOffset);
             }
         }
 
         /// <inheritdoc />
         public float GetAxis(int index)
         {
-            return _axes[_current][index];
+            return _axes[index];
         }
 
         /// <inheritdoc />
         public float GetAxisPrevious(int index)
         {
-            return _axes[_previous][index];
+            return _previousAxes[index];
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private void SetAxis(int index, float value)
         {
-            _axes[_current][index] = value < -1 ? -1 : (value > 1 ? 1 : value);
+            _axes[index] = value < -1 ? -1 : (value > 1 ? 1 : value);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private void SetAxes(float[] axes)
         {
-            _axes[_current] = axes;
+            _axes = axes;
         }
 
         /// <inheritdoc/>
         public override string ToString()
         {
             // string.Join internally uses a StringBuilder
-            var joinedHats = string.Join(", ", _hats[_current]);
-            var joinedAxes = string.Join(", ", _axes[_current]);
+            var joinedHats = string.Join(", ", _hats);
+            var joinedAxes = string.Join(", ", _axes);
 
             var buttonBuilder = new StringBuilder();
 
@@ -168,9 +162,17 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
 
         internal unsafe void Update()
         {
-            _previous = _current;
-            _current++;
-            _current %= StatePositionCount;
+            Hat[] tempHats = _previousHats;
+            _previousHats = _hats;
+            _hats = tempHats;
+
+            float[] tempAxes = _previousAxes;
+            _previousAxes = _axes;
+            _axes = tempAxes;
+
+            byte[] tempButtons = _previousButtons;
+            _previousButtons = _buttons;
+            _buttons = tempButtons;
 
             var h = GLFW.GetJoystickHatsRaw(Id, out var count);
             for (var j = 0; j < count; j++)
