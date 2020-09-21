@@ -60,7 +60,6 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
                 Array.Copy(source._previousHats, _previousHats, source._previousHats.Length);
                 Array.Copy(source._previousAxes, _previousAxes, source._previousAxes.Length);
                 Array.Copy(source._previousButtons, _previousButtons, source._previousButtons.Length);
-
         }
 
         /// <inheritdoc />
