@@ -48,10 +48,10 @@ namespace OpenTK.Windowing.Desktop
         /// <inheritdoc />
         public KeyboardState LastKeyboardState { get; private set; }
 
-        private readonly IJoystickState[] _joystickStates = new IJoystickState[16];
+        private readonly List<IJoystickState> _joystickStates = new List<IJoystickState>(16);
 
         /// <inheritdoc/>
-        public IReadOnlyCollection<IJoystickState> JoystickStates { get => _joystickStates; }
+        public IReadOnlyList<IJoystickState> JoystickStates { get => _joystickStates; }
 
         /// <inheritdoc />
         public Vector2 MousePosition
@@ -816,7 +816,7 @@ namespace OpenTK.Windowing.Desktop
                 GLFW.SetJoystickCallback(_joystickCallback);
 
                 // Check for Joysticks that are connected at application launch
-                for (int i = 0; i < _joystickStates.Length; i++)
+                for (int i = 0; i < _joystickStates.Count; i++)
                 {
                     if (GLFW.JoystickPresent(i))
                     {
@@ -937,7 +937,7 @@ namespace OpenTK.Windowing.Desktop
             GLFW.GetCursorPos(WindowPtr, out var x, out var y);
             _mouseState.Position = new Vector2((float)x, (float)y);
 
-            for (var i = 0; i < _joystickStates.Length; i++)
+            for (var i = 0; i < _joystickStates.Count; i++)
             {
                 if (_joystickStates[i] == null)
                 {

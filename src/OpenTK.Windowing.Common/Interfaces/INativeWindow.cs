@@ -162,7 +162,7 @@ namespace OpenTK.Windowing.Common
         /// <summary>
         /// Gets the current state of the joysticks as of the last time the window processed events.
         /// </summary>
-        IReadOnlyCollection<IJoystickState> JoystickStates { get; }
+        IReadOnlyList<IJoystickState> JoystickStates { get; }
 
         /// <summary>
         ///     Gets the current state of the keyboard as of the last time the window processed events.

@@ -163,7 +163,7 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
             }
 
             // String Interpolation uses string.Format which internally uses a StringBuilder
-            return $"{{hats: [{joinedHats}], axes: [{joinedAxes}], buttons: [{buttonBuilder}], id: {Id}, name: {Name}}}";
+            return $"{{id: {Id}, name: {Name}, hats: [{joinedHats}], axes: [{joinedAxes}], buttons: [{buttonBuilder}]}}";
         }
 
         internal unsafe void Update()
