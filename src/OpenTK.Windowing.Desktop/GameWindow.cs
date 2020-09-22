@@ -140,7 +140,7 @@ namespace OpenTK.Windowing.Desktop
         }
 
         /// <summary>
-        /// Gets a double representing the time spent in the RenderFrame function, in seconds.
+        /// Gets or sets (protected) a double representing the time spent in the RenderFrame function, in seconds.
         /// </summary>
         public double RenderTime { get; protected set; }
 
