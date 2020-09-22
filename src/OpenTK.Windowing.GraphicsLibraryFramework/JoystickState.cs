@@ -15,8 +15,10 @@ using OpenTK.Windowing.Common.Input;
 
 namespace OpenTK.Windowing.GraphicsLibraryFramework
 {
-    /// <inheritdoc />
-    internal sealed class JoystickState : IJoystickState
+    /// <summary>
+    /// Encapsulates the state of a joystick device.
+    /// </summary>
+    public sealed class JoystickState
     {
         private Hat[] _hats;
         private float[] _axes;
@@ -26,10 +28,14 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         private float[] _previousAxes;
         private byte[] _previousButtons;
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Gets the identity of the joystick this state describes.
+        /// </summary>
         public int Id { get; }
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Gets the name of the joystick this state describes.
+        /// </summary>
         public string Name { get; }
 
         internal JoystickState(int hatCount, int axesCount, int buttonCount, int id, string name)
@@ -62,13 +68,21 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
                 Array.Copy(source._previousButtons, _previousButtons, source._previousButtons.Length);
         }
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Gets a <see cref="Hat"/> describing the state of a hat.
+        /// </summary>
+        /// <param name="index">The index of the hat to check.</param>
+        /// <returns>A <see cref="Hat"/> describing the hat state.</returns>
         public Hat GetHat(int index)
         {
             return _hats[index];
         }
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Gets a <see cref="Hat"/> describing the previous state of a hat.
+        /// </summary>
+        /// <param name="index">The index of the hat to check.</param>
+        /// <returns>A <see cref="Hat"/> describing the hat state.</returns>
         public Hat GetHatPrevious(int index)
         {
             return _previousHats[index];
@@ -80,7 +94,11 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
             _hats[index] = value;
         }
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Gets a <see cref="bool"/> describing the state of a button.
+        /// </summary>
+        /// <param name="index">The index of the button to check.</param>
+        /// <returns><c>true</c> if the button is down; <c>false</c> otherwise.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool IsButtonDown(int index)
         {
@@ -90,7 +108,11 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
             return (b & pow) == pow;
         }
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Gets a <see cref="bool"/> describing whether the button was down and is now not down.
+        /// </summary>
+        /// <param name="index">The index of the button.</param>
+        /// <returns>Returns true if the button was down, or false if the button was not down.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool WasButtonDown(int index)
         {
@@ -117,13 +139,21 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
             }
         }
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Gets a <see cref="float"/> between -1 and 1 describing the position of an axis.
+        /// </summary>
+        /// <param name="index">The index of the Axis to check.</param>
+        /// <returns>A <see cref="float"/> between -1 and 1 describing the position of the axis.</returns>
         public float GetAxis(int index)
         {
             return _axes[index];
         }
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Gets a <see cref="float"/> between -1 and 1 describing the previous position of an axis.
+        /// </summary>
+        /// <param name="index">The index of the Axis to check.</param>
+        /// <returns>A <see cref="float"/> between -1 and 1 describing the position of the axis.</returns>
         public float GetAxisPrevious(int index)
         {
             return _previousAxes[index];
@@ -161,36 +191,57 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
 
         internal unsafe void Update()
         {
-            Hat[] tempHats = _previousHats;
-            _previousHats = _hats;
-            _hats = tempHats;
+            UpdateHats();
 
-            float[] tempAxes = _previousAxes;
-            _previousAxes = _axes;
-            _axes = tempAxes;
+            UpdateAxes();
 
-            byte[] tempButtons = _previousButtons;
-            _previousButtons = _buttons;
-            _buttons = tempButtons;
+            UpdateButtons();
+        }
 
-            var h = GLFW.GetJoystickHatsRaw(Id, out var count);
-            for (var j = 0; j < count; j++)
-            {
-                SetHat(j, (Hat)h[j]);
-            }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private void Swap<T>(ref T a, ref T b)
+        {
+            T temp = a;
+            a = b;
+            b = temp;
+        }
 
-            var axes = GLFW.GetJoystickAxes(Id);
-            SetAxes(axes);
+        private unsafe void UpdateButtons()
+        {
+            Swap(ref _buttons, ref _previousButtons);
 
-            var b = GLFW.GetJoystickButtonsRaw(Id, out count);
+            var b = GLFW.GetJoystickButtonsRaw(Id, out int count);
             for (var j = 0; j < count; j++)
             {
                 SetButtonDown(j, b[j] == JoystickInputAction.Press);
             }
         }
 
-        /// <inheritdoc/>
-        public IJoystickState GetSnapshot()
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private void UpdateAxes()
+        {
+            Swap(ref _axes, ref _previousAxes);
+
+            var axes = GLFW.GetJoystickAxes(Id);
+            SetAxes(axes);
+        }
+
+        private unsafe void UpdateHats()
+        {
+            Swap(ref _hats, ref _previousHats);
+
+            var h = GLFW.GetJoystickHatsRaw(Id, out int count);
+            for (var j = 0; j < count; j++)
+            {
+                SetHat(j, (Hat)h[j]);
+            }
+        }
+
+        /// <summary>
+        /// Gets an immutable snapshot of this JoystickState.
+        /// </summary>
+        /// <returns>Returns an immutable snapshot of this JoystickState.</returns>
+        public JoystickState GetSnapshot()
         {
             return new JoystickState(this);
         }

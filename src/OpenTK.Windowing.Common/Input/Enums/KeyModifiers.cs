@@ -18,7 +18,8 @@ namespace OpenTK.Windowing.Common.Input
     public enum KeyModifiers : byte
     {
         /// <summary>
-        /// The alt key modifier (option on Mac).
+        /// On Windows & Linux: The Alt Key modifier.
+        /// On Mac: The Option Key modifier.
         /// </summary>
         Alt = 1 << 0,
 
@@ -33,17 +34,19 @@ namespace OpenTK.Windowing.Common.Input
         Shift = 1 << 2,
 
         /// <summary>
-        /// The command key modifier on a Mac
+        /// On Windows: The Windows Key modifier.
+        /// On Linux: The Meta or Super Key modifier.
+        /// On Mac: The Command Key modifier.
         /// </summary>
         Command = 1 << 3,
 
         /// <summary>
-        /// If the caps lock is enabled.
+        /// The CapsLock Key state.
         /// </summary>
         CapsLock = 1 << 4,
 
         /// <summary>
-        /// If the num lock is enabled.
+        /// The NumLock Key state.
         /// </summary>
         NumLock = 1 << 5,
     }
