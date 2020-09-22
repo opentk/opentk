@@ -12,7 +12,7 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
     /// <summary>
     /// The context API used to create the window context.
     /// </summary>
-    public enum ContextApi
+    public enum ContextApi : int
     {
         /// <summary>
         /// Uses the native context API to create the window context.

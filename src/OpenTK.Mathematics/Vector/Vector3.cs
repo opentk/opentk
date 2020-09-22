@@ -1168,7 +1168,7 @@ namespace OpenTK.Mathematics
         {
             float tempX = ((vector.X - x) / width * 2.0f) - 1.0f;
             float tempY = ((vector.Y - y) / height * 2.0f) - 1.0f;
-            float tempZ = (vector.Z / (maxZ - minZ) * 2.0f) - 1.0f;
+            float tempZ = ((vector.Z - minZ) / (maxZ - minZ) * 2.0f) - 1.0f;
 
             Vector3 result;
             result.X =

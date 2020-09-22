@@ -20,14 +20,14 @@ using MouseButton = OpenTK.Windowing.Common.Input.MouseButton;
 namespace OpenTK.Windowing.Desktop
 {
     /// <summary>
-    /// A Native Window
+    /// A Native Window.
     /// </summary>
-    public class NativeWindow
+    public class NativeWindow : IDisposable
     {
         /// <summary>
         /// Gets the native <see cref="Window"/> pointer for use with <see cref="GLFW"/> API.
         /// </summary>
-        protected unsafe Window* WindowPtr { get; }
+        public unsafe Window* WindowPtr { get; }
 
         // Used for delta calculation in the mouse pos changed event.
         private Vector2 _lastReportedMousePos;
@@ -69,7 +69,8 @@ namespace OpenTK.Windowing.Desktop
         public Vector2 MousePosition
         {
             get => _mouseState.Position;
-            set {
+            set
+            {
                 unsafe
                 {
                     GLFW.SetCursorPos(WindowPtr, value.X, value.Y);
@@ -123,7 +124,8 @@ namespace OpenTK.Windowing.Desktop
         public WindowIcon Icon
         {
             get => _icon;
-            set {
+            set
+            {
                 unsafe
                 {
                     var images = value.Images;
@@ -136,8 +138,7 @@ namespace OpenTK.Windowing.Desktop
                         var image = images[i];
                         handles[i] = GCHandle.Alloc(image.Data, GCHandleType.Pinned);
                         var addrOfPinnedObject = (byte*)handles[i].AddrOfPinnedObject();
-                        glfwImages[i] =
-                            new GraphicsLibraryFramework.Image(image.Width, image.Height, addrOfPinnedObject);
+                        glfwImages[i] = new GraphicsLibraryFramework.Image(image.Width, image.Height, addrOfPinnedObject);
                     }
 
                     GLFW.SetWindowIcon(WindowPtr, glfwImages);
@@ -164,14 +165,16 @@ namespace OpenTK.Windowing.Desktop
         /// </summary>
         public string ClipboardString
         {
-            get {
+            get
+            {
                 unsafe
                 {
                     return GLFW.GetClipboardString(WindowPtr);
                 }
             }
 
-            set {
+            set
+            {
                 unsafe
                 {
                     GLFW.SetClipboardString(WindowPtr, value);
@@ -187,11 +190,13 @@ namespace OpenTK.Windowing.Desktop
         public string Title
         {
             get => _title;
-            set {
-                _title = value;
+            set
+            {
                 unsafe
                 {
                     GLFW.SetWindowTitle(WindowPtr, value);
+
+                    _title = value;
                 }
             }
         }
@@ -216,7 +221,10 @@ namespace OpenTK.Windowing.Desktop
         /// </summary>
         public Version APIVersion { get; }
 
-        private readonly Monitor _currentMonitor;
+        /// <inheritdoc cref="INativeWindow.Context" />
+        public IGLFWGraphicsContext Context { get; }
+
+        private Monitor _currentMonitor;
 
         /// <summary>
         /// Gets or sets the current <see cref="Monitor"/>.
@@ -225,7 +233,8 @@ namespace OpenTK.Windowing.Desktop
         {
             get => _currentMonitor;
 
-            set {
+            set
+            {
                 var monitor = value.ToUnsafePtr<GraphicsLibraryFramework.Monitor>();
                 var mode = GLFW.GetVideoMode(monitor);
                 GLFW.SetWindowMonitor(
@@ -236,6 +245,8 @@ namespace OpenTK.Windowing.Desktop
                                       _size.X,
                                       _size.Y,
                                       mode->RefreshRate);
+
+                _currentMonitor = value;
             }
         }
 
@@ -268,7 +279,6 @@ namespace OpenTK.Windowing.Desktop
             get => _isVisible;
             set
             {
-                _isVisible = value;
                 unsafe
                 {
                     if (value)
@@ -279,6 +289,8 @@ namespace OpenTK.Windowing.Desktop
                     {
                         GLFW.HideWindow(WindowPtr);
                     }
+
+                    _isVisible = value;
                 }
             }
         }
@@ -303,12 +315,12 @@ namespace OpenTK.Windowing.Desktop
         {
             get
             {
-                if (GLFW.GetWindowAttrib(WindowPtr, WindowAttributeGetter.Iconified))
+                if (GLFW.GetWindowAttrib(WindowPtr, WindowAttributeGetBool.Iconified))
                 {
                     return WindowState.Minimized;
                 }
 
-                if (GLFW.GetWindowAttrib(WindowPtr, WindowAttributeGetter.Maximized))
+                if (GLFW.GetWindowAttrib(WindowPtr, WindowAttributeGetBool.Maximized))
                 {
                     return WindowState.Maximized;
                 }
@@ -354,7 +366,7 @@ namespace OpenTK.Windowing.Desktop
 
             set
             {
-                if (!GLFW.GetWindowAttrib(WindowPtr, WindowAttributeGetter.Decorated))
+                if (!GLFW.GetWindowAttrib(WindowPtr, WindowAttributeGetBool.Decorated))
                 {
                     GLFW.GetVersion(out var major, out var minor, out _);
 
@@ -368,15 +380,15 @@ namespace OpenTK.Windowing.Desktop
                     switch (value)
                     {
                         case WindowBorder.Hidden:
-                            GLFW.SetWindowAttrib(WindowPtr, WindowAttributeSetter.Decorated, false);
+                            GLFW.SetWindowAttrib(WindowPtr, WindowAttribute.Decorated, false);
                             break;
 
                         case WindowBorder.Resizable:
-                            GLFW.SetWindowAttrib(WindowPtr, WindowAttributeSetter.Resizable, true);
+                            GLFW.SetWindowAttrib(WindowPtr, WindowAttribute.Resizable, true);
                             break;
 
                         case WindowBorder.Fixed:
-                            GLFW.SetWindowAttrib(WindowPtr, WindowAttributeSetter.Resizable, false);
+                            GLFW.SetWindowAttrib(WindowPtr, WindowAttribute.Resizable, false);
                             break;
                     }
                 }
@@ -634,6 +646,8 @@ namespace OpenTK.Windowing.Desktop
             _isVisible = settings.StartVisible;
             GLFW.WindowHint(WindowHintBool.Visible, _isVisible);
 
+            GLFW.WindowHint(WindowHintInt.Samples, settings.NumberOfSamples);
+
             if (settings.WindowState == WindowState.Fullscreen)
             {
                 var monitor = settings.CurrentMonitor.ToUnsafePtr<GraphicsLibraryFramework.Monitor>();
@@ -642,25 +656,27 @@ namespace OpenTK.Windowing.Desktop
                 GLFW.WindowHint(WindowHintInt.GreenBits, modePtr->GreenBits);
                 GLFW.WindowHint(WindowHintInt.BlueBits, modePtr->BlueBits);
                 GLFW.WindowHint(WindowHintInt.RefreshRate, modePtr->RefreshRate);
-                WindowPtr = GLFW.CreateWindow(modePtr->Width, modePtr->Height, _title, monitor, null);
+                WindowPtr = GLFW.CreateWindow(modePtr->Width, modePtr->Height, _title, monitor, (Window*)(settings.SharedContext?.NativeContex ?? IntPtr.Zero));
             }
             else
             {
-                WindowPtr = GLFW.CreateWindow(settings.Size.X, settings.Size.Y, _title, null, null);
+                WindowPtr = GLFW.CreateWindow(settings.Size.X, settings.Size.Y, _title, null, (Window*)(settings.SharedContext?.NativeContex ?? IntPtr.Zero));
             }
+
+            Context = new GLFWGraphicsContext(WindowPtr);
 
             Exists = true;
 
             if (isOpenGl)
             {
-                GLFW.MakeContextCurrent(WindowPtr);
+                Context.MakeCurrent();
 
                 if (settings.AutoLoadBindings)
                 {
                     InitializeGlBindings();
                 }
 
-                GLFW.MakeContextCurrent(null);
+                Context.MakeNoneCurrent();
             }
 
             // Enables the caps lock modifier to be detected and updated
@@ -669,7 +685,10 @@ namespace OpenTK.Windowing.Desktop
             RegisterWindowCallbacks();
 
             _isFocused = settings.StartFocused;
-            if (settings.StartFocused) Focus();
+            if (settings.StartFocused)
+            {
+Focus();
+            }
             WindowState = settings.WindowState;
 
             IsEventDriven = settings.IsEventDriven;
@@ -691,7 +710,7 @@ namespace OpenTK.Windowing.Desktop
             GLFW.GetWindowPos(WindowPtr, out var x, out var y);
             _location = new Vector2i(x, y);
 
-            _isFocused = GLFW.GetWindowAttrib(WindowPtr, WindowAttributeGetter.Focused);
+            _isFocused = GLFW.GetWindowAttrib(WindowPtr, WindowAttributeGetBool.Focused);
         }
 
         private static void InitializeGlBindings()
@@ -961,10 +980,7 @@ namespace OpenTK.Windowing.Desktop
         /// </summary>
         public void MakeCurrent()
         {
-            unsafe
-            {
-                GLFW.MakeContextCurrent(WindowPtr);
-            }
+            Context.MakeCurrent();
         }
 
         private unsafe void DestroyWindow()

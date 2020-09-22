@@ -94,6 +94,17 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         FocusOnShow = 0x0002000C,
 
         /// <summary>
+        /// Specifies whether the window is transparent to mouse input,
+        /// letting any mouse events pass through to whatever window is behind it.
+        /// Possible values are <c>true</c> and <c>false</c>.
+        /// </summary>
+        /// <remarks>
+        /// This is only supported for undecorated windows.
+        /// Decorated windows with this enabled will behave differently between platforms.
+        /// </remarks>
+        MousePassthrough = 0x0002000D,
+
+        /// <summary>
         /// Specifies whether the window's context is an OpenGL forward-compatible one.
         /// Possible values are <c>true</c> and <c>false</c>.
         /// </summary>

@@ -12,7 +12,7 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
     /// <summary>
     /// The OpenGL context profiles.
     /// </summary>
-    public enum OpenGlProfile
+    public enum OpenGlProfile : int
     {
         /// <summary>
         /// Used for unknown OpenGL profile or OpenGL ES.

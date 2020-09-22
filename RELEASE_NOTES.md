@@ -1,3 +1,19 @@
+## 4.0.0-pre9.7
+* Fix opentk.redist.glfw version warnings (@jvbsl)
+* Add support for window-level multisampling (@jvbsl)
+* Allow null delegates for GLFW callbacks (@jvbsl)
+* Add new API to get/set from GLFW window/context attributes (@jvbsl)
+* Add vulkan surface creation (@jvbsl)
+
+## 4.0.0-pre9.6
+ * Fix bindings generator for net2.1
+
+## 4.0.0-pre9.5
+ * GLFW Native Access bindings. (@RedImp1470 @NogginBops)
+ * Fixed normalization in Vector3.Unproject (@burnss9)
+ * General windowing improvements and new Graphics Context API. (@NogginBops)
+ * Use correct function in SetCharModsCallback (@jvbsl)
+
 ## 4.0.0-pre9.4
  * **moved to dotnetcore only**
  * Return namespaces to the glorious OpenTK (thanks @glopes)

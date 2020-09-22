@@ -13,7 +13,7 @@ using OpenTK.Windowing.Common.Input;
 namespace OpenTK.Windowing.Common
 {
     /// <summary>
-    /// Defines the event data for <see cref="IWindowEvents.KeyDown"/> and <see cref="IWindowEvents.KeyUp"/> events.
+    /// Defines the event data for <see cref="INativeWindow.KeyDown"/> and <see cref="INativeWindow.KeyUp"/> events.
     /// </summary>
     public readonly struct KeyboardKeyEventArgs
     {
