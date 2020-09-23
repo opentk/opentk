@@ -233,7 +233,6 @@ namespace OpenTK.Windowing.Common.Input
             return builder.ToString();
         }
 
-        // This shouldn't be necessary but I'll keep it in just in case.
         [Conditional("DEBUG")]
         private static void ValidateOffset(int offset)
         {

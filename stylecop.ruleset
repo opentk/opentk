@@ -33,7 +33,7 @@
     <Rule Id="SA1024" Action="Error" /> <!-- Colons must be spaced correctly -->
     <Rule Id="SA1025" Action="Error" /> <!-- Code must not contain multiple whitespace in a row -->
     <Rule Id="SA1026" Action="Error" /> <!-- Code must not contain space after new keyword in implicitly typed array allocation -->
-    <Rule Id="SA1027" Action="Error" /> <!-- Use tabs correctly -->
+    <Rule Id="SA1027" Action="None" /> <!-- Use tabs correctly -->
     <Rule Id="SA1028" Action="Error" /> <!-- Code must not contain trailing whitespace -->
 
     <!-- Readability rules -->
