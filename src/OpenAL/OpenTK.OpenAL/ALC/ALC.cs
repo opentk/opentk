@@ -214,33 +214,10 @@ namespace OpenTK.Audio.OpenAL
         /// <param name="device">A pointer to the device to be queried.</param>
         /// <param name="param">An attribute to be retrieved: ALC_DEVICE_SPECIFIER, ALC_CAPTURE_DEVICE_SPECIFIER, ALC_ALL_DEVICES_SPECIFIER.</param>
         /// <returns>A List of strings containing the names of the Devices.</returns>
-        public static IList<string> GetString(ALDevice device, AlcGetStringList param)
+        public static unsafe List<string> GetString(ALDevice device, AlcGetStringList param)
         {
-            List<string> result = new List<string>();
-
-            // We cannot use Marshal.PtrToStringAnsi(),
-            //  because alcGetString is defined to return either a null-terminated string,
-            //  or an array of null-terminated strings terminated by an extra null.
-            // Marshal.PtrToStringAnsi() will fail in the latter case (it will only
-            // return the very first string in the array.)
-            // We'll have to marshal this ourselves.
-            unsafe
-            {
-                byte* currentPos = GetStringPtr(device, (AlcGetString)param);
-                while (true)
-                {
-                    var currentString = Marshal.PtrToStringAnsi(new IntPtr(currentPos));
-
-                    if (string.IsNullOrEmpty(currentString))
-                    {
-                        break;
-                    }
-
-                    result.Add(currentString);
-                    currentPos += currentString.Length + 1;
-                }
-            }
-            return result;
+            byte* result = GetStringPtr(device, (AlcGetString)param);
+            return ALStringListToList(result);
         }
 
         /// <summary>This function returns a List of strings related to the context.</summary>
