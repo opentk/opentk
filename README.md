@@ -37,7 +37,9 @@ Features
 
 OpenTK is available for Windows, Linux, Mac OS X, *BSD and SteamOS. It can be used standalone or integrated into a GUI (Windows.Forms, WPF, GTK+, Qt, VTK, ...)
 
-A fork of OpenTK 1.0 is also available through [Xamarin](https://docs.microsoft.com/en-us/xamarin/graphics-games/game-development/) for Android and iOS. However, that branch is neither maintained nor supported by this project.
+An old, unsupported version of OpenTK 1.0 may be included in the [Xamarin](https://docs.microsoft.com/en-us/xamarin/graphics-games/game-development/) Android and iOS distribution. The Xamarin fork is not supported or maintained by this project.
+
+Adding support for mobile again is a future goal of the OpenTK project, but is somewhat frustrated by Apple's deprecation of OpenGL. Contributions to re-add support for these platforms are welcomed.
 
 Instructions
 ============
