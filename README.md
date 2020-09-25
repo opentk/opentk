@@ -35,8 +35,11 @@ Features
 - Performant, highly optimized and reliable linear algebra library
 - Write once run everywhere
 
-OpenTK is available for Windows, Linux, Mac OS X, *BSD, SteamOS, Android and iOS. It can be used standalone or integrated into a GUI (Windows.Forms, WPF, GTK+, Qt, VTK, ...)
+OpenTK is available for Windows, Linux, Mac OS X, *BSD and SteamOS. It can be used standalone or integrated into a GUI (Windows.Forms, WPF, GTK+, Qt, VTK, ...)
 
+An old, unsupported version of OpenTK 1.0 may be included in the [Xamarin](https://docs.microsoft.com/en-us/xamarin/graphics-games/game-development/) Android and iOS distribution. The Xamarin fork is not supported or maintained by this project.
+
+Adding support for mobile again is a future goal of the OpenTK project, but is somewhat frustrated by Apple's deprecation of OpenGL. Contributions to re-add support for these platforms are welcomed.
 
 Instructions
 ============
