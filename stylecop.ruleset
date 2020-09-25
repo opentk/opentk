@@ -147,7 +147,7 @@
     <Rule Id="SA1515" Action="Warning" Intentional="true" Reason="Used for spacing"/> <!-- Single-line comment must be preceded by blank line -->
     <Rule Id="SA1516" Action="Error" /> <!-- Elements must be separated by blank line -->
     <Rule Id="SA1517" Action="Error" /> <!-- Code must not contain blank lines at start of file -->
-    <Rule Id="SA1518" Action="Error" /> <!-- Use line endings correctly at end of file -->
+    <Rule Id="SA1518" Action="None" /> <!-- Use line endings correctly at end of file -->
     <Rule Id="SA1519" Action="Error" /> <!-- Braces must not be omitted from multi-line child statement -->
     <Rule Id="SA1520" Action="Error" /> <!-- Use braces consistently -->
 
@@ -174,8 +174,8 @@
     <Rule Id="SA1620" Action="Error" /> <!-- Generic type parameter documentation must match type parameters -->
     <Rule Id="SA1621" Action="Error" /> <!-- Generic type parameter documentation must declare parameter name -->
     <Rule Id="SA1622" Action="Error" /> <!-- Generic type parameter documentation must have text -->
-    <Rule Id="SA1623" Action="Error" /> <!-- Property summary documentation must match accessors -->
-    <Rule Id="SA1624" Action="Error" /> <!-- Property summary documentation must omit accessor with restricted access -->
+    <Rule Id="SA1623" Action="None" /> <!-- Property summary documentation must match accessors -->
+    <Rule Id="SA1624" Action="None" /> <!-- Property summary documentation must omit accessor with restricted access -->
     <Rule Id="SA1625" Action="Error" /> <!-- Element documentation must not be copied and pasted -->
     <Rule Id="SA1626" Action="Error" /> <!-- Single-line comments must not use documentation style slashes -->
     <Rule Id="SA1627" Action="Error" /> <!-- Documentation text must not be empty -->

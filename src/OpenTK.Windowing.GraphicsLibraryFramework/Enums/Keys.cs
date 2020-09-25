@@ -260,16 +260,6 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         GraveAccent = 96 /* ` */,
 
         /// <summary>
-        /// Non US keyboard layout key 1.
-        /// </summary>
-        World1 = 161 /* non-US #1 */,
-
-        /// <summary>
-        /// Non US keyboard layout key 2.
-        /// </summary>
-        World2 = 162 /* non-US #2 */,
-
-        /// <summary>
         /// The escape key.
         /// </summary>
         Escape = 256,

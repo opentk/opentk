@@ -44,21 +44,34 @@ namespace OpenTK.Windowing.Desktop
     /// </item>
     /// </list>
     /// </remarks>
-    public class GameWindow : NativeWindow, IGameWindow
+    public class GameWindow : NativeWindow
     {
-        /// <inheritdoc/>
+        /// <summary>
+        /// Occurs before the window is displayed for the first time.
+        /// </summary>
         public event Action Load;
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Occurs before the window is destroyed.
+        /// </summary>
         public event Action Unload;
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Occurs when it is time to update a frame.
+        /// </summary>
         public event Action<FrameEventArgs> UpdateFrame;
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// If game window is configured to run with a dedicated update thread (by passing isSingleThreaded = false in the
+        /// constructor),
+        /// occurs when the update thread has started. This would be a good place to initialize thread specific stuff (like
+        /// setting a synchronization context).
+        /// </summary>
         public event Action RenderThreadStarted;
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Occurs when it is time to render a frame.
+        /// </summary>
         public event Action<FrameEventArgs> RenderFrame;
 
         /// <summary>
@@ -68,8 +81,6 @@ namespace OpenTK.Windowing.Desktop
 
         private readonly Stopwatch _watchRender = new Stopwatch();
         private readonly Stopwatch _watchUpdate = new Stopwatch();
-
-        // private IGraphicsContext glContext; //HIGH: Implement with OpenGL ADL Bindings
 
         /// <summary>
         /// Gets a value indicating whether or not UpdatePeriod has consistently failed to reach TargetUpdatePeriod.
@@ -85,10 +96,27 @@ namespace OpenTK.Windowing.Desktop
 
         private Thread _renderThread;
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Gets a value indicating whether or not the GameWindow should use a separate thread for rendering.
+        /// </summary>
+        /// <remarks>
+        ///   <para>
+        ///     If this is true, render frames will be processed in a separate thread.
+        ///     Do not enable this unless your code is thread safe.
+        ///   </para>
+        /// </remarks>
         public bool IsMultiThreaded { get; }
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Gets or sets a double representing the render frequency, in hertz.
+        /// </summary>
+        /// <remarks>
+        ///  <para>
+        /// A value of 0.0 indicates that RenderFrame events are generated at the maximum possible frequency (i.e. only
+        /// limited by the hardware's capabilities).
+        ///  </para>
+        ///  <para>Values lower than 1.0Hz are clamped to 0.0. Values higher than 500.0Hz are clamped to 200.0Hz.</para>
+        /// </remarks>
         public double RenderFrequency
         {
             get => _renderFrequency;
@@ -111,10 +139,21 @@ namespace OpenTK.Windowing.Desktop
             }
         }
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Gets a double representing the time spent in the RenderFrame function, in seconds.
+        /// </summary>
         public double RenderTime { get; protected set; }
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Gets or sets a double representing the update frequency, in hertz.
+        /// </summary>
+        /// <remarks>
+        ///  <para>
+        /// A value of 0.0 indicates that UpdateFrame events are generated at the maximum possible frequency (i.e. only
+        /// limited by the hardware's capabilities).
+        ///  </para>
+        ///  <para>Values lower than 1.0Hz are clamped to 0.0. Values higher than 500.0Hz are clamped to 500.0Hz.</para>
+        /// </remarks>
         public double UpdateFrequency
         {
             get => _updateFrequency;
@@ -139,7 +178,9 @@ namespace OpenTK.Windowing.Desktop
 
         private VSyncMode _vSync;
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Gets or sets the VSyncMode.
+        /// </summary>
         public VSyncMode VSync
         {
             get => _vSync;
@@ -183,7 +224,9 @@ namespace OpenTK.Windowing.Desktop
             UpdateFrequency = gameWindowSettings.UpdateFrequency;
         }
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Initialize the update thread (if using a multi-threaded contex, and enter the game loop of the GameWindow.
+        /// </summary>
         public virtual void Run()
         {
             // Make sure the GameWindow is visible when it first runs.
@@ -195,7 +238,7 @@ namespace OpenTK.Windowing.Desktop
             // Send the OnLoad event, to load all user code.
             OnLoad();
 
-            // Send a redundant OnResize event, to make sure all user code has the correct values.
+            // Send a dummy OnResize event, to make sure any listening user code has the correct values.
             OnResize(new ResizeEventArgs(Size));
 
             Debug.Print("Entering main loop.");
@@ -296,7 +339,9 @@ namespace OpenTK.Windowing.Desktop
             }
         }
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Swaps the front and back buffers of the current GraphicsContext, presenting the rendered scene to the user.
+        /// </summary>
         public virtual void SwapBuffers()
         {
             Context.SwapBuffers();

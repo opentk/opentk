@@ -2,10 +2,10 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Reflection;
 using System.Runtime.InteropServices;
-using System.Threading;
 using OpenTK.Core;
 using OpenTK.Mathematics;
 using OpenTK.Windowing.Common;
@@ -20,9 +20,9 @@ using MouseButton = OpenTK.Windowing.Common.Input.MouseButton;
 namespace OpenTK.Windowing.Desktop
 {
     /// <summary>
-    /// Instances of this class implement the <see cref="INativeWindow"/> interface on the current platform.
+    /// A Native Window.
     /// </summary>
-    public class NativeWindow : INativeWindow
+    public class NativeWindow : IDisposable
     {
         /// <summary>
         /// Gets the native <see cref="Window"/> pointer for use with <see cref="GLFW"/> API.
@@ -42,21 +42,30 @@ namespace OpenTK.Windowing.Desktop
         // Never null.
         private MouseCursor _managedCursor = MouseCursor.Default;
 
-        /// <inheritdoc />
+        /// <summary>
+        ///     Gets the current state of the keyboard as of the last time the window processed events.
+        /// </summary>
         public KeyboardState KeyboardState => _keyboardState;
 
-        /// <inheritdoc />
+        /// <summary>
+        ///     Gets the previous keyboard state.
+        ///     This value is updated with the new state every time the window processes events.
+        /// </summary>
         public KeyboardState LastKeyboardState { get; private set; }
 
         private readonly JoystickState[] _joystickStates = new JoystickState[16];
 
-        /// <inheritdoc/>
-        public JoystickState[] JoystickStates { get => _joystickStates; }
+        /// <summary>
+        /// Gets the current state of the joysticks as of the last time the window processed events.
+        /// </summary>
+        public IReadOnlyList<JoystickState> JoystickStates
+        {
+            get => _joystickStates;
+        }
 
-        /// <inheritdoc/>
-        public JoystickState[] LastJoystickStates { get; private set; }
-
-        /// <inheritdoc />
+        /// <summary>
+        ///     Gets or sets the position of the mouse relative to the content area of this window.
+        /// </summary>
         public Vector2 MousePosition
         {
             get => _mouseState.Position;
@@ -73,24 +82,45 @@ namespace OpenTK.Windowing.Desktop
 
         private MouseState _mouseState = default;
 
-        /// <inheritdoc />
+        /// <summary>
+        ///     Gets the amount that the mouse moved since the last frame.
+        ///     This does not necessarily correspond to pixels, for example in the case of raw input.
+        /// </summary>
         public Vector2 MouseDelta { get; private set; }
 
-        /// <inheritdoc />
+        /// <summary>
+        ///     Gets the current state of the mouse as of the last time the window processed events.
+        /// </summary>
         public MouseState MouseState => _mouseState;
 
-        /// <inheritdoc />
+        /// <summary>
+        ///     Gets the previous keyboard state.
+        ///     This value is updated with the new state every time the window processes events.
+        /// </summary>
         public MouseState LastMouseState { get; private set; }
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Gets a value indicating whether any key is down.
+        /// </summary>
+        /// <value><c>true</c> if any key is down; otherwise, <c>false</c>.</value>
         public bool IsAnyKeyDown => _keyboardState.IsAnyKeyDown;
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Gets a value indicating whether any mouse button is pressed.
+        /// </summary>
+        /// <value><c>true</c> if any button is pressed; otherwise, <c>false</c>.</value>
         public bool IsAnyMouseButtonDown => _mouseState.IsAnyButtonDown;
 
         private WindowIcon _icon;
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Gets or sets the current <see cref="WindowIcon" /> for this window.
+        /// </summary>
+        /// <remarks>
+        /// <para>
+        /// This does nothing on macOS; on that platform, the icon is determined by the application bundle.
+        /// </para>
+        /// </remarks>
         public WindowIcon Icon
         {
             get => _icon;
@@ -124,11 +154,15 @@ namespace OpenTK.Windowing.Desktop
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether this window is event driven or not.
+        /// Gets or sets a value indicating whether or not this window is event-driven.
+        /// An event-driven window will wait for events before updating/rendering. It is useful for non-game applications,
+        /// where the program only needs to do any processing after the user inputs something.
         /// </summary>
         public bool IsEventDriven { get; set; }
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Gets or sets the clipboard string.
+        /// </summary>
         public string ClipboardString
         {
             get
@@ -150,7 +184,9 @@ namespace OpenTK.Windowing.Desktop
 
         private string _title;
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Gets or sets the title of the window.
+        /// </summary>
         public string Title
         {
             get => _title;
@@ -165,20 +201,25 @@ namespace OpenTK.Windowing.Desktop
             }
         }
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Gets a value representing the current graphics API.
+        /// </summary>
         public ContextAPI API { get; }
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Gets a value representing the current graphics API profile.
+        /// </summary>
         public ContextProfile Profile { get; }
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Gets a value representing the current graphics profile flags.
+        /// </summary>
         public ContextFlags Flags { get; }
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Gets a value representing the current version of the graphics API.
+        /// </summary>
         public Version APIVersion { get; }
-
-        /// <inheritdoc />
-        IGraphicsContext INativeWindow.Context => Context;
 
         /// <inheritdoc cref="INativeWindow.Context" />
         public IGLFWGraphicsContext Context { get; }
@@ -197,36 +238,42 @@ namespace OpenTK.Windowing.Desktop
                 var monitor = value.ToUnsafePtr<GraphicsLibraryFramework.Monitor>();
                 var mode = GLFW.GetVideoMode(monitor);
                 GLFW.SetWindowMonitor(
-                    WindowPtr,
-                    monitor,
-                    _location.X,
-                    _location.Y,
-                    _size.X,
-                    _size.Y,
-                    mode->RefreshRate);
+                                      WindowPtr,
+                                      monitor,
+                                      _location.X,
+                                      _location.Y,
+                                      _size.X,
+                                      _size.Y,
+                                      mode->RefreshRate);
 
                 _currentMonitor = value;
             }
         }
 
+        // This is updated by the constructor and by the the OnFocusChanged event. We presume that OnFocusChanged will fire after a call to GLFW.FocusWindow.
         private bool _isFocused;
 
-        /// <inheritdoc />
-        public unsafe bool IsFocused
+        /// <summary>
+        /// Gets a value indicating whether this window has input focus.
+        /// </summary>
+        public bool IsFocused
         {
             get => _isFocused;
-            set
-            {
-                if (value)
-                {
-                    GLFW.FocusWindow(WindowPtr);
-                }
-            }
+        }
+
+        /// <summary>
+        /// Brings the window into focus.
+        /// </summary>
+        public unsafe void Focus()
+        {
+            GLFW.FocusWindow(WindowPtr);
         }
 
         private bool _isVisible;
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Gets or sets a value indicating whether the window is visible.
+        /// </summary>
         public bool IsVisible
         {
             get => _isVisible;
@@ -248,13 +295,22 @@ namespace OpenTK.Windowing.Desktop
             }
         }
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Gets a value indicating whether the window has been created and has not been destroyed.
+        /// </summary>
         public bool Exists { get; private set; }
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Gets a value indicating whether the shutdown sequence has been initiated
+        /// for this window, by calling GameWindow.Exit() or hitting the 'close' button.
+        /// If this property is true, it is no longer safe to use any OpenTK.Input or
+        /// OpenTK.Graphics.OpenGL functions or properties.
+        /// </summary>
         public bool IsExiting { get; private set; }
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Gets or sets the <see cref="WindowState" /> for this window.
+        /// </summary>
         public unsafe WindowState WindowState
         {
             get
@@ -273,15 +329,6 @@ namespace OpenTK.Windowing.Desktop
                 {
                     return WindowState.Fullscreen;
                 }
-
-                /*var mode = Glfw.GetVideoMode(CurrentMonitor.ToUnsafePtr<GraphicsLibraryFramework.Monitor>());
-
-                Glfw.GetWindowSize(WindowPtr, out var windowWidth, out var windowHeight);
-
-                if (mode->Width == windowWidth && mode->Height == windowHeight)
-                {
-                    return WindowState.Maximized;
-                }*/
 
                 return WindowState.Normal;
             }
@@ -310,7 +357,9 @@ namespace OpenTK.Windowing.Desktop
 
         private WindowBorder _windowBorder;
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Gets or sets the <see cref="WindowBorder" /> for this window.
+        /// </summary>
         public unsafe WindowBorder WindowBorder
         {
             get => _windowBorder;
@@ -348,7 +397,11 @@ namespace OpenTK.Windowing.Desktop
             }
         }
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Gets or sets a <see cref="OpenTK.Mathematics.Box2i" /> structure the contains the external bounds of this window,
+        /// in screen coordinates.
+        /// External bounds include the title bar, borders and drawing area of the window.
+        /// </summary>
         public unsafe Box2i Bounds
         {
             get => new Box2i(Location, Location + Size);
@@ -359,25 +412,43 @@ namespace OpenTK.Windowing.Desktop
             }
         }
 
+        // This is updated by the constructor, by OnMove, and in the Location property setter.
         private Vector2i _location;
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Gets or sets a <see cref="OpenTK.Mathematics.Vector2i" /> structure that contains the location of this window on the
+        /// desktop.
+        /// </summary>
         public unsafe Vector2i Location
         {
             get => _location;
-            set => GLFW.SetWindowPos(WindowPtr, value.X, value.Y);
+            set
+            {
+                GLFW.SetWindowPos(WindowPtr, value.X, value.Y);
+                _location = value;
+            }
         }
 
         private Vector2i _size;
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Gets or sets a <see cref="OpenTK.Mathematics.Vector2i" /> structure that contains the external size of this window.
+        /// </summary>
         public unsafe Vector2i Size
         {
             get => _size;
-            set => GLFW.SetWindowSize(WindowPtr, value.X, value.Y);
+            set
+            {
+                _size = value;
+                GLFW.SetWindowSize(WindowPtr, value.X, value.Y);
+            }
         }
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Gets or sets a <see cref="OpenTK.Mathematics.Box2i" /> structure that contains the internal bounds of this window,
+        /// in client coordinates.
+        /// The internal bounds include the drawing area of the window, but exclude the titlebar and window borders.
+        /// </summary>
         public Box2i ClientRectangle
         {
             get => new Box2i(Location, Location + Size);
@@ -388,13 +459,20 @@ namespace OpenTK.Windowing.Desktop
             }
         }
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Gets a <see cref="OpenTK.Mathematics.Vector2i" /> structure that contains the internal size this window.
+        /// </summary>
         public Vector2i ClientSize { get; private set; }
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Gets or sets a value indicating whether the window is fullscreen or not.
+        /// </summary>
         public bool IsFullscreen { get; set; }
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Gets or sets the <see cref="OpenTK.Windowing.Common.Input.MouseCursor" /> for this window.
+        /// </summary>
+        /// <value>The cursor.</value>
         public MouseCursor Cursor
         {
             get => _managedCursor;
@@ -440,7 +518,9 @@ namespace OpenTK.Windowing.Desktop
             }
         }
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Gets or sets a value indicating whether the mouse cursor is visible.
+        /// </summary>
         public unsafe bool CursorVisible
         {
             get
@@ -457,7 +537,9 @@ namespace OpenTK.Windowing.Desktop
                     value ? CursorModeValue.CursorNormal : CursorModeValue.CursorHidden);
         }
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Gets or sets a value indicating whether the mouse cursor is confined inside the window size.
+        /// </summary>
         public unsafe bool CursorGrabbed
         {
             get => GLFW.GetInputMode(WindowPtr, CursorStateAttribute.Cursor) == CursorModeValue.CursorDisabled;
@@ -602,7 +684,11 @@ namespace OpenTK.Windowing.Desktop
 
             RegisterWindowCallbacks();
 
-            IsFocused = settings.StartFocused;
+            _isFocused = settings.StartFocused;
+            if (settings.StartFocused)
+            {
+Focus();
+            }
             WindowState = settings.WindowState;
 
             IsEventDriven = settings.IsEventDriven;
@@ -828,19 +914,19 @@ namespace OpenTK.Windowing.Desktop
                         GLFW.GetJoystickButtonsRaw(joy, out var buttonCount);
                         var name = GLFW.GetJoystickName(joy);
 
-                        JoystickStates[joy] = new JoystickState(hatCount, axisCount, buttonCount, joy, name);
+                        _joystickStates[joy] = new JoystickState(hatCount, axisCount, buttonCount, joy, name);
                     }
                     else
                     {
                         // Remove the joystick state from the array of joysticks.
-                        JoystickStates[joy] = default;
+                        _joystickStates[joy] = null;
                     }
                     OnJoystickConnected(new JoystickEventArgs(joy, eventCode == ConnectedState.Connected));
                 };
                 GLFW.SetJoystickCallback(_joystickCallback);
 
                 // Check for Joysticks that are connected at application launch
-                for (int i = 0; i < JoystickStates.Length; i++)
+                for (int i = 0; i < _joystickStates.Length; i++)
                 {
                     if (GLFW.JoystickPresent(i))
                     {
@@ -849,7 +935,7 @@ namespace OpenTK.Windowing.Desktop
                         GLFW.GetJoystickButtonsRaw(i, out var buttonCount);
                         var name = GLFW.GetJoystickName(i);
 
-                        JoystickStates[i] = new JoystickState(hatCount, axisCount, buttonCount, i, name);
+                        _joystickStates[i] = new JoystickState(hatCount, axisCount, buttonCount, i, name);
                     }
                 }
 
@@ -878,7 +964,9 @@ namespace OpenTK.Windowing.Desktop
             }
         }
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Closes this window.
+        /// </summary>
         public virtual void Close()
         {
             unsafe
@@ -887,7 +975,9 @@ namespace OpenTK.Windowing.Desktop
             }
         }
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Makes the GraphicsContext current on the calling thread.
+        /// </summary>
         public void MakeCurrent()
         {
             Context.MakeCurrent();
@@ -908,7 +998,6 @@ namespace OpenTK.Windowing.Desktop
         {
             LastKeyboardState = KeyboardState;
             LastMouseState = MouseState;
-            LastJoystickStates = JoystickStates;
             MouseDelta = Vector2.Zero;
 
             if (IsExiting)
@@ -920,7 +1009,12 @@ namespace OpenTK.Windowing.Desktop
             return true;
         }
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Processes pending window events and waits <paramref cref="timeout"/> seconds for events.
+        /// </summary>
+        /// <param name="timeout">The timeout in seconds.</param>
+        /// <returns><c>true</c> if events where processed; otherwise <c>false</c>
+        /// (Event processing not possible anymore, window is about to be destroyed).</returns>
         public bool ProcessEvents(double timeout)
         {
             if (!PreProcessEvents())
@@ -934,7 +1028,9 @@ namespace OpenTK.Windowing.Desktop
             return true;
         }
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Processes pending window events.
+        /// </summary>
         public virtual void ProcessEvents()
         {
             if (!PreProcessEvents())
@@ -959,146 +1055,227 @@ namespace OpenTK.Windowing.Desktop
             GLFW.GetCursorPos(WindowPtr, out var x, out var y);
             _mouseState.Position = new Vector2((float)x, (float)y);
 
-            for (var i = 0; i < JoystickStates.Length; i++)
+            for (var i = 0; i < _joystickStates.Length; i++)
             {
-                var joy = JoystickStates[i];
-                if (joy == default)
+                if (_joystickStates[i] == null)
                 {
                     continue;
                 }
 
-                var h = GLFW.GetJoystickHatsRaw(joy.Id, out var count);
-                var hats = new Hat[count];
-                for (var j = 0; j < count; j++)
-                {
-                    hats[j] = (Hat)h[j];
-                }
-
-                var axes = GLFW.GetJoystickAxes(joy.Id);
-
-                var b = GLFW.GetJoystickButtonsRaw(joy.Id, out count);
-                var buttons = new bool[count];
-                for (var j = 0; j < buttons.Length; j++)
-                {
-                    buttons[j] = b[j] == JoystickInputAction.Press;
-                }
-
-                JoystickStates[i] = new JoystickState(hats, axes, buttons, joy.Id, joy.Name);
+                _joystickStates[i].Update();
             }
         }
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Transforms the specified point from screen to client coordinates.
+        /// </summary>
+        /// <param name="point">
+        /// A <see cref="OpenTK.Mathematics.Vector2" /> to transform.
+        /// </param>
+        /// <returns>
+        /// The point transformed to client coordinates.
+        /// </returns>
         public Vector2i PointToClient(Vector2i point)
         {
             return point - Location;
         }
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Transforms the specified point from client to screen coordinates.
+        /// </summary>
+        /// <param name="point">
+        /// A <see cref="OpenTK.Mathematics.Vector2" /> to transform.
+        /// </param>
+        /// <returns>
+        /// The point transformed to screen coordinates.
+        /// </returns>
         public Vector2i PointToScreen(Vector2i point)
         {
             return point + Location;
         }
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Occurs whenever the window is moved.
+        /// </summary>
         public event Action<WindowPositionEventArgs> Move;
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Occurs whenever the window is resized.
+        /// </summary>
         public event Action<ResizeEventArgs> Resize;
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Occurs whenever the window is refreshed.
+        /// </summary>
         public event Action Refresh;
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Occurs when the window is about to close.
+        /// </summary>
         public event Action<CancelEventArgs> Closing;
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Occurs after the window has closed.
+        /// </summary>
         public event Action Closed;
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Occurs when the window is minimized.
+        /// </summary>
         public event Action<MinimizedEventArgs> Minimized;
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Occurs when a joystick is connected or disconnected.
+        /// </summary>
         public event Action<JoystickEventArgs> JoystickConnected;
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Occurs when the <see cref="INativeWindowProperties.IsFocused" /> property of the window changes.
+        /// </summary>
         public event Action<FocusedChangedEventArgs> FocusedChanged;
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Occurs whenever a keyboard key is pressed.
+        /// </summary>
         public event Action<KeyboardKeyEventArgs> KeyDown;
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Occurs whenever a Unicode code point is typed.
+        /// </summary>
         public event Action<TextInputEventArgs> TextInput;
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Occurs whenever a keyboard key is released.
+        /// </summary>
         public event Action<KeyboardKeyEventArgs> KeyUp;
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Occurs when a <see cref="Monitor"/> is connected or disconnected.
+        /// </summary>
         public event Action<MonitorEventArgs> MonitorConnected;
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Occurs whenever the mouse cursor leaves the window <see cref="INativeWindowProperties.Bounds" />.
+        /// </summary>
         public event Action MouseLeave;
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Occurs whenever the mouse cursor enters the window <see cref="INativeWindowProperties.Bounds" />.
+        /// </summary>
         public event Action MouseEnter;
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Occurs whenever a <see cref="Input.MouseButton" /> is clicked.
+        /// </summary>
         public event Action<MouseButtonEventArgs> MouseDown;
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Occurs whenever a <see cref="Input.MouseButton" /> is released.
+        /// </summary>
         public event Action<MouseButtonEventArgs> MouseUp;
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Occurs whenever the mouse cursor is moved;
+        /// </summary>
         public event Action<MouseMoveEventArgs> MouseMove;
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Occurs whenever a mouse wheel is moved;
+        /// </summary>
         public event Action<MouseWheelEventArgs> MouseWheel;
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Occurs whenever one or more files are dropped on the window.
+        /// </summary>
         public event Action<FileDropEventArgs> FileDrop;
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Gets a <see cref="bool" /> indicating whether this key is currently down.
+        /// </summary>
+        /// <param name="key">The <see cref="Key" /> to check.</param>
+        /// <returns><c>true</c> if <paramref name="key"/> is in the down state; otherwise, <c>false</c>.</returns>
         public bool IsKeyDown(Key key)
         {
             return _keyboardState.IsKeyDown(key);
         }
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Gets a <see cref="bool" /> indicating whether this key is currently up.
+        /// </summary>
+        /// <param name="key">The <see cref="Key" /> to check.</param>
+        /// <returns><c>true</c> if <paramref name="key"/> is in the up state; otherwise, <c>false</c>.</returns>
         public bool IsKeyUp(Key key)
         {
             return _keyboardState.IsKeyUp(key);
         }
 
-        /// <inheritdoc />
+        /// <summary>
+        ///     Gets whether the specified key is pressed in the current frame but released in the previous frame.
+        /// </summary>
+        /// <remarks>
+        ///     "Frame" refers to invocations of <see cref="INativeWindow.ProcessEvents"/> here.
+        /// </remarks>
+        /// <param name="key">The key to check.</param>
+        /// <returns>True if the key is pressed in this frame, but not the last frame.</returns>
         public bool IsKeyPressed(Key key)
         {
             return _keyboardState.IsKeyDown(key) && !LastKeyboardState.IsKeyDown(key);
         }
 
-        /// <inheritdoc />
+        /// <summary>
+        ///     Gets whether the specified key is released in the current frame but pressed in the previous frame.
+        /// </summary>
+        /// <remarks>
+        ///     "Frame" refers to invocations of <see cref="INativeWindow.ProcessEvents"/> here.
+        /// </remarks>
+        /// <param name="key">The key to check.</param>
+        /// <returns>True if the key is released in this frame, but pressed the last frame.</returns>
         public bool IsKeyReleased(Key key)
         {
             return !_keyboardState.IsKeyDown(key) && LastKeyboardState.IsKeyDown(key);
         }
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Gets a <see cref="bool" /> indicating whether this button is currently down.
+        /// </summary>
+        /// <param name="button">The <see cref="MouseButton" /> to check.</param>
+        /// <returns><c>true</c> if <paramref name="button"/> is in the down state; otherwise, <c>false</c>.</returns>
         public bool IsMouseButtonDown(MouseButton button)
         {
             return _mouseState.IsButtonDown(button);
         }
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Gets a <see cref="bool" /> indicating whether this mouse button is currently up.
+        /// </summary>
+        /// <param name="button">The <see cref="MouseButton" /> to check.</param>
+        /// <returns><c>true</c> if <paramref name="button"/> is in the up state; otherwise, <c>false</c>.</returns>
         public bool IsMouseButtonUp(MouseButton button)
         {
             return _mouseState.IsButtonUp(button);
         }
 
-        /// <inheritdoc />
+        /// <summary>
+        ///     Gets whether the specified mouse button is pressed in the current frame but released in the previous frame.
+        /// </summary>
+        /// <remarks>
+        ///     "Frame" refers to invocations of <see cref="INativeWindow.ProcessEvents"/> here.
+        /// </remarks>
+        /// <param name="button">The button to check.</param>
+        /// <returns>True if the button is pressed in this frame, but not the last frame.</returns>
         public bool IsMouseButtonPressed(MouseButton button)
         {
             return _mouseState.IsButtonDown(button) && !LastMouseState.IsButtonDown(button);
         }
 
-        /// <inheritdoc />
+        /// <summary>
+        ///     Gets whether the specified mouse button is released in the current frame but pressed in the previous frame.
+        /// </summary>
+        /// <remarks>
+        ///     "Frame" refers to invocations of <see cref="INativeWindow.ProcessEvents"/> here.
+        /// </remarks>
+        /// <param name="button">The button to check.</param>
+        /// <returns>True if the button is released in this frame, but pressed the last frame.</returns>
         public bool IsMouseButtonReleased(MouseButton button)
         {
             return !_mouseState.IsButtonDown(button) && LastMouseState.IsButtonDown(button);
@@ -1121,7 +1298,12 @@ namespace OpenTK.Windowing.Desktop
             return value;
         }
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Gets the current monitor scale.
+        /// </summary>
+        /// <param name="horizontalScale">Horizontal scale.</param>
+        /// <param name="verticalScale">Vertical scale.</param>
+        /// <returns><c>true</c>, if current monitor scale was gotten correctly, <c>false</c> otherwise.</returns>
         public unsafe bool TryGetCurrentMonitorScale(out float horizontalScale, out float verticalScale) =>
             DpiCalculator.TryGetMonitorScale(
                 GetDpiMonitor(),
@@ -1129,7 +1311,17 @@ namespace OpenTK.Windowing.Desktop
                 out verticalScale
             );
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Gets the dpi of the current monitor.
+        /// </summary>
+        /// <param name="horizontalDpi">Horizontal dpi.</param>
+        /// <param name="verticalDpi">Vertical dpi.</param>
+        /// <returns><c>true</c>, if current monitor's dpi was gotten correctly, <c>false</c> otherwise.</returns>
+        /// <remarks>
+        /// This methods approximates the dpi of the monitor by multiplying
+        /// the monitor scale recieved from <see cref="TryGetCurrentMonitorScale(out float, out float)"/>
+        /// by each platforms respective default dpi (72 for macOS and 96 for other systems).
+        /// </remarks>
         public unsafe bool TryGetCurrentMonitorDpi(out float horizontalDpi, out float verticalDpi) =>
             DpiCalculator.TryGetMonitorDpi(
                 GetDpiMonitor(),
@@ -1137,7 +1329,17 @@ namespace OpenTK.Windowing.Desktop
                 out verticalDpi
             );
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Gets the raw dpi of current monitor.
+        /// </summary>
+        /// <param name="horizontalDpi">Horizontal dpi.</param>
+        /// <param name="verticalDpi">Vertical dpi.</param>
+        /// <returns><c>true</c>, if current monitor's raw dpi was gotten correctly, <c>false</c> otherwise.</returns>
+        /// <remarks>
+        /// This method calculates dpi by retrieving monitor dimensions and resolution.
+        /// However on certain platforms (such as Windows) these values may not
+        /// be scaled correctly.
+        /// </remarks>
         public unsafe bool TryGetCurrentMonitorDpiRaw(out float horizontalDpi, out float verticalDpi) =>
             DpiCalculator.TryGetMonitorDpiRaw(
                 GetDpiMonitor(),
@@ -1410,10 +1612,6 @@ namespace OpenTK.Windowing.Desktop
             map[(int)Keys.Backslash] = Key.BackSlash;
             map[(int)Keys.RightBracket] = Key.BracketRight;
             map[(int)Keys.GraveAccent] = Key.Grave;
-
-            // TODO: What are these world keys and how do I handle them.
-            // map[(int)Keys.World1] = Key.Z;
-            // map[(int)Keys.World2] = Key.Z;
             map[(int)Keys.Escape] = Key.Escape;
             map[(int)Keys.Enter] = Key.Enter;
             map[(int)Keys.Tab] = Key.Tab;
