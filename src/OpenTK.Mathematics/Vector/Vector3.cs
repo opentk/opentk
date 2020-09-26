@@ -26,6 +26,7 @@ using System.Globalization;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Xml.Serialization;
+using OpenTK.Mathematics.Rotors;
 
 namespace OpenTK.Mathematics
 {
@@ -706,6 +707,33 @@ namespace OpenTK.Mathematics
             result.X = (left.Y * right.Z) - (left.Z * right.Y);
             result.Y = (left.Z * right.X) - (left.X * right.Z);
             result.Z = (left.X * right.Y) - (left.Y * right.X);
+        }
+
+        /// <summary>
+        /// The wedge product of two vectors.
+        /// This creates a bivector that represents the plane formed by these vectors.
+        /// </summary>
+        /// <param name="v1">The first vector.</param>
+        /// <param name="v2">The second vector.</param>
+        /// <returns>The resulting bivector.</returns>
+        public static BiVector3 Wedge(Vector3 v1, Vector3 v2)
+        {
+            Wedge(v1, v2, out BiVector3 bv);
+            return bv;
+        }
+
+        /// <summary>
+        /// The wedge product of two vectors.
+        /// This creates a bivector that represents the plane formed by these vectors.
+        /// </summary>
+        /// <param name="v1">The first vector.</param>
+        /// <param name="v2">The second vector.</param>
+        /// <param name="bv">The resulting bivector.</param>
+        public static void Wedge(in Vector3 v1, in Vector3 v2, out BiVector3 bv)
+        {
+            bv.NotX = (v1.Y * v2.Z) - (v1.Z * v2.Y);
+            bv.NotY = (v1.Z * v2.X) - (v1.X * v2.Z);
+            bv.NotZ = (v1.X * v2.Y) - (v1.Y * v2.X);
         }
 
         /// <summary>
@@ -1552,13 +1580,7 @@ namespace OpenTK.Mathematics
         /// <returns>A System.Int32 containing the unique hashcode for this instance.</returns>
         public override int GetHashCode()
         {
-            unchecked
-            {
-                var hashCode = X.GetHashCode();
-                hashCode = (hashCode * 397) ^ Y.GetHashCode();
-                hashCode = (hashCode * 397) ^ Z.GetHashCode();
-                return hashCode;
-            }
+            return HashCode.Combine(X, Y, Z);
         }
 
         /// <summary>

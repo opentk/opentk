@@ -26,6 +26,7 @@ using System.Globalization;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Xml.Serialization;
+using OpenTK.Mathematics.Rotors;
 
 namespace OpenTK.Mathematics
 {
@@ -689,6 +690,21 @@ namespace OpenTK.Mathematics
         public static void Dot(in Vector4 left, in Vector4 right, out float result)
         {
             result = (left.X * right.X) + (left.Y * right.Y) + (left.Z * right.Z) + (left.W * right.W);
+        }
+
+        public static void Wedge(in Vector4 p, in Vector4 q, out BiVector4 bv)
+        {
+            bv.WX = q.X - p.X;
+            bv.WY = q.Y - p.Y;
+            bv.WZ = q.Z - p.Z;
+            bv.YZ = (p.Y * q.Z) - (p.Z * q.Y);
+            bv.ZX = (p.Z * q.X) - (p.X * q.Z);
+            bv.XY = (p.X * q.Y) - (p.Y * q.Y);
+        }
+
+        public static void AntiWedge(in Vector4 v, in AntiVector4 tv, out float s)
+        {
+            s = (v.X * tv.NotX) + (v.Y * tv.NotY) + (v.Z * tv.NotZ);
         }
 
         /// <summary>
