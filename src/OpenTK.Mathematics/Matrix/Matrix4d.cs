@@ -1776,7 +1776,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public override bool Equals(object obj)
         {
-            return obj is Matrix4d m && Equals(m);
+            return obj is Matrix4d && Equals((Matrix4d)obj);
         }
 
         /// <summary>

@@ -276,7 +276,7 @@ namespace OpenTK.Mathematics
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            return obj is Box2 box && Equals(box);
+            return obj is Box2 && Equals((Box2)obj);
         }
 
         /// <inheritdoc/>

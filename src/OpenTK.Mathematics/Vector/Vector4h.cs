@@ -1360,7 +1360,7 @@ namespace OpenTK.Mathematics
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            return obj is Vector4h h && Equals(h);
+            return obj is Vector4h && Equals((Vector4h)obj);
         }
 
         /// <inheritdoc/>

@@ -1545,7 +1545,7 @@ namespace OpenTK.Mathematics
         /// <inheritdoc />
         public override bool Equals(object obj)
         {
-            return obj is Vector3 vector && Equals(vector);
+            return obj is Vector3 && Equals((Vector3)obj);
         }
 
         /// <inheritdoc />

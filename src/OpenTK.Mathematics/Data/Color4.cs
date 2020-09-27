@@ -177,7 +177,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public override bool Equals(object obj)
         {
-            return obj is Color4 c && Equals(c);
+            return obj is Color4 && Equals((Color4)obj);
         }
 
         /// <summary>

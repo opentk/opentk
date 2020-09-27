@@ -728,7 +728,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public override bool Equals(object obj)
         {
-            return obj is Matrix2x3 m && Equals(m);
+            return obj is Matrix2x3 && Equals((Matrix2x3)obj);
         }
 
         /// <summary>

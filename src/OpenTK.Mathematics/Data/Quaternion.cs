@@ -806,7 +806,7 @@ namespace OpenTK.Mathematics
         /// <inheritdoc />
         public override bool Equals(object obj)
         {
-            return obj is Quaternion quaternion && Equals(quaternion);
+            return obj is Quaternion && Equals((Quaternion)obj);
         }
 
         /// <inheritdoc />

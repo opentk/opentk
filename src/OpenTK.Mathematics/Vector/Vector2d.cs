@@ -962,7 +962,7 @@ namespace OpenTK.Mathematics
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            return obj is Vector2d d && Equals(d);
+            return obj is Vector2d && Equals((Vector2d)obj);
         }
 
         /// <inheritdoc/>
