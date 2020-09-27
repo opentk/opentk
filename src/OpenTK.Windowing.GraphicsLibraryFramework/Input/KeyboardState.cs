@@ -8,22 +8,31 @@
 //
 
 using System;
+using System.Collections;
 using System.Diagnostics;
 using System.Text;
+using OpenTK.Windowing.Common;
 
-namespace OpenTK.Windowing.Common.Input
+namespace OpenTK.Windowing.GraphicsLibraryFramework
 {
     /// <summary>
     /// Encapsulates the state of a Keyboard device.
     /// </summary>
-    public struct KeyboardState : IEquatable<KeyboardState>
+    public sealed class KeyboardState
     {
-        // Allocate enough ints to store all keyboard keys
-        private const int IntSize = 32;
+	    // These arrays will mostly be empty since the last integer used is 384. That's only 48 bytes though.
+        private BitArray _keys = new BitArray((int)Keys.LastKey);
+        private BitArray _keysPrevious = new BitArray((int)Keys.LastKey);
 
-        private const int NumInts = ((int)Key.LastKey / IntSize) + 1;
+        private KeyboardState(KeyboardState source)
+        {
+	        _keys = (BitArray)source._keys.Clone();
+	        _keysPrevious = (BitArray)source._keysPrevious.Clone();
+        }
 
-        private unsafe fixed int _keys[NumInts];
+        internal KeyboardState()
+        {
+        }
 
         /// <summary>
         /// Gets a <see cref="bool" /> indicating whether the specified
@@ -31,10 +40,10 @@ namespace OpenTK.Windowing.Common.Input
         /// </summary>
         /// <param name="key">The <see cref="Key" /> to check.</param>
         /// <returns><c>true</c> if key is down; <c>false</c> otherwise.</returns>
-        public bool this[Key key]
+        public bool this[Keys key]
         {
             get => IsKeyDown(key);
-            set => SetKeyState(key, value);
+            private set => SetKeyState(key, value);
         }
 
         /// <summary>
@@ -42,24 +51,9 @@ namespace OpenTK.Windowing.Common.Input
         /// </summary>
         /// <param name="key">The <see cref="Key" /> to check.</param>
         /// <returns><c>true</c> if <paramref name="key"/> is in the down state; otherwise, <c>false</c>.</returns>
-        public bool IsKeyDown(Key key)
+        public bool IsKeyDown(Keys key)
         {
-            var (intOffset, bitOffset) = GetOffsets(key);
-
-            unsafe
-            {
-                return (this._keys[intOffset] & (1 << bitOffset)) != 0;
-            }
-        }
-
-        /// <summary>
-        /// Gets a <see cref="bool" /> indicating whether this key is currently up.
-        /// </summary>
-        /// <param name="key">The <see cref="Key" /> to check.</param>
-        /// <returns><c>true</c> if <paramref name="key"/> is in the up state; otherwise, <c>false</c>.</returns>
-        public bool IsKeyUp(Key key)
-        {
-            return !IsKeyDown(key);
+	        return _keys[(int)key];
         }
 
         /// <summary>
@@ -70,14 +64,11 @@ namespace OpenTK.Windowing.Common.Input
         {
             get
             {
-                for (var i = 0; i < NumInts; ++i)
+                for (var i = 0; i < _keys.Length; ++i)
                 {
-                    unsafe
+	                if (_keys[i])
                     {
-                        if (this._keys[i] != 0)
-                        {
-                            return true;
-                        }
+                        return true;
                     }
                 }
 
@@ -90,24 +81,9 @@ namespace OpenTK.Windowing.Common.Input
         /// </summary>
         /// <param name="key">The <see cref="Key"/> which state should be changed.</param>
         /// <param name="down">The new state the key should be changed to.</param>
-        public void SetKeyState(Key key, bool down)
+        internal void SetKeyState(Keys key, bool down)
         {
-            var (intOffset, bitOffset) = GetOffsets(key);
-
-            if (down)
-            {
-                unsafe
-                {
-                    this._keys[intOffset] |= 1 << bitOffset;
-                }
-            }
-            else
-            {
-                unsafe
-                {
-                    this._keys[intOffset] &= ~(1 << bitOffset);
-                }
-            }
+	        _keys[(int)key] = down;
         }
 
         /// <summary>
@@ -163,47 +139,6 @@ namespace OpenTK.Windowing.Common.Input
             return false;
         }
 
-        /// <summary>
-        /// Compares two KeyboardState instances.
-        /// </summary>
-        /// <param name="other">The instance to compare two.</param>
-        /// <returns><c>true</c>, if both instances are equal; <c>false</c> otherwise.</returns>
-        public bool Equals(KeyboardState other)
-        {
-            for (var i = 0; i < NumInts; i++)
-            {
-                unsafe
-                {
-                    if (this._keys[i] != other._keys[i])
-                    {
-                        return false;
-                    }
-                }
-            }
-
-            return true;
-        }
-
-        /// <summary>
-        /// Generates a hashcode for the current instance.
-        /// </summary>
-        /// <returns>
-        /// A <see cref="int" /> representing the hashcode for this instance.
-        /// </returns>
-        public override int GetHashCode()
-        {
-            var hashcode = 0;
-            for (var i = 0; i < NumInts; i++)
-            {
-                unsafe
-                {
-                    hashcode ^= 397 * this._keys[i];
-                }
-            }
-
-            return hashcode;
-        }
-
         /// <inheritdoc />
         public override string ToString()
         {
@@ -211,19 +146,20 @@ namespace OpenTK.Windowing.Common.Input
             builder.Append('{');
             var first = true;
 
-            for (var key = (Key)1; key <= Key.LastKey; ++key)
+            string[] keys = Enum.GetNames(typeof(Keys));
+
+            foreach (string key in keys)
             {
-                if (IsKeyDown(key))
+                if (IsKeyDown(Enum.Parse<Keys>(key)))
                 {
                     if (!first)
                     {
-                        builder.Append(',');
+                        builder.Append(", ");
                     }
                     else
                     {
                         first = false;
                     }
-
                     builder.Append(key);
                 }
             }
@@ -233,29 +169,25 @@ namespace OpenTK.Windowing.Common.Input
             return builder.ToString();
         }
 
-        [Conditional("DEBUG")]
-        private static void ValidateOffset(int offset)
+        internal void Update()
         {
-            if (offset < 0 || offset >= NumInts * IntSize)
-            {
-                throw new ArgumentOutOfRangeException();
-            }
+	        Utils.Swap(ref _keys, ref _keysPrevious);
         }
 
-        private static (int intOffset, int bitOffset) GetOffsets(Key key)
+        /// <summary>
+        /// Gets a <see cref="bool" /> indicating whether this key was down in the previous frame.
+        /// </summary>
+        /// <param name="key">The <see cref="Key" /> to check.</param>
+        /// <returns><c>true</c> if <paramref name="key"/> was in the down state; otherwise, <c>false</c>.</returns>
+        public bool WasKeyDown(Keys key)
         {
-            if (key <= Key.Unknown || key > Key.LastKey)
-            {
-                throw new ArgumentOutOfRangeException(nameof(key), "Invalid key");
-            }
-
-            var offset = (int)key;
-            ValidateOffset(offset);
-
-            var intOffset = offset / IntSize;
-            var bitOffset = offset % IntSize;
-
-            return (intOffset, bitOffset);
+	        return _keysPrevious[(int)key];
         }
+
+        /// <summary>
+        /// Gets an immutable snapshot of this KeyboardState.
+        /// </summary>
+        /// <returns>Returns an immutable snapshot of this KeyboardState.</returns>
+        public KeyboardState GetSnapshot() => new KeyboardState(this);
     }
 }
