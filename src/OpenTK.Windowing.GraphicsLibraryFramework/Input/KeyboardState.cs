@@ -24,7 +24,7 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         private BitArray _keys = new BitArray((int)Keys.LastKey);
         private BitArray _keysPrevious = new BitArray((int)Keys.LastKey);
 
-        private static readonly string[] KeyNames = Enum.GetNames(typeof(Keys));
+        private static readonly Keys[] KeyValues;
 
         private KeyboardState(KeyboardState source)
         {
@@ -34,6 +34,15 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
 
         internal KeyboardState()
         {
+        }
+
+        static KeyboardState()
+        {
+	        // All this really does is copy the clumsy Array of objects
+	        // with no indexer into a strongly typed array with an indexer.
+	        Array enumValues = Enum.GetValues(typeof(Keys));
+	        KeyValues = new Keys[enumValues.Length];
+	        Array.Copy(enumValues, KeyValues, enumValues.Length);
         }
 
         /// <summary>
@@ -148,9 +157,9 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
             builder.Append('{');
             var first = true;
 
-            foreach (string key in KeyNames)
+            foreach (Keys key in KeyValues)
             {
-                if (IsKeyDown(Enum.Parse<Keys>(key)))
+                if (IsKeyDown(key))
                 {
                     builder.AppendFormat("{0}{1}", key, !first ? ", " : string.Empty);
                 }
