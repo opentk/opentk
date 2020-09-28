@@ -132,12 +132,36 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         /// </returns>
         public override bool Equals(object obj)
         {
+            if (obj == null)
+            {
+                return false;
+            }
+
             if (obj is KeyboardState state)
             {
                 return Equals(state);
             }
 
             return false;
+        }
+
+        private bool Equals(KeyboardState other)
+        {
+            var keyValues = (Keys[])Enum.GetValues(typeof(Keys));
+            for (int i = 0; i < keyValues.Length; i++)
+            {
+                if (_keys[i] != other._keys[i])
+                {
+                    return false;
+                }
+
+                if (_keysPrevious[i] != other._keysPrevious[i])
+                {
+                    return false;
+                }
+            }
+
+            return true;
         }
 
         /// <inheritdoc />

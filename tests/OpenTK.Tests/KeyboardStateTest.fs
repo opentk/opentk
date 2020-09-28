@@ -36,12 +36,10 @@ module KeyboardState =
         let mutable b = KeyboardState()
 
         Assert.Equal(a, b);
-        Assert.Equal(a.GetHashCode(), b.GetHashCode());
         a.SetKeyState(Keys.A, true);
         Assert.NotEqual(a, b);
         b.SetKeyState(Keys.A, true);
-        Assert.Equal(a, b);
-        Assert.Equal(a.GetHashCode(), b.GetHashCode());
+        Assert.Equal(a, b);        
 
     [<Fact>]
     let ``Any Key Down`` () =
