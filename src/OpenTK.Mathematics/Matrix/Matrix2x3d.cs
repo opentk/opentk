@@ -23,12 +23,15 @@ SOFTWARE.
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
+using System.Runtime.InteropServices;
 
 namespace OpenTK.Mathematics
 {
     /// <summary>
     /// Represents a 2x3 matrix.
     /// </summary>
+    [Serializable]
+    [StructLayout(LayoutKind.Sequential)]
     public struct Matrix2x3d : IEquatable<Matrix2x3d>
     {
         /// <summary>
@@ -714,10 +717,7 @@ namespace OpenTK.Mathematics
         /// <returns>A System.Int32 containing the unique hashcode for this instance.</returns>
         public override int GetHashCode()
         {
-            unchecked
-            {
-                return (Row0.GetHashCode() * 397) ^ Row1.GetHashCode();
-            }
+            return HashCode.Combine(Row0, Row1);
         }
 
         /// <summary>
@@ -728,12 +728,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public override bool Equals(object obj)
         {
-            if (!(obj is Matrix2x3d))
-            {
-                return false;
-            }
-
-            return Equals((Matrix2x3d)obj);
+            return obj is Matrix2x3d && Equals((Matrix2x3d)obj);
         }
 
         /// <summary>

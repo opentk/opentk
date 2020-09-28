@@ -258,10 +258,9 @@ namespace OpenTK.Mathematics
         /// </summary>
         /// <param name="left">The left operand.</param>
         /// <param name="right">The right operand.</param>
-        [Pure]
         public static bool operator ==(Box2 left, Box2 right)
         {
-            return left.Min == right.Min && left.Max == right.Max;
+            return left.Equals(right);
         }
 
         /// <summary>
@@ -269,45 +268,34 @@ namespace OpenTK.Mathematics
         /// </summary>
         /// <param name="left">The left operand.</param>
         /// <param name="right">The right operand.</param>
-        [Pure]
         public static bool operator !=(Box2 left, Box2 right)
         {
             return !(left == right);
         }
 
         /// <inheritdoc/>
-        [Pure]
-        public bool Equals(Box2 other)
+        public override bool Equals(object obj)
         {
-            return Min.Equals(other.Min) && Max.Equals(other.Max);
+            return obj is Box2 && Equals((Box2)obj);
         }
 
         /// <inheritdoc/>
-        [Pure]
-        public override bool Equals(object obj)
+        public bool Equals(Box2 other)
         {
-            if (ReferenceEquals(null, obj))
-            {
-                return false;
-            }
-            return obj is Box2 other && Equals(other);
+            return _min.Equals(other._min) &&
+                   _max.Equals(other._max);
         }
 
         /// <inheritdoc/>
         public override int GetHashCode()
         {
-            unchecked
-            {
-                return (Min.GetHashCode() * 397) ^ Max.GetHashCode();
-            }
+            return HashCode.Combine(_min, _max);
         }
-
-        private static readonly string ListSeparator = CultureInfo.CurrentCulture.TextInfo.ListSeparator;
 
         /// <inheritdoc/>
         public override string ToString()
         {
-            return $"({Min.X}{ListSeparator} {Min.Y}) - ({Max.X}{ListSeparator} {Max.Y})";
+            return $"{Min} - {Max}";
         }
     }
 }

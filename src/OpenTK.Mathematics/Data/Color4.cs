@@ -177,12 +177,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public override bool Equals(object obj)
         {
-            if (!(obj is Color4))
-            {
-                return false;
-            }
-
-            return Equals((Color4)obj);
+            return obj is Color4 && Equals((Color4)obj);
         }
 
         /// <summary>
@@ -191,7 +186,7 @@ namespace OpenTK.Mathematics
         /// <returns>A System.Int32 containing the hashcode of this Color4 structure.</returns>
         public override int GetHashCode()
         {
-            return ToArgb();
+            return HashCode.Combine(R, G, B, A);
         }
 
         /// <summary>
@@ -200,7 +195,8 @@ namespace OpenTK.Mathematics
         /// <returns>A System.String that describes this Color4 structure.</returns>
         public override string ToString()
         {
-            return $"{{(R, G, B, A) = ({R.ToString()}, {G.ToString()}, {B.ToString()}, {A.ToString()})}}";
+            var ls = MathHelper.ListSeparator;
+            return $"{{(R{ls} G{ls} B{ls} A) = ({R}{ls} {G}{ls} {B}{ls} {A})}}";
         }
 
         /// <summary>
