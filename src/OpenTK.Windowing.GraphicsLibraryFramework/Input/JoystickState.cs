@@ -217,7 +217,8 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         /// <summary>
         /// Gets an immutable snapshot of this JoystickState.
         /// </summary>
-        /// <returns>Returns an immutable snapshot of this JoystickState.</returns>
+        /// <returns>Returns an immutable snapshot of this JoystickState.
+        /// This can be used to save the current keyboard state for comparison later on.</returns>
         public JoystickState GetSnapshot()
         {
             return new JoystickState(this);

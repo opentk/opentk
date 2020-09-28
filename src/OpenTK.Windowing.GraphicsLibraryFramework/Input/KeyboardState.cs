@@ -188,7 +188,8 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         /// <summary>
         /// Gets an immutable snapshot of this KeyboardState.
         /// </summary>
-        /// <returns>Returns an immutable snapshot of this KeyboardState.</returns>
+        /// <returns>Returns an immutable snapshot of this KeyboardState.
+        /// This can be used to save the current keyboard state for comparison later on.</returns>
         public KeyboardState GetSnapshot() => new KeyboardState(this);
     }
 }
