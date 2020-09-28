@@ -86,7 +86,7 @@ namespace OpenTK.Windowing.Desktop
         ///     Gets the amount that the mouse moved since the last frame.
         ///     This does not necessarily correspond to pixels, for example in the case of raw input.
         /// </summary>
-        [Obsolete("Use " + nameof(MouseState.Delta) + " member of the " + nameof(MouseState) + " property instead.", true)]
+        [Obsolete("Use " + nameof(MouseState.Delta) + " member of the " + nameof(NativeWindow.MouseState) + " property instead.", true)]
         public Vector2 MouseDelta => Vector2.Zero;
 
         /// <summary>
@@ -98,7 +98,7 @@ namespace OpenTK.Windowing.Desktop
         ///     Gets the previous keyboard state.
         ///     This value is updated with the new state every time the window processes events.
         /// </summary>
-        [Obsolete("Use " + nameof(MouseState.WasButtonDown) + " and " + nameof(MouseState.PreviousPosition) + " members of the " + nameof(MouseState) + " property instead.", true)]
+        [Obsolete("Use " + nameof(MouseState.WasButtonDown) + " and " + nameof(MouseState.PreviousPosition) + " members of the " + nameof(NativeWindow.MouseState) + " property instead.", true)]
         public MouseState LastMouseState => null;
 
         /// <summary>
