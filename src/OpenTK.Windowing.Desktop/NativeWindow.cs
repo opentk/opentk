@@ -865,17 +865,16 @@ namespace OpenTK.Windowing.Desktop
 
         private unsafe void MouseButtonCallback(Window* window, MouseButton button, InputAction action, KeyModifiers mods)
         {
-            var ourButton = (MouseButton)button;
-            var args = new MouseButtonEventArgs(ourButton, action, mods);
+            var args = new MouseButtonEventArgs(button, action, mods);
 
             if (action == InputAction.Release)
             {
-                _mouseState[ourButton] = false;
+                _mouseState[button] = false;
                 OnMouseUp(args);
             }
             else
             {
-                _mouseState[ourButton] = true;
+                _mouseState[button] = true;
                 OnMouseDown(args);
             }
         }
