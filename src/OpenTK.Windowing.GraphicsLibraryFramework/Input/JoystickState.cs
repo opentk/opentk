@@ -63,12 +63,12 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
                    source.Id,
                    source.Name)
         {
-                Array.Copy(source._hats, _hats, source._hats.Length);
-                Array.Copy(source._axes, _axes, source._axes.Length);
-                _buttons = (BitArray)source._buttons.Clone(); // Array.Copy(source._buttons, _buttons, source._buttons.Length);
-                Array.Copy(source._hatsPrevious, _hatsPrevious, source._hatsPrevious.Length);
-                Array.Copy(source._axesPrevious, _axesPrevious, source._axesPrevious.Length);
-                _buttonsPrevious = (BitArray)source._buttonsPrevious.Clone(); // Array.Copy(source._previousButtons, _previousButtons, source._previousButtons.Length);
+            Array.Copy(source._hats, _hats, source._hats.Length);
+            Array.Copy(source._axes, _axes, source._axes.Length);
+            _buttons = (BitArray)source._buttons.Clone(); // Array.Copy(source._buttons, _buttons, source._buttons.Length);
+            Array.Copy(source._hatsPrevious, _hatsPrevious, source._hatsPrevious.Length);
+            Array.Copy(source._axesPrevious, _axesPrevious, source._axesPrevious.Length);
+            _buttonsPrevious = (BitArray)source._buttonsPrevious.Clone(); // Array.Copy(source._previousButtons, _previousButtons, source._previousButtons.Length);
         }
 
         /// <summary>
@@ -122,7 +122,7 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private void SetButtonDown(int index, bool value)
         {
-	        _buttons[index] = value;
+            _buttons[index] = value;
         }
 
         /// <summary>

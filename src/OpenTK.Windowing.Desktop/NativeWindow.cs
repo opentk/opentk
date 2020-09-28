@@ -241,13 +241,13 @@ namespace OpenTK.Windowing.Desktop
                 var monitor = value.ToUnsafePtr<GraphicsLibraryFramework.Monitor>();
                 var mode = GLFW.GetVideoMode(monitor);
                 GLFW.SetWindowMonitor(
-                                      WindowPtr,
-                                      monitor,
-                                      _location.X,
-                                      _location.Y,
-                                      _size.X,
-                                      _size.Y,
-                                      mode->RefreshRate);
+                WindowPtr,
+                monitor,
+                _location.X,
+                _location.Y,
+                _size.X,
+                _size.Y,
+                mode->RefreshRate);
 
                 _currentMonitor = value;
             }
@@ -481,9 +481,10 @@ namespace OpenTK.Windowing.Desktop
             get => _managedCursor;
             set
             {
-                _managedCursor = value ?? throw new ArgumentNullException(
-                                                                          nameof(value),
-                                                                          "Cursor cannot be null. To reset to default cursor, set it to MouseCursor.Default instead.");
+                _managedCursor = value ??
+                                 throw new ArgumentNullException(
+                                 nameof(value),
+                                 "Cursor cannot be null. To reset to default cursor, set it to MouseCursor.Default instead.");
 
                 unsafe
                 {
@@ -535,9 +536,9 @@ namespace OpenTK.Windowing.Desktop
 
             set =>
                 GLFW.SetInputMode(
-                                  WindowPtr,
-                                  CursorStateAttribute.Cursor,
-                                  value ? CursorModeValue.CursorNormal : CursorModeValue.CursorHidden);
+                WindowPtr,
+                CursorStateAttribute.Cursor,
+                value ? CursorModeValue.CursorNormal : CursorModeValue.CursorHidden);
         }
 
         /// <summary>
@@ -810,11 +811,12 @@ namespace OpenTK.Windowing.Desktop
 
                 _keyCallback = (window, key, scancode, action, mods) =>
                                {
-                                   var args = new KeyboardKeyEventArgs(
-                                                                       key,
-                                                                       scancode,
-                                                                       mods,
-                                                                       action == InputAction.Repeat);
+                                   var args =
+                                       new KeyboardKeyEventArgs(
+                                       key,
+                                       scancode,
+                                       mods,
+                                       action == InputAction.Repeat);
 
                                    if (action == InputAction.Release)
                                    {
@@ -854,10 +856,11 @@ namespace OpenTK.Windowing.Desktop
                 _mouseButtonCallback = (window, button, action, mods) =>
                                        {
                                            var ourButton = (MouseButton)button;
-                                           var args = new MouseButtonEventArgs(
-                                                                               ourButton,
-                                                                               action,
-                                                                               mods);
+                                           var args =
+                                               new MouseButtonEventArgs(
+                                               ourButton,
+                                               action,
+                                               mods);
 
                                            if (action == InputAction.Release)
                                            {
@@ -920,8 +923,8 @@ namespace OpenTK.Windowing.Desktop
                                         }
 
                                         OnJoystickConnected(new JoystickEventArgs(
-                                                             joy,
-                                                             eventCode == ConnectedState.Connected));
+                                                            joy,
+                                                            eventCode == ConnectedState.Connected));
                                     };
                 GLFW.SetJoystickCallback(_joystickCallback);
 
@@ -942,8 +945,8 @@ namespace OpenTK.Windowing.Desktop
                 _monitorCallback = (monitor, eventCode) =>
                                    {
                                        OnMonitorConnected(new MonitorEventArgs(
-                                                                               new Monitor((IntPtr)monitor),
-                                                                               eventCode == ConnectedState.Connected));
+                                                          new Monitor((IntPtr)monitor),
+                                                          eventCode == ConnectedState.Connected));
                                    };
                 GLFW.SetMonitorCallback(_monitorCallback);
 
@@ -1286,10 +1289,10 @@ namespace OpenTK.Windowing.Desktop
         /// <returns><c>true</c>, if current monitor scale was gotten correctly, <c>false</c> otherwise.</returns>
         public unsafe bool TryGetCurrentMonitorScale(out float horizontalScale, out float verticalScale) =>
             DpiCalculator.TryGetMonitorScale(
-                                             GetDpiMonitor(),
-                                             out horizontalScale,
-                                             out verticalScale
-                                            );
+            GetDpiMonitor(),
+            out horizontalScale,
+            out verticalScale
+            );
 
         /// <summary>
         /// Gets the dpi of the current monitor.
@@ -1304,10 +1307,10 @@ namespace OpenTK.Windowing.Desktop
         /// </remarks>
         public unsafe bool TryGetCurrentMonitorDpi(out float horizontalDpi, out float verticalDpi) =>
             DpiCalculator.TryGetMonitorDpi(
-                                           GetDpiMonitor(),
-                                           out horizontalDpi,
-                                           out verticalDpi
-                                          );
+            GetDpiMonitor(),
+            out horizontalDpi,
+            out verticalDpi
+            );
 
         /// <summary>
         /// Gets the raw dpi of current monitor.
@@ -1322,10 +1325,10 @@ namespace OpenTK.Windowing.Desktop
         /// </remarks>
         public unsafe bool TryGetCurrentMonitorDpiRaw(out float horizontalDpi, out float verticalDpi) =>
             DpiCalculator.TryGetMonitorDpiRaw(
-                                              GetDpiMonitor(),
-                                              out horizontalDpi,
-                                              out verticalDpi
-                                             );
+            GetDpiMonitor(),
+            out horizontalDpi,
+            out verticalDpi
+            );
 
         /// <summary>
         /// Raises the <see cref="Move"/> event.

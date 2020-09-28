@@ -21,14 +21,14 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
     /// </summary>
     public sealed class KeyboardState
     {
-	    // These arrays will mostly be empty since the last integer used is 384. That's only 48 bytes though.
+        // These arrays will mostly be empty since the last integer used is 384. That's only 48 bytes though.
         private BitArray _keys = new BitArray((int)Keys.LastKey);
         private BitArray _keysPrevious = new BitArray((int)Keys.LastKey);
 
         private KeyboardState(KeyboardState source)
         {
-	        _keys = (BitArray)source._keys.Clone();
-	        _keysPrevious = (BitArray)source._keysPrevious.Clone();
+            _keys = (BitArray)source._keys.Clone();
+            _keysPrevious = (BitArray)source._keysPrevious.Clone();
         }
 
         internal KeyboardState()
@@ -54,7 +54,7 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         /// <returns><c>true</c> if <paramref name="key"/> is in the down state; otherwise, <c>false</c>.</returns>
         public bool IsKeyDown(Keys key)
         {
-	        return _keys[(int)key];
+            return _keys[(int)key];
         }
 
         /// <summary>
@@ -67,7 +67,7 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
             {
                 for (var i = 0; i < _keys.Length; ++i)
                 {
-	                if (_keys[i])
+                    if (_keys[i])
                     {
                         return true;
                     }
@@ -84,7 +84,7 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         /// <param name="down">The new state the key should be changed to.</param>
         internal void SetKeyState(Keys key, bool down)
         {
-	        _keys[(int)key] = down;
+            _keys[(int)key] = down;
         }
 
         /// <summary>
@@ -162,7 +162,7 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
 
         internal void Update()
         {
-	        Utils.Swap(ref _keys, ref _keysPrevious);
+            Utils.Swap(ref _keys, ref _keysPrevious);
         }
 
         /// <summary>
@@ -172,7 +172,7 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         /// <returns><c>true</c> if <paramref name="key"/> was in the down state; otherwise, <c>false</c>.</returns>
         public bool WasKeyDown(Keys key)
         {
-	        return _keysPrevious[(int)key];
+            return _keysPrevious[(int)key];
         }
 
         /// <summary>
