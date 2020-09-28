@@ -60,8 +60,7 @@ namespace OpenTK.Windowing.Desktop
             get => _joystickStates;
         }
 
-        [Obsolete("Use " + nameof(JoystickState.WasButtonDown) + ", " + nameof(JoystickState.GetAxisPrevious) + " and " + nameof(JoystickState.GetHatPrevious) + " instead.",
-                  true)]
+        [Obsolete("Use " + nameof(JoystickState.WasButtonDown) + ", " + nameof(JoystickState.GetAxisPrevious) + " and " + nameof(JoystickState.GetHatPrevious) + " instead.", true)]
         public IReadOnlyList<JoystickState> LastJoystickStates => null;
 
         /// <summary>
@@ -70,7 +69,8 @@ namespace OpenTK.Windowing.Desktop
         public Vector2 MousePosition
         {
             get => _mouseState.Position;
-            set {
+            set
+            {
                 unsafe
                 {
                     GLFW.SetCursorPos(WindowPtr, value.X, value.Y);
@@ -86,8 +86,7 @@ namespace OpenTK.Windowing.Desktop
         ///     Gets the amount that the mouse moved since the last frame.
         ///     This does not necessarily correspond to pixels, for example in the case of raw input.
         /// </summary>
-        [Obsolete("Use " + nameof(MouseState.Delta) + " member of the " + nameof(MouseState) + " property instead.",
-                  true)]
+        [Obsolete("Use " + nameof(MouseState.Delta) + " member of the " + nameof(MouseState) + " property instead.", true)]
         public Vector2 MouseDelta => Vector2.Zero;
 
         /// <summary>
@@ -99,8 +98,7 @@ namespace OpenTK.Windowing.Desktop
         ///     Gets the previous keyboard state.
         ///     This value is updated with the new state every time the window processes events.
         /// </summary>
-        [Obsolete("Use " + nameof(MouseState.WasButtonDown) + " and " + nameof(MouseState.PreviousPosition) + " members of the " + nameof(MouseState) + " property instead.",
-                  true)]
+        [Obsolete("Use " + nameof(MouseState.WasButtonDown) + " and " + nameof(MouseState.PreviousPosition) + " members of the " + nameof(MouseState) + " property instead.", true)]
         public MouseState LastMouseState => null;
 
         /// <summary>
@@ -128,7 +126,8 @@ namespace OpenTK.Windowing.Desktop
         public WindowIcon Icon
         {
             get => _icon;
-            set {
+            set
+            {
                 unsafe
                 {
                     var images = value.Images;
@@ -169,14 +168,16 @@ namespace OpenTK.Windowing.Desktop
         /// </summary>
         public string ClipboardString
         {
-            get {
+            get
+            {
                 unsafe
                 {
                     return GLFW.GetClipboardString(WindowPtr);
                 }
             }
 
-            set {
+            set
+            {
                 unsafe
                 {
                     GLFW.SetClipboardString(WindowPtr, value);
@@ -192,7 +193,8 @@ namespace OpenTK.Windowing.Desktop
         public string Title
         {
             get => _title;
-            set {
+            set
+            {
                 unsafe
                 {
                     GLFW.SetWindowTitle(WindowPtr, value);
@@ -234,7 +236,8 @@ namespace OpenTK.Windowing.Desktop
         {
             get => _currentMonitor;
 
-            set {
+            set
+            {
                 var monitor = value.ToUnsafePtr<GraphicsLibraryFramework.Monitor>();
                 var mode = GLFW.GetVideoMode(monitor);
                 GLFW.SetWindowMonitor(
@@ -277,7 +280,8 @@ namespace OpenTK.Windowing.Desktop
         public bool IsVisible
         {
             get => _isVisible;
-            set {
+            set
+            {
                 unsafe
                 {
                     if (value)
@@ -312,7 +316,8 @@ namespace OpenTK.Windowing.Desktop
         /// </summary>
         public unsafe WindowState WindowState
         {
-            get {
+            get
+            {
                 if (GLFW.GetWindowAttrib(WindowPtr, WindowAttributeGetBool.Iconified))
                 {
                     return WindowState.Minimized;
@@ -331,7 +336,8 @@ namespace OpenTK.Windowing.Desktop
                 return WindowState.Normal;
             }
 
-            set {
+            set
+            {
                 switch (value)
                 {
                     case WindowState.Normal:
@@ -361,7 +367,8 @@ namespace OpenTK.Windowing.Desktop
         {
             get => _windowBorder;
 
-            set {
+            set
+            {
                 if (!GLFW.GetWindowAttrib(WindowPtr, WindowAttributeGetBool.Decorated))
                 {
                     GLFW.GetVersion(out var major, out var minor, out _);
@@ -401,7 +408,8 @@ namespace OpenTK.Windowing.Desktop
         public unsafe Box2i Bounds
         {
             get => new Box2i(Location, Location + Size);
-            set {
+            set
+            {
                 GLFW.SetWindowSize(WindowPtr, (int)value.Size.X, (int)value.Size.Y);
                 GLFW.SetWindowPos(WindowPtr, (int)value.Min.X, (int)value.Min.Y);
             }
@@ -417,7 +425,8 @@ namespace OpenTK.Windowing.Desktop
         public unsafe Vector2i Location
         {
             get => _location;
-            set {
+            set
+            {
                 GLFW.SetWindowPos(WindowPtr, value.X, value.Y);
                 _location = value;
             }
@@ -431,7 +440,8 @@ namespace OpenTK.Windowing.Desktop
         public unsafe Vector2i Size
         {
             get => _size;
-            set {
+            set
+            {
                 _size = value;
                 GLFW.SetWindowSize(WindowPtr, value.X, value.Y);
             }
@@ -445,7 +455,8 @@ namespace OpenTK.Windowing.Desktop
         public Box2i ClientRectangle
         {
             get => new Box2i(Location, Location + Size);
-            set {
+            set
+            {
                 Location = value.Min;
                 Size = value.Size;
             }
@@ -468,7 +479,8 @@ namespace OpenTK.Windowing.Desktop
         public MouseCursor Cursor
         {
             get => _managedCursor;
-            set {
+            set
+            {
                 _managedCursor = value ?? throw new ArgumentNullException(
                                                                           nameof(value),
                                                                           "Cursor cannot be null. To reset to default cursor, set it to MouseCursor.Default instead.");
@@ -514,7 +526,8 @@ namespace OpenTK.Windowing.Desktop
         /// </summary>
         public unsafe bool CursorVisible
         {
-            get {
+            get
+            {
                 var inputMode = GLFW.GetInputMode(WindowPtr, CursorStateAttribute.Cursor);
                 return inputMode != CursorModeValue.CursorHidden
                        && inputMode != CursorModeValue.CursorDisabled;
@@ -533,7 +546,8 @@ namespace OpenTK.Windowing.Desktop
         public unsafe bool CursorGrabbed
         {
             get => GLFW.GetInputMode(WindowPtr, CursorStateAttribute.Cursor) == CursorModeValue.CursorDisabled;
-            set {
+            set
+            {
                 if (value)
                 {
                     GLFW.SetInputMode(WindowPtr, CursorStateAttribute.Cursor, CursorModeValue.CursorDisabled);
@@ -646,13 +660,11 @@ namespace OpenTK.Windowing.Desktop
                 GLFW.WindowHint(WindowHintInt.GreenBits, modePtr->GreenBits);
                 GLFW.WindowHint(WindowHintInt.BlueBits, modePtr->BlueBits);
                 GLFW.WindowHint(WindowHintInt.RefreshRate, modePtr->RefreshRate);
-                WindowPtr = GLFW.CreateWindow(modePtr->Width, modePtr->Height, _title, monitor,
-                                              (Window*)(settings.SharedContext?.NativeContex ?? IntPtr.Zero));
+                WindowPtr = GLFW.CreateWindow(modePtr->Width, modePtr->Height, _title, monitor, (Window*)(settings.SharedContext?.NativeContex ?? IntPtr.Zero));
             }
             else
             {
-                WindowPtr = GLFW.CreateWindow(settings.Size.X, settings.Size.Y, _title, null,
-                                              (Window*)(settings.SharedContext?.NativeContex ?? IntPtr.Zero));
+                WindowPtr = GLFW.CreateWindow(settings.Size.X, settings.Size.Y, _title, null, (Window*)(settings.SharedContext?.NativeContex ?? IntPtr.Zero));
             }
 
             _mouseState = new MouseState(WindowPtr);
@@ -738,7 +750,7 @@ namespace OpenTK.Windowing.Desktop
                 }
 
                 var load = type.GetMethod("LoadBindings");
-                load.Invoke(null, new object[] {provider});
+                load.Invoke(null, new object[] { provider });
             }
 
             LoadBindings("ES11");
@@ -796,7 +808,8 @@ namespace OpenTK.Windowing.Desktop
                 _charCallback = (window, codepoint) => OnTextInput(new TextInputEventArgs((int)codepoint));
                 GLFW.SetCharCallback(WindowPtr, _charCallback);
 
-                _keyCallback = (window, key, scancode, action, mods) => {
+                _keyCallback = (window, key, scancode, action, mods) =>
+                               {
                                    var args = new KeyboardKeyEventArgs(
                                                                        key,
                                                                        scancode,
@@ -825,7 +838,8 @@ namespace OpenTK.Windowing.Desktop
 
                 GLFW.SetKeyCallback(WindowPtr, _keyCallback);
 
-                _cursorEnterCallback = (window, entered) => {
+                _cursorEnterCallback = (window, entered) =>
+                                       {
                                            if (entered)
                                            {
                                                OnMouseEnter();
@@ -837,7 +851,8 @@ namespace OpenTK.Windowing.Desktop
                                        };
                 GLFW.SetCursorEnterCallback(WindowPtr, _cursorEnterCallback);
 
-                _mouseButtonCallback = (window, button, action, mods) => {
+                _mouseButtonCallback = (window, button, action, mods) =>
+                                       {
                                            var ourButton = (MouseButton)button;
                                            var args = new MouseButtonEventArgs(
                                                                                ourButton,
@@ -857,7 +872,8 @@ namespace OpenTK.Windowing.Desktop
                                        };
                 GLFW.SetMouseButtonCallback(WindowPtr, _mouseButtonCallback);
 
-                _cursorPosCallback = (window, posX, posY) => {
+                _cursorPosCallback = (window, posX, posY) =>
+                                     {
                                          var newPos = new Vector2((float)posX, (float)posY);
                                          var delta = _lastReportedMousePos - newPos;
 
@@ -871,7 +887,8 @@ namespace OpenTK.Windowing.Desktop
                                       OnMouseWheel(new MouseWheelEventArgs((float)offsetX, (float)offsetY));
                 GLFW.SetScrollCallback(WindowPtr, _scrollCallback);
 
-                _dropCallback = (window, count, paths) => {
+                _dropCallback = (window, count, paths) =>
+                                {
                                     var arrayOfPaths = new string[count];
 
                                     for (var i = 0; i < count; i++)
@@ -883,7 +900,8 @@ namespace OpenTK.Windowing.Desktop
                                 };
                 GLFW.SetDropCallback(WindowPtr, _dropCallback);
 
-                _joystickCallback = (joy, eventCode) => {
+                _joystickCallback = (joy, eventCode) =>
+                                    {
                                         if (eventCode == ConnectedState.Connected)
                                         {
                                             // Initialize the first joystick state.
@@ -921,7 +939,8 @@ namespace OpenTK.Windowing.Desktop
                     }
                 }
 
-                _monitorCallback = (monitor, eventCode) => {
+                _monitorCallback = (monitor, eventCode) =>
+                                   {
                                        OnMonitorConnected(new MonitorEventArgs(
                                                                                new Monitor((IntPtr)monitor),
                                                                                eventCode == ConnectedState.Connected));
@@ -1493,7 +1512,8 @@ namespace OpenTK.Windowing.Desktop
             }
 
             if (disposing)
-            { }
+            {
+            }
 
             // Free unmanaged resources
             DestroyWindow();
