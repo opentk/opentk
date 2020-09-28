@@ -696,6 +696,7 @@ namespace OpenTK.Windowing.Desktop
             _charCallback = (w, codepoint) => OnTextInput(new TextInputEventArgs((int)codepoint));
             _scrollCallback = (w, offsetX, offsetY) => OnMouseWheel(new MouseWheelEventArgs((float)offsetX, (float)offsetY));
             _monitorCallback = (monitor, eventCode) => OnMonitorConnected(new MonitorEventArgs(new Monitor((IntPtr)monitor), eventCode == ConnectedState.Connected));
+            _windowRefreshCallback = w => OnRefresh();
 
             RegisterWindowCallbacks();
 
@@ -788,6 +789,7 @@ namespace OpenTK.Windowing.Desktop
         private readonly GLFWCallbacks.CharCallback _charCallback;
         private readonly GLFWCallbacks.ScrollCallback _scrollCallback;
         private readonly GLFWCallbacks.MonitorCallback _monitorCallback;
+        private readonly GLFWCallbacks.WindowRefreshCallback _windowRefreshCallback;
 
         private unsafe void RegisterWindowCallbacks()
         {
@@ -798,6 +800,7 @@ namespace OpenTK.Windowing.Desktop
             GLFW.SetCharCallback(WindowPtr, _charCallback);
             GLFW.SetScrollCallback(WindowPtr, _scrollCallback);
             GLFW.SetMonitorCallback(_monitorCallback);
+            GLFW.SetWindowRefreshCallback(WindowPtr, _windowRefreshCallback);
             GLFW.SetWindowCloseCallback(WindowPtr, OnCloseCallback);
             GLFW.SetKeyCallback(WindowPtr, KeyCallback);
             GLFW.SetCursorEnterCallback(WindowPtr, CursorEnterCallback);
@@ -805,7 +808,6 @@ namespace OpenTK.Windowing.Desktop
             GLFW.SetCursorPosCallback(WindowPtr, CursorPosCallback);
             GLFW.SetDropCallback(WindowPtr, DropCallback);
             GLFW.SetJoystickCallback(JoystickCallback);
-            GLFW.SetWindowRefreshCallback(WindowPtr, w => OnRefresh());
         }
 
         private unsafe void InitialiseJoystickStates()
