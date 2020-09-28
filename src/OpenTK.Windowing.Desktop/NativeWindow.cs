@@ -787,172 +787,169 @@ namespace OpenTK.Windowing.Desktop
             ClientSize = new Vector2i(width, height);
         }
 
-        private void RegisterWindowCallbacks()
+        private unsafe void RegisterWindowCallbacks()
         {
-            unsafe
+            _posCallback = (window, x, y) => OnMove(new WindowPositionEventArgs(x, y));
+            GLFW.SetWindowPosCallback(WindowPtr, _posCallback);
+
+            _sizeCallback = (window, width, height) => OnResize(new ResizeEventArgs(width, height));
+            GLFW.SetWindowSizeCallback(WindowPtr, _sizeCallback);
+
+            _closeCallback = OnCloseCallback;
+            GLFW.SetWindowCloseCallback(WindowPtr, _closeCallback);
+
+            _iconifyCallback = (window, iconified) => OnMinimized(new MinimizedEventArgs(iconified));
+            GLFW.SetWindowIconifyCallback(WindowPtr, _iconifyCallback);
+
+            _focusCallback = (window, focused) => OnFocusedChanged(new FocusedChangedEventArgs(focused));
+            GLFW.SetWindowFocusCallback(WindowPtr, _focusCallback);
+
+            _charCallback = (window, codepoint) => OnTextInput(new TextInputEventArgs((int)codepoint));
+            GLFW.SetCharCallback(WindowPtr, _charCallback);
+
+            _keyCallback = KeyCallback;
+
+            GLFW.SetKeyCallback(WindowPtr, _keyCallback);
+
+            _cursorEnterCallback = CursorEnterCallback;
+            GLFW.SetCursorEnterCallback(WindowPtr, _cursorEnterCallback);
+
+            _mouseButtonCallback = MouseButtonCallback;
+            GLFW.SetMouseButtonCallback(WindowPtr, _mouseButtonCallback);
+
+            _cursorPosCallback = CursorPosCallback;
+            GLFW.SetCursorPosCallback(WindowPtr, _cursorPosCallback);
+
+            _scrollCallback = (window, offsetX, offsetY) =>
+                                  OnMouseWheel(new MouseWheelEventArgs((float)offsetX, (float)offsetY));
+            GLFW.SetScrollCallback(WindowPtr, _scrollCallback);
+
+            _dropCallback = DropCallback;
+            GLFW.SetDropCallback(WindowPtr, _dropCallback);
+
+            _joystickCallback = JoystickCallback;
+            GLFW.SetJoystickCallback(_joystickCallback);
+
+            // Check for Joysticks that are connected at application launch
+            for (int i = 0; i < _joystickStates.Length; i++)
             {
-                _posCallback = (window, x, y) => OnMove(new WindowPositionEventArgs(x, y));
-                GLFW.SetWindowPosCallback(WindowPtr, _posCallback);
-
-                _sizeCallback = (window, width, height) => OnResize(new ResizeEventArgs(width, height));
-                GLFW.SetWindowSizeCallback(WindowPtr, _sizeCallback);
-
-                _closeCallback = OnCloseCallback;
-                GLFW.SetWindowCloseCallback(WindowPtr, _closeCallback);
-
-                _iconifyCallback = (window, iconified) => OnMinimized(new MinimizedEventArgs(iconified));
-                GLFW.SetWindowIconifyCallback(WindowPtr, _iconifyCallback);
-
-                _focusCallback = (window, focused) => OnFocusedChanged(new FocusedChangedEventArgs(focused));
-                GLFW.SetWindowFocusCallback(WindowPtr, _focusCallback);
-
-                _charCallback = (window, codepoint) => OnTextInput(new TextInputEventArgs((int)codepoint));
-                GLFW.SetCharCallback(WindowPtr, _charCallback);
-
-                _keyCallback = (window, key, scancode, action, mods) =>
-                               {
-                                   var args =
-                                       new KeyboardKeyEventArgs(
-                                       key,
-                                       scancode,
-                                       mods,
-                                       action == InputAction.Repeat);
-
-                                   if (action == InputAction.Release)
-                                   {
-                                       if (key != Keys.Unknown)
-                                       {
-                                           _keyboardState.SetKeyState(key, false);
-                                       }
-
-                                       OnKeyUp(args);
-                                   }
-                                   else
-                                   {
-                                       if (key != Keys.Unknown)
-                                       {
-                                           _keyboardState.SetKeyState(key, true);
-                                       }
-
-                                       OnKeyDown(args);
-                                   }
-                               };
-
-                GLFW.SetKeyCallback(WindowPtr, _keyCallback);
-
-                _cursorEnterCallback = (window, entered) =>
-                                       {
-                                           if (entered)
-                                           {
-                                               OnMouseEnter();
-                                           }
-                                           else
-                                           {
-                                               OnMouseLeave();
-                                           }
-                                       };
-                GLFW.SetCursorEnterCallback(WindowPtr, _cursorEnterCallback);
-
-                _mouseButtonCallback = (window, button, action, mods) =>
-                                       {
-                                           var ourButton = (MouseButton)button;
-                                           var args =
-                                               new MouseButtonEventArgs(
-                                               ourButton,
-                                               action,
-                                               mods);
-
-                                           if (action == InputAction.Release)
-                                           {
-                                               _mouseState[ourButton] = false;
-                                               OnMouseUp(args);
-                                           }
-                                           else
-                                           {
-                                               _mouseState[ourButton] = true;
-                                               OnMouseDown(args);
-                                           }
-                                       };
-                GLFW.SetMouseButtonCallback(WindowPtr, _mouseButtonCallback);
-
-                _cursorPosCallback = (window, posX, posY) =>
-                                     {
-                                         var newPos = new Vector2((float)posX, (float)posY);
-                                         var delta = _lastReportedMousePos - newPos;
-
-                                         _lastReportedMousePos = _mouseState.Position = newPos;
-
-                                         OnMouseMove(new MouseMoveEventArgs(newPos, delta));
-                                     };
-                GLFW.SetCursorPosCallback(WindowPtr, _cursorPosCallback);
-
-                _scrollCallback = (window, offsetX, offsetY) =>
-                                      OnMouseWheel(new MouseWheelEventArgs((float)offsetX, (float)offsetY));
-                GLFW.SetScrollCallback(WindowPtr, _scrollCallback);
-
-                _dropCallback = (window, count, paths) =>
-                                {
-                                    var arrayOfPaths = new string[count];
-
-                                    for (var i = 0; i < count; i++)
-                                    {
-                                        arrayOfPaths[i] = MarshalUtility.PtrToStringUTF8(paths[i]);
-                                    }
-
-                                    OnFileDrop(new FileDropEventArgs(arrayOfPaths));
-                                };
-                GLFW.SetDropCallback(WindowPtr, _dropCallback);
-
-                _joystickCallback = (joy, eventCode) =>
-                                    {
-                                        if (eventCode == ConnectedState.Connected)
-                                        {
-                                            // Initialize the first joystick state.
-                                            GLFW.GetJoystickHatsRaw(joy, out var hatCount);
-                                            GLFW.GetJoystickAxesRaw(joy, out var axisCount);
-                                            GLFW.GetJoystickButtonsRaw(joy, out var buttonCount);
-                                            var name = GLFW.GetJoystickName(joy);
-
-                                            _joystickStates[joy] =
-                                                new JoystickState(hatCount, axisCount, buttonCount, joy, name);
-                                        }
-                                        else
-                                        {
-                                            // Remove the joystick state from the array of joysticks.
-                                            _joystickStates[joy] = null;
-                                        }
-
-                                        OnJoystickConnected(new JoystickEventArgs(
-                                                            joy,
-                                                            eventCode == ConnectedState.Connected));
-                                    };
-                GLFW.SetJoystickCallback(_joystickCallback);
-
-                // Check for Joysticks that are connected at application launch
-                for (int i = 0; i < _joystickStates.Length; i++)
+                if (GLFW.JoystickPresent(i))
                 {
-                    if (GLFW.JoystickPresent(i))
-                    {
-                        GLFW.GetJoystickHatsRaw(i, out var hatCount);
-                        GLFW.GetJoystickAxesRaw(i, out var axisCount);
-                        GLFW.GetJoystickButtonsRaw(i, out var buttonCount);
-                        var name = GLFW.GetJoystickName(i);
+                    GLFW.GetJoystickHatsRaw(i, out var hatCount);
+                    GLFW.GetJoystickAxesRaw(i, out var axisCount);
+                    GLFW.GetJoystickButtonsRaw(i, out var buttonCount);
+                    var name = GLFW.GetJoystickName(i);
 
-                        _joystickStates[i] = new JoystickState(hatCount, axisCount, buttonCount, i, name);
-                    }
+                    _joystickStates[i] = new JoystickState(hatCount, axisCount, buttonCount, i, name);
+                }
+            }
+
+            _monitorCallback = (monitor, eventCode) =>
+                               {
+                                   OnMonitorConnected(new MonitorEventArgs(
+                                                      new Monitor((IntPtr)monitor),
+                                                      eventCode == ConnectedState.Connected));
+                               };
+            GLFW.SetMonitorCallback(_monitorCallback);
+
+            _refreshCallback = (window) => OnRefresh();
+            GLFW.SetWindowRefreshCallback(WindowPtr, _refreshCallback);
+        }
+
+        private unsafe void KeyCallback(Window* window, Keys key, int scancode, InputAction action, KeyModifiers mods)
+        {
+            var args = new KeyboardKeyEventArgs(key, scancode, mods, action == InputAction.Repeat);
+
+            if (action == InputAction.Release)
+            {
+                if (key != Keys.Unknown)
+                {
+                    _keyboardState.SetKeyState(key, false);
                 }
 
-                _monitorCallback = (monitor, eventCode) =>
-                                   {
-                                       OnMonitorConnected(new MonitorEventArgs(
-                                                          new Monitor((IntPtr)monitor),
-                                                          eventCode == ConnectedState.Connected));
-                                   };
-                GLFW.SetMonitorCallback(_monitorCallback);
-
-                _refreshCallback = (window) => OnRefresh();
-                GLFW.SetWindowRefreshCallback(WindowPtr, _refreshCallback);
+                OnKeyUp(args);
             }
+            else
+            {
+                if (key != Keys.Unknown)
+                {
+                    _keyboardState.SetKeyState(key, true);
+                }
+
+                OnKeyDown(args);
+            }
+        }
+
+        private unsafe void CursorEnterCallback(Window* window, bool entered)
+        {
+            if (entered)
+            {
+                OnMouseEnter();
+            }
+            else
+            {
+                OnMouseLeave();
+            }
+        }
+
+        private unsafe void MouseButtonCallback(Window* window, MouseButton button, InputAction action, KeyModifiers mods)
+        {
+            var ourButton = (MouseButton)button;
+            var args = new MouseButtonEventArgs(ourButton, action, mods);
+
+            if (action == InputAction.Release)
+            {
+                _mouseState[ourButton] = false;
+                OnMouseUp(args);
+            }
+            else
+            {
+                _mouseState[ourButton] = true;
+                OnMouseDown(args);
+            }
+        }
+
+        private unsafe void CursorPosCallback(Window* window, double posX, double posY)
+        {
+            var newPos = new Vector2((float)posX, (float)posY);
+            var delta = _lastReportedMousePos - newPos;
+
+            _lastReportedMousePos = _mouseState.Position = newPos;
+
+            OnMouseMove(new MouseMoveEventArgs(newPos, delta));
+        }
+
+        private unsafe void JoystickCallback(int joy, ConnectedState eventCode)
+        {
+            if (eventCode == ConnectedState.Connected)
+            {
+                // Initialize the first joystick state.
+                GLFW.GetJoystickHatsRaw(joy, out var hatCount);
+                GLFW.GetJoystickAxesRaw(joy, out var axisCount);
+                GLFW.GetJoystickButtonsRaw(joy, out var buttonCount);
+                var name = GLFW.GetJoystickName(joy);
+
+                _joystickStates[joy] = new JoystickState(hatCount, axisCount, buttonCount, joy, name);
+            }
+            else
+            {
+                // Remove the joystick state from the array of joysticks.
+                _joystickStates[joy] = null;
+            }
+
+            OnJoystickConnected(new JoystickEventArgs(joy, eventCode == ConnectedState.Connected));
+        }
+
+        private unsafe void DropCallback(Window* window, int count, byte** paths)
+        {
+            var arrayOfPaths = new string[count];
+
+            for (var i = 0; i < count; i++)
+            {
+                arrayOfPaths[i] = MarshalUtility.PtrToStringUTF8(paths[i]);
+            }
+
+            OnFileDrop(new FileDropEventArgs(arrayOfPaths));
         }
 
         private unsafe void OnCloseCallback(Window* window)
