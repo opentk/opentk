@@ -24,6 +24,8 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         private BitArray _keys = new BitArray((int)Keys.LastKey);
         private BitArray _keysPrevious = new BitArray((int)Keys.LastKey);
 
+        private static readonly string[] KeyNames = Enum.GetNames(typeof(Keys));
+
         private KeyboardState(KeyboardState source)
         {
 	        _keys = (BitArray)source._keys.Clone();
@@ -146,21 +148,11 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
             builder.Append('{');
             var first = true;
 
-            string[] keys = Enum.GetNames(typeof(Keys));
-
-            foreach (string key in keys)
+            foreach (string key in KeyNames)
             {
                 if (IsKeyDown(Enum.Parse<Keys>(key)))
                 {
-                    if (!first)
-                    {
-                        builder.Append(", ");
-                    }
-                    else
-                    {
-                        first = false;
-                    }
-                    builder.Append(key);
+                    builder.AppendFormat("{0}{1}", key, !first ? ", " : string.Empty);
                 }
             }
 
