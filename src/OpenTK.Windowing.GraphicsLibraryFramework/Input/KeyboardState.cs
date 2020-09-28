@@ -22,8 +22,8 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
     public sealed class KeyboardState
     {
         // These arrays will mostly be empty since the last integer used is 384. That's only 48 bytes though.
-        private BitArray _keys = new BitArray((int)Keys.LastKey);
-        private BitArray _keysPrevious = new BitArray((int)Keys.LastKey);
+        private BitArray _keys = new BitArray((int)Keys.LastKey + 1);
+        private BitArray _keysPrevious = new BitArray((int)Keys.LastKey + 1);
 
         private KeyboardState(KeyboardState source)
         {
