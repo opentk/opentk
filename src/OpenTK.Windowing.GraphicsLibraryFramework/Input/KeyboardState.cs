@@ -11,6 +11,7 @@ using System;
 using System.Collections;
 using System.Diagnostics;
 using System.Text;
+using OpenTK.Core;
 using OpenTK.Windowing.Common;
 
 namespace OpenTK.Windowing.GraphicsLibraryFramework
@@ -23,8 +24,6 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
 	    // These arrays will mostly be empty since the last integer used is 384. That's only 48 bytes though.
         private BitArray _keys = new BitArray((int)Keys.LastKey);
         private BitArray _keysPrevious = new BitArray((int)Keys.LastKey);
-
-        private static readonly Keys[] KeyValues = (Keys[])Enum.GetValues(typeof(Keys));
 
         private KeyboardState(KeyboardState source)
         {
@@ -148,7 +147,7 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
             builder.Append('{');
             var first = true;
 
-            foreach (Keys key in KeyValues)
+            foreach (Keys key in (Keys[])Enum.GetValues(typeof(Keys)))
             {
                 if (IsKeyDown(key))
                 {

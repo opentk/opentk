@@ -10,6 +10,7 @@
 using System;
 using System.Collections;
 using System.Text;
+using OpenTK.Core;
 using OpenTK.Mathematics;
 using OpenTK.Windowing.Common;
 
@@ -24,6 +25,7 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         /// The maximum number of buttons a <see cref="MouseState"/> can represent.
         /// </summary>
         internal const int MaxButtons = 16; // we are storing in an ushort
+
         private BitArray _buttons = new BitArray(MaxButtons);
         private BitArray _buttonsPrevious = new BitArray(MaxButtons);
 
@@ -31,17 +33,17 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
 
         internal unsafe MouseState(Window* windowPtr)
         {
-	        _windowPtr = windowPtr;
+            _windowPtr = windowPtr;
         }
 
         private MouseState(MouseState source)
         {
-	        // Vector2 is a struct, so these should be value copies
-	        Position = source.Position;
-	        PreviousPosition = source.PreviousPosition;
+            // Vector2 is a struct, so these should be value copies
+            Position = source.Position;
+            PreviousPosition = source.PreviousPosition;
 
-	        _buttons = (BitArray)source._buttons.Clone();
-	        _buttonsPrevious = (BitArray)source._buttonsPrevious.Clone();
+            _buttons = (BitArray)source._buttons.Clone();
+            _buttonsPrevious = (BitArray)source._buttonsPrevious.Clone();
         }
 
         /// <summary>
@@ -71,10 +73,7 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         public bool this[MouseButton button]
         {
             get => _buttons[(int)button];
-            internal set
-            {
-	            _buttons[(int)button] = value;
-            }
+            internal set { _buttons[(int)button] = value; }
         }
 
         /// <summary>
@@ -113,18 +112,18 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         /// <value><c>true</c> if any button is down; otherwise, <c>false</c>.</value>
         public bool IsAnyButtonDown
         {
-	        get
-	        {
-		        for (int i = 0; i < MaxButtons; i++)
-		        {
-			        if (_buttons[i])
+            get
+            {
+                for (int i = 0; i < MaxButtons; i++)
+                {
+                    if (_buttons[i])
                     {
                         return true;
                     }
                 }
 
-		        return false;
-	        }
+                return false;
+            }
         }
 
         /// <summary>
@@ -133,24 +132,25 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         /// <returns>A <see cref="string" /> that represents the current <see cref="MouseState" />.</returns>
         public override string ToString()
         {
-			StringBuilder b = new StringBuilder();
-			for (int i = 0; i < MaxButtons; i++)
-			{
-			    b.Append(_buttons[i] ? "1" : "0");
-			}
-			return $"[X={X}, Y={Y}, Buttons={b}]";
+            StringBuilder b = new StringBuilder();
+            for (int i = 0; i < MaxButtons; i++)
+            {
+                b.Append(_buttons[i] ? "1" : "0");
+            }
+
+            return $"[X={X}, Y={Y}, Buttons={b}]";
         }
 
         internal void Update()
         {
-	        Utils.Swap(ref _buttons, ref _buttonsPrevious);
-	        PreviousPosition = Position;
+            Utils.Swap(ref _buttons, ref _buttonsPrevious);
+            PreviousPosition = Position;
 
-	        unsafe
-	        {
-		        GLFW.GetCursorPos(_windowPtr, out var x, out var y);
-		        Position = new Vector2((float)x, (float)y);
-	        }
+            unsafe
+            {
+                GLFW.GetCursorPos(_windowPtr, out var x, out var y);
+                Position = new Vector2((float)x, (float)y);
+            }
         }
 
         /// <summary>
@@ -160,7 +160,7 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         /// <returns><c>true</c> if the <paramref name="button"/> is down, otherwise <c>false</c>.</returns>
         public bool WasButtonDown(MouseButton button)
         {
-	        return _buttonsPrevious[(int)button];
+            return _buttonsPrevious[(int)button];
         }
 
         /// <summary>
