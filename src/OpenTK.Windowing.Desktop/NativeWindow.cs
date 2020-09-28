@@ -689,7 +689,16 @@ namespace OpenTK.Windowing.Desktop
             // Enables the caps lock modifier to be detected and updated
             GLFW.SetInputMode(WindowPtr, LockKeyModAttribute.LockKeyMods, true);
 
+            _windowPosCallback = (w, posX, posY) => OnMove(new WindowPositionEventArgs(posX, posY));
+            _windowSizeCallback = (w, argsWidth, argsHeight) => OnResize(new ResizeEventArgs(argsWidth, argsHeight));
+            _windowIconifyCallback = (w, iconified) => OnMinimized(new MinimizedEventArgs(iconified));
+            _windowFocusCallback = (w, focused) => OnFocusedChanged(new FocusedChangedEventArgs(focused));
+            _charCallback = (w, codepoint) => OnTextInput(new TextInputEventArgs((int)codepoint));
+            _scrollCallback = (w, offsetX, offsetY) => OnMouseWheel(new MouseWheelEventArgs((float)offsetX, (float)offsetY));
+
             RegisterWindowCallbacks();
+
+            InitialiseJoystickStates();
 
             _isFocused = settings.StartFocused;
             if (settings.StartFocused)
@@ -771,38 +780,29 @@ namespace OpenTK.Windowing.Desktop
             ClientSize = new Vector2i(width, height);
         }
 
+        private readonly GLFWCallbacks.WindowPosCallback _windowPosCallback;
+        private readonly GLFWCallbacks.WindowSizeCallback _windowSizeCallback;
+        private readonly GLFWCallbacks.WindowIconifyCallback _windowIconifyCallback;
+        private readonly GLFWCallbacks.WindowFocusCallback _windowFocusCallback;
+        private readonly GLFWCallbacks.CharCallback _charCallback;
+        private readonly GLFWCallbacks.ScrollCallback _scrollCallback;
+
         private unsafe void RegisterWindowCallbacks()
         {
-            GLFW.SetWindowPosCallback(WindowPtr, (w, x, y) => OnMove(new WindowPositionEventArgs(x, y)));
-
-            GLFW.SetWindowSizeCallback(WindowPtr, (w, width, height) => OnResize(new ResizeEventArgs(width, height)));
-
-            GLFW.SetWindowCloseCallback(WindowPtr, OnCloseCallback);
-
-            GLFW.SetWindowIconifyCallback(WindowPtr, (w, iconified) => OnMinimized(new MinimizedEventArgs(iconified)));
-
-            GLFW.SetWindowFocusCallback(WindowPtr, (w, focused) => OnFocusedChanged(new FocusedChangedEventArgs(focused)));
-
-            GLFW.SetCharCallback(WindowPtr, (w, codepoint) => OnTextInput(new TextInputEventArgs((int)codepoint)));
-
-            GLFW.SetKeyCallback(WindowPtr, KeyCallback);
-
-            GLFW.SetCursorEnterCallback(WindowPtr, CursorEnterCallback);
-
-            GLFW.SetMouseButtonCallback(WindowPtr, MouseButtonCallback);
-
-            GLFW.SetCursorPosCallback(WindowPtr, CursorPosCallback);
-
-            GLFW.SetScrollCallback(WindowPtr, (w, offsetX, offsetY) => OnMouseWheel(new MouseWheelEventArgs((float)offsetX, (float)offsetY)));
-
-            GLFW.SetDropCallback(WindowPtr, DropCallback);
-
-            GLFW.SetJoystickCallback(JoystickCallback);
-
-            InitialiseJoystickStates();
-
+            GLFW.SetWindowPosCallback(WindowPtr, _windowPosCallback);
+            GLFW.SetWindowSizeCallback(WindowPtr, _windowSizeCallback);
+            GLFW.SetWindowIconifyCallback(WindowPtr, _windowIconifyCallback);
+            GLFW.SetWindowFocusCallback(WindowPtr, _windowFocusCallback);
+            GLFW.SetCharCallback(WindowPtr, _charCallback);
+            GLFW.SetScrollCallback(WindowPtr, _scrollCallback);
             GLFW.SetMonitorCallback((monitor, eventCode) => OnMonitorConnected(new MonitorEventArgs(new Monitor((IntPtr)monitor), eventCode == ConnectedState.Connected)));
-
+            GLFW.SetWindowCloseCallback(WindowPtr, OnCloseCallback);
+            GLFW.SetKeyCallback(WindowPtr, KeyCallback);
+            GLFW.SetCursorEnterCallback(WindowPtr, CursorEnterCallback);
+            GLFW.SetMouseButtonCallback(WindowPtr, MouseButtonCallback);
+            GLFW.SetCursorPosCallback(WindowPtr, CursorPosCallback);
+            GLFW.SetDropCallback(WindowPtr, DropCallback);
+            GLFW.SetJoystickCallback(JoystickCallback);
             GLFW.SetWindowRefreshCallback(WindowPtr, w => OnRefresh());
         }
 
