@@ -15,6 +15,7 @@ using OpenTK.Windowing.Common;
 using OpenTK.Windowing.Common.Input;
 
 [assembly: InternalsVisibleTo("OpenTK.Windowing.Desktop")]
+[assembly: InternalsVisibleTo("OpenTK.Tests")]
 
 namespace OpenTK.Windowing.GraphicsLibraryFramework
 {
