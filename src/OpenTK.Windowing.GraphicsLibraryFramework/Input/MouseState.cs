@@ -165,7 +165,7 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
 
         /// <summary>
         /// Gets an immutable snapshot of this MouseState.
-        /// This can be used to save the current keyboard state for comparison later on.
+        /// This can be used to save the current mouse state for comparison later on.
         /// </summary>
         /// <returns>Returns an immutable snapshot of this MouseState.</returns>
         public MouseState GetSnapshot() => new MouseState(this);
