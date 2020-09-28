@@ -86,7 +86,7 @@ namespace OpenTK.Windowing.Desktop
         ///     Gets the amount that the mouse moved since the last frame.
         ///     This does not necessarily correspond to pixels, for example in the case of raw input.
         /// </summary>
-        [Obsolete("Use " + nameof(MouseState.Delta) + " member of the " + nameof(NativeWindow.MouseState) + " property instead.", true)]
+        [Obsolete("Use " + nameof(MouseState.Delta) + " member of the MouseState property instead.", true)]
         public Vector2 MouseDelta => Vector2.Zero;
 
         /// <summary>
@@ -98,7 +98,7 @@ namespace OpenTK.Windowing.Desktop
         ///     Gets the previous keyboard state.
         ///     This value is updated with the new state every time the window processes events.
         /// </summary>
-        [Obsolete("Use " + nameof(MouseState.WasButtonDown) + " and " + nameof(MouseState.PreviousPosition) + " members of the " + nameof(NativeWindow.MouseState) + " property instead.", true)]
+        [Obsolete("Use " + nameof(MouseState.WasButtonDown) + " and " + nameof(MouseState.PreviousPosition) + " members of the MouseState property instead.", true)]
         public MouseState LastMouseState => null;
 
         /// <summary>
@@ -761,22 +761,6 @@ namespace OpenTK.Windowing.Desktop
             LoadBindings("OpenGL4");
         }
 
-        private GLFWCallbacks.WindowPosCallback _posCallback;
-        private GLFWCallbacks.WindowSizeCallback _sizeCallback;
-        private GLFWCallbacks.WindowCloseCallback _closeCallback;
-        private GLFWCallbacks.WindowIconifyCallback _iconifyCallback;
-        private GLFWCallbacks.WindowFocusCallback _focusCallback;
-        private GLFWCallbacks.CharCallback _charCallback;
-        private GLFWCallbacks.KeyCallback _keyCallback;
-        private GLFWCallbacks.CursorEnterCallback _cursorEnterCallback;
-        private GLFWCallbacks.MouseButtonCallback _mouseButtonCallback;
-        private GLFWCallbacks.CursorPosCallback _cursorPosCallback;
-        private GLFWCallbacks.ScrollCallback _scrollCallback;
-        private GLFWCallbacks.DropCallback _dropCallback;
-        private GLFWCallbacks.JoystickCallback _joystickCallback;
-        private GLFWCallbacks.MonitorCallback _monitorCallback;
-        private GLFWCallbacks.WindowRefreshCallback _refreshCallback;
-
         private unsafe void HandleResize(int width, int height)
         {
             _size.X = width;
@@ -789,47 +773,41 @@ namespace OpenTK.Windowing.Desktop
 
         private unsafe void RegisterWindowCallbacks()
         {
-            _posCallback = (window, x, y) => OnMove(new WindowPositionEventArgs(x, y));
-            GLFW.SetWindowPosCallback(WindowPtr, _posCallback);
+            GLFW.SetWindowPosCallback(WindowPtr, (w, x, y) => OnMove(new WindowPositionEventArgs(x, y)));
 
-            _sizeCallback = (window, width, height) => OnResize(new ResizeEventArgs(width, height));
-            GLFW.SetWindowSizeCallback(WindowPtr, _sizeCallback);
+            GLFW.SetWindowSizeCallback(WindowPtr, (w, width, height) => OnResize(new ResizeEventArgs(width, height)));
 
-            _closeCallback = OnCloseCallback;
-            GLFW.SetWindowCloseCallback(WindowPtr, _closeCallback);
+            GLFW.SetWindowCloseCallback(WindowPtr, OnCloseCallback);
 
-            _iconifyCallback = (window, iconified) => OnMinimized(new MinimizedEventArgs(iconified));
-            GLFW.SetWindowIconifyCallback(WindowPtr, _iconifyCallback);
+            GLFW.SetWindowIconifyCallback(WindowPtr, (w, iconified) => OnMinimized(new MinimizedEventArgs(iconified)));
 
-            _focusCallback = (window, focused) => OnFocusedChanged(new FocusedChangedEventArgs(focused));
-            GLFW.SetWindowFocusCallback(WindowPtr, _focusCallback);
+            GLFW.SetWindowFocusCallback(WindowPtr, (w, focused) => OnFocusedChanged(new FocusedChangedEventArgs(focused)));
 
-            _charCallback = (window, codepoint) => OnTextInput(new TextInputEventArgs((int)codepoint));
-            GLFW.SetCharCallback(WindowPtr, _charCallback);
+            GLFW.SetCharCallback(WindowPtr, (w, codepoint) => OnTextInput(new TextInputEventArgs((int)codepoint)));
 
-            _keyCallback = KeyCallback;
+            GLFW.SetKeyCallback(WindowPtr, KeyCallback);
 
-            GLFW.SetKeyCallback(WindowPtr, _keyCallback);
+            GLFW.SetCursorEnterCallback(WindowPtr, CursorEnterCallback);
 
-            _cursorEnterCallback = CursorEnterCallback;
-            GLFW.SetCursorEnterCallback(WindowPtr, _cursorEnterCallback);
+            GLFW.SetMouseButtonCallback(WindowPtr, MouseButtonCallback);
 
-            _mouseButtonCallback = MouseButtonCallback;
-            GLFW.SetMouseButtonCallback(WindowPtr, _mouseButtonCallback);
+            GLFW.SetCursorPosCallback(WindowPtr, CursorPosCallback);
 
-            _cursorPosCallback = CursorPosCallback;
-            GLFW.SetCursorPosCallback(WindowPtr, _cursorPosCallback);
+            GLFW.SetScrollCallback(WindowPtr, (w, offsetX, offsetY) => OnMouseWheel(new MouseWheelEventArgs((float)offsetX, (float)offsetY)));
 
-            _scrollCallback = (window, offsetX, offsetY) =>
-                                  OnMouseWheel(new MouseWheelEventArgs((float)offsetX, (float)offsetY));
-            GLFW.SetScrollCallback(WindowPtr, _scrollCallback);
+            GLFW.SetDropCallback(WindowPtr, DropCallback);
 
-            _dropCallback = DropCallback;
-            GLFW.SetDropCallback(WindowPtr, _dropCallback);
+            GLFW.SetJoystickCallback(JoystickCallback);
 
-            _joystickCallback = JoystickCallback;
-            GLFW.SetJoystickCallback(_joystickCallback);
+            InitialiseJoystickStates();
 
+            GLFW.SetMonitorCallback((monitor, eventCode) => OnMonitorConnected(new MonitorEventArgs(new Monitor((IntPtr)monitor), eventCode == ConnectedState.Connected)));
+
+            GLFW.SetWindowRefreshCallback(WindowPtr, w => OnRefresh());
+        }
+
+        private unsafe void InitialiseJoystickStates()
+        {
             // Check for Joysticks that are connected at application launch
             for (int i = 0; i < _joystickStates.Length; i++)
             {
@@ -843,17 +821,6 @@ namespace OpenTK.Windowing.Desktop
                     _joystickStates[i] = new JoystickState(hatCount, axisCount, buttonCount, i, name);
                 }
             }
-
-            _monitorCallback = (monitor, eventCode) =>
-                               {
-                                   OnMonitorConnected(new MonitorEventArgs(
-                                                      new Monitor((IntPtr)monitor),
-                                                      eventCode == ConnectedState.Connected));
-                               };
-            GLFW.SetMonitorCallback(_monitorCallback);
-
-            _refreshCallback = (window) => OnRefresh();
-            GLFW.SetWindowRefreshCallback(WindowPtr, _refreshCallback);
         }
 
         private unsafe void KeyCallback(Window* window, Keys key, int scancode, InputAction action, KeyModifiers mods)
@@ -1165,12 +1132,12 @@ namespace OpenTK.Windowing.Desktop
         public event Action MouseEnter;
 
         /// <summary>
-        /// Occurs whenever a <see cref="Input.MouseButton" /> is clicked.
+        /// Occurs whenever a <see cref="MouseButton" /> is clicked.
         /// </summary>
         public event Action<MouseButtonEventArgs> MouseDown;
 
         /// <summary>
-        /// Occurs whenever a <see cref="Input.MouseButton" /> is released.
+        /// Occurs whenever a <see cref="MouseButton" /> is released.
         /// </summary>
         public event Action<MouseButtonEventArgs> MouseUp;
 
