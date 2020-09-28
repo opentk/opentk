@@ -695,6 +695,7 @@ namespace OpenTK.Windowing.Desktop
             _windowFocusCallback = (w, focused) => OnFocusedChanged(new FocusedChangedEventArgs(focused));
             _charCallback = (w, codepoint) => OnTextInput(new TextInputEventArgs((int)codepoint));
             _scrollCallback = (w, offsetX, offsetY) => OnMouseWheel(new MouseWheelEventArgs((float)offsetX, (float)offsetY));
+            _monitorCallback = (monitor, eventCode) => OnMonitorConnected(new MonitorEventArgs(new Monitor((IntPtr)monitor), eventCode == ConnectedState.Connected));
 
             RegisterWindowCallbacks();
 
@@ -786,6 +787,7 @@ namespace OpenTK.Windowing.Desktop
         private readonly GLFWCallbacks.WindowFocusCallback _windowFocusCallback;
         private readonly GLFWCallbacks.CharCallback _charCallback;
         private readonly GLFWCallbacks.ScrollCallback _scrollCallback;
+        private readonly GLFWCallbacks.MonitorCallback _monitorCallback;
 
         private unsafe void RegisterWindowCallbacks()
         {
@@ -795,7 +797,7 @@ namespace OpenTK.Windowing.Desktop
             GLFW.SetWindowFocusCallback(WindowPtr, _windowFocusCallback);
             GLFW.SetCharCallback(WindowPtr, _charCallback);
             GLFW.SetScrollCallback(WindowPtr, _scrollCallback);
-            GLFW.SetMonitorCallback((monitor, eventCode) => OnMonitorConnected(new MonitorEventArgs(new Monitor((IntPtr)monitor), eventCode == ConnectedState.Connected)));
+            GLFW.SetMonitorCallback(_monitorCallback);
             GLFW.SetWindowCloseCallback(WindowPtr, OnCloseCallback);
             GLFW.SetKeyCallback(WindowPtr, KeyCallback);
             GLFW.SetCursorEnterCallback(WindowPtr, CursorEnterCallback);
