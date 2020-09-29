@@ -9,6 +9,8 @@ namespace OpenToolkit.OpenCL.Tests
 	{
 		static void Main(string[] args)
 		{
+			ToGrayscale.ConvertToGrayscale("image.jpg");
+
 			//Get the ids of available opencl platforms
 
 			CL.GetPlatformIds(0, null, out uint platformCount);
@@ -28,18 +30,10 @@ namespace OpenToolkit.OpenCL.Tests
 				CL.GetDeviceIds(new CLPlatform(platformId), DeviceType.All, out CLDevice[] deviceIds);
 
 				CLContext context = CL.CreateContext(IntPtr.Zero, (uint)deviceIds.Length, deviceIds, IntPtr.Zero,
-					IntPtr.Zero, out CLResultCode result);
-				if (result != CLResultCode.Success)
+					IntPtr.Zero, out CLError result);
+				if (result != CLError.Success)
 				{
 					throw new Exception("The context couldn't be created.");
-				}
-
-				CL.GetSupportedImageFormats(context, MemoryFlags.ReadOnly, MemoryObjectType.Image2D,
-					out ImageFormat[] formats);
-
-				foreach (ImageFormat imageFormat in formats)
-				{
-					Console.WriteLine($"{imageFormat.ChannelOrder} {imageFormat.ChannelType}");
 				}
 
 				string code = @"
@@ -53,7 +47,7 @@ namespace OpenToolkit.OpenCL.Tests
 
 				CL.BuildProgram(program, (uint)deviceIds.Length, deviceIds, null, IntPtr.Zero, IntPtr.Zero);
 
-				CLKernel kernel = new CLKernel(CL.CreateKernel(program, "add", out result));
+				CLKernel kernel = CL.CreateKernel(program, "add", out result);
 
 				int arraySize = 20;
 				float[] A = new float[arraySize];
@@ -88,8 +82,12 @@ namespace OpenToolkit.OpenCL.Tests
 					CL.EnqueueFillBuffer(commandQueue, bufferB, pattern, UIntPtr.Zero, (UIntPtr)(arraySize * sizeof(float)), null,
 						out _);
 
+					//CL.EnqueueNDRangeKernel(commandQueue, kernel, 1, null, new UIntPtr[] {new UIntPtr((uint)A.Length)},
+					//	null, 0, null,  out CLEvent eventHandle);
+
 					CL.EnqueueNDRangeKernel(commandQueue, kernel, 1, null, new UIntPtr[] {new UIntPtr((uint)A.Length)},
 						null, 0, null,  out CLEvent eventHandle);
+
 
 					CL.Finish(commandQueue);
 

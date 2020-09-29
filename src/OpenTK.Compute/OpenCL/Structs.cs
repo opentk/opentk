@@ -20,5 +20,27 @@ namespace OpenTK.Compute.OpenCL
         public uint MipLevels;
         public uint Samples;
         public IntPtr Buffer;
+
+        public static ImageDescription Create2D(uint width, uint height)
+        {
+	        return new ImageDescription()
+	        {
+		        ImageType = MemoryObjectType.Image2D,
+		        Width = (UIntPtr)width,
+		        Height = (UIntPtr)height,
+		        Depth = (UIntPtr)1,
+	        };
+        }
+
+        public static ImageDescription Create3D(uint width, uint height, uint depth)
+        {
+	        return new ImageDescription()
+	        {
+		        ImageType = MemoryObjectType.Image3D,
+		        Width = (UIntPtr)width,
+		        Height = (UIntPtr)height,
+		        Depth = (UIntPtr)depth,
+	        };
+        }
     }
 }
