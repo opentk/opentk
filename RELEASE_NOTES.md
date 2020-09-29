@@ -1,3 +1,9 @@
+## 4.0.0-pre9.8
+* Significant rework & improvements to input. (Massive Thanks to @Phyyl, @HughPH and @NogginBops)
+* Fixes to OpenAL Bindings (@NogginBops)
+* General Math improvements (@NogginBops)
+* Added OpenCL Bindings (Huge thanks to @NepNet)
+
 ## 4.0.0-pre9.7
 * Fix opentk.redist.glfw version warnings (@jvbsl)
 * Add support for window-level multisampling (@jvbsl)
