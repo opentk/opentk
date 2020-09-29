@@ -7,7 +7,7 @@
 // of the MIT license. See the LICENSE file for details.
 //
 
-using OpenTK.Windowing.Common.Input;
+using OpenTK.Windowing.GraphicsLibraryFramework;
 
 namespace OpenTK.Windowing.Common
 {

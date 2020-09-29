@@ -7,11 +7,15 @@
 // of the MIT license. See the LICENSE file for details.
 
 using System;
+using System.Collections;
 using System.Runtime.CompilerServices;
 using System.Text;
+using OpenTK.Core;
+using OpenTK.Windowing.Common;
 using OpenTK.Windowing.Common.Input;
 
 [assembly: InternalsVisibleTo("OpenTK.Windowing.Desktop")]
+[assembly: InternalsVisibleTo("OpenTK.Tests")]
 
 namespace OpenTK.Windowing.GraphicsLibraryFramework
 {
@@ -22,11 +26,11 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
     {
         private Hat[] _hats;
         private float[] _axes;
-        private byte[] _buttons;
+        private BitArray _buttons;
 
-        private Hat[] _previousHats;
-        private float[] _previousAxes;
-        private byte[] _previousButtons;
+        private Hat[] _hatsPrevious;
+        private float[] _axesPrevious;
+        private BitArray _buttonsPrevious;
 
         /// <summary>
         /// Gets the identity of the joystick this state describes.
@@ -42,11 +46,11 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         {
             _hats = new Hat[hatCount];
             _axes = new float[axesCount];
-            _buttons = new byte[buttonCount];
+            _buttons = new BitArray(buttonCount);
 
-            _previousHats = new Hat[hatCount];
-            _previousAxes = new float[axesCount];
-            _previousButtons = new byte[buttonCount];
+            _hatsPrevious = new Hat[hatCount];
+            _axesPrevious = new float[axesCount];
+            _buttonsPrevious = new BitArray(buttonCount);
 
             Id = id;
             Name = name;
@@ -60,12 +64,12 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
                    source.Id,
                    source.Name)
         {
-                Array.Copy(source._hats, _hats, source._hats.Length);
-                Array.Copy(source._axes, _axes, source._axes.Length);
-                Array.Copy(source._buttons, _buttons, source._buttons.Length);
-                Array.Copy(source._previousHats, _previousHats, source._previousHats.Length);
-                Array.Copy(source._previousAxes, _previousAxes, source._previousAxes.Length);
-                Array.Copy(source._previousButtons, _previousButtons, source._previousButtons.Length);
+            Array.Copy(source._hats, _hats, source._hats.Length);
+            Array.Copy(source._axes, _axes, source._axes.Length);
+            _buttons = (BitArray)source._buttons.Clone(); // Array.Copy(source._buttons, _buttons, source._buttons.Length);
+            Array.Copy(source._hatsPrevious, _hatsPrevious, source._hatsPrevious.Length);
+            Array.Copy(source._axesPrevious, _axesPrevious, source._axesPrevious.Length);
+            _buttonsPrevious = (BitArray)source._buttonsPrevious.Clone(); // Array.Copy(source._previousButtons, _previousButtons, source._previousButtons.Length);
         }
 
         /// <summary>
@@ -85,7 +89,7 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         /// <returns>A <see cref="Hat"/> describing the hat state.</returns>
         public Hat GetHatPrevious(int index)
         {
-            return _previousHats[index];
+            return _hatsPrevious[index];
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -95,48 +99,31 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         }
 
         /// <summary>
-        /// Gets a <see cref="bool"/> describing the state of a button.
+        /// Gets a <see cref="bool"/> describing the state of a button in the current frame.
         /// </summary>
         /// <param name="index">The index of the button to check.</param>
         /// <returns><c>true</c> if the button is down; <c>false</c> otherwise.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool IsButtonDown(int index)
         {
-            byte b = _buttons[index / 8];
-            int pow = (int)Math.Pow(2, index % 8);
-
-            return (b & pow) == pow;
+            return _buttons[index];
         }
 
         /// <summary>
-        /// Gets a <see cref="bool"/> describing whether the button was down and is now not down.
+        /// Gets a <see cref="bool"/> describing whether the button was down in the previous frame.
         /// </summary>
         /// <param name="index">The index of the button.</param>
         /// <returns>Returns true if the button was down, or false if the button was not down.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool WasButtonDown(int index)
         {
-            byte bCurrent = _buttons[index / 8];
-            byte bPrevious = _previousButtons[index / 8];
-            int pow = (int)Math.Pow(2, index % 8);
-
-            return (bCurrent & pow) != pow && (bPrevious & pow) == pow;
+            return _buttonsPrevious[index];
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private void SetButtonDown(int index, bool value)
         {
-            int byteOffSet = index / 8;
-            int bitOffset = index % 8;
-
-            if (value)
-            {
-                _buttons[byteOffSet] |= (byte)(1 << bitOffset);
-            }
-            else
-            {
-                _buttons[byteOffSet] &= (byte)~(1 << bitOffset);
-            }
+            _buttons[index] = value;
         }
 
         /// <summary>
@@ -156,7 +143,7 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         /// <returns>A <see cref="float"/> between -1 and 1 describing the position of the axis.</returns>
         public float GetAxisPrevious(int index)
         {
-            return _previousAxes[index];
+            return _axesPrevious[index];
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -198,17 +185,9 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
             UpdateButtons();
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private void Swap<T>(ref T a, ref T b)
-        {
-            T temp = a;
-            a = b;
-            b = temp;
-        }
-
         private unsafe void UpdateButtons()
         {
-            Swap(ref _buttons, ref _previousButtons);
+            Utils.Swap(ref _buttons, ref _buttonsPrevious);
 
             var b = GLFW.GetJoystickButtonsRaw(Id, out int count);
             for (var j = 0; j < count; j++)
@@ -220,7 +199,7 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private void UpdateAxes()
         {
-            Swap(ref _axes, ref _previousAxes);
+            Utils.Swap(ref _axes, ref _axesPrevious);
 
             var axes = GLFW.GetJoystickAxes(Id);
             SetAxes(axes);
@@ -228,7 +207,7 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
 
         private unsafe void UpdateHats()
         {
-            Swap(ref _hats, ref _previousHats);
+            Utils.Swap(ref _hats, ref _hatsPrevious);
 
             var h = GLFW.GetJoystickHatsRaw(Id, out int count);
             for (var j = 0; j < count; j++)
@@ -239,6 +218,7 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
 
         /// <summary>
         /// Gets an immutable snapshot of this JoystickState.
+        /// This can be used to save the current joystick state for comparison later on.
         /// </summary>
         /// <returns>Returns an immutable snapshot of this JoystickState.</returns>
         public JoystickState GetSnapshot()

@@ -8,7 +8,7 @@
 //
 
 using System;
-using OpenTK.Windowing.Common.Input;
+using OpenTK.Windowing.GraphicsLibraryFramework;
 
 namespace OpenTK.Windowing.Common
 {
@@ -24,7 +24,7 @@ namespace OpenTK.Windowing.Common
         /// <param name="scanCode">The scan code of the key that generated this event.</param>
         /// <param name="modifiers">The key modifiers that were active when this event was generated.</param>
         /// <param name="isRepeat">Whether this event is a repeat from the user holding the key down.</param>
-        public KeyboardKeyEventArgs(Key key, int scanCode, KeyModifiers modifiers, bool isRepeat)
+        public KeyboardKeyEventArgs(Keys key, int scanCode, KeyModifiers modifiers, bool isRepeat)
         {
             Key = key;
             ScanCode = scanCode;
@@ -35,7 +35,7 @@ namespace OpenTK.Windowing.Common
         /// <summary>
         /// Gets the key that generated this event.
         /// </summary>
-        public Key Key { get; }
+        public Keys Key { get; }
 
         /// <summary>
         /// Gets the keyboard scan code of the key that generated this event.
@@ -80,6 +80,6 @@ namespace OpenTK.Windowing.Common
         /// Gets a value indicating whether <see cref="OpenTK.Windowing.Common.Input.KeyModifiers.Shift" /> is pressed.
         /// </summary>
         /// <value><c>true</c> if pressed; otherwise, <c>false</c>.</value>
-        public bool Command => Modifiers.HasFlag(KeyModifiers.Command);
+        public bool Command => Modifiers.HasFlag(KeyModifiers.Super);
     }
 }
