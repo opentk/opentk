@@ -6,4 +6,8 @@
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
         <LangVersion>8</LangVersion>
     </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+      <DocumentationFile>bin\Release\OpenTK.Compute.xml</DocumentationFile>
+    </PropertyGroup>
 </Project>
