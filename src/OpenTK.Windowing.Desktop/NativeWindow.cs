@@ -738,6 +738,9 @@ namespace OpenTK.Windowing.Desktop
             GLFW.GetWindowPos(WindowPtr, out var x, out var y);
             _location = new Vector2i(x, y);
 
+            GLFW.GetCursorPos(WindowPtr, out var mousex, out var mousey);
+            _lastReportedMousePos = new Vector2((float)mousex, (float)mousey);
+
             _isFocused = GLFW.GetWindowAttrib(WindowPtr, WindowAttributeGetBool.Focused);
         }
 
