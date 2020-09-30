@@ -1,3 +1,6 @@
+## 4.0.0-pre9.9
+* Fix for broken delegates (@HughPH)
+
 ## 4.0.0-pre9.8
 * Significant rework & improvements to input. (Massive Thanks to @Phyyl, @HughPH and @NogginBops)
 * Fixes to OpenAL Bindings (@NogginBops)
