@@ -689,6 +689,7 @@ namespace OpenTK.Windowing.Desktop
             // Enables the caps lock modifier to be detected and updated
             GLFW.SetInputMode(WindowPtr, LockKeyModAttribute.LockKeyMods, true);
 
+            // These lambdas must be assigned to fields to prevent them from being garbage collected
             _windowPosCallback = (w, posX, posY) => OnMove(new WindowPositionEventArgs(posX, posY));
             _windowSizeCallback = (w, argsWidth, argsHeight) => OnResize(new ResizeEventArgs(argsWidth, argsHeight));
             _windowIconifyCallback = (w, iconified) => OnMinimized(new MinimizedEventArgs(iconified));
@@ -697,6 +698,14 @@ namespace OpenTK.Windowing.Desktop
             _scrollCallback = (w, offsetX, offsetY) => OnMouseWheel(new MouseWheelEventArgs((float)offsetX, (float)offsetY));
             _monitorCallback = (monitor, eventCode) => OnMonitorConnected(new MonitorEventArgs(new Monitor((IntPtr)monitor), eventCode == ConnectedState.Connected));
             _windowRefreshCallback = w => OnRefresh();
+            // These must be assigned to fields even when they're methods
+            _windowCloseCallback = OnCloseCallback;
+            _keyCallback = KeyCallback;
+            _cursorEnterCallback = CursorEnterCallback;
+            _mouseButtonCallback = MouseButtonCallback;
+            _cursorPosCallback = CursorPosCallback;
+            _dropCallback = DropCallback;
+            _joystickCallback = JoystickCallback;
 
             RegisterWindowCallbacks();
 
@@ -790,6 +799,13 @@ namespace OpenTK.Windowing.Desktop
         private readonly GLFWCallbacks.ScrollCallback _scrollCallback;
         private readonly GLFWCallbacks.MonitorCallback _monitorCallback;
         private readonly GLFWCallbacks.WindowRefreshCallback _windowRefreshCallback;
+        private readonly GLFWCallbacks.WindowCloseCallback _windowCloseCallback;
+        private readonly GLFWCallbacks.KeyCallback _keyCallback;
+        private readonly GLFWCallbacks.CursorEnterCallback _cursorEnterCallback;
+        private readonly GLFWCallbacks.MouseButtonCallback _mouseButtonCallback;
+        private readonly GLFWCallbacks.CursorPosCallback _cursorPosCallback;
+        private readonly GLFWCallbacks.DropCallback _dropCallback;
+        private readonly GLFWCallbacks.JoystickCallback _joystickCallback;
 
         private unsafe void RegisterWindowCallbacks()
         {
@@ -801,13 +817,13 @@ namespace OpenTK.Windowing.Desktop
             GLFW.SetScrollCallback(WindowPtr, _scrollCallback);
             GLFW.SetMonitorCallback(_monitorCallback);
             GLFW.SetWindowRefreshCallback(WindowPtr, _windowRefreshCallback);
-            GLFW.SetWindowCloseCallback(WindowPtr, OnCloseCallback);
-            GLFW.SetKeyCallback(WindowPtr, KeyCallback);
-            GLFW.SetCursorEnterCallback(WindowPtr, CursorEnterCallback);
-            GLFW.SetMouseButtonCallback(WindowPtr, MouseButtonCallback);
-            GLFW.SetCursorPosCallback(WindowPtr, CursorPosCallback);
-            GLFW.SetDropCallback(WindowPtr, DropCallback);
-            GLFW.SetJoystickCallback(JoystickCallback);
+            GLFW.SetWindowCloseCallback(WindowPtr, _windowCloseCallback);
+            GLFW.SetKeyCallback(WindowPtr, _keyCallback);
+            GLFW.SetCursorEnterCallback(WindowPtr, _cursorEnterCallback);
+            GLFW.SetMouseButtonCallback(WindowPtr, _mouseButtonCallback);
+            GLFW.SetCursorPosCallback(WindowPtr, _cursorPosCallback);
+            GLFW.SetDropCallback(WindowPtr, _dropCallback);
+            GLFW.SetJoystickCallback(_joystickCallback);
         }
 
         private unsafe void InitialiseJoystickStates()
