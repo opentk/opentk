@@ -900,7 +900,7 @@ namespace OpenTK.Windowing.Desktop
             var newPos = new Vector2((float)posX, (float)posY);
             var delta = _lastReportedMousePos - newPos;
 
-            _lastReportedMousePos = _mouseState.Position = newPos;
+            _lastReportedMousePos = newPos;
 
             OnMouseMove(new MouseMoveEventArgs(newPos, delta));
         }
