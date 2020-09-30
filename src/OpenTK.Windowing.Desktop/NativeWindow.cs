@@ -740,6 +740,7 @@ namespace OpenTK.Windowing.Desktop
 
             GLFW.GetCursorPos(WindowPtr, out var mousex, out var mousey);
             _lastReportedMousePos = new Vector2((float)mousex, (float)mousey);
+            _mouseState.Position = _lastReportedMousePos;
 
             _isFocused = GLFW.GetWindowAttrib(WindowPtr, WindowAttributeGetBool.Focused);
         }
