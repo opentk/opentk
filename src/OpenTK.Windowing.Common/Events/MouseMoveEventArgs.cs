@@ -58,17 +58,17 @@ namespace OpenTK.Windowing.Common
         public Vector2 Position { get; }
 
         /// <summary>
-        /// Gets the change in X position produced by this event.
+        /// Gets the change in X position since the last event.
         /// </summary>
         public float DeltaX => Delta.X;
 
         /// <summary>
-        /// Gets the change in Y position produced by this event.
+        /// Gets the change in Y position since the last event.
         /// </summary>
         public float DeltaY => Delta.Y;
 
         /// <summary>
-        /// Gets the change in position produced by this event.
+        /// Gets the change in position since the last event.
         /// </summary>
         public Vector2 Delta { get; }
     }
