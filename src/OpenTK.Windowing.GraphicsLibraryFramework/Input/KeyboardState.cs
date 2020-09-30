@@ -186,7 +186,7 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
 
         internal void Update()
         {
-            Utils.Swap(ref _keys, ref _keysPrevious);
+            _keysPrevious = (BitArray)_keys.Clone();
         }
 
         /// <summary>
