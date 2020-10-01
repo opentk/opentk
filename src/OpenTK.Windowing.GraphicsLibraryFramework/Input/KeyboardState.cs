@@ -186,7 +186,10 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
 
         internal void Update()
         {
-            _keysPrevious = (BitArray)_keys.Clone();
+            foreach (int key in (int[])Enum.GetValues(typeof(Keys)))
+            {
+                _keysPrevious[key] = _keys[key];
+            }
         }
 
         /// <summary>
