@@ -143,7 +143,7 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
 
         internal void Update()
         {
-            Utils.Swap(ref _buttons, ref _buttonsPrevious);
+            _buttonsPrevious = (BitArray)_buttons.Clone();
             PreviousPosition = Position;
 
             unsafe

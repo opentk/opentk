@@ -738,6 +738,10 @@ namespace OpenTK.Windowing.Desktop
             GLFW.GetWindowPos(WindowPtr, out var x, out var y);
             _location = new Vector2i(x, y);
 
+            GLFW.GetCursorPos(WindowPtr, out var mousex, out var mousey);
+            _lastReportedMousePos = new Vector2((float)mousex, (float)mousey);
+            _mouseState.Position = _lastReportedMousePos;
+
             _isFocused = GLFW.GetWindowAttrib(WindowPtr, WindowAttributeGetBool.Focused);
         }
 
@@ -900,7 +904,7 @@ namespace OpenTK.Windowing.Desktop
             var newPos = new Vector2((float)posX, (float)posY);
             var delta = _lastReportedMousePos - newPos;
 
-            _lastReportedMousePos = _mouseState.Position = newPos;
+            _lastReportedMousePos = newPos;
 
             OnMouseMove(new MouseMoveEventArgs(newPos, delta));
         }
