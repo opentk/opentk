@@ -7,14 +7,13 @@
 // of the MIT license. See the LICENSE file for details.
 //
 
-using System;
 using System.Threading;
 using OpenTK.Windowing.GraphicsLibraryFramework;
 
 namespace OpenTK.Windowing.Desktop
 {
     /// <summary>
-    /// Singleton providing easy GLFW implementation access.
+    ///     Singleton providing easy GLFW implementation access.
     /// </summary>
     internal static class GLFWProvider
     {
@@ -27,7 +26,7 @@ namespace OpenTK.Windowing.Desktop
         private static Thread _mainThread;
 
         /// <summary>
-        /// Gets a value indicating whether the <see cref="Thread.CurrentThread"/> is the same as the GLFW main thread.
+        ///     Gets a value indicating whether the <see cref="Thread.CurrentThread" /> is the same as the GLFW main thread.
         /// </summary>
         public static bool IsOnMainThread => _mainThread == Thread.CurrentThread;
 

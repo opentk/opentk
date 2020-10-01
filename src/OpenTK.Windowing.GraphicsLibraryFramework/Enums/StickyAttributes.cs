@@ -10,19 +10,19 @@
 namespace OpenTK.Windowing.GraphicsLibraryFramework
 {
     /// <summary>
-    /// Attributes related to sticky keys and buttons.
+    ///     Attributes related to sticky keys and buttons.
     /// </summary>
-    /// <seealso cref="GLFW.SetInputMode(Window*,StickyAttributes,bool)"/>
-    /// <seealso cref="GLFW.GetInputMode(Window*,StickyAttributes)"/>
+    /// <seealso cref="GLFW.SetInputMode(Window*,StickyAttributes,bool)" />
+    /// <seealso cref="GLFW.GetInputMode(Window*,StickyAttributes)" />
     public enum StickyAttributes
     {
         /// <summary>
-        /// Specify whether keyboard input should be sticky or not.
+        ///     Specify whether keyboard input should be sticky or not.
         /// </summary>
         StickyKeys = 0x00033002,
 
         /// <summary>
-        /// Specify whether mouse button input should be sticky or not.
+        ///     Specify whether mouse button input should be sticky or not.
         /// </summary>
         StickyMouseButtons = 0x00033003
     }

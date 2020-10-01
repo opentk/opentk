@@ -16,106 +16,99 @@ using OpenTK.Windowing.GraphicsLibraryFramework;
 namespace OpenTK.Windowing.Desktop
 {
     /// <summary>
-    /// The <see cref="GameWindow"/> class contains cross-platform methods to create and render on an OpenGL
-    /// window, handle input and load resources.
+    ///     The <see cref="GameWindow" /> class contains cross-platform methods to create and render on an OpenGL
+    ///     window, handle input and load resources.
     /// </summary>
     /// <remarks>
-    /// <see cref="GameWindow"/> contains several events you can hook or override to add your custom logic:
-    /// <list>
-    /// <item>
-    /// <see cref="OnLoad"/>: Occurs after creating the OpenGL context, but before entering the main loop.
-    /// Override to load resources.
-    /// </item>
-    /// <item>
-    /// <see cref="OnUnload"/>: Occurs after exiting the main loop, but before deleting the OpenGL context.
-    /// Override to unload resources.
-    /// </item>
-    /// <item>
-    /// <see cref="NativeWindow.OnResize"/>: Occurs whenever GameWindow is resized. You should update the OpenGL Viewport
-    /// and Projection Matrix here.
-    /// </item>
-    /// <item>
-    /// <see cref="OnUpdateFrame"/>: Occurs at the specified logic update rate. Override to add your game
-    /// logic.
-    /// </item>
-    /// <item>
-    /// <see cref="OnRenderFrame"/>: Occurs at the specified frame render rate. Override to add your
-    /// rendering code.
-    /// </item>
-    /// </list>
+    ///     <see cref="GameWindow" /> contains several events you can hook or override to add your custom logic:
+    ///     <list>
+    ///         <item>
+    ///             <see cref="OnLoad" />: Occurs after creating the OpenGL context, but before entering the main loop.
+    ///             Override to load resources.
+    ///         </item>
+    ///         <item>
+    ///             <see cref="OnUnload" />: Occurs after exiting the main loop, but before deleting the OpenGL context.
+    ///             Override to unload resources.
+    ///         </item>
+    ///         <item>
+    ///             <see cref="NativeWindow.OnResize" />: Occurs whenever GameWindow is resized. You should update the OpenGL Viewport
+    ///             and Projection Matrix here.
+    ///         </item>
+    ///         <item>
+    ///             <see cref="OnUpdateFrame" />: Occurs at the specified logic update rate. Override to add your game
+    ///             logic.
+    ///         </item>
+    ///         <item>
+    ///             <see cref="OnRenderFrame" />: Occurs at the specified frame render rate. Override to add your
+    ///             rendering code.
+    ///         </item>
+    ///     </list>
     /// </remarks>
     public class GameWindow : NativeWindow
     {
         /// <summary>
-        /// Occurs before the window is displayed for the first time.
-        /// </summary>
-        public event Action Load;
-
-        /// <summary>
-        /// Occurs before the window is destroyed.
-        /// </summary>
-        public event Action Unload;
-
-        /// <summary>
-        /// Occurs when it is time to update a frame.
-        /// </summary>
-        public event Action<FrameEventArgs> UpdateFrame;
-
-        /// <summary>
-        /// If game window is configured to run with a dedicated update thread (by passing isSingleThreaded = false in the
-        /// constructor),
-        /// occurs when the update thread has started. This would be a good place to initialize thread specific stuff (like
-        /// setting a synchronization context).
-        /// </summary>
-        public event Action RenderThreadStarted;
-
-        /// <summary>
-        /// Occurs when it is time to render a frame.
-        /// </summary>
-        public event Action<FrameEventArgs> RenderFrame;
-
-        /// <summary>
-        /// Frequency cap for Update/RenderFrame events.
+        ///     Frequency cap for Update/RenderFrame events.
         /// </summary>
         private const double MaxFrequency = 500.0;
 
         private readonly Stopwatch _watchRender = new Stopwatch();
         private readonly Stopwatch _watchUpdate = new Stopwatch();
 
-        /// <summary>
-        /// Gets a value indicating whether or not UpdatePeriod has consistently failed to reach TargetUpdatePeriod.
-        /// This can be used to do things such as decreasing visual quality if the user's computer isn't powerful enough
-        /// to handle the application.
-        /// </summary>
-        protected bool IsRunningSlowly { get; private set; }
-
-        private double _updateEpsilon; // quantization error for UpdateFrame events
-
         private double _renderFrequency;
-        private double _updateFrequency;
 
         private Thread _renderThread;
 
+        private double _updateEpsilon; // quantization error for UpdateFrame events
+        private double _updateFrequency;
+
+        private VSyncMode _vSync;
+
         /// <summary>
-        /// Gets a value indicating whether or not the GameWindow should use a separate thread for rendering.
+        ///     Initializes a new instance of the <see cref="GameWindow" /> class with sensible default attributes.
+        /// </summary>
+        /// <param name="gameWindowSettings">The <see cref="GameWindow" /> related settings.</param>
+        /// <param name="nativeWindowSettings">The <see cref="NativeWindow" /> related settings.</param>
+        /// <remarks>
+        ///     <para>
+        ///         Use GameWindowSettings.Default and NativeWindowSettings.Default to get some sensible default attributes.
+        ///     </para>
+        /// </remarks>
+        public GameWindow(GameWindowSettings gameWindowSettings, NativeWindowSettings nativeWindowSettings)
+            : base(nativeWindowSettings)
+        {
+            IsMultiThreaded = gameWindowSettings.IsMultiThreaded;
+
+            RenderFrequency = gameWindowSettings.RenderFrequency;
+            UpdateFrequency = gameWindowSettings.UpdateFrequency;
+        }
+
+        /// <summary>
+        ///     Gets a value indicating whether or not UpdatePeriod has consistently failed to reach TargetUpdatePeriod.
+        ///     This can be used to do things such as decreasing visual quality if the user's computer isn't powerful enough
+        ///     to handle the application.
+        /// </summary>
+        protected bool IsRunningSlowly { get; private set; }
+
+        /// <summary>
+        ///     Gets a value indicating whether or not the GameWindow should use a separate thread for rendering.
         /// </summary>
         /// <remarks>
-        ///   <para>
-        ///     If this is true, render frames will be processed in a separate thread.
-        ///     Do not enable this unless your code is thread safe.
-        ///   </para>
+        ///     <para>
+        ///         If this is true, render frames will be processed in a separate thread.
+        ///         Do not enable this unless your code is thread safe.
+        ///     </para>
         /// </remarks>
         public bool IsMultiThreaded { get; }
 
         /// <summary>
-        /// Gets or sets a double representing the render frequency, in hertz.
+        ///     Gets or sets a double representing the render frequency, in hertz.
         /// </summary>
         /// <remarks>
-        ///  <para>
-        /// A value of 0.0 indicates that RenderFrame events are generated at the maximum possible frequency (i.e. only
-        /// limited by the hardware's capabilities).
-        ///  </para>
-        ///  <para>Values lower than 1.0Hz are clamped to 0.0. Values higher than 500.0Hz are clamped to 200.0Hz.</para>
+        ///     <para>
+        ///         A value of 0.0 indicates that RenderFrame events are generated at the maximum possible frequency (i.e. only
+        ///         limited by the hardware's capabilities).
+        ///     </para>
+        ///     <para>Values lower than 1.0Hz are clamped to 0.0. Values higher than 500.0Hz are clamped to 200.0Hz.</para>
         /// </remarks>
         public double RenderFrequency
         {
@@ -140,19 +133,19 @@ namespace OpenTK.Windowing.Desktop
         }
 
         /// <summary>
-        /// Gets a double representing the time spent in the RenderFrame function, in seconds.
+        ///     Gets a double representing the time spent in the RenderFrame function, in seconds.
         /// </summary>
         public double RenderTime { get; protected set; }
 
         /// <summary>
-        /// Gets or sets a double representing the update frequency, in hertz.
+        ///     Gets or sets a double representing the update frequency, in hertz.
         /// </summary>
         /// <remarks>
-        ///  <para>
-        /// A value of 0.0 indicates that UpdateFrame events are generated at the maximum possible frequency (i.e. only
-        /// limited by the hardware's capabilities).
-        ///  </para>
-        ///  <para>Values lower than 1.0Hz are clamped to 0.0. Values higher than 500.0Hz are clamped to 500.0Hz.</para>
+        ///     <para>
+        ///         A value of 0.0 indicates that UpdateFrame events are generated at the maximum possible frequency (i.e. only
+        ///         limited by the hardware's capabilities).
+        ///     </para>
+        ///     <para>Values lower than 1.0Hz are clamped to 0.0. Values higher than 500.0Hz are clamped to 500.0Hz.</para>
         /// </remarks>
         public double UpdateFrequency
         {
@@ -176,10 +169,8 @@ namespace OpenTK.Windowing.Desktop
             }
         }
 
-        private VSyncMode _vSync;
-
         /// <summary>
-        /// Gets or sets the VSyncMode.
+        ///     Gets or sets the VSyncMode.
         /// </summary>
         public VSyncMode VSync
         {
@@ -199,33 +190,42 @@ namespace OpenTK.Windowing.Desktop
                     case VSyncMode.Adaptive:
                         GLFW.SwapInterval(IsRunningSlowly ? 0 : 1);
                         break;
-                    }
+                }
 
                 _vSync = value;
             }
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="GameWindow"/> class with sensible default attributes.
+        ///     Occurs before the window is displayed for the first time.
         /// </summary>
-        /// <param name="gameWindowSettings">The <see cref="GameWindow"/> related settings.</param>
-        /// <param name="nativeWindowSettings">The <see cref="NativeWindow"/> related settings.</param>
-        /// <remarks>
-        /// <para>
-        /// Use GameWindowSettings.Default and NativeWindowSettings.Default to get some sensible default attributes.
-        /// </para>
-        /// </remarks>
-        public GameWindow(GameWindowSettings gameWindowSettings, NativeWindowSettings nativeWindowSettings)
-            : base(nativeWindowSettings)
-        {
-            IsMultiThreaded = gameWindowSettings.IsMultiThreaded;
-
-            RenderFrequency = gameWindowSettings.RenderFrequency;
-            UpdateFrequency = gameWindowSettings.UpdateFrequency;
-        }
+        public event Action Load;
 
         /// <summary>
-        /// Initialize the update thread (if using a multi-threaded contex, and enter the game loop of the GameWindow.
+        ///     Occurs before the window is destroyed.
+        /// </summary>
+        public event Action Unload;
+
+        /// <summary>
+        ///     Occurs when it is time to update a frame.
+        /// </summary>
+        public event Action<FrameEventArgs> UpdateFrame;
+
+        /// <summary>
+        ///     If game window is configured to run with a dedicated update thread (by passing isSingleThreaded = false in the
+        ///     constructor),
+        ///     occurs when the update thread has started. This would be a good place to initialize thread specific stuff (like
+        ///     setting a synchronization context).
+        /// </summary>
+        public event Action RenderThreadStarted;
+
+        /// <summary>
+        ///     Occurs when it is time to render a frame.
+        /// </summary>
+        public event Action<FrameEventArgs> RenderFrame;
+
+        /// <summary>
+        ///     Initialize the update thread (if using a multi-threaded contex, and enter the game loop of the GameWindow.
         /// </summary>
         public virtual void Run()
         {
@@ -340,7 +340,7 @@ namespace OpenTK.Windowing.Desktop
         }
 
         /// <summary>
-        /// Swaps the front and back buffers of the current GraphicsContext, presenting the rendered scene to the user.
+        ///     Swaps the front and back buffers of the current GraphicsContext, presenting the rendered scene to the user.
         /// </summary>
         public virtual void SwapBuffers()
         {
@@ -355,7 +355,7 @@ namespace OpenTK.Windowing.Desktop
         }
 
         /// <summary>
-        /// Run when the update thread is started. This will never run if you set IsSingleThreaded to true.
+        ///     Run when the update thread is started. This will never run if you set IsSingleThreaded to true.
         /// </summary>
         protected virtual void OnRenderThreadStarted()
         {
@@ -363,7 +363,7 @@ namespace OpenTK.Windowing.Desktop
         }
 
         /// <summary>
-        /// Run immediately after Run() is called.
+        ///     Run immediately after Run() is called.
         /// </summary>
         protected virtual void OnLoad()
         {
@@ -371,7 +371,7 @@ namespace OpenTK.Windowing.Desktop
         }
 
         /// <summary>
-        /// Run when the window is about to close.
+        ///     Run when the window is about to close.
         /// </summary>
         protected virtual void OnUnload()
         {
@@ -379,7 +379,7 @@ namespace OpenTK.Windowing.Desktop
         }
 
         /// <summary>
-        /// Run when the window is ready to update.
+        ///     Run when the window is ready to update.
         /// </summary>
         /// <param name="args">The event arguments for this frame.</param>
         protected virtual void OnUpdateFrame(FrameEventArgs args)
@@ -388,7 +388,7 @@ namespace OpenTK.Windowing.Desktop
         }
 
         /// <summary>
-        /// Run when the window is ready to update.
+        ///     Run when the window is ready to update.
         /// </summary>
         /// <param name="args">The event arguments for this frame.</param>
         protected virtual void OnRenderFrame(FrameEventArgs args)

@@ -10,18 +10,18 @@
 namespace OpenTK.Windowing.GraphicsLibraryFramework
 {
     /// <summary>
-    /// Defines event information for <see cref="GLFW.GetJoystickButtons"/> and <see cref="GLFW.GetJoystickButtonsRaw(int,out int)"/>.
+    ///     Defines event information for <see cref="GLFW.GetJoystickButtons" /> and <see cref="GLFW.GetJoystickButtonsRaw(int,out int)" />.
     /// </summary>
     public enum JoystickInputAction : byte
     {
         /// <summary>
-        /// The joystick button was released.
+        ///     The joystick button was released.
         /// </summary>
         Release = 0,
 
         /// <summary>
-        /// The joystick button was pressed.
+        ///     The joystick button was pressed.
         /// </summary>
-        Press = 1,
+        Press = 1
     }
 }

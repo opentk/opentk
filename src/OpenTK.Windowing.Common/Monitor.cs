@@ -12,32 +12,26 @@ using System;
 namespace OpenTK.Windowing.Common
 {
     /// <summary>
-    /// Wrapper around an implementation-defined monitor struct.
+    ///     Wrapper around an implementation-defined monitor struct.
     /// </summary>
     public struct Monitor
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="Monitor"/> struct.
+        ///     Initializes a new instance of the <see cref="Monitor" /> struct.
         /// </summary>
         /// <param name="ptr">A pointer to the underlying native Monitor.</param>
-        public Monitor(IntPtr ptr)
-        {
-            Pointer = ptr;
-        }
+        public Monitor(IntPtr ptr) => Pointer = ptr;
 
         /// <summary>
-        /// Gets a pointer to the underlying native Monitor.
+        ///     Gets a pointer to the underlying native Monitor.
         /// </summary>
         public IntPtr Pointer { get; }
 
         /// <summary>
-        /// Converts the underlying <see cref="Pointer"/> to a unmanaged pointer.
+        ///     Converts the underlying <see cref="Pointer" /> to a unmanaged pointer.
         /// </summary>
-        /// <typeparam name="T">The type of the object found at the <see cref="Pointer"/> memory address.</typeparam>
+        /// <typeparam name="T">The type of the object found at the <see cref="Pointer" /> memory address.</typeparam>
         /// <returns>A unmanaged pointer to the underlying native Monitor.</returns>
-        public unsafe T* ToUnsafePtr<T>() where T : unmanaged
-        {
-            return (T*)Pointer;
-        }
+        public unsafe T* ToUnsafePtr<T>() where T : unmanaged => (T*)Pointer;
     }
 }

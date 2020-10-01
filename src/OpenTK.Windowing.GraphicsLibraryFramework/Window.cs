@@ -10,7 +10,7 @@
 namespace OpenTK.Windowing.GraphicsLibraryFramework
 {
     /// <summary>
-    /// Opaque handle to a GLFW window.
+    ///     Opaque handle to a GLFW window.
     /// </summary>
     public struct Window
     {

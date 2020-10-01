@@ -17,20 +17,21 @@ using OpenTK.Windowing.GraphicsLibraryFramework;
 namespace OpenTK.Windowing.Desktop
 {
     /// <summary>
-    /// This class contains methods used for calculating dpi.
+    ///     This class contains methods used for calculating dpi.
     /// </summary>
-    internal static partial class DpiCalculator
+    internal static class DpiCalculator
     {
+        private static readonly bool _isHookSet = false;
+
         private static List<DpiInfo> _dpiInfos = new List<DpiInfo>();
 
         // I am not sure how well of an idea this is.
         private static Dictionary<IntPtr, int> _dpiIndexLookup = new Dictionary<IntPtr, int>();
 
-        private static bool _isCacheBuilt = false;
-        private static bool _isHookSet = false;
+        private static bool _isCacheBuilt;
 
         /// <summary>
-        /// Gets the current monitor scale.
+        ///     Gets the current monitor scale.
         /// </summary>
         /// <param name="monitor">The monitor in question.</param>
         /// <param name="horizontalScale">Horizontal scale.</param>
@@ -42,81 +43,75 @@ namespace OpenTK.Windowing.Desktop
             out float verticalScale
         )
         {
-            if (TryGetFromCache((IntPtr)monitor, out DpiInfo info))
+            if (TryGetFromCache((IntPtr)monitor, out var info))
             {
                 horizontalScale = info.HorizontalScale;
                 verticalScale = info.VerticalScale;
                 return true;
             }
-            else
-            {
-                horizontalScale = 1f;
-                verticalScale = 1f;
-                return false;
-            }
+
+            horizontalScale = 1f;
+            verticalScale = 1f;
+            return false;
         }
 
         /// <summary>
-        /// Gets the dpi of the monitor pointed to.
+        ///     Gets the dpi of the monitor pointed to.
         /// </summary>
         /// <param name="monitor">The monitor in question.</param>
         /// <param name="horizontalDpi">Horizontal dpi.</param>
         /// <param name="verticalDpi">Vertical dpi.</param>
         /// <returns><c>true</c>, if the monitor's dpi was gotten correctly, <c>false</c> otherwise.</returns>
         /// <remarks>
-        /// This methods approximates the dpi of the monitor by multiplying
-        /// the monitor scale received from <see cref="TryGetMonitorScale(Monitor*, out float, out float)"/>
-        /// by each platforms respective default dpi (72 for macOS and 96 for other systems).
+        ///     This methods approximates the dpi of the monitor by multiplying
+        ///     the monitor scale received from <see cref="TryGetMonitorScale(Monitor*, out float, out float)" />
+        ///     by each platforms respective default dpi (72 for macOS and 96 for other systems).
         /// </remarks>
         public static unsafe bool TryGetMonitorDpi(Monitor* monitor, out float horizontalDpi, out float verticalDpi)
         {
-            if (TryGetFromCache((IntPtr)monitor, out DpiInfo info))
+            if (TryGetFromCache((IntPtr)monitor, out var info))
             {
                 horizontalDpi = info.HorizontalDpi;
                 verticalDpi = info.VerticalDpi;
                 return true;
             }
-            else
-            {
-                horizontalDpi = verticalDpi = GetPlatformDefaultDpi();
-                return false;
-            }
+
+            horizontalDpi = verticalDpi = GetPlatformDefaultDpi();
+            return false;
         }
 
         /// <summary>
-        /// Gets the raw dpi of the monitor pointed to.
+        ///     Gets the raw dpi of the monitor pointed to.
         /// </summary>
         /// <param name="monitor">The monitor in question.</param>
         /// <param name="horizontalDpi">Horizontal dpi.</param>
         /// <param name="verticalDpi">Vertical dpi.</param>
         /// <returns><c>true</c>, if monitor's raw dpi was gotten correctly, <c>false</c> otherwise.</returns>
         /// <remarks>
-        /// This method calculates dpi by retrieving monitor dimensions and resolution.
-        /// However on certain platforms (such as Windows) these values may not
-        /// be scaled correctly.
+        ///     This method calculates dpi by retrieving monitor dimensions and resolution.
+        ///     However on certain platforms (such as Windows) these values may not
+        ///     be scaled correctly.
         /// </remarks>
         public static unsafe bool TryGetMonitorDpiRaw(Monitor* monitor, out float horizontalDpi, out float verticalDpi)
         {
-            if (TryGetFromCache((IntPtr)monitor, out DpiInfo info))
+            if (TryGetFromCache((IntPtr)monitor, out var info))
             {
                 horizontalDpi = info.HorizontalRawDpi;
                 verticalDpi = info.VerticalRawDpi;
                 return true;
             }
-            else
-            {
-                horizontalDpi = verticalDpi = GetPlatformDefaultDpi();
-                return false;
-            }
+
+            horizontalDpi = verticalDpi = GetPlatformDefaultDpi();
+            return false;
         }
 
         /// <summary>
-        /// Gets the default dpi for platforms.
+        ///     Gets the default dpi for platforms.
         /// </summary>
         /// <returns>The platform default dpi.</returns>
         /// <remarks>
-        /// For historical reasons macOS has a default dpi of 72, and other
-        /// platforms have a default dpi of 96.
+        ///     For historical reasons macOS has a default dpi of 72, and other
+        ///     platforms have a default dpi of 96.
         /// </remarks>
         public static float GetPlatformDefaultDpi()
         {
@@ -124,10 +119,8 @@ namespace OpenTK.Windowing.Desktop
             {
                 return 72f;
             }
-            else
-            {
-                return 96f;
-            }
+
+            return 96f;
         }
 
         private static int GetRectangleIntersectionArea(Rectangle a, Rectangle b)
@@ -137,7 +130,7 @@ namespace OpenTK.Windowing.Desktop
         }
 
         /// <summary>
-        /// Returns the monitor a window intersects with the most.
+        ///     Returns the monitor a window intersects with the most.
         /// </summary>
         /// <param name="window">The window calculate the monitor for.</param>
         /// <returns>The monitor which the window intersects with the most.</returns>
@@ -156,8 +149,8 @@ namespace OpenTK.Windowing.Desktop
                 windowArea = new Rectangle(windowX, windowY, windowWidth, windowHeight);
             }
 
-            int selectedIndex = 0;
-            for (int i = 0; i < _dpiInfos.Count; i++)
+            var selectedIndex = 0;
+            for (var i = 0; i < _dpiInfos.Count; i++)
             {
                 if (
                     GetRectangleIntersectionArea(_dpiInfos[i].ClientArea, windowArea) >
@@ -172,7 +165,7 @@ namespace OpenTK.Windowing.Desktop
         }
 
         /// <summary>
-        /// Checks wheter the cache has been built or builds it if it can.
+        ///     Checks wheter the cache has been built or builds it if it can.
         /// </summary>
         /// <returns>Wether the current cache is valid or not.</returns>
         public static unsafe bool CheckCache()
@@ -191,7 +184,7 @@ namespace OpenTK.Windowing.Desktop
         }
 
         /// <summary>
-        /// Tries to get a <see cref="DpiInfo"/> object from the prebuilt cache.
+        ///     Tries to get a <see cref="DpiInfo" /> object from the prebuilt cache.
         /// </summary>
         /// <param name="index">The monitor index of the object.</param>
         /// <param name="info">The cached object.</param>
@@ -211,14 +204,14 @@ namespace OpenTK.Windowing.Desktop
         }
 
         /// <summary>
-        /// Tries to get a <see cref="DpiInfo"/> object from the prebuilt cache.
+        ///     Tries to get a <see cref="DpiInfo" /> object from the prebuilt cache.
         /// </summary>
         /// <param name="monitor">An opaque handle to the monitor.</param>
         /// <param name="info">The cached object.</param>
         /// <returns>True when the object was retrieved from cache successfully.</returns>
         public static bool TryGetFromCache(IntPtr monitor, out DpiInfo info)
         {
-            if (_dpiIndexLookup.TryGetValue(monitor, out int index))
+            if (_dpiIndexLookup.TryGetValue(monitor, out var index))
             {
                 return TryGetFromCache(index, out info);
             }
@@ -228,7 +221,7 @@ namespace OpenTK.Windowing.Desktop
         }
 
         /// <summary>
-        /// Builds the monitor cache (again if called before).
+        ///     Builds the monitor cache (again if called before).
         /// </summary>
         public static unsafe void BuildMonitorCache()
         {
@@ -240,9 +233,9 @@ namespace OpenTK.Windowing.Desktop
             var newInfos = new List<DpiInfo>();
             var newIndexLookup = new Dictionary<IntPtr, int>();
 
-            var monitors = GLFW.GetMonitorsRaw(out int monitorCount);
+            var monitors = GLFW.GetMonitorsRaw(out var monitorCount);
 
-            for (int i = 0; i < monitorCount; i++)
+            for (var i = 0; i < monitorCount; i++)
             {
                 var monitor = *(monitors + i);
 

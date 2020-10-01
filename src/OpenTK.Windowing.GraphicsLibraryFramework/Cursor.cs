@@ -10,7 +10,7 @@
 namespace OpenTK.Windowing.GraphicsLibraryFramework
 {
     /// <summary>
-    /// Opaque handle to a GLFW cursor.
+    ///     Opaque handle to a GLFW cursor.
     /// </summary>
     public struct Cursor
     {

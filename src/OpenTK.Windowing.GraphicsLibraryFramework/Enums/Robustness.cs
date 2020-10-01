@@ -10,22 +10,22 @@
 namespace OpenTK.Windowing.GraphicsLibraryFramework
 {
     /// <summary>
-    /// OpenGL context robustness strategy.
+    ///     OpenGL context robustness strategy.
     /// </summary>
-    public enum Robustness : int
+    public enum Robustness
     {
         /// <summary>
-        /// No context robustness strategy.
+        ///     No context robustness strategy.
         /// </summary>
         NoRobustness = 0,
 
         /// <summary>
-        /// Robust context without a reset notification.
+        ///     Robust context without a reset notification.
         /// </summary>
         NoResetNotification = 0x00031001,
 
         /// <summary>
-        /// Lose context on reset.
+        ///     Lose context on reset.
         /// </summary>
         LoseContextOnReset = 0x00031002
     }

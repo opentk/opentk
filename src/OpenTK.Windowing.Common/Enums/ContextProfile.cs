@@ -10,23 +10,23 @@
 namespace OpenTK.Windowing.Common
 {
     /// <summary>
-    /// Selects the profile for the context's graphics API. This only applies on OpenGL 3.2 upwards, and has no effect on older versions.
+    ///     Selects the profile for the context's graphics API. This only applies on OpenGL 3.2 upwards, and has no effect on older versions.
     /// </summary>
     public enum ContextProfile
     {
         /// <summary>
-        /// Used for unknown OpenGL profile or OpenGL ES.
+        ///     Used for unknown OpenGL profile or OpenGL ES.
         /// </summary>
         Any,
 
         /// <summary>
-        /// Selects compatability profile. You should only use this if maintaining legacy code.
+        ///     Selects compatability profile. You should only use this if maintaining legacy code.
         /// </summary>
         Compatability,
 
         /// <summary>
-        /// Selects core profile. All new projects should use this unless they have a good reason not to.
+        ///     Selects core profile. All new projects should use this unless they have a good reason not to.
         /// </summary>
-        Core,
+        Core
     }
 }

@@ -9,21 +9,18 @@
 
 using System;
 using System.Collections;
-using System.Diagnostics;
 using System.Text;
-using OpenTK.Core;
-using OpenTK.Windowing.Common;
 
 namespace OpenTK.Windowing.GraphicsLibraryFramework
 {
     /// <summary>
-    /// Encapsulates the state of a Keyboard device.
+    ///     Encapsulates the state of a Keyboard device.
     /// </summary>
     public sealed class KeyboardState
     {
         // These arrays will mostly be empty since the last integer used is 384. That's only 48 bytes though.
-        private BitArray _keys = new BitArray((int)Keys.LastKey + 1);
-        private BitArray _keysPrevious = new BitArray((int)Keys.LastKey + 1);
+        private readonly BitArray _keys = new BitArray((int)Keys.LastKey + 1);
+        private readonly BitArray _keysPrevious = new BitArray((int)Keys.LastKey + 1);
 
         private KeyboardState(KeyboardState source)
         {
@@ -36,8 +33,8 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         }
 
         /// <summary>
-        /// Gets a <see cref="bool" /> indicating whether the specified
-        ///  <see cref="Key" /> is currently down.
+        ///     Gets a <see cref="bool" /> indicating whether the specified
+        ///     <see cref="Key" /> is currently down.
         /// </summary>
         /// <param name="key">The <see cref="Key" /> to check.</param>
         /// <returns><c>true</c> if key is down; <c>false</c> otherwise.</returns>
@@ -48,17 +45,7 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         }
 
         /// <summary>
-        /// Gets a <see cref="bool" /> indicating whether this key is currently down.
-        /// </summary>
-        /// <param name="key">The <see cref="Key" /> to check.</param>
-        /// <returns><c>true</c> if <paramref name="key"/> is in the down state; otherwise, <c>false</c>.</returns>
-        public bool IsKeyDown(Keys key)
-        {
-            return _keys[(int)key];
-        }
-
-        /// <summary>
-        /// Gets a value indicating whether any key is currently down.
+        ///     Gets a value indicating whether any key is currently down.
         /// </summary>
         /// <value><c>true</c> if any key is down; otherwise, <c>false</c>.</value>
         public bool IsAnyKeyDown
@@ -78,9 +65,16 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         }
 
         /// <summary>
-        /// Sets the key state of the <paramref name="key"/> depending on the given <paramref name="down"/> value.
+        ///     Gets a <see cref="bool" /> indicating whether this key is currently down.
         /// </summary>
-        /// <param name="key">The <see cref="Key"/> which state should be changed.</param>
+        /// <param name="key">The <see cref="Key" /> to check.</param>
+        /// <returns><c>true</c> if <paramref name="key" /> is in the down state; otherwise, <c>false</c>.</returns>
+        public bool IsKeyDown(Keys key) => _keys[(int)key];
+
+        /// <summary>
+        ///     Sets the key state of the <paramref name="key" /> depending on the given <paramref name="down" /> value.
+        /// </summary>
+        /// <param name="key">The <see cref="Key" /> which state should be changed.</param>
         /// <param name="down">The new state the key should be changed to.</param>
         internal void SetKeyState(Keys key, bool down)
         {
@@ -88,47 +82,41 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         }
 
         /// <summary>
-        /// Checks whether two <see cref="KeyboardState" /> instances are equal.
+        ///     Checks whether two <see cref="KeyboardState" /> instances are equal.
         /// </summary>
         /// <param name="left">
-        /// The first <see cref="KeyboardState" /> instance to compare.
+        ///     The first <see cref="KeyboardState" /> instance to compare.
         /// </param>
         /// <param name="right">
-        /// The second <see cref="KeyboardState" /> instance to compare.
+        ///     The second <see cref="KeyboardState" /> instance to compare.
         /// </param>
         /// <returns>
-        /// <c>true</c> if both left is equal to right; <c>false</c> otherwise.
+        ///     <c>true</c> if both left is equal to right; <c>false</c> otherwise.
         /// </returns>
-        public static bool operator ==(KeyboardState left, KeyboardState right)
-        {
-            return left.Equals(right);
-        }
+        public static bool operator ==(KeyboardState left, KeyboardState right) => left.Equals(right);
 
         /// <summary>
-        /// Checks whether two <see cref="KeyboardState" /> instances are not equal.
+        ///     Checks whether two <see cref="KeyboardState" /> instances are not equal.
         /// </summary>
         /// <param name="left">
-        /// The first <see cref="KeyboardState" /> instance to compare.
+        ///     The first <see cref="KeyboardState" /> instance to compare.
         /// </param>
         /// <param name="right">
-        /// The second <see cref="KeyboardState" /> instance to compare.
+        ///     The second <see cref="KeyboardState" /> instance to compare.
         /// </param>
         /// <returns>
-        /// <c>true</c> if both left is not equal to right; <c>false</c> otherwise.
+        ///     <c>true</c> if both left is not equal to right; <c>false</c> otherwise.
         /// </returns>
-        public static bool operator !=(KeyboardState left, KeyboardState right)
-        {
-            return !left.Equals(right);
-        }
+        public static bool operator !=(KeyboardState left, KeyboardState right) => !left.Equals(right);
 
         /// <summary>
-        /// Compares to an object instance for equality.
+        ///     Compares to an object instance for equality.
         /// </summary>
         /// <param name="obj">
-        /// The <see cref="object" /> to compare to.
+        ///     The <see cref="object" /> to compare to.
         /// </param>
         /// <returns>
-        /// <c>true</c> if this instance is equal to obj; <c>false</c> otherwise.
+        ///     <c>true</c> if this instance is equal to obj; <c>false</c> otherwise.
         /// </returns>
         public override bool Equals(object obj)
         {
@@ -148,7 +136,7 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         private bool Equals(KeyboardState other)
         {
             var keyValues = (Keys[])Enum.GetValues(typeof(Keys));
-            for (int i = 0; i < keyValues.Length; i++)
+            for (var i = 0; i < keyValues.Length; i++)
             {
                 if (_keys[i] != other._keys[i])
                 {
@@ -171,7 +159,7 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
             builder.Append('{');
             var first = true;
 
-            foreach (Keys key in (Keys[])Enum.GetValues(typeof(Keys)))
+            foreach (var key in (Keys[])Enum.GetValues(typeof(Keys)))
             {
                 if (IsKeyDown(key))
                 {
@@ -186,25 +174,22 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
 
         internal void Update()
         {
-            foreach (int key in (int[])Enum.GetValues(typeof(Keys)))
+            foreach (var key in (int[])Enum.GetValues(typeof(Keys)))
             {
                 _keysPrevious[key] = _keys[key];
             }
         }
 
         /// <summary>
-        /// Gets a <see cref="bool" /> indicating whether this key was down in the previous frame.
+        ///     Gets a <see cref="bool" /> indicating whether this key was down in the previous frame.
         /// </summary>
         /// <param name="key">The <see cref="Key" /> to check.</param>
-        /// <returns><c>true</c> if <paramref name="key"/> was in the down state; otherwise, <c>false</c>.</returns>
-        public bool WasKeyDown(Keys key)
-        {
-            return _keysPrevious[(int)key];
-        }
+        /// <returns><c>true</c> if <paramref name="key" /> was in the down state; otherwise, <c>false</c>.</returns>
+        public bool WasKeyDown(Keys key) => _keysPrevious[(int)key];
 
         /// <summary>
-        /// Gets an immutable snapshot of this KeyboardState.
-        /// This can be used to save the current keyboard state for comparison later on.
+        ///     Gets an immutable snapshot of this KeyboardState.
+        ///     This can be used to save the current keyboard state for comparison later on.
         /// </summary>
         /// <returns>Returns an immutable snapshot of this KeyboardState.</returns>
         public KeyboardState GetSnapshot() => new KeyboardState(this);

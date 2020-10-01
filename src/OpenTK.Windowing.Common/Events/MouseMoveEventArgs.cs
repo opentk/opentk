@@ -12,12 +12,12 @@ using OpenTK.Mathematics;
 namespace OpenTK.Windowing.Common
 {
     /// <summary>
-    /// Defines the event data for <see cref="IWindowEvents.MouseMove" /> events.
+    ///     Defines the event data for <see cref="IWindowEvents.MouseMove" /> events.
     /// </summary>
     public readonly struct MouseMoveEventArgs
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="MouseMoveEventArgs"/> struct.
+        ///     Initializes a new instance of the <see cref="MouseMoveEventArgs" /> struct.
         /// </summary>
         /// <param name="position">The new mouse position.</param>
         /// <param name="delta">The change in position produced by this event.</param>
@@ -28,7 +28,7 @@ namespace OpenTK.Windowing.Common
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="MouseMoveEventArgs"/> struct.
+        ///     Initializes a new instance of the <see cref="MouseMoveEventArgs" /> struct.
         /// </summary>
         /// <param name="x">The new mouse X position.</param>
         /// <param name="y">The new mouse Y position.</param>
@@ -40,35 +40,35 @@ namespace OpenTK.Windowing.Common
         }
 
         /// <summary>
-        /// Gets the new X position produced by this event.
-        /// This position is relative to the top-left corner of the contents of the window.
+        ///     Gets the new X position produced by this event.
+        ///     This position is relative to the top-left corner of the contents of the window.
         /// </summary>
         public float X => Position.X;
 
         /// <summary>
-        /// Gets the new Y position produced by this event.
-        /// This position is relative to the top-left corner of the contents of the window.
+        ///     Gets the new Y position produced by this event.
+        ///     This position is relative to the top-left corner of the contents of the window.
         /// </summary>
         public float Y => Position.Y;
 
         /// <summary>
-        /// Gets the new position produced by this event.
-        /// This position is relative to the top-left corner of the contents of the window.
+        ///     Gets the new position produced by this event.
+        ///     This position is relative to the top-left corner of the contents of the window.
         /// </summary>
         public Vector2 Position { get; }
 
         /// <summary>
-        /// Gets the change in X position since the last event.
+        ///     Gets the change in X position since the last event.
         /// </summary>
         public float DeltaX => Delta.X;
 
         /// <summary>
-        /// Gets the change in Y position since the last event.
+        ///     Gets the change in Y position since the last event.
         /// </summary>
         public float DeltaY => Delta.Y;
 
         /// <summary>
-        /// Gets the change in position since the last event.
+        ///     Gets the change in position since the last event.
         /// </summary>
         public Vector2 Delta { get; }
     }

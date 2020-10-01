@@ -12,13 +12,13 @@ using System;
 namespace OpenTK.Windowing.Common.Input
 {
     /// <summary>
-    /// Stores a window icon. A window icon is defined
-    /// as a 2-dimensional buffer of RGBA values.
+    ///     Stores a window icon. A window icon is defined
+    ///     as a 2-dimensional buffer of RGBA values.
     /// </summary>
     public class Image
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="Image" /> class.
+        ///     Initializes a new instance of the <see cref="Image" /> class.
         /// </summary>
         /// <param name="width">The icon pixel width.</param>
         /// <param name="height">The icon pixel height.</param>
@@ -41,24 +41,24 @@ namespace OpenTK.Windowing.Common.Input
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Image"/> class.
+        ///     Initializes a new instance of the <see cref="Image" /> class.
         /// </summary>
         protected Image()
         {
         }
 
         /// <summary>
-        /// Gets the icon pixel width.
+        ///     Gets the icon pixel width.
         /// </summary>
         public int Width { get; }
 
         /// <summary>
-        /// Gets the icon pixel height.
+        ///     Gets the icon pixel height.
         /// </summary>
         public int Height { get; }
 
         /// <summary>
-        /// Gets the RGBA pixel data of the icon.
+        ///     Gets the RGBA pixel data of the icon.
         /// </summary>
         public byte[] Data { get; }
     }

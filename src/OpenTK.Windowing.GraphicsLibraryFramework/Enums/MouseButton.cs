@@ -46,23 +46,23 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         Button8 = 7,
 
         /// <summary>
-        ///     The left mouse button. This corresponds to <see cref="Button1"/>.
+        ///     The left mouse button. This corresponds to <see cref="Button1" />.
         /// </summary>
         Left = Button1,
 
         /// <summary>
-        ///     The right mouse button. This corresponds to <see cref="Button2"/>.
+        ///     The right mouse button. This corresponds to <see cref="Button2" />.
         /// </summary>
         Right = Button2,
 
         /// <summary>
-        ///     The middle mouse button. This corresponds to <see cref="Button3"/>.
+        ///     The middle mouse button. This corresponds to <see cref="Button3" />.
         /// </summary>
         Middle = Button3,
 
         /// <summary>
         ///     The highest mouse button available.
         /// </summary>
-        Last = Button8,
+        Last = Button8
     }
 }

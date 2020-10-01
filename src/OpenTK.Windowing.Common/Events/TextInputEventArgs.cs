@@ -15,13 +15,10 @@ namespace OpenTK.Windowing.Common
     public readonly struct TextInputEventArgs
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="TextInputEventArgs"/> struct.
+        ///     Initializes a new instance of the <see cref="TextInputEventArgs" /> struct.
         /// </summary>
         /// <param name="unicode">The unicode code point that was input.</param>
-        public TextInputEventArgs(int unicode)
-        {
-            Unicode = unicode;
-        }
+        public TextInputEventArgs(int unicode) => Unicode = unicode;
 
         /// <summary>
         ///     Gets the Unicode code point that was input.

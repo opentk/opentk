@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 namespace OpenTK.Windowing.GraphicsLibraryFramework
@@ -18,14 +17,14 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
             // Register DllImport resolver so that the correct dynamic library is loaded on all platforms.
             // On net472, we rely on Mono's DllMap for this. See the .dll.config file.
             NativeLibrary.SetDllImportResolver(typeof(GLFWNative).Assembly, (name, assembly, path) =>
-            {
-                if (name != LibraryName)
-                {
-                    return IntPtr.Zero;
-                }
+                                                                            {
+                                                                                if (name != LibraryName)
+                                                                                {
+                                                                                    return IntPtr.Zero;
+                                                                                }
 
-                return LoadLibrary("glfw", new Version(3, 3), assembly, path);
-            });
+                                                                                return LoadLibrary("glfw", new Version(3, 3), assembly, path);
+                                                                            });
         }
 
         private static IntPtr LoadLibrary(string libraryName, Version version, Assembly assembly, DllImportSearchPath? searchPath)
@@ -42,17 +41,17 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
             {
                 libNameFormatter = (libName, ver) =>
-                    libName + ".so" + (string.IsNullOrEmpty(ver) ? string.Empty : "." + ver);
+                                       libName + ".so" + (string.IsNullOrEmpty(ver) ? string.Empty : "." + ver);
             }
             else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
             {
                 libNameFormatter = (libName, ver) =>
-                    libName + (string.IsNullOrEmpty(ver) ? string.Empty : "." + ver) + ".dylib";
+                                       libName + (string.IsNullOrEmpty(ver) ? string.Empty : "." + ver) + ".dylib";
             }
             else if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
                 libNameFormatter = (libName, ver) =>
-                    libName + (string.IsNullOrEmpty(ver) ? string.Empty : ver) + ".dll";
+                                       libName + (string.IsNullOrEmpty(ver) ? string.Empty : ver) + ".dll";
             }
             else
             {
@@ -66,6 +65,7 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
                     return handle;
                 }
             }
+
             return NativeLibrary.Load(libraryName, assembly, searchPath);
         }
 

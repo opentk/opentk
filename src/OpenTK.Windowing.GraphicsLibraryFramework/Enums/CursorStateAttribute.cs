@@ -10,15 +10,15 @@
 namespace OpenTK.Windowing.GraphicsLibraryFramework
 {
     /// <summary>
-    /// Attribute for setting <see cref="CursorModeValue"/> of the cursor.
+    ///     Attribute for setting <see cref="CursorModeValue" /> of the cursor.
     /// </summary>
-    /// <seealso cref="GLFW.SetInputMode(Window*,CursorStateAttribute,CursorModeValue)"/>
-    /// <seealso cref="GLFW.GetInputMode(Window*,CursorStateAttribute)"/>
+    /// <seealso cref="GLFW.SetInputMode(Window*,CursorStateAttribute,CursorModeValue)" />
+    /// <seealso cref="GLFW.GetInputMode(Window*,CursorStateAttribute)" />
     public enum CursorStateAttribute
     {
         /// <summary>
-        /// Attribute for setting <see cref="CursorModeValue"/> of the cursor.
+        ///     Attribute for setting <see cref="CursorModeValue" /> of the cursor.
         /// </summary>
-        Cursor = 0x00033001,
+        Cursor = 0x00033001
     }
 }

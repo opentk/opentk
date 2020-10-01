@@ -18,8 +18,8 @@
     <Rule Id="SA1009" Action="None" Intentional="true" Reason="Used for alignment"/> <!-- Closing parenthesis must be spaced correctly -->
     <Rule Id="SA1010" Action="Error" /> <!-- Opening square brackets must be spaced correctly -->
     <Rule Id="SA1011" Action="Error" /> <!-- Closing square brackets must be spaced correctly -->
-    <Rule Id="SA1012" Action="Error" /> <!-- Opening braces must be spaced correctly -->
-    <Rule Id="SA1013" Action="Error" /> <!-- Closing braces must be spaced correctly -->
+    <Rule Id="SA1012" Action="Info" /> <!-- Opening braces must be spaced correctly -->
+    <Rule Id="SA1013" Action="Info" /> <!-- Closing braces must be spaced correctly -->
     <Rule Id="SA1014" Action="Error" /> <!-- Opening generic brackets must be spaced correctly -->
     <Rule Id="SA1015" Action="Error" /> <!-- Closing generic brackets must be spaced correctly -->
     <Rule Id="SA1016" Action="Error" /> <!-- Opening attribute brackets must be spaced correctly -->

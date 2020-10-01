@@ -12,38 +12,38 @@ using System.Runtime.InteropServices;
 namespace OpenTK.Windowing.GraphicsLibraryFramework
 {
     /// <summary>
-    /// Replicated handle to a GLFW VideoMode.
+    ///     Replicated handle to a GLFW VideoMode.
     /// </summary>
     [StructLayout(LayoutKind.Sequential, Pack = 1)]
     public struct VideoMode
     {
         /// <summary>
-        /// The width, in screen coordinates, of the <see cref="VideoMode"/>.
+        ///     The width, in screen coordinates, of the <see cref="VideoMode" />.
         /// </summary>
         public int Width;
 
         /// <summary>
-        /// The height, in screen coordinates, of the <see cref="VideoMode"/>.
+        ///     The height, in screen coordinates, of the <see cref="VideoMode" />.
         /// </summary>
         public int Height;
 
         /// <summary>
-        /// The bit depth of the red channel of the <see cref="VideoMode"/>.
+        ///     The bit depth of the red channel of the <see cref="VideoMode" />.
         /// </summary>
         public int RedBits;
 
         /// <summary>
-        /// The bit depth of the green channel of the <see cref="VideoMode"/>.
+        ///     The bit depth of the green channel of the <see cref="VideoMode" />.
         /// </summary>
         public int GreenBits;
 
         /// <summary>
-        /// The bit depth of the blue channel of the <see cref="VideoMode"/>.
+        ///     The bit depth of the blue channel of the <see cref="VideoMode" />.
         /// </summary>
         public int BlueBits;
 
         /// <summary>
-        /// The refresh rate, in Hz, of the <see cref="VideoMode"/>.
+        ///     The refresh rate, in Hz, of the <see cref="VideoMode" />.
         /// </summary>
         public int RefreshRate;
     }
