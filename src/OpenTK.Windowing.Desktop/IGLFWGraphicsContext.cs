@@ -14,6 +14,6 @@ namespace OpenTK.Windowing.Desktop
         /// <summary>
         /// The GLFW Window that represents the context.
         /// </summary>
-        unsafe Window* WindowPtr { get; }
+        unsafe IntPtr WindowPtr { get; }
     }
 }
