@@ -445,13 +445,13 @@ namespace OpenTK.Windowing.Desktop
                 var monitor = value.ToUnsafePtr<GraphicsLibraryFramework.Monitor>();
                 var mode = GLFW.GetVideoMode(monitor);
                 GLFW.SetWindowMonitor(
-                WindowPtr,
-                monitor,
-                _location.X,
-                _location.Y,
-                _size.X,
-                _size.Y,
-                mode->RefreshRate);
+                    WindowPtr,
+                    monitor,
+                    _location.X,
+                    _location.Y,
+                    _size.X,
+                    _size.Y,
+                    mode->RefreshRate);
 
                 _currentMonitor = value;
             }
