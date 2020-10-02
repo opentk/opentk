@@ -30,8 +30,8 @@ namespace OpenToolkit.OpenCL.Tests
 				CL.GetDeviceIds(new CLPlatform(platformId), DeviceType.All, out CLDevice[] deviceIds);
 
 				CLContext context = CL.CreateContext(IntPtr.Zero, (uint)deviceIds.Length, deviceIds, IntPtr.Zero,
-					IntPtr.Zero, out CLError result);
-				if (result != CLError.Success)
+					IntPtr.Zero, out CLResultCode result);
+				if (result != CLResultCode.Success)
 				{
 					throw new Exception("The context couldn't be created.");
 				}
