@@ -245,7 +245,8 @@ namespace OpenTK.Windowing.Desktop
             _location = new Vector2i(x, y);
 
             GLFW.GetCursorPos(WindowPtr, out var mousex, out var mousey);
-            MouseState.Position = _lastReportedMousePos = new Vector2((float)mousex, (float)mousey);
+            _lastReportedMousePos = new Vector2((float)mousex, (float)mousey);
+            MouseState.Position = _lastReportedMousePos;
 
             IsFocused = GLFW.GetWindowAttrib(WindowPtr, WindowAttributeGetBool.Focused);
         }
@@ -277,18 +278,18 @@ namespace OpenTK.Windowing.Desktop
 
         /// <summary>
         ///     Gets or sets the position of the mouse relative to the content area of this window.
-        ///     NOTE: It is not necessary to centre the mouse on each frame. Use CursorGrabbed = true;
-        ///     to enable this behaviour.
         /// </summary>
         public Vector2 MousePosition
         {
-            get => _lastReportedMousePos;
+            get => MouseState.Position;
             set
             {
                 unsafe
                 {
                     GLFW.SetCursorPos(WindowPtr, value.X, value.Y);
                 }
+
+                MouseState.Position = value;
             }
         }
 
@@ -712,14 +713,14 @@ namespace OpenTK.Windowing.Desktop
             {
                 var inputMode = GLFW.GetInputMode(WindowPtr, CursorStateAttribute.Cursor);
                 return inputMode != CursorModeValue.CursorHidden
-                    && inputMode != CursorModeValue.CursorDisabled;
+                       && inputMode != CursorModeValue.CursorDisabled;
             }
 
             set =>
                 GLFW.SetInputMode(
-                    WindowPtr,
-                    CursorStateAttribute.Cursor,
-                    value ? CursorModeValue.CursorNormal : CursorModeValue.CursorHidden);
+                WindowPtr,
+                CursorStateAttribute.Cursor,
+                value ? CursorModeValue.CursorNormal : CursorModeValue.CursorHidden);
         }
 
         /// <summary>

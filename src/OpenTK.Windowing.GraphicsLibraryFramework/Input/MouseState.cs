@@ -24,7 +24,7 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         internal const int MaxButtons = 16; // we are storing in an ushort
 
         private readonly BitArray _buttons = new BitArray(MaxButtons);
-        private readonly BitArray _buttonsPrevious = new BitArray(MaxButtons);
+        private BitArray _buttonsPrevious = new BitArray(MaxButtons);
 
         private readonly unsafe Window* _windowPtr;
 
@@ -50,7 +50,7 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         ///     Gets a <see cref="Vector2" /> representing the absolute position of the pointer
         ///     in the previous frame, relative to the top-left corner of the contents of the window.
         /// </summary>
-        public Vector2 PreviousPosition { get; private set; }
+        public Vector2 PreviousPosition { get; internal set; }
 
         /// <summary>
         ///     Gets a <see cref="Vector2" /> representing the amount that the mouse moved since the last frame.
