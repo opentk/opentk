@@ -9,7 +9,8 @@ namespace OpenTK.Windowing.Desktop
     /// </summary>
     public unsafe class GLFWGraphicsContext : IGLFWGraphicsContext
     {
-        private readonly Window* _windowPtr;
+        /// <inheritdoc />
+        public Window* WindowPtr { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="GLFWGraphicsContext"/> class, a GLFW managed opengl context.
@@ -17,25 +18,22 @@ namespace OpenTK.Windowing.Desktop
         /// <param name="windowPtr">The window pointer that is associated with the context.</param>
         public GLFWGraphicsContext(Window* windowPtr)
         {
-            _windowPtr = windowPtr;
+            WindowPtr = windowPtr;
         }
 
         /// <inheritdoc />
-        public bool IsCurrent => GLFW.GetCurrentContext() == _windowPtr;
-
-        /// <inheritdoc/>
-        public IntPtr NativeContex => (IntPtr)_windowPtr;
+        public bool IsCurrent => GLFW.GetCurrentContext() == WindowPtr;
 
         /// <inheritdoc />
         public void SwapBuffers()
         {
-            GLFW.SwapBuffers(_windowPtr);
+            GLFW.SwapBuffers(WindowPtr);
         }
 
         /// <inheritdoc />
         public void MakeCurrent()
         {
-            GLFW.MakeContextCurrent(_windowPtr);
+            GLFW.MakeContextCurrent(WindowPtr);
         }
 
         /// <inheritdoc />

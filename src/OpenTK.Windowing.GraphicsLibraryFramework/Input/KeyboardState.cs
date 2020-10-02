@@ -9,6 +9,7 @@
 
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
 using OpenTK.Core;
@@ -19,7 +20,7 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
     /// <summary>
     /// Encapsulates the state of a Keyboard device.
     /// </summary>
-    public sealed class KeyboardState
+    public class KeyboardState
     {
         // These arrays will mostly be empty since the last integer used is 384. That's only 48 bytes though.
         private BitArray _keys = new BitArray((int)Keys.LastKey + 1);
@@ -85,83 +86,6 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         internal void SetKeyState(Keys key, bool down)
         {
             _keys[(int)key] = down;
-        }
-
-        /// <summary>
-        /// Checks whether two <see cref="KeyboardState" /> instances are equal.
-        /// </summary>
-        /// <param name="left">
-        /// The first <see cref="KeyboardState" /> instance to compare.
-        /// </param>
-        /// <param name="right">
-        /// The second <see cref="KeyboardState" /> instance to compare.
-        /// </param>
-        /// <returns>
-        /// <c>true</c> if both left is equal to right; <c>false</c> otherwise.
-        /// </returns>
-        public static bool operator ==(KeyboardState left, KeyboardState right)
-        {
-            return left.Equals(right);
-        }
-
-        /// <summary>
-        /// Checks whether two <see cref="KeyboardState" /> instances are not equal.
-        /// </summary>
-        /// <param name="left">
-        /// The first <see cref="KeyboardState" /> instance to compare.
-        /// </param>
-        /// <param name="right">
-        /// The second <see cref="KeyboardState" /> instance to compare.
-        /// </param>
-        /// <returns>
-        /// <c>true</c> if both left is not equal to right; <c>false</c> otherwise.
-        /// </returns>
-        public static bool operator !=(KeyboardState left, KeyboardState right)
-        {
-            return !left.Equals(right);
-        }
-
-        /// <summary>
-        /// Compares to an object instance for equality.
-        /// </summary>
-        /// <param name="obj">
-        /// The <see cref="object" /> to compare to.
-        /// </param>
-        /// <returns>
-        /// <c>true</c> if this instance is equal to obj; <c>false</c> otherwise.
-        /// </returns>
-        public override bool Equals(object obj)
-        {
-            if (obj == null)
-            {
-                return false;
-            }
-
-            if (obj is KeyboardState state)
-            {
-                return Equals(state);
-            }
-
-            return false;
-        }
-
-        private bool Equals(KeyboardState other)
-        {
-            var keyValues = (Keys[])Enum.GetValues(typeof(Keys));
-            for (int i = 0; i < keyValues.Length; i++)
-            {
-                if (_keys[i] != other._keys[i])
-                {
-                    return false;
-                }
-
-                if (_keysPrevious[i] != other._keysPrevious[i])
-                {
-                    return false;
-                }
-            }
-
-            return true;
         }
 
         /// <inheritdoc />

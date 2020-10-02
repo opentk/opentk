@@ -19,7 +19,7 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
     /// <summary>
     /// Encapsulates the state of a mouse device.
     /// </summary>
-    public sealed class MouseState
+    public class MouseState
     {
         /// <summary>
         /// The maximum number of buttons a <see cref="MouseState"/> can represent.

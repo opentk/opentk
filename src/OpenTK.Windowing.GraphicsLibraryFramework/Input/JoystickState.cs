@@ -22,7 +22,7 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
     /// <summary>
     /// Encapsulates the state of a joystick device.
     /// </summary>
-    public sealed class JoystickState
+    public class JoystickState
     {
         private Hat[] _hats;
         private float[] _axes;

@@ -28,8 +28,6 @@ namespace OpenTK.Windowing.Desktop
         // Used for delta calculation in the mouse pos changed event.
         private Vector2 _lastReportedMousePos;
 
-        private KeyboardState _keyboardState = new KeyboardState();
-
         // GLFW cursor we assigned to the window.
         // Null if the cursor is default.
         private unsafe Cursor* _glfwCursor;
@@ -41,7 +39,7 @@ namespace OpenTK.Windowing.Desktop
         /// <summary>
         ///     Gets the current state of the keyboard as of the last time the window processed events.
         /// </summary>
-        public KeyboardState KeyboardState => _keyboardState;
+        public KeyboardState KeyboardState { get; } = new KeyboardState();
 
         /// <summary>
         ///     Gets the previous keyboard state.
@@ -106,7 +104,7 @@ namespace OpenTK.Windowing.Desktop
         /// Gets a value indicating whether any key is down.
         /// </summary>
         /// <value><c>true</c> if any key is down; otherwise, <c>false</c>.</value>
-        public bool IsAnyKeyDown => _keyboardState.IsAnyKeyDown;
+        public bool IsAnyKeyDown => KeyboardState.IsAnyKeyDown;
 
         /// <summary>
         /// Gets a value indicating whether any mouse button is pressed.
@@ -225,7 +223,9 @@ namespace OpenTK.Windowing.Desktop
         /// </summary>
         public Version APIVersion { get; }
 
-        /// <inheritdoc cref="INativeWindow.Context" />
+        /// <summary>
+        /// Gets the graphics context associated with this NativeWindow.
+        /// </summary>
         public IGLFWGraphicsContext Context { get; }
 
         private Monitor _currentMonitor;
@@ -598,6 +598,7 @@ namespace OpenTK.Windowing.Desktop
             }
 
             var isOpenGl = false;
+            API = settings.API;
             switch (settings.API)
             {
                 case ContextAPI.NoAPI:
@@ -621,6 +622,7 @@ namespace OpenTK.Windowing.Desktop
             GLFW.WindowHint(WindowHintInt.ContextVersionMajor, settings.APIVersion.Major);
             GLFW.WindowHint(WindowHintInt.ContextVersionMinor, settings.APIVersion.Minor);
 
+            Flags = settings.Flags;
             if (settings.Flags.HasFlag(ContextFlags.ForwardCompatible))
             {
                 GLFW.WindowHint(WindowHintBool.OpenGLForwardCompat, true);
@@ -631,6 +633,7 @@ namespace OpenTK.Windowing.Desktop
                 GLFW.WindowHint(WindowHintBool.OpenGLDebugContext, true);
             }
 
+            Profile = settings.Profile;
             switch (settings.Profile)
             {
                 case ContextProfile.Any:
@@ -856,7 +859,7 @@ namespace OpenTK.Windowing.Desktop
             {
                 if (key != Keys.Unknown)
                 {
-                    _keyboardState.SetKeyState(key, false);
+                    KeyboardState.SetKeyState(key, false);
                 }
 
                 OnKeyUp(args);
@@ -865,7 +868,7 @@ namespace OpenTK.Windowing.Desktop
             {
                 if (key != Keys.Unknown)
                 {
-                    _keyboardState.SetKeyState(key, true);
+                    KeyboardState.SetKeyState(key, true);
                 }
 
                 OnKeyDown(args);
@@ -1187,7 +1190,7 @@ namespace OpenTK.Windowing.Desktop
         /// <returns><c>true</c> if <paramref name="key"/> is in the down state; otherwise, <c>false</c>.</returns>
         public bool IsKeyDown(Keys key)
         {
-            return _keyboardState.IsKeyDown(key);
+            return KeyboardState.IsKeyDown(key);
         }
 
         /// <summary>
@@ -1200,7 +1203,7 @@ namespace OpenTK.Windowing.Desktop
         /// <returns>True if the key is pressed in this frame, but not the last frame.</returns>
         public bool IsKeyPressed(Keys key)
         {
-            return _keyboardState.IsKeyDown(key) && !_keyboardState.WasKeyDown(key);
+            return KeyboardState.IsKeyDown(key) && !KeyboardState.WasKeyDown(key);
         }
 
         /// <summary>
@@ -1213,7 +1216,7 @@ namespace OpenTK.Windowing.Desktop
         /// <returns>True if the key is released in this frame, but pressed the last frame.</returns>
         public bool IsKeyReleased(Keys key)
         {
-            return !_keyboardState.IsKeyDown(key) && _keyboardState.WasKeyDown(key);
+            return !KeyboardState.IsKeyDown(key) && KeyboardState.WasKeyDown(key);
         }
 
         /// <summary>
