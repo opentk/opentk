@@ -1,6 +1,6 @@
 namespace OpenTK.Compute.OpenCL
 {
-	public enum CLError : int
+	public enum CLResultCode : int
 	{
 		Success = 0,
 
