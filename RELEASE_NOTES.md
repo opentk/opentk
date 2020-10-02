@@ -9,7 +9,7 @@ Key changes:
  * Math library performance improvements and fixes
  * All new OpenAL bindings
  * All new OpenCL Bindings
- * Total restructure of all packages. the OpenTK package is now a metapackage.
+ * Total restructure of all packages into a modular system with a number of packages. The OpenTK package is now a metapackage that will automatically download all of these for you.
 
 OpenTK 4.0.0 is entirely MIT licensed.
 
