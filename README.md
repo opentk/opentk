@@ -59,6 +59,15 @@ and then enable the "Copy to Output Directory" option (as in step 3 below).
 News
 ===
 
+### 2020-10-02
+
+OpenTK 4.0.0 is available with full support for .net core 3.1!
+
+We're excited to see what you can build with this!
+
+https://www.nuget.org/packages/OpenTK
+
+
 ### 2020-04-06
 
 Oops! Forgot to update the news! OpenTK 4.0.0 PREVIEW is now available on Nuget.
