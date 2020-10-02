@@ -75,6 +75,7 @@ namespace OpenTK.Windowing.Desktop
             {
                 unsafe
                 {
+                    // This call invokes the OnMouseMove event, which in turn updates _lastReportedMousePos.
                     GLFW.SetCursorPos(WindowPtr, value.X, value.Y);
                 }
             }
