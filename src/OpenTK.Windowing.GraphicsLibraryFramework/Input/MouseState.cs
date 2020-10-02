@@ -23,10 +23,10 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         /// </summary>
         internal const int MaxButtons = 16; // we are storing in an ushort
 
+        private readonly unsafe Window* _windowPtr;
+
         private readonly BitArray _buttons = new BitArray(MaxButtons);
         private BitArray _buttonsPrevious = new BitArray(MaxButtons);
-
-        private readonly unsafe Window* _windowPtr;
 
         internal unsafe MouseState(Window* windowPtr) => _windowPtr = windowPtr;
 
