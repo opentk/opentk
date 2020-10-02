@@ -65,18 +65,19 @@ namespace OpenTK.Windowing.Desktop
 
         /// <summary>
         ///     Gets or sets the position of the mouse relative to the content area of this window.
+        ///     NOTE: It is not necessary to centre the mouse on each frame. Use CursorGrabbed = true;
+        ///     to enable this behaviour.
         /// </summary>
         public Vector2 MousePosition
         {
-            get => _mouseState.Position;
+            get => _lastReportedMousePos;
             set
             {
                 unsafe
                 {
+                    // This call invokes the OnMouseMove event, which in turn updates _lastReportedMousePos.
                     GLFW.SetCursorPos(WindowPtr, value.X, value.Y);
                 }
-
-                _mouseState.Position = value;
             }
         }
 
