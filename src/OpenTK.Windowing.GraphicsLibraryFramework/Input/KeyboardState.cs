@@ -20,7 +20,7 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
     {
         // These arrays will mostly be empty since the last integer used is 384. That's only 48 bytes though.
         private readonly BitArray _keys = new BitArray((int)Keys.LastKey + 1);
-        private readonly BitArray _keysPrevious = new BitArray((int)Keys.LastKey + 1);
+        private BitArray _keysPrevious = new BitArray((int)Keys.LastKey + 1);
 
         private KeyboardState(KeyboardState source)
         {
