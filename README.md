@@ -59,6 +59,28 @@ and then enable the "Copy to Output Directory" option (as in step 3 below).
 News
 ===
 
+### 2020-10-02
+
+OpenTK 4.0.0 is released with full availability.
+
+Key changes:
+ * Full support for .Net Core 3.1
+ * Brand new GLFW-based windowing system
+ * Brand new GLFW-based input system
+ * Removed all platform-specific backends (and fixed every xplat bug!)
+ * Math library performance improvements and fixes
+ * All new OpenAL bindings
+ * All new OpenCL Bindings
+ * Total restructure of all packages into a modular system with a number of packages. The OpenTK Nuget package is now a metapackage that will automatically download all of these for you.
+
+OpenTK 4.0.0 is entirely MIT licensed.
+
+
+We're excited to see what you can build with this!
+
+https://www.nuget.org/packages/OpenTK
+
+
 ### 2020-04-06
 
 Oops! Forgot to update the news! OpenTK 4.0.0 PREVIEW is now available on Nuget.
