@@ -20,7 +20,14 @@ namespace OpenTK.Compute.OpenCL
 
 		/// <summary>
 		/// Introduced in OpenCL 1.0
+		/// See more: https://www.khronos.org/registry/OpenCL/sdk/2.2/docs/man/html/clGetPlatformIDs.html
 		/// </summary>
+		/// <param name="numberOfEntries">number of <see cref="CLPlatform"/> entries that can be added to platforms. If platforms is not NULL, numberOfEntries must be greater than zero.</param>
+		/// <param name="platforms">returns a list of OpenCL platforms found. The CLPlatform values returned in platforms can be used to identify a specific OpenCL platform. If platforms is NULL, this argument is ignored. The number of OpenCL platforms returned is the minimum of the value specified by numberOfEntries or the number of OpenCL platforms available.</param>
+		/// <param name="numberOfPlatforms">returns the number of OpenCL platforms available. If numberOfPlatforms is NULL, this argument is ignored.</param>
+		/// <returns>returns <see cref="CLResultCode.Success"/> if the function is executed successfully. Otherwise, it returns one of the following errors:
+		/// -InvalidValue if numberOfEntries is equal to zero and platforms is not NULL or if both numberOfPlatforms and platforms are NULL.
+		/// -OutOfHostMemory if there is a failure to allocate resources required by the OpenCL implementation on the host.</returns>
 		[DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clGetPlatformIDs")]
 		public static extern CLResultCode GetPlatformIds([In] uint numberOfEntries, [Out] CLPlatform[] platforms,
 			[Out] out uint numberOfPlatforms);
@@ -28,6 +35,10 @@ namespace OpenTK.Compute.OpenCL
 		/// <summary>
 		/// Introduced in OpenCL 1.0
 		/// </summary>
+		/// <param name="platformIds">returns a list of OpenCL platforms found. The CLPlatform values returned in platforms can be used to identify a specific OpenCL platform.</param>
+		/// <returns>returns Success if the function is executed successfully. Otherwise, it returns one of the following errors:
+		/// -InvalidValue if numberOfEntries is equal to zero and platforms is not NULL or if both numberOfPlatforms and platforms are NULL.
+		/// -OutOfHostMemory if there is a failure to allocate resources required by the OpenCL implementation on the host.</returns>
 		public static CLResultCode GetPlatformIds(out CLPlatform[] platformIds)
 		{
 			GetPlatformIds(0, null, out uint platformCount);
