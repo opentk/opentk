@@ -2,7 +2,7 @@
 Huge thanks and congratulations to the entire OpenTK Community for getting this release together.
 
 Key changes:
- * Full Support for .Net Core 3.1
+ * Full support for .Net Core 3.1
  * Brand new GLFW-based windowing system
  * Brand new GLFW-based input system
  * Removed all platform-specific backends (and fixed every xplat bug!)
