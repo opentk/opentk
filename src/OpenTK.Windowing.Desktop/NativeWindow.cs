@@ -469,9 +469,10 @@ namespace OpenTK.Windowing.Desktop
         public Vector2i ClientSize { get; private set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether the window is fullscreen or not.
+        /// Gets a value indicating whether the window is fullscreen or not.
+        /// Use <see cref="WindowState"/> to set the window to fullscreen.
         /// </summary>
-        public bool IsFullscreen { get; set; }
+        public bool IsFullscreen => WindowState == WindowState.Fullscreen;
 
         /// <summary>
         /// Gets or sets the <see cref="OpenTK.Windowing.Common.Input.MouseCursor" /> for this window.
@@ -686,8 +687,6 @@ namespace OpenTK.Windowing.Desktop
                 {
                     InitializeGlBindings();
                 }
-
-                Context.MakeNoneCurrent();
             }
 
             // Enables the caps lock modifier to be detected and updated
