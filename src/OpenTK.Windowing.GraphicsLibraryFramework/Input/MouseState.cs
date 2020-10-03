@@ -143,10 +143,8 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
 
         internal void Update()
         {
-            for (var i = 0; i < MaxButtons; i++)
-            {
-                _buttonsPrevious[i] = _buttons[i];
-            }
+            _buttonsPrevious.SetAll(false);
+            _buttonsPrevious.Or(_buttons);
             PreviousPosition = Position;
 
             unsafe
