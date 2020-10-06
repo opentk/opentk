@@ -11,6 +11,9 @@ namespace OpenTK.Windowing.Desktop
     {
         private readonly Window* _windowPtr;
 
+        /// <inheritdoc />
+        public IntPtr WindowPtr => (IntPtr)_windowPtr;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="GLFWGraphicsContext"/> class, a GLFW managed opengl context.
         /// </summary>
@@ -22,9 +25,6 @@ namespace OpenTK.Windowing.Desktop
 
         /// <inheritdoc />
         public bool IsCurrent => GLFW.GetCurrentContext() == _windowPtr;
-
-        /// <inheritdoc/>
-        public IntPtr NativeContex => (IntPtr)_windowPtr;
 
         /// <inheritdoc />
         public void SwapBuffers()
