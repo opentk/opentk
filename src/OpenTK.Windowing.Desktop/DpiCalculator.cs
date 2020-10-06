@@ -27,7 +27,7 @@ namespace OpenTK.Windowing.Desktop
         private static Dictionary<IntPtr, int> _dpiIndexLookup = new Dictionary<IntPtr, int>();
 
         private static bool _isCacheBuilt;
-        private static bool _isHookSet = false;
+        private static bool _isHookSet;
 
         /// <summary>
         ///     Gets the current monitor scale.
