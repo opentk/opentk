@@ -1,3 +1,9 @@
+### 4.0.1
+
+* Internal code improvements & fixes (@NogginBops)
+* Remove memory allocations from joystick axes every frame (@K0bin)
+* Remove memory allocations from KeyboardState + MouseState Updates (@HughPH)
+
 ### 4.0.0
 Huge thanks and congratulations to the entire OpenTK Community for getting this release together.
 
