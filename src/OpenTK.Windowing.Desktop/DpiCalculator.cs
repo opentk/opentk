@@ -21,14 +21,13 @@ namespace OpenTK.Windowing.Desktop
     /// </summary>
     internal static class DpiCalculator
     {
-        private static readonly bool _isHookSet = false;
-
         private static List<DpiInfo> _dpiInfos = new List<DpiInfo>();
 
         // I am not sure how well of an idea this is.
         private static Dictionary<IntPtr, int> _dpiIndexLookup = new Dictionary<IntPtr, int>();
 
         private static bool _isCacheBuilt;
+        private static bool _isHookSet = false;
 
         /// <summary>
         ///     Gets the current monitor scale.
@@ -178,6 +177,7 @@ namespace OpenTK.Windowing.Desktop
             if (!_isHookSet && GLFWProvider.IsOnMainThread)
             {
                 GLFW.SetMonitorCallback(DpiMonitorCallback);
+                _isHookSet = true;
             }
 
             return _isCacheBuilt;
