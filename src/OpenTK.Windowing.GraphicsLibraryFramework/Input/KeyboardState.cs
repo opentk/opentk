@@ -171,11 +171,12 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
             builder.Append('{');
             var first = true;
 
-            foreach (Keys key in (Keys[])Enum.GetValues(typeof(Keys)))
+            for (Keys key = 0; key <= Keys.LastKey; key++)
             {
                 if (IsKeyDown(key))
                 {
                     builder.AppendFormat("{0}{1}", key, !first ? ", " : string.Empty);
+                    first = false;
                 }
             }
 
@@ -186,7 +187,8 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
 
         internal void Update()
         {
-            _keysPrevious = (BitArray)_keys.Clone();
+            _keysPrevious.SetAll(false);
+            _keysPrevious.Or(_keys);
         }
 
         /// <summary>
