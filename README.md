@@ -7,7 +7,7 @@ We have a very active discord server, if you need help, want to help, or are jus
 
 [![Discord](https://discordapp.com/api/guilds/337627185248468993/widget.png)](https://discord.gg/6HqD48s)
 
-The Open Toolkit library is a fast, low-level C# binding for OpenGL, OpenGL ES and OpenAL. It runs on all major platforms and powers hundreds of apps, games and scientific research.
+The Open Toolkit library is a fast, low-level C# binding for OpenGL, OpenGL ES, OpenAL, and OpenCL. It runs on all major platforms and powers hundreds of apps, games and scientific research.
 
 Use OpenTK to add cross-platform 3d graphics, audio, compute and haptics to your C# application. Integrate it into your existing user interface or use it standalone without any external dependencies.
 
