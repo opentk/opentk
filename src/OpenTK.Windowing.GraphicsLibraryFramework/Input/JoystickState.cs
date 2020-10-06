@@ -153,9 +153,13 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private void SetAxes(float[] axes)
+        private void SetAxes(Span<float> axes)
         {
-            _axes = axes;
+            if (axes.Length > _axes.Length)
+            {
+                _axes = new float[axes.Length];
+            }
+            axes.CopyTo(_axes);
         }
 
         /// <inheritdoc/>
