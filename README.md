@@ -52,10 +52,6 @@ Instructions
 
 OpenTK is available as a [NuGet Package](http://www.nuget.org/packages/OpenTK/).
 
-Note what installing NuGet package will add reference to OpenTK.dll, but OpenTK.dll.config
-will not be copied to the project output directory automatically, so you need to add it to your project
-and then enable the "Copy to Output Directory" option (as in step 3 below).
-
 News
 ===
 
