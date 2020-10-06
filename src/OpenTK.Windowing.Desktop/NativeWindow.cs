@@ -297,7 +297,6 @@ namespace OpenTK.Windowing.Desktop
             }
         }
 
-
         /// <summary>
         ///     Gets the amount that the mouse moved since the last frame.
         ///     This does not necessarily correspond to pixels, for example in the case of raw input.
