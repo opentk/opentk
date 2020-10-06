@@ -108,7 +108,7 @@ namespace OpenTK.Windowing.Desktop
         ///         A value of 0.0 indicates that RenderFrame events are generated at the maximum possible frequency (i.e. only
         ///         limited by the hardware's capabilities).
         ///     </para>
-        ///     <para>Values lower than 1.0Hz are clamped to 0.0. Values higher than 500.0Hz are clamped to 200.0Hz.</para>
+        ///     <para>Values lower than 1.0Hz are clamped to 0.0. Values higher than 500.0Hz are clamped to 500.0Hz.</para>
         /// </remarks>
         public double RenderFrequency
         {

@@ -16,11 +16,11 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
     /// <summary>
     ///     Encapsulates the state of a Keyboard device.
     /// </summary>
-    public sealed class KeyboardState
+    public class KeyboardState
     {
         // These arrays will mostly be empty since the last integer used is 384. That's only 48 bytes though.
         private readonly BitArray _keys = new BitArray((int)Keys.LastKey + 1);
-        private BitArray _keysPrevious = new BitArray((int)Keys.LastKey + 1);
+        private readonly BitArray _keysPrevious = new BitArray((int)Keys.LastKey + 1);
 
         private KeyboardState(KeyboardState source)
         {
@@ -81,77 +81,6 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
             _keys[(int)key] = down;
         }
 
-        /// <summary>
-        ///     Checks whether two <see cref="KeyboardState" /> instances are equal.
-        /// </summary>
-        /// <param name="left">
-        ///     The first <see cref="KeyboardState" /> instance to compare.
-        /// </param>
-        /// <param name="right">
-        ///     The second <see cref="KeyboardState" /> instance to compare.
-        /// </param>
-        /// <returns>
-        ///     <c>true</c> if both left is equal to right; <c>false</c> otherwise.
-        /// </returns>
-        public static bool operator ==(KeyboardState left, KeyboardState right) => left.Equals(right);
-
-        /// <summary>
-        ///     Checks whether two <see cref="KeyboardState" /> instances are not equal.
-        /// </summary>
-        /// <param name="left">
-        ///     The first <see cref="KeyboardState" /> instance to compare.
-        /// </param>
-        /// <param name="right">
-        ///     The second <see cref="KeyboardState" /> instance to compare.
-        /// </param>
-        /// <returns>
-        ///     <c>true</c> if both left is not equal to right; <c>false</c> otherwise.
-        /// </returns>
-        public static bool operator !=(KeyboardState left, KeyboardState right) => !left.Equals(right);
-
-        /// <summary>
-        ///     Compares to an object instance for equality.
-        /// </summary>
-        /// <param name="obj">
-        ///     The <see cref="object" /> to compare to.
-        /// </param>
-        /// <returns>
-        ///     <c>true</c> if this instance is equal to obj; <c>false</c> otherwise.
-        /// </returns>
-        public override bool Equals(object obj)
-        {
-            if (obj == null)
-            {
-                return false;
-            }
-
-            if (obj is KeyboardState state)
-            {
-                return Equals(state);
-            }
-
-            return false;
-        }
-
-        private bool Equals(KeyboardState other)
-        {
-            var keyValues = (Keys[])Enum.GetValues(typeof(Keys));
-            for (var i = 0; i < keyValues.Length; i++)
-            {
-                if (_keys[i] != other._keys[i])
-                {
-                    return false;
-                }
-
-                if (_keysPrevious[i] != other._keysPrevious[i])
-                {
-                    return false;
-                }
-            }
-
-            return true;
-        }
-
         /// <inheritdoc />
         public override string ToString()
         {
@@ -159,11 +88,12 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
             builder.Append('{');
             var first = true;
 
-            foreach (var key in (Keys[])Enum.GetValues(typeof(Keys)))
+            for (Keys key = 0; key <= Keys.LastKey; key++)
             {
                 if (IsKeyDown(key))
                 {
                     builder.AppendFormat("{0}{1}", key, !first ? ", " : string.Empty);
+                    first = false;
                 }
             }
 
@@ -174,7 +104,8 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
 
         internal void Update()
         {
-            _keysPrevious = (BitArray)_keys.Clone();
+            _keysPrevious.SetAll(false);
+            _keysPrevious.Or(_keys);
         }
 
         /// <summary>

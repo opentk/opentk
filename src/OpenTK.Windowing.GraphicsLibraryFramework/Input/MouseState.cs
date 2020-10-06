@@ -16,12 +16,12 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
     /// <summary>
     ///     Encapsulates the state of a mouse device.
     /// </summary>
-    public sealed class MouseState
+    public class MouseState
     {
         /// <summary>
         ///     The maximum number of buttons a <see cref="MouseState" /> can represent.
         /// </summary>
-        internal const int MaxButtons = 16; // we are storing in an ushort
+        internal const int MaxButtons = 16;
 
         private readonly unsafe Window* _windowPtr;
 
@@ -134,7 +134,8 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
 
         internal void Update()
         {
-            _buttonsPrevious = (BitArray)_buttons.Clone();
+            _buttonsPrevious.SetAll(false);
+            _buttonsPrevious.Or(_buttons);
             PreviousPosition = Position;
 
             unsafe

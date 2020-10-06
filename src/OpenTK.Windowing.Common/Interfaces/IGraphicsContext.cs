@@ -13,11 +13,6 @@ namespace OpenTK.Windowing.Common
         bool IsCurrent { get; }
 
         /// <summary>
-        ///     Gets a handle or pointer that represents the opengl context in the API used to create it.
-        /// </summary>
-        IntPtr NativeContex { get; }
-
-        /// <summary>
         ///     Swaps the front and back buffers of the current GraphicsContext, presenting the rendered scene to the user.
         /// </summary>
         void SwapBuffers();

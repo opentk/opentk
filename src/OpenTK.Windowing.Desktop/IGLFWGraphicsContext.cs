@@ -1,4 +1,5 @@
-﻿using OpenTK.Windowing.Common;
+using System;
+using OpenTK.Windowing.Common;
 
 namespace OpenTK.Windowing.Desktop
 {
@@ -7,5 +8,9 @@ namespace OpenTK.Windowing.Desktop
     /// </summary>
     public interface IGLFWGraphicsContext : IGraphicsContext
     {
+        /// <summary>
+        /// The GLFW Window that represents the context.
+        /// </summary>
+        unsafe IntPtr WindowPtr { get; }
     }
 }

@@ -103,6 +103,7 @@ namespace OpenTK.Windowing.Desktop
             }
 
             var isOpenGl = false;
+            API = settings.API;
             switch (settings.API)
             {
                 case ContextAPI.NoAPI:
@@ -126,6 +127,7 @@ namespace OpenTK.Windowing.Desktop
             GLFW.WindowHint(WindowHintInt.ContextVersionMajor, settings.APIVersion.Major);
             GLFW.WindowHint(WindowHintInt.ContextVersionMinor, settings.APIVersion.Minor);
 
+            Flags = settings.Flags;
             if (settings.Flags.HasFlag(ContextFlags.ForwardCompatible))
             {
                 GLFW.WindowHint(WindowHintBool.OpenGLForwardCompat, true);
@@ -136,6 +138,7 @@ namespace OpenTK.Windowing.Desktop
                 GLFW.WindowHint(WindowHintBool.OpenGLDebugContext, true);
             }
 
+            Profile = settings.Profile;
             switch (settings.Profile)
             {
                 case ContextProfile.Any:
@@ -167,11 +170,11 @@ namespace OpenTK.Windowing.Desktop
                 GLFW.WindowHint(WindowHintInt.GreenBits, modePtr->GreenBits);
                 GLFW.WindowHint(WindowHintInt.BlueBits, modePtr->BlueBits);
                 GLFW.WindowHint(WindowHintInt.RefreshRate, modePtr->RefreshRate);
-                WindowPtr = GLFW.CreateWindow(modePtr->Width, modePtr->Height, _title, monitor, (Window*)(settings.SharedContext?.NativeContex ?? IntPtr.Zero));
+                WindowPtr = GLFW.CreateWindow(modePtr->Width, modePtr->Height, _title, monitor, (Window*)(settings.SharedContext?.WindowPtr ?? IntPtr.Zero));
             }
             else
             {
-                WindowPtr = GLFW.CreateWindow(settings.Size.X, settings.Size.Y, _title, null, (Window*)(settings.SharedContext?.NativeContex ?? IntPtr.Zero));
+                WindowPtr = GLFW.CreateWindow(settings.Size.X, settings.Size.Y, _title, null, (Window*)(settings.SharedContext?.WindowPtr ?? IntPtr.Zero));
             }
 
             MouseState = new MouseState(WindowPtr);
@@ -278,20 +281,22 @@ namespace OpenTK.Windowing.Desktop
 
         /// <summary>
         ///     Gets or sets the position of the mouse relative to the content area of this window.
+        ///     NOTE: It is not necessary to centre the mouse on each frame. Use CursorGrabbed = true;
+        ///     to enable this behaviour.
         /// </summary>
         public Vector2 MousePosition
         {
-            get => MouseState.Position;
+            get => _lastReportedMousePos;
             set
             {
                 unsafe
                 {
+                    // This call invokes the OnMouseMove event, which in turn updates _lastReportedMousePos.
                     GLFW.SetCursorPos(WindowPtr, value.X, value.Y);
                 }
-
-                MouseState.Position = value;
             }
         }
+
 
         /// <summary>
         ///     Gets the amount that the mouse moved since the last frame.
@@ -431,7 +436,9 @@ namespace OpenTK.Windowing.Desktop
         /// </summary>
         public Version APIVersion { get; }
 
-        /// <inheritdoc cref="INativeWindow.Context" />
+        /// <summary>
+        /// Gets the graphics context associated with this NativeWindow.
+        /// </summary>
         public IGLFWGraphicsContext Context { get; }
 
         /// <summary>
@@ -650,9 +657,10 @@ namespace OpenTK.Windowing.Desktop
         public Vector2i ClientSize { get; private set; }
 
         /// <summary>
-        ///     Gets or sets a value indicating whether the window is fullscreen or not.
+        /// Gets a value indicating whether the window is fullscreen or not.
+        /// Use <see cref="WindowState"/> to set the window to fullscreen.
         /// </summary>
-        public bool IsFullscreen { get; set; }
+        public bool IsFullscreen => WindowState == WindowState.Fullscreen;
 
         /// <summary>
         ///     Gets or sets the <see cref="OpenTK.Windowing.Common.Input.MouseCursor" /> for this window.
@@ -1062,7 +1070,7 @@ namespace OpenTK.Windowing.Desktop
         ///     Transforms the specified point from screen to client coordinates.
         /// </summary>
         /// <param name="point">
-        ///     A <see cref="OpenTK.Mathematics.Vector2" /> to transform.
+        /// A <see cref="OpenTK.Mathematics.Vector2" /> to transform.
         /// </param>
         /// <returns>
         ///     The point transformed to client coordinates.

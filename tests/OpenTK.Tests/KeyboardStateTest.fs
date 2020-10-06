@@ -31,17 +31,6 @@ module KeyboardState =
             Assert.False(keyboardState.IsKeyDown value)
 
     [<Fact>]
-    let ``Equality`` () =
-        let mutable a = KeyboardState()
-        let mutable b = KeyboardState()
-
-        Assert.Equal(a, b);
-        a.SetKeyState(Keys.A, true);
-        Assert.NotEqual(a, b);
-        b.SetKeyState(Keys.A, true);
-        Assert.Equal(a, b);        
-
-    [<Fact>]
     let ``Any Key Down`` () =
         let mutable a = KeyboardState()
 

@@ -1931,22 +1931,9 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         ///         Possible errors include <see cref="ErrorCode.NotInitialized" />, <see cref="ErrorCode.InvalidEnum" /> and <see cref="ErrorCode.PlatformError" />.
         ///     </para>
         /// </remarks>
-        public static unsafe float[] GetJoystickAxes(int jid)
+        public static unsafe Span<float> GetJoystickAxes(int jid)
         {
-            var ptr = GetJoystickAxesRaw(jid, out var count);
-
-            if (ptr == null)
-            {
-                return null;
-            }
-
-            var array = new float[count];
-            for (var i = 0; i < count; i++)
-            {
-                array[i] = ptr[i];
-            }
-
-            return array;
+            return new Span<float>(GetJoystickAxesRaw(jid, out var count), count);
         }
 
         /// <summary>

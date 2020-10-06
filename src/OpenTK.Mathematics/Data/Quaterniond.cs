@@ -777,7 +777,6 @@ namespace OpenTK.Mathematics
         /// <param name="left">The first instance.</param>
         /// <param name="right">The second instance.</param>
         /// <returns>True, if left equals right; false otherwise.</returns>
-        [Pure]
         public static bool operator ==(Quaterniond left, Quaterniond right)
         {
             return left.Equals(right);
@@ -789,10 +788,28 @@ namespace OpenTK.Mathematics
         /// <param name="left">The first instance.</param>
         /// <param name="right">The second instance.</param>
         /// <returns>True, if left does not equal right; false otherwise.</returns>
-        [Pure]
         public static bool operator !=(Quaterniond left, Quaterniond right)
         {
-            return !left.Equals(right);
+            return !(left == right);
+        }
+
+        /// <inheritdoc />
+        public override bool Equals(object obj)
+        {
+            return obj is Quaterniond && Equals((Quaterniond)obj);
+        }
+
+        /// <inheritdoc />
+        public bool Equals(Quaterniond other)
+        {
+            return Xyz.Equals(other.Xyz) &&
+                   W == other.W;
+        }
+
+        /// <inheritdoc />
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Xyz, W);
         }
 
         /// <summary>
@@ -801,46 +818,7 @@ namespace OpenTK.Mathematics
         /// <returns>A human-readable representation of the quaternion.</returns>
         public override string ToString()
         {
-            return $"V: {Xyz}, W: {W}";
-        }
-
-        /// <summary>
-        /// Compares this object instance to another object for equality.
-        /// </summary>
-        /// <param name="other">The other object to be used in the comparison.</param>
-        /// <returns>True if both objects are Quaternions of equal value. Otherwise it returns false.</returns>
-        [Pure]
-        public override bool Equals(object other)
-        {
-            if (other is Quaterniond == false)
-            {
-                return false;
-            }
-
-            return this == (Quaterniond)other;
-        }
-
-        /// <summary>
-        /// Provides the hash code for this object.
-        /// </summary>
-        /// <returns>A hash code formed from the bitwise XOR of this objects members.</returns>
-        public override int GetHashCode()
-        {
-            unchecked
-            {
-                return (Xyz.GetHashCode() * 397) ^ W.GetHashCode();
-            }
-        }
-
-        /// <summary>
-        /// Compares this Quaterniond instance to another Quaterniond for equality.
-        /// </summary>
-        /// <param name="other">The other Quaterniond to be used in the comparison.</param>
-        /// <returns>True if both instances are equal; false otherwise.</returns>
-        [Pure]
-        public bool Equals(Quaterniond other)
-        {
-            return Xyz == other.Xyz && W == other.W;
+            return $"V: {Xyz}{MathHelper.ListSeparator} W: {W}";
         }
     }
 }
