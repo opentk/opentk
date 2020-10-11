@@ -1,3 +1,6 @@
+### 4.0.2
+* Fix for duplicate mouse state updates (Thanks @HughPH)
+
 ### 4.0.1
 
 * Internal code improvements & fixes (@NogginBops)
