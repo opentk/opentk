@@ -1029,6 +1029,8 @@ namespace OpenTK.Windowing.Desktop
                 return;
             }
 
+            ProcessInputEvents();
+
             if (IsEventDriven)
             {
                 GLFW.WaitEvents();
@@ -1037,8 +1039,6 @@ namespace OpenTK.Windowing.Desktop
             {
                 GLFW.PollEvents();
             }
-
-            ProcessInputEvents();
         }
 
         private unsafe void ProcessInputEvents()
