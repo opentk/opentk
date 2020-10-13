@@ -213,13 +213,13 @@ namespace OpenTK.Mathematics
             {
                 eulerAngles.Z = -Math.PI / 2; // -90 degrees
                 eulerAngles.Y = Math.Atan2(yawY, yawX);
-                eulerAngles.X = MathHelper.NormalizeRadians(-eulerAngles.Y - (2d * MathF.Atan2(q.Y, q.W)));
+                eulerAngles.X = MathHelper.NormalizeRadians(-eulerAngles.Y - (2d * Math.Atan2(q.Y, q.W)));
             }
             else if (singularityTest > SINGULARITY_THRESHOLD)
             {
                 eulerAngles.Z = Math.PI / 2; // 90 degrees
                 eulerAngles.Y = Math.Atan2(yawY, yawX);
-                eulerAngles.X = MathHelper.NormalizeRadians(eulerAngles.Y - (2d * MathF.Atan2(q.Y, q.W)));
+                eulerAngles.X = MathHelper.NormalizeRadians(eulerAngles.Y - (2d * Math.Atan2(q.Y, q.W)));
             }
             else
             {

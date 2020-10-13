@@ -733,7 +733,7 @@ namespace OpenTK.Mathematics
                 throw new ArgumentOutOfRangeException(nameof(n), "Must be positive.");
             }
 
-            return MathF.Pow(2, Math.Ceiling(Math.Log(n, 2)));
+            return MathF.Pow(2, MathF.Ceiling(MathF.Log(n, 2)));
         }
 
         /// <summary>

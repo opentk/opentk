@@ -163,7 +163,7 @@ namespace OpenTK.Mathematics
                 W = 2.0f * MathF.Acos(q.W) // angle
             };
 
-            var den = MathF.Sqrt(1.0 - (q.W * q.W));
+            var den = MathF.Sqrt(1.0f - (q.W * q.W));
             if (den > 0.0001f)
             {
                 result.Xyz = q.Xyz / den;

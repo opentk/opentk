@@ -1070,7 +1070,7 @@ namespace OpenTK.Mathematics
         public static void CalculateAngle(in Vector3 first, in Vector3 second, out float result)
         {
             Dot(in first, in second, out float temp);
-            result = MathF.Acos(MathHelper.Clamp(temp / (first.Length * second.Length), -1.0, 1.0));
+            result = MathF.Acos(MathHelper.Clamp(temp / (first.Length * second.Length), -1.0f, 1.0f));
         }
 
         /// <summary>
