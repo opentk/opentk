@@ -733,7 +733,7 @@ namespace OpenTK.Mathematics
                 throw new ArgumentOutOfRangeException(nameof(n), "Must be positive.");
             }
 
-            return (float)Math.Pow(2, Math.Ceiling(Math.Log(n, 2)));
+            return MathF.Pow(2, Math.Ceiling(Math.Log(n, 2)));
         }
 
         /// <summary>
@@ -842,7 +842,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static float DegreesToRadians(float degrees)
         {
-            const float degToRad = (float)Math.PI / 180.0f;
+            const float degToRad = MathF.PI / 180.0f;
             return degrees * degToRad;
         }
 
@@ -854,7 +854,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static float RadiansToDegrees(float radians)
         {
-            const float radToDeg = 180.0f / (float)Math.PI;
+            const float radToDeg = 180.0f / MathF.PI;
             return radians * radToDeg;
         }
 

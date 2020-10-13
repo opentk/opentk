@@ -245,7 +245,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         /// <see cref="LengthFast"/>
         /// <seealso cref="LengthSquared"/>
-        public float Length => (float)Math.Sqrt((X * X) + (Y * Y) + (Z * Z) + (W * W));
+        public float Length => MathF.Sqrt((X * X) + (Y * Y) + (Z * Z) + (W * W));
 
         /// <summary>
         /// Gets an approximation of the vector length (magnitude).

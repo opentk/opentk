@@ -114,7 +114,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         /// <see cref="LengthFast"/>
         /// <seealso cref="LengthSquared"/>
-        public float Length => (float)Math.Sqrt((X * X) + (Y * Y));
+        public float Length => MathF.Sqrt((X * X) + (Y * Y));
 
         /// <summary>
         /// Gets an approximation of the vector length (magnitude).
@@ -515,7 +515,7 @@ namespace OpenTK.Mathematics
         /// <param name="result">The distance.</param>
         public static void Distance(in Vector2 vec1, in Vector2 vec2, out float result)
         {
-            result = (float)Math.Sqrt(((vec2.X - vec1.X) * (vec2.X - vec1.X)) + ((vec2.Y - vec1.Y) * (vec2.Y - vec1.Y)));
+            result = MathF.Sqrt(((vec2.X - vec1.X) * (vec2.X - vec1.X)) + ((vec2.Y - vec1.Y) * (vec2.Y - vec1.Y)));
         }
 
         /// <summary>
