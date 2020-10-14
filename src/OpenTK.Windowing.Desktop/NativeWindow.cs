@@ -306,7 +306,7 @@ namespace OpenTK.Windowing.Desktop
 
         /// <summary>
         /// Gets a value indicating whether the shutdown sequence has been initiated
-        /// for this window, by calling GameWindow.Exit() or hitting the 'close' button.
+        /// for this window, by calling GameWindow.Close() or hitting the 'close' button.
         /// If this property is true, it is no longer safe to use any OpenTK.Input or
         /// OpenTK.Graphics.OpenGL functions or properties.
         /// </summary>
