@@ -229,9 +229,6 @@ namespace OpenTK.Windowing.Desktop
         /// </summary>
         public virtual void Run()
         {
-            // Make sure the GameWindow is visible when it first runs.
-            IsVisible = true;
-
             // Make sure that the gl contexts is current for OnLoad and the initial OnResize
             Context.MakeCurrent();
 
