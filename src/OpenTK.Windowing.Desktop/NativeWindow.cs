@@ -370,7 +370,7 @@ namespace OpenTK.Windowing.Desktop
 
             set
             {
-                if (!GLFW.GetWindowAttrib(WindowPtr, WindowAttributeGetBool.Decorated))
+                if (GLFW.GetWindowAttrib(WindowPtr, WindowAttributeGetBool.Decorated))
                 {
                     GLFW.GetVersion(out var major, out var minor, out _);
 
