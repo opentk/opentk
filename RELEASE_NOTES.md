@@ -1,5 +1,12 @@
+### 4.0.3
+* Fix input regression for IsKeyReleased and IsKeyPressed (@FriendlyChicken)
+* Invert GetWindowAttrib Decorated check for window border (@FriendlyChicken)
+* Internal math improvements (@NogginBops)
+
+
 ### 4.0.2
 * Fix for duplicate mouse state updates (Thanks @HughPH)
+
 
 ### 4.0.1
 
