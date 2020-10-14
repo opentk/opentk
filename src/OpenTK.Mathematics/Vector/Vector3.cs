@@ -164,7 +164,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         /// <see cref="LengthFast"/>
         /// <seealso cref="LengthSquared"/>
-        public float Length => (float)Math.Sqrt((X * X) + (Y * Y) + (Z * Z));
+        public float Length => MathF.Sqrt((X * X) + (Y * Y) + (Z * Z));
 
         /// <summary>
         /// Gets an approximation of the vector length (magnitude).
@@ -574,7 +574,7 @@ namespace OpenTK.Mathematics
         /// <param name="result">The distance.</param>
         public static void Distance(in Vector3 vec1, in Vector3 vec2, out float result)
         {
-            result = (float)Math.Sqrt(((vec2.X - vec1.X) * (vec2.X - vec1.X)) + ((vec2.Y - vec1.Y) * (vec2.Y - vec1.Y)) +
+            result = MathF.Sqrt(((vec2.X - vec1.X) * (vec2.X - vec1.X)) + ((vec2.Y - vec1.Y) * (vec2.Y - vec1.Y)) +
                                       ((vec2.Z - vec1.Z) * (vec2.Z - vec1.Z)));
         }
 
@@ -1070,7 +1070,7 @@ namespace OpenTK.Mathematics
         public static void CalculateAngle(in Vector3 first, in Vector3 second, out float result)
         {
             Dot(in first, in second, out float temp);
-            result = (float)Math.Acos(MathHelper.Clamp(temp / (first.Length * second.Length), -1.0, 1.0));
+            result = MathF.Acos(MathHelper.Clamp(temp / (first.Length * second.Length), -1.0f, 1.0f));
         }
 
         /// <summary>
