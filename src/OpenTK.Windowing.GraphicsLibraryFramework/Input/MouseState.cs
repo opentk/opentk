@@ -42,6 +42,9 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
             Position = source.Position;
             PreviousPosition = source.PreviousPosition;
 
+            Scroll = source.Scroll;
+            PreviousScroll = source.PreviousScroll;
+
             _buttons = (BitArray)source._buttons.Clone();
             _buttonsPrevious = (BitArray)source._buttonsPrevious.Clone();
         }
@@ -63,6 +66,21 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         /// This does not necessarily correspond to pixels, for example in the case of raw input.
         /// </summary>
         public Vector2 Delta => Position - PreviousPosition;
+
+        /// <summary>
+        /// Get a Vector2 representing the position of the mouse wheel.
+        /// </summary>
+        public Vector2 Scroll { get; internal set; }
+
+        /// <summary>
+        /// Get a Vector2 representing the position of the mouse wheel.
+        /// </summary>
+        public Vector2 PreviousScroll { get; internal set; }
+
+        /// <summary>
+        /// Get a Vector2 representing the amount that the mouse wheel moved since the last frame.
+        /// </summary>
+        public Vector2 ScrollDelta => Scroll - PreviousScroll;
 
         /// <summary>
         /// Gets a <see cref="bool" /> indicating whether the specified

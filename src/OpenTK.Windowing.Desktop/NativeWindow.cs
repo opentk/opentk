@@ -698,7 +698,7 @@ namespace OpenTK.Windowing.Desktop
             _windowIconifyCallback = (w, iconified) => OnMinimized(new MinimizedEventArgs(iconified));
             _windowFocusCallback = (w, focused) => OnFocusedChanged(new FocusedChangedEventArgs(focused));
             _charCallback = (w, codepoint) => OnTextInput(new TextInputEventArgs((int)codepoint));
-            _scrollCallback = (w, offsetX, offsetY) => OnMouseWheel(new MouseWheelEventArgs((float)offsetX, (float)offsetY));
+            _scrollCallback = ScrollCallback;
             _monitorCallback = (monitor, eventCode) => OnMonitorConnected(new MonitorEventArgs(new Monitor((IntPtr)monitor), eventCode == ConnectedState.Connected));
             _windowRefreshCallback = w => OnRefresh();
             // These must be assigned to fields even when they're methods
@@ -910,6 +910,14 @@ namespace OpenTK.Windowing.Desktop
             _lastReportedMousePos = newPos;
 
             OnMouseMove(new MouseMoveEventArgs(newPos, delta));
+        }
+
+        private unsafe void ScrollCallback(Window* window, double offsetX, double offsetY)
+        {
+            _mouseState.PreviousPosition = _mouseState.Scroll;
+            _mouseState.Scroll = new Vector2((float)offsetX, (float)offsetY);
+
+            OnMouseWheel(new MouseWheelEventArgs(_mouseState.Scroll));
         }
 
         private unsafe void JoystickCallback(int joy, ConnectedState eventCode)
