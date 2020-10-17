@@ -1,3 +1,8 @@
+### 4.0.4
+* Add scroll wheel support (@NogginBops)
+* Fix Windowing minimized on startup (@FriendlyChicken)
+* Minor documentation fixes (@NogginBops)
+
 ### 4.0.3
 * Fix input regression for IsKeyReleased and IsKeyPressed (@FriendlyChicken)
 * Invert GetWindowAttrib Decorated check for window border (@FriendlyChicken)
