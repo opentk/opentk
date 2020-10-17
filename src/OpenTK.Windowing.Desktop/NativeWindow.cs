@@ -915,7 +915,7 @@ namespace OpenTK.Windowing.Desktop
         private unsafe void ScrollCallback(Window* window, double offsetX, double offsetY)
         {
             _mouseState.PreviousPosition = _mouseState.Scroll;
-            _mouseState.Scroll = new Vector2((float)offsetX, (float)offsetY);
+            _mouseState.Scroll += new Vector2((float)offsetX, (float)offsetY);
 
             OnMouseWheel(new MouseWheelEventArgs(_mouseState.Scroll));
         }

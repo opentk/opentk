@@ -165,6 +165,8 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
             _buttonsPrevious.Or(_buttons);
             PreviousPosition = Position;
 
+            PreviousScroll = Scroll;
+
             unsafe
             {
                 GLFW.GetCursorPos(_windowPtr, out var x, out var y);
