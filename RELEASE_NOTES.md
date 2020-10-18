@@ -1,3 +1,6 @@
+### 4.0.5
+* Fix scrolling delta (@NogginBops)
+
 ### 4.0.4
 * Add scroll wheel support (@NogginBops)
 * Fix Windowing minimized on startup (@FriendlyChicken)
