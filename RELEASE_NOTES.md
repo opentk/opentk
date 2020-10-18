@@ -1,3 +1,6 @@
+### 4.0.6
+* Fix mouse delta being backwards (@strexicious)
+
 ### 4.0.5
 * Fix scrolling delta (@NogginBops)
 
