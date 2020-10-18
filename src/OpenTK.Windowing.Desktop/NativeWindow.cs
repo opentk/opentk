@@ -905,7 +905,7 @@ namespace OpenTK.Windowing.Desktop
         private unsafe void CursorPosCallback(Window* window, double posX, double posY)
         {
             var newPos = new Vector2((float)posX, (float)posY);
-            var delta = _lastReportedMousePos - newPos;
+            var delta = newPos - _lastReportedMousePos;
 
             _lastReportedMousePos = newPos;
 
