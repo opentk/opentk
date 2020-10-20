@@ -1191,7 +1191,7 @@ namespace OpenTK.Windowing.Desktop
         /// <summary>
         /// Gets a <see cref="bool" /> indicating whether this key is currently down.
         /// </summary>
-        /// <param name="key">The <see cref="Key" /> to check.</param>
+        /// <param name="key">The <see cref="Keys">key</see> to check.</param>
         /// <returns><c>true</c> if <paramref name="key"/> is in the down state; otherwise, <c>false</c>.</returns>
         public bool IsKeyDown(Keys key)
         {
@@ -1202,9 +1202,9 @@ namespace OpenTK.Windowing.Desktop
         ///     Gets whether the specified key is pressed in the current frame but released in the previous frame.
         /// </summary>
         /// <remarks>
-        ///     "Frame" refers to invocations of <see cref="INativeWindow.ProcessEvents"/> here.
+        ///     "Frame" refers to invocations of <see cref="NativeWindow.ProcessEvents()"/> here.
         /// </remarks>
-        /// <param name="key">The key to check.</param>
+        /// <param name="key">The <see cref="Keys">key</see> to check.</param>
         /// <returns>True if the key is pressed in this frame, but not the last frame.</returns>
         public bool IsKeyPressed(Keys key)
         {
@@ -1215,9 +1215,9 @@ namespace OpenTK.Windowing.Desktop
         ///     Gets whether the specified key is released in the current frame but pressed in the previous frame.
         /// </summary>
         /// <remarks>
-        ///     "Frame" refers to invocations of <see cref="INativeWindow.ProcessEvents"/> here.
+        ///     "Frame" refers to invocations of <see cref="NativeWindow.ProcessEvents()"/> here.
         /// </remarks>
-        /// <param name="key">The key to check.</param>
+        /// <param name="key">The <see cref="Keys">key</see> to check.</param>
         /// <returns>True if the key is released in this frame, but pressed the last frame.</returns>
         public bool IsKeyReleased(Keys key)
         {
@@ -1238,7 +1238,7 @@ namespace OpenTK.Windowing.Desktop
         ///     Gets whether the specified mouse button is pressed in the current frame but released in the previous frame.
         /// </summary>
         /// <remarks>
-        ///     "Frame" refers to invocations of <see cref="INativeWindow.ProcessEvents"/> here.
+        ///     "Frame" refers to invocations of <see cref="NativeWindow.ProcessEvents()"/> here.
         /// </remarks>
         /// <param name="button">The button to check.</param>
         /// <returns>True if the button is pressed in this frame, but not the last frame.</returns>
@@ -1251,7 +1251,7 @@ namespace OpenTK.Windowing.Desktop
         ///     Gets whether the specified mouse button is released in the current frame but pressed in the previous frame.
         /// </summary>
         /// <remarks>
-        ///     "Frame" refers to invocations of <see cref="INativeWindow.ProcessEvents"/> here.
+        ///     "Frame" refers to invocations of <see cref="NativeWindow.ProcessEvents()"/> here.
         /// </remarks>
         /// <param name="button">The button to check.</param>
         /// <returns>True if the button is released in this frame, but pressed the last frame.</returns>
