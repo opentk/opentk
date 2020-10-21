@@ -1,4 +1,4 @@
-﻿//
+//
 // WinRawJoystick.cs
 //
 // Author:
@@ -223,8 +223,8 @@ namespace OpenTK.Platform.Windows
                 device.SetConnected(false);
             }
 
+            int lastDiscoveredXinputID = 0;
             // Discover joystick devices
-            int xinput_device_count = 0;
             RawInputDeviceList[] deviceList = WinRawInput.GetDeviceList();
             foreach (RawInputDeviceList dev in deviceList)
             {
@@ -256,8 +256,24 @@ namespace OpenTK.Platform.Windows
                 {
                     try
                     {
-                        device = new Device(handle, guid, is_xinput,
-                            is_xinput ? xinput_device_count++ : 0);
+                        if (is_xinput)
+                        {
+                            //Attempt to find the next valid XInput ID
+                            int currentXinputID = XInput.FindNextValidID(lastDiscoveredXinputID + 1);
+                            if (currentXinputID == -1)
+                            {
+                                //Not found a valid ID, so continue
+                                continue;
+                            }
+                            //Create new device
+                            device = new Device(handle, guid, true, currentXinputID);
+                        }
+                        else
+                        {
+                            //This device isn't XInput, so create it
+                            device = new Device(handle, guid, false, 0);
+                        }
+                        
 
                         // This is a new device, query its capabilities and add it
                         // to the device list
@@ -276,6 +292,13 @@ namespace OpenTK.Platform.Windows
                             {
                                 match = candidate;
                             }
+
+                            if (candidate.IsXInput && candidate.XInputIndex != device.XInputIndex)
+                            {
+                                //All XInput devices use the same GUID, so we need to test the index too
+                                match = null;
+                            }
+
                         }
                         if (match != null)
                         {

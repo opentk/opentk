@@ -1,4 +1,4 @@
-﻿//
+//
 // XInputJoystick.cs
 //
 // Author:
@@ -352,6 +352,28 @@ namespace OpenTK.Platform.Windows
         {
             public XInputBatteryType Type;
             public XInputBatteryLevel Level;
+        }
+
+        internal int FindNextValidID(int index)
+        {
+            if (index > 3 || index < 0)
+            {
+                //Valid XinputIDs are 0 - 3
+                //Return -1 to indicate we haven't found a valid ID
+                return -1;
+            }
+            XInputDeviceCapabilities xcaps;
+            XInputErrorCode error = xinput.GetCapabilities(
+                (XInputUserIndex)index,
+                XInputCapabilitiesFlags.Default,
+                out xcaps);
+            if (error != XInputErrorCode.Success)
+            {
+                //This ID isn't actually connected, so loop around & try the next
+                return FindNextValidID(index + 1);
+            }
+            //This is connected!
+            return index;
         }
 
         private class XInput : IDisposable
