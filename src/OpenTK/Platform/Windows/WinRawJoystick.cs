@@ -223,7 +223,7 @@ namespace OpenTK.Platform.Windows
                 device.SetConnected(false);
             }
 
-            int lastDiscoveredXinputID = 0;
+            int lastDiscoveredXinputID = -1;
             // Discover joystick devices
             RawInputDeviceList[] deviceList = WinRawInput.GetDeviceList();
             foreach (RawInputDeviceList dev in deviceList)
