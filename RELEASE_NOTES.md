@@ -1,3 +1,6 @@
+### 3.2.1
+	*  Fix: XInput issues with multiple / disconnected pads (Thanks @leezer3)
+
 ### 3.2
     * Fix Input crash if >64 buttons. (Thanks @tyronx)
     * Add provisional dx_interop bindings for use in GLWPFControl.
