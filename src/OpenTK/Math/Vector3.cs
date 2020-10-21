@@ -1118,39 +1118,39 @@ namespace OpenTK
         /// </remarks>
         public static Vector3 Unproject(Vector3 vector, float x, float y, float width, float height, float minZ, float maxZ, Matrix4 inverseWorldViewProjection)
         {
-            Vector4 result;
+            
+            float X = (vector.X - x) / width * 2.0f - 1.0f;
+            float Y = (vector.Y - y) / height * 2.0f - 1.0f;
+            float Z = (vector.Z / (maxZ - minZ)) * 2.0f - 1.0f;
 
-            result.X = ((((vector.X - x) / width) * 2.0f) - 1.0f);
-            result.Y = ((((vector.Y - y) / height) * 2.0f) - 1.0f);
-            result.Z = (((vector.Z / (maxZ - minZ)) * 2.0f) - 1.0f);
-
+            Vector3 result;
             result.X =
-                result.X * inverseWorldViewProjection.M11 +
-                result.Y * inverseWorldViewProjection.M21 +
-                result.Z * inverseWorldViewProjection.M31 +
+                X * inverseWorldViewProjection.M11 +
+                Y * inverseWorldViewProjection.M21 +
+                Z * inverseWorldViewProjection.M31 +
                 inverseWorldViewProjection.M41;
 
             result.Y =
-                result.X * inverseWorldViewProjection.M12 +
-                result.Y * inverseWorldViewProjection.M22 +
-                result.Z * inverseWorldViewProjection.M32 +
+                X * inverseWorldViewProjection.M12 +
+                Y * inverseWorldViewProjection.M22 +
+                Z * inverseWorldViewProjection.M32 +
                 inverseWorldViewProjection.M42;
 
             result.Z =
-                result.X * inverseWorldViewProjection.M13 +
-                result.Y * inverseWorldViewProjection.M23 +
-                result.Z * inverseWorldViewProjection.M33 +
+                X * inverseWorldViewProjection.M13 +
+                Y * inverseWorldViewProjection.M23 +
+                Z * inverseWorldViewProjection.M33 +
                 inverseWorldViewProjection.M43;
 
-            result.W =
-                result.X * inverseWorldViewProjection.M14 +
-                result.Y * inverseWorldViewProjection.M24 +
-                result.Z * inverseWorldViewProjection.M34 +
+            float W =
+                X * inverseWorldViewProjection.M14 +
+                Y * inverseWorldViewProjection.M24 +
+                Z * inverseWorldViewProjection.M34 +
                 inverseWorldViewProjection.M44;
 
-            result /= result.W;
+            result /= W;
 
-            return new Vector3(result.X, result.Y, result.Z);
+            return result;
         }
 
         /// <summary>

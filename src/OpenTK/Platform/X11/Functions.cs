@@ -289,7 +289,7 @@ namespace OpenTK.Platform.X11
         public extern static int XChangeProperty(IntPtr display, IntPtr window, IntPtr property, IntPtr type, int format, PropertyMode mode, IntPtr atoms, int nelements);
 
         [DllImport("libX11", EntryPoint = "XChangeProperty", CharSet = CharSet.Ansi)]
-        public extern static int XChangeProperty(IntPtr display, IntPtr window, IntPtr property, IntPtr type, int format, PropertyMode mode, string text, int text_length);
+        public extern static int XChangeProperty(IntPtr display, IntPtr window, IntPtr property, IntPtr type, int format, PropertyMode mode, byte[] text, int text_length);
 
         [DllImport("libX11", EntryPoint = "XDeleteProperty")]
         public extern static int XDeleteProperty(IntPtr display, IntPtr window, IntPtr property);
