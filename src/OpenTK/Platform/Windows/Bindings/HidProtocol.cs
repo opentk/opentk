@@ -28,6 +28,7 @@
 using System;
 using System.Runtime.InteropServices;
 using System.Security;
+using Microsoft.Win32;
 using OpenTK.Platform.Common;
 
 namespace OpenTK.Platform.Windows
@@ -107,6 +108,40 @@ namespace OpenTK.Platform.Windows
         [SuppressUnmanagedCodeSecurity]
         [DllImport(lib, SetLastError = true, EntryPoint = "HidP_MaxDataListLength")]
         public static extern int MaxDataListLength(HidProtocolReportType type, [In] byte[] preparsed_data);
+
+        /// <summary>Gets the HID device friendly name from the registry</summary>
+        /// <param name="BroadcastName">The HID broadcast name string</param>
+        /// <returns>The friendly name, or an empty string if not found</returns>
+        internal static string GetDeviceName(string BroadcastName)
+        {
+            string[] Parts = BroadcastName.Split('#');
+            if (Parts.Length >= 3)
+            {
+                string DevType = Parts[0].Substring(Parts[0].IndexOf(@"?\", StringComparison.Ordinal) + 2);
+                string DeviceInstanceId = Parts[1];
+                string DeviceUniqueID = Parts[2];
+                string RegPath = @"SYSTEM\CurrentControlSet\Enum\" + DevType + "\\" + DeviceInstanceId + "\\" + DeviceUniqueID;
+                RegistryKey key = Registry.LocalMachine.OpenSubKey(RegPath);
+                if (key != null)
+                {
+                    object result = key.GetValue("FriendlyName");
+                    if (result != null)
+                    {
+                        //User-set, so should be usable as-is
+                        return result.ToString();
+                    }
+                        
+                    result = key.GetValue("DeviceDesc");
+                    if (result != null)
+                    {
+                        //Always starts with the driver inf and other bits
+                        string[] splitResult = result.ToString().Split(';');
+                        return splitResult[splitResult.Length - 1];
+                    }
+                }
+            }
+            return String.Empty;
+        }
     }
 
     internal enum HidProtocolCollectionType : byte
