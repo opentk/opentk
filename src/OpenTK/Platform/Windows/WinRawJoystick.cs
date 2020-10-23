@@ -67,7 +67,6 @@ namespace OpenTK.Platform.Windows
                 Guid = guid;
                 IsXInput = is_xinput;
                 XInputIndex = xinput_index;
-
             }
 
             public void ClearButtons()
@@ -107,6 +106,11 @@ namespace OpenTK.Platform.Windows
             {
                 Capabilities.SetIsConnected(value);
                 State.SetIsConnected(value);
+                if (value == false)
+                {
+                    //The stick has disconnected, so reset the cached name
+                    Name = null;
+                }
             }
 
             public JoystickCapabilities GetCapabilities()

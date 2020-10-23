@@ -120,24 +120,32 @@ namespace OpenTK.Platform.Windows
                 string DevType = Parts[0].Substring(Parts[0].IndexOf(@"?\", StringComparison.Ordinal) + 2);
                 string DeviceInstanceId = Parts[1];
                 string DeviceUniqueID = Parts[2];
-                string RegPath = @"SYSTEM\CurrentControlSet\Enum\" + DevType + "\\" + DeviceInstanceId + "\\" + DeviceUniqueID;
-                RegistryKey key = Registry.LocalMachine.OpenSubKey(RegPath);
-                if (key != null)
+                try
                 {
-                    object result = key.GetValue("FriendlyName");
-                    if (result != null)
+                    string RegPath = @"SYSTEM\CurrentControlSet\Enum\" + DevType + "\\" + DeviceInstanceId + "\\" + DeviceUniqueID;
+                    RegistryKey key = Registry.LocalMachine.OpenSubKey(RegPath);
+                    if (key != null)
                     {
-                        //User-set, so should be usable as-is
-                        return result.ToString();
-                    }
+                        object result = key.GetValue("FriendlyName");
+                        if (result != null)
+                        {
+                            //User-set, so should be usable as-is
+                            return result.ToString();
+                        }
                         
-                    result = key.GetValue("DeviceDesc");
-                    if (result != null)
-                    {
-                        //Always starts with the driver inf and other bits
-                        string[] splitResult = result.ToString().Split(';');
-                        return splitResult[splitResult.Length - 1];
+                        result = key.GetValue("DeviceDesc");
+                        if (result != null)
+                        {
+                            //Always starts with the driver inf and other bits
+                            string[] splitResult = result.ToString().Split(';');
+                            return splitResult[splitResult.Length - 1];
+                        }
                     }
+                }
+                catch
+                {
+                    //Error occured during registry operations
+                    return String.Empty;
                 }
             }
             return String.Empty;
