@@ -50,6 +50,8 @@ namespace OpenTK
         private bool previous_cursor_grabbed = false;
         private bool previous_cursor_visible = true;
 
+        private bool firstFocusEvent = false;
+
         /// <summary>
         /// System.Threading.Thread.CurrentThread.ManagedThreadId of the thread that created this <see cref="OpenTK.NativeWindow"/>.
         /// </summary>
@@ -683,6 +685,18 @@ namespace OpenTK
         /// <param name="e">Not used.</param>
         protected virtual void OnFocusedChanged(EventArgs e)
         {
+            if (!firstFocusEvent)
+            {
+                /*
+                 * First focus event will always be when the Run() command spawns the window
+                 * If the cursor has been set to invisible before the first focus event
+                 * e.g. before the Run() command has been issued, we need to change the
+                 * previous_cursor_visible value appropriately
+                 */
+                previous_cursor_visible = CursorVisible;
+                firstFocusEvent = true;
+                return;
+            }
             if (!Focused)
             {
                 // Release cursor and make it visible when losing focus,
