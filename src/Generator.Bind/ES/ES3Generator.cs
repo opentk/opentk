@@ -11,7 +11,7 @@ namespace Bind.ES
         {
             Settings.DefaultOutputPath = Path.Combine(
                 Settings.OutputPath, "./ES30");
-            Settings.DefaultOutputNamespace = "OpenToolkit.Graphics.ES30";
+            Settings.DefaultOutputNamespace = "OpenTK.Graphics.ES30";
             Settings.DefaultImportsFile = "ES30Core.cs";
             Settings.DefaultDelegatesFile = "ES30Delegates.cs";
             Settings.DefaultEnumsFile = "ES30Enums.cs";
