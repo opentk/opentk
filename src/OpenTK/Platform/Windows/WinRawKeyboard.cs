@@ -50,7 +50,8 @@ namespace OpenTK.Platform.Windows
 
             this.window = windowHandle;
             RefreshDevices();
-
+            //Hook into the session switch event
+            SystemEvents.SessionSwitch += (SessionSwitch);
             Debug.Unindent();
         }
 
@@ -302,6 +303,19 @@ namespace OpenTK.Platform.Windows
                 {
                     return String.Empty;
                 }
+            }
+        }
+
+        private void SessionSwitch(object sender, SessionSwitchEventArgs e)
+        {
+            /*
+             * When locking or unlocking the computer, reset all keyboard states
+             * Otherwise, a key which is pressed when the session switch is initiated
+             * will remain pressed regardless until it is pressed and released again
+             */
+            for (int i = 0; i < keyboards.Count; i++)
+            {
+                keyboards[i] = new KeyboardState();
             }
         }
     }
