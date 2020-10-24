@@ -101,12 +101,36 @@ namespace OpenTK.Platform.Linux
         {
             lock (sync)
             {
+                List<int> xboxPadCandidates = new List<int>();
                 foreach (string file in Directory.GetFiles(path))
                 {
                     LinuxJoystickDetails stick = OpenJoystick(file);
                     if (stick != null)
                     {
+                        if (stick.Caps.AxisCount == 6 && stick.Caps.ButtonCount == 11 && stick.Caps.HatCount == 2)
+                        {
+                            xboxPadCandidates.Add(Sticks.Count);
+                        }
+                        else
+                        {
+                            stick.Caps.SetIsConnected(true);
+                            stick.State.SetIsConnected(true);
+                        }
                         Sticks.Add(stick.PathIndex, stick);
+                    }
+                }
+
+                if (xboxPadCandidates.Count < 4)
+                {
+                    /*
+                     * The XBox wireless reciever generates 4 sticks which may not have anything connected to them
+                     * If there are less than 4, this can't be this (or it's been fixed evdev side in the meantime)
+                     * so let's set them as connected
+                     */
+                    foreach (int idx in xboxPadCandidates)
+                    {
+                        Sticks[idx].Caps.SetIsConnected(true);
+                        Sticks[idx].State.SetIsConnected(true);
                     }
                 }
             }
@@ -367,10 +391,7 @@ namespace OpenTK.Platform.Linux
                     {
                         break;
                     }
-
-                    // Only mark the joystick as connected when we actually start receiving events.
-                    // Otherwise, the Xbox wireless receiver will register 4 joysticks even if no
-                    // actual joystick is connected to the receiver.
+                    //As we've received an event, this must be connected!
                     js.Caps.SetIsConnected(true);
                     js.State.SetIsConnected(true);
 
