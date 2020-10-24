@@ -1,4 +1,5 @@
 ﻿using System.IO;
+
 using Bind.GL2;
 
 namespace Bind.ES
@@ -6,8 +7,7 @@ namespace Bind.ES
     // Generation implementation for OpenGL ES 2.0 and 3.0
     internal class ES2Generator : Generator
     {
-        public ES2Generator(Settings settings)
-            : base(settings)
+        public ES2Generator(Settings settings) : base(settings)
         {
             Settings.DefaultOutputPath = Path.Combine(
                 Settings.OutputPath, "./ES20");

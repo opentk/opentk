@@ -1,4 +1,5 @@
 ﻿using System.IO;
+
 using Bind.GL2;
 
 namespace Bind.ES
@@ -6,8 +7,7 @@ namespace Bind.ES
     // Generation implementation for OpenGL ES 3.1
     internal class ES31Generator : Generator
     {
-        public ES31Generator(Settings settings)
-            : base(settings)
+        public ES31Generator(Settings settings) : base(settings)
         {
             Settings.DefaultOutputPath = Path.Combine(
                 Settings.OutputPath, "./ES31");
