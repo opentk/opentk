@@ -27,6 +27,9 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Security.Cryptography;
+using System.Threading;
+using Microsoft.Win32;
 using OpenTK.Input;
 
 namespace OpenTK.Platform.Linux
@@ -71,52 +74,122 @@ namespace OpenTK.Platform.Linux
 
         private readonly object sync = new object();
 
-        private readonly FileSystemWatcher watcher = new FileSystemWatcher();
-
         private readonly DeviceCollection<LinuxJoystickDetails> Sticks =
             new DeviceCollection<LinuxJoystickDetails>();
 
         private bool disposed;
 
-        public LinuxJoystick()
+        private const string InputDevicePath = "/proc/bus/input/devices";
+
+        private readonly Thread ProcessingThread;
+
+        private string EvdevPath
         {
-            string path =
-                Directory.Exists(JoystickPath) ? JoystickPath :
-                Directory.Exists(JoystickPathLegacy) ? JoystickPathLegacy :
-                String.Empty;
-
-            if (!String.IsNullOrEmpty(path))
+            get
             {
-                watcher.Path = path;
-
-                watcher.Created += JoystickAdded;
-                watcher.Deleted += JoystickRemoved;
-                watcher.EnableRaisingEvents = true;
-
-                OpenJoysticks(path);
+                return Directory.Exists(JoystickPath) ? JoystickPath :
+                    Directory.Exists(JoystickPathLegacy) ? JoystickPathLegacy :
+                    String.Empty;
             }
         }
 
-        private void OpenJoysticks(string path)
+        public LinuxJoystick()
         {
-            lock (sync)
+            ProcessingThread = new Thread(ProcessEvents);
+            ProcessingThread.IsBackground = true;
+            ProcessingThread.Start();
+
+
+            if (!String.IsNullOrEmpty(EvdevPath))
             {
-                List<int> xboxPadCandidates = new List<int>();
-                foreach (string file in Directory.GetFiles(path))
+                OpenJoysticks(EvdevPath);
+            }
+        }
+
+        private MD5 Hasher = MD5.Create();
+
+        private string procHash;
+
+        private void ProcessEvents()
+        {
+            if (!File.Exists(InputDevicePath))
+            {
+                //BSD may not have the Linux ProcFS, no use running a pointless loop
+                return;
+            }
+
+            while (!disposed)
+            {
+                /*
+                 * Rather hacky filesystemwatcher equivilant, as it doesn't work on ProcFS
+                 * As the thing is psuedo-files, we can't use the last modified date either
+                 * We have to load the thing into a stream and hash. At least it's only a few bytes.....
+                 *
+                 * Note: We could possibly override the Mono filesystem watcher backend, but this is a global variable only
+                 * and so may break user code
+                 */
+                List<int> connectedDevices = new List<int>();
+                using (StreamReader reader = new StreamReader(new FileStream(InputDevicePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite)))
                 {
-                    LinuxJoystickDetails stick = OpenJoystick(file);
-                    if (stick != null)
+                    string newHash = BitConverter.ToString(Hasher.ComputeHash(reader.BaseStream));
+                    if (newHash == procHash)
+                    {
+                        //Marginal goto, but might as well only open the stream once
+                        goto EndCondition;
+                    }
+
+                    reader.BaseStream.Seek( 0, 0);
+                    procHash = newHash;
+                    OpenJoysticks(EvdevPath);
+                    while (!reader.EndOfStream)
+                    {
+                        string currentLine = reader.ReadLine();
+                        if (string.IsNullOrEmpty(currentLine))
+                        {
+                            continue;
+                        }
+
+                        switch (char.ToLower(currentLine[0]))
+                        {
+                            case 'h':
+                                string[] handlers = currentLine.Substring(currentLine.IndexOf('=') + 1).Trim().Split(' ');
+
+                                foreach (string handler in handlers)
+                                {
+                                    if (handler.StartsWith("event", StringComparison.InvariantCultureIgnoreCase))
+                                    {
+                                        //As device is in /proc/bus/input/devices it is connected, so pull out the evdev ID
+                                        int evdevID = int.Parse(handler.Substring(5));
+                                        connectedDevices.Add(evdevID);
+                                    }
+                                }
+
+                                break;
+                        }
+
+                    }
+                }
+
+                List<int> xboxPadCandidates = new List<int>();
+
+                foreach (LinuxJoystickDetails stick in Sticks)
+                {
+                    if (connectedDevices.Contains(stick.PathIndex))
                     {
                         if (stick.Caps.AxisCount == 6 && stick.Caps.ButtonCount == 11 && stick.Caps.HatCount == 2)
                         {
-                            xboxPadCandidates.Add(Sticks.Count);
+                            xboxPadCandidates.Add(stick.PathIndex);
                         }
                         else
                         {
                             stick.Caps.SetIsConnected(true);
                             stick.State.SetIsConnected(true);
                         }
-                        Sticks.Add(stick.PathIndex, stick);
+                    }
+                    else
+                    {
+                        stick.State.SetIsConnected(false);
+                        stick.Caps.SetIsConnected(false);
                     }
                 }
 
@@ -129,8 +202,29 @@ namespace OpenTK.Platform.Linux
                      */
                     foreach (int idx in xboxPadCandidates)
                     {
-                        Sticks[idx].Caps.SetIsConnected(true);
-                        Sticks[idx].State.SetIsConnected(true);
+                        LinuxJoystickDetails stick = Sticks.FromHardwareId(idx);
+                        if (stick != null)
+                        {
+                            stick.Caps.SetIsConnected(true);
+                            stick.State.SetIsConnected(true);
+                        }
+                    }
+                }
+                EndCondition:
+                Thread.Sleep(750);
+            }
+        }
+
+        private void OpenJoysticks(string path)
+        {
+            lock (sync)
+            {
+                foreach (string file in Directory.GetFiles(path))
+                {
+                    LinuxJoystickDetails stick = OpenJoystick(file);
+                    if (stick != null)
+                    {
+                        Sticks.Add(stick.PathIndex, stick);
                     }
                 }
             }
@@ -148,31 +242,6 @@ namespace OpenTK.Platform.Linux
                 }
             }
             return -1;
-        }
-
-        private void JoystickAdded(object sender, FileSystemEventArgs e)
-        {
-            lock (sync)
-            {
-                OpenJoystick(e.FullPath);
-            }
-        }
-
-        private void JoystickRemoved(object sender, FileSystemEventArgs e)
-        {
-            lock (sync)
-            {
-                string file = Path.GetFileName(e.FullPath);
-                int number = GetJoystickNumber(file);
-                if (number != -1)
-                {
-                    var stick = Sticks.FromHardwareId(number);
-                    if (stick != null)
-                    {
-                        CloseJoystick(stick);
-                    }
-                }
-            }
         }
 
         private Guid CreateGuid(EvdevInputId id, string name)
@@ -376,6 +445,7 @@ namespace OpenTK.Platform.Linux
             return new JoystickHatState(HatPositions[x, y]);
         }
 
+        
         private void PollJoystick(LinuxJoystickDetails js)
         {
             unsafe
@@ -483,8 +553,6 @@ namespace OpenTK.Platform.Linux
                 if (manual)
                 {
                 }
-
-                watcher.Dispose();
                 foreach (LinuxJoystickDetails js in Sticks)
                 {
                     CloseJoystick(js);
