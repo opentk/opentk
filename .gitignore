@@ -324,6 +324,9 @@ _Pvt_Extensions
 .idea/
 *.sln.iml
 
+# JetBrains Rider
+.ionide/
+
 # CodeRush
 .cr/
 
@@ -576,16 +579,16 @@ TestResults.xml
 
 ### OpenTK Binding files ###
 .bindingsGenerated
-src/OpenToolkit.Graphics/ES11/ES11.cs
-src/OpenToolkit.Graphics/ES11/ES11Enums.cs
-src/OpenToolkit.Graphics/ES20/ES20.cs
-src/OpenToolkit.Graphics/ES20/ES20Enums.cs
-src/OpenToolkit.Graphics/ES30/ES30.cs
-src/OpenToolkit.Graphics/ES30/ES30Enums.cs
-src/OpenToolkit.Graphics/OpenGL2/GL.cs
-src/OpenToolkit.Graphics/OpenGL2/GLEnums.cs
-src/OpenToolkit.Graphics/OpenGL4/GL4.cs
-src/OpenToolkit.Graphics/OpenGL4/GL4Enums.cs
+src/OpenTK.Graphics/ES11/ES11.cs
+src/OpenTK.Graphics/ES11/ES11Enums.cs
+src/OpenTK.Graphics/ES20/ES20.cs
+src/OpenTK.Graphics/ES20/ES20Enums.cs
+src/OpenTK.Graphics/ES30/ES30.cs
+src/OpenTK.Graphics/ES30/ES30Enums.cs
+src/OpenTK.Graphics/OpenGL2/GL.cs
+src/OpenTK.Graphics/OpenGL2/GLEnums.cs
+src/OpenTK.Graphics/OpenGL4/GL4.cs
+src/OpenTK.Graphics/OpenGL4/GL4Enums.cs
 
 ### OpenTK AssemblyInfo files ###
 **/AssemblyInfo.cs

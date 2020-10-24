@@ -7,9 +7,15 @@ We have a very active discord server, if you need help, want to help, or are jus
 
 [![Discord](https://discordapp.com/api/guilds/337627185248468993/widget.png)](https://discord.gg/6HqD48s)
 
-The Open Toolkit library is a fast, low-level C# binding for OpenGL, OpenGL ES and OpenAL. It runs on all major platforms and powers hundreds of apps, games and scientific research.
+The Open Toolkit library is a fast, low-level C# binding for OpenGL, OpenGL ES, OpenAL, and OpenCL. It runs on all major platforms and powers hundreds of apps, games and scientific research.
 
 Use OpenTK to add cross-platform 3d graphics, audio, compute and haptics to your C# application. Integrate it into your existing user interface or use it standalone without any external dependencies.
+
+OpenTK comes with simple and easy to follow tutorials for learning *modern* OpenGL. These are written by the community and represent all of the best practices to get you started.
+
+#### Learn how to use OpenTK here: https://opentk.net/learn/index.html
+
+Sample projects that accompany the tutorial can be found here: https://github.com/opentk/LearnOpenTK
 
 Project website: https://opentk.net
 
@@ -35,20 +41,41 @@ Features
 - Performant, highly optimized and reliable linear algebra library
 - Write once run everywhere
 
-OpenTK is available for Windows, Linux, Mac OS X, *BSD, SteamOS, Android and iOS. It can be used standalone or integrated into a GUI (Windows.Forms, WPF, GTK+, Qt, VTK, ...)
+OpenTK is available for Windows, Linux, Mac OS X, *BSD and SteamOS. It can be used standalone or integrated into a GUI (Windows.Forms, WPF, GTK+, Qt, VTK, ...)
 
+An old, unsupported version of OpenTK 1.0 may be included in the [Xamarin](https://docs.microsoft.com/en-us/xamarin/graphics-games/game-development/) Android and iOS distribution. The Xamarin fork is not supported or maintained by this project.
+
+Adding support for mobile again is a future goal of the OpenTK project, but is somewhat frustrated by Apple's deprecation of OpenGL. Contributions to re-add support for these platforms are welcomed.
 
 Instructions
 ============
 
 OpenTK is available as a [NuGet Package](http://www.nuget.org/packages/OpenTK/).
 
-Note what installing NuGet package will add reference to OpenTK.dll, but OpenTK.dll.config
-will not be copied to the project output directory automatically, so you need to add it to your project
-and then enable the "Copy to Output Directory" option (as in step 3 below).
-
 News
 ===
+
+### 2020-10-02
+
+OpenTK 4.0.0 is released with full availability.
+
+Key changes:
+ * Full support for .Net Core 3.1
+ * Brand new GLFW-based windowing system
+ * Brand new GLFW-based input system
+ * Removed all platform-specific backends (and fixed every xplat bug!)
+ * Math library performance improvements and fixes
+ * All new OpenAL bindings
+ * All new OpenCL Bindings
+ * Total restructure of all packages into a modular system with a number of packages. The OpenTK Nuget package is now a metapackage that will automatically download all of these for you.
+
+OpenTK 4.0.0 is entirely MIT licensed.
+
+
+We're excited to see what you can build with this!
+
+https://www.nuget.org/packages/OpenTK
+
 
 ### 2020-04-06
 

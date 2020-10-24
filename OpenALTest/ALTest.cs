@@ -2,9 +2,12 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading;
-using OpenToolkit.Audio.OpenAL.Extensions.Creative.EFX;
+using OpenTK.Audio.OpenAL.Extensions.Creative.EFX;
+using OpenTK.Audio.OpenAL.Extensions.EXT.Double;
+using OpenTK.Audio.OpenAL.Extensions.EXT.Float32;
+using OpenTK.Audio.OpenAL.Extensions.EXT.FloatFormat;
 
-namespace OpenToolkit.Audio.OpenAL
+namespace OpenTK.Audio.OpenAL
 {
     internal class ALTest
     {
@@ -155,6 +158,64 @@ namespace OpenToolkit.Audio.OpenAL
             }
 
             AL.SourceStop(alSource);
+
+            // Test float32 format extension
+            if (EXTFloat32.IsExtensionPresent()) {
+                Console.WriteLine("Testing float32 format extension with a sine wave...");
+
+                float[] sine = new float[44100 * 2];
+                for (int i = 0; i < sine.Length; i++)
+                {
+                    sine[i] = MathF.Sin(440 * MathF.PI * 2 * (i / (float)sine.Length));
+                }
+
+                var buffer = AL.GenBuffer();
+                EXTFloat32.BufferData(buffer, FloatBufferFormat.Mono, sine, 44100);
+
+                AL.Listener(ALListenerf.Gain, 0.1f);
+
+                AL.Source(alSource, ALSourcef.Gain, 1f);
+                AL.Source(alSource, ALSourcei.Buffer, buffer);
+
+                AL.SourcePlay(alSource);
+
+                while (AL.GetSourceState(alSource) == ALSourceState.Playing)
+                {
+                    Thread.Sleep(10);
+                }
+
+                AL.SourceStop(alSource);
+            }
+
+            // Test double format extension
+            if (EXTDouble.IsExtensionPresent())
+            {
+                Console.WriteLine("Testing float32 format extension with a saw wave...");
+
+                double[] saw = new double[44100 * 2];
+                for (int i = 0; i < saw.Length; i++)
+                {
+                    var t = (i / (double)saw.Length) * 440;
+                    saw[i] = t - Math.Floor(t);
+                }
+
+                var buffer = AL.GenBuffer();
+                EXTDouble.BufferData(buffer, DoubleBufferFormat.Mono, saw, 44100);
+
+                AL.Listener(ALListenerf.Gain, 0.1f);
+
+                AL.Source(alSource, ALSourcef.Gain, 1f);
+                AL.Source(alSource, ALSourcei.Buffer, buffer);
+
+                AL.SourcePlay(alSource);
+
+                while (AL.GetSourceState(alSource) == ALSourceState.Playing)
+                {
+                    Thread.Sleep(10);
+                }
+
+                AL.SourceStop(alSource);
+            }
 
             Console.WriteLine("Goodbye!");
 

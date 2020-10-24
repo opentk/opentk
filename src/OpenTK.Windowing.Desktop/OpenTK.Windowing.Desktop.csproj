@@ -1,0 +1,40 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+      <TargetFrameworks>netcoreapp3.1</TargetFrameworks>
+      <RootNamespace>OpenTK.Windowing.Desktop</RootNamespace>
+      <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    </PropertyGroup>
+    
+    <ItemGroup>
+      <ProjectReference Include="..\OpenTK.Core\OpenTK.Core.csproj" />
+      <!-- The PrivateAssets thing is to ensure the .dll.config file gets copied transitively. -->
+      <ProjectReference Include="..\OpenTK.Mathematics\OpenTK.Mathematics.csproj" />
+      <ProjectReference Include="..\OpenTK.Windowing.Common\OpenTK.Windowing.Common.csproj" />
+      <ProjectReference Include="..\OpenTK.Windowing.GraphicsLibraryFramework\OpenTK.Windowing.GraphicsLibraryFramework.csproj" PrivateAssets="analyzers;build" />
+    </ItemGroup>
+    
+    <ItemGroup>
+      <PackageReference Condition="'$(TargetFramework)' == 'net472'" Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.0-preview.2">
+        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        <PrivateAssets>all</PrivateAssets>
+      </PackageReference>
+      <PackageReference Include="opentoolkit.redist.glfw" Version="3.3.0-pre20190419183326" />
+      <PackageReference Condition="'$(TargetFramework)' == 'net472'" Include="System.Memory" Version="4.5" />
+    </ItemGroup>
+
+    <Import Project="..\..\props\common.props" />
+    <Import Project="..\..\props\nuget-common.props" />
+    <Import Project="..\..\props\stylecop.props" />
+
+    <!-- Fix adapted from https://jaylee.org/archive/2019/03/31/using-span-of-t-in-xamarin-cross-targeted-projects.html
+        Remove System.Memory if mono is installed at default location
+    -->
+    <Target Name="VS16_RemoveSystemMemory" BeforeTargets="FindReferenceAssembliesForReferences" Condition="$(Path.Contains('/usr/lib/mono')) Or $(FrameworkPathOverride.Contains('/usr/lib/mono'))">
+      <ItemGroup>
+        <_ReferencePathToRemove Include="@(ReferencePath)" Condition="'%(ReferencePath.NuGetPackageId)'=='System.Memory'" />
+        <ReferencePath Remove="@(_ReferencePathToRemove)" />
+      </ItemGroup>
+      <Message Text="Removing System.Memory for mono compatibility" Importance="high" />
+    </Target>
+</Project>

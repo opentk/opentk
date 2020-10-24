@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <Deterministic>true</Deterministic>
+    <RootNamespace>OpenTK.Input</RootNamespace>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <Description>Shared input functionality for the OpenTK library.</Description>
+  </PropertyGroup>
+
+  <Import Project="..\..\props\common.props" />
+  <Import Project="..\..\props\nuget-common.props" />
+  <Import Project="..\..\props\stylecop.props" />
+</Project>

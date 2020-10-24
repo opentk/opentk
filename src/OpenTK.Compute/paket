@@ -1,0 +1,10 @@
+type file
+id OpenTK.Compute
+description
+    OpenCL Compute Bindings for dotnet from the Khronos OpenCL C Library.
+dependencies
+    framework: netcoreapp3.1
+files
+    bin\Release\netcoreapp3.1\OpenTK.Compute.dll ==> lib\netcoreapp3.1
+    bin\Release\netcoreapp3.1\OpenTK.Compute.xml ==> lib\netcoreapp3.1
+    bin\Release\netcoreapp3.1\OpenTK.Compute.pdb ==> lib\netcoreapp3.1

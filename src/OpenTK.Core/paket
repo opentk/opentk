@@ -1,0 +1,8 @@
+type file
+id OpenTK.Core
+description
+    Holds core functionality used by other OpenTK packages.
+files
+    bin\Release\netstandard2.1\OpenTK.Core.dll ==> lib\netstandard2.1
+    bin\Release\netstandard2.1\OpenTK.Core.xml ==> lib\netstandard2.1 
+    bin\Release\netstandard2.1\OpenTK.Core.pdb ==> lib\netstandard2.1

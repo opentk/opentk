@@ -1,0 +1,8 @@
+type file
+id OpenTK.Mathematics
+description
+    A basic mathematics library developed primarily for rendering in 3d and 2d.
+files
+    bin\Release\netstandard2.1\OpenTK.Mathematics.dll ==> lib\netstandard2.1
+    bin\Release\netstandard2.1\OpenTK.Mathematics.xml ==> lib\netstandard2.1
+    bin\Release\netstandard2.1\OpenTK.Mathematics.pdb ==> lib\netstandard2.1
