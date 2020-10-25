@@ -29,7 +29,6 @@ using System.Diagnostics;
 using System.IO;
 using System.Security.Cryptography;
 using System.Threading;
-using Microsoft.Win32;
 using OpenTK.Input;
 
 namespace OpenTK.Platform.Linux
@@ -77,12 +76,19 @@ namespace OpenTK.Platform.Linux
         private readonly DeviceCollection<LinuxJoystickDetails> Sticks =
             new DeviceCollection<LinuxJoystickDetails>();
 
-        private bool disposed;
+        private volatile bool disposed;
 
         private const string InputDevicePath = "/proc/bus/input/devices";
+        /// <summary>The evdev path on recent Xorg versions</summary>
+        private static readonly string JoystickPath = "/dev/input";
+        /// <summary>The legacy evdev fallback Xorg path</summary>
+        private static readonly string JoystickPathLegacy = "/dev";
 
-        private readonly Thread ProcessingThread;
+        /// <summary>Thread used to monitor ProcFS for changes in order to support hotplugging of joysticks</summary>
+        private readonly Thread ProcFSMonitorThread;
 
+        /// <summary>Gets the actual evdev path used by the XOrg server</summary>
+        /// <remarks>See <see href="https://www.kernel.org/doc/Documentation/input/input.txt">the Linux kernel documentation</see> for further details.</remarks>
         private string EvdevPath
         {
             get
@@ -95,18 +101,17 @@ namespace OpenTK.Platform.Linux
 
         public LinuxJoystick()
         {
-            ProcessingThread = new Thread(ProcessEvents);
-            ProcessingThread.IsBackground = true;
-            ProcessingThread.Start();
-
-
+            ProcFSMonitorThread = new Thread(ProcessEvents);
+            ProcFSMonitorThread.IsBackground = true;
+            ProcFSMonitorThread.Start();
+            //Populate the initial list of joysticks
             if (!String.IsNullOrEmpty(EvdevPath))
             {
                 OpenJoysticks(EvdevPath);
             }
         }
 
-        private MD5 Hasher = MD5.Create();
+        private readonly MD5 Hasher = MD5.Create();
 
         private string procHash;
 
@@ -128,46 +133,21 @@ namespace OpenTK.Platform.Linux
                  * Note: We could possibly override the Mono filesystem watcher backend, but this is a global variable only
                  * and so may break user code
                  */
-                List<int> connectedDevices = new List<int>();
-                using (StreamReader reader = new StreamReader(new FileStream(InputDevicePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite)))
+                Thread.Sleep(750); //750ms is the Mono default for the file hashing version of FileSystemWatcher backend
+                List<int> connectedDevices;
+                
+                using (FileStream stream = new FileStream(InputDevicePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
                 {
-                    string newHash = BitConverter.ToString(Hasher.ComputeHash(reader.BaseStream));
+                    string newHash = BitConverter.ToString(Hasher.ComputeHash(stream));
                     if (newHash == procHash)
                     {
-                        //Marginal goto, but might as well only open the stream once
-                        goto EndCondition;
+                        //Hash of /proc/bus/input/devices has not changed, hence no new devices added / removed
+                        continue;
                     }
-
-                    reader.BaseStream.Seek( 0, 0);
+                    stream.Seek( 0, 0);
+                    connectedDevices = GetConnectedDevices(stream);
                     procHash = newHash;
                     OpenJoysticks(EvdevPath);
-                    while (!reader.EndOfStream)
-                    {
-                        string currentLine = reader.ReadLine();
-                        if (string.IsNullOrEmpty(currentLine))
-                        {
-                            continue;
-                        }
-
-                        switch (char.ToLower(currentLine[0]))
-                        {
-                            case 'h':
-                                string[] handlers = currentLine.Substring(currentLine.IndexOf('=') + 1).Trim().Split(' ');
-
-                                foreach (string handler in handlers)
-                                {
-                                    if (handler.StartsWith("event", StringComparison.InvariantCultureIgnoreCase))
-                                    {
-                                        //As device is in /proc/bus/input/devices it is connected, so pull out the evdev ID
-                                        int evdevID = int.Parse(handler.Substring(5));
-                                        connectedDevices.Add(evdevID);
-                                    }
-                                }
-
-                                break;
-                        }
-
-                    }
                 }
 
                 List<int> xboxPadCandidates = new List<int>();
@@ -210,10 +190,46 @@ namespace OpenTK.Platform.Linux
                         }
                     }
                 }
-                EndCondition:
-                Thread.Sleep(750);
             }
         }
+
+        /// <summary>Gets the list of connected device IDs</summary>
+        /// <param name="stream">The filestream to /proc/bus/input/devices</param>
+        /// <returns>The list of connected device IDs, or an empty list if no devices are connected</returns>
+        private List<int> GetConnectedDevices(FileStream stream)
+        {
+            List<int> connectedDevices = new List<int>();
+            using (StreamReader reader = new StreamReader(stream))
+            {
+                while (!reader.EndOfStream)
+                {
+                    string currentLine = reader.ReadLine();
+                    if (string.IsNullOrEmpty(currentLine))
+                    {
+                        continue;
+                    }
+
+                    switch (char.ToLower(currentLine[0]))
+                    {
+                        case 'h':
+                            string[] handlers = currentLine.Substring(currentLine.IndexOf('=') + 1).Trim().Split(' ');
+
+                            foreach (string handler in handlers)
+                            {
+                                if (handler.StartsWith("event", StringComparison.InvariantCultureIgnoreCase))
+                                {
+                                    //As device is in /proc/bus/input/devices it is connected, so pull out the evdev ID
+                                    int evdevID = int.Parse(handler.Substring(5));
+                                    connectedDevices.Add(evdevID);
+                                }
+                            }
+                            break;
+                    }
+                }
+            }
+            return connectedDevices;
+        }
+
 
         private void OpenJoysticks(string path)
         {
@@ -536,9 +552,6 @@ namespace OpenTK.Platform.Linux
                 }
             }
         }
-
-        private static readonly string JoystickPath = "/dev/input";
-        private static readonly string JoystickPathLegacy = "/dev";
 
         public void Dispose()
         {
