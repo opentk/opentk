@@ -38,7 +38,7 @@ namespace GeneratorV2.Overloading
                     //args[pRef.ParameterIndex] = args[pRef.ParameterIndex].CloneWithName(args[_argIndex].Name);
                     return arg.Name + ".Length";
                 }
-                else if (expr is BinaryOperation binaryOperation)
+                if (expr is BinaryOperation binaryOperation)
                 {
                     var left = ExpressionToString(binaryOperation.Left, args, out var leftLenIdx);
                     var right = ExpressionToString(binaryOperation.Right, args, out var rightLenIdx);
@@ -88,7 +88,7 @@ namespace GeneratorV2.Overloading
                 writer.WriteLine($"fixed ({newType} {newName} = {spanArg.Name})");
                 using (writer.Scope())
                 {
-                    if (newType != _castType)
+                    if (newType != _castType && !spanArg.Type.Contains("GLhandleARB"))
                     {
                         writer.WriteLine($"var {newName}_casted = ({_castType}){newName};");
                         args[_argIndex] = spanArg.Clone(newType, $"{newName}_casted");
@@ -130,20 +130,15 @@ namespace GeneratorV2.Overloading
                 }
                 if (otherReferences == 0)
                 {
-                    isByteSize = reference.Parameter.Type.OriginalTypeName.Contains("GLsizeiptr");
+                    isByteSize = parameter.Type.OriginalTypeName.Contains("void");
                     context.Parameters[reference.ParameterIndex] = null;
                     useParameter = false;
-                }
-
-                if (!(type.Length is CompSize) && reference.Parameter.Type.OriginalTypeName.Contains("GLsizei") && !reference.Parameter.Type.OriginalTypeName.Contains("GLsizeiptr"))
-                {
-                    Logger.Info(context.Command.Name);
                 }
             }
 
             var elementType = type.Name.Substring(0, ptrLoc);
             string castType = elementType + "*";
-            
+
             if (elementType == "void")
             {
                 elementType = $"T{++context.TypeParameterCount}";
@@ -151,6 +146,10 @@ namespace GeneratorV2.Overloading
             else if (elementType.Contains("*") && type.OriginalTypeName.Contains("GLchar"))
             {
                 elementType = "IntPtr";
+            }
+            else if (type.OriginalTypeName.Contains("GLhandleARB"))
+            {
+                elementType = "GLhandleARB";
             }
             var typeName = (type.Modifier == PModifier.ReadOnlySpan ? "ReadOnly" : string.Empty) + $"Span<{elementType}>{type.Name.Substring(ptrLoc+1)}";
 
