@@ -25,6 +25,11 @@ namespace OpenTK.Windowing.Desktop
         /// </summary>
         public unsafe Window* WindowPtr { get; }
 
+        // Both of these are used to cache the size and location of the window before going into full screen mode.
+        // When getting out of full screen mode, the location and size will be set to these value.
+        private Vector2i _cachedWindowClientSize;
+        private Vector2i _cachedWindowLocation;
+
         // Used for delta calculation in the mouse pos changed event.
         private Vector2 _lastReportedMousePos;
 
@@ -339,6 +344,18 @@ namespace OpenTK.Windowing.Desktop
 
             set
             {
+                // If the window is in full screen mode, take it out of full screen mode
+                if (GLFW.GetWindowMonitor(WindowPtr) != null)
+                {
+                    GLFW.SetWindowMonitor(WindowPtr, null, _cachedWindowLocation.X, _cachedWindowLocation.Y, _cachedWindowClientSize.X, _cachedWindowClientSize.Y, 0);
+                }
+                else
+                {
+                    // Only cache the size and location if the window is not in full screen mode
+                    _cachedWindowClientSize = ClientSize;
+                    _cachedWindowLocation = Location;
+                }
+
                 switch (value)
                 {
                     case WindowState.Normal:
@@ -370,31 +387,28 @@ namespace OpenTK.Windowing.Desktop
 
             set
             {
-                if (GLFW.GetWindowAttrib(WindowPtr, WindowAttributeGetBool.Decorated))
+                GLFW.GetVersion(out var major, out var minor, out _);
+
+                // It isn't possible to implement this in versions of GLFW older than 3.3,
+                // as SetWindowAttrib didn't exist before then.
+                if ((major == 3) && (minor < 3))
                 {
-                    GLFW.GetVersion(out var major, out var minor, out _);
+                    throw new NotSupportedException("Cannot be implemented in GLFW 3.2.");
+                }
 
-                    // It isn't possible to implement this in versions of GLFW older than 3.3,
-                    // as SetWindowAttrib didn't exist before then.
-                    if ((major == 3) && (minor < 3))
-                    {
-                        throw new NotSupportedException("Cannot be implemented in GLFW 3.2.");
-                    }
-
-                    switch (value)
-                    {
-                        case WindowBorder.Hidden:
-                            GLFW.SetWindowAttrib(WindowPtr, WindowAttribute.Decorated, false);
-                            break;
-
-                        case WindowBorder.Resizable:
-                            GLFW.SetWindowAttrib(WindowPtr, WindowAttribute.Resizable, true);
-                            break;
-
-                        case WindowBorder.Fixed:
-                            GLFW.SetWindowAttrib(WindowPtr, WindowAttribute.Resizable, false);
-                            break;
-                    }
+                switch (value)
+                {
+                    case WindowBorder.Hidden:
+                        GLFW.SetWindowAttrib(WindowPtr, WindowAttribute.Decorated, false);
+                        break;
+                    case WindowBorder.Resizable:
+                        GLFW.SetWindowAttrib(WindowPtr, WindowAttribute.Decorated, true);
+                        GLFW.SetWindowAttrib(WindowPtr, WindowAttribute.Resizable, true);
+                        break;
+                    case WindowBorder.Fixed:
+                        GLFW.SetWindowAttrib(WindowPtr, WindowAttribute.Decorated, true);
+                        GLFW.SetWindowAttrib(WindowPtr, WindowAttribute.Resizable, false);
+                        break;
                 }
 
                 _windowBorder = value;
