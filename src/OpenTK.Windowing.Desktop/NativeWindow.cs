@@ -370,31 +370,28 @@ namespace OpenTK.Windowing.Desktop
 
             set
             {
-                if (GLFW.GetWindowAttrib(WindowPtr, WindowAttributeGetBool.Decorated))
+                GLFW.GetVersion(out var major, out var minor, out _);
+
+                // It isn't possible to implement this in versions of GLFW older than 3.3,
+                // as SetWindowAttrib didn't exist before then.
+                if ((major == 3) && (minor < 3))
                 {
-                    GLFW.GetVersion(out var major, out var minor, out _);
+                    throw new NotSupportedException("Cannot be implemented in GLFW 3.2.");
+                }
 
-                    // It isn't possible to implement this in versions of GLFW older than 3.3,
-                    // as SetWindowAttrib didn't exist before then.
-                    if ((major == 3) && (minor < 3))
-                    {
-                        throw new NotSupportedException("Cannot be implemented in GLFW 3.2.");
-                    }
-
-                    switch (value)
-                    {
-                        case WindowBorder.Hidden:
-                            GLFW.SetWindowAttrib(WindowPtr, WindowAttribute.Decorated, false);
-                            break;
-
-                        case WindowBorder.Resizable:
-                            GLFW.SetWindowAttrib(WindowPtr, WindowAttribute.Resizable, true);
-                            break;
-
-                        case WindowBorder.Fixed:
-                            GLFW.SetWindowAttrib(WindowPtr, WindowAttribute.Resizable, false);
-                            break;
-                    }
+                switch (value)
+                {
+                    case WindowBorder.Hidden:
+                        GLFW.SetWindowAttrib(WindowPtr, WindowAttribute.Decorated, false);
+                        break;
+                    case WindowBorder.Resizable:
+                        GLFW.SetWindowAttrib(WindowPtr, WindowAttribute.Decorated, true);
+                        GLFW.SetWindowAttrib(WindowPtr, WindowAttribute.Resizable, true);
+                        break;
+                    case WindowBorder.Fixed:
+                        GLFW.SetWindowAttrib(WindowPtr, WindowAttribute.Decorated, true);
+                        GLFW.SetWindowAttrib(WindowPtr, WindowAttribute.Resizable, false);
+                        break;
                 }
 
                 _windowBorder = value;
