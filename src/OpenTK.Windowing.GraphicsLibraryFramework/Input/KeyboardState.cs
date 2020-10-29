@@ -40,22 +40,12 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         /// Gets a <see cref="bool" /> indicating whether the specified
         ///  <see cref="Key" /> is currently down.
         /// </summary>
-        /// <param name="key">The <see cref="Key" /> to check.</param>
+        /// <param name="key">The <see cref="Keys">key</see> to check.</param>
         /// <returns><c>true</c> if key is down; <c>false</c> otherwise.</returns>
         public bool this[Keys key]
         {
             get => IsKeyDown(key);
             private set => SetKeyState(key, value);
-        }
-
-        /// <summary>
-        /// Gets a <see cref="bool" /> indicating whether this key is currently down.
-        /// </summary>
-        /// <param name="key">The <see cref="Key" /> to check.</param>
-        /// <returns><c>true</c> if <paramref name="key"/> is in the down state; otherwise, <c>false</c>.</returns>
-        public bool IsKeyDown(Keys key)
-        {
-            return _keys[(int)key];
         }
 
         /// <summary>
@@ -81,7 +71,7 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         /// <summary>
         /// Sets the key state of the <paramref name="key"/> depending on the given <paramref name="down"/> value.
         /// </summary>
-        /// <param name="key">The <see cref="Key"/> which state should be changed.</param>
+        /// <param name="key">The <see cref="Keys">key</see> which state should be changed.</param>
         /// <param name="down">The new state the key should be changed to.</param>
         internal void SetKeyState(Keys key, bool down)
         {
@@ -116,13 +106,49 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         }
 
         /// <summary>
+        /// Gets a <see cref="bool" /> indicating whether this key is currently down.
+        /// </summary>
+        /// <param name="key">The <see cref="Keys">key</see> to check.</param>
+        /// <returns><c>true</c> if <paramref name="key"/> is in the down state; otherwise, <c>false</c>.</returns>
+        public bool IsKeyDown(Keys key)
+        {
+            return _keys[(int)key];
+        }
+
+        /// <summary>
         /// Gets a <see cref="bool" /> indicating whether this key was down in the previous frame.
         /// </summary>
-        /// <param name="key">The <see cref="Key" /> to check.</param>
+        /// <param name="key">The <see cref="Keys" /> to check.</param>
         /// <returns><c>true</c> if <paramref name="key"/> was in the down state; otherwise, <c>false</c>.</returns>
         public bool WasKeyDown(Keys key)
         {
             return _keysPrevious[(int)key];
+        }
+
+        /// <summary>
+        ///     Gets whether the specified key is pressed in the current frame but released in the previous frame.
+        /// </summary>
+        /// <remarks>
+        ///     "Frame" refers to invocations of <see cref="NativeWindow.ProcessEvents()"/> here.
+        /// </remarks>
+        /// <param name="key">The <see cref="Keys">key</see> to check.</param>
+        /// <returns>True if the key is pressed in this frame, but not the last frame.</returns>
+        public bool IsKeyPressed(Keys key)
+        {
+            return _keys[(int)key] && !_keysPrevious[(int)key];
+        }
+
+        /// <summary>
+        ///     Gets whether the specified key is released in the current frame but pressed in the previous frame.
+        /// </summary>
+        /// <remarks>
+        ///     "Frame" refers to invocations of <see cref="NativeWindow.ProcessEvents()"/> here.
+        /// </remarks>
+        /// <param name="key">The <see cref="Keys">key</see> to check.</param>
+        /// <returns>True if the key is released in this frame, but pressed the last frame.</returns>
+        public bool IsKeyReleased(Keys key)
+        {
+            return !_keys[(int)key] && _keysPrevious[(int)key];
         }
 
         /// <summary>

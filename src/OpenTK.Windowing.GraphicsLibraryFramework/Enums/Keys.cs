@@ -12,7 +12,7 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
     /// <summary>
     /// Specifies key codes and modifiers in US keyboard layout.
     /// </summary>
-    public enum Keys
+    public enum Keys : int
     {
         /// <summary>
         /// An unknown key.
