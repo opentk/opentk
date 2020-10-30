@@ -1,4 +1,4 @@
-﻿//
+//
 // GameWindow.cs
 //
 // Copyright (C) 2018 OpenTK
@@ -256,6 +256,7 @@ namespace OpenTK.Windowing.Desktop
 
                 if (!Exists || IsExiting)
                 {
+                    DestroyWindow();
                     return;
                 }
 

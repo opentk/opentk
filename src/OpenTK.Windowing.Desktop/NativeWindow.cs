@@ -986,7 +986,7 @@ namespace OpenTK.Windowing.Desktop
             Context.MakeCurrent();
         }
 
-        private unsafe void DestroyWindow()
+        protected unsafe void DestroyWindow()
         {
             if (Exists)
             {
@@ -1513,9 +1513,6 @@ namespace OpenTK.Windowing.Desktop
             if (disposing)
             {
             }
-
-            // Free unmanaged resources
-            DestroyWindow();
 
             _disposedValue = true;
         }
