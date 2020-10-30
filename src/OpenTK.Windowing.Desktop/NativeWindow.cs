@@ -1000,6 +1000,8 @@ namespace OpenTK.Windowing.Desktop
             {
                 IsExiting = true;
             }
+
+            Dispose(true);
         }
 
         /// <summary>
