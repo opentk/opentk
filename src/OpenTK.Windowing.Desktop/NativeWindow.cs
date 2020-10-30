@@ -1584,7 +1584,7 @@ namespace OpenTK.Windowing.Desktop
 
             if (disposing)
             {
-                _minimizedToFullscreenTask.Dispose();
+                _minimizedToFullscreenTask?.Dispose();
             }
 
             // Free unmanaged resources
