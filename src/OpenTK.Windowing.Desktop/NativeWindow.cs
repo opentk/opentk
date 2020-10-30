@@ -1011,6 +1011,8 @@ namespace OpenTK.Windowing.Desktop
             {
                 OnCloseCallback(WindowPtr);
             }
+
+            Dispose(true);
         }
 
         /// <summary>
