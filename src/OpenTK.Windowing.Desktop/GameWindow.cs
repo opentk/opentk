@@ -253,14 +253,13 @@ namespace OpenTK.Windowing.Desktop
             while (true)
             {
                 ProcessEvents();
+                DispatchUpdateFrame();
 
                 if (!Exists || IsExiting)
                 {
                     DestroyWindow();
                     return;
                 }
-
-                DispatchUpdateFrame();
 
                 if (!IsMultiThreaded)
                 {
