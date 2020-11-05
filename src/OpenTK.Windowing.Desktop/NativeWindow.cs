@@ -27,9 +27,6 @@ namespace OpenTK.Windowing.Desktop
         /// </summary>
         public unsafe Window* WindowPtr { get; }
 
-        private CancellationTokenSource _minimizedToFullscreenTokenSrc; // Used for returning to full screen from a minimized state
-        private Task _minimizedToFullscreenTask;
-
         // Both of these are used to cache the size and location of the window before going into full screen mode.
         // When getting out of full screen mode, the location and size will be set to these value in all states other then minimized.
         private Vector2i _cachedWindowClientSize;
@@ -353,20 +350,28 @@ namespace OpenTK.Windowing.Desktop
             {
                 _previousWindowState = WindowState;
 
-                // If the window is in full screen mode, take it out of full screen mode
-                if (GLFW.GetWindowMonitor(WindowPtr) != null)
+                bool sizeNotEmpty(Vector2i vector) => vector.X != 0 && vector.Y != 0;
+
+                var canLeaveFullScreenMode = GLFW.GetWindowMonitor(WindowPtr) != null // Is full screen
+                    && value != WindowState.Fullscreen
+                    && sizeNotEmpty(_cachedWindowClientSize);
+
+                var shouldCacheSizeAndLocation = GLFW.GetWindowMonitor(WindowPtr) == null && // Not fullscreen
+                    !GLFW.GetWindowAttrib(WindowPtr, WindowAttributeGetBool.Iconified) && // Not minimized
+                    value == WindowState.Fullscreen && // Intention on going full screen
+                    sizeNotEmpty(ClientSize);
+
+                if (canLeaveFullScreenMode)
                 {
+                    // Get out of fullscreen mode
                     GLFW.SetWindowMonitor(WindowPtr, null, _cachedWindowLocation.X, _cachedWindowLocation.Y, _cachedWindowClientSize.X, _cachedWindowClientSize.Y, 0);
                 }
-                else
+
+                if (shouldCacheSizeAndLocation)
                 {
-                    // Do not cache the size and location when minimized.  The values do not make sense in that state
-                    if (!GLFW.GetWindowAttrib(WindowPtr, WindowAttributeGetBool.Iconified))
-                    {
-                        // Only cache the size and location if the window is not in full screen mode
-                        _cachedWindowClientSize = ClientSize;
-                        _cachedWindowLocation = Location;
-                    }
+                    // Only cache the size and location if the window is not in full screen mode
+                    _cachedWindowClientSize = ClientSize;
+                    _cachedWindowLocation = Location;
                 }
 
                 switch (value)
@@ -376,14 +381,6 @@ namespace OpenTK.Windowing.Desktop
                         break;
                     case WindowState.Minimized:
                         GLFW.IconifyWindow(WindowPtr);
-
-                        // If the previous state was full screen before being minimized,
-                        // start watching the state of the window to return to full screen
-                        // once a state other then full screen is chosen.
-                        if (_previousWindowState == WindowState.Fullscreen)
-                        {
-                            StartWatchingWindowState();
-                        }
                         break;
                     case WindowState.Maximized:
                         GLFW.MaximizeWindow(WindowPtr);
@@ -1025,43 +1022,6 @@ namespace OpenTK.Windowing.Desktop
             Context.MakeCurrent();
         }
 
-        /// <summary>
-        /// Begins watching the state of the window for previous full screen state restoration.
-        /// If the user clicks the iconified window in the taskbar, the window will go back
-        /// to full screen if the window was full screen before being minimized.
-        /// </summary>
-        /// <remarks>
-        ///     Scenario: The user is running a game full screen.  If the user was to minimize
-        ///     the game window, and then click the icon in the taskbar, they should go back to full screen.
-        /// </remarks>
-        private void StartWatchingWindowState()
-        {
-            _minimizedToFullscreenTokenSrc = new CancellationTokenSource();
-
-            _minimizedToFullscreenTask = new Task(
-            () =>
-            {
-                while (!_minimizedToFullscreenTokenSrc.IsCancellationRequested)
-                {
-                    Thread.Sleep(500);
-
-                    if (WindowState != WindowState.Minimized)
-                    {
-                        // Keep this thread safe just in case the user
-                        // is doing something that might cause issues
-                        lock (_lockObject)
-                        {
-                            WindowState = WindowState.Fullscreen;
-                        }
-
-                        _minimizedToFullscreenTokenSrc.Cancel();
-                    }
-                }
-            }, _minimizedToFullscreenTokenSrc.Token);
-
-            _minimizedToFullscreenTask.Start();
-        }
-
         private unsafe void DestroyWindow()
         {
             if (Exists)
@@ -1564,6 +1524,11 @@ namespace OpenTK.Windowing.Desktop
         /// <param name="e">A <see cref="MouseWheelEventArgs"/> that contains the event data.</param>
         protected virtual void OnMinimized(MinimizedEventArgs e)
         {
+            if (_previousWindowState == WindowState.Fullscreen && !e.IsMinimized)
+            {
+                WindowState = WindowState.Fullscreen;
+            }
+
             Minimized?.Invoke(e);
         }
 
@@ -1588,7 +1553,6 @@ namespace OpenTK.Windowing.Desktop
 
             if (disposing)
             {
-                _minimizedToFullscreenTask?.Dispose();
             }
 
             // Free unmanaged resources
