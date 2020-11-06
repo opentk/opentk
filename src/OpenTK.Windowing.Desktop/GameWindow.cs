@@ -225,7 +225,7 @@ namespace OpenTK.Windowing.Desktop
         }
 
         /// <summary>
-        /// Initialize the update thread (if using a multi-threaded contex, and enter the game loop of the GameWindow.
+        /// Initialize the update thread (if using a multi-threaded context, and enter the game loop of the GameWindow.
         /// </summary>
         public virtual void Run()
         {
@@ -271,7 +271,7 @@ namespace OpenTK.Windowing.Desktop
         private void StartRenderThread()
         {
             // If we are starting a render thread we want the context to be current there.
-            // So when creating the render thead the graphics context needs to be made not current on the thread creating the render thread.
+            // So when creating the render thread the graphics context needs to be made not current on the thread creating the render thread.
             Context.MakeCurrent();
 
             OnRenderThreadStarted();
