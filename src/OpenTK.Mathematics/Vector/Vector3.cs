@@ -1525,6 +1525,39 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
+        /// Converts OpenTK.Vector3 to OpenTK.Vector3d.
+        /// </summary>
+        /// <param name="vec">The Vector3 to convert.</param>
+        /// <returns>The resulting Vector3d.</returns>
+        [Pure]
+        public static implicit operator Vector3d(Vector3 vec)
+        {
+            return new Vector3d(vec.X, vec.Y, vec.Z);
+        }
+
+        /// <summary>
+        /// Converts OpenTK.Vector3 to OpenTK.Vector3h.
+        /// </summary>
+        /// <param name="vec">The Vector3 to convert.</param>
+        /// <returns>The resulting Vector3h.</returns>
+        [Pure]
+        public static explicit operator Vector3h(Vector3 vec)
+        {
+            return new Vector3h(vec.X, vec.Y, vec.Z);
+        }
+
+        /// <summary>
+        /// Converts OpenTK.Vector3 to OpenTK.Vector3i.
+        /// </summary>
+        /// <param name="vec">The Vector3 to convert.</param>
+        /// <returns>The resulting Vector3i.</returns>
+        [Pure]
+        public static explicit operator Vector3i(Vector3 vec)
+        {
+            return new Vector3i((int)vec.X, (int)vec.Y, (int)vec.Z);
+        }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="Vector3"/> struct using a tuple containing the component
         /// values.
         /// </summary>
