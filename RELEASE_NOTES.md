@@ -1,3 +1,7 @@
+### 3.3.1
+	* Fix wgl_dx_interop Lock/Unlock bindings (Thanks @ZCore)
+
+
 ### 3.3
 	* New: Add HID device names via Joystick.GetName (@leezer3)
 	* Fixes for keyboard / mice states & visibility in odd conditions (@leezer3)
