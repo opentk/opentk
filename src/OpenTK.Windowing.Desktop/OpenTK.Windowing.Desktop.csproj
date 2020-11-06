@@ -37,4 +37,7 @@
       </ItemGroup>
       <Message Text="Removing System.Memory for mono compatibility" Importance="high" />
     </Target>
+    <ItemGroup>
+      <PackageReference Update="StyleCop.Analyzers" Version="1.1.118" />
+    </ItemGroup>
 </Project>

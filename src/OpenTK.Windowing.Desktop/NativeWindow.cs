@@ -180,6 +180,7 @@ namespace OpenTK.Windowing.Desktop
                     return GLFW.GetClipboardString(WindowPtr);
                 }
             }
+
             set
             {
                 unsafe
@@ -698,8 +699,6 @@ namespace OpenTK.Windowing.Desktop
             {
                 WindowPtr = GLFW.CreateWindow(settings.Size.X, settings.Size.Y, _title, null, (Window*)(settings.SharedContext?.WindowPtr ?? IntPtr.Zero));
             }
-
-            MouseState = new MouseState(WindowPtr);
 
             Context = new GLFWGraphicsContext(WindowPtr);
 
