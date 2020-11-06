@@ -88,9 +88,16 @@ namespace OpenTK.Input
             return implementation.GetGuid(index);
         }
 
-        //public string GetName(int index)
-        //{
-        //    return implementation.GetName(index);
-        //}
+        /// Returns the name of the device connected at the specified index.
+        /// </summary>
+        /// <returns>
+        /// The name of the device at the specified index.
+        /// If no device is connected at this index than an empty string.
+        /// </returns>
+        /// <param name="index">The zero-based device index for the device to poll</param>
+        public static string GetName(int index)
+        {
+            return implementation.GetName(index);
+        }
     }
 }

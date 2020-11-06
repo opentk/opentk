@@ -34,5 +34,6 @@ namespace OpenTK.Input
         JoystickState GetState(int index);
         JoystickCapabilities GetCapabilities(int index);
         Guid GetGuid(int index);
+        string GetName(int index);
     }
 }

@@ -508,5 +508,15 @@ namespace OpenTK.Platform.Linux
             }
             return Guid.Empty;
         }
+
+        string IJoystickDriver2.GetName(int index)
+        {
+            LinuxJoystickDetails js = Sticks.FromIndex(index);
+            if (js != null)
+            {
+                return js.Name;
+            }
+            return String.Empty;
+        }
     }
 }

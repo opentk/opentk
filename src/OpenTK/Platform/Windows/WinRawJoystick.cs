@@ -59,6 +59,8 @@ namespace OpenTK.Platform.Windows
             private readonly Dictionary<int, JoystickHat> hats =
                 new Dictionary<int, JoystickHat>();
 
+            internal string Name = null;
+
             public Device(IntPtr handle, Guid guid, bool is_xinput, int xinput_index)
             {
                 Handle = handle;
@@ -104,6 +106,11 @@ namespace OpenTK.Platform.Windows
             {
                 Capabilities.SetIsConnected(value);
                 State.SetIsConnected(value);
+                if (value == false)
+                {
+                    //The stick has disconnected, so reset the cached name
+                    Name = null;
+                }
             }
 
             public JoystickCapabilities GetCapabilities()
@@ -893,6 +900,39 @@ namespace OpenTK.Platform.Windows
                     }
                 }
                 return new Guid();
+            }
+        }
+
+        public string GetName(int index)
+        {
+            lock (UpdateLock)
+            {
+                if (IsValid(index))
+                {
+                    Device dev = Devices.FromIndex(index);
+                    if (dev.Name != null)
+                    {
+                        //Name already cached, so return it
+                        return dev.Name;
+                    }
+                    if (dev.IsXInput)
+                    {
+                        //XInput- Return specific string for this
+                        return XInput.GetName(dev.XInputIndex);
+                    }
+                    //Pull out the HID name string
+                    int size = 0;
+                    Functions.GetRawInputDeviceInfo(dev.Handle, RawInputDeviceInfoEnum.DEVICENAME, IntPtr.Zero, ref size);
+                    IntPtr name_ptr = Marshal.AllocHGlobal((IntPtr)size);
+                    Functions.GetRawInputDeviceInfo(dev.Handle, RawInputDeviceInfoEnum.DEVICENAME, name_ptr, ref size);
+                    string name = Marshal.PtrToStringAnsi(name_ptr);
+                    Marshal.FreeHGlobal(name_ptr);
+                    //Parse the registry & store
+                    dev.Name = HidProtocol.GetDeviceName(name);
+                    return dev.Name;
+                }
+                //Not valid, so let's return an empty string
+                return String.Empty;
             }
         }
     }

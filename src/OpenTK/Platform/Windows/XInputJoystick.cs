@@ -147,7 +147,7 @@ namespace OpenTK.Platform.Windows
 
         public string GetName(int index)
         {
-            return String.Empty;
+            return "XInput Controller " + index;
         }
 
         public Guid GetGuid(int index)
