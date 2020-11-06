@@ -57,7 +57,8 @@ namespace OpenTK.Platform.Windows
 
             Window = window;
             RefreshDevices();
-
+            //Hook into the session switch event
+            SystemEvents.SessionSwitch += (SessionSwitch);
             Debug.Unindent();
         }
 
@@ -366,6 +367,25 @@ namespace OpenTK.Platform.Windows
             state.X = p.X;
             state.Y = p.Y;
             return state;
+        }
+
+        private void SessionSwitch(object sender, SessionSwitchEventArgs e)
+        {
+            /*
+             * When locking or unlocking the computer, reset all mice states
+             * Otherwise, a mouse button which is pressed when the session switch is initiated
+             * will remain pressed regardless until it is pressed and released again
+             *
+             * Note: This is much rarer than the similar condition with the keyboard
+             * (as the mouse will likely move slightly on unlock) but still...
+             */
+            lock (UpdateLock)
+            {
+                for (int i = 0; i < mice.Count; i++)
+                {
+                    mice[i] = new MouseState();
+                }
+            }
         }
     }
 }
