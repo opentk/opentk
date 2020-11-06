@@ -1001,7 +1001,7 @@ public static extern IntPtr CreateImageWithProperties(CLContext context, IntPtr[
 		/// </summary>
 		[DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clEnqueueReadBuffer")]
 		public static extern CLResultCode EnqueueReadBuffer([In] CLCommandQueue commandQueue, [In] CLBuffer buffer,
-			[In] uint blockingRead,
+			[In] bool blockingRead,
 			[In] UIntPtr offset, [In] UIntPtr size, [In] IntPtr pointer, [In] uint numberOfEventsInWaitList,
 			[In] CLEvent[] eventWaitList,
 			[Out] out CLEvent @event);
@@ -1016,7 +1016,7 @@ public static extern IntPtr CreateImageWithProperties(CLContext context, IntPtr[
 		{
 			fixed (T* b = array)
 			{
-				CLResultCode resultCode = EnqueueReadBuffer(commandQueue, buffer, (uint)(blockingRead ? 1 : 0), offset,
+				CLResultCode resultCode = EnqueueReadBuffer(commandQueue, buffer, blockingRead, offset,
 					(UIntPtr)(array.Length * sizeof(float)), (IntPtr)b, (uint)(eventWaitList?.Length ?? 0),
 					eventWaitList,
 					out eventHandle);
@@ -1034,7 +1034,7 @@ public static extern IntPtr CreateImageWithProperties(CLContext context, IntPtr[
 		{
 			fixed (T* b = span)
 			{
-				CLResultCode resultCode = EnqueueReadBuffer(commandQueue, buffer, (uint)(blockingRead ? 1 : 0), offset,
+				CLResultCode resultCode = EnqueueReadBuffer(commandQueue, buffer, blockingRead, offset,
 					(UIntPtr)(span.Length * sizeof(T)), (IntPtr)b, (uint)(eventWaitList?.Length ?? 0),
 					eventWaitList, out eventHandle);
 				return resultCode;
@@ -1046,7 +1046,7 @@ public static extern IntPtr CreateImageWithProperties(CLContext context, IntPtr[
 		/// </summary>
 		[DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clEnqueueReadBufferRect")]
 		public static extern CLResultCode EnqueueReadBufferRect([In] CLCommandQueue commandQueue, [In] CLBuffer buffer,
-			[In] uint blockingRead,
+			[In] bool blockingRead,
 			[In] UIntPtr[] bufferOffset, [In] UIntPtr[] hostOffset, [In] UIntPtr[] region, [In] UIntPtr bufferRowPitch,
 			[In] UIntPtr bufferSlicePitch, [In] UIntPtr hostRowPitch, [In] UIntPtr hostSlicePitch, [In] IntPtr pointer,
 			[In] uint numberOfEventsInWaitList, [In] CLEvent[] eventWaitList, [Out] out CLEvent @event);
@@ -1062,7 +1062,7 @@ public static extern IntPtr CreateImageWithProperties(CLContext context, IntPtr[
 		{
 			fixed (T* a = array)
 			{
-				return EnqueueReadBufferRect(commandQueue, buffer, (uint)(blockingRead ? 1 : 0), bufferOffset,
+				return EnqueueReadBufferRect(commandQueue, buffer, blockingRead, bufferOffset,
 					hostOffset, region,
 					bufferRowPitch, bufferSlicePitch, hostRowPitch, hostSlicePitch, (IntPtr)a,
 					(uint)(eventWaitList?.Length ?? 0),
@@ -1081,10 +1081,10 @@ public static extern IntPtr CreateImageWithProperties(CLContext context, IntPtr[
 		{
 			fixed (T* a = span)
 			{
-				return EnqueueReadBufferRect(commandQueue, buffer, (uint)(blockingRead ? 1 : 0), bufferOffset,
+				return EnqueueReadBufferRect(commandQueue, buffer, blockingRead, bufferOffset,
 					hostOffset, region,
 					bufferRowPitch, bufferSlicePitch, hostRowPitch, hostSlicePitch, (IntPtr)a,
-					(uint)(uint)(eventWaitList?.Length ?? 0),
+					(uint)(eventWaitList?.Length ?? 0),
 					eventWaitList, out @event);
 			}
 		}
@@ -1094,7 +1094,7 @@ public static extern IntPtr CreateImageWithProperties(CLContext context, IntPtr[
 		/// </summary>
 		[DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clEnqueueWriteBuffer")]
 		public static extern CLResultCode EnqueueWriteBuffer([In] CLCommandQueue commandQueue, [In] CLBuffer buffer,
-			[In] uint blockingWrite,
+			[In] bool blockingWrite,
 			[In] UIntPtr offset, [In] UIntPtr size, [In] IntPtr pointer, [In] uint numberOfEventsInWaitList,
 			[In] CLEvent[] eventWaitList,
 			[Out] out CLEvent @event);
@@ -1109,7 +1109,7 @@ public static extern IntPtr CreateImageWithProperties(CLContext context, IntPtr[
 		{
 			fixed (T* a = array)
 			{
-				CLResultCode resultCode = EnqueueWriteBuffer(commandQueue, buffer, (uint)(blockingWrite ? 1 : 0), offset,
+				CLResultCode resultCode = EnqueueWriteBuffer(commandQueue, buffer, blockingWrite, offset,
 					(UIntPtr)(array.Length * sizeof(T)), (IntPtr)a, (uint)(eventWaitList?.Length ?? 0),
 					eventWaitList, out @event);
 
@@ -1127,7 +1127,7 @@ public static extern IntPtr CreateImageWithProperties(CLContext context, IntPtr[
 		{
 			fixed (T* a = span)
 			{
-				CLResultCode resultCode = EnqueueWriteBuffer(commandQueue, buffer, (uint)(blockingWrite ? 1 : 0), offset,
+				CLResultCode resultCode = EnqueueWriteBuffer(commandQueue, buffer, blockingWrite, offset,
 					(UIntPtr)(span.Length * sizeof(T)), (IntPtr)a, (uint)(eventWaitList?.Length ?? 0),
 					eventWaitList, out @event);
 
@@ -1140,7 +1140,7 @@ public static extern IntPtr CreateImageWithProperties(CLContext context, IntPtr[
 		/// </summary>
 		[DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clEnqueueWriteBufferRect")]
 		public static extern CLResultCode EnqueueWriteBufferRect([In] CLCommandQueue commandQueue, [In] CLBuffer buffer,
-			[In] uint blockingWrite,
+			[In] bool blockingWrite,
 			[In] UIntPtr[] bufferOffset, [In] UIntPtr[] hostOffset, [In] UIntPtr[] region, [In] UIntPtr bufferRowPitch,
 			[In] UIntPtr bufferSlicePitch, [In] UIntPtr hostRowPitch, [In] UIntPtr hostSlicePitch, [In] IntPtr pointer,
 			[In] uint numberOfEventsInWaitList, [In] CLEvent[] eventWaitList, [Out] out CLEvent @event);
@@ -1156,7 +1156,7 @@ public static extern IntPtr CreateImageWithProperties(CLContext context, IntPtr[
 		{
 			fixed (T* a = array)
 			{
-				return EnqueueWriteBufferRect(commandQueue, buffer, (uint)(blockingWrite ? 1 : 0), bufferOffset,
+				return EnqueueWriteBufferRect(commandQueue, buffer, blockingWrite, bufferOffset,
 					hostOffset, region,
 					bufferRowPitch, bufferSlicePitch, hostRowPitch, hostSlicePitch, (IntPtr)a,
 					(uint)(eventWaitList?.Length ?? 0),
@@ -1175,7 +1175,7 @@ public static extern IntPtr CreateImageWithProperties(CLContext context, IntPtr[
 		{
 			fixed (T* a = span)
 			{
-				return EnqueueWriteBufferRect(commandQueue, buffer, (uint)(blockingWrite ? 1 : 0), bufferOffset,
+				return EnqueueWriteBufferRect(commandQueue, buffer, blockingWrite, bufferOffset,
 					hostOffset, region,
 					bufferRowPitch, bufferSlicePitch, hostRowPitch, hostSlicePitch, (IntPtr)a,
 					(uint)(eventWaitList?.Length ?? 0),
@@ -1234,7 +1234,7 @@ public static extern IntPtr CreateImageWithProperties(CLContext context, IntPtr[
 		/// </summary>
 		[DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clEnqueueReadImage")]
 		public static extern CLResultCode EnqueueReadImage([In] CLCommandQueue commandQueue, [In] CLImage image,
-			[In] uint blockingRead,
+			[In] bool blockingRead,
 			[In] UIntPtr[] origin, [In] UIntPtr[] region, [In] UIntPtr rowPitch, [In] UIntPtr slicePitch,
 			[In] IntPtr pointer,
 			[In] uint numberOfEventsInWaitList, [In] CLEvent[] eventWaitList, [Out] out CLEvent @event);
@@ -1244,7 +1244,7 @@ public static extern IntPtr CreateImageWithProperties(CLContext context, IntPtr[
 		/// </summary>
 		[DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clEnqueueWriteImage")]
 		public static extern CLResultCode EnqueueWriteImage([In] CLCommandQueue commandQueue, [In] CLImage image,
-			[In] uint blockingWrite,
+			[In] bool blockingWrite,
 			[In] UIntPtr[] origin, [In] UIntPtr[] region, [In] UIntPtr inputRowPitch, [In] UIntPtr inputSlicePitch,
 			[In] IntPtr pointer,
 			[In] uint numberOfEventsInWaitList, [In] CLEvent[] eventWaitList, [Out] out CLEvent @event);
@@ -1294,7 +1294,7 @@ public static extern IntPtr CreateImageWithProperties(CLContext context, IntPtr[
 		/// </summary>
 		[DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clEnqueueMapBuffer")]
 		public static extern IntPtr EnqueueMapBuffer([In] CLCommandQueue commandQueue, [In] CLBuffer buffer,
-			[In] uint blockingMap,
+			[In] bool blockingMap,
 			[In] MapFlags flags, [In] UIntPtr offset, [In] UIntPtr size, [In] uint numberOfEventsInWaitList,
 			[In] CLEvent[] eventWaitList,
 			[Out] out CLEvent @event, [Out] out CLResultCode resultCode);
@@ -1304,7 +1304,7 @@ public static extern IntPtr CreateImageWithProperties(CLContext context, IntPtr[
 		/// </summary>
 		[DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clEnqueueMapImage")]
 		public static extern IntPtr EnqueueMapImage([In] CLCommandQueue commandQueue, [In] CLImage image,
-			[In] uint blockingMap, [In] MapFlags flags,
+			[In] bool blockingMap, [In] MapFlags flags,
 			[In] UIntPtr[] origin, [In] UIntPtr[] region, [In] UIntPtr rowPitch, [In] UIntPtr slicePitch,
 			[In] uint numberOfEventsInWaitList,
 			[In] CLEvent[] eventWaitList, [Out] out CLEvent @event, [Out] out CLResultCode resultCode);
@@ -1399,7 +1399,7 @@ public static extern IntPtr CreateImageWithProperties(CLContext context, IntPtr[
 		/// Introduced in OpenCL 2.0
 		/// </summary>
 		[DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clEnqueueSVMMemcpy")]
-		public static extern CLResultCode EnqueueSvmMemoryCopy([In] CLCommandQueue commandQueue, [In] uint blockingCopy,
+		public static extern CLResultCode EnqueueSvmMemoryCopy([In] CLCommandQueue commandQueue, [In] bool blockingCopy,
 			[In] IntPtr dstPointer, [In] IntPtr srcPointer, [In] UIntPtr size, [In] uint numberOfEventsInWaitList,
 			[In] CLEvent[] eventWaitList,
 			[Out] out CLEvent @event);
@@ -1418,7 +1418,7 @@ public static extern IntPtr CreateImageWithProperties(CLContext context, IntPtr[
 		/// Introduced in OpenCL 2.0
 		/// </summary>
 		[DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clEnqueueSVMMap")]
-		public static extern CLResultCode EnqueueSvmMap([In] CLCommandQueue commandQueue, [In] uint blockingMap,
+		public static extern CLResultCode EnqueueSvmMap([In] CLCommandQueue commandQueue, [In] bool blockingMap,
 			[In] MapFlags mapFlag,
 			[In] IntPtr svmPointer, [In] UIntPtr size, [In] uint numberOfEventsInWaitList, [In] CLEvent[] eventWaitList,
 			[Out] out CLEvent @event);
