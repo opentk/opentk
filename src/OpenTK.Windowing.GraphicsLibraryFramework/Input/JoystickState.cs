@@ -171,7 +171,7 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
 
             var buttonBuilder = new StringBuilder();
 
-            for (int i = 0; i < _buttons.Length * 8; i++)
+            for (int i = 0; i < _buttons.Length; i++)
             {
                 buttonBuilder.Append($", {(IsButtonDown(i) ? "down" : "up")}");
             }
