@@ -27,6 +27,8 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Security.Cryptography;
+using System.Threading;
 using OpenTK.Input;
 
 namespace OpenTK.Platform.Linux
@@ -71,31 +73,163 @@ namespace OpenTK.Platform.Linux
 
         private readonly object sync = new object();
 
-        private readonly FileSystemWatcher watcher = new FileSystemWatcher();
-
         private readonly DeviceCollection<LinuxJoystickDetails> Sticks =
             new DeviceCollection<LinuxJoystickDetails>();
 
-        private bool disposed;
+        private volatile bool disposed;
+
+        private const string InputDevicePath = "/proc/bus/input/devices";
+        /// <summary>The evdev path on recent Xorg versions</summary>
+        private static readonly string JoystickPath = "/dev/input";
+        /// <summary>The legacy evdev fallback Xorg path</summary>
+        private static readonly string JoystickPathLegacy = "/dev";
+
+        /// <summary>Thread used to monitor ProcFS for changes in order to support hotplugging of joysticks</summary>
+        private readonly Thread ProcFSMonitorThread;
+
+        /// <summary>Gets the actual evdev path used by the XOrg server</summary>
+        /// <remarks>See <see href="https://www.kernel.org/doc/Documentation/input/input.txt">the Linux kernel documentation</see> for further details.</remarks>
+        private string EvdevPath
+        {
+            get
+            {
+                return Directory.Exists(JoystickPath) ? JoystickPath :
+                    Directory.Exists(JoystickPathLegacy) ? JoystickPathLegacy :
+                    String.Empty;
+            }
+        }
 
         public LinuxJoystick()
         {
-            string path =
-                Directory.Exists(JoystickPath) ? JoystickPath :
-                Directory.Exists(JoystickPathLegacy) ? JoystickPathLegacy :
-                String.Empty;
-
-            if (!String.IsNullOrEmpty(path))
+            ProcFSMonitorThread = new Thread(ProcessEvents);
+            ProcFSMonitorThread.IsBackground = true;
+            ProcFSMonitorThread.Start();
+            //Populate the initial list of joysticks
+            if (!String.IsNullOrEmpty(EvdevPath))
             {
-                watcher.Path = path;
-
-                watcher.Created += JoystickAdded;
-                watcher.Deleted += JoystickRemoved;
-                watcher.EnableRaisingEvents = true;
-
-                OpenJoysticks(path);
+                OpenJoysticks(EvdevPath);
             }
         }
+
+        private readonly MD5 Hasher = MD5.Create();
+
+        private string procHash;
+
+        private void ProcessEvents()
+        {
+            if (!File.Exists(InputDevicePath))
+            {
+                //BSD may not have the Linux ProcFS, no use running a pointless loop
+                return;
+            }
+
+            while (!disposed)
+            {
+                /*
+                 * Rather hacky filesystemwatcher equivilant, as it doesn't work on ProcFS
+                 * As the thing is psuedo-files, we can't use the last modified date either
+                 * We have to load the thing into a stream and hash. At least it's only a few bytes.....
+                 *
+                 * Note: We could possibly override the Mono filesystem watcher backend, but this is a global variable only
+                 * and so may break user code
+                 */
+                Thread.Sleep(750); //750ms is the Mono default for the file hashing version of FileSystemWatcher backend
+                List<int> connectedDevices;
+                
+                using (FileStream stream = new FileStream(InputDevicePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+                {
+                    string newHash = BitConverter.ToString(Hasher.ComputeHash(stream));
+                    if (newHash == procHash)
+                    {
+                        //Hash of /proc/bus/input/devices has not changed, hence no new devices added / removed
+                        continue;
+                    }
+                    stream.Seek( 0, 0);
+                    connectedDevices = GetConnectedDevices(stream);
+                    procHash = newHash;
+                    OpenJoysticks(EvdevPath);
+                }
+
+                List<int> xboxPadCandidates = new List<int>();
+
+                foreach (LinuxJoystickDetails stick in Sticks)
+                {
+                    if (connectedDevices.Contains(stick.PathIndex))
+                    {
+                        if (stick.Caps.AxisCount == 6 && stick.Caps.ButtonCount == 11 && stick.Caps.HatCount == 2)
+                        {
+                            xboxPadCandidates.Add(stick.PathIndex);
+                        }
+                        else
+                        {
+                            stick.Caps.SetIsConnected(true);
+                            stick.State.SetIsConnected(true);
+                        }
+                    }
+                    else
+                    {
+                        stick.State.SetIsConnected(false);
+                        stick.Caps.SetIsConnected(false);
+                    }
+                }
+
+                if (xboxPadCandidates.Count < 4)
+                {
+                    /*
+                     * The XBox wireless reciever generates 4 sticks which may not have anything connected to them
+                     * If there are less than 4, this can't be this (or it's been fixed evdev side in the meantime)
+                     * so let's set them as connected
+                     */
+                    foreach (int idx in xboxPadCandidates)
+                    {
+                        LinuxJoystickDetails stick = Sticks.FromHardwareId(idx);
+                        if (stick != null)
+                        {
+                            stick.Caps.SetIsConnected(true);
+                            stick.State.SetIsConnected(true);
+                        }
+                    }
+                }
+            }
+        }
+
+        /// <summary>Gets the list of connected device IDs</summary>
+        /// <param name="stream">The filestream to /proc/bus/input/devices</param>
+        /// <returns>The list of connected device IDs, or an empty list if no devices are connected</returns>
+        private List<int> GetConnectedDevices(FileStream stream)
+        {
+            List<int> connectedDevices = new List<int>();
+            using (StreamReader reader = new StreamReader(stream))
+            {
+                while (!reader.EndOfStream)
+                {
+                    string currentLine = reader.ReadLine();
+                    if (string.IsNullOrEmpty(currentLine))
+                    {
+                        continue;
+                    }
+
+                    switch (char.ToLower(currentLine[0]))
+                    {
+                        case 'h':
+                            string[] handlers = currentLine.Substring(currentLine.IndexOf('=') + 1).Trim().Split(' ');
+
+                            foreach (string handler in handlers)
+                            {
+                                if (handler.StartsWith("event", StringComparison.InvariantCultureIgnoreCase))
+                                {
+                                    //As device is in /proc/bus/input/devices it is connected, so pull out the evdev ID
+                                    int evdevID = int.Parse(handler.Substring(5));
+                                    connectedDevices.Add(evdevID);
+                                }
+                            }
+                            break;
+                    }
+                }
+            }
+            return connectedDevices;
+        }
+
 
         private void OpenJoysticks(string path)
         {
@@ -124,31 +258,6 @@ namespace OpenTK.Platform.Linux
                 }
             }
             return -1;
-        }
-
-        private void JoystickAdded(object sender, FileSystemEventArgs e)
-        {
-            lock (sync)
-            {
-                OpenJoystick(e.FullPath);
-            }
-        }
-
-        private void JoystickRemoved(object sender, FileSystemEventArgs e)
-        {
-            lock (sync)
-            {
-                string file = Path.GetFileName(e.FullPath);
-                int number = GetJoystickNumber(file);
-                if (number != -1)
-                {
-                    var stick = Sticks.FromHardwareId(number);
-                    if (stick != null)
-                    {
-                        CloseJoystick(stick);
-                    }
-                }
-            }
         }
 
         private Guid CreateGuid(EvdevInputId id, string name)
@@ -352,6 +461,7 @@ namespace OpenTK.Platform.Linux
             return new JoystickHatState(HatPositions[x, y]);
         }
 
+        
         private void PollJoystick(LinuxJoystickDetails js)
         {
             unsafe
@@ -367,10 +477,7 @@ namespace OpenTK.Platform.Linux
                     {
                         break;
                     }
-
-                    // Only mark the joystick as connected when we actually start receiving events.
-                    // Otherwise, the Xbox wireless receiver will register 4 joysticks even if no
-                    // actual joystick is connected to the receiver.
+                    //As we've received an event, this must be connected!
                     js.Caps.SetIsConnected(true);
                     js.State.SetIsConnected(true);
 
@@ -446,9 +553,6 @@ namespace OpenTK.Platform.Linux
             }
         }
 
-        private static readonly string JoystickPath = "/dev/input";
-        private static readonly string JoystickPathLegacy = "/dev";
-
         public void Dispose()
         {
             Dispose(true);
@@ -462,8 +566,6 @@ namespace OpenTK.Platform.Linux
                 if (manual)
                 {
                 }
-
-                watcher.Dispose();
                 foreach (LinuxJoystickDetails js in Sticks)
                 {
                     CloseJoystick(js);
