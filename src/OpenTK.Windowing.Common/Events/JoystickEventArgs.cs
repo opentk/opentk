@@ -13,7 +13,7 @@ using OpenTK.Windowing.Common;
 namespace OpenTK.Windowing.Common
 {
     /// <summary>
-    /// Defines the event data for the <see cref="INativeWindow.JoystickConnected"/> event.
+    /// Defines the event data for the <see cref="NativeWindow.JoystickConnected"/> event.
     /// </summary>
     public readonly struct JoystickEventArgs
     {

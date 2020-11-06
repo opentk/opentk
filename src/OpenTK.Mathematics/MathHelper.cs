@@ -883,23 +883,12 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Swaps two double values.
-        /// </summary>
-        /// <param name="a">The first value.</param>
-        /// <param name="b">The second value.</param>
-        public static void Swap(ref double a, ref double b)
-        {
-            var temp = a;
-            a = b;
-            b = temp;
-        }
-
-        /// <summary>
         /// Swaps two float values.
         /// </summary>
+        /// <typeparam name="T">The type of the values to swap.</typeparam>
         /// <param name="a">The first value.</param>
         /// <param name="b">The second value.</param>
-        public static void Swap(ref float a, ref float b)
+        public static void Swap<T>(ref T a, ref T b)
         {
             var temp = a;
             a = b;
@@ -945,15 +934,10 @@ namespace OpenTK.Mathematics
             return Math.Max(Math.Min(n, max), min);
         }
 
-        [Pure]
-        private static unsafe int FloatToInt32Bits(float f)
-        {
-            return *((int*)&f);
-        }
-
         /// <summary>
         /// Scales the specified number linearly between a minimum and a maximum.
         /// </summary>
+        /// <remarks>If the value range is zero, this function will throw a divide by zero exception.</remarks>
         /// <param name="value">The number to scale.</param>
         /// <param name="valueMin">The minimum expected number (inclusive).</param>
         /// <param name="valueMax">The maximum expected number (inclusive).</param>
@@ -961,25 +945,47 @@ namespace OpenTK.Mathematics
         /// <param name="resultMax">The maximum output number (inclusive).</param>
         /// <returns>The number, scaled linearly between min and max.</returns>
         [Pure]
-        public static int ScaleValue
-        (
-            int value,
-            int valueMin,
-            int valueMax,
-            int resultMin,
-            int resultMax
-        )
+        public static int Map(int value, int valueMin, int valueMax, int resultMin, int resultMax)
         {
-            if (valueMin >= valueMax || resultMin >= resultMax)
-            {
-                throw new ArgumentOutOfRangeException();
-            }
+            int inRange = valueMax - valueMax;
+            int resultRange = resultMax - resultMin;
+            return resultMin + (resultRange * ((value - valueMin) / inRange));
+        }
 
-            value = Clamp(value, valueMin, valueMax);
+        /// <summary>
+        /// Scales the specified number linearly between a minimum and a maximum.
+        /// </summary>
+        /// <remarks>If the value range is zero, this function will throw a divide by zero exception.</remarks>
+        /// <param name="value">The number to scale.</param>
+        /// <param name="valueMin">The minimum expected number (inclusive).</param>
+        /// <param name="valueMax">The maximum expected number (inclusive).</param>
+        /// <param name="resultMin">The minimum output number (inclusive).</param>
+        /// <param name="resultMax">The maximum output number (inclusive).</param>
+        /// <returns>The number, scaled linearly between min and max.</returns>
+        [Pure]
+        public static float Map(float value, float valueMin, float valueMax, float resultMin, float resultMax)
+        {
+            float inRange = valueMax - valueMax;
+            float resultRange = resultMax - resultMin;
+            return resultMin + (resultRange * ((value - valueMin) / inRange));
+        }
 
-            var range = resultMax - resultMin;
-            long temp = (value - valueMin) * range; // need long to avoid overflow
-            return (int)((temp / (valueMax - valueMin)) + resultMin);
+        /// <summary>
+        /// Scales the specified number linearly between a minimum and a maximum.
+        /// </summary>
+        /// <remarks>If the value range is zero, this function will throw a divide by zero exception.</remarks>
+        /// <param name="value">The number to scale.</param>
+        /// <param name="valueMin">The minimum expected number (inclusive).</param>
+        /// <param name="valueMax">The maximum expected number (inclusive).</param>
+        /// <param name="resultMin">The minimum output number (inclusive).</param>
+        /// <param name="resultMax">The maximum output number (inclusive).</param>
+        /// <returns>The number, scaled linearly between min and max.</returns>
+        [Pure]
+        public static double Map(double value, double valueMin, double valueMax, double resultMin, double resultMax)
+        {
+            double inRange = valueMax - valueMax;
+            double resultRange = resultMax - resultMin;
+            return resultMin + (resultRange * ((value - valueMin) / inRange));
         }
 
         /// <summary>
@@ -996,13 +1002,13 @@ namespace OpenTK.Mathematics
         public static bool ApproximatelyEqual(float a, float b, int maxDeltaBits)
         {
             // we use longs here, otherwise we run into a two's complement problem, causing this to fail with -2 and 2.0
-            long k = FloatToInt32Bits(a);
+            long k = BitConverter.SingleToInt32Bits(a);
             if (k < 0)
             {
                 k = int.MinValue - k;
             }
 
-            long l = FloatToInt32Bits(b);
+            long l = BitConverter.SingleToInt32Bits(b);
             if (l < 0)
             {
                 l = int.MinValue - l;
@@ -1140,12 +1146,26 @@ namespace OpenTK.Mathematics
         /// </summary>
         /// <param name="start">Start value.</param>
         /// <param name="end">End value.</param>
-        /// <param name="t">Value of the interpollation between a and b.</param>
+        /// <param name="t">Value of the interpollation between a and b. Clamped to [0, 1].</param>
         /// <returns>The interpolated result between the a and b values.</returns>
         [Pure]
         public static float Lerp(float start, float end, float t)
         {
-            t = Clamp(t, 0, 1);
+            t = Math.Clamp(t, 0, 1);
+            return start + (t * (end - start));
+        }
+
+        /// <summary>
+        /// Linearly interpolates between a and b by t.
+        /// </summary>
+        /// <param name="start">Start value.</param>
+        /// <param name="end">End value.</param>
+        /// <param name="t">Value of the interpollation between a and b. Clamped to [0, 1].</param>
+        /// <returns>The interpolated result between the a and b values.</returns>
+        [Pure]
+        public static double Lerp(double start, double end, double t)
+        {
+            t = Math.Clamp(t, 0, 1);
             return start + (t * (end - start));
         }
 

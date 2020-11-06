@@ -12,7 +12,7 @@ using OpenTK.Mathematics;
 namespace OpenTK.Windowing.Common
 {
     /// <summary>
-    /// Defines the event data for <see cref="INativeWindow.MouseWheel" /> events.
+    /// Defines the event data for <see cref="NativeWindow.MouseWheel" /> events.
     /// </summary>
     public readonly struct MouseWheelEventArgs
     {
