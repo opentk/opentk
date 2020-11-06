@@ -1,3 +1,8 @@
+### 3.3
+	* New: Add HID device names via Joystick.GetName (@leezer3)
+	* Fixes for keyboard / mice states & visibility in odd conditions (@leezer3)
+	* Fixes for Linux joystick issues with connection / disconnection (@leezer3)
+
 ### 3.2.1
 	*  Fix: XInput issues with multiple / disconnected pads (Thanks @leezer3)
 
