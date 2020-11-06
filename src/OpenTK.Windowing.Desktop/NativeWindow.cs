@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Reflection;
 using System.Runtime.InteropServices;
+using System.Threading;
+using System.Threading.Tasks;
 using OpenTK.Core;
 using OpenTK.Mathematics;
 using OpenTK.Windowing.Common;
@@ -24,6 +26,13 @@ namespace OpenTK.Windowing.Desktop
         /// Gets the native <see cref="Window"/> pointer for use with <see cref="GLFW"/> API.
         /// </summary>
         public unsafe Window* WindowPtr { get; }
+
+        // Both of these are used to cache the size and location of the window before going into full screen mode.
+        // When getting out of full screen mode, the location and size will be set to these value in all states other then minimized.
+        private Vector2i _cachedWindowClientSize;
+        private Vector2i _cachedWindowLocation;
+        private WindowState _previousWindowState;
+        private static object _lockObject = new object();
 
         // Used for delta calculation in the mouse position changed event.
         private Vector2 _lastReportedMousePos;
@@ -339,6 +348,32 @@ namespace OpenTK.Windowing.Desktop
 
             set
             {
+                _previousWindowState = WindowState;
+
+                bool sizeNotEmpty(Vector2i vector) => vector.X != 0 && vector.Y != 0;
+
+                var canLeaveFullScreenMode = GLFW.GetWindowMonitor(WindowPtr) != null // Is full screen
+                    && value != WindowState.Fullscreen
+                    && sizeNotEmpty(_cachedWindowClientSize);
+
+                var shouldCacheSizeAndLocation = GLFW.GetWindowMonitor(WindowPtr) == null && // Not fullscreen
+                    !GLFW.GetWindowAttrib(WindowPtr, WindowAttributeGetBool.Iconified) && // Not minimized
+                    value == WindowState.Fullscreen && // Intention on going full screen
+                    sizeNotEmpty(ClientSize);
+
+                if (canLeaveFullScreenMode)
+                {
+                    // Get out of fullscreen mode
+                    GLFW.SetWindowMonitor(WindowPtr, null, _cachedWindowLocation.X, _cachedWindowLocation.Y, _cachedWindowClientSize.X, _cachedWindowClientSize.Y, 0);
+                }
+
+                if (shouldCacheSizeAndLocation)
+                {
+                    // Only cache the size and location if the window is not in full screen mode
+                    _cachedWindowClientSize = ClientSize;
+                    _cachedWindowLocation = Location;
+                }
+
                 switch (value)
                 {
                     case WindowState.Normal:
@@ -963,6 +998,8 @@ namespace OpenTK.Windowing.Desktop
             {
                 IsExiting = true;
             }
+
+            Dispose(true);
         }
 
         /// <summary>
@@ -974,6 +1011,8 @@ namespace OpenTK.Windowing.Desktop
             {
                 OnCloseCallback(WindowPtr);
             }
+
+            Dispose(true);
         }
 
         /// <summary>
@@ -1486,6 +1525,11 @@ namespace OpenTK.Windowing.Desktop
         /// <param name="e">A <see cref="MouseWheelEventArgs"/> that contains the event data.</param>
         protected virtual void OnMinimized(MinimizedEventArgs e)
         {
+            if (_previousWindowState == WindowState.Fullscreen && !e.IsMinimized)
+            {
+                WindowState = WindowState.Fullscreen;
+            }
+
             Minimized?.Invoke(e);
         }
 

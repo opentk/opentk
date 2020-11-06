@@ -1597,6 +1597,39 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
+        /// Converts OpenTK.Vector4i to OpenTK.Vector4.
+        /// </summary>
+        /// <param name="vec">The Vector4i to convert.</param>
+        /// <returns>The resulting Vector4.</returns>
+        [Pure]
+        public static implicit operator Vector4(Vector4i vec)
+        {
+            return new Vector4(vec.X, vec.Y, vec.Z, vec.W);
+        }
+
+        /// <summary>
+        /// Converts OpenTK.Vector4i to OpenTK.Vector4d.
+        /// </summary>
+        /// <param name="vec">The Vector4i to convert.</param>
+        /// <returns>The resulting Vector4d.</returns>
+        [Pure]
+        public static implicit operator Vector4d(Vector4i vec)
+        {
+            return new Vector4d(vec.X, vec.Y, vec.Z, vec.W);
+        }
+
+        /// <summary>
+        /// Converts OpenTK.Vector4i to OpenTK.Vector4h.
+        /// </summary>
+        /// <param name="vec">The Vector4i to convert.</param>
+        /// <returns>The resulting Vector4h.</returns>
+        [Pure]
+        public static explicit operator Vector4h(Vector4i vec)
+        {
+            return new Vector4h(vec.X, vec.Y, vec.Z, vec.W);
+        }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="Vector4i"/> struct using a tuple containing the component
         /// values.
         /// </summary>

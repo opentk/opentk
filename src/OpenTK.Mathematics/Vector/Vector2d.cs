@@ -920,25 +920,36 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Converts OpenTK.Vector2 to OpenTK.Vector2d.
+        /// Converts OpenTK.Vector2d to OpenTK.Vector2.
         /// </summary>
-        /// <param name="v2">The Vector2 to convert.</param>
-        /// <returns>The resulting Vector2d.</returns>
+        /// <param name="vec">The Vector2d to convert.</param>
+        /// <returns>The resulting Vector2.</returns>
         [Pure]
-        public static explicit operator Vector2d(Vector2 v2)
+        public static explicit operator Vector2(Vector2d vec)
         {
-            return new Vector2d(v2.X, v2.Y);
+            return new Vector2((float)vec.X, (float)vec.Y);
         }
 
         /// <summary>
-        /// Converts OpenTK.Vector2d to OpenTK.Vector2.
+        /// Converts OpenTK.Vector2d to OpenTK.Vector2h.
         /// </summary>
-        /// <param name="v2d">The Vector2d to convert.</param>
-        /// <returns>The resulting Vector2.</returns>
+        /// <param name="vec">The Vector2d to convert.</param>
+        /// <returns>The resulting Vector2h.</returns>
         [Pure]
-        public static explicit operator Vector2(Vector2d v2d)
+        public static explicit operator Vector2h(Vector2d vec)
         {
-            return new Vector2((float)v2d.X, (float)v2d.Y);
+            return new Vector2h(new Half(vec.X), new Half(vec.Y));
+        }
+
+        /// <summary>
+        /// Converts OpenTK.Vector2d to OpenTK.Vector2i.
+        /// </summary>
+        /// <param name="vec">The Vector2d to convert.</param>
+        /// <returns>The resulting Vector2i.</returns>
+        [Pure]
+        public static explicit operator Vector2i(Vector2d vec)
+        {
+            return new Vector2i((int)vec.X, (int)vec.Y);
         }
 
         /// <summary>
