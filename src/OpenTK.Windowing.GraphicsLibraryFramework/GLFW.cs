@@ -1227,9 +1227,9 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         /// This function sets the value of an attribute of the specified window.
         /// </para>
         /// <para>
-        /// The supported attributes are <see cref="WindowAttributeSetter.Decorated"/>,
-        /// <see cref="WindowAttributeSetter.Resizable"/>, <see cref="WindowAttributeSetter.Floating"/>,
-        /// <see cref="WindowAttributeSetter.AutoIconify"/> and <see cref="WindowAttributeSetter.FocusOnShow"/>.
+        /// The supported attributes are <see cref="WindowAttribute.Decorated"/>,
+        /// <see cref="WindowAttribute.Resizable"/>, <see cref="WindowAttribute.Floating"/>,
+        /// <see cref="WindowAttribute.AutoIconify"/> and <see cref="WindowAttribute.FocusOnShow"/>.
         /// </para>
         /// <para>
         /// Some of these attributes are ignored for full screen windows.
@@ -1245,7 +1245,7 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         /// <param name="value"><c>true</c> or <c>false</c>.</param>
         /// <remarks>
         /// <para>
-        /// Calling <see cref="GetWindowAttrib"/> will always return the latest value,
+        /// Calling <see cref="GetWindowAttrib(Window*, WindowAttributeGetBool)"/> will always return the latest value,
         /// even if that value is ignored by the current mode of the window.
         /// </para>
         /// <para>
@@ -1255,7 +1255,7 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         /// Possible errors include <see cref="ErrorCode.NotInitialized"/>, <see cref="ErrorCode.InvalidEnum"/>, <see cref="ErrorCode.InvalidValue"/> and <see cref="ErrorCode.PlatformError"/>.
         /// </para>
         /// </remarks>
-        public static unsafe void SetWindowAttrib(Window* window, WindowAttributeSetter attribute, bool value)
+        public static unsafe void SetWindowAttrib(Window* window, WindowAttribute attribute, bool value)
         {
             glfwSetWindowAttrib(window, attribute, value ? GLFW_TRUE : GLFW_FALSE);
         }
@@ -1324,8 +1324,6 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         /// <item><term><see cref="Keys.LeftBracket"/></term></item>
         /// <item><term><see cref="Keys.RightBracket"/></term></item>
         /// <item><term><see cref="Keys.Backslash"/></term></item>
-        /// <item><term><see cref="Keys.World1"/></term></item>
-        /// <item><term><see cref="Keys.World2"/></term></item>
         /// <item><term><see cref="Keys.D0"/> to <see cref="Keys.D9"/></term></item>
         /// <item><term><see cref="Keys.A"/> to <see cref="Keys.Z"/></term></item>
         /// <item><term><see cref="Keys.KeyPad0"/> to <see cref="Keys.KeyPad9"/></term></item>
@@ -1397,8 +1395,6 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         /// <item><term><see cref="Keys.LeftBracket"/></term></item>
         /// <item><term><see cref="Keys.RightBracket"/></term></item>
         /// <item><term><see cref="Keys.Backslash"/></term></item>
-        /// <item><term><see cref="Keys.World1"/></term></item>
-        /// <item><term><see cref="Keys.World2"/></term></item>
         /// <item><term><see cref="Keys.D0"/> to <see cref="Keys.D9"/></term></item>
         /// <item><term><see cref="Keys.A"/> to <see cref="Keys.Z"/></term></item>
         /// <item><term><see cref="Keys.KeyPad0"/> to <see cref="Keys.KeyPad9"/></term></item>
@@ -1849,22 +1845,9 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         /// Possible errors include <see cref="ErrorCode.NotInitialized"/>, <see cref="ErrorCode.InvalidEnum"/> and <see cref="ErrorCode.PlatformError"/>.
         /// </para>
         /// </remarks>
-        public static unsafe float[] GetJoystickAxes(int jid)
+        public static unsafe Span<float> GetJoystickAxes(int jid)
         {
-            var ptr = GetJoystickAxesRaw(jid, out var count);
-
-            if (ptr == null)
-            {
-                return null;
-            }
-
-            var array = new float[count];
-            for (var i = 0; i < count; i++)
-            {
-                array[i] = ptr[i];
-            }
-
-            return array;
+            return new Span<float>(GetJoystickAxesRaw(jid, out var count), count);
         }
 
         /// <summary>
@@ -2971,7 +2954,7 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         /// <a href="https://www.glfw.org/docs/latest/window_guide.html#window_hints_hard">hard constraints</a>.
         /// This includes the size of the window, especially for full screen windows.
         /// To query the actual attributes of the created window, framebuffer and context,
-        /// see <see cref="GetWindowAttrib" />, <see cref="GetWindowSize" /> and <see cref="GetFramebufferSize" />.
+        /// see <see cref="GetWindowAttrib(Window*, WindowAttributeGetBool)" />, <see cref="GetWindowSize" /> and <see cref="GetFramebufferSize" />.
         /// </para>
         /// <para>
         /// To create a full screen window, you need to specify the monitor the window will cover.
@@ -3105,7 +3088,7 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         /// <a href="https://www.glfw.org/docs/latest/window_guide.html#window_hints_hard">hard constraints</a>.
         /// This includes the size of the window, especially for full screen windows.
         /// To query the actual attributes of the created window, framebuffer and context,
-        /// see <see cref="GetWindowAttrib" />, <see cref="GetWindowSize" /> and <see cref="GetFramebufferSize" />.
+        /// see <see cref="GetWindowAttrib(Window*, WindowAttributeGetBool)" />, <see cref="GetWindowSize" /> and <see cref="GetFramebufferSize" />.
         /// </para>
         /// <para>
         /// To create a full screen window, you need to specify the monitor the window will cover.
@@ -3527,9 +3510,45 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         /// Possible errors include <see cref="ErrorCode.NotInitialized"/>, <see cref="ErrorCode.InvalidEnum"/> and <see cref="ErrorCode.PlatformError"/>.
         /// </para>
         /// </remarks>
-        public static unsafe bool GetWindowAttrib(Window* window, WindowAttributeGetter attribute)
+        public static unsafe bool GetWindowAttrib(Window* window, WindowAttributeGetBool attribute)
         {
             return glfwGetWindowAttrib(window, attribute) == GLFW_TRUE;
+        }
+
+        /// <inheritdoc cref="GetWindowAttrib(Window*, WindowAttributeGetBool)"/>
+        public static unsafe int GetWindowAttrib(Window* window, WindowAttributeGetInt attribute)
+        {
+            return glfwGetWindowAttrib(window, attribute);
+        }
+
+        /// <inheritdoc cref="GetWindowAttrib(Window*, WindowAttributeGetBool)"/>
+        public static unsafe ClientApi GetWindowAttrib(Window* window, WindowAttributeGetClientApi attribute)
+        {
+            return glfwGetWindowAttrib(window, attribute);
+        }
+
+        /// <inheritdoc cref="GetWindowAttrib(Window*, WindowAttributeGetBool)"/>
+        public static unsafe ContextApi GetWindowAttrib(Window* window, WindowAttributeGetContextApi attribute)
+        {
+            return glfwGetWindowAttrib(window, attribute);
+        }
+
+        /// <inheritdoc cref="GetWindowAttrib(Window*, WindowAttributeGetBool)"/>
+        public static unsafe OpenGlProfile GetWindowAttrib(Window* window, WindowAttributeGetOpenGlProfile attribute)
+        {
+            return glfwGetWindowAttrib(window, attribute);
+        }
+
+        /// <inheritdoc cref="GetWindowAttrib(Window*, WindowAttributeGetBool)"/>
+        public static unsafe ReleaseBehavior GetWindowAttrib(Window* window, WindowAttributeGetReleaseBehavior attribute)
+        {
+            return glfwGetWindowAttrib(window, attribute);
+        }
+
+        /// <inheritdoc cref="GetWindowAttrib(Window*, WindowAttributeGetBool)"/>
+        public static unsafe Robustness GetWindowAttrib(Window* window, WindowAttributeGetRobustness attribute)
+        {
+            return glfwGetWindowAttrib(window, attribute);
         }
 
         /// <summary>
@@ -3863,7 +3882,7 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
             Window* window,
             GLFWCallbacks.WindowMaximizeCallback callback)
         {
-            return glfwSetWindowMaximizeCallback(window, Marshal.GetFunctionPointerForDelegate(callback));
+            return glfwSetWindowMaximizeCallback(window, callback);
         }
 
         /// <summary>
@@ -3890,7 +3909,7 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
             Window* window,
             GLFWCallbacks.FramebufferSizeCallback callback)
         {
-            return glfwSetFramebufferSizeCallback(window, Marshal.GetFunctionPointerForDelegate(callback));
+            return glfwSetFramebufferSizeCallback(window, callback);
         }
 
         /// <summary>
@@ -3917,7 +3936,7 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
             Window* window,
             GLFWCallbacks.WindowContentScaleCallback callback)
         {
-            return glfwSetWindowContentScaleCallback(window, Marshal.GetFunctionPointerForDelegate(callback));
+            return glfwSetWindowContentScaleCallback(window, callback);
         }
 
         /// <summary>
@@ -4031,7 +4050,7 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
             Window* window,
             GLFWCallbacks.CharCallback callback)
         {
-            return glfwSetCharCallback(window, Marshal.GetFunctionPointerForDelegate(callback));
+            return glfwSetCharCallback(window, callback);
         }
 
         /// <summary>
@@ -4068,7 +4087,7 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
             Window* window,
             GLFWCallbacks.CharModsCallback callback)
         {
-            return glfwSetCharModsCallback(window, Marshal.GetFunctionPointerForDelegate(callback));
+            return glfwSetCharModsCallback(window, callback);
         }
 
         /// <summary>
@@ -4151,7 +4170,7 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
             Window* window,
             GLFWCallbacks.CursorEnterCallback callback)
         {
-            return glfwSetCursorEnterCallback(window, Marshal.GetFunctionPointerForDelegate(callback));
+            return glfwSetCursorEnterCallback(window, callback);
         }
 
         /// <summary>
@@ -4181,7 +4200,7 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
             Window* window,
             GLFWCallbacks.CursorPosCallback callback)
         {
-            return glfwSetCursorPosCallback(window, Marshal.GetFunctionPointerForDelegate(callback));
+            return glfwSetCursorPosCallback(window, callback);
         }
 
         /// <summary>
@@ -4212,7 +4231,7 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
             Window* window,
             GLFWCallbacks.DropCallback callback)
         {
-            return glfwSetDropCallback(window, Marshal.GetFunctionPointerForDelegate(callback));
+            return glfwSetDropCallback(window, callback);
         }
 
         /// <summary>
@@ -4245,7 +4264,7 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         /// </remarks>
         public static IntPtr SetErrorCallback(GLFWCallbacks.ErrorCallback callback)
         {
-            return glfwSetErrorCallback(Marshal.GetFunctionPointerForDelegate(callback));
+            return glfwSetErrorCallback(callback);
         }
 
         /// <summary>
@@ -4369,7 +4388,7 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         /// </remarks>
         public static IntPtr SetJoystickCallback(GLFWCallbacks.JoystickCallback callback)
         {
-            return glfwSetJoystickCallback(Marshal.GetFunctionPointerForDelegate(callback));
+            return glfwSetJoystickCallback(callback);
         }
 
         /// <summary>
@@ -4414,7 +4433,7 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
             Window* window,
             GLFWCallbacks.KeyCallback callback)
         {
-            return glfwSetKeyCallback(window, Marshal.GetFunctionPointerForDelegate(callback));
+            return glfwSetKeyCallback(window, callback);
         }
 
         /// <summary>
@@ -4443,7 +4462,7 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
             Window* window,
             GLFWCallbacks.ScrollCallback callback)
         {
-            return glfwSetScrollCallback(window, Marshal.GetFunctionPointerForDelegate(callback));
+            return glfwSetScrollCallback(window, callback);
         }
 
         /// <summary>
@@ -4466,7 +4485,7 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         /// </remarks>
         public static IntPtr SetMonitorCallback(GLFWCallbacks.MonitorCallback callback)
         {
-            return glfwSetMonitorCallback(Marshal.GetFunctionPointerForDelegate(callback));
+            return glfwSetMonitorCallback(callback);
         }
 
         /// <summary>
@@ -4499,7 +4518,7 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
             Window* window,
             GLFWCallbacks.MouseButtonCallback callback)
         {
-            return glfwSetMouseButtonCallback(window, Marshal.GetFunctionPointerForDelegate(callback));
+            return glfwSetMouseButtonCallback(window, callback);
         }
 
         /// <summary>
@@ -4536,7 +4555,7 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
             Window* window,
             GLFWCallbacks.WindowCloseCallback callback)
         {
-            return glfwSetWindowCloseCallback(window, Marshal.GetFunctionPointerForDelegate(callback));
+            return glfwSetWindowCloseCallback(window, callback);
         }
 
         /// <summary>
@@ -4567,7 +4586,7 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
             Window* window,
             GLFWCallbacks.WindowFocusCallback callback)
         {
-            return glfwSetWindowFocusCallback(window, Marshal.GetFunctionPointerForDelegate(callback));
+            return glfwSetWindowFocusCallback(window, callback);
         }
 
         /// <summary>
@@ -4667,7 +4686,7 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
             Window* window,
             GLFWCallbacks.WindowIconifyCallback callback)
         {
-            return glfwSetWindowIconifyCallback(window, Marshal.GetFunctionPointerForDelegate(callback));
+            return glfwSetWindowIconifyCallback(window, callback);
         }
 
         /// <summary>
@@ -4784,7 +4803,7 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
             Window* window,
             GLFWCallbacks.WindowPosCallback callback)
         {
-            return glfwSetWindowPosCallback(window, Marshal.GetFunctionPointerForDelegate(callback));
+            return glfwSetWindowPosCallback(window, callback);
         }
 
         /// <summary>
@@ -4819,7 +4838,7 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
             Window* window,
             GLFWCallbacks.WindowRefreshCallback callback)
         {
-            return glfwSetWindowRefreshCallback(window, Marshal.GetFunctionPointerForDelegate(callback));
+            return glfwSetWindowRefreshCallback(window, callback);
         }
 
         /// <summary>
@@ -4885,7 +4904,7 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
             Window* window,
             GLFWCallbacks.WindowSizeCallback callback)
         {
-            return glfwSetWindowSizeCallback(window, Marshal.GetFunctionPointerForDelegate(callback));
+            return glfwSetWindowSizeCallback(window, callback);
         }
 
         /// <summary>
@@ -5722,9 +5741,9 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
             VkHandle instance,
             Window* window,
             void* allocator,
-            VkHandle surface)
+            out VkHandle surface)
         {
-            return glfwCreateWindowSurface(instance, window, allocator, surface);
+            return glfwCreateWindowSurface(instance, window, allocator, out surface);
         }
     }
 }

@@ -57,7 +57,13 @@ namespace Bind
                     if (match.Success)
                     {
                         string opt = match.Value.Substring(1).Trim();
-                        string val = a.Substring(match.Value.Length + 1).Trim();
+                        string val;
+
+                        if (a.Contains(":"))
+                            val = a.Substring(a.IndexOf(":") + 1).Trim();
+                        else
+                            val = string.Empty;
+
                         switch (opt)
                         {
                             case "?":
@@ -124,7 +130,7 @@ namespace Bind
                             }
                             default:
                                 throw new ArgumentException(
-                                    String.Format("Argument {0} not recognized. Use the '/?' switch for help.", a)
+                                    String.Format("Argument not recognized. Use the '-help' switch for help.\n{0}", a)
                                 );
                         }
                     }
@@ -132,12 +138,12 @@ namespace Bind
             }
             catch (NullReferenceException e)
             {
-                Console.WriteLine("Argument error ({0}). Please use the '-?' switch for help.", e.ToString());
+                Console.WriteLine("Argument error. Please use the '-help' switch for help.\n{0}", e.ToString());
                 return;
             }
             catch (ArgumentException e)
             {
-                Console.WriteLine("Argument error ({0}). Please use the '-?' switch for help.", e.ToString());
+                Console.WriteLine("Argument error. Please use the '-help' switch for help.\n{0}", e.ToString());
                 return;
             }
 
@@ -278,23 +284,23 @@ namespace Bind
             Console.WriteLine(
 @"Usage: bind [-in:path] [-out:path] [switches]
 Available switches:
--in:         Input directory (e.g. -in:../specs/)
--out:        Output directory (e.g. -out:out)
--ns:         Output namespace (e.g. -ns:OpenTK.Graphics).
-             Default: OpenTK.Graphics.OpenGL
--namespace:  Same as -ns
--class:      Output class (e.g. -class:GL3).
-             Default: GL/Wgl/Glu/Glx (depends on -mode)
--mode:       Generator mode (e.g. -mode:gl4).
-             Default: all
-             Accepted: all/gl2/gl4/es10/es11/es20
--o/-option:  Set advanced option. Available options:
-    -o:tao   Tao compatibility mode.
-    -o:enums Follow OpenGL instead .Net naming conventions.
-    -o:safe  Do not generate public unsafe functions.
+  -in:         Input directory (e.g. -in:../specs/)
+  -out:        Output directory (e.g. -out:out)
+  -ns:         Output namespace (e.g. -ns:OpenTK.Graphics).
+               Default: OpenTK.Graphics.OpenGL
+  -namespace:  Same as -ns
+  -class:      Output class (e.g. -class:GL3).
+               Default: GL/Wgl/Glu/Glx (depends on -mode)
+  -mode:       Generator mode (e.g. -mode:gl4).
+               Default: all
+               Accepted: all/gl2/gl4/es10/es11/es20
+  -o/-option:  Set advanced option. Available options:
+    -o:tao     Tao compatibility mode.
+    -o:enums   Follow OpenGL instead .Net naming conventions.
+    -o:safe    Do not generate public unsafe functions.
     -o:enums_in_class
-             Place enums in a nested class (i.e. GL.Enums)
-             instead of a namespace (i.e. OpenTK.Graphics.OpenGL.Enums)
+               Place enums in a nested class (i.e. GL.Enums)
+               instead of a namespace (i.e. OpenTK.Graphics.OpenGL.Enums)
 ");
         }
     }

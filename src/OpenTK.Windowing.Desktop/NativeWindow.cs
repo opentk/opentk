@@ -2,37 +2,31 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Reflection;
 using System.Runtime.InteropServices;
-using System.Threading;
 using OpenTK.Core;
 using OpenTK.Mathematics;
 using OpenTK.Windowing.Common;
 using OpenTK.Windowing.Common.Input;
 using OpenTK.Windowing.GraphicsLibraryFramework;
-using GlfwKeyModifiers = OpenTK.Windowing.GraphicsLibraryFramework.KeyModifiers;
-using InputAction = OpenTK.Windowing.GraphicsLibraryFramework.InputAction;
-using KeyModifiers = OpenTK.Windowing.Common.Input.KeyModifiers;
 using Monitor = OpenTK.Windowing.Common.Monitor;
-using MouseButton = OpenTK.Windowing.Common.Input.MouseButton;
 
 namespace OpenTK.Windowing.Desktop
 {
     /// <summary>
-    /// Instances of this class implement the <see cref="INativeWindow"/> interface on the current platform.
+    /// A Native Window.
     /// </summary>
-    public class NativeWindow : INativeWindow
+    public class NativeWindow : IDisposable
     {
         /// <summary>
         /// Gets the native <see cref="Window"/> pointer for use with <see cref="GLFW"/> API.
         /// </summary>
         public unsafe Window* WindowPtr { get; }
 
-        // Used for delta calculation in the mouse pos changed event.
+        // Used for delta calculation in the mouse position changed event.
         private Vector2 _lastReportedMousePos;
-
-        private KeyboardState _keyboardState = default;
 
         // GLFW cursor we assigned to the window.
         // Null if the cursor is default.
@@ -42,55 +36,92 @@ namespace OpenTK.Windowing.Desktop
         // Never null.
         private MouseCursor _managedCursor = MouseCursor.Default;
 
-        /// <inheritdoc />
-        public KeyboardState KeyboardState => _keyboardState;
+        /// <summary>
+        ///     Gets the current state of the keyboard as of the last time the window processed events.
+        /// </summary>
+        public KeyboardState KeyboardState { get; } = new KeyboardState();
 
-        /// <inheritdoc />
-        public KeyboardState LastKeyboardState { get; private set; }
+        /// <summary>
+        ///     Gets the previous keyboard state.
+        ///     This value is updated with the new state every time the window processes events.
+        /// </summary>
+        [Obsolete("Use " + nameof(KeyboardState.WasKeyDown) + " instead.", true)]
+        public KeyboardState LastKeyboardState => null;
 
         private readonly JoystickState[] _joystickStates = new JoystickState[16];
 
-        /// <inheritdoc/>
-        public JoystickState[] JoystickStates { get => _joystickStates; }
+        /// <summary>
+        /// Gets the current state of the joysticks as of the last time the window processed events.
+        /// </summary>
+        public IReadOnlyList<JoystickState> JoystickStates
+        {
+            get => _joystickStates;
+        }
 
-        /// <inheritdoc/>
-        public JoystickState[] LastJoystickStates { get; private set; }
+        [Obsolete("Use " + nameof(JoystickState.WasButtonDown) + ", " + nameof(JoystickState.GetAxisPrevious) + " and " + nameof(JoystickState.GetHatPrevious) + " instead.", true)]
+        public IReadOnlyList<JoystickState> LastJoystickStates => null;
 
-        /// <inheritdoc />
+        /// <summary>
+        ///     Gets or sets the position of the mouse relative to the content area of this window.
+        ///     NOTE: It is not necessary to center the mouse on each frame. Use CursorGrabbed = true;
+        ///     to enable this behavior.
+        /// </summary>
         public Vector2 MousePosition
         {
-            get => _mouseState.Position;
+            get => _lastReportedMousePos;
             set
             {
                 unsafe
                 {
+                    // This call invokes the OnMouseMove event, which in turn updates _lastReportedMousePos.
                     GLFW.SetCursorPos(WindowPtr, value.X, value.Y);
                 }
-
-                _mouseState.Position = value;
             }
         }
 
-        private MouseState _mouseState = default;
+        private MouseState _mouseState;
 
-        /// <inheritdoc />
-        public Vector2 MouseDelta { get; private set; }
+        /// <summary>
+        ///     Gets the amount that the mouse moved since the last frame.
+        ///     This does not necessarily correspond to pixels, for example in the case of raw input.
+        /// </summary>
+        [Obsolete("Use " + nameof(OpenTK.Windowing.GraphicsLibraryFramework.MouseState.Delta) + " member of the " + nameof(NativeWindow.MouseState) + " property instead.", true)]
+        public Vector2 MouseDelta => Vector2.Zero;
 
-        /// <inheritdoc />
+        /// <summary>
+        ///     Gets the current state of the mouse as of the last time the window processed events.
+        /// </summary>
         public MouseState MouseState => _mouseState;
 
-        /// <inheritdoc />
-        public MouseState LastMouseState { get; private set; }
+        /// <summary>
+        ///     Gets the previous keyboard state.
+        ///     This value is updated with the new state every time the window processes events.
+        /// </summary>
+        [Obsolete("Use " + nameof(OpenTK.Windowing.GraphicsLibraryFramework.MouseState.WasButtonDown) + " and " + nameof(OpenTK.Windowing.GraphicsLibraryFramework.MouseState.PreviousPosition) + " members of the " + nameof(NativeWindow.MouseState) + " property instead.", true)]
+        public MouseState LastMouseState => null;
 
-        /// <inheritdoc />
-        public bool IsAnyKeyDown => _keyboardState.IsAnyKeyDown;
+        /// <summary>
+        /// Gets a value indicating whether any key is down.
+        /// </summary>
+        /// <value><c>true</c> if any key is down; otherwise, <c>false</c>.</value>
+        public bool IsAnyKeyDown => KeyboardState.IsAnyKeyDown;
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Gets a value indicating whether any mouse button is pressed.
+        /// </summary>
+        /// <value><c>true</c> if any button is pressed; otherwise, <c>false</c>.</value>
         public bool IsAnyMouseButtonDown => _mouseState.IsAnyButtonDown;
 
         private WindowIcon _icon;
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Gets or sets the current <see cref="WindowIcon" /> for this window.
+        /// </summary>
+        /// <remarks>
+        /// <para>
+        /// This does nothing on macOS; on that platform, the icon is determined by the application bundle.
+        /// </para>
+        /// </remarks>
         public WindowIcon Icon
         {
             get => _icon;
@@ -108,7 +139,8 @@ namespace OpenTK.Windowing.Desktop
                         var image = images[i];
                         handles[i] = GCHandle.Alloc(image.Data, GCHandleType.Pinned);
                         var addrOfPinnedObject = (byte*)handles[i].AddrOfPinnedObject();
-                        glfwImages[i] = new GraphicsLibraryFramework.Image(image.Width, image.Height, addrOfPinnedObject);
+                        glfwImages[i] =
+                            new GraphicsLibraryFramework.Image(image.Width, image.Height, addrOfPinnedObject);
                     }
 
                     GLFW.SetWindowIcon(WindowPtr, glfwImages);
@@ -124,11 +156,15 @@ namespace OpenTK.Windowing.Desktop
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether this window is event driven or not.
+        /// Gets or sets a value indicating whether or not this window is event-driven.
+        /// An event-driven window will wait for events before updating/rendering. It is useful for non-game applications,
+        /// where the program only needs to do any processing after the user inputs something.
         /// </summary>
         public bool IsEventDriven { get; set; }
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Gets or sets the clipboard string.
+        /// </summary>
         public string ClipboardString
         {
             get
@@ -150,7 +186,9 @@ namespace OpenTK.Windowing.Desktop
 
         private string _title;
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Gets or sets the title of the window.
+        /// </summary>
         public string Title
         {
             get => _title;
@@ -165,22 +203,29 @@ namespace OpenTK.Windowing.Desktop
             }
         }
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Gets a value representing the current graphics API.
+        /// </summary>
         public ContextAPI API { get; }
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Gets a value representing the current graphics API profile.
+        /// </summary>
         public ContextProfile Profile { get; }
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Gets a value representing the current graphics profile flags.
+        /// </summary>
         public ContextFlags Flags { get; }
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Gets a value representing the current version of the graphics API.
+        /// </summary>
         public Version APIVersion { get; }
 
-        /// <inheritdoc />
-        IGraphicsContext INativeWindow.Context => Context;
-
-        /// <inheritdoc cref="INativeWindow.Context" />
+        /// <summary>
+        /// Gets the graphics context associated with this NativeWindow.
+        /// </summary>
         public IGLFWGraphicsContext Context { get; }
 
         private Monitor _currentMonitor;
@@ -197,36 +242,42 @@ namespace OpenTK.Windowing.Desktop
                 var monitor = value.ToUnsafePtr<GraphicsLibraryFramework.Monitor>();
                 var mode = GLFW.GetVideoMode(monitor);
                 GLFW.SetWindowMonitor(
-                    WindowPtr,
-                    monitor,
-                    _location.X,
-                    _location.Y,
-                    _size.X,
-                    _size.Y,
-                    mode->RefreshRate);
+                WindowPtr,
+                monitor,
+                _location.X,
+                _location.Y,
+                _size.X,
+                _size.Y,
+                mode->RefreshRate);
 
                 _currentMonitor = value;
             }
         }
 
+        // This is updated by the constructor and by the OnFocusChanged event. We presume that OnFocusChanged will fire after a call to GLFW.FocusWindow.
         private bool _isFocused;
 
-        /// <inheritdoc />
-        public unsafe bool IsFocused
+        /// <summary>
+        /// Gets a value indicating whether this window has input focus.
+        /// </summary>
+        public bool IsFocused
         {
             get => _isFocused;
-            set
-            {
-                if (value)
-                {
-                    GLFW.FocusWindow(WindowPtr);
-                }
-            }
+        }
+
+        /// <summary>
+        /// Brings the window into focus.
+        /// </summary>
+        public unsafe void Focus()
+        {
+            GLFW.FocusWindow(WindowPtr);
         }
 
         private bool _isVisible;
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Gets or sets a value indicating whether the window is visible.
+        /// </summary>
         public bool IsVisible
         {
             get => _isVisible;
@@ -248,23 +299,32 @@ namespace OpenTK.Windowing.Desktop
             }
         }
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Gets a value indicating whether the window has been created and has not been destroyed.
+        /// </summary>
         public bool Exists { get; private set; }
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Gets a value indicating whether the shutdown sequence has been initiated
+        /// for this window, by calling GameWindow.Close() or hitting the 'close' button.
+        /// If this property is true, it is no longer safe to use any OpenTK.Input or
+        /// OpenTK.Graphics.OpenGL functions or properties.
+        /// </summary>
         public bool IsExiting { get; private set; }
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Gets or sets the <see cref="WindowState" /> for this window.
+        /// </summary>
         public unsafe WindowState WindowState
         {
             get
             {
-                if (GLFW.GetWindowAttrib(WindowPtr, WindowAttributeGetter.Iconified))
+                if (GLFW.GetWindowAttrib(WindowPtr, WindowAttributeGetBool.Iconified))
                 {
                     return WindowState.Minimized;
                 }
 
-                if (GLFW.GetWindowAttrib(WindowPtr, WindowAttributeGetter.Maximized))
+                if (GLFW.GetWindowAttrib(WindowPtr, WindowAttributeGetBool.Maximized))
                 {
                     return WindowState.Maximized;
                 }
@@ -273,15 +333,6 @@ namespace OpenTK.Windowing.Desktop
                 {
                     return WindowState.Fullscreen;
                 }
-
-                /*var mode = Glfw.GetVideoMode(CurrentMonitor.ToUnsafePtr<GraphicsLibraryFramework.Monitor>());
-
-                Glfw.GetWindowSize(WindowPtr, out var windowWidth, out var windowHeight);
-
-                if (mode->Width == windowWidth && mode->Height == windowHeight)
-                {
-                    return WindowState.Maximized;
-                }*/
 
                 return WindowState.Normal;
             }
@@ -310,45 +361,48 @@ namespace OpenTK.Windowing.Desktop
 
         private WindowBorder _windowBorder;
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Gets or sets the <see cref="WindowBorder" /> for this window.
+        /// </summary>
         public unsafe WindowBorder WindowBorder
         {
             get => _windowBorder;
 
             set
             {
-                if (!GLFW.GetWindowAttrib(WindowPtr, WindowAttributeGetter.Decorated))
+                GLFW.GetVersion(out var major, out var minor, out _);
+
+                // It isn't possible to implement this in versions of GLFW older than 3.3,
+                // as SetWindowAttrib didn't exist before then.
+                if ((major == 3) && (minor < 3))
                 {
-                    GLFW.GetVersion(out var major, out var minor, out _);
+                    throw new NotSupportedException("Cannot be implemented in GLFW 3.2.");
+                }
 
-                    // It isn't possible to implement this in versions of GLFW older than 3.3,
-                    // as SetWindowAttrib didn't exist before then.
-                    if ((major == 3) && (minor < 3))
-                    {
-                        throw new NotSupportedException("Cannot be implemented in GLFW 3.2.");
-                    }
-
-                    switch (value)
-                    {
-                        case WindowBorder.Hidden:
-                            GLFW.SetWindowAttrib(WindowPtr, WindowAttributeSetter.Decorated, false);
-                            break;
-
-                        case WindowBorder.Resizable:
-                            GLFW.SetWindowAttrib(WindowPtr, WindowAttributeSetter.Resizable, true);
-                            break;
-
-                        case WindowBorder.Fixed:
-                            GLFW.SetWindowAttrib(WindowPtr, WindowAttributeSetter.Resizable, false);
-                            break;
-                    }
+                switch (value)
+                {
+                    case WindowBorder.Hidden:
+                        GLFW.SetWindowAttrib(WindowPtr, WindowAttribute.Decorated, false);
+                        break;
+                    case WindowBorder.Resizable:
+                        GLFW.SetWindowAttrib(WindowPtr, WindowAttribute.Decorated, true);
+                        GLFW.SetWindowAttrib(WindowPtr, WindowAttribute.Resizable, true);
+                        break;
+                    case WindowBorder.Fixed:
+                        GLFW.SetWindowAttrib(WindowPtr, WindowAttribute.Decorated, true);
+                        GLFW.SetWindowAttrib(WindowPtr, WindowAttribute.Resizable, false);
+                        break;
                 }
 
                 _windowBorder = value;
             }
         }
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Gets or sets a <see cref="OpenTK.Mathematics.Box2i" /> structure the contains the external bounds of this window,
+        /// in screen coordinates.
+        /// External bounds include the title bar, borders and drawing area of the window.
+        /// </summary>
         public unsafe Box2i Bounds
         {
             get => new Box2i(Location, Location + Size);
@@ -359,25 +413,43 @@ namespace OpenTK.Windowing.Desktop
             }
         }
 
+        // This is updated by the constructor, by OnMove, and in the Location property setter.
         private Vector2i _location;
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Gets or sets a <see cref="OpenTK.Mathematics.Vector2i" /> structure that contains the location of this window on the
+        /// desktop.
+        /// </summary>
         public unsafe Vector2i Location
         {
             get => _location;
-            set => GLFW.SetWindowPos(WindowPtr, value.X, value.Y);
+            set
+            {
+                GLFW.SetWindowPos(WindowPtr, value.X, value.Y);
+                _location = value;
+            }
         }
 
         private Vector2i _size;
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Gets or sets a <see cref="OpenTK.Mathematics.Vector2i" /> structure that contains the external size of this window.
+        /// </summary>
         public unsafe Vector2i Size
         {
             get => _size;
-            set => GLFW.SetWindowSize(WindowPtr, value.X, value.Y);
+            set
+            {
+                _size = value;
+                GLFW.SetWindowSize(WindowPtr, value.X, value.Y);
+            }
         }
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Gets or sets a <see cref="OpenTK.Mathematics.Box2i" /> structure that contains the internal bounds of this window,
+        /// in client coordinates.
+        /// The internal bounds include the drawing area of the window, but exclude the title bar and window borders.
+        /// </summary>
         public Box2i ClientRectangle
         {
             get => new Box2i(Location, Location + Size);
@@ -388,21 +460,30 @@ namespace OpenTK.Windowing.Desktop
             }
         }
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Gets a <see cref="OpenTK.Mathematics.Vector2i" /> structure that contains the internal size this window.
+        /// </summary>
         public Vector2i ClientSize { get; private set; }
 
-        /// <inheritdoc />
-        public bool IsFullscreen { get; set; }
+        /// <summary>
+        /// Gets a value indicating whether the window is fullscreen or not.
+        /// Use <see cref="WindowState"/> to set the window to fullscreen.
+        /// </summary>
+        public bool IsFullscreen => WindowState == WindowState.Fullscreen;
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Gets or sets the <see cref="OpenTK.Windowing.Common.Input.MouseCursor" /> for this window.
+        /// </summary>
+        /// <value>The cursor.</value>
         public MouseCursor Cursor
         {
             get => _managedCursor;
             set
             {
-                _managedCursor = value ?? throw new ArgumentNullException(
-                              nameof(value),
-                              "Cursor cannot be null. To reset to default cursor, set it to MouseCursor.Default instead.");
+                _managedCursor = value ??
+                                 throw new ArgumentNullException(
+                                 nameof(value),
+                                 "Cursor cannot be null. To reset to default cursor, set it to MouseCursor.Default instead.");
 
                 unsafe
                 {
@@ -440,7 +521,9 @@ namespace OpenTK.Windowing.Desktop
             }
         }
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Gets or sets a value indicating whether the mouse cursor is visible.
+        /// </summary>
         public unsafe bool CursorVisible
         {
             get
@@ -452,12 +535,14 @@ namespace OpenTK.Windowing.Desktop
 
             set =>
                 GLFW.SetInputMode(
-                    WindowPtr,
-                    CursorStateAttribute.Cursor,
-                    value ? CursorModeValue.CursorNormal : CursorModeValue.CursorHidden);
+                WindowPtr,
+                CursorStateAttribute.Cursor,
+                value ? CursorModeValue.CursorNormal : CursorModeValue.CursorHidden);
         }
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Gets or sets a value indicating whether the mouse cursor is confined inside the window size.
+        /// </summary>
         public unsafe bool CursorGrabbed
         {
             get => GLFW.GetInputMode(WindowPtr, CursorStateAttribute.Cursor) == CursorModeValue.CursorDisabled;
@@ -487,7 +572,8 @@ namespace OpenTK.Windowing.Desktop
             GLFWProvider.EnsureInitialized();
             if (!GLFWProvider.IsOnMainThread)
             {
-                throw new GLFWException("Can only create windows on the Glfw main thread. (Thread from which Glfw was first created).");
+                throw new
+                    GLFWException("Can only create windows on the Glfw main thread. (Thread from which Glfw was first created).");
             }
 
             _title = settings.Title;
@@ -510,6 +596,7 @@ namespace OpenTK.Windowing.Desktop
             }
 
             var isOpenGl = false;
+            API = settings.API;
             switch (settings.API)
             {
                 case ContextAPI.NoAPI:
@@ -533,6 +620,7 @@ namespace OpenTK.Windowing.Desktop
             GLFW.WindowHint(WindowHintInt.ContextVersionMajor, settings.APIVersion.Major);
             GLFW.WindowHint(WindowHintInt.ContextVersionMinor, settings.APIVersion.Minor);
 
+            Flags = settings.Flags;
             if (settings.Flags.HasFlag(ContextFlags.ForwardCompatible))
             {
                 GLFW.WindowHint(WindowHintBool.OpenGLForwardCompat, true);
@@ -543,6 +631,7 @@ namespace OpenTK.Windowing.Desktop
                 GLFW.WindowHint(WindowHintBool.OpenGLDebugContext, true);
             }
 
+            Profile = settings.Profile;
             switch (settings.Profile)
             {
                 case ContextProfile.Any:
@@ -564,6 +653,8 @@ namespace OpenTK.Windowing.Desktop
             _isVisible = settings.StartVisible;
             GLFW.WindowHint(WindowHintBool.Visible, _isVisible);
 
+            GLFW.WindowHint(WindowHintInt.Samples, settings.NumberOfSamples);
+
             if (settings.WindowState == WindowState.Fullscreen)
             {
                 var monitor = settings.CurrentMonitor.ToUnsafePtr<GraphicsLibraryFramework.Monitor>();
@@ -572,12 +663,14 @@ namespace OpenTK.Windowing.Desktop
                 GLFW.WindowHint(WindowHintInt.GreenBits, modePtr->GreenBits);
                 GLFW.WindowHint(WindowHintInt.BlueBits, modePtr->BlueBits);
                 GLFW.WindowHint(WindowHintInt.RefreshRate, modePtr->RefreshRate);
-                WindowPtr = GLFW.CreateWindow(modePtr->Width, modePtr->Height, _title, monitor, (Window*)(settings.SharedContext?.NativeContex ?? IntPtr.Zero));
+                WindowPtr = GLFW.CreateWindow(modePtr->Width, modePtr->Height, _title, monitor, (Window*)(settings.SharedContext?.WindowPtr ?? IntPtr.Zero));
             }
             else
             {
-                WindowPtr = GLFW.CreateWindow(settings.Size.X, settings.Size.Y, _title, null, (Window*)(settings.SharedContext?.NativeContex ?? IntPtr.Zero));
+                WindowPtr = GLFW.CreateWindow(settings.Size.X, settings.Size.Y, _title, null, (Window*)(settings.SharedContext?.WindowPtr ?? IntPtr.Zero));
             }
+
+            _mouseState = new MouseState(WindowPtr);
 
             Context = new GLFWGraphicsContext(WindowPtr);
 
@@ -591,16 +684,39 @@ namespace OpenTK.Windowing.Desktop
                 {
                     InitializeGlBindings();
                 }
-
-                Context.MakeNoneCurrent();
             }
 
             // Enables the caps lock modifier to be detected and updated
             GLFW.SetInputMode(WindowPtr, LockKeyModAttribute.LockKeyMods, true);
 
+            // These lambdas must be assigned to fields to prevent them from being garbage collected
+            _windowPosCallback = (w, posX, posY) => OnMove(new WindowPositionEventArgs(posX, posY));
+            _windowSizeCallback = (w, argsWidth, argsHeight) => OnResize(new ResizeEventArgs(argsWidth, argsHeight));
+            _windowIconifyCallback = (w, iconified) => OnMinimized(new MinimizedEventArgs(iconified));
+            _windowFocusCallback = (w, focused) => OnFocusedChanged(new FocusedChangedEventArgs(focused));
+            _charCallback = (w, codepoint) => OnTextInput(new TextInputEventArgs((int)codepoint));
+            _scrollCallback = ScrollCallback;
+            _monitorCallback = (monitor, eventCode) => OnMonitorConnected(new MonitorEventArgs(new Monitor((IntPtr)monitor), eventCode == ConnectedState.Connected));
+            _windowRefreshCallback = w => OnRefresh();
+            // These must be assigned to fields even when they're methods
+            _windowCloseCallback = OnCloseCallback;
+            _keyCallback = KeyCallback;
+            _cursorEnterCallback = CursorEnterCallback;
+            _mouseButtonCallback = MouseButtonCallback;
+            _cursorPosCallback = CursorPosCallback;
+            _dropCallback = DropCallback;
+            _joystickCallback = JoystickCallback;
+
             RegisterWindowCallbacks();
 
-            IsFocused = settings.StartFocused;
+            InitialiseJoystickStates();
+
+            _isFocused = settings.StartFocused;
+            if (settings.StartFocused)
+            {
+                Focus();
+            }
+
             WindowState = settings.WindowState;
 
             IsEventDriven = settings.IsEventDriven;
@@ -622,7 +738,11 @@ namespace OpenTK.Windowing.Desktop
             GLFW.GetWindowPos(WindowPtr, out var x, out var y);
             _location = new Vector2i(x, y);
 
-            _isFocused = GLFW.GetWindowAttrib(WindowPtr, WindowAttributeGetter.Focused);
+            GLFW.GetCursorPos(WindowPtr, out var mousex, out var mousey);
+            _lastReportedMousePos = new Vector2((float)mousex, (float)mousey);
+            _mouseState.Position = _lastReportedMousePos;
+
+            _isFocused = GLFW.GetWindowAttrib(WindowPtr, WindowAttributeGetBool.Focused);
         }
 
         private static void InitializeGlBindings()
@@ -665,22 +785,6 @@ namespace OpenTK.Windowing.Desktop
             LoadBindings("OpenGL4");
         }
 
-        private GLFWCallbacks.WindowPosCallback _posCallback;
-        private GLFWCallbacks.WindowSizeCallback _sizeCallback;
-        private GLFWCallbacks.WindowCloseCallback _closeCallback;
-        private GLFWCallbacks.WindowIconifyCallback _iconifyCallback;
-        private GLFWCallbacks.WindowFocusCallback _focusCallback;
-        private GLFWCallbacks.CharCallback _charCallback;
-        private GLFWCallbacks.KeyCallback _keyCallback;
-        private GLFWCallbacks.CursorEnterCallback _cursorEnterCallback;
-        private GLFWCallbacks.MouseButtonCallback _mouseButtonCallback;
-        private GLFWCallbacks.CursorPosCallback _cursorPosCallback;
-        private GLFWCallbacks.ScrollCallback _scrollCallback;
-        private GLFWCallbacks.DropCallback _dropCallback;
-        private GLFWCallbacks.JoystickCallback _joystickCallback;
-        private GLFWCallbacks.MonitorCallback _monitorCallback;
-        private GLFWCallbacks.WindowRefreshCallback _refreshCallback;
-
         private unsafe void HandleResize(int width, int height)
         {
             _size.X = width;
@@ -691,175 +795,160 @@ namespace OpenTK.Windowing.Desktop
             ClientSize = new Vector2i(width, height);
         }
 
-        private void RegisterWindowCallbacks()
+        private readonly GLFWCallbacks.WindowPosCallback _windowPosCallback;
+        private readonly GLFWCallbacks.WindowSizeCallback _windowSizeCallback;
+        private readonly GLFWCallbacks.WindowIconifyCallback _windowIconifyCallback;
+        private readonly GLFWCallbacks.WindowFocusCallback _windowFocusCallback;
+        private readonly GLFWCallbacks.CharCallback _charCallback;
+        private readonly GLFWCallbacks.ScrollCallback _scrollCallback;
+        private readonly GLFWCallbacks.MonitorCallback _monitorCallback;
+        private readonly GLFWCallbacks.WindowRefreshCallback _windowRefreshCallback;
+        private readonly GLFWCallbacks.WindowCloseCallback _windowCloseCallback;
+        private readonly GLFWCallbacks.KeyCallback _keyCallback;
+        private readonly GLFWCallbacks.CursorEnterCallback _cursorEnterCallback;
+        private readonly GLFWCallbacks.MouseButtonCallback _mouseButtonCallback;
+        private readonly GLFWCallbacks.CursorPosCallback _cursorPosCallback;
+        private readonly GLFWCallbacks.DropCallback _dropCallback;
+        private readonly GLFWCallbacks.JoystickCallback _joystickCallback;
+
+        private unsafe void RegisterWindowCallbacks()
         {
-            unsafe
+            GLFW.SetWindowPosCallback(WindowPtr, _windowPosCallback);
+            GLFW.SetWindowSizeCallback(WindowPtr, _windowSizeCallback);
+            GLFW.SetWindowIconifyCallback(WindowPtr, _windowIconifyCallback);
+            GLFW.SetWindowFocusCallback(WindowPtr, _windowFocusCallback);
+            GLFW.SetCharCallback(WindowPtr, _charCallback);
+            GLFW.SetScrollCallback(WindowPtr, _scrollCallback);
+            GLFW.SetMonitorCallback(_monitorCallback);
+            GLFW.SetWindowRefreshCallback(WindowPtr, _windowRefreshCallback);
+            GLFW.SetWindowCloseCallback(WindowPtr, _windowCloseCallback);
+            GLFW.SetKeyCallback(WindowPtr, _keyCallback);
+            GLFW.SetCursorEnterCallback(WindowPtr, _cursorEnterCallback);
+            GLFW.SetMouseButtonCallback(WindowPtr, _mouseButtonCallback);
+            GLFW.SetCursorPosCallback(WindowPtr, _cursorPosCallback);
+            GLFW.SetDropCallback(WindowPtr, _dropCallback);
+            GLFW.SetJoystickCallback(_joystickCallback);
+        }
+
+        private unsafe void InitialiseJoystickStates()
+        {
+            // Check for Joysticks that are connected at application launch
+            for (int i = 0; i < _joystickStates.Length; i++)
             {
-                _posCallback = (window, x, y) => OnMove(new WindowPositionEventArgs(x, y));
-                GLFW.SetWindowPosCallback(WindowPtr, _posCallback);
-
-                _sizeCallback = (window, width, height) => OnResize(new ResizeEventArgs(width, height));
-                GLFW.SetWindowSizeCallback(WindowPtr, _sizeCallback);
-
-                _closeCallback = OnCloseCallback;
-                GLFW.SetWindowCloseCallback(WindowPtr, _closeCallback);
-
-                _iconifyCallback = (window, iconified) => OnMinimized(new MinimizedEventArgs(iconified));
-                GLFW.SetWindowIconifyCallback(WindowPtr, _iconifyCallback);
-
-                _focusCallback = (window, focused) => OnFocusedChanged(new FocusedChangedEventArgs(focused));
-                GLFW.SetWindowFocusCallback(WindowPtr, _focusCallback);
-
-                _charCallback = (window, codepoint) => OnTextInput(new TextInputEventArgs((int)codepoint));
-                GLFW.SetCharCallback(WindowPtr, _charCallback);
-
-                _keyCallback = (window, key, scancode, action, mods) =>
+                if (GLFW.JoystickPresent(i))
                 {
-                    int index = (int)key;
+                    GLFW.GetJoystickHatsRaw(i, out var hatCount);
+                    GLFW.GetJoystickAxesRaw(i, out var axisCount);
+                    GLFW.GetJoystickButtonsRaw(i, out var buttonCount);
+                    var name = GLFW.GetJoystickName(i);
 
-                    var ourKey = Key.Unknown;
+                    _joystickStates[i] = new JoystickState(hatCount, axisCount, buttonCount, i, name);
+                }
+            }
+        }
 
-                    if (index >= 0 && index < GlfwKeyMapping.Length)
-                    {
-                        ourKey = GlfwKeyMapping[index];
-                    }
+        private unsafe void KeyCallback(Window* window, Keys key, int scancode, InputAction action, KeyModifiers mods)
+        {
+            var args = new KeyboardKeyEventArgs(key, scancode, mods, action == InputAction.Repeat);
 
-                    var args = new KeyboardKeyEventArgs(
-                        ourKey,
-                        scancode,
-                        MapGlfwKeyModifiers(mods),
-                        action == InputAction.Repeat);
-
-                    if (action == InputAction.Release)
-                    {
-                        if (ourKey != Key.Unknown)
-                        {
-                            _keyboardState.SetKeyState(ourKey, false);
-                        }
-
-                        OnKeyUp(args);
-                    }
-                    else
-                    {
-                        if (ourKey != Key.Unknown)
-                        {
-                            _keyboardState.SetKeyState(ourKey, true);
-                        }
-
-                        OnKeyDown(args);
-                    }
-                };
-
-                GLFW.SetKeyCallback(WindowPtr, _keyCallback);
-
-                _cursorEnterCallback = (window, entered) =>
+            if (action == InputAction.Release)
+            {
+                if (key != Keys.Unknown)
                 {
-                    if (entered)
-                    {
-                        OnMouseEnter();
-                    }
-                    else
-                    {
-                        OnMouseLeave();
-                    }
-                };
-                GLFW.SetCursorEnterCallback(WindowPtr, _cursorEnterCallback);
-
-                _mouseButtonCallback = (window, button, action, mods) =>
-                {
-                    var ourButton = (MouseButton)button;
-                    var args = new MouseButtonEventArgs(
-                        ourButton,
-                        MapGlfwInputAction(action),
-                        MapGlfwKeyModifiers(mods));
-
-                    if (action == InputAction.Release)
-                    {
-                        _mouseState[ourButton] = false;
-                        OnMouseUp(args);
-                    }
-                    else
-                    {
-                        _mouseState[ourButton] = true;
-                        OnMouseDown(args);
-                    }
-                };
-                GLFW.SetMouseButtonCallback(WindowPtr, _mouseButtonCallback);
-
-                _cursorPosCallback = (window, posX, posY) =>
-                {
-                    var newPos = new Vector2((float)posX, (float)posY);
-                    var delta = _lastReportedMousePos - newPos;
-
-                    MouseDelta += delta;
-
-                    _lastReportedMousePos = _mouseState.Position = newPos;
-
-                    OnMouseMove(new MouseMoveEventArgs(newPos, delta));
-                };
-                GLFW.SetCursorPosCallback(WindowPtr, _cursorPosCallback);
-
-                _scrollCallback = (window, offsetX, offsetY) =>
-                    OnMouseWheel(new MouseWheelEventArgs((float)offsetX, (float)offsetY));
-                GLFW.SetScrollCallback(WindowPtr, _scrollCallback);
-
-                _dropCallback = (window, count, paths) =>
-                {
-                    var arrayOfPaths = new string[count];
-
-                    for (var i = 0; i < count; i++)
-                    {
-                        arrayOfPaths[i] = MarshalUtility.PtrToStringUTF8(paths[i]);
-                    }
-
-                    OnFileDrop(new FileDropEventArgs(arrayOfPaths));
-                };
-                GLFW.SetDropCallback(WindowPtr, _dropCallback);
-
-                _joystickCallback = (joy, eventCode) =>
-                {
-                    if (eventCode == ConnectedState.Connected)
-                    {
-                        // Initialize the first joystick state.
-                        GLFW.GetJoystickHatsRaw(joy, out var hatCount);
-                        GLFW.GetJoystickAxesRaw(joy, out var axisCount);
-                        GLFW.GetJoystickButtonsRaw(joy, out var buttonCount);
-                        var name = GLFW.GetJoystickName(joy);
-
-                        JoystickStates[joy] = new JoystickState(hatCount, axisCount, buttonCount, joy, name);
-                    }
-                    else
-                    {
-                        // Remove the joystick state from the array of joysticks.
-                        JoystickStates[joy] = default;
-                    }
-                    OnJoystickConnected(new JoystickEventArgs(joy, eventCode == ConnectedState.Connected));
-                };
-                GLFW.SetJoystickCallback(_joystickCallback);
-
-                // Check for Joysticks that are connected at application launch
-                for (int i = 0; i < JoystickStates.Length; i++)
-                {
-                    if (GLFW.JoystickPresent(i))
-                    {
-                        GLFW.GetJoystickHatsRaw(i, out var hatCount);
-                        GLFW.GetJoystickAxesRaw(i, out var axisCount);
-                        GLFW.GetJoystickButtonsRaw(i, out var buttonCount);
-                        var name = GLFW.GetJoystickName(i);
-
-                        JoystickStates[i] = new JoystickState(hatCount, axisCount, buttonCount, i, name);
-                    }
+                    KeyboardState.SetKeyState(key, false);
                 }
 
-                _monitorCallback = (monitor, eventCode) =>
-                {
-                    OnMonitorConnected(new MonitorEventArgs(new Monitor((IntPtr)monitor), eventCode == ConnectedState.Connected));
-                };
-                GLFW.SetMonitorCallback(_monitorCallback);
-
-                _refreshCallback = (window) => OnRefresh();
-                GLFW.SetWindowRefreshCallback(WindowPtr, _refreshCallback);
+                OnKeyUp(args);
             }
+            else
+            {
+                if (key != Keys.Unknown)
+                {
+                    KeyboardState.SetKeyState(key, true);
+                }
+
+                OnKeyDown(args);
+            }
+        }
+
+        private unsafe void CursorEnterCallback(Window* window, bool entered)
+        {
+            if (entered)
+            {
+                OnMouseEnter();
+            }
+            else
+            {
+                OnMouseLeave();
+            }
+        }
+
+        private unsafe void MouseButtonCallback(Window* window, MouseButton button, InputAction action, KeyModifiers mods)
+        {
+            var args = new MouseButtonEventArgs(button, action, mods);
+
+            if (action == InputAction.Release)
+            {
+                _mouseState[button] = false;
+                OnMouseUp(args);
+            }
+            else
+            {
+                _mouseState[button] = true;
+                OnMouseDown(args);
+            }
+        }
+
+        private unsafe void CursorPosCallback(Window* window, double posX, double posY)
+        {
+            var newPos = new Vector2((float)posX, (float)posY);
+            var delta = newPos - _lastReportedMousePos;
+
+            _lastReportedMousePos = newPos;
+
+            OnMouseMove(new MouseMoveEventArgs(newPos, delta));
+        }
+
+        private unsafe void ScrollCallback(Window* window, double offsetX, double offsetY)
+        {
+            // TODO: Think more about when we want to move the current scroll to the previous one
+            _mouseState.PreviousScroll = _mouseState.Scroll;
+            _mouseState.Scroll += new Vector2((float)offsetX, (float)offsetY);
+
+            OnMouseWheel(new MouseWheelEventArgs(_mouseState.Scroll));
+        }
+
+        private unsafe void JoystickCallback(int joy, ConnectedState eventCode)
+        {
+            if (eventCode == ConnectedState.Connected)
+            {
+                // Initialize the first joystick state.
+                GLFW.GetJoystickHatsRaw(joy, out var hatCount);
+                GLFW.GetJoystickAxesRaw(joy, out var axisCount);
+                GLFW.GetJoystickButtonsRaw(joy, out var buttonCount);
+                var name = GLFW.GetJoystickName(joy);
+
+                _joystickStates[joy] = new JoystickState(hatCount, axisCount, buttonCount, joy, name);
+            }
+            else
+            {
+                // Remove the joystick state from the array of joysticks.
+                _joystickStates[joy] = null;
+            }
+
+            OnJoystickConnected(new JoystickEventArgs(joy, eventCode == ConnectedState.Connected));
+        }
+
+        private unsafe void DropCallback(Window* window, int count, byte** paths)
+        {
+            var arrayOfPaths = new string[count];
+
+            for (var i = 0; i < count; i++)
+            {
+                arrayOfPaths[i] = MarshalUtility.PtrToStringUTF8(paths[i]);
+            }
+
+            OnFileDrop(new FileDropEventArgs(arrayOfPaths));
         }
 
         private unsafe void OnCloseCallback(Window* window)
@@ -876,7 +965,9 @@ namespace OpenTK.Windowing.Desktop
             }
         }
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Closes this window.
+        /// </summary>
         public virtual void Close()
         {
             unsafe
@@ -885,13 +976,15 @@ namespace OpenTK.Windowing.Desktop
             }
         }
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Makes the GraphicsContext current on the calling thread.
+        /// </summary>
         public void MakeCurrent()
         {
             Context.MakeCurrent();
         }
 
-        private unsafe void DestroyWindow()
+        protected unsafe void DestroyWindow()
         {
             if (Exists)
             {
@@ -904,11 +997,6 @@ namespace OpenTK.Windowing.Desktop
 
         private bool PreProcessEvents()
         {
-            LastKeyboardState = KeyboardState;
-            LastMouseState = MouseState;
-            LastJoystickStates = JoystickStates;
-            MouseDelta = Vector2.Zero;
-
             if (IsExiting)
             {
                 DestroyWindow();
@@ -918,7 +1006,12 @@ namespace OpenTK.Windowing.Desktop
             return true;
         }
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Processes pending window events and waits <paramref cref="timeout"/> seconds for events.
+        /// </summary>
+        /// <param name="timeout">The timeout in seconds.</param>
+        /// <returns><c>true</c> if events where processed; otherwise <c>false</c>
+        /// (Event processing not possible anymore, window is about to be destroyed).</returns>
         public bool ProcessEvents(double timeout)
         {
             if (!PreProcessEvents())
@@ -932,13 +1025,17 @@ namespace OpenTK.Windowing.Desktop
             return true;
         }
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Processes pending window events.
+        /// </summary>
         public virtual void ProcessEvents()
         {
             if (!PreProcessEvents())
             {
                 return;
             }
+
+            ProcessInputEvents();
 
             if (IsEventDriven)
             {
@@ -948,158 +1045,217 @@ namespace OpenTK.Windowing.Desktop
             {
                 GLFW.PollEvents();
             }
-
-            ProcessInputEvents();
         }
 
         private unsafe void ProcessInputEvents()
         {
-            GLFW.GetCursorPos(WindowPtr, out var x, out var y);
-            _mouseState.Position = new Vector2((float)x, (float)y);
+            MouseState.Update();
+            KeyboardState.Update();
 
-            for (var i = 0; i < JoystickStates.Length; i++)
+            for (var i = 0; i < _joystickStates.Length; i++)
             {
-                var joy = JoystickStates[i];
-                if (joy == default)
+                if (_joystickStates[i] == null)
                 {
                     continue;
                 }
 
-                var h = GLFW.GetJoystickHatsRaw(joy.Id, out var count);
-                var hats = new Hat[count];
-                for (var j = 0; j < count; j++)
-                {
-                    hats[j] = (Hat)h[j];
-                }
-
-                var axes = GLFW.GetJoystickAxes(joy.Id);
-
-                var b = GLFW.GetJoystickButtonsRaw(joy.Id, out count);
-                var buttons = new bool[count];
-                for (var j = 0; j < buttons.Length; j++)
-                {
-                    buttons[j] = b[j] == JoystickInputAction.Press;
-                }
-
-                JoystickStates[i] = new JoystickState(hats, axes, buttons, joy.Id, joy.Name);
+                _joystickStates[i].Update();
             }
         }
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Transforms the specified point from screen to client coordinates.
+        /// </summary>
+        /// <param name="point">
+        /// A <see cref="OpenTK.Mathematics.Vector2" /> to transform.
+        /// </param>
+        /// <returns>
+        /// The point transformed to client coordinates.
+        /// </returns>
         public Vector2i PointToClient(Vector2i point)
         {
             return point - Location;
         }
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Transforms the specified point from client to screen coordinates.
+        /// </summary>
+        /// <param name="point">
+        /// A <see cref="OpenTK.Mathematics.Vector2" /> to transform.
+        /// </param>
+        /// <returns>
+        /// The point transformed to screen coordinates.
+        /// </returns>
         public Vector2i PointToScreen(Vector2i point)
         {
             return point + Location;
         }
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Occurs whenever the window is moved.
+        /// </summary>
         public event Action<WindowPositionEventArgs> Move;
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Occurs whenever the window is resized.
+        /// </summary>
         public event Action<ResizeEventArgs> Resize;
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Occurs whenever the window is refreshed.
+        /// </summary>
         public event Action Refresh;
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Occurs when the window is about to close.
+        /// </summary>
         public event Action<CancelEventArgs> Closing;
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Occurs after the window has closed.
+        /// </summary>
         public event Action Closed;
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Occurs when the window is minimized.
+        /// </summary>
         public event Action<MinimizedEventArgs> Minimized;
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Occurs when a joystick is connected or disconnected.
+        /// </summary>
         public event Action<JoystickEventArgs> JoystickConnected;
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Occurs when the <see cref="INativeWindowProperties.IsFocused" /> property of the window changes.
+        /// </summary>
         public event Action<FocusedChangedEventArgs> FocusedChanged;
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Occurs whenever a keyboard key is pressed.
+        /// </summary>
         public event Action<KeyboardKeyEventArgs> KeyDown;
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Occurs whenever a Unicode code point is typed.
+        /// </summary>
         public event Action<TextInputEventArgs> TextInput;
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Occurs whenever a keyboard key is released.
+        /// </summary>
         public event Action<KeyboardKeyEventArgs> KeyUp;
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Occurs when a <see cref="Monitor"/> is connected or disconnected.
+        /// </summary>
         public event Action<MonitorEventArgs> MonitorConnected;
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Occurs whenever the mouse cursor leaves the window <see cref="INativeWindowProperties.Bounds" />.
+        /// </summary>
         public event Action MouseLeave;
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Occurs whenever the mouse cursor enters the window <see cref="INativeWindowProperties.Bounds" />.
+        /// </summary>
         public event Action MouseEnter;
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Occurs whenever a <see cref="MouseButton" /> is clicked.
+        /// </summary>
         public event Action<MouseButtonEventArgs> MouseDown;
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Occurs whenever a <see cref="MouseButton" /> is released.
+        /// </summary>
         public event Action<MouseButtonEventArgs> MouseUp;
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Occurs whenever the mouse cursor is moved;
+        /// </summary>
         public event Action<MouseMoveEventArgs> MouseMove;
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Occurs whenever a mouse wheel is moved;
+        /// </summary>
         public event Action<MouseWheelEventArgs> MouseWheel;
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Occurs whenever one or more files are dropped on the window.
+        /// </summary>
         public event Action<FileDropEventArgs> FileDrop;
 
-        /// <inheritdoc />
-        public bool IsKeyDown(Key key)
+        /// <summary>
+        /// Gets a <see cref="bool" /> indicating whether this key is currently down.
+        /// </summary>
+        /// <param name="key">The <see cref="Keys">key</see> to check.</param>
+        /// <returns><c>true</c> if <paramref name="key"/> is in the down state; otherwise, <c>false</c>.</returns>
+        public bool IsKeyDown(Keys key)
         {
-            return _keyboardState.IsKeyDown(key);
+            return KeyboardState.IsKeyDown(key);
         }
 
-        /// <inheritdoc />
-        public bool IsKeyUp(Key key)
+        /// <summary>
+        ///     Gets whether the specified key is pressed in the current frame but released in the previous frame.
+        /// </summary>
+        /// <remarks>
+        ///     "Frame" refers to invocations of <see cref="NativeWindow.ProcessEvents()"/> here.
+        /// </remarks>
+        /// <param name="key">The <see cref="Keys">key</see> to check.</param>
+        /// <returns>True if the key is pressed in this frame, but not the last frame.</returns>
+        public bool IsKeyPressed(Keys key)
         {
-            return _keyboardState.IsKeyUp(key);
+            return KeyboardState.IsKeyDown(key) && !KeyboardState.WasKeyDown(key);
         }
 
-        /// <inheritdoc />
-        public bool IsKeyPressed(Key key)
+        /// <summary>
+        ///     Gets whether the specified key is released in the current frame but pressed in the previous frame.
+        /// </summary>
+        /// <remarks>
+        ///     "Frame" refers to invocations of <see cref="NativeWindow.ProcessEvents()"/> here.
+        /// </remarks>
+        /// <param name="key">The <see cref="Keys">key</see> to check.</param>
+        /// <returns>True if the key is released in this frame, but pressed the last frame.</returns>
+        public bool IsKeyReleased(Keys key)
         {
-            return _keyboardState.IsKeyDown(key) && !LastKeyboardState.IsKeyDown(key);
+            return !KeyboardState.IsKeyDown(key) && KeyboardState.WasKeyDown(key);
         }
 
-        /// <inheritdoc />
-        public bool IsKeyReleased(Key key)
-        {
-            return !_keyboardState.IsKeyDown(key) && LastKeyboardState.IsKeyDown(key);
-        }
-
-        /// <inheritdoc />
+        /// <summary>
+        /// Gets a <see cref="bool" /> indicating whether this button is currently down.
+        /// </summary>
+        /// <param name="button">The <see cref="MouseButton" /> to check.</param>
+        /// <returns><c>true</c> if <paramref name="button"/> is in the down state; otherwise, <c>false</c>.</returns>
         public bool IsMouseButtonDown(MouseButton button)
         {
             return _mouseState.IsButtonDown(button);
         }
 
-        /// <inheritdoc />
-        public bool IsMouseButtonUp(MouseButton button)
-        {
-            return _mouseState.IsButtonUp(button);
-        }
-
-        /// <inheritdoc />
+        /// <summary>
+        ///     Gets whether the specified mouse button is pressed in the current frame but released in the previous frame.
+        /// </summary>
+        /// <remarks>
+        ///     "Frame" refers to invocations of <see cref="NativeWindow.ProcessEvents()"/> here.
+        /// </remarks>
+        /// <param name="button">The button to check.</param>
+        /// <returns>True if the button is pressed in this frame, but not the last frame.</returns>
         public bool IsMouseButtonPressed(MouseButton button)
         {
-            return _mouseState.IsButtonDown(button) && !LastMouseState.IsButtonDown(button);
+            return _mouseState.IsButtonDown(button) && !_mouseState.WasButtonDown(button);
         }
 
-        /// <inheritdoc />
+        /// <summary>
+        ///     Gets whether the specified mouse button is released in the current frame but pressed in the previous frame.
+        /// </summary>
+        /// <remarks>
+        ///     "Frame" refers to invocations of <see cref="NativeWindow.ProcessEvents()"/> here.
+        /// </remarks>
+        /// <param name="button">The button to check.</param>
+        /// <returns>True if the button is released in this frame, but pressed the last frame.</returns>
         public bool IsMouseButtonReleased(MouseButton button)
         {
-            return !_mouseState.IsButtonDown(button) && LastMouseState.IsButtonDown(button);
+            return !_mouseState.IsButtonDown(button) && _mouseState.WasButtonDown(button);
         }
 
         private unsafe GraphicsLibraryFramework.Monitor* GetDpiMonitor()
@@ -1119,28 +1275,53 @@ namespace OpenTK.Windowing.Desktop
             return value;
         }
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Gets the current monitor scale.
+        /// </summary>
+        /// <param name="horizontalScale">Horizontal scale.</param>
+        /// <param name="verticalScale">Vertical scale.</param>
+        /// <returns><c>true</c>, if current monitor scale was gotten correctly, <c>false</c> otherwise.</returns>
         public unsafe bool TryGetCurrentMonitorScale(out float horizontalScale, out float verticalScale) =>
             DpiCalculator.TryGetMonitorScale(
-                GetDpiMonitor(),
-                out horizontalScale,
-                out verticalScale
+            GetDpiMonitor(),
+            out horizontalScale,
+            out verticalScale
             );
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Gets the dpi of the current monitor.
+        /// </summary>
+        /// <param name="horizontalDpi">Horizontal dpi.</param>
+        /// <param name="verticalDpi">Vertical dpi.</param>
+        /// <returns><c>true</c>, if current monitor's dpi was gotten correctly, <c>false</c> otherwise.</returns>
+        /// <remarks>
+        /// This methods approximates the dpi of the monitor by multiplying
+        /// the monitor scale received from <see cref="TryGetCurrentMonitorScale(out float, out float)"/>
+        /// by each platforms respective default dpi (72 for macOS and 96 for other systems).
+        /// </remarks>
         public unsafe bool TryGetCurrentMonitorDpi(out float horizontalDpi, out float verticalDpi) =>
             DpiCalculator.TryGetMonitorDpi(
-                GetDpiMonitor(),
-                out horizontalDpi,
-                out verticalDpi
+            GetDpiMonitor(),
+            out horizontalDpi,
+            out verticalDpi
             );
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Gets the raw dpi of current monitor.
+        /// </summary>
+        /// <param name="horizontalDpi">Horizontal dpi.</param>
+        /// <param name="verticalDpi">Vertical dpi.</param>
+        /// <returns><c>true</c>, if current monitor's raw dpi was gotten correctly, <c>false</c> otherwise.</returns>
+        /// <remarks>
+        /// This method calculates dpi by retrieving monitor dimensions and resolution.
+        /// However on certain platforms (such as Windows) these values may not
+        /// be scaled correctly.
+        /// </remarks>
         public unsafe bool TryGetCurrentMonitorDpiRaw(out float horizontalDpi, out float verticalDpi) =>
             DpiCalculator.TryGetMonitorDpiRaw(
-                GetDpiMonitor(),
-                out horizontalDpi,
-                out verticalDpi
+            GetDpiMonitor(),
+            out horizontalDpi,
+            out verticalDpi
             );
 
         /// <summary>
@@ -1331,9 +1512,6 @@ namespace OpenTK.Windowing.Desktop
             {
             }
 
-            // Free unmanaged resources
-            DestroyWindow();
-
             _disposedValue = true;
         }
 
@@ -1350,191 +1528,6 @@ namespace OpenTK.Windowing.Desktop
         {
             Dispose(true);
             GC.SuppressFinalize(this);
-        }
-
-        // Maps GLFW's key enum to our key enum.
-        // There's a few gaps here and there since this is a direct array.
-        // Those default to Unknown.
-        private static readonly Key[] GlfwKeyMapping = GenerateGlfwKeyMapping();
-
-        private static Key[] GenerateGlfwKeyMapping()
-        {
-            var map = new Key[(int)Keys.LastKey + 1];
-            map[(int)Keys.Space] = Key.Space;
-            map[(int)Keys.Apostrophe] = Key.Quote;
-            map[(int)Keys.Comma] = Key.Comma;
-            map[(int)Keys.Minus] = Key.Minus;
-            map[(int)Keys.Period] = Key.Period;
-            map[(int)Keys.Slash] = Key.Slash;
-            map[(int)Keys.D0] = Key.Number0;
-            map[(int)Keys.D1] = Key.Number1;
-            map[(int)Keys.D2] = Key.Number2;
-            map[(int)Keys.D3] = Key.Number3;
-            map[(int)Keys.D4] = Key.Number4;
-            map[(int)Keys.D5] = Key.Number5;
-            map[(int)Keys.D6] = Key.Number6;
-            map[(int)Keys.D7] = Key.Number7;
-            map[(int)Keys.D8] = Key.Number8;
-            map[(int)Keys.D9] = Key.Number9;
-            map[(int)Keys.Semicolon] = Key.Semicolon;
-            map[(int)Keys.Equal] = Key.Plus;
-            map[(int)Keys.A] = Key.A;
-            map[(int)Keys.B] = Key.B;
-            map[(int)Keys.C] = Key.C;
-            map[(int)Keys.D] = Key.D;
-            map[(int)Keys.E] = Key.E;
-            map[(int)Keys.F] = Key.F;
-            map[(int)Keys.G] = Key.G;
-            map[(int)Keys.H] = Key.H;
-            map[(int)Keys.I] = Key.I;
-            map[(int)Keys.J] = Key.J;
-            map[(int)Keys.K] = Key.K;
-            map[(int)Keys.L] = Key.L;
-            map[(int)Keys.M] = Key.M;
-            map[(int)Keys.N] = Key.N;
-            map[(int)Keys.O] = Key.O;
-            map[(int)Keys.P] = Key.P;
-            map[(int)Keys.Q] = Key.Q;
-            map[(int)Keys.R] = Key.R;
-            map[(int)Keys.S] = Key.S;
-            map[(int)Keys.T] = Key.T;
-            map[(int)Keys.U] = Key.U;
-            map[(int)Keys.V] = Key.V;
-            map[(int)Keys.W] = Key.W;
-            map[(int)Keys.X] = Key.X;
-            map[(int)Keys.Y] = Key.Y;
-            map[(int)Keys.Z] = Key.Z;
-            map[(int)Keys.LeftBracket] = Key.BracketLeft;
-            map[(int)Keys.Backslash] = Key.BackSlash;
-            map[(int)Keys.RightBracket] = Key.BracketRight;
-            map[(int)Keys.GraveAccent] = Key.Grave;
-
-            // TODO: What are these world keys and how do I handle them.
-            // map[(int)Keys.World1] = Key.Z;
-            // map[(int)Keys.World2] = Key.Z;
-            map[(int)Keys.Escape] = Key.Escape;
-            map[(int)Keys.Enter] = Key.Enter;
-            map[(int)Keys.Tab] = Key.Tab;
-            map[(int)Keys.Backspace] = Key.BackSpace;
-            map[(int)Keys.Insert] = Key.Insert;
-            map[(int)Keys.Delete] = Key.Delete;
-            map[(int)Keys.Right] = Key.Right;
-            map[(int)Keys.Left] = Key.Left;
-            map[(int)Keys.Down] = Key.Down;
-            map[(int)Keys.Up] = Key.Up;
-            map[(int)Keys.PageUp] = Key.PageUp;
-            map[(int)Keys.PageDown] = Key.PageDown;
-            map[(int)Keys.Home] = Key.Home;
-            map[(int)Keys.End] = Key.End;
-            map[(int)Keys.CapsLock] = Key.CapsLock;
-            map[(int)Keys.ScrollLock] = Key.ScrollLock;
-            map[(int)Keys.NumLock] = Key.NumLock;
-            map[(int)Keys.PrintScreen] = Key.PrintScreen;
-            map[(int)Keys.Pause] = Key.Pause;
-            map[(int)Keys.F1] = Key.F1;
-            map[(int)Keys.F2] = Key.F2;
-            map[(int)Keys.F3] = Key.F3;
-            map[(int)Keys.F4] = Key.F4;
-            map[(int)Keys.F5] = Key.F5;
-            map[(int)Keys.F6] = Key.F6;
-            map[(int)Keys.F7] = Key.F7;
-            map[(int)Keys.F8] = Key.F8;
-            map[(int)Keys.F9] = Key.F9;
-            map[(int)Keys.F10] = Key.F10;
-            map[(int)Keys.F11] = Key.F11;
-            map[(int)Keys.F12] = Key.F12;
-            map[(int)Keys.F13] = Key.F13;
-            map[(int)Keys.F14] = Key.F14;
-            map[(int)Keys.F15] = Key.F15;
-            map[(int)Keys.F16] = Key.F16;
-            map[(int)Keys.F17] = Key.F17;
-            map[(int)Keys.F18] = Key.F18;
-            map[(int)Keys.F19] = Key.F19;
-            map[(int)Keys.F20] = Key.F20;
-            map[(int)Keys.F21] = Key.F21;
-            map[(int)Keys.F22] = Key.F22;
-            map[(int)Keys.F23] = Key.F23;
-            map[(int)Keys.F24] = Key.F24;
-            map[(int)Keys.F25] = Key.F25;
-            map[(int)Keys.KeyPad0] = Key.Keypad0;
-            map[(int)Keys.KeyPad1] = Key.Keypad1;
-            map[(int)Keys.KeyPad2] = Key.Keypad2;
-            map[(int)Keys.KeyPad3] = Key.Keypad3;
-            map[(int)Keys.KeyPad4] = Key.Keypad4;
-            map[(int)Keys.KeyPad5] = Key.Keypad5;
-            map[(int)Keys.KeyPad6] = Key.Keypad6;
-            map[(int)Keys.KeyPad7] = Key.Keypad7;
-            map[(int)Keys.KeyPad8] = Key.Keypad8;
-            map[(int)Keys.KeyPad9] = Key.Keypad9;
-            map[(int)Keys.KeyPadDecimal] = Key.KeypadDecimal;
-            map[(int)Keys.KeyPadDivide] = Key.KeypadDivide;
-            map[(int)Keys.KeyPadMultiply] = Key.KeypadMultiply;
-            map[(int)Keys.KeyPadSubtract] = Key.KeypadSubtract;
-            map[(int)Keys.KeyPadAdd] = Key.KeypadAdd;
-            map[(int)Keys.KeyPadEnter] = Key.KeypadEnter;
-            map[(int)Keys.KeyPadEqual] = Key.KeypadEqual;
-            map[(int)Keys.LeftShift] = Key.ShiftLeft;
-            map[(int)Keys.LeftControl] = Key.ControlLeft;
-            map[(int)Keys.LeftAlt] = Key.AltLeft;
-            map[(int)Keys.LeftSuper] = Key.WinLeft;
-            map[(int)Keys.RightShift] = Key.ShiftRight;
-            map[(int)Keys.RightControl] = Key.ControlRight;
-            map[(int)Keys.RightAlt] = Key.AltRight;
-            map[(int)Keys.RightSuper] = Key.WinRight;
-            map[(int)Keys.Menu] = Key.Menu;
-            return map;
-        }
-
-        private static KeyModifiers MapGlfwKeyModifiers(GlfwKeyModifiers modifiers)
-        {
-            KeyModifiers value = default;
-
-            if (modifiers.HasFlag(GlfwKeyModifiers.Alt))
-            {
-                value |= KeyModifiers.Alt;
-            }
-
-            if (modifiers.HasFlag(GlfwKeyModifiers.Shift))
-            {
-                value |= KeyModifiers.Shift;
-            }
-
-            if (modifiers.HasFlag(GlfwKeyModifiers.Control))
-            {
-                value |= KeyModifiers.Control;
-            }
-
-            if (modifiers.HasFlag(GlfwKeyModifiers.Super))
-            {
-                value |= KeyModifiers.Command;
-            }
-
-            if (modifiers.HasFlag(GlfwKeyModifiers.CapsLock))
-            {
-                value |= KeyModifiers.CapsLock;
-            }
-
-            if (modifiers.HasFlag(GlfwKeyModifiers.NumLock))
-            {
-                value |= KeyModifiers.NumLock;
-            }
-
-            return value;
-        }
-
-        private static Common.InputAction MapGlfwInputAction(InputAction action)
-        {
-            switch (action)
-            {
-                case InputAction.Release:
-                    return Common.InputAction.Release;
-                case InputAction.Press:
-                    return Common.InputAction.Press;
-                case InputAction.Repeat:
-                    return Common.InputAction.Repeat;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(action), action, null);
-            }
         }
 
         private static CursorShape MapStandardCursorShape(MouseCursor.StandardShape shape)

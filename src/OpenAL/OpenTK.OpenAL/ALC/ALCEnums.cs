@@ -163,7 +163,7 @@ namespace OpenTK.Audio.OpenAL
     }
 
     /// <summary>
-    /// Defines available parameters for <see cref="ALC.GetStringList(ALDevice, GetEnumerationStringList)" />.
+    /// Defines available parameters for <see cref="ALC.GetStringListPtr(ALDevice, GetEnumerationStringList)" />.
     /// </summary>
     public enum GetEnumerationStringList
     {

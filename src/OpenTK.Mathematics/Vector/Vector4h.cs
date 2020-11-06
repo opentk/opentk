@@ -59,6 +59,11 @@ namespace OpenTK.Mathematics
         public Half W;
 
         /// <summary>
+        /// Defines the size of the Vector4d struct in bytes.
+        /// </summary>
+        public static readonly int SizeInBytes = Unsafe.SizeOf<Vector4h>();
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="Vector4h"/> struct.
         /// </summary>
         /// <param name="value">The value that will initialize this instance.</param>
@@ -1274,9 +1279,26 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// The size in bytes for an instance of the Half4 struct is 8.
+        /// Compares two instances for equality.
         /// </summary>
-        public static readonly int SizeInBytes = 8;
+        /// <param name="left">The first instance.</param>
+        /// <param name="right">The second instance.</param>
+        /// <returns>True, if left equals right; false otherwise.</returns>
+        public static bool operator ==(Vector4h left, Vector4h right)
+        {
+            return left.Equals(right);
+        }
+
+        /// <summary>
+        /// Compares two instances for inequality.
+        /// </summary>
+        /// <param name="left">The first instance.</param>
+        /// <param name="right">The second instance.</param>
+        /// <returns>True, if left does not equa lright; false otherwise.</returns>
+        public static bool operator !=(Vector4h left, Vector4h right)
+        {
+            return !(left == right);
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Vector4h"/> struct.
@@ -1324,19 +1346,6 @@ namespace OpenTK.Mathematics
             W.ToBinaryStream(bin);
         }
 
-        /// <summary>
-        /// Returns a value indicating whether this instance is equal to a specified OpenTK.Half4 vector.
-        /// </summary>
-        /// <param name="other">OpenTK.Half4 to compare to this instance..</param>
-        /// <returns>True, if other is equal to this instance; false otherwise.</returns>
-        [Pure]
-        public bool Equals(Vector4h other)
-        {
-            return X.Equals(other.X) && Y.Equals(other.Y) && Z.Equals(other.Z) && W.Equals(other.W);
-        }
-
-        private static readonly string ListSeparator = CultureInfo.CurrentCulture.TextInfo.ListSeparator;
-
         /// <inheritdoc/>
         public override string ToString()
         {
@@ -1347,8 +1356,29 @@ namespace OpenTK.Mathematics
                 Y.ToString(),
                 Z.ToString(),
                 W.ToString(),
-                ListSeparator
+                MathHelper.ListSeparator
             );
+        }
+
+        /// <inheritdoc/>
+        public override bool Equals(object obj)
+        {
+            return obj is Vector4h && Equals((Vector4h)obj);
+        }
+
+        /// <inheritdoc/>
+        public bool Equals(Vector4h other)
+        {
+            return X.Equals(other.X) &&
+                   Y.Equals(other.Y) &&
+                   Z.Equals(other.Z) &&
+                   W.Equals(other.W);
+        }
+
+        /// <inheritdoc/>
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(X, Y, Z, W);
         }
 
         /// <summary>

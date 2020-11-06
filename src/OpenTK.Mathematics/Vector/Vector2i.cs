@@ -10,6 +10,7 @@
 using System;
 using System.Diagnostics.Contracts;
 using System.Globalization;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Xml.Serialization;
 
@@ -128,7 +129,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Defines the size of the <see cref="Vector2i"/> struct in bytes.
         /// </summary>
-        public static readonly int SizeInBytes = Marshal.SizeOf<Vector2i>();
+        public static readonly int SizeInBytes = Unsafe.SizeOf<Vector2i>();
 
         /// <summary>
         /// Adds two vectors.
@@ -497,7 +498,6 @@ namespace OpenTK.Mathematics
         /// <param name="left">Left operand.</param>
         /// <param name="right">Right operand.</param>
         /// <returns>True if both instances are equal; false otherwise.</returns>
-        [Pure]
         public static bool operator ==(Vector2i left, Vector2i right)
         {
             return left.Equals(right);
@@ -509,10 +509,9 @@ namespace OpenTK.Mathematics
         /// <param name="left">Left operand.</param>
         /// <param name="right">Right operand.</param>
         /// <returns>True if both instances are not equal; false otherwise.</returns>
-        [Pure]
         public static bool operator !=(Vector2i left, Vector2i right)
         {
-            return !left.Equals(right);
+            return !(left == right);
         }
 
         /// <summary>
@@ -560,51 +559,29 @@ namespace OpenTK.Mathematics
             return new Vector2i(values.X, values.Y);
         }
 
-        private static readonly string ListSeparator = CultureInfo.CurrentCulture.TextInfo.ListSeparator;
-
         /// <inheritdoc/>
         public override string ToString()
         {
-            return string.Format("({0}{2} {1})", X, Y, ListSeparator);
+            return string.Format("({0}{2} {1})", X, Y, MathHelper.ListSeparator);
         }
 
-        /// <summary>
-        /// Returns the hashcode for this instance.
-        /// </summary>
-        /// <returns>A System.Int32 containing the unique hashcode for this instance.</returns>
-        public override int GetHashCode()
-        {
-            unchecked
-            {
-                return (X * 397) ^ Y;
-            }
-        }
-
-        /// <summary>
-        /// Indicates whether this instance and a specified object are equal.
-        /// </summary>
-        /// <param name="obj">The object to compare to.</param>
-        /// <returns>True if the instances are equal; false otherwise.</returns>
-        [Pure]
+        /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (!(obj is Vector2i))
-            {
-                return false;
-            }
-
-            return Equals((Vector2i)obj);
+            return obj is Vector2i && Equals((Vector2i)obj);
         }
 
-        /// <summary>
-        /// Indicates whether the current vector is equal to another vector.
-        /// </summary>
-        /// <param name="other">A vector to compare with this vector.</param>
-        /// <returns>true if the current vector is equal to the vector parameter; otherwise, false.</returns>
-        [Pure]
+        /// <inheritdoc/>
         public bool Equals(Vector2i other)
         {
-            return X == other.X && Y == other.Y;
+            return X == other.X &&
+                   Y == other.Y;
+        }
+
+        /// <inheritdoc/>
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(X, Y);
         }
 
         /// <summary>

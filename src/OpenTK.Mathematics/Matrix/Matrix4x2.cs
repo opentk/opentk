@@ -23,12 +23,15 @@ SOFTWARE.
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
+using System.Runtime.InteropServices;
 
 namespace OpenTK.Mathematics
 {
     /// <summary>
     /// Represents a 4x2 matrix.
     /// </summary>
+    [Serializable]
+    [StructLayout(LayoutKind.Sequential)]
     public struct Matrix4x2 : IEquatable<Matrix4x2>
     {
         /// <summary>
@@ -284,8 +287,8 @@ namespace OpenTK.Mathematics
         /// <param name="result">The resulting Matrix3x2 instance.</param>
         public static void CreateRotation(float angle, out Matrix4x2 result)
         {
-            var cos = (float)Math.Cos(angle);
-            var sin = (float)Math.Sin(angle);
+            var cos = MathF.Cos(angle);
+            var sin = MathF.Sin(angle);
 
             result.Row0.X = cos;
             result.Row0.Y = sin;
@@ -793,14 +796,7 @@ namespace OpenTK.Mathematics
         /// <returns>A System.Int32 containing the unique hashcode for this instance.</returns>
         public override int GetHashCode()
         {
-            unchecked
-            {
-                var hashCode = Row0.GetHashCode();
-                hashCode = (hashCode * 397) ^ Row1.GetHashCode();
-                hashCode = (hashCode * 397) ^ Row2.GetHashCode();
-                hashCode = (hashCode * 397) ^ Row3.GetHashCode();
-                return hashCode;
-            }
+            return HashCode.Combine(Row0, Row1, Row2, Row3);
         }
 
         /// <summary>
@@ -811,12 +807,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public override bool Equals(object obj)
         {
-            if (!(obj is Matrix4x2))
-            {
-                return false;
-            }
-
-            return Equals((Matrix4x2)obj);
+            return obj is Matrix4x2 && Equals((Matrix4x2)obj);
         }
 
         /// <summary>

@@ -23,12 +23,15 @@ SOFTWARE.
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
+using System.Runtime.InteropServices;
 
 namespace OpenTK.Mathematics
 {
     /// <summary>
     /// Represents a 2x4 matrix.
     /// </summary>
+    [Serializable]
+    [StructLayout(LayoutKind.Sequential)]
     public struct Matrix2x4 : IEquatable<Matrix2x4>
     {
         /// <summary>
@@ -270,8 +273,8 @@ namespace OpenTK.Mathematics
         /// <param name="result">The resulting Matrix2x4 instance.</param>
         public static void CreateRotation(float angle, out Matrix2x4 result)
         {
-            var cos = (float)Math.Cos(angle);
-            var sin = (float)Math.Sin(angle);
+            var cos = MathF.Cos(angle);
+            var sin = MathF.Sin(angle);
 
             result.Row0.X = cos;
             result.Row0.Y = sin;
@@ -779,10 +782,7 @@ namespace OpenTK.Mathematics
         /// <returns>A System.Int32 containing the unique hashcode for this instance.</returns>
         public override int GetHashCode()
         {
-            unchecked
-            {
-                return (Row0.GetHashCode() * 397) ^ Row1.GetHashCode();
-            }
+            return HashCode.Combine(Row0, Row1);
         }
 
         /// <summary>
@@ -793,12 +793,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public override bool Equals(object obj)
         {
-            if (!(obj is Matrix2x4))
-            {
-                return false;
-            }
-
-            return Equals((Matrix2x4)obj);
+            return obj is Matrix2x4 && Equals((Matrix2x4)obj);
         }
 
         /// <summary>

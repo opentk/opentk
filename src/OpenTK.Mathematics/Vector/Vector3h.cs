@@ -432,9 +432,31 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
+        /// Compares two instances for equality.
+        /// </summary>
+        /// <param name="left">The first instance.</param>
+        /// <param name="right">The second instance.</param>
+        /// <returns>True, if left equals right; false otherwise.</returns>
+        public static bool operator ==(Vector3h left, Vector3h right)
+        {
+            return left.Equals(right);
+        }
+
+        /// <summary>
+        /// Compares two instances for inequality.
+        /// </summary>
+        /// <param name="left">The first instance.</param>
+        /// <param name="right">The second instance.</param>
+        /// <returns>True, if left does not equal right; false otherwise.</returns>
+        public static bool operator !=(Vector3h left, Vector3h right)
+        {
+            return !(left == right);
+        }
+
+        /// <summary>
         /// The size in bytes for an instance of the Half3 struct is 6.
         /// </summary>
-        public static readonly int SizeInBytes = 6;
+        public static readonly int SizeInBytes = Unsafe.SizeOf<Vector3h>();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Vector3h"/> struct.
@@ -479,23 +501,30 @@ namespace OpenTK.Mathematics
             Z.ToBinaryStream(bin);
         }
 
-        /// <summary>
-        /// Returns a value indicating whether this instance is equal to a specified OpenTK.Half3 vector.
-        /// </summary>
-        /// <param name="other">OpenTK.Half3 to compare to this instance..</param>
-        /// <returns>True, if other is equal to this instance; false otherwise.</returns>
-        [Pure]
-        public bool Equals(Vector3h other)
-        {
-            return X.Equals(other.X) && Y.Equals(other.Y) && Z.Equals(other.Z);
-        }
-
-        private static readonly string ListSeparator = CultureInfo.CurrentCulture.TextInfo.ListSeparator;
-
         /// <inheritdoc/>
         public override string ToString()
         {
-            return string.Format("({0}{3} {1}{3} {2})", X.ToString(), Y.ToString(), Z.ToString(), ListSeparator);
+            return string.Format("({0}{3} {1}{3} {2})", X.ToString(), Y.ToString(), Z.ToString(), MathHelper.ListSeparator);
+        }
+
+        /// <inheritdoc/>
+        public override bool Equals(object obj)
+        {
+            return obj is Vector3h && Equals((Vector3h)obj);
+        }
+
+        /// <inheritdoc/>
+        public bool Equals(Vector3h other)
+        {
+            return X.Equals(other.X) &&
+                   Y.Equals(other.Y) &&
+                   Z.Equals(other.Z);
+        }
+
+        /// <inheritdoc/>
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(X, Y, Z);
         }
 
         /// <summary>

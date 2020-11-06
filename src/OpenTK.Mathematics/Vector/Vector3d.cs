@@ -256,7 +256,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Defines the size of the Vector3d struct in bytes.
         /// </summary>
-        public static readonly int SizeInBytes = Marshal.SizeOf<Vector3d>();
+        public static readonly int SizeInBytes = Unsafe.SizeOf<Vector3d>();
 
         /// <summary>
         /// Adds two vectors.
@@ -1374,7 +1374,6 @@ namespace OpenTK.Mathematics
         /// <param name="left">The first instance.</param>
         /// <param name="right">The second instance.</param>
         /// <returns>True, if left equals right; false otherwise.</returns>
-        [Pure]
         public static bool operator ==(Vector3d left, Vector3d right)
         {
             return left.Equals(right);
@@ -1386,10 +1385,9 @@ namespace OpenTK.Mathematics
         /// <param name="left">The first instance.</param>
         /// <param name="right">The second instance.</param>
         /// <returns>True, if left does not equa lright; false otherwise.</returns>
-        [Pure]
         public static bool operator !=(Vector3d left, Vector3d right)
         {
-            return !left.Equals(right);
+            return !(left == right);
         }
 
         /// <summary>
@@ -1437,57 +1435,30 @@ namespace OpenTK.Mathematics
             return new Vector3d(values.X, values.Y, values.Z);
         }
 
-        private static readonly string ListSeparator = CultureInfo.CurrentCulture.TextInfo.ListSeparator;
-
         /// <inheritdoc />
         public override string ToString()
         {
-            return string.Format("({0}{3} {1}{3} {2})", X, Y, Z, ListSeparator);
+            return string.Format("({0}{3} {1}{3} {2})", X, Y, Z, MathHelper.ListSeparator);
         }
 
-        /// <summary>
-        /// Returns the hashcode for this instance.
-        /// </summary>
-        /// <returns>A System.Int32 containing the unique hashcode for this instance.</returns>
-        public override int GetHashCode()
-        {
-            unchecked
-            {
-                var hashCode = X.GetHashCode();
-                hashCode = (hashCode * 397) ^ Y.GetHashCode();
-                hashCode = (hashCode * 397) ^ Z.GetHashCode();
-                return hashCode;
-            }
-        }
-
-        /// <summary>
-        /// Indicates whether this instance and a specified object are equal.
-        /// </summary>
-        /// <param name="obj">The object to compare to.</param>
-        /// <returns>True if the instances are equal; false otherwise.</returns>
-        [Pure]
+        /// <inheritdoc />
         public override bool Equals(object obj)
         {
-            if (!(obj is Vector3d))
-            {
-                return false;
-            }
-
-            return Equals((Vector3d)obj);
+            return obj is Vector3d && Equals((Vector3d)obj);
         }
 
-        /// <summary>
-        /// Indicates whether the current vector is equal to another vector.
-        /// </summary>
-        /// <param name="other">A vector to compare with this vector.</param>
-        /// <returns>true if the current vector is equal to the vector parameter; otherwise, false.</returns>
-        [Pure]
+        /// <inheritdoc />
         public bool Equals(Vector3d other)
         {
-            return
-                X == other.X &&
-                Y == other.Y &&
-                Z == other.Z;
+            return X == other.X &&
+                   Y == other.Y &&
+                   Z == other.Z;
+        }
+
+        /// <inheritdoc />
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(X, Y, Z);
         }
 
         /// <summary>

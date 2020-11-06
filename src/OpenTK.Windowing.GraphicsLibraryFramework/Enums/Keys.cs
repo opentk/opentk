@@ -12,7 +12,7 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
     /// <summary>
     /// Specifies key codes and modifiers in US keyboard layout.
     /// </summary>
-    public enum Keys
+    public enum Keys : int
     {
         /// <summary>
         /// An unknown key.
@@ -258,16 +258,6 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         /// The grave accent key.
         /// </summary>
         GraveAccent = 96 /* ` */,
-
-        /// <summary>
-        /// Non US keyboard layout key 1.
-        /// </summary>
-        World1 = 161 /* non-US #1 */,
-
-        /// <summary>
-        /// Non US keyboard layout key 2.
-        /// </summary>
-        World2 = 162 /* non-US #2 */,
 
         /// <summary>
         /// The escape key.

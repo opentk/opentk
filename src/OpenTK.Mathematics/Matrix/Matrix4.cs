@@ -671,8 +671,8 @@ namespace OpenTK.Mathematics
             float axisX = axis.X, axisY = axis.Y, axisZ = axis.Z;
 
             // calculate angles
-            var cos = (float)Math.Cos(-angle);
-            var sin = (float)Math.Sin(-angle);
+            var cos = MathF.Cos(-angle);
+            var sin = MathF.Sin(-angle);
             var t = 1.0f - cos;
 
             // do the conversion math once
@@ -745,8 +745,8 @@ namespace OpenTK.Mathematics
         /// <param name="result">The resulting Matrix4 instance.</param>
         public static void CreateRotationX(float angle, out Matrix4 result)
         {
-            var cos = (float)Math.Cos(angle);
-            var sin = (float)Math.Sin(angle);
+            var cos = MathF.Cos(angle);
+            var sin = MathF.Sin(angle);
 
             result = Identity;
             result.Row1.Y = cos;
@@ -774,8 +774,8 @@ namespace OpenTK.Mathematics
         /// <param name="result">The resulting Matrix4 instance.</param>
         public static void CreateRotationY(float angle, out Matrix4 result)
         {
-            var cos = (float)Math.Cos(angle);
-            var sin = (float)Math.Sin(angle);
+            var cos = MathF.Cos(angle);
+            var sin = MathF.Sin(angle);
 
             result = Identity;
             result.Row0.X = cos;
@@ -803,8 +803,8 @@ namespace OpenTK.Mathematics
         /// <param name="result">The resulting Matrix4 instance.</param>
         public static void CreateRotationZ(float angle, out Matrix4 result)
         {
-            var cos = (float)Math.Cos(angle);
-            var sin = (float)Math.Sin(angle);
+            var cos = MathF.Cos(angle);
+            var sin = MathF.Sin(angle);
 
             result = Identity;
             result.Row0.X = cos;
@@ -1094,7 +1094,7 @@ namespace OpenTK.Mathematics
                 throw new ArgumentOutOfRangeException(nameof(depthFar));
             }
 
-            var maxY = depthNear * (float)Math.Tan(0.5f * fovy);
+            var maxY = depthNear * MathF.Tan(0.5f * fovy);
             var minY = -maxY;
             var minX = minY * aspect;
             var maxX = maxY * aspect;
@@ -1712,14 +1712,7 @@ namespace OpenTK.Mathematics
         /// <returns>A System.Int32 containing the unique hashcode for this instance.</returns>
         public override int GetHashCode()
         {
-            unchecked
-            {
-                var hashCode = Row0.GetHashCode();
-                hashCode = (hashCode * 397) ^ Row1.GetHashCode();
-                hashCode = (hashCode * 397) ^ Row2.GetHashCode();
-                hashCode = (hashCode * 397) ^ Row3.GetHashCode();
-                return hashCode;
-            }
+            return HashCode.Combine(Row0, Row1, Row2, Row3);
         }
 
         /// <summary>
@@ -1730,12 +1723,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public override bool Equals(object obj)
         {
-            if (!(obj is Matrix4))
-            {
-                return false;
-            }
-
-            return Equals((Matrix4)obj);
+            return obj is Matrix4 && Equals((Matrix4)obj);
         }
 
         /// <summary>

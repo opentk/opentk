@@ -177,12 +177,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public override bool Equals(object obj)
         {
-            if (!(obj is Color4))
-            {
-                return false;
-            }
-
-            return Equals((Color4)obj);
+            return obj is Color4 && Equals((Color4)obj);
         }
 
         /// <summary>
@@ -191,7 +186,7 @@ namespace OpenTK.Mathematics
         /// <returns>A System.Int32 containing the hashcode of this Color4 structure.</returns>
         public override int GetHashCode()
         {
-            return ToArgb();
+            return HashCode.Combine(R, G, B, A);
         }
 
         /// <summary>
@@ -200,7 +195,8 @@ namespace OpenTK.Mathematics
         /// <returns>A System.String that describes this Color4 structure.</returns>
         public override string ToString()
         {
-            return $"{{(R, G, B, A) = ({R.ToString()}, {G.ToString()}, {B.ToString()}, {A.ToString()})}}";
+            var ls = MathHelper.ListSeparator;
+            return $"{{(R{ls} G{ls} B{ls} A) = ({R}{ls} {G}{ls} {B}{ls} {A})}}";
         }
 
         /// <summary>
@@ -928,7 +924,7 @@ namespace OpenTK.Mathematics
             }
             else
             {
-                r = (float)Math.Pow((srgb.R + 0.055f) / (1.0f + 0.055f), 2.4f);
+                r = MathF.Pow((srgb.R + 0.055f) / (1.0f + 0.055f), 2.4f);
             }
 
             if (srgb.G <= 0.04045f)
@@ -937,7 +933,7 @@ namespace OpenTK.Mathematics
             }
             else
             {
-                g = (float)Math.Pow((srgb.G + 0.055f) / (1.0f + 0.055f), 2.4f);
+                g = MathF.Pow((srgb.G + 0.055f) / (1.0f + 0.055f), 2.4f);
             }
 
             if (srgb.B <= 0.04045f)
@@ -946,7 +942,7 @@ namespace OpenTK.Mathematics
             }
             else
             {
-                b = (float)Math.Pow((srgb.B + 0.055f) / (1.0f + 0.055f), 2.4f);
+                b = MathF.Pow((srgb.B + 0.055f) / (1.0f + 0.055f), 2.4f);
             }
 
             return new Color4(r, g, b, srgb.A);
@@ -970,7 +966,7 @@ namespace OpenTK.Mathematics
             }
             else
             {
-                r = ((1.0f + 0.055f) * (float)Math.Pow(rgb.R, 1.0f / 2.4f)) - 0.055f;
+                r = ((1.0f + 0.055f) * MathF.Pow(rgb.R, 1.0f / 2.4f)) - 0.055f;
             }
 
             if (rgb.G <= 0.0031308)
@@ -979,7 +975,7 @@ namespace OpenTK.Mathematics
             }
             else
             {
-                g = ((1.0f + 0.055f) * (float)Math.Pow(rgb.G, 1.0f / 2.4f)) - 0.055f;
+                g = ((1.0f + 0.055f) * MathF.Pow(rgb.G, 1.0f / 2.4f)) - 0.055f;
             }
 
             if (rgb.B <= 0.0031308)
@@ -988,7 +984,7 @@ namespace OpenTK.Mathematics
             }
             else
             {
-                b = ((1.0f + 0.055f) * (float)Math.Pow(rgb.B, 1.0f / 2.4f)) - 0.055f;
+                b = ((1.0f + 0.055f) * MathF.Pow(rgb.B, 1.0f / 2.4f)) - 0.055f;
             }
 
             return new Color4(r, g, b, rgb.A);

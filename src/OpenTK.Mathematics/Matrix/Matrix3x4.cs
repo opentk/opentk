@@ -312,8 +312,8 @@ namespace OpenTK.Mathematics
             axis.Normalize();
             float axisX = axis.X, axisY = axis.Y, axisZ = axis.Z;
 
-            var cos = (float)Math.Cos(angle);
-            var sin = (float)Math.Sin(angle);
+            var cos = MathF.Cos(angle);
+            var sin = MathF.Sin(angle);
             var t = 1.0f - cos;
 
             float tXX = t * axisX * axisX;
@@ -411,8 +411,8 @@ namespace OpenTK.Mathematics
         /// <param name="result">The resulting Matrix4 instance.</param>
         public static void CreateRotationX(float angle, out Matrix3x4 result)
         {
-            var cos = (float)Math.Cos(angle);
-            var sin = (float)Math.Sin(angle);
+            var cos = MathF.Cos(angle);
+            var sin = MathF.Sin(angle);
 
             result.Row0.X = 1;
             result.Row0.Y = 0;
@@ -447,8 +447,8 @@ namespace OpenTK.Mathematics
         /// <param name="result">The resulting Matrix4 instance.</param>
         public static void CreateRotationY(float angle, out Matrix3x4 result)
         {
-            var cos = (float)Math.Cos(angle);
-            var sin = (float)Math.Sin(angle);
+            var cos = MathF.Cos(angle);
+            var sin = MathF.Sin(angle);
 
             result.Row0.X = cos;
             result.Row0.Y = 0;
@@ -483,8 +483,8 @@ namespace OpenTK.Mathematics
         /// <param name="result">The resulting Matrix4 instance.</param>
         public static void CreateRotationZ(float angle, out Matrix3x4 result)
         {
-            var cos = (float)Math.Cos(angle);
-            var sin = (float)Math.Sin(angle);
+            var cos = MathF.Cos(angle);
+            var sin = MathF.Sin(angle);
 
             result.Row0.X = cos;
             result.Row0.Y = sin;
@@ -981,13 +981,7 @@ namespace OpenTK.Mathematics
         /// <returns>A System.Int32 containing the unique hashcode for this instance.</returns>
         public override int GetHashCode()
         {
-            unchecked
-            {
-                var hashCode = Row0.GetHashCode();
-                hashCode = (hashCode * 397) ^ Row1.GetHashCode();
-                hashCode = (hashCode * 397) ^ Row2.GetHashCode();
-                return hashCode;
-            }
+            return HashCode.Combine(Row0, Row1, Row2);
         }
 
         /// <summary>
@@ -998,12 +992,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public override bool Equals(object obj)
         {
-            if (!(obj is Matrix3x4))
-            {
-                return false;
-            }
-
-            return Equals((Matrix3x4)obj);
+            return obj is Matrix3x4 && Equals((Matrix3x4)obj);
         }
 
         /// <summary>

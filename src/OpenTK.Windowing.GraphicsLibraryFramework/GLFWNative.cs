@@ -69,6 +69,8 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
             return NativeLibrary.Load(libraryName, assembly, searchPath);
         }
 
+#pragma warning disable IDE1006 // Naming Styles
+
         [DllImport(LibraryName)]
         public static extern int glfwInit();
 
@@ -148,7 +150,7 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         public static extern void glfwRequestWindowAttention(Window* window);
 
         [DllImport(LibraryName)]
-        public static extern void glfwSetWindowAttrib(Window* window, WindowAttributeSetter attrib, int value);
+        public static extern void glfwSetWindowAttrib(Window* window, WindowAttribute attrib, int value);
 
         [DllImport(LibraryName)]
         public static extern int glfwRawMouseMotionSupported();
@@ -277,7 +279,25 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         public static extern VideoMode* glfwGetVideoMode(Monitor* monitor);
 
         [DllImport(LibraryName)]
-        public static extern int glfwGetWindowAttrib(Window* window, WindowAttributeGetter attribute);
+        public static extern int glfwGetWindowAttrib(Window* window, WindowAttributeGetBool attribute);
+
+        [DllImport(LibraryName)]
+        public static extern int glfwGetWindowAttrib(Window* window, WindowAttributeGetInt attribute);
+
+        [DllImport(LibraryName)]
+        public static extern ClientApi glfwGetWindowAttrib(Window* window, WindowAttributeGetClientApi attribute);
+
+        [DllImport(LibraryName)]
+        public static extern ContextApi glfwGetWindowAttrib(Window* window, WindowAttributeGetContextApi attribute);
+
+        [DllImport(LibraryName)]
+        public static extern OpenGlProfile glfwGetWindowAttrib(Window* window, WindowAttributeGetOpenGlProfile attribute);
+
+        [DllImport(LibraryName)]
+        public static extern ReleaseBehavior glfwGetWindowAttrib(Window* window, WindowAttributeGetReleaseBehavior attribute);
+
+        [DllImport(LibraryName)]
+        public static extern Robustness glfwGetWindowAttrib(Window* window, WindowAttributeGetRobustness attribute);
 
         [DllImport(LibraryName)]
         public static extern void glfwGetWindowSize(Window* window, int* width, int* height);
@@ -352,22 +372,22 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         public static extern void* glfwGetWindowUserPointer(Window* window);
 
         [DllImport(LibraryName)]
-        public static extern IntPtr glfwSetCharCallback(Window* window, IntPtr callback);
+        public static extern IntPtr glfwSetCharCallback(Window* window, GLFWCallbacks.CharCallback callback);
 
         [DllImport(LibraryName)]
-        public static extern IntPtr glfwSetCharModsCallback(Window* window, IntPtr callback);
+        public static extern IntPtr glfwSetCharModsCallback(Window* window, GLFWCallbacks.CharModsCallback callback);
 
         [DllImport(LibraryName)]
-        public static extern IntPtr glfwSetCursorEnterCallback(Window* window, IntPtr callback);
+        public static extern IntPtr glfwSetCursorEnterCallback(Window* window, GLFWCallbacks.CursorEnterCallback callback);
 
         [DllImport(LibraryName)]
-        public static extern IntPtr glfwSetCursorPosCallback(Window* window, IntPtr callback);
+        public static extern IntPtr glfwSetCursorPosCallback(Window* window, GLFWCallbacks.CursorPosCallback callback);
 
         [DllImport(LibraryName)]
-        public static extern IntPtr glfwSetDropCallback(Window* window, IntPtr callback);
+        public static extern IntPtr glfwSetDropCallback(Window* window, GLFWCallbacks.DropCallback callback);
 
         [DllImport(LibraryName)]
-        public static extern IntPtr glfwSetErrorCallback(IntPtr callback);
+        public static extern IntPtr glfwSetErrorCallback(GLFWCallbacks.ErrorCallback callback);
 
         [DllImport(LibraryName)]
         public static extern void glfwSetInputMode(Window* window, CursorStateAttribute mode, CursorModeValue value);
@@ -379,40 +399,40 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         public static extern void glfwSetInputMode(Window* window, LockKeyModAttribute mode, int value);
 
         [DllImport(LibraryName)]
-        public static extern IntPtr glfwSetJoystickCallback(IntPtr callback);
+        public static extern IntPtr glfwSetJoystickCallback(GLFWCallbacks.JoystickCallback callback);
 
         [DllImport(LibraryName)]
-        public static extern IntPtr glfwSetKeyCallback(Window* window, IntPtr callback);
+        public static extern IntPtr glfwSetKeyCallback(Window* window, GLFWCallbacks.KeyCallback callback);
 
         [DllImport(LibraryName)]
-        public static extern IntPtr glfwSetScrollCallback(Window* window, IntPtr callback);
+        public static extern IntPtr glfwSetScrollCallback(Window* window, GLFWCallbacks.ScrollCallback callback);
 
         [DllImport(LibraryName)]
-        public static extern IntPtr glfwSetMonitorCallback(IntPtr callback);
+        public static extern IntPtr glfwSetMonitorCallback(GLFWCallbacks.MonitorCallback callback);
 
         [DllImport(LibraryName)]
-        public static extern IntPtr glfwSetMouseButtonCallback(Window* window, IntPtr callback);
+        public static extern IntPtr glfwSetMouseButtonCallback(Window* window, GLFWCallbacks.MouseButtonCallback callback);
 
         [DllImport(LibraryName)]
-        public static extern IntPtr glfwSetWindowCloseCallback(Window* window, IntPtr callback);
+        public static extern IntPtr glfwSetWindowCloseCallback(Window* window, GLFWCallbacks.WindowCloseCallback callback);
 
         [DllImport(LibraryName)]
-        public static extern IntPtr glfwSetWindowFocusCallback(Window* window, IntPtr callback);
+        public static extern IntPtr glfwSetWindowFocusCallback(Window* window, GLFWCallbacks.WindowFocusCallback callback);
 
         [DllImport(LibraryName)]
         public static extern void glfwSetWindowIcon(Window* window, int count, Image* images);
 
         [DllImport(LibraryName)]
-        public static extern IntPtr glfwSetWindowIconifyCallback(Window* window, IntPtr callback);
+        public static extern IntPtr glfwSetWindowIconifyCallback(Window* window, GLFWCallbacks.WindowIconifyCallback callback);
 
         [DllImport(LibraryName)]
-        public static extern IntPtr glfwSetWindowMaximizeCallback(Window* window, IntPtr callback);
+        public static extern IntPtr glfwSetWindowMaximizeCallback(Window* window, GLFWCallbacks.WindowMaximizeCallback callback);
 
         [DllImport(LibraryName)]
-        public static extern IntPtr glfwSetFramebufferSizeCallback(Window* window, IntPtr callback);
+        public static extern IntPtr glfwSetFramebufferSizeCallback(Window* window, GLFWCallbacks.FramebufferSizeCallback callback);
 
         [DllImport(LibraryName)]
-        public static extern IntPtr glfwSetWindowContentScaleCallback(Window* window, IntPtr callback);
+        public static extern IntPtr glfwSetWindowContentScaleCallback(Window* window, GLFWCallbacks.WindowContentScaleCallback callback);
 
         [DllImport(LibraryName)]
         public static extern void glfwSetWindowTitle(Window* window, byte* title);
@@ -424,7 +444,7 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         public static extern void glfwSetWindowSize(Window* window, int width, int height);
 
         [DllImport(LibraryName)]
-        public static extern IntPtr glfwSetWindowSizeCallback(Window* window, IntPtr callback);
+        public static extern IntPtr glfwSetWindowSizeCallback(Window* window, GLFWCallbacks.WindowSizeCallback callback);
 
         [DllImport(LibraryName)]
         public static extern void glfwSetWindowShouldClose(Window* window, int value);
@@ -436,10 +456,10 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         public static extern void glfwSetWindowPos(Window* window, int x, int y);
 
         [DllImport(LibraryName)]
-        public static extern IntPtr glfwSetWindowPosCallback(Window* window, IntPtr callback);
+        public static extern IntPtr glfwSetWindowPosCallback(Window* window, GLFWCallbacks.WindowPosCallback callback);
 
         [DllImport(LibraryName)]
-        public static extern IntPtr glfwSetWindowRefreshCallback(Window* window, IntPtr callback);
+        public static extern IntPtr glfwSetWindowRefreshCallback(Window* window, GLFWCallbacks.WindowRefreshCallback callback);
 
         [DllImport(LibraryName)]
         public static extern void glfwSwapInterval(int interval);
@@ -469,6 +489,8 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         public static extern int glfwGetPhysicalDevicePresentationSupport(VkHandle instance, VkHandle device, int queueFamily);
 
         [DllImport(LibraryName)]
-        public static extern int glfwCreateWindowSurface(VkHandle instance, Window* window, void* allocator, VkHandle surface);
+        public static extern int glfwCreateWindowSurface(VkHandle instance, Window* window, void* allocator, out VkHandle surface);
+
+#pragma warning restore IDE1006 // Naming Styles
     }
 }

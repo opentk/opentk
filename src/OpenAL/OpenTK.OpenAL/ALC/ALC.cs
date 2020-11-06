@@ -214,33 +214,10 @@ namespace OpenTK.Audio.OpenAL
         /// <param name="device">A pointer to the device to be queried.</param>
         /// <param name="param">An attribute to be retrieved: ALC_DEVICE_SPECIFIER, ALC_CAPTURE_DEVICE_SPECIFIER, ALC_ALL_DEVICES_SPECIFIER.</param>
         /// <returns>A List of strings containing the names of the Devices.</returns>
-        public static IList<string> GetString(ALDevice device, AlcGetStringList param)
+        public static unsafe List<string> GetString(ALDevice device, AlcGetStringList param)
         {
-            List<string> result = new List<string>();
-
-            // We cannot use Marshal.PtrToStringAnsi(),
-            //  because alcGetString is defined to return either a null-terminated string,
-            //  or an array of null-terminated strings terminated by an extra null.
-            // Marshal.PtrToStringAnsi() will fail in the latter case (it will only
-            // return the very first string in the array.)
-            // We'll have to marshal this ourselves.
-            unsafe
-            {
-                byte* currentPos = GetStringPtr(device, (AlcGetString)param);
-                while (true)
-                {
-                    var currentString = Marshal.PtrToStringAnsi(new IntPtr(currentPos));
-
-                    if (string.IsNullOrEmpty(currentString))
-                    {
-                        break;
-                    }
-
-                    result.Add(currentString);
-                    currentPos += currentString.Length + 1;
-                }
-            }
-            return result;
+            byte* result = GetStringPtr(device, (AlcGetString)param);
+            return ALStringListToList(result);
         }
 
         /// <summary>This function returns a List of strings related to the context.</summary>
@@ -251,7 +228,7 @@ namespace OpenTK.Audio.OpenAL
         /// </remarks>
         /// <param name="param">An attribute to be retrieved: ALC_DEVICE_SPECIFIER, ALC_CAPTURE_DEVICE_SPECIFIER, ALC_ALL_DEVICES_SPECIFIER.</param>
         /// <returns>A List of strings containing the names of the Devices.</returns>
-        public static IList<string> GetString(AlcGetStringList param) => GetString(ALDevice.Null, param);
+        public static List<string> GetString(AlcGetStringList param) => GetString(ALDevice.Null, param);
 
         /// <summary>This function returns integers related to the context.</summary>
         /// <param name="device">a pointer to the device to be queried.</param>
@@ -424,17 +401,12 @@ namespace OpenTK.Audio.OpenAL
         /// <param name="device">A pointer to a capture device.</param>
         /// <param name="buffer">A reference to a buffer, which must be large enough to accommodate the number of samples.</param>
         /// <param name="samples">The number of samples to be retrieved.</param>
-        public static void CaptureSamples<T>(ALCaptureDevice device, ref T buffer, int samples)
+        public static unsafe void CaptureSamples<T>(ALCaptureDevice device, ref T buffer, int samples)
             where T : unmanaged
         {
-            GCHandle handle = GCHandle.Alloc(buffer, GCHandleType.Pinned);
-            try
+            fixed (T* ptr = &buffer)
             {
-                CaptureSamples(device, handle.AddrOfPinnedObject(), samples);
-            }
-            finally
-            {
-                handle.Free();
+                CaptureSamples(device, ptr, samples);
             }
         }
 
@@ -526,12 +498,12 @@ namespace OpenTK.Audio.OpenAL
         /// <param name="param">The named property.</param>
         /// <returns>The value.</returns>
         [DllImport(Lib, EntryPoint = "alcGetString", ExactSpelling = true, CallingConvention = AlcCallingConv)]
-        public static unsafe extern byte* GetStringList(ALDevice device, GetEnumerationStringList param);
+        public static unsafe extern byte* GetStringListPtr(ALDevice device, GetEnumerationStringList param);
 
         /// <inheritdoc cref="GetString(ALDevice, GetEnumerationString)"/>
         public static unsafe IEnumerable<string> GetStringList(GetEnumerationStringList param)
         {
-            byte* result = GetStringList(ALDevice.Null, param);
+            byte* result = GetStringListPtr(ALDevice.Null, param);
             return ALStringListToList(result);
         }
 

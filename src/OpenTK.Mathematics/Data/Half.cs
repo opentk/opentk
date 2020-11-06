@@ -383,6 +383,16 @@ namespace OpenTK.Mathematics
             return h.ToSingle();
         }
 
+        public static bool operator ==(Half left, Half right)
+        {
+            return left.Equals(right);
+        }
+
+        public static bool operator !=(Half left, Half right)
+        {
+            return !(left == right);
+        }
+
         /// <summary>
         /// The size in bytes for an instance of the Half struct.
         /// </summary>
@@ -443,6 +453,18 @@ namespace OpenTK.Mathematics
         public void ToBinaryStream(BinaryWriter bin)
         {
             bin.Write(_bits);
+        }
+
+        /// <inheritdoc />
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(_bits);
+        }
+
+        /// <inheritdoc />
+        public override bool Equals(object obj)
+        {
+            return base.Equals(obj);
         }
 
         /// <summary>
