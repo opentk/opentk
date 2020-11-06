@@ -1,4 +1,4 @@
-﻿//
+//
 // GameWindow.cs
 //
 // Copyright (C) 2018 OpenTK
@@ -253,13 +253,13 @@ namespace OpenTK.Windowing.Desktop
             while (true)
             {
                 ProcessEvents();
+                DispatchUpdateFrame();
 
                 if (!Exists || IsExiting)
                 {
+                    DestroyWindow();
                     return;
                 }
-
-                DispatchUpdateFrame();
 
                 if (!IsMultiThreaded)
                 {
@@ -308,6 +308,7 @@ namespace OpenTK.Windowing.Desktop
                 }
 
                 IsRunningSlowly = _updateEpsilon >= updatePeriod;
+
                 if (IsRunningSlowly && --isRunningSlowlyRetries == 0)
                 {
                     // If UpdateFrame consistently takes longer than TargetUpdateFrame
@@ -316,12 +317,6 @@ namespace OpenTK.Windowing.Desktop
                 }
 
                 elapsed = _watchUpdate.Elapsed.TotalSeconds;
-            }
-
-            // Update VSync if set to adaptive
-            if (_vSync == VSyncMode.Adaptive)
-            {
-                GLFW.SwapInterval(IsRunningSlowly ? 0 : 1);
             }
         }
 
@@ -333,6 +328,12 @@ namespace OpenTK.Windowing.Desktop
             {
                 _watchRender.Restart();
                 OnRenderFrame(new FrameEventArgs(elapsed));
+
+                // Update VSync if set to adaptive
+                if (_vSync == VSyncMode.Adaptive)
+                {
+                    GLFW.SwapInterval(IsRunningSlowly ? 0 : 1);
+                }
             }
         }
 

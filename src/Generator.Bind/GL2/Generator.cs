@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
+
 using Bind.Structures;
 
 namespace Bind.GL2
@@ -80,9 +81,9 @@ namespace Bind.GL2
             path = Path.Combine(Settings.InputPath, path);
             if ((File.GetAttributes(path) & FileAttributes.Directory) != 0)
             {
-                foreach (var file in Directory.GetFiles(
-                    path, "*.xml", SearchOption.AllDirectories))
+                foreach (var file in Directory.GetFiles(path, "*.xml", SearchOption.AllDirectories))
                 {
+                    Console.WriteLine($"Reading: {file}");
                     yield return file;
                 }
             }
@@ -124,8 +125,7 @@ namespace Bind.GL2
             var doc_processor = new DocProcessor(this);
 
             Enums = enum_processor.Process(Enums, Profile);
-            Wrappers = func_processor.Process(enum_processor, doc_processor,
-                Delegates, Enums, Profile, Version);
+            Wrappers = func_processor.Process(enum_processor, doc_processor, Delegates, Enums, Profile, Version);
         }
     }
 }

@@ -45,8 +45,8 @@ namespace Bind
             }
 
             Generator = generator;
-            foreach (string file in Directory.GetFiles(Settings.DocPath).Concat(
-                Directory.GetFiles(Settings.FallbackDocPath)))
+            foreach (string file in Directory.GetFiles(Settings.InputPath + "/" + Settings.DocPath).Concat(
+                Directory.GetFiles(Settings.InputPath + "/" + Settings.FallbackDocPath)))
             {
                 var name = Path.GetFileName(file);
                 if (!DocumentationFiles.ContainsKey(name))

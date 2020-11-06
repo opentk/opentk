@@ -21,8 +21,8 @@ namespace Bind
         public string DefaultInputPath = "src/Generator.Bind/Specifications";
         public string DefaultOutputPath = "src/OpenTK.Graphics";
         public string DefaultOutputNamespace = "OpenTK.Graphics.OpenGL";
-        public string DefaultDocPath = "src/Generator.Bind/Specifications/Docs";
-        public string DefaultFallbackDocPath = "src/Generator.Bind/Specifications/Docs/GL";
+        public string DefaultDocPath = "Docs";
+        public string DefaultFallbackDocPath = "Docs/GL";
         public string DefaultLicenseFile = "License.txt";
         public string DefaultLanguageTypeMapFile = "csharp.tm";
         public string DefaultKeywordEscapeCharacter = "@";
@@ -36,7 +36,7 @@ namespace Bind
             languageTypeMapFile, keywordEscapeCharacter, importsFile, delegatesFile, enumsFile,
             wrappersFile;
 
-        private Nullable<Legacy> compatibility;
+        private Legacy? compatibility;
         public string InputPath { get { return inputPath ?? DefaultInputPath; } set { inputPath = value; } }
         public string OutputPath { get { return outputPath ?? DefaultOutputPath; } set { outputPath = value; } }
         public string OutputNamespace { get { return outputNamespace ?? DefaultOutputNamespace; } set { outputNamespace = value; } }
@@ -68,9 +68,7 @@ namespace Bind
             get
             {
                 return
-                    normalEnumsClassOverride == null ?
-                        String.IsNullOrEmpty(NestedEnumsClass) ? OutputClass : OutputClass + NamespaceSeparator + NestedEnumsClass :
-                        normalEnumsClassOverride;
+                    normalEnumsClassOverride ?? (String.IsNullOrEmpty(NestedEnumsClass) ? OutputClass : OutputClass + NamespaceSeparator + NestedEnumsClass);
             }
         }
 

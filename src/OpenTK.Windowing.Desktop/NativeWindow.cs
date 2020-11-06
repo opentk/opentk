@@ -72,8 +72,8 @@ namespace OpenTK.Windowing.Desktop
 
         /// <summary>
         ///     Gets or sets the position of the mouse relative to the content area of this window.
-        ///     NOTE: It is not necessary to centre the mouse on each frame. Use CursorGrabbed = true;
-        ///     to enable this behaviour.
+        ///     NOTE: It is not necessary to center the mouse on each frame. Use CursorGrabbed = true;
+        ///     to enable this behavior.
         /// </summary>
         public Vector2 MousePosition
         {
@@ -263,7 +263,7 @@ namespace OpenTK.Windowing.Desktop
             }
         }
 
-        // This is updated by the constructor and by the the OnFocusChanged event. We presume that OnFocusChanged will fire after a call to GLFW.FocusWindow.
+        // This is updated by the constructor and by the OnFocusChanged event. We presume that OnFocusChanged will fire after a call to GLFW.FocusWindow.
         private bool _isFocused;
 
         /// <summary>
@@ -483,7 +483,7 @@ namespace OpenTK.Windowing.Desktop
         /// <summary>
         /// Gets or sets a <see cref="OpenTK.Mathematics.Box2i" /> structure that contains the internal bounds of this window,
         /// in client coordinates.
-        /// The internal bounds include the drawing area of the window, but exclude the titlebar and window borders.
+        /// The internal bounds include the drawing area of the window, but exclude the title bar and window borders.
         /// </summary>
         public Box2i ClientRectangle
         {
@@ -946,7 +946,8 @@ namespace OpenTK.Windowing.Desktop
 
         private unsafe void ScrollCallback(Window* window, double offsetX, double offsetY)
         {
-            _mouseState.PreviousPosition = _mouseState.Scroll;
+            // TODO: Think more about when we want to move the current scroll to the previous one
+            _mouseState.PreviousScroll = _mouseState.Scroll;
             _mouseState.Scroll += new Vector2((float)offsetX, (float)offsetY);
 
             OnMouseWheel(new MouseWheelEventArgs(_mouseState.Scroll));
@@ -1022,7 +1023,7 @@ namespace OpenTK.Windowing.Desktop
             Context.MakeCurrent();
         }
 
-        private unsafe void DestroyWindow()
+        protected unsafe void DestroyWindow()
         {
             if (Exists)
             {
@@ -1227,7 +1228,7 @@ namespace OpenTK.Windowing.Desktop
         /// <summary>
         /// Gets a <see cref="bool" /> indicating whether this key is currently down.
         /// </summary>
-        /// <param name="key">The <see cref="Key" /> to check.</param>
+        /// <param name="key">The <see cref="Keys">key</see> to check.</param>
         /// <returns><c>true</c> if <paramref name="key"/> is in the down state; otherwise, <c>false</c>.</returns>
         public bool IsKeyDown(Keys key)
         {
@@ -1238,9 +1239,9 @@ namespace OpenTK.Windowing.Desktop
         ///     Gets whether the specified key is pressed in the current frame but released in the previous frame.
         /// </summary>
         /// <remarks>
-        ///     "Frame" refers to invocations of <see cref="INativeWindow.ProcessEvents"/> here.
+        ///     "Frame" refers to invocations of <see cref="NativeWindow.ProcessEvents()"/> here.
         /// </remarks>
-        /// <param name="key">The key to check.</param>
+        /// <param name="key">The <see cref="Keys">key</see> to check.</param>
         /// <returns>True if the key is pressed in this frame, but not the last frame.</returns>
         public bool IsKeyPressed(Keys key)
         {
@@ -1251,9 +1252,9 @@ namespace OpenTK.Windowing.Desktop
         ///     Gets whether the specified key is released in the current frame but pressed in the previous frame.
         /// </summary>
         /// <remarks>
-        ///     "Frame" refers to invocations of <see cref="INativeWindow.ProcessEvents"/> here.
+        ///     "Frame" refers to invocations of <see cref="NativeWindow.ProcessEvents()"/> here.
         /// </remarks>
-        /// <param name="key">The key to check.</param>
+        /// <param name="key">The <see cref="Keys">key</see> to check.</param>
         /// <returns>True if the key is released in this frame, but pressed the last frame.</returns>
         public bool IsKeyReleased(Keys key)
         {
@@ -1274,7 +1275,7 @@ namespace OpenTK.Windowing.Desktop
         ///     Gets whether the specified mouse button is pressed in the current frame but released in the previous frame.
         /// </summary>
         /// <remarks>
-        ///     "Frame" refers to invocations of <see cref="INativeWindow.ProcessEvents"/> here.
+        ///     "Frame" refers to invocations of <see cref="NativeWindow.ProcessEvents()"/> here.
         /// </remarks>
         /// <param name="button">The button to check.</param>
         /// <returns>True if the button is pressed in this frame, but not the last frame.</returns>
@@ -1287,7 +1288,7 @@ namespace OpenTK.Windowing.Desktop
         ///     Gets whether the specified mouse button is released in the current frame but pressed in the previous frame.
         /// </summary>
         /// <remarks>
-        ///     "Frame" refers to invocations of <see cref="INativeWindow.ProcessEvents"/> here.
+        ///     "Frame" refers to invocations of <see cref="NativeWindow.ProcessEvents()"/> here.
         /// </remarks>
         /// <param name="button">The button to check.</param>
         /// <returns>True if the button is released in this frame, but pressed the last frame.</returns>
@@ -1334,7 +1335,7 @@ namespace OpenTK.Windowing.Desktop
         /// <returns><c>true</c>, if current monitor's dpi was gotten correctly, <c>false</c> otherwise.</returns>
         /// <remarks>
         /// This methods approximates the dpi of the monitor by multiplying
-        /// the monitor scale recieved from <see cref="TryGetCurrentMonitorScale(out float, out float)"/>
+        /// the monitor scale received from <see cref="TryGetCurrentMonitorScale(out float, out float)"/>
         /// by each platforms respective default dpi (72 for macOS and 96 for other systems).
         /// </remarks>
         public unsafe bool TryGetCurrentMonitorDpi(out float horizontalDpi, out float verticalDpi) =>
@@ -1554,9 +1555,6 @@ namespace OpenTK.Windowing.Desktop
             if (disposing)
             {
             }
-
-            // Free unmanaged resources
-            DestroyWindow();
 
             _disposedValue = true;
         }

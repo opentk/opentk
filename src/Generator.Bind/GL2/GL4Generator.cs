@@ -29,11 +29,10 @@ namespace Bind.GL2
 {
     internal class GL4Generator : Generator
     {
-        public GL4Generator(Settings settings)
-            : base(settings)
+        public GL4Generator(Settings settings) : base(settings)
         {
             Settings.DefaultOutputPath = Path.Combine(
-                Settings.DefaultOutputPath, "./OpenGL4");
+                Settings.OutputPath, "./OpenGL4");
             Settings.DefaultOutputNamespace = "OpenTK.Graphics.OpenGL4";
             Settings.DefaultImportsFile = "GL4Core.cs";
             Settings.DefaultDelegatesFile = "GL4Delegates.cs";
