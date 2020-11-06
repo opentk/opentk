@@ -1,3 +1,22 @@
+### 4.1.0
+
+API: Switched the type of OpenCL blocking argument to bool (@NepNet)
+API: Add casting from one VectorX to another VectorX (@imkSushi)
+
+Improvements & fixes for window state transitions (@KinsonDigital)
+
+Fix generator.bind command line handling (@HowToDoThis)
+NativeWindow disposal improvements (@KinsonDigital)
+Fix JoystickState ToString (@albfan)
+Fix to scroll wheel effecting mouse position (@NogginBops)
+Window border bug fix (@KinsonDigital)
+Added IsKeyPressed/IsKeyReleased to KeyboardState (@NogginBops)
+Fixed delta mouse position (@strexicious)
+Fixed scrolling so that you can actually detect per frame deltas (@NogginBops)
+Added scroll data to MouseState (@NogginBops)
+Fix StartVisible = false not working (@FriendlyChicken)
+
+
 ### 4.0.6
 * Fix mouse delta being backwards (@strexicious)
 
