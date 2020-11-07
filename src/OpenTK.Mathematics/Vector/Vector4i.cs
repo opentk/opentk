@@ -183,7 +183,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Gets the manhattan length of the vector.
         /// </summary>
-        public int ManhattanLength => X + Y + Z + W;
+        public int ManhattanLength => Math.Abs(X) + Math.Abs(Y) + Math.Abs(Z) + Math.Abs(W);
 
         /// <summary>
         /// Gets the euclidian length of the vector.

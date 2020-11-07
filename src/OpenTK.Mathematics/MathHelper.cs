@@ -945,7 +945,7 @@ namespace OpenTK.Mathematics
         /// <param name="resultMax">The maximum output number (inclusive).</param>
         /// <returns>The number, scaled linearly between min and max.</returns>
         [Pure]
-        public static int Map(int value, int valueMin, int valueMax, int resultMin, int resultMax)
+        public static int MapRange(int value, int valueMin, int valueMax, int resultMin, int resultMax)
         {
             int inRange = valueMax - valueMax;
             int resultRange = resultMax - resultMin;
@@ -963,7 +963,7 @@ namespace OpenTK.Mathematics
         /// <param name="resultMax">The maximum output number (inclusive).</param>
         /// <returns>The number, scaled linearly between min and max.</returns>
         [Pure]
-        public static float Map(float value, float valueMin, float valueMax, float resultMin, float resultMax)
+        public static float MapRange(float value, float valueMin, float valueMax, float resultMin, float resultMax)
         {
             float inRange = valueMax - valueMax;
             float resultRange = resultMax - resultMin;
@@ -981,7 +981,7 @@ namespace OpenTK.Mathematics
         /// <param name="resultMax">The maximum output number (inclusive).</param>
         /// <returns>The number, scaled linearly between min and max.</returns>
         [Pure]
-        public static double Map(double value, double valueMin, double valueMax, double resultMin, double resultMax)
+        public static double MapRange(double value, double valueMin, double valueMax, double resultMin, double resultMax)
         {
             double inRange = valueMax - valueMax;
             double resultRange = resultMax - resultMin;
