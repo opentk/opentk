@@ -510,8 +510,35 @@ namespace OpenTK.Mathematics
         /// <param name="result">Matrix result.</param>
         public static void CreateFromQuaternion(in Quaterniond q, out Matrix3d result)
         {
-            q.ToAxisAngle(out Vector3d axis, out double angle);
-            CreateFromAxisAngle(axis, angle, out result);
+            // Adapted from https://en.wikipedia.org/wiki/Quaternions_and_spatial_rotation#Quaternion-derived_rotation_matrix
+            double sqx = q.X * q.X;
+            double sqy = q.Y * q.Y;
+            double sqz = q.Z * q.Z;
+            double sqw = q.W * q.W;
+
+            double xy = q.X * q.Y;
+            double xz = q.X * q.Z;
+            double xw = q.X * q.W;
+
+            double yz = q.Y * q.Z;
+            double yw = q.Y * q.W;
+
+            double zw = q.Z * q.W;
+
+            double s2 = 2d / (sqx + sqy + sqz + sqw);
+
+            result.Row0.X = 1d - (s2 * (sqy + sqz));
+            result.Row1.Y = 1d - (s2 * (sqx + sqz));
+            result.Row2.Z = 1d - (s2 * (sqx + sqy));
+
+            result.Row0.Y = s2 * (xy - zw);
+            result.Row1.X = s2 * (xy + zw);
+
+            result.Row2.X = s2 * (xz - yw);
+            result.Row0.Z = s2 * (xz + yw);
+
+            result.Row2.Y = s2 * (yz + xw);
+            result.Row1.Z = s2 * (yz - xw);
         }
 
         /// <summary>
