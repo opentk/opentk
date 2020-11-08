@@ -47,41 +47,6 @@ namespace OpenTK.Mathematics
         public int W;
 
         /// <summary>
-        /// Defines a unit-length <see cref="Vector4i"/> that points towards the X-axis.
-        /// </summary>
-        public static readonly Vector4i UnitX = new Vector4i(1, 0, 0, 0);
-
-        /// <summary>
-        /// Defines a unit-length <see cref="Vector4i"/> that points towards the Y-axis.
-        /// </summary>
-        public static readonly Vector4i UnitY = new Vector4i(0, 1, 0, 0);
-
-        /// <summary>
-        /// Defines a unit-length <see cref="Vector4i"/> that points towards the Z-axis.
-        /// </summary>
-        public static readonly Vector4i UnitZ = new Vector4i(0, 0, 1, 0);
-
-        /// <summary>
-        /// Defines a unit-length <see cref="Vector4i"/> that points towards the W-axis.
-        /// </summary>
-        public static readonly Vector4i UnitW = new Vector4i(0, 0, 0, 1);
-
-        /// <summary>
-        /// Defines a zero-length <see cref="Vector4i"/>.
-        /// </summary>
-        public static readonly Vector4i Zero = new Vector4i(0, 0, 0, 0);
-
-        /// <summary>
-        /// Defines an instance with all components set to 1.
-        /// </summary>
-        public static readonly Vector4i One = new Vector4i(1, 1, 1, 1);
-
-        /// <summary>
-        /// Defines the size of the <see cref="Vector4i"/> struct in bytes.
-        /// </summary>
-        public static readonly int SizeInBytes = Unsafe.SizeOf<Vector4i>();
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="Vector4i"/> struct.
         /// </summary>
         /// <param name="value">The value that will initialize this instance.</param>
@@ -111,13 +76,26 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Initializes a new instance of the <see cref="Vector4i"/> struct.
         /// </summary>
-        /// <param name="v">The Vector2 to copy components from.</param>
+        /// <param name="v">The <see cref="Vector2i"/> to copy components from.</param>
         public Vector4i(Vector2i v)
         {
             X = v.X;
             Y = v.Y;
             Z = 0;
             W = 0;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Vector4i"/> struct.
+        /// </summary>
+        /// <param name="v1">The <see cref="Vector2i"/> to get the X and Y components for the Vector4.</param>
+        /// <param name="v2">The <see cref="Vector2i"/> to get the Z and W components for the Vector4.</param>
+        public Vector4i(Vector2i v1, Vector2i v2)
+        {
+            X = v1.X;
+            Y = v1.Y;
+            Z = v2.X;
+            W = v2.Y;
         }
 
         /// <summary>
@@ -201,6 +179,51 @@ namespace OpenTK.Mathematics
                 }
             }
         }
+
+        /// <summary>
+        /// Gets the manhattan length of the vector.
+        /// </summary>
+        public int ManhattanLength => Math.Abs(X) + Math.Abs(Y) + Math.Abs(Z) + Math.Abs(W);
+
+        /// <summary>
+        /// Gets the euclidian length of the vector.
+        /// </summary>
+        public float EuclideanLength => MathF.Sqrt((X * X) + (Y * Y) + (Z * Z) + (W * W));
+
+        /// <summary>
+        /// Defines a unit-length <see cref="Vector4i"/> that points towards the X-axis.
+        /// </summary>
+        public static readonly Vector4i UnitX = new Vector4i(1, 0, 0, 0);
+
+        /// <summary>
+        /// Defines a unit-length <see cref="Vector4i"/> that points towards the Y-axis.
+        /// </summary>
+        public static readonly Vector4i UnitY = new Vector4i(0, 1, 0, 0);
+
+        /// <summary>
+        /// Defines a unit-length <see cref="Vector4i"/> that points towards the Z-axis.
+        /// </summary>
+        public static readonly Vector4i UnitZ = new Vector4i(0, 0, 1, 0);
+
+        /// <summary>
+        /// Defines a unit-length <see cref="Vector4i"/> that points towards the W-axis.
+        /// </summary>
+        public static readonly Vector4i UnitW = new Vector4i(0, 0, 0, 1);
+
+        /// <summary>
+        /// Defines a zero-length <see cref="Vector4i"/>.
+        /// </summary>
+        public static readonly Vector4i Zero = new Vector4i(0, 0, 0, 0);
+
+        /// <summary>
+        /// Defines an instance with all components set to 1.
+        /// </summary>
+        public static readonly Vector4i One = new Vector4i(1, 1, 1, 1);
+
+        /// <summary>
+        /// Defines the size of the <see cref="Vector4i"/> struct in bytes.
+        /// </summary>
+        public static readonly int SizeInBytes = Unsafe.SizeOf<Vector4i>();
 
         /// <summary>
         /// Adds two vectors.
@@ -434,10 +457,10 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector4i Clamp(Vector4i vec, Vector4i min, Vector4i max)
         {
-            vec.X = vec.X < min.X ? min.X : vec.X > max.X ? max.X : vec.X;
-            vec.Y = vec.Y < min.Y ? min.Y : vec.Y > max.Y ? max.Y : vec.Y;
-            vec.Z = vec.Z < min.Z ? min.Z : vec.Z > max.Z ? max.Z : vec.Z;
-            vec.W = vec.W < min.W ? min.W : vec.W > max.W ? max.W : vec.W;
+            vec.X = MathHelper.Clamp(vec.X, min.X, max.X);
+            vec.Y = MathHelper.Clamp(vec.Y, min.Y, max.Y);
+            vec.Z = MathHelper.Clamp(vec.Z, min.Z, max.Z);
+            vec.W = MathHelper.Clamp(vec.W, min.W, max.W);
             return vec;
         }
 
@@ -450,10 +473,10 @@ namespace OpenTK.Mathematics
         /// <param name="result">The clamped vector.</param>
         public static void Clamp(in Vector4i vec, in Vector4i min, in Vector4i max, out Vector4i result)
         {
-            result.X = vec.X < min.X ? min.X : vec.X > max.X ? max.X : vec.X;
-            result.Y = vec.Y < min.Y ? min.Y : vec.Y > max.Y ? max.Y : vec.Y;
-            result.Z = vec.Z < min.Z ? min.Z : vec.Z > max.Z ? max.Z : vec.Z;
-            result.W = vec.W < min.W ? min.W : vec.W > max.W ? max.W : vec.W;
+            result.X = MathHelper.Clamp(vec.X, min.X, max.X);
+            result.Y = MathHelper.Clamp(vec.Y, min.Y, max.Y);
+            result.Z = MathHelper.Clamp(vec.Z, min.Z, max.Z);
+            result.W = MathHelper.Clamp(vec.W, min.W, max.W);
         }
 
         /// <summary>

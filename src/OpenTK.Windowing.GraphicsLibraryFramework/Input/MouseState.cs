@@ -26,14 +26,11 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         /// </summary>
         internal const int MaxButtons = 16;
 
-        private BitArray _buttons = new BitArray(MaxButtons);
-        private BitArray _buttonsPrevious = new BitArray(MaxButtons);
+        private readonly BitArray _buttons = new BitArray(MaxButtons);
+        private readonly BitArray _buttonsPrevious = new BitArray(MaxButtons);
 
-        private unsafe Window* _windowPtr;
-
-        internal unsafe MouseState(Window* windowPtr)
+        internal MouseState()
         {
-            _windowPtr = windowPtr;
         }
 
         private MouseState(MouseState source)
@@ -163,15 +160,9 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         {
             _buttonsPrevious.SetAll(false);
             _buttonsPrevious.Or(_buttons);
+
             PreviousPosition = Position;
-
             PreviousScroll = Scroll;
-
-            unsafe
-            {
-                GLFW.GetCursorPos(_windowPtr, out var x, out var y);
-                Position = new Vector2((float)x, (float)y);
-            }
         }
 
         /// <summary>

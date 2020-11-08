@@ -97,6 +97,16 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
+        /// Gets the manhattan length of the vector.
+        /// </summary>
+        public int ManhattanLength => Math.Abs(X) + Math.Abs(Y);
+
+        /// <summary>
+        /// Gets the euclidian length of the vector.
+        /// </summary>
+        public float EuclideanLength => MathF.Sqrt((X * X) + (Y * Y));
+
+        /// <summary>
         /// Gets the perpendicular vector on the right side of this vector.
         /// </summary>
         public Vector2i PerpendicularRight => new Vector2i(Y, -X);
@@ -290,8 +300,8 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector2i ComponentMin(Vector2i a, Vector2i b)
         {
-            a.X = a.X < b.X ? a.X : b.X;
-            a.Y = a.Y < b.Y ? a.Y : b.Y;
+            a.X = Math.Min(a.X, b.X);
+            a.Y = Math.Min(a.Y, b.Y);
             return a;
         }
 
@@ -303,8 +313,8 @@ namespace OpenTK.Mathematics
         /// <param name="result">The component-wise minimum.</param>
         public static void ComponentMin(in Vector2i a, in Vector2i b, out Vector2i result)
         {
-            result.X = a.X < b.X ? a.X : b.X;
-            result.Y = a.Y < b.Y ? a.Y : b.Y;
+            result.X = Math.Min(a.X, b.X);
+            result.Y = Math.Min(a.Y, b.Y);
         }
 
         /// <summary>
@@ -316,8 +326,8 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector2i ComponentMax(Vector2i a, Vector2i b)
         {
-            a.X = a.X > b.X ? a.X : b.X;
-            a.Y = a.Y > b.Y ? a.Y : b.Y;
+            a.X = Math.Max(a.X, b.X);
+            a.Y = Math.Max(a.Y, b.Y);
             return a;
         }
 
@@ -329,8 +339,8 @@ namespace OpenTK.Mathematics
         /// <param name="result">The component-wise maximum.</param>
         public static void ComponentMax(in Vector2i a, in Vector2i b, out Vector2i result)
         {
-            result.X = a.X > b.X ? a.X : b.X;
-            result.Y = a.Y > b.Y ? a.Y : b.Y;
+            result.X = Math.Max(a.X, b.X);
+            result.Y = Math.Max(a.Y, b.Y);
         }
 
         /// <summary>
@@ -343,8 +353,8 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector2i Clamp(Vector2i vec, Vector2i min, Vector2i max)
         {
-            vec.X = vec.X < min.X ? min.X : vec.X > max.X ? max.X : vec.X;
-            vec.Y = vec.Y < min.Y ? min.Y : vec.Y > max.Y ? max.Y : vec.Y;
+            vec.X = MathHelper.Clamp(vec.X, min.X, max.X);
+            vec.Y = MathHelper.Clamp(vec.Y, min.Y, max.Y);
             return vec;
         }
 
@@ -357,8 +367,8 @@ namespace OpenTK.Mathematics
         /// <param name="result">The clamped vector.</param>
         public static void Clamp(in Vector2i vec, in Vector2i min, in Vector2i max, out Vector2i result)
         {
-            result.X = vec.X < min.X ? min.X : vec.X > max.X ? max.X : vec.X;
-            result.Y = vec.Y < min.Y ? min.Y : vec.Y > max.Y ? max.Y : vec.Y;
+            result.X = MathHelper.Clamp(vec.X, min.X, max.X);
+            result.Y = MathHelper.Clamp(vec.Y, min.Y, max.Y);
         }
 
         /// <summary>

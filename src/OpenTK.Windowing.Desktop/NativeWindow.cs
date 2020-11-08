@@ -32,7 +32,6 @@ namespace OpenTK.Windowing.Desktop
         private Vector2i _cachedWindowClientSize;
         private Vector2i _cachedWindowLocation;
         private WindowState _previousWindowState;
-        private static object _lockObject = new object();
 
         // Used for delta calculation in the mouse position changed event.
         private Vector2 _lastReportedMousePos;
@@ -88,8 +87,6 @@ namespace OpenTK.Windowing.Desktop
             }
         }
 
-        private MouseState _mouseState;
-
         /// <summary>
         ///     Gets the amount that the mouse moved since the last frame.
         ///     This does not necessarily correspond to pixels, for example in the case of raw input.
@@ -100,7 +97,7 @@ namespace OpenTK.Windowing.Desktop
         /// <summary>
         ///     Gets the current state of the mouse as of the last time the window processed events.
         /// </summary>
-        public MouseState MouseState => _mouseState;
+        public MouseState MouseState { get; } = new MouseState();
 
         /// <summary>
         ///     Gets the previous keyboard state.
@@ -119,7 +116,7 @@ namespace OpenTK.Windowing.Desktop
         /// Gets a value indicating whether any mouse button is pressed.
         /// </summary>
         /// <value><c>true</c> if any button is pressed; otherwise, <c>false</c>.</value>
-        public bool IsAnyMouseButtonDown => _mouseState.IsAnyButtonDown;
+        public bool IsAnyMouseButtonDown => MouseState.IsAnyButtonDown;
 
         private WindowIcon _icon;
 
@@ -251,13 +248,13 @@ namespace OpenTK.Windowing.Desktop
                 var monitor = value.ToUnsafePtr<GraphicsLibraryFramework.Monitor>();
                 var mode = GLFW.GetVideoMode(monitor);
                 GLFW.SetWindowMonitor(
-                WindowPtr,
-                monitor,
-                _location.X,
-                _location.Y,
-                _size.X,
-                _size.Y,
-                mode->RefreshRate);
+                    WindowPtr,
+                    monitor,
+                    _location.X,
+                    _location.Y,
+                    _size.X,
+                    _size.Y,
+                    mode->RefreshRate);
 
                 _currentMonitor = value;
             }
@@ -350,16 +347,14 @@ namespace OpenTK.Windowing.Desktop
             {
                 _previousWindowState = WindowState;
 
-                bool sizeNotEmpty(Vector2i vector) => vector.X != 0 && vector.Y != 0;
-
                 var canLeaveFullScreenMode = GLFW.GetWindowMonitor(WindowPtr) != null // Is full screen
                     && value != WindowState.Fullscreen
-                    && sizeNotEmpty(_cachedWindowClientSize);
+                    && _cachedWindowClientSize.ManhattanLength > 0;
 
                 var shouldCacheSizeAndLocation = GLFW.GetWindowMonitor(WindowPtr) == null && // Not fullscreen
                     !GLFW.GetWindowAttrib(WindowPtr, WindowAttributeGetBool.Iconified) && // Not minimized
                     value == WindowState.Fullscreen && // Intention on going full screen
-                    sizeNotEmpty(ClientSize);
+                    ClientSize.ManhattanLength > 0;
 
                 if (canLeaveFullScreenMode)
                 {
@@ -601,7 +596,7 @@ namespace OpenTK.Windowing.Desktop
         /// <summary>
         /// Initializes a new instance of the <see cref="NativeWindow"/> class.
         /// </summary>
-        /// <param name="settings">The <see cref="INativeWindow"/> related settings.</param>
+        /// <param name="settings">The <see cref="NativeWindow"/> related settings.</param>
         public unsafe NativeWindow(NativeWindowSettings settings)
         {
             GLFWProvider.EnsureInitialized();
@@ -705,8 +700,6 @@ namespace OpenTK.Windowing.Desktop
                 WindowPtr = GLFW.CreateWindow(settings.Size.X, settings.Size.Y, _title, null, (Window*)(settings.SharedContext?.WindowPtr ?? IntPtr.Zero));
             }
 
-            _mouseState = new MouseState(WindowPtr);
-
             Context = new GLFWGraphicsContext(WindowPtr);
 
             Exists = true;
@@ -775,7 +768,7 @@ namespace OpenTK.Windowing.Desktop
 
             GLFW.GetCursorPos(WindowPtr, out var mousex, out var mousey);
             _lastReportedMousePos = new Vector2((float)mousex, (float)mousey);
-            _mouseState.Position = _lastReportedMousePos;
+            MouseState.Position = _lastReportedMousePos;
 
             _isFocused = GLFW.GetWindowAttrib(WindowPtr, WindowAttributeGetBool.Focused);
         }
@@ -924,12 +917,12 @@ namespace OpenTK.Windowing.Desktop
 
             if (action == InputAction.Release)
             {
-                _mouseState[button] = false;
+                MouseState[button] = false;
                 OnMouseUp(args);
             }
             else
             {
-                _mouseState[button] = true;
+                MouseState[button] = true;
                 OnMouseDown(args);
             }
         }
@@ -947,10 +940,10 @@ namespace OpenTK.Windowing.Desktop
         private unsafe void ScrollCallback(Window* window, double offsetX, double offsetY)
         {
             // TODO: Think more about when we want to move the current scroll to the previous one
-            _mouseState.PreviousScroll = _mouseState.Scroll;
-            _mouseState.Scroll += new Vector2((float)offsetX, (float)offsetY);
+            MouseState.PreviousScroll = MouseState.Scroll;
+            MouseState.Scroll += new Vector2((float)offsetX, (float)offsetY);
 
-            OnMouseWheel(new MouseWheelEventArgs(_mouseState.Scroll));
+            OnMouseWheel(new MouseWheelEventArgs(MouseState.Scroll));
         }
 
         private unsafe void JoystickCallback(int joy, ConnectedState eventCode)
@@ -1046,7 +1039,7 @@ namespace OpenTK.Windowing.Desktop
         }
 
         /// <summary>
-        /// Processes pending window events and waits <paramref cref="timeout"/> seconds for events.
+        /// Processes pending window events and waits <paramref name="timeout"/> seconds for events.
         /// </summary>
         /// <param name="timeout">The timeout in seconds.</param>
         /// <returns><c>true</c> if events where processed; otherwise <c>false</c>
@@ -1090,6 +1083,9 @@ namespace OpenTK.Windowing.Desktop
         {
             MouseState.Update();
             KeyboardState.Update();
+
+            GLFW.GetCursorPos(WindowPtr, out var x, out var y);
+            MouseState.Position = new Vector2((float)x, (float)y);
 
             for (var i = 0; i < _joystickStates.Length; i++)
             {
@@ -1166,7 +1162,7 @@ namespace OpenTK.Windowing.Desktop
         public event Action<JoystickEventArgs> JoystickConnected;
 
         /// <summary>
-        /// Occurs when the <see cref="INativeWindowProperties.IsFocused" /> property of the window changes.
+        /// Occurs when the <see cref="NativeWindow.IsFocused" /> property of the window changes.
         /// </summary>
         public event Action<FocusedChangedEventArgs> FocusedChanged;
 
@@ -1191,12 +1187,12 @@ namespace OpenTK.Windowing.Desktop
         public event Action<MonitorEventArgs> MonitorConnected;
 
         /// <summary>
-        /// Occurs whenever the mouse cursor leaves the window <see cref="INativeWindowProperties.Bounds" />.
+        /// Occurs whenever the mouse cursor leaves the window <see cref="NativeWindow.Bounds" />.
         /// </summary>
         public event Action MouseLeave;
 
         /// <summary>
-        /// Occurs whenever the mouse cursor enters the window <see cref="INativeWindowProperties.Bounds" />.
+        /// Occurs whenever the mouse cursor enters the window <see cref="NativeWindow.Bounds" />.
         /// </summary>
         public event Action MouseEnter;
 
@@ -1268,7 +1264,7 @@ namespace OpenTK.Windowing.Desktop
         /// <returns><c>true</c> if <paramref name="button"/> is in the down state; otherwise, <c>false</c>.</returns>
         public bool IsMouseButtonDown(MouseButton button)
         {
-            return _mouseState.IsButtonDown(button);
+            return MouseState.IsButtonDown(button);
         }
 
         /// <summary>
@@ -1281,7 +1277,7 @@ namespace OpenTK.Windowing.Desktop
         /// <returns>True if the button is pressed in this frame, but not the last frame.</returns>
         public bool IsMouseButtonPressed(MouseButton button)
         {
-            return _mouseState.IsButtonDown(button) && !_mouseState.WasButtonDown(button);
+            return MouseState.IsButtonDown(button) && !MouseState.WasButtonDown(button);
         }
 
         /// <summary>
@@ -1294,7 +1290,7 @@ namespace OpenTK.Windowing.Desktop
         /// <returns>True if the button is released in this frame, but pressed the last frame.</returns>
         public bool IsMouseButtonReleased(MouseButton button)
         {
-            return !_mouseState.IsButtonDown(button) && _mouseState.WasButtonDown(button);
+            return !MouseState.IsButtonDown(button) && MouseState.WasButtonDown(button);
         }
 
         private unsafe GraphicsLibraryFramework.Monitor* GetDpiMonitor()

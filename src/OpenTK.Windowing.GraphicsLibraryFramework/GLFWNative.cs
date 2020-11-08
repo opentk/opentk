@@ -38,7 +38,7 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
                 }
             }
 
-            Func<string, string, string> libNameFormatter = null;
+            Func<string, string, string> libNameFormatter;
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
             {
                 libNameFormatter = (libName, ver) =>

@@ -77,6 +77,18 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="Vector3i"/> struct.
+        /// </summary>
+        /// <param name="v">The <see cref="Vector2i"/> to copy components from.</param>
+        /// <param name="z">The z component of the new Vector3.</param>
+        public Vector3i(Vector2i v, int z)
+        {
+            X = v.X;
+            Y = v.Y;
+            Z = z;
+        }
+
+        /// <summary>
         /// Gets or sets the value at the index of the vector.
         /// </summary>
         /// <param name="index">The index of the component from the vector.</param>
@@ -123,6 +135,16 @@ namespace OpenTK.Mathematics
                 }
             }
         }
+
+        /// <summary>
+        /// Gets the manhattan length of the vector.
+        /// </summary>
+        public int ManhattanLength => Math.Abs(X) + Math.Abs(Y) + Math.Abs(Z);
+
+        /// <summary>
+        /// Gets the euclidian length of the vector.
+        /// </summary>
+        public float EuclideanLength => MathF.Sqrt((X * X) + (Y * Y) + (Z * Z));
 
         /// <summary>
         /// Defines a unit-length Vector3i that points towards the X-axis.
@@ -366,9 +388,9 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector3i Clamp(Vector3i vec, Vector3i min, Vector3i max)
         {
-            vec.X = vec.X < min.X ? min.X : vec.X > max.X ? max.X : vec.X;
-            vec.Y = vec.Y < min.Y ? min.Y : vec.Y > max.Y ? max.Y : vec.Y;
-            vec.Z = vec.Z < min.Z ? min.Z : vec.Z > max.Z ? max.Z : vec.Z;
+            vec.X = MathHelper.Clamp(vec.X, min.X, max.X);
+            vec.Y = MathHelper.Clamp(vec.Y, min.Y, max.Y);
+            vec.Z = MathHelper.Clamp(vec.Z, min.Z, max.Z);
             return vec;
         }
 
@@ -381,9 +403,9 @@ namespace OpenTK.Mathematics
         /// <param name="result">The clamped vector.</param>
         public static void Clamp(in Vector3i vec, in Vector3i min, in Vector3i max, out Vector3i result)
         {
-            result.X = vec.X < min.X ? min.X : vec.X > max.X ? max.X : vec.X;
-            result.Y = vec.Y < min.Y ? min.Y : vec.Y > max.Y ? max.Y : vec.Y;
-            result.Z = vec.Z < min.Z ? min.Z : vec.Z > max.Z ? max.Z : vec.Z;
+            result.X = MathHelper.Clamp(vec.X, min.X, max.X);
+            result.Y = MathHelper.Clamp(vec.Y, min.Y, max.Y);
+            result.Z = MathHelper.Clamp(vec.Z, min.Z, max.Z);
         }
 
         /// <summary>

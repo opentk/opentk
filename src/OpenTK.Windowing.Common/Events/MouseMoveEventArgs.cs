@@ -12,7 +12,7 @@ using OpenTK.Mathematics;
 namespace OpenTK.Windowing.Common
 {
     /// <summary>
-    /// Defines the event data for <see cref="IWindowEvents.MouseMove" /> events.
+    /// Defines the event data for <see cref="NativeWindow.MouseMove"/> events.
     /// </summary>
     public readonly struct MouseMoveEventArgs
     {
