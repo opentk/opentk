@@ -395,3 +395,55 @@ module Matrix4 =
             Assert.Equal(n, R3.Y)
             Assert.Equal(o, R3.Z)
             Assert.Equal(p, R3.W)
+
+
+    [<Properties(Arbitrary = [| typeof<OpenTKGen> |])>]
+    module ``Quaternion conversion`` =
+        //
+        [<Property>]
+        let ``Quaternion to Matrix4 equals Quaternion to AxisAngle to Matrix4`` (q: Quaternion) =
+            let A = Matrix4.CreateFromQuaternion(q)
+            let axis, angle = q.ToAxisAngle()
+            let B = Matrix4.CreateFromAxisAngle(axis, angle)
+
+            let epsilon = 0.000001f;
+
+            Assert.ApproximatelyEqualDelta(A.M11, B.M11, epsilon)
+            Assert.ApproximatelyEqualDelta(A.M12, B.M12, epsilon)
+            Assert.ApproximatelyEqualDelta(A.M13, B.M13, epsilon)
+            Assert.ApproximatelyEqualDelta(A.M14, B.M14, epsilon)
+
+            Assert.ApproximatelyEqualDelta(A.M21, B.M21, epsilon)
+            Assert.ApproximatelyEqualDelta(A.M22, B.M22, epsilon)
+            Assert.ApproximatelyEqualDelta(A.M23, B.M23, epsilon)
+            Assert.ApproximatelyEqualDelta(A.M24, B.M24, epsilon)
+
+            Assert.ApproximatelyEqualDelta(A.M31, B.M31, epsilon)
+            Assert.ApproximatelyEqualDelta(A.M32, B.M32, epsilon)
+            Assert.ApproximatelyEqualDelta(A.M33, B.M33, epsilon)
+            Assert.ApproximatelyEqualDelta(A.M34, B.M34, epsilon)
+
+            Assert.ApproximatelyEqualDelta(A.M41, B.M41, epsilon)
+            Assert.ApproximatelyEqualDelta(A.M42, B.M42, epsilon)
+            Assert.ApproximatelyEqualDelta(A.M43, B.M43, epsilon)
+            Assert.ApproximatelyEqualDelta(A.M44, B.M44, epsilon)
+
+        [<Property>]
+        let ``Quaternion to Matrix3 equals Quaternion to AxisAngle to Matrix3`` (q: Quaternion) =
+            let A = Matrix3.CreateFromQuaternion(q)
+            let axis, angle = q.ToAxisAngle()
+            let B = Matrix3.CreateFromAxisAngle(axis, angle)
+
+            let epsilon = 0.000001f;
+
+            Assert.ApproximatelyEqualDelta(A.M11, B.M11, epsilon)
+            Assert.ApproximatelyEqualDelta(A.M12, B.M12, epsilon)
+            Assert.ApproximatelyEqualDelta(A.M13, B.M13, epsilon)
+
+            Assert.ApproximatelyEqualDelta(A.M21, B.M21, epsilon)
+            Assert.ApproximatelyEqualDelta(A.M22, B.M22, epsilon)
+            Assert.ApproximatelyEqualDelta(A.M23, B.M23, epsilon)
+
+            Assert.ApproximatelyEqualDelta(A.M31, B.M31, epsilon)
+            Assert.ApproximatelyEqualDelta(A.M32, B.M32, epsilon)
+            Assert.ApproximatelyEqualDelta(A.M33, B.M33, epsilon)

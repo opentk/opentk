@@ -80,6 +80,8 @@ type internal Assert =
     static member ApproximatelyEqualEpsilon(a : float, b : float, c : float) =
         if not <| approxEqDoubleEpsilonWithError(a, b, c) then raise <| new Xunit.Sdk.EqualException(a,b)
 
+    static member ApproximatelyEqualDelta(a : float32, b : float32, c : float32) =
+        if not <| approxEqEpsilon a b c then raise <| new Xunit.Sdk.EqualException(a,b)
 
     static member NotApproximatelyEqualEpsilon(a : float32, b : float32) =
         if approxEqSingleEpsilon a b then raise <| new Xunit.Sdk.EqualException(a,b)
