@@ -206,6 +206,7 @@ Target.create "Clean" <| fun _ ->
     -- ("./src" </> "OpenTK.Graphics" </> "ES30/Helper.cs")
     -- ("./src" </> "OpenTK.Graphics" </> "OpenGL2/Helper.cs")
     -- ("./src" </> "OpenTK.Graphics" </> "OpenGL4/Helper.cs")
+    -- ("./src" </> "OpenTK.Graphics" </> "Wgl/*.*")
     -- ("./src" </> "OpenTK.Graphics" </> "paket")
     |> Seq.iter(Shell.rm)
 
