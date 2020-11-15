@@ -14,6 +14,9 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using OpenTK.Windowing.GraphicsLibraryFramework;
 
+using glfw = OpenTK.Windowing.GraphicsLibraryFramework;
+using otk = OpenTK.Windowing.Common;
+
 namespace OpenTK.Windowing.Desktop
 {
     /// <summary>
@@ -36,13 +39,13 @@ namespace OpenTK.Windowing.Desktop
         /// <param name="horizontalScale">Horizontal scale.</param>
         /// <param name="verticalScale">Vertical scale.</param>
         /// <returns><c>true</c>, if current monitor scale was gotten correctly, <c>false</c> otherwise.</returns>
-        public static unsafe bool TryGetMonitorScale(
-            Monitor* monitor,
+        internal static unsafe bool TryGetMonitorScale(
+            otk::Monitor monitor,
             out float horizontalScale,
             out float verticalScale
         )
         {
-            if (TryGetFromCache((IntPtr)monitor, out MonitorInfo info))
+            if (TryGetFromCache(monitor.Pointer, out MonitorInfo info))
             {
                 horizontalScale = info.HorizontalScale;
                 verticalScale = info.VerticalScale;
@@ -65,12 +68,12 @@ namespace OpenTK.Windowing.Desktop
         /// <returns><c>true</c>, if the monitor's dpi was gotten correctly, <c>false</c> otherwise.</returns>
         /// <remarks>
         /// This methods approximates the dpi of the monitor by multiplying
-        /// the monitor scale received from <see cref="TryGetMonitorScale(Monitor*, out float, out float)"/>
+        /// the monitor scale received from <see cref="TryGetMonitorScale(otk::Monitor, out float, out float)"/>
         /// by each platforms respective default dpi (72 for macOS and 96 for other systems).
         /// </remarks>
-        public static unsafe bool TryGetMonitorDpi(Monitor* monitor, out float horizontalDpi, out float verticalDpi)
+        internal static unsafe bool TryGetMonitorDpi(otk::Monitor monitor, out float horizontalDpi, out float verticalDpi)
         {
-            if (TryGetFromCache((IntPtr)monitor, out MonitorInfo info))
+            if (TryGetFromCache(monitor.Pointer, out MonitorInfo info))
             {
                 horizontalDpi = info.HorizontalDpi;
                 verticalDpi = info.VerticalDpi;
@@ -95,9 +98,9 @@ namespace OpenTK.Windowing.Desktop
         /// However on certain platforms (such as Windows) these values may not
         /// be scaled correctly.
         /// </remarks>
-        public static unsafe bool TryGetMonitorDpiRaw(Monitor* monitor, out float horizontalDpi, out float verticalDpi)
+        internal static unsafe bool TryGetMonitorDpiRaw(otk::Monitor monitor, out float horizontalDpi, out float verticalDpi)
         {
-            if (TryGetFromCache((IntPtr)monitor, out MonitorInfo info))
+            if (TryGetFromCache(monitor.Pointer, out MonitorInfo info))
             {
                 horizontalDpi = info.HorizontalRawDpi;
                 verticalDpi = info.VerticalRawDpi;
@@ -141,7 +144,7 @@ namespace OpenTK.Windowing.Desktop
         /// </summary>
         /// <param name="window">The window calculate the monitor for.</param>
         /// <returns>The monitor which the window intersects with the most.</returns>
-        public static unsafe Monitor* GetMonitorFromWindow(Window* window)
+        public static unsafe otk::Monitor GetMonitorFromWindow(Window* window)
         {
             if (!CheckCache())
             {
@@ -170,6 +173,13 @@ namespace OpenTK.Windowing.Desktop
 
             return _monitorInfos[selectedIndex].Handle;
         }
+
+        /// <summary>
+        /// Returns the monitor a window intersects with the most.
+        /// </summary>
+        /// <param name="window">The window calculate the monitor for.</param>
+        /// <returns>The monitor which the window intersects with the most.</returns>
+        public static unsafe otk::Monitor GetMonitorFromWindow(NativeWindow window) => GetMonitorFromWindow(window.WindowPtr);
 
         /// <summary>
         /// Checks wheter the cache has been built or builds it if it can.
@@ -246,7 +256,7 @@ namespace OpenTK.Windowing.Desktop
             {
                 var monitor = *(monitors + i);
 
-                newInfos.Add(new MonitorInfo(monitor));
+                newInfos.Add(new MonitorInfo(new otk::Monitor((IntPtr)monitor)));
                 newIndexLookup.Add((IntPtr)monitor, i);
             }
 
