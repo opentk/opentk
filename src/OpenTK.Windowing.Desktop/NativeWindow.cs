@@ -1293,7 +1293,17 @@ namespace OpenTK.Windowing.Desktop
             return !MouseState.IsButtonDown(button) && MouseState.WasButtonDown(button);
         }
 
-        private unsafe Monitor GetDpiMonitor()
+        /// <summary>
+        /// Find the monitor this window is currently in.
+        /// </summary>
+        /// <returns>The monitor the window is in, if found.</returns>
+        /// <remarks>
+        /// This method first tries to find the monitor by querying the GLFW
+        /// backend. However this rarely works, so this function invokes
+        /// <see cref="OpenTK.Windowing.Desktop.Monitors.GetMonitorFromWindow(NativeWindow)"/>
+        /// to find it.
+        /// </remarks>
+        public unsafe Monitor FindMonitor()
         {
             /*
              * According to the GLFW documentation, glfwGetWindowMonitor will return a value only
@@ -1305,7 +1315,7 @@ namespace OpenTK.Windowing.Desktop
 
             if (value.Pointer == IntPtr.Zero)
             {
-                value = Monitors.GetMonitorFromWindow(WindowPtr);
+                value = Monitors.GetMonitorFromWindow(this);
             }
 
             return value;
@@ -1317,12 +1327,20 @@ namespace OpenTK.Windowing.Desktop
         /// <param name="horizontalScale">Horizontal scale.</param>
         /// <param name="verticalScale">Vertical scale.</param>
         /// <returns><c>true</c>, if current monitor scale was gotten correctly, <c>false</c> otherwise.</returns>
-        public unsafe bool TryGetCurrentMonitorScale(out float horizontalScale, out float verticalScale) =>
-            Monitors.TryGetMonitorScale(
-            GetDpiMonitor(),
-            out horizontalScale,
-            out verticalScale
-            );
+        public unsafe bool TryGetCurrentMonitorScale(out float horizontalScale, out float verticalScale)
+        {
+            if (Monitors.TryGetMonitorInfo(FindMonitor(), out MonitorInfo info))
+            {
+                horizontalScale = info.HorizontalScale;
+                verticalScale = info.VerticalScale;
+                return true;
+            }
+            else
+            {
+                horizontalScale = verticalScale = 1;
+                return false;
+            }
+        }
 
         /// <summary>
         /// Gets the dpi of the current monitor.
@@ -1335,12 +1353,20 @@ namespace OpenTK.Windowing.Desktop
         /// the monitor scale received from <see cref="TryGetCurrentMonitorScale(out float, out float)"/>
         /// by each platforms respective default dpi (72 for macOS and 96 for other systems).
         /// </remarks>
-        public unsafe bool TryGetCurrentMonitorDpi(out float horizontalDpi, out float verticalDpi) =>
-            Monitors.TryGetMonitorDpi(
-            GetDpiMonitor(),
-            out horizontalDpi,
-            out verticalDpi
-            );
+        public unsafe bool TryGetCurrentMonitorDpi(out float horizontalDpi, out float verticalDpi)
+        {
+            if (Monitors.TryGetMonitorInfo(FindMonitor(), out MonitorInfo info))
+            {
+                horizontalDpi = info.HorizontalDpi;
+                verticalDpi = info.VerticalDpi;
+                return true;
+            }
+            else
+            {
+                horizontalDpi = verticalDpi = 1;
+                return false;
+            }
+        }
 
         /// <summary>
         /// Gets the raw dpi of current monitor.
@@ -1353,12 +1379,20 @@ namespace OpenTK.Windowing.Desktop
         /// However on certain platforms (such as Windows) these values may not
         /// be scaled correctly.
         /// </remarks>
-        public unsafe bool TryGetCurrentMonitorDpiRaw(out float horizontalDpi, out float verticalDpi) =>
-            Monitors.TryGetMonitorDpiRaw(
-            GetDpiMonitor(),
-            out horizontalDpi,
-            out verticalDpi
-            );
+        public unsafe bool TryGetCurrentMonitorDpiRaw(out float horizontalDpi, out float verticalDpi)
+        {
+            if (Monitors.TryGetMonitorInfo(FindMonitor(), out MonitorInfo info))
+            {
+                horizontalDpi = info.HorizontalDpi;
+                verticalDpi = info.VerticalDpi;
+                return true;
+            }
+            else
+            {
+                horizontalDpi = verticalDpi = 1;
+                return false;
+            }
+        }
 
         /// <summary>
         /// Raises the <see cref="Move"/> event.
