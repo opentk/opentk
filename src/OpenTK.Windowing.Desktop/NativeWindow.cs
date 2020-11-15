@@ -332,18 +332,13 @@ namespace OpenTK.Windowing.Desktop
                         _unminimizedWindowState = value;
                     }
 
-                    var canLeaveFullScreenMode = GLFW.GetWindowMonitor(WindowPtr) != null // Is full screen
-                        && value != WindowState.Fullscreen
-                        && _cachedWindowClientSize.ManhattanLength > 0;
-
-                    var shouldCacheSizeAndLocation = GLFW.GetWindowMonitor(WindowPtr) == null && // Not fullscreen
+                    var shouldCacheSizeAndLocation = _windowState != WindowState.Fullscreen && // Not fullscreen
                         !GLFW.GetWindowAttrib(WindowPtr, WindowAttributeGetBool.Iconified) && // Not minimized
-                        value == WindowState.Fullscreen && // Intention on going full screen
-                        ClientSize.ManhattanLength > 0;
+                        value == WindowState.Fullscreen; // Intention on going full screen
 
-                    if (canLeaveFullScreenMode)
+                    if (_windowState == WindowState.Fullscreen && value != WindowState.Fullscreen)
                     {
-                        // Get out of fullscreen mode
+                        // Get out of fullscreen mode.
                         GLFW.SetWindowMonitor(WindowPtr, null, _cachedWindowLocation.X, _cachedWindowLocation.Y, _cachedWindowClientSize.X, _cachedWindowClientSize.Y, 0);
                     }
 
@@ -672,6 +667,9 @@ namespace OpenTK.Windowing.Desktop
 
                 if (settings.WindowState == WindowState.Fullscreen && _isVisible)
                 {
+                    _windowState = WindowState.Fullscreen;
+                    _cachedWindowLocation = settings.Location ?? new Vector2i(32, 32);  // Better than nothing.
+                    _cachedWindowClientSize = settings.Size;
                     WindowPtr = GLFW.CreateWindow(modePtr->Width, modePtr->Height, _title, monitor, (Window*)(settings.SharedContext?.WindowPtr ?? IntPtr.Zero));
                 }
                 else
