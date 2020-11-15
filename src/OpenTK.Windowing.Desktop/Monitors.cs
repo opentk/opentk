@@ -19,12 +19,12 @@ namespace OpenTK.Windowing.Desktop
     /// <summary>
     /// This class contains methods used for calculating dpi.
     /// </summary>
-    internal static partial class DpiCalculator
+    public static class Monitors
     {
-        private static List<MonitorInfo> _dpiInfos = new List<MonitorInfo>();
+        private static List<MonitorInfo> _monitorInfos = new List<MonitorInfo>();
 
         // I am not sure how well of an idea this is.
-        private static Dictionary<IntPtr, int> _dpiIndexLookup = new Dictionary<IntPtr, int>();
+        private static Dictionary<IntPtr, int> _monitorIndexLookup = new Dictionary<IntPtr, int>();
 
         private static bool _isCacheBuilt = false;
         private static bool _isHookSet = false;
@@ -157,18 +157,18 @@ namespace OpenTK.Windowing.Desktop
             }
 
             int selectedIndex = 0;
-            for (int i = 0; i < _dpiInfos.Count; i++)
+            for (int i = 0; i < _monitorInfos.Count; i++)
             {
                 if (
-                    GetRectangleIntersectionArea(_dpiInfos[i].ClientArea, windowArea) >
-                    GetRectangleIntersectionArea(_dpiInfos[selectedIndex].ClientArea, windowArea)
+                    GetRectangleIntersectionArea(_monitorInfos[i].ClientArea, windowArea) >
+                    GetRectangleIntersectionArea(_monitorInfos[selectedIndex].ClientArea, windowArea)
                 )
                 {
                     selectedIndex = i;
                 }
             }
 
-            return _dpiInfos[selectedIndex].Handle;
+            return _monitorInfos[selectedIndex].Handle;
         }
 
         /// <summary>
@@ -200,7 +200,7 @@ namespace OpenTK.Windowing.Desktop
         {
             if (CheckCache())
             {
-                info = _dpiInfos.ElementAtOrDefault(index);
+                info = _monitorInfos.ElementAtOrDefault(index);
             }
             else
             {
@@ -218,7 +218,7 @@ namespace OpenTK.Windowing.Desktop
         /// <returns>True when the object was retrieved from cache successfully.</returns>
         public static bool TryGetFromCache(IntPtr monitor, out MonitorInfo info)
         {
-            if (_dpiIndexLookup.TryGetValue(monitor, out int index))
+            if (_monitorIndexLookup.TryGetValue(monitor, out int index))
             {
                 return TryGetFromCache(index, out info);
             }
@@ -250,8 +250,8 @@ namespace OpenTK.Windowing.Desktop
                 newIndexLookup.Add((IntPtr)monitor, i);
             }
 
-            _dpiInfos = newInfos;
-            _dpiIndexLookup = newIndexLookup;
+            _monitorInfos = newInfos;
+            _monitorIndexLookup = newIndexLookup;
 
             _isCacheBuilt = true;
         }

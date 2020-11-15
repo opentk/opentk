@@ -96,7 +96,7 @@ namespace OpenTK.Windowing.Desktop
         /// <paramref pref="handle"/> must be a valid pointer to a monitor.
         /// </remarks>
         /// <param name="handle">An opaque handle to a monitor.</param>
-        public MonitorInfo(Monitor* handle)
+        internal MonitorInfo(Monitor* handle)
         {
             if (!GLFWProvider.IsOnMainThread)
             {
@@ -157,7 +157,7 @@ namespace OpenTK.Windowing.Desktop
         /// </summary>
         private void CalculateMonitorDpi()
         {
-            float defaultDpi = DpiCalculator.GetPlatformDefaultDpi();
+            float defaultDpi = Monitors.GetPlatformDefaultDpi();
 
             HorizontalDpi = defaultDpi * HorizontalScale;
             VerticalDpi = defaultDpi * VerticalScale;

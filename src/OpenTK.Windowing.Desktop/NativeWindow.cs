@@ -1304,7 +1304,7 @@ namespace OpenTK.Windowing.Desktop
             GraphicsLibraryFramework.Monitor* value = GLFW.GetWindowMonitor(WindowPtr);
             if (value == null)
             {
-                value = DpiCalculator.GetMonitorFromWindow(WindowPtr);
+                value = Monitors.GetMonitorFromWindow(WindowPtr);
             }
 
             return value;
@@ -1317,7 +1317,7 @@ namespace OpenTK.Windowing.Desktop
         /// <param name="verticalScale">Vertical scale.</param>
         /// <returns><c>true</c>, if current monitor scale was gotten correctly, <c>false</c> otherwise.</returns>
         public unsafe bool TryGetCurrentMonitorScale(out float horizontalScale, out float verticalScale) =>
-            DpiCalculator.TryGetMonitorScale(
+            Monitors.TryGetMonitorScale(
             GetDpiMonitor(),
             out horizontalScale,
             out verticalScale
@@ -1335,7 +1335,7 @@ namespace OpenTK.Windowing.Desktop
         /// by each platforms respective default dpi (72 for macOS and 96 for other systems).
         /// </remarks>
         public unsafe bool TryGetCurrentMonitorDpi(out float horizontalDpi, out float verticalDpi) =>
-            DpiCalculator.TryGetMonitorDpi(
+            Monitors.TryGetMonitorDpi(
             GetDpiMonitor(),
             out horizontalDpi,
             out verticalDpi
@@ -1353,7 +1353,7 @@ namespace OpenTK.Windowing.Desktop
         /// be scaled correctly.
         /// </remarks>
         public unsafe bool TryGetCurrentMonitorDpiRaw(out float horizontalDpi, out float verticalDpi) =>
-            DpiCalculator.TryGetMonitorDpiRaw(
+            Monitors.TryGetMonitorDpiRaw(
             GetDpiMonitor(),
             out horizontalDpi,
             out verticalDpi
