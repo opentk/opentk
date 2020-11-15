@@ -21,7 +21,7 @@ namespace OpenTK.Windowing.Desktop
     /// </summary>
     internal static partial class DpiCalculator
     {
-        private static List<DpiInfo> _dpiInfos = new List<DpiInfo>();
+        private static List<MonitorInfo> _dpiInfos = new List<MonitorInfo>();
 
         // I am not sure how well of an idea this is.
         private static Dictionary<IntPtr, int> _dpiIndexLookup = new Dictionary<IntPtr, int>();
@@ -42,7 +42,7 @@ namespace OpenTK.Windowing.Desktop
             out float verticalScale
         )
         {
-            if (TryGetFromCache((IntPtr)monitor, out DpiInfo info))
+            if (TryGetFromCache((IntPtr)monitor, out MonitorInfo info))
             {
                 horizontalScale = info.HorizontalScale;
                 verticalScale = info.VerticalScale;
@@ -70,7 +70,7 @@ namespace OpenTK.Windowing.Desktop
         /// </remarks>
         public static unsafe bool TryGetMonitorDpi(Monitor* monitor, out float horizontalDpi, out float verticalDpi)
         {
-            if (TryGetFromCache((IntPtr)monitor, out DpiInfo info))
+            if (TryGetFromCache((IntPtr)monitor, out MonitorInfo info))
             {
                 horizontalDpi = info.HorizontalDpi;
                 verticalDpi = info.VerticalDpi;
@@ -97,7 +97,7 @@ namespace OpenTK.Windowing.Desktop
         /// </remarks>
         public static unsafe bool TryGetMonitorDpiRaw(Monitor* monitor, out float horizontalDpi, out float verticalDpi)
         {
-            if (TryGetFromCache((IntPtr)monitor, out DpiInfo info))
+            if (TryGetFromCache((IntPtr)monitor, out MonitorInfo info))
             {
                 horizontalDpi = info.HorizontalRawDpi;
                 verticalDpi = info.VerticalRawDpi;
@@ -191,12 +191,12 @@ namespace OpenTK.Windowing.Desktop
         }
 
         /// <summary>
-        /// Tries to get a <see cref="DpiInfo"/> object from the prebuilt cache.
+        /// Tries to get a <see cref="MonitorInfo"/> object from the prebuilt cache.
         /// </summary>
         /// <param name="index">The monitor index of the object.</param>
         /// <param name="info">The cached object.</param>
         /// <returns>True when the object was retrieved from cache successfully.</returns>
-        public static bool TryGetFromCache(int index, out DpiInfo info)
+        public static bool TryGetFromCache(int index, out MonitorInfo info)
         {
             if (CheckCache())
             {
@@ -211,12 +211,12 @@ namespace OpenTK.Windowing.Desktop
         }
 
         /// <summary>
-        /// Tries to get a <see cref="DpiInfo"/> object from the prebuilt cache.
+        /// Tries to get a <see cref="MonitorInfo"/> object from the prebuilt cache.
         /// </summary>
         /// <param name="monitor">An opaque handle to the monitor.</param>
         /// <param name="info">The cached object.</param>
         /// <returns>True when the object was retrieved from cache successfully.</returns>
-        public static bool TryGetFromCache(IntPtr monitor, out DpiInfo info)
+        public static bool TryGetFromCache(IntPtr monitor, out MonitorInfo info)
         {
             if (_dpiIndexLookup.TryGetValue(monitor, out int index))
             {
@@ -237,7 +237,7 @@ namespace OpenTK.Windowing.Desktop
                 throw new InvalidOperationException("Only GLFW main thread can build the monitor cache.");
             }
 
-            var newInfos = new List<DpiInfo>();
+            var newInfos = new List<MonitorInfo>();
             var newIndexLookup = new Dictionary<IntPtr, int>();
 
             var monitors = GLFW.GetMonitorsRaw(out int monitorCount);
@@ -246,7 +246,7 @@ namespace OpenTK.Windowing.Desktop
             {
                 var monitor = *(monitors + i);
 
-                newInfos.Add(new DpiInfo(monitor));
+                newInfos.Add(new MonitorInfo(monitor));
                 newIndexLookup.Add((IntPtr)monitor, i);
             }
 

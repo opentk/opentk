@@ -14,9 +14,9 @@ using OpenTK.Windowing.GraphicsLibraryFramework;
 namespace OpenTK.Windowing.Desktop
 {
     /// <summary>
-    /// This class calculates and caches dpi information of a monitor.
+    /// This class contains information about a monitor.
     /// </summary>
-    internal unsafe class DpiInfo
+    public unsafe class MonitorInfo
     {
         /// <summary>
         /// The handle to the monitor.
@@ -90,13 +90,13 @@ namespace OpenTK.Windowing.Desktop
         public float VerticalRawDpi { get; private set; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="DpiInfo"/> class.
+        /// Initializes a new instance of the <see cref="MonitorInfo"/> class.
         /// </summary>
         /// <remarks>
         /// <paramref pref="handle"/> must be a valid pointer to a monitor.
         /// </remarks>
         /// <param name="handle">An opaque handle to a monitor.</param>
-        public DpiInfo(Monitor* handle)
+        public MonitorInfo(Monitor* handle)
         {
             if (!GLFWProvider.IsOnMainThread)
             {
