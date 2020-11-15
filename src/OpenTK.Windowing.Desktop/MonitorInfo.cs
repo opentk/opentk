@@ -11,6 +11,9 @@ using System;
 using System.Drawing;
 using OpenTK.Windowing.GraphicsLibraryFramework;
 
+using glfw = OpenTK.Windowing.GraphicsLibraryFramework;
+using otk = OpenTK.Windowing.Common;
+
 namespace OpenTK.Windowing.Desktop
 {
     /// <summary>
@@ -21,12 +24,14 @@ namespace OpenTK.Windowing.Desktop
         /// <summary>
         /// The handle to the monitor.
         /// </summary>
-        private readonly Monitor* _handle;
+        private readonly otk::Monitor _handle;
+
+        private glfw::Monitor* HandleAsPtr => _handle.ToUnsafePtr<glfw::Monitor>();
 
         /// <summary>
         /// Gets the internal handle to the monitor.
         /// </summary>
-        public Monitor* Handle => _handle;
+        public otk::Monitor Handle => _handle;
 
         /// <summary>
         /// Gets the client area of the monitor (in the virtual screen-space).
@@ -96,14 +101,14 @@ namespace OpenTK.Windowing.Desktop
         /// <paramref pref="handle"/> must be a valid pointer to a monitor.
         /// </remarks>
         /// <param name="handle">An opaque handle to a monitor.</param>
-        internal MonitorInfo(Monitor* handle)
+        internal MonitorInfo(otk::Monitor handle)
         {
             if (!GLFWProvider.IsOnMainThread)
             {
                 throw new NotSupportedException("Only the GLFW thread can construct this object.");
             }
 
-            if (handle == null)
+            if (handle.Pointer == IntPtr.Zero)
             {
                 throw new ArgumentNullException(nameof(handle));
             }
@@ -124,8 +129,8 @@ namespace OpenTK.Windowing.Desktop
         /// </summary>
         private unsafe void GetClientArea()
         {
-            GLFW.GetMonitorPos(_handle, out int x, out int y);
-            var videoMode = GLFW.GetVideoMode(_handle);
+            GLFW.GetMonitorPos(HandleAsPtr, out int x, out int y);
+            var videoMode = GLFW.GetVideoMode(HandleAsPtr);
 
             ClientArea = new Rectangle(x, y, videoMode->Width, videoMode->Height);
         }
@@ -135,7 +140,7 @@ namespace OpenTK.Windowing.Desktop
         /// </summary>
         private void GetPhysicalSize()
         {
-            GLFW.GetMonitorPhysicalSize(_handle, out int width, out int height);
+            GLFW.GetMonitorPhysicalSize(HandleAsPtr, out int width, out int height);
 
             PhysicalWidth = width;
             PhysicalHeight = height;
@@ -146,7 +151,7 @@ namespace OpenTK.Windowing.Desktop
         /// </summary>
         private void GetScale()
         {
-            GLFW.GetMonitorContentScale(_handle, out float horizontalScale, out float verticalScale);
+            GLFW.GetMonitorContentScale(HandleAsPtr, out float horizontalScale, out float verticalScale);
 
             HorizontalScale = horizontalScale;
             VerticalScale = verticalScale;
