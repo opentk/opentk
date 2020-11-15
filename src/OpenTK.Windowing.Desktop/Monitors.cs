@@ -20,7 +20,7 @@ using otk = OpenTK.Windowing.Common;
 namespace OpenTK.Windowing.Desktop
 {
     /// <summary>
-    /// This class contains methods used for calculating dpi.
+    /// Information about monitors installed on the system.
     /// </summary>
     public static class Monitors
     {
@@ -77,10 +77,14 @@ namespace OpenTK.Windowing.Desktop
         }
 
         /// <summary>
-        /// Returns the monitor a window intersects with the most.
+        /// Find the monitor a window is in.
         /// </summary>
-        /// <param name="window">The window calculate the monitor for.</param>
-        /// <returns>The monitor which the window intersects with the most.</returns>
+        /// <param name="window">The window to find.</param>
+        /// <returns>The window the monitor was found in.</returns>
+        /// <remarks>
+        /// This function searches for the window by finding which monitor has the largest
+        /// intersection area with the given monitor.
+        /// </remarks>
         public static unsafe otk::Monitor GetMonitorFromWindow(Window* window)
         {
             if (!CheckCache())
@@ -112,10 +116,14 @@ namespace OpenTK.Windowing.Desktop
         }
 
         /// <summary>
-        /// Returns the monitor a window intersects with the most.
+        /// Find the monitor a window is in.
         /// </summary>
-        /// <param name="window">The window calculate the monitor for.</param>
-        /// <returns>The monitor which the window intersects with the most.</returns>
+        /// <param name="window">The window to find.</param>
+        /// <returns>The window the monitor was found in.</returns>
+        /// <remarks>
+        /// This function searches for the window by finding which monitor has the largest
+        /// intersection area with the given monitor.
+        /// </remarks>
         public static unsafe otk::Monitor GetMonitorFromWindow(NativeWindow window) => GetMonitorFromWindow(window.WindowPtr);
 
         /// <summary>
@@ -138,11 +146,11 @@ namespace OpenTK.Windowing.Desktop
         }
 
         /// <summary>
-        /// Tries to get a <see cref="MonitorInfo"/> object from the prebuilt cache.
+        /// Try to get information about a monitor.
         /// </summary>
-        /// <param name="index">The monitor index of the object.</param>
-        /// <param name="info">The cached object.</param>
-        /// <returns>True when the object was retrieved from cache successfully.</returns>
+        /// <param name="index">The index of the monitor.</param>
+        /// <param name="info">Monitor information.</param>
+        /// <returns>True when the object was retrieved from cache, or built successfully.</returns>
         public static bool TryGetMonitorInfo(int index, out MonitorInfo info)
         {
             if (CheckCache())
@@ -158,11 +166,11 @@ namespace OpenTK.Windowing.Desktop
         }
 
         /// <summary>
-        /// Tries to get a <see cref="MonitorInfo"/> object from the prebuilt cache.
+        /// Try to get information about a monitor.
         /// </summary>
-        /// <param name="monitor">An opaque handle to the monitor.</param>
-        /// <param name="info">The cached object.</param>
-        /// <returns>True when the object was retrieved from cache successfully.</returns>
+        /// <param name="monitor">The window handle.</param>
+        /// <param name="info">Monitor information.</param>
+        /// <returns>True when the object was retrieved from cache, or built successfully.</returns>
         public static bool TryGetMonitorInfo(otk::Monitor monitor, out MonitorInfo info)
         {
             if (_monitorIndexLookup.TryGetValue(monitor.Pointer, out int index))
@@ -175,7 +183,7 @@ namespace OpenTK.Windowing.Desktop
         }
 
         /// <summary>
-        /// Builds the monitor cache (again if called before).
+        /// Builds the monitor cache (again if previously called).
         /// </summary>
         public static unsafe void BuildMonitorCache()
         {

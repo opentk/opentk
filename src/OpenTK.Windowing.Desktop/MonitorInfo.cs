@@ -82,7 +82,7 @@ namespace OpenTK.Windowing.Desktop
         /// Gets the raw, calculated dpi of the monitor in the horizontal axis.
         /// </summary>
         /// <remarks>
-        /// This value may not give you incorrect results on certain platforms.
+        /// This value may be incorrect. Use <see cref="HorizontalDpi"/> if possible.
         /// </remarks>
         public float HorizontalRawDpi { get; private set; }
 
@@ -90,7 +90,7 @@ namespace OpenTK.Windowing.Desktop
         /// Gets the raw, calculated dpi of the monitor in the vertical axis.
         /// </summary>
         /// <remarks>
-        /// This value may not give you incorrect results on certain platforms.
+        /// This value may be incorrect. Use <see cref="HorizontalDpi"/> if possible.
         /// </remarks>
         public float VerticalRawDpi { get; private set; }
 
