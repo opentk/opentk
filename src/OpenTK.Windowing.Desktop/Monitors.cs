@@ -33,83 +33,20 @@ namespace OpenTK.Windowing.Desktop
         private static bool _isHookSet = false;
 
         /// <summary>
-        /// Gets the current monitor scale.
+        /// The number of monitors available.
         /// </summary>
-        /// <param name="monitor">The monitor in question.</param>
-        /// <param name="horizontalScale">Horizontal scale.</param>
-        /// <param name="verticalScale">Vertical scale.</param>
-        /// <returns><c>true</c>, if current monitor scale was gotten correctly, <c>false</c> otherwise.</returns>
-        internal static unsafe bool TryGetMonitorScale(
-            otk::Monitor monitor,
-            out float horizontalScale,
-            out float verticalScale
-        )
+        public static int Count
         {
-            if (TryGetFromCache(monitor.Pointer, out MonitorInfo info))
+            get
             {
-                horizontalScale = info.HorizontalScale;
-                verticalScale = info.VerticalScale;
-                return true;
-            }
-            else
-            {
-                horizontalScale = 1f;
-                verticalScale = 1f;
-                return false;
-            }
-        }
-
-        /// <summary>
-        /// Gets the dpi of the monitor pointed to.
-        /// </summary>
-        /// <param name="monitor">The monitor in question.</param>
-        /// <param name="horizontalDpi">Horizontal dpi.</param>
-        /// <param name="verticalDpi">Vertical dpi.</param>
-        /// <returns><c>true</c>, if the monitor's dpi was gotten correctly, <c>false</c> otherwise.</returns>
-        /// <remarks>
-        /// This methods approximates the dpi of the monitor by multiplying
-        /// the monitor scale received from <see cref="TryGetMonitorScale(otk::Monitor, out float, out float)"/>
-        /// by each platforms respective default dpi (72 for macOS and 96 for other systems).
-        /// </remarks>
-        internal static unsafe bool TryGetMonitorDpi(otk::Monitor monitor, out float horizontalDpi, out float verticalDpi)
-        {
-            if (TryGetFromCache(monitor.Pointer, out MonitorInfo info))
-            {
-                horizontalDpi = info.HorizontalDpi;
-                verticalDpi = info.VerticalDpi;
-                return true;
-            }
-            else
-            {
-                horizontalDpi = verticalDpi = GetPlatformDefaultDpi();
-                return false;
-            }
-        }
-
-        /// <summary>
-        /// Gets the raw dpi of the monitor pointed to.
-        /// </summary>
-        /// <param name="monitor">The monitor in question.</param>
-        /// <param name="horizontalDpi">Horizontal dpi.</param>
-        /// <param name="verticalDpi">Vertical dpi.</param>
-        /// <returns><c>true</c>, if monitor's raw dpi was gotten correctly, <c>false</c> otherwise.</returns>
-        /// <remarks>
-        /// This method calculates dpi by retrieving monitor dimensions and resolution.
-        /// However on certain platforms (such as Windows) these values may not
-        /// be scaled correctly.
-        /// </remarks>
-        internal static unsafe bool TryGetMonitorDpiRaw(otk::Monitor monitor, out float horizontalDpi, out float verticalDpi)
-        {
-            if (TryGetFromCache(monitor.Pointer, out MonitorInfo info))
-            {
-                horizontalDpi = info.HorizontalRawDpi;
-                verticalDpi = info.VerticalRawDpi;
-                return true;
-            }
-            else
-            {
-                horizontalDpi = verticalDpi = GetPlatformDefaultDpi();
-                return false;
+                if (CheckCache())
+                {
+                    return _monitorInfos.Count;
+                }
+                else
+                {
+                    throw new GLFWException("This information is not cached and cannot be queried outside of the GLFW main thread");
+                }
             }
         }
 
@@ -206,7 +143,7 @@ namespace OpenTK.Windowing.Desktop
         /// <param name="index">The monitor index of the object.</param>
         /// <param name="info">The cached object.</param>
         /// <returns>True when the object was retrieved from cache successfully.</returns>
-        public static bool TryGetFromCache(int index, out MonitorInfo info)
+        public static bool TryGetMonitorInfo(int index, out MonitorInfo info)
         {
             if (CheckCache())
             {
@@ -226,11 +163,11 @@ namespace OpenTK.Windowing.Desktop
         /// <param name="monitor">An opaque handle to the monitor.</param>
         /// <param name="info">The cached object.</param>
         /// <returns>True when the object was retrieved from cache successfully.</returns>
-        public static bool TryGetFromCache(IntPtr monitor, out MonitorInfo info)
+        public static bool TryGetMonitorInfo(otk::Monitor monitor, out MonitorInfo info)
         {
-            if (_monitorIndexLookup.TryGetValue(monitor, out int index))
+            if (_monitorIndexLookup.TryGetValue(monitor.Pointer, out int index))
             {
-                return TryGetFromCache(index, out info);
+                return TryGetMonitorInfo(index, out info);
             }
 
             info = null;
