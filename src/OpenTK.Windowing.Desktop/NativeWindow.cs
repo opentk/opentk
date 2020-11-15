@@ -1293,7 +1293,7 @@ namespace OpenTK.Windowing.Desktop
             return !MouseState.IsButtonDown(button) && MouseState.WasButtonDown(button);
         }
 
-        private unsafe GraphicsLibraryFramework.Monitor* GetDpiMonitor()
+        private unsafe Monitor GetDpiMonitor()
         {
             /*
              * According to the GLFW documentation, glfwGetWindowMonitor will return a value only
@@ -1301,8 +1301,9 @@ namespace OpenTK.Windowing.Desktop
              *
              * If the window is not fullscreen, find the monitor manually.
              */
-            GraphicsLibraryFramework.Monitor* value = GLFW.GetWindowMonitor(WindowPtr);
-            if (value == null)
+            Monitor value = new Monitor((IntPtr)GLFW.GetWindowMonitor(WindowPtr));
+
+            if (value.Pointer == IntPtr.Zero)
             {
                 value = Monitors.GetMonitorFromWindow(WindowPtr);
             }
