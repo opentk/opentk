@@ -12,8 +12,8 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Runtime.InteropServices;
-using OpenTK.Windowing.GraphicsLibraryFramework;
 using OpenTK.Windowing.Common;
+using OpenTK.Windowing.GraphicsLibraryFramework;
 
 namespace OpenTK.Windowing.Desktop
 {

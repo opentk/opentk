@@ -9,8 +9,8 @@
 
 using System;
 using System.Drawing;
-using OpenTK.Windowing.GraphicsLibraryFramework;
 using OpenTK.Windowing.Common;
+using OpenTK.Windowing.GraphicsLibraryFramework;
 
 namespace OpenTK.Windowing.Desktop
 {
