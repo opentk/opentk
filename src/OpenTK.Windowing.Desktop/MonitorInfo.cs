@@ -24,14 +24,14 @@ namespace OpenTK.Windowing.Desktop
         /// <summary>
         /// The handle to the monitor.
         /// </summary>
-        private readonly otk::Monitor _handle;
+        private readonly otk::MonitorHandle _handle;
 
         private glfw::Monitor* HandleAsPtr => _handle.ToUnsafePtr<glfw::Monitor>();
 
         /// <summary>
         /// Gets the internal handle to the monitor.
         /// </summary>
-        public otk::Monitor Handle => _handle;
+        public otk::MonitorHandle Handle => _handle;
 
         /// <summary>
         /// Gets the client area of the monitor (in the virtual screen-space).
@@ -101,7 +101,7 @@ namespace OpenTK.Windowing.Desktop
         /// <paramref pref="handle"/> must be a valid pointer to a monitor.
         /// </remarks>
         /// <param name="handle">An opaque handle to a monitor.</param>
-        internal MonitorInfo(otk::Monitor handle)
+        internal MonitorInfo(otk::MonitorHandle handle)
         {
             if (!GLFWProvider.IsOnMainThread)
             {

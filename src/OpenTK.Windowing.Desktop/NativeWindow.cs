@@ -13,7 +13,7 @@ using OpenTK.Mathematics;
 using OpenTK.Windowing.Common;
 using OpenTK.Windowing.Common.Input;
 using OpenTK.Windowing.GraphicsLibraryFramework;
-using Monitor = OpenTK.Windowing.Common.Monitor;
+using MonitorHandle = OpenTK.Windowing.Common.MonitorHandle;
 
 namespace OpenTK.Windowing.Desktop
 {
@@ -234,12 +234,12 @@ namespace OpenTK.Windowing.Desktop
         /// </summary>
         public IGLFWGraphicsContext Context { get; }
 
-        private Monitor _currentMonitor;
+        private MonitorHandle _currentMonitor;
 
         /// <summary>
-        /// Gets or sets the current <see cref="Monitor"/>.
+        /// Gets or sets the current <see cref="MonitorHandle"/>.
         /// </summary>
-        public unsafe Monitor CurrentMonitor
+        public unsafe MonitorHandle CurrentMonitor
         {
             get => _currentMonitor;
 
@@ -724,7 +724,7 @@ namespace OpenTK.Windowing.Desktop
             _windowFocusCallback = (w, focused) => OnFocusedChanged(new FocusedChangedEventArgs(focused));
             _charCallback = (w, codepoint) => OnTextInput(new TextInputEventArgs((int)codepoint));
             _scrollCallback = ScrollCallback;
-            _monitorCallback = (monitor, eventCode) => OnMonitorConnected(new MonitorEventArgs(new Monitor((IntPtr)monitor), eventCode == ConnectedState.Connected));
+            _monitorCallback = (monitor, eventCode) => OnMonitorConnected(new MonitorEventArgs(new MonitorHandle((IntPtr)monitor), eventCode == ConnectedState.Connected));
             _windowRefreshCallback = w => OnRefresh();
             // These must be assigned to fields even when they're methods
             _windowCloseCallback = OnCloseCallback;
@@ -1182,7 +1182,7 @@ namespace OpenTK.Windowing.Desktop
         public event Action<KeyboardKeyEventArgs> KeyUp;
 
         /// <summary>
-        /// Occurs when a <see cref="Monitor"/> is connected or disconnected.
+        /// Occurs when a <see cref="MonitorHandle"/> is connected or disconnected.
         /// </summary>
         public event Action<MonitorEventArgs> MonitorConnected;
 
@@ -1303,7 +1303,7 @@ namespace OpenTK.Windowing.Desktop
         /// <see cref="OpenTK.Windowing.Desktop.Monitors.GetMonitorFromWindow(NativeWindow)"/>
         /// to find it.
         /// </remarks>
-        public unsafe Monitor FindMonitor()
+        public unsafe MonitorHandle FindMonitor()
         {
             /*
              * According to the GLFW documentation, glfwGetWindowMonitor will return a value only
@@ -1311,7 +1311,7 @@ namespace OpenTK.Windowing.Desktop
              *
              * If the window is not fullscreen, find the monitor manually.
              */
-            Monitor value = new Monitor((IntPtr)GLFW.GetWindowMonitor(WindowPtr));
+            MonitorHandle value = new MonitorHandle((IntPtr)GLFW.GetWindowMonitor(WindowPtr));
 
             if (value.Pointer == IntPtr.Zero)
             {

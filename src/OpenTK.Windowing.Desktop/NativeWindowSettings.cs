@@ -12,7 +12,7 @@ using OpenTK.Mathematics;
 using OpenTK.Windowing.Common;
 using OpenTK.Windowing.Common.Input;
 using OpenTK.Windowing.GraphicsLibraryFramework;
-using Monitor = OpenTK.Windowing.Common.Monitor;
+using MonitorHandle = OpenTK.Windowing.Common.MonitorHandle;
 
 namespace OpenTK.Windowing.Desktop
 {
@@ -34,7 +34,7 @@ namespace OpenTK.Windowing.Desktop
             unsafe
             {
                 GLFWProvider.EnsureInitialized();
-                CurrentMonitor = new Monitor((IntPtr)GLFW.GetPrimaryMonitor());
+                CurrentMonitor = new MonitorHandle((IntPtr)GLFW.GetPrimaryMonitor());
             }
         }
 
@@ -118,7 +118,7 @@ namespace OpenTK.Windowing.Desktop
         /// <summary>
         /// Gets or sets the monitor to open the new window on.
         /// </summary>
-        public Monitor CurrentMonitor { get; set; }
+        public MonitorHandle CurrentMonitor { get; set; }
 
         /// <summary>
         /// Gets or sets the title of the new window.
