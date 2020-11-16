@@ -13,9 +13,7 @@ using System.Drawing;
 using System.Linq;
 using System.Runtime.InteropServices;
 using OpenTK.Windowing.GraphicsLibraryFramework;
-
-using glfw = OpenTK.Windowing.GraphicsLibraryFramework;
-using otk = OpenTK.Windowing.Common;
+using OpenTK.Windowing.Common;
 
 namespace OpenTK.Windowing.Desktop
 {
@@ -85,7 +83,7 @@ namespace OpenTK.Windowing.Desktop
         /// This function searches for the window by finding which monitor has the largest
         /// intersection area with the given monitor.
         /// </remarks>
-        public static unsafe otk::MonitorHandle GetMonitorFromWindow(Window* window)
+        public static unsafe MonitorHandle GetMonitorFromWindow(Window* window)
         {
             if (!CheckCache())
             {
@@ -124,7 +122,7 @@ namespace OpenTK.Windowing.Desktop
         /// This function searches for the window by finding which monitor has the largest
         /// intersection area with the given monitor.
         /// </remarks>
-        public static unsafe otk::MonitorHandle GetMonitorFromWindow(NativeWindow window) => GetMonitorFromWindow(window.WindowPtr);
+        public static unsafe MonitorHandle GetMonitorFromWindow(NativeWindow window) => GetMonitorFromWindow(window.WindowPtr);
 
         /// <summary>
         /// Checks wheter the cache has been built or builds it if it can.
@@ -171,7 +169,7 @@ namespace OpenTK.Windowing.Desktop
         /// <param name="monitor">The window handle.</param>
         /// <param name="info">Monitor information.</param>
         /// <returns>True when the object was retrieved from cache, or built successfully.</returns>
-        public static bool TryGetMonitorInfo(otk::MonitorHandle monitor, out MonitorInfo info)
+        public static bool TryGetMonitorInfo(MonitorHandle monitor, out MonitorInfo info)
         {
             if (_monitorIndexLookup.TryGetValue(monitor.Pointer, out int index))
             {
@@ -201,7 +199,7 @@ namespace OpenTK.Windowing.Desktop
             {
                 var monitor = *(monitors + i);
 
-                newInfos.Add(new MonitorInfo(new otk::MonitorHandle((IntPtr)monitor)));
+                newInfos.Add(new MonitorInfo(new MonitorHandle((IntPtr)monitor)));
                 newIndexLookup.Add((IntPtr)monitor, i);
             }
 

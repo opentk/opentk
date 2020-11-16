@@ -10,9 +10,7 @@
 using System;
 using System.Drawing;
 using OpenTK.Windowing.GraphicsLibraryFramework;
-
-using glfw = OpenTK.Windowing.GraphicsLibraryFramework;
-using otk = OpenTK.Windowing.Common;
+using OpenTK.Windowing.Common;
 
 namespace OpenTK.Windowing.Desktop
 {
@@ -24,14 +22,14 @@ namespace OpenTK.Windowing.Desktop
         /// <summary>
         /// The handle to the monitor.
         /// </summary>
-        private readonly otk::MonitorHandle _handle;
+        private readonly MonitorHandle _handle;
 
-        private glfw::Monitor* HandleAsPtr => _handle.ToUnsafePtr<glfw::Monitor>();
+        private Monitor* HandleAsPtr => _handle.ToUnsafePtr<Monitor>();
 
         /// <summary>
         /// Gets the internal handle to the monitor.
         /// </summary>
-        public otk::MonitorHandle Handle => _handle;
+        public MonitorHandle Handle => _handle;
 
         /// <summary>
         /// Gets the client area of the monitor (in the virtual screen-space).
@@ -101,7 +99,7 @@ namespace OpenTK.Windowing.Desktop
         /// <paramref pref="handle"/> must be a valid pointer to a monitor.
         /// </remarks>
         /// <param name="handle">An opaque handle to a monitor.</param>
-        internal MonitorInfo(otk::MonitorHandle handle)
+        internal MonitorInfo(MonitorHandle handle)
         {
             if (!GLFWProvider.IsOnMainThread)
             {
