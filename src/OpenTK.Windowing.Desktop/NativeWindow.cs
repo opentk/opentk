@@ -334,7 +334,7 @@ namespace OpenTK.Windowing.Desktop
 
                     var shouldCacheSizeAndLocation = _windowState != WindowState.Fullscreen && // Not fullscreen
                         _windowState != WindowState.Minimized && // Not minimized
-                        value == WindowState.Fullscreen; // Intention on going full screen
+                        (value == WindowState.Fullscreen || value == WindowState.Minimized); // Intention on going full screen or minimized
 
                     if (_windowState == WindowState.Fullscreen && value != WindowState.Fullscreen && _isVisible)
                     {
