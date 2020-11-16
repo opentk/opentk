@@ -12,7 +12,6 @@ using OpenTK.Mathematics;
 using OpenTK.Windowing.Common;
 using OpenTK.Windowing.Common.Input;
 using OpenTK.Windowing.GraphicsLibraryFramework;
-using MonitorHandle = OpenTK.Windowing.Common.MonitorHandle;
 
 namespace OpenTK.Windowing.Desktop
 {
