@@ -333,10 +333,10 @@ namespace OpenTK.Windowing.Desktop
                     }
 
                     var shouldCacheSizeAndLocation = _windowState != WindowState.Fullscreen && // Not fullscreen
-                        !GLFW.GetWindowAttrib(WindowPtr, WindowAttributeGetBool.Iconified) && // Not minimized
+                        _windowState != WindowState.Minimized && // Not minimized
                         value == WindowState.Fullscreen; // Intention on going full screen
 
-                    if (_windowState == WindowState.Fullscreen && value != WindowState.Fullscreen)
+                    if (_windowState == WindowState.Fullscreen && value != WindowState.Fullscreen && _isVisible)
                     {
                         // Get out of fullscreen mode.
                         GLFW.SetWindowMonitor(WindowPtr, null, _cachedWindowLocation.X, _cachedWindowLocation.Y, _cachedWindowClientSize.X, _cachedWindowClientSize.Y, 0);
