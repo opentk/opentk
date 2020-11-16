@@ -863,6 +863,32 @@ namespace OpenTK.Windowing.Desktop
             }
         }
 
+        /// <summary>
+        /// After the OS notifies us of a window change, we can't be certain that our
+        /// cached state is correct.  This method exists to allow us to directly ask
+        /// the OS what state it says our window is really in.
+        /// </summary>
+        /// <returns>The current actual state of the window.</returns>
+        private unsafe WindowState GetWindowStateFromGLFW()
+        {
+            if (GLFW.GetWindowAttrib(WindowPtr, WindowAttributeGetBool.Iconified))
+            {
+                return WindowState.Minimized;
+            }
+
+            if (GLFW.GetWindowAttrib(WindowPtr, WindowAttributeGetBool.Maximized))
+            {
+                return WindowState.Maximized;
+            }
+
+            if (GLFW.GetWindowMonitor(WindowPtr) != null)
+            {
+                return WindowState.Fullscreen;
+            }
+
+            return WindowState.Normal;
+        }
+
         private readonly GLFWCallbacks.WindowPosCallback _windowPosCallback;
         private readonly GLFWCallbacks.WindowSizeCallback _windowSizeCallback;
         private readonly GLFWCallbacks.WindowIconifyCallback _windowIconifyCallback;
@@ -1568,7 +1594,7 @@ namespace OpenTK.Windowing.Desktop
         /// <param name="e">A <see cref="MinimizedEventArgs"/> that contains the event data.</param>
         protected virtual void OnMinimized(MinimizedEventArgs e)
         {
-            _windowState = e.IsMinimized ? WindowState.Minimized : _unminimizedWindowState;
+            _windowState = e.IsMinimized ? WindowState.Minimized : GetWindowStateFromGLFW();
 
             Minimized?.Invoke(e);
         }
@@ -1579,8 +1605,11 @@ namespace OpenTK.Windowing.Desktop
         /// <param name="e">A <see cref="MaximizedEventArgs"/> that contains the event data.</param>
         protected virtual void OnMaximized(MaximizedEventArgs e)
         {
-            _windowState = e.IsMaximized ? WindowState.Maximized : WindowState.Normal;
-            _unminimizedWindowState = _windowState;
+            _windowState = e.IsMaximized ? WindowState.Maximized : GetWindowStateFromGLFW();
+            if (_windowState != WindowState.Minimized)
+            {
+                _unminimizedWindowState = _windowState;
+            }
 
             Maximized?.Invoke(e);
         }
