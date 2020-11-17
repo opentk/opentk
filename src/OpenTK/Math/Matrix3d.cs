@@ -466,6 +466,7 @@ namespace OpenTK
         public static void CreateFromQuaternion(ref Quaterniond q, out Matrix3d result)
         {
             // Adapted from https://en.wikipedia.org/wiki/Quaternions_and_spatial_rotation#Quaternion-derived_rotation_matrix
+            // with the caviat that opentk uses row-major matrices so the matrix we create is transposed
             double sqx = q.X * q.X;
             double sqy = q.Y * q.Y;
             double sqz = q.Z * q.Z;
@@ -486,14 +487,14 @@ namespace OpenTK
             result.Row1.Y = 1d - (s2 * (sqx + sqz));
             result.Row2.Z = 1d - (s2 * (sqx + sqy));
 
-            result.Row0.Y = s2 * (xy - zw);
-            result.Row1.X = s2 * (xy + zw);
+            result.Row0.Y = s2 * (xy + zw);
+            result.Row1.X = s2 * (xy - zw);
 
-            result.Row2.X = s2 * (xz - yw);
-            result.Row0.Z = s2 * (xz + yw);
+            result.Row2.X = s2 * (xz + yw);
+            result.Row0.Z = s2 * (xz - yw);
 
-            result.Row2.Y = s2 * (yz + xw);
-            result.Row1.Z = s2 * (yz - xw);
+            result.Row2.Y = s2 * (yz - xw);
+            result.Row1.Z = s2 * (yz + xw);
         }
 
         /// <summary>
