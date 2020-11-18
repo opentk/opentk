@@ -24,6 +24,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Xml;
@@ -66,6 +67,15 @@ namespace OpenTK.Convert
 
         private static void Main(string[] args)
         {
+            // These prevent us to accidently generate wrong code because of
+            // locale dependent string functions. Whether it actually affects
+            // this program in particular have not been tested yet, but better
+            // be safe than sorry.
+            CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
+            CultureInfo.CurrentUICulture = CultureInfo.InvariantCulture;
+            CultureInfo.DefaultThreadCurrentCulture = CultureInfo.InvariantCulture;
+            CultureInfo.DefaultThreadCurrentUICulture = CultureInfo.InvariantCulture;
+            
             Parser.Default.ParseArguments<Options>(args)
                 .WithParsed(result => CLIOptions = result)
                 .WithNotParsed(error => Environment.Exit(-1));
