@@ -8,6 +8,7 @@ open Constants
 open System.IO
 open System.Runtime
 open CommandLine
+open System.Globalization
 
 type options =
     { [<Option('i', "input", Required = true,
@@ -289,6 +290,13 @@ let generateCode basePath (typecheckAndAggregateResults: TypecheckAndAggregateRe
 
 [<EntryPoint>]
 let main argv =
+    // These prevent us to accidently generate wrong code because of
+    // locale dependent string functions.
+    CultureInfo.CurrentCulture <- CultureInfo.InvariantCulture
+    CultureInfo.CurrentUICulture <- CultureInfo.InvariantCulture
+    CultureInfo.DefaultThreadCurrentCulture <- CultureInfo.InvariantCulture
+    CultureInfo.DefaultThreadCurrentUICulture <- CultureInfo.InvariantCulture
+    
     printfn
         "Welcome to the OpenTK4.0 binding generator F#ast edition!"
     let result = CommandLine.Parser.Default.ParseArguments<options>(argv)

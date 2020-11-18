@@ -5,6 +5,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.Reflection;
 using System.Security;
 using System.Text.RegularExpressions;
@@ -37,6 +38,13 @@ namespace Bind
 
         private static void Main(string[] arguments)
         {
+            // These prevent us to accidently generate wrong code because of
+            // locale dependent string functions.
+            CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
+            CultureInfo.CurrentUICulture = CultureInfo.InvariantCulture;
+            CultureInfo.DefaultThreadCurrentCulture = CultureInfo.InvariantCulture;
+            CultureInfo.DefaultThreadCurrentUICulture = CultureInfo.InvariantCulture;
+
             Debug.AutoFlush = true;
             Trace.Listeners.Clear();
             Trace.Listeners.Add(new TextWriterTraceListener(Console.Out));
