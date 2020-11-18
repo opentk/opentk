@@ -130,6 +130,8 @@ namespace OpenTK.Windowing.Desktop
         /// <returns>Wether the current cache is valid or not.</returns>
         public static unsafe bool CheckCache()
         {
+            GLFWProvider.EnsureInitialized();
+
             if (!_isCacheBuilt && GLFWProvider.IsOnMainThread)
             {
                 BuildMonitorCache();
@@ -185,6 +187,8 @@ namespace OpenTK.Windowing.Desktop
         /// </summary>
         public static unsafe void BuildMonitorCache()
         {
+            GLFWProvider.EnsureInitialized();
+
             if (!GLFWProvider.IsOnMainThread)
             {
                 throw new InvalidOperationException("Only GLFW main thread can build the monitor cache.");
