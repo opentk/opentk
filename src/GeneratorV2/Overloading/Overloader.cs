@@ -16,7 +16,12 @@ namespace GeneratorV2.Overloading
             new SpanOverloader(),
             new StringSpanOverloader(),
             new IntPtrOverloader(),
-            new RefOverloader() };
+            new RefOverloader(),
+            new VectorOverloader() };
+        private readonly IOverloader[] _returnOverloaders =
+        {
+            new StringReturnOverloader()
+        };
         private readonly Specification _spec;
         private readonly HashSet<string> _overloadedCommandNames = new HashSet<string>();
 
@@ -32,7 +37,7 @@ namespace GeneratorV2.Overloading
 
             public ILayer? NestedLayer => null;
 
-            public void WriteLayer(IndentedTextWriter writer, string methodName, Argument[] args)
+            public string? WriteLayer(IndentedTextWriter writer, string methodName, Argument[] args)
             {
                 if (_context.Method.ReturnType.Name != "void")
                 {
@@ -49,6 +54,7 @@ namespace GeneratorV2.Overloading
                     }
                 }
                 writer.WriteLine(");");
+                return _context.Method.ReturnType.Name == "void" ? null : ReturnValueName;
             }
         }
         private class ReturnVariableLayer : ILayer
@@ -62,18 +68,19 @@ namespace GeneratorV2.Overloading
             }
             public ILayer? NestedLayer { get; }
 
-            public void WriteLayer(IndentedTextWriter writer, string methodName, Argument[] args)
+            public string? WriteLayer(IndentedTextWriter writer, string methodName, Argument[] args)
             {
                 bool hasReturnValue = _context.Method.ReturnType.Name != "void";
                 if (hasReturnValue)
                 {
                     writer.WriteLine($"{_context.Method.ReturnType.Name} {ReturnValueName};");
                 }
-                NestedLayer.WriteLayer(writer, methodName, args);
+                var valueName = NestedLayer.WriteLayer(writer, methodName, args);
                 if (hasReturnValue)
                 {
-                    writer.WriteLine($"return {ReturnValueName};");
+                    writer.WriteLine($"return {valueName};");
                 }
+                return valueName;
             }
         }
 
@@ -142,6 +149,14 @@ namespace GeneratorV2.Overloading
                 }
             } while (overloadHappened);
 
+            foreach (var overloader in _returnOverloaders)
+            {
+                if (overloader.TryOverloadParameter(context, ref currentLayer, -1))
+                {
+                    isValidOverload = true;
+                }
+            }
+
             if (!isValidOverload)
             {
                 return;
@@ -168,7 +183,7 @@ namespace GeneratorV2.Overloading
             {
                 currentLayer.WriteLayer(writer, commandName, args.ToArray());
             };
-            command.Overloads.Add(new Overload(method.ReturnType, bodyWriter, context.TypeParameterCount, context.Parameters.Where(x => x != null).OfType<Parameter>().ToArray()));
+            command.Overloads.Add(new Overload(context.ReturnType, bodyWriter, context.TypeParameterCount, context.Parameters.Where(x => x != null).OfType<Parameter>().ToArray()));
         }
 
         private static bool TryCreateGroupedParameters(OverloadContext context)

@@ -22,7 +22,7 @@ namespace GeneratorV2.Overloading
                 _argIndex = argIndex;
             }
 
-            public void WriteLayer(IndentedTextWriter writer, string methodName, Argument[] args)
+            public string? WriteLayer(IndentedTextWriter writer, string methodName, Argument[] args)
             {
                 var arg = args[_argIndex];
                 var newName = arg.Name + "_strarr";
@@ -34,12 +34,13 @@ namespace GeneratorV2.Overloading
                     writer.WriteLine($"{newName}[i] = Marshal.StringToCoTaskMemUTF8({arg.Name}[i]);");
                 }
                 args[_argIndex] = arg.Clone(newType, newName);
-                _nestedLayer.WriteLayer(writer, methodName, args);
+                var returnValue = _nestedLayer.WriteLayer(writer, methodName, args);
                 writer.WriteLine($"for (int i = 0; i < {newName}.Length; i++)");
                 using (writer.Scope())
                 {
                     writer.WriteLine($"Marshal.FreeCoTaskMem({newName}[i]);");
                 }
+                return returnValue;
             }
         }
 

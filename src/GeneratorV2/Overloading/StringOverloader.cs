@@ -21,7 +21,7 @@ namespace GeneratorV2.Overloading
                 _argIndex = argIndex;
             }
 
-            public void WriteLayer(IndentedTextWriter writer, string methodName, Argument[] args)
+            public string? WriteLayer(IndentedTextWriter writer, string methodName, Argument[] args)
             {
                 var arg = args[_argIndex];
                 var ptrName = arg.Name + "_iptr";
@@ -29,8 +29,9 @@ namespace GeneratorV2.Overloading
                 writer.WriteLine($"var {ptrName} = Marshal.StringToCoTaskMemUTF8({arg.Name});");
                 writer.WriteLine($"var {strName} = (byte*){ptrName};");
                 args[_argIndex] = arg.Clone("byte*", strName);
-                _nestedLayer.WriteLayer(writer, methodName, args);
-                writer.WriteLine($"Marshal.FreeCoTaskMem({ptrName});");
+                var returnValue = _nestedLayer.WriteLayer(writer, methodName, args);
+                writer.WriteLine($"Marshal.FreeCoTaskMem((IntPtr){ptrName});");
+                return returnValue;
             }
         }
         private class OutputLayer : ILayer
@@ -46,7 +47,7 @@ namespace GeneratorV2.Overloading
                 _lenIdx = lenIdx;
             }
 
-            public void WriteLayer(IndentedTextWriter writer, string methodName, Argument[] args)
+            public string? WriteLayer(IndentedTextWriter writer, string methodName, Argument[] args)
             {
                 var arg = args[_argIndex];
                 var ptrName = arg.Name + "_iptr";
@@ -55,9 +56,10 @@ namespace GeneratorV2.Overloading
                 writer.WriteLine($"var {ptrName} = Marshal.AllocCoTaskMem({args[_lenIdx].Name});");
                 writer.WriteLine($"var {strName} = (byte*){ptrName};");
                 args[_argIndex] = arg.Clone("byte*", strName);
-                _nestedLayer.WriteLayer(writer, methodName, args);
+                var returnValue = _nestedLayer.WriteLayer(writer, methodName, args);
                 writer.WriteLine($"{arg.Name} = Marshal.PtrToStringUTF8({ptrName});");
                 writer.WriteLine($"Marshal.FreeCoTaskMem({ptrName});");
+                return returnValue;
             }
         }
         public bool TryOverloadParameter(OverloadContext context, ref ILayer topLayer, int paramIndex)

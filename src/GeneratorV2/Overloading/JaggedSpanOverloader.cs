@@ -62,7 +62,7 @@ namespace GeneratorV2.Overloading
                 return null;
             }
 
-            public void WriteLayer(IndentedTextWriter writer, string methodName, Argument[] args)
+            public string? WriteLayer(IndentedTextWriter writer, string methodName, Argument[] args)
             {
                 var spanArg = args[_argIndex];
 
@@ -79,7 +79,7 @@ namespace GeneratorV2.Overloading
                     writer.WriteLine($"{lenArg.Type} {lenArg.Name} = ({lenArg.Type})({lengthExpression});");
                 }
                 writer.WriteLine($"var {spanArg.Name}_vptr = {(newType.StartsWith("T") ? "(void**)" : string.Empty)}(({newType}){spanArg.Name});");
-                _nestedLayer.WriteLayer(writer, methodName, args);
+                return _nestedLayer.WriteLayer(writer, methodName, args);
             }
         }
 

@@ -19,7 +19,7 @@ namespace GeneratorV2.Overloading
                 _argIndex = argIndex;
             }
 
-            public void WriteLayer(IndentedTextWriter writer, string methodName, Argument[] args)
+            public string? WriteLayer(IndentedTextWriter writer, string methodName, Argument[] args)
             {
                 var arg = args[_argIndex];
                 var newArgName = arg.Name + "_iptr";
@@ -28,7 +28,7 @@ namespace GeneratorV2.Overloading
 
                 args[_argIndex] = arg.Clone(newTypeName, newArgName);
 
-                _nestedLayer.WriteLayer(writer, methodName, args);
+                return _nestedLayer.WriteLayer(writer, methodName, args);
             }
         }
 

@@ -20,7 +20,7 @@ namespace GeneratorV2.Overloading
                 _argIndex = argIndex;
             }
 
-            public void WriteLayer(IndentedTextWriter writer, string methodName, Argument[] args)
+            public string? WriteLayer(IndentedTextWriter writer, string methodName, Argument[] args)
             {
                 var arg = args[_argIndex];
                 var refStart = arg.Type.IndexOf("ref ");
@@ -30,7 +30,7 @@ namespace GeneratorV2.Overloading
                 using (writer.Scope())
                 {
                     args[_argIndex] = arg.Clone(newType, newName);
-                    _nestedLayer.WriteLayer(writer, methodName, args);
+                    return _nestedLayer.WriteLayer(writer, methodName, args);
                 }
             }
         }
