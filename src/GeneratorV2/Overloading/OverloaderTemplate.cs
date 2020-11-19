@@ -19,13 +19,13 @@ namespace GeneratorV2.Overloading
                 _argIndex = argIndex;
             }
 
-            public void WriteLayer(IndentedTextWriter writer, string methodName, Argument[] args)
+            public string? WriteLayer(IndentedTextWriter writer, string methodName, Argument[] args)
             {
                 //Write here
 
                 //Modify args here
 
-                _nestedLayer.WriteLayer(writer, methodName, args);
+                return _nestedLayer.WriteLayer(writer, methodName, args);
             }
         }
 

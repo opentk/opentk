@@ -67,7 +67,7 @@ namespace GeneratorV2.Overloading
                 return null;
             }
 
-            public void WriteLayer(IndentedTextWriter writer, string methodName, Argument[] args)
+            public string? WriteLayer(IndentedTextWriter writer, string methodName, Argument[] args)
             {
                 var spanArg = args[_argIndex];
 
@@ -93,7 +93,7 @@ namespace GeneratorV2.Overloading
                         writer.WriteLine($"var {newName}_casted = ({_castType}){newName};");
                         args[_argIndex] = spanArg.Clone(newType, $"{newName}_casted");
                     }
-                    _nestedLayer.WriteLayer(writer, methodName, args);
+                    return _nestedLayer.WriteLayer(writer, methodName, args);
                 }
             }
         }
@@ -108,6 +108,7 @@ namespace GeneratorV2.Overloading
             }
             var type = parameter.Type;
             var ptrLoc = type.Name.LastIndexOf('*');
+            //TODO: When multiple overloads are supported, support spans for constant length.
             if (type == null || type.Length == null || ptrLoc == -1 || type.Length is Constant)
             {
                 return false;

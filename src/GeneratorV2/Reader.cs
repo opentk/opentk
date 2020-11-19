@@ -7,7 +7,7 @@ namespace GeneratorV2
     {
         public static Stream ReadSpecFromGithub()
         {
-            var link = "https://raw.githubusercontent.com/jvbsl/OpenGL-Registry/fix/combined/xml/gl.xml";
+            var link = "https://raw.githubusercontent.com/frederikja163/OpenGL-Registry/otk5/xml/gl.xml";
             Logger.Info($"Beginning to download openGL spec from {link}");
             var request = WebRequest.CreateHttp(link);
 

@@ -25,14 +25,14 @@ namespace GeneratorV2.Overloading
             }
 
 
-            public void WriteLayer(IndentedTextWriter writer, string methodName, Argument[] args)
+            public string? WriteLayer(IndentedTextWriter writer, string methodName, Argument[] args)
             {
                 var arg = args[_argIndex];
                 args[_argIndex] = arg.Clone(_typeName, _argName);
 
                 writer.WriteLine($"var {_argName} = ({_typeName}){arg.Name};");
 
-                _nestedLayer.WriteLayer(writer, methodName, args);
+                return _nestedLayer.WriteLayer(writer, methodName, args);
             }
         }
 

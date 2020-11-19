@@ -13,9 +13,12 @@ namespace GeneratorV2.Overloading
 
         public Parameter?[] Parameters { get; }
 
+        public PType ReturnType { get; set; }
+
         public OverloadContext(Command command)
         {
             Command = command;
+            ReturnType = command.Method.ReturnType;
 
             var parameters = Command.Method.Parameters;
             Parameters = new Parameter?[parameters.Length];
