@@ -8,7 +8,7 @@ namespace GeneratorV2.Data
 
         public EnumEntryCollection EnumEntries { get; } = new EnumEntryCollection();
 
-        public Dictionary<string, Command> Commands { get; } = new Dictionary<string, Command>();
+        public Dictionary<string, Command2> Commands { get; } = new Dictionary<string, Command2>();
 
         public string Api { get; }
         public string Name { get; }
@@ -33,7 +33,7 @@ namespace GeneratorV2.Data
             EnumEntries.Add(entry);
         }
 
-        public void Add(Command command)
+        public void Add(Command2 command)
         {
             Commands.TryAdd(command.Method.EntryPoint, command);
         }

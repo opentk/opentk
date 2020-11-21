@@ -47,4 +47,19 @@ namespace GeneratorV2.Data
             return new HandleARBCommand(Method, newName, Apple, BaseOverload, Overloads);
         }
     }
+
+    public class Command2
+    {
+        public readonly Method2 Method;
+
+        public readonly string Name;
+
+        //public List<Overload> Overloads { get; }
+
+        public Command2(Method2 method, string name)
+        {
+            Method = method;
+            Name = name;
+        }
+    }
 }

@@ -6,23 +6,17 @@ using System.Xml.Linq;
 #nullable enable
 namespace GeneratorV2.Parsing
 {
-    public class Parser : IParser<Stream>
+    public class Parser
     {
-        public void Parse(Stream input, Specification output)
+        public Specification Parse(Stream input)
         {
             var xdocument = XDocument.Load(input);
-            new CommandParser().Parse(xdocument.Root, output);
-            new EnumParser().Parse(xdocument.Root, output);
-            new FeatureParser().Parse(xdocument.Root, output);
-            new ExtensionParser().Parse(xdocument.Root, output);
-        }
+            var commands = new CommandParser().Parse(xdocument.Root);
+            var enums =  new EnumParser().Parse(xdocument.Root);
+            var features = new FeatureParser().Parse(xdocument.Root, commands, enums);
+            var extensions = new ExtensionParser().Parse(xdocument.Root, commands, enums);
 
-        public int Priority
-        {
-            get
-            {
-                return -1;
-            }
+            return new Specification(null, commands, enums);
         }
     }
 }

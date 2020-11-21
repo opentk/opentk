@@ -11,4 +11,16 @@
             Name = name;
         }
     }
+
+    public class Parameter2
+    {
+        public readonly PType2 Type;
+        public readonly string Name;
+
+        public Parameter2(PType2 type, string name)
+        {
+            Type = type;
+            Name = name;
+        }
+    }
 }

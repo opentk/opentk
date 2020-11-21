@@ -6,12 +6,12 @@ using System.Xml.Linq;
 
 namespace GeneratorV2.Parsing
 {
-    public class EnumParser : IParser<XElement>
+    public class EnumParser
     {
-        public void Parse(XElement input, Specification output)
+        public EnumEntryCollection Parse(XElement input)
         {
-            Logger.Info("Beggining parsing of enums.");
-            EnumEntryCollection enums = output.Enums;
+            Logger.Info("Begining parsing of enums.");
+            EnumEntryCollection enums = new EnumEntryCollection();
             foreach (var e in input.Elements("enums"))
             {
                 var parentGroups = e.Attribute("group")?.Value?.Split(',', StringSplitOptions.None) ?? new string[0];
@@ -24,6 +24,8 @@ namespace GeneratorV2.Parsing
                     }
                 }
             }
+
+            return enums;
         }
 
         public static ulong ConvertToUInt64(string val, string? type)

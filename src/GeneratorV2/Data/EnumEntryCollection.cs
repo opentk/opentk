@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 
@@ -38,7 +39,7 @@ namespace GeneratorV2.Data
             }
         }
 
-        public bool TryGetValue(string name, string api, out EnumEntry? entry)
+        public bool TryGetValue(string name, string api, [NotNullWhen(true)] out EnumEntry? entry)
         {
             if (Enums.TryGetValue(name, out entry))
             {
