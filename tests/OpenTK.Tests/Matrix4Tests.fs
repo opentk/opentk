@@ -406,7 +406,7 @@ module Matrix4 =
             let axis, angle = q.ToAxisAngle()
             let B = Matrix4.CreateFromAxisAngle(axis, angle)
 
-            let epsilon = 0.000001f;
+            let epsilon = 0.00001f;
 
             Assert.ApproximatelyEqualDelta(A.M11, B.M11, epsilon)
             Assert.ApproximatelyEqualDelta(A.M12, B.M12, epsilon)
@@ -434,7 +434,7 @@ module Matrix4 =
             let axis, angle = q.ToAxisAngle()
             let B = Matrix3.CreateFromAxisAngle(axis, angle)
 
-            let epsilon = 0.000001f;
+            let epsilon = 0.00001f;
 
             Assert.ApproximatelyEqualDelta(A.M11, B.M11, epsilon)
             Assert.ApproximatelyEqualDelta(A.M12, B.M12, epsilon)
