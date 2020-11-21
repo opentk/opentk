@@ -14,13 +14,13 @@ namespace OpenTK.Windowing.Common
     /// <summary>
     /// Wrapper around an implementation-defined monitor struct.
     /// </summary>
-    public struct Monitor
+    public struct MonitorHandle
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="Monitor"/> struct.
+        /// Initializes a new instance of the <see cref="MonitorHandle"/> struct.
         /// </summary>
         /// <param name="ptr">A pointer to the underlying native Monitor.</param>
-        public Monitor(IntPtr ptr)
+        public MonitorHandle(IntPtr ptr)
         {
             Pointer = ptr;
         }

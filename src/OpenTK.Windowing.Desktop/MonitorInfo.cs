@@ -9,24 +9,27 @@
 
 using System;
 using System.Drawing;
+using OpenTK.Windowing.Common;
 using OpenTK.Windowing.GraphicsLibraryFramework;
 
 namespace OpenTK.Windowing.Desktop
 {
     /// <summary>
-    /// This class calculates and caches dpi information of a monitor.
+    /// This class contains information about a monitor.
     /// </summary>
-    internal unsafe class DpiInfo
+    public unsafe class MonitorInfo
     {
         /// <summary>
         /// The handle to the monitor.
         /// </summary>
-        private readonly Monitor* _handle;
+        private readonly MonitorHandle _handle;
+
+        private Monitor* HandleAsPtr => _handle.ToUnsafePtr<Monitor>();
 
         /// <summary>
         /// Gets the internal handle to the monitor.
         /// </summary>
-        public Monitor* Handle => _handle;
+        public MonitorHandle Handle => _handle;
 
         /// <summary>
         /// Gets the client area of the monitor (in the virtual screen-space).
@@ -77,7 +80,7 @@ namespace OpenTK.Windowing.Desktop
         /// Gets the raw, calculated dpi of the monitor in the horizontal axis.
         /// </summary>
         /// <remarks>
-        /// This value may not give you incorrect results on certain platforms.
+        /// This value may be incorrect. Use <see cref="HorizontalDpi"/> if possible.
         /// </remarks>
         public float HorizontalRawDpi { get; private set; }
 
@@ -85,25 +88,25 @@ namespace OpenTK.Windowing.Desktop
         /// Gets the raw, calculated dpi of the monitor in the vertical axis.
         /// </summary>
         /// <remarks>
-        /// This value may not give you incorrect results on certain platforms.
+        /// This value may be incorrect. Use <see cref="HorizontalDpi"/> if possible.
         /// </remarks>
         public float VerticalRawDpi { get; private set; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="DpiInfo"/> class.
+        /// Initializes a new instance of the <see cref="MonitorInfo"/> class.
         /// </summary>
         /// <remarks>
         /// <paramref pref="handle"/> must be a valid pointer to a monitor.
         /// </remarks>
         /// <param name="handle">An opaque handle to a monitor.</param>
-        public DpiInfo(Monitor* handle)
+        internal MonitorInfo(MonitorHandle handle)
         {
             if (!GLFWProvider.IsOnMainThread)
             {
                 throw new NotSupportedException("Only the GLFW thread can construct this object.");
             }
 
-            if (handle == null)
+            if (handle.Pointer == IntPtr.Zero)
             {
                 throw new ArgumentNullException(nameof(handle));
             }
@@ -124,8 +127,8 @@ namespace OpenTK.Windowing.Desktop
         /// </summary>
         private unsafe void GetClientArea()
         {
-            GLFW.GetMonitorPos(_handle, out int x, out int y);
-            var videoMode = GLFW.GetVideoMode(_handle);
+            GLFW.GetMonitorPos(HandleAsPtr, out int x, out int y);
+            var videoMode = GLFW.GetVideoMode(HandleAsPtr);
 
             ClientArea = new Rectangle(x, y, videoMode->Width, videoMode->Height);
         }
@@ -135,7 +138,7 @@ namespace OpenTK.Windowing.Desktop
         /// </summary>
         private void GetPhysicalSize()
         {
-            GLFW.GetMonitorPhysicalSize(_handle, out int width, out int height);
+            GLFW.GetMonitorPhysicalSize(HandleAsPtr, out int width, out int height);
 
             PhysicalWidth = width;
             PhysicalHeight = height;
@@ -146,7 +149,7 @@ namespace OpenTK.Windowing.Desktop
         /// </summary>
         private void GetScale()
         {
-            GLFW.GetMonitorContentScale(_handle, out float horizontalScale, out float verticalScale);
+            GLFW.GetMonitorContentScale(HandleAsPtr, out float horizontalScale, out float verticalScale);
 
             HorizontalScale = horizontalScale;
             VerticalScale = verticalScale;
@@ -157,7 +160,7 @@ namespace OpenTK.Windowing.Desktop
         /// </summary>
         private void CalculateMonitorDpi()
         {
-            float defaultDpi = DpiCalculator.GetPlatformDefaultDpi();
+            float defaultDpi = Monitors.GetPlatformDefaultDpi();
 
             HorizontalDpi = defaultDpi * HorizontalScale;
             VerticalDpi = defaultDpi * VerticalScale;
