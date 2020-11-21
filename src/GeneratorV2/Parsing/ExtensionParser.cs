@@ -5,12 +5,12 @@ using System.Xml.Linq;
 
 namespace GeneratorV2.Parsing
 {
-    public class ExtensionParser : IParser<XElement>
+    public class ExtensionParser
     {
-        public void Parse(XElement input, Specification output)
+        public List<Extension> Parse(XElement input, Dictionary<string, Command2> commands, EnumEntryCollection enums)
         {
-            var commands = output.Commands;
-            EnumEntryCollection enums = output.Enums;
+            List<Extension> extensions = new List<Extension>();
+
             foreach (var ext in input.Element("extensions").Elements("extension"))
             {
                 var extName = ext.Attribute("name")?.Value?.Substring(3);
@@ -43,12 +43,14 @@ namespace GeneratorV2.Parsing
                         }
                     }
 
-                    output.AddExtension(extension);
+                    extensions.Add(extension);
                 }
             }
+
+            return extensions;
         }
 
-        private static void ParseInclude(EnumEntryCollection enums, Dictionary<string, Command> commands,
+        private static void ParseInclude(EnumEntryCollection enums, Dictionary<string, Command2> commands,
             Extension extension, XElement includes, string vendorName)
         {
             foreach (var e in includes.Elements("enum"))
@@ -70,13 +72,19 @@ namespace GeneratorV2.Parsing
                 var cName = e.Attribute("name").Value;
                 if (!commands.TryGetValue(cName, out var command))
                 {
-                    Logger.Error($"Extension command include did not parse correctly.");
+                    Logger.Error($"Could not find the command '{cName}' used by the extension '{"TODO: print extension name"}'.");
                     continue;
                 }
 
-                extension.Add(command.CloneCommand("Gl" + (command.Name.EndsWith(vendorName) ?
-                                                            command.Name.Remove(command.Name.Length - vendorName.Length) :
-                                                            command.Name)));
+                // TODO: Do we really want to do this?
+                // Remove the vedor name from the end to make a nicer C# function.
+                string name = command.Name;
+                if (command.Name.EndsWith(vendorName))
+                {
+                    name = name[0..^vendorName.Length];
+                }
+
+                extension.Add(new Command2(command.Method, "Gl" + name));
             }
         }
     }

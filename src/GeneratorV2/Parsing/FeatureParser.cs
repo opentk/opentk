@@ -5,13 +5,14 @@ using System.Xml.Linq;
 
 namespace GeneratorV2.Parsing
 {
-    public class FeatureParser : IParser<XElement>
+    public class FeatureParser
     {
-        public void Parse(XElement input, Specification output)
+        public List<Feature> Parse(XElement input, Dictionary<string, Command2> commands, EnumEntryCollection enums)
         {
-            Logger.Info("Beggining parsing of features.");
-            var commands = output.Commands;
-            EnumEntryCollection enums = output.Enums;
+            Logger.Info("Begining parsing of features.");
+
+            List<Feature> features = new List<Feature>();
+
             Feature? previousFeature = null;
             foreach (var element1 in input.Elements("feature"))
             {
@@ -41,9 +42,12 @@ namespace GeneratorV2.Parsing
                         ParseInclude(enums, commands, feature, includes);
                     }
                     previousFeature = feature;
-                    output.AddFeature(feature);
+
+                    features.Add(feature);
                 }
             }
+
+            return features;
         }
 
         private static void ParseExclude(XElement excludes, HashSet<string> excludeEnums, HashSet<string> excludeCommands)
@@ -77,7 +81,7 @@ namespace GeneratorV2.Parsing
             }
         }
 
-        private static void ParseInclude(EnumEntryCollection enums, Dictionary<string, Command> commands,
+        private static void ParseInclude(EnumEntryCollection enums, Dictionary<string, Command2> commands,
             Feature feature, XElement includes)
         {
             var profile = includes.Attribute("profile")?.Value;
@@ -91,9 +95,7 @@ namespace GeneratorV2.Parsing
                 var eName = e.Attribute("name").Value;
                 if (enums.TryGetValue(eName, feature.Api, out var enumEntry))
                 {
-#pragma warning disable CS8604 // Possible null reference argument.
                     feature.Add(enumEntry);
-#pragma warning restore CS8604 // Possible null reference argument.
                 }
                 else
                 {
@@ -103,6 +105,9 @@ namespace GeneratorV2.Parsing
             foreach (var e in includes.Elements("command"))
             {
                 var cName = e.Attribute("name").Value;
+
+                // FIXME: We should see if reversing this lookup and using
+                // List<> instead of Dictionary<> for better itteration.
                 if (!commands.TryGetValue(cName, out var command))
                 {
                     Logger.Error($"Feature command include did not parse correctly.");

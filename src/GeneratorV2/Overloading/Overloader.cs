@@ -93,9 +93,9 @@ namespace GeneratorV2.Overloading
             _spec = specification;
         }
 
-        public void Overload()
+        public OverloadedSpecification Overload(Specification specification)
         {
-            foreach (var (apiName, api) in _spec.Apis)
+            foreach (var (apiName, api) in specification.Apis)
             {
                 foreach (var feature in api.Features)
                 {
@@ -124,7 +124,7 @@ namespace GeneratorV2.Overloading
             }
         }
 
-        private void Overload(Command command, bool isFeatureCommand)
+        private void Overload(Command2 command, bool isFeatureCommand)
         {
             var method = command.Method;
             var context = new OverloadContext(command);
@@ -189,14 +189,14 @@ namespace GeneratorV2.Overloading
             }
         }
 
-        private static void CreateOverload(Command command, OverloadContext context, ILayer currentLayer)
+        private static void CreateOverload(Command2 command, OverloadContext context, ILayer currentLayer)
         {
             var method = command.Method;
             var args = context.Parameters.Zip(method.Parameters, (contextParam, methodParam) => new Argument(contextParam ?? methodParam)).ToArray();
-            Action<IndentedTextWriter, string> bodyWriter = (writer, commandName) =>
+            void bodyWriter(IndentedTextWriter writer, string commandName)
             {
                 currentLayer.WriteLayer(writer, commandName, args.ToArray());
-            };
+            }
             command.Overloads.Add(new Overload(context.ReturnType, bodyWriter, context.TypeParameterCount, context.Parameters.Where(x => x != null).OfType<Parameter>().ToArray()));
         }
 
