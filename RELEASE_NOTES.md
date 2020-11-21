@@ -1,3 +1,12 @@
+### 4.3.0
+* API: Add new Monitor Info API (@utkumaden)
+
+* Fix WindowState and StartVisible to behave correctly on MS Windows (@seanofw)
+* Fix scrolling getting lost between frames (@NogginBops)
+* Fix ContextProfile documentation to be correct (@NogginBops)
+* Fix Quaternion -> Matrix3/Matrix4 conversions (@NogginBops)
+* Fix wrong binding code generation on some locales (@ahmetsait)
+
 ### 4.2.0
 * API: Add WGL Bindings + dx_interop extensions.
 * API: Add Euclidian/Manhattan Distance to Vector2/3/4i (@NogginBops)
