@@ -14,7 +14,7 @@ namespace GeneratorV2.Overloading
         {
         }
 
-        private Argument(string type, string name)
+        public Argument(string type, string name)
         {
             Type = type;
             Name = name;

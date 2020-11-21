@@ -11,6 +11,7 @@ namespace GeneratorV2.Overloading
     {
         private readonly IOverloader[] _overloaders = {
             new EnumOverloader(),
+            new SyncOverloader(),
             new StringOverloader(),
             new JaggedSpanOverloader(),
             new SpanOverloader(),
@@ -20,7 +21,9 @@ namespace GeneratorV2.Overloading
             new VectorOverloader() };
         private readonly IOverloader[] _returnOverloaders =
         {
-            new StringReturnOverloader()
+            new IntPtrReturnOverloader(),
+            new ReturnStringOverloader(),
+            new ReturnSyncOverloader()
         };
         private readonly Specification _spec;
         private readonly HashSet<string> _overloadedCommandNames = new HashSet<string>();
@@ -35,15 +38,16 @@ namespace GeneratorV2.Overloading
                 _context = context;
             }
 
+            public string Suffix { get; set; } = "";
             public ILayer? NestedLayer => null;
 
-            public string? WriteLayer(IndentedTextWriter writer, string methodName, Argument[] args)
+            public Argument? WriteLayer(IndentedTextWriter writer, string methodName, Argument[] args)
             {
                 if (_context.Method.ReturnType.Name != "void")
                 {
                     writer.Write($"{ReturnValueName} = ");
                 }
-                writer.Write(methodName);
+                writer.Write(methodName + Suffix);
                 writer.Write('(');
                 for (int i = 0; i < args.Length; i++)
                 {
@@ -54,7 +58,7 @@ namespace GeneratorV2.Overloading
                     }
                 }
                 writer.WriteLine(");");
-                return _context.Method.ReturnType.Name == "void" ? null : ReturnValueName;
+                return _context.Method.ReturnType.Name == "void" ? null : new Argument(_context.ReturnType.Name, ReturnValueName);
             }
         }
         private class ReturnVariableLayer : ILayer
@@ -68,19 +72,19 @@ namespace GeneratorV2.Overloading
             }
             public ILayer? NestedLayer { get; }
 
-            public string? WriteLayer(IndentedTextWriter writer, string methodName, Argument[] args)
+            public Argument? WriteLayer(IndentedTextWriter writer, string methodName, Argument[] args)
             {
                 bool hasReturnValue = _context.Method.ReturnType.Name != "void";
                 if (hasReturnValue)
                 {
                     writer.WriteLine($"{_context.Method.ReturnType.Name} {ReturnValueName};");
                 }
-                var valueName = NestedLayer.WriteLayer(writer, methodName, args);
+                var returnValue = NestedLayer.WriteLayer(writer, methodName, args);
                 if (hasReturnValue)
                 {
-                    writer.WriteLine($"return {valueName};");
+                    writer.WriteLine($"return {returnValue.Name};");
                 }
-                return valueName;
+                return returnValue;
             }
         }
 
@@ -124,7 +128,8 @@ namespace GeneratorV2.Overloading
         {
             var method = command.Method;
             var context = new OverloadContext(command);
-            ILayer currentLayer = new CallLayer(context);
+            var callLayer = new CallLayer(context);
+            ILayer currentLayer = callLayer;
 
             bool isValidOverload = false;
             bool overloadHappened;
@@ -149,13 +154,22 @@ namespace GeneratorV2.Overloading
                 }
             } while (overloadHappened);
 
-            foreach (var overloader in _returnOverloaders)
+            do
             {
-                if (overloader.TryOverloadParameter(context, ref currentLayer, -1))
+                overloadHappened = false;
+                foreach (var overloader in _returnOverloaders)
                 {
-                    isValidOverload = true;
+                    if (overloader.TryOverloadParameter(context, ref currentLayer, -1))
+                    {
+                        if (!isValidOverload)
+                        {
+                            callLayer.Suffix = "Raw";
+                            method.Suffix = "Raw";
+                            isValidOverload = true;
+                        }
+                    }
                 }
-            }
+            } while (overloadHappened);
 
             if (!isValidOverload)
             {

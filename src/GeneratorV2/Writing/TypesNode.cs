@@ -18,9 +18,22 @@ namespace GeneratorV2.Writing
             Writer.WriteLine("public unsafe delegate void GLDEBUGPROCKHR(uint source, uint type, uint id, uint severity, int length, char* message, void* userParam);");
             Writer.WriteLine("public unsafe delegate void GLDEBUGPROCAMD(uint id, uint category, uint severity, int length, char* message, void* userParam);");
             Writer.WriteLine("public unsafe delegate void GLDEBUGPROCNV();");
-            Writer.WriteLine("public struct GLsync{};");
-            Writer.WriteLine("public struct CLContext{};");
-            Writer.WriteLine("public struct CLEvent{};");
+            Writer.WriteLine("public struct CLContext{}");
+            Writer.WriteLine("public struct CLEvent{}");
+            Writer.WriteLine("public struct GLsync{}");
+            Writer.WriteLine("public unsafe struct GLsyncObject");
+            using (Writer.Scope())
+            {
+                Writer.WriteLine("internal GLsync* ObjPtr;");
+                Writer.WriteLine("internal GLsyncObject(GLsync* syncObject)");
+                using (Writer.Scope())
+                {
+                    Writer.WriteLine("ObjPtr = syncObject;");
+                }
+
+                Writer.WriteLine("public static implicit operator GLsync*(GLsyncObject obj) => obj.ObjPtr;");
+                Writer.WriteLine("public static implicit operator GLsyncObject(GLsync* obj) => new GLsyncObject(obj);");
+            }
 
             //GLhandleArb
             Writer.WriteLine("public struct GLhandleARB");

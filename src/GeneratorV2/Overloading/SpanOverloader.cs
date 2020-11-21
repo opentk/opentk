@@ -67,7 +67,7 @@ namespace GeneratorV2.Overloading
                 return null;
             }
 
-            public string? WriteLayer(IndentedTextWriter writer, string methodName, Argument[] args)
+            public Argument? WriteLayer(IndentedTextWriter writer, string methodName, Argument[] args)
             {
                 var spanArg = args[_argIndex];
 

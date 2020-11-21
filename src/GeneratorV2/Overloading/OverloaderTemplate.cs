@@ -19,7 +19,7 @@ namespace GeneratorV2.Overloading
                 _argIndex = argIndex;
             }
 
-            public string? WriteLayer(IndentedTextWriter writer, string methodName, Argument[] args)
+            public Argument? WriteLayer(IndentedTextWriter writer, string methodName, Argument[] args)
             {
                 //Write here
 

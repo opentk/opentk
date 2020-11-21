@@ -20,7 +20,7 @@ namespace GeneratorV2.Overloading
                 _argIndex = argIndex;
             }
 
-            public string? WriteLayer(IndentedTextWriter writer, string methodName, Argument[] args)
+            public Argument? WriteLayer(IndentedTextWriter writer, string methodName, Argument[] args)
             {
                 var arg = args[_argIndex];
                 var refStart = arg.Type.IndexOf("ref ");
