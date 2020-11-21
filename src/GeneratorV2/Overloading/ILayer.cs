@@ -7,6 +7,6 @@ namespace GeneratorV2.Overloading
 {
     public interface ILayer
     {
-        string? WriteLayer(IndentedTextWriter writer, string methodName, Argument[] args);
+        Argument? WriteLayer(IndentedTextWriter writer, string methodName, Argument[] args);
     }
 }

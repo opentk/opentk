@@ -17,7 +17,7 @@ namespace GeneratorV2.Writing
             }
             else
             {
-                WriteMethod(_command.Method, _command.Name);
+                WriteMethod(_command.Method, _command.Name + _command.Method.Suffix);
             }
         }
 

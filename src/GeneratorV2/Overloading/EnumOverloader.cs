@@ -25,7 +25,7 @@ namespace GeneratorV2.Overloading
             }
 
 
-            public string? WriteLayer(IndentedTextWriter writer, string methodName, Argument[] args)
+            public Argument? WriteLayer(IndentedTextWriter writer, string methodName, Argument[] args)
             {
                 var arg = args[_argIndex];
                 args[_argIndex] = arg.Clone(_typeName, _argName);

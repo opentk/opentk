@@ -4,6 +4,7 @@
     {
         public PType ReturnType { get; }
         public string EntryPoint { get; }
+        public string Suffix { get; set; }
         public Parameter[] Parameters { get; }
 
         public Method(PType returnType, string entryPoint, params Parameter[] parameters)
