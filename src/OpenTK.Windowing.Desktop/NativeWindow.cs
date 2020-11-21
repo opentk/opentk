@@ -1007,8 +1007,9 @@ namespace OpenTK.Windowing.Desktop
 
         private unsafe void ScrollCallback(Window* window, double offsetX, double offsetY)
         {
-            // TODO: Think more about when we want to move the current scroll to the previous one
-            MouseState.PreviousScroll = MouseState.Scroll;
+            // GLFW says this function can be called not only in response to functions like glfwPollEvents();
+            // There might be a function like glfwSetWindowSize what will trigger a sroll event to trigger inside that function.
+            // We ignore this case for now and just accept that the scroll value will change after such a function call.
             MouseState.Scroll += new Vector2((float)offsetX, (float)offsetY);
 
             OnMouseWheel(new MouseWheelEventArgs(MouseState.Scroll));
