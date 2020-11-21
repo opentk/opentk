@@ -10,7 +10,8 @@
 namespace OpenTK.Windowing.Common
 {
     /// <summary>
-    /// Selects the profile for the context's graphics API. This only applies on OpenGL 3.2 upwards, and has no effect on older versions.
+    /// Selects the profile for the context's graphics API.
+    /// For versions below 3.2 the <see cref="Any"/> option needs to be used.
     /// </summary>
     public enum ContextProfile
     {
