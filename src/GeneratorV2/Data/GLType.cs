@@ -22,6 +22,8 @@ namespace GeneratorV2.Data
         IntPtr,
         VoidPtr,
 
+        Enum,
+
         GLHandleARB,
 
         //The following have a custom c# implementation in the writer.

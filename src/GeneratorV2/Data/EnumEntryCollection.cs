@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System;
 
-
-#nullable enable
 namespace GeneratorV2.Data
 {
     public class EnumEntryCollection : IEnumerable<KeyValuePair<string, EnumEntry>>, IEnumerable
@@ -39,6 +38,16 @@ namespace GeneratorV2.Data
             }
         }
 
+        // FIXME!!!
+        public bool TryGetValue(string name, [NotNullWhen(true)] out EnumEntry? entry)
+        {
+            if (Enums.TryGetValue(name, out entry))
+            {
+                return true;
+            }
+            return false;
+        }
+
         public bool TryGetValue(string name, string api, [NotNullWhen(true)] out EnumEntry? entry)
         {
             if (Enums.TryGetValue(name, out entry))
@@ -63,7 +72,7 @@ namespace GeneratorV2.Data
             {
                 return source.Where(e => e.Api == null || api == e.Api).ToArray();
             }
-            return new EnumEntry[0];
+            return Array.Empty<EnumEntry>();
         }
 
         public IEnumerator<KeyValuePair<string, EnumEntry>> GetEnumerator()

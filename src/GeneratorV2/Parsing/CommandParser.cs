@@ -9,7 +9,7 @@ namespace GeneratorV2.Parsing
 {
     public class CommandParser
     {
-        public Dictionary<string, Command2> Parse(XElement input)
+        public static Dictionary<string, Command2> Parse(XElement input)
         {
             Logger.Info("Begining parsing of commands.");
             var xelement = input.Element("commands");
@@ -56,12 +56,14 @@ namespace GeneratorV2.Parsing
 
         public static IExpression? Evaluate(IExpression expression, Method method)
         {
-            var lazy = expression as LazyEvaluatedExpression;
-            if (lazy == null)
+            if (expression is LazyEvaluatedExpression lazy)
+            {
+                return ParseExpression(lazy.Expression, method);
+            }
+            else
             {
                 return expression;
             }
-            return ParseExpression(lazy.Expression, method);
         }
 
         public static IExpression? Evaluate(IExpression expression, Method2 method)
@@ -205,10 +207,11 @@ namespace GeneratorV2.Parsing
                 return ParseType(type["struct".Length..]);
             }
 
+            // FIXME: Make this a 1 to 1 map
             PrimitiveType primitiveType = type switch
             {
                 "void" => PrimitiveType.Void,
-                "GLenum" => PrimitiveType.Uint,
+                "GLenum" => PrimitiveType.Enum,
                 "GLboolean" => PrimitiveType.Byte,
                 "GLbitfield" => PrimitiveType.Uint,
                 "GLvoid" => PrimitiveType.Void,
@@ -241,6 +244,8 @@ namespace GeneratorV2.Parsing
                 "GLuint64EXT" => PrimitiveType.Uint,
                 "GLhalfNV" => PrimitiveType.Ushort,
                 "GLvdpauSurfaceNV" => PrimitiveType.IntPtr,
+
+                // FIXME
                 "GLVULKANPROCNV" => PrimitiveType.Void,
 
                 "GLhandleARB" => PrimitiveType.GLHandleARB, //This type is platform specific on apple.

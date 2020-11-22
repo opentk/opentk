@@ -16,7 +16,7 @@ namespace GeneratorV2.Data
             Commands = commands;
             Enums = enums;
         }
-
+        /*
         private Api GetOrCreateApi(string apiName)
         {
             if (!Apis.TryGetValue(apiName, out Api? value))
@@ -39,7 +39,7 @@ namespace GeneratorV2.Data
             Api orCreateApi = GetOrCreateApi(extension.Api);
             orCreateApi.AddEnums(extension);
             orCreateApi.Extensions.AddExtension(extension);
-        }
+        }*/
     }
 
     public class OverloadedSpecification

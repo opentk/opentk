@@ -111,6 +111,7 @@ namespace GeneratorV2.Overloading
                 }
             }
         }
+
         private void Overload(CommandEnumCollection commandCollection)
         {
             bool isFeatureCommand = commandCollection is Feature;
