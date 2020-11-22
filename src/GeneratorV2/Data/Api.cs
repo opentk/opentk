@@ -6,21 +6,18 @@ namespace GeneratorV2.Data
     {
         public string Name { get; }
 
-        public ApiExtension Extensions { get; } = new ApiExtension();
+        public readonly List<Extension> Extensions;
 
-        public List<Feature> Features { get; } = new List<Feature>();
+        public readonly List<Feature> Features;
 
-        public EnumEntryCollection AllEnum { get; } = new EnumEntryCollection();
+        public readonly EnumEntryCollection AllEnums;
 
-        public Api(string name)
+        public Api(string name, List<Extension> extensions, List<Feature> features, EnumEntryCollection allEnums)
         {
             this.Name = name;
-        }
-
-        public void AddEnums(CommandEnumCollection collection)
-        {
-            foreach ((string _, EnumEntry entry) in collection.EnumEntries)
-                this.AllEnum.Add(entry);
+            Extensions = extensions;
+            Features = features;
+            AllEnums = allEnums;
         }
     }
 }

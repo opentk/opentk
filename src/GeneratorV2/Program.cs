@@ -21,7 +21,7 @@ namespace GeneratorV2
                 using var stream = Reader.ReadSpecFromGithub();
 
                 //Parsing
-                var specification = new Parser().Parse(stream);
+                var specification = Parser.Parse(stream);
 
                 //Overloading
                 new Overloader(specification).Overload();
