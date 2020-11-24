@@ -9,6 +9,7 @@ namespace GeneratorV2.Overloading
 {
     public class Overloader
     {
+        /*
         private readonly IOverloader[] _overloaders = {
             new EnumOverloader(),
             new SyncOverloader(),
@@ -216,7 +217,7 @@ namespace GeneratorV2.Overloading
                 }
             }
             return hasGroupedEnum;
-        }
+        }*/
     }
 
     //public extern unsafe void Test(int** array, int count, uint enm);

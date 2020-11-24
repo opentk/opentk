@@ -93,9 +93,11 @@ namespace GeneratorV2.Overloading
                 var pRef = type.Length as ParameterReference;
                 if (pRef != null)
                 {
-                    var lenIdx = pRef.ParameterIndex;
+                    throw new Exception("!!!!");
+                    //var lenIdx = pRef.ParameterIndex;
                     context.Parameters[paramIndex] = new Parameter(new PType("out string", type.OriginalTypeName, type.Modifier, type.Group, type.Length), parameter.Name);
-                    topLayer = new OutputLayer(topLayer, paramIndex, lenIdx);
+                    throw new Exception("!!!!");
+                    //topLayer = new OutputLayer(topLayer, paramIndex, lenIdx);
                 }
                 else
                 {

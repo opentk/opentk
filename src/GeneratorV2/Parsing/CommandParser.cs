@@ -12,15 +12,13 @@ namespace GeneratorV2.Parsing
         public static Dictionary<string, Command2> Parse(XElement input)
         {
             Logger.Info("Begining parsing of commands.");
-            var xelement = input.Element("commands");
+            var xelement = input.Element("commands")!;
+
             var commands = new Dictionary<string, Command2>();
             foreach (var element in xelement.Elements("command"))
             {
                 var command = ParseCommand(element);
-                if (command != null)
-                {
-                    commands.Add(command.Method.EntryPoint, command);
-                }
+                commands.Add(command.Method.EntryPoint, command);
             }
 
             return commands;
@@ -28,120 +26,148 @@ namespace GeneratorV2.Parsing
 
         private static Command2 ParseCommand(XElement c)
         {
-            var t = c.Element("proto");
-            var name = t.Element("name").Value;
-            var methodName = name[2..];
+            var proto = c.Element("proto");
+            if (proto == null) throw new Exception("Missing proto tag!");
+
+            var name = proto.Element("name")?.Value;
+            if (name == null) throw new Exception("Missing name tag!");
+
             var parameterList = new List<Parameter2>();
             foreach (var element in c.Elements("param"))
             {
-                var paramName = NameMangler.MangleParameterName(element.Element("name").Value);
+                var paramName = element.Element("name")?.Value;
                 var ptype = ParsePType(element);
+
+                if (paramName == null) throw new Exception("Missing parameter name!");
+
                 //isGLhandleArb |= ptype.Name == PlatformSpecificGlHandleArbFlag;
                 parameterList.Add(new Parameter2(ptype, paramName));
             }
-            var ptype1 = ParsePType(t);
-            //isGLhandleArb |= ptype1.Name == PlatformSpecificGlHandleArbFlag;
 
-            var method = new Method2(ptype1, name, parameterList.ToArray());
-            foreach (var p in method.Parameters)
-            {
-                if (p.Type.Length != null)
-                {
-                    p.Type.Length = Evaluate(p.Type.Length, method);
-                }
-            }
+            var returnType = ParsePType(proto);
 
-            return new Command2(method, methodName);
+            var method = new Method2(returnType, name, parameterList.ToArray());
+
+            // TODO: We can skip the Command class and just use Method directly.
+            return new Command2(method, name);
         }
 
-        public static IExpression? Evaluate(IExpression expression, Method method)
+        private static IExpression ParseExpression(string expression)
         {
-            if (expression is LazyEvaluatedExpression lazy)
+            var retExpr = ParseExpressionPrio2(expression, out string leftOver);
+
+            if (string.IsNullOrEmpty(leftOver) == false)
+                throw new Exception($"Failed to parse expression '{expression}' with leftover '{leftOver}'");
+
+            return retExpr;
+        }
+
+        private static IExpression ParseExpressionPrio2(string expression, out string leftOver)
+        {
+            var retExpr = ParseExpressionPrio1(expression, out string exp);
+            exp = exp.TrimStart();
+
+            BinaryOperator op;
+            while ((op = GetOperation(exp)) != BinaryOperator.Invalid)
             {
-                return ParseExpression(lazy.Expression, method);
+                exp = exp[1..];
+                var right = ParseExpressionPrio1(exp, out exp);
+                exp = exp.TrimStart();
+
+                retExpr = new BinaryOperation(retExpr, op, right);
+            }
+
+            leftOver = exp;
+            return retExpr;
+
+            static BinaryOperator GetOperation(string expression)
+            {
+                if (expression.Length == 0) return BinaryOperator.Invalid;
+                return expression[0] switch
+                {
+                    '+' => BinaryOperator.Addition,
+                    '-' => BinaryOperator.Subtraction,
+                    _ => BinaryOperator.Invalid,
+                };
+            }
+        }
+
+        private static IExpression ParseExpressionPrio1(string expression, out string leftOver)
+        {
+            var retExpr = ParseExpressionPrio0(expression, out string exp);
+            exp = exp.TrimStart();
+
+            BinaryOperator op;
+            while ((op = GetOperation(exp)) != BinaryOperator.Invalid)
+            {
+                exp = exp[1..];
+                var right = ParseExpressionPrio0(exp, out exp);
+                exp = exp.TrimStart();
+
+                retExpr = new BinaryOperation(retExpr, op, right);
+            }
+
+            leftOver = exp;
+            return retExpr;
+
+            static BinaryOperator GetOperation(string expression)
+            {
+                if (expression.Length == 0) return BinaryOperator.Invalid;
+                return expression[0] switch
+                {
+                    '*' => BinaryOperator.Multiplication,
+                    '/' => BinaryOperator.Division,
+                    '%' => BinaryOperator.Modulo,
+                    _ => BinaryOperator.Invalid,
+                };
+            }
+        }
+
+        private static IExpression ParseExpressionPrio0(string expression, out string leftOver)
+        {
+            expression = expression.TrimStart();
+            if (expression.StartsWith("COMPSIZE("))
+            {
+                var exp = expression["COMPSIZE(".Length..];
+                List<IExpression> arguments = new List<IExpression>();
+                while (exp[0] != ')')
+                {
+                    arguments.Add(ParseExpressionPrio2(exp, out exp));
+
+                    if (exp[0] == ',')
+                        exp = exp[1..];
+                }
+
+                // Remove the last ')'
+                leftOver = exp[1..];
+                return new CompSize(arguments.ToArray());
+            }
+            else if (char.IsDigit(expression[0]))
+            {
+                int i = 1;
+                while (i < expression.Length && char.IsDigit(expression[i]))
+                {
+                    i++;
+                }
+
+                leftOver = expression[i..];
+                return new Constant(int.Parse(expression[0..i]));
             }
             else
             {
-                return expression;
-            }
-        }
-
-        public static IExpression? Evaluate(IExpression expression, Method2 method)
-        {
-            throw new NotImplementedException("This should be changed completely");
-        }
-
-        private static IExpression? ParseExpression(string length, Method method)
-        {
-            if (length == null)
-            {
-                return null;
-            }
-            length = length.Trim();
-            if (int.TryParse(length, out var val))
-            {
-                return new Constant(val);
-            }
-            var str = length.Split('*', 2);
-            if (str.Length == 2)
-            {
-                var left = ParseExpression(str[0], method);
-                var right = ParseExpression(str[1], method);
-                if (left == null || right == null)
+                if (char.IsLetter(expression[0]))
                 {
-                    Logger.Warning("Error in parsing binary operation expression for length of " + method.EntryPoint);
-                    return null;
-                }
-                return new BinaryOperation(left, '*', right);
-            }
-            int sInd = length.IndexOf("COMPSIZE(");
-            if (sInd != -1)
-            {
-                sInd =  sInd + "COMPSIZE(".Length;
-                int eInd = length.IndexOf(')', sInd);
+                    int i = 1;
+                    while (i < expression.Length && char.IsLetterOrDigit(expression[i]))
+                    {
+                        i++;
+                    }
 
-                if (eInd == -1)
-                {
-                    Logger.Warning("PType parsing: Missing closing bracket for 'COMPSIZE('.");
-                    return null;
+                    leftOver = expression[i..];
+                    return new ParameterReference(expression[0..i]);
                 }
-                var openingBracket = length.IndexOf('(', sInd);
-                if (openingBracket != -1 && openingBracket < eInd)
-                {
-                    Logger.Warning("PType parsing: Nested brackets not supported.");
-                    return null;
-                }
-                var subStr = length.Substring(sInd, eInd - sInd);
-                var parameters = subStr.Split(',');
-                var parsedParameter = new IExpression?[string.IsNullOrEmpty(subStr) ? 0 : parameters.Length];
-                for (int i = 0; i < parsedParameter.Length; i++)
-                {
-                    parsedParameter[i] = ParseExpression(parameters[i], method);
-                }
-                return new CompSize(parsedParameter);
+                else throw new Exception($"Could not parse expression '{expression}'");
             }
-
-            for (int i = 0; i < length.Length; i++)
-            {
-                var c = length[i];
-                if (i == 0 && !char.IsLetter(c) || !char.IsLetterOrDigit(c))
-                {
-                    Logger.Warning($"PType parsing: Not a valid parameter reference '{length}'.");
-                    return null;
-                }
-            }
-
-            for (int i = 0; i < method.Parameters.Length; i++)
-            {
-                var p = method.Parameters[i];
-                if (p.Name == length)
-                {
-                    return new ParameterReference(i, p);
-                }
-            }
-
-            Logger.Warning($"PType parsing: Cannot parse length - '{length}' is not supported.");
-            return null;
         }
 
         private static PType2 ParsePType(XElement t)
@@ -151,7 +177,7 @@ namespace GeneratorV2.Parsing
 
             var str = t.GetXmlText(element => !(element.Name == "name") ? element.Value : string.Empty).Trim();
 
-            var pTypeLength = length == null ? null : new LazyEvaluatedExpression(length);
+            var pTypeLength = length == null ? null : ParseExpression(length);
 
             return new PType2(ParseType(str), group, pTypeLength);
         }

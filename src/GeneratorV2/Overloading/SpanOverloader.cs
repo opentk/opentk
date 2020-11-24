@@ -34,7 +34,8 @@ namespace GeneratorV2.Overloading
                 if (expr is ParameterReference pRef)
                 {
                     var arg = args[_argIndex];
-                    lenIdx = pRef.ParameterIndex;
+                    throw new Exception("!!!!");
+                    //lenIdx = pRef.ParameterIndex;
                     //args[pRef.ParameterIndex] = args[pRef.ParameterIndex].CloneWithName(args[_argIndex].Name);
                     return arg.Name + ".Length";
                 }
@@ -53,7 +54,7 @@ namespace GeneratorV2.Overloading
                     }
 
                     lenIdx = Math.Max(leftLenIdx, rightLenIdx);
-                    if (binaryOperation.Operator != '*')
+                    if (binaryOperation.Operator != BinaryOperator.Multiplication)
                     {
                         Logger.Warning("Cannot compute non multiplication for length");
                     }
@@ -127,12 +128,14 @@ namespace GeneratorV2.Overloading
                         continue;
                     }
                     var refs = GetAllReferences(p.Type.Length);
-                    otherReferences += refs.Count(r => r.ParameterIndex == reference.ParameterIndex);
+                    throw new Exception("!!!!");
+                    //otherReferences += refs.Count(r => r.ParameterIndex == reference.ParameterIndex);
                 }
                 if (otherReferences == 0)
                 {
                     isByteSize = parameter.Type.OriginalTypeName.Contains("void");
-                    context.Parameters[reference.ParameterIndex] = null;
+                    throw new Exception("!!!!");
+                    //context.Parameters[reference.ParameterIndex] = null;
                     useParameter = false;
                 }
             }

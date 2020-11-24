@@ -85,4 +85,11 @@ namespace GeneratorV2.Data
             return GetEnumerator();
         }
     }
+
+    public class EnumCollection
+    {
+        public readonly Dictionary<string, EnumEntry2> Enums;
+
+
+    }
 }

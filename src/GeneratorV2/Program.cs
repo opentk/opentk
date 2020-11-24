@@ -24,7 +24,7 @@ namespace GeneratorV2
                 var specification = Parser.Parse(stream);
 
                 //Overloading
-                new Overloader(specification).Overload();
+                //new Overloader(specification).Overload();
                 //Overloader.OverloadCommands(specification);
 
                 //Writing

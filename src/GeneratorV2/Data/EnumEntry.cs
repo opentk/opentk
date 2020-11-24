@@ -50,18 +50,16 @@ namespace GeneratorV2.Data
         public readonly EnumType Type;
         public readonly string? Vendor;
         public readonly Range? Range;
-        public readonly string? Alias;
         public readonly string? Comment;
         public readonly List<EnumEntry2> Enums;
 
-        public EnumsEntry(string @namespace, string[]? groups, EnumType type, string? vendor, Range? range, string? alias, string? comment, List<EnumEntry2> enums)
+        public EnumsEntry(string @namespace, string[]? groups, EnumType type, string? vendor, Range? range, string? comment, List<EnumEntry2> enums)
         {
             Namespace = @namespace;
             Groups = groups;
             Type = type;
             Vendor = vendor;
             Range = range;
-            Alias = alias;
             Comment = comment;
             Enums = enums;
         }
@@ -91,17 +89,19 @@ namespace GeneratorV2.Data
         public readonly string Name;
         public readonly GLAPI Api;
         public readonly ulong Value;
+        public readonly string? Alias;
         public readonly string? Comment;
 
         public readonly string[]? Groups;
 
         public readonly TypeSuffix Type;
 
-        public EnumEntry2(string name, GLAPI api, ulong value, string? comment, string[]? groups, TypeSuffix type)
+        public EnumEntry2(string name, GLAPI api, ulong value, string? alias, string? comment, string[]? groups, TypeSuffix type)
         {
             Name = name;
             Api = api;
             Value = value;
+            Alias = alias;
             Comment = comment;
             Groups = groups;
             Type = type;

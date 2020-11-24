@@ -32,12 +32,13 @@ namespace GeneratorV2.Writing
                 {
                     var methodExtensionClass = methodClass.AddNode(new ClassNode(e.Name));
                     var overloadExtensionClass = overloadClass.AddNode(new ClassNode(e.Name));
-
+                    /*
                     foreach(var (cName, c) in e.Commands)
                     {
                         methodExtensionClass.AddNode(new MethodNode(c));
                         overloadExtensionClass.AddNode(new OverloadNode(c));
                     }
+                    */
                 }
             }
         }
