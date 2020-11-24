@@ -21,7 +21,7 @@ namespace GeneratorV2.Parsing
 
             
 
-            return new Specification(null, commands, enums);
+            return new Specification(null, commands);
         }
 
         public static List<EnumsEntry> ParseEnums(XElement input)
@@ -47,12 +47,10 @@ namespace GeneratorV2.Parsing
                 Range? range = null;
                 if (startStr != null)
                 {
-                    var start = new Int32Converter().ConvertFromString(startStr);
-                    var end = new Int32Converter().ConvertFromString(endStr);
+                    var start = (int)new Int32Converter().ConvertFromString(startStr);
+                    var end = (int)new Int32Converter().ConvertFromString(endStr);
                     range = new Range((Index)start, (Index)end);
                 }
-
-                var alias = enums.Attribute("alias")?.Value;
 
                 var comment = enums.Attribute("comment")?.Value;
 
@@ -62,7 +60,7 @@ namespace GeneratorV2.Parsing
                     entries.Add(ParseEnumEntry(@enum));
                 }
 
-                enumsEntries.Add(new EnumsEntry(@namespace, group, type, vendor, range, alias, comment, entries));
+                enumsEntries.Add(new EnumsEntry(@namespace, group, type, vendor, range, comment, entries));
             }
 
             return enumsEntries;
@@ -172,13 +170,15 @@ namespace GeneratorV2.Parsing
 
             var value = ConvertToUInt64(valueStr, suffix);
 
+            var alias = @enum.Attribute("alias")?.Value;
+
             var groups = @enum.Attribute("group")?.Value?.Split(',', StringSplitOptions.RemoveEmptyEntries);
 
             var comment = @enum.Attribute("comment")?.Value;
 
             var api = Parser.ParseApi(@enum.Attribute("api")?.Value);
 
-            return new EnumEntry2(name, api, value, comment, groups, suffix);
+            return new EnumEntry2(name, api, value, alias, comment, groups, suffix);
 
             static TypeSuffix ParseEnumTypeSuffix(string? suffix) => suffix switch
             {
@@ -192,7 +192,7 @@ namespace GeneratorV2.Parsing
             {
                 TypeSuffix.None => (uint)(int)new Int32Converter().ConvertFromString(val),
                 TypeSuffix.Ull => (ulong)(long)new Int64Converter().ConvertFromString(val),
-                TypeSuffix.U => (ulong)(long)new UInt32Converter().ConvertFromString(val),
+                TypeSuffix.U => (ulong)(uint)new UInt32Converter().ConvertFromString(val),
                 TypeSuffix.Invalid or _ => throw new Exception($"Invalid suffix '{type}'!"),
             };
         }
@@ -204,7 +204,7 @@ namespace GeneratorV2.Parsing
             var comment = requires.Attribute("comment")?.Value;
 
             List<Command2> reqCommands = new List<Command2>();
-            List<EnumEntry> reqEnums = new List<EnumEntry>();
+            List<EnumEntry2> reqEnums = new List<EnumEntry2>();
 
             foreach (var entry in requires.Elements())
             {
@@ -218,12 +218,34 @@ namespace GeneratorV2.Parsing
                         {
                             reqCommands.Add(command);
                         }
+                        else
+                        {
+                            throw new Exception($"No command called '{name}' found!");
+                        }
                         break;
                     case "enum":
-                        if (enums.TryGetValue(name, out var @enum))
+                        bool found = false;
+                        foreach (var e in enums)
+                        {
+                            foreach (var @enum in e.Enums)
+                            {
+                                if (@enum.Name == name)
+                                {
+                                    reqEnums.Add(@enum);
+                                    found = true;
+                                    break;
+                                }
+                            }
+
+                            if (found) break;
+                        }
+                        if (found) break;
+
+                        throw new Exception("!!!");
+                        /*if (enums.TryGetValue(name, out var @enum))
                         {
                             reqEnums.Add(@enum);
-                        }
+                        }*/
                         break;
                     default:
                         continue;
@@ -239,7 +261,7 @@ namespace GeneratorV2.Parsing
             var comment = requires.Attribute("comment")?.Value;
 
             List<Command2> removeCommands = new List<Command2>();
-            List<EnumEntry> removeEnums = new List<EnumEntry>();
+            List<EnumEntry2> removeEnums = new List<EnumEntry2>();
 
             foreach (var entry in requires.Elements())
             {
@@ -253,12 +275,34 @@ namespace GeneratorV2.Parsing
                         {
                             removeCommands.Add(command);
                         }
+                        else
+                        {
+                            throw new Exception($"No command called '{name}' found!");
+                        }
                         break;
                     case "enum":
-                        if (enums.TryGetValue(name, out var @enum))
+                        bool found = false;
+                        foreach (var e in enums)
+                        {
+                            foreach (var @enum in e.Enums)
+                            {
+                                if (@enum.Name == name)
+                                {
+                                    removeEnums.Add(@enum);
+                                    found = true;
+                                    break;
+                                }
+                            }
+
+                            if (found) break;
+                        }
+                        if (found) break;
+
+                        throw new Exception("!!!");
+                        /*if (enums.TryGetValue(name, out var @enum))
                         {
                             removeEnums.Add(@enum);
-                        }
+                        }*/
                         break;
                     default:
                         continue;

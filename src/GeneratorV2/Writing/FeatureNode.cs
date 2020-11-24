@@ -26,6 +26,7 @@ namespace GeneratorV2.Writing
                     .AddNode(new NamespaceNode(subNamespace))
                         .AddNode(new ClassNode("GL"));
 
+            /*
             foreach (var (name, command) in feature.Commands)
             {
                 methodClass.AddNode(new MethodNode(command));
@@ -38,6 +39,7 @@ namespace GeneratorV2.Writing
             {
                 enumNamespace.AddNode(new EnumNode(groupName, group));
             }
+            */
         }
 
         public override void Write()

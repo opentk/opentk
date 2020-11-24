@@ -10,11 +10,12 @@ namespace GeneratorV2.Data
         public readonly Dictionary<string, Command2> Commands;
         public readonly EnumEntryCollection Enums;
 
-        public Specification(Dictionary<string, Api> apis, Dictionary<string, Command2> commands, EnumEntryCollection enums)
+        public Specification(Dictionary<string, Api> apis, Dictionary<string, Command2> commands)
         {
             Apis = apis;
             Commands = commands;
-            Enums = enums;
+            Enums = default;
+            throw new System.Exception("!!!!");
         }
         /*
         private Api GetOrCreateApi(string apiName)

@@ -10,16 +10,6 @@ namespace GeneratorV2.Data
 
     }
 
-    public class LazyEvaluatedExpression : IExpression
-    {
-        public LazyEvaluatedExpression(string expression)
-        {
-            Expression = expression;
-        }
-
-        public string Expression { get; }
-    }
-
     public class Constant : IExpression
     {
         public int Value { get; }
@@ -32,21 +22,31 @@ namespace GeneratorV2.Data
 
     public class CompSize : IExpression
     {
-        public IExpression?[] Parameters { get; }
+        public IExpression[] Parameters { get; }
 
-        public CompSize(IExpression?[] parameters)
+        public CompSize(IExpression[] parameters)
         {
             Parameters = parameters;
         }
     }
 
+    public enum BinaryOperator
+    {
+        Invalid,
+        Addition,
+        Subtraction,
+        Multiplication,
+        Division,
+        Modulo,
+    }
+
     public class BinaryOperation : IExpression
     {
         public IExpression Left { get; }
-        public char Operator { get; }
+        public BinaryOperator Operator { get; }
         public IExpression Right { get; }
 
-        public BinaryOperation(IExpression left, char op, IExpression right)
+        public BinaryOperation(IExpression left, BinaryOperator op, IExpression right)
         {
             Left = left;
             Operator = op;
@@ -56,13 +56,11 @@ namespace GeneratorV2.Data
 
     public class ParameterReference : IExpression
     {
-        public int ParameterIndex { get; }
-        public Parameter Parameter { get; }
+        public string ParameterName { get; }
 
-        public ParameterReference(int parameterIndex, Parameter parameter)
+        public ParameterReference(string parameter)
         {
-            ParameterIndex = parameterIndex;
-            Parameter = parameter;
+            ParameterName = parameter;
         }
     }
 }
