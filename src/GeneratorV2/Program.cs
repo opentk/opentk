@@ -5,6 +5,7 @@ using GeneratorV2.Writing;
 using GeneratorV2.Overloading;
 using System;
 using System.Collections.Generic;
+using GeneratorV2.Process;
 
 namespace GeneratorV2
 {
@@ -23,12 +24,16 @@ namespace GeneratorV2
                 //Parsing
                 var specification = Parser.Parse(stream);
 
+                var outputSpec = Processor.ProcessSpec(specification);
+
                 //Overloading
                 //new Overloader(specification).Overload();
                 //Overloader.OverloadCommands(specification);
 
+                Writer2.Write(outputSpec);
+
                 //Writing
-                new Writer(specification).Write();
+                //new Writer(specification).Write();
 
                 st.Stop();
 

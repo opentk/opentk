@@ -15,6 +15,7 @@ namespace GeneratorV2.Writing
 
         public Writer(Specification spec) : base(new List<Node>())
         {
+            /*
             _spec = spec;
             _path = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? throw new NullReferenceException(),
                 "..", "..", "..", "..", "OpenToolkit.Graphics");
@@ -35,7 +36,7 @@ namespace GeneratorV2.Writing
                         .AddNode(new LoaderNode());
 
             AddNode(new FileNode(Path.Combine(_path, "OpenToolkit.Graphics.csproj")))
-                .AddNode(new ProjectNode(namespaceName));
+                .AddNode(new ProjectNode(namespaceName));*/
 
         }
 
