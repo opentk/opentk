@@ -6,17 +6,20 @@ namespace GeneratorV2.Data
     public class Specification
     {
         // FIXME: Read only versions!
-        public readonly Dictionary<string, Api> Apis;
         public readonly Dictionary<string, Command2> Commands;
-        public readonly EnumEntryCollection Enums;
+        public readonly List<EnumsEntry> Enums;
+        public readonly List<Feature> Features;
+        public readonly List<Extension> Extensions;
 
-        public Specification(Dictionary<string, Api> apis, Dictionary<string, Command2> commands)
+        public Specification(Dictionary<string, Command2> commands, List<EnumsEntry> enums, List<Feature> features, List<Extension> extensions)
         {
-            Apis = apis;
             Commands = commands;
-            Enums = default;
-            throw new System.Exception("!!!!");
+            Enums = enums;
+            Features = features;
+            Extensions = extensions;
         }
+
+
         /*
         private Api GetOrCreateApi(string apiName)
         {

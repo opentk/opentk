@@ -13,15 +13,14 @@ namespace GeneratorV2.Parsing
         public static Specification Parse(Stream input)
         {
             var xdocument = XDocument.Load(input);
+
             var commands = ParseCommands(xdocument.Root!);
             var enums =  ParseEnums(xdocument.Root!);
 
-            var features = ParseFeatures(xdocument.Root, commands, enums);
-            var extensions = ParseExtensions(xdocument.Root, commands, enums);
+            var features = ParseFeatures(xdocument.Root!, commands, enums);
+            var extensions = ParseExtensions(xdocument.Root!, commands, enums);
 
-            
-
-            return new Specification(null, commands);
+            return new Specification(commands, enums, features, extensions);
         }
 
 
