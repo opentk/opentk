@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Drawing;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Threading;
@@ -1728,7 +1727,7 @@ namespace OpenTK.Windowing.Desktop
             {
                 // Calculate a suitable upper-left corner for the window, based on this monitor's
                 // coordinates.  This should work correctly even in unusual multi-monitor layouts.
-                Rectangle monitorRectangle = monitorInfo.ClientArea;
+                Box2i monitorRectangle = monitorInfo.ClientArea;
                 x = (monitorRectangle.Right + monitorRectangle.Left - Size.X) / 2;
                 y = (monitorRectangle.Bottom + monitorRectangle.Top - Size.Y) / 2;
 

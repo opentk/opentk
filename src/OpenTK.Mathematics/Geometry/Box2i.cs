@@ -296,5 +296,47 @@ namespace OpenTK.Mathematics
         {
             return $"{Min} - {Max}";
         }
+
+        /// <summary>
+        /// Gets the x-coordinate of the left edge of this <see cref="Box2i"/> structure.
+        /// </summary>
+        public int Left => (int)Center.X - HalfSize.X;
+
+        /// <summary>
+        /// Gets the x-coordinate of the right edge of this <see cref="Box2i"/> structure.
+        /// </summary>
+        public int Right => (int)Center.X + HalfSize.X;
+
+        /// <summary>
+        /// Gets the y-coordinate of the bottom edge of this <see cref="Box2i"/> structure.
+        /// </summary>
+        public int Bottom => (int)Center.Y + HalfSize.Y;
+
+        /// <summary>
+        /// Gets the y-coordinate of the top edge of this <see cref="Box2i"/> structure.
+        /// </summary>
+        public int Top => (int)Center.Y - HalfSize.Y;
+
+        /// <summary>
+        /// Creates a rectangle that represents the intersection between a and
+        /// b. If there is no intersection, a empty <see cref="Box2i"/> is returned.
+        /// </summary>
+        /// <param name="a">First rectangle to intersect.</param>
+        /// <param name="b">Second rectangle to intersect.</param>
+        /// <returns>The <see cref="Box2i"/> that represents the intersection of both Box2i.</returns>
+        public static Box2i Intersect(Box2i a, Box2i b)
+        {
+            int x1 = Math.Max(a.Left, b.Left);
+            int x2 = Math.Min(a.Right, b.Right);
+            int y1 = Math.Max(a.Top, b.Top);
+            int y2 = Math.Min(a.Bottom, b.Bottom);
+
+            if (x2 >= x1 && y2 >= y1)
+            {
+                return new Box2i(x1, y1, x2, y2);
+            }
+
+            return new Box2i(0, 0, 0, 0);
+        }
     }
 }
