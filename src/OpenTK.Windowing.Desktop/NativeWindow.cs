@@ -1710,5 +1710,42 @@ namespace OpenTK.Windowing.Desktop
                     throw new ArgumentOutOfRangeException(nameof(shape), shape, null);
             }
         }
+
+        /// <summary>
+        /// Centers the <see cref="NativeWindow"/> on the monitor where resizes,
+        /// If no monitor is found it is placed in the upper-left corner of what's hopefully a monitor
+        /// </summary>
+        public void CenterWindow()
+        {
+            int x, y;
+
+            // Find out which monitor the window is already on.  If we can't find that out, then
+            // just try to find the first monitor attached to the computer and use that instead.
+            MonitorHandle currentMonitor = Monitors.GetMonitorFromWindow(this);
+            if (Monitors.TryGetMonitorInfo(currentMonitor, out MonitorInfo monitorInfo)
+                || Monitors.TryGetMonitorInfo(0, out monitorInfo))
+            {
+                // Calculate a suitable upper-left corner for the window, based on this monitor's
+                // coordinates.  This should work correctly even in unusual multi-monitor layouts.
+                Rectangle monitorRectangle = monitorInfo.ClientArea;
+                x = (monitorRectangle.Right + monitorRectangle.Left - Size.X) / 2;
+                y = (monitorRectangle.Bottom + monitorRectangle.Top - Size.Y) / 2;
+
+                // Avoid putting it offscreen.
+                if (x < monitorRectangle.Left) x = monitorRectangle.Left;
+                if (y < monitorRectangle.Top) y = monitorRectangle.Top;
+            }
+            else
+            {
+                // No idea what monitor this is, so just try to put the window somewhere reasonable,
+                // like the upper-left corner of what's hopefully *a* monitor.  Alternatively, you
+                // could throw an exception here.
+                x = 32;
+                y = 64;
+            }
+
+            // Actually move the window.
+            ClientRectangle = new Box2i(x, y, x + Size.X, y + Size.Y);
+        }
     }
 }
