@@ -4,11 +4,11 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Drawing;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Drawing;
 using OpenTK.Core;
 using OpenTK.Mathematics;
 using OpenTK.Windowing.Common;
@@ -1713,7 +1713,7 @@ namespace OpenTK.Windowing.Desktop
         }
 
         /// <summary>
-        /// Tries to center the <see cref="NativeWindow"/> on the monitor where resides
+        /// Tries to center the <see cref="NativeWindow"/> on the monitor where resides.
         /// </summary>
         /// <returns><c>true</c>, if current the window was successfully centered, <c>false</c> otherwise.</returns>
         public bool TryCenterWindow()
@@ -1733,13 +1733,20 @@ namespace OpenTK.Windowing.Desktop
                 y = (monitorRectangle.Bottom + monitorRectangle.Top - Size.Y) / 2;
 
                 // Avoid putting it offscreen.
-                if (x < monitorRectangle.Left) x = monitorRectangle.Left;
-                if (y < monitorRectangle.Top) y = monitorRectangle.Top;
+                if (x < monitorRectangle.Left)
+                {
+                    x = monitorRectangle.Left;
+                }
+
+                if (y < monitorRectangle.Top)
+                {
+                    y = monitorRectangle.Top;
+                }
             }
             else
             {
                 // No idea what monitor this is, so return false to let the user implement its
-                // default behavior for when the mothod fails,
+                // default behavior for when the method fails,
                 return false;
             }
 
