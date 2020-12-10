@@ -8,6 +8,7 @@ using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Drawing;
 using OpenTK.Core;
 using OpenTK.Mathematics;
 using OpenTK.Windowing.Common;
@@ -1712,10 +1713,10 @@ namespace OpenTK.Windowing.Desktop
         }
 
         /// <summary>
-        /// Centers the <see cref="NativeWindow"/> on the monitor where resizes,
-        /// If no monitor is found it is placed in the upper-left corner of what's hopefully a monitor
+        /// Tries to center the <see cref="NativeWindow"/> on the monitor where resides
         /// </summary>
-        public void CenterWindow()
+        /// <returns><c>true</c>, if current the window was successfully centered, <c>false</c> otherwise.</returns>
+        public bool TryCenterWindow()
         {
             int x, y;
 
@@ -1737,15 +1738,14 @@ namespace OpenTK.Windowing.Desktop
             }
             else
             {
-                // No idea what monitor this is, so just try to put the window somewhere reasonable,
-                // like the upper-left corner of what's hopefully *a* monitor.  Alternatively, you
-                // could throw an exception here.
-                x = 32;
-                y = 64;
+                // No idea what monitor this is, so return false to let the user implement its
+                // default behavior for when the mothod fails,
+                return false;
             }
 
             // Actually move the window.
             ClientRectangle = new Box2i(x, y, x + Size.X, y + Size.Y);
+            return true;
         }
     }
 }
