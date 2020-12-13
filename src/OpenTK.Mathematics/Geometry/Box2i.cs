@@ -20,6 +20,8 @@ namespace OpenTK.Mathematics
     [StructLayout(LayoutKind.Sequential)]
     public struct Box2i : IEquatable<Box2i>
     {
+        public static readonly Box2i Empty = new Box2i(0, 0, 0, 0);
+
         private Vector2i _min;
 
         /// <summary>
@@ -165,6 +167,28 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
+        /// Creates a rectangle that represents the intersection between a and
+        /// b. If there is no intersection, a empty <see cref="Box2i"/> is returned.
+        /// </summary>
+        /// <param name="a">First rectangle to intersect.</param>
+        /// <param name="b">Second rectangle to intersect.</param>
+        /// <returns>The <see cref="Box2i"/> that represents the intersection of both Box2i.</returns>
+        public static Box2i Intersect(Box2i a, Box2i b)
+        {
+            Vector2i min = Vector2i.ComponentMax(a.Min, b.Min);
+            Vector2i max = Vector2i.ComponentMin(a.Max, b.Max);
+
+            if (max.X >= min.X && max.Y >= min.Y)
+            {
+                return new Box2i(min, max);
+            }
+            else
+            {
+                return Empty;
+            }
+        }
+
+        /// <summary>
         /// Returns the distance between the nearest edge and the specified point.
         /// </summary>
         /// <param name="point">The point to find distance for.</param>
@@ -295,48 +319,6 @@ namespace OpenTK.Mathematics
         public override string ToString()
         {
             return $"{Min} - {Max}";
-        }
-
-        /// <summary>
-        /// Gets the x-coordinate of the left edge of this <see cref="Box2i"/> structure.
-        /// </summary>
-        public int Left => (int)Center.X - HalfSize.X;
-
-        /// <summary>
-        /// Gets the x-coordinate of the right edge of this <see cref="Box2i"/> structure.
-        /// </summary>
-        public int Right => (int)Center.X + HalfSize.X;
-
-        /// <summary>
-        /// Gets the y-coordinate of the bottom edge of this <see cref="Box2i"/> structure.
-        /// </summary>
-        public int Bottom => (int)Center.Y + HalfSize.Y;
-
-        /// <summary>
-        /// Gets the y-coordinate of the top edge of this <see cref="Box2i"/> structure.
-        /// </summary>
-        public int Top => (int)Center.Y - HalfSize.Y;
-
-        /// <summary>
-        /// Creates a rectangle that represents the intersection between a and
-        /// b. If there is no intersection, a empty <see cref="Box2i"/> is returned.
-        /// </summary>
-        /// <param name="a">First rectangle to intersect.</param>
-        /// <param name="b">Second rectangle to intersect.</param>
-        /// <returns>The <see cref="Box2i"/> that represents the intersection of both Box2i.</returns>
-        public static Box2i Intersect(Box2i a, Box2i b)
-        {
-            int x1 = Math.Max(a.Left, b.Left);
-            int x2 = Math.Min(a.Right, b.Right);
-            int y1 = Math.Max(a.Top, b.Top);
-            int y2 = Math.Min(a.Bottom, b.Bottom);
-
-            if (x2 >= x1 && y2 >= y1)
-            {
-                return new Box2i(x1, y1, x2, y2);
-            }
-
-            return new Box2i(0, 0, 0, 0);
         }
     }
 }

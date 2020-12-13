@@ -1712,13 +1712,10 @@ namespace OpenTK.Windowing.Desktop
         }
 
         /// <summary>
-        /// Tries to center the <see cref="NativeWindow"/> on the monitor where resides.
+        /// Centers the <see cref="NativeWindow"/> on the monitor where resides.
         /// </summary>
-        /// <returns><c>true</c>, if current the window was successfully centered, <c>false</c> otherwise.</returns>
-        public bool TryCenterWindow()
+        public void CenterWindow()
         {
-            int x, y;
-
             // Find out which monitor the window is already on.  If we can't find that out, then
             // just try to find the first monitor attached to the computer and use that instead.
             MonitorHandle currentMonitor = Monitors.GetMonitorFromWindow(this);
@@ -1728,30 +1725,28 @@ namespace OpenTK.Windowing.Desktop
                 // Calculate a suitable upper-left corner for the window, based on this monitor's
                 // coordinates.  This should work correctly even in unusual multi-monitor layouts.
                 Box2i monitorRectangle = monitorInfo.ClientArea;
-                x = (monitorRectangle.Right + monitorRectangle.Left - Size.X) / 2;
-                y = (monitorRectangle.Bottom + monitorRectangle.Top - Size.Y) / 2;
+                int x = (monitorRectangle.Min.X + monitorRectangle.Max.X - Size.X) / 2;
+                int y = (monitorRectangle.Min.Y + monitorRectangle.Max.Y - Size.Y) / 2;
 
                 // Avoid putting it offscreen.
-                if (x < monitorRectangle.Left)
+                if (x < monitorRectangle.Min.X)
                 {
-                    x = monitorRectangle.Left;
+                    x = monitorRectangle.Min.X;
                 }
 
-                if (y < monitorRectangle.Top)
+                if (y < monitorRectangle.Min.Y)
                 {
-                    y = monitorRectangle.Top;
+                    y = monitorRectangle.Min.Y;
                 }
+
+                // Actually move the window.
+                ClientRectangle = new Box2i(x, y, x + Size.X, y + Size.Y);
             }
             else
             {
-                // No idea what monitor this is, so return false to let the user implement its
-                // default behavior for when the method fails,
-                return false;
+                // Something in GLFW has gone wrong, and we can't get monitor information.
+                throw new GLFWException("Could not get information about the current monitor nor the default monitor. Something is probably broken in GLFW.");
             }
-
-            // Actually move the window.
-            ClientRectangle = new Box2i(x, y, x + Size.X, y + Size.Y);
-            return true;
         }
     }
 }
