@@ -9,9 +9,9 @@
 
 using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
 using System.Runtime.InteropServices;
+using OpenTK.Mathematics;
 using OpenTK.Windowing.Common;
 using OpenTK.Windowing.GraphicsLibraryFramework;
 
@@ -68,10 +68,10 @@ namespace OpenTK.Windowing.Desktop
             }
         }
 
-        private static int GetRectangleIntersectionArea(Rectangle a, Rectangle b)
+        private static int GetRectangleIntersectionArea(Box2i a, Box2i b)
         {
-            var area = Rectangle.Intersect(a, b);
-            return area.Width * area.Height;
+            var area = Box2i.Intersect(a, b);
+            return area.Size.X * area.Size.Y;
         }
 
         /// <summary>
@@ -90,12 +90,12 @@ namespace OpenTK.Windowing.Desktop
                 throw new Exception("This method can only be called from the main GLFW thread.");
             }
 
-            Rectangle windowArea;
+            Box2i windowArea;
             {
                 int windowX, windowY, windowWidth, windowHeight;
                 GLFW.GetWindowPos(window, out windowX, out windowY);
                 GLFW.GetWindowSize(window, out windowWidth, out windowHeight);
-                windowArea = new Rectangle(windowX, windowY, windowWidth, windowHeight);
+                windowArea = new Box2i(windowX, windowY, windowX + windowWidth, windowY + windowHeight);
             }
 
             int selectedIndex = 0;

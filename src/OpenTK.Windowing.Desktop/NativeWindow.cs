@@ -1710,5 +1710,43 @@ namespace OpenTK.Windowing.Desktop
                     throw new ArgumentOutOfRangeException(nameof(shape), shape, null);
             }
         }
+
+        /// <summary>
+        /// Centers the <see cref="NativeWindow"/> on the monitor where resides.
+        /// </summary>
+        public void CenterWindow()
+        {
+            // Find out which monitor the window is already on.  If we can't find that out, then
+            // just try to find the first monitor attached to the computer and use that instead.
+            MonitorHandle currentMonitor = Monitors.GetMonitorFromWindow(this);
+            if (Monitors.TryGetMonitorInfo(currentMonitor, out MonitorInfo monitorInfo)
+                || Monitors.TryGetMonitorInfo(0, out monitorInfo))
+            {
+                // Calculate a suitable upper-left corner for the window, based on this monitor's
+                // coordinates.  This should work correctly even in unusual multi-monitor layouts.
+                Box2i monitorRectangle = monitorInfo.ClientArea;
+                int x = (monitorRectangle.Min.X + monitorRectangle.Max.X - Size.X) / 2;
+                int y = (monitorRectangle.Min.Y + monitorRectangle.Max.Y - Size.Y) / 2;
+
+                // Avoid putting it offscreen.
+                if (x < monitorRectangle.Min.X)
+                {
+                    x = monitorRectangle.Min.X;
+                }
+
+                if (y < monitorRectangle.Min.Y)
+                {
+                    y = monitorRectangle.Min.Y;
+                }
+
+                // Actually move the window.
+                ClientRectangle = new Box2i(x, y, x + Size.X, y + Size.Y);
+            }
+            else
+            {
+                // Something in GLFW has gone wrong, and we can't get monitor information.
+                throw new GLFWException("Could not get information about the current monitor nor the default monitor. Something is probably broken in GLFW.");
+            }
+        }
     }
 }

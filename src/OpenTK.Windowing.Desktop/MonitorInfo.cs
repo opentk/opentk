@@ -8,7 +8,7 @@
 //
 
 using System;
-using System.Drawing;
+using OpenTK.Mathematics;
 using OpenTK.Windowing.Common;
 using OpenTK.Windowing.GraphicsLibraryFramework;
 
@@ -34,17 +34,17 @@ namespace OpenTK.Windowing.Desktop
         /// <summary>
         /// Gets the client area of the monitor (in the virtual screen-space).
         /// </summary>
-        public Rectangle ClientArea { get; private set; }
+        public Box2i ClientArea { get; private set; }
 
         /// <summary>
         /// Gets the horizontal resolution of the monitor.
         /// </summary>
-        public int HorizontalResolution => ClientArea.Width;
+        public int HorizontalResolution => ClientArea.Size.X;
 
         /// <summary>
         /// Gets the vertical resolution of the monitor.
         /// </summary>
-        public int VerticalResolution => ClientArea.Height;
+        public int VerticalResolution => ClientArea.Size.Y;
 
         /// <summary>
         /// Gets the scale of the monitor in the horizontal axis.
@@ -130,7 +130,7 @@ namespace OpenTK.Windowing.Desktop
             GLFW.GetMonitorPos(HandleAsPtr, out int x, out int y);
             var videoMode = GLFW.GetVideoMode(HandleAsPtr);
 
-            ClientArea = new Rectangle(x, y, videoMode->Width, videoMode->Height);
+            ClientArea = new Box2i(x, y, x + videoMode->Width, y + videoMode->Height);
         }
 
         /// <summary>

@@ -20,6 +20,8 @@ namespace OpenTK.Mathematics
     [StructLayout(LayoutKind.Sequential)]
     public struct Box2i : IEquatable<Box2i>
     {
+        public static readonly Box2i Empty = new Box2i(0, 0, 0, 0);
+
         private Vector2i _min;
 
         /// <summary>
@@ -162,6 +164,28 @@ namespace OpenTK.Mathematics
         {
             return _max.X >= other._min.X && _min.X <= other._max.X &&
                    _max.Y >= other._min.Y && _min.Y <= other._max.Y;
+        }
+
+        /// <summary>
+        /// Creates a rectangle that represents the intersection between a and
+        /// b. If there is no intersection, a empty <see cref="Box2i"/> is returned.
+        /// </summary>
+        /// <param name="a">First rectangle to intersect.</param>
+        /// <param name="b">Second rectangle to intersect.</param>
+        /// <returns>The <see cref="Box2i"/> that represents the intersection of both Box2i.</returns>
+        public static Box2i Intersect(Box2i a, Box2i b)
+        {
+            Vector2i min = Vector2i.ComponentMax(a.Min, b.Min);
+            Vector2i max = Vector2i.ComponentMin(a.Max, b.Max);
+
+            if (max.X >= min.X && max.Y >= min.Y)
+            {
+                return new Box2i(min, max);
+            }
+            else
+            {
+                return Empty;
+            }
         }
 
         /// <summary>
