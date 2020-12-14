@@ -42,6 +42,21 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         /// </summary>
         public string Name { get; }
 
+        /// <summary>
+        /// Gets the number of buttons on the joystick this state describes.
+        /// </summary>
+        public int ButtonCount { get => _buttons.Length; }
+
+        /// <summary>
+        /// Gets the number of axes on the joystick this state describes.
+        /// </summary>
+        public int AxisCount { get => _axes.Length; }
+
+        /// <summary>
+        /// Gets the number of hats on the joystick this state describes.
+        /// </summary>
+        public int HatCount { get => _hats.Length; }
+
         internal JoystickState(int hatCount, int axesCount, int buttonCount, int id, string name)
         {
             _hats = new Hat[hatCount];
