@@ -1714,7 +1714,13 @@ namespace OpenTK.Windowing.Desktop
         /// <summary>
         /// Centers the <see cref="NativeWindow"/> on the monitor where resides.
         /// </summary>
-        public void CenterWindow()
+        public void CenterWindow() => CenterWindow(Size);
+
+        /// <summary>
+        /// Centers and resizes the <see cref="NativeWindow"/> on the monitor where resides.
+        /// </summary>
+        /// <param name="newSize">The size to make the centered window.</param>
+        public void CenterWindow(Vector2i newSize)
         {
             // Find out which monitor the window is already on.  If we can't find that out, then
             // just try to find the first monitor attached to the computer and use that instead.
@@ -1725,8 +1731,8 @@ namespace OpenTK.Windowing.Desktop
                 // Calculate a suitable upper-left corner for the window, based on this monitor's
                 // coordinates.  This should work correctly even in unusual multi-monitor layouts.
                 Box2i monitorRectangle = monitorInfo.ClientArea;
-                int x = (monitorRectangle.Min.X + monitorRectangle.Max.X - Size.X) / 2;
-                int y = (monitorRectangle.Min.Y + monitorRectangle.Max.Y - Size.Y) / 2;
+                int x = (monitorRectangle.Min.X + monitorRectangle.Max.X - newSize.X) / 2;
+                int y = (monitorRectangle.Min.Y + monitorRectangle.Max.Y - newSize.Y) / 2;
 
                 // Avoid putting it offscreen.
                 if (x < monitorRectangle.Min.X)
@@ -1740,7 +1746,7 @@ namespace OpenTK.Windowing.Desktop
                 }
 
                 // Actually move the window.
-                ClientRectangle = new Box2i(x, y, x + Size.X, y + Size.Y);
+                ClientRectangle = new Box2i(x, y, x + newSize.X, y + newSize.Y);
             }
             else
             {
