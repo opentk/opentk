@@ -1,3 +1,7 @@
+## 4.4.0
+* API: Added properties ButtonCount, AxisCount, and HatCount to JoystickState (@Ferpsalerp)
+* API: Added a method that centers the NativeWindow in the monitor it currently resides (with optional resize) (@Timber1900 and @NogginBops)
+
 ### 4.3.0
 * API: Add new Monitor Info API (@utkumaden)
 
