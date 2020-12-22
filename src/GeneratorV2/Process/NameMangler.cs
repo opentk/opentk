@@ -8,7 +8,7 @@ namespace GeneratorV2.Parsing
     {
         public static string MangleEnumName(string name)
         {
-            return MangleExtensionName(name.Substring(3));
+            return MangleExtensionName(name[3..]);
         }
 
         public static string MangleParameterName(string name) => name switch
@@ -36,7 +36,7 @@ namespace GeneratorV2.Parsing
         private static string MangleMemberName(string name)
         {
             var stringBuilder = new StringBuilder(name.Length);
-            var flag = true;
+            var nextUpper = true;
             if (char.IsDigit(name[0]))
             {
                 stringBuilder.Append('_');
@@ -46,12 +46,12 @@ namespace GeneratorV2.Parsing
                 var c = name[i];
                 if (c == '_')
                 {
-                    flag = true;
+                    nextUpper = true;
                 }
                 else
                 {
-                    stringBuilder.Append(flag ? char.ToUpper(c) : char.ToLower(c));
-                    flag = false;
+                    stringBuilder.Append(nextUpper ? char.ToUpper(c) : char.ToLower(c));
+                    nextUpper = false;
                 }
             }
             return stringBuilder.ToString();

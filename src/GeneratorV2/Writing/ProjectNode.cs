@@ -17,11 +17,11 @@ namespace GeneratorV2.Writing
         public override void Write()
         {
             Writer.WriteLine("<Project Sdk=\"Microsoft.NET.Sdk\">");
-            using (Writer.Indentation())
+            //using (IndentationExtension.Indentation(Writer))
             {
                 Writer.WriteLine("<PropertyGroup>");
-
-                using (Writer.Indentation())
+                    
+                //using (IndentationExtension.Indentation(Writer))
                 {
                     Writer.WriteLine("<TargetFramework>net5.0</TargetFramework>");
                     Writer.WriteLine("<Nullable>enable</Nullable>");
@@ -35,7 +35,7 @@ namespace GeneratorV2.Writing
 
                 Writer.WriteLine("<ItemGroup>");
 
-                using (Writer.Indentation())
+                //using (IndentationExtension.Indentation(Writer))
                 {
                     Writer.WriteLine("<ProjectReference Include=\"../OpenToolkit.Core/OpenToolkit.Core.csproj\" />");
                     Writer.WriteLine("<ProjectReference Include=\"../OpenToolkit.Mathematics/OpenToolkit.Mathematics.csproj\" />");

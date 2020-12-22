@@ -24,13 +24,30 @@ namespace GeneratorV2
                 //Parsing
                 var specification = Parser.Parse(stream);
 
+                // WIP
                 var outputSpec = Processor.ProcessSpec(specification);
+
+                Writer2.Write(outputSpec);
+
+                /*
+                Writer.WriteProject();
+                foreach (var api in outputSpec)
+                {
+                    foreach (var glvers in api.ver)
+                    {
+                        Writer.WriteGLAPI(glAPI);
+                    }
+                    foreach (var glexten in outputSpec)
+                    {
+                        Writer.WriteGLAPI(glAPI);
+                    }
+                    Writer.WriteEnums(api.Enums);
+                }
+                */
 
                 //Overloading
                 //new Overloader(specification).Overload();
                 //Overloader.OverloadCommands(specification);
-
-                Writer2.Write(outputSpec);
 
                 //Writing
                 //new Writer(specification).Write();

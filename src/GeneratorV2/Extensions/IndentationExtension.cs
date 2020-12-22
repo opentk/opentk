@@ -3,6 +3,7 @@ using System.CodeDom.Compiler;
 
 namespace GeneratorV2.Extensions
 {
+    /*
     public static class IndentationExtension
     {
         public struct Scoping : IDisposable
@@ -49,5 +50,5 @@ namespace GeneratorV2.Extensions
         {
             return new Indent(writer);
         }
-    }
+    }*/
 }

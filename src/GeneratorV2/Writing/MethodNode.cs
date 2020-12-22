@@ -83,7 +83,7 @@ namespace GeneratorV2.Writing
 
             //Public method
             Writer.WriteLine($"public static {m.ReturnType.Name} {name}({paramSignatureList})");
-            using (Writer.Indentation())
+            //using (IndentationExtension.Indentation(Writer))
             {
                 Writer.WriteLine($"=> _{name}_fnptr({paramList});");
             }
@@ -91,7 +91,7 @@ namespace GeneratorV2.Writing
 
             //Preload method
             Writer.WriteLine($"private static void Preload{name}()");
-            using (Writer.Indentation())
+            //using (IndentationExtension.Indentation(Writer))
             {
                 Writer.WriteLine($"=> _{name}_fnptr = ({delegateType}){bindingsName}.GetProcAddress(\"{m.EntryPoint}\");");
             }
@@ -99,13 +99,13 @@ namespace GeneratorV2.Writing
 
             //Lazy method
             Writer.WriteLine($"private static {m.ReturnType.Name} {name}_Lazy({paramSignatureList})");
-            using (Writer.Scope())
+            //using (Writer.Scope())
             {
                 Writer.WriteLine($"lock ({lockName})");
-                using (Writer.Scope())
+                //using (Writer.Scope())
                 {
                     Writer.WriteLine($"if (_{name}_fnptr == ({delegateType})&{name}_Lazy)");
-                    using (Writer.Scope())
+                    //using (Writer.Scope())
                     {
                         Writer.WriteLine($"Preload{name}();");
                     }

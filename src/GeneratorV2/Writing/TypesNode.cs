@@ -22,11 +22,11 @@ namespace GeneratorV2.Writing
             Writer.WriteLine("public struct CLEvent{}");
             Writer.WriteLine("public struct GLsync{}");
             Writer.WriteLine("public unsafe struct GLsyncObject");
-            using (Writer.Scope())
+            //using (Writer.Scope())
             {
                 Writer.WriteLine("internal GLsync* ObjPtr;");
                 Writer.WriteLine("internal GLsyncObject(GLsync* syncObject)");
-                using (Writer.Scope())
+                //using (Writer.Scope())
                 {
                     Writer.WriteLine("ObjPtr = syncObject;");
                 }
@@ -37,18 +37,18 @@ namespace GeneratorV2.Writing
 
             //GLhandleArb
             Writer.WriteLine("public struct GLhandleARB");
-            using (Writer.Scope())
+            //using (Writer.Scope())
             {
                 Writer.WriteLine("private readonly uint _value1;");
                 Writer.WriteLine("private readonly IntPtr _value2;");
                 Writer.WriteLine("public GLhandleARB(uint val)");
-                using (Writer.Scope())
+                //using (Writer.Scope())
                 {
                     Writer.WriteLine("_value2 = IntPtr.Zero;");
                     Writer.WriteLine("_value1 = val;");
                 }
                 Writer.WriteLine("public GLhandleARB(IntPtr val)");
-                using (Writer.Scope())
+                //using (Writer.Scope())
                 {
                     Writer.WriteLine("_value1 = 0;");
                     Writer.WriteLine("_value2 = val;");

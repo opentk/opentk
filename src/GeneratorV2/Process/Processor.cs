@@ -1,4 +1,5 @@
 ﻿using GeneratorV2.Data;
+using GeneratorV2.Parsing;
 using GeneratorV2.Writing2;
 using System;
 using System.Collections.Generic;
@@ -34,9 +35,45 @@ namespace GeneratorV2.Process
             {
                 foreach (var @enum in e.Enums)
                 {
-                    var e1 = e.Groups ?? Enumerable.Empty<string>();
+                    if (@enum.Type == TypeSuffix.Ull)
+                    {
+                        // This is a uint64 enum, which will not fit in any normal enum type.
+                        // These enums are all part of the "SpecialNumbers" group
+                        // that get special treatment later in the code.
+                        continue;
+                    }
+
+                    if (@enum.Api != GLAPI.None && @enum.Api != GLAPI.GL)
+                    {
+                        // FIXME: For now we ignore gles and glsc enums
+                        continue;
+                    }
+
                     var e2 = @enum.Groups ?? Enumerable.Empty<string>();
-                    foreach (var g in Enumerable.Concat(e1, e2).Append("All"))
+
+                    // We skip the <enums> attribute group tag for now, because
+                    // if we use it we need to deduplicate the names, which is a hassle.
+                    // The code below can be used to detect the enums for which this will
+                    // result in the wrong code being generated.
+                    // This is 164 entires as of 2020-12-22
+                    /**
+                    var e1 = e.Groups ?? Enumerable.Empty<string>();
+                    List<string> missing = new List<string>();
+                    foreach (var item in e1)
+                    {
+                        if (e2.Contains(item) == false)
+                        {
+                            missing.Add(item);
+                        }
+                    }
+
+                    if (missing.Count > 0)
+                    {
+                        Console.WriteLine($"Enum {@enum.Name} has missing enum tag! {string.Join(", ", missing)}");
+                    }
+                    */
+
+                    foreach (var g in e2.Append("All"))
                     {
                         if (enumGroups.TryGetValue(g, out var egroup) == false)
                         {
@@ -44,8 +81,7 @@ namespace GeneratorV2.Process
                             enumGroups[g] = egroup;
                         }
 
-                        // FIXME: Do name mangling!!!
-                        egroup.Members.Add(new EnumMember(@enum.Name, @enum.Value));
+                        egroup.Members.Add(new EnumMember(NameMangler.MangleEnumName(@enum.Name), @enum.Value));
 
                         // FIXME!!!
                         if (egroup.Flags && e.Type != EnumType.Bitmask)
@@ -59,62 +95,64 @@ namespace GeneratorV2.Process
             return new List<EnumGroup>(enumGroups.Values);
         }
 
-        public static NativeFunction MakeNativeFunction(Method2 method)
+        public static NativeFunction MakeNativeFunction(GLMethod method)
         {
             List<NativeParameter> parameters = new List<NativeParameter>();
             foreach (var p in method.Parameters)
             {
-                CSType t = MakeCSType(p.Type);
-                parameters.Add(new NativeParameter(t, p.Name));
+                ICSType t = MakeCSType(p.Type.Type, p.Type.Group);
+                parameters.Add(new NativeParameter(t, NameMangler.MangleParameterName(p.Name)));
             }
 
-            CSType returnType = MakeCSType(method.ReturnType);
+            ICSType returnType = MakeCSType(method.ReturnType.Type, method.ReturnType.Group);
 
             return new NativeFunction(method.EntryPoint, parameters, returnType);
         }
 
-        public static CSType MakeCSType(PType2 ptype)
+        public static ICSType MakeCSType(GLType type, string? group = null)
         {
-            return new CSType(ToString(ptype.Type, ptype.Group));
-        }
-
-        // FIXME: Remove!
-        static string ToString(GLType t, string? group)
-        {
-            switch (t)
+            switch (type)
             {
                 case GLArrayType at:
-                    return $"{ToString(at.BaseType, group)}[{at.Length}]";
+                    return new CSArray(MakeCSType(at.BaseType, group), at.Length, at.Const);
                 case GLPointerType pt:
-                    return $"{ToString(pt.BaseType, group)}*";
+                    return new CSPointer(MakeCSType(pt.BaseType, group), pt.Const);
                 case GLBaseType bt:
                     return bt.Type switch
                     {
+                        PrimitiveType.Void =>   new CSVoid(),
+                        PrimitiveType.Byte =>   new CSType("byte", bt.Const),
+                        PrimitiveType.Sbyte =>  new CSType("sbyte", bt.Const),
+                        PrimitiveType.Short =>  new CSType("short", bt.Const),
+                        PrimitiveType.Ushort => new CSType("ushort", bt.Const),
+                        PrimitiveType.Int =>    new CSType("int", bt.Const),
+                        PrimitiveType.Uint =>   new CSType("uint", bt.Const),
+                        PrimitiveType.Long =>   new CSType("long", bt.Const),
+                        PrimitiveType.Ulong =>  new CSType("ulong", bt.Const),
+                        PrimitiveType.Half =>   new CSType("Half", bt.Const),
+                        PrimitiveType.Float =>  new CSType("float", bt.Const),
+                        PrimitiveType.Double => new CSType("double", bt.Const),
+                        PrimitiveType.IntPtr => new CSType("IntPtr", bt.Const),
+
+                        PrimitiveType.VoidPtr => new CSPointer(new CSVoid(), bt.Const),
+
+                        // FIXME: Should this be treated special?
+                        PrimitiveType.Enum => new CSType(group ?? "All", bt.Const),
+
+                        // FIXME: Are these just normal CSType? probably?
+                        PrimitiveType.GLHandleARB => new CSType("GLHandleARB", bt.Const),
+                        PrimitiveType.GLSync =>      new CSType("GLSync", bt.Const),
+
+                        PrimitiveType.CLContext => new CSType("CLContext", bt.Const),
+                        PrimitiveType.CLEvent =>   new CSType("CLEvent", bt.Const),
+
+                        PrimitiveType.GLDEBUGPROC =>    new CSType("GLDebugProc", bt.Const),
+                        PrimitiveType.GLDEBUGPROCARB => new CSType("GLDebugProcARB", bt.Const),
+                        PrimitiveType.GLDEBUGPROCKHR => new CSType("GLDebugProcKHR", bt.Const),
+                        PrimitiveType.GLDEBUGPROCAMD => new CSType("GLDebugProcAMD", bt.Const),
+                        PrimitiveType.GLDEBUGPROCNV =>  new CSType("GLDebugProcNV", bt.Const),
+
                         PrimitiveType.Invalid => throw new Exception(),
-                        PrimitiveType.Void => "void",
-                        PrimitiveType.Byte => "byte",
-                        PrimitiveType.Sbyte => "sbyte",
-                        PrimitiveType.Short => "short",
-                        PrimitiveType.Ushort => "ushort",
-                        PrimitiveType.Int => "int",
-                        PrimitiveType.Uint => "uint",
-                        PrimitiveType.Long => "long",
-                        PrimitiveType.Ulong => "ulong",
-                        PrimitiveType.Half => "Half",
-                        PrimitiveType.Float => "float",
-                        PrimitiveType.Double => "double",
-                        PrimitiveType.IntPtr => "IntPtr",
-                        PrimitiveType.VoidPtr => "void*",
-                        PrimitiveType.Enum => group ?? "All", // FIXME
-                        PrimitiveType.GLHandleARB => "GLHandleARB",
-                        PrimitiveType.GLSync => "GLSync",
-                        PrimitiveType.CLContext => "CLContext",
-                        PrimitiveType.CLEvent => "CLEvent",
-                        PrimitiveType.GLDEBUGPROC => "GLDebugProc",
-                        PrimitiveType.GLDEBUGPROCARB => "GLDebugProcArb",
-                        PrimitiveType.GLDEBUGPROCKHR => "GLDebugProcKHR",
-                        PrimitiveType.GLDEBUGPROCAMD => "GLDebugProcAMD",
-                        PrimitiveType.GLDEBUGPROCNV => "GLDebugProcNV",
                         _ => throw new Exception(),
                     };
                 default:

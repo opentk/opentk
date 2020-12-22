@@ -87,7 +87,7 @@ namespace GeneratorV2.Overloading
                     writer.WriteLine($"{lenArg.Type} {lenArg.Name} = ({lenArg.Type})({lengthExpression}{sizeMult});");
                 }
                 writer.WriteLine($"fixed ({newType} {newName} = {spanArg.Name})");
-                using (writer.Scope())
+                //using (writer.Scope())
                 {
                     if (newType != _castType && !spanArg.Type.Contains("GLhandleARB"))
                     {

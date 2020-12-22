@@ -6,23 +6,87 @@ using System.Threading.Tasks;
 
 namespace GeneratorV2.Writing2
 {
-    class CSType
+    // FIXME...?
+    interface ICSType
     {
-        // FIXME!!!!!
-        public string Type;
+        public string ToCSString();
+    }
 
-        public CSType(string type)
+    class CSType : ICSType
+    {
+        public readonly string TypeName;
+
+        // FIXME: Think through this
+        public readonly bool Constant;
+
+        public CSType(string typeName, bool constant)
         {
-            Type = type;
+            TypeName = typeName;
+            Constant = constant;
         }
+
+        public string ToCSString()
+        {
+            return TypeName;
+        }
+    }
+
+    class CSArray : ICSType
+    {
+        public readonly ICSType BaseType;
+
+        // FIXME: Think through size, see GLArrayType
+        public readonly bool Constant;
+        public readonly int Size;
+
+        public CSArray(ICSType baseType, int size, bool constant)
+        {
+            BaseType = baseType;
+            Size = size;
+            Constant = constant;
+        }
+
+        public string ToCSString()
+        {
+            // FIXME: Maybe do something with size or constant??
+            return $"{BaseType.ToCSString()}[]";
+        }
+    }
+
+    class CSPointer : ICSType
+    {
+        public readonly ICSType BaseType;
+
+        // FIXME: Think through this, see GLPointerType
+        public readonly bool Constant;
+
+        public CSPointer(ICSType baseType, bool constant)
+        {
+            BaseType = baseType;
+            Constant = constant;
+        }
+
+        public string ToCSString()
+        {
+            // FIXME: Maybe do something with constant??
+            return $"{BaseType.ToCSString()}*";
+        }
+    }
+
+    class CSVoid :ICSType
+    {
+        public CSVoid()
+        { }
+
+        public string ToCSString() => "void";
     }
 
     class NativeParameter
     {
-        public readonly CSType Type;
+        public readonly ICSType Type;
         public readonly string Name;
 
-        public NativeParameter(CSType type, string name)
+        public NativeParameter(ICSType type, string name)
         {
             Type = type;
             Name = name;
@@ -31,13 +95,13 @@ namespace GeneratorV2.Writing2
 
     class NativeFunction
     {
-        public readonly string Name;
+        public readonly string EntryPoint;
         public readonly List<NativeParameter> Parameters;
-        public readonly CSType ReturnType;
+        public readonly ICSType ReturnType;
 
-        public NativeFunction(string name, List<NativeParameter> parameters, CSType returnType)
+        public NativeFunction(string entryPoint, List<NativeParameter> parameters, ICSType returnType)
         {
-            Name = name;
+            EntryPoint = entryPoint;
             Parameters = parameters;
             ReturnType = returnType;
         }
