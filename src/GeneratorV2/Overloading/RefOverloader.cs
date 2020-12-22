@@ -27,7 +27,7 @@ namespace GeneratorV2.Overloading
                 var newType = arg.Type.Substring(refStart + "ref ".Length) + "*";
                 var newName = arg.Name + "_ptr";
                 writer.WriteLine($"fixed ({newType} {newName} = &{arg.Name})");
-                using (writer.Scope())
+                //using (writer.Scope())
                 {
                     args[_argIndex] = arg.Clone(newType, newName);
                     return _nestedLayer.WriteLayer(writer, methodName, args);

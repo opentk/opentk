@@ -29,14 +29,14 @@ namespace GeneratorV2.Overloading
                 var newType = "Span<IntPtr>";
                 writer.WriteLine($"{newType} {newName} = stackalloc IntPtr[{arg.Name}.Length];");
                 writer.WriteLine($"for (int i = 0; i < {arg.Name}.Length; i++)");
-                using (writer.Scope())
+                //using (writer.Scope())
                 {
                     writer.WriteLine($"{newName}[i] = Marshal.StringToCoTaskMemUTF8({arg.Name}[i]);");
                 }
                 args[_argIndex] = arg.Clone(newType, newName);
                 var returnValue = _nestedLayer.WriteLayer(writer, methodName, args);
                 writer.WriteLine($"for (int i = 0; i < {newName}.Length; i++)");
-                using (writer.Scope())
+                //using (writer.Scope())
                 {
                     writer.WriteLine($"Marshal.FreeCoTaskMem({newName}[i]);");
                 }

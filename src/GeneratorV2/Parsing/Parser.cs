@@ -61,7 +61,7 @@ namespace GeneratorV2.Parsing
 
             var returnType = ParsePType(proto);
 
-            var method = new Method2(returnType, name, parameterList.ToArray());
+            var method = new GLMethod(returnType, name, parameterList.ToArray());
 
             // TODO: We can skip the Command class and just use Method directly.
             return new Command2(method, name);
@@ -529,12 +529,7 @@ namespace GeneratorV2.Parsing
                         }
                         if (found) break;
 
-                        throw new Exception("!!!");
-                        /*if (enums.TryGetValue(name, out var @enum))
-                        {
-                            reqEnums.Add(@enum);
-                        }*/
-                        break;
+                        throw new Exception("This enum is required, but it doesn't exist in the first place...");
                     default:
                         continue;
                 }
@@ -586,12 +581,7 @@ namespace GeneratorV2.Parsing
                         }
                         if (found) break;
 
-                        throw new Exception("!!!");
-                        /*if (enums.TryGetValue(name, out var @enum))
-                        {
-                            removeEnums.Add(@enum);
-                        }*/
-                        break;
+                        throw new Exception("This enum was removed, but it didn't exist in the first place...");
                     default:
                         continue;
                 }

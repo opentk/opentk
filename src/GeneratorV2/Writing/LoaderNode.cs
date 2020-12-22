@@ -19,13 +19,13 @@ namespace GeneratorV2.Writing
             Writer.WriteLine("internal static object LockObj = new object();");
             Writer.WriteLine("private static IBindingsContext? _bindingsContext;");
             Writer.WriteLine("internal static IBindingsContext BindingsContext");
-            using (Writer.Indentation())
+            //using (IndentationExtension.Indentation(Writer))
             {
                 Writer.WriteLine("=> _bindingsContext ?? throw new Exception(\"Bindings not loaded, load with GLLoader.LoadBindings\");");
             }
 
             Writer.WriteLine("public static void LoadBindings(IBindingsContext c)");
-            using (Writer.Indentation())
+            //using (IndentationExtension.Indentation(Writer))
             {
                 Writer.WriteLine("=> _bindingsContext = c;");
             }

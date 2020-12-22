@@ -32,7 +32,7 @@ namespace GeneratorV2.Writing
         private void WriteEnumClass()
         {
             Writer.WriteLine($"public static class {_groupName}");
-            using (Writer.Scope())
+            //using (Writer.Scope())
             {
                 var groupEnumerator = _group.GetEnumerator();
                 var hasNext = groupEnumerator.MoveNext();
@@ -49,7 +49,7 @@ namespace GeneratorV2.Writing
         private void WriteEnumGroup()
         {
             Writer.WriteLine($"public enum {_groupName} : uint");
-            using (Writer.Scope())
+            //using (Writer.Scope())
             {
                 var groupEnumerator = _group.GetEnumerator();
                 var hasNext = groupEnumerator.MoveNext();

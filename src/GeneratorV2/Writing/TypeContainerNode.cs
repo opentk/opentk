@@ -17,7 +17,7 @@ namespace GeneratorV2.Writing
         public override void Write()
         {
             WriteDeclaration();
-            using (Writer.Scope())
+            //using (Writer.Scope())
             {
                 WriteChildren();
             }

@@ -50,13 +50,13 @@ namespace GeneratorV2.Data
 
     public class Command2
     {
-        public readonly Method2 Method;
+        public readonly GLMethod Method;
 
         public readonly string Name;
 
         //public List<Overload> Overloads { get; }
 
-        public Command2(Method2 method, string name)
+        public Command2(GLMethod method, string name)
         {
             Method = method;
             Name = name;

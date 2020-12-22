@@ -57,7 +57,7 @@ namespace GeneratorV2.Overloading
 
                 writer.WriteLine($"{args[_argIndex].Name} = default;");
                 writer.WriteLine($"fixed ({_type} {newName} = &{arg.Name}.X)");
-                using (writer.Scope())
+                //using (writer.Scope())
                 {
                     args[_argIndex] = arg.Clone(newType, newName);
 

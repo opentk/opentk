@@ -55,7 +55,7 @@ namespace GeneratorV2.Writing
 
             if (o.TypeParameterCount > 0)
             {
-                using (Writer.Indentation())
+                //using (IndentationExtension.Indentation(Writer))
                 {
                     for (int i = 1; i <= o.TypeParameterCount; i++)
                     {
@@ -64,9 +64,9 @@ namespace GeneratorV2.Writing
                 }
             }
 
-            using (Writer.Scope())
+            //using (Writer.Scope())
             {
-                o.BodyWriter(Writer, _command.Name);
+                //o.BodyWriter(Writer, _command.Name);
             }
             Writer.WriteLine();
         }
