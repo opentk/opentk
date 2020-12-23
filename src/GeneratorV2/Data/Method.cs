@@ -14,18 +14,4 @@
             Parameters = parameters;
         }
     }
-
-    public class GLMethod
-    {
-        public readonly PType2 ReturnType;
-        public readonly string EntryPoint;
-        public Parameter2[] Parameters;
-
-        public GLMethod(PType2 returnType, string entryPoint, params Parameter2[] parameters)
-        {
-            ReturnType = returnType;
-            EntryPoint = entryPoint;
-            Parameters = parameters;
-        }
-    }
 }

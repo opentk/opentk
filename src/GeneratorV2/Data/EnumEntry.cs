@@ -16,9 +16,9 @@ namespace GeneratorV2.Data
         public string Name { get; }
         public string? Api { get; }
         public string MangledName { get; }
-        public ulong Value {get;}
+        public ulong Value { get; }
 
-        public string[] Groups {get;}
+        public string[] Groups { get; }
 
         public EnumType Type { get; }
 
@@ -43,6 +43,7 @@ namespace GeneratorV2.Data
         }
     }
 
+    // <enums/>
     public class EnumsEntry
     {
         public readonly string Namespace;
@@ -84,6 +85,7 @@ namespace GeneratorV2.Data
         Ull,
     }
 
+    // <enum/>
     public class EnumEntry2
     {
         public readonly string Name;

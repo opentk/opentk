@@ -55,6 +55,7 @@ namespace GeneratorV2
 
         public void Dispose()
         {
+            Writer.Flush();
             Writer.Dispose();
             GC.SuppressFinalize(this);
         }

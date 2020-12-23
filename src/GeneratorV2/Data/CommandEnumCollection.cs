@@ -32,10 +32,5 @@ namespace GeneratorV2.Data
             }
             EnumEntries.Add(entry);
         }
-
-        public void Add(Command2 command)
-        {
-            Commands.TryAdd(command.Method.EntryPoint, command);
-        }
     }
 }

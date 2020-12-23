@@ -17,23 +17,22 @@ namespace GeneratorV2.Parsing
             var commands = ParseCommands(xdocument.Root!);
             var enums =  ParseEnums(xdocument.Root!);
 
-            var features = ParseFeatures(xdocument.Root!, commands, enums);
-            var extensions = ParseExtensions(xdocument.Root!, commands, enums);
+            var features = ParseFeatures(xdocument.Root!);
+            var extensions = ParseExtensions(xdocument.Root!);
 
             return new Specification(commands, enums, features, extensions);
         }
 
-
-        public static Dictionary<string, Command2> ParseCommands(XElement input)
+        public static List<Command2> ParseCommands(XElement input)
         {
             Logger.Info("Begining parsing of commands.");
             var xelement = input.Element("commands")!;
 
-            var commands = new Dictionary<string, Command2>();
+            var commands = new List<Command2>();
             foreach (var element in xelement.Elements("command"))
             {
                 var command = ParseCommand(element);
-                commands.Add(command.Method.EntryPoint, command);
+                commands.Add(command);
             }
 
             return commands;
@@ -44,8 +43,8 @@ namespace GeneratorV2.Parsing
             var proto = c.Element("proto");
             if (proto == null) throw new Exception("Missing proto tag!");
 
-            var name = proto.Element("name")?.Value;
-            if (name == null) throw new Exception("Missing name tag!");
+            var entryPoint = proto.Element("name")?.Value;
+            if (entryPoint == null) throw new Exception("Missing name tag!");
 
             var parameterList = new List<Parameter2>();
             foreach (var element in c.Elements("param"))
@@ -61,10 +60,7 @@ namespace GeneratorV2.Parsing
 
             var returnType = ParsePType(proto);
 
-            var method = new GLMethod(returnType, name, parameterList.ToArray());
-
-            // TODO: We can skip the Command class and just use Method directly.
-            return new Command2(method, name);
+            return new Command2(entryPoint, returnType, parameterList.ToArray());
         }
 
         private static IExpression ParseExpression(string expression)
@@ -403,7 +399,7 @@ namespace GeneratorV2.Parsing
         }
 
 
-        public static List<Feature> ParseFeatures(XElement input, Dictionary<string, Command2> commands, List<EnumsEntry> enums)
+        public static List<Feature> ParseFeatures(XElement input)
         {
             Logger.Info("Begining parsing of features.");
 
@@ -426,14 +422,14 @@ namespace GeneratorV2.Parsing
                 List<RequireEntry> requireEntries = new List<RequireEntry>();
                 foreach (var require in feature.Elements("require"))
                 {
-                    RequireEntry reqEntry = ParseRequire(require, commands, enums);
+                    RequireEntry reqEntry = ParseRequire(require);
                     requireEntries.Add(reqEntry);
                 }
 
                 List<RemoveEntry> removeEntries = new List<RemoveEntry>();
                 foreach (var remove in feature.Elements("remove"))
                 {
-                    RemoveEntry removeEntry = ParseRemove(remove, commands, enums);
+                    RemoveEntry removeEntry = ParseRemove(remove);
                     removeEntries.Add(removeEntry);
                 }
 
@@ -443,7 +439,7 @@ namespace GeneratorV2.Parsing
             return features;
         }
 
-        public static List<Extension> ParseExtensions(XElement input, Dictionary<string, Command2> commands, List<EnumsEntry> enums)
+        public static List<Extension> ParseExtensions(XElement input)
         {
             List<Extension> extensions = new List<Extension>();
 
@@ -476,7 +472,7 @@ namespace GeneratorV2.Parsing
                 List<RequireEntry> requires = new List<RequireEntry>();
                 foreach (var require in extension.Elements("require"))
                 {
-                    requires.Add(Parser.ParseRequire(extension, commands, enums));
+                    requires.Add(ParseRequire(extension));
                 }
 
                 extensions.Add(new Extension(extName, vendor, supportedApis, comment, requires));
@@ -485,51 +481,29 @@ namespace GeneratorV2.Parsing
             return extensions;
         }
 
-        public static RequireEntry ParseRequire(XElement requires, Dictionary<string, Command2> commands, List<EnumsEntry> enums)
+        public static RequireEntry ParseRequire(XElement requires)
         {
             var api = ParseApi(requires.Attribute("api")?.Value);
             var profile = ParseProfile(requires.Attribute("profile")?.Value);
             var comment = requires.Attribute("comment")?.Value;
 
-            List<Command2> reqCommands = new List<Command2>();
-            List<EnumEntry2> reqEnums = new List<EnumEntry2>();
+            List<string> reqCommands = new List<string>();
+            List<string> reqEnums = new List<string>();
 
             foreach (var entry in requires.Elements())
             {
+                // A few entries here have a comment attribute, but we don't bother with it
                 string? name = entry.Attribute("name")?.Value;
                 if (name == null) throw new Exception($"The entry '{entry}' didn't contain a name attribute.");
 
                 switch (entry.Name.LocalName)
                 {
                     case "command":
-                        if (commands.TryGetValue(name, out var command))
-                        {
-                            reqCommands.Add(command);
-                        }
-                        else
-                        {
-                            throw new Exception($"No command called '{name}' found!");
-                        }
+                        reqCommands.Add(name);
                         break;
                     case "enum":
-                        bool found = false;
-                        foreach (var e in enums)
-                        {
-                            foreach (var @enum in e.Enums)
-                            {
-                                if (@enum.Name == name)
-                                {
-                                    reqEnums.Add(@enum);
-                                    found = true;
-                                    break;
-                                }
-                            }
-
-                            if (found) break;
-                        }
-                        if (found) break;
-
-                        throw new Exception("This enum is required, but it doesn't exist in the first place...");
+                        reqEnums.Add(name);
+                        break;
                     default:
                         continue;
                 }
@@ -538,50 +512,28 @@ namespace GeneratorV2.Parsing
             return new RequireEntry(api, profile, comment, reqCommands, reqEnums);
         }
 
-        public static RemoveEntry ParseRemove(XElement requires, Dictionary<string, Command2> commands, List<EnumsEntry> enums)
+        public static RemoveEntry ParseRemove(XElement requires)
         {
             var profile = ParseProfile(requires.Attribute("profile")?.Value);
             var comment = requires.Attribute("comment")?.Value;
 
-            List<Command2> removeCommands = new List<Command2>();
-            List<EnumEntry2> removeEnums = new List<EnumEntry2>();
+            List<string> removeCommands = new List<string>();
+            List<string> removeEnums = new List<string>();
 
             foreach (var entry in requires.Elements())
             {
+                // A few entries here have a comment attribute, but we don't bother with it
                 string? name = entry.Attribute("name")?.Value;
                 if (name == null) throw new Exception($"The entry '{entry}' didn't contain a name attribute.");
 
                 switch (entry.Name.LocalName)
                 {
                     case "command":
-                        if (commands.TryGetValue(name, out var command))
-                        {
-                            removeCommands.Add(command);
-                        }
-                        else
-                        {
-                            throw new Exception($"No command called '{name}' found!");
-                        }
+                        removeCommands.Add(name);
                         break;
                     case "enum":
-                        bool found = false;
-                        foreach (var e in enums)
-                        {
-                            foreach (var @enum in e.Enums)
-                            {
-                                if (@enum.Name == name)
-                                {
-                                    removeEnums.Add(@enum);
-                                    found = true;
-                                    break;
-                                }
-                            }
-
-                            if (found) break;
-                        }
-                        if (found) break;
-
-                        throw new Exception("This enum was removed, but it didn't exist in the first place...");
+                        removeEnums.Add(name);
+                        break;
                     default:
                         continue;
                 }

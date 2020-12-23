@@ -55,10 +55,10 @@ namespace GeneratorV2.Data
 
         public readonly GLProfile Profile;
         public readonly string? Comment;
-        public readonly List<Command2> Commands = new List<Command2>();
-        public readonly List<EnumEntry2> Enums = new List<EnumEntry2>();
+        public readonly List<string> Commands = new List<string>();
+        public readonly List<string> Enums = new List<string>();
 
-        public RequireEntry(GLAPI api, GLProfile profile, string? comment, List<Command2> commands, List<EnumEntry2> enums)
+        public RequireEntry(GLAPI api, GLProfile profile, string? comment, List<string> commands, List<string> enums)
         {
             Api = api;
             Profile = profile;
@@ -72,10 +72,10 @@ namespace GeneratorV2.Data
     {
         public readonly GLProfile Profile;
         public readonly string? Comment;
-        public readonly List<Command2> Commands = new List<Command2>();
-        public readonly List<EnumEntry2> Enums = new List<EnumEntry2>();
+        public readonly List<string> Commands = new List<string>();
+        public readonly List<string> Enums = new List<string>();
 
-        public RemoveEntry(GLProfile profile, string? comment, List<Command2> commands, List<EnumEntry2> enums)
+        public RemoveEntry(GLProfile profile, string? comment, List<string> commands, List<string> enums)
         {
             Profile = profile;
             Comment = comment;
