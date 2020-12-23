@@ -107,29 +107,80 @@ namespace GeneratorV2.Writing2
         }
     }
 
-    class EnumMember
+    // FIXME: Better name
+    class EnumMemberData : IEquatable<EnumMemberData?>
     {
+        // This is the c name still
         public readonly string Name;
         public readonly ulong Value;
+        public readonly string[]? Groups;
+        public readonly bool IsFlag;
 
-        public EnumMember(string name, ulong value)
+        public EnumMemberData(string name, ulong value, string[]? groups, bool isFlag)
         {
             Name = name;
             Value = value;
+            Groups = groups;
+            IsFlag = isFlag;
+        }
+
+        // It is important to have an equals and hashcode because
+        // this type will be used in a lot of hash tables
+
+        public override bool Equals(object? obj)
+        {
+            return Equals(obj as EnumMemberData);
+        }
+
+        public bool Equals(EnumMemberData? other)
+        {
+            return other != null &&
+                   Name == other.Name &&
+                   Value == other.Value &&
+                   EqualityComparer<string[]?>.Default.Equals(Groups, other.Groups) &&
+                   IsFlag == other.IsFlag;
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Name, Value, Groups, IsFlag);
+        }
+
+        public static bool operator ==(EnumMemberData? left, EnumMemberData? right)
+        {
+            return EqualityComparer<EnumMemberData>.Default.Equals(left, right);
+        }
+
+        public static bool operator !=(EnumMemberData? left, EnumMemberData? right)
+        {
+            return !(left == right);
+        }
+    }
+
+    // FIXME: Better name
+    class EnumGroupData
+    {
+        public readonly string Name;
+        public readonly bool IsFlags;
+
+        public EnumGroupData(string name, bool isFlags)
+        {
+            Name = name;
+            IsFlags = isFlags;
         }
     }
 
     class EnumGroup
     {
         public readonly string Name;
-        public readonly List<EnumMember> Members;
-        public bool Flags;
+        public readonly bool IsFlags;
+        public readonly List<EnumMemberData> Members;
 
-        public EnumGroup(string name, List<EnumMember> members, bool flags)
+        public EnumGroup(string name, bool isFlags, List<EnumMemberData> members)
         {
             Name = name;
+            IsFlags = isFlags;
             Members = members;
-            Flags = flags;
         }
     }
 
@@ -137,12 +188,14 @@ namespace GeneratorV2.Writing2
     {
         public readonly string Version;
         public readonly List<NativeFunction> Functions;
+        public readonly List<EnumMemberData> AllEnums;
         public readonly List<EnumGroup> EnumGroups;
 
-        public GLVersionOutput(string version, List<NativeFunction> functions, List<EnumGroup> enumGroups)
+        public GLVersionOutput(string version, List<NativeFunction> functions, List<EnumMemberData> allEnums, List<EnumGroup> enumGroups)
         {
             Version = version;
             Functions = functions;
+            AllEnums = allEnums;
             EnumGroups = enumGroups;
         }
     }

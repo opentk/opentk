@@ -52,10 +52,20 @@ namespace GeneratorV2.Writing
 
             WriteBuiltInTypes(outputProjectPath);
 
-            // FIXME: Versions
-            WriteNativeFunctions(outputProjectPath, data.Versions[0].Functions);
+            string glFolder = Path.Combine(outputProjectPath, "GL");
 
-            WriteEnums(outputProjectPath, data.Versions[0].EnumGroups);
+            // This should create folders to put the projects in
+            foreach (var version in data.Versions)
+            {
+                string versionPath = Path.Combine(glFolder, version.Version);
+
+                // FIXME: Delete files if it already exists?
+                Directory.CreateDirectory(versionPath);
+
+                WriteNativeFunctions(versionPath, version.Version, version.Functions);
+
+                WriteEnums(versionPath, version.Version, version.EnumGroups, version.AllEnums);
+            }
         }
 
         public static void WriteProjectFile(string projectPath, string rootNamespace)
@@ -184,13 +194,13 @@ namespace GeneratorV2.Writing
             }
         }
 
-        public static void WriteNativeFunctions(string projectPath, List<NativeFunction> nativeFunctions)
+        public static void WriteNativeFunctions(string directoryPath, string version, List<NativeFunction> nativeFunctions)
         {
-            using IndentedTextWriter writer = new IndentedTextWriter(Path.Combine(projectPath, "Methods.cs"));
+            using IndentedTextWriter writer = new IndentedTextWriter(Path.Combine(directoryPath, "GL.cs"));
             writer.WriteLine("using System;");
             writer.WriteLine();
             // NAMESPACE:
-            writer.WriteLine("namespace OpenToolkit.Graphics.OpenGL");
+            writer.WriteLine($"namespace OpenToolkit.Graphics.OpenGL.{version}");
             using (Scope(writer))
             {
                 writer.WriteLine($"public static unsafe partial class GL");
@@ -263,28 +273,57 @@ namespace GeneratorV2.Writing
             }
         }
 
-        public static void WriteEnums(string projectPath, List<EnumGroup> enumGroups)
+        public static void WriteEnums(string directoryPath, string version, List<EnumGroup> enumGroups, List<EnumMemberData> allEnums)
         {
             // FIXME: Disable CA1069
-
-            using IndentedTextWriter writer = new IndentedTextWriter(Path.Combine(projectPath, "Enums.cs"));
+            string path = Path.Combine(directoryPath, "Enums.cs");
+            // We delete the previous file for now as it seems we get more consistent results by doing that.
+            File.Delete(path);
+            using IndentedTextWriter writer = new IndentedTextWriter(path);
             writer.WriteLine("using System;");
             writer.WriteLine();
             // NAMESPACE:
-            writer.WriteLine("namespace OpenToolkit.Graphics.OpenGL");
+            writer.WriteLine($"namespace OpenToolkit.Graphics.OpenGL.{version}");
             using (Scope(writer))
             {
-                foreach (var group in enumGroups)
+                WriteEnumGroups(writer, enumGroups);
+                WriteAllEnum(writer, allEnums);
+            }
+        }
+
+        public static void WriteEnumGroups(IndentedTextWriter writer, List<EnumGroup> enumGroups)
+        {
+            foreach (var group in enumGroups)
+            {
+                if (group.Members.Count <= 0) continue;
+
+                // FIXME: This group should not be part of there from the beginning.
+                if (group.Name == "SpecialNumbers") continue;
+
+                if (group.IsFlags) writer.WriteLine($"[Flags]");
+                writer.WriteLine($"public enum {group.Name} : uint");
+                using (Scope(writer))
                 {
-                    if (group.Flags) writer.WriteLine($"[Flags]");
-                    writer.WriteLine($"public enum {group.Name} : uint");
-                    using (Scope(writer))
+                    foreach (var member in group.Members)
                     {
-                        foreach (var member in group.Members)
-                        {
-                            writer.WriteLine($"{member.Name} = {member.Value},");
-                        }
+                        writer.WriteLine($"{member.Name} = {member.Value},");
                     }
+                }
+            }
+        }
+
+        public static void WriteAllEnum(IndentedTextWriter writer, List<EnumMemberData> allEnums)
+        {
+            writer.WriteLine($"public enum All : uint");
+            using (Scope(writer))
+            {
+                foreach (var member in allEnums)
+                {
+                    // FIXME: We probably shouldn't get these values inside of this list...
+                    if (member.Value > uint.MaxValue)
+                        continue;
+
+                    writer.WriteLine($"{member.Name} = {member.Value},");
                 }
             }
         }

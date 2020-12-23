@@ -5,45 +5,23 @@ namespace GeneratorV2.Data
 {
     public class Specification
     {
-        // FIXME: Read only versions!
-        public readonly Dictionary<string, Command2> Commands;
+        // These are lists of all the functions and enums in the spec
+        public readonly List<Command2> Commands;
         public readonly List<EnumsEntry> Enums;
+
+        // This is a list of all the gl versions in the spec.
+        // This contains what functions are part of what version.
         public readonly List<Feature> Features;
+
         public readonly List<Extension> Extensions;
 
-        public Specification(Dictionary<string, Command2> commands, List<EnumsEntry> enums, List<Feature> features, List<Extension> extensions)
+        public Specification(List<Command2> commands, List<EnumsEntry> enums, List<Feature> features, List<Extension> extensions)
         {
             Commands = commands;
             Enums = enums;
             Features = features;
             Extensions = extensions;
         }
-
-
-        /*
-        private Api GetOrCreateApi(string apiName)
-        {
-            if (!Apis.TryGetValue(apiName, out Api? value))
-            {
-                value = new Api(apiName);
-                Apis.Add(apiName, value);
-            }
-            return value;
-        }
-
-        public void AddFeature(Feature feature)
-        {
-            Api orCreateApi = GetOrCreateApi(feature.Api);
-            orCreateApi.AddEnums(feature);
-            orCreateApi.Features.Add(feature);
-        }
-
-        public void AddExtension(Extension extension)
-        {
-            Api orCreateApi = GetOrCreateApi(extension.Api);
-            orCreateApi.AddEnums(extension);
-            orCreateApi.Extensions.AddExtension(extension);
-        }*/
     }
 
     public class OverloadedSpecification

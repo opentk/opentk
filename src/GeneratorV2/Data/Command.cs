@@ -50,16 +50,15 @@ namespace GeneratorV2.Data
 
     public class Command2
     {
-        public readonly GLMethod Method;
+        public readonly string EntryPoint;
+        public readonly PType2 ReturnType;
+        public Parameter2[] Parameters;
 
-        public readonly string Name;
-
-        //public List<Overload> Overloads { get; }
-
-        public Command2(GLMethod method, string name)
+        public Command2(string entryPoint, PType2 returnType, Parameter2[] parameters)
         {
-            Method = method;
-            Name = name;
+            EntryPoint = entryPoint;
+            ReturnType = returnType;
+            Parameters = parameters;
         }
     }
 }
