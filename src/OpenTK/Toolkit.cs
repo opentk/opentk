@@ -132,14 +132,19 @@ namespace OpenTK
                     initialized = true;
                     Configuration.Init(options);
                     Options = options;
-                    /*
-                     * If shipping an AnyCPU build and OpenALSoft / SDL, these are architecture specific PInvokes
-                     * Add the appropriate search path so this will work
-                     */
-                    string path = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
-                    path = Path.Combine(path, IntPtr.Size == 4 ? "x86" : "x64");
-                    bool ok = SetDllDirectory(path);
-                    if (!ok) throw new System.ComponentModel.Win32Exception();
+                    if (Environment.OSVersion.Platform == PlatformID.Win32S | Environment.OSVersion.Platform == PlatformID.Win32Windows | Environment.OSVersion.Platform == PlatformID.Win32NT)
+                    {
+                        /*
+                        *  If shipping an AnyCPU build and OpenALSoft / SDL, these are architecture specific PInvokes
+                        *  Add the appropriate search path so this will work (common convention)
+                         * Non-Windows platforms should be handled via the OpenTK.dll.config file as appropriate
+                        */
+                        string path = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
+                        path = Path.Combine(path, IntPtr.Size == 4 ? "x86" : "x64");
+                        bool ok = SetDllDirectory(path);
+                        if (!ok) throw new System.ComponentModel.Win32Exception();
+                    }
+
                     // The actual initialization takes place in the
                     // platform-specific factory constructors.
                     toolkit = new Toolkit(new Factory());
