@@ -2,6 +2,7 @@ using GeneratorV2.Data;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Xml.Linq;
@@ -268,8 +269,8 @@ namespace GeneratorV2.Parsing
                 "GLeglImageOES" => PrimitiveType.VoidPtr,
                 "GLchar" => PrimitiveType.Byte,
                 "GLcharARB" => PrimitiveType.Byte,
-                "GLhalf" => PrimitiveType.Short,
-                "GLhalfARB" => PrimitiveType.Short,
+                "GLhalf" => PrimitiveType.Half,
+                "GLhalfARB" => PrimitiveType.Half,
                 "GLfixed" => PrimitiveType.Int,
                 "GLintptr" => PrimitiveType.IntPtr,
                 "GLintptrARB" => PrimitiveType.IntPtr,
@@ -330,11 +331,18 @@ namespace GeneratorV2.Parsing
                     throw new Exception($"Enums entry '{enums}' is missing either a start or end attribute.");
 
                 Range? range = null;
-                if (startStr != null)
+                if (startStr != null && endStr != null)
                 {
-                    var start = (int)new Int32Converter().ConvertFromString(startStr);
-                    var end = (int)new Int32Converter().ConvertFromString(endStr);
-                    range = new Range((Index)start, (Index)end);
+                    var start = (Index)ParseInt(startStr);
+                    var end = (Index)ParseInt(endStr);
+                    range = new Range(start, end);
+
+                    static int ParseInt(string str)
+                    {
+                        bool hex = str.StartsWith("0x");
+                        if (hex) str = str[2..];
+                        return int.Parse(str, hex ? NumberStyles.HexNumber : NumberStyles.Integer);
+                    }
                 }
 
                 var comment = enums.Attribute("comment")?.Value;

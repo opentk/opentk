@@ -3,6 +3,7 @@ using GeneratorV2.Writing2;
 using System;
 using System.CodeDom.Compiler;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -43,6 +44,7 @@ namespace GeneratorV2.Writing
                 "..", "..", "..", "..", "OpenToolkit.Graphics");
 
             // FIXME: Delete existing if there is one
+            try { Directory.Delete(outputProjectPath, true); } catch { }
             Directory.CreateDirectory(outputProjectPath);
 
             // NAMESPACE:
@@ -52,14 +54,13 @@ namespace GeneratorV2.Writing
 
             WriteBuiltInTypes(outputProjectPath);
 
-            string glFolder = Path.Combine(outputProjectPath, "GL");
+            string glFolder = Path.Combine(outputProjectPath, "OpenGL");
 
             // This should create folders to put the projects in
             foreach (var version in data.Versions)
             {
                 string versionPath = Path.Combine(glFolder, version.Version);
 
-                // FIXME: Delete files if it already exists?
                 Directory.CreateDirectory(versionPath);
 
                 WriteNativeFunctions(versionPath, version.Version, version.Functions);
@@ -76,6 +77,8 @@ namespace GeneratorV2.Writing
             writer.WriteLine("<Project Sdk=\"Microsoft.NET.Sdk\">");
             using (writer.Indentation())
             {
+                writer.WriteLine("<!-- This file is auto generated, do not edit -->");
+
                 writer.WriteLine("<PropertyGroup>");
 
                 using (writer.Indentation())
@@ -109,6 +112,7 @@ namespace GeneratorV2.Writing
         public static void WriteBindingsLoader(string projectPath)
         {
             using var writer = new IndentedTextWriter(Path.Combine(projectPath, $"{LoaderClass}.cs"));
+            writer.WriteLine("// This file is auto generated, do not edit.");
             writer.WriteLine("using System;");
             writer.WriteLine();
             // NAMESPACE:
@@ -130,6 +134,7 @@ namespace GeneratorV2.Writing
         public static void WriteBuiltInTypes(string projectPath)
         {
             using var writer = new IndentedTextWriter(Path.Combine(projectPath, "Types.cs"));
+            writer.WriteLine("// This file is auto generated, do not edit.");
             writer.WriteLine("using System;");
             writer.WriteLine("using System.Runtime.InteropServices;");
             writer.WriteLine();
@@ -197,6 +202,7 @@ namespace GeneratorV2.Writing
         public static void WriteNativeFunctions(string directoryPath, string version, List<NativeFunction> nativeFunctions)
         {
             using IndentedTextWriter writer = new IndentedTextWriter(Path.Combine(directoryPath, "GL.cs"));
+            writer.WriteLine("// This file is auto generated, do not edit.");
             writer.WriteLine("using System;");
             writer.WriteLine();
             // NAMESPACE:
@@ -277,9 +283,8 @@ namespace GeneratorV2.Writing
         {
             // FIXME: Disable CA1069
             string path = Path.Combine(directoryPath, "Enums.cs");
-            // We delete the previous file for now as it seems we get more consistent results by doing that.
-            File.Delete(path);
             using IndentedTextWriter writer = new IndentedTextWriter(path);
+            writer.WriteLine("// This file is auto generated, do not edit.");
             writer.WriteLine("using System;");
             writer.WriteLine();
             // NAMESPACE:
@@ -295,11 +300,6 @@ namespace GeneratorV2.Writing
         {
             foreach (var group in enumGroups)
             {
-                if (group.Members.Count <= 0) continue;
-
-                // FIXME: This group should not be part of there from the beginning.
-                if (group.Name == "SpecialNumbers") continue;
-
                 if (group.IsFlags) writer.WriteLine($"[Flags]");
                 writer.WriteLine($"public enum {group.Name} : uint");
                 using (Scope(writer))
