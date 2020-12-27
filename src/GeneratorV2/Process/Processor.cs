@@ -3,6 +3,7 @@ using GeneratorV2.Parsing;
 using GeneratorV2.Writing2;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,15 +16,18 @@ namespace GeneratorV2.Process
         {
             // The first thing we do is process all of the functions defined into a dictionary of NativeFunctions
             Dictionary<string, NativeFunction> allFunctions = new Dictionary<string, NativeFunction>(spec.Commands.Count);
+            Dictionary<NativeFunction, string[]> functionToEnumGroupsUsed = new Dictionary<NativeFunction, string[]>();
             foreach (var command in spec.Commands)
             {
-                var nativeFunction = MakeNativeFunction(command);
+                var nativeFunction = MakeNativeFunction(command, out string[] usedEnumGroups);
                 allFunctions.Add(nativeFunction.EntryPoint, nativeFunction);
+
+                functionToEnumGroupsUsed.Add(nativeFunction, usedEnumGroups);
             }
 
             // We then make a dictionary of all the enums with their individual group data inside
             Dictionary<string, EnumMemberData> allEnums = new Dictionary<string, EnumMemberData>();
-            Dictionary<string, EnumMemberData> allEnumsGLES2 = new Dictionary<string, EnumMemberData>();
+            Dictionary<string, EnumMemberData> allEnumsGLES = new Dictionary<string, EnumMemberData>();
             // FIXME: This is only here to mark groups as flags...
             Dictionary<string, EnumGroupData> allGroups = new Dictionary<string, EnumGroupData>();
             HashSet<string> allGroupNames = new HashSet<string>();
@@ -36,10 +40,10 @@ namespace GeneratorV2.Process
                 HashSet<string> entryGroups = new HashSet<string>();
                 if (enumsEntry.Groups != null)
                 {
+                    entryGroups.UnionWith(enumsEntry.Groups);
+                    allGroupNames.UnionWith(enumsEntry.Groups);
                     foreach (var group in enumsEntry.Groups)
                     {
-                        entryGroups.Add(group);
-                        allGroupNames.Add(group);
                         allGroups.TryAdd(group, new EnumGroupData(group, isFlag));
                     }
                 }
@@ -50,23 +54,23 @@ namespace GeneratorV2.Process
 
                     if (@enum.Groups != null)
                     {
+                        groups.UnionWith(@enum.Groups);
+                        allGroupNames.UnionWith(@enum.Groups);
                         foreach (var group in @enum.Groups)
                         {
-                            groups.Add(group);
-                            allGroupNames.Add(group);
                             allGroups.TryAdd(group, new EnumGroupData(group, isFlag));
                         }
                     }
 
-                    var data = new EnumMemberData(@enum.Name, @enum.Value, groups.ToArray(), isFlag);
+                    var data = new EnumMemberData(NameMangler.MangleEnumName(@enum.Name), @enum.Value, groups.ToArray(), isFlag);
                     if (@enum.Api == GLAPI.None)
                     {
                         allEnums.Add(@enum.Name, data);
-                        allEnumsGLES2.Add(@enum.Name, data);
+                        allEnumsGLES.Add(@enum.Name, data);
                     }
-                    else if (@enum.Api == GLAPI.GLES2)
+                    else if (@enum.Api == GLAPI.GLES2 || @enum.Api == GLAPI.GLES1)
                     {
-                        allEnumsGLES2.Add(@enum.Name, data);
+                        allEnumsGLES.Add(@enum.Name, data);
                     }
                     else if (@enum.Api == GLAPI.GL)
                     {
@@ -78,19 +82,16 @@ namespace GeneratorV2.Process
             // Now that we have all of the functions ready in a nice dictionary
             // we can start building all of the API versions.
 
-            // Group the features into GL and GL ES
-            List<Feature> glFeatures = new List<Feature>();
-            List<Feature> glesFeatures = new List<Feature>();
+            // Filter the features we actually want to emit
+            List<Feature> features = new List<Feature>();
             foreach (var feature in spec.Features)
             {
                 switch (feature.Api)
                 {
                     case GLAPI.GL:
-                        glFeatures.Add(feature);
-                        break;
                     case GLAPI.GLES1:
                     case GLAPI.GLES2:
-                        glesFeatures.Add(feature);
+                        features.Add(feature);
                         break;
                     case GLAPI.GLSC2:
                         // We don't care about GLSC 2
@@ -106,31 +107,39 @@ namespace GeneratorV2.Process
 
             // Here we process all of the desktop OpenGL versions
             {
-                List<NativeFunction> functionsInLastVersion = new List<NativeFunction>();
+                HashSet<NativeFunction> functionsInLastVersion = new HashSet<NativeFunction>();
                 HashSet<EnumMemberData> enumsInLastVersion = new HashSet<EnumMemberData>();
-                foreach (var feature in glFeatures)
+                HashSet<string> groupsReferencedByFunctions = new HashSet<string>();
+                foreach (var feature in features)
                 {
+                    bool isGLES = feature.Api switch
+                    {
+                        GLAPI.GL => false,
+                        GLAPI.GLES1 => true,
+                        GLAPI.GLES2 => true,
+                        _ => throw new Exception($"We should filter other APIs before this. API: {feature.Api}"),
+                    };
+
                     StringBuilder name = new StringBuilder();
-                    name.Append("GL");
+                    name.Append(isGLES ? "GLES" : "GL");
                     name.Append(feature.Version.Major);
                     name.Append(feature.Version.Minor);
 
                     // A list of functions contained in this version.
-                    List<NativeFunction> functions = new List<NativeFunction>();
+                    HashSet<NativeFunction> functions = new HashSet<NativeFunction>();
                     HashSet<EnumMemberData> enums = new HashSet<EnumMemberData>();
 
                     // Go through all the functions that are required for this version and add them here.
                     foreach (var require in feature.Requires)
                     {
-                        // FIXME: We need to deduplicate names here!
-                        // This is because some functions are removed and then later reused.
-                        // And because we don't remove anything from the lists we need to
-                        // deduplicate the names, because otherwise we generate it two times.
                         foreach (var command in require.Commands)
                         {
                             if (allFunctions.TryGetValue(command, out var function))
                             {
                                 functions.Add(function);
+
+                                var functionGroups = functionToEnumGroupsUsed[function];
+                                groupsReferencedByFunctions.UnionWith(functionGroups);
                             }
                             else
                             {
@@ -140,7 +149,8 @@ namespace GeneratorV2.Process
 
                         foreach (var enumName in require.Enums)
                         {
-                            if (allEnums.TryGetValue(enumName, out var @enum))
+                            var enumsDict = isGLES ? allEnumsGLES : allEnums;
+                            if (enumsDict.TryGetValue(enumName, out var @enum))
                             {
                                 enums.Add(@enum);
                             }
@@ -153,7 +163,7 @@ namespace GeneratorV2.Process
 
                     // Make a copy of all the functions and enums contained in the previous version.
                     // We will remove items from this list according to the remove tags.
-                    List<NativeFunction> functionsFromPreviousVersion = new List<NativeFunction>(functionsInLastVersion);
+                    HashSet<NativeFunction> functionsFromPreviousVersion = new HashSet<NativeFunction>(functionsInLastVersion);
                     HashSet<EnumMemberData> enumsFromPreviousVersion = new HashSet<EnumMemberData>(enumsInLastVersion);
 
                     foreach (var remove in feature.Removes)
@@ -165,7 +175,7 @@ namespace GeneratorV2.Process
                     }
 
                     // Add all of the functions from the last version.
-                    functions.AddRange(functionsFromPreviousVersion);
+                    functions.UnionWith(functionsFromPreviousVersion);
                     enums.UnionWith(enumsFromPreviousVersion);
                     //enums.AddRange();
 
@@ -195,36 +205,50 @@ namespace GeneratorV2.Process
                         }
                     }
 
-                    // FIXME: Name
                     List<EnumGroup> finalGroups = new List<EnumGroup>();
                     foreach (var (groupName, members) in enumGroups)
                     {
-                        // We will handle the special numbers in another way.
+                        // SpecialNumbers is not an enum group that we want to output.
+                        // We handle these entries differently.
                         if (groupName == "SpecialNumbers")
                             continue;
 
-                        // FIXME: Cleaner way to get this data?
+                        // Remove all empty enum groups, except the empty groups referenced by included functions.
+                        // In GL 4.1 to 4.5 there are functions that use the group "ShaderBinaryFormat"
+                        // while not including any members for that enum group.
+                        // This is needed to solve that case.
+                        if (members.Count <= 0 && groupsReferencedByFunctions.Contains(groupName) == false)
+                            continue;
+
                         bool isFlags = allGroups[groupName].IsFlags;
                         finalGroups.Add(new EnumGroup(groupName, isFlags, members));
                     }
 
-                    glVersions.Add(new GLVersionOutput(name.ToString(), functions, enums.ToList(), finalGroups));
+                    glVersions.Add(new GLVersionOutput(name.ToString(), functions.ToList(), enums.ToList(), finalGroups));
                 }
             }
 
             return new OutputData(glVersions);
         }
 
-        public static NativeFunction MakeNativeFunction(Command2 command)
+        public static NativeFunction MakeNativeFunction(Command2 command, out string[] enumGroupsUsed)
         {
+            HashSet<string> enumGroups = new HashSet<string>();
+
             List<NativeParameter> parameters = new List<NativeParameter>();
             foreach (var p in command.Parameters)
             {
                 ICSType t = MakeCSType(p.Type.Type, p.Type.Group);
                 parameters.Add(new NativeParameter(t, NameMangler.MangleParameterName(p.Name)));
+                if (p.Type.Group != null)
+                    enumGroups.Add(p.Type.Group);
             }
 
             ICSType returnType = MakeCSType(command.ReturnType.Type, command.ReturnType.Group);
+            if (command.ReturnType.Group != null)
+                enumGroups.Add(command.ReturnType.Group);
+
+            enumGroupsUsed = enumGroups.ToArray();
 
             return new NativeFunction(command.EntryPoint, parameters, returnType);
         }
@@ -249,6 +273,8 @@ namespace GeneratorV2.Process
                         PrimitiveType.Uint =>   new CSType("uint", bt.Const),
                         PrimitiveType.Long =>   new CSType("long", bt.Const),
                         PrimitiveType.Ulong =>  new CSType("ulong", bt.Const),
+                        // This might need an include, but the spec doesn't use this type
+                        // so we don't really need to do anything...
                         PrimitiveType.Half =>   new CSType("Half", bt.Const),
                         PrimitiveType.Float =>  new CSType("float", bt.Const),
                         PrimitiveType.Double => new CSType("double", bt.Const),
@@ -259,7 +285,7 @@ namespace GeneratorV2.Process
                         // FIXME: Should this be treated special?
                         PrimitiveType.Enum => new CSType(group ?? "All", bt.Const),
 
-                        // FIXME: Are these just normal CSType? probably?
+                        // FIXME: Are these just normal CSType? probably...
                         PrimitiveType.GLHandleARB => new CSType("GLHandleARB", bt.Const),
                         PrimitiveType.GLSync =>      new CSType("GLSync", bt.Const),
 
