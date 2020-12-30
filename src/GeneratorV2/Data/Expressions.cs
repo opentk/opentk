@@ -37,7 +37,6 @@ namespace GeneratorV2.Data
         Subtraction,
         Multiplication,
         Division,
-        Modulo,
     }
 
     public class BinaryOperation : IExpression
@@ -52,6 +51,24 @@ namespace GeneratorV2.Data
             Operator = op;
             Right = right;
         }
+
+        public static BinaryOperator Invert(BinaryOperator @operator) => @operator switch
+        {
+            BinaryOperator.Addition => BinaryOperator.Subtraction,
+            BinaryOperator.Subtraction => BinaryOperator.Addition,
+            BinaryOperator.Multiplication => BinaryOperator.Division,
+            BinaryOperator.Division => BinaryOperator.Multiplication,
+            _ => throw new Exception("Invalid binary operator, we can't invert it."),
+        };
+
+        public static char GetOperationChar(BinaryOperator @operator) => @operator switch
+        {
+            BinaryOperator.Addition => '+',
+            BinaryOperator.Subtraction => '-',
+            BinaryOperator.Multiplication => '*',
+            BinaryOperator.Division => '/',
+            _ => throw new Exception("Invalid binary operator, there is no char associated."),
+        };
     }
 
     public class ParameterReference : IExpression

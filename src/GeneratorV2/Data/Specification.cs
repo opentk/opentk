@@ -28,9 +28,9 @@ namespace GeneratorV2.Data
     {
         public readonly Specification Specification;
 
-        public readonly Dictionary<Command2, List<Overload>> CommandOverloads;
+        public readonly Dictionary<Command2, List<OverloadOld>> CommandOverloads;
 
-        public OverloadedSpecification(Specification specification, Dictionary<Command2, List<Overload>> commandOverloads)
+        public OverloadedSpecification(Specification specification, Dictionary<Command2, List<OverloadOld>> commandOverloads)
         {
             Specification = specification;
             CommandOverloads = commandOverloads;

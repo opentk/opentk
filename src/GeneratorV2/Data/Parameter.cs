@@ -12,15 +12,18 @@
         }
     }
 
-    public class Parameter2
+    // TODO: Think about name
+    public class GLParameter
     {
         public readonly PType2 Type;
         public readonly string Name;
+        public readonly IExpression? Length;
 
-        public Parameter2(PType2 type, string name)
+        public GLParameter(PType2 type, string name, IExpression? length)
         {
             Type = type;
             Name = name;
+            Length = length;
         }
     }
 }

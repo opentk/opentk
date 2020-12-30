@@ -9,13 +9,13 @@ namespace GeneratorV2.Data
 
         public string Name { get; }
 
-        public List<Overload> Overloads { get; }
+        public List<OverloadOld> Overloads { get; }
 
-        public Command(Method method, string name, List<Overload>? overloads = null)
+        public Command(Method method, string name, List<OverloadOld>? overloads = null)
         {
             Method = method;
             Name = name;
-            Overloads = overloads ?? new List<Overload>();
+            Overloads = overloads ?? new List<OverloadOld>();
         }
 
         public virtual bool IsHandleArb => false;
@@ -31,9 +31,9 @@ namespace GeneratorV2.Data
     {
         public Method Apple { get; }
 
-        public Overload BaseOverload { get; }
+        public OverloadOld BaseOverload { get; }
 
-        public HandleARBCommand(Method other, string name, Method apple, Overload baseOverload, List<Overload>? overloads = null)
+        public HandleARBCommand(Method other, string name, Method apple, OverloadOld baseOverload, List<OverloadOld>? overloads = null)
             : base(other, name, overloads)
         {
             Apple = apple;
@@ -52,9 +52,9 @@ namespace GeneratorV2.Data
     {
         public readonly string EntryPoint;
         public readonly PType2 ReturnType;
-        public Parameter2[] Parameters;
+        public GLParameter[] Parameters;
 
-        public Command2(string entryPoint, PType2 returnType, Parameter2[] parameters)
+        public Command2(string entryPoint, PType2 returnType, GLParameter[] parameters)
         {
             EntryPoint = entryPoint;
             ReturnType = returnType;

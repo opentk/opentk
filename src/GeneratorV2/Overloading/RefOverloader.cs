@@ -1,5 +1,6 @@
 ﻿using GeneratorV2.Data;
 using GeneratorV2.Extensions;
+using GeneratorV2.Writing2;
 using System;
 using System.CodeDom.Compiler;
 using System.Collections.Generic;
@@ -7,7 +8,7 @@ using System.Text;
 
 namespace GeneratorV2.Overloading
 {
-    public class RefOverloader : IOverloader
+    /*public class RefOverloader : IOverloader
     {
         private class Layer : ILayer
         {
@@ -35,13 +36,19 @@ namespace GeneratorV2.Overloading
             }
         }
 
-        public bool TryOverloadParameter(OverloadContext context, ref ILayer topLayer, int paramIndex)
+        public bool TryOverloadParameter(OverloadContext2 context, ref ILayer topLayer, int paramIndex)
         {
             var parameter = context.Parameters[paramIndex];
             if (parameter == null)
             {
                 return false;
             }
+
+            if (parameter.Type is CSPointer pt)
+            {
+
+            }
+
             var type = parameter.Type;
             var ptrLoc = type.Name.IndexOf('*');
             var c = type?.Length as Constant;
@@ -57,5 +64,5 @@ namespace GeneratorV2.Overloading
             topLayer = new Layer(topLayer, paramIndex);
             return true;
         }
-    }
+    }*/
 }

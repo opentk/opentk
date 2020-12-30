@@ -47,7 +47,7 @@ namespace GeneratorV2.Parsing
             var entryPoint = proto.Element("name")?.Value;
             if (entryPoint == null) throw new Exception("Missing name tag!");
 
-            var parameterList = new List<Parameter2>();
+            var parameterList = new List<GLParameter>();
             foreach (var element in c.Elements("param"))
             {
                 var paramName = element.Element("name")?.Value;
@@ -55,8 +55,11 @@ namespace GeneratorV2.Parsing
 
                 if (paramName == null) throw new Exception("Missing parameter name!");
 
+                var length = element.Attribute("len")?.Value;
+                var paramLength = length == null ? null : ParseExpression(length);
+
                 //isGLhandleArb |= ptype.Name == PlatformSpecificGlHandleArbFlag;
-                parameterList.Add(new Parameter2(ptype, paramName));
+                parameterList.Add(new GLParameter(ptype, paramName, paramLength));
             }
 
             var returnType = ParsePType(proto);
@@ -129,7 +132,6 @@ namespace GeneratorV2.Parsing
                 {
                     '*' => BinaryOperator.Multiplication,
                     '/' => BinaryOperator.Division,
-                    '%' => BinaryOperator.Modulo,
                     _ => BinaryOperator.Invalid,
                 };
             }
@@ -185,13 +187,10 @@ namespace GeneratorV2.Parsing
         private static PType2 ParsePType(XElement t)
         {
             var group = t.Attribute("group")?.Value;
-            var length = t.Attribute("len")?.Value;
 
             var str = t.GetXmlText(element => !(element.Name == "name") ? element.Value : string.Empty).Trim();
 
-            var pTypeLength = length == null ? null : ParseExpression(length);
-
-            return new PType2(ParseType(str), group, pTypeLength);
+            return new PType2(ParseType(str), group);
         }
 
         private static GLType ParseType(string type)

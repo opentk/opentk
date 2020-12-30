@@ -9,7 +9,7 @@ using System.Text;
 
 namespace GeneratorV2.Overloading
 {
-    public class StringSpanOverloader : IOverloader
+    /*public class StringSpanOverloader : IOverloader
     {
         private class Layer : ILayer
         {
@@ -61,5 +61,5 @@ namespace GeneratorV2.Overloading
             topLayer = new Layer(topLayer, paramIndex);
             return true;
         }
-    }
+    }*/
 }

@@ -6,6 +6,7 @@ using System.Text;
 
 namespace GeneratorV2.Overloading
 {
+    /*
     public class IntPtrReturnOverloader : IOverloader
     {
         private class Layer : ILayer
@@ -39,5 +40,5 @@ namespace GeneratorV2.Overloading
             topLayer = new Layer(topLayer);
             return true;
         }
-    }
+    }*/
 }

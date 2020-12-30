@@ -7,6 +7,7 @@ using System.Text;
 
 namespace GeneratorV2.Overloading
 {
+    /*
     public class EnumOverloader : IOverloader
     {
         private class Layer : ILayer
@@ -57,4 +58,5 @@ namespace GeneratorV2.Overloading
             return true;
         }
     }
+    */
 }

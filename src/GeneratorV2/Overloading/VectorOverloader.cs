@@ -7,7 +7,7 @@ using System.Text;
 
 namespace GeneratorV2.Overloading
 {
-    public class VectorOverloader : IOverloader
+    /*public class VectorOverloader : IOverloader
     {
         private class InputLayer : ILayer
         {
@@ -85,7 +85,7 @@ namespace GeneratorV2.Overloading
             var param = context.Parameters[paramIndex];
             var length = param.Type.Length as Constant;
             var ptrLoc = param.Type.Name.IndexOf('*');
-            if (length == null || length.Value <= 1 || length.Value > 4 || ptrLoc == -1 /*|| !context.Method.EntryPoint.EndsWith("v")*/)
+            if (length == null || length.Value <= 1 || length.Value > 4 || ptrLoc == -1 /*|| !context.Method.EntryPoint.EndsWith("v")/)
             {
                 return false;
             }
@@ -135,5 +135,5 @@ namespace GeneratorV2.Overloading
 
             return true;
         }
-    }
+    }*/
 }

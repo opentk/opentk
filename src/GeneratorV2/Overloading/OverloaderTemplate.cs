@@ -6,7 +6,7 @@ using System.Text;
 
 namespace GeneratorV2.Overloading
 {
-    public class OverloaderTemplate : IOverloader
+    /*public class OverloaderTemplate : IOverloader
     {
         private class Layer : ILayer
         {
@@ -29,7 +29,7 @@ namespace GeneratorV2.Overloading
             }
         }
 
-        public bool TryOverloadParameter(OverloadContext context, ref ILayer topLayer, int paramIndex)
+        public bool TryOverloadParameter(OverloadContext2 context, ref ILayer topLayer, int paramIndex)
         {
             if (true) //Check if we want to overload
             {
@@ -39,7 +39,7 @@ namespace GeneratorV2.Overloading
             topLayer = new Layer(topLayer, paramIndex);
             return true;
         }
-    }
+    }*/
 }
 
 #pragma warning restore CS0162 // Unreachable code detected

@@ -23,7 +23,7 @@ namespace GeneratorV2.Writing
             }
         }
 
-        protected void WriteOverload(Overload o)
+        protected void WriteOverload(OverloadOld o)
         {
             Writer.Write($"public static {o.ReturnType.Name} {_command.Name}");
             if (o.TypeParameterCount > 0)

@@ -9,7 +9,7 @@ using System.Text;
 
 namespace GeneratorV2.Overloading
 {
-    public class SpanOverloader : IOverloader
+    /*public class SpanOverloader : IOverloader
     {
         private class Layer : ILayer
         {
@@ -189,5 +189,5 @@ namespace GeneratorV2.Overloading
             }
             return references;
         }
-    }
+    }*/
 }

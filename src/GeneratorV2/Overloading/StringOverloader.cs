@@ -8,7 +8,7 @@ using System.Text;
 
 namespace GeneratorV2.Overloading
 {
-    public class StringOverloader : IOverloader
+    /*public class StringOverloader : IOverloader
     {
         private class InputLayer : ILayer
         {
@@ -124,5 +124,5 @@ namespace GeneratorV2.Overloading
         public unsafe static void GetShaderSource(uint shader, int bufSize, int* length, byte* source)
         {
         }
-    }
+    }*/
 }
