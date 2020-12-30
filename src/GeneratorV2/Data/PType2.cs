@@ -8,13 +8,11 @@ namespace GeneratorV2.Data
     {
         public readonly GLType Type;
         public readonly string? Group;
-        public IExpression? Length;
-
-        public PType2(GLType type, string? group, IExpression? length)
+        
+        public PType2(GLType type, string? group)
         {
             Type = type;
             Group = group;
-            Length = length;
         }
     }
 }

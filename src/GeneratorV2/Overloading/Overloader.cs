@@ -1,4 +1,5 @@
 ﻿using GeneratorV2.Data;
+using GeneratorV2.Writing2;
 using System;
 using System.CodeDom.Compiler;
 using System.Collections.Generic;
@@ -7,10 +8,17 @@ using System.Text;
 
 namespace GeneratorV2.Overloading
 {
+    public class OverloadContext { }
+
+    public interface IOverloader
+    {
+        bool TryOverloadParameter(OverloadContext context, ref ILayer topLayer, int paramIndex);
+    }
+
+    /*
     public class Overloader
     {
-        /*
-        private readonly IOverloader[] _overloaders = {
+        static readonly IOverloader[] _overloaders = {
             new EnumOverloader(),
             new SyncOverloader(),
             new StringOverloader(),
@@ -20,23 +28,24 @@ namespace GeneratorV2.Overloading
             new IntPtrOverloader(),
             new RefOverloader(),
             new VectorOverloader() };
-        private readonly IOverloader[] _returnOverloaders =
+
+        static readonly IOverloader[] _returnOverloaders =
         {
             new IntPtrReturnOverloader(),
             new ReturnStringOverloader(),
             new ReturnSyncOverloader()
         };
-        private readonly Specification _spec;
-        private readonly HashSet<string> _overloadedCommandNames = new HashSet<string>();
+
+        //private readonly HashSet<string> _overloadedCommandNames = new HashSet<string>();
 
         private const string ReturnValueName = "returnValue";
         private class CallLayer : ILayer
         {
-            private readonly OverloadContext _context;
+            private readonly NativeFunction Function;
 
-            public CallLayer(OverloadContext context)
+            public CallLayer(NativeFunction function)
             {
-                _context = context;
+                Function = function;
             }
 
             public string Suffix { get; set; } = "";
@@ -44,12 +53,13 @@ namespace GeneratorV2.Overloading
 
             public Argument? WriteLayer(IndentedTextWriter writer, string methodName, Argument[] args)
             {
-                if (_context.Method.ReturnType.Name != "void")
+                bool returnValue = Function.ReturnType is not CSVoid;
+                if (returnValue)
                 {
                     writer.Write($"{ReturnValueName} = ");
                 }
                 writer.Write(methodName + Suffix);
-                writer.Write('(');
+                writer.Write("(");
                 for (int i = 0; i < args.Length; i++)
                 {
                     writer.Write(args[i].Name);
@@ -59,78 +69,52 @@ namespace GeneratorV2.Overloading
                     }
                 }
                 writer.WriteLine(");");
-                return _context.Method.ReturnType.Name == "void" ? null : new Argument(_context.ReturnType.Name, ReturnValueName);
+                return returnValue ? new Argument(Function.ReturnType.ToCSString(), ReturnValueName) : null;
             }
         }
+
         private class ReturnVariableLayer : ILayer
         {
-            private readonly OverloadContext _context;
+            private readonly ICSType ReturnType;
 
-            public ReturnVariableLayer(OverloadContext context, ILayer nestedLayer)
+            public ReturnVariableLayer(ICSType returnType, ILayer nestedLayer)
             {
-                _context = context;
+                ReturnType = returnType;
                 NestedLayer = nestedLayer;
             }
-            public ILayer? NestedLayer { get; }
+            public ILayer NestedLayer { get; }
 
             public Argument? WriteLayer(IndentedTextWriter writer, string methodName, Argument[] args)
             {
-                bool hasReturnValue = _context.Method.ReturnType.Name != "void";
+                bool hasReturnValue = ReturnType is not CSVoid;
                 if (hasReturnValue)
                 {
-                    writer.WriteLine($"{_context.Method.ReturnType.Name} {ReturnValueName};");
+                    writer.WriteLine($"{ReturnType.ToCSString()} {ReturnValueName};");
                 }
+
                 var returnValue = NestedLayer.WriteLayer(writer, methodName, args);
+
                 if (hasReturnValue)
                 {
                     writer.WriteLine($"return {returnValue.Name};");
                 }
+
                 return returnValue;
             }
         }
 
-        public Overloader(Specification specification)
+        static void Overload(List<NativeFunction> functions)
         {
-            _spec = specification;
-        }
-
-        public OverloadedSpecification Overload(Specification specification)
-        {
-            foreach (var (apiName, api) in specification.Apis)
+            foreach (var function in functions)
             {
-                foreach (var feature in api.Features)
-                {
-                    Overload(feature);
-                }
-
-                foreach(var (vendorName, extensions) in api.Extensions)
-                {
-                    foreach (var extension in extensions)
-                    {
-                        Overload(extension);
-                    }
-                }
+                Overload(function);
             }
         }
 
-        private void Overload(CommandEnumCollection commandCollection)
+        static void Overload(NativeFunction function)
         {
-            bool isFeatureCommand = commandCollection is Feature;
-            foreach (var (commandName, c) in commandCollection.Commands)
-            {
-                if (!_overloadedCommandNames.Contains(commandName))
-                {
-                    _overloadedCommandNames.Add(commandName);
-                    Overload(c, isFeatureCommand);
-                }
-            }
-        }
-
-        private void Overload(Command2 command, bool isFeatureCommand)
-        {
-            var method = command.Method;
-            var context = new OverloadContext(command);
-            var callLayer = new CallLayer(context);
+            //var context = new OverloadContext(function);
+            var callLayer = new CallLayer(function);
             ILayer currentLayer = callLayer;
 
             bool isValidOverload = false;
@@ -138,15 +122,15 @@ namespace GeneratorV2.Overloading
             do
             {
                 overloadHappened = false;
-                for (int i = 0; i < context.Parameters.Length; i++)
+                for (int i = 0; i < function.Parameters.Count; i++)
                 {
-                    if (context.Parameters[i] == null)
+                    if (function.Parameters[i] == null)
                     {
                         continue;
                     }
                     foreach (var overloader in _overloaders)
                     {
-                        if (overloader.TryOverloadParameter(context, ref currentLayer, i))
+                        if (overloader.TryOverloadParameter(function, ref currentLayer, i))
                         {
                             overloadHappened = true;
                             isValidOverload = true;
@@ -161,12 +145,12 @@ namespace GeneratorV2.Overloading
                 overloadHappened = false;
                 foreach (var overloader in _returnOverloaders)
                 {
-                    if (overloader.TryOverloadParameter(context, ref currentLayer, -1))
+                    if (overloader.TryOverloadParameter(function, ref currentLayer, -1))
                     {
                         if (!isValidOverload)
                         {
                             callLayer.Suffix = "Raw";
-                            method.Suffix = "Raw";
+                            //method.Suffix = "Raw";
                             isValidOverload = true;
                         }
                     }
@@ -178,21 +162,22 @@ namespace GeneratorV2.Overloading
                 return;
             }
 
-            currentLayer = new ReturnVariableLayer(context, currentLayer);
+            currentLayer = new ReturnVariableLayer(function.ReturnType, currentLayer);
 
-            CreateOverload(command, context, currentLayer);
+            CreateOverload(function, context, currentLayer);
 
             if (isFeatureCommand)
             {
                 if (TryCreateGroupedParameters(context))
                 {
-                    CreateOverload(command, context, currentLayer);
+                    CreateOverload(function, context, currentLayer);
                 }
             }
         }
 
-        private static void CreateOverload(Command2 command, OverloadContext context, ILayer currentLayer)
+        private static Overload CreateOverload(Command2 command, OverloadContext context, ILayer currentLayer)
         {
+            /*
             var method = command.Method;
             var args = context.Parameters.Zip(method.Parameters, (contextParam, methodParam) => new Argument(contextParam ?? methodParam)).ToArray();
             void bodyWriter(IndentedTextWriter writer, string commandName)
@@ -200,25 +185,9 @@ namespace GeneratorV2.Overloading
                 currentLayer.WriteLayer(writer, commandName, args.ToArray());
             }
             command.Overloads.Add(new Overload(context.ReturnType, bodyWriter, context.TypeParameterCount, context.Parameters.Where(x => x != null).OfType<Parameter>().ToArray()));
+            *
         }
-
-        private static bool TryCreateGroupedParameters(OverloadContext context)
-        {
-            bool hasGroupedEnum = false;
-            for (int i = 0; i < context.Parameters.Length; i++)
-            {
-                var parameter = context.Parameters[i];
-                if (parameter != null && parameter.Type.Group != null && parameter.Type.OriginalTypeName.Contains("GLenum"))
-                {
-                    hasGroupedEnum = true;
-                    var type = parameter.Type;
-                    context.Parameters[i] = new Parameter(new PType(type.Name.Replace("All", type.Group), type.OriginalTypeName,
-                        type.Modifier, type.Group, type.Length), parameter.Name);
-                }
-            }
-            return hasGroupedEnum;
-        }*/
-    }
+    }*/
 
     //public extern unsafe void Test(int** array, int count, uint enm);
     //void Test(Span<int>* p1, SomeEnum enm)

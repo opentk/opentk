@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Text;
 
 namespace GeneratorV2.Writing
@@ -64,6 +65,7 @@ namespace GeneratorV2.Writing
                 Directory.CreateDirectory(versionPath);
 
                 WriteNativeFunctions(versionPath, version.Version, version.Functions);
+                WriteOverloads(versionPath, version.Version, version.Overloads);
 
                 WriteEnums(versionPath, version.Version, version.EnumGroups, version.AllEnums);
             }
@@ -275,6 +277,87 @@ namespace GeneratorV2.Writing
 
                         writer.WriteLine();
                     }
+                }
+            }
+        }
+
+        public static void WriteOverloads(string directoryPath, string version, List<Overload> overloads)
+        {
+            using IndentedTextWriter writer = new IndentedTextWriter(Path.Combine(directoryPath, "GL.Overloads.cs"));
+            writer.WriteLine("// This file is auto generated, do not edit.");
+            writer.WriteLine("using System;");
+            writer.WriteLine("using System.Runtime.InteropServices;");
+            writer.WriteLine();
+            // NAMESPACE:
+            writer.WriteLine($"namespace OpenToolkit.Graphics.OpenGL.{version}");
+            using (Scope(writer))
+            {
+                writer.WriteLine($"public static unsafe partial class GL");
+                using (Scope(writer))
+                {
+                    foreach (var overload in overloads)
+                    {
+                        if (overload.NestedOverload == null &&
+                            overload.MarshalLayerToNested == null)
+                            continue;
+
+                        string parameterString = string.Join(", ", overload.InputParameters.Select(p => $"{p.Type.ToCSString()} {p.Name}"));
+
+                        // FIXME: Make the overload contain the name. (remove postfix usecase)
+                        // FIXME: Make NativeFunction contain the preprocessed name as well as the entry point.
+                        if (overload.GenericTypes != null)
+                        {
+                            writer.WriteLine($"public static unsafe {overload.ReturnType.ToCSString()} {overload.NativeFunction.EntryPoint[2..]}<{string.Join(", ", overload.GenericTypes)}>({parameterString})");
+                            using (writer.Indentation())
+                            {
+                                foreach (var type in overload.GenericTypes)
+                                {
+                                    writer.WriteLine($"where {type} : unmanaged");
+                                }
+                            }
+                        }
+                        else
+                        {
+                            writer.WriteLine($"public static unsafe {overload.ReturnType.ToCSString()} {overload.NativeFunction.EntryPoint[2..]}({parameterString})");
+                        }
+
+                        using (Scope(writer))
+                        {
+                            string? returnName = WriteNestedOverload(writer, overload);
+
+                            if (returnName != null)
+                            {
+                                writer.WriteLine($"return {returnName};");
+                            }
+                        }
+                    }
+                }
+            }
+
+            static string? WriteNestedOverload(IndentedTextWriter writer, Overload overload)
+            {
+                overload.MarshalLayerToNested?.WritePrologue(writer);
+
+                string? returnName;
+                if (overload.NestedOverload != null)
+                    returnName = WriteNestedOverload(writer, overload.NestedOverload);
+                else
+                    returnName = WriteNativeCall(writer, overload.NativeFunction);
+
+                return overload.MarshalLayerToNested?.WriteEpilogue(writer, returnName) ?? returnName;
+            }
+
+            static string? WriteNativeCall(IndentedTextWriter writer, NativeFunction function)
+            {
+                if (function.ReturnType is CSVoid)
+                {
+                    writer.WriteLine($"{function.EntryPoint[2..]}({string.Join(", ", function.Parameters.Select(p => p.Name))});");
+                    return null;
+                }
+                else
+                {
+                    writer.WriteLine($"var returnValue = {function.EntryPoint[2..]}({string.Join(", ", function.Parameters.Select(p => p.Name))});");
+                    return "returnValue";
                 }
             }
         }

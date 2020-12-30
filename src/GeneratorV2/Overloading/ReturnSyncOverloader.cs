@@ -6,7 +6,7 @@ using System.Text;
 
 namespace GeneratorV2.Overloading
 {
-    public class ReturnSyncOverloader : IOverloader
+    /*public class ReturnSyncOverloader : IOverloader
     {
         private class Layer : ILayer
         {
@@ -38,5 +38,5 @@ namespace GeneratorV2.Overloading
             topLayer = new Layer(topLayer);
             return true;
         }
-    }
+    }*/
 }

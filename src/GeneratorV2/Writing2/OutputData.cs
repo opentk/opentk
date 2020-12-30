@@ -1,5 +1,7 @@
-﻿using System;
+﻿using GeneratorV2.Data;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -7,12 +9,12 @@ using System.Threading.Tasks;
 namespace GeneratorV2.Writing2
 {
     // FIXME...?
-    interface ICSType
+    public interface ICSType
     {
         public string ToCSString();
     }
 
-    class CSType : ICSType
+    public class CSType : ICSType
     {
         public readonly string TypeName;
 
@@ -31,7 +33,9 @@ namespace GeneratorV2.Writing2
         }
     }
 
-    class CSArray : ICSType
+    // FIXME: This type should never really be visible here?
+    // It should atleast never be written out...
+    public class CSFixedSizeArray : ICSType
     {
         public readonly ICSType BaseType;
 
@@ -39,11 +43,32 @@ namespace GeneratorV2.Writing2
         public readonly bool Constant;
         public readonly int Size;
 
-        public CSArray(ICSType baseType, int size, bool constant)
+        public CSFixedSizeArray(ICSType baseType, int size, bool constant)
         {
             BaseType = baseType;
             Size = size;
             Constant = constant;
+        }
+
+        public string ToCSString()
+        {
+            throw new Exception();
+            // FIXME: Maybe do something with size or constant??
+            return $"{BaseType.ToCSString()}[]";
+        }
+    }
+
+    public class CSArray : ICSType
+    {
+        public readonly ICSType BaseType;
+
+        // FIXME: Think through size, see GLArrayType
+        public readonly bool Readonly;
+
+        public CSArray(ICSType baseType, bool @readonly)
+        {
+            BaseType = baseType;
+            Readonly = @readonly;
         }
 
         public string ToCSString()
@@ -53,7 +78,7 @@ namespace GeneratorV2.Writing2
         }
     }
 
-    class CSPointer : ICSType
+    public class CSPointer : ICSType
     {
         public readonly ICSType BaseType;
 
@@ -73,7 +98,7 @@ namespace GeneratorV2.Writing2
         }
     }
 
-    class CSVoid :ICSType
+    public class CSVoid :ICSType
     {
         public CSVoid()
         { }
@@ -81,25 +106,107 @@ namespace GeneratorV2.Writing2
         public string ToCSString() => "void";
     }
 
-    class NativeParameter
+    public class CSRef : ICSType
     {
-        public readonly ICSType Type;
-        public readonly string Name;
+        public enum Type { Ref, Out, In }
+        public readonly Type RefType;
+        public readonly ICSType ReferencedType;
 
-        public NativeParameter(ICSType type, string name)
+        public CSRef(Type refType, ICSType referencedType)
         {
-            Type = type;
-            Name = name;
+            RefType = refType;
+            ReferencedType = referencedType;
+        }
+
+        public string ToCSString()
+        {
+            string modifier = RefType switch
+            {
+                Type.Ref => "ref",
+                Type.Out => "out",
+                Type.In => "in",
+                _ => throw new Exception()
+            };
+            return $"{modifier} {ReferencedType.ToCSString()}";
         }
     }
 
-    class NativeFunction
+    public class CSString : ICSType
+    {
+        public readonly bool Nullable;
+
+        public CSString(bool nullable)
+        {
+            Nullable = nullable;
+        }
+
+        public string ToCSString()
+        {
+            return $"string{(Nullable ? "?" : "")}";
+        }
+    }
+
+    public class CSSpan : ICSType
+    {
+        public readonly ICSType BaseType;
+        public readonly bool Readonly;
+
+        public CSSpan(ICSType baseType, bool @readonly)
+        {
+            BaseType = baseType;
+            Readonly = @readonly;
+        }
+
+        public string ToCSString()
+        {
+            if (Readonly)
+            {
+                return $"ReadOnlySpan<{BaseType.ToCSString()}>";
+            }
+            else
+            {
+                return $"Span<{BaseType.ToCSString()}>";
+            }
+        }
+    }
+
+    public class CSGenericType : ICSType
+    {
+        public readonly string GenericTypeName;
+
+        public CSGenericType(string genericTypeName)
+        {
+            GenericTypeName = genericTypeName;
+        }
+
+        public string ToCSString()
+        {
+            return GenericTypeName;
+        }
+    }
+
+    public class Parameter
+    {
+        public readonly ICSType Type;
+        public readonly string Name;
+        // FIXME: Make a processed version of this?
+        public readonly IExpression? Length;
+
+        public Parameter(ICSType type, string name, IExpression? length)
+        {
+            Type = type;
+            Name = name;
+            Length = length;
+        }
+    }
+
+    public class NativeFunction
     {
         public readonly string EntryPoint;
-        public readonly List<NativeParameter> Parameters;
+        public readonly List<Parameter> Parameters;
         public readonly ICSType ReturnType;
 
-        public NativeFunction(string entryPoint, List<NativeParameter> parameters, ICSType returnType)
+        public NativeFunction(string entryPoint, List<Parameter> parameters, ICSType returnType)
         {
             EntryPoint = entryPoint;
             Parameters = parameters;
@@ -107,8 +214,44 @@ namespace GeneratorV2.Writing2
         }
     }
 
+    public interface IOverloader
+    {
+        public bool TryGenerateOverloads(Overload overload, [NotNullWhen(true)] out List<Overload>? newOverloads);
+    }
+
+    // FIXME: We could maybe move this into the Overload class
+    // and make the overloads inherit from this Overload.
+    // Might be a cleaner solution, and stuff like that.
+    public interface IOverloadLayer
+    {
+        public void WritePrologue(IndentedTextWriter writer);
+        public string? WriteEpilogue(IndentedTextWriter writer, string? returnName);
+    }
+
+    public class Overload
+    {
+        public readonly Overload? NestedOverload;
+        public readonly IOverloadLayer? MarshalLayerToNested;
+
+        public readonly Parameter[] InputParameters;
+        public readonly NativeFunction NativeFunction;
+        public readonly ICSType ReturnType;
+
+        public readonly string[]? GenericTypes;
+
+        public Overload(Overload? nestedOverload, IOverloadLayer? marshalLayerToNested, Parameter[] inputParameters, NativeFunction nativeFunction, ICSType returnType, string[]? genericTypes = null)
+        {
+            NestedOverload = nestedOverload;
+            MarshalLayerToNested = marshalLayerToNested;
+            InputParameters = inputParameters;
+            NativeFunction = nativeFunction;
+            ReturnType = returnType;
+            GenericTypes = genericTypes;
+        }
+    }
+
     // FIXME: Better name
-    class EnumMemberData : IEquatable<EnumMemberData?>
+    public class EnumMemberData : IEquatable<EnumMemberData?>
     {
         // This is the c name still
         public readonly string Name;
@@ -158,7 +301,7 @@ namespace GeneratorV2.Writing2
     }
 
     // FIXME: Better name
-    class EnumGroupData
+    public class EnumGroupData
     {
         public readonly string Name;
         public readonly bool IsFlags;
@@ -170,7 +313,7 @@ namespace GeneratorV2.Writing2
         }
     }
 
-    class EnumGroup
+    public class EnumGroup
     {
         public readonly string Name;
         public readonly bool IsFlags;
@@ -184,23 +327,25 @@ namespace GeneratorV2.Writing2
         }
     }
 
-    class GLVersionOutput
+    public class GLVersionOutput
     {
         public readonly string Version;
         public readonly List<NativeFunction> Functions;
+        public readonly List<Overload> Overloads;
         public readonly List<EnumMemberData> AllEnums;
         public readonly List<EnumGroup> EnumGroups;
 
-        public GLVersionOutput(string version, List<NativeFunction> functions, List<EnumMemberData> allEnums, List<EnumGroup> enumGroups)
+        public GLVersionOutput(string version, List<NativeFunction> functions, List<Overload> overloads, List<EnumMemberData> allEnums, List<EnumGroup> enumGroups)
         {
             Version = version;
             Functions = functions;
+            Overloads = overloads;
             AllEnums = allEnums;
             EnumGroups = enumGroups;
         }
     }
 
-    class OutputData
+    public class OutputData
     {
         public readonly List<GLVersionOutput> Versions;
 
