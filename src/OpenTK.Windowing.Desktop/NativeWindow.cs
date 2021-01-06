@@ -1009,9 +1009,11 @@ namespace OpenTK.Windowing.Desktop
             // GLFW says this function can be called not only in response to functions like glfwPollEvents();
             // There might be a function like glfwSetWindowSize what will trigger a sroll event to trigger inside that function.
             // We ignore this case for now and just accept that the scroll value will change after such a function call.
-            MouseState.Scroll += new Vector2((float)offsetX, (float)offsetY);
-
-            OnMouseWheel(new MouseWheelEventArgs(MouseState.Scroll));
+            var offset = new Vector2((float)offsetX, (float)offsetY);
+            
+            MouseState.Scroll += offset;
+            
+            OnMouseWheel(new MouseWheelEventArgs(offset));
         }
 
         private unsafe void JoystickCallback(int joy, ConnectedState eventCode)
