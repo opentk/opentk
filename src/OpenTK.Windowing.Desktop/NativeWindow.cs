@@ -1010,9 +1010,9 @@ namespace OpenTK.Windowing.Desktop
             // There might be a function like glfwSetWindowSize what will trigger a sroll event to trigger inside that function.
             // We ignore this case for now and just accept that the scroll value will change after such a function call.
             var offset = new Vector2((float)offsetX, (float)offsetY);
-            
+
             MouseState.Scroll += offset;
-            
+
             OnMouseWheel(new MouseWheelEventArgs(offset));
         }
 
