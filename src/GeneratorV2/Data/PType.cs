@@ -1,26 +1,18 @@
-﻿namespace GeneratorV2.Data
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace GeneratorV2.Data
 {
-    public enum PModifier
-    {
-        None = 0,
-        ReadOnlySpan = 1,
-        In = 2,
-    }
     public class PType
     {
-        public string Name { get; }
-        public string OriginalTypeName { get; }
-        public PModifier Modifier { get; }
-        public string? Group { get; }
-        public IExpression? Length { get; set; }
-
-        public PType(string name, string originalTypeName, PModifier modifier = PModifier.None, string? group = null, IExpression? length = null)
+        public readonly GLType Type;
+        public readonly string? Group;
+        
+        public PType(GLType type, string? group)
         {
-            Name = name;
-            OriginalTypeName = originalTypeName;
-            Modifier = modifier;
+            Type = type;
             Group = group;
-            Length = length;
         }
     }
 }

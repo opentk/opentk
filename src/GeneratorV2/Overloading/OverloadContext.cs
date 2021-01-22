@@ -1,4 +1,4 @@
-﻿using GeneratorV2.Writing2;
+﻿using GeneratorV2.Writing;
 using System;
 using System.CodeDom.Compiler;
 using System.Collections.Generic;
@@ -32,19 +32,4 @@ namespace GeneratorV2.Overloading
 
         public Method Method => Command.Method;
     }*/
-
-    public class OverloadContext2
-    {
-        public readonly NativeFunction Function;
-        public readonly Parameter?[] Parameters;
-        public readonly ICSType ReturnType;
-
-        public OverloadContext2(NativeFunction function)
-        {
-            Function = function;
-
-            Parameters = function.Parameters.ToArray();
-            ReturnType = function.ReturnType;
-        }
-    }
 }
