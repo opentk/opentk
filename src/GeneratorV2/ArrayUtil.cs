@@ -8,15 +8,11 @@ namespace GeneratorV2
 {
     static class ArrayUtil
     {
-        public static T[] MakeCopyAndGrow<T>(this T[]? array, int additionalElements)
+        public static T[] MakeCopyAndGrow<T>(this T[] array, int additionalElements)
         {
-            T[] newArray = new T[(array?.Length ?? 0) + additionalElements];
-            if (array != null)
-            {
-                Array.Copy(array, newArray, array.Length);
-            }
+            T[] newArray = new T[array.Length + additionalElements];
+            Array.Copy(array, newArray, array.Length);
             return newArray;
         }
-
     }
 }

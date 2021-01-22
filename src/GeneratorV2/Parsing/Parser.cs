@@ -184,13 +184,13 @@ namespace GeneratorV2.Parsing
             }
         }
 
-        private static PType2 ParsePType(XElement t)
+        private static PType ParsePType(XElement t)
         {
             var group = t.Attribute("group")?.Value;
 
             var str = t.GetXmlText(element => !(element.Name == "name") ? element.Value : string.Empty).Trim();
 
-            return new PType2(ParseType(str), group);
+            return new PType(ParseType(str), group);
         }
 
         private static GLType ParseType(string type)
@@ -266,8 +266,8 @@ namespace GeneratorV2.Parsing
                 "GLclampd" => PrimitiveType.Double,
                 "GLeglClientBufferEXT" => PrimitiveType.VoidPtr,
                 "GLeglImageOES" => PrimitiveType.VoidPtr,
-                "GLchar" => PrimitiveType.Byte,
-                "GLcharARB" => PrimitiveType.Byte,
+                "GLchar" => PrimitiveType.ByteChar,
+                "GLcharARB" => PrimitiveType.ByteChar,
                 "GLhalf" => PrimitiveType.Half,
                 "GLhalfARB" => PrimitiveType.Half,
                 "GLfixed" => PrimitiveType.Int,

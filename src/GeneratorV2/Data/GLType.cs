@@ -9,6 +9,7 @@ namespace GeneratorV2.Data
         Invalid,
         Void,
         Byte,
+        ByteChar,
         Sbyte,
         Short,
         Ushort,

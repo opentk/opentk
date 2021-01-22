@@ -23,17 +23,4 @@ namespace GeneratorV2.Data
             Extensions = extensions;
         }
     }
-
-    public class OverloadedSpecification
-    {
-        public readonly Specification Specification;
-
-        public readonly Dictionary<Command2, List<OverloadOld>> CommandOverloads;
-
-        public OverloadedSpecification(Specification specification, Dictionary<Command2, List<OverloadOld>> commandOverloads)
-        {
-            Specification = specification;
-            CommandOverloads = commandOverloads;
-        }
-    }
 }

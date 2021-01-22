@@ -8,6 +8,8 @@ namespace GeneratorV2
 {
     public static class XElementExtensions
     {
+        // TODO: This is only used in one place.
+        // Consider moving it into the place where it's being used.
         public static string GetXmlText(this XElement element, Func<XElement, string>? elementPredicate = null)
         {
             var sb = new StringBuilder();

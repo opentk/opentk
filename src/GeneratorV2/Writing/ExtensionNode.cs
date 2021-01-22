@@ -5,6 +5,7 @@ using System.IO;
 
 namespace GeneratorV2.Writing
 {
+    /*
     class ExtensionNode : Node
     {
         private readonly string _path;
@@ -38,7 +39,7 @@ namespace GeneratorV2.Writing
                         methodExtensionClass.AddNode(new MethodNode(c));
                         overloadExtensionClass.AddNode(new OverloadNode(c));
                     }
-                    */
+                    /
                 }
             }
         }
@@ -61,5 +62,5 @@ namespace GeneratorV2.Writing
 
             WriteChildren();
         }
-    }
+    }*/
 }

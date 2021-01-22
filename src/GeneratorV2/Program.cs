@@ -27,7 +27,7 @@ namespace GeneratorV2
                 // WIP
                 var outputSpec = Processor.ProcessSpec(specification);
 
-                Writer2.Write(outputSpec);
+                Writer.Write(outputSpec);
 
                 /*
                 Writer.WriteProject();

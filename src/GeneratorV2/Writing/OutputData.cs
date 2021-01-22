@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GeneratorV2.Writing2
+namespace GeneratorV2.Writing
 {
     // FIXME...?
     public interface ICSType
@@ -30,6 +30,25 @@ namespace GeneratorV2.Writing2
         public string ToCSString()
         {
             return TypeName;
+        }
+    }
+
+    public class CSChar : ICSType
+    {
+        public readonly bool IsByteSize;
+
+        // FIXME: Think through this
+        public readonly bool Constant;
+
+        public CSChar(bool isByteSize, bool constant)
+        {
+            IsByteSize = isByteSize;
+            Constant = constant;
+        }
+
+        public string ToCSString()
+        {
+            return IsByteSize ? "byte" : "char";
         }
     }
 
@@ -198,6 +217,11 @@ namespace GeneratorV2.Writing2
             Name = name;
             Length = length;
         }
+
+        public override string ToString()
+        {
+            return $"{Type.ToCSString()} {Name}{(Length != null ? " (has length)" : string.Empty)}";
+        }
     }
 
     public class NativeFunction
@@ -237,9 +261,9 @@ namespace GeneratorV2.Writing2
         public readonly NativeFunction NativeFunction;
         public readonly ICSType ReturnType;
 
-        public readonly string[]? GenericTypes;
+        public readonly string[] GenericTypes;
 
-        public Overload(Overload? nestedOverload, IOverloadLayer? marshalLayerToNested, Parameter[] inputParameters, NativeFunction nativeFunction, ICSType returnType, string[]? genericTypes = null)
+        public Overload(Overload? nestedOverload, IOverloadLayer? marshalLayerToNested, Parameter[] inputParameters, NativeFunction nativeFunction, ICSType returnType, string[] genericTypes)
         {
             NestedOverload = nestedOverload;
             MarshalLayerToNested = marshalLayerToNested;

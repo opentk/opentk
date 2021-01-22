@@ -10,7 +10,7 @@ namespace GeneratorV2.Overloading
         public string Type { get; }
         public string Name { get; }
 
-        public Argument(Parameter parameter) : this(parameter.Type.Name, parameter.Name)
+        public Argument(dynamic parameter) : this((string)parameter.Type.Name, (string)parameter.Name)
         {
         }
 
