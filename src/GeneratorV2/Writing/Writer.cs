@@ -15,6 +15,7 @@ namespace GeneratorV2.Writing
     class Writer
     {
         // FIXME: Find a better place
+        // Move this into IndentedTextWriter.cs
         public struct CsScope : IDisposable
         {
             public IndentedTextWriter.Scope Scope;
@@ -39,17 +40,22 @@ namespace GeneratorV2.Writing
             return new CsScope(writer.Indentation());
         }
 
+        // FIXME: Should this be "OpenTK.Graphics.OpenGL" instead?
+        const string Namespace = "OpenTK.Graphics";
+        const string LoaderClass = "GLLoader";
+        const string LoaderBindingsContext = LoaderClass + ".BindingsContext";
+
         public static void Write(OutputData data)
         {
             string outputProjectPath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? throw new NullReferenceException(),
-                "..", "..", "..", "..", "OpenToolkit.Graphics");
+                "..", "..", "..", "..", Namespace);
 
             // FIXME: Delete existing if there is one
             try { Directory.Delete(outputProjectPath, true); } catch { }
             Directory.CreateDirectory(outputProjectPath);
 
             // NAMESPACE:
-            WriteProjectFile(outputProjectPath, "OpenToolkit.Graphics");
+            WriteProjectFile(outputProjectPath);
 
             WriteBindingsLoader(outputProjectPath);
 
@@ -57,7 +63,7 @@ namespace GeneratorV2.Writing
 
             string glFolder = Path.Combine(outputProjectPath, "OpenGL");
 
-            // This should create folders to put the projects in
+            // This should create folders to put the versions in
             foreach (var version in data.Versions)
             {
                 string versionPath = Path.Combine(glFolder, version.Version);
@@ -71,134 +77,111 @@ namespace GeneratorV2.Writing
             }
         }
 
-        public static void WriteProjectFile(string projectPath, string rootNamespace)
+        public static void WriteProjectFile(string projectPath)
         {
-            // FIXME: Get the name from somewhere?
-            using var writer = new IndentedTextWriter(Path.Combine(projectPath, "OpenToolkit.Graphics.csproj"));
-
-            writer.WriteLine("<Project Sdk=\"Microsoft.NET.Sdk\">");
-            using (writer.Indentation())
-            {
-                writer.WriteLine("<!-- This file is auto generated, do not edit -->");
-
-                writer.WriteLine("<PropertyGroup>");
-
-                using (writer.Indentation())
-                {
-                    writer.WriteLine("<TargetFramework>net5.0</TargetFramework>");
-                    writer.WriteLine("<Nullable>enable</Nullable>");
-                    writer.WriteLine($"<RootNamespace>{rootNamespace}</RootNamespace>");
-                    writer.WriteLine("<AllowUnsafeBlocks>true</AllowUnsafeBlocks>");
-                    writer.WriteLine("<PackageVersion>5.0.0-pre0.0</PackageVersion>");
-                    writer.WriteLine("<Version>5.0.0</Version>");
-                }
-
-                writer.WriteLine("</PropertyGroup>");
-
-                writer.WriteLine("<ItemGroup>");
-
-                using (writer.Indentation())
-                {
-                    writer.WriteLine("<ProjectReference Include=\"../OpenToolkit.Core/OpenToolkit.Core.csproj\" />");
-                    writer.WriteLine("<ProjectReference Include=\"../OpenToolkit.Mathematics/OpenToolkit.Mathematics.csproj\" />");
-                }
-
-                writer.WriteLine("</ItemGroup>");
-            }
-            writer.WriteLine("</Project>");
+            using var writer = new IndentedTextWriter(Path.Combine(projectPath, $"{Namespace}.csproj"));
+            
+            // FIXME: Maybe get the version from somewhere too?
+            // The indentation is gonna be weird in the file doing it like this,
+            // but it shouldn't be edited in there anyways.
+            writer.Write($@"
+                <!-- This file is auto generated, do not edit -->
+                <Project Sdk=""Microsoft.NET.Sdk"">
+                    <PropertyGroup>
+                        <TargetFramework>net5.0</TargetFramework>
+                        <Nullable>enable</Nullable>
+                        <RootNamespace>{Namespace}</RootNamespace>
+                        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+                        <PackageVersion>5.0.0-pre0.0</PackageVersion>
+                        <Version>5.0.0</Version>
+                    </PropertyGroup>
+                    <ItemGroup>
+                        <ProjectReference Include=""../OpenToolkit.Core/OpenToolkit.Core.csproj"" />
+                        <ProjectReference Include=""../OpenToolkit.Mathematics/OpenToolkit.Mathematics.csproj"" />
+                    </ItemGroup>
+                </Project>
+                ");
         }
 
-        // FIXME: Maybe this file shouldn't be generated?
-        const string LoaderClass = "GLLoader";
-        const string LoaderBindingsContext = LoaderClass + ".BindingsContext";
         public static void WriteBindingsLoader(string projectPath)
         {
             using var writer = new IndentedTextWriter(Path.Combine(projectPath, $"{LoaderClass}.cs"));
-            writer.WriteLine("// This file is auto generated, do not edit.");
-            writer.WriteLine("using System;");
-            writer.WriteLine();
-            // NAMESPACE:
-            writer.WriteLine("namespace OpenToolkit.Graphics.OpenGL");
-            using (Scope(writer))
-            {
-                writer.WriteLine($"public unsafe static class {LoaderClass}");
-                using (Scope(writer))
-                {
-                    writer.WriteLine("internal static object LockObj = new object();");
-                    writer.WriteLine("private static IBindingsContext? _bindingsContext;");
-                    writer.WriteLine("internal static IBindingsContext BindingsContext => _bindingsContext ?? throw new Exception(\"Bindings not loaded, load with GLLoader.LoadBindings\");");
-                    writer.WriteLine("public static void LoadBindings(IBindingsContext c) => _bindingsContext = c;");
-                }
-            }
+            writer.Write($@"
+                // This file is auto generated, do not edit.
+                using System;
+
+                namespace {Namespace}
+                {{
+                    public unsafe static class {LoaderClass}
+                    {{
+                        internal static object LockObj = new object();
+                        private static IBindingsContext? _bindingsContext;
+                        internal static IBindingsContext BindingsContext => _bindingsContext ?? throw new Exception(""Bindings not loaded, load with GLLoader.LoadBindings"");
+                        public static void LoadBindings(IBindingsContext c) => _bindingsContext = c;
+                    }}
+                }}
+                ");
         }
 
         // FIXME: Maybe this file shouldn't be generated?
         public static void WriteBuiltInTypes(string projectPath)
         {
             using var writer = new IndentedTextWriter(Path.Combine(projectPath, "Types.cs"));
-            writer.WriteLine("// This file is auto generated, do not edit.");
-            writer.WriteLine("using System;");
-            writer.WriteLine("using System.Runtime.InteropServices;");
-            writer.WriteLine();
-            // NAMESPACE:
-            writer.WriteLine("namespace OpenToolkit.Graphics.OpenGL");
-            using (Scope(writer))
-            {
-                // FIXME: We might want to change back to GLDEBUGPROC and provide a nicer wrapper for it.
-                writer.WriteLine("public unsafe delegate void GLDebugProc(uint source, uint type, uint id, uint severity, int length, char* message, void* userParam);");
-                writer.WriteLine("public unsafe delegate void GLDebugProcARB(uint source, uint type, uint id, uint severity, int length, char* message, void* userParam);");
-                writer.WriteLine("public unsafe delegate void GLDebugProcKHR(uint source, uint type, uint id, uint severity, int length, char* message, void* userParam);");
-                writer.WriteLine("public unsafe delegate void GLDebugProcAMD(uint id, uint category, uint severity, int length, char* message, void* userParam);");
-                writer.WriteLine("public unsafe delegate void GLDebugProcNV();");
-                writer.WriteLine();
-                writer.WriteLine("public struct CLContext{}");
-                writer.WriteLine("public struct CLEvent{}");
-                writer.WriteLine();
-                writer.WriteLine("public struct GLSync{}");
-                writer.WriteLine("public unsafe struct GLSyncObject");
-                using (Scope(writer))
-                {
-                    writer.WriteLine("internal GLSync* ObjPtr;");
-                    writer.WriteLine("internal GLSyncObject(GLSync* syncObject)");
-                    writer.WriteLine();
-                    using (Scope(writer))
-                    {
-                        writer.WriteLine("ObjPtr = syncObject;");
-                    }
-                    writer.WriteLine();
-                    writer.WriteLine("public static implicit operator GLSync*(GLSyncObject obj) => obj.ObjPtr;");
-                    writer.WriteLine("public static implicit operator GLSyncObject(GLSync* obj) => new GLSyncObject(obj);");
-                }
-                writer.WriteLine();
+            writer.Write($@"
+                // This file is auto generated, do not edit.
+                using System;
+                using System.Runtime.InteropServices;
 
-                //GLHandleArb
-                writer.WriteLine("[StructLayout(LayoutKind.Explicit)]");
-                writer.WriteLine("public struct GLHandleARB");
-                using (Scope(writer))
-                {
-                    writer.WriteLine("[FieldOffset(0)] private readonly uint _value1;");
-                    writer.WriteLine("[FieldOffset(0)] private readonly IntPtr _value2;");
-                    writer.WriteLine();
-                    writer.WriteLine("public GLHandleARB(uint val)");
-                    using (Scope(writer))
-                    {
-                        writer.WriteLine("_value2 = IntPtr.Zero;");
-                        writer.WriteLine("_value1 = val;");
-                    }
-                    writer.WriteLine();
-                    writer.WriteLine("public GLHandleARB(IntPtr val)");
-                    using (Scope(writer))
-                    {
-                        writer.WriteLine("_value1 = 0;");
-                        writer.WriteLine("_value2 = val;");
-                    }
-                    writer.WriteLine();
-                    writer.WriteLine("public static implicit operator GLHandleARB(uint val) => new GLHandleARB(val);");
-                    writer.WriteLine("public static implicit operator GLHandleARB(IntPtr val) => new GLHandleARB(val);");
-                    writer.WriteLine("public static implicit operator uint(GLHandleARB val) => val._value1;");
-                    writer.WriteLine("public static implicit operator IntPtr(GLHandleARB val) => val._value2;");
-                }
-            }
+                namespace {Namespace}
+                {{
+                    public unsafe delegate void GLDebugProc(uint source, uint type, uint id, uint severity, int length, char* message, void* userParam);
+                    public unsafe delegate void GLDebugProcARB(uint source, uint type, uint id, uint severity, int length, char* message, void* userParam);
+                    public unsafe delegate void GLDebugProcKHR(uint source, uint type, uint id, uint severity, int length, char* message, void* userParam);
+                    public unsafe delegate void GLDebugProcAMD(uint id, uint category, uint severity, int length, char* message, void* userParam);
+                    public unsafe delegate void GLDebugProcNV();
+
+                    public struct CLContext{{}}
+                    public struct CLEvent{{}}
+
+                    public struct GLSync{{}}
+                    public unsafe struct GLSyncObject
+                    {{
+                        internal GLSync* ObjPtr;
+                        internal GLSyncObject(GLSync* syncObject)
+
+                        {{
+                            ObjPtr = syncObject;
+                        }}
+
+                        public static implicit operator GLSync*(GLSyncObject obj) => obj.ObjPtr;
+                        public static implicit operator GLSyncObject(GLSync* obj) => new GLSyncObject(obj);
+                    }}
+
+                    [StructLayout(LayoutKind.Explicit)]
+                    public struct GLHandleARB
+                    {{
+                        [FieldOffset(0)] private readonly uint _value1;
+                        [FieldOffset(0)] private readonly IntPtr _value2;
+
+                        public GLHandleARB(uint val)
+                        {{
+                            _value2 = IntPtr.Zero;
+                            _value1 = val;
+                        }}
+
+                        public GLHandleARB(IntPtr val)
+                        {{
+                            _value1 = 0;
+                            _value2 = val;
+                        }}
+
+                        public static implicit operator GLHandleARB(uint val) => new GLHandleARB(val);
+                        public static implicit operator GLHandleARB(IntPtr val) => new GLHandleARB(val);
+                        public static implicit operator uint(GLHandleARB val) => val._value1;
+                        public static implicit operator IntPtr(GLHandleARB val) => val._value2;
+                    }}
+                }}
+                ");
         }
 
         public static void WriteNativeFunctions(string directoryPath, string version, List<NativeFunction> nativeFunctions)
@@ -208,7 +191,7 @@ namespace GeneratorV2.Writing
             writer.WriteLine("using System;");
             writer.WriteLine();
             // NAMESPACE:
-            writer.WriteLine($"namespace OpenToolkit.Graphics.OpenGL.{version}");
+            writer.WriteLine($"namespace {Namespace}.OpenGL.{version}");
             using (Scope(writer))
             {
                 writer.WriteLine($"public static unsafe partial class GL");
@@ -289,8 +272,7 @@ namespace GeneratorV2.Writing
             writer.WriteLine("using System.Runtime.CompilerServices;");
             writer.WriteLine("using System.Runtime.InteropServices;");
             writer.WriteLine();
-            // NAMESPACE:
-            writer.WriteLine($"namespace OpenToolkit.Graphics.OpenGL.{version}");
+            writer.WriteLine($"namespace {Namespace}.OpenGL.{version}");
             using (Scope(writer))
             {
                 writer.WriteLine($"public static unsafe partial class GL");
@@ -298,6 +280,7 @@ namespace GeneratorV2.Writing
                 {
                     foreach (var overload in overloads)
                     {
+                        // FIXME: This was(?) used to cull "overloads" that didn't get any .
                         if (overload.NestedOverload == null &&
                             overload.MarshalLayerToNested == null)
                             continue;
@@ -306,20 +289,14 @@ namespace GeneratorV2.Writing
 
                         // FIXME: Make the overload contain the name. (remove postfix usecase)
                         // FIXME: Make NativeFunction contain the preprocessed name as well as the entry point.
-                        if (overload.GenericTypes.Length > 0)
+                        string genericTypes = overload.GenericTypes.Length <= 0 ? "" : $"<{string.Join(", ", overload.GenericTypes)}>";
+                        writer.WriteLine($"public static unsafe {overload.ReturnType.ToCSString()} {overload.NativeFunction.EntryPoint[2..]}{genericTypes}({parameterString})");
+                        using (writer.Indentation())
                         {
-                            writer.WriteLine($"public static unsafe {overload.ReturnType.ToCSString()} {overload.NativeFunction.EntryPoint[2..]}<{string.Join(", ", overload.GenericTypes)}>({parameterString})");
-                            using (writer.Indentation())
+                            foreach (var type in overload.GenericTypes)
                             {
-                                foreach (var type in overload.GenericTypes)
-                                {
-                                    writer.WriteLine($"where {type} : unmanaged");
-                                }
+                                writer.WriteLine($"where {type} : unmanaged");
                             }
-                        }
-                        else
-                        {
-                            writer.WriteLine($"public static unsafe {overload.ReturnType.ToCSString()} {overload.NativeFunction.EntryPoint[2..]}({parameterString})");
                         }
 
                         using (Scope(writer))

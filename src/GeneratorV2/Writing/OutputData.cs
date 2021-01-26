@@ -5,15 +5,17 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Diagnostics;
 
 namespace GeneratorV2.Writing
 {
-    // FIXME...?
+    // FIXME: Switch to ToString and use [DebuggerDisplay] for nice debug strings
     public interface ICSType
     {
         public string ToCSString();
     }
 
+    [DebuggerDisplay("{TypeName} (Constant = {Constant})")]
     public class CSType : ICSType
     {
         public readonly string TypeName;
@@ -33,6 +35,7 @@ namespace GeneratorV2.Writing
         }
     }
 
+    // FIXME: Split into CSChar8 and CSChar16
     public class CSChar : ICSType
     {
         public readonly bool IsByteSize;
@@ -54,6 +57,10 @@ namespace GeneratorV2.Writing
 
     // FIXME: This type should never really be visible here?
     // It should atleast never be written out...
+
+    // FIXME: Remove this. What we do instead is when we make a ICSType out of
+    // glPathGlyphIndexRangeNV we change the type into a pointer
+    // and add a constant length expression to the parameter.
     public class CSFixedSizeArray : ICSType
     {
         public readonly ICSType BaseType;
@@ -117,7 +124,7 @@ namespace GeneratorV2.Writing
         }
     }
 
-    public class CSVoid :ICSType
+    public class CSVoid : ICSType
     {
         public CSVoid()
         { }
@@ -208,7 +215,9 @@ namespace GeneratorV2.Writing
     {
         public readonly ICSType Type;
         public readonly string Name;
-        // FIXME: Make a processed version of this?
+        // FIXME: This is only used for overloading,
+        // this is the parsed version of the length without processing.
+        // We might want to do further processing on this before overloading, or move it.
         public readonly IExpression? Length;
 
         public Parameter(ICSType type, string name, IExpression? length)
@@ -226,8 +235,10 @@ namespace GeneratorV2.Writing
 
     public class NativeFunction
     {
+        // FIXME: Add string for the C# name of the function.
         public readonly string EntryPoint;
         public readonly List<Parameter> Parameters;
+        // Possibly update this to use Type.
         public readonly ICSType ReturnType;
 
         public NativeFunction(string entryPoint, List<Parameter> parameters, ICSType returnType)
@@ -277,7 +288,7 @@ namespace GeneratorV2.Writing
     // FIXME: Better name
     public class EnumMemberData : IEquatable<EnumMemberData?>
     {
-        // This is the c name still
+        // FIXME: This is the c name still
         public readonly string Name;
         public readonly ulong Value;
         public readonly string[]? Groups;
@@ -353,6 +364,7 @@ namespace GeneratorV2.Writing
 
     public class GLVersionOutput
     {
+        // FIXME: Make this into GLAPI + Version
         public readonly string Version;
         public readonly List<NativeFunction> Functions;
         public readonly List<Overload> Overloads;
