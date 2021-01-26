@@ -16,6 +16,10 @@ namespace GeneratorV2.Process
     {
         public static OutputData ProcessSpec(Specification spec)
         {
+            // FIXME: Check if GLSC 2 contains unique functions that could be filtered out.
+            // FIXME: See if we can filter out enums and functions that are from GLSC 2 so that
+            // we do not process them that would be great.
+
             // The first thing we do is process all of the functions defined into a dictionary of NativeFunctions
             Dictionary<string, NativeFunction> allFunctions = new Dictionary<string, NativeFunction>(spec.Commands.Count);
             Dictionary<NativeFunction, Overload[]> allFunctionOverloads = new Dictionary<NativeFunction, Overload[]>(spec.Commands.Count);
@@ -31,23 +35,25 @@ namespace GeneratorV2.Process
                 allFunctionOverloads[nativeFunction] = overloads;
             }
 
-            // We then make a dictionary of all the enums with their individual group data inside
+            // FIXME: Make this into Dictionary<GLAPI, Dictionary<string, EnumMemberData>> to handle different GL APIs.
+            // We then make a dictionary of all the enums with their individual group data inside.
             Dictionary<string, EnumMemberData> allEnums = new Dictionary<string, EnumMemberData>();
             Dictionary<string, EnumMemberData> allEnumsGLES = new Dictionary<string, EnumMemberData>();
             // FIXME: This is only here to mark groups as flags...
+            // FIXME: Rename/change type to Dictionary<string, bool> isEnumGroupFlags.
             Dictionary<string, EnumGroupData> allGroups = new Dictionary<string, EnumGroupData>();
+            // FIXME: Remove this and use the variable above (isEnumGroupFlags.Keys) instead.
             HashSet<string> allGroupNames = new HashSet<string>();
             foreach (var enumsEntry in spec.Enums)
             {
-                // FIXME: Cleanup
-
-
+                // FIXME: Cleanup.
+                // FIXME: Fix specification so we don't need to apply the <enums> groups to the enums here.
                 bool isFlag = enumsEntry.Type == EnumType.Bitmask;
                 HashSet<string> entryGroups = new HashSet<string>();
                 if (enumsEntry.Groups != null)
                 {
-                    entryGroups.UnionWith(enumsEntry.Groups);
                     allGroupNames.UnionWith(enumsEntry.Groups);
+                    entryGroups.UnionWith(enumsEntry.Groups);
                     foreach (var group in enumsEntry.Groups)
                     {
                         allGroups.TryAdd(group, new EnumGroupData(group, isFlag));
@@ -60,8 +66,8 @@ namespace GeneratorV2.Process
 
                     if (@enum.Groups != null)
                     {
-                        groups.UnionWith(@enum.Groups);
                         allGroupNames.UnionWith(@enum.Groups);
+                        groups.UnionWith(@enum.Groups);
                         foreach (var group in @enum.Groups)
                         {
                             allGroups.TryAdd(group, new EnumGroupData(group, isFlag));
@@ -85,7 +91,7 @@ namespace GeneratorV2.Process
                 }
             }
 
-            // Now that we have all of the functions ready in a nice dictionary
+            // Now that we have all of the functions and enums ready in dictionaries
             // we can start building all of the API versions.
 
             // Filter the features we actually want to emit
@@ -127,7 +133,11 @@ namespace GeneratorV2.Process
                     };
 
                     StringBuilder name = new StringBuilder();
-                    name.Append(isGLES ? "GLES" : "GL");
+                    name.Append(feature.Api switch {
+                        GLAPI.GLES1 => "GLES",
+                        GLAPI.GLES2 => "GLES",
+                        _ => feature.Api,
+                    });
                     name.Append(feature.Version.Major);
                     name.Append(feature.Version.Minor);
 
@@ -215,7 +225,7 @@ namespace GeneratorV2.Process
                     foreach (var (groupName, members) in enumGroups)
                     {
                         // SpecialNumbers is not an enum group that we want to output.
-                        // We handle these entries differently.
+                        // We handle these entries differently as some of the entries are longer than an int.
                         if (groupName == "SpecialNumbers")
                             continue;
 
@@ -279,7 +289,7 @@ namespace GeneratorV2.Process
                     {
                         PrimitiveType.Void => new CSVoid(),
                         PrimitiveType.Byte => new CSType("byte", bt.Const),
-                        PrimitiveType.ByteChar => new CSChar(isByteSize: true, bt.Const),
+                        PrimitiveType.Char8 => new CSChar(isByteSize: true, bt.Const),
                         PrimitiveType.Sbyte => new CSType("sbyte", bt.Const),
                         PrimitiveType.Short => new CSType("short", bt.Const),
                         PrimitiveType.Ushort => new CSType("ushort", bt.Const),

@@ -9,7 +9,7 @@ namespace GeneratorV2.Data
         Invalid,
         Void,
         Byte,
-        ByteChar,
+        Char8,
         Sbyte,
         Short,
         Ushort,
@@ -27,7 +27,7 @@ namespace GeneratorV2.Data
 
         GLHandleARB,
 
-        //The following have a custom c# implementation in the writer.
+        // The following have a custom c# implementation in the writer.
         GLSync,
         CLContext,
         CLEvent,
@@ -68,7 +68,7 @@ namespace GeneratorV2.Data
         }
     }
 
-    public class GLArrayType : GLPointerType
+    public class GLArrayType : GLPointerType // REMEMBER: This is also a pointer type.
     {
         public readonly int Length;
 

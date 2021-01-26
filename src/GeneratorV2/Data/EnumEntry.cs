@@ -18,6 +18,7 @@ namespace GeneratorV2.Data
         public readonly string[]? Groups;
         public readonly EnumType Type;
         public readonly string? Vendor;
+        // NOTE: This field is not that useful to us so we might not even want to parse it.
         public readonly Range? Range;
         public readonly string? Comment;
         public readonly List<EnumEntry2> Enums;
@@ -35,12 +36,13 @@ namespace GeneratorV2.Data
     }
 
     /// <summary>
+    /// "
     /// Legal C suffix for the value to force it to a specific type.
     /// Currently only \code{u} and \code{ull} are used,
     /// for \code{unsigned} 32 - and 64 - bit integer values, respectively.
     /// Separated from the \attr{value} field since this eases parsing and
     /// sorting of values, and is rarely used.
-    ///
+    /// "
     /// <br/>
     /// Taken from <see href="https://github.com/KhronosGroup/OpenGL-Registry/blob/0dc24166d162723781f1bf9fe433f71fa03a7aa0/xml/readme.tex#L383">KhronosGroup/OpenGL-Registry/xml/readme.tex#L383</see> 2020-11-22
     /// </summary>

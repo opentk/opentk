@@ -15,11 +15,14 @@ namespace GeneratorV2.Parsing
         {
             var xdocument = XDocument.Load(input);
 
-            var commands = ParseCommands(xdocument.Root!);
-            var enums =  ParseEnums(xdocument.Root!);
+            if (xdocument.Root == null)
+                throw new NullReferenceException("The parsed xml didn't contain a Root node.");
+            
+            var commands = ParseCommands(xdocument.Root);
+            var enums =  ParseEnums(xdocument.Root);
 
-            var features = ParseFeatures(xdocument.Root!);
-            var extensions = ParseExtensions(xdocument.Root!);
+            var features = ParseFeatures(xdocument.Root);
+            var extensions = ParseExtensions(xdocument.Root);
 
             return new Specification(commands, enums, features, extensions);
         }
@@ -83,6 +86,7 @@ namespace GeneratorV2.Parsing
             exp = exp.TrimStart();
 
             BinaryOperator op;
+            // GetOperation is a local function defined below return.
             while ((op = GetOperation(exp)) != BinaryOperator.Invalid)
             {
                 exp = exp[1..];
@@ -113,6 +117,7 @@ namespace GeneratorV2.Parsing
             exp = exp.TrimStart();
 
             BinaryOperator op;
+            // GetOperation is a local function defined below return.
             while ((op = GetOperation(exp)) != BinaryOperator.Invalid)
             {
                 exp = exp[1..];
@@ -148,10 +153,10 @@ namespace GeneratorV2.Parsing
                 {
                     arguments.Add(ParseExpressionPrio2(exp, out exp));
 
+                    // NOTE: Possible error here, if whitespaces are introduced in COMPSIZE() inside the spec.
                     if (exp[0] == ',')
                         exp = exp[1..];
                 }
-
                 // Remove the last ')'
                 leftOver = exp[1..];
                 return new CompSize(arguments.ToArray());
@@ -167,28 +172,25 @@ namespace GeneratorV2.Parsing
                 leftOver = expression[i..];
                 return new Constant(int.Parse(expression[0..i]));
             }
-            else
+            else if (char.IsLetter(expression[0]))
             {
-                if (char.IsLetter(expression[0]))
+                int i = 1;
+                while (i < expression.Length && char.IsLetterOrDigit(expression[i]))
                 {
-                    int i = 1;
-                    while (i < expression.Length && char.IsLetterOrDigit(expression[i]))
-                    {
-                        i++;
-                    }
-
-                    leftOver = expression[i..];
-                    return new ParameterReference(expression[0..i]);
+                    i++;
                 }
-                else throw new Exception($"Could not parse expression '{expression}'");
+
+                leftOver = expression[i..];
+                return new ParameterReference(expression[0..i]);
             }
+            else throw new Exception($"Could not parse expression '{expression}'");
         }
 
         private static PType ParsePType(XElement t)
         {
             var group = t.Attribute("group")?.Value;
 
-            var str = t.GetXmlText(element => !(element.Name == "name") ? element.Value : string.Empty).Trim();
+            var str = t.GetXmlText(element => element.Name != "name" ? element.Value : string.Empty).Trim();
 
             return new PType(ParseType(str), group);
         }
@@ -214,98 +216,102 @@ namespace GeneratorV2.Parsing
                     throw new Exception("Missmatched brackets!");
                 }
             }
-
-            if (type.EndsWith('*'))
+            else if (type.EndsWith('*'))
             {
-                // We are parsing a pointer type.
+                // This removes the last character of the string, ^1 is an exclusive upper bound.
                 var withoutAsterisk = type[0..^1].TrimEnd();
 
+                // A pointer is only const if const is directly in front of the pointer,
+                // if the const is in front of the type the type is the constant and not the pointer.
                 bool @const = false;
                 if (withoutAsterisk.EndsWith("const"))
                 {
                     @const = true;
                     withoutAsterisk = withoutAsterisk[0..^"const".Length];
                 }
-                else if (withoutAsterisk.StartsWith("const"))
-                {
-                    @const = true;
-                    withoutAsterisk = withoutAsterisk["const".Length..];
-                }
 
                 var baseType = ParseType(withoutAsterisk);
 
                 return new GLPointerType(baseType, @const);
             }
-
-            // This is needed for _cl_context, and _cl_event
-            // We don't care about struct here because it doesn't add any information (we are not a c compiler).
-            if (type.StartsWith("struct"))
+            else
             {
-                return ParseType(type["struct".Length..]);
+                var @const = false;
+                if (type.StartsWith("const"))
+                {
+                    @const = true;
+                    type = type["const".Length..].TrimStart();
+                }
+
+                // This is needed for _cl_context, and _cl_event
+                // We don't care about struct here because it doesn't add any information (we are not a c compiler).
+                if (type.StartsWith("struct"))
+                {
+                    type = type["struct".Length..].TrimStart();
+                }
+
+                // FIXME: Make this a 1 to 1 map
+                PrimitiveType primitiveType = type switch
+                {
+                    "void" => PrimitiveType.Void,
+                    "GLenum" => PrimitiveType.Enum,
+                    "GLboolean" => PrimitiveType.Byte,
+                    "GLbitfield" => PrimitiveType.Uint,
+                    "GLvoid" => PrimitiveType.Void,
+                    "GLbyte" => PrimitiveType.Sbyte,
+                    "GLubyte" => PrimitiveType.Byte,
+                    "GLshort" => PrimitiveType.Short,
+                    "GLushort" => PrimitiveType.Ushort,
+                    "GLint" => PrimitiveType.Int,
+                    "GLuint" => PrimitiveType.Uint,
+                    "GLclampx" => PrimitiveType.Int,
+                    "GLsizei" => PrimitiveType.Int,
+                    "GLfloat" => PrimitiveType.Float,
+                    "GLclampf" => PrimitiveType.Float,
+                    "GLdouble" => PrimitiveType.Double,
+                    "GLclampd" => PrimitiveType.Double,
+                    "GLeglClientBufferEXT" => PrimitiveType.VoidPtr,
+                    "GLeglImageOES" => PrimitiveType.VoidPtr,
+                    "GLchar" => PrimitiveType.Char8,
+                    "GLcharARB" => PrimitiveType.Char8,
+                    "GLhalf" => PrimitiveType.Half,
+                    "GLhalfARB" => PrimitiveType.Half,
+                    "GLfixed" => PrimitiveType.Int,
+                    "GLintptr" => PrimitiveType.IntPtr,
+                    "GLintptrARB" => PrimitiveType.IntPtr,
+                    "GLsizeiptr" => PrimitiveType.IntPtr,
+                    "GLsizeiptrARB" => PrimitiveType.IntPtr,
+                    "GLint64" => PrimitiveType.Int,
+                    "GLint64EXT" => PrimitiveType.Int,
+                    "GLuint64" => PrimitiveType.Uint,
+                    "GLuint64EXT" => PrimitiveType.Uint,
+                    "GLhalfNV" => PrimitiveType.Ushort,
+                    "GLvdpauSurfaceNV" => PrimitiveType.IntPtr,
+
+                    // FIXME
+                    "GLVULKANPROCNV" => PrimitiveType.Void,
+
+                    "GLhandleARB" => PrimitiveType.GLHandleARB, //This type is platform specific on apple.
+
+                    //The following have a custom c# implementation in the writer.
+                    "GLsync" => PrimitiveType.GLSync,
+                    "_cl_context" => PrimitiveType.CLContext,
+                    "_cl_event" => PrimitiveType.CLEvent,
+                    "GLDEBUGPROC" => PrimitiveType.GLDEBUGPROC,
+                    "GLDEBUGPROCARB" => PrimitiveType.GLDEBUGPROCARB,
+                    "GLDEBUGPROCKHR" => PrimitiveType.GLDEBUGPROCKHR,
+                    "GLDEBUGPROCAMD" => PrimitiveType.GLDEBUGPROCAMD,
+                    "GLDEBUGPROCNV" => PrimitiveType.GLDEBUGPROCNV,
+                    _ => PrimitiveType.Invalid,
+                };
+
+                if (primitiveType == PrimitiveType.Invalid)
+                {
+                    throw new Exception($"Type conversion has not been created for type {type}");
+                }
+
+                return new GLBaseType(type, primitiveType, @const);
             }
-
-            // FIXME: Make this a 1 to 1 map
-            PrimitiveType primitiveType = type switch
-            {
-                "void" => PrimitiveType.Void,
-                "GLenum" => PrimitiveType.Enum,
-                "GLboolean" => PrimitiveType.Byte,
-                "GLbitfield" => PrimitiveType.Uint,
-                "GLvoid" => PrimitiveType.Void,
-                "GLbyte" => PrimitiveType.Sbyte,
-                "GLubyte" => PrimitiveType.Byte,
-                "GLshort" => PrimitiveType.Short,
-                "GLushort" => PrimitiveType.Ushort,
-                "GLint" => PrimitiveType.Int,
-                "GLuint" => PrimitiveType.Uint,
-                "GLclampx" => PrimitiveType.Int,
-                "GLsizei" => PrimitiveType.Int,
-                "GLfloat" => PrimitiveType.Float,
-                "GLclampf" => PrimitiveType.Float,
-                "GLdouble" => PrimitiveType.Double,
-                "GLclampd" => PrimitiveType.Double,
-                "GLeglClientBufferEXT" => PrimitiveType.VoidPtr,
-                "GLeglImageOES" => PrimitiveType.VoidPtr,
-                "GLchar" => PrimitiveType.ByteChar,
-                "GLcharARB" => PrimitiveType.ByteChar,
-                "GLhalf" => PrimitiveType.Half,
-                "GLhalfARB" => PrimitiveType.Half,
-                "GLfixed" => PrimitiveType.Int,
-                "GLintptr" => PrimitiveType.IntPtr,
-                "GLintptrARB" => PrimitiveType.IntPtr,
-                "GLsizeiptr" => PrimitiveType.IntPtr,
-                "GLsizeiptrARB" => PrimitiveType.IntPtr,
-                "GLint64" => PrimitiveType.Int,
-                "GLint64EXT" => PrimitiveType.Int,
-                "GLuint64" => PrimitiveType.Uint,
-                "GLuint64EXT" => PrimitiveType.Uint,
-                "GLhalfNV" => PrimitiveType.Ushort,
-                "GLvdpauSurfaceNV" => PrimitiveType.IntPtr,
-
-                // FIXME
-                "GLVULKANPROCNV" => PrimitiveType.Void,
-
-                "GLhandleARB" => PrimitiveType.GLHandleARB, //This type is platform specific on apple.
-
-                //The following have a custom c# implementation in the writer.
-                "GLsync" => PrimitiveType.GLSync,
-                "_cl_context" => PrimitiveType.CLContext,
-                "_cl_event" => PrimitiveType.CLEvent,
-                "GLDEBUGPROC" => PrimitiveType.GLDEBUGPROC,
-                "GLDEBUGPROCARB" => PrimitiveType.GLDEBUGPROCARB,
-                "GLDEBUGPROCKHR" => PrimitiveType.GLDEBUGPROCKHR,
-                "GLDEBUGPROCAMD" => PrimitiveType.GLDEBUGPROCAMD,
-                "GLDEBUGPROCNV" => PrimitiveType.GLDEBUGPROCNV,
-                _ => PrimitiveType.Invalid,
-            };
-
-            if (primitiveType == PrimitiveType.Invalid)
-            {
-                Logger.Error($"Type conversion has not been created for type {type}");
-                throw new Exception();
-            }
-
-            return new GLBaseType(type, primitiveType, false);
         }
 
 
@@ -326,7 +332,8 @@ namespace GeneratorV2.Parsing
 
                 var startStr = enums.Attribute("start")?.Value;
                 var endStr = enums.Attribute("end")?.Value;
-                if ((startStr == null) != (endStr == null))
+                if ((startStr == null && endStr != null) ||
+                    (startStr != null && endStr == null))
                     throw new Exception($"Enums entry '{enums}' is missing either a start or end attribute.");
 
                 Range? range = null;

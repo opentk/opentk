@@ -48,6 +48,7 @@ namespace GeneratorV2.Data
         // FIXME...
     }
 
+    // TODO: Merge these too classes probably
     public class RequireEntry
     {
         // This field is most likely not used...

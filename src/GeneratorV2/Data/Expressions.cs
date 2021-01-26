@@ -22,6 +22,7 @@ namespace GeneratorV2.Data
 
     public class CompSize : IExpression
     {
+        // FIXME: These are all probably ParameterReference...
         public IExpression[] Parameters { get; }
 
         public CompSize(IExpression[] parameters)
