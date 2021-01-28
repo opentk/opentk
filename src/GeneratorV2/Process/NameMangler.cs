@@ -6,9 +6,16 @@ namespace GeneratorV2.Parsing
 {
     public class NameMangler
     {
+        public static string MangleFunctionName(string name)
+        {
+            // Remove the "gl" prefix.
+            return name[2..];
+        }
+
         public static string MangleEnumName(string name)
         {
-            return MangleExtensionName(name[3..]);
+            // Remove the "GL_" prefix.
+            return MangleMemberName(name[3..]);
         }
 
         public static string MangleParameterName(string name) => name switch
