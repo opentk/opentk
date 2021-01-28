@@ -66,21 +66,28 @@ namespace GeneratorV2.Writing
             // This should create folders to put the versions in
             foreach (var version in data.Versions)
             {
-                string versionPath = Path.Combine(glFolder, version.Version);
+                string apiName = version.Api switch
+                {
+                    OutputApi.GL => "GL",
+                    OutputApi.GLES => "GLES",
+                    _ => throw new Exception($"This is not a valid output API ({version.Api})"),
+                };
+                string versionName = $"{apiName}{version.Version.Major}{version.Version.Minor}";
+                string versionPath = Path.Combine(glFolder, versionName);
 
                 Directory.CreateDirectory(versionPath);
 
-                WriteNativeFunctions(versionPath, version.Version, version.Functions);
-                WriteOverloads(versionPath, version.Version, version.Overloads);
+                WriteNativeFunctions(versionPath, versionName, version.Functions);
+                WriteOverloads(versionPath, versionName, version.Overloads);
 
-                WriteEnums(versionPath, version.Version, version.EnumGroups, version.AllEnums);
+                WriteEnums(versionPath, versionName, version.EnumGroups, version.AllEnums);
             }
         }
 
         public static void WriteProjectFile(string projectPath)
         {
             using var writer = new IndentedTextWriter(Path.Combine(projectPath, $"{Namespace}.csproj"));
-            
+
             // FIXME: Maybe get the version from somewhere too?
             // The indentation is gonna be weird in the file doing it like this,
             // but it shouldn't be edited in there anyways.
@@ -123,7 +130,6 @@ namespace GeneratorV2.Writing
                 ");
         }
 
-        // FIXME: Maybe this file shouldn't be generated?
         public static void WriteBuiltInTypes(string projectPath)
         {
             using var writer = new IndentedTextWriter(Path.Combine(projectPath, "Types.cs"));
@@ -205,8 +211,7 @@ namespace GeneratorV2.Writing
                     StringBuilder signature = new StringBuilder();
                     foreach (var function in nativeFunctions)
                     {
-                        // Remove the "gl" prefix.
-                        string name = function.EntryPoint[2..];
+                        string name = function.FunctionName;
 
                         paramNames.Clear();
                         delegateTypes.Clear();

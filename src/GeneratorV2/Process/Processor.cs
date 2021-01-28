@@ -1,6 +1,7 @@
 ﻿using GeneratorV2.Data;
 using GeneratorV2.Parsing;
 using GeneratorV2.Writing;
+using GeneratorV2.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -35,15 +36,8 @@ namespace GeneratorV2.Process
                 allFunctionOverloads[nativeFunction] = overloads;
             }
 
-            // FIXME: Make this into Dictionary<GLAPI, Dictionary<string, EnumMemberData>> to handle different GL APIs.
-            // We then make a dictionary of all the enums with their individual group data inside.
-            Dictionary<string, EnumMemberData> allEnums = new Dictionary<string, EnumMemberData>();
-            Dictionary<string, EnumMemberData> allEnumsGLES = new Dictionary<string, EnumMemberData>();
-            // FIXME: This is only here to mark groups as flags...
-            // FIXME: Rename/change type to Dictionary<string, bool> isEnumGroupFlags.
-            Dictionary<string, EnumGroupData> allGroups = new Dictionary<string, EnumGroupData>();
-            // FIXME: Remove this and use the variable above (isEnumGroupFlags.Keys) instead.
-            HashSet<string> allGroupNames = new HashSet<string>();
+            Dictionary<OutputApi, Dictionary<string, EnumMemberData>> allEnumsPerAPI = new Dictionary<OutputApi, Dictionary<string, EnumMemberData>>();
+            Dictionary<string, bool> allEnumGroupsToIsBitmask = new Dictionary<string, bool>();
             foreach (var enumsEntry in spec.Enums)
             {
                 // FIXME: Cleanup.
@@ -52,11 +46,10 @@ namespace GeneratorV2.Process
                 HashSet<string> entryGroups = new HashSet<string>();
                 if (enumsEntry.Groups != null)
                 {
-                    allGroupNames.UnionWith(enumsEntry.Groups);
                     entryGroups.UnionWith(enumsEntry.Groups);
                     foreach (var group in enumsEntry.Groups)
                     {
-                        allGroups.TryAdd(group, new EnumGroupData(group, isFlag));
+                        allEnumGroupsToIsBitmask.TryAdd(group, isFlag);
                     }
                 }
 
@@ -66,27 +59,26 @@ namespace GeneratorV2.Process
 
                     if (@enum.Groups != null)
                     {
-                        allGroupNames.UnionWith(@enum.Groups);
                         groups.UnionWith(@enum.Groups);
                         foreach (var group in @enum.Groups)
                         {
-                            allGroups.TryAdd(group, new EnumGroupData(group, isFlag));
+                            allEnumGroupsToIsBitmask.TryAdd(group, isFlag);
                         }
                     }
 
                     var data = new EnumMemberData(NameMangler.MangleEnumName(@enum.Name), @enum.Value, groups.ToArray(), isFlag);
                     if (@enum.Api == GLAPI.None)
                     {
-                        allEnums.Add(@enum.Name, data);
-                        allEnumsGLES.Add(@enum.Name, data);
+                        allEnumsPerAPI.AddToNestedDict(OutputApi.GL, @enum.Name, data);
+                        allEnumsPerAPI.AddToNestedDict(OutputApi.GLES, @enum.Name, data);
                     }
                     else if (@enum.Api == GLAPI.GLES2 || @enum.Api == GLAPI.GLES1)
                     {
-                        allEnumsGLES.Add(@enum.Name, data);
+                        allEnumsPerAPI.AddToNestedDict(OutputApi.GLES, @enum.Name, data);
                     }
                     else if (@enum.Api == GLAPI.GL)
                     {
-                        allEnums.Add(@enum.Name, data);
+                        allEnumsPerAPI.AddToNestedDict(OutputApi.GL, @enum.Name, data);
                     }
                 }
             }
@@ -124,22 +116,13 @@ namespace GeneratorV2.Process
                 HashSet<string> groupsReferencedByFunctions = new HashSet<string>();
                 foreach (var feature in features)
                 {
-                    bool isGLES = feature.Api switch
+                    OutputApi api = feature.Api switch
                     {
-                        GLAPI.GL => false,
-                        GLAPI.GLES1 => true,
-                        GLAPI.GLES2 => true,
+                        GLAPI.GL => OutputApi.GL,
+                        GLAPI.GLES1 => OutputApi.GLES,
+                        GLAPI.GLES2 => OutputApi.GLES,
                         _ => throw new Exception($"We should filter other APIs before this. API: {feature.Api}"),
                     };
-
-                    StringBuilder name = new StringBuilder();
-                    name.Append(feature.Api switch {
-                        GLAPI.GLES1 => "GLES",
-                        GLAPI.GLES2 => "GLES",
-                        _ => feature.Api,
-                    });
-                    name.Append(feature.Version.Major);
-                    name.Append(feature.Version.Minor);
 
                     // A list of functions contained in this version.
                     HashSet<NativeFunction> functions = new HashSet<NativeFunction>();
@@ -165,7 +148,7 @@ namespace GeneratorV2.Process
 
                         foreach (var enumName in require.Enums)
                         {
-                            var enumsDict = isGLES ? allEnumsGLES : allEnums;
+                            var enumsDict = allEnumsPerAPI[api];
                             if (enumsDict.TryGetValue(enumName, out var @enum))
                             {
                                 enums.Add(@enum);
@@ -203,7 +186,7 @@ namespace GeneratorV2.Process
                     Dictionary<string, List<EnumMemberData>> enumGroups = new Dictionary<string, List<EnumMemberData>>();
 
                     // Add keys + lists for all enum names
-                    foreach (var groupName in allGroupNames)
+                    foreach (var groupName in allEnumGroupsToIsBitmask.Keys)
                     {
                         enumGroups.Add(groupName, new List<EnumMemberData>());
                     }
@@ -236,7 +219,7 @@ namespace GeneratorV2.Process
                         if (members.Count <= 0 && groupsReferencedByFunctions.Contains(groupName) == false)
                             continue;
 
-                        bool isFlags = allGroups[groupName].IsFlags;
+                        bool isFlags = allEnumGroupsToIsBitmask[groupName];
                         finalGroups.Add(new EnumGroup(groupName, isFlags, members));
                     }
 
@@ -247,7 +230,7 @@ namespace GeneratorV2.Process
                         overloadList.AddRange(allFunctionOverloads[function]);
                     }
 
-                    glVersions.Add(new GLVersionOutput(name.ToString(), functionList, overloadList, enums.ToList(), finalGroups));
+                    glVersions.Add(new GLVersionOutput(api, feature.Version, functionList, overloadList, enums.ToList(), finalGroups));
                 }
             }
 
@@ -256,40 +239,44 @@ namespace GeneratorV2.Process
 
         public static NativeFunction MakeNativeFunction(Command2 command, out string[] enumGroupsUsed)
         {
+            string functionName = NameMangler.MangleFunctionName(command.EntryPoint);
+
             HashSet<string> enumGroups = new HashSet<string>();
 
             List<Parameter> parameters = new List<Parameter>();
             foreach (var p in command.Parameters)
             {
-                ICSType t = MakeCSType(p.Type.Type, p.Type.Group);
-                parameters.Add(new Parameter(t, NameMangler.MangleParameterName(p.Name), p.Length));
+                ICSType t = MakeCSType(p.Type.Type, p.Type.Group, out var length);
+                parameters.Add(new Parameter(t, NameMangler.MangleParameterName(p.Name), p.Length ?? length));
                 if (p.Type.Group != null)
                     enumGroups.Add(p.Type.Group);
             }
 
-            ICSType returnType = MakeCSType(command.ReturnType.Type, command.ReturnType.Group);
+            ICSType returnType = MakeCSType(command.ReturnType.Type, command.ReturnType.Group, out _);
             if (command.ReturnType.Group != null)
                 enumGroups.Add(command.ReturnType.Group);
 
             enumGroupsUsed = enumGroups.ToArray();
 
-            return new NativeFunction(command.EntryPoint, parameters, returnType);
+            return new NativeFunction(command.EntryPoint, functionName, parameters, returnType);
         }
 
-        public static ICSType MakeCSType(GLType type, string? group = null)
+        public static ICSType MakeCSType(GLType type, string? group, out IExpression? length)
         {
+            length = default;
             switch (type)
             {
                 case GLArrayType at:
-                    return new CSFixedSizeArray(MakeCSType(at.BaseType, group), at.Length, at.Const);
+                    length = new Constant(at.Length);
+                    return new CSPointer(MakeCSType(at.BaseType, group, out _), at.Const);
                 case GLPointerType pt:
-                    return new CSPointer(MakeCSType(pt.BaseType, group), pt.Const);
+                    return new CSPointer(MakeCSType(pt.BaseType, group, out length), pt.Const);
                 case GLBaseType bt:
                     return bt.Type switch
                     {
                         PrimitiveType.Void => new CSVoid(),
                         PrimitiveType.Byte => new CSType("byte", bt.Const),
-                        PrimitiveType.Char8 => new CSChar(isByteSize: true, bt.Const),
+                        PrimitiveType.Char8 => new CSChar8(bt.Const),
                         PrimitiveType.Sbyte => new CSType("sbyte", bt.Const),
                         PrimitiveType.Short => new CSType("short", bt.Const),
                         PrimitiveType.Ushort => new CSType("ushort", bt.Const),
@@ -436,7 +423,7 @@ namespace GeneratorV2.Process
                 {
                     // FIXME: We want to handle sized strings different!!!
                     var param = newParams[i];
-                    if (param.Type is CSPointer pt && pt.BaseType is CSChar charType)
+                    if (param.Type is CSPointer pt && pt.BaseType is CSChar8 charType)
                     {
                         var pointerParam = newParams[i];
                         // FIXME: Can we know if the string is nullable or not?
@@ -507,7 +494,7 @@ namespace GeneratorV2.Process
                 {
                     var param = newParams[i];
 
-                    if (param.Type is CSPointer pt && pt.BaseType is CSChar)
+                    if (param.Type is CSPointer pt && pt.BaseType is CSChar8)
                     {
                         Debug.WriteLine($"Char pointer leaked from earlier overloaders: \"{overload.NativeFunction.EntryPoint}\" ({param})");
                         break;
