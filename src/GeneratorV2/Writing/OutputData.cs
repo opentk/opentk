@@ -16,109 +16,59 @@ namespace GeneratorV2.Writing
         GLES,
     }
 
-    // FIXME: Switch to ToString and use [DebuggerDisplay] for nice debug strings
-    public interface ICSType
+    public abstract record BaseCSType()
     {
-        public string ToCSString();
+        // We use a custom To string here to allow tostring to be used for debugging,
+        // also this way we make sure you have to override the tostring method.
+        public abstract string ToCSString();
     }
 
     [DebuggerDisplay("{TypeName} (Constant = {Constant})")]
-    public class CSType : ICSType
+    public record CSType(string TypeName, bool Constant) : BaseCSType
     {
-        public readonly string TypeName;
-
-        // FIXME: Think through this
-        public readonly bool Constant;
-
-        public CSType(string typeName, bool constant)
-        {
-            TypeName = typeName;
-            Constant = constant;
-        }
-
-        public string ToCSString()
+        public override string ToCSString()
         {
             return TypeName;
         }
     }
 
-    public class CSChar8 : ICSType
+    public record CSChar8(bool Constant) : BaseCSType
     {
-        // FIXME: Think through this
-        public readonly bool Constant;
-
-        public CSChar8(bool constant)
-        {
-            Constant = constant;
-        }
-
-        public string ToCSString()
+        public override string ToCSString()
         {
             return "byte";
         }
     }
 
-    public class CSArray : ICSType
+    // FIXME: Think through size, see GLArrayType
+    public record CSArray(BaseCSType BaseType, bool Readonly) : BaseCSType
     {
-        public readonly ICSType BaseType;
-
-        // FIXME: Think through size, see GLArrayType
-        public readonly bool Readonly;
-
-        public CSArray(ICSType baseType, bool @readonly)
-        {
-            BaseType = baseType;
-            Readonly = @readonly;
-        }
-
-        public string ToCSString()
+        public override string ToCSString()
         {
             // FIXME: Maybe do something with size or constant??
             return $"{BaseType.ToCSString()}[]";
         }
     }
 
-    public class CSPointer : ICSType
+    public record CSPointer(BaseCSType BaseType, bool Constant) : BaseCSType
     {
-        public readonly ICSType BaseType;
-
-        // FIXME: Think through this, see GLPointerType
-        public readonly bool Constant;
-
-        public CSPointer(ICSType baseType, bool constant)
-        {
-            BaseType = baseType;
-            Constant = constant;
-        }
-
-        public string ToCSString()
+        public override string ToCSString()
         {
             // FIXME: Maybe do something with constant??
             return $"{BaseType.ToCSString()}*";
         }
     }
 
-    public class CSVoid : ICSType
+    public record CSVoid() : BaseCSType
     {
-        public CSVoid()
-        { }
-
-        public string ToCSString() => "void";
+        public override string ToCSString() => "void";
     }
 
-    public class CSRef : ICSType
+    public record CSRef(CSRef.Type RefType, BaseCSType ReferencedType) : BaseCSType
     {
         public enum Type { Ref, Out, In }
-        public readonly Type RefType;
-        public readonly ICSType ReferencedType;
 
-        public CSRef(Type refType, ICSType referencedType)
-        {
-            RefType = refType;
-            ReferencedType = referencedType;
-        }
-
-        public string ToCSString()
+        public override string ToCSString()
         {
             string modifier = RefType switch
             {
@@ -131,33 +81,17 @@ namespace GeneratorV2.Writing
         }
     }
 
-    public class CSString : ICSType
+    public record CSString(bool Nullable) : BaseCSType
     {
-        public readonly bool Nullable;
-
-        public CSString(bool nullable)
-        {
-            Nullable = nullable;
-        }
-
-        public string ToCSString()
+        public override string ToCSString()
         {
             return $"string{(Nullable ? "?" : "")}";
         }
     }
 
-    public class CSSpan : ICSType
+    public record CSSpan(BaseCSType BaseType, bool Readonly) : BaseCSType
     {
-        public readonly ICSType BaseType;
-        public readonly bool Readonly;
-
-        public CSSpan(ICSType baseType, bool @readonly)
-        {
-            BaseType = baseType;
-            Readonly = @readonly;
-        }
-
-        public string ToCSString()
+        public override string ToCSString()
         {
             if (Readonly)
             {
@@ -170,59 +104,29 @@ namespace GeneratorV2.Writing
         }
     }
 
-    public class CSGenericType : ICSType
+    public record CSGenericType(string GenericTypeName) : BaseCSType
     {
-        public readonly string GenericTypeName;
-
-        public CSGenericType(string genericTypeName)
-        {
-            GenericTypeName = genericTypeName;
-        }
-
-        public string ToCSString()
+        public override string ToCSString()
         {
             return GenericTypeName;
         }
     }
 
-    public class Parameter
-    {
-        public readonly ICSType Type;
-        public readonly string Name;
+    public record Parameter(
+        BaseCSType Type,
+        string Name,
         // FIXME: This is only used for overloading,
         // this is the parsed version of the length without processing.
         // We might want to do further processing on this before overloading, or move it.
-        public readonly IExpression? Length;
+        Expression? Length);
 
-        public Parameter(ICSType type, string name, IExpression? length)
-        {
-            Type = type;
-            Name = name;
-            Length = length;
-        }
+    public record NativeFunction(
+        string EntryPoint,
+        string FunctionName,
+        List<Parameter> Parameters,
+        BaseCSType ReturnType);
 
-        public override string ToString()
-        {
-            return $"{Type.ToCSString()} {Name}{(Length != null ? " (has length)" : string.Empty)}";
-        }
-    }
-
-    public class NativeFunction
-    {
-        public readonly string EntryPoint;
-        public readonly string FunctionName;
-        public readonly List<Parameter> Parameters;
-        // Possibly update this to use System.Type
-        public readonly ICSType ReturnType;
-
-        public NativeFunction(string entryPoint, string functionName, List<Parameter> parameters, ICSType returnType)
-        {
-            EntryPoint = entryPoint;
-            FunctionName = functionName;
-            Parameters = parameters;
-            ReturnType = returnType;
-        }
-    }
+    public record OverloadedFunction(NativeFunction NativeFunction, Overload[] Overloads, bool ChangeNativeName);
 
     public interface IOverloader
     {
@@ -238,131 +142,48 @@ namespace GeneratorV2.Writing
         public string? WriteEpilogue(IndentedTextWriter writer, string? returnName);
     }
 
-    public class Overload
-    {
-        public readonly Overload? NestedOverload;
-        public readonly IOverloadLayer? MarshalLayerToNested;
+    public record Overload(
+        Overload? NestedOverload,
+        IOverloadLayer? MarshalLayerToNested,
+        Parameter[] InputParameters,
+        NativeFunction NativeFunction,
+        BaseCSType ReturnType,
+        string ReturnVariableName,
+        string[] GenericTypes);
 
-        public readonly Parameter[] InputParameters;
-        public readonly NativeFunction NativeFunction;
-        public readonly ICSType ReturnType;
+    public record OverloaderNativeFunction(
+        NativeFunction Function,
+        bool PostfixName);
 
-        public readonly string[] GenericTypes;
-
-        public Overload(Overload? nestedOverload, IOverloadLayer? marshalLayerToNested, Parameter[] inputParameters, NativeFunction nativeFunction, ICSType returnType, string[] genericTypes)
-        {
-            NestedOverload = nestedOverload;
-            MarshalLayerToNested = marshalLayerToNested;
-            InputParameters = inputParameters;
-            NativeFunction = nativeFunction;
-            ReturnType = returnType;
-            GenericTypes = genericTypes;
-        }
-    }
+    public record OverloaderFunctionOverloads(
+        Overload[] Overloads,
+        bool PostfixName);
 
     // FIXME: Better name
-    public class EnumMemberData : IEquatable<EnumMemberData?>
-    {
-        public readonly string Name;
-        public readonly ulong Value;
-        public readonly string[]? Groups;
-        public readonly bool IsFlag;
-
-        public EnumMemberData(string name, ulong value, string[]? groups, bool isFlag)
-        {
-            Name = name;
-            Value = value;
-            Groups = groups;
-            IsFlag = isFlag;
-        }
-
-        // It is important to have an equals and hashcode because
-        // this type will be used in a lot of hash tables
-
-        public override bool Equals(object? obj)
-        {
-            return Equals(obj as EnumMemberData);
-        }
-
-        public bool Equals(EnumMemberData? other)
-        {
-            return other != null &&
-                   Name == other.Name &&
-                   Value == other.Value &&
-                   EqualityComparer<string[]?>.Default.Equals(Groups, other.Groups) &&
-                   IsFlag == other.IsFlag;
-        }
-
-        public override int GetHashCode()
-        {
-            return HashCode.Combine(Name, Value, Groups, IsFlag);
-        }
-
-        public static bool operator ==(EnumMemberData? left, EnumMemberData? right)
-        {
-            return EqualityComparer<EnumMemberData>.Default.Equals(left, right);
-        }
-
-        public static bool operator !=(EnumMemberData? left, EnumMemberData? right)
-        {
-            return !(left == right);
-        }
-    }
+    public record EnumMemberData(
+        string Name,
+        ulong Value,
+        string[]? Groups,
+        bool IsFlag) : IEquatable<EnumMemberData?>;
 
     // FIXME: Better name
-    public class EnumGroupData
-    {
-        public readonly string Name;
-        public readonly bool IsFlags;
+    public record EnumGroupData (
+        string Name,
+        bool IsFlags);
 
-        public EnumGroupData(string name, bool isFlags)
-        {
-            Name = name;
-            IsFlags = isFlags;
-        }
-    }
+    public record EnumGroup(
+        string Name,
+        bool IsFlags,
+        List<EnumMemberData> Members);
 
-    public class EnumGroup
-    {
-        public readonly string Name;
-        public readonly bool IsFlags;
-        public readonly List<EnumMemberData> Members;
+    public record GLVersionOutput(
+        OutputApi Api,
+        Version Version,
+        List<OverloaderNativeFunction> Functions,
+        List<OverloaderFunctionOverloads> Overloads,
+        List<EnumMemberData> AllEnums,
+        List<EnumGroup> EnumGroups);
 
-        public EnumGroup(string name, bool isFlags, List<EnumMemberData> members)
-        {
-            Name = name;
-            IsFlags = isFlags;
-            Members = members;
-        }
-    }
-
-    public class GLVersionOutput
-    {
-        public readonly OutputApi Api;
-        public readonly Version Version;
-        public readonly List<NativeFunction> Functions;
-        public readonly List<Overload> Overloads;
-        public readonly List<EnumMemberData> AllEnums;
-        public readonly List<EnumGroup> EnumGroups;
-
-        public GLVersionOutput(OutputApi api, Version version, List<NativeFunction> functions, List<Overload> overloads, List<EnumMemberData> allEnums, List<EnumGroup> enumGroups)
-        {
-            Api = api;
-            Version = version;
-            Functions = functions;
-            Overloads = overloads;
-            AllEnums = allEnums;
-            EnumGroups = enumGroups;
-        }
-    }
-
-    public class OutputData
-    {
-        public readonly List<GLVersionOutput> Versions;
-
-        public OutputData(List<GLVersionOutput> versions)
-        {
-            Versions = versions;
-        }
-    }
+    public record OutputData(
+        List<GLVersionOutput> Versions);
 }

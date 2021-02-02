@@ -73,7 +73,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GeneratorV2", "src\Generato
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenToolkit.Graphics@Deprecated@", "src\OpenToolkit.Graphics@Deprecated@\OpenToolkit.Graphics@Deprecated@.csproj", "{4FE5F2E4-07ED-422E-BE21-8F5055857222}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenToolkit.Graphics", "src\OpenToolkit.Graphics\OpenToolkit.Graphics.csproj", "{21F0CEC7-C282-4842-87F9-6836266E3343}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenTK.Graphics", "src\OpenTK.Graphics\OpenTK.Graphics.csproj", "{F37509EA-7556-4266-AF64-8426C4B06144}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -141,10 +141,10 @@ Global
 		{4FE5F2E4-07ED-422E-BE21-8F5055857222}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4FE5F2E4-07ED-422E-BE21-8F5055857222}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4FE5F2E4-07ED-422E-BE21-8F5055857222}.Release|Any CPU.Build.0 = Release|Any CPU
-		{21F0CEC7-C282-4842-87F9-6836266E3343}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{21F0CEC7-C282-4842-87F9-6836266E3343}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{21F0CEC7-C282-4842-87F9-6836266E3343}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{21F0CEC7-C282-4842-87F9-6836266E3343}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F37509EA-7556-4266-AF64-8426C4B06144}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F37509EA-7556-4266-AF64-8426C4B06144}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F37509EA-7556-4266-AF64-8426C4B06144}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F37509EA-7556-4266-AF64-8426C4B06144}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

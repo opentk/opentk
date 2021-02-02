@@ -22,18 +22,15 @@ namespace GeneratorV2.Process
             // we do not process them that would be great.
 
             // The first thing we do is process all of the functions defined into a dictionary of NativeFunctions
-            Dictionary<string, NativeFunction> allFunctions = new Dictionary<string, NativeFunction>(spec.Commands.Count);
-            Dictionary<NativeFunction, Overload[]> allFunctionOverloads = new Dictionary<NativeFunction, Overload[]>(spec.Commands.Count);
+            Dictionary<string, OverloadedFunction> allFunctions = new Dictionary<string, OverloadedFunction>(spec.Commands.Count);
             Dictionary<NativeFunction, string[]> functionToEnumGroupsUsed = new Dictionary<NativeFunction, string[]>();
             foreach (var command in spec.Commands)
             {
                 var nativeFunction = MakeNativeFunction(command, out string[] usedEnumGroups);
-                allFunctions.Add(nativeFunction.EntryPoint, nativeFunction);
-
+                var overloads = GenerateOverloads(nativeFunction, out bool changeNativeName);
+                
                 functionToEnumGroupsUsed.Add(nativeFunction, usedEnumGroups);
-
-                var overloads = GenerateOverloads(nativeFunction);
-                allFunctionOverloads[nativeFunction] = overloads;
+                allFunctions.Add(nativeFunction.EntryPoint, new OverloadedFunction(nativeFunction, overloads, changeNativeName));
             }
 
             Dictionary<OutputApi, Dictionary<string, EnumMemberData>> allEnumsPerAPI = new Dictionary<OutputApi, Dictionary<string, EnumMemberData>>();
@@ -111,7 +108,7 @@ namespace GeneratorV2.Process
 
             // Here we process all of the desktop OpenGL versions
             {
-                HashSet<NativeFunction> functionsInLastVersion = new HashSet<NativeFunction>();
+                HashSet<OverloadedFunction> functionsInLastVersion = new HashSet<OverloadedFunction>();
                 HashSet<EnumMemberData> enumsInLastVersion = new HashSet<EnumMemberData>();
                 HashSet<string> groupsReferencedByFunctions = new HashSet<string>();
                 foreach (var feature in features)
@@ -125,7 +122,7 @@ namespace GeneratorV2.Process
                     };
 
                     // A list of functions contained in this version.
-                    HashSet<NativeFunction> functions = new HashSet<NativeFunction>();
+                    HashSet<OverloadedFunction> functions = new HashSet<OverloadedFunction>();
                     HashSet<EnumMemberData> enums = new HashSet<EnumMemberData>();
 
                     // Go through all the functions that are required for this version and add them here.
@@ -137,7 +134,7 @@ namespace GeneratorV2.Process
                             {
                                 functions.Add(function);
 
-                                var functionGroups = functionToEnumGroupsUsed[function];
+                                var functionGroups = functionToEnumGroupsUsed[function.NativeFunction];
                                 groupsReferencedByFunctions.UnionWith(functionGroups);
                             }
                             else
@@ -162,7 +159,7 @@ namespace GeneratorV2.Process
 
                     // Make a copy of all the functions and enums contained in the previous version.
                     // We will remove items from this list according to the remove tags.
-                    HashSet<NativeFunction> functionsFromPreviousVersion = new HashSet<NativeFunction>(functionsInLastVersion);
+                    HashSet<OverloadedFunction> functionsFromPreviousVersion = new HashSet<OverloadedFunction>(functionsInLastVersion);
                     HashSet<EnumMemberData> enumsFromPreviousVersion = new HashSet<EnumMemberData>(enumsInLastVersion);
 
                     foreach (var remove in feature.Removes)
@@ -223,11 +220,12 @@ namespace GeneratorV2.Process
                         finalGroups.Add(new EnumGroup(groupName, isFlags, members));
                     }
 
-                    var functionList = functions.ToList();
-                    List<Overload> overloadList = new List<Overload>();
-                    foreach (var function in functionList)
+                    List<OverloaderNativeFunction> functionList = new List<OverloaderNativeFunction>();
+                    List<OverloaderFunctionOverloads> overloadList = new List<OverloaderFunctionOverloads>();
+                    foreach (var overloadedFunction in functions)
                     {
-                        overloadList.AddRange(allFunctionOverloads[function]);
+                        functionList.Add(new OverloaderNativeFunction(overloadedFunction.NativeFunction, overloadedFunction.ChangeNativeName));
+                        overloadList.Add(new OverloaderFunctionOverloads(overloadedFunction.Overloads, overloadedFunction.ChangeNativeName));
                     }
 
                     glVersions.Add(new GLVersionOutput(api, feature.Version, functionList, overloadList, enums.ToList(), finalGroups));
@@ -237,7 +235,7 @@ namespace GeneratorV2.Process
             return new OutputData(glVersions);
         }
 
-        public static NativeFunction MakeNativeFunction(Command2 command, out string[] enumGroupsUsed)
+        public static NativeFunction MakeNativeFunction(Command command, out string[] enumGroupsUsed)
         {
             string functionName = NameMangler.MangleFunctionName(command.EntryPoint);
 
@@ -246,13 +244,13 @@ namespace GeneratorV2.Process
             List<Parameter> parameters = new List<Parameter>();
             foreach (var p in command.Parameters)
             {
-                ICSType t = MakeCSType(p.Type.Type, p.Type.Group, out var length);
+                BaseCSType t = MakeCSType(p.Type.Type, p.Type.Group, out var length);
                 parameters.Add(new Parameter(t, NameMangler.MangleParameterName(p.Name), p.Length ?? length));
                 if (p.Type.Group != null)
                     enumGroups.Add(p.Type.Group);
             }
 
-            ICSType returnType = MakeCSType(command.ReturnType.Type, command.ReturnType.Group, out _);
+            BaseCSType returnType = MakeCSType(command.ReturnType.Type, command.ReturnType.Group, out _);
             if (command.ReturnType.Group != null)
                 enumGroups.Add(command.ReturnType.Group);
 
@@ -261,53 +259,53 @@ namespace GeneratorV2.Process
             return new NativeFunction(command.EntryPoint, functionName, parameters, returnType);
         }
 
-        public static ICSType MakeCSType(GLType type, string? group, out IExpression? length)
+        public static BaseCSType MakeCSType(GLType type, string? group, out Expression? length)
         {
             length = default;
             switch (type)
             {
                 case GLArrayType at:
                     length = new Constant(at.Length);
-                    return new CSPointer(MakeCSType(at.BaseType, group, out _), at.Const);
+                    return new CSPointer(MakeCSType(at.BaseType, group, out _), at.Constant);
                 case GLPointerType pt:
-                    return new CSPointer(MakeCSType(pt.BaseType, group, out length), pt.Const);
+                    return new CSPointer(MakeCSType(pt.BaseType, group, out length), pt.Constant);
                 case GLBaseType bt:
                     return bt.Type switch
                     {
                         PrimitiveType.Void => new CSVoid(),
-                        PrimitiveType.Byte => new CSType("byte", bt.Const),
-                        PrimitiveType.Char8 => new CSChar8(bt.Const),
-                        PrimitiveType.Sbyte => new CSType("sbyte", bt.Const),
-                        PrimitiveType.Short => new CSType("short", bt.Const),
-                        PrimitiveType.Ushort => new CSType("ushort", bt.Const),
-                        PrimitiveType.Int => new CSType("int", bt.Const),
-                        PrimitiveType.Uint => new CSType("uint", bt.Const),
-                        PrimitiveType.Long => new CSType("long", bt.Const),
-                        PrimitiveType.Ulong => new CSType("ulong", bt.Const),
+                        PrimitiveType.Byte => new CSType("byte", bt.Constant),
+                        PrimitiveType.Char8 => new CSChar8(bt.Constant),
+                        PrimitiveType.Sbyte => new CSType("sbyte", bt.Constant),
+                        PrimitiveType.Short => new CSType("short", bt.Constant),
+                        PrimitiveType.Ushort => new CSType("ushort", bt.Constant),
+                        PrimitiveType.Int => new CSType("int", bt.Constant),
+                        PrimitiveType.Uint => new CSType("uint", bt.Constant),
+                        PrimitiveType.Long => new CSType("long", bt.Constant),
+                        PrimitiveType.Ulong => new CSType("ulong", bt.Constant),
                         // This might need an include, but the spec doesn't use this type
                         // so we don't really need to do anything...
-                        PrimitiveType.Half => new CSType("Half", bt.Const),
-                        PrimitiveType.Float => new CSType("float", bt.Const),
-                        PrimitiveType.Double => new CSType("double", bt.Const),
-                        PrimitiveType.IntPtr => new CSType("IntPtr", bt.Const),
+                        PrimitiveType.Half => new CSType("Half", bt.Constant),
+                        PrimitiveType.Float => new CSType("float", bt.Constant),
+                        PrimitiveType.Double => new CSType("double", bt.Constant),
+                        PrimitiveType.IntPtr => new CSType("IntPtr", bt.Constant),
 
-                        PrimitiveType.VoidPtr => new CSPointer(new CSVoid(), bt.Const),
+                        PrimitiveType.VoidPtr => new CSPointer(new CSVoid(), bt.Constant),
 
                         // FIXME: Should this be treated special?
-                        PrimitiveType.Enum => new CSType(group ?? "All", bt.Const),
+                        PrimitiveType.Enum => new CSType(group ?? "All", bt.Constant),
 
                         // FIXME: Are these just normal CSType? probably...
-                        PrimitiveType.GLHandleARB => new CSType("GLHandleARB", bt.Const),
-                        PrimitiveType.GLSync => new CSType("GLSync", bt.Const),
+                        PrimitiveType.GLHandleARB => new CSType("GLHandleARB", bt.Constant),
+                        PrimitiveType.GLSync => new CSType("GLSync", bt.Constant),
 
-                        PrimitiveType.CLContext => new CSType("CLContext", bt.Const),
-                        PrimitiveType.CLEvent => new CSType("CLEvent", bt.Const),
+                        PrimitiveType.CLContext => new CSType("CLContext", bt.Constant),
+                        PrimitiveType.CLEvent => new CSType("CLEvent", bt.Constant),
 
-                        PrimitiveType.GLDEBUGPROC => new CSType("GLDebugProc", bt.Const),
-                        PrimitiveType.GLDEBUGPROCARB => new CSType("GLDebugProcARB", bt.Const),
-                        PrimitiveType.GLDEBUGPROCKHR => new CSType("GLDebugProcKHR", bt.Const),
-                        PrimitiveType.GLDEBUGPROCAMD => new CSType("GLDebugProcAMD", bt.Const),
-                        PrimitiveType.GLDEBUGPROCNV => new CSType("GLDebugProcNV", bt.Const),
+                        PrimitiveType.GLDEBUGPROC => new CSType("GLDebugProc", bt.Constant),
+                        PrimitiveType.GLDEBUGPROCARB => new CSType("GLDebugProcARB", bt.Constant),
+                        PrimitiveType.GLDEBUGPROCKHR => new CSType("GLDebugProcKHR", bt.Constant),
+                        PrimitiveType.GLDEBUGPROCAMD => new CSType("GLDebugProcAMD", bt.Constant),
+                        PrimitiveType.GLDEBUGPROCNV => new CSType("GLDebugProcNV", bt.Constant),
 
                         PrimitiveType.Invalid => throw new Exception(),
                         _ => throw new Exception(),
@@ -317,9 +315,13 @@ namespace GeneratorV2.Process
             }
         }
 
+        // /!\ IMPORTANT /!\:
+        // All return type overloaders need to run before any of the other overloaders.
+        // This is to ensure that correct scoping for the new return varialbes.
         static readonly IOverloader[] Overloaders = new IOverloader[]
         {
             new StringReturnOverloader(),
+
             new StringOverloader(),
             new SpanAndArrayOverloader(),
             new RefInsteadOfPointerOverloader(),
@@ -330,12 +332,12 @@ namespace GeneratorV2.Process
         // FIXME: Figure out how we do return type overloading? Do we rename the raw function to something else?
         // FIXME: Should we only be able to have one return type overload?
         // Maybe we can do the return type overloading in a post processing step?
-        public static Overload[] GenerateOverloads(NativeFunction function)
+        public static Overload[] GenerateOverloads(NativeFunction function, out bool changeNativeName)
         {
             List<Overload> overloads = new List<Overload>
             {
                 // Make a "base" overload
-                new Overload(null, null, function.Parameters.ToArray(), function, function.ReturnType, Array.Empty<string>()),
+                new Overload(null, null, function.Parameters.ToArray(), function, function.ReturnType, "returnValue", Array.Empty<string>()),
             };
 
             bool overloadedOnce = false;
@@ -361,15 +363,34 @@ namespace GeneratorV2.Process
 
             if (overloadedOnce)
             {
+                changeNativeName = false;
+                foreach (var overload in overloads)
+                {
+                    if (function.Parameters.Count != overload.InputParameters.Length)
+                        continue;
+
+                    for (int i = 0; i < function.Parameters.Count; i++)
+                    {
+                        if (function.Parameters[i].Type.Equals(overload.InputParameters[i].Type))
+                        {
+                            changeNativeName = true;
+                            break;
+                        }
+                    }
+
+                    if (changeNativeName == true)
+                    {
+                        break;
+                    }
+                }
                 return overloads.ToArray();
             }
             else
             {
+                changeNativeName = false;
                 return Array.Empty<Overload>();
             }
         }
-
-        public delegate Overload[] Overloader(Overload overload);
 
         // FIXME: Make this nicer.
         // These being classes actually don't acomplish much
@@ -384,11 +405,12 @@ namespace GeneratorV2.Process
                 if (overload.NativeFunction.EntryPoint == "glGetString" ||
                     overload.NativeFunction.EntryPoint == "glGetStringi")
                 {
-                    var layer = new StringReturnLayer();
-                    var returnType = new CSString(nullable: true);
+                    var newReturnName = $"{overload.ReturnVariableName}_str";
+                    var layer = new StringReturnLayer(newReturnName);
+                    var returnType = new CSString(Nullable: true);
                     newOverloads = new List<Overload>()
                     {
-                        new Overload(overload, layer, overload.InputParameters, overload.NativeFunction, returnType, overload.GenericTypes)
+                        new Overload(overload, layer, overload.InputParameters, overload.NativeFunction, returnType, newReturnName, overload.GenericTypes)
                     };
                     return true;
                 }
@@ -401,15 +423,22 @@ namespace GeneratorV2.Process
 
             class StringReturnLayer : IOverloadLayer
             {
-                public void WritePrologue(IndentedTextWriter writer)
+                readonly string NewReturnName;
+
+                public StringReturnLayer(string newReturnName)
                 {
+                    NewReturnName = newReturnName;
                 }
 
-                public string? WriteEpilogue(IndentedTextWriter writer, string? returnName)
+                public void WritePrologue(IndentedTextWriter writer)
                 {
-                    string returnNameNew = $"{returnName}_str";
-                    writer.WriteLine($"string? {returnNameNew} = Marshal.PtrToStringAnsi((IntPtr){returnName});");
-                    return returnNameNew;
+                    writer.WriteLine($"string? {NewReturnName};");
+                }
+
+                public string WriteEpilogue(IndentedTextWriter writer, string? returnName)
+                {
+                    writer.WriteLine($"{NewReturnName} = Marshal.PtrToStringAnsi((IntPtr){returnName});");
+                    return NewReturnName;
                 }
             }
         }
@@ -423,18 +452,18 @@ namespace GeneratorV2.Process
                 {
                     // FIXME: We want to handle sized strings different!!!
                     var param = newParams[i];
-                    if (param.Type is CSPointer pt && pt.BaseType is CSChar8 charType)
+                    if (param.Type is CSPointer pt && pt.BaseType is CSChar8)
                     {
                         var pointerParam = newParams[i];
                         // FIXME: Can we know if the string is nullable or not?
-                        newParams[i] = new Parameter(new CSString(nullable: false), param.Name + "_string", null);
+                        newParams[i] = new Parameter(new CSString(Nullable: false), param.Name + "_string", null);
                         var stringParams = newParams.ToArray();
                         var stringLayer = new StringLayer(pointerParam, newParams[i]);
 
                         // FIXME: There might be more than one parameter we should do this for...
                         newOverloads = new List<Overload>()
                         {
-                            new Overload(overload, stringLayer, stringParams, overload.NativeFunction, overload.ReturnType, overload.GenericTypes),
+                            new Overload(overload, stringLayer, stringParams, overload.NativeFunction, overload.ReturnType, overload.ReturnVariableName, overload.GenericTypes),
                         };
                         return true;
                     }
@@ -512,8 +541,10 @@ namespace GeneratorV2.Process
                             // FIXME: Check this!
                             var pointer = pointerParam.Type as CSPointer;
 
+                            if (pointer == null) throw new Exception("A parameter with a 'len' attribute must be a pointer type!");
+
                             string[]? genericTypes = overload.GenericTypes;
-                            ICSType baseType;
+                            BaseCSType baseType;
                             if (pointer.BaseType is CSVoid)
                             {
                                 genericTypes = overload.GenericTypes.MakeCopyAndGrow(1);
@@ -542,8 +573,8 @@ namespace GeneratorV2.Process
                             // FIXME: There might be more than one parameter we should do this for...
                             newOverloads = new List<Overload>()
                             {
-                                new Overload(overload, spanLayer, spanParams, overload.NativeFunction, overload.ReturnType, genericTypes),
-                                new Overload(overload, arrayLayer, arrayParams, overload.NativeFunction, overload.ReturnType, genericTypes),
+                                new Overload(overload, spanLayer, spanParams, overload.NativeFunction, overload.ReturnType, overload.ReturnVariableName, genericTypes),
+                                new Overload(overload, arrayLayer, arrayParams, overload.NativeFunction, overload.ReturnType, overload.ReturnVariableName, genericTypes),
                             };
                             return true;
                         }
@@ -554,7 +585,7 @@ namespace GeneratorV2.Process
                 return false;
 
                 // FIXME: Better name, maybe even another structure...
-                static string? GetParameterExpression(IExpression expr, out Func<string, string> parameterExpression)
+                static string? GetParameterExpression(Expression expr, out Func<string, string> parameterExpression)
                 {
                     switch (expr)
                     {
@@ -653,7 +684,7 @@ namespace GeneratorV2.Process
                     var layer = new RefInsteadOfPointerLayer(changed, original);
                     newOverloads = new List<Overload>()
                     {
-                        new Overload(overload, layer, parameters, overload.NativeFunction, overload.ReturnType, overload.GenericTypes)
+                        new Overload(overload, layer, parameters, overload.NativeFunction, overload.ReturnType, overload.ReturnVariableName, overload.GenericTypes)
                     };
                     return true;
                 }

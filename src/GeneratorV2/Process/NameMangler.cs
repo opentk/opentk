@@ -1,21 +1,34 @@
 using System.Text;
 
-
 #nullable enable
 namespace GeneratorV2.Parsing
 {
     public class NameMangler
     {
+        public static string RemoveStart(string str, string start)
+        {
+            if (!str.StartsWith(start))
+                throw new System.Exception($"'{str}' dosen't start with '{start}'");
+
+            return str[start.Length..];
+        }
+
         public static string MangleFunctionName(string name)
         {
             // Remove the "gl" prefix.
-            return name[2..];
+            return RemoveStart(name, "gl");
         }
 
         public static string MangleEnumName(string name)
         {
             // Remove the "GL_" prefix.
-            return MangleMemberName(name[3..]);
+            var mangledName = RemoveStart(name, "GL_");
+            // If the name starts with a number prefix it with "_"
+            if (char.IsDigit(mangledName[0]))
+            {
+                mangledName = "_" + mangledName;
+            }
+            return mangledName;
         }
 
         public static string MangleParameterName(string name) => name switch

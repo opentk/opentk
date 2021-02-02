@@ -190,7 +190,7 @@ namespace GeneratorV2.Writing
                 ");
         }
 
-        public static void WriteNativeFunctions(string directoryPath, string version, List<NativeFunction> nativeFunctions)
+        public static void WriteNativeFunctions(string directoryPath, string version, List<OverloaderNativeFunction> nativeFunctions)
         {
             using IndentedTextWriter writer = new IndentedTextWriter(Path.Combine(directoryPath, "GL.cs"));
             writer.WriteLine("// This file is auto generated, do not edit.");
@@ -209,9 +209,10 @@ namespace GeneratorV2.Writing
                     StringBuilder paramNames = new StringBuilder();
                     StringBuilder delegateTypes = new StringBuilder();
                     StringBuilder signature = new StringBuilder();
-                    foreach (var function in nativeFunctions)
+                    foreach (var (function, postfixName) in nativeFunctions)
                     {
                         string name = function.FunctionName;
+                        if (postfixName) name += "_";
 
                         paramNames.Clear();
                         delegateTypes.Clear();
@@ -267,9 +268,11 @@ namespace GeneratorV2.Writing
                     }
                 }
             }
+
+            writer.Flush();
         }
 
-        public static void WriteOverloads(string directoryPath, string version, List<Overload> overloads)
+        public static void WriteOverloads(string directoryPath, string version, List<OverloaderFunctionOverloads> overloads)
         {
             using IndentedTextWriter writer = new IndentedTextWriter(Path.Combine(directoryPath, "GL.Overloads.cs"));
             writer.WriteLine("// This file is auto generated, do not edit.");
@@ -283,68 +286,76 @@ namespace GeneratorV2.Writing
                 writer.WriteLine($"public static unsafe partial class GL");
                 using (Scope(writer))
                 {
-                    foreach (var overload in overloads)
+                    foreach (var (overs, postfixNativeCall) in overloads)
                     {
-                        // FIXME: This was(?) used to cull "overloads" that didn't get any .
-                        if (overload.NestedOverload == null &&
-                            overload.MarshalLayerToNested == null)
-                            continue;
-
-                        string parameterString = string.Join(", ", overload.InputParameters.Select(p => $"{p.Type.ToCSString()} {p.Name}"));
-
-                        // FIXME: Make the overload contain the name. (remove postfix usecase)
-                        // FIXME: Make NativeFunction contain the preprocessed name as well as the entry point.
-                        string genericTypes = overload.GenericTypes.Length <= 0 ? "" : $"<{string.Join(", ", overload.GenericTypes)}>";
-                        writer.WriteLine($"public static unsafe {overload.ReturnType.ToCSString()} {overload.NativeFunction.EntryPoint[2..]}{genericTypes}({parameterString})");
-                        using (writer.Indentation())
+                        foreach (var overload in overs)
                         {
-                            foreach (var type in overload.GenericTypes)
-                            {
-                                writer.WriteLine($"where {type} : unmanaged");
-                            }
-                        }
+                            // FIXME: This was(?) used to cull "overloads" that didn't get any .
+                            if (overload.NestedOverload == null &&
+                                overload.MarshalLayerToNested == null)
+                                continue;
 
-                        using (Scope(writer))
-                        {
-                            if (overload.ReturnType is not CSVoid)
-                            {
-                                writer.WriteLine($"{overload.ReturnType.ToCSString()} returnValue;");
-                            }
-                            
-                            string? returnName = WriteNestedOverload(writer, overload);
+                            string parameterString = string.Join(", ", overload.InputParameters.Select(p => $"{p.Type.ToCSString()} {p.Name}"));
 
-                            if (returnName != null)
+                            // FIXME: Make the overload contain the name. (remove postfix usecase)
+                            // FIXME: Make NativeFunction contain the preprocessed name as well as the entry point.
+                            string genericTypes = overload.GenericTypes.Length <= 0 ? "" : $"<{string.Join(", ", overload.GenericTypes)}>";
+                            writer.WriteLine($"public static unsafe {overload.ReturnType.ToCSString()} {overload.NativeFunction.EntryPoint[2..]}{genericTypes}({parameterString})");
+                            using (writer.Indentation())
                             {
-                                writer.WriteLine($"return {returnName};");
+                                foreach (var type in overload.GenericTypes)
+                                {
+                                    writer.WriteLine($"where {type} : unmanaged");
+                                }
+                            }
+
+                            using (Scope(writer))
+                            {
+                                if (overload.ReturnType is not CSVoid)
+                                {
+                                    writer.WriteLine($"{overload.NativeFunction.ReturnType.ToCSString()} returnValue;");
+                                }
+
+                                string? returnName = WriteNestedOverload(writer, overload, postfixNativeCall);
+
+                                if (returnName != null)
+                                {
+                                    writer.WriteLine($"return {returnName};");
+                                }
                             }
                         }
                     }
                 }
             }
 
-            static string? WriteNestedOverload(IndentedTextWriter writer, Overload overload)
+            static string? WriteNestedOverload(IndentedTextWriter writer, Overload overload, bool postfixNativeCall)
             {
                 overload.MarshalLayerToNested?.WritePrologue(writer);
 
                 string? returnName;
                 if (overload.NestedOverload != null)
-                    returnName = WriteNestedOverload(writer, overload.NestedOverload);
+                    returnName = WriteNestedOverload(writer, overload.NestedOverload, postfixNativeCall);
                 else
-                    returnName = WriteNativeCall(writer, overload.NativeFunction);
+                    returnName = WriteNativeCall(writer, overload.NativeFunction, postfixNativeCall);
 
                 return overload.MarshalLayerToNested?.WriteEpilogue(writer, returnName) ?? returnName;
             }
 
-            static string? WriteNativeCall(IndentedTextWriter writer, NativeFunction function)
+            static string? WriteNativeCall(IndentedTextWriter writer, NativeFunction function, bool postfixNativeCall)
             {
+                string name = function.FunctionName;
+                if (postfixNativeCall) name += "_";
+
+                string arguments = string.Join(", ", function.Parameters.Select(p => p.Name));
+
                 if (function.ReturnType is CSVoid)
                 {
-                    writer.WriteLine($"{function.EntryPoint[2..]}({string.Join(", ", function.Parameters.Select(p => p.Name))});");
+                    writer.WriteLine($"{name}({arguments});");
                     return null;
                 }
                 else
                 {
-                    writer.WriteLine($"returnValue = {function.EntryPoint[2..]}({string.Join(", ", function.Parameters.Select(p => p.Name))});");
+                    writer.WriteLine($"returnValue = {name}({arguments});");
                     return "returnValue";
                 }
             }
@@ -359,7 +370,7 @@ namespace GeneratorV2.Writing
             writer.WriteLine("using System;");
             writer.WriteLine();
             // NAMESPACE:
-            writer.WriteLine($"namespace OpenToolkit.Graphics.OpenGL.{version}");
+            writer.WriteLine($"namespace {Namespace}.OpenGL.{version}");
             using (Scope(writer))
             {
                 WriteEnumGroups(writer, enumGroups);

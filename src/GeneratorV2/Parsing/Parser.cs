@@ -27,12 +27,12 @@ namespace GeneratorV2.Parsing
             return new Specification(commands, enums, features, extensions);
         }
 
-        public static List<Command2> ParseCommands(XElement input)
+        public static List<Command> ParseCommands(XElement input)
         {
             Logger.Info("Begining parsing of commands.");
             var xelement = input.Element("commands")!;
 
-            var commands = new List<Command2>();
+            var commands = new List<Command>();
             foreach (var element in xelement.Elements("command"))
             {
                 var command = ParseCommand(element);
@@ -42,7 +42,7 @@ namespace GeneratorV2.Parsing
             return commands;
         }
 
-        private static Command2 ParseCommand(XElement c)
+        private static Command ParseCommand(XElement c)
         {
             var proto = c.Element("proto");
             if (proto == null) throw new Exception("Missing proto tag!");
@@ -67,7 +67,7 @@ namespace GeneratorV2.Parsing
 
             var returnType = ParsePType(proto);
 
-            return new Command2(entryPoint, returnType, parameterList.ToArray());
+            return new Command(entryPoint, returnType, parameterList.ToArray());
         }
 
         private static IExpression ParseExpression(string expression)
@@ -353,7 +353,7 @@ namespace GeneratorV2.Parsing
 
                 var comment = enums.Attribute("comment")?.Value;
 
-                List<EnumEntry2> entries = new List<EnumEntry2>();
+                List<EnumEntry> entries = new List<EnumEntry>();
                 foreach (var @enum in enums.Elements("enum"))
                 {
                     entries.Add(ParseEnumEntry(@enum));
@@ -372,7 +372,7 @@ namespace GeneratorV2.Parsing
             };
         }
 
-        public static EnumEntry2 ParseEnumEntry(XElement @enum)
+        public static EnumEntry ParseEnumEntry(XElement @enum)
         {
             var name = @enum.Attribute("name")?.Value;
             var valueStr = @enum.Attribute("value")?.Value;
@@ -393,7 +393,7 @@ namespace GeneratorV2.Parsing
 
             var api = Parser.ParseApi(@enum.Attribute("api")?.Value);
 
-            return new EnumEntry2(name, api, value, alias, comment, groups, suffix);
+            return new EnumEntry(name, api, value, alias, comment, groups, suffix);
 
             static TypeSuffix ParseEnumTypeSuffix(string? suffix) => suffix switch
             {
@@ -456,8 +456,9 @@ namespace GeneratorV2.Parsing
         public static List<Extension> ParseExtensions(XElement input)
         {
             List<Extension> extensions = new List<Extension>();
+            var xelement = input.Element("extensions")!;
 
-            foreach (var extension in input.Elements("extension"))
+            foreach (var extension in xelement.Elements("extension"))
             {
                 var extName = extension.Attribute("name")?.Value;
                 if (extName == null)
@@ -465,7 +466,10 @@ namespace GeneratorV2.Parsing
                     throw new Exception($"Extension '{extension}' is missing a name!");
                 }
 
-                var vendor = extName[3..extName.IndexOf("_", 3, StringComparison.Ordinal)];
+                // Remove "GL_" and get the vendor name from the first part of the extension name
+                // Extension name convention: "GL_VENDOR_EXTENSION_NAME"
+                var extNameWithoutGLPrefix = NameMangler.RemoveStart(extName, "GL_");
+                var vendor = extNameWithoutGLPrefix[..extNameWithoutGLPrefix.IndexOf("_")];
                 if (string.IsNullOrEmpty(vendor))
                 {
                     throw new Exception($"Extension '{extension}' doesn't have the vendor in it's name!");
@@ -486,7 +490,7 @@ namespace GeneratorV2.Parsing
                 List<RequireEntry> requires = new List<RequireEntry>();
                 foreach (var require in extension.Elements("require"))
                 {
-                    requires.Add(ParseRequire(extension));
+                    requires.Add(ParseRequire(require));
                 }
 
                 extensions.Add(new Extension(extName, vendor, supportedApis, comment, requires));
