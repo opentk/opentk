@@ -5,31 +5,11 @@ using System.Text;
 
 namespace GeneratorV2.Data
 {
-    public interface IExpression
-    {
+    public record Expression;
 
-    }
+    public record Constant(int Value) : Expression;
 
-    public class Constant : IExpression
-    {
-        public int Value { get; }
-
-        public Constant(int value)
-        {
-            Value = value;
-        }
-    }
-
-    public class CompSize : IExpression
-    {
-        // FIXME: These are all probably ParameterReference...
-        public IExpression[] Parameters { get; }
-
-        public CompSize(IExpression[] parameters)
-        {
-            Parameters = parameters;
-        }
-    }
+    public record CompSize(Expression[] Parameters) : Expression;
 
     public enum BinaryOperator
     {
@@ -40,19 +20,11 @@ namespace GeneratorV2.Data
         Division,
     }
 
-    public class BinaryOperation : IExpression
+    public record BinaryOperation(
+        Expression Left,
+        BinaryOperator Operator,
+        Expression Right) : Expression
     {
-        public IExpression Left { get; }
-        public BinaryOperator Operator { get; }
-        public IExpression Right { get; }
-
-        public BinaryOperation(IExpression left, BinaryOperator op, IExpression right)
-        {
-            Left = left;
-            Operator = op;
-            Right = right;
-        }
-
         public static BinaryOperator Invert(BinaryOperator @operator) => @operator switch
         {
             BinaryOperator.Addition => BinaryOperator.Subtraction,
@@ -72,13 +44,5 @@ namespace GeneratorV2.Data
         };
     }
 
-    public class ParameterReference : IExpression
-    {
-        public string ParameterName { get; }
-
-        public ParameterReference(string parameter)
-        {
-            ParameterName = parameter;
-        }
-    }
+    public record ParameterReference(string ParameterName) : Expression;
 }
