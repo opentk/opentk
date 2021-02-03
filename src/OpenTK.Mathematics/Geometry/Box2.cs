@@ -281,6 +281,10 @@ namespace OpenTK.Mathematics
             return new Box2(minX, minY, maxX, maxY);
         }
 
+        /// <summary>
+        /// Replaces this Box with the intersection of itself and the specified Box.
+        /// </summary>
+        /// <param name="other">The Box with which to intersect.</param>
         public void Intersect(Box2 other)
         {
             Box2 result = Intersect(other, this);
@@ -291,6 +295,12 @@ namespace OpenTK.Mathematics
             Height = result.Height;
         }
 
+        /// <summary>
+        /// Returns the intersection of two Boxes.
+        /// </summary>
+        /// <param name="a">The first box.</param>
+        /// <param name="b">The second box.</param>
+        /// <returns>The intersection of two Boxes.</returns>
         public static Box2 Intersect(Box2 a, Box2 b)
         {
             float minX = a._min.X > b._min.X ? a._min.X : b._min.X;
@@ -305,11 +315,21 @@ namespace OpenTK.Mathematics
             return Box2.Zero;
         }
 
+        /// <summary>
+        /// Returns the intersection of itself and the specified Box.
+        /// </summary>
+        /// <param name="other">The Box with which to intersect.</param>
+        /// <returns>The intersection of itself and the specified Box.</returns>
         public Box2 Intersected(Box2 other)
         {
             return Intersect(other, this);
         }
 
+        /// <summary>
+        /// Determines if this Box intersects with another Box.
+        /// </summary>
+        /// <param name="other">The Box to test.</param>
+        /// <returns>This method returns true if there is any intersection, otherwise false.</returns>
         public bool IntersectsWith(Box2 other)
         {
             return other._min.X < _max.X
@@ -318,6 +338,11 @@ namespace OpenTK.Mathematics
                 && _min.Y < other._max.Y;
         }
 
+        /// <summary>
+        /// Determines if this Box intersects or touches with another Box.
+        /// </summary>
+        /// <param name="other">The Box to test.</param>
+        /// <returns>This method returns true if there is any intersection or touches, otherwise false.</returns>
         public bool TouchWith(Box2 other)
         {
             return other._min.X <= _max.X
@@ -326,6 +351,12 @@ namespace OpenTK.Mathematics
                 && _min.Y <= other._max.Y;
         }
 
+        /// <summary>
+        /// Gets a Box structure that contains the union of two Box structures.
+        /// </summary>
+        /// <param name="a">A Box to union.</param>
+        /// <param name="b">a box to union.</param>
+        /// <returns>A Box structure that bounds the union of the two Box structures.</returns>
         public static Box2 Union(Box2 a, Box2 b)
         {
             float minX = a._min.X < b._min.X ? a._min.X : b._min.X;
@@ -336,6 +367,11 @@ namespace OpenTK.Mathematics
             return new Box2(minX, minY, maxX, maxY);
         }
 
+        /// <summary>
+        /// Gets a Box structure that contains rounded integers.
+        /// </summary>
+        /// <param name="value">A Box to round.</param>
+        /// <returns>A Box structure that contains rounded integers.</returns>
         public static Box2i Round(Box2 value)
         {
             return new Box2i(
@@ -345,12 +381,32 @@ namespace OpenTK.Mathematics
                 (int)MathHelper.Round(value.Max.Y));
         }
 
+        /// <summary>
+        /// Gets a Box structure that contains rounded up integers.
+        /// </summary>
+        /// <param name="value">A Box to round.</param>
+        /// <returns>A Box structure that contains rounded up integers.</returns>
         public static Box2i Ceiling(Box2 value)
         {
             int x = (int)MathHelper.Ceiling(value._min.X);
             int y = (int)MathHelper.Ceiling(value._min.Y);
             int sizeX = (int)MathHelper.Ceiling(value.Width);
             int sizeY = (int)MathHelper.Ceiling(value.Height);
+
+            return new Box2i(x, y, x + sizeX, y + sizeY);
+        }
+
+        /// <summary>
+        /// Gets a Box structure that contains rounded down integers.
+        /// </summary>
+        /// <param name="value">A Box to round.</param>
+        /// <returns>A Box structure that contains rounded down integers.</returns>
+        public static Box2i Floor(Box2 value)
+        {
+            int x = (int)MathHelper.Floor(value._min.X);
+            int y = (int)MathHelper.Floor(value._min.Y);
+            int sizeX = (int)MathHelper.Floor(value.Width);
+            int sizeY = (int)MathHelper.Floor(value.Height);
 
             return new Box2i(x, y, x + sizeX, y + sizeY);
         }
