@@ -140,6 +140,32 @@ namespace GeneratorV2.Writing
     {
         public void WritePrologue(IndentedTextWriter writer);
         public string? WriteEpilogue(IndentedTextWriter writer, string? returnName);
+
+        // FIXME: Better place to put this?
+        // FIXME: Better name, maybe even another structure...
+        public static string? GetParameterExpression(Expression expr, out Func<string, string> parameterExpression)
+        {
+            switch (expr)
+            {
+                case Constant c:
+                    parameterExpression = s => c.Value.ToString();
+                    return null;
+                case ParameterReference pr:
+                    parameterExpression = s => $"{s}.Length";
+                    return pr.ParameterName;
+                case BinaryOperation bo:
+                    // FIXME: We don't want to assume that the left expression contains the
+                    // parameter name, but this is true for gl.xml 2020-12-30
+                    string? reference = GetParameterExpression(bo.Left, out var leftExpr);
+                    GetParameterExpression(bo.Right, out var rightExpr);
+                    var invOp = BinaryOperation.Invert(bo.Operator);
+                    parameterExpression = s => $"{leftExpr(s)} {BinaryOperation.GetOperationChar(invOp)} {rightExpr(s)}";
+                    return reference;
+                default:
+                    parameterExpression = s => "";
+                    return null;
+            }
+        }
     }
 
     public record Overload(
