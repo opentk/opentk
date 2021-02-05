@@ -448,29 +448,71 @@ namespace GeneratorV2.Process
             public bool TryGenerateOverloads(Overload overload, [NotNullWhen(true)] out List<Overload>? newOverloads)
             {
                 List<Parameter> newParams = new List<Parameter>(overload.InputParameters);
+                Overload newOverload = overload;
                 for (int i = newParams.Count - 1; i >= 0; i--)
                 {
                     // FIXME: We want to handle sized strings different!!!
                     var param = newParams[i];
-                    if (param.Type is CSPointer pt && pt.BaseType is CSChar8)
+                    if (param.Type is CSPointer pt && pt.BaseType is CSChar8 bt)
                     {
                         var pointerParam = newParams[i];
-                        // FIXME: Can we know if the string is nullable or not?
-                        newParams[i] = new Parameter(new CSString(Nullable: false), param.Name + "_string", null);
-                        var stringParams = newParams.ToArray();
-                        var stringLayer = new StringLayer(pointerParam, newParams[i]);
-
-                        // FIXME: There might be more than one parameter we should do this for...
-                        newOverloads = new List<Overload>()
+                        if (/*pt.Constant || */bt.Constant)
                         {
-                            new Overload(overload, stringLayer, stringParams, overload.NativeFunction, overload.ReturnType, overload.ReturnVariableName, overload.GenericTypes),
-                        };
-                        return true;
+                            // FIXME: Can we know if the string is nullable or not?
+                            newParams[i] = new Parameter(new CSString(Nullable: false), param.Name + "_string", null);
+                            var stringParams = newParams.ToArray();
+                            var stringLayer = new StringLayer(pointerParam, newParams[i]);
+
+                            newOverload = newOverload with { NestedOverload = newOverload, MarshalLayerToNested = stringLayer, InputParameters = stringParams };
+                        }
+                        else
+                        {
+                            int stringParamIndex = i;
+                            Parameter? lenParam = null;
+                            if (param.Length != null)
+                            {
+                                string? paramName = IOverloadLayer.GetParameterExpression(param.Length, out var expr);
+                                if (paramName == null)
+                                {
+                                    Logger.Info($"{overload.NativeFunction.EntryPoint} has a COMPSIZE string length for parameter '{param.Name}'!");
+                                    continue;
+                                }
+                                int index = newParams.FindIndex(p => p.Name == paramName);
+                                lenParam = newParams[index];
+                            }
+
+                            if (lenParam == null)
+                            {
+                                Logger.Info($"{overload.NativeFunction.EntryPoint} is missing a len attribute for parameter '{param.Name}'");
+                                continue;
+                            }
+
+                            // FIXME: Can we know if the string is nullable or not?
+                            var stringParam = new Parameter(new CSRef(CSRef.Type.Out, new CSString(Nullable: false)), param.Name + "_string", null);
+                            newParams[stringParamIndex] = stringParam;
+
+                            var stringParams = newParams.ToArray();
+                            var stringLayer = new OutStringLayer(pointerParam, lenParam, stringParam);
+
+                            newOverload = newOverload with { NestedOverload = newOverload, MarshalLayerToNested = stringLayer, InputParameters = stringParams };
+                        }
                     }
                 }
 
-                newOverloads = default;
-                return false;
+                if (newOverload == overload)
+                {
+                    // We didn't do any overloading
+                    newOverloads = default;
+                    return false;
+                }
+                else
+                {
+                    newOverloads = new List<Overload>()
+                    {
+                        newOverload,
+                    };
+                    return true;
+                }
             }
 
             class StringLayer : IOverloadLayer
@@ -495,6 +537,32 @@ namespace GeneratorV2.Process
                     return returnName;
                 }
             }
+
+            class OutStringLayer : IOverloadLayer
+            {
+                public readonly Parameter PointerParameter;
+                public readonly Parameter StringParameter;
+                public readonly Parameter? StringLengthParameter;
+
+                public OutStringLayer(Parameter pointerParameter, Parameter? stringLengthParameter, Parameter stringParameter)
+                {
+                    PointerParameter = pointerParameter;
+                    StringParameter = stringParameter;
+                    StringLengthParameter = stringLengthParameter;
+                }
+
+                public void WritePrologue(IndentedTextWriter writer)
+                {
+                    writer.WriteLine($"var {PointerParameter.Name} = (byte*)Marshal.AllocCoTaskMem({StringLengthParameter.Name});");
+                }
+
+                public string? WriteEpilogue(IndentedTextWriter writer, string? returnName)
+                {
+                    writer.WriteLine($"{StringParameter.Name} = Marshal.PtrToStringUTF8((IntPtr){PointerParameter.Name})!;");
+                    writer.WriteLine($"Marshal.FreeCoTaskMem((IntPtr){PointerParameter.Name});");
+                    return returnName;
+                }
+            }
         }
 
         class SpanAndArrayOverloader : IOverloader
@@ -503,8 +571,10 @@ namespace GeneratorV2.Process
             {
                 if (overload.NativeFunction.EntryPoint == "glShaderSource")
                 {
-                    ;
+                    newOverloads = default;
+                    return false;
                 }
+
                 if (overload.NativeFunction.EntryPoint == "glTransformFeedbackVaryings"||
                     overload.NativeFunction.EntryPoint == "glCreateShaderProgramv")
                 {
@@ -515,39 +585,44 @@ namespace GeneratorV2.Process
                     return false;
                 }
 
+                if (overload.NativeFunction.EntryPoint == "glDrawElementsInstancedBaseInstance")
+                {
+                    ;
+                }
+
                 // FIXME: We want to be able to handle more than just one Span and Array overload
                 // functions like "glShaderSource" can take more than one array.
                 // 
                 List<Parameter> newParams = new List<Parameter>(overload.InputParameters);
+                var genericTypes = overload.GenericTypes;
+                Overload arrayOverload = overload;
+                Overload spanOverload = overload;
                 for (int i = newParams.Count - 1; i >= 0; i--)
                 {
                     var param = newParams[i];
 
                     if (param.Type is CSPointer pt && pt.BaseType is CSChar8)
                     {
-                        Debug.WriteLine($"Char pointer leaked from earlier overloaders: \"{overload.NativeFunction.EntryPoint}\" ({param})");
-                        break;
+                        Logger.Warning($"Char pointer leaked from earlier overloaders: \"{overload.NativeFunction.EntryPoint}\" ({param})");
+                        continue;
                     }
 
                     if (param.Length != null)
                     {
-                        string? paramName = GetParameterExpression(param.Length, out var expr);
+                        string? paramName = IOverloadLayer.GetParameterExpression(param.Length, out var expr);
                         if (paramName != null)
                         {
-                            // FIXME: This can be replaced with `i`?
-                            int index = newParams.FindIndex(p => p.Name == paramName);
-
+                            int index = Array.FindIndex(overload.InputParameters, p => p.Name == paramName);
+                            
                             var pointerParam = newParams[i];
-                            // FIXME: Check this!
-                            var pointer = pointerParam.Type as CSPointer;
 
-                            if (pointer == null) throw new Exception("A parameter with a 'len' attribute must be a pointer type!");
+                            if (pointerParam.Type is not CSPointer pointer)
+                                throw new Exception("A parameter with a 'len' attribute must be a pointer type!");
 
-                            string[]? genericTypes = overload.GenericTypes;
                             BaseCSType baseType;
                             if (pointer.BaseType is CSVoid)
                             {
-                                genericTypes = overload.GenericTypes.MakeCopyAndGrow(1);
+                                genericTypes = genericTypes.MakeCopyAndGrow(1);
                                 genericTypes[^1] = $"T{genericTypes.Length}";
                                 baseType = new CSGenericType(genericTypes[^1]);
                             }
@@ -556,57 +631,54 @@ namespace GeneratorV2.Process
                                 baseType = pointer.BaseType;
                             }
 
-                            var old = newParams[index];
+                            var old = overload.InputParameters[index];
 
-                            newParams.RemoveAt(index);
-                            int typeIndex = index < i ? i - 1 : i;
+                            int typeIndex = i;
 
-                            // FIXME: Name of new parameter
-                            newParams[typeIndex] = new Parameter(new CSSpan(baseType, pointer.Constant), pointerParam.Name + "_span", null);
-                            var spanParams = newParams.ToArray();
-                            var spanLayer = new SpanOrArrayLayer(pointerParam, newParams[typeIndex], old, expr(newParams[typeIndex].Name));
-
-                            newParams[typeIndex] = new Parameter(new CSArray(baseType, pointer.Constant), pointerParam.Name + "_array", null);
-                            var arrayParams = newParams.ToArray();
-                            var arrayLayer = new SpanOrArrayLayer(pointerParam, newParams[typeIndex], old, expr(newParams[typeIndex].Name));
-
-                            // FIXME: There might be more than one parameter we should do this for...
-                            newOverloads = new List<Overload>()
+                            // If this is the only len attribute that refernces this parameter,
+                            // we can remove that parameter as we can calculate it from the length of this parameter (array/span).
+                            // FIXME: This check is going to fail if the two 'len' attributes have different "forms" e.g. "n" == "n*4" == "COMPSIZE(n)" etc.
+                            Parameter? paramToBeRemoved = null;
+                            bool shouldCalculateLength = overload.InputParameters.Count(p => p.Length == param.Length) <= 1;
+                            if (shouldCalculateLength)
                             {
-                                new Overload(overload, spanLayer, spanParams, overload.NativeFunction, overload.ReturnType, overload.ReturnVariableName, genericTypes),
-                                new Overload(overload, arrayLayer, arrayParams, overload.NativeFunction, overload.ReturnType, overload.ReturnVariableName, genericTypes),
-                            };
-                            return true;
+                                paramToBeRemoved = old;
+                                newParams.Remove(old);
+
+                                if (index < i)
+                                {
+                                    typeIndex--;
+                                    i--;
+                                }
+                            }
+                            
+                            // FIXME: Name of new parameter
+                            var newSpanParams = spanOverload.InputParameters.Where(p => p != paramToBeRemoved).ToArray();
+                            newSpanParams[typeIndex] = new Parameter(new CSSpan(baseType, pointer.Constant), pointerParam.Name + "_span", null);
+                            var spanLayer = new SpanOrArrayLayer(pointerParam, newSpanParams[typeIndex], old, expr(newSpanParams[typeIndex].Name), shouldCalculateLength);
+                            spanOverload = spanOverload with { NestedOverload = spanOverload, MarshalLayerToNested = spanLayer, InputParameters = newSpanParams, GenericTypes = genericTypes };
+
+                            var newArrayParams = arrayOverload.InputParameters.Where(p => p != paramToBeRemoved).ToArray();
+                            newArrayParams[typeIndex] = new Parameter(new CSArray(baseType, pointer.Constant), pointerParam.Name + "_array", null);
+                            var arrayLayer = new SpanOrArrayLayer(pointerParam, newArrayParams[typeIndex], old, expr(newArrayParams[typeIndex].Name), shouldCalculateLength);
+                            arrayOverload = arrayOverload with { NestedOverload = arrayOverload, MarshalLayerToNested = arrayLayer, InputParameters = newArrayParams, GenericTypes = genericTypes };
                         }
                     }
                 }
 
-                newOverloads = default;
-                return false;
-
-                // FIXME: Better name, maybe even another structure...
-                static string? GetParameterExpression(Expression expr, out Func<string, string> parameterExpression)
+                if (arrayOverload == spanOverload)
                 {
-                    switch (expr)
+                    newOverloads = default;
+                    return false;
+                }
+                else
+                {
+                    newOverloads = new List<Overload>()
                     {
-                        case Constant c:
-                            parameterExpression = s => c.Value.ToString();
-                            return null;
-                        case ParameterReference pr:
-                            parameterExpression = s => $"{s}.Length";
-                            return pr.ParameterName;
-                        case BinaryOperation bo:
-                            // FIXME: We don't want to assume that the left expression contains the
-                            // parameter name, but this is true for gl.xml 2020-12-30
-                            string? reference = GetParameterExpression(bo.Left, out var leftExpr);
-                            GetParameterExpression(bo.Right, out var rightExpr);
-                            var invOp = BinaryOperation.Invert(bo.Operator);
-                            parameterExpression = s => $"{leftExpr(s)} {BinaryOperation.GetOperationChar(invOp)} {rightExpr(s)}";
-                            return reference;
-                        default:
-                            parameterExpression = s => "";
-                            return null;
-                    }
+                        spanOverload,
+                        arrayOverload,
+                    };
+                    return true;
                 }
             }
 
@@ -616,13 +688,15 @@ namespace GeneratorV2.Process
                 public readonly Parameter SpanOrArrayParameter;
                 public readonly Parameter LengthParameter;
                 public readonly string ParameterExpression;
+                public readonly bool ShouldCalculateLength;
 
-                public SpanOrArrayLayer(Parameter pointerParameter, Parameter spanOrArrayParameter, Parameter lengthParameter, string parameterExpression)
+                public SpanOrArrayLayer(Parameter pointerParameter, Parameter spanOrArrayParameter, Parameter lengthParameter, string parameterExpression, bool shouldCalculateLength)
                 {
                     PointerParameter = pointerParameter;
                     SpanOrArrayParameter = spanOrArrayParameter;
                     LengthParameter = lengthParameter;
                     ParameterExpression = parameterExpression;
+                    ShouldCalculateLength = shouldCalculateLength;
                 }
 
                 private IndentedTextWriter.Scope Scope;
@@ -633,7 +707,11 @@ namespace GeneratorV2.Process
                     // But that is fine because we can cast `int`s to `IntPtr`.
                     // This is slightly fragile but it's fine for now.
                     // - Noggin_bops 2021-01-22
-                    writer.WriteLine($"{LengthParameter.Type.ToCSString()} {LengthParameter.Name} = ({LengthParameter.Type.ToCSString()}){ParameterExpression};");
+                    if (ShouldCalculateLength)
+                    {
+                        writer.WriteLine($"{LengthParameter.Type.ToCSString()} {LengthParameter.Name} = ({LengthParameter.Type.ToCSString()}){ParameterExpression};");
+                    }
+
                     writer.WriteLine($"fixed ({PointerParameter.Type.ToCSString()} {PointerParameter.Name} = {SpanOrArrayParameter.Name})");
                     writer.WriteLine("{");
                     Scope = writer.Indentation();

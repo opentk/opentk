@@ -70,7 +70,7 @@ namespace GeneratorV2.Parsing
             return new Command(entryPoint, returnType, parameterList.ToArray());
         }
 
-        private static IExpression ParseExpression(string expression)
+        private static Expression ParseExpression(string expression)
         {
             var retExpr = ParseExpressionPrio2(expression, out string leftOver);
 
@@ -80,7 +80,7 @@ namespace GeneratorV2.Parsing
             return retExpr;
         }
 
-        private static IExpression ParseExpressionPrio2(string expression, out string leftOver)
+        private static Expression ParseExpressionPrio2(string expression, out string leftOver)
         {
             var retExpr = ParseExpressionPrio1(expression, out string exp);
             exp = exp.TrimStart();
@@ -111,7 +111,7 @@ namespace GeneratorV2.Parsing
             }
         }
 
-        private static IExpression ParseExpressionPrio1(string expression, out string leftOver)
+        private static Expression ParseExpressionPrio1(string expression, out string leftOver)
         {
             var retExpr = ParseExpressionPrio0(expression, out string exp);
             exp = exp.TrimStart();
@@ -142,13 +142,13 @@ namespace GeneratorV2.Parsing
             }
         }
 
-        private static IExpression ParseExpressionPrio0(string expression, out string leftOver)
+        private static Expression ParseExpressionPrio0(string expression, out string leftOver)
         {
             expression = expression.TrimStart();
             if (expression.StartsWith("COMPSIZE("))
             {
                 var exp = expression["COMPSIZE(".Length..];
-                List<IExpression> arguments = new List<IExpression>();
+                List<Expression> arguments = new List<Expression>();
                 while (exp[0] != ')')
                 {
                     arguments.Add(ParseExpressionPrio2(exp, out exp));
@@ -209,7 +209,7 @@ namespace GeneratorV2.Parsing
 
                     var baseType = ParseType(type.Substring(0, openingBracketIndex));
 
-                    return new GLArrayType(baseType, false, length);
+                    return new GLArrayType(baseType, length, false);
                 }
                 else
                 {
