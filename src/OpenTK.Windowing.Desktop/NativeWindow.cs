@@ -616,6 +616,8 @@ namespace OpenTK.Windowing.Desktop
             GLFW.WindowHint(WindowHintInt.ContextVersionMajor, settings.APIVersion.Major);
             GLFW.WindowHint(WindowHintInt.ContextVersionMinor, settings.APIVersion.Minor);
 
+            APIVersion = settings.APIVersion;
+
             Flags = settings.Flags;
             if (settings.Flags.HasFlag(ContextFlags.ForwardCompatible))
             {
