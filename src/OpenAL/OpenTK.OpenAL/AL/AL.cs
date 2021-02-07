@@ -407,14 +407,14 @@ namespace OpenTK.Audio.OpenAL
             {
                 throw new ArgumentNullException(nameof(sources));
             }
-            DeleteBuffers(sources.Length, ref sources[0]);
+            DeleteSources(sources.Length, ref sources[0]);
         }
 
         /// <summary>This function deletes one or more sources.</summary>
         /// <param name="sources">An array of source names identifying the sources to be deleted.</param>
         public static void DeleteSources(Span<int> sources)
         {
-            DeleteBuffers(sources.Length, ref sources[0]);
+            DeleteSources(sources.Length, ref sources[0]);
         }
 
         /// <summary>This function deletes one source only.</summary>

@@ -190,7 +190,7 @@ namespace OpenTK.Audio.OpenAL
             // Test double format extension
             if (EXTDouble.IsExtensionPresent())
             {
-                Console.WriteLine("Testing float32 format extension with a saw wave...");
+                Console.WriteLine("Testing float64 format extension with a saw wave...");
 
                 double[] saw = new double[44100 * 2];
                 for (int i = 0; i < saw.Length; i++)
