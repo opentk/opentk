@@ -145,6 +145,11 @@ namespace OpenTK.Windowing.Desktop
         public double RenderTime { get; protected set; }
 
         /// <summary>
+        /// Gets a double representing the time spent in the UpdateFrame function, in seconds.
+        /// </summary>
+        public double UpdateTime { get; protected set; }
+
+        /// <summary>
         /// Gets or sets a double representing the update frequency, in hertz.
         /// </summary>
         /// <remarks>
@@ -294,6 +299,8 @@ namespace OpenTK.Windowing.Desktop
                 _watchUpdate.Restart();
                 OnUpdateFrame(new FrameEventArgs(elapsed));
 
+                UpdateTime = _watchUpdate.Elapsed.TotalSeconds;
+
                 // Calculate difference (positive or negative) between
                 // actual elapsed time and target elapsed time. We must
                 // compensate for this difference.
@@ -328,6 +335,8 @@ namespace OpenTK.Windowing.Desktop
             {
                 _watchRender.Restart();
                 OnRenderFrame(new FrameEventArgs(elapsed));
+
+                RenderTime = _watchRender.Elapsed.TotalSeconds;
 
                 // Update VSync if set to adaptive
                 if (_vSync == VSyncMode.Adaptive)
