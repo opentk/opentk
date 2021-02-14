@@ -506,6 +506,9 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         [DllImport(LibraryName)]
         public static extern IntPtr glfwGetEGLContext(Window* window);
 
+        [DllImport(LibraryName)]
+        public static extern IntPtr glfwGetOSMesaContext(Window* window);
+
         #endregion
 #pragma warning restore SA1124 // Do not use regions
 

@@ -3824,41 +3824,6 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         public static unsafe void MaximizeWindow(Window* window) => glfwMaximizeWindow(window);
 
         /// <summary>
-        /// This function returns the Windows specific window handle (HWND).
-        /// </summary>
-        /// <param name="window">The window to query.</param>
-        /// <returns>The Windows specific window handle (HWND).</returns>
-        public static unsafe IntPtr GetWin32Window(Window* window) => glfwGetWin32Window(window);
-
-        /// <summary>
-        /// This function returns the macos specific window handle (NSWindow).
-        /// </summary>
-        /// <param name="window">The window to query.</param>
-        /// <returns>The macos specific window handle (NSWindow).</returns>
-        public static unsafe IntPtr GetCocoaWindow(Window* window) => glfwGetCocoaWindow(window);
-
-        /// <summary>
-        /// This function returns the x11 specific window handle (Window).
-        /// </summary>
-        /// <param name="window">The window to query.</param>
-        /// <returns>The x11 specific window handle (Window).</returns>
-        public static unsafe uint GetX11Window(Window* window) => glfwGetX11Window(window);
-
-        /// <summary>
-        /// This function returns the glx specific window handle (Window).
-        /// </summary>
-        /// <param name="window">The window to query.</param>
-        /// <returns>The glx specific window handle (Window).</returns>
-        public static unsafe uint GetGLXWindow(Window* window) => glfwGetGLXWindow(window);
-
-        /// <summary>
-        /// This function returns the wayland specific window handle (struct wl_surface*).
-        /// </summary>
-        /// <param name="window">The window to query.</param>
-        /// <returns>The wayland specific window handle (struct wl_surface*).</returns>
-        public static unsafe IntPtr GetWaylandWindow(Window* window) => glfwGetWaylandWindow(window);
-
-        /// <summary>
         /// <para>
         /// This function sets the maximization callback of the specified window,
         /// which is called when the window is maximized or restored.
@@ -5745,5 +5710,81 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         {
             return glfwCreateWindowSurface(instance, window, allocator, out surface);
         }
+
+#pragma warning disable SA1124 // Do not use regions
+        #region GLFW Native Access
+
+        /// <summary>
+        /// This function returns the Windows specific window handle (HWND).
+        /// </summary>
+        /// <param name="window">The window to query.</param>
+        /// <returns>The Windows specific window handle (HWND).</returns>
+        public static unsafe IntPtr GetWin32Window(Window* window) => glfwGetWin32Window(window);
+
+        /// <summary>
+        /// This function returns the WGL context associated with the window.
+        /// </summary>
+        /// <param name="window">The window to get the context from.</param>
+        /// <returns>The HGLRC of the specified window, or NULL if an error occurred.</returns>
+        public static unsafe IntPtr GetWGLContext(Window* window) => glfwGetWGLContext(window);
+
+        /// <summary>
+        /// This function returns the macos specific window handle (NSWindow).
+        /// </summary>
+        /// <param name="window">The window to query.</param>
+        /// <returns>The macos specific window handle (NSWindow).</returns>
+        public static unsafe IntPtr GetCocoaWindow(Window* window) => glfwGetCocoaWindow(window);
+
+        /// <summary>
+        /// This function returns the NSOpenGLContext (macos) associated with the window.
+        /// </summary>
+        /// <param name="window">The window to get the context from.</param>
+        /// <returns>The NSOpenGLContext of the specified window, or nil if an error occurred.</returns>
+        public static unsafe IntPtr GetNSGLContext(Window* window) => glfwGetNSGLContext(window);
+
+        /// <summary>
+        /// This function returns the x11 specific window handle (Window).
+        /// </summary>
+        /// <param name="window">The window to query.</param>
+        /// <returns>The x11 specific window handle (Window).</returns>
+        public static unsafe uint GetX11Window(Window* window) => glfwGetX11Window(window);
+
+        /// <summary>
+        /// This function returns the GLX context associated with the window.
+        /// </summary>
+        /// <param name="window">The window to get the context from.</param>
+        /// <returns>The GLXContext of the specified window, or NULL if an error occurred.</returns>
+        public static unsafe uint GetGLXContext(Window* window) => glfwGetGLXContext(window);
+
+        /// <summary>
+        /// This function returns the glx specific window handle (Window).
+        /// </summary>
+        /// <param name="window">The window to query.</param>
+        /// <returns>The glx specific window handle (Window).</returns>
+        public static unsafe uint GetGLXWindow(Window* window) => glfwGetGLXWindow(window);
+
+        /// <summary>
+        /// This function returns the wayland specific window handle (struct wl_surface*).
+        /// </summary>
+        /// <param name="window">The window to query.</param>
+        /// <returns>The wayland specific window handle (struct wl_surface*).</returns>
+        public static unsafe IntPtr GetWaylandWindow(Window* window) => glfwGetWaylandWindow(window);
+
+        /// <summary>
+        ///  This function returns the egl context associated with the window.
+        /// </summary>
+        /// <param name="window">The window to get the context from.</param>
+        /// <returns>The EGLContext of the specified window, or EGL_NO_CONTEXT if an error occurred.</returns>
+        public static unsafe IntPtr GetEGLContext(Window* window) => glfwGetEGLContext(window);
+
+        /// <summary>
+        ///  This function returns the mesa context associated with the window.
+        /// </summary>
+        /// <param name="window">The window to get the context from.</param>
+        /// <returns>The OSMesaContext of the specified window, or NULL if an error occurred.</returns>
+        public static unsafe IntPtr GetOSMesaContext(Window* window) => glfwGetOSMesaContext(window);
+
+        #endregion
+#pragma warning restore SA1124 // Do not use regions
     }
 }
