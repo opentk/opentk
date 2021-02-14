@@ -321,21 +321,6 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         public static extern void glfwMaximizeWindow(Window* window);
 
         [DllImport(LibraryName)]
-        public static extern IntPtr glfwGetWin32Window(Window* window);
-
-        [DllImport(LibraryName)]
-        public static extern IntPtr glfwGetCocoaWindow(Window* window);
-
-        [DllImport(LibraryName)]
-        public static extern uint glfwGetX11Window(Window* window);
-
-        [DllImport(LibraryName)]
-        public static extern uint glfwGetGLXWindow(Window* window);
-
-        [DllImport(LibraryName)]
-        public static extern IntPtr glfwGetWaylandWindow(Window* window);
-
-        [DllImport(LibraryName)]
         public static extern void glfwPollEvents();
 
         [DllImport(LibraryName)]
@@ -490,6 +475,42 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
 
         [DllImport(LibraryName)]
         public static extern int glfwCreateWindowSurface(VkHandle instance, Window* window, void* allocator, out VkHandle surface);
+
+#pragma warning disable SA1124 // Do not use regions
+        #region GLFW Native functions
+
+        [DllImport(LibraryName)]
+        public static extern IntPtr glfwGetWin32Window(Window* window);
+
+        [DllImport(LibraryName)]
+        public static extern IntPtr glfwGetWGLContext(Window* window);
+
+        [DllImport(LibraryName)]
+        public static extern IntPtr glfwGetCocoaWindow(Window* window);
+
+        [DllImport(LibraryName)]
+        public static extern IntPtr glfwGetNSGLContext(Window* window);
+
+        [DllImport(LibraryName)]
+        public static extern uint glfwGetX11Window(Window* window);
+
+        [DllImport(LibraryName)]
+        public static extern uint glfwGetGLXContext(Window* window);
+
+        [DllImport(LibraryName)]
+        public static extern uint glfwGetGLXWindow(Window* window);
+
+        [DllImport(LibraryName)]
+        public static extern IntPtr glfwGetWaylandWindow(Window* window);
+
+        [DllImport(LibraryName)]
+        public static extern IntPtr glfwGetEGLContext(Window* window);
+
+        [DllImport(LibraryName)]
+        public static extern IntPtr glfwGetOSMesaContext(Window* window);
+
+        #endregion
+#pragma warning restore SA1124 // Do not use regions
 
 #pragma warning restore IDE1006 // Naming Styles
     }
