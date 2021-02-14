@@ -1,3 +1,12 @@
+## 4.5.0
+API: Introduced `GameWindow.UpdateTime` to match `GameWindow.RenderTime`. (@NogginBops)
+API: Added GLFW functions for getting platform dependent opengl context pointers. (@NogginBops)
+
+FIX: `GameWindow.RenderTime` now gets updated correctly. (@NogginBops)
+FIX: Actually assign `APIVersion` property in `NativeWindow`. (@BroMandarin)
+FIX: The `MouseWheelEventArgs` in `OnMouseWheel` now correctly returns a delta instead of an accumulated offset. (@GeorchW)
+FIX: Some overloads for `AL.DeleteSources` where calling `alDeleteBuffers` instead of `alDeleteSources`. (@NogginBops)
+
 ## 4.4.0
 * API: Added properties ButtonCount, AxisCount, and HatCount to JoystickState (@Ferpsalerp)
 * API: Added a method that centers the NativeWindow in the monitor it currently resides (with optional resize) (@Timber1900 and @NogginBops)
