@@ -259,6 +259,8 @@ namespace OpenTK.Platform.X11
         {
             lock (Sync)
             {
+                // save current mouse position
+                MouseState current_mouse_state = (this as IMouseDriver2).GetState();
                 devices.Clear();
                 keyboards.Clear();
 
@@ -396,6 +398,14 @@ namespace OpenTK.Platform.X11
                         }
                     }
                     XI.FreeDeviceInfo((IntPtr)list);
+                }
+
+                // Restore current mouse position
+                if (devices.Count >= 1) {
+                    devices[0].State.Position = current_mouse_state.Position;
+                    devices[0].State.SetScrollAbsolute(
+                            current_mouse_state.Scroll.X,
+                            current_mouse_state.Scroll.Y);
                 }
             }
         }
