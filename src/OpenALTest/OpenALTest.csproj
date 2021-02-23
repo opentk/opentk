@@ -2,12 +2,12 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net5.0</TargetFramework>
     <StartupObject>OpenTK.Audio.OpenAL.ALTest</StartupObject>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\src\OpenAL\OpenTK.OpenAL\OpenTK.OpenAL.csproj" />
+    <ProjectReference Include="..\OpenAL\OpenTK.OpenAL\OpenTK.OpenAL.csproj" />
   </ItemGroup>
 
 </Project>

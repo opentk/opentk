@@ -41,15 +41,15 @@ namespace GeneratorV2.Writing
         }
 
         // FIXME: Should this be "OpenTK.Graphics.OpenGL" instead?
-        const string BaseNamespace = "OpenToolkit";
-        const string Namespace = "OpenTK.Graphics";
+        const string BaseNamespace = "OpenTK";
+        const string GraphicsNamespace = BaseNamespace + ".Graphics";
         const string LoaderClass = "GLLoader";
         const string LoaderBindingsContext = LoaderClass + ".BindingsContext";
 
         public static void Write(OutputData data)
         {
             string outputProjectPath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? throw new NullReferenceException(),
-                "..", "..", "..", "..", Namespace);
+                "..", "..", "..", "..", GraphicsNamespace);
 
             // FIXME: Delete existing if there is one
             try { Directory.Delete(outputProjectPath, true); } catch { }
@@ -87,7 +87,7 @@ namespace GeneratorV2.Writing
 
         public static void WriteProjectFile(string projectPath)
         {
-            using var writer = new IndentedTextWriter(Path.Combine(projectPath, $"{Namespace}.csproj"));
+            using var writer = new IndentedTextWriter(Path.Combine(projectPath, $"{GraphicsNamespace}.csproj"));
 
             // FIXME: Maybe get the version from somewhere too?
             // The indentation is gonna be weird in the file doing it like this,
@@ -98,7 +98,7 @@ namespace GeneratorV2.Writing
                     <PropertyGroup>
                         <TargetFramework>net5.0</TargetFramework>
                         <Nullable>enable</Nullable>
-                        <RootNamespace>{Namespace}</RootNamespace>
+                        <RootNamespace>{GraphicsNamespace}</RootNamespace>
                         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
                         <PackageVersion>5.0.0-pre0.0</PackageVersion>
                         <Version>5.0.0</Version>
@@ -118,7 +118,7 @@ namespace GeneratorV2.Writing
                 // This file is auto generated, do not edit.
                 using System;
 
-                namespace {Namespace}
+                namespace {GraphicsNamespace}
                 {{
                     public unsafe static class {LoaderClass}
                     {{
@@ -139,7 +139,7 @@ namespace GeneratorV2.Writing
                 using System;
                 using System.Runtime.InteropServices;
 
-                namespace {Namespace}
+                namespace {GraphicsNamespace}
                 {{
                     public unsafe delegate void GLDebugProc(uint source, uint type, uint id, uint severity, int length, char* message, void* userParam);
                     public unsafe delegate void GLDebugProcARB(uint source, uint type, uint id, uint severity, int length, char* message, void* userParam);
@@ -198,7 +198,7 @@ namespace GeneratorV2.Writing
             writer.WriteLine("using System;");
             writer.WriteLine();
             // NAMESPACE:
-            writer.WriteLine($"namespace {Namespace}.OpenGL.{version}");
+            writer.WriteLine($"namespace {GraphicsNamespace}.OpenGL.{version}");
             using (Scope(writer))
             {
                 writer.WriteLine($"public static unsafe partial class GL");
@@ -281,7 +281,7 @@ namespace GeneratorV2.Writing
             writer.WriteLine("using System.Runtime.CompilerServices;");
             writer.WriteLine("using System.Runtime.InteropServices;");
             writer.WriteLine();
-            writer.WriteLine($"namespace {Namespace}.OpenGL.{version}");
+            writer.WriteLine($"namespace {GraphicsNamespace}.OpenGL.{version}");
             using (Scope(writer))
             {
                 writer.WriteLine($"public static unsafe partial class GL");
@@ -371,7 +371,7 @@ namespace GeneratorV2.Writing
             writer.WriteLine("using System;");
             writer.WriteLine();
             // NAMESPACE:
-            writer.WriteLine($"namespace {Namespace}.OpenGL.{version}");
+            writer.WriteLine($"namespace {GraphicsNamespace}.OpenGL.{version}");
             using (Scope(writer))
             {
                 WriteEnumGroups(writer, enumGroups);

@@ -3,10 +3,10 @@ id OpenToolkit.Graphics
 description
     GLes11, GLes20, GLes30, GL2, and GL4 bindings for dotnet from the Khronos openGL c library.
 dependencies
-    framework: netstandard2.0
+    framework: net5.0
         OpenToolkit.Core ~> #VERSION#
         OpenToolkit.Mathematics ~> #VERSION#
 files
-    bin\Release\netstandard2.0\OpenToolkit.Graphics.dll ==> lib\netstandard2.0
-    bin\Release\netstandard2.0\OpenToolkit.Graphics.xml ==> lib\netstandard2.0
-    bin\Release\netstandard2.0\OpenToolkit.Graphics.pdb ==> lib\netstandard2.0
+    bin\Release\net5.0\OpenToolkit.Graphics.dll ==> lib\net5.0
+    bin\Release\net5.0\OpenToolkit.Graphics.xml ==> lib\net5.0
+    bin\Release\net5.0\OpenToolkit.Graphics.pdb ==> lib\net5.0
