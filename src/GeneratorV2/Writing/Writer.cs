@@ -104,8 +104,8 @@ namespace GeneratorV2.Writing
                         <Version>5.0.0</Version>
                     </PropertyGroup>
                     <ItemGroup>
-                        <ProjectReference Include=""../OpenToolkit.Core/OpenToolkit.Core.csproj"" />
-                        <ProjectReference Include=""../OpenToolkit.Mathematics/OpenToolkit.Mathematics.csproj"" />
+                        <ProjectReference Include=""../{BaseNamespace}.Core/{BaseNamespace}.Core.csproj"" />
+                        <ProjectReference Include=""../{BaseNamespace}.Mathematics/{BaseNamespace}.Mathematics.csproj"" />
                     </ItemGroup>
                 </Project>
                 ");
