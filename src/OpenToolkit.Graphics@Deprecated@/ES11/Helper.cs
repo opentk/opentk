@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 
-namespace OpenToolkit.Graphics.ES11
+namespace OpenTK.Graphics.ES11
 {
     /// <summary>
     /// Provides access to OpenGL ES 1.1 methods.

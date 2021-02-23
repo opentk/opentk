@@ -1,5 +1,5 @@
 using System;
-namespace OpenToolkit.Graphics.GL
+namespace OpenTK.Graphics.GL
 {
     
     public struct CombinerPortionNV {}

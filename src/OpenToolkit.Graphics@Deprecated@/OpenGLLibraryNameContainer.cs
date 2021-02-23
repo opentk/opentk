@@ -1,6 +1,6 @@
 using System.Runtime.InteropServices;
 
-namespace OpenToolkit.Graphics.GL
+namespace OpenTK.Graphics.GL
 {
     /// <summary>
     /// Contains the library name of OpenGL.

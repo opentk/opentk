@@ -27,7 +27,7 @@ using System;
 using System.Text;
 using System.Runtime.InteropServices;
 
-namespace OpenToolkit.Graphics
+namespace OpenTK.Graphics
 {
     /// <summary>
     /// Provides a common foundation for all flat API bindings and implements the extension loading interface.

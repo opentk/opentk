@@ -29,9 +29,9 @@ using System.Diagnostics;
 using System.Drawing;
 #endif
 using System.Runtime.InteropServices;
-using OpenToolkit.Mathematics;
+using OpenTK.Mathematics;
 
-namespace OpenToolkit.Graphics.ES30
+namespace OpenTK.Graphics.ES30
 {
     /// <summary>
     /// Provides access to OpenGL ES 3.0 methods.

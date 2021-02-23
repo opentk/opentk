@@ -45,9 +45,23 @@ let projectUrl = "https://github.com/opentk/opentk"
 let iconUrl = "https://raw.githubusercontent.com/opentk/opentk/master/docs/files/img/logo.png"
 
 let description =
-    "The Open Toolkit is set of fast, low-level C# bindings for OpenGL, OpenGL ES and OpenAL. It runs on all major platforms and powers hundreds of apps, games and scientific research."
+    "The Open Toolkit is set of fast, low-level C# bindings for OpenGL, OpenGL ES, OpenAL and OpenCL. It runs on all major platforms and powers hundreds of apps, games and scientific research.
+    It provides bindings for GLFW windowing, input and a game loop, and is the perfect start for your own game engine.
+    
 
-let tags = "OpenTK OpenGL OpenGLES GLES OpenAL C# F# .NET Mono Vector Math Game Graphics Sound"
+    OpenTK comes with simple and easy to follow tutorials for learning *modern* OpenGL. These are written by the community and represent all of the best practices to get you started.
+    Learn how to use OpenTK here:
+    https://opentk.net/learn/index.html
+
+    Sample projects that accompany the tutorial can be found here:
+    https://github.com/opentk/LearnOpenTK
+
+    We have a very active discord server, if you need help, want to help, or are just curious, come join us!
+    https://discord.gg/6HqD48s
+
+    "
+
+let tags = "OpenTK OpenGL OpenGLES GLES OpenAL OpenCL C# F# .NET Mono Vector Math Game Graphics Sound"
 
 let copyright = "Copyright (c) 2006 - 2020 Stefanos Apostolopoulos <stapostol@gmail.com> for the Open Toolkit library."
 
@@ -92,7 +106,7 @@ let releaseProjects =
     -- "src/SpecificationOpenGL/**"
     -- "src/OpenAL/OpenALGenerator/**"
     -- "src/OpenAL/OpenALTest/**"
-    -- "src/OpenAL/OpenToolkit.OpenAL.Extensions/**"
+    -- "src/OpenAL/OpenTK.OpenAL.Extensions/**"
 
 
 // Absolutely all test projects.
@@ -169,8 +183,8 @@ Target.create "RewriteBindings" (fun _ ->
     Trace.log " --- Rewriting bindings (calli) --- "
     let framework = "netcoreapp31"
     let projFile = "src/Generator.Rewrite/Generator.Rewrite.csproj"
-    let bindingsFile = "OpenToolkit.Graphics.dll"
-    let bindingsOutput = "src/OpenToolkit.Graphics/bin/Release/netstandard2.0"
+    let bindingsFile = "OpenTK.Graphics.dll"
+    let bindingsOutput = "src/OpenTK.Graphics/bin/Release/netstandard2.1"
 
     let args =
         [ "-a " + (System.IO.Path.GetFullPath bindingsOutput </> bindingsFile)
@@ -182,17 +196,18 @@ Target.create "RewriteBindings" (fun _ ->
 // ---------
 
 Target.create "Clean" <| fun _ ->
-    !! ("./src" </> "OpenToolkit.Graphics" </> "**/*.*")
+    !! ("./src" </> "OpenTK.Graphics" </> "**/*.*")
     ++ (nugetDir </> "*.nupkg")
-    -- ("./src" </> "OpenToolkit.Graphics" </> "Enums/*.cs")
-    -- ("./src" </> "OpenToolkit.Graphics" </> "*.cs")
-    -- ("./src" </> "OpenToolkit.Graphics" </> "*.csproj")
-    -- ("./src" </> "OpenToolkit.Graphics" </> "ES11/Helper.cs")
-    -- ("./src" </> "OpenToolkit.Graphics" </> "ES20/Helper.cs")
-    -- ("./src" </> "OpenToolkit.Graphics" </> "ES30/Helper.cs")
-    -- ("./src" </> "OpenToolkit.Graphics" </> "OpenGL2/Helper.cs")
-    -- ("./src" </> "OpenToolkit.Graphics" </> "OpenGL4/Helper.cs")
-    -- ("./src" </> "OpenToolkit.Graphics" </> "paket")
+    -- ("./src" </> "OpenTK.Graphics" </> "Enums/*.cs")
+    -- ("./src" </> "OpenTK.Graphics" </> "*.cs")
+    -- ("./src" </> "OpenTK.Graphics" </> "*.csproj")
+    -- ("./src" </> "OpenTK.Graphics" </> "ES11/Helper.cs")
+    -- ("./src" </> "OpenTK.Graphics" </> "ES20/Helper.cs")
+    -- ("./src" </> "OpenTK.Graphics" </> "ES30/Helper.cs")
+    -- ("./src" </> "OpenTK.Graphics" </> "OpenGL2/Helper.cs")
+    -- ("./src" </> "OpenTK.Graphics" </> "OpenGL4/Helper.cs")
+    -- ("./src" </> "OpenTK.Graphics" </> "Wgl/*.*")
+    -- ("./src" </> "OpenTK.Graphics" </> "paket")
     |> Seq.iter(Shell.rm)
 
 Target.create "Restore" (fun _ -> DotNet.restore dotnetSimple "OpenTK.sln" |> ignore)

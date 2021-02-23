@@ -29,9 +29,9 @@ using System.Diagnostics;
 using System.Drawing;
 #endif
 using System.Runtime.InteropServices;
-using OpenToolkit.Mathematics;
+using OpenTK.Mathematics;
 
-namespace OpenToolkit.Graphics.OpenGL4
+namespace OpenTK.Graphics.OpenGL4
 {
     /// <summary>
     /// Provides access to OpenGL 4.x methods for the core profile.

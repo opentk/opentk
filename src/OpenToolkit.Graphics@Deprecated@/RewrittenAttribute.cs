@@ -25,7 +25,7 @@
 
 using System;
 
-namespace OpenToolkit.Graphics
+namespace OpenTK.Graphics
 {
     [AttributeUsage(AttributeTargets.Assembly, AllowMultiple = false, Inherited = false)]
     internal class RewrittenAttribute : Attribute

@@ -30,10 +30,10 @@ using System.Diagnostics;
 using System.Drawing;
 #endif
 using System.Runtime.InteropServices;
-using OpenToolkit.Mathematics;
+using OpenTK.Mathematics;
 
 
-namespace OpenToolkit.Graphics.OpenGL
+namespace OpenTK.Graphics.OpenGL
 {
     /// <summary>
     /// OpenGL bindings for .NET, implementing the full OpenGL API, including extensions.
@@ -804,7 +804,7 @@ namespace OpenToolkit.Graphics.OpenGL
 
         /// <summary>
         /// [requires: v2.0]
-        /// Specify the value of a <see cref="OpenToolkit.Graphics.Color4"/> uniform variable for the current program object.
+        /// Specify the value of a <see cref="OpenTK.Graphics.Color4"/> uniform variable for the current program object.
         /// In shader code, this is represented as a <see cref="Vector4"/>.
         /// </summary>
         /// <param name="location">
@@ -1361,7 +1361,7 @@ namespace OpenToolkit.Graphics.OpenGL
 
         /// <summary>
         /// [requires: v4.1 or ARB_separate_shader_objects|VERSION_4_1]
-        /// Specify the value of a <see cref="OpenToolkit.Graphics.Color4"/> uniform variable for the specified program object.
+        /// Specify the value of a <see cref="OpenTK.Graphics.Color4"/> uniform variable for the specified program object.
         /// In shader code, this is represented as a <see cref="Vector4"/>.
         /// </summary>
         /// <param name="program">
@@ -1887,7 +1887,7 @@ namespace OpenToolkit.Graphics.OpenGL
         public static string GetActiveAttrib(int program, int index, out int size, out ActiveAttribType type)
         {
             int length;
-            GetProgram(program, OpenToolkit.Graphics.OpenGL.GetProgramParameterName.ActiveAttributeMaxLength, out length);
+            GetProgram(program, OpenTK.Graphics.OpenGL.GetProgramParameterName.ActiveAttributeMaxLength, out length);
             string str;
 
             GetActiveAttrib(program, index, length == 0 ? 1 : length * 2, out length, out size, out type, out str);
@@ -1916,7 +1916,7 @@ namespace OpenToolkit.Graphics.OpenGL
         public static string GetActiveUniform(int program, int uniformIndex, out int size, out ActiveUniformType type)
         {
             int length;
-            GetProgram(program, OpenToolkit.Graphics.OpenGL.GetProgramParameterName.ActiveUniformMaxLength, out length);
+            GetProgram(program, OpenTK.Graphics.OpenGL.GetProgramParameterName.ActiveUniformMaxLength, out length);
 
             string str;
             GetActiveUniform(program, uniformIndex, length == 0 ? 1 : length, out length, out size, out type, out str);
@@ -1939,7 +1939,7 @@ namespace OpenToolkit.Graphics.OpenGL
         public static string GetActiveUniformName(int program, int uniformIndex)
         {
             int length;
-            GetProgram(program, OpenToolkit.Graphics.OpenGL.GetProgramParameterName.ActiveUniformMaxLength, out length);
+            GetProgram(program, OpenTK.Graphics.OpenGL.GetProgramParameterName.ActiveUniformMaxLength, out length);
             string str;
 
             GetActiveUniformName(program, uniformIndex, length == 0 ? 1 : length * 2, out length, out str);
@@ -1962,7 +1962,7 @@ namespace OpenToolkit.Graphics.OpenGL
         public static string GetActiveUniformBlockName(int program, int uniformIndex)
         {
             int length;
-            GetProgram(program, OpenToolkit.Graphics.OpenGL.GetProgramParameterName.ActiveUniformBlockMaxNameLength, out length);
+            GetProgram(program, OpenTK.Graphics.OpenGL.GetProgramParameterName.ActiveUniformBlockMaxNameLength, out length);
             string str;
 
             GetActiveUniformBlockName(program, uniformIndex, length == 0 ? 1 : length * 2, out length, out str);
@@ -2062,7 +2062,7 @@ namespace OpenToolkit.Graphics.OpenGL
             unsafe
             {
                 int length;
-                GL.GetProgram(program, OpenToolkit.Graphics.OpenGL.GetProgramParameterName.InfoLogLength, out length); if (length == 0)
+                GL.GetProgram(program, OpenTK.Graphics.OpenGL.GetProgramParameterName.InfoLogLength, out length); if (length == 0)
                 {
                     info = String.Empty;
                     return;
@@ -2075,7 +2075,7 @@ namespace OpenToolkit.Graphics.OpenGL
         /// Helper function that defines the coordinate origin of the Point Sprite.
         /// </summary>
         /// <param name="param">
-        /// A OpenToolkit.Graphics.OpenGL.GL.PointSpriteCoordOriginParameter token,
+        /// A OpenTK.Graphics.OpenGL.GL.PointSpriteCoordOriginParameter token,
         /// denoting the origin of the Point Sprite.
         /// </param>
         public static void PointParameter(PointSpriteCoordOriginParameter param)
@@ -2825,7 +2825,7 @@ namespace OpenToolkit.Graphics.OpenGL
         /// Specifies the width and height of the viewport. When a GL context is first attached to a window, 
         /// width and height are set to the dimensions of that window.
         /// </param>
-        public static void Viewport(OpenToolkit.Point location, OpenToolkit.Size size)
+        public static void Viewport(OpenTK.Point location, OpenTK.Size size)
         {
             GL.Viewport(location.X, location.Y, size.Width, size.Height);
         }
@@ -2838,7 +2838,7 @@ namespace OpenToolkit.Graphics.OpenGL
         /// Specifies the lower left corner, as well as the width and height of the viewport. When a GL context is 
         /// first attached to a window, width and height are set to the dimensions of that window.
         /// </param>
-        public static void Viewport(OpenToolkit.Rectangle rectangle)
+        public static void Viewport(OpenTK.Rectangle rectangle)
         {
             GL.Viewport(rectangle.X, rectangle.Y, rectangle.Width, rectangle.Height);
         }
