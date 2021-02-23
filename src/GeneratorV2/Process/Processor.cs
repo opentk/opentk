@@ -28,7 +28,7 @@ namespace GeneratorV2.Process
             {
                 var nativeFunction = MakeNativeFunction(command, out string[] usedEnumGroups);
                 var overloads = GenerateOverloads(nativeFunction, out bool changeNativeName);
-                
+
                 functionToEnumGroupsUsed.Add(nativeFunction, usedEnumGroups);
                 allFunctions.Add(nativeFunction.EntryPoint, new OverloadedFunction(nativeFunction, overloads, changeNativeName));
             }
@@ -592,7 +592,7 @@ namespace GeneratorV2.Process
 
                 // FIXME: We want to be able to handle more than just one Span and Array overload
                 // functions like "glShaderSource" can take more than one array.
-                // 
+                //
                 List<Parameter> newParams = new List<Parameter>(overload.InputParameters);
                 var genericTypes = overload.GenericTypes;
                 Overload arrayOverload = overload;
@@ -613,11 +613,30 @@ namespace GeneratorV2.Process
                         if (paramName != null)
                         {
                             int index = Array.FindIndex(overload.InputParameters, p => p.Name == paramName);
-                            
+
                             var pointerParam = newParams[i];
 
                             if (pointerParam.Type is not CSPointer pointer)
                                 throw new Exception("A parameter with a 'len' attribute must be a pointer type!");
+
+                            var old = overload.InputParameters[index];
+                            int typeIndex = i;
+                            Parameter? paramToBeRemoved = null;
+                            bool shouldCalculateLength = overload.InputParameters.Count(p => p.Length == param.Length) <= 1;
+                            // If this is the only len attribute that refernces this parameter,
+                            // we can remove that parameter as we can calculate it from the length of this parameter (array/span).
+                            // FIXME: This check is going to fail if the two 'len' attributes have different "forms" e.g. "n" == "n*4" == "COMPSIZE(n)" etc.
+                            if (shouldCalculateLength)
+                            {
+                                paramToBeRemoved = old;
+                                newParams.Remove(old);
+
+                                if (index < i)
+                                {
+                                    typeIndex--;
+                                    i--;
+                                }
+                            }
 
                             BaseCSType baseType;
                             if (pointer.BaseType is CSVoid)
@@ -631,36 +650,15 @@ namespace GeneratorV2.Process
                                 baseType = pointer.BaseType;
                             }
 
-                            var old = overload.InputParameters[index];
-
-                            int typeIndex = i;
-
-                            // If this is the only len attribute that refernces this parameter,
-                            // we can remove that parameter as we can calculate it from the length of this parameter (array/span).
-                            // FIXME: This check is going to fail if the two 'len' attributes have different "forms" e.g. "n" == "n*4" == "COMPSIZE(n)" etc.
-                            Parameter? paramToBeRemoved = null;
-                            bool shouldCalculateLength = overload.InputParameters.Count(p => p.Length == param.Length) <= 1;
-                            if (shouldCalculateLength)
-                            {
-                                paramToBeRemoved = old;
-                                newParams.Remove(old);
-
-                                if (index < i)
-                                {
-                                    typeIndex--;
-                                    i--;
-                                }
-                            }
-                            
                             // FIXME: Name of new parameter
                             var newSpanParams = spanOverload.InputParameters.Where(p => p != paramToBeRemoved).ToArray();
                             newSpanParams[typeIndex] = new Parameter(new CSSpan(baseType, pointer.Constant), pointerParam.Name + "_span", null);
-                            var spanLayer = new SpanOrArrayLayer(pointerParam, newSpanParams[typeIndex], old, expr(newSpanParams[typeIndex].Name), shouldCalculateLength);
+                            var spanLayer = new SpanOrArrayLayer(pointerParam, newSpanParams[typeIndex], old, expr(newSpanParams[typeIndex].Name), shouldCalculateLength, baseType);
                             spanOverload = spanOverload with { NestedOverload = spanOverload, MarshalLayerToNested = spanLayer, InputParameters = newSpanParams, GenericTypes = genericTypes };
 
                             var newArrayParams = arrayOverload.InputParameters.Where(p => p != paramToBeRemoved).ToArray();
                             newArrayParams[typeIndex] = new Parameter(new CSArray(baseType, pointer.Constant), pointerParam.Name + "_array", null);
-                            var arrayLayer = new SpanOrArrayLayer(pointerParam, newArrayParams[typeIndex], old, expr(newArrayParams[typeIndex].Name), shouldCalculateLength);
+                            var arrayLayer = new SpanOrArrayLayer(pointerParam, newArrayParams[typeIndex], old, expr(newArrayParams[typeIndex].Name), shouldCalculateLength, baseType);
                             arrayOverload = arrayOverload with { NestedOverload = arrayOverload, MarshalLayerToNested = arrayLayer, InputParameters = newArrayParams, GenericTypes = genericTypes };
                         }
                     }
@@ -682,22 +680,14 @@ namespace GeneratorV2.Process
                 }
             }
 
-            class SpanOrArrayLayer : IOverloadLayer
+            record SpanOrArrayLayer(
+                Parameter PointerParameter,
+                Parameter SpanOrArrayParameter,
+                Parameter LengthParameter,
+                string ParameterExpression,
+                bool ShouldCalculateLength,
+                BaseCSType BaseType) : IOverloadLayer
             {
-                public readonly Parameter PointerParameter;
-                public readonly Parameter SpanOrArrayParameter;
-                public readonly Parameter LengthParameter;
-                public readonly string ParameterExpression;
-                public readonly bool ShouldCalculateLength;
-
-                public SpanOrArrayLayer(Parameter pointerParameter, Parameter spanOrArrayParameter, Parameter lengthParameter, string parameterExpression, bool shouldCalculateLength)
-                {
-                    PointerParameter = pointerParameter;
-                    SpanOrArrayParameter = spanOrArrayParameter;
-                    LengthParameter = lengthParameter;
-                    ParameterExpression = parameterExpression;
-                    ShouldCalculateLength = shouldCalculateLength;
-                }
 
                 private IndentedTextWriter.Scope Scope;
                 public void WritePrologue(IndentedTextWriter writer)
@@ -709,7 +699,8 @@ namespace GeneratorV2.Process
                     // - Noggin_bops 2021-01-22
                     if (ShouldCalculateLength)
                     {
-                        writer.WriteLine($"{LengthParameter.Type.ToCSString()} {LengthParameter.Name} = ({LengthParameter.Type.ToCSString()}){ParameterExpression};");
+                        var byteSize = BaseType is CSGenericType ? $" * sizeof({BaseType.ToCSString()})" : "";
+                        writer.WriteLine($"{LengthParameter.Type.ToCSString()} {LengthParameter.Name} = ({LengthParameter.Type.ToCSString()})({ParameterExpression}{byteSize});");
                     }
 
                     writer.WriteLine($"fixed ({PointerParameter.Type.ToCSString()} {PointerParameter.Name} = {SpanOrArrayParameter.Name})");

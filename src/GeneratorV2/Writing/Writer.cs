@@ -41,6 +41,7 @@ namespace GeneratorV2.Writing
         }
 
         // FIXME: Should this be "OpenTK.Graphics.OpenGL" instead?
+        const string BaseNamespace = "OpenToolkit";
         const string Namespace = "OpenTK.Graphics";
         const string LoaderClass = "GLLoader";
         const string LoaderBindingsContext = LoaderClass + ".BindingsContext";
