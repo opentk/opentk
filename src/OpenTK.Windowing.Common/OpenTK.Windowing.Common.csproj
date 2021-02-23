@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.1;netcoreapp3.1</TargetFrameworks>
-    <RootNamespace>OpenTK.Windowing.Common</RootNamespace>
+    <TargetFramework>net5.0</TargetFramework>
+    <RootNamespace>OpenToolkit.Windowing.Common</RootNamespace>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
 
