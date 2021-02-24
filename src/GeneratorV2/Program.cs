@@ -18,7 +18,7 @@ namespace GeneratorV2
         {
             var st = new Stopwatch();
             st.Start();
-            using (Logger.CreateLogger(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "log.txt")))
+            using (Logger.CreateLogger(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly()!.Location)!, "log.txt")))
             {
                 //TODO: Documentation.
                 //Reading
