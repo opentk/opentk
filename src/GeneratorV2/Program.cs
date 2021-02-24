@@ -5,6 +5,8 @@ using GeneratorV2.Writing;
 using GeneratorV2.Overloading;
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Reflection;
 using GeneratorV2.Process;
 
 namespace GeneratorV2
@@ -15,7 +17,7 @@ namespace GeneratorV2
         {
             var st = new Stopwatch();
             st.Start();
-            using (Logger.CreateLogger("log.txt"))
+            using (Logger.CreateLogger(Path.Combine(Assembly.GetEntryAssembly()!.Location, "log.txt")))
             {
                 //TODO: Documentation.
                 //Reading

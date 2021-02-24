@@ -47,7 +47,7 @@ let iconUrl = "https://raw.githubusercontent.com/opentk/opentk/master/docs/files
 let description =
     "The Open Toolkit is set of fast, low-level C# bindings for OpenGL, OpenGL ES, OpenAL and OpenCL. It runs on all major platforms and powers hundreds of apps, games and scientific research.
     It provides bindings for GLFW windowing, input and a game loop, and is the perfect start for your own game engine.
-    
+
 
     OpenTK comes with simple and easy to follow tutorials for learning *modern* OpenGL. These are written by the community and represent all of the best practices to get you started.
     Learn how to use OpenTK here:
@@ -353,10 +353,10 @@ open Fake.Core.TargetOperators
   ==> "AssemblyInfo"
   //==> "UpdateSpec"
   //==> "UpdateBindingsRewrite"
-  //==> "Build"
+  ==> "GenerateBindings"
+  ==> "Build"
   //==> "RewriteBindings"
 //  ==> "RunAllTests"
-  ==> "GenerateBindings"
   ==> "All"
   ==> "CreateNuGetPackage"
   ==> "CreateMetaPackage"

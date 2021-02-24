@@ -1,3 +1,6 @@
+## 5.0-pre.1
+* YAAAY!
+
 ## 4.5.0
 API: Introduced `GameWindow.UpdateTime` to match `GameWindow.RenderTime`. (@NogginBops)
 API: Added GLFW functions for getting platform dependent opengl context pointers. (@NogginBops)

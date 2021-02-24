@@ -56,6 +56,8 @@ namespace GeneratorV2.Writing
             Directory.CreateDirectory(outputProjectPath);
 
             // NAMESPACE:
+            WritePaketFile(outputProjectPath);
+
             WriteProjectFile(outputProjectPath);
 
             WriteBindingsLoader(outputProjectPath);
@@ -82,6 +84,39 @@ namespace GeneratorV2.Writing
                 WriteOverloads(versionPath, versionName, version.Overloads);
 
                 WriteEnums(versionPath, versionName, version.EnumGroups, version.AllEnums);
+            }
+        }
+
+        public static void WritePaketFile(string projectPath)
+        {
+
+            using var writer = new IndentedTextWriter(Path.Combine(projectPath, $"paket"));
+
+            writer.WriteLine("type file");
+            writer.WriteLine($"id {GraphicsNamespace}");
+
+            writer.WriteLine("description");
+            using (writer.Indentation())
+            {
+                writer.WriteLine("OpenGl and OpenGlEs bindings for dotnet from the Khronos openGL c library.");
+            }
+
+            writer.WriteLine("dependencies");
+            using (writer.Indentation())
+            {
+                writer.WriteLine("framework: net5.0");
+                using (writer.Indentation())
+                {
+                    writer.WriteLine("OpenToolkit.Core ~> #VERSION#");
+                    writer.WriteLine("OpenToolkit.Mathematics ~> #VERSION#");
+                }
+            }
+
+            writer.WriteLine("files");
+            using (writer.Indentation())
+            {
+                writer.WriteLine($"bin\\Release\\net5.0\\{GraphicsNamespace}.dll ==> lib\\net5.0");
+                writer.WriteLine($"bin\\Release\\net5.0\\{GraphicsNamespace}.pdb ==> lib\\net5.0");
             }
         }
 
