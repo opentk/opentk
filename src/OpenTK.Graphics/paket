@@ -1,0 +1,11 @@
+type file
+id OpenTK.Graphics
+description
+    OpenGl and OpenGlEs bindings for dotnet from the Khronos openGL c library.
+dependencies
+    framework: net5.0
+        OpenTK.Core ~> #VERSION#
+        OpenTK.Mathematics ~> #VERSION#
+files
+    bin\Release\net5.0\OpenTK.Graphics.dll ==> lib\net5.0
+    bin\Release\net5.0\OpenTK.Graphics.pdb ==> lib\net5.0

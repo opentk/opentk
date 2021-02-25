@@ -51,18 +51,9 @@ namespace GeneratorV2.Writing
             string outputProjectPath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? throw new NullReferenceException(),
                 "..", "..", "..", "..", GraphicsNamespace);
 
-            // FIXME: Delete existing if there is one
-            try { Directory.Delete(outputProjectPath, true); } catch { }
-            Directory.CreateDirectory(outputProjectPath);
-
-            // NAMESPACE:
-            WritePaketFile(outputProjectPath);
-
-            WriteProjectFile(outputProjectPath);
-
-            WriteBindingsLoader(outputProjectPath);
-
-            WriteBuiltInTypes(outputProjectPath);
+            #if DEBUG
+            RewriteProject(outputProjectPath);
+            #endif
 
             string glFolder = Path.Combine(outputProjectPath, "OpenGL");
 
@@ -87,7 +78,24 @@ namespace GeneratorV2.Writing
             }
         }
 
-        public static void WritePaketFile(string projectPath)
+        private static void RewriteProject(string outputProjectPath)
+        {
+            try{ Directory.Delete(outputProjectPath, true); }
+            catch (UnauthorizedAccessException) { }
+
+            Directory.CreateDirectory(outputProjectPath);
+
+            // NAMESPACE:
+            WritePaketFile(outputProjectPath);
+
+            WriteProjectFile(outputProjectPath);
+
+            WriteBindingsLoader(outputProjectPath);
+
+            WriteBuiltInTypes(outputProjectPath);
+        }
+
+        private static void WritePaketFile(string projectPath)
         {
 
             using var writer = new IndentedTextWriter(Path.Combine(projectPath, $"paket"));
@@ -107,8 +115,8 @@ namespace GeneratorV2.Writing
                 writer.WriteLine("framework: net5.0");
                 using (writer.Indentation())
                 {
-                    writer.WriteLine("OpenToolkit.Core ~> #VERSION#");
-                    writer.WriteLine("OpenToolkit.Mathematics ~> #VERSION#");
+                    writer.WriteLine($"{BaseNamespace}.Core ~> #VERSION#");
+                    writer.WriteLine($"{BaseNamespace}.Mathematics ~> #VERSION#");
                 }
             }
 
@@ -120,7 +128,7 @@ namespace GeneratorV2.Writing
             }
         }
 
-        public static void WriteProjectFile(string projectPath)
+        private static void WriteProjectFile(string projectPath)
         {
             using var writer = new IndentedTextWriter(Path.Combine(projectPath, $"{GraphicsNamespace}.csproj"));
 
@@ -135,8 +143,6 @@ namespace GeneratorV2.Writing
                         <Nullable>enable</Nullable>
                         <RootNamespace>{GraphicsNamespace}</RootNamespace>
                         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-                        <PackageVersion>5.0.0-pre0.0</PackageVersion>
-                        <Version>5.0.0</Version>
                     </PropertyGroup>
                     <ItemGroup>
                         <ProjectReference Include=""../{BaseNamespace}.Core/{BaseNamespace}.Core.csproj"" />
@@ -146,7 +152,7 @@ namespace GeneratorV2.Writing
                 ");
         }
 
-        public static void WriteBindingsLoader(string projectPath)
+        private static void WriteBindingsLoader(string projectPath)
         {
             using var writer = new IndentedTextWriter(Path.Combine(projectPath, $"{LoaderClass}.cs"));
             writer.Write($@"
@@ -166,7 +172,7 @@ namespace GeneratorV2.Writing
                 ");
         }
 
-        public static void WriteBuiltInTypes(string projectPath)
+        private static void WriteBuiltInTypes(string projectPath)
         {
             using var writer = new IndentedTextWriter(Path.Combine(projectPath, "Types.cs"));
             writer.Write($@"
@@ -226,7 +232,7 @@ namespace GeneratorV2.Writing
                 ");
         }
 
-        public static void WriteNativeFunctions(string directoryPath, string version, List<OverloaderNativeFunction> nativeFunctions)
+        private static void WriteNativeFunctions(string directoryPath, string version, List<OverloaderNativeFunction> nativeFunctions)
         {
             using IndentedTextWriter writer = new IndentedTextWriter(Path.Combine(directoryPath, "GL.cs"));
             writer.WriteLine("// This file is auto generated, do not edit.");
@@ -308,7 +314,7 @@ namespace GeneratorV2.Writing
             writer.Flush();
         }
 
-        public static void WriteOverloads(string directoryPath, string version, List<OverloaderFunctionOverloads> overloads)
+        private static void WriteOverloads(string directoryPath, string version, List<OverloaderFunctionOverloads> overloads)
         {
             using IndentedTextWriter writer = new IndentedTextWriter(Path.Combine(directoryPath, "GL.Overloads.cs"));
             writer.WriteLine("// This file is auto generated, do not edit.");
@@ -397,7 +403,7 @@ namespace GeneratorV2.Writing
             }
         }
 
-        public static void WriteEnums(string directoryPath, string version, List<EnumGroup> enumGroups, List<EnumMemberData> allEnums)
+        private static void WriteEnums(string directoryPath, string version, List<EnumGroup> enumGroups, List<EnumMemberData> allEnums)
         {
             // FIXME: Disable CA1069
             string path = Path.Combine(directoryPath, "Enums.cs");
@@ -414,7 +420,7 @@ namespace GeneratorV2.Writing
             }
         }
 
-        public static void WriteEnumGroups(IndentedTextWriter writer, List<EnumGroup> enumGroups)
+        private static void WriteEnumGroups(IndentedTextWriter writer, List<EnumGroup> enumGroups)
         {
             foreach (var group in enumGroups)
             {
@@ -430,7 +436,7 @@ namespace GeneratorV2.Writing
             }
         }
 
-        public static void WriteAllEnum(IndentedTextWriter writer, List<EnumMemberData> allEnums)
+        private static void WriteAllEnum(IndentedTextWriter writer, List<EnumMemberData> allEnums)
         {
             writer.WriteLine($"public enum All : uint");
             using (Scope(writer))
