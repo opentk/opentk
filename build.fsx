@@ -158,6 +158,7 @@ let asArgs args = args |> String.concat " "
 
 Target.create "GenerateBindings" (fun _ ->
     Trace.log " --- Generating bindings --- "
+    let releaseProjects = releaseProjects.And "src/OpenTK.Graphics/*.csproj"
     let framework = "net5.0"
     let projFile = "src/GeneratorV2/GeneratorV2.csproj"
 
@@ -171,14 +172,8 @@ Target.create "GenerateBindings" (fun _ ->
 Target.create "Clean" <| fun _ ->
     !! ("./src" </> "OpenTK.Graphics" </> "**/*.*")
     ++ (nugetDir </> "*.nupkg")
-    -- ("./src" </> "OpenTK.Graphics" </> "Enums/*.cs")
     -- ("./src" </> "OpenTK.Graphics" </> "*.cs")
     -- ("./src" </> "OpenTK.Graphics" </> "*.csproj")
-    -- ("./src" </> "OpenTK.Graphics" </> "ES11/Helper.cs")
-    -- ("./src" </> "OpenTK.Graphics" </> "ES20/Helper.cs")
-    -- ("./src" </> "OpenTK.Graphics" </> "ES30/Helper.cs")
-    -- ("./src" </> "OpenTK.Graphics" </> "OpenGL2/Helper.cs")
-    -- ("./src" </> "OpenTK.Graphics" </> "OpenGL4/Helper.cs")
     -- ("./src" </> "OpenTK.Graphics" </> "Wgl/*.*")
     -- ("./src" </> "OpenTK.Graphics" </> "paket")
     |> Seq.iter(Shell.rm)

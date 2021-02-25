@@ -64,8 +64,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GeneratorV2", "src\Generato
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenToolkit.Graphics@Deprecated@", "src\OpenToolkit.Graphics@Deprecated@\OpenToolkit.Graphics@Deprecated@.csproj", "{4FE5F2E4-07ED-422E-BE21-8F5055857222}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenTK.Graphics", "src\OpenTK.Graphics\OpenTK.Graphics.csproj", "{F37509EA-7556-4266-AF64-8426C4B06144}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenTK.Windowing.Common", "src\OpenTK.Windowing.Common\OpenTK.Windowing.Common.csproj", "{9A0D02D2-0834-42F8-9610-8221CF803708}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenTK.Windowing.GraphicsLibraryFramework", "src\OpenTK.Windowing.GraphicsLibraryFramework\OpenTK.Windowing.GraphicsLibraryFramework.csproj", "{ECC7271C-A5E5-4CDC-BA9F-A38A150CD2D4}"
@@ -80,6 +78,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenTK.Benchmarks", "OpenTK
 	ProjectSection(ProjectDependencies) = postProject
 		{517AC4BF-6AF5-415D-B11C-FC6FE6710336} = {517AC4BF-6AF5-415D-B11C-FC6FE6710336}
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenTK.Graphics", "src\OpenTK.Graphics\OpenTK.Graphics.csproj", "{83D53823-B146-442F-B650-EDE6664D38EB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -131,10 +131,6 @@ Global
 		{4FE5F2E4-07ED-422E-BE21-8F5055857222}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4FE5F2E4-07ED-422E-BE21-8F5055857222}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4FE5F2E4-07ED-422E-BE21-8F5055857222}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F37509EA-7556-4266-AF64-8426C4B06144}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F37509EA-7556-4266-AF64-8426C4B06144}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F37509EA-7556-4266-AF64-8426C4B06144}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F37509EA-7556-4266-AF64-8426C4B06144}.Release|Any CPU.Build.0 = Release|Any CPU
 		{9A0D02D2-0834-42F8-9610-8221CF803708}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{9A0D02D2-0834-42F8-9610-8221CF803708}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9A0D02D2-0834-42F8-9610-8221CF803708}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -159,6 +155,10 @@ Global
 		{A31363E2-783D-4F6A-B447-130E7A344442}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A31363E2-783D-4F6A-B447-130E7A344442}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A31363E2-783D-4F6A-B447-130E7A344442}.Release|Any CPU.Build.0 = Release|Any CPU
+		{83D53823-B146-442F-B650-EDE6664D38EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{83D53823-B146-442F-B650-EDE6664D38EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{83D53823-B146-442F-B650-EDE6664D38EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{83D53823-B146-442F-B650-EDE6664D38EB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
