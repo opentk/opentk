@@ -17,7 +17,7 @@ namespace GeneratorV2.Parsing
 
             if (xdocument.Root == null)
                 throw new NullReferenceException("The parsed xml didn't contain a Root node.");
-            
+
             var commands = ParseCommands(xdocument.Root);
             var enums =  ParseEnums(xdocument.Root);
 
@@ -564,7 +564,7 @@ namespace GeneratorV2.Parsing
 
         public static GLAPI ParseApi(string? api) => api switch
         {
-            null or "" => GLAPI.None,
+            null or "" or "disabled" => GLAPI.None,
 
             "gl" => GLAPI.GL,
             "gles1" => GLAPI.GLES1,

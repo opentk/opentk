@@ -84,28 +84,21 @@ namespace GeneratorV2.Process
             // we can start building all of the API versions.
 
             // Filter the features we actually want to emit
-            List<Feature> features = new List<Feature>();
-            foreach (var feature in spec.Features)
+            List<Feature> features = spec.Features.FindAll(feature => feature.Api switch
             {
-                switch (feature.Api)
-                {
-                    case GLAPI.GL:
-                    case GLAPI.GLES1:
-                    case GLAPI.GLES2:
-                        features.Add(feature);
-                        break;
-                    case GLAPI.GLSC2:
-                        // We don't care about GLSC 2
-                        continue;
-                    case GLAPI.Invalid:
-                    case GLAPI.None:
-                    default:
-                        throw new Exception($"Feature '{feature.Name}' doesn't have a proper api tag.");
-                }
-            }
+                GLAPI.GL or GLAPI.GLES1 or GLAPI.GLES2 => true,
+                GLAPI.GLSC2 => false,
+                _ or GLAPI.Invalid or GLAPI.None => throw new Exception($"Feature '{feature.Name}' doesn't have a proper api tag."),
+            });
+
+            List<Extension> extensions = spec.Extensions.FindAll(extension => default != extension.SupportedApis.FirstOrDefault(api => api switch
+            {
+                GLAPI.GL or GLAPI.GLES1 or GLAPI.GLES2 => true,
+                GLAPI.GLSC2 or GLAPI.None  => false,
+                _ or GLAPI.Invalid=> throw new Exception($"Extension '{extension.Name}' doesn't have a proper api tag."),
+            }));
 
             List<GLVersionOutput> glVersions = new List<GLVersionOutput>();
-
             // Here we process all of the desktop OpenGL versions
             {
                 HashSet<OverloadedFunction> functionsInLastVersion = new HashSet<OverloadedFunction>();
@@ -232,7 +225,136 @@ namespace GeneratorV2.Process
                 }
             }
 
-            return new OutputData(glVersions);
+
+            List<GLExtensionOutput> glExtensions = new List<GLExtensionOutput>();
+
+            // Here we process all of the desktop OpenGL extensions
+            {
+                HashSet<OverloadedFunction> functionsInLastVersion = new HashSet<OverloadedFunction>();
+                HashSet<EnumMemberData> enumsInLastVersion = new HashSet<EnumMemberData>();
+                HashSet<string> groupsReferencedByFunctions = new HashSet<string>();
+                foreach (var feature in features)
+                {
+                    OutputApi api = feature.Api switch
+                    {
+                        GLAPI.GL => OutputApi.GL,
+                        GLAPI.GLES1 => OutputApi.GLES,
+                        GLAPI.GLES2 => OutputApi.GLES,
+                        _ => throw new Exception($"We should filter other APIs before this. API: {feature.Api}"),
+                    };
+
+                    // A list of functions contained in this version.
+                    HashSet<OverloadedFunction> functions = new HashSet<OverloadedFunction>();
+                    HashSet<EnumMemberData> enums = new HashSet<EnumMemberData>();
+
+                    // Go through all the functions that are required for this version and add them here.
+                    foreach (var require in feature.Requires)
+                    {
+                        foreach (var command in require.Commands)
+                        {
+                            if (allFunctions.TryGetValue(command, out var function))
+                            {
+                                functions.Add(function);
+
+                                var functionGroups = functionToEnumGroupsUsed[function.NativeFunction];
+                                groupsReferencedByFunctions.UnionWith(functionGroups);
+                            }
+                            else
+                            {
+                                throw new Exception($"Could not find any function called '{command}'.");
+                            }
+                        }
+
+                        foreach (var enumName in require.Enums)
+                        {
+                            var enumsDict = allEnumsPerAPI[api];
+                            if (enumsDict.TryGetValue(enumName, out var @enum))
+                            {
+                                enums.Add(@enum);
+                            }
+                            else
+                            {
+                                throw new Exception($"Could not find any enum called '{enumName}'.");
+                            }
+                        }
+                    }
+
+                    // Make a copy of all the functions and enums contained in the previous version.
+                    // We will remove items from this list according to the remove tags.
+                    HashSet<OverloadedFunction> functionsFromPreviousVersion = new HashSet<OverloadedFunction>(functionsInLastVersion);
+                    HashSet<EnumMemberData> enumsFromPreviousVersion = new HashSet<EnumMemberData>(enumsInLastVersion);
+
+                    foreach (var remove in feature.Removes)
+                    {
+                        // FXIME: For now we don't remove anything as idk how we want to
+                        // handle core vs not core. For now we just include all versions.
+
+                        // We probably want to mark deprecated functions with a deprecated tag?
+                    }
+
+                    // Add all of the functions from the last version.
+                    functions.UnionWith(functionsFromPreviousVersion);
+                    enums.UnionWith(enumsFromPreviousVersion);
+                    //enums.AddRange();
+
+                    // This is the new previous version.
+                    functionsInLastVersion = functions;
+                    enumsInLastVersion = enums;
+
+                    // Go through all of the enums and put them into their groups
+                    Dictionary<string, List<EnumMemberData>> enumGroups = new Dictionary<string, List<EnumMemberData>>();
+
+                    // Add keys + lists for all enum names
+                    foreach (var groupName in allEnumGroupsToIsBitmask.Keys)
+                    {
+                        enumGroups.Add(groupName, new List<EnumMemberData>());
+                    }
+
+                    foreach (var @enum in enums)
+                    {
+                        // This enum doesn't have a group, so we skip it.
+                        // It will still appear in the All enum.
+                        if (@enum.Groups == null) continue;
+
+                        foreach (var groupName in @enum.Groups)
+                        {
+                            // Here we rely on the step where we add all of the enum groups earlier.
+                            enumGroups[groupName].Add(@enum);
+                        }
+                    }
+
+                    List<EnumGroup> finalGroups = new List<EnumGroup>();
+                    foreach (var (groupName, members) in enumGroups)
+                    {
+                        // SpecialNumbers is not an enum group that we want to output.
+                        // We handle these entries differently as some of the entries are longer than an int.
+                        if (groupName == "SpecialNumbers")
+                            continue;
+
+                        // Remove all empty enum groups, except the empty groups referenced by included functions.
+                        // In GL 4.1 to 4.5 there are functions that use the group "ShaderBinaryFormat"
+                        // while not including any members for that enum group.
+                        // This is needed to solve that case.
+                        if (members.Count <= 0 && groupsReferencedByFunctions.Contains(groupName) == false)
+                            continue;
+
+                        bool isFlags = allEnumGroupsToIsBitmask[groupName];
+                        finalGroups.Add(new EnumGroup(groupName, isFlags, members));
+                    }
+
+                    List<OverloaderNativeFunction> functionList = new List<OverloaderNativeFunction>();
+                    List<OverloaderFunctionOverloads> overloadList = new List<OverloaderFunctionOverloads>();
+                    foreach (var overloadedFunction in functions)
+                    {
+                        functionList.Add(new OverloaderNativeFunction(overloadedFunction.NativeFunction, overloadedFunction.ChangeNativeName));
+                        overloadList.Add(new OverloaderFunctionOverloads(overloadedFunction.Overloads, overloadedFunction.ChangeNativeName));
+                    }
+
+                    glExtensions.Add(new GLExtensionOutput(api, functionList, overloadList, enums.ToList(), finalGroups));
+                }
+            }
+
+            return new OutputData(glVersions, glExtensions);
         }
 
         public static NativeFunction MakeNativeFunction(Command command, out string[] enumGroupsUsed)

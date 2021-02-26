@@ -210,6 +210,12 @@ namespace GeneratorV2.Writing
         List<EnumMemberData> AllEnums,
         List<EnumGroup> EnumGroups);
 
-    public record OutputData(
-        List<GLVersionOutput> Versions);
+    public record GLExtensionOutput(
+        OutputApi Api,
+        List<OverloaderNativeFunction> Functions,
+        List<OverloaderFunctionOverloads> Overloads,
+        List<EnumMemberData> AllEnums,
+        List<EnumGroup> EnumGroups);
+
+    public record OutputData(List<GLVersionOutput> Versions, List<GLExtensionOutput> Extensions);
 }
