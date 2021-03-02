@@ -570,6 +570,7 @@ namespace GeneratorV2.Parsing
             "gles1" => GLAPI.GLES1,
             "gles2" => GLAPI.GLES2,
             "glsc2" => GLAPI.GLSC2,
+            "glcore" => GLAPI.GLCore,
 
             _ => GLAPI.Invalid,
         };

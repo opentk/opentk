@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Diagnostics;
+using GeneratorV2.Parsing;
 
 namespace GeneratorV2.Writing
 {
@@ -202,20 +203,22 @@ namespace GeneratorV2.Writing
         bool IsFlags,
         List<EnumMemberData> Members);
 
-    public record GLVersionOutput(
-        OutputApi Api,
-        Version Version,
-        List<OverloaderNativeFunction> Functions,
-        List<OverloaderFunctionOverloads> Overloads,
-        List<EnumMemberData> AllEnums,
-        List<EnumGroup> EnumGroups);
 
     public record GLExtensionOutput(
-        OutputApi Api,
+        List<OverloaderNativeFunction> Functions,
+        List<OverloaderFunctionOverloads> Overloads);
+
+    public record GLExtensionVendor(
+        string VendorName,
+        List<GLExtensionOutput> Extensions
+    );
+
+    public record GLOutputApi(
+        Dictionary<string, GLExtensionVendor> Vendors,
         List<OverloaderNativeFunction> Functions,
         List<OverloaderFunctionOverloads> Overloads,
         List<EnumMemberData> AllEnums,
         List<EnumGroup> EnumGroups);
 
-    public record OutputData(List<GLVersionOutput> Versions, List<GLExtensionOutput> Extensions);
+    public record OutputData(List<GLOutputApi> Apis);
 }

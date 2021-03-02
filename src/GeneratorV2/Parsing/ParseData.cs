@@ -15,6 +15,7 @@ namespace GeneratorV2.Parsing
         GLES1,
         GLES2,
         GLSC2,
+        GLCore,
     }
 
     public enum GLProfile
