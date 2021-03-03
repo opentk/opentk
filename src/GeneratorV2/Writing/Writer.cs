@@ -52,33 +52,32 @@ namespace GeneratorV2.Writing
                 Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? throw new NullReferenceException(),
                 "..", "..", "..", "..", GraphicsNamespace);
 
-#if DEBUG
-            RewriteProject(outputProjectPath);
-#endif
+            // RewriteProject(outputProjectPath);
 
             string glFolder = Path.Combine(outputProjectPath, "OpenGL");
 
             // This should create folders to put the versions in
             foreach (var api in data.Apis)
             {
-                string apiName = api.Api switch
+                string apiNamespace = api.Api switch
                 {
-                    OutputApi.GL => "GL",
-                    OutputApi.GLES => "GLES",
+                    OutputApi.GL => "OpenGL",
+                    OutputApi.GLCompat => "OpenGL.Compatibility",
+                    OutputApi.GLES1 => "OpenGLES1",
+                    OutputApi.GLES3 => "OpenGLES3",
                     _ => throw new Exception($"This is not a valid output API ({api.Api})"),
                 };
-                foreach (var version in api.Versions)
-                {
-                    string versionName = $"{apiName}{version.Version.Major}{version.Version.Minor}";
-                    string versionPath = Path.Combine(glFolder, versionName);
+                string directoryPath = Path.Combine(outputProjectPath, Path.Combine(apiNamespace.Split('.')));
 
-                    Directory.CreateDirectory(versionPath);
+                // if (!Directory.Exists(directoryPath))
+                // {
+                //     Directory.CreateDirectory(directoryPath);
+                // }
 
-                    WriteNativeFunctions(versionPath, versionName, version.Functions);
-                    WriteOverloads(versionPath, versionName, version.Overloads);
+                WriteNativeFunctions(directoryPath, apiNamespace, api.Groups);
+                WriteOverloads(directoryPath, apiNamespace, api.Groups);
 
-                    WriteEnums(versionPath, versionName, version.EnumGroups, version.AllEnums);
-                }
+                WriteEnums(directoryPath, apiNamespace, api.EnumGroups, api.AllEnums);
             }
         }
 
@@ -241,53 +240,39 @@ namespace GeneratorV2.Writing
                 ");
         }
 
-        private static void WriteNativeFunctionsForExtensions(string directoryPath, string version,
-            List<OverloaderNativeFunction> nativeFunctions)
+        private static void WriteNativeFunctions(
+            string directoryPath,
+            string glNamespace,
+            Dictionary<string, GLOutputApiGroup> groups)
         {
-            using IndentedTextWriter writer = new IndentedTextWriter(Path.Combine(directoryPath, "GL.cs"));
+            using IndentedTextWriter writer = new IndentedTextWriter(Path.Combine(directoryPath, "GL.Native.cs"));
             writer.WriteLine("// This file is auto generated, do not edit.");
             writer.WriteLine("using System;");
             writer.WriteLine();
             // NAMESPACE:
-            writer.WriteLine($"namespace {GraphicsNamespace}.OpenGL.{version}");
+            writer.WriteLine($"namespace {GraphicsNamespace}.{glNamespace}");
             using (Scope(writer))
             {
                 writer.WriteLine($"public static unsafe partial class GL");
                 using (Scope(writer))
                 {
-                    // Write delegate field initialized to the lazy loader.
-                    // Write public function definition that calls delegate.
-                    // Write lazy loader function.
-                    foreach (var (function, postfixName) in nativeFunctions)
+                    foreach (var (vendor, group) in groups)
                     {
-                        WriteNativeMethod(function, postfixName, writer);
-                    }
-                }
-            }
+                        CsScope? scope = null;
+                        if (!string.IsNullOrWhiteSpace(vendor))
+                        {
+                            writer.WriteLine($"public static unsafe partial class {vendor}");
+                            scope = Scope(writer);
+                        }
+                        // Write delegate field initialized to the lazy loader.
+                        // Write public function definition that calls delegate.
+                        // Write lazy loader function.
+                        foreach (var (function, postfixName) in group.Functions)
+                        {
+                            WriteNativeMethod(function, postfixName, writer);
+                        }
 
-            writer.Flush();
-        }
-
-        private static void WriteNativeFunctions(string directoryPath, string version,
-            List<OverloaderNativeFunction> nativeFunctions)
-        {
-            using IndentedTextWriter writer = new IndentedTextWriter(Path.Combine(directoryPath, "GL.cs"));
-            writer.WriteLine("// This file is auto generated, do not edit.");
-            writer.WriteLine("using System;");
-            writer.WriteLine();
-            // NAMESPACE:
-            writer.WriteLine($"namespace {GraphicsNamespace}.OpenGL.{version}");
-            using (Scope(writer))
-            {
-                writer.WriteLine($"public static unsafe partial class GL");
-                using (Scope(writer))
-                {
-                    // Write delegate field initialized to the lazy loader.
-                    // Write public function definition that calls delegate.
-                    // Write lazy loader function.
-                    foreach (var (function, postfixName) in nativeFunctions)
-                    {
-                        WriteNativeMethod(function, postfixName, writer);
+                        scope?.Dispose();
                     }
                 }
             }
@@ -354,27 +339,42 @@ namespace GeneratorV2.Writing
             writer.WriteLine();
         }
 
-        private static void WriteOverloads(string directoryPath, string version,
-            List<OverloaderFunctionOverloads> overloads)
+        private static void WriteOverloads(
+            string directoryPath,
+            string glNamespace,
+            Dictionary<string, GLOutputApiGroup> groups)
         {
-            using IndentedTextWriter writer = new IndentedTextWriter(Path.Combine(directoryPath, "GL.Overloads.cs"));
+            using IndentedTextWriter writer =
+                new IndentedTextWriter(Path.Combine(directoryPath, "GL.Overloads.cs"));
             writer.WriteLine("// This file is auto generated, do not edit.");
             writer.WriteLine("using System;");
             writer.WriteLine("using System.Runtime.CompilerServices;");
             writer.WriteLine("using System.Runtime.InteropServices;");
             writer.WriteLine();
-            writer.WriteLine($"namespace {GraphicsNamespace}.OpenGL.{version}");
+            writer.WriteLine($"namespace {GraphicsNamespace}.{glNamespace}");
             using (Scope(writer))
             {
                 writer.WriteLine($"public static unsafe partial class GL");
                 using (Scope(writer))
                 {
-                    foreach (var (overs, postfixNativeCall) in overloads)
+                    foreach (var (vendor, group) in groups)
                     {
-                        foreach (var overload in overs)
+                        CsScope? scope = null;
+                        if (!string.IsNullOrWhiteSpace(vendor))
                         {
-                            WriteOverloadMethod(overload, writer, postfixNativeCall);
+                            writer.WriteLine($"public static unsafe partial class {vendor}");
+                            scope = Scope(writer);
                         }
+
+                        foreach (var (overs, postfixNativeCall) in group.Overloads)
+                        {
+                            foreach (var overload in overs)
+                            {
+                                WriteOverloadMethod(overload, writer, postfixNativeCall);
+                            }
+                        }
+
+                        scope?.Dispose();
                     }
                 }
             }
@@ -453,7 +453,7 @@ namespace GeneratorV2.Writing
             return overload.MarshalLayerToNested?.WriteEpilogue(writer, returnName) ?? returnName;
         }
 
-        private static void WriteEnums(string directoryPath, string version, List<EnumGroup> enumGroups, List<EnumMemberData> allEnums)
+        private static void WriteEnums(string directoryPath, string apiNamespace, List<EnumGroup> enumGroups, List<EnumMemberData> allEnums)
         {
             // FIXME: Disable CA1069
             string path = Path.Combine(directoryPath, "Enums.cs");
@@ -462,11 +462,11 @@ namespace GeneratorV2.Writing
             writer.WriteLine("using System;");
             writer.WriteLine();
             // NAMESPACE:
-            writer.WriteLine($"namespace {GraphicsNamespace}.OpenGL.{version}");
+            writer.WriteLine($"namespace {GraphicsNamespace}.{apiNamespace}");
             using (Scope(writer))
             {
-                WriteEnumGroups(writer, enumGroups);
                 WriteAllEnum(writer, allEnums);
+                WriteEnumGroups(writer, enumGroups);
             }
         }
 

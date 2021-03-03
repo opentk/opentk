@@ -14,7 +14,9 @@ namespace GeneratorV2.Writing
     {
         Invalid,
         GL,
-        GLES,
+        GLCompat,
+        GLES1,
+        GLES3
     }
 
     public abstract record BaseCSType()
@@ -203,20 +205,13 @@ namespace GeneratorV2.Writing
         bool IsFlags,
         List<EnumMemberData> Members);
 
-
-    public record GLExtensionOutput(
+    public record GLOutputApiGroup(
         List<OverloaderNativeFunction> Functions,
         List<OverloaderFunctionOverloads> Overloads);
 
-    public record GLExtensionVendor(
-        string VendorName,
-        List<GLExtensionOutput> Extensions
-    );
-
     public record GLOutputApi(
-        Dictionary<string, GLExtensionVendor> Vendors,
-        List<OverloaderNativeFunction> Functions,
-        List<OverloaderFunctionOverloads> Overloads,
+        OutputApi Api,
+        Dictionary<string, GLOutputApiGroup> Groups,
         List<EnumMemberData> AllEnums,
         List<EnumGroup> EnumGroups);
 
