@@ -10,7 +10,7 @@ namespace GeneratorV2.Extensions
     {
         /// <summary>
         /// Adds the specified two keys and value to the a nested dictionary.
-        /// This method allocates a nested array if needed.
+        /// This method allocates a nested dictionary if needed.
         /// </summary>
         /// <typeparam name="TKey1">Key of the first dictionary.</typeparam>
         /// <typeparam name="TKey2">Key of the second dictionary.</typeparam>
@@ -30,6 +30,46 @@ namespace GeneratorV2.Extensions
             }
 
             nestedDict.Add(key2, value);
+        }
+
+        /// <summary>
+        /// Adds the specified key and value to the a dictionary with a nested hashset.
+        /// This method allocates a nested hashset if needed.
+        /// </summary>
+        /// <typeparam name="TKey">Key of the dictionary.</typeparam>
+        /// <typeparam name="TValue">The value to store.</typeparam>
+        /// <param name="dict">The dictionary with a nested hashset.</param>
+        /// <param name="key">The key of the element to add.</param>
+        /// <param name="value">The value of the element to add.</param>
+        public static void AddToNestedHashSet<TKey, TValue>(this Dictionary<TKey, HashSet<TValue>> dict, TKey key, TValue value)
+            where TKey : notnull
+        {
+            if (dict.TryGetValue(key, out var nestedCollection) == false)
+            {
+                nestedCollection = new HashSet<TValue>();
+                dict.Add(key, nestedCollection);
+            }
+            nestedCollection.Add(value);
+        }
+
+        /// <summary>
+        /// Adds the specified key and value to the a dictionary with a nested list.
+        /// This method allocates a nested list if needed.
+        /// </summary>
+        /// <typeparam name="TKey">Key of the dictionary.</typeparam>
+        /// <typeparam name="TValue">The value to store.</typeparam>
+        /// <param name="dict">The dictionary with a nested list.</param>
+        /// <param name="key">The key of the element to add.</param>
+        /// <param name="value">The value of the element to add.</param>
+        public static void AddToNestedList<TKey, TValue>(this Dictionary<TKey, List<TValue>> dict, TKey key, TValue value)
+            where TKey : notnull
+        {
+            if (dict.TryGetValue(key, out var nestedCollection) == false)
+            {
+                nestedCollection = new List<TValue>();
+                dict.Add(key, nestedCollection);
+            }
+            nestedCollection.Add(value);
         }
     }
 }

@@ -205,13 +205,14 @@ namespace GeneratorV2.Writing
         bool IsFlags,
         List<EnumMemberData> Members);
 
+    // FIXME: Better name
     public record GLOutputApiGroup(
         List<OverloaderNativeFunction> Functions,
         List<OverloaderFunctionOverloads> Overloads);
 
     public record GLOutputApi(
         OutputApi Api,
-        Dictionary<string, GLOutputApiGroup> Groups,
+        Dictionary<string, GLOutputApiGroup> Vendors,
         List<EnumMemberData> AllEnums,
         List<EnumGroup> EnumGroups);
 
