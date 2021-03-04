@@ -394,7 +394,7 @@ namespace GeneratorV2.Process
 
             if (overloadedOnce)
             {
-                changeNativeName = false;
+                changeNativeName = true;
                 foreach (var overload in overloads)
                 {
                     if (function.Parameters.Count != overload.InputParameters.Length)
@@ -402,9 +402,9 @@ namespace GeneratorV2.Process
 
                     for (int i = 0; i < function.Parameters.Count; i++)
                     {
-                        if (function.Parameters[i].Type.Equals(overload.InputParameters[i].Type))
+                        if (!function.Parameters[i].Type.Equals(overload.InputParameters[i].Type))
                         {
-                            changeNativeName = true;
+                            changeNativeName = false;
                             break;
                         }
                     }
