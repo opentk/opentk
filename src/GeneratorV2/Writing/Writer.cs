@@ -268,9 +268,6 @@ namespace GeneratorV2.Writing
                             writer.WriteLine($"public static unsafe partial class {vendor}");
                             scope = Scope(writer);
                         }
-                        // Write delegate field initialized to the lazy loader.
-                        // Write public function definition that calls delegate.
-                        // Write lazy loader function.
                         foreach (var (function, postfixName) in group.Functions)
                         {
                             WriteNativeMethod(function, postfixName, writer);
@@ -286,6 +283,9 @@ namespace GeneratorV2.Writing
 
         private static void WriteNativeMethod(NativeFunction function, bool postfixName, IndentedTextWriter writer)
         {
+            // Write delegate field initialized to the lazy loader.
+            // Write public function definition that calls delegate.
+            // Write lazy loader function.
             string name = function.FunctionName;
             if (postfixName) name += "_";
 
