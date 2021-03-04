@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Diagnostics;
+using GeneratorV2.Parsing;
 
 namespace GeneratorV2.Writing
 {
@@ -13,7 +14,9 @@ namespace GeneratorV2.Writing
     {
         Invalid,
         GL,
-        GLES,
+        GLCompat,
+        GLES1,
+        GLES3
     }
 
     public abstract record BaseCSType()
@@ -202,14 +205,16 @@ namespace GeneratorV2.Writing
         bool IsFlags,
         List<EnumMemberData> Members);
 
-    public record GLVersionOutput(
-        OutputApi Api,
-        Version Version,
+    // FIXME: Better name
+    public record GLOutputApiGroup(
         List<OverloaderNativeFunction> Functions,
-        List<OverloaderFunctionOverloads> Overloads,
+        List<OverloaderFunctionOverloads> Overloads);
+
+    public record GLOutputApi(
+        OutputApi Api,
+        Dictionary<string, GLOutputApiGroup> Vendors,
         List<EnumMemberData> AllEnums,
         List<EnumGroup> EnumGroups);
 
-    public record OutputData(
-        List<GLVersionOutput> Versions);
+    public record OutputData(List<GLOutputApi> Apis);
 }

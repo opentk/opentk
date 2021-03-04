@@ -13,8 +13,15 @@ using System.Threading.Tasks;
 
 namespace GeneratorV2.Process
 {
-    static class Processor
+    public static class Processor
     {
+        // This is only used to pass data from ProcessSpec to GetOutputApiFromRequireTags
+        private record ProcessedGLInformation(
+            Dictionary<string, OverloadedFunction> AllFunctions,
+            Dictionary<NativeFunction, string[]> FunctionToEnumGroupsUsed,
+            Dictionary<OutputApi, Dictionary<string, EnumMemberData>> AllEnumsPerAPI,
+            Dictionary<string, bool> AllEnumGroupsToIsBitmask);
+
         public static OutputData ProcessSpec(Specification spec)
         {
             // FIXME: Check if GLSC 2 contains unique functions that could be filtered out.
@@ -67,15 +74,22 @@ namespace GeneratorV2.Process
                     if (@enum.Api == GLAPI.None)
                     {
                         allEnumsPerAPI.AddToNestedDict(OutputApi.GL, @enum.Name, data);
-                        allEnumsPerAPI.AddToNestedDict(OutputApi.GLES, @enum.Name, data);
+                        allEnumsPerAPI.AddToNestedDict(OutputApi.GLCompat, @enum.Name, data);
+                        allEnumsPerAPI.AddToNestedDict(OutputApi.GLES1, @enum.Name, data);
+                        allEnumsPerAPI.AddToNestedDict(OutputApi.GLES3, @enum.Name, data);
                     }
-                    else if (@enum.Api == GLAPI.GLES2 || @enum.Api == GLAPI.GLES1)
+                    else if (@enum.Api == GLAPI.GLES1)
                     {
-                        allEnumsPerAPI.AddToNestedDict(OutputApi.GLES, @enum.Name, data);
+                        allEnumsPerAPI.AddToNestedDict(OutputApi.GLES1, @enum.Name, data);
+                    }
+                    else if (@enum.Api == GLAPI.GLES2)
+                    {
+                        allEnumsPerAPI.AddToNestedDict(OutputApi.GLES3, @enum.Name, data);
                     }
                     else if (@enum.Api == GLAPI.GL)
                     {
                         allEnumsPerAPI.AddToNestedDict(OutputApi.GL, @enum.Name, data);
+                        allEnumsPerAPI.AddToNestedDict(OutputApi.GLCompat, @enum.Name, data);
                     }
                 }
             }
@@ -84,155 +98,204 @@ namespace GeneratorV2.Process
             // we can start building all of the API versions.
 
             // Filter the features we actually want to emit
-            List<Feature> features = new List<Feature>();
-            foreach (var feature in spec.Features)
+            List<Feature> features = spec.Features.FindAll(feature => feature.Api switch
             {
-                switch (feature.Api)
+                GLAPI.GL or GLAPI.GLES1 or GLAPI.GLES2 => true,
+                GLAPI.GLSC2 or GLAPI.GLCore => false,
+                _ or GLAPI.Invalid or GLAPI.None => throw new Exception($"Feature '{feature.Name}' doesn't have a proper api tag."),
+            });
+            List<Extension> extensions = spec.Extensions.FindAll(extension => extension.SupportedApis.Any(api => api switch
+            {
+                GLAPI.GL or GLAPI.GLES1 or GLAPI.GLES2 => true,
+                GLAPI.GLSC2 or GLAPI.GLCore or GLAPI.None => false,
+                _ => throw new Exception($"Extension '{extension.Name}' doesn't have a proper api tag."),
+            }));
+
+            var glRequires = GetRequireEntries(features, extensions, GLAPI.GL);
+            var gles1Requires = GetRequireEntries(features, extensions, GLAPI.GLES1);
+            var gles3Requires = GetRequireEntries(features, extensions, GLAPI.GLES2);
+            var glRemoves = GetRemoveEntries(features, GLAPI.GL);
+            // OpenGL ES doesn't have any remove tags as of yet, we are just doing this in case it gets added later. // 2021-03-04
+            var gles3Removes = GetRemoveEntries(features, GLAPI.GLES2);
+
+            var info = new ProcessedGLInformation(allFunctions, functionToEnumGroupsUsed, allEnumsPerAPI, allEnumGroupsToIsBitmask);
+
+            var gl = GetOutputApiFromRequireTags(OutputApi.GL, glRequires, glRemoves, info);
+            var glCompat = GetOutputApiFromRequireTags(OutputApi.GLCompat, glRequires, new List<RemoveEntry>(), info);
+            var gles1 = GetOutputApiFromRequireTags(OutputApi.GLES1, gles1Requires, new List<RemoveEntry>(), info);
+            var gles3 = GetOutputApiFromRequireTags(OutputApi.GLES3, gles3Requires, gles3Removes, info);
+
+            return new OutputData(new List<GLOutputApi>()
+            {
+                gl, glCompat, gles1, gles3
+            });
+        }
+
+        private static List<(string, RequireEntry entry)> GetRequireEntries(List<Feature> features, List<Extension> extensions, GLAPI api)
+        {
+            List<(string Vendor, RequireEntry entry)> requireEntries = new List<(string Vendor, RequireEntry entry)>();
+
+            foreach (var feature in features)
+            {
+                if (feature.Api == api)
                 {
-                    case GLAPI.GL:
-                    case GLAPI.GLES1:
-                    case GLAPI.GLES2:
-                        features.Add(feature);
-                        break;
-                    case GLAPI.GLSC2:
-                        // We don't care about GLSC 2
-                        continue;
-                    case GLAPI.Invalid:
-                    case GLAPI.None:
-                    default:
-                        throw new Exception($"Feature '{feature.Name}' doesn't have a proper api tag.");
+                    AddAllRequires("", feature.Requires);
                 }
             }
 
-            List<GLVersionOutput> glVersions = new List<GLVersionOutput>();
-
-            // Here we process all of the desktop OpenGL versions
+            foreach (var extension in extensions)
             {
-                HashSet<OverloadedFunction> functionsInLastVersion = new HashSet<OverloadedFunction>();
-                HashSet<EnumMemberData> enumsInLastVersion = new HashSet<EnumMemberData>();
-                HashSet<string> groupsReferencedByFunctions = new HashSet<string>();
-                foreach (var feature in features)
+                if (extension.SupportedApis.Contains(api))
                 {
-                    OutputApi api = feature.Api switch
-                    {
-                        GLAPI.GL => OutputApi.GL,
-                        GLAPI.GLES1 => OutputApi.GLES,
-                        GLAPI.GLES2 => OutputApi.GLES,
-                        _ => throw new Exception($"We should filter other APIs before this. API: {feature.Api}"),
-                    };
+                    AddAllRequires(extension.Vendor, extension.Requires);
+                }
+            }
 
-                    // A list of functions contained in this version.
-                    HashSet<OverloadedFunction> functions = new HashSet<OverloadedFunction>();
-                    HashSet<EnumMemberData> enums = new HashSet<EnumMemberData>();
+            return requireEntries;
 
-                    // Go through all the functions that are required for this version and add them here.
-                    foreach (var require in feature.Requires)
-                    {
-                        foreach (var command in require.Commands)
-                        {
-                            if (allFunctions.TryGetValue(command, out var function))
-                            {
-                                functions.Add(function);
+            void AddAllRequires(string vendor, List<RequireEntry> requires)
+            {
+                foreach (var require in requires)
+                {
+                    requireEntries.Add((vendor, require));
+                }
+            }
+        }
 
-                                var functionGroups = functionToEnumGroupsUsed[function.NativeFunction];
-                                groupsReferencedByFunctions.UnionWith(functionGroups);
-                            }
-                            else
-                            {
-                                throw new Exception($"Could not find any function called '{command}'.");
-                            }
-                        }
+        private static List<RemoveEntry> GetRemoveEntries(List<Feature> features, GLAPI api)
+        {
+            List<RemoveEntry> removeEntries = new List<RemoveEntry>();
 
-                        foreach (var enumName in require.Enums)
-                        {
-                            var enumsDict = allEnumsPerAPI[api];
-                            if (enumsDict.TryGetValue(enumName, out var @enum))
-                            {
-                                enums.Add(@enum);
-                            }
-                            else
-                            {
-                                throw new Exception($"Could not find any enum called '{enumName}'.");
-                            }
-                        }
-                    }
-
-                    // Make a copy of all the functions and enums contained in the previous version.
-                    // We will remove items from this list according to the remove tags.
-                    HashSet<OverloadedFunction> functionsFromPreviousVersion = new HashSet<OverloadedFunction>(functionsInLastVersion);
-                    HashSet<EnumMemberData> enumsFromPreviousVersion = new HashSet<EnumMemberData>(enumsInLastVersion);
-
+            foreach (var feature in features)
+            {
+                if (feature.Api == api)
+                {
                     foreach (var remove in feature.Removes)
                     {
-                        // FXIME: For now we don't remove anything as idk how we want to
-                        // handle core vs not core. For now we just include all versions.
-
-                        // We probably want to mark deprecated functions with a deprecated tag?
+                        removeEntries.Add(remove);
                     }
-
-                    // Add all of the functions from the last version.
-                    functions.UnionWith(functionsFromPreviousVersion);
-                    enums.UnionWith(enumsFromPreviousVersion);
-                    //enums.AddRange();
-
-                    // This is the new previous version.
-                    functionsInLastVersion = functions;
-                    enumsInLastVersion = enums;
-
-                    // Go through all of the enums and put them into their groups
-                    Dictionary<string, List<EnumMemberData>> enumGroups = new Dictionary<string, List<EnumMemberData>>();
-
-                    // Add keys + lists for all enum names
-                    foreach (var groupName in allEnumGroupsToIsBitmask.Keys)
-                    {
-                        enumGroups.Add(groupName, new List<EnumMemberData>());
-                    }
-
-                    foreach (var @enum in enums)
-                    {
-                        // This enum doesn't have a group, so we skip it.
-                        // It will still appear in the All enum.
-                        if (@enum.Groups == null) continue;
-
-                        foreach (var groupName in @enum.Groups)
-                        {
-                            // Here we rely on the step where we add all of the enum groups earlier.
-                            enumGroups[groupName].Add(@enum);
-                        }
-                    }
-
-                    List<EnumGroup> finalGroups = new List<EnumGroup>();
-                    foreach (var (groupName, members) in enumGroups)
-                    {
-                        // SpecialNumbers is not an enum group that we want to output.
-                        // We handle these entries differently as some of the entries are longer than an int.
-                        if (groupName == "SpecialNumbers")
-                            continue;
-
-                        // Remove all empty enum groups, except the empty groups referenced by included functions.
-                        // In GL 4.1 to 4.5 there are functions that use the group "ShaderBinaryFormat"
-                        // while not including any members for that enum group.
-                        // This is needed to solve that case.
-                        if (members.Count <= 0 && groupsReferencedByFunctions.Contains(groupName) == false)
-                            continue;
-
-                        bool isFlags = allEnumGroupsToIsBitmask[groupName];
-                        finalGroups.Add(new EnumGroup(groupName, isFlags, members));
-                    }
-
-                    List<OverloaderNativeFunction> functionList = new List<OverloaderNativeFunction>();
-                    List<OverloaderFunctionOverloads> overloadList = new List<OverloaderFunctionOverloads>();
-                    foreach (var overloadedFunction in functions)
-                    {
-                        functionList.Add(new OverloaderNativeFunction(overloadedFunction.NativeFunction, overloadedFunction.ChangeNativeName));
-                        overloadList.Add(new OverloaderFunctionOverloads(overloadedFunction.Overloads, overloadedFunction.ChangeNativeName));
-                    }
-
-                    glVersions.Add(new GLVersionOutput(api, feature.Version, functionList, overloadList, enums.ToList(), finalGroups));
                 }
             }
 
-            return new OutputData(glVersions);
+            return removeEntries;
+        }
+
+        private static GLOutputApi GetOutputApiFromRequireTags(
+            OutputApi api,
+            List<(string vendor, RequireEntry requireEntry)> requireEntries,
+            List<RemoveEntry> removeEntries,
+            ProcessedGLInformation glInformation)
+        {
+            HashSet<string> groupsReferencedByFunctions = new HashSet<string>();
+            // A list of functions contained in this version.
+            Dictionary<string, HashSet<OverloadedFunction>> functionsByVendor = new Dictionary<string, HashSet<OverloadedFunction>>();
+            HashSet<EnumMemberData> enums = new HashSet<EnumMemberData>();
+
+            // Deconstruct glInformation for easier access
+            var (allFunctions, functionToEnumGroupsUsed, allEnumsPerAPI, allEnumGroupsToIsBitmask) = glInformation;
+
+            // Go through all the functions that are required for this version and add them here.
+            foreach (var (vendor, requireEntry) in requireEntries)
+            {
+                foreach (var command in requireEntry.Commands)
+                {
+                    if (allFunctions.TryGetValue(command, out var function))
+                    {
+                        functionsByVendor.AddToNestedHashSet(vendor, function);
+
+                        var functionGroups = functionToEnumGroupsUsed[function.NativeFunction];
+                        groupsReferencedByFunctions.UnionWith(functionGroups);
+                    }
+                    else
+                    {
+                        throw new Exception($"Could not find any function called '{command}'.");
+                    }
+                }
+
+                foreach (var enumName in requireEntry.Enums)
+                {
+                    var enumsDict = allEnumsPerAPI[api];
+                    if (enumsDict.TryGetValue(enumName, out var @enum))
+                    {
+                        enums.Add(@enum);
+                    }
+                    else
+                    {
+                        throw new Exception($"Could not find any enum called '{enumName}'.");
+                    }
+                }
+            }
+
+            foreach (var remove in removeEntries)
+            {
+                foreach (var command in remove.Commands)
+                {
+                    foreach (var functions in functionsByVendor.Values)
+                    {
+                        functions.RemoveWhere(f => f.NativeFunction.EntryPoint == command);
+                    }
+                }
+            }
+
+            // Go through all of the enums and put them into their groups
+            Dictionary<string, List<EnumMemberData>> enumGroups = new Dictionary<string, List<EnumMemberData>>();
+
+            // Add keys + lists for all enum names
+            foreach (var groupName in allEnumGroupsToIsBitmask.Keys)
+            {
+                enumGroups.Add(groupName, new List<EnumMemberData>());
+            }
+
+            foreach (var @enum in enums)
+            {
+                // This enum doesn't have a group, so we skip it.
+                // It will still appear in the All enum.
+                if (@enum.Groups == null) continue;
+
+                foreach (var groupName in @enum.Groups)
+                {
+                    enumGroups.AddToNestedList(groupName, @enum);
+                }
+            }
+
+            List<EnumGroup> finalGroups = new List<EnumGroup>();
+            foreach (var (groupName, members) in enumGroups)
+            {
+                // SpecialNumbers is not an enum group that we want to output.
+                // We handle these entries differently as some of the entries are longer than an int.
+                if (groupName == "SpecialNumbers")
+                    continue;
+
+                // Remove all empty enum groups, except the empty groups referenced by included functions.
+                // In GL 4.1 to 4.5 there are functions that use the group "ShaderBinaryFormat"
+                // while not including any members for that enum group.
+                // This is needed to solve that case.
+                if (members.Count <= 0 && groupsReferencedByFunctions.Contains(groupName) == false)
+                    continue;
+
+                bool isFlags = allEnumGroupsToIsBitmask[groupName];
+                finalGroups.Add(new EnumGroup(groupName, isFlags, members));
+            }
+;
+            var vendors = new Dictionary<string, GLOutputApiGroup>();
+            foreach (var (vendor, overloadedFunctions) in functionsByVendor)
+            {
+                foreach (var overloadedFunction in overloadedFunctions)
+                {
+                    if (!vendors.TryGetValue(vendor, out var group))
+                    {
+                        group = new GLOutputApiGroup(
+                            new List<OverloaderNativeFunction>(), new List<OverloaderFunctionOverloads>());
+                        vendors.Add(vendor, group);
+                    }
+                    group.Functions.Add(new OverloaderNativeFunction(overloadedFunction.NativeFunction,
+                        overloadedFunction.ChangeNativeName));
+                    group.Overloads.Add(new OverloaderFunctionOverloads(overloadedFunction.Overloads,
+                        overloadedFunction.ChangeNativeName));
+                }
+            }
+
+            return new GLOutputApi(api, vendors, enums.ToList(), finalGroups);
         }
 
         public static NativeFunction MakeNativeFunction(Command command, out string[] enumGroupsUsed)
@@ -317,7 +380,7 @@ namespace GeneratorV2.Process
 
         // /!\ IMPORTANT /!\:
         // All return type overloaders need to run before any of the other overloaders.
-        // This is to ensure that correct scoping for the new return varialbes.
+        // This is to ensure that correct scoping for the new return variables.
         static readonly IOverloader[] Overloaders = new IOverloader[]
         {
             new StringReturnOverloader(),
@@ -363,7 +426,7 @@ namespace GeneratorV2.Process
 
             if (overloadedOnce)
             {
-                changeNativeName = false;
+                changeNativeName = true;
                 foreach (var overload in overloads)
                 {
                     if (function.Parameters.Count != overload.InputParameters.Length)
@@ -371,9 +434,9 @@ namespace GeneratorV2.Process
 
                     for (int i = 0; i < function.Parameters.Count; i++)
                     {
-                        if (function.Parameters[i].Type.Equals(overload.InputParameters[i].Type))
+                        if (!function.Parameters[i].Type.Equals(overload.InputParameters[i].Type))
                         {
-                            changeNativeName = true;
+                            changeNativeName = false;
                             break;
                         }
                     }
@@ -601,10 +664,18 @@ namespace GeneratorV2.Process
                 {
                     var param = newParams[i];
 
-                    if (param.Type is CSPointer pt && pt.BaseType is CSChar8)
+                    if (param.Type is CSPointer pt)
                     {
-                        Logger.Warning($"Char pointer leaked from earlier overloaders: \"{overload.NativeFunction.EntryPoint}\" ({param})");
-                        continue;
+                        if (pt.BaseType is CSChar8)
+                        {
+                            Logger.Warning($"Char pointer leaked from earlier overloaders: \"{overload.NativeFunction.EntryPoint}\" ({param})");
+                            continue;
+                        }
+                        else if (pt.BaseType is CSPointer)
+                        {
+                            Logger.Warning($"Pointer leaked from earlier overloaders: \"{overload.NativeFunction.EntryPoint}\" ({param})");
+                            continue;
+                        }
                     }
 
                     if (param.Length != null)
@@ -675,6 +746,7 @@ namespace GeneratorV2.Process
                     {
                         spanOverload,
                         arrayOverload,
+                        overload,
                     };
                     return true;
                 }

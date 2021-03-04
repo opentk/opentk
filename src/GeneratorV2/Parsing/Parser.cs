@@ -17,7 +17,7 @@ namespace GeneratorV2.Parsing
 
             if (xdocument.Root == null)
                 throw new NullReferenceException("The parsed xml didn't contain a Root node.");
-            
+
             var commands = ParseCommands(xdocument.Root);
             var enums =  ParseEnums(xdocument.Root);
 
@@ -475,6 +475,11 @@ namespace GeneratorV2.Parsing
                     throw new Exception($"Extension '{extension}' doesn't have the vendor in it's name!");
                 }
 
+                if (char.IsDigit(vendor[0]))
+                {
+                    vendor = "_" + vendor;
+                }
+
                 var comment = extension.Attribute("comment")?.Value;
 
                 var supportedApis = extension
@@ -564,12 +569,13 @@ namespace GeneratorV2.Parsing
 
         public static GLAPI ParseApi(string? api) => api switch
         {
-            null or "" => GLAPI.None,
+            null or "" or "disabled" => GLAPI.None,
 
             "gl" => GLAPI.GL,
             "gles1" => GLAPI.GLES1,
             "gles2" => GLAPI.GLES2,
             "glsc2" => GLAPI.GLSC2,
+            "glcore" => GLAPI.GLCore,
 
             _ => GLAPI.Invalid,
         };
