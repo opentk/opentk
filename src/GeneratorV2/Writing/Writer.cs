@@ -78,8 +78,8 @@ namespace GeneratorV2.Writing
                 //     Directory.CreateDirectory(directoryPath);
                 // }
 
-                WriteNativeFunctions(directoryPath, apiNamespace, api.Groups);
-                WriteOverloads(directoryPath, apiNamespace, api.Groups);
+                WriteNativeFunctions(directoryPath, apiNamespace, api.Vendors);
+                WriteOverloads(directoryPath, apiNamespace, api.Vendors);
 
                 WriteEnums(directoryPath, apiNamespace, api.EnumGroups, api.AllEnums);
             }
