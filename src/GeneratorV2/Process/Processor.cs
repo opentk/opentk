@@ -154,7 +154,7 @@ namespace GeneratorV2.Process
         {
             HashSet<string> groupsReferencedByFunctions = new HashSet<string>();
             // A list of functions contained in this version.
-            Dictionary<string, List<OverloadedFunction>> functionsByGroup = new Dictionary<string, List<OverloadedFunction>>();
+            Dictionary<string, HashSet<OverloadedFunction>> functionsByGroup = new Dictionary<string, HashSet<OverloadedFunction>>();
             HashSet<EnumMemberData> enums = new HashSet<EnumMemberData>();
 
             // Go through all the functions that are required for this version and add them here.
@@ -166,7 +166,7 @@ namespace GeneratorV2.Process
                     {
                         if (!functionsByGroup.TryGetValue(require.vendor, out var functions))
                         {
-                            functions = new List<OverloadedFunction>();
+                            functions = new HashSet<OverloadedFunction>();
                             functionsByGroup.Add(require.vendor, functions);
                         }
                         functions.Add(function);
@@ -632,10 +632,18 @@ namespace GeneratorV2.Process
                 {
                     var param = newParams[i];
 
-                    if (param.Type is CSPointer pt && pt.BaseType is CSChar8)
+                    if (param.Type is CSPointer pt)
                     {
-                        Logger.Warning($"Char pointer leaked from earlier overloaders: \"{overload.NativeFunction.EntryPoint}\" ({param})");
-                        continue;
+                        if (pt.BaseType is CSChar8)
+                        {
+                            Logger.Warning($"Char pointer leaked from earlier overloaders: \"{overload.NativeFunction.EntryPoint}\" ({param})");
+                            continue;
+                        }
+                        else if (pt.BaseType is CSPointer)
+                        {
+                            Logger.Warning($"Pointer leaked from earlier overloaders: \"{overload.NativeFunction.EntryPoint}\" ({param})");
+                            continue;
+                        }
                     }
 
                     if (param.Length != null)
