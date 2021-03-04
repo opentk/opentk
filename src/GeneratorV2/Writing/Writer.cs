@@ -54,7 +54,6 @@ namespace GeneratorV2.Writing
 
             // RewriteProject(outputProjectPath);
 
-            string glFolder = Path.Combine(outputProjectPath, "OpenGL");
 
             // This should create folders to put the versions in
             foreach (var api in data.Apis)
@@ -68,6 +67,11 @@ namespace GeneratorV2.Writing
                     _ => throw new Exception($"This is not a valid output API ({api.Api})"),
                 };
                 string directoryPath = Path.Combine(outputProjectPath, Path.Combine(apiNamespace.Split('.')));
+                var files = Directory.GetFiles(directoryPath, "*.cs", SearchOption.TopDirectoryOnly);
+                foreach (var file in files.Where(file => Path.GetFileName(file) != "GL.Manual.cs"))
+                {
+                    File.Delete(file);
+                }
 
                 // if (!Directory.Exists(directoryPath))
                 // {
