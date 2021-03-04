@@ -1,7 +1,9 @@
+using System;
+using System.Runtime.InteropServices;
+
 namespace OpenTK.Graphics.OpenGLES1
 {
-    public static partial class GL
+    public static unsafe partial class GL
     {
-
     }
 }

@@ -475,6 +475,11 @@ namespace GeneratorV2.Parsing
                     throw new Exception($"Extension '{extension}' doesn't have the vendor in it's name!");
                 }
 
+                if (char.IsDigit(vendor[0]))
+                {
+                    vendor = "_" + vendor;
+                }
+
                 var comment = extension.Attribute("comment")?.Value;
 
                 var supportedApis = extension
