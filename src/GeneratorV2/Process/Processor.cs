@@ -71,9 +71,12 @@ namespace GeneratorV2.Process
                         allEnumsPerAPI.AddToNestedDict(OutputApi.GLES1, @enum.Name, data);
                         allEnumsPerAPI.AddToNestedDict(OutputApi.GLES3, @enum.Name, data);
                     }
-                    else if (@enum.Api == GLAPI.GLES2 || @enum.Api == GLAPI.GLES1)
+                    else if (@enum.Api == GLAPI.GLES1)
                     {
                         allEnumsPerAPI.AddToNestedDict(OutputApi.GLES1, @enum.Name, data);
+                    }
+                    else if (@enum.Api == GLAPI.GLES2)
+                    {
                         allEnumsPerAPI.AddToNestedDict(OutputApi.GLES3, @enum.Name, data);
                     }
                     else if (@enum.Api == GLAPI.GL)
