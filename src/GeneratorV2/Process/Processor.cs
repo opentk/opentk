@@ -386,6 +386,7 @@ namespace GeneratorV2.Process
             new StringReturnOverloader(),
 
             new GenAndCreateOverloader(),
+            new OutToReturnOverloader(),
             new StringOverloader(),
             new SpanAndArrayOverloader(),
             new RefInsteadOfPointerOverloader(),
@@ -929,21 +930,97 @@ namespace GeneratorV2.Process
                     _pointerParameter = pointerParameter;
                 }
 
-                private IndentedTextWriter.Scope _scope;
                 public void WritePrologue(IndentedTextWriter writer)
                 {
-                    writer.WriteLine($"var {_lengthParameter.Name} = 1");
-                    writer.WriteLine($"var {_handleParameter.Name} = 0");
-                    writer.WriteLine($"fixed (var {_pointerParameter.Name} = &{_handleParameter.Name})");
-                    writer.WriteLine("{");
-                    _scope = writer.Indentation();
+                    writer.WriteLine($"{_lengthParameter.Type.ToCSString()} {_lengthParameter.Name} = 1;");
+                    writer.WriteLine($"{((CSRef)_handleParameter.Type).ReferencedType.ToCSString()} {_handleParameter.Name}_tmp = 0;");
+                    writer.WriteLine($"{_pointerParameter.Type.ToCSString()} {_pointerParameter.Name} = &{_handleParameter.Name}_tmp;");
                 }
 
                 public string? WriteEpilogue(IndentedTextWriter writer, string? returnName)
                 {
-                    _scope.Dispose();
-                    writer.WriteLine("}");
+                    writer.WriteLine($"{_handleParameter.Name} = {_handleParameter.Name}_tmp;");
                     return returnName;
+                }
+            }
+        }
+
+        public class OutToReturnOverloader : IOverloader
+        {
+            public bool TryGenerateOverloads(Overload overload, [NotNullWhen(true)] out List<Overload>? newOverloads)
+            {
+                if (overload.NativeFunction.FunctionName.Contains("Gen"))
+                {
+
+                }
+                var oldParameters = overload.InputParameters;
+                if (overload.ReturnType is not CSVoid || oldParameters.Length == 0)
+                {
+                    newOverloads = null;
+                    return false;
+                }
+
+                //Find the one and only out param, if there are more we do an early return.
+                Parameter[] newParameters = new Parameter[oldParameters.Length - 1];
+                Parameter? outParameter = null;
+                CSRef? outType = null;
+                for (int i = 0; i < oldParameters.Length; i++)
+                {
+                    var parameter = oldParameters[i];
+                    if (parameter.Type is CSRef pRef && pRef.RefType == CSRef.Type.Out)
+                    {
+                        if (outParameter != null)
+                        {
+                            newOverloads = null;
+                            return false;
+                        }
+
+                        outType = pRef;
+                        outParameter = parameter;
+                    }
+                    else if (i != oldParameters.Length - 1)
+                    {
+                        newParameters[outParameter != null ? i + 1 : i] = parameter;
+                    }
+                }
+                if (outType == null || outParameter == null)
+                {
+                    newOverloads = null;
+                    return false;
+                }
+                string returnName = overload.ReturnVariableName + "_out";
+
+                newOverloads = new List<Overload>()
+                {
+                    overload with {NestedOverload = overload, InputParameters = newParameters,
+                        ReturnType = outType!.ReferencedType, MarshalLayerToNested = new OutToReturnOverloadLayer(outParameter, returnName, outType)},
+                    overload,
+                };
+                return true;
+            }
+
+            private class OutToReturnOverloadLayer : IOverloadLayer
+            {
+                private readonly Parameter _outParameter;
+                private readonly string _returnName;
+                private readonly CSRef _outType;
+
+                public OutToReturnOverloadLayer(Parameter outParameter, string returnName, CSRef outType)
+                {
+                    _outParameter = outParameter;
+                    _returnName = returnName;
+                    _outType = outType;
+                }
+
+                public void WritePrologue(IndentedTextWriter writer)
+                {
+                    writer.WriteLine($"{_outType.ReferencedType.ToCSString()} {_returnName}, {_outParameter.Name} = default;");
+                }
+
+                public string? WriteEpilogue(IndentedTextWriter writer, string? returnName)
+                {
+                    writer.WriteLine($"{_returnName} = {_outParameter.Name};");
+                    return _returnName;
                 }
             }
         }

@@ -410,7 +410,7 @@ namespace GeneratorV2.Writing
 
             using (Scope(indentedTextWriter))
             {
-                if (overload1.ReturnType is not CSVoid)
+                if (overload1.ReturnType is not CSVoid && overload1.NativeFunction.ReturnType is not CSVoid)
                 {
                     indentedTextWriter.WriteLine($"{overload1.NativeFunction.ReturnType.ToCSString()} returnValue;");
                 }
