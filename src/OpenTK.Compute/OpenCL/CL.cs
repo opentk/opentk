@@ -16,6 +16,8 @@ namespace OpenTK.Compute.OpenCL
 
 		public delegate void ClEventCallback(IntPtr waitEvent, IntPtr userData);
 
+		public static readonly IntPtr ContextPlatform = (IntPtr)0x1084;
+
 		#region Platform API
 
 		/// <summary>
@@ -165,6 +167,27 @@ namespace OpenTK.Compute.OpenCL
 			return CreateContext(properties, (uint)devices.Length, devices, notificationCallback, userData,
 				out resultCode);
 		}
+
+
+		/// <summary>
+		/// Introduced in OpenCL 1.0
+		/// </summary>
+		[DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clCreateContext")]
+		public static extern CLContext CreateContext([In] IntPtr[] properties, [In] uint numberOfDevices,
+			[In] CLDevice[] devices,
+			[In] IntPtr notificationCallback, [In] IntPtr userData, [Out] out CLResultCode resultCode);
+
+		/// <summary>
+		/// Introduced in OpenCL 1.0
+		/// </summary>
+		public static CLContext CreateContext(IntPtr[] properties, CLDevice[] devices,
+			IntPtr notificationCallback,
+			IntPtr userData, out CLResultCode resultCode)
+		{
+			return CreateContext(properties, (uint)devices.Length, devices, notificationCallback, userData,
+				out resultCode);
+		}
+
 
 		/// <summary>
 		/// Introduced in OpenCL 1.0
