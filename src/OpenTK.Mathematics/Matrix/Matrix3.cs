@@ -804,116 +804,52 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Calculate the inverse of the given matrix.
         /// </summary>
-        /// <param name="mat">The matrix to invert.</param>
+        /// <param name="matrix">The matrix to invert.</param>
         /// <param name="result">The inverse of the given matrix if it has one, or the input if it is singular.</param>
         /// <exception cref="InvalidOperationException">Thrown if the Matrix3 is singular.</exception>
-        public static void Invert(in Matrix3 mat, out Matrix3 result)
+        public static void Invert(in Matrix3 matrix, out Matrix3 result)
         {
-            int[] colIdx = { 0, 0, 0 };
-            int[] rowIdx = { 0, 0, 0 };
-            int[] pivotIdx = { -1, -1, -1 };
+            // Original implementation can be found here:
+            // https://github.com/niswegmann/small-matrix-inverse/blob/6eac02b84ad06870692abaf828638a391548502c/invert3x3_c.h
+            Matrix3 mat = matrix;
 
-            float[,] inverse =
+            // Compute the elements needed to calculate the determinant
+            // so that we can throw without writing anything to the out parameter.
+            float invRow0X = (+mat.Row1.Y * mat.Row2.Z) - (mat.Row1.Z * mat.Row2.Y);
+            float invRow1X = (-mat.Row1.X * mat.Row2.Z) + (mat.Row1.Z * mat.Row2.X);
+            float invRow2X = (+mat.Row1.X * mat.Row2.Y) - (mat.Row1.Y * mat.Row2.X);
+
+            // Compute determinant:
+            float det = (mat.Row0.X * invRow0X) + (mat.Row0.Y * invRow1X) + (mat.Row0.Z * invRow2X);
+
+            if (det == 0f)
             {
-                { mat.Row0.X, mat.Row0.Y, mat.Row0.Z },
-                { mat.Row1.X, mat.Row1.Y, mat.Row1.Z },
-                { mat.Row2.X, mat.Row2.Y, mat.Row2.Z }
-            };
-
-            var icol = 0;
-            var irow = 0;
-            for (var i = 0; i < 3; i++)
-            {
-                var maxPivot = 0.0f;
-                for (var j = 0; j < 3; j++)
-                {
-                    if (pivotIdx[j] != 0)
-                    {
-                        for (var k = 0; k < 3; ++k)
-                        {
-                            if (pivotIdx[k] == -1)
-                            {
-                                var absVal = Math.Abs(inverse[j, k]);
-                                if (absVal > maxPivot)
-                                {
-                                    maxPivot = absVal;
-                                    irow = j;
-                                    icol = k;
-                                }
-                            }
-                            else if (pivotIdx[k] > 0)
-                            {
-                                result = mat;
-                                return;
-                            }
-                        }
-                    }
-                }
-
-                ++pivotIdx[icol];
-
-                if (irow != icol)
-                {
-                    for (var k = 0; k < 3; ++k)
-                    {
-                        var f = inverse[irow, k];
-                        inverse[irow, k] = inverse[icol, k];
-                        inverse[icol, k] = f;
-                    }
-                }
-
-                rowIdx[i] = irow;
-                colIdx[i] = icol;
-
-                var pivot = inverse[icol, icol];
-
-                if (pivot == 0.0f)
-                {
-                    throw new InvalidOperationException("Matrix is singular and cannot be inverted.");
-                }
-
-                var oneOverPivot = 1.0f / pivot;
-                inverse[icol, icol] = 1.0f;
-                for (var k = 0; k < 3; ++k)
-                {
-                    inverse[icol, k] *= oneOverPivot;
-                }
-
-                for (var j = 0; j < 3; ++j)
-                {
-                    if (icol != j)
-                    {
-                        var f = inverse[j, icol];
-                        inverse[j, icol] = 0.0f;
-                        for (var k = 0; k < 3; ++k)
-                        {
-                            inverse[j, k] -= inverse[icol, k] * f;
-                        }
-                    }
-                }
+                throw new InvalidOperationException("Matrix is singular and cannot be inverted.");
             }
 
-            for (var j = 2; j >= 0; --j)
-            {
-                var ir = rowIdx[j];
-                var ic = colIdx[j];
-                for (var k = 0; k < 3; ++k)
-                {
-                    var f = inverse[k, ir];
-                    inverse[k, ir] = inverse[k, ic];
-                    inverse[k, ic] = f;
-                }
-            }
+            // Compute adjoint:
+            result.Row0.X = invRow0X;
+            result.Row0.Y = (-mat.Row0.Y * mat.Row2.Z) + (mat.Row0.Z * mat.Row2.Y);
+            result.Row0.Z = (+mat.Row0.Y * mat.Row1.Z) - (mat.Row0.Z * mat.Row1.Y);
+            result.Row1.X = invRow1X;
+            result.Row1.Y = (+mat.Row0.X * mat.Row2.Z) - (mat.Row0.Z * mat.Row2.X);
+            result.Row1.Z = (-mat.Row0.X * mat.Row1.Z) + (mat.Row0.Z * mat.Row1.X);
+            result.Row2.X = invRow2X;
+            result.Row2.Y = (-mat.Row0.X * mat.Row2.Y) + (mat.Row0.Y * mat.Row2.X);
+            result.Row2.Z = (+mat.Row0.X * mat.Row1.Y) - (mat.Row0.Y * mat.Row1.X);
 
-            result.Row0.X = inverse[0, 0];
-            result.Row0.Y = inverse[0, 1];
-            result.Row0.Z = inverse[0, 2];
-            result.Row1.X = inverse[1, 0];
-            result.Row1.Y = inverse[1, 1];
-            result.Row1.Z = inverse[1, 2];
-            result.Row2.X = inverse[2, 0];
-            result.Row2.Y = inverse[2, 1];
-            result.Row2.Z = inverse[2, 2];
+            // Multiply adjoint with reciprocal of determinant:
+            det = 1.0f / det;
+
+            result.Row0.X *= det;
+            result.Row0.Y *= det;
+            result.Row0.Z *= det;
+            result.Row1.X *= det;
+            result.Row1.Y *= det;
+            result.Row1.Z *= det;
+            result.Row2.X *= det;
+            result.Row2.Y *= det;
+            result.Row2.Z *= det;
         }
 
         /// <summary>
