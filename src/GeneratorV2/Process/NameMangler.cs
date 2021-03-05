@@ -23,12 +23,7 @@ namespace GeneratorV2.Parsing
         {
             // Remove the "GL_" prefix.
             var mangledName = RemoveStart(name, "GL_");
-            // If the name starts with a number prefix it with "_"
-            if (char.IsDigit(mangledName[0]))
-            {
-                mangledName = "_" + mangledName;
-            }
-            return mangledName;
+            return MangleMemberName(mangledName);
         }
 
         public static string MangleParameterName(string name) => name switch
