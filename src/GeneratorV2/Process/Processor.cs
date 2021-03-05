@@ -385,6 +385,7 @@ namespace GeneratorV2.Process
         {
             new StringReturnOverloader(),
 
+            new GenAndCreateOverloader(),
             new StringOverloader(),
             new SpanAndArrayOverloader(),
             new RefInsteadOfPointerOverloader(),
@@ -863,6 +864,84 @@ namespace GeneratorV2.Process
                 public string? WriteEpilogue(IndentedTextWriter writer, string? returnName)
                 {
                     Scope.Dispose();
+                    writer.WriteLine("}");
+                    return returnName;
+                }
+            }
+        }
+
+        public class GenAndCreateOverloader : IOverloader
+        {
+            public bool TryGenerateOverloads(Overload overload, [NotNullWhen(true)] out List<Overload>? newOverloads)
+            {
+                var pointerParameter = overload.InputParameters.LastOrDefault();
+                var nativeName = overload.NativeFunction.FunctionName;
+                if ((!nativeName.StartsWith("Create") && !nativeName.StartsWith("Gen")) ||
+                    !nativeName.EndsWith("s") || pointerParameter == null ||
+                    pointerParameter.Type is not CSPointer pointerParameterType ||
+                    pointerParameter.Length == null || pointerParameter.Length is not ParameterReference handleLength)
+                {
+                    newOverloads = null;
+                    return false;
+                }
+                var newNativeName = nativeName[..^1];
+
+                int lengthParameterIndex = -1;
+                Parameter[] parameters = new Parameter[overload.InputParameters.Length - 1];
+                for (var i = 0; i < overload.InputParameters.Length - 1; i++)
+                {
+                    var parameter = overload.InputParameters[i];
+                    if (parameter.Name.Equals(handleLength.ParameterName))
+                    {
+                        lengthParameterIndex = i;
+                    }
+                    else
+                    {
+                        parameters[lengthParameterIndex != -1 ? i + 1 : i] = parameter;
+                    }
+                }
+                if (lengthParameterIndex == -1)
+                    throw new Exception($"Couldnt find len {handleLength.ParameterName} on method {nativeName}");
+
+                var newParameterName = pointerParameter.Name + "_handle";
+                parameters[parameters.Length - 1] = new Parameter(new CSRef(CSRef.Type.Out, pointerParameterType.BaseType),
+                    newParameterName, null);
+
+                newOverloads = new List<Overload>()
+                {
+                    overload with { InputParameters = parameters, NestedOverload = overload,
+                        MarshalLayerToNested = new GenAndCreateOverloadLayer(overload.InputParameters[lengthParameterIndex], parameters[parameters.Length - 1], pointerParameter)},
+                    overload,
+                };
+                return true;
+            }
+
+            private class GenAndCreateOverloadLayer : IOverloadLayer
+            {
+                private readonly Parameter _lengthParameter;
+                private readonly Parameter _handleParameter;
+                private readonly Parameter _pointerParameter;
+
+                public GenAndCreateOverloadLayer(Parameter lengthParameter, Parameter handleParameter, Parameter pointerParameter)
+                {
+                    _lengthParameter = lengthParameter;
+                    _handleParameter = handleParameter;
+                    _pointerParameter = pointerParameter;
+                }
+
+                private IndentedTextWriter.Scope _scope;
+                public void WritePrologue(IndentedTextWriter writer)
+                {
+                    writer.WriteLine($"var {_lengthParameter.Name} = 1");
+                    writer.WriteLine($"var {_handleParameter.Name} = 0");
+                    writer.WriteLine($"fixed (var {_pointerParameter.Name} = &{_handleParameter.Name})");
+                    writer.WriteLine("{");
+                    _scope = writer.Indentation();
+                }
+
+                public string? WriteEpilogue(IndentedTextWriter writer, string? returnName)
+                {
+                    _scope.Dispose();
                     writer.WriteLine("}");
                     return returnName;
                 }
