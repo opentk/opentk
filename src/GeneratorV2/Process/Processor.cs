@@ -386,10 +386,10 @@ namespace GeneratorV2.Process
             new StringReturnOverloader(),
 
             new GenAndCreateOverloader(),
-            new OutToReturnOverloader(),
             new StringOverloader(),
             new SpanAndArrayOverloader(),
             new RefInsteadOfPointerOverloader(),
+            new OutToReturnOverloader(),
         };
 
         // FIXME: The return variable my go out of scope, declare the variables the first thing we do.
@@ -949,10 +949,6 @@ namespace GeneratorV2.Process
         {
             public bool TryGenerateOverloads(Overload overload, [NotNullWhen(true)] out List<Overload>? newOverloads)
             {
-                if (overload.NativeFunction.FunctionName.Contains("Gen"))
-                {
-
-                }
                 var oldParameters = overload.InputParameters;
                 if (overload.ReturnType is not CSVoid || oldParameters.Length == 0)
                 {
