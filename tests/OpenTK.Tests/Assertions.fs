@@ -50,13 +50,17 @@ type internal Assert =
     static member ApproximatelyEquivalent(a : Vector4,b : Vector4) =
         if not <| approxEq a.X b.X && approxEq a.Y b.Y && approxEq a.Z b.Z && approxEq a.W b.W then
             raise <| new Xunit.Sdk.EqualException(a,b)
+        
+    static member ApproximatelyEquivalent(a : Color4<'T>, b : Color4<'T>, epsilon:float32) =
+        if not <| approxEqEpsilon a.X b.X epsilon && approxEqEpsilon a.Y b.Y epsilon && approxEqEpsilon a.Z b.Z epsilon && approxEqEpsilon a.W b.W epsilon then
+            raise <| new Xunit.Sdk.EqualException(a,b)
+
+    static member ApproximatelyEquivalent(a : Color3<'T>, b : Color3<'T>, epsilon:float32) =
+        if not <| approxEqEpsilon a.X b.X epsilon && approxEqEpsilon a.Y b.Y epsilon && approxEqEpsilon a.Y b.Y epsilon then
+            raise <| new Xunit.Sdk.EqualException(a,b)
 
     static member ApproximatelyEquivalent(a : float32,b : float32) =
         if not <| approxEq a b then raise <| new Xunit.Sdk.EqualException(a,b)
-
-    static member ApproximatelyEquivalent(a : Color4, b : Color4, epsilon:float32) =
-        if not <| approxEqEpsilon a.R b.R epsilon && approxEqEpsilon a.G b.G epsilon && approxEqEpsilon a.B b.B epsilon && approxEqEpsilon a.A b.A epsilon then
-            raise <| new Xunit.Sdk.EqualException(a,b)
 
     static member ApproximatelyEqualEpsilon(a : Vector2, b : Vector2, epsilon:float32) =
         if neqEpsilon a.X b.X epsilon || neqEpsilon a.Y b.Y epsilon then
