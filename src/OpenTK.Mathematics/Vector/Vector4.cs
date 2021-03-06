@@ -2016,18 +2016,6 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Returns this Vector4 as a Color4. The resulting struct will have RGBA mapped to XYZW, in that order.
-        /// </summary>
-        /// <param name="v">The Vector4 to convert.</param>
-        /// <returns>The Vector4, converted to a Color4.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        [Pure]
-        public static explicit operator Color4<Rgba>(Vector4 v)
-        {
-            return Unsafe.As<Vector4, Color4<Rgba>>(ref v);
-        }
-
-        /// <summary>
         /// Converts OpenTK.Vector4 to OpenTK.Vector4d.
         /// </summary>
         /// <param name="vec">The Vector4 to convert.</param>
