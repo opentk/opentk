@@ -230,7 +230,7 @@ namespace OpenTK.Windowing.Desktop
         }
 
         /// <summary>
-        /// Initialize the update thread (if using a multi-threaded context, and enter the game loop of the GameWindow.
+        /// Initialize the update thread (if using a multi-threaded context, and enter the game loop of the GameWindow).
         /// </summary>
         public virtual void Run()
         {
