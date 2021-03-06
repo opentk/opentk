@@ -93,18 +93,19 @@ module private Generators =
     let stdFloatGen = Arb.generate<DoNotSize<uint64>> |> Gen.map (fun (DoNotSize n) -> (float (n >>> 11)) * (1.0 / float (1UL <<< 53)))     
     let acuteAngle = stdFloatGen |> Gen.map (fun f -> (float32 f - 0.5f) * MathHelper.DegreesToRadians 178.0f |> AcuteAngle) |> Arb.fromGen
     
-    let color4HDR =
+    
+    let color4<'T when 'T :> IColorSpace4> =
         singleArb
-        |> Gen.filter (fun x -> x >= 0.0f)
+        |> Gen.filter (fun x -> (0.0f <= x && x <= 1.0f))
         |> Gen.four
-        |> Gen.map Color4
+        |> Gen.map Color4<'T>
         |> Arb.fromGen
 
-    let color4LDR =
+    let color3<'T when 'T :> IColorSpace3> =
         singleArb
-        |> Gen.filter (fun x -> (x >= 0.0f && x <= 1.0f))
-        |> Gen.four
-        |> Gen.map Color4
+        |> Gen.filter (fun x -> (0.0f <= x && x <= 1.0f))
+        |> Gen.three
+        |> Gen.map Color3<'T>
         |> Arb.fromGen
         
 type OpenTKGen =
@@ -122,5 +123,5 @@ type OpenTKGen =
     static member Box2() = box2
     static member Box3() = box3
     static member AcuteAngle() = acuteAngle
-    static member Color4LDR() = color4LDR
-    static member Color4() = color4HDR
+    static member Color4() = color4
+    static member Color3() = color3
