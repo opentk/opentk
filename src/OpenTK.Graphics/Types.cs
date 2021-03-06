@@ -52,4 +52,3 @@
                         public static implicit operator IntPtr(GLHandleARB val) => val._value2;
                     }
                 }
-                

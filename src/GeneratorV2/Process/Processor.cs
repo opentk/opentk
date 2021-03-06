@@ -875,6 +875,7 @@ namespace GeneratorV2.Process
         {
             public bool TryGenerateOverloads(Overload overload, [NotNullWhen(true)] out List<Overload>? newOverloads)
             {
+                // Here we assume that the last parameter is the pointer parameter.
                 var pointerParameter = overload.InputParameters.LastOrDefault();
                 var nativeName = overload.NativeFunction.FunctionName;
                 if ((!nativeName.StartsWith("Create") && !nativeName.StartsWith("Gen")) ||
@@ -905,13 +906,12 @@ namespace GeneratorV2.Process
                     throw new Exception($"Couldnt find len {handleLength.ParameterName} on method {nativeName}");
 
                 var newParameterName = pointerParameter.Name + "_handle";
-                parameters[parameters.Length - 1] = new Parameter(new CSRef(CSRef.Type.Out, pointerParameterType.BaseType),
-                    newParameterName, null);
+                parameters[^1] = new Parameter(new CSRef(CSRef.Type.Out, pointerParameterType.BaseType), newParameterName, null);
 
                 newOverloads = new List<Overload>()
                 {
                     overload with { InputParameters = parameters, NestedOverload = overload,
-                        MarshalLayerToNested = new GenAndCreateOverloadLayer(overload.InputParameters[lengthParameterIndex], parameters[parameters.Length - 1], pointerParameter)},
+                        MarshalLayerToNested = new GenAndCreateOverloadLayer(overload.InputParameters[lengthParameterIndex], parameters[^1], pointerParameter)},
                     overload,
                 };
                 return true;
@@ -920,26 +920,25 @@ namespace GeneratorV2.Process
             private class GenAndCreateOverloadLayer : IOverloadLayer
             {
                 private readonly Parameter _lengthParameter;
-                private readonly Parameter _handleParameter;
+                private readonly Parameter _outParameter;
                 private readonly Parameter _pointerParameter;
 
-                public GenAndCreateOverloadLayer(Parameter lengthParameter, Parameter handleParameter, Parameter pointerParameter)
+                public GenAndCreateOverloadLayer(Parameter lengthParameter, Parameter outParameter, Parameter pointerParameter)
                 {
                     _lengthParameter = lengthParameter;
-                    _handleParameter = handleParameter;
+                    _outParameter = outParameter;
                     _pointerParameter = pointerParameter;
                 }
 
                 public void WritePrologue(IndentedTextWriter writer)
                 {
                     writer.WriteLine($"{_lengthParameter.Type.ToCSString()} {_lengthParameter.Name} = 1;");
-                    writer.WriteLine($"{((CSRef)_handleParameter.Type).ReferencedType.ToCSString()} {_handleParameter.Name}_tmp = 0;");
-                    writer.WriteLine($"{_pointerParameter.Type.ToCSString()} {_pointerParameter.Name} = &{_handleParameter.Name}_tmp;");
+                    writer.WriteLine($"Unsafe.SkipInit(out {_outParameter.Name});");
+                    writer.WriteLine($"{_pointerParameter.Type.ToCSString()} {_pointerParameter.Name} = ({_pointerParameter.Type.ToCSString()})Unsafe.AsPointer(ref {_outParameter.Name});");
                 }
 
                 public string? WriteEpilogue(IndentedTextWriter writer, string? returnName)
                 {
-                    writer.WriteLine($"{_handleParameter.Name} = {_handleParameter.Name}_tmp;");
                     return returnName;
                 }
             }
@@ -956,7 +955,7 @@ namespace GeneratorV2.Process
                     return false;
                 }
 
-                //Find the one and only out param, if there are more we do an early return.
+                // Find the one and only out param, if there are more we do an early return.
                 Parameter[] newParameters = new Parameter[oldParameters.Length - 1];
                 Parameter? outParameter = null;
                 CSRef? outType = null;
@@ -979,17 +978,17 @@ namespace GeneratorV2.Process
                         newParameters[outParameter != null ? i + 1 : i] = parameter;
                     }
                 }
+                
                 if (outType == null || outParameter == null)
                 {
                     newOverloads = null;
                     return false;
                 }
-                string returnName = overload.ReturnVariableName + "_out";
-
+                
                 newOverloads = new List<Overload>()
                 {
                     overload with {NestedOverload = overload, InputParameters = newParameters,
-                        ReturnType = outType!.ReferencedType, MarshalLayerToNested = new OutToReturnOverloadLayer(outParameter, returnName, outType)},
+                        ReturnType = outType!.ReferencedType, MarshalLayerToNested = new OutToReturnOverloadLayer(outParameter, outType)},
                     overload,
                 };
                 return true;
@@ -998,25 +997,22 @@ namespace GeneratorV2.Process
             private class OutToReturnOverloadLayer : IOverloadLayer
             {
                 private readonly Parameter _outParameter;
-                private readonly string _returnName;
                 private readonly CSRef _outType;
 
-                public OutToReturnOverloadLayer(Parameter outParameter, string returnName, CSRef outType)
+                public OutToReturnOverloadLayer(Parameter outParameter, CSRef outType)
                 {
                     _outParameter = outParameter;
-                    _returnName = returnName;
                     _outType = outType;
                 }
 
                 public void WritePrologue(IndentedTextWriter writer)
                 {
-                    writer.WriteLine($"{_outType.ReferencedType.ToCSString()} {_returnName}, {_outParameter.Name} = default;");
+                    writer.WriteLine($"{_outType.ReferencedType.ToCSString()} {_outParameter.Name};");
                 }
 
                 public string? WriteEpilogue(IndentedTextWriter writer, string? returnName)
                 {
-                    writer.WriteLine($"{_returnName} = {_outParameter.Name};");
-                    return _returnName;
+                    return _outParameter.Name;
                 }
             }
         }
