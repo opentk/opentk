@@ -252,6 +252,7 @@ namespace GeneratorV2.Writing
             using IndentedTextWriter writer = new IndentedTextWriter(Path.Combine(directoryPath, "GL.Native.cs"));
             writer.WriteLine("// This file is auto generated, do not edit.");
             writer.WriteLine("using System;");
+            writer.WriteLine("using System.Runtime.InteropServices;");
             writer.WriteLine();
             // NAMESPACE:
             writer.WriteLine($"namespace {GraphicsNamespace}.{glNamespace}");
@@ -323,12 +324,7 @@ namespace GeneratorV2.Writing
             writer.WriteLine($"private static {returnType} {name}_Lazy({signature})");
             using (Scope(writer))
             {
-                writer.WriteLine($"if (_{name}_fnptr == (delegate*<{delegateTypes}>)&{name}_Lazy)");
-                using (Scope(writer))
-                {
-                    writer.WriteLine(
-                        $"_{name}_fnptr = (delegate*<{delegateTypes}>){LoaderBindingsContext}.GetProcAddress(\"{function.EntryPoint}\");");
-                }
+                writer.WriteLine($"_{name}_fnptr = (delegate*<{delegateTypes}>){LoaderBindingsContext}.GetProcAddress(\"{function.EntryPoint}\");");
 
                 if (function.ReturnType is not CSVoid)
                 {
