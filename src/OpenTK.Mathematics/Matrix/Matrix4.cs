@@ -1524,11 +1524,18 @@ namespace OpenTK.Mathematics
             // Original derivation and implementation can be found here:
             // https://lxjk.github.io/2017/09/03/Fast-4x4-Matrix-Inverse-with-SSE-SIMD-Explained.html
 
-            float* m = (float*)Unsafe.AsPointer(ref Unsafe.AsRef(in mat));
-            Vector128<float> row0 = Sse.LoadVector128(m);
-            Vector128<float> row1 = Sse.LoadVector128(m + 4);
-            Vector128<float> row2 = Sse.LoadVector128(m + 8);
-            Vector128<float> row3 = Sse.LoadVector128(m + 12);
+            Vector128<float> row0;
+            Vector128<float> row1;
+            Vector128<float> row2;
+            Vector128<float> row3;
+
+            fixed (float* m = &mat.Row0.X)
+            {
+                row0 = Sse.LoadVector128(m);
+                row1 = Sse.LoadVector128(m + 4);
+                row2 = Sse.LoadVector128(m + 8);
+                row3 = Sse.LoadVector128(m + 12);
+            }
 
             // __m128 A = VecShuffle_0101(inM.mVec[0], inM.mVec[1]);
             var A = Sse.MoveLowToHigh(row0, row1);
@@ -1599,7 +1606,7 @@ namespace OpenTK.Mathematics
             const byte Shuffle_2121 = 0b0110_0110;
 
             // Mat2Mul(vec1, vec2):
-            //_mm_add_ps(_mm_mul_ps(vec1, VecSwizzle(vec2, 0, 3, 0, 3)),
+            // _mm_add_ps(_mm_mul_ps(vec1, VecSwizzle(vec2, 0, 3, 0, 3)),
             //       _mm_mul_ps(VecSwizzle(vec1, 1, 0, 3, 2), VecSwizzle(vec2, 2, 1, 2, 1)));
 
             // __m128 X_ = _mm_sub_ps(
@@ -1633,7 +1640,7 @@ namespace OpenTK.Mathematics
             const byte Shuffle_3030 = 0b0011_0011;
 
             // Mat2MulAdj(vec1, vec2):
-            //_mm_sub_ps(_mm_mul_ps(vec1, VecSwizzle(vec2, 3, 0, 3, 0)),
+            // _mm_sub_ps(_mm_mul_ps(vec1, VecSwizzle(vec2, 3, 0, 3, 0)),
             //       _mm_mul_ps(VecSwizzle(vec1, 1, 0, 3, 2), VecSwizzle(vec2, 2, 1, 2, 1)));
 
             // __m128 Y_ = _mm_sub_ps(
@@ -1701,14 +1708,17 @@ namespace OpenTK.Mathematics
 
             Unsafe.SkipInit(out result);
 
-            // r.mVec[0] = VecShuffle(X_, Y_, 3, 1, 3, 1);
-            Sse.Store((float*)Unsafe.AsPointer(ref result) + 0, Sse.Shuffle(X_, Y_, Shuffle_3131));
-            // r.mVec[1] = VecShuffle(X_, Y_, 2, 0, 2, 0);
-            Sse.Store((float*)Unsafe.AsPointer(ref result) + 4, Sse.Shuffle(X_, Y_, Shuffle_2020));
-            // r.mVec[2] = VecShuffle(Z_, W_, 3, 1, 3, 1);
-            Sse.Store((float*)Unsafe.AsPointer(ref result) + 8, Sse.Shuffle(Z_, W_, Shuffle_3131));
-            // r.mVec[3] = VecShuffle(Z_, W_, 2, 0, 2, 0);
-            Sse.Store((float*)Unsafe.AsPointer(ref result) + 12, Sse.Shuffle(Z_, W_, Shuffle_2020));
+            fixed (float* r = &result.Row0.X)
+            {
+                // r.mVec[0] = VecShuffle(X_, Y_, 3, 1, 3, 1);
+                Sse.Store(r + 0, Sse.Shuffle(X_, Y_, Shuffle_3131));
+                // r.mVec[1] = VecShuffle(X_, Y_, 2, 0, 2, 0);
+                Sse.Store(r + 4, Sse.Shuffle(X_, Y_, Shuffle_2020));
+                // r.mVec[2] = VecShuffle(Z_, W_, 3, 1, 3, 1);
+                Sse.Store(r + 8, Sse.Shuffle(Z_, W_, Shuffle_3131));
+                // r.mVec[3] = VecShuffle(Z_, W_, 2, 0, 2, 0);
+                Sse.Store(r + 12, Sse.Shuffle(Z_, W_, Shuffle_2020));
+            }
 #pragma warning restore SA1114 // Parameter list should follow declaration
 #pragma warning restore SA1312 // Variable names should begin with lower-case letter
 #pragma warning restore SA1512 // Single-line comments should not be followed by blank lines
