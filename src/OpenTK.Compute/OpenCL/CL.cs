@@ -199,6 +199,13 @@ namespace OpenTK.Compute.OpenCL
 		/// <summary>
 		/// Introduced in OpenCL 1.0
 		/// </summary>
+		[DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clCreateContextFromType")]
+		public static extern CLContext CreateContextFromType([In] IntPtr[] properties, [In] DeviceType deviceType,
+			[In] IntPtr notificationCallback, [In] IntPtr userData, [Out] out CLResultCode resultCode);
+
+		/// <summary>
+		/// Introduced in OpenCL 1.0
+		/// </summary>
 		[DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clRetainContext")]
 		public static extern CLResultCode RetainContext([In] CLContext context);
 

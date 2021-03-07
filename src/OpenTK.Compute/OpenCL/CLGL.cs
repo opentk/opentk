@@ -67,6 +67,13 @@ namespace OpenTK.Compute.OpenCL
 		/// <summary>
 		/// Introduced in Opencl 1.2
 		/// </summary>
+		/// <param name="context"></param>
+		/// <param name="flags"></param>
+		/// <param name="target">This corresponds to the texture target used in OpenGL; e.g. (int)TextureTarget.Texture2D</param>
+		/// <param name="mipLevel"></param>
+		/// <param name="texture"></param>
+		/// <param name="error"></param>
+		/// <returns></returns>
 		[DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clCreateFromGLTexture")]
 		public static extern CLBuffer CreateFromGLTexture(
 			[In] CLContext context,
@@ -147,7 +154,6 @@ namespace OpenTK.Compute.OpenCL
 		public static extern CLBuffer CreateFromGLTexture2D(
 			[In] CLContext context,
 			[In] MemoryFlags flags,
-			//TODO FIX
 			[In] int target,
 			[In] int mipLevel,
 			[In] int texture,
@@ -162,7 +168,6 @@ namespace OpenTK.Compute.OpenCL
 		public static extern CLBuffer CreateFromGLTexture3D(
 			[In] CLContext context,
 			[In] MemoryFlags flags,
-			//TODO FIX
 			[In] int target,
 			[In] int mipLevel,
 			[In] int texture,
@@ -177,7 +182,7 @@ namespace OpenTK.Compute.OpenCL
 			DevicesForGlContextKHR = 0x2007
 		}
 
-		public enum ContextProperties : uint
+		public enum ContextProperties : int
 		{
 			GlContextKHR = 0x2008,
 			EglDisplayKHR = 0x2009,
