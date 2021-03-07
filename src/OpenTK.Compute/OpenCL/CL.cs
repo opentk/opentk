@@ -11,7 +11,7 @@ namespace OpenTK.Compute.OpenCL
 			CLBase.RegisterOpenCLResolver();
 		}
 
-		private const string LibName = "libOpenCL";
+		private const string LibName = "opencl";
 		private const CallingConvention CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl;
 
 		public delegate void ClEventCallback(IntPtr waitEvent, IntPtr userData);
