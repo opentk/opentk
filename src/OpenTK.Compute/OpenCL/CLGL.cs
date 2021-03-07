@@ -171,13 +171,13 @@ namespace OpenTK.Compute.OpenCL
 
 		#endregion
 
-		public enum CLGLContextInfo : uint
+		public enum ContextInfo : uint
 		{
 			CurrentDeviceForGlContextKHR = 0x2006,
 			DevicesForGlContextKHR = 0x2007
 		}
 
-		public enum ContextProperties
+		public enum ContextProperties : uint
 		{
 			GlContextKHR = 0x2008,
 			EglDisplayKHR = 0x2009,
@@ -191,22 +191,21 @@ namespace OpenTK.Compute.OpenCL
 		/// </summary>
 		[DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clGetGLContextInfoKHR")]
 		public static extern CLResultCode GetGLContextInfoKHR(
-			[In] ref ContextProperties properties,
+			[In] IntPtr[] properties,
 			[In] ContextInfo paramName,
 			[In] UIntPtr paramValueSize,
 			[Out] byte[] paramValue,
 			[Out] out UIntPtr paramValueSizeReturned
 		);
 
-		/*
 		/// <summary>
 		/// Introduced in Opencl 1.1
 		/// </summary>
 		[DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clCreateEventFromGLsyncKHR")]
 		public static extern CLEvent CreateEventFromGLsyncKHR(
 			[In] CLContext context,
-			[In] uint sync,
+			[In] IntPtr sync,
 			[Out] out CLResultCode error
-		);*/
+		);
 	}
 }
