@@ -560,7 +560,7 @@ namespace OpenTK.Mathematics
 
             var invDet = 1f / det;
 
-            // Because the c# jit assumes noalias for byref types we need to
+            // Because the c# jit assumes alias for byref types we need to
             // save this value as the write to result.Row0.X could change the
             // value of mat.Row0.X.
             var row0x = mat.Row0.X;
