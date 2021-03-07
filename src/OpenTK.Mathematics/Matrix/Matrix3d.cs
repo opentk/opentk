@@ -807,16 +807,18 @@ namespace OpenTK.Mathematics
         {
             // Original implementation can be found here:
             // https://github.com/niswegmann/small-matrix-inverse/blob/6eac02b84ad06870692abaf828638a391548502c/invert3x3_c.h
-            Matrix3d mat = matrix;
+            double row0X = matrix.Row0.X, row0Y = matrix.Row0.Y, row0Z = matrix.Row0.Z;
+            double row1X = matrix.Row1.X, row1Y = matrix.Row1.Y, row1Z = matrix.Row1.Z;
+            double row2X = matrix.Row2.X, row2Y = matrix.Row2.Y, row2Z = matrix.Row2.Z;
 
             // Compute the elements needed to calculate the determinant
             // so that we can throw without writing anything to the out parameter.
-            double invRow0X = (+mat.Row1.Y * mat.Row2.Z) - (mat.Row1.Z * mat.Row2.Y);
-            double invRow1X = (-mat.Row1.X * mat.Row2.Z) + (mat.Row1.Z * mat.Row2.X);
-            double invRow2X = (+mat.Row1.X * mat.Row2.Y) - (mat.Row1.Y * mat.Row2.X);
+            double invRow0X = (+row1Y * row2Z) - (row1Z * row2Y);
+            double invRow1X = (-row1X * row2Z) + (row1Z * row2X);
+            double invRow2X = (+row1X * row2Y) - (row1Y * row2X);
 
             // Compute determinant:
-            double det = (mat.Row0.X * invRow0X) + (mat.Row0.Y * invRow1X) + (mat.Row0.Z * invRow2X);
+            double det = (row0X * invRow0X) + (row0Y * invRow1X) + (row0Z * invRow2X);
 
             if (det == 0f)
             {
@@ -825,14 +827,14 @@ namespace OpenTK.Mathematics
 
             // Compute adjoint:
             result.Row0.X = invRow0X;
-            result.Row0.Y = (-mat.Row0.Y * mat.Row2.Z) + (mat.Row0.Z * mat.Row2.Y);
-            result.Row0.Z = (+mat.Row0.Y * mat.Row1.Z) - (mat.Row0.Z * mat.Row1.Y);
+            result.Row0.Y = (-row0Y * row2Z) + (row0Z * row2Y);
+            result.Row0.Z = (+row0Y * row1Z) - (row0Z * row1Y);
             result.Row1.X = invRow1X;
-            result.Row1.Y = (+mat.Row0.X * mat.Row2.Z) - (mat.Row0.Z * mat.Row2.X);
-            result.Row1.Z = (-mat.Row0.X * mat.Row1.Z) + (mat.Row0.Z * mat.Row1.X);
+            result.Row1.Y = (+row0X * row2Z) - (row0Z * row2X);
+            result.Row1.Z = (-row0X * row1Z) + (row0Z * row1X);
             result.Row2.X = invRow2X;
-            result.Row2.Y = (-mat.Row0.X * mat.Row2.Y) + (mat.Row0.Y * mat.Row2.X);
-            result.Row2.Z = (+mat.Row0.X * mat.Row1.Y) - (mat.Row0.Y * mat.Row1.X);
+            result.Row2.Y = (-row0X * row2Y) + (row0Y * row2X);
+            result.Row2.Z = (+row0X * row1Y) - (row0Y * row1X);
 
             // Multiply adjoint with reciprocal of determinant:
             det = 1.0f / det;
