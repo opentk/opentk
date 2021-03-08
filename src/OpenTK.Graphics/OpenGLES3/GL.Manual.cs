@@ -17,7 +17,7 @@ namespace OpenTK.Graphics.OpenGLES3
         {
             IntPtr str_iptr = Marshal.StringToCoTaskMemAnsi(str);
             int length = str.Length;
-            OpenGL.GL.ShaderSource(shader, 1, (byte**)&str_iptr, ref length);
+            GL.ShaderSource(shader, 1, (byte**)&str_iptr, ref length);
             Marshal.FreeCoTaskMem(str_iptr);
         }
     }
