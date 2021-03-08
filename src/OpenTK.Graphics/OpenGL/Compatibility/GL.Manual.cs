@@ -12,6 +12,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         // anywhere else in the file.
         public enum SampleMaskNV
         { }
+
         public static void ShaderSource(uint shader, string str)
         {
             IntPtr str_iptr = Marshal.StringToCoTaskMemAnsi(str);
