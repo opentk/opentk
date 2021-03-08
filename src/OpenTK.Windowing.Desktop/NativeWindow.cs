@@ -774,23 +774,13 @@ namespace OpenTK.Windowing.Desktop
 
             var provider = new GLFWBindingsContext();
 
-            void LoadBindings(string typeNamespace)
+            var type = assembly.GetType($"OpenTK.Graphics.GLLoader");
+            if (type == null)
             {
-                var type = assembly.GetType($"OpenTK.Graphics.{typeNamespace}.GL");
-                if (type == null)
-                {
-                    return;
-                }
-
-                var load = type.GetMethod("LoadBindings");
-                load.Invoke(null, new object[] { provider });
+                return;
             }
-
-            LoadBindings("ES11");
-            LoadBindings("ES20");
-            LoadBindings("ES30");
-            LoadBindings("OpenGL");
-            LoadBindings("OpenGL4");
+            var load = type.GetMethod("LoadBindings");
+            load.Invoke(null, new object[] { provider });
         }
 
         private unsafe void HandleResize(int width, int height)
