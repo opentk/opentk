@@ -1,5 +1,11 @@
-## 5.0-pre.3
-* YAAAY!
+## 5.0-pre.1
+* Rewritten generator for OpenGL bindings, this will enable some nice features that are in the works.
+* Updated projects to .net 5
+* New colors using phantom types for color spaces.
+
+**Note**: The new OpenGL bindings will receive updates and breaking changes in the coming previews.
+
+**Note**: The generated functions currently do not have xml documentation attached to them, this will be available in the final release.
 
 ## 4.5.0
 * API: Introduced `GameWindow.UpdateTime` to match `GameWindow.RenderTime`. (@NogginBops)
