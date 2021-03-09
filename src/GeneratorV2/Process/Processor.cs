@@ -403,7 +403,8 @@ namespace GeneratorV2.Process
             List<Overload> overloads = new List<Overload>
             {
                 // Make a "base" overload
-                new Overload(null, null, function.Parameters.ToArray(), function, function.ReturnType, "returnValue", Array.Empty<string>()),
+                new Overload(null,null, function.Parameters.ToArray(), function, function.ReturnType, "returnValue",
+                    Array.Empty<string>(), function.FunctionName),
             };
 
             bool overloadedOnce = false;
@@ -476,7 +477,8 @@ namespace GeneratorV2.Process
                     var returnType = new CSString(Nullable: true);
                     newOverloads = new List<Overload>()
                     {
-                        new Overload(overload, layer, overload.InputParameters, overload.NativeFunction, returnType, newReturnName, overload.GenericTypes)
+                        overload with{NestedOverload =  overload, MarshalLayerToNested = layer, ReturnType = returnType, ReturnVariableName = newReturnName},
+                        // new Overload(overload, layer, overload.InputParameters, overload.NativeFunction, returnType, newReturnName, overload.GenericTypes)
                     };
                     return true;
                 }
@@ -844,7 +846,8 @@ namespace GeneratorV2.Process
                     var layer = new RefInsteadOfPointerLayer(changed, original);
                     newOverloads = new List<Overload>()
                     {
-                        new Overload(overload, layer, parameters, overload.NativeFunction, overload.ReturnType, overload.ReturnVariableName, genericTypes)
+                        overload with{NestedOverload = overload, MarshalLayerToNested = layer, InputParameters = parameters, GenericTypes = genericTypes},
+                        // new Overload(overload, layer, parameters, overload.NativeFunction, overload.ReturnType, overload.ReturnVariableName, genericTypes)
                     };
                     return true;
                 }
@@ -903,7 +906,7 @@ namespace GeneratorV2.Process
                     newOverloads = null;
                     return false;
                 }
-                var newNativeName = nativeName[..^1];
+                var newName = nativeName[..^1];
 
                 int lengthParameterIndex = -1;
                 Parameter[] parameters = new Parameter[overload.InputParameters.Length - 1];
@@ -927,7 +930,7 @@ namespace GeneratorV2.Process
 
                 newOverloads = new List<Overload>()
                 {
-                    overload with { InputParameters = parameters, NestedOverload = overload,
+                    overload with { InputParameters = parameters, NestedOverload = overload, OverloadName = newName,
                         MarshalLayerToNested = new GenAndCreateOverloadLayer(overload.InputParameters[lengthParameterIndex], parameters[^1], pointerParameter)},
                     overload,
                 };
