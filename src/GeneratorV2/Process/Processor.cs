@@ -717,7 +717,7 @@ namespace GeneratorV2.Process
 
                             newSpanParams[spanArrayParameterIndex]  = newSpanParams[spanArrayParameterIndex]  with { Type = new CSSpan(baseType, pointer.Constant) };
                             newArrayParams[spanArrayParameterIndex] = newArrayParams[spanArrayParameterIndex] with { Type = new CSArray(baseType, pointer.Constant) };
-                            
+
                             var spanLayer  = new SpanOrArrayLayer(pointerParam, newSpanParams[spanArrayParameterIndex], oldLength, expr, shouldCalculateLength, baseType);
                             var arrayLayer = new SpanOrArrayLayer(pointerParam, newArrayParams[spanArrayParameterIndex], oldLength, expr, shouldCalculateLength, baseType);
 
@@ -928,23 +928,50 @@ namespace GeneratorV2.Process
 
                 CSRef.Type refType = nativeName.StartsWith("Delete") ? CSRef.Type.In : CSRef.Type.Out;
                 parameters[^1] = pointerParameter with { Type = new CSRef(refType, pointerParameterType.BaseType), Length = null };
+                IOverloadLayer layer = refType == CSRef.Type.In ? new DeleteOverloadLayer(overload.InputParameters[lengthParameterIndex], parameters[^1], pointerParameter) :
+                    new GenAndCreateOverloadLayer(overload.InputParameters[lengthParameterIndex], parameters[^1], pointerParameter);
 
                 newOverloads = new List<Overload>()
                 {
                     overload with { InputParameters = parameters, NestedOverload = overload, OverloadName = newName, NameTable = nameTable,
-                        MarshalLayerToNested = new GenCreateAndDeleteOverloadLayer(overload.InputParameters[lengthParameterIndex], parameters[^1], pointerParameter)},
+                        MarshalLayerToNested = layer},
                     overload,
                 };
                 return true;
             }
 
-            private class GenCreateAndDeleteOverloadLayer : IOverloadLayer
+            private class DeleteOverloadLayer : IOverloadLayer
+            {
+                public readonly Parameter LengthParameter;
+                public readonly Parameter InParameter;
+                public readonly Parameter PointerParameter;
+
+                public DeleteOverloadLayer(Parameter lengthParameter, Parameter inParameter, Parameter pointerParameter)
+                {
+                    LengthParameter = lengthParameter;
+                    InParameter = inParameter;
+                    PointerParameter = pointerParameter;
+                }
+
+                public void WritePrologue(IndentedTextWriter writer, NameTable nameTable)
+                {
+                    writer.WriteLine($"{LengthParameter.Type.ToCSString()} {nameTable[LengthParameter]} = 1;");
+                    writer.WriteLine($"{PointerParameter.Type.ToCSString()} {nameTable[PointerParameter]} = ({PointerParameter.Type.ToCSString()}){nameTable[InParameter]};");
+                }
+
+                public string? WriteEpilogue(IndentedTextWriter writer, NameTable nameTable, string? returnName)
+                {
+                    return returnName;
+                }
+            }
+
+            private class GenAndCreateOverloadLayer : IOverloadLayer
             {
                 public readonly Parameter LengthParameter;
                 public readonly Parameter OutParameter;
                 public readonly Parameter PointerParameter;
 
-                public GenCreateAndDeleteOverloadLayer(Parameter lengthParameter, Parameter outParameter, Parameter pointerParameter)
+                public GenAndCreateOverloadLayer(Parameter lengthParameter, Parameter outParameter, Parameter pointerParameter)
                 {
                     LengthParameter = lengthParameter;
                     OutParameter = outParameter;
