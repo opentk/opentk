@@ -640,27 +640,6 @@ namespace GeneratorV2.Process
         {
             public bool TryGenerateOverloads(Overload overload, [NotNullWhen(true)] out List<Overload>? newOverloads)
             {
-                if (overload.NativeFunction.EntryPoint == "glShaderSource")
-                {
-                    newOverloads = default;
-                    return false;
-                }
-
-                if (overload.NativeFunction.EntryPoint == "glTransformFeedbackVaryings"||
-                    overload.NativeFunction.EntryPoint == "glCreateShaderProgramv")
-                {
-                    Debug.Print($"Fix proper overloads for: {overload.NativeFunction.EntryPoint}");
-                    ;
-
-                    newOverloads = default;
-                    return false;
-                }
-
-                if (overload.NativeFunction.EntryPoint == "glDrawElementsInstancedBaseInstance")
-                {
-                    ;
-                }
-
                 // FIXME: We want to be able to handle more than just one Span and Array overload
                 // functions like "glShaderSource" can take more than one array.
                 //
@@ -806,10 +785,6 @@ namespace GeneratorV2.Process
         {
             public bool TryGenerateOverloads(Overload overload, [NotNullWhen(true)] out List<Overload>? newOverloads)
             {
-                if (overload.NativeFunction.EntryPoint == "glShaderSource")
-                {
-
-                }
                 Parameter[] parameters = new Parameter[overload.InputParameters.Length];
                 List<Parameter> original = new List<Parameter>();
                 List<Parameter> changed = new List<Parameter>();
