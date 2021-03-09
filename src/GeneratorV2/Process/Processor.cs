@@ -477,7 +477,7 @@ namespace GeneratorV2.Process
                     var returnType = new CSString(Nullable: true);
                     newOverloads = new List<Overload>()
                     {
-                        overload with{NestedOverload =  overload, MarshalLayerToNested = layer, ReturnType = returnType, ReturnVariableName = newReturnName},
+                        overload with {NestedOverload =  overload, MarshalLayerToNested = layer, ReturnType = returnType, ReturnVariableName = newReturnName},
                         // new Overload(overload, layer, overload.InputParameters, overload.NativeFunction, returnType, newReturnName, overload.GenericTypes)
                     };
                     return true;
@@ -835,7 +835,7 @@ namespace GeneratorV2.Process
                     var layer = new RefInsteadOfPointerLayer(changed, original);
                     newOverloads = new List<Overload>()
                     {
-                        overload with{NestedOverload = overload, MarshalLayerToNested = layer, InputParameters = parameters, GenericTypes = genericTypes},
+                        overload with {NestedOverload = overload, MarshalLayerToNested = layer, InputParameters = parameters, GenericTypes = genericTypes},
                         // new Overload(overload, layer, parameters, overload.NativeFunction, overload.ReturnType, overload.ReturnVariableName, genericTypes)
                     };
                     return true;
