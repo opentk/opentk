@@ -221,7 +221,8 @@ namespace GeneratorV2.Writing
         BaseCSType ReturnType,
         NameTable NameTable,
         string ReturnVariableName,
-        string[] GenericTypes);
+        string[] GenericTypes,
+        string OverloadName);
 
     public record OverloaderNativeFunction(
         NativeFunction Function,
