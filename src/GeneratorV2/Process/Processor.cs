@@ -335,7 +335,8 @@ namespace GeneratorV2.Process
                 case GLBaseType bt:
                     return bt.Type switch
                     {
-                        PrimitiveType.Void => new CSVoid(),
+                        PrimitiveType.Void => new CSVoid(bt.Constant),
+                        PrimitiveType.Bool => new CSType("bool", bt.Constant),
                         PrimitiveType.Byte => new CSType("byte", bt.Constant),
                         PrimitiveType.Char8 => new CSChar8(bt.Constant),
                         PrimitiveType.Sbyte => new CSType("sbyte", bt.Constant),
@@ -351,8 +352,9 @@ namespace GeneratorV2.Process
                         PrimitiveType.Float => new CSType("float", bt.Constant),
                         PrimitiveType.Double => new CSType("double", bt.Constant),
                         PrimitiveType.IntPtr => new CSType("IntPtr", bt.Constant),
+                        PrimitiveType.Nint => new CSType("nint", bt.Constant),
 
-                        PrimitiveType.VoidPtr => new CSPointer(new CSVoid(), bt.Constant),
+                        PrimitiveType.VoidPtr => new CSPointer(new CSVoid(false), bt.Constant),
 
                         // FIXME: Should this be treated special?
                         PrimitiveType.Enum => new CSType(group ?? "All", bt.Constant),
@@ -385,7 +387,7 @@ namespace GeneratorV2.Process
         {
             new StringReturnOverloader(),
 
-            new GenAndCreateOverloader(),
+            new GenCreateAndDeleteOverloader(),
             new StringOverloader(),
             new SpanAndArrayOverloader(),
             new RefInsteadOfPointerOverloader(),
@@ -402,7 +404,8 @@ namespace GeneratorV2.Process
             List<Overload> overloads = new List<Overload>
             {
                 // Make a "base" overload
-                new Overload(null, null, function.Parameters.ToArray(), function, function.ReturnType, new NameTable(), "returnValue", Array.Empty<string>()),
+                new Overload(null, null, function.Parameters.ToArray(), function, function.ReturnType,
+                    new NameTable(), "returnValue", Array.Empty<string>(), function.FunctionName),
             };
 
             bool overloadedOnce = false;
@@ -637,27 +640,6 @@ namespace GeneratorV2.Process
         {
             public bool TryGenerateOverloads(Overload overload, [NotNullWhen(true)] out List<Overload>? newOverloads)
             {
-                if (overload.NativeFunction.EntryPoint == "glShaderSource")
-                {
-                    newOverloads = default;
-                    return false;
-                }
-
-                if (overload.NativeFunction.EntryPoint == "glTransformFeedbackVaryings"||
-                    overload.NativeFunction.EntryPoint == "glCreateShaderProgramv")
-                {
-                    Debug.Print($"Fix proper overloads for: {overload.NativeFunction.EntryPoint}");
-                    ;
-
-                    newOverloads = default;
-                    return false;
-                }
-
-                if (overload.NativeFunction.EntryPoint == "glDrawElementsInstancedBaseInstance")
-                {
-                    ;
-                }
-
                 // FIXME: We want to be able to handle more than just one Span and Array overload
                 // functions like "glShaderSource" can take more than one array.
                 //
@@ -807,22 +789,40 @@ namespace GeneratorV2.Process
                 List<Parameter> original = new List<Parameter>();
                 List<Parameter> changed = new List<Parameter>();
                 NameTable nameTable = overload.NameTable.New();
+                string[] genericTypes = overload.GenericTypes;
                 for (int i = 0; i < overload.InputParameters.Length; i++)
                 {
                     Parameter parameter = overload.InputParameters[i];
                     parameters[i] = parameter;
 
-                    if (parameter.Type is CSPointer pt && pt.BaseType is CSType)
+                    if (parameter.Type is CSPointer pt)
                     {
+                        bool constant = pt.Constant;
+                        BaseCSType baseType;
+                        switch (pt.BaseType)
+                        {
+                            case CSVoid btVoid:
+                                genericTypes = genericTypes.MakeCopyAndGrow(1);
+                                genericTypes[^1] = $"T{genericTypes.Length}";
+                                baseType = new CSGenericType(genericTypes[^1]);
+                                constant |= btVoid.Constant;
+                                break;
+                            case CSType bt:
+                                baseType = pt.BaseType;
+                                constant |= bt.Constant;
+                                break;
+                            default:
+                                continue;
+                        }
                         // FIXME: When do we know it's an out ref type?
-                        CSRef.Type refType = pt.Constant ? CSRef.Type.In : CSRef.Type.Ref;
+                        CSRef.Type refType = constant ? CSRef.Type.In : CSRef.Type.Ref;
 
                         // Rename the parameter
                         nameTable.Rename(parameter, $"{parameter.Name}_ptr");
 
                         original.Add(parameters[i]);
 
-                        parameters[i] = parameters[i] with { Type = new CSRef(refType, pt.BaseType) };
+                        parameters[i] = parameters[i] with { Type = new CSRef(refType, baseType) };
 
                         changed.Add(parameters[i]);
                     }
@@ -833,7 +833,7 @@ namespace GeneratorV2.Process
                     var layer = new RefInsteadOfPointerLayer(changed, original);
                     newOverloads = new List<Overload>()
                     {
-                        overload with { NestedOverload = overload, MarshalLayerToNested = layer, InputParameters = parameters, NameTable = nameTable }
+                        overload with { NestedOverload = overload, MarshalLayerToNested = layer, InputParameters = parameters, NameTable = nameTable, GenericTypes = genericTypes }
                     };
                     return true;
                 }
@@ -877,12 +877,12 @@ namespace GeneratorV2.Process
             }
         }
 
-        public class GenAndCreateOverloader : IOverloader
+        public class GenCreateAndDeleteOverloader : IOverloader
         {
             public bool TryGenerateOverloads(Overload overload, [NotNullWhen(true)] out List<Overload>? newOverloads)
             {
                 var nativeName = overload.NativeFunction.FunctionName;
-                if (!nativeName.StartsWith("Create") && !nativeName.StartsWith("Gen") || !nativeName.EndsWith("s"))
+                if (!nativeName.StartsWith("Create") && !nativeName.StartsWith("Gen") && !nativeName.StartsWith("Delete") || !nativeName.EndsWith("s"))
                 {
                     newOverloads = default;
                     return false;
@@ -902,6 +902,8 @@ namespace GeneratorV2.Process
                     newOverloads = default;
                     return false;
                 }
+
+                var newName = nativeName[..^1];
 
                 int lengthParameterIndex = -1;
                 Parameter[] parameters = new Parameter[overload.InputParameters.Length - 1];
@@ -928,20 +930,20 @@ namespace GeneratorV2.Process
 
                 newOverloads = new List<Overload>()
                 {
-                    overload with { InputParameters = parameters, NestedOverload = overload, NameTable = nameTable,
-                        MarshalLayerToNested = new GenAndCreateOverloadLayer(overload.InputParameters[lengthParameterIndex], parameters[^1], pointerParameter)},
+                    overload with { InputParameters = parameters, NestedOverload = overload, OverloadName = newName, NameTable = nameTable,
+                        MarshalLayerToNested = new GenCreateAndDeleteOverloadLayer(overload.InputParameters[lengthParameterIndex], parameters[^1], pointerParameter)},
                     overload,
                 };
                 return true;
             }
 
-            private class GenAndCreateOverloadLayer : IOverloadLayer
+            private class GenCreateAndDeleteOverloadLayer : IOverloadLayer
             {
                 public readonly Parameter LengthParameter;
                 public readonly Parameter OutParameter;
                 public readonly Parameter PointerParameter;
 
-                public GenAndCreateOverloadLayer(Parameter lengthParameter, Parameter outParameter, Parameter pointerParameter)
+                public GenCreateAndDeleteOverloadLayer(Parameter lengthParameter, Parameter outParameter, Parameter pointerParameter)
                 {
                     LengthParameter = lengthParameter;
                     OutParameter = outParameter;
@@ -996,13 +998,13 @@ namespace GeneratorV2.Process
                         newParameters[outParameter != null ? i + 1 : i] = parameter;
                     }
                 }
-                
+
                 if (outType == null || outParameter == null)
                 {
                     newOverloads = null;
                     return false;
                 }
-                
+
                 newOverloads = new List<Overload>()
                 {
                     overload with { NestedOverload = overload, InputParameters = newParameters,

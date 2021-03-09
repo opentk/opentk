@@ -397,7 +397,7 @@ namespace GeneratorV2.Writing
             string genericTypes =
                 overload1.GenericTypes.Length <= 0 ? "" : $"<{string.Join(", ", overload1.GenericTypes)}>";
             indentedTextWriter.WriteLine(
-                $"public static unsafe {overload1.ReturnType.ToCSString()} {overload1.NativeFunction.EntryPoint[2..]}{genericTypes}({parameterString})");
+                $"public static unsafe {overload1.ReturnType.ToCSString()} {overload1.OverloadName}{genericTypes}({parameterString})");
             using (indentedTextWriter.Indentation())
             {
                 foreach (var type in overload1.GenericTypes)

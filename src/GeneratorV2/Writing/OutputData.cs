@@ -62,7 +62,7 @@ namespace GeneratorV2.Writing
         }
     }
 
-    public record CSVoid() : BaseCSType
+    public record CSVoid(bool Constant) : BaseCSType
     {
         public override string ToCSString() => "void";
     }
@@ -221,7 +221,8 @@ namespace GeneratorV2.Writing
         BaseCSType ReturnType,
         NameTable NameTable,
         string ReturnVariableName,
-        string[] GenericTypes);
+        string[] GenericTypes,
+        string OverloadName);
 
     public record OverloaderNativeFunction(
         NativeFunction Function,
