@@ -46,6 +46,7 @@ namespace GeneratorV2.Parsing
         Float,
         Double,
         IntPtr,
+        Nint,
         VoidPtr,
 
         Enum,

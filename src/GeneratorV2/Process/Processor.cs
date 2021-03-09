@@ -352,6 +352,7 @@ namespace GeneratorV2.Process
                         PrimitiveType.Float => new CSType("float", bt.Constant),
                         PrimitiveType.Double => new CSType("double", bt.Constant),
                         PrimitiveType.IntPtr => new CSType("IntPtr", bt.Constant),
+                        PrimitiveType.Nint => new CSType("nint", bt.Constant),
 
                         PrimitiveType.VoidPtr => new CSPointer(new CSVoid(false), bt.Constant),
 
