@@ -62,7 +62,7 @@ namespace GeneratorV2.Writing
         }
     }
 
-    public record CSVoid() : BaseCSType
+    public record CSVoid(bool Constant) : BaseCSType
     {
         public override string ToCSString() => "void";
     }
