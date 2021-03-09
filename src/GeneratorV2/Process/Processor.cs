@@ -927,7 +927,8 @@ namespace GeneratorV2.Process
                 var nameTable = overload.NameTable.New();
                 nameTable.Rename(pointerParameter, $"{pointerParameter.Name}_handle");
 
-                parameters[^1] = pointerParameter with { Type = new CSRef(CSRef.Type.Out, pointerParameterType.BaseType), Length = null };
+                CSRef.Type refType = nativeName.StartsWith("Delete") ? CSRef.Type.In : CSRef.Type.Out;
+                parameters[^1] = pointerParameter with { Type = new CSRef(refType, pointerParameterType.BaseType), Length = null };
 
                 newOverloads = new List<Overload>()
                 {
