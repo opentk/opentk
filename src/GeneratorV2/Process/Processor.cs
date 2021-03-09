@@ -335,7 +335,7 @@ namespace GeneratorV2.Process
                 case GLBaseType bt:
                     return bt.Type switch
                     {
-                        PrimitiveType.Void => new CSVoid(),
+                        PrimitiveType.Void => new CSVoid(bt.Constant),
                         PrimitiveType.Bool => new CSType("bool", bt.Constant),
                         PrimitiveType.Byte => new CSType("byte", bt.Constant),
                         PrimitiveType.Char8 => new CSChar8(bt.Constant),
@@ -353,7 +353,7 @@ namespace GeneratorV2.Process
                         PrimitiveType.Double => new CSType("double", bt.Constant),
                         PrimitiveType.IntPtr => new CSType("IntPtr", bt.Constant),
 
-                        PrimitiveType.VoidPtr => new CSPointer(new CSVoid(), bt.Constant),
+                        PrimitiveType.VoidPtr => new CSPointer(new CSVoid(false), bt.Constant),
 
                         // FIXME: Should this be treated special?
                         PrimitiveType.Enum => new CSType(group ?? "All", bt.Constant),
@@ -798,6 +798,10 @@ namespace GeneratorV2.Process
         {
             public bool TryGenerateOverloads(Overload overload, [NotNullWhen(true)] out List<Overload>? newOverloads)
             {
+                if (overload.NativeFunction.EntryPoint == "glShaderSource")
+                {
+
+                }
                 Parameter[] parameters = new Parameter[overload.InputParameters.Length];
                 List<Parameter> original = new List<Parameter>();
                 List<Parameter> changed = new List<Parameter>();
@@ -809,16 +813,19 @@ namespace GeneratorV2.Process
 
                     if (parameter.Type is CSPointer pt)
                     {
+                        bool constant = false;
                         BaseCSType baseType;
-                        if (pt.BaseType is CSVoid)
+                        if (pt.BaseType is CSVoid btVoid)
                         {
                             genericTypes = genericTypes.MakeCopyAndGrow(1);
                             genericTypes[^1] = $"T{genericTypes.Length}";
                             baseType = new CSGenericType(genericTypes[^1]);
+                            constant = btVoid.Constant;
                         }
-                        else if (pt.BaseType is CSType)
+                        else if (pt.BaseType is CSType bt)
                         {
                             baseType = pt.BaseType;
+                            constant = bt.Constant;
                         }
                         else
                         {
@@ -827,7 +834,7 @@ namespace GeneratorV2.Process
                         // FIXME: When do we know it's an out ref type?
                         CSRef.Type refType = CSRef.Type.Ref;
                         string postfix = "_ref";
-                        if (pt.Constant)
+                        if (constant || pt.Constant)
                         {
                             refType = CSRef.Type.In;
                             postfix = "_in";
