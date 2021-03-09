@@ -336,6 +336,7 @@ namespace GeneratorV2.Process
                     return bt.Type switch
                     {
                         PrimitiveType.Void => new CSVoid(),
+                        PrimitiveType.Bool => new CSType("bool", bt.Constant),
                         PrimitiveType.Byte => new CSType("byte", bt.Constant),
                         PrimitiveType.Char8 => new CSChar8(bt.Constant),
                         PrimitiveType.Sbyte => new CSType("sbyte", bt.Constant),
