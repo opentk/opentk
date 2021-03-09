@@ -798,13 +798,29 @@ namespace GeneratorV2.Process
                 Parameter[] parameters = new Parameter[overload.InputParameters.Length];
                 List<Parameter> original = new List<Parameter>();
                 List<Parameter> changed = new List<Parameter>();
+                string[] genericTypes = overload.GenericTypes;
                 for (int i = 0; i < overload.InputParameters.Length; i++)
                 {
                     Parameter parameter = overload.InputParameters[i];
                     parameters[i] = parameter;
 
-                    if (parameter.Type is CSPointer pt && pt.BaseType is CSType)
+                    if (parameter.Type is CSPointer pt)
                     {
+                        BaseCSType baseType;
+                        if (pt.BaseType is CSVoid)
+                        {
+                            genericTypes = genericTypes.MakeCopyAndGrow(1);
+                            genericTypes[^1] = $"T{genericTypes.Length}";
+                            baseType = new CSGenericType(genericTypes[^1]);
+                        }
+                        else if (pt.BaseType is CSType)
+                        {
+                            baseType = pt.BaseType;
+                        }
+                        else
+                        {
+                            continue;
+                        }
                         // FIXME: When do we know it's an out ref type?
                         CSRef.Type refType = CSRef.Type.Ref;
                         string postfix = "_ref";
@@ -816,7 +832,7 @@ namespace GeneratorV2.Process
 
                         original.Add(parameters[i]);
 
-                        parameters[i] = new Parameter(new CSRef(refType, pt.BaseType), parameter.Name + postfix, parameter.Length);
+                        parameters[i] = new Parameter(new CSRef(refType, baseType), parameter.Name + postfix, parameter.Length);
 
                         changed.Add(parameters[i]);
                     }
@@ -827,7 +843,7 @@ namespace GeneratorV2.Process
                     var layer = new RefInsteadOfPointerLayer(changed, original);
                     newOverloads = new List<Overload>()
                     {
-                        new Overload(overload, layer, parameters, overload.NativeFunction, overload.ReturnType, overload.ReturnVariableName, overload.GenericTypes)
+                        new Overload(overload, layer, parameters, overload.NativeFunction, overload.ReturnType, overload.ReturnVariableName, genericTypes)
                     };
                     return true;
                 }
@@ -978,13 +994,13 @@ namespace GeneratorV2.Process
                         newParameters[outParameter != null ? i + 1 : i] = parameter;
                     }
                 }
-                
+
                 if (outType == null || outParameter == null)
                 {
                     newOverloads = null;
                     return false;
                 }
-                
+
                 newOverloads = new List<Overload>()
                 {
                     overload with {NestedOverload = overload, InputParameters = newParameters,
