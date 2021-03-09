@@ -385,7 +385,7 @@ namespace GeneratorV2.Process
         {
             new StringReturnOverloader(),
 
-            new GenAndCreateOverloader(),
+            new GenCreateAndDeleteOverloader(),
             new StringOverloader(),
             new SpanAndArrayOverloader(),
             new RefInsteadOfPointerOverloader(),
@@ -891,7 +891,7 @@ namespace GeneratorV2.Process
             }
         }
 
-        public class GenAndCreateOverloader : IOverloader
+        public class GenCreateAndDeleteOverloader : IOverloader
         {
             public bool TryGenerateOverloads(Overload overload, [NotNullWhen(true)] out List<Overload>? newOverloads)
             {
@@ -904,8 +904,11 @@ namespace GeneratorV2.Process
 
                 // Here we assume that the last parameter is the pointer parameter.
                 var pointerParameter = overload.InputParameters.LastOrDefault();
-
-                if (pointerParameter == null || pointerParameter.Type is not CSPointer pointerParameterType)
+                var nativeName = overload.NativeFunction.FunctionName;
+                if ((!nativeName.StartsWith("Create") && !nativeName.StartsWith("Gen") && !nativeName.StartsWith("Delete")) ||
+                    !nativeName.EndsWith("s") || pointerParameter == null ||
+                    pointerParameter.Type is not CSPointer pointerParameterType ||
+                    pointerParameter.Length == null || pointerParameter.Length is not ParameterReference handleLength)
                 {
                     newOverloads = default;
                     return false;
