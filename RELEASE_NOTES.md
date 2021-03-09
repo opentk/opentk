@@ -1,3 +1,12 @@
+## 5.0-pre.2
+* bools will now be booleans instead of bytes
+* ref parameters can now be generic
+* Delete* will now recieve similar overloads as Gen* and Create*
+* Delete, Gen and Create* will have names with removed s for the singular versions
+* Overloads now use nint for arguments of type GLsizeiptr and GLsizeiptrARB in c
+* Proper parameter naming
+* Created new overload for void* parameters making them IntPtr
+
 ## 5.0-pre.1
 * Rewritten generator for OpenGL bindings, this will enable some nice features that are in the works.
 * Updated projects to .net 5
