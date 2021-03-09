@@ -32,6 +32,7 @@ namespace GeneratorV2.Parsing
     {
         Invalid,
         Void,
+        Bool,
         Byte,
         Char8,
         Sbyte,
@@ -45,6 +46,7 @@ namespace GeneratorV2.Parsing
         Float,
         Double,
         IntPtr,
+        Nint,
         VoidPtr,
 
         Enum,

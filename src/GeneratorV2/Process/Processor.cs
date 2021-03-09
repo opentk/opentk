@@ -335,7 +335,8 @@ namespace GeneratorV2.Process
                 case GLBaseType bt:
                     return bt.Type switch
                     {
-                        PrimitiveType.Void => new CSVoid(),
+                        PrimitiveType.Void => new CSVoid(bt.Constant),
+                        PrimitiveType.Bool => new CSType("bool", bt.Constant),
                         PrimitiveType.Byte => new CSType("byte", bt.Constant),
                         PrimitiveType.Char8 => new CSChar8(bt.Constant),
                         PrimitiveType.Sbyte => new CSType("sbyte", bt.Constant),
@@ -351,8 +352,9 @@ namespace GeneratorV2.Process
                         PrimitiveType.Float => new CSType("float", bt.Constant),
                         PrimitiveType.Double => new CSType("double", bt.Constant),
                         PrimitiveType.IntPtr => new CSType("IntPtr", bt.Constant),
+                        PrimitiveType.Nint => new CSType("nint", bt.Constant),
 
-                        PrimitiveType.VoidPtr => new CSPointer(new CSVoid(), bt.Constant),
+                        PrimitiveType.VoidPtr => new CSPointer(new CSVoid(false), bt.Constant),
 
                         // FIXME: Should this be treated special?
                         PrimitiveType.Enum => new CSType(group ?? "All", bt.Constant),
@@ -385,7 +387,7 @@ namespace GeneratorV2.Process
         {
             new StringReturnOverloader(),
 
-            new GenAndCreateOverloader(),
+            new GenCreateAndDeleteOverloader(),
             new StringOverloader(),
             new SpanAndArrayOverloader(),
             new RefInsteadOfPointerOverloader(),
@@ -402,7 +404,8 @@ namespace GeneratorV2.Process
             List<Overload> overloads = new List<Overload>
             {
                 // Make a "base" overload
-                new Overload(null, null, function.Parameters.ToArray(), function, function.ReturnType, "returnValue", Array.Empty<string>()),
+                new Overload(null,null, function.Parameters.ToArray(), function, function.ReturnType, "returnValue",
+                    Array.Empty<string>(), function.FunctionName),
             };
 
             bool overloadedOnce = false;
@@ -475,7 +478,8 @@ namespace GeneratorV2.Process
                     var returnType = new CSString(Nullable: true);
                     newOverloads = new List<Overload>()
                     {
-                        new Overload(overload, layer, overload.InputParameters, overload.NativeFunction, returnType, newReturnName, overload.GenericTypes)
+                        overload with {NestedOverload =  overload, MarshalLayerToNested = layer, ReturnType = returnType, ReturnVariableName = newReturnName},
+                        // new Overload(overload, layer, overload.InputParameters, overload.NativeFunction, returnType, newReturnName, overload.GenericTypes)
                     };
                     return true;
                 }
@@ -634,27 +638,6 @@ namespace GeneratorV2.Process
         {
             public bool TryGenerateOverloads(Overload overload, [NotNullWhen(true)] out List<Overload>? newOverloads)
             {
-                if (overload.NativeFunction.EntryPoint == "glShaderSource")
-                {
-                    newOverloads = default;
-                    return false;
-                }
-
-                if (overload.NativeFunction.EntryPoint == "glTransformFeedbackVaryings"||
-                    overload.NativeFunction.EntryPoint == "glCreateShaderProgramv")
-                {
-                    Debug.Print($"Fix proper overloads for: {overload.NativeFunction.EntryPoint}");
-                    ;
-
-                    newOverloads = default;
-                    return false;
-                }
-
-                if (overload.NativeFunction.EntryPoint == "glDrawElementsInstancedBaseInstance")
-                {
-                    ;
-                }
-
                 // FIXME: We want to be able to handle more than just one Span and Array overload
                 // functions like "glShaderSource" can take more than one array.
                 //
@@ -798,17 +781,36 @@ namespace GeneratorV2.Process
                 Parameter[] parameters = new Parameter[overload.InputParameters.Length];
                 List<Parameter> original = new List<Parameter>();
                 List<Parameter> changed = new List<Parameter>();
+                string[] genericTypes = overload.GenericTypes;
                 for (int i = 0; i < overload.InputParameters.Length; i++)
                 {
                     Parameter parameter = overload.InputParameters[i];
                     parameters[i] = parameter;
 
-                    if (parameter.Type is CSPointer pt && pt.BaseType is CSType)
+                    if (parameter.Type is CSPointer pt)
                     {
+                        bool constant = false;
+                        BaseCSType baseType;
+                        if (pt.BaseType is CSVoid btVoid)
+                        {
+                            genericTypes = genericTypes.MakeCopyAndGrow(1);
+                            genericTypes[^1] = $"T{genericTypes.Length}";
+                            baseType = new CSGenericType(genericTypes[^1]);
+                            constant = btVoid.Constant;
+                        }
+                        else if (pt.BaseType is CSType bt)
+                        {
+                            baseType = pt.BaseType;
+                            constant = bt.Constant;
+                        }
+                        else
+                        {
+                            continue;
+                        }
                         // FIXME: When do we know it's an out ref type?
                         CSRef.Type refType = CSRef.Type.Ref;
                         string postfix = "_ref";
-                        if (pt.Constant)
+                        if (constant || pt.Constant)
                         {
                             refType = CSRef.Type.In;
                             postfix = "_in";
@@ -816,7 +818,7 @@ namespace GeneratorV2.Process
 
                         original.Add(parameters[i]);
 
-                        parameters[i] = new Parameter(new CSRef(refType, pt.BaseType), parameter.Name + postfix, parameter.Length);
+                        parameters[i] = new Parameter(new CSRef(refType, baseType), parameter.Name + postfix, parameter.Length);
 
                         changed.Add(parameters[i]);
                     }
@@ -827,7 +829,8 @@ namespace GeneratorV2.Process
                     var layer = new RefInsteadOfPointerLayer(changed, original);
                     newOverloads = new List<Overload>()
                     {
-                        new Overload(overload, layer, parameters, overload.NativeFunction, overload.ReturnType, overload.ReturnVariableName, overload.GenericTypes)
+                        overload with {NestedOverload = overload, MarshalLayerToNested = layer, InputParameters = parameters, GenericTypes = genericTypes},
+                        // new Overload(overload, layer, parameters, overload.NativeFunction, overload.ReturnType, overload.ReturnVariableName, genericTypes)
                     };
                     return true;
                 }
@@ -871,14 +874,14 @@ namespace GeneratorV2.Process
             }
         }
 
-        public class GenAndCreateOverloader : IOverloader
+        public class GenCreateAndDeleteOverloader : IOverloader
         {
             public bool TryGenerateOverloads(Overload overload, [NotNullWhen(true)] out List<Overload>? newOverloads)
             {
                 // Here we assume that the last parameter is the pointer parameter.
                 var pointerParameter = overload.InputParameters.LastOrDefault();
                 var nativeName = overload.NativeFunction.FunctionName;
-                if ((!nativeName.StartsWith("Create") && !nativeName.StartsWith("Gen")) ||
+                if ((!nativeName.StartsWith("Create") && !nativeName.StartsWith("Gen") && !nativeName.StartsWith("Delete")) ||
                     !nativeName.EndsWith("s") || pointerParameter == null ||
                     pointerParameter.Type is not CSPointer pointerParameterType ||
                     pointerParameter.Length == null || pointerParameter.Length is not ParameterReference handleLength)
@@ -886,7 +889,7 @@ namespace GeneratorV2.Process
                     newOverloads = null;
                     return false;
                 }
-                var newNativeName = nativeName[..^1];
+                var newName = nativeName[..^1];
 
                 int lengthParameterIndex = -1;
                 Parameter[] parameters = new Parameter[overload.InputParameters.Length - 1];
@@ -910,7 +913,7 @@ namespace GeneratorV2.Process
 
                 newOverloads = new List<Overload>()
                 {
-                    overload with { InputParameters = parameters, NestedOverload = overload,
+                    overload with { InputParameters = parameters, NestedOverload = overload, OverloadName = newName,
                         MarshalLayerToNested = new GenAndCreateOverloadLayer(overload.InputParameters[lengthParameterIndex], parameters[^1], pointerParameter)},
                     overload,
                 };
@@ -978,13 +981,13 @@ namespace GeneratorV2.Process
                         newParameters[outParameter != null ? i + 1 : i] = parameter;
                     }
                 }
-                
+
                 if (outType == null || outParameter == null)
                 {
                     newOverloads = null;
                     return false;
                 }
-                
+
                 newOverloads = new List<Overload>()
                 {
                     overload with {NestedOverload = overload, InputParameters = newParameters,
