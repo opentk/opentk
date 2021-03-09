@@ -67,6 +67,7 @@ namespace GeneratorV2.Writing
                     _ => throw new Exception($"This is not a valid output API ({api.Api})"),
                 };
                 string directoryPath = Path.Combine(outputProjectPath, Path.Combine(apiNamespace.Split('.')));
+                if (Directory.Exists(directoryPath) == false) Directory.CreateDirectory(directoryPath);
                 var files = Directory.GetFiles(directoryPath, "*.cs", SearchOption.TopDirectoryOnly);
                 foreach (var file in files.Where(file => Path.GetFileName(file) != "GL.Manual.cs"))
                 {
@@ -269,6 +270,7 @@ namespace GeneratorV2.Writing
                             writer.WriteLine($"public static unsafe partial class {vendor}");
                             scope = Scope(writer);
                         }
+
                         foreach (var (function, postfixName) in group.Functions)
                         {
                             WriteNativeMethod(function, postfixName, writer);
@@ -380,7 +382,7 @@ namespace GeneratorV2.Writing
             }
         }
 
-        private static void WriteOverloadMethod(Overload overload1, IndentedTextWriter indentedTextWriter, bool b)
+        private static void WriteOverloadMethod(Overload overload1, IndentedTextWriter indentedTextWriter, bool postfixNativeCall)
         {
             // FIXME: This was(?) used to cull "overloads" that didn't get any .
             if (overload1.NestedOverload == null &&
@@ -410,8 +412,13 @@ namespace GeneratorV2.Writing
                 {
                     indentedTextWriter.WriteLine($"{overload1.NativeFunction.ReturnType.ToCSString()} returnValue;");
                 }
+                
+                if (overload1.NativeFunction.EntryPoint == "glNamedBufferData")
+                {
+                    ;
+                }
 
-                string? returnName = WriteNestedOverload(indentedTextWriter, overload1, b);
+                string? returnName = WriteNestedOverload(indentedTextWriter, overload1, new NameTable(), postfixNativeCall);
 
                 if (returnName != null)
                 {
@@ -420,13 +427,12 @@ namespace GeneratorV2.Writing
             }
         }
 
-        private static string? WriteNativeCall(IndentedTextWriter writer, NativeFunction function,
-            bool postfixNativeCall)
+        private static string? WriteNativeCall(IndentedTextWriter writer, NativeFunction function, NameTable table, bool postfixNativeCall)
         {
             string name = function.FunctionName;
             if (postfixNativeCall) name += "_";
 
-            string arguments = string.Join(", ", function.Parameters.Select(p => p.Name));
+            string arguments = string.Join(", ", function.Parameters.Select(p => table[p]));
 
             if (function.ReturnType is CSVoid)
             {
@@ -440,17 +446,20 @@ namespace GeneratorV2.Writing
             }
         }
 
-        private static string? WriteNestedOverload(IndentedTextWriter writer, Overload overload, bool postfixNativeCall)
+        private static string? WriteNestedOverload(IndentedTextWriter writer, Overload overload, NameTable nameTable, bool postfixNativeCall)
         {
-            overload.MarshalLayerToNested?.WritePrologue(writer);
+            // Update the name table with the names for this overload.
+            nameTable.Apply(overload.NameTable);
+
+            overload.MarshalLayerToNested?.WritePrologue(writer, nameTable);
 
             string? returnName;
             if (overload.NestedOverload != null)
-                returnName = WriteNestedOverload(writer, overload.NestedOverload, postfixNativeCall);
+                returnName = WriteNestedOverload(writer, overload.NestedOverload, nameTable, postfixNativeCall);
             else
-                returnName = WriteNativeCall(writer, overload.NativeFunction, postfixNativeCall);
+                returnName = WriteNativeCall(writer, overload.NativeFunction, nameTable, postfixNativeCall);
 
-            return overload.MarshalLayerToNested?.WriteEpilogue(writer, returnName) ?? returnName;
+            return overload.MarshalLayerToNested?.WriteEpilogue(writer, nameTable, returnName) ?? returnName;
         }
 
         private static void WriteEnums(string directoryPath, string apiNamespace, List<EnumGroup> enumGroups, List<EnumMemberData> allEnums)
