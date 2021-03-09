@@ -1117,7 +1117,7 @@ namespace GeneratorV2.Process
                 {
                     foreach ((Parameter vPtr, Parameter iPtr) in ParameterNames)
                     {
-                        writer.WriteLine($"void* {nameTable[vPtr]} = &{nameTable[iPtr]};");
+                        writer.WriteLine($"void* {nameTable[vPtr]} = (void*){nameTable[iPtr]};");
                     }
                 }
 
