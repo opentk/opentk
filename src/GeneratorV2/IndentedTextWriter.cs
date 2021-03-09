@@ -26,11 +26,10 @@ namespace GeneratorV2
 
         public void WriteIndentation()
         {
-            ReadOnlySpan<char> spaces16 = "                ";
             int indents = CurrentIndentation * IndentationWidth;
-            for (int i = 0; i < indents; i += spaces16.Length)
+            for (int i = 0; i < indents; i++)
             {
-                Writer.Write(spaces16.Slice(0, Math.Min(indents, spaces16.Length)));
+                Writer.Write(' ');
             }
         }
 

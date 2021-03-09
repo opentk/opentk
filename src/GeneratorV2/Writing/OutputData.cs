@@ -141,8 +141,8 @@ namespace GeneratorV2.Writing
     // Might be a cleaner solution, and stuff like that.
     public interface IOverloadLayer
     {
-        public void WritePrologue(IndentedTextWriter writer);
-        public string? WriteEpilogue(IndentedTextWriter writer, string? returnName);
+        public void WritePrologue(IndentedTextWriter writer, NameTable nameTable);
+        public string? WriteEpilogue(IndentedTextWriter writer, NameTable nameTable, string? returnName);
 
         // FIXME: Better place to put this?
         // FIXME: Better name, maybe even another structure...
@@ -171,12 +171,55 @@ namespace GeneratorV2.Writing
         }
     }
 
+    public class NameTable
+    {
+        public Dictionary<Parameter, string> Table = new Dictionary<Parameter, string>();
+
+        public NameTable()
+        {
+        }
+
+        public NameTable(NameTable table)
+        {
+            Table = new Dictionary<Parameter, string>(table.Table);
+        }
+
+        public NameTable New()
+        {
+            return new NameTable(this);
+        }
+
+        public void Rename(Parameter param, string name) => Table[param] = name;
+
+        public string this[Parameter param]
+        {
+            get
+            {
+                if (Table.TryGetValue(param, out var name) == false)
+                {
+                    name = param.Name;
+                }
+
+                return name;
+            }
+        }
+
+        public void Apply(NameTable table)
+        {
+            foreach (var (param, name) in table.Table)
+            {
+                Table[param] = name;
+            }
+        }
+    }
+
     public record Overload(
         Overload? NestedOverload,
         IOverloadLayer? MarshalLayerToNested,
         Parameter[] InputParameters,
         NativeFunction NativeFunction,
         BaseCSType ReturnType,
+        NameTable NameTable,
         string ReturnVariableName,
         string[] GenericTypes);
 
