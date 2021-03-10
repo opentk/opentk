@@ -1,3 +1,6 @@
+## 5.0-pre.3
+* Fix an issue when overloading a void* to an IntPtr.
+
 ## 5.0-pre.2
 * bools will now be booleans instead of bytes
 * ref parameters can now be generic
