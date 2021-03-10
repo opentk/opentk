@@ -1098,8 +1098,8 @@ namespace GeneratorV2.Process
                 IOverloadLayer layer = new VoidPtrToIntPtrOverloadLayer(parameterNames);
                 newOverloads = new List<Overload>()
                 {
-                    overload,
                     overload with {NestedOverload = overload, InputParameters = parameters, MarshalLayerToNested = layer, NameTable = nameTable},
+                    overload,
                 };
                 return true;
             }
