@@ -16,7 +16,6 @@ namespace OpenTK.Compute.OpenCL
 
 		public delegate void ClEventCallback(IntPtr waitEvent, IntPtr userData);
 
-		public static readonly IntPtr ContextPlatform = (IntPtr)0x1084;
 
 		#region Platform API
 
