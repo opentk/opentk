@@ -2,6 +2,11 @@ using System;
 
 namespace OpenTK.Compute.OpenCL
 {
+	public enum ContextProperties : int
+	{
+		ContextPlatform = 0x1084
+	}
+
 	public enum PlatformInfo : uint
 	{
 		Profile = 0x0900,
