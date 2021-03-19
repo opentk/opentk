@@ -47,7 +47,7 @@ let iconUrl = "https://raw.githubusercontent.com/opentk/opentk/master/docs/files
 let description =
     "The Open Toolkit is set of fast, low-level C# bindings for OpenGL, OpenGL ES, OpenAL and OpenCL. It runs on all major platforms and powers hundreds of apps, games and scientific research.
     It provides bindings for GLFW windowing, input and a game loop, and is the perfect start for your own game engine.
-    
+
 
     OpenTK comes with simple and easy to follow tutorials for learning *modern* OpenGL. These are written by the community and represent all of the best practices to get you started.
     Learn how to use OpenTK here:
@@ -179,17 +179,21 @@ Target.create "UpdateBindingsRewrite" (fun _ ->
     let args = [  ] |> asArgs
     DotNet.runWithDefaultOptions framework projFile args |> ignore)
 
-Target.create "RewriteBindings" (fun _ ->
-    Trace.log " --- Rewriting bindings (calli) --- "
+let rewriteBindsForTfm tfm =
+    Trace.log (sprintf " --- Rewriting bindings for %s (calli) --- " tfm)
     let framework = "netcoreapp31"
     let projFile = "src/Generator.Rewrite/Generator.Rewrite.csproj"
     let bindingsFile = "OpenTK.Graphics.dll"
-    let bindingsOutput = "src/OpenTK.Graphics/bin/Release/netstandard2.1"
+    let bindingsOutput = sprintf "src/OpenTK.Graphics/bin/Release/%s" tfm
 
     let args =
         [ "-a " + (System.IO.Path.GetFullPath bindingsOutput </> bindingsFile)
         ] |> asArgs
-    DotNet.runWithDefaultOptions framework projFile args |> ignore)
+    DotNet.runWithDefaultOptions framework projFile args |> ignore
+
+Target.create "RewriteBindings" (fun _ ->
+    rewriteBindsForTfm "netstandard2.1"
+    rewriteBindsForTfm "netcoreapp3.1")
 
 // ---------
 // Build Targets
