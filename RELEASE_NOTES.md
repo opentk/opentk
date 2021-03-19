@@ -1,6 +1,10 @@
+## 4.6.2
+
+* FIX: The package should now be built corretly and work on .net core 3.1 and up. (@PJB)
+
 ## 4.6.1
 
-* FIX: Made `OpenTK.Mathematics` work on .net standard 2.1 and .net core 3.1 which broke with 4.6.0 (@PJB)
+* FIX: Made `OpenTK.Mathematics` work on .net standard 2.1 and .net core 3.1 which broke with 4.6.0. (@PJB)
 
 ## 4.6.0
 
