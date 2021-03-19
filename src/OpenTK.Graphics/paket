@@ -6,7 +6,13 @@ dependencies
     framework: netstandard2.1
         OpenTK.Core ~> #VERSION#
         OpenTK.Mathematics ~> #VERSION#
+    framework: netcoreapp3.1
+        OpenTK.Core ~> #VERSION#
+        OpenTK.Mathematics ~> #VERSION#
 files
     bin\Release\netstandard2.1\OpenTK.Graphics.dll ==> lib\netstandard2.1
     bin\Release\netstandard2.1\OpenTK.Graphics.xml ==> lib\netstandard2.1
     bin\Release\netstandard2.1\OpenTK.Graphics.pdb ==> lib\netstandard2.1
+    bin\Release\netcoreapp3.1\OpenTK.Graphics.dll ==> lib\netcoreapp3.1
+    bin\Release\netcoreapp3.1\OpenTK.Graphics.xml ==> lib\netcoreapp3.1
+    bin\Release\netcoreapp3.1\OpenTK.Graphics.pdb ==> lib\netcoreapp3.1
