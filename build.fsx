@@ -150,7 +150,7 @@ let specSource = "https://raw.githubusercontent.com/frederikja163/OpenGL-Registr
 //let bindingsOutputPath =
 //    ""
 
-let asArgs args = args |> String.concat " "
+let asArgs args = args |> List.map (fun ( x: string) -> sprintf "\"%s\"" x) |> String.concat " "
 
 
 Target.create "UpdateSpec" (fun _ ->
@@ -166,8 +166,8 @@ Target.create "UpdateBindings" (fun _ ->
     let projFile = "src/Generator/Generator.fsproj"
 
     let args =
-        [ sprintf "-i %s" (System.IO.Path.GetFullPath pathToSpec)
-          "-o " + (System.IO.Path.GetFullPath "src" </> "OpenGL") ]
+        [ "-i"; System.IO.Path.GetFullPath pathToSpec;
+          "-o"; System.IO.Path.GetFullPath "src" </> "OpenGL" ]
         |> asArgs
     DotNet.runWithDefaultOptions framework projFile args |> ignore)
 
@@ -186,9 +186,10 @@ let rewriteBindsForTfm tfm =
     let bindingsFile = "OpenTK.Graphics.dll"
     let bindingsOutput = sprintf "src/OpenTK.Graphics/bin/Release/%s" tfm
 
-    let args =
-        [ "-a " + (System.IO.Path.GetFullPath bindingsOutput </> bindingsFile)
-        ] |> asArgs
+    let targetPath = (System.IO.Path.GetFullPath bindingsOutput </> bindingsFile)
+    Trace.log targetPath
+    let args = [ "-a"; targetPath ] |> asArgs
+    Trace.log args
     DotNet.runWithDefaultOptions framework projFile args |> ignore
 
 Target.create "RewriteBindings" (fun _ ->
