@@ -187,9 +187,7 @@ let rewriteBindsForTfm tfm =
     let bindingsOutput = sprintf "src/OpenTK.Graphics/bin/Release/%s" tfm
 
     let targetPath = (System.IO.Path.GetFullPath bindingsOutput </> bindingsFile)
-    Trace.log targetPath
     let args = [ "-a"; targetPath ] |> asArgs
-    Trace.log args
     DotNet.runWithDefaultOptions framework projFile args |> ignore
 
 Target.create "RewriteBindings" (fun _ ->
