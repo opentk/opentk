@@ -1,3 +1,7 @@
+## 4.6.3
+
+* FIX: Fixed an issue where `Matrix4.Invert` threw an exception if the matrix determinant was negative. (@NogginBops, thanks for reporting @ghidosoft)
+
 ## 4.6.2
 
 * FIX: The package should now be built corretly and work on .net core 3.1 and up. (@PJB)
