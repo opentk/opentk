@@ -299,7 +299,7 @@ namespace OpenTK.Windowing.Desktop
                 _watchUpdate.Restart();
                 OnUpdateFrame(new FrameEventArgs(elapsed));
 
-                UpdateTime = _watchUpdate.Elapsed.TotalSeconds;
+                UpdateTime = elapsed;
 
                 // Calculate difference (positive or negative) between
                 // actual elapsed time and target elapsed time. We must
@@ -336,7 +336,7 @@ namespace OpenTK.Windowing.Desktop
                 _watchRender.Restart();
                 OnRenderFrame(new FrameEventArgs(elapsed));
 
-                RenderTime = _watchRender.Elapsed.TotalSeconds;
+                RenderTime = elapsed;
 
                 // Update VSync if set to adaptive
                 if (_vSync == VSyncMode.Adaptive)
