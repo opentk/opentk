@@ -297,9 +297,8 @@ namespace OpenTK.Windowing.Desktop
             while (elapsed > 0 && elapsed + _updateEpsilon >= updatePeriod)
             {
                 _watchUpdate.Restart();
-                OnUpdateFrame(new FrameEventArgs(elapsed));
-
                 UpdateTime = elapsed;
+                OnUpdateFrame(new FrameEventArgs(elapsed));
 
                 // Calculate difference (positive or negative) between
                 // actual elapsed time and target elapsed time. We must
@@ -334,9 +333,8 @@ namespace OpenTK.Windowing.Desktop
             if (elapsed > 0 && elapsed >= renderPeriod)
             {
                 _watchRender.Restart();
-                OnRenderFrame(new FrameEventArgs(elapsed));
-
                 RenderTime = elapsed;
+                OnRenderFrame(new FrameEventArgs(elapsed));
 
                 // Update VSync if set to adaptive
                 if (_vSync == VSyncMode.Adaptive)
