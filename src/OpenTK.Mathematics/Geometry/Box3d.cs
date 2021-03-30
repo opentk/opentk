@@ -15,7 +15,7 @@ using System.Runtime.InteropServices;
 namespace OpenTK.Mathematics
 {
     /// <summary>
-    /// Defines an axis-aligned 2d box (rectangle).
+    /// Defines an axis-aligned 3d box (Cuboid).
     /// </summary>
     [StructLayout(LayoutKind.Sequential)]
     public struct Box3d : IEquatable<Box3d>
@@ -132,7 +132,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Returns whether the box contains the specified point (borders inclusive).
+        /// Returns whether the box contains the specified point (borders exclusive).
         /// </summary>
         /// <param name="point">The point to query.</param>
         /// <returns>Whether this box contains the point.</returns>
@@ -145,7 +145,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Returns whether the box contains the specified point (borders inclusive).
+        /// Returns whether the box contains the specified point.
         /// </summary>
         /// <param name="point">The point to query.</param>
         /// <param name="boundaryInclusive">

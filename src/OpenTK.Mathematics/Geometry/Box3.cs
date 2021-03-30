@@ -15,7 +15,7 @@ using System.Runtime.InteropServices;
 namespace OpenTK.Mathematics
 {
     /// <summary>
-    /// Defines an axis-aligned 2d box (rectangle).
+    /// Defines an axis-aligned 3d box (Cuboid).
     /// </summary>
     [StructLayout(LayoutKind.Sequential)]
     public struct Box3 : IEquatable<Box3>
