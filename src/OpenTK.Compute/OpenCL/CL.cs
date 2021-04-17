@@ -51,15 +51,15 @@ namespace OpenTK.Compute.OpenCL
 		/// </summary>
 		[DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clGetPlatformInfo")]
 		public static extern CLResultCode GetPlatformInfo([In] CLPlatform platform, [In] PlatformInfo paramName,
-			[In] UIntPtr paramValueSize, [Out] byte[] paramValue, [Out] out UIntPtr paramValueSizeReturned);
+			[In] nuint paramValueSize, [Out] byte[] paramValue, [Out] out nuint paramValueSizeReturned);
 
 		/// <summary>
 		/// Introduced in OpenCL 1.0
 		/// </summary>
 		public static CLResultCode GetPlatformInfo(CLPlatform platform, PlatformInfo paramName, out byte[] paramValue)
 		{
-			GetPlatformInfo(platform, paramName, UIntPtr.Zero, null, out UIntPtr sizeReturned);
-			paramValue = new byte[sizeReturned.ToUInt64()];
+			GetPlatformInfo(platform, paramName, 0, null, out nuint sizeReturned);
+			paramValue = new byte[sizeReturned];
 			return GetPlatformInfo(platform, paramName, sizeReturned, paramValue, out _);
 		}
 
@@ -90,16 +90,16 @@ namespace OpenTK.Compute.OpenCL
 		/// </summary>
 		[DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clGetDeviceInfo")]
 		public static extern CLResultCode GetDeviceInfo([In] CLDevice device, [In] DeviceInfo paramName,
-			[In] UIntPtr paramValueSize,
-			[Out] byte[] paramValue, [Out] out UIntPtr paramValueSizeReturned);
+			[In] nuint paramValueSize,
+			[Out] byte[] paramValue, [Out] out nuint paramValueSizeReturned);
 
 		/// <summary>
 		/// Introduced in OpenCL 1.0
 		/// </summary>
 		public static CLResultCode GetDeviceInfo(CLDevice device, DeviceInfo paramName, out byte[] paramValue)
 		{
-			GetDeviceInfo(device, paramName, UIntPtr.Zero, null, out UIntPtr sizeReturned);
-			paramValue = new byte[sizeReturned.ToUInt64()];
+			GetDeviceInfo(device, paramName, 0, null, out nuint sizeReturned);
+			paramValue = new byte[sizeReturned];
 			return GetDeviceInfo(device, paramName, sizeReturned, paramValue, out _);
 		}
 
@@ -190,8 +190,8 @@ namespace OpenTK.Compute.OpenCL
 		/// </summary>
 		[DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clGetContextInfo")]
 		public static extern CLResultCode GetContextInfo([In] CLContext context, [In] ContextInfo paramName,
-			[In] UIntPtr paramValueSize,
-			[Out] byte[] paramValue, [Out] out UIntPtr paramValueSizeReturned);
+			[In] nuint paramValueSize,
+			[Out] byte[] paramValue, [Out] out nuint paramValueSizeReturned);
 
 
 		/// <summary>
@@ -199,8 +199,8 @@ namespace OpenTK.Compute.OpenCL
 		/// </summary>
 		public static CLResultCode GetContextInfo(CLContext context, ContextInfo paramName, out byte[] paramValue)
 		{
-			GetContextInfo(context, paramName, UIntPtr.Zero, null, out UIntPtr sizeReturned);
-			paramValue = new byte[sizeReturned.ToUInt64()];
+			GetContextInfo(context, paramName, 0, null, out nuint sizeReturned);
+			paramValue = new byte[sizeReturned];
 			return GetContextInfo(context, paramName, sizeReturned, paramValue, out _);
 		}
 
@@ -234,7 +234,7 @@ namespace OpenTK.Compute.OpenCL
 		[DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clGetCommandQueueInfo")]
 		public static extern CLResultCode GetCommandQueueInfo([In] CLCommandQueue commandQueue,
 			[In] CommandQueueInfo paramName,
-			[In] UIntPtr paramSize, [Out] byte[] paramValue, [Out] out UIntPtr paramValueSizeReturned);
+			[In] nuint paramSize, [Out] byte[] paramValue, [Out] out nuint paramValueSizeReturned);
 
 		/// <summary>
 		/// Introduced in OpenCL 1.0
@@ -242,8 +242,8 @@ namespace OpenTK.Compute.OpenCL
 		public static CLResultCode GetCommandQueueInfo(CLCommandQueue queue, CommandQueueInfo paramName,
 			out byte[] paramValue)
 		{
-			GetCommandQueueInfo(queue, paramName, UIntPtr.Zero, null, out UIntPtr sizeReturned);
-			paramValue = new byte[sizeReturned.ToUInt64()];
+			GetCommandQueueInfo(queue, paramName, 0, null, out nuint sizeReturned);
+			paramValue = new byte[sizeReturned];
 			return GetCommandQueueInfo(queue, paramName, sizeReturned, paramValue, out _);
 		}
 
@@ -255,7 +255,7 @@ namespace OpenTK.Compute.OpenCL
 		/// Introduced in OpenCL 1.0
 		/// </summary>
 		[DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clCreateBuffer")]
-		public static extern CLBuffer CreateBuffer([In] CLContext context, [In] MemoryFlags flags, [In] UIntPtr size,
+		public static extern CLBuffer CreateBuffer([In] CLContext context, [In] MemoryFlags flags, [In] nuint size,
 			[In] IntPtr hostPtr,
 			[Out] out CLResultCode resultCode);
 
@@ -267,7 +267,7 @@ namespace OpenTK.Compute.OpenCL
 		{
 			fixed (T* b = array)
 			{
-				IntPtr buffer = CreateBuffer(context, flags, (UIntPtr)(sizeof(T) * array.Length), (IntPtr)b,
+				IntPtr buffer = CreateBuffer(context, flags, (nuint)(sizeof(T) * array.Length), (IntPtr)b,
 					out resultCode);
 				return new CLBuffer(buffer);
 			}
@@ -281,7 +281,7 @@ namespace OpenTK.Compute.OpenCL
 		{
 			fixed (T* b = span)
 			{
-				IntPtr buffer = CreateBuffer(context, flags, (UIntPtr)(sizeof(T) * span.Length), (IntPtr)b,
+				IntPtr buffer = CreateBuffer(context, flags, (nuint)(sizeof(T) * span.Length), (IntPtr)b,
 					out resultCode);
 				return new CLBuffer(buffer);
 			}
@@ -316,7 +316,7 @@ namespace OpenTK.Compute.OpenCL
 /*
 [ClVersion(3,0)]
 [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clCreateBufferWithProperties")]
-public static extern IntPtr CreateBufferWithProperties(CLContext context, IntPtr[] properties, MemoryFlags flags, UIntPtr size, IntPtr hostPointer, out CLResultCode errorCode);
+public static extern IntPtr CreateBufferWithProperties(CLContext context, IntPtr[] properties, MemoryFlags flags, nuint size, IntPtr hostPointer, out CLResultCode errorCode);
 //const cl_mem_properties * properties,
 
 [ClVersion(3,0)]
@@ -398,28 +398,28 @@ public static extern IntPtr CreateImageWithProperties(CLContext context, IntPtr[
 		/// </summary>
 		[DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clGetMemObjectInfo")]
 		public static extern CLResultCode GetMemObjectInfo([In] IntPtr memoryObject, [In] MemoryObjectInfo paramName,
-			[In] UIntPtr paramValueSize, [Out] byte[] paramValue, [Out] out UIntPtr paramValueSizeReturned);
+			[In] nuint paramValueSize, [Out] byte[] paramValue, [Out] out nuint paramValueSizeReturned);
 
 		/// <summary>
 		/// Introduced in OpenCL 1.0
 		/// </summary>
 		[DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clGetMemObjectInfo")]
 		public static extern CLResultCode GetMemObjectInfo([In] CLBuffer memoryObject, [In] MemoryObjectInfo paramName,
-			[In] UIntPtr paramValueSize, [Out] byte[] paramValue, [Out] out UIntPtr paramValueSizeReturned);
+			[In] nuint paramValueSize, [Out] byte[] paramValue, [Out] out nuint paramValueSizeReturned);
 
 		/// <summary>
 		/// Introduced in OpenCL 1.0
 		/// </summary>
 		[DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clGetMemObjectInfo")]
 		public static extern CLResultCode GetMemObjectInfo([In] CLImage memoryObject, [In] MemoryObjectInfo paramName,
-			[In] UIntPtr paramValueSize, [Out] byte[] paramValue, [Out] out UIntPtr paramValueSizeReturned);
+			[In] nuint paramValueSize, [Out] byte[] paramValue, [Out] out nuint paramValueSizeReturned);
 
 		/// <summary>
 		/// Introduced in OpenCL 1.0
 		/// </summary>
 		[DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clGetMemObjectInfo")]
 		public static extern CLResultCode GetMemObjectInfo([In] CLPipe memoryObject, [In] MemoryObjectInfo paramName,
-			[In] UIntPtr paramValueSize, [Out] byte[] paramValue, [Out] out UIntPtr paramValueSizeReturned);
+			[In] nuint paramValueSize, [Out] byte[] paramValue, [Out] out nuint paramValueSizeReturned);
 
 		/// <summary>
 		/// Introduced in OpenCL 1.0
@@ -427,8 +427,8 @@ public static extern IntPtr CreateImageWithProperties(CLContext context, IntPtr[
 		public static CLResultCode GetMemObjectInfo(IntPtr memoryObject, MemoryObjectInfo paramName,
 			out byte[] paramValue)
 		{
-			GetMemObjectInfo(memoryObject, paramName, UIntPtr.Zero, null, out UIntPtr size);
-			paramValue = new byte[size.ToUInt64()];
+			GetMemObjectInfo(memoryObject, paramName, 0, null, out nuint size);
+			paramValue = new byte[size];
 			return GetMemObjectInfo(memoryObject, paramName, size, paramValue, out _);
 		}
 
@@ -464,16 +464,16 @@ public static extern IntPtr CreateImageWithProperties(CLContext context, IntPtr[
 		/// </summary>
 		[DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clGetImageInfo")]
 		public static extern CLResultCode GetImageInfo([In] CLImage image, [In] ImageInfo paramName,
-			[In] UIntPtr paramValueSize,
-			[Out] byte[] paramValue, [Out] out UIntPtr paramValueSizeReturned);
+			[In] nuint paramValueSize,
+			[Out] byte[] paramValue, [Out] out nuint paramValueSizeReturned);
 
 		/// <summary>
 		/// Introduced in OpenCL 1.0
 		/// </summary>
 		public static CLResultCode GetImageInfo(CLImage image, ImageInfo paramName, out byte[] paramValue)
 		{
-			GetImageInfo(image, paramName, UIntPtr.Zero, null, out UIntPtr size);
-			paramValue = new byte[size.ToUInt64()];
+			GetImageInfo(image, paramName, 0, null, out nuint size);
+			paramValue = new byte[size];
 			return GetImageInfo(image, paramName, size, paramValue, out _);
 		}
 
@@ -482,16 +482,16 @@ public static extern IntPtr CreateImageWithProperties(CLContext context, IntPtr[
 		/// </summary>
 		[DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clGetPipeInfo")]
 		public static extern CLResultCode GetPipeInfo([In] CLPipe pipe, [In] PipeInfo paramName,
-			[In] UIntPtr paramValueSize,
-			[Out] byte[] paramValue, [Out] out UIntPtr paramValueSizeReturned);
+			[In] nuint paramValueSize,
+			[Out] byte[] paramValue, [Out] out nuint paramValueSizeReturned);
 
 		/// <summary>
 		/// Introduced in OpenCL 2.0
 		/// </summary>
 		public static CLResultCode GetPipeInfo(CLPipe pipe, PipeInfo paramName, out byte[] paramValue)
 		{
-			GetPipeInfo(pipe, paramName, UIntPtr.Zero, null, out UIntPtr size);
-			paramValue = new byte[size.ToUInt64()];
+			GetPipeInfo(pipe, paramName, 0, null, out nuint size);
+			paramValue = new byte[size];
 			return GetPipeInfo(pipe, paramName, size, paramValue, out _);
 		}
 
@@ -532,7 +532,7 @@ public static extern IntPtr CreateImageWithProperties(CLContext context, IntPtr[
 		/// Introduced in OpenCL 2.0
 		/// </summary>
 		[DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clSVMAlloc")]
-		public static extern IntPtr SVMAlloc([In] CLContext context, [In] SvmMemoryFlags flags, [In] UIntPtr size,
+		public static extern IntPtr SVMAlloc([In] CLContext context, [In] SvmMemoryFlags flags, [In] nuint size,
 			[In] uint alignment);
 
 		/// <summary>
@@ -570,16 +570,16 @@ public static extern IntPtr CreateImageWithProperties(CLContext context, IntPtr[
 		/// </summary>
 		[DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clGetSamplerInfo")]
 		public static extern CLResultCode GetSamplerInfo([In] CLSampler sampler, [In] SamplerInfo paramName,
-			[In] UIntPtr paramValueSize,
-			[Out] byte[] paramValue, [Out] out UIntPtr paramValueSizeReturned);
+			[In] nuint paramValueSize,
+			[Out] byte[] paramValue, [Out] out nuint paramValueSizeReturned);
 
 		/// <summary>
 		/// Introduced in OpenCL 1.0
 		/// </summary>
 		public static CLResultCode GetSamplerInfo(CLSampler sampler, SamplerInfo paramName, out byte[] paramValue)
 		{
-			GetSamplerInfo(sampler, paramName, UIntPtr.Zero, null, out UIntPtr size);
-			paramValue = new byte[size.ToUInt64()];
+			GetSamplerInfo(sampler, paramName, 0, null, out nuint size);
+			paramValue = new byte[size];
 			return GetSamplerInfo(sampler, paramName, size, paramValue, out _);
 		}
 
@@ -612,7 +612,7 @@ public static extern IntPtr CreateImageWithProperties(CLContext context, IntPtr[
 		[DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clCreateProgramWithBinary")]
 		public static extern CLProgram CreateProgramWithBinary([In] CLContext context, [In] uint numberOfDevices,
 			[In] IntPtr[] deviceList,
-			[In] UIntPtr[] lengths, [In] IntPtr[] binaries, [Out] out CLResultCode[] binaryStatus,
+			[In] nuint[] lengths, [In] IntPtr[] binaries, [Out] out CLResultCode[] binaryStatus,
 			[Out] out CLResultCode resultCode);
 
 		/// <summary>
@@ -627,7 +627,7 @@ public static extern IntPtr CreateImageWithProperties(CLContext context, IntPtr[
 		/// Introduced in OpenCL 2.1
 		/// </summary>
 		[DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clCreateProgramWithIL")]
-		public static extern CLProgram CreateProgramWithIL([In] CLContext context, [In] IntPtr il, [In] UIntPtr length,
+		public static extern CLProgram CreateProgramWithIL([In] CLContext context, [In] IntPtr il, [In] nuint length,
 			[Out] out CLResultCode resultCode);
 
 		/// <summary>
@@ -694,7 +694,7 @@ public static extern IntPtr CreateImageWithProperties(CLContext context, IntPtr[
 		/// </summary>
 		[DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clSetProgramSpecializationConstant")]
 		public static extern CLResultCode SetProgramSpecializationConstant([In] CLProgram program, [In] uint specId,
-			[In] UIntPtr specSize, [In] IntPtr specValue);
+			[In] nuint specSize, [In] IntPtr specValue);
 
 		/// <summary>
 		/// Introduced in OpenCL 1.2
@@ -707,16 +707,16 @@ public static extern IntPtr CreateImageWithProperties(CLContext context, IntPtr[
 		/// </summary>
 		[DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clGetProgramInfo")]
 		public static extern CLResultCode GetProgramInfo([In] CLProgram program, [In] ProgramInfo paramName,
-			[In] UIntPtr paramValueSize,
-			[Out] byte[] paramValue, [Out] out UIntPtr paramValueSizeReturned);
+			[In] nuint paramValueSize,
+			[Out] byte[] paramValue, [Out] out nuint paramValueSizeReturned);
 
 		/// <summary>
 		/// Introduced in OpenCL 1.0
 		/// </summary>
 		public static CLResultCode GetProgramInfo(CLProgram program, ProgramInfo paramName, out byte[] paramValue)
 		{
-			GetProgramInfo(program, paramName, UIntPtr.Zero, null, out UIntPtr size);
-			paramValue = new byte[size.ToUInt64()];
+			GetProgramInfo(program, paramName, 0, null, out nuint size);
+			paramValue = new byte[size];
 			return GetProgramInfo(program, paramName, size, paramValue, out _);
 		}
 
@@ -726,7 +726,7 @@ public static extern IntPtr CreateImageWithProperties(CLContext context, IntPtr[
 		[DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clGetProgramBuildInfo")]
 		public static extern CLResultCode GetProgramBuildInfo([In] CLProgram program, [In] CLDevice device,
 			[In] ProgramBuildInfo paramName,
-			[In] UIntPtr paramValueSize, [Out] byte[] paramValue, [Out] out UIntPtr paramValueSizeReturned);
+			[In] nuint paramValueSize, [Out] byte[] paramValue, [Out] out nuint paramValueSizeReturned);
 
 		/// <summary>
 		/// Introduced in OpenCL 1.0
@@ -734,8 +734,8 @@ public static extern IntPtr CreateImageWithProperties(CLContext context, IntPtr[
 		public static CLResultCode GetProgramBuildInfo(CLProgram program, CLDevice device, ProgramBuildInfo paramName,
 			out byte[] paramValue)
 		{
-			GetProgramBuildInfo(program, device, paramName, UIntPtr.Zero, null, out UIntPtr size);
-			paramValue = new byte[size.ToUInt64()];
+			GetProgramBuildInfo(program, device, paramName, 0, null, out nuint size);
+			paramValue = new byte[size];
 			return GetProgramBuildInfo(program, device, paramName, size, paramValue, out _);
 		}
 
@@ -792,7 +792,7 @@ public static extern IntPtr CreateImageWithProperties(CLContext context, IntPtr[
 		/// </summary>
 		[DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clSetKernelArg")]
 		public static extern CLResultCode SetKernelArg([In] CLKernel kernel, [In] uint argumentIndex,
-			[In] UIntPtr argumentSize,
+			[In] nuint argumentSize,
 			[In] IntPtr argumentValuePointer);
 
 		/// <summary>
@@ -802,7 +802,7 @@ public static extern IntPtr CreateImageWithProperties(CLContext context, IntPtr[
 		{
 			fixed (T* arg = &argument)
 			{
-				return SetKernelArg(kernel, argumentIndex, (UIntPtr)sizeof(T), (IntPtr)arg);
+				return SetKernelArg(kernel, argumentIndex, (nuint)sizeof(T), (IntPtr)arg);
 			}
 		}
 
@@ -818,23 +818,23 @@ public static extern IntPtr CreateImageWithProperties(CLContext context, IntPtr[
 		/// </summary>
 		[DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clSetKernelExecInfo")]
 		public static extern CLResultCode SetKernelExecInfo([In] CLKernel kernel, [In] KernelExecInfo paramName,
-			[In] UIntPtr paramValueSize, [In] IntPtr paramValue);
+			[In] nuint paramValueSize, [In] IntPtr paramValue);
 
 		/// <summary>
 		/// Introduced in OpenCL 1.0
 		/// </summary>
 		[DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clGetKernelInfo")]
 		public static extern CLResultCode GetKernelInfo([In] CLKernel kernel, [In] KernelInfo paramName,
-			[In] UIntPtr paramValueSize,
-			[Out] byte[] paramValue, [Out] out UIntPtr paramSizeReturned);
+			[In] nuint paramValueSize,
+			[Out] byte[] paramValue, [Out] out nuint paramSizeReturned);
 
 		/// <summary>
 		/// Introduced in OpenCL 1.0
 		/// </summary>
 		public static CLResultCode GetKernelInfo(CLKernel kernel, KernelInfo paramName, out byte[] paramValue)
 		{
-			GetKernelInfo(kernel, paramName, UIntPtr.Zero, null, out UIntPtr size);
-			paramValue = new byte[size.ToUInt64()];
+			GetKernelInfo(kernel, paramName, 0, null, out nuint size);
+			paramValue = new byte[size];
 			return GetKernelInfo(kernel, paramName, size, paramValue, out _);
 		}
 
@@ -844,7 +844,7 @@ public static extern IntPtr CreateImageWithProperties(CLContext context, IntPtr[
 		[DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clGetKernelArgInfo")]
 		public static extern CLResultCode GetKernelArgInfo([In] CLKernel kernel, [In] uint argumentIndex,
 			[In] KernelArgInfo paramName,
-			[In] UIntPtr paramValueSize, [Out] byte[] paramValue, [Out] out UIntPtr paramSizeReturned);
+			[In] nuint paramValueSize, [Out] byte[] paramValue, [Out] out nuint paramSizeReturned);
 
 		/// <summary>
 		/// Introduced in OpenCL 1.2
@@ -852,8 +852,8 @@ public static extern IntPtr CreateImageWithProperties(CLContext context, IntPtr[
 		public static CLResultCode GetKernelArgInfo(CLKernel kernel, uint argumentIndex, KernelArgInfo paramName,
 			out byte[] paramValue)
 		{
-			GetKernelArgInfo(kernel, argumentIndex, paramName, UIntPtr.Zero, null, out UIntPtr size);
-			paramValue = new byte[size.ToUInt64()];
+			GetKernelArgInfo(kernel, argumentIndex, paramName, 0, null, out nuint size);
+			paramValue = new byte[size];
 			return GetKernelArgInfo(kernel, argumentIndex, paramName, size, paramValue, out _);
 		}
 
@@ -862,8 +862,8 @@ public static extern IntPtr CreateImageWithProperties(CLContext context, IntPtr[
 		/// </summary>
 		[DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clGetKernelWorkGroupInfo")]
 		public static extern CLResultCode GetKernelWorkGroupInfo([In] CLKernel kernel, [In] CLDevice device,
-			[In] KernelWorkGroupInfo paramName, [In] UIntPtr paramValueSize, [Out] byte[] paramValue,
-			[Out] out UIntPtr paramSizeReturned);
+			[In] KernelWorkGroupInfo paramName, [In] nuint paramValueSize, [Out] byte[] paramValue,
+			[Out] out nuint paramSizeReturned);
 
 		/// <summary>
 		/// Introduced in OpenCL 1.0
@@ -872,8 +872,8 @@ public static extern IntPtr CreateImageWithProperties(CLContext context, IntPtr[
 			KernelWorkGroupInfo paramName,
 			out byte[] paramValue)
 		{
-			GetKernelWorkGroupInfo(kernel, device, paramName, UIntPtr.Zero, null, out UIntPtr size);
-			paramValue = new byte[size.ToUInt64()];
+			GetKernelWorkGroupInfo(kernel, device, paramName, 0, null, out nuint size);
+			paramValue = new byte[size];
 			return GetKernelWorkGroupInfo(kernel, device, paramName, size, paramValue, out _);
 		}
 
@@ -882,9 +882,9 @@ public static extern IntPtr CreateImageWithProperties(CLContext context, IntPtr[
 		/// </summary>
 		[DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clGetKernelSubGroupInfo")]
 		public static extern CLResultCode GetKernelSubGroupInfo([In] CLKernel kernel, [In] CLDevice device,
-			[In] KernelSubGroupInfo paramName, [In] UIntPtr inputValueSize, [In] IntPtr inputValue,
-			[In] UIntPtr paramValueSize,
-			[Out] byte[] paramValue, [Out] out UIntPtr paramSizeReturned);
+			[In] KernelSubGroupInfo paramName, [In] nuint inputValueSize, [In] IntPtr inputValue,
+			[In] nuint paramValueSize,
+			[Out] byte[] paramValue, [Out] out nuint paramSizeReturned);
 
 		#endregion
 
@@ -901,16 +901,16 @@ public static extern IntPtr CreateImageWithProperties(CLContext context, IntPtr[
 		/// </summary>
 		[DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clGetEventInfo")]
 		public static extern CLResultCode GetEventInfo([In] CLEvent @event, [In] EventInfo paramName,
-			[In] UIntPtr paramValueSize,
-			[Out] byte[] paramValue, [Out] out UIntPtr paramSizeReturned);
+			[In] nuint paramValueSize,
+			[Out] byte[] paramValue, [Out] out nuint paramSizeReturned);
 
 		/// <summary>
 		/// Introduced in OpenCL 1.0
 		/// </summary>
 		public static CLResultCode GetEventInfo(CLEvent @event, EventInfo paramName, out byte[] paramValue)
 		{
-			GetEventInfo(@event, paramName, UIntPtr.Zero, null, out UIntPtr size);
-			paramValue = new byte[size.ToUInt64()];
+			GetEventInfo(@event, paramName, 0, null, out nuint size);
+			paramValue = new byte[size];
 			return GetEventInfo(@event, paramName, size, paramValue, out _);
 		}
 
@@ -964,15 +964,15 @@ public static extern IntPtr CreateImageWithProperties(CLContext context, IntPtr[
 		/// </summary>
 		[DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clGetEventProfilingInfo")]
 		public static extern CLResultCode GetEventProfilingInfo([In] CLEvent @event, [In] ProfilingInfo paramName,
-			[In] UIntPtr paramValueSize, [Out] byte[] paramValue, [Out] out UIntPtr paramValueSizeReturned);
+			[In] nuint paramValueSize, [Out] byte[] paramValue, [Out] out nuint paramValueSizeReturned);
 
 		/// <summary>
 		/// Introduced in OpenCL 1.0
 		/// </summary>
 		public static CLResultCode GetEventProfilingInfo(CLEvent @event, ProfilingInfo paramName, out byte[] paramValue)
 		{
-			GetEventProfilingInfo(@event, paramName, UIntPtr.Zero, null, out UIntPtr size);
-			paramValue = new byte[size.ToUInt64()];
+			GetEventProfilingInfo(@event, paramName, 0, null, out nuint size);
+			paramValue = new byte[size];
 			return GetEventProfilingInfo(@event, paramName, size, paramValue, out _);
 		}
 
@@ -1002,7 +1002,7 @@ public static extern IntPtr CreateImageWithProperties(CLContext context, IntPtr[
 		[DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clEnqueueReadBuffer")]
 		public static extern CLResultCode EnqueueReadBuffer([In] CLCommandQueue commandQueue, [In] CLBuffer buffer,
 			[In] bool blockingRead,
-			[In] UIntPtr offset, [In] UIntPtr size, [In] IntPtr pointer, [In] uint numberOfEventsInWaitList,
+			[In] nuint offset, [In] nuint size, [In] IntPtr pointer, [In] uint numberOfEventsInWaitList,
 			[In] CLEvent[] eventWaitList,
 			[Out] out CLEvent @event);
 
@@ -1011,13 +1011,13 @@ public static extern IntPtr CreateImageWithProperties(CLContext context, IntPtr[
 		/// </summary>
 		public static unsafe CLResultCode EnqueueReadBuffer<T>(CLCommandQueue commandQueue, CLBuffer buffer,
 			bool blockingRead,
-			UIntPtr offset, T[] array, CLEvent[] eventWaitList, out CLEvent eventHandle)
+			nuint offset, T[] array, CLEvent[] eventWaitList, out CLEvent eventHandle)
 			where T : unmanaged
 		{
 			fixed (T* b = array)
 			{
 				CLResultCode resultCode = EnqueueReadBuffer(commandQueue, buffer, blockingRead, offset,
-					(UIntPtr)(array.Length * sizeof(float)), (IntPtr)b, (uint)(eventWaitList?.Length ?? 0),
+					(nuint)(array.Length * sizeof(float)), (IntPtr)b, (uint)(eventWaitList?.Length ?? 0),
 					eventWaitList,
 					out eventHandle);
 				return resultCode;
@@ -1029,13 +1029,13 @@ public static extern IntPtr CreateImageWithProperties(CLContext context, IntPtr[
 		/// </summary>
 		public static unsafe CLResultCode EnqueueReadBuffer<T>(CLCommandQueue commandQueue, CLBuffer buffer,
 			bool blockingRead,
-			UIntPtr offset, Span<T> span, CLEvent[] eventWaitList, out CLEvent eventHandle)
+			nuint offset, Span<T> span, CLEvent[] eventWaitList, out CLEvent eventHandle)
 			where T : unmanaged
 		{
 			fixed (T* b = span)
 			{
 				CLResultCode resultCode = EnqueueReadBuffer(commandQueue, buffer, blockingRead, offset,
-					(UIntPtr)(span.Length * sizeof(T)), (IntPtr)b, (uint)(eventWaitList?.Length ?? 0),
+					(nuint)(span.Length * sizeof(T)), (IntPtr)b, (uint)(eventWaitList?.Length ?? 0),
 					eventWaitList, out eventHandle);
 				return resultCode;
 			}
@@ -1047,8 +1047,8 @@ public static extern IntPtr CreateImageWithProperties(CLContext context, IntPtr[
 		[DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clEnqueueReadBufferRect")]
 		public static extern CLResultCode EnqueueReadBufferRect([In] CLCommandQueue commandQueue, [In] CLBuffer buffer,
 			[In] bool blockingRead,
-			[In] UIntPtr[] bufferOffset, [In] UIntPtr[] hostOffset, [In] UIntPtr[] region, [In] UIntPtr bufferRowPitch,
-			[In] UIntPtr bufferSlicePitch, [In] UIntPtr hostRowPitch, [In] UIntPtr hostSlicePitch, [In] IntPtr pointer,
+			[In] nuint[] bufferOffset, [In] nuint[] hostOffset, [In] nuint[] region, [In] nuint bufferRowPitch,
+			[In] nuint bufferSlicePitch, [In] nuint hostRowPitch, [In] nuint hostSlicePitch, [In] IntPtr pointer,
 			[In] uint numberOfEventsInWaitList, [In] CLEvent[] eventWaitList, [Out] out CLEvent @event);
 
 		/// <summary>
@@ -1056,8 +1056,8 @@ public static extern IntPtr CreateImageWithProperties(CLContext context, IntPtr[
 		/// </summary>
 		public static unsafe CLResultCode EnqueueReadBufferRect<T>(CLCommandQueue commandQueue, CLBuffer buffer,
 			bool blockingRead,
-			UIntPtr[] bufferOffset, UIntPtr[] hostOffset, UIntPtr[] region, UIntPtr bufferRowPitch,
-			UIntPtr bufferSlicePitch, UIntPtr hostRowPitch, UIntPtr hostSlicePitch, T[] array,
+			nuint[] bufferOffset, nuint[] hostOffset, nuint[] region, nuint bufferRowPitch,
+			nuint bufferSlicePitch, nuint hostRowPitch, nuint hostSlicePitch, T[] array,
 			CLEvent[] eventWaitList, out CLEvent @event) where T : unmanaged
 		{
 			fixed (T* a = array)
@@ -1075,8 +1075,8 @@ public static extern IntPtr CreateImageWithProperties(CLContext context, IntPtr[
 		/// </summary>
 		public static unsafe CLResultCode EnqueueReadBufferRect<T>(CLCommandQueue commandQueue, CLBuffer buffer,
 			bool blockingRead,
-			UIntPtr[] bufferOffset, UIntPtr[] hostOffset, UIntPtr[] region, UIntPtr bufferRowPitch,
-			UIntPtr bufferSlicePitch, UIntPtr hostRowPitch, UIntPtr hostSlicePitch, Span<T> span,
+			nuint[] bufferOffset, nuint[] hostOffset, nuint[] region, nuint bufferRowPitch,
+			nuint bufferSlicePitch, nuint hostRowPitch, nuint hostSlicePitch, Span<T> span,
 			CLEvent[] eventWaitList, out CLEvent @event) where T : unmanaged
 		{
 			fixed (T* a = span)
@@ -1095,7 +1095,7 @@ public static extern IntPtr CreateImageWithProperties(CLContext context, IntPtr[
 		[DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clEnqueueWriteBuffer")]
 		public static extern CLResultCode EnqueueWriteBuffer([In] CLCommandQueue commandQueue, [In] CLBuffer buffer,
 			[In] bool blockingWrite,
-			[In] UIntPtr offset, [In] UIntPtr size, [In] IntPtr pointer, [In] uint numberOfEventsInWaitList,
+			[In] nuint offset, [In] nuint size, [In] IntPtr pointer, [In] uint numberOfEventsInWaitList,
 			[In] CLEvent[] eventWaitList,
 			[Out] out CLEvent @event);
 
@@ -1104,13 +1104,13 @@ public static extern IntPtr CreateImageWithProperties(CLContext context, IntPtr[
 		/// </summary>
 		public static unsafe CLResultCode EnqueueWriteBuffer<T>(CLCommandQueue commandQueue, CLBuffer buffer,
 			bool blockingWrite,
-			UIntPtr offset, T[] array, CLEvent[] eventWaitList,
+			nuint offset, T[] array, CLEvent[] eventWaitList,
 			out CLEvent @event) where T : unmanaged
 		{
 			fixed (T* a = array)
 			{
 				CLResultCode resultCode = EnqueueWriteBuffer(commandQueue, buffer, blockingWrite, offset,
-					(UIntPtr)(array.Length * sizeof(T)), (IntPtr)a, (uint)(eventWaitList?.Length ?? 0),
+					(nuint)(array.Length * sizeof(T)), (IntPtr)a, (uint)(eventWaitList?.Length ?? 0),
 					eventWaitList, out @event);
 
 				return resultCode;
@@ -1122,13 +1122,13 @@ public static extern IntPtr CreateImageWithProperties(CLContext context, IntPtr[
 		/// </summary>
 		public static unsafe CLResultCode EnqueueWriteBuffer<T>(CLCommandQueue commandQueue, CLBuffer buffer,
 			bool blockingWrite,
-			UIntPtr offset, Span<T> span, CLEvent[] eventWaitList,
+			nuint offset, Span<T> span, CLEvent[] eventWaitList,
 			out CLEvent @event) where T : unmanaged
 		{
 			fixed (T* a = span)
 			{
 				CLResultCode resultCode = EnqueueWriteBuffer(commandQueue, buffer, blockingWrite, offset,
-					(UIntPtr)(span.Length * sizeof(T)), (IntPtr)a, (uint)(eventWaitList?.Length ?? 0),
+					(nuint)(span.Length * sizeof(T)), (IntPtr)a, (uint)(eventWaitList?.Length ?? 0),
 					eventWaitList, out @event);
 
 				return resultCode;
@@ -1141,8 +1141,8 @@ public static extern IntPtr CreateImageWithProperties(CLContext context, IntPtr[
 		[DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clEnqueueWriteBufferRect")]
 		public static extern CLResultCode EnqueueWriteBufferRect([In] CLCommandQueue commandQueue, [In] CLBuffer buffer,
 			[In] bool blockingWrite,
-			[In] UIntPtr[] bufferOffset, [In] UIntPtr[] hostOffset, [In] UIntPtr[] region, [In] UIntPtr bufferRowPitch,
-			[In] UIntPtr bufferSlicePitch, [In] UIntPtr hostRowPitch, [In] UIntPtr hostSlicePitch, [In] IntPtr pointer,
+			[In] nuint[] bufferOffset, [In] nuint[] hostOffset, [In] nuint[] region, [In] nuint bufferRowPitch,
+			[In] nuint bufferSlicePitch, [In] nuint hostRowPitch, [In] nuint hostSlicePitch, [In] IntPtr pointer,
 			[In] uint numberOfEventsInWaitList, [In] CLEvent[] eventWaitList, [Out] out CLEvent @event);
 
 		/// <summary>
@@ -1150,8 +1150,8 @@ public static extern IntPtr CreateImageWithProperties(CLContext context, IntPtr[
 		/// </summary>
 		public static unsafe CLResultCode EnqueueWriteBufferRect<T>(CLCommandQueue commandQueue, CLBuffer buffer,
 			bool blockingWrite,
-			UIntPtr[] bufferOffset, UIntPtr[] hostOffset, UIntPtr[] region, UIntPtr bufferRowPitch,
-			UIntPtr bufferSlicePitch, UIntPtr hostRowPitch, UIntPtr hostSlicePitch, T[] array,
+			nuint[] bufferOffset, nuint[] hostOffset, nuint[] region, nuint bufferRowPitch,
+			nuint bufferSlicePitch, nuint hostRowPitch, nuint hostSlicePitch, T[] array,
 			CLEvent[] eventWaitList, out CLEvent @event) where T : unmanaged
 		{
 			fixed (T* a = array)
@@ -1169,8 +1169,8 @@ public static extern IntPtr CreateImageWithProperties(CLContext context, IntPtr[
 		/// </summary>
 		public static unsafe CLResultCode EnqueueWriteBufferRect<T>(CLCommandQueue commandQueue, CLBuffer buffer,
 			bool blockingWrite,
-			UIntPtr[] bufferOffset, UIntPtr[] hostOffset, UIntPtr[] region, UIntPtr bufferRowPitch,
-			UIntPtr bufferSlicePitch, UIntPtr hostRowPitch, UIntPtr hostSlicePitch, Span<T> span,
+			nuint[] bufferOffset, nuint[] hostOffset, nuint[] region, nuint bufferRowPitch,
+			nuint bufferSlicePitch, nuint hostRowPitch, nuint hostSlicePitch, Span<T> span,
 			CLEvent[] eventWaitList, out CLEvent @event) where T : unmanaged
 		{
 			fixed (T* a = span)
@@ -1189,7 +1189,7 @@ public static extern IntPtr CreateImageWithProperties(CLContext context, IntPtr[
 		[DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clEnqueueFillBuffer")]
 		public static extern CLResultCode EnqueueFillBuffer([In] CLCommandQueue commandQueue, [In] CLBuffer buffer,
 			[In] IntPtr pattern,
-			[In] UIntPtr patternSize, [In] UIntPtr offset, [In] UIntPtr size, [In] uint numberOfEventsInWaitList,
+			[In] nuint patternSize, [In] nuint offset, [In] nuint size, [In] uint numberOfEventsInWaitList,
 			[In] CLEvent[] eventWaitList,
 			[Out] out CLEvent @event);
 
@@ -1198,12 +1198,12 @@ public static extern IntPtr CreateImageWithProperties(CLContext context, IntPtr[
 		/// Introduced in OpenCL 1.2
 		/// </summary>
 		public static unsafe CLResultCode EnqueueFillBuffer<T>(CLCommandQueue commandQueue, CLBuffer buffer,
-			T[] pattern, UIntPtr offset, UIntPtr size, CLEvent[] eventWaitList,
+			T[] pattern, nuint offset, nuint size, CLEvent[] eventWaitList,
 			out CLEvent @event) where T : unmanaged
 		{
 			fixed (T* p = pattern)
 			{
-				return EnqueueFillBuffer(commandQueue, buffer, (IntPtr)p, (UIntPtr)(pattern.Length * sizeof(T)), offset,
+				return EnqueueFillBuffer(commandQueue, buffer, (IntPtr)p, (nuint)(pattern.Length * sizeof(T)), offset,
 					size, (uint)(eventWaitList?.Length ?? 0), eventWaitList, out @event);
 			}
 		}
@@ -1214,7 +1214,7 @@ public static extern IntPtr CreateImageWithProperties(CLContext context, IntPtr[
 		[DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clEnqueueCopyBuffer")]
 		public static extern CLResultCode EnqueueCopyBuffer(CLCommandQueue commandQueue, CLBuffer srcBuffer,
 			CLBuffer dstBuffer,
-			UIntPtr srcOffset, UIntPtr dstOffset, UIntPtr size, uint numberOfEventsInWaitList, CLEvent[] eventWaitList,
+			nuint srcOffset, nuint dstOffset, nuint size, uint numberOfEventsInWaitList, CLEvent[] eventWaitList,
 			out CLEvent @event);
 
 		/// <summary>
@@ -1223,9 +1223,9 @@ public static extern IntPtr CreateImageWithProperties(CLContext context, IntPtr[
 		[DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clEnqueueCopyBufferRect")]
 		public static extern CLResultCode EnqueueCopyBufferRect([In] CLCommandQueue commandQueue,
 			[In] CLBuffer srcBuffer, [In] CLBuffer dstBuffer,
-			[In] UIntPtr[] srcOrigin, [In] UIntPtr[] dstOrigin, [In] UIntPtr[] region, [In] UIntPtr srcRowPitch,
-			[In] UIntPtr srcSlicePitch,
-			[In] UIntPtr dstRowPitch, [In] UIntPtr dstSlicePitch, [In] uint numberOfEventsInWaitList,
+			[In] nuint[] srcOrigin, [In] nuint[] dstOrigin, [In] nuint[] region, [In] nuint srcRowPitch,
+			[In] nuint srcSlicePitch,
+			[In] nuint dstRowPitch, [In] nuint dstSlicePitch, [In] uint numberOfEventsInWaitList,
 			[In] CLEvent[] eventWaitList,
 			[Out] out CLEvent @event);
 
@@ -1235,7 +1235,7 @@ public static extern IntPtr CreateImageWithProperties(CLContext context, IntPtr[
 		[DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clEnqueueReadImage")]
 		public static extern CLResultCode EnqueueReadImage([In] CLCommandQueue commandQueue, [In] CLImage image,
 			[In] bool blockingRead,
-			[In] UIntPtr[] origin, [In] UIntPtr[] region, [In] UIntPtr rowPitch, [In] UIntPtr slicePitch,
+			[In] nuint[] origin, [In] nuint[] region, [In] nuint rowPitch, [In] nuint slicePitch,
 			[In] IntPtr pointer,
 			[In] uint numberOfEventsInWaitList, [In] CLEvent[] eventWaitList, [Out] out CLEvent @event);
 
@@ -1245,7 +1245,7 @@ public static extern IntPtr CreateImageWithProperties(CLContext context, IntPtr[
 		[DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clEnqueueWriteImage")]
 		public static extern CLResultCode EnqueueWriteImage([In] CLCommandQueue commandQueue, [In] CLImage image,
 			[In] bool blockingWrite,
-			[In] UIntPtr[] origin, [In] UIntPtr[] region, [In] UIntPtr inputRowPitch, [In] UIntPtr inputSlicePitch,
+			[In] nuint[] origin, [In] nuint[] region, [In] nuint inputRowPitch, [In] nuint inputSlicePitch,
 			[In] IntPtr pointer,
 			[In] uint numberOfEventsInWaitList, [In] CLEvent[] eventWaitList, [Out] out CLEvent @event);
 
@@ -1255,7 +1255,7 @@ public static extern IntPtr CreateImageWithProperties(CLContext context, IntPtr[
 		[DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clEnqueueFillImage")]
 		public static extern CLResultCode EnqueueFillImage([In] CLCommandQueue commandQueue, [In] CLImage image,
 			[In] IntPtr fillColor,
-			[In] UIntPtr[] origin, [In] UIntPtr[] region, [In] uint numberOfEventsInWaitList,
+			[In] nuint[] origin, [In] nuint[] region, [In] uint numberOfEventsInWaitList,
 			[In] CLEvent[] eventWaitList,
 			[Out] out CLEvent @event);
 
@@ -1265,7 +1265,7 @@ public static extern IntPtr CreateImageWithProperties(CLContext context, IntPtr[
 		[DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clEnqueueCopyImage")]
 		public static extern CLResultCode EnqueueCopyImage([In] CLCommandQueue commandQueue, [In] CLImage srcImage,
 			[In] CLImage dstImage,
-			[In] UIntPtr[] srcOrigin, [In] UIntPtr[] dstOrigin, [In] UIntPtr[] region,
+			[In] nuint[] srcOrigin, [In] nuint[] dstOrigin, [In] nuint[] region,
 			[In] uint numberOfEventsInWaitList,
 			[In] CLEvent[] eventWaitList, [Out] out CLEvent @event);
 
@@ -1275,7 +1275,7 @@ public static extern IntPtr CreateImageWithProperties(CLContext context, IntPtr[
 		[DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clEnqueueCopyImageToBuffer")]
 		public static extern CLResultCode EnqueueCopyImageToBuffer([In] CLCommandQueue commandQueue,
 			[In] CLImage srcImage,
-			[In] CLBuffer dstBuffer, [In] UIntPtr[] srcOrigin, [In] UIntPtr[] region, [In] UIntPtr dstOffset,
+			[In] CLBuffer dstBuffer, [In] nuint[] srcOrigin, [In] nuint[] region, [In] nuint dstOffset,
 			[In] uint numberOfEventsInWaitList,
 			[In] CLEvent[] eventWaitList, [Out] out CLEvent @event);
 
@@ -1285,7 +1285,7 @@ public static extern IntPtr CreateImageWithProperties(CLContext context, IntPtr[
 		[DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clEnqueueCopyBufferToImage")]
 		public static extern CLResultCode EnqueueCopyBufferToImage([In] CLCommandQueue commandQueue,
 			[In] CLBuffer srcBuffer,
-			[In] CLImage dstImage, [In] UIntPtr srcOffset, [In] UIntPtr[] dstOrigin, [In] UIntPtr[] region,
+			[In] CLImage dstImage, [In] nuint srcOffset, [In] nuint[] dstOrigin, [In] nuint[] region,
 			[In] uint numberOfEventsInWaitList,
 			[In] CLEvent[] eventWaitList, [Out] out CLEvent @event);
 
@@ -1295,7 +1295,7 @@ public static extern IntPtr CreateImageWithProperties(CLContext context, IntPtr[
 		[DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clEnqueueMapBuffer")]
 		public static extern IntPtr EnqueueMapBuffer([In] CLCommandQueue commandQueue, [In] CLBuffer buffer,
 			[In] bool blockingMap,
-			[In] MapFlags flags, [In] UIntPtr offset, [In] UIntPtr size, [In] uint numberOfEventsInWaitList,
+			[In] MapFlags flags, [In] nuint offset, [In] nuint size, [In] uint numberOfEventsInWaitList,
 			[In] CLEvent[] eventWaitList,
 			[Out] out CLEvent @event, [Out] out CLResultCode resultCode);
 
@@ -1305,7 +1305,7 @@ public static extern IntPtr CreateImageWithProperties(CLContext context, IntPtr[
 		[DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clEnqueueMapImage")]
 		public static extern IntPtr EnqueueMapImage([In] CLCommandQueue commandQueue, [In] CLImage image,
 			[In] bool blockingMap, [In] MapFlags flags,
-			[In] UIntPtr[] origin, [In] UIntPtr[] region, [In] UIntPtr rowPitch, [In] UIntPtr slicePitch,
+			[In] nuint[] origin, [In] nuint[] region, [In] nuint rowPitch, [In] nuint slicePitch,
 			[In] uint numberOfEventsInWaitList,
 			[In] CLEvent[] eventWaitList, [Out] out CLEvent @event, [Out] out CLResultCode resultCode);
 
@@ -1352,7 +1352,7 @@ public static extern IntPtr CreateImageWithProperties(CLContext context, IntPtr[
 		[DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clEnqueueNDRangeKernel")]
 		public static extern CLResultCode EnqueueNDRangeKernel([In] CLCommandQueue commandQueue, [In] CLKernel kernel,
 			[In] uint workDimension,
-			[In] UIntPtr[] globalWorkOffset, [In] UIntPtr[] globalWorkSize, [In] UIntPtr[] localWorkSize,
+			[In] nuint[] globalWorkOffset, [In] nuint[] globalWorkSize, [In] nuint[] localWorkSize,
 			[In] uint numberOfEventsInWaitList,
 			[In] CLEvent[] eventWaitList, [Out] out CLEvent @event);
 
@@ -1362,7 +1362,7 @@ public static extern IntPtr CreateImageWithProperties(CLContext context, IntPtr[
 		[DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clEnqueueNativeKernel")]
 		public static extern CLResultCode EnqueueNativeKernel([In] CLCommandQueue commandQueue,
 			[In] IntPtr userFunction,
-			[In] IntPtr[] arguments, [In] UIntPtr argumentSize, [In] uint numberOfMemoryObjects,
+			[In] IntPtr[] arguments, [In] nuint argumentSize, [In] uint numberOfMemoryObjects,
 			[In] IntPtr[] memoryObjects,
 			[In] IntPtr argumentsMemoryLocation, [In] uint numberOfEventsInWaitList, [In] CLEvent[] eventWaitList,
 			[Out] out CLEvent @event);
@@ -1400,7 +1400,7 @@ public static extern IntPtr CreateImageWithProperties(CLContext context, IntPtr[
 		/// </summary>
 		[DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clEnqueueSVMMemcpy")]
 		public static extern CLResultCode EnqueueSvmMemoryCopy([In] CLCommandQueue commandQueue, [In] bool blockingCopy,
-			[In] IntPtr dstPointer, [In] IntPtr srcPointer, [In] UIntPtr size, [In] uint numberOfEventsInWaitList,
+			[In] IntPtr dstPointer, [In] IntPtr srcPointer, [In] nuint size, [In] uint numberOfEventsInWaitList,
 			[In] CLEvent[] eventWaitList,
 			[Out] out CLEvent @event);
 
@@ -1410,7 +1410,7 @@ public static extern IntPtr CreateImageWithProperties(CLContext context, IntPtr[
 		[DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clEnqueueSVMMemFill")]
 		public static extern CLResultCode EnqueueSvmMemoryFill([In] CLCommandQueue commandQueue, [In] IntPtr svmPointer,
 			[In] IntPtr pattern,
-			[In] UIntPtr patternSize, [In] UIntPtr size, [In] uint numberOfEventsInWaitList,
+			[In] nuint patternSize, [In] nuint size, [In] uint numberOfEventsInWaitList,
 			[In] CLEvent[] eventWaitList,
 			[Out] out CLEvent @event);
 
@@ -1420,7 +1420,7 @@ public static extern IntPtr CreateImageWithProperties(CLContext context, IntPtr[
 		[DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clEnqueueSVMMap")]
 		public static extern CLResultCode EnqueueSvmMap([In] CLCommandQueue commandQueue, [In] bool blockingMap,
 			[In] MapFlags mapFlag,
-			[In] IntPtr svmPointer, [In] UIntPtr size, [In] uint numberOfEventsInWaitList, [In] CLEvent[] eventWaitList,
+			[In] IntPtr svmPointer, [In] nuint size, [In] uint numberOfEventsInWaitList, [In] CLEvent[] eventWaitList,
 			[Out] out CLEvent @event);
 
 		/// <summary>
@@ -1436,7 +1436,7 @@ public static extern IntPtr CreateImageWithProperties(CLContext context, IntPtr[
 		[DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clEnqueueSVMMigrateMem")]
 		public static extern CLResultCode EnqueueSvmMigrateMemory([In] CLCommandQueue commandQueue,
 			[In] uint numberOfSvmPointers,
-			[In] IntPtr[] svmPointers, [In] UIntPtr[] sizes, [In] MemoryMigrationFlags memoryMigrationFlags,
+			[In] IntPtr[] svmPointers, [In] nuint[] sizes, [In] MemoryMigrationFlags memoryMigrationFlags,
 			[In] uint numberOfEventsInWaitList, [In] CLEvent[] eventWaitList, [Out] out CLEvent @event);
 
 		#endregion
@@ -1460,8 +1460,8 @@ public static extern IntPtr CreateImageWithProperties(CLContext context, IntPtr[
 		[Obsolete("Deprecated method, use CreateImage instead")]
 		[DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clCreateImage2D")]
 		public static extern CLImage CreateImage2D([In] CLContext context, [In] MemoryFlags flags,
-			[In] ref ImageFormat imageFormat, [In] UIntPtr imageWidth, [In] UIntPtr imageHeight,
-			[In] UIntPtr imageRowPitch, [In] IntPtr hostPointer,
+			[In] ref ImageFormat imageFormat, [In] nuint imageWidth, [In] nuint imageHeight,
+			[In] nuint imageRowPitch, [In] IntPtr hostPointer,
 			[Out] out CLResultCode resultCode);
 
 		/// <summary>
@@ -1471,8 +1471,8 @@ public static extern IntPtr CreateImageWithProperties(CLContext context, IntPtr[
 		[DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clCreateImage3D")]
 		public static extern CLImage CreateImage3D([In] CLContext context, [In] MemoryFlags flags,
 			[In] ref ImageFormat imageFormat,
-			[In] UIntPtr imageWidth, [In] UIntPtr imageHeight, [In] UIntPtr imageDepth, [In] UIntPtr imageRowPitch,
-			[In] UIntPtr imageSlicePitch,
+			[In] nuint imageWidth, [In] nuint imageHeight, [In] nuint imageDepth, [In] nuint imageRowPitch,
+			[In] nuint imageSlicePitch,
 			[In] IntPtr hostPointer, [Out] out CLResultCode resultCode);
 
 		/// <summary>
