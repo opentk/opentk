@@ -12,6 +12,7 @@ using System.Diagnostics.Contracts;
 using System.Globalization;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using System.Text.Json.Serialization;
 using System.Xml.Serialization;
 
 namespace OpenTK.Mathematics
@@ -29,11 +30,13 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// The X component of the Vector2i.
         /// </summary>
+        [JsonInclude]
         public int X;
 
         /// <summary>
         /// The Y component of the Vector2i.
         /// </summary>
+        [JsonInclude]
         public int Y;
 
         /// <summary>

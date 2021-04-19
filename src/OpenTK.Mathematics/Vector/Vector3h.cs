@@ -27,6 +27,7 @@ using System.IO;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
 using System.Xml.Serialization;
 
 namespace OpenTK.Mathematics
@@ -41,16 +42,19 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// The X component of the Half3.
         /// </summary>
+        [JsonInclude]
         public Half X;
 
         /// <summary>
         /// The Y component of the Half3.
         /// </summary>
+        [JsonInclude]
         public Half Y;
 
         /// <summary>
         /// The Z component of the Half3.
         /// </summary>
+        [JsonInclude]
         public Half Z;
 
         /// <summary>
