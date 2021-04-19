@@ -8,6 +8,7 @@
 
 using System;
 using System.Diagnostics.Contracts;
+using System.Text.Json.Serialization;
 
 namespace OpenTK.Mathematics
 {
@@ -20,16 +21,19 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Start anchor point.
         /// </summary>
+        [JsonInclude]
         public Vector2 StartAnchor;
 
         /// <summary>
         /// End anchor point.
         /// </summary>
+        [JsonInclude]
         public Vector2 EndAnchor;
 
         /// <summary>
         /// Control point, controls the direction of both endings of the curve.
         /// </summary>
+        [JsonInclude]
         public Vector2 ControlPoint;
 
         /// <summary>
@@ -41,6 +45,7 @@ namespace OpenTK.Mathematics
         /// the original curve, 5.0f i.e. stands for a curve that has always a distance
         /// of 5.f to the orignal curve at any point.
         /// </remarks>
+        [JsonInclude]
         public float Parallel;
 
         /// <summary>
