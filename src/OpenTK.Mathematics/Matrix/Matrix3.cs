@@ -24,6 +24,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
 using System.Runtime.InteropServices;
+using System.Text.Json.Serialization;
 
 namespace OpenTK.Mathematics
 {
@@ -37,16 +38,19 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// First row of the matrix.
         /// </summary>
+        [JsonInclude]
         public Vector3 Row0;
 
         /// <summary>
         /// Second row of the matrix.
         /// </summary>
+        [JsonInclude]
         public Vector3 Row1;
 
         /// <summary>
         /// Third row of the matrix.
         /// </summary>
+        [JsonInclude]
         public Vector3 Row2;
 
         /// <summary>
