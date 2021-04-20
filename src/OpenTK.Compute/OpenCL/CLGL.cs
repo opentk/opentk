@@ -113,9 +113,9 @@ namespace OpenTK.Compute.OpenCL
 		public static extern CLResultCode GetGLTextureInfo(
 			[In] CLBuffer memObject,
 			[In] TextureInfo paramName,
-			[In] UIntPtr paramValueSize,
+			[In] nuint paramValueSize,
 			[Out] byte[] paramValue,
-			[Out] out UIntPtr paramValueSizeReturned
+			[Out] out nuint paramValueSizeReturned
 		);
 
 		/// <summary>
@@ -198,9 +198,9 @@ namespace OpenTK.Compute.OpenCL
 		public static extern CLResultCode GetGLContextInfoKHR(
 			[In] IntPtr[] properties,
 			[In] ContextInfo paramName,
-			[In] UIntPtr paramValueSize,
+			[In] nuint paramValueSize,
 			[Out] byte[] paramValue,
-			[Out] out UIntPtr paramValueSizeReturned
+			[Out] out nuint paramValueSizeReturned
 		);
 
 		/// <summary>
