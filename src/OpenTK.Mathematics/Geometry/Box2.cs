@@ -11,6 +11,7 @@ using System;
 using System.Diagnostics.Contracts;
 using System.Globalization;
 using System.Runtime.InteropServices;
+using System.Text.Json.Serialization;
 
 namespace OpenTK.Mathematics
 {
@@ -20,6 +21,7 @@ namespace OpenTK.Mathematics
     [StructLayout(LayoutKind.Sequential)]
     public struct Box2 : IEquatable<Box2>
     {
+        [JsonInclude]
         private Vector2 _min;
 
         /// <summary>
@@ -43,6 +45,7 @@ namespace OpenTK.Mathematics
             }
         }
 
+        [JsonInclude]
         private Vector2 _max;
 
         /// <summary>

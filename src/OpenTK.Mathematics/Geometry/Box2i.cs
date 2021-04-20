@@ -11,6 +11,7 @@ using System;
 using System.Diagnostics.Contracts;
 using System.Globalization;
 using System.Runtime.InteropServices;
+using System.Text.Json.Serialization;
 
 namespace OpenTK.Mathematics
 {
@@ -22,6 +23,7 @@ namespace OpenTK.Mathematics
     {
         public static readonly Box2i Empty = new Box2i(0, 0, 0, 0);
 
+        [JsonInclude]
         private Vector2i _min;
 
         /// <summary>
@@ -45,6 +47,7 @@ namespace OpenTK.Mathematics
             }
         }
 
+        [JsonInclude]
         private Vector2i _max;
 
         /// <summary>
