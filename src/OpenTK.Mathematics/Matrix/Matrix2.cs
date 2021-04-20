@@ -89,6 +89,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Gets the determinant of this matrix.
         /// </summary>
+        [JsonIgnore]
         public float Determinant
         {
             get
@@ -105,6 +106,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Gets or sets the first column of this matrix.
         /// </summary>
+        [JsonIgnore]
         public Vector2 Column0
         {
             get => new Vector2(Row0.X, Row1.X);
@@ -118,6 +120,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Gets or sets the second column of this matrix.
         /// </summary>
+        [JsonIgnore]
         public Vector2 Column1
         {
             get => new Vector2(Row0.Y, Row1.Y);
@@ -131,6 +134,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Gets or sets the value at row 1, column 1 of this instance.
         /// </summary>
+        [JsonIgnore]
         public float M11
         {
             get => Row0.X;
@@ -140,6 +144,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Gets or sets the value at row 1, column 2 of this instance.
         /// </summary>
+        [JsonIgnore]
         public float M12
         {
             get => Row0.Y;
@@ -149,6 +154,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Gets or sets the value at row 2, column 1 of this instance.
         /// </summary>
+        [JsonIgnore]
         public float M21
         {
             get => Row1.X;
@@ -158,6 +164,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Gets or sets the value at row 2, column 2 of this instance.
         /// </summary>
+        [JsonIgnore]
         public float M22
         {
             get => Row1.Y;
@@ -167,6 +174,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Gets or sets the values along the main diagonal of the matrix.
         /// </summary>
+        [JsonIgnore]
         public Vector2 Diagonal
         {
             get => new Vector2(Row0.X, Row1.Y);
@@ -180,6 +188,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Gets the trace of the matrix, the sum of the values along the diagonal.
         /// </summary>
+        [JsonIgnore]
         public float Trace => Row0.X + Row1.Y;
 
         /// <summary>

@@ -102,26 +102,31 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Gets the first column of this matrix.
         /// </summary>
+        [JsonIgnore]
         public Vector3d Column0 => new Vector3d(Row0.X, Row1.X, Row2.X);
 
         /// <summary>
         /// Gets the second column of this matrix.
         /// </summary>
+        [JsonIgnore]
         public Vector3d Column1 => new Vector3d(Row0.Y, Row1.Y, Row2.Y);
 
         /// <summary>
         /// Gets the third column of this matrix.
         /// </summary>
+        [JsonIgnore]
         public Vector3d Column2 => new Vector3d(Row0.Z, Row1.Z, Row2.Z);
 
         /// <summary>
         /// Gets the fourth column of this matrix.
         /// </summary>
+        [JsonIgnore]
         public Vector3d Column3 => new Vector3d(Row0.W, Row1.W, Row2.W);
 
         /// <summary>
         /// Gets or sets the value at row 1, column 1 of this instance.
         /// </summary>
+        [JsonIgnore]
         public double M11
         {
             get => Row0.X;
@@ -131,6 +136,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Gets or sets the value at row 1, column 2 of this instance.
         /// </summary>
+        [JsonIgnore]
         public double M12
         {
             get => Row0.Y;
@@ -140,6 +146,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Gets or sets the value at row 1, column 3 of this instance.
         /// </summary>
+        [JsonIgnore]
         public double M13
         {
             get => Row0.Z;
@@ -149,6 +156,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Gets or sets the value at row 1, column 4 of this instance.
         /// </summary>
+        [JsonIgnore]
         public double M14
         {
             get => Row0.W;
@@ -158,6 +166,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Gets or sets the value at row 2, column 1 of this instance.
         /// </summary>
+        [JsonIgnore]
         public double M21
         {
             get => Row1.X;
@@ -167,6 +176,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Gets or sets the value at row 2, column 2 of this instance.
         /// </summary>
+        [JsonIgnore]
         public double M22
         {
             get => Row1.Y;
@@ -176,6 +186,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Gets or sets the value at row 2, column 3 of this instance.
         /// </summary>
+        [JsonIgnore]
         public double M23
         {
             get => Row1.Z;
@@ -185,6 +196,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Gets or sets the value at row 2, column 4 of this instance.
         /// </summary>
+        [JsonIgnore]
         public double M24
         {
             get => Row1.W;
@@ -194,6 +206,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Gets or sets the value at row 3, column 1 of this instance.
         /// </summary>
+        [JsonIgnore]
         public double M31
         {
             get => Row2.X;
@@ -203,6 +216,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Gets or sets the value at row 3, column 2 of this instance.
         /// </summary>
+        [JsonIgnore]
         public double M32
         {
             get => Row2.Y;
@@ -212,6 +226,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Gets or sets the value at row 3, column 3 of this instance.
         /// </summary>
+        [JsonIgnore]
         public double M33
         {
             get => Row2.Z;
@@ -221,6 +236,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Gets or sets the value at row 3, column 4 of this instance.
         /// </summary>
+        [JsonIgnore]
         public double M34
         {
             get => Row2.W;
@@ -230,6 +246,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Gets or sets the values along the main diagonal of the matrix.
         /// </summary>
+        [JsonIgnore]
         public Vector3d Diagonal
         {
             get => new Vector3d(Row0.X, Row1.Y, Row2.Z);
@@ -244,6 +261,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Gets the trace of the matrix, the sum of the values along the diagonal.
         /// </summary>
+        [JsonIgnore]
         public double Trace => Row0.X + Row1.Y + Row2.Z;
 
         /// <summary>

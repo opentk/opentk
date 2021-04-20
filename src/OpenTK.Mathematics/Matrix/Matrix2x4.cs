@@ -88,6 +88,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Gets or sets the first column of the matrix.
         /// </summary>
+        [JsonIgnore]
         public Vector2 Column0
         {
             get => new Vector2(Row0.X, Row1.X);
@@ -101,6 +102,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Gets or sets the second column of the matrix.
         /// </summary>
+        [JsonIgnore]
         public Vector2 Column1
         {
             get => new Vector2(Row0.Y, Row1.Y);
@@ -114,6 +116,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Gets or sets the third column of the matrix.
         /// </summary>
+        [JsonIgnore]
         public Vector2 Column2
         {
             get => new Vector2(Row0.Z, Row1.Z);
@@ -127,6 +130,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Gets or sets the fourth column of the matrix.
         /// </summary>
+        [JsonIgnore]
         public Vector2 Column3
         {
             get => new Vector2(Row0.W, Row1.W);
@@ -140,6 +144,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Gets or sets the value at row 1, column 1 of this instance.
         /// </summary>
+        [JsonIgnore]
         public float M11
         {
             get => Row0.X;
@@ -149,6 +154,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Gets or sets the value at row 1, column 2 of this instance.
         /// </summary>
+        [JsonIgnore]
         public float M12
         {
             get => Row0.Y;
@@ -158,6 +164,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Gets or sets the value at row 1, column 3 of this instance.
         /// </summary>
+        [JsonIgnore]
         public float M13
         {
             get => Row0.Z;
@@ -167,6 +174,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Gets or sets the value at row 1, column 4 of this instance.
         /// </summary>
+        [JsonIgnore]
         public float M14
         {
             get => Row0.W;
@@ -176,6 +184,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Gets or sets the value at row 2, column 1 of this instance.
         /// </summary>
+        [JsonIgnore]
         public float M21
         {
             get => Row1.X;
@@ -185,6 +194,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Gets or sets the value at row 2, column 2 of this instance.
         /// </summary>
+        [JsonIgnore]
         public float M22
         {
             get => Row1.Y;
@@ -194,6 +204,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Gets or sets the value at row 2, column 3 of this instance.
         /// </summary>
+        [JsonIgnore]
         public float M23
         {
             get => Row1.Z;
@@ -203,6 +214,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Gets or sets the value at row 2, column 4 of this instance.
         /// </summary>
+        [JsonIgnore]
         public float M24
         {
             get => Row1.W;
@@ -212,6 +224,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Gets or sets the values along the main diagonal of the matrix.
         /// </summary>
+        [JsonIgnore]
         public Vector2 Diagonal
         {
             get => new Vector2(Row0.X, Row1.Y);
@@ -225,6 +238,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Gets the trace of the matrix, the sum of the values along the diagonal.
         /// </summary>
+        [JsonIgnore]
         public float Trace => Row0.X + Row1.Y;
 
         /// <summary>
