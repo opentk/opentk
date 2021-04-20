@@ -47,7 +47,7 @@ let iconUrl = "https://raw.githubusercontent.com/opentk/opentk/master/docs/files
 let description =
     "The Open Toolkit is set of fast, low-level C# bindings for OpenGL, OpenGL ES, OpenAL and OpenCL. It runs on all major platforms and powers hundreds of apps, games and scientific research.
     It provides bindings for GLFW windowing, input and a game loop, and is the perfect start for your own game engine.
-    
+
 
     OpenTK comes with simple and easy to follow tutorials for learning *modern* OpenGL. These are written by the community and represent all of the best practices to get you started.
     Learn how to use OpenTK here:
@@ -95,19 +95,14 @@ let testDir = binDir </> "test"
 // ---------
 
 let toolProjects =
-    !! "src/Generators/**/*.??proj"
+    !! "src/GeneratorV2/**/*.??proj"
 
 let releaseProjects =
     !! "src/**/*.??proj"
-    -- "src/Generator/**"
-    -- "src/Generator.Bind/**"
-    -- "src/Generator.Converter/**"
-    -- "src/Generator.Rewrite/**"
-    -- "src/SpecificationOpenGL/**"
-    -- "src/OpenAL/OpenALGenerator/**"
-    -- "src/OpenAL/OpenALTest/**"
+    -- "src/GeneratorV2/**"
+    -- "src/OpenALGenerator/**"
+    -- "src/OpenALTest/**"
     -- "src/OpenAL/OpenTK.OpenAL.Extensions/**"
-
 
 // Absolutely all test projects.
 let allTestProjects =
@@ -128,8 +123,8 @@ let nugetCommandRunnerPath =
 // Lazily install DotNet SDK in the correct version if not available
 let install =
     lazy
-        (if (DotNet.getVersion id).StartsWith "3" then id
-         else DotNet.install (fun options -> { options with Version = DotNet.Version "3.1.100" }))
+        (if (DotNet.getVersion id).StartsWith "5" then id
+         else DotNet.install (fun options -> { options with Version = DotNet.Version "5.0.103" }))
 
 // Define general properties across various commands (with arguments)
 let inline withWorkDir wd = DotNet.Options.lift install.Value >> DotNet.Options.withWorkingDirectory wd
@@ -145,7 +140,7 @@ module DotNet =
 
 let pathToSpec = "src" </> "gl.xml"
 
-let specSource = "https://raw.githubusercontent.com/frederikja163/OpenGL-Registry/master/xml/gl.xml"
+//let specSource = "https://raw.githubusercontent.com/frederikja163/OpenGL-Registry/master/xml/gl.xml"
 
 //let bindingsOutputPath =
 //    ""
@@ -153,42 +148,20 @@ let specSource = "https://raw.githubusercontent.com/frederikja163/OpenGL-Registr
 let asArgs args = args |> String.concat " "
 
 
-Target.create "UpdateSpec" (fun _ ->
-    Trace.log " --- Updating spec --- "
-    specSource
-    |> Fake.Net.Http.downloadFile ("src" </> "gl.xml")
-    |> Trace.logfn "Saved spec at %s"
-    ())
+//Target.create "UpdateSpec" (fun _ ->
+//    Trace.log " --- Updating spec --- "
+//    specSource
+//    |> Fake.Net.Http.downloadFile ("src" </> "gl.xml")
+//    |> Trace.logfn "Saved spec at %s"
+//    ())
 
-Target.create "UpdateBindings" (fun _ ->
-    Trace.log " --- Updating bindings --- "
-    let framework = "netcoreapp31"
-    let projFile = "src/Generator/Generator.fsproj"
-
-    let args =
-        [ sprintf "-i %s" (System.IO.Path.GetFullPath pathToSpec)
-          "-o " + (System.IO.Path.GetFullPath "src" </> "OpenGL") ]
-        |> asArgs
-    DotNet.runWithDefaultOptions framework projFile args |> ignore)
-
-Target.create "UpdateBindingsRewrite" (fun _ ->
-    Trace.log " --- Updating bindings (rewrite) --- "
-    let framework = "netcoreapp31"
-    let projFile = "src/Generator.Bind/Generator.Bind.csproj"
+Target.create "GenerateBindings" (fun _ ->
+    Trace.log " --- Generating bindings --- "
+    let releaseProjects = releaseProjects.And "src/OpenTK.Graphics/*.csproj"
+    let framework = "net5.0"
+    let projFile = "src/GeneratorV2/GeneratorV2.csproj"
 
     let args = [  ] |> asArgs
-    DotNet.runWithDefaultOptions framework projFile args |> ignore)
-
-Target.create "RewriteBindings" (fun _ ->
-    Trace.log " --- Rewriting bindings (calli) --- "
-    let framework = "netcoreapp31"
-    let projFile = "src/Generator.Rewrite/Generator.Rewrite.csproj"
-    let bindingsFile = "OpenTK.Graphics.dll"
-    let bindingsOutput = "src/OpenTK.Graphics/bin/Release/netstandard2.1"
-
-    let args =
-        [ "-a " + (System.IO.Path.GetFullPath bindingsOutput </> bindingsFile)
-        ] |> asArgs
     DotNet.runWithDefaultOptions framework projFile args |> ignore)
 
 // ---------
@@ -198,16 +171,14 @@ Target.create "RewriteBindings" (fun _ ->
 Target.create "Clean" <| fun _ ->
     !! ("./src" </> "OpenTK.Graphics" </> "**/*.*")
     ++ (nugetDir </> "*.nupkg")
-    -- ("./src" </> "OpenTK.Graphics" </> "Enums/*.cs")
     -- ("./src" </> "OpenTK.Graphics" </> "*.cs")
     -- ("./src" </> "OpenTK.Graphics" </> "*.csproj")
-    -- ("./src" </> "OpenTK.Graphics" </> "ES11/Helper.cs")
-    -- ("./src" </> "OpenTK.Graphics" </> "ES20/Helper.cs")
-    -- ("./src" </> "OpenTK.Graphics" </> "ES30/Helper.cs")
-    -- ("./src" </> "OpenTK.Graphics" </> "OpenGL2/Helper.cs")
-    -- ("./src" </> "OpenTK.Graphics" </> "OpenGL4/Helper.cs")
     -- ("./src" </> "OpenTK.Graphics" </> "Wgl/*.*")
     -- ("./src" </> "OpenTK.Graphics" </> "paket")
+    -- ("./src" </> "OpenTK.Graphics" </> "OpenGL" </> "GL.Manual.cs")
+    -- ("./src" </> "OpenTK.Graphics" </> "OpenGL" </> "Compatibility" </> "GL.Manual.cs")
+    -- ("./src" </> "OpenTK.Graphics" </> "OpenGLES1" </> "GL.Manual.cs")
+    -- ("./src" </> "OpenTK.Graphics" </> "OpenGLES2" </> "GL.Manual.cs")
     |> Seq.iter(Shell.rm)
 
 Target.create "Restore" (fun _ -> DotNet.restore dotnetSimple "OpenTK.sln" |> ignore)
@@ -230,7 +201,7 @@ Target.create "Build"( fun _ ->
 Target.create "BuildTest" <| fun _ ->
     !!"tests/**/*.??proj"
     |> Seq.map(fun proj ->
-        DotNet.runWithDefaultOptions "netcoreapp3.1" proj "" |> string)
+        DotNet.runWithDefaultOptions "net5.0" proj "" |> string)
     |> Trace.logItems "TestBuild-Output: "
 
 // Copies binaries from default VS location to expected bin folder
@@ -239,7 +210,7 @@ Target.create "CopyBinaries" (fun _ ->
     releaseProjects
     |> Seq.map
         (fun f ->
-        ((System.IO.Path.GetDirectoryName f) @@ "bin/Release/netstandard2.0",
+        ((System.IO.Path.GetDirectoryName f) @@ "bin/Release/net5.0",
          "bin" @@ (System.IO.Path.GetFileNameWithoutExtension f)))
     |> Seq.iter (fun (fromDir, toDir) -> Shell.copyDir toDir fromDir (fun _ -> true)))
 
@@ -378,10 +349,11 @@ open Fake.Core.TargetOperators
 "Clean"
   ==> "Restore"
   ==> "AssemblyInfo"
-  ==> "UpdateSpec"
-  ==> "UpdateBindingsRewrite"
+  //==> "UpdateSpec"
+  //==> "UpdateBindingsRewrite"
+  ==> "GenerateBindings"
   ==> "Build"
-  ==> "RewriteBindings"
+  //==> "RewriteBindings"
 //  ==> "RunAllTests"
   ==> "All"
   ==> "CreateNuGetPackage"
