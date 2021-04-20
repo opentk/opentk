@@ -102,21 +102,25 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Gets the manhattan length of the vector.
         /// </summary>
+        [JsonIgnore]
         public int ManhattanLength => Math.Abs(X) + Math.Abs(Y);
 
         /// <summary>
         /// Gets the euclidian length of the vector.
         /// </summary>
+        [JsonIgnore]
         public float EuclideanLength => MathF.Sqrt((X * X) + (Y * Y));
 
         /// <summary>
         /// Gets the perpendicular vector on the right side of this vector.
         /// </summary>
+        [JsonIgnore]
         public Vector2i PerpendicularRight => new Vector2i(Y, -X);
 
         /// <summary>
         /// Gets the perpendicular vector on the left side of this vector.
         /// </summary>
+        [JsonIgnore]
         public Vector2i PerpendicularLeft => new Vector2i(-Y, X);
 
         /// <summary>
@@ -378,6 +382,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets a <see cref="Vector2i"/> with the Y and X components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector2i Yx
         {
             get => new Vector2i(Y, X);

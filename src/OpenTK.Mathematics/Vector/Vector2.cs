@@ -117,6 +117,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         /// <see cref="LengthFast"/>
         /// <seealso cref="LengthSquared"/>
+        [JsonIgnore]
         public float Length => MathF.Sqrt((X * X) + (Y * Y));
 
         /// <summary>
@@ -128,6 +129,7 @@ namespace OpenTK.Mathematics
         /// </remarks>
         /// <see cref="Length"/>
         /// <seealso cref="LengthSquared"/>
+        [JsonIgnore]
         public float LengthFast => 1.0f / MathHelper.InverseSqrtFast((X * X) + (Y * Y));
 
         /// <summary>
@@ -139,16 +141,19 @@ namespace OpenTK.Mathematics
         /// </remarks>
         /// <see cref="Length"/>
         /// <seealso cref="LengthFast"/>
+        [JsonIgnore]
         public float LengthSquared => (X * X) + (Y * Y);
 
         /// <summary>
         /// Gets the perpendicular vector on the right side of this vector.
         /// </summary>
+        [JsonIgnore]
         public Vector2 PerpendicularRight => new Vector2(Y, -X);
 
         /// <summary>
         /// Gets the perpendicular vector on the left side of this vector.
         /// </summary>
+        [JsonIgnore]
         public Vector2 PerpendicularLeft => new Vector2(-Y, X);
 
         /// <summary>
@@ -803,6 +808,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets an OpenTK.Vector2 with the Y and X components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector2 Yx
         {
             get => new Vector2(Y, X);

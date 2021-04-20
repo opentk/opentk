@@ -148,6 +148,7 @@ namespace OpenTK.Mathematics
         /// Gets the length (magnitude) of the vector.
         /// </summary>
         /// <seealso cref="LengthSquared"/>
+        [JsonIgnore]
         public double Length => Math.Sqrt((X * X) + (Y * Y));
 
         /// <summary>
@@ -158,16 +159,19 @@ namespace OpenTK.Mathematics
         /// for comparisons.
         /// </remarks>
         /// <see cref="Length"/>
+        [JsonIgnore]
         public double LengthSquared => (X * X) + (Y * Y);
 
         /// <summary>
         /// Gets the perpendicular vector on the right side of this vector.
         /// </summary>
+        [JsonIgnore]
         public Vector2d PerpendicularRight => new Vector2d(Y, -X);
 
         /// <summary>
         /// Gets the perpendicular vector on the left side of this vector.
         /// </summary>
+        [JsonIgnore]
         public Vector2d PerpendicularLeft => new Vector2d(-Y, X);
 
         /// <summary>
@@ -753,6 +757,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Gets or sets an OpenTK.Vector2d with the Y and X components of this instance.
         /// </summary>
+        [JsonIgnore]
         [XmlIgnore]
         public Vector2d Yx
         {

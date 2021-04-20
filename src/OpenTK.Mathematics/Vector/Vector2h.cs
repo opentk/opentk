@@ -193,6 +193,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets an OpenTK.Vector2h with the Y and X components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector2h Yx
         {
             get => new Vector2h(Y, X);

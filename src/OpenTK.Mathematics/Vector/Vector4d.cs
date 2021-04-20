@@ -250,6 +250,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         /// <see cref="LengthFast"/>
         /// <seealso cref="LengthSquared"/>
+        [JsonIgnore]
         public double Length => Math.Sqrt((X * X) + (Y * Y) + (Z * Z) + (W * W));
 
         /// <summary>
@@ -261,6 +262,7 @@ namespace OpenTK.Mathematics
         /// </remarks>
         /// <see cref="Length"/>
         /// <seealso cref="LengthSquared"/>
+        [JsonIgnore]
         public double LengthFast => 1.0 / MathHelper.InverseSqrtFast((X * X) + (Y * Y) + (Z * Z) + (W * W));
 
         /// <summary>
@@ -271,6 +273,7 @@ namespace OpenTK.Mathematics
         /// for comparisons.
         /// </remarks>
         /// <see cref="Length"/>
+        [JsonIgnore]
         public double LengthSquared => (X * X) + (Y * Y) + (Z * Z) + (W * W);
 
         /// <summary>
@@ -862,6 +865,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets an OpenTK.Vector2d with the X and Y components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector2d Xy
         {
             get => Unsafe.As<Vector4d, Vector2d>(ref this);
@@ -876,6 +880,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets an OpenTK.Vector2d with the X and Z components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector2d Xz
         {
             get => new Vector2d(X, Z);
@@ -890,6 +895,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets an OpenTK.Vector2d with the X and W components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector2d Xw
         {
             get => new Vector2d(X, W);
@@ -904,6 +910,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets an OpenTK.Vector2d with the Y and X components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector2d Yx
         {
             get => new Vector2d(Y, X);
@@ -918,6 +925,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets an OpenTK.Vector2d with the Y and Z components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector2d Yz
         {
             get => new Vector2d(Y, Z);
@@ -932,6 +940,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets an OpenTK.Vector2d with the Y and W components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector2d Yw
         {
             get => new Vector2d(Y, W);
@@ -946,6 +955,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets an OpenTK.Vector2d with the Z and X components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector2d Zx
         {
             get => new Vector2d(Z, X);
@@ -960,6 +970,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets an OpenTK.Vector2d with the Z and Y components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector2d Zy
         {
             get => new Vector2d(Z, Y);
@@ -974,6 +985,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets an OpenTK.Vector2d with the Z and W components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector2d Zw
         {
             get => new Vector2d(Z, W);
@@ -988,6 +1000,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets an OpenTK.Vector2d with the W and X components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector2d Wx
         {
             get => new Vector2d(W, X);
@@ -1002,6 +1015,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets an OpenTK.Vector2d with the W and Y components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector2d Wy
         {
             get => new Vector2d(W, Y);
@@ -1016,6 +1030,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets an OpenTK.Vector2d with the W and Z components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector2d Wz
         {
             get => new Vector2d(W, Z);
@@ -1030,6 +1045,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets an OpenTK.Vector3d with the X, Y, and Z components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector3d Xyz
         {
             get => Unsafe.As<Vector4d, Vector3d>(ref this);
@@ -1045,6 +1061,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets an OpenTK.Vector3d with the X, Y, and Z components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector3d Xyw
         {
             get => new Vector3d(X, Y, W);
@@ -1060,6 +1077,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets an OpenTK.Vector3d with the X, Z, and Y components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector3d Xzy
         {
             get => new Vector3d(X, Z, Y);
@@ -1075,6 +1093,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets an OpenTK.Vector3d with the X, Z, and W components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector3d Xzw
         {
             get => new Vector3d(X, Z, W);
@@ -1090,6 +1109,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets an OpenTK.Vector3d with the X, W, and Y components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector3d Xwy
         {
             get => new Vector3d(X, W, Y);
@@ -1105,6 +1125,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets an OpenTK.Vector3d with the X, W, and Z components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector3d Xwz
         {
             get => new Vector3d(X, W, Z);
@@ -1120,6 +1141,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets an OpenTK.Vector3d with the Y, X, and Z components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector3d Yxz
         {
             get => new Vector3d(Y, X, Z);
@@ -1135,6 +1157,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets an OpenTK.Vector3d with the Y, X, and W components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector3d Yxw
         {
             get => new Vector3d(Y, X, W);
@@ -1150,6 +1173,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets an OpenTK.Vector3d with the Y, Z, and X components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector3d Yzx
         {
             get => new Vector3d(Y, Z, X);
@@ -1165,6 +1189,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets an OpenTK.Vector3d with the Y, Z, and W components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector3d Yzw
         {
             get => new Vector3d(Y, Z, W);
@@ -1180,6 +1205,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets an OpenTK.Vector3d with the Y, W, and X components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector3d Ywx
         {
             get => new Vector3d(Y, W, X);
@@ -1195,6 +1221,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets an OpenTK.Vector3d with the Y, W, and Z components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector3d Ywz
         {
             get => new Vector3d(Y, W, Z);
@@ -1210,6 +1237,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets an OpenTK.Vector3d with the Z, X, and Y components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector3d Zxy
         {
             get => new Vector3d(Z, X, Y);
@@ -1225,6 +1253,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets an OpenTK.Vector3d with the Z, X, and W components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector3d Zxw
         {
             get => new Vector3d(Z, X, W);
@@ -1240,6 +1269,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets an OpenTK.Vector3d with the Z, Y, and X components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector3d Zyx
         {
             get => new Vector3d(Z, Y, X);
@@ -1255,6 +1285,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets an OpenTK.Vector3d with the Z, Y, and W components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector3d Zyw
         {
             get => new Vector3d(Z, Y, W);
@@ -1270,6 +1301,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets an OpenTK.Vector3d with the Z, W, and X components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector3d Zwx
         {
             get => new Vector3d(Z, W, X);
@@ -1285,6 +1317,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets an OpenTK.Vector3d with the Z, W, and Y components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector3d Zwy
         {
             get => new Vector3d(Z, W, Y);
@@ -1300,6 +1333,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets an OpenTK.Vector3d with the W, X, and Y components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector3d Wxy
         {
             get => new Vector3d(W, X, Y);
@@ -1315,6 +1349,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets an OpenTK.Vector3d with the W, X, and Z components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector3d Wxz
         {
             get => new Vector3d(W, X, Z);
@@ -1330,6 +1365,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets an OpenTK.Vector3d with the W, Y, and X components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector3d Wyx
         {
             get => new Vector3d(W, Y, X);
@@ -1345,6 +1381,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets an OpenTK.Vector3d with the W, Y, and Z components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector3d Wyz
         {
             get => new Vector3d(W, Y, Z);
@@ -1360,6 +1397,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets an OpenTK.Vector3d with the W, Z, and X components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector3d Wzx
         {
             get => new Vector3d(W, Z, X);
@@ -1375,6 +1413,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets an OpenTK.Vector3d with the W, Z, and Y components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector3d Wzy
         {
             get => new Vector3d(W, Z, Y);
@@ -1390,6 +1429,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets an OpenTK.Vector4d with the X, Y, W, and Z components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector4d Xywz
         {
             get => new Vector4d(X, Y, W, Z);
@@ -1406,6 +1446,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets an OpenTK.Vector4d with the X, Z, Y, and W components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector4d Xzyw
         {
             get => new Vector4d(X, Z, Y, W);
@@ -1422,6 +1463,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets an OpenTK.Vector4d with the X, Z, W, and Y components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector4d Xzwy
         {
             get => new Vector4d(X, Z, W, Y);
@@ -1438,6 +1480,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets an OpenTK.Vector4d with the X, W, Y, and Z components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector4d Xwyz
         {
             get => new Vector4d(X, W, Y, Z);
@@ -1454,6 +1497,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets an OpenTK.Vector4d with the X, W, Z, and Y components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector4d Xwzy
         {
             get => new Vector4d(X, W, Z, Y);
@@ -1470,6 +1514,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets an OpenTK.Vector4d with the Y, X, Z, and W components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector4d Yxzw
         {
             get => new Vector4d(Y, X, Z, W);
@@ -1486,6 +1531,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets an OpenTK.Vector4d with the Y, X, W, and Z components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector4d Yxwz
         {
             get => new Vector4d(Y, X, W, Z);
@@ -1502,6 +1548,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets an OpenTK.Vector4d with the Y, Y, Z, and W components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector4d Yyzw
         {
             get => new Vector4d(Y, Y, Z, W);
@@ -1518,6 +1565,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets an OpenTK.Vector4d with the Y, Y, W, and Z components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector4d Yywz
         {
             get => new Vector4d(Y, Y, W, Z);
@@ -1534,6 +1582,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets an OpenTK.Vector4d with the Y, Z, X, and W components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector4d Yzxw
         {
             get => new Vector4d(Y, Z, X, W);
@@ -1550,6 +1599,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets an OpenTK.Vector4d with the Y, Z, W, and X components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector4d Yzwx
         {
             get => new Vector4d(Y, Z, W, X);
@@ -1566,6 +1616,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets an OpenTK.Vector4d with the Y, W, X, and Z components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector4d Ywxz
         {
             get => new Vector4d(Y, W, X, Z);
@@ -1582,6 +1633,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets an OpenTK.Vector4d with the Y, W, Z, and X components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector4d Ywzx
         {
             get => new Vector4d(Y, W, Z, X);
@@ -1598,6 +1650,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets an OpenTK.Vector4d with the Z, X, Y, and Z components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector4d Zxyw
         {
             get => new Vector4d(Z, X, Y, W);
@@ -1614,6 +1667,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets an OpenTK.Vector4d with the Z, X, W, and Y components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector4d Zxwy
         {
             get => new Vector4d(Z, X, W, Y);
@@ -1630,6 +1684,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets an OpenTK.Vector4d with the Z, Y, X, and W components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector4d Zyxw
         {
             get => new Vector4d(Z, Y, X, W);
@@ -1646,6 +1701,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets an OpenTK.Vector4d with the Z, Y, W, and X components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector4d Zywx
         {
             get => new Vector4d(Z, Y, W, X);
@@ -1662,6 +1718,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets an OpenTK.Vector4d with the Z, W, X, and Y components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector4d Zwxy
         {
             get => new Vector4d(Z, W, X, Y);
@@ -1678,6 +1735,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets an OpenTK.Vector4d with the Z, W, Y, and X components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector4d Zwyx
         {
             get => new Vector4d(Z, W, Y, X);
@@ -1694,6 +1752,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets an OpenTK.Vector4d with the Z, W, Z, and Y components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector4d Zwzy
         {
             get => new Vector4d(Z, W, Z, Y);
@@ -1710,6 +1769,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets an OpenTK.Vector4d with the W, X, Y, and Z components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector4d Wxyz
         {
             get => new Vector4d(W, X, Y, Z);
@@ -1726,6 +1786,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets an OpenTK.Vector4d with the W, X, Z, and Y components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector4d Wxzy
         {
             get => new Vector4d(W, X, Z, Y);
@@ -1742,6 +1803,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets an OpenTK.Vector4d with the W, Y, X, and Z components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector4d Wyxz
         {
             get => new Vector4d(W, Y, X, Z);
@@ -1758,6 +1820,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets an OpenTK.Vector4d with the W, Y, Z, and X components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector4d Wyzx
         {
             get => new Vector4d(W, Y, Z, X);
@@ -1774,6 +1837,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets an OpenTK.Vector4d with the W, Z, X, and Y components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector4d Wzxy
         {
             get => new Vector4d(W, Z, X, Y);
@@ -1790,6 +1854,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets an OpenTK.Vector4d with the W, Z, Y, and X components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector4d Wzyx
         {
             get => new Vector4d(W, Z, Y, X);
@@ -1806,6 +1871,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets an OpenTK.Vector4d with the W, Z, Y, and W components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector4d Wzyw
         {
             get => new Vector4d(W, Z, Y, W);

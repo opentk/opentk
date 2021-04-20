@@ -188,11 +188,13 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Gets the manhattan length of the vector.
         /// </summary>
+        [JsonIgnore]
         public int ManhattanLength => Math.Abs(X) + Math.Abs(Y) + Math.Abs(Z) + Math.Abs(W);
 
         /// <summary>
         /// Gets the euclidian length of the vector.
         /// </summary>
+        [JsonIgnore]
         public float EuclideanLength => MathF.Sqrt((X * X) + (Y * Y) + (Z * Z) + (W * W));
 
         /// <summary>
@@ -488,6 +490,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets a <see cref="Vector2i"/> with the X and Y components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector2i Xy
         {
             get => Unsafe.As<Vector4i, Vector2i>(ref this);
@@ -502,6 +505,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets a <see cref="Vector2i"/> with the X and Z components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector2i Xz
         {
             get => new Vector2i(X, Z);
@@ -516,6 +520,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets a <see cref="Vector2i"/> with the X and W components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector2i Xw
         {
             get => new Vector2i(X, W);
@@ -530,6 +535,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets a <see cref="Vector2i"/> with the Y and X components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector2i Yx
         {
             get => new Vector2i(Y, X);
@@ -544,6 +550,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets a <see cref="Vector2i"/> with the Y and Z components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector2i Yz
         {
             get => new Vector2i(Y, Z);
@@ -558,6 +565,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets a <see cref="Vector2i"/> with the Y and W components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector2i Yw
         {
             get => new Vector2i(Y, W);
@@ -572,6 +580,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets a <see cref="Vector2i"/> with the Z and X components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector2i Zx
         {
             get => new Vector2i(Z, X);
@@ -586,6 +595,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets a <see cref="Vector2i"/> with the Z and Y components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector2i Zy
         {
             get => new Vector2i(Z, Y);
@@ -600,6 +610,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets a <see cref="Vector2i"/> with the Z and W components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector2i Zw
         {
             get => new Vector2i(Z, W);
@@ -614,6 +625,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets a <see cref="Vector2i"/> with the W and X components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector2i Wx
         {
             get => new Vector2i(W, X);
@@ -628,6 +640,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets a <see cref="Vector2i"/> with the W and Y components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector2i Wy
         {
             get => new Vector2i(W, Y);
@@ -642,6 +655,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets a <see cref="Vector2i"/> with the W and Z components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector2i Wz
         {
             get => new Vector2i(W, Z);
@@ -656,6 +670,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets a <see cref="Vector3i"/> with the X, Y, and Z components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector3i Xyz
         {
             get => Unsafe.As<Vector4i, Vector3i>(ref this);
@@ -671,6 +686,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets a <see cref="Vector3i"/> with the X, Y, and Z components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector3i Xyw
         {
             get => new Vector3i(X, Y, W);
@@ -686,6 +702,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets a <see cref="Vector3i"/> with the X, Z, and Y components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector3i Xzy
         {
             get => new Vector3i(X, Z, Y);
@@ -701,6 +718,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets a <see cref="Vector3i"/> with the X, Z, and W components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector3i Xzw
         {
             get => new Vector3i(X, Z, W);
@@ -716,6 +734,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets a <see cref="Vector3i"/> with the X, W, and Y components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector3i Xwy
         {
             get => new Vector3i(X, W, Y);
@@ -731,6 +750,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets a <see cref="Vector3i"/> with the X, W, and Z components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector3i Xwz
         {
             get => new Vector3i(X, W, Z);
@@ -746,6 +766,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets a <see cref="Vector3i"/> with the Y, X, and Z components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector3i Yxz
         {
             get => new Vector3i(Y, X, Z);
@@ -761,6 +782,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets a <see cref="Vector3i"/> with the Y, X, and W components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector3i Yxw
         {
             get => new Vector3i(Y, X, W);
@@ -776,6 +798,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets a <see cref="Vector3i"/> with the Y, Z, and X components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector3i Yzx
         {
             get => new Vector3i(Y, Z, X);
@@ -791,6 +814,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets a <see cref="Vector3i"/> with the Y, Z, and W components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector3i Yzw
         {
             get => new Vector3i(Y, Z, W);
@@ -806,6 +830,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets a <see cref="Vector3i"/> with the Y, W, and X components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector3i Ywx
         {
             get => new Vector3i(Y, W, X);
@@ -821,6 +846,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets a <see cref="Vector3i"/> with the Y, W, and Z components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector3i Ywz
         {
             get => new Vector3i(Y, W, Z);
@@ -836,6 +862,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets a <see cref="Vector3i"/> with the Z, X, and Y components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector3i Zxy
         {
             get => new Vector3i(Z, X, Y);
@@ -851,6 +878,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets a <see cref="Vector3i"/> with the Z, X, and W components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector3i Zxw
         {
             get => new Vector3i(Z, X, W);
@@ -866,6 +894,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets a <see cref="Vector3i"/> with the Z, Y, and X components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector3i Zyx
         {
             get => new Vector3i(Z, Y, X);
@@ -881,6 +910,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets a <see cref="Vector3i"/> with the Z, Y, and W components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector3i Zyw
         {
             get => new Vector3i(Z, Y, W);
@@ -896,6 +926,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets a <see cref="Vector3i"/> with the Z, W, and X components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector3i Zwx
         {
             get => new Vector3i(Z, W, X);
@@ -911,6 +942,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets a <see cref="Vector3i"/> with the Z, W, and Y components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector3i Zwy
         {
             get => new Vector3i(Z, W, Y);
@@ -926,6 +958,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets a <see cref="Vector3i"/> with the W, X, and Y components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector3i Wxy
         {
             get => new Vector3i(W, X, Y);
@@ -941,6 +974,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets a <see cref="Vector3i"/> with the W, X, and Z components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector3i Wxz
         {
             get => new Vector3i(W, X, Z);
@@ -956,6 +990,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets a <see cref="Vector3i"/> with the W, Y, and X components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector3i Wyx
         {
             get => new Vector3i(W, Y, X);
@@ -971,6 +1006,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets a <see cref="Vector3i"/> with the W, Y, and Z components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector3i Wyz
         {
             get => new Vector3i(W, Y, Z);
@@ -986,6 +1022,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets a <see cref="Vector3i"/> with the W, Z, and X components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector3i Wzx
         {
             get => new Vector3i(W, Z, X);
@@ -1001,6 +1038,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets a <see cref="Vector3i"/> with the W, Z, and Y components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector3i Wzy
         {
             get => new Vector3i(W, Z, Y);
@@ -1016,6 +1054,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets a <see cref="Vector4i"/> with the X, Y, W, and Z components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector4i Xywz
         {
             get => new Vector4i(X, Y, W, Z);
@@ -1032,6 +1071,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets a <see cref="Vector4i"/> with the X, Z, Y, and W components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector4i Xzyw
         {
             get => new Vector4i(X, Z, Y, W);
@@ -1048,6 +1088,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets a <see cref="Vector4i"/> with the X, Z, W, and Y components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector4i Xzwy
         {
             get => new Vector4i(X, Z, W, Y);
@@ -1064,6 +1105,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets a <see cref="Vector4i"/> with the X, W, Y, and Z components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector4i Xwyz
         {
             get => new Vector4i(X, W, Y, Z);
@@ -1080,6 +1122,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets a <see cref="Vector4i"/> with the X, W, Z, and Y components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector4i Xwzy
         {
             get => new Vector4i(X, W, Z, Y);
@@ -1096,6 +1139,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets a <see cref="Vector4i"/> with the Y, X, Z, and W components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector4i Yxzw
         {
             get => new Vector4i(Y, X, Z, W);
@@ -1112,6 +1156,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets a <see cref="Vector4i"/> with the Y, X, W, and Z components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector4i Yxwz
         {
             get => new Vector4i(Y, X, W, Z);
@@ -1128,6 +1173,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets a <see cref="Vector4i"/> with the Y, Y, Z, and W components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector4i Yyzw
         {
             get => new Vector4i(Y, Y, Z, W);
@@ -1144,6 +1190,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets a <see cref="Vector4i"/> with the Y, Y, W, and Z components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector4i Yywz
         {
             get => new Vector4i(Y, Y, W, Z);
@@ -1160,6 +1207,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets a <see cref="Vector4i"/> with the Y, Z, X, and W components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector4i Yzxw
         {
             get => new Vector4i(Y, Z, X, W);
@@ -1176,6 +1224,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets a <see cref="Vector4i"/> with the Y, Z, W, and X components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector4i Yzwx
         {
             get => new Vector4i(Y, Z, W, X);
@@ -1192,6 +1241,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets a <see cref="Vector4i"/> with the Y, W, X, and Z components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector4i Ywxz
         {
             get => new Vector4i(Y, W, X, Z);
@@ -1208,6 +1258,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets a <see cref="Vector4i"/> with the Y, W, Z, and X components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector4i Ywzx
         {
             get => new Vector4i(Y, W, Z, X);
@@ -1224,6 +1275,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets a <see cref="Vector4i"/> with the Z, X, Y, and Z components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector4i Zxyw
         {
             get => new Vector4i(Z, X, Y, W);
@@ -1240,6 +1292,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets a <see cref="Vector4i"/> with the Z, X, W, and Y components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector4i Zxwy
         {
             get => new Vector4i(Z, X, W, Y);
@@ -1256,6 +1309,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets a <see cref="Vector4i"/> with the Z, Y, X, and W components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector4i Zyxw
         {
             get => new Vector4i(Z, Y, X, W);
@@ -1272,6 +1326,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets a <see cref="Vector4i"/> with the Z, Y, W, and X components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector4i Zywx
         {
             get => new Vector4i(Z, Y, W, X);
@@ -1288,6 +1343,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets a <see cref="Vector4i"/> with the Z, W, X, and Y components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector4i Zwxy
         {
             get => new Vector4i(Z, W, X, Y);
@@ -1304,6 +1360,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets a <see cref="Vector4i"/> with the Z, W, Y, and X components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector4i Zwyx
         {
             get => new Vector4i(Z, W, Y, X);
@@ -1320,6 +1377,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets a <see cref="Vector4i"/> with the Z, W, Z, and Y components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector4i Zwzy
         {
             get => new Vector4i(Z, W, Z, Y);
@@ -1336,6 +1394,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets a <see cref="Vector4i"/> with the W, X, Y, and Z components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector4i Wxyz
         {
             get => new Vector4i(W, X, Y, Z);
@@ -1352,6 +1411,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets a <see cref="Vector4i"/> with the W, X, Z, and Y components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector4i Wxzy
         {
             get => new Vector4i(W, X, Z, Y);
@@ -1368,6 +1428,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets a <see cref="Vector4i"/> with the W, Y, X, and Z components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector4i Wyxz
         {
             get => new Vector4i(W, Y, X, Z);
@@ -1384,6 +1445,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets a <see cref="Vector4i"/> with the W, Y, Z, and X components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector4i Wyzx
         {
             get => new Vector4i(W, Y, Z, X);
@@ -1400,6 +1462,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets a <see cref="Vector4i"/> with the W, Z, X, and Y components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector4i Wzxy
         {
             get => new Vector4i(W, Z, X, Y);
@@ -1416,6 +1479,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets a <see cref="Vector4i"/> with the W, Z, Y, and X components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector4i Wzyx
         {
             get => new Vector4i(W, Z, Y, X);
@@ -1432,6 +1496,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets a <see cref="Vector4i"/> with the W, Z, Y, and W components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector4i Wzyw
         {
             get => new Vector4i(W, Z, Y, W);
