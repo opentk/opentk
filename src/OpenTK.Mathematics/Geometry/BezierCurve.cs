@@ -38,6 +38,7 @@ namespace OpenTK.Mathematics
         /// Gets the points of this curve.
         /// </summary>
         /// <remarks>The first point and the last points represent the anchor points.</remarks>
+        [JsonIgnore]
         public IList<Vector2> Points => _points;
 
         /// <summary>
