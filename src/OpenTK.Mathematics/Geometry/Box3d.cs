@@ -27,6 +27,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Gets or sets the minimum boundary of the structure.
         /// </summary>
+        [JsonIgnore]
         public Vector3d Min
         {
             get => _min;
@@ -55,6 +56,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Gets or sets the maximum boundary of the structure.
         /// </summary>
+        [JsonIgnore]
         public Vector3d Max
         {
             get => _max;
@@ -105,6 +107,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Gets or sets a vector describing the size of the Box3d structure.
         /// </summary>
+        [JsonIgnore]
         public Vector3d Size
         {
             get => Max - Min;
@@ -119,6 +122,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Gets or sets a vector describing half the size of the box.
         /// </summary>
+        [JsonIgnore]
         public Vector3d HalfSize
         {
             get => Size / 2;
@@ -128,6 +132,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Gets or sets a vector describing the center of the box.
         /// </summary>
+        [JsonIgnore]
         public Vector3d Center
         {
             get => HalfSize + _min;
