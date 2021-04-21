@@ -1772,6 +1772,28 @@ namespace OpenTK.Platform.X11
         public IntPtr raw_values; // FP3232*
     }
 
+    internal enum XIChangeReason
+    {
+        SlaveSwitch = 1,
+        DeviceChange = 2
+    }
+
+    internal struct XIDeviceChangedEvent
+    {
+        public int            type;         /* GenericEvent */
+        public IntPtr         serial;       /* # of last request processed by server */
+        public Bool           send_event;   /* true if this came from a SendEvent request */
+        public IntPtr         display;      /* Display the event was read from */
+        public int            extension;    /* XI extension offset */
+        public XIEventType    evtype;       /* XI_DeviceChanged */
+        public Time           time;
+        public int            deviceid;     /* id of the device that changed */
+        public int            sourceid;     /* Source for the new classes. */
+        public XIChangeReason reason;       /* Reason for the change */
+        public int            num_classes;
+        public IntPtr         classes;      /* XIAnyClassInfo */
+    }
+
     internal struct XIButtonState
     {
         public int           mask_len;
