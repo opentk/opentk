@@ -281,11 +281,11 @@ namespace GeneratorV2.Parsing
                     "GLintptrARB" => PrimitiveType.IntPtr,
                     "GLsizeiptr" => PrimitiveType.Nint,
                     "GLsizeiptrARB" => PrimitiveType.Nint,
-                    "GLint64" => PrimitiveType.Int,
-                    "GLint64EXT" => PrimitiveType.Int,
-                    "GLuint64" => PrimitiveType.Uint,
-                    "GLuint64EXT" => PrimitiveType.Uint,
-                    "GLhalfNV" => PrimitiveType.Ushort,
+                    "GLint64" => PrimitiveType.Long,
+                    "GLint64EXT" => PrimitiveType.Long,
+                    "GLuint64" => PrimitiveType.Ulong,
+                    "GLuint64EXT" => PrimitiveType.Ulong,
+                    "GLhalfNV" => PrimitiveType.Half,
                     "GLvdpauSurfaceNV" => PrimitiveType.IntPtr,
 
                     // FIXME
