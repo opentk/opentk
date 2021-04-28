@@ -20,5 +20,19 @@ namespace OpenTK.Graphics.OpenGLES3
             GL.ShaderSource(shader, 1, (byte**)&str_iptr, length);
             Marshal.FreeCoTaskMem(str_iptr);
         }
+
+        public static void GetShaderInfoLog(uint shader, out string info)
+        {
+            int length = default;
+            GL.GetShader(shader, ShaderParameterName.InfoLogLength, ref length);
+            if (length == 0)
+            {
+                info = string.Empty;
+            }
+            else
+            {
+                GL.GetShaderInfoLog(shader, length, ref length, out info);
+            }
+        }
     }
 }
