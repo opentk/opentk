@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\OpenAL\OpenTK.OpenAL\OpenTK.OpenAL.csproj" />
+    <ProjectReference Include="..\OpenTK.Audio.OpenAL\OpenTK.Audio.OpenAL.csproj" />
   </ItemGroup>
 
 </Project>

@@ -102,7 +102,7 @@ let releaseProjects =
     -- "src/GeneratorV2/**"
     -- "src/OpenALGenerator/**"
     -- "src/OpenALTest/**"
-    -- "src/OpenAL/OpenTK.OpenAL.Extensions/**"
+    -- "src/OpenTK.Audio.OpenAL.Extensions/**"
 
 // Absolutely all test projects.
 let allTestProjects =
