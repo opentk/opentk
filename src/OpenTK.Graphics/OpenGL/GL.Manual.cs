@@ -39,5 +39,24 @@ namespace OpenTK.Graphics.OpenGL
                 GetShaderInfoLog(shader, length, ref length, out info);
             }
         }
+
+        /// <summary>
+        /// Create a stand-alone program from an array of null-terminated source code strings
+        /// </summary>
+        /// <param name="shaderType">Specifies the type of shader to create</param>
+        /// <param name="count">Specifies the number of source code strings in the array strings</param>
+        /// <param name="shaderText"></param>
+        /// <exception cref="ArgumentNullException"></exception>
+        public static void CreateShaderProgramv(ShaderType shaderType, int count, string shaderText)
+        {
+            if (string.IsNullOrEmpty(shaderText))
+            {
+                throw new ArgumentNullException(nameof(shaderText))
+            }
+
+            var shaderTextPtr = Marshal.StringToCoTaskMemAnsi(shaderText);
+            CreateShaderProgramv_(shaderType, count, (byte**)shaderTextPtr);
+            Marshal.FreeCoTaskMem(shaderTextPtr);
+        }
     }
 }
