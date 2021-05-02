@@ -13,12 +13,17 @@ namespace OpenTK.Graphics.OpenGL
 
     public static unsafe partial class GL
     {
-        public static void ShaderSource(uint shader, string str)
+        public static void ShaderSource(uint shader, string shaderText)
         {
-            IntPtr str_iptr = Marshal.StringToCoTaskMemAnsi(str);
-            int length = str.Length;
-            GL.ShaderSource(shader, 1, (byte**)&str_iptr, length);
-            Marshal.FreeCoTaskMem(str_iptr);
+            if (string.IsNullOrEmpty(shaderText))
+            {
+                throw new ArgumentNullException(nameof(shaderText));
+            }
+
+            var shaderTextPtr = Marshal.StringToCoTaskMemAnsi(shaderText);
+            var length = shaderText.Length;
+            ShaderSource(shader, 1, (byte**)&shaderTextPtr, length);
+            Marshal.FreeCoTaskMem(shaderTextPtr);
         }
 
         public static void GetShaderInfoLog(uint shader, out string info)
