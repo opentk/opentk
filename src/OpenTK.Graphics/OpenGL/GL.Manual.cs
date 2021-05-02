@@ -51,7 +51,7 @@ namespace OpenTK.Graphics.OpenGL
         {
             if (string.IsNullOrEmpty(shaderText))
             {
-                throw new ArgumentNullException(nameof(shaderText))
+                throw new ArgumentNullException(nameof(shaderText));
             }
 
             var shaderTextPtr = Marshal.StringToCoTaskMemAnsi(shaderText);
