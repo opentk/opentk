@@ -39,13 +39,12 @@ namespace OpenTK.Graphics.OpenGL
         /// Create a stand-alone program from an array of null-terminated source code strings
         /// </summary>
         /// <param name="shaderType">Specifies the type of shader to create</param>
-        /// <param name="count">Specifies the number of source code strings in the array strings</param>
         /// <param name="shaderText"></param>
         /// <exception cref="ArgumentNullException"></exception>
-        public static void CreateShaderProgram(ShaderType shaderType, int count, string shaderText)
+        public static void CreateShaderProgram(ShaderType shaderType, string shaderText)
         {
             var shaderTextPtr = Marshal.StringToCoTaskMemAnsi(shaderText);
-            CreateShaderProgramv_(shaderType, count, (byte**)shaderTextPtr);
+            CreateShaderProgramv_(shaderType, 1, (byte**)shaderTextPtr);
             Marshal.FreeCoTaskMem(shaderTextPtr);
         }
     }
