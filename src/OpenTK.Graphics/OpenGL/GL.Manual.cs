@@ -29,14 +29,14 @@ namespace OpenTK.Graphics.OpenGL
         public static void GetShaderInfoLog(uint shader, out string info)
         {
             int length = default;
-            GL.GetShader(shader, ShaderParameterName.InfoLogLength, ref length);
+            GetShader(shader, ShaderParameterName.InfoLogLength, ref length);
             if (length == 0)
             {
                 info = string.Empty;
             }
             else
             {
-                GL.GetShaderInfoLog(shader, length, ref length, out info);
+                GetShaderInfoLog(shader, length, ref length, out info);
             }
         }
     }
