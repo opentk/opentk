@@ -15,11 +15,6 @@ namespace OpenTK.Graphics.OpenGL
     {
         public static void ShaderSource(uint shader, string shaderText)
         {
-            if (string.IsNullOrEmpty(shaderText))
-            {
-                throw new ArgumentNullException(nameof(shaderText));
-            }
-
             var shaderTextPtr = Marshal.StringToCoTaskMemAnsi(shaderText);
             var length = shaderText.Length;
             ShaderSource(shader, 1, (byte**)&shaderTextPtr, length);
@@ -49,11 +44,6 @@ namespace OpenTK.Graphics.OpenGL
         /// <exception cref="ArgumentNullException"></exception>
         public static void CreateShaderProgram(ShaderType shaderType, int count, string shaderText)
         {
-            if (string.IsNullOrEmpty(shaderText))
-            {
-                throw new ArgumentNullException(nameof(shaderText));
-            }
-
             var shaderTextPtr = Marshal.StringToCoTaskMemAnsi(shaderText);
             CreateShaderProgramv_(shaderType, count, (byte**)shaderTextPtr);
             Marshal.FreeCoTaskMem(shaderTextPtr);
