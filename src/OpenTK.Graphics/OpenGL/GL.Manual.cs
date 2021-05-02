@@ -17,21 +17,21 @@ namespace OpenTK.Graphics.OpenGL
         {
             var shaderTextPtr = Marshal.StringToCoTaskMemAnsi(shaderText);
             var length = shaderText.Length;
-            ShaderSource(shader, 1, (byte**)&shaderTextPtr, length);
+            GL.ShaderSource(shader, 1, (byte**)&shaderTextPtr, length);
             Marshal.FreeCoTaskMem(shaderTextPtr);
         }
 
         public static void GetShaderInfoLog(uint shader, out string info)
         {
             int length = default;
-            GetShader(shader, ShaderParameterName.InfoLogLength, ref length);
+            GL.GetShader(shader, ShaderParameterName.InfoLogLength, ref length);
             if (length == 0)
             {
                 info = string.Empty;
             }
             else
             {
-                GetShaderInfoLog(shader, length, ref length, out info);
+                GL.GetShaderInfoLog(shader, length, ref length, out info);
             }
         }
 
@@ -44,7 +44,8 @@ namespace OpenTK.Graphics.OpenGL
         public static void CreateShaderProgram(ShaderType shaderType, string shaderText)
         {
             var shaderTextPtr = Marshal.StringToCoTaskMemAnsi(shaderText);
-            CreateShaderProgramv_(shaderType, 1, (byte**)shaderTextPtr);
+            // ReSharper disable once ArrangeStaticMemberQualifier
+            GL.CreateShaderProgramv_(shaderType, 1, (byte**)shaderTextPtr);
             Marshal.FreeCoTaskMem(shaderTextPtr);
         }
     }
