@@ -47,7 +47,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <param name="count">Specifies the number of source code strings in the array strings</param>
         /// <param name="shaderText"></param>
         /// <exception cref="ArgumentNullException"></exception>
-        public static void CreateShaderProgramv(ShaderType shaderType, int count, string shaderText)
+        public static void CreateShaderProgram(ShaderType shaderType, int count, string shaderText)
         {
             if (string.IsNullOrEmpty(shaderText))
             {
