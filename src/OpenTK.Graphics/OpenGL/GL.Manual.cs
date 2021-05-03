@@ -1,6 +1,5 @@
 using System;
 using System.Runtime.InteropServices;
-using OpenTK.Core.Native;
 
 namespace OpenTK.Graphics.OpenGL
 {
@@ -44,10 +43,10 @@ namespace OpenTK.Graphics.OpenGL
         /// <exception cref="ArgumentNullException"></exception>
         public static void CreateShaderProgram(ShaderType shaderType, string shaderText)
         {
-            var shaderTexts = new[] {shaderText};
-            var shaderTextsPtr = MarshalTk.MarshalStringArrayToPtr(shaderTexts);
-            GL.CreateShaderProgramv_(shaderType, shaderTexts.Length, (byte**)shaderTextsPtr);
-            MarshalTk.FreeStringArrayPtr(shaderTextsPtr, shaderTexts.Length);
+            var shaderTextPtr = Marshal.StringToCoTaskMemAnsi(shaderText);
+            // ReSharper disable once ArrangeStaticMemberQualifier
+            GL.CreateShaderProgramv_(shaderType, 1, (byte**)shaderTextPtr);
+            Marshal.FreeCoTaskMem(shaderTextPtr);
         }
     }
 }
