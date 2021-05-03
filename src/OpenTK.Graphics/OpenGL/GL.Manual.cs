@@ -44,7 +44,6 @@ namespace OpenTK.Graphics.OpenGL
         public static void CreateShaderProgram(ShaderType shaderType, string shaderText)
         {
             var shaderTextPtr = Marshal.StringToCoTaskMemAnsi(shaderText);
-            // ReSharper disable once ArrangeStaticMemberQualifier
             GL.CreateShaderProgramv_(shaderType, 1, (byte**)shaderTextPtr);
             Marshal.FreeCoTaskMem(shaderTextPtr);
         }
