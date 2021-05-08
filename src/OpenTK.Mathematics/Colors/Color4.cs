@@ -1,45 +1,8 @@
 ﻿using System;
 using System.Diagnostics.Contracts;
-using OpenTK.Mathematics;
 
-#pragma warning disable SA1649
-namespace OpenTK.Mathematics
+namespace OpenTK.Mathematics.Colors
 {
-    /// <summary>
-    /// Interface for ColorSpace phantom types with 4 elements.
-    /// </summary>
-    public interface IColorSpace4
-    {
-    }
-
-    /// <summary>
-    /// Red, green, blue, alpha colorspace.
-    /// </summary>
-    public sealed class Rgba : IColorSpace4
-    {
-    }
-
-    /// <summary>
-    /// Alpha, red, green, blue colorspace.
-    /// </summary>
-    public sealed class Argb : IColorSpace4
-    {
-    }
-
-    /// <summary>
-    /// Hue, saturation, value, alpha colorspace.
-    /// </summary>
-    public sealed class Hsva : IColorSpace4
-    {
-    }
-
-    /// <summary>
-    /// Hue, saturation, light, alpha colorspace.
-    /// </summary>
-    public sealed class Hsla : IColorSpace4
-    {
-    }
-
     /// <summary>
     /// To provide type-safety between different color spaces and allow extension by users to include additional and future color spaces, colors are marked with a special _phantom_ type parameter that indicates their color space.<br/>
     /// Typically these are four-letter abbreviations that indicate the components of the colors, such as <see cref="Rgba"/> or <see cref="Hsva"/>.<br/><br/>
@@ -1101,4 +1064,3 @@ namespace OpenTK.Mathematics
         public static Color4<Rgba> Yellowgreen => new Color4<Rgba>(0.6039216f, 0.8039216f, 0.19607843f, 1f);
     }
 }
-#pragma warning restore SA1649

@@ -1,38 +1,8 @@
 ﻿using System;
 using System.Diagnostics.Contracts;
-using OpenTK.Mathematics;
 
-#pragma warning disable SA1649
-namespace OpenTK
+namespace OpenTK.Mathematics.Colors
 {
-    /// <summary>
-    /// Interface for ColorSpace phantom types with 3 elements.
-    /// </summary>
-    public interface IColorSpace3
-    {
-    }
-
-    /// <summary>
-    /// Red, green, blue colorspace.
-    /// </summary>
-    public sealed class Rgb : IColorSpace3
-    {
-    }
-
-    /// <summary>
-    /// Hue, saturation, value colorspace.
-    /// </summary>
-    public sealed class Hsv : IColorSpace3
-    {
-    }
-
-    /// <summary>
-    /// Hue, saturation, light colorspace.
-    /// </summary>
-    public sealed class Hsl : IColorSpace3
-    {
-    }
-
     /// <summary>
     /// To provide type-safety between different color spaces and allow extension by users to include additional and future color spaces, colors are marked with a special _phantom_ type parameter that indicates their color space.
     /// Typically these are four-letter abbreviations that indicate the components of the colors, such as <see cref="Rgb"/> or <see cref="Hsv"/>.
@@ -1237,4 +1207,3 @@ namespace OpenTK
         public static Color3<Rgb> Yellowgreen => new Color3<Rgb>(0.6039216f, 0.8039216f, 0.19607843f);
     }
 }
-#pragma warning restore SA1649
