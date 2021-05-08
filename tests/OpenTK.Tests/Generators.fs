@@ -1,11 +1,9 @@
 ﻿namespace OpenTK.Tests
 
-open Xunit
 open FsCheck
-open FsCheck.Xunit
 open System
-open OpenTK
 open OpenTK.Mathematics
+open OpenTK.Mathematics.Colors
 
 /// An angle from -89 to +89
 [<Struct>]

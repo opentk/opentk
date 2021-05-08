@@ -7,6 +7,7 @@ open System
 open System.Runtime.InteropServices
 open OpenTK
 open OpenTK.Mathematics
+open OpenTK.Mathematics.Colors
 
 module Color4 =
     [<Literal>]

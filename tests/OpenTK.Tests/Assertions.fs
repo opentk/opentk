@@ -2,12 +2,9 @@
 
 open Xunit
 open FsCheck
-open FsCheck.Xunit
 open System
-open System
-open System
-open OpenTK
 open OpenTK.Mathematics
+open OpenTK.Mathematics.Colors
 
 [<AutoOpen>]
 module private AssertHelpers =
