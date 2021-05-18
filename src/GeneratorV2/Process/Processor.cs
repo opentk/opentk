@@ -1022,14 +1022,20 @@ namespace GeneratorV2.Process
                     PointerParameter = pointerParameter;
                 }
 
+                private IndentedTextWriter.Scope Scope;
                 public void WritePrologue(IndentedTextWriter writer, NameTable nameTable)
                 {
                     writer.WriteLine($"{LengthParameter.Type.ToCSString()} {nameTable[LengthParameter]} = 1;");
-                    writer.WriteLine($"{PointerParameter.Type.ToCSString()} {nameTable[PointerParameter]} = ({PointerParameter.Type.ToCSString()}){nameTable[InParameter]};");
+                    writer.WriteLine($"fixed({PointerParameter.Type.ToCSString()} {nameTable[PointerParameter]} = &{nameTable[InParameter]})");
+                    //writer.WriteLine($"{PointerParameter.Type.ToCSString()} {nameTable[PointerParameter]} = ({PointerParameter.Type.ToCSString()}){nameTable[InParameter]};");
+                    writer.WriteLine("{");
+                    Scope = writer.Indentation();
                 }
 
                 public string? WriteEpilogue(IndentedTextWriter writer, NameTable nameTable, string? returnName)
                 {
+                    Scope.Dispose();
+                    writer.WriteLine("}");
                     return returnName;
                 }
             }
@@ -1052,6 +1058,16 @@ namespace GeneratorV2.Process
                 {
                     writer.WriteLine($"{LengthParameter.Type.ToCSString()} {nameTable[LengthParameter]} = 1;");
                     writer.WriteLine($"Unsafe.SkipInit(out {nameTable[OutParameter]});");
+                    // FIXME
+                    writer.WriteLine("// FIXME: This could be a problem for the overloads that take an out parameter");
+                    writer.WriteLine("// as this parameter could *potentially* move while inside of this function");
+                    writer.WriteLine("// which would mean that the new value never gets written to the out parameter.");
+                    writer.WriteLine("// Making for a nasty bug.");
+                    writer.WriteLine("// The reason we don't use a fixed expression here is because of the \"single out parameter to return value\" overloading step");
+                    writer.WriteLine("// that will make it so this tries to fix a local variable which is not allowed in C# for some reason.");
+                    writer.WriteLine("// If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk");
+                    writer.WriteLine("// - 2021-05-18");
+
                     writer.WriteLine($"{PointerParameter.Type.ToCSString()} {nameTable[PointerParameter]} = ({PointerParameter.Type.ToCSString()})Unsafe.AsPointer(ref {nameTable[OutParameter]});");
                 }
 
