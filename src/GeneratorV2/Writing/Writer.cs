@@ -352,6 +352,7 @@ namespace GeneratorV2.Writing
             writer.WriteLine("using System;");
             writer.WriteLine("using System.Runtime.CompilerServices;");
             writer.WriteLine("using System.Runtime.InteropServices;");
+            writer.WriteLine("using OpenTK.Mathematics;");
             writer.WriteLine();
             writer.WriteLine($"namespace {GraphicsNamespace}.{glNamespace}");
             using (Scope(writer))
@@ -412,7 +413,7 @@ namespace GeneratorV2.Writing
                 {
                     indentedTextWriter.WriteLine($"{overload1.NativeFunction.ReturnType.ToCSString()} returnValue;");
                 }
-                
+
                 if (overload1.NativeFunction.EntryPoint == "glNamedBufferData")
                 {
                     ;
