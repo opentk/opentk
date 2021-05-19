@@ -7,7 +7,6 @@ namespace OpenTK.Graphics
 {
     namespace OpenGL
     {
-        [UnmanagedFunctionPointer(CallingConvention.Winapi)]
         public delegate void GLDebugProc(DebugSource source, DebugType type, uint id, DebugSeverity severity, int length, IntPtr message, IntPtr userParam);
         public unsafe delegate void GLDebugProcARB(DebugSource source, DebugType type, uint id, DebugSeverity severity, int length, char* message, void* userParam);
         public unsafe delegate void GLDebugProcKHR(DebugSource source, DebugType type, uint id, DebugSeverity severity, int length, char* message, void* userParam);
