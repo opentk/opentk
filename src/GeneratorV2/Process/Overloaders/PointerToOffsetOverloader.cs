@@ -93,7 +93,7 @@ namespace GeneratorV2.Process.Overloaders
 
             public void WritePrologue(IndentedTextWriter writer, NameTable nameTable)
             {
-                writer.WriteLine($"{_pointerParameter.Type.ToCSString()} {nameTable[_pointerParameter]} = ({_pointerParameter.Type.ToCSString()}){nameTable[_offsetParameter]}");
+                writer.WriteLine($"{_pointerParameter.Type.ToCSString()} {nameTable[_pointerParameter]} = ({_pointerParameter.Type.ToCSString()}){nameTable[_offsetParameter]};");
             }
 
             public string? WriteEpilogue(IndentedTextWriter writer, NameTable nameTable, string? returnName)
