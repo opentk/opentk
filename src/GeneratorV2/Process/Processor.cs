@@ -1027,7 +1027,6 @@ namespace GeneratorV2.Process
                 {
                     writer.WriteLine($"{LengthParameter.Type.ToCSString()} {nameTable[LengthParameter]} = 1;");
                     writer.WriteLine($"fixed({PointerParameter.Type.ToCSString()} {nameTable[PointerParameter]} = &{nameTable[InParameter]})");
-                    //writer.WriteLine($"{PointerParameter.Type.ToCSString()} {nameTable[PointerParameter]} = ({PointerParameter.Type.ToCSString()}){nameTable[InParameter]};");
                     writer.WriteLine("{");
                     Scope = writer.Indentation();
                 }
