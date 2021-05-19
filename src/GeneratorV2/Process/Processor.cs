@@ -15,6 +15,26 @@ namespace GeneratorV2.Process
 {
     public static class Processor
     {
+        // /!\ IMPORTANT /!\:
+        // All return type overloaders need to run before any of the other overloaders.
+        // This is to ensure that correct scoping for the new return variables.
+        // FIXME: Maybe we dont want classes for these?
+        static readonly IOverloader[] Overloaders = new IOverloader[]
+        {
+            new TrimNameOverloader(),
+
+            new StringReturnOverloader(),
+
+            new PointerToOffsetOverloader(),
+            new VectorOverloader(),
+            new VoidPtrToIntPtrOverloader(),
+            new GenCreateAndDeleteOverloader(),
+            new StringOverloader(),
+            new SpanAndArrayOverloader(),
+            new RefInsteadOfPointerOverloader(),
+            new OutToReturnOverloader(),
+        };
+
         // This is only used to pass data from ProcessSpec to GetOutputApiFromRequireTags
         private record ProcessedGLInformation(
             Dictionary<string, OverloadedFunction> AllFunctions,
@@ -378,25 +398,6 @@ namespace GeneratorV2.Process
                     throw new Exception();
             }
         }
-
-        // /!\ IMPORTANT /!\:
-        // All return type overloaders need to run before any of the other overloaders.
-        // This is to ensure that correct scoping for the new return variables.
-        // FIXME: Maybe we dont want classes for these?
-        static readonly IOverloader[] Overloaders = new IOverloader[]
-        {
-            new TrimNameOverloader(),
-
-            new StringReturnOverloader(),
-
-            new VectorOverloader(),
-            new VoidPtrToIntPtrOverloader(),
-            new GenCreateAndDeleteOverloader(),
-            new StringOverloader(),
-            new SpanAndArrayOverloader(),
-            new RefInsteadOfPointerOverloader(),
-            new OutToReturnOverloader(),
-        };
 
         // FIXME: The return variable might go out of scope, declare the variables the first thing we do.
         // FIXME: Figure out how to cast ref/out/in to pointers.
