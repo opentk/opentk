@@ -14,33 +14,6 @@ namespace GeneratorV2.Writing
 {
     class Writer
     {
-        // FIXME: Find a better place
-        // Move this into IndentedTextWriter.cs
-        public struct CsScope : IDisposable
-        {
-            public IndentedTextWriter.Scope Scope;
-
-            public CsScope(IndentedTextWriter.Scope scope)
-            {
-                Scope = scope;
-            }
-
-            public void Dispose()
-            {
-                Scope.Dispose();
-                Scope.Writer.WriteLine("}");
-            }
-        }
-
-        // FIXME: Find a better place
-        // Utility for opening a "{ }" scope for C# code.
-        public static CsScope Scope(IndentedTextWriter writer)
-        {
-            writer.WriteLine("{");
-            return new CsScope(writer.Indentation());
-        }
-
-        // FIXME: Should this be "OpenTK.Graphics.OpenGL" instead?
         const string BaseNamespace = "OpenTK";
         const string GraphicsNamespace = BaseNamespace + ".Graphics";
         const string LoaderClass = "GLLoader";
@@ -93,12 +66,11 @@ namespace GeneratorV2.Writing
             writer.WriteLine("using System;");
             writer.WriteLine("using System.Runtime.InteropServices;");
             writer.WriteLine();
-            // NAMESPACE:
             writer.WriteLine($"namespace {GraphicsNamespace}.{glNamespace}");
-            using (Scope(writer))
+            using (writer.CsScope())
             {
                 writer.WriteLine($"public static unsafe partial class GL");
-                using (Scope(writer))
+                using (writer.CsScope())
                 {
                     foreach (var (vendor, group) in groups)
                     {
@@ -106,7 +78,7 @@ namespace GeneratorV2.Writing
                         if (!string.IsNullOrWhiteSpace(vendor))
                         {
                             writer.WriteLine($"public static unsafe partial class {vendor}");
-                            scope = Scope(writer);
+                            scope = writer.CsScope();
                         }
 
                         foreach (var (function, postfixName) in group.Functions)
@@ -162,7 +134,7 @@ namespace GeneratorV2.Writing
             writer.WriteLine($"public static {returnType} {name}({signature}) => _{name}_fnptr({paramNames});");
 
             writer.WriteLine($"private static {returnType} {name}_Lazy({signature})");
-            using (Scope(writer))
+            using (writer.CsScope())
             {
                 writer.WriteLine($"_{name}_fnptr = (delegate*<{delegateTypes}>){LoaderBindingsContext}.GetProcAddress(\"{function.EntryPoint}\");");
 
@@ -191,12 +163,14 @@ namespace GeneratorV2.Writing
             writer.WriteLine("using System.Runtime.CompilerServices;");
             writer.WriteLine("using System.Runtime.InteropServices;");
             writer.WriteLine("using OpenTK.Mathematics;");
+            // FIXME: Figure out whether we wanna use opentk's half or system.numerics. Does it even make a difference?
+            writer.WriteLine("using Half = System.Half;");
             writer.WriteLine();
             writer.WriteLine($"namespace {GraphicsNamespace}.{glNamespace}");
-            using (Scope(writer))
+            using (writer.CsScope())
             {
                 writer.WriteLine($"public static unsafe partial class GL");
-                using (Scope(writer))
+                using (writer.CsScope())
                 {
                     foreach (var (vendor, group) in groups)
                     {
@@ -204,7 +178,7 @@ namespace GeneratorV2.Writing
                         if (!string.IsNullOrWhiteSpace(vendor))
                         {
                             writer.WriteLine($"public static unsafe partial class {vendor}");
-                            scope = Scope(writer);
+                            scope = writer.CsScope();
                         }
 
                         foreach (var (overs, postfixNativeCall) in group.Overloads)
@@ -223,7 +197,7 @@ namespace GeneratorV2.Writing
 
         private static void WriteOverloadMethod(Overload overload1, IndentedTextWriter indentedTextWriter, bool postfixNativeCall)
         {
-            // FIXME: This was(?) used to cull "overloads" that didn't get any .
+            // This is used to cull methods that didn't get any overloads.
             if (overload1.NestedOverload == null &&
                 overload1.MarshalLayerToNested == null)
                 return;
@@ -231,13 +205,11 @@ namespace GeneratorV2.Writing
             string parameterString =
                 string.Join(", ", overload1.InputParameters.Select(p => $"{p.Type.ToCSString()} {p.Name}"));
 
-            // FIXME: Make the overload contain the name. (remove postfix usecase)
-            // FIXME: Make NativeFunction contain the preprocessed name as well as the entry point.
             string genericTypes =
                 overload1.GenericTypes.Length <= 0 ? "" : $"<{string.Join(", ", overload1.GenericTypes)}>";
             indentedTextWriter.WriteLine(
                 $"public static unsafe {overload1.ReturnType.ToCSString()} {overload1.OverloadName}{genericTypes}({parameterString})");
-            using (indentedTextWriter.Indentation())
+            using (indentedTextWriter.Scope())
             {
                 foreach (var type in overload1.GenericTypes)
                 {
@@ -245,16 +217,11 @@ namespace GeneratorV2.Writing
                 }
             }
 
-            using (Scope(indentedTextWriter))
+            using (indentedTextWriter.CsScope())
             {
                 if (overload1.ReturnType is not CSVoid && overload1.NativeFunction.ReturnType is not CSVoid)
                 {
                     indentedTextWriter.WriteLine($"{overload1.NativeFunction.ReturnType.ToCSString()} returnValue;");
-                }
-
-                if (overload1.NativeFunction.EntryPoint == "glNamedBufferData")
-                {
-                    ;
                 }
 
                 string? returnName = WriteNestedOverload(indentedTextWriter, overload1, new NameTable(), postfixNativeCall);
@@ -309,9 +276,8 @@ namespace GeneratorV2.Writing
             writer.WriteLine("// This file is auto generated, do not edit.");
             writer.WriteLine("using System;");
             writer.WriteLine();
-            // NAMESPACE:
             writer.WriteLine($"namespace {GraphicsNamespace}.{apiNamespace}");
-            using (Scope(writer))
+            using (writer.CsScope())
             {
                 WriteAllEnum(writer, allEnums);
                 WriteEnumGroups(writer, enumGroups);
@@ -324,7 +290,7 @@ namespace GeneratorV2.Writing
             {
                 if (group.IsFlags) writer.WriteLine($"[Flags]");
                 writer.WriteLine($"public enum {group.Name} : uint");
-                using (Scope(writer))
+                using (writer.CsScope())
                 {
                     foreach (var member in group.Members)
                     {
@@ -337,7 +303,7 @@ namespace GeneratorV2.Writing
         private static void WriteAllEnum(IndentedTextWriter writer, List<EnumMemberData> allEnums)
         {
             writer.WriteLine($"public enum All : uint");
-            using (Scope(writer))
+            using (writer.CsScope())
             {
                 foreach (var member in allEnums)
                 {
