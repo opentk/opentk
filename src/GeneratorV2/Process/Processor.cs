@@ -824,7 +824,7 @@ namespace GeneratorV2.Process
                 bool ShouldCalculateLength,
                 BaseCSType BaseType) : IOverloadLayer
             {
-                private Writer.CsScope Scope;
+                private CsScope Scope;
                 public void WritePrologue(IndentedTextWriter writer, NameTable nameTable)
                 {
                     // NOTE: We are casting the length field to the target type because some of
@@ -840,7 +840,7 @@ namespace GeneratorV2.Process
                     }
 
                     writer.WriteLine($"fixed ({PointerParameter.Type.ToCSString()} {nameTable[PointerParameter]} = {nameTable[SpanOrArrayParameter]})");
-                    Scope = Writer.Scope(writer);
+                    Scope = writer.CsScope();
                 }
 
                 public string? WriteEpilogue(IndentedTextWriter writer, NameTable nameTable, string? returnName)
@@ -928,7 +928,7 @@ namespace GeneratorV2.Process
                     PointerParameters = pointerParameters;
                 }
 
-                private IndentedTextWriter.Scope Scope;
+                private CsScope Scope;
                 public void WritePrologue(IndentedTextWriter writer, NameTable nameTable)
                 {
                     for (int i = 0; i < RefParameters.Count; i++)
@@ -937,14 +937,12 @@ namespace GeneratorV2.Process
                         writer.WriteLine($"fixed ({type} {nameTable[PointerParameters[i]]} = &{nameTable[RefParameters[i]]})");
                     }
 
-                    writer.WriteLine("{");
-                    Scope = writer.Indentation();
+                    Scope = writer.CsScope();
                 }
 
                 public string? WriteEpilogue(IndentedTextWriter writer, NameTable nameTable, string? returnName)
                 {
                     Scope.Dispose();
-                    writer.WriteLine("}");
                     return returnName;
                 }
             }
@@ -1022,19 +1020,17 @@ namespace GeneratorV2.Process
                     PointerParameter = pointerParameter;
                 }
 
-                private IndentedTextWriter.Scope Scope;
+                private CsScope Scope;
                 public void WritePrologue(IndentedTextWriter writer, NameTable nameTable)
                 {
                     writer.WriteLine($"{LengthParameter.Type.ToCSString()} {nameTable[LengthParameter]} = 1;");
                     writer.WriteLine($"fixed({PointerParameter.Type.ToCSString()} {nameTable[PointerParameter]} = &{nameTable[InParameter]})");
-                    writer.WriteLine("{");
-                    Scope = writer.Indentation();
+                    Scope = writer.CsScope();
                 }
 
                 public string? WriteEpilogue(IndentedTextWriter writer, NameTable nameTable, string? returnName)
                 {
                     Scope.Dispose();
-                    writer.WriteLine("}");
                     return returnName;
                 }
             }
@@ -1364,7 +1360,7 @@ namespace GeneratorV2.Process
                     _countParameters = countParameters;
                 }
 
-                private Writer.CsScope _scope;
+                private CsScope _scope;
                 public void WritePrologue(IndentedTextWriter writer, NameTable nameTable)
                 {
                     for (int i = 0; i < _vectorParameters.Count; i++)
@@ -1376,7 +1372,7 @@ namespace GeneratorV2.Process
 
                         writer.WriteLine($"fixed ({pointerParameter.Type.ToCSString()} {pointerName} = &{vectorName}.X)");
                     }
-                    _scope = Writer.Scope(writer);
+                    _scope = writer.CsScope();
 
                     foreach (Parameter countParameter in _countParameters)
                     {
