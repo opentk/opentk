@@ -35,6 +35,22 @@ namespace GeneratorV2.Writing
         }
     }
 
+    public record CSFunctionPointer(string TypeName, bool Constant) : BaseCSType
+    {
+        public override string ToCSString()
+        {
+            return "IntPtr";
+        }
+    }
+
+    public record CSDelegateType(string TypeName) : BaseCSType
+    {
+        public override string ToCSString()
+        {
+            return TypeName;
+        }
+    }
+
     public record CSChar8(bool Constant) : BaseCSType
     {
         public override string ToCSString()

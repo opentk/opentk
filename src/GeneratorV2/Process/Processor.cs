@@ -367,11 +367,11 @@ namespace GeneratorV2.Process
                         PrimitiveType.CLContext => new CSType("CLContext", bt.Constant),
                         PrimitiveType.CLEvent => new CSType("CLEvent", bt.Constant),
 
-                        PrimitiveType.GLDEBUGPROC => new CSType("GLDebugProc", bt.Constant),
-                        PrimitiveType.GLDEBUGPROCARB => new CSType("GLDebugProcARB", bt.Constant),
-                        PrimitiveType.GLDEBUGPROCKHR => new CSType("GLDebugProcKHR", bt.Constant),
-                        PrimitiveType.GLDEBUGPROCAMD => new CSType("GLDebugProcAMD", bt.Constant),
-                        PrimitiveType.GLDEBUGPROCNV => new CSType("GLDebugProcNV", bt.Constant),
+                        PrimitiveType.GLDEBUGPROC => new CSFunctionPointer("GLDebugProc", bt.Constant),
+                        PrimitiveType.GLDEBUGPROCARB => new CSFunctionPointer("GLDebugProcARB", bt.Constant),
+                        PrimitiveType.GLDEBUGPROCKHR => new CSFunctionPointer("GLDebugProcKHR", bt.Constant),
+                        PrimitiveType.GLDEBUGPROCAMD => new CSFunctionPointer("GLDebugProcAMD", bt.Constant),
+                        PrimitiveType.GLDEBUGPROCNV => new CSFunctionPointer("GLDebugProcNV", bt.Constant),
 
                         PrimitiveType.Invalid => throw new Exception(),
                         _ => throw new Exception(),
@@ -390,6 +390,7 @@ namespace GeneratorV2.Process
 
             new StringReturnOverloader(),
 
+            new FunctionPtrToDelegateOverloader(),
             new VoidPtrToIntPtrOverloader(),
             new GenCreateAndDeleteOverloader(),
             new StringOverloader(),
@@ -464,7 +465,7 @@ namespace GeneratorV2.Process
             }
         }
 
-        class TrimNameOverloader : IOverloader
+        public class TrimNameOverloader : IOverloader
         {
             private static readonly Regex Endings = new Regex(
                 @"([fd]v?|u?[isb](64)?v?|v|i_v|fi)$",
@@ -527,11 +528,80 @@ namespace GeneratorV2.Process
             }
         }
 
+        public class FunctionPtrToDelegateOverloader : IOverloader
+        {
+            public bool TryGenerateOverloads(Overload overload, [NotNullWhen(true)] out List<Overload>? newOverloads)
+            {
+                Parameter[] parameters = new Parameter[overload.InputParameters.Length];
+                List<Parameter> original = new List<Parameter>();
+                List<Parameter> changed = new List<Parameter>();
+                NameTable nameTable = overload.NameTable.New();
+                for (int i = 0; i < overload.InputParameters.Length; i++)
+                {
+                    Parameter parameter = overload.InputParameters[i];
+                    parameters[i] = parameter;
+
+                    if (parameter.Type is CSFunctionPointer fpt)
+                    {
+                        // Rename the parameter
+                        nameTable.Rename(parameter, $"{parameter.Name}_ptr");
+
+                        original.Add(parameters[i]);
+
+                        parameters[i] = parameters[i] with { Type = new CSDelegateType(fpt.TypeName) };
+
+                        changed.Add(parameters[i]);
+                    }
+                }
+
+                if (changed.Count > 0)
+                {
+                    var layer = new FunctionPtrToDelegateLayer(changed, original);
+                    newOverloads = new List<Overload>()
+                    {
+                        overload with { NestedOverload = overload, MarshalLayerToNested = layer, InputParameters = parameters, NameTable = nameTable }
+                    };
+                    return true;
+                }
+                else
+                {
+                    newOverloads = default;
+                    return false;
+                }
+            }
+
+            class FunctionPtrToDelegateLayer : IOverloadLayer
+            {
+                public readonly List<Parameter> DelegateParameters;
+                public readonly List<Parameter> PointerParameters;
+                
+                public FunctionPtrToDelegateLayer(List<Parameter> delegateParameters, List<Parameter> pointerParameters)
+                {
+                    DelegateParameters = delegateParameters;
+                    PointerParameters = pointerParameters;
+                }
+
+                public void WritePrologue(IndentedTextWriter writer, NameTable nameTable)
+                {
+                    for (int i = 0; i < DelegateParameters.Count; i++)
+                    {
+                        string type = PointerParameters[i].Type.ToCSString();
+                        writer.WriteLine($"{type} {nameTable[PointerParameters[i]]} = Marshal.GetFunctionPointerForDelegate({nameTable[DelegateParameters[i]]});");
+                    }
+                }
+
+                public string? WriteEpilogue(IndentedTextWriter writer, NameTable nameTable, string? returnName)
+                {
+                    return returnName;
+                }
+            }
+        }
+
         // FIXME: Make this nicer.
         // These being classes actually don't acomplish much
         // they are just so that we can put them in a
         // IOverloader[].
-        class StringReturnOverloader : IOverloader
+        public class StringReturnOverloader : IOverloader
         {
             public bool TryGenerateOverloads(Overload overload, [NotNullWhen(true)] out List<Overload>? newOverloads)
             {
@@ -578,7 +648,7 @@ namespace GeneratorV2.Process
             }
         }
 
-        class StringOverloader : IOverloader
+        public class StringOverloader : IOverloader
         {
             public bool TryGenerateOverloads(Overload overload, [NotNullWhen(true)] out List<Overload>? newOverloads)
             {
@@ -703,7 +773,7 @@ namespace GeneratorV2.Process
             }
         }
 
-        class SpanAndArrayOverloader : IOverloader
+        public class SpanAndArrayOverloader : IOverloader
         {
             public bool TryGenerateOverloads(Overload overload, [NotNullWhen(true)] out List<Overload>? newOverloads)
             {
@@ -848,7 +918,7 @@ namespace GeneratorV2.Process
             }
         }
 
-        class RefInsteadOfPointerOverloader : IOverloader
+        public class RefInsteadOfPointerOverloader : IOverloader
         {
             public bool TryGenerateOverloads(Overload overload, [NotNullWhen(true)] out List<Overload>? newOverloads)
             {

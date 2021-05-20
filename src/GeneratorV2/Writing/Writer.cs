@@ -319,14 +319,15 @@ namespace GeneratorV2.Writing
 
             delegateTypes.Append(returnType);
 
-            writer.WriteLine($"private static delegate*<{delegateTypes}> _{name}_fnptr = &{name}_Lazy;");
+            writer.WriteLine($"private static delegate* unmanaged<{delegateTypes}> _{name}_fnptr = &{name}_Lazy;");
 
             writer.WriteLine($"public static {returnType} {name}({signature}) => _{name}_fnptr({paramNames});");
 
+            writer.WriteLine($"[UnmanagedCallersOnly]");
             writer.WriteLine($"private static {returnType} {name}_Lazy({signature})");
             using (Scope(writer))
             {
-                writer.WriteLine($"_{name}_fnptr = (delegate*<{delegateTypes}>){LoaderBindingsContext}.GetProcAddress(\"{function.EntryPoint}\");");
+                writer.WriteLine($"_{name}_fnptr = (delegate* unmanaged<{delegateTypes}>){LoaderBindingsContext}.GetProcAddress(\"{function.EntryPoint}\");");
 
                 if (function.ReturnType is not CSVoid)
                 {
