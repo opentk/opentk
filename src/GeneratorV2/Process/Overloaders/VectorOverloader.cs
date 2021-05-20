@@ -158,7 +158,7 @@ namespace GeneratorV2.Process.Overloaders
                 _countParameters = countParameters;
             }
 
-            private CsScope _scope;
+            private Scope _scope;
             public void WritePrologue(IndentedTextWriter writer, NameTable nameTable)
             {
                 for (int i = 0; i < _vectorParameters.Count; i++)
@@ -170,7 +170,7 @@ namespace GeneratorV2.Process.Overloaders
 
                     writer.WriteLine($"fixed ({pointerParameter.Type.ToCSString()} {pointerName} = &{vectorName}.X)");
                 }
-                _scope = writer.CsScope();
+                _scope = writer.Scope();
 
                 foreach (Parameter countParameter in _countParameters)
                 {

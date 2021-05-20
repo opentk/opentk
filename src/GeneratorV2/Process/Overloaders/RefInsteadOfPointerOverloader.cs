@@ -78,7 +78,7 @@ namespace GeneratorV2.Process.Overloaders
                 PointerParameters = pointerParameters;
             }
 
-            private CsScope Scope;
+            private Scope Scope;
             public void WritePrologue(IndentedTextWriter writer, NameTable nameTable)
             {
                 for (int i = 0; i < RefParameters.Count; i++)
@@ -87,7 +87,7 @@ namespace GeneratorV2.Process.Overloaders
                     writer.WriteLine($"fixed ({type} {nameTable[PointerParameters[i]]} = &{nameTable[RefParameters[i]]})");
                 }
 
-                Scope = writer.CsScope();
+                Scope = writer.Scope();
             }
 
             public string? WriteEpilogue(IndentedTextWriter writer, NameTable nameTable, string? returnName)

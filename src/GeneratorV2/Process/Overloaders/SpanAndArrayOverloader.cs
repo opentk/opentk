@@ -124,7 +124,7 @@ namespace GeneratorV2.Process.Overloaders
             bool ShouldCalculateLength,
             BaseCSType BaseType) : IOverloadLayer
         {
-            private CsScope Scope;
+            private Scope Scope;
             public void WritePrologue(IndentedTextWriter writer, NameTable nameTable)
             {
                 // NOTE: We are casting the length field to the target type because some of
@@ -140,7 +140,7 @@ namespace GeneratorV2.Process.Overloaders
                 }
 
                 writer.WriteLine($"fixed ({PointerParameter.Type.ToCSString()} {nameTable[PointerParameter]} = {nameTable[SpanOrArrayParameter]})");
-                Scope = writer.CsScope();
+                Scope = writer.Scope();
             }
 
             public string? WriteEpilogue(IndentedTextWriter writer, NameTable nameTable, string? returnName)
