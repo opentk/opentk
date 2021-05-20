@@ -137,7 +137,7 @@ namespace GeneratorV2.Process
             // OpenGL ES doesn't have any remove tags as of yet, we are just doing this in case it gets added later. // 2021-03-04
             var gles3Removes = GetRemoveEntries(features, GLAPI.GLES2);
 
-            var info = new Processor.ProcessedGLInformation(allFunctions, functionToEnumGroupsUsed, allEnumsPerAPI, allEnumGroupsToIsBitmask);
+            var info = new ProcessedGLInformation(allFunctions, functionToEnumGroupsUsed, allEnumsPerAPI, allEnumGroupsToIsBitmask);
 
             var gl = GetOutputApiFromRequireTags(OutputApi.GL, glRequires, glRemoves, info);
             var glCompat = GetOutputApiFromRequireTags(OutputApi.GLCompat, glRequires, new List<RemoveEntry>(), info);
@@ -202,7 +202,7 @@ namespace GeneratorV2.Process
         private static GLOutputApi GetOutputApiFromRequireTags(
             OutputApi api,
             List<(string vendor, RequireEntry requireEntry)> requireEntries,
-            List<RemoveEntry> removeEntries, Processor.ProcessedGLInformation glInformation)
+            List<RemoveEntry> removeEntries, ProcessedGLInformation glInformation)
         {
             HashSet<string> groupsReferencedByFunctions = new HashSet<string>();
             // A list of functions contained in this version.

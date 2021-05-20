@@ -148,6 +148,7 @@ namespace GeneratorV2.Process
             {"glDrawRangeElementsBaseVertexEXT", "indices"},
             {"glDrawRangeElementsBaseVertexOES", "indices"},
             {"glDrawRangeElementsEXT", "indices"},
+            // FIXME: These methods contain an array of offsets, which we cannot currently handle.
             // {"glMultiDrawElements", "indices"},
             // {"glMultiDrawElementsBaseVertex", "indices"},
             // {"glMultiDrawElementsBaseVertexEXT", "indices"},
@@ -169,14 +170,12 @@ namespace GeneratorV2.Process
             }
 
             // Get the parameter index.
-            int parameterIndex = -1;
-            while (overload.InputParameters[++parameterIndex].Name != parameterName)
+            int parameterIndex = Array.FindIndex(overload.InputParameters, p => p.Name == parameterName);
+            if (parameterIndex == -1)
             {
-                if (parameterIndex >= overload.InputParameters.Length)
-                {
-                    newOverloads = null;
-                    return false;
-                }
+                Logger.Warning($"{overload.NativeFunction.FunctionName} does not have a parameter with the name {parameterName}");
+                newOverloads = null;
+                return false;
             }
 
             NameTable nameTable = overload.NameTable.New();
@@ -188,7 +187,6 @@ namespace GeneratorV2.Process
             Parameter[] newParameters = overload.InputParameters.ToArray();
             newParameters[parameterIndex] = offsetParameter;
             nameTable.Rename(pointerParameter, pointerParameter.Name);
-            nameTable.Rename(offsetParameter, offsetParameter.Name);
             newOverloads = new List<Overload>()
             {
                 overload with
