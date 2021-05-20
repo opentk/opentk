@@ -465,7 +465,7 @@ namespace GeneratorV2.Process
             }
         }
 
-        class TrimNameOverloader : IOverloader
+        public class TrimNameOverloader : IOverloader
         {
             private static readonly Regex Endings = new Regex(
                 @"([fd]v?|u?[isb](64)?v?|v|i_v|fi)$",
@@ -528,7 +528,7 @@ namespace GeneratorV2.Process
             }
         }
 
-        class FunctionPtrToDelegateOverloader : IOverloader
+        public class FunctionPtrToDelegateOverloader : IOverloader
         {
             public bool TryGenerateOverloads(Overload overload, [NotNullWhen(true)] out List<Overload>? newOverloads)
             {
@@ -536,7 +536,6 @@ namespace GeneratorV2.Process
                 List<Parameter> original = new List<Parameter>();
                 List<Parameter> changed = new List<Parameter>();
                 NameTable nameTable = overload.NameTable.New();
-                string[] genericTypes = overload.GenericTypes;
                 for (int i = 0; i < overload.InputParameters.Length; i++)
                 {
                     Parameter parameter = overload.InputParameters[i];
@@ -560,7 +559,7 @@ namespace GeneratorV2.Process
                     var layer = new FunctionPtrToDelegateLayer(changed, original);
                     newOverloads = new List<Overload>()
                     {
-                        overload with { NestedOverload = overload, MarshalLayerToNested = layer, InputParameters = parameters, NameTable = nameTable, GenericTypes = genericTypes }
+                        overload with { NestedOverload = overload, MarshalLayerToNested = layer, InputParameters = parameters, NameTable = nameTable }
                     };
                     return true;
                 }
@@ -602,7 +601,7 @@ namespace GeneratorV2.Process
         // These being classes actually don't acomplish much
         // they are just so that we can put them in a
         // IOverloader[].
-        class StringReturnOverloader : IOverloader
+        public class StringReturnOverloader : IOverloader
         {
             public bool TryGenerateOverloads(Overload overload, [NotNullWhen(true)] out List<Overload>? newOverloads)
             {
@@ -649,7 +648,7 @@ namespace GeneratorV2.Process
             }
         }
 
-        class StringOverloader : IOverloader
+        public class StringOverloader : IOverloader
         {
             public bool TryGenerateOverloads(Overload overload, [NotNullWhen(true)] out List<Overload>? newOverloads)
             {
@@ -774,7 +773,7 @@ namespace GeneratorV2.Process
             }
         }
 
-        class SpanAndArrayOverloader : IOverloader
+        public class SpanAndArrayOverloader : IOverloader
         {
             public bool TryGenerateOverloads(Overload overload, [NotNullWhen(true)] out List<Overload>? newOverloads)
             {
@@ -919,7 +918,7 @@ namespace GeneratorV2.Process
             }
         }
 
-        class RefInsteadOfPointerOverloader : IOverloader
+        public class RefInsteadOfPointerOverloader : IOverloader
         {
             public bool TryGenerateOverloads(Overload overload, [NotNullWhen(true)] out List<Overload>? newOverloads)
             {
@@ -1015,7 +1014,7 @@ namespace GeneratorV2.Process
             }
         }
 
-        class GenCreateAndDeleteOverloader : IOverloader
+        public class GenCreateAndDeleteOverloader : IOverloader
         {
             public bool TryGenerateOverloads(Overload overload, [NotNullWhen(true)] out List<Overload>? newOverloads)
             {
@@ -1130,7 +1129,7 @@ namespace GeneratorV2.Process
             }
         }
 
-        class OutToReturnOverloader : IOverloader
+        public class OutToReturnOverloader : IOverloader
         {
             public bool TryGenerateOverloads(Overload overload, [NotNullWhen(true)] out List<Overload>? newOverloads)
             {
@@ -1203,7 +1202,7 @@ namespace GeneratorV2.Process
             }
         }
 
-        class VoidPtrToIntPtrOverloader : IOverloader
+        public class VoidPtrToIntPtrOverloader : IOverloader
         {
             public bool TryGenerateOverloads(Overload overload, [NotNullWhen(true)] out List<Overload>? newOverloads)
             {
