@@ -67,18 +67,18 @@ namespace GeneratorV2.Writing
             writer.WriteLine("using System.Runtime.InteropServices;");
             writer.WriteLine();
             writer.WriteLine($"namespace {GraphicsNamespace}.{glNamespace}");
-            using (writer.CsScope())
+            using (writer.Scope())
             {
                 writer.WriteLine($"public static unsafe partial class GL");
-                using (writer.CsScope())
+                using (writer.Scope())
                 {
                     foreach (var (vendor, group) in groups)
                     {
-                        CsScope? scope = null;
+                        Scope? scope = null;
                         if (!string.IsNullOrWhiteSpace(vendor))
                         {
                             writer.WriteLine($"public static unsafe partial class {vendor}");
-                            scope = writer.CsScope();
+                            scope = writer.Scope();
                         }
 
                         foreach (var (function, postfixName) in group.Functions)
@@ -134,7 +134,7 @@ namespace GeneratorV2.Writing
             writer.WriteLine($"public static {returnType} {name}({signature}) => _{name}_fnptr({paramNames});");
 
             writer.WriteLine($"private static {returnType} {name}_Lazy({signature})");
-            using (writer.CsScope())
+            using (writer.Scope())
             {
                 writer.WriteLine($"_{name}_fnptr = (delegate*<{delegateTypes}>){LoaderBindingsContext}.GetProcAddress(\"{function.EntryPoint}\");");
 
@@ -167,18 +167,18 @@ namespace GeneratorV2.Writing
             writer.WriteLine("using Half = System.Half;");
             writer.WriteLine();
             writer.WriteLine($"namespace {GraphicsNamespace}.{glNamespace}");
-            using (writer.CsScope())
+            using (writer.Scope())
             {
                 writer.WriteLine($"public static unsafe partial class GL");
-                using (writer.CsScope())
+                using (writer.Scope())
                 {
                     foreach (var (vendor, group) in groups)
                     {
-                        CsScope? scope = null;
+                        Scope? scope = null;
                         if (!string.IsNullOrWhiteSpace(vendor))
                         {
                             writer.WriteLine($"public static unsafe partial class {vendor}");
-                            scope = writer.CsScope();
+                            scope = writer.Scope();
                         }
 
                         foreach (var (overs, postfixNativeCall) in group.Overloads)
@@ -209,7 +209,7 @@ namespace GeneratorV2.Writing
                 overload1.GenericTypes.Length <= 0 ? "" : $"<{string.Join(", ", overload1.GenericTypes)}>";
             indentedTextWriter.WriteLine(
                 $"public static unsafe {overload1.ReturnType.ToCSString()} {overload1.OverloadName}{genericTypes}({parameterString})");
-            using (indentedTextWriter.Scope())
+            using (indentedTextWriter.Indent())
             {
                 foreach (var type in overload1.GenericTypes)
                 {
@@ -217,7 +217,7 @@ namespace GeneratorV2.Writing
                 }
             }
 
-            using (indentedTextWriter.CsScope())
+            using (indentedTextWriter.Scope())
             {
                 if (overload1.ReturnType is not CSVoid && overload1.NativeFunction.ReturnType is not CSVoid)
                 {
@@ -277,7 +277,7 @@ namespace GeneratorV2.Writing
             writer.WriteLine("using System;");
             writer.WriteLine();
             writer.WriteLine($"namespace {GraphicsNamespace}.{apiNamespace}");
-            using (writer.CsScope())
+            using (writer.Scope())
             {
                 WriteAllEnum(writer, allEnums);
                 WriteEnumGroups(writer, enumGroups);
@@ -290,7 +290,7 @@ namespace GeneratorV2.Writing
             {
                 if (group.IsFlags) writer.WriteLine($"[Flags]");
                 writer.WriteLine($"public enum {group.Name} : uint");
-                using (writer.CsScope())
+                using (writer.Scope())
                 {
                     foreach (var member in group.Members)
                     {
@@ -303,7 +303,7 @@ namespace GeneratorV2.Writing
         private static void WriteAllEnum(IndentedTextWriter writer, List<EnumMemberData> allEnums)
         {
             writer.WriteLine($"public enum All : uint");
-            using (writer.CsScope())
+            using (writer.Scope())
             {
                 foreach (var member in allEnums)
                 {

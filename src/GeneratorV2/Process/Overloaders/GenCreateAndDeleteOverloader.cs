@@ -83,12 +83,12 @@ namespace GeneratorV2.Process.Overloaders
                 PointerParameter = pointerParameter;
             }
 
-            private CsScope Scope;
+            private Scope Scope;
             public void WritePrologue(IndentedTextWriter writer, NameTable nameTable)
             {
                 writer.WriteLine($"{LengthParameter.Type.ToCSString()} {nameTable[LengthParameter]} = 1;");
                 writer.WriteLine($"fixed({PointerParameter.Type.ToCSString()} {nameTable[PointerParameter]} = &{nameTable[InParameter]})");
-                Scope = writer.CsScope();
+                Scope = writer.Scope();
             }
 
             public string? WriteEpilogue(IndentedTextWriter writer, NameTable nameTable, string? returnName)
