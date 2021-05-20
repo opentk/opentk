@@ -100,15 +100,8 @@ namespace GeneratorV2.Process
             }
         }
 
-        class StringReturnLayer : IOverloadLayer
+        private record StringReturnLayer(string NewReturnName) : IOverloadLayer
         {
-            readonly string NewReturnName;
-
-            public StringReturnLayer(string newReturnName)
-            {
-                NewReturnName = newReturnName;
-            }
-
             public void WritePrologue(IndentedTextWriter writer, NameTable nameTable)
             {
                 writer.WriteLine($"string? {NewReturnName};");
@@ -200,21 +193,13 @@ namespace GeneratorV2.Process
             return true;
         }
 
-        public class PointerToOffsetLayer : IOverloadLayer
+        public record PointerToOffsetLayer(Parameter PointerParameter,
+            Parameter OffsetParameter) : IOverloadLayer
         {
-            private Parameter _pointerParameter;
-            private Parameter _offsetParameter;
-
-            public PointerToOffsetLayer(Parameter pointerParameter, Parameter offsetParameter)
-            {
-                _pointerParameter = pointerParameter;
-                _offsetParameter = offsetParameter;
-            }
-
             public void WritePrologue(IndentedTextWriter writer, NameTable nameTable)
             {
                 writer.WriteLine(
-                    $"{_pointerParameter.Type.ToCSString()} {nameTable[_pointerParameter]} = ({_pointerParameter.Type.ToCSString()}){nameTable[_offsetParameter]};");
+                    $"{PointerParameter.Type.ToCSString()} {nameTable[PointerParameter]} = ({PointerParameter.Type.ToCSString()}){nameTable[OffsetParameter]};");
             }
 
             public string? WriteEpilogue(IndentedTextWriter writer, NameTable nameTable, string? returnName)
@@ -366,28 +351,18 @@ namespace GeneratorV2.Process
             return false;
         }
 
-        public class VectorOverloadLayer : IOverloadLayer
+        public record VectorOverloadLayer(List<Parameter> PointerParameters,
+            List<Parameter> VectorParameters,
+            List<Parameter> CountParameters) : IOverloadLayer
         {
-            private readonly List<Parameter> _pointerParameters;
-            private readonly List<Parameter> _vectorParameters;
-            private readonly List<Parameter> _countParameters;
-
-            public VectorOverloadLayer(List<Parameter> pointerParameters,
-                List<Parameter> vectorParameters, List<Parameter> countParameters)
-            {
-                _pointerParameters = pointerParameters;
-                _vectorParameters = vectorParameters;
-                _countParameters = countParameters;
-            }
-
             private Scope _scope;
 
             public void WritePrologue(IndentedTextWriter writer, NameTable nameTable)
             {
-                for (int i = 0; i < _vectorParameters.Count; i++)
+                for (int i = 0; i < VectorParameters.Count; i++)
                 {
-                    Parameter pointerParameter = _pointerParameters[i];
-                    Parameter vectorParameter = _vectorParameters[i];
+                    Parameter pointerParameter = PointerParameters[i];
+                    Parameter vectorParameter = VectorParameters[i];
                     string pointerName = nameTable[pointerParameter];
                     string vectorName = nameTable[vectorParameter];
 
@@ -396,7 +371,7 @@ namespace GeneratorV2.Process
 
                 _scope = writer.Scope();
 
-                foreach (Parameter countParameter in _countParameters)
+                foreach (Parameter countParameter in CountParameters)
                 {
                     writer.WriteLine($"{countParameter.Type.ToCSString()} {nameTable[countParameter]} = 1;");
                 }
@@ -453,15 +428,9 @@ namespace GeneratorV2.Process
             return true;
         }
 
-        private class VoidPtrToIntPtrOverloadLayer : IOverloadLayer
+        private record VoidPtrToIntPtrOverloadLayer(
+            List<(Parameter VPtr, Parameter IPtr)> ParameterNames) : IOverloadLayer
         {
-            public readonly List<(Parameter VPtr, Parameter IPtr)> ParameterNames;
-
-            public VoidPtrToIntPtrOverloadLayer(List<(Parameter VPtr, Parameter IPtr)> parameterNames)
-            {
-                ParameterNames = parameterNames;
-            }
-
             public void WritePrologue(IndentedTextWriter writer, NameTable nameTable)
             {
                 foreach ((Parameter vPtr, Parameter iPtr) in ParameterNames)
@@ -551,50 +520,30 @@ namespace GeneratorV2.Process
             return true;
         }
 
-        private class DeleteOverloadLayer : IOverloadLayer
+        private record DeleteOverloadLayer(Parameter LengthParameter,
+            Parameter InParameter,
+            Parameter PointerParameter) : IOverloadLayer
         {
-            public readonly Parameter LengthParameter;
-            public readonly Parameter InParameter;
-            public readonly Parameter PointerParameter;
-
-            public DeleteOverloadLayer(Parameter lengthParameter, Parameter inParameter, Parameter pointerParameter)
-            {
-                LengthParameter = lengthParameter;
-                InParameter = inParameter;
-                PointerParameter = pointerParameter;
-            }
-
-            private Scope Scope;
-
+            private Scope _scope;
             public void WritePrologue(IndentedTextWriter writer, NameTable nameTable)
             {
                 writer.WriteLine($"{LengthParameter.Type.ToCSString()} {nameTable[LengthParameter]} = 1;");
                 writer.WriteLine(
                     $"fixed({PointerParameter.Type.ToCSString()} {nameTable[PointerParameter]} = &{nameTable[InParameter]})");
-                Scope = writer.Scope();
+                _scope = writer.Scope();
             }
 
             public string? WriteEpilogue(IndentedTextWriter writer, NameTable nameTable, string? returnName)
             {
-                Scope.Dispose();
+                _scope.Dispose();
                 return returnName;
             }
         }
 
-        private class GenAndCreateOverloadLayer : IOverloadLayer
+        private record GenAndCreateOverloadLayer(Parameter LengthParameter,
+            Parameter OutParameter,
+            Parameter PointerParameter) : IOverloadLayer
         {
-            public readonly Parameter LengthParameter;
-            public readonly Parameter OutParameter;
-            public readonly Parameter PointerParameter;
-
-            public GenAndCreateOverloadLayer(Parameter lengthParameter, Parameter outParameter,
-                Parameter pointerParameter)
-            {
-                LengthParameter = lengthParameter;
-                OutParameter = outParameter;
-                PointerParameter = pointerParameter;
-            }
-
             public void WritePrologue(IndentedTextWriter writer, NameTable nameTable)
             {
                 writer.WriteLine($"{LengthParameter.Type.ToCSString()} {nameTable[LengthParameter]} = 1;");
@@ -712,17 +661,8 @@ namespace GeneratorV2.Process
             }
         }
 
-        class StringLayer : IOverloadLayer
+        private record StringLayer(Parameter PointerParameter, Parameter StringParameter) : IOverloadLayer
         {
-            public readonly Parameter PointerParameter;
-            public readonly Parameter StringParameter;
-
-            public StringLayer(Parameter pointerParameter, Parameter stringParameter)
-            {
-                PointerParameter = pointerParameter;
-                StringParameter = stringParameter;
-            }
-
             public void WritePrologue(IndentedTextWriter writer, NameTable nameTable)
             {
                 writer.WriteLine(
@@ -736,20 +676,10 @@ namespace GeneratorV2.Process
             }
         }
 
-        class OutStringLayer : IOverloadLayer
+        private record OutStringLayer(Parameter PointerParameter,
+            Parameter StringLengthParameter,
+            Parameter StringParameter) : IOverloadLayer
         {
-            public readonly Parameter PointerParameter;
-            public readonly Parameter StringParameter;
-            public readonly Parameter StringLengthParameter;
-
-            public OutStringLayer(Parameter pointerParameter, Parameter stringLengthParameter,
-                Parameter stringParameter)
-            {
-                PointerParameter = pointerParameter;
-                StringParameter = stringParameter;
-                StringLengthParameter = stringLengthParameter;
-            }
-
             public void WritePrologue(IndentedTextWriter writer, NameTable nameTable)
             {
                 writer.WriteLine(
@@ -893,7 +823,7 @@ namespace GeneratorV2.Process
             }
         }
 
-        record SpanOrArrayLayer(
+        private record SpanOrArrayLayer(
             Parameter PointerParameter,
             Parameter SpanOrArrayParameter,
             Parameter LengthParameter,
@@ -901,7 +831,7 @@ namespace GeneratorV2.Process
             bool ShouldCalculateLength,
             BaseCSType BaseType) : IOverloadLayer
         {
-            private Scope Scope;
+            private Scope _scope;
 
             public void WritePrologue(IndentedTextWriter writer, NameTable nameTable)
             {
@@ -920,12 +850,12 @@ namespace GeneratorV2.Process
 
                 writer.WriteLine(
                     $"fixed ({PointerParameter.Type.ToCSString()} {nameTable[PointerParameter]} = {nameTable[SpanOrArrayParameter]})");
-                Scope = writer.Scope();
+                _scope = writer.Scope();
             }
 
             public string? WriteEpilogue(IndentedTextWriter writer, NameTable nameTable, string? returnName)
             {
-                Scope.Dispose();
+                _scope.Dispose();
                 return returnName;
             }
         }
@@ -994,18 +924,10 @@ namespace GeneratorV2.Process
             }
         }
 
-        class RefInsteadOfPointerLayer : IOverloadLayer
+        private record RefInsteadOfPointerLayer(List<Parameter> RefParameters,
+            List<Parameter> PointerParameters) : IOverloadLayer
         {
-            public readonly List<Parameter> RefParameters;
-            public readonly List<Parameter> PointerParameters;
-
-            public RefInsteadOfPointerLayer(List<Parameter> refParameters, List<Parameter> pointerParameters)
-            {
-                RefParameters = refParameters;
-                PointerParameters = pointerParameters;
-            }
-
-            private Scope Scope;
+            private Scope _scope;
             public void WritePrologue(IndentedTextWriter writer, NameTable nameTable)
             {
                 for (int i = 0; i < RefParameters.Count; i++)
@@ -1014,12 +936,12 @@ namespace GeneratorV2.Process
                     writer.WriteLine($"fixed ({type} {nameTable[PointerParameters[i]]} = &{nameTable[RefParameters[i]]})");
                 }
 
-                Scope = writer.Scope();
+                _scope = writer.Scope();
             }
 
             public string? WriteEpilogue(IndentedTextWriter writer, NameTable nameTable, string? returnName)
             {
-                Scope.Dispose();
+                _scope.Dispose();
                 return returnName;
             }
         }
@@ -1079,17 +1001,8 @@ namespace GeneratorV2.Process
             return true;
         }
 
-        private class OutToReturnOverloadLayer : IOverloadLayer
+        private record OutToReturnOverloadLayer(Parameter OutParameter, CSRef OutType) : IOverloadLayer
         {
-            public readonly Parameter OutParameter;
-            public readonly CSRef OutType;
-
-            public OutToReturnOverloadLayer(Parameter outParameter, CSRef outType)
-            {
-                OutParameter = outParameter;
-                OutType = outType;
-            }
-
             public void WritePrologue(IndentedTextWriter writer, NameTable nameTable)
             {
                 writer.WriteLine($"{OutType.ReferencedType.ToCSString()} {nameTable[OutParameter]};");
