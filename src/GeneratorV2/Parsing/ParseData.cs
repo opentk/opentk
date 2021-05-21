@@ -32,7 +32,7 @@ namespace GeneratorV2.Parsing
     {
         Invalid,
         Void,
-        Bool,
+        Bool8,
         Byte,
         Char8,
         Sbyte,

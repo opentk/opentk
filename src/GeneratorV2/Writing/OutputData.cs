@@ -59,6 +59,14 @@ namespace GeneratorV2.Writing
         }
     }
 
+    public record CSBool8(bool Constant) : BaseCSType
+    {
+        public override string ToCSString()
+        {
+            return "byte";
+        }
+    }
+
     // FIXME: Think through size, see GLArrayType
     public record CSArray(BaseCSType BaseType, bool Readonly) : BaseCSType
     {
