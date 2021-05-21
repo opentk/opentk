@@ -1,8 +1,14 @@
+<<<<<<< HEAD
+=======
+
+// This file is auto generated, do not edit.
+>>>>>>> 72bd3468d87d9e134d1c5671163e881add3e2414
 using System;
 using System.Runtime.InteropServices;
 
 namespace OpenTK.Graphics
 {
+<<<<<<< HEAD
     public unsafe delegate void GLDebugProc(uint source, uint type, uint id, uint severity, int length, char* message, void* userParam);
     public unsafe delegate void GLDebugProcARB(uint source, uint type, uint id, uint severity, int length, char* message, void* userParam);
     public unsafe delegate void GLDebugProcKHR(uint source, uint type, uint id, uint severity, int length, char* message, void* userParam);
@@ -13,11 +19,47 @@ namespace OpenTK.Graphics
     public struct CLEvent{}
 
     public struct GLSync{}
+=======
+    namespace OpenGL
+    {
+        public delegate void GLDebugProc(DebugSource source, DebugType type, uint id, DebugSeverity severity, int length, IntPtr message, IntPtr userParam);
+        public unsafe delegate void GLDebugProcARB(DebugSource source, DebugType type, uint id, DebugSeverity severity, int length, char* message, void* userParam);
+        public unsafe delegate void GLDebugProcKHR(DebugSource source, DebugType type, uint id, DebugSeverity severity, int length, char* message, void* userParam);
+        public unsafe delegate void GLDebugProcAMD(uint id, uint category, uint severity, int length, char* message, void* userParam);
+        public unsafe delegate void GLDebugProcNV();
+    }
+
+    namespace OpenGLES1
+    {
+        public unsafe delegate void GLDebugProc(DebugSource source, DebugType type, uint id, DebugSeverity severity, int length, char* message, void* userParam);
+        public unsafe delegate void GLDebugProcARB(DebugSource source, DebugType type, uint id, DebugSeverity severity, int length, char* message, void* userParam);
+        public unsafe delegate void GLDebugProcKHR(DebugSource source, DebugType type, uint id, DebugSeverity severity, int length, char* message, void* userParam);
+        public unsafe delegate void GLDebugProcAMD(uint id, uint category, uint severity, int length, char* message, void* userParam);
+        public unsafe delegate void GLDebugProcNV();
+    }
+
+    namespace OpenGLES3
+    {
+        public unsafe delegate void GLDebugProc(DebugSource source, DebugType type, uint id, DebugSeverity severity, int length, char* message, void* userParam);
+        public unsafe delegate void GLDebugProcARB(DebugSource source, DebugType type, uint id, DebugSeverity severity, int length, char* message, void* userParam);
+        public unsafe delegate void GLDebugProcKHR(DebugSource source, DebugType type, uint id, DebugSeverity severity, int length, char* message, void* userParam);
+        public unsafe delegate void GLDebugProcAMD(uint id, uint category, uint severity, int length, char* message, void* userParam);
+        public unsafe delegate void GLDebugProcNV();
+    }
+
+    public struct CLContext {}
+    public struct CLEvent {}
+
+    public struct GLSync {}
+>>>>>>> 72bd3468d87d9e134d1c5671163e881add3e2414
     public unsafe struct GLSyncObject
     {
         internal GLSync* ObjPtr;
         internal GLSyncObject(GLSync* syncObject)
+<<<<<<< HEAD
 
+=======
+>>>>>>> 72bd3468d87d9e134d1c5671163e881add3e2414
         {
             ObjPtr = syncObject;
         }
