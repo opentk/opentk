@@ -9,8 +9,4 @@
     <StartupObject>GeneratorV2.Program</StartupObject>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Folder Include="Process\Overloaders" />
-  </ItemGroup>
-
 </Project>
