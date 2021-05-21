@@ -20,6 +20,7 @@ namespace GeneratorV2.Process
 
             new StringReturnOverloader(),
 
+            new BoolOverloader(),
             new FunctionPtrToDelegateOverloader(),
             new PointerToOffsetOverloader(),
             new VoidPtrToIntPtrOverloader(),
@@ -350,7 +351,7 @@ namespace GeneratorV2.Process
                     return bt.Type switch
                     {
                         PrimitiveType.Void => new CSVoid(bt.Constant),
-                        PrimitiveType.Bool => new CSType("bool", bt.Constant),
+                        PrimitiveType.Bool8 => new CSBool8(bt.Constant),
                         PrimitiveType.Byte => new CSType("byte", bt.Constant),
                         PrimitiveType.Char8 => new CSChar8(bt.Constant),
                         PrimitiveType.Sbyte => new CSType("sbyte", bt.Constant),
