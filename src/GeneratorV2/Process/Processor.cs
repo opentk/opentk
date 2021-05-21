@@ -4,11 +4,7 @@ using GeneratorV2.Writing;
 using GeneratorV2.Extensions;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GeneratorV2.Process
 {
@@ -25,7 +21,6 @@ namespace GeneratorV2.Process
             new StringReturnOverloader(),
 
             new PointerToOffsetOverloader(),
-            new VectorOverloader(),
             new VoidPtrToIntPtrOverloader(),
             new GenCreateAndDeleteOverloader(),
             new StringOverloader(),
