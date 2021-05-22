@@ -259,6 +259,11 @@ namespace GeneratorV2.Process
 
         public bool TryGenerateOverloads(Overload overload, out List<Overload>? newOverloads)
         {
+            if (overload.NativeFunction.EntryPoint == "glNamedProgramLocalParameters4fvEXT")
+            {
+                ;
+            }
+
             Match m = Regex.Match(overload.OverloadName, "([1-4])([f|d|h|i])v");
             if (!m.Success || !int.TryParse(m.Groups[1].Value, out int vectorSize))
             {
@@ -269,7 +274,8 @@ namespace GeneratorV2.Process
             if (vectorType == "f") vectorType = "";
 
             NameTable nameTable = overload.NameTable.New();
-            Parameter[] parameters = overload.InputParameters;
+            Parameter[] parameters = overload.InputParameters.ToArray();
+            List<Parameter> countParameters = new();
             List<(Parameter ptrParam, Parameter vectorParam, string firstElem)> overloadedParams = new();
 
             for (var i = 0; i < parameters.Length; i++)
@@ -281,7 +287,15 @@ namespace GeneratorV2.Process
                     continue;
                 }
 
-                ParameterReference? reference = null;
+                string typeName = "Vector" + vectorSize + vectorType;
+                string firstElem = ".X";
+                if (!_existingVectorTypes.Contains(typeName))
+                {
+                    typeName = baseType.TypeName;
+                    firstElem = "";
+                }
+
+                Parameter? refParam = null;
                 Constant constant;
                 if (parameter.Length is Constant cnst)
                 {
@@ -289,7 +303,7 @@ namespace GeneratorV2.Process
                 }
                 else if (parameter.Length is BinaryOperation binary)
                 {
-
+                    ParameterReference? reference = null;
                     if (binary.Left is ParameterReference leftRef && binary.Right is Constant rightConst)
                     {
                         reference = leftRef;
@@ -301,19 +315,14 @@ namespace GeneratorV2.Process
                         constant = leftConst;
                     }
                     else continue;
+
+                    refParam = parameters.First(p => p.Name == reference.ParameterName);
+                    countParameters.Add(refParam);
                 }
                 else continue;
 
                 if (constant.Value == vectorSize)
                 {
-                    string typeName = "Vector" + vectorSize + vectorType;
-                    string firstElem = ".X";
-                    if (!_existingVectorTypes.Contains(typeName))
-                    {
-                        typeName = baseType.TypeName;
-                        firstElem = "";
-                    }
-
                     parameters[i] = parameter with
                     {
                         Type = new CSRef(ptr.Constant || baseType.Constant ? CSRef.Type.In : CSRef.Type.Ref,
@@ -336,22 +345,27 @@ namespace GeneratorV2.Process
                 overload with
                 {
                     OverloadName = overload.OverloadName.Remove(m.Index, m.Length),
-                    InputParameters = parameters,
+                    InputParameters = parameters.Except(countParameters).ToArray(),
                     NameTable = nameTable,
                     NestedOverload = overload,
-                    MarshalLayerToNested = new VectorLayer(overloadedParams)
-                }
+                    MarshalLayerToNested = new SingleVectorLayer(countParameters, overloadedParams)
+                },
             };
             return true;
         }
 
-        public record VectorLayer(
+        public record SingleVectorLayer(
+            List<Parameter> CountParameters,
             List<(Parameter ptrParam, Parameter vectorParam, string firstElem)> OverloadedParameters) : IOverloadLayer
         {
             private CsScope _csScope;
             public void WritePrologue(IndentedTextWriter writer, NameTable nameTable)
             {
-                foreach ((Parameter ptrParam, Parameter vectorParam, string firstElem) in OverloadedParameters)
+                foreach (var refParam in CountParameters)
+                {
+                    writer.WriteLine($"{refParam.Type.ToCSString()} {nameTable[refParam]} = 1;");
+                }
+                foreach (var (ptrParam, vectorParam, firstElem) in OverloadedParameters)
                 {
                     writer.WriteLine($"fixed ({ptrParam.Type.ToCSString()} {nameTable[ptrParam]} = &{nameTable[vectorParam]}{firstElem})");
                 }
