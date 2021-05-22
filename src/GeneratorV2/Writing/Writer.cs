@@ -67,18 +67,18 @@ namespace GeneratorV2.Writing
             writer.WriteLine("using System.Runtime.InteropServices;");
             writer.WriteLine();
             writer.WriteLine($"namespace {GraphicsNamespace}.{glNamespace}");
-            using (writer.Scope())
+            using (writer.CsScope())
             {
                 writer.WriteLine($"public static unsafe partial class GL");
-                using (writer.Scope())
+                using (writer.CsScope())
                 {
                     foreach (var (vendor, group) in groups)
                     {
-                        Scope? scope = null;
+                        CsScope? scope = null;
                         if (!string.IsNullOrWhiteSpace(vendor))
                         {
                             writer.WriteLine($"public static unsafe partial class {vendor}");
-                            scope = writer.Scope();
+                            scope = writer.CsScope();
                         }
 
                         foreach (var (function, postfixName) in group.Functions)
@@ -135,7 +135,7 @@ namespace GeneratorV2.Writing
 
             writer.WriteLine($"[UnmanagedCallersOnly]");
             writer.WriteLine($"private static {returnType} {name}_Lazy({signature})");
-            using (writer.Scope())
+            using (writer.CsScope())
             {
                 writer.WriteLine($"_{name}_fnptr = (delegate* unmanaged<{delegateTypes}>){LoaderBindingsContext}.GetProcAddress(\"{function.EntryPoint}\");");
 
@@ -168,18 +168,18 @@ namespace GeneratorV2.Writing
             writer.WriteLine("using Half = System.Half;");
             writer.WriteLine();
             writer.WriteLine($"namespace {GraphicsNamespace}.{glNamespace}");
-            using (writer.Scope())
+            using (writer.CsScope())
             {
                 writer.WriteLine($"public static unsafe partial class GL");
-                using (writer.Scope())
+                using (writer.CsScope())
                 {
                     foreach (var (vendor, group) in groups)
                     {
-                        Scope? scope = null;
+                        CsScope? scope = null;
                         if (!string.IsNullOrWhiteSpace(vendor))
                         {
                             writer.WriteLine($"public static unsafe partial class {vendor}");
-                            scope = writer.Scope();
+                            scope = writer.CsScope();
                         }
 
                         foreach (var (overs, postfixNativeCall) in group.Overloads)
@@ -218,7 +218,7 @@ namespace GeneratorV2.Writing
                 }
             }
 
-            using (indentedTextWriter.Scope())
+            using (indentedTextWriter.CsScope())
             {
                 if (overload1.ReturnType is not CSVoid && overload1.NativeFunction.ReturnType is not CSVoid)
                 {
@@ -278,7 +278,7 @@ namespace GeneratorV2.Writing
             writer.WriteLine("using System;");
             writer.WriteLine();
             writer.WriteLine($"namespace {GraphicsNamespace}.{apiNamespace}");
-            using (writer.Scope())
+            using (writer.CsScope())
             {
                 WriteAllEnum(writer, allEnums);
                 WriteEnumGroups(writer, enumGroups);
@@ -291,7 +291,7 @@ namespace GeneratorV2.Writing
             {
                 if (group.IsFlags) writer.WriteLine($"[Flags]");
                 writer.WriteLine($"public enum {group.Name} : uint");
-                using (writer.Scope())
+                using (writer.CsScope())
                 {
                     foreach (var member in group.Members)
                     {
@@ -304,7 +304,7 @@ namespace GeneratorV2.Writing
         private static void WriteAllEnum(IndentedTextWriter writer, List<EnumMemberData> allEnums)
         {
             writer.WriteLine($"public enum All : uint");
-            using (writer.Scope())
+            using (writer.CsScope())
             {
                 foreach (var member in allEnums)
                 {

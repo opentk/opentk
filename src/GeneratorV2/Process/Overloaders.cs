@@ -471,18 +471,18 @@ namespace GeneratorV2.Process
             Parameter InParameter,
             Parameter PointerParameter) : IOverloadLayer
         {
-            private Scope _scope;
+            private CsScope _csScope;
             public void WritePrologue(IndentedTextWriter writer, NameTable nameTable)
             {
                 writer.WriteLine($"{LengthParameter.Type.ToCSString()} {nameTable[LengthParameter]} = 1;");
                 writer.WriteLine(
                     $"fixed({PointerParameter.Type.ToCSString()} {nameTable[PointerParameter]} = &{nameTable[InParameter]})");
-                _scope = writer.Scope();
+                _csScope = writer.CsScope();
             }
 
             public string? WriteEpilogue(IndentedTextWriter writer, NameTable nameTable, string? returnName)
             {
-                _scope.Dispose();
+                _csScope.Dispose();
                 return returnName;
             }
         }
@@ -778,7 +778,7 @@ namespace GeneratorV2.Process
             bool ShouldCalculateLength,
             BaseCSType BaseType) : IOverloadLayer
         {
-            private Scope _scope;
+            private CsScope _csScope;
 
             public void WritePrologue(IndentedTextWriter writer, NameTable nameTable)
             {
@@ -797,12 +797,12 @@ namespace GeneratorV2.Process
 
                 writer.WriteLine(
                     $"fixed ({PointerParameter.Type.ToCSString()} {nameTable[PointerParameter]} = {nameTable[SpanOrArrayParameter]})");
-                _scope = writer.Scope();
+                _csScope = writer.CsScope();
             }
 
             public string? WriteEpilogue(IndentedTextWriter writer, NameTable nameTable, string? returnName)
             {
-                _scope.Dispose();
+                _csScope.Dispose();
                 return returnName;
             }
         }
@@ -874,7 +874,7 @@ namespace GeneratorV2.Process
         private record RefInsteadOfPointerLayer(List<Parameter> RefParameters,
             List<Parameter> PointerParameters) : IOverloadLayer
         {
-            private Scope _scope;
+            private CsScope _csScope;
             public void WritePrologue(IndentedTextWriter writer, NameTable nameTable)
             {
                 for (int i = 0; i < RefParameters.Count; i++)
@@ -883,12 +883,12 @@ namespace GeneratorV2.Process
                     writer.WriteLine($"fixed ({type} {nameTable[PointerParameters[i]]} = &{nameTable[RefParameters[i]]})");
                 }
 
-                _scope = writer.Scope();
+                _csScope = writer.CsScope();
             }
 
             public string? WriteEpilogue(IndentedTextWriter writer, NameTable nameTable, string? returnName)
             {
-                _scope.Dispose();
+                _csScope.Dispose();
                 return returnName;
             }
         }

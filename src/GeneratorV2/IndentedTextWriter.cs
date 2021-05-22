@@ -53,10 +53,10 @@ namespace GeneratorV2
         }
 
         // Utility method for creating a cs scope "{}".
-        public Scope Scope()
+        public CsScope CsScope()
         {
             WriteLine("{");
-            return new Scope(Indent());
+            return new CsScope(Indent());
         }
 
         public void Dispose()
@@ -67,11 +67,11 @@ namespace GeneratorV2
         }
     }
 
-    public struct Scope : IDisposable
+    public struct CsScope : IDisposable
     {
         public Indentation Indentation;
 
-        public Scope(Indentation indentation)
+        public CsScope(Indentation indentation)
         {
             Indentation = indentation;
         }
