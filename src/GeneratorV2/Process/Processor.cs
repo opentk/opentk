@@ -15,6 +15,28 @@ namespace GeneratorV2.Process
 {
     public static class Processor
     {
+        // /!\ IMPORTANT /!\:
+        // All return type overloaders need to run before any of the other overloaders.
+        // This is to ensure that correct scoping for the new return variables.
+        // FIXME: Maybe we dont want classes for these?
+        static readonly IOverloader[] Overloaders = new IOverloader[]
+        {
+            new TrimNameOverloader(),
+
+            new StringReturnOverloader(),
+
+            new BoolOverloader(),
+            new FunctionPtrToDelegateOverloader(),
+            new VectorAndMatrixOverloader(),
+            new PointerToOffsetOverloader(),
+            new VoidPtrToIntPtrOverloader(),
+            new GenCreateAndDeleteOverloader(),
+            new StringOverloader(),
+            new SpanAndArrayOverloader(),
+            new RefInsteadOfPointerOverloader(),
+            new OutToReturnOverloader(),
+        };
+
         // This is only used to pass data from ProcessSpec to GetOutputApiFromRequireTags
         private record ProcessedGLInformation(
             Dictionary<string, OverloadedFunction> AllFunctions,

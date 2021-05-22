@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text.RegularExpressions;
 using GeneratorV2.Data;
 using GeneratorV2.Writing;
@@ -237,6 +238,76 @@ namespace GeneratorV2.Process
                 }
             }
         }
+
+    public sealed class VectorAndMatrixOverloader : IOverloader
+    {
+        public bool TryGenerateOverloads(Overload overload, out List<Overload>? newOverloads)
+        {
+            Match m = Regex.Match(overload.NativeFunction.EntryPoint, "([2-4])([f|d|h|i])v");
+            if (!m.Success || !int.TryParse(m.Groups[1].Value, out int vectorSize))
+            {
+                newOverloads = null;
+                return false;
+            }
+            var vectorType = m.Groups[2].Value;
+            if (vectorType == "f") vectorType = "";
+
+            NameTable nameTable = overload.NameTable.New();
+            Parameter[] parameters = overload.InputParameters;
+            List<(Parameter ptrParam, Parameter vectorParam)> overloadedParams = new();
+
+            for (var i = 0; i < parameters.Length; i++)
+            {
+                Parameter parameter = parameters[i];
+                if (parameter.Length == null || parameter.Type is not CSPointer ptr || ptr.BaseType is not CSType baseType)
+                {
+                    continue;
+                }
+
+                if (parameter.Length is Constant constant && constant.Value == vectorSize)
+                {
+                    parameters[i] = parameter with { Type = new CSType("Vector" + vectorSize + vectorType, baseType.Constant), Length = null };
+                    nameTable.Rename(parameter, parameter.Name + "_ptr");
+                    overloadedParams.Add((parameter, parameters[i]));
+                }
+            }
+
+            if (overloadedParams.Count == 0)
+            {
+                newOverloads = null;
+                return false;
+            }
+
+            newOverloads = new List<Overload>()
+            {
+                overload with
+                {
+                    InputParameters = parameters,
+                    NameTable = nameTable,
+                    NestedOverload = overload,
+                    MarshalLayerToNested = new VectorLayer(overloadedParams)
+                }
+            };
+            return true;
+        }
+
+        public record VectorLayer(
+            List<(Parameter ptrParam, Parameter vectorParam)> OverloadedParameters) : IOverloadLayer
+        {
+            public void WritePrologue(IndentedTextWriter writer, NameTable nameTable)
+            {
+                foreach ((Parameter ptrParam, Parameter vectorParam) in OverloadedParameters)
+                {
+                    writer.WriteLine($"{ptrParam.Type.ToCSString()} {nameTable[ptrParam]} = &{nameTable[vectorParam]}.X;");
+                }
+            }
+
+            public string? WriteEpilogue(IndentedTextWriter writer, NameTable nameTable, string? returnName)
+            {
+                return returnName;
+            }
+        }
+    }
 
     public sealed class PointerToOffsetOverloader : IOverloader
     {
