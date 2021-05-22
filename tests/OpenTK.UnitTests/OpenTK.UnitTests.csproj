@@ -7,8 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.7.1"/>
-    <PackageReference Include="xunit" Version="2.4.1"/>
+    <PackageReference Include="JetBrains.Annotations" Version="2021.1.0">
+      <PrivateAssets>all</PrivateAssets>      
+    </PackageReference>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.7.1" />
+    <PackageReference Include="xunit" Version="2.4.1" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.3">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
@@ -17,13 +20,13 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="opentoolkit.redist.glfw" Version="3.3.0-pre20190419183326"/>
+    <PackageReference Include="opentoolkit.redist.glfw" Version="3.3.0-pre20190419183326" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\OpenTK.Graphics\OpenTK.Graphics.csproj"/>
-    <ProjectReference Include="..\..\src\OpenTK.Windowing.Desktop\OpenTK.Windowing.Desktop.csproj"/>
-    <ProjectReference Include="..\..\src\OpenTK.Windowing.GraphicsLibraryFramework\OpenTK.Windowing.GraphicsLibraryFramework.csproj"/>
+    <ProjectReference Include="..\..\src\OpenTK.Graphics\OpenTK.Graphics.csproj" />
+    <ProjectReference Include="..\..\src\OpenTK.Windowing.Desktop\OpenTK.Windowing.Desktop.csproj" />
+    <ProjectReference Include="..\..\src\OpenTK.Windowing.GraphicsLibraryFramework\OpenTK.Windowing.GraphicsLibraryFramework.csproj" />
   </ItemGroup>
 
 </Project>
