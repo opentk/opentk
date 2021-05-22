@@ -194,6 +194,9 @@ Requirements
 - To develop Android applications: Visual Studio and Xamarin
 - To develop iOS applications: Visual Studio, Xamarin and XCode
 
+Please also see the following file for further details:
+[Optional Dependancies](OptionalDepenancies.md)
+
 
 Documentation
 =============
