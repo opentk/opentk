@@ -1,3 +1,14 @@
+## 5.0-pre.4
+* Fixed debug callbacks (GL.DebugMessageCallback)
+* Created an offset overloader to deal with glDrawElements* and glVertexAttribXPointer
+* Created a bool overloader to properly manage 8 bit booleans in the spec
+* Manual overload for GL.CreateShaderProgramv (@deccer)
+* Added the old 4.0 name trimmer
+* Opentk.compute changed UIntPtr to nuint
+* OpenCL OpenGL interop added
+* Fixed singular delete overloads
+* General overloader code cleanup
+
 ## 5.0-pre.3
 * Fix an issue when overloading a void* to an IntPtr.
 
