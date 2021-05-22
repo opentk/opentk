@@ -22,7 +22,7 @@ namespace GeneratorV2.Process
 
             new BoolOverloader(),
             new FunctionPtrToDelegateOverloader(),
-            new VectorAndMatrixOverloader(),
+            new VectorOverloader(),
             new PointerToOffsetOverloader(),
             new VoidPtrToIntPtrOverloader(),
             new GenCreateAndDeleteOverloader(),

@@ -239,7 +239,7 @@ namespace GeneratorV2.Process
             }
         }
 
-    public sealed class VectorAndMatrixOverloader : IOverloader
+    public sealed class VectorOverloader : IOverloader
     {
         public bool TryGenerateOverloads(Overload overload, out List<Overload>? newOverloads)
         {
@@ -259,14 +259,43 @@ namespace GeneratorV2.Process
             for (var i = 0; i < parameters.Length; i++)
             {
                 Parameter parameter = parameters[i];
-                if (parameter.Length == null || parameter.Type is not CSPointer ptr || ptr.BaseType is not CSType baseType)
+                if (parameter.Length == null ||
+                    parameter.Type is not CSPointer ptr || ptr.BaseType is not CSType baseType)
                 {
                     continue;
                 }
 
-                if (parameter.Length is Constant constant && constant.Value == vectorSize)
+                ParameterReference? reference = null;
+                Constant constant;
+                if (parameter.Length is Constant cnst)
                 {
-                    parameters[i] = parameter with { Type = new CSType("Vector" + vectorSize + vectorType, baseType.Constant), Length = null };
+                    constant = cnst;
+                }
+                else if (parameter.Length is BinaryOperation binary)
+                {
+
+                    if (binary.Left is ParameterReference leftRef && binary.Right is Constant rightConst)
+                    {
+                        reference = leftRef;
+                        constant = rightConst;
+                    }
+                    else if (binary.Right is ParameterReference rightRef && binary.Left is Constant leftConst)
+                    {
+                        reference = rightRef;
+                        constant = leftConst;
+                    }
+                    else continue;
+                }
+                else continue;
+
+                if (constant.Value == vectorSize)
+                {
+                    parameters[i] = parameter with
+                    {
+                        Type = new CSRef(ptr.Constant ? CSRef.Type.In : CSRef.Type.Ref,
+                            new CSType("Vector" + vectorSize + vectorType, baseType.Constant)),
+                        Length = null
+                    };
                     nameTable.Rename(parameter, parameter.Name + "_ptr");
                     overloadedParams.Add((parameter, parameters[i]));
                 }
