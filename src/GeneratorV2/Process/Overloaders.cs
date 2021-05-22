@@ -158,7 +158,7 @@ namespace GeneratorV2.Process
             {
                 foreach (var (byteParam, boolParam) in OverloadedParameters)
                 {
-                    writer.WriteLine($"byte {nameTable[byteParam]} = {nameTable[boolParam]} ? 1 : 0;");
+                    writer.WriteLine($"byte {nameTable[byteParam]} = (byte)({nameTable[boolParam]} ? 1 : 0);");
                 }
             }
 
