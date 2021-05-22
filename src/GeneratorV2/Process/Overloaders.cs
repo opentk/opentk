@@ -241,9 +241,25 @@ namespace GeneratorV2.Process
 
     public sealed class VectorOverloader : IOverloader
     {
+        private readonly HashSet<string> _existingVectorTypes = new HashSet<string>()
+        {
+            "Vector2",
+            "Vector2d",
+            "Vector2h",
+            "Vector2i",
+            "Vector3",
+            "Vector3d",
+            "Vector3h",
+            "Vector3i",
+            "Vector4",
+            "Vector4d",
+            "Vector4h",
+            "Vector4i",
+        };
+
         public bool TryGenerateOverloads(Overload overload, out List<Overload>? newOverloads)
         {
-            Match m = Regex.Match(overload.NativeFunction.EntryPoint, "([2-4])([f|d|h|i])v");
+            Match m = Regex.Match(overload.OverloadName, "([1-4])([f|d|h|i])v");
             if (!m.Success || !int.TryParse(m.Groups[1].Value, out int vectorSize))
             {
                 newOverloads = null;
@@ -254,7 +270,7 @@ namespace GeneratorV2.Process
 
             NameTable nameTable = overload.NameTable.New();
             Parameter[] parameters = overload.InputParameters;
-            List<(Parameter ptrParam, Parameter vectorParam)> overloadedParams = new();
+            List<(Parameter ptrParam, Parameter vectorParam, string firstElem)> overloadedParams = new();
 
             for (var i = 0; i < parameters.Length; i++)
             {
@@ -290,14 +306,22 @@ namespace GeneratorV2.Process
 
                 if (constant.Value == vectorSize)
                 {
+                    string typeName = "Vector" + vectorSize + vectorType;
+                    string firstElem = ".X";
+                    if (!_existingVectorTypes.Contains(typeName))
+                    {
+                        typeName = baseType.TypeName;
+                        firstElem = "";
+                    }
+
                     parameters[i] = parameter with
                     {
-                        Type = new CSRef(ptr.Constant ? CSRef.Type.In : CSRef.Type.Ref,
-                            new CSType("Vector" + vectorSize + vectorType, baseType.Constant)),
+                        Type = new CSRef(ptr.Constant || baseType.Constant ? CSRef.Type.In : CSRef.Type.Ref,
+                            new CSType(typeName, baseType.Constant)),
                         Length = null
                     };
                     nameTable.Rename(parameter, parameter.Name + "_ptr");
-                    overloadedParams.Add((parameter, parameters[i]));
+                    overloadedParams.Add((parameter, parameters[i], firstElem));
                 }
             }
 
@@ -311,6 +335,7 @@ namespace GeneratorV2.Process
             {
                 overload with
                 {
+                    OverloadName = overload.OverloadName.Remove(m.Index, m.Length),
                     InputParameters = parameters,
                     NameTable = nameTable,
                     NestedOverload = overload,
@@ -321,18 +346,22 @@ namespace GeneratorV2.Process
         }
 
         public record VectorLayer(
-            List<(Parameter ptrParam, Parameter vectorParam)> OverloadedParameters) : IOverloadLayer
+            List<(Parameter ptrParam, Parameter vectorParam, string firstElem)> OverloadedParameters) : IOverloadLayer
         {
+            private CsScope _csScope;
             public void WritePrologue(IndentedTextWriter writer, NameTable nameTable)
             {
-                foreach ((Parameter ptrParam, Parameter vectorParam) in OverloadedParameters)
+                foreach ((Parameter ptrParam, Parameter vectorParam, string firstElem) in OverloadedParameters)
                 {
-                    writer.WriteLine($"{ptrParam.Type.ToCSString()} {nameTable[ptrParam]} = &{nameTable[vectorParam]}.X;");
+                    writer.WriteLine($"fixed ({ptrParam.Type.ToCSString()} {nameTable[ptrParam]} = &{nameTable[vectorParam]}{firstElem})");
                 }
+
+                _csScope = writer.CsScope();
             }
 
             public string? WriteEpilogue(IndentedTextWriter writer, NameTable nameTable, string? returnName)
             {
+                _csScope.Dispose();
                 return returnName;
             }
         }
