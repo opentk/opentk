@@ -1,5 +1,3 @@
-
-// This file is auto generated, do not edit.
 using System;
 using System.Runtime.InteropServices;
 

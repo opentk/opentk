@@ -14,33 +14,6 @@ namespace GeneratorV2.Writing
 {
     class Writer
     {
-        // FIXME: Find a better place
-        // Move this into IndentedTextWriter.cs
-        public struct CsScope : IDisposable
-        {
-            public IndentedTextWriter.Scope Scope;
-
-            public CsScope(IndentedTextWriter.Scope scope)
-            {
-                Scope = scope;
-            }
-
-            public void Dispose()
-            {
-                Scope.Dispose();
-                Scope.Writer.WriteLine("}");
-            }
-        }
-
-        // FIXME: Find a better place
-        // Utility for opening a "{ }" scope for C# code.
-        public static CsScope Scope(IndentedTextWriter writer)
-        {
-            writer.WriteLine("{");
-            return new CsScope(writer.Indentation());
-        }
-
-        // FIXME: Should this be "OpenTK.Graphics.OpenGL" instead?
         const string BaseNamespace = "OpenTK";
         const string GraphicsNamespace = BaseNamespace + ".Graphics";
         const string LoaderClass = "GLLoader";
@@ -51,9 +24,6 @@ namespace GeneratorV2.Writing
             string outputProjectPath = Path.Combine(
                 Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? throw new NullReferenceException(),
                 "..", "..", "..", "..", GraphicsNamespace);
-
-            // RewriteProject(outputProjectPath);
-
 
             // This should create folders to put the versions in
             foreach (var api in data.Apis)
@@ -86,165 +56,6 @@ namespace GeneratorV2.Writing
             }
         }
 
-        private static void RewriteProject(string outputProjectPath)
-        {
-            try
-            {
-                Directory.Delete(outputProjectPath, true);
-            }
-            catch (UnauthorizedAccessException)
-            {
-            }
-
-            Directory.CreateDirectory(outputProjectPath);
-
-            // NAMESPACE:
-            WritePaketFile(outputProjectPath);
-
-            WriteProjectFile(outputProjectPath);
-
-            WriteBindingsLoader(outputProjectPath);
-
-            WriteBuiltInTypes(outputProjectPath);
-        }
-
-        private static void WritePaketFile(string projectPath)
-        {
-
-            using var writer = new IndentedTextWriter(Path.Combine(projectPath, $"paket"));
-
-            writer.WriteLine("type file");
-            writer.WriteLine($"id {GraphicsNamespace}");
-
-            writer.WriteLine("description");
-            using (writer.Indentation())
-            {
-                writer.WriteLine("OpenGl and OpenGlEs bindings for dotnet from the Khronos openGL c library.");
-            }
-
-            writer.WriteLine("dependencies");
-            using (writer.Indentation())
-            {
-                writer.WriteLine("framework: net5.0");
-                using (writer.Indentation())
-                {
-                    writer.WriteLine($"{BaseNamespace}.Core ~> #VERSION#");
-                    writer.WriteLine($"{BaseNamespace}.Mathematics ~> #VERSION#");
-                }
-            }
-
-            writer.WriteLine("files");
-            using (writer.Indentation())
-            {
-                writer.WriteLine($"bin\\Release\\net5.0\\{GraphicsNamespace}.dll ==> lib\\net5.0");
-                writer.WriteLine($"bin\\Release\\net5.0\\{GraphicsNamespace}.pdb ==> lib\\net5.0");
-            }
-        }
-
-        private static void WriteProjectFile(string projectPath)
-        {
-            using var writer = new IndentedTextWriter(Path.Combine(projectPath, $"{GraphicsNamespace}.csproj"));
-
-            // FIXME: Maybe get the version from somewhere too?
-            // The indentation is gonna be weird in the file doing it like this,
-            // but it shouldn't be edited in there anyways.
-            writer.Write($@"
-                <!-- This file is auto generated, do not edit -->
-                <Project Sdk=""Microsoft.NET.Sdk"">
-                    <PropertyGroup>
-                        <TargetFramework>net5.0</TargetFramework>
-                        <Nullable>enable</Nullable>
-                        <RootNamespace>{GraphicsNamespace}</RootNamespace>
-                        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-                    </PropertyGroup>
-                    <ItemGroup>
-                        <ProjectReference Include=""../{BaseNamespace}.Core/{BaseNamespace}.Core.csproj"" />
-                        <ProjectReference Include=""../{BaseNamespace}.Mathematics/{BaseNamespace}.Mathematics.csproj"" />
-                    </ItemGroup>
-                </Project>
-                ");
-        }
-
-        private static void WriteBindingsLoader(string projectPath)
-        {
-            using var writer = new IndentedTextWriter(Path.Combine(projectPath, $"{LoaderClass}.cs"));
-            writer.Write($@"
-                // This file is auto generated, do not edit.
-                using System;
-
-                namespace {GraphicsNamespace}
-                {{
-                    public unsafe static class {LoaderClass}
-                    {{
-                        internal static object LockObj = new object();
-                        private static IBindingsContext? _bindingsContext;
-                        internal static IBindingsContext BindingsContext => _bindingsContext ?? throw new Exception(""Bindings not loaded, load with GLLoader.LoadBindings"");
-                        public static void LoadBindings(IBindingsContext c) => _bindingsContext = c;
-                    }}
-                }}
-                ");
-        }
-
-        private static void WriteBuiltInTypes(string projectPath)
-        {
-            using var writer = new IndentedTextWriter(Path.Combine(projectPath, "Types.cs"));
-            writer.Write($@"
-                // This file is auto generated, do not edit.
-                using System;
-                using System.Runtime.InteropServices;
-
-                namespace {GraphicsNamespace}
-                {{
-                    public unsafe delegate void GLDebugProc(uint source, uint type, uint id, uint severity, int length, char* message, void* userParam);
-                    public unsafe delegate void GLDebugProcARB(uint source, uint type, uint id, uint severity, int length, char* message, void* userParam);
-                    public unsafe delegate void GLDebugProcKHR(uint source, uint type, uint id, uint severity, int length, char* message, void* userParam);
-                    public unsafe delegate void GLDebugProcAMD(uint id, uint category, uint severity, int length, char* message, void* userParam);
-                    public unsafe delegate void GLDebugProcNV();
-
-                    public struct CLContext{{}}
-                    public struct CLEvent{{}}
-
-                    public struct GLSync{{}}
-                    public unsafe struct GLSyncObject
-                    {{
-                        internal GLSync* ObjPtr;
-                        internal GLSyncObject(GLSync* syncObject)
-
-                        {{
-                            ObjPtr = syncObject;
-                        }}
-
-                        public static implicit operator GLSync*(GLSyncObject obj) => obj.ObjPtr;
-                        public static implicit operator GLSyncObject(GLSync* obj) => new GLSyncObject(obj);
-                    }}
-
-                    [StructLayout(LayoutKind.Explicit)]
-                    public struct GLHandleARB
-                    {{
-                        [FieldOffset(0)] private readonly uint _value1;
-                        [FieldOffset(0)] private readonly IntPtr _value2;
-
-                        public GLHandleARB(uint val)
-                        {{
-                            _value2 = IntPtr.Zero;
-                            _value1 = val;
-                        }}
-
-                        public GLHandleARB(IntPtr val)
-                        {{
-                            _value1 = 0;
-                            _value2 = val;
-                        }}
-
-                        public static implicit operator GLHandleARB(uint val) => new GLHandleARB(val);
-                        public static implicit operator GLHandleARB(IntPtr val) => new GLHandleARB(val);
-                        public static implicit operator uint(GLHandleARB val) => val._value1;
-                        public static implicit operator IntPtr(GLHandleARB val) => val._value2;
-                    }}
-                }}
-                ");
-        }
-
         private static void WriteNativeFunctions(
             string directoryPath,
             string glNamespace,
@@ -255,12 +66,11 @@ namespace GeneratorV2.Writing
             writer.WriteLine("using System;");
             writer.WriteLine("using System.Runtime.InteropServices;");
             writer.WriteLine();
-            // NAMESPACE:
             writer.WriteLine($"namespace {GraphicsNamespace}.{glNamespace}");
-            using (Scope(writer))
+            using (writer.CsScope())
             {
                 writer.WriteLine($"public static unsafe partial class GL");
-                using (Scope(writer))
+                using (writer.CsScope())
                 {
                     foreach (var (vendor, group) in groups)
                     {
@@ -268,7 +78,7 @@ namespace GeneratorV2.Writing
                         if (!string.IsNullOrWhiteSpace(vendor))
                         {
                             writer.WriteLine($"public static unsafe partial class {vendor}");
-                            scope = Scope(writer);
+                            scope = writer.CsScope();
                         }
 
                         foreach (var (function, postfixName) in group.Functions)
@@ -325,7 +135,7 @@ namespace GeneratorV2.Writing
 
             writer.WriteLine($"[UnmanagedCallersOnly]");
             writer.WriteLine($"private static {returnType} {name}_Lazy({signature})");
-            using (Scope(writer))
+            using (writer.CsScope())
             {
                 writer.WriteLine($"_{name}_fnptr = (delegate* unmanaged<{delegateTypes}>){LoaderBindingsContext}.GetProcAddress(\"{function.EntryPoint}\");");
 
@@ -353,12 +163,15 @@ namespace GeneratorV2.Writing
             writer.WriteLine("using System;");
             writer.WriteLine("using System.Runtime.CompilerServices;");
             writer.WriteLine("using System.Runtime.InteropServices;");
+            writer.WriteLine("using OpenTK.Mathematics;");
+            // FIXME: Figure out whether we wanna use opentk's half or system.numerics. Does it even make a difference?
+            writer.WriteLine("using Half = System.Half;");
             writer.WriteLine();
             writer.WriteLine($"namespace {GraphicsNamespace}.{glNamespace}");
-            using (Scope(writer))
+            using (writer.CsScope())
             {
                 writer.WriteLine($"public static unsafe partial class GL");
-                using (Scope(writer))
+                using (writer.CsScope())
                 {
                     foreach (var (vendor, group) in groups)
                     {
@@ -366,7 +179,7 @@ namespace GeneratorV2.Writing
                         if (!string.IsNullOrWhiteSpace(vendor))
                         {
                             writer.WriteLine($"public static unsafe partial class {vendor}");
-                            scope = Scope(writer);
+                            scope = writer.CsScope();
                         }
 
                         foreach (var (overs, postfixNativeCall) in group.Overloads)
@@ -385,7 +198,7 @@ namespace GeneratorV2.Writing
 
         private static void WriteOverloadMethod(Overload overload1, IndentedTextWriter indentedTextWriter, bool postfixNativeCall)
         {
-            // FIXME: This was(?) used to cull "overloads" that didn't get any .
+            // This is used to cull methods that didn't get any overloads.
             if (overload1.NestedOverload == null &&
                 overload1.MarshalLayerToNested == null)
                 return;
@@ -393,13 +206,11 @@ namespace GeneratorV2.Writing
             string parameterString =
                 string.Join(", ", overload1.InputParameters.Select(p => $"{p.Type.ToCSString()} {p.Name}"));
 
-            // FIXME: Make the overload contain the name. (remove postfix usecase)
-            // FIXME: Make NativeFunction contain the preprocessed name as well as the entry point.
             string genericTypes =
                 overload1.GenericTypes.Length <= 0 ? "" : $"<{string.Join(", ", overload1.GenericTypes)}>";
             indentedTextWriter.WriteLine(
                 $"public static unsafe {overload1.ReturnType.ToCSString()} {overload1.OverloadName}{genericTypes}({parameterString})");
-            using (indentedTextWriter.Indentation())
+            using (indentedTextWriter.Indent())
             {
                 foreach (var type in overload1.GenericTypes)
                 {
@@ -407,16 +218,11 @@ namespace GeneratorV2.Writing
                 }
             }
 
-            using (Scope(indentedTextWriter))
+            using (indentedTextWriter.CsScope())
             {
                 if (overload1.ReturnType is not CSVoid && overload1.NativeFunction.ReturnType is not CSVoid)
                 {
                     indentedTextWriter.WriteLine($"{overload1.NativeFunction.ReturnType.ToCSString()} returnValue;");
-                }
-                
-                if (overload1.NativeFunction.EntryPoint == "glNamedBufferData")
-                {
-                    ;
                 }
 
                 string? returnName = WriteNestedOverload(indentedTextWriter, overload1, new NameTable(), postfixNativeCall);
@@ -471,9 +277,8 @@ namespace GeneratorV2.Writing
             writer.WriteLine("// This file is auto generated, do not edit.");
             writer.WriteLine("using System;");
             writer.WriteLine();
-            // NAMESPACE:
             writer.WriteLine($"namespace {GraphicsNamespace}.{apiNamespace}");
-            using (Scope(writer))
+            using (writer.CsScope())
             {
                 WriteAllEnum(writer, allEnums);
                 WriteEnumGroups(writer, enumGroups);
@@ -486,7 +291,7 @@ namespace GeneratorV2.Writing
             {
                 if (group.IsFlags) writer.WriteLine($"[Flags]");
                 writer.WriteLine($"public enum {group.Name} : uint");
-                using (Scope(writer))
+                using (writer.CsScope())
                 {
                     foreach (var member in group.Members)
                     {
@@ -499,7 +304,7 @@ namespace GeneratorV2.Writing
         private static void WriteAllEnum(IndentedTextWriter writer, List<EnumMemberData> allEnums)
         {
             writer.WriteLine($"public enum All : uint");
-            using (Scope(writer))
+            using (writer.CsScope())
             {
                 foreach (var member in allEnums)
                 {

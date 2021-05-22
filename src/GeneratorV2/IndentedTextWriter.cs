@@ -46,10 +46,17 @@ namespace GeneratorV2
 
         public void Flush() => Writer.Flush();
 
-        public Scope Indentation()
+        public Indentation Indent()
         {
             CurrentIndentation++;
-            return new Scope(this);
+            return new Indentation(this);
+        }
+
+        // Utility method for creating a cs scope "{}".
+        public CsScope CsScope()
+        {
+            WriteLine("{");
+            return new CsScope(Indent());
         }
 
         public void Dispose()
@@ -58,20 +65,36 @@ namespace GeneratorV2
             Writer.Dispose();
             GC.SuppressFinalize(this);
         }
+    }
 
-        public struct Scope : IDisposable
+    public struct CsScope : IDisposable
+    {
+        public Indentation Indentation;
+
+        public CsScope(Indentation indentation)
         {
-            public readonly IndentedTextWriter Writer;
+            Indentation = indentation;
+        }
 
-            public Scope(IndentedTextWriter writer)
-            {
-                Writer = writer;
-            }
+        public void Dispose()
+        {
+            Indentation.Dispose();
+            Indentation.Writer.WriteLine("}");
+        }
+    }
 
-            public void Dispose()
-            {
-                Writer.CurrentIndentation--;
-            }
+    public struct Indentation : IDisposable
+    {
+        public readonly IndentedTextWriter Writer;
+
+        public Indentation(IndentedTextWriter writer)
+        {
+            Writer = writer;
+        }
+
+        public void Dispose()
+        {
+            Writer.CurrentIndentation--;
         }
     }
 }
