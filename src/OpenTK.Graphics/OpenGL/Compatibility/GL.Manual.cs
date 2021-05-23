@@ -24,7 +24,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         public static void GetShaderInfoLog(uint shader, out string info)
         {
             int length = default;
-            GL.GetShader(shader, ShaderParameterName.InfoLogLength, ref length);
+            GL.GetShaderi(shader, ShaderParameterName.InfoLogLength, ref length);
             if (length == 0)
             {
                 info = string.Empty;
