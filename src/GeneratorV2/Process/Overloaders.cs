@@ -11,7 +11,7 @@ namespace GeneratorV2.Process
 {
     public sealed class VectorOverloader : IOverloader
     {
-        private readonly Regex VectorNameMatch = new Regex("([1-4])([f|d|h|i])v", RegexOptions.Compiled);
+        private static readonly Regex VectorNameMatch = new Regex("([1-4])([f|d|h|i])v", RegexOptions.Compiled);
         private readonly HashSet<string> _existingVectorTypes = new HashSet<string>()
         {
             "Vector2",
