@@ -9,17 +9,200 @@ using GeneratorV2.Writing;
 
 namespace GeneratorV2.Process
 {
+    public sealed class VectorOverloader : IOverloader
+    {
+        private readonly Regex VectorNameMatch = new Regex("([1-4])([f|d|h|i])v", RegexOptions.Compiled);
+        private readonly HashSet<string> _existingVectorTypes = new HashSet<string>()
+        {
+            "Vector2",
+            "Vector2d",
+            "Vector2h",
+            "Vector2i",
+            "Vector3",
+            "Vector3d",
+            "Vector3h",
+            "Vector3i",
+            "Vector4",
+            "Vector4d",
+            "Vector4h",
+            "Vector4i",
+        };
+
+        public bool TryGenerateOverloads(Overload overload, [NotNullWhen(true)] out List<Overload>? newOverloads)
+        {
+            Match m = VectorNameMatch.Match(overload.OverloadName);
+            if (!m.Success || !int.TryParse(m.Groups[1].Value, out int vectorSize))
+            {
+                newOverloads = null;
+                return false;
+            }
+            var vectorType = m.Groups[2].Value;
+            if (vectorType == "f") vectorType = "";
+
+            NameTable nameTable = overload.NameTable.New();
+            Parameter[] singleParameters = overload.InputParameters.ToArray();
+            Parameter[] spanParameters = overload.InputParameters.ToArray();
+            Parameter[] arrayParameters = overload.InputParameters.ToArray();
+            List<Parameter> countParameters = new();
+            List<(Parameter ptrParam, Parameter vectorParam, string firstElem)> overloadedParams = new();
+
+            for (var i = 0; i < singleParameters.Length; i++)
+            {
+                Parameter parameter = singleParameters[i];
+                if (parameter.Length == null ||
+                    parameter.Type is not CSPointer ptr || ptr.BaseType is not CSType baseType)
+                {
+                    continue;
+                }
+
+                string typeName = "Vector" + vectorSize + vectorType;
+                string firstElem = ".X";
+                if (!_existingVectorTypes.Contains(typeName))
+                {
+                    typeName = baseType.TypeName;
+                    firstElem = "";
+                }
+
+                Parameter? refParam = null;
+                Constant constant;
+                if (parameter.Length is Constant cnst)
+                {
+                    constant = cnst;
+                }
+                else if (parameter.Length is BinaryOperation binary)
+                {
+                    ParameterReference? reference = null;
+                    if (binary.Left is ParameterReference leftRef && binary.Right is Constant rightConst)
+                    {
+                        reference = leftRef;
+                        constant = rightConst;
+                    }
+                    else if (binary.Right is ParameterReference rightRef && binary.Left is Constant leftConst)
+                    {
+                        reference = rightRef;
+                        constant = leftConst;
+                    }
+                    else continue;
+
+                    refParam = singleParameters.First(p => p.Name == reference.ParameterName);
+                    countParameters.Add(refParam);
+                }
+                else continue;
+
+                if (constant.Value == vectorSize)
+                {
+                    CSType vector = new CSType(typeName, baseType.Constant);
+                    singleParameters[i] = parameter with
+                    {
+                        Type = new CSRef(ptr.Constant || baseType.Constant ? CSRef.Type.In : CSRef.Type.Ref,
+                            vector),
+                        Length = null
+                    };
+                    spanParameters[i] = parameter with { Type = new CSSpan(vector, ptr.Constant || baseType.Constant), Length = null };
+                    arrayParameters[i] = parameter with { Type = new CSArray(vector, ptr.Constant || baseType.Constant), Length = null };
+                    nameTable.Rename(parameter, parameter.Name + "_ptr");
+                    overloadedParams.Add((parameter, singleParameters[i], firstElem));
+                }
+            }
+
+            if (overloadedParams.Count == 0)
+            {
+                newOverloads = null;
+                return false;
+            }
+
+            string overloadName = overload.OverloadName.Remove(m.Index + 2, 1);
+            newOverloads = new List<Overload>()
+            {
+                overload with
+                {
+                    OverloadName = overloadName,
+                    InputParameters = singleParameters.Except(countParameters).ToArray(),
+                    NameTable = nameTable,
+                    NestedOverload = overload,
+                    MarshalLayerToNested = new SingleVectorLayer(countParameters, overloadedParams)
+                },
+                overload with
+                {
+                    OverloadName = overloadName,
+                    InputParameters = spanParameters,
+                    NameTable = nameTable,
+                    NestedOverload = overload,
+                    MarshalLayerToNested = new SpanArrayVectorLayer(countParameters, overloadedParams)
+                },
+                overload with
+                {
+                    OverloadName = overloadName,
+                    InputParameters = arrayParameters,
+                    NameTable = nameTable,
+                    NestedOverload = overload,
+                    MarshalLayerToNested = new SpanArrayVectorLayer(countParameters, overloadedParams)
+                },
+            };
+            return true;
+        }
+
+        public record SingleVectorLayer(
+            List<Parameter> CountParameters,
+            List<(Parameter ptrParam, Parameter vectorParam, string firstElem)> OverloadedParameters) : IOverloadLayer
+        {
+            private CsScope _csScope;
+            public void WritePrologue(IndentedTextWriter writer, NameTable nameTable)
+            {
+                foreach (var refParam in CountParameters)
+                {
+                    writer.WriteLine($"{refParam.Type.ToCSString()} {nameTable[refParam]} = 1;");
+                }
+                foreach (var (ptrParam, vectorParam, firstElem) in OverloadedParameters)
+                {
+                    writer.WriteLine($"fixed ({ptrParam.Type.ToCSString()} {nameTable[ptrParam]} = &{nameTable[vectorParam]}{firstElem})");
+                }
+
+                _csScope = writer.CsScope();
+            }
+
+            public string? WriteEpilogue(IndentedTextWriter writer, NameTable nameTable, string? returnName)
+            {
+                _csScope.Dispose();
+                return returnName;
+            }
+        }
+
+        public record SpanArrayVectorLayer(
+            List<Parameter> CountParameters,
+            List<(Parameter ptrParam, Parameter vectorParam, string firstElem)> OverloadedParameters) : IOverloadLayer
+        {
+            private CsScope _csScope;
+
+            public void WritePrologue(IndentedTextWriter writer, NameTable nameTable)
+            {
+                foreach (var (ptrParam, vectorParam, firstElem) in OverloadedParameters)
+                {
+                    writer.WriteLine($"fixed ({ptrParam.Type.ToCSString()} {nameTable[ptrParam]} = &{nameTable[vectorParam]}[0]{firstElem})");
+                }
+
+                _csScope = writer.CsScope();
+            }
+
+            public string? WriteEpilogue(IndentedTextWriter writer, NameTable nameTable, string? returnName)
+            {
+                _csScope.Dispose();
+                return returnName;
+            }
+        }
+    }
+
     public class TrimNameOverloader : IOverloader
     {
         private static readonly Regex Endings = new Regex(
-            @"([fd]v?|u?[isb](64)?v?|v|i_v|fi)$",
+            @"(u?[sb](64)?v?|v|i_v|fi)$",
             RegexOptions.Compiled);
 
         private static readonly Regex EndingsNotToTrim = new Regex(
             "(sh|ib|[tdrey]s|[eE]n[vd]|bled" +
             "|Attrib|Access|Boolean|Coord|Depth|Feedbacks|Finish|Flag" +
             "|Groups|IDs|Indexed|Instanced|Pixels|Queries|Status|Tess|Through" +
-            "|Uniforms|Varyings|Weight|Width)$",
+            "|Uniforms|Varyings|Weight|Width|[1-4][fdhi]v)$",
             RegexOptions.Compiled);
 
         private static readonly Regex EndingsAddV = new Regex("^0", RegexOptions.Compiled);
@@ -238,148 +421,6 @@ namespace GeneratorV2.Process
                 }
             }
         }
-
-    public sealed class VectorOverloader : IOverloader
-    {
-        private readonly HashSet<string> _existingVectorTypes = new HashSet<string>()
-        {
-            "Vector2",
-            "Vector2d",
-            "Vector2h",
-            "Vector2i",
-            "Vector3",
-            "Vector3d",
-            "Vector3h",
-            "Vector3i",
-            "Vector4",
-            "Vector4d",
-            "Vector4h",
-            "Vector4i",
-        };
-
-        public bool TryGenerateOverloads(Overload overload, out List<Overload>? newOverloads)
-        {
-            if (overload.NativeFunction.EntryPoint == "glNamedProgramLocalParameters4fvEXT")
-            {
-                ;
-            }
-
-            Match m = Regex.Match(overload.OverloadName, "([1-4])([f|d|h|i])v");
-            if (!m.Success || !int.TryParse(m.Groups[1].Value, out int vectorSize))
-            {
-                newOverloads = null;
-                return false;
-            }
-            var vectorType = m.Groups[2].Value;
-            if (vectorType == "f") vectorType = "";
-
-            NameTable nameTable = overload.NameTable.New();
-            Parameter[] parameters = overload.InputParameters.ToArray();
-            List<Parameter> countParameters = new();
-            List<(Parameter ptrParam, Parameter vectorParam, string firstElem)> overloadedParams = new();
-
-            for (var i = 0; i < parameters.Length; i++)
-            {
-                Parameter parameter = parameters[i];
-                if (parameter.Length == null ||
-                    parameter.Type is not CSPointer ptr || ptr.BaseType is not CSType baseType)
-                {
-                    continue;
-                }
-
-                string typeName = "Vector" + vectorSize + vectorType;
-                string firstElem = ".X";
-                if (!_existingVectorTypes.Contains(typeName))
-                {
-                    typeName = baseType.TypeName;
-                    firstElem = "";
-                }
-
-                Parameter? refParam = null;
-                Constant constant;
-                if (parameter.Length is Constant cnst)
-                {
-                    constant = cnst;
-                }
-                else if (parameter.Length is BinaryOperation binary)
-                {
-                    ParameterReference? reference = null;
-                    if (binary.Left is ParameterReference leftRef && binary.Right is Constant rightConst)
-                    {
-                        reference = leftRef;
-                        constant = rightConst;
-                    }
-                    else if (binary.Right is ParameterReference rightRef && binary.Left is Constant leftConst)
-                    {
-                        reference = rightRef;
-                        constant = leftConst;
-                    }
-                    else continue;
-
-                    refParam = parameters.First(p => p.Name == reference.ParameterName);
-                    countParameters.Add(refParam);
-                }
-                else continue;
-
-                if (constant.Value == vectorSize)
-                {
-                    parameters[i] = parameter with
-                    {
-                        Type = new CSRef(ptr.Constant || baseType.Constant ? CSRef.Type.In : CSRef.Type.Ref,
-                            new CSType(typeName, baseType.Constant)),
-                        Length = null
-                    };
-                    nameTable.Rename(parameter, parameter.Name + "_ptr");
-                    overloadedParams.Add((parameter, parameters[i], firstElem));
-                }
-            }
-
-            if (overloadedParams.Count == 0)
-            {
-                newOverloads = null;
-                return false;
-            }
-
-            newOverloads = new List<Overload>()
-            {
-                overload with
-                {
-                    OverloadName = overload.OverloadName.Remove(m.Index, m.Length),
-                    InputParameters = parameters.Except(countParameters).ToArray(),
-                    NameTable = nameTable,
-                    NestedOverload = overload,
-                    MarshalLayerToNested = new SingleVectorLayer(countParameters, overloadedParams)
-                },
-            };
-            return true;
-        }
-
-        public record SingleVectorLayer(
-            List<Parameter> CountParameters,
-            List<(Parameter ptrParam, Parameter vectorParam, string firstElem)> OverloadedParameters) : IOverloadLayer
-        {
-            private CsScope _csScope;
-            public void WritePrologue(IndentedTextWriter writer, NameTable nameTable)
-            {
-                foreach (var refParam in CountParameters)
-                {
-                    writer.WriteLine($"{refParam.Type.ToCSString()} {nameTable[refParam]} = 1;");
-                }
-                foreach (var (ptrParam, vectorParam, firstElem) in OverloadedParameters)
-                {
-                    writer.WriteLine($"fixed ({ptrParam.Type.ToCSString()} {nameTable[ptrParam]} = &{nameTable[vectorParam]}{firstElem})");
-                }
-
-                _csScope = writer.CsScope();
-            }
-
-            public string? WriteEpilogue(IndentedTextWriter writer, NameTable nameTable, string? returnName)
-            {
-                _csScope.Dispose();
-                return returnName;
-            }
-        }
-    }
 
     public sealed class PointerToOffsetOverloader : IOverloader
     {

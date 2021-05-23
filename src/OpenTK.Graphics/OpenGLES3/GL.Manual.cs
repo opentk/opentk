@@ -1,7 +1,7 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace OpenTK.Graphics.OpenGL
+namespace OpenTK.Graphics.OpenGLES3
 {
     // FIXME: Remove this when it's fixed
     // This is here because there in the gl.xml
@@ -31,7 +31,7 @@ namespace OpenTK.Graphics.OpenGL
             }
             else
             {
-                GL.GetShaderInfoLog(shader, length, ref length, out info);
+                OpenGL.GL.GetShaderInfoLog(shader, length, ref length, out info);
             }
         }
 
