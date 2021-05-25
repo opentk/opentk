@@ -10,7 +10,6 @@
 using System;
 using System.Buffers;
 using System.ComponentModel;
-using AdvancedDLSupport;
 using OpenTK.Core.Extensions;
 using OpenTK.Core.Loader;
 
