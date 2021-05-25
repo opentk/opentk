@@ -8,7 +8,6 @@
 //
 
 using System.Runtime.InteropServices;
-using AdvancedDLSupport;
 
 // ReSharper disable ExplicitCallerInfoArgument
 namespace OpenTK.OpenAL.Extensions.Creative.EFX

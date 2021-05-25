@@ -8,7 +8,6 @@
 //
 
 using System;
-using AdvancedDLSupport;
 using OpenTK.Core.Extensions;
 using OpenTK.Core.Loader;
 

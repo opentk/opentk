@@ -7,7 +7,6 @@
 // of the MIT license. See the LICENSE file for details.
 //
 
-using AdvancedDLSupport;
 using OpenTK.OpenAL.Interfaces;
 
 // ReSharper disable ExplicitCallerInfoArgument
