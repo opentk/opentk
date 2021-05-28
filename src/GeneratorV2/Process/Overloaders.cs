@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Text.RegularExpressions;
 using GeneratorV2.Data;
 using GeneratorV2.Writing;
@@ -11,7 +10,7 @@ namespace GeneratorV2.Process
 {
     public sealed class VectorOverloader : IOverloader
     {
-        private static readonly Regex VectorNameMatch = new Regex("([1-4])([f|d|h|i])v", RegexOptions.Compiled);
+        private static readonly Regex VectorNameMatch = new Regex("([1-4])([f|d|h|i])v$", RegexOptions.Compiled);
         private readonly HashSet<string> _existingVectorTypes = new HashSet<string>()
         {
             "Vector2",
@@ -45,9 +44,10 @@ namespace GeneratorV2.Process
             Parameter[] singleParameters = overload.InputParameters.ToArray();
             Parameter[] spanParameters = overload.InputParameters.ToArray();
             Parameter[] arrayParameters = overload.InputParameters.ToArray();
-            List<Parameter> countParameters = new();
-            List<(Parameter ptrParam, Parameter vectorParam, string firstElem)> overloadedParams = new();
-
+            Parameter? countParameter = null;
+            Parameter? ptrParam = null;
+            Parameter? vectorParam = null;
+            string? firstElem = null;
             for (var i = 0; i < singleParameters.Length; i++)
             {
                 Parameter parameter = singleParameters[i];
@@ -55,7 +55,7 @@ namespace GeneratorV2.Process
                 if (parameter.Type is CSPointer ptr && ptr.BaseType is CSType baseType)
                 {
                     string typeName = "Vector" + vectorSize + vectorType;
-                    string firstElem = ".X";
+                    firstElem = ".X";
                     if (!_existingVectorTypes.Contains(typeName))
                     {
                         // Some vector methods arent actually vectors.
@@ -64,7 +64,6 @@ namespace GeneratorV2.Process
                         firstElem = "";
                     }
 
-                    Parameter? refParam = null;
                     Constant constant;
                     if (parameter.Length is Constant cnst)
                     {
@@ -72,7 +71,7 @@ namespace GeneratorV2.Process
                     }
                     else if (parameter.Length is BinaryOperation binary)
                     {
-                        ParameterReference? reference = null;
+                        ParameterReference reference;
                         if (binary.Left is ParameterReference leftRef && binary.Right is Constant rightConst)
                         {
                             reference = leftRef;
@@ -85,8 +84,7 @@ namespace GeneratorV2.Process
                         }
                         else continue;
 
-                        refParam = singleParameters.First(p => p.Name == reference.ParameterName);
-                        countParameters.Add(refParam);
+                        countParameter = singleParameters.First(p => p.Name == reference.ParameterName);
                     }
                     else continue;
 
@@ -101,19 +99,22 @@ namespace GeneratorV2.Process
                         };
                         spanParameters[i] = parameter with
                         {
-                            Type = new CSSpan(vector, ptr.Constant || baseType.Constant), Length = null
+                            Type = new CSSpan(vector, ptr.Constant || baseType.Constant),
+                            Length = null
                         };
                         arrayParameters[i] = parameter with
                         {
-                            Type = new CSArray(vector, ptr.Constant || baseType.Constant), Length = null
+                            Type = new CSArray(vector, ptr.Constant || baseType.Constant),
+                            Length = null
                         };
                         nameTable.Rename(parameter, parameter.Name + "_ptr");
-                        overloadedParams.Add((parameter, singleParameters[i], firstElem));
+                        ptrParam = parameter;
+                        vectorParam = singleParameters[i];
                     }
                 }
             }
 
-            if (overloadedParams.Count == 0)
+            if (countParameter == null || ptrParam == null || vectorParam == null || firstElem == null)
             {
                 newOverloads = null;
                 return false;
@@ -125,10 +126,10 @@ namespace GeneratorV2.Process
                 overload with
                 {
                     OverloadName = overloadName,
-                    InputParameters = singleParameters.Except(countParameters).ToArray(),
+                    InputParameters = singleParameters.Where(p => p != countParameter).ToArray(),
                     NameTable = nameTable,
                     NestedOverload = overload,
-                    MarshalLayerToNested = new SingleVectorLayer(countParameters, overloadedParams)
+                    MarshalLayerToNested = new SingleVectorLayer(countParameter, ptrParam, vectorParam)
                 },
                 overload with
                 {
@@ -136,7 +137,7 @@ namespace GeneratorV2.Process
                     InputParameters = spanParameters,
                     NameTable = nameTable,
                     NestedOverload = overload,
-                    MarshalLayerToNested = new SpanArrayVectorLayer(countParameters, overloadedParams)
+                    MarshalLayerToNested = new SpanArrayVectorLayer(countParameter, ptrParam, vectorParam)
                 },
                 overload with
                 {
@@ -144,29 +145,23 @@ namespace GeneratorV2.Process
                     InputParameters = arrayParameters,
                     NameTable = nameTable,
                     NestedOverload = overload,
-                    MarshalLayerToNested = new SpanArrayVectorLayer(countParameters, overloadedParams)
+                    MarshalLayerToNested = new SpanArrayVectorLayer(countParameter, ptrParam, vectorParam)
                 },
             };
             return true;
         }
 
         public record SingleVectorLayer(
-            List<Parameter> CountParameters,
-            List<(Parameter PtrParam, Parameter VectorParam, string FirstElem)> OverloadedParameters) : IOverloadLayer
+            Parameter CountParameters, Parameter PtrParam, Parameter VectorParam) : IOverloadLayer
         {
             private CsScope _csScope;
             public void WritePrologue(IndentedTextWriter writer, NameTable nameTable)
             {
-                foreach (var countParameter in CountParameters)
-                {
-                    writer.WriteLine($"{countParameter.Type.ToCSString()} {nameTable[countParameter]} = 1;");
-                }
-                foreach (var (ptrParam, vectorParam, firstElem) in OverloadedParameters)
-                {
-                    writer.WriteLine($"fixed ({ptrParam.Type.ToCSString()} {nameTable[ptrParam]} = &{nameTable[vectorParam]}{firstElem})");
-                }
-
+                BaseCSType vectorType = ((CSRef)VectorParam.Type).ReferencedType;
+                writer.WriteLine($"{CountParameters.Type.ToCSString()} {nameTable[CountParameters]} = 1;");
+                writer.WriteLine($"fixed ({vectorType.ToCSString()}* tmp_vecPtr = &{nameTable[VectorParam]})");
                 _csScope = writer.CsScope();
+                writer.WriteLine($"{PtrParam.Type.ToCSString()} {nameTable[PtrParam]} = ({PtrParam.Type.ToCSString()})tmp_vecPtr;");
             }
 
             public string? WriteEpilogue(IndentedTextWriter writer, NameTable nameTable, string? returnName)
@@ -177,19 +172,16 @@ namespace GeneratorV2.Process
         }
 
         public record SpanArrayVectorLayer(
-            List<Parameter> CountParameters,
-            List<(Parameter ptrParam, Parameter vectorParam, string firstElem)> OverloadedParameters) : IOverloadLayer
+            Parameter CountParameter, Parameter PtrParam, Parameter VectorParam) : IOverloadLayer
         {
             private CsScope _csScope;
 
             public void WritePrologue(IndentedTextWriter writer, NameTable nameTable)
             {
-                foreach (var (ptrParam, vectorParam, firstElem) in OverloadedParameters)
-                {
-                    writer.WriteLine($"fixed ({ptrParam.Type.ToCSString()} {nameTable[ptrParam]} = &{nameTable[vectorParam]}[0]{firstElem})");
-                }
-
+                BaseCSType vectorType = ((CSRef)VectorParam.Type).ReferencedType;
+                writer.WriteLine($"fixed ({vectorType.ToCSString()}* tmp_vecPtr = {nameTable[VectorParam]})");
                 _csScope = writer.CsScope();
+                writer.WriteLine($"{PtrParam.Type.ToCSString()} {nameTable[PtrParam]} = ({PtrParam.Type.ToCSString()})tmp_vecPtr;");
             }
 
             public string? WriteEpilogue(IndentedTextWriter writer, NameTable nameTable, string? returnName)
