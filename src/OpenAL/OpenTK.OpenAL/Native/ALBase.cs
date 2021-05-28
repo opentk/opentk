@@ -42,6 +42,8 @@ namespace OpenTK.Audio.OpenAL
             IntPtr ptr = AL.GetProcAddress(name);
             if (ptr == IntPtr.Zero)
             {
+                // If we can't load the function for whatever reason we dynamically generate a delegate to
+                // give the user an error message that is actually understandable.
                 MethodInfo invoke = typeof(TDelegate).GetMethod("Invoke");
                 Type returnType = invoke.ReturnType;
                 Type[] parameters = invoke.GetParameters().Select(p => p.ParameterType).ToArray();
