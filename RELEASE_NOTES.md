@@ -1,3 +1,12 @@
+## 4.6.4
+
+* FIX: Made it so that the singular check in `Matrix4.Invert` is the same between platforms.
+In particular this fixes an issue where the singular check was too aggressive in the SSE3 path. (@NogginBops)
+* FIX: Made checking for OpenAL extensions not crash if the extension wasn't present. (@NogginBops)
+* FIX: Fix to the rewriter to not generate invalid IL on some GLES functions. (@NogginBops)
+
+* Updated CONTRIBUTING.md to not contain broken links. (@asears)
+
 ## 4.6.3
 
 * FIX: Fixed an issue where `Matrix4.Invert` threw an exception if the matrix determinant was negative. (@NogginBops, thanks for reporting @ghidosoft)
