@@ -31,11 +31,13 @@ namespace GeneratorV2.Process
         public bool TryGenerateOverloads(Overload overload, [NotNullWhen(true)] out List<Overload>? newOverloads)
         {
             Match m = VectorNameMatch.Match(overload.OverloadName);
-            if (!m.Success || !int.TryParse(m.Groups[1].Value, out int vectorSize))
+            if (m.Success == false)
             {
                 newOverloads = null;
                 return false;
             }
+
+            int vectorSize = int.Parse(m.Groups[1].Value);
             var vectorType = m.Groups[2].Value;
             if (vectorType == "f") vectorType = "";
 
@@ -49,59 +51,65 @@ namespace GeneratorV2.Process
             for (var i = 0; i < singleParameters.Length; i++)
             {
                 Parameter parameter = singleParameters[i];
-                if (parameter.Length == null ||
-                    parameter.Type is not CSPointer ptr || ptr.BaseType is not CSType baseType)
+                if (parameter.Length == null) continue;
+                if (parameter.Type is CSPointer ptr && ptr.BaseType is CSType baseType)
                 {
-                    continue;
-                }
-
-                string typeName = "Vector" + vectorSize + vectorType;
-                string firstElem = ".X";
-                if (!_existingVectorTypes.Contains(typeName))
-                {
-                    typeName = baseType.TypeName;
-                    firstElem = "";
-                }
-
-                Parameter? refParam = null;
-                Constant constant;
-                if (parameter.Length is Constant cnst)
-                {
-                    constant = cnst;
-                }
-                else if (parameter.Length is BinaryOperation binary)
-                {
-                    ParameterReference? reference = null;
-                    if (binary.Left is ParameterReference leftRef && binary.Right is Constant rightConst)
+                    string typeName = "Vector" + vectorSize + vectorType;
+                    string firstElem = ".X";
+                    if (!_existingVectorTypes.Contains(typeName))
                     {
-                        reference = leftRef;
-                        constant = rightConst;
+                        // Some vector methods arent actually vectors.
+                        // So we just overload them like their normal types.
+                        typeName = baseType.TypeName;
+                        firstElem = "";
                     }
-                    else if (binary.Right is ParameterReference rightRef && binary.Left is Constant leftConst)
+
+                    Parameter? refParam = null;
+                    Constant constant;
+                    if (parameter.Length is Constant cnst)
                     {
-                        reference = rightRef;
-                        constant = leftConst;
+                        constant = cnst;
+                    }
+                    else if (parameter.Length is BinaryOperation binary)
+                    {
+                        ParameterReference? reference = null;
+                        if (binary.Left is ParameterReference leftRef && binary.Right is Constant rightConst)
+                        {
+                            reference = leftRef;
+                            constant = rightConst;
+                        }
+                        else if (binary.Right is ParameterReference rightRef && binary.Left is Constant leftConst)
+                        {
+                            reference = rightRef;
+                            constant = leftConst;
+                        }
+                        else continue;
+
+                        refParam = singleParameters.First(p => p.Name == reference.ParameterName);
+                        countParameters.Add(refParam);
                     }
                     else continue;
 
-                    refParam = singleParameters.First(p => p.Name == reference.ParameterName);
-                    countParameters.Add(refParam);
-                }
-                else continue;
-
-                if (constant.Value == vectorSize)
-                {
-                    CSType vector = new CSType(typeName, baseType.Constant);
-                    singleParameters[i] = parameter with
+                    if (constant.Value == vectorSize)
                     {
-                        Type = new CSRef(ptr.Constant || baseType.Constant ? CSRef.Type.In : CSRef.Type.Ref,
-                            vector),
-                        Length = null
-                    };
-                    spanParameters[i] = parameter with { Type = new CSSpan(vector, ptr.Constant || baseType.Constant), Length = null };
-                    arrayParameters[i] = parameter with { Type = new CSArray(vector, ptr.Constant || baseType.Constant), Length = null };
-                    nameTable.Rename(parameter, parameter.Name + "_ptr");
-                    overloadedParams.Add((parameter, singleParameters[i], firstElem));
+                        CSType vector = new CSType(typeName, baseType.Constant);
+                        singleParameters[i] = parameter with
+                        {
+                            Type = new CSRef(ptr.Constant || baseType.Constant ? CSRef.Type.In : CSRef.Type.Ref,
+                                vector),
+                            Length = null
+                        };
+                        spanParameters[i] = parameter with
+                        {
+                            Type = new CSSpan(vector, ptr.Constant || baseType.Constant), Length = null
+                        };
+                        arrayParameters[i] = parameter with
+                        {
+                            Type = new CSArray(vector, ptr.Constant || baseType.Constant), Length = null
+                        };
+                        nameTable.Rename(parameter, parameter.Name + "_ptr");
+                        overloadedParams.Add((parameter, singleParameters[i], firstElem));
+                    }
                 }
             }
 
@@ -144,14 +152,14 @@ namespace GeneratorV2.Process
 
         public record SingleVectorLayer(
             List<Parameter> CountParameters,
-            List<(Parameter ptrParam, Parameter vectorParam, string firstElem)> OverloadedParameters) : IOverloadLayer
+            List<(Parameter PtrParam, Parameter VectorParam, string FirstElem)> OverloadedParameters) : IOverloadLayer
         {
             private CsScope _csScope;
             public void WritePrologue(IndentedTextWriter writer, NameTable nameTable)
             {
-                foreach (var refParam in CountParameters)
+                foreach (var countParameter in CountParameters)
                 {
-                    writer.WriteLine($"{refParam.Type.ToCSString()} {nameTable[refParam]} = 1;");
+                    writer.WriteLine($"{countParameter.Type.ToCSString()} {nameTable[countParameter]} = 1;");
                 }
                 foreach (var (ptrParam, vectorParam, firstElem) in OverloadedParameters)
                 {
