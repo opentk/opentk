@@ -1695,7 +1695,7 @@ namespace OpenTK.Mathematics
             // detM = _mm_sub_ps(detM, tr);
             detM = Sse.Subtract(detM, tr);
 
-            if (MathF.Abs(detM.GetElement(0)) < 0.000001f)
+            if (MathF.Abs(detM.GetElement(0)) < float.Epsilon)
             {
                 throw new InvalidOperationException("Matrix is singular and cannot be inverted.");
             }
