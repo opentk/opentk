@@ -8,6 +8,167 @@ using GeneratorV2.Writing;
 
 namespace GeneratorV2.Process
 {
+    public class TrimNameOverloader : IOverloader
+    {
+        private static readonly Regex Endings = new Regex(
+            @"(u?[sb](64)?v?|v|i_v|fi)$",
+            RegexOptions.Compiled);
+
+        private static readonly Regex EndingsNotToTrim = new Regex(
+            "(sh|ib|[tdrey]s|[eE]n[vd]|bled" +
+            "|Attrib|Access|Boolean|Coord|Depth|Feedbacks|Finish|Flag" +
+            "|Groups|IDs|Indexed|Instanced|Pixels|Queries|Status|Tess|Through" +
+            "|Uniforms|Varyings|Weight|Width|[1-4][fdhi]v)$",
+            RegexOptions.Compiled);
+
+        private static readonly Regex EndingsAddV = new Regex("^0", RegexOptions.Compiled);
+
+        public bool TryGenerateOverloads(Overload overload, [NotNullWhen(true)] out List<Overload>? newOverloads)
+        {
+            // See: https://github.com/opentk/opentk/blob/082c8d228d0def042b11424ac002776432f44f47/src/Generator.Bind/FuncProcessor.cs#L417
+
+            string name = overload.OverloadName;
+            string trimmedName = name;
+            // FIXME: Remove extension name before we trim endings
+            Match m = EndingsNotToTrim.Match(name);
+            if ((m.Index + m.Length) != name.Length)
+            {
+                m = Endings.Match(name);
+
+                if (m.Length > 0 && m.Index + m.Length == name.Length)
+                {
+                    // Only trim endings, not internal matches.
+                    if (m.Value[m.Length - 1] == 'v' && EndingsAddV.IsMatch(name) &&
+                        !name.StartsWith("Get") && !name.StartsWith("MatrixIndex"))
+                    {
+                        // Only trim ending 'v' when there is a number
+                        trimmedName = name.Substring(0, m.Index) + "v";
+                    }
+                    else
+                    {
+                        if (!name.EndsWith("xedv"))
+                        {
+                            trimmedName = name.Substring(0, m.Index);
+                        }
+                        else
+                        {
+                            trimmedName = name.Substring(0, m.Index + 1);
+                        }
+                    }
+                }
+            }
+
+            if (trimmedName != name)
+            {
+                newOverloads = new List<Overload>() {overload with {OverloadName = trimmedName}};
+                return true;
+            }
+            else
+            {
+                newOverloads = default;
+                return false;
+            }
+        }
+    }
+
+    public class StringReturnOverloader : IOverloader
+    {
+        public bool TryGenerateOverloads(Overload overload, [NotNullWhen(true)] out List<Overload>? newOverloads)
+        {
+            // See: https://github.com/KhronosGroup/OpenGL-Registry/issues/363
+            // These are the only two functions that return strings 2020-12-29
+            if (overload.NativeFunction.EntryPoint == "glGetString" ||
+                overload.NativeFunction.EntryPoint == "glGetStringi")
+            {
+                var newReturnName = $"{overload.ReturnVariableName}_str";
+                var layer = new StringReturnLayer(newReturnName);
+                var returnType = new CSString(Nullable: true);
+                newOverloads = new List<Overload>()
+                {
+                    overload with
+                    {
+                        NestedOverload = overload, MarshalLayerToNested = layer, ReturnType = returnType,
+                        ReturnVariableName = newReturnName
+                    }
+                };
+                return true;
+            }
+            else
+            {
+                newOverloads = default;
+                return false;
+            }
+        }
+
+        private record StringReturnLayer(string NewReturnName) : IOverloadLayer
+        {
+            public void WritePrologue(IndentedTextWriter writer, NameTable nameTable)
+            {
+                writer.WriteLine($"string? {NewReturnName};");
+            }
+
+            public string WriteEpilogue(IndentedTextWriter writer, NameTable nameTable, string? returnName)
+            {
+                writer.WriteLine($"{NewReturnName} = Marshal.PtrToStringAnsi((IntPtr){returnName});");
+                return NewReturnName;
+            }
+        }
+    }
+
+    public class BoolOverloader : IOverloader
+    {
+        public bool TryGenerateOverloads(Overload overload, [NotNullWhen(true)] out List<Overload>? newOverloads)
+        {
+            Parameter[] parameters = overload.InputParameters.ToArray();
+            NameTable nameTable = overload.NameTable;
+            List<(Parameter byteParam, Parameter boolParam)> overloadedParameters = new List<(Parameter, Parameter)>();
+            for (int i = 0; i < parameters.Length; i++)
+            {
+                Parameter parameter = parameters[i];
+                if (parameter.Type is not CSBool8 bool8)
+                {
+                    continue;
+                }
+
+                nameTable.Rename(parameter, parameter.Name + "_byte");
+                parameters[i] = parameter with { Type = new CSType("bool", bool8.Constant) };
+                overloadedParameters.Add((parameter, parameters[i]));
+            }
+
+            if (overloadedParameters.Count == 0)
+            {
+                newOverloads = null;
+                return false;
+            }
+
+            newOverloads = new List<Overload>()
+            {
+                overload with {
+                    NestedOverload = overload,
+                    MarshalLayerToNested = new BoolLayer(overloadedParameters),
+                    InputParameters = parameters,
+                    NameTable = nameTable }
+            };
+            return true;
+        }
+
+        private record BoolLayer(List<(Parameter byteParam, Parameter boolParam)> OverloadedParameters) : IOverloadLayer
+        {
+            public void WritePrologue(IndentedTextWriter writer, NameTable nameTable)
+            {
+                foreach (var (byteParam, boolParam) in OverloadedParameters)
+                {
+                    writer.WriteLine($"byte {nameTable[byteParam]} = {nameTable[boolParam]} ? 1 : 0;");
+                }
+            }
+
+            public string? WriteEpilogue(IndentedTextWriter writer, NameTable nameTable, string? returnName)
+            {
+                return returnName;
+            }
+        }
+    }
+
     public sealed class VectorOverloader : IOverloader
     {
         private static readonly Regex VectorNameMatch = new Regex("([1-4])([f|d|h|i])v$", RegexOptions.Compiled);
@@ -57,7 +218,6 @@ namespace GeneratorV2.Process
             string typeName;
             if (matrixMatch.Success)
             {
-                // FIXME: we might need to swap width and height around here.
                 int columns = int.Parse(matrixMatch.Groups[1].Value);
                 int rows = columns;
                 typePostfix = matrixMatch.Groups[3].Value;
@@ -227,167 +387,6 @@ namespace GeneratorV2.Process
             public string? WriteEpilogue(IndentedTextWriter writer, NameTable nameTable, string? returnName)
             {
                 _csScope.Dispose();
-                return returnName;
-            }
-        }
-    }
-
-    public class TrimNameOverloader : IOverloader
-    {
-        private static readonly Regex Endings = new Regex(
-            @"(u?[sb](64)?v?|v|i_v|fi)$",
-            RegexOptions.Compiled);
-
-        private static readonly Regex EndingsNotToTrim = new Regex(
-            "(sh|ib|[tdrey]s|[eE]n[vd]|bled" +
-            "|Attrib|Access|Boolean|Coord|Depth|Feedbacks|Finish|Flag" +
-            "|Groups|IDs|Indexed|Instanced|Pixels|Queries|Status|Tess|Through" +
-            "|Uniforms|Varyings|Weight|Width|[1-4][fdhi]v)$",
-            RegexOptions.Compiled);
-
-        private static readonly Regex EndingsAddV = new Regex("^0", RegexOptions.Compiled);
-
-        public bool TryGenerateOverloads(Overload overload, [NotNullWhen(true)] out List<Overload>? newOverloads)
-        {
-            // See: https://github.com/opentk/opentk/blob/082c8d228d0def042b11424ac002776432f44f47/src/Generator.Bind/FuncProcessor.cs#L417
-
-            string name = overload.OverloadName;
-            string trimmedName = name;
-            // FIXME: Remove extension name before we trim endings
-            Match m = EndingsNotToTrim.Match(name);
-            if ((m.Index + m.Length) != name.Length)
-            {
-                m = Endings.Match(name);
-
-                if (m.Length > 0 && m.Index + m.Length == name.Length)
-                {
-                    // Only trim endings, not internal matches.
-                    if (m.Value[m.Length - 1] == 'v' && EndingsAddV.IsMatch(name) &&
-                        !name.StartsWith("Get") && !name.StartsWith("MatrixIndex"))
-                    {
-                        // Only trim ending 'v' when there is a number
-                        trimmedName = name.Substring(0, m.Index) + "v";
-                    }
-                    else
-                    {
-                        if (!name.EndsWith("xedv"))
-                        {
-                            trimmedName = name.Substring(0, m.Index);
-                        }
-                        else
-                        {
-                            trimmedName = name.Substring(0, m.Index + 1);
-                        }
-                    }
-                }
-            }
-
-            if (trimmedName != name)
-            {
-                newOverloads = new List<Overload>() {overload with {OverloadName = trimmedName}};
-                return true;
-            }
-            else
-            {
-                newOverloads = default;
-                return false;
-            }
-        }
-    }
-
-    public class StringReturnOverloader : IOverloader
-    {
-        public bool TryGenerateOverloads(Overload overload, [NotNullWhen(true)] out List<Overload>? newOverloads)
-        {
-            // See: https://github.com/KhronosGroup/OpenGL-Registry/issues/363
-            // These are the only two functions that return strings 2020-12-29
-            if (overload.NativeFunction.EntryPoint == "glGetString" ||
-                overload.NativeFunction.EntryPoint == "glGetStringi")
-            {
-                var newReturnName = $"{overload.ReturnVariableName}_str";
-                var layer = new StringReturnLayer(newReturnName);
-                var returnType = new CSString(Nullable: true);
-                newOverloads = new List<Overload>()
-                {
-                    overload with
-                    {
-                        NestedOverload = overload, MarshalLayerToNested = layer, ReturnType = returnType,
-                        ReturnVariableName = newReturnName
-                    }
-                };
-                return true;
-            }
-            else
-            {
-                newOverloads = default;
-                return false;
-            }
-        }
-
-        private record StringReturnLayer(string NewReturnName) : IOverloadLayer
-        {
-            public void WritePrologue(IndentedTextWriter writer, NameTable nameTable)
-            {
-                writer.WriteLine($"string? {NewReturnName};");
-            }
-
-            public string WriteEpilogue(IndentedTextWriter writer, NameTable nameTable, string? returnName)
-            {
-                writer.WriteLine($"{NewReturnName} = Marshal.PtrToStringAnsi((IntPtr){returnName});");
-                return NewReturnName;
-            }
-        }
-    }
-
-    public class BoolOverloader : IOverloader
-    {
-        public bool TryGenerateOverloads(Overload overload, [NotNullWhen(true)] out List<Overload>? newOverloads)
-        {
-            Parameter[] parameters = overload.InputParameters.ToArray();
-            NameTable nameTable = overload.NameTable;
-            List<(Parameter byteParam, Parameter boolParam)> overloadedParameters = new List<(Parameter, Parameter)>();
-            for (int i = 0; i < parameters.Length; i++)
-            {
-                Parameter parameter = parameters[i];
-                if (parameter.Type is not CSBool8 bool8)
-                {
-                    continue;
-                }
-
-                nameTable.Rename(parameter, parameter.Name + "_byte");
-                parameters[i] = parameter with { Type = new CSType("bool", bool8.Constant) };
-                overloadedParameters.Add((parameter, parameters[i]));
-            }
-
-            if (overloadedParameters.Count == 0)
-            {
-                newOverloads = null;
-                return false;
-            }
-
-            newOverloads = new List<Overload>()
-            {
-                overload with {
-                    NestedOverload = overload,
-                    MarshalLayerToNested = new BoolLayer(overloadedParameters),
-                    InputParameters = parameters,
-                    NameTable = nameTable }
-            };
-            return true;
-        }
-
-        private record BoolLayer(List<(Parameter byteParam, Parameter boolParam)> OverloadedParameters) : IOverloadLayer
-        {
-            public void WritePrologue(IndentedTextWriter writer, NameTable nameTable)
-            {
-                foreach (var (byteParam, boolParam) in OverloadedParameters)
-                {
-                    writer.WriteLine($"byte {nameTable[byteParam]} = {nameTable[boolParam]} ? 1 : 0;");
-                }
-            }
-
-            public string? WriteEpilogue(IndentedTextWriter writer, NameTable nameTable, string? returnName)
-            {
                 return returnName;
             }
         }
