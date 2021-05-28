@@ -21,12 +21,12 @@ namespace GeneratorV2.Process
         // FIXME: Maybe we dont want classes for these?
         static readonly IOverloader[] Overloaders = new IOverloader[]
         {
-            new VectorOverloader(),
             new TrimNameOverloader(),
 
             new StringReturnOverloader(),
 
             new BoolOverloader(),
+            new VectorOverloader(),
             new FunctionPtrToDelegateOverloader(),
             new PointerToOffsetOverloader(),
             new VoidPtrToIntPtrOverloader(),
