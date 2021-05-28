@@ -11,6 +11,7 @@ namespace GeneratorV2.Process
     public sealed class VectorOverloader : IOverloader
     {
         private static readonly Regex VectorNameMatch = new Regex("([1-4])([f|d|h|i])v$", RegexOptions.Compiled);
+        private static readonly Regex MatrixNameMatch = new Regex("Matrix([1-4])(?:x([1-4]))?([f|d])v$", RegexOptions.Compiled);
         private readonly HashSet<string> _existingVectorTypes = new HashSet<string>()
         {
             "Vector2",
@@ -25,20 +26,63 @@ namespace GeneratorV2.Process
             "Vector4d",
             "Vector4h",
             "Vector4i",
+
+            "Matrix2d",
+            "Matrix2x3d",
+            "Matrix2x4d",
+            "Matrix3x2d",
+            "Matrix3d",
+            "Matrix3x4d",
+            "Matrix4x2d",
+            "Matrix4x3d",
+            "Matrix4d",
+            "Matrix2",
+            "Matrix2x3",
+            "Matrix2x4",
+            "Matrix3x2",
+            "Matrix3",
+            "Matrix3x4",
+            "Matrix4x2",
+            "Matrix4x3",
+            "Matrix4",
         };
 
         public bool TryGenerateOverloads(Overload overload, [NotNullWhen(true)] out List<Overload>? newOverloads)
         {
-            Match m = VectorNameMatch.Match(overload.OverloadName);
-            if (m.Success == false)
+            Match vectorMatch = VectorNameMatch.Match(overload.OverloadName);
+            Match matrixMatch = MatrixNameMatch.Match(overload.OverloadName);
+
+            int vectorSize;
+            string typePostfix;
+            string typeName;
+            if (matrixMatch.Success)
+            {
+                // FIXME: we might need to swap width and height around here.
+                int columns = int.Parse(matrixMatch.Groups[1].Value);
+                int rows = columns;
+                typePostfix = matrixMatch.Groups[3].Value;
+                if (typePostfix == "f") typePostfix = "";
+                typeName = "Matrix" + columns;
+                if (matrixMatch.Groups[2].Success)
+                {
+                    rows = int.Parse(matrixMatch.Groups[2].Value);
+                    typeName += "x" + rows;
+                }
+                typeName += typePostfix;
+                vectorSize = columns * rows;
+            }
+            else if (vectorMatch.Success)
+            {
+                vectorSize = int.Parse(vectorMatch.Groups[1].Value);
+                typePostfix = vectorMatch.Groups[2].Value;
+                if (typePostfix == "f") typePostfix = "";
+                typeName = "Vector" + vectorSize + typePostfix;
+            }
+            else
             {
                 newOverloads = null;
                 return false;
             }
-
-            int vectorSize = int.Parse(m.Groups[1].Value);
-            var vectorType = m.Groups[2].Value;
-            if (vectorType == "f") vectorType = "";
 
             NameTable nameTable = overload.NameTable.New();
             Parameter[] singleParameters = overload.InputParameters.ToArray();
@@ -47,21 +91,17 @@ namespace GeneratorV2.Process
             Parameter? countParameter = null;
             Parameter? ptrParam = null;
             Parameter? vectorParam = null;
-            string? firstElem = null;
             for (var i = 0; i < singleParameters.Length; i++)
             {
                 Parameter parameter = singleParameters[i];
                 if (parameter.Length == null) continue;
                 if (parameter.Type is CSPointer ptr && ptr.BaseType is CSType baseType)
                 {
-                    string typeName = "Vector" + vectorSize + vectorType;
-                    firstElem = ".X";
                     if (!_existingVectorTypes.Contains(typeName))
                     {
                         // Some vector methods arent actually vectors.
                         // So we just overload them like their normal types.
                         typeName = baseType.TypeName;
-                        firstElem = "";
                     }
 
                     Constant constant;
@@ -114,13 +154,13 @@ namespace GeneratorV2.Process
                 }
             }
 
-            if (countParameter == null || ptrParam == null || vectorParam == null || firstElem == null)
+            if (countParameter == null || ptrParam == null || vectorParam == null)
             {
                 newOverloads = null;
                 return false;
             }
 
-            string overloadName = overload.OverloadName.Remove(m.Index + 2, 1);
+            string overloadName = overload.OverloadName.Remove(vectorMatch.Index + vectorMatch.Length - 1, 1);
             newOverloads = new List<Overload>()
             {
                 overload with
