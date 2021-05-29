@@ -1,3 +1,6 @@
+## 5.0-pre.5
+* Math type overloads (includes Vector overloads and matrix overloads).
+
 ## 5.0-pre.4
 * Fixed debug callbacks (GL.DebugMessageCallback)
 * Created an offset overloader to deal with glDrawElements* and glVertexAttribXPointer
