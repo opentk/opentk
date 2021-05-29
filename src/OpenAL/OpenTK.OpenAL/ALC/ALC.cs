@@ -139,7 +139,7 @@ namespace OpenTK.Audio.OpenAL
         /// <param name="device">A pointer to the device to retrieve the error state from.</param>
         /// <returns>Errorcode Int32.</returns>
         [DllImport(Lib, EntryPoint = "alcGetError", ExactSpelling = true, CallingConvention = AlcCallingConv)]
-        public static extern AlcError GetError([In] ALDevice device);
+        public static extern ALCError GetError([In] ALDevice device);
         // ALC_API ALCenum         ALC_APIENTRY alcGetError( ALCdevice *device );
 
         /// <summary>This function queries if a specified context extension is available.</summary>
@@ -506,6 +506,14 @@ namespace OpenTK.Audio.OpenAL
             byte* result = GetStringListPtr(ALDevice.Null, param);
             return ALStringListToList(result);
         }
+
+        /// <summary>This function retrieves an OpenAL string property.</summary>
+        /// <param name="device">The device to use for getting the string.</param>
+        /// <param name="param">The alc error which human-readable string should be returned.</param>
+        /// <returns>The human-readable string for the alc error.</returns>
+        [DllImport(Lib, EntryPoint = "alcGetString", ExactSpelling = true, CallingConvention = AlcCallingConv)]
+        [return: MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(ConstCharPtrMarshaler))]
+        public static extern string GetErrorString(ALDevice device, ALCError param);
 
         /// <summary>
         /// Used to convert a OpenAL string list to a C# List.

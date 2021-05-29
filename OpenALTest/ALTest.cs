@@ -6,6 +6,7 @@ using OpenTK.Audio.OpenAL.Extensions.Creative.EFX;
 using OpenTK.Audio.OpenAL.Extensions.EXT.Double;
 using OpenTK.Audio.OpenAL.Extensions.EXT.Float32;
 using OpenTK.Audio.OpenAL.Extensions.EXT.FloatFormat;
+using OpenTK.Audio.OpenAL.Extensions.SOFT.HRTF;
 
 namespace OpenTK.Audio.OpenAL
 {
@@ -30,9 +31,36 @@ namespace OpenTK.Audio.OpenAL
             var allDevices = Extensions.Creative.EnumerateAll.EnumerateAll.GetStringList(Extensions.Creative.EnumerateAll.GetEnumerateAllContextStringList.AllDevicesSpecifier);
             Console.WriteLine($"All Devices: {string.Join(", ", allDevices)}");
 
+            ALContextAttributes attribs = new ALContextAttributes();
+            HRTF.AddHRTFAttribute(attribs, HRTFAttributeValue.DontCare);
+
             var device = ALC.OpenDevice(deviceName);
-            var context = ALC.CreateContext(device, (int[])null);
+            var context = ALC.CreateContext(device, attribs);
             ALC.MakeContextCurrent(context);
+
+            if (HRTF.IsExtensionPresent(device))
+            {
+                HRTF.Device = device;
+
+                Console.WriteLine($"HRTF Available, trying to activate it...");
+                attribs = new ALContextAttributes();
+                HRTF.AddHRTFAttribute(attribs, HRTFAttributeValue.True);
+                attribs.AddAttribute((int)HRTFAttribute.HRTF_ID, 0);
+                bool b = HRTF.ResetDeviceSOFT(device, attribs);
+                Console.WriteLine(b);
+
+                CheckALCError(device, "Reset device");
+                CheckALError("Reset device");
+
+                Console.WriteLine($"HRTF Status: {HRTF.GetHRTFStatus(device)}");
+
+                HRTF.GetInteger(device, HRTFInteger.NumHRTFSpecifierSOFT, out int hrtfs);
+                Console.WriteLine($"Number of HRTFs: {hrtfs}");
+                for (int i = 0; i < hrtfs; i++)
+                {
+                    Console.WriteLine($"HRTF 0: {HRTF.GetStringSOFT(device, HRTFAttribute.HRTF, i)}");
+                }
+            }
 
             CheckALError("Start");
 
@@ -232,6 +260,16 @@ namespace OpenTK.Audio.OpenAL
                 Console.WriteLine($"ALError at '{str}': {AL.GetErrorString(error)}");
             }
         }
+
+        public static void CheckALCError(ALDevice device, string str)
+        {
+            ALCError error = ALC.GetError(device);
+            if (error != ALCError.NoError)
+            {
+                Console.WriteLine($"ALError at '{str}': {ALC.GetErrorString(device, error)}");
+            }
+        }
+
 
         public static void FillSine(short[] buffer, float frequency, float sampleRate)
         {

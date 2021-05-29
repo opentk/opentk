@@ -54,7 +54,9 @@ namespace OpenTK.Audio.OpenAL
         /// Gets or sets additional attributes.
         /// Will usually be the major and minor version numbers of the context. // FIXME: This needs verification. Docs say nothing about this.
         /// </summary>
-        public int[] AdditionalAttributes { get; set; }
+#pragma warning disable SA1401 // Fields should be private
+        public int[] AdditionalAttributes;
+#pragma warning restore SA1401 // Fields should be private
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ALContextAttributes"/> class.
@@ -88,16 +90,14 @@ namespace OpenTK.Audio.OpenAL
         /// <returns>The attibute list in the form of a span.</returns>
         public int[] CreateAttributeArray()
         {
-            // The number of members * 2 + AdditionalAttributes
-            int[] attributeList = new int[(5 * 2) + (AdditionalAttributes?.Length ?? 0) + 1];
-            int index = 0;
+            List<int> attributeList = new List<int>();
 
             void AddAttribute(int? value, AlcContextAttributes attribute)
             {
                 if (value != null)
                 {
-                    attributeList[index++] = (int)attribute;
-                    attributeList[index++] = value ?? default;
+                    attributeList.Add((int)attribute);
+                    attributeList.Add(value ?? default);
                 }
             }
 
@@ -112,14 +112,33 @@ namespace OpenTK.Audio.OpenAL
 
             if (AdditionalAttributes != null)
             {
-                Array.Copy(AdditionalAttributes, 0, attributeList, index, AdditionalAttributes.Length);
-                index += AdditionalAttributes.Length;
+                attributeList.AddRange(AdditionalAttributes);
             }
 
             // Add the trailing null byte.
-            attributeList[index++] = 0;
+            attributeList.Add(0);
 
-            return attributeList;
+            return attributeList.ToArray();
+        }
+
+        /// <summary>
+        /// Adds an additional attribute specificed by a key and value.
+        /// </summary>
+        /// <param name="key">The attribute key.</param>
+        /// <param name="value">The attribute value.</param>
+        public void AddAttribute(int key, int value)
+        {
+            if (AdditionalAttributes == null)
+            {
+                AdditionalAttributes = new int[] { key, value };
+            }
+            else
+            {
+                int newLength = AdditionalAttributes.Length + 2;
+                Array.Resize(ref AdditionalAttributes, newLength);
+                AdditionalAttributes[newLength - 2] = key;
+                AdditionalAttributes[newLength - 1] = value;
+            }
         }
 
         /// <summary>
