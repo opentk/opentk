@@ -11,6 +11,7 @@ using System;
 using System.Diagnostics.Contracts;
 using System.Globalization;
 using System.Runtime.InteropServices;
+using System.Text.Json.Serialization;
 
 namespace OpenTK.Mathematics
 {
@@ -22,11 +23,13 @@ namespace OpenTK.Mathematics
     {
         public static readonly Box2i Empty = new Box2i(0, 0, 0, 0);
 
+        [JsonInclude]
         private Vector2i _min;
 
         /// <summary>
         /// Gets or sets the minimum boundary of the structure.
         /// </summary>
+        [JsonIgnore]
         public Vector2i Min
         {
             get => _min;
@@ -45,11 +48,13 @@ namespace OpenTK.Mathematics
             }
         }
 
+        [JsonInclude]
         private Vector2i _max;
 
         /// <summary>
         /// Gets or sets the maximum boundary of the structure.
         /// </summary>
+        [JsonIgnore]
         public Vector2i Max
         {
             get => _max;
@@ -94,6 +99,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Gets a vector describing the size of the Box2i structure.
         /// </summary>
+        [JsonIgnore]
         public Vector2i Size
         {
             get => Max - Min;
@@ -102,6 +108,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Gets or sets a vector describing half the size of the box.
         /// </summary>
+        [JsonIgnore]
         public Vector2i HalfSize
         {
             get => Size / 2;
@@ -117,6 +124,7 @@ namespace OpenTK.Mathematics
         /// Gets a vector describing the center of the box.
         /// </summary>
         /// to avoid annoying off-by-one errors in box placement, no setter is provided for this property
+        [JsonIgnore]
         public Vector2 Center
         {
             get => ((_min + _max).ToVector2() * 0.5f) + _min.ToVector2();

@@ -11,6 +11,7 @@ using System;
 using System.Diagnostics.Contracts;
 using System.Globalization;
 using System.Runtime.InteropServices;
+using System.Text.Json.Serialization;
 
 namespace OpenTK.Mathematics
 {
@@ -20,11 +21,13 @@ namespace OpenTK.Mathematics
     [StructLayout(LayoutKind.Sequential)]
     public struct Box3 : IEquatable<Box3>
     {
+        [JsonInclude]
         private Vector3 _min;
 
         /// <summary>
         /// Gets or sets the minimum boundary of the structure.
         /// </summary>
+        [JsonIgnore]
         public Vector3 Min
         {
             get => _min;
@@ -47,11 +50,13 @@ namespace OpenTK.Mathematics
             }
         }
 
+        [JsonInclude]
         private Vector3 _max;
 
         /// <summary>
         /// Gets or sets the maximum boundary of the structure.
         /// </summary>
+        [JsonIgnore]
         public Vector3 Max
         {
             get => _max;
@@ -102,6 +107,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Gets or sets a vector describing the size of the Box3 structure.
         /// </summary>
+        [JsonIgnore]
         public Vector3 Size
         {
             get => Max - Min;
@@ -116,6 +122,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Gets or sets a vector describing half the size of the box.
         /// </summary>
+        [JsonIgnore]
         public Vector3 HalfSize
         {
             get => Size / 2;
@@ -125,6 +132,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Gets or sets a vector describing the center of the box.
         /// </summary>
+        [JsonIgnore]
         public Vector3 Center
         {
             get => HalfSize + _min;

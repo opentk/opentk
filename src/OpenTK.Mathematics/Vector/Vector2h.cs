@@ -27,6 +27,7 @@ using System.IO;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
 using System.Xml.Serialization;
 
 namespace OpenTK.Mathematics
@@ -41,11 +42,13 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// The X component of the Half2.
         /// </summary>
+        [JsonInclude]
         public Half X;
 
         /// <summary>
         /// The Y component of the Half2.
         /// </summary>
+        [JsonInclude]
         public Half Y;
 
         /// <summary>
@@ -190,6 +193,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets an OpenTK.Vector2h with the Y and X components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector2h Yx
         {
             get => new Vector2h(Y, X);

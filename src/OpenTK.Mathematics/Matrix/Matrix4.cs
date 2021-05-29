@@ -24,6 +24,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
 using System.Runtime.InteropServices;
+using System.Text.Json.Serialization;
 
 namespace OpenTK.Mathematics
 {
@@ -38,21 +39,25 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Top row of the matrix.
         /// </summary>
+        [JsonInclude]
         public Vector4 Row0;
 
         /// <summary>
         /// 2nd row of the matrix.
         /// </summary>
+        [JsonInclude]
         public Vector4 Row1;
 
         /// <summary>
         /// 3rd row of the matrix.
         /// </summary>
+        [JsonInclude]
         public Vector4 Row2;
 
         /// <summary>
         /// Bottom row of the matrix.
         /// </summary>
+        [JsonInclude]
         public Vector4 Row3;
 
         /// <summary>
@@ -142,6 +147,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Gets the determinant of this matrix.
         /// </summary>
+        [JsonIgnore]
         public float Determinant
         {
             get
@@ -177,6 +183,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Gets or sets the first column of this matrix.
         /// </summary>
+        [JsonIgnore]
         public Vector4 Column0
         {
             get => new Vector4(Row0.X, Row1.X, Row2.X, Row3.X);
@@ -192,6 +199,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Gets or sets the second column of this matrix.
         /// </summary>
+        [JsonIgnore]
         public Vector4 Column1
         {
             get => new Vector4(Row0.Y, Row1.Y, Row2.Y, Row3.Y);
@@ -207,6 +215,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Gets or sets the third column of this matrix.
         /// </summary>
+        [JsonIgnore]
         public Vector4 Column2
         {
             get => new Vector4(Row0.Z, Row1.Z, Row2.Z, Row3.Z);
@@ -222,6 +231,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Gets or sets the fourth column of this matrix.
         /// </summary>
+        [JsonIgnore]
         public Vector4 Column3
         {
             get => new Vector4(Row0.W, Row1.W, Row2.W, Row3.W);
@@ -237,6 +247,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Gets or sets the value at row 1, column 1 of this instance.
         /// </summary>
+        [JsonIgnore]
         public float M11
         {
             get => Row0.X;
@@ -246,6 +257,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Gets or sets the value at row 1, column 2 of this instance.
         /// </summary>
+        [JsonIgnore]
         public float M12
         {
             get => Row0.Y;
@@ -255,6 +267,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Gets or sets the value at row 1, column 3 of this instance.
         /// </summary>
+        [JsonIgnore]
         public float M13
         {
             get => Row0.Z;
@@ -264,6 +277,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Gets or sets the value at row 1, column 4 of this instance.
         /// </summary>
+        [JsonIgnore]
         public float M14
         {
             get => Row0.W;
@@ -273,6 +287,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Gets or sets the value at row 2, column 1 of this instance.
         /// </summary>
+        [JsonIgnore]
         public float M21
         {
             get => Row1.X;
@@ -282,6 +297,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Gets or sets the value at row 2, column 2 of this instance.
         /// </summary>
+        [JsonIgnore]
         public float M22
         {
             get => Row1.Y;
@@ -291,6 +307,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Gets or sets the value at row 2, column 3 of this instance.
         /// </summary>
+        [JsonIgnore]
         public float M23
         {
             get => Row1.Z;
@@ -300,6 +317,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Gets or sets the value at row 2, column 4 of this instance.
         /// </summary>
+        [JsonIgnore]
         public float M24
         {
             get => Row1.W;
@@ -309,6 +327,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Gets or sets the value at row 3, column 1 of this instance.
         /// </summary>
+        [JsonIgnore]
         public float M31
         {
             get => Row2.X;
@@ -318,6 +337,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Gets or sets the value at row 3, column 2 of this instance.
         /// </summary>
+        [JsonIgnore]
         public float M32
         {
             get => Row2.Y;
@@ -327,6 +347,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Gets or sets the value at row 3, column 3 of this instance.
         /// </summary>
+        [JsonIgnore]
         public float M33
         {
             get => Row2.Z;
@@ -336,6 +357,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Gets or sets the value at row 3, column 4 of this instance.
         /// </summary>
+        [JsonIgnore]
         public float M34
         {
             get => Row2.W;
@@ -345,6 +367,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Gets or sets the value at row 4, column 1 of this instance.
         /// </summary>
+        [JsonIgnore]
         public float M41
         {
             get => Row3.X;
@@ -354,6 +377,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Gets or sets the value at row 4, column 2 of this instance.
         /// </summary>
+        [JsonIgnore]
         public float M42
         {
             get => Row3.Y;
@@ -363,6 +387,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Gets or sets the value at row 4, column 3 of this instance.
         /// </summary>
+        [JsonIgnore]
         public float M43
         {
             get => Row3.Z;
@@ -372,6 +397,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Gets or sets the value at row 4, column 4 of this instance.
         /// </summary>
+        [JsonIgnore]
         public float M44
         {
             get => Row3.W;
@@ -381,6 +407,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Gets or sets the values along the main diagonal of the matrix.
         /// </summary>
+        [JsonIgnore]
         public Vector4 Diagonal
         {
             get => new Vector4(Row0.X, Row1.Y, Row2.Z, Row3.W);
@@ -396,6 +423,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Gets the trace of the matrix, the sum of the values along the diagonal.
         /// </summary>
+        [JsonIgnore]
         public float Trace => Row0.X + Row1.Y + Row2.Z + Row3.W;
 
         /// <summary>

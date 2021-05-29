@@ -12,6 +12,7 @@ using System.Diagnostics.Contracts;
 using System.Globalization;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using System.Text.Json.Serialization;
 using System.Xml.Serialization;
 
 namespace OpenTK.Mathematics
@@ -29,16 +30,19 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// The X component of the Vector3i.
         /// </summary>
+        [JsonInclude]
         public int X;
 
         /// <summary>
         /// The Y component of the Vector3i.
         /// </summary>
+        [JsonInclude]
         public int Y;
 
         /// <summary>
         /// The Z component of the Vector3i.
         /// </summary>
+        [JsonInclude]
         public int Z;
 
         /// <summary>
@@ -139,11 +143,13 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Gets the manhattan length of the vector.
         /// </summary>
+        [JsonIgnore]
         public int ManhattanLength => Math.Abs(X) + Math.Abs(Y) + Math.Abs(Z);
 
         /// <summary>
         /// Gets the euclidian length of the vector.
         /// </summary>
+        [JsonIgnore]
         public float EuclideanLength => MathF.Sqrt((X * X) + (Y * Y) + (Z * Z));
 
         /// <summary>
@@ -412,6 +418,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets a <see cref="Vector2i"/> with the X and Y components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector2i Xy
         {
             get => Unsafe.As<Vector3i, Vector2i>(ref this);
@@ -426,6 +433,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets a <see cref="Vector2i"/> with the X and Z components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector2i Xz
         {
             get => new Vector2i(X, Z);
@@ -440,6 +448,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets a <see cref="Vector2i"/> with the Y and X components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector2i Yx
         {
             get => new Vector2i(Y, X);
@@ -454,6 +463,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets a <see cref="Vector2i"/> with the Y and Z components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector2i Yz
         {
             get => new Vector2i(Y, Z);
@@ -468,6 +478,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets a <see cref="Vector2i"/> with the Z and X components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector2i Zx
         {
             get => new Vector2i(Z, X);
@@ -482,6 +493,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets a <see cref="Vector2i"/> with the Z and Y components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector2i Zy
         {
             get => new Vector2i(Z, Y);
@@ -496,6 +508,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets a <see cref="Vector3i"/> with the X, Z, and Y components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector3i Xzy
         {
             get => new Vector3i(X, Z, Y);
@@ -511,6 +524,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets a <see cref="Vector3i"/> with the Y, X, and Z components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector3i Yxz
         {
             get => new Vector3i(Y, X, Z);
@@ -526,6 +540,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets a <see cref="Vector3i"/> with the Y, Z, and X components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector3i Yzx
         {
             get => new Vector3i(Y, Z, X);
@@ -541,6 +556,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets a <see cref="Vector3i"/> with the Z, X, and Y components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector3i Zxy
         {
             get => new Vector3i(Z, X, Y);
@@ -556,6 +572,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets a <see cref="Vector3i"/> with the Z, Y, and X components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector3i Zyx
         {
             get => new Vector3i(Z, Y, X);

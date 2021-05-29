@@ -12,6 +12,7 @@ using System.Diagnostics.Contracts;
 using System.Globalization;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using System.Text.Json.Serialization;
 using System.Xml.Serialization;
 
 namespace OpenTK.Mathematics
@@ -29,11 +30,13 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// The X component of the Vector2i.
         /// </summary>
+        [JsonInclude]
         public int X;
 
         /// <summary>
         /// The Y component of the Vector2i.
         /// </summary>
+        [JsonInclude]
         public int Y;
 
         /// <summary>
@@ -99,21 +102,25 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Gets the manhattan length of the vector.
         /// </summary>
+        [JsonIgnore]
         public int ManhattanLength => Math.Abs(X) + Math.Abs(Y);
 
         /// <summary>
         /// Gets the euclidian length of the vector.
         /// </summary>
+        [JsonIgnore]
         public float EuclideanLength => MathF.Sqrt((X * X) + (Y * Y));
 
         /// <summary>
         /// Gets the perpendicular vector on the right side of this vector.
         /// </summary>
+        [JsonIgnore]
         public Vector2i PerpendicularRight => new Vector2i(Y, -X);
 
         /// <summary>
         /// Gets the perpendicular vector on the left side of this vector.
         /// </summary>
+        [JsonIgnore]
         public Vector2i PerpendicularLeft => new Vector2i(-Y, X);
 
         /// <summary>
@@ -375,6 +382,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets a <see cref="Vector2i"/> with the Y and X components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector2i Yx
         {
             get => new Vector2i(Y, X);

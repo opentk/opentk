@@ -27,6 +27,7 @@ using System.IO;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
 using System.Xml.Serialization;
 
 namespace OpenTK.Mathematics
@@ -41,16 +42,19 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// The X component of the Half3.
         /// </summary>
+        [JsonInclude]
         public Half X;
 
         /// <summary>
         /// The Y component of the Half3.
         /// </summary>
+        [JsonInclude]
         public Half Y;
 
         /// <summary>
         /// The Z component of the Half3.
         /// </summary>
+        [JsonInclude]
         public Half Z;
 
         /// <summary>
@@ -213,6 +217,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets an OpenTK.Vector2h with the X and Y components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector2h Xy
         {
             get => Unsafe.As<Vector3h, Vector2h>(ref this);
@@ -227,6 +232,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets an OpenTK.Vector2h with the X and Z components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector2h Xz
         {
             get => new Vector2h(X, Z);
@@ -241,6 +247,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets an OpenTK.Vector2h with the Y and X components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector2h Yx
         {
             get => new Vector2h(Y, X);
@@ -255,6 +262,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets an OpenTK.Vector2h with the Y and Z components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector2h Yz
         {
             get => new Vector2h(Y, Z);
@@ -269,6 +277,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets an OpenTK.Vector2h with the Z and X components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector2h Zx
         {
             get => new Vector2h(Z, X);
@@ -283,6 +292,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets an OpenTK.Vector2h with the Z and Y components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector2h Zy
         {
             get => new Vector2h(Z, Y);
@@ -297,6 +307,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets an OpenTK.Vector3h with the X, Z, and Y components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector3h Xzy
         {
             get => new Vector3h(X, Z, Y);
@@ -312,6 +323,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets an OpenTK.Vector3h with the Y, X, and Z components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector3h Yxz
         {
             get => new Vector3h(Y, X, Z);
@@ -327,6 +339,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets an OpenTK.Vector3h with the Y, Z, and X components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector3h Yzx
         {
             get => new Vector3h(Y, Z, X);
@@ -342,6 +355,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets an OpenTK.Vector3h with the Z, X, and Y components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector3h Zxy
         {
             get => new Vector3h(Z, X, Y);
@@ -357,6 +371,7 @@ namespace OpenTK.Mathematics
         /// Gets or sets an OpenTK.Vector3h with the Z, Y, and X components of this instance.
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Vector3h Zyx
         {
             get => new Vector3h(Z, Y, X);

@@ -9,6 +9,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
+using System.Text.Json.Serialization;
 
 namespace OpenTK.Mathematics
 {
@@ -18,6 +19,7 @@ namespace OpenTK.Mathematics
     [Serializable]
     public struct BezierCurve
     {
+        [JsonInclude]
         private readonly List<Vector2> _points;
 
         /// <summary>
@@ -29,12 +31,14 @@ namespace OpenTK.Mathematics
         /// the original curve, 5.0f i.e. stands for a curve that has always a distance
         /// of 5.0f to the orignal curve at any point.
         /// </remarks>
+        [JsonInclude]
         public float Parallel;
 
         /// <summary>
         /// Gets the points of this curve.
         /// </summary>
         /// <remarks>The first point and the last points represent the anchor points.</remarks>
+        [JsonIgnore]
         public IList<Vector2> Points => _points;
 
         /// <summary>

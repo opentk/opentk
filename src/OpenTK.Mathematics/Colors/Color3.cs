@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics.Contracts;
+using System.Text.Json.Serialization;
 using OpenTK.Mathematics;
 
 #pragma warning disable SA1649
@@ -49,16 +50,19 @@ namespace OpenTK
         /// <summary>
         /// The first element of this color. This corresponds to the first letter of the color type.
         /// </summary>
+        [JsonInclude]
         public float X;
 
         /// <summary>
         /// The second element of this colour. This corresponds to the second letter of the colour type.
         /// </summary>
+        [JsonInclude]
         public float Y;
 
         /// <summary>
         /// The third element of this color. This corresponds to the second letter of the colour type.
         /// </summary>
+        [JsonInclude]
         public float Z;
 
         /// <summary>

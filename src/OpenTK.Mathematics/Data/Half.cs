@@ -60,6 +60,7 @@ using System.Globalization;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
 
 namespace OpenTK.Mathematics
 {
@@ -81,6 +82,7 @@ namespace OpenTK.Mathematics
     [StructLayout(LayoutKind.Sequential)]
     public struct Half : ISerializable, IComparable<Half>, IFormattable, IEquatable<Half>
     {
+        [JsonInclude]
         private ushort _bits;
 
         /// <summary>

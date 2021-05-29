@@ -23,6 +23,7 @@ SOFTWARE.
 using System;
 using System.Diagnostics.Contracts;
 using System.Runtime.InteropServices;
+using System.Text.Json.Serialization;
 using System.Xml.Serialization;
 
 namespace OpenTK.Mathematics
@@ -36,11 +37,13 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// The X, Y and Z components of this instance.
         /// </summary>
+        [JsonInclude]
         public Vector3d Xyz;
 
         /// <summary>
         /// The W component of this instance.
         /// </summary>
+        [JsonInclude]
         public double W;
 
         /// <summary>
