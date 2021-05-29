@@ -11,14 +11,14 @@ namespace GeneratorV2.Process
     public class TrimNameOverloader : IOverloader
     {
         private static readonly Regex Endings = new Regex(
-            @"([fd]v?|u?[isb](64)?v?|v|i_v|fi)$",
+            @"(u?[sb](64)?v?|v|i_v|fi)$",
             RegexOptions.Compiled);
 
         private static readonly Regex EndingsNotToTrim = new Regex(
             "(sh|ib|[tdrey]s|[eE]n[vd]|bled" +
             "|Attrib|Access|Boolean|Coord|Depth|Feedbacks|Finish|Flag" +
             "|Groups|IDs|Indexed|Instanced|Pixels|Queries|Status|Tess|Through" +
-            "|Uniforms|Varyings|Weight|Width)$",
+            "|Uniforms|Varyings|Weight|Width|[1-4][fdhi]v)$",
             RegexOptions.Compiled);
 
         private static readonly Regex EndingsAddV = new Regex("^0", RegexOptions.Compiled);
@@ -164,6 +164,245 @@ namespace GeneratorV2.Process
 
             public string? WriteEpilogue(IndentedTextWriter writer, NameTable nameTable, string? returnName)
             {
+                return returnName;
+            }
+        }
+    }
+
+    public sealed class MathTypeOverloader : IOverloader
+    {
+        // Math type overloads have 3 different types.
+        // One is a Reference type, and has no length parameter for arrays of math types.
+        // The other two are arrays and spans. These both include the length parameter.
+
+        // Regex to match names of vector methods.
+        private static readonly Regex VectorNameMatch = new Regex("([1-4])([fdhi])v$", RegexOptions.Compiled);
+        // Regex to match names of matrix methods.
+        private static readonly Regex MatrixNameMatch = new Regex("(Matrix([1-4])(?:x([1-4]))?[fd])v$", RegexOptions.Compiled);
+        // This is used to make sure we don't overload types that arent supported.
+        private readonly HashSet<string> _existingTypes = new HashSet<string>()
+        {
+            // Vectors.
+            "Vector2",
+            "Vector2d",
+            "Vector2h",
+            "Vector2i",
+            "Vector3",
+            "Vector3d",
+            "Vector3h",
+            "Vector3i",
+            "Vector4",
+            "Vector4d",
+            "Vector4h",
+            "Vector4i",
+
+            // Matrices.
+            // double matrices.
+            "Matrix2d",
+            "Matrix2x3d",
+            "Matrix2x4d",
+            "Matrix3x2d",
+            "Matrix3d",
+            "Matrix3x4d",
+            "Matrix4x2d",
+            "Matrix4x3d",
+            "Matrix4d",
+            // float matrices.
+            "Matrix2",
+            "Matrix2x3",
+            "Matrix2x4",
+            "Matrix3x2",
+            "Matrix3",
+            "Matrix3x4",
+            "Matrix4x2",
+            "Matrix4x3",
+            "Matrix4",
+        };
+
+        public bool TryGenerateOverloads(Overload overload, [NotNullWhen(true)] out List<Overload>? newOverloads)
+        {
+            // Match with either a regex or a vector.
+            Match vectorMatch = VectorNameMatch.Match(overload.OverloadName);
+            Match matrixMatch = MatrixNameMatch.Match(overload.OverloadName);
+
+            // The vector size is used to check that we overload the right parameter later on.
+            int vectorSize;
+            string typePostfix;
+            string typeName;
+            if (matrixMatch.Success)
+            {
+                typeName = matrixMatch.Groups[1].Value;
+                int columns = int.Parse(matrixMatch.Groups[2].Value);
+                int rows = matrixMatch.Groups[3].Success ?
+                    int.Parse(matrixMatch.Groups[3].Value) : columns;
+                vectorSize = columns * rows;
+            }
+            else if (vectorMatch.Success)
+            {
+                vectorSize = int.Parse(vectorMatch.Groups[1].Value);
+                typePostfix = vectorMatch.Groups[2].Value;
+                if (typePostfix == "f") typePostfix = "";
+                typeName = $"Vector{vectorSize}{typePostfix}";
+            }
+            else
+            {
+                newOverloads = null;
+                return false;
+            }
+
+            NameTable nameTable = overload.NameTable.New();
+            Parameter[] singleParameters = overload.InputParameters.ToArray();
+            Parameter[] spanParameters = overload.InputParameters.ToArray();
+            Parameter[] arrayParameters = overload.InputParameters.ToArray();
+            Parameter? lengthParameter = null;
+            Parameter? ptrParam = null;
+            Parameter? vectorParam = null;
+            for (var i = 0; i < singleParameters.Length; i++)
+            {
+                Parameter parameter = singleParameters[i];
+                if (parameter.Length == null) continue;
+                if (parameter.Type is CSPointer ptr && ptr.BaseType is CSType baseType)
+                {
+                    if (!_existingTypes.Contains(typeName))
+                    {
+                        // Some vector methods arent actually vectors.
+                        // So we just overload them like their normal types.
+                        // An example of this is glUniform1f
+                        typeName = baseType.TypeName;
+                    }
+
+                    Constant constant;
+                    if (parameter.Length is Constant cnst)
+                    {
+                        constant = cnst;
+                    }
+                    else if (parameter.Length is BinaryOperation binary)
+                    {
+                        // We need to figure out which operator side is the length of the vector type.
+                        // and which side is the parameter reference.
+                        // The side with the parameter reference, references the length parameter of an array.
+                        ParameterReference reference;
+                        if (binary.Left is ParameterReference leftRef && binary.Right is Constant rightConst)
+                        {
+                            reference = leftRef;
+                            constant = rightConst;
+                        }
+                        else if (binary.Right is ParameterReference rightRef && binary.Left is Constant leftConst)
+                        {
+                            reference = rightRef;
+                            constant = leftConst;
+                        }
+                        else continue;
+
+                        lengthParameter = singleParameters.First(p => p.Name == reference.ParameterName);
+                    }
+                    else continue;
+
+                    if (constant.Value == vectorSize)
+                    {
+                        bool isConstant = ptr.Constant || baseType.Constant;
+                        CSType vector = new CSType(typeName, baseType.Constant);
+                        singleParameters[i] = parameter with
+                        {
+                            Type = new CSRef(isConstant ? CSRef.Type.In : CSRef.Type.Ref, vector),
+                            Length = null
+                        };
+                        spanParameters[i] = parameter with
+                        {
+                            Type = new CSSpan(vector, isConstant),
+                            Length = null
+                        };
+                        arrayParameters[i] = parameter with
+                        {
+                            Type = new CSArray(vector, isConstant),
+                            Length = null
+                        };
+                        nameTable.Rename(parameter, parameter.Name + "_ptr");
+                        ptrParam = parameter;
+                        vectorParam = singleParameters[i];
+                        // For now we only overload one MathType parameter as the spec only contains one old
+                        // extension (GL_SUN_vertex) with methods that have multiple vectors per method.
+                        // 29-05-2021 FrederikJA
+                        break;
+                    }
+                }
+            }
+
+            // Check if any overloads were generated.
+            if (lengthParameter == null || ptrParam == null || vectorParam == null)
+            {
+                newOverloads = null;
+                return false;
+            }
+
+            // Remove the 'v' from the overloaded name.
+            string overloadName = overload.OverloadName.Remove(vectorMatch.Index + vectorMatch.Length - 1, 1);
+            newOverloads = new List<Overload>()
+            {
+                overload with
+                {
+                    OverloadName = overloadName,
+                    InputParameters = singleParameters.Where(p => p != lengthParameter).ToArray(),
+                    NameTable = nameTable,
+                    NestedOverload = overload,
+                    MarshalLayerToNested = new SingleVectorLayer(lengthParameter, ptrParam, vectorParam)
+                },
+                overload with
+                {
+                    OverloadName = overloadName,
+                    InputParameters = spanParameters,
+                    NameTable = nameTable,
+                    NestedOverload = overload,
+                    MarshalLayerToNested = new SpanArrayVectorLayer(lengthParameter, ptrParam, vectorParam)
+                },
+                overload with
+                {
+                    OverloadName = overloadName,
+                    InputParameters = arrayParameters,
+                    NameTable = nameTable,
+                    NestedOverload = overload,
+                    MarshalLayerToNested = new SpanArrayVectorLayer(lengthParameter, ptrParam, vectorParam)
+                },
+            };
+            return true;
+        }
+
+        public record SingleVectorLayer(
+            Parameter CountParameters, Parameter PtrParam, Parameter VectorParam) : IOverloadLayer
+        {
+            private CsScope _csScope;
+            public void WritePrologue(IndentedTextWriter writer, NameTable nameTable)
+            {
+                BaseCSType vectorType = ((CSRef)VectorParam.Type).ReferencedType;
+                writer.WriteLine($"{CountParameters.Type.ToCSString()} {nameTable[CountParameters]} = 1;");
+                writer.WriteLine($"fixed ({vectorType.ToCSString()}* tmp_vecPtr = &{nameTable[VectorParam]})");
+                _csScope = writer.CsScope();
+                writer.WriteLine($"{PtrParam.Type.ToCSString()} {nameTable[PtrParam]} = ({PtrParam.Type.ToCSString()})tmp_vecPtr;");
+            }
+
+            public string? WriteEpilogue(IndentedTextWriter writer, NameTable nameTable, string? returnName)
+            {
+                _csScope.Dispose();
+                return returnName;
+            }
+        }
+
+        public record SpanArrayVectorLayer(
+            Parameter CountParameter, Parameter PtrParam, Parameter VectorParam) : IOverloadLayer
+        {
+            private CsScope _csScope;
+
+            public void WritePrologue(IndentedTextWriter writer, NameTable nameTable)
+            {
+                BaseCSType vectorType = ((CSRef)VectorParam.Type).ReferencedType;
+                writer.WriteLine($"fixed ({vectorType.ToCSString()}* tmp_vecPtr = {nameTable[VectorParam]})");
+                _csScope = writer.CsScope();
+                writer.WriteLine($"{PtrParam.Type.ToCSString()} {nameTable[PtrParam]} = ({PtrParam.Type.ToCSString()})tmp_vecPtr;");
+            }
+
+            public string? WriteEpilogue(IndentedTextWriter writer, NameTable nameTable, string? returnName)
+            {
+                _csScope.Dispose();
                 return returnName;
             }
         }
