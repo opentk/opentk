@@ -21,7 +21,7 @@ namespace GeneratorV2.Process
             new StringReturnOverloader(),
 
             new BoolOverloader(),
-            new VectorOverloader(),
+            new MathTypeOverloader(),
             new FunctionPtrToDelegateOverloader(),
             new PointerToOffsetOverloader(),
             new VoidPtrToIntPtrOverloader(),
