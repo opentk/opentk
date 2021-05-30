@@ -45,5 +45,19 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 GL.GetShaderInfoLog(shader, length, ref length, out info);
             }
         }
+
+        public static void GetProgramInfoLog(uint program, out string info)
+        {
+            int length = default;
+            GL.GetProgrami(program, ProgramPropertyARB.InfoLogLength, ref length);
+            if (length == 0)
+            {
+                info = string.Empty;
+            }
+            else
+            {
+                GL.GetProgramInfoLog(program, length, ref length, out info);
+            }
+        }
     }
 }
