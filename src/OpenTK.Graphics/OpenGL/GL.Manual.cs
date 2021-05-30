@@ -45,6 +45,20 @@ namespace OpenTK.Graphics.OpenGL
             }
         }
 
+        public static void GetProgramInfoLog(uint program, out string info)
+        {
+            int length = default;
+            GL.GetProgrami(program, ProgramPropertyARB.InfoLogLength, ref length);
+            if (length == 0)
+            {
+                info = string.Empty;
+            }
+            else
+            {
+                GL.GetProgramInfoLog(program, length, ref length, out info);
+            }
+        }
+
         /// <summary>
         /// Create a stand-alone program from an array of null-terminated source code strings
         /// </summary>
