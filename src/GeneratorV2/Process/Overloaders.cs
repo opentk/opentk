@@ -60,12 +60,7 @@ namespace GeneratorV2.Process
 
             if (trimmedName != name)
             {
-                newOverloads = new List<Overload>() {overload with
-                {
-                    OverloadName = trimmedName,
-                    NestedOverload = overload,
-                    MarshalLayerToNested = null
-                }};
+                newOverloads = new List<Overload>() {overload with {OverloadName = trimmedName}};
                 return true;
             }
             else
