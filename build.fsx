@@ -178,7 +178,7 @@ Target.create "Clean" <| fun _ ->
     -- ("./src" </> "OpenTK.Graphics" </> "OpenGL" </> "GL.Manual.cs")
     -- ("./src" </> "OpenTK.Graphics" </> "OpenGL" </> "Compatibility" </> "GL.Manual.cs")
     -- ("./src" </> "OpenTK.Graphics" </> "OpenGLES1" </> "GL.Manual.cs")
-    -- ("./src" </> "OpenTK.Graphics" </> "OpenGLES2" </> "GL.Manual.cs")
+    -- ("./src" </> "OpenTK.Graphics" </> "OpenGLES3" </> "GL.Manual.cs")
     |> Seq.iter(Shell.rm)
 
 Target.create "Restore" (fun _ -> DotNet.restore dotnetSimple "OpenTK.sln" |> ignore)
