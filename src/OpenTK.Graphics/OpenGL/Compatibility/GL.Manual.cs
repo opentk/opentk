@@ -14,6 +14,16 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         public enum SampleMaskNV
         { }
 
+
+        // FIXME: Right now this is the only method that actually takes a color besides a few FFP methods.
+        // So currently its not worth it creating an overloader for these.
+        // I also doubt there will ever be created new methods that take in a color.
+        // 30-05-2021 FrederikJA
+        public static void ClearColor(Color4<Rgba> clearColor)
+        {
+            GL.ClearColor(clearColor.X, clearColor.Y, clearColor.Z, clearColor.W);
+        }
+
         public static void ShaderSource(uint shader, string str)
         {
             IntPtr str_iptr = Marshal.StringToCoTaskMemAnsi(str);
