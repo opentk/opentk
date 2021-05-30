@@ -142,6 +142,7 @@ namespace GeneratorV2.Writing
     public record Parameter(
         BaseCSType Type,
         string Name,
+        Handle? Handle,
         // FIXME: This is only used for overloading,
         // this is the parsed version of the length without processing.
         // We might want to do further processing on this before overloading, or move it.

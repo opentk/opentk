@@ -64,6 +64,18 @@ namespace GeneratorV2.Parsing
         GLDEBUGPROCNV,
     }
 
+    public enum Handle
+    {
+        Program,
+        ProgramPipeline,
+        Texture,
+        Buffer,
+        Shader,
+        Query,
+        Framebuffer,
+        Renderbuffer,
+    }
+
     public record GLType();
 
     public record GLBaseType(string OriginalString, PrimitiveType Type, bool Constant) : GLType;
@@ -74,7 +86,7 @@ namespace GeneratorV2.Parsing
 
     public record PType(GLType Type, string? Group);
 
-    public record GLParameter(PType Type, string Name, Expression? Length);
+    public record GLParameter(PType Type, string Name, Handle? Handle, Expression? Length);
 
     public record Command(string EntryPoint, PType ReturnType, GLParameter[] Parameters);
 

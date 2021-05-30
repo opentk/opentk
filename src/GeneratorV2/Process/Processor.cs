@@ -330,7 +330,7 @@ namespace GeneratorV2.Process
             foreach (var p in command.Parameters)
             {
                 BaseCSType t = MakeCSType(p.Type.Type, p.Type.Group, out var length);
-                parameters.Add(new Parameter(t, NameMangler.MangleParameterName(p.Name), p.Length ?? length));
+                parameters.Add(new Parameter(t, NameMangler.MangleParameterName(p.Name), p.Handle, p.Length ?? length));
                 if (p.Type.Group != null)
                     enumGroups.Add(p.Type.Group);
             }
