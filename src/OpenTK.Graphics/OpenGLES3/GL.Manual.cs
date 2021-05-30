@@ -68,7 +68,7 @@ namespace OpenTK.Graphics.OpenGLES3
         public static void CreateShaderProgram(ShaderType shaderType, string shaderText)
         {
             var shaderTextPtr = Marshal.StringToCoTaskMemAnsi(shaderText);
-            GL.CreateShaderProgramv_(shaderType, 1, (byte**)&shaderTextPtr);
+            GL.CreateShaderProgramv(shaderType, 1, (byte**)&shaderTextPtr);
             Marshal.FreeCoTaskMem(shaderTextPtr);
         }
     }

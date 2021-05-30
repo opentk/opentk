@@ -447,15 +447,18 @@ namespace GeneratorV2.Process
                 // Replace the old overloads with the new overloads
                 overloads = newOverloads;
             }
-
             if (overloadedOnce)
             {
-                changeNativeName = true;
+                changeNativeName = false;
                 foreach (var overload in overloads)
                 {
-                    if (function.Parameters.Count != overload.InputParameters.Length)
+                    if (function.Parameters.Count != overload.InputParameters.Length ||
+                        overload.OverloadName != function.FunctionName)
+                    {
                         continue;
+                    }
 
+                    changeNativeName = true;
                     for (int i = 0; i < function.Parameters.Count; i++)
                     {
                         if (!function.Parameters[i].Type.Equals(overload.InputParameters[i].Type))
