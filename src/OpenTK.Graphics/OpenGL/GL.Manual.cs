@@ -1,5 +1,6 @@
 using System;
 using System.Runtime.InteropServices;
+using OpenTK.Mathematics;
 
 namespace OpenTK.Graphics.OpenGL
 {
@@ -13,6 +14,15 @@ namespace OpenTK.Graphics.OpenGL
 
     public static unsafe partial class GL
     {
+        // Right now this is the only method that actually takes a color besides a few FFP methods.
+        // So currently its not worth it creating an overloader for these.
+        // I also doubt there will ever be created new methods that take in a color.
+        // 30-05-2021 FrederikJA
+        public static void ClearColor(Color4<Rgba> clearColor)
+        {
+            GL.ClearColor(clearColor.X, clearColor.Y, clearColor.Z, clearColor.W);
+        }
+
         public static void ShaderSource(uint shader, string shaderText)
         {
             var shaderTextPtr = Marshal.StringToCoTaskMemAnsi(shaderText);
@@ -32,6 +42,20 @@ namespace OpenTK.Graphics.OpenGL
             else
             {
                 GL.GetShaderInfoLog(shader, length, ref length, out info);
+            }
+        }
+
+        public static void GetProgramInfoLog(uint program, out string info)
+        {
+            int length = default;
+            GL.GetProgrami(program, ProgramPropertyARB.InfoLogLength, ref length);
+            if (length == 0)
+            {
+                info = string.Empty;
+            }
+            else
+            {
+                GL.GetProgramInfoLog(program, length, ref length, out info);
             }
         }
 
