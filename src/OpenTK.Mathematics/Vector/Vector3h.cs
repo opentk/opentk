@@ -70,9 +70,9 @@ namespace OpenTK.Mathematics
         /// <param name="value">The value that will initialize this instance.</param>
         public Vector3h(float value)
         {
-            X = new Half(value);
-            Y = new Half(value);
-            Z = new Half(value);
+            X = (Half)value;
+            Y = (Half)value;
+            Z = (Half)value;
         }
 
         /// <summary>
@@ -97,24 +97,9 @@ namespace OpenTK.Mathematics
         /// <param name="z">The Z component of the vector.</param>
         public Vector3h(float x, float y, float z)
         {
-            X = new Half(x);
-            Y = new Half(y);
-            Z = new Half(z);
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Vector3h"/> struct.
-        /// The new Half3 instance will convert the 3 parameters into 16-bit half-precision floating-point.
-        /// </summary>
-        /// <param name="x">The X component of the vector.</param>
-        /// <param name="y">The Y component of the vector.</param>
-        /// <param name="z">The Z component of the vector.</param>
-        /// <param name="throwOnError">Enable checks that will throw if the conversion result is not meaningful.</param>
-        public Vector3h(float x, float y, float z, bool throwOnError)
-        {
-            X = new Half(x, throwOnError);
-            Y = new Half(y, throwOnError);
-            Z = new Half(z, throwOnError);
+            X = (Half)x;
+            Y = (Half)y;
+            Z = (Half)z;
         }
 
         /// <summary>
@@ -123,21 +108,9 @@ namespace OpenTK.Mathematics
         /// <param name="v">The <see cref="Vector3"/> to convert.</param>
         public Vector3h(Vector3 v)
         {
-            X = new Half(v.X);
-            Y = new Half(v.Y);
-            Z = new Half(v.Z);
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Vector3h"/> struct.
-        /// </summary>
-        /// <param name="v">The <see cref="Vector3"/> to convert.</param>
-        /// <param name="throwOnError">Enable checks that will throw if the conversion result is not meaningful.</param>
-        public Vector3h(Vector3 v, bool throwOnError)
-        {
-            X = new Half(v.X, throwOnError);
-            Y = new Half(v.Y, throwOnError);
-            Z = new Half(v.Z, throwOnError);
+            X = (Half)v.X;
+            Y = (Half)v.Y;
+            Z = (Half)v.Z;
         }
 
         /// <summary>
@@ -146,21 +119,9 @@ namespace OpenTK.Mathematics
         /// <param name="v">The <see cref="Vector3"/> to convert.</param>
         public Vector3h(in Vector3 v)
         {
-            X = new Half(v.X);
-            Y = new Half(v.Y);
-            Z = new Half(v.Z);
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Vector3h"/> struct.
-        /// </summary>
-        /// <param name="v">The <see cref="Vector3"/> to convert.</param>
-        /// <param name="throwOnError">Enable checks that will throw if the conversion result is not meaningful.</param>
-        public Vector3h(in Vector3 v, bool throwOnError)
-        {
-            X = new Half(v.X, throwOnError);
-            Y = new Half(v.Y, throwOnError);
-            Z = new Half(v.Z, throwOnError);
+            X = (Half)v.X;
+            Y = (Half)v.Y;
+            Z = (Half)v.Z;
         }
 
         /// <summary>
@@ -169,21 +130,9 @@ namespace OpenTK.Mathematics
         /// <param name="v">The <see cref="Vector3d"/> to convert.</param>
         public Vector3h(Vector3d v)
         {
-            X = new Half(v.X);
-            Y = new Half(v.Y);
-            Z = new Half(v.Z);
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Vector3h"/> struct.
-        /// </summary>
-        /// <param name="v">The <see cref="Vector3d"/> to convert.</param>
-        /// <param name="throwOnError">Enable checks that will throw if the conversion result is not meaningful.</param>
-        public Vector3h(Vector3d v, bool throwOnError)
-        {
-            X = new Half(v.X, throwOnError);
-            Y = new Half(v.Y, throwOnError);
-            Z = new Half(v.Z, throwOnError);
+            X = (Half)v.X;
+            Y = (Half)v.Y;
+            Z = (Half)v.Z;
         }
 
         /// <summary>
@@ -192,21 +141,9 @@ namespace OpenTK.Mathematics
         /// <param name="v">The <see cref="Vector3d"/> to convert.</param>
         public Vector3h(in Vector3d v)
         {
-            X = new Half(v.X);
-            Y = new Half(v.Y);
-            Z = new Half(v.Z);
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Vector3h"/> struct.
-        /// </summary>
-        /// <param name="v">The <see cref="Vector3d"/> to convert.</param>
-        /// <param name="throwOnError">Enable checks that will throw if the conversion result is not meaningful.</param>
-        public Vector3h(in Vector3d v, bool throwOnError)
-        {
-            X = new Half(v.X, throwOnError);
-            Y = new Half(v.Y, throwOnError);
-            Z = new Half(v.Z, throwOnError);
+            X = (Half)v.X;
+            Y = (Half)v.Y;
+            Z = (Half)v.Z;
         }
 
         /// <summary>
@@ -374,7 +311,7 @@ namespace OpenTK.Mathematics
         /// <returns>The vector.</returns>
         public Vector3 ToVector3()
         {
-            return new Vector3(X, Y, Z);
+            return new Vector3((float)X, (float)Y, (float)Z);
         }
 
         /// <summary>
@@ -383,7 +320,7 @@ namespace OpenTK.Mathematics
         /// <returns>The vector.</returns>
         public Vector3d ToVector3d()
         {
-            return new Vector3d(X, Y, Z);
+            return new Vector3d((double)X, (double)Y, (double)Z);
         }
 
         /// <summary>
@@ -394,7 +331,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static implicit operator Vector3(Vector3h vec)
         {
-            return new Vector3(vec.X, vec.Y, vec.Z);
+            return new Vector3((float)vec.X, (float)vec.Y, (float)vec.Z);
         }
 
         /// <summary>
@@ -405,7 +342,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static implicit operator Vector3d(Vector3h vec)
         {
-            return new Vector3d(vec.X, vec.Y, vec.Z);
+            return new Vector3d((double)vec.X, (double)vec.Y, (double)vec.Z);
         }
 
         /// <summary>
@@ -479,28 +416,6 @@ namespace OpenTK.Mathematics
             info.AddValue("Z", Z);
         }
 
-        /// <summary>
-        /// Updates the X,Y and Z components of this instance by reading from a Stream.
-        /// </summary>
-        /// <param name="bin">A BinaryReader instance associated with an open Stream.</param>
-        public void FromBinaryStream(BinaryReader bin)
-        {
-            X.FromBinaryStream(bin);
-            Y.FromBinaryStream(bin);
-            Z.FromBinaryStream(bin);
-        }
-
-        /// <summary>
-        /// Writes the X,Y and Z components of this instance into a Stream.
-        /// </summary>
-        /// <param name="bin">A BinaryWriter instance associated with an open Stream.</param>
-        public void ToBinaryStream(BinaryWriter bin)
-        {
-            X.ToBinaryStream(bin);
-            Y.ToBinaryStream(bin);
-            Z.ToBinaryStream(bin);
-        }
-
         /// <inheritdoc/>
         public override string ToString()
         {
@@ -548,44 +463,6 @@ namespace OpenTK.Mathematics
         public override int GetHashCode()
         {
             return HashCode.Combine(X, Y, Z);
-        }
-
-        /// <summary>
-        /// Returns the Half3 as an array of bytes.
-        /// </summary>
-        /// <param name="h">The Half3 to convert.</param>
-        /// <returns>The input as byte array.</returns>
-        [Pure]
-        public static byte[] GetBytes(Vector3h h)
-        {
-            var result = new byte[SizeInBytes];
-
-            var temp = Half.GetBytes(h.X);
-            result[0] = temp[0];
-            result[1] = temp[1];
-            temp = Half.GetBytes(h.Y);
-            result[2] = temp[0];
-            result[3] = temp[1];
-            temp = Half.GetBytes(h.Z);
-            result[4] = temp[0];
-            result[5] = temp[1];
-
-            return result;
-        }
-
-        /// <summary>
-        /// Converts an array of bytes into Half3.
-        /// </summary>
-        /// <param name="value">A Half3 in it's byte[] representation.</param>
-        /// <param name="startIndex">The starting position within value.</param>
-        /// <returns>A new Half3 instance.</returns>
-        [Pure]
-        public static Vector3h FromBytes(byte[] value, int startIndex)
-        {
-            return new Vector3h(
-                Half.FromBytes(value, startIndex),
-                Half.FromBytes(value, startIndex + 2),
-                Half.FromBytes(value, startIndex + 4));
         }
 
         /// <summary>

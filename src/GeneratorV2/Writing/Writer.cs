@@ -65,7 +65,6 @@ namespace GeneratorV2.Writing
             writer.WriteLine("// This file is auto generated, do not edit.");
             writer.WriteLine("using System;");
             writer.WriteLine("using System.Runtime.InteropServices;");
-            writer.WriteLine("using Half = OpenTK.Mathematics.Half;");
             writer.WriteLine();
             writer.WriteLine($"namespace {GraphicsNamespace}.{glNamespace}");
             using (writer.CsScope())
@@ -165,8 +164,6 @@ namespace GeneratorV2.Writing
             writer.WriteLine("using System.Runtime.CompilerServices;");
             writer.WriteLine("using System.Runtime.InteropServices;");
             writer.WriteLine("using OpenTK.Mathematics;");
-            // FIXME: Figure out whether we wanna use opentk's half or system.numerics. Does it even make a difference?
-            writer.WriteLine("using Half = OpenTK.Mathematics.Half;");
             writer.WriteLine();
             writer.WriteLine($"namespace {GraphicsNamespace}.{glNamespace}");
             using (writer.CsScope())

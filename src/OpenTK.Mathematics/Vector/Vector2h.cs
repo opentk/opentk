@@ -64,8 +64,8 @@ namespace OpenTK.Mathematics
         /// <param name="value">The value that will initialize this instance.</param>
         public Vector2h(float value)
         {
-            X = new Half(value);
-            Y = new Half(value);
+            X = (Half)value;
+            Y = (Half)value;
         }
 
         /// <summary>
@@ -86,20 +86,8 @@ namespace OpenTK.Mathematics
         /// <param name="y">The Y component of the vector.</param>
         public Vector2h(float x, float y)
         {
-            X = new Half(x);
-            Y = new Half(y);
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Vector2h"/> struct.
-        /// </summary>
-        /// <param name="x">The X component of the vector.</param>
-        /// <param name="y">The Y component of the vector.</param>
-        /// <param name="throwOnError">Enable checks that will throw if the conversion result is not meaningful.</param>
-        public Vector2h(float x, float y, bool throwOnError)
-        {
-            X = new Half(x, throwOnError);
-            Y = new Half(y, throwOnError);
+            X = (Half)x;
+            Y = (Half)y;
         }
 
         /// <summary>
@@ -108,19 +96,8 @@ namespace OpenTK.Mathematics
         /// <param name="v">The <see cref="Vector2"/> to convert.</param>
         public Vector2h(Vector2 v)
         {
-            X = new Half(v.X);
-            Y = new Half(v.Y);
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Vector2h"/> struct.
-        /// </summary>
-        /// <param name="v">The <see cref="Vector2"/> to convert.</param>
-        /// <param name="throwOnError">Enable checks that will throw if the conversion result is not meaningful.</param>
-        public Vector2h(Vector2 v, bool throwOnError)
-        {
-            X = new Half(v.X, throwOnError);
-            Y = new Half(v.Y, throwOnError);
+            X = (Half)v.X;
+            Y = (Half)v.Y;
         }
 
         /// <summary>
@@ -129,19 +106,8 @@ namespace OpenTK.Mathematics
         /// <param name="v">The <see cref="Vector2"/> to convert.</param>
         public Vector2h(in Vector2 v)
         {
-            X = new Half(v.X);
-            Y = new Half(v.Y);
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Vector2h"/> struct.
-        /// </summary>
-        /// <param name="v">The <see cref="Vector2"/> to convert.</param>
-        /// <param name="throwOnError">Enable checks that will throw if the conversion result is not meaningful.</param>
-        public Vector2h(in Vector2 v, bool throwOnError)
-        {
-            X = new Half(v.X, throwOnError);
-            Y = new Half(v.Y, throwOnError);
+            X = (Half)v.X;
+            Y = (Half)v.Y;
         }
 
         /// <summary>
@@ -150,19 +116,8 @@ namespace OpenTK.Mathematics
         /// <param name="v">The <see cref="Vector2d"/> to convert.</param>
         public Vector2h(Vector2d v)
         {
-            X = new Half(v.X);
-            Y = new Half(v.Y);
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Vector2h"/> struct.
-        /// </summary>
-        /// <param name="v">The <see cref="Vector2d"/> to convert.</param>
-        /// <param name="throwOnError">Enable checks that will throw if the conversion result is not meaningful.</param>
-        public Vector2h(Vector2d v, bool throwOnError)
-        {
-            X = new Half(v.X, throwOnError);
-            Y = new Half(v.Y, throwOnError);
+            X = (Half)v.X;
+            Y = (Half)v.Y;
         }
 
         /// <summary>
@@ -171,19 +126,8 @@ namespace OpenTK.Mathematics
         /// <param name="v">The <see cref="Vector2d"/> to convert.</param>
         public Vector2h(in Vector2d v)
         {
-            X = new Half(v.X);
-            Y = new Half(v.Y);
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Vector2h"/> struct.
-        /// </summary>
-        /// <param name="v">The <see cref="Vector2d"/> to convert.</param>
-        /// <param name="throwOnError">Enable checks that will throw if the conversion result is not meaningful.</param>
-        public Vector2h(in Vector2d v, bool throwOnError)
-        {
-            X = new Half(v.X, throwOnError);
-            Y = new Half(v.Y, throwOnError);
+            X = (Half)v.X;
+            Y = (Half)v.Y;
         }
 
         /// <summary>
@@ -206,7 +150,7 @@ namespace OpenTK.Mathematics
         /// <returns>The vector.</returns>
         public Vector2 ToVector2()
         {
-            return new Vector2(X, Y);
+            return new Vector2((float)X, (float)Y);
         }
 
         /// <summary>
@@ -215,7 +159,7 @@ namespace OpenTK.Mathematics
         /// <returns>The vector.</returns>
         public Vector2d ToVector2d()
         {
-            return new Vector2d(X, Y);
+            return new Vector2d((double)X, (double)Y);
         }
 
         /// <summary>
@@ -226,7 +170,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static implicit operator Vector2(Vector2h vec)
         {
-            return new Vector2(vec.X, vec.Y);
+            return new Vector2((float)vec.X, (float)vec.Y);
         }
 
         /// <summary>
@@ -237,7 +181,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static implicit operator Vector2d(Vector2h vec)
         {
-            return new Vector2d(vec.X, vec.Y);
+            return new Vector2d((double)vec.X, (double)vec.Y);
         }
 
         /// <summary>
@@ -308,26 +252,6 @@ namespace OpenTK.Mathematics
             info.AddValue("Y", Y);
         }
 
-        /// <summary>
-        /// Updates the X and Y components of this instance by reading from a Stream.
-        /// </summary>
-        /// <param name="bin">A BinaryReader instance associated with an open Stream.</param>
-        public void FromBinaryStream(BinaryReader bin)
-        {
-            X.FromBinaryStream(bin);
-            Y.FromBinaryStream(bin);
-        }
-
-        /// <summary>
-        /// Writes the X and Y components of this instance into a Stream.
-        /// </summary>
-        /// <param name="bin">A BinaryWriter instance associated with an open Stream.</param>
-        public void ToBinaryStream(BinaryWriter bin)
-        {
-            X.ToBinaryStream(bin);
-            Y.ToBinaryStream(bin);
-        }
-
         /// <inheritdoc/>
         public override string ToString()
         {
@@ -373,40 +297,6 @@ namespace OpenTK.Mathematics
         public override int GetHashCode()
         {
             return HashCode.Combine(X, Y);
-        }
-
-        /// <summary>
-        /// Returns the Half2 as an array of bytes.
-        /// </summary>
-        /// <param name="h">The Half2 to convert.</param>
-        /// <returns>The input as byte array.</returns>
-        [Pure]
-        public static byte[] GetBytes(Vector2h h)
-        {
-            var result = new byte[SizeInBytes];
-
-            var temp = Half.GetBytes(h.X);
-            result[0] = temp[0];
-            result[1] = temp[1];
-            temp = Half.GetBytes(h.Y);
-            result[2] = temp[0];
-            result[3] = temp[1];
-
-            return result;
-        }
-
-        /// <summary>
-        /// Converts an array of bytes into Half2.
-        /// </summary>
-        /// <param name="value">A Half2 in it's byte[] representation.</param>
-        /// <param name="startIndex">The starting position within value.</param>
-        /// <returns>A new Half2 instance.</returns>
-        [Pure]
-        public static Vector2h FromBytes(byte[] value, int startIndex)
-        {
-            return new Vector2h(
-                Half.FromBytes(value, startIndex),
-                Half.FromBytes(value, startIndex + 2));
         }
 
         /// <summary>

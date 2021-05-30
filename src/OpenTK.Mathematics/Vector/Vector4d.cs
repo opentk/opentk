@@ -2077,7 +2077,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static explicit operator Vector4h(Vector4d vec)
         {
-            return new Vector4h(new Half(vec.X), new Half(vec.Y), new Half(vec.Z), new Half(vec.W));
+            return new Vector4h((Half)vec.X, (Half)vec.Y, (Half)vec.Z, (Half)vec.W);
         }
 
         /// <summary>
