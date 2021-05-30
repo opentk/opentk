@@ -61,8 +61,23 @@ namespace GeneratorV2.Parsing
                 var length = element.Attribute("len")?.Value;
                 var paramLength = length == null ? null : ParseExpression(length);
 
+                string? className = element.Element("class")?.Value;
+                Handle? handle = className switch
+                {
+                    null => null,
+                    "program" => Handle.Program,
+                    "program pipeline" => Handle.ProgramPipeline,
+                    "texture" => Handle.Texture,
+                    "buffer" => Handle.Buffer,
+                    "shader" => Handle.Shader,
+                    "query" => Handle.Query,
+                    "framebuffer" => Handle.Framebuffer,
+                    "renderbuffer" => Handle.Renderbuffer,
+                    _ => throw new Exception(className + " is not a supported handle type yet!"),
+                };
+
                 //isGLhandleArb |= ptype.Name == PlatformSpecificGlHandleArbFlag;
-                parameterList.Add(new GLParameter(ptype, paramName, paramLength));
+                parameterList.Add(new GLParameter(ptype, paramName, handle, paramLength));
             }
 
             var returnType = ParsePType(proto);
