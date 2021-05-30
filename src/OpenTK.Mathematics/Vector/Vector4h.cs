@@ -81,10 +81,10 @@ namespace OpenTK.Mathematics
         /// <param name="value">The value that will initialize this instance.</param>
         public Vector4h(float value)
         {
-            X = new Half(value);
-            Y = new Half(value);
-            Z = new Half(value);
-            W = new Half(value);
+            X = (Half)value;
+            Y = (Half)value;
+            Z = (Half)value;
+            W = (Half)value;
         }
 
         /// <summary>
@@ -111,26 +111,10 @@ namespace OpenTK.Mathematics
         /// <param name="w">The W component of the vector.</param>
         public Vector4h(float x, float y, float z, float w)
         {
-            X = new Half(x);
-            Y = new Half(y);
-            Z = new Half(z);
-            W = new Half(w);
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Vector4h"/> struct.
-        /// </summary>
-        /// <param name="x">The X component of the vector.</param>
-        /// <param name="y">The Y component of the vector.</param>
-        /// <param name="z">The Z component of the vector.</param>
-        /// <param name="w">The W component of the vector.</param>
-        /// <param name="throwOnError">Enable checks that will throw if the conversion result is not meaningful.</param>
-        public Vector4h(float x, float y, float z, float w, bool throwOnError)
-        {
-            X = new Half(x, throwOnError);
-            Y = new Half(y, throwOnError);
-            Z = new Half(z, throwOnError);
-            W = new Half(w, throwOnError);
+            X = (Half)x;
+            Y = (Half)y;
+            Z = (Half)z;
+            W = (Half)w;
         }
 
         /// <summary>
@@ -139,23 +123,10 @@ namespace OpenTK.Mathematics
         /// <param name="v">The <see cref="Vector4"/> to convert.</param>
         public Vector4h(Vector4 v)
         {
-            X = new Half(v.X);
-            Y = new Half(v.Y);
-            Z = new Half(v.Z);
-            W = new Half(v.W);
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Vector4h"/> struct.
-        /// </summary>
-        /// <param name="v">The <see cref="Vector4"/> to convert.</param>
-        /// <param name="throwOnError">Enable checks that will throw if the conversion result is not meaningful.</param>
-        public Vector4h(Vector4 v, bool throwOnError)
-        {
-            X = new Half(v.X, throwOnError);
-            Y = new Half(v.Y, throwOnError);
-            Z = new Half(v.Z, throwOnError);
-            W = new Half(v.W, throwOnError);
+            X = (Half)v.X;
+            Y = (Half)v.Y;
+            Z = (Half)v.Z;
+            W = (Half)v.W;
         }
 
         /// <summary>
@@ -164,23 +135,10 @@ namespace OpenTK.Mathematics
         /// <param name="v">The <see cref="Vector4"/> to convert.</param>
         public Vector4h(in Vector4 v)
         {
-            X = new Half(v.X);
-            Y = new Half(v.Y);
-            Z = new Half(v.Z);
-            W = new Half(v.W);
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Vector4h"/> struct.
-        /// </summary>
-        /// <param name="v">The <see cref="Vector4"/> to convert.</param>
-        /// <param name="throwOnError">Enable checks that will throw if the conversion result is not meaningful.</param>
-        public Vector4h(in Vector4 v, bool throwOnError)
-        {
-            X = new Half(v.X, throwOnError);
-            Y = new Half(v.Y, throwOnError);
-            Z = new Half(v.Z, throwOnError);
-            W = new Half(v.W, throwOnError);
+            X = (Half)v.X;
+            Y = (Half)v.Y;
+            Z = (Half)v.Z;
+            W = (Half)v.W;
         }
 
         /// <summary>
@@ -189,23 +147,10 @@ namespace OpenTK.Mathematics
         /// <param name="v">The <see cref="Vector4d"/> to convert.</param>
         public Vector4h(Vector4d v)
         {
-            X = new Half(v.X);
-            Y = new Half(v.Y);
-            Z = new Half(v.Z);
-            W = new Half(v.W);
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Vector4h"/> struct.
-        /// </summary>
-        /// <param name="v">The <see cref="Vector4d"/> to convert.</param>
-        /// <param name="throwOnError">Enable checks that will throw if the conversion result is not meaningful.</param>
-        public Vector4h(Vector4d v, bool throwOnError)
-        {
-            X = new Half(v.X, throwOnError);
-            Y = new Half(v.Y, throwOnError);
-            Z = new Half(v.Z, throwOnError);
-            W = new Half(v.W, throwOnError);
+            X = (Half)v.X;
+            Y = (Half)v.Y;
+            Z = (Half)v.Z;
+            W = (Half)v.W;
         }
 
         /// <summary>
@@ -214,23 +159,10 @@ namespace OpenTK.Mathematics
         /// <param name="v">The <see cref="Vector4d"/> to convert.</param>
         public Vector4h(in Vector4d v)
         {
-            X = new Half(v.X);
-            Y = new Half(v.Y);
-            Z = new Half(v.Z);
-            W = new Half(v.W);
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Vector4h"/> struct.
-        /// </summary>
-        /// <param name="v">The <see cref="Vector4d"/> to convert.</param>
-        /// <param name="throwOnError">Enable checks that will throw if the conversion result is not meaningful.</param>
-        public Vector4h(in Vector4d v, bool throwOnError)
-        {
-            X = new Half(v.X, throwOnError);
-            Y = new Half(v.Y, throwOnError);
-            Z = new Half(v.Z, throwOnError);
-            W = new Half(v.W, throwOnError);
+            X = (Half)v.X;
+            Y = (Half)v.Y;
+            Z = (Half)v.Z;
+            W = (Half)v.W;
         }
 
         /// <summary>
@@ -1199,7 +1131,7 @@ namespace OpenTK.Mathematics
         /// <returns>The vector.</returns>
         public Vector4 ToVector4()
         {
-            return new Vector4(X, Y, Z, W);
+            return new Vector4((float)X, (float)Y, (float)Z, (float)W);
         }
 
         /// <summary>
@@ -1208,7 +1140,7 @@ namespace OpenTK.Mathematics
         /// <returns>The vector.</returns>
         public Vector4d ToVector4d()
         {
-            return new Vector4d(X, Y, Z, W);
+            return new Vector4d((double)X, (double)Y, (double)Z, (double)W);
         }
 
         /// <summary>
@@ -1241,7 +1173,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static implicit operator Vector4(Vector4h vec)
         {
-            return new Vector4(vec.X, vec.Y, vec.Z, vec.W);
+            return new Vector4((float)vec.X, (float)vec.Y, (float)vec.Z, (float)vec.W);
         }
 
         /// <summary>
@@ -1252,7 +1184,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static implicit operator Vector4d(Vector4h vec)
         {
-            return new Vector4d(vec.X, vec.Y, vec.Z, vec.W);
+            return new Vector4d((double)vec.X, (double)vec.Y, (double)vec.Z, (double)vec.W);
         }
 
         /// <summary>
@@ -1322,30 +1254,6 @@ namespace OpenTK.Mathematics
             info.AddValue("W", W);
         }
 
-        /// <summary>
-        /// Updates the X,Y,Z and W components of this instance by reading from a Stream.
-        /// </summary>
-        /// <param name="bin">A BinaryReader instance associated with an open Stream.</param>
-        public void FromBinaryStream(BinaryReader bin)
-        {
-            X.FromBinaryStream(bin);
-            Y.FromBinaryStream(bin);
-            Z.FromBinaryStream(bin);
-            W.FromBinaryStream(bin);
-        }
-
-        /// <summary>
-        /// Writes the X,Y,Z and W components of this instance into a Stream.
-        /// </summary>
-        /// <param name="bin">A BinaryWriter instance associated with an open Stream.</param>
-        public void ToBinaryStream(BinaryWriter bin)
-        {
-            X.ToBinaryStream(bin);
-            Y.ToBinaryStream(bin);
-            Z.ToBinaryStream(bin);
-            W.ToBinaryStream(bin);
-        }
-
         /// <inheritdoc/>
         public override string ToString()
         {
@@ -1379,48 +1287,6 @@ namespace OpenTK.Mathematics
         public override int GetHashCode()
         {
             return HashCode.Combine(X, Y, Z, W);
-        }
-
-        /// <summary>
-        /// Returns the Half4 as an array of bytes.
-        /// </summary>
-        /// <param name="h">The Half4 to convert.</param>
-        /// <returns>The input as byte array.</returns>
-        [Pure]
-        public static byte[] GetBytes(Vector4h h)
-        {
-            var result = new byte[SizeInBytes];
-
-            var temp = Half.GetBytes(h.X);
-            result[0] = temp[0];
-            result[1] = temp[1];
-            temp = Half.GetBytes(h.Y);
-            result[2] = temp[0];
-            result[3] = temp[1];
-            temp = Half.GetBytes(h.Z);
-            result[4] = temp[0];
-            result[5] = temp[1];
-            temp = Half.GetBytes(h.W);
-            result[6] = temp[0];
-            result[7] = temp[1];
-
-            return result;
-        }
-
-        /// <summary>
-        /// Converts an array of bytes into Half4.
-        /// </summary>
-        /// <param name="value">A Half4 in it's byte[] representation.</param>
-        /// <param name="startIndex">The starting position within value.</param>
-        /// <returns>A new Half4 instance.</returns>
-        [Pure]
-        public static Vector4h FromBytes(byte[] value, int startIndex)
-        {
-            return new Vector4h(
-                Half.FromBytes(value, startIndex),
-                Half.FromBytes(value, startIndex + 2),
-                Half.FromBytes(value, startIndex + 4),
-                Half.FromBytes(value, startIndex + 6));
         }
 
         /// <summary>
