@@ -1,0 +1,23 @@
+\documentclass[a4paper, 12pt]{article}
+
+\usepackage[margin=1in]{geometry}
+
+\title{
+    Platform Abstraction Layer (PAL) 2.0\\
+    {\large Specification Draft}
+}
+\author{OpenTK}
+
+\begin{document}
+\maketitle
+
+\section*{Abstract}
+Over the years the OpenTK project has use several different methods for
+abstracting platform APIs (such as but not limited to Win32 and X11). The latest
+method, the GLFW library has proven to be troublesome and lack the cohesion of
+previous PAL of the OpenTK 3.0 Version. This document aims to redesign the
+original PAL into C-like interface from which object oriented types may be
+derived for all platforms which may be partially implemented depending on the
+executing system.
+
+\end{document}
