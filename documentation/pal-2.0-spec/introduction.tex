@@ -18,7 +18,9 @@ GLFW is a needless dependency. Even though the project is open source, if a bug
 or issue surfaces which may only be fixed in GLFW, a fix may take a long time to
 be approved or never be approved even if implemented by OpenTK. This would
 require distributing our own fork of GLFW which is more trouble for maintaining
-the project.
+the project. Since it is a 3rd party dependency, sometimes issues rise up with
+GLFW not being present at the binary directory, even if it is explicitly
+provided by the nuget package. (see \tkissue{1228})
 
 It is in our best interest to keep OpenTK freestanding from 3rd party
 abstraction layers. However, this isn't mutually exclusive to the idea of
