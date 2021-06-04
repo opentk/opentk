@@ -13,7 +13,7 @@ namespace OpenTK.Graphics.OpenGL
 
     public static unsafe partial class GL
     {
-        public static void ShaderSource(uint shader, string shaderText)
+        public static void ShaderSource(Shader shader, string shaderText)
         {
             var shaderTextPtr = Marshal.StringToCoTaskMemAnsi(shaderText);
             var length = shaderText.Length;
@@ -21,7 +21,7 @@ namespace OpenTK.Graphics.OpenGL
             Marshal.FreeCoTaskMem(shaderTextPtr);
         }
 
-        public static void GetShaderInfoLog(uint shader, out string info)
+        public static void GetShaderInfoLog(Shader shader, out string info)
         {
             int length = default;
             GL.GetShaderi(shader, ShaderParameterName.InfoLogLength, ref length);

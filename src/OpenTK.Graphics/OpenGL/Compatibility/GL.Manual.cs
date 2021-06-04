@@ -14,7 +14,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         public enum SampleMaskNV
         { }
 
-        public static void ShaderSource(uint shader, string str)
+        public static void ShaderSource(Shader shader, string str)
         {
             IntPtr str_iptr = Marshal.StringToCoTaskMemAnsi(str);
             int length = str.Length;
@@ -22,7 +22,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             Marshal.FreeCoTaskMem(str_iptr);
         }
 
-        public static void GetShaderInfoLog(uint shader, out string info)
+        public static void GetShaderInfoLog(Shader shader, out string info)
         {
             int length = default;
             GL.GetShaderi(shader, ShaderParameterName.InfoLogLength, ref length);
