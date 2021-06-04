@@ -661,9 +661,13 @@ namespace OpenTK.Windowing.Desktop
             {
                 var monitor = settings.CurrentMonitor.ToUnsafePtr<GraphicsLibraryFramework.Monitor>();
                 var modePtr = GLFW.GetVideoMode(monitor);
-                GLFW.WindowHint(WindowHintInt.RedBits, modePtr->RedBits);
-                GLFW.WindowHint(WindowHintInt.GreenBits, modePtr->GreenBits);
-                GLFW.WindowHint(WindowHintInt.BlueBits, modePtr->BlueBits);
+                GLFW.WindowHint(WindowHintInt.RedBits, settings.SetBitsExplicitly ? settings.RedBits : modePtr->RedBits);
+                GLFW.WindowHint(WindowHintInt.GreenBits, settings.SetBitsExplicitly ? settings.GreenBits : modePtr->GreenBits);
+                GLFW.WindowHint(WindowHintInt.BlueBits, settings.SetBitsExplicitly ? settings.BlueBits : modePtr->BlueBits);
+                if (settings.SetBitsExplicitly)
+                {
+                    GLFW.WindowHint(WindowHintInt.AlphaBits, settings.AlphaBits);
+                }
                 GLFW.WindowHint(WindowHintInt.RefreshRate, modePtr->RefreshRate);
 
                 if (settings.WindowState == WindowState.Fullscreen && _isVisible)
@@ -679,6 +683,8 @@ namespace OpenTK.Windowing.Desktop
                 }
             }
 
+            GLFW.WindowHint(WindowHintInt.DepthBits, settings.DepthBits);
+            GLFW.WindowHint(WindowHintInt.StencilBits, settings.StencilBits);
             Context = new GLFWGraphicsContext(WindowPtr);
 
             Exists = true;
