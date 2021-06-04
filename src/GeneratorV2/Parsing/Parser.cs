@@ -36,6 +36,7 @@ namespace GeneratorV2.Parsing
             foreach (var element in xelement.Elements("command"))
             {
                 var command = ParseCommand(element);
+
                 commands.Add(command);
             }
 
@@ -205,7 +206,9 @@ namespace GeneratorV2.Parsing
                 "sampler" => Handle.Sampler,
                 "transform feedback" => Handle.TransformFeedback,
                 "vertex array" => Handle.VertexArray,
-                "sync" => Handle.Sync,
+                // The "Sync" class is already marked with the "GLSync" type which is handled differently from the other types
+                // We leave it null here to let the "GLSync" handling do this.
+                "sync" => null,
                 "display list" => Handle.DisplayList,
                 _ => throw new Exception(className + " is not a supported handle type yet!"),
             };

@@ -125,13 +125,47 @@ namespace GeneratorV2.Writing
                 delegateTypes.Append(", ");
             }
 
-            string returnType = function.ReturnType.ToCSString();
+            // FIXME .net 6
+            // In .net 5 there is a bug where struct returns from a function pointer on 64 bit architectures results in the wrong JIT output and throws an exception.
+            // See: https://github.com/dotnet/runtime/issues/51170 and https://github.com/dotnet/runtime/issues/35928
+            // To fix this we define the function pointer with an equivalent primitive type (if there is one, otherwise throw exception).
+            // This allows us to make the problem invisible to the user as all of the public functions have the correct return type.
+            // - 2021-06-04
+
+            bool handleNet5functionPointerReturnStructBug;
+
+            string returnType;
+            if (function.ReturnType is CSStruct returnStruct)
+            {
+                if (returnStruct.UnderlyingType == null) throw new Exception("A function returned a struct, but didn't have an underlying representation.");
+                returnType = returnStruct.UnderlyingType.ToCSString();
+
+                handleNet5functionPointerReturnStructBug = true;
+            }
+            else
+            {
+                returnType = function.ReturnType.ToCSString();
+
+                handleNet5functionPointerReturnStructBug = false;
+            }
 
             delegateTypes.Append(returnType);
 
             writer.WriteLine($"private static delegate* unmanaged<{delegateTypes}> _{name}_fnptr = &{name}_Lazy;");
 
-            writer.WriteLine($"public static {returnType} {name}({signature}) => _{name}_fnptr({paramNames});");
+            // FIXME: .net 6
+            if (handleNet5functionPointerReturnStructBug)
+            {
+                // Here we just cast and return the correct return type in the public facing function.
+                // This works because all of the structs that get here should have a defined cast from the primitive type to the struct type.
+                // These casts need to be added manually for this to work correctly.
+                // - 2021-06-04
+                writer.WriteLine($"public static {function.ReturnType.ToCSString()} {name}({signature}) => ({function.ReturnType.ToCSString()}) _{name}_fnptr({paramNames});");
+            }
+            else
+            {
+                writer.WriteLine($"public static {returnType} {name}({signature}) => _{name}_fnptr({paramNames});");
+            }
 
             writer.WriteLine($"[UnmanagedCallersOnly]");
             writer.WriteLine($"private static {returnType} {name}_Lazy({signature})");

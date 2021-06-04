@@ -31,25 +31,45 @@ namespace OpenTK.Graphics
         public unsafe delegate void GLDebugProcNV();
     }
 
-    public struct CLContext {}
-    public struct CLEvent {}
-
-    public struct GLSync {}
-    public unsafe struct GLSyncObject
+    public struct CLContext
     {
-        internal GLSync* ObjPtr;
-        internal GLSyncObject(GLSync* syncObject)
+        public IntPtr Value;
+
+        public CLContext(IntPtr value)
         {
-            ObjPtr = syncObject;
+            Value = value;
         }
 
-        public static implicit operator GLSync*(GLSyncObject obj) => obj.ObjPtr;
-        public static implicit operator GLSyncObject(GLSync* obj) => new GLSyncObject(obj);
+        public static explicit operator CLContext(IntPtr val) => new CLContext(val);
+    }
+
+    public struct CLEvent
+    {
+        public IntPtr Value;
+
+        public CLEvent(IntPtr value)
+        {
+            Value = value;
+        }
+
+        public static explicit operator CLEvent(IntPtr val) => new CLEvent(val);
     }
         public static implicit operator GLSync*(GLSyncObject obj) => obj.ObjPtr;
         public static implicit operator GLSyncObject(GLSync* obj) => new GLSyncObject(obj);
     }
 
+    public struct GLSync
+    {
+        public IntPtr Value;
+
+        public GLSync(IntPtr value)
+        {
+            Value = value;
+        }
+
+        public static explicit operator GLSync(IntPtr val) => new GLSync(val);
+    }
+    
     [StructLayout(LayoutKind.Explicit)]
     public struct GLHandleARB
     {
@@ -83,39 +103,175 @@ namespace OpenTK.Graphics
             _value2 = val;
         }
 
-        public static implicit operator GLHandleARB(uint val) => new GLHandleARB(val);
-        public static implicit operator GLHandleARB(IntPtr val) => new GLHandleARB(val);
-        public static implicit operator uint(GLHandleARB val) => val._value1;
-        public static implicit operator IntPtr(GLHandleARB val) => val._value2;
+        public static explicit operator GLHandleARB(uint val) => new GLHandleARB(val);
+        public static explicit operator GLHandleARB(IntPtr val) => new GLHandleARB(val);
+        public static explicit operator uint(GLHandleARB val) => val._value1;
+        public static explicit operator IntPtr(GLHandleARB val) => val._value2;
     }
 
-    public readonly struct Program1
+    public struct Program1
     {
-        private uint _handle { get; init; }
+        public static readonly Shader Zero = new Shader(0);
 
-        public static readonly Program1 Zero = new Program1() {_handle = 0};
+        public int Handle;
+
+        public Program1(int handle)
+        {
+            Handle = handle;
+        }
+
+        public override bool Equals(object? obj)
+        {
+            return obj is Program1 device && Equals(device);
+        }
+
+        public bool Equals([AllowNull] Program1 other)
+        {
+            return Handle.Equals(other.Handle);
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Handle);
+        }
+
+        public static bool operator ==(Program1 left, Program1 right)
+        {
+            return left.Equals(right);
+        }
+
+        public static bool operator !=(Program1 left, Program1 right)
+        {
+            return !(left == right);
+        }
+
+        public static explicit operator Program1(int Program1) => new Program1(Program1);
+        public static explicit operator int(Program1 Program1) => Program1.Handle;
     }
-    public readonly struct ProgramPipeline
+
+    public struct ProgramPipeline
     {
-        private uint _handle { get; init; }
+        public static readonly Shader Zero = new Shader(0);
 
-        public static readonly ProgramPipeline Zero = new ProgramPipeline() {_handle = 0};
+        public int Handle;
+
+        public ProgramPipeline(int handle)
+        {
+            Handle = handle;
+        }
+
+        public override bool Equals(object? obj)
+        {
+            return obj is ProgramPipeline device && Equals(device);
+        }
+
+        public bool Equals([AllowNull] ProgramPipeline other)
+        {
+            return Handle.Equals(other.Handle);
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Handle);
+        }
+
+        public static bool operator ==(ProgramPipeline left, ProgramPipeline right)
+        {
+            return left.Equals(right);
+        }
+
+        public static bool operator !=(ProgramPipeline left, ProgramPipeline right)
+        {
+            return !(left == right);
+        }
+
+        public static explicit operator ProgramPipeline(int ProgramPipeline) => new ProgramPipeline(ProgramPipeline);
+        public static explicit operator int(ProgramPipeline ProgramPipeline) => ProgramPipeline.Handle;
     }
-    public readonly struct Texture
+
+    public struct Texture
     {
-        private uint _handle { get; init; }
+        public static readonly Shader Zero = new Shader(0);
 
-        public static readonly Texture Zero = new Texture() {_handle = 0};
+        public int Handle;
+
+        public Texture(int handle)
+        {
+            Handle = handle;
+        }
+
+        public override bool Equals(object? obj)
+        {
+            return obj is Texture device && Equals(device);
+        }
+
+        public bool Equals([AllowNull] Texture other)
+        {
+            return Handle.Equals(other.Handle);
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Handle);
+        }
+
+        public static bool operator ==(Texture left, Texture right)
+        {
+            return left.Equals(right);
+        }
+
+        public static bool operator !=(Texture left, Texture right)
+        {
+            return !(left == right);
+        }
+
+        public static explicit operator Texture(int Texture) => new Texture(Texture);
+        public static explicit operator int(Texture Texture) => Texture.Handle;
     }
-    public readonly struct Buffer1
+
+    public struct Buffer1
     {
-        private uint _handle { get; init; }
+        public static readonly Shader Zero = new Shader(0);
 
-        public static readonly Buffer1 Zero = new Buffer1() {_handle = 0};
+        public int Handle;
+
+        public Buffer1(int handle)
+        {
+            Handle = handle;
+        }
+
+        public override bool Equals(object? obj)
+        {
+            return obj is Buffer1 device && Equals(device);
+        }
+
+        public bool Equals([AllowNull] Buffer1 other)
+        {
+            return Handle.Equals(other.Handle);
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Handle);
+        }
+
+        public static bool operator ==(Buffer1 left, Buffer1 right)
+        {
+            return left.Equals(right);
+        }
+
+        public static bool operator !=(Buffer1 left, Buffer1 right)
+        {
+            return !(left == right);
+        }
+
+        public static explicit operator Buffer1(int Buffer1) => new Buffer1(Buffer1);
+        public static explicit operator int(Buffer1 Buffer1) => Buffer1.Handle;
     }
+
     public struct Shader : IEquatable<Shader>
     {
-        public static readonly Shader Null = new Shader(0);
+        public static readonly Shader Zero = new Shader(0);
 
         public int Handle;
 
@@ -124,7 +280,7 @@ namespace OpenTK.Graphics
             Handle = handle;
         }
 
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
             return obj is Shader device && Equals(device);
         }
@@ -149,55 +305,288 @@ namespace OpenTK.Graphics
             return !(left == right);
         }
 
-        public static implicit operator int(Shader device) => device.Handle;
+        public static explicit operator Shader(int shader) => new Shader(shader);
+        public static explicit operator int(Shader shader) => shader.Handle;
     }
-    public readonly struct Query
-    {
-        private uint _handle { get; init; }
 
-        public static readonly Query Zero = new Query() {_handle = 0};
+    public struct Query
+    {
+        public static readonly Shader Zero = new Shader(0);
+
+        public int Handle;
+
+        public Query(int handle)
+        {
+            Handle = handle;
+        }
+
+        public override bool Equals(object? obj)
+        {
+            return obj is Query device && Equals(device);
+        }
+
+        public bool Equals([AllowNull] Query other)
+        {
+            return Handle.Equals(other.Handle);
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Handle);
+        }
+
+        public static bool operator ==(Query left, Query right)
+        {
+            return left.Equals(right);
+        }
+
+        public static bool operator !=(Query left, Query right)
+        {
+            return !(left == right);
+        }
+
+        public static explicit operator Query(int Query) => new Query(Query);
+        public static explicit operator int(Query Query) => Query.Handle;
     }
-    public readonly struct Framebuffer
-    {
-        private uint _handle { get; init; }
 
-        public static readonly Framebuffer Zero = new Framebuffer() {_handle = 0};
+    public struct Framebuffer
+    {
+        public static readonly Shader Zero = new Shader(0);
+
+        public int Handle;
+
+        public Framebuffer(int handle)
+        {
+            Handle = handle;
+        }
+
+        public override bool Equals(object? obj)
+        {
+            return obj is Framebuffer device && Equals(device);
+        }
+
+        public bool Equals([AllowNull] Framebuffer other)
+        {
+            return Handle.Equals(other.Handle);
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Handle);
+        }
+
+        public static bool operator ==(Framebuffer left, Framebuffer right)
+        {
+            return left.Equals(right);
+        }
+
+        public static bool operator !=(Framebuffer left, Framebuffer right)
+        {
+            return !(left == right);
+        }
+
+        public static explicit operator Framebuffer(int Framebuffer) => new Framebuffer(Framebuffer);
+        public static explicit operator int(Framebuffer Framebuffer) => Framebuffer.Handle;
     }
-    public readonly struct Renderbuffer
-    {
-        private uint _handle { get; init; }
 
-        public static readonly Renderbuffer Zero = new Renderbuffer() {_handle = 0};
+    public struct Renderbuffer
+    {
+        public static readonly Shader Zero = new Shader(0);
+
+        public int Handle;
+
+        public Renderbuffer(int handle)
+        {
+            Handle = handle;
+        }
+
+        public override bool Equals(object? obj)
+        {
+            return obj is Renderbuffer device && Equals(device);
+        }
+
+        public bool Equals([AllowNull] Renderbuffer other)
+        {
+            return Handle.Equals(other.Handle);
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Handle);
+        }
+
+        public static bool operator ==(Renderbuffer left, Renderbuffer right)
+        {
+            return left.Equals(right);
+        }
+
+        public static bool operator !=(Renderbuffer left, Renderbuffer right)
+        {
+            return !(left == right);
+        }
+
+        public static explicit operator Renderbuffer(int Renderbuffer) => new Renderbuffer(Renderbuffer);
+        public static explicit operator int(Renderbuffer Renderbuffer) => Renderbuffer.Handle;
     }
-    public readonly struct Sampler
-    {
-        private uint _handle { get; init; }
 
-        public static readonly Sampler Zero = new Sampler() {_handle = 0};
+    public struct Sampler
+    {
+        public static readonly Shader Zero = new Shader(0);
+
+        public int Handle;
+
+        public Sampler(int handle)
+        {
+            Handle = handle;
+        }
+
+        public override bool Equals(object? obj)
+        {
+            return obj is Sampler device && Equals(device);
+        }
+
+        public bool Equals([AllowNull] Sampler other)
+        {
+            return Handle.Equals(other.Handle);
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Handle);
+        }
+
+        public static bool operator ==(Sampler left, Sampler right)
+        {
+            return left.Equals(right);
+        }
+
+        public static bool operator !=(Sampler left, Sampler right)
+        {
+            return !(left == right);
+        }
+
+        public static explicit operator Sampler(int Sampler) => new Sampler(Sampler);
+        public static explicit operator int(Sampler Sampler) => Sampler.Handle;
     }
-    public readonly struct TransformFeedback
-    {
-        private uint _handle { get; init; }
 
-        public static readonly TransformFeedback Zero = new TransformFeedback() {_handle = 0};
+    public struct TransformFeedback
+    {
+        public static readonly Shader Zero = new Shader(0);
+
+        public int Handle;
+
+        public TransformFeedback(int handle)
+        {
+            Handle = handle;
+        }
+
+        public override bool Equals(object? obj)
+        {
+            return obj is TransformFeedback device && Equals(device);
+        }
+
+        public bool Equals([AllowNull] TransformFeedback other)
+        {
+            return Handle.Equals(other.Handle);
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Handle);
+        }
+
+        public static bool operator ==(TransformFeedback left, TransformFeedback right)
+        {
+            return left.Equals(right);
+        }
+
+        public static bool operator !=(TransformFeedback left, TransformFeedback right)
+        {
+            return !(left == right);
+        }
+
+        public static explicit operator TransformFeedback(int TransformFeedback) => new TransformFeedback(TransformFeedback);
+        public static explicit operator int(TransformFeedback TransformFeedback) => TransformFeedback.Handle;
     }
-    public readonly struct VertexArray
-    {
-        private uint _handle { get; init; }
 
-        public static readonly VertexArray Zero = new VertexArray() {_handle = 0};
+    public struct VertexArray
+    {
+        public static readonly Shader Zero = new Shader(0);
+
+        public int Handle;
+
+        public VertexArray(int handle)
+        {
+            Handle = handle;
+        }
+
+        public override bool Equals(object? obj)
+        {
+            return obj is VertexArray device && Equals(device);
+        }
+
+        public bool Equals([AllowNull] VertexArray other)
+        {
+            return Handle.Equals(other.Handle);
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Handle);
+        }
+
+        public static bool operator ==(VertexArray left, VertexArray right)
+        {
+            return left.Equals(right);
+        }
+
+        public static bool operator !=(VertexArray left, VertexArray right)
+        {
+            return !(left == right);
+        }
+
+        public static explicit operator VertexArray(int VertexArray) => new VertexArray(VertexArray);
+        public static explicit operator int(VertexArray VertexArray) => VertexArray.Handle;
     }
-    public readonly struct Sync
-    {
-        private uint _handle { get; init; }
 
-        public static readonly Sync Zero = new Sync() {_handle = 0};
-    }
-    public readonly struct DisplayList
+    public struct DisplayList
     {
-        private uint _handle { get; init; }
+        public static readonly Shader Zero = new Shader(0);
 
-        public static readonly DisplayList Zero = new DisplayList() {_handle = 0};
+        public int Handle;
+
+        public DisplayList(int handle)
+        {
+            Handle = handle;
+        }
+
+        public override bool Equals(object? obj)
+        {
+            return obj is DisplayList device && Equals(device);
+        }
+
+        public bool Equals([AllowNull] DisplayList other)
+        {
+            return Handle.Equals(other.Handle);
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Handle);
+        }
+
+        public static bool operator ==(DisplayList left, DisplayList right)
+        {
+            return left.Equals(right);
+        }
+
+        public static bool operator !=(DisplayList left, DisplayList right)
+        {
+            return !(left == right);
+        }
+
+        public static explicit operator DisplayList(int DisplayList) => new DisplayList(DisplayList);
+        public static explicit operator int(DisplayList DisplayList) => DisplayList.Handle;
     }
 }
         public static implicit operator GLHandleARB(uint val) => new GLHandleARB(val);
