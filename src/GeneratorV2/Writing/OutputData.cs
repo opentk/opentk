@@ -27,7 +27,15 @@ namespace GeneratorV2.Writing
     }
 
     [DebuggerDisplay("{TypeName} (Constant = {Constant})")]
-    public record CSType(string TypeName, bool Constant) : BaseCSType
+    public record CSPrimitive(string TypeName, bool Constant) : BaseCSType
+    {
+        public override string ToCSString()
+        {
+            return TypeName;
+        }
+    }
+
+    public record CSStruct(string TypeName, bool Constant, CSPrimitive? UnderlyingType) : BaseCSType
     {
         public override string ToCSString()
         {

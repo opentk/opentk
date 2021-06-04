@@ -131,7 +131,7 @@ namespace GeneratorV2.Process
                 }
 
                 nameTable.Rename(parameter, parameter.Name + "_byte");
-                parameters[i] = parameter with { Type = new CSType("bool", bool8.Constant) };
+                parameters[i] = parameter with { Type = new CSPrimitive("bool", bool8.Constant) };
                 overloadedParameters.Add((parameter, parameters[i]));
             }
 
@@ -261,7 +261,7 @@ namespace GeneratorV2.Process
             {
                 Parameter parameter = singleParameters[i];
                 if (parameter.Length == null) continue;
-                if (parameter.Type is CSPointer ptr && ptr.BaseType is CSType baseType)
+                if (parameter.Type is CSPointer ptr && ptr.BaseType is CSPrimitive baseType)
                 {
                     if (!_existingTypes.Contains(typeName))
                     {
@@ -301,7 +301,7 @@ namespace GeneratorV2.Process
                     if (constant.Value == vectorSize)
                     {
                         bool isConstant = ptr.Constant || baseType.Constant;
-                        CSType vector = new CSType(typeName, baseType.Constant);
+                        CSStruct vector = new CSStruct(typeName, baseType.Constant, null);
                         singleParameters[i] = parameter with
                         {
                             Type = new CSRef(isConstant ? CSRef.Type.In : CSRef.Type.Ref, vector),
@@ -516,7 +516,7 @@ namespace GeneratorV2.Process
             {"glVertexAttribLPointer", "pointer"},
         };
 
-        public bool TryGenerateOverloads(Overload overload, out List<Overload>? newOverloads)
+        public bool TryGenerateOverloads(Overload overload, [NotNullWhen(true)] out List<Overload>? newOverloads)
         {
             if (!_methodsAndParametersToOverload.TryGetValue(overload.NativeFunction.EntryPoint, out var parameterName))
             {
@@ -537,7 +537,7 @@ namespace GeneratorV2.Process
             Parameter pointerParameter = overload.InputParameters[parameterIndex];
             Parameter offsetParameter = pointerParameter with
             {
-                Type = new CSType("nint", false), Name = "offset", Length = null
+                Type = new CSPrimitive("nint", false), Name = "offset", Length = null
             };
             Parameter[] newParameters = overload.InputParameters.ToArray();
             newParameters[parameterIndex] = offsetParameter;
@@ -590,7 +590,7 @@ namespace GeneratorV2.Process
                 }
 
                 nameTable.Rename(parameter, parameter.Name + "_vptr");
-                parameters[i] = parameter with {Type = new CSType("IntPtr", false), Length = null};
+                parameters[i] = parameter with {Type = new CSPrimitive("IntPtr", false), Length = null};
                 parameterNames.Add((parameter, parameters[i]));
             }
 
@@ -1073,7 +1073,7 @@ namespace GeneratorV2.Process
                             baseType = new CSGenericType(genericTypes[^1]);
                             constant |= btVoid.Constant;
                             break;
-                        case CSType bt:
+                        case CSPrimitive bt:
                             baseType = pt.BaseType;
                             constant |= bt.Constant;
                             break;
