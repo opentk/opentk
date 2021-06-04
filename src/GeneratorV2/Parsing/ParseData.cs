@@ -66,14 +66,19 @@ namespace GeneratorV2.Parsing
 
     public enum Handle
     {
-        Program,
+        Program1,
         ProgramPipeline,
         Texture,
-        Buffer,
+        Buffer1,
         Shader,
         Query,
         Framebuffer,
         Renderbuffer,
+        Sampler,
+        TransformFeedback,
+        VertexArray,
+        Sync,
+        DisplayList,
     }
 
     public record GLType();
@@ -84,9 +89,9 @@ namespace GeneratorV2.Parsing
 
     public record GLArrayType(GLType BaseType, int Length, bool Constant) : GLType;
 
-    public record PType(GLType Type, string? Group);
+    public record PType(GLType Type, Handle? Handle, string? Group);
 
-    public record GLParameter(PType Type, string Name, Handle? Handle, Expression? Length);
+    public record GLParameter(PType Type, string Name, Expression? Length);
 
     public record Command(string EntryPoint, PType ReturnType, GLParameter[] Parameters);
 

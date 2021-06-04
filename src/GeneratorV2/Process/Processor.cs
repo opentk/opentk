@@ -323,13 +323,13 @@ namespace GeneratorV2.Process
             List<Parameter> parameters = new List<Parameter>();
             foreach (var p in command.Parameters)
             {
-                BaseCSType t = MakeCSType(p.Type.Type, p.Type.Group, out var length);
-                parameters.Add(new Parameter(t, NameMangler.MangleParameterName(p.Name), p.Handle, p.Length ?? length));
+                BaseCSType t = MakeCSType(p.Type.Type, p.Type.Handle, p.Type.Group, out var length);
+                parameters.Add(new Parameter(t, NameMangler.MangleParameterName(p.Name), p.Length ?? length));
                 if (p.Type.Group != null)
                     enumGroups.Add(p.Type.Group);
             }
 
-            BaseCSType returnType = MakeCSType(command.ReturnType.Type, command.ReturnType.Group, out _);
+            BaseCSType returnType = MakeCSType(command.ReturnType.Type, command.ReturnType.Handle, command.ReturnType.Group, out _);
             if (command.ReturnType.Group != null)
                 enumGroups.Add(command.ReturnType.Group);
 
@@ -338,16 +338,21 @@ namespace GeneratorV2.Process
             return new NativeFunction(command.EntryPoint, functionName, parameters, returnType);
         }
 
-        public static BaseCSType MakeCSType(GLType type, string? group, out Expression? length)
+        public static BaseCSType MakeCSType(GLType type, Handle? handle, string? group, out Expression? length)
         {
             length = default;
+            if (handle != null && type is GLBaseType handleType)
+            {
+                return new CSType(handle.ToString()!, handleType.Constant);
+            }
+
             switch (type)
             {
                 case GLArrayType at:
                     length = new Constant(at.Length);
-                    return new CSPointer(MakeCSType(at.BaseType, group, out _), at.Constant);
+                    return new CSPointer(MakeCSType(at.BaseType, handle, group, out _), at.Constant);
                 case GLPointerType pt:
-                    return new CSPointer(MakeCSType(pt.BaseType, group, out length), pt.Constant);
+                    return new CSPointer(MakeCSType(pt.BaseType, handle, group, out length), pt.Constant);
                 case GLBaseType bt:
                     return bt.Type switch
                     {
