@@ -61,23 +61,8 @@ namespace GeneratorV2.Parsing
                 var length = element.Attribute("len")?.Value;
                 var paramLength = length == null ? null : ParseExpression(length);
 
-                string? className = element.Element("class")?.Value;
-                Handle? handle = className switch
-                {
-                    null => null,
-                    "program" => Handle.Program,
-                    "program pipeline" => Handle.ProgramPipeline,
-                    "texture" => Handle.Texture,
-                    "buffer" => Handle.Buffer,
-                    "shader" => Handle.Shader,
-                    "query" => Handle.Query,
-                    "framebuffer" => Handle.Framebuffer,
-                    "renderbuffer" => Handle.Renderbuffer,
-                    _ => throw new Exception(className + " is not a supported handle type yet!"),
-                };
-
                 //isGLhandleArb |= ptype.Name == PlatformSpecificGlHandleArbFlag;
-                parameterList.Add(new GLParameter(ptype, paramName, handle, paramLength));
+                parameterList.Add(new GLParameter(ptype, paramName, paramLength));
             }
 
             var returnType = ParsePType(proto);
@@ -205,9 +190,29 @@ namespace GeneratorV2.Parsing
         {
             var group = t.Attribute("group")?.Value;
 
+            string? className = t.Attribute("class")?.Value;
+            Handle? handle = className switch
+            {
+                null => null,
+                "program" => Handle.Program1,
+                "program pipeline" => Handle.ProgramPipeline,
+                "texture" => Handle.Texture,
+                "buffer" => Handle.Buffer1,
+                "shader" => Handle.Shader,
+                "query" => Handle.Query,
+                "framebuffer" => Handle.Framebuffer,
+                "renderbuffer" => Handle.Renderbuffer,
+                "sampler" => Handle.Sampler,
+                "transform feedback" => Handle.TransformFeedback,
+                "vertex array" => Handle.VertexArray,
+                "sync" => Handle.Sync,
+                "display list" => Handle.DisplayList,
+                _ => throw new Exception(className + " is not a supported handle type yet!"),
+            };
+
             var str = t.GetXmlText(element => element.Name != "name" ? element.Value : string.Empty).Trim();
 
-            return new PType(ParseType(str), group);
+            return new PType(ParseType(str), handle, group);
         }
 
         private static GLType ParseType(string type)
