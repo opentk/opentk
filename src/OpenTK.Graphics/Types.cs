@@ -93,7 +93,7 @@ namespace OpenTK.Graphics
 
     public struct Program1
     {
-        public static readonly Shader Zero = new Shader(0);
+        public static readonly Program1 Zero = new Program1(0);
 
         public int Handle;
 
@@ -133,7 +133,7 @@ namespace OpenTK.Graphics
 
     public struct ProgramPipeline
     {
-        public static readonly Shader Zero = new Shader(0);
+        public static readonly ProgramPipeline Zero = new ProgramPipeline(0);
 
         public int Handle;
 
@@ -173,7 +173,7 @@ namespace OpenTK.Graphics
 
     public struct Texture
     {
-        public static readonly Shader Zero = new Shader(0);
+        public static readonly Texture Zero = new Texture(0);
 
         public int Handle;
 
@@ -213,7 +213,7 @@ namespace OpenTK.Graphics
 
     public struct Buffer1
     {
-        public static readonly Shader Zero = new Shader(0);
+        public static readonly Buffer1 Zero = new Buffer1(0);
 
         public int Handle;
 
@@ -293,7 +293,7 @@ namespace OpenTK.Graphics
 
     public struct Query
     {
-        public static readonly Shader Zero = new Shader(0);
+        public static readonly Query Zero = new Query(0);
 
         public int Handle;
 
@@ -333,7 +333,7 @@ namespace OpenTK.Graphics
 
     public struct Framebuffer
     {
-        public static readonly Shader Zero = new Shader(0);
+        public static readonly Framebuffer Zero = new Framebuffer(0);
 
         public int Handle;
 
@@ -373,7 +373,7 @@ namespace OpenTK.Graphics
 
     public struct Renderbuffer
     {
-        public static readonly Shader Zero = new Shader(0);
+        public static readonly Renderbuffer Zero = new Renderbuffer(0);
 
         public int Handle;
 
@@ -413,7 +413,7 @@ namespace OpenTK.Graphics
 
     public struct Sampler
     {
-        public static readonly Shader Zero = new Shader(0);
+        public static readonly Sampler Zero = new Sampler(0);
 
         public int Handle;
 
@@ -453,7 +453,7 @@ namespace OpenTK.Graphics
 
     public struct TransformFeedback
     {
-        public static readonly Shader Zero = new Shader(0);
+        public static readonly TransformFeedback Zero = new TransformFeedback(0);
 
         public int Handle;
 
@@ -493,7 +493,7 @@ namespace OpenTK.Graphics
 
     public struct VertexArray
     {
-        public static readonly Shader Zero = new Shader(0);
+        public static readonly VertexArray Zero = new VertexArray(0);
 
         public int Handle;
 
@@ -533,7 +533,7 @@ namespace OpenTK.Graphics
 
     public struct DisplayList
     {
-        public static readonly Shader Zero = new Shader(0);
+        public static readonly DisplayList Zero = new DisplayList(0);
 
         public int Handle;
 
