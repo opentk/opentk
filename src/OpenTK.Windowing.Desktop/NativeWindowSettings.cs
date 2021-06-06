@@ -177,7 +177,7 @@ namespace OpenTK.Windowing.Desktop
         /// <remarks>
         /// Default value is 8.
         /// </remarks>
-        public int StencilBits { get; set; } = 8;
+        public int? StencilBits { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating the number of depth bits used for OpenGL context creation.
@@ -185,7 +185,7 @@ namespace OpenTK.Windowing.Desktop
         /// <remarks>
         /// Default value is 24.
         /// </remarks>
-        public int DepthBits { get; set; } = 24;
+        public int? DepthBits { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating the number of red bits used for OpenGL context creation.
@@ -193,7 +193,7 @@ namespace OpenTK.Windowing.Desktop
         /// <remarks>
         /// Default value is 8.
         /// </remarks>
-        public int RedBits { get; set; } = 8;
+        public int? RedBits { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating the number of green bits used for OpenGL context creation.
@@ -201,7 +201,7 @@ namespace OpenTK.Windowing.Desktop
         /// <remarks>
         /// Default value is 8.
         /// </remarks>
-        public int GreenBits { get; set; } = 8;
+        public int? GreenBits { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating the number of blue bits used for OpenGL context creation.
@@ -209,7 +209,7 @@ namespace OpenTK.Windowing.Desktop
         /// <remarks>
         /// Default value is 8.
         /// </remarks>
-        public int BlueBits { get; set; } = 8;
+        public int? BlueBits { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating the number of alpha bits used for OpenGL context creation.
@@ -217,12 +217,6 @@ namespace OpenTK.Windowing.Desktop
         /// <remarks>
         /// Default value is 8.
         /// </remarks>
-        public int AlphaBits { get; set; } = 8;
-
-        /// <summary>
-        /// Gets or sets a value indicating whether red/green/blue-bits, depth/stencil bits should be set explicitly.
-        /// If false red/green/blue bits are determined from the currently set video mode of the current monitor.
-        /// </summary>
-        public bool SetBitsExplicitly { get; set; } = false;
+        public int? AlphaBits { get; set; }
     }
 }
