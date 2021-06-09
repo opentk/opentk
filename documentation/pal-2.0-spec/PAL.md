@@ -86,7 +86,22 @@ __Cons__
   fixes may take a long time to arrive or outright be marked as "won't fix".
 
 ## Glossary
-|  Acronym       | Description                                                 |
-|----------------|-------------------------------------------------------------|
-| GLFW           | A C library for abstracting away windowing and input for use in games. |
-| PAL            | Platform Abstraction Layer                                  |
+<!--
+I really hate it when my text documents aren't 80 columns, sorry for not using
+markdown syntax here.
+-->
+<table>
+  <tr>
+    <th>Acronym</th> <th>Description</th>
+  </tr>
+  <tr>
+    <td>GLFW</td>
+    <td>
+      A C library for abstracting away windowing and input for use in games.
+    </td>
+  </tr>
+  <tr>
+    <td>PAL</td>
+    <td>Platform Abstraction Layer</td>
+  </tr>
+</table>
