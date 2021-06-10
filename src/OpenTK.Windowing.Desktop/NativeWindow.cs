@@ -668,6 +668,7 @@ namespace OpenTK.Windowing.Desktop
                 {
                     GLFW.WindowHint(WindowHintInt.AlphaBits, settings.AlphaBits.Value);
                 }
+
                 GLFW.WindowHint(WindowHintInt.RefreshRate, modePtr->RefreshRate);
 
                 if (settings.WindowState == WindowState.Fullscreen && _isVisible)
@@ -692,6 +693,7 @@ namespace OpenTK.Windowing.Desktop
             {
                 GLFW.WindowHint(WindowHintInt.StencilBits, settings.StencilBits.Value);
             }
+
             Context = new GLFWGraphicsContext(WindowPtr);
 
             Exists = true;
