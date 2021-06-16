@@ -1,3 +1,10 @@
+## 5.0-pre.6
+* New manual overload for ClearColor
+* New manual overload for GetProgramInfoLog
+* Move to System.Half from OpenTK.Mathemathics.Half (@friendlychicken)
+* Fix native call '_' postfix
+* *Added typesafe opengl handles!*
+
 ## 5.0-pre.5
 * Math type overloads (includes Vector overloads and matrix overloads).
 
