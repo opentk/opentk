@@ -323,13 +323,13 @@ namespace GeneratorV2.Process
             List<Parameter> parameters = new List<Parameter>();
             foreach (var p in command.Parameters)
             {
-                BaseCSType t = MakeCSType(p.Type.Type, p.Type.Group, out var length);
+                BaseCSType t = MakeCSType(p.Type.Type, p.Type.Handle, p.Type.Group, out var length);
                 parameters.Add(new Parameter(t, NameMangler.MangleParameterName(p.Name), p.Length ?? length));
                 if (p.Type.Group != null)
                     enumGroups.Add(p.Type.Group);
             }
 
-            BaseCSType returnType = MakeCSType(command.ReturnType.Type, command.ReturnType.Group, out _);
+            BaseCSType returnType = MakeCSType(command.ReturnType.Type, command.ReturnType.Handle, command.ReturnType.Group, out _);
             if (command.ReturnType.Group != null)
                 enumGroups.Add(command.ReturnType.Group);
 
@@ -338,49 +338,54 @@ namespace GeneratorV2.Process
             return new NativeFunction(command.EntryPoint, functionName, parameters, returnType);
         }
 
-        public static BaseCSType MakeCSType(GLType type, string? group, out Expression? length)
+        public static BaseCSType MakeCSType(GLType type, Handle? handle, string? group, out Expression? length)
         {
             length = default;
+            if (handle != null && type is GLBaseType handleType)
+            {
+                return new CSStruct(handle.ToString()!, handleType.Constant, new CSPrimitive("int", handleType.Constant));
+            }
+
             switch (type)
             {
                 case GLArrayType at:
                     length = new Constant(at.Length);
-                    return new CSPointer(MakeCSType(at.BaseType, group, out _), at.Constant);
+                    return new CSPointer(MakeCSType(at.BaseType, handle, group, out _), at.Constant);
                 case GLPointerType pt:
-                    return new CSPointer(MakeCSType(pt.BaseType, group, out length), pt.Constant);
+                    return new CSPointer(MakeCSType(pt.BaseType, handle, group, out length), pt.Constant);
                 case GLBaseType bt:
                     return bt.Type switch
                     {
                         PrimitiveType.Void => new CSVoid(bt.Constant),
                         PrimitiveType.Bool8 => new CSBool8(bt.Constant),
-                        PrimitiveType.Byte => new CSType("byte", bt.Constant),
+                        PrimitiveType.Byte => new CSPrimitive("byte", bt.Constant),
                         PrimitiveType.Char8 => new CSChar8(bt.Constant),
-                        PrimitiveType.Sbyte => new CSType("sbyte", bt.Constant),
-                        PrimitiveType.Short => new CSType("short", bt.Constant),
-                        PrimitiveType.Ushort => new CSType("ushort", bt.Constant),
-                        PrimitiveType.Int => new CSType("int", bt.Constant),
-                        PrimitiveType.Uint => new CSType("uint", bt.Constant),
-                        PrimitiveType.Long => new CSType("long", bt.Constant),
-                        PrimitiveType.Ulong => new CSType("ulong", bt.Constant),
+                        PrimitiveType.Sbyte => new CSPrimitive("sbyte", bt.Constant),
+                        PrimitiveType.Short => new CSPrimitive("short", bt.Constant),
+                        PrimitiveType.Ushort => new CSPrimitive("ushort", bt.Constant),
+                        PrimitiveType.Int => new CSPrimitive("int", bt.Constant),
+                        PrimitiveType.Uint => new CSPrimitive("uint", bt.Constant),
+                        PrimitiveType.Long => new CSPrimitive("long", bt.Constant),
+                        PrimitiveType.Ulong => new CSPrimitive("ulong", bt.Constant),
                         // This might need an include, but the spec doesn't use this type
                         // so we don't really need to do anything...
-                        PrimitiveType.Half => new CSType("Half", bt.Constant),
-                        PrimitiveType.Float => new CSType("float", bt.Constant),
-                        PrimitiveType.Double => new CSType("double", bt.Constant),
-                        PrimitiveType.IntPtr => new CSType("IntPtr", bt.Constant),
-                        PrimitiveType.Nint => new CSType("nint", bt.Constant),
+                        PrimitiveType.Half => new CSStruct("Half", bt.Constant, new CSPrimitive("ushort", bt.Constant)),
+                        PrimitiveType.Float => new CSPrimitive("float", bt.Constant),
+                        PrimitiveType.Double => new CSPrimitive("double", bt.Constant),
+                        PrimitiveType.IntPtr => new CSPrimitive("IntPtr", bt.Constant),
+                        PrimitiveType.Nint => new CSPrimitive("nint", bt.Constant),
 
                         PrimitiveType.VoidPtr => new CSPointer(new CSVoid(false), bt.Constant),
 
                         // FIXME: Should this be treated special?
-                        PrimitiveType.Enum => new CSType(group ?? "All", bt.Constant),
+                        PrimitiveType.Enum => new CSPrimitive(group ?? "All", bt.Constant),
 
                         // FIXME: Are these just normal CSType? probably...
-                        PrimitiveType.GLHandleARB => new CSType("GLHandleARB", bt.Constant),
-                        PrimitiveType.GLSync => new CSType("GLSync", bt.Constant),
+                        PrimitiveType.GLHandleARB => new CSStruct("GLHandleARB", bt.Constant, new CSPrimitive("IntPtr", bt.Constant)),
+                        PrimitiveType.GLSync => new CSStruct("GLSync", bt.Constant, new CSPrimitive("IntPtr", bt.Constant)),
 
-                        PrimitiveType.CLContext => new CSType("CLContext", bt.Constant),
-                        PrimitiveType.CLEvent => new CSType("CLEvent", bt.Constant),
+                        PrimitiveType.CLContext => new CSStruct("CLContext", bt.Constant, new CSPrimitive("IntPtr", bt.Constant)),
+                        PrimitiveType.CLEvent => new CSStruct("CLEvent", bt.Constant, new CSPrimitive("IntPtr", bt.Constant)),
 
                         PrimitiveType.GLDEBUGPROC => new CSFunctionPointer("GLDebugProc", bt.Constant),
                         PrimitiveType.GLDEBUGPROCARB => new CSFunctionPointer("GLDebugProcARB", bt.Constant),
