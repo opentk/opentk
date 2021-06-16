@@ -66,19 +66,18 @@ namespace GeneratorV2.Parsing
 
     public enum Handle
     {
-        Program1,
-        ProgramPipeline,
-        Texture,
-        Buffer1,
-        Shader,
-        Query,
-        Framebuffer,
-        Renderbuffer,
-        Sampler,
-        TransformFeedback,
-        VertexArray,
-        Sync,
-        DisplayList,
+        ProgramHandle,
+        ProgramPipelineHandle,
+        TextureHandle,
+        BufferHandle,
+        ShaderHandle,
+        QueryHandle,
+        FramebufferHandle,
+        RenderbufferHandle,
+        SamplerHandle,
+        TransformFeedbackHandle,
+        VertexArrayHandle,
+        DisplayListHandle,
     }
 
     public record GLType();

@@ -65,6 +65,7 @@ namespace GeneratorV2.Writing
             writer.WriteLine("// This file is auto generated, do not edit.");
             writer.WriteLine("using System;");
             writer.WriteLine("using System.Runtime.InteropServices;");
+            writer.WriteLine("using OpenTK.Graphics;");
             writer.WriteLine();
             writer.WriteLine($"namespace {GraphicsNamespace}.{glNamespace}");
             using (writer.CsScope())
@@ -198,6 +199,7 @@ namespace GeneratorV2.Writing
             writer.WriteLine("using System.Runtime.CompilerServices;");
             writer.WriteLine("using System.Runtime.InteropServices;");
             writer.WriteLine("using OpenTK.Mathematics;");
+            writer.WriteLine("using OpenTK.Graphics;");
             writer.WriteLine();
             writer.WriteLine($"namespace {GraphicsNamespace}.{glNamespace}");
             using (writer.CsScope())

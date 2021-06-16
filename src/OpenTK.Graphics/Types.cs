@@ -66,7 +66,7 @@ namespace OpenTK.Graphics
 
         public static explicit operator GLSync(IntPtr val) => new GLSync(val);
     }
-    
+
     [StructLayout(LayoutKind.Explicit)]
     public struct GLHandleARB
     {
@@ -91,23 +91,23 @@ namespace OpenTK.Graphics
         public static explicit operator IntPtr(GLHandleARB val) => val._value2;
     }
 
-    public struct Program1
+    public struct ProgramHandle
     {
-        public static readonly Program1 Zero = new Program1(0);
+        public static readonly ProgramHandle Zero = new ProgramHandle(0);
 
         public int Handle;
 
-        public Program1(int handle)
+        public ProgramHandle(int handle)
         {
             Handle = handle;
         }
 
         public override bool Equals(object? obj)
         {
-            return obj is Program1 device && Equals(device);
+            return obj is ProgramHandle device && Equals(device);
         }
 
-        public bool Equals([AllowNull] Program1 other)
+        public bool Equals([AllowNull] ProgramHandle other)
         {
             return Handle.Equals(other.Handle);
         }
@@ -117,37 +117,37 @@ namespace OpenTK.Graphics
             return HashCode.Combine(Handle);
         }
 
-        public static bool operator ==(Program1 left, Program1 right)
+        public static bool operator ==(ProgramHandle left, ProgramHandle right)
         {
             return left.Equals(right);
         }
 
-        public static bool operator !=(Program1 left, Program1 right)
+        public static bool operator !=(ProgramHandle left, ProgramHandle right)
         {
             return !(left == right);
         }
 
-        public static explicit operator Program1(int Program1) => new Program1(Program1);
-        public static explicit operator int(Program1 Program1) => Program1.Handle;
+        public static explicit operator ProgramHandle(int Program1) => new ProgramHandle(Program1);
+        public static explicit operator int(ProgramHandle programHandle) => programHandle.Handle;
     }
 
-    public struct ProgramPipeline
+    public struct ProgramPipelineHandle
     {
-        public static readonly ProgramPipeline Zero = new ProgramPipeline(0);
+        public static readonly ProgramPipelineHandle Zero = new ProgramPipelineHandle(0);
 
         public int Handle;
 
-        public ProgramPipeline(int handle)
+        public ProgramPipelineHandle(int handle)
         {
             Handle = handle;
         }
 
         public override bool Equals(object? obj)
         {
-            return obj is ProgramPipeline device && Equals(device);
+            return obj is ProgramPipelineHandle device && Equals(device);
         }
 
-        public bool Equals([AllowNull] ProgramPipeline other)
+        public bool Equals([AllowNull] ProgramPipelineHandle other)
         {
             return Handle.Equals(other.Handle);
         }
@@ -157,37 +157,37 @@ namespace OpenTK.Graphics
             return HashCode.Combine(Handle);
         }
 
-        public static bool operator ==(ProgramPipeline left, ProgramPipeline right)
+        public static bool operator ==(ProgramPipelineHandle left, ProgramPipelineHandle right)
         {
             return left.Equals(right);
         }
 
-        public static bool operator !=(ProgramPipeline left, ProgramPipeline right)
+        public static bool operator !=(ProgramPipelineHandle left, ProgramPipelineHandle right)
         {
             return !(left == right);
         }
 
-        public static explicit operator ProgramPipeline(int ProgramPipeline) => new ProgramPipeline(ProgramPipeline);
-        public static explicit operator int(ProgramPipeline ProgramPipeline) => ProgramPipeline.Handle;
+        public static explicit operator ProgramPipelineHandle(int ProgramPipeline) => new ProgramPipelineHandle(ProgramPipeline);
+        public static explicit operator int(ProgramPipelineHandle programPipelineHandle) => programPipelineHandle.Handle;
     }
 
-    public struct Texture
+    public struct TextureHandle
     {
-        public static readonly Texture Zero = new Texture(0);
+        public static readonly TextureHandle Zero = new TextureHandle(0);
 
         public int Handle;
 
-        public Texture(int handle)
+        public TextureHandle(int handle)
         {
             Handle = handle;
         }
 
         public override bool Equals(object? obj)
         {
-            return obj is Texture device && Equals(device);
+            return obj is TextureHandle device && Equals(device);
         }
 
-        public bool Equals([AllowNull] Texture other)
+        public bool Equals([AllowNull] TextureHandle other)
         {
             return Handle.Equals(other.Handle);
         }
@@ -197,37 +197,37 @@ namespace OpenTK.Graphics
             return HashCode.Combine(Handle);
         }
 
-        public static bool operator ==(Texture left, Texture right)
+        public static bool operator ==(TextureHandle left, TextureHandle right)
         {
             return left.Equals(right);
         }
 
-        public static bool operator !=(Texture left, Texture right)
+        public static bool operator !=(TextureHandle left, TextureHandle right)
         {
             return !(left == right);
         }
 
-        public static explicit operator Texture(int Texture) => new Texture(Texture);
-        public static explicit operator int(Texture Texture) => Texture.Handle;
+        public static explicit operator TextureHandle(int Texture) => new TextureHandle(Texture);
+        public static explicit operator int(TextureHandle textureHandle) => textureHandle.Handle;
     }
 
-    public struct Buffer1
+    public struct BufferHandle
     {
-        public static readonly Buffer1 Zero = new Buffer1(0);
+        public static readonly BufferHandle Zero = new BufferHandle(0);
 
         public int Handle;
 
-        public Buffer1(int handle)
+        public BufferHandle(int handle)
         {
             Handle = handle;
         }
 
         public override bool Equals(object? obj)
         {
-            return obj is Buffer1 device && Equals(device);
+            return obj is BufferHandle device && Equals(device);
         }
 
-        public bool Equals([AllowNull] Buffer1 other)
+        public bool Equals([AllowNull] BufferHandle other)
         {
             return Handle.Equals(other.Handle);
         }
@@ -237,37 +237,37 @@ namespace OpenTK.Graphics
             return HashCode.Combine(Handle);
         }
 
-        public static bool operator ==(Buffer1 left, Buffer1 right)
+        public static bool operator ==(BufferHandle left, BufferHandle right)
         {
             return left.Equals(right);
         }
 
-        public static bool operator !=(Buffer1 left, Buffer1 right)
+        public static bool operator !=(BufferHandle left, BufferHandle right)
         {
             return !(left == right);
         }
 
-        public static explicit operator Buffer1(int Buffer1) => new Buffer1(Buffer1);
-        public static explicit operator int(Buffer1 Buffer1) => Buffer1.Handle;
+        public static explicit operator BufferHandle(int Buffer1) => new BufferHandle(Buffer1);
+        public static explicit operator int(BufferHandle bufferHandle) => bufferHandle.Handle;
     }
 
-    public struct Shader : IEquatable<Shader>
+    public struct ShaderHandle : IEquatable<ShaderHandle>
     {
-        public static readonly Shader Zero = new Shader(0);
+        public static readonly ShaderHandle Zero = new ShaderHandle(0);
 
         public int Handle;
 
-        public Shader(int handle)
+        public ShaderHandle(int handle)
         {
             Handle = handle;
         }
 
         public override bool Equals(object? obj)
         {
-            return obj is Shader device && Equals(device);
+            return obj is ShaderHandle device && Equals(device);
         }
 
-        public bool Equals([AllowNull] Shader other)
+        public bool Equals([AllowNull] ShaderHandle other)
         {
             return Handle.Equals(other.Handle);
         }
@@ -277,37 +277,37 @@ namespace OpenTK.Graphics
             return HashCode.Combine(Handle);
         }
 
-        public static bool operator ==(Shader left, Shader right)
+        public static bool operator ==(ShaderHandle left, ShaderHandle right)
         {
             return left.Equals(right);
         }
 
-        public static bool operator !=(Shader left, Shader right)
+        public static bool operator !=(ShaderHandle left, ShaderHandle right)
         {
             return !(left == right);
         }
 
-        public static explicit operator Shader(int shader) => new Shader(shader);
-        public static explicit operator int(Shader shader) => shader.Handle;
+        public static explicit operator ShaderHandle(int shader) => new ShaderHandle(shader);
+        public static explicit operator int(ShaderHandle shaderHandle) => shaderHandle.Handle;
     }
 
-    public struct Query
+    public struct QueryHandle
     {
-        public static readonly Query Zero = new Query(0);
+        public static readonly QueryHandle Zero = new QueryHandle(0);
 
         public int Handle;
 
-        public Query(int handle)
+        public QueryHandle(int handle)
         {
             Handle = handle;
         }
 
         public override bool Equals(object? obj)
         {
-            return obj is Query device && Equals(device);
+            return obj is QueryHandle device && Equals(device);
         }
 
-        public bool Equals([AllowNull] Query other)
+        public bool Equals([AllowNull] QueryHandle other)
         {
             return Handle.Equals(other.Handle);
         }
@@ -317,37 +317,37 @@ namespace OpenTK.Graphics
             return HashCode.Combine(Handle);
         }
 
-        public static bool operator ==(Query left, Query right)
+        public static bool operator ==(QueryHandle left, QueryHandle right)
         {
             return left.Equals(right);
         }
 
-        public static bool operator !=(Query left, Query right)
+        public static bool operator !=(QueryHandle left, QueryHandle right)
         {
             return !(left == right);
         }
 
-        public static explicit operator Query(int Query) => new Query(Query);
-        public static explicit operator int(Query Query) => Query.Handle;
+        public static explicit operator QueryHandle(int Query) => new QueryHandle(Query);
+        public static explicit operator int(QueryHandle queryHandle) => queryHandle.Handle;
     }
 
-    public struct Framebuffer
+    public struct FramebufferHandle
     {
-        public static readonly Framebuffer Zero = new Framebuffer(0);
+        public static readonly FramebufferHandle Zero = new FramebufferHandle(0);
 
         public int Handle;
 
-        public Framebuffer(int handle)
+        public FramebufferHandle(int handle)
         {
             Handle = handle;
         }
 
         public override bool Equals(object? obj)
         {
-            return obj is Framebuffer device && Equals(device);
+            return obj is FramebufferHandle device && Equals(device);
         }
 
-        public bool Equals([AllowNull] Framebuffer other)
+        public bool Equals([AllowNull] FramebufferHandle other)
         {
             return Handle.Equals(other.Handle);
         }
@@ -357,37 +357,37 @@ namespace OpenTK.Graphics
             return HashCode.Combine(Handle);
         }
 
-        public static bool operator ==(Framebuffer left, Framebuffer right)
+        public static bool operator ==(FramebufferHandle left, FramebufferHandle right)
         {
             return left.Equals(right);
         }
 
-        public static bool operator !=(Framebuffer left, Framebuffer right)
+        public static bool operator !=(FramebufferHandle left, FramebufferHandle right)
         {
             return !(left == right);
         }
 
-        public static explicit operator Framebuffer(int Framebuffer) => new Framebuffer(Framebuffer);
-        public static explicit operator int(Framebuffer Framebuffer) => Framebuffer.Handle;
+        public static explicit operator FramebufferHandle(int Framebuffer) => new FramebufferHandle(Framebuffer);
+        public static explicit operator int(FramebufferHandle framebufferHandle) => framebufferHandle.Handle;
     }
 
-    public struct Renderbuffer
+    public struct RenderbufferHandle
     {
-        public static readonly Renderbuffer Zero = new Renderbuffer(0);
+        public static readonly RenderbufferHandle Zero = new RenderbufferHandle(0);
 
         public int Handle;
 
-        public Renderbuffer(int handle)
+        public RenderbufferHandle(int handle)
         {
             Handle = handle;
         }
 
         public override bool Equals(object? obj)
         {
-            return obj is Renderbuffer device && Equals(device);
+            return obj is RenderbufferHandle device && Equals(device);
         }
 
-        public bool Equals([AllowNull] Renderbuffer other)
+        public bool Equals([AllowNull] RenderbufferHandle other)
         {
             return Handle.Equals(other.Handle);
         }
@@ -397,37 +397,37 @@ namespace OpenTK.Graphics
             return HashCode.Combine(Handle);
         }
 
-        public static bool operator ==(Renderbuffer left, Renderbuffer right)
+        public static bool operator ==(RenderbufferHandle left, RenderbufferHandle right)
         {
             return left.Equals(right);
         }
 
-        public static bool operator !=(Renderbuffer left, Renderbuffer right)
+        public static bool operator !=(RenderbufferHandle left, RenderbufferHandle right)
         {
             return !(left == right);
         }
 
-        public static explicit operator Renderbuffer(int Renderbuffer) => new Renderbuffer(Renderbuffer);
-        public static explicit operator int(Renderbuffer Renderbuffer) => Renderbuffer.Handle;
+        public static explicit operator RenderbufferHandle(int Renderbuffer) => new RenderbufferHandle(Renderbuffer);
+        public static explicit operator int(RenderbufferHandle renderbufferHandle) => renderbufferHandle.Handle;
     }
 
-    public struct Sampler
+    public struct SamplerHandle
     {
-        public static readonly Sampler Zero = new Sampler(0);
+        public static readonly SamplerHandle Zero = new SamplerHandle(0);
 
         public int Handle;
 
-        public Sampler(int handle)
+        public SamplerHandle(int handle)
         {
             Handle = handle;
         }
 
         public override bool Equals(object? obj)
         {
-            return obj is Sampler device && Equals(device);
+            return obj is SamplerHandle device && Equals(device);
         }
 
-        public bool Equals([AllowNull] Sampler other)
+        public bool Equals([AllowNull] SamplerHandle other)
         {
             return Handle.Equals(other.Handle);
         }
@@ -437,37 +437,37 @@ namespace OpenTK.Graphics
             return HashCode.Combine(Handle);
         }
 
-        public static bool operator ==(Sampler left, Sampler right)
+        public static bool operator ==(SamplerHandle left, SamplerHandle right)
         {
             return left.Equals(right);
         }
 
-        public static bool operator !=(Sampler left, Sampler right)
+        public static bool operator !=(SamplerHandle left, SamplerHandle right)
         {
             return !(left == right);
         }
 
-        public static explicit operator Sampler(int Sampler) => new Sampler(Sampler);
-        public static explicit operator int(Sampler Sampler) => Sampler.Handle;
+        public static explicit operator SamplerHandle(int Sampler) => new SamplerHandle(Sampler);
+        public static explicit operator int(SamplerHandle samplerHandle) => samplerHandle.Handle;
     }
 
-    public struct TransformFeedback
+    public struct TransformFeedbackHandle
     {
-        public static readonly TransformFeedback Zero = new TransformFeedback(0);
+        public static readonly TransformFeedbackHandle Zero = new TransformFeedbackHandle(0);
 
         public int Handle;
 
-        public TransformFeedback(int handle)
+        public TransformFeedbackHandle(int handle)
         {
             Handle = handle;
         }
 
         public override bool Equals(object? obj)
         {
-            return obj is TransformFeedback device && Equals(device);
+            return obj is TransformFeedbackHandle device && Equals(device);
         }
 
-        public bool Equals([AllowNull] TransformFeedback other)
+        public bool Equals([AllowNull] TransformFeedbackHandle other)
         {
             return Handle.Equals(other.Handle);
         }
@@ -477,37 +477,37 @@ namespace OpenTK.Graphics
             return HashCode.Combine(Handle);
         }
 
-        public static bool operator ==(TransformFeedback left, TransformFeedback right)
+        public static bool operator ==(TransformFeedbackHandle left, TransformFeedbackHandle right)
         {
             return left.Equals(right);
         }
 
-        public static bool operator !=(TransformFeedback left, TransformFeedback right)
+        public static bool operator !=(TransformFeedbackHandle left, TransformFeedbackHandle right)
         {
             return !(left == right);
         }
 
-        public static explicit operator TransformFeedback(int TransformFeedback) => new TransformFeedback(TransformFeedback);
-        public static explicit operator int(TransformFeedback TransformFeedback) => TransformFeedback.Handle;
+        public static explicit operator TransformFeedbackHandle(int TransformFeedback) => new TransformFeedbackHandle(TransformFeedback);
+        public static explicit operator int(TransformFeedbackHandle transformFeedbackHandle) => transformFeedbackHandle.Handle;
     }
 
-    public struct VertexArray
+    public struct VertexArrayHandle
     {
-        public static readonly VertexArray Zero = new VertexArray(0);
+        public static readonly VertexArrayHandle Zero = new VertexArrayHandle(0);
 
         public int Handle;
 
-        public VertexArray(int handle)
+        public VertexArrayHandle(int handle)
         {
             Handle = handle;
         }
 
         public override bool Equals(object? obj)
         {
-            return obj is VertexArray device && Equals(device);
+            return obj is VertexArrayHandle device && Equals(device);
         }
 
-        public bool Equals([AllowNull] VertexArray other)
+        public bool Equals([AllowNull] VertexArrayHandle other)
         {
             return Handle.Equals(other.Handle);
         }
@@ -517,37 +517,37 @@ namespace OpenTK.Graphics
             return HashCode.Combine(Handle);
         }
 
-        public static bool operator ==(VertexArray left, VertexArray right)
+        public static bool operator ==(VertexArrayHandle left, VertexArrayHandle right)
         {
             return left.Equals(right);
         }
 
-        public static bool operator !=(VertexArray left, VertexArray right)
+        public static bool operator !=(VertexArrayHandle left, VertexArrayHandle right)
         {
             return !(left == right);
         }
 
-        public static explicit operator VertexArray(int VertexArray) => new VertexArray(VertexArray);
-        public static explicit operator int(VertexArray VertexArray) => VertexArray.Handle;
+        public static explicit operator VertexArrayHandle(int VertexArray) => new VertexArrayHandle(VertexArray);
+        public static explicit operator int(VertexArrayHandle vertexArrayHandle) => vertexArrayHandle.Handle;
     }
 
-    public struct DisplayList
+    public struct DisplayListHandle
     {
-        public static readonly DisplayList Zero = new DisplayList(0);
+        public static readonly DisplayListHandle Zero = new DisplayListHandle(0);
 
         public int Handle;
 
-        public DisplayList(int handle)
+        public DisplayListHandle(int handle)
         {
             Handle = handle;
         }
 
         public override bool Equals(object? obj)
         {
-            return obj is DisplayList device && Equals(device);
+            return obj is DisplayListHandle device && Equals(device);
         }
 
-        public bool Equals([AllowNull] DisplayList other)
+        public bool Equals([AllowNull] DisplayListHandle other)
         {
             return Handle.Equals(other.Handle);
         }
@@ -557,17 +557,17 @@ namespace OpenTK.Graphics
             return HashCode.Combine(Handle);
         }
 
-        public static bool operator ==(DisplayList left, DisplayList right)
+        public static bool operator ==(DisplayListHandle left, DisplayListHandle right)
         {
             return left.Equals(right);
         }
 
-        public static bool operator !=(DisplayList left, DisplayList right)
+        public static bool operator !=(DisplayListHandle left, DisplayListHandle right)
         {
             return !(left == right);
         }
 
-        public static explicit operator DisplayList(int DisplayList) => new DisplayList(DisplayList);
-        public static explicit operator int(DisplayList DisplayList) => DisplayList.Handle;
+        public static explicit operator DisplayListHandle(int DisplayList) => new DisplayListHandle(DisplayList);
+        public static explicit operator int(DisplayListHandle displayListHandle) => displayListHandle.Handle;
     }
 }

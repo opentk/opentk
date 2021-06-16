@@ -195,21 +195,21 @@ namespace GeneratorV2.Parsing
             Handle? handle = className switch
             {
                 null => null,
-                "program" => Handle.Program1,
-                "program pipeline" => Handle.ProgramPipeline,
-                "texture" => Handle.Texture,
-                "buffer" => Handle.Buffer1,
-                "shader" => Handle.Shader,
-                "query" => Handle.Query,
-                "framebuffer" => Handle.Framebuffer,
-                "renderbuffer" => Handle.Renderbuffer,
-                "sampler" => Handle.Sampler,
-                "transform feedback" => Handle.TransformFeedback,
-                "vertex array" => Handle.VertexArray,
+                "program" => Handle.ProgramHandle,
+                "program pipeline" => Handle.ProgramPipelineHandle,
+                "texture" => Handle.TextureHandle,
+                "buffer" => Handle.BufferHandle,
+                "shader" => Handle.ShaderHandle,
+                "query" => Handle.QueryHandle,
+                "framebuffer" => Handle.FramebufferHandle,
+                "renderbuffer" => Handle.RenderbufferHandle,
+                "sampler" => Handle.SamplerHandle,
+                "transform feedback" => Handle.TransformFeedbackHandle,
+                "vertex array" => Handle.VertexArrayHandle,
                 // The "Sync" class is already marked with the "GLSync" type which is handled differently from the other types
                 // We leave it null here to let the "GLSync" handling do this.
                 "sync" => null,
-                "display list" => Handle.DisplayList,
+                "display list" => Handle.DisplayListHandle,
                 _ => throw new Exception(className + " is not a supported handle type yet!"),
             };
 
