@@ -51,8 +51,11 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
             }
             else if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
+                var architecture = RuntimeInformation.ProcessArchitecture == Architecture.X64
+                    ? "-x64"
+                    : "-x86";
                 libNameFormatter = (libName, ver) =>
-                    libName + (string.IsNullOrEmpty(ver) ? string.Empty : ver) + ".dll";
+                    libName + (string.IsNullOrEmpty(ver) ? string.Empty : ver) + $"{architecture}.dll";
             }
             else
             {
