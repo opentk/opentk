@@ -1558,10 +1558,9 @@ namespace OpenTK.Mathematics
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector3 operator /(Vector3 vec, float scale)
         {
-            var invScale = 1 / scale;
-            vec.X *= invScale;
-            vec.Y *= invScale;
-            vec.Z *= invScale;
+            vec.X /= scale;
+            vec.Y /= scale;
+            vec.Z /= scale;
             return vec;
         }
 
