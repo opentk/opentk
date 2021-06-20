@@ -84,7 +84,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         /// <param name="v">The Vector2 to copy components from.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public Vector3(in Vector2 v)
+        public Vector3(Vector2 v)
         {
             X = v.X;
             Y = v.Y;
@@ -1648,7 +1648,7 @@ namespace OpenTK.Mathematics
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public override bool Equals(object obj)
         {
-            return obj is Vector3 vec && Equals(vec);
+            return obj is Vector3 && Equals((Vector3)obj);
         }
 
         /// <inheritdoc />
