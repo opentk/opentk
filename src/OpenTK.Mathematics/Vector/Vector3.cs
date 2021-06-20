@@ -574,7 +574,7 @@ namespace OpenTK.Mathematics
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float Distance(in Vector3 vec1, in Vector3 vec2)
         {
-            Distance(in vec1, in vec2, out var result);
+            Distance(in vec1, in vec2, out float result);
             return result;
         }
 
@@ -602,7 +602,7 @@ namespace OpenTK.Mathematics
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float DistanceSquared(in Vector3 vec1, in Vector3 vec2)
         {
-            DistanceSquared(in vec1, in vec2, out var result);
+            DistanceSquared(in vec1, in vec2, out float result);
             return result;
         }
 
@@ -715,7 +715,7 @@ namespace OpenTK.Mathematics
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector3 Cross(in Vector3 left, in Vector3 right)
         {
-            Cross(in left, in right, out var result);
+            Cross(in left, in right, out Vector3 result);
             return result;
         }
 
@@ -778,7 +778,7 @@ namespace OpenTK.Mathematics
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector3 BaryCentric(in Vector3 a, in Vector3 b, in Vector3 c, float u, float v)
         {
-            BaryCentric(in a, in b, in c, u, v, out var result);
+            BaryCentric(in a, in b, in c, u, v, out Vector3 result);
             return result;
         }
 
@@ -806,12 +806,12 @@ namespace OpenTK.Mathematics
             out Vector3 result
         )
         {
-            Subtract(in b, in a, out var ab);
-            Multiply(in ab, u, out var abU);
-            Add(in a, in abU, out var uPos);
+            Subtract(in b, in a, out Vector3 ab);
+            Multiply(in ab, u, out Vector3 abU);
+            Add(in a, in abU, out Vector3 uPos);
 
-            Subtract(in c, in a, out var ac);
-            Multiply(in ac, v, out var acV);
+            Subtract(in c, in a, out Vector3 ac);
+            Multiply(in ac, v, out Vector3 acV);
             Add(in uPos, in acV, out result);
         }
 
@@ -826,7 +826,7 @@ namespace OpenTK.Mathematics
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector3 TransformVector(in Vector3 vec, in Matrix4 mat)
         {
-            TransformVector(in vec, in mat, out var result);
+            TransformVector(in vec, in mat, out Vector3 result);
             return result;
         }
 
@@ -867,7 +867,7 @@ namespace OpenTK.Mathematics
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector3 TransformNormal(in Vector3 norm, in Matrix4 mat)
         {
-            TransformNormal(in norm, in mat, out var result);
+            TransformNormal(in norm, in mat, out Vector3 result);
             return result;
         }
 
@@ -902,7 +902,7 @@ namespace OpenTK.Mathematics
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector3 TransformNormalInverse(in Vector3 norm, in Matrix4 invMat)
         {
-            TransformNormalInverse(in norm, in invMat, out var result);
+            TransformNormalInverse(in norm, in invMat, out Vector3 result);
             return result;
         }
 
@@ -942,7 +942,7 @@ namespace OpenTK.Mathematics
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector3 TransformPosition(in Vector3 pos, in Matrix4 mat)
         {
-            TransformPosition(in pos, in mat, out var result);
+            TransformPosition(in pos, in mat, out Vector3 result);
             return result;
         }
 
@@ -981,7 +981,7 @@ namespace OpenTK.Mathematics
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector3 TransformRow(in Vector3 vec, in Matrix3 mat)
         {
-            TransformRow(in vec, in mat, out var result);
+            TransformRow(in vec, in mat, out Vector3 result);
             return result;
         }
 
@@ -1009,7 +1009,7 @@ namespace OpenTK.Mathematics
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector3 Transform(in Vector3 vec, in Quaternion quat)
         {
-            Transform(in vec, in quat, out var result);
+            Transform(in vec, in quat, out Vector3 result);
             return result;
         }
 
@@ -1025,8 +1025,8 @@ namespace OpenTK.Mathematics
             // Since vec.W == 0, we can optimize quat * vec * quat^-1 as follows:
             // vec + 2.0 * cross(quat.xyz, cross(quat.xyz, vec) + quat.w * vec)
             Vector3 xyz = quat.Xyz;
-            Cross(in xyz, in vec, out var temp);
-            Multiply(in vec, quat.W, out var temp2);
+            Cross(in xyz, in vec, out Vector3 temp);
+            Multiply(in vec, quat.W, out Vector3 temp2);
             Add(in temp, in temp2, out temp);
             Cross(in xyz, in temp, out temp2);
             Multiply(in temp2, 2f, out temp2);
@@ -1043,7 +1043,7 @@ namespace OpenTK.Mathematics
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector3 TransformColumn(in Matrix3 mat, in Vector3 vec)
         {
-            TransformColumn(in mat, in vec, out var result);
+            TransformColumn(in mat, in vec, out Vector3 result);
             return result;
         }
 
@@ -1071,7 +1071,7 @@ namespace OpenTK.Mathematics
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector3 TransformPerspective(in Vector3 vec, in Matrix4 mat)
         {
-            TransformPerspective(in vec, in mat, out var result);
+            TransformPerspective(in vec, in mat, out Vector3 result);
             return result;
         }
 
@@ -1102,7 +1102,7 @@ namespace OpenTK.Mathematics
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float CalculateAngle(in Vector3 first, in Vector3 second)
         {
-            CalculateAngle(in first, in second, out var result);
+            CalculateAngle(in first, in second, out float result);
             return result;
         }
 
@@ -1116,7 +1116,7 @@ namespace OpenTK.Mathematics
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void CalculateAngle(in Vector3 first, in Vector3 second, out float result)
         {
-            Dot(in first, in second, out var temp);
+            Dot(in first, in second, out float temp);
             result = MathF.Acos(MathHelper.Clamp(temp / (first.Length * second.Length), -1.0f, 1.0f));
         }
 
@@ -1513,7 +1513,7 @@ namespace OpenTK.Mathematics
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector3 operator *(in Vector3 vec, in Matrix3 mat)
         {
-            TransformRow(in vec, in mat, out var result);
+            TransformRow(in vec, in mat, out Vector3 result);
             return result;
         }
 
@@ -1527,7 +1527,7 @@ namespace OpenTK.Mathematics
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector3 operator *(in Matrix3 mat, in Vector3 vec)
         {
-            TransformColumn(in mat, in vec, out var result);
+            TransformColumn(in mat, in vec, out Vector3 result);
             return result;
         }
 
@@ -1541,7 +1541,7 @@ namespace OpenTK.Mathematics
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector3 operator *(in Quaternion quat, in Vector3 vec)
         {
-            Transform(in vec, in quat, out var result);
+            Transform(in vec, in quat, out Vector3 result);
             return result;
         }
 
