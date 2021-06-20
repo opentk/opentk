@@ -22,7 +22,6 @@ SOFTWARE.
 
 using System;
 using System.Diagnostics.Contracts;
-using System.Globalization;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Xml.Serialization;
@@ -58,6 +57,7 @@ namespace OpenTK.Mathematics
         /// Initializes a new instance of the <see cref="Vector3"/> struct.
         /// </summary>
         /// <param name="value">The value that will initialize this instance.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Vector3(float value)
         {
             X = value;
@@ -71,6 +71,7 @@ namespace OpenTK.Mathematics
         /// <param name="x">The x component of the Vector3.</param>
         /// <param name="y">The y component of the Vector3.</param>
         /// <param name="z">The z component of the Vector3.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Vector3(float x, float y, float z)
         {
             X = x;
@@ -82,7 +83,8 @@ namespace OpenTK.Mathematics
         /// Initializes a new instance of the <see cref="Vector3"/> struct.
         /// </summary>
         /// <param name="v">The Vector2 to copy components from.</param>
-        public Vector3(Vector2 v)
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public Vector3(in Vector2 v)
         {
             X = v.X;
             Y = v.Y;
@@ -93,7 +95,8 @@ namespace OpenTK.Mathematics
         /// Initializes a new instance of the <see cref="Vector3"/> struct.
         /// </summary>
         /// <param name="v">The Vector3 to copy components from.</param>
-        public Vector3(Vector3 v)
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public Vector3(in Vector3 v)
         {
             X = v.X;
             Y = v.Y;
@@ -104,7 +107,8 @@ namespace OpenTK.Mathematics
         /// Initializes a new instance of the <see cref="Vector3"/> struct.
         /// </summary>
         /// <param name="v">The Vector4 to copy components from.</param>
-        public Vector3(Vector4 v)
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public Vector3(in Vector4 v)
         {
             X = v.X;
             Y = v.Y;
@@ -120,41 +124,23 @@ namespace OpenTK.Mathematics
         {
             get
             {
-                if (index == 0)
+                switch (index)
                 {
-                    return X;
+                    case 0: return X;
+                    case 1: return Y;
+                    case 2: return Z;
+                    default: throw new IndexOutOfRangeException("You tried to access this vector at index: " + index);
                 }
-
-                if (index == 1)
-                {
-                    return Y;
-                }
-
-                if (index == 2)
-                {
-                    return Z;
-                }
-
-                throw new IndexOutOfRangeException("You tried to access this vector at index: " + index);
             }
 
             set
             {
-                if (index == 0)
+                switch (index)
                 {
-                    X = value;
-                }
-                else if (index == 1)
-                {
-                    Y = value;
-                }
-                else if (index == 2)
-                {
-                    Z = value;
-                }
-                else
-                {
-                    throw new IndexOutOfRangeException("You tried to set this vector at index: " + index);
+                    case 0: X = value; break;
+                    case 1: Y = value; break;
+                    case 2: Z = value; break;
+                    default: throw new IndexOutOfRangeException("You tried to set this vector at index: " + index);
                 }
             }
         }
@@ -192,6 +178,7 @@ namespace OpenTK.Mathematics
         /// Returns a copy of the Vector3 scaled to unit length.
         /// </summary>
         /// <returns>The normalized copy.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Vector3 Normalized()
         {
             var v = this;
@@ -202,6 +189,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Scales the Vector3 to unit length.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Normalize()
         {
             var scale = 1.0f / Length;
@@ -213,6 +201,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Scales the Vector3 to approximately unit length.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void NormalizeFast()
         {
             var scale = MathHelper.InverseSqrtFast((X * X) + (Y * Y) + (Z * Z));
@@ -268,6 +257,7 @@ namespace OpenTK.Mathematics
         /// <param name="b">Right operand.</param>
         /// <returns>Result of operation.</returns>
         [Pure]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector3 Add(Vector3 a, Vector3 b)
         {
             Add(in a, in b, out a);
@@ -280,6 +270,7 @@ namespace OpenTK.Mathematics
         /// <param name="a">Left operand.</param>
         /// <param name="b">Right operand.</param>
         /// <param name="result">Result of operation.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void Add(in Vector3 a, in Vector3 b, out Vector3 result)
         {
             result.X = a.X + b.X;
@@ -294,6 +285,7 @@ namespace OpenTK.Mathematics
         /// <param name="b">Second operand.</param>
         /// <returns>Result of subtraction.</returns>
         [Pure]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector3 Subtract(Vector3 a, Vector3 b)
         {
             Subtract(in a, in b, out a);
@@ -306,6 +298,7 @@ namespace OpenTK.Mathematics
         /// <param name="a">First operand.</param>
         /// <param name="b">Second operand.</param>
         /// <param name="result">Result of subtraction.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void Subtract(in Vector3 a, in Vector3 b, out Vector3 result)
         {
             result.X = a.X - b.X;
@@ -320,6 +313,7 @@ namespace OpenTK.Mathematics
         /// <param name="scale">Right operand.</param>
         /// <returns>Result of the operation.</returns>
         [Pure]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector3 Multiply(Vector3 vector, float scale)
         {
             Multiply(in vector, scale, out vector);
@@ -332,6 +326,7 @@ namespace OpenTK.Mathematics
         /// <param name="vector">Left operand.</param>
         /// <param name="scale">Right operand.</param>
         /// <param name="result">Result of the operation.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void Multiply(in Vector3 vector, float scale, out Vector3 result)
         {
             result.X = vector.X * scale;
@@ -346,6 +341,7 @@ namespace OpenTK.Mathematics
         /// <param name="scale">Right operand.</param>
         /// <returns>Result of the operation.</returns>
         [Pure]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector3 Multiply(Vector3 vector, Vector3 scale)
         {
             Multiply(in vector, in scale, out vector);
@@ -358,6 +354,7 @@ namespace OpenTK.Mathematics
         /// <param name="vector">Left operand.</param>
         /// <param name="scale">Right operand.</param>
         /// <param name="result">Result of the operation.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void Multiply(in Vector3 vector, in Vector3 scale, out Vector3 result)
         {
             result.X = vector.X * scale.X;
@@ -372,6 +369,7 @@ namespace OpenTK.Mathematics
         /// <param name="scale">Right operand.</param>
         /// <returns>Result of the operation.</returns>
         [Pure]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector3 Divide(Vector3 vector, float scale)
         {
             Divide(in vector, scale, out vector);
@@ -384,6 +382,7 @@ namespace OpenTK.Mathematics
         /// <param name="vector">Left operand.</param>
         /// <param name="scale">Right operand.</param>
         /// <param name="result">Result of the operation.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void Divide(in Vector3 vector, float scale, out Vector3 result)
         {
             result.X = vector.X / scale;
@@ -398,6 +397,7 @@ namespace OpenTK.Mathematics
         /// <param name="scale">Right operand.</param>
         /// <returns>Result of the operation.</returns>
         [Pure]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector3 Divide(Vector3 vector, Vector3 scale)
         {
             Divide(in vector, in scale, out vector);
@@ -410,6 +410,7 @@ namespace OpenTK.Mathematics
         /// <param name="vector">Left operand.</param>
         /// <param name="scale">Right operand.</param>
         /// <param name="result">Result of the operation.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void Divide(in Vector3 vector, in Vector3 scale, out Vector3 result)
         {
             result.X = vector.X / scale.X;
@@ -424,6 +425,7 @@ namespace OpenTK.Mathematics
         /// <param name="b">Second operand.</param>
         /// <returns>The component-wise minimum.</returns>
         [Pure]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector3 ComponentMin(Vector3 a, Vector3 b)
         {
             a.X = a.X < b.X ? a.X : b.X;
@@ -438,6 +440,7 @@ namespace OpenTK.Mathematics
         /// <param name="a">First operand.</param>
         /// <param name="b">Second operand.</param>
         /// <param name="result">The component-wise minimum.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void ComponentMin(in Vector3 a, in Vector3 b, out Vector3 result)
         {
             result.X = a.X < b.X ? a.X : b.X;
@@ -452,6 +455,7 @@ namespace OpenTK.Mathematics
         /// <param name="b">Second operand.</param>
         /// <returns>The component-wise maximum.</returns>
         [Pure]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector3 ComponentMax(Vector3 a, Vector3 b)
         {
             a.X = a.X > b.X ? a.X : b.X;
@@ -466,6 +470,7 @@ namespace OpenTK.Mathematics
         /// <param name="a">First operand.</param>
         /// <param name="b">Second operand.</param>
         /// <param name="result">The component-wise maximum.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void ComponentMax(in Vector3 a, in Vector3 b, out Vector3 result)
         {
             result.X = a.X > b.X ? a.X : b.X;
@@ -481,7 +486,8 @@ namespace OpenTK.Mathematics
         /// <param name="right">Right operand.</param>
         /// <returns>The minimum Vector3.</returns>
         [Pure]
-        public static Vector3 MagnitudeMin(Vector3 left, Vector3 right)
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Vector3 MagnitudeMin(in Vector3 left, in Vector3 right)
         {
             return left.LengthSquared < right.LengthSquared ? left : right;
         }
@@ -493,6 +499,7 @@ namespace OpenTK.Mathematics
         /// <param name="left">Left operand.</param>
         /// <param name="right">Right operand.</param>
         /// <param name="result">The magnitude-wise minimum.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void MagnitudeMin(in Vector3 left, in Vector3 right, out Vector3 result)
         {
             result = left.LengthSquared < right.LengthSquared ? left : right;
@@ -506,7 +513,8 @@ namespace OpenTK.Mathematics
         /// <param name="right">Right operand.</param>
         /// <returns>The maximum Vector3.</returns>
         [Pure]
-        public static Vector3 MagnitudeMax(Vector3 left, Vector3 right)
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Vector3 MagnitudeMax(in Vector3 left, in Vector3 right)
         {
             return left.LengthSquared >= right.LengthSquared ? left : right;
         }
@@ -518,6 +526,7 @@ namespace OpenTK.Mathematics
         /// <param name="left">Left operand.</param>
         /// <param name="right">Right operand.</param>
         /// <param name="result">The magnitude-wise maximum.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void MagnitudeMax(in Vector3 left, in Vector3 right, out Vector3 result)
         {
             result = left.LengthSquared >= right.LengthSquared ? left : right;
@@ -531,6 +540,7 @@ namespace OpenTK.Mathematics
         /// <param name="max">Maximum vector.</param>
         /// <returns>The clamped vector.</returns>
         [Pure]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector3 Clamp(Vector3 vec, Vector3 min, Vector3 max)
         {
             vec.X = vec.X < min.X ? min.X : vec.X > max.X ? max.X : vec.X;
@@ -546,6 +556,7 @@ namespace OpenTK.Mathematics
         /// <param name="min">Minimum vector.</param>
         /// <param name="max">Maximum vector.</param>
         /// <param name="result">The clamped vector.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void Clamp(in Vector3 vec, in Vector3 min, in Vector3 max, out Vector3 result)
         {
             result.X = vec.X < min.X ? min.X : vec.X > max.X ? max.X : vec.X;
@@ -560,9 +571,10 @@ namespace OpenTK.Mathematics
         /// <param name="vec2">The second vector.</param>
         /// <returns>The distance.</returns>
         [Pure]
-        public static float Distance(Vector3 vec1, Vector3 vec2)
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static float Distance(in Vector3 vec1, in Vector3 vec2)
         {
-            Distance(in vec1, in vec2, out float result);
+            Distance(in vec1, in vec2, out var result);
             return result;
         }
 
@@ -572,10 +584,12 @@ namespace OpenTK.Mathematics
         /// <param name="vec1">The first vector.</param>
         /// <param name="vec2">The second vector.</param>
         /// <param name="result">The distance.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void Distance(in Vector3 vec1, in Vector3 vec2, out float result)
         {
-            result = MathF.Sqrt(((vec2.X - vec1.X) * (vec2.X - vec1.X)) + ((vec2.Y - vec1.Y) * (vec2.Y - vec1.Y)) +
-                                      ((vec2.Z - vec1.Z) * (vec2.Z - vec1.Z)));
+            result = MathF.Sqrt(((vec2.X - vec1.X) * (vec2.X - vec1.X))
+                                + ((vec2.Y - vec1.Y) * (vec2.Y - vec1.Y))
+                                + ((vec2.Z - vec1.Z) * (vec2.Z - vec1.Z)));
         }
 
         /// <summary>
@@ -585,9 +599,10 @@ namespace OpenTK.Mathematics
         /// <param name="vec2">The second vector.</param>
         /// <returns>The squared distance.</returns>
         [Pure]
-        public static float DistanceSquared(Vector3 vec1, Vector3 vec2)
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static float DistanceSquared(in Vector3 vec1, in Vector3 vec2)
         {
-            DistanceSquared(in vec1, in vec2, out float result);
+            DistanceSquared(in vec1, in vec2, out var result);
             return result;
         }
 
@@ -597,10 +612,12 @@ namespace OpenTK.Mathematics
         /// <param name="vec1">The first vector.</param>
         /// <param name="vec2">The second vector.</param>
         /// <param name="result">The squared distance.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void DistanceSquared(in Vector3 vec1, in Vector3 vec2, out float result)
         {
-            result = ((vec2.X - vec1.X) * (vec2.X - vec1.X)) + ((vec2.Y - vec1.Y) * (vec2.Y - vec1.Y)) +
-                     ((vec2.Z - vec1.Z) * (vec2.Z - vec1.Z));
+            result = ((vec2.X - vec1.X) * (vec2.X - vec1.X))
+                     + ((vec2.Y - vec1.Y) * (vec2.Y - vec1.Y))
+                     + ((vec2.Z - vec1.Z) * (vec2.Z - vec1.Z));
         }
 
         /// <summary>
@@ -609,6 +626,7 @@ namespace OpenTK.Mathematics
         /// <param name="vec">The input vector.</param>
         /// <returns>The normalized copy.</returns>
         [Pure]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector3 Normalize(Vector3 vec)
         {
             var scale = 1.0f / vec.Length;
@@ -623,6 +641,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         /// <param name="vec">The input vector.</param>
         /// <param name="result">The normalized vector.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void Normalize(in Vector3 vec, out Vector3 result)
         {
             var scale = 1.0f / vec.Length;
@@ -637,6 +656,7 @@ namespace OpenTK.Mathematics
         /// <param name="vec">The input vector.</param>
         /// <returns>The normalized copy.</returns>
         [Pure]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector3 NormalizeFast(Vector3 vec)
         {
             var scale = MathHelper.InverseSqrtFast((vec.X * vec.X) + (vec.Y * vec.Y) + (vec.Z * vec.Z));
@@ -651,6 +671,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         /// <param name="vec">The input vector.</param>
         /// <param name="result">The normalized vector.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void NormalizeFast(in Vector3 vec, out Vector3 result)
         {
             var scale = MathHelper.InverseSqrtFast((vec.X * vec.X) + (vec.Y * vec.Y) + (vec.Z * vec.Z));
@@ -666,7 +687,8 @@ namespace OpenTK.Mathematics
         /// <param name="right">Second operand.</param>
         /// <returns>The dot product of the two inputs.</returns>
         [Pure]
-        public static float Dot(Vector3 left, Vector3 right)
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static float Dot(in Vector3 left, in Vector3 right)
         {
             return (left.X * right.X) + (left.Y * right.Y) + (left.Z * right.Z);
         }
@@ -677,6 +699,7 @@ namespace OpenTK.Mathematics
         /// <param name="left">First operand.</param>
         /// <param name="right">Second operand.</param>
         /// <param name="result">The dot product of the two inputs.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void Dot(in Vector3 left, in Vector3 right, out float result)
         {
             result = (left.X * right.X) + (left.Y * right.Y) + (left.Z * right.Z);
@@ -689,9 +712,10 @@ namespace OpenTK.Mathematics
         /// <param name="right">Second operand.</param>
         /// <returns>The cross product of the two inputs.</returns>
         [Pure]
-        public static Vector3 Cross(Vector3 left, Vector3 right)
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Vector3 Cross(in Vector3 left, in Vector3 right)
         {
-            Cross(in left, in right, out Vector3 result);
+            Cross(in left, in right, out var result);
             return result;
         }
 
@@ -701,6 +725,7 @@ namespace OpenTK.Mathematics
         /// <param name="left">First operand.</param>
         /// <param name="right">Second operand.</param>
         /// <param name="result">The cross product of the two inputs.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void Cross(in Vector3 left, in Vector3 right, out Vector3 result)
         {
             result.X = (left.Y * right.Z) - (left.Z * right.Y);
@@ -716,6 +741,7 @@ namespace OpenTK.Mathematics
         /// <param name="blend">The blend factor. a when blend=0, b when blend=1.</param>
         /// <returns>a when blend=0, b when blend=1, and a linear combination otherwise.</returns>
         [Pure]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector3 Lerp(Vector3 a, Vector3 b, float blend)
         {
             a.X = (blend * (b.X - a.X)) + a.X;
@@ -731,6 +757,7 @@ namespace OpenTK.Mathematics
         /// <param name="b">Second input vector.</param>
         /// <param name="blend">The blend factor. a when blend=0, b when blend=1.</param>
         /// <param name="result">a when blend=0, b when blend=1, and a linear combination otherwise.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void Lerp(in Vector3 a, in Vector3 b, float blend, out Vector3 result)
         {
             result.X = (blend * (b.X - a.X)) + a.X;
@@ -748,7 +775,8 @@ namespace OpenTK.Mathematics
         /// <param name="v">Second Barycentric Coordinate.</param>
         /// <returns>a when u=v=0, b when u=1,v=0, c when u=0,v=1, and a linear combination of a,b,c otherwise.</returns>
         [Pure]
-        public static Vector3 BaryCentric(Vector3 a, Vector3 b, Vector3 c, float u, float v)
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Vector3 BaryCentric(in Vector3 a, in Vector3 b, in Vector3 c, float u, float v)
         {
             BaryCentric(in a, in b, in c, u, v, out var result);
             return result;
@@ -767,6 +795,7 @@ namespace OpenTK.Mathematics
         /// otherwise.
         /// </param>
         [Pure]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void BaryCentric
         (
             in Vector3 a,
@@ -794,9 +823,10 @@ namespace OpenTK.Mathematics
         /// <param name="mat">The desired transformation.</param>
         /// <returns>The transformed vector.</returns>
         [Pure]
-        public static Vector3 TransformVector(Vector3 vec, Matrix4 mat)
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Vector3 TransformVector(in Vector3 vec, in Matrix4 mat)
         {
-            TransformVector(in vec, in mat, out Vector3 result);
+            TransformVector(in vec, in mat, out var result);
             return result;
         }
 
@@ -807,6 +837,7 @@ namespace OpenTK.Mathematics
         /// <param name="vec">The vector to transform.</param>
         /// <param name="mat">The desired transformation.</param>
         /// <param name="result">The transformed vector.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void TransformVector(in Vector3 vec, in Matrix4 mat, out Vector3 result)
         {
             result.X = (vec.X * mat.Row0.X) +
@@ -833,9 +864,10 @@ namespace OpenTK.Mathematics
         /// <param name="mat">The desired transformation.</param>
         /// <returns>The transformed normal.</returns>
         [Pure]
-        public static Vector3 TransformNormal(Vector3 norm, Matrix4 mat)
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Vector3 TransformNormal(in Vector3 norm, in Matrix4 mat)
         {
-            TransformNormal(in norm, in mat, out Vector3 result);
+            TransformNormal(in norm, in mat, out var result);
             return result;
         }
 
@@ -849,6 +881,7 @@ namespace OpenTK.Mathematics
         /// <param name="norm">The normal to transform.</param>
         /// <param name="mat">The desired transformation.</param>
         /// <param name="result">The transformed normal.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void TransformNormal(in Vector3 norm, in Matrix4 mat, out Vector3 result)
         {
             var inverse = Matrix4.Invert(mat);
@@ -866,9 +899,10 @@ namespace OpenTK.Mathematics
         /// <param name="invMat">The inverse of the desired transformation.</param>
         /// <returns>The transformed normal.</returns>
         [Pure]
-        public static Vector3 TransformNormalInverse(Vector3 norm, Matrix4 invMat)
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Vector3 TransformNormalInverse(in Vector3 norm, in Matrix4 invMat)
         {
-            TransformNormalInverse(in norm, in invMat, out Vector3 result);
+            TransformNormalInverse(in norm, in invMat, out var result);
             return result;
         }
 
@@ -882,6 +916,7 @@ namespace OpenTK.Mathematics
         /// <param name="norm">The normal to transform.</param>
         /// <param name="invMat">The inverse of the desired transformation.</param>
         /// <param name="result">The transformed normal.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void TransformNormalInverse(in Vector3 norm, in Matrix4 invMat, out Vector3 result)
         {
             result.X = (norm.X * invMat.Row0.X) +
@@ -904,9 +939,10 @@ namespace OpenTK.Mathematics
         /// <param name="mat">The desired transformation.</param>
         /// <returns>The transformed position.</returns>
         [Pure]
-        public static Vector3 TransformPosition(Vector3 pos, Matrix4 mat)
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Vector3 TransformPosition(in Vector3 pos, in Matrix4 mat)
         {
-            TransformPosition(in pos, in mat, out Vector3 result);
+            TransformPosition(in pos, in mat, out var result);
             return result;
         }
 
@@ -916,6 +952,7 @@ namespace OpenTK.Mathematics
         /// <param name="pos">The position to transform.</param>
         /// <param name="mat">The desired transformation.</param>
         /// <param name="result">The transformed position.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void TransformPosition(in Vector3 pos, in Matrix4 mat, out Vector3 result)
         {
             result.X = (pos.X * mat.Row0.X) +
@@ -941,9 +978,10 @@ namespace OpenTK.Mathematics
         /// <param name="mat">The desired transformation.</param>
         /// <returns>The transformed vector.</returns>
         [Pure]
-        public static Vector3 TransformRow(Vector3 vec, Matrix3 mat)
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Vector3 TransformRow(in Vector3 vec, in Matrix3 mat)
         {
-            TransformRow(in vec, in mat, out Vector3 result);
+            TransformRow(in vec, in mat, out var result);
             return result;
         }
 
@@ -953,6 +991,7 @@ namespace OpenTK.Mathematics
         /// <param name="vec">The vector to transform.</param>
         /// <param name="mat">The desired transformation.</param>
         /// <param name="result">The transformed vector.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void TransformRow(in Vector3 vec, in Matrix3 mat, out Vector3 result)
         {
             result.X = (vec.X * mat.Row0.X) + (vec.Y * mat.Row1.X) + (vec.Z * mat.Row2.X);
@@ -967,9 +1006,10 @@ namespace OpenTK.Mathematics
         /// <param name="quat">The quaternion to rotate the vector by.</param>
         /// <returns>The result of the operation.</returns>
         [Pure]
-        public static Vector3 Transform(Vector3 vec, Quaternion quat)
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Vector3 Transform(in Vector3 vec, in Quaternion quat)
         {
-            Transform(in vec, in quat, out Vector3 result);
+            Transform(in vec, in quat, out var result);
             return result;
         }
 
@@ -979,13 +1019,14 @@ namespace OpenTK.Mathematics
         /// <param name="vec">The vector to transform.</param>
         /// <param name="quat">The quaternion to rotate the vector by.</param>
         /// <param name="result">The result of the operation.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void Transform(in Vector3 vec, in Quaternion quat, out Vector3 result)
         {
             // Since vec.W == 0, we can optimize quat * vec * quat^-1 as follows:
             // vec + 2.0 * cross(quat.xyz, cross(quat.xyz, vec) + quat.w * vec)
             Vector3 xyz = quat.Xyz;
-            Cross(in xyz, in vec, out Vector3 temp);
-            Multiply(in vec, quat.W, out Vector3 temp2);
+            Cross(in xyz, in vec, out var temp);
+            Multiply(in vec, quat.W, out var temp2);
             Add(in temp, in temp2, out temp);
             Cross(in xyz, in temp, out temp2);
             Multiply(in temp2, 2f, out temp2);
@@ -999,9 +1040,10 @@ namespace OpenTK.Mathematics
         /// <param name="vec">The vector to transform.</param>
         /// <returns>The transformed vector.</returns>
         [Pure]
-        public static Vector3 TransformColumn(Matrix3 mat, Vector3 vec)
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Vector3 TransformColumn(in Matrix3 mat, in Vector3 vec)
         {
-            TransformColumn(in mat, in vec, out Vector3 result);
+            TransformColumn(in mat, in vec, out var result);
             return result;
         }
 
@@ -1011,6 +1053,7 @@ namespace OpenTK.Mathematics
         /// <param name="mat">The desired transformation.</param>
         /// <param name="vec">The vector to transform.</param>
         /// <param name="result">The transformed vector.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void TransformColumn(in Matrix3 mat, in Vector3 vec, out Vector3 result)
         {
             result.X = (mat.Row0.X * vec.X) + (mat.Row0.Y * vec.Y) + (mat.Row0.Z * vec.Z);
@@ -1025,9 +1068,10 @@ namespace OpenTK.Mathematics
         /// <param name="mat">The desired transformation.</param>
         /// <returns>The transformed vector.</returns>
         [Pure]
-        public static Vector3 TransformPerspective(Vector3 vec, Matrix4 mat)
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Vector3 TransformPerspective(in Vector3 vec, in Matrix4 mat)
         {
-            TransformPerspective(in vec, in mat, out Vector3 result);
+            TransformPerspective(in vec, in mat, out var result);
             return result;
         }
 
@@ -1037,6 +1081,7 @@ namespace OpenTK.Mathematics
         /// <param name="vec">The vector to transform.</param>
         /// <param name="mat">The desired transformation.</param>
         /// <param name="result">The transformed vector.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void TransformPerspective(in Vector3 vec, in Matrix4 mat, out Vector3 result)
         {
             var v = new Vector4(vec.X, vec.Y, vec.Z, 1);
@@ -1054,9 +1099,10 @@ namespace OpenTK.Mathematics
         /// <returns>Angle (in radians) between the vectors.</returns>
         /// <remarks>Note that the returned angle is never bigger than the constant Pi.</remarks>
         [Pure]
-        public static float CalculateAngle(Vector3 first, Vector3 second)
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static float CalculateAngle(in Vector3 first, in Vector3 second)
         {
-            CalculateAngle(in first, in second, out float result);
+            CalculateAngle(in first, in second, out var result);
             return result;
         }
 
@@ -1067,9 +1113,10 @@ namespace OpenTK.Mathematics
         /// <param name="second">The second vector.</param>
         /// <param name="result">Angle (in radians) between the vectors.</param>
         /// <remarks>Note that the returned angle is never bigger than the constant Pi.</remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void CalculateAngle(in Vector3 first, in Vector3 second, out float result)
         {
-            Dot(in first, in second, out float temp);
+            Dot(in first, in second, out var temp);
             result = MathF.Acos(MathHelper.Clamp(temp / (first.Length * second.Length), -1.0f, 1.0f));
         }
 
@@ -1090,16 +1137,17 @@ namespace OpenTK.Mathematics
         /// Project(vector, -1, -1, 2, 2, -1, 1, worldViewProjection).
         /// </remarks>
         [Pure]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector3 Project
         (
-            Vector3 vector,
+            in Vector3 vector,
             float x,
             float y,
             float width,
             float height,
             float minZ,
             float maxZ,
-            Matrix4 worldViewProjection
+            in Matrix4 worldViewProjection
         )
         {
             Vector4 result;
@@ -1154,16 +1202,17 @@ namespace OpenTK.Mathematics
         /// Project(vector, -1, -1, 2, 2, -1, 1, inverseWorldViewProjection).
         /// </remarks>
         [Pure]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector3 Unproject
         (
-            Vector3 vector,
+            in Vector3 vector,
             float x,
             float y,
             float width,
             float height,
             float minZ,
             float maxZ,
-            Matrix4 inverseWorldViewProjection
+            in Matrix4 inverseWorldViewProjection
         )
         {
             float tempX = ((vector.X - x) / width * 2.0f) - 1.0f;
@@ -1366,6 +1415,7 @@ namespace OpenTK.Mathematics
         /// <param name="right">The second instance.</param>
         /// <returns>The result of the calculation.</returns>
         [Pure]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector3 operator +(Vector3 left, Vector3 right)
         {
             left.X += right.X;
@@ -1381,6 +1431,7 @@ namespace OpenTK.Mathematics
         /// <param name="right">The second instance.</param>
         /// <returns>The result of the calculation.</returns>
         [Pure]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector3 operator -(Vector3 left, Vector3 right)
         {
             left.X -= right.X;
@@ -1395,6 +1446,7 @@ namespace OpenTK.Mathematics
         /// <param name="vec">The instance.</param>
         /// <returns>The result of the calculation.</returns>
         [Pure]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector3 operator -(Vector3 vec)
         {
             vec.X = -vec.X;
@@ -1410,6 +1462,7 @@ namespace OpenTK.Mathematics
         /// <param name="scale">The scalar.</param>
         /// <returns>The result of the calculation.</returns>
         [Pure]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector3 operator *(Vector3 vec, float scale)
         {
             vec.X *= scale;
@@ -1425,6 +1478,7 @@ namespace OpenTK.Mathematics
         /// <param name="vec">The instance.</param>
         /// <returns>The result of the calculation.</returns>
         [Pure]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector3 operator *(float scale, Vector3 vec)
         {
             vec.X *= scale;
@@ -1440,6 +1494,7 @@ namespace OpenTK.Mathematics
         /// <param name="vec">Right operand.</param>
         /// <returns>Result of multiplication.</returns>
         [Pure]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector3 operator *(Vector3 vec, Vector3 scale)
         {
             vec.X *= scale.X;
@@ -1455,9 +1510,10 @@ namespace OpenTK.Mathematics
         /// <param name="mat">The desired transformation.</param>
         /// <returns>The transformed vector.</returns>
         [Pure]
-        public static Vector3 operator *(Vector3 vec, Matrix3 mat)
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Vector3 operator *(in Vector3 vec, in Matrix3 mat)
         {
-            TransformRow(in vec, in mat, out Vector3 result);
+            TransformRow(in vec, in mat, out var result);
             return result;
         }
 
@@ -1468,9 +1524,10 @@ namespace OpenTK.Mathematics
         /// <param name="vec">The vector to transform.</param>
         /// <returns>The transformed vector.</returns>
         [Pure]
-        public static Vector3 operator *(Matrix3 mat, Vector3 vec)
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Vector3 operator *(in Matrix3 mat, in Vector3 vec)
         {
-            TransformColumn(in mat, in vec, out Vector3 result);
+            TransformColumn(in mat, in vec, out var result);
             return result;
         }
 
@@ -1481,9 +1538,10 @@ namespace OpenTK.Mathematics
         /// <param name="quat">The quaternion to rotate the vector by.</param>
         /// <returns>The multiplied vector.</returns>
         [Pure]
-        public static Vector3 operator *(Quaternion quat, Vector3 vec)
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Vector3 operator *(in Quaternion quat, in Vector3 vec)
         {
-            Transform(in vec, in quat, out Vector3 result);
+            Transform(in vec, in quat, out var result);
             return result;
         }
 
@@ -1494,11 +1552,13 @@ namespace OpenTK.Mathematics
         /// <param name="scale">The scalar.</param>
         /// <returns>The result of the calculation.</returns>
         [Pure]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector3 operator /(Vector3 vec, float scale)
         {
-            vec.X /= scale;
-            vec.Y /= scale;
-            vec.Z /= scale;
+            var invScale = 1 / scale;
+            vec.X *= invScale;
+            vec.Y *= invScale;
+            vec.Z *= invScale;
             return vec;
         }
 
@@ -1508,7 +1568,8 @@ namespace OpenTK.Mathematics
         /// <param name="left">The first instance.</param>
         /// <param name="right">The second instance.</param>
         /// <returns>True, if left equals right; false otherwise.</returns>
-        public static bool operator ==(Vector3 left, Vector3 right)
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool operator ==(in Vector3 left, in Vector3 right)
         {
             return left.Equals(right);
         }
@@ -1519,7 +1580,8 @@ namespace OpenTK.Mathematics
         /// <param name="left">The first instance.</param>
         /// <param name="right">The second instance.</param>
         /// <returns>True, if left does not equal right; false otherwise.</returns>
-        public static bool operator !=(Vector3 left, Vector3 right)
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool operator !=(in Vector3 left, in Vector3 right)
         {
             return !(left == right);
         }
@@ -1530,7 +1592,8 @@ namespace OpenTK.Mathematics
         /// <param name="vec">The Vector3 to convert.</param>
         /// <returns>The resulting Vector3d.</returns>
         [Pure]
-        public static implicit operator Vector3d(Vector3 vec)
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static implicit operator Vector3d(in Vector3 vec)
         {
             return new Vector3d(vec.X, vec.Y, vec.Z);
         }
@@ -1541,7 +1604,8 @@ namespace OpenTK.Mathematics
         /// <param name="vec">The Vector3 to convert.</param>
         /// <returns>The resulting Vector3h.</returns>
         [Pure]
-        public static explicit operator Vector3h(Vector3 vec)
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static explicit operator Vector3h(in Vector3 vec)
         {
             return new Vector3h(vec.X, vec.Y, vec.Z);
         }
@@ -1552,7 +1616,8 @@ namespace OpenTK.Mathematics
         /// <param name="vec">The Vector3 to convert.</param>
         /// <returns>The resulting Vector3i.</returns>
         [Pure]
-        public static explicit operator Vector3i(Vector3 vec)
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static explicit operator Vector3i(in Vector3 vec)
         {
             return new Vector3i((int)vec.X, (int)vec.Y, (int)vec.Z);
         }
@@ -1564,24 +1629,28 @@ namespace OpenTK.Mathematics
         /// <param name="values">A tuple containing the component values.</param>
         /// <returns>A new instance of the <see cref="Vector3"/> struct with the given component values.</returns>
         [Pure]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static implicit operator Vector3((float X, float Y, float Z) values)
         {
             return new Vector3(values.X, values.Y, values.Z);
         }
 
         /// <inheritdoc />
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public override string ToString()
         {
             return string.Format("({0}{3} {1}{3} {2})", X, Y, Z, MathHelper.ListSeparator);
         }
 
         /// <inheritdoc />
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public override bool Equals(object obj)
         {
-            return obj is Vector3 && Equals((Vector3)obj);
+            return obj is Vector3 vec && Equals(vec);
         }
 
         /// <inheritdoc />
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool Equals(Vector3 other)
         {
             return X == other.X &&
@@ -1590,6 +1659,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <inheritdoc />
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public override int GetHashCode()
         {
             return HashCode.Combine(X, Y, Z);
@@ -1602,6 +1672,7 @@ namespace OpenTK.Mathematics
         /// <param name="y">The Y component of the vector.</param>
         /// <param name="z">The Z component of the vector.</param>
         [Pure]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Deconstruct(out float x, out float y, out float z)
         {
             x = X;
