@@ -137,9 +137,12 @@ namespace OpenTK.Mathematics
             {
                 switch (index)
                 {
-                    case 0: X = value; break;
-                    case 1: Y = value; break;
-                    case 2: Z = value; break;
+                    case 0: X = value;
+                        break;
+                    case 1: Y = value;
+                        break;
+                    case 2: Z = value;
+                        break;
                     default: throw new IndexOutOfRangeException("You tried to set this vector at index: " + index);
                 }
             }
