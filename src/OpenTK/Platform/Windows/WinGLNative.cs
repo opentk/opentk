@@ -618,13 +618,12 @@ namespace OpenTK.Platform.Windows
             // Win95 does not distinguish left/right key constants (GetAsyncKeyState returns 0).
             // In this case, both keys will be reported as pressed.
 
-            //bool extended0 = (lParam.ToInt64() & 1 << 24) != 0;
-            bool extended1 = (lParam.ToInt64() & 1 << 24) != 0;
+            bool extended0 = (lParam.ToInt64() & 1 << 24) != 0;
             short scancode = (short)((lParam.ToInt64() >> 16) & 0xff);
             //ushort repeat_count = unchecked((ushort)((ulong)lParam.ToInt64() & 0xffffu));
             VirtualKeys vkey = (VirtualKeys)wParam;
             bool is_valid;
-            Key key = WinKeyMap.TranslateKey(scancode, vkey, extended1, false, out is_valid);
+            Key key = WinKeyMap.TranslateKey(scancode, vkey, extended0, false, out is_valid);
 
             if (is_valid)
             {
