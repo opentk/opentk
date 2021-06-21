@@ -202,6 +202,7 @@ namespace OpenTK.Platform.Windows
                     case Key.ControlLeft: key = Key.ControlRight; break;
                     case Key.ControlRight: key = Key.ControlLeft; break;
                     case Key.ShiftLeft: is_valid = false; break;
+                    default: is_valid = false; break;
                 }
             }
 
@@ -212,6 +213,173 @@ namespace OpenTK.Platform.Windows
                     case Key.ControlLeft: key = Key.Pause; break;
                 }
             }
+
+            return key;
+        }
+
+        public static Key GetVKey(VirtualKeys key)
+        {
+            switch (key)
+            {
+                case VirtualKeys.ESCAPE: return Key.Escape;
+                case VirtualKeys.NUMBER1: return Key.Number1;
+                case VirtualKeys.NUMBER2: return Key.Number2;
+                case VirtualKeys.NUMBER3: return Key.Number3;
+                case VirtualKeys.NUMBER4: return Key.Number4;
+                case VirtualKeys.NUMBER5: return Key.Number5;
+                case VirtualKeys.NUMBER6: return Key.Number6;
+                case VirtualKeys.NUMBER7: return Key.Number7;
+                case VirtualKeys.NUMBER8: return Key.Number8;
+                case VirtualKeys.NUMBER9: return Key.Number9;
+                case VirtualKeys.NUMBER0: return Key.Number0;
+                case VirtualKeys.OEM_MINUS: return Key.Minus;
+                case VirtualKeys.OEM_PLUS: return Key.Plus;
+                case VirtualKeys.BACK: return Key.BackSpace;
+                case VirtualKeys.TAB: return Key.Tab;
+
+                case VirtualKeys.A: return Key.A;
+                case VirtualKeys.B: return Key.B;
+                case VirtualKeys.C: return Key.C;
+                case VirtualKeys.D: return Key.D;
+                case VirtualKeys.E: return Key.E;
+                case VirtualKeys.F: return Key.F;
+                case VirtualKeys.G: return Key.G;
+                case VirtualKeys.H: return Key.H;
+                case VirtualKeys.I: return Key.I;
+                case VirtualKeys.J: return Key.J;
+                case VirtualKeys.K: return Key.K;
+                case VirtualKeys.L: return Key.L;
+                case VirtualKeys.M: return Key.M;
+                case VirtualKeys.N: return Key.N;
+                case VirtualKeys.O: return Key.O;
+                case VirtualKeys.P: return Key.P;
+                case VirtualKeys.Q: return Key.Q;
+                case VirtualKeys.R: return Key.R;
+                case VirtualKeys.S: return Key.S;
+                case VirtualKeys.T: return Key.T;
+                case VirtualKeys.U: return Key.U;
+                case VirtualKeys.V: return Key.V;
+                case VirtualKeys.W: return Key.W;
+                case VirtualKeys.X: return Key.X;
+                case VirtualKeys.Y: return Key.Y;
+                case VirtualKeys.Z: return Key.Z;
+
+                case VirtualKeys.RETURN: return Key.Enter;
+                case VirtualKeys.LCONTROL: return Key.ControlLeft;
+                case VirtualKeys.RCONTROL: return Key.ControlRight;
+
+                case VirtualKeys.OEM_1: return Key.Semicolon;
+                case VirtualKeys.OEM_2: return Key.Slash;
+                case VirtualKeys.OEM_3: return Key.Grave;
+                case VirtualKeys.OEM_4: return Key.BracketLeft;
+                case VirtualKeys.OEM_5: return Key.BackSlash;
+                case VirtualKeys.OEM_6: return Key.BracketRight;
+                case VirtualKeys.OEM_7: return Key.Quote;
+
+                case VirtualKeys.LSHIFT: return Key.ShiftLeft;
+                case VirtualKeys.RSHIFT: return Key.ShiftRight;
+                case VirtualKeys.OEM_COMMA: return Key.Comma;
+                case VirtualKeys.OEM_PERIOD: return Key.Period;
+                case VirtualKeys.SNAPSHOT: return Key.PrintScreen;
+                case VirtualKeys.LMENU: return Key.AltLeft;
+                case VirtualKeys.RMENU: return Key.AltRight;
+                case VirtualKeys.SPACE: return Key.Space;
+                case VirtualKeys.CAPITAL: return Key.CapsLock;
+
+                case VirtualKeys.F1: return Key.F1;
+                case VirtualKeys.F2: return Key.F2;
+                case VirtualKeys.F3: return Key.F3;
+                case VirtualKeys.F4: return Key.F4;
+                case VirtualKeys.F5: return Key.F5;
+                case VirtualKeys.F6: return Key.F6;
+                case VirtualKeys.F7: return Key.F7;
+                case VirtualKeys.F8: return Key.F8;
+                case VirtualKeys.F9: return Key.F9;
+                case VirtualKeys.F10: return Key.F10;
+                case VirtualKeys.F11: return Key.F11;
+                case VirtualKeys.F12: return Key.F12;
+                case VirtualKeys.F13: return Key.F13;
+                case VirtualKeys.F14: return Key.F14;
+                case VirtualKeys.F15: return Key.F15;
+                case VirtualKeys.F16: return Key.F16;
+                case VirtualKeys.F17: return Key.F17;
+                case VirtualKeys.F18: return Key.F18;
+                case VirtualKeys.F19: return Key.F19;
+                case VirtualKeys.F20: return Key.F20;
+                case VirtualKeys.F21: return Key.F21;
+                case VirtualKeys.F22: return Key.F22;
+                case VirtualKeys.F23: return Key.F23;
+                case VirtualKeys.F24: return Key.F24;
+
+
+                case VirtualKeys.NUMLOCK: return Key.NumLock;
+                case VirtualKeys.SCROLL: return Key.ScrollLock;
+                case VirtualKeys.HOME: return Key.Home;
+                case VirtualKeys.UP: return Key.Up;
+                case VirtualKeys.PRIOR: return Key.PageUp;
+                case VirtualKeys.LEFT: return Key.Left;
+
+                case VirtualKeys.NUMPAD0: return Key.Keypad0;
+                case VirtualKeys.NUMPAD1: return Key.Keypad1;
+                case VirtualKeys.NUMPAD2: return Key.Keypad2;
+                case VirtualKeys.NUMPAD3: return Key.Keypad3;
+                case VirtualKeys.NUMPAD4: return Key.Keypad4;
+                case VirtualKeys.NUMPAD5: return Key.Keypad5;
+                case VirtualKeys.NUMPAD6: return Key.Keypad6;
+                case VirtualKeys.NUMPAD7: return Key.Keypad7;
+                case VirtualKeys.NUMPAD8: return Key.Keypad8;
+                case VirtualKeys.NUMPAD9: return Key.Keypad9;
+
+                case VirtualKeys.RIGHT: return Key.Right;
+                case VirtualKeys.END: return Key.End;
+
+                case VirtualKeys.DOWN: return Key.Down;
+                case VirtualKeys.NEXT: return Key.PageDown;
+                case VirtualKeys.INSERT: return Key.Insert;
+                case VirtualKeys.DELETE: return Key.Delete;
+
+                case VirtualKeys.PAUSE: return Key.Pause;
+                case VirtualKeys.LWIN: return Key.WinLeft;
+                case VirtualKeys.RWIN: return Key.WinRight;
+
+                default: return Key.Unknown;
+            }
+        }
+
+        public static Key TranslateVKey(short scancode, VirtualKeys vkey, bool extended0, out bool is_valid)
+        {
+            is_valid = true;
+
+            switch (vkey)
+            {
+                case VirtualKeys.SHIFT:
+                    // Trust key scancode for shift
+                    switch (GetKey(scancode))
+                    {
+                        case Key.ShiftLeft:
+                            if (extended0)
+                            {
+                                is_valid = false;
+                                break;
+                            }
+                            vkey = VirtualKeys.LSHIFT;
+                            break;
+                        case Key.ShiftRight:
+                            vkey = VirtualKeys.RSHIFT;
+                            break;
+                    }
+                    break;
+                case VirtualKeys.CONTROL:
+                    vkey = extended0 ? VirtualKeys.RCONTROL : VirtualKeys.LCONTROL;
+                    break;
+                case VirtualKeys.MENU:
+                    vkey = extended0 ? VirtualKeys.RMENU : VirtualKeys.LMENU;
+                    break;
+            }
+
+            Key key = GetVKey(vkey);
+
+            if (key == Key.Unknown) is_valid = false;
 
             return key;
         }
