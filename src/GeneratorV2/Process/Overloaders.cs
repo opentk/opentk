@@ -523,7 +523,7 @@ namespace GeneratorV2.Process
 
         public bool TryGenerateOverloads(Overload overload, [NotNullWhen(true)] out List<Overload>? newOverloads)
         {
-            if (!_methodsAndParametersToOverload.TryGetValue(overload.NativeFunction.EntryPoint, out var parameterName))
+            if (_methodsAndParametersToOverload.TryGetValue(overload.NativeFunction.EntryPoint, out var parameterName) == false)
             {
                 newOverloads = null;
                 return false;
@@ -1082,7 +1082,18 @@ namespace GeneratorV2.Process
                             baseType = pt.BaseType;
                             constant |= bt.Constant;
                             break;
+                        case CSStruct bt:
+                            baseType = pt.BaseType;
+                            constant |= bt.Constant;
+                            break;
+                        case CSBool8 bt:
+                            baseType = pt.BaseType;
+                            constant |= bt.Constant;
+                            break;
+                        case CSPointer:
+                            continue;
                         default:
+                            Logger.Warning($"{pt} is not supported by the ref overloader.");
                             continue;
                     }
                     // FIXME: When do we know it's an out ref type?
