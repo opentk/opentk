@@ -1,4 +1,5 @@
-using GeneratorV2.Data;
+using Generator.Utility;
+using Generator.Utility.Extensions;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -7,7 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Xml.Linq;
 
-namespace GeneratorV2.Parsing
+namespace Generator.Parsing
 {
     public class Parser
     {
@@ -19,7 +20,7 @@ namespace GeneratorV2.Parsing
                 throw new NullReferenceException("The parsed xml didn't contain a Root node.");
 
             var commands = ParseCommands(xdocument.Root);
-            var enums =  ParseEnums(xdocument.Root);
+            var enums = ParseEnums(xdocument.Root);
 
             var features = ParseFeatures(xdocument.Root);
             var extensions = ParseExtensions(xdocument.Root);
@@ -355,8 +356,8 @@ namespace GeneratorV2.Parsing
 
                 var startStr = enums.Attribute("start")?.Value;
                 var endStr = enums.Attribute("end")?.Value;
-                if ((startStr == null && endStr != null) ||
-                    (startStr != null && endStr == null))
+                if (startStr == null && endStr != null ||
+                    startStr != null && endStr == null)
                     throw new Exception($"Enums entry '{enums}' is missing either a start or end attribute.");
 
                 Range? range = null;
@@ -414,7 +415,7 @@ namespace GeneratorV2.Parsing
 
             var comment = @enum.Attribute("comment")?.Value;
 
-            var api = Parser.ParseApi(@enum.Attribute("api")?.Value);
+            var api = ParseApi(@enum.Attribute("api")?.Value);
 
             return new EnumEntry(name, api, value, alias, comment, groups, suffix);
 
@@ -430,7 +431,7 @@ namespace GeneratorV2.Parsing
             {
                 TypeSuffix.None => (uint)(int)new Int32Converter().ConvertFromString(val),
                 TypeSuffix.Ull => (ulong)(long)new Int64Converter().ConvertFromString(val),
-                TypeSuffix.U => (ulong)(uint)new UInt32Converter().ConvertFromString(val),
+                TypeSuffix.U => (uint)new UInt32Converter().ConvertFromString(val),
                 TypeSuffix.Invalid or _ => throw new Exception($"Invalid suffix '{type}'!"),
             };
         }

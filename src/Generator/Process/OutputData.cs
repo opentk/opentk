@@ -1,14 +1,11 @@
-﻿using GeneratorV2.Data;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Diagnostics;
-using GeneratorV2.Parsing;
+using Generator.Utility;
+using Generator.Parsing;
 
-namespace GeneratorV2.Writing
+namespace Generator.Writing
 {
     public enum OutputApi
     {
@@ -264,7 +261,7 @@ namespace GeneratorV2.Writing
         bool IsFlag) : IEquatable<EnumMemberData?>;
 
     // FIXME: Better name
-    public record EnumGroupData (
+    public record EnumGroupData(
         string Name,
         bool IsFlags);
 
