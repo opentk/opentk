@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics;
-using Generator.Utility;
 using Generator.Parsing;
+using System.CodeDom.Compiler;
 
 namespace Generator.Writing
 {
