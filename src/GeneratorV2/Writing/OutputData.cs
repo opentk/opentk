@@ -256,14 +256,6 @@ namespace GeneratorV2.Writing
         string[] GenericTypes,
         string OverloadName);
 
-    public record OverloaderNativeFunction(
-        NativeFunction Function,
-        bool PostfixName);
-
-    public record OverloaderFunctionOverloads(
-        Overload[] Overloads,
-        bool PostfixName);
-
     // FIXME: Better name
     public record EnumMemberData(
         string Name,
@@ -283,8 +275,9 @@ namespace GeneratorV2.Writing
 
     // FIXME: Better name
     public record GLOutputApiGroup(
-        List<OverloaderNativeFunction> Functions,
-        List<OverloaderFunctionOverloads> Overloads);
+        List<NativeFunction> NativeFunctions,
+        List<Overload[]> OverloadsGroupedByNativeFunctions,
+        HashSet<NativeFunction> NativeFunctionsWithPostfix);
 
     public record GLOutputApi(
         OutputApi Api,

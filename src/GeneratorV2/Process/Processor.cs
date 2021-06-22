@@ -298,7 +298,7 @@ namespace GeneratorV2.Process
                 bool isFlags = allEnumGroupsToIsBitmask[groupName];
                 finalGroups.Add(new EnumGroup(groupName, isFlags, members));
             }
-;
+
             var vendors = new Dictionary<string, GLOutputApiGroup>();
             foreach (var (vendor, overloadedFunctions) in functionsByVendor)
             {
@@ -307,13 +307,16 @@ namespace GeneratorV2.Process
                     if (!vendors.TryGetValue(vendor, out var group))
                     {
                         group = new GLOutputApiGroup(
-                            new List<OverloaderNativeFunction>(), new List<OverloaderFunctionOverloads>());
+                            new List<NativeFunction>(), new List<Overload[]>(), new HashSet<NativeFunction>());
                         vendors.Add(vendor, group);
                     }
-                    group.Functions.Add(new OverloaderNativeFunction(overloadedFunction.NativeFunction,
-                        overloadedFunction.ChangeNativeName));
-                    group.Overloads.Add(new OverloaderFunctionOverloads(overloadedFunction.Overloads,
-                        overloadedFunction.ChangeNativeName));
+                    group.NativeFunctions.Add(overloadedFunction.NativeFunction);
+                    group.OverloadsGroupedByNativeFunctions.Add(overloadedFunction.Overloads);
+
+                    if (overloadedFunction.ChangeNativeName)
+                    {
+                        group.NativeFunctionsWithPostfix.Add(overloadedFunction.NativeFunction);
+                    }
                 }
             }
 

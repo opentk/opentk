@@ -81,8 +81,9 @@ namespace GeneratorV2.Writing
                             scope = writer.CsScope();
                         }
 
-                        foreach (var (function, postfixName) in group.Functions)
+                        foreach (var function in group.NativeFunctions)
                         {
+                            bool postfixName = group.NativeFunctionsWithPostfix.Contains(function);
                             WriteNativeMethod(function, postfixName, writer);
                         }
 
@@ -214,10 +215,11 @@ namespace GeneratorV2.Writing
                             scope = writer.CsScope();
                         }
 
-                        foreach (var (overs, postfixNativeCall) in group.Overloads)
+                        foreach (var nativeFunctionOverloads in group.OverloadsGroupedByNativeFunctions)
                         {
-                            foreach (var overload in overs)
+                            foreach (var overload in nativeFunctionOverloads)
                             {
+                                bool postfixNativeCall = group.NativeFunctionsWithPostfix.Contains(overload.NativeFunction);
                                 WriteOverloadMethod(overload, writer, postfixNativeCall);
                             }
                         }
