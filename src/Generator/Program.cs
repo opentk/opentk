@@ -1,15 +1,12 @@
 ﻿using System.Diagnostics;
-using GeneratorV2.Data;
-using GeneratorV2.Parsing;
-using GeneratorV2.Writing;
-using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Numerics;
 using System.Reflection;
-using GeneratorV2.Process;
+using Generator.Utility;
+using Generator.Writing;
+using Generator.Parsing;
+using Generator.Process;
 
-namespace GeneratorV2
+namespace Generator
 {
     unsafe class Program
     {

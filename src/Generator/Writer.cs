@@ -1,16 +1,12 @@
-﻿using GeneratorV2.Data;
-using GeneratorV2.Writing;
+﻿using Generator.Utility;
 using System;
-using System.CodeDom.Compiler;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Runtime.InteropServices;
 using System.Text;
 
-namespace GeneratorV2.Writing
+namespace Generator.Writing
 {
     class Writer
     {

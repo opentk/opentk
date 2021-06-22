@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text.RegularExpressions;
-using GeneratorV2.Data;
-using GeneratorV2.Writing;
+using Generator.Parsing;
+using Generator.Utility;
+using Generator.Writing;
 
-namespace GeneratorV2.Process
+namespace Generator.Process
 {
     public class TrimNameOverloader : IOverloader
     {
@@ -31,7 +32,7 @@ namespace GeneratorV2.Process
             string trimmedName = name;
             // FIXME: Remove extension name before we trim endings
             Match m = EndingsNotToTrim.Match(name);
-            if ((m.Index + m.Length) != name.Length)
+            if (m.Index + m.Length != name.Length)
             {
                 m = Endings.Match(name);
 
@@ -414,73 +415,73 @@ namespace GeneratorV2.Process
     }
 
     public class FunctionPtrToDelegateOverloader : IOverloader
+    {
+        public bool TryGenerateOverloads(Overload overload, [NotNullWhen(true)] out List<Overload>? newOverloads)
         {
-            public bool TryGenerateOverloads(Overload overload, [NotNullWhen(true)] out List<Overload>? newOverloads)
+            Parameter[] parameters = new Parameter[overload.InputParameters.Length];
+            List<Parameter> original = new List<Parameter>();
+            List<Parameter> changed = new List<Parameter>();
+            NameTable nameTable = overload.NameTable.New();
+            for (int i = 0; i < overload.InputParameters.Length; i++)
             {
-                Parameter[] parameters = new Parameter[overload.InputParameters.Length];
-                List<Parameter> original = new List<Parameter>();
-                List<Parameter> changed = new List<Parameter>();
-                NameTable nameTable = overload.NameTable.New();
-                for (int i = 0; i < overload.InputParameters.Length; i++)
+                Parameter parameter = overload.InputParameters[i];
+                parameters[i] = parameter;
+
+                if (parameter.Type is CSFunctionPointer fpt)
                 {
-                    Parameter parameter = overload.InputParameters[i];
-                    parameters[i] = parameter;
+                    // Rename the parameter
+                    nameTable.Rename(parameter, $"{parameter.Name}_ptr");
 
-                    if (parameter.Type is CSFunctionPointer fpt)
-                    {
-                        // Rename the parameter
-                        nameTable.Rename(parameter, $"{parameter.Name}_ptr");
+                    original.Add(parameters[i]);
 
-                        original.Add(parameters[i]);
+                    parameters[i] = parameters[i] with { Type = new CSDelegateType(fpt.TypeName) };
 
-                        parameters[i] = parameters[i] with { Type = new CSDelegateType(fpt.TypeName) };
-
-                        changed.Add(parameters[i]);
-                    }
+                    changed.Add(parameters[i]);
                 }
+            }
 
-                if (changed.Count > 0)
-                {
-                    var layer = new FunctionPtrToDelegateLayer(changed, original);
-                    newOverloads = new List<Overload>()
+            if (changed.Count > 0)
+            {
+                var layer = new FunctionPtrToDelegateLayer(changed, original);
+                newOverloads = new List<Overload>()
                     {
                         overload with { NestedOverload = overload, MarshalLayerToNested = layer, InputParameters = parameters, NameTable = nameTable }
                     };
-                    return true;
-                }
-                else
-                {
-                    newOverloads = default;
-                    return false;
-                }
+                return true;
             }
-
-            class FunctionPtrToDelegateLayer : IOverloadLayer
+            else
             {
-                public readonly List<Parameter> DelegateParameters;
-                public readonly List<Parameter> PointerParameters;
-
-                public FunctionPtrToDelegateLayer(List<Parameter> delegateParameters, List<Parameter> pointerParameters)
-                {
-                    DelegateParameters = delegateParameters;
-                    PointerParameters = pointerParameters;
-                }
-
-                public void WritePrologue(IndentedTextWriter writer, NameTable nameTable)
-                {
-                    for (int i = 0; i < DelegateParameters.Count; i++)
-                    {
-                        string type = PointerParameters[i].Type.ToCSString();
-                        writer.WriteLine($"{type} {nameTable[PointerParameters[i]]} = Marshal.GetFunctionPointerForDelegate({nameTable[DelegateParameters[i]]});");
-                    }
-                }
-
-                public string? WriteEpilogue(IndentedTextWriter writer, NameTable nameTable, string? returnName)
-                {
-                    return returnName;
-                }
+                newOverloads = default;
+                return false;
             }
         }
+
+        class FunctionPtrToDelegateLayer : IOverloadLayer
+        {
+            public readonly List<Parameter> DelegateParameters;
+            public readonly List<Parameter> PointerParameters;
+
+            public FunctionPtrToDelegateLayer(List<Parameter> delegateParameters, List<Parameter> pointerParameters)
+            {
+                DelegateParameters = delegateParameters;
+                PointerParameters = pointerParameters;
+            }
+
+            public void WritePrologue(IndentedTextWriter writer, NameTable nameTable)
+            {
+                for (int i = 0; i < DelegateParameters.Count; i++)
+                {
+                    string type = PointerParameters[i].Type.ToCSString();
+                    writer.WriteLine($"{type} {nameTable[PointerParameters[i]]} = Marshal.GetFunctionPointerForDelegate({nameTable[DelegateParameters[i]]});");
+                }
+            }
+
+            public string? WriteEpilogue(IndentedTextWriter writer, NameTable nameTable, string? returnName)
+            {
+                return returnName;
+            }
+        }
+    }
 
     public sealed class PointerToOffsetOverloader : IOverloader
     {
@@ -542,7 +543,9 @@ namespace GeneratorV2.Process
             Parameter pointerParameter = overload.InputParameters[parameterIndex];
             Parameter offsetParameter = pointerParameter with
             {
-                Type = new CSPrimitive("nint", false), Name = "offset", Length = null
+                Type = new CSPrimitive("nint", false),
+                Name = "offset",
+                Length = null
             };
             Parameter[] newParameters = overload.InputParameters.ToArray();
             newParameters[parameterIndex] = offsetParameter;
@@ -595,7 +598,7 @@ namespace GeneratorV2.Process
                 }
 
                 nameTable.Rename(parameter, parameter.Name + "_vptr");
-                parameters[i] = parameter with {Type = new CSPrimitive("IntPtr", false), Length = null};
+                parameters[i] = parameter with { Type = new CSPrimitive("IntPtr", false), Length = null };
                 parameterNames.Add((parameter, parameters[i]));
             }
 
@@ -690,7 +693,8 @@ namespace GeneratorV2.Process
             CSRef.Type refType = nativeName.StartsWith("Delete") ? CSRef.Type.In : CSRef.Type.Out;
             parameters[^1] = pointerParameter with
             {
-                Type = new CSRef(refType, pointerParameterType.BaseType), Length = null
+                Type = new CSRef(refType, pointerParameterType.BaseType),
+                Length = null
             };
             IOverloadLayer layer = refType == CSRef.Type.In
                 ? new DeleteOverloadLayer(overload.InputParameters[lengthParameterIndex], parameters[^1],
@@ -782,14 +786,16 @@ namespace GeneratorV2.Process
                     if (bt.Constant)
                     {
                         // FIXME: Can we know if the string is nullable or not?
-                        newParams[i] = newParams[i] with {Type = new CSString(Nullable: false), Length = null};
+                        newParams[i] = newParams[i] with { Type = new CSString(Nullable: false), Length = null };
                         var stringParams = newParams.ToArray();
                         var stringLayer = new StringLayer(pointerParam, newParams[i]);
 
                         newOverload = newOverload with
                         {
-                            NestedOverload = newOverload, MarshalLayerToNested = stringLayer,
-                            InputParameters = stringParams, NameTable = nameTable
+                            NestedOverload = newOverload,
+                            MarshalLayerToNested = stringLayer,
+                            InputParameters = stringParams,
+                            NameTable = nameTable
                         };
                     }
                     else
@@ -820,7 +826,8 @@ namespace GeneratorV2.Process
                         // FIXME: Can we know if the string is nullable or not?
                         var stringParam = newParams[stringParamIndex] with
                         {
-                            Type = new CSRef(CSRef.Type.Out, new CSString(Nullable: false)), Length = null
+                            Type = new CSRef(CSRef.Type.Out, new CSString(Nullable: false)),
+                            Length = null
                         };
                         newParams[stringParamIndex] = stringParam;
 
@@ -829,8 +836,10 @@ namespace GeneratorV2.Process
 
                         newOverload = newOverload with
                         {
-                            NestedOverload = newOverload, MarshalLayerToNested = stringLayer,
-                            InputParameters = stringParams, NameTable = nameTable
+                            NestedOverload = newOverload,
+                            MarshalLayerToNested = stringLayer,
+                            InputParameters = stringParams,
+                            NameTable = nameTable
                         };
                     }
                 }
@@ -985,13 +994,19 @@ namespace GeneratorV2.Process
 
                         spanOverload = spanOverload with
                         {
-                            NestedOverload = spanOverload, MarshalLayerToNested = spanLayer,
-                            InputParameters = newSpanParams, NameTable = spanNameTable, GenericTypes = genericTypes
+                            NestedOverload = spanOverload,
+                            MarshalLayerToNested = spanLayer,
+                            InputParameters = newSpanParams,
+                            NameTable = spanNameTable,
+                            GenericTypes = genericTypes
                         };
                         arrayOverload = arrayOverload with
                         {
-                            NestedOverload = arrayOverload, MarshalLayerToNested = arrayLayer,
-                            InputParameters = newArrayParams, NameTable = arrayNameTable, GenericTypes = genericTypes
+                            NestedOverload = arrayOverload,
+                            MarshalLayerToNested = arrayLayer,
+                            InputParameters = newArrayParams,
+                            NameTable = arrayNameTable,
+                            GenericTypes = genericTypes
                         };
                     }
                 }

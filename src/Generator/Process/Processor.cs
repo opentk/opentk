@@ -1,12 +1,12 @@
-﻿using GeneratorV2.Data;
-using GeneratorV2.Parsing;
-using GeneratorV2.Writing;
-using GeneratorV2.Extensions;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Generator.Utility.Extensions;
+using Generator.Utility;
+using Generator.Writing;
+using Generator.Parsing;
 
-namespace GeneratorV2.Process
+namespace Generator.Process
 {
     public static class Processor
     {
