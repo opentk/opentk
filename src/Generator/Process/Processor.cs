@@ -262,8 +262,16 @@ namespace Generator.Process
                 enumGroups.Add(groupName, new List<EnumMemberData>());
             }
 
+            List<EnumMemberData> allEnums = new List<EnumMemberData>();
             foreach (var @enum in enums)
             {
+                // The all enum contains all enums that fit in a uint.
+                // So if they fit, they get added.
+                if (@enum.Value <= uint.MaxValue)
+                {
+                    allEnums.Add(@enum);
+                }
+
                 // This enum doesn't have a group, so we skip it.
                 // It will still appear in the All enum.
                 if (@enum.Groups == null) continue;
@@ -314,7 +322,7 @@ namespace Generator.Process
                 }
             }
 
-            return new GLOutputApi(api, vendors, enums.ToList(), finalGroups);
+            return new GLOutputApi(api, vendors, allEnums, finalGroups);
         }
 
         public static NativeFunction MakeNativeFunction(Command command, out string[] enumGroupsUsed)
