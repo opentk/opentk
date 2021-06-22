@@ -9,12 +9,12 @@ using System.CodeDom.Compiler;
 
 namespace Generator.Writing
 {
-    class Writer
+    internal static class Writer
     {
-        const string BaseNamespace = "OpenTK";
-        const string GraphicsNamespace = BaseNamespace + ".Graphics";
-        const string LoaderClass = "GLLoader";
-        const string LoaderBindingsContext = LoaderClass + ".BindingsContext";
+        private const string BaseNamespace = "OpenTK";
+        private const string GraphicsNamespace = BaseNamespace + ".Graphics";
+        private const string LoaderClass = "GLLoader";
+        private const string LoaderBindingsContext = LoaderClass + ".BindingsContext";
 
         public static void Write(OutputData data)
         {
@@ -41,15 +41,10 @@ namespace Generator.Writing
                     File.Delete(file);
                 }
 
-                // if (!Directory.Exists(directoryPath))
-                // {
-                //     Directory.CreateDirectory(directoryPath);
-                // }
-
                 WriteNativeFunctions(directoryPath, apiNamespace, api.Vendors);
                 WriteOverloads(directoryPath, apiNamespace, api.Vendors);
 
-                WriteEnums(directoryPath, apiNamespace, api.EnumGroups, api.AllEnums);
+                WriteEnums(directoryPath, apiNamespace, api.AllEnums, api.EnumGroups);
             }
         }
 
@@ -125,14 +120,10 @@ namespace Generator.Writing
                 delegateTypes.Append(", ");
             }
 
-            // FIXME .net 6
-            // In .net 5 there is a bug where struct returns from a function pointer on 64 bit architectures results in the wrong JIT output and throws an exception.
-            // See: https://github.com/dotnet/runtime/issues/51170 and https://github.com/dotnet/runtime/issues/35928
-            // To fix this we define the function pointer with an equivalent primitive type (if there is one, otherwise throw exception).
-            // This allows us to make the problem invisible to the user as all of the public functions have the correct return type.
-            // - 2021-06-04
-
-            bool handleNet5functionPointerReturnStructBug;
+            // Because there might be ABI differences between returning a struct and a primitive type we can't assume the GL function is gonna return a struct,
+            // so we need to match the native function signature excactly, to avoid a mismatch in the ABI.
+            // - 2021-06-22
+            bool handleAbiDifferenceForTypesafeHandles;
 
             string returnType;
             if (function.ReturnType is CSStruct returnStruct)
@@ -140,26 +131,25 @@ namespace Generator.Writing
                 if (returnStruct.UnderlyingType == null) throw new Exception("A function returned a struct, but didn't have an underlying representation.");
                 returnType = returnStruct.UnderlyingType.ToCSString();
 
-                handleNet5functionPointerReturnStructBug = true;
+                handleAbiDifferenceForTypesafeHandles = true;
             }
             else
             {
                 returnType = function.ReturnType.ToCSString();
 
-                handleNet5functionPointerReturnStructBug = false;
+                handleAbiDifferenceForTypesafeHandles = false;
             }
 
             delegateTypes.Append(returnType);
 
             writer.WriteLine($"private static delegate* unmanaged<{delegateTypes}> _{name}_fnptr = &{name}_Lazy;");
 
-            // FIXME: .net 6
-            if (handleNet5functionPointerReturnStructBug)
+            if (handleAbiDifferenceForTypesafeHandles)
             {
                 // Here we just cast and return the correct return type in the public facing function.
                 // This works because all of the structs that get here should have a defined cast from the primitive type to the struct type.
                 // These casts need to be added manually for this to work correctly.
-                // - 2021-06-04
+                // - 2021-06-22
                 writer.WriteLine($"public static {function.ReturnType.ToCSString()} {name}({signature}) => ({function.ReturnType.ToCSString()}) _{name}_fnptr({paramNames});");
             }
             else
@@ -232,11 +222,6 @@ namespace Generator.Writing
 
         private static void WriteOverloadMethod(Overload overload1, IndentedTextWriter indentedTextWriter, bool postfixNativeCall)
         {
-            // This is used to cull methods that didn't get any overloads.
-            if (overload1.NestedOverload == null &&
-                overload1.MarshalLayerToNested == null)
-                return;
-
             string parameterString =
                 string.Join(", ", overload1.InputParameters.Select(p => $"{p.Type.ToCSString()} {p.Name}"));
 
@@ -268,25 +253,6 @@ namespace Generator.Writing
             }
         }
 
-        private static string? WriteNativeCall(IndentedTextWriter writer, NativeFunction function, NameTable table, bool postfixNativeCall)
-        {
-            string name = function.FunctionName;
-            if (postfixNativeCall) name += "_";
-
-            string arguments = string.Join(", ", function.Parameters.Select(p => table[p]));
-
-            if (function.ReturnType is CSVoid)
-            {
-                writer.WriteLine($"{name}({arguments});");
-                return null;
-            }
-            else
-            {
-                writer.WriteLine($"returnValue = {name}({arguments});");
-                return "returnValue";
-            }
-        }
-
         private static string? WriteNestedOverload(IndentedTextWriter writer, Overload overload, NameTable nameTable, bool postfixNativeCall)
         {
             // Update the name table with the names for this overload.
@@ -296,16 +262,35 @@ namespace Generator.Writing
 
             string? returnName;
             if (overload.NestedOverload != null)
+            {
                 returnName = WriteNestedOverload(writer, overload.NestedOverload, nameTable, postfixNativeCall);
+            }
             else
-                returnName = WriteNativeCall(writer, overload.NativeFunction, nameTable, postfixNativeCall);
+            {
+                // Writes the native call.
+                NativeFunction nativeFunction = overload.NativeFunction;
+                string name = nativeFunction.FunctionName;
+                if (postfixNativeCall) name += "_";
+
+                string arguments = string.Join(", ", nativeFunction.Parameters.Select(p => nameTable[p]));
+
+                if (nativeFunction.ReturnType is CSVoid)
+                {
+                    writer.WriteLine($"{name}({arguments});");
+                    return null;
+                }
+                else
+                {
+                    writer.WriteLine($"returnValue = {name}({arguments});");
+                    return "returnValue";
+                }
+            }
 
             return overload.MarshalLayerToNested?.WriteEpilogue(writer, nameTable, returnName) ?? returnName;
         }
 
-        private static void WriteEnums(string directoryPath, string apiNamespace, List<EnumGroup> enumGroups, List<EnumMemberData> allEnums)
+        private static void WriteEnums(string directoryPath, string apiNamespace, List<EnumMemberData> allEnums, List<EnumGroup> enumGroups)
         {
-            // FIXME: Disable CA1069 in enums.cs
             using StreamWriter stream = File.CreateText(Path.Combine(directoryPath, "Enums.cs"));
             using IndentedTextWriter writer = new IndentedTextWriter(stream);
             writer.WriteLine("// This file is auto generated, do not edit.");
@@ -314,8 +299,22 @@ namespace Generator.Writing
             writer.WriteLine($"namespace {GraphicsNamespace}.{apiNamespace}");
             using (writer.CsScope())
             {
+                writer.WriteLineNoTabs("#pragma warning disable CA1069 // Enums values should not be duplicated");
                 WriteAllEnum(writer, allEnums);
                 WriteEnumGroups(writer, enumGroups);
+                writer.WriteLineNoTabs("#pragma warning restore CA1069 // Enums values should not be duplicated");
+            }
+        }
+
+        private static void WriteAllEnum(IndentedTextWriter writer, List<EnumMemberData> allEnums)
+        {
+            writer.WriteLine($"public enum All : uint");
+            using (writer.CsScope())
+            {
+                foreach (var member in allEnums)
+                {
+                    writer.WriteLine($"{member.Name} = {member.Value},");
+                }
             }
         }
 
@@ -331,22 +330,6 @@ namespace Generator.Writing
                     {
                         writer.WriteLine($"{member.Name} = {member.Value},");
                     }
-                }
-            }
-        }
-
-        private static void WriteAllEnum(IndentedTextWriter writer, List<EnumMemberData> allEnums)
-        {
-            writer.WriteLine($"public enum All : uint");
-            using (writer.CsScope())
-            {
-                foreach (var member in allEnums)
-                {
-                    // FIXME: We probably shouldn't get these values inside of this list...
-                    if (member.Value > uint.MaxValue)
-                        continue;
-
-                    writer.WriteLine($"{member.Name} = {member.Value},");
                 }
             }
         }
