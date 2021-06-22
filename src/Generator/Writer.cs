@@ -1,10 +1,11 @@
-﻿using Generator.Utility;
+﻿using Generator.Utility.Extensions;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.CodeDom.Compiler;
 
 namespace Generator.Writing
 {
@@ -57,7 +58,8 @@ namespace Generator.Writing
             string glNamespace,
             Dictionary<string, GLOutputApiGroup> groups)
         {
-            using IndentedTextWriter writer = new IndentedTextWriter(Path.Combine(directoryPath, "GL.Native.cs"));
+            using StreamWriter stream = File.CreateText(Path.Combine(directoryPath, "GL.Native.cs"));
+            using IndentedTextWriter writer = new IndentedTextWriter(stream);
             writer.WriteLine("// This file is auto generated, do not edit.");
             writer.WriteLine("using System;");
             writer.WriteLine("using System.Runtime.InteropServices;");
@@ -188,8 +190,8 @@ namespace Generator.Writing
             string glNamespace,
             Dictionary<string, GLOutputApiGroup> groups)
         {
-            using IndentedTextWriter writer =
-                new IndentedTextWriter(Path.Combine(directoryPath, "GL.Overloads.cs"));
+            using StreamWriter stream = File.CreateText(Path.Combine(directoryPath, "GL.Overloads.cs"));
+            using IndentedTextWriter writer = new IndentedTextWriter(stream);
             writer.WriteLine("// This file is auto generated, do not edit.");
             writer.WriteLine("using System;");
             writer.WriteLine("using System.Runtime.CompilerServices;");
@@ -301,9 +303,9 @@ namespace Generator.Writing
 
         private static void WriteEnums(string directoryPath, string apiNamespace, List<EnumGroup> enumGroups, List<EnumMemberData> allEnums)
         {
-            // FIXME: Disable CA1069
-            string path = Path.Combine(directoryPath, "Enums.cs");
-            using IndentedTextWriter writer = new IndentedTextWriter(path);
+            // FIXME: Disable CA1069 in enums.cs
+            using StreamWriter stream = File.CreateText(Path.Combine(directoryPath, "Enums.cs"));
+            using IndentedTextWriter writer = new IndentedTextWriter(stream);
             writer.WriteLine("// This file is auto generated, do not edit.");
             writer.WriteLine("using System;");
             writer.WriteLine();

@@ -1,10 +1,12 @@
 using System;
+using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Generator.Parsing;
 using Generator.Utility;
+using Generator.Utility.Extensions;
 using Generator.Writing;
 
 namespace Generator.Process
