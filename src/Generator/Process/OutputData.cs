@@ -18,13 +18,17 @@ namespace Generator.Writing
 
     public abstract record BaseCSType()
     {
-        // We use a custom To string here to allow tostring to be used for debugging,
-        // also this way we make sure you have to override the tostring method.
+        // We use a custom ToString here to allow ToString to be used for debugging,
+        // also this way we make sure you have to override the custom ToString method.
         public abstract string ToCSString();
     }
 
-    [DebuggerDisplay("{TypeName} (Constant = {Constant})")]
-    public record CSPrimitive(string TypeName, bool Constant) : BaseCSType
+    public interface IConstantCSType
+    {
+        public bool Constant { get; }
+    }
+
+    public record CSPrimitive(string TypeName, bool Constant) : BaseCSType, IConstantCSType
     {
         public override string ToCSString()
         {
@@ -32,7 +36,7 @@ namespace Generator.Writing
         }
     }
 
-    public record CSStruct(string TypeName, bool Constant, CSPrimitive? UnderlyingType) : BaseCSType
+    public record CSStruct(string TypeName, bool Constant, CSPrimitive? UnderlyingType) : BaseCSType, IConstantCSType
     {
         public override string ToCSString()
         {
@@ -40,7 +44,7 @@ namespace Generator.Writing
         }
     }
 
-    public record CSFunctionPointer(string TypeName, bool Constant) : BaseCSType
+    public record CSFunctionPointer(string TypeName, bool Constant) : BaseCSType, IConstantCSType
     {
         public override string ToCSString()
         {
@@ -56,7 +60,7 @@ namespace Generator.Writing
         }
     }
 
-    public record CSChar8(bool Constant) : BaseCSType
+    public record CSChar8(bool Constant) : BaseCSType, IConstantCSType
     {
         public override string ToCSString()
         {
@@ -64,7 +68,7 @@ namespace Generator.Writing
         }
     }
 
-    public record CSBool8(bool Constant) : BaseCSType
+    public record CSBool8(bool Constant) : BaseCSType, IConstantCSType
     {
         public override string ToCSString()
         {
@@ -72,26 +76,38 @@ namespace Generator.Writing
         }
     }
 
-    // FIXME: Think through size, see GLArrayType
-    public record CSArray(BaseCSType BaseType, bool Readonly) : BaseCSType
+    public record CSArray(BaseCSType BaseType) : BaseCSType
     {
         public override string ToCSString()
         {
-            // FIXME: Maybe do something with size or constant??
             return $"{BaseType.ToCSString()}[]";
         }
     }
 
-    public record CSPointer(BaseCSType BaseType, bool Constant) : BaseCSType
+    public record CSSpan(BaseCSType BaseType, bool Readonly) : BaseCSType
     {
         public override string ToCSString()
         {
-            // FIXME: Maybe do something with constant??
+            if (Readonly)
+            {
+                return $"ReadOnlySpan<{BaseType.ToCSString()}>";
+            }
+            else
+            {
+                return $"Span<{BaseType.ToCSString()}>";
+            }
+        }
+    }
+
+    public record CSPointer(BaseCSType BaseType, bool Constant) : BaseCSType, IConstantCSType
+    {
+        public override string ToCSString()
+        {
             return $"{BaseType.ToCSString()}*";
         }
     }
 
-    public record CSVoid(bool Constant) : BaseCSType
+    public record CSVoid(bool Constant) : BaseCSType, IConstantCSType
     {
         public override string ToCSString() => "void";
     }
@@ -121,21 +137,6 @@ namespace Generator.Writing
         }
     }
 
-    public record CSSpan(BaseCSType BaseType, bool Readonly) : BaseCSType
-    {
-        public override string ToCSString()
-        {
-            if (Readonly)
-            {
-                return $"ReadOnlySpan<{BaseType.ToCSString()}>";
-            }
-            else
-            {
-                return $"Span<{BaseType.ToCSString()}>";
-            }
-        }
-    }
-
     public record CSGenericType(string GenericTypeName) : BaseCSType
     {
         public override string ToCSString()
@@ -147,9 +148,6 @@ namespace Generator.Writing
     public record Parameter(
         BaseCSType Type,
         string Name,
-        // FIXME: This is only used for overloading,
-        // this is the parsed version of the length without processing.
-        // We might want to do further processing on this before overloading, or move it.
         Expression? Length);
 
     public record NativeFunction(
@@ -159,46 +157,6 @@ namespace Generator.Writing
         BaseCSType ReturnType);
 
     public record OverloadedFunction(NativeFunction NativeFunction, Overload[] Overloads, bool ChangeNativeName);
-
-    public interface IOverloader
-    {
-        public bool TryGenerateOverloads(Overload overload, [NotNullWhen(true)] out List<Overload>? newOverloads);
-    }
-
-    // FIXME: We could maybe move this into the Overload class
-    // and make the overloads inherit from this Overload.
-    // Might be a cleaner solution, and stuff like that.
-    public interface IOverloadLayer
-    {
-        public void WritePrologue(IndentedTextWriter writer, NameTable nameTable);
-        public string? WriteEpilogue(IndentedTextWriter writer, NameTable nameTable, string? returnName);
-
-        // FIXME: Better place to put this?
-        // FIXME: Better name, maybe even another structure...
-        public static string? GetParameterExpression(Expression expr, out Func<string, string> parameterExpression)
-        {
-            switch (expr)
-            {
-                case Constant c:
-                    parameterExpression = s => c.Value.ToString();
-                    return null;
-                case ParameterReference pr:
-                    parameterExpression = s => $"{s}.Length";
-                    return pr.ParameterName;
-                case BinaryOperation bo:
-                    // FIXME: We don't want to assume that the left expression contains the
-                    // parameter name, but this is true for gl.xml 2020-12-30
-                    string? reference = GetParameterExpression(bo.Left, out var leftExpr);
-                    GetParameterExpression(bo.Right, out var rightExpr);
-                    var invOp = BinaryOperation.Invert(bo.Operator);
-                    parameterExpression = s => $"{leftExpr(s)} {BinaryOperation.GetOperationChar(invOp)} {rightExpr(s)}";
-                    return reference;
-                default:
-                    parameterExpression = s => "";
-                    return null;
-            }
-        }
-    }
 
     public class NameTable
     {
@@ -242,6 +200,12 @@ namespace Generator.Writing
         }
     }
 
+    public interface IOverloadLayer
+    {
+        public void WritePrologue(IndentedTextWriter writer, NameTable nameTable);
+        public string? WriteEpilogue(IndentedTextWriter writer, NameTable nameTable, string? returnName);
+    }
+
     public record Overload(
         Overload? NestedOverload,
         IOverloadLayer? MarshalLayerToNested,
@@ -253,33 +217,26 @@ namespace Generator.Writing
         string[] GenericTypes,
         string OverloadName);
 
-    // FIXME: Better name
-    public record EnumMemberData(
+    public record EnumGroupMember(
         string Name,
         ulong Value,
         string[]? Groups,
-        bool IsFlag) : IEquatable<EnumMemberData?>;
-
-    // FIXME: Better name
-    public record EnumGroupData(
-        string Name,
-        bool IsFlags);
+        bool IsFlag) : IEquatable<EnumGroupMember?>;
 
     public record EnumGroup(
         string Name,
         bool IsFlags,
-        List<EnumMemberData> Members);
+        List<EnumGroupMember> Members);
 
-    // FIXME: Better name
-    public record GLOutputApiGroup(
+    public record GLVendorFunctions(
         List<NativeFunction> NativeFunctions,
         List<Overload[]> OverloadsGroupedByNativeFunctions,
         HashSet<NativeFunction> NativeFunctionsWithPostfix);
 
     public record GLOutputApi(
         OutputApi Api,
-        Dictionary<string, GLOutputApiGroup> Vendors,
-        List<EnumMemberData> AllEnums,
+        Dictionary<string, GLVendorFunctions> Vendors,
+        List<EnumGroupMember> AllEnums,
         List<EnumGroup> EnumGroups);
 
     public record OutputData(List<GLOutputApi> Apis);

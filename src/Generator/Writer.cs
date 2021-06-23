@@ -51,7 +51,7 @@ namespace Generator.Writing
         private static void WriteNativeFunctions(
             string directoryPath,
             string glNamespace,
-            Dictionary<string, GLOutputApiGroup> groups)
+            Dictionary<string, GLVendorFunctions> groups)
         {
             using StreamWriter stream = File.CreateText(Path.Combine(directoryPath, "GL.Native.cs"));
             using IndentedTextWriter writer = new IndentedTextWriter(stream);
@@ -178,7 +178,7 @@ namespace Generator.Writing
         private static void WriteOverloads(
             string directoryPath,
             string glNamespace,
-            Dictionary<string, GLOutputApiGroup> groups)
+            Dictionary<string, GLVendorFunctions> groups)
         {
             using StreamWriter stream = File.CreateText(Path.Combine(directoryPath, "GL.Overloads.cs"));
             using IndentedTextWriter writer = new IndentedTextWriter(stream);
@@ -287,7 +287,7 @@ namespace Generator.Writing
             return overload.MarshalLayerToNested?.WriteEpilogue(writer, nameTable, returnName) ?? returnName;
         }
 
-        private static void WriteEnums(string directoryPath, string apiNamespace, List<EnumMemberData> allEnums, List<EnumGroup> enumGroups)
+        private static void WriteEnums(string directoryPath, string apiNamespace, List<EnumGroupMember> allEnums, List<EnumGroup> enumGroups)
         {
             using StreamWriter stream = File.CreateText(Path.Combine(directoryPath, "Enums.cs"));
             using IndentedTextWriter writer = new IndentedTextWriter(stream);
@@ -304,7 +304,7 @@ namespace Generator.Writing
             }
         }
 
-        private static void WriteAllEnum(IndentedTextWriter writer, List<EnumMemberData> allEnums)
+        private static void WriteAllEnum(IndentedTextWriter writer, List<EnumGroupMember> allEnums)
         {
             writer.WriteLine($"public enum All : uint");
             using (writer.CsScope())

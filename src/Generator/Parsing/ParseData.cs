@@ -75,10 +75,36 @@ namespace Generator.Parsing
 
     public record GLPointerType(GLType BaseType, bool Constant) : GLType;
 
-    public record GLArrayType(GLType BaseType, int Length, bool Constant) : GLType;
 
-
-    public record Expression;
+    public record Expression
+    {
+        // FIXME: Clean up this mess. We assume a lot of things we maybe dont wanna assume?
+        // Can all lengths even be inverted and what should happen if they cant?
+        // For now this works, but it might break later. 2021-06-23.
+        public static string? InvertExpressionAndGetReferencedName(Expression expr, out Func<string, string> inverseExpression)
+        {
+            switch (expr)
+            {
+                case Constant c:
+                    inverseExpression = s => c.Value.ToString();
+                    return null;
+                case ParameterReference pr:
+                    inverseExpression = s => $"{s}.Length";
+                    return pr.ParameterName;
+                case BinaryOperation bo:
+                    // FIXME: We don't want to assume that the left expression contains the
+                    // parameter name, but this is true for gl.xml 2020-12-30
+                    string? reference = InvertExpressionAndGetReferencedName(bo.Left, out var leftExpr);
+                    InvertExpressionAndGetReferencedName(bo.Right, out var rightExpr);
+                    var invOp = BinaryOperation.Invert(bo.Operator);
+                    inverseExpression = s => $"{leftExpr(s)} {BinaryOperation.GetOperationChar(invOp)} {rightExpr(s)}";
+                    return reference;
+                default:
+                    inverseExpression = s => "";
+                    return null;
+            }
+        }
+    }
 
     public record Constant(int Value) : Expression;
 
