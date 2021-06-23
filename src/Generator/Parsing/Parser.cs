@@ -224,24 +224,7 @@ namespace Generator.Parsing
         {
             type = type.Trim();
 
-            if (type.EndsWith(']'))
-            {
-                int openingBracketIndex = type.LastIndexOf('[');
-                if (openingBracketIndex != -1)
-                {
-                    var lengthStr = type.Substring(openingBracketIndex + 1, type.Length - openingBracketIndex - 2);
-                    int length = int.Parse(lengthStr);
-
-                    var baseType = ParseType(type.Substring(0, openingBracketIndex));
-
-                    return new GLArrayType(baseType, length, false);
-                }
-                else
-                {
-                    throw new Exception("Missmatched brackets!");
-                }
-            }
-            else if (type.EndsWith('*'))
+            if (type.EndsWith('*'))
             {
                 // This removes the last character of the string, ^1 is an exclusive upper bound.
                 var withoutAsterisk = type[0..^1].TrimEnd();

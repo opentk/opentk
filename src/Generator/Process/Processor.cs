@@ -10,33 +10,12 @@ namespace Generator.Process
 {
     public static class Processor
     {
-        // /!\ IMPORTANT /!\:
-        // All return type overloaders need to run before any of the other overloaders.
-        // This is to ensure that correct scoping for the new return variables.
-        // FIXME: Maybe we dont want classes for these?
-        static readonly IOverloader[] Overloaders = new IOverloader[]
-        {
-            new TrimNameOverloader(),
-
-            new StringReturnOverloader(),
-
-            new BoolOverloader(),
-            new MathTypeOverloader(),
-            new FunctionPtrToDelegateOverloader(),
-            new PointerToOffsetOverloader(),
-            new VoidPtrToIntPtrOverloader(),
-            new GenCreateAndDeleteOverloader(),
-            new StringOverloader(),
-            new SpanAndArrayOverloader(),
-            new RefInsteadOfPointerOverloader(),
-            new OutToReturnOverloader(),
-        };
 
         // This is only used to pass data from ProcessSpec to GetOutputApiFromRequireTags
         private record ProcessedGLInformation(
             Dictionary<string, OverloadedFunction> AllFunctions,
             Dictionary<NativeFunction, string[]> FunctionToEnumGroupsUsed,
-            Dictionary<OutputApi, Dictionary<string, EnumMemberData>> AllEnumsPerAPI,
+            Dictionary<OutputApi, Dictionary<string, EnumGroupMember>> AllEnumsPerAPI,
             Dictionary<string, bool> AllEnumGroupsToIsBitmask);
 
         public static OutputData ProcessSpec(Specification spec)
@@ -57,7 +36,7 @@ namespace Generator.Process
                 allFunctions.Add(nativeFunction.EntryPoint, new OverloadedFunction(nativeFunction, overloads, changeNativeName));
             }
 
-            Dictionary<OutputApi, Dictionary<string, EnumMemberData>> allEnumsPerAPI = new Dictionary<OutputApi, Dictionary<string, EnumMemberData>>();
+            Dictionary<OutputApi, Dictionary<string, EnumGroupMember>> allEnumsPerAPI = new Dictionary<OutputApi, Dictionary<string, EnumGroupMember>>();
             Dictionary<string, bool> allEnumGroupsToIsBitmask = new Dictionary<string, bool>();
             foreach (var enumsEntry in spec.Enums)
             {
@@ -87,7 +66,7 @@ namespace Generator.Process
                         }
                     }
 
-                    var data = new EnumMemberData(NameMangler.MangleEnumName(@enum.Name), @enum.Value, groups.ToArray(), isFlag);
+                    var data = new EnumGroupMember(NameMangler.MangleEnumName(@enum.Name), @enum.Value, groups.ToArray(), isFlag);
                     if (@enum.Api == GLAPI.None)
                     {
                         allEnumsPerAPI.AddToNestedDict(OutputApi.GL, @enum.Name, data);
@@ -205,7 +184,7 @@ namespace Generator.Process
             HashSet<string> groupsReferencedByFunctions = new HashSet<string>();
             // A list of functions contained in this version.
             Dictionary<string, HashSet<OverloadedFunction>> functionsByVendor = new Dictionary<string, HashSet<OverloadedFunction>>();
-            HashSet<EnumMemberData> enums = new HashSet<EnumMemberData>();
+            HashSet<EnumGroupMember> enums = new HashSet<EnumGroupMember>();
 
             // Deconstruct glInformation for easier access
             var (allFunctions, functionToEnumGroupsUsed, allEnumsPerAPI, allEnumGroupsToIsBitmask) = glInformation;
@@ -254,15 +233,15 @@ namespace Generator.Process
             }
 
             // Go through all of the enums and put them into their groups
-            Dictionary<string, List<EnumMemberData>> enumGroups = new Dictionary<string, List<EnumMemberData>>();
+            Dictionary<string, List<EnumGroupMember>> enumGroups = new Dictionary<string, List<EnumGroupMember>>();
 
             // Add keys + lists for all enum names
             foreach (var groupName in allEnumGroupsToIsBitmask.Keys)
             {
-                enumGroups.Add(groupName, new List<EnumMemberData>());
+                enumGroups.Add(groupName, new List<EnumGroupMember>());
             }
 
-            List<EnumMemberData> allEnums = new List<EnumMemberData>();
+            List<EnumGroupMember> allEnums = new List<EnumGroupMember>();
             foreach (var @enum in enums)
             {
                 // The all enum contains all enums that fit in a uint.
@@ -301,14 +280,14 @@ namespace Generator.Process
                 finalGroups.Add(new EnumGroup(groupName, isFlags, members));
             }
 
-            var vendors = new Dictionary<string, GLOutputApiGroup>();
+            var vendors = new Dictionary<string, GLVendorFunctions>();
             foreach (var (vendor, overloadedFunctions) in functionsByVendor)
             {
                 foreach (var overloadedFunction in overloadedFunctions)
                 {
                     if (!vendors.TryGetValue(vendor, out var group))
                     {
-                        group = new GLOutputApiGroup(
+                        group = new GLVendorFunctions(
                             new List<NativeFunction>(), new List<Overload[]>(), new HashSet<NativeFunction>());
                         vendors.Add(vendor, group);
                     }
@@ -359,9 +338,6 @@ namespace Generator.Process
 
             switch (type)
             {
-                case GLArrayType at:
-                    length = new Constant(at.Length);
-                    return new CSPointer(MakeCSType(at.BaseType, handle, group, out _), at.Constant);
                 case GLPointerType pt:
                     return new CSPointer(MakeCSType(pt.BaseType, handle, group, out length), pt.Constant);
                 case GLBaseType bt:
@@ -428,7 +404,7 @@ namespace Generator.Process
             };
 
             bool overloadedOnce = false;
-            foreach (var overloader in Overloaders)
+            foreach (var overloader in IOverloader.Overloaders)
             {
                 List<Overload> newOverloads = new List<Overload>();
                 foreach (var overload in overloads)
