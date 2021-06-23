@@ -74,7 +74,7 @@ namespace Generator.Process
                     }
                 }
 
-                foreach (var @enum in enumsEntry.Enums)
+                foreach (var @enum in enumsEntry.Entries)
                 {
                     HashSet<string> groups = new HashSet<string>(entryGroups);
 
@@ -349,7 +349,7 @@ namespace Generator.Process
             return new NativeFunction(command.EntryPoint, functionName, parameters, returnType);
         }
 
-        public static BaseCSType MakeCSType(GLType type, Handle? handle, string? group, out Expression? length)
+        public static BaseCSType MakeCSType(GLType type, HandleType? handle, string? group, out Expression? length)
         {
             length = default;
             if (handle != null && type is GLBaseType handleType)
@@ -403,6 +403,7 @@ namespace Generator.Process
                         PrimitiveType.GLDEBUGPROCKHR => new CSFunctionPointer("GLDebugProcKHR", bt.Constant),
                         PrimitiveType.GLDEBUGPROCAMD => new CSFunctionPointer("GLDebugProcAMD", bt.Constant),
                         PrimitiveType.GLDEBUGPROCNV => new CSFunctionPointer("GLDebugProcNV", bt.Constant),
+                        PrimitiveType.GLVULKANPROCNV => new CSFunctionPointer("GLVulkanProcNV", bt.Constant),
 
                         PrimitiveType.Invalid => throw new Exception(),
                         _ => throw new Exception(),

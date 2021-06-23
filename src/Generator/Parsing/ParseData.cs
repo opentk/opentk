@@ -3,78 +3,80 @@ using System.Collections.Generic;
 
 namespace Generator.Parsing
 {
-    public enum GLAPI
-    {
-        Invalid,
-        None,
-        GL,
-        GLES1,
-        GLES2,
-        GLSC2,
-        GLCore,
-    }
+    public record Specification(
+        List<Command> Commands,
+        List<Enums> Enums,
+        List<Feature> Features,
+        List<Extension> Extensions);
 
-    public enum GLProfile
-    {
-        Invalid,
-        None,
-        Core,
-        Compatibility,
-        Common,
-        // FIXME...
-    }
 
-    public enum PrimitiveType
-    {
-        Invalid,
-        Void,
-        Bool8,
-        Byte,
-        Char8,
-        Sbyte,
-        Short,
-        Ushort,
-        Int,
-        Uint,
-        Long,
-        Ulong,
-        Half,
-        Float,
-        Double,
-        IntPtr,
-        Nint,
-        VoidPtr,
+    public record Command(
+        string EntryPoint,
+        PType ReturnType,
+        GLParameter[] Parameters);
 
-        Enum,
 
-        GLHandleARB,
+    public record Enums(
+        string Namespace,
+        string[]? Groups,
+        EnumType Type,
+        string? Vendor,
+        Range? Range,
+        string? Comment,
+        List<EnumEntry> Entries);
 
-        // The following have a custom c# implementation in the writer.
-        GLSync,
-        CLContext,
-        CLEvent,
-        GLDEBUGPROC,
-        GLDEBUGPROCARB,
-        GLDEBUGPROCKHR,
-        GLDEBUGPROCAMD,
-        GLDEBUGPROCNV,
-    }
+    public record EnumEntry(
+        string Name,
+        GLAPI Api,
+        ulong Value,
+        string? Alias,
+        string? Comment,
+        string[]? Groups,
+        TypeSuffix Type);
 
-    public enum Handle
-    {
-        ProgramHandle,
-        ProgramPipelineHandle,
-        TextureHandle,
-        BufferHandle,
-        ShaderHandle,
-        QueryHandle,
-        FramebufferHandle,
-        RenderbufferHandle,
-        SamplerHandle,
-        TransformFeedbackHandle,
-        VertexArrayHandle,
-        DisplayListHandle,
-    }
+
+    public record Feature(
+        GLAPI Api,
+        Version Version,
+        string Name,
+        List<RequireEntry> Requires,
+        List<RemoveEntry> Removes);
+
+    public record Extension(
+        string Name,
+        string Vendor,
+        GLAPI[] SupportedApis,
+        string? Comment,
+        List<RequireEntry> Requires);
+
+
+    public record RequireEntry(
+        GLAPI Api,
+        GLProfile Profile,
+        string? Comment,
+        List<string> Commands,
+        List<string> Enums);
+
+    public record RemoveEntry(
+        GLProfile Profile,
+        string? Comment,
+        List<string> Commands,
+        List<string> Enums);
+
+
+    public record GLParameter(PType Type, string Name, Expression? Length);
+
+    public record PType(GLType Type, HandleType? Handle, string? Group);
+
+
+    public record GLType();
+
+    public record GLBaseType(string OriginalString, PrimitiveType Type, bool Constant) : GLType;
+
+    public record GLPointerType(GLType BaseType, bool Constant) : GLType;
+
+    public record GLArrayType(GLType BaseType, int Length, bool Constant) : GLType;
+
 
     public record Expression;
 
@@ -117,19 +119,82 @@ namespace Generator.Parsing
 
     public record ParameterReference(string ParameterName) : Expression;
 
-    public record GLType();
 
-    public record GLBaseType(string OriginalString, PrimitiveType Type, bool Constant) : GLType;
 
-    public record GLPointerType(GLType BaseType, bool Constant) : GLType;
+    public enum GLAPI
+    {
+        Invalid,
+        None,
+        GL,
+        GLES1,
+        GLES2,
+        GLSC2,
+        GLCore,
+    }
 
-    public record GLArrayType(GLType BaseType, int Length, bool Constant) : GLType;
+    public enum GLProfile
+    {
+        Invalid,
+        None,
+        Core,
+        Compatibility,
+        Common,
+    }
 
-    public record PType(GLType Type, Handle? Handle, string? Group);
 
-    public record GLParameter(PType Type, string Name, Expression? Length);
+    public enum PrimitiveType
+    {
+        Invalid,
+        Void,
+        Bool8,
+        Byte,
+        Char8,
+        Sbyte,
+        Short,
+        Ushort,
+        Int,
+        Uint,
+        Long,
+        Ulong,
+        Half,
+        Float,
+        Double,
+        IntPtr,
+        Nint,
+        VoidPtr,
 
-    public record Command(string EntryPoint, PType ReturnType, GLParameter[] Parameters);
+        Enum,
+
+        GLHandleARB,
+
+        // The following have a custom c# implementation in the writer.
+        GLSync,
+        CLContext,
+        CLEvent,
+        GLDEBUGPROC,
+        GLDEBUGPROCARB,
+        GLDEBUGPROCKHR,
+        GLDEBUGPROCAMD,
+        GLDEBUGPROCNV,
+        GLVULKANPROCNV,
+    }
+
+    public enum HandleType
+    {
+        ProgramHandle,
+        ProgramPipelineHandle,
+        TextureHandle,
+        BufferHandle,
+        ShaderHandle,
+        QueryHandle,
+        FramebufferHandle,
+        RenderbufferHandle,
+        SamplerHandle,
+        TransformFeedbackHandle,
+        VertexArrayHandle,
+        DisplayListHandle,
+    }
+
 
     public enum EnumType
     {
@@ -137,15 +202,6 @@ namespace Generator.Parsing
         None,
         Bitmask
     }
-
-    public record EnumsEntry(
-        string Namespace,
-        string[]? Groups,
-        EnumType Type,
-        string? Vendor,
-        Range? Range,
-        string? Comment,
-        List<EnumEntry> Enums);
 
     /// <summary>
     /// "
@@ -165,46 +221,4 @@ namespace Generator.Parsing
         U,
         Ull,
     }
-
-    public record EnumEntry(
-        string Name,
-        GLAPI Api,
-        ulong Value,
-        string? Alias,
-        string? Comment,
-        string[]? Groups,
-        TypeSuffix Type);
-
-    public record RequireEntry(
-        GLAPI Api,
-        GLProfile Profile,
-        string? Comment,
-        List<string> Commands,
-        List<string> Enums);
-
-    public record RemoveEntry(
-        GLProfile Profile,
-        string? Comment,
-        List<string> Commands,
-        List<string> Enums);
-
-    public record Extension(
-        string Name,
-        string Vendor,
-        GLAPI[] SupportedApis,
-        string? Comment,
-        List<RequireEntry> Requires);
-
-    public record Feature(
-        GLAPI Api,
-        Version Version,
-        string Name,
-        List<RequireEntry> Requires,
-        List<RemoveEntry> Removes);
-
-    public record Specification(
-        List<Command> Commands,
-        List<EnumsEntry> Enums,
-        List<Feature> Features,
-        List<Extension> Extensions);
 }
