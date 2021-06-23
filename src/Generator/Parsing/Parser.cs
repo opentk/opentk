@@ -28,6 +28,7 @@ namespace Generator.Parsing
             return new Specification(commands, enums, features, extensions);
         }
 
+
         public static List<Command> ParseCommands(XElement input)
         {
             Logger.Info("Begining parsing of commands.");
@@ -193,24 +194,24 @@ namespace Generator.Parsing
             var group = t.Attribute("group")?.Value;
 
             string? className = t.Attribute("class")?.Value;
-            Handle? handle = className switch
+            HandleType? handle = className switch
             {
                 null => null,
-                "program" => Handle.Program1,
-                "program pipeline" => Handle.ProgramPipeline,
-                "texture" => Handle.Texture,
-                "buffer" => Handle.Buffer1,
-                "shader" => Handle.Shader,
-                "query" => Handle.Query,
-                "framebuffer" => Handle.Framebuffer,
-                "renderbuffer" => Handle.Renderbuffer,
-                "sampler" => Handle.Sampler,
-                "transform feedback" => Handle.TransformFeedback,
-                "vertex array" => Handle.VertexArray,
+                "program" => HandleType.ProgramHandle,
+                "program pipeline" => HandleType.ProgramPipelineHandle,
+                "texture" => HandleType.TextureHandle,
+                "buffer" => HandleType.BufferHandle,
+                "shader" => HandleType.ShaderHandle,
+                "query" => HandleType.QueryHandle,
+                "framebuffer" => HandleType.FramebufferHandle,
+                "renderbuffer" => HandleType.RenderbufferHandle,
+                "sampler" => HandleType.SamplerHandle,
+                "transform feedback" => HandleType.TransformFeedbackHandle,
+                "vertex array" => HandleType.VertexArrayHandle,
                 // The "Sync" class is already marked with the "GLSync" type which is handled differently from the other types
                 // We leave it null here to let the "GLSync" handling do this.
                 "sync" => null,
-                "display list" => Handle.DisplayList,
+                "display list" => HandleType.DisplayListHandle,
                 _ => throw new Exception(className + " is not a supported handle type yet!"),
             };
 
@@ -274,7 +275,6 @@ namespace Generator.Parsing
                     type = type["struct".Length..].TrimStart();
                 }
 
-                // FIXME: Make this a 1 to 1 map
                 PrimitiveType primitiveType = type switch
                 {
                     "void" => PrimitiveType.Void,
@@ -312,12 +312,10 @@ namespace Generator.Parsing
                     "GLhalfNV" => PrimitiveType.Half,
                     "GLvdpauSurfaceNV" => PrimitiveType.IntPtr,
 
-                    // FIXME
-                    "GLVULKANPROCNV" => PrimitiveType.Void,
+                    // This type is platform specific on apple.
+                    "GLhandleARB" => PrimitiveType.GLHandleARB,
 
-                    "GLhandleARB" => PrimitiveType.GLHandleARB, //This type is platform specific on apple.
-
-                    //The following have a custom c# implementation in the writer.
+                    // The following have a custom c# implementation in the writer.
                     "GLsync" => PrimitiveType.GLSync,
                     "_cl_context" => PrimitiveType.CLContext,
                     "_cl_event" => PrimitiveType.CLEvent,
@@ -326,6 +324,10 @@ namespace Generator.Parsing
                     "GLDEBUGPROCKHR" => PrimitiveType.GLDEBUGPROCKHR,
                     "GLDEBUGPROCAMD" => PrimitiveType.GLDEBUGPROCAMD,
                     "GLDEBUGPROCNV" => PrimitiveType.GLDEBUGPROCNV,
+                    // This isn't actually used in the output bindings.
+                    // But we leave it here as a primitive type so we have the information if we need it later.
+                    // - 2021-06-23
+                    "GLVULKANPROCNV" => PrimitiveType.GLVULKANPROCNV,
                     _ => PrimitiveType.Invalid,
                 };
 
@@ -339,10 +341,10 @@ namespace Generator.Parsing
         }
 
 
-        public static List<EnumsEntry> ParseEnums(XElement input)
+        public static List<Enums> ParseEnums(XElement input)
         {
             Logger.Info("Begining parsing of enums.");
-            List<EnumsEntry> enumsEntries = new List<EnumsEntry>();
+            List<Enums> enumsEntries = new List<Enums>();
             foreach (var enums in input.Elements("enums"))
             {
                 var @namespace = enums.Attribute("namespace")?.Value;
@@ -383,7 +385,7 @@ namespace Generator.Parsing
                     entries.Add(ParseEnumEntry(@enum));
                 }
 
-                enumsEntries.Add(new EnumsEntry(@namespace, group, type, vendor, range, comment, entries));
+                enumsEntries.Add(new Enums(@namespace, group, type, vendor, range, comment, entries));
             }
 
             return enumsEntries;
@@ -588,7 +590,6 @@ namespace Generator.Parsing
 
             return new RemoveEntry(profile, comment, removeCommands, removeEnums);
         }
-
 
 
         public static GLAPI ParseApi(string? api) => api switch

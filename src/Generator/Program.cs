@@ -16,16 +16,18 @@ namespace Generator
             st.Start();
             using (Logger.CreateLogger(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly()!.Location)!, "log.txt")))
             {
-                //TODO: Documentation.
-                //Reading
+                // Reading the gl.xml file.
                 using var stream = Reader.ReadSpecFromGithub();
 
-                //Parsing
+                // TODO: Documentation.
+
+                // Parsing into data structures.
                 var specification = Parser.Parse(stream);
 
-                // WIP
+                // Processer/overloading
                 var outputSpec = Processor.ProcessSpec(specification);
 
+                // Writing cs files.
                 Writer.Write(outputSpec);
 
                 st.Stop();
@@ -35,41 +37,3 @@ namespace Generator
         }
     }
 }
-/*
- * TODO:
- * Work on some manual overloading system.
- */
-
-/*TODO: Look into enum overloads for extensions
- * 1) Only use the ALL enum - Currently doing
- * 2) Create a struct with implicit conversions
- * 3) Create a ton of overloads
- * 4) Extra enum group per extension (downside: name collision)
- * */
-
-//TODO:
-//Overloading
-//Documentation
-//Trimmer
-//Buildscript
-// - .gitignore
-
-/*
- * OpenToolkit.Graphics
- *     /[API]opengl
- *         /All.cs
- *         /extensions
- *             /AMD
- *                  /Methods.cs
- *                  /Overloads.cs
- *             /NV
- *             /EXT
- *         /versions
- *             /V32
- *                  /Methods.cs
- *                  /Overloads.cs
- *                  /Enums.cs
- *             /V42
- *             /V46
- *     /[API]gles
- */
