@@ -26,6 +26,9 @@
 using System;
 using OpenTK.Platform;
 using System.Diagnostics;
+using System.IO;
+using System.Reflection;
+using System.Runtime.InteropServices;
 
 namespace OpenTK
 {
@@ -129,6 +132,31 @@ namespace OpenTK
                     initialized = true;
                     Configuration.Init(options);
                     Options = options;
+                    if (Environment.OSVersion.Platform == PlatformID.Win32S || Environment.OSVersion.Platform == PlatformID.Win32Windows || Environment.OSVersion.Platform == PlatformID.Win32NT)
+                    {
+                        /*
+                         * https://docs.microsoft.com/en-us/windows/win32/dlls/dynamic-link-library-search-order
+                         *
+                         * If shipping an AnyCPU build and C++ DLLImports such as OpenALSoft / SDL
+                         * we need to use architecture specific P/Invokes.
+                         * Windows will attempt to locate an appropriate file using the search order listed
+                         * in the document above. However, we want to avoid putting 'our' copy of these files
+                         * into the system cache.
+                         *
+                         * Thus, a common convention is to use an x86 / x64 subfolder to store the architecture
+                         * specific DLLImports. (Architecture independant files can be stored in the same
+                         * folder as the main DLL)
+                         *
+                         * For this to work, we need to add the appropriate search path to SetDLLDirectory
+                         *
+                         * NOTE:
+                         * Non-Windows platforms should be handled via the OpenTK.dll.config file as appropriate
+                         */
+                        string path = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
+                        path = Path.Combine(path, IntPtr.Size == 4 ? "x86" : "x64");
+                        bool ok = SetDllDirectory(path);
+                        if (!ok) throw new System.ComponentModel.Win32Exception();
+                    }
 
                     // The actual initialization takes place in the
                     // platform-specific factory constructors.
@@ -177,5 +205,8 @@ namespace OpenTK
             // as that will crash on many operating systems.
         }
         #endif
+        
+        [DllImport("kernel32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        private static extern bool SetDllDirectory(string path);
     }
 }
