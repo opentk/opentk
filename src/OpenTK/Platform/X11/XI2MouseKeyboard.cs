@@ -49,6 +49,93 @@ namespace OpenTK.Platform.X11
             public XIValuatorClassInfo MotionX = new XIValuatorClassInfo { number = -1 };
             public XIValuatorClassInfo MotionY = new XIValuatorClassInfo { number = -1 };
             public string Name;
+
+            public unsafe void SetClasses(int num_classes, XIAnyClassInfo **classes)
+            {
+                ScrollX.number = -1;
+                ScrollY.number = -1;
+                MotionX.number = -1;
+                MotionY.number = -1;
+
+                // Decode the XIDeviceInfo to axes, buttons and scroll types
+                for (int j = 0; j < num_classes; j++)
+                {
+                    XIAnyClassInfo* class_info = classes[j];
+                    switch (class_info->type)
+                    {
+                        case XIClassType.Button:
+                            {
+                                XIButtonClassInfo* button = (XIButtonClassInfo*)class_info;
+                                Debug.Print("\t{0} buttons", button->num_buttons);
+                            }
+                            break;
+
+                        case XIClassType.Scroll:
+                            {
+                                XIScrollClassInfo* scroll = (XIScrollClassInfo*)class_info;
+                                switch (scroll->scroll_type)
+                                {
+                                    case XIScrollType.Vertical:
+                                        Debug.WriteLine("\tSmooth vertical scrolling");
+                                        ScrollY = *scroll;
+                                        break;
+
+                                    case XIScrollType.Horizontal:
+                                        Debug.WriteLine("\tSmooth horizontal scrolling");
+                                        ScrollX = *scroll;
+                                        break;
+
+                                    default:
+                                        Debug.Print("\tUnknown scrolling type {0}", scroll->scroll_type);
+                                        break;
+                                }
+                            }
+                            break;
+
+                        case XIClassType.Valuator:
+                            {
+                                // We use relative x/y valuators for mouse movement.
+                                // Iff these are not available, we fall back to
+                                // absolute x/y valuators.
+                                XIValuatorClassInfo* valuator = (XIValuatorClassInfo*)class_info;
+                                if (valuator->label == XI.RelativeX)
+                                {
+                                    Debug.WriteLine("\tRelative X movement");
+                                    MotionX = *valuator;
+                                }
+                                else if (valuator->label == XI.RelativeY)
+                                {
+                                    Debug.WriteLine("\tRelative Y movement");
+                                    MotionY = *valuator;
+                                }
+                                else if (valuator->label == XI.AbsoluteX)
+                                {
+                                    Debug.WriteLine("\tAbsolute X movement");
+                                    if (MotionX.number == -1)
+                                    {
+                                        MotionX = *valuator;
+                                    }
+                                }
+                                else if (valuator->label == XI.AbsoluteY)
+                                {
+                                    Debug.WriteLine("\tAbsolute X movement");
+                                    if (MotionY.number == -1)
+                                    {
+                                        MotionY = *valuator;
+                                    }
+                                }
+                                else
+                                {
+                                    IntPtr label = Functions.XGetAtomName(API.DefaultDisplay, valuator->label);
+                                    Debug.Print("\tUnknown valuator {0}",
+                                        Marshal.PtrToStringAnsi(label));
+                                    Functions.XFree(label);
+                                }
+                            }
+                            break;
+                    }
+                }
+            }
         }
 
         private class XIKeyboard
@@ -259,6 +346,8 @@ namespace OpenTK.Platform.X11
         {
             lock (Sync)
             {
+                // save current mouse position
+                MouseState current_mouse_state = (this as IMouseDriver2).GetState();
                 devices.Clear();
                 keyboards.Clear();
 
@@ -304,84 +393,8 @@ namespace OpenTK.Platform.X11
                                     Debug.Print("Device {0} \"{1}\" is {2} and has:",
                                         i, d.Name, d.DeviceInfo.enabled ? "enabled" : "disabled");
 
-                                    // Decode the XIDeviceInfo to axes, buttons and scroll types
-                                    for (int j = 0; j < d.DeviceInfo.num_classes; j++)
-                                    {
-                                        XIAnyClassInfo* class_info = *((XIAnyClassInfo**)d.DeviceInfo.classes + j);
-                                        switch (class_info->type)
-                                        {
-                                            case XIClassType.Button:
-                                                {
-                                                    XIButtonClassInfo* button = (XIButtonClassInfo*)class_info;
-                                                    Debug.Print("\t{0} buttons", button->num_buttons);
-                                                }
-                                                break;
-
-                                            case XIClassType.Scroll:
-                                                {
-                                                    XIScrollClassInfo* scroll = (XIScrollClassInfo*)class_info;
-                                                    switch (scroll->scroll_type)
-                                                    {
-                                                        case XIScrollType.Vertical:
-                                                            Debug.WriteLine("\tSmooth vertical scrolling");
-                                                            d.ScrollY = *scroll;
-                                                            break;
-
-                                                        case XIScrollType.Horizontal:
-                                                            Debug.WriteLine("\tSmooth horizontal scrolling");
-                                                            d.ScrollX = *scroll;
-                                                            break;
-
-                                                        default:
-                                                            Debug.Print("\tUnknown scrolling type {0}", scroll->scroll_type);
-                                                            break;
-                                                    }
-                                                }
-                                                break;
-
-                                            case XIClassType.Valuator:
-                                                {
-                                                    // We use relative x/y valuators for mouse movement.
-                                                    // Iff these are not available, we fall back to
-                                                    // absolute x/y valuators.
-                                                    XIValuatorClassInfo* valuator = (XIValuatorClassInfo*)class_info;
-                                                    if (valuator->label == XI.RelativeX)
-                                                    {
-                                                        Debug.WriteLine("\tRelative X movement");
-                                                        d.MotionX = *valuator;
-                                                    }
-                                                    else if (valuator->label == XI.RelativeY)
-                                                    {
-                                                        Debug.WriteLine("\tRelative Y movement");
-                                                        d.MotionY = *valuator;
-                                                    }
-                                                    else if (valuator->label == XI.AbsoluteX)
-                                                    {
-                                                        Debug.WriteLine("\tAbsolute X movement");
-                                                        if (d.MotionX.number == -1)
-                                                        {
-                                                            d.MotionX = *valuator;
-                                                        }
-                                                    }
-                                                    else if (valuator->label == XI.AbsoluteY)
-                                                    {
-                                                        Debug.WriteLine("\tAbsolute X movement");
-                                                        if (d.MotionY.number == -1)
-                                                        {
-                                                            d.MotionY = *valuator;
-                                                        }
-                                                    }
-                                                    else
-                                                    {
-                                                        IntPtr label = Functions.XGetAtomName(window.Display, valuator->label);
-                                                        Debug.Print("\tUnknown valuator {0}",
-                                                            Marshal.PtrToStringAnsi(label));
-                                                        Functions.XFree(label);
-                                                    }
-                                                }
-                                                break;
-                                        }
-                                    }
+                                    d.SetClasses(d.DeviceInfo.num_classes,
+                                            (XIAnyClassInfo**)d.DeviceInfo.classes);
 
                                     // Map the hardware device id to the current XIMouse id
                                     int id = d.DeviceInfo.deviceid;
@@ -396,6 +409,14 @@ namespace OpenTK.Platform.X11
                         }
                     }
                     XI.FreeDeviceInfo((IntPtr)list);
+                }
+
+                // Restore current mouse position
+                if (devices.Count >= 1) {
+                    devices[0].State.Position = current_mouse_state.Position;
+                    devices[0].State.SetScrollAbsolute(
+                            current_mouse_state.Scroll.X,
+                            current_mouse_state.Scroll.Y);
                 }
             }
         }
@@ -447,7 +468,7 @@ namespace OpenTK.Platform.X11
                                     break;
 
                                 case XIEventType.DeviceChanged:
-                                    UpdateDevices();
+                                    ProcessDeviceChanged(ref cookie);
                                     break;
                             }
                         }
@@ -541,36 +562,41 @@ namespace OpenTK.Platform.X11
             double v = 0;
             if (d.MotionX.number != -1)
             {
-                x = ReadRawValue(ref raw, d.MotionX.number);
+                if (ReadRawValue(ref raw, d.MotionX.number, out x))
+                {
+                    if (d.MotionX.mode == XIMode.Relative)
+                    {
+                        d.State.X += (int)Math.Round(x);
+                    }
+                    else
+                    {
+                        d.State.X = (int)Math.Round(x);
+                    }
+                }
             }
             if (d.MotionY.number != -1)
             {
-                y = ReadRawValue(ref raw, d.MotionY.number);
+                if (ReadRawValue(ref raw, d.MotionY.number, out y))
+                {
+                    if (d.MotionY.mode == XIMode.Relative)
+                    {
+                        d.State.Y += (int)Math.Round(y);
+                    }
+                    else
+                    {
+                        d.State.Y = (int)Math.Round(y);
+                    }
+                }
             }
             if (d.ScrollX.number != -1)
             {
-                h = ReadRawValue(ref raw, d.ScrollX.number) / d.ScrollX.increment;
+                ReadRawValue(ref raw, d.ScrollX.number, out h);
+                h /= d.ScrollX.increment;
             }
             if (d.ScrollY.number != -1)
             {
-                v = ReadRawValue(ref raw, d.ScrollY.number) / d.ScrollY.increment;
-            }
-
-            if (d.MotionX.mode == XIMode.Relative)
-            {
-                d.State.X += (int)Math.Round(x);
-            }
-            else
-            {
-                d.State.X = (int)Math.Round(x);
-            }
-            if (d.MotionY.mode == XIMode.Relative)
-            {
-                d.State.Y += (int)Math.Round(y);
-            }
-            else
-            {
-                d.State.Y = (int)Math.Round(y);
+                ReadRawValue(ref raw, d.ScrollY.number, out v);
+                v /= d.ScrollY.increment;
             }
 
             // Note: OpenTK follows the windows scrolling convention where
@@ -579,9 +605,9 @@ namespace OpenTK.Platform.X11
             d.State.SetScrollRelative((float)h, (float)(-v));
         }
 
-        private unsafe static double ReadRawValue(ref XIRawEvent raw, int bit)
+        private unsafe static bool ReadRawValue(ref XIRawEvent raw, int bit, out double value)
         {
-            double value = 0;
+            value = 0;
             if (IsBitSet(raw.valuators.mask, bit))
             {
                 // Find the offset where this value is stored.
@@ -596,8 +622,42 @@ namespace OpenTK.Platform.X11
                     }
                 }
                 value = *((double*)raw.raw_values + offset);
+                return true;
             }
-            return value;
+            else
+            {
+                return false;
+            }
+        }
+
+        // This event is sent whenever a device changes its capabilities. This
+        // may be sent when switching between two different mice or keyboards.
+        // Some Wayland display servers send this very frequently, switching
+        // the mouse between absolute and relative position mode whenever the
+        // mouse is clicked or moved.
+        private void ProcessDeviceChanged(ref XGenericEventCookie cookie)
+        {
+            lock (Sync)
+            {
+                unsafe
+                {
+                    XIDeviceChangedEvent ce = *(XIDeviceChangedEvent*)cookie.data;
+
+                    if (rawids.ContainsKey(ce.deviceid))
+                    {
+                        XIMouse mouse = devices[rawids[ce.deviceid]];
+                        mouse.SetClasses(ce.num_classes, (XIAnyClassInfo**)ce.classes);
+                    }
+                    else if (keyboard_ids.ContainsKey(ce.deviceid))
+                    {
+                        // no action needed
+                    }
+                    else
+                    {
+                        Debug.Print($"Device {ce.deviceid} not found");
+                    }
+                }
+            }
         }
 
         private static bool IsEventValid(IntPtr display, ref XEvent e, IntPtr arg)
