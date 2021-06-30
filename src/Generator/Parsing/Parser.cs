@@ -14,16 +14,16 @@ namespace Generator.Parsing
     {
         public static Specification Parse(Stream input)
         {
-            var xdocument = XDocument.Load(input);
+            XDocument? xdocument = XDocument.Load(input);
 
             if (xdocument.Root == null)
                 throw new NullReferenceException("The parsed xml didn't contain a Root node.");
 
-            var commands = ParseCommands(xdocument.Root);
-            var enums = ParseEnums(xdocument.Root);
+            List<Command>? commands = ParseCommands(xdocument.Root);
+            List<Enums>? enums = ParseEnums(xdocument.Root);
 
-            var features = ParseFeatures(xdocument.Root);
-            var extensions = ParseExtensions(xdocument.Root);
+            List<Feature>? features = ParseFeatures(xdocument.Root);
+            List<Extension>? extensions = ParseExtensions(xdocument.Root);
 
             return new Specification(commands, enums, features, extensions);
         }
@@ -32,12 +32,12 @@ namespace Generator.Parsing
         public static List<Command> ParseCommands(XElement input)
         {
             Logger.Info("Begining parsing of commands.");
-            var xelement = input.Element("commands")!;
+            XElement? xelement = input.Element("commands")!;
 
-            var commands = new List<Command>();
-            foreach (var element in xelement.Elements("command"))
+            List<Command>? commands = new List<Command>();
+            foreach (XElement? element in xelement.Elements("command"))
             {
-                var command = ParseCommand(element);
+                Command? command = ParseCommand(element);
 
                 commands.Add(command);
             }
@@ -47,35 +47,35 @@ namespace Generator.Parsing
 
         private static Command ParseCommand(XElement c)
         {
-            var proto = c.Element("proto");
+            XElement? proto = c.Element("proto");
             if (proto == null) throw new Exception("Missing proto tag!");
 
-            var entryPoint = proto.Element("name")?.Value;
+            string? entryPoint = proto.Element("name")?.Value;
             if (entryPoint == null) throw new Exception("Missing name tag!");
 
-            var parameterList = new List<GLParameter>();
-            foreach (var element in c.Elements("param"))
+            List<GLParameter>? parameterList = new List<GLParameter>();
+            foreach (XElement? element in c.Elements("param"))
             {
-                var paramName = element.Element("name")?.Value;
-                var ptype = ParsePType(element);
+                string? paramName = element.Element("name")?.Value;
+                PType? ptype = ParsePType(element);
 
                 if (paramName == null) throw new Exception("Missing parameter name!");
 
-                var length = element.Attribute("len")?.Value;
-                var paramLength = length == null ? null : ParseExpression(length);
+                string? length = element.Attribute("len")?.Value;
+                Expression? paramLength = length == null ? null : ParseExpression(length);
 
                 //isGLhandleArb |= ptype.Name == PlatformSpecificGlHandleArbFlag;
                 parameterList.Add(new GLParameter(ptype, paramName, paramLength));
             }
 
-            var returnType = ParsePType(proto);
+            PType? returnType = ParsePType(proto);
 
             return new Command(entryPoint, returnType, parameterList.ToArray());
         }
 
         private static Expression ParseExpression(string expression)
         {
-            var retExpr = ParseExpressionPrio2(expression, out string leftOver);
+            Expression? retExpr = ParseExpressionPrio2(expression, out string leftOver);
 
             if (string.IsNullOrEmpty(leftOver) == false)
                 throw new Exception($"Failed to parse expression '{expression}' with leftover '{leftOver}'");
@@ -85,7 +85,7 @@ namespace Generator.Parsing
 
         private static Expression ParseExpressionPrio2(string expression, out string leftOver)
         {
-            var retExpr = ParseExpressionPrio1(expression, out string exp);
+            Expression? retExpr = ParseExpressionPrio1(expression, out string exp);
             exp = exp.TrimStart();
 
             BinaryOperator op;
@@ -93,7 +93,7 @@ namespace Generator.Parsing
             while ((op = GetOperation(exp)) != BinaryOperator.Invalid)
             {
                 exp = exp[1..];
-                var right = ParseExpressionPrio1(exp, out exp);
+                Expression? right = ParseExpressionPrio1(exp, out exp);
                 exp = exp.TrimStart();
 
                 retExpr = new BinaryOperation(retExpr, op, right);
@@ -116,7 +116,7 @@ namespace Generator.Parsing
 
         private static Expression ParseExpressionPrio1(string expression, out string leftOver)
         {
-            var retExpr = ParseExpressionPrio0(expression, out string exp);
+            Expression? retExpr = ParseExpressionPrio0(expression, out string exp);
             exp = exp.TrimStart();
 
             BinaryOperator op;
@@ -124,7 +124,7 @@ namespace Generator.Parsing
             while ((op = GetOperation(exp)) != BinaryOperator.Invalid)
             {
                 exp = exp[1..];
-                var right = ParseExpressionPrio0(exp, out exp);
+                Expression? right = ParseExpressionPrio0(exp, out exp);
                 exp = exp.TrimStart();
 
                 retExpr = new BinaryOperation(retExpr, op, right);
@@ -150,7 +150,7 @@ namespace Generator.Parsing
             expression = expression.TrimStart();
             if (expression.StartsWith("COMPSIZE("))
             {
-                var exp = expression["COMPSIZE(".Length..];
+                string? exp = expression["COMPSIZE(".Length..];
                 List<Expression> arguments = new List<Expression>();
                 while (exp[0] != ')')
                 {
@@ -191,7 +191,7 @@ namespace Generator.Parsing
 
         private static PType ParsePType(XElement t)
         {
-            var group = t.Attribute("group")?.Value;
+            string? group = t.Attribute("group")?.Value;
 
             string? className = t.Attribute("class")?.Value;
             HandleType? handle = className switch
@@ -215,7 +215,7 @@ namespace Generator.Parsing
                 _ => throw new Exception(className + " is not a supported handle type yet!"),
             };
 
-            var str = t.GetXmlText(element => element.Name != "name" ? element.Value : string.Empty).Trim();
+            string? str = t.GetXmlText(element => element.Name != "name" ? element.Value : string.Empty).Trim();
 
             return new PType(ParseType(str), handle, group);
         }
@@ -227,7 +227,7 @@ namespace Generator.Parsing
             if (type.EndsWith('*'))
             {
                 // This removes the last character of the string, ^1 is an exclusive upper bound.
-                var withoutAsterisk = type[0..^1].TrimEnd();
+                string? withoutAsterisk = type[0..^1].TrimEnd();
 
                 // A pointer is only const if const is directly in front of the pointer,
                 // if the const is in front of the type the type is the constant and not the pointer.
@@ -238,13 +238,13 @@ namespace Generator.Parsing
                     withoutAsterisk = withoutAsterisk[0..^"const".Length];
                 }
 
-                var baseType = ParseType(withoutAsterisk);
+                GLType? baseType = ParseType(withoutAsterisk);
 
                 return new GLPointerType(baseType, @const);
             }
             else
             {
-                var @const = false;
+                bool @const = false;
                 if (type.StartsWith("const"))
                 {
                     @const = true;
@@ -328,19 +328,19 @@ namespace Generator.Parsing
         {
             Logger.Info("Begining parsing of enums.");
             List<Enums> enumsEntries = new List<Enums>();
-            foreach (var enums in input.Elements("enums"))
+            foreach (XElement? enums in input.Elements("enums"))
             {
-                var @namespace = enums.Attribute("namespace")?.Value;
+                string? @namespace = enums.Attribute("namespace")?.Value;
                 if (@namespace == null) throw new Exception($"Enums entry '{enums}' is missing a namespace attribute.");
 
-                var group = enums.Attribute("group")?.Value?.Split(',', StringSplitOptions.RemoveEmptyEntries);
+                string[] group = enums.Attribute("group")?.Value?.Split(',', StringSplitOptions.RemoveEmptyEntries) ?? Array.Empty<string>();
 
-                var vendor = enums.Attribute("vendor")?.Value;
+                string? vendor = enums.Attribute("vendor")?.Value;
 
-                var type = ParseEnumsType(enums.Attribute("type")?.Value);
+                EnumType type = ParseEnumsType(enums.Attribute("type")?.Value);
 
-                var startStr = enums.Attribute("start")?.Value;
-                var endStr = enums.Attribute("end")?.Value;
+                string? startStr = enums.Attribute("start")?.Value;
+                string? endStr = enums.Attribute("end")?.Value;
                 if (startStr == null && endStr != null ||
                     startStr != null && endStr == null)
                     throw new Exception($"Enums entry '{enums}' is missing either a start or end attribute.");
@@ -348,8 +348,8 @@ namespace Generator.Parsing
                 Range? range = null;
                 if (startStr != null && endStr != null)
                 {
-                    var start = (Index)ParseInt(startStr);
-                    var end = (Index)ParseInt(endStr);
+                    Index start = (Index)ParseInt(startStr);
+                    Index end = (Index)ParseInt(endStr);
                     range = new Range(start, end);
 
                     static int ParseInt(string str)
@@ -360,10 +360,10 @@ namespace Generator.Parsing
                     }
                 }
 
-                var comment = enums.Attribute("comment")?.Value;
+                string? comment = enums.Attribute("comment")?.Value;
 
                 List<EnumEntry> entries = new List<EnumEntry>();
-                foreach (var @enum in enums.Elements("enum"))
+                foreach (XElement? @enum in enums.Elements("enum"))
                 {
                     entries.Add(ParseEnumEntry(@enum));
                 }
@@ -383,24 +383,24 @@ namespace Generator.Parsing
 
         public static EnumEntry ParseEnumEntry(XElement @enum)
         {
-            var name = @enum.Attribute("name")?.Value;
-            var valueStr = @enum.Attribute("value")?.Value;
+            string? name = @enum.Attribute("name")?.Value;
+            string? valueStr = @enum.Attribute("value")?.Value;
             if (valueStr == null || name == null)
             {
                 throw new Exception($"Enum {name} did not pass correctly");
             }
 
-            var suffix = ParseEnumTypeSuffix(@enum.Attribute("type")?.Value);
+            TypeSuffix suffix = ParseEnumTypeSuffix(@enum.Attribute("type")?.Value);
 
-            var value = ConvertToUInt64(valueStr, suffix);
+            ulong value = ConvertToUInt64(valueStr, suffix);
 
-            var alias = @enum.Attribute("alias")?.Value;
+            string? alias = @enum.Attribute("alias")?.Value;
 
-            var groups = @enum.Attribute("group")?.Value?.Split(',', StringSplitOptions.RemoveEmptyEntries);
+            string[] groups = @enum.Attribute("group")?.Value?.Split(',', StringSplitOptions.RemoveEmptyEntries) ?? Array.Empty<string>();
 
-            var comment = @enum.Attribute("comment")?.Value;
+            string? comment = @enum.Attribute("comment")?.Value;
 
-            var api = ParseApi(@enum.Attribute("api")?.Value);
+            GLAPI api = ParseApi(@enum.Attribute("api")?.Value);
 
             return new EnumEntry(name, api, value, alias, comment, groups, suffix);
 
@@ -428,29 +428,29 @@ namespace Generator.Parsing
 
             List<Feature> features = new List<Feature>();
 
-            foreach (var feature in input.Elements("feature"))
+            foreach (XElement? feature in input.Elements("feature"))
             {
-                var apiStr = feature.Attribute("api")?.Value;
-                var name = feature.Attribute("name")?.Value;
-                var number = feature.Attribute("number")?.Value;
+                string? apiStr = feature.Attribute("api")?.Value;
+                string? name = feature.Attribute("name")?.Value;
+                string? number = feature.Attribute("number")?.Value;
 
                 if (apiStr == null || name == null || number == null)
                 {
                     throw new Exception($"Feature '{feature}' is missing an attribute.");
                 }
 
-                var version = Version.Parse(number);
-                var api = ParseApi(apiStr);
+                Version? version = Version.Parse(number);
+                GLAPI api = ParseApi(apiStr);
 
                 List<RequireEntry> requireEntries = new List<RequireEntry>();
-                foreach (var require in feature.Elements("require"))
+                foreach (XElement? require in feature.Elements("require"))
                 {
                     RequireEntry reqEntry = ParseRequire(require);
                     requireEntries.Add(reqEntry);
                 }
 
                 List<RemoveEntry> removeEntries = new List<RemoveEntry>();
-                foreach (var remove in feature.Elements("remove"))
+                foreach (XElement? remove in feature.Elements("remove"))
                 {
                     RemoveEntry removeEntry = ParseRemove(remove);
                     removeEntries.Add(removeEntry);
@@ -465,11 +465,11 @@ namespace Generator.Parsing
         public static List<Extension> ParseExtensions(XElement input)
         {
             List<Extension> extensions = new List<Extension>();
-            var xelement = input.Element("extensions")!;
+            XElement? xelement = input.Element("extensions")!;
 
-            foreach (var extension in xelement.Elements("extension"))
+            foreach (XElement? extension in xelement.Elements("extension"))
             {
-                var extName = extension.Attribute("name")?.Value;
+                string? extName = extension.Attribute("name")?.Value;
                 if (extName == null)
                 {
                     throw new Exception($"Extension '{extension}' is missing a name!");
@@ -477,8 +477,8 @@ namespace Generator.Parsing
 
                 // Remove "GL_" and get the vendor name from the first part of the extension name
                 // Extension name convention: "GL_VENDOR_EXTENSION_NAME"
-                var extNameWithoutGLPrefix = NameMangler.RemoveStart(extName, "GL_");
-                var vendor = extNameWithoutGLPrefix[..extNameWithoutGLPrefix.IndexOf("_")];
+                string? extNameWithoutGLPrefix = NameMangler.RemoveStart(extName, "GL_");
+                string? vendor = extNameWithoutGLPrefix[..extNameWithoutGLPrefix.IndexOf("_")];
                 if (string.IsNullOrEmpty(vendor))
                 {
                     throw new Exception($"Extension '{extension}' doesn't have the vendor in it's name!");
@@ -489,9 +489,9 @@ namespace Generator.Parsing
                     vendor = "_" + vendor;
                 }
 
-                var comment = extension.Attribute("comment")?.Value;
+                string? comment = extension.Attribute("comment")?.Value;
 
-                var supportedApis = extension
+                GLAPI[]? supportedApis = extension
                     .Attribute("supported")?.Value?
                     .Split('|', StringSplitOptions.RemoveEmptyEntries)
                     .Select(s => ParseApi(s)).ToArray();
@@ -502,7 +502,7 @@ namespace Generator.Parsing
                 }
 
                 List<RequireEntry> requires = new List<RequireEntry>();
-                foreach (var require in extension.Elements("require"))
+                foreach (XElement? require in extension.Elements("require"))
                 {
                     requires.Add(ParseRequire(require));
                 }
@@ -515,14 +515,14 @@ namespace Generator.Parsing
 
         public static RequireEntry ParseRequire(XElement requires)
         {
-            var api = ParseApi(requires.Attribute("api")?.Value);
-            var profile = ParseProfile(requires.Attribute("profile")?.Value);
-            var comment = requires.Attribute("comment")?.Value;
+            GLAPI api = ParseApi(requires.Attribute("api")?.Value);
+            GLProfile profile = ParseProfile(requires.Attribute("profile")?.Value);
+            string? comment = requires.Attribute("comment")?.Value;
 
             List<string> reqCommands = new List<string>();
             List<string> reqEnums = new List<string>();
 
-            foreach (var entry in requires.Elements())
+            foreach (XElement? entry in requires.Elements())
             {
                 // A few entries here have a comment attribute, but we don't bother with it
                 string? name = entry.Attribute("name")?.Value;
@@ -546,13 +546,13 @@ namespace Generator.Parsing
 
         public static RemoveEntry ParseRemove(XElement requires)
         {
-            var profile = ParseProfile(requires.Attribute("profile")?.Value);
-            var comment = requires.Attribute("comment")?.Value;
+            GLProfile profile = ParseProfile(requires.Attribute("profile")?.Value);
+            string? comment = requires.Attribute("comment")?.Value;
 
             List<string> removeCommands = new List<string>();
             List<string> removeEnums = new List<string>();
 
-            foreach (var entry in requires.Elements())
+            foreach (XElement? entry in requires.Elements())
             {
                 // A few entries here have a comment attribute, but we don't bother with it
                 string? name = entry.Attribute("name")?.Value;

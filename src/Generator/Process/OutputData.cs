@@ -48,7 +48,7 @@ namespace Generator.Writing
     public record EnumGroupMember(
         string Name,
         ulong Value,
-        string[]? Groups,
+        string[] Groups,
         bool IsFlag) : IEquatable<EnumGroupMember?>;
 
     public record EnumGroup(

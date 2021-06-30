@@ -25,10 +25,6 @@ namespace Generator.Process
 
         public static OutputData ProcessSpec(Specification spec)
         {
-            // FIXME: Check if GLSC 2 contains unique functions that could be filtered out.
-            // FIXME: See if we can filter out enums and functions that are from GLSC 2 so that
-            // we do not process them that would be great.
-
             // The first thing we do is process all of the functions defined into a dictionary of NativeFunctions
             Dictionary<string, OverloadedFunction> allFunctions = new Dictionary<string, OverloadedFunction>(spec.Commands.Count);
             Dictionary<NativeFunction, string[]> functionToEnumGroupsUsed = new Dictionary<NativeFunction, string[]>();
@@ -42,55 +38,39 @@ namespace Generator.Process
             }
 
             Dictionary<OutputApi, Dictionary<string, EnumGroupMember>> allEnumsPerAPI = new Dictionary<OutputApi, Dictionary<string, EnumGroupMember>>();
+            // This dictionary is used both as a list of all enums (which is seperate from *the* all enum),
+            // and as a dictionary to look up if an enum group is a bitmask.
             Dictionary<string, bool> allEnumGroupsToIsBitmask = new Dictionary<string, bool>();
             foreach (var enumsEntry in spec.Enums)
             {
-                // FIXME: Cleanup.
-                // FIXME: Fix specification so we don't need to apply the <enums> groups to the enums here.
                 bool isFlag = enumsEntry.Type == EnumType.Bitmask;
-                HashSet<string> entryGroups = new HashSet<string>();
-                if (enumsEntry.Groups != null)
+                foreach (var @enum in enumsEntry.Entries)
                 {
-                    entryGroups.UnionWith(enumsEntry.Groups);
-                    foreach (var group in enumsEntry.Groups)
+                    foreach (var group in @enum.Groups)
                     {
                         allEnumGroupsToIsBitmask.TryAdd(group, isFlag);
                     }
-                }
 
-                foreach (var @enum in enumsEntry.Entries)
-                {
-                    HashSet<string> groups = new HashSet<string>(entryGroups);
+                    EnumGroupMember data = new EnumGroupMember(NameMangler.MangleEnumName(@enum.Name), @enum.Value, @enum.Groups, isFlag);
 
-                    if (@enum.Groups != null)
+                    switch (@enum.Api)
                     {
-                        groups.UnionWith(@enum.Groups);
-                        foreach (var group in @enum.Groups)
-                        {
-                            allEnumGroupsToIsBitmask.TryAdd(group, isFlag);
-                        }
-                    }
-
-                    var data = new EnumGroupMember(NameMangler.MangleEnumName(@enum.Name), @enum.Value, groups.ToArray(), isFlag);
-                    if (@enum.Api == GLAPI.None)
-                    {
-                        allEnumsPerAPI.AddToNestedDict(OutputApi.GL, @enum.Name, data);
-                        allEnumsPerAPI.AddToNestedDict(OutputApi.GLCompat, @enum.Name, data);
-                        allEnumsPerAPI.AddToNestedDict(OutputApi.GLES1, @enum.Name, data);
-                        allEnumsPerAPI.AddToNestedDict(OutputApi.GLES3, @enum.Name, data);
-                    }
-                    else if (@enum.Api == GLAPI.GLES1)
-                    {
-                        allEnumsPerAPI.AddToNestedDict(OutputApi.GLES1, @enum.Name, data);
-                    }
-                    else if (@enum.Api == GLAPI.GLES2)
-                    {
-                        allEnumsPerAPI.AddToNestedDict(OutputApi.GLES3, @enum.Name, data);
-                    }
-                    else if (@enum.Api == GLAPI.GL)
-                    {
-                        allEnumsPerAPI.AddToNestedDict(OutputApi.GL, @enum.Name, data);
-                        allEnumsPerAPI.AddToNestedDict(OutputApi.GLCompat, @enum.Name, data);
+                        case GLAPI.None:
+                            allEnumsPerAPI.AddToNestedDict(OutputApi.GL, @enum.Name, data);
+                            allEnumsPerAPI.AddToNestedDict(OutputApi.GLCompat, @enum.Name, data);
+                            allEnumsPerAPI.AddToNestedDict(OutputApi.GLES1, @enum.Name, data);
+                            allEnumsPerAPI.AddToNestedDict(OutputApi.GLES3, @enum.Name, data);
+                            break;
+                        case GLAPI.GLES1:
+                            allEnumsPerAPI.AddToNestedDict(OutputApi.GLES1, @enum.Name, data);
+                            break;
+                        case GLAPI.GLES2:
+                            allEnumsPerAPI.AddToNestedDict(OutputApi.GLES3, @enum.Name, data);
+                            break;
+                        case GLAPI.GL:
+                            allEnumsPerAPI.AddToNestedDict(OutputApi.GL, @enum.Name, data);
+                            allEnumsPerAPI.AddToNestedDict(OutputApi.GLCompat, @enum.Name, data);
+                            break;
                     }
                 }
             }
@@ -258,7 +238,7 @@ namespace Generator.Process
 
                 // This enum doesn't have a group, so we skip it.
                 // It will still appear in the All enum.
-                if (@enum.Groups == null) continue;
+                if (@enum.Groups.Length == 0) continue;
 
                 foreach (var groupName in @enum.Groups)
                 {
