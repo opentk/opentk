@@ -18,7 +18,7 @@ namespace Generator.Parsing
 
     public record Enums(
         string Namespace,
-        string[]? Groups,
+        string[] Groups,
         EnumType Type,
         string? Vendor,
         Range? Range,
@@ -31,7 +31,7 @@ namespace Generator.Parsing
         ulong Value,
         string? Alias,
         string? Comment,
-        string[]? Groups,
+        string[] Groups,
         TypeSuffix Type);
 
 
