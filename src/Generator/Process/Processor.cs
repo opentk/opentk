@@ -11,12 +11,17 @@ namespace Generator.Process
     public static class Processor
     {
 
-        // This is only used to pass data from ProcessSpec to GetOutputApiFromRequireTags
+        // These types are only used to pass data from ProcessSpec to GetOutputApiFromRequireTags
         private record ProcessedGLInformation(
             Dictionary<string, OverloadedFunction> AllFunctions,
             Dictionary<NativeFunction, string[]> FunctionToEnumGroupsUsed,
             Dictionary<OutputApi, Dictionary<string, EnumGroupMember>> AllEnumsPerAPI,
             Dictionary<string, bool> AllEnumGroupsToIsBitmask);
+
+        public record OverloadedFunction(
+            NativeFunction NativeFunction,
+            Overload[] Overloads,
+            bool ChangeNativeName);
 
         public static OutputData ProcessSpec(Specification spec)
         {

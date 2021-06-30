@@ -7,14 +7,62 @@ using System.CodeDom.Compiler;
 
 namespace Generator.Writing
 {
-    public enum OutputApi
+    public record OutputData(List<GLOutputApi> Apis);
+
+
+    public record GLOutputApi(
+        OutputApi Api,
+        Dictionary<string, GLVendorFunctions> Vendors,
+        List<EnumGroupMember> AllEnums,
+        List<EnumGroup> EnumGroups);
+
+
+    public record GLVendorFunctions(
+        List<NativeFunction> NativeFunctions,
+        List<Overload[]> OverloadsGroupedByNativeFunctions,
+        HashSet<NativeFunction> NativeFunctionsWithPostfix);
+
+    public record NativeFunction(
+        string EntryPoint,
+        string FunctionName,
+        List<Parameter> Parameters,
+        BaseCSType ReturnType);
+
+    public record Overload(
+        Overload? NestedOverload,
+        IOverloadLayer? MarshalLayerToNested,
+        Parameter[] InputParameters,
+        NativeFunction NativeFunction,
+        BaseCSType ReturnType,
+        NameTable NameTable,
+        string ReturnVariableName,
+        string[] GenericTypes,
+        string OverloadName);
+
+    public record Parameter(
+        BaseCSType Type,
+        string Name,
+        Expression? Length);
+
+
+    public record EnumGroupMember(
+        string Name,
+        ulong Value,
+        string[]? Groups,
+        bool IsFlag) : IEquatable<EnumGroupMember?>;
+
+    public record EnumGroup(
+        string Name,
+        bool IsFlags,
+        List<EnumGroupMember> Members);
+
+
+    public interface IOverloadLayer
     {
-        Invalid,
-        GL,
-        GLCompat,
-        GLES1,
-        GLES3
+        public void WritePrologue(IndentedTextWriter writer, NameTable nameTable);
+        public string? WriteEpilogue(IndentedTextWriter writer, NameTable nameTable, string? returnName);
     }
+
 
     public abstract record BaseCSType()
     {
@@ -26,6 +74,11 @@ namespace Generator.Writing
     public interface IConstantCSType
     {
         public bool Constant { get; }
+    }
+
+    public record CSVoid(bool Constant) : BaseCSType, IConstantCSType
+    {
+        public override string ToCSString() => "void";
     }
 
     public record CSPrimitive(string TypeName, bool Constant) : BaseCSType, IConstantCSType
@@ -44,19 +97,11 @@ namespace Generator.Writing
         }
     }
 
-    public record CSFunctionPointer(string TypeName, bool Constant) : BaseCSType, IConstantCSType
+    public record CSBool8(bool Constant) : BaseCSType, IConstantCSType
     {
         public override string ToCSString()
         {
-            return "IntPtr";
-        }
-    }
-
-    public record CSDelegateType(string TypeName) : BaseCSType
-    {
-        public override string ToCSString()
-        {
-            return TypeName;
+            return "byte";
         }
     }
 
@@ -68,11 +113,36 @@ namespace Generator.Writing
         }
     }
 
-    public record CSBool8(bool Constant) : BaseCSType, IConstantCSType
+    public record CSString(bool Nullable) : BaseCSType
     {
         public override string ToCSString()
         {
-            return "byte";
+            return $"string{(Nullable ? "?" : "")}";
+        }
+    }
+
+    public record CSPointer(BaseCSType BaseType, bool Constant) : BaseCSType, IConstantCSType
+    {
+        public override string ToCSString()
+        {
+            return $"{BaseType.ToCSString()}*";
+        }
+    }
+
+    public record CSRef(CSRef.Type RefType, BaseCSType ReferencedType) : BaseCSType
+    {
+        public enum Type { Ref, Out, In }
+
+        public override string ToCSString()
+        {
+            string modifier = RefType switch
+            {
+                Type.Ref => "ref",
+                Type.Out => "out",
+                Type.In => "in",
+                _ => throw new Exception()
+            };
+            return $"{modifier} {ReferencedType.ToCSString()}";
         }
     }
 
@@ -99,44 +169,6 @@ namespace Generator.Writing
         }
     }
 
-    public record CSPointer(BaseCSType BaseType, bool Constant) : BaseCSType, IConstantCSType
-    {
-        public override string ToCSString()
-        {
-            return $"{BaseType.ToCSString()}*";
-        }
-    }
-
-    public record CSVoid(bool Constant) : BaseCSType, IConstantCSType
-    {
-        public override string ToCSString() => "void";
-    }
-
-    public record CSRef(CSRef.Type RefType, BaseCSType ReferencedType) : BaseCSType
-    {
-        public enum Type { Ref, Out, In }
-
-        public override string ToCSString()
-        {
-            string modifier = RefType switch
-            {
-                Type.Ref => "ref",
-                Type.Out => "out",
-                Type.In => "in",
-                _ => throw new Exception()
-            };
-            return $"{modifier} {ReferencedType.ToCSString()}";
-        }
-    }
-
-    public record CSString(bool Nullable) : BaseCSType
-    {
-        public override string ToCSString()
-        {
-            return $"string{(Nullable ? "?" : "")}";
-        }
-    }
-
     public record CSGenericType(string GenericTypeName) : BaseCSType
     {
         public override string ToCSString()
@@ -145,19 +177,25 @@ namespace Generator.Writing
         }
     }
 
-    public record Parameter(
-        BaseCSType Type,
-        string Name,
-        Expression? Length);
+    public record CSFunctionPointer(string TypeName, bool Constant) : BaseCSType, IConstantCSType
+    {
+        public override string ToCSString()
+        {
+            return "IntPtr";
+        }
+    }
 
-    public record NativeFunction(
-        string EntryPoint,
-        string FunctionName,
-        List<Parameter> Parameters,
-        BaseCSType ReturnType);
+    public record CSDelegateType(string TypeName) : BaseCSType
+    {
+        public override string ToCSString()
+        {
+            return TypeName;
+        }
+    }
 
-    public record OverloadedFunction(NativeFunction NativeFunction, Overload[] Overloads, bool ChangeNativeName);
 
+    // FIXME: Clean up our naming/renaming of variables entirely. Do we even need/want a nametable?
+    // If we do this is definitely not the correct API for it.
     public class NameTable
     {
         public Dictionary<Parameter, string> Table = new Dictionary<Parameter, string>();
@@ -200,44 +238,13 @@ namespace Generator.Writing
         }
     }
 
-    public interface IOverloadLayer
+
+    public enum OutputApi
     {
-        public void WritePrologue(IndentedTextWriter writer, NameTable nameTable);
-        public string? WriteEpilogue(IndentedTextWriter writer, NameTable nameTable, string? returnName);
+        Invalid,
+        GL,
+        GLCompat,
+        GLES1,
+        GLES3
     }
-
-    public record Overload(
-        Overload? NestedOverload,
-        IOverloadLayer? MarshalLayerToNested,
-        Parameter[] InputParameters,
-        NativeFunction NativeFunction,
-        BaseCSType ReturnType,
-        NameTable NameTable,
-        string ReturnVariableName,
-        string[] GenericTypes,
-        string OverloadName);
-
-    public record EnumGroupMember(
-        string Name,
-        ulong Value,
-        string[]? Groups,
-        bool IsFlag) : IEquatable<EnumGroupMember?>;
-
-    public record EnumGroup(
-        string Name,
-        bool IsFlags,
-        List<EnumGroupMember> Members);
-
-    public record GLVendorFunctions(
-        List<NativeFunction> NativeFunctions,
-        List<Overload[]> OverloadsGroupedByNativeFunctions,
-        HashSet<NativeFunction> NativeFunctionsWithPostfix);
-
-    public record GLOutputApi(
-        OutputApi Api,
-        Dictionary<string, GLVendorFunctions> Vendors,
-        List<EnumGroupMember> AllEnums,
-        List<EnumGroup> EnumGroups);
-
-    public record OutputData(List<GLOutputApi> Apis);
 }

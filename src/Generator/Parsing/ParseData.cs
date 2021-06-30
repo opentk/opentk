@@ -64,16 +64,27 @@ namespace Generator.Parsing
         List<string> Enums);
 
 
-    public record GLParameter(PType Type, string Name, Expression? Length);
+    public record GLParameter(
+        PType Type,
+        string Name,
+        Expression? Length);
 
-    public record PType(GLType Type, HandleType? Handle, string? Group);
+    public record PType(
+        GLType Type,
+        HandleType? Handle,
+        string? Group);
 
 
     public record GLType();
 
-    public record GLBaseType(string OriginalString, PrimitiveType Type, bool Constant) : GLType;
+    public record GLBaseType(
+        string OriginalString,
+        PrimitiveType Type,
+        bool Constant) : GLType;
 
-    public record GLPointerType(GLType BaseType, bool Constant) : GLType;
+    public record GLPointerType(
+        GLType BaseType,
+        bool Constant) : GLType;
 
 
     public record Expression
