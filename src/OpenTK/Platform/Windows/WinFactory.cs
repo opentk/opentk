@@ -80,6 +80,7 @@ namespace OpenTK.Platform.Windows
 
         public override INativeWindow CreateNativeWindow(int x, int y, int width, int height, string title, GraphicsMode mode, GameWindowFlags options, DisplayDevice device)
         {
+            RawInputDriver.UseVirtualKeys = (options & GameWindowFlags.UseVirtualKeys) == GameWindowFlags.UseVirtualKeys;
             return new WinGLNative(x, y, width, height, title, options, device);
         }
 

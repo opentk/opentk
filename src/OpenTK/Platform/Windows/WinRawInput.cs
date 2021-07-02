@@ -37,6 +37,7 @@ namespace OpenTK.Platform.Windows
         private WinRawKeyboard keyboard_driver;
         private WinRawMouse mouse_driver;
         private WinRawJoystick joystick_driver;
+        private bool use_virtual_keys;
 
         private IntPtr DevNotifyHandle;
         private static readonly Guid DeviceInterfaceHid = new Guid("4D1E55B2-F16F-11CF-88CB-001111000030");
@@ -126,7 +127,7 @@ namespace OpenTK.Platform.Windows
 
         protected override void CreateDrivers()
         {
-            keyboard_driver = new WinRawKeyboard(Parent.Handle);
+            keyboard_driver = new WinRawKeyboard(Parent.Handle) {UseVirtualKeys = use_virtual_keys};
             mouse_driver = new WinRawMouse(Parent.Handle);
             joystick_driver = new WinRawJoystick(Parent.Handle);
             DevNotifyHandle = RegisterForDeviceNotifications(Parent);
@@ -161,6 +162,16 @@ namespace OpenTK.Platform.Windows
             }
             Functions.GetRawInputDeviceList(ridl, ref count, API.RawInputDeviceListSize);
             return ridl;
+        }
+
+        public bool UseVirtualKeys
+        {
+            set
+            {
+                // update driver if it already exists
+                if (keyboard_driver != null) keyboard_driver.UseVirtualKeys = value;
+                use_virtual_keys = value;
+            }
         }
 
         public override IKeyboardDriver2 KeyboardDriver
