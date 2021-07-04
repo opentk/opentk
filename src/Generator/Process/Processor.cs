@@ -11,21 +11,43 @@ namespace Generator.Process
     public static class Processor
     {
 
-        // These types are only used to pass data from ProcessSpec to GetOutputApiFromRequireTags
+        // These types are only used to pass data from ProcessSpec to GetOutputApiFromRequireTags.
         private record ProcessedGLInformation(
             Dictionary<string, OverloadedFunction> AllFunctions,
             Dictionary<NativeFunction, string[]> FunctionToEnumGroupsUsed,
             Dictionary<OutputApi, Dictionary<string, EnumGroupMember>> AllEnumsPerAPI,
-            Dictionary<string, bool> AllEnumGroupsToIsBitmask);
+            List<EnumGroupInfo> AllEnumGroups);
 
         public record OverloadedFunction(
             NativeFunction NativeFunction,
             Overload[] Overloads,
             bool ChangeNativeName);
 
+        public sealed record EnumGroupInfo(
+            string GroupName,
+            bool IsFlags)
+        {
+            // To deduplicate these correctly we need special logic for the IsFlags bool
+            // so we don't consider it in the equality check and hashcode to allow for that.
+            //
+            // Example:
+            // PathFontStyle uses GL_NONE which is not marked as bitmask
+            // but other entries such as GL_BOLD_BIT_NV is marked as bitmask.
+            //
+            // When this case happens we want to consider the entire group as a bitmask.
+            //
+            // In the current spec this case only happens for PathFontStyle.
+            // - 2021-07-04
+            public bool Equals(EnumGroupInfo? other) =>
+                other?.GroupName == GroupName;
+
+            public override int GetHashCode() =>
+                HashCode.Combine(GroupName);
+        };
+
         public static OutputData ProcessSpec(Specification spec)
         {
-            // The first thing we do is process all of the functions defined into a dictionary of NativeFunctions
+            // The first thing we do is process all of the functions defined into a dictionary of NativeFunctions.
             Dictionary<string, OverloadedFunction> allFunctions = new Dictionary<string, OverloadedFunction>(spec.Commands.Count);
             Dictionary<NativeFunction, string[]> functionToEnumGroupsUsed = new Dictionary<NativeFunction, string[]>();
             foreach (var command in spec.Commands)
@@ -40,7 +62,7 @@ namespace Generator.Process
             Dictionary<OutputApi, Dictionary<string, EnumGroupMember>> allEnumsPerAPI = new Dictionary<OutputApi, Dictionary<string, EnumGroupMember>>();
             // This dictionary is used both as a list of all enums (which is seperate from *the* all enum),
             // and as a dictionary to look up if an enum group is a bitmask.
-            Dictionary<string, bool> allEnumGroupsToIsBitmask = new Dictionary<string, bool>();
+            HashSet<EnumGroupInfo> allEnumGroups = new HashSet<EnumGroupInfo>();
             foreach (var enumsEntry in spec.Enums)
             {
                 bool isFlag = enumsEntry.Type == EnumType.Bitmask;
@@ -48,7 +70,22 @@ namespace Generator.Process
                 {
                     foreach (var group in @enum.Groups)
                     {
-                        allEnumGroupsToIsBitmask.TryAdd(group, isFlag);
+                        // If the first enums tag wasn't flagged as a bitmask, but later ones in the same group are.
+                        // Then we want the group to be considered a bitmask.
+                        if (allEnumGroups.TryGetValue(new EnumGroupInfo(group, isFlag), out var actual))
+                        {
+                            // In the current spec this case never happens, but it could.
+                            // - 2021-07-04
+                            if (isFlag == true && actual.IsFlags == false)
+                            {
+                                allEnumGroups.Remove(actual);
+                                allEnumGroups.Add(actual with { IsFlags = true });
+                            }
+                        }
+                        else
+                        {
+                            allEnumGroups.Add(new EnumGroupInfo(group, isFlag));
+                        }
                     }
 
                     EnumGroupMember data = new EnumGroupMember(NameMangler.MangleEnumName(@enum.Name), @enum.Value, @enum.Groups, isFlag);
@@ -99,7 +136,7 @@ namespace Generator.Process
             // OpenGL ES doesn't have any remove tags as of yet, we are just doing this in case it gets added later. // 2021-03-04
             var gles3Removes = GetRemoveEntries(features, GLAPI.GLES2);
 
-            var info = new ProcessedGLInformation(allFunctions, functionToEnumGroupsUsed, allEnumsPerAPI, allEnumGroupsToIsBitmask);
+            var info = new ProcessedGLInformation(allFunctions, functionToEnumGroupsUsed, allEnumsPerAPI, allEnumGroups.ToList());
 
             var gl = GetOutputApiFromRequireTags(OutputApi.GL, glRequires, glRemoves, info);
             var glCompat = GetOutputApiFromRequireTags(OutputApi.GLCompat, glRequires, new List<RemoveEntry>(), info);
@@ -169,7 +206,10 @@ namespace Generator.Process
             HashSet<string> groupsReferencedByFunctions = new HashSet<string>();
             // A list of functions contained in this version.
             Dictionary<string, HashSet<OverloadedFunction>> functionsByVendor = new Dictionary<string, HashSet<OverloadedFunction>>();
-            HashSet<EnumGroupMember> enums = new HashSet<EnumGroupMember>();
+            //HashSet<EnumGroupMember> enums = new HashSet<EnumGroupMember>();
+            Dictionary<string, List<EnumGroupMember>> enums = new Dictionary<string, List<EnumGroupMember>>();
+
+            HashSet<EnumGroupMember> theAllEnumGroup = new HashSet<EnumGroupMember>();
 
             // Deconstruct glInformation for easier access
             var (allFunctions, functionToEnumGroupsUsed, allEnumsPerAPI, allEnumGroupsToIsBitmask) = glInformation;
@@ -197,7 +237,24 @@ namespace Generator.Process
                     var enumsDict = allEnumsPerAPI[api];
                     if (enumsDict.TryGetValue(enumName, out var @enum))
                     {
-                        enums.Add(@enum);
+                        foreach (string group in @enum.Groups)
+                        {
+                            if (enums.TryGetValue(group, out var groupMembers) == false)
+                            {
+                                groupMembers = new List<EnumGroupMember>();
+                                enums.Add(group, groupMembers);
+                            }
+
+                            if (groupMembers.Find(g => g.Name == @enum.Name) == null)
+                            {
+                                groupMembers.Add(@enum);
+                            }
+                        }
+
+                        if (@enum.Value <= uint.MaxValue)
+                        {
+                            theAllEnumGroup.Add(@enum);
+                        }
                     }
                     else
                     {
@@ -218,40 +275,16 @@ namespace Generator.Process
             }
 
             // Go through all of the enums and put them into their groups
-            Dictionary<string, List<EnumGroupMember>> enumGroups = new Dictionary<string, List<EnumGroupMember>>();
 
             // Add keys + lists for all enum names
-            foreach (var groupName in allEnumGroupsToIsBitmask.Keys)
-            {
-                enumGroups.Add(groupName, new List<EnumGroupMember>());
-            }
-
-            List<EnumGroupMember> allEnums = new List<EnumGroupMember>();
-            foreach (var @enum in enums)
-            {
-                // The all enum contains all enums that fit in a uint.
-                // So if they fit, they get added.
-                if (@enum.Value <= uint.MaxValue)
-                {
-                    allEnums.Add(@enum);
-                }
-
-                // This enum doesn't have a group, so we skip it.
-                // It will still appear in the All enum.
-                if (@enum.Groups.Length == 0) continue;
-
-                foreach (var groupName in @enum.Groups)
-                {
-                    enumGroups.AddToNestedList(groupName, @enum);
-                    //enumGroups[groupName].Add(@enum);
-                }
-            }
-
             List<EnumGroup> finalGroups = new List<EnumGroup>();
-            foreach (var (groupName, members) in enumGroups)
+            foreach (var (groupName, isFlags) in allEnumGroupsToIsBitmask)
             {
+                enums.TryGetValue(groupName, out List<EnumGroupMember>? members);
+                members ??= new List<EnumGroupMember>();
+
                 // SpecialNumbers is not an enum group that we want to output.
-                // We handle these entries differently as some of the entries are longer than an int.
+                // We handle these entries differently as some of the entries don't fit in an int.
                 if (groupName == "SpecialNumbers")
                     continue;
 
@@ -262,7 +295,6 @@ namespace Generator.Process
                 if (members.Count <= 0 && groupsReferencedByFunctions.Contains(groupName) == false)
                     continue;
 
-                bool isFlags = allEnumGroupsToIsBitmask[groupName];
                 finalGroups.Add(new EnumGroup(groupName, isFlags, members));
             }
 
@@ -287,7 +319,7 @@ namespace Generator.Process
                 }
             }
 
-            return new GLOutputApi(api, vendors, allEnums, finalGroups);
+            return new GLOutputApi(api, vendors, theAllEnumGroup.ToList(), finalGroups);
         }
 
         public static NativeFunction MakeNativeFunction(Command command, out string[] enumGroupsUsed)
