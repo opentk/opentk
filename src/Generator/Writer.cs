@@ -44,7 +44,7 @@ namespace Generator.Writing
                 WriteNativeFunctions(directoryPath, apiNamespace, api.Vendors);
                 WriteOverloads(directoryPath, apiNamespace, api.Vendors);
 
-                WriteEnums(directoryPath, apiNamespace, api.AllEnums, api.EnumGroups);
+                WriteEnums(directoryPath, apiNamespace, api.TheAllEnumGroup, api.EnumGroups);
             }
         }
 
