@@ -243,6 +243,7 @@ namespace Generator.Process
                 foreach (var groupName in @enum.Groups)
                 {
                     enumGroups.AddToNestedList(groupName, @enum);
+                    //enumGroups[groupName].Add(@enum);
                 }
             }
 
