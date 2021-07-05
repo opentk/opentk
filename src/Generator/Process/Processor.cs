@@ -60,8 +60,6 @@ namespace Generator.Process
             }
 
             Dictionary<OutputApi, Dictionary<string, EnumGroupMember>> allEnumsPerAPI = new Dictionary<OutputApi, Dictionary<string, EnumGroupMember>>();
-            // This dictionary is used both as a list of all enums (which is seperate from *the* all enum),
-            // and as a dictionary to look up if an enum group is a bitmask.
             HashSet<EnumGroupInfo> allEnumGroups = new HashSet<EnumGroupInfo>();
             foreach (var enumsEntry in spec.Enums)
             {
