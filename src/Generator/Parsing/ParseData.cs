@@ -182,9 +182,8 @@ namespace Generator.Parsing
     public enum PrimitiveType
     {
         Invalid,
+
         Void,
-        Bool8,
-        Char8,
         Byte,
         Sbyte,
         Short,
@@ -198,13 +197,13 @@ namespace Generator.Parsing
         Double,
         IntPtr,
         Nint,
+        Enum,
+        Bool8,
+        Char8,
         VoidPtr,
 
-        Enum,
 
         GLHandleARB,
-
-        // The following have a custom c# implementation in the writer.
         GLSync,
         CLContext,
         CLEvent,
