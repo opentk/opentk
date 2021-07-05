@@ -95,11 +95,11 @@ let testDir = binDir </> "test"
 // ---------
 
 let toolProjects =
-    !! "src/GeneratorV2/**/*.??proj"
+    !! "src/Generator/**/*.??proj"
 
 let releaseProjects =
     !! "src/**/*.??proj"
-    -- "src/GeneratorV2/**"
+    -- "src/Generator/**"
     -- "src/OpenALGenerator/**"
     -- "src/OpenALTest/**"
     -- "src/OpenAL/OpenTK.OpenAL.Extensions/**"
@@ -159,7 +159,7 @@ Target.create "GenerateBindings" (fun _ ->
     Trace.log " --- Generating bindings --- "
     let releaseProjects = releaseProjects.And "src/OpenTK.Graphics/*.csproj"
     let framework = "net5.0"
-    let projFile = "src/GeneratorV2/GeneratorV2.csproj"
+    let projFile = "src/Generator/Generator.csproj"
 
     let args = [  ] |> asArgs
     DotNet.runWithDefaultOptions framework projFile args |> ignore)
