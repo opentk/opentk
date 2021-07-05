@@ -40,6 +40,29 @@ namespace OpenTK.Graphics
         public unsafe delegate void GLDebugProcNV();
     }
 
+    public static class SpecialNumbers
+    {
+        public const int False = 0;
+        public const int NoError = 0;
+        public const int Zero = 0;
+        public const int None = 0;
+        public const int NoneOES = 0;
+        public const int True = 1;
+        public const int One = 1;
+        public const uint InvalidIndex = 0xFFFFFFFF;
+        public const int AllPixelsAMD = unchecked((int)0xFFFFFFFF);
+        public const ulong TimeoutIgnored = 0xFFFFFFFFFFFFFFFF;
+        public const ulong TimeoutIgnoredAPPLE = 0xFFFFFFFFFFFFFFFF;
+        // These are used for #ifdefs in the c headers, so we don't need to include them in the output bindings.
+        // They are just written here for completeness.
+        //  - 2021-07-05
+        // public const int VersionESCL10 = 1;
+        // public const int VersionESCM11 = 1;
+        // public const int VersionESCL11 = 1;
+        public const int UUIDSizeEXT = 16;
+        public const int LUIDSizeEXT = 8;
+    }
+
     public struct CLContext
     {
         public IntPtr Value;
