@@ -357,8 +357,8 @@ namespace Generator.Process
                 case GLBaseType bt when handle == null:
                     return bt.Type switch
                     {
+                        // C# primitive types
                         PrimitiveType.Void => new CSVoid(bt.Constant),
-
                         PrimitiveType.Byte => new CSPrimitive("byte", bt.Constant),
                         PrimitiveType.Sbyte => new CSPrimitive("sbyte", bt.Constant),
                         PrimitiveType.Short => new CSPrimitive("short", bt.Constant),
@@ -373,11 +373,14 @@ namespace Generator.Process
                         PrimitiveType.Float => new CSPrimitive("float", bt.Constant),
                         PrimitiveType.Double => new CSPrimitive("double", bt.Constant),
 
+                        // C interop types
                         PrimitiveType.Bool8 => new CSBool8(bt.Constant),
                         PrimitiveType.Char8 => new CSChar8(bt.Constant),
 
+                        // Enum
                         PrimitiveType.Enum => new CSPrimitive(group ?? "All", bt.Constant),
 
+                        // Pointers
                         PrimitiveType.IntPtr => new CSPrimitive("IntPtr", bt.Constant),
                         PrimitiveType.Nint => new CSPrimitive("nint", bt.Constant),
                         PrimitiveType.VoidPtr => new CSPointer(new CSVoid(false), bt.Constant),
@@ -387,9 +390,11 @@ namespace Generator.Process
 
                         PrimitiveType.GLSync => new CSStruct("GLSync", bt.Constant, new CSPrimitive("IntPtr", bt.Constant)),
 
+                        // OpenCL structs
                         PrimitiveType.CLContext => new CSStruct("CLContext", bt.Constant, new CSPrimitive("IntPtr", bt.Constant)),
                         PrimitiveType.CLEvent => new CSStruct("CLEvent", bt.Constant, new CSPrimitive("IntPtr", bt.Constant)),
 
+                        // Function pointer types
                         PrimitiveType.GLDebugProc => new CSFunctionPointer("GLDebugProc", bt.Constant),
                         PrimitiveType.GLDebugProcARB => new CSFunctionPointer("GLDebugProcARB", bt.Constant),
                         PrimitiveType.GLDebugProcKHR => new CSFunctionPointer("GLDebugProcKHR", bt.Constant),
