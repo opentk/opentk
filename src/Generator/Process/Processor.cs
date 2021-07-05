@@ -325,40 +325,41 @@ namespace Generator.Process
             HashSet<string> referencedEnumGroups = new HashSet<string>();
 
             List<Parameter> parameters = new List<Parameter>();
-            foreach (GLParameter p in command.Parameters)
+            foreach (GLParameter parameter in command.Parameters)
             {
-                BaseCSType t = MakeCSType(p.Type.Type, p.Type.Handle, p.Type.Group, out Expression? length);
-                parameters.Add(new Parameter(t, NameMangler.MangleParameterName(p.Name), p.Length ?? length));
-                if (p.Type.Group != null)
-                    referencedEnumGroups.Add(p.Type.Group);
+                BaseCSType type = MakeCSType(parameter.Type.Type, parameter.Type.Handle, parameter.Type.Group);
+                parameters.Add(new Parameter(type, NameMangler.MangleParameterName(parameter.Name), parameter.Length));
+                if (parameter.Type.Group != null)
+                {
+                    referencedEnumGroups.Add(parameter.Type.Group);
+                }
             }
 
-            BaseCSType returnType = MakeCSType(command.ReturnType.Type, command.ReturnType.Handle, command.ReturnType.Group, out _);
+            BaseCSType returnType = MakeCSType(command.ReturnType.Type, command.ReturnType.Handle, command.ReturnType.Group);
             if (command.ReturnType.Group != null)
+            {
                 referencedEnumGroups.Add(command.ReturnType.Group);
+            }
 
             return new NativeFunction(command.EntryPoint, functionName, parameters, returnType, referencedEnumGroups.ToArray());
         }
 
-        public static BaseCSType MakeCSType(GLType type, HandleType? handle, string? group, out Expression? length)
+        public static BaseCSType MakeCSType(GLType type, HandleType? handle, string? group)
         {
-            length = default;
-            if (handle != null && type is GLBaseType handleType)
-            {
-                return new CSStruct(handle.Value.ToString(), handleType.Constant, new CSPrimitive("int", handleType.Constant));
-            }
-
             switch (type)
             {
                 case GLPointerType pt:
-                    return new CSPointer(MakeCSType(pt.BaseType, handle, group, out length), pt.Constant);
-                case GLBaseType bt:
+                    return new CSPointer(MakeCSType(pt.BaseType, handle, group), pt.Constant);
+
+                case GLBaseType bt when handle != null:
+                    return new CSStruct(handle.Value.ToString(), bt.Constant, new CSPrimitive("int", bt.Constant));
+
+                case GLBaseType bt when handle == null:
                     return bt.Type switch
                     {
                         PrimitiveType.Void => new CSVoid(bt.Constant),
-                        PrimitiveType.Bool8 => new CSBool8(bt.Constant),
+
                         PrimitiveType.Byte => new CSPrimitive("byte", bt.Constant),
-                        PrimitiveType.Char8 => new CSChar8(bt.Constant),
                         PrimitiveType.Sbyte => new CSPrimitive("sbyte", bt.Constant),
                         PrimitiveType.Short => new CSPrimitive("short", bt.Constant),
                         PrimitiveType.Ushort => new CSPrimitive("ushort", bt.Constant),
@@ -371,27 +372,30 @@ namespace Generator.Process
                         PrimitiveType.Half => new CSStruct("Half", bt.Constant, new CSPrimitive("ushort", bt.Constant)),
                         PrimitiveType.Float => new CSPrimitive("float", bt.Constant),
                         PrimitiveType.Double => new CSPrimitive("double", bt.Constant),
-                        PrimitiveType.IntPtr => new CSPrimitive("IntPtr", bt.Constant),
-                        PrimitiveType.Nint => new CSPrimitive("nint", bt.Constant),
 
-                        PrimitiveType.VoidPtr => new CSPointer(new CSVoid(false), bt.Constant),
+                        PrimitiveType.Bool8 => new CSBool8(bt.Constant),
+                        PrimitiveType.Char8 => new CSChar8(bt.Constant),
 
-                        // FIXME: Should this be treated special?
                         PrimitiveType.Enum => new CSPrimitive(group ?? "All", bt.Constant),
 
-                        // FIXME: Are these just normal CSType? probably...
+                        PrimitiveType.IntPtr => new CSPrimitive("IntPtr", bt.Constant),
+                        PrimitiveType.Nint => new CSPrimitive("nint", bt.Constant),
+                        PrimitiveType.VoidPtr => new CSPointer(new CSVoid(false), bt.Constant),
+
+                        // FIXME: Output the GLHandleARB again...
                         PrimitiveType.GLHandleARB => new CSStruct("GLHandleARB", bt.Constant, new CSPrimitive("IntPtr", bt.Constant)),
+
                         PrimitiveType.GLSync => new CSStruct("GLSync", bt.Constant, new CSPrimitive("IntPtr", bt.Constant)),
 
                         PrimitiveType.CLContext => new CSStruct("CLContext", bt.Constant, new CSPrimitive("IntPtr", bt.Constant)),
                         PrimitiveType.CLEvent => new CSStruct("CLEvent", bt.Constant, new CSPrimitive("IntPtr", bt.Constant)),
 
-                        PrimitiveType.GLDEBUGPROC => new CSFunctionPointer("GLDebugProc", bt.Constant),
-                        PrimitiveType.GLDEBUGPROCARB => new CSFunctionPointer("GLDebugProcARB", bt.Constant),
-                        PrimitiveType.GLDEBUGPROCKHR => new CSFunctionPointer("GLDebugProcKHR", bt.Constant),
-                        PrimitiveType.GLDEBUGPROCAMD => new CSFunctionPointer("GLDebugProcAMD", bt.Constant),
-                        PrimitiveType.GLDEBUGPROCNV => new CSFunctionPointer("GLDebugProcNV", bt.Constant),
-                        PrimitiveType.GLVULKANPROCNV => new CSFunctionPointer("GLVulkanProcNV", bt.Constant),
+                        PrimitiveType.GLDebugProc => new CSFunctionPointer("GLDebugProc", bt.Constant),
+                        PrimitiveType.GLDebugProcARB => new CSFunctionPointer("GLDebugProcARB", bt.Constant),
+                        PrimitiveType.GLDebugProcKHR => new CSFunctionPointer("GLDebugProcKHR", bt.Constant),
+                        PrimitiveType.GLDebugProcAMD => new CSFunctionPointer("GLDebugProcAMD", bt.Constant),
+                        PrimitiveType.GLDebugProcNV => new CSFunctionPointer("GLDebugProcNV", bt.Constant),
+                        PrimitiveType.GLVulkanProcNV => new CSFunctionPointer("GLVulkanProcNV", bt.Constant),
 
                         PrimitiveType.Invalid => throw new Exception(),
                         _ => throw new Exception(),

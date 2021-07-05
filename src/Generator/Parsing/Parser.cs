@@ -302,15 +302,15 @@ namespace Generator.Parsing
                     "GLsync" => PrimitiveType.GLSync,
                     "_cl_context" => PrimitiveType.CLContext,
                     "_cl_event" => PrimitiveType.CLEvent,
-                    "GLDEBUGPROC" => PrimitiveType.GLDEBUGPROC,
-                    "GLDEBUGPROCARB" => PrimitiveType.GLDEBUGPROCARB,
-                    "GLDEBUGPROCKHR" => PrimitiveType.GLDEBUGPROCKHR,
-                    "GLDEBUGPROCAMD" => PrimitiveType.GLDEBUGPROCAMD,
-                    "GLDEBUGPROCNV" => PrimitiveType.GLDEBUGPROCNV,
+                    "GLDEBUGPROC" => PrimitiveType.GLDebugProc,
+                    "GLDEBUGPROCARB" => PrimitiveType.GLDebugProcARB,
+                    "GLDEBUGPROCKHR" => PrimitiveType.GLDebugProcKHR,
+                    "GLDEBUGPROCAMD" => PrimitiveType.GLDebugProcAMD,
+                    "GLDEBUGPROCNV" => PrimitiveType.GLDebugProcNV,
                     // This isn't actually used in the output bindings.
                     // But we leave it here as a primitive type so we have the information if we need it later.
                     // - 2021-06-23
-                    "GLVULKANPROCNV" => PrimitiveType.GLVULKANPROCNV,
+                    "GLVULKANPROCNV" => PrimitiveType.GLVulkanProcNV,
                     _ => PrimitiveType.Invalid,
                 };
 
