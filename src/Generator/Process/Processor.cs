@@ -14,7 +14,6 @@ namespace Generator.Process
         // These types are only used to pass data from ProcessSpec to GetOutputApiFromRequireTags.
         private record ProcessedGLInformation(
             Dictionary<string, OverloadedFunction> AllFunctions,
-            Dictionary<NativeFunction, string[]> FunctionToEnumGroupsUsed,
             Dictionary<OutputApi, Dictionary<string, EnumGroupMember>> AllEnumsPerAPI,
             List<EnumGroupInfo> AllEnumGroups);
 
@@ -49,14 +48,12 @@ namespace Generator.Process
         {
             // The first thing we do is process all of the functions defined into a dictionary of NativeFunctions.
             Dictionary<string, OverloadedFunction> allFunctions = new Dictionary<string, OverloadedFunction>(spec.Commands.Count);
-            Dictionary<NativeFunction, string[]> functionToEnumGroupsUsed = new Dictionary<NativeFunction, string[]>();
             foreach (var command in spec.Commands)
             {
-                var nativeFunction = MakeNativeFunction(command, out string[] usedEnumGroups);
-                var overloads = GenerateOverloads(nativeFunction, out bool changeNativeName);
+                NativeFunction nativeFunction = MakeNativeFunction(command);
+                OverloadedFunction overloadedFunction = GenerateOverloads(nativeFunction);
 
-                functionToEnumGroupsUsed.Add(nativeFunction, usedEnumGroups);
-                allFunctions.Add(nativeFunction.EntryPoint, new OverloadedFunction(nativeFunction, overloads, changeNativeName));
+                allFunctions.Add(nativeFunction.EntryPoint, overloadedFunction);
             }
 
             Dictionary<OutputApi, Dictionary<string, EnumGroupMember>> allEnumsPerAPI = new Dictionary<OutputApi, Dictionary<string, EnumGroupMember>>();
@@ -134,7 +131,7 @@ namespace Generator.Process
             // OpenGL ES doesn't have any remove tags as of yet, we are just doing this in case it gets added later. // 2021-03-04
             var gles3Removes = GetRemoveEntries(features, GLAPI.GLES2);
 
-            var info = new ProcessedGLInformation(allFunctions, functionToEnumGroupsUsed, allEnumsPerAPI, allEnumGroups.ToList());
+            var info = new ProcessedGLInformation(allFunctions, allEnumsPerAPI, allEnumGroups.ToList());
 
             var gl = GetOutputApiFromRequireTags(OutputApi.GL, glRequires, glRemoves, info);
             var glCompat = GetOutputApiFromRequireTags(OutputApi.GLCompat, glRequires, new List<RemoveEntry>(), info);
@@ -210,7 +207,7 @@ namespace Generator.Process
             HashSet<EnumGroupMember> theAllEnumGroup = new HashSet<EnumGroupMember>();
 
             // Deconstruct glInformation for easier access
-            var (allFunctions, functionToEnumGroupsUsed, allEnumsPerAPI, allEnumGroupsToIsBitmask) = glInformation;
+            var (allFunctions, allEnumsPerAPI, allEnumGroupsToIsBitmask) = glInformation;
 
             // Go through all the functions that are required for this version and add them here.
             foreach (var (vendor, requireEntry) in requireEntries)
@@ -221,8 +218,7 @@ namespace Generator.Process
                     {
                         functionsByVendor.AddToNestedHashSet(vendor, function);
 
-                        var functionGroups = functionToEnumGroupsUsed[function.NativeFunction];
-                        groupsReferencedByFunctions.UnionWith(functionGroups);
+                        groupsReferencedByFunctions.UnionWith(function.NativeFunction.ReferencedEnumGroups);
                     }
                     else
                     {
@@ -320,11 +316,11 @@ namespace Generator.Process
             return new GLOutputApi(api, vendors, theAllEnumGroup.ToList(), finalGroups);
         }
 
-        public static NativeFunction MakeNativeFunction(Command command, out string[] enumGroupsUsed)
+        public static NativeFunction MakeNativeFunction(Command command)
         {
             string functionName = NameMangler.MangleFunctionName(command.EntryPoint);
 
-            HashSet<string> enumGroups = new HashSet<string>();
+            HashSet<string> referencedEnumGroups = new HashSet<string>();
 
             List<Parameter> parameters = new List<Parameter>();
             foreach (var p in command.Parameters)
@@ -332,16 +328,14 @@ namespace Generator.Process
                 BaseCSType t = MakeCSType(p.Type.Type, p.Type.Handle, p.Type.Group, out var length);
                 parameters.Add(new Parameter(t, NameMangler.MangleParameterName(p.Name), p.Length ?? length));
                 if (p.Type.Group != null)
-                    enumGroups.Add(p.Type.Group);
+                    referencedEnumGroups.Add(p.Type.Group);
             }
 
             BaseCSType returnType = MakeCSType(command.ReturnType.Type, command.ReturnType.Handle, command.ReturnType.Group, out _);
             if (command.ReturnType.Group != null)
-                enumGroups.Add(command.ReturnType.Group);
+                referencedEnumGroups.Add(command.ReturnType.Group);
 
-            enumGroupsUsed = enumGroups.ToArray();
-
-            return new NativeFunction(command.EntryPoint, functionName, parameters, returnType);
+            return new NativeFunction(command.EntryPoint, functionName, parameters, returnType, referencedEnumGroups.ToArray());
         }
 
         public static BaseCSType MakeCSType(GLType type, HandleType? handle, string? group, out Expression? length)
@@ -410,13 +404,13 @@ namespace Generator.Process
         // FIXME: Figure out how we do return type overloading? Do we rename the raw function to something else?
         // FIXME: Should we only be able to have one return type overload?
         // Maybe we can do the return type overloading in a post processing step?
-        public static Overload[] GenerateOverloads(NativeFunction function, out bool changeNativeName)
+        public static OverloadedFunction GenerateOverloads(NativeFunction nativeFunction)
         {
             List<Overload> overloads = new List<Overload>
             {
                 // Make a "base" overload
-                new Overload(null, null, function.Parameters.ToArray(), function, function.ReturnType,
-                    new NameTable(), "returnValue", Array.Empty<string>(), function.FunctionName),
+                new Overload(null, null, nativeFunction.Parameters.ToArray(), nativeFunction, nativeFunction.ReturnType,
+                    new NameTable(), "returnValue", Array.Empty<string>(), nativeFunction.FunctionName),
             };
 
             bool overloadedOnce = false;
@@ -441,19 +435,19 @@ namespace Generator.Process
             }
             if (overloadedOnce)
             {
-                changeNativeName = false;
+                bool changeNativeName = false;
                 foreach (var overload in overloads)
                 {
-                    if (function.Parameters.Count != overload.InputParameters.Length ||
-                        overload.OverloadName != function.FunctionName)
+                    if (nativeFunction.Parameters.Count != overload.InputParameters.Length ||
+                        overload.OverloadName != nativeFunction.FunctionName)
                     {
                         continue;
                     }
 
                     changeNativeName = true;
-                    for (int i = 0; i < function.Parameters.Count; i++)
+                    for (int i = 0; i < nativeFunction.Parameters.Count; i++)
                     {
-                        if (!function.Parameters[i].Type.Equals(overload.InputParameters[i].Type))
+                        if (!nativeFunction.Parameters[i].Type.Equals(overload.InputParameters[i].Type))
                         {
                             changeNativeName = false;
                             break;
@@ -465,12 +459,11 @@ namespace Generator.Process
                         break;
                     }
                 }
-                return overloads.ToArray();
+                return new OverloadedFunction(nativeFunction, overloads.ToArray(), changeNativeName);
             }
             else
             {
-                changeNativeName = false;
-                return Array.Empty<Overload>();
+                return new OverloadedFunction(nativeFunction, Array.Empty<Overload>(), false);
             }
         }
     }
