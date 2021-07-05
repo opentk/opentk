@@ -26,7 +26,8 @@ namespace Generator.Writing
         string EntryPoint,
         string FunctionName,
         List<Parameter> Parameters,
-        BaseCSType ReturnType);
+        BaseCSType ReturnType,
+        string[] ReferencedEnumGroups);
 
     public record Overload(
         Overload? NestedOverload,
