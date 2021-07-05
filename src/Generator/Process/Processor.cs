@@ -48,7 +48,7 @@ namespace Generator.Process
         {
             // The first thing we do is process all of the functions defined into a dictionary of NativeFunctions.
             Dictionary<string, OverloadedFunction> allFunctions = new Dictionary<string, OverloadedFunction>(spec.Commands.Count);
-            foreach (var command in spec.Commands)
+            foreach (Command command in spec.Commands)
             {
                 NativeFunction nativeFunction = MakeNativeFunction(command);
                 OverloadedFunction overloadedFunction = GenerateOverloads(nativeFunction);
@@ -58,16 +58,16 @@ namespace Generator.Process
 
             Dictionary<OutputApi, Dictionary<string, EnumGroupMember>> allEnumsPerAPI = new Dictionary<OutputApi, Dictionary<string, EnumGroupMember>>();
             HashSet<EnumGroupInfo> allEnumGroups = new HashSet<EnumGroupInfo>();
-            foreach (var enumsEntry in spec.Enums)
+            foreach (Enums enumsEntry in spec.Enums)
             {
                 bool isFlag = enumsEntry.Type == EnumType.Bitmask;
-                foreach (var @enum in enumsEntry.Entries)
+                foreach (EnumEntry @enum in enumsEntry.Entries)
                 {
-                    foreach (var group in @enum.Groups)
+                    foreach (string group in @enum.Groups)
                     {
                         // If the first enums tag wasn't flagged as a bitmask, but later ones in the same group are.
                         // Then we want the group to be considered a bitmask.
-                        if (allEnumGroups.TryGetValue(new EnumGroupInfo(group, isFlag), out var actual))
+                        if (allEnumGroups.TryGetValue(new EnumGroupInfo(group, isFlag), out EnumGroupInfo? actual))
                         {
                             // In the current spec this case never happens, but it could.
                             // - 2021-07-04
@@ -124,19 +124,19 @@ namespace Generator.Process
                 _ => throw new Exception($"Extension '{extension.Name}' doesn't have a proper api tag."),
             }));
 
-            var glRequires = GetRequireEntries(features, extensions, GLAPI.GL);
-            var gles1Requires = GetRequireEntries(features, extensions, GLAPI.GLES1);
-            var gles3Requires = GetRequireEntries(features, extensions, GLAPI.GLES2);
-            var glRemoves = GetRemoveEntries(features, GLAPI.GL);
+            List<(string vendor, RequireEntry entry)> glRequires = GetRequireEntries(features, extensions, GLAPI.GL);
+            List<(string vendor, RequireEntry entry)> gles1Requires = GetRequireEntries(features, extensions, GLAPI.GLES1);
+            List<(string vendor, RequireEntry entry)> gles3Requires = GetRequireEntries(features, extensions, GLAPI.GLES2);
+            List<RemoveEntry> glRemoves = GetRemoveEntries(features, GLAPI.GL);
             // OpenGL ES doesn't have any remove tags as of yet, we are just doing this in case it gets added later. // 2021-03-04
-            var gles3Removes = GetRemoveEntries(features, GLAPI.GLES2);
+            List<RemoveEntry> gles3Removes = GetRemoveEntries(features, GLAPI.GLES2);
 
-            var info = new ProcessedGLInformation(allFunctions, allEnumsPerAPI, allEnumGroups.ToList());
+            ProcessedGLInformation info = new ProcessedGLInformation(allFunctions, allEnumsPerAPI, allEnumGroups.ToList());
 
-            var gl = GetOutputApiFromRequireTags(OutputApi.GL, glRequires, glRemoves, info);
-            var glCompat = GetOutputApiFromRequireTags(OutputApi.GLCompat, glRequires, new List<RemoveEntry>(), info);
-            var gles1 = GetOutputApiFromRequireTags(OutputApi.GLES1, gles1Requires, new List<RemoveEntry>(), info);
-            var gles3 = GetOutputApiFromRequireTags(OutputApi.GLES3, gles3Requires, gles3Removes, info);
+            GLOutputApi gl = GetOutputApiFromRequireTags(OutputApi.GL, glRequires, glRemoves, info);
+            GLOutputApi glCompat = GetOutputApiFromRequireTags(OutputApi.GLCompat, glRequires, new List<RemoveEntry>(), info);
+            GLOutputApi gles1 = GetOutputApiFromRequireTags(OutputApi.GLES1, gles1Requires, new List<RemoveEntry>(), info);
+            GLOutputApi gles3 = GetOutputApiFromRequireTags(OutputApi.GLES3, gles3Requires, gles3Removes, info);
 
             return new OutputData(new List<GLOutputApi>()
             {
@@ -144,11 +144,11 @@ namespace Generator.Process
             });
         }
 
-        private static List<(string, RequireEntry entry)> GetRequireEntries(List<Feature> features, List<Extension> extensions, GLAPI api)
+        private static List<(string vendor, RequireEntry entry)> GetRequireEntries(List<Feature> features, List<Extension> extensions, GLAPI api)
         {
-            List<(string Vendor, RequireEntry entry)> requireEntries = new List<(string Vendor, RequireEntry entry)>();
+            List<(string vendor, RequireEntry entry)> requireEntries = new List<(string vendor, RequireEntry entry)>();
 
-            foreach (var feature in features)
+            foreach (Feature? feature in features)
             {
                 if (feature.Api == api)
                 {
@@ -156,7 +156,7 @@ namespace Generator.Process
                 }
             }
 
-            foreach (var extension in extensions)
+            foreach (Extension extension in extensions)
             {
                 if (extension.SupportedApis.Contains(api))
                 {
@@ -168,7 +168,7 @@ namespace Generator.Process
 
             void AddAllRequires(string vendor, List<RequireEntry> requires)
             {
-                foreach (var require in requires)
+                foreach (RequireEntry require in requires)
                 {
                     requireEntries.Add((vendor, require));
                 }
@@ -179,11 +179,11 @@ namespace Generator.Process
         {
             List<RemoveEntry> removeEntries = new List<RemoveEntry>();
 
-            foreach (var feature in features)
+            foreach (Feature feature in features)
             {
                 if (feature.Api == api)
                 {
-                    foreach (var remove in feature.Removes)
+                    foreach (RemoveEntry remove in feature.Removes)
                     {
                         removeEntries.Add(remove);
                     }
@@ -207,14 +207,16 @@ namespace Generator.Process
             HashSet<EnumGroupMember> theAllEnumGroup = new HashSet<EnumGroupMember>();
 
             // Deconstruct glInformation for easier access
-            var (allFunctions, allEnumsPerAPI, allEnumGroupsToIsBitmask) = glInformation;
+            Dictionary<string, OverloadedFunction> allFunctions = glInformation.AllFunctions;
+            Dictionary<OutputApi, Dictionary<string, EnumGroupMember>> allEnumsPerAPI = glInformation.AllEnumsPerAPI;
+            List<EnumGroupInfo> allEnumGroups = glInformation.AllEnumGroups;
 
             // Go through all the functions that are required for this version and add them here.
-            foreach (var (vendor, requireEntry) in requireEntries)
+            foreach ((string vendor, RequireEntry requireEntry) in requireEntries)
             {
-                foreach (var command in requireEntry.Commands)
+                foreach (string command in requireEntry.Commands)
                 {
-                    if (allFunctions.TryGetValue(command, out var function))
+                    if (allFunctions.TryGetValue(command, out OverloadedFunction? function))
                     {
                         functionsByVendor.AddToNestedHashSet(vendor, function);
 
@@ -226,14 +228,14 @@ namespace Generator.Process
                     }
                 }
 
-                foreach (var enumName in requireEntry.Enums)
+                foreach (string? enumName in requireEntry.Enums)
                 {
-                    var enumsDict = allEnumsPerAPI[api];
-                    if (enumsDict.TryGetValue(enumName, out var @enum))
+                    Dictionary<string, EnumGroupMember>? enumsDict = allEnumsPerAPI[api];
+                    if (enumsDict.TryGetValue(enumName, out EnumGroupMember? @enum))
                     {
                         foreach (string group in @enum.Groups)
                         {
-                            if (enums.TryGetValue(group, out var groupMembers) == false)
+                            if (enums.TryGetValue(group, out List<EnumGroupMember>? groupMembers) == false)
                             {
                                 groupMembers = new List<EnumGroupMember>();
                                 enums.Add(group, groupMembers);
@@ -257,11 +259,11 @@ namespace Generator.Process
                 }
             }
 
-            foreach (var remove in removeEntries)
+            foreach (RemoveEntry remove in removeEntries)
             {
-                foreach (var command in remove.Commands)
+                foreach (string command in remove.Commands)
                 {
-                    foreach (var functions in functionsByVendor.Values)
+                    foreach (HashSet<OverloadedFunction> functions in functionsByVendor.Values)
                     {
                         functions.RemoveWhere(f => f.NativeFunction.EntryPoint == command);
                     }
@@ -272,7 +274,7 @@ namespace Generator.Process
 
             // Add keys + lists for all enum names
             List<EnumGroup> finalGroups = new List<EnumGroup>();
-            foreach (var (groupName, isFlags) in allEnumGroupsToIsBitmask)
+            foreach ((string groupName, bool isFlags) in allEnumGroups)
             {
                 enums.TryGetValue(groupName, out List<EnumGroupMember>? members);
                 members ??= new List<EnumGroupMember>();
@@ -292,12 +294,12 @@ namespace Generator.Process
                 finalGroups.Add(new EnumGroup(groupName, isFlags, members));
             }
 
-            var vendors = new Dictionary<string, GLVendorFunctions>();
-            foreach (var (vendor, overloadedFunctions) in functionsByVendor)
+            Dictionary<string, GLVendorFunctions> vendors = new Dictionary<string, GLVendorFunctions>();
+            foreach ((string vendor, HashSet<OverloadedFunction> overloadedFunctions) in functionsByVendor)
             {
-                foreach (var overloadedFunction in overloadedFunctions)
+                foreach (OverloadedFunction overloadedFunction in overloadedFunctions)
                 {
-                    if (!vendors.TryGetValue(vendor, out var group))
+                    if (!vendors.TryGetValue(vendor, out GLVendorFunctions? group))
                     {
                         group = new GLVendorFunctions(
                             new List<NativeFunction>(), new List<Overload[]>(), new HashSet<NativeFunction>());
@@ -323,9 +325,9 @@ namespace Generator.Process
             HashSet<string> referencedEnumGroups = new HashSet<string>();
 
             List<Parameter> parameters = new List<Parameter>();
-            foreach (var p in command.Parameters)
+            foreach (GLParameter p in command.Parameters)
             {
-                BaseCSType t = MakeCSType(p.Type.Type, p.Type.Handle, p.Type.Group, out var length);
+                BaseCSType t = MakeCSType(p.Type.Type, p.Type.Handle, p.Type.Group, out Expression? length);
                 parameters.Add(new Parameter(t, NameMangler.MangleParameterName(p.Name), p.Length ?? length));
                 if (p.Type.Group != null)
                     referencedEnumGroups.Add(p.Type.Group);
@@ -343,7 +345,7 @@ namespace Generator.Process
             length = default;
             if (handle != null && type is GLBaseType handleType)
             {
-                return new CSStruct(handle.ToString()!, handleType.Constant, new CSPrimitive("int", handleType.Constant));
+                return new CSStruct(handle.Value.ToString(), handleType.Constant, new CSPrimitive("int", handleType.Constant));
             }
 
             switch (type)
@@ -414,12 +416,12 @@ namespace Generator.Process
             };
 
             bool overloadedOnce = false;
-            foreach (var overloader in IOverloader.Overloaders)
+            foreach (IOverloader? overloader in IOverloader.Overloaders)
             {
                 List<Overload> newOverloads = new List<Overload>();
-                foreach (var overload in overloads)
+                foreach (Overload overload in overloads)
                 {
-                    if (overloader.TryGenerateOverloads(overload, out var overloaderOverloads))
+                    if (overloader.TryGenerateOverloads(overload, out List<Overload>? overloaderOverloads))
                     {
                         overloadedOnce = true;
 
@@ -436,7 +438,7 @@ namespace Generator.Process
             if (overloadedOnce)
             {
                 bool changeNativeName = false;
-                foreach (var overload in overloads)
+                foreach (Overload overload in overloads)
                 {
                     if (nativeFunction.Parameters.Count != overload.InputParameters.Length ||
                         overload.OverloadName != nativeFunction.FunctionName)
