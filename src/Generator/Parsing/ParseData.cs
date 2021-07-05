@@ -75,7 +75,7 @@ namespace Generator.Parsing
         string? Group);
 
 
-    public record GLType();
+    public abstract record GLType();
 
     public record GLBaseType(
         string OriginalString,
@@ -184,8 +184,8 @@ namespace Generator.Parsing
         Invalid,
         Void,
         Bool8,
-        Byte,
         Char8,
+        Byte,
         Sbyte,
         Short,
         Ushort,
@@ -208,12 +208,12 @@ namespace Generator.Parsing
         GLSync,
         CLContext,
         CLEvent,
-        GLDEBUGPROC,
-        GLDEBUGPROCARB,
-        GLDEBUGPROCKHR,
-        GLDEBUGPROCAMD,
-        GLDEBUGPROCNV,
-        GLVULKANPROCNV,
+        GLDebugProc,
+        GLDebugProcARB,
+        GLDebugProcKHR,
+        GLDebugProcAMD,
+        GLDebugProcNV,
+        GLVulkanProcNV,
     }
 
     public enum HandleType
