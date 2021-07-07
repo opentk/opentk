@@ -410,10 +410,6 @@ namespace Generator.Process
             }
         }
 
-        // FIXME: The return variable might go out of scope, declare the variables the first thing we do.
-        // FIXME: Figure out how to cast ref/out/in to pointers.
-        // FIXME: Figure out how we do return type overloading? Do we rename the raw function to something else?
-        // FIXME: Should we only be able to have one return type overload?
         // Maybe we can do the return type overloading in a post processing step?
         public static OverloadedFunction GenerateOverloads(NativeFunction nativeFunction)
         {
@@ -425,7 +421,7 @@ namespace Generator.Process
             };
 
             bool overloadedOnce = false;
-            foreach (IOverloader? overloader in IOverloader.Overloaders)
+            foreach (IOverloader overloader in IOverloader.Overloaders)
             {
                 List<Overload> newOverloads = new List<Overload>();
                 foreach (Overload overload in overloads)
@@ -444,38 +440,40 @@ namespace Generator.Process
                 // Replace the old overloads with the new overloads
                 overloads = newOverloads;
             }
-            if (overloadedOnce)
+
+            bool changeNativeName = false;
+            foreach (Overload overload in overloads)
             {
-                bool changeNativeName = false;
-                foreach (Overload overload in overloads)
+                if (AreSignaturesDifferent(nativeFunction, overload) == false)
                 {
-                    if (nativeFunction.Parameters.Count != overload.InputParameters.Length ||
-                        overload.OverloadName != nativeFunction.FunctionName)
-                    {
-                        continue;
-                    }
-
                     changeNativeName = true;
-                    for (int i = 0; i < nativeFunction.Parameters.Count; i++)
-                    {
-                        if (!nativeFunction.Parameters[i].Type.Equals(overload.InputParameters[i].Type))
-                        {
-                            changeNativeName = false;
-                            break;
-                        }
-                    }
-
-                    if (changeNativeName == true)
-                    {
-                        break;
-                    }
                 }
-                return new OverloadedFunction(nativeFunction, overloads.ToArray(), changeNativeName);
             }
-            else
+            Overload[] overloadArray = overloadedOnce ? overloads.ToArray() : Array.Empty<Overload>();
+            return new OverloadedFunction(nativeFunction, overloadArray, changeNativeName);
+        }
+
+        private static bool AreSignaturesDifferent(NativeFunction nativeFunction, Overload overload)
+        {
+            if (nativeFunction.Parameters.Count != overload.InputParameters.Length)
             {
-                return new OverloadedFunction(nativeFunction, Array.Empty<Overload>(), false);
+                return true;
             }
+
+            if (overload.OverloadName != nativeFunction.FunctionName)
+            {
+                return true;
+            }
+
+            for (int i = 0; i < nativeFunction.Parameters.Count; i++)
+            {
+                if (nativeFunction.Parameters[i].Type.Equals(overload.InputParameters[i].Type) == false)
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
     }
 }

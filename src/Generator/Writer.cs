@@ -161,6 +161,7 @@ namespace Generator.Writing
             writer.WriteLine($"private static {returnType} {name}_Lazy({signature})");
             using (writer.CsScope())
             {
+                // Dotnet gurantees you can't get torn values when assigning functionpointers, assuming proper allignment which is default.
                 writer.WriteLine($"_{name}_fnptr = (delegate* unmanaged<{delegateTypes}>){LoaderBindingsContext}.GetProcAddress(\"{function.EntryPoint}\");");
 
                 if (function.ReturnType is not CSVoid)
