@@ -110,7 +110,7 @@ namespace Generator.Process
             // Now that we have all of the functions and enums ready in dictionaries
             // we can start building all of the API versions.
 
-            // Filter the features we actually want to emit
+            // Filter the features we actually want to output.
             List<Feature> features = spec.Features.FindAll(feature => feature.Api switch
             {
                 GLAPI.GL or GLAPI.GLES1 or GLAPI.GLES2 => true,
@@ -148,11 +148,14 @@ namespace Generator.Process
         {
             List<(string vendor, RequireEntry entry)> requireEntries = new List<(string vendor, RequireEntry entry)>();
 
-            foreach (Feature? feature in features)
+            foreach (Feature feature in features)
             {
                 if (feature.Api == api)
                 {
-                    AddAllRequires("", feature.Requires);
+                    foreach (RequireEntry require in feature.Requires)
+                    {
+                        requireEntries.Add(("", require));
+                    }
                 }
             }
 
@@ -160,19 +163,14 @@ namespace Generator.Process
             {
                 if (extension.SupportedApis.Contains(api))
                 {
-                    AddAllRequires(extension.Vendor, extension.Requires);
+                    foreach (RequireEntry require in extension.Requires)
+                    {
+                        requireEntries.Add((extension.Vendor, require));
+                    }
                 }
             }
 
             return requireEntries;
-
-            void AddAllRequires(string vendor, List<RequireEntry> requires)
-            {
-                foreach (RequireEntry require in requires)
-                {
-                    requireEntries.Add((vendor, require));
-                }
-            }
         }
 
         private static List<RemoveEntry> GetRemoveEntries(List<Feature> features, GLAPI api)
