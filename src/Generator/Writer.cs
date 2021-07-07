@@ -208,7 +208,7 @@ namespace Generator.Writing
                             foreach (var overload in nativeFunctionOverloads)
                             {
                                 bool postfixNativeCall = group.NativeFunctionsWithPostfix.Contains(overload.NativeFunction);
-                                WriteOverloadMethod(overload, writer, postfixNativeCall);
+                                WriteOverloadMethod(writer, overload, postfixNativeCall);
                             }
                         }
 
@@ -218,35 +218,35 @@ namespace Generator.Writing
             }
         }
 
-        private static void WriteOverloadMethod(Overload overload1, IndentedTextWriter indentedTextWriter, bool postfixNativeCall)
+        private static void WriteOverloadMethod(IndentedTextWriter writer, Overload overload, bool postfixNativeCall)
         {
             string parameterString =
-                string.Join(", ", overload1.InputParameters.Select(p => $"{p.Type.ToCSString()} {p.Name}"));
+                string.Join(", ", overload.InputParameters.Select(p => $"{p.Type.ToCSString()} {p.Name}"));
 
             string genericTypes =
-                overload1.GenericTypes.Length <= 0 ? "" : $"<{string.Join(", ", overload1.GenericTypes)}>";
-            indentedTextWriter.WriteLine(
-                $"public static unsafe {overload1.ReturnType.ToCSString()} {overload1.OverloadName}{genericTypes}({parameterString})");
-            using (indentedTextWriter.Indent())
+                overload.GenericTypes.Length <= 0 ? "" : $"<{string.Join(", ", overload.GenericTypes)}>";
+            writer.WriteLine(
+                $"public static unsafe {overload.ReturnType.ToCSString()} {overload.OverloadName}{genericTypes}({parameterString})");
+            using (writer.Indent())
             {
-                foreach (var type in overload1.GenericTypes)
+                foreach (var type in overload.GenericTypes)
                 {
-                    indentedTextWriter.WriteLine($"where {type} : unmanaged");
+                    writer.WriteLine($"where {type} : unmanaged");
                 }
             }
 
-            using (indentedTextWriter.CsScope())
+            using (writer.CsScope())
             {
-                if (overload1.ReturnType is not CSVoid && overload1.NativeFunction.ReturnType is not CSVoid)
+                if (overload.ReturnType is not CSVoid && overload.NativeFunction.ReturnType is not CSVoid)
                 {
-                    indentedTextWriter.WriteLine($"{overload1.NativeFunction.ReturnType.ToCSString()} returnValue;");
+                    writer.WriteLine($"{overload.NativeFunction.ReturnType.ToCSString()} returnValue;");
                 }
 
-                string? returnName = WriteNestedOverload(indentedTextWriter, overload1, new NameTable(), postfixNativeCall);
+                string? returnName = WriteNestedOverload(writer, overload, new NameTable(), postfixNativeCall);
 
                 if (returnName != null)
                 {
-                    indentedTextWriter.WriteLine($"return {returnName};");
+                    writer.WriteLine($"return {returnName};");
                 }
             }
         }
