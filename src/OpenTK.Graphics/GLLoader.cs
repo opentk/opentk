@@ -4,7 +4,6 @@ namespace OpenTK.Graphics
 {
     public unsafe static class GLLoader
     {
-        internal static object LockObj = new object();
         private static IBindingsContext? _bindingsContext;
 
         internal static IBindingsContext BindingsContext => _bindingsContext ??

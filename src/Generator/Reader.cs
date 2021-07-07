@@ -1,7 +1,8 @@
+using Generator.Utility;
 using System.IO;
 using System.Net;
 
-namespace GeneratorV2
+namespace Generator
 {
     public static class Reader
     {

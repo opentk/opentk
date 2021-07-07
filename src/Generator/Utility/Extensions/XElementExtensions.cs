@@ -1,10 +1,9 @@
-
 using System;
 using System.Text;
 using System.Xml.Linq;
 
 
-namespace GeneratorV2
+namespace Generator.Utility.Extensions
 {
     public static class XElementExtensions
     {
