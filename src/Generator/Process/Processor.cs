@@ -440,6 +440,7 @@ namespace Generator.Process
                 // Replace the old overloads with the new overloads
                 overloads = newOverloads;
             }
+            Overload[] overloadArray = overloadedOnce ? overloads.ToArray() : Array.Empty<Overload>();
 
             bool changeNativeName = false;
             foreach (Overload overload in overloads)
@@ -449,7 +450,7 @@ namespace Generator.Process
                     changeNativeName = true;
                 }
             }
-            Overload[] overloadArray = overloadedOnce ? overloads.ToArray() : Array.Empty<Overload>();
+
             return new OverloadedFunction(nativeFunction, overloadArray, changeNativeName);
         }
 
