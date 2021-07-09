@@ -46,17 +46,52 @@ namespace OpenTK
         private static readonly IntPtr selMakeCurrentContext = Selector.Get("makeCurrentContext");
         private static readonly IntPtr selUpdate = Selector.Get("update");
 
-        private static readonly IntPtr opengl = NS.AddImage(
+        private static IntPtr opengl = NS.AddImage(
             "/System/Library/Frameworks/OpenGL.framework/OpenGL",
             AddImageFlags.ReturnOnError);
 
-        private static readonly IntPtr opengles = NS.AddImage(
+        private static IntPtr opengles = NS.AddImage(
             "/System/Library/Frameworks/OpenGL.framework/OpenGLES",
             AddImageFlags.ReturnOnError);
+        
+        private static bool bindUsingDlSym = false;
 
         static CocoaContext()
         {
             Cocoa.Initialize();
+            DetectBindingMethod();
+        }
+
+        // As of MacOS Monterey Beta 1/2, NSLookupSymbolInImage() stopped working. It is unclear
+        // if this will be fixed by Apple in the future. dlsym still works, but is about 20x slower.
+        // We will try to detect if NSLookup works by looking up 'glClear' and fallback to dlsym 
+        // if it returns NULL.
+
+        static unsafe void DetectBindingMethod()
+        {
+            // "glClear\0"
+            var glClearName = new byte[] { 0x67, 0x6c, 0x43, 0x6c, 0x65, 0x61, 0x72, 0x00 };
+
+            fixed (byte* ptr = &glClearName[0])
+            {
+                var symbol = GetAddressUsingNSLookup(new IntPtr(ptr));
+
+                if (symbol == IntPtr.Zero)
+                {
+                    // Need to reload the library with dlopen. NSAddImage doesnt return
+                    // the same data structure. 
+                    opengl   = NS.LoadLibrary("/System/Library/Frameworks/OpenGL.framework/OpenGL");
+                    opengles = NS.LoadLibrary("/System/Library/Frameworks/OpenGL.framework/OpenGLES");
+
+                    bindUsingDlSym = true;
+
+                    Debug.Print("Using dlsym() as binding method.");
+                }
+                else
+                {
+                    Debug.Print("Using NSLookupSymbolInImage() as binding method.");
+                }
+            }
         }
 
         public CocoaContext(GraphicsMode mode, IWindowInfo window, IGraphicsContext shareContext, int majorVersion, int minorVersion)
@@ -361,7 +396,7 @@ namespace OpenTK
             IsDisposed = true;
         }
 
-        public override IntPtr GetAddress(IntPtr function)
+        public static IntPtr GetAddressUsingNSLookup(IntPtr function)
         {
             unsafe
             {
@@ -403,6 +438,32 @@ namespace OpenTK
                     address = NS.AddressOfSymbol(symbol);
                 }
                 return address;
+            }
+        }
+
+        public static IntPtr GetAddressUsingDlSym(IntPtr function)
+        {
+            IntPtr symbol = IntPtr.Zero;
+            if (opengl != IntPtr.Zero)
+            {
+                symbol = NS.GetSymbol(opengl, function);
+            }
+            if (symbol == IntPtr.Zero && opengles != IntPtr.Zero)
+            {
+                symbol = NS.GetSymbol(opengles, function);
+            }
+            return symbol;
+        }
+
+        public override IntPtr GetAddress(IntPtr function)
+        {
+            if (bindUsingDlSym)
+            {
+                return GetAddressUsingDlSym(function);
+            }
+            else
+            {
+                return GetAddressUsingNSLookup(function);
             }
         }
     }
