@@ -95,9 +95,31 @@ markdown syntax here.
     <th>Acronym</th> <th>Description</th>
   </tr>
   <tr>
+    <td>Dependency</td>
+    <td>
+      Any program or library which another program or library requires to
+      operate.
+    </td>
+  </tr>
+  <tr>
+    <td>Dependent</td>
+    <td>
+      Any program or library which is a dependency of the program or library in
+      question.
+    </td>
+  </tr>
+  <tr>
     <td>GLFW</td>
     <td>
       A C library for abstracting away windowing and input for use in games.
+    </td>
+  </tr>
+  <tr>
+    <td>nth Order Dependency</td>
+    <td>
+      An nth order dependency is the dependency of an n-1st dependency. For
+      example, for the dependent of OpenTK 4.0, GLFW is a second order
+      dependency.
     </td>
   </tr>
   <tr>
