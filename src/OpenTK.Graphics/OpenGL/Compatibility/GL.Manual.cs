@@ -14,7 +14,6 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         public enum SampleMaskNV
         { }
 
-
         // Right now this is the only method that actually takes a color besides a few FFP methods.
         // So currently its not worth it creating an overloader for these.
         // I also doubt there will ever be created new methods that take in a color.
@@ -24,7 +23,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             GL.ClearColor(clearColor.X, clearColor.Y, clearColor.Z, clearColor.W);
         }
 
-        public static void ShaderSource(uint shader, string str)
+        public static void ShaderSource(ShaderHandle shader, string str)
         {
             IntPtr str_iptr = Marshal.StringToCoTaskMemAnsi(str);
             int length = str.Length;
@@ -32,7 +31,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             Marshal.FreeCoTaskMem(str_iptr);
         }
 
-        public static void GetShaderInfoLog(uint shader, out string info)
+        public static void GetShaderInfoLog(ShaderHandle shader, out string info)
         {
             int length = default;
             GL.GetShaderi(shader, ShaderParameterName.InfoLogLength, ref length);
@@ -46,7 +45,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
 
-        public static void GetProgramInfoLog(uint program, out string info)
+        public static void GetProgramInfoLog(ProgramHandle program, out string info)
         {
             int length = default;
             GL.GetProgrami(program, ProgramPropertyARB.InfoLogLength, ref length);

@@ -23,7 +23,7 @@ namespace OpenTK.Graphics.OpenGLES3
             GL.ClearColor(clearColor.X, clearColor.Y, clearColor.Z, clearColor.W);
         }
 
-        public static void ShaderSource(uint shader, string shaderText)
+        public static void ShaderSource(ShaderHandle shader, string shaderText)
         {
             var shaderTextPtr = Marshal.StringToCoTaskMemAnsi(shaderText);
             var length = shaderText.Length;
@@ -31,21 +31,21 @@ namespace OpenTK.Graphics.OpenGLES3
             Marshal.FreeCoTaskMem(shaderTextPtr);
         }
 
-        public static void GetShaderInfoLog(uint shader, out string info)
+        public static void GetShaderInfoLog(ShaderHandle shaderHandle, out string info)
         {
             int length = default;
-            GL.GetShaderi(shader, ShaderParameterName.InfoLogLength, ref length);
+            GL.GetShaderi(shaderHandle, ShaderParameterName.InfoLogLength, ref length);
             if (length == 0)
             {
                 info = string.Empty;
             }
             else
             {
-                GL.GetShaderInfoLog(shader, length, ref length, out info);
+                GL.GetShaderInfoLog(shaderHandle, length, ref length, out info);
             }
         }
 
-        public static void GetProgramInfoLog(uint program, out string info)
+        public static void GetProgramInfoLog(ProgramHandle program, out string info)
         {
             int length = default;
             GL.GetProgrami(program, ProgramPropertyARB.InfoLogLength, ref length);
@@ -68,7 +68,7 @@ namespace OpenTK.Graphics.OpenGLES3
         public static void CreateShaderProgram(ShaderType shaderType, string shaderText)
         {
             var shaderTextPtr = Marshal.StringToCoTaskMemAnsi(shaderText);
-            GL.CreateShaderProgramv_(shaderType, 1, (byte**)&shaderTextPtr);
+            GL.CreateShaderProgramv(shaderType, 1, (byte**)&shaderTextPtr);
             Marshal.FreeCoTaskMem(shaderTextPtr);
         }
     }

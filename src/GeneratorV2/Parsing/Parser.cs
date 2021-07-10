@@ -36,6 +36,7 @@ namespace GeneratorV2.Parsing
             foreach (var element in xelement.Elements("command"))
             {
                 var command = ParseCommand(element);
+
                 commands.Add(command);
             }
 
@@ -190,9 +191,31 @@ namespace GeneratorV2.Parsing
         {
             var group = t.Attribute("group")?.Value;
 
+            string? className = t.Attribute("class")?.Value;
+            Handle? handle = className switch
+            {
+                null => null,
+                "program" => Handle.ProgramHandle,
+                "program pipeline" => Handle.ProgramPipelineHandle,
+                "texture" => Handle.TextureHandle,
+                "buffer" => Handle.BufferHandle,
+                "shader" => Handle.ShaderHandle,
+                "query" => Handle.QueryHandle,
+                "framebuffer" => Handle.FramebufferHandle,
+                "renderbuffer" => Handle.RenderbufferHandle,
+                "sampler" => Handle.SamplerHandle,
+                "transform feedback" => Handle.TransformFeedbackHandle,
+                "vertex array" => Handle.VertexArrayHandle,
+                // The "Sync" class is already marked with the "GLSync" type which is handled differently from the other types
+                // We leave it null here to let the "GLSync" handling do this.
+                "sync" => null,
+                "display list" => Handle.DisplayListHandle,
+                _ => throw new Exception(className + " is not a supported handle type yet!"),
+            };
+
             var str = t.GetXmlText(element => element.Name != "name" ? element.Value : string.Empty).Trim();
 
-            return new PType(ParseType(str), group);
+            return new PType(ParseType(str), handle, group);
         }
 
         private static GLType ParseType(string type)
