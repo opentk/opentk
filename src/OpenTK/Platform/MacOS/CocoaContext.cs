@@ -66,6 +66,9 @@ namespace OpenTK
         // if this will be fixed by Apple in the future. dlsym still works, but is about 20x slower.
         // We will try to detect if NSLookup works by looking up 'glClear' and fallback to dlsym 
         // if it returns NULL.
+        //
+        // More information here: 
+        // https://github.com/opentk/opentk/issues/1308
 
         static unsafe void DetectBindingMethod()
         {
@@ -78,8 +81,14 @@ namespace OpenTK
 
                 if (symbol == IntPtr.Zero)
                 {
-                    // Need to reload the library with dlopen. NSAddImage doesnt return
-                    // the same data structure. 
+                    // Need to reload the library with dlopen since NSAddImage doesnt return
+                    // the same data structure. We cannot unload a library that was loaded
+                    // with NSAddImage unfortunately, there is not API for this. 
+                    //
+                    // That being said, there is evidence that the library isnt actually loaded 
+                    // twice since on systems that supports both methods (pre-Monterey Beta), they 
+                    // both will return the same exact function pointers.
+
                     opengl   = NS.LoadLibrary("/System/Library/Frameworks/OpenGL.framework/OpenGL");
                     opengles = NS.LoadLibrary("/System/Library/Frameworks/OpenGL.framework/OpenGLES");
 
