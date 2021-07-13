@@ -46,61 +46,12 @@ namespace OpenTK
         private static readonly IntPtr selMakeCurrentContext = Selector.Get("makeCurrentContext");
         private static readonly IntPtr selUpdate = Selector.Get("update");
 
-        private static IntPtr opengl = NS.AddImage(
-            "/System/Library/Frameworks/OpenGL.framework/OpenGL",
-            AddImageFlags.ReturnOnError);
-
-        private static IntPtr opengles = NS.AddImage(
-            "/System/Library/Frameworks/OpenGL.framework/OpenGLES",
-            AddImageFlags.ReturnOnError);
-        
-        private static bool bindUsingDlSym = false;
+        private static IntPtr opengl   = NS.LoadLibrary("/System/Library/Frameworks/OpenGL.framework/OpenGL", true);
+        private static IntPtr opengles = NS.LoadLibrary("/System/Library/Frameworks/OpenGL.framework/OpenGLES", true);
 
         static CocoaContext()
         {
             Cocoa.Initialize();
-            DetectBindingMethod();
-        }
-
-        // As of MacOS Monterey Beta 1/2, NSLookupSymbolInImage() stopped working. It is unclear
-        // if this will be fixed by Apple in the future. dlsym still works, but is about 20x slower.
-        // We will try to detect if NSLookup works by looking up 'glClear' and fallback to dlsym 
-        // if it returns NULL.
-        //
-        // More information here: 
-        // https://github.com/opentk/opentk/issues/1308
-
-        static unsafe void DetectBindingMethod()
-        {
-            // "glClear\0"
-            var glClearName = new byte[] { 0x67, 0x6c, 0x43, 0x6c, 0x65, 0x61, 0x72, 0x00 };
-
-            fixed (byte* ptr = &glClearName[0])
-            {
-                var symbol = GetAddressUsingNSLookup(new IntPtr(ptr));
-
-                if (symbol == IntPtr.Zero)
-                {
-                    // Need to reload the library with dlopen since NSAddImage doesnt return
-                    // the same data structure. We cannot unload a library that was loaded
-                    // with NSAddImage unfortunately, there is not API for this. 
-                    //
-                    // That being said, there is evidence that the library isnt actually loaded 
-                    // twice since on systems that supports both methods (pre-Monterey Beta), they 
-                    // both will return the same exact function pointers.
-
-                    opengl   = NS.LoadLibrary("/System/Library/Frameworks/OpenGL.framework/OpenGL");
-                    opengles = NS.LoadLibrary("/System/Library/Frameworks/OpenGL.framework/OpenGLES");
-
-                    bindUsingDlSym = true;
-
-                    Debug.Print("Using dlsym() as binding method.");
-                }
-                else
-                {
-                    Debug.Print("Using NSLookupSymbolInImage() as binding method.");
-                }
-            }
         }
 
         public CocoaContext(GraphicsMode mode, IWindowInfo window, IGraphicsContext shareContext, int majorVersion, int minorVersion)
@@ -405,6 +356,14 @@ namespace OpenTK
             IsDisposed = true;
         }
 
+        // As of MacOS Monterey Beta 1/2, NSLookupSymbolInImage() stopped working. It is unclear
+        // if this will be fixed by Apple in the future. We therefore switch to dlsym, which is
+        // ever so slightly slower. We are keeping this code in case we ever want to switch back.
+        // A Feedback Assistant issue was open with Apple about this FB9319518.
+        //
+        // More information here: 
+        // https://github.com/opentk/opentk/issues/1308
+
         public static IntPtr GetAddressUsingNSLookup(IntPtr function)
         {
             unsafe
@@ -466,14 +425,7 @@ namespace OpenTK
 
         public override IntPtr GetAddress(IntPtr function)
         {
-            if (bindUsingDlSym)
-            {
-                return GetAddressUsingDlSym(function);
-            }
-            else
-            {
-                return GetAddressUsingNSLookup(function);
-            }
+            return GetAddressUsingDlSym(function);
         }
     }
 }
