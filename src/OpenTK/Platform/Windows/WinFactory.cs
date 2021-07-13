@@ -40,6 +40,8 @@ namespace OpenTK.Platform.Windows
         // that they call WinFactory methods internally.
         private WinRawInput rawinput_driver; // For keyboard and mouse input
 
+        private bool use_virtual_keys;
+
         internal static IntPtr OpenGLHandle { get; private set; }
         private const string OpenGLName = "OPENGL32.DLL";
 
@@ -80,7 +82,11 @@ namespace OpenTK.Platform.Windows
 
         public override INativeWindow CreateNativeWindow(int x, int y, int width, int height, string title, GraphicsMode mode, GameWindowFlags options, DisplayDevice device)
         {
-            RawInputDriver.UseVirtualKeys = (options & GameWindowFlags.UseVirtualKeys) == GameWindowFlags.UseVirtualKeys;
+            use_virtual_keys = (options & GameWindowFlags.UseVirtualKeys) == GameWindowFlags.UseVirtualKeys;
+            if (rawinput_driver != null)
+            {
+                rawinput_driver.UseVirtualKeys = use_virtual_keys;
+            }
             return new WinGLNative(x, y, width, height, title, options, device);
         }
 
@@ -136,6 +142,7 @@ namespace OpenTK.Platform.Windows
                     if (rawinput_driver == null)
                     {
                         rawinput_driver = new WinRawInput();
+                        rawinput_driver.UseVirtualKeys = use_virtual_keys;
                     }
                     return rawinput_driver;
                 }
