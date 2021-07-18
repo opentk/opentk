@@ -181,35 +181,6 @@ namespace OpenTK.Windowing.Desktop
             }
         }
 
-        private VSyncMode _vSync;
-
-        /// <summary>
-        /// Gets or sets the VSyncMode.
-        /// </summary>
-        public VSyncMode VSync
-        {
-            get => _vSync;
-            set
-            {
-                switch (value)
-                {
-                    case VSyncMode.On:
-                        GLFW.SwapInterval(1);
-                        break;
-
-                    case VSyncMode.Off:
-                        GLFW.SwapInterval(0);
-                        break;
-
-                    case VSyncMode.Adaptive:
-                        GLFW.SwapInterval(IsRunningSlowly ? 0 : 1);
-                        break;
-                }
-
-                _vSync = value;
-            }
-        }
-
         /// <summary>
         /// Initializes a new instance of the <see cref="GameWindow"/> class with sensible default attributes.
         /// </summary>
@@ -337,7 +308,7 @@ namespace OpenTK.Windowing.Desktop
                 OnRenderFrame(new FrameEventArgs(elapsed));
 
                 // Update VSync if set to adaptive
-                if (_vSync == VSyncMode.Adaptive)
+                if (VSync == VSyncMode.Adaptive)
                 {
                     GLFW.SwapInterval(IsRunningSlowly ? 0 : 1);
                 }
