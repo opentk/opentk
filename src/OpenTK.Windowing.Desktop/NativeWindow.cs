@@ -117,6 +117,37 @@ namespace OpenTK.Windowing.Desktop
         /// <value><c>true</c> if any button is pressed; otherwise, <c>false</c>.</value>
         public bool IsAnyMouseButtonDown => MouseState.IsAnyButtonDown;
 
+        private VSyncMode _vSync;
+
+        /// <summary>
+        /// Gets or sets the VSync state of this <see cref="NativeWindow"/>.
+        /// </summary>
+        /// <value>
+        /// The VSync state.
+        /// </value>
+        public VSyncMode VSync
+        {
+            get => _vSync;
+
+            set
+            {
+                // We don't do anything here for adaptive because that's handled in GameWindow
+                switch (value)
+                {
+                    case VSyncMode.On:
+                        Context.SwapInterval = 1;
+                        break;
+
+                    case VSyncMode.Off:
+                        Context.SwapInterval = 0;
+                        break;
+                }
+
+                _vSync = value;
+            }
+        }
+
+
         private WindowIcon _icon;
 
         /// <summary>
