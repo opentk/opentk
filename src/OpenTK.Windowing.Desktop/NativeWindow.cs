@@ -147,7 +147,6 @@ namespace OpenTK.Windowing.Desktop
             }
         }
 
-
         private WindowIcon _icon;
 
         /// <summary>
