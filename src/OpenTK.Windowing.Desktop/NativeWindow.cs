@@ -131,7 +131,7 @@ namespace OpenTK.Windowing.Desktop
 
             set
             {
-                // We don't do anything here for adaptive because that's handled in GameWindow
+                // We don't do anything here for adaptive because that's handled in GameWindow.
                 switch (value)
                 {
                     case VSyncMode.On:
