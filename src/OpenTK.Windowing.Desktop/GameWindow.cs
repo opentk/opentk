@@ -204,7 +204,7 @@ namespace OpenTK.Windowing.Desktop
                     case VSyncMode.Adaptive:
                         GLFW.SwapInterval(IsRunningSlowly ? 0 : 1);
                         break;
-                    }
+                }
 
                 _vSync = value;
             }
