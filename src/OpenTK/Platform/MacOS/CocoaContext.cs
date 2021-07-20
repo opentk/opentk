@@ -46,13 +46,16 @@ namespace OpenTK
         private static readonly IntPtr selMakeCurrentContext = Selector.Get("makeCurrentContext");
         private static readonly IntPtr selUpdate = Selector.Get("update");
 
-        private static readonly IntPtr opengl = NS.AddImage(
-            "/System/Library/Frameworks/OpenGL.framework/OpenGL",
-            AddImageFlags.ReturnOnError);
+        // As of MacOS Monterey Beta 1/2, NSLookupSymbolInImage() stopped working.
+        // A Feedback Assistant issue was open with Apple about this FB9319518 and Apple
+        // responded that it was intentional on their part and that it was a deprecated
+        // API. They recommended dlopen / dlsym.
+        //
+        // More information here: 
+        // https://github.com/opentk/opentk/issues/1308
 
-        private static readonly IntPtr opengles = NS.AddImage(
-            "/System/Library/Frameworks/OpenGL.framework/OpenGLES",
-            AddImageFlags.ReturnOnError);
+        private static IntPtr opengl   = NS.LoadLibrary("/System/Library/Frameworks/OpenGL.framework/OpenGL", true);
+        private static IntPtr opengles = NS.LoadLibrary("/System/Library/Frameworks/OpenGL.framework/OpenGLES", true);
 
         static CocoaContext()
         {
@@ -363,47 +366,16 @@ namespace OpenTK
 
         public override IntPtr GetAddress(IntPtr function)
         {
-            unsafe
+            IntPtr symbol = IntPtr.Zero;
+            if (opengl != IntPtr.Zero)
             {
-                // Add a leading underscore to the function name
-                // As of OpenGL 4.4, all functions are < 64 bytes
-                // in length. Double that just to be sure.
-                const int max = 128;
-                byte* fun = stackalloc byte[max];
-                byte* ptr = fun;
-                byte* cur = (byte*)function.ToPointer();
-                int i = 0;
-
-                *ptr++ = (byte)'_';
-                while (*cur != 0 && ++i < max)
-                {
-                    *ptr++ = *cur++;
-                }
-
-                if (i >= max - 1)
-                {
-                    Debug.Print("Function {0} too long. Loading will fail.",
-                        Marshal.PtrToStringAnsi(function));
-                }
-
-                IntPtr address = IntPtr.Zero;
-                IntPtr symbol = IntPtr.Zero;
-                if (opengl != IntPtr.Zero)
-                {
-                    symbol = NS.LookupSymbolInImage(opengl, new IntPtr(fun),
-                        SymbolLookupFlags.Bind | SymbolLookupFlags.ReturnOnError);
-                }
-                if (symbol == IntPtr.Zero && opengles != IntPtr.Zero)
-                {
-                    symbol = NS.LookupSymbolInImage(opengles, new IntPtr(fun),
-                        SymbolLookupFlags.Bind | SymbolLookupFlags.ReturnOnError);
-                }
-                if (symbol != IntPtr.Zero)
-                {
-                    address = NS.AddressOfSymbol(symbol);
-                }
-                return address;
+                symbol = NS.GetSymbol(opengl, function);
             }
+            if (symbol == IntPtr.Zero && opengles != IntPtr.Zero)
+            {
+                symbol = NS.GetSymbol(opengles, function);
+            }
+            return symbol;
         }
     }
 }

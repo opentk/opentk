@@ -155,10 +155,19 @@ namespace OpenTK.Platform.MacOS
             return dlsym(handle, symbol);
         }
 
-        public static IntPtr LoadLibrary(string fileName)
+        public static IntPtr LoadLibrary(string fileName, bool first = false)
         {
             const int RTLD_NOW = 2;
-            return dlopen(fileName, RTLD_NOW);
+            const int RTLD_FIRST = 0x100;
+
+            int flags = RTLD_NOW;
+
+            if (first)
+            {
+                flags |= RTLD_FIRST;
+            }
+
+            return dlopen(fileName, flags);
         }
 
         public static void FreeLibrary(IntPtr handle)
