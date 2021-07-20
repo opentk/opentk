@@ -152,10 +152,34 @@ namespace OpenTK
                          * NOTE:
                          * Non-Windows platforms should be handled via the OpenTK.dll.config file as appropriate
                          */
-                        string path = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
-                        path = Path.Combine(path, IntPtr.Size == 4 ? "x86" : "x64");
-                        bool ok = SetDllDirectory(path);
-                        if (!ok) throw new System.ComponentModel.Win32Exception();
+                        Assembly entryAssembly = Assembly.GetEntryAssembly();
+                        if (entryAssembly != null)
+                        {
+                            try
+                            {
+                                string assemblyLocation = entryAssembly.Location;
+                                string path = Path.GetDirectoryName(assemblyLocation);
+                                path = Path.Combine(path, IntPtr.Size == 4 ? "x86" : "x64");
+                                bool ok = SetDllDirectory(path);
+                                if (!ok)
+                                {
+                                    // A fairly fundamental Win32 syscall failed. Developer probably wants to know about this, but not necessarily users
+                                    throw new System.ComponentModel.Win32Exception("Setting x86/x64 specific dll import directory failed.");
+                                }
+                            }
+                            catch (Exception e)
+                            {
+#if DEBUG
+                                throw;
+#else
+                                Trace.TraceWarning($"Exception when trying to set x86/x64 dll directory. {e}");
+#endif
+                            }
+                        }
+                        else
+                        {
+                            Trace.TraceWarning("Could not get assembly location, we will not set separate x86 and x64 dll import folders. This means you won't get architecture specific dll imports.");
+                        }
                     }
 
                     // The actual initialization takes place in the
@@ -194,7 +218,7 @@ namespace OpenTK
             }
         }
 
-        #if DEBUG
+#if DEBUG
         /// <summary>
         /// Finalizes this instance.
         /// </summary>
@@ -204,7 +228,7 @@ namespace OpenTK
             // We may not Dispose() the toolkit from the finalizer thread,
             // as that will crash on many operating systems.
         }
-        #endif
+#endif
         
         [DllImport("kernel32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         private static extern bool SetDllDirectory(string path);
