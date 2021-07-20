@@ -259,6 +259,8 @@ namespace OpenTK.Platform.X11
         {
             lock (Sync)
             {
+                // save current mouse position
+                MouseState current_mouse_state = (this as IMouseDriver2).GetState();
                 devices.Clear();
                 keyboards.Clear();
 
@@ -396,6 +398,14 @@ namespace OpenTK.Platform.X11
                         }
                     }
                     XI.FreeDeviceInfo((IntPtr)list);
+                }
+
+                // Restore current mouse position
+                if (devices.Count >= 1) {
+                    devices[0].State.Position = current_mouse_state.Position;
+                    devices[0].State.SetScrollAbsolute(
+                            current_mouse_state.Scroll.X,
+                            current_mouse_state.Scroll.Y);
                 }
             }
         }
@@ -541,36 +551,41 @@ namespace OpenTK.Platform.X11
             double v = 0;
             if (d.MotionX.number != -1)
             {
-                x = ReadRawValue(ref raw, d.MotionX.number);
+                if (ReadRawValue(ref raw, d.MotionX.number, out x))
+                {
+                    if (d.MotionX.mode == XIMode.Relative)
+                    {
+                        d.State.X += (int)Math.Round(x);
+                    }
+                    else
+                    {
+                        d.State.X = (int)Math.Round(x);
+                    }
+                }
             }
             if (d.MotionY.number != -1)
             {
-                y = ReadRawValue(ref raw, d.MotionY.number);
+                if (ReadRawValue(ref raw, d.MotionY.number, out y))
+                {
+                    if (d.MotionY.mode == XIMode.Relative)
+                    {
+                        d.State.Y += (int)Math.Round(y);
+                    }
+                    else
+                    {
+                        d.State.Y = (int)Math.Round(y);
+                    }
+                }
             }
             if (d.ScrollX.number != -1)
             {
-                h = ReadRawValue(ref raw, d.ScrollX.number) / d.ScrollX.increment;
+                ReadRawValue(ref raw, d.ScrollX.number, out h);
+                h /= d.ScrollX.increment;
             }
             if (d.ScrollY.number != -1)
             {
-                v = ReadRawValue(ref raw, d.ScrollY.number) / d.ScrollY.increment;
-            }
-
-            if (d.MotionX.mode == XIMode.Relative)
-            {
-                d.State.X += (int)Math.Round(x);
-            }
-            else
-            {
-                d.State.X = (int)Math.Round(x);
-            }
-            if (d.MotionY.mode == XIMode.Relative)
-            {
-                d.State.Y += (int)Math.Round(y);
-            }
-            else
-            {
-                d.State.Y = (int)Math.Round(y);
+                ReadRawValue(ref raw, d.ScrollY.number, out v);
+                v /= d.ScrollY.increment;
             }
 
             // Note: OpenTK follows the windows scrolling convention where
@@ -579,9 +594,9 @@ namespace OpenTK.Platform.X11
             d.State.SetScrollRelative((float)h, (float)(-v));
         }
 
-        private unsafe static double ReadRawValue(ref XIRawEvent raw, int bit)
+        private unsafe static bool ReadRawValue(ref XIRawEvent raw, int bit, out double value)
         {
-            double value = 0;
+            value = 0;
             if (IsBitSet(raw.valuators.mask, bit))
             {
                 // Find the offset where this value is stored.
@@ -596,8 +611,12 @@ namespace OpenTK.Platform.X11
                     }
                 }
                 value = *((double*)raw.raw_values + offset);
+                return true;
             }
-            return value;
+            else
+            {
+                return false;
+            }
         }
 
         private static bool IsEventValid(IntPtr display, ref XEvent e, IntPtr arg)
