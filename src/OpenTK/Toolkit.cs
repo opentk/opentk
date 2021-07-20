@@ -152,10 +152,27 @@ namespace OpenTK
                          * NOTE:
                          * Non-Windows platforms should be handled via the OpenTK.dll.config file as appropriate
                          */
-                        string path = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
-                        path = Path.Combine(path, IntPtr.Size == 4 ? "x86" : "x64");
-                        bool ok = SetDllDirectory(path);
-                        if (!ok) throw new System.ComponentModel.Win32Exception();
+                        Assembly entryAssembly = Assembly.GetEntryAssembly();
+                        if (entryAssembly != null)
+                        {
+                            try
+                            {
+                                string assemblyLocation = entryAssembly.Location;
+                                string path = Path.GetDirectoryName(assemblyLocation);
+                                path = Path.Combine(path, IntPtr.Size == 4 ? "x86" : "x64");
+                                bool ok = SetDllDirectory(path);
+                                if (!ok)
+                                {
+                                    //A fairly fundamental Win32 syscall failed. Developer probably wants to know about this, but not necessarily users
+                                    throw new System.ComponentModel.Win32Exception("Windows reported that attempting to set the DLL search path failed");
+                                }
+                            }
+                            catch
+                            {
+                                //A fairly fundamental Win32 syscall failed. Developer probably wants to know about this, but not necessarily users
+                                throw new System.ComponentModel.Win32Exception("An unexpected Win32 error occured when attempting to set the DLL search path");
+                            }
+                        }
                     }
 
                     // The actual initialization takes place in the
