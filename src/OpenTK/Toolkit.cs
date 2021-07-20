@@ -173,6 +173,10 @@ namespace OpenTK
                                 throw new System.ComponentModel.Win32Exception("An unexpected Win32 error occured when attempting to set the DLL search path");
                             }
                         }
+                        else
+                        {
+                            Trace.WriteLine("Could not get assebly location, we will not set separate x86 and x64 dll import folders. This means you won't get architecture specific dll imports.");
+                        }
                     }
 
                     // The actual initialization takes place in the
