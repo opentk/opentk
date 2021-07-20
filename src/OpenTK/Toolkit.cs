@@ -178,7 +178,7 @@ namespace OpenTK
                         }
                         else
                         {
-                            Trace.TraceWarning("Could not get assebly location, we will not set separate x86 and x64 dll import folders. This means you won't get architecture specific dll imports.");
+                            Trace.TraceWarning("Could not get assembly location, we will not set separate x86 and x64 dll import folders. This means you won't get architecture specific dll imports.");
                         }
                     }
 
