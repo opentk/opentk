@@ -170,7 +170,7 @@ namespace OpenTK
                             catch (Exception e)
                             {
 #if DEBUG
-                                throw e;
+                                throw;
 #else
                                 Trace.TraceWarning($"Exception when trying to set x86/x64 dll directory. {e}");
 #endif
