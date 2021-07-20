@@ -1,4 +1,5 @@
 ### 3.3.2
+	* Added ability to include architecture  dependent dlls (x86 vs x64) on windows by placing the files in `x86` and `x64` folders respectively (@leezer3)
 	* Fix: Mouse position no longer resets when scrolling in Wayland (@jascrain)
 	* Fix: `QuaternionD` euler angle constructor now produces the same result as the equivalent constructor in `Quaternion` (@leezer3)
 	* Fix: Changed to using `dlopen`/`dlsym` on MacOS as `NSLookupSymbolInImage` is deprecated and no longer works on MacOS Monterey (@BleuBleu)
