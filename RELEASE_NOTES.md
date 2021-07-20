@@ -1,3 +1,9 @@
+### 3.3.2
+	* Fix: Mouse position no longer resets when scrolling in Wayland (@jascrain)
+	* Fix: `QuaternionD` euler angle constructor now produces the same result as the equivalent constructor in `Quaternion` (@leezer3)
+	* Fix: Changed to using `dlopen`/`dlsym` on MacOS as `NSLookupSymbolInImage` is deprecated and no longer works on MacOS Monterey (@BleuBleu)
+	* Optimized `CreateFromQuaternion` function for Matrix3/4/3d/4d to be ~80% faster (@NogginBops)
+
 ### 3.3.1
 	* Fix wgl_dx_interop Lock/Unlock bindings (Thanks @ZCore)
 
