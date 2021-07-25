@@ -202,7 +202,6 @@ namespace OpenTK.Platform.Windows
                     case Key.ControlLeft: key = Key.ControlRight; break;
                     case Key.ControlRight: key = Key.ControlLeft; break;
                     case Key.ShiftLeft: is_valid = false; break;
-                    default: is_valid = false; break;
                 }
             }
 
