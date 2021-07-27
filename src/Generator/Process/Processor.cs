@@ -441,7 +441,7 @@ namespace Generator.Process
             Overload[] overloadArray = overloadedOnce ? overloads.ToArray() : Array.Empty<Overload>();
 
             bool changeNativeName = false;
-            foreach (Overload overload in overloads)
+            foreach (Overload overload in overloadArray)
             {
                 if (AreSignaturesDifferent(nativeFunction, overload) == false)
                 {
