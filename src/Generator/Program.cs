@@ -20,6 +20,7 @@ namespace Generator
                 using var stream = Reader.ReadSpecFromGithub();
 
                 // TODO: Documentation.
+                var documentation = Reader.ReadDocumentationFromGithub();
 
                 // Parsing into data structures.
                 var specification = Parser.Parse(stream);
