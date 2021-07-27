@@ -10,4 +10,8 @@
     <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
       <DocumentationFile>bin\Release\OpenTK.Compute.xml</DocumentationFile>
     </PropertyGroup>
+
+    <PropertyGroup>
+      <NoWarn>1591</NoWarn>
+    </PropertyGroup>
 </Project>
