@@ -11,7 +11,7 @@
       <DocumentationFile>bin\Release\OpenTK.Compute.xml</DocumentationFile>
     </PropertyGroup>
 
-    <Import Project="..\..\props\common.props" />
-    <Import Project="..\..\props\nuget-common.props" />
-    <Import Project="..\..\props\stylecop.props" />
+    <PropertyGroup>
+      <NoWarn>1591</NoWarn>
+    </PropertyGroup>
 </Project>
