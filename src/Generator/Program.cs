@@ -16,14 +16,13 @@ namespace Generator
             st.Start();
             using (Logger.CreateLogger(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly()!.Location)!, "log.txt")))
             {
-                // Reading the gl.xml file.
-                using var stream = Reader.ReadSpecFromGithub();
+                // Reading the gl.xml file and parsing it into data structures.
+                using var specificationStream = Reader.ReadSpecFromGithub();
+                var specification = SpecificationParser.Parse(specificationStream);
 
-                // TODO: Documentation.
-                var documentation = Reader.ReadDocumentationFromGithub();
-
-                // Parsing into data structures.
-                var specification = Parser.Parse(stream);
+                // Read the documentation folders and parse it into data structures.
+                using var documentationSource = Reader.ReadDocumentationFromGithub();
+                var documentation = DocumentationParser.Parse(documentationSource);
 
                 // Processer/overloading
                 var outputSpec = Processor.ProcessSpec(specification);
@@ -32,7 +31,6 @@ namespace Generator
                 Writer.Write(outputSpec);
 
                 st.Stop();
-
                 Logger.Info($"{st.ElapsedMilliseconds}");
             }
         }

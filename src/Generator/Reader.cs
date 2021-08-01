@@ -8,11 +8,37 @@ using System.Linq;
 
 namespace Generator
 {
+    public record DocumentationSource(DocumentationFolder[] Folders) : IDisposable
+    {
+        public void Dispose()
+        {
+            foreach (DocumentationFolder folder in Folders)
+            {
+                folder.Dispose();
+            }
+
+            GC.SuppressFinalize(this);
+        }
+    }
+
+    public record DocumentationFolder(string Folder, FileStream[] Files) : IDisposable
+    {
+        public void Dispose()
+        {
+            foreach (FileStream file in Files)
+            {
+                file.Dispose();
+            }
+
+            GC.SuppressFinalize(this);
+        }
+    }
+
     public static class Reader
     {
         static readonly string TempDirectory = Path.Combine(".", "GeneratorFiles");
 
-        // Fixme: file stream + caching
+        // FIXME: file stream + caching
         public static Stream ReadSpecFromGithub()
         {
             var link = "https://raw.githubusercontent.com/frederikja163/OpenGL-Registry/otk5/xml/gl.xml";
@@ -23,10 +49,7 @@ namespace Generator
             return response.GetResponseStream();
         }
 
-        public record DocumentationFolder(string Folder, FileStream[] Files);
-
-        // FIXME: Better type!
-        public static DocumentationFolder[] ReadDocumentationFromGithub()
+        public static DocumentationSource ReadDocumentationFromGithub()
         {
             string[] DocumentationFolders = new string[]
             {
@@ -36,7 +59,7 @@ namespace Generator
                 "gl4",
             };
 
-            DocumentationFolder[] results = new DocumentationFolder[DocumentationFolders.Length];
+            DocumentationFolder[] folders = new DocumentationFolder[DocumentationFolders.Length];
 
             for (int folderIndex = 0; folderIndex < DocumentationFolders.Length; folderIndex++)
             {
@@ -53,7 +76,7 @@ namespace Generator
                         files.Add(stream);
                     }
 
-                    results[folderIndex] = new DocumentationFolder(DocumentationFolders[folderIndex], files.ToArray());
+                    folders[folderIndex] = new DocumentationFolder(DocumentationFolders[folderIndex], files.ToArray());
                 }
                 else
                 {
@@ -73,8 +96,10 @@ namespace Generator
                     foreach (var fileInfo in json.EnumerateArray())
                     {
                         string fileName = fileInfo.GetProperty("name").GetString()!;
-                        if (fileName.StartsWith("gl") && fileName.StartsWith("gl_") == false)
+                        // Ignore glu and glX files.
+                        if (fileName.StartsWith("gl") && char.IsUpper(fileName[2]) && fileName[2] != 'X')
                         {
+
                             fileInfos.Add(fileInfo);
                         }
                     }
@@ -100,11 +125,11 @@ namespace Generator
                         files[fileIndex] = fileStream;
                     }
 
-                    results[folderIndex] = new DocumentationFolder(DocumentationFolders[folderIndex], files);
+                    folders[folderIndex] = new DocumentationFolder(DocumentationFolders[folderIndex], files);
                 }
             }
 
-            return results;
+            return new DocumentationSource(folders);
         }
     }
 }
