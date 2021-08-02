@@ -36,7 +36,7 @@ namespace Generator
 
     public static class Reader
     {
-        private static readonly string TempDirectory = Path.Combine("..", "..", "..", "CacheFiles");
+        private static readonly string TempDirectory = Path.Combine("..", "..", "..", "SpecificationFiles");
 
         public static FileStream ReadSpecFromGithub()
         {
@@ -110,8 +110,11 @@ namespace Generator
                     foreach (JsonElement fileInfo in json.EnumerateArray())
                     {
                         string fileName = fileInfo.GetProperty("name").GetString()!;
-                        // Ignore glu and glX files.
-                        if (fileName.StartsWith("gl") && char.IsUpper(fileName[2]) && fileName[2] != 'X')
+                        // Ignore glu and glX files as well as glIntro.xml from es1.1.
+                        if (fileName.StartsWith("gl") &&
+                            char.IsUpper(fileName[2]) &&
+                            fileName[2] != 'X' &&
+                            fileName != "glIntro.xml")
                         {
                             fileInfos.Add(fileInfo);
                         }

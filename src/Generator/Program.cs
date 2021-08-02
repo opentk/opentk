@@ -12,7 +12,7 @@ namespace Generator
     {
         static void Main(string[] args)
         {
-            Stopwatch? st = new Stopwatch();
+            Stopwatch st = new Stopwatch();
             st.Start();
             using (Logger.CreateLogger(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly()!.Location)!, "log.txt")))
             {
@@ -21,11 +21,11 @@ namespace Generator
                 Specification specification = SpecificationParser.Parse(specificationStream);
 
                 // Read the documentation folders and parse it into data structures.
-                using DocumentationSource? documentationSource = Reader.ReadDocumentationFromGithub();
+                using DocumentationSource documentationSource = Reader.ReadDocumentationFromGithub();
                 Documentation documentation = DocumentationParser.Parse(documentationSource);
 
                 // Processer/overloading
-                OutputData outputSpec = Processor.ProcessSpec(specification);
+                OutputData outputSpec = Processor.ProcessSpec(specification, documentation);
 
                 // Writing cs files.
                 Writer.Write(outputSpec);

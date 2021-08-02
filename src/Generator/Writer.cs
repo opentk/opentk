@@ -44,7 +44,7 @@ namespace Generator.Writing
                 WriteNativeFunctions(directoryPath, apiNamespace, api.Vendors);
                 WriteOverloads(directoryPath, apiNamespace, api.Vendors);
 
-                WriteEnums(directoryPath, apiNamespace, api.TheAllEnumGroup, api.EnumGroups);
+                WriteEnums(directoryPath, apiNamespace, api.EnumGroups);
             }
         }
 
@@ -290,7 +290,7 @@ namespace Generator.Writing
             return overload.MarshalLayerToNested?.WriteEpilogue(writer, nameTable, returnName) ?? returnName;
         }
 
-        private static void WriteEnums(string directoryPath, string apiNamespace, List<EnumGroupMember> allEnums, List<EnumGroup> enumGroups)
+        private static void WriteEnums(string directoryPath, string apiNamespace, List<EnumGroup> enumGroups)
         {
             using StreamWriter stream = File.CreateText(Path.Combine(directoryPath, "Enums.cs"));
             using IndentedTextWriter writer = new IndentedTextWriter(stream);
@@ -301,21 +301,8 @@ namespace Generator.Writing
             using (writer.CsScope())
             {
                 writer.WriteLineNoTabs("#pragma warning disable CA1069 // Enums values should not be duplicated");
-                WriteAllEnum(writer, allEnums);
                 WriteEnumGroups(writer, enumGroups);
                 writer.WriteLineNoTabs("#pragma warning restore CA1069 // Enums values should not be duplicated");
-            }
-        }
-
-        private static void WriteAllEnum(IndentedTextWriter writer, List<EnumGroupMember> allEnums)
-        {
-            writer.WriteLine($"public enum All : uint");
-            using (writer.CsScope())
-            {
-                foreach (var member in allEnums)
-                {
-                    writer.WriteLine($"{member.Name} = {member.Value},");
-                }
             }
         }
 

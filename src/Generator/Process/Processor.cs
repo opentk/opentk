@@ -19,6 +19,7 @@ namespace Generator.Process
 
         public record OverloadedFunction(
             NativeFunction NativeFunction,
+            Dictionary<OutputApi, CommandDocumentation> Documentation,
             Overload[] Overloads,
             bool ChangeNativeName);
 
@@ -44,14 +45,15 @@ namespace Generator.Process
                 HashCode.Combine(GroupName);
         };
 
-        public static OutputData ProcessSpec(Specification spec)
+        public static OutputData ProcessSpec(Specification spec, Documentation docs)
         {
             // The first thing we do is process all of the functions defined into a dictionary of NativeFunctions.
             Dictionary<string, OverloadedFunction> allFunctions = new Dictionary<string, OverloadedFunction>(spec.Commands.Count);
             foreach (Command command in spec.Commands)
             {
                 NativeFunction nativeFunction = MakeNativeFunction(command);
-                OverloadedFunction overloadedFunction = GenerateOverloads(nativeFunction);
+                Dictionary<OutputApi, CommandDocumentation> functionDocumentation = MakeDocumentation(nativeFunction, docs);
+                OverloadedFunction overloadedFunction = GenerateOverloads(nativeFunction, functionDocumentation);
 
                 allFunctions.Add(nativeFunction.EntryPoint, overloadedFunction);
             }
@@ -194,7 +196,8 @@ namespace Generator.Process
         private static GLOutputApi GetOutputApiFromRequireTags(
             OutputApi api,
             List<(string vendor, RequireEntry requireEntry)> requireEntries,
-            List<RemoveEntry> removeEntries, ProcessedGLInformation glInformation)
+            List<RemoveEntry> removeEntries,
+            ProcessedGLInformation glInformation)
         {
             HashSet<string> groupsReferencedByFunctions = new HashSet<string>();
             // A list of functions contained in this version.
@@ -212,6 +215,12 @@ namespace Generator.Process
             // Go through all the functions that are required for this version and add them here.
             foreach ((string vendor, RequireEntry requireEntry) in requireEntries)
             {
+                // Skip all of the compatibility profile requires if we are not doing GLCompat
+                if (requireEntry.Profile == GLProfile.Compatibility && api != OutputApi.GLCompat)
+                {
+                    continue;
+                }
+
                 foreach (string command in requireEntry.Commands)
                 {
                     if (allFunctions.TryGetValue(command, out OverloadedFunction? function))
@@ -268,10 +277,37 @@ namespace Generator.Process
                 }
             }
 
+            Dictionary<OverloadedFunction, CommandDocumentation> documentation = new Dictionary<OverloadedFunction, CommandDocumentation>();
+            foreach (var (vendor, functions) in functionsByVendor)
+            {
+                foreach (var function in functions)
+                {
+                    if (function.Documentation.TryGetValue(api, out CommandDocumentation? commandDocumentation))
+                    {
+                        documentation[function] = commandDocumentation;
+                    }
+                    else
+                    {
+                        if (vendor == "")
+                        {
+                            Logger.Warning($"{function.NativeFunction.EntryPoint} doesn't have any documentation for {api}");
+                        }
+                        else
+                        {
+                            // Extensions don't have documentation (yet?)
+                        }
+                    }
+                }
+            }
+
             // Go through all of the enums and put them into their groups
 
             // Add keys + lists for all enum names
             List<EnumGroup> finalGroups = new List<EnumGroup>();
+
+            // Add the All enum group
+            finalGroups.Add(new EnumGroup("All", false, theAllEnumGroup.ToList()));
+
             foreach ((string groupName, bool isFlags) in allEnumGroups)
             {
                 enums.TryGetValue(groupName, out List<EnumGroupMember>? members);
@@ -299,8 +335,7 @@ namespace Generator.Process
                 {
                     if (!vendors.TryGetValue(vendor, out GLVendorFunctions? group))
                     {
-                        group = new GLVendorFunctions(
-                            new List<NativeFunction>(), new List<Overload[]>(), new HashSet<NativeFunction>());
+                        group = new GLVendorFunctions(new List<NativeFunction>(), new List<Overload[]>(), new HashSet<NativeFunction>());
                         vendors.Add(vendor, group);
                     }
                     group.NativeFunctions.Add(overloadedFunction.NativeFunction);
@@ -313,7 +348,7 @@ namespace Generator.Process
                 }
             }
 
-            return new GLOutputApi(api, vendors, theAllEnumGroup.ToList(), finalGroups);
+            return new GLOutputApi(api, vendors, finalGroups);
         }
 
         public static NativeFunction MakeNativeFunction(Command command)
@@ -408,8 +443,23 @@ namespace Generator.Process
             }
         }
 
+        public static Dictionary<OutputApi, CommandDocumentation> MakeDocumentation(NativeFunction function, Documentation documentation)
+        {
+            Dictionary<OutputApi, CommandDocumentation> commandDocs = new Dictionary<OutputApi, CommandDocumentation>();
+
+            foreach (var (version, versionDocumentation) in documentation.VersionDocumentation)
+            {
+                if (versionDocumentation.Commands.TryGetValue(function.EntryPoint, out CommandDocumentation? commandDoc))
+                {
+                    commandDocs.Add(version, commandDoc);
+                }
+            }
+
+            return commandDocs;
+        }
+
         // Maybe we can do the return type overloading in a post processing step?
-        public static OverloadedFunction GenerateOverloads(NativeFunction nativeFunction)
+        public static OverloadedFunction GenerateOverloads(NativeFunction nativeFunction, Dictionary<OutputApi, CommandDocumentation> functionDocumentation)
         {
             List<Overload> overloads = new List<Overload>
             {
@@ -449,7 +499,7 @@ namespace Generator.Process
                 }
             }
 
-            return new OverloadedFunction(nativeFunction, overloadArray, changeNativeName);
+            return new OverloadedFunction(nativeFunction, functionDocumentation, overloadArray, changeNativeName);
         }
 
         private static bool AreSignaturesDifferent(NativeFunction nativeFunction, Overload overload)

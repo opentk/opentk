@@ -13,7 +13,6 @@ namespace Generator.Writing
     public record GLOutputApi(
         OutputApi Api,
         Dictionary<string, GLVendorFunctions> Vendors,
-        List<EnumGroupMember> TheAllEnumGroup,
         List<EnumGroup> EnumGroups);
 
 
