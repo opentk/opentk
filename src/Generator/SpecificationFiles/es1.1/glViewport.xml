@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+			    "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+<refentry xml:base="" id="glViewport">
+    <refmeta>
+	<refmetainfo>
+	    <copyright>
+		<year>2003-2004</year>
+		<holder>Silicon Graphics, Inc.</holder>
+	    </copyright>
+	</refmetainfo>
+	<refentrytitle>glViewport</refentrytitle>
+	<manvolnum>3G</manvolnum>
+    </refmeta>
+
+    <refnamediv>
+	<refname>glViewport</refname>
+	<refpurpose>set the viewport</refpurpose>
+    </refnamediv>
+
+    <refsynopsisdiv>
+	<title>C Specification</title>
+
+	<funcsynopsis>
+	    <funcprototype>
+		<funcdef>void <function>glViewport</function></funcdef>
+		<paramdef>GLint <parameter>x</parameter></paramdef>
+		<paramdef>GLint <parameter>y</parameter></paramdef>
+		<paramdef>GLsizei <parameter>width</parameter></paramdef>
+		<paramdef>GLsizei <parameter>height</parameter></paramdef>
+	    </funcprototype>
+	</funcsynopsis>
+    </refsynopsisdiv>
+
+    <refsect1 id="parameters"><title>Parameters</title>
+
+	<variablelist>
+	    <varlistentry>
+		<term>
+		    <parameter>x</parameter>,
+		    <parameter>y</parameter>
+		</term>
+		<listitem>
+		    <para>Specify the lower left corner of the viewport
+		    rectangle, in pixels. The initial value is (0, 0).</para>
+		</listitem>
+	    </varlistentry>
+
+	    <varlistentry>
+		<term>
+		    <parameter>width</parameter>,
+		    <parameter>height</parameter>
+		</term>
+		<listitem>
+		    <para>Specify the width and height of the viewport. When
+		    a GL context is first attached to a surface (e.g. window),
+		    <parameter>width</parameter>
+		    and
+		    <parameter>height</parameter>
+		    are set to the dimensions of that surface.</para>
+		</listitem>
+	    </varlistentry>
+	</variablelist>
+    </refsect1>
+
+    <refsect1 id="description"><title>Description</title>
+
+	<para>
+	<function>glViewport</function>
+
+	specifies the affine transformation of
+	<replaceable>x</replaceable> and
+	<replaceable>y</replaceable>
+	from normalized device coordinates to window coordinates. Let
+	<inlineequation><mml:math><mml:mfenced>
+	    <mml:msub><mml:mi>x</mml:mi><mml:mi>nd</mml:mi></mml:msub>
+	    <mml:msub><mml:mi>y</mml:mi><mml:mi>nd</mml:mi></mml:msub>
+	</mml:mfenced></mml:math></inlineequation>
+	be normalized device coordinates. Then the window coordinates
+	<inlineequation><mml:math><mml:mfenced>
+	    <mml:msub><mml:mi>x</mml:mi><mml:mi>w</mml:mi></mml:msub>
+	    <mml:msub><mml:mi>y</mml:mi><mml:mi>w</mml:mi></mml:msub>
+	</mml:mfenced></mml:math></inlineequation>
+	are computed as follows:</para>
+
+	<informalequation><mml:math>
+	    <mml:mtable><mml:mtr><mml:mtd>
+		<mml:msub><mml:mi>x</mml:mi><mml:mi>w</mml:mi></mml:msub>
+		<mml:mgroupalign/>
+		<mml:mo>=</mml:mo>
+		<mml:mgroupalign/>
+		<mml:mo>(</mml:mo>
+		    <mml:msub><mml:mi>x</mml:mi><mml:mi>nd</mml:mi></mml:msub>
+		    <mml:mo>+</mml:mo>
+		    <mml:mn>1</mml:mn>
+		<mml:mo>)</mml:mo>
+		<mml:mfrac>
+		    <mml:mi>width</mml:mi>
+		    <mml:mn>2</mml:mn>
+		</mml:mfrac>
+		<mml:mo>+</mml:mo>
+		<mml:mi>x</mml:mi>
+	    </mml:mtd></mml:mtr>
+	    <mml:mtr><mml:mtd>
+		<mml:msub><mml:mi>y</mml:mi><mml:mi>w</mml:mi></mml:msub>
+		<mml:mgroupalign/>
+		<mml:mo>=</mml:mo>
+		<mml:mgroupalign/>
+		<mml:mo>(</mml:mo>
+		    <mml:msub><mml:mi>y</mml:mi><mml:mi>nd</mml:mi></mml:msub>
+		    <mml:mo>+</mml:mo>
+		    <mml:mn>1</mml:mn>
+		<mml:mo>)</mml:mo>
+		<mml:mfrac>
+		    <mml:mi>height</mml:mi>
+		    <mml:mn>2</mml:mn>
+		</mml:mfrac>
+		<mml:mo>+</mml:mo>
+		<mml:mi>y</mml:mi>
+	    </mml:mtd></mml:mtr></mml:mtable>
+	</mml:math></informalequation>
+
+	<para>Viewport width and height are silently clamped to a range
+	that depends on the implementation. To query this range, call
+	<citerefentry><refentrytitle>glGet</refentrytitle></citerefentry>
+	with argument <constant>GL_MAX_VIEWPORT_DIMS</constant>.</para>
+    </refsect1>
+
+    <refsect1 id="errors"><title>Errors</title>
+
+	<para><constant>GL_INVALID_VALUE</constant> is generated if either
+	    <parameter>width</parameter> or
+	    <parameter>height</parameter> is negative.</para>
+    </refsect1>
+
+    <refsect1 id="associatedgets"><title>Associated Gets</title>
+
+	<para>
+	    <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry>
+	    with argument <constant>GL_MAX_VIEWPORT_DIMS</constant>
+	</para>
+    </refsect1>
+
+    <refsect1 id="seealso"><title>See Also</title>
+
+	<para>
+	    <citerefentry><refentrytitle>glDepthRange</refentrytitle></citerefentry>,
+	    <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry>
+	</para>
+    </refsect1>
+    <refsect1 id="copyright"><title>Copyright</title>
+	<para>
+	    Copyright <trademark class="copyright"></trademark> 2003-2004
+	    Silicon Graphics, Inc. This document is licensed under the SGI
+	    Free Software B License. For details, see
+	    <ulink url="https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt">https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt</ulink>.
+	</para>
+    </refsect1>
+</refentry>

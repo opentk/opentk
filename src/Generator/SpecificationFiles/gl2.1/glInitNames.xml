@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+<refentry id="glInitNames">
+    <refmeta>
+        <refmetainfo>
+            <copyright>
+                <year>1991-2006</year>
+                <holder>Silicon Graphics, Inc.</holder>
+            </copyright>
+        </refmetainfo>
+        <refentrytitle>glInitNames</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glInitNames</refname>
+        <refpurpose>initialize the name stack</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glInitNames</function></funcdef>
+                <paramdef> <parameter>void</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 id="description"><title>Description</title>
+        <para>
+            The name stack is used during selection mode to allow sets of rendering
+            commands to be uniquely identified.
+            It consists of an ordered set of unsigned integers.
+            <function>glInitNames</function> causes the name stack to be initialized to its default empty state.
+        </para>
+        <para>
+            The name stack is always empty while the render mode is not <constant>GL_SELECT</constant>.
+            Calls to <function>glInitNames</function> while the render mode is not <constant>GL_SELECT</constant> are ignored.
+        </para>
+    </refsect1>
+    <refsect1 id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if <function>glInitNames</function>
+            is executed between the execution of <citerefentry><refentrytitle>glBegin</refentrytitle></citerefentry> and the corresponding execution of
+            <citerefentry><refentrytitle>glEnd</refentrytitle></citerefentry>.
+        </para>
+    </refsect1>
+    <refsect1 id="associatedgets"><title>Associated Gets</title>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_NAME_STACK_DEPTH</constant>
+        </para>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_MAX_NAME_STACK_DEPTH</constant>
+        </para>
+    </refsect1>
+    <refsect1 id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glLoadName</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glPushName</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glRenderMode</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glSelectBuffer</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"></trademark> 1991-2006
+            Silicon Graphics, Inc. This document is licensed under the SGI
+            Free Software B License. For details, see
+            <ulink url="https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt">https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt</ulink>.
+        </para>
+    </refsect1>
+</refentry>

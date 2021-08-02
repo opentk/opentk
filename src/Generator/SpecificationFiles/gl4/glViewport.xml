@@ -1,0 +1,206 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<!-- Converted by db4-upgrade version 1.1 -->
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glViewport">
+    <info>
+        <copyright>
+            <year>1991-2006</year>
+            <holder>Silicon Graphics, Inc.</holder>
+        </copyright>
+        <copyright>
+            <year>2010-2014</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </info>
+    <refmeta>
+        <refentrytitle>glViewport</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glViewport</refname>
+        <refpurpose>set the viewport</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glViewport</function></funcdef>
+                <paramdef>GLint <parameter>x</parameter></paramdef>
+                <paramdef>GLint <parameter>y</parameter></paramdef>
+                <paramdef>GLsizei <parameter>width</parameter></paramdef>
+                <paramdef>GLsizei <parameter>height</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 xml:id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>x</parameter></term>
+            <term><parameter>y</parameter></term>
+            <listitem>
+                <para>
+                    Specify the lower left corner of the viewport rectangle,
+                    in pixels. The initial value is (0,0).
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>width</parameter></term>
+            <term><parameter>height</parameter></term>
+            <listitem>
+                <para>
+                    Specify the width and height
+                    of the viewport.
+                    When a GL context is first attached to a window,
+                    <parameter>width</parameter> and <parameter>height</parameter> are set to the dimensions of that
+                    window.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 xml:id="description"><title>Description</title>
+        <para>
+            <function>glViewport</function> specifies the affine transformation of
+            <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mml:mi mathvariant="italic">x</mml:mi></mml:math></inlineequation>
+            and
+            <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mml:mi mathvariant="italic">y</mml:mi></mml:math></inlineequation>
+            from
+            normalized device coordinates to window coordinates.
+            Let
+            <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                <!-- eqn: (x sub nd, y sub nd):-->
+                <mml:mfenced open="(" close=")">
+                    <mml:msub><mml:mi mathvariant="italic">x</mml:mi>
+                    <mml:mi mathvariant="italic">nd</mml:mi>
+                    </mml:msub>
+                    <mml:msub><mml:mi mathvariant="italic">y</mml:mi>
+                    <mml:mi mathvariant="italic">nd</mml:mi>
+                    </mml:msub>
+                </mml:mfenced>
+            </mml:math></inlineequation>
+            be normalized device coordinates.
+            Then the window coordinates
+            <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                <!-- eqn: (x sub w, y sub w):-->
+                <mml:mfenced open="(" close=")">
+                    <mml:msub><mml:mi mathvariant="italic">x</mml:mi>
+                    <mml:mi mathvariant="italic">w</mml:mi>
+                    </mml:msub>
+                    <mml:msub><mml:mi mathvariant="italic">y</mml:mi>
+                    <mml:mi mathvariant="italic">w</mml:mi>
+                    </mml:msub>
+                </mml:mfenced>
+            </mml:math></inlineequation>
+            are computed as follows:
+        </para>
+        <para>
+            <informalequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                <!-- eqn: x sub w  =  ( x sub nd  +  1 ) left ( width over 2 right )  +  x:-->
+                <mml:mrow>
+                    <mml:msub><mml:mi mathvariant="italic">x</mml:mi>
+                    <mml:mi mathvariant="italic">w</mml:mi>
+                    </mml:msub>
+                    <mml:mo>=</mml:mo>
+                    <mml:mrow>
+                        <mml:mfenced open="(" close=")">
+                            <mml:mrow>
+                                <mml:msub><mml:mi mathvariant="italic">x</mml:mi>
+                                <mml:mi mathvariant="italic">nd</mml:mi>
+                                </mml:msub>
+                                <mml:mo>+</mml:mo>
+                                <mml:mn>1</mml:mn>
+                            </mml:mrow>
+                        </mml:mfenced>
+                        <mml:mo>&it;</mml:mo>
+                        <mml:mfenced open="(" close=")">
+                            <mml:mfrac>
+                                <mml:mi mathvariant="italic">width</mml:mi>
+                                <mml:mn>2</mml:mn>
+                            </mml:mfrac>
+                        </mml:mfenced>
+                        <mml:mo>+</mml:mo>
+                        <mml:mi mathvariant="italic">x</mml:mi>
+                    </mml:mrow>
+                </mml:mrow>
+            </mml:math></informalequation>
+        </para>
+        <para>
+            <informalequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                <!-- eqn: y sub w  =  ( y sub nd  +  1 ) left ( height over 2 right )  +  y:-->
+                <mml:mrow>
+                    <mml:msub><mml:mi mathvariant="italic">y</mml:mi>
+                    <mml:mi mathvariant="italic">w</mml:mi>
+                    </mml:msub>
+                    <mml:mo>=</mml:mo>
+                    <mml:mrow>
+                        <mml:mfenced open="(" close=")">
+                            <mml:mrow>
+                                <mml:msub><mml:mi mathvariant="italic">y</mml:mi>
+                                <mml:mi mathvariant="italic">nd</mml:mi>
+                                </mml:msub>
+                                <mml:mo>+</mml:mo>
+                                <mml:mn>1</mml:mn>
+                            </mml:mrow>
+                        </mml:mfenced>
+                        <mml:mo>&it;</mml:mo>
+                        <mml:mfenced open="(" close=")">
+                            <mml:mfrac>
+                                <mml:mi mathvariant="italic">height</mml:mi>
+                                <mml:mn>2</mml:mn>
+                            </mml:mfrac>
+                        </mml:mfenced>
+                        <mml:mo>+</mml:mo>
+                        <mml:mi mathvariant="italic">y</mml:mi>
+                    </mml:mrow>
+                </mml:mrow>
+            </mml:math></informalequation>
+        </para>
+        <para>
+            Viewport width and height are silently clamped
+            to a range that depends on the implementation.
+            To query this range, call <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument
+            <constant>GL_MAX_VIEWPORT_DIMS</constant>.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if either <parameter>width</parameter> or <parameter>height</parameter> is negative.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="associatedgets"><title>Associated Gets</title>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_VIEWPORT</constant>
+        </para>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_MAX_VIEWPORT_DIMS</constant>
+        </para>
+    </refsect1>
+    <refsect1 xml:id="versions"><title>Version Support</title>
+        <informaltable>
+            <tgroup cols="13" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry><function>glViewport</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='20']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+    <refsect1 xml:id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glDepthRange</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 1991-2006 Silicon Graphics, Inc.
+            Copyright <trademark class="copyright"/> 2010-2014 Khronos Group.
+            This document is licensed under the SGI Free Software B License.
+            For details, see
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt">https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt</link>.
+        </para>
+    </refsect1>
+</refentry>

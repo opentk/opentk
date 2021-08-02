@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+<refentry id="glTranslate">
+    <refmeta>
+        <refmetainfo>
+            <copyright>
+                <year>1991-2006</year>
+                <holder>Silicon Graphics, Inc.</holder>
+            </copyright>
+        </refmetainfo>
+        <refentrytitle>glTranslate</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glTranslate</refname>
+        <refpurpose>multiply the current matrix by a translation matrix</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glTranslated</function></funcdef>
+                <paramdef>GLdouble <parameter>x</parameter></paramdef>
+                <paramdef>GLdouble <parameter>y</parameter></paramdef>
+                <paramdef>GLdouble <parameter>z</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glTranslatef</function></funcdef>
+                <paramdef>GLfloat <parameter>x</parameter></paramdef>
+                <paramdef>GLfloat <parameter>y</parameter></paramdef>
+                <paramdef>GLfloat <parameter>z</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <!-- eqn: ignoring delim $$ -->
+    <refsect1 id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>x</parameter></term>
+            <term><parameter>y</parameter></term>
+            <term><parameter>z</parameter></term>
+            <listitem>
+                <para>
+                    Specify the <emphasis>x</emphasis>, <emphasis>y</emphasis>, and <emphasis>z</emphasis> coordinates of a translation vector.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 id="description"><title>Description</title>
+        <para>
+            <function>glTranslate</function> produces a translation by
+            <inlineequation><mml:math>
+                <!-- eqn: (x,y,z):-->
+                <mml:mfenced open="(" close=")">
+                    <mml:mi mathvariant="italic">x</mml:mi>
+                    <mml:mi mathvariant="italic">y</mml:mi>
+                    <mml:mi mathvariant="italic">z</mml:mi>
+                </mml:mfenced>
+            </mml:math></inlineequation>.
+            The current matrix
+            (see
+            <citerefentry><refentrytitle>glMatrixMode</refentrytitle></citerefentry>)
+            is multiplied by this translation matrix,
+            with the product replacing the current matrix, as if
+            <citerefentry><refentrytitle>glMultMatrix</refentrytitle></citerefentry> were called with the following matrix
+            for its argument:
+        </para>
+        <para>
+            <informalequation><mml:math>
+                <!-- eqn: left (    matrix {    ccol {  1 above  0 above  0 above  0 }    ccol { 0 above 1 above 0 above 0 }    ccol { 0 above 0 above 1 above 0 }    ccol { x  above y  above z  above 1} }   right ):-->
+                <mml:mfenced open="(" close=")">
+                    <mml:mtable>
+                        <mml:mtr>
+                            <mml:mtd>
+                                <mml:mn>1</mml:mn>
+                            </mml:mtd>
+                            <mml:mtd>
+                                <mml:mn>0</mml:mn>
+                            </mml:mtd>
+                            <mml:mtd>
+                                <mml:mn>0</mml:mn>
+                            </mml:mtd>
+                            <mml:mtd>
+                                <mml:mi mathvariant="italic">x</mml:mi>
+                            </mml:mtd>
+                        </mml:mtr>
+                        <mml:mtr>
+                            <mml:mtd>
+                                <mml:mn>0</mml:mn>
+                            </mml:mtd>
+                            <mml:mtd>
+                                <mml:mn>1</mml:mn>
+                            </mml:mtd>
+                            <mml:mtd>
+                                <mml:mn>0</mml:mn>
+                            </mml:mtd>
+                            <mml:mtd>
+                                <mml:mi mathvariant="italic">y</mml:mi>
+                            </mml:mtd>
+                        </mml:mtr>
+                        <mml:mtr>
+                            <mml:mtd>
+                                <mml:mn>0</mml:mn>
+                            </mml:mtd>
+                            <mml:mtd>
+                                <mml:mn>0</mml:mn>
+                            </mml:mtd>
+                            <mml:mtd>
+                                <mml:mn>1</mml:mn>
+                            </mml:mtd>
+                            <mml:mtd>
+                                <mml:mi mathvariant="italic">z</mml:mi>
+                            </mml:mtd>
+                        </mml:mtr>
+                        <mml:mtr>
+                            <mml:mtd>
+                                <mml:mn>0</mml:mn>
+                            </mml:mtd>
+                            <mml:mtd>
+                                <mml:mn>0</mml:mn>
+                            </mml:mtd>
+                            <mml:mtd>
+                                <mml:mn>0</mml:mn>
+                            </mml:mtd>
+                            <mml:mtd>
+                                <mml:mn>1</mml:mn>
+                            </mml:mtd>
+                        </mml:mtr>
+                    </mml:mtable>
+                </mml:mfenced>
+            </mml:math></informalequation>
+        </para>
+        <para>
+        </para>
+        <para>
+            If the matrix mode is either <constant>GL_MODELVIEW</constant> or <constant>GL_PROJECTION</constant>,
+            all objects drawn after a call to <function>glTranslate</function> are translated.
+        </para>
+        <para>
+            Use <citerefentry><refentrytitle>glPushMatrix</refentrytitle></citerefentry> and
+            <citerefentry><refentrytitle>glPopMatrix</refentrytitle></citerefentry> to save and restore
+            the untranslated coordinate system.
+        </para>
+    </refsect1>
+    <refsect1 id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if <function>glTranslate</function>
+            is executed between the execution of <citerefentry><refentrytitle>glBegin</refentrytitle></citerefentry>
+            and the corresponding execution of <citerefentry><refentrytitle>glEnd</refentrytitle></citerefentry>.
+        </para>
+    </refsect1>
+    <refsect1 id="associatedgets"><title>Associated Gets</title>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_MATRIX_MODE</constant>
+        </para>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_COLOR_MATRIX</constant>
+        </para>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_MODELVIEW_MATRIX</constant>
+        </para>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_PROJECTION_MATRIX</constant>
+        </para>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_TEXTURE_MATRIX</constant>
+        </para>
+    </refsect1>
+    <refsect1 id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glMatrixMode</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glMultMatrix</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glPushMatrix</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glRotate</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glScale</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"></trademark> 1991-2006
+            Silicon Graphics, Inc. This document is licensed under the SGI
+            Free Software B License. For details, see
+            <ulink url="https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt">https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt</ulink>.
+        </para>
+    </refsect1>
+</refentry>

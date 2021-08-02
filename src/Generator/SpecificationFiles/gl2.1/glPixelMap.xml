@@ -1,0 +1,585 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+<refentry id="glPixelMap">
+    <refmeta>
+        <refmetainfo>
+            <copyright>
+                <year>1991-2006</year>
+                <holder>Silicon Graphics, Inc.</holder>
+            </copyright>
+        </refmetainfo>
+        <refentrytitle>glPixelMap</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glPixelMap</refname>
+        <refpurpose>set up pixel transfer maps</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glPixelMapfv</function></funcdef>
+                <paramdef>GLenum <parameter>map</parameter></paramdef>
+                <paramdef>GLsizei <parameter>mapsize</parameter></paramdef>
+                <paramdef>const GLfloat * <parameter>values</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glPixelMapuiv</function></funcdef>
+                <paramdef>GLenum <parameter>map</parameter></paramdef>
+                <paramdef>GLsizei <parameter>mapsize</parameter></paramdef>
+                <paramdef>const GLuint * <parameter>values</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glPixelMapusv</function></funcdef>
+                <paramdef>GLenum <parameter>map</parameter></paramdef>
+                <paramdef>GLsizei <parameter>mapsize</parameter></paramdef>
+                <paramdef>const GLushort * <parameter>values</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <!-- eqn: ignoring delim $$ -->
+    <refsect1 id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>map</parameter></term>
+            <listitem>
+                <para>
+                    Specifies a symbolic map name.
+                    Must be one of the following:
+                    <constant>GL_PIXEL_MAP_I_TO_I</constant>,
+                    <constant>GL_PIXEL_MAP_S_TO_S</constant>,
+                    <constant>GL_PIXEL_MAP_I_TO_R</constant>,
+                    <constant>GL_PIXEL_MAP_I_TO_G</constant>,
+                    <constant>GL_PIXEL_MAP_I_TO_B</constant>,
+                    <constant>GL_PIXEL_MAP_I_TO_A</constant>,
+                    <constant>GL_PIXEL_MAP_R_TO_R</constant>,
+                    <constant>GL_PIXEL_MAP_G_TO_G</constant>,
+                    <constant>GL_PIXEL_MAP_B_TO_B</constant>, or
+                    <constant>GL_PIXEL_MAP_A_TO_A</constant>.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>mapsize</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the size of the map being defined.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>values</parameter></term>
+            <listitem>
+                <para>
+                    Specifies an array of <parameter>mapsize</parameter> values.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 id="description"><title>Description</title>
+        <para>
+            <function>glPixelMap</function> sets up translation tables,
+            or <emphasis>maps</emphasis>,
+            used by
+            <citerefentry><refentrytitle>glCopyPixels</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glCopyTexImage1D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glCopyTexImage2D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glCopyTexSubImage1D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glCopyTexSubImage2D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glCopyTexSubImage3D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glDrawPixels</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glReadPixels</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glTexImage1D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glTexImage2D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glTexImage3D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glTexSubImage1D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glTexSubImage2D</refentrytitle></citerefentry>, and
+            <citerefentry><refentrytitle>glTexSubImage3D</refentrytitle></citerefentry>.
+            Additionally, if the <code>ARB_imaging</code> subset is supported, the
+            routines
+            <citerefentry><refentrytitle>glColorTable</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glColorSubTable</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glConvolutionFilter1D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glConvolutionFilter2D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glHistogram</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glMinmax</refentrytitle></citerefentry>, and
+            <citerefentry><refentrytitle>glSeparableFilter2D</refentrytitle></citerefentry>.
+            Use of these maps is described completely in the
+            <citerefentry><refentrytitle>glPixelTransfer</refentrytitle></citerefentry> reference page,
+            and partly in the reference pages for the pixel and texture image commands.
+            Only the specification of the maps is described in this reference page.
+        </para>
+        <para>
+            <parameter>map</parameter> is a symbolic map name,
+            indicating one of ten maps to set.
+            <parameter>mapsize</parameter> specifies the number of entries in the map,
+            and <parameter>values</parameter> is a pointer to an array of <parameter>mapsize</parameter> map values.
+        </para>
+        <para>
+            If a non-zero named buffer object is bound to the <constant>GL_PIXEL_UNPACK_BUFFER</constant> target 
+            (see <citerefentry><refentrytitle>glBindBuffer</refentrytitle></citerefentry>) while a pixel transfer map is
+            specified, <parameter>values</parameter> is treated as a byte offset into the buffer object's data store.
+        </para>
+        <para>
+            The ten maps are as follows:
+        </para>
+        <variablelist>
+            <varlistentry>
+                <term><constant>GL_PIXEL_MAP_I_TO_I</constant></term>
+                <listitem>
+                    <para>
+                        Maps color indices to color indices.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_PIXEL_MAP_S_TO_S</constant></term>
+                <listitem>
+                    <para>
+                        Maps stencil indices to stencil indices.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_PIXEL_MAP_I_TO_R</constant></term>
+                <listitem>
+                    <para>
+                        Maps color indices to red components.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_PIXEL_MAP_I_TO_G</constant></term>
+                <listitem>
+                    <para>
+                        Maps color indices to green components.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_PIXEL_MAP_I_TO_B</constant></term>
+                <listitem>
+                    <para>
+                        Maps color indices to blue components.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_PIXEL_MAP_I_TO_A</constant></term>
+                <listitem>
+                    <para>
+                        Maps color indices to alpha components.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_PIXEL_MAP_R_TO_R</constant></term>
+                <listitem>
+                    <para>
+                        Maps red components to red components.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_PIXEL_MAP_G_TO_G</constant></term>
+                <listitem>
+                    <para>
+                        Maps green components to green components.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_PIXEL_MAP_B_TO_B</constant></term>
+                <listitem>
+                    <para>
+                        Maps blue components to blue components.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_PIXEL_MAP_A_TO_A</constant></term>
+                <listitem>
+                    <para>
+                        Maps alpha components to alpha components.
+                    </para>
+                </listitem>
+            </varlistentry>
+        </variablelist>
+        <para>
+            The entries in a map can be specified as single-precision
+            floating-point numbers,
+            unsigned short integers,
+            or unsigned int integers.
+            Maps that store color component values
+            (all but <constant>GL_PIXEL_MAP_I_TO_I</constant> and <constant>GL_PIXEL_MAP_S_TO_S</constant>)
+            retain their values in floating-point format,
+            with unspecified mantissa and exponent sizes.
+            Floating-point values specified by <function>glPixelMapfv</function> are converted directly
+            to the internal floating-point format of these maps,
+            then clamped to the range [0,1].
+            Unsigned integer values specified by <function>glPixelMapusv</function> and
+            <function>glPixelMapuiv</function> are converted linearly such that
+            the largest representable integer maps to 1.0,
+            and 0 maps to 0.0.
+        </para>
+        <para>
+            Maps that store indices,
+            <constant>GL_PIXEL_MAP_I_TO_I</constant> and <constant>GL_PIXEL_MAP_S_TO_S</constant>,
+            retain their values in fixed-point format,
+            with an unspecified number of bits to the right of the binary point.
+            Floating-point values specified by <function>glPixelMapfv</function> are converted directly
+            to the internal fixed-point format of these maps.
+            Unsigned integer values specified by <function>glPixelMapusv</function> and
+            <function>glPixelMapuiv</function> specify integer values,
+            with all 0's to the right of the binary point.
+        </para>
+        <para>
+            The following table shows the initial sizes and values for each of the maps.
+            Maps that are indexed by either color or stencil indices must have
+            <parameter>mapsize</parameter> = 
+            <inlineequation><mml:math>
+                <!-- eqn: 2 sup n:-->
+                <mml:msup><mml:mn>2</mml:mn>
+                <mml:mi mathvariant="italic">n</mml:mi>
+                </mml:msup>
+            </mml:math></inlineequation>
+            for some 
+            <inlineequation><mml:math><mml:mi mathvariant="italic">n</mml:mi></mml:math></inlineequation>
+            or the results are undefined.
+            The maximum allowable size for each map depends on the implementation
+            and can be determined by calling <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument
+            <constant>GL_MAX_PIXEL_MAP_TABLE</constant>.
+            The single maximum applies to all maps; it is at
+            least 32.
+        </para>
+        <informaltable frame="topbot">
+            <tgroup cols="5" align="left">
+                <colspec colwidth="4*" />
+                <colspec colwidth="2*"  align="center"/>
+                <colspec colwidth="2*"  align="center"/>
+                <colspec colwidth="1*"  align="center"/>
+                <colspec colwidth="1*"  align="center"/>
+                <thead>
+                    <row>
+                        <entry rowsep="1" align="left"><emphasis role="bold">
+                        <parameter>map</parameter>
+                        </emphasis></entry>
+                        <entry rowsep="1" align="center"><emphasis role="bold">
+                        Lookup Index
+                        </emphasis></entry>
+                        <entry rowsep="1" align="center"><emphasis role="bold">
+                        Lookup Value
+                        </emphasis></entry>
+                        <entry rowsep="1" align="center"><emphasis role="bold">
+                        Initial Size
+                        </emphasis></entry>
+                        <entry rowsep="1" align="center"><emphasis role="bold">
+                        Initial Value
+                        </emphasis></entry>
+                    </row>
+                </thead>
+                <tbody>
+                    <row>
+                        <entry align="left">
+                        <constant>GL_PIXEL_MAP_I_TO_I</constant>
+                        </entry>
+                        <entry align="center">
+                        color index
+                        </entry>
+                        <entry align="center">
+                        color index
+                        </entry>
+                        <entry align="center">
+                        1
+                        </entry>
+                        <entry align="center">
+                        0
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        <constant>GL_PIXEL_MAP_S_TO_S</constant>
+                        </entry>
+                        <entry align="center">
+                        stencil index 
+                        </entry>
+                        <entry align="center">
+                        stencil index 
+                        </entry>
+                        <entry align="center">
+                        1
+                        </entry>
+                        <entry align="center">
+                        0
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        <constant>GL_PIXEL_MAP_I_TO_R</constant>
+                        </entry>
+                        <entry align="center">
+                        color index 
+                        </entry>
+                        <entry align="center">
+                        R
+                        </entry>
+                        <entry align="center">
+                        1
+                        </entry>
+                        <entry align="center">
+                        0
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        <constant>GL_PIXEL_MAP_I_TO_G</constant>
+                        </entry>
+                        <entry align="center">
+                        color index 
+                        </entry>
+                        <entry align="center">
+                        G
+                        </entry>
+                        <entry align="center">
+                        1
+                        </entry>
+                        <entry align="center">
+                        0
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        <constant>GL_PIXEL_MAP_I_TO_B</constant>
+                        </entry>
+                        <entry align="center">
+                        color index
+                        </entry>
+                        <entry align="center">
+                        B
+                        </entry>
+                        <entry align="center">
+                        1
+                        </entry>
+                        <entry align="center">
+                        0
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        <constant>GL_PIXEL_MAP_I_TO_A</constant>
+                        </entry>
+                        <entry align="center">
+                        color index
+                        </entry>
+                        <entry align="center">
+                        A
+                        </entry>
+                        <entry align="center">
+                        1
+                        </entry>
+                        <entry align="center">
+                        0
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        <constant>GL_PIXEL_MAP_R_TO_R</constant>
+                        </entry>
+                        <entry align="center">
+                        R
+                        </entry>
+                        <entry align="center">
+                        R
+                        </entry>
+                        <entry align="center">
+                        1
+                        </entry>
+                        <entry align="center">
+                        0
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        <constant>GL_PIXEL_MAP_G_TO_G</constant>
+                        </entry>
+                        <entry align="center">
+                        G
+                        </entry>
+                        <entry align="center">
+                        G
+                        </entry>
+                        <entry align="center">
+                        1
+                        </entry>
+                        <entry align="center">
+                        0
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        <constant>GL_PIXEL_MAP_B_TO_B</constant>
+                        </entry>
+                        <entry align="center">
+                        B
+                        </entry>
+                        <entry align="center">
+                        B
+                        </entry>
+                        <entry align="center">
+                        1
+                        </entry>
+                        <entry align="center">
+                        0
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        <constant>GL_PIXEL_MAP_A_TO_A</constant>
+                        </entry>
+                        <entry align="center">
+                        A
+                        </entry>
+                        <entry align="center">
+                        A
+                        </entry>
+                        <entry align="center">
+                        1
+                        </entry>
+                        <entry align="center">
+                        0
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+    <refsect1 id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_ENUM</constant> is generated if <parameter>map</parameter> is not an accepted value.
+        </para>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if <parameter>mapsize</parameter> is less than one
+            or larger than <constant>GL_MAX_PIXEL_MAP_TABLE</constant>.
+        </para>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if <parameter>map</parameter> is
+            <constant>GL_PIXEL_MAP_I_TO_I</constant>,
+            <constant>GL_PIXEL_MAP_S_TO_S</constant>,
+            <constant>GL_PIXEL_MAP_I_TO_R</constant>,
+            <constant>GL_PIXEL_MAP_I_TO_G</constant>,
+            <constant>GL_PIXEL_MAP_I_TO_B</constant>, or
+            <constant>GL_PIXEL_MAP_I_TO_A</constant>,
+            and <parameter>mapsize</parameter> is not a power of two.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if a non-zero buffer object name is bound to the
+            <constant>GL_PIXEL_UNPACK_BUFFER</constant> target and the buffer object's data store is currently mapped.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if a non-zero buffer object name is bound to the
+            <constant>GL_PIXEL_UNPACK_BUFFER</constant> target and the data would be unpacked from the buffer 
+            object such that the memory reads required would exceed the data store size.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated by <function>glPixelMapfv</function> if a non-zero buffer object name is bound to the
+            <constant>GL_PIXEL_UNPACK_BUFFER</constant> target and <parameter>values</parameter> is not evenly divisible 
+            into the number of bytes needed to store in memory a GLfloat datum.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated by <function>glPixelMapuiv</function> if a non-zero buffer object name is bound to the
+            <constant>GL_PIXEL_UNPACK_BUFFER</constant> target and <parameter>values</parameter> is not evenly divisible 
+            into the number of bytes needed to store in memory a GLuint datum.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated by <function>glPixelMapusv</function> if a non-zero buffer object name is bound to the
+            <constant>GL_PIXEL_UNPACK_BUFFER</constant> target and <parameter>values</parameter> is not evenly divisible 
+            into the number of bytes needed to store in memory a GLushort datum.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if <function>glPixelMap</function>
+            is executed between the execution of <citerefentry><refentrytitle>glBegin</refentrytitle></citerefentry>
+            and the corresponding execution of <citerefentry><refentrytitle>glEnd</refentrytitle></citerefentry>.
+        </para>
+    </refsect1>
+    <refsect1 id="associatedgets"><title>Associated Gets</title>
+        <para>
+            <citerefentry><refentrytitle>glGetPixelMap</refentrytitle></citerefentry>
+        </para>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_PIXEL_MAP_I_TO_I_SIZE</constant>
+        </para>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_PIXEL_MAP_S_TO_S_SIZE</constant>
+        </para>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_PIXEL_MAP_I_TO_R_SIZE</constant>
+        </para>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_PIXEL_MAP_I_TO_G_SIZE</constant>
+        </para>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_PIXEL_MAP_I_TO_B_SIZE</constant>
+        </para>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_PIXEL_MAP_I_TO_A_SIZE</constant>
+        </para>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_PIXEL_MAP_R_TO_R_SIZE</constant>
+        </para>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_PIXEL_MAP_G_TO_G_SIZE</constant>
+        </para>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_PIXEL_MAP_B_TO_B_SIZE</constant>
+        </para>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_PIXEL_MAP_A_TO_A_SIZE</constant>
+        </para>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_MAX_PIXEL_MAP_TABLE</constant>
+        </para>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_PIXEL_UNPACK_BUFFER_BINDING</constant>
+        </para>
+    </refsect1>
+    <refsect1 id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glColorTable</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glColorSubTable</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glConvolutionFilter1D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glConvolutionFilter2D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glCopyPixels</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glCopyTexImage1D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glCopyTexImage2D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glCopyTexSubImage1D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glCopyTexSubImage2D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glDrawPixels</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glHistogram</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glMinmax</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glPixelStore</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glPixelTransfer</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glReadPixels</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glSeparableFilter2D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glTexImage1D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glTexImage2D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glTexImage3D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glTexSubImage1D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glTexSubImage2D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glTexSubImage3D</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"></trademark> 1991-2006
+            Silicon Graphics, Inc. This document is licensed under the SGI
+            Free Software B License. For details, see
+            <ulink url="https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt">https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt</ulink>.
+        </para>
+    </refsect1>
+</refentry>

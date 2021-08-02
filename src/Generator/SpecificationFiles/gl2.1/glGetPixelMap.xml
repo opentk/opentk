@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+<refentry id="glGetPixelMap">
+    <refmeta>
+        <refmetainfo>
+            <copyright>
+                <year>1991-2006</year>
+                <holder>Silicon Graphics, Inc.</holder>
+            </copyright>
+        </refmetainfo>
+        <refentrytitle>glGetPixelMap</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glGetPixelMap</refname>
+        <refpurpose>return the specified pixel map</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glGetPixelMapfv</function></funcdef>
+                <paramdef>GLenum <parameter>map</parameter></paramdef>
+                <paramdef>GLfloat * <parameter>data</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glGetPixelMapuiv</function></funcdef>
+                <paramdef>GLenum <parameter>map</parameter></paramdef>
+                <paramdef>GLuint * <parameter>data</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glGetPixelMapusv</function></funcdef>
+                <paramdef>GLenum <parameter>map</parameter></paramdef>
+                <paramdef>GLushort * <parameter>data</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>map</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the name of the pixel map to return.
+                    Accepted values are
+                    <constant>GL_PIXEL_MAP_I_TO_I</constant>,
+                    <constant>GL_PIXEL_MAP_S_TO_S</constant>,
+                    <constant>GL_PIXEL_MAP_I_TO_R</constant>,
+                    <constant>GL_PIXEL_MAP_I_TO_G</constant>,
+                    <constant>GL_PIXEL_MAP_I_TO_B</constant>,
+                    <constant>GL_PIXEL_MAP_I_TO_A</constant>,
+                    <constant>GL_PIXEL_MAP_R_TO_R</constant>,
+                    <constant>GL_PIXEL_MAP_G_TO_G</constant>,
+                    <constant>GL_PIXEL_MAP_B_TO_B</constant>, and
+                    <constant>GL_PIXEL_MAP_A_TO_A</constant>.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>data</parameter></term>
+            <listitem>
+                <para>
+                    Returns the pixel map contents.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 id="description"><title>Description</title>
+        <para>
+            See the <citerefentry><refentrytitle>glPixelMap</refentrytitle></citerefentry> reference page for a description of the acceptable
+            values for the <parameter>map</parameter> parameter.
+            <function>glGetPixelMap</function> returns in <parameter>data</parameter> the contents of the pixel map
+            specified in <parameter>map</parameter>.
+            Pixel maps are used during the execution of
+            <citerefentry><refentrytitle>glReadPixels</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glDrawPixels</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glCopyPixels</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glTexImage1D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glTexImage2D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glTexImage3D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glTexSubImage1D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glTexSubImage2D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glTexSubImage3D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glCopyTexImage1D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glCopyTexImage2D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glCopyTexSubImage1D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glCopyTexSubImage2D</refentrytitle></citerefentry>, and
+            <citerefentry><refentrytitle>glCopyTexSubImage3D</refentrytitle></citerefentry>.
+            to map color indices,
+            stencil indices,
+            color components,
+            and depth components to other values.
+        </para>
+        <para>
+            If a non-zero named buffer object is bound to the <constant>GL_PIXEL_PACK_BUFFER</constant> target 
+            (see <citerefentry><refentrytitle>glBindBuffer</refentrytitle></citerefentry>) while a pixel map is
+            requested, <parameter>data</parameter> is treated as a byte offset into the buffer object's data store.
+        </para>
+        <para>
+            Unsigned integer values,
+            if requested,
+            are linearly mapped from the internal fixed or floating-point representation
+            such that 1.0 maps to the largest representable integer value,
+            and 0.0 maps to 0.
+            Return unsigned integer values are undefined if the map value was
+            not in the range [0,1].
+        </para>
+        <para>
+            To determine the required size of <parameter>map</parameter>,
+            call <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with the appropriate symbolic
+            constant.
+        </para>
+    </refsect1>
+    <refsect1 id="notes"><title>Notes</title>
+        <para>
+            If an error is generated,
+            no change is made to the contents of <parameter>data</parameter>.
+        </para>
+    </refsect1>
+    <refsect1 id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_ENUM</constant> is generated if <parameter>map</parameter> is not an accepted value.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if a non-zero buffer object name is bound to the
+            <constant>GL_PIXEL_PACK_BUFFER</constant> target and the buffer object's data store is currently mapped.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if a non-zero buffer object name is bound to the
+            <constant>GL_PIXEL_PACK_BUFFER</constant> target and the data would be packed to the buffer 
+            object such that the memory writes required would exceed the data store size.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated by <function>glGetPixelMapfv</function> if a non-zero buffer object name is bound to the
+            <constant>GL_PIXEL_PACK_BUFFER</constant> target and <parameter>data</parameter> is not evenly divisible 
+            into the number of bytes needed to store in memory a GLfloat datum.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated by <function>glGetPixelMapuiv</function> if a non-zero buffer object name is bound to the
+            <constant>GL_PIXEL_PACK_BUFFER</constant> target and <parameter>data</parameter> is not evenly divisible 
+            into the number of bytes needed to store in memory a GLuint datum.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated by <function>glGetPixelMapusv</function> if a non-zero buffer object name is bound to the
+            <constant>GL_PIXEL_PACK_BUFFER</constant> target and <parameter>data</parameter> is not evenly divisible 
+            into the number of bytes needed to store in memory a GLushort datum.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if <function>glGetPixelMap</function>
+            is executed between the execution of <citerefentry><refentrytitle>glBegin</refentrytitle></citerefentry>
+            and the corresponding execution of <citerefentry><refentrytitle>glEnd</refentrytitle></citerefentry>.
+        </para>
+    </refsect1>
+    <refsect1 id="associatedgets"><title>Associated Gets</title>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_PIXEL_MAP_I_TO_I_SIZE</constant>
+        </para>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_PIXEL_MAP_S_TO_S_SIZE</constant>
+        </para>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_PIXEL_MAP_I_TO_R_SIZE</constant>
+        </para>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_PIXEL_MAP_I_TO_G_SIZE</constant>
+        </para>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_PIXEL_MAP_I_TO_B_SIZE</constant>
+        </para>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_PIXEL_MAP_I_TO_A_SIZE</constant>
+        </para>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_PIXEL_MAP_R_TO_R_SIZE</constant>
+        </para>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_PIXEL_MAP_G_TO_G_SIZE</constant>
+        </para>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_PIXEL_MAP_B_TO_B_SIZE</constant>
+        </para>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_PIXEL_MAP_A_TO_A_SIZE</constant>
+        </para>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_MAX_PIXEL_MAP_TABLE</constant>
+        </para>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_PIXEL_PACK_BUFFER_BINDING</constant>
+        </para>
+    </refsect1>
+    <refsect1 id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glColorSubTable</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glColorTable</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glConvolutionFilter1D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glConvolutionFilter2D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glCopyColorSubTable</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glCopyColorTable</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glCopyPixels</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glCopyTexImage1D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glCopyTexImage2D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glCopyTexSubImage1D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glCopyTexSubImage2D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glCopyTexSubImage3D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glDrawPixels</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glGetHistogram</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glGetMinmax</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glGetTexImage</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glPixelMap</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glPixelTransfer</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glReadPixels</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glSeparableFilter2D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glTexImage1D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glTexImage1D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glTexImage2D</refentrytitle></citerefentry>
+            <citerefentry><refentrytitle>glTexImage2D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glTexImage3D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glTexSubImage1D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glTexSubImage2D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glTexSubImage3D</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"></trademark> 1991-2006
+            Silicon Graphics, Inc. This document is licensed under the SGI
+            Free Software B License. For details, see
+            <ulink url="https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt">https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt</ulink>.
+        </para>
+    </refsect1>
+</refentry>

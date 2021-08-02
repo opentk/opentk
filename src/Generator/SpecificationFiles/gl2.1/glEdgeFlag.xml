@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+<refentry id="glEdgeFlag">
+    <refmeta>
+        <refmetainfo>
+            <copyright>
+                <year>1991-2006</year>
+                <holder>Silicon Graphics, Inc.</holder>
+            </copyright>
+        </refmetainfo>
+        <refentrytitle>glEdgeFlag</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glEdgeFlag</refname>
+        <refpurpose>flag edges as either boundary or nonboundary</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glEdgeFlag</function></funcdef>
+                <paramdef>GLboolean <parameter>flag</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>flag</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the current edge flag value,
+                    either <constant>GL_TRUE</constant> or <constant>GL_FALSE</constant>. The initial value is <constant>GL_TRUE</constant>.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glEdgeFlagv</function></funcdef>
+                <paramdef>const GLboolean * <parameter>flag</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 id="parameters2"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>flag</parameter></term>
+            <listitem>
+                <para>
+                    Specifies a pointer to an array that contains a single boolean element,
+                    which replaces the current edge flag value.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 id="description"><title>Description</title>
+        <para>
+            Each vertex of a polygon,
+            separate triangle,
+            or separate quadrilateral specified between a <citerefentry><refentrytitle>glBegin</refentrytitle></citerefentry>/<citerefentry><refentrytitle>glEnd</refentrytitle></citerefentry> pair
+            is marked as the start of either a boundary or nonboundary edge.
+            If the current edge flag is true when the vertex is specified,
+            the vertex is marked as the start of a boundary edge.
+            Otherwise, the vertex is marked as the start of a nonboundary edge.
+            <function>glEdgeFlag</function> sets the edge flag bit to <constant>GL_TRUE</constant> if <parameter>flag</parameter> is <constant>GL_TRUE</constant>
+            and to <constant>GL_FALSE</constant> otherwise.
+        </para>
+        <para>
+            The vertices of connected triangles and connected quadrilaterals are always
+            marked as boundary,
+            regardless of the value of the edge flag.
+        </para>
+        <para>
+            Boundary and nonboundary edge flags on vertices are significant only if
+            <constant>GL_POLYGON_MODE</constant> is set to <constant>GL_POINT</constant> or <constant>GL_LINE</constant>.
+            See <citerefentry><refentrytitle>glPolygonMode</refentrytitle></citerefentry>.
+        </para>
+    </refsect1>
+    <refsect1 id="notes"><title>Notes</title>
+        <para>
+            The current edge flag can be updated at any time.
+            In particular,
+            <function>glEdgeFlag</function> can be called between a call to <citerefentry><refentrytitle>glBegin</refentrytitle></citerefentry> and the corresponding
+            call to <citerefentry><refentrytitle>glEnd</refentrytitle></citerefentry>.
+        </para>
+    </refsect1>
+    <refsect1 id="associatedgets"><title>Associated Gets</title>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_EDGE_FLAG</constant>
+        </para>
+    </refsect1>
+    <refsect1 id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glBegin</refentrytitle></citerefentry>,
+            <function>glEdgeFlagPointer</function>,
+            <citerefentry><refentrytitle>glPolygonMode</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"></trademark> 1991-2006
+            Silicon Graphics, Inc. This document is licensed under the SGI
+            Free Software B License. For details, see
+            <ulink url="https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt">https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt</ulink>.
+        </para>
+    </refsect1>
+</refentry>

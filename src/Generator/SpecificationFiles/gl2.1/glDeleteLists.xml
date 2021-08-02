@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+<refentry id="glDeleteLists">
+    <refmeta>
+        <refmetainfo>
+            <copyright>
+                <year>1991-2006</year>
+                <holder>Silicon Graphics, Inc.</holder>
+            </copyright>
+        </refmetainfo>
+        <refentrytitle>glDeleteLists</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glDeleteLists</refname>
+        <refpurpose>delete a contiguous group of display lists</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glDeleteLists</function></funcdef>
+                <paramdef>GLuint <parameter>list</parameter></paramdef>
+                <paramdef>GLsizei <parameter>range</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>list</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the integer name of the first display list to delete.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>range</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the number of display lists to delete.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 id="description"><title>Description</title>
+        <para>
+            <function>glDeleteLists</function> causes a contiguous group of display lists to be deleted.
+            <parameter>list</parameter> is the name of the first display list to be deleted,
+            and <parameter>range</parameter> is the number of display lists to delete.
+            All display lists 
+            <inlineequation><mml:math><mml:mi mathvariant="italic">d</mml:mi></mml:math></inlineequation>
+            with 
+            <inlineequation><mml:math>
+                <!-- eqn: list <= d <= list + range - 1:-->
+                <mml:mrow>
+                    <mml:mi mathvariant="italic">list</mml:mi>
+                    <mml:mo>&lt;=</mml:mo>
+                    <mml:mi mathvariant="italic">d</mml:mi>
+                    <mml:mo>&lt;=</mml:mo>
+                    <mml:mrow>
+                        <mml:mi mathvariant="italic">list</mml:mi>
+                        <mml:mo>+</mml:mo>
+                        <mml:mi mathvariant="italic">range</mml:mi>
+                        <mml:mo>-</mml:mo>
+                        <mml:mn>1</mml:mn>
+                    </mml:mrow>
+                </mml:mrow>
+            </mml:math></inlineequation>
+            are deleted.
+        </para>
+        <para>
+            All storage locations allocated to the specified display lists are freed,
+            and the names are available for reuse at a later time.
+            Names within the range that do not have an associated display list are ignored.
+            If <parameter>range</parameter> is 0, nothing happens.
+        </para>
+    </refsect1>
+    <refsect1 id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if <parameter>range</parameter> is negative.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if <function>glDeleteLists</function>
+            is executed between the execution of <citerefentry><refentrytitle>glBegin</refentrytitle></citerefentry>
+            and the corresponding execution of <citerefentry><refentrytitle>glEnd</refentrytitle></citerefentry>.
+        </para>
+    </refsect1>
+    <refsect1 id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glCallList</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glCallLists</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glGenLists</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glIsList</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glNewList</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"></trademark> 1991-2006
+            Silicon Graphics, Inc. This document is licensed under the SGI
+            Free Software B License. For details, see
+            <ulink url="https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt">https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt</ulink>.
+        </para>
+    </refsect1>
+</refentry>

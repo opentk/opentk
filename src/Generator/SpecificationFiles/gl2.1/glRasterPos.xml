@@ -1,0 +1,426 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+<refentry id="glRasterPos">
+    <refmeta>
+        <refmetainfo>
+            <copyright>
+                <year>1991-2006</year>
+                <holder>Silicon Graphics, Inc.</holder>
+            </copyright>
+        </refmetainfo>
+        <refentrytitle>glRasterPos</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glRasterPos</refname>
+        <refpurpose>specify the raster position for pixel operations</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glRasterPos2s</function></funcdef>
+                <paramdef>GLshort <parameter>x</parameter></paramdef>
+                <paramdef>GLshort <parameter>y</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glRasterPos2i</function></funcdef>
+                <paramdef>GLint <parameter>x</parameter></paramdef>
+                <paramdef>GLint <parameter>y</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glRasterPos2f</function></funcdef>
+                <paramdef>GLfloat <parameter>x</parameter></paramdef>
+                <paramdef>GLfloat <parameter>y</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glRasterPos2d</function></funcdef>
+                <paramdef>GLdouble <parameter>x</parameter></paramdef>
+                <paramdef>GLdouble <parameter>y</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glRasterPos3s</function></funcdef>
+                <paramdef>GLshort <parameter>x</parameter></paramdef>
+                <paramdef>GLshort <parameter>y</parameter></paramdef>
+                <paramdef>GLshort <parameter>z</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glRasterPos3i</function></funcdef>
+                <paramdef>GLint <parameter>x</parameter></paramdef>
+                <paramdef>GLint <parameter>y</parameter></paramdef>
+                <paramdef>GLint <parameter>z</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glRasterPos3f</function></funcdef>
+                <paramdef>GLfloat <parameter>x</parameter></paramdef>
+                <paramdef>GLfloat <parameter>y</parameter></paramdef>
+                <paramdef>GLfloat <parameter>z</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glRasterPos3d</function></funcdef>
+                <paramdef>GLdouble <parameter>x</parameter></paramdef>
+                <paramdef>GLdouble <parameter>y</parameter></paramdef>
+                <paramdef>GLdouble <parameter>z</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glRasterPos4s</function></funcdef>
+                <paramdef>GLshort <parameter>x</parameter></paramdef>
+                <paramdef>GLshort <parameter>y</parameter></paramdef>
+                <paramdef>GLshort <parameter>z</parameter></paramdef>
+                <paramdef>GLshort <parameter>w</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glRasterPos4i</function></funcdef>
+                <paramdef>GLint <parameter>x</parameter></paramdef>
+                <paramdef>GLint <parameter>y</parameter></paramdef>
+                <paramdef>GLint <parameter>z</parameter></paramdef>
+                <paramdef>GLint <parameter>w</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glRasterPos4f</function></funcdef>
+                <paramdef>GLfloat <parameter>x</parameter></paramdef>
+                <paramdef>GLfloat <parameter>y</parameter></paramdef>
+                <paramdef>GLfloat <parameter>z</parameter></paramdef>
+                <paramdef>GLfloat <parameter>w</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glRasterPos4d</function></funcdef>
+                <paramdef>GLdouble <parameter>x</parameter></paramdef>
+                <paramdef>GLdouble <parameter>y</parameter></paramdef>
+                <paramdef>GLdouble <parameter>z</parameter></paramdef>
+                <paramdef>GLdouble <parameter>w</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <!-- eqn: ignoring delim $$ -->
+    <refsect1 id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>x</parameter></term>
+            <term><parameter>y</parameter></term>
+            <term><parameter>z</parameter></term>
+            <term><parameter>w</parameter></term>
+            <listitem>
+                <para>
+                    Specify the 
+                    <inlineequation><mml:math><mml:mi mathvariant="italic">x</mml:mi></mml:math></inlineequation>,
+                    <inlineequation><mml:math><mml:mi mathvariant="italic">y</mml:mi></mml:math></inlineequation>,
+                    <inlineequation><mml:math><mml:mi mathvariant="italic">z</mml:mi></mml:math></inlineequation>,
+                    and 
+                    <inlineequation><mml:math><mml:mi mathvariant="italic">w</mml:mi></mml:math></inlineequation>
+                    object coordinates
+                    (if present)
+                    for the raster
+                    position.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glRasterPos2sv</function></funcdef>
+                <paramdef>const GLshort * <parameter>v</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glRasterPos2iv</function></funcdef>
+                <paramdef>const GLint * <parameter>v</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glRasterPos2fv</function></funcdef>
+                <paramdef>const GLfloat * <parameter>v</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glRasterPos2dv</function></funcdef>
+                <paramdef>const GLdouble * <parameter>v</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glRasterPos3sv</function></funcdef>
+                <paramdef>const GLshort * <parameter>v</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glRasterPos3iv</function></funcdef>
+                <paramdef>const GLint * <parameter>v</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glRasterPos3fv</function></funcdef>
+                <paramdef>const GLfloat * <parameter>v</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glRasterPos3dv</function></funcdef>
+                <paramdef>const GLdouble * <parameter>v</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glRasterPos4sv</function></funcdef>
+                <paramdef>const GLshort * <parameter>v</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glRasterPos4iv</function></funcdef>
+                <paramdef>const GLint * <parameter>v</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glRasterPos4fv</function></funcdef>
+                <paramdef>const GLfloat * <parameter>v</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glRasterPos4dv</function></funcdef>
+                <paramdef>const GLdouble * <parameter>v</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 id="parameters2"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>v</parameter></term>
+            <listitem>
+                <para>
+                    Specifies a pointer to an array of two,
+                    three,
+                    or four elements,
+                    specifying 
+                    <inlineequation><mml:math><mml:mi mathvariant="italic">x</mml:mi></mml:math></inlineequation>,
+                    <inlineequation><mml:math><mml:mi mathvariant="italic">y</mml:mi></mml:math></inlineequation>,
+                    <inlineequation><mml:math><mml:mi mathvariant="italic">z</mml:mi></mml:math></inlineequation>,
+                    and 
+                    <inlineequation><mml:math><mml:mi mathvariant="italic">w</mml:mi></mml:math></inlineequation>
+                    coordinates, respectively.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 id="description"><title>Description</title>
+        <para>
+            The GL maintains a 3D position in window coordinates.
+            This position,
+            called the raster position,
+            is used to position pixel and bitmap write operations. It is
+            maintained with subpixel accuracy.
+            See <citerefentry><refentrytitle>glBitmap</refentrytitle></citerefentry>, <citerefentry><refentrytitle>glDrawPixels</refentrytitle></citerefentry>, and <citerefentry><refentrytitle>glCopyPixels</refentrytitle></citerefentry>.
+        </para>
+        <para>
+            The current raster position consists of three window coordinates
+            (<inlineequation><mml:math><mml:mi mathvariant="italic">x</mml:mi></mml:math></inlineequation>,
+            <inlineequation><mml:math><mml:mi mathvariant="italic">y</mml:mi></mml:math></inlineequation>,
+            <inlineequation><mml:math><mml:mi mathvariant="italic">z</mml:mi></mml:math></inlineequation>),
+            a clip coordinate value 
+            (<inlineequation><mml:math><mml:mi mathvariant="italic">w</mml:mi></mml:math></inlineequation>),
+            an eye coordinate distance,
+            a valid bit,
+            and associated color data and texture coordinates.
+            The 
+            <inlineequation><mml:math><mml:mi mathvariant="italic">w</mml:mi></mml:math></inlineequation>
+            coordinate is a clip coordinate,
+            because 
+            <inlineequation><mml:math><mml:mi mathvariant="italic">w</mml:mi></mml:math></inlineequation>
+            is not projected to window coordinates.
+            <function>glRasterPos4</function> specifies object coordinates 
+            <inlineequation><mml:math><mml:mi mathvariant="italic">x</mml:mi></mml:math></inlineequation>,
+            <inlineequation><mml:math><mml:mi mathvariant="italic">y</mml:mi></mml:math></inlineequation>,
+            <inlineequation><mml:math><mml:mi mathvariant="italic">z</mml:mi></mml:math></inlineequation>,
+            and 
+            <inlineequation><mml:math><mml:mi mathvariant="italic">w</mml:mi></mml:math></inlineequation>
+            explicitly.
+            <function>glRasterPos3</function> specifies object coordinate 
+            <inlineequation><mml:math><mml:mi mathvariant="italic">x</mml:mi></mml:math></inlineequation>,
+            <inlineequation><mml:math><mml:mi mathvariant="italic">y</mml:mi></mml:math></inlineequation>,
+            and 
+            <inlineequation><mml:math><mml:mi mathvariant="italic">z</mml:mi></mml:math></inlineequation>
+            explicitly,
+            while 
+            <inlineequation><mml:math><mml:mi mathvariant="italic">w</mml:mi></mml:math></inlineequation>
+            is implicitly set to 1.
+            <function>glRasterPos2</function> uses the argument values for 
+            <inlineequation><mml:math><mml:mi mathvariant="italic">x</mml:mi></mml:math></inlineequation>
+            and 
+            <inlineequation><mml:math><mml:mi mathvariant="italic">y</mml:mi></mml:math></inlineequation>
+            while
+            implicitly setting 
+            <inlineequation><mml:math><mml:mi mathvariant="italic">z</mml:mi></mml:math></inlineequation>
+            and 
+            <inlineequation><mml:math><mml:mi mathvariant="italic">w</mml:mi></mml:math></inlineequation>
+            to 0 and 1.
+        </para>
+        <para>
+            The object coordinates presented by <function>glRasterPos</function> are treated just like those
+            of a <citerefentry><refentrytitle>glVertex</refentrytitle></citerefentry> command:
+            They are transformed by the current modelview and projection matrices
+            and passed to the clipping stage.
+            If the vertex is not culled,
+            then it is projected and scaled to window coordinates,
+            which become the new current raster position,
+            and the <constant>GL_CURRENT_RASTER_POSITION_VALID</constant> flag is set.
+            If the vertex
+            <emphasis>is</emphasis>
+            culled,
+            then the valid bit is cleared and the current raster position
+            and associated color and texture coordinates are undefined.
+        </para>
+        <para>
+            The current raster position also includes some associated color data
+            and texture coordinates.
+            If lighting is enabled,
+            then <constant>GL_CURRENT_RASTER_COLOR</constant>
+            (in RGBA mode)
+            or <constant>GL_CURRENT_RASTER_INDEX</constant>
+            (in color index mode)
+            is set to the color produced by the lighting calculation
+            (see <citerefentry><refentrytitle>glLight</refentrytitle></citerefentry>, <citerefentry><refentrytitle>glLightModel</refentrytitle></citerefentry>, and
+            <citerefentry><refentrytitle>glShadeModel</refentrytitle></citerefentry>).
+            If lighting is disabled,
+            current color
+            (in RGBA mode, state variable <constant>GL_CURRENT_COLOR</constant>)
+            or color index
+            (in color index mode, state variable <constant>GL_CURRENT_INDEX</constant>)
+            is used to update the current raster color.
+            <constant>GL_CURRENT_RASTER_SECONDARY_COLOR</constant> (in RGBA mode) is likewise updated.
+        </para>
+        <para>
+            Likewise,
+            <constant>GL_CURRENT_RASTER_TEXTURE_COORDS</constant> is updated as a function
+            of <constant>GL_CURRENT_TEXTURE_COORDS</constant>,
+            based on the texture matrix and the texture generation functions
+            (see <citerefentry><refentrytitle>glTexGen</refentrytitle></citerefentry>).
+            Finally,
+            the distance from the origin of the eye coordinate system to the
+            vertex as transformed by only the modelview matrix replaces
+            <constant>GL_CURRENT_RASTER_DISTANCE</constant>.
+        </para>
+        <para>
+            Initially, the current raster position is (0, 0, 0, 1),
+            the current raster distance is 0,
+            the valid bit is set,
+            the associated RGBA color is (1, 1, 1, 1),
+            the associated color index is 1,
+            and the associated texture coordinates are (0, 0, 0, 1).
+            In RGBA mode,
+            <constant>GL_CURRENT_RASTER_INDEX</constant> is always 1;
+            in color index mode,
+            the current raster RGBA color always maintains its initial value.
+        </para>
+    </refsect1>
+    <refsect1 id="notes"><title>Notes</title>
+        <para>
+            The raster position is modified by <function>glRasterPos</function>, <citerefentry><refentrytitle>glBitmap</refentrytitle></citerefentry>, and <citerefentry><refentrytitle>glWindowPos</refentrytitle></citerefentry>.
+        </para>
+        <para>
+            When the raster position coordinates are invalid,
+            drawing commands that are based on the raster position are
+            ignored (that is, they do not result in changes to GL state).
+        </para>
+        <para>
+            Calling <citerefentry><refentrytitle>glDrawElements</refentrytitle></citerefentry> or <citerefentry><refentrytitle>glDrawRangeElements</refentrytitle></citerefentry> may leave the
+            current color or index indeterminate.
+            If <function>glRasterPos</function> is executed while the current color or index is indeterminate, the
+            current raster color or current raster index remains indeterminate.
+        </para>
+        <para>
+            To set a valid raster position outside the viewport, first set a valid
+            raster position, then call <citerefentry><refentrytitle>glBitmap</refentrytitle></citerefentry> with NULL as the <emphasis>bitmap</emphasis>
+            parameter.
+        </para>
+        <para>
+            When the <code>ARB_imaging</code> extension is supported, there are distinct
+            raster texture coordinates for each texture unit. Each texture unit's
+            current raster texture coordinates are updated by <function>glRasterPos</function>.
+        </para>
+    </refsect1>
+    <refsect1 id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if <function>glRasterPos</function>
+            is executed between the execution of <citerefentry><refentrytitle>glBegin</refentrytitle></citerefentry>
+            and the corresponding execution of <citerefentry><refentrytitle>glEnd</refentrytitle></citerefentry>.
+        </para>
+    </refsect1>
+    <refsect1 id="associatedgets"><title>Associated Gets</title>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_CURRENT_RASTER_POSITION</constant>
+        </para>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_CURRENT_RASTER_POSITION_VALID</constant>
+        </para>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_CURRENT_RASTER_DISTANCE</constant>
+        </para>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_CURRENT_RASTER_COLOR</constant>
+        </para>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_CURRENT_RASTER_SECONDARY_COLOR</constant>
+        </para>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_CURRENT_RASTER_INDEX</constant>
+        </para>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_CURRENT_RASTER_TEXTURE_COORDS</constant>
+        </para>
+    </refsect1>
+    <refsect1 id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glBitmap</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glCopyPixels</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glDrawArrays</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glDrawElements</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glDrawRangeElements</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glDrawPixels</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glMultiTexCoord</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glTexCoord</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glTexGen</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glVertex</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glWindowPos</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"></trademark> 1991-2006
+            Silicon Graphics, Inc. This document is licensed under the SGI
+            Free Software B License. For details, see
+            <ulink url="https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt">https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt</ulink>.
+        </para>
+    </refsect1>
+</refentry>

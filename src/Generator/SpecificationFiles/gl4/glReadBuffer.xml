@@ -1,0 +1,187 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<!-- Converted by db4-upgrade version 1.1 -->
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glReadBuffer">
+    <info>
+        <copyright>
+            <year>1991-2006</year>
+
+      <holder>Silicon Graphics, Inc.</holder>
+    </copyright>
+
+    <copyright>
+      <year>2011-2014</year>
+
+      <holder>Khronos Group</holder>
+    </copyright>
+  </info>
+
+  <refmeta>
+    <refentrytitle>glReadBuffer</refentrytitle>
+
+    <manvolnum>3G</manvolnum>
+  </refmeta>
+
+  <refnamediv>
+    <refname>glReadBuffer</refname>
+
+    <refname>glNamedFramebufferReadBuffer</refname>
+
+    <refpurpose>select a color buffer source for pixels</refpurpose>
+  </refnamediv>
+
+  <refsynopsisdiv>
+    <title>C Specification</title>
+
+    <funcsynopsis>
+      <funcprototype>
+        <funcdef>void <function>glReadBuffer</function></funcdef>
+
+        <paramdef>GLenum <parameter>mode</parameter></paramdef>
+      </funcprototype>
+
+      <funcprototype>
+        <funcdef>void <function>glNamedFramebufferReadBuffer</function></funcdef>
+
+        <paramdef>GLuint <parameter>framebuffer</parameter></paramdef>
+
+        <paramdef>GLenum <parameter>mode</parameter></paramdef>
+      </funcprototype>
+    </funcsynopsis>
+  </refsynopsisdiv>
+
+  <refsect1 xml:id="parameters">
+    <title>Parameters</title>
+
+    <variablelist>
+      <varlistentry>
+        <term><parameter>framebuffer</parameter></term>
+
+        <listitem>
+          <para>Specifies the name of the framebuffer object for
+          <function>glNamedFramebufferReadBuffer</function> function.</para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term><parameter>mode</parameter></term>
+
+        <listitem>
+          <para>Specifies a color buffer. Accepted values are
+          <constant>GL_FRONT_LEFT</constant>,
+          <constant>GL_FRONT_RIGHT</constant>,
+          <constant>GL_BACK_LEFT</constant>,
+          <constant>GL_BACK_RIGHT</constant>, <constant>GL_FRONT</constant>,
+          <constant>GL_BACK</constant>, <constant>GL_LEFT</constant>,
+          <constant>GL_RIGHT</constant>, and the constants
+          <constant>GL_COLOR_ATTACHMENT</constant><emphasis>i</emphasis>.</para>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+  </refsect1>
+
+  <refsect1 xml:id="description">
+    <title>Description</title>
+
+    <para><function>glReadBuffer</function> specifies a color buffer as the
+    source for subsequent
+    <citerefentry><refentrytitle>glReadPixels</refentrytitle></citerefentry>,
+    <citerefentry><refentrytitle>glCopyTexImage1D</refentrytitle></citerefentry>,
+    <citerefentry><refentrytitle>glCopyTexImage2D</refentrytitle></citerefentry>,
+    <citerefentry><refentrytitle>glCopyTexSubImage1D</refentrytitle></citerefentry>,
+    <citerefentry><refentrytitle>glCopyTexSubImage2D</refentrytitle></citerefentry>,
+    and
+    <citerefentry><refentrytitle>glCopyTexSubImage3D</refentrytitle></citerefentry>
+    commands. <parameter>mode</parameter> accepts one of twelve or more
+    predefined values. In a fully configured system,
+    <constant>GL_FRONT</constant>, <constant>GL_LEFT</constant>, and
+    <constant>GL_FRONT_LEFT</constant> all name the front left buffer,
+    <constant>GL_FRONT_RIGHT</constant> and <constant>GL_RIGHT</constant>
+    name the front right buffer, and <constant>GL_BACK_LEFT</constant> and
+    <constant>GL_BACK</constant> name the back left buffer. Further more,
+    the constants
+    <constant>GL_COLOR_ATTACHMENT</constant><emphasis>i</emphasis> may be
+    used to indicate the <emphasis>i</emphasis><superscript>th</superscript>
+    color attachment where <emphasis>i</emphasis> ranges from zero to the
+    value of <constant>GL_MAX_COLOR_ATTACHMENTS</constant> minus one.</para>
+
+    <para>Nonstereo double-buffered configurations have only a front left and
+    a back left buffer. Single-buffered configurations have a front left and a
+    front right buffer if stereo, and only a front left buffer if nonstereo.
+    It is an error to specify a nonexistent buffer to
+    <function>glReadBuffer</function>.</para>
+
+    <para><parameter>mode</parameter> is initially
+    <constant>GL_FRONT</constant> in single-buffered configurations and
+    <constant>GL_BACK</constant> in double-buffered configurations.</para>
+
+    <para>For <function>glReadBuffer</function>, the target framebuffer object
+    is that bound to <constant>GL_READ_FRAMEBUFFER</constant>. For
+    <function>glNamedFramebufferReadBuffer</function>,
+    <parameter>framebuffer</parameter> must either be zero or the name of the
+    target framebuffer object. If <parameter>framebuffer</parameter> is zero,
+    then the default read framebuffer is affected.</para>
+  </refsect1>
+
+  <refsect1 xml:id="errors">
+    <title>Errors</title>
+
+    <para><constant>GL_INVALID_ENUM</constant> is generated if
+    <parameter>mode</parameter> is not one of the twelve (or more) accepted
+    values.</para>
+
+    <para><constant>GL_INVALID_OPERATION</constant> is generated if
+    <parameter>mode</parameter> specifies a buffer that does not exist.</para>
+
+    <para><constant>GL_INVALID_OPERATION</constant> is generated by
+    <function>glNamedFramebufferReadBuffer</function> if
+    <parameter>framebuffer</parameter> is not zero or the name of an existing
+    framebuffer object.</para>
+  </refsect1>
+
+  <refsect1 xml:id="associatedgets">
+    <title>Associated Gets</title>
+
+    <para><citerefentry><refentrytitle>glGet</refentrytitle></citerefentry>
+    with argument <constant>GL_READ_BUFFER</constant></para>
+
+    </refsect1>
+    <refsect1 xml:id="versions"><title>Version Support</title>
+        <informaltable>
+            <tgroup cols="13" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry><function>glNamedFramebufferReadBuffer</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='45']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glReadBuffer</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='20']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+    <refsect1 xml:id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glCopyTexImage1D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glCopyTexImage2D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glCopyTexSubImage1D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glCopyTexSubImage2D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glCopyTexSubImage3D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glDrawBuffer</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glReadPixels</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 1991-2006 Silicon Graphics, Inc.
+            Copyright <trademark class="copyright"/> 2011-2014 Khronos Group.
+            This document is licensed under the SGI
+            Free Software B License. For details, see
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt">https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt</link>.
+        </para>
+    </refsect1>
+</refentry>

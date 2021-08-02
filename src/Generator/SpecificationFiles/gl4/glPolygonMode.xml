@@ -1,0 +1,166 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<!-- Converted by db4-upgrade version 1.1 -->
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glPolygonMode">
+    <info>
+        <copyright>
+            <year>1991-2006</year>
+            <holder>Silicon Graphics, Inc.</holder>
+        </copyright>
+        <copyright>
+            <year>2010-2014</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </info>
+    <refmeta>
+        <refentrytitle>glPolygonMode</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glPolygonMode</refname>
+        <refpurpose>select a polygon rasterization mode</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glPolygonMode</function></funcdef>
+                <paramdef>GLenum <parameter>face</parameter></paramdef>
+                <paramdef>GLenum <parameter>mode</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 xml:id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>face</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the polygons that <parameter>mode</parameter> applies to.
+                    Must be <constant>GL_FRONT_AND_BACK</constant> for front- and back-facing polygons.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>mode</parameter></term>
+            <listitem>
+                <para>
+                    Specifies how polygons will be rasterized.
+                    Accepted values are
+                    <constant>GL_POINT</constant>,
+                    <constant>GL_LINE</constant>, and
+                    <constant>GL_FILL</constant>.
+                    The initial value is <constant>GL_FILL</constant> for both front- and back-facing polygons.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 xml:id="description"><title>Description</title>
+        <para>
+            <function>glPolygonMode</function> controls the interpretation of polygons for rasterization.
+            <parameter>face</parameter> describes which polygons <parameter>mode</parameter> applies to:
+            both front and back-facing polygons (<constant>GL_FRONT_AND_BACK</constant>).
+            The polygon mode affects only the final rasterization of polygons.
+            In particular,
+            a polygon's vertices are lit and
+            the polygon is clipped and possibly culled before these modes are applied.
+        </para>
+        <para>
+            Three modes are defined and can be specified in <parameter>mode</parameter>:
+        </para>
+        <variablelist>
+            <varlistentry>
+                <term><constant>GL_POINT</constant></term>
+                <listitem>
+                    <para>
+                        Polygon vertices that are marked as the start of a boundary edge
+                        are drawn as points.
+                        Point attributes such as
+                        <constant>GL_POINT_SIZE</constant> and
+                        <constant>GL_POINT_SMOOTH</constant> control
+                        the rasterization of the points.
+                        Polygon rasterization attributes other than <constant>GL_POLYGON_MODE</constant> have no effect.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_LINE</constant></term>
+                <listitem>
+                    <para>
+                        Boundary edges of the polygon are drawn as line segments.
+                        Line attributes such as
+                        <constant>GL_LINE_WIDTH</constant> and
+                        <constant>GL_LINE_SMOOTH</constant> control
+                        the rasterization of the lines.
+                        Polygon rasterization attributes other than <constant>GL_POLYGON_MODE</constant> have no effect.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_FILL</constant></term>
+                <listitem>
+                    <para>
+                        The interior of the polygon is filled.
+                        Polygon attributes such as <constant>GL_POLYGON_SMOOTH</constant> control the rasterization of the polygon.
+                    </para>
+                </listitem>
+            </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 xml:id="examples"><title>Examples</title>
+        <para>
+            To draw a surface with outlined polygons,
+            call
+            <programlisting>
+glPolygonMode(<constant>GL_FRONT_AND_BACK</constant>, <constant>GL_LINE</constant>);
+            </programlisting>
+        </para>
+    </refsect1>
+    <refsect1 xml:id="notes"><title>Notes</title>
+        <para>
+            Vertices are marked as boundary or nonboundary with an edge flag.
+            Edge flags are generated internally by the GL when it decomposes
+            triangle stips and fans.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_ENUM</constant> is generated if either <parameter>face</parameter> or <parameter>mode</parameter> is not
+            an accepted value.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="associatedgets"><title>Associated Gets</title>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_POLYGON_MODE</constant>
+        </para>
+    </refsect1>
+    <refsect1 xml:id="versions"><title>Version Support</title>
+        <informaltable>
+            <tgroup cols="13" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry><function>glPolygonMode</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='20']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+    <refsect1 xml:id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glLineWidth</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glPointSize</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 1991-2006 Silicon Graphics, Inc.
+            Copyright <trademark class="copyright"/> 2010-2014 Khronos Group.
+            This document is licensed under the SGI Free Software B License.
+            For details, see
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt">https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt</link>.
+        </para>
+    </refsect1>
+</refentry>

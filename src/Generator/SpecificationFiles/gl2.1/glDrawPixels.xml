@@ -1,0 +1,1235 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+<refentry id="glDrawPixels">
+    <refmeta>
+        <refmetainfo>
+            <copyright>
+                <year>1991-2006</year>
+                <holder>Silicon Graphics, Inc.</holder>
+            </copyright>
+        </refmetainfo>
+        <refentrytitle>glDrawPixels</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glDrawPixels</refname>
+        <refpurpose>write a block of pixels to the frame buffer</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glDrawPixels</function></funcdef>
+                <paramdef>GLsizei <parameter>width</parameter></paramdef>
+                <paramdef>GLsizei <parameter>height</parameter></paramdef>
+                <paramdef>GLenum <parameter>format</parameter></paramdef>
+                <paramdef>GLenum <parameter>type</parameter></paramdef>
+                <paramdef>const void * <parameter>data</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <!-- eqn: ignoring delim $$ -->
+    <refsect1 id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>width</parameter></term>
+            <term><parameter>height</parameter></term>
+            <listitem>
+                <para>
+                    Specify the dimensions of the pixel rectangle to be written
+                    into the frame buffer.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>format</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the format of the pixel data.
+                    Symbolic constants
+                    <constant>GL_COLOR_INDEX</constant>,
+                    <constant>GL_STENCIL_INDEX</constant>,
+                    <constant>GL_DEPTH_COMPONENT</constant>,
+                    <constant>GL_RGB</constant>,
+                    <constant>GL_BGR</constant>,
+                    <constant>GL_RGBA</constant>,
+                    <constant>GL_BGRA</constant>,
+                    <constant>GL_RED</constant>,
+                    <constant>GL_GREEN</constant>,
+                    <constant>GL_BLUE</constant>,
+                    <constant>GL_ALPHA</constant>,
+                    <constant>GL_LUMINANCE</constant>, and
+                    <constant>GL_LUMINANCE_ALPHA</constant> are accepted.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>type</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the data type for <parameter>data</parameter>.
+                    Symbolic constants
+                    <constant>GL_UNSIGNED_BYTE</constant>,
+                    <constant>GL_BYTE</constant>,
+                    <constant>GL_BITMAP</constant>,
+                    <constant>GL_UNSIGNED_SHORT</constant>,
+                    <constant>GL_SHORT</constant>,
+                    <constant>GL_UNSIGNED_INT</constant>,
+                    <constant>GL_INT</constant>,
+                    <constant>GL_FLOAT</constant>,
+                    <constant>GL_UNSIGNED_BYTE_3_3_2</constant>,
+                    <constant>GL_UNSIGNED_BYTE_2_3_3_REV</constant>,
+                    <constant>GL_UNSIGNED_SHORT_5_6_5</constant>,
+                    <constant>GL_UNSIGNED_SHORT_5_6_5_REV</constant>,
+                    <constant>GL_UNSIGNED_SHORT_4_4_4_4</constant>,
+                    <constant>GL_UNSIGNED_SHORT_4_4_4_4_REV</constant>,
+                    <constant>GL_UNSIGNED_SHORT_5_5_5_1</constant>,
+                    <constant>GL_UNSIGNED_SHORT_1_5_5_5_REV</constant>,
+                    <constant>GL_UNSIGNED_INT_8_8_8_8</constant>,
+                    <constant>GL_UNSIGNED_INT_8_8_8_8_REV</constant>,
+                    <constant>GL_UNSIGNED_INT_10_10_10_2</constant>, and
+                    <constant>GL_UNSIGNED_INT_2_10_10_10_REV</constant>
+                    are accepted.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>data</parameter></term>
+            <listitem>
+                <para>
+                    Specifies a pointer to the pixel data.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 id="description"><title>Description</title>
+        <para>
+            <function>glDrawPixels</function> reads pixel data from memory and writes it into the frame buffer
+            relative to the current raster position, provided that the raster
+            position is valid.  Use
+            <citerefentry><refentrytitle>glRasterPos</refentrytitle></citerefentry> or <citerefentry><refentrytitle>glWindowPos</refentrytitle></citerefentry> to set the current raster position; use
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_CURRENT_RASTER_POSITION_VALID</constant>
+            to determine if the specified raster position is valid, and
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_CURRENT_RASTER_POSITION</constant>
+            to query the raster position.
+        </para>
+        <para>
+            Several parameters define the encoding of pixel data in memory
+            and control the processing of the pixel data
+            before it is placed in the frame buffer.
+            These parameters are set with four commands:
+            <citerefentry><refentrytitle>glPixelStore</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glPixelTransfer</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glPixelMap</refentrytitle></citerefentry>, and <citerefentry><refentrytitle>glPixelZoom</refentrytitle></citerefentry>.
+            This reference page describes the effects on <function>glDrawPixels</function> of many,
+            but not all, of the parameters specified by these four commands.
+        </para>
+        <para>
+            Data is read from <parameter>data</parameter> as a sequence of signed or unsigned bytes,
+            signed or unsigned shorts, signed or unsigned integers, or
+            single-precision floating-point values, depending on <parameter>type</parameter>.
+            When <parameter>type</parameter> is one of <constant>GL_UNSIGNED_BYTE</constant>, <constant>GL_BYTE</constant>,
+            <constant>GL_UNSIGNED_SHORT</constant>, <constant>GL_SHORT</constant>, <constant>GL_UNSIGNED_INT</constant>,
+            <constant>GL_INT</constant>, or <constant>GL_FLOAT</constant> each of these bytes, shorts, integers, or
+            floating-point values is interpreted as one color or depth component, or
+            one index, depending on <parameter>format</parameter>.
+            When <parameter>type</parameter> is one of <constant>GL_UNSIGNED_BYTE_3_3_2</constant>,
+            <constant>GL_UNSIGNED_SHORT_5_6_5</constant>, <constant>GL_UNSIGNED_SHORT_4_4_4_4</constant>,
+            <constant>GL_UNSIGNED_SHORT_5_5_5_1</constant>, <constant>GL_UNSIGNED_INT_8_8_8_8</constant>, or
+            <constant>GL_UNSIGNED_INT_10_10_10_2</constant>, each unsigned value is interpreted as
+            containing all the components for a single pixel, with the color
+            components arranged according to <parameter>format</parameter>.
+            When <parameter>type</parameter> is one of <constant>GL_UNSIGNED_BYTE_2_3_3_REV</constant>,
+            <constant>GL_UNSIGNED_SHORT_5_6_5_REV</constant>, <constant>GL_UNSIGNED_SHORT_4_4_4_4_REV</constant>,
+            <constant>GL_UNSIGNED_SHORT_1_5_5_5_REV</constant>, <constant>GL_UNSIGNED_INT_8_8_8_8_REV</constant>, or
+            <constant>GL_UNSIGNED_INT_2_10_10_10_REV</constant>, each unsigned value is interpreted
+            as containing all color components, specified by <parameter>format</parameter>, for a single
+            pixel in a reversed order. Indices are always treated individually.
+            Color components are treated as groups of one, two, three, or four
+            values, again based on <parameter>format</parameter>. Both individual indices and groups of
+            components are referred to as pixels.
+            If <parameter>type</parameter> is <constant>GL_BITMAP</constant>, the data must be unsigned bytes, and
+            <parameter>format</parameter> must be either <constant>GL_COLOR_INDEX</constant> or <constant>GL_STENCIL_INDEX</constant>.
+            Each unsigned byte is treated as eight 1-bit pixels, with bit ordering
+            determined by <constant>GL_UNPACK_LSB_FIRST</constant> (see <citerefentry><refentrytitle>glPixelStore</refentrytitle></citerefentry>).
+        </para>
+        <para>
+            <inlineequation><mml:math>
+                <!-- eqn: width  times  height:-->
+                <mml:mrow>
+                    <mml:mi mathvariant="italic">width</mml:mi>
+                    <mml:mo>&times;</mml:mo>
+                    <mml:mi mathvariant="italic">height</mml:mi>
+                </mml:mrow>
+            </mml:math></inlineequation>
+            pixels are read from memory,
+            starting at location <parameter>data</parameter>.
+            By default, these pixels are taken from adjacent memory locations,
+            except that after all <parameter>width</parameter> pixels are read,
+            the read pointer is advanced to the next four-byte boundary.
+            The four-byte row alignment is specified by <citerefentry><refentrytitle>glPixelStore</refentrytitle></citerefentry> with
+            argument <constant>GL_UNPACK_ALIGNMENT</constant>,
+            and it can be set to one, two, four, or eight bytes.
+            Other pixel store parameters specify different read pointer advancements,
+            both before the first pixel is read
+            and after all <parameter>width</parameter> pixels are read.
+            See the <citerefentry><refentrytitle>glPixelStore</refentrytitle></citerefentry> reference page for details on these options.
+        </para>
+        <para>
+            If a non-zero named buffer object is bound to the <constant>GL_PIXEL_UNPACK_BUFFER</constant> target 
+            (see <citerefentry><refentrytitle>glBindBuffer</refentrytitle></citerefentry>) while a block of pixels is
+            specified, <parameter>data</parameter> is treated as a byte offset into the buffer object's data store.
+        </para>
+        <para>
+            The 
+            <inlineequation><mml:math>
+                <!-- eqn: width  times  height:-->
+                <mml:mrow>
+                    <mml:mi mathvariant="italic">width</mml:mi>
+                    <mml:mo>&times;</mml:mo>
+                    <mml:mi mathvariant="italic">height</mml:mi>
+                </mml:mrow>
+            </mml:math></inlineequation>
+            pixels that are read from memory are
+            each operated on in the same way,
+            based on the values of several parameters specified by <citerefentry><refentrytitle>glPixelTransfer</refentrytitle></citerefentry>
+            and <citerefentry><refentrytitle>glPixelMap</refentrytitle></citerefentry>.
+            The details of these operations,
+            as well as the target buffer into which the pixels are drawn,
+            are specific to the format of the pixels,
+            as specified by <parameter>format</parameter>.
+            <parameter>format</parameter> can assume one of 13 symbolic values:
+        </para>
+        <variablelist>
+            <varlistentry>
+                <term><constant>GL_COLOR_INDEX</constant></term>
+                <listitem>
+                    <para>
+                        Each pixel is a single value,
+                        a color index.
+                        It is converted to fixed-point format,
+                        with an unspecified number of bits to the right of the binary point,
+                        regardless of the memory data type.
+                        Floating-point values convert to true fixed-point values.
+                        Signed and unsigned integer data is converted with all fraction bits
+                        set to 0.
+                        Bitmap data convert to either 0 or 1.
+                    </para>
+                    <para>
+                        Each fixed-point index is then shifted left by <constant>GL_INDEX_SHIFT</constant> bits
+                        and added to <constant>GL_INDEX_OFFSET</constant>.
+                        If <constant>GL_INDEX_SHIFT</constant> is negative,
+                        the shift is to the right.
+                        In either case, zero bits fill otherwise unspecified bit locations in the
+                        result.
+                    </para>
+                    <para>
+                        If the GL is in RGBA mode,
+                        the resulting index is converted to an RGBA pixel
+                        with the help of the <constant>GL_PIXEL_MAP_I_TO_R</constant>,
+                        <constant>GL_PIXEL_MAP_I_TO_G</constant>,
+                        <constant>GL_PIXEL_MAP_I_TO_B</constant>,
+                        and <constant>GL_PIXEL_MAP_I_TO_A</constant> tables.
+                        If the GL is in color index mode,
+                        and if <constant>GL_MAP_COLOR</constant> is true,
+                        the index is replaced with the value that it references in lookup table
+                        <constant>GL_PIXEL_MAP_I_TO_I</constant>.
+                        Whether the lookup replacement of the index is done or not,
+                        the integer part of the index is then ANDed with 
+                        <inlineequation><mml:math>
+                            <!-- eqn: 2 sup b -1:-->
+                            <mml:mrow>
+                                <mml:msup><mml:mn>2</mml:mn>
+                                <mml:mi mathvariant="italic">b</mml:mi>
+                                </mml:msup>
+                                <mml:mo>-</mml:mo>
+                                <mml:mn>1</mml:mn>
+                            </mml:mrow>
+                        </mml:math></inlineequation>,
+                        where 
+                        <inlineequation><mml:math><mml:mi mathvariant="italic">b</mml:mi></mml:math></inlineequation>
+                        is the number of bits in a color index buffer.
+                    </para>
+                    <para>
+                        The GL then converts the resulting indices or RGBA colors to fragments
+                        by attaching the current raster position <emphasis>z</emphasis> coordinate and
+                        texture coordinates to each pixel,
+                        then assigning 
+                        <inlineequation><mml:math><mml:mi mathvariant="italic">x</mml:mi></mml:math></inlineequation>
+                        and 
+                        <inlineequation><mml:math><mml:mi mathvariant="italic">y</mml:mi></mml:math></inlineequation>
+                        window coordinates to the 
+                        <inlineequation><mml:math><mml:mi mathvariant="italic">n</mml:mi></mml:math></inlineequation>th
+                        fragment such that
+                        <informalequation><mml:math>
+                            <!-- eqn: x sub n  =  x sub r  +  n   mod   width:-->
+                            <mml:mrow>
+                                <mml:msub><mml:mi mathvariant="italic">x</mml:mi>
+                                <mml:mi mathvariant="italic">n</mml:mi>
+                                </mml:msub>
+                                <mml:mo>=</mml:mo>
+                                <mml:mrow>
+                                    <mml:msub><mml:mi mathvariant="italic">x</mml:mi>
+                                    <mml:mi mathvariant="italic">r</mml:mi>
+                                    </mml:msub>
+                                    <mml:mo>+</mml:mo>
+                                    <mml:mrow>
+                                        <mml:mi mathvariant="italic">n</mml:mi>
+                                        <mml:mo>%</mml:mo>
+                                        <mml:mi mathvariant="italic">width</mml:mi>
+                                    </mml:mrow>
+                                </mml:mrow>
+                            </mml:mrow>
+                        </mml:math></informalequation>
+                        <para>
+                            <informalequation><mml:math>
+                                <!-- eqn: y sub n  =  y sub r  +  \(lf n  /  width   \(rf:-->
+                                <mml:mrow>
+                                    <mml:msub><mml:mi mathvariant="italic">y</mml:mi>
+                                    <mml:mi mathvariant="italic">n</mml:mi>
+                                    </mml:msub>
+                                    <mml:mo>=</mml:mo>
+                                    <mml:mrow>
+                                        <mml:msub><mml:mi mathvariant="italic">y</mml:mi>
+                                        <mml:mi mathvariant="italic">r</mml:mi>
+                                        </mml:msub>
+                                        <mml:mo>+</mml:mo>
+                                        <mml:mfenced open="&LeftFloor;" close="&RightFloor;">
+                                            <mml:mfrac>
+                                                <mml:mi mathvariant="italic">n</mml:mi>
+                                                <mml:mi mathvariant="italic">width</mml:mi>
+                                            </mml:mfrac>
+                                        </mml:mfenced>
+                                    </mml:mrow>
+                                </mml:mrow>
+                            </mml:math></informalequation>
+                        </para>
+                        <para>
+                        </para>
+                    </para>
+                    <para>
+                        where 
+                        <inlineequation><mml:math>
+                            <!-- eqn: (x sub r , y sub r):-->
+                            <mml:mfenced open="(" close=")">
+                                <mml:msub><mml:mi mathvariant="italic">x</mml:mi>
+                                <mml:mi mathvariant="italic">r</mml:mi>
+                                </mml:msub>
+                                <mml:msub><mml:mi mathvariant="italic">y</mml:mi>
+                                <mml:mi mathvariant="italic">r</mml:mi>
+                                </mml:msub>
+                            </mml:mfenced>
+                        </mml:math></inlineequation>
+                        is the current raster position.
+                        These pixel fragments are then treated just like the fragments generated by
+                        rasterizing points, lines, or polygons.
+                        Texture mapping,
+                        fog,
+                        and all the fragment operations are applied before the fragments are written
+                        to the frame buffer.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_STENCIL_INDEX</constant></term>
+                <listitem>
+                    <para>
+                        Each pixel is a single value,
+                        a stencil index.
+                        It is converted to fixed-point format,
+                        with an unspecified number of bits to the right of the binary point,
+                        regardless of the memory data type.
+                        Floating-point values convert to true fixed-point values.
+                        Signed and unsigned integer data is converted with all fraction bits
+                        set to 0.
+                        Bitmap data convert to either 0 or 1.
+                    </para>
+                    <para>
+                        Each fixed-point index is then shifted left by <constant>GL_INDEX_SHIFT</constant> bits,
+                        and added to <constant>GL_INDEX_OFFSET</constant>.
+                        If <constant>GL_INDEX_SHIFT</constant> is negative,
+                        the shift is to the right.
+                        In either case, zero bits fill otherwise unspecified bit locations in the
+                        result.
+                        If <constant>GL_MAP_STENCIL</constant> is true,
+                        the index is replaced with the value that it references in lookup table
+                        <constant>GL_PIXEL_MAP_S_TO_S</constant>.
+                        Whether the lookup replacement of the index is done or not,
+                        the integer part of the index is then ANDed with 
+                        <inlineequation><mml:math>
+                            <!-- eqn: 2 sup b -1:-->
+                            <mml:mrow>
+                                <mml:msup><mml:mn>2</mml:mn>
+                                <mml:mi mathvariant="italic">b</mml:mi>
+                                </mml:msup>
+                                <mml:mo>-</mml:mo>
+                                <mml:mn>1</mml:mn>
+                            </mml:mrow>
+                        </mml:math></inlineequation>,
+                        where 
+                        <inlineequation><mml:math><mml:mi mathvariant="italic">b</mml:mi></mml:math></inlineequation>
+                        is the number of bits in the stencil buffer.
+                        The resulting stencil indices are then written to the stencil buffer
+                        such that the 
+                        <inlineequation><mml:math><mml:mi mathvariant="italic">n</mml:mi></mml:math></inlineequation>th
+                        index is written to location
+                    </para>
+                    <para>
+                        <informalequation><mml:math>
+                            <!-- eqn: x sub n  =  x sub r  +  n   mod   width:-->
+                            <mml:mrow>
+                                <mml:msub><mml:mi mathvariant="italic">x</mml:mi>
+                                <mml:mi mathvariant="italic">n</mml:mi>
+                                </mml:msub>
+                                <mml:mo>=</mml:mo>
+                                <mml:mrow>
+                                    <mml:msub><mml:mi mathvariant="italic">x</mml:mi>
+                                    <mml:mi mathvariant="italic">r</mml:mi>
+                                    </mml:msub>
+                                    <mml:mo>+</mml:mo>
+                                    <mml:mrow>
+                                        <mml:mi mathvariant="italic">n</mml:mi>
+                                        <mml:mo>%</mml:mo>
+                                        <mml:mi mathvariant="italic">width</mml:mi>
+                                    </mml:mrow>
+                                </mml:mrow>
+                            </mml:mrow>
+                        </mml:math></informalequation>
+                        <para>
+                            <informalequation><mml:math>
+                                <!-- eqn: y sub n  =  y sub r  +  \(lf   n / width   \(rf:-->
+                                <mml:mrow>
+                                    <mml:msub><mml:mi mathvariant="italic">y</mml:mi>
+                                    <mml:mi mathvariant="italic">n</mml:mi>
+                                    </mml:msub>
+                                    <mml:mo>=</mml:mo>
+                                    <mml:mrow>
+                                        <mml:msub><mml:mi mathvariant="italic">y</mml:mi>
+                                        <mml:mi mathvariant="italic">r</mml:mi>
+                                        </mml:msub>
+                                        <mml:mo>+</mml:mo>
+                                        <mml:mfenced open="&LeftFloor;" close="&RightFloor;">
+                                            <mml:mfrac>
+                                                <mml:mi mathvariant="italic">n</mml:mi>
+                                                <mml:mi mathvariant="italic">width</mml:mi>
+                                            </mml:mfrac>
+                                        </mml:mfenced>
+                                    </mml:mrow>
+                                </mml:mrow>
+                            </mml:math></informalequation>
+                        </para>
+                    </para>
+                    <para>
+                        where 
+                        <inlineequation><mml:math>
+                            <!-- eqn: (x sub r , y sub r):-->
+                            <mml:mfenced open="(" close=")">
+                                <mml:msub><mml:mi mathvariant="italic">x</mml:mi>
+                                <mml:mi mathvariant="italic">r</mml:mi>
+                                </mml:msub>
+                                <mml:msub><mml:mi mathvariant="italic">y</mml:mi>
+                                <mml:mi mathvariant="italic">r</mml:mi>
+                                </mml:msub>
+                            </mml:mfenced>
+                        </mml:math></inlineequation>
+                        is the current raster position.
+                        Only the pixel ownership test,
+                        the scissor test,
+                        and the stencil writemask affect these write operations.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_DEPTH_COMPONENT</constant></term>
+                <listitem>
+                    <para>
+                        Each pixel is a single-depth component.
+                        Floating-point data is converted directly to an internal floating-point
+                        format with unspecified precision.
+                        Signed integer data is mapped linearly to the internal floating-point
+                        format such that the most positive representable integer value maps to 1.0,
+                        and the most negative representable value maps to 
+                        <inlineequation><mml:math>
+                            <!-- eqn: -1.0:-->
+                            <mml:mn>-1.0</mml:mn>
+                        </mml:math></inlineequation>.
+                        Unsigned integer data is mapped similarly:
+                        the largest integer value maps to 1.0,
+                        and 0 maps to 0.0.
+                        The resulting floating-point depth value is then multiplied
+                        by <constant>GL_DEPTH_SCALE</constant> and added to <constant>GL_DEPTH_BIAS</constant>.
+                        The result is clamped to the range 
+                        <inlineequation><mml:math>
+                            <!-- eqn: [0,1]:-->
+                            <mml:mfenced open="[" close="]">
+                                <mml:mn>0</mml:mn>
+                                <mml:mn>1</mml:mn>
+                            </mml:mfenced>
+                        </mml:math></inlineequation>.
+                    </para>
+                    <para>
+                        The GL then converts the resulting depth components to fragments
+                        by attaching the current raster position color or color index and
+                        texture coordinates to each pixel,
+                        then assigning 
+                        <inlineequation><mml:math><mml:mi mathvariant="italic">x</mml:mi></mml:math></inlineequation>
+                        and 
+                        <inlineequation><mml:math><mml:mi mathvariant="italic">y</mml:mi></mml:math></inlineequation>
+                        window coordinates to the 
+                        <inlineequation><mml:math><mml:mi mathvariant="italic">n</mml:mi></mml:math></inlineequation>th
+                        fragment such that
+                    </para>
+                    <para>
+                        <informalequation><mml:math>
+                            <!-- eqn: x sub n  =  x sub r  +  n   mod   width:-->
+                            <mml:mrow>
+                                <mml:msub><mml:mi mathvariant="italic">x</mml:mi>
+                                <mml:mi mathvariant="italic">n</mml:mi>
+                                </mml:msub>
+                                <mml:mo>=</mml:mo>
+                                <mml:mrow>
+                                    <mml:msub><mml:mi mathvariant="italic">x</mml:mi>
+                                    <mml:mi mathvariant="italic">r</mml:mi>
+                                    </mml:msub>
+                                    <mml:mo>+</mml:mo>
+                                    <mml:mrow>
+                                        <mml:mi mathvariant="italic">n</mml:mi>
+                                        <mml:mo>%</mml:mo>
+                                        <mml:mi mathvariant="italic">width</mml:mi>
+                                    </mml:mrow>
+                                </mml:mrow>
+                            </mml:mrow>
+                        </mml:math></informalequation>
+                        <para>
+                            <informalequation><mml:math>
+                                <!-- eqn: y sub n  =  y sub r  +  \(lf   n / width   \(rf:-->
+                                <mml:mrow>
+                                    <mml:msub><mml:mi mathvariant="italic">y</mml:mi>
+                                    <mml:mi mathvariant="italic">n</mml:mi>
+                                    </mml:msub>
+                                    <mml:mo>=</mml:mo>
+                                    <mml:mrow>
+                                        <mml:msub><mml:mi mathvariant="italic">y</mml:mi>
+                                        <mml:mi mathvariant="italic">r</mml:mi>
+                                        </mml:msub>
+                                        <mml:mo>+</mml:mo>
+                                        <mml:mfenced open="&LeftFloor;" close="&RightFloor;">
+                                            <mml:mfrac>
+                                                <mml:mi mathvariant="italic">n</mml:mi>
+                                                <mml:mi mathvariant="italic">width</mml:mi>
+                                            </mml:mfrac>
+                                        </mml:mfenced>
+                                    </mml:mrow>
+                                </mml:mrow>
+                            </mml:math></informalequation>
+                        </para>
+                    </para>
+                    <para>
+                        where 
+                        <inlineequation><mml:math>
+                            <!-- eqn: (x sub r , y sub r):-->
+                            <mml:mfenced open="(" close=")">
+                                <mml:msub><mml:mi mathvariant="italic">x</mml:mi>
+                                <mml:mi mathvariant="italic">r</mml:mi>
+                                </mml:msub>
+                                <mml:msub><mml:mi mathvariant="italic">y</mml:mi>
+                                <mml:mi mathvariant="italic">r</mml:mi>
+                                </mml:msub>
+                            </mml:mfenced>
+                        </mml:math></inlineequation>
+                        is the current raster position.
+                        These pixel fragments are then treated just like the fragments generated by
+                        rasterizing points, lines, or polygons.
+                        Texture mapping,
+                        fog,
+                        and all the fragment operations are applied before the fragments are written
+                        to the frame buffer.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_RGBA</constant></term>
+                <listitem>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_BGRA</constant></term>
+                <listitem>
+                    <para>
+                        Each pixel is a four-component group: For <constant>GL_RGBA</constant>, the red
+                        component is first, followed by green, followed by blue, followed by
+                        alpha; for <constant>GL_BGRA</constant> the order is blue, green, red and then alpha.
+                        Floating-point values are converted directly to an internal floating-point
+                        format with unspecified precision.
+                        Signed integer values are mapped linearly to the internal floating-point
+                        format such that the most positive representable integer value maps to 1.0,
+                        and the most negative representable value maps to 
+                        <inlineequation><mml:math>
+                            <!-- eqn: -1.0:-->
+                            <mml:mn>-1.0</mml:mn>
+                        </mml:math></inlineequation>.
+                        (Note that
+                        this mapping does not convert 0 precisely to 0.0.)
+                        Unsigned integer data is mapped similarly:
+                        The largest integer value maps to 1.0,
+                        and 0 maps to 0.0.
+                        The resulting floating-point color values are then multiplied
+                        by <constant>GL_c_SCALE</constant> and added to <constant>GL_c_BIAS</constant>,
+                        where <emphasis>c</emphasis> is RED, GREEN, BLUE, and ALPHA
+                        for the respective color components.
+                        The results are clamped to the range 
+                        <inlineequation><mml:math>
+                            <!-- eqn: [0,1]:-->
+                            <mml:mfenced open="[" close="]">
+                                <mml:mn>0</mml:mn>
+                                <mml:mn>1</mml:mn>
+                            </mml:mfenced>
+                        </mml:math></inlineequation>.
+                    </para>
+                    <para>
+                        If <constant>GL_MAP_COLOR</constant> is true,
+                        each color component is scaled by the size of lookup table
+                        <constant>GL_PIXEL_MAP_c_TO_c</constant>,
+                        then replaced by the value that it references in that table.
+                        <emphasis>c</emphasis> is R, G, B, or A respectively.
+                    </para>
+                    <para>
+                        The GL then converts the resulting RGBA colors to fragments
+                        by attaching the current raster position <emphasis>z</emphasis> coordinate and
+                        texture coordinates to each pixel,
+                        then assigning 
+                        <inlineequation><mml:math><mml:mi mathvariant="italic">x</mml:mi></mml:math></inlineequation>
+                        and 
+                        <inlineequation><mml:math><mml:mi mathvariant="italic">y</mml:mi></mml:math></inlineequation>
+                        window coordinates to the 
+                        <inlineequation><mml:math><mml:mi mathvariant="italic">n</mml:mi></mml:math></inlineequation>th
+                        fragment such that
+                    </para>
+                    <para>
+                        <informalequation><mml:math>
+                            <!-- eqn: x sub n  =  x sub r  +  n   mod   width:-->
+                            <mml:mrow>
+                                <mml:msub><mml:mi mathvariant="italic">x</mml:mi>
+                                <mml:mi mathvariant="italic">n</mml:mi>
+                                </mml:msub>
+                                <mml:mo>=</mml:mo>
+                                <mml:mrow>
+                                    <mml:msub><mml:mi mathvariant="italic">x</mml:mi>
+                                    <mml:mi mathvariant="italic">r</mml:mi>
+                                    </mml:msub>
+                                    <mml:mo>+</mml:mo>
+                                    <mml:mrow>
+                                        <mml:mi mathvariant="italic">n</mml:mi>
+                                        <mml:mo>%</mml:mo>
+                                        <mml:mi mathvariant="italic">width</mml:mi>
+                                    </mml:mrow>
+                                </mml:mrow>
+                            </mml:mrow>
+                        </mml:math></informalequation>
+                        <para>
+                            <informalequation><mml:math>
+                                <!-- eqn: y sub n  =  y sub r  +  \(lf   n / width   \(rf:-->
+                                <mml:mrow>
+                                    <mml:msub><mml:mi mathvariant="italic">y</mml:mi>
+                                    <mml:mi mathvariant="italic">n</mml:mi>
+                                    </mml:msub>
+                                    <mml:mo>=</mml:mo>
+                                    <mml:mrow>
+                                        <mml:msub><mml:mi mathvariant="italic">y</mml:mi>
+                                        <mml:mi mathvariant="italic">r</mml:mi>
+                                        </mml:msub>
+                                        <mml:mo>+</mml:mo>
+                                        <mml:mfenced open="&LeftFloor;" close="&RightFloor;">
+                                            <mml:mfrac>
+                                                <mml:mi mathvariant="italic">n</mml:mi>
+                                                <mml:mi mathvariant="italic">width</mml:mi>
+                                            </mml:mfrac>
+                                        </mml:mfenced>
+                                    </mml:mrow>
+                                </mml:mrow>
+                            </mml:math></informalequation>
+                        </para>
+                    </para>
+                    <para>
+                        where 
+                        <inlineequation><mml:math>
+                            <!-- eqn: (x sub r , y sub r):-->
+                            <mml:mfenced open="(" close=")">
+                                <mml:msub><mml:mi mathvariant="italic">x</mml:mi>
+                                <mml:mi mathvariant="italic">r</mml:mi>
+                                </mml:msub>
+                                <mml:msub><mml:mi mathvariant="italic">y</mml:mi>
+                                <mml:mi mathvariant="italic">r</mml:mi>
+                                </mml:msub>
+                            </mml:mfenced>
+                        </mml:math></inlineequation>
+                        is the current raster position.
+                        These pixel fragments are then treated just like the fragments generated by
+                        rasterizing points, lines, or polygons.
+                        Texture mapping,
+                        fog,
+                        and all the fragment operations are applied before the fragments are written
+                        to the frame buffer.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_RED</constant></term>
+                <listitem>
+                    <para>
+                        Each pixel is a single red component.
+                        This component is converted to the internal floating-point format in
+                        the same way the red component of an RGBA pixel is. It is
+                        then converted to an RGBA pixel with green and blue set to 0,
+                        and alpha set to 1.
+                        After this conversion, the pixel is treated as if it had been read
+                        as an RGBA pixel.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_GREEN</constant></term>
+                <listitem>
+                    <para>
+                        Each pixel is a single green component.
+                        This component is converted to the internal floating-point format in
+                        the same way the green component of an RGBA pixel is.
+                        It is then converted to an RGBA pixel with red and blue set to 0,
+                        and alpha set to 1.
+                        After this conversion, the pixel is treated as if it had been read
+                        as an RGBA pixel.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_BLUE</constant></term>
+                <listitem>
+                    <para>
+                        Each pixel is a single blue component.
+                        This component is converted to the internal floating-point format in
+                        the same way the blue component of an RGBA pixel is.
+                        It is then converted to an RGBA pixel with red and green set to 0,
+                        and alpha set to 1.
+                        After this conversion, the pixel is treated as if it had been read
+                        as an RGBA pixel.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_ALPHA</constant></term>
+                <listitem>
+                    <para>
+                        Each pixel is a single alpha component.
+                        This component is converted to the internal floating-point format in
+                        the same way the alpha component of an RGBA pixel is.
+                        It is then converted to an RGBA pixel with red, green, and blue set to 0.
+                        After this conversion, the pixel is treated as if it had been read
+                        as an RGBA pixel.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_RGB</constant></term>
+                <listitem>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_BGR</constant></term>
+                <listitem>
+                    <para>
+                        Each pixel is a three-component group:
+                        red first, followed by green, followed by blue; for <constant>GL_BGR</constant>, the
+                        first component is blue, followed by green and then red.
+                        Each component is converted to the internal floating-point format in
+                        the same way the red, green, and blue components of an RGBA pixel are.
+                        The color triple is converted to an RGBA pixel with alpha set to 1.
+                        After this conversion, the pixel is treated as if it had been read
+                        as an RGBA pixel.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_LUMINANCE</constant></term>
+                <listitem>
+                    <para>
+                        Each pixel is a single luminance component.
+                        This component is converted to the internal floating-point format in
+                        the same way the red component of an RGBA pixel is.
+                        It is then converted to an RGBA pixel with red, green, and blue set to the
+                        converted luminance value,
+                        and alpha set to 1.
+                        After this conversion, the pixel is treated as if it had been read
+                        as an RGBA pixel.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_LUMINANCE_ALPHA</constant></term>
+                <listitem>
+                    <para>
+                        Each pixel is a two-component group:
+                        luminance first, followed by alpha.
+                        The two components are converted to the internal floating-point format in
+                        the same way the red component of an RGBA pixel is.
+                        They are then converted to an RGBA pixel with red, green, and blue set to the
+                        converted luminance value,
+                        and alpha set to the converted alpha value.
+                        After this conversion, the pixel is treated as if it had been read
+                        as an RGBA pixel.
+
+                    </para>
+		    </listitem>
+		</varlistentry>
+        </variablelist>
+
+			  <para>
+                        The following table summarizes the meaning of the valid constants for the
+                        <emphasis>type</emphasis> parameter:
+			  </para>
+                    <para>
+                        <informaltable frame="topbot">
+                            <tgroup cols="2" align="left">
+                                <colspec colwidth="1*" />
+                                <colspec colwidth="1*" />
+                                <thead>
+                                    <row>
+                                        <entry rowsep="1" align="left"><emphasis role="bold">
+                                        Type
+                                        </emphasis></entry>
+                                        <entry rowsep="1" align="left"><emphasis role="bold">
+                                        Corresponding Type
+                                        </emphasis></entry>
+                                    </row>
+                                </thead>
+                                <tbody>
+                                    <row>
+                                        <entry align="left">
+                                        <constant>GL_UNSIGNED_BYTE</constant>
+                                        </entry>
+                                        <entry align="left">
+                                        unsigned 8-bit integer
+                                        </entry>
+                                    </row>
+                                    <row>
+                                        <entry align="left">
+                                        <constant>GL_BYTE</constant>
+                                        </entry>
+                                        <entry align="left">
+                                        signed 8-bit integer
+                                        </entry>
+                                    </row>
+                                    <row>
+                                        <entry align="left">
+                                        <constant>GL_BITMAP</constant>
+                                        </entry>
+                                        <entry align="left">
+                                        single bits in unsigned 8-bit integers
+                                        </entry>
+                                    </row>
+                                    <row>
+                                        <entry align="left">
+                                        <constant>GL_UNSIGNED_SHORT</constant>
+                                        </entry>
+                                        <entry align="left">
+                                        unsigned 16-bit integer
+                                        </entry>
+                                    </row>
+                                    <row>
+                                        <entry align="left">
+                                        <constant>GL_SHORT</constant>
+                                        </entry>
+                                        <entry align="left">
+                                        signed 16-bit integer
+                                        </entry>
+                                    </row>
+                                    <row>
+                                        <entry align="left">
+                                        <constant>GL_UNSIGNED_INT</constant>
+                                        </entry>
+                                        <entry align="left">
+                                        unsigned 32-bit integer
+                                        </entry>
+                                    </row>
+                                    <row>
+                                        <entry align="left">
+                                        <constant>GL_INT</constant>
+                                        </entry>
+                                        <entry align="left">
+                                        32-bit integer
+                                        </entry>
+                                    </row>
+                                    <row>
+                                        <entry align="left">
+                                        <constant>GL_FLOAT</constant>
+                                        </entry>
+                                        <entry align="left">
+                                        single-precision floating-point
+                                        </entry>
+                                    </row>
+                                    <row>
+                                        <entry align="left">
+                                        <constant>GL_UNSIGNED_BYTE_3_3_2</constant>
+                                        </entry>
+                                        <entry align="left">
+                                        unsigned 8-bit integer 
+                                        </entry>
+                                    </row>
+                                    <row>
+                                        <entry align="left">
+                                        <constant>GL_UNSIGNED_BYTE_2_3_3_REV</constant>
+                                        </entry>
+                                        <entry align="left">
+                                        unsigned 8-bit integer with reversed component ordering
+                                        </entry>
+                                    </row>
+                                    <row>
+                                        <entry align="left">
+                                        <constant>GL_UNSIGNED_SHORT_5_6_5</constant>
+                                        </entry>
+                                        <entry align="left">
+                                        unsigned 16-bit integer
+                                        </entry>
+                                    </row>
+                                    <row>
+                                        <entry align="left">
+                                        <constant>GL_UNSIGNED_SHORT_5_6_5_REV</constant>
+                                        </entry>
+                                        <entry align="left">
+                                        unsigned 16-bit integer with reversed component ordering
+                                        </entry>
+                                    </row>
+                                    <row>
+                                        <entry align="left">
+                                        <constant>GL_UNSIGNED_SHORT_4_4_4_4</constant>
+                                        </entry>
+                                        <entry align="left">
+                                        unsigned 16-bit integer
+                                        </entry>
+                                    </row>
+                                    <row>
+                                        <entry align="left">
+                                        <constant>GL_UNSIGNED_SHORT_4_4_4_4_REV</constant>
+                                        </entry>
+                                        <entry align="left">
+                                        unsigned 16-bit integer with reversed component ordering
+                                        </entry>
+                                    </row>
+                                    <row>
+                                        <entry align="left">
+                                        <constant>GL_UNSIGNED_SHORT_5_5_5_1</constant>
+                                        </entry>
+                                        <entry align="left">
+                                        unsigned 16-bit integer
+                                        </entry>
+                                    </row>
+                                    <row>
+                                        <entry align="left">
+                                        <constant>GL_UNSIGNED_SHORT_1_5_5_5_REV</constant>
+                                        </entry>
+                                        <entry align="left">
+                                        unsigned 16-bit integer with reversed component ordering
+                                        </entry>
+                                    </row>
+                                    <row>
+                                        <entry align="left">
+                                        <constant>GL_UNSIGNED_INT_8_8_8_8</constant>
+                                        </entry>
+                                        <entry align="left">
+                                        unsigned 32-bit integer
+                                        </entry>
+                                    </row>
+                                    <row>
+                                        <entry align="left">
+                                        <constant>GL_UNSIGNED_INT_8_8_8_8_REV</constant>
+                                        </entry>
+                                        <entry align="left">
+                                        unsigned 32-bit integer with reversed component ordering
+                                        </entry>
+                                    </row>
+                                    <row>
+                                        <entry align="left">
+                                        <constant>GL_UNSIGNED_INT_10_10_10_2</constant>
+                                        </entry>
+                                        <entry align="left">
+                                        unsigned 32-bit integer
+                                        </entry>
+                                    </row>
+                                    <row>
+                                        <entry align="left">
+                                        <constant>GL_UNSIGNED_INT_2_10_10_10_REV</constant>
+                                        </entry>
+                                        <entry align="left">
+                                        unsigned 32-bit integer with reversed component ordering
+                                        </entry>
+                                    </row>
+                                </tbody>
+                            </tgroup>
+                        </informaltable>
+                    </para>
+                    <para>
+                    </para>
+                <!--/listitem-->
+            <!--/varlistentry-->
+        <!--/variablelist-->
+        <para>
+            The rasterization described so far assumes pixel zoom factors of 1.
+            If
+            <citerefentry><refentrytitle>glPixelZoom</refentrytitle></citerefentry> is used to change the 
+            <inlineequation><mml:math><mml:mi mathvariant="italic">x</mml:mi></mml:math></inlineequation>
+            and 
+            <inlineequation><mml:math><mml:mi mathvariant="italic">y</mml:mi></mml:math></inlineequation>
+            pixel zoom factors,
+            pixels are converted to fragments as follows.
+            If 
+            <inlineequation><mml:math>
+                <!-- eqn: (x sub r, y sub r):-->
+                <mml:mfenced open="(" close=")">
+                    <mml:msub><mml:mi mathvariant="italic">x</mml:mi>
+                    <mml:mi mathvariant="italic">r</mml:mi>
+                    </mml:msub>
+                    <mml:msub><mml:mi mathvariant="italic">y</mml:mi>
+                    <mml:mi mathvariant="italic">r</mml:mi>
+                    </mml:msub>
+                </mml:mfenced>
+            </mml:math></inlineequation>
+            is the current raster position,
+            and a given pixel is in the 
+            <inlineequation><mml:math><mml:mi mathvariant="italic">n</mml:mi></mml:math></inlineequation>th
+            column and 
+            <inlineequation><mml:math><mml:mi mathvariant="italic">m</mml:mi></mml:math></inlineequation>th
+            row
+            of the pixel rectangle,
+            then fragments are generated for pixels whose centers are in the rectangle
+            with corners at
+        </para>
+        <para>
+            <informalequation><mml:math>
+                <!-- eqn: left ( x sub r  +  {zoom sub x} n, y sub r  +  {zoom sub y} m right ):-->
+                <mml:mfenced open="(" close=")">
+                    <mml:mrow>
+                        <mml:msub><mml:mi mathvariant="italic">x</mml:mi>
+                        <mml:mi mathvariant="italic">r</mml:mi>
+                        </mml:msub>
+                        <mml:mo>+</mml:mo>
+                        <mml:mfenced open="" close="">
+                            <mml:msub><mml:mi mathvariant="italic">zoom</mml:mi>
+                            <mml:mi mathvariant="italic">x</mml:mi>
+                            </mml:msub>
+                        </mml:mfenced>
+                        <mml:mo>&it;</mml:mo>
+                        <mml:mi mathvariant="italic">n</mml:mi>
+                    </mml:mrow>
+                    <mml:mrow>
+                        <mml:msub><mml:mi mathvariant="italic">y</mml:mi>
+                        <mml:mi mathvariant="italic">r</mml:mi>
+                        </mml:msub>
+                        <mml:mo>+</mml:mo>
+                        <mml:mfenced open="" close="">
+                            <mml:msub><mml:mi mathvariant="italic">zoom</mml:mi>
+                            <mml:mi mathvariant="italic">y</mml:mi>
+                            </mml:msub>
+                        </mml:mfenced>
+                        <mml:mo>&it;</mml:mo>
+                        <mml:mi mathvariant="italic">m</mml:mi>
+                    </mml:mrow>
+                </mml:mfenced>
+            </mml:math></informalequation>
+            <para>
+                <informalequation><mml:math>
+                    <!-- eqn: left ( x sub r  +  {zoom sub x} (n  +  1), y sub r  +  {zoom sub y} ( m  +  1 ) right ):-->
+                    <mml:mfenced open="(" close=")">
+                        <mml:mrow>
+                            <mml:msub><mml:mi mathvariant="italic">x</mml:mi>
+                            <mml:mi mathvariant="italic">r</mml:mi>
+                            </mml:msub>
+                            <mml:mo>+</mml:mo>
+                            <mml:mrow>
+                                <mml:mfenced open="" close="">
+                                    <mml:msub><mml:mi mathvariant="italic">zoom</mml:mi>
+                                    <mml:mi mathvariant="italic">x</mml:mi>
+                                    </mml:msub>
+                                </mml:mfenced>
+                                <mml:mo>&af;</mml:mo>
+                                <mml:mfenced open="(" close=")">
+                                    <mml:mrow>
+                                        <mml:mi mathvariant="italic">n</mml:mi>
+                                        <mml:mo>+</mml:mo>
+                                        <mml:mn>1</mml:mn>
+                                    </mml:mrow>
+                                </mml:mfenced>
+                            </mml:mrow>
+                        </mml:mrow>
+                        <mml:mrow>
+                            <mml:msub><mml:mi mathvariant="italic">y</mml:mi>
+                            <mml:mi mathvariant="italic">r</mml:mi>
+                            </mml:msub>
+                            <mml:mo>+</mml:mo>
+                            <mml:mrow>
+                                <mml:mfenced open="" close="">
+                                    <mml:msub><mml:mi mathvariant="italic">zoom</mml:mi>
+                                    <mml:mi mathvariant="italic">y</mml:mi>
+                                    </mml:msub>
+                                </mml:mfenced>
+                                <mml:mo>&af;</mml:mo>
+                                <mml:mfenced open="(" close=")">
+                                    <mml:mrow>
+                                        <mml:mi mathvariant="italic">m</mml:mi>
+                                        <mml:mo>+</mml:mo>
+                                        <mml:mn>1</mml:mn>
+                                    </mml:mrow>
+                                </mml:mfenced>
+                            </mml:mrow>
+                        </mml:mrow>
+                    </mml:mfenced>
+                </mml:math></informalequation>
+            </para>
+        </para>
+        <para>
+            where 
+            <inlineequation><mml:math>
+                <!-- eqn: zoom sub x:-->
+                <mml:msub><mml:mi mathvariant="italic">zoom</mml:mi>
+                <mml:mi mathvariant="italic">x</mml:mi>
+                </mml:msub>
+            </mml:math></inlineequation>
+            is the value of <constant>GL_ZOOM_X</constant> and
+            <inlineequation><mml:math>
+                <!-- eqn: zoom sub y:-->
+                <mml:msub><mml:mi mathvariant="italic">zoom</mml:mi>
+                <mml:mi mathvariant="italic">y</mml:mi>
+                </mml:msub>
+            </mml:math></inlineequation>
+            is the value of <constant>GL_ZOOM_Y</constant>.
+        </para>
+    </refsect1>
+    <refsect1 id="notes"><title>Notes</title>
+        <para>
+            <constant>GL_BGR</constant> and <constant>GL_BGRA</constant> are only valid for <parameter>format</parameter> if the GL
+            version is 1.2 or greater.
+        </para>
+        <para>
+            <constant>GL_UNSIGNED_BYTE_3_3_2</constant>,
+            <constant>GL_UNSIGNED_BYTE_2_3_3_REV</constant>,
+            <constant>GL_UNSIGNED_SHORT_5_6_5</constant>,
+            <constant>GL_UNSIGNED_SHORT_5_6_5_REV</constant>,
+            <constant>GL_UNSIGNED_SHORT_4_4_4_4</constant>,
+            <constant>GL_UNSIGNED_SHORT_4_4_4_4_REV</constant>,
+            <constant>GL_UNSIGNED_SHORT_5_5_5_1</constant>,
+            <constant>GL_UNSIGNED_SHORT_1_5_5_5_REV</constant>,
+            <constant>GL_UNSIGNED_INT_8_8_8_8</constant>,
+            <constant>GL_UNSIGNED_INT_8_8_8_8_REV</constant>,
+            <constant>GL_UNSIGNED_INT_10_10_10_2</constant>, and
+            <constant>GL_UNSIGNED_INT_2_10_10_10_REV</constant> are only valid for <parameter>type</parameter> if the
+            GL version is 1.2 or greater.
+        </para>
+    </refsect1>
+    <refsect1 id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_ENUM</constant> is generated if <parameter>format</parameter> or <parameter>type</parameter> is not one of
+            the accepted values.
+        </para>
+        <para>
+            <constant>GL_INVALID_ENUM</constant> is generated if <parameter>type</parameter> is <constant>GL_BITMAP</constant> and
+            <parameter>format</parameter> is not either <constant>GL_COLOR_INDEX</constant> or <constant>GL_STENCIL_INDEX</constant>.
+        </para>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if either <parameter>width</parameter> or <parameter>height</parameter> is negative.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if <parameter>format</parameter> is <constant>GL_STENCIL_INDEX</constant>
+            and there is no stencil buffer.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if <parameter>format</parameter> is
+            <constant>GL_RED</constant>,
+            <constant>GL_GREEN</constant>,
+            <constant>GL_BLUE</constant>,
+            <constant>GL_ALPHA</constant>,
+            <constant>GL_RGB</constant>,
+            <constant>GL_RGBA</constant>,
+            <constant>GL_BGR</constant>,
+            <constant>GL_BGRA</constant>,
+            <constant>GL_LUMINANCE</constant>,
+            or
+            <constant>GL_LUMINANCE_ALPHA</constant>,
+            and the GL is in color index mode.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if <parameter>format</parameter> is one of
+            <constant>GL_UNSIGNED_BYTE_3_3_2</constant>,
+            <constant>GL_UNSIGNED_BYTE_2_3_3_REV</constant>,
+            <constant>GL_UNSIGNED_SHORT_5_6_5</constant>, or
+            <constant>GL_UNSIGNED_SHORT_5_6_5_REV</constant>
+            and <parameter>format</parameter> is not <constant>GL_RGB</constant>.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if <parameter>format</parameter> is one of
+            <constant>GL_UNSIGNED_SHORT_4_4_4_4</constant>,
+            <constant>GL_UNSIGNED_SHORT_4_4_4_4_REV</constant>,
+            <constant>GL_UNSIGNED_SHORT_5_5_5_1</constant>,
+            <constant>GL_UNSIGNED_SHORT_1_5_5_5_REV</constant>,
+            <constant>GL_UNSIGNED_INT_8_8_8_8</constant>,
+            <constant>GL_UNSIGNED_INT_8_8_8_8_REV</constant>,
+            <constant>GL_UNSIGNED_INT_10_10_10_2</constant>, or
+            <constant>GL_UNSIGNED_INT_2_10_10_10_REV</constant>
+            and <parameter>format</parameter> is neither <constant>GL_RGBA</constant> nor <constant>GL_BGRA</constant>.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if a non-zero buffer object name is bound to the
+            <constant>GL_PIXEL_UNPACK_BUFFER</constant> target and the buffer object's data store is currently mapped.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if a non-zero buffer object name is bound to the
+            <constant>GL_PIXEL_UNPACK_BUFFER</constant> target and the data would be unpacked from the buffer 
+            object such that the memory reads required would exceed the data store size.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if a non-zero buffer object name is bound to the
+            <constant>GL_PIXEL_UNPACK_BUFFER</constant> target and <parameter>data</parameter> is not evenly divisible 
+            into the number of bytes needed to store in memory a datum indicated by <parameter>type</parameter>.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if <function>glDrawPixels</function>
+            is executed between the execution of <citerefentry><refentrytitle>glBegin</refentrytitle></citerefentry>
+            and the corresponding execution of <citerefentry><refentrytitle>glEnd</refentrytitle></citerefentry>.
+        </para>
+    </refsect1>
+    <refsect1 id="associatedgets"><title>Associated Gets</title>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_CURRENT_RASTER_POSITION</constant>
+        </para>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_CURRENT_RASTER_POSITION_VALID</constant>
+        </para>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_PIXEL_UNPACK_BUFFER_BINDING</constant>
+        </para>
+    </refsect1>
+    <refsect1 id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glAlphaFunc</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glBlendFunc</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glCopyPixels</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glDepthFunc</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glLogicOp</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glPixelMap</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glPixelStore</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glPixelTransfer</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glPixelZoom</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glRasterPos</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glReadPixels</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glScissor</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glStencilFunc</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glWindowPos</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"></trademark> 1991-2006
+            Silicon Graphics, Inc. This document is licensed under the SGI
+            Free Software B License. For details, see
+            <ulink url="https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt">https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt</ulink>.
+        </para>
+    </refsect1>
+</refentry>

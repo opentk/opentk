@@ -1,0 +1,311 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<!-- Converted by db4-upgrade version 1.1 -->
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glStencilFunc">
+    <info>
+        <copyright>
+            <year>1991-2006</year>
+            <holder>Silicon Graphics, Inc.</holder>
+        </copyright>
+        <copyright>
+            <year>2010-2014</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </info>
+    <refmeta>
+        <refentrytitle>glStencilFunc</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glStencilFunc</refname>
+        <refpurpose>set front and back function and reference value for stencil testing</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glStencilFunc</function></funcdef>
+                <paramdef>GLenum <parameter>func</parameter></paramdef>
+                <paramdef>GLint <parameter>ref</parameter></paramdef>
+                <paramdef>GLuint <parameter>mask</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 xml:id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>func</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the test function.
+                    Eight symbolic constants are valid:
+                    <constant>GL_NEVER</constant>,
+                    <constant>GL_LESS</constant>,
+                    <constant>GL_LEQUAL</constant>,
+                    <constant>GL_GREATER</constant>,
+                    <constant>GL_GEQUAL</constant>,
+                    <constant>GL_EQUAL</constant>,
+                    <constant>GL_NOTEQUAL</constant>, and
+                    <constant>GL_ALWAYS</constant>. The initial value is <constant>GL_ALWAYS</constant>.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>ref</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the reference value for the stencil test.
+                    <parameter>ref</parameter> is clamped to the range
+                    <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                        <!-- eqn: [0, 2 sup n - 1]:-->
+                        <mml:mfenced open="[" close="]">
+                            <mml:mn>0</mml:mn>
+                            <mml:mrow>
+                                <mml:msup><mml:mn>2</mml:mn>
+                                <mml:mi mathvariant="italic">n</mml:mi>
+                                </mml:msup>
+                                <mml:mo>-</mml:mo>
+                                <mml:mn>1</mml:mn>
+                            </mml:mrow>
+                        </mml:mfenced>
+                    </mml:math></inlineequation>,
+                    where
+                    <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mml:mi mathvariant="italic">n</mml:mi></mml:math></inlineequation>
+                    is the number of bitplanes in the stencil buffer. The
+                    initial value is 0.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>mask</parameter></term>
+            <listitem>
+                <para>
+                    Specifies a mask that is ANDed with both the reference value
+                    and the stored stencil value when the test is done. The initial value
+                    is all 1's.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 xml:id="description"><title>Description</title>
+        <para>
+            Stenciling,
+            like depth-buffering,
+            enables and disables drawing on a per-pixel basis.
+            Stencil planes are first drawn into using GL drawing primitives, then
+            geometry and images are rendered using the stencil planes to mask out
+            portions of the screen.
+            Stenciling is typically used in multipass rendering algorithms
+            to achieve special effects,
+            such as decals,
+            outlining,
+            and constructive solid geometry rendering.
+        </para>
+        <para>
+            The stencil test conditionally eliminates a pixel based on the outcome
+            of a comparison between the reference value
+            and the value in the stencil buffer.
+            To enable and disable the test, call <citerefentry><refentrytitle>glEnable</refentrytitle></citerefentry> and <!-- FIX: link to glEnable --> <function>glDisable</function>
+            with argument <constant>GL_STENCIL_TEST</constant>.
+            To specify actions based on the outcome of the stencil test, call
+            <citerefentry><refentrytitle>glStencilOp</refentrytitle></citerefentry> or
+            <citerefentry><refentrytitle>glStencilOpSeparate</refentrytitle></citerefentry>.
+        </para>
+        <para>
+            There can be two separate sets of <parameter>func</parameter>, <parameter>ref</parameter>, and
+            <parameter>mask</parameter> parameters; one affects back-facing polygons, and the other
+            affects front-facing polygons as well as other non-polygon primitives.
+            <citerefentry><refentrytitle>glStencilFunc</refentrytitle></citerefentry> sets both front
+            and back stencil state to the same values. Use <citerefentry><refentrytitle>glStencilFuncSeparate</refentrytitle></citerefentry>
+            to set front and back stencil state to different values.
+        </para>
+        <para>
+            <parameter>func</parameter> is a symbolic constant that determines the stencil comparison function.
+            It accepts one of eight values,
+            shown in the following list.
+            <parameter>ref</parameter> is an integer reference value that is used in the stencil comparison.
+            It is clamped to the range
+            <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                <!-- eqn: [0, 2 sup n - 1]:-->
+                <mml:mfenced open="[" close="]">
+                    <mml:mn>0</mml:mn>
+                    <mml:mrow>
+                        <mml:msup><mml:mn>2</mml:mn>
+                        <mml:mi mathvariant="italic">n</mml:mi>
+                        </mml:msup>
+                        <mml:mo>-</mml:mo>
+                        <mml:mn>1</mml:mn>
+                    </mml:mrow>
+                </mml:mfenced>
+            </mml:math></inlineequation>,
+            where
+            <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mml:mi mathvariant="italic">n</mml:mi></mml:math></inlineequation>
+            is the number of bitplanes in the stencil buffer.
+            <parameter>mask</parameter> is bitwise ANDed with both the reference value
+            and the stored stencil value,
+            with the ANDed values participating in the comparison.
+        </para>
+        <para>
+            If <emphasis>stencil</emphasis> represents the value stored in the corresponding
+            stencil buffer location,
+            the following list shows the effect of each comparison function
+            that can be specified by <parameter>func</parameter>.
+            Only if the comparison succeeds is the pixel passed through
+            to the next stage in the rasterization process
+            (see <citerefentry><refentrytitle>glStencilOp</refentrytitle></citerefentry>).
+            All tests treat <emphasis>stencil</emphasis> values as unsigned integers in the range
+            <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                <!-- eqn: [0, 2 sup n - 1]:-->
+                <mml:mfenced open="[" close="]">
+                    <mml:mn>0</mml:mn>
+                    <mml:mrow>
+                        <mml:msup><mml:mn>2</mml:mn>
+                        <mml:mi mathvariant="italic">n</mml:mi>
+                        </mml:msup>
+                        <mml:mo>-</mml:mo>
+                        <mml:mn>1</mml:mn>
+                    </mml:mrow>
+                </mml:mfenced>
+            </mml:math></inlineequation>,
+            where
+            <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mml:mi mathvariant="italic">n</mml:mi></mml:math></inlineequation>
+            is the number of bitplanes in the stencil buffer.
+        </para>
+        <para>
+            The following values are accepted by <parameter>func</parameter>:
+        </para>
+        <variablelist>
+            <varlistentry>
+                <term><constant>GL_NEVER</constant></term>
+                <listitem>
+                    <para>
+                        Always fails.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_LESS</constant></term>
+                <listitem>
+                    <para>
+                        Passes if ( <parameter>ref</parameter> &amp; <parameter>mask</parameter> ) &lt; ( <emphasis>stencil</emphasis> &amp; <parameter>mask</parameter> ).
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_LEQUAL</constant></term>
+                <listitem>
+                    <para>
+                        Passes if ( <parameter>ref</parameter> &amp; <parameter>mask</parameter> ) &lt;= ( <emphasis>stencil</emphasis> &amp; <parameter>mask</parameter> ).
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_GREATER</constant></term>
+                <listitem>
+                    <para>
+                        Passes if ( <parameter>ref</parameter> &amp; <parameter>mask</parameter> ) &gt; ( <emphasis>stencil</emphasis> &amp; <parameter>mask</parameter> ).
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_GEQUAL</constant></term>
+                <listitem>
+                    <para>
+                        Passes if ( <parameter>ref</parameter> &amp; <parameter>mask</parameter> ) &gt;= ( <emphasis>stencil</emphasis> &amp; <parameter>mask</parameter> ).
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_EQUAL</constant></term>
+                <listitem>
+                    <para>
+                        Passes if ( <parameter>ref</parameter> &amp; <parameter>mask</parameter> ) = ( <emphasis>stencil</emphasis> &amp; <parameter>mask</parameter> ).
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_NOTEQUAL</constant></term>
+                <listitem>
+                    <para>
+                        Passes if ( <parameter>ref</parameter> &amp; <parameter>mask</parameter> ) != ( <emphasis>stencil</emphasis> &amp; <parameter>mask</parameter> ).
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_ALWAYS</constant></term>
+                <listitem>
+                    <para>
+                        Always passes.
+                    </para>
+                </listitem>
+            </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 xml:id="notes"><title>Notes</title>
+        <para>
+            Initially, the stencil test is disabled.
+            If there is no stencil buffer,
+            no stencil modification can occur and it is as if
+            the stencil test always passes.
+        </para>
+        <para>
+            <citerefentry><refentrytitle>glStencilFunc</refentrytitle></citerefentry> is the same as
+            calling <citerefentry><refentrytitle>glStencilFuncSeparate</refentrytitle></citerefentry>
+            with <parameter>face</parameter> set to <constant>GL_FRONT_AND_BACK</constant>.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_ENUM</constant> is generated if <parameter>func</parameter> is not one of the eight
+            accepted values.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="associatedgets"><title>Associated Gets</title>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument
+            <constant>GL_STENCIL_FUNC</constant>, <constant>GL_STENCIL_VALUE_MASK</constant>,
+            <constant>GL_STENCIL_REF</constant>, <constant>GL_STENCIL_BACK_FUNC</constant>,
+            <constant>GL_STENCIL_BACK_VALUE_MASK</constant>, <constant>GL_STENCIL_BACK_REF</constant>,
+            or <constant>GL_STENCIL_BITS</constant>
+        </para>
+        <para>
+            <citerefentry><refentrytitle>glIsEnabled</refentrytitle></citerefentry> with argument <constant>GL_STENCIL_TEST</constant>
+        </para>
+    </refsect1>
+    <refsect1 xml:id="versions"><title>Version Support</title>
+        <informaltable>
+            <tgroup cols="13" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry><function>glStencilFunc</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='20']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+    <refsect1 xml:id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glBlendFunc</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glDepthFunc</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glEnable</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glLogicOp</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glStencilFuncSeparate</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glStencilMask</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glStencilMaskSeparate</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glStencilOp</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glStencilOpSeparate</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 1991-2006 Silicon Graphics, Inc.
+            Copyright <trademark class="copyright"/> 2010-2014 Khronos Group.
+            This document is licensed under the SGI Free Software B License.
+            For details, see
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt">https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt</link>.
+        </para>
+    </refsect1>
+</refentry>

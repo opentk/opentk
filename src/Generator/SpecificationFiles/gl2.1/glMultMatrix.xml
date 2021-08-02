@@ -1,0 +1,838 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+<refentry id="glMultMatrix">
+    <refmeta>
+        <refmetainfo>
+            <copyright>
+                <year>1991-2006</year>
+                <holder>Silicon Graphics, Inc.</holder>
+            </copyright>
+        </refmetainfo>
+        <refentrytitle>glMultMatrix</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glMultMatrix</refname>
+        <refpurpose>multiply the current matrix with the specified matrix</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glMultMatrixd</function></funcdef>
+                <paramdef>const GLdouble * <parameter>m</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glMultMatrixf</function></funcdef>
+                <paramdef>const GLfloat * <parameter>m</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <!-- eqn: ignoring delim $$ -->
+    <refsect1 id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>m</parameter></term>
+            <listitem>
+                <para>
+                    Points to 16 consecutive values that are used as the elements of
+                    a 
+                    <inlineequation><mml:math>
+                        <!-- eqn: 4  times  4:-->
+                        <mml:mrow>
+                            <mml:mn>4</mml:mn>
+                            <mml:mo>&times;</mml:mo>
+                            <mml:mn>4</mml:mn>
+                        </mml:mrow>
+                    </mml:math></inlineequation>
+                    column-major matrix.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 id="description"><title>Description</title>
+        <para>
+            <function>glMultMatrix</function> multiplies the current matrix with the one specified using <parameter>m</parameter>, and
+            replaces the current matrix with the product.
+        </para>
+        <para>
+            The current matrix is determined by the current matrix mode (see <citerefentry><refentrytitle>glMatrixMode</refentrytitle></citerefentry>). It is either the projection matrix,
+            modelview matrix,
+            or the texture matrix.
+        </para>
+    </refsect1>
+    <refsect1 id="examples"><title>Examples</title>
+        <para>
+            If the current matrix is 
+            <inlineequation><mml:math><mml:mi mathvariant="italic">C</mml:mi></mml:math></inlineequation>
+            and the coordinates
+            to be transformed are 
+            <inlineequation><mml:math>
+                <!-- eqn: v  =  (v[0], v[1], v[2], v[3]):-->
+                <mml:mrow>
+                    <mml:mi mathvariant="italic">v</mml:mi>
+                    <mml:mo>=</mml:mo>
+                    <mml:mfenced open="(" close=")">
+                        <mml:mrow>
+                            <mml:mi mathvariant="italic">v</mml:mi>
+                            <mml:mo>&af;</mml:mo>
+                            <mml:mfenced open="[" close="]">
+                                <mml:mn>0</mml:mn>
+                            </mml:mfenced>
+                        </mml:mrow>
+                        <mml:mrow>
+                            <mml:mi mathvariant="italic">v</mml:mi>
+                            <mml:mo>&af;</mml:mo>
+                            <mml:mfenced open="[" close="]">
+                                <mml:mn>1</mml:mn>
+                            </mml:mfenced>
+                        </mml:mrow>
+                        <mml:mrow>
+                            <mml:mi mathvariant="italic">v</mml:mi>
+                            <mml:mo>&af;</mml:mo>
+                            <mml:mfenced open="[" close="]">
+                                <mml:mn>2</mml:mn>
+                            </mml:mfenced>
+                        </mml:mrow>
+                        <mml:mrow>
+                            <mml:mi mathvariant="italic">v</mml:mi>
+                            <mml:mo>&af;</mml:mo>
+                            <mml:mfenced open="[" close="]">
+                                <mml:mn>3</mml:mn>
+                            </mml:mfenced>
+                        </mml:mrow>
+                    </mml:mfenced>
+                </mml:mrow>
+            </mml:math></inlineequation>,
+            then the current transformation is 
+            <inlineequation><mml:math>
+                <!-- eqn: C  times  v:-->
+                <mml:mrow>
+                    <mml:mi mathvariant="italic">C</mml:mi>
+                    <mml:mo>&times;</mml:mo>
+                    <mml:mi mathvariant="italic">v</mml:mi>
+                </mml:mrow>
+            </mml:math></inlineequation>,
+            or
+        </para>
+        <para>
+            <informalequation><mml:math>
+                <!-- eqn: left ( matrix {    ccol {  c[0] above  c[1] above  c[2] above  c[3] }    ccol { c[4] above c[5] above c[6] above c[7] }    ccol { c[8] above c[9] above c[10] above c[11] }    ccol { c[12]  above c[13]  above c[14]  above c[15]  } } right )    times    left ( matrix {    ccol {  v[0]  above  v[1]  above  v[2]  above  v[3]  } } right ):-->
+                <mml:mrow>
+                    <mml:mfenced open="(" close=")">
+                        <mml:mtable>
+                            <mml:mtr>
+                                <mml:mtd>
+                                    <mml:mrow>
+                                        <mml:mi mathvariant="italic">c</mml:mi>
+                                        <mml:mo>&af;</mml:mo>
+                                        <mml:mfenced open="[" close="]">
+                                            <mml:mn>0</mml:mn>
+                                        </mml:mfenced>
+                                    </mml:mrow>
+                                </mml:mtd>
+                                <mml:mtd>
+                                    <mml:mrow>
+                                        <mml:mi mathvariant="italic">c</mml:mi>
+                                        <mml:mo>&af;</mml:mo>
+                                        <mml:mfenced open="[" close="]">
+                                            <mml:mn>4</mml:mn>
+                                        </mml:mfenced>
+                                    </mml:mrow>
+                                </mml:mtd>
+                                <mml:mtd>
+                                    <mml:mrow>
+                                        <mml:mi mathvariant="italic">c</mml:mi>
+                                        <mml:mo>&af;</mml:mo>
+                                        <mml:mfenced open="[" close="]">
+                                            <mml:mn>8</mml:mn>
+                                        </mml:mfenced>
+                                    </mml:mrow>
+                                </mml:mtd>
+                                <mml:mtd>
+                                    <mml:mrow>
+                                        <mml:mi mathvariant="italic">c</mml:mi>
+                                        <mml:mo>&af;</mml:mo>
+                                        <mml:mfenced open="[" close="]">
+                                            <mml:mn>12</mml:mn>
+                                        </mml:mfenced>
+                                    </mml:mrow>
+                                </mml:mtd>
+                            </mml:mtr>
+                            <mml:mtr>
+                                <mml:mtd>
+                                    <mml:mrow>
+                                        <mml:mi mathvariant="italic">c</mml:mi>
+                                        <mml:mo>&af;</mml:mo>
+                                        <mml:mfenced open="[" close="]">
+                                            <mml:mn>1</mml:mn>
+                                        </mml:mfenced>
+                                    </mml:mrow>
+                                </mml:mtd>
+                                <mml:mtd>
+                                    <mml:mrow>
+                                        <mml:mi mathvariant="italic">c</mml:mi>
+                                        <mml:mo>&af;</mml:mo>
+                                        <mml:mfenced open="[" close="]">
+                                            <mml:mn>5</mml:mn>
+                                        </mml:mfenced>
+                                    </mml:mrow>
+                                </mml:mtd>
+                                <mml:mtd>
+                                    <mml:mrow>
+                                        <mml:mi mathvariant="italic">c</mml:mi>
+                                        <mml:mo>&af;</mml:mo>
+                                        <mml:mfenced open="[" close="]">
+                                            <mml:mn>9</mml:mn>
+                                        </mml:mfenced>
+                                    </mml:mrow>
+                                </mml:mtd>
+                                <mml:mtd>
+                                    <mml:mrow>
+                                        <mml:mi mathvariant="italic">c</mml:mi>
+                                        <mml:mo>&af;</mml:mo>
+                                        <mml:mfenced open="[" close="]">
+                                            <mml:mn>13</mml:mn>
+                                        </mml:mfenced>
+                                    </mml:mrow>
+                                </mml:mtd>
+                            </mml:mtr>
+                            <mml:mtr>
+                                <mml:mtd>
+                                    <mml:mrow>
+                                        <mml:mi mathvariant="italic">c</mml:mi>
+                                        <mml:mo>&af;</mml:mo>
+                                        <mml:mfenced open="[" close="]">
+                                            <mml:mn>2</mml:mn>
+                                        </mml:mfenced>
+                                    </mml:mrow>
+                                </mml:mtd>
+                                <mml:mtd>
+                                    <mml:mrow>
+                                        <mml:mi mathvariant="italic">c</mml:mi>
+                                        <mml:mo>&af;</mml:mo>
+                                        <mml:mfenced open="[" close="]">
+                                            <mml:mn>6</mml:mn>
+                                        </mml:mfenced>
+                                    </mml:mrow>
+                                </mml:mtd>
+                                <mml:mtd>
+                                    <mml:mrow>
+                                        <mml:mi mathvariant="italic">c</mml:mi>
+                                        <mml:mo>&af;</mml:mo>
+                                        <mml:mfenced open="[" close="]">
+                                            <mml:mn>10</mml:mn>
+                                        </mml:mfenced>
+                                    </mml:mrow>
+                                </mml:mtd>
+                                <mml:mtd>
+                                    <mml:mrow>
+                                        <mml:mi mathvariant="italic">c</mml:mi>
+                                        <mml:mo>&af;</mml:mo>
+                                        <mml:mfenced open="[" close="]">
+                                            <mml:mn>14</mml:mn>
+                                        </mml:mfenced>
+                                    </mml:mrow>
+                                </mml:mtd>
+                            </mml:mtr>
+                            <mml:mtr>
+                                <mml:mtd>
+                                    <mml:mrow>
+                                        <mml:mi mathvariant="italic">c</mml:mi>
+                                        <mml:mo>&af;</mml:mo>
+                                        <mml:mfenced open="[" close="]">
+                                            <mml:mn>3</mml:mn>
+                                        </mml:mfenced>
+                                    </mml:mrow>
+                                </mml:mtd>
+                                <mml:mtd>
+                                    <mml:mrow>
+                                        <mml:mi mathvariant="italic">c</mml:mi>
+                                        <mml:mo>&af;</mml:mo>
+                                        <mml:mfenced open="[" close="]">
+                                            <mml:mn>7</mml:mn>
+                                        </mml:mfenced>
+                                    </mml:mrow>
+                                </mml:mtd>
+                                <mml:mtd>
+                                    <mml:mrow>
+                                        <mml:mi mathvariant="italic">c</mml:mi>
+                                        <mml:mo>&af;</mml:mo>
+                                        <mml:mfenced open="[" close="]">
+                                            <mml:mn>11</mml:mn>
+                                        </mml:mfenced>
+                                    </mml:mrow>
+                                </mml:mtd>
+                                <mml:mtd>
+                                    <mml:mrow>
+                                        <mml:mi mathvariant="italic">c</mml:mi>
+                                        <mml:mo>&af;</mml:mo>
+                                        <mml:mfenced open="[" close="]">
+                                            <mml:mn>15</mml:mn>
+                                        </mml:mfenced>
+                                    </mml:mrow>
+                                </mml:mtd>
+                            </mml:mtr>
+                        </mml:mtable>
+                    </mml:mfenced>
+                    <mml:mo>&times;</mml:mo>
+                    <mml:mfenced open="(" close=")">
+                        <mml:mtable>
+                            <mml:mtr>
+                                <mml:mtd>
+                                    <mml:mrow>
+                                        <mml:mi mathvariant="italic">v</mml:mi>
+                                        <mml:mo>&af;</mml:mo>
+                                        <mml:mfenced open="[" close="]">
+                                            <mml:mn>0</mml:mn>
+                                        </mml:mfenced>
+                                    </mml:mrow>
+                                </mml:mtd>
+                            </mml:mtr>
+                            <mml:mtr>
+                                <mml:mtd>
+                                    <mml:mrow>
+                                        <mml:mi mathvariant="italic">v</mml:mi>
+                                        <mml:mo>&af;</mml:mo>
+                                        <mml:mfenced open="[" close="]">
+                                            <mml:mn>1</mml:mn>
+                                        </mml:mfenced>
+                                    </mml:mrow>
+                                </mml:mtd>
+                            </mml:mtr>
+                            <mml:mtr>
+                                <mml:mtd>
+                                    <mml:mrow>
+                                        <mml:mi mathvariant="italic">v</mml:mi>
+                                        <mml:mo>&af;</mml:mo>
+                                        <mml:mfenced open="[" close="]">
+                                            <mml:mn>2</mml:mn>
+                                        </mml:mfenced>
+                                    </mml:mrow>
+                                </mml:mtd>
+                            </mml:mtr>
+                            <mml:mtr>
+                                <mml:mtd>
+                                    <mml:mrow>
+                                        <mml:mi mathvariant="italic">v</mml:mi>
+                                        <mml:mo>&af;</mml:mo>
+                                        <mml:mfenced open="[" close="]">
+                                            <mml:mn>3</mml:mn>
+                                        </mml:mfenced>
+                                    </mml:mrow>
+                                </mml:mtd>
+                            </mml:mtr>
+                        </mml:mtable>
+                    </mml:mfenced>
+                </mml:mrow>
+            </mml:math></informalequation>
+        </para>
+        <para>
+        </para>
+        <para>
+            Calling <function>glMultMatrix</function> with an argument of 
+            <inlineequation><mml:math>
+                <!-- eqn: m  =  left { m[0], m[1], ..., m[15] right }:-->
+                <mml:mrow>
+                    <mml:mi mathvariant="italic">m</mml:mi>
+                    <mml:mo>=</mml:mo>
+                    <mml:mfenced open="{" close="}">
+                        <mml:mrow>
+                            <mml:mi mathvariant="italic">m</mml:mi>
+                            <mml:mo>&af;</mml:mo>
+                            <mml:mfenced open="[" close="]">
+                                <mml:mn>0</mml:mn>
+                            </mml:mfenced>
+                        </mml:mrow>
+                        <mml:mrow>
+                            <mml:mi mathvariant="italic">m</mml:mi>
+                            <mml:mo>&af;</mml:mo>
+                            <mml:mfenced open="[" close="]">
+                                <mml:mn>1</mml:mn>
+                            </mml:mfenced>
+                        </mml:mrow>
+                        <mml:mi mathvariant="italic">...</mml:mi>
+                        <mml:mrow>
+                            <mml:mi mathvariant="italic">m</mml:mi>
+                            <mml:mo>&af;</mml:mo>
+                            <mml:mfenced open="[" close="]">
+                                <mml:mn>15</mml:mn>
+                            </mml:mfenced>
+                        </mml:mrow>
+                    </mml:mfenced>
+                </mml:mrow>
+            </mml:math></inlineequation>
+            replaces the current transformation with 
+            <inlineequation><mml:math>
+                <!-- eqn: (C  times  M)  times  v:-->
+                <mml:mrow>
+                    <mml:mfenced open="(" close=")">
+                        <mml:mrow>
+                            <mml:mi mathvariant="italic">C</mml:mi>
+                            <mml:mo>&times;</mml:mo>
+                            <mml:mi mathvariant="italic">M</mml:mi>
+                        </mml:mrow>
+                    </mml:mfenced>
+                    <mml:mo>&times;</mml:mo>
+                    <mml:mi mathvariant="italic">v</mml:mi>
+                </mml:mrow>
+            </mml:math></inlineequation>,
+            or
+        </para>
+        <para>
+            <informalequation><mml:math>
+                <!-- eqn: left ( matrix {    ccol {  c[0] above  c[1] above  c[2] above  c[3] }    ccol { c[4] above c[5] above c[6] above c[7] }    ccol { c[8] above c[9] above c[10] above c[11] }    ccol { c[12]  above c[13]  above c[14]  above c[15]  } } right )    times    left ( matrix {    ccol {  m[0] above  m[1] above  m[2] above  m[3] }    ccol { m[4] above m[5] above m[6] above m[7] }    ccol { m[8] above m[9] above m[10] above m[11] }    ccol { m[12]  above m[13]  above m[14]  above m[15]  } } right )    times    left ( matrix {    ccol {  v[0]  above  v[1]  above  v[2]  above  v[3]  } } right ):-->
+                <mml:mrow>
+                    <mml:mfenced open="(" close=")">
+                        <mml:mtable>
+                            <mml:mtr>
+                                <mml:mtd>
+                                    <mml:mrow>
+                                        <mml:mi mathvariant="italic">c</mml:mi>
+                                        <mml:mo>&af;</mml:mo>
+                                        <mml:mfenced open="[" close="]">
+                                            <mml:mn>0</mml:mn>
+                                        </mml:mfenced>
+                                    </mml:mrow>
+                                </mml:mtd>
+                                <mml:mtd>
+                                    <mml:mrow>
+                                        <mml:mi mathvariant="italic">c</mml:mi>
+                                        <mml:mo>&af;</mml:mo>
+                                        <mml:mfenced open="[" close="]">
+                                            <mml:mn>4</mml:mn>
+                                        </mml:mfenced>
+                                    </mml:mrow>
+                                </mml:mtd>
+                                <mml:mtd>
+                                    <mml:mrow>
+                                        <mml:mi mathvariant="italic">c</mml:mi>
+                                        <mml:mo>&af;</mml:mo>
+                                        <mml:mfenced open="[" close="]">
+                                            <mml:mn>8</mml:mn>
+                                        </mml:mfenced>
+                                    </mml:mrow>
+                                </mml:mtd>
+                                <mml:mtd>
+                                    <mml:mrow>
+                                        <mml:mi mathvariant="italic">c</mml:mi>
+                                        <mml:mo>&af;</mml:mo>
+                                        <mml:mfenced open="[" close="]">
+                                            <mml:mn>12</mml:mn>
+                                        </mml:mfenced>
+                                    </mml:mrow>
+                                </mml:mtd>
+                            </mml:mtr>
+                            <mml:mtr>
+                                <mml:mtd>
+                                    <mml:mrow>
+                                        <mml:mi mathvariant="italic">c</mml:mi>
+                                        <mml:mo>&af;</mml:mo>
+                                        <mml:mfenced open="[" close="]">
+                                            <mml:mn>1</mml:mn>
+                                        </mml:mfenced>
+                                    </mml:mrow>
+                                </mml:mtd>
+                                <mml:mtd>
+                                    <mml:mrow>
+                                        <mml:mi mathvariant="italic">c</mml:mi>
+                                        <mml:mo>&af;</mml:mo>
+                                        <mml:mfenced open="[" close="]">
+                                            <mml:mn>5</mml:mn>
+                                        </mml:mfenced>
+                                    </mml:mrow>
+                                </mml:mtd>
+                                <mml:mtd>
+                                    <mml:mrow>
+                                        <mml:mi mathvariant="italic">c</mml:mi>
+                                        <mml:mo>&af;</mml:mo>
+                                        <mml:mfenced open="[" close="]">
+                                            <mml:mn>9</mml:mn>
+                                        </mml:mfenced>
+                                    </mml:mrow>
+                                </mml:mtd>
+                                <mml:mtd>
+                                    <mml:mrow>
+                                        <mml:mi mathvariant="italic">c</mml:mi>
+                                        <mml:mo>&af;</mml:mo>
+                                        <mml:mfenced open="[" close="]">
+                                            <mml:mn>13</mml:mn>
+                                        </mml:mfenced>
+                                    </mml:mrow>
+                                </mml:mtd>
+                            </mml:mtr>
+                            <mml:mtr>
+                                <mml:mtd>
+                                    <mml:mrow>
+                                        <mml:mi mathvariant="italic">c</mml:mi>
+                                        <mml:mo>&af;</mml:mo>
+                                        <mml:mfenced open="[" close="]">
+                                            <mml:mn>2</mml:mn>
+                                        </mml:mfenced>
+                                    </mml:mrow>
+                                </mml:mtd>
+                                <mml:mtd>
+                                    <mml:mrow>
+                                        <mml:mi mathvariant="italic">c</mml:mi>
+                                        <mml:mo>&af;</mml:mo>
+                                        <mml:mfenced open="[" close="]">
+                                            <mml:mn>6</mml:mn>
+                                        </mml:mfenced>
+                                    </mml:mrow>
+                                </mml:mtd>
+                                <mml:mtd>
+                                    <mml:mrow>
+                                        <mml:mi mathvariant="italic">c</mml:mi>
+                                        <mml:mo>&af;</mml:mo>
+                                        <mml:mfenced open="[" close="]">
+                                            <mml:mn>10</mml:mn>
+                                        </mml:mfenced>
+                                    </mml:mrow>
+                                </mml:mtd>
+                                <mml:mtd>
+                                    <mml:mrow>
+                                        <mml:mi mathvariant="italic">c</mml:mi>
+                                        <mml:mo>&af;</mml:mo>
+                                        <mml:mfenced open="[" close="]">
+                                            <mml:mn>14</mml:mn>
+                                        </mml:mfenced>
+                                    </mml:mrow>
+                                </mml:mtd>
+                            </mml:mtr>
+                            <mml:mtr>
+                                <mml:mtd>
+                                    <mml:mrow>
+                                        <mml:mi mathvariant="italic">c</mml:mi>
+                                        <mml:mo>&af;</mml:mo>
+                                        <mml:mfenced open="[" close="]">
+                                            <mml:mn>3</mml:mn>
+                                        </mml:mfenced>
+                                    </mml:mrow>
+                                </mml:mtd>
+                                <mml:mtd>
+                                    <mml:mrow>
+                                        <mml:mi mathvariant="italic">c</mml:mi>
+                                        <mml:mo>&af;</mml:mo>
+                                        <mml:mfenced open="[" close="]">
+                                            <mml:mn>7</mml:mn>
+                                        </mml:mfenced>
+                                    </mml:mrow>
+                                </mml:mtd>
+                                <mml:mtd>
+                                    <mml:mrow>
+                                        <mml:mi mathvariant="italic">c</mml:mi>
+                                        <mml:mo>&af;</mml:mo>
+                                        <mml:mfenced open="[" close="]">
+                                            <mml:mn>11</mml:mn>
+                                        </mml:mfenced>
+                                    </mml:mrow>
+                                </mml:mtd>
+                                <mml:mtd>
+                                    <mml:mrow>
+                                        <mml:mi mathvariant="italic">c</mml:mi>
+                                        <mml:mo>&af;</mml:mo>
+                                        <mml:mfenced open="[" close="]">
+                                            <mml:mn>15</mml:mn>
+                                        </mml:mfenced>
+                                    </mml:mrow>
+                                </mml:mtd>
+                            </mml:mtr>
+                        </mml:mtable>
+                    </mml:mfenced>
+                    <mml:mo>&times;</mml:mo>
+                    <mml:mfenced open="(" close=")">
+                        <mml:mtable>
+                            <mml:mtr>
+                                <mml:mtd>
+                                    <mml:mrow>
+                                        <mml:mi mathvariant="italic">m</mml:mi>
+                                        <mml:mo>&af;</mml:mo>
+                                        <mml:mfenced open="[" close="]">
+                                            <mml:mn>0</mml:mn>
+                                        </mml:mfenced>
+                                    </mml:mrow>
+                                </mml:mtd>
+                                <mml:mtd>
+                                    <mml:mrow>
+                                        <mml:mi mathvariant="italic">m</mml:mi>
+                                        <mml:mo>&af;</mml:mo>
+                                        <mml:mfenced open="[" close="]">
+                                            <mml:mn>4</mml:mn>
+                                        </mml:mfenced>
+                                    </mml:mrow>
+                                </mml:mtd>
+                                <mml:mtd>
+                                    <mml:mrow>
+                                        <mml:mi mathvariant="italic">m</mml:mi>
+                                        <mml:mo>&af;</mml:mo>
+                                        <mml:mfenced open="[" close="]">
+                                            <mml:mn>8</mml:mn>
+                                        </mml:mfenced>
+                                    </mml:mrow>
+                                </mml:mtd>
+                                <mml:mtd>
+                                    <mml:mrow>
+                                        <mml:mi mathvariant="italic">m</mml:mi>
+                                        <mml:mo>&af;</mml:mo>
+                                        <mml:mfenced open="[" close="]">
+                                            <mml:mn>12</mml:mn>
+                                        </mml:mfenced>
+                                    </mml:mrow>
+                                </mml:mtd>
+                            </mml:mtr>
+                            <mml:mtr>
+                                <mml:mtd>
+                                    <mml:mrow>
+                                        <mml:mi mathvariant="italic">m</mml:mi>
+                                        <mml:mo>&af;</mml:mo>
+                                        <mml:mfenced open="[" close="]">
+                                            <mml:mn>1</mml:mn>
+                                        </mml:mfenced>
+                                    </mml:mrow>
+                                </mml:mtd>
+                                <mml:mtd>
+                                    <mml:mrow>
+                                        <mml:mi mathvariant="italic">m</mml:mi>
+                                        <mml:mo>&af;</mml:mo>
+                                        <mml:mfenced open="[" close="]">
+                                            <mml:mn>5</mml:mn>
+                                        </mml:mfenced>
+                                    </mml:mrow>
+                                </mml:mtd>
+                                <mml:mtd>
+                                    <mml:mrow>
+                                        <mml:mi mathvariant="italic">m</mml:mi>
+                                        <mml:mo>&af;</mml:mo>
+                                        <mml:mfenced open="[" close="]">
+                                            <mml:mn>9</mml:mn>
+                                        </mml:mfenced>
+                                    </mml:mrow>
+                                </mml:mtd>
+                                <mml:mtd>
+                                    <mml:mrow>
+                                        <mml:mi mathvariant="italic">m</mml:mi>
+                                        <mml:mo>&af;</mml:mo>
+                                        <mml:mfenced open="[" close="]">
+                                            <mml:mn>13</mml:mn>
+                                        </mml:mfenced>
+                                    </mml:mrow>
+                                </mml:mtd>
+                            </mml:mtr>
+                            <mml:mtr>
+                                <mml:mtd>
+                                    <mml:mrow>
+                                        <mml:mi mathvariant="italic">m</mml:mi>
+                                        <mml:mo>&af;</mml:mo>
+                                        <mml:mfenced open="[" close="]">
+                                            <mml:mn>2</mml:mn>
+                                        </mml:mfenced>
+                                    </mml:mrow>
+                                </mml:mtd>
+                                <mml:mtd>
+                                    <mml:mrow>
+                                        <mml:mi mathvariant="italic">m</mml:mi>
+                                        <mml:mo>&af;</mml:mo>
+                                        <mml:mfenced open="[" close="]">
+                                            <mml:mn>6</mml:mn>
+                                        </mml:mfenced>
+                                    </mml:mrow>
+                                </mml:mtd>
+                                <mml:mtd>
+                                    <mml:mrow>
+                                        <mml:mi mathvariant="italic">m</mml:mi>
+                                        <mml:mo>&af;</mml:mo>
+                                        <mml:mfenced open="[" close="]">
+                                            <mml:mn>10</mml:mn>
+                                        </mml:mfenced>
+                                    </mml:mrow>
+                                </mml:mtd>
+                                <mml:mtd>
+                                    <mml:mrow>
+                                        <mml:mi mathvariant="italic">m</mml:mi>
+                                        <mml:mo>&af;</mml:mo>
+                                        <mml:mfenced open="[" close="]">
+                                            <mml:mn>14</mml:mn>
+                                        </mml:mfenced>
+                                    </mml:mrow>
+                                </mml:mtd>
+                            </mml:mtr>
+                            <mml:mtr>
+                                <mml:mtd>
+                                    <mml:mrow>
+                                        <mml:mi mathvariant="italic">m</mml:mi>
+                                        <mml:mo>&af;</mml:mo>
+                                        <mml:mfenced open="[" close="]">
+                                            <mml:mn>3</mml:mn>
+                                        </mml:mfenced>
+                                    </mml:mrow>
+                                </mml:mtd>
+                                <mml:mtd>
+                                    <mml:mrow>
+                                        <mml:mi mathvariant="italic">m</mml:mi>
+                                        <mml:mo>&af;</mml:mo>
+                                        <mml:mfenced open="[" close="]">
+                                            <mml:mn>7</mml:mn>
+                                        </mml:mfenced>
+                                    </mml:mrow>
+                                </mml:mtd>
+                                <mml:mtd>
+                                    <mml:mrow>
+                                        <mml:mi mathvariant="italic">m</mml:mi>
+                                        <mml:mo>&af;</mml:mo>
+                                        <mml:mfenced open="[" close="]">
+                                            <mml:mn>11</mml:mn>
+                                        </mml:mfenced>
+                                    </mml:mrow>
+                                </mml:mtd>
+                                <mml:mtd>
+                                    <mml:mrow>
+                                        <mml:mi mathvariant="italic">m</mml:mi>
+                                        <mml:mo>&af;</mml:mo>
+                                        <mml:mfenced open="[" close="]">
+                                            <mml:mn>15</mml:mn>
+                                        </mml:mfenced>
+                                    </mml:mrow>
+                                </mml:mtd>
+                            </mml:mtr>
+                        </mml:mtable>
+                    </mml:mfenced>
+                    <mml:mo>&times;</mml:mo>
+                    <mml:mfenced open="(" close=")">
+                        <mml:mtable>
+                            <mml:mtr>
+                                <mml:mtd>
+                                    <mml:mrow>
+                                        <mml:mi mathvariant="italic">v</mml:mi>
+                                        <mml:mo>&af;</mml:mo>
+                                        <mml:mfenced open="[" close="]">
+                                            <mml:mn>0</mml:mn>
+                                        </mml:mfenced>
+                                    </mml:mrow>
+                                </mml:mtd>
+                            </mml:mtr>
+                            <mml:mtr>
+                                <mml:mtd>
+                                    <mml:mrow>
+                                        <mml:mi mathvariant="italic">v</mml:mi>
+                                        <mml:mo>&af;</mml:mo>
+                                        <mml:mfenced open="[" close="]">
+                                            <mml:mn>1</mml:mn>
+                                        </mml:mfenced>
+                                    </mml:mrow>
+                                </mml:mtd>
+                            </mml:mtr>
+                            <mml:mtr>
+                                <mml:mtd>
+                                    <mml:mrow>
+                                        <mml:mi mathvariant="italic">v</mml:mi>
+                                        <mml:mo>&af;</mml:mo>
+                                        <mml:mfenced open="[" close="]">
+                                            <mml:mn>2</mml:mn>
+                                        </mml:mfenced>
+                                    </mml:mrow>
+                                </mml:mtd>
+                            </mml:mtr>
+                            <mml:mtr>
+                                <mml:mtd>
+                                    <mml:mrow>
+                                        <mml:mi mathvariant="italic">v</mml:mi>
+                                        <mml:mo>&af;</mml:mo>
+                                        <mml:mfenced open="[" close="]">
+                                            <mml:mn>3</mml:mn>
+                                        </mml:mfenced>
+                                    </mml:mrow>
+                                </mml:mtd>
+                            </mml:mtr>
+                        </mml:mtable>
+                    </mml:mfenced>
+                </mml:mrow>
+            </mml:math></informalequation>
+        </para>
+        <para>
+        </para>
+        <para>
+            Where 
+            <inlineequation><mml:math><mml:mi mathvariant="italic">v</mml:mi></mml:math></inlineequation>
+            is represented as a 
+            <inlineequation><mml:math>
+                <!-- eqn: 4  times  1:-->
+                <mml:mrow>
+                    <mml:mn>4</mml:mn>
+                    <mml:mo>&times;</mml:mo>
+                    <mml:mn>1</mml:mn>
+                </mml:mrow>
+            </mml:math></inlineequation>
+            matrix.
+        </para>
+    </refsect1>
+    <refsect1 id="notes"><title>Notes</title>
+        <para>
+            While the elements of the matrix may be specified with
+            single or double precision, the GL may store or operate on these
+            values in less-than-single precision.
+        </para>
+        <para>
+            In many computer languages, 
+            <inlineequation><mml:math>
+                <!-- eqn: 4  times  4:-->
+                <mml:mrow>
+                    <mml:mn>4</mml:mn>
+                    <mml:mo>&times;</mml:mo>
+                    <mml:mn>4</mml:mn>
+                </mml:mrow>
+            </mml:math></inlineequation>
+            arrays are represented
+            in row-major order. The transformations just described
+            represent these matrices in column-major order.
+            The order of the multiplication is important. For example, if the current
+            transformation is a rotation, and <function>glMultMatrix</function> is called with a translation matrix,
+            the translation is done directly on the coordinates to be transformed,
+            while the rotation is done on the results of that translation.
+        </para>
+    </refsect1>
+    <refsect1 id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if <function>glMultMatrix</function>
+            is executed between the execution of <citerefentry><refentrytitle>glBegin</refentrytitle></citerefentry>
+            and the corresponding execution of <citerefentry><refentrytitle>glEnd</refentrytitle></citerefentry>.
+        </para>
+    </refsect1>
+    <refsect1 id="associatedgets"><title>Associated Gets</title>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_MATRIX_MODE</constant>
+        </para>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_COLOR_MATRIX</constant>
+        </para>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_MODELVIEW_MATRIX</constant>
+        </para>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_PROJECTION_MATRIX</constant>
+        </para>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_TEXTURE_MATRIX</constant>
+        </para>
+    </refsect1>
+    <refsect1 id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glLoadIdentity</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glLoadMatrix</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glLoadTransposeMatrix</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glMatrixMode</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glMultTransposeMatrix</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glPushMatrix</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"></trademark> 1991-2006
+            Silicon Graphics, Inc. This document is licensed under the SGI
+            Free Software B License. For details, see
+            <ulink url="https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt">https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt</ulink>.
+        </para>
+    </refsect1>
+</refentry>

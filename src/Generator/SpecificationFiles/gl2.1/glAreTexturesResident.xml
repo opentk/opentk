@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+<refentry id="glAreTexturesResident">
+    <refmeta>
+        <refmetainfo>
+            <copyright>
+                <year>1991-2006</year>
+                <holder>Silicon Graphics, Inc.</holder>
+            </copyright>
+        </refmetainfo>
+        <refentrytitle>glAreTexturesResident</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glAreTexturesResident</refname>
+        <refpurpose>determine if textures are loaded in texture memory</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>GLboolean <function>glAreTexturesResident</function></funcdef>
+                <paramdef>GLsizei <parameter>n</parameter></paramdef>
+                <paramdef>const GLuint * <parameter>textures</parameter></paramdef>
+                <paramdef>GLboolean * <parameter>residences</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>n</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the number of textures to be queried.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>textures</parameter></term>
+            <listitem>
+                <para>
+                    Specifies an array containing the names of the textures to be queried.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>residences</parameter></term>
+            <listitem>
+                <para>
+                    Specifies an array in which the texture residence status is returned.
+                    The residence status of a texture named by an element of <parameter>textures</parameter> is
+                    returned in the corresponding element of <parameter>residences</parameter>.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 id="description"><title>Description</title>
+        <para>
+            GL establishes
+            a ``working set'' of textures that are resident in texture memory.
+            These textures can be bound to a texture target much more efficiently
+            than textures that are not resident.
+        </para>
+        <para>
+            <function>glAreTexturesResident</function> queries the texture residence status of the <parameter>n</parameter> textures named by
+            the elements of <parameter>textures</parameter>.
+            If all the named textures are resident,
+            <function>glAreTexturesResident</function> returns <constant>GL_TRUE</constant>,
+            and the contents of <parameter>residences</parameter> are undisturbed.
+            If not all the named textures are resident, <function>glAreTexturesResident</function> returns <constant>GL_FALSE</constant>,
+            and detailed status is returned in the <parameter>n</parameter> elements of <parameter>residences</parameter>.
+            If an element of <parameter>residences</parameter> is <constant>GL_TRUE</constant>, then the texture named by
+            the corresponding element of <parameter>textures</parameter> is resident.
+        </para>
+        <para>
+            The residence status of a single bound texture may also be queried
+            by calling
+            <citerefentry><refentrytitle>glGetTexParameter</refentrytitle></citerefentry> with the <emphasis>target</emphasis> argument set to the
+            target to which the texture is bound, and the <emphasis>pname</emphasis> argument
+            set to <constant>GL_TEXTURE_RESIDENT</constant>.
+            This is the only way that the residence status of a default texture can be
+            queried.
+        </para>
+    </refsect1>
+    <refsect1 id="notes"><title>Notes</title>
+        <para>
+            <function>glAreTexturesResident</function> is available only if the GL version is 1.1 or greater.
+        </para>
+        <para>
+            <function>glAreTexturesResident</function> returns the residency status of the textures at the time of
+            invocation. It does not guarantee that the textures will remain
+            resident at any other time.
+        </para>
+        <para>
+            If textures reside in virtual memory (there is no texture memory), they
+            are considered always resident.
+        </para>
+        <para>
+            Some implementations may not load a texture until the first use of
+            that texture.
+        </para>
+    </refsect1>
+    <refsect1 id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if <parameter>n</parameter> is negative.
+        </para>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if any element in <parameter>textures</parameter>
+            is 0 or does not name a texture. In that case, the function returns
+            <constant>GL_FALSE</constant> and the contents of <parameter>residences</parameter> is indeterminate.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if <function>glAreTexturesResident</function> is executed
+            between the execution of <citerefentry><refentrytitle>glBegin</refentrytitle></citerefentry> and the corresponding
+            execution of <citerefentry><refentrytitle>glEnd</refentrytitle></citerefentry>.
+        </para>
+    </refsect1>
+    <refsect1 id="associatedgets"><title>Associated Gets</title>
+        <para>
+            <citerefentry><refentrytitle>glGetTexParameter</refentrytitle></citerefentry> with parameter name <constant>GL_TEXTURE_RESIDENT</constant>
+            retrieves the residence status of a currently bound texture.
+        </para>
+    </refsect1>
+    <refsect1 id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glBindTexture</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glGetTexParameter</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glPrioritizeTextures</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glTexImage1D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glTexImage2D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glTexImage3D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glTexParameter</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"></trademark> 1991-2006
+            Silicon Graphics, Inc. This document is licensed under the SGI
+            Free Software B License. For details, see
+            <ulink url="https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt">https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt</ulink>.
+        </para>
+    </refsect1>
+</refentry>

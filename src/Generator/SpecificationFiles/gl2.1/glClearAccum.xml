@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+<refentry id="glClearAccum">
+    <refmeta>
+        <refmetainfo>
+            <copyright>
+                <year>1991-2006</year>
+                <holder>Silicon Graphics, Inc.</holder>
+            </copyright>
+        </refmetainfo>
+        <refentrytitle>glClearAccum</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glClearAccum</refname>
+        <refpurpose>specify clear values for the accumulation buffer</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glClearAccum</function></funcdef>
+                <paramdef>GLfloat <parameter>red</parameter></paramdef>
+                <paramdef>GLfloat <parameter>green</parameter></paramdef>
+                <paramdef>GLfloat <parameter>blue</parameter></paramdef>
+                <paramdef>GLfloat <parameter>alpha</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>red</parameter></term>
+            <term><parameter>green</parameter></term>
+            <term><parameter>blue</parameter></term>
+            <term><parameter>alpha</parameter></term>
+            <listitem>
+                <para>
+                    Specify the red, green, blue, and alpha values used when the
+                    accumulation buffer is cleared.
+                    The initial values are all 0.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 id="description"><title>Description</title>
+        <para>
+            <function>glClearAccum</function> specifies the red, green, blue, and alpha values used by <citerefentry><refentrytitle>glClear</refentrytitle></citerefentry>
+            to clear the accumulation buffer.
+        </para>
+        <para>
+            Values specified by <function>glClearAccum</function> are clamped to the
+            range 
+            <inlineequation><mml:math>
+                <!-- eqn: [-1,1]:-->
+                <mml:mfenced open="[" close="]">
+                    <mml:mn>-1</mml:mn>
+                    <mml:mn>1</mml:mn>
+                </mml:mfenced>
+            </mml:math></inlineequation>.
+        </para>
+    </refsect1>
+    <refsect1 id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if <function>glClearAccum</function>
+            is executed between the execution of <citerefentry><refentrytitle>glBegin</refentrytitle></citerefentry>
+            and the corresponding execution of <citerefentry><refentrytitle>glEnd</refentrytitle></citerefentry>.
+        </para>
+    </refsect1>
+    <refsect1 id="associatedgets"><title>Associated Gets</title>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_ACCUM_CLEAR_VALUE</constant>
+        </para>
+    </refsect1>
+    <refsect1 id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glAccum</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glClear</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"></trademark> 1991-2006
+            Silicon Graphics, Inc. This document is licensed under the SGI
+            Free Software B License. For details, see
+            <ulink url="https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt">https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt</ulink>.
+        </para>
+    </refsect1>
+</refentry>

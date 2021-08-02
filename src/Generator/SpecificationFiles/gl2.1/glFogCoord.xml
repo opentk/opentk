@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+<refentry id="glFogCoord">
+    <refmeta>
+        <refmetainfo>
+            <copyright>
+                <year>1991-2006</year>
+                <holder>Silicon Graphics, Inc.</holder>
+            </copyright>
+        </refmetainfo>
+        <refentrytitle>glFogCoord</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glFogCoord</refname>
+        <refpurpose>set the current fog coordinates</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glFogCoordd</function></funcdef>
+                <paramdef>GLdouble <parameter>coord</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glFogCoordf</function></funcdef>
+                <paramdef>GLfloat <parameter>coord</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>coord</parameter></term>
+            <listitem>
+                <para>
+                    Specify the fog distance.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glFogCoorddv</function></funcdef>
+                <paramdef>GLdouble * <parameter>coord</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glFogCoordfv</function></funcdef>
+                <paramdef>GLfloat * <parameter>coord</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 id="parameters2"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>coord</parameter></term>
+            <listitem>
+                <para>
+                    Specifies a pointer to an array containing a single value representing the
+                    fog distance.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 id="description"><title>Description</title>
+        <para>
+            <function>glFogCoord</function> specifies the fog coordinate that is associated with each vertex and
+            the current raster position.  The value specified is interpolated and used
+            in computing the fog color (see <citerefentry><refentrytitle>glFog</refentrytitle></citerefentry>).
+        </para>
+    </refsect1>
+    <refsect1 id="notes"><title>Notes</title>
+        <para>
+            <function>glFogCoord</function> is available only if the GL version is 1.4 or greater.
+        </para>
+        <para>
+            The current fog coordinate can be updated at any time.  In particular,
+            <function>glFogCoord</function> can be called between a call to <citerefentry><refentrytitle>glBegin</refentrytitle></citerefentry> and the corresponding
+            call to <citerefentry><refentrytitle>glEnd</refentrytitle></citerefentry>.
+        </para>
+    </refsect1>
+    <refsect1 id="associatedgets"><title>Associated Gets</title>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_CURRENT_FOG_COORD</constant>
+        </para>
+    </refsect1>
+    <refsect1 id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glFog</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glFogCoordPointer</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glVertex</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"></trademark> 1991-2006
+            Silicon Graphics, Inc. This document is licensed under the SGI
+            Free Software B License. For details, see
+            <ulink url="https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt">https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt</ulink>.
+        </para>
+    </refsect1>
+</refentry>

@@ -1,0 +1,778 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+<refentry id="glColorTable">
+    <refmeta>
+        <refmetainfo>
+            <copyright>
+                <year>1991-2006</year>
+                <holder>Silicon Graphics, Inc.</holder>
+            </copyright>
+        </refmetainfo>
+        <refentrytitle>glColorTable</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glColorTable</refname>
+        <refpurpose>define a color lookup table</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glColorTable</function></funcdef>
+                <paramdef>GLenum <parameter>target</parameter></paramdef>
+                <paramdef>GLenum <parameter>internalformat</parameter></paramdef>
+                <paramdef>GLsizei <parameter>width</parameter></paramdef>
+                <paramdef>GLenum <parameter>format</parameter></paramdef>
+                <paramdef>GLenum <parameter>type</parameter></paramdef>
+                <paramdef>const void * <parameter>data</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>target</parameter></term>
+            <listitem>
+                <para>
+                    Must be one of
+                    <constant>GL_COLOR_TABLE</constant>,
+                    <constant>GL_POST_CONVOLUTION_COLOR_TABLE</constant>,
+                    <constant>GL_POST_COLOR_MATRIX_COLOR_TABLE</constant>,
+                    <constant>GL_PROXY_COLOR_TABLE</constant>,
+                    <constant>GL_PROXY_POST_CONVOLUTION_COLOR_TABLE</constant>,
+                    or
+                    <constant>GL_PROXY_POST_COLOR_MATRIX_COLOR_TABLE</constant>.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>internalformat</parameter></term>
+            <listitem>
+                <para>
+                    The internal format of the color table.
+                    The allowable values are
+                    <constant>GL_ALPHA</constant>,
+                    <constant>GL_ALPHA4</constant>,
+                    <constant>GL_ALPHA8</constant>,
+                    <constant>GL_ALPHA12</constant>,
+                    <constant>GL_ALPHA16</constant>,
+                    <constant>GL_LUMINANCE</constant>,
+                    <constant>GL_LUMINANCE4</constant>,
+                    <constant>GL_LUMINANCE8</constant>,
+                    <constant>GL_LUMINANCE12</constant>,
+                    <constant>GL_LUMINANCE16</constant>,
+                    <constant>GL_LUMINANCE_ALPHA</constant>,
+                    <constant>GL_LUMINANCE4_ALPHA4</constant>,
+                    <constant>GL_LUMINANCE6_ALPHA2</constant>,
+                    <constant>GL_LUMINANCE8_ALPHA8</constant>,
+                    <constant>GL_LUMINANCE12_ALPHA4</constant>,
+                    <constant>GL_LUMINANCE12_ALPHA12</constant>,
+                    <constant>GL_LUMINANCE16_ALPHA16</constant>,
+                    <constant>GL_INTENSITY</constant>,
+                    <constant>GL_INTENSITY4</constant>,
+                    <constant>GL_INTENSITY8</constant>,
+                    <constant>GL_INTENSITY12</constant>,
+                    <constant>GL_INTENSITY16</constant>,
+                    <constant>GL_R3_G3_B2</constant>,
+                    <constant>GL_RGB</constant>,
+                    <constant>GL_RGB4</constant>,
+                    <constant>GL_RGB5</constant>,
+                    <constant>GL_RGB8</constant>,
+                    <constant>GL_RGB10</constant>,
+                    <constant>GL_RGB12</constant>,
+                    <constant>GL_RGB16</constant>,
+                    <constant>GL_RGBA</constant>,
+                    <constant>GL_RGBA2</constant>,
+                    <constant>GL_RGBA4</constant>,
+                    <constant>GL_RGB5_A1</constant>,
+                    <constant>GL_RGBA8</constant>,
+                    <constant>GL_RGB10_A2</constant>,
+                    <constant>GL_RGBA12</constant>, and
+                    <constant>GL_RGBA16</constant>.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>width</parameter></term>
+            <listitem>
+                <para>
+                    The number of entries in the color lookup table specified by <parameter>data</parameter>.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>format</parameter></term>
+            <listitem>
+                <para>
+                    The format of the pixel data in <parameter>data</parameter>.
+                    The allowable values are
+                    <constant>GL_RED</constant>,
+                    <constant>GL_GREEN</constant>,
+                    <constant>GL_BLUE</constant>,
+                    <constant>GL_ALPHA</constant>,
+                    <constant>GL_LUMINANCE</constant>,
+                    <constant>GL_LUMINANCE_ALPHA</constant>,
+                    <constant>GL_RGB</constant>,
+                    <constant>GL_BGR</constant>,
+                    <constant>GL_RGBA</constant>, and
+                    <constant>GL_BGRA</constant>.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>type</parameter></term>
+            <listitem>
+                <para>
+                    The type of the pixel data in <parameter>data</parameter>.
+                    The allowable values are
+                    <constant>GL_UNSIGNED_BYTE</constant>,
+                    <constant>GL_BYTE</constant>,
+                    <constant>GL_UNSIGNED_SHORT</constant>,
+                    <constant>GL_SHORT</constant>,
+                    <constant>GL_UNSIGNED_INT</constant>,
+                    <constant>GL_INT</constant>,
+                    <constant>GL_FLOAT</constant>,
+                    <constant>GL_UNSIGNED_BYTE_3_3_2</constant>,
+                    <constant>GL_UNSIGNED_BYTE_2_3_3_REV</constant>,
+                    <constant>GL_UNSIGNED_SHORT_5_6_5</constant>,
+                    <constant>GL_UNSIGNED_SHORT_5_6_5_REV</constant>,
+                    <constant>GL_UNSIGNED_SHORT_4_4_4_4</constant>,
+                    <constant>GL_UNSIGNED_SHORT_4_4_4_4_REV</constant>,
+                    <constant>GL_UNSIGNED_SHORT_5_5_5_1</constant>,
+                    <constant>GL_UNSIGNED_SHORT_1_5_5_5_REV</constant>,
+                    <constant>GL_UNSIGNED_INT_8_8_8_8</constant>,
+                    <constant>GL_UNSIGNED_INT_8_8_8_8_REV</constant>,
+                    <constant>GL_UNSIGNED_INT_10_10_10_2</constant>, and
+                    <constant>GL_UNSIGNED_INT_2_10_10_10_REV</constant>.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>data</parameter></term>
+            <listitem>
+                <para>
+                    Pointer to a one-dimensional array of pixel data that is processed to
+                    build the color table.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 id="description"><title>Description</title>
+        <para>
+            <function>glColorTable</function> may be used in two ways:
+            to test the actual size and color resolution of a lookup table
+            given a particular set of parameters,
+            or to load the contents of a color lookup
+            table.
+            Use the targets <constant>GL_PROXY_*</constant> for the first case
+            and the other targets for the second case.
+        </para>
+        <para>
+            If a non-zero named buffer object is bound to the <constant>GL_PIXEL_UNPACK_BUFFER</constant> target 
+            (see <citerefentry><refentrytitle>glBindBuffer</refentrytitle></citerefentry>) while a color table is
+            specified, <parameter>data</parameter> is treated as a byte offset into the buffer object's data store.
+        </para>
+        <para>
+            If <parameter>target</parameter> is <constant>GL_COLOR_TABLE</constant>,
+            <constant>GL_POST_CONVOLUTION_COLOR_TABLE</constant>,
+            or
+            <constant>GL_POST_COLOR_MATRIX_COLOR_TABLE</constant>,
+            <function>glColorTable</function> builds a color lookup table from an array of pixels.
+            The pixel array specified by <parameter>width</parameter>, <parameter>format</parameter>, <parameter>type</parameter>, and <parameter>data</parameter>
+            is extracted from memory and
+            processed just as if <citerefentry><refentrytitle>glDrawPixels</refentrytitle></citerefentry> were called, but processing
+            stops after the final expansion to RGBA is completed.
+        </para>
+        <para>
+            The four scale parameters and the four bias parameters that are defined
+            for the table are then used to scale and bias the R, G, B, and A components
+            of each pixel.
+            (Use <function>glColorTableParameter</function> to set these scale and bias
+            parameters.)
+        </para>
+        <para>
+            Next, the R, G, B, and A values are clamped to the range 
+            <inlineequation><mml:math>
+                <!-- eqn: [0,1]:-->
+                <mml:mfenced open="[" close="]">
+                    <mml:mn>0</mml:mn>
+                    <mml:mn>1</mml:mn>
+                </mml:mfenced>
+            </mml:math></inlineequation>.
+            Each pixel is then converted to the internal format specified by
+            <parameter>internalformat</parameter>.
+            This conversion simply maps the component values of the pixel (R, G, B,
+            and A) to the values included in the internal format (red, green, blue,
+            alpha, luminance, and intensity).  The mapping is as follows:
+        </para>
+        <para>
+        </para>
+        <informaltable frame="topbot">
+            <tgroup cols="7" align="left">
+                <colspec colwidth="3*" />
+                <colspec colwidth="1*" align="center"/>
+                <colspec colwidth="1*" align="center"/>
+                <colspec colwidth="1*" align="center"/>
+                <colspec colwidth="1*" align="center"/>
+                <colspec colwidth="1.5*" align="center"/>
+                <colspec colwidth="1.5*" align="center"/>
+                <thead>
+                    <row>
+                        <entry rowsep="1" align="left"><emphasis role="bold">
+                        Internal Format
+                        </emphasis></entry>
+                        <entry rowsep="1" align="center"><emphasis role="bold">
+                        Red
+                        </emphasis></entry>
+                        <entry rowsep="1" align="center"><emphasis role="bold">
+                        Green
+                        </emphasis></entry>
+                        <entry rowsep="1" align="center"><emphasis role="bold">
+                        Blue
+                        </emphasis></entry>
+                        <entry rowsep="1" align="center"><emphasis role="bold">
+                        Alpha
+                        </emphasis></entry>
+                        <entry rowsep="1" align="center"><emphasis role="bold">
+                        Luminance
+                        </emphasis></entry>
+                        <entry rowsep="1" align="center"><emphasis role="bold">
+                        Intensity
+                        </emphasis></entry>
+                    </row>
+                </thead>
+                <tbody>
+                    <row>
+                        <entry align="left">
+                        <constant>GL_ALPHA</constant>
+                        </entry>
+                        <entry align="center">
+                        </entry>
+                        <entry align="center">
+                        </entry>
+                        <entry align="center">
+                        </entry>
+                        <entry align="center">
+                        A
+                        </entry>
+                        <entry align="center">
+                        </entry>
+                        <entry align="center">
+                         
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        <constant>GL_LUMINANCE</constant>
+                        </entry>
+                        <entry align="center">
+                        </entry>
+                        <entry align="center">
+                        </entry>
+                        <entry align="center">
+                        </entry>
+                        <entry align="center">
+                        </entry>
+                        <entry align="center">
+                        R
+                        </entry>
+                        <entry align="center">
+                         
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        <constant>GL_LUMINANCE_ALPHA</constant>
+                        </entry>
+                        <entry align="center">
+                        </entry>
+                        <entry align="center">
+                        </entry>
+                        <entry align="center">
+                        </entry>
+                        <entry align="center">
+                        A
+                        </entry>
+                        <entry align="center">
+                        R
+                        </entry>
+                        <entry align="center">
+                         
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        <constant>GL_INTENSITY</constant>
+                        </entry>
+                        <entry align="center">
+                        </entry>
+                        <entry align="center">
+                        </entry>
+                        <entry align="center">
+                        </entry>
+                        <entry align="center">
+                        </entry>
+                        <entry align="center">
+                        </entry>
+                        <entry align="center">
+                        R
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        <constant>GL_RGB</constant>
+                        </entry>
+                        <entry align="center">
+                        R
+                        </entry>
+                        <entry align="center">
+                        G
+                        </entry>
+                        <entry align="center">
+                        B
+                        </entry>
+                        <entry align="center">
+                        </entry>
+                        <entry align="center">
+                        </entry>
+                        <entry align="center">
+                         
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        <constant>GL_RGBA</constant>
+                        </entry>
+                        <entry align="center">
+                        R
+                        </entry>
+                        <entry align="center">
+                        G
+                        </entry>
+                        <entry align="center">
+                        B
+                        </entry>
+                        <entry align="center">
+                        A
+                        </entry>
+                        <entry align="center">
+                        </entry>
+                        <entry align="center">
+                         
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+        <para>
+            Finally, the red, green, blue, alpha, luminance, and/or intensity components of
+            the resulting pixels are stored in the color table.
+            They form a one-dimensional table with indices in the range
+            <inlineequation><mml:math>
+                <!-- eqn: [0, width-1]:-->
+                <mml:mfenced open="[" close="]">
+                    <mml:mn>0</mml:mn>
+                    <mml:mrow>
+                        <mml:mi mathvariant="italic">width</mml:mi>
+                        <mml:mo>-</mml:mo>
+                        <mml:mn>1</mml:mn>
+                    </mml:mrow>
+                </mml:mfenced>
+            </mml:math></inlineequation>.
+        </para>
+        <para>
+            If <parameter>target</parameter> is <constant>GL_PROXY_*</constant>,
+            <function>glColorTable</function> recomputes and stores the values of the proxy color table's state
+            variables
+            <constant>GL_COLOR_TABLE_FORMAT</constant>,
+            <constant>GL_COLOR_TABLE_WIDTH</constant>,
+            <constant>GL_COLOR_TABLE_RED_SIZE</constant>,
+            <constant>GL_COLOR_TABLE_GREEN_SIZE</constant>,
+            <constant>GL_COLOR_TABLE_BLUE_SIZE</constant>,
+            <constant>GL_COLOR_TABLE_ALPHA_SIZE</constant>,
+            <constant>GL_COLOR_TABLE_LUMINANCE_SIZE</constant>, and
+            <constant>GL_COLOR_TABLE_INTENSITY_SIZE</constant>.
+            There is no effect on the image or state of any actual color table.
+            If the specified color table is too large to be supported, then all the
+            proxy state variables listed above are set to zero.
+            Otherwise, the color table could be supported by <function>glColorTable</function>
+            using the corresponding non-proxy target,
+            and the proxy state variables are set as if that target were being defined.
+        </para>
+        <para>
+            The proxy state variables can be retrieved by calling
+            <citerefentry><refentrytitle>glGetColorTableParameter</refentrytitle></citerefentry> with a target of
+            <constant>GL_PROXY_*</constant>.
+            This allows the application to decide if a particular <function>glColorTable</function>
+            command would succeed, and to determine what the resulting color table
+            attributes would be.
+        </para>
+        <para>
+            If a color table is enabled, and its width is non-zero, then its
+            contents are used to replace a subset of the components of each RGBA
+            pixel group, based on the internal format of the table.
+        </para>
+        <para>
+            Each pixel group has color components (R, G, B, A)
+            that are in the range 
+            <inlineequation><mml:math>
+                <!-- eqn: [0.0, 1.0]:-->
+                <mml:mfenced open="[" close="]">
+                    <mml:mn>0.0</mml:mn>
+                    <mml:mn>1.0</mml:mn>
+                </mml:mfenced>
+            </mml:math></inlineequation>.
+            The color components are rescaled to
+            the size of the color lookup table to form an index.
+            Then a subset of the components based on the internal format of the table are
+            replaced by the table entry selected by that index.
+            If the color components and contents of the table are represented as follows:
+        </para>
+        <para>
+        </para>
+        <informaltable frame="topbot">
+            <tgroup cols="2" align="left">
+                <colspec align="center"/>
+                <colspec align="center"/>
+                <thead>
+                    <row>
+                        <entry rowsep="1" align="center"><emphasis role="bold">
+                        Representation
+                        </emphasis></entry>
+                        <entry rowsep="1" align="center"><emphasis role="bold">
+                        Meaning
+                        </emphasis></entry>
+                    </row>
+                </thead>
+                <tbody>
+                    <row>
+                        <entry align="center">
+                        <code>r</code>
+                        </entry>
+                        <entry align="left">
+                        Table index computed from <code>R</code>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="center">
+                        <code>g</code>
+                        </entry>
+                        <entry align="left">
+                        Table index computed from <code>G</code>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="center">
+                        <code>b</code>
+                        </entry>
+                        <entry align="left">
+                        Table index computed from <code>B</code>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="center">
+                        <code>a</code>
+                        </entry>
+                        <entry align="left">
+                        Table index computed from <code>A</code>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="center">
+                        <code>L[i]</code>
+                        </entry>
+                        <entry align="left">
+                        Luminance value at table index <code>i</code>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="center">
+                        <code>I[i]</code>
+                        </entry>
+                        <entry align="left">
+                        Intensity value at table index <code>i</code>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="center">
+                        <code>R[i]</code>
+                        </entry>
+                        <entry align="left">
+                        Red value at table index <code>i</code>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="center">
+                        <code>G[i]</code>
+                        </entry>
+                        <entry align="left">
+                        Green value at table index <code>i</code>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="center">
+                        <code>B[i]</code>
+                        </entry>
+                        <entry align="left">
+                        Blue value at table index <code>i</code>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="center">
+                        <code>A[i]</code>
+                        </entry>
+                        <entry align="left">
+                        Alpha value at table index <code>i</code>
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+        <para>
+            then the result of color table lookup is as follows:
+        </para>
+        <para>
+        </para>
+        <informaltable frame="topbot">
+            <tgroup cols="5" align="left">
+                <colspec colwidth="2*" />
+                <colspec colwidth="1*" colname="r"/>
+                <colspec colwidth="1*" colname="g"/>
+                <colspec colwidth="1*" colname="b"/>
+                <colspec colwidth="1*" colname="a"/>
+                <thead>
+                    <row>
+                        <entry align="left"><emphasis role="bold">
+                        </emphasis></entry>
+                        <entry namest="r" nameend="a" align="center"><emphasis role="bold">
+                        Resulting Texture Components
+                        </emphasis></entry>
+                    </row>
+                    <row>
+                        <entry rowsep="1" align="left"><emphasis role="bold">
+                        Table Internal Format
+                        </emphasis></entry>
+                        <entry rowsep="1" align="center"><emphasis role="bold">
+                        R
+                        </emphasis></entry>
+                        <entry rowsep="1" align="center"><emphasis role="bold">
+                        G
+                        </emphasis></entry>
+                        <entry rowsep="1" align="center"><emphasis role="bold">
+                        B
+                        </emphasis></entry>
+                        <entry rowsep="1" align="center"><emphasis role="bold">
+                        A
+                        </emphasis></entry>
+                    </row>
+                </thead>
+                <tbody>
+                    <row>
+                        <entry align="left">
+                        <constant>GL_ALPHA</constant>
+                        </entry>
+                        <entry align="center">
+                        <code>R</code>
+                        </entry>
+                        <entry align="center">
+                        <code>G</code>
+                        </entry>
+                        <entry align="center">
+                        <code>B</code>
+                        </entry>
+                        <entry align="center">
+                        <code>A[a]</code>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        <constant>GL_LUMINANCE</constant>
+                        </entry>
+                        <entry align="center">
+                        <code>L[r]</code>
+                        </entry>
+                        <entry align="center">
+                        <code>L[g]</code>
+                        </entry>
+                        <entry align="center">
+                        <code>L[b]</code>
+                        </entry>
+                        <entry align="center">
+                        <code>At</code>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        <constant>GL_LUMINANCE_ALPHA</constant>
+                        </entry>
+                        <entry align="center">
+                        <code>L[r]</code>
+                        </entry>
+                        <entry align="center">
+                        <code>L[g]</code>
+                        </entry>
+                        <entry align="center">
+                        <code>L[b]</code>
+                        </entry>
+                        <entry align="center">
+                        <code>A[a]</code>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        <constant>GL_INTENSITY</constant>
+                        </entry>
+                        <entry align="center">
+                        <code>I[r]</code>
+                        </entry>
+                        <entry align="center">
+                        <code>I[g]</code>
+                        </entry>
+                        <entry align="center">
+                        <code>I[b]</code>
+                        </entry>
+                        <entry align="center">
+                        <code>I[a]</code>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        <constant>GL_RGB</constant>
+                        </entry>
+                        <entry align="center">
+                        <code>R[r]</code>
+                        </entry>
+                        <entry align="center">
+                        <code>G[g]</code>
+                        </entry>
+                        <entry align="center">
+                        <code>B[b]</code>
+                        </entry>
+                        <entry align="center">
+                        <code>A</code>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        <constant>GL_RGBA</constant>
+                        </entry>
+                        <entry align="center">
+                        <code>R[r]</code>
+                        </entry>
+                        <entry align="center">
+                        <code>G[g]</code>
+                        </entry>
+                        <entry align="center">
+                        <code>B[b]</code>
+                        </entry>
+                        <entry align="center">
+                        <code>A[a]</code>
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+        <para>
+            When <constant>GL_COLOR_TABLE</constant> is enabled, the colors resulting from
+            the pixel map operation (if it is enabled) are mapped
+            by the color lookup table before being passed to the convolution
+            operation. The colors resulting from the convolution operation
+            are modified by the post convolution color lookup table when
+            <constant>GL_POST_CONVOLUTION_COLOR_TABLE</constant>
+            is enabled. These modified colors are then sent to the color matrix operation.
+            Finally, if <constant>GL_POST_COLOR_MATRIX_COLOR_TABLE</constant>
+            is enabled, the colors resulting from the color matrix operation
+            are mapped by the post color matrix color lookup table before being
+            used by the histogram operation.
+        </para>
+        <para>
+        </para>
+    </refsect1>
+    <refsect1 id="notes"><title>Notes</title>
+        <para>
+            <function>glColorTable</function> is present only if <code>ARB_imaging</code> is returned when <citerefentry><refentrytitle>glGetString</refentrytitle></citerefentry>
+            is called with an argument of <constant>GL_EXTENSIONS</constant>.
+        </para>
+        <para>
+            If <parameter>target</parameter> is set to <constant>GL_COLOR_TABLE</constant>,
+            <constant>GL_POST_CONVOLUTION_COLOR_TABLE</constant>,
+            or <constant>GL_POST_COLOR_MATRIX_COLOR_TABLE</constant>,
+            then <parameter>width</parameter> must be a power of two or a <constant>GL_INVALID_VALUE</constant>
+            error is generated.
+        </para>
+        <para>
+        </para>
+    </refsect1>
+    <refsect1 id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_ENUM</constant> is generated if <parameter>target</parameter> is not one of the allowable
+            values.
+        </para>
+        <para>
+            <constant>GL_INVALID_ENUM</constant> is generated if <parameter>internalformat</parameter> is not one of the
+            allowable values.
+        </para>
+        <para>
+            <constant>GL_INVALID_ENUM</constant> is generated if <parameter>format</parameter> is not one of the allowable
+            values.
+        </para>
+        <para>
+            <constant>GL_INVALID_ENUM</constant> is generated if <parameter>type</parameter> is not one of the allowable
+            values.
+        </para>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if <parameter>width</parameter> is less than zero.
+        </para>
+        <para>
+            <constant>GL_TABLE_TOO_LARGE</constant> is generated if the requested color table
+            is too large to be supported by the implementation, and <parameter>target</parameter> is
+            not a <constant>GL_PROXY_*</constant> target.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if a non-zero buffer object name is bound to the
+            <constant>GL_PIXEL_UNPACK_BUFFER</constant> target and the buffer object's data store is currently mapped.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if a non-zero buffer object name is bound to the
+            <constant>GL_PIXEL_UNPACK_BUFFER</constant> target and the data would be unpacked from the buffer 
+            object such that the memory reads required would exceed the data store size.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if a non-zero buffer object name is bound to the
+            <constant>GL_PIXEL_UNPACK_BUFFER</constant> target and <parameter>data</parameter> is not evenly divisible 
+            into the number of bytes needed to store in memory a datum indicated by <parameter>type</parameter>.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if <function>glColorTable</function> is executed
+            between the execution of <citerefentry><refentrytitle>glBegin</refentrytitle></citerefentry> and the corresponding
+            execution of <citerefentry><refentrytitle>glEnd</refentrytitle></citerefentry>.
+        </para>
+    </refsect1>
+    <refsect1 id="associatedgets"><title>Associated Gets</title>
+        <para>
+            <citerefentry><refentrytitle>glGetColorTableParameter</refentrytitle></citerefentry>
+        </para>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_PIXEL_UNPACK_BUFFER_BINDING</constant>
+        </para>
+    </refsect1>
+    <refsect1 id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glColorSubTable</refentrytitle></citerefentry>,
+            <function>glColorTableParameter</function>,
+            <citerefentry><refentrytitle>glCopyColorTable</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glCopyColorSubTable</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glGetColorTable</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"></trademark> 1991-2006
+            Silicon Graphics, Inc. This document is licensed under the SGI
+            Free Software B License. For details, see
+            <ulink url="https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt">https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt</ulink>.
+        </para>
+    </refsect1>
+</refentry>
