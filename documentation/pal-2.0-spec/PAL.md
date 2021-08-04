@@ -85,6 +85,110 @@ __Cons__
 * Windowing fixes have to be implemented in GLFW itself, affecting our users as
   fixes may take a long time to arrive or outright be marked as "won't fix".
 
+## Design Goals
+* Provide access to platform APIs without being coupled to any specific platform
+  or library.
+* Provide easy to implement interface with which OpenTK could access unsupported
+  platforms; officially, by third parties or dependents.
+* Give dependents the choice over native, or third party second order
+  dependencies such as GLFW or SDL2.
+* Create a well defined contract for the abstraction layer in order to decrease
+  the amount of potential platform dependent bugs.
+* Given the instanceless nature of platform APIs, keep the PAL as instanceless
+  as possible.
+
+## Platform Components
+The OpenTK platform abstraction layer should abstract away platform components.
+A platform component is any API or system peripheral which the end user may be 
+interested in.
+
+### OpenGL Component
+The OpenGL component *MUST* provide the following capabilites:
+* Creating OpenGL contexts,
+* Destroying OpenGL Contexts,
+* Getting and setting the active OpenGL context,
+* Querying avaliable OpenGL extensions,
+* Loading OpenGL procedure addresses (___GetProcAddress).
+* Creating shared OpenGL contexts.
+
+### (Future) Vulkan Component
+This component *MUST* provide a way to load Vulkan procedure addresses.
+
+### Icon Component
+In some operating systems like Windows, an icon object (similar to a window
+object) must be created in order to change the icon of a window.
+
+The Icon Component *MUST* provide the following capabilities:
+* Creating an icon object,
+* Create an icon object containing to common system icons,
+* Deleting an icon object,
+* Copying bitmap information from buffers (such as arrays, `Spans<T>`s) into any
+  mipmap level of the icon,
+* Loading an icon from a stream or file if the operating system supports this
+  action.
+
+### Mouse Cursor Component
+When a desktop operating system is used, the user may want to create a custom
+mouse cursor for their application.
+
+The Mouse Cursor Component *MUST* provide the following capabilities:
+* Creating a mouse cursor object,
+* Creating a mouse cursor object from common system cursors,
+* Deleting a mouse cursor object,
+* Copying bitmap information from buffers into the mouse cursor object,
+* Setting the mouse cursor origin within the image for the mouse cursor object,
+* Loading the mouse cursor object from a stream or file if the operating system
+  supports this action.
+ 
+### Windowing Component
+The windowing component *MUST* provide the following capabilities:
+* Creating windows,
+* Destroying windows,
+* Getting and setting the window title,
+* Getting and setting the window icon using an icon object,
+* Getting and setting the window size and location,
+* Getting and setting the window client area size and location,
+* Getting and setting the mouse cursor for the window with a cursor object,
+* Changing mouse cursor visibility,
+* Getting and setting the display the window is in,
+* Getting and setting the window visibility,
+* Getting and setting the window border type,
+* Changing the window visibility in the task switcher,
+* Changining window modes: normal, minimized, maximized, borderless fullscreen,
+  exclusive fullscreen (if supported),
+* Setting a callback to the window event handler,
+* Pumping window events to the callback.
+
+### Surface Component
+Some operating systems don't have support for windows, for example game
+consoles, mobile devices and framebuffer rendering on Linux. Therefore a OpenGL
+surface must be created before rendering commands can be issued.
+
+The Surface Component *MUST* provide the following capabilities:
+* Creating a drawing surface,
+* Destroying a drawing surface,
+* Getting or setting the framebuffer client area,
+* Getting or setting the display the surface is in.
+
+### Display Component
+Many desktop users and even some laptop users often utilize multiple displays.
+This component should provide information on display devices.
+
+The Display Component *MUST* provide the following capabilities:
+* Enumerating all available display devices,
+* Enumerating all the available display modes for each given device,
+* Changing the display mode of each display device,
+* Getting the pixel density of each display, for each video mode,
+* Getting an identifier object for the default display device.
+
+### Mice Input Component
+The Mice Input Component *MUST* provide the following capabilities:
+* Enumerating all available mice installed in the system. (if operating system
+  supports multiple mice.)
+* Getting the state of buttons on the mice.
+* Getting or setting the mice position on the screen.
+* Getting vertical and horizontal wheel information of the device.
+
 ## Glossary
 <!--
 I really hate it when my text documents aren't 80 columns, sorry for not using
@@ -92,7 +196,7 @@ markdown syntax here.
 -->
 <table>
   <tr>
-    <th>Acronym</th> <th>Description</th>
+    <th>Term</th> <th>Description</th>
   </tr>
   <tr>
     <td>Dependency</td>
