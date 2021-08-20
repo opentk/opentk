@@ -17,6 +17,11 @@ namespace OpenTK.Windowing.Common
     public struct MonitorHandle
     {
         /// <summary>
+        /// Gets a pointer to the underlying native Monitor.
+        /// </summary>
+        public IntPtr Pointer { get; }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="MonitorHandle"/> struct.
         /// </summary>
         /// <param name="ptr">A pointer to the underlying native Monitor.</param>
@@ -24,11 +29,6 @@ namespace OpenTK.Windowing.Common
         {
             Pointer = ptr;
         }
-
-        /// <summary>
-        /// Gets a pointer to the underlying native Monitor.
-        /// </summary>
-        public IntPtr Pointer { get; }
 
         /// <summary>
         /// Converts the underlying <see cref="Pointer"/> to a unmanaged pointer.

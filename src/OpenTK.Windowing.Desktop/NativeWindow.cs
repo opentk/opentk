@@ -696,25 +696,6 @@ namespace OpenTK.Windowing.Desktop
             // Enables the caps lock modifier to be detected and updated
             GLFW.SetInputMode(WindowPtr, LockKeyModAttribute.LockKeyMods, true);
 
-            // These lambdas must be assigned to fields to prevent them from being garbage collected
-            _windowPosCallback = (w, posX, posY) => OnMove(new WindowPositionEventArgs(posX, posY));
-            _windowSizeCallback = (w, argsWidth, argsHeight) => OnResize(new ResizeEventArgs(argsWidth, argsHeight));
-            _windowIconifyCallback = (w, iconified) => OnMinimized(new MinimizedEventArgs(iconified));
-            _windowMaximizeCallback = (w, maximized) => OnMaximized(new MaximizedEventArgs(maximized));
-            _windowFocusCallback = (w, focused) => OnFocusedChanged(new FocusedChangedEventArgs(focused));
-            _charCallback = (w, codepoint) => OnTextInput(new TextInputEventArgs((int)codepoint));
-            _scrollCallback = ScrollCallback;
-            _monitorCallback = (monitor, eventCode) => OnMonitorConnected(new MonitorEventArgs(new MonitorHandle((IntPtr)monitor), eventCode == ConnectedState.Connected));
-            _windowRefreshCallback = w => OnRefresh();
-            // These must be assigned to fields even when they're methods
-            _windowCloseCallback = OnCloseCallback;
-            _keyCallback = KeyCallback;
-            _cursorEnterCallback = CursorEnterCallback;
-            _mouseButtonCallback = MouseButtonCallback;
-            _cursorPosCallback = CursorPosCallback;
-            _dropCallback = DropCallback;
-            _joystickCallback = JoystickCallback;
-
             RegisterWindowCallbacks();
 
             InitialiseJoystickStates();
@@ -890,25 +871,46 @@ namespace OpenTK.Windowing.Desktop
             return WindowState.Normal;
         }
 
-        private readonly GLFWCallbacks.WindowPosCallback _windowPosCallback;
-        private readonly GLFWCallbacks.WindowSizeCallback _windowSizeCallback;
-        private readonly GLFWCallbacks.WindowIconifyCallback _windowIconifyCallback;
-        private readonly GLFWCallbacks.WindowMaximizeCallback _windowMaximizeCallback;
-        private readonly GLFWCallbacks.WindowFocusCallback _windowFocusCallback;
-        private readonly GLFWCallbacks.CharCallback _charCallback;
-        private readonly GLFWCallbacks.ScrollCallback _scrollCallback;
-        private readonly GLFWCallbacks.MonitorCallback _monitorCallback;
-        private readonly GLFWCallbacks.WindowRefreshCallback _windowRefreshCallback;
-        private readonly GLFWCallbacks.WindowCloseCallback _windowCloseCallback;
-        private readonly GLFWCallbacks.KeyCallback _keyCallback;
-        private readonly GLFWCallbacks.CursorEnterCallback _cursorEnterCallback;
-        private readonly GLFWCallbacks.MouseButtonCallback _mouseButtonCallback;
-        private readonly GLFWCallbacks.CursorPosCallback _cursorPosCallback;
-        private readonly GLFWCallbacks.DropCallback _dropCallback;
-        private readonly GLFWCallbacks.JoystickCallback _joystickCallback;
+        private GLFWCallbacks.WindowPosCallback _windowPosCallback;
+        private GLFWCallbacks.WindowSizeCallback _windowSizeCallback;
+        private GLFWCallbacks.WindowIconifyCallback _windowIconifyCallback;
+        private GLFWCallbacks.WindowMaximizeCallback _windowMaximizeCallback;
+        private GLFWCallbacks.WindowFocusCallback _windowFocusCallback;
+        private GLFWCallbacks.CharCallback _charCallback;
+        private GLFWCallbacks.ScrollCallback _scrollCallback;
+        private GLFWCallbacks.WindowRefreshCallback _windowRefreshCallback;
+        private GLFWCallbacks.WindowCloseCallback _windowCloseCallback;
+        private GLFWCallbacks.KeyCallback _keyCallback;
+        private GLFWCallbacks.CursorEnterCallback _cursorEnterCallback;
+        private GLFWCallbacks.MouseButtonCallback _mouseButtonCallback;
+        private GLFWCallbacks.CursorPosCallback _cursorPosCallback;
+        private GLFWCallbacks.DropCallback _dropCallback;
+        private GLFWCallbacks.JoystickCallback _joystickCallback;
+
+        [Obsolete("Use the Monitors.OnMonitorConnected event instead.", true)]
+        private GLFWCallbacks.MonitorCallback _monitorCallback;
 
         private unsafe void RegisterWindowCallbacks()
         {
+            // These lambdas must be assigned to fields to prevent them from being garbage collected
+            _windowPosCallback = (w, posX, posY) => OnMove(new WindowPositionEventArgs(posX, posY));
+            _windowSizeCallback = (w, argsWidth, argsHeight) => OnResize(new ResizeEventArgs(argsWidth, argsHeight));
+            _windowIconifyCallback = (w, iconified) => OnMinimized(new MinimizedEventArgs(iconified));
+            _windowMaximizeCallback = (w, maximized) => OnMaximized(new MaximizedEventArgs(maximized));
+            _windowFocusCallback = (w, focused) => OnFocusedChanged(new FocusedChangedEventArgs(focused));
+            _charCallback = (w, codepoint) => OnTextInput(new TextInputEventArgs((int)codepoint));
+            _scrollCallback = ScrollCallback;
+            _windowRefreshCallback = w => OnRefresh();
+
+            // These must be assigned to fields even when they're methods
+            _windowCloseCallback = OnCloseCallback;
+            _keyCallback = KeyCallback;
+            _cursorEnterCallback = CursorEnterCallback;
+            _mouseButtonCallback = MouseButtonCallback;
+            _cursorPosCallback = CursorPosCallback;
+            _dropCallback = DropCallback;
+            _joystickCallback = JoystickCallback;
+
             GLFW.SetWindowPosCallback(WindowPtr, _windowPosCallback);
             GLFW.SetWindowSizeCallback(WindowPtr, _windowSizeCallback);
             GLFW.SetWindowIconifyCallback(WindowPtr, _windowIconifyCallback);
@@ -916,7 +918,6 @@ namespace OpenTK.Windowing.Desktop
             GLFW.SetWindowFocusCallback(WindowPtr, _windowFocusCallback);
             GLFW.SetCharCallback(WindowPtr, _charCallback);
             GLFW.SetScrollCallback(WindowPtr, _scrollCallback);
-            GLFW.SetMonitorCallback(_monitorCallback);
             GLFW.SetWindowRefreshCallback(WindowPtr, _windowRefreshCallback);
             GLFW.SetWindowCloseCallback(WindowPtr, _windowCloseCallback);
             GLFW.SetKeyCallback(WindowPtr, _keyCallback);
@@ -1088,6 +1089,10 @@ namespace OpenTK.Windowing.Desktop
             Context.MakeCurrent();
         }
 
+        /// <summary>
+        /// Destroys this window and its context.
+        /// Calls <see cref="OnClosed"/> after which no further callbacks will be called.
+        /// </summary>
         protected unsafe void DestroyWindow()
         {
             if (Exists)
@@ -1261,6 +1266,7 @@ namespace OpenTK.Windowing.Desktop
         /// <summary>
         /// Occurs when a <see cref="MonitorHandle"/> is connected or disconnected.
         /// </summary>
+        [Obsolete("Use the Monitors.OnMonitorConnected event instead.", true)]
         public event Action<MonitorEventArgs> MonitorConnected;
 
         /// <summary>
@@ -1380,22 +1386,10 @@ namespace OpenTK.Windowing.Desktop
         /// <see cref="OpenTK.Windowing.Desktop.Monitors.GetMonitorFromWindow(NativeWindow)"/>
         /// to find it.
         /// </remarks>
+        [Obsolete("Use Monitors.GetMonitorFromWindow instead", true)]
         public unsafe MonitorHandle FindMonitor()
         {
-            /*
-             * According to the GLFW documentation, glfwGetWindowMonitor will return a value only
-             * when the window is fullscreen.
-             *
-             * If the window is not fullscreen, find the monitor manually.
-             */
-            MonitorHandle value = new MonitorHandle((IntPtr)GLFW.GetWindowMonitor(WindowPtr));
-
-            if (value.Pointer == IntPtr.Zero)
-            {
-                value = Monitors.GetMonitorFromWindow(this);
-            }
-
-            return value;
+            return default;
         }
 
         /// <summary>
@@ -1406,17 +1400,10 @@ namespace OpenTK.Windowing.Desktop
         /// <returns><c>true</c>, if current monitor scale was gotten correctly, <c>false</c> otherwise.</returns>
         public unsafe bool TryGetCurrentMonitorScale(out float horizontalScale, out float verticalScale)
         {
-            if (Monitors.TryGetMonitorInfo(FindMonitor(), out MonitorInfo info))
-            {
-                horizontalScale = info.HorizontalScale;
-                verticalScale = info.VerticalScale;
-                return true;
-            }
-            else
-            {
-                horizontalScale = verticalScale = 1;
-                return false;
-            }
+            MonitorInfo info = Monitors.GetMonitorFromWindow(this);
+            horizontalScale = info.HorizontalScale;
+            verticalScale = info.VerticalScale;
+            return true;
         }
 
         /// <summary>
@@ -1432,43 +1419,29 @@ namespace OpenTK.Windowing.Desktop
         /// </remarks>
         public unsafe bool TryGetCurrentMonitorDpi(out float horizontalDpi, out float verticalDpi)
         {
-            if (Monitors.TryGetMonitorInfo(FindMonitor(), out MonitorInfo info))
-            {
-                horizontalDpi = info.HorizontalDpi;
-                verticalDpi = info.VerticalDpi;
-                return true;
-            }
-            else
-            {
-                horizontalDpi = verticalDpi = 1;
-                return false;
-            }
+            MonitorInfo info = Monitors.GetMonitorFromWindow(this);
+            horizontalDpi = info.HorizontalDpi;
+            verticalDpi = info.VerticalDpi;
+            return true;
         }
 
         /// <summary>
         /// Gets the raw dpi of current monitor.
         /// </summary>
-        /// <param name="horizontalDpi">Horizontal dpi.</param>
-        /// <param name="verticalDpi">Vertical dpi.</param>
+        /// <param name="horizontalRawDpi">Raw horizontal dpi.</param>
+        /// <param name="verticalRawDpi">Raw vertical dpi.</param>
         /// <returns><c>true</c>, if current monitor's raw dpi was gotten correctly, <c>false</c> otherwise.</returns>
         /// <remarks>
         /// This method calculates dpi by retrieving monitor dimensions and resolution.
         /// However on certain platforms (such as Windows) these values may not
         /// be scaled correctly.
         /// </remarks>
-        public unsafe bool TryGetCurrentMonitorDpiRaw(out float horizontalDpi, out float verticalDpi)
+        public unsafe bool TryGetCurrentMonitorDpiRaw(out float horizontalRawDpi, out float verticalRawDpi)
         {
-            if (Monitors.TryGetMonitorInfo(FindMonitor(), out MonitorInfo info))
-            {
-                horizontalDpi = info.HorizontalDpi;
-                verticalDpi = info.VerticalDpi;
-                return true;
-            }
-            else
-            {
-                horizontalDpi = verticalDpi = 1;
-                return false;
-            }
+            MonitorInfo info = Monitors.GetMonitorFromWindow(this);
+            horizontalRawDpi = info.HorizontalRawDpi;
+            verticalRawDpi = info.VerticalRawDpi;
+            return true;
         }
 
         /// <summary>
@@ -1570,6 +1543,7 @@ namespace OpenTK.Windowing.Desktop
         /// Raises the <see cref="MonitorConnected"/> event.
         /// </summary>
         /// <param name="e">A <see cref="MonitorEventArgs"/> that contains the event data.</param>
+        [Obsolete("Use the Monitors.OnMonitorConnected event instead.", true)]
         protected virtual void OnMonitorConnected(MonitorEventArgs e)
         {
             MonitorConnected?.Invoke(e);
@@ -1726,37 +1700,28 @@ namespace OpenTK.Windowing.Desktop
         /// <param name="newSize">The size to make the centered window.</param>
         public void CenterWindow(Vector2i newSize)
         {
-            // Find out which monitor the window is already on.  If we can't find that out, then
-            // just try to find the first monitor attached to the computer and use that instead.
-            MonitorHandle currentMonitor = Monitors.GetMonitorFromWindow(this);
-            if (Monitors.TryGetMonitorInfo(currentMonitor, out MonitorInfo monitorInfo)
-                || Monitors.TryGetMonitorInfo(0, out monitorInfo))
+            // Find out which monitor the window is already on.
+            MonitorInfo monitorInfo = Monitors.GetMonitorFromWindow(this);
+
+            // Calculate a suitable upper-left corner for the window, based on this monitor's
+            // coordinates.  This should work correctly even in unusual multi-monitor layouts.
+            Box2i monitorRectangle = monitorInfo.ClientArea;
+            int x = (monitorRectangle.Min.X + monitorRectangle.Max.X - newSize.X) / 2;
+            int y = (monitorRectangle.Min.Y + monitorRectangle.Max.Y - newSize.Y) / 2;
+
+            // Avoid putting it offscreen.
+            if (x < monitorRectangle.Min.X)
             {
-                // Calculate a suitable upper-left corner for the window, based on this monitor's
-                // coordinates.  This should work correctly even in unusual multi-monitor layouts.
-                Box2i monitorRectangle = monitorInfo.ClientArea;
-                int x = (monitorRectangle.Min.X + monitorRectangle.Max.X - newSize.X) / 2;
-                int y = (monitorRectangle.Min.Y + monitorRectangle.Max.Y - newSize.Y) / 2;
-
-                // Avoid putting it offscreen.
-                if (x < monitorRectangle.Min.X)
-                {
-                    x = monitorRectangle.Min.X;
-                }
-
-                if (y < monitorRectangle.Min.Y)
-                {
-                    y = monitorRectangle.Min.Y;
-                }
-
-                // Actually move the window.
-                ClientRectangle = new Box2i(x, y, x + newSize.X, y + newSize.Y);
+                x = monitorRectangle.Min.X;
             }
-            else
+
+            if (y < monitorRectangle.Min.Y)
             {
-                // Something in GLFW has gone wrong, and we can't get monitor information.
-                throw new GLFWException("Could not get information about the current monitor nor the default monitor. Something is probably broken in GLFW.");
+                y = monitorRectangle.Min.Y;
             }
+
+            // Actually move the window.
+            ClientRectangle = new Box2i(x, y, x + newSize.X, y + newSize.Y);
         }
     }
 }

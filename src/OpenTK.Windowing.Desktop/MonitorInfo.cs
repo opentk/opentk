@@ -113,57 +113,25 @@ namespace OpenTK.Windowing.Desktop
 
             _handle = handle;
 
-            GetClientArea();
-            GetPhysicalSize();
-            GetScale();
-
-            // DO NOT call these methods before the above Get* methods.
-            CalculateMonitorDpi();
-            CalculateMonitorRawDpi();
-        }
-
-        /// <summary>
-        /// Queries GLFW to get the client area of the monitor.
-        /// </summary>
-        private unsafe void GetClientArea()
-        {
             GLFW.GetMonitorPos(HandleAsPtr, out int x, out int y);
             var videoMode = GLFW.GetVideoMode(HandleAsPtr);
-
             ClientArea = new Box2i(x, y, x + videoMode->Width, y + videoMode->Height);
-        }
 
-        /// <summary>
-        /// Queries GLFW to get the physical size of the monitor.
-        /// </summary>
-        private void GetPhysicalSize()
-        {
             GLFW.GetMonitorPhysicalSize(HandleAsPtr, out int width, out int height);
-
             PhysicalWidth = width;
             PhysicalHeight = height;
-        }
 
-        /// <summary>
-        /// Queries GLFW to get monitor scale.
-        /// </summary>
-        private void GetScale()
-        {
             GLFW.GetMonitorContentScale(HandleAsPtr, out float horizontalScale, out float verticalScale);
-
             HorizontalScale = horizontalScale;
             VerticalScale = verticalScale;
-        }
 
-        /// <summary>
-        /// Calculates the monitor dpi from cached values.
-        /// </summary>
-        private void CalculateMonitorDpi()
-        {
             float defaultDpi = Monitors.GetPlatformDefaultDpi();
 
             HorizontalDpi = defaultDpi * HorizontalScale;
             VerticalDpi = defaultDpi * VerticalScale;
+
+            HorizontalRawDpi = CalculateDpi(HorizontalResolution, PhysicalWidth);
+            VerticalRawDpi = CalculateDpi(VerticalResolution, PhysicalHeight);
         }
 
         /// <summary>
@@ -180,14 +148,5 @@ namespace OpenTK.Windowing.Desktop
         ///   = (pixelCount / dInMm) * 25.4.
         /// </remarks>
         private float CalculateDpi(int pixels, int length) => ((float)pixels / (float)length) * 25.4f;
-
-        /// <summary>
-        /// Calculates the raw dpi of the monitor from cached values.
-        /// </summary>
-        private void CalculateMonitorRawDpi()
-        {
-            HorizontalRawDpi = CalculateDpi(HorizontalResolution, PhysicalWidth);
-            VerticalRawDpi = CalculateDpi(VerticalResolution, PhysicalHeight);
-        }
     }
 }
