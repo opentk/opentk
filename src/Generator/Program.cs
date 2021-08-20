@@ -31,7 +31,7 @@ namespace Generator
                 Writer.Write(outputSpec);
 
                 st.Stop();
-                Logger.Info($"{st.ElapsedMilliseconds}");
+                Logger.Info($"Generated OpenGL bindings in {st.ElapsedMilliseconds} ms");
             }
         }
     }

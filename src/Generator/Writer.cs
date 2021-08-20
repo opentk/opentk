@@ -6,6 +6,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.CodeDom.Compiler;
+using Generator.Parsing;
 
 namespace Generator.Writing
 {
@@ -41,7 +42,7 @@ namespace Generator.Writing
                     File.Delete(file);
                 }
 
-                WriteNativeFunctions(directoryPath, apiNamespace, api.Vendors);
+                WriteNativeFunctions(directoryPath, apiNamespace, api.Vendors, api.Documentation);
                 WriteOverloads(directoryPath, apiNamespace, api.Vendors);
 
                 WriteEnums(directoryPath, apiNamespace, api.EnumGroups);
@@ -51,7 +52,8 @@ namespace Generator.Writing
         private static void WriteNativeFunctions(
             string directoryPath,
             string glNamespace,
-            Dictionary<string, GLVendorFunctions> groups)
+            Dictionary<string, GLVendorFunctions> groups,
+            Dictionary<NativeFunction, CommandDocumentation> documentation)
         {
             using StreamWriter stream = File.CreateText(Path.Combine(directoryPath, "GL.Native.cs"));
             using IndentedTextWriter writer = new IndentedTextWriter(stream);
@@ -78,7 +80,8 @@ namespace Generator.Writing
                         foreach (var function in group.NativeFunctions)
                         {
                             bool postfixName = group.NativeFunctionsWithPostfix.Contains(function);
-                            WriteNativeMethod(function, postfixName, writer);
+                            documentation.TryGetValue(function, out CommandDocumentation? commandDocumentation);
+                            WriteNativeMethod(writer, function, postfixName, commandDocumentation);
                         }
 
                         scope?.Dispose();
@@ -89,7 +92,7 @@ namespace Generator.Writing
             writer.Flush();
         }
 
-        private static void WriteNativeMethod(NativeFunction function, bool postfixName, IndentedTextWriter writer)
+        private static void WriteNativeMethod(IndentedTextWriter writer, NativeFunction function, bool postfixName, CommandDocumentation? documentation)
         {
             // Write delegate field initialized to the lazy loader.
             // Write public function definition that calls delegate.
@@ -143,6 +146,11 @@ namespace Generator.Writing
             delegateTypes.Append(returnType);
 
             writer.WriteLine($"private static delegate* unmanaged<{delegateTypes}> _{name}_fnptr = &{name}_Lazy;");
+
+            if (documentation != null)
+            {
+                WriteDocumentation(writer, documentation);
+            }
 
             if (handleAbiDifferenceForTypesafeHandles)
             {
@@ -288,6 +296,11 @@ namespace Generator.Writing
             }
 
             return overload.MarshalLayerToNested?.WriteEpilogue(writer, nameTable, returnName) ?? returnName;
+        }
+
+        private static void WriteDocumentation(IndentedTextWriter writer, CommandDocumentation documentation)
+        {
+            writer.WriteLine($"/// <summary> {documentation.Purpose} </summary>");
         }
 
         private static void WriteEnums(string directoryPath, string apiNamespace, List<EnumGroup> enumGroups)

@@ -277,14 +277,14 @@ namespace Generator.Process
                 }
             }
 
-            Dictionary<OverloadedFunction, CommandDocumentation> documentation = new Dictionary<OverloadedFunction, CommandDocumentation>();
+            Dictionary<NativeFunction, CommandDocumentation> documentation = new Dictionary<NativeFunction, CommandDocumentation>();
             foreach (var (vendor, functions) in functionsByVendor)
             {
                 foreach (var function in functions)
                 {
                     if (function.Documentation.TryGetValue(api, out CommandDocumentation? commandDocumentation))
                     {
-                        documentation[function] = commandDocumentation;
+                        documentation[function.NativeFunction] = commandDocumentation;
                     }
                     else
                     {
@@ -348,7 +348,7 @@ namespace Generator.Process
                 }
             }
 
-            return new GLOutputApi(api, vendors, finalGroups);
+            return new GLOutputApi(api, vendors, finalGroups, documentation);
         }
 
         public static NativeFunction MakeNativeFunction(Command command)

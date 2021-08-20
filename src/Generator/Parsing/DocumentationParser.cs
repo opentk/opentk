@@ -22,7 +22,7 @@ namespace Generator.Parsing
             {
                 Dictionary<string, CommandDocumentation> docFolder = new Dictionary<string, CommandDocumentation>();
 
-                Logger.Info($"Documentation {folder.Folder}:\n\n");
+                //Logger.Info($"Documentation {folder.Folder}:\n\n");
 
                 foreach (var file in folder.Files)
                 {
@@ -82,6 +82,10 @@ namespace Generator.Parsing
                     // FIXME: Remove tab indentation.
                     string desc = entry.ElementIgnoreNamespace("para").Value;
 
+                    desc = desc.Replace("\r", "");
+                    desc = desc.Replace("\n", "");
+                    desc = desc.Replace("\t", "");
+
                     parameters.Add(new ParameterDocumentation(parameter, desc));
                     //Logger.Info($"  {parameter}: {desc}");
                 }
@@ -90,12 +94,15 @@ namespace Generator.Parsing
             List<CommandDocumentation> documentation = new List<CommandDocumentation>();
             XElement namediv = root.ElementIgnoreNamespace("refnamediv");
             string purpose = namediv.ElementIgnoreNamespace("refpurpose").Value;
+            purpose = purpose.Replace("\r", "");
+            purpose = purpose.Replace("\n", "");
+            purpose = purpose.Replace("\t", "");
             XElement synopsis = root.ElementIgnoreNamespace("refsynopsisdiv");
             foreach (XElement name in synopsis.ElementsIgnoreNamespace("function"))
             {
                 documentation.Add(new CommandDocumentation(name.Value, purpose, parameters.ToArray()));
 
-                Logger.Info($"{name.Value}");
+                //Logger.Info($"{name.Value}");
             }
 
             return documentation.ToArray();
