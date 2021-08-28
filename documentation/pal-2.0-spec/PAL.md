@@ -189,6 +189,28 @@ The Mice Input Component *MUST* provide the following capabilities:
 * Getting or setting the mice position on the screen.
 * Getting vertical and horizontal wheel information of the device.
 
+### Keyboard Input Component
+The keyboard input component *MUST* provide the following capabilities.
+* Enumerating all available keyboards installed in the system (if the operating
+  system supports such capability.)
+* Getting the state of each button on the a keyboard.
+* Querying the global keyboard layout.
+* Querying the the keyboard layout for a window given its handle. (if supported)
+
+### IME component.
+The IME component *MUST* provide the following capabilities:
+* Invoking the input method editor.
+* Specifying the input method editor area.
+
+### Controller Input Component
+The controller input component *MUST* provide the follwoing capabilities:
+* Enumerate all available controller devices in the system.
+* Get the number of buttons on each controller device.
+* Get the number of all analog channels on each controller device.
+* Get the button state for each button on each controller device.
+* Get the position value of each analog channel on each controller device.
+* Query the name and type of each controller device. (if available.)
+
 ## Glossary
 <!--
 I really hate it when my text documents aren't 80 columns, sorry for not using
