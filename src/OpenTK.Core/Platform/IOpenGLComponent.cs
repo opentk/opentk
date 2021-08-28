@@ -8,6 +8,21 @@ namespace OpenTK.Core.Platform
     public interface IOpenGLComponent : IPalComponent
     {
         /// <summary>
+        /// True if the component driver has the capability to share display lists between OpenGL contexts.
+        /// </summary>
+        bool CanShareContexts { get; }
+
+        /// <summary>
+        /// True if the component driver can create a context from windows.
+        /// </summary>
+        bool CanCreateFromWindow { get; }
+
+        /// <summary>
+        /// True if the component driver can create a context from surfaces.
+        /// </summary>
+        bool CanCreateFromSurface { get; }
+
+        /// <summary>
         /// Create and OpenGL context for a surface.
         /// </summary>
         /// <returns>An OpenGL context handle.</returns>
