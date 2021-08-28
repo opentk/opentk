@@ -5,7 +5,7 @@ namespace OpenTK.Core.Platform
     /// <summary>
     /// Interface for drivers which provide the PAL OpenGL Component.
     /// </summary>
-    public interface IOpenGLComponent
+    public interface IOpenGLComponent : IPalComponent
     {
         /// <summary>
         /// Create and OpenGL context for a surface.
