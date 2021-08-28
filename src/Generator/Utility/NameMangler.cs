@@ -1,7 +1,6 @@
 using System.Text;
 
-#nullable enable
-namespace GeneratorV2.Parsing
+namespace Generator.Utility
 {
     public class NameMangler
     {
@@ -27,16 +26,16 @@ namespace GeneratorV2.Parsing
         }
 
         public static string MangleParameterName(string name) => name switch
-            {
-                "base" => "@base",
-                "event" => "@event",
-                "in" => "input",
-                "object" => "obj",
-                "params" => "parameters",
-                "ref" => "reference",
-                "string" => "str",
-                _ => name
-            };
+        {
+            "base" => "@base",
+            "event" => "@event",
+            "in" => "input",
+            "object" => "obj",
+            "params" => "parameters",
+            "ref" => "reference",
+            "string" => "str",
+            _ => name
+        };
 
         public static string MangleClassName(string name)
         {

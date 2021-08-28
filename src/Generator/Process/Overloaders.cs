@@ -1,13 +1,43 @@
 using System;
+using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text.RegularExpressions;
-using GeneratorV2.Data;
-using GeneratorV2.Writing;
+using Generator.Parsing;
+using Generator.Utility;
+using Generator.Utility.Extensions;
+using Generator.Writing;
 
-namespace GeneratorV2.Process
+namespace Generator.Process
 {
+    public interface IOverloader
+    {
+        public bool TryGenerateOverloads(Overload overload, [NotNullWhen(true)] out List<Overload>? newOverloads);
+
+        // /!\ IMPORTANT /!\:
+        // All return type overloaders need to run before any of the other overloaders.
+        // This is to ensure that correct scoping for the new return variables.
+        // FIXME: Maybe we dont want classes for these?
+        public static readonly IOverloader[] Overloaders = new IOverloader[]
+        {
+            new TrimNameOverloader(),
+
+            new StringReturnOverloader(),
+
+            new BoolOverloader(),
+            new MathTypeOverloader(),
+            new FunctionPtrToDelegateOverloader(),
+            new PointerToOffsetOverloader(),
+            new VoidPtrToIntPtrOverloader(),
+            new GenCreateAndDeleteOverloader(),
+            new StringOverloader(),
+            new SpanAndArrayOverloader(),
+            new RefInsteadOfPointerOverloader(),
+            new OutToReturnOverloader(),
+        };
+    }
+
     public class TrimNameOverloader : IOverloader
     {
         private static readonly Regex Endings = new Regex(
@@ -31,7 +61,7 @@ namespace GeneratorV2.Process
             string trimmedName = name;
             // FIXME: Remove extension name before we trim endings
             Match m = EndingsNotToTrim.Match(name);
-            if ((m.Index + m.Length) != name.Length)
+            if (m.Index + m.Length != name.Length)
             {
                 m = Endings.Match(name);
 
@@ -305,21 +335,20 @@ namespace GeneratorV2.Process
 
                     if (constant.Value == vectorSize)
                     {
-                        bool isConstant = ptr.Constant || baseType.Constant;
                         CSStruct vector = new CSStruct(typeName, baseType.Constant, null);
                         singleParameters[i] = parameter with
                         {
-                            Type = new CSRef(isConstant ? CSRef.Type.In : CSRef.Type.Ref, vector),
+                            Type = new CSRef(baseType.Constant ? CSRef.Type.In : CSRef.Type.Ref, vector),
                             Length = null
                         };
                         spanParameters[i] = parameter with
                         {
-                            Type = new CSSpan(vector, isConstant),
+                            Type = new CSSpan(vector, baseType.Constant),
                             Length = null
                         };
                         arrayParameters[i] = parameter with
                         {
-                            Type = new CSArray(vector, isConstant),
+                            Type = new CSArray(vector),
                             Length = null
                         };
                         nameTable.Rename(parameter, parameter.Name + "_ptr");
@@ -414,73 +443,73 @@ namespace GeneratorV2.Process
     }
 
     public class FunctionPtrToDelegateOverloader : IOverloader
+    {
+        public bool TryGenerateOverloads(Overload overload, [NotNullWhen(true)] out List<Overload>? newOverloads)
         {
-            public bool TryGenerateOverloads(Overload overload, [NotNullWhen(true)] out List<Overload>? newOverloads)
+            Parameter[] parameters = new Parameter[overload.InputParameters.Length];
+            List<Parameter> original = new List<Parameter>();
+            List<Parameter> changed = new List<Parameter>();
+            NameTable nameTable = overload.NameTable.New();
+            for (int i = 0; i < overload.InputParameters.Length; i++)
             {
-                Parameter[] parameters = new Parameter[overload.InputParameters.Length];
-                List<Parameter> original = new List<Parameter>();
-                List<Parameter> changed = new List<Parameter>();
-                NameTable nameTable = overload.NameTable.New();
-                for (int i = 0; i < overload.InputParameters.Length; i++)
+                Parameter parameter = overload.InputParameters[i];
+                parameters[i] = parameter;
+
+                if (parameter.Type is CSFunctionPointer fpt)
                 {
-                    Parameter parameter = overload.InputParameters[i];
-                    parameters[i] = parameter;
+                    // Rename the parameter
+                    nameTable.Rename(parameter, $"{parameter.Name}_ptr");
 
-                    if (parameter.Type is CSFunctionPointer fpt)
-                    {
-                        // Rename the parameter
-                        nameTable.Rename(parameter, $"{parameter.Name}_ptr");
+                    original.Add(parameters[i]);
 
-                        original.Add(parameters[i]);
+                    parameters[i] = parameters[i] with { Type = new CSDelegateType(fpt.TypeName) };
 
-                        parameters[i] = parameters[i] with { Type = new CSDelegateType(fpt.TypeName) };
-
-                        changed.Add(parameters[i]);
-                    }
+                    changed.Add(parameters[i]);
                 }
+            }
 
-                if (changed.Count > 0)
-                {
-                    var layer = new FunctionPtrToDelegateLayer(changed, original);
-                    newOverloads = new List<Overload>()
+            if (changed.Count > 0)
+            {
+                var layer = new FunctionPtrToDelegateLayer(changed, original);
+                newOverloads = new List<Overload>()
                     {
                         overload with { NestedOverload = overload, MarshalLayerToNested = layer, InputParameters = parameters, NameTable = nameTable }
                     };
-                    return true;
-                }
-                else
-                {
-                    newOverloads = default;
-                    return false;
-                }
+                return true;
             }
-
-            class FunctionPtrToDelegateLayer : IOverloadLayer
+            else
             {
-                public readonly List<Parameter> DelegateParameters;
-                public readonly List<Parameter> PointerParameters;
-
-                public FunctionPtrToDelegateLayer(List<Parameter> delegateParameters, List<Parameter> pointerParameters)
-                {
-                    DelegateParameters = delegateParameters;
-                    PointerParameters = pointerParameters;
-                }
-
-                public void WritePrologue(IndentedTextWriter writer, NameTable nameTable)
-                {
-                    for (int i = 0; i < DelegateParameters.Count; i++)
-                    {
-                        string type = PointerParameters[i].Type.ToCSString();
-                        writer.WriteLine($"{type} {nameTable[PointerParameters[i]]} = Marshal.GetFunctionPointerForDelegate({nameTable[DelegateParameters[i]]});");
-                    }
-                }
-
-                public string? WriteEpilogue(IndentedTextWriter writer, NameTable nameTable, string? returnName)
-                {
-                    return returnName;
-                }
+                newOverloads = default;
+                return false;
             }
         }
+
+        class FunctionPtrToDelegateLayer : IOverloadLayer
+        {
+            public readonly List<Parameter> DelegateParameters;
+            public readonly List<Parameter> PointerParameters;
+
+            public FunctionPtrToDelegateLayer(List<Parameter> delegateParameters, List<Parameter> pointerParameters)
+            {
+                DelegateParameters = delegateParameters;
+                PointerParameters = pointerParameters;
+            }
+
+            public void WritePrologue(IndentedTextWriter writer, NameTable nameTable)
+            {
+                for (int i = 0; i < DelegateParameters.Count; i++)
+                {
+                    string type = PointerParameters[i].Type.ToCSString();
+                    writer.WriteLine($"{type} {nameTable[PointerParameters[i]]} = Marshal.GetFunctionPointerForDelegate({nameTable[DelegateParameters[i]]});");
+                }
+            }
+
+            public string? WriteEpilogue(IndentedTextWriter writer, NameTable nameTable, string? returnName)
+            {
+                return returnName;
+            }
+        }
+    }
 
     public sealed class PointerToOffsetOverloader : IOverloader
     {
@@ -523,7 +552,7 @@ namespace GeneratorV2.Process
 
         public bool TryGenerateOverloads(Overload overload, [NotNullWhen(true)] out List<Overload>? newOverloads)
         {
-            if (!_methodsAndParametersToOverload.TryGetValue(overload.NativeFunction.EntryPoint, out var parameterName))
+            if (_methodsAndParametersToOverload.TryGetValue(overload.NativeFunction.EntryPoint, out var parameterName) == false)
             {
                 newOverloads = null;
                 return false;
@@ -542,7 +571,9 @@ namespace GeneratorV2.Process
             Parameter pointerParameter = overload.InputParameters[parameterIndex];
             Parameter offsetParameter = pointerParameter with
             {
-                Type = new CSPrimitive("nint", false), Name = "offset", Length = null
+                Type = new CSPrimitive("nint", false),
+                Name = "offset",
+                Length = null
             };
             Parameter[] newParameters = overload.InputParameters.ToArray();
             newParameters[parameterIndex] = offsetParameter;
@@ -595,7 +626,7 @@ namespace GeneratorV2.Process
                 }
 
                 nameTable.Rename(parameter, parameter.Name + "_vptr");
-                parameters[i] = parameter with {Type = new CSPrimitive("IntPtr", false), Length = null};
+                parameters[i] = parameter with { Type = new CSPrimitive("IntPtr", false), Length = null };
                 parameterNames.Add((parameter, parameters[i]));
             }
 
@@ -690,7 +721,8 @@ namespace GeneratorV2.Process
             CSRef.Type refType = nativeName.StartsWith("Delete") ? CSRef.Type.In : CSRef.Type.Out;
             parameters[^1] = pointerParameter with
             {
-                Type = new CSRef(refType, pointerParameterType.BaseType), Length = null
+                Type = new CSRef(refType, pointerParameterType.BaseType),
+                Length = null
             };
             IOverloadLayer layer = refType == CSRef.Type.In
                 ? new DeleteOverloadLayer(overload.InputParameters[lengthParameterIndex], parameters[^1],
@@ -782,14 +814,16 @@ namespace GeneratorV2.Process
                     if (bt.Constant)
                     {
                         // FIXME: Can we know if the string is nullable or not?
-                        newParams[i] = newParams[i] with {Type = new CSString(Nullable: false), Length = null};
+                        newParams[i] = newParams[i] with { Type = new CSString(Nullable: false), Length = null };
                         var stringParams = newParams.ToArray();
                         var stringLayer = new StringLayer(pointerParam, newParams[i]);
 
                         newOverload = newOverload with
                         {
-                            NestedOverload = newOverload, MarshalLayerToNested = stringLayer,
-                            InputParameters = stringParams, NameTable = nameTable
+                            NestedOverload = newOverload,
+                            MarshalLayerToNested = stringLayer,
+                            InputParameters = stringParams,
+                            NameTable = nameTable
                         };
                     }
                     else
@@ -798,7 +832,7 @@ namespace GeneratorV2.Process
                         Parameter? lenParam = null;
                         if (param.Length != null)
                         {
-                            string? paramName = IOverloadLayer.GetParameterExpression(param.Length, out var expr);
+                            string? paramName = Expression.InvertExpressionAndGetReferencedName(param.Length, out var expr);
                             if (paramName == null)
                             {
                                 Logger.Info(
@@ -820,7 +854,8 @@ namespace GeneratorV2.Process
                         // FIXME: Can we know if the string is nullable or not?
                         var stringParam = newParams[stringParamIndex] with
                         {
-                            Type = new CSRef(CSRef.Type.Out, new CSString(Nullable: false)), Length = null
+                            Type = new CSRef(CSRef.Type.Out, new CSString(Nullable: false)),
+                            Length = null
                         };
                         newParams[stringParamIndex] = stringParam;
 
@@ -829,8 +864,10 @@ namespace GeneratorV2.Process
 
                         newOverload = newOverload with
                         {
-                            NestedOverload = newOverload, MarshalLayerToNested = stringLayer,
-                            InputParameters = stringParams, NameTable = nameTable
+                            NestedOverload = newOverload,
+                            MarshalLayerToNested = stringLayer,
+                            InputParameters = stringParams,
+                            NameTable = nameTable
                         };
                     }
                 }
@@ -920,80 +957,89 @@ namespace GeneratorV2.Process
 
                 if (param.Length != null)
                 {
-                    string? lengthParamName = IOverloadLayer.GetParameterExpression(param.Length, out var expr);
-                    if (lengthParamName != null)
-                    {
-                        var pointerParam = newParams[i];
-                        if (pointerParam.Type is not CSPointer pointer)
-                            throw new Exception("A parameter with a 'len' attribute must be a pointer type!");
+                    string? lengthParamName = Expression.InvertExpressionAndGetReferencedName(param.Length, out var expr);
+                    var pointerParam = newParams[i];
+                    if (pointerParam.Type is not CSPointer pointer)
+                        throw new Exception("A parameter with a 'len' attribute must be a pointer type!");
 
-                        int lengthParamIndex =
-                            Array.FindIndex(overload.InputParameters, p => p.Name == lengthParamName);
-                        var oldLength = overload.InputParameters[lengthParamIndex];
-                        int spanArrayParameterIndex = i;
-                        Parameter? paramToBeRemoved = null;
-                        bool shouldCalculateLength = overload.InputParameters.Count(p => p.Length == param.Length) <= 1;
-                        // If this is the only len attribute that refernces this parameter,
+                    Parameter? oldLength = null;
+                    int spanArrayParameterIndex = i;
+                    Parameter? paramToBeRemoved = null;
+                    bool shouldCalculateLength = overload.InputParameters.Count(p => p.Length == param.Length) <= 1 && lengthParamName != null;
+                    if (shouldCalculateLength)
+                    {
+                        // If this is the only len attribute that references this parameter,
                         // we can remove that parameter as we can calculate it from the length of this parameter (array/span).
                         // FIXME: This check is going to fail if the two 'len' attributes have different "forms" e.g. "n" == "n*4" == "COMPSIZE(n)" etc.
-                        if (shouldCalculateLength)
-                        {
-                            paramToBeRemoved = oldLength;
-                            newParams.Remove(oldLength);
+                        int lengthParamIndex =
+                            Array.FindIndex(overload.InputParameters, p => p.Name == lengthParamName);
+                        oldLength = overload.InputParameters[lengthParamIndex];
 
-                            if (lengthParamIndex < i)
-                            {
-                                spanArrayParameterIndex--;
-                                i--;
-                            }
+                        paramToBeRemoved = oldLength;
+                        newParams.Remove(oldLength);
+
+                        if (lengthParamIndex < i)
+                        {
+                            spanArrayParameterIndex--;
+                            i--;
                         }
-
-                        BaseCSType baseType;
-                        if (pointer.BaseType is CSVoid)
-                        {
-                            genericTypes = genericTypes.MakeCopyAndGrow(1);
-                            genericTypes[^1] = $"T{genericTypes.Length}";
-                            baseType = new CSGenericType(genericTypes[^1]);
-                        }
-                        else
-                        {
-                            baseType = pointer.BaseType;
-                        }
-
-                        var spanNameTable = overload.NameTable.New();
-                        var arrayNameTable = overload.NameTable.New();
-
-                        spanNameTable.Rename(pointerParam, $"{pointerParam.Name}_ptr");
-                        arrayNameTable.Rename(pointerParam, $"{pointerParam.Name}_ptr");
-
-                        var newSpanParams = spanOverload.InputParameters.Where(p => p != paramToBeRemoved).ToArray();
-                        var newArrayParams = arrayOverload.InputParameters.Where(p => p != paramToBeRemoved).ToArray();
-
-                        newSpanParams[spanArrayParameterIndex] = newSpanParams[spanArrayParameterIndex] with
-                        {
-                            Type = new CSSpan(baseType, pointer.Constant)
-                        };
-                        newArrayParams[spanArrayParameterIndex] = newArrayParams[spanArrayParameterIndex] with
-                        {
-                            Type = new CSArray(baseType, pointer.Constant)
-                        };
-
-                        var spanLayer = new SpanOrArrayLayer(pointerParam, newSpanParams[spanArrayParameterIndex],
-                            oldLength, expr, shouldCalculateLength, baseType);
-                        var arrayLayer = new SpanOrArrayLayer(pointerParam, newArrayParams[spanArrayParameterIndex],
-                            oldLength, expr, shouldCalculateLength, baseType);
-
-                        spanOverload = spanOverload with
-                        {
-                            NestedOverload = spanOverload, MarshalLayerToNested = spanLayer,
-                            InputParameters = newSpanParams, NameTable = spanNameTable, GenericTypes = genericTypes
-                        };
-                        arrayOverload = arrayOverload with
-                        {
-                            NestedOverload = arrayOverload, MarshalLayerToNested = arrayLayer,
-                            InputParameters = newArrayParams, NameTable = arrayNameTable, GenericTypes = genericTypes
-                        };
                     }
+
+                    BaseCSType baseType;
+                    if (pointer.BaseType is CSVoid)
+                    {
+                        genericTypes = genericTypes.MakeCopyAndGrow(1);
+                        genericTypes[^1] = $"T{genericTypes.Length}";
+                        baseType = new CSGenericType(genericTypes[^1]);
+                    }
+                    else
+                    {
+                        baseType = pointer.BaseType;
+                    }
+
+                    bool isBaseTypeConstant = false;
+                    if (pointer.BaseType is IConstantCSType constantType)
+                    {
+                        isBaseTypeConstant = constantType.Constant;
+                    }
+
+                    var spanNameTable = overload.NameTable.New();
+                    var arrayNameTable = overload.NameTable.New();
+
+                    spanNameTable.Rename(pointerParam, $"{pointerParam.Name}_ptr");
+                    arrayNameTable.Rename(pointerParam, $"{pointerParam.Name}_ptr");
+
+                    var newSpanParams = spanOverload.InputParameters.Where(p => p != paramToBeRemoved).ToArray();
+                    var newArrayParams = arrayOverload.InputParameters.Where(p => p != paramToBeRemoved).ToArray();
+
+                    newSpanParams[spanArrayParameterIndex] = newSpanParams[spanArrayParameterIndex] with
+                    {
+                        Type = new CSSpan(baseType, isBaseTypeConstant)
+                    };
+                    newArrayParams[spanArrayParameterIndex] = newArrayParams[spanArrayParameterIndex] with
+                    {
+                        Type = new CSArray(baseType)
+                    };
+
+                    var spanLayer = new SpanOrArrayLayer(pointerParam, newSpanParams[spanArrayParameterIndex], oldLength, expr, baseType);
+                    var arrayLayer = new SpanOrArrayLayer(pointerParam, newArrayParams[spanArrayParameterIndex], oldLength, expr, baseType);
+
+                    spanOverload = spanOverload with
+                    {
+                        NestedOverload = spanOverload,
+                        MarshalLayerToNested = spanLayer,
+                        InputParameters = newSpanParams,
+                        NameTable = spanNameTable,
+                        GenericTypes = genericTypes
+                    };
+                    arrayOverload = arrayOverload with
+                    {
+                        NestedOverload = arrayOverload,
+                        MarshalLayerToNested = arrayLayer,
+                        InputParameters = newArrayParams,
+                        NameTable = arrayNameTable,
+                        GenericTypes = genericTypes
+                    };
                 }
             }
 
@@ -1017,9 +1063,8 @@ namespace GeneratorV2.Process
         private record SpanOrArrayLayer(
             Parameter PointerParameter,
             Parameter SpanOrArrayParameter,
-            Parameter LengthParameter,
+            Parameter? LengthParameter,
             Func<string, string> ParameterExpression,
-            bool ShouldCalculateLength,
             BaseCSType BaseType) : IOverloadLayer
         {
             private CsScope _csScope;
@@ -1031,7 +1076,7 @@ namespace GeneratorV2.Process
                 // But that is fine because we can cast `int`s to `IntPtr`.
                 // This is slightly fragile but it's fine for now.
                 // - Noggin_bops 2021-01-22
-                if (ShouldCalculateLength)
+                if (LengthParameter != null)
                 {
                     var byteSize = BaseType is CSGenericType ? $" * sizeof({BaseType.ToCSString()})" : "";
                     var lengthExpression = ParameterExpression(nameTable[SpanOrArrayParameter]);
@@ -1039,8 +1084,7 @@ namespace GeneratorV2.Process
                         $"{LengthParameter.Type.ToCSString()} {nameTable[LengthParameter]} = ({LengthParameter.Type.ToCSString()})({lengthExpression}{byteSize});");
                 }
 
-                writer.WriteLine(
-                    $"fixed ({PointerParameter.Type.ToCSString()} {nameTable[PointerParameter]} = {nameTable[SpanOrArrayParameter]})");
+                writer.WriteLine($"fixed ({PointerParameter.Type.ToCSString()} {nameTable[PointerParameter]} = {nameTable[SpanOrArrayParameter]})");
                 _csScope = writer.CsScope();
             }
 
@@ -1082,7 +1126,18 @@ namespace GeneratorV2.Process
                             baseType = pt.BaseType;
                             constant |= bt.Constant;
                             break;
+                        case CSStruct bt:
+                            baseType = pt.BaseType;
+                            constant |= bt.Constant;
+                            break;
+                        case CSBool8 bt:
+                            baseType = pt.BaseType;
+                            constant |= bt.Constant;
+                            break;
+                        case CSPointer:
+                            continue;
                         default:
+                            Logger.Warning($"{pt} is not supported by the ref overloader.");
                             continue;
                     }
                     // FIXME: When do we know it's an out ref type?
