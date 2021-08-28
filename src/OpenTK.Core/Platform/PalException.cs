@@ -6,7 +6,7 @@ namespace OpenTK.Core.Platform
     /// Exception type for platform abstraction layer drivers.
     /// </summary>
     [Serializable]
-    public sealed class PalException : Exception
+    public class PalException : Exception
     {
         /// <summary>
         /// The component which throws the exception.
