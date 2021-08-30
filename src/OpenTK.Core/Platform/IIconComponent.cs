@@ -45,6 +45,63 @@ namespace OpenTK.Core.Platform
         void GenerateMipmaps(IconHandle handle);
 
         /// <summary>
+        /// Get the dimensions of a icon object.
+        /// </summary>
+        /// <param name="handle">Handle to icon object.</param>
+        /// <param name="width">Width of the icon.</param>
+        /// <param name="height">Height of icon.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="handle"/> is null.</exception>
+        void GetDimensions(IconHandle handle, out int width, out int height);
+
+        /// <summary>
+        /// Get the dimensions of an icon object.
+        /// </summary>
+        /// <param name="handle">Handle to icon object.</param>
+        /// <param name="level">Mipmap level of the object.</param>
+        /// <param name="width">Width of the icon.</param>
+        /// <param name="height">Height of icon.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="handle"/> is null.</exception>
+        /// <exception cref="PalNotImplementedException">Driver does not provide mipmaps. See <see cref="HasMipmaps"/>.</exception>
+        /// <exception cref="ArgumentOutOfRangeException">Icon does not have mipmap level specified by <paramref name="level"/>.</exception>
+        void GetDimensions(IconHandle handle, int level, out int width, out int height);
+
+        /// <summary>
+        /// Get the bitmap visual of an icon object.
+        /// </summary>
+        /// <param name="handle">Handle to an icon object.</param>
+        /// <param name="data">A buffer to copy bitmap data into.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="handle"/> is null.</exception>
+        void GetBitmap(IconHandle handle, Span<byte> data);
+
+        /// <summary>
+        /// Get the bitmap visual of an icon object.
+        /// </summary>
+        /// <param name="handle">Handle to an icon object.</param>
+        /// <param name="level">Mipmap level of the visual to copy.</param>
+        /// <param name="data">A buffer to copy bitmap data into.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="handle"/> is null.</exception>
+        /// <exception cref="PalNotImplementedException">Driver does not implement mipmap functionality.</exception>
+        void GetBitmap(IconHandle handle, int level, Span<byte> data);
+
+        /// <summary>
+        /// Get the size of the bitmap visual in bytes.
+        /// </summary>
+        /// <param name="handle">Handle to an icon object.</param>
+        /// <returns>The size of the bitmap visual in bytes.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="handle"/> is null.</exception>
+        int GetBitmapSize(IconHandle handle);
+
+        /// <summary>
+        /// Get the size of the bitmap visual in bytes.
+        /// </summary>
+        /// <param name="handle">Handle to an icon object.</param>
+        /// <param name="level">Mipmap level of the visual to get the size of.</param>
+        /// <returns>The size of the bitmap visual in bytes.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="handle"/> is null.</exception>
+        /// <exception cref="PalNotImplementedException">Driver does not implement mipmap functionality.</exception>
+        int GetBitmapSize(IconHandle handle, int level);
+
+        /// <summary>
         /// Load an icon object with image data.
         /// </summary>
         /// <param name="handle">Handle to an icon object.</param>
@@ -93,6 +150,6 @@ namespace OpenTK.Core.Platform
         /// <exception cref="ArgumentException"><paramref name="handle"/> is null.</exception>
         /// <exception cref="Exception">System does not provide an icon for the given value of <paramref name="name"/>.</exception>
         /// <exception cref="PalNotImplementedException">Driver does not implement loading system icons. See <see cref="CanLoadSystemIcon"/>.</exception>
-        void LoadSystemIcon(IconHandle handle, SystemIconType name);
+        void Load(IconHandle handle, SystemIconType name);
     }
 }
