@@ -33,14 +33,14 @@ namespace OpenTK.Core.Platform
         /// Destroy an icon object.
         /// </summary>
         /// <param name="handle">Handle to the icon object to destroy.</param>
-        /// <exception cref="ArgumentException"><paramref name="handle"/> is null.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="handle"/> is null.</exception>
         void Destroy(IconHandle handle);
 
         /// <summary>
         /// Create the mipmap levels of an icon object if not already done.
         /// </summary>
         /// <param name="handle">Handle to an icon object.</param>
-        /// <exception cref="ArgumentException"><paramref name="handle"/> is null.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="handle"/> is null.</exception>
         /// <exception cref="PalNotImplementedException">Driver does not provide mipmaps. See <see cref="HasMipmaps"/>.</exception>
         void GenerateMipmaps(IconHandle handle);
 
@@ -106,7 +106,7 @@ namespace OpenTK.Core.Platform
         /// </summary>
         /// <param name="handle">Handle to an icon object.</param>
         /// <param name="data">Image data to load into icon.</param>
-        /// <exception cref="ArgumentException"><paramref name="handle"/> is null.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="handle"/> is null.</exception>
         void Load(IconHandle handle, ReadOnlySpan<byte> data);
 
         /// <summary>
@@ -115,7 +115,7 @@ namespace OpenTK.Core.Platform
         /// <param name="handle">Handle to an icon object.</param>
         /// <param name="data">Image data to load into icon.</param>
         /// <param name="level">Mip level to load data onto.</param>
-        /// <exception cref="ArgumentException"><paramref name="handle"/> is null.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="handle"/> is null.</exception>
         /// <exception cref="PalNotImplementedException">Driver does not provide mipmaps. See <see cref="HasMipmaps"/>.</exception>
         void Load(IconHandle handle, ReadOnlySpan<byte> data, int level);
 
@@ -124,7 +124,7 @@ namespace OpenTK.Core.Platform
         /// </summary>
         /// <param name="handle">Handle to an icon object.</param>
         /// <param name="file">Path to the icon file.</param>
-        /// <exception cref="ArgumentException"><paramref name="handle"/> or <paramref name="file"/> is null.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="handle"/> or <paramref name="file"/> is null.</exception>
         /// <exception cref="FileNotFoundException">Icon file not found.</exception>
         /// <exception cref="IOException">Generic IO error.</exception>
         /// <exception cref="PalNotImplementedException">Driver does not implement loading from files. See <see cref="CanLoadFile"/>.</exception>
@@ -135,7 +135,7 @@ namespace OpenTK.Core.Platform
         /// </summary>
         /// <param name="handle">Handle to icon object.</param>
         /// <param name="stream">Stream containing icon file.</param>
-        /// <exception cref="ArgumentException"><paramref name="handle"/> or <paramref name="stream"/> is null.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="handle"/> or <paramref name="stream"/> is null.</exception>
         /// <exception cref="FileNotFoundException">Icon file not found.</exception>
         /// <exception cref="IOException">Generic IO error.</exception>
         /// <exception cref="PalNotImplementedException">Driver does not implement loading from files. See <see cref="CanLoadFile"/>.</exception>
@@ -147,8 +147,8 @@ namespace OpenTK.Core.Platform
         /// </summary>
         /// <param name="handle">Handle to an icon object.</param>
         /// <param name="name">To be replaced by an enumeration.</param>
-        /// <exception cref="ArgumentException"><paramref name="handle"/> is null.</exception>
-        /// <exception cref="Exception">System does not provide an icon for the given value of <paramref name="name"/>.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="handle"/> is null.</exception>
+        /// <exception cref="PlatformException">System does not provide an icon for the given value of <paramref name="name"/>.</exception>
         /// <exception cref="PalNotImplementedException">Driver does not implement loading system icons. See <see cref="CanLoadSystemIcon"/>.</exception>
         void Load(IconHandle handle, SystemIconType name);
     }
