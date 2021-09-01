@@ -105,19 +105,24 @@ namespace OpenTK.Core.Platform
         /// Load an icon object with image data.
         /// </summary>
         /// <param name="handle">Handle to an icon object.</param>
+        /// <param name="width">Width of the bitmap.</param>
+        /// <param name="height">Height of the bitmap.</param>
         /// <param name="data">Image data to load into icon.</param>
         /// <exception cref="ArgumentNullException"><paramref name="handle"/> is null.</exception>
-        void Load(IconHandle handle, ReadOnlySpan<byte> data);
+        void Load(IconHandle handle, int width, int height, ReadOnlySpan<byte> data);
 
         /// <summary>
         /// Load an icon object with image data.
         /// </summary>
         /// <param name="handle">Handle to an icon object.</param>
+        /// <param name="width">Width of the mipmap.</param>
+        /// <param name="height">Height of the bitmap.</param>
         /// <param name="data">Image data to load into icon.</param>
         /// <param name="level">Mip level to load data onto.</param>
         /// <exception cref="ArgumentNullException"><paramref name="handle"/> is null.</exception>
+        /// <exception cref="ArgumentOutOfRangeException"><paramref name="width"/> or <paramref name="height"/> is larger than the previous MIP level.</exception>
         /// <exception cref="PalNotImplementedException">Driver does not provide mipmaps. See <see cref="HasMipmaps"/>.</exception>
-        void Load(IconHandle handle, ReadOnlySpan<byte> data, int level);
+        void Load(IconHandle handle, int width, int height, ReadOnlySpan<byte> data, int level);
 
         /// <summary>
         /// Load an icon object from a file.
