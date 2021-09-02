@@ -1224,7 +1224,7 @@ namespace Generator.Process
                 }
                 else if (i != oldParameters.Length - 1)
                 {
-                    newParameters[outParameter != null ? i + 1 : i] = parameter;
+                    newParameters[outParameter != null ? i - 1 : i] = parameter;
                 }
             }
 
