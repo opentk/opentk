@@ -660,9 +660,14 @@ namespace OpenTK.Windowing.Desktop
             {
                 var monitor = settings.CurrentMonitor.ToUnsafePtr<GraphicsLibraryFramework.Monitor>();
                 var modePtr = GLFW.GetVideoMode(monitor);
-                GLFW.WindowHint(WindowHintInt.RedBits, modePtr->RedBits);
-                GLFW.WindowHint(WindowHintInt.GreenBits, modePtr->GreenBits);
-                GLFW.WindowHint(WindowHintInt.BlueBits, modePtr->BlueBits);
+                GLFW.WindowHint(WindowHintInt.RedBits, settings.RedBits ?? modePtr->RedBits);
+                GLFW.WindowHint(WindowHintInt.GreenBits, settings.GreenBits ?? modePtr->GreenBits);
+                GLFW.WindowHint(WindowHintInt.BlueBits, settings.BlueBits ?? modePtr->BlueBits);
+                if (settings.AlphaBits.HasValue)
+                {
+                    GLFW.WindowHint(WindowHintInt.AlphaBits, settings.AlphaBits.Value);
+                }
+
                 GLFW.WindowHint(WindowHintInt.RefreshRate, modePtr->RefreshRate);
 
                 if (settings.WindowState == WindowState.Fullscreen && _isVisible)
@@ -676,6 +681,16 @@ namespace OpenTK.Windowing.Desktop
                 {
                     WindowPtr = GLFW.CreateWindow(settings.Size.X, settings.Size.Y, _title, null, (Window*)(settings.SharedContext?.WindowPtr ?? IntPtr.Zero));
                 }
+            }
+
+            if (settings.DepthBits.HasValue)
+            {
+                GLFW.WindowHint(WindowHintInt.DepthBits, settings.DepthBits.Value);
+            }
+
+            if (settings.StencilBits.HasValue)
+            {
+                GLFW.WindowHint(WindowHintInt.StencilBits, settings.StencilBits.Value);
             }
 
             Context = new GLFWGraphicsContext(WindowPtr);
