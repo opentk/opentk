@@ -568,8 +568,7 @@ namespace OpenTK.Windowing.Desktop
             GLFWProvider.EnsureInitialized();
             if (!GLFWProvider.IsOnMainThread)
             {
-                throw new
-                    GLFWException("Can only create windows on the Glfw main thread. (Thread from which Glfw was first created).");
+                throw new GLFWException("Can only create windows on the Glfw main thread (the thread that calls Main).");
             }
 
             _title = settings.Title;
@@ -1665,7 +1664,7 @@ namespace OpenTK.Windowing.Desktop
         private bool _disposedValue; // To detect redundant calls
 
         /// <inheritdoc cref="IDisposable.Dispose" />
-        protected virtual void Dispose(bool disposing)
+        protected virtual unsafe void Dispose(bool disposing)
         {
             if (_disposedValue)
             {
@@ -1674,6 +1673,15 @@ namespace OpenTK.Windowing.Desktop
 
             if (disposing)
             {
+            }
+
+            if (GLFWProvider.IsOnMainThread)
+            {
+                GLFW.DestroyWindow(WindowPtr);
+            }
+            else
+            {
+                throw new GLFWException("You can only dispose windows on the main thread. The window needs to be disposed as it cannot safely be disposed in the finalizer.");
             }
 
             _disposedValue = true;
