@@ -28,10 +28,10 @@ namespace OpenTK.Windowing.Desktop
 
             if (!GLFWProvider.IsOnMainThread)
             {
-                throw new InvalidOperationException("Only GLFW main thread can build the monitor cache.");
+                throw new InvalidOperationException("Only GLFW main thread can access this class.");
             }
 
-            _monitorCallback = DpiMonitorCallback;
+            _monitorCallback = MonitorCallback;
             GLFW.SetMonitorCallback(_monitorCallback);
         }
 
@@ -210,7 +210,7 @@ namespace OpenTK.Windowing.Desktop
         {
         }
 
-        private static unsafe void DpiMonitorCallback(Monitor* monitor, ConnectedState state)
+        private static unsafe void MonitorCallback(Monitor* monitor, ConnectedState state)
         {
             OnMonitorConnected?.Invoke(new MonitorEventArgs(new MonitorHandle((IntPtr)monitor), state == ConnectedState.Connected));
         }
