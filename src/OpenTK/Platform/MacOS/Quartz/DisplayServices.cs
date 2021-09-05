@@ -99,6 +99,12 @@ namespace OpenTK.Platform.MacOS
         [DllImport(lib, EntryPoint="CGShieldingWindowLevel")]
         internal static extern uint ShieldingWindowLevel();
 
+        [DllImport(lib, EntryPoint="CGDisplayModeGetPixelWidth")]
+        internal static extern IntPtr GetPixelWidth(IntPtr display);
+
+        [DllImport(lib, EntryPoint="CGDisplayModeGetPixelHeight")]
+        internal static extern IntPtr GetPixelHeight(IntPtr display);
+
         [DllImport(lib, EntryPoint="CGDisplayRelease")]
         internal static extern CGDisplayErr DisplayRelease(IntPtr display);
 

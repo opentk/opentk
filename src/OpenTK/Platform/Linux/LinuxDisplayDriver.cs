@@ -45,21 +45,6 @@ namespace OpenTK.Platform.Linux
         unsafe public ModeConnector* pConnector { get { return (ModeConnector*)Connector; } }
         unsafe public ModeCrtc* pCrtc { get { return (ModeCrtc*)Crtc; } }
         unsafe public ModeEncoder* pEncoder { get { return (ModeEncoder*)Encoder; } }
-        /*
-        public ModeInfo Mode
-        {
-            get
-            {
-                if (Crtc == IntPtr.Zero)
-                    throw new InvalidOperationException();
-
-                unsafe
-                {
-                    return pCrtc->mode;
-                }
-            }
-        }
-        */
 
         public ModeInfo OriginalMode;
 
@@ -347,7 +332,7 @@ namespace OpenTK.Platform.Linux
 
             bool is_primary = AvailableDevices.Count == 0;
             DisplayDevice device = new DisplayDevice(current, is_primary,
-                modes, GetBounds(current), display);
+                modes, GetBounds(current), new Vector2(1.0f, 1.0f), display);
 
             if (is_primary)
             {

@@ -133,6 +133,21 @@ namespace OpenTK.Platform.Windows
                         opentk_dev_available_res.Add(res);
                     }
 
+                    float scaleFactor;
+                    //Pull the DPI out of the registry
+                    if (Environment.OSVersion.Version.Major == 10)
+                    {
+                        //Win10
+                        scaleFactor = (float)Registry.GetValue("HKEY_CURRENT_USER\\Control Panel\\Desktop", "LogPixels", 96);
+                    }
+                    else
+                    {
+                        //Lower
+                        scaleFactor = float.Parse((string)Registry.GetValue( @"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\ThemeManager",    "LastLoadedDPI", "96"));
+                    }
+                    //Divide by default 96DPI to get scale factor
+                    scaleFactor /= 96.0f;
+
                     // Construct the OpenTK DisplayDevice through the accumulated parameters.
                     // The constructor will automatically add the DisplayDevice to the list
                     // of available devices.
@@ -142,6 +157,7 @@ namespace OpenTK.Platform.Windows
                         opentk_dev_primary,
                         opentk_dev_available_res,
                         opentk_dev_current_res.Bounds,
+                        new Vector2(scaleFactor, scaleFactor),
                         dev1.DeviceName);
                     #pragma warning restore 612,618
 

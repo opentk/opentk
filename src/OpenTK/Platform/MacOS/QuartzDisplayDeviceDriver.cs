@@ -122,13 +122,16 @@ namespace OpenTK.Platform.MacOS
                         }
                     }
 
+                    float pixelScaleW = (float)CG.GetPixelWidth(currentDisplay);
+                    float pixelScaleH = (float)CG.GetPixelHeight(currentDisplay);
+
                     NSRect bounds = CG.DisplayBounds(currentDisplay);
                     Rectangle newRect = new Rectangle((int)bounds.Location.X, (int)bounds.Location.Y, (int)bounds.Size.Width, (int)bounds.Size.Height);
 
                     Debug.Print("Display {0} bounds: {1}", i, newRect);
 
                     DisplayDevice opentk_dev = new DisplayDevice(opentk_dev_current_res,
-                        primary, opentk_dev_available_res, newRect, currentDisplay);
+                        primary, opentk_dev_available_res, newRect, new Vector2(pixelScaleW, pixelScaleH), currentDisplay);
 
                     AvailableDevices.Add(opentk_dev);
 

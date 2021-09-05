@@ -61,9 +61,10 @@ namespace OpenTK.Platform.SDL2
                     current_mode.Width, current_mode.Height,
                     TranslateFormat(current_mode.Format),
                     current_mode.RefreshRate);
-
+                float pixelScaleD, pixelScaleW, pixelScaleH;
+                SDL.GetDisplayDPI(d, out pixelScaleD, out pixelScaleW, out pixelScaleH);
                 var device = new DisplayDevice(
-                    current_resolution, d == 0, mode_list, TranslateBounds(bounds), d);
+                    current_resolution, d == 0, mode_list, TranslateBounds(bounds), new Vector2(pixelScaleW, pixelScaleH), d);
 
                 AvailableDevices.Add(device);
                 if (d == 0)
