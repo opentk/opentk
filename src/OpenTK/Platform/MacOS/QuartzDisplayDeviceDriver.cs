@@ -123,12 +123,12 @@ namespace OpenTK.Platform.MacOS
                     }
                     //Copy the current display mode and take a pointer to it
                     IntPtr displayMode = CG.CopyDisplayMode(currentDisplay);
-                    //Pull out the raw width and height
-                    int rawWidth = (int)CG.GetModeWidth(displayMode);
-                    int rawHeight = (int)CG.GetModeHeight(displayMode);
                     //Pull out the scaled width and height
-                    int scaledWidth = (int)CG.GetModePixelWidth(displayMode);
-                    int scaledHeight = (int)CG.GetModePixelHeight(displayMode);
+                    int scaledWidth = (int)CG.GetModeWidth(displayMode);
+                    int scaledHeight = (int)CG.GetModeHeight(displayMode);
+                    //Pull out the raw width and height
+                    int rawWidth = (int)CG.GetModePixelWidth(displayMode);
+                    int rawHeight = (int)CG.GetModePixelHeight(displayMode);
                     //Remember to release the display mode
                     CG.ReleaseDisplayMode(displayMode);
 
