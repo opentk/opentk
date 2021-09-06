@@ -121,9 +121,19 @@ namespace OpenTK.Platform.MacOS
                             opentk_dev_current_res = thisRes;
                         }
                     }
+                    //Copy the current display mode and take a pointer to it
+                    IntPtr displayMode = CG.CopyDisplayMode(currentDisplay);
+                    //Pull out the raw width and height
+                    int rawWidth = (int)CG.GetModeWidth(displayMode);
+                    int rawHeight = (int)CG.GetModeHeight(displayMode);
+                    //Pull out the scaled width and height
+                    int scaledWidth = (int)CG.GetModePixelWidth(displayMode);
+                    int scaledHeight = (int)CG.GetModePixelHeight(displayMode);
+                    //Remember to release the display mode
+                    CG.ReleaseDisplayMode(displayMode);
 
-                    float pixelScaleW = (float)CG.GetPixelWidth(currentDisplay);
-                    float pixelScaleH = (float)CG.GetPixelHeight(currentDisplay);
+                    float pixelScaleW = (float)rawWidth / scaledWidth;
+                    float pixelScaleH = (float)rawHeight / scaledHeight;
 
                     NSRect bounds = CG.DisplayBounds(currentDisplay);
                     Rectangle newRect = new Rectangle((int)bounds.Location.X, (int)bounds.Location.Y, (int)bounds.Size.Width, (int)bounds.Size.Height);
