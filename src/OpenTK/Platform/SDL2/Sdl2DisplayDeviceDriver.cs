@@ -62,7 +62,12 @@ namespace OpenTK.Platform.SDL2
                     TranslateFormat(current_mode.Format),
                     current_mode.RefreshRate);
                 float pixelScaleD, pixelScaleW, pixelScaleH;
+                //Get display DPI from SDL
                 SDL.GetDisplayDPI(d, out pixelScaleD, out pixelScaleW, out pixelScaleH);
+                //Convert to scale factor using default 96DPI
+                pixelScaleD /= 96.0f;
+                pixelScaleW /= 96.0f;
+                pixelScaleH /= 96.0f;
                 var device = new DisplayDevice(
                     current_resolution, d == 0, mode_list, TranslateBounds(bounds), new Vector2(pixelScaleW, pixelScaleH), d);
 
