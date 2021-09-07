@@ -96,33 +96,11 @@ namespace OpenTK.Platform.X11
                 ScreenCount = Functions.XScreenCount(DefaultDisplay);
             }
             Debug.Print("Display connection: {0}, Screen count: {1}", DefaultDisplay, ScreenCount);
-
-            //AppDomain.CurrentDomain.ProcessExit += new EventHandler(CurrentDomain_ProcessExit);
         }
-
-        private static void CurrentDomain_ProcessExit(object sender, EventArgs e)
-        {
-            if (DefaultDisplay != IntPtr.Zero)
-            {
-                Functions.XCloseDisplay(DefaultDisplay);
-                DefaultDisplay = IntPtr.Zero;
-                DefaultScreen = 0;
-                rootWindow = IntPtr.Zero;
-            }
-        }
-
-        // Display management
-        //[DllImport(_dll_name, EntryPoint = "XOpenDisplay")]
-        //extern public static IntPtr OpenDisplay([MarshalAs(UnmanagedType.LPTStr)] string display_name);
-
-        //[DllImport(_dll_name, EntryPoint = "XCloseDisplay")]
-        //extern public static void CloseDisplay(Display display);
-
-        //[DllImport(_dll_name, EntryPoint = "XCreateColormap")]
-        //extern public static IntPtr CreateColormap(Display display, Window window, IntPtr visual, int alloc);
+        
 
         [DllImport(_dll_name, EntryPoint = "XCreateSimpleWindow")]
-        public extern static Window CreateSimpleWindow(
+        public static extern Window CreateSimpleWindow(
             Display display,
             Window parent,
             int x, int y,
@@ -133,56 +111,55 @@ namespace OpenTK.Platform.X11
         );
 
         [DllImport(_dll_name, EntryPoint = "XResizeWindow")]
-        public extern static int XResizeWindow(Display display, Window window, int width, int height);
+        public static extern int XResizeWindow(Display display, Window window, int width, int height);
 
         [DllImport(_dll_name, EntryPoint = "XDestroyWindow")]
-        public extern static void DestroyWindow(Display display, Window window);
+        public static extern void DestroyWindow(Display display, Window window);
 
         [DllImport(_dll_name, EntryPoint = "XMapWindow")]
-        extern public static void MapWindow(Display display, Window window);
+        public static extern void MapWindow(Display display, Window window);
 
         [DllImport(_dll_name, EntryPoint = "XMapRaised")]
-        extern public static void MapRaised(Display display, Window window);
+        public static extern void MapRaised(Display display, Window window);
 
         [DllImport(_dll_name, EntryPoint = "XDefaultVisual")]
-        extern public static IntPtr DefaultVisual(Display display, int screen_number);
+        public static extern IntPtr DefaultVisual(Display display, int screen_number);
 
-        /// <summary>
-        /// Frees the memory used by an X structure. Only use on unmanaged structures!
-        /// </summary>
+        /// <summary>Frees the memory used by an X structure.</summary>
+        /// <remarks>Should only be used on unmanaged structures</remarks>
         /// <param name="buffer">A pointer to the structure that will be freed.</param>
         [DllImport(_dll_name, EntryPoint = "XFree")]
-        extern public static void Free(IntPtr buffer);
+        public static extern void Free(IntPtr buffer);
 
         [System.Security.SuppressUnmanagedCodeSecurity]
         [DllImport(_dll_name, EntryPoint = "XEventsQueued")]
-        extern public static int EventsQueued(Display display, int mode);
+        public static extern int EventsQueued(Display display, int mode);
 
         [System.Security.SuppressUnmanagedCodeSecurity]
         [DllImport(_dll_name, EntryPoint = "XPending")]
-        extern public static int Pending(Display display);
+        public static extern int Pending(Display display);
 
         //[System.Security.SuppressUnmanagedCodeSecurity]
         [DllImport(_dll_name, EntryPoint = "XNextEvent")]
-        extern public static void NextEvent(
+        public static extern void NextEvent(
             Display display,
             [MarshalAs(UnmanagedType.AsAny)][In, Out]object e);
 
         [DllImport(_dll_name, EntryPoint = "XNextEvent")]
-        extern public static void NextEvent(Display display, [In, Out] IntPtr e);
+        public static extern void NextEvent(Display display, [In, Out] IntPtr e);
 
         [DllImport(_dll_name, EntryPoint = "XPeekEvent")]
-        extern public static void PeekEvent(
+        public static extern void PeekEvent(
             Display display,
             [MarshalAs(UnmanagedType.AsAny)][In, Out]object event_return
         );
 
         [DllImport(_dll_name, EntryPoint = "XPeekEvent")]
-        extern public static void PeekEvent(Display display, [In, Out]XEvent event_return);
+        public static extern void PeekEvent(Display display, [In, Out]XEvent event_return);
 
         [DllImport(_dll_name, EntryPoint = "XSendEvent")]
         [return: MarshalAs(UnmanagedType.Bool)]
-        extern public static bool SendEvent(Display display, Window window, bool propagate,
+        public static extern bool SendEvent(Display display, Window window, bool propagate,
             [MarshalAs(UnmanagedType.SysInt)]EventMask event_mask, ref XEvent event_send);
 
         /// <summary>
@@ -235,19 +212,19 @@ namespace OpenTK.Platform.X11
         public static extern bool CheckMaskEvent(Display display, EventMask event_mask, ref XEvent event_return);
 
         [DllImport(_dll_name, EntryPoint = "XGrabPointer")]
-        extern public static ErrorCodes GrabPointer(Display display, IntPtr grab_window,
+        public static extern ErrorCodes GrabPointer(Display display, IntPtr grab_window,
             bool owner_events, int event_mask, GrabMode pointer_mode, GrabMode keyboard_mode,
             IntPtr confine_to, IntPtr cursor, int time);
 
         [DllImport(_dll_name, EntryPoint = "XUngrabPointer")]
-        extern public static ErrorCodes UngrabPointer(Display display, int time);
+        public static extern ErrorCodes UngrabPointer(Display display, int time);
 
         [DllImport(_dll_name, EntryPoint = "XGrabKeyboard")]
-        extern public static ErrorCodes GrabKeyboard(Display display, IntPtr grab_window,
+        public static extern ErrorCodes GrabKeyboard(Display display, IntPtr grab_window,
             bool owner_events, GrabMode pointer_mode, GrabMode keyboard_mode, int time);
 
         [DllImport(_dll_name, EntryPoint = "XUngrabKeyboard")]
-        extern public static void UngrabKeyboard(Display display, int time);
+        public static extern void UngrabKeyboard(Display display, int time);
 
         /// <summary>
         /// The XGetKeyboardMapping() function returns the symbols for the specified number of KeyCodes starting with first_keycode.
@@ -417,7 +394,7 @@ namespace OpenTK.Platform.X11
             private float blue;                    /* Blue Gamma value */
         }
         [DllImport(_dll_name_vid)]
-        extern public static bool XF86VidModeQueryExtension(
+        public static extern bool XF86VidModeQueryExtension(
             Display display,
             out int event_base_return,
             out int error_base_return);
@@ -430,7 +407,7 @@ namespace OpenTK.Platform.X11
         */
 
         [DllImport(_dll_name_vid)]
-        extern public static bool XF86VidModeSwitchToMode(
+        public static extern bool XF86VidModeSwitchToMode(
             Display display,
             int screen,
             IntPtr
@@ -438,20 +415,20 @@ namespace OpenTK.Platform.X11
 
 
         [DllImport(_dll_name_vid)]
-        extern public static bool XF86VidModeQueryVersion(
+        public static extern bool XF86VidModeQueryVersion(
             Display display,
             out int major_version_return,
             out int minor_version_return);
 
         [DllImport(_dll_name_vid)]
-        extern public static bool XF86VidModeGetModeLine(
+        public static extern bool XF86VidModeGetModeLine(
             Display display,
             int screen,
             out int dotclock_return,
             out XF86VidModeModeLine modeline);
 
         [DllImport(_dll_name_vid)]
-        extern public static bool XF86VidModeGetAllModeLines(
+        public static extern bool XF86VidModeGetAllModeLines(
             Display display,
             int screen,
             out int modecount_return,
@@ -459,88 +436,19 @@ namespace OpenTK.Platform.X11
             out IntPtr modesinfo);
 
         [DllImport(_dll_name_vid)]
-        extern public static bool XF86VidModeGetViewPort(
+        public static extern bool XF86VidModeGetViewPort(
             Display display,
             int screen,
             out int x_return,
             out int y_return);
 
         [DllImport(_dll_name_vid)]
-        extern public static bool XF86VidModeSetViewPort(
+        public static extern bool XF86VidModeSetViewPort(
             Display display,
             int screen,
             int x,
             int y);
-
-        /*
-Bool XF86VidModeSetClientVersion(
-    Display *display);
-
-Bool XF86VidModeDeleteModeLine(
-    Display *display,
-    int screen,
-    XF86VidModeModeInfo *modeline);
-
-Bool XF86VidModeModModeLine(
-    Display *display,
-    int screen,
-    XF86VidModeModeLine *modeline);
-
-Status XF86VidModeValidateModeLine(
-    Display *display,
-    int screen,
-    XF86VidModeModeLine *modeline);
-
-Bool XF86VidModeLockModeSwitch(
-    Display *display,
-    int screen,
-    int lock);
-
-Bool XF86VidModeGetMonitor(
-    Display *display,
-    int screen,
-    XF86VidModeMonitor *monitor);
-
-XF86VidModeGetDotClocks(
-    Display *display,
-    int screen,
-    int *flags return,
-    int *number of clocks return,
-    int *max dot clock return,
-    int **clocks return);
-
-XF86VidModeGetGamma(
-    Display *display,
-    int screen,
-    XF86VidModeGamma *Gamma);
-
-XF86VidModeSetGamma(
-    Display *display,
-    int screen,
-    XF86VidModeGamma *Gamma);
-
-XF86VidModeGetGammaRamp(
-    Display *display,
-    int screen,
-    int size,
-    unsigned short *red array,
-    unsigned short *green array,
-    unsigned short *blue array);
-
-XF86VidModeSetGammaRamp(
-    Display *display,
-    int screen,
-    int size,
-    unsigned short *red array,
-    unsigned short *green array,
-    unsigned short *blue array);
-
-XF86VidModeGetGammaRampSize(
-    Display *display,
-    int screen,
-    int *size);
-         * */
-
+        
         [DllImport(_dll_name, EntryPoint = "XLookupKeysym")]
         public static extern KeySym LookupKeysym(ref XKeyEvent key_event, int index);
 
@@ -630,7 +538,7 @@ XF86VidModeGetGammaRampSize(
         internal int MWidth, MHeight;
     };
 
-    unsafe internal struct Screen
+    internal unsafe struct Screen
     {
         private XExtData ext_data;    /* hook for extension to hang buffer */
         private IntPtr display;     /* back pointer to display structure */ /* _XDisplay */
@@ -655,7 +563,7 @@ XF86VidModeGetGammaRampSize(
         private long root_input_mask;    /* initial root input mask */
     }
 
-    unsafe internal class XExtData
+    internal unsafe class XExtData
     {
         private int number;        /* number returned by XRegisterExtension */
         private XExtData next;    /* next item on list of buffer for structure */
@@ -1325,11 +1233,9 @@ XF86VidModeGetGammaRampSize(
                     return XCreateWindow(display, parent, x, y, width, height, border_width, depth,
                         (int)@class, visual, (IntPtr)valuemask, &attr);
                 }
-                else
-                {
-                    return XCreateWindow(display, parent, x, y, width, height, border_width, depth,
-                        (int)@class, visual, (IntPtr)valuemask, null);
-                }
+
+                return XCreateWindow(display, parent, x, y, width, height, border_width, depth,
+                    (int)@class, visual, (IntPtr)valuemask, null);
             }
         }
 
@@ -1342,13 +1248,13 @@ XF86VidModeGetGammaRampSize(
         }
 
         [DllImport(XcursorLibrary)]
-        internal static unsafe extern XcursorImage* XcursorImageCreate(int width, int height);
+        internal static extern unsafe XcursorImage* XcursorImageCreate(int width, int height);
 
         [DllImport(XcursorLibrary)]
-        internal static unsafe extern void XcursorImageDestroy(XcursorImage* image);
+        internal static extern unsafe void XcursorImageDestroy(XcursorImage* image);
 
         [DllImport(XcursorLibrary)]
-        internal static unsafe extern Cursor XcursorImageLoadCursor(Display dpy, XcursorImage* image);
+        internal static extern unsafe Cursor XcursorImageLoadCursor(Display dpy, XcursorImage* image);
 
         /*
         /// <summary>
@@ -1368,7 +1274,7 @@ XF86VidModeGetGammaRampSize(
         /// <param name="keys">Returns an array of bytes that identifies which keys are pressed down. Each bit represents one key of the keyboard.</param>
         /// <remarks>Note that the logical state of a device (as seen by client applications) may lag the physical state if device event processing is frozen.</remarks>
         [DllImport(X11Library, EntryPoint = "XQueryKeymap")]
-        extern public static void XQueryKeymap(IntPtr display, byte[] keys);
+        public static extern void XQueryKeymap(IntPtr display, byte[] keys);
 
         /// <summary>
         /// The XMaskEvent() function searches the event queue for the events associated with the specified mask. When it finds a match, XMaskEvent() removes that event and copies it into the specified XEvent structure. The other events stored in the queue are not discarded. If the event you requested is not in the queue, XMaskEvent() flushes the output buffer and blocks until one is received.
@@ -1377,7 +1283,7 @@ XF86VidModeGetGammaRampSize(
         /// <param name="event_mask">Specifies the event mask.</param>
         /// <param name="e">Returns the matched event's associated structure.</param>
         [DllImport(X11Library, EntryPoint = "XMaskEvent")]
-        extern public static void XMaskEvent(IntPtr display, EventMask event_mask, ref XEvent e);
+        public static extern void XMaskEvent(IntPtr display, EventMask event_mask, ref XEvent e);
 
         /// <summary>
         /// The XPutBackEvent() function pushes an event back onto the head of the display's event queue by copying the event into the queue. This can be useful if you read an event and then decide that you would rather deal with it later. There is no limit to the number of times in succession that you can call XPutBackEvent().
@@ -1420,7 +1326,7 @@ XF86VidModeGetGammaRampSize(
         public static extern XRRScreenSize XRRConfigSizes(XRRScreenConfiguration config, int[] nsizes);
 
         [DllImport(XrandrLibrary)]
-        unsafe public static extern short* XRRConfigRates(XRRScreenConfiguration config, int size_index, int[] nrates);
+        public static extern unsafe short* XRRConfigRates(XRRScreenConfiguration config, int size_index, int[] nrates);
 
         [DllImport(XrandrLibrary)]
         public static extern SizeID XRRConfigCurrentConfiguration(XRRScreenConfiguration config, out Rotation rotation);
@@ -1456,18 +1362,15 @@ XF86VidModeGetGammaRampSize(
         public static extern Rotation XRRRotations(Display dpy, int screen, ref Rotation current_rotation);
 
         [DllImport(XrandrLibrary)]
-        private unsafe static extern IntPtr XRRSizes(Display dpy, int screen, int* nsizes);
+        private static extern unsafe IntPtr XRRSizes(Display dpy, int screen, int* nsizes);
 
         public static XRRScreenSize[] XRRSizes(Display dpy, int screen)
         {
             XRRScreenSize[] sizes;
-            //IntPtr ptr;
-            int count;
             unsafe
             {
-                //ptr = XRRSizes(dpy, screen, &nsizes);
-
-                byte* data = (byte*)XRRSizes(dpy, screen, &count); //(byte*)ptr;
+                int count;
+                byte* data = (byte*)XRRSizes(dpy, screen, &count);
                 if (count == 0)
                 {
                     return null;
@@ -1485,7 +1388,7 @@ XF86VidModeGetGammaRampSize(
         }
 
         [DllImport(XrandrLibrary)]
-        private unsafe static extern short* XRRRates(Display dpy, int screen, int size_index, int* nrates);
+        private static extern unsafe short* XRRRates(Display dpy, int screen, int size_index, int* nrates);
 
         public static short[] XRRRates(Display dpy, int screen, int size_index)
         {
@@ -1514,7 +1417,7 @@ XF86VidModeGetGammaRampSize(
         public static extern int XScreenCount(Display display);
 
         [DllImport(X11Library)]
-        private unsafe static extern int *XListDepths(Display display, int screen_number, int* count_return);
+        private static extern unsafe int *XListDepths(Display display, int screen_number, int* count_return);
 
         public static int[] XListDepths(Display display, int screen_number)
         {
@@ -1553,7 +1456,7 @@ XF86VidModeGetGammaRampSize(
         }
 
         [DllImport(X11Library)]
-        unsafe public static extern Pixmap XCreateBitmapFromData(Display display, Window d, byte* data, int width, int height);
+        public static extern unsafe Pixmap XCreateBitmapFromData(Display display, Window d, byte* data, int width, int height);
 
         [DllImport("libX11", EntryPoint = "XAllocColor")]
         public static extern Status XAllocNamedColor(Display display, Colormap colormap, string color_name, out XColor screen_def_return, out XColor exact_def_return);

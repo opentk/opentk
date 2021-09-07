@@ -45,8 +45,6 @@ namespace OpenTK.Platform.X11
         private readonly Dictionary<DisplayDevice, int> deviceToDefaultResolution = new Dictionary<DisplayDevice, int>();
         // Store a mapping between DisplayDevices and X11 screens.
         private readonly Dictionary<DisplayDevice, int> deviceToScreen = new Dictionary<DisplayDevice, int>();
-        // Keep the time when the config of each screen was last updated.
-        private readonly List<IntPtr> lastConfigUpdate = new List<IntPtr>();
 
         private bool xinerama_supported, xrandr_supported, xf86_supported;
 
@@ -121,7 +119,7 @@ namespace OpenTK.Platform.X11
                     }
                 }
 
-            throw new InvalidOperationException("No primary display found. Please file a bug at https://github.com/opentk/opentk/issues");
+                throw new InvalidOperationException("No primary display found. Please file a bug at https://github.com/opentk/opentk/issues");
         }
 
         private bool QueryXinerama(List<DisplayDevice> devices)
@@ -159,9 +157,8 @@ namespace OpenTK.Platform.X11
             {
                 int screen = deviceToScreen[dev];
 
-                IntPtr timestamp_of_last_update;
+                IntPtr timestamp_of_last_update; //TODO: Unused, may possibly be removable
                 Functions.XRRTimes(API.DefaultDisplay, screen, out timestamp_of_last_update);
-                lastConfigUpdate.Add(timestamp_of_last_update);
 
                 List<DisplayResolution> available_res = new List<DisplayResolution>();
 
@@ -309,11 +306,10 @@ namespace OpenTK.Platform.X11
 
         private static float FindCurrentRefreshRate(int screen)
         {
-            short rate = 0;
             IntPtr screen_config = Functions.XRRGetScreenInfo(API.DefaultDisplay, Functions.XRootWindow(API.DefaultDisplay, screen));
-            rate = Functions.XRRConfigCurrentRate(screen_config);
+            short rate = Functions.XRRConfigCurrentRate(screen_config);
             Functions.XRRFreeScreenConfigInfo(screen_config);
-            return (float)rate;
+            return rate;
         }
 
         private static int FindCurrentDepth(int screen)
@@ -345,7 +341,7 @@ namespace OpenTK.Platform.X11
                 Debug.Print("Changing size of screen {0} from {1} to {2}",
                     screen, current_resolution_index, new_resolution_index);
 
-                int ret = 0;
+                int ret;
                 short refresh_rate = (short)(resolution != null ? resolution.RefreshRate : 0);
                 if (refresh_rate > 0)
                 {
@@ -383,14 +379,13 @@ namespace OpenTK.Platform.X11
             {
                 return ChangeResolutionXRandR(device, resolution);
             }
-            else if (xf86_supported)
+
+            if (xf86_supported)
             {
                 return ChangeResolutionXF86(device, resolution);
             }
-            else
-            {
-                return false;
-            }
+
+            return false;
         }
 
         public sealed override bool TryRestoreResolution(DisplayDevice device)
