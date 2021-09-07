@@ -52,6 +52,7 @@ namespace OpenTK.Platform.MacOS
         NoneAvailable = 1011,
     }
 
+    /// <summary>Contains P/Invokes to the MacOS CoreGraphics API</summary>
     internal partial class CG
     {
         private const string lib = "/System/Library/Frameworks/ApplicationServices.framework/Versions/Current/ApplicationServices";
