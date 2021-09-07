@@ -75,7 +75,7 @@ namespace OpenTK.Platform.X11
                     // Note: this won't work correctly in the case of distinct X servers.
                     for (int i = 0; i < API.ScreenCount; i++)
                     {
-                        DisplayDevice dev = new DisplayDevice();
+                        DisplayDevice dev = new DisplayDevice(new Vector2(1.0f, 1.0f));
                         dev.IsPrimary = i == Functions.XDefaultScreen(API.DefaultDisplay);
                         devices.Add(dev);
                         deviceToScreen.Add(dev, i);
@@ -133,7 +133,7 @@ namespace OpenTK.Platform.X11
                 bool first = true;
                 foreach (XineramaScreenInfo screen in screens)
                 {
-                    DisplayDevice dev = new DisplayDevice();
+                    DisplayDevice dev = new DisplayDevice(new Vector2(1.0f, 1.0f));
                     dev.Bounds = new Rectangle(screen.X, screen.Y, screen.Width, screen.Height);
                     if (first)
                     {

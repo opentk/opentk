@@ -51,7 +51,7 @@ namespace OpenTK
         private static readonly object display_lock = new object();
         private static DisplayDevice primary_display;
 
-        private static Platform.IDisplayDeviceDriver implementation;
+        private static readonly Platform.IDisplayDeviceDriver implementation;
         /// <summary>Stores the scale factor</summary>
         private readonly Vector2 scaleFactor;
 
@@ -60,21 +60,21 @@ namespace OpenTK
             implementation = Platform.Factory.Default.CreateDisplayDeviceDriver();
         }
 
-        internal DisplayDevice()
+        internal DisplayDevice(Vector2 factor)
         {
             available_resolutions_readonly = available_resolutions.AsReadOnly();
+            scaleFactor = factor;
         }
 
         internal DisplayDevice(DisplayResolution currentResolution, bool primary,
             IEnumerable<DisplayResolution> availableResolutions, Rectangle bounds, Vector2 factor,
             object id)
-            : this()
+            : this(factor)
         {
             // Todo: Consolidate current resolution with bounds? Can they fall out of sync right now?
             this.current_resolution = currentResolution;
             IsPrimary = primary;
             this.available_resolutions.AddRange(availableResolutions);
-            this.scaleFactor = factor;
             #pragma warning disable 612,618
             this.bounds = bounds == Rectangle.Empty ? currentResolution.Bounds : bounds;
             #pragma warning restore 612,618
