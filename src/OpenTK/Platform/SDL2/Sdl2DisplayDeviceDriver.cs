@@ -69,7 +69,7 @@ namespace OpenTK.Platform.SDL2
                 pixelScaleW /= 96.0f;
                 pixelScaleH /= 96.0f;
                 var device = new DisplayDevice(
-                    current_resolution, d == 0, mode_list, TranslateBounds(bounds), new Vector2(pixelScaleW, pixelScaleH), d);
+                    current_resolution, d == 0, mode_list, TranslateBounds(bounds), d, d);
 
                 AvailableDevices.Add(device);
                 if (d == 0)
@@ -102,6 +102,17 @@ namespace OpenTK.Platform.SDL2
         {
             Sdl2Factory.UseFullscreenDesktop = true;
             return true;
+        }
+
+        public override Vector2 GetDisplayScaling (DisplayIndex displayIndex)
+        {
+            float pixelScaleD, pixelScaleW, pixelScaleH;
+            SDL.GetDisplayDPI ((int)displayIndex, out pixelScaleD, out pixelScaleW, out pixelScaleH);
+            pixelScaleD /= 96.0f;
+            pixelScaleW /= 96.0f;
+            pixelScaleH /= 96.0f;
+
+            return new Vector2 (pixelScaleW, pixelScaleH);
         }
     }
 }

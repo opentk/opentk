@@ -329,7 +329,7 @@ namespace OpenTK.Platform.Linux
 
             bool is_primary = AvailableDevices.Count == 0;
             DisplayDevice device = new DisplayDevice(current, is_primary,
-                modes, GetBounds(current), new Vector2(1.0f, 1.0f), display);
+                modes, GetBounds(current), AvailableDevices.Count, display);
 
             if (is_primary)
             {
@@ -391,6 +391,11 @@ namespace OpenTK.Platform.Linux
                 return Drm.ModeSetCrtc(FD, display.Id, 0, 0, 0,
                     &connector_id, 1, &mode) == 0;
             }
+        }
+
+        public override Vector2 GetDisplayScaling (DisplayIndex displayIndex)
+        {
+            return new Vector2 (1, 1);
         }
     }
 }

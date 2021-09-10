@@ -75,7 +75,7 @@ namespace OpenTK.Platform.X11
                     // Note: this won't work correctly in the case of distinct X servers.
                     for (int i = 0; i < API.ScreenCount; i++)
                     {
-                        DisplayDevice dev = new DisplayDevice(new Vector2(1.0f, 1.0f));
+                        DisplayDevice dev = new DisplayDevice(i);
                         dev.IsPrimary = i == Functions.XDefaultScreen(API.DefaultDisplay);
                         devices.Add(dev);
                         deviceToScreen.Add(dev, i);
@@ -131,9 +131,10 @@ namespace OpenTK.Platform.X11
             {
                 IList<XineramaScreenInfo> screens = NativeMethods.XineramaQueryScreens(API.DefaultDisplay);
                 bool first = true;
+                int screenCount = 0;
                 foreach (XineramaScreenInfo screen in screens)
                 {
-                    DisplayDevice dev = new DisplayDevice(new Vector2(1.0f, 1.0f));
+                    DisplayDevice dev = new DisplayDevice(screenCount);
                     dev.Bounds = new Rectangle(screen.X, screen.Y, screen.Width, screen.Height);
                     if (first)
                     {
@@ -141,6 +142,7 @@ namespace OpenTK.Platform.X11
                         // Makes sense conceptually, but is there a way to verify this?
                         dev.IsPrimary = true;
                         first = false;
+                        screenCount++;
                     }
                     devices.Add(dev);
                     // It seems that all X screens are equal to 0 is Xinerama is enabled, at least on Nvidia (verify?)
@@ -391,6 +393,11 @@ namespace OpenTK.Platform.X11
         public sealed override bool TryRestoreResolution(DisplayDevice device)
         {
             return TryChangeResolution(device, null);
+        }
+
+        public override Vector2 GetDisplayScaling (DisplayIndex displayIndex)
+        {
+            return new Vector2 (1, 1);
         }
 
         private static class NativeMethods
