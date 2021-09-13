@@ -1,3 +1,7 @@
+## 4.6.6
+
+* FIX: Fixed arithmetic overflow issue in `Box2i.Center` and `Box3i.Center` introduced when making them return correct values.
+
 ## 4.6.5
 
 * API: Added settings in `NativeWindowSettings` for controlling backbuffer parameters such as `DepthBits` and `StencilBits`. (@deccer)
