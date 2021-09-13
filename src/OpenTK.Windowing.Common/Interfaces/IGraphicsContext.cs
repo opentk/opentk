@@ -13,6 +13,14 @@ namespace OpenTK.Windowing.Common
         bool IsCurrent { get; }
 
         /// <summary>
+        /// Gets or sets the swap interval (the number of screen updates to wait between swapping front and back buffers. See <see cref="SwapBuffers"/>).
+        /// </summary>
+        /// <value>
+        /// The swap interval.
+        /// </value>
+        int SwapInterval { get; set; }
+
+        /// <summary>
         /// Swaps the front and back buffers of the current GraphicsContext, presenting the rendered scene to the user.
         /// </summary>
         void SwapBuffers();
@@ -26,13 +34,5 @@ namespace OpenTK.Windowing.Common
         /// Makes no GraphicsContext current one on the calling thread.
         /// </summary>
         void MakeNoneCurrent();
-
-        /// <summary>
-        /// Gets or sets the swap interval (the number of screen updates to wait between calling <see cref="SwapBuffers"/>).
-        /// </summary>
-        /// <value>
-        /// The swap interval.
-        /// </value>
-        int SwapInterval { get; set; }
     }
 }
