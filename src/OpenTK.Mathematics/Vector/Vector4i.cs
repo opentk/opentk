@@ -459,11 +459,12 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector4i Clamp(Vector4i vec, Vector4i min, Vector4i max)
         {
-            vec.X = MathHelper.Clamp(vec.X, min.X, max.X);
-            vec.Y = MathHelper.Clamp(vec.Y, min.Y, max.Y);
-            vec.Z = MathHelper.Clamp(vec.Z, min.Z, max.Z);
-            vec.W = MathHelper.Clamp(vec.W, min.W, max.W);
-            return vec;
+            Vector4i result;
+            result.X = MathHelper.Clamp(vec.X, min.X, max.X);
+            result.Y = MathHelper.Clamp(vec.Y, min.Y, max.Y);
+            result.Z = MathHelper.Clamp(vec.Z, min.Z, max.Z);
+            result.W = MathHelper.Clamp(vec.W, min.W, max.W);
+            return result;
         }
 
         /// <summary>
