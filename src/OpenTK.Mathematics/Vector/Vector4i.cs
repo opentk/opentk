@@ -396,11 +396,12 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector4i ComponentMin(Vector4i a, Vector4i b)
         {
-            a.X = a.X < b.X ? a.X : b.X;
-            a.Y = a.Y < b.Y ? a.Y : b.Y;
-            a.Z = a.Z < b.Z ? a.Z : b.Z;
-            a.W = a.W < b.W ? a.W : b.W;
-            return a;
+            Vector4i result;
+            result.X = Math.Min(a.X, b.X);
+            result.Y = Math.Min(a.Y, b.Y);
+            result.Z = Math.Min(a.Z, b.Z);
+            result.W = Math.Min(a.W, b.W);
+            return result;
         }
 
         /// <summary>
@@ -411,10 +412,10 @@ namespace OpenTK.Mathematics
         /// <param name="result">The component-wise minimum.</param>
         public static void ComponentMin(in Vector4i a, in Vector4i b, out Vector4i result)
         {
-            result.X = a.X < b.X ? a.X : b.X;
-            result.Y = a.Y < b.Y ? a.Y : b.Y;
-            result.Z = a.Z < b.Z ? a.Z : b.Z;
-            result.W = a.W < b.W ? a.W : b.W;
+            result.X = Math.Min(a.X, b.X);
+            result.Y = Math.Min(a.Y, b.Y);
+            result.Z = Math.Min(a.Z, b.Z);
+            result.W = Math.Min(a.W, b.W);
         }
 
         /// <summary>
@@ -426,11 +427,12 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector4i ComponentMax(Vector4i a, Vector4i b)
         {
-            a.X = a.X > b.X ? a.X : b.X;
-            a.Y = a.Y > b.Y ? a.Y : b.Y;
-            a.Z = a.Z > b.Z ? a.Z : b.Z;
-            a.W = a.W > b.W ? a.W : b.W;
-            return a;
+            Vector4i result;
+            result.X = Math.Max(a.X, b.X);
+            result.Y = Math.Max(a.Y, b.Y);
+            result.Z = Math.Max(a.Z, b.Z);
+            result.W = Math.Max(a.W, b.W);
+            return result;
         }
 
         /// <summary>
@@ -441,10 +443,10 @@ namespace OpenTK.Mathematics
         /// <param name="result">The component-wise maximum.</param>
         public static void ComponentMax(in Vector4i a, in Vector4i b, out Vector4i result)
         {
-            result.X = a.X > b.X ? a.X : b.X;
-            result.Y = a.Y > b.Y ? a.Y : b.Y;
-            result.Z = a.Z > b.Z ? a.Z : b.Z;
-            result.W = a.W > b.W ? a.W : b.W;
+            result.X = Math.Max(a.X, b.X);
+            result.Y = Math.Max(a.Y, b.Y);
+            result.Z = Math.Max(a.Z, b.Z);
+            result.W = Math.Max(a.W, b.W);
         }
 
         /// <summary>
