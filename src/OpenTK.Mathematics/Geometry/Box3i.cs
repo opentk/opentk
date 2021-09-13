@@ -20,6 +20,11 @@ namespace OpenTK.Mathematics
     [StructLayout(LayoutKind.Sequential)]
     public struct Box3i : IEquatable<Box3i>
     {
+        /// <summary>
+        /// An empty box with Min (0, 0, 0) and Max (0, 0, 0).
+        /// </summary>
+        public static readonly Box3i Empty = new Box3i(0, 0, 0, 0, 0, 0);
+
         private Vector3i _min;
 
         /// <summary>
@@ -30,19 +35,7 @@ namespace OpenTK.Mathematics
             get => _min;
             set
             {
-                if (value.X > _max.X)
-                {
-                    _max.X = value.X;
-                }
-                if (value.Y > _max.Y)
-                {
-                    _max.Y = value.Y;
-                }
-                if (value.Z > _max.Z)
-                {
-                    _max.Z = value.Z;
-                }
-
+                _max = Vector3i.ComponentMax(_max, value);
                 _min = value;
             }
         }
@@ -57,19 +50,7 @@ namespace OpenTK.Mathematics
             get => _max;
             set
             {
-                if (value.X < _min.X)
-                {
-                    _min.X = value.X;
-                }
-                if (value.Y < _min.Y)
-                {
-                    _min.Y = value.Y;
-                }
-                if (value.Z < _min.Z)
-                {
-                    _min.Z = value.Z;
-                }
-
+                _min = Vector3i.ComponentMin(_min, value);
                 _max = value;
             }
         }
@@ -127,7 +108,7 @@ namespace OpenTK.Mathematics
         /// to avoid annoying off-by-one errors in box placement, no setter is provided for this property
         public Vector3 Center
         {
-            get => ((_min + _max).ToVector3() * 0.5f) + _min.ToVector3();
+            get => (_min + _max).ToVector3() * 0.5f;
         }
 
         /// <summary>
@@ -160,9 +141,12 @@ namespace OpenTK.Mathematics
                        _min.Y <= point.Y && point.Y <= _max.Y &&
                        _min.Z <= point.Z && point.Z <= _max.Z;
             }
-            return _min.X < point.X && point.X < _max.X &&
-                   _min.Y < point.Y && point.Y < _max.Y &&
-                   _min.Z < point.Z && point.Z < _max.Z;
+            else
+            {
+                return _min.X < point.X && point.X < _max.X &&
+                       _min.Y < point.Y && point.Y < _max.Y &&
+                       _min.Z < point.Z && point.Z < _max.Z;
+            }
         }
 
         /// <summary>
@@ -186,11 +170,11 @@ namespace OpenTK.Mathematics
         [Pure]
         public float DistanceToNearestEdge(Vector3i point)
         {
-            var distX = new Vector3(
+            var dist = new Vector3(
                 Math.Max(0f, Math.Max(_min.X - point.X, point.X - _max.X)),
                 Math.Max(0f, Math.Max(_min.Y - point.Y, point.Y - _max.Y)),
                 Math.Max(0f, Math.Max(_min.Z - point.Z, point.Z - _max.Z)));
-            return distX.Length;
+            return dist.Length;
         }
 
         /// <summary>
