@@ -1,3 +1,7 @@
+## 4.6.7
+
+* FIX: Fixed closing window causing AccessViolations on windows and other crashes on other platforms. (@NogginBops)
+
 ## 4.6.6
 
 * FIX: Fixed arithmetic overflow issue in `Box2i.Center` and `Box3i.Center` introduced when making them return correct values.
