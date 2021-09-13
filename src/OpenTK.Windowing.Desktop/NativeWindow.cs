@@ -24,7 +24,7 @@ namespace OpenTK.Windowing.Desktop
         /// <summary>
         /// Gets the native <see cref="Window"/> pointer for use with <see cref="GLFW"/> API.
         /// </summary>
-        public unsafe Window* WindowPtr { get; }
+        public unsafe Window* WindowPtr { get; protected set; }
 
         // Both of these are used to cache the size and location of the window before going into full screen mode.
         // When getting out of full screen mode, the location and size will be set to these value in all states other then minimized.
@@ -1103,25 +1103,14 @@ namespace OpenTK.Windowing.Desktop
             {
                 GLFW.SetWindowShouldClose(WindowPtr, false);
             }
-            else
-            {
-                IsExiting = true;
-            }
-
-            Dispose(true);
         }
 
         /// <summary>
         /// Closes this window.
         /// </summary>
-        public virtual void Close()
+        public virtual unsafe void Close()
         {
-            unsafe
-            {
-                OnCloseCallback(WindowPtr);
-            }
-
-            Dispose(true);
+            GLFW.SetWindowShouldClose(WindowPtr, true);
         }
 
         /// <summary>
@@ -1132,28 +1121,6 @@ namespace OpenTK.Windowing.Desktop
             Context.MakeCurrent();
         }
 
-        protected unsafe void DestroyWindow()
-        {
-            if (Exists)
-            {
-                Exists = false;
-                GLFW.DestroyWindow(WindowPtr);
-
-                OnClosed();
-            }
-        }
-
-        private bool PreProcessEvents()
-        {
-            if (IsExiting)
-            {
-                DestroyWindow();
-                return false;
-            }
-
-            return true;
-        }
-
         /// <summary>
         /// Processes pending window events and waits <paramref name="timeout"/> seconds for events.
         /// </summary>
@@ -1162,14 +1129,11 @@ namespace OpenTK.Windowing.Desktop
         /// (Event processing not possible anymore, window is about to be destroyed).</returns>
         public bool ProcessEvents(double timeout)
         {
-            if (!PreProcessEvents())
-            {
-                return false;
-            }
-
             GLFW.WaitEventsTimeout(timeout);
+
             ProcessInputEvents();
 
+            // FIXME: Remove this return and the documentation comment about it
             return true;
         }
 
@@ -1178,11 +1142,6 @@ namespace OpenTK.Windowing.Desktop
         /// </summary>
         public virtual void ProcessEvents()
         {
-            if (!PreProcessEvents())
-            {
-                return;
-            }
-
             ProcessInputEvents();
 
             if (IsEventDriven)

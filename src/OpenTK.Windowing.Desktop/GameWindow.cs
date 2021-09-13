@@ -203,7 +203,7 @@ namespace OpenTK.Windowing.Desktop
         /// <summary>
         /// Initialize the update thread (if using a multi-threaded context, and enter the game loop of the GameWindow).
         /// </summary>
-        public virtual void Run()
+        public virtual unsafe void Run()
         {
             // Make sure that the gl contexts is current for OnLoad and the initial OnResize
             Context.MakeCurrent();
@@ -226,16 +226,10 @@ namespace OpenTK.Windowing.Desktop
 
             _watchRender.Start();
             _watchUpdate.Start();
-            while (true)
+            while (GLFW.WindowShouldClose(WindowPtr) == false)
             {
                 ProcessEvents();
                 DispatchUpdateFrame();
-
-                if (!Exists || IsExiting)
-                {
-                    DestroyWindow();
-                    return;
-                }
 
                 if (!IsMultiThreaded)
                 {
@@ -244,7 +238,7 @@ namespace OpenTK.Windowing.Desktop
             }
         }
 
-        private void StartRenderThread()
+        private unsafe void StartRenderThread()
         {
             // If we are starting a render thread we want the context to be current there.
             // So when creating the render thread the graphics context needs to be made not current on the thread creating the render thread.
@@ -252,7 +246,7 @@ namespace OpenTK.Windowing.Desktop
 
             OnRenderThreadStarted();
             _watchRender.Start();
-            while (Exists && !IsExiting)
+            while (GLFW.WindowShouldClose(WindowPtr) == false)
             {
                 DispatchRenderFrame();
             }
