@@ -1,3 +1,16 @@
+## 4.6.5
+
+* API: Added settings in `NativeWindowSettings` for controlling backbuffer parameters such as `DepthBits` and `StencilBits`. (@deccer)
+
+* API: Added `SwapInterval` to `IGraphicsContext` and moved `VSync` property from `GameWindow` to `NativeWindow` to allow for more control over vsync. (@softwareantics)
+
+* Updated GLFW to 3.3.4. (@NogginBops)
+
+
+* FIX: Fixed `Box2i.Center` and `Box3i.Center` returning wrong values. (@NogginBops, thanks @g7ChoGXh for the bug report)
+* FIX: Implemented proper disposing of `NativeWindow`. (@NogginBops, thanks @xiejiang2014 for the bug report)
+* FIX: Fixed calling conventions on glfw callbacks in 32-bit builds. (@NogginBops)
+
 ## 4.6.4
 
 * FIX: Made it so that the singular check in `Matrix4.Invert` is the same between platforms.
