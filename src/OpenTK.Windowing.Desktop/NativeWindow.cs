@@ -1387,9 +1387,9 @@ namespace OpenTK.Windowing.Desktop
         /// to find it.
         /// </remarks>
         [Obsolete("Use Monitors.GetMonitorFromWindow instead", true)]
-        public unsafe MonitorHandle FindMonitor()
+        public unsafe MonitorInfo FindMonitor()
         {
-            return default;
+            return Monitors.GetMonitorFromWindow(WindowPtr);
         }
 
         /// <summary>

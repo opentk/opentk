@@ -46,13 +46,7 @@ namespace OpenTK.Windowing.Desktop
         /// The number of monitors available.
         /// </summary>
         [Obsolete("Use GetMonitors() instead.", true)]
-        public static unsafe int Count
-        {
-            get
-            {
-                return -1;
-            }
-        }
+        public static unsafe int Count => throw new Exception("This property is Obsolete, use GetMonitors() instead.");
 
         /// <summary>
         /// Gets the default dpi for platforms.
@@ -149,16 +143,6 @@ namespace OpenTK.Windowing.Desktop
         public static unsafe MonitorInfo GetMonitorFromWindow(NativeWindow window) => GetMonitorFromWindow(window.WindowPtr);
 
         /// <summary>
-        /// Checks wheter the cache has been built or builds it if it can.
-        /// </summary>
-        /// <returns>Wether the current cache is valid or not.</returns>
-        [Obsolete("There is no cache anymore", true)]
-        public static unsafe bool CheckCache()
-        {
-            return false;
-        }
-
-        /// <summary>
         /// Retrives a list of connected monitors.
         /// </summary>
         /// <returns>A list of connected monitors.</returns>
@@ -176,6 +160,11 @@ namespace OpenTK.Windowing.Desktop
             return monitors;
         }
 
+        private static unsafe void MonitorCallback(Monitor* monitor, ConnectedState state)
+        {
+            OnMonitorConnected?.Invoke(new MonitorEventArgs(new MonitorHandle((IntPtr)monitor), state == ConnectedState.Connected));
+        }
+
         /// <summary>
         /// Try to get information about a monitor.
         /// </summary>
@@ -183,11 +172,7 @@ namespace OpenTK.Windowing.Desktop
         /// <param name="info">Monitor information.</param>
         /// <returns>True when the object was retrieved from cache, or built successfully.</returns>
         [Obsolete("Use GetMonitors() instead.", true)]
-        public static bool TryGetMonitorInfo(int index, out MonitorInfo info)
-        {
-            info = default;
-            return info != null;
-        }
+        public static bool TryGetMonitorInfo(int index, out MonitorInfo info) => throw new Exception("This function is Obsolete, use GetMonitors() instead.");
 
         /// <summary>
         /// Try to get information about a monitor.
@@ -196,23 +181,19 @@ namespace OpenTK.Windowing.Desktop
         /// <param name="info">Monitor information.</param>
         /// <returns>True when the object was retrieved from cache, or built successfully.</returns>
         [Obsolete("Use GetMonitors() instead.", true)]
-        public static bool TryGetMonitorInfo(MonitorHandle monitor, out MonitorInfo info)
-        {
-            info = default;
-            return false;
-        }
+        public static bool TryGetMonitorInfo(MonitorHandle monitor, out MonitorInfo info) => throw new Exception("This function is Obsolete, use GetMonitors() instead.");
+
+        /// <summary>
+        /// Checks wheter the cache has been built or builds it if it can.
+        /// </summary>
+        /// <returns>Wether the current cache is valid or not.</returns>
+        [Obsolete("There is no cache anymore", true)]
+        public static unsafe bool CheckCache() => throw new Exception("There is no cache anymore, don't call this function.");
 
         /// <summary>
         /// Builds the monitor cache (again if previously called).
         /// </summary>
         [Obsolete("There is no cache anymore", true)]
-        public static unsafe void BuildMonitorCache()
-        {
-        }
-
-        private static unsafe void MonitorCallback(Monitor* monitor, ConnectedState state)
-        {
-            OnMonitorConnected?.Invoke(new MonitorEventArgs(new MonitorHandle((IntPtr)monitor), state == ConnectedState.Connected));
-        }
+        public static unsafe void BuildMonitorCache() => throw new Exception("There is no cache anymore, don't call this function.");
     }
 }
