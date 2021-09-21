@@ -1383,7 +1383,7 @@ namespace OpenTK.Windowing.Desktop
         /// <remarks>
         /// This method first tries to find the monitor by querying the GLFW
         /// backend. However this rarely works, so this function invokes
-        /// <see cref="OpenTK.Windowing.Desktop.Monitors.GetMonitorFromWindow(NativeWindow)"/>
+        /// <see cref="Monitors.GetMonitorFromWindow(NativeWindow)"/>
         /// to find it.
         /// </remarks>
         [Obsolete("Use Monitors.GetMonitorFromWindow instead", true)]
