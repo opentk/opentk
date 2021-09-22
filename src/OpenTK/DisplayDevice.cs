@@ -42,7 +42,7 @@ namespace OpenTK
 
         private bool primary;
         private Rectangle bounds;
-        private DisplayResolution current_resolution = new DisplayResolution();
+        internal DisplayResolution current_resolution = new DisplayResolution();
         private List<DisplayResolution> available_resolutions = new List<DisplayResolution>();
         private IList<DisplayResolution> available_resolutions_readonly;
 

@@ -18,6 +18,8 @@ namespace OpenTK
 
         internal DisplayResolution() { }
 
+        internal Vector2 ScaleFactor;
+
         // Creates a new DisplayResolution object for the primary DisplayDevice.
         internal DisplayResolution(int x, int y, int width, int height, int bitsPerPixel, float refreshRate)
         {
@@ -42,6 +44,33 @@ namespace OpenTK
             this.bounds = new Rectangle(x, y, width, height);
             this.BitsPerPixel = bitsPerPixel;
             this.RefreshRate = refreshRate;
+        }
+
+        // Creates a new DisplayResolution object for the primary DisplayDevice.
+        internal DisplayResolution(int x, int y, int width, int height, int bitsPerPixel, float refreshRate, Vector2 scaleFactor)
+        {
+            // Refresh rate may be zero, since this information may not be available on some platforms.
+            if (width <= 0)
+            {
+                throw new ArgumentOutOfRangeException("width", "Must be greater than zero.");
+            }
+            if (height <= 0)
+            {
+                throw new ArgumentOutOfRangeException("height", "Must be greater than zero.");
+            }
+            if (bitsPerPixel <= 0)
+            {
+                throw new ArgumentOutOfRangeException("bitsPerPixel", "Must be greater than zero.");
+            }
+            if (refreshRate < 0)
+            {
+                throw new ArgumentOutOfRangeException("refreshRate", "Must be greater than, or equal to zero.");
+            }
+
+            this.bounds = new Rectangle(x, y, width, height);
+            this.BitsPerPixel = bitsPerPixel;
+            this.RefreshRate = refreshRate;
+            this.ScaleFactor = scaleFactor;
         }
         
         /// <summary>

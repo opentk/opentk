@@ -192,7 +192,7 @@ namespace OpenTK.Platform.X11
                         {
                             foreach (int depth in depths)
                             {
-                                available_res.Add(new DisplayResolution(0, 0, size.Width, size.Height, depth, (float)rate));
+                                available_res.Add(new DisplayResolution(0, 0, size.Width, size.Height, depth, (float)rate, new Vector2(size.Width * 25.4f / size.MWidth / 96.0f, size.Height * 25.4f / size.Height / 96.0f)));
                             }
                         }
                     }
@@ -203,7 +203,7 @@ namespace OpenTK.Platform.X11
                         // not distinguish between the two as far as resolutions are supported (since XRandR
                         // operates on X screens, not display devices) - we need to be careful not to add the
                         // same resolution twice!
-                        DisplayResolution res = new DisplayResolution(0, 0, size.Width, size.Height, depth, 0);
+                        DisplayResolution res = new DisplayResolution(0, 0, size.Width, size.Height, depth, 0, new Vector2(size.Width * 25.4f / size.MWidth / 96.0f, size.Height * 25.4f / size.Height / 96.0f));
                         if (!screenResolutionToIndex[screen].ContainsKey(res))
                         {
                             screenResolutionToIndex[screen].Add(res, resolution_count);
@@ -396,7 +396,8 @@ namespace OpenTK.Platform.X11
 
         public override Vector2 GetDisplayScaling (DisplayIndex displayIndex)
         {
-            return new Vector2 (1, 1);
+            DisplayDevice dev = DisplayDevice.GetDisplay(displayIndex);
+            return dev.current_resolution.ScaleFactor;
         }
 
         private static class NativeMethods
