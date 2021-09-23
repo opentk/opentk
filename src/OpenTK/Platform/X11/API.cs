@@ -510,28 +510,7 @@ namespace OpenTK.Platform.X11
                 VisualID, Screen, Depth, Class);
         }
     }
-
-    [StructLayout(LayoutKind.Sequential)]
-    internal struct SizeHints
-    {
-        public long flags;         /* marks which fields in this structure are defined */
-        public int x, y;           /* Obsolete */
-        public int width, height;  /* Obsolete */
-        public int min_width, min_height;
-        public int max_width, max_height;
-        public int width_inc, height_inc;
-        public Rectangle min_aspect, max_aspect;
-        public int base_width, base_height;
-        public int win_gravity;
-        internal struct Rectangle
-        {
-            public int x;       /* numerator */
-            public int y;       /* denominator */
-            private void stop_the_compiler_warnings() { x = y = 0; }
-        }
-        /* this structure may be extended in the future */
-    }
-
+    
     /// <summary>The screen size as reported by XRandR</summary>
     /// <remarks>See <see href="https://www.x.org/releases/X11R7.5/doc/man/man3/Xrandr.3.html"/></remarks>
     internal struct XRRScreenSize
@@ -545,31 +524,6 @@ namespace OpenTK.Platform.X11
         /// <summary>The physical height of the screen in millimeters</summary>
         internal int MHeight;
     };
-
-    internal unsafe struct Screen
-    {
-        private XExtData ext_data;    /* hook for extension to hang buffer */
-        private IntPtr display;     /* back pointer to display structure */ /* _XDisplay */
-        private Window root;        /* Root window id. */
-
-        private int width, height;    /* width and height of screen */
-        private int mwidth, mheight;    /* width and height of  in millimeters */
-
-        private int ndepths;        /* number of depths possible */
-        //Depth *depths;        /* list of allowable depths on the screen */
-        private int root_depth;        /* bits per pixel */
-        //Visual* root_visual;    /* root visual */
-        private IntPtr default_gc;        /* GC for the root root visual */   // GC
-
-        private Colormap cmap;        /* default color map */
-        private UIntPtr white_pixel;    // unsigned long
-        private UIntPtr black_pixel;    /* White and Black pixel values */  // unsigned long
-        private int max_maps, min_maps;    /* max and min color maps */
-
-        private int backing_store;    /* Never, WhenMapped, Always */
-        private Bool save_unders;
-        private long root_input_mask;    /* initial root input mask */
-    }
 
     internal unsafe class XExtData
     {
@@ -1348,8 +1302,6 @@ namespace OpenTK.Platform.X11
         [DllImport(XrandrLibrary)]
         public static extern XRRScreenConfiguration XRRScreenConfig(Display dpy, int screen);
 
-        [DllImport(XrandrLibrary)]
-        public static extern XRRScreenConfiguration XRRConfig(ref Screen screen);
 
         [DllImport(XrandrLibrary)]
         public static extern void XRRSelectInput(Display dpy, Window window, int mask);
@@ -1469,27 +1421,6 @@ namespace OpenTK.Platform.X11
         [DllImport("libX11", EntryPoint = "XAllocColor")]
         public static extern Status XAllocNamedColor(Display display, Colormap colormap, string color_name, out XColor screen_def_return, out XColor exact_def_return);
     }
-    /*
-    [StructLayout(LayoutKind.Sequential)]
-    internal struct Keymap
-    {
-        unsafe fixed byte bits[32];
-
-        public bool this[KeyCode key]
-        {
-            get
-            {
-                unsafe
-                {
-                    fixed (Keymap* ptr = &this)
-                    {
-                        return ((ptr->bits[key / 8] >> (key % 8)) & 0x01) != 0;
-                    }
-                }
-            }
-        }
-    }
-    */
 
     // Helper structure for calling XLock/UnlockDisplay
     internal struct XLock : IDisposable
