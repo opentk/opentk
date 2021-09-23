@@ -181,35 +181,6 @@ namespace OpenTK.Windowing.Desktop
             }
         }
 
-        private VSyncMode _vSync;
-
-        /// <summary>
-        /// Gets or sets the VSyncMode.
-        /// </summary>
-        public VSyncMode VSync
-        {
-            get => _vSync;
-            set
-            {
-                switch (value)
-                {
-                    case VSyncMode.On:
-                        GLFW.SwapInterval(1);
-                        break;
-
-                    case VSyncMode.Off:
-                        GLFW.SwapInterval(0);
-                        break;
-
-                    case VSyncMode.Adaptive:
-                        GLFW.SwapInterval(IsRunningSlowly ? 0 : 1);
-                        break;
-                    }
-
-                _vSync = value;
-            }
-        }
-
         /// <summary>
         /// Initializes a new instance of the <see cref="GameWindow"/> class with sensible default attributes.
         /// </summary>
@@ -232,7 +203,7 @@ namespace OpenTK.Windowing.Desktop
         /// <summary>
         /// Initialize the update thread (if using a multi-threaded context, and enter the game loop of the GameWindow).
         /// </summary>
-        public virtual void Run()
+        public virtual unsafe void Run()
         {
             // Make sure that the gl contexts is current for OnLoad and the initial OnResize
             Context.MakeCurrent();
@@ -255,16 +226,10 @@ namespace OpenTK.Windowing.Desktop
 
             _watchRender.Start();
             _watchUpdate.Start();
-            while (true)
+            while (GLFW.WindowShouldClose(WindowPtr) == false)
             {
                 ProcessEvents();
                 DispatchUpdateFrame();
-
-                if (!Exists || IsExiting)
-                {
-                    DestroyWindow();
-                    return;
-                }
 
                 if (!IsMultiThreaded)
                 {
@@ -273,7 +238,7 @@ namespace OpenTK.Windowing.Desktop
             }
         }
 
-        private void StartRenderThread()
+        private unsafe void StartRenderThread()
         {
             // If we are starting a render thread we want the context to be current there.
             // So when creating the render thread the graphics context needs to be made not current on the thread creating the render thread.
@@ -281,7 +246,7 @@ namespace OpenTK.Windowing.Desktop
 
             OnRenderThreadStarted();
             _watchRender.Start();
-            while (Exists && !IsExiting)
+            while (GLFW.WindowShouldClose(WindowPtr) == false)
             {
                 DispatchRenderFrame();
             }
@@ -337,7 +302,7 @@ namespace OpenTK.Windowing.Desktop
                 OnRenderFrame(new FrameEventArgs(elapsed));
 
                 // Update VSync if set to adaptive
-                if (_vSync == VSyncMode.Adaptive)
+                if (VSync == VSyncMode.Adaptive)
                 {
                     GLFW.SwapInterval(IsRunningSlowly ? 0 : 1);
                 }
