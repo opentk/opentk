@@ -532,10 +532,18 @@ namespace OpenTK.Platform.X11
         /* this structure may be extended in the future */
     }
 
+    /// <summary>The screen size as reported by XRandR</summary>
+    /// <remarks>See <see href="https://www.x.org/releases/X11R7.5/doc/man/man3/Xrandr.3.html"/></remarks>
     internal struct XRRScreenSize
     {
-        internal int Width, Height;
-        internal int MWidth, MHeight;
+        /// <summary>The width of the display resolution in pixels</summary>
+        internal int Width;
+        /// <summary>The height of the display resolution in pixels</summary>
+        internal int Height;
+        /// <summary>The physical width of the screen in millimeters</summary>
+        internal int MWidth;
+        /// <summary>The physical height of the screen in millimeters</summary>
+        internal int MHeight;
     };
 
     internal unsafe struct Screen

@@ -173,6 +173,14 @@ namespace OpenTK.Platform.X11
                 XRRScreenSize[] sizes = FindAvailableResolutions(screen);
                 foreach (XRRScreenSize size in sizes)
                 {
+                    // Calculate the scaling factor for this resolution
+                    // Use a default 1,1 in case the reported physical size is zero / undefined
+                    Vector2 scaleFactor = new Vector2(1, 1);
+                    if (size.MWidth != 0 && size.MHeight != 0)
+                    {
+                        scaleFactor = new Vector2((size.Width * 25.4f / size.MWidth) / 96.0f, (size.Height * 25.4f / size.MHeight) / 96.0f);
+                    }
+
                     if (size.Width == 0 || size.Height == 0)
                     {
                         Debug.Print("[Warning] XRandR returned an invalid resolution ({0}) for display device {1}", size, screen);
@@ -192,7 +200,8 @@ namespace OpenTK.Platform.X11
                         {
                             foreach (int depth in depths)
                             {
-                                available_res.Add(new DisplayResolution(0, 0, size.Width, size.Height, depth, (float)rate, new Vector2(size.Width * 25.4f / size.MWidth / 96.0f, size.Height * 25.4f / size.Height / 96.0f)));
+                                
+                                available_res.Add(new DisplayResolution(0, 0, size.Width, size.Height, depth, (float)rate, scaleFactor));
                             }
                         }
                     }
@@ -203,7 +212,7 @@ namespace OpenTK.Platform.X11
                         // not distinguish between the two as far as resolutions are supported (since XRandR
                         // operates on X screens, not display devices) - we need to be careful not to add the
                         // same resolution twice!
-                        DisplayResolution res = new DisplayResolution(0, 0, size.Width, size.Height, depth, 0, new Vector2(size.Width * 25.4f / size.MWidth / 96.0f, size.Height * 25.4f / size.Height / 96.0f));
+                        DisplayResolution res = new DisplayResolution(0, 0, size.Width, size.Height, depth, 0, scaleFactor);
                         if (!screenResolutionToIndex[screen].ContainsKey(res))
                         {
                             screenResolutionToIndex[screen].Add(res, resolution_count);
