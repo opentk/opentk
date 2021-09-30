@@ -178,7 +178,11 @@ namespace OpenTK.Platform.X11
                     Vector2 scaleFactor = new Vector2(1, 1);
                     if (size.MWidth != 0 && size.MHeight != 0)
                     {
-                        scaleFactor = new Vector2((size.Width * 25.4f / size.MWidth) / 96.0f, (size.Height * 25.4f / size.MHeight) / 96.0f);
+                        // DPI may be calculated by multiplying the screen width / height in pixels by 1 inch (25.4mm)
+                        // and then dividing it by the physical size in millimeters.
+                        // We then divide this by the default 96dpi to give the current scale factor as a size / resolution independant Vector2
+
+                        scaleFactor = new Vector2(((size.Width * 25.4f) / size.MWidth) / 96.0f, ((size.Height * 25.4f) / size.MHeight) / 96.0f);
                     }
 
                     if (size.Width == 0 || size.Height == 0)
@@ -186,8 +190,7 @@ namespace OpenTK.Platform.X11
                         Debug.Print("[Warning] XRandR returned an invalid resolution ({0}) for display device {1}", size, screen);
                         continue;
                     }
-                    short[] rates = null;
-                    rates = Functions.XRRRates(API.DefaultDisplay, screen, resolution_count);
+                    short[] rates = Functions.XRRRates(API.DefaultDisplay, screen, resolution_count);
 
                     // It seems that XRRRates returns 0 for modes that are larger than the screen
                     // can support, as well as for all supported modes. On Ubuntu 7.10 the tool
@@ -201,7 +204,7 @@ namespace OpenTK.Platform.X11
                             foreach (int depth in depths)
                             {
                                 
-                                available_res.Add(new DisplayResolution(0, 0, size.Width, size.Height, depth, (float)rate, scaleFactor));
+                                available_res.Add(new DisplayResolution(0, 0, size.Width, size.Height, depth, rate, scaleFactor));
                             }
                         }
                     }
