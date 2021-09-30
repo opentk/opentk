@@ -579,24 +579,7 @@ namespace OpenTK.Platform.X11
                 return false;
             }
         }
-
-        private bool DisableGnomeDecorations()
-        {
-            using (new XLock(window.Display))
-            {
-                IntPtr atom = Functions.XInternAtom(this.window.Display, Constants.XA_WIN_HINTS, true);
-                if (atom != IntPtr.Zero)
-                {
-                    IntPtr hints = IntPtr.Zero;
-                    Functions.XChangeProperty(this.window.Display, this.Handle, atom, atom, 32, PropertyMode.Replace,
-                                              ref hints, Marshal.SizeOf(hints) / IntPtr.Size);
-                    return true;
-                }
-
-                return false;
-            }
-        }
-
+        
         private void EnableWindowDecorations()
         {
             if (EnableMotifDecorations())
@@ -638,31 +621,7 @@ namespace OpenTK.Platform.X11
                 return false;
             }
         }
-
-        private bool EnableGnomeDecorations()
-        {
-            using (new XLock(window.Display))
-            {
-                // Restore window layer.
-                //XEvent xev = new XEvent();
-                //xev.ClientMessageEvent.window = this.window.Handle;
-                //xev.ClientMessageEvent.type = XEventName.ClientMessage;
-                //xev.ClientMessageEvent.message_type = Functions.XInternAtom(this.window.Display, Constants.XA_WIN_LAYER, false);
-                //xev.ClientMessageEvent.format = 32;
-                //xev.ClientMessageEvent.ptr1 = (IntPtr)WindowLayer.AboveDock;
-                //Functions.XSendEvent(this.window.Display, this.window.RootWindow, false, (IntPtr)EventMask.SubstructureNotifyMask, ref xev);
-
-                IntPtr atom = Functions.XInternAtom(this.window.Display, Constants.XA_WIN_HINTS, true);
-                if (atom != IntPtr.Zero)
-                {
-                    Functions.XDeleteProperty(this.window.Display, this.Handle, atom);
-                    return true;
-                }
-
-                return false;
-            }
-        }
-
+        
         private static void DeleteIconPixmaps(IntPtr display, IntPtr window)
         {
             using (new XLock(display))
