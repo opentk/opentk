@@ -1716,11 +1716,6 @@ namespace OpenTK.Platform.X11
             get { return exists; }
         }
 
-        public bool IsIdle
-        {
-            get { throw new Exception("The method or operation is not implemented."); }
-        }
-
         /// <summary>
         /// Gets the current window handle.
         /// </summary>

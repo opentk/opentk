@@ -1217,18 +1217,7 @@ namespace OpenTK.Platform.X11
 
         [DllImport(XcursorLibrary)]
         internal static extern unsafe Cursor XcursorImageLoadCursor(Display dpy, XcursorImage* image);
-
-        /*
-        /// <summary>
-        /// The XQueryKeymap() function returns a bit vector for the logical state of the keyboard, where each bit set to 1 indicates that the corresponding key is currently pressed down. The vector is represented as 32 bytes. Byte N (from 0) contains the bits for keys 8N to 8N + 7 with the least-significant bit in the byte representing key 8N.
-        /// </summary>
-        /// <param name="display">Specifies the connection to the X server.</param>
-        /// <param name="keys">Returns an array of bytes that identifies which keys are pressed down. Each bit represents one key of the keyboard.</param>
-        /// <remarks>Note that the logical state of a device (as seen by client applications) may lag the physical state if device event processing is frozen.</remarks>
-        [DllImport(_dll_name, EntryPoint = "XQueryKeymap")]
-        extern public static void XQueryKeymap(IntPtr display, [MarshalAs(UnmanagedType.LPArray, SizeConst = 32), In, Out] Keymap keys);
-        */
-
+        
         /// <summary>
         /// The XQueryKeymap() function returns a bit vector for the logical state of the keyboard, where each bit set to 1 indicates that the corresponding key is currently pressed down. The vector is represented as 32 bytes. Byte N (from 0) contains the bits for keys 8N to 8N + 7 with the least-significant bit in the byte representing key 8N.
         /// </summary>
@@ -1342,7 +1331,6 @@ namespace OpenTK.Platform.X11
                     sizes[i] = (XRRScreenSize)Marshal.PtrToStructure((IntPtr)data, typeof(XRRScreenSize));
                     data += Marshal.SizeOf(typeof(XRRScreenSize));
                 }
-                //XFree(ptr);   // Looks like we must not free this.
                 return sizes;
             }
         }
