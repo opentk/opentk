@@ -102,7 +102,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Gets or sets a vector describing the size of the Box3d structure.
         /// </summary>
-        public Vector3d Size
+        public Vector3d CenteredSize
         {
             get => Max - Min;
             set
@@ -118,8 +118,8 @@ namespace OpenTK.Mathematics
         /// </summary>
         public Vector3d HalfSize
         {
-            get => Size / 2;
-            set => Size = value * 2;
+            get => CenteredSize / 2;
+            set => CenteredSize = value * 2;
         }
 
         /// <summary>
@@ -130,6 +130,364 @@ namespace OpenTK.Mathematics
             get => HalfSize + _min;
             set => Translate(value - Center);
         }
+
+        // --
+
+        /// <summary>
+        /// Gets or sets the width of the box.
+        /// </summary>
+        public double Width
+        {
+            get => _max.X - _min.X;
+            set => _max.X = _min.X + value;
+        }
+
+        /// <summary>
+        /// Gets or sets the height of the box.
+        /// </summary>
+        public double Height
+        {
+            get => _max.Y - _min.Y;
+            set => _max.Y = _min.Y + value;
+        }
+
+        /// <summary>
+        /// Gets or sets the depth of the box.
+        /// </summary>
+        public double Depth
+        {
+            get => _max.Z - _min.Z;
+            set => _max.Z = _min.Z + value;
+        }
+
+        /// <summary>
+        /// Gets or sets the left location of the box.
+        /// </summary>
+        public double Left
+        {
+            get => _min.X;
+            set => _min.X = value;
+        }
+
+        /// <summary>
+        /// Gets or sets the top location of the box.
+        /// </summary>
+        public double Top
+        {
+            get => _min.Y;
+            set => _min.Y = value;
+        }
+
+        /// <summary>
+        /// Gets or sets the right location of the box.
+        /// </summary>
+        public double Right
+        {
+            get => _max.X;
+            set => _max.X = value;
+        }
+
+        /// <summary>
+        /// Gets or sets the bottom location of the box.
+        /// </summary>
+        public double Bottom
+        {
+            get => _max.Y;
+            set => _max.Y = value;
+        }
+
+        /// <summary>
+        /// Gets or sets the front location of the box.
+        /// </summary>
+        public double Front
+        {
+            get => _min.Z;
+            set => _min.Z = value;
+        }
+
+        /// <summary>
+        /// Gets or sets the back location of the box.
+        /// </summary>
+        public double Back
+        {
+            get => _max.Z;
+            set => _max.Z = value;
+        }
+
+        /// <summary>
+        /// Gets or sets the X location of the box.
+        /// </summary>
+        public double X
+        {
+            get => _min.X;
+            set => _min.X = value;
+        }
+
+        /// <summary>
+        /// Gets or sets the Y location of the box.
+        /// </summary>
+        public double Y
+        {
+            get => _min.Y;
+            set => _min.Y = value;
+        }
+
+        /// <summary>
+        /// Gets or sets the Z location of the box.
+        /// </summary>
+        public double Z
+        {
+            get => _min.Z;
+            set => _min.Z = value;
+        }
+
+        /// <summary>
+        /// Gets or sets the horizontal size.
+        /// </summary>
+        public double SizeX
+        {
+            get => _max.X - _min.X;
+            set => _max.X = _min.X + value;
+        }
+
+        /// <summary>
+        /// Gets or sets the vertical size.
+        /// </summary>
+        public double SizeY
+        {
+            get => _max.Y - _min.Y;
+            set => _max.Y = _min.Y + value;
+        }
+
+        /// <summary>
+        /// Gets or sets the vertical size.
+        /// </summary>
+        public double SizeZ
+        {
+            get => _max.Z - _min.Z;
+            set => _max.Z = _min.Z + value;
+        }
+
+        /// <summary>
+        /// Gets or sets the size of the box.
+        /// </summary>
+        public Vector3d Size
+        {
+            get => new Vector3d(_max.X - _min.X, _max.Y - _min.Y, _max.Z - _min.Z);
+            set
+            {
+                _max.X = _min.X + value.X;
+                _max.Y = _min.Y + value.Y;
+                _max.Z = _min.Z + value.Z;
+            }
+        }
+
+        /// <summary>
+        /// Gets the location of the box.
+        /// </summary>
+        public Vector3d Location => _min;
+
+        /// <summary>
+        /// Gets a value indicating whether all values are zero.
+        /// </summary>
+        public bool IsZero => _min.X == 0 && _min.Y == 0 && _min.Z == 0
+                           && _max.X == 0 && _max.Y == 0 && _max.Z == 0;
+
+        /// <summary>
+        /// Gets a box with all components zero.
+        /// </summary>
+        public static readonly Box3d Zero = new Box3d(0, 0, 0, 0, 0, 0);
+
+        /// <summary>
+        /// Gets a box with a location 0,0,9 with the a size of 1.
+        /// </summary>
+        public static readonly Box3d UnitSquare = new Box3d(0, 0, 0, 1, 1, 1);
+
+        /// <summary>
+        /// Creates a box.
+        /// </summary>
+        /// <param name="location">The location of the box.</param>
+        /// <param name="size">The size of the box.</param>
+        /// <returns>A box.</returns>
+        public static Box3d FromSize(Vector3d location, Vector3d size)
+        {
+            return new Box3d(location, location + size);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Box3"/> struct.
+        /// </summary>
+        /// <param name="min">The minimum point on the XY plane this box encloses.</param>
+        /// <param name="max">The maximum point on the XY plane this box encloses.</param>
+        /// <returns>A box.</returns>
+        public static Box3d FromPositions(Vector3d min, Vector3d max)
+        {
+            return new Box3d(min, max);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Box3d"/> struct.
+        /// </summary>
+        /// <param name="minX">The minimum X value to be enclosed.</param>
+        /// <param name="minY">The minimum Y value to be enclosed.</param>
+        /// <param name="minZ">The minimum Z value to be enclosed.</param>
+        /// <param name="maxX">The maximum X value to be enclosed.</param>
+        /// <param name="maxY">The maximum Y value to be enclosed.</param>
+        /// <param name="maxZ">The maximum Z value to be enclosed.</param>
+        /// <returns>A box.</returns>
+        public static Box3d FromPositions(double minX, double minY, double minZ, double maxX, double maxY, double maxZ)
+        {
+            return new Box3d(minX, minY, minZ, maxX, maxY, maxZ);
+        }
+
+        /// <summary>
+        /// Replaces this Box with the intersection of itself and the specified Box.
+        /// </summary>
+        /// <param name="other">The Box with which to intersect.</param>
+        public void Intersect(Box3d other)
+        {
+            Box3d result = Intersect(other, this);
+
+            X = result.X;
+            Y = result.Y;
+            Z = result.Z;
+            Width = result.Width;
+            Height = result.Height;
+            Depth = result.Depth;
+        }
+
+        /// <summary>
+        /// Returns the intersection of two Boxes.
+        /// </summary>
+        /// <param name="a">The first box.</param>
+        /// <param name="b">The second box.</param>
+        /// <returns>The intersection of two Boxes.</returns>
+        public static Box3d Intersect(Box3d a, Box3d b)
+        {
+            double minX = a._min.X > b._min.X ? a._min.X : b._min.X;
+            double minY = a._min.Y > b._min.Y ? a._min.Y : b._min.Y;
+            double minZ = a._min.Z > b._min.Z ? a._min.Z : b._min.Z;
+            double maxX = a._max.X < b._max.X ? a._max.X : b._max.X;
+            double maxY = a._max.Y < b._max.Y ? a._max.Y : b._max.Y;
+            double maxZ = a._max.Z < b._max.Z ? a._max.Z : b._max.Z;
+
+            if (maxX >= minX && maxY >= minY && maxZ >= minZ)
+            {
+                return new Box3d(minX, minY, minZ, maxX, maxY, maxZ);
+            }
+
+            return Zero;
+        }
+
+        /// <summary>
+        /// Returns the intersection of itself and the specified Box.
+        /// </summary>
+        /// <param name="other">The Box with which to intersect.</param>
+        /// <returns>The intersection of itself and the specified Box.</returns>
+        public Box3d Intersected(Box3d other)
+        {
+            return Intersect(other, this);
+        }
+
+        /// <summary>
+        /// Determines if this Box intersects with another Box.
+        /// </summary>
+        /// <param name="other">The Box to test.</param>
+        /// <returns>This method returns true if there is any intersection, otherwise false.</returns>
+        public bool IntersectsWith(Box3d other)
+        {
+            return other._min.X < _max.X
+                && _min.X < other._max.X
+                && other._min.Y < _max.Y
+                && _min.Y < other._max.Y
+                && other._min.Z < _max.Z
+                && _min.Z < other._max.Z;
+        }
+
+        /// <summary>
+        /// Determines if this Box intersects or touches with another Box.
+        /// </summary>
+        /// <param name="other">The Box to test.</param>
+        /// <returns>This method returns true if there is any intersection or touches, otherwise false.</returns>
+        public bool TouchWith(Box3d other)
+        {
+            return other._min.X <= _max.X
+                && _min.X <= other._max.X
+                && other._min.Y <= _max.Y
+                && _min.Y <= other._max.Y
+                && other._min.Z <= _max.Z
+                && _min.Z <= other._max.Z;
+        }
+
+        /// <summary>
+        /// Gets a Box structure that contains the union of two Box structures.
+        /// </summary>
+        /// <param name="a">A Box to union.</param>
+        /// <param name="b">a box to union.</param>
+        /// <returns>A Box structure that bounds the union of the two Box structures.</returns>
+        public static Box3d Union(Box3d a, Box3d b)
+        {
+            double minX = a._min.X < b._min.X ? a._min.X : b._min.X;
+            double minY = a._min.Y < b._min.Y ? a._min.Y : b._min.Y;
+            double minZ = a._min.Z < b._min.Z ? a._min.Z : b._min.Z;
+            double maxX = a._max.X > b._max.X ? a._max.X : b._max.X;
+            double maxY = a._max.Y > b._max.Y ? a._max.Y : b._max.Y;
+            double maxZ = a._max.Z > b._max.Z ? a._max.Z : b._max.Z;
+
+            return new Box3d(minX, minY, minZ, maxX, maxY, maxZ);
+        }
+
+        /// <summary>
+        /// Gets a Box structure that contains rounded integers.
+        /// </summary>
+        /// <param name="value">A Box to round.</param>
+        /// <returns>A Box structure that contains rounded integers.</returns>
+        public static Box3i Round(Box3d value)
+        {
+            return new Box3i(
+                (int)MathHelper.Round(value.Min.X),
+                (int)MathHelper.Round(value.Min.Y),
+                (int)MathHelper.Round(value.Min.Z),
+                (int)MathHelper.Round(value.Max.X),
+                (int)MathHelper.Round(value.Max.Y),
+                (int)MathHelper.Round(value.Max.Z));
+        }
+
+        /// <summary>
+        /// Gets a Box structure that contains rounded up integers.
+        /// </summary>
+        /// <param name="value">A Box to round.</param>
+        /// <returns>A Box structure that contains rounded up integers.</returns>
+        public static Box3i Ceiling(Box3d value)
+        {
+            int x = (int)MathHelper.Ceiling(value._min.X);
+            int y = (int)MathHelper.Ceiling(value._min.Y);
+            int z = (int)MathHelper.Ceiling(value._min.Z);
+            int sizeX = (int)MathHelper.Ceiling(value.Width);
+            int sizeY = (int)MathHelper.Ceiling(value.Height);
+            int sizeZ = (int)MathHelper.Ceiling(value.Depth);
+
+            return new Box3i(x, y, z, x + sizeX, y + sizeY, z + sizeZ);
+        }
+
+        /// <summary>
+        /// Gets a Box structure that contains rounded down integers.
+        /// </summary>
+        /// <param name="value">A Box to round.</param>
+        /// <returns>A Box structure that contains rounded down integers.</returns>
+        public static Box3i Floor(Box3d value)
+        {
+            int x = (int)MathHelper.Floor(value._min.X);
+            int y = (int)MathHelper.Floor(value._min.Y);
+            int z = (int)MathHelper.Floor(value._min.Z);
+            int sizeX = (int)MathHelper.Floor(value.Width);
+            int sizeY = (int)MathHelper.Floor(value.Height);
+            int sizeZ = (int)MathHelper.Floor(value.Depth);
+
+            return new Box3i(x, y, z, x + sizeX, y + sizeY, z + sizeZ);
+        }
+
+        // --
 
         /// <summary>
         /// Returns whether the box contains the specified point (borders inclusive).

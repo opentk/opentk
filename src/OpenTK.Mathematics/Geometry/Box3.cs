@@ -326,7 +326,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Box2"/> struct.
+        /// Initializes a new instance of the <see cref="Box3"/> struct.
         /// </summary>
         /// <param name="minX">The minimum X value to be enclosed.</param>
         /// <param name="minY">The minimum Y value to be enclosed.</param>
