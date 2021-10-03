@@ -145,7 +145,8 @@ namespace OpenTK.Compute.OpenCL
             CLCommandQueue commandQueue,
             CLBuffer[] memoryObjects,
             CLEvent[] eventWaitList,
-            out CLEvent @event){
+            out CLEvent @event)
+        {
             return EnqueueAcquireGLObjects(commandQueue, (uint)memoryObjects.Length, memoryObjects, (uint)eventWaitList.Length, eventWaitList, out @event);
         }
 
@@ -166,7 +167,8 @@ namespace OpenTK.Compute.OpenCL
             CLCommandQueue commandQueue,
             CLBuffer[] memoryObjects,
             CLEvent[] eventWaitList,
-            out CLEvent @event){
+            out CLEvent @event)
+        {
             return EnqueueReleaseGLObjects(commandQueue, (uint)memoryObjects.Length, memoryObjects, (uint)eventWaitList.Length, eventWaitList, out @event);
         }
 

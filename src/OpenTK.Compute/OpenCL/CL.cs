@@ -226,11 +226,11 @@ namespace OpenTK.Compute.OpenCL
         public static CLContext CreateContext(
             IntPtr properties,
             CLDevice[] devices,
-            IntPtr notificationCallback,
+            ClEventCallback callback,
             IntPtr userData,
             out CLResultCode resultCode)
         {
-            return CreateContext(properties, (uint)devices.Length, devices, notificationCallback, userData,
+            return CreateContext(properties, (uint)devices.Length, devices, Marshal.GetFunctionPointerForDelegate(callback), userData,
                 out resultCode);
         }
 
@@ -252,11 +252,11 @@ namespace OpenTK.Compute.OpenCL
         public static CLContext CreateContext(
             CLContextProperties properties,
             CLDevice[] devices,
-            IntPtr notificationCallback,
+            ClEventCallback callback,
             IntPtr userData,
             out CLResultCode resultCode)
         {
-            return CreateContext(properties.CreatePropertyArray(), (uint)devices.Length, devices, notificationCallback, userData,
+            return CreateContext(properties.CreatePropertyArray(), (uint)devices.Length, devices, Marshal.GetFunctionPointerForDelegate(callback), userData,
                 out resultCode);
         }
 
@@ -277,11 +277,11 @@ namespace OpenTK.Compute.OpenCL
         public static CLContext CreateContextFromType(
             CLContextProperties properties,
             DeviceType deviceType,
-            IntPtr notificationCallback,
+            ClEventCallback callback,
             IntPtr userData,
             out CLResultCode resultCode)
         {
-            return CreateContextFromType(properties.CreatePropertyArray(), deviceType, notificationCallback, userData,
+            return CreateContextFromType(properties.CreatePropertyArray(), deviceType, Marshal.GetFunctionPointerForDelegate(callback), userData,
                 out resultCode);
         }
 
@@ -748,6 +748,17 @@ namespace OpenTK.Compute.OpenCL
             [In] IntPtr userData);
 
         /// <summary>
+        /// Introduced in OpenCL 1.1
+        /// </summary>
+        public static CLResultCode SetMemoryObjectDestructorCallback(
+            IntPtr memoryObject,
+            ClEventCallback callback,
+            IntPtr userData)
+        {
+            return SetMemoryObjectDestructorCallback(memoryObject, Marshal.GetFunctionPointerForDelegate(callback), userData);
+        }
+
+        /// <summary>
         /// Introduced in OpenCL 1.0
         /// </summary>
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clSetMemObjectDestructorCallback")]
@@ -755,6 +766,17 @@ namespace OpenTK.Compute.OpenCL
             [In] CLBuffer memoryObject,
             [In] IntPtr notificationCallback,
             [In] IntPtr userData);
+
+        /// <summary>
+        /// Introduced in OpenCL 1.0
+        /// </summary>
+        public static CLResultCode SetMemoryObjectDestructorCallback(
+            CLBuffer memoryObject,
+            ClEventCallback callback,
+            IntPtr userData)
+        {
+            return SetMemoryObjectDestructorCallback(memoryObject, Marshal.GetFunctionPointerForDelegate(callback), userData);
+        }
 
         /// <summary>
         /// Introduced in OpenCL 1.0
@@ -768,11 +790,33 @@ namespace OpenTK.Compute.OpenCL
         /// <summary>
         /// Introduced in OpenCL 1.0
         /// </summary>
+        public static CLResultCode SetMemoryObjectDestructorCallback(
+            CLImage memoryObject,
+            ClEventCallback callback,
+            IntPtr userData)
+        {
+            return SetMemoryObjectDestructorCallback(memoryObject, Marshal.GetFunctionPointerForDelegate(callback), userData);
+        }
+
+        /// <summary>
+        /// Introduced in OpenCL 1.0
+        /// </summary>
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clSetMemObjectDestructorCallback")]
         public static extern CLResultCode SetMemoryObjectDestructorCallback(
             [In] CLPipe memoryObject,
             [In] IntPtr notificationCallback,
             [In] IntPtr userData);
+
+        /// <summary>
+        /// Introduced in OpenCL 1.0
+        /// </summary>
+        public static CLResultCode SetMemoryObjectDestructorCallback(
+            CLPipe memoryObject,
+            ClEventCallback callback,
+            IntPtr userData)
+        {
+            return SetMemoryObjectDestructorCallback(memoryObject, Marshal.GetFunctionPointerForDelegate(callback), userData);
+        }
 
         #endregion
 
@@ -1028,6 +1072,17 @@ namespace OpenTK.Compute.OpenCL
             [In] CLProgram program,
             [In] IntPtr notificationCallback,
             [In] IntPtr userData);
+
+        /// <summary>
+        /// Introduced in OpenCL 2.2
+        /// </summary>
+        public static CLResultCode SetProgramReleaseCallback(
+            CLProgram program,
+            ClEventCallback callback,
+            IntPtr userData)
+        {
+            return SetProgramReleaseCallback(program, Marshal.GetFunctionPointerForDelegate(callback), userData);
+        }
 
         /// <summary>
         /// Introduced in OpenCL 2.2
@@ -1410,10 +1465,11 @@ namespace OpenTK.Compute.OpenCL
         public static CLResultCode SetEventCallback(
             CLEvent eventHandle,
             int callbackType,
-            ClEventCallback notifyCallback)
+            ClEventCallback notifyCallback,
+            IntPtr userData)
         {
             return SetEventCallback(eventHandle, callbackType,
-                Marshal.GetFunctionPointerForDelegate(notifyCallback), IntPtr.Zero);
+                Marshal.GetFunctionPointerForDelegate(notifyCallback), userData);
         }
 
         #endregion
