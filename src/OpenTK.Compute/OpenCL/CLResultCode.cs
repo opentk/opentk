@@ -70,13 +70,15 @@ namespace OpenTK.Compute.OpenCL
 		InvalidLinkerOptions = -67,
 		InvalidDevicePartitionCount = -68,
 		InvalidPipeSize = -69,
-		InvalidDeviceQueue = -70,
+        InvalidDeviceQueue = -70,
+        InvalidSpecID = -71,
+        MaxSizeRestrictionExceeded = -72,
 
-		#endregion
+        #endregion
 
-		#region Errors thrown by extensions
+        #region Errors thrown by extensions
 
-		InvalidGlShaderGroupReferenceKhr = -1000,
+        InvalidGlShaderGroupReferenceKhr = -1000,
 		PlatformNotFoundKhr = -1001,
 		InvalidD3D10DeviceKhr = -1002,
 		InvalidD3D10ResourceKhr = -1003,

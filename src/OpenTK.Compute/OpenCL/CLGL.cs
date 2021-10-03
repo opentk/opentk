@@ -118,6 +118,16 @@ namespace OpenTK.Compute.OpenCL
             [Out] out UIntPtr paramValueSizeReturned
         );
 
+        public static CLResultCode GetGLTextureInfo(
+            CLBuffer memObject,
+            TextureInfo paramName,
+            out byte[] paramValue)
+        {
+            GetGLTextureInfo(memObject, paramName, UIntPtr.Zero, null, out UIntPtr sizeReturned);
+            paramValue = new byte[sizeReturned.ToUInt64()];
+            return GetGLTextureInfo(memObject, paramName, sizeReturned, paramValue, out _);
+        }
+
         /// <summary>
         /// Introduced in Opencl 1.0
         /// </summary>
@@ -131,6 +141,14 @@ namespace OpenTK.Compute.OpenCL
             [Out] out CLEvent @event
         );
 
+        public static CLResultCode EnqueueAcquireGLObjects(
+            CLCommandQueue commandQueue,
+            CLBuffer[] memoryObjects,
+            CLEvent[] eventWaitList,
+            out CLEvent @event){
+            return EnqueueAcquireGLObjects(commandQueue, (uint)memoryObjects.Length, memoryObjects, (uint)eventWaitList.Length, eventWaitList, out @event);
+        }
+
         /// <summary>
         /// Introduced in Opencl 1.0
         /// </summary>
@@ -143,6 +161,14 @@ namespace OpenTK.Compute.OpenCL
             [In] CLEvent[] eventWaitList,
             [Out] out CLEvent @event
         );
+
+        public static CLResultCode EnqueueReleaseGLObjects(
+            CLCommandQueue commandQueue,
+            CLBuffer[] memoryObjects,
+            CLEvent[] eventWaitList,
+            out CLEvent @event){
+            return EnqueueReleaseGLObjects(commandQueue, (uint)memoryObjects.Length, memoryObjects, (uint)eventWaitList.Length, eventWaitList, out @event);
+        }
 
         #region Deprecated OpenCL 1.1 APIs
 
@@ -182,15 +208,6 @@ namespace OpenTK.Compute.OpenCL
             DevicesForGlContextKHR = 0x2007
         }
 
-        public enum ContextProperties : int
-        {
-            GlContextKHR = 0x2008,
-            EglDisplayKHR = 0x2009,
-            GlxDisplayKHR = 0x200A,
-            WglHDCKHR = 0x200B,
-            CglShareGroupKHR = 0x200C,
-        }
-
         /// <summary>
         /// Introduced in Opencl 1.0
         /// </summary>
@@ -203,11 +220,22 @@ namespace OpenTK.Compute.OpenCL
             [Out] out UIntPtr paramValueSizeReturned
         );
 
-        public static CLResultCode GetGLContextInfoKHR(IntPtr[] properties, ContextInfo paramName, out byte[] paramValue)
+        public static CLResultCode GetGLContextInfoKHR(
+            IntPtr[] properties,
+            ContextInfo paramName,
+            out byte[] paramValue)
         {
             GetGLContextInfoKHR(properties, paramName, UIntPtr.Zero, null, out UIntPtr sizeReturned);
             paramValue = new byte[sizeReturned.ToUInt64()];
             return GetGLContextInfoKHR(properties, paramName, sizeReturned, paramValue, out _);
+        }
+
+        public static CLResultCode GetGLContextInfoKHR(
+            CLContextProperties properties,
+            ContextInfo paramName,
+            out byte[] paramValue)
+        {
+            return GetGLContextInfoKHR(properties.CreatePropertyArray(), paramName, out paramValue);
         }
 
         /// <summary>
