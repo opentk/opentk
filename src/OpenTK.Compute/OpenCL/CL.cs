@@ -230,7 +230,7 @@ namespace OpenTK.Compute.OpenCL
             IntPtr userData,
             out CLResultCode resultCode)
         {
-            return CreateContext(properties, (uint)devices.Length, devices, Marshal.GetFunctionPointerForDelegate(callback), userData,
+            return CreateContext(properties, (uint)devices.Length, devices, callback == null ? IntPtr.Zero : Marshal.GetFunctionPointerForDelegate(callback), userData,
                 out resultCode);
         }
 
@@ -256,7 +256,7 @@ namespace OpenTK.Compute.OpenCL
             IntPtr userData,
             out CLResultCode resultCode)
         {
-            return CreateContext(properties.CreatePropertyArray(), (uint)devices.Length, devices, Marshal.GetFunctionPointerForDelegate(callback), userData,
+            return CreateContext(properties.CreatePropertyArray(), (uint)devices.Length, devices, callback == null ? IntPtr.Zero : Marshal.GetFunctionPointerForDelegate(callback), userData,
                 out resultCode);
         }
 
@@ -281,7 +281,7 @@ namespace OpenTK.Compute.OpenCL
             IntPtr userData,
             out CLResultCode resultCode)
         {
-            return CreateContextFromType(properties.CreatePropertyArray(), deviceType, Marshal.GetFunctionPointerForDelegate(callback), userData,
+            return CreateContextFromType(properties.CreatePropertyArray(), deviceType, callback == null ? IntPtr.Zero : Marshal.GetFunctionPointerForDelegate(callback), userData,
                 out resultCode);
         }
 
@@ -755,7 +755,7 @@ namespace OpenTK.Compute.OpenCL
             ClEventCallback callback,
             IntPtr userData)
         {
-            return SetMemoryObjectDestructorCallback(memoryObject, Marshal.GetFunctionPointerForDelegate(callback), userData);
+            return SetMemoryObjectDestructorCallback(memoryObject, callback == null ? IntPtr.Zero : Marshal.GetFunctionPointerForDelegate(callback), userData);
         }
 
         /// <summary>
@@ -775,7 +775,7 @@ namespace OpenTK.Compute.OpenCL
             ClEventCallback callback,
             IntPtr userData)
         {
-            return SetMemoryObjectDestructorCallback(memoryObject, Marshal.GetFunctionPointerForDelegate(callback), userData);
+            return SetMemoryObjectDestructorCallback(memoryObject, callback == null ? IntPtr.Zero : Marshal.GetFunctionPointerForDelegate(callback), userData);
         }
 
         /// <summary>
@@ -795,7 +795,7 @@ namespace OpenTK.Compute.OpenCL
             ClEventCallback callback,
             IntPtr userData)
         {
-            return SetMemoryObjectDestructorCallback(memoryObject, Marshal.GetFunctionPointerForDelegate(callback), userData);
+            return SetMemoryObjectDestructorCallback(memoryObject, callback == null ? IntPtr.Zero : Marshal.GetFunctionPointerForDelegate(callback), userData);
         }
 
         /// <summary>
@@ -815,7 +815,7 @@ namespace OpenTK.Compute.OpenCL
             ClEventCallback callback,
             IntPtr userData)
         {
-            return SetMemoryObjectDestructorCallback(memoryObject, Marshal.GetFunctionPointerForDelegate(callback), userData);
+            return SetMemoryObjectDestructorCallback(memoryObject, callback == null ? IntPtr.Zero : Marshal.GetFunctionPointerForDelegate(callback), userData);
         }
 
         #endregion
@@ -1030,7 +1030,7 @@ namespace OpenTK.Compute.OpenCL
             IntPtr userData)
         {
             return CompileProgram(program, (uint)deviceList.Length, deviceList, options, (uint)inputHeaders.Length, inputHeaders,
-               out headerIncludeNames, Marshal.GetFunctionPointerForDelegate(callback), userData);
+               out headerIncludeNames, callback == null ? IntPtr.Zero : Marshal.GetFunctionPointerForDelegate(callback), userData);
         }
 
         /// <summary>
@@ -1081,7 +1081,7 @@ namespace OpenTK.Compute.OpenCL
             ClEventCallback callback,
             IntPtr userData)
         {
-            return SetProgramReleaseCallback(program, Marshal.GetFunctionPointerForDelegate(callback), userData);
+            return SetProgramReleaseCallback(program, callback == null ? IntPtr.Zero : Marshal.GetFunctionPointerForDelegate(callback), userData);
         }
 
         /// <summary>
