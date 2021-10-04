@@ -9,20 +9,16 @@ namespace OpenToolkit.OpenCL.Tests
 	{
 		static void Main(string[] args)
 		{
-			ToGrayscale.ConvertToGrayscale("image.jpg");
-
 			//Get the ids of available opencl platforms
 
-			CL.GetPlatformIds(0, null, out uint platformCount);
-			CLPlatform[] platformIds = new CLPlatform[platformCount];
-			CL.GetPlatformIds(platformCount, platformIds, out _);
+			var resultCode = CL.GetPlatformIds(out CLPlatform[] platformIds);
 
 			Console.WriteLine(platformIds.Length);
 			foreach (CLPlatform platform in platformIds)
 			{
-				Console.WriteLine(platform.Handle);
 				CL.GetPlatformInfo(platform, PlatformInfo.Name, out byte[] val);
-			}
+                Console.WriteLine(Encoding.ASCII.GetString(val));
+            }
 
 			//Get the device ids for each platform
 			foreach (IntPtr platformId in platformIds)
@@ -77,7 +73,7 @@ namespace OpenToolkit.OpenCL.Tests
 					CL.SetKernelArg(kernel, 3, -1f);
 
 					CLCommandQueue commandQueue = new CLCommandQueue(
-						CL.CreateCommandQueueWithProperties(context, deviceIds[0], IntPtr.Zero, out result));
+						CL.CreateCommandQueueWithProperties(context, deviceIds[0], CommandQueueProperty.None, out result));
 
 					CL.EnqueueFillBuffer(commandQueue, bufferB, pattern, UIntPtr.Zero, (UIntPtr)(arraySize * sizeof(float)), null,
 						out _);
@@ -104,7 +100,7 @@ namespace OpenToolkit.OpenCL.Tests
 						}
 
 						Console.WriteLine(line.ToString());
-					});
+					}, IntPtr.Zero);
 
 					//get rid of the buffers because we no longer need them
 					CL.ReleaseMemoryObject(bufferA);
