@@ -45,9 +45,11 @@ namespace OpenTK.Compute.OpenCL
         /// -OutOfHostMemory if there is a failure to allocate resources required by the OpenCL implementation on the host.</returns>
         public static CLResultCode GetPlatformIds(out CLPlatform[] platformIds)
         {
-            var result = GetPlatformIds(0, null, out UIntPtr platformCount);
-            platformIds = new CLPlatform[platformCount.ToUInt32()];
-            return GetPlatformIds(platformCount.ToUInt32(), platformIds, out _);
+            var resultCode = GetPlatformIds(0, null, out UIntPtr sizeReturned);
+            platformIds = new CLPlatform[sizeReturned.ToUInt32()];
+            if (sizeReturned.ToUInt32() == 0)
+                return resultCode;
+            return GetPlatformIds(sizeReturned.ToUInt32(), platformIds, out _);
         }
 
         /// <summary>
@@ -69,8 +71,10 @@ namespace OpenTK.Compute.OpenCL
             PlatformInfo paramName,
             out byte[] paramValue)
         {
-            GetPlatformInfo(platform, paramName, UIntPtr.Zero, null, out UIntPtr sizeReturned);
+            var resultCode = GetPlatformInfo(platform, paramName, UIntPtr.Zero, null, out UIntPtr sizeReturned);
             paramValue = new byte[sizeReturned.ToUInt64()];
+            if (sizeReturned.ToUInt32() == 0)
+                return resultCode;            
             return GetPlatformInfo(platform, paramName, sizeReturned, paramValue, out _);
         }
 
@@ -104,7 +108,7 @@ namespace OpenTK.Compute.OpenCL
             [In] DeviceType deviceType,
             [In] uint numberOfEntries,
             [Out] CLDevice[] devices,
-            [Out] out uint numberOfDevicesReturned);
+            [Out] out uint numberOfsizeReturned);
 
         /// <summary>
         /// Introduced in OpenCL 1.0
@@ -114,9 +118,11 @@ namespace OpenTK.Compute.OpenCL
             DeviceType deviceType,
             out CLDevice[] deviceIds)
         {
-            GetDeviceIds(platform, deviceType, 0, null, out uint deviceCount);
-            deviceIds = new CLDevice[deviceCount];
-            return GetDeviceIds(platform, deviceType, deviceCount, deviceIds, out _);
+            var resultCode = GetDeviceIds(platform, deviceType, 0, null, out uint sizeReturned);
+            deviceIds = new CLDevice[sizeReturned];
+            if (sizeReturned == 0)
+                return resultCode;
+            return GetDeviceIds(platform, deviceType, sizeReturned, deviceIds, out _);
         }
 
         /// <summary>
@@ -138,8 +144,10 @@ namespace OpenTK.Compute.OpenCL
             DeviceInfo paramName,
             out byte[] paramValue)
         {
-            GetDeviceInfo(device, paramName, UIntPtr.Zero, null, out UIntPtr sizeReturned);
-            paramValue = new byte[sizeReturned.ToUInt64()];
+            var resultCode = GetDeviceInfo(device, paramName, UIntPtr.Zero, null, out UIntPtr sizeReturned);
+            paramValue = new byte[sizeReturned.ToUInt32()];
+            if (sizeReturned.ToUInt32() == 0)
+                return resultCode;      
             return GetDeviceInfo(device, paramName, sizeReturned, paramValue, out _);
         }
 
@@ -152,7 +160,7 @@ namespace OpenTK.Compute.OpenCL
             [In] IntPtr[] properties,
             [In] uint numberOfDevices,
             [Out] CLDevice[] outDevices,
-            [Out] out uint devicesReturned);
+            [Out] out uint sizeReturned);
 
         /// <summary>
         /// Introduced in OpenCL 1.2
@@ -162,9 +170,11 @@ namespace OpenTK.Compute.OpenCL
             IntPtr[] properties,
             out CLDevice[] outDevices)
         {
-            CreateSubDevices(inDevice, properties, 0, null, out uint devicesReturned);
-            outDevices = new CLDevice[devicesReturned];
-            return CreateSubDevices(inDevice, properties, devicesReturned, outDevices, out _);
+            var resultCode = CreateSubDevices(inDevice, properties, 0, null, out uint sizeReturned);
+            outDevices = new CLDevice[sizeReturned];
+            if (sizeReturned == 0)
+                return resultCode;
+            return CreateSubDevices(inDevice, properties, sizeReturned, outDevices, out _);
         }
 
         /// <summary>
@@ -318,8 +328,10 @@ namespace OpenTK.Compute.OpenCL
             ContextInfo paramName,
             out byte[] paramValue)
         {
-            GetContextInfo(context, paramName, UIntPtr.Zero, null, out UIntPtr sizeReturned);
-            paramValue = new byte[sizeReturned.ToUInt64()];
+            var resultCode = GetContextInfo(context, paramName, UIntPtr.Zero, null, out UIntPtr sizeReturned);
+            paramValue = new byte[sizeReturned.ToUInt32()];
+            if (sizeReturned.ToUInt32() == 0)
+                return resultCode;
             return GetContextInfo(context, paramName, sizeReturned, paramValue, out _);
         }
 
@@ -368,8 +380,10 @@ namespace OpenTK.Compute.OpenCL
             CommandQueueInfo paramName,
             out byte[] paramValue)
         {
-            GetCommandQueueInfo(queue, paramName, UIntPtr.Zero, null, out UIntPtr sizeReturned);
-            paramValue = new byte[sizeReturned.ToUInt64()];
+            var resultCode = GetCommandQueueInfo(queue, paramName, UIntPtr.Zero, null, out UIntPtr sizeReturned);
+            paramValue = new byte[sizeReturned.ToUInt32()];
+            if (sizeReturned.ToUInt32() == 0)
+                return resultCode;
             return GetCommandQueueInfo(queue, paramName, sizeReturned, paramValue, out _);
         }
 
@@ -384,7 +398,7 @@ namespace OpenTK.Compute.OpenCL
         public static extern CLBuffer CreateBuffer(
             [In] CLContext context,
             [In] MemoryFlags flags,
-            [In] UIntPtr size,
+            [In] UIntPtr sizeReturned,
             [In] IntPtr hostPtr,
             [Out] out CLResultCode resultCode);
 
@@ -466,7 +480,7 @@ namespace OpenTK.Compute.OpenCL
             [In] CLContext context,
             [In] IntPtr[] properties,
             [In] MemoryFlags flags,
-            [In] UIntPtr size,
+            [In] UIntPtr sizeReturned,
             [In] IntPtr hostPointer,
             [Out] out CLResultCode errorCode);
 
@@ -590,9 +604,11 @@ namespace OpenTK.Compute.OpenCL
             MemoryObjectType imageType,
             out ImageFormat[] imageFormats)
         {
-            GetSupportedImageFormats(context, flags, imageType, 0, null, out uint count);
-            imageFormats = new ImageFormat[count];
-            return GetSupportedImageFormats(context, flags, imageType, count, imageFormats, out _);
+            var resultCode = GetSupportedImageFormats(context, flags, imageType, 0, null, out uint sizeReturned);
+            imageFormats = new ImageFormat[sizeReturned];
+            if (sizeReturned == 0)
+                return resultCode;
+            return GetSupportedImageFormats(context, flags, imageType, sizeReturned, imageFormats, out _);
         }
 
         /// <summary>
@@ -614,9 +630,11 @@ namespace OpenTK.Compute.OpenCL
             MemoryObjectInfo paramName,
             out byte[] paramValue)
         {
-            GetMemObjectInfo(memoryObject, paramName, UIntPtr.Zero, null, out UIntPtr size);
-            paramValue = new byte[size.ToUInt64()];
-            return GetMemObjectInfo(memoryObject, paramName, size, paramValue, out _);
+            var resultCode = GetMemObjectInfo(memoryObject, paramName, UIntPtr.Zero, null, out UIntPtr sizeReturned);
+            paramValue = new byte[sizeReturned.ToUInt32()];
+            if (sizeReturned.ToUInt32() == 0)
+                return resultCode;
+            return GetMemObjectInfo(memoryObject, paramName, sizeReturned, paramValue, out _);
         }
 
         /// <summary>
@@ -638,9 +656,11 @@ namespace OpenTK.Compute.OpenCL
             MemoryObjectInfo paramName,
             out byte[] paramValue)
         {
-            GetMemObjectInfo(memoryObject, paramName, UIntPtr.Zero, null, out UIntPtr size);
-            paramValue = new byte[size.ToUInt64()];
-            return GetMemObjectInfo(memoryObject, paramName, size, paramValue, out _);
+            var resultCode = GetMemObjectInfo(memoryObject, paramName, UIntPtr.Zero, null, out UIntPtr sizeReturned);
+            paramValue = new byte[sizeReturned.ToUInt32()];
+            if (sizeReturned.ToUInt32() == 0)
+                return resultCode;
+            return GetMemObjectInfo(memoryObject, paramName, sizeReturned, paramValue, out _);
         }
 
         /// <summary>
@@ -662,9 +682,11 @@ namespace OpenTK.Compute.OpenCL
             MemoryObjectInfo paramName,
             out byte[] paramValue)
         {
-            GetMemObjectInfo(memoryObject, paramName, UIntPtr.Zero, null, out UIntPtr size);
-            paramValue = new byte[size.ToUInt64()];
-            return GetMemObjectInfo(memoryObject, paramName, size, paramValue, out _);
+            var resultCode = GetMemObjectInfo(memoryObject, paramName, UIntPtr.Zero, null, out UIntPtr sizeReturned);
+            paramValue = new byte[sizeReturned.ToUInt32()];
+            if (sizeReturned.ToUInt32() == 0)
+                return resultCode;
+            return GetMemObjectInfo(memoryObject, paramName, sizeReturned, paramValue, out _);
         }
 
         /// <summary>
@@ -686,9 +708,11 @@ namespace OpenTK.Compute.OpenCL
             MemoryObjectInfo paramName,
             out byte[] paramValue)
         {
-            GetMemObjectInfo(memoryObject, paramName, UIntPtr.Zero, null, out UIntPtr size);
-            paramValue = new byte[size.ToUInt64()];
-            return GetMemObjectInfo(memoryObject, paramName, size, paramValue, out _);
+            var resultCode = GetMemObjectInfo(memoryObject, paramName, UIntPtr.Zero, null, out UIntPtr sizeReturned);
+            paramValue = new byte[sizeReturned.ToUInt32()];
+            if (sizeReturned.ToUInt32() == 0)
+                return resultCode;
+            return GetMemObjectInfo(memoryObject, paramName, sizeReturned, paramValue, out _);
         }
 
         /// <summary>
@@ -710,9 +734,11 @@ namespace OpenTK.Compute.OpenCL
             ImageInfo paramName,
             out byte[] paramValue)
         {
-            GetImageInfo(image, paramName, UIntPtr.Zero, null, out UIntPtr size);
-            paramValue = new byte[size.ToUInt64()];
-            return GetImageInfo(image, paramName, size, paramValue, out _);
+            var resultCode = GetImageInfo(image, paramName, UIntPtr.Zero, null, out UIntPtr sizeReturned);
+            paramValue = new byte[sizeReturned.ToUInt64()];
+            if (sizeReturned.ToUInt32() == 0)
+                return resultCode;
+            return GetImageInfo(image, paramName, sizeReturned, paramValue, out _);
         }
 
         /// <summary>
@@ -734,9 +760,11 @@ namespace OpenTK.Compute.OpenCL
             PipeInfo paramName,
             out byte[] paramValue)
         {
-            GetPipeInfo(pipe, paramName, UIntPtr.Zero, null, out UIntPtr size);
-            paramValue = new byte[size.ToUInt64()];
-            return GetPipeInfo(pipe, paramName, size, paramValue, out _);
+            var resultCode = GetPipeInfo(pipe, paramName, UIntPtr.Zero, null, out UIntPtr sizeReturned);
+            paramValue = new byte[sizeReturned.ToUInt32()];
+            if (sizeReturned.ToUInt32() == 0)
+                return resultCode;
+            return GetPipeInfo(pipe, paramName, sizeReturned, paramValue, out _);
         }
 
         /// <summary>
@@ -830,7 +858,7 @@ namespace OpenTK.Compute.OpenCL
         public static extern IntPtr SVMAlloc(
             [In] CLContext context,
             [In] SvmMemoryFlags flags,
-            [In] UIntPtr size,
+            [In] UIntPtr sizeReturned,
             [In] uint alignment);
 
         /// <summary>
@@ -885,9 +913,11 @@ namespace OpenTK.Compute.OpenCL
             SamplerInfo paramName,
             out byte[] paramValue)
         {
-            GetSamplerInfo(sampler, paramName, UIntPtr.Zero, null, out UIntPtr size);
-            paramValue = new byte[size.ToUInt64()];
-            return GetSamplerInfo(sampler, paramName, size, paramValue, out _);
+            var resultCode = GetSamplerInfo(sampler, paramName, UIntPtr.Zero, null, out UIntPtr sizeReturned);
+            paramValue = new byte[sizeReturned.ToUInt32()];
+            if (sizeReturned.ToUInt32() == 0)
+                return resultCode;
+            return GetSamplerInfo(sampler, paramName, sizeReturned, paramValue, out _);
         }
 
         #endregion
@@ -900,7 +930,7 @@ namespace OpenTK.Compute.OpenCL
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clCreateProgramWithSource")]
         public static extern CLProgram CreateProgramWithSource(
             [In] CLContext context,
-            [In] uint count,
+            [In] uint sizeReturned,
             [In] IntPtr[] strings,
             [In] uint[] lengths,
             [Out] out CLResultCode resultCode);
@@ -1120,9 +1150,11 @@ namespace OpenTK.Compute.OpenCL
             ProgramInfo paramName,
             out byte[] paramValue)
         {
-            GetProgramInfo(program, paramName, UIntPtr.Zero, null, out UIntPtr size);
-            paramValue = new byte[size.ToUInt64()];
-            return GetProgramInfo(program, paramName, size, paramValue, out _);
+            var resultCode = GetProgramInfo(program, paramName, UIntPtr.Zero, null, out UIntPtr sizeReturned);
+            paramValue = new byte[sizeReturned.ToUInt32()];
+            if (sizeReturned.ToUInt32() == 0)
+                return resultCode;
+            return GetProgramInfo(program, paramName, sizeReturned, paramValue, out _);
         }
 
         /// <summary>
@@ -1146,9 +1178,11 @@ namespace OpenTK.Compute.OpenCL
             ProgramBuildInfo paramName,
             out byte[] paramValue)
         {
-            GetProgramBuildInfo(program, device, paramName, UIntPtr.Zero, null, out UIntPtr size);
-            paramValue = new byte[size.ToUInt64()];
-            return GetProgramBuildInfo(program, device, paramName, size, paramValue, out _);
+            var resultCode = GetProgramBuildInfo(program, device, paramName, UIntPtr.Zero, null, out UIntPtr sizeReturned);
+            paramValue = new byte[sizeReturned.ToUInt32()];
+            if (sizeReturned.ToUInt32() == 0)
+                return resultCode;
+            return GetProgramBuildInfo(program, device, paramName, sizeReturned, paramValue, out _);
         }
 
         #endregion
@@ -1181,9 +1215,11 @@ namespace OpenTK.Compute.OpenCL
             CLProgram program,
             out CLKernel[] kernels)
         {
-            CreateKernelsInProgram(program, 0, null, out uint count);
-            kernels = new CLKernel[count];
-            return CreateKernelsInProgram(program, count, kernels, out _);
+            var resultCode = CreateKernelsInProgram(program, 0, null, out uint sizeReturned);
+            kernels = new CLKernel[sizeReturned];
+            if (sizeReturned == 0)
+                return resultCode;
+            return CreateKernelsInProgram(program, sizeReturned, kernels, out _);
         }
 
 
@@ -1269,9 +1305,11 @@ namespace OpenTK.Compute.OpenCL
             KernelInfo paramName,
             out byte[] paramValue)
         {
-            GetKernelInfo(kernel, paramName, UIntPtr.Zero, null, out UIntPtr size);
-            paramValue = new byte[size.ToUInt64()];
-            return GetKernelInfo(kernel, paramName, size, paramValue, out _);
+            var resultCode = GetKernelInfo(kernel, paramName, UIntPtr.Zero, null, out UIntPtr sizeReturned);
+            paramValue = new byte[sizeReturned.ToUInt32()];
+            if (sizeReturned.ToUInt32() == 0)
+                return resultCode;
+            return GetKernelInfo(kernel, paramName, sizeReturned, paramValue, out _);
         }
 
         /// <summary>
@@ -1295,9 +1333,11 @@ namespace OpenTK.Compute.OpenCL
             KernelArgInfo paramName,
             out byte[] paramValue)
         {
-            GetKernelArgInfo(kernel, argumentIndex, paramName, UIntPtr.Zero, null, out UIntPtr size);
-            paramValue = new byte[size.ToUInt64()];
-            return GetKernelArgInfo(kernel, argumentIndex, paramName, size, paramValue, out _);
+            var resultCode = GetKernelArgInfo(kernel, argumentIndex, paramName, UIntPtr.Zero, null, out UIntPtr sizeReturned);
+            paramValue = new byte[sizeReturned.ToUInt32()];
+            if (sizeReturned.ToUInt32() == 0)
+                return resultCode;
+            return GetKernelArgInfo(kernel, argumentIndex, paramName, sizeReturned, paramValue, out _);
         }
 
         /// <summary>
@@ -1321,9 +1361,11 @@ namespace OpenTK.Compute.OpenCL
             KernelWorkGroupInfo paramName,
             out byte[] paramValue)
         {
-            GetKernelWorkGroupInfo(kernel, device, paramName, UIntPtr.Zero, null, out UIntPtr size);
-            paramValue = new byte[size.ToUInt64()];
-            return GetKernelWorkGroupInfo(kernel, device, paramName, size, paramValue, out _);
+            var resultCode = GetKernelWorkGroupInfo(kernel, device, paramName, UIntPtr.Zero, null, out UIntPtr sizeReturned);
+            paramValue = new byte[sizeReturned.ToUInt32()];
+            if (sizeReturned.ToUInt32() == 0)
+                return resultCode;
+            return GetKernelWorkGroupInfo(kernel, device, paramName, sizeReturned, paramValue, out _);
         }
 
         /// <summary>
@@ -1353,9 +1395,11 @@ namespace OpenTK.Compute.OpenCL
         {
             fixed (T* b = array)
             {
-                GetKernelSubGroupInfo(kernel, device, paramName, (UIntPtr)(array.Length * sizeof(float)), (IntPtr)b, UIntPtr.Zero, null, out UIntPtr count);
-                paramValue = new byte[count.ToUInt64()];
-                return GetKernelSubGroupInfo(kernel, device, paramName, (UIntPtr)(array.Length * sizeof(float)), (IntPtr)b, count, paramValue, out _);
+                var resultCode = GetKernelSubGroupInfo(kernel, device, paramName, (UIntPtr)(array.Length * sizeof(float)), (IntPtr)b, UIntPtr.Zero, null, out UIntPtr sizeReturned);
+                paramValue = new byte[sizeReturned.ToUInt32()];
+                if (sizeReturned.ToUInt32() == 0)
+                    return resultCode;
+                return GetKernelSubGroupInfo(kernel, device, paramName, (UIntPtr)(array.Length * sizeof(float)), (IntPtr)b, sizeReturned, paramValue, out _);
             }
         }
 
@@ -1372,9 +1416,11 @@ namespace OpenTK.Compute.OpenCL
         {
             fixed (T* b = span)
             {
-                GetKernelSubGroupInfo(kernel, device, paramName, (UIntPtr)(span.Length * sizeof(float)), (IntPtr)b, UIntPtr.Zero, null, out UIntPtr count);
-                paramValue = new byte[count.ToUInt64()];
-                return GetKernelSubGroupInfo(kernel, device, paramName, (UIntPtr)(span.Length * sizeof(float)), (IntPtr)b, count, paramValue, out _);
+                var resultCode = GetKernelSubGroupInfo(kernel, device, paramName, (UIntPtr)(span.Length * sizeof(float)), (IntPtr)b, UIntPtr.Zero, null, out UIntPtr sizeReturned);
+                paramValue = new byte[sizeReturned.ToUInt32()];
+                if (sizeReturned.ToUInt32() == 0)
+                    return resultCode;
+                return GetKernelSubGroupInfo(kernel, device, paramName, (UIntPtr)(span.Length * sizeof(float)), (IntPtr)b, sizeReturned, paramValue, out _);
             }
         }
 
@@ -1417,9 +1463,11 @@ namespace OpenTK.Compute.OpenCL
             EventInfo paramName,
             out byte[] paramValue)
         {
-            GetEventInfo(@event, paramName, UIntPtr.Zero, null, out UIntPtr size);
-            paramValue = new byte[size.ToUInt64()];
-            return GetEventInfo(@event, paramName, size, paramValue, out _);
+            var resultCode = GetEventInfo(@event, paramName, UIntPtr.Zero, null, out UIntPtr sizeReturned);
+            paramValue = new byte[sizeReturned.ToUInt32()];
+            if (sizeReturned.ToUInt32() == 0)
+                return resultCode;
+            return GetEventInfo(@event, paramName, sizeReturned, paramValue, out _);
         }
 
         /// <summary>
@@ -1496,9 +1544,11 @@ namespace OpenTK.Compute.OpenCL
             ProfilingInfo paramName,
             out byte[] paramValue)
         {
-            GetEventProfilingInfo(@event, paramName, UIntPtr.Zero, null, out UIntPtr size);
-            paramValue = new byte[size.ToUInt64()];
-            return GetEventProfilingInfo(@event, paramName, size, paramValue, out _);
+            var resultCode = GetEventProfilingInfo(@event, paramName, UIntPtr.Zero, null, out UIntPtr sizeReturned);
+            paramValue = new byte[sizeReturned.ToUInt32()];
+            if (sizeReturned.ToUInt32() == 0)
+                return resultCode;
+            return GetEventProfilingInfo(@event, paramName, sizeReturned, paramValue, out _);
         }
 
         #endregion
@@ -1530,7 +1580,7 @@ namespace OpenTK.Compute.OpenCL
             [In] CLBuffer buffer,
             [In] bool blockingRead,
             [In] UIntPtr offset,
-            [In] UIntPtr size,
+            [In] UIntPtr sizeReturned,
             [In] IntPtr pointer,
             [In] uint numberOfEventsInWaitList,
             [In] CLEvent[] eventWaitList,
@@ -1667,7 +1717,7 @@ namespace OpenTK.Compute.OpenCL
             [In] CLBuffer buffer,
             [In] bool blockingWrite,
             [In] UIntPtr offset,
-            [In] UIntPtr size,
+            [In] UIntPtr sizeReturned,
             [In] IntPtr pointer,
             [In] uint numberOfEventsInWaitList,
             [In] CLEvent[] eventWaitList,
@@ -1805,7 +1855,7 @@ namespace OpenTK.Compute.OpenCL
             [In] IntPtr pattern,
             [In] UIntPtr patternSize,
             [In] UIntPtr offset,
-            [In] UIntPtr size,
+            [In] UIntPtr sizeReturned,
             [In] uint numberOfEventsInWaitList,
             [In] CLEvent[] eventWaitList,
             [Out] out CLEvent @event);
@@ -1819,7 +1869,7 @@ namespace OpenTK.Compute.OpenCL
             CLBuffer buffer,
             T[] pattern,
             UIntPtr offset,
-            UIntPtr size,
+            UIntPtr sizeReturned,
             CLEvent[] eventWaitList,
             out CLEvent @event)
             where T : unmanaged
@@ -1827,7 +1877,7 @@ namespace OpenTK.Compute.OpenCL
             fixed (T* p = pattern)
             {
                 return EnqueueFillBuffer(commandQueue, buffer, (IntPtr)p, (UIntPtr)(pattern.Length * sizeof(T)), offset,
-                    size, (uint)(eventWaitList?.Length ?? 0), eventWaitList, out @event);
+                    sizeReturned, (uint)(eventWaitList?.Length ?? 0), eventWaitList, out @event);
             }
         }
 
@@ -1841,7 +1891,7 @@ namespace OpenTK.Compute.OpenCL
             [In] CLBuffer dstBuffer,
             [In] UIntPtr srcOffset,
             [In] UIntPtr dstOffset,
-            [In] UIntPtr size,
+            [In] UIntPtr sizeReturned,
             [In] uint numberOfEventsInWaitList,
             [In] CLEvent[] eventWaitList,
             [Out] out CLEvent @event);
@@ -1855,12 +1905,12 @@ namespace OpenTK.Compute.OpenCL
             CLBuffer dstBuffer,
             UIntPtr srcOffset,
             UIntPtr dstOffset,
-            UIntPtr size,
+            UIntPtr sizeReturned,
             CLEvent[] eventWaitList,
             out CLEvent @event)
         {
             return EnqueueCopyBuffer(commandQueue, srcBuffer, dstBuffer, srcOffset, dstOffset,
-                size, (uint)(eventWaitList?.Length ?? 0), eventWaitList, out @event);
+                sizeReturned, (uint)(eventWaitList?.Length ?? 0), eventWaitList, out @event);
         }
 
         /// <summary>
@@ -2165,7 +2215,7 @@ namespace OpenTK.Compute.OpenCL
             [In] bool blockingMap,
             [In] MapFlags flags,
             [In] UIntPtr offset,
-            [In] UIntPtr size,
+            [In] UIntPtr sizeReturned,
             [In] uint numberOfEventsInWaitList,
             [In] CLEvent[] eventWaitList,
             [Out] out CLEvent @event,
@@ -2180,12 +2230,12 @@ namespace OpenTK.Compute.OpenCL
             bool blockingMap,
             MapFlags flags,
             UIntPtr offset,
-            UIntPtr size,
+            UIntPtr sizeReturned,
             CLEvent[] eventWaitList,
             out CLEvent @event,
             out CLResultCode resultCode)
         {
-            return EnqueueMapBuffer(commandQueue, buffer, blockingMap, flags, offset, size,
+            return EnqueueMapBuffer(commandQueue, buffer, blockingMap, flags, offset, sizeReturned,
                 (uint)(eventWaitList?.Length ?? 0), eventWaitList, out @event, out resultCode);
         }
 
@@ -2489,7 +2539,7 @@ namespace OpenTK.Compute.OpenCL
             [In] bool blockingCopy,
             [In] IntPtr dstPointer,
             [In] IntPtr srcPointer,
-            [In] UIntPtr size,
+            [In] UIntPtr sizeReturned,
             [In] uint numberOfEventsInWaitList,
             [In] CLEvent[] eventWaitList,
             [Out] out CLEvent @event);
@@ -2502,11 +2552,11 @@ namespace OpenTK.Compute.OpenCL
             bool blockingCopy,
             IntPtr dstPointer,
             IntPtr srcPointer,
-            UIntPtr size,
+            UIntPtr sizeReturned,
             CLEvent[] eventWaitList,
             out CLEvent @event)
         {
-            return EnqueueSvmMemoryCopy(commandQueue, blockingCopy, dstPointer, srcPointer, size,
+            return EnqueueSvmMemoryCopy(commandQueue, blockingCopy, dstPointer, srcPointer, sizeReturned,
                 (uint)(eventWaitList?.Length ?? 0), eventWaitList, out @event);
         }
 
@@ -2519,7 +2569,7 @@ namespace OpenTK.Compute.OpenCL
             [In] IntPtr svmPointer,
             [In] IntPtr pattern,
             [In] UIntPtr patternSize,
-            [In] UIntPtr size,
+            [In] UIntPtr sizeReturned,
             [In] uint numberOfEventsInWaitList,
             [In] CLEvent[] eventWaitList,
             [Out] out CLEvent @event);
@@ -2531,7 +2581,7 @@ namespace OpenTK.Compute.OpenCL
             CLCommandQueue commandQueue,
             IntPtr svmPointer,
             T[] pattern,
-            UIntPtr size,
+            UIntPtr sizeReturned,
             CLEvent[] eventWaitList,
             out CLEvent @event)
             where T : unmanaged
@@ -2539,7 +2589,7 @@ namespace OpenTK.Compute.OpenCL
             fixed (T* p = pattern)
             {
                 return EnqueueSvmMemoryFill(commandQueue, svmPointer, (IntPtr)p, (UIntPtr)(pattern.Length * sizeof(T)),
-                    size, (uint)(eventWaitList?.Length ?? 0), eventWaitList, out @event);
+                    sizeReturned, (uint)(eventWaitList?.Length ?? 0), eventWaitList, out @event);
             }
         }
 
@@ -2550,7 +2600,7 @@ namespace OpenTK.Compute.OpenCL
             CLCommandQueue commandQueue,
             IntPtr svmPointer,
             Span<T> pattern,
-            UIntPtr size,
+            UIntPtr sizeReturned,
             CLEvent[] eventWaitList,
             out CLEvent @event)
             where T : unmanaged
@@ -2558,7 +2608,7 @@ namespace OpenTK.Compute.OpenCL
             fixed (T* p = pattern)
             {
                 return EnqueueSvmMemoryFill(commandQueue, svmPointer, (IntPtr)p, (UIntPtr)(pattern.Length * sizeof(T)),
-                    size, (uint)(eventWaitList?.Length ?? 0), eventWaitList, out @event);
+                    sizeReturned, (uint)(eventWaitList?.Length ?? 0), eventWaitList, out @event);
             }
         }
 
@@ -2571,7 +2621,7 @@ namespace OpenTK.Compute.OpenCL
             [In] bool blockingMap,
             [In] MapFlags mapFlag,
             [In] IntPtr svmPointer,
-            [In] UIntPtr size,
+            [In] UIntPtr sizeReturned,
             [In] uint numberOfEventsInWaitList,
             [In] CLEvent[] eventWaitList,
             [Out] out CLEvent @event);
@@ -2584,11 +2634,11 @@ namespace OpenTK.Compute.OpenCL
             bool blockingMap,
             MapFlags mapFlag,
             IntPtr svmPointer,
-            UIntPtr size,
+            UIntPtr sizeReturned,
             CLEvent[] eventWaitList,
             out CLEvent @event)
         {
-            return EnqueueSvmMap(commandQueue, blockingMap, mapFlag, svmPointer, size,
+            return EnqueueSvmMap(commandQueue, blockingMap, mapFlag, svmPointer, sizeReturned,
                 (uint)(eventWaitList?.Length ?? 0), eventWaitList, out @event);
         }
 
