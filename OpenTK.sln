@@ -82,10 +82,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenTK.Compute", "src\OpenT
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenToolkit.OpenCL.Tests", "tests\OpenToolkit.OpenCL.Tests\OpenToolkit.OpenCL.Tests.csproj", "{51A92F39-3444-4E07-9C4F-99C2D8F11879}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenTK.Benchmarks", "OpenTK.Benchmarks\OpenTK.Benchmarks.csproj", "{A31363E2-783D-4F6A-B447-130E7A344442}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenTK.Benchmarks", "OpenTK.Benchmarks\OpenTK.Benchmarks.csproj", "{A31363E2-783D-4F6A-B447-130E7A344442}"
 	ProjectSection(ProjectDependencies) = postProject
 		{517AC4BF-6AF5-415D-B11C-FC6FE6710336} = {517AC4BF-6AF5-415D-B11C-FC6FE6710336}
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenTK.OpenCL.Tests", "tests\OpenTK.OpenCL.Tests\OpenTK.OpenCL.Tests.csproj", "{457CF14C-4BBD-45F9-B86C-2BB926FDBD04}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -177,6 +179,10 @@ Global
 		{A31363E2-783D-4F6A-B447-130E7A344442}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A31363E2-783D-4F6A-B447-130E7A344442}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A31363E2-783D-4F6A-B447-130E7A344442}.Release|Any CPU.Build.0 = Release|Any CPU
+		{457CF14C-4BBD-45F9-B86C-2BB926FDBD04}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{457CF14C-4BBD-45F9-B86C-2BB926FDBD04}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{457CF14C-4BBD-45F9-B86C-2BB926FDBD04}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{457CF14C-4BBD-45F9-B86C-2BB926FDBD04}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -194,6 +200,7 @@ Global
 		{172C1E62-DA67-4203-BBCB-9DA4D9111EF0} = {BBBE802B-9F6E-4299-97CE-97CDA43802B9}
 		{51A92F39-3444-4E07-9C4F-99C2D8F11879} = {0B9B71A1-29F7-4CC5-9A9D-9DF122BE8B28}
 		{A31363E2-783D-4F6A-B447-130E7A344442} = {0B9B71A1-29F7-4CC5-9A9D-9DF122BE8B28}
+		{457CF14C-4BBD-45F9-B86C-2BB926FDBD04} = {0B9B71A1-29F7-4CC5-9A9D-9DF122BE8B28}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {82DDE6D6-0D55-49B4-9C64-B31B4A6E729F}

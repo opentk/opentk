@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Runtime.InteropServices;
+using System.Text;
 using OpenTK.Compute.Native;
 
 namespace OpenTK.Compute.OpenCL
@@ -80,7 +81,7 @@ namespace OpenTK.Compute.OpenCL
         {
             extensionSupported = false;
             var resultCode = GetPlatformInfo(platform, PlatformInfo.Extensions, out byte[] bytes);
-            var extensions = System.Text.Encoding.ASCII.GetString(bytes).Split(" ");
+            var extensions = Encoding.ASCII.GetString(bytes).Split(" ");
             foreach (var supportedExtension in extensions)
             {
                 if (supportedExtension == extension)
