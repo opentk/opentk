@@ -19,6 +19,11 @@ namespace OpenTK.Core.Platform
         bool CanLoadSystemCursor { get; }
 
         /// <summary>
+        /// True if the driver can scale a cursor.
+        /// </summary>
+        bool CanScaleCursor { get; }
+
+        /// <summary>
         /// Create a cursor object.
         /// </summary>
         /// <returns>A cursor object.</returns>
@@ -56,6 +61,16 @@ namespace OpenTK.Core.Platform
         /// <param name="image">Buffer to copy cursor image into.</param>
         /// <exception cref="ArgumentNullException"><paramref name="handle"/> is null.</exception>
         void GetImage(CursorHandle handle, Span<byte> image);
+
+        /// <summary>
+        /// Get the scale of the cursor image.
+        /// </summary>
+        /// <param name="handle">Handle to a cursor object.</param>
+        /// <param name="horizontal">Horizontal scale of the cursor.</param>
+        /// <param name="vertical">Vertical scale of the cursor.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="handle"/> is null.</exception>
+        /// <exception cref="PalNotImplementedException">Driver cannot scale cursor images.</exception>
+        void GetScale(CursorHandle handle, out float horizontal, out float vertical);
 
         /// <summary>
         /// Load a standard system cursor.
@@ -112,5 +127,18 @@ namespace OpenTK.Core.Platform
         /// <exception cref="ArgumentNullException"><paramref name="handle"/> is null.</exception>
         /// <exception cref="ArgumentOutOfRangeException"><paramref name="x"/> or <paramref name="y"/> is outside of the cursor image.</exception>
         void SetHotspot(CursorHandle handle, int x, int y);
+
+        /// <summary>
+        /// Set the scale of the cursor image.
+        /// </summary>
+        /// <param name="handle">Handle to a cursor image.</param>
+        /// <param name="horizontal">New horizontal scale of cursor image.</param>
+        /// <param name="vertical">New vertical scale of cursor image.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="handle"/> is null.</exception>
+        /// <exception cref="ArgumentOutOfRangeException">
+        ///     <paramref name="horizontal"/> or <paramref name="vertical"/> is negative.
+        /// </exception>
+        /// <exception cref="PalNotImplementedException">Driver cannot scale cursor images.</exception>
+        void SetScale(CursorHandle handle, float horizontal, float vertical);
     }
 }

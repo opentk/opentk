@@ -39,5 +39,11 @@ namespace OpenTK.Core.Platform
         /// Specifies which PAL components this object provides.
         /// </summary>
         PalComponents Provides { get; }
+
+        /// <summary>
+        /// Initialize the driver.
+        /// </summary>
+        /// <param name="which">Bitfield of which components the driver need to be initialized.</param>
+        void Initialize(PalComponents which);
     }
 }
