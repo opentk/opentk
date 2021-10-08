@@ -165,7 +165,6 @@ namespace OpenTK.Compute.OpenCL
         DevicePipeSupport = 0x1071,
         DeviceLatestConformanceVersionPassed = 0x1072,
 
-        TerminateCapabilityKHR = 0x2031,
         SpirVersion = 0x40e0
     }
 
