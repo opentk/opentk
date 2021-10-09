@@ -217,7 +217,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Gets a value indicating whether all values are zero.
         /// </summary>
-        public bool IsEmpty => _min.X == 0 && _min.Y == 0 && _max.X == 0 && _max.Y == 0;
+        public bool IsZero => _min.X == 0 && _min.Y == 0 && _max.X == 0 && _max.Y == 0;
 
         /// <summary>
         /// Gets a box with all components zero.
