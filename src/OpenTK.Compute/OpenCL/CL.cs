@@ -340,9 +340,21 @@ namespace OpenTK.Compute.OpenCL
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clCreateCommandQueueWithProperties")]
         public static extern CLCommandQueue CreateCommandQueueWithProperties(
             [In] this CLContext context,
-            [In] IntPtr device,
-            [In] CLCommandQueue.Properties properties,
+            [In] CLDevice device,
+            [In] IntPtr[] properties,
             [Out] out CLResultCode resultCode);
+
+        /// <summary>
+        /// Introduced in OpenCL 2.0
+        /// </summary>
+        public static CLCommandQueue CreateCommandQueueWithProperties(
+            this CLContext context,
+            CLDevice device,
+            CLCommandQueueProperties properties,
+            out CLResultCode resultCode)
+        {
+            return CreateCommandQueueWithProperties(context, device, properties.CreatePropertyArray(), out resultCode);
+        }
 
         /// <summary>
         /// Introduced in OpenCL 1.0

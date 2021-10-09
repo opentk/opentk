@@ -46,7 +46,7 @@ namespace OpenTK.Compute.OpenCL
             Properties = 0x1093,
             Size = 0x1094,
             DeviceDefault = 0x1095,
-            Array = 0x1098
+            PropertiesArray = 0x1098
         }
 
         [Flags]
@@ -57,6 +57,16 @@ namespace OpenTK.Compute.OpenCL
             ProfilingEnable = 1 << 1,
             OnDevice = 1 << 2,
             OnDeviceDefault = 1 << 3,
+        }
+
+        public enum Property
+        {
+            Properties = 0x1093,
+            Size = 0x1094,
+            KernelBatchingARM = 0X41e7,
+            DeferredFlushARM = 0X41ec,
+            FamilyIntel = 0X418c,
+            IndexIntel = 0X418d,
         }
     }
 }

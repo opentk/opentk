@@ -1,55 +1,111 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenTK.Compute.OpenCL;
-using System.Linq;
+using System;
 
 namespace OpenTK.Compute.Tests
 {
     [TestClass]
     public class CommandQueueAPITest
     {
-        CLPlatform platform;
+        CLContext context;
+        CLDevice device;
 
         [TestInitialize()]
         public void Starup()
         {
             CL.GetPlatformIds(out CLPlatform[] platformIds);
-            platform = platformIds[0];
+            var platform = platformIds[0];
+            platform.GetDeviceIds(CLDevice.Type.Default, out CLDevice[] devices);
+            device = devices[0];
+            var properties = new CLContextProperties(platform, false);
+            context = properties.CreateContext(new[] { device }, null, IntPtr.Zero, out _);
+        }
+
+        [TestCleanup()]
+        public void Cleanup()
+        {
+            context.ReleaseContext();
         }
 
         [TestMethod]
         public void CreateCommandQueueWithProperties()
         {
-            Assert.Inconclusive();
+            var properties = new CLCommandQueueProperties(CLCommandQueue.Properties.OnDevice&CLCommandQueue.Properties.OutOfOrderExecModeEnable, 1);
+            var commandQueue = context.CreateCommandQueueWithProperties(device, properties, out CLResultCode resultCode);
+            Assert.AreEqual(CLResultCode.Success, resultCode);
+            commandQueue.ReleaseCommandQueue();
         }
 
         [TestMethod]
         public void RetainCommandQueue()
         {
-            Assert.Inconclusive();
+            var properties = new CLCommandQueueProperties();
+            var commandQueue = context.CreateCommandQueueWithProperties(device, properties, out _);
+            CLResultCode resultCode = commandQueue.RetainCommandQueue();
+            Assert.AreEqual(CLResultCode.Success, resultCode);
+            commandQueue.ReleaseCommandQueue();
+            resultCode = commandQueue.ReleaseCommandQueue();
+            Assert.AreEqual(CLResultCode.Success, resultCode);
         }
 
         [TestMethod]
         public void ReleaseCommandQueue()
         {
-            Assert.Inconclusive();
+            var properties = new CLCommandQueueProperties();
+            var commandQueue = context.CreateCommandQueueWithProperties(device, properties, out _);
+            CLResultCode resultCode = commandQueue.ReleaseCommandQueue();
+            Assert.AreEqual(CLResultCode.Success, resultCode);
         }
 
         [TestMethod]
-        public void GetCommandQueueInfo()
+        [DataRow(CLCommandQueue.Info.PropertiesArray)]
+        [DataRow(CLCommandQueue.Info.Context)]
+        [DataRow(CLCommandQueue.Info.Device)]
+        [DataRow(CLCommandQueue.Info.DeviceDefault)]
+        [DataRow(CLCommandQueue.Info.Properties)]
+        [DataRow(CLCommandQueue.Info.Size)]
+        [DataRow(CLCommandQueue.Info.ReferenceCount)]
+        public void GetCommandQueueInfo(CLCommandQueue.Info param)
         {
-            Assert.Inconclusive();
+            // Size is only valid if command queue is OnDevice
+            var properties = new CLCommandQueueProperties(CLCommandQueue.Properties.OutOfOrderExecModeEnable | CLCommandQueue.Properties.OnDevice, null);
+            var commandQueue = context.CreateCommandQueueWithProperties(device, properties, out _);
+            CLResultCode resultCode = commandQueue.GetCommandQueueInfo(param, out byte[] paramValue);
+            Assert.AreEqual(CLResultCode.Success, resultCode);
+            Assert.IsTrue(paramValue.Length > 0);
+            commandQueue.ReleaseCommandQueue();
+        }
+
+        [TestMethod]
+        public void SetDefaultDeviceCommandQueue()
+        {
+            var properties = new CLCommandQueueProperties();
+            var commandQueue = context.CreateCommandQueueWithProperties(device, properties, out _);
+            var commandQueue2 = context.CreateCommandQueueWithProperties(device, new CLCommandQueueProperties(CLCommandQueue.Properties.OutOfOrderExecModeEnable | CLCommandQueue.Properties.OnDevice | CLCommandQueue.Properties.OnDeviceDefault, null), out _);
+            var resultCode = context.SetDefaultDeviceCommandQueue(device, commandQueue2);
+            Assert.AreEqual(CLResultCode.Success, resultCode);
+            commandQueue.ReleaseCommandQueue();
+            commandQueue2.ReleaseCommandQueue();
         }
 
         [TestMethod]
         public void Flush()
         {
-            Assert.Inconclusive();
+            var properties = new CLCommandQueueProperties();
+            var commandQueue = context.CreateCommandQueueWithProperties(device, properties, out _);
+            CLResultCode resultCode = commandQueue.Flush();
+            Assert.AreEqual(CLResultCode.Success, resultCode);
+            commandQueue.ReleaseCommandQueue();
         }
 
         [TestMethod]
         public void Finish()
         {
-            Assert.Inconclusive();
+            var properties = new CLCommandQueueProperties();
+            var commandQueue = context.CreateCommandQueueWithProperties(device, properties, out _);
+            CLResultCode resultCode = commandQueue.Finish();
+            Assert.AreEqual(CLResultCode.Success, resultCode);
+            commandQueue.ReleaseCommandQueue();
         }
     }
 }
