@@ -4,7 +4,7 @@ using OpenTK.Compute.Native;
 
 namespace OpenTK.Compute.OpenCL
 {
-    public class CLGL : CLBase
+    public static class CLGL 
     {
         public enum ObjectType : uint
         {
@@ -58,7 +58,7 @@ namespace OpenTK.Compute.OpenCL
         /// </summary>
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clCreateFromGLBuffer")]
         public static extern CLBuffer CreateFromGLBuffer(
-            [In] CLContext context,
+            [In] this CLContext context,
             [In] MemoryFlags flags,
             [In] int glBuffer,
             [Out] out CLResultCode error
@@ -76,7 +76,7 @@ namespace OpenTK.Compute.OpenCL
         /// <returns></returns>
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clCreateFromGLTexture")]
         public static extern CLBuffer CreateFromGLTexture(
-            [In] CLContext context,
+            [In] this CLContext context,
             [In] MemoryFlags flags,
             //TODO FIX
             [In] int target,
@@ -90,7 +90,7 @@ namespace OpenTK.Compute.OpenCL
         /// </summary>
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clCreateFromGLRenderbuffer")]
         public static extern CLBuffer CreateFromGLRenderbuffer(
-            [In] CLContext context,
+            [In] this CLContext context,
             [In] MemoryFlags flags,
             [In] int renderBuffer,
             [Out] out CLResultCode error
@@ -101,7 +101,7 @@ namespace OpenTK.Compute.OpenCL
         /// </summary>
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clGetGLObjectInfo")]
         public static extern CLResultCode GetGLObjectInfo(
-            [In] CLBuffer memObject,
+            [In] this CLBuffer memObject,
             [Out] out ObjectType glObjectType,
             [Out] out int glObjectName
         );
@@ -111,7 +111,7 @@ namespace OpenTK.Compute.OpenCL
         /// </summary>
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clGetGLTextureInfo")]
         public static extern CLResultCode GetGLTextureInfo(
-            [In] CLBuffer memObject,
+            [In] this CLBuffer memObject,
             [In] TextureInfo paramName,
             [In] UIntPtr paramValueSize,
             [Out] byte[] paramValue,
@@ -119,7 +119,7 @@ namespace OpenTK.Compute.OpenCL
         );
 
         public static CLResultCode GetGLTextureInfo(
-            CLBuffer memObject,
+            this CLBuffer memObject,
             TextureInfo paramName,
             out byte[] paramValue)
         {
@@ -133,7 +133,7 @@ namespace OpenTK.Compute.OpenCL
         /// </summary>
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clEnqueueAcquireGLObjects")]
         public static extern CLResultCode EnqueueAcquireGLObjects(
-            [In] CLCommandQueue commandQueue,
+            [In] this CLCommandQueue commandQueue,
             [In] uint numberOfObjects,
             [In] CLBuffer[] memoryObjects,
             [In] uint numEventsInWaitList,
@@ -142,7 +142,7 @@ namespace OpenTK.Compute.OpenCL
         );
 
         public static CLResultCode EnqueueAcquireGLObjects(
-            CLCommandQueue commandQueue,
+            this CLCommandQueue commandQueue,
             CLBuffer[] memoryObjects,
             CLEvent[] eventWaitList,
             out CLEvent @event)
@@ -155,7 +155,7 @@ namespace OpenTK.Compute.OpenCL
         /// </summary>
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clEnqueueReleaseGLObjects")]
         public static extern CLResultCode EnqueueReleaseGLObjects(
-            [In] CLCommandQueue commandQueue,
+            [In] this CLCommandQueue commandQueue,
             [In] uint numberOfObjects,
             [In] CLBuffer[] memoryObjects,
             [In] uint numEventsInWaitList,
@@ -164,7 +164,7 @@ namespace OpenTK.Compute.OpenCL
         );
 
         public static CLResultCode EnqueueReleaseGLObjects(
-            CLCommandQueue commandQueue,
+            this CLCommandQueue commandQueue,
             CLBuffer[] memoryObjects,
             CLEvent[] eventWaitList,
             out CLEvent @event)
@@ -233,7 +233,7 @@ namespace OpenTK.Compute.OpenCL
         }
 
         public static CLResultCode GetGLContextInfoKHR(
-            CLContextProperties properties,
+            this CLContextProperties properties,
             ContextInfo paramName,
             out byte[] paramValue)
         {
@@ -245,7 +245,7 @@ namespace OpenTK.Compute.OpenCL
         /// </summary>
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clCreateEventFromGLsyncKHR")]
         public static extern CLEvent CreateEventFromGLsyncKHR(
-            [In] CLContext context,
+            [In] this CLContext context,
             [In] IntPtr sync,
             [Out] out CLResultCode error
         );

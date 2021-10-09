@@ -37,5 +37,20 @@ namespace OpenTK.Compute.OpenCL
 		}
 
 		public static implicit operator IntPtr(CLBuffer buffer) => buffer.Handle;
-	}
+
+        public enum Info : uint
+        {
+            Properties = 0x110A
+        }
+
+        public enum Property : uint
+        {
+
+        }
+
+        public enum CreateType : uint
+        {
+            Region = 0x1220
+        }
+    }
 }

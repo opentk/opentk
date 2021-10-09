@@ -1,7 +1,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenTK.Compute.OpenCL;
 
-namespace OpenTK.OpenCL.Tests
+namespace OpenTK.Compute.Tests
 {
 	[TestClass]
 	public class PlatformAPITest
@@ -16,16 +16,16 @@ namespace OpenTK.OpenCL.Tests
         }
 
         [TestMethod]
-        [DataRow(PlatformInfo.Profile)]
-        [DataRow(PlatformInfo.Version)]
-        [DataRow(PlatformInfo.Name)]
-        [DataRow(PlatformInfo.Vendor)]
-        [DataRow(PlatformInfo.Extensions)]
-        [DataRow(PlatformInfo.HostTimerResolution)]
-        [DataRow(PlatformInfo.NumericVersion)]
-        [DataRow(PlatformInfo.ExtensionsWithVersion)]
-        [DataRow(PlatformInfo.PlatformIcdSuffix)]
-        public void GetPlatformInfo(PlatformInfo paramName)
+        [DataRow(CLPlatform.Info.Profile)]
+        [DataRow(CLPlatform.Info.Version)]
+        [DataRow(CLPlatform.Info.Name)]
+        [DataRow(CLPlatform.Info.Vendor)]
+        [DataRow(CLPlatform.Info.Extensions)]
+        [DataRow(CLPlatform.Info.HostTimerResolution)]
+        [DataRow(CLPlatform.Info.NumericVersion)]
+        [DataRow(CLPlatform.Info.ExtensionsWithVersion)]
+        [DataRow(CLPlatform.Info.PlatformIcdSuffix)]
+        public void GetPlatformInfo(CLPlatform.Info paramName)
         {
             CL.GetPlatformIds(out CLPlatform[] platformIds);
 
@@ -35,6 +35,12 @@ namespace OpenTK.OpenCL.Tests
                 Assert.AreEqual(CLResultCode.Success, resultCode);
                 Assert.IsTrue(paramValue.Length > 0);
             }
+        }
+
+        [TestMethod]
+        public void GetExtensionFunctionAddressForPlatform()
+        {
+            Assert.Inconclusive();
         }
     }
 }

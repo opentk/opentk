@@ -37,5 +37,18 @@ namespace OpenTK.Compute.OpenCL
 		}
 
 		public static implicit operator IntPtr(CLPlatform platform) => platform.Handle;
-	}
+
+        public enum Info : uint
+        {
+            Profile = 0x0900,
+            Version = 0x0901,
+            Name = 0x0902,
+            Vendor = 0x0903,
+            Extensions = 0x0904,
+            HostTimerResolution = 0x0905,
+            NumericVersion = 0x0906,
+            ExtensionsWithVersion = 0x0907,
+            PlatformIcdSuffix = 0x0920
+        }
+    }
 }

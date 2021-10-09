@@ -87,7 +87,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenTK.Benchmarks", "OpenTK
 		{517AC4BF-6AF5-415D-B11C-FC6FE6710336} = {517AC4BF-6AF5-415D-B11C-FC6FE6710336}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenTK.OpenCL.Tests", "tests\OpenTK.OpenCL.Tests\OpenTK.OpenCL.Tests.csproj", "{457CF14C-4BBD-45F9-B86C-2BB926FDBD04}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenTK.Compute.Tests", "tests\OpenTK.Compute.Tests\OpenTK.Compute.Tests.csproj", "{457CF14C-4BBD-45F9-B86C-2BB926FDBD04}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -37,5 +37,26 @@ namespace OpenTK.Compute.OpenCL
 		}
 
 		public static implicit operator IntPtr(CLCommandQueue queue) => queue.Handle;
-	}
+
+        public enum Info : uint
+        {
+            Context = 0x1090,
+            Device = 0x1091,
+            ReferenceCount = 0x1092,
+            Properties = 0x1093,
+            Size = 0x1094,
+            DeviceDefault = 0x1095,
+            Array = 0x1098
+        }
+
+        [Flags]
+        public enum Properties : ulong
+        {
+            None = 0,
+            OutOfOrderExecModeEnable = 1 << 0,
+            ProfilingEnable = 1 << 1,
+            OnDevice = 1 << 2,
+            OnDeviceDefault = 1 << 3,
+        }
+    }
 }

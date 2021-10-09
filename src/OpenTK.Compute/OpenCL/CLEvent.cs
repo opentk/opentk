@@ -37,5 +37,14 @@ namespace OpenTK.Compute.OpenCL
 		}
 
 		public static implicit operator IntPtr(CLEvent @event) => @event.Handle;
-	}
+
+        public enum Info : uint
+        {
+            CommandQueue = 0x11D0,
+            CommandType = 0x11D1,
+            ReferenceCount = 0x11D2,
+            CommandExecutionStatus = 0x11D3,
+            Context = 0x11D4
+        }
+    }
 }

@@ -5,7 +5,7 @@ using OpenTK.Compute.Native;
 
 namespace OpenTK.Compute.OpenCL
 {
-    public class CL : CLBase
+    public static class CL
     {
         static CL()
         {
@@ -57,8 +57,8 @@ namespace OpenTK.Compute.OpenCL
         /// </summary>
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clGetPlatformInfo")]
         public static extern CLResultCode GetPlatformInfo(
-            [In] CLPlatform platform,
-            [In] PlatformInfo paramName,
+            [In] this CLPlatform platform,
+            [In] CLPlatform.Info paramName,
             [In] UIntPtr paramValueSize,
             [Out] byte[] paramValue,
             [Out] out UIntPtr paramValueSizeReturned);
@@ -67,8 +67,8 @@ namespace OpenTK.Compute.OpenCL
         /// Introduced in OpenCL 1.0
         /// </summary>
         public static CLResultCode GetPlatformInfo(
-            CLPlatform platform,
-            PlatformInfo paramName,
+            this CLPlatform platform,
+            CLPlatform.Info paramName,
             out byte[] paramValue)
         {
             var resultCode = GetPlatformInfo(platform, paramName, UIntPtr.Zero, null, out UIntPtr sizeReturned);
@@ -79,12 +79,12 @@ namespace OpenTK.Compute.OpenCL
         }
 
         public static CLResultCode SupportsPlatformExtension(
-            CLPlatform platform,
+            this CLPlatform platform,
             string extension,
             out bool extensionSupported)
         {
             extensionSupported = false;
-            var resultCode = GetPlatformInfo(platform, PlatformInfo.Extensions, out byte[] bytes);
+            var resultCode = GetPlatformInfo(platform, CLPlatform.Info.Extensions, out byte[] bytes);
             var extensions = Encoding.ASCII.GetString(bytes).Split(" ");
             foreach (var supportedExtension in extensions)
             {
@@ -104,8 +104,8 @@ namespace OpenTK.Compute.OpenCL
         /// </summary>
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clGetDeviceIDs")]
         public static extern CLResultCode GetDeviceIds(
-            [In] CLPlatform platform,
-            [In] DeviceType deviceType,
+            [In] this CLPlatform platform,
+            [In] CLDevice.Type deviceType,
             [In] uint numberOfEntries,
             [Out] CLDevice[] devices,
             [Out] out uint numberOfsizeReturned);
@@ -114,8 +114,8 @@ namespace OpenTK.Compute.OpenCL
         /// Introduced in OpenCL 1.0
         /// </summary>
         public static CLResultCode GetDeviceIds(
-            CLPlatform platform,
-            DeviceType deviceType,
+            this CLPlatform platform,
+            CLDevice.Type deviceType,
             out CLDevice[] deviceIds)
         {
             var resultCode = GetDeviceIds(platform, deviceType, 0, null, out uint sizeReturned);
@@ -130,8 +130,8 @@ namespace OpenTK.Compute.OpenCL
         /// </summary>
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clGetDeviceInfo")]
         public static extern CLResultCode GetDeviceInfo(
-            [In] CLDevice device,
-            [In] DeviceInfo paramName,
+            [In] this CLDevice device,
+            [In] CLDevice.Info paramName,
             [In] UIntPtr paramValueSize,
             [Out] byte[] paramValue,
             [Out] out UIntPtr paramValueSizeReturned);
@@ -140,8 +140,8 @@ namespace OpenTK.Compute.OpenCL
         /// Introduced in OpenCL 1.0
         /// </summary>
         public static CLResultCode GetDeviceInfo(
-            CLDevice device,
-            DeviceInfo paramName,
+            this CLDevice device,
+            CLDevice.Info paramName,
             out byte[] paramValue)
         {
             var resultCode = GetDeviceInfo(device, paramName, UIntPtr.Zero, null, out UIntPtr sizeReturned);
@@ -156,7 +156,7 @@ namespace OpenTK.Compute.OpenCL
         /// </summary>
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clCreateSubDevices")]
         public static extern CLResultCode CreateSubDevices(
-            [In] CLDevice inDevice,
+            [In] this CLDevice inDevice,
             [In] IntPtr[] properties,
             [In] uint numberOfDevices,
             [Out] CLDevice[] outDevices,
@@ -166,35 +166,35 @@ namespace OpenTK.Compute.OpenCL
         /// Introduced in OpenCL 1.2
         /// </summary>
         public static CLResultCode CreateSubDevices(
-            CLDevice inDevice,
-            IntPtr[] properties,
+            this CLDevice inDevice,
+            CLDevicePartitionProperties properties,
             out CLDevice[] outDevices)
         {
-            var resultCode = CreateSubDevices(inDevice, properties, 0, null, out uint sizeReturned);
+            var resultCode = CreateSubDevices(inDevice, properties.CreatePropertyArray(), 0, null, out uint sizeReturned);
             outDevices = new CLDevice[sizeReturned];
             if (sizeReturned == 0)
                 return resultCode;
-            return CreateSubDevices(inDevice, properties, sizeReturned, outDevices, out _);
+            return CreateSubDevices(inDevice, properties.CreatePropertyArray(), sizeReturned, outDevices, out _);
         }
 
         /// <summary>
         /// Introduced in OpenCL 1.2
         /// </summary>
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clRetainDevice")]
-        public static extern CLResultCode RetainDevice([In] CLDevice device);
+        public static extern CLResultCode RetainDevice([In] this CLDevice device);
 
         /// <summary>
         /// Introduced in OpenCL 1.2
         /// </summary>
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clReleaseDevice")]
-        public static extern CLResultCode ReleaseDevice([In] CLDevice device);
+        public static extern CLResultCode ReleaseDevice([In] this CLDevice device);
 
         /// <summary>
         /// Introduced in OpenCL 2.1
         /// </summary>
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clSetDefaultDeviceCommandQueue")]
         public static extern CLResultCode SetDefaultDeviceCommandQueue(
-            [In] CLContext context,
+            [In] this CLContext context,
             [In] CLDevice device,
             [In] CLCommandQueue commandQueue);
 
@@ -203,17 +203,17 @@ namespace OpenTK.Compute.OpenCL
         /// </summary>
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clGetDeviceAndHostTimer")]
         public static extern CLResultCode GetDeviceAndHostTimer(
-            [In] CLDevice device,
-            IntPtr deviceTimestamp,
-            IntPtr hostTimestamp);
+            [In] this CLDevice device,
+            [In] IntPtr deviceTimestamp,
+            [In] IntPtr hostTimestamp);
 
         /// <summary>
         /// Introduced in OpenCL 2.1
         /// </summary>
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clGetHostTimer")]
         public static extern CLResultCode GetHostTimer(
-            [In] CLDevice device,
-            IntPtr hostTimestamp);
+            [In] this CLDevice device,
+            [In] IntPtr hostTimestamp);
 
         #endregion
 
@@ -224,32 +224,6 @@ namespace OpenTK.Compute.OpenCL
         /// </summary>
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clCreateContext")]
         public static extern CLContext CreateContext(
-            [In] IntPtr properties,
-            [In] uint numberOfDevices,
-            [In] CLDevice[] devices,
-            [In] IntPtr notificationCallback,
-            [In] IntPtr userData,
-            [Out] out CLResultCode resultCode);
-
-        /// <summary>
-        /// Introduced in OpenCL 1.0
-        /// </summary>
-        public static CLContext CreateContext(
-            IntPtr properties,
-            CLDevice[] devices,
-            ClEventCallback callback,
-            IntPtr userData,
-            out CLResultCode resultCode)
-        {
-            return CreateContext(properties, (uint)devices.Length, devices, callback == null ? IntPtr.Zero : Marshal.GetFunctionPointerForDelegate(callback), userData,
-                out resultCode);
-        }
-
-        /// <summary>
-        /// Introduced in OpenCL 1.0
-        /// </summary>
-        [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clCreateContext")]
-        public static extern CLContext CreateContext(
             [In] IntPtr[] properties,
             [In] uint numberOfDevices,
             [In] CLDevice[] devices,
@@ -261,7 +235,7 @@ namespace OpenTK.Compute.OpenCL
         /// Introduced in OpenCL 1.0
         /// </summary>
         public static CLContext CreateContext(
-            CLContextProperties properties,
+            this CLContextProperties properties,
             CLDevice[] devices,
             ClEventCallback callback,
             IntPtr userData,
@@ -277,7 +251,7 @@ namespace OpenTK.Compute.OpenCL
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clCreateContextFromType")]
         public static extern CLContext CreateContextFromType(
             [In] IntPtr[] properties,
-            [In] DeviceType deviceType,
+            [In] CLDevice.Type deviceType,
             [In] IntPtr notificationCallback,
             [In] IntPtr userData,
             [Out] out CLResultCode resultCode);
@@ -286,8 +260,8 @@ namespace OpenTK.Compute.OpenCL
         /// Introduced in OpenCL 1.0
         /// </summary>
         public static CLContext CreateContextFromType(
-            CLContextProperties properties,
-            DeviceType deviceType,
+            this CLContextProperties properties,
+            CLDevice.Type deviceType,
             ClEventCallback callback,
             IntPtr userData,
             out CLResultCode resultCode)
@@ -300,21 +274,21 @@ namespace OpenTK.Compute.OpenCL
         /// Introduced in OpenCL 1.0
         /// </summary>
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clRetainContext")]
-        public static extern CLResultCode RetainContext([In] CLContext context);
+        public static extern CLResultCode RetainContext([In] this CLContext context);
 
         /// <summary>
         /// Introduced in OpenCL 1.0
         /// </summary>
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clReleaseContext")]
-        public static extern CLResultCode ReleaseContext([In] CLContext context);
+        public static extern CLResultCode ReleaseContext([In] this CLContext context);
 
         /// <summary>
         /// Introduced in OpenCL 1.0
         /// </summary>
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clGetContextInfo")]
         public static extern CLResultCode GetContextInfo(
-            [In] CLContext context,
-            [In] ContextInfo paramName,
+            [In] this CLContext context,
+            [In] CLContext.Info paramName,
             [In] UIntPtr paramValueSize,
             [Out] byte[] paramValue,
             [Out] out UIntPtr paramValueSizeReturned);
@@ -324,8 +298,8 @@ namespace OpenTK.Compute.OpenCL
         /// Introduced in OpenCL 1.0
         /// </summary>
         public static CLResultCode GetContextInfo(
-            CLContext context,
-            ContextInfo paramName,
+            this CLContext context,
+            CLContext.Info paramName,
             out byte[] paramValue)
         {
             var resultCode = GetContextInfo(context, paramName, UIntPtr.Zero, null, out UIntPtr sizeReturned);
@@ -344,30 +318,30 @@ namespace OpenTK.Compute.OpenCL
         /// </summary>
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clCreateCommandQueueWithProperties")]
         public static extern CLCommandQueue CreateCommandQueueWithProperties(
-            [In] CLContext context,
+            [In] this CLContext context,
             [In] IntPtr device,
-            [In] CommandQueueProperty properties,
+            [In] CLCommandQueue.Properties properties,
             [Out] out CLResultCode resultCode);
 
         /// <summary>
         /// Introduced in OpenCL 1.0
         /// </summary>
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clRetainCommandQueue")]
-        public static extern CLResultCode RetainCommandQueue([In] CLCommandQueue commandQueue);
+        public static extern CLResultCode RetainCommandQueue([In] this CLCommandQueue commandQueue);
 
         /// <summary>
         /// Introduced in OpenCL 1.0
         /// </summary>
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clReleaseCommandQueue")]
-        public static extern CLResultCode ReleaseCommandQueue([In] CLCommandQueue commandQueue);
+        public static extern CLResultCode ReleaseCommandQueue([In] this CLCommandQueue commandQueue);
 
         /// <summary>
         /// Introduced in OpenCL 1.0
         /// </summary>
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clGetCommandQueueInfo")]
         public static extern CLResultCode GetCommandQueueInfo(
-            [In] CLCommandQueue commandQueue,
-            [In] CommandQueueInfo paramName,
+            [In] this CLCommandQueue commandQueue,
+            [In] CLCommandQueue.Info paramName,
             [In] UIntPtr paramSize,
             [Out] byte[] paramValue,
             [Out] out UIntPtr paramValueSizeReturned);
@@ -376,8 +350,8 @@ namespace OpenTK.Compute.OpenCL
         /// Introduced in OpenCL 1.0
         /// </summary>
         public static CLResultCode GetCommandQueueInfo(
-            CLCommandQueue queue,
-            CommandQueueInfo paramName,
+           this CLCommandQueue queue,
+            CLCommandQueue.Info paramName,
             out byte[] paramValue)
         {
             var resultCode = GetCommandQueueInfo(queue, paramName, UIntPtr.Zero, null, out UIntPtr sizeReturned);
@@ -396,7 +370,7 @@ namespace OpenTK.Compute.OpenCL
         /// </summary>
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clCreateBuffer")]
         public static extern CLBuffer CreateBuffer(
-            [In] CLContext context,
+            [In] this CLContext context,
             [In] MemoryFlags flags,
             [In] UIntPtr sizeReturned,
             [In] IntPtr hostPtr,
@@ -406,7 +380,7 @@ namespace OpenTK.Compute.OpenCL
         /// Introduced in OpenCL 1.0
         /// </summary>
         public static unsafe CLBuffer CreateBuffer<T>(
-            CLContext context,
+           this CLContext context,
             MemoryFlags flags,
             T[] array,
             out CLResultCode resultCode) where T : unmanaged
@@ -423,7 +397,7 @@ namespace OpenTK.Compute.OpenCL
         /// Introduced in OpenCL 1.0
         /// </summary>
         public static unsafe CLBuffer CreateBuffer<T>(
-            CLContext context,
+            this CLContext context,
             MemoryFlags flags,
             Span<T> span,
             out CLResultCode resultCode) where T : unmanaged
@@ -436,15 +410,14 @@ namespace OpenTK.Compute.OpenCL
             }
         }
 
-
         /// <summary>
         /// Introduced in OpenCL 1.1
         /// </summary>
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clCreateSubBuffer")]
         public static extern CLBuffer CreateSubBuffer(
-            [In] CLBuffer buffer,
+            [In] this CLBuffer buffer,
             [In] MemoryFlags flags,
-            [In] BufferCreateType bufferCreateType,
+            [In] CLBuffer.CreateType bufferCreateType,
             [In] IntPtr bufferCreateInfo,
             [Out] out CLResultCode resultCode);
 
@@ -453,7 +426,7 @@ namespace OpenTK.Compute.OpenCL
         /// </summary>
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clCreateImage")]
         public static extern CLImage CreateImage(
-            [In] CLContext context,
+            [In] this CLContext context,
             [In] MemoryFlags flags,
             [In] ref ImageFormat imageFormat,
             [In] ref ImageDescription imageDesc,
@@ -465,7 +438,7 @@ namespace OpenTK.Compute.OpenCL
         /// </summary>
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clCreatePipe")]
         public static extern CLPipe CreatePipe(
-            [In] CLContext context,
+            [In] this CLContext context,
             [In] MemoryFlags flags,
             [In] uint pipePacketSize,
             [In] uint pipeMaxPackets,
@@ -473,11 +446,25 @@ namespace OpenTK.Compute.OpenCL
             [Out] out CLResultCode resultCode);
 
         /// <summary>
+        /// Introduced in OpenCL 2.0
+        /// </summary>
+        public static CLPipe CreatePipe(
+            this CLContext context,
+            MemoryFlags flags,
+            uint pipePacketSize,
+            uint pipeMaxPackets,
+            CLPipeProperties properties,
+            out CLResultCode resultCode)
+        {
+            return CreatePipe(context, flags, pipePacketSize, pipeMaxPackets, properties.CreatePropertyArray(), out resultCode);
+        }
+
+        /// <summary>
         /// Introduced in OpenCL 3.0
         /// </summary>
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clCreateBufferWithProperties")]
         public static extern CLBuffer CreateBufferWithProperties(
-            [In] CLContext context,
+            [In] this CLContext context,
             [In] IntPtr[] properties,
             [In] MemoryFlags flags,
             [In] UIntPtr sizeReturned,
@@ -488,8 +475,8 @@ namespace OpenTK.Compute.OpenCL
         /// Introduced in OpenCL 3.0
         /// </summary>
         public static unsafe CLBuffer CreateBufferWithProperties<T>(
-            CLContext context,
-            IntPtr[] properties,
+            this CLContext context,
+            CLBufferProperties properties,
             MemoryFlags flags,
             T[] array,
             out CLResultCode errorCode)
@@ -497,7 +484,7 @@ namespace OpenTK.Compute.OpenCL
         {
             fixed (T* b = array)
             {
-                return CreateBufferWithProperties(context, properties, flags, (UIntPtr)(sizeof(T) * array.Length), (IntPtr)b,
+                return CreateBufferWithProperties(context, properties.CreatePropertyArray(), flags, (UIntPtr)(sizeof(T) * array.Length), (IntPtr)b,
                     out errorCode);
             }
         }
@@ -506,8 +493,8 @@ namespace OpenTK.Compute.OpenCL
         /// Introduced in OpenCL 3.0
         /// </summary>
         public static unsafe CLBuffer CreateBufferWithProperties<T>(
-            CLContext context,
-            IntPtr[] properties,
+            this CLContext context,
+            CLBufferProperties properties,
             MemoryFlags flags,
             Span<T> span,
             out CLResultCode errorCode)
@@ -515,7 +502,7 @@ namespace OpenTK.Compute.OpenCL
         {
             fixed (T* b = span)
             {
-                return CreateBufferWithProperties(context, properties, flags, (UIntPtr)(sizeof(T) * span.Length), (IntPtr)b,
+                return CreateBufferWithProperties(context, properties.CreatePropertyArray(), flags, (UIntPtr)(sizeof(T) * span.Length), (IntPtr)b,
                     out errorCode);
             }
         }
@@ -525,13 +512,28 @@ namespace OpenTK.Compute.OpenCL
         /// </summary>
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clCreateImageWithProperties")]
         public static extern CLImage CreateImageWithProperties(
-            [In] CLContext context,
+            [In] this CLContext context,
             [In] IntPtr[] properties,
             [In] MemoryFlags flags,
             [In] IntPtr imageFormat,
             [In] IntPtr imageDesc,
             [In] IntPtr hostPointer,
             [Out] out CLResultCode errorCode);
+
+        /// <summary>
+        /// Introduced in OpenCL 3.0
+        /// </summary>
+        public static CLImage CreateImageWithProperties(
+            this CLContext context,
+            CLImageProperties properties,
+            MemoryFlags flags,
+            IntPtr imageFormat,
+            IntPtr imageDesc,
+            IntPtr hostPointer,
+            out CLResultCode errorCode)
+        {
+            return CreateImageWithProperties(context, properties.CreatePropertyArray(), flags, imageFormat, imageDesc, hostPointer, out errorCode);
+        }
 
 
         /// <summary>
@@ -544,19 +546,19 @@ namespace OpenTK.Compute.OpenCL
         /// Introduced in OpenCL 1.0
         /// </summary>
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clRetainMemObject")]
-        public static extern CLResultCode RetainMemoryObject([In] CLBuffer memoryObject);
+        public static extern CLResultCode RetainMemoryObject([In] this CLBuffer memoryObject);
 
         /// <summary>
         /// Introduced in OpenCL 1.0
         /// </summary>
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clRetainMemObject")]
-        public static extern CLResultCode RetainMemoryObject([In] CLImage memoryObject);
+        public static extern CLResultCode RetainMemoryObject([In] this CLImage memoryObject);
 
         /// <summary>
         /// Introduced in OpenCL 1.0
         /// </summary>
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clRetainMemObject")]
-        public static extern CLResultCode RetainMemoryObject([In] CLPipe memoryObject);
+        public static extern CLResultCode RetainMemoryObject([In] this CLPipe memoryObject);
 
         /// <summary>
         /// Introduced in OpenCL 1.0
@@ -568,26 +570,26 @@ namespace OpenTK.Compute.OpenCL
         /// Introduced in OpenCL 1.0
         /// </summary>
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clReleaseMemObject")]
-        public static extern CLResultCode ReleaseMemoryObject([In] CLBuffer memoryObject);
+        public static extern CLResultCode ReleaseMemoryObject([In] this CLBuffer memoryObject);
 
         /// <summary>
         /// Introduced in OpenCL 1.0
         /// </summary>
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clReleaseMemObject")]
-        public static extern CLResultCode ReleaseMemoryObject([In] CLImage memoryObject);
+        public static extern CLResultCode ReleaseMemoryObject([In] this CLImage memoryObject);
 
         /// <summary>
         /// Introduced in OpenCL 1.0
         /// </summary>
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clReleaseMemObject")]
-        public static extern CLResultCode ReleaseMemoryObject([In] CLPipe memoryObject);
+        public static extern CLResultCode ReleaseMemoryObject([In] this CLPipe memoryObject);
 
         /// <summary>
         /// Introduced in OpenCL 1.0
         /// </summary>
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clGetSupportedImageFormats")]
         public static extern CLResultCode GetSupportedImageFormats(
-            [In] CLContext context,
+            [In] this CLContext context,
             [In] MemoryFlags flags,
             [In] MemoryObjectType imageType,
             [In] uint numberOfEntries,
@@ -599,7 +601,7 @@ namespace OpenTK.Compute.OpenCL
         /// Introduced in OpenCL 1.0
         /// </summary>
         public static CLResultCode GetSupportedImageFormats(
-            CLContext context,
+            this CLContext context,
             MemoryFlags flags,
             MemoryObjectType imageType,
             out ImageFormat[] imageFormats)
@@ -642,7 +644,7 @@ namespace OpenTK.Compute.OpenCL
         /// </summary>
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clGetMemObjectInfo")]
         public static extern CLResultCode GetMemObjectInfo(
-            [In] CLBuffer memoryObject,
+            [In] this CLBuffer memoryObject,
             [In] MemoryObjectInfo paramName,
             [In] UIntPtr paramValueSize,
             [Out] byte[] paramValue,
@@ -652,7 +654,7 @@ namespace OpenTK.Compute.OpenCL
         /// Introduced in OpenCL 1.0
         /// </summary>
         public static CLResultCode GetMemObjectInfo(
-            CLBuffer memoryObject,
+           this CLBuffer memoryObject,
             MemoryObjectInfo paramName,
             out byte[] paramValue)
         {
@@ -668,7 +670,7 @@ namespace OpenTK.Compute.OpenCL
         /// </summary>
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clGetMemObjectInfo")]
         public static extern CLResultCode GetMemObjectInfo(
-            [In] CLImage memoryObject,
+            [In] this CLImage memoryObject,
             [In] MemoryObjectInfo paramName,
             [In] UIntPtr paramValueSize,
             [Out] byte[] paramValue,
@@ -678,7 +680,7 @@ namespace OpenTK.Compute.OpenCL
         /// Introduced in OpenCL 1.0
         /// </summary>
         public static CLResultCode GetMemObjectInfo(
-            CLImage memoryObject,
+           this CLImage memoryObject,
             MemoryObjectInfo paramName,
             out byte[] paramValue)
         {
@@ -694,7 +696,7 @@ namespace OpenTK.Compute.OpenCL
         /// </summary>
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clGetMemObjectInfo")]
         public static extern CLResultCode GetMemObjectInfo(
-            [In] CLPipe memoryObject,
+            [In] this CLPipe memoryObject,
             [In] MemoryObjectInfo paramName,
             [In] UIntPtr paramValueSize,
             [Out] byte[] paramValue,
@@ -704,7 +706,7 @@ namespace OpenTK.Compute.OpenCL
         /// Introduced in OpenCL 1.0
         /// </summary>
         public static CLResultCode GetMemObjectInfo(
-            CLPipe memoryObject,
+           this CLPipe memoryObject,
             MemoryObjectInfo paramName,
             out byte[] paramValue)
         {
@@ -720,8 +722,8 @@ namespace OpenTK.Compute.OpenCL
         /// </summary>
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clGetImageInfo")]
         public static extern CLResultCode GetImageInfo(
-            [In] CLImage image,
-            [In] ImageInfo paramName,
+            [In] this CLImage image,
+            [In] CLImage.Info paramName,
             [In] UIntPtr paramValueSize,
             [Out] byte[] paramValue,
             [Out] out UIntPtr paramValueSizeReturned);
@@ -730,8 +732,8 @@ namespace OpenTK.Compute.OpenCL
         /// Introduced in OpenCL 1.0
         /// </summary>
         public static CLResultCode GetImageInfo(
-            CLImage image,
-            ImageInfo paramName,
+           this CLImage image,
+            CLImage.Info paramName,
             out byte[] paramValue)
         {
             var resultCode = GetImageInfo(image, paramName, UIntPtr.Zero, null, out UIntPtr sizeReturned);
@@ -746,8 +748,8 @@ namespace OpenTK.Compute.OpenCL
         /// </summary>
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clGetPipeInfo")]
         public static extern CLResultCode GetPipeInfo(
-            [In] CLPipe pipe,
-            [In] PipeInfo paramName,
+            [In] this CLPipe pipe,
+            [In] CLPipe.Info paramName,
             [In] UIntPtr paramValueSize,
             [Out] byte[] paramValue,
             [Out] out UIntPtr paramValueSizeReturned);
@@ -757,7 +759,7 @@ namespace OpenTK.Compute.OpenCL
         /// </summary>
         public static CLResultCode GetPipeInfo(
             CLPipe pipe,
-            PipeInfo paramName,
+            CLPipe.Info paramName,
             out byte[] paramValue)
         {
             var resultCode = GetPipeInfo(pipe, paramName, UIntPtr.Zero, null, out UIntPtr sizeReturned);
@@ -792,7 +794,7 @@ namespace OpenTK.Compute.OpenCL
         /// </summary>
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clSetMemObjectDestructorCallback")]
         public static extern CLResultCode SetMemoryObjectDestructorCallback(
-            [In] CLBuffer memoryObject,
+            [In] this CLBuffer memoryObject,
             [In] IntPtr notificationCallback,
             [In] IntPtr userData);
 
@@ -800,7 +802,7 @@ namespace OpenTK.Compute.OpenCL
         /// Introduced in OpenCL 1.0
         /// </summary>
         public static CLResultCode SetMemoryObjectDestructorCallback(
-            CLBuffer memoryObject,
+            this CLBuffer memoryObject,
             ClEventCallback callback,
             IntPtr userData)
         {
@@ -812,7 +814,7 @@ namespace OpenTK.Compute.OpenCL
         /// </summary>
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clSetMemObjectDestructorCallback")]
         public static extern CLResultCode SetMemoryObjectDestructorCallback(
-            [In] CLImage memoryObject,
+            [In] this CLImage memoryObject,
             [In] IntPtr notificationCallback,
             [In] IntPtr userData);
 
@@ -820,7 +822,7 @@ namespace OpenTK.Compute.OpenCL
         /// Introduced in OpenCL 1.0
         /// </summary>
         public static CLResultCode SetMemoryObjectDestructorCallback(
-            CLImage memoryObject,
+            this CLImage memoryObject,
             ClEventCallback callback,
             IntPtr userData)
         {
@@ -832,7 +834,7 @@ namespace OpenTK.Compute.OpenCL
         /// </summary>
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clSetMemObjectDestructorCallback")]
         public static extern CLResultCode SetMemoryObjectDestructorCallback(
-            [In] CLPipe memoryObject,
+            [In] this CLPipe memoryObject,
             [In] IntPtr notificationCallback,
             [In] IntPtr userData);
 
@@ -840,7 +842,7 @@ namespace OpenTK.Compute.OpenCL
         /// Introduced in OpenCL 1.0
         /// </summary>
         public static CLResultCode SetMemoryObjectDestructorCallback(
-            CLPipe memoryObject,
+           this CLPipe memoryObject,
             ClEventCallback callback,
             IntPtr userData)
         {
@@ -856,7 +858,7 @@ namespace OpenTK.Compute.OpenCL
         /// </summary>
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clSVMAlloc")]
         public static extern IntPtr SVMAlloc(
-            [In] CLContext context,
+            [In] this CLContext context,
             [In] SvmMemoryFlags flags,
             [In] UIntPtr sizeReturned,
             [In] uint alignment);
@@ -866,7 +868,7 @@ namespace OpenTK.Compute.OpenCL
         /// </summary>
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clSVMFree")]
         public static extern IntPtr SVMFree(
-            [In] CLContext context,
+            [In] this CLContext context,
             [In] IntPtr svmPointer);
 
         #endregion
@@ -878,29 +880,40 @@ namespace OpenTK.Compute.OpenCL
         /// </summary>
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clCreateSamplerWithProperties")]
         public static extern CLSampler CreateSamplerWithProperties(
-            [In] CLContext context,
-            [In] IntPtr samplerProperties,
+            [In] this CLContext context,
+            [In] IntPtr[] samplerProperties,
             [Out] out CLResultCode resultCode);
+
+        /// <summary>
+        /// Introduced in OpenCL 2.0
+        /// </summary>
+        public static CLSampler CreateSamplerWithProperties(
+            this CLContext context,
+            CLSamplerProperties properties,
+            out CLResultCode resultCode)
+        {
+            return CreateSamplerWithProperties(context, properties.CreatePropertyArray(), out resultCode);
+        }
 
         /// <summary>
         /// Introduced in OpenCL 1.0
         /// </summary>
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clRetainSampler")]
-        public static extern CLResultCode RetainSampler([In] CLSampler sampler);
+        public static extern CLResultCode RetainSampler([In] this CLSampler sampler);
 
         /// <summary>
         /// Introduced in OpenCL 1.0
         /// </summary>
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clReleaseSampler")]
-        public static extern CLResultCode ReleaseSampler([In] CLSampler sampler);
+        public static extern CLResultCode ReleaseSampler([In] this CLSampler sampler);
 
         /// <summary>
         /// Introduced in OpenCL 1.0
         /// </summary>
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clGetSamplerInfo")]
         public static extern CLResultCode GetSamplerInfo(
-            [In] CLSampler sampler,
-            [In] SamplerInfo paramName,
+            [In] this CLSampler sampler,
+            [In] CLSampler.Info paramName,
             [In] UIntPtr paramValueSize,
             [Out] byte[] paramValue,
             [Out] out UIntPtr paramValueSizeReturned);
@@ -909,8 +922,8 @@ namespace OpenTK.Compute.OpenCL
         /// Introduced in OpenCL 1.0
         /// </summary>
         public static CLResultCode GetSamplerInfo(
-            CLSampler sampler,
-            SamplerInfo paramName,
+            this CLSampler sampler,
+            CLSampler.Info paramName,
             out byte[] paramValue)
         {
             var resultCode = GetSamplerInfo(sampler, paramName, UIntPtr.Zero, null, out UIntPtr sizeReturned);
@@ -929,7 +942,7 @@ namespace OpenTK.Compute.OpenCL
         /// </summary>
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clCreateProgramWithSource")]
         public static extern CLProgram CreateProgramWithSource(
-            [In] CLContext context,
+            [In] this CLContext context,
             [In] uint sizeReturned,
             [In] IntPtr[] strings,
             [In] uint[] lengths,
@@ -939,7 +952,7 @@ namespace OpenTK.Compute.OpenCL
         /// Introduced in OpenCL 1.0
         /// </summary>
         public static CLProgram CreateProgramWithSource(
-            CLContext context,
+            this CLContext context,
             string source,
             out CLResultCode resultCode)
         {
@@ -953,7 +966,7 @@ namespace OpenTK.Compute.OpenCL
         /// </summary>
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clCreateProgramWithBinary")]
         public static extern CLProgram CreateProgramWithBinary(
-            [In] CLContext context,
+            [In] this CLContext context,
             [In] uint numberOfDevices,
             [In] IntPtr[] deviceList,
             [In] UIntPtr[] lengths,
@@ -966,7 +979,7 @@ namespace OpenTK.Compute.OpenCL
         /// </summary>
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clCreateProgramWithBuiltInKernels")]
         public static extern CLProgram CreateProgramWithBuiltInKernels(
-            [In] CLContext context,
+            [In] this CLContext context,
             [In] uint numberOfDevices,
             [In] CLDevice[] deviceList,
             [In] string kernelNames,
@@ -977,7 +990,7 @@ namespace OpenTK.Compute.OpenCL
         /// Introduced in OpenCL 1.2
         /// </summary>
         public static CLProgram CreateProgramWithBuiltInKernels(
-            CLContext context,
+            this CLContext context,
             CLDevice[] deviceList,
             string kernelNames,
             out CLResultCode resultCode)
@@ -990,7 +1003,7 @@ namespace OpenTK.Compute.OpenCL
         /// </summary>
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clCreateProgramWithIL")]
         public static extern CLProgram CreateProgramWithIL(
-            [In] CLContext context,
+            [In] this CLContext context,
             [In] IntPtr il,
             [In] UIntPtr length,
             [Out] out CLResultCode resultCode);
@@ -999,20 +1012,20 @@ namespace OpenTK.Compute.OpenCL
         /// Introduced in OpenCL 1.0
         /// </summary>
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clRetainProgram")]
-        public static extern CLResultCode RetainProgram([In] CLProgram program);
+        public static extern CLResultCode RetainProgram([In] this CLProgram program);
 
         /// <summary>
         /// Introduced in OpenCL 1.0
         /// </summary>
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clReleaseProgram")]
-        public static extern CLResultCode ReleaseProgram([In] CLProgram program);
+        public static extern CLResultCode ReleaseProgram([In] this CLProgram program);
 
         /// <summary>
         /// Introduced in OpenCL 1.0
         /// </summary>
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clBuildProgram")]
         public static extern CLResultCode BuildProgram(
-            [In] CLProgram program,
+            [In] this CLProgram program,
             [In] uint numberOfDevices,
             [In] CLDevice[] deviceList,
             [In] string options,
@@ -1023,7 +1036,7 @@ namespace OpenTK.Compute.OpenCL
         /// Introduced in OpenCL 1.0
         /// </summary>
         public static CLResultCode BuildProgram(
-            CLProgram program,
+            this CLProgram program,
             CLDevice[] deviceList,
             string options,
             ClEventCallback callback,
@@ -1038,7 +1051,7 @@ namespace OpenTK.Compute.OpenCL
         /// </summary>
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clCompileProgram")]
         public static extern CLResultCode CompileProgram(
-            [In] CLProgram program,
+            [In] this CLProgram program,
             [In] uint numberOfDevices,
             [In] CLDevice[] deviceList,
             [In] string options,
@@ -1052,7 +1065,7 @@ namespace OpenTK.Compute.OpenCL
         /// Introduced in OpenCL 1.2
         /// </summary>
         public static CLResultCode CompileProgram(
-            CLProgram program,
+           this CLProgram program,
             CLDevice[] deviceList,
             string options,
             IntPtr[] inputHeaders,
@@ -1069,7 +1082,7 @@ namespace OpenTK.Compute.OpenCL
         /// </summary>
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clLinkProgram")]
         public static extern CLProgram LinkProgram(
-            [In] CLContext context,
+            [In] this CLContext context,
             [In] uint numberOfDevices,
             [In] CLDevice[] deviceList,
             [In] string options,
@@ -1083,7 +1096,7 @@ namespace OpenTK.Compute.OpenCL
         /// Introduced in OpenCL 1.2
         /// </summary>
         public static CLProgram LinkProgram(
-            CLContext context,
+            this CLContext context,
             CLDevice[] deviceList,
             string options,
             CLProgram[] inputPrograms,
@@ -1100,7 +1113,7 @@ namespace OpenTK.Compute.OpenCL
         /// </summary>
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clSetProgramReleaseCallback")]
         public static extern CLResultCode SetProgramReleaseCallback(
-            [In] CLProgram program,
+            [In] this CLProgram program,
             [In] IntPtr notificationCallback,
             [In] IntPtr userData);
 
@@ -1108,7 +1121,7 @@ namespace OpenTK.Compute.OpenCL
         /// Introduced in OpenCL 2.2
         /// </summary>
         public static CLResultCode SetProgramReleaseCallback(
-            CLProgram program,
+           this CLProgram program,
             ClEventCallback callback,
             IntPtr userData)
         {
@@ -1120,7 +1133,7 @@ namespace OpenTK.Compute.OpenCL
         /// </summary>
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clSetProgramSpecializationConstant")]
         public static extern CLResultCode SetProgramSpecializationConstant(
-            [In] CLProgram program,
+            [In] this CLProgram program,
             [In] uint specId,
             [In] UIntPtr specSize,
             [In] IntPtr specValue);
@@ -1129,15 +1142,15 @@ namespace OpenTK.Compute.OpenCL
         /// Introduced in OpenCL 1.2
         /// </summary>
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clUnloadPlatformCompiler")]
-        public static extern CLResultCode UnloadPlatformCompiler([In] CLPlatform platform);
+        public static extern CLResultCode UnloadPlatformCompiler([In] this CLPlatform platform);
 
         /// <summary>
         /// Introduced in OpenCL 1.0
         /// </summary>
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clGetProgramInfo")]
         public static extern CLResultCode GetProgramInfo(
-            [In] CLProgram program,
-            [In] ProgramInfo paramName,
+            [In] this CLProgram program,
+            [In] CLProgram.Info paramName,
             [In] UIntPtr paramValueSize,
             [Out] byte[] paramValue,
             [Out] out UIntPtr paramValueSizeReturned);
@@ -1146,8 +1159,8 @@ namespace OpenTK.Compute.OpenCL
         /// Introduced in OpenCL 1.0
         /// </summary>
         public static CLResultCode GetProgramInfo(
-            CLProgram program,
-            ProgramInfo paramName,
+           this CLProgram program,
+            CLProgram.Info paramName,
             out byte[] paramValue)
         {
             var resultCode = GetProgramInfo(program, paramName, UIntPtr.Zero, null, out UIntPtr sizeReturned);
@@ -1162,9 +1175,9 @@ namespace OpenTK.Compute.OpenCL
         /// </summary>
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clGetProgramBuildInfo")]
         public static extern CLResultCode GetProgramBuildInfo(
-            [In] CLProgram program,
+            [In] this CLProgram program,
             [In] CLDevice device,
-            [In] ProgramBuildInfo paramName,
+            [In] CLProgram.BuildInfo paramName,
             [In] UIntPtr paramValueSize,
             [Out] byte[] paramValue,
             [Out] out UIntPtr paramValueSizeReturned);
@@ -1173,9 +1186,9 @@ namespace OpenTK.Compute.OpenCL
         /// Introduced in OpenCL 1.0
         /// </summary>
         public static CLResultCode GetProgramBuildInfo(
-            CLProgram program,
+            this CLProgram program,
             CLDevice device,
-            ProgramBuildInfo paramName,
+            CLProgram.BuildInfo paramName,
             out byte[] paramValue)
         {
             var resultCode = GetProgramBuildInfo(program, device, paramName, UIntPtr.Zero, null, out UIntPtr sizeReturned);
@@ -1194,7 +1207,7 @@ namespace OpenTK.Compute.OpenCL
         /// </summary>
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clCreateKernel")]
         public static extern CLKernel CreateKernel(
-            [In] CLProgram program,
+            [In] this CLProgram program,
             [In] string name,
             [Out] out CLResultCode resultCode);
 
@@ -1203,7 +1216,7 @@ namespace OpenTK.Compute.OpenCL
         /// </summary>
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clCreateKernelsInProgram")]
         public static extern CLResultCode CreateKernelsInProgram(
-            [In] CLProgram program,
+            [In] this CLProgram program,
             [In] uint numberOfKernels,
             [In] CLKernel[] kernels,
             [Out] out uint numberOfKernelsReturned);
@@ -1212,7 +1225,7 @@ namespace OpenTK.Compute.OpenCL
         /// Introduced in OpenCL 1.0
         /// </summary>
         public static CLResultCode CreateKernelsInProgram(
-            CLProgram program,
+            this CLProgram program,
             out CLKernel[] kernels)
         {
             var resultCode = CreateKernelsInProgram(program, 0, null, out uint sizeReturned);
@@ -1228,27 +1241,27 @@ namespace OpenTK.Compute.OpenCL
         /// </summary>
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clCloneKernel")]
         public static extern CLKernel CloneKernel(
-            [In] CLKernel sourceKernel,
+            [In] this CLKernel sourceKernel,
             [Out] out CLResultCode resultCode);
 
         /// <summary>
         /// Introduced in OpenCL 1.0
         /// </summary>
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clRetainKernel")]
-        public static extern CLResultCode RetainKernel([In] CLKernel kernel);
+        public static extern CLResultCode RetainKernel([In] this CLKernel kernel);
 
         /// <summary>
         /// Introduced in OpenCL 1.0
         /// </summary>
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clReleaseKernel")]
-        public static extern CLResultCode ReleaseKernel([In] CLKernel kernel);
+        public static extern CLResultCode ReleaseKernel([In] this CLKernel kernel);
 
         /// <summary>
         /// Introduced in OpenCL 1.0
         /// </summary>
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clSetKernelArg")]
         public static extern CLResultCode SetKernelArg(
-            [In] CLKernel kernel,
+            [In] this CLKernel kernel,
             [In] uint argumentIndex,
             [In] UIntPtr argumentSize,
             [In] IntPtr argumentValuePointer);
@@ -1257,7 +1270,7 @@ namespace OpenTK.Compute.OpenCL
         /// Introduced in OpenCL 1.0
         /// </summary>
         public static unsafe CLResultCode SetKernelArg<T>(
-            CLKernel kernel,
+            this CLKernel kernel,
             uint argumentIndex,
             in T argument) where T : unmanaged
         {
@@ -1272,7 +1285,7 @@ namespace OpenTK.Compute.OpenCL
         /// </summary>
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clSetKernelArgSVMPointer")]
         public static extern CLResultCode SetKernelArgSVMPointer(
-            [In] CLKernel kernel,
+            [In] this CLKernel kernel,
             [In] uint argumentIndex,
             [In] IntPtr argumentValuePointer);
 
@@ -1281,8 +1294,8 @@ namespace OpenTK.Compute.OpenCL
         /// </summary>
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clSetKernelExecInfo")]
         public static extern CLResultCode SetKernelExecInfo(
-            [In] CLKernel kernel,
-            [In] KernelExecInfo paramName,
+            [In] this CLKernel kernel,
+            [In] CLKernel.ExecInfo paramName,
             [In] UIntPtr paramValueSize,
             [In] IntPtr paramValue);
 
@@ -1291,8 +1304,8 @@ namespace OpenTK.Compute.OpenCL
         /// </summary>
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clGetKernelInfo")]
         public static extern CLResultCode GetKernelInfo(
-            [In] CLKernel kernel,
-            [In] KernelInfo paramName,
+            [In] this CLKernel kernel,
+            [In] CLKernel.Info paramName,
             [In] UIntPtr paramValueSize,
             [Out] byte[] paramValue,
             [Out] out UIntPtr paramSizeReturned);
@@ -1301,8 +1314,8 @@ namespace OpenTK.Compute.OpenCL
         /// Introduced in OpenCL 1.0
         /// </summary>
         public static CLResultCode GetKernelInfo(
-            CLKernel kernel,
-            KernelInfo paramName,
+            this CLKernel kernel,
+            CLKernel.Info paramName,
             out byte[] paramValue)
         {
             var resultCode = GetKernelInfo(kernel, paramName, UIntPtr.Zero, null, out UIntPtr sizeReturned);
@@ -1317,9 +1330,9 @@ namespace OpenTK.Compute.OpenCL
         /// </summary>
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clGetKernelArgInfo")]
         public static extern CLResultCode GetKernelArgInfo(
-            [In] CLKernel kernel,
+            [In] this CLKernel kernel,
             [In] uint argumentIndex,
-            [In] KernelArgInfo paramName,
+            [In] CLKernel.ArgInfo paramName,
             [In] UIntPtr paramValueSize,
             [Out] byte[] paramValue,
             [Out] out UIntPtr paramSizeReturned);
@@ -1328,9 +1341,9 @@ namespace OpenTK.Compute.OpenCL
         /// Introduced in OpenCL 1.2
         /// </summary>
         public static CLResultCode GetKernelArgInfo(
-            CLKernel kernel,
+           this CLKernel kernel,
             uint argumentIndex,
-            KernelArgInfo paramName,
+            CLKernel.ArgInfo paramName,
             out byte[] paramValue)
         {
             var resultCode = GetKernelArgInfo(kernel, argumentIndex, paramName, UIntPtr.Zero, null, out UIntPtr sizeReturned);
@@ -1345,9 +1358,9 @@ namespace OpenTK.Compute.OpenCL
         /// </summary>
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clGetKernelWorkGroupInfo")]
         public static extern CLResultCode GetKernelWorkGroupInfo(
-            [In] CLKernel kernel,
+            [In] this CLKernel kernel,
             [In] CLDevice device,
-            [In] KernelWorkGroupInfo paramName,
+            [In] CLKernel.WorkGroupInfo paramName,
             [In] UIntPtr paramValueSize,
             [Out] byte[] paramValue,
             [Out] out UIntPtr paramSizeReturned);
@@ -1356,9 +1369,9 @@ namespace OpenTK.Compute.OpenCL
         /// Introduced in OpenCL 1.0
         /// </summary>
         public static CLResultCode GetKernelWorkGroupInfo(
-            CLKernel kernel,
+            this CLKernel kernel,
             CLDevice device,
-            KernelWorkGroupInfo paramName,
+            CLKernel.WorkGroupInfo paramName,
             out byte[] paramValue)
         {
             var resultCode = GetKernelWorkGroupInfo(kernel, device, paramName, UIntPtr.Zero, null, out UIntPtr sizeReturned);
@@ -1373,9 +1386,9 @@ namespace OpenTK.Compute.OpenCL
         /// </summary>
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clGetKernelSubGroupInfo")]
         public static extern CLResultCode GetKernelSubGroupInfo(
-            [In] CLKernel kernel,
+            [In] this CLKernel kernel,
             [In] CLDevice device,
-            [In] KernelSubGroupInfo paramName,
+            [In] CLKernel.SubGroupInfo paramName,
             [In] UIntPtr inputValueSize,
             [In] IntPtr inputValue,
             [In] UIntPtr paramValueSize,
@@ -1386,9 +1399,9 @@ namespace OpenTK.Compute.OpenCL
         /// Introduced in OpenCL 2.1
         /// </summary>
         public static unsafe CLResultCode GetKernelSubGroupInfo<T>(
-            CLKernel kernel,
+            this CLKernel kernel,
             CLDevice device,
-            KernelSubGroupInfo paramName,
+            CLKernel.SubGroupInfo paramName,
             T[] array,
             out byte[] paramValue)
             where T : unmanaged
@@ -1407,9 +1420,9 @@ namespace OpenTK.Compute.OpenCL
         /// Introduced in OpenCL 2.1
         /// </summary>
         public static unsafe CLResultCode GetKernelSubGroupInfo<T>(
-            CLKernel kernel,
+            this CLKernel kernel,
             CLDevice device,
-            KernelSubGroupInfo paramName,
+            CLKernel.SubGroupInfo paramName,
             Span<T> span,
             out byte[] paramValue)
             where T : unmanaged
@@ -1439,7 +1452,7 @@ namespace OpenTK.Compute.OpenCL
         /// <summary>
         /// Introduced in OpenCL 1.0
         /// </summary>
-        public static CLResultCode WaitForEvents(CLEvent[] eventList)
+        public static CLResultCode WaitForEvents(this CLEvent[] eventList)
         {
             return WaitForEvents((uint)eventList.Length, eventList);
         }
@@ -1449,8 +1462,8 @@ namespace OpenTK.Compute.OpenCL
         /// </summary>
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clGetEventInfo")]
         public static extern CLResultCode GetEventInfo(
-            [In] CLEvent @event,
-            [In] EventInfo paramName,
+            [In] this CLEvent @event,
+            [In] CLEvent.Info paramName,
             [In] UIntPtr paramValueSize,
             [Out] byte[] paramValue,
             [Out] out UIntPtr paramSizeReturned);
@@ -1459,8 +1472,8 @@ namespace OpenTK.Compute.OpenCL
         /// Introduced in OpenCL 1.0
         /// </summary>
         public static CLResultCode GetEventInfo(
-            CLEvent @event,
-            EventInfo paramName,
+            this CLEvent @event,
+            CLEvent.Info paramName,
             out byte[] paramValue)
         {
             var resultCode = GetEventInfo(@event, paramName, UIntPtr.Zero, null, out UIntPtr sizeReturned);
@@ -1475,27 +1488,27 @@ namespace OpenTK.Compute.OpenCL
         /// </summary>
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clCreateUserEvent")]
         public static extern CLEvent CreateUserEvent(
-            [In] CLContext context,
+            [In] this CLContext context,
             [Out] out CLResultCode resultCode);
 
         /// <summary>
         /// Introduced in OpenCL 1.0
         /// </summary>
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clRetainEvent")]
-        public static extern CLResultCode RetainEvent([In] CLEvent @event);
+        public static extern CLResultCode RetainEvent([In] this CLEvent @event);
 
         /// <summary>
         /// Introduced in OpenCL 1.0
         /// </summary>
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clReleaseEvent")]
-        public static extern CLResultCode ReleaseEvent([In] CLEvent @event);
+        public static extern CLResultCode ReleaseEvent([In] this CLEvent @event);
 
         /// <summary>
         /// Introduced in OpenCL 1.1
         /// </summary>
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clSetUserEventStatus")]
         public static extern CLResultCode SetUserEventStatus(
-            [In] CLEvent @event,
+            [In] this CLEvent @event,
             [In] int executionStatus);
 
         /// <summary>
@@ -1503,7 +1516,7 @@ namespace OpenTK.Compute.OpenCL
         /// </summary>
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clSetEventCallback")]
         public static extern CLResultCode SetEventCallback(
-            [In] CLEvent eventHandle,
+            [In] this CLEvent eventHandle,
             [In] int commandExecCallbackType,
             [In] IntPtr notifyCallback,
             [In] IntPtr userData);
@@ -1512,7 +1525,7 @@ namespace OpenTK.Compute.OpenCL
         /// Introduced in OpenCL 1.1
         /// </summary>
         public static CLResultCode SetEventCallback(
-            CLEvent eventHandle,
+            this CLEvent eventHandle,
             int callbackType,
             ClEventCallback notifyCallback,
             IntPtr userData)
@@ -1530,7 +1543,7 @@ namespace OpenTK.Compute.OpenCL
         /// </summary>
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clGetEventProfilingInfo")]
         public static extern CLResultCode GetEventProfilingInfo(
-            [In] CLEvent @event,
+            [In] this CLEvent @event,
             [In] ProfilingInfo paramName,
             [In] UIntPtr paramValueSize,
             [Out] byte[] paramValue,
@@ -1540,7 +1553,7 @@ namespace OpenTK.Compute.OpenCL
         /// Introduced in OpenCL 1.0
         /// </summary>
         public static CLResultCode GetEventProfilingInfo(
-            CLEvent @event,
+            this CLEvent @event,
             ProfilingInfo paramName,
             out byte[] paramValue)
         {
@@ -1559,13 +1572,13 @@ namespace OpenTK.Compute.OpenCL
         /// Introduced in OpenCL 1.0
         /// </summary>
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clFlush")]
-        public static extern CLResultCode Flush([In] CLCommandQueue commandQueue);
+        public static extern CLResultCode Flush([In] this CLCommandQueue commandQueue);
 
         /// <summary>
         /// Introduced in OpenCL 1.0
         /// </summary>
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clFinish")]
-        public static extern CLResultCode Finish([In] CLCommandQueue commandQueue);
+        public static extern CLResultCode Finish([In] this CLCommandQueue commandQueue);
 
         #endregion
 
@@ -1576,7 +1589,7 @@ namespace OpenTK.Compute.OpenCL
         /// </summary>
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clEnqueueReadBuffer")]
         public static extern CLResultCode EnqueueReadBuffer(
-            [In] CLCommandQueue commandQueue,
+            [In] this CLCommandQueue commandQueue,
             [In] CLBuffer buffer,
             [In] bool blockingRead,
             [In] UIntPtr offset,
@@ -1590,7 +1603,7 @@ namespace OpenTK.Compute.OpenCL
         /// Introduced in OpenCL1.0
         /// </summary>
         public static unsafe CLResultCode EnqueueReadBuffer<T>(
-            CLCommandQueue commandQueue,
+            this CLCommandQueue commandQueue,
             CLBuffer buffer,
             bool blockingRead,
             UIntPtr offset,
@@ -1612,7 +1625,7 @@ namespace OpenTK.Compute.OpenCL
         /// Introduced in OpenCL 1.0
         /// </summary>
         public static unsafe CLResultCode EnqueueReadBuffer<T>(
-            CLCommandQueue commandQueue,
+           this CLCommandQueue commandQueue,
             CLBuffer buffer,
             bool blockingRead,
             UIntPtr offset,
@@ -1635,7 +1648,7 @@ namespace OpenTK.Compute.OpenCL
         /// </summary>
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clEnqueueReadBufferRect")]
         public static extern CLResultCode EnqueueReadBufferRect(
-            [In] CLCommandQueue commandQueue,
+            [In] this CLCommandQueue commandQueue,
             [In] CLBuffer buffer,
             [In] bool blockingRead,
             [In] UIntPtr[] bufferOffset,
@@ -1654,7 +1667,7 @@ namespace OpenTK.Compute.OpenCL
         /// Introduced in OpenCL 1.1
         /// </summary>
         public static unsafe CLResultCode EnqueueReadBufferRect<T>(
-            CLCommandQueue commandQueue,
+            this CLCommandQueue commandQueue,
             CLBuffer buffer,
             bool blockingRead,
             UIntPtr[] bufferOffset,
@@ -1683,7 +1696,7 @@ namespace OpenTK.Compute.OpenCL
         /// Introduced in OpenCL 1.1
         /// </summary>
         public static unsafe CLResultCode EnqueueReadBufferRect<T>(
-            CLCommandQueue commandQueue,
+            this CLCommandQueue commandQueue,
             CLBuffer buffer,
             bool blockingRead,
             UIntPtr[] bufferOffset,
@@ -1713,7 +1726,7 @@ namespace OpenTK.Compute.OpenCL
         /// </summary>
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clEnqueueWriteBuffer")]
         public static extern CLResultCode EnqueueWriteBuffer(
-            [In] CLCommandQueue commandQueue,
+            [In] this CLCommandQueue commandQueue,
             [In] CLBuffer buffer,
             [In] bool blockingWrite,
             [In] UIntPtr offset,
@@ -1727,7 +1740,7 @@ namespace OpenTK.Compute.OpenCL
         /// Introduced in OpenCL 1.0
         /// </summary>
         public static unsafe CLResultCode EnqueueWriteBuffer<T>(
-            CLCommandQueue commandQueue,
+            this CLCommandQueue commandQueue,
             CLBuffer buffer,
             bool blockingWrite,
             UIntPtr offset,
@@ -1749,7 +1762,7 @@ namespace OpenTK.Compute.OpenCL
         /// Introduced in OpenCL 1.0
         /// </summary>
         public static unsafe CLResultCode EnqueueWriteBuffer<T>(
-            CLCommandQueue commandQueue,
+            this CLCommandQueue commandQueue,
             CLBuffer buffer,
             bool blockingWrite,
             UIntPtr offset,
@@ -1773,7 +1786,7 @@ namespace OpenTK.Compute.OpenCL
         /// </summary>
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clEnqueueWriteBufferRect")]
         public static extern CLResultCode EnqueueWriteBufferRect(
-            [In] CLCommandQueue commandQueue,
+            [In] this CLCommandQueue commandQueue,
             [In] CLBuffer buffer,
             [In] bool blockingWrite,
             [In] UIntPtr[] bufferOffset,
@@ -1792,7 +1805,7 @@ namespace OpenTK.Compute.OpenCL
         /// Introduced in OpenCL 1.1
         /// </summary>
         public static unsafe CLResultCode EnqueueWriteBufferRect<T>(
-            CLCommandQueue commandQueue, CLBuffer buffer,
+            this CLCommandQueue commandQueue, CLBuffer buffer,
             bool blockingWrite,
             UIntPtr[] bufferOffset,
             UIntPtr[] hostOffset,
@@ -1820,7 +1833,7 @@ namespace OpenTK.Compute.OpenCL
         /// Introduced in OpenCL 1.1
         /// </summary>
         public static unsafe CLResultCode EnqueueWriteBufferRect<T>(
-            CLCommandQueue commandQueue,
+            this CLCommandQueue commandQueue,
             CLBuffer buffer,
             bool blockingWrite,
             UIntPtr[] bufferOffset,
@@ -1850,7 +1863,7 @@ namespace OpenTK.Compute.OpenCL
         /// </summary>
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clEnqueueFillBuffer")]
         public static extern CLResultCode EnqueueFillBuffer(
-            [In] CLCommandQueue commandQueue,
+            [In] this CLCommandQueue commandQueue,
             [In] CLBuffer buffer,
             [In] IntPtr pattern,
             [In] UIntPtr patternSize,
@@ -1865,7 +1878,7 @@ namespace OpenTK.Compute.OpenCL
         /// Introduced in OpenCL 1.2
         /// </summary>
         public static unsafe CLResultCode EnqueueFillBuffer<T>(
-            CLCommandQueue commandQueue,
+            this CLCommandQueue commandQueue,
             CLBuffer buffer,
             T[] pattern,
             UIntPtr offset,
@@ -1886,7 +1899,7 @@ namespace OpenTK.Compute.OpenCL
         /// </summary>
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clEnqueueCopyBuffer")]
         public static extern CLResultCode EnqueueCopyBuffer(
-            [In] CLCommandQueue commandQueue,
+            [In] this CLCommandQueue commandQueue,
             [In] CLBuffer srcBuffer,
             [In] CLBuffer dstBuffer,
             [In] UIntPtr srcOffset,
@@ -1900,7 +1913,7 @@ namespace OpenTK.Compute.OpenCL
         /// Introduced in OpenCL 1.0
         /// </summary>
         public static CLResultCode EnqueueCopyBuffer(
-            CLCommandQueue commandQueue,
+           this CLCommandQueue commandQueue,
             CLBuffer srcBuffer,
             CLBuffer dstBuffer,
             UIntPtr srcOffset,
@@ -1918,7 +1931,7 @@ namespace OpenTK.Compute.OpenCL
         /// </summary>
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clEnqueueCopyBufferRect")]
         public static extern CLResultCode EnqueueCopyBufferRect(
-            [In] CLCommandQueue commandQueue,
+            [In] this CLCommandQueue commandQueue,
             [In] CLBuffer srcBuffer,
             [In] CLBuffer dstBuffer,
             [In] UIntPtr[] srcOrigin,
@@ -1936,7 +1949,7 @@ namespace OpenTK.Compute.OpenCL
         /// Introduced in OpenCL 1.1
         /// </summary>
         public static CLResultCode EnqueueCopyBufferRect(
-            CLCommandQueue commandQueue,
+            this CLCommandQueue commandQueue,
             CLBuffer srcBuffer,
             CLBuffer dstBuffer,
             UIntPtr[] srcOrigin,
@@ -1958,7 +1971,7 @@ namespace OpenTK.Compute.OpenCL
         /// </summary>
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clEnqueueReadImage")]
         public static extern CLResultCode EnqueueReadImage(
-            [In] CLCommandQueue commandQueue,
+            [In] this CLCommandQueue commandQueue,
             [In] CLImage image,
             [In] bool blockingRead,
             [In] UIntPtr[] origin,
@@ -1974,7 +1987,7 @@ namespace OpenTK.Compute.OpenCL
         /// Introduced in OpenCL 1.0
         /// </summary>
         public static unsafe CLResultCode EnqueueReadImage<T>(
-            CLCommandQueue commandQueue,
+           this CLCommandQueue commandQueue,
             CLImage image,
             bool blockingRead,
             UIntPtr[] origin,
@@ -1997,7 +2010,7 @@ namespace OpenTK.Compute.OpenCL
         /// Introduced in OpenCL 1.0
         /// </summary>
         public static unsafe CLResultCode EnqueueReadImage<T>(
-            CLCommandQueue commandQueue,
+           this CLCommandQueue commandQueue,
             CLImage image,
             bool blockingRead,
             UIntPtr[] origin,
@@ -2021,7 +2034,7 @@ namespace OpenTK.Compute.OpenCL
         /// </summary>
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clEnqueueWriteImage")]
         public static extern CLResultCode EnqueueWriteImage(
-            [In] CLCommandQueue commandQueue,
+            [In] this CLCommandQueue commandQueue,
             [In] CLImage image,
             [In] bool blockingWrite,
             [In] UIntPtr[] origin,
@@ -2037,7 +2050,7 @@ namespace OpenTK.Compute.OpenCL
         /// Introduced in OpenCL 1.0
         /// </summary>
         public static unsafe CLResultCode EnqueueWriteImage<T>(
-            CLCommandQueue commandQueue,
+           this CLCommandQueue commandQueue,
             CLImage image,
             bool blockingWrite,
             UIntPtr[] origin,
@@ -2060,7 +2073,7 @@ namespace OpenTK.Compute.OpenCL
         /// Introduced in OpenCL 1.0
         /// </summary>
         public static unsafe CLResultCode EnqueueWriteImage<T>(
-            CLCommandQueue commandQueue,
+            this CLCommandQueue commandQueue,
             CLImage image,
             bool blockingWrite,
             UIntPtr[] origin,
@@ -2084,7 +2097,7 @@ namespace OpenTK.Compute.OpenCL
         /// </summary>
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clEnqueueFillImage")]
         public static extern CLResultCode EnqueueFillImage(
-            [In] CLCommandQueue commandQueue,
+            [In] this CLCommandQueue commandQueue,
             [In] CLImage image,
             [In] IntPtr fillColor,
             [In] UIntPtr[] origin,
@@ -2097,7 +2110,7 @@ namespace OpenTK.Compute.OpenCL
         /// Introduced in OpenCL 1.2
         /// </summary>
         public static CLResultCode EnqueueFillImage(
-            CLCommandQueue commandQueue,
+            this CLCommandQueue commandQueue,
             CLImage image,
             IntPtr fillColor,
             UIntPtr[] origin,
@@ -2114,7 +2127,7 @@ namespace OpenTK.Compute.OpenCL
         /// </summary>
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clEnqueueCopyImage")]
         public static extern CLResultCode EnqueueCopyImage(
-            [In] CLCommandQueue commandQueue,
+            [In] this CLCommandQueue commandQueue,
             [In] CLImage srcImage,
             [In] CLImage dstImage,
             [In] UIntPtr[] srcOrigin,
@@ -2128,7 +2141,7 @@ namespace OpenTK.Compute.OpenCL
         /// Introduced in OpenCL 1.0
         /// </summary>
         public static CLResultCode EnqueueCopyImage(
-            CLCommandQueue commandQueue,
+            this CLCommandQueue commandQueue,
             CLImage srcImage,
             CLImage dstImage,
             UIntPtr[] srcOrigin,
@@ -2146,7 +2159,7 @@ namespace OpenTK.Compute.OpenCL
         /// </summary>
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clEnqueueCopyImageToBuffer")]
         public static extern CLResultCode EnqueueCopyImageToBuffer(
-            [In] CLCommandQueue commandQueue,
+            [In] this CLCommandQueue commandQueue,
             [In] CLImage srcImage,
             [In] CLBuffer dstBuffer,
             [In] UIntPtr[] srcOrigin,
@@ -2160,7 +2173,7 @@ namespace OpenTK.Compute.OpenCL
         /// Introduced in OpenCL 1.0
         /// </summary>
         public static CLResultCode EnqueueCopyImageToBuffer(
-            CLCommandQueue commandQueue,
+            this CLCommandQueue commandQueue,
             CLImage srcImage,
             CLBuffer dstBuffer,
             UIntPtr[] srcOrigin,
@@ -2178,7 +2191,7 @@ namespace OpenTK.Compute.OpenCL
         /// </summary>
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clEnqueueCopyBufferToImage")]
         public static extern CLResultCode EnqueueCopyBufferToImage(
-            [In] CLCommandQueue commandQueue,
+            [In] this CLCommandQueue commandQueue,
             [In] CLBuffer srcBuffer,
             [In] CLImage dstImage,
             [In] UIntPtr srcOffset,
@@ -2192,7 +2205,7 @@ namespace OpenTK.Compute.OpenCL
         /// Introduced in OpenCL 1.0
         /// </summary>
         public static CLResultCode EnqueueCopyBufferToImage(
-            CLCommandQueue commandQueue,
+           this CLCommandQueue commandQueue,
             CLBuffer srcBuffer,
             CLImage dstImage,
             UIntPtr srcOffset,
@@ -2210,7 +2223,7 @@ namespace OpenTK.Compute.OpenCL
         /// </summary>
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clEnqueueMapBuffer")]
         public static extern IntPtr EnqueueMapBuffer(
-            [In] CLCommandQueue commandQueue,
+            [In] this CLCommandQueue commandQueue,
             [In] CLBuffer buffer,
             [In] bool blockingMap,
             [In] MapFlags flags,
@@ -2225,7 +2238,7 @@ namespace OpenTK.Compute.OpenCL
         /// Introduced in OpenCL 1.0
         /// </summary>
         public static IntPtr EnqueueMapBuffer(
-            CLCommandQueue commandQueue,
+            this CLCommandQueue commandQueue,
             CLBuffer buffer,
             bool blockingMap,
             MapFlags flags,
@@ -2244,7 +2257,7 @@ namespace OpenTK.Compute.OpenCL
         /// </summary>
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clEnqueueMapImage")]
         public static extern IntPtr EnqueueMapImage(
-            [In] CLCommandQueue commandQueue,
+            [In] this CLCommandQueue commandQueue,
             [In] CLImage image,
             [In] bool blockingMap,
             [In] MapFlags flags,
@@ -2261,7 +2274,7 @@ namespace OpenTK.Compute.OpenCL
         /// Introduced in OpenCL 1.0
         /// </summary>
         public static IntPtr EnqueueMapImage(
-            CLCommandQueue commandQueue,
+           this CLCommandQueue commandQueue,
             CLImage image,
             bool blockingMap,
             MapFlags flags,
@@ -2282,7 +2295,7 @@ namespace OpenTK.Compute.OpenCL
         /// </summary>
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clEnqueueUnmapMemObject")]
         public static extern CLResultCode EnqueueUnmapMemoryObject(
-            [In] CLCommandQueue commandQueue,
+            [In] this CLCommandQueue commandQueue,
             [In] IntPtr memoryObject,
             [In] IntPtr mapperPtr,
             [In] uint numberOfEventsInWaitList,
@@ -2293,7 +2306,7 @@ namespace OpenTK.Compute.OpenCL
         /// Introduced in OpenCL 1.0
         /// </summary>
         public static CLResultCode EnqueueUnmapMemoryObject(
-            CLCommandQueue commandQueue,
+            this CLCommandQueue commandQueue,
             IntPtr memoryObject,
             IntPtr mapperPtr,
             CLEvent[] eventWaitList,
@@ -2308,7 +2321,7 @@ namespace OpenTK.Compute.OpenCL
         /// </summary>
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clEnqueueUnmapMemObject")]
         public static extern CLResultCode EnqueueUnmapMemoryObject(
-            [In] CLCommandQueue commandQueue,
+            [In] this CLCommandQueue commandQueue,
             [In] CLBuffer memoryObject,
             [In] IntPtr mapperPtr,
             [In] uint numberOfEventsInWaitList,
@@ -2319,7 +2332,7 @@ namespace OpenTK.Compute.OpenCL
         /// Introduced in OpenCL 1.0
         /// </summary>
         public static CLResultCode EnqueueUnmapMemoryObject(
-            CLCommandQueue commandQueue,
+            this CLCommandQueue commandQueue,
             CLBuffer memoryObject,
             IntPtr mapperPtr,
             CLEvent[] eventWaitList,
@@ -2334,7 +2347,7 @@ namespace OpenTK.Compute.OpenCL
         /// </summary>
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clEnqueueUnmapMemObject")]
         public static extern CLResultCode EnqueueUnmapMemoryObject(
-            [In] CLCommandQueue commandQueue,
+            [In] this CLCommandQueue commandQueue,
             [In] CLImage memoryObject,
             [In] IntPtr mapperPtr,
             [In] uint numberOfEventsInWaitList,
@@ -2345,7 +2358,7 @@ namespace OpenTK.Compute.OpenCL
         /// Introduced in OpenCL 1.0
         /// </summary>
         public static CLResultCode EnqueueUnmapMemoryObject(
-            CLCommandQueue commandQueue,
+            this CLCommandQueue commandQueue,
             CLImage memoryObject,
             IntPtr mapperPtr,
             CLEvent[] eventWaitList,
@@ -2360,7 +2373,7 @@ namespace OpenTK.Compute.OpenCL
         /// </summary>
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clEnqueueMigrateMemObjects")]
         public static extern CLResultCode EnqueueMigrateMemoryObjects(
-            [In] CLCommandQueue commandQueue,
+            [In] this CLCommandQueue commandQueue,
             [In] uint numberOfMemoryObjects,
             [In] IntPtr[] memoryObjects,
             [In] MemoryMigrationFlags flags,
@@ -2372,7 +2385,7 @@ namespace OpenTK.Compute.OpenCL
         /// Introduced in OpenCL 1.2
         /// </summary>
         public static CLResultCode EnqueueMigrateMemoryObjects(
-            CLCommandQueue commandQueue,
+            this CLCommandQueue commandQueue,
             IntPtr[] memoryObjects,
             MemoryMigrationFlags flags,
             CLEvent[] eventWaitList,
@@ -2387,7 +2400,7 @@ namespace OpenTK.Compute.OpenCL
         /// </summary>
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clEnqueueNDRangeKernel")]
         public static extern CLResultCode EnqueueNDRangeKernel(
-            [In] CLCommandQueue commandQueue,
+            [In] this CLCommandQueue commandQueue,
             [In] CLKernel kernel,
             [In] uint workDimension,
             [In] UIntPtr[] globalWorkOffset,
@@ -2401,7 +2414,7 @@ namespace OpenTK.Compute.OpenCL
         /// Introduced in OpenCL 1.0
         /// </summary>
         public static CLResultCode EnqueueNDRangeKernel(
-            CLCommandQueue commandQueue,
+            this CLCommandQueue commandQueue,
             CLKernel kernel,
             uint workDimension,
             UIntPtr[] globalWorkOffset,
@@ -2419,7 +2432,7 @@ namespace OpenTK.Compute.OpenCL
         /// </summary>
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clEnqueueNativeKernel")]
         public static extern CLResultCode EnqueueNativeKernel(
-            [In] CLCommandQueue commandQueue,
+            [In] this CLCommandQueue commandQueue,
             [In] IntPtr userFunction,
             [In] IntPtr[] arguments,
             [In] UIntPtr argumentSize,
@@ -2434,7 +2447,7 @@ namespace OpenTK.Compute.OpenCL
         /// Introduced in OpenCL 1.0
         /// </summary>
         public static CLResultCode EnqueueNativeKernel(
-            CLCommandQueue commandQueue,
+            this CLCommandQueue commandQueue,
             IntPtr userFunction,
             IntPtr[] arguments,
             UIntPtr argumentSize,
@@ -2452,7 +2465,7 @@ namespace OpenTK.Compute.OpenCL
         /// </summary>
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clEnqueueMarkerWithWaitList")]
         public static extern CLResultCode EnqueueMarkerWithWaitList(
-            [In] CLCommandQueue commandQueue,
+            [In] this CLCommandQueue commandQueue,
             [In] uint numberOfMemoryObjects,
             [In] IntPtr[] memoryObjects,
             [In] IntPtr argumentsMemoryLocation,
@@ -2464,7 +2477,7 @@ namespace OpenTK.Compute.OpenCL
         /// Introduced in OpenCL 1.2
         /// </summary>
         public static CLResultCode EnqueueMarkerWithWaitList(
-            CLCommandQueue commandQueue,
+           this CLCommandQueue commandQueue,
             IntPtr[] memoryObjects,
             IntPtr argumentsMemoryLocation,
             CLEvent[] eventWaitList,
@@ -2479,7 +2492,7 @@ namespace OpenTK.Compute.OpenCL
         /// </summary>
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clEnqueueBarrierWithWaitList")]
         public static extern CLResultCode EnqueueBarrierWithWaitList(
-            [In] CLCommandQueue commandQueue,
+            [In] this CLCommandQueue commandQueue,
             [In] uint numberOfMemoryObjects,
             [In] IntPtr[] memoryObjects,
             [In] IntPtr argumentsMemoryLocation,
@@ -2491,7 +2504,7 @@ namespace OpenTK.Compute.OpenCL
         /// Introduced in OpenCL 1.2
         /// </summary>
         public static CLResultCode EnqueueBarrierWithWaitList(
-            CLCommandQueue commandQueue,
+            this CLCommandQueue commandQueue,
             IntPtr[] memoryObjects,
             IntPtr argumentsMemoryLocation,
             CLEvent[] eventWaitList,
@@ -2506,7 +2519,7 @@ namespace OpenTK.Compute.OpenCL
         /// </summary>
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clEnqueueSVMFree")]
         public static extern CLResultCode EnqueueSVMFree(
-            [In] CLCommandQueue commandQueue,
+            [In] this CLCommandQueue commandQueue,
             [In] uint numberOfSvmPointers,
             [In] IntPtr[] svmPointers,
             [In] IntPtr svmFreePointersCallback,
@@ -2519,7 +2532,7 @@ namespace OpenTK.Compute.OpenCL
         /// Introduced in OpenCL 2.0
         /// </summary>
         public static CLResultCode EnqueueSVMFree(
-            CLCommandQueue commandQueue,
+            this CLCommandQueue commandQueue,
             IntPtr[] svmPointers,
             ClEventCallback svmFreePointersCallback,
             IntPtr userData,
@@ -2535,7 +2548,7 @@ namespace OpenTK.Compute.OpenCL
         /// </summary>
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clEnqueueSVMMemcpy")]
         public static extern CLResultCode EnqueueSvmMemoryCopy(
-            [In] CLCommandQueue commandQueue,
+            [In] this CLCommandQueue commandQueue,
             [In] bool blockingCopy,
             [In] IntPtr dstPointer,
             [In] IntPtr srcPointer,
@@ -2548,7 +2561,7 @@ namespace OpenTK.Compute.OpenCL
         /// Introduced in OpenCL 2.0
         /// </summary>
         public static CLResultCode EnqueueSvmMemoryCopy(
-            CLCommandQueue commandQueue,
+           this CLCommandQueue commandQueue,
             bool blockingCopy,
             IntPtr dstPointer,
             IntPtr srcPointer,
@@ -2565,7 +2578,7 @@ namespace OpenTK.Compute.OpenCL
         /// </summary>
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clEnqueueSVMMemFill")]
         public static extern CLResultCode EnqueueSvmMemoryFill(
-            [In] CLCommandQueue commandQueue,
+            [In] this CLCommandQueue commandQueue,
             [In] IntPtr svmPointer,
             [In] IntPtr pattern,
             [In] UIntPtr patternSize,
@@ -2578,7 +2591,7 @@ namespace OpenTK.Compute.OpenCL
         /// Introduced in OpenCL 2.0
         /// </summary>
         public static unsafe CLResultCode EnqueueSvmMemoryFill<T>(
-            CLCommandQueue commandQueue,
+            this CLCommandQueue commandQueue,
             IntPtr svmPointer,
             T[] pattern,
             UIntPtr sizeReturned,
@@ -2597,7 +2610,7 @@ namespace OpenTK.Compute.OpenCL
         /// Introduced in OpenCL 2.0
         /// </summary>
         public static unsafe CLResultCode EnqueueSvmMemoryFill<T>(
-            CLCommandQueue commandQueue,
+            this CLCommandQueue commandQueue,
             IntPtr svmPointer,
             Span<T> pattern,
             UIntPtr sizeReturned,
@@ -2617,7 +2630,7 @@ namespace OpenTK.Compute.OpenCL
         /// </summary>
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clEnqueueSVMMap")]
         public static extern CLResultCode EnqueueSvmMap(
-            [In] CLCommandQueue commandQueue,
+            [In] this CLCommandQueue commandQueue,
             [In] bool blockingMap,
             [In] MapFlags mapFlag,
             [In] IntPtr svmPointer,
@@ -2630,7 +2643,7 @@ namespace OpenTK.Compute.OpenCL
         /// Introduced in OpenCL 2.0
         /// </summary>
         public static CLResultCode EnqueueSvmMap(
-            CLCommandQueue commandQueue,
+            this CLCommandQueue commandQueue,
             bool blockingMap,
             MapFlags mapFlag,
             IntPtr svmPointer,
@@ -2647,7 +2660,7 @@ namespace OpenTK.Compute.OpenCL
         /// </summary>
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clEnqueueSVMUnmap")]
         public static extern CLResultCode EnqueueSVMUnmap(
-            [In] CLCommandQueue commandQueue,
+            [In] this CLCommandQueue commandQueue,
             [In] IntPtr svmPointer,
             [In] uint numberOfEventsInWaitList,
             [In] CLEvent[] eventWaitList,
@@ -2657,7 +2670,7 @@ namespace OpenTK.Compute.OpenCL
         /// Introduced in OpenCL 2.0
         /// </summary>
         public static CLResultCode EnqueueSVMUnmap(
-            CLCommandQueue commandQueue,
+            this CLCommandQueue commandQueue,
             IntPtr svmPointer,
             CLEvent[] eventWaitList,
             out CLEvent @event)
@@ -2670,7 +2683,8 @@ namespace OpenTK.Compute.OpenCL
         /// Introduced in OpenCL 2.1
         /// </summary>
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clEnqueueSVMMigrateMem")]
-        public static extern CLResultCode EnqueueSvmMigrateMemory([In] CLCommandQueue commandQueue,
+        public static extern CLResultCode EnqueueSvmMigrateMemory(
+            [In] this CLCommandQueue commandQueue,
             [In] uint numberOfSvmPointers,
             [In] IntPtr[] svmPointers,
             [In] UIntPtr[] sizes,
@@ -2682,7 +2696,8 @@ namespace OpenTK.Compute.OpenCL
         /// <summary>
         /// Introduced in OpenCL 2.1
         /// </summary>
-        public static CLResultCode EnqueueSvmMigrateMemory([In] CLCommandQueue commandQueue,
+        public static CLResultCode EnqueueSvmMigrateMemory(
+            [In] this CLCommandQueue commandQueue,
             IntPtr[] svmPointers,
             UIntPtr[] sizes,
             MemoryMigrationFlags memoryMigrationFlags,
@@ -2702,7 +2717,7 @@ namespace OpenTK.Compute.OpenCL
         /// </summary>
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clGetExtensionFunctionAddressForPlatform")]
         public static extern IntPtr GetExtensionFunctionAddressForPlatform(
-            [In] CLPlatform platform,
+            [In] this CLPlatform platform,
             [In] string functionName);
 
         #endregion
@@ -2800,7 +2815,7 @@ namespace OpenTK.Compute.OpenCL
         public static extern CLCommandQueue CreateCommandQueue(
             [In] CLContext context,
             [In] CLDevice device,
-            [In] CommandQueueProperty properties,
+            [In] CLCommandQueue.Properties properties,
             [Out] out CLResultCode resultCode);
 
         /// <summary>
@@ -2811,8 +2826,8 @@ namespace OpenTK.Compute.OpenCL
         public static extern CLSampler CreateSampler(
             [In] CLContext context,
             [In] uint normalizedCoordinates,
-            [In] AddressingMode addressingMode,
-            [In] FilterMode filterMode,
+            [In] CLSampler.AddressingMode addressingMode,
+            [In] CLSampler.FilterMode filterMode,
             [Out] out CLResultCode resultCode);
 
         /// <summary>

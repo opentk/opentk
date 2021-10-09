@@ -1,5 +1,5 @@
 //
-// CLPipeProperties.cs
+// CLImageProperties.cs
 //
 // Copyright (C) 2020 OpenTK
 //
@@ -16,28 +16,28 @@ namespace OpenTK.Compute.OpenCL
     /// <summary>
     /// Convenience class for handling CLContext Properties
     /// </summary>
-    public class CLPipeProperties
+    public class CLImageProperties
     {
         /// <summary>
         /// Gets or sets additional properties for forward compatibility
         /// </summary>
         public IntPtr[] AdditionalProperties { get; set; }
 
-        public CLPipeProperties()
+        public CLImageProperties()
         {
 
         }
 
         /// <summary>
-        /// Converts these context properties to a <see cref="CL.CreatePipe(CLContext, MemoryFlags, uint, uint, IntPtr[], out CLResultCode)"/> compatible list.
-        /// Alternativly, consider using the more convenient <see cref="CL.CreatePipe(CLPipeProperties, CLDevice[], IntPtr, IntPtr, out CLResultCode)"/> overload.
+        /// Converts these context properties to a <see cref="CL.CreateImageWithProperties(CLContext, MemoryFlags, uint, uint, IntPtr[], out CLResultCode)"/> compatible list.
+        /// Alternativly, consider using the more convenient <see cref="CL.CreateImageWithProperties(CLImageProperties, CLDevice[], IntPtr, IntPtr, out CLResultCode)"/> overload.
         /// </summary>
         /// <returns>The attibute list in the form of a span.</returns>
         public IntPtr[] CreatePropertyArray()
         {
             List<IntPtr> propertyList = new List<IntPtr>();
 
-            void AddProperty(IntPtr value, CLPipe.Property property)
+            void AddProperty(IntPtr value, CLImage.Property property)
             {
                 if (value != null)
                 {
@@ -61,17 +61,17 @@ namespace OpenTK.Compute.OpenCL
         /// Parses a CL sampler property list.
         /// </summary>
         /// <param name="propertyArray">The CL sampler attribute list.</param>
-        /// <returns>The parsed <see cref="CLPipeProperties"/> object.</returns>
-        internal static CLPipeProperties FromArray(IntPtr[] propertyArray)
+        /// <returns>The parsed <see cref="CLImageProperties"/> object.</returns>
+        internal static CLImageProperties FromArray(IntPtr[] propertyArray)
         {
             List<IntPtr> extra = new List<IntPtr>();
-            CLPipeProperties properties = new CLPipeProperties();
+            CLImageProperties properties = new CLImageProperties();
 
             float GetFloat(IntPtr buf)
             {
-                var buffer = new float[1];
-                Marshal.Copy(buf, buffer, 0, 1);
-                return buffer[0];
+                var Image = new float[1];
+                Marshal.Copy(buf, Image, 0, 1);
+                return Image[0];
             }
 
             void ParseAttribute(IntPtr @enum, IntPtr value)

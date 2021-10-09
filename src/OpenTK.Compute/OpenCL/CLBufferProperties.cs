@@ -1,5 +1,5 @@
 //
-// CLPipeProperties.cs
+// CLBufferProperties.cs
 //
 // Copyright (C) 2020 OpenTK
 //
@@ -16,28 +16,28 @@ namespace OpenTK.Compute.OpenCL
     /// <summary>
     /// Convenience class for handling CLContext Properties
     /// </summary>
-    public class CLPipeProperties
+    public class CLBufferProperties
     {
         /// <summary>
         /// Gets or sets additional properties for forward compatibility
         /// </summary>
         public IntPtr[] AdditionalProperties { get; set; }
 
-        public CLPipeProperties()
+        public CLBufferProperties()
         {
 
         }
 
         /// <summary>
-        /// Converts these context properties to a <see cref="CL.CreatePipe(CLContext, MemoryFlags, uint, uint, IntPtr[], out CLResultCode)"/> compatible list.
-        /// Alternativly, consider using the more convenient <see cref="CL.CreatePipe(CLPipeProperties, CLDevice[], IntPtr, IntPtr, out CLResultCode)"/> overload.
+        /// Converts these context properties to a <see cref="CL.CreateBufferWithProperties(CLContext, MemoryFlags, uint, uint, IntPtr[], out CLResultCode)"/> compatible list.
+        /// Alternativly, consider using the more convenient <see cref="CL.CreateBufferWithProperties(CLBufferProperties, CLDevice[], IntPtr, IntPtr, out CLResultCode)"/> overload.
         /// </summary>
         /// <returns>The attibute list in the form of a span.</returns>
         public IntPtr[] CreatePropertyArray()
         {
             List<IntPtr> propertyList = new List<IntPtr>();
 
-            void AddProperty(IntPtr value, CLPipe.Property property)
+            void AddProperty(IntPtr value, CLBuffer.Property property)
             {
                 if (value != null)
                 {
@@ -61,11 +61,11 @@ namespace OpenTK.Compute.OpenCL
         /// Parses a CL sampler property list.
         /// </summary>
         /// <param name="propertyArray">The CL sampler attribute list.</param>
-        /// <returns>The parsed <see cref="CLPipeProperties"/> object.</returns>
-        internal static CLPipeProperties FromArray(IntPtr[] propertyArray)
+        /// <returns>The parsed <see cref="CLBufferProperties"/> object.</returns>
+        internal static CLBufferProperties FromArray(IntPtr[] propertyArray)
         {
             List<IntPtr> extra = new List<IntPtr>();
-            CLPipeProperties properties = new CLPipeProperties();
+            CLBufferProperties properties = new CLBufferProperties();
 
             float GetFloat(IntPtr buf)
             {

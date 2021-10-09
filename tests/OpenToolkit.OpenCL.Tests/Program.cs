@@ -55,7 +55,7 @@ namespace OpenToolkit.OpenCL.Tests
                     Console.WriteLine(Encoding.ASCII.GetString(val));
                 }
 
-                CLContext context = CL.CreateContext(IntPtr.Zero, (uint)deviceIds.Length, deviceIds, IntPtr.Zero,
+                CLContext context = CL.CreateContext(new[]{ IntPtr.Zero}, (uint)deviceIds.Length, deviceIds, IntPtr.Zero,
 					IntPtr.Zero, out resultCode);
                 HandleResultCode(resultCode, "CL.CreateContext");
 
