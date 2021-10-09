@@ -63,5 +63,12 @@ namespace OpenTK.Compute.OpenCL
             Properties = 0x1082,
             NumberOfDevices = 0x1083
         }
+
+        [Flags]
+        public enum MemoryInitializeKHR  : ulong
+        {
+            Local = 1<<0,
+            Private = 1<<1,
+        }
     }
 }
