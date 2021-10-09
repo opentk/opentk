@@ -70,5 +70,18 @@ namespace OpenTK.Compute.Tests
             Assert.AreEqual(CLResultCode.Success, resultCode);
             Assert.IsTrue(paramValue.Length > 0);
         }
+
+        [TestMethod]
+        public void SetContextDestructorCallback()
+        {
+            var properties = new CLContextProperties(platform, false);
+            var context = properties.CreateContextFromType(CLDevice.Type.Default, null, IntPtr.Zero, out _);
+            bool callBackMade = false;
+            void callBack(IntPtr waitEvent, IntPtr userData){ callBackMade = true; }
+            var resultCode = context.SetContextDestructorCallback(callBack, IntPtr.Zero);
+            Assert.AreEqual(CLResultCode.Success, resultCode);
+            context.ReleaseContext();
+            Assert.IsTrue(callBackMade);
+        }
     }
 }

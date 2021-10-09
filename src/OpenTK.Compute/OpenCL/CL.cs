@@ -309,6 +309,27 @@ namespace OpenTK.Compute.OpenCL
             return GetContextInfo(context, paramName, sizeReturned, paramValue, out _);
         }
 
+
+        /// <summary>
+        /// Introduced in OpenCL 3.0
+        /// </summary>
+        [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clSetContextDestructorCallback")]
+        public static extern CLResultCode SetContextDestructorCallback(
+            [In] this CLContext context,
+            [In] IntPtr callback,
+            [In] IntPtr userData);
+
+        /// <summary>
+        /// Introduced in OpenCL 3.0
+        /// </summary>
+        public static CLResultCode SetContextDestructorCallback(
+            this CLContext context,
+            ClEventCallback callback,
+            IntPtr userData)
+        {
+            return SetContextDestructorCallback(context, callback == null ? IntPtr.Zero : Marshal.GetFunctionPointerForDelegate(callback), userData);
+        }
+
         #endregion
 
         #region CommandQueue API
