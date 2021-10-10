@@ -1,9 +1,11 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenTK.Compute.OpenCL;
+using System;
+using System.Text;
 
 namespace OpenTK.Compute.Tests
 {
-	[TestClass]
+    [TestClass]
 	public class PlatformAPITest
     {
         [TestMethod]
@@ -16,16 +18,16 @@ namespace OpenTK.Compute.Tests
         }
 
         [TestMethod]
-        [DataRow(CLPlatform.Info.Profile)]
-        [DataRow(CLPlatform.Info.Version)]
-        [DataRow(CLPlatform.Info.Name)]
-        [DataRow(CLPlatform.Info.Vendor)]
-        [DataRow(CLPlatform.Info.Extensions)]
-        [DataRow(CLPlatform.Info.HostTimerResolution)]
-        [DataRow(CLPlatform.Info.NumericVersion)]
-        [DataRow(CLPlatform.Info.ExtensionsWithVersion)]
-        [DataRow(CLPlatform.Info.PlatformIcdSuffix)]
-        public void GetPlatformInfo(CLPlatform.Info paramName)
+        [DataRow(PlatformInfo.Profile)]
+        [DataRow(PlatformInfo.Version)]
+        [DataRow(PlatformInfo.Name)]
+        [DataRow(PlatformInfo.Vendor)]
+        [DataRow(PlatformInfo.Extensions)]
+        [DataRow(PlatformInfo.HostTimerResolution)]
+        [DataRow(PlatformInfo.NumericVersion)]
+        [DataRow(PlatformInfo.ExtensionsWithVersion)]
+        [DataRow(PlatformInfo.PlatformIcdSuffix)]
+        public void GetPlatformInfo(PlatformInfo paramName)
         {
             CL.GetPlatformIds(out CLPlatform[] platformIds);
 
@@ -40,7 +42,23 @@ namespace OpenTK.Compute.Tests
         [TestMethod]
         public void GetExtensionFunctionAddressForPlatform()
         {
-            Assert.Inconclusive();
+            CL.GetPlatformIds(out CLPlatform[] platformIds);
+            foreach (var platform in platformIds)
+            {
+                CL.GetPlatformInfo(platform, PlatformInfo.Extensions, out byte[] bytes);
+                var extensions = Encoding.ASCII.GetString(bytes).Split(" ");
+                int extensionsFound = 0;
+                for (int i = 0; i< extensions.Length -1; i++)
+                {
+                    platform.SupportsPlatformExtension(extensions[i], out bool success);
+                    var address = platform.GetExtensionFunctionAddressForPlatform(extensions[i]);
+                    // Only returns a valid address for non-core extensions
+                    if (address != IntPtr.Zero) extensionsFound++;
+                }
+
+                if (extensionsFound == 0)
+                    Assert.Inconclusive("No non-core extension addresses found amongst: "+ Encoding.ASCII.GetString(bytes));
+            }
         }
     }
 }

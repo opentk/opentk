@@ -1,6 +1,8 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenTK.Compute.OpenCL;
+using System;
 using System.Linq;
+using System.Text;
 
 namespace OpenTK.Compute.Tests
 {
@@ -18,18 +20,18 @@ namespace OpenTK.Compute.Tests
         [TestMethod]
         public void GetDeviceIDs()
         {
-            var resultCode = platform.GetDeviceIds(CLDevice.Type.All, out CLDevice[] deviceIds);
+            var resultCode = platform.GetDeviceIds(DeviceType.All, out CLDevice[] deviceIds);
 
             Assert.AreEqual(CLResultCode.Success, resultCode);
             Assert.IsTrue(deviceIds.Length > 0);
         }
 
         [TestMethod]
-        [DataRow(CLDevice.Type.Accelerator)]
-        [DataRow(CLDevice.Type.Cpu)]
-        [DataRow(CLDevice.Type.Default)]
-        [DataRow(CLDevice.Type.Gpu)]
-        public void GetDeviceIds_DistinctType(CLDevice.Type paramName)
+        [DataRow(DeviceType.Accelerator)]
+        [DataRow(DeviceType.Cpu)]
+        [DataRow(DeviceType.Default)]
+        [DataRow(DeviceType.Gpu)]
+        public void GetDeviceIds_DistinctType(DeviceType paramName)
         {
             var resultCode = platform.GetDeviceIds(paramName, out _);
 
@@ -38,117 +40,117 @@ namespace OpenTK.Compute.Tests
 
 
         [TestMethod]
-        [DataRow(CLDevice.Info.Type)]
-        [DataRow(CLDevice.Info.VendorId)]
-        [DataRow(CLDevice.Info.MaximumComputeUnits)]
-        [DataRow(CLDevice.Info.MaximumWorkItemDimensions)]
-        [DataRow(CLDevice.Info.MaximumWorkGroupSize)]
-        [DataRow(CLDevice.Info.MaximumWorkItemSizes)]
-        [DataRow(CLDevice.Info.PreferredVectorWidthChar)]
-        [DataRow(CLDevice.Info.PreferredVectorWidthShort)]
-        [DataRow(CLDevice.Info.PreferredVectorWidthInt)]
-        [DataRow(CLDevice.Info.PreferredVectorWidthLong)]
-        [DataRow(CLDevice.Info.PreferredVectorWidthFloat)]
-        [DataRow(CLDevice.Info.PreferredVectorWidthDouble)]
-        [DataRow(CLDevice.Info.MaximumClockFrequency)]
-        [DataRow(CLDevice.Info.AddressBits)]
-        [DataRow(CLDevice.Info.MaximumReadImageArguments)]
-        [DataRow(CLDevice.Info.MaximumWriteImageArguments)]
-        [DataRow(CLDevice.Info.MaximumMemoryAllocationSize)]
-        [DataRow(CLDevice.Info.Image2DMaximumWidth)]
-        [DataRow(CLDevice.Info.Image2DMaximumHeight)]
-        [DataRow(CLDevice.Info.Image3DMaximumWidth)]
-        [DataRow(CLDevice.Info.Image3DMaximumHeight)]
-        [DataRow(CLDevice.Info.Image3DMaximumDepth)]
-        [DataRow(CLDevice.Info.ImageSupport)]
-        [DataRow(CLDevice.Info.MaximumParameterSize)]
-        [DataRow(CLDevice.Info.MaximumSamplers)]
-        [DataRow(CLDevice.Info.MemoryBaseAddressAlignment)]
-        [DataRow(CLDevice.Info.SingleFloatingPointConfiguration)]
-        [DataRow(CLDevice.Info.GlobalMemoryCacheType)]
-        [DataRow(CLDevice.Info.GlobalMemoryCachelineSize)]
-        [DataRow(CLDevice.Info.GlobalMemoryCacheSize)]
-        [DataRow(CLDevice.Info.GlobalMemorySize)]
-        [DataRow(CLDevice.Info.MaximumConstantBufferSize)]
-        [DataRow(CLDevice.Info.MaximumConstantArguments)]
-        [DataRow(CLDevice.Info.LocalMemoryType)]
-        [DataRow(CLDevice.Info.LocalMemorySize)]
-        [DataRow(CLDevice.Info.ErrorCorrectionSupport)]
-        [DataRow(CLDevice.Info.ProfilingTimerResolution)]
-        [DataRow(CLDevice.Info.EndianLittle)]
-        [DataRow(CLDevice.Info.Available)]
-        [DataRow(CLDevice.Info.CompilerAvailable)]
-        [DataRow(CLDevice.Info.ExecutionCapabilities)]
-        [DataRow(CLDevice.Info.QueueOnHostProperties)]
-        [DataRow(CLDevice.Info.Name)]
-        [DataRow(CLDevice.Info.Vendor)]
-        [DataRow(CLDevice.Info.DriverVersion)]
-        [DataRow(CLDevice.Info.Profile)]
-        [DataRow(CLDevice.Info.Version)]
-        [DataRow(CLDevice.Info.Extensions)]
-        [DataRow(CLDevice.Info.Platform)]
-        [DataRow(CLDevice.Info.DoubleFloatingPointConfiguration)]
-        [DataRow(CLDevice.Info.HalfFloatingPointConfiguration)]
-        [DataRow(CLDevice.Info.PreferredVectorWidthHalf)]
-        [DataRow(CLDevice.Info.NativeVectorWidthChar)]
-        [DataRow(CLDevice.Info.NativeVectorWidthShort)]
-        [DataRow(CLDevice.Info.NativeVectorWidthInt)]
-        [DataRow(CLDevice.Info.NativeVectorWidthLong)]
-        [DataRow(CLDevice.Info.NativeVectorWidthFloat)]
-        [DataRow(CLDevice.Info.NativeVectorWidthDouble)]
-        [DataRow(CLDevice.Info.NativeVectorWidthHalf)]
-        [DataRow(CLDevice.Info.OpenClCVersion)]
-        [DataRow(CLDevice.Info.LinkerAvailable)]
-        [DataRow(CLDevice.Info.BuiltInKernels)]
-        [DataRow(CLDevice.Info.ImageMaximumBufferSize)]
-        [DataRow(CLDevice.Info.ImageMaximumArraySize)]
-        [DataRow(CLDevice.Info.ParentDevice)]
-        [DataRow(CLDevice.Info.PartitionMaximumSubDevices)]
-        [DataRow(CLDevice.Info.PartitionProperties)]
-        [DataRow(CLDevice.Info.PartitionAffinityDomain)]
-        [DataRow(CLDevice.Info.PartitionType)]
-        [DataRow(CLDevice.Info.ReferenceCount)]
-        [DataRow(CLDevice.Info.PreferredInteropUserSync)]
-        [DataRow(CLDevice.Info.PrintfBufferSize)]
-        [DataRow(CLDevice.Info.ImagePitchAlignment)]
-        [DataRow(CLDevice.Info.ImageBaseAddressAlignment)]
-        [DataRow(CLDevice.Info.MaximumReadWriteImageArguments)]
-        [DataRow(CLDevice.Info.MaximumGlobalVariableSize)]
-        [DataRow(CLDevice.Info.QueueOnDeviceProperties)]
-        [DataRow(CLDevice.Info.QueueOnDevicePreferredSize)]
-        [DataRow(CLDevice.Info.QueueOnDeviceMaximumSize)]
-        [DataRow(CLDevice.Info.MaximumOnDeviceQueues)]
-        [DataRow(CLDevice.Info.MaximumOnDeviceEvents)]
-        [DataRow(CLDevice.Info.SvmCapabilities)]
-        [DataRow(CLDevice.Info.GlobalVariablePreferredTotalSize)]
-        [DataRow(CLDevice.Info.MaximumPipeArguments)]
-        [DataRow(CLDevice.Info.PipeMaximumActiveReservations)]
-        [DataRow(CLDevice.Info.PipeMaximumPacketSize)]
-        [DataRow(CLDevice.Info.PreferredPlatformAtomicAlignment)]
-        [DataRow(CLDevice.Info.PreferredGlobalAtomicAlignment)]
-        [DataRow(CLDevice.Info.PreferredLocalAtomicAlignment)]
-        [DataRow(CLDevice.Info.IntermediateLanguageVersion)]
-        [DataRow(CLDevice.Info.MaximumNumberOfSubGroups)]
-        [DataRow(CLDevice.Info.SubGroupIndependentForwardProgress)]
-        [DataRow(CLDevice.Info.DeviceNumericVersion)]
-        [DataRow(CLDevice.Info.DeviceExtensionsWithVersion)]
-        [DataRow(CLDevice.Info.DeviceIlsWithVersion)]
-        [DataRow(CLDevice.Info.DeviceBuiltInKernelsWithVersion)]
-        [DataRow(CLDevice.Info.DeviceAtomicMemoryCapabilities)]
-        [DataRow(CLDevice.Info.DeviceAtomicFenceCapabilities)]
-        [DataRow(CLDevice.Info.DeviceNonUniformWorkGroupSupport)]
-        [DataRow(CLDevice.Info.DeviceOpenCLCAllVersions)]
-        [DataRow(CLDevice.Info.DevicePreferredWorkGroupSizeMultiple)]
-        [DataRow(CLDevice.Info.DeviceWorkGroupCollectiveFunctionsSupport)]
-        [DataRow(CLDevice.Info.DeviceGenericAddressSpaceSupport)]
-        [DataRow(CLDevice.Info.DeviceOpenCLCFeatures)]
-        [DataRow(CLDevice.Info.DeviceDeviceEnqueueCapabilities)]
-        [DataRow(CLDevice.Info.DevicePipeSupport)]
-        [DataRow(CLDevice.Info.DeviceLatestConformanceVersionPassed)]
-        [DataRow(CLDevice.Info.SpirVersion)]
-        public void GetDeviceInfo(CLDevice.Info paramName)
+        [DataRow(DeviceInfo.Type)]
+        [DataRow(DeviceInfo.VendorId)]
+        [DataRow(DeviceInfo.MaximumComputeUnits)]
+        [DataRow(DeviceInfo.MaximumWorkItemDimensions)]
+        [DataRow(DeviceInfo.MaximumWorkGroupSize)]
+        [DataRow(DeviceInfo.MaximumWorkItemSizes)]
+        [DataRow(DeviceInfo.PreferredVectorWidthChar)]
+        [DataRow(DeviceInfo.PreferredVectorWidthShort)]
+        [DataRow(DeviceInfo.PreferredVectorWidthInt)]
+        [DataRow(DeviceInfo.PreferredVectorWidthLong)]
+        [DataRow(DeviceInfo.PreferredVectorWidthFloat)]
+        [DataRow(DeviceInfo.PreferredVectorWidthDouble)]
+        [DataRow(DeviceInfo.MaximumClockFrequency)]
+        [DataRow(DeviceInfo.AddressBits)]
+        [DataRow(DeviceInfo.MaximumReadImageArguments)]
+        [DataRow(DeviceInfo.MaximumWriteImageArguments)]
+        [DataRow(DeviceInfo.MaximumMemoryAllocationSize)]
+        [DataRow(DeviceInfo.Image2DMaximumWidth)]
+        [DataRow(DeviceInfo.Image2DMaximumHeight)]
+        [DataRow(DeviceInfo.Image3DMaximumWidth)]
+        [DataRow(DeviceInfo.Image3DMaximumHeight)]
+        [DataRow(DeviceInfo.Image3DMaximumDepth)]
+        [DataRow(DeviceInfo.ImageSupport)]
+        [DataRow(DeviceInfo.MaximumParameterSize)]
+        [DataRow(DeviceInfo.MaximumSamplers)]
+        [DataRow(DeviceInfo.MemoryBaseAddressAlignment)]
+        [DataRow(DeviceInfo.SingleFloatingPointConfiguration)]
+        [DataRow(DeviceInfo.GlobalMemoryCacheType)]
+        [DataRow(DeviceInfo.GlobalMemoryCachelineSize)]
+        [DataRow(DeviceInfo.GlobalMemoryCacheSize)]
+        [DataRow(DeviceInfo.GlobalMemorySize)]
+        [DataRow(DeviceInfo.MaximumConstantBufferSize)]
+        [DataRow(DeviceInfo.MaximumConstantArguments)]
+        [DataRow(DeviceInfo.LocalMemoryType)]
+        [DataRow(DeviceInfo.LocalMemorySize)]
+        [DataRow(DeviceInfo.ErrorCorrectionSupport)]
+        [DataRow(DeviceInfo.ProfilingTimerResolution)]
+        [DataRow(DeviceInfo.EndianLittle)]
+        [DataRow(DeviceInfo.Available)]
+        [DataRow(DeviceInfo.CompilerAvailable)]
+        [DataRow(DeviceInfo.ExecutionCapabilities)]
+        [DataRow(DeviceInfo.QueueOnHostProperties)]
+        [DataRow(DeviceInfo.Name)]
+        [DataRow(DeviceInfo.Vendor)]
+        [DataRow(DeviceInfo.DriverVersion)]
+        [DataRow(DeviceInfo.Profile)]
+        [DataRow(DeviceInfo.Version)]
+        [DataRow(DeviceInfo.Extensions)]
+        [DataRow(DeviceInfo.Platform)]
+        [DataRow(DeviceInfo.DoubleFloatingPointConfiguration)]
+        [DataRow(DeviceInfo.HalfFloatingPointConfiguration)]
+        [DataRow(DeviceInfo.PreferredVectorWidthHalf)]
+        [DataRow(DeviceInfo.NativeVectorWidthChar)]
+        [DataRow(DeviceInfo.NativeVectorWidthShort)]
+        [DataRow(DeviceInfo.NativeVectorWidthInt)]
+        [DataRow(DeviceInfo.NativeVectorWidthLong)]
+        [DataRow(DeviceInfo.NativeVectorWidthFloat)]
+        [DataRow(DeviceInfo.NativeVectorWidthDouble)]
+        [DataRow(DeviceInfo.NativeVectorWidthHalf)]
+        [DataRow(DeviceInfo.OpenClCVersion)]
+        [DataRow(DeviceInfo.LinkerAvailable)]
+        [DataRow(DeviceInfo.BuiltInKernels)]
+        [DataRow(DeviceInfo.ImageMaximumBufferSize)]
+        [DataRow(DeviceInfo.ImageMaximumArraySize)]
+        [DataRow(DeviceInfo.ParentDevice)]
+        [DataRow(DeviceInfo.PartitionMaximumSubDevices)]
+        [DataRow(DeviceInfo.PartitionProperties)]
+        [DataRow(DeviceInfo.PartitionAffinityDomain)]
+        [DataRow(DeviceInfo.PartitionType)]
+        [DataRow(DeviceInfo.ReferenceCount)]
+        [DataRow(DeviceInfo.PreferredInteropUserSync)]
+        [DataRow(DeviceInfo.PrintfBufferSize)]
+        [DataRow(DeviceInfo.ImagePitchAlignment)]
+        [DataRow(DeviceInfo.ImageBaseAddressAlignment)]
+        [DataRow(DeviceInfo.MaximumReadWriteImageArguments)]
+        [DataRow(DeviceInfo.MaximumGlobalVariableSize)]
+        [DataRow(DeviceInfo.QueueOnDeviceProperties)]
+        [DataRow(DeviceInfo.QueueOnDevicePreferredSize)]
+        [DataRow(DeviceInfo.QueueOnDeviceMaximumSize)]
+        [DataRow(DeviceInfo.MaximumOnDeviceQueues)]
+        [DataRow(DeviceInfo.MaximumOnDeviceEvents)]
+        [DataRow(DeviceInfo.SvmCapabilities)]
+        [DataRow(DeviceInfo.GlobalVariablePreferredTotalSize)]
+        [DataRow(DeviceInfo.MaximumPipeArguments)]
+        [DataRow(DeviceInfo.PipeMaximumActiveReservations)]
+        [DataRow(DeviceInfo.PipeMaximumPacketSize)]
+        [DataRow(DeviceInfo.PreferredPlatformAtomicAlignment)]
+        [DataRow(DeviceInfo.PreferredGlobalAtomicAlignment)]
+        [DataRow(DeviceInfo.PreferredLocalAtomicAlignment)]
+        [DataRow(DeviceInfo.IntermediateLanguageVersion)]
+        [DataRow(DeviceInfo.MaximumNumberOfSubGroups)]
+        [DataRow(DeviceInfo.SubGroupIndependentForwardProgress)]
+        [DataRow(DeviceInfo.DeviceNumericVersion)]
+        [DataRow(DeviceInfo.DeviceExtensionsWithVersion)]
+        [DataRow(DeviceInfo.DeviceIlsWithVersion)]
+        [DataRow(DeviceInfo.DeviceBuiltInKernelsWithVersion)]
+        [DataRow(DeviceInfo.DeviceAtomicMemoryCapabilities)]
+        [DataRow(DeviceInfo.DeviceAtomicFenceCapabilities)]
+        [DataRow(DeviceInfo.DeviceNonUniformWorkGroupSupport)]
+        [DataRow(DeviceInfo.DeviceOpenCLCAllVersions)]
+        [DataRow(DeviceInfo.DevicePreferredWorkGroupSizeMultiple)]
+        [DataRow(DeviceInfo.DeviceWorkGroupCollectiveFunctionsSupport)]
+        [DataRow(DeviceInfo.DeviceGenericAddressSpaceSupport)]
+        [DataRow(DeviceInfo.DeviceOpenCLCFeatures)]
+        [DataRow(DeviceInfo.DeviceDeviceEnqueueCapabilities)]
+        [DataRow(DeviceInfo.DevicePipeSupport)]
+        [DataRow(DeviceInfo.DeviceLatestConformanceVersionPassed)]
+        [DataRow(DeviceInfo.SpirVersion)]
+        public void GetDeviceInfo(DeviceInfo paramName)
         {
-            platform.GetDeviceIds(CLDevice.Type.All, out CLDevice[] deviceIds);
+            platform.GetDeviceIds(DeviceType.All, out CLDevice[] deviceIds);
 
             foreach (var device in deviceIds)
             {
@@ -156,6 +158,83 @@ namespace OpenTK.Compute.Tests
                 Assert.AreEqual(CLResultCode.Success, resultCode);
                 Assert.IsTrue(paramValue.Length > 0);
             }
+        }
+
+        [TestMethod]
+        public void CreateSubDevices()
+        {
+            platform.GetDeviceIds(DeviceType.Cpu, out CLDevice[] deviceIds);
+            if (deviceIds.Length == 0)
+            {
+                Assert.Inconclusive("Sub devices can only be created on CPUs");
+                return;
+            }
+            var properties = new CLDevicePartitionProperties(1, new uint[0], null);
+
+            var resultCode = deviceIds[0].CreateSubDevices(properties, out CLDevice[] subDevices);
+
+            Assert.AreEqual(CLResultCode.Success, resultCode);
+            Assert.IsTrue(subDevices.Length > 0);
+        }
+
+        [TestMethod]
+        public void RetainDevice()
+        {
+            platform.GetDeviceIds(DeviceType.Cpu, out CLDevice[] deviceIds);
+            if (deviceIds.Length == 0)
+            {
+                Assert.Inconclusive("Sub devices can only be created on CPUs. Only Sub devices can be retained");
+                return;
+            }
+            var properties = new CLDevicePartitionProperties(1, new uint[0], null);
+
+            deviceIds[0].CreateSubDevices(properties, out CLDevice[] subDevices);
+            var device = subDevices[0];
+            var resultCode = device.RetainDevice();
+            Assert.AreEqual(CLResultCode.Success, resultCode);
+            device.ReleaseDevice();
+            resultCode = device.ReleaseDevice();
+            Assert.AreEqual(CLResultCode.Success, resultCode);
+            resultCode = device.ReleaseDevice();
+            Assert.AreNotEqual(CLResultCode.Success, resultCode);
+        }
+
+        [TestMethod]
+        public void ReleaseDevice()
+        {
+            platform.GetDeviceIds(DeviceType.Cpu, out CLDevice[] deviceIds);
+            if (deviceIds.Length == 0)
+            {
+                Assert.Inconclusive("Sub devices can only be created on CPUs. Only Sub devices can be released");
+                return;
+            }
+            var properties = new CLDevicePartitionProperties(1, new uint[0], null);
+
+            deviceIds[0].CreateSubDevices(properties, out CLDevice[] subDevices);
+            var device = subDevices[0];
+            var resultCode = device.ReleaseDevice();
+            Assert.AreEqual(CLResultCode.Success, resultCode);
+            resultCode = device.ReleaseDevice();
+            Assert.AreNotEqual(CLResultCode.Success, resultCode);
+        }
+
+        [TestMethod]
+        public void GetDeviceAndHostTimer()
+        {
+            platform.GetDeviceIds(DeviceType.All, out CLDevice[] deviceIds);
+            var resultCode = deviceIds[0].GetDeviceAndHostTimer(out ulong deviceTimestamp, out ulong hostTimestamp);
+            Assert.AreEqual(CLResultCode.Success, resultCode);
+            Assert.IsTrue(deviceTimestamp > 0);
+            Assert.IsTrue(hostTimestamp > 0);
+        }
+
+        [TestMethod]
+        public void GetHostTimer()
+        {
+            platform.GetDeviceIds(DeviceType.All, out CLDevice[] deviceIds);
+            var resultCode = deviceIds[0].GetHostTimer(out ulong hostTimestamp);
+            Assert.AreEqual(CLResultCode.Success, resultCode);
+            Assert.IsTrue(hostTimestamp > 0);
         }
     }
 }

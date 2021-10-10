@@ -19,9 +19,9 @@ namespace OpenTK.Compute.OpenCL
     public class CLSamplerProperties
     {
         public bool? NormalizedCoords { get; set; }
-        public CLSampler.AddressingMode? AddressingMode { get; set; }
-        public CLSampler.FilterMode? FilterMode { get; set; }
-        public CLSampler.FilterMode? MipFilterModeKHR { get; set; }
+        public SamplerAddressingMode? AddressingMode { get; set; }
+        public SamplerFilterMode? FilterMode { get; set; }
+        public SamplerFilterMode? MipFilterModeKHR { get; set; }
         public float? LodMinKHR { get; set; }
         public float? LodMaxKHR { get; set; }
 
@@ -34,15 +34,15 @@ namespace OpenTK.Compute.OpenCL
 
         }
 
-        public CLSamplerProperties(bool? normalizedCoords, CLSampler.AddressingMode? addressingMode, CLSampler.FilterMode? filterMode)
+        public CLSamplerProperties(bool? normalizedCoords, SamplerAddressingMode? addressingMode, SamplerFilterMode? filterMode)
         {
             NormalizedCoords = normalizedCoords;
             AddressingMode = addressingMode;
             FilterMode = filterMode;
         }
 
-        public CLSamplerProperties(bool? normalizedCoords, CLSampler.AddressingMode? addressingMode,
-                                   CLSampler.FilterMode? filterMode, CLSampler.FilterMode? mipFilterModeKHR, float? lodMinKHR,
+        public CLSamplerProperties(bool? normalizedCoords, SamplerAddressingMode? addressingMode,
+                                   SamplerFilterMode? filterMode, SamplerFilterMode? mipFilterModeKHR, float? lodMinKHR,
                                    float? lodMaxKHR)
         {
             NormalizedCoords = normalizedCoords;
@@ -63,7 +63,7 @@ namespace OpenTK.Compute.OpenCL
         {
             List<IntPtr> propertyList = new List<IntPtr>();
 
-            void AddProperty(IntPtr value, CLSampler.Property property)
+            void AddProperty(IntPtr value, SamplerProperty property)
             {
                 if (value != null)
                 {
@@ -72,17 +72,19 @@ namespace OpenTK.Compute.OpenCL
                 }
             }
 
-            if (NormalizedCoords != null) AddProperty((IntPtr)(NormalizedCoords.Value ? 1 : 0), CLSampler.Property.NormalizedCoords);
-            if (AddressingMode != null) AddProperty((IntPtr)AddressingMode, CLSampler.Property.AddressingMode);
-            if (FilterMode != null) AddProperty((IntPtr)FilterMode, CLSampler.Property.FilterMode);
-            if (MipFilterModeKHR != null) AddProperty((IntPtr)MipFilterModeKHR, CLSampler.Property.MipFilterModeKHR);
-            if (LodMinKHR != null) AddProperty((IntPtr)BitConverter.SingleToInt32Bits(LodMinKHR.Value), CLSampler.Property.LodMinKHR);
-            if (LodMaxKHR != null) AddProperty((IntPtr)BitConverter.SingleToInt32Bits(LodMaxKHR.Value), CLSampler.Property.LodMaxKHR);
+            if (NormalizedCoords != null) AddProperty((IntPtr)(NormalizedCoords.Value ? 1 : 0), SamplerProperty.NormalizedCoords);
+            if (AddressingMode != null) AddProperty((IntPtr)AddressingMode, SamplerProperty.AddressingMode);
+            if (FilterMode != null) AddProperty((IntPtr)FilterMode, SamplerProperty.FilterMode);
+            if (MipFilterModeKHR != null) AddProperty((IntPtr)MipFilterModeKHR, SamplerProperty.MipFilterModeKHR);
+            if (LodMinKHR != null) AddProperty((IntPtr)BitConverter.SingleToInt32Bits(LodMinKHR.Value), SamplerProperty.LodMinKHR);
+            if (LodMaxKHR != null) AddProperty((IntPtr)BitConverter.SingleToInt32Bits(LodMaxKHR.Value), SamplerProperty.LodMaxKHR);
 
             if (AdditionalProperties != null)
             {
                 propertyList.AddRange(AdditionalProperties);
             }
+
+            if (propertyList.Count == 0) return null;
 
             // Add the trailing null byte.
             propertyList.Add(IntPtr.Zero);
@@ -111,22 +113,22 @@ namespace OpenTK.Compute.OpenCL
             {
                 switch (@enum.ToInt32())
                 {
-                    case (int)CLSampler.Property.NormalizedCoords:
+                    case (int)SamplerProperty.NormalizedCoords:
                         properties.NormalizedCoords = (uint)value == 1;
                         break;
-                    case (int)CLSampler.Property.AddressingMode:
-                        properties.AddressingMode = (CLSampler.AddressingMode)value;
+                    case (int)SamplerProperty.AddressingMode:
+                        properties.AddressingMode = (SamplerAddressingMode)value;
                         break;
-                    case (int)CLSampler.Property.FilterMode:
-                        properties.FilterMode = (CLSampler.FilterMode)value;
+                    case (int)SamplerProperty.FilterMode:
+                        properties.FilterMode = (SamplerFilterMode)value;
                         break;
-                    case (int)CLSampler.Property.MipFilterModeKHR:
-                        properties.MipFilterModeKHR = (CLSampler.FilterMode)value;
+                    case (int)SamplerProperty.MipFilterModeKHR:
+                        properties.MipFilterModeKHR = (SamplerFilterMode)value;
                         break;
-                    case (int)CLSampler.Property.LodMinKHR:
+                    case (int)SamplerProperty.LodMinKHR:
                         properties.LodMinKHR = GetFloat(value);
                         break;
-                    case (int)CLSampler.Property.LodMaxKHR:
+                    case (int)SamplerProperty.LodMaxKHR:
                         properties.LodMaxKHR = GetFloat(value);
                         break;
                     default:

@@ -58,54 +58,6 @@ namespace OpenTK.Compute.Tests
         }
 
         [TestMethod]
-        public void EnqueueReadImage()
-        {
-            Assert.Inconclusive();
-        }
-
-        [TestMethod]
-        public void EnqueueWriteImage()
-        {
-            Assert.Inconclusive();
-        }
-
-        [TestMethod]
-        public void EnqueueFillImage()
-        {
-            Assert.Inconclusive();
-        }
-
-        [TestMethod]
-        public void EnqueueCopyImage()
-        {
-            Assert.Inconclusive();
-        }
-
-        [TestMethod]
-        public void EnqueueCopyImageToBuffer()
-        {
-            Assert.Inconclusive();
-        }
-
-        [TestMethod]
-        public void EnqueueCopyBufferToImage()
-        {
-            Assert.Inconclusive();
-        }
-
-        [TestMethod]
-        public void EnqueueMapBuffer()
-        {
-            Assert.Inconclusive();
-        }
-
-        [TestMethod]
-        public void EnqueueMapImage()
-        {
-            Assert.Inconclusive();
-        }
-
-        [TestMethod]
         public void EnqueueUnmapMemoryObject_CLBuffer()
         {
             Assert.Inconclusive();

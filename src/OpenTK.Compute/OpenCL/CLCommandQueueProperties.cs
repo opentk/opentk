@@ -19,7 +19,7 @@ namespace OpenTK.Compute.OpenCL
     public class CLCommandQueueProperties
     {
 
-        public CLCommandQueue.Properties? Properties { get; set; }
+        public CommandQueueProperties? Properties { get; set; }
         public uint? Size { get; set; }
         public bool? KernelBatchingARM { get; set; }
         public bool? DeferredFlushARM { get; set; }
@@ -35,7 +35,7 @@ namespace OpenTK.Compute.OpenCL
         {
 
         }
-        public CLCommandQueueProperties(CLCommandQueue.Properties? properties, uint? size)
+        public CLCommandQueueProperties(CommandQueueProperties? properties, uint? size)
         {
             Properties = properties;
             Size = size;
@@ -50,22 +50,24 @@ namespace OpenTK.Compute.OpenCL
         {
             List<IntPtr> propertyList = new List<IntPtr>();
 
-            void AddProperty(IntPtr value, CLCommandQueue.Property property)
+            void AddProperty(IntPtr value, CommandQueueProperty property)
             {
                 propertyList.Add((IntPtr)property);
                 propertyList.Add(value);
             }
 
-            if (Properties.HasValue) AddProperty((IntPtr)Properties.Value, CLCommandQueue.Property.Properties);
-            if (Size.HasValue) AddProperty((IntPtr)Size.Value, CLCommandQueue.Property.Size);
-            if (KernelBatchingARM.HasValue) AddProperty((IntPtr)(KernelBatchingARM.Value ? 1 : 0), CLCommandQueue.Property.KernelBatchingARM);
-            if (DeferredFlushARM.HasValue) AddProperty((IntPtr)(DeferredFlushARM.Value ? 1 : 0), CLCommandQueue.Property.DeferredFlushARM);
-            if (FamilyIntel.HasValue) AddProperty((IntPtr)FamilyIntel.Value, CLCommandQueue.Property.FamilyIntel);
-            if (IndexIntel.HasValue) AddProperty((IntPtr)IndexIntel.Value, CLCommandQueue.Property.IndexIntel);
+            if (Properties.HasValue) AddProperty((IntPtr)Properties.Value, CommandQueueProperty.Properties);
+            if (Size.HasValue) AddProperty((IntPtr)Size.Value, CommandQueueProperty.Size);
+            if (KernelBatchingARM.HasValue) AddProperty((IntPtr)(KernelBatchingARM.Value ? 1 : 0), CommandQueueProperty.KernelBatchingARM);
+            if (DeferredFlushARM.HasValue) AddProperty((IntPtr)(DeferredFlushARM.Value ? 1 : 0), CommandQueueProperty.DeferredFlushARM);
+            if (FamilyIntel.HasValue) AddProperty((IntPtr)FamilyIntel.Value, CommandQueueProperty.FamilyIntel);
+            if (IndexIntel.HasValue) AddProperty((IntPtr)IndexIntel.Value, CommandQueueProperty.IndexIntel);
             if (AdditionalProperties != null)
             {
                 propertyList.AddRange(AdditionalProperties);
             }
+
+            if (propertyList.Count == 0) return null;
 
             // Add the trailing null byte.
             propertyList.Add(IntPtr.Zero);
@@ -94,22 +96,22 @@ namespace OpenTK.Compute.OpenCL
             {
                 switch (@enum.ToInt32())
                 {
-                    case (int)CLCommandQueue.Property.Properties:
-                        properties.Properties = (CLCommandQueue.Properties)value.ToInt64();
+                    case (int)CommandQueueProperty.Properties:
+                        properties.Properties = (CommandQueueProperties)value.ToInt64();
                         break;
-                    case (int)CLCommandQueue.Property.Size:
+                    case (int)CommandQueueProperty.Size:
                         properties.Size = (uint)value.ToInt32();
                         break;
-                    case (int)CLCommandQueue.Property.KernelBatchingARM:
+                    case (int)CommandQueueProperty.KernelBatchingARM:
                         properties.KernelBatchingARM = value.ToInt32() == 1;
                         break;
-                    case (int)CLCommandQueue.Property.DeferredFlushARM:
+                    case (int)CommandQueueProperty.DeferredFlushARM:
                         properties.DeferredFlushARM = value.ToInt32() == 1;
                         break;
-                    case (int)CLCommandQueue.Property.FamilyIntel:
+                    case (int)CommandQueueProperty.FamilyIntel:
                         properties.FamilyIntel = (uint)value.ToInt32();
                         break;
-                    case (int)CLCommandQueue.Property.IndexIntel:
+                    case (int)CommandQueueProperty.IndexIntel:
                         properties.IndexIntel = (uint)value.ToInt32();
                         break;
                     default:

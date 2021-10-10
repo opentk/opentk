@@ -29,7 +29,7 @@ namespace OpenTK.Compute.OpenCL
         public IntPtr? ContextAdapterD3D9KHR { get; set; }
         public IntPtr? ContextAdapterD3D9ExKHR { get; set; }
         public IntPtr? ContextAdapterDXVAKHR { get; set; }
-        public CLContext.MemoryInitializeKHR? ContextMemoryInitializeKHR { get; set; }
+        public ContextMemoryInitializeKHR? ContextMemoryInitializeKHR { get; set; }
         public bool? ContextTerminateKHR { get; set; }
 
         /// <summary>
@@ -64,7 +64,7 @@ namespace OpenTK.Compute.OpenCL
             IntPtr? contextAdapterD3D9KHR,
             IntPtr? contextAdapterD3D9ExKHR,
             IntPtr? contextAdapterDXVAKHR,
-            CLContext.MemoryInitializeKHR? contextMemoryInitializeKHR,
+            ContextMemoryInitializeKHR? contextMemoryInitializeKHR,
             bool? contextTerminateKHR)
         {
             ContextPlatform = contextPlatform;
@@ -94,31 +94,33 @@ namespace OpenTK.Compute.OpenCL
             // The number of members * 2 + AdditionalProperties
             List<IntPtr> propertyList = new List<IntPtr>();
 
-            void AddProperty(IntPtr value, CLContext.Property property)
+            void AddProperty(IntPtr value, ContextProperty property)
             {
                 propertyList.Add((IntPtr)property);
                 propertyList.Add(value);                
             }
 
-            if (ContextPlatform != null) AddProperty(ContextPlatform, CLContext.Property.ContextPlatform);
-            if (ContextInteropUserSync.HasValue) AddProperty((IntPtr)(ContextInteropUserSync.Value?1:0), CLContext.Property.ContextInteropUserSync);
-            if (GlContextKHR.HasValue) AddProperty(GlContextKHR.Value, CLContext.Property.GlContextKHR);
-            if (EglDisplayKHR.HasValue) AddProperty(EglDisplayKHR.Value, CLContext.Property.EglDisplayKHR);
-            if (GlxDisplayKHR.HasValue) AddProperty(GlxDisplayKHR.Value, CLContext.Property.GlxDisplayKHR);
-            if (WglHDCKHR.HasValue) AddProperty(WglHDCKHR.Value, CLContext.Property.WglHDCKHR);
-            if (CglShareGroupKHR.HasValue) AddProperty(CglShareGroupKHR.Value, CLContext.Property.CglShareGroupKHR);
-            if (ContextD3D10DeviceKHR.HasValue) AddProperty(ContextD3D10DeviceKHR.Value, CLContext.Property.ContextD3D10DeviceKHR);
-            if (ContextD3D11DeviceKHR.HasValue) AddProperty(ContextD3D11DeviceKHR.Value, CLContext.Property.ContextD3D11DeviceKHR);
-            if (ContextAdapterD3D9KHR.HasValue) AddProperty(ContextAdapterD3D9KHR.Value, CLContext.Property.ContextAdapterD3D9KHR);
-            if (ContextAdapterD3D9ExKHR.HasValue) AddProperty(ContextAdapterD3D9ExKHR.Value, CLContext.Property.ContextAdapterD3D9ExKHR);
-            if (ContextAdapterDXVAKHR.HasValue) AddProperty(ContextAdapterDXVAKHR.Value, CLContext.Property.ContextAdapterDXVAKHR);
-            if (ContextMemoryInitializeKHR.HasValue) AddProperty((IntPtr)ContextMemoryInitializeKHR.Value, CLContext.Property.ContextMemoryInitializeKHR);
-            if (ContextTerminateKHR.HasValue) AddProperty((IntPtr)(ContextTerminateKHR.Value ? 1 : 0), CLContext.Property.ContextTerminateKHR);
+            if (ContextPlatform != null) AddProperty(ContextPlatform, ContextProperty.ContextPlatform);
+            if (ContextInteropUserSync.HasValue) AddProperty((IntPtr)(ContextInteropUserSync.Value?1:0), ContextProperty.ContextInteropUserSync);
+            if (GlContextKHR.HasValue) AddProperty(GlContextKHR.Value, ContextProperty.GlContextKHR);
+            if (EglDisplayKHR.HasValue) AddProperty(EglDisplayKHR.Value, ContextProperty.EglDisplayKHR);
+            if (GlxDisplayKHR.HasValue) AddProperty(GlxDisplayKHR.Value, ContextProperty.GlxDisplayKHR);
+            if (WglHDCKHR.HasValue) AddProperty(WglHDCKHR.Value, ContextProperty.WglHDCKHR);
+            if (CglShareGroupKHR.HasValue) AddProperty(CglShareGroupKHR.Value, ContextProperty.CglShareGroupKHR);
+            if (ContextD3D10DeviceKHR.HasValue) AddProperty(ContextD3D10DeviceKHR.Value, ContextProperty.ContextD3D10DeviceKHR);
+            if (ContextD3D11DeviceKHR.HasValue) AddProperty(ContextD3D11DeviceKHR.Value, ContextProperty.ContextD3D11DeviceKHR);
+            if (ContextAdapterD3D9KHR.HasValue) AddProperty(ContextAdapterD3D9KHR.Value, ContextProperty.ContextAdapterD3D9KHR);
+            if (ContextAdapterD3D9ExKHR.HasValue) AddProperty(ContextAdapterD3D9ExKHR.Value, ContextProperty.ContextAdapterD3D9ExKHR);
+            if (ContextAdapterDXVAKHR.HasValue) AddProperty(ContextAdapterDXVAKHR.Value, ContextProperty.ContextAdapterDXVAKHR);
+            if (ContextMemoryInitializeKHR.HasValue) AddProperty((IntPtr)ContextMemoryInitializeKHR.Value, ContextProperty.ContextMemoryInitializeKHR);
+            if (ContextTerminateKHR.HasValue) AddProperty((IntPtr)(ContextTerminateKHR.Value ? 1 : 0), ContextProperty.ContextTerminateKHR);
 
             if (AdditionalProperties != null)
             {
                 propertyList.AddRange(AdditionalProperties);
             }
+
+            if (propertyList.Count == 0) return null;
 
             // Add the trailing null byte.
             propertyList.Add(IntPtr.Zero);
@@ -140,46 +142,46 @@ namespace OpenTK.Compute.OpenCL
             {
                 switch (@enum.ToInt32())
                 {
-                    case (int)CLContext.Property.ContextPlatform:
+                    case (int)ContextProperty.ContextPlatform:
                         properties.ContextPlatform = new CLPlatform(value);
                         break;
-                    case (int)CLContext.Property.GlContextKHR:
+                    case (int)ContextProperty.GlContextKHR:
                         properties.GlContextKHR = value;
                         break;
-                    case (int)CLContext.Property.EglDisplayKHR:
+                    case (int)ContextProperty.EglDisplayKHR:
                         properties.EglDisplayKHR = value;
                         break;
-                    case (int)CLContext.Property.GlxDisplayKHR:
+                    case (int)ContextProperty.GlxDisplayKHR:
                         properties.GlxDisplayKHR = value;
                         break;
-                    case (int)CLContext.Property.WglHDCKHR:
+                    case (int)ContextProperty.WglHDCKHR:
                         properties.WglHDCKHR = value;
                         break;
-                    case (int)CLContext.Property.CglShareGroupKHR:
+                    case (int)ContextProperty.CglShareGroupKHR:
                         properties.CglShareGroupKHR = value;
                         break;
-                    case (int)CLContext.Property.ContextInteropUserSync:
+                    case (int)ContextProperty.ContextInteropUserSync:
                         properties.ContextInteropUserSync = value.ToInt32() > 0;
                         break;
-                    case (int)CLContext.Property.ContextD3D10DeviceKHR:
+                    case (int)ContextProperty.ContextD3D10DeviceKHR:
                         properties.ContextD3D10DeviceKHR = value;
                         break;
-                    case (int)CLContext.Property.ContextD3D11DeviceKHR:
+                    case (int)ContextProperty.ContextD3D11DeviceKHR:
                         properties.ContextD3D11DeviceKHR = value;
                         break;
-                    case (int)CLContext.Property.ContextAdapterD3D9KHR:
+                    case (int)ContextProperty.ContextAdapterD3D9KHR:
                         properties.ContextAdapterD3D9KHR = value;
                         break;
-                    case (int)CLContext.Property.ContextAdapterD3D9ExKHR:
+                    case (int)ContextProperty.ContextAdapterD3D9ExKHR:
                         properties.ContextAdapterD3D9ExKHR = value;
                         break;
-                    case (int)CLContext.Property.ContextAdapterDXVAKHR:
+                    case (int)ContextProperty.ContextAdapterDXVAKHR:
                         properties.ContextAdapterDXVAKHR = value;
                         break;
-                    case (int)CLContext.Property.ContextMemoryInitializeKHR:
-                        properties.ContextMemoryInitializeKHR = (CLContext.MemoryInitializeKHR)value.ToInt64();
+                    case (int)ContextProperty.ContextMemoryInitializeKHR:
+                        properties.ContextMemoryInitializeKHR = (ContextMemoryInitializeKHR)value.ToInt64();
                         break;
-                    case (int)CLContext.Property.ContextTerminateKHR:
+                    case (int)ContextProperty.ContextTerminateKHR:
                         properties.ContextTerminateKHR = value.ToInt32() > 0;
                         break;
                     default:

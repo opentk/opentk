@@ -15,7 +15,7 @@ namespace OpenTK.Compute.Tests
         {
             CL.GetPlatformIds(out CLPlatform[] platformIds);
             var platform = platformIds[0];
-            platform.GetDeviceIds(CLDevice.Type.Default, out CLDevice[] devices);
+            platform.GetDeviceIds(DeviceType.Default, out CLDevice[] devices);
             device = devices[0];
             var properties = new CLContextProperties(platform, false);
             context = properties.CreateContext(new[] { device }, null, IntPtr.Zero, out _);
@@ -30,7 +30,7 @@ namespace OpenTK.Compute.Tests
         [TestMethod]
         public void CreateCommandQueueWithProperties()
         {
-            var properties = new CLCommandQueueProperties(CLCommandQueue.Properties.OnDevice&CLCommandQueue.Properties.OutOfOrderExecModeEnable, 1);
+            var properties = new CLCommandQueueProperties(CommandQueueProperties.OnDevice & CommandQueueProperties.OutOfOrderExecModeEnable, 1);
             var commandQueue = context.CreateCommandQueueWithProperties(device, properties, out CLResultCode resultCode);
             Assert.AreEqual(CLResultCode.Success, resultCode);
             commandQueue.ReleaseCommandQueue();
@@ -58,17 +58,17 @@ namespace OpenTK.Compute.Tests
         }
 
         [TestMethod]
-        [DataRow(CLCommandQueue.Info.PropertiesArray)]
-        [DataRow(CLCommandQueue.Info.Context)]
-        [DataRow(CLCommandQueue.Info.Device)]
-        [DataRow(CLCommandQueue.Info.DeviceDefault)]
-        [DataRow(CLCommandQueue.Info.Properties)]
-        [DataRow(CLCommandQueue.Info.Size)]
-        [DataRow(CLCommandQueue.Info.ReferenceCount)]
-        public void GetCommandQueueInfo(CLCommandQueue.Info param)
+        [DataRow(CommandQueueInfo.PropertiesArray)]
+        [DataRow(CommandQueueInfo.Context)]
+        [DataRow(CommandQueueInfo.Device)]
+        [DataRow(CommandQueueInfo.DeviceDefault)]
+        [DataRow(CommandQueueInfo.Properties)]
+        [DataRow(CommandQueueInfo.Size)]
+        [DataRow(CommandQueueInfo.ReferenceCount)]
+        public void GetCommandQueueInfo(CommandQueueInfo param)
         {
             // Size is only valid if command queue is OnDevice
-            var properties = new CLCommandQueueProperties(CLCommandQueue.Properties.OutOfOrderExecModeEnable | CLCommandQueue.Properties.OnDevice, null);
+            var properties = new CLCommandQueueProperties(CommandQueueProperties.OutOfOrderExecModeEnable | CommandQueueProperties.OnDevice, null);
             var commandQueue = context.CreateCommandQueueWithProperties(device, properties, out _);
             CLResultCode resultCode = commandQueue.GetCommandQueueInfo(param, out byte[] paramValue);
             Assert.AreEqual(CLResultCode.Success, resultCode);
@@ -81,7 +81,7 @@ namespace OpenTK.Compute.Tests
         {
             var properties = new CLCommandQueueProperties();
             var commandQueue = context.CreateCommandQueueWithProperties(device, properties, out _);
-            var commandQueue2 = context.CreateCommandQueueWithProperties(device, new CLCommandQueueProperties(CLCommandQueue.Properties.OutOfOrderExecModeEnable | CLCommandQueue.Properties.OnDevice | CLCommandQueue.Properties.OnDeviceDefault, null), out _);
+            var commandQueue2 = context.CreateCommandQueueWithProperties(device, new CLCommandQueueProperties(CommandQueueProperties.OutOfOrderExecModeEnable | CommandQueueProperties.OnDevice | CommandQueueProperties.OnDeviceDefault, null), out _);
             var resultCode = context.SetDefaultDeviceCommandQueue(device, commandQueue2);
             Assert.AreEqual(CLResultCode.Success, resultCode);
             commandQueue.ReleaseCommandQueue();

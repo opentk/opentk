@@ -5,7 +5,7 @@ using OpenTK.Compute.OpenCL;
 
 namespace OpenToolkit.OpenCL.Tests
 {
-	class Program
+	class Program2
 	{
 		static void Main(string[] args)
 		{
@@ -24,11 +24,11 @@ namespace OpenToolkit.OpenCL.Tests
                 foreach (CLPlatform platform in platformIds)
                 {
                     // Get platform info for all found platforms
-                    resultCode = CL.GetPlatformInfo(platform, PlatformInfo.Name, out byte[] val);
+                    resultCode = platform.GetPlatformInfo(PlatformInfo.Name, out byte[] val);
                     HandleResultCode(resultCode, "CL.GetPlatformInfo");
                     Console.WriteLine(Encoding.ASCII.GetString(val));
 
-                    resultCode = CL.SupportsPlatformExtension(platform, "cl_khr_gl_sharing", out bool supported);
+                    resultCode = platform.SupportsPlatformExtension("cl_khr_gl_sharing", out bool supported);
                     HandleResultCode(resultCode, "CL.SupportsPlatformExtension");
 
                     if (supported)
@@ -46,11 +46,11 @@ namespace OpenToolkit.OpenCL.Tests
 			//Get the device ids for each platform
 			foreach (CLPlatform platform in platformIds)
 			{
-                resultCode = CL.GetDeviceIds(platform, DeviceType.All, out CLDevice[] deviceIds);
+                resultCode = platform.GetDeviceIds(DeviceType.All, out CLDevice[] deviceIds);
                 HandleResultCode(resultCode, "CL.GetDeviceIds");
 
                 foreach (var device in deviceIds){
-                    resultCode = CL.GetDeviceInfo(device, DeviceInfo.Type, out byte[] val);
+                    resultCode = device.GetDeviceInfo(DeviceInfo.Type, out byte[] val);
                     HandleResultCode(resultCode, "CL.GetDeviceIds");
                     Console.WriteLine(Encoding.ASCII.GetString(val));
                 }
@@ -66,13 +66,13 @@ namespace OpenToolkit.OpenCL.Tests
                     result[i] = (A[i] + B[i])*mul;
                 }";
 
-				CLProgram program = CL.CreateProgramWithSource(context, code, out resultCode);
+				CLProgram program = context.CreateProgramWithSource(code, out resultCode);
                 HandleResultCode(resultCode, "CL.CreateProgramWithSource");
 
-                resultCode = CL.BuildProgram(program, (uint)deviceIds.Length, deviceIds, null, IntPtr.Zero, IntPtr.Zero);
+                resultCode = program.BuildProgram((uint)deviceIds.Length, deviceIds, null, IntPtr.Zero, IntPtr.Zero);
                 HandleResultCode(resultCode, "CL.BuildProgram");
 
-                CLKernel kernel = CL.CreateKernel(program, "add", out resultCode);
+                CLKernel kernel = program.CreateKernel("add", out resultCode);
                 HandleResultCode(resultCode, "CL.CreateKernel");
 
                 int arraySize = 20;
@@ -85,49 +85,49 @@ namespace OpenToolkit.OpenCL.Tests
 					B[i] = i;
 				}
 
-				CLBuffer bufferA = CL.CreateBuffer(context, MemoryFlags.ReadOnly | MemoryFlags.CopyHostPtr, A, out resultCode);
+				CLBuffer bufferA = context.CreateBuffer(MemoryFlags.ReadOnly | MemoryFlags.CopyHostPtr, A, out resultCode);
                 HandleResultCode(resultCode, "CL.CreateBuffer");
-                CLBuffer bufferB = CL.CreateBuffer(context, MemoryFlags.ReadOnly | MemoryFlags.CopyHostPtr, B, out resultCode);
+                CLBuffer bufferB = context.CreateBuffer(MemoryFlags.ReadOnly | MemoryFlags.CopyHostPtr, B, out resultCode);
                 HandleResultCode(resultCode, "CL.CreateBuffer");
 
                 float[] pattern = new float[]{1,3,5,7};
 
-				CLBuffer resultBuffer =  CL.CreateBuffer(context, MemoryFlags.WriteOnly, new UIntPtr((uint)(arraySize * sizeof(float))), IntPtr.Zero, out resultCode);
+				CLBuffer resultBuffer =  context.CreateBuffer(MemoryFlags.WriteOnly, new UIntPtr((uint)(arraySize * sizeof(float))), IntPtr.Zero, out resultCode);
                 HandleResultCode(resultCode, "CL.CreateBuffer");
 
                 try
 				{
-					CL.SetKernelArg(kernel, 0, bufferA);
+					kernel.SetKernelArg(0, bufferA);
                     HandleResultCode(resultCode, "CL.SetKernelArg");
-                    CL.SetKernelArg(kernel, 1, bufferB);
+                    kernel.SetKernelArg(1, bufferB);
                     HandleResultCode(resultCode, "CL.SetKernelArg");
-                    CL.SetKernelArg(kernel, 2, resultBuffer);
+                    kernel.SetKernelArg(2, resultBuffer);
                     HandleResultCode(resultCode, "CL.SetKernelArg");
-                    CL.SetKernelArg(kernel, 3, -1f);
+                    kernel.SetKernelArg(3, -1f);
                     HandleResultCode(resultCode, "CL.SetKernelArg");
 
-                    CLCommandQueue commandQueue = CL.CreateCommandQueueWithProperties(context, deviceIds[0], new CLCommandQueueProperties(), out resultCode);
+                    CLCommandQueue commandQueue = context.CreateCommandQueueWithProperties( deviceIds[0], new CLCommandQueueProperties(), out resultCode);
                     HandleResultCode(resultCode, "CL.CreateCommandQueueWithProperties");
 
-                    resultCode = CL.EnqueueFillBuffer(commandQueue, bufferB, pattern, UIntPtr.Zero, (UIntPtr)(arraySize * sizeof(float)), null,
+                    resultCode = commandQueue.EnqueueFillBuffer( bufferB, pattern, UIntPtr.Zero, (UIntPtr)(arraySize * sizeof(float)), null,
 						out _);
                     HandleResultCode(resultCode, "CL.EnqueueFillBuffer");
 
                     //CL.EnqueueNDRangeKernel(commandQueue, kernel, 1, null, new UIntPtr[] {new UIntPtr((uint)A.Length)},
                     //	null, 0, null,  out CLEvent eventHandle);
 
-                    resultCode = CL.EnqueueNDRangeKernel(commandQueue, kernel, 1, null, new UIntPtr[] {new UIntPtr((uint)A.Length)},
+                    resultCode = commandQueue.EnqueueNDRangeKernel( kernel, 1, null, new UIntPtr[] {new UIntPtr((uint)A.Length)},
 						null, 0, null,  out CLEvent eventHandle);
                     HandleResultCode(resultCode, "CL.EnqueueNDRangeKernel");
 
 
-                    resultCode = CL.Finish(commandQueue);
+                    resultCode = commandQueue.Finish();
                     HandleResultCode(resultCode, "CL.Finish");
 
-                    resultCode = CL.SetEventCallback(eventHandle, (int)CommandExecutionStatus.Complete, (waitEvent, data) =>
+                    resultCode = eventHandle.SetEventCallback( (int)CommandExecutionStatus.Complete, (waitEvent, data) =>
 					{
 						float[] resultValues = new float[arraySize];
-                        resultCode = CL.EnqueueReadBuffer(commandQueue, resultBuffer, true, null, resultValues, null, out _);
+                        resultCode = commandQueue.EnqueueReadBuffer(resultBuffer, true, null, resultValues, null, out _);
                         HandleResultCode(resultCode, "CL.EnqueueReadBuffer");
 
                         StringBuilder line = new StringBuilder();
@@ -142,23 +142,23 @@ namespace OpenToolkit.OpenCL.Tests
                     HandleResultCode(resultCode, "CL.SetEventCallback");
 
                     //get rid of the buffers because we no longer need them
-                    resultCode = CL.ReleaseMemoryObject(bufferA);
+                    resultCode = bufferA.ReleaseMemoryObject();
                     HandleResultCode(resultCode, "CL.ReleaseMemoryObject");
-                    resultCode = CL.ReleaseMemoryObject(bufferB);
+                    resultCode = bufferB.ReleaseMemoryObject();
                     HandleResultCode(resultCode, "CL.ReleaseMemoryObject");
-                    resultCode = CL.ReleaseMemoryObject(resultBuffer);
+                    resultCode = resultBuffer.ReleaseMemoryObject();
                     HandleResultCode(resultCode, "CL.ReleaseMemoryObject");
 
                     //Release the program kernels and queues
-                    resultCode = CL.ReleaseProgram(program);
+                    resultCode = program.ReleaseProgram();
                     HandleResultCode(resultCode, "CL.ReleaseProgram");
-                    resultCode = CL.ReleaseKernel(kernel);
+                    resultCode = kernel.ReleaseKernel();
                     HandleResultCode(resultCode, "CL.ReleaseKernel");
-                    resultCode = CL.ReleaseCommandQueue(commandQueue);
+                    resultCode = commandQueue.ReleaseCommandQueue();
                     HandleResultCode(resultCode, "CL.ReleaseCommandQueue");
-                    resultCode = CL.ReleaseContext(context);
+                    resultCode = context.ReleaseContext();
                     HandleResultCode(resultCode, "CL.ReleaseContext");
-                    resultCode = CL.ReleaseEvent(eventHandle);
+                    resultCode = eventHandle.ReleaseEvent();
                     HandleResultCode(resultCode, "CL.ReleaseEvent");
                 }
 				catch (Exception e)

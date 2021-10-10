@@ -21,7 +21,7 @@ namespace OpenTK.Compute.OpenCL
     {
         public uint? Equally { get; set; }
         public uint[] ByCounts { get; set; }
-        public CLDevice.AffinityDomain? ByAffinityDomain { get; set; }
+        public DeviceAffinityDomain? ByAffinityDomain { get; set; }
 
         /// <summary>
         /// Gets or sets additional properties for forward compatibility
@@ -33,6 +33,13 @@ namespace OpenTK.Compute.OpenCL
 
         }
 
+        public CLDevicePartitionProperties(uint? equally, uint[] byCounts, DeviceAffinityDomain? byAffinityDomain)
+        {
+            Equally = equally;
+            ByCounts = byCounts;
+            ByAffinityDomain = byAffinityDomain;
+        }
+
         /// <summary>
         /// Converts these context properties to a <see cref="CL.CreateSubDevice(CLContext, MemoryFlags, uint, uint, IntPtr[], out CLResultCode)"/> compatible list.
         /// Alternativly, consider using the more convenient <see cref="CL.CreateSubDevice(CLDevicePartitionProperties, CLDevice[], IntPtr, IntPtr, out CLResultCode)"/> overload.
@@ -42,26 +49,28 @@ namespace OpenTK.Compute.OpenCL
         {
             List<IntPtr> propertyList = new List<IntPtr>();
 
-            void AddProperty(IntPtr value, CLDevice.PartitionProperty property)
+            void AddProperty(IntPtr value, DevicePartitionProperty property)
             {
                 propertyList.Add((IntPtr)property);
                 propertyList.Add(value);
             }
 
-            if (Equally.HasValue) AddProperty((IntPtr)Equally.Value, CLDevice.PartitionProperty.Equally);
+            if (Equally.HasValue) AddProperty((IntPtr)Equally.Value, DevicePartitionProperty.Equally);
             if (ByCounts.Length > 0)
             {
-                propertyList.Add((IntPtr)CLDevice.PartitionProperty.ByCounts);
+                propertyList.Add((IntPtr)DevicePartitionProperty.ByCounts);
                 propertyList.AddRange(from value in ByCounts
                                       select (IntPtr)value);
-                propertyList.Add((IntPtr)CLDevice.PartitionProperty.ByCountsListEnd);
+                propertyList.Add((IntPtr)DevicePartitionProperty.ByCountsListEnd);
             }
-            if (ByAffinityDomain.HasValue) AddProperty((IntPtr)ByAffinityDomain.Value, CLDevice.PartitionProperty.ByAffinityDomain);
+            if (ByAffinityDomain.HasValue) AddProperty((IntPtr)ByAffinityDomain.Value, DevicePartitionProperty.ByAffinityDomain);
 
             if (AdditionalProperties != null)
             {
                 propertyList.AddRange(AdditionalProperties);
             }
+
+            if (propertyList.Count == 0) return null;
 
             // Add the trailing null byte.
             propertyList.Add(IntPtr.Zero);
@@ -83,16 +92,16 @@ namespace OpenTK.Compute.OpenCL
             {
                 switch (propertyArray[i].ToInt32())
                 {
-                    case (int)CLDevice.PartitionProperty.Equally:
+                    case (int)DevicePartitionProperty.Equally:
                         properties.Equally = (uint)propertyArray[i + 1].ToInt32();
                         break;
-                    case (int)CLDevice.PartitionProperty.ByAffinityDomain:
-                        properties.ByAffinityDomain = (CLDevice.AffinityDomain)propertyArray[i + 1].ToInt64();
+                    case (int)DevicePartitionProperty.ByAffinityDomain:
+                        properties.ByAffinityDomain = (DeviceAffinityDomain)propertyArray[i + 1].ToInt64();
                         break;
-                    case (int)CLDevice.PartitionProperty.ByCounts:
+                    case (int)DevicePartitionProperty.ByCounts:
                         var value = (uint)propertyArray[i + 1];
                         var list = new List<uint>();
-                        while (value != (uint)CLDevice.PartitionProperty.ByCountsListEnd){
+                        while (value != (uint)DevicePartitionProperty.ByCountsListEnd){
                             list.Add(value);
                             i++;
                             if (i >= propertyArray.Length - 1) break;

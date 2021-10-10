@@ -5,8 +5,9 @@ namespace OpenTK.Compute.OpenCL
 	public readonly struct CLImage : IEquatable<CLImage>
 	{
 		public readonly IntPtr Handle;
+        public static CLBuffer Zero { get { return new CLBuffer(IntPtr.Zero); } }
 
-		public CLImage(IntPtr handle)
+        public CLImage(IntPtr handle)
 		{
 			Handle = handle;
 		}
@@ -37,25 +38,5 @@ namespace OpenTK.Compute.OpenCL
 		}
 
 		public static implicit operator IntPtr(CLImage image) => image.Handle;
-
-        public enum Info : uint
-        {
-            Format = 0x1110,
-            ElementSize = 0x1111,
-            RowPitch = 0x1112,
-            SlicePitch = 0x1113,
-            Width = 0x1114,
-            Height = 0x1115,
-            Depth = 0x1116,
-            ArraySize = 0x1117,
-            Buffer = 0x1118,
-            NumberOfMipLevels = 0x1119,
-            NumberOfSamples = 0x111A
-        }
-
-        public enum Property : uint
-        {
-            
-        }
     }
 }

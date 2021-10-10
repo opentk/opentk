@@ -5,8 +5,9 @@ namespace OpenTK.Compute.OpenCL
 	public readonly struct CLPipe : IEquatable<CLPipe>
 	{
 		public readonly IntPtr Handle;
+        public static CLBuffer Zero { get { return new CLBuffer(IntPtr.Zero); } }
 
-		public CLPipe(IntPtr handle)
+        public CLPipe(IntPtr handle)
 		{
 			Handle = handle;
 		}
@@ -37,17 +38,5 @@ namespace OpenTK.Compute.OpenCL
 		}
 
 		public static implicit operator IntPtr(CLPipe pipe) => pipe.Handle;
-
-        public enum Info : uint
-        {
-            PacketSize = 0x1120,
-            MaximumNumberOfPackets = 0x1121,
-            Properties = 0x1122
-        }
-
-        public enum Property : uint
-        {
-
-        }
     }
 }

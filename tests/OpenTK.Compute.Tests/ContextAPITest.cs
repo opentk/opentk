@@ -20,7 +20,7 @@ namespace OpenTK.Compute.Tests
         public void CreateContext()
         {
             var properties = new CLContextProperties(platform, false);
-            platform.GetDeviceIds(CLDevice.Type.All, out CLDevice[] devices);
+            platform.GetDeviceIds(DeviceType.All, out CLDevice[] devices);
             var context = properties.CreateContext(devices, null, IntPtr.Zero, out CLResultCode resultCode);
             context.ReleaseContext();
             Assert.AreEqual(CLResultCode.Success, resultCode);
@@ -30,7 +30,7 @@ namespace OpenTK.Compute.Tests
         public void CreateContextFromType()
         {
             var properties = new CLContextProperties(platform, false);
-            var context = properties.CreateContextFromType(CLDevice.Type.Default, null, IntPtr.Zero, out CLResultCode resultCode);
+            var context = properties.CreateContextFromType(DeviceType.Default, null, IntPtr.Zero, out CLResultCode resultCode);
             context.ReleaseContext();
             Assert.AreEqual(CLResultCode.Success, resultCode);
         }
@@ -39,7 +39,7 @@ namespace OpenTK.Compute.Tests
         public void RetainContext()
         {
             var properties = new CLContextProperties(platform, false);
-            var context = properties.CreateContextFromType(CLDevice.Type.Default, null, IntPtr.Zero, out _);
+            var context = properties.CreateContextFromType(DeviceType.Default, null, IntPtr.Zero, out _);
             var resultCode = context.RetainContext();
             Assert.AreEqual(CLResultCode.Success, resultCode);
             context.ReleaseContext();
@@ -51,20 +51,20 @@ namespace OpenTK.Compute.Tests
         public void ReleaseContext()
         {
             var properties = new CLContextProperties(platform, false);
-            var context = properties.CreateContextFromType(CLDevice.Type.Default, null, IntPtr.Zero, out _);
+            var context = properties.CreateContextFromType(DeviceType.Default, null, IntPtr.Zero, out _);
             var resultCode = context.ReleaseContext();
             Assert.AreEqual(CLResultCode.Success, resultCode);
         }
 
         [TestMethod]
-        [DataRow(CLContext.Info.Devices)]
-        [DataRow(CLContext.Info.NumberOfDevices)]
-        [DataRow(CLContext.Info.ReferenceCount)]
-        [DataRow(CLContext.Info.Properties)]
-        public void GetContextInfo(CLContext.Info param)
+        [DataRow(ContextInfo.Devices)]
+        [DataRow(ContextInfo.NumberOfDevices)]
+        [DataRow(ContextInfo.ReferenceCount)]
+        [DataRow(ContextInfo.Properties)]
+        public void GetContextInfo(ContextInfo param)
         {
             var properties = new CLContextProperties(platform, false);
-            var context = properties.CreateContextFromType(CLDevice.Type.Default, null, IntPtr.Zero, out _);
+            var context = properties.CreateContextFromType(DeviceType.Default, null, IntPtr.Zero, out _);
             var resultCode = context.GetContextInfo(param, out byte[] paramValue);
             context.ReleaseContext();
             Assert.AreEqual(CLResultCode.Success, resultCode);
@@ -75,7 +75,7 @@ namespace OpenTK.Compute.Tests
         public void SetContextDestructorCallback()
         {
             var properties = new CLContextProperties(platform, false);
-            var context = properties.CreateContextFromType(CLDevice.Type.Default, null, IntPtr.Zero, out _);
+            var context = properties.CreateContextFromType(DeviceType.Default, null, IntPtr.Zero, out _);
             bool callBackMade = false;
             void callBack(IntPtr waitEvent, IntPtr userData){ callBackMade = true; }
             var resultCode = context.SetContextDestructorCallback(callBack, IntPtr.Zero);

@@ -37,7 +37,7 @@ namespace OpenTK.Compute.OpenCL
         {
             List<IntPtr> propertyList = new List<IntPtr>();
 
-            void AddProperty(IntPtr value, CLBuffer.Property property)
+            void AddProperty(IntPtr value, BufferProperty property)
             {
                 if (value != null)
                 {
@@ -50,6 +50,8 @@ namespace OpenTK.Compute.OpenCL
             {
                 propertyList.AddRange(AdditionalProperties);
             }
+
+            if (propertyList.Count == 0) return null;
 
             // Add the trailing null byte.
             propertyList.Add(IntPtr.Zero);
