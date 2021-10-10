@@ -7,7 +7,7 @@ namespace OpenToolkit.OpenCL.Tests
 {
 	class Program2
 	{
-		static void Main(string[] args)
+		static void Main2(string[] args)
 		{
             //Get the ids of available opencl platforms
             var resultCode = CL.GetPlatformIds(out CLPlatform[] platformIds);
@@ -92,7 +92,7 @@ namespace OpenToolkit.OpenCL.Tests
 
                 float[] pattern = new float[]{1,3,5,7};
 
-				CLBuffer resultBuffer =  context.CreateBuffer(MemoryFlags.WriteOnly, new UIntPtr((uint)(arraySize * sizeof(float))), IntPtr.Zero, out resultCode);
+				CLBuffer resultBuffer =  context.CreateBuffer(MemoryFlags.WriteOnly, (uint)(arraySize * sizeof(float)), IntPtr.Zero, out resultCode);
                 HandleResultCode(resultCode, "CL.CreateBuffer");
 
                 try
@@ -109,14 +109,14 @@ namespace OpenToolkit.OpenCL.Tests
                     CLCommandQueue commandQueue = context.CreateCommandQueueWithProperties( deviceIds[0], new CLCommandQueueProperties(), out resultCode);
                     HandleResultCode(resultCode, "CL.CreateCommandQueueWithProperties");
 
-                    resultCode = commandQueue.EnqueueFillBuffer( bufferB, pattern, UIntPtr.Zero, (UIntPtr)(arraySize * sizeof(float)), null,
+                    resultCode = commandQueue.EnqueueFillBuffer( bufferB, pattern, 0, (uint)(arraySize * sizeof(float)), null,
 						out _);
                     HandleResultCode(resultCode, "CL.EnqueueFillBuffer");
 
                     //CL.EnqueueNDRangeKernel(commandQueue, kernel, 1, null, new UIntPtr[] {new UIntPtr((uint)A.Length)},
                     //	null, 0, null,  out CLEvent eventHandle);
 
-                    resultCode = commandQueue.EnqueueNDRangeKernel( kernel, 1, null, new UIntPtr[] {new UIntPtr((uint)A.Length)},
+                    resultCode = commandQueue.EnqueueNDRangeKernel( kernel, 1, null, new[] {(uint)A.Length},
 						null, 0, null,  out CLEvent eventHandle);
                     HandleResultCode(resultCode, "CL.EnqueueNDRangeKernel");
 

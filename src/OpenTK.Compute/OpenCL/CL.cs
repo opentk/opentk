@@ -405,7 +405,7 @@ namespace OpenTK.Compute.OpenCL
         public static extern CLBuffer CreateBuffer(
             [In] this CLContext context,
             [In] MemoryFlags flags,
-            [In] UIntPtr sizeReturned,
+            [In] uint sizeReturned,
             [In] IntPtr hostPtr,
             [Out] out CLResultCode resultCode);
 
@@ -420,7 +420,7 @@ namespace OpenTK.Compute.OpenCL
         {
             fixed (T* b = array)
             {
-                return CreateBuffer(context, flags, (UIntPtr)(sizeof(T) * array.Length), (IntPtr)b, out resultCode);
+                return CreateBuffer(context, flags, (uint)(sizeof(T) * array.Length), (IntPtr)b, out resultCode);
             }
         }
 
@@ -435,7 +435,7 @@ namespace OpenTK.Compute.OpenCL
         {
             fixed (T* b = span)
             {
-                return CreateBuffer(context, flags, (UIntPtr)(sizeof(T) * span.Length), (IntPtr)b, out resultCode);
+                return CreateBuffer(context, flags, (uint)(sizeof(T) * span.Length), (IntPtr)b, out resultCode);
             }
         }
 
@@ -458,7 +458,7 @@ namespace OpenTK.Compute.OpenCL
             [In] this CLContext context,
             [In] IntPtr[] properties,
             [In] MemoryFlags flags,
-            [In] UIntPtr sizeReturned,
+            [In] uint sizeReturned,
             [In] IntPtr hostPointer,
             [Out] out CLResultCode errorCode);
 
@@ -475,7 +475,7 @@ namespace OpenTK.Compute.OpenCL
         {
             fixed (T* b = array)
             {
-                return CreateBufferWithProperties(context, properties.CreatePropertyArray(), flags, (UIntPtr)(sizeof(T) * array.Length), (IntPtr)b,
+                return CreateBufferWithProperties(context, properties.CreatePropertyArray(), flags, (uint)(sizeof(T) * array.Length), (IntPtr)b,
                     out errorCode);
             }
         }
@@ -493,7 +493,7 @@ namespace OpenTK.Compute.OpenCL
         {
             fixed (T* b = span)
             {
-                return CreateBufferWithProperties(context, properties.CreatePropertyArray(), flags, (UIntPtr)(sizeof(T) * span.Length), (IntPtr)b,
+                return CreateBufferWithProperties(context, properties.CreatePropertyArray(), flags, (uint)(sizeof(T) * span.Length), (IntPtr)b,
                     out errorCode);
             }
         }
@@ -1267,7 +1267,7 @@ namespace OpenTK.Compute.OpenCL
         public static extern IntPtr SVMAlloc(
             [In] this CLContext context,
             [In] SvmMemoryFlags flags,
-            [In] UIntPtr sizeReturned,
+            [In] uint sizeReturned,
             [In] uint alignment);
 
         /// <summary>
@@ -1375,8 +1375,8 @@ namespace OpenTK.Compute.OpenCL
         public static extern CLProgram CreateProgramWithBinary(
             [In] this CLContext context,
             [In] uint numberOfDevices,
-            [In] IntPtr[] deviceList,
-            [In] UIntPtr[] lengths,
+            [In] CLDevice[] deviceList,
+            [In] uint[] lengths,
             [In] IntPtr[] binaries,
             [Out] out CLResultCode[] binaryStatus,
             [Out] out CLResultCode resultCode);
@@ -1412,7 +1412,7 @@ namespace OpenTK.Compute.OpenCL
         public static extern CLProgram CreateProgramWithIL(
             [In] this CLContext context,
             [In] IntPtr il,
-            [In] UIntPtr length,
+            [In] uint length,
             [Out] out CLResultCode resultCode);
 
         /// <summary>
@@ -1542,7 +1542,7 @@ namespace OpenTK.Compute.OpenCL
         public static extern CLResultCode SetProgramSpecializationConstant(
             [In] this CLProgram program,
             [In] uint specId,
-            [In] UIntPtr specSize,
+            [In] uint specSize,
             [In] IntPtr specValue);
 
         /// <summary>
@@ -1670,7 +1670,7 @@ namespace OpenTK.Compute.OpenCL
         public static extern CLResultCode SetKernelArg(
             [In] this CLKernel kernel,
             [In] uint argumentIndex,
-            [In] UIntPtr argumentSize,
+            [In] uint argumentSize,
             [In] IntPtr argumentValuePointer);
 
         /// <summary>
@@ -1683,7 +1683,7 @@ namespace OpenTK.Compute.OpenCL
         {
             fixed (T* arg = &argument)
             {
-                return SetKernelArg(kernel, argumentIndex, (UIntPtr)sizeof(T), (IntPtr)arg);
+                return SetKernelArg(kernel, argumentIndex, (uint)sizeof(T), (IntPtr)arg);
             }
         }
 
@@ -1703,7 +1703,7 @@ namespace OpenTK.Compute.OpenCL
         public static extern CLResultCode SetKernelExecInfo(
             [In] this CLKernel kernel,
             [In] KernelExecInfo paramName,
-            [In] UIntPtr paramValueSize,
+            [In] uint paramValueSize,
             [In] IntPtr paramValue);
 
         /// <summary>
@@ -1796,7 +1796,7 @@ namespace OpenTK.Compute.OpenCL
             [In] this CLKernel kernel,
             [In] CLDevice device,
             [In] KernelSubGroupInfo paramName,
-            [In] UIntPtr inputValueSize,
+            [In] uint inputValueSize,
             [In] IntPtr inputValue,
             [In] uint paramValueSize,
             [Out] byte[] paramValue,
@@ -1815,11 +1815,11 @@ namespace OpenTK.Compute.OpenCL
         {
             fixed (T* b = array)
             {
-                var resultCode = GetKernelSubGroupInfo(kernel, device, paramName, (UIntPtr)(array.Length * sizeof(float)), (IntPtr)b, 0, null, out uint sizeReturned);
+                var resultCode = GetKernelSubGroupInfo(kernel, device, paramName, (uint)(array.Length * sizeof(float)), (IntPtr)b, 0, null, out uint sizeReturned);
                 paramValue = new byte[sizeReturned];
                 if (sizeReturned == 0)
                     return resultCode;
-                return GetKernelSubGroupInfo(kernel, device, paramName, (UIntPtr)(array.Length * sizeof(float)), (IntPtr)b, sizeReturned, paramValue, out _);
+                return GetKernelSubGroupInfo(kernel, device, paramName, (uint)(array.Length * sizeof(float)), (IntPtr)b, sizeReturned, paramValue, out _);
             }
         }
 
@@ -1836,11 +1836,11 @@ namespace OpenTK.Compute.OpenCL
         {
             fixed (T* b = span)
             {
-                var resultCode = GetKernelSubGroupInfo(kernel, device, paramName, (UIntPtr)(span.Length * sizeof(float)), (IntPtr)b, 0, null, out uint sizeReturned);
+                var resultCode = GetKernelSubGroupInfo(kernel, device, paramName, (uint)(span.Length * sizeof(float)), (IntPtr)b, 0, null, out uint sizeReturned);
                 paramValue = new byte[sizeReturned];
                 if (sizeReturned == 0)
                     return resultCode;
-                return GetKernelSubGroupInfo(kernel, device, paramName, (UIntPtr)(span.Length * sizeof(float)), (IntPtr)b, sizeReturned, paramValue, out _);
+                return GetKernelSubGroupInfo(kernel, device, paramName, (uint)(span.Length * sizeof(float)), (IntPtr)b, sizeReturned, paramValue, out _);
             }
         }
 
@@ -2000,7 +2000,7 @@ namespace OpenTK.Compute.OpenCL
             [In] CLBuffer buffer,
             [In] bool blockingRead,
             [In] uint[] offset,
-            [In] UIntPtr sizeReturned,
+            [In] uint sizeReturned,
             [In] IntPtr pointer,
             [In] uint numberOfEventsInWaitList,
             [In] CLEvent[] eventWaitList,
@@ -2022,7 +2022,7 @@ namespace OpenTK.Compute.OpenCL
             fixed (T* b = array)
             {
                 return EnqueueReadBuffer(commandQueue, buffer, blockingRead, offset,
-                    (UIntPtr)(array.Length * sizeof(float)), (IntPtr)b, (uint)(eventWaitList?.Length ?? 0),
+                    (uint)(array.Length * sizeof(float)), (IntPtr)b, (uint)(eventWaitList?.Length ?? 0),
                     eventWaitList,
                     out eventHandle);
             }
@@ -2044,7 +2044,7 @@ namespace OpenTK.Compute.OpenCL
             fixed (T* b = span)
             {
                 CLResultCode resultCode = EnqueueReadBuffer(commandQueue, buffer, blockingRead, offset,
-                    (UIntPtr)(span.Length * sizeof(T)), (IntPtr)b, (uint)(eventWaitList?.Length ?? 0),
+                    (uint)(span.Length * sizeof(T)), (IntPtr)b, (uint)(eventWaitList?.Length ?? 0),
                     eventWaitList, out eventHandle);
                 return resultCode;
             }
@@ -2058,9 +2058,9 @@ namespace OpenTK.Compute.OpenCL
             [In] this CLCommandQueue commandQueue,
             [In] CLBuffer buffer,
             [In] bool blockingRead,
-            [In] UIntPtr[] bufferOffset,
-            [In] UIntPtr[] hostOffset,
-            [In] UIntPtr[] region,
+            [In] uint[] bufferOffset,
+            [In] uint[] hostOffset,
+            [In] uint[] region,
             [In] uint bufferRowPitch,
             [In] uint bufferSlicePitch,
             [In] uint hostRowPitch,
@@ -2077,9 +2077,9 @@ namespace OpenTK.Compute.OpenCL
             this CLCommandQueue commandQueue,
             CLBuffer buffer,
             bool blockingRead,
-            UIntPtr[] bufferOffset,
-            UIntPtr[] hostOffset,
-            UIntPtr[] region,
+            uint[] bufferOffset,
+            uint[] hostOffset,
+            uint[] region,
             uint bufferRowPitch,
             uint bufferSlicePitch,
             uint hostRowPitch,
@@ -2106,9 +2106,9 @@ namespace OpenTK.Compute.OpenCL
             this CLCommandQueue commandQueue,
             CLBuffer buffer,
             bool blockingRead,
-            UIntPtr[] bufferOffset,
-            UIntPtr[] hostOffset,
-            UIntPtr[] region,
+            uint[] bufferOffset,
+            uint[] hostOffset,
+            uint[] region,
             uint bufferRowPitch,
             uint bufferSlicePitch,
             uint hostRowPitch,
@@ -2137,7 +2137,7 @@ namespace OpenTK.Compute.OpenCL
             [In] CLBuffer buffer,
             [In] bool blockingWrite,
             [In] uint offset,
-            [In] UIntPtr sizeReturned,
+            [In] uint sizeReturned,
             [In] IntPtr pointer,
             [In] uint numberOfEventsInWaitList,
             [In] CLEvent[] eventWaitList,
@@ -2158,7 +2158,7 @@ namespace OpenTK.Compute.OpenCL
             fixed (T* a = array)
             {
                 CLResultCode resultCode = EnqueueWriteBuffer(commandQueue, buffer, blockingWrite, offset,
-                    (UIntPtr)(array.Length * sizeof(T)), (IntPtr)a, (uint)(eventWaitList?.Length ?? 0),
+                    (uint)(array.Length * sizeof(T)), (IntPtr)a, (uint)(eventWaitList?.Length ?? 0),
                     eventWaitList, out @event);
 
                 return resultCode;
@@ -2181,7 +2181,7 @@ namespace OpenTK.Compute.OpenCL
             fixed (T* a = span)
             {
                 CLResultCode resultCode = EnqueueWriteBuffer(commandQueue, buffer, blockingWrite, offset,
-                    (UIntPtr)(span.Length * sizeof(T)), (IntPtr)a, (uint)(eventWaitList?.Length ?? 0),
+                    (uint)(span.Length * sizeof(T)), (IntPtr)a, (uint)(eventWaitList?.Length ?? 0),
                     eventWaitList, out @event);
 
                 return resultCode;
@@ -2196,9 +2196,9 @@ namespace OpenTK.Compute.OpenCL
             [In] this CLCommandQueue commandQueue,
             [In] CLBuffer buffer,
             [In] bool blockingWrite,
-            [In] UIntPtr[] bufferOffset,
-            [In] UIntPtr[] hostOffset,
-            [In] UIntPtr[] region,
+            [In] uint[] bufferOffset,
+            [In] uint[] hostOffset,
+            [In] uint[] region,
             [In] uint bufferRowPitch,
             [In] uint bufferSlicePitch,
             [In] uint hostRowPitch,
@@ -2214,9 +2214,9 @@ namespace OpenTK.Compute.OpenCL
         public static unsafe CLResultCode EnqueueWriteBufferRect<T>(
             this CLCommandQueue commandQueue, CLBuffer buffer,
             bool blockingWrite,
-            UIntPtr[] bufferOffset,
-            UIntPtr[] hostOffset,
-            UIntPtr[] region,
+            uint[] bufferOffset,
+            uint[] hostOffset,
+            uint[] region,
             uint bufferRowPitch,
             uint bufferSlicePitch,
             uint hostRowPitch,
@@ -2243,9 +2243,9 @@ namespace OpenTK.Compute.OpenCL
             this CLCommandQueue commandQueue,
             CLBuffer buffer,
             bool blockingWrite,
-            UIntPtr[] bufferOffset,
-            UIntPtr[] hostOffset,
-            UIntPtr[] region,
+            uint[] bufferOffset,
+            uint[] hostOffset,
+            uint[] region,
             uint bufferRowPitch,
             uint bufferSlicePitch,
             uint hostRowPitch,
@@ -2273,9 +2273,9 @@ namespace OpenTK.Compute.OpenCL
             [In] this CLCommandQueue commandQueue,
             [In] CLBuffer buffer,
             [In] IntPtr pattern,
-            [In] UIntPtr patternSize,
-            [In] UIntPtr offset,
-            [In] UIntPtr sizeReturned,
+            [In] uint patternSize,
+            [In] uint offset,
+            [In] uint sizeReturned,
             [In] uint numberOfEventsInWaitList,
             [In] CLEvent[] eventWaitList,
             [Out] out CLEvent @event);
@@ -2288,15 +2288,15 @@ namespace OpenTK.Compute.OpenCL
             this CLCommandQueue commandQueue,
             CLBuffer buffer,
             T[] pattern,
-            UIntPtr offset,
-            UIntPtr sizeReturned,
+            uint offset,
+            uint sizeReturned,
             CLEvent[] eventWaitList,
             out CLEvent @event)
             where T : unmanaged
         {
             fixed (T* p = pattern)
             {
-                return EnqueueFillBuffer(commandQueue, buffer, (IntPtr)p, (UIntPtr)(pattern.Length * sizeof(T)), offset,
+                return EnqueueFillBuffer(commandQueue, buffer, (IntPtr)p, (uint)(pattern.Length * sizeof(T)), offset,
                     sizeReturned, (uint)(eventWaitList?.Length ?? 0), eventWaitList, out @event);
             }
         }
@@ -2311,7 +2311,7 @@ namespace OpenTK.Compute.OpenCL
             [In] CLBuffer dstBuffer,
             [In] uint srcOffset,
             [In] uint dstOffset,
-            [In] UIntPtr sizeReturned,
+            [In] uint sizeReturned,
             [In] uint numberOfEventsInWaitList,
             [In] CLEvent[] eventWaitList,
             [Out] out CLEvent @event);
@@ -2325,7 +2325,7 @@ namespace OpenTK.Compute.OpenCL
             CLBuffer dstBuffer,
             uint srcOffset,
             uint dstOffset,
-            UIntPtr sizeReturned,
+            uint sizeReturned,
             CLEvent[] eventWaitList,
             out CLEvent @event)
         {
@@ -2341,9 +2341,9 @@ namespace OpenTK.Compute.OpenCL
             [In] this CLCommandQueue commandQueue,
             [In] CLBuffer srcBuffer,
             [In] CLBuffer dstBuffer,
-            [In] UIntPtr[] srcOrigin,
-            [In] UIntPtr[] dstOrigin,
-            [In] UIntPtr[] region,
+            [In] uint[] srcOrigin,
+            [In] uint[] dstOrigin,
+            [In] uint[] region,
             [In] uint srcRowPitch,
             [In] uint srcSlicePitch,
             [In] uint dstRowPitch,
@@ -2359,9 +2359,9 @@ namespace OpenTK.Compute.OpenCL
             this CLCommandQueue commandQueue,
             CLBuffer srcBuffer,
             CLBuffer dstBuffer,
-            UIntPtr[] srcOrigin,
-            UIntPtr[] dstOrigin,
-            UIntPtr[] region,
+            uint[] srcOrigin,
+            uint[] dstOrigin,
+            uint[] region,
             uint srcRowPitch,
             uint srcSlicePitch,
             uint dstRowPitch,
@@ -2382,8 +2382,8 @@ namespace OpenTK.Compute.OpenCL
             [In] CLBuffer buffer,
             [In] bool blockingMap,
             [In] MapFlags flags,
-            [In] UIntPtr offset,
-            [In] UIntPtr sizeReturned,
+            [In] uint offset,
+            [In] uint sizeReturned,
             [In] uint numberOfEventsInWaitList,
             [In] CLEvent[] eventWaitList,
             [Out] out CLEvent @event,
@@ -2397,8 +2397,8 @@ namespace OpenTK.Compute.OpenCL
             CLBuffer buffer,
             bool blockingMap,
             MapFlags flags,
-            UIntPtr offset,
-            UIntPtr sizeReturned,
+            uint offset,
+            uint sizeReturned,
             CLEvent[] eventWaitList,
             out CLEvent @event,
             out CLResultCode resultCode)
@@ -2416,8 +2416,8 @@ namespace OpenTK.Compute.OpenCL
             [In] CLImage image,
             [In] bool blockingMap,
             [In] MapFlags flags,
-            [In] UIntPtr[] origin,
-            [In] UIntPtr[] region,
+            [In] uint[] origin,
+            [In] uint[] region,
             [In] uint rowPitch,
             [In] uint slicePitch,
             [In] uint numberOfEventsInWaitList,
@@ -2433,8 +2433,8 @@ namespace OpenTK.Compute.OpenCL
             CLImage image,
             bool blockingMap,
             MapFlags flags,
-            UIntPtr[] origin,
-            UIntPtr[] region,
+            uint[] origin,
+            uint[] region,
             uint rowPitch,
             uint slicePitch,
             CLEvent[] eventWaitList,
@@ -2558,9 +2558,9 @@ namespace OpenTK.Compute.OpenCL
             [In] this CLCommandQueue commandQueue,
             [In] CLKernel kernel,
             [In] uint workDimension,
-            [In] UIntPtr[] globalWorkOffset,
-            [In] UIntPtr[] globalWorkSize,
-            [In] UIntPtr[] localWorkSize,
+            [In] uint[] globalWorkOffset,
+            [In] uint[] globalWorkSize,
+            [In] uint[] localWorkSize,
             [In] uint numberOfEventsInWaitList,
             [In] CLEvent[] eventWaitList,
             [Out] out CLEvent @event);
@@ -2572,9 +2572,9 @@ namespace OpenTK.Compute.OpenCL
             this CLCommandQueue commandQueue,
             CLKernel kernel,
             uint workDimension,
-            UIntPtr[] globalWorkOffset,
-            UIntPtr[] globalWorkSize,
-            UIntPtr[] localWorkSize,
+            uint[] globalWorkOffset,
+            uint[] globalWorkSize,
+            uint[] localWorkSize,
             CLEvent[] eventWaitList,
             out CLEvent @event)
         {
@@ -2590,7 +2590,7 @@ namespace OpenTK.Compute.OpenCL
             [In] this CLCommandQueue commandQueue,
             [In] IntPtr userFunction,
             [In] IntPtr[] arguments,
-            [In] UIntPtr argumentSize,
+            [In] uint argumentSize,
             [In] uint numberOfMemoryObjects,
             [In] IntPtr[] memoryObjects,
             [In] IntPtr argumentsMemoryLocation,
@@ -2605,7 +2605,7 @@ namespace OpenTK.Compute.OpenCL
             this CLCommandQueue commandQueue,
             IntPtr userFunction,
             IntPtr[] arguments,
-            UIntPtr argumentSize,
+            uint argumentSize,
             IntPtr[] memoryObjects,
             IntPtr argumentsMemoryLocation,
             CLEvent[] eventWaitList,
@@ -2707,7 +2707,7 @@ namespace OpenTK.Compute.OpenCL
             [In] bool blockingCopy,
             [In] IntPtr dstPointer,
             [In] IntPtr srcPointer,
-            [In] UIntPtr sizeReturned,
+            [In] uint sizeReturned,
             [In] uint numberOfEventsInWaitList,
             [In] CLEvent[] eventWaitList,
             [Out] out CLEvent @event);
@@ -2720,7 +2720,7 @@ namespace OpenTK.Compute.OpenCL
             bool blockingCopy,
             IntPtr dstPointer,
             IntPtr srcPointer,
-            UIntPtr sizeReturned,
+            uint sizeReturned,
             CLEvent[] eventWaitList,
             out CLEvent @event)
         {
@@ -2736,8 +2736,8 @@ namespace OpenTK.Compute.OpenCL
             [In] this CLCommandQueue commandQueue,
             [In] IntPtr svmPointer,
             [In] IntPtr pattern,
-            [In] UIntPtr patternSize,
-            [In] UIntPtr sizeReturned,
+            [In] uint patternSize,
+            [In] uint sizeReturned,
             [In] uint numberOfEventsInWaitList,
             [In] CLEvent[] eventWaitList,
             [Out] out CLEvent @event);
@@ -2749,14 +2749,14 @@ namespace OpenTK.Compute.OpenCL
             this CLCommandQueue commandQueue,
             IntPtr svmPointer,
             T[] pattern,
-            UIntPtr sizeReturned,
+            uint sizeReturned,
             CLEvent[] eventWaitList,
             out CLEvent @event)
             where T : unmanaged
         {
             fixed (T* p = pattern)
             {
-                return EnqueueSvmMemoryFill(commandQueue, svmPointer, (IntPtr)p, (UIntPtr)(pattern.Length * sizeof(T)),
+                return EnqueueSvmMemoryFill(commandQueue, svmPointer, (IntPtr)p, (uint)(pattern.Length * sizeof(T)),
                     sizeReturned, (uint)(eventWaitList?.Length ?? 0), eventWaitList, out @event);
             }
         }
@@ -2768,14 +2768,14 @@ namespace OpenTK.Compute.OpenCL
             this CLCommandQueue commandQueue,
             IntPtr svmPointer,
             Span<T> pattern,
-            UIntPtr sizeReturned,
+            uint sizeReturned,
             CLEvent[] eventWaitList,
             out CLEvent @event)
             where T : unmanaged
         {
             fixed (T* p = pattern)
             {
-                return EnqueueSvmMemoryFill(commandQueue, svmPointer, (IntPtr)p, (UIntPtr)(pattern.Length * sizeof(T)),
+                return EnqueueSvmMemoryFill(commandQueue, svmPointer, (IntPtr)p, (uint)(pattern.Length * sizeof(T)),
                     sizeReturned, (uint)(eventWaitList?.Length ?? 0), eventWaitList, out @event);
             }
         }
@@ -2789,7 +2789,7 @@ namespace OpenTK.Compute.OpenCL
             [In] bool blockingMap,
             [In] MapFlags mapFlag,
             [In] IntPtr svmPointer,
-            [In] UIntPtr sizeReturned,
+            [In] uint sizeReturned,
             [In] uint numberOfEventsInWaitList,
             [In] CLEvent[] eventWaitList,
             [Out] out CLEvent @event);
@@ -2802,7 +2802,7 @@ namespace OpenTK.Compute.OpenCL
             bool blockingMap,
             MapFlags mapFlag,
             IntPtr svmPointer,
-            UIntPtr sizeReturned,
+            uint sizeReturned,
             CLEvent[] eventWaitList,
             out CLEvent @event)
         {
@@ -2842,7 +2842,7 @@ namespace OpenTK.Compute.OpenCL
             [In] this CLCommandQueue commandQueue,
             [In] uint numberOfSvmPointers,
             [In] IntPtr[] svmPointers,
-            [In] UIntPtr[] sizes,
+            [In] uint[] sizes,
             [In] MemoryMigrationFlags memoryMigrationFlags,
             [In] uint numberOfEventsInWaitList,
             [In] CLEvent[] eventWaitList,
@@ -2854,7 +2854,7 @@ namespace OpenTK.Compute.OpenCL
         public static CLResultCode EnqueueSvmMigrateMemory(
             [In] this CLCommandQueue commandQueue,
             IntPtr[] svmPointers,
-            UIntPtr[] sizes,
+            uint[] sizes,
             MemoryMigrationFlags memoryMigrationFlags,
             CLEvent[] eventWaitList,
             out CLEvent @event)
@@ -2888,9 +2888,9 @@ namespace OpenTK.Compute.OpenCL
             [In] CLContext context,
             [In] MemoryFlags flags,
             [In] ref CLImageFormat imageFormat,
-            [In] UIntPtr imageWidth,
-            [In] UIntPtr imageHeight,
-            [In] UIntPtr imageRowPitch,
+            [In] uint imageWidth,
+            [In] uint imageHeight,
+            [In] uint imageRowPitch,
             [In] IntPtr hostPointer,
             [Out] out CLResultCode resultCode);
 
@@ -2903,11 +2903,11 @@ namespace OpenTK.Compute.OpenCL
             [In] CLContext context,
             [In] MemoryFlags flags,
             [In] ref CLImageFormat imageFormat,
-            [In] UIntPtr imageWidth,
-            [In] UIntPtr imageHeight,
-            [In] UIntPtr imageDepth,
-            [In] UIntPtr imageRowPitch,
-            [In] UIntPtr imageSlicePitch,
+            [In] uint imageWidth,
+            [In] uint imageHeight,
+            [In] uint imageDepth,
+            [In] uint imageRowPitch,
+            [In] uint imageSlicePitch,
             [In] IntPtr hostPointer,
             [Out] out CLResultCode resultCode);
 
