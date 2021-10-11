@@ -476,9 +476,6 @@ namespace OpenTK.Platform.X11
 
             if (hints.flags != IntPtr.Zero)
             {
-                // The Metacity team has decided that they won't care about this when clicking the maximize
-                // icon, will maximize the window to fill the screen/parent no matter what.
-                // http://bugzilla.ximian.com/show_bug.cgi?id=80021
                 using (new XLock(window.Display))
                 {
                     Functions.XSetWMNormalHints(window.Display, window.Handle, ref hints);
