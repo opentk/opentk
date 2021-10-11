@@ -68,13 +68,8 @@ namespace OpenTK.Platform.X11
         private const string _dll_name = "libX11";
         private const string _dll_name_vid = "libXxf86vm";
 
-        private static Window rootWindow;
-
         internal static Display DefaultDisplay { get; private set; }
 
-        private static int DefaultScreen { get; set; }
-
-        //internal static Window RootWindow { get { return rootWindow; } }
         internal static int ScreenCount { get; }
 
         internal static object Lock = new object();
@@ -432,7 +427,6 @@ namespace OpenTK.Platform.X11
             Display display,
             int screen,
             out int modecount_return,
-            /*XF86VidModeModeInfo***  <-- yes, that's three *'s. */
             out IntPtr modesinfo);
 
         [DllImport(_dll_name_vid)]
@@ -524,18 +518,7 @@ namespace OpenTK.Platform.X11
         /// <summary>The physical height of the screen in millimeters</summary>
         internal int MHeight;
     };
-
-    internal unsafe class XExtData
-    {
-        private int number;        /* number returned by XRegisterExtension */
-        private XExtData next;    /* next item on list of buffer for structure */
-
-        private delegate int FreePrivateDelegate(XExtData extension);
-
-        private FreePrivateDelegate FreePrivate;    /* called to free private storage */
-        private XPointer private_data;    /* buffer private to this extension. */
-    };
-
+    
     [StructLayout(LayoutKind.Sequential)]
     internal struct MotifWmHints
     {
