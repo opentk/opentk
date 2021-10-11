@@ -38,6 +38,7 @@ namespace OpenTK.Platform.X11
     using Bool = System.Boolean;
     using Time = System.IntPtr;
     using Window = System.IntPtr;
+    using Pixmap = System.IntPtr;
 
     //
     // In the structures below, fields of type long are mapped to IntPtr.
@@ -1466,17 +1467,27 @@ namespace OpenTK.Platform.X11
         InactiveState = 4
     }
 
+    /// <summary>X11 Window Hints</summary>
     [StructLayout(LayoutKind.Sequential)]
     internal struct XWMHints
     {
+        /// <summary>Marks which fields in this structure are defined</summary>
         public IntPtr flags;
+        /// <summary>Whether the window relies on the window manager to get keyboard input</summary>
         public bool input;
+        /// <summary>Used by the window manager to communicate the input focus model used</summary>
         public XInitialState initial_state;
-        public IntPtr icon_pixmap;
+        /// <summary>Pointer to the pixmap to be used as the window icon</summary>
+        public Pixmap icon_pixmap;
+        /// <summary>Pointer to the window to be used as icon</summary>
         public IntPtr icon_window;
+        /// <summary>The inital X position of the icon</summary>
         public int icon_x;
+        /// <summary>The initial Y position of the icon</summary>
         public int icon_y;
-        public IntPtr icon_mask;
+        /// <summary>Pointer to the pixmap to be used as the icon mask</summary>
+        public Pixmap icon_mask;
+        /// <summary>ID of the related window group</summary>
         public IntPtr window_group;
     }
 

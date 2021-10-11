@@ -1320,7 +1320,7 @@ namespace OpenTK.Platform.X11
                         wmHints.icon_mask = Functions.CreateMaskFromImage(window.Display, bitmap);
 
                         Functions.XSetWMHints(window.Display, window.Handle, ref wmHints);
-                        Functions.XFree (wmHints_ptr);
+                        Functions.XFree(wmHints_ptr);
 
                         Functions.XSync(window.Display, false);
                     }
@@ -1400,12 +1400,7 @@ namespace OpenTK.Platform.X11
                 {
                     return OpenTK.WindowState.Fullscreen;
                 }
-                /*
-                                attributes = new XWindowAttributes();
-                                Functions.XGetWindowAttributes(window.Display, window.Handle, ref attributes);
-                                if (attributes.map_state == MapState.IsUnmapped)
-                                    return (OpenTK.WindowState)(-1);
-                */
+
                 return OpenTK.WindowState.Normal;
             }
             set

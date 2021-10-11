@@ -151,6 +151,8 @@ namespace OpenTK.Platform.X11
         [DllImport("libX11", EntryPoint = "XQueryTree")]
         public extern static int XQueryTree(IntPtr display, IntPtr window, out IntPtr root_return, out IntPtr parent_return, out IntPtr children_return, out int nchildren_return);
 
+        /// <summary>General purpose Xlib routine which frees the specified data</summary>
+        /// <param name="data">The data to free</param>
         [DllImport("libX11", EntryPoint = "XFree")]
         public extern static int XFree(IntPtr data);
 
@@ -382,6 +384,10 @@ namespace OpenTK.Platform.X11
         [DllImport("libX11", EntryPoint = "XSetZoomHints")]
         public extern static void XSetZoomHints(IntPtr display, IntPtr window, ref XSizeHints hints);
 
+        /// <summary>Gets the window manager hints for the specified window</summary>
+        /// <param name="display">The display connection to the XServer</param>
+        /// <param name="w">The window to retrieve the hints for</param>
+        /// <returns>NULL if no hints are set, otherwise a pointer to the <see cref="XWMHints"/> structure</returns>
         [DllImport("libX11")]
         public static extern IntPtr XGetWMHints(Display display, Window w); // returns XWMHints*
 
@@ -457,6 +463,9 @@ namespace OpenTK.Platform.X11
         [DllImport("libX11")]
         public static extern Status XGetTransientForHint(Display display, Window w, out Window prop_window_return);
 
+        /// <summary>Flushes the output buffer, and then waits until all requests have been recieved and processed by the specified XServer</summary>
+        /// <param name="display">The display connection to the XServer</param>
+        /// <param name="discard">Whether all events on the event queue are to be discarded</param>
         [DllImport("libX11")]
         public static extern void XSync(Display display, bool discard);
 
@@ -477,11 +486,34 @@ namespace OpenTK.Platform.X11
             uint depth, ImageFormat format, int offset, byte[] data, uint width, uint height,
             int bitmap_pad, int bytes_per_line);
 
+        /// <summary>Allocates the memory needed for an XImage structure</summary>
+        /// <param name="display">The display connection to the XServer</param>
+        /// <param name="visual">Pointer to the visual structure</param>
+        /// <param name="depth">Depth of the image</param>
+        /// <param name="format">Format of the image</param>
+        /// <param name="offset">Number of pixels to ignore at the beginning of the scanline</param>
+        /// <param name="data">The image data</param>
+        /// <param name="width">Width of the image in pixels</param>
+        /// <param name="height">Height of the image in pixels</param>
+        /// <param name="bitmap_pad">Quantum of a scanline (8, 16 or 32)</param>
+        /// <param name="bytes_per_line">Number of bytes in the client image between scanlines</param>
+        /// <returns></returns>
         [DllImport("libX11")]
         public static extern IntPtr XCreateImage(Display display, IntPtr visual,
             uint depth, ImageFormat format, int offset, IntPtr data, uint width, uint height,
             int bitmap_pad, int bytes_per_line);
 
+        /// <summary>Combines an image with a rectangle of the specified drawable</summary>
+        /// <param name="display">The display connection to the XServer</param>
+        /// <param name="drawable">Pointer to the drawable</param>
+        /// <param name="gc">Pointer to the GC</param>
+        /// <param name="image">Pointer to the image to be combined with the rectangle</param>
+        /// <param name="src_x">The offset in X from the left edge of the image</param>
+        /// <param name="src_y">The offset in Y from the top edge of the image</param>
+        /// <param name="dest_x">The destination X coordinate relative to the origin of the drawable</param>
+        /// <param name="dest_y">The destination Y coordinate relative to the origin of the drawable</param>
+        /// <param name="width">The width of the sub-image</param>
+        /// <param name="height">The height of the sub-image</param>
         [DllImport("libX11")]
         public static extern void XPutImage(Display display, IntPtr drawable,
             IntPtr gc, IntPtr image, int src_x, int src_y, int dest_x, int dest_y, uint width, uint height);
@@ -512,9 +544,7 @@ namespace OpenTK.Platform.X11
 
         public static void SendNetWMMessage(X11WindowInfo window, IntPtr message_type, IntPtr l0, IntPtr l1, IntPtr l2)
         {
-            XEvent xev;
-
-            xev = new XEvent();
+            XEvent xev = new XEvent();
             xev.ClientMessageEvent.type = XEventName.ClientMessage;
             xev.ClientMessageEvent.send_event = true;
             xev.ClientMessageEvent.window = window.Handle;
@@ -547,26 +577,10 @@ namespace OpenTK.Platform.X11
             XSendEvent(window.Display, window.Handle, false, new IntPtr((int)EventMask.NoEventMask), ref xev);
         }
 
-        [StructLayout(LayoutKind.Sequential, Pack = 1)]
-        private struct  Pixel
-        {
-            public byte A, R, G, B;
-            public Pixel(byte a, byte r, byte g, byte b)
-            {
-                A = a;
-                R = r;
-                G = g;
-                B = b;
-            }
-            public static implicit operator Pixel(int argb)
-            {
-                return new Pixel(
-                    (byte)((argb >> 24) & 0xFF),
-                    (byte)((argb >> 16) & 0xFF),
-                    (byte)((argb >> 8) & 0xFF),
-                    (byte)(argb & 0xFF));
-            }
-        }
+        /// <summary>Creates an X11 pixmap from a Bitmap</summary>
+        /// <param name="display">The display the pixmap is to be associated with</param>
+        /// <param name="image">The image to convert to a pixmap</param>
+        /// <returns>The pointer to the created pixmap</returns>
         public static IntPtr CreatePixmapFromImage(Display display, Bitmap image)
         {
             int width = image.Width;
@@ -590,6 +604,10 @@ namespace OpenTK.Platform.X11
             return pixmap;
         }
 
+        /// <summary>Creates an X11 pixmap mask from a Bitmap</summary>
+        /// <param name="display">The display the pixmap mask is to be associated with</param>
+        /// <param name="image">The image to convert to a pixmap mask</param>
+        /// <returns>The pointer to the created pixmap mask</returns>
         public static IntPtr CreateMaskFromImage(Display display, Bitmap image)
         {
             int width = image.Width;
