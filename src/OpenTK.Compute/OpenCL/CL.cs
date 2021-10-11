@@ -59,9 +59,9 @@ namespace OpenTK.Compute.OpenCL
         public static extern CLResultCode GetPlatformInfo(
             [In] this CLPlatform platform,
             [In] PlatformInfo paramName,
-            [In] ulong paramValueSize,
+            [In] nuint paramValueSize,
             [Out] byte[] paramValue,
-            [Out] out ulong paramValueSizeReturned);
+            [Out] out nuint paramValueSizeReturned);
 
         /// <summary>
         /// Introduced in OpenCL 1.0
@@ -71,7 +71,7 @@ namespace OpenTK.Compute.OpenCL
             PlatformInfo paramName,
             out byte[] paramValue)
         {
-            var resultCode = GetPlatformInfo(platform, paramName, 0, null, out ulong sizeReturned);
+            var resultCode = GetPlatformInfo(platform, paramName, 0, null, out nuint sizeReturned);
             paramValue = new byte[sizeReturned];
             if (sizeReturned == 0)
                 return resultCode;
@@ -132,9 +132,9 @@ namespace OpenTK.Compute.OpenCL
         public static extern CLResultCode GetDeviceInfo(
             [In] this CLDevice device,
             [In] DeviceInfo paramName,
-            [In] ulong paramValueSize,
+            [In] nuint paramValueSize,
             [Out] byte[] paramValue,
-            [Out] out ulong paramValueSizeReturned);
+            [Out] out nuint paramValueSizeReturned);
 
         /// <summary>
         /// Introduced in OpenCL 1.0
@@ -144,7 +144,7 @@ namespace OpenTK.Compute.OpenCL
             DeviceInfo paramName,
             out byte[] paramValue)
         {
-            var resultCode = GetDeviceInfo(device, paramName, 0, null, out ulong sizeReturned);
+            var resultCode = GetDeviceInfo(device, paramName, 0, null, out nuint sizeReturned);
             paramValue = new byte[sizeReturned];
             if (sizeReturned == 0)
                 return resultCode;
@@ -204,8 +204,8 @@ namespace OpenTK.Compute.OpenCL
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clGetDeviceAndHostTimer")]
         public static extern CLResultCode GetDeviceAndHostTimer(
             [In] this CLDevice device,
-            [Out] out ulong deviceTimestamp,
-            [Out] out ulong hostTimestamp);
+            [Out] out nuint deviceTimestamp,
+            [Out] out nuint hostTimestamp);
 
         /// <summary>
         /// Introduced in OpenCL 2.1
@@ -213,7 +213,7 @@ namespace OpenTK.Compute.OpenCL
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clGetHostTimer")]
         public static extern CLResultCode GetHostTimer(
             [In] this CLDevice device,
-            [Out] out ulong hostTimestamp);
+            [Out] out nuint hostTimestamp);
 
         #endregion
 
@@ -289,9 +289,9 @@ namespace OpenTK.Compute.OpenCL
         public static extern CLResultCode GetContextInfo(
             [In] this CLContext context,
             [In] ContextInfo paramName,
-            [In] ulong paramValueSize,
+            [In] nuint paramValueSize,
             [Out] byte[] paramValue,
-            [Out] out ulong paramValueSizeReturned);
+            [Out] out nuint paramValueSizeReturned);
 
 
         /// <summary>
@@ -302,7 +302,7 @@ namespace OpenTK.Compute.OpenCL
             ContextInfo paramName,
             out byte[] paramValue)
         {
-            var resultCode = GetContextInfo(context, paramName, 0, null, out ulong sizeReturned);
+            var resultCode = GetContextInfo(context, paramName, 0, null, out nuint sizeReturned);
             paramValue = new byte[sizeReturned];
             if (sizeReturned == 0)
                 return resultCode;
@@ -375,9 +375,9 @@ namespace OpenTK.Compute.OpenCL
         public static extern CLResultCode GetCommandQueueInfo(
             [In] this CLCommandQueue commandQueue,
             [In] CommandQueueInfo paramName,
-            [In] ulong paramSize,
+            [In] nuint paramSize,
             [Out] byte[] paramValue,
-            [Out] out ulong paramValueSizeReturned);
+            [Out] out nuint paramValueSizeReturned);
 
         /// <summary>
         /// Introduced in OpenCL 1.0
@@ -387,7 +387,7 @@ namespace OpenTK.Compute.OpenCL
             CommandQueueInfo paramName,
             out byte[] paramValue)
         {
-            var resultCode = GetCommandQueueInfo(queue, paramName, 0, null, out ulong sizeReturned);
+            var resultCode = GetCommandQueueInfo(queue, paramName, 0, null, out nuint sizeReturned);
             paramValue = new byte[sizeReturned];
             if (sizeReturned == 0)
                 return resultCode;
@@ -405,7 +405,7 @@ namespace OpenTK.Compute.OpenCL
         public static extern CLBuffer CreateBuffer(
             [In] this CLContext context,
             [In] MemoryFlags flags,
-            [In] ulong sizeReturned,
+            [In] nuint sizeReturned,
             [In] IntPtr hostPtr,
             [Out] out CLResultCode resultCode);
 
@@ -420,7 +420,7 @@ namespace OpenTK.Compute.OpenCL
         {
             fixed (T* b = array)
             {
-                return CreateBuffer(context, flags, (ulong)(sizeof(T) * array.Length), (IntPtr)b, out resultCode);
+                return CreateBuffer(context, flags, (nuint)(sizeof(T) * array.Length), (IntPtr)b, out resultCode);
             }
         }
 
@@ -435,7 +435,7 @@ namespace OpenTK.Compute.OpenCL
         {
             fixed (T* b = span)
             {
-                return CreateBuffer(context, flags, (ulong)(sizeof(T) * span.Length), (IntPtr)b, out resultCode);
+                return CreateBuffer(context, flags, (nuint)(sizeof(T) * span.Length), (IntPtr)b, out resultCode);
             }
         }
 
@@ -458,7 +458,7 @@ namespace OpenTK.Compute.OpenCL
             [In] this CLContext context,
             [In] IntPtr[] properties,
             [In] MemoryFlags flags,
-            [In] ulong sizeReturned,
+            [In] nuint sizeReturned,
             [In] IntPtr hostPointer,
             [Out] out CLResultCode errorCode);
 
@@ -475,7 +475,7 @@ namespace OpenTK.Compute.OpenCL
         {
             fixed (T* b = array)
             {
-                return CreateBufferWithProperties(context, properties.CreatePropertyArray(), flags, (ulong)(sizeof(T) * array.Length), (IntPtr)b,
+                return CreateBufferWithProperties(context, properties.CreatePropertyArray(), flags, (nuint)(sizeof(T) * array.Length), (IntPtr)b,
                     out errorCode);
             }
         }
@@ -493,7 +493,7 @@ namespace OpenTK.Compute.OpenCL
         {
             fixed (T* b = span)
             {
-                return CreateBufferWithProperties(context, properties.CreatePropertyArray(), flags, (ulong)(sizeof(T) * span.Length), (IntPtr)b,
+                return CreateBufferWithProperties(context, properties.CreatePropertyArray(), flags, (nuint)(sizeof(T) * span.Length), (IntPtr)b,
                     out errorCode);
             }
         }
@@ -517,9 +517,9 @@ namespace OpenTK.Compute.OpenCL
         public static extern CLResultCode GetMemObjectInfo(
             [In] this CLBuffer buffer,
             [In] MemoryObjectInfo paramName,
-            [In] ulong paramValueSize,
+            [In] nuint paramValueSize,
             [Out] byte[] paramValue,
-            [Out] out ulong paramValueSizeReturned);
+            [Out] out nuint paramValueSizeReturned);
 
         /// <summary>
         /// Introduced in OpenCL 1.0
@@ -529,7 +529,7 @@ namespace OpenTK.Compute.OpenCL
             MemoryObjectInfo paramName,
             out byte[] paramValue)
         {
-            var resultCode = GetMemObjectInfo(buffer, paramName, 0, null, out ulong sizeReturned);
+            var resultCode = GetMemObjectInfo(buffer, paramName, 0, null, out nuint sizeReturned);
             paramValue = new byte[sizeReturned];
             if (sizeReturned == 0)
                 return resultCode;
@@ -763,9 +763,9 @@ namespace OpenTK.Compute.OpenCL
         public static extern CLResultCode GetMemObjectInfo(
             [In] this CLImage image,
             [In] MemoryObjectInfo paramName,
-            [In] ulong paramValueSize,
+            [In] nuint paramValueSize,
             [Out] byte[] paramValue,
-            [Out] out ulong paramValueSizeReturned);
+            [Out] out nuint paramValueSizeReturned);
 
         /// <summary>
         /// Introduced in OpenCL 1.0
@@ -775,7 +775,7 @@ namespace OpenTK.Compute.OpenCL
             MemoryObjectInfo paramName,
             out byte[] paramValue)
         {
-            var resultCode = GetMemObjectInfo(image, paramName, 0, null, out ulong sizeReturned);
+            var resultCode = GetMemObjectInfo(image, paramName, 0, null, out nuint sizeReturned);
             paramValue = new byte[sizeReturned];
             if (sizeReturned == 0)
                 return resultCode;
@@ -789,9 +789,9 @@ namespace OpenTK.Compute.OpenCL
         public static extern CLResultCode GetImageInfo(
             [In] this CLImage image,
             [In] ImageInfo paramName,
-            [In] ulong paramValueSize,
+            [In] nuint paramValueSize,
             [Out] byte[] paramValue,
-            [Out] out ulong paramValueSizeReturned);
+            [Out] out nuint paramValueSizeReturned);
 
         /// <summary>
         /// Introduced in OpenCL 1.0
@@ -801,7 +801,7 @@ namespace OpenTK.Compute.OpenCL
             ImageInfo paramName,
             out byte[] paramValue)
         {
-            var resultCode = GetImageInfo(image, paramName, 0, null, out ulong sizeReturned);
+            var resultCode = GetImageInfo(image, paramName, 0, null, out nuint sizeReturned);
             paramValue = new byte[sizeReturned];
             if (sizeReturned == 0)
                 return resultCode;
@@ -836,10 +836,10 @@ namespace OpenTK.Compute.OpenCL
             [In] this CLCommandQueue commandQueue,
             [In] CLImage image,
             [In] bool blockingRead,
-            [In] ulong[] origin,
-            [In] ulong[] region,
-            [In] ulong rowPitch,
-            [In] ulong slicePitch,
+            [In] nuint[] origin,
+            [In] nuint[] region,
+            [In] nuint rowPitch,
+            [In] nuint slicePitch,
             [In] IntPtr hostBuffer,
             [In] uint numberOfEventsInWaitList,
             [In] CLEvent[] eventWaitList,
@@ -852,10 +852,10 @@ namespace OpenTK.Compute.OpenCL
            this CLCommandQueue commandQueue,
             CLImage image,
             bool blockingRead,
-            ulong[] origin,
-            ulong[] region,
-            ulong rowPitch,
-            ulong slicePitch,
+            nuint[] origin,
+            nuint[] region,
+            nuint rowPitch,
+            nuint slicePitch,
             T[] array,
             CLEvent[] eventWaitList,
             out CLEvent @event)
@@ -875,10 +875,10 @@ namespace OpenTK.Compute.OpenCL
            this CLCommandQueue commandQueue,
             CLImage image,
             bool blockingRead,
-            ulong[] origin,
-            ulong[] region,
-            ulong rowPitch,
-            ulong slicePitch,
+            nuint[] origin,
+            nuint[] region,
+            nuint rowPitch,
+            nuint slicePitch,
             Span<T> span,
             CLEvent[] eventWaitList,
             out CLEvent @event)
@@ -899,10 +899,10 @@ namespace OpenTK.Compute.OpenCL
             [In] this CLCommandQueue commandQueue,
             [In] CLImage image,
             [In] bool blockingWrite,
-            [In] ulong[] origin,
-            [In] ulong[] region,
-            [In] ulong inputRowPitch,
-            [In] ulong inputSlicePitch,
+            [In] nuint[] origin,
+            [In] nuint[] region,
+            [In] nuint inputRowPitch,
+            [In] nuint inputSlicePitch,
             [In] IntPtr pointer,
             [In] uint numberOfEventsInWaitList,
             [In] CLEvent[] eventWaitList,
@@ -915,10 +915,10 @@ namespace OpenTK.Compute.OpenCL
            this CLCommandQueue commandQueue,
             CLImage image,
             bool blockingWrite,
-            ulong[] origin,
-            ulong[] region,
-            ulong inputRowPitch,
-            ulong inputSlicePitch,
+            nuint[] origin,
+            nuint[] region,
+            nuint inputRowPitch,
+            nuint inputSlicePitch,
             T[] array,
             CLEvent[] eventWaitList,
             out CLEvent @event)
@@ -938,10 +938,10 @@ namespace OpenTK.Compute.OpenCL
             this CLCommandQueue commandQueue,
             CLImage image,
             bool blockingWrite,
-            ulong[] origin,
-            ulong[] region,
-            ulong inputRowPitch,
-            ulong inputSlicePitch,
+            nuint[] origin,
+            nuint[] region,
+            nuint inputRowPitch,
+            nuint inputSlicePitch,
             Span<T> span,
             CLEvent[] eventWaitList,
             out CLEvent @event)
@@ -962,8 +962,8 @@ namespace OpenTK.Compute.OpenCL
             [In] this CLCommandQueue commandQueue,
             [In] CLImage image,
             [In] IntPtr fillColor,
-            [In] ulong[] origin,
-            [In] ulong[] region,
+            [In] nuint[] origin,
+            [In] nuint[] region,
             [In] uint numberOfEventsInWaitList,
             [In] CLEvent[] eventWaitList,
             [Out] out CLEvent @event);
@@ -975,8 +975,8 @@ namespace OpenTK.Compute.OpenCL
             this CLCommandQueue commandQueue,
             CLImage image,
             IntPtr fillColor,
-            ulong[] origin,
-            ulong[] region,
+            nuint[] origin,
+            nuint[] region,
             CLEvent[] eventWaitList,
             out CLEvent @event)
         {
@@ -992,9 +992,9 @@ namespace OpenTK.Compute.OpenCL
             [In] this CLCommandQueue commandQueue,
             [In] CLImage srcImage,
             [In] CLImage dstImage,
-            [In] ulong[] srcOrigin,
-            [In] ulong[] dstOrigin,
-            [In] ulong[] region,
+            [In] nuint[] srcOrigin,
+            [In] nuint[] dstOrigin,
+            [In] nuint[] region,
             [In] uint numberOfEventsInWaitList,
             [In] CLEvent[] eventWaitList,
             [Out] out CLEvent @event);
@@ -1006,9 +1006,9 @@ namespace OpenTK.Compute.OpenCL
             this CLCommandQueue commandQueue,
             CLImage srcImage,
             CLImage dstImage,
-            ulong[] srcOrigin,
-            ulong[] dstOrigin,
-            ulong[] region,
+            nuint[] srcOrigin,
+            nuint[] dstOrigin,
+            nuint[] region,
             CLEvent[] eventWaitList,
             out CLEvent @event)
         {
@@ -1024,9 +1024,9 @@ namespace OpenTK.Compute.OpenCL
             [In] this CLCommandQueue commandQueue,
             [In] CLImage srcImage,
             [In] CLBuffer dstBuffer,
-            [In] ulong[] srcOrigin,
-            [In] ulong[] region,
-            [In] ulong dstOffset,
+            [In] nuint[] srcOrigin,
+            [In] nuint[] region,
+            [In] nuint dstOffset,
             [In] uint numberOfEventsInWaitList,
             [In] CLEvent[] eventWaitList,
             [Out] out CLEvent @event);
@@ -1038,9 +1038,9 @@ namespace OpenTK.Compute.OpenCL
             this CLCommandQueue commandQueue,
             CLImage srcImage,
             CLBuffer dstBuffer,
-            ulong[] srcOrigin,
-            ulong[] region,
-            ulong dstOffset,
+            nuint[] srcOrigin,
+            nuint[] region,
+            nuint dstOffset,
             CLEvent[] eventWaitList,
             out CLEvent @event)
         {
@@ -1056,9 +1056,9 @@ namespace OpenTK.Compute.OpenCL
             [In] this CLCommandQueue commandQueue,
             [In] CLBuffer srcBuffer,
             [In] CLImage dstImage,
-            [In] ulong srcOffset,
-            [In] ulong[] dstOrigin,
-            [In] ulong[] region,
+            [In] nuint srcOffset,
+            [In] nuint[] dstOrigin,
+            [In] nuint[] region,
             [In] uint numberOfEventsInWaitList,
             [In] CLEvent[] eventWaitList,
             [Out] out CLEvent @event);
@@ -1070,9 +1070,9 @@ namespace OpenTK.Compute.OpenCL
            this CLCommandQueue commandQueue,
             CLBuffer srcBuffer,
             CLImage dstImage,
-            ulong srcOffset,
-            ulong[] dstOrigin,
-            ulong[] region,
+            nuint srcOffset,
+            nuint[] dstOrigin,
+            nuint[] region,
             CLEvent[] eventWaitList,
             out CLEvent @event)
         {
@@ -1129,9 +1129,9 @@ namespace OpenTK.Compute.OpenCL
         public static extern CLResultCode GetMemObjectInfo(
             [In] this CLPipe pipe,
             [In] MemoryObjectInfo paramName,
-            [In] ulong paramValueSize,
+            [In] nuint paramValueSize,
             [Out] byte[] paramValue,
-            [Out] out ulong paramValueSizeReturned);
+            [Out] out nuint paramValueSizeReturned);
 
         /// <summary>
         /// Introduced in OpenCL 1.0
@@ -1141,7 +1141,7 @@ namespace OpenTK.Compute.OpenCL
             MemoryObjectInfo paramName,
             out byte[] paramValue)
         {
-            var resultCode = GetMemObjectInfo(pipe, paramName, 0, null, out ulong sizeReturned);
+            var resultCode = GetMemObjectInfo(pipe, paramName, 0, null, out nuint sizeReturned);
             paramValue = new byte[sizeReturned];
             if (sizeReturned == 0)
                 return resultCode;
@@ -1155,9 +1155,9 @@ namespace OpenTK.Compute.OpenCL
         public static extern CLResultCode GetPipeInfo(
             [In] this CLPipe pipe,
             [In] PipeInfo paramName,
-            [In] ulong paramValueSize,
+            [In] nuint paramValueSize,
             [Out] byte[] paramValue,
-            [Out] out ulong paramValueSizeReturned);
+            [Out] out nuint paramValueSizeReturned);
 
         /// <summary>
         /// Introduced in OpenCL 2.0
@@ -1167,7 +1167,7 @@ namespace OpenTK.Compute.OpenCL
             PipeInfo paramName,
             out byte[] paramValue)
         {
-            var resultCode = GetPipeInfo(pipe, paramName, 0, null, out ulong sizeReturned);
+            var resultCode = GetPipeInfo(pipe, paramName, 0, null, out nuint sizeReturned);
             paramValue = new byte[sizeReturned];
             if (sizeReturned == 0)
                 return resultCode;
@@ -1217,9 +1217,9 @@ namespace OpenTK.Compute.OpenCL
         public static extern CLResultCode GetMemObjectInfo(
             [In] IntPtr memoryObject,
             [In] MemoryObjectInfo paramName,
-            [In] ulong paramValueSize,
+            [In] nuint paramValueSize,
             [Out] byte[] paramValue,
-            [Out] out ulong paramValueSizeReturned);
+            [Out] out nuint paramValueSizeReturned);
 
         /// <summary>
         /// Introduced in OpenCL 1.0
@@ -1229,7 +1229,7 @@ namespace OpenTK.Compute.OpenCL
             MemoryObjectInfo paramName,
             out byte[] paramValue)
         {
-            var resultCode = GetMemObjectInfo(memoryObject, paramName, 0, null, out ulong sizeReturned);
+            var resultCode = GetMemObjectInfo(memoryObject, paramName, 0, null, out nuint sizeReturned);
             paramValue = new byte[sizeReturned];
             if (sizeReturned == 0)
                 return resultCode;
@@ -1267,7 +1267,7 @@ namespace OpenTK.Compute.OpenCL
         public static extern IntPtr SVMAlloc(
             [In] this CLContext context,
             [In] SvmMemoryFlags flags,
-            [In] ulong size,
+            [In] nuint size,
             [In] uint alignment);
 
         /// <summary>
@@ -1321,9 +1321,9 @@ namespace OpenTK.Compute.OpenCL
         public static extern CLResultCode GetSamplerInfo(
             [In] this CLSampler sampler,
             [In] SamplerInfo paramName,
-            [In] ulong paramValueSize,
+            [In] nuint paramValueSize,
             [Out] byte[] paramValue,
-            [Out] out ulong paramValueSizeReturned);
+            [Out] out nuint paramValueSizeReturned);
 
         /// <summary>
         /// Introduced in OpenCL 1.0
@@ -1333,7 +1333,7 @@ namespace OpenTK.Compute.OpenCL
             SamplerInfo paramName,
             out byte[] paramValue)
         {
-            var resultCode = GetSamplerInfo(sampler, paramName, 0, null, out ulong sizeReturned);
+            var resultCode = GetSamplerInfo(sampler, paramName, 0, null, out nuint sizeReturned);
             paramValue = new byte[sizeReturned];
             if (sizeReturned == 0)
                 return resultCode;
@@ -1350,9 +1350,9 @@ namespace OpenTK.Compute.OpenCL
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clCreateProgramWithSource")]
         public static extern CLProgram CreateProgramWithSource(
             [In] this CLContext context,
-            [In] ulong size,
+            [In] nuint size,
             [In] IntPtr[] strings,
-            [In] ulong[] lengths,
+            [In] nuint[] lengths,
             [Out] out CLResultCode resultCode);
 
         /// <summary>
@@ -1364,7 +1364,7 @@ namespace OpenTK.Compute.OpenCL
             out CLResultCode resultCode)
         {
             IntPtr[] sourceList = { Marshal.StringToHGlobalAnsi(source) };
-            ulong[] sourceLengths = { (ulong)source.Length };
+            nuint[] sourceLengths = { (nuint)source.Length };
             return CreateProgramWithSource(context, 1, sourceList, sourceLengths, out resultCode);
         }
 
@@ -1376,7 +1376,7 @@ namespace OpenTK.Compute.OpenCL
             [In] this CLContext context,
             [In] uint numberOfDevices,
             [In] CLDevice[] deviceList,
-            [In] ulong[] lengths,
+            [In] nuint[] lengths,
             [In] IntPtr[] binaries,
             [Out] out CLResultCode[] binaryStatus,
             [Out] out CLResultCode resultCode);
@@ -1412,7 +1412,7 @@ namespace OpenTK.Compute.OpenCL
         public static extern CLProgram CreateProgramWithIL(
             [In] this CLContext context,
             [In] IntPtr il,
-            [In] ulong length,
+            [In] nuint length,
             [Out] out CLResultCode resultCode);
 
         /// <summary>
@@ -1542,7 +1542,7 @@ namespace OpenTK.Compute.OpenCL
         public static extern CLResultCode SetProgramSpecializationConstant(
             [In] this CLProgram program,
             [In] uint specId,
-            [In] ulong specSize,
+            [In] nuint specSize,
             [In] IntPtr specValue);
 
         /// <summary>
@@ -1558,9 +1558,9 @@ namespace OpenTK.Compute.OpenCL
         public static extern CLResultCode GetProgramInfo(
             [In] this CLProgram program,
             [In] ProgramInfo paramName,
-            [In] ulong paramValueSize,
+            [In] nuint paramValueSize,
             [Out] byte[] paramValue,
-            [Out] out ulong paramValueSizeReturned);
+            [Out] out nuint paramValueSizeReturned);
 
         /// <summary>
         /// Introduced in OpenCL 1.0
@@ -1570,7 +1570,7 @@ namespace OpenTK.Compute.OpenCL
             ProgramInfo paramName,
             out byte[] paramValue)
         {
-            var resultCode = GetProgramInfo(program, paramName, 0, null, out ulong sizeReturned);
+            var resultCode = GetProgramInfo(program, paramName, 0, null, out nuint sizeReturned);
             paramValue = new byte[sizeReturned];
             if (sizeReturned == 0)
                 return resultCode;
@@ -1585,9 +1585,9 @@ namespace OpenTK.Compute.OpenCL
             [In] this CLProgram program,
             [In] CLDevice device,
             [In] ProgramBuildInfo paramName,
-            [In] ulong paramValueSize,
+            [In] nuint paramValueSize,
             [Out] byte[] paramValue,
-            [Out] out ulong paramValueSizeReturned);
+            [Out] out nuint paramValueSizeReturned);
 
         /// <summary>
         /// Introduced in OpenCL 1.0
@@ -1598,7 +1598,7 @@ namespace OpenTK.Compute.OpenCL
             ProgramBuildInfo paramName,
             out byte[] paramValue)
         {
-            var resultCode = GetProgramBuildInfo(program, device, paramName, 0, null, out ulong sizeReturned);
+            var resultCode = GetProgramBuildInfo(program, device, paramName, 0, null, out nuint sizeReturned);
             paramValue = new byte[sizeReturned];
             if (sizeReturned == 0)
                 return resultCode;
@@ -1670,7 +1670,7 @@ namespace OpenTK.Compute.OpenCL
         public static extern CLResultCode SetKernelArg(
             [In] this CLKernel kernel,
             [In] uint argumentIndex,
-            [In] ulong argumentSize,
+            [In] nuint argumentSize,
             [In] IntPtr argumentValuePointer);
 
         /// <summary>
@@ -1683,7 +1683,7 @@ namespace OpenTK.Compute.OpenCL
         {
             fixed (T* arg = &argument)
             {
-                return SetKernelArg(kernel, argumentIndex, (ulong)sizeof(T), (IntPtr)arg);
+                return SetKernelArg(kernel, argumentIndex, (nuint)sizeof(T), (IntPtr)arg);
             }
         }
 
@@ -1713,9 +1713,9 @@ namespace OpenTK.Compute.OpenCL
         public static extern CLResultCode GetKernelInfo(
             [In] this CLKernel kernel,
             [In] KernelInfo paramName,
-            [In] ulong paramValueSize,
+            [In] nuint paramValueSize,
             [Out] byte[] paramValue,
-            [Out] out ulong paramSizeReturned);
+            [Out] out nuint paramSizeReturned);
 
         /// <summary>
         /// Introduced in OpenCL 1.0
@@ -1725,7 +1725,7 @@ namespace OpenTK.Compute.OpenCL
             KernelInfo paramName,
             out byte[] paramValue)
         {
-            var resultCode = GetKernelInfo(kernel, paramName, 0, null, out ulong sizeReturned);
+            var resultCode = GetKernelInfo(kernel, paramName, 0, null, out nuint sizeReturned);
             paramValue = new byte[sizeReturned];
             if (sizeReturned == 0)
                 return resultCode;
@@ -1740,9 +1740,9 @@ namespace OpenTK.Compute.OpenCL
             [In] this CLKernel kernel,
             [In] uint argumentIndex,
             [In] KernelArgInfo paramName,
-            [In] ulong paramValueSize,
+            [In] nuint paramValueSize,
             [Out] byte[] paramValue,
-            [Out] out ulong paramSizeReturned);
+            [Out] out nuint paramSizeReturned);
 
         /// <summary>
         /// Introduced in OpenCL 1.2
@@ -1753,7 +1753,7 @@ namespace OpenTK.Compute.OpenCL
             KernelArgInfo paramName,
             out byte[] paramValue)
         {
-            var resultCode = GetKernelArgInfo(kernel, argumentIndex, paramName, 0, null, out ulong sizeReturned);
+            var resultCode = GetKernelArgInfo(kernel, argumentIndex, paramName, 0, null, out nuint sizeReturned);
             paramValue = new byte[sizeReturned];
             if (sizeReturned == 0)
                 return resultCode;
@@ -1768,9 +1768,9 @@ namespace OpenTK.Compute.OpenCL
             [In] this CLKernel kernel,
             [In] CLDevice device,
             [In] KernelWorkGroupInfo paramName,
-            [In] ulong paramValueSize,
+            [In] nuint paramValueSize,
             [Out] byte[] paramValue,
-            [Out] out ulong paramSizeReturned);
+            [Out] out nuint paramSizeReturned);
 
         /// <summary>
         /// Introduced in OpenCL 1.0
@@ -1781,7 +1781,7 @@ namespace OpenTK.Compute.OpenCL
             KernelWorkGroupInfo paramName,
             out byte[] paramValue)
         {
-            var resultCode = GetKernelWorkGroupInfo(kernel, device, paramName, 0, null, out ulong sizeReturned);
+            var resultCode = GetKernelWorkGroupInfo(kernel, device, paramName, 0, null, out nuint sizeReturned);
             paramValue = new byte[sizeReturned];
             if (sizeReturned == 0)
                 return resultCode;
@@ -1798,9 +1798,9 @@ namespace OpenTK.Compute.OpenCL
             [In] KernelSubGroupInfo paramName,
             [In] uint inputValueSize,
             [In] IntPtr inputValue,
-            [In] ulong paramValueSize,
+            [In] nuint paramValueSize,
             [Out] byte[] paramValue,
-            [Out] out ulong paramSizeReturned);
+            [Out] out nuint paramSizeReturned);
 
         /// <summary>
         /// Introduced in OpenCL 2.1
@@ -1815,7 +1815,7 @@ namespace OpenTK.Compute.OpenCL
         {
             fixed (T* b = array)
             {
-                var resultCode = GetKernelSubGroupInfo(kernel, device, paramName, (uint)(array.Length * sizeof(float)), (IntPtr)b, 0, null, out ulong sizeReturned);
+                var resultCode = GetKernelSubGroupInfo(kernel, device, paramName, (uint)(array.Length * sizeof(float)), (IntPtr)b, 0, null, out nuint sizeReturned);
                 paramValue = new byte[sizeReturned];
                 if (sizeReturned == 0)
                     return resultCode;
@@ -1836,7 +1836,7 @@ namespace OpenTK.Compute.OpenCL
         {
             fixed (T* b = span)
             {
-                var resultCode = GetKernelSubGroupInfo(kernel, device, paramName, (uint)(span.Length * sizeof(float)), (IntPtr)b, 0, null, out ulong sizeReturned);
+                var resultCode = GetKernelSubGroupInfo(kernel, device, paramName, (uint)(span.Length * sizeof(float)), (IntPtr)b, 0, null, out nuint sizeReturned);
                 paramValue = new byte[sizeReturned];
                 if (sizeReturned == 0)
                     return resultCode;
@@ -1871,9 +1871,9 @@ namespace OpenTK.Compute.OpenCL
         public static extern CLResultCode GetEventInfo(
             [In] this CLEvent @event,
             [In] EventInfo paramName,
-            [In] ulong paramValueSize,
+            [In] nuint paramValueSize,
             [Out] byte[] paramValue,
-            [Out] out ulong paramSizeReturned);
+            [Out] out nuint paramSizeReturned);
 
         /// <summary>
         /// Introduced in OpenCL 1.0
@@ -1883,7 +1883,7 @@ namespace OpenTK.Compute.OpenCL
             EventInfo paramName,
             out byte[] paramValue)
         {
-            var resultCode = GetEventInfo(@event, paramName, 0, null, out ulong sizeReturned);
+            var resultCode = GetEventInfo(@event, paramName, 0, null, out nuint sizeReturned);
             paramValue = new byte[sizeReturned];
             if (sizeReturned == 0)
                 return resultCode;
@@ -1952,9 +1952,9 @@ namespace OpenTK.Compute.OpenCL
         public static extern CLResultCode GetEventProfilingInfo(
             [In] this CLEvent @event,
             [In] ProfilingInfo paramName,
-            [In] ulong paramValueSize,
+            [In] nuint paramValueSize,
             [Out] byte[] paramValue,
-            [Out] out ulong paramValueSizeReturned);
+            [Out] out nuint paramValueSizeReturned);
 
         /// <summary>
         /// Introduced in OpenCL 1.0
@@ -1964,7 +1964,7 @@ namespace OpenTK.Compute.OpenCL
             ProfilingInfo paramName,
             out byte[] paramValue)
         {
-            var resultCode = GetEventProfilingInfo(@event, paramName, 0, null, out ulong sizeReturned);
+            var resultCode = GetEventProfilingInfo(@event, paramName, 0, null, out nuint sizeReturned);
             paramValue = new byte[sizeReturned];
             if (sizeReturned == 0)
                 return resultCode;
@@ -1999,8 +1999,8 @@ namespace OpenTK.Compute.OpenCL
             [In] this CLCommandQueue commandQueue,
             [In] CLBuffer buffer,
             [In] bool blockingRead,
-            [In] ulong offset,
-            [In] ulong size,
+            [In] nuint offset,
+            [In] nuint size,
             [In] IntPtr pointer,
             [In] uint numberOfEventsInWaitList,
             [In] CLEvent[] eventWaitList,
@@ -2013,7 +2013,7 @@ namespace OpenTK.Compute.OpenCL
             this CLCommandQueue commandQueue,
             CLBuffer buffer,
             bool blockingRead,
-            ulong offset,
+            nuint offset,
             T[] array,
             CLEvent[] eventWaitList,
             out CLEvent eventHandle)
@@ -2022,7 +2022,7 @@ namespace OpenTK.Compute.OpenCL
             fixed (T* b = array)
             {
                 return EnqueueReadBuffer(commandQueue, buffer, blockingRead, offset,
-                    (ulong)(array.Length * sizeof(float)), (IntPtr)b, (uint)(eventWaitList?.Length ?? 0),
+                    (nuint)(array.Length * sizeof(float)), (IntPtr)b, (uint)(eventWaitList?.Length ?? 0),
                     eventWaitList,
                     out eventHandle);
             }
@@ -2035,7 +2035,7 @@ namespace OpenTK.Compute.OpenCL
            this CLCommandQueue commandQueue,
             CLBuffer buffer,
             bool blockingRead,
-            ulong offset,
+            nuint offset,
             Span<T> span,
             CLEvent[] eventWaitList,
             out CLEvent eventHandle)
@@ -2044,7 +2044,7 @@ namespace OpenTK.Compute.OpenCL
             fixed (T* b = span)
             {
                 CLResultCode resultCode = EnqueueReadBuffer(commandQueue, buffer, blockingRead, offset,
-                    (ulong)(span.Length * sizeof(T)), (IntPtr)b, (uint)(eventWaitList?.Length ?? 0),
+                    (nuint)(span.Length * sizeof(T)), (IntPtr)b, (uint)(eventWaitList?.Length ?? 0),
                     eventWaitList, out eventHandle);
                 return resultCode;
             }
@@ -2058,13 +2058,13 @@ namespace OpenTK.Compute.OpenCL
             [In] this CLCommandQueue commandQueue,
             [In] CLBuffer buffer,
             [In] bool blockingRead,
-            [In] ulong[] bufferOffset,
-            [In] ulong[] hostOffset,
-            [In] ulong[] region,
-            [In] ulong bufferRowPitch,
-            [In] ulong bufferSlicePitch,
-            [In] ulong hostRowPitch,
-            [In] ulong hostSlicePitch,
+            [In] nuint[] bufferOffset,
+            [In] nuint[] hostOffset,
+            [In] nuint[] region,
+            [In] nuint bufferRowPitch,
+            [In] nuint bufferSlicePitch,
+            [In] nuint hostRowPitch,
+            [In] nuint hostSlicePitch,
             [In] IntPtr pointer,
             [In] uint numberOfEventsInWaitList,
             [In] CLEvent[] eventWaitList,
@@ -2077,13 +2077,13 @@ namespace OpenTK.Compute.OpenCL
             this CLCommandQueue commandQueue,
             CLBuffer buffer,
             bool blockingRead,
-            ulong[] bufferOffset,
-            ulong[] hostOffset,
-            ulong[] region,
-            ulong bufferRowPitch,
-            ulong bufferSlicePitch,
-            ulong hostRowPitch,
-            ulong hostSlicePitch,
+            nuint[] bufferOffset,
+            nuint[] hostOffset,
+            nuint[] region,
+            nuint bufferRowPitch,
+            nuint bufferSlicePitch,
+            nuint hostRowPitch,
+            nuint hostSlicePitch,
             T[] array,
             CLEvent[] eventWaitList,
             out CLEvent @event)
@@ -2106,13 +2106,13 @@ namespace OpenTK.Compute.OpenCL
             this CLCommandQueue commandQueue,
             CLBuffer buffer,
             bool blockingRead,
-            ulong[] bufferOffset,
-            ulong[] hostOffset,
-            ulong[] region,
-            ulong bufferRowPitch,
-            ulong bufferSlicePitch,
-            ulong hostRowPitch,
-            ulong hostSlicePitch,
+            nuint[] bufferOffset,
+            nuint[] hostOffset,
+            nuint[] region,
+            nuint bufferRowPitch,
+            nuint bufferSlicePitch,
+            nuint hostRowPitch,
+            nuint hostSlicePitch,
             Span<T> span,
             CLEvent[] eventWaitList,
             out CLEvent @event)
@@ -2136,8 +2136,8 @@ namespace OpenTK.Compute.OpenCL
             [In] this CLCommandQueue commandQueue,
             [In] CLBuffer buffer,
             [In] bool blockingWrite,
-            [In] ulong offset,
-            [In] ulong size,
+            [In] nuint offset,
+            [In] nuint size,
             [In] IntPtr pointer,
             [In] uint numberOfEventsInWaitList,
             [In] CLEvent[] eventWaitList,
@@ -2150,7 +2150,7 @@ namespace OpenTK.Compute.OpenCL
             this CLCommandQueue commandQueue,
             CLBuffer buffer,
             bool blockingWrite,
-            ulong offset,
+            nuint offset,
             T[] array,
             CLEvent[] eventWaitList,
             out CLEvent @event) where T : unmanaged
@@ -2172,7 +2172,7 @@ namespace OpenTK.Compute.OpenCL
             this CLCommandQueue commandQueue,
             CLBuffer buffer,
             bool blockingWrite,
-            ulong offset,
+            nuint offset,
             Span<T> span,
             CLEvent[] eventWaitList,
             out CLEvent @event)
@@ -2196,13 +2196,13 @@ namespace OpenTK.Compute.OpenCL
             [In] this CLCommandQueue commandQueue,
             [In] CLBuffer buffer,
             [In] bool blockingWrite,
-            [In] ulong[] bufferOffset,
-            [In] ulong[] hostOffset,
-            [In] ulong[] region,
-            [In] ulong bufferRowPitch,
-            [In] ulong bufferSlicePitch,
-            [In] ulong hostRowPitch,
-            [In] ulong hostSlicePitch,
+            [In] nuint[] bufferOffset,
+            [In] nuint[] hostOffset,
+            [In] nuint[] region,
+            [In] nuint bufferRowPitch,
+            [In] nuint bufferSlicePitch,
+            [In] nuint hostRowPitch,
+            [In] nuint hostSlicePitch,
             [In] IntPtr pointer,
             [In] uint numberOfEventsInWaitList,
             [In] CLEvent[] eventWaitList,
@@ -2214,13 +2214,13 @@ namespace OpenTK.Compute.OpenCL
         public static unsafe CLResultCode EnqueueWriteBufferRect<T>(
             this CLCommandQueue commandQueue, CLBuffer buffer,
             bool blockingWrite,
-            ulong[] bufferOffset,
-            ulong[] hostOffset,
-            ulong[] region,
-            ulong bufferRowPitch,
-            ulong bufferSlicePitch,
-            ulong hostRowPitch,
-            ulong hostSlicePitch,
+            nuint[] bufferOffset,
+            nuint[] hostOffset,
+            nuint[] region,
+            nuint bufferRowPitch,
+            nuint bufferSlicePitch,
+            nuint hostRowPitch,
+            nuint hostSlicePitch,
             T[] array,
             CLEvent[] eventWaitList,
             out CLEvent @event)
@@ -2243,13 +2243,13 @@ namespace OpenTK.Compute.OpenCL
             this CLCommandQueue commandQueue,
             CLBuffer buffer,
             bool blockingWrite,
-            ulong[] bufferOffset,
-            ulong[] hostOffset,
-            ulong[] region,
-            ulong bufferRowPitch,
-            ulong bufferSlicePitch,
-            ulong hostRowPitch,
-            ulong hostSlicePitch,
+            nuint[] bufferOffset,
+            nuint[] hostOffset,
+            nuint[] region,
+            nuint bufferRowPitch,
+            nuint bufferSlicePitch,
+            nuint hostRowPitch,
+            nuint hostSlicePitch,
             Span<T> span,
             CLEvent[] eventWaitList,
             out CLEvent @event)
@@ -2273,9 +2273,9 @@ namespace OpenTK.Compute.OpenCL
             [In] this CLCommandQueue commandQueue,
             [In] CLBuffer buffer,
             [In] IntPtr pattern,
-            [In] ulong patternSize,
-            [In] ulong offset,
-            [In] ulong size,
+            [In] nuint patternSize,
+            [In] nuint offset,
+            [In] nuint size,
             [In] uint numberOfEventsInWaitList,
             [In] CLEvent[] eventWaitList,
             [Out] out CLEvent @event);
@@ -2288,15 +2288,15 @@ namespace OpenTK.Compute.OpenCL
             this CLCommandQueue commandQueue,
             CLBuffer buffer,
             T[] pattern,
-            ulong offset,
-            ulong size,
+            nuint offset,
+            nuint size,
             CLEvent[] eventWaitList,
             out CLEvent @event)
             where T : unmanaged
         {
             fixed (T* p = pattern)
             {
-                return EnqueueFillBuffer(commandQueue, buffer, (IntPtr)p, (ulong)(pattern.Length * sizeof(T)), offset,
+                return EnqueueFillBuffer(commandQueue, buffer, (IntPtr)p, (nuint)(pattern.Length * sizeof(T)), offset,
                     size, (uint)(eventWaitList?.Length ?? 0), eventWaitList, out @event);
             }
         }
@@ -2309,9 +2309,9 @@ namespace OpenTK.Compute.OpenCL
             [In] this CLCommandQueue commandQueue,
             [In] CLBuffer srcBuffer,
             [In] CLBuffer dstBuffer,
-            [In] ulong srcOffset,
-            [In] ulong dstOffset,
-            [In] ulong size,
+            [In] nuint srcOffset,
+            [In] nuint dstOffset,
+            [In] nuint size,
             [In] uint numberOfEventsInWaitList,
             [In] CLEvent[] eventWaitList,
             [Out] out CLEvent @event);
@@ -2323,9 +2323,9 @@ namespace OpenTK.Compute.OpenCL
            this CLCommandQueue commandQueue,
             CLBuffer srcBuffer,
             CLBuffer dstBuffer,
-            ulong srcOffset,
-            ulong dstOffset,
-            ulong sizeReturned,
+            nuint srcOffset,
+            nuint dstOffset,
+            nuint sizeReturned,
             CLEvent[] eventWaitList,
             out CLEvent @event)
         {
@@ -2341,13 +2341,13 @@ namespace OpenTK.Compute.OpenCL
             [In] this CLCommandQueue commandQueue,
             [In] CLBuffer srcBuffer,
             [In] CLBuffer dstBuffer,
-            [In] ulong[] srcOrigin,
-            [In] ulong[] dstOrigin,
-            [In] ulong[] region,
-            [In] ulong srcRowPitch,
-            [In] ulong srcSlicePitch,
-            [In] ulong dstRowPitch,
-            [In] ulong dstSlicePitch,
+            [In] nuint[] srcOrigin,
+            [In] nuint[] dstOrigin,
+            [In] nuint[] region,
+            [In] nuint srcRowPitch,
+            [In] nuint srcSlicePitch,
+            [In] nuint dstRowPitch,
+            [In] nuint dstSlicePitch,
             [In] uint numberOfEventsInWaitList,
             [In] CLEvent[] eventWaitList,
             [Out] out CLEvent @event);
@@ -2359,13 +2359,13 @@ namespace OpenTK.Compute.OpenCL
             this CLCommandQueue commandQueue,
             CLBuffer srcBuffer,
             CLBuffer dstBuffer,
-            ulong[] srcOrigin,
-            ulong[] dstOrigin,
-            ulong[] region,
-            ulong srcRowPitch,
-            ulong srcSlicePitch,
-            ulong dstRowPitch,
-            ulong dstSlicePitch,
+            nuint[] srcOrigin,
+            nuint[] dstOrigin,
+            nuint[] region,
+            nuint srcRowPitch,
+            nuint srcSlicePitch,
+            nuint dstRowPitch,
+            nuint dstSlicePitch,
             CLEvent[] eventWaitList,
             out CLEvent @event)
         {
@@ -2382,8 +2382,8 @@ namespace OpenTK.Compute.OpenCL
             [In] CLBuffer buffer,
             [In] bool blockingMap,
             [In] MapFlags flags,
-            [In] ulong offset,
-            [In] ulong size,
+            [In] nuint offset,
+            [In] nuint size,
             [In] uint numberOfEventsInWaitList,
             [In] CLEvent[] eventWaitList,
             [Out] out CLEvent @event,
@@ -2397,8 +2397,8 @@ namespace OpenTK.Compute.OpenCL
             CLBuffer buffer,
             bool blockingMap,
             MapFlags flags,
-            ulong offset,
-            ulong size,
+            nuint offset,
+            nuint size,
             CLEvent[] eventWaitList,
             out CLEvent @event,
             out CLResultCode resultCode)
@@ -2416,11 +2416,11 @@ namespace OpenTK.Compute.OpenCL
             [In] CLImage image,
             [In] bool blockingMap,
             [In] MapFlags flags,
-            [In] ulong[] origin,
-            [In] ulong[] region,
-            [In] ulong rowPitch,
-            [In] ulong slicePitch,
-            [In] ulong numberOfEventsInWaitList,
+            [In] nuint[] origin,
+            [In] nuint[] region,
+            [In] nuint rowPitch,
+            [In] nuint slicePitch,
+            [In] nuint numberOfEventsInWaitList,
             [In] CLEvent[] eventWaitList,
             [Out] out CLEvent @event,
             [Out] out CLResultCode resultCode);
@@ -2433,10 +2433,10 @@ namespace OpenTK.Compute.OpenCL
             CLImage image,
             bool blockingMap,
             MapFlags flags,
-            ulong[] origin,
-            ulong[] region,
-            ulong rowPitch,
-            ulong slicePitch,
+            nuint[] origin,
+            nuint[] region,
+            nuint rowPitch,
+            nuint slicePitch,
             CLEvent[] eventWaitList,
             out CLEvent @event,
             out CLResultCode resultCode)
@@ -2558,9 +2558,9 @@ namespace OpenTK.Compute.OpenCL
             [In] this CLCommandQueue commandQueue,
             [In] CLKernel kernel,
             [In] uint workDimension,
-            [In] ulong[] globalWorkOffset,
-            [In] ulong[] globalWorkSize,
-            [In] ulong[] localWorkSize,
+            [In] nuint[] globalWorkOffset,
+            [In] nuint[] globalWorkSize,
+            [In] nuint[] localWorkSize,
             [In] uint numberOfEventsInWaitList,
             [In] CLEvent[] eventWaitList,
             [Out] out CLEvent @event);
@@ -2572,9 +2572,9 @@ namespace OpenTK.Compute.OpenCL
             this CLCommandQueue commandQueue,
             CLKernel kernel,
             uint workDimension,
-            ulong[] globalWorkOffset,
-            ulong[] globalWorkSize,
-            ulong[] localWorkSize,
+            nuint[] globalWorkOffset,
+            nuint[] globalWorkSize,
+            nuint[] localWorkSize,
             CLEvent[] eventWaitList,
             out CLEvent @event)
         {
@@ -2590,7 +2590,7 @@ namespace OpenTK.Compute.OpenCL
             [In] this CLCommandQueue commandQueue,
             [In] IntPtr userFunction,
             [In] IntPtr[] arguments,
-            [In] ulong argumentSize,
+            [In] nuint argumentSize,
             [In] uint numberOfMemoryObjects,
             [In] IntPtr[] memoryObjects,
             [In] IntPtr argumentsMemoryLocation,
@@ -2605,7 +2605,7 @@ namespace OpenTK.Compute.OpenCL
             this CLCommandQueue commandQueue,
             IntPtr userFunction,
             IntPtr[] arguments,
-            ulong argumentSize,
+            nuint argumentSize,
             IntPtr[] memoryObjects,
             IntPtr argumentsMemoryLocation,
             CLEvent[] eventWaitList,
@@ -2707,7 +2707,7 @@ namespace OpenTK.Compute.OpenCL
             [In] bool blockingCopy,
             [In] IntPtr dstPointer,
             [In] IntPtr srcPointer,
-            [In] ulong size,
+            [In] nuint size,
             [In] uint numberOfEventsInWaitList,
             [In] CLEvent[] eventWaitList,
             [Out] out CLEvent @event);
@@ -2720,7 +2720,7 @@ namespace OpenTK.Compute.OpenCL
             bool blockingCopy,
             IntPtr dstPointer,
             IntPtr srcPointer,
-            ulong size,
+            nuint size,
             CLEvent[] eventWaitList,
             out CLEvent @event)
         {
@@ -2736,8 +2736,8 @@ namespace OpenTK.Compute.OpenCL
             [In] this CLCommandQueue commandQueue,
             [In] IntPtr svmPointer,
             [In] IntPtr pattern,
-            [In] ulong patternSize,
-            [In] ulong size,
+            [In] nuint patternSize,
+            [In] nuint size,
             [In] uint numberOfEventsInWaitList,
             [In] CLEvent[] eventWaitList,
             [Out] out CLEvent @event);
@@ -2749,14 +2749,14 @@ namespace OpenTK.Compute.OpenCL
             this CLCommandQueue commandQueue,
             IntPtr svmPointer,
             T[] pattern,
-            ulong size,
+            nuint size,
             CLEvent[] eventWaitList,
             out CLEvent @event)
             where T : unmanaged
         {
             fixed (T* p = pattern)
             {
-                return EnqueueSvmMemoryFill(commandQueue, svmPointer, (IntPtr)p, (ulong)(pattern.Length * sizeof(T)),
+                return EnqueueSvmMemoryFill(commandQueue, svmPointer, (IntPtr)p, (nuint)(pattern.Length * sizeof(T)),
                     size, (uint)(eventWaitList?.Length ?? 0), eventWaitList, out @event);
             }
         }
@@ -2768,7 +2768,7 @@ namespace OpenTK.Compute.OpenCL
             this CLCommandQueue commandQueue,
             IntPtr svmPointer,
             Span<T> pattern,
-            ulong size,
+            nuint size,
             CLEvent[] eventWaitList,
             out CLEvent @event)
             where T : unmanaged
@@ -2789,7 +2789,7 @@ namespace OpenTK.Compute.OpenCL
             [In] bool blockingMap,
             [In] MapFlags mapFlag,
             [In] IntPtr svmPointer,
-            [In] ulong size,
+            [In] nuint size,
             [In] uint numberOfEventsInWaitList,
             [In] CLEvent[] eventWaitList,
             [Out] out CLEvent @event);
@@ -2802,7 +2802,7 @@ namespace OpenTK.Compute.OpenCL
             bool blockingMap,
             MapFlags mapFlag,
             IntPtr svmPointer,
-            ulong size,
+            nuint size,
             CLEvent[] eventWaitList,
             out CLEvent @event)
         {
@@ -2842,7 +2842,7 @@ namespace OpenTK.Compute.OpenCL
             [In] this CLCommandQueue commandQueue,
             [In] uint numberOfSvmPointers,
             [In] IntPtr[] svmPointers,
-            [In] ulong[] sizes,
+            [In] nuint[] sizes,
             [In] MemoryMigrationFlags memoryMigrationFlags,
             [In] uint numberOfEventsInWaitList,
             [In] CLEvent[] eventWaitList,
@@ -2854,7 +2854,7 @@ namespace OpenTK.Compute.OpenCL
         public static CLResultCode EnqueueSvmMigrateMemory(
             [In] this CLCommandQueue commandQueue,
             IntPtr[] svmPointers,
-            ulong[] sizes,
+            nuint[] sizes,
             MemoryMigrationFlags memoryMigrationFlags,
             CLEvent[] eventWaitList,
             out CLEvent @event)
@@ -2888,9 +2888,9 @@ namespace OpenTK.Compute.OpenCL
             [In] CLContext context,
             [In] MemoryFlags flags,
             [In] ref CLImageFormat imageFormat,
-            [In] ulong imageWidth,
-            [In] ulong imageHeight,
-            [In] ulong imageRowPitch,
+            [In] nuint imageWidth,
+            [In] nuint imageHeight,
+            [In] nuint imageRowPitch,
             [In] IntPtr hostPointer,
             [Out] out CLResultCode resultCode);
 
@@ -2903,11 +2903,11 @@ namespace OpenTK.Compute.OpenCL
             [In] CLContext context,
             [In] MemoryFlags flags,
             [In] ref CLImageFormat imageFormat,
-            [In] ulong imageWidth,
-            [In] ulong imageHeight,
-            [In] ulong imageDepth,
-            [In] ulong imageRowPitch,
-            [In] ulong imageSlicePitch,
+            [In] nuint imageWidth,
+            [In] nuint imageHeight,
+            [In] nuint imageDepth,
+            [In] nuint imageRowPitch,
+            [In] nuint imageSlicePitch,
             [In] IntPtr hostPointer,
             [Out] out CLResultCode resultCode);
 

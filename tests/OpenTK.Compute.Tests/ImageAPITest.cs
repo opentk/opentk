@@ -208,13 +208,26 @@ namespace OpenTK.Compute.Tests
         [TestMethod]
         public void EnqueueWriteImage()
         {
-            Assert.Inconclusive();
+            CLImageFormat imageFormat = new CLImageFormat(ChannelOrder.R, ChannelType.UnsignedInteger32);
+            CLImageDescription imageDesc = CLImageDescription.Create1D(3);
+            var data = new uint[] { 1, 2, 3 };
+            var image = context.CreateImage(MemoryFlags.ReadWrite | MemoryFlags.CopyHostPtr, ref imageFormat, ref imageDesc, data, out CLResultCode result);
+            Assert.AreEqual(CLResultCode.Success, result);
+            var resultCode = commandQueue.EnqueueWriteImage(image, true, new nuint[] { 0, 0, 0 }, new nuint[] { 3, 1, 1 }, 0, 0, data, null, out _);
+            Assert.AreEqual(CLResultCode.Success, resultCode);
         }
 
         [TestMethod]
         public void EnqueueReadImage()
         {
-            Assert.Inconclusive();
+            CLImageFormat imageFormat = new CLImageFormat(ChannelOrder.R, ChannelType.UnsignedInteger32);
+            CLImageDescription imageDesc = CLImageDescription.Create1D(3);
+            var data = new uint[] { 1, 2, 3 };
+            var image = context.CreateImage(MemoryFlags.ReadWrite | MemoryFlags.CopyHostPtr, ref imageFormat, ref imageDesc, data, out _);
+            var output = new uint[3];
+            var resultCode = commandQueue.EnqueueReadImage(image, true, new nuint[] { 0, 0, 0 }, new nuint[] { 3, 1, 1 }, 0, 0, output, null, out _);
+            Assert.AreEqual(CLResultCode.Success, resultCode);
+            Console.WriteLine(data[0]);
         }
 
         [TestMethod]

@@ -222,7 +222,7 @@ namespace OpenTK.Compute.Tests
         public void GetDeviceAndHostTimer()
         {
             platform.GetDeviceIds(DeviceType.All, out CLDevice[] deviceIds);
-            var resultCode = deviceIds[0].GetDeviceAndHostTimer(out ulong deviceTimestamp, out ulong hostTimestamp);
+            var resultCode = deviceIds[0].GetDeviceAndHostTimer(out nuint deviceTimestamp, out nuint hostTimestamp);
             Assert.AreEqual(CLResultCode.Success, resultCode);
             Assert.IsTrue(deviceTimestamp > 0);
             Assert.IsTrue(hostTimestamp > 0);
@@ -232,7 +232,7 @@ namespace OpenTK.Compute.Tests
         public void GetHostTimer()
         {
             platform.GetDeviceIds(DeviceType.All, out CLDevice[] deviceIds);
-            var resultCode = deviceIds[0].GetHostTimer(out ulong hostTimestamp);
+            var resultCode = deviceIds[0].GetHostTimer(out nuint hostTimestamp);
             Assert.AreEqual(CLResultCode.Success, resultCode);
             Assert.IsTrue(hostTimestamp > 0);
         }
