@@ -982,7 +982,7 @@ namespace OpenTK
         public static Vector3 Transform(Matrix3 mat, Vector3 vec)
         {
             Vector3 result;
-            Transform(ref vec, ref mat, out result);
+            Transform(ref mat, ref vec, out result);
             return result;
         }
 
