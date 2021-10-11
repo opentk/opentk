@@ -255,24 +255,60 @@ namespace OpenTK.Platform.X11
         [DllImport(_dll_name, EntryPoint = "XDisplayKeycodes")]
         public static extern void DisplayKeycodes(Display display, ref int min_keycodes_return, ref int max_keycodes_return);
 
+        /// <summary>
+        /// Specifies an XFree86 video modeline
+        /// </summary>
         [StructLayout(LayoutKind.Sequential)]
         internal struct XF86VidModeModeLine
         {
-            public short hdisplay;   /* Number of display pixels horizontally */
-            public short hsyncstart; /* Horizontal sync start */
-            public short hsyncend;   /* Horizontal sync end */
-            public short htotal;     /* Total horizontal pixels */
-            public short vdisplay;   /* Number of display pixels vertically */
-            public short vsyncstart; /* Vertical sync start */
-            public short vsyncend;   /* Vertical sync start */
-            public short vtotal;     /* Total vertical pixels */
-            public int flags;      /* Mode flags */
-            public int privsize;   /* Size of private */
-            public IntPtr _private;   /* Server privates */
+            /// <summary>
+            /// Number of display pixels horizontally
+            /// </summary>
+            public short hdisplay;
+            /// <summary>
+            /// Horizontal sync start
+            /// </summary>
+            public short hsyncstart;
+            /// <summary>
+            /// Horizontal sync end
+            /// </summary>
+            public short hsyncend;
+            /// <summary>
+            /// Total horizontal pixels
+            /// </summary>
+            public short htotal;
+            /// <summary>
+            /// Number of display pixels vertically
+            /// </summary>
+            public short vdisplay;
+            /// <summary>
+            /// Vertical sync start
+            /// </summary>
+            public short vsyncstart;
+            /// <summary>
+            /// Vertical sycn end
+            /// </summary>
+            public short vsyncend;
+            /// <summary>
+            /// Total vertical pixels
+            /// </summary>
+            public short vtotal;
+            /// <summary>
+            /// Mode flags
+            /// </summary>
+            public int flags;
+            /// <summary>
+            /// Size in bytes of the server private struct
+            /// </summary>
+            public int privsize;
+            /// <summary>
+            /// Pointer to the server private struct
+            /// </summary>
+            public IntPtr _private;
         }
 
         /// <summary>
-        /// Specifies an XF86 display mode.
+        /// Specifies an XFree86 display mode.
         /// </summary>
         [StructLayout(LayoutKind.Sequential)]
         internal struct XF86VidModeModeInfo
@@ -281,112 +317,179 @@ namespace OpenTK.Platform.X11
             /// Pixel clock.
             /// </summary>
             public int dotclock;
-
             /// <summary>
             /// Number of display pixels horizontally
             /// </summary>
             public short hdisplay;
-
             /// <summary>
             /// Horizontal sync start
             /// </summary>
             public short hsyncstart;
-
             /// <summary>
             /// Horizontal sync end
             /// </summary>
             public short hsyncend;
-
             /// <summary>
-            /// Total horizontal pixel
+            /// Total horizontal pixels
             /// </summary>
             public short htotal;
-
             /// <summary>
-            ///
+            /// Horizontal skew
             /// </summary>
             public short hskew;
-
             /// <summary>
             /// Number of display pixels vertically
             /// </summary>
             public short vdisplay;
-
             /// <summary>
             /// Vertical sync start
             /// </summary>
             public short vsyncstart;
-
             /// <summary>
             /// Vertical sync end
             /// </summary>
             public short vsyncend;
-
             /// <summary>
             /// Total vertical pixels
             /// </summary>
             public short vtotal;
-
             /// <summary>
-            ///
+            /// Vertical skew
             /// </summary>
             public short vskew;
-
             /// <summary>
             /// Mode flags
             /// </summary>
             public int flags;
-
-            private int privsize;   /* Size of private */
-            private IntPtr _private;   /* Server privates */
+            /// <summary>
+            /// Size in bytes of the server private struct
+            /// </summary>
+            private int privsize;
+            /// <summary>
+            /// Pointer to the server private struct
+            /// </summary>
+            private IntPtr _private;
         }
 
-        //Monitor information:
+        /// <summary>
+        /// Specifies an XFree86 monitor
+        /// </summary>
         [StructLayout(LayoutKind.Sequential)]
         internal struct XF86VidModeMonitor
         {
-            [MarshalAs(UnmanagedType.LPStr)] private string vendor;     /* Name of manufacturer */
-            [MarshalAs(UnmanagedType.LPStr)] private string model;      /* Model name */
-            private float EMPTY;      /* unused, for backward compatibility */
-
-            private byte nhsync;     /* Number of horiz sync ranges */
-            /*XF86VidModeSyncRange* */
-            private IntPtr hsync; /* Horizontal sync ranges */
-
-            private byte nvsync;     /* Number of vert sync ranges */
-            /*XF86VidModeSyncRange* */
-            private IntPtr vsync; /* Vertical sync ranges */
+            /// <summary>
+            /// Name of manufacturer
+            /// </summary>
+            [MarshalAs(UnmanagedType.LPStr)] 
+            private string vendor;
+            /// <summary>
+            /// Name of model
+            /// </summary>
+            [MarshalAs(UnmanagedType.LPStr)] 
+            private string model;
+            /// <summary>
+            /// Unused
+            /// </summary>
+            /// <remarks>Required for backwards compatability</remarks>
+            private float EMPTY;
+            /// <summary>
+            /// Number of horizontal sync ranges
+            /// </summary>
+            private byte nhsync;
+            /// <summary>
+            /// Pointer to the horizontal sync ranges array
+            /// </summary>
+            /// <remarks>See <see cref="XF86VidModeSyncRange"/></remarks>
+            private IntPtr hsync;
+            /// <summary>
+            /// Number of vertical sync ranges
+            /// </summary>
+            private byte nvsync;
+            /// <summary>
+            /// Pointer to the vertical sync ranges array
+            /// </summary>
+            /// <remarks>See <see cref="XF86VidModeSyncRange"/></remarks>
+            private IntPtr vsync;
         }
 
+        /// <summary>
+        /// Specifies an XFree86 video mode sync range
+        /// </summary>
         [StructLayout(LayoutKind.Sequential)]
         internal struct XF86VidModeSyncRange
         {
-            private float hi;         /* Top of range */
-            private float lo;         /* Bottom of range */
+            /// <summary>
+            /// Top of the range
+            /// </summary>
+            private float hi;
+            /// <summary>
+            /// Bottom of the range
+            /// </summary>
+            private float lo;
         }
 
+        /// <summary>
+        /// Specifies the structure recieved on an XFree86 video mode change notification event
+        /// </summary>
         [StructLayout(LayoutKind.Sequential)]
         internal struct XF86VidModeNotifyEvent
         {
-            private int type;                      /* of event */
-            private ulong serial;          /* # of last request processed by server */
-            private bool send_event;               /* true if this came from a SendEvent req */
-            private Display display;              /* Display the event was read from */
-            private IntPtr root;                   /* root window of event screen */
-            private int state;                     /* What happened */
-            private int kind;                      /* What happened */
-
-            private bool forced;                   /* extents of new region */
-            /* Time */
-            private IntPtr time;                     /* event timestamp */
+            /// <summary>
+            /// Type of event
+            /// </summary>
+            private int type;
+            /// <summary>
+            /// Number of the last request processed by the server
+            /// </summary>
+            private ulong serial;
+            /// <summary>
+            /// Whether this came from a SendEvent request
+            /// </summary>
+            private bool send_event;
+            /// <summary>
+            /// Display the event was read from
+            /// </summary>
+            private Display display;
+            /// <summary>
+            /// Root window of the event's screen
+            /// </summary>
+            private IntPtr root;
+            /// <summary>
+            /// What happened
+            /// </summary>
+            private int state;
+            /// <summary>
+            /// What happened
+            /// </summary>
+            private int kind;
+            /// <summary>
+            /// Extents of the new region
+            /// </summary>
+            private bool forced;
+            /// <summary>
+            /// Event timestamp
+            /// </summary>
+            private IntPtr time;
         }
 
+        /// <summary>
+        /// Specifies the gamma for an XFree86 video moed
+        /// </summary>
         [StructLayout(LayoutKind.Sequential)]
         internal struct XF86VidModeGamma
         {
-            private float red;                     /* Red Gamma value */
-            private float green;                   /* Green Gamma value */
-            private float blue;                    /* Blue Gamma value */
+            /// <summary>
+            /// Red value
+            /// </summary>
+            private float red;
+            /// <summary>
+            /// Green value
+            /// </summary>
+            private float green;
+            /// <summary>
+            /// Blue value
+            /// </summary>
+            private float blue;
         }
         [DllImport(_dll_name_vid)]
         public static extern bool XF86VidModeQueryExtension(
