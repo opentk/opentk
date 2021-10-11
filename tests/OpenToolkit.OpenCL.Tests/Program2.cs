@@ -116,7 +116,7 @@ namespace OpenToolkit.OpenCL.Tests
                     //CL.EnqueueNDRangeKernel(commandQueue, kernel, 1, null, new UIntPtr[] {new UIntPtr((uint)A.Length)},
                     //	null, 0, null,  out CLEvent eventHandle);
 
-                    resultCode = commandQueue.EnqueueNDRangeKernel( kernel, 1, null, new[] {(uint)A.Length},
+                    resultCode = commandQueue.EnqueueNDRangeKernel( kernel, 1, null, new[] {(ulong)A.Length},
 						null, 0, null,  out CLEvent eventHandle);
                     HandleResultCode(resultCode, "CL.EnqueueNDRangeKernel");
 
@@ -127,7 +127,7 @@ namespace OpenToolkit.OpenCL.Tests
                     resultCode = eventHandle.SetEventCallback( (int)CommandExecutionStatus.Complete, (waitEvent, data) =>
 					{
 						float[] resultValues = new float[arraySize];
-                        resultCode = commandQueue.EnqueueReadBuffer(resultBuffer, true, null, resultValues, null, out _);
+                        resultCode = commandQueue.EnqueueReadBuffer(resultBuffer, true, 0, resultValues, null, out _);
                         HandleResultCode(resultCode, "CL.EnqueueReadBuffer");
 
                         StringBuilder line = new StringBuilder();
