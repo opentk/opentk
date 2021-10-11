@@ -277,7 +277,7 @@ namespace OpenTK.Platform.X11
 
             EmptyCursor = CreateEmptyCursor(window);
 
-            Debug.WriteLine(String.Format("X11GLNative window created successfully (id: {0}).", Handle));
+            Debug.WriteLine(string.Format("X11GLNative window created successfully (id: {0}).", Handle));
             Debug.Unindent();
 
             using (new XLock(window.Display))
@@ -325,7 +325,6 @@ namespace OpenTK.Platform.X11
 
                 // Open a display connection to the X server, and obtain the screen and root window.
                 window.Display = Functions.XOpenDisplay(IntPtr.Zero);
-                //window.Display = API.DefaultDisplay;
                 if (window.Display == IntPtr.Zero)
                 {
                     throw new Exception("Could not open connection to X");
@@ -333,8 +332,8 @@ namespace OpenTK.Platform.X11
 
                 using (new XLock(window.Display))
                 {
-                    window.Screen = Functions.XDefaultScreen(window.Display); //API.DefaultScreen;
-                    window.RootWindow = Functions.XRootWindow(window.Display, window.Screen); // API.RootWindow;
+                    window.Screen = Functions.XDefaultScreen(window.Display);
+                    window.RootWindow = Functions.XRootWindow(window.Display, window.Screen);
                     KeyMap = new X11KeyMap(window.Display);
                 }
 
@@ -369,71 +368,58 @@ namespace OpenTK.Platform.X11
             string[] fileNames = new string[splitted.Length];
             for (int i = 0; i < splitted.Length; i++)
             {
-                // Delete starting file://, filename data is URI-encoded
+                // Delete starting file:// as filename data is URI-encoded
                 fileNames[i] = Uri.UnescapeDataString(splitted[i].Substring(7));
             }
 
             return fileNames;
         }
 
-        /// <summary>
-        /// Not used yet.
-        /// Registers the necessary atoms for GameWindow.
-        /// </summary>
-        private void RegisterAtoms(X11WindowInfo window)
+        /// <summary>Registers the necessary atoms for our GameWindow</summary>
+        /// <param name="windowToRegister">The window to register the atoms for</param>
+        private void RegisterAtoms(X11WindowInfo windowToRegister)
         {
-            using (new XLock(window.Display))
+            using (new XLock(windowToRegister.Display))
             {
                 Debug.WriteLine("Registering atoms.");
-                _atom_wm_destroy = Functions.XInternAtom(window.Display, "WM_DELETE_WINDOW", true);
+                _atom_wm_destroy = Functions.XInternAtom(windowToRegister.Display, "WM_DELETE_WINDOW", true);
 
-                _atom_net_wm_state = Functions.XInternAtom(window.Display, "_NET_WM_STATE", false);
-                _atom_net_wm_state_minimized = Functions.XInternAtom(window.Display, "_NET_WM_STATE_MINIMIZED", false);
-                _atom_net_wm_state_fullscreen = Functions.XInternAtom(window.Display, "_NET_WM_STATE_FULLSCREEN", false);
+                _atom_net_wm_state = Functions.XInternAtom(windowToRegister.Display, "_NET_WM_STATE", false);
+                _atom_net_wm_state_minimized = Functions.XInternAtom(windowToRegister.Display, "_NET_WM_STATE_MINIMIZED", false);
+                _atom_net_wm_state_fullscreen = Functions.XInternAtom(windowToRegister.Display, "_NET_WM_STATE_FULLSCREEN", false);
                 _atom_net_wm_state_maximized_horizontal =
-                    Functions.XInternAtom(window.Display, "_NET_WM_STATE_MAXIMIZED_HORZ", false);
+                    Functions.XInternAtom(windowToRegister.Display, "_NET_WM_STATE_MAXIMIZED_HORZ", false);
                 _atom_net_wm_state_maximized_vertical =
-                    Functions.XInternAtom(window.Display, "_NET_WM_STATE_MAXIMIZED_VERT", false);
+                    Functions.XInternAtom(windowToRegister.Display, "_NET_WM_STATE_MAXIMIZED_VERT", false);
 
                 _atom_net_wm_allowed_actions =
-                    Functions.XInternAtom(window.Display, "_NET_WM_ALLOWED_ACTIONS", false);
+                    Functions.XInternAtom(windowToRegister.Display, "_NET_WM_ALLOWED_ACTIONS", false);
                 _atom_net_wm_action_resize =
-                    Functions.XInternAtom(window.Display, "_NET_WM_ACTION_RESIZE", false);
+                    Functions.XInternAtom(windowToRegister.Display, "_NET_WM_ACTION_RESIZE", false);
                 _atom_net_wm_action_maximize_horizontally =
-                    Functions.XInternAtom(window.Display, "_NET_WM_ACTION_MAXIMIZE_HORZ", false);
+                    Functions.XInternAtom(windowToRegister.Display, "_NET_WM_ACTION_MAXIMIZE_HORZ", false);
                 _atom_net_wm_action_maximize_vertically =
-                    Functions.XInternAtom(window.Display, "_NET_WM_ACTION_MAXIMIZE_VERT", false);
+                    Functions.XInternAtom(windowToRegister.Display, "_NET_WM_ACTION_MAXIMIZE_VERT", false);
 
                 _atom_net_wm_icon =
-                    Functions.XInternAtom(window.Display, "_NEW_WM_ICON", false);
+                    Functions.XInternAtom(windowToRegister.Display, "_NEW_WM_ICON", false);
 
                 _atom_net_frame_extents =
-                    Functions.XInternAtom(window.Display, "_NET_FRAME_EXTENTS", false);
+                    Functions.XInternAtom(windowToRegister.Display, "_NET_FRAME_EXTENTS", false);
 
                 // Some Xdnd atoms
-                _atom_xdnd_enter = Functions.XInternAtom(window.Display, "XdndEnter", false);
-                _atom_xdnd_position = Functions.XInternAtom(window.Display, "XdndPosition", false);
-                _atom_xdnd_status = Functions.XInternAtom(window.Display, "XdndStatus", false);
-                _atom_xdnd_type_list = Functions.XInternAtom(window.Display, "XdndTypeList", false);
-                _atom_xdnd_action_copy = Functions.XInternAtom(window.Display, "XdndActionCopy", false);
-                _atom_xdnd_drop = Functions.XInternAtom(window.Display, "XdndDrop", false);
-                _atom_xdnd_finished = Functions.XInternAtom(window.Display, "XdndFinished", false);
-                _atom_xdnd_selection = Functions.XInternAtom(window.Display, "XdndSelection", false);
-                _atom_xdnd_leave = Functions.XInternAtom(window.Display, "XdndLeave", false);
+                _atom_xdnd_enter = Functions.XInternAtom(windowToRegister.Display, "XdndEnter", false);
+                _atom_xdnd_position = Functions.XInternAtom(windowToRegister.Display, "XdndPosition", false);
+                _atom_xdnd_status = Functions.XInternAtom(windowToRegister.Display, "XdndStatus", false);
+                _atom_xdnd_type_list = Functions.XInternAtom(windowToRegister.Display, "XdndTypeList", false);
+                _atom_xdnd_action_copy = Functions.XInternAtom(windowToRegister.Display, "XdndActionCopy", false);
+                _atom_xdnd_drop = Functions.XInternAtom(windowToRegister.Display, "XdndDrop", false);
+                _atom_xdnd_finished = Functions.XInternAtom(windowToRegister.Display, "XdndFinished", false);
+                _atom_xdnd_selection = Functions.XInternAtom(windowToRegister.Display, "XdndSelection", false);
+                _atom_xdnd_leave = Functions.XInternAtom(windowToRegister.Display, "XdndLeave", false);
 
                 // Selection atoms
-                _atom_xdnd_primary = Functions.XInternAtom(window.Display, "PRIMARY", false);
-//            string[] atom_names = new string[]
-//            {
-//                //"WM_TITLE",
-//                //"UTF8_STRING"
-//            };
-//            IntPtr[] atoms = new IntPtr[atom_names.Length];
-//            //Functions.XInternAtoms(window.Display, atom_names, atom_names.Length, false, atoms);
-//
-//            int offset = 0;
-//            //WMTitle = atoms[offset++];
-//            //UTF8String = atoms[offset++];
+                _atom_xdnd_primary = Functions.XInternAtom(windowToRegister.Display, "PRIMARY", false);
             }
         }
 
@@ -544,8 +530,6 @@ namespace OpenTK.Platform.X11
 
             using (new XLock(window.Display))
             {
-                // Functions.XSetTransientForHint(this.window.Display, this.Handle, this.window.RootWindow);
-
                 // Some WMs remove decorations when this hint is set. Doesn't hurt to try.
                 Functions.XSetTransientForHint(this.window.Display, this.Handle, this.window.RootWindow);
 
@@ -565,8 +549,6 @@ namespace OpenTK.Platform.X11
                 IntPtr atom = Functions.XInternAtom(this.window.Display, MOTIF_WM_ATOM, true);
                 if (atom != IntPtr.Zero)
                 {
-                    //Functions.XGetWindowProperty(window.Display, window.Handle, atom, IntPtr.Zero, IntPtr.Zero, false,
-
                     MotifWmHints hints = new MotifWmHints();
                     hints.flags = (IntPtr)MotifFlags.Decorations;
                     Functions.XChangeProperty(this.window.Display, this.Handle, atom, atom, 32, PropertyMode.Replace,
@@ -584,9 +566,7 @@ namespace OpenTK.Platform.X11
                 Debug.Print("Activated decorations through motif.");
                 _decorations_hidden = false;
             }
-
-            //if (EnableGnomeDecorations()) { Debug.Print("Activated decorations through gnome."); activated = true; }
-
+            
             using (new XLock(window.Display))
             {
                 Functions.XSetTransientForHint(this.window.Display, this.Handle, IntPtr.Zero);
@@ -606,7 +586,6 @@ namespace OpenTK.Platform.X11
                 IntPtr atom = Functions.XInternAtom(this.window.Display, MOTIF_WM_ATOM, true);
                 if (atom != IntPtr.Zero)
                 {
-                    //Functions.XDeleteProperty(this.window.Display, this.Handle, atom);
                     MotifWmHints hints = new MotifWmHints();
                     hints.flags = (IntPtr)MotifFlags.Decorations;
                     hints.decorations = (IntPtr)MotifDecorations.All;
