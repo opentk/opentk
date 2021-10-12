@@ -598,6 +598,9 @@ namespace OpenTK.Platform.X11
             }
         }
         
+        /// <summary>Deletes any icon pixmaps allocated by the specified window</summary>
+        /// <param name="display">The display the pixmap is associated with</param>
+        /// <param name="window">The window the pixmap is associated with</param>
         private static void DeleteIconPixmaps(IntPtr display, IntPtr window)
         {
             using (new XLock(display))

@@ -156,13 +156,25 @@ namespace OpenTK.Platform.X11
         [DllImport("libX11", EntryPoint = "XFree")]
         public extern static int XFree(IntPtr data);
 
+        /// <summary>Raises the specified window to the top of the stack</summary>
+        /// <param name="display">The display connection to the XServer</param>
+        /// <param name="window">The window to raise</param>
         [DllImport("libX11", EntryPoint = "XRaiseWindow")]
         public extern static int XRaiseWindow(IntPtr display, IntPtr window);
 
-        [DllImport("libX11", EntryPoint = "XLowerWindow")]//, CLSCompliant(false)]
+        /// <summary>Lowers the specified window to the bottom of the stack</summary>
+        /// <param name="display">The display connection to the XServer</param>
+        /// <param name="window">The window to lower</param>
+        [DllImport("libX11", EntryPoint = "XLowerWindow")]
         public extern static uint XLowerWindow(IntPtr display, IntPtr window);
 
-        [DllImport("libX11", EntryPoint = "XConfigureWindow")]//, CLSCompliant(false)]
+        /// <summary>Reconfigures the window's size, position and stacking order</summary>
+        /// <param name="display">The display connection to the XServer</param>
+        /// <param name="window">The window to configure</param>
+        /// <param name="value_mask">Specifies which values are to be set</param>
+        /// <param name="values">Contains the new window size, position and stacking order</param>
+        ///<remarks>Any values not specified to be set by value_mask are taken from the existing geometry of the window</remarks>
+        [DllImport("libX11", EntryPoint = "XConfigureWindow")]
         public extern static uint XConfigureWindow(IntPtr display, IntPtr window, ChangeWindowAttributes value_mask, ref XWindowChanges values);
 
         [DllImport("libX11", EntryPoint = "XInternAtom")]
@@ -284,6 +296,15 @@ namespace OpenTK.Platform.X11
         [DllImport("libX11", EntryPoint = "XChangeProperty")]
         public extern static int XChangeProperty(IntPtr display, IntPtr window, IntPtr property, IntPtr type, int format, PropertyMode mode, int[] data, int nelements);
 
+        /// <summary>Alters an X11 property on the specified window</summary>
+        /// <param name="display">The display connection to the XServer</param>
+        /// <param name="window">The window to change or create the property on</param>
+        /// <param name="property">Property name</param>
+        /// <param name="type">The property type</param>
+        /// <param name="format">Specifies whether the data should be viewed as a 8, 16 or 32-bit value list</param>
+        /// <param name="mode">The operation mode</param>
+        /// <param name="data">Property data</param>
+        /// <param name="nelements">The number of elements in the specified data format</param>
         [DllImport("libX11", EntryPoint = "XChangeProperty")]
         public extern static int XChangeProperty(IntPtr display, IntPtr window, IntPtr property, IntPtr type, int format, PropertyMode mode, IntPtr[] data, int nelements);
 
@@ -293,6 +314,10 @@ namespace OpenTK.Platform.X11
         [DllImport("libX11", EntryPoint = "XChangeProperty", CharSet = CharSet.Ansi)]
         public extern static int XChangeProperty(IntPtr display, IntPtr window, IntPtr property, IntPtr type, int format, PropertyMode mode, byte[] text, int text_length);
 
+        /// <summary>Deletes a specified XProperty from the window</summary>
+        /// <param name="display">The display connection to the XServer</param>
+        /// <param name="window">The window</param>
+        /// <param name="property">The property to delete</param>
         [DllImport("libX11", EntryPoint = "XDeleteProperty")]
         public extern static int XDeleteProperty(IntPtr display, IntPtr window, IntPtr property);
 
@@ -330,6 +355,10 @@ namespace OpenTK.Platform.X11
         [DllImport("libX11", EntryPoint = "XSetInputFocus")]
         public extern static int XSetInputFocus(IntPtr display, IntPtr window, RevertTo revert_to, IntPtr time);
 
+        /// <summary>If supported by the client Window Manager, the window will be iconified (minimized) if in normal state</summary>
+        /// <param name="display">The display connection to the XServer</param>
+        /// <param name="window">The window to iconify (minimize)</param>
+        /// <param name="screen_number">The screen number on the host XServer</param>
         [DllImport("libX11", EntryPoint = "XIconifyWindow")]
         public extern static int XIconifyWindow(IntPtr display, IntPtr window, int screen_number);
 
@@ -389,8 +418,12 @@ namespace OpenTK.Platform.X11
         /// <param name="w">The window to retrieve the hints for</param>
         /// <returns>NULL if no hints are set, otherwise a pointer to the <see cref="XWMHints"/> structure</returns>
         [DllImport("libX11")]
-        public static extern IntPtr XGetWMHints(Display display, Window w); // returns XWMHints*
+        public static extern IntPtr XGetWMHints(Display display, Window w);
 
+        /// <summary>Sets the window manager hints for the specified window</summary>
+        /// <param name="display">The display connection to the XServer</param>
+        /// <param name="w">The window to set the hints on</param>
+        /// <param name="wmhints">The <see cref="XWMHints"/> to set</param>
         [DllImport("libX11")]
         public static extern void XSetWMHints(Display display, Window w, ref XWMHints wmhints);
 
@@ -542,6 +575,12 @@ namespace OpenTK.Platform.X11
 
         private static readonly IntPtr CopyFromParent = IntPtr.Zero;
 
+        /// <summary>Sends an X11 event to the specified window</summary>
+        /// <param name="window">The window recieving the event</param>
+        /// <param name="message_type">The X11 message type</param>
+        /// <param name="l0"></param>
+        /// <param name="l1"></param>
+        /// <param name="l2"></param>
         public static void SendNetWMMessage(X11WindowInfo window, IntPtr message_type, IntPtr l0, IntPtr l1, IntPtr l2)
         {
             XEvent xev = new XEvent();
