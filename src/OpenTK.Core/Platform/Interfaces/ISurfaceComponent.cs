@@ -22,13 +22,13 @@ namespace OpenTK.Core.Platform
         /// </summary>
         /// <param name="handle">Handle to a surface.</param>
         /// <returns>Handle to the display the surface is in.</returns>
-        object GetDisplay(SurfaceHandle handle);
+        DisplayHandle GetDisplay(SurfaceHandle handle);
 
         /// <summary>
         /// Set the display the surface is in.
         /// </summary>
         /// <param name="handle">Handle to a surface.</param>
         /// <param name="display">Handle to the display to set the surface to.</param>
-        void SetDisplay(SurfaceHandle handle, object display);
+        void SetDisplay(SurfaceHandle handle, DisplayHandle display);
     }
 }
