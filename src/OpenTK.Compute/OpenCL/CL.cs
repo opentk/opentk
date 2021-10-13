@@ -17,7 +17,6 @@ namespace OpenTK.Compute.OpenCL
 
         public delegate void ClEventCallback(IntPtr waitEvent, IntPtr userData);
 
-
         #region Platform API
 
         /// <summary>
@@ -394,6 +393,18 @@ namespace OpenTK.Compute.OpenCL
             return GetCommandQueueInfo(queue, paramName, sizeReturned, paramValue, out _);
         }
 
+        /// <summary>
+        /// Introduced in OpenCL 1.0
+        /// </summary>
+        [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clFlush")]
+        public static extern CLResultCode Flush([In] this CLCommandQueue commandQueue);
+
+        /// <summary>
+        /// Introduced in OpenCL 1.0
+        /// </summary>
+        [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clFinish")]
+        public static extern CLResultCode Finish([In] this CLCommandQueue commandQueue);
+
         #endregion
 
         #region Buffer Objects APIs
@@ -554,6 +565,448 @@ namespace OpenTK.Compute.OpenCL
             IntPtr userData)
         {
             return SetMemoryObjectDestructorCallback(buffer, callback == null ? IntPtr.Zero : Marshal.GetFunctionPointerForDelegate(callback), userData);
+        }
+
+        /// <summary>
+        /// Introduced in OpenCL 1.0
+        /// </summary>
+        [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clEnqueueUnmapMemObject")]
+        public static extern CLResultCode EnqueueUnmapMemoryObject(
+            [In] this CLCommandQueue commandQueue,
+            [In] CLBuffer memoryObject,
+            [In] IntPtr mapperPtr,
+            [In] uint numberOfEventsInWaitList,
+            [In] CLEvent[] eventWaitList,
+            [Out] out CLEvent @event);
+
+        /// <summary>
+        /// Introduced in OpenCL 1.0
+        /// </summary>
+        public static CLResultCode EnqueueUnmapMemoryObject(
+            this CLCommandQueue commandQueue,
+            CLBuffer memoryObject,
+            IntPtr mapperPtr,
+            CLEvent[] eventWaitList,
+            out CLEvent @event)
+        {
+            return EnqueueUnmapMemoryObject(commandQueue, memoryObject, mapperPtr,
+                (uint)(eventWaitList?.Length ?? 0), eventWaitList, out @event);
+        }
+
+        /// <summary>
+        /// Introduced in OpenCL 1.0
+        /// </summary>
+        [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clEnqueueReadBuffer")]
+        public static extern CLResultCode EnqueueReadBuffer(
+            [In] this CLCommandQueue commandQueue,
+            [In] CLBuffer buffer,
+            [In] bool blockingRead,
+            [In] nuint offset,
+            [In] nuint size,
+            [In] IntPtr pointer,
+            [In] uint numberOfEventsInWaitList,
+            [In] CLEvent[] eventWaitList,
+            [Out] out CLEvent @event);
+
+        /// <summary>
+        /// Introduced in OpenCL1.0
+        /// </summary>
+        public static unsafe CLResultCode EnqueueReadBuffer<T>(
+            this CLCommandQueue commandQueue,
+            CLBuffer buffer,
+            bool blockingRead,
+            nuint offset,
+            T[] array,
+            CLEvent[] eventWaitList,
+            out CLEvent eventHandle)
+            where T : unmanaged
+        {
+            fixed (T* b = array)
+            {
+                return EnqueueReadBuffer(commandQueue, buffer, blockingRead, offset,
+                    (nuint)(array.Length * sizeof(float)), (IntPtr)b, (uint)(eventWaitList?.Length ?? 0),
+                    eventWaitList,
+                    out eventHandle);
+            }
+        }
+
+        /// <summary>
+        /// Introduced in OpenCL 1.0
+        /// </summary>
+        public static unsafe CLResultCode EnqueueReadBuffer<T>(
+           this CLCommandQueue commandQueue,
+            CLBuffer buffer,
+            bool blockingRead,
+            nuint offset,
+            Span<T> span,
+            CLEvent[] eventWaitList,
+            out CLEvent eventHandle)
+            where T : unmanaged
+        {
+            fixed (T* b = span)
+            {
+                CLResultCode resultCode = EnqueueReadBuffer(commandQueue, buffer, blockingRead, offset,
+                    (nuint)(span.Length * sizeof(T)), (IntPtr)b, (uint)(eventWaitList?.Length ?? 0),
+                    eventWaitList, out eventHandle);
+                return resultCode;
+            }
+        }
+
+        /// <summary>
+        /// Introduced in OpenCL 1.1
+        /// </summary>
+        [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clEnqueueReadBufferRect")]
+        public static extern CLResultCode EnqueueReadBufferRect(
+            [In] this CLCommandQueue commandQueue,
+            [In] CLBuffer buffer,
+            [In] bool blockingRead,
+            [In] nuint[] bufferOffset,
+            [In] nuint[] hostOffset,
+            [In] nuint[] region,
+            [In] nuint bufferRowPitch,
+            [In] nuint bufferSlicePitch,
+            [In] nuint hostRowPitch,
+            [In] nuint hostSlicePitch,
+            [In] IntPtr pointer,
+            [In] uint numberOfEventsInWaitList,
+            [In] CLEvent[] eventWaitList,
+            [Out] out CLEvent @event);
+
+        /// <summary>
+        /// Introduced in OpenCL 1.1
+        /// </summary>
+        public static unsafe CLResultCode EnqueueReadBufferRect<T>(
+            this CLCommandQueue commandQueue,
+            CLBuffer buffer,
+            bool blockingRead,
+            nuint[] bufferOffset,
+            nuint[] hostOffset,
+            nuint[] region,
+            nuint bufferRowPitch,
+            nuint bufferSlicePitch,
+            nuint hostRowPitch,
+            nuint hostSlicePitch,
+            T[] array,
+            CLEvent[] eventWaitList,
+            out CLEvent @event)
+            where T : unmanaged
+        {
+            fixed (T* a = array)
+            {
+                return EnqueueReadBufferRect(commandQueue, buffer, blockingRead, bufferOffset,
+                    hostOffset, region,
+                    bufferRowPitch, bufferSlicePitch, hostRowPitch, hostSlicePitch, (IntPtr)a,
+                    (uint)(eventWaitList?.Length ?? 0),
+                    eventWaitList, out @event);
+            }
+        }
+
+        /// <summary>
+        /// Introduced in OpenCL 1.1
+        /// </summary>
+        public static unsafe CLResultCode EnqueueReadBufferRect<T>(
+            this CLCommandQueue commandQueue,
+            CLBuffer buffer,
+            bool blockingRead,
+            nuint[] bufferOffset,
+            nuint[] hostOffset,
+            nuint[] region,
+            nuint bufferRowPitch,
+            nuint bufferSlicePitch,
+            nuint hostRowPitch,
+            nuint hostSlicePitch,
+            Span<T> span,
+            CLEvent[] eventWaitList,
+            out CLEvent @event)
+            where T : unmanaged
+        {
+            fixed (T* a = span)
+            {
+                return EnqueueReadBufferRect(commandQueue, buffer, blockingRead, bufferOffset,
+                    hostOffset, region,
+                    bufferRowPitch, bufferSlicePitch, hostRowPitch, hostSlicePitch, (IntPtr)a,
+                    (uint)(eventWaitList?.Length ?? 0),
+                    eventWaitList, out @event);
+            }
+        }
+
+        /// <summary>
+        /// Introduced in OpenCL 1.0
+        /// </summary>
+        [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clEnqueueWriteBuffer")]
+        public static extern CLResultCode EnqueueWriteBuffer(
+            [In] this CLCommandQueue commandQueue,
+            [In] CLBuffer buffer,
+            [In] bool blockingWrite,
+            [In] nuint offset,
+            [In] nuint size,
+            [In] IntPtr pointer,
+            [In] uint numberOfEventsInWaitList,
+            [In] CLEvent[] eventWaitList,
+            [Out] out CLEvent @event);
+
+        /// <summary>
+        /// Introduced in OpenCL 1.0
+        /// </summary>
+        public static unsafe CLResultCode EnqueueWriteBuffer<T>(
+            this CLCommandQueue commandQueue,
+            CLBuffer buffer,
+            bool blockingWrite,
+            nuint offset,
+            T[] array,
+            CLEvent[] eventWaitList,
+            out CLEvent @event) where T : unmanaged
+        {
+            fixed (T* a = array)
+            {
+                CLResultCode resultCode = EnqueueWriteBuffer(commandQueue, buffer, blockingWrite, offset,
+                    (uint)(array.Length * sizeof(T)), (IntPtr)a, (uint)(eventWaitList?.Length ?? 0),
+                    eventWaitList, out @event);
+
+                return resultCode;
+            }
+        }
+
+        /// <summary>
+        /// Introduced in OpenCL 1.0
+        /// </summary>
+        public static unsafe CLResultCode EnqueueWriteBuffer<T>(
+            this CLCommandQueue commandQueue,
+            CLBuffer buffer,
+            bool blockingWrite,
+            nuint offset,
+            Span<T> span,
+            CLEvent[] eventWaitList,
+            out CLEvent @event)
+            where T : unmanaged
+        {
+            fixed (T* a = span)
+            {
+                CLResultCode resultCode = EnqueueWriteBuffer(commandQueue, buffer, blockingWrite, offset,
+                    (uint)(span.Length * sizeof(T)), (IntPtr)a, (uint)(eventWaitList?.Length ?? 0),
+                    eventWaitList, out @event);
+
+                return resultCode;
+            }
+        }
+
+        /// <summary>
+        /// Introduced in OpenCL 1.1
+        /// </summary>
+        [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clEnqueueWriteBufferRect")]
+        public static extern CLResultCode EnqueueWriteBufferRect(
+            [In] this CLCommandQueue commandQueue,
+            [In] CLBuffer buffer,
+            [In] bool blockingWrite,
+            [In] nuint[] bufferOffset,
+            [In] nuint[] hostOffset,
+            [In] nuint[] region,
+            [In] nuint bufferRowPitch,
+            [In] nuint bufferSlicePitch,
+            [In] nuint hostRowPitch,
+            [In] nuint hostSlicePitch,
+            [In] IntPtr pointer,
+            [In] uint numberOfEventsInWaitList,
+            [In] CLEvent[] eventWaitList,
+            [Out] out CLEvent @event);
+
+        /// <summary>
+        /// Introduced in OpenCL 1.1
+        /// </summary>
+        public static unsafe CLResultCode EnqueueWriteBufferRect<T>(
+            this CLCommandQueue commandQueue, CLBuffer buffer,
+            bool blockingWrite,
+            nuint[] bufferOffset,
+            nuint[] hostOffset,
+            nuint[] region,
+            nuint bufferRowPitch,
+            nuint bufferSlicePitch,
+            nuint hostRowPitch,
+            nuint hostSlicePitch,
+            T[] array,
+            CLEvent[] eventWaitList,
+            out CLEvent @event)
+            where T : unmanaged
+        {
+            fixed (T* a = array)
+            {
+                return EnqueueWriteBufferRect(commandQueue, buffer, blockingWrite, bufferOffset,
+                    hostOffset, region,
+                    bufferRowPitch, bufferSlicePitch, hostRowPitch, hostSlicePitch, (IntPtr)a,
+                    (uint)(eventWaitList?.Length ?? 0),
+                    eventWaitList, out @event);
+            }
+        }
+
+        /// <summary>
+        /// Introduced in OpenCL 1.1
+        /// </summary>
+        public static unsafe CLResultCode EnqueueWriteBufferRect<T>(
+            this CLCommandQueue commandQueue,
+            CLBuffer buffer,
+            bool blockingWrite,
+            nuint[] bufferOffset,
+            nuint[] hostOffset,
+            nuint[] region,
+            nuint bufferRowPitch,
+            nuint bufferSlicePitch,
+            nuint hostRowPitch,
+            nuint hostSlicePitch,
+            Span<T> span,
+            CLEvent[] eventWaitList,
+            out CLEvent @event)
+            where T : unmanaged
+        {
+            fixed (T* a = span)
+            {
+                return EnqueueWriteBufferRect(commandQueue, buffer, blockingWrite, bufferOffset,
+                    hostOffset, region,
+                    bufferRowPitch, bufferSlicePitch, hostRowPitch, hostSlicePitch, (IntPtr)a,
+                    (uint)(eventWaitList?.Length ?? 0),
+                    eventWaitList, out @event);
+            }
+        }
+
+        /// <summary>
+        /// Introduced in OpenCL 1.2
+        /// </summary>
+        [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clEnqueueFillBuffer")]
+        public static extern CLResultCode EnqueueFillBuffer(
+            [In] this CLCommandQueue commandQueue,
+            [In] CLBuffer buffer,
+            [In] IntPtr pattern,
+            [In] nuint patternSize,
+            [In] nuint offset,
+            [In] nuint size,
+            [In] uint numberOfEventsInWaitList,
+            [In] CLEvent[] eventWaitList,
+            [Out] out CLEvent @event);
+
+
+        /// <summary>
+        /// Introduced in OpenCL 1.2
+        /// </summary>
+        public static unsafe CLResultCode EnqueueFillBuffer<T>(
+            this CLCommandQueue commandQueue,
+            CLBuffer buffer,
+            T[] pattern,
+            nuint offset,
+            nuint size,
+            CLEvent[] eventWaitList,
+            out CLEvent @event)
+            where T : unmanaged
+        {
+            fixed (T* p = pattern)
+            {
+                return EnqueueFillBuffer(commandQueue, buffer, (IntPtr)p, (nuint)(pattern.Length * sizeof(T)), offset,
+                    size, (uint)(eventWaitList?.Length ?? 0), eventWaitList, out @event);
+            }
+        }
+
+        /// <summary>
+        /// Introduced in OpenCL 1.0
+        /// </summary>
+        [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clEnqueueCopyBuffer")]
+        public static extern CLResultCode EnqueueCopyBuffer(
+            [In] this CLCommandQueue commandQueue,
+            [In] CLBuffer srcBuffer,
+            [In] CLBuffer dstBuffer,
+            [In] nuint srcOffset,
+            [In] nuint dstOffset,
+            [In] nuint size,
+            [In] uint numberOfEventsInWaitList,
+            [In] CLEvent[] eventWaitList,
+            [Out] out CLEvent @event);
+
+        /// <summary>
+        /// Introduced in OpenCL 1.0
+        /// </summary>
+        public static CLResultCode EnqueueCopyBuffer(
+           this CLCommandQueue commandQueue,
+            CLBuffer srcBuffer,
+            CLBuffer dstBuffer,
+            nuint srcOffset,
+            nuint dstOffset,
+            nuint sizeReturned,
+            CLEvent[] eventWaitList,
+            out CLEvent @event)
+        {
+            return EnqueueCopyBuffer(commandQueue, srcBuffer, dstBuffer, srcOffset, dstOffset,
+                sizeReturned, (uint)(eventWaitList?.Length ?? 0), eventWaitList, out @event);
+        }
+
+        /// <summary>
+        /// Introduced in OpenCL 1.1
+        /// </summary>
+        [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clEnqueueCopyBufferRect")]
+        public static extern CLResultCode EnqueueCopyBufferRect(
+            [In] this CLCommandQueue commandQueue,
+            [In] CLBuffer srcBuffer,
+            [In] CLBuffer dstBuffer,
+            [In] nuint[] srcOrigin,
+            [In] nuint[] dstOrigin,
+            [In] nuint[] region,
+            [In] nuint srcRowPitch,
+            [In] nuint srcSlicePitch,
+            [In] nuint dstRowPitch,
+            [In] nuint dstSlicePitch,
+            [In] uint numberOfEventsInWaitList,
+            [In] CLEvent[] eventWaitList,
+            [Out] out CLEvent @event);
+
+        /// <summary>
+        /// Introduced in OpenCL 1.1
+        /// </summary>
+        public static CLResultCode EnqueueCopyBufferRect(
+            this CLCommandQueue commandQueue,
+            CLBuffer srcBuffer,
+            CLBuffer dstBuffer,
+            nuint[] srcOrigin,
+            nuint[] dstOrigin,
+            nuint[] region,
+            nuint srcRowPitch,
+            nuint srcSlicePitch,
+            nuint dstRowPitch,
+            nuint dstSlicePitch,
+            CLEvent[] eventWaitList,
+            out CLEvent @event)
+        {
+            return EnqueueCopyBufferRect(commandQueue, srcBuffer, dstBuffer, srcOrigin, dstOrigin, region, srcRowPitch,
+                srcSlicePitch, dstRowPitch, dstSlicePitch, (uint)(eventWaitList?.Length ?? 0), eventWaitList, out @event);
+        }
+
+        /// <summary>
+        /// Introduced in OpenCL 1.0
+        /// </summary>
+        [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clEnqueueMapBuffer")]
+        public static extern IntPtr EnqueueMapBuffer(
+            [In] this CLCommandQueue commandQueue,
+            [In] CLBuffer buffer,
+            [In] bool blockingMap,
+            [In] MapFlags flags,
+            [In] nuint offset,
+            [In] nuint size,
+            [In] uint numberOfEventsInWaitList,
+            [In] CLEvent[] eventWaitList,
+            [Out] out CLEvent @event,
+            [Out] out CLResultCode resultCode);
+
+        /// <summary>
+        /// Introduced in OpenCL 1.0
+        /// </summary>
+        public static IntPtr EnqueueMapBuffer(
+            this CLCommandQueue commandQueue,
+            CLBuffer buffer,
+            bool blockingMap,
+            MapFlags flags,
+            nuint offset,
+            nuint size,
+            CLEvent[] eventWaitList,
+            out CLEvent @event,
+            out CLResultCode resultCode)
+        {
+            return EnqueueMapBuffer(commandQueue, buffer, blockingMap, flags, offset, size,
+                (uint)(eventWaitList?.Length ?? 0), eventWaitList, out @event, out resultCode);
         }
 
         #endregion
@@ -971,17 +1424,41 @@ namespace OpenTK.Compute.OpenCL
         /// <summary>
         /// Introduced in OpenCL 1.2
         /// </summary>
-        public static CLResultCode EnqueueFillImage(
+        public static unsafe CLResultCode EnqueueFillImage<T>(
             this CLCommandQueue commandQueue,
             CLImage image,
-            IntPtr fillColor,
+            T[] fillColor,
             nuint[] origin,
             nuint[] region,
             CLEvent[] eventWaitList,
             out CLEvent @event)
+            where T : unmanaged
         {
-            return EnqueueFillImage(commandQueue, image, fillColor, origin, region,
+            fixed (T* a = fillColor)
+            {
+                return EnqueueFillImage(commandQueue, image, (IntPtr)a, origin, region,
                 (uint)(eventWaitList?.Length ?? 0), eventWaitList, out @event);
+            }
+        }
+
+        /// <summary>
+        /// Introduced in OpenCL 1.2
+        /// </summary>
+        public static unsafe CLResultCode EnqueueFillImage<T>(
+            this CLCommandQueue commandQueue,
+            CLImage image,
+            Span<T> fillColor,
+            nuint[] origin,
+            nuint[] region,
+            CLEvent[] eventWaitList,
+            out CLEvent @event)
+            where T : unmanaged
+        {
+            fixed (T* a = fillColor)
+            {
+                return EnqueueFillImage(commandQueue, image, (IntPtr)a, origin, region,
+                (uint)(eventWaitList?.Length ?? 0), eventWaitList, out @event);
+            }
         }
 
         /// <summary>
@@ -1077,6 +1554,70 @@ namespace OpenTK.Compute.OpenCL
             out CLEvent @event)
         {
             return EnqueueCopyBufferToImage(commandQueue, srcBuffer, dstImage, srcOffset, dstOrigin, region,
+                (uint)(eventWaitList?.Length ?? 0), eventWaitList, out @event);
+        }
+
+        /// <summary>
+        /// Introduced in OpenCL 1.0
+        /// </summary>
+        [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clEnqueueMapImage")]
+        public static extern IntPtr EnqueueMapImage(
+            [In] this CLCommandQueue commandQueue,
+            [In] CLImage image,
+            [In] bool blockingMap,
+            [In] MapFlags flags,
+            [In] nuint[] origin,
+            [In] nuint[] region,
+            [In] nuint rowPitch,
+            [In] nuint slicePitch,
+            [In] nuint numberOfEventsInWaitList,
+            [In] CLEvent[] eventWaitList,
+            [Out] out CLEvent @event,
+            [Out] out CLResultCode resultCode);
+
+        /// <summary>
+        /// Introduced in OpenCL 1.0
+        /// </summary>
+        public static IntPtr EnqueueMapImage(
+           this CLCommandQueue commandQueue,
+            CLImage image,
+            bool blockingMap,
+            MapFlags flags,
+            nuint[] origin,
+            nuint[] region,
+            nuint rowPitch,
+            nuint slicePitch,
+            CLEvent[] eventWaitList,
+            out CLEvent @event,
+            out CLResultCode resultCode)
+        {
+            return EnqueueMapImage(commandQueue, image, blockingMap, flags, origin, region, rowPitch, slicePitch,
+                (uint)(eventWaitList?.Length ?? 0), eventWaitList, out @event, out resultCode);
+        }
+
+        /// <summary>
+        /// Introduced in OpenCL 1.0
+        /// </summary>
+        [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clEnqueueUnmapMemObject")]
+        public static extern CLResultCode EnqueueUnmapMemoryObject(
+            [In] this CLCommandQueue commandQueue,
+            [In] CLImage memoryObject,
+            [In] IntPtr mapperPtr,
+            [In] uint numberOfEventsInWaitList,
+            [In] CLEvent[] eventWaitList,
+            [Out] out CLEvent @event);
+
+        /// <summary>
+        /// Introduced in OpenCL 1.0
+        /// </summary>
+        public static CLResultCode EnqueueUnmapMemoryObject(
+            this CLCommandQueue commandQueue,
+            CLImage memoryObject,
+            IntPtr mapperPtr,
+            CLEvent[] eventWaitList,
+            out CLEvent @event)
+        {
+            return EnqueueUnmapMemoryObject(commandQueue, memoryObject, mapperPtr,
                 (uint)(eventWaitList?.Length ?? 0), eventWaitList, out @event);
         }
 
@@ -1256,6 +1797,113 @@ namespace OpenTK.Compute.OpenCL
             return SetMemoryObjectDestructorCallback(memoryObject, callback == null ? IntPtr.Zero : Marshal.GetFunctionPointerForDelegate(callback), userData);
         }
 
+        /// <summary>
+        /// Introduced in OpenCL 1.0
+        /// </summary>
+        [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clEnqueueUnmapMemObject")]
+        public static extern CLResultCode EnqueueUnmapMemoryObject(
+            [In] this CLCommandQueue commandQueue,
+            [In] IntPtr memoryObject,
+            [In] IntPtr mapperPtr,
+            [In] uint numberOfEventsInWaitList,
+            [In] CLEvent[] eventWaitList,
+            [Out] out CLEvent @event);
+
+        /// <summary>
+        /// Introduced in OpenCL 1.0
+        /// </summary>
+        public static CLResultCode EnqueueUnmapMemoryObject(
+            this CLCommandQueue commandQueue,
+            IntPtr memoryObject,
+            IntPtr mapperPtr,
+            CLEvent[] eventWaitList,
+            out CLEvent @event)
+        {
+            return EnqueueUnmapMemoryObject(commandQueue, memoryObject, mapperPtr,
+                (uint)(eventWaitList?.Length ?? 0), eventWaitList, out @event);
+        }
+
+        /// <summary>
+        /// Introduced in OpenCL 1.2
+        /// </summary>
+        [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clEnqueueMigrateMemObjects")]
+        public static extern CLResultCode EnqueueMigrateMemoryObjects(
+            [In] this CLCommandQueue commandQueue,
+            [In] uint numberOfMemoryObjects,
+            [In] IntPtr[] memoryObjects,
+            [In] MemoryMigrationFlags flags,
+            [In] uint numberOfEventsInWaitList,
+            [In] CLEvent[] eventWaitList,
+            [Out] out CLEvent @event);
+
+        /// <summary>
+        /// Introduced in OpenCL 1.2
+        /// </summary>
+        public static CLResultCode EnqueueMigrateMemoryObjects(
+            this CLCommandQueue commandQueue,
+            IntPtr[] memoryObjects,
+            MemoryMigrationFlags flags,
+            CLEvent[] eventWaitList,
+            out CLEvent @event)
+        {
+            return EnqueueMigrateMemoryObjects(commandQueue, (uint)(memoryObjects?.Length ?? 0), memoryObjects, flags,
+                (uint)(eventWaitList?.Length ?? 0), eventWaitList, out @event);
+        }
+
+        /// <summary>
+        /// Introduced in OpenCL 1.2
+        /// </summary>
+        [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clEnqueueMarkerWithWaitList")]
+        public static extern CLResultCode EnqueueMarkerWithWaitList(
+            [In] this CLCommandQueue commandQueue,
+            [In] uint numberOfMemoryObjects,
+            [In] IntPtr[] memoryObjects,
+            [In] IntPtr argumentsMemoryLocation,
+            [In] uint numberOfEventsInWaitList,
+            [In] CLEvent[] eventWaitList,
+            [Out] out CLEvent @event);
+
+        /// <summary>
+        /// Introduced in OpenCL 1.2
+        /// </summary>
+        public static CLResultCode EnqueueMarkerWithWaitList(
+           this CLCommandQueue commandQueue,
+            IntPtr[] memoryObjects,
+            IntPtr argumentsMemoryLocation,
+            CLEvent[] eventWaitList,
+            out CLEvent @event)
+        {
+            return EnqueueMarkerWithWaitList(commandQueue, (uint)(memoryObjects?.Length ?? 0), memoryObjects, argumentsMemoryLocation,
+                (uint)(eventWaitList?.Length ?? 0), eventWaitList, out @event);
+        }
+
+        /// <summary>
+        /// Introduced in OpenCL 1.2
+        /// </summary>
+        [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clEnqueueBarrierWithWaitList")]
+        public static extern CLResultCode EnqueueBarrierWithWaitList(
+            [In] this CLCommandQueue commandQueue,
+            [In] uint numberOfMemoryObjects,
+            [In] IntPtr[] memoryObjects,
+            [In] IntPtr argumentsMemoryLocation,
+            [In] uint numberOfEventsInWaitList,
+            [In] CLEvent[] eventWaitList,
+            [Out] out CLEvent @event);
+
+        /// <summary>
+        /// Introduced in OpenCL 1.2
+        /// </summary>
+        public static CLResultCode EnqueueBarrierWithWaitList(
+            this CLCommandQueue commandQueue,
+            IntPtr[] memoryObjects,
+            IntPtr argumentsMemoryLocation,
+            CLEvent[] eventWaitList,
+            out CLEvent @event)
+        {
+            return EnqueueBarrierWithWaitList(commandQueue, (uint)(memoryObjects?.Length ?? 0), memoryObjects, argumentsMemoryLocation,
+                (uint)(eventWaitList?.Length ?? 0), eventWaitList, out @event);
+        }
+
         #endregion
 
         #region SVM Allocation API
@@ -1277,6 +1925,200 @@ namespace OpenTK.Compute.OpenCL
         public static extern IntPtr SVMFree(
             [In] this CLContext context,
             [In] IntPtr svmPointer);
+
+        /// <summary>
+        /// Introduced in OpenCL 2.0
+        /// </summary>
+        [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clEnqueueSVMFree")]
+        public static extern CLResultCode EnqueueSVMFree(
+            [In] this CLCommandQueue commandQueue,
+            [In] uint numberOfSvmPointers,
+            [In] IntPtr[] svmPointers,
+            [In] IntPtr svmFreePointersCallback,
+            [In] IntPtr userData,
+            [In] uint numberOfEventsInWaitList,
+            [In] CLEvent[] eventWaitList,
+            [Out] out CLEvent @event);
+
+        /// <summary>
+        /// Introduced in OpenCL 2.0
+        /// </summary>
+        public static CLResultCode EnqueueSVMFree(
+            this CLCommandQueue commandQueue,
+            IntPtr[] svmPointers,
+            ClEventCallback svmFreePointersCallback,
+            IntPtr userData,
+            CLEvent[] eventWaitList,
+            out CLEvent @event)
+        {
+            return EnqueueSVMFree(commandQueue, (uint)(svmPointers?.Length ?? 0), svmPointers, Marshal.GetFunctionPointerForDelegate(svmFreePointersCallback), userData,
+                (uint)(eventWaitList?.Length ?? 0), eventWaitList, out @event);
+        }
+
+        /// <summary>
+        /// Introduced in OpenCL 2.0
+        /// </summary>
+        [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clEnqueueSVMMemcpy")]
+        public static extern CLResultCode EnqueueSvmMemoryCopy(
+            [In] this CLCommandQueue commandQueue,
+            [In] bool blockingCopy,
+            [In] IntPtr dstPointer,
+            [In] IntPtr srcPointer,
+            [In] nuint size,
+            [In] uint numberOfEventsInWaitList,
+            [In] CLEvent[] eventWaitList,
+            [Out] out CLEvent @event);
+
+        /// <summary>
+        /// Introduced in OpenCL 2.0
+        /// </summary>
+        public static CLResultCode EnqueueSvmMemoryCopy(
+           this CLCommandQueue commandQueue,
+            bool blockingCopy,
+            IntPtr dstPointer,
+            IntPtr srcPointer,
+            nuint size,
+            CLEvent[] eventWaitList,
+            out CLEvent @event)
+        {
+            return EnqueueSvmMemoryCopy(commandQueue, blockingCopy, dstPointer, srcPointer, size,
+                (uint)(eventWaitList?.Length ?? 0), eventWaitList, out @event);
+        }
+
+        /// <summary>
+        /// Introduced in OpenCL 2.0
+        /// </summary>
+        [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clEnqueueSVMMemFill")]
+        public static extern CLResultCode EnqueueSvmMemoryFill(
+            [In] this CLCommandQueue commandQueue,
+            [In] IntPtr svmPointer,
+            [In] IntPtr pattern,
+            [In] nuint patternSize,
+            [In] nuint size,
+            [In] uint numberOfEventsInWaitList,
+            [In] CLEvent[] eventWaitList,
+            [Out] out CLEvent @event);
+
+        /// <summary>
+        /// Introduced in OpenCL 2.0
+        /// </summary>
+        public static unsafe CLResultCode EnqueueSvmMemoryFill<T>(
+            this CLCommandQueue commandQueue,
+            IntPtr svmPointer,
+            T[] pattern,
+            nuint size,
+            CLEvent[] eventWaitList,
+            out CLEvent @event)
+            where T : unmanaged
+        {
+            fixed (T* p = pattern)
+            {
+                return EnqueueSvmMemoryFill(commandQueue, svmPointer, (IntPtr)p, (nuint)(pattern.Length * sizeof(T)),
+                    size, (uint)(eventWaitList?.Length ?? 0), eventWaitList, out @event);
+            }
+        }
+
+        /// <summary>
+        /// Introduced in OpenCL 2.0
+        /// </summary>
+        public static unsafe CLResultCode EnqueueSvmMemoryFill<T>(
+            this CLCommandQueue commandQueue,
+            IntPtr svmPointer,
+            Span<T> pattern,
+            nuint size,
+            CLEvent[] eventWaitList,
+            out CLEvent @event)
+            where T : unmanaged
+        {
+            fixed (T* p = pattern)
+            {
+                return EnqueueSvmMemoryFill(commandQueue, svmPointer, (IntPtr)p, (uint)(pattern.Length * sizeof(T)),
+                    size, (uint)(eventWaitList?.Length ?? 0), eventWaitList, out @event);
+            }
+        }
+
+        /// <summary>
+        /// Introduced in OpenCL 2.0
+        /// </summary>
+        [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clEnqueueSVMMap")]
+        public static extern CLResultCode EnqueueSvmMap(
+            [In] this CLCommandQueue commandQueue,
+            [In] bool blockingMap,
+            [In] MapFlags mapFlag,
+            [In] IntPtr svmPointer,
+            [In] nuint size,
+            [In] uint numberOfEventsInWaitList,
+            [In] CLEvent[] eventWaitList,
+            [Out] out CLEvent @event);
+
+        /// <summary>
+        /// Introduced in OpenCL 2.0
+        /// </summary>
+        public static CLResultCode EnqueueSvmMap(
+            this CLCommandQueue commandQueue,
+            bool blockingMap,
+            MapFlags mapFlag,
+            IntPtr svmPointer,
+            nuint size,
+            CLEvent[] eventWaitList,
+            out CLEvent @event)
+        {
+            return EnqueueSvmMap(commandQueue, blockingMap, mapFlag, svmPointer, size,
+                (uint)(eventWaitList?.Length ?? 0), eventWaitList, out @event);
+        }
+
+        /// <summary>
+        /// Introduced in OpenCL 2.0
+        /// </summary>
+        [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clEnqueueSVMUnmap")]
+        public static extern CLResultCode EnqueueSVMUnmap(
+            [In] this CLCommandQueue commandQueue,
+            [In] IntPtr svmPointer,
+            [In] uint numberOfEventsInWaitList,
+            [In] CLEvent[] eventWaitList,
+            [Out] out CLEvent @event);
+
+        /// <summary>
+        /// Introduced in OpenCL 2.0
+        /// </summary>
+        public static CLResultCode EnqueueSVMUnmap(
+            this CLCommandQueue commandQueue,
+            IntPtr svmPointer,
+            CLEvent[] eventWaitList,
+            out CLEvent @event)
+        {
+            return EnqueueSVMUnmap(commandQueue, svmPointer,
+                (uint)(eventWaitList?.Length ?? 0), eventWaitList, out @event);
+        }
+
+        /// <summary>
+        /// Introduced in OpenCL 2.1
+        /// </summary>
+        [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clEnqueueSVMMigrateMem")]
+        public static extern CLResultCode EnqueueSvmMigrateMemory(
+            [In] this CLCommandQueue commandQueue,
+            [In] uint numberOfSvmPointers,
+            [In] IntPtr[] svmPointers,
+            [In] nuint[] sizes,
+            [In] MemoryMigrationFlags memoryMigrationFlags,
+            [In] uint numberOfEventsInWaitList,
+            [In] CLEvent[] eventWaitList,
+            [Out] out CLEvent @event);
+
+        /// <summary>
+        /// Introduced in OpenCL 2.1
+        /// </summary>
+        public static CLResultCode EnqueueSvmMigrateMemory(
+            [In] this CLCommandQueue commandQueue,
+            IntPtr[] svmPointers,
+            nuint[] sizes,
+            MemoryMigrationFlags memoryMigrationFlags,
+            CLEvent[] eventWaitList,
+            out CLEvent @event)
+        {
+            return EnqueueSvmMigrateMemory(commandQueue, (uint)(svmPointers?.Length ?? 0), svmPointers, sizes, memoryMigrationFlags,
+                (uint)(eventWaitList?.Length ?? 0), eventWaitList, out @event);
+        }
 
         #endregion
 
@@ -1844,6 +2686,71 @@ namespace OpenTK.Compute.OpenCL
             }
         }
 
+        /// <summary>
+        /// Introduced in OpenCL 1.0
+        /// </summary>
+        [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clEnqueueNDRangeKernel")]
+        public static extern CLResultCode EnqueueNDRangeKernel(
+            [In] this CLCommandQueue commandQueue,
+            [In] CLKernel kernel,
+            [In] uint workDimension,
+            [In] nuint[] globalWorkOffset,
+            [In] nuint[] globalWorkSize,
+            [In] nuint[] localWorkSize,
+            [In] uint numberOfEventsInWaitList,
+            [In] CLEvent[] eventWaitList,
+            [Out] out CLEvent @event);
+
+        /// <summary>
+        /// Introduced in OpenCL 1.0
+        /// </summary>
+        public static CLResultCode EnqueueNDRangeKernel(
+            this CLCommandQueue commandQueue,
+            CLKernel kernel,
+            uint workDimension,
+            nuint[] globalWorkOffset,
+            nuint[] globalWorkSize,
+            nuint[] localWorkSize,
+            CLEvent[] eventWaitList,
+            out CLEvent @event)
+        {
+            return EnqueueNDRangeKernel(commandQueue, kernel, workDimension, globalWorkOffset, globalWorkSize, localWorkSize,
+                (uint)(eventWaitList?.Length ?? 0), eventWaitList, out @event);
+        }
+
+        /// <summary>
+        /// Introduced in OpenCL 1.0
+        /// </summary>
+        [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clEnqueueNativeKernel")]
+        public static extern CLResultCode EnqueueNativeKernel(
+            [In] this CLCommandQueue commandQueue,
+            [In] IntPtr userFunction,
+            [In] IntPtr[] arguments,
+            [In] nuint argumentSize,
+            [In] uint numberOfMemoryObjects,
+            [In] IntPtr[] memoryObjects,
+            [In] IntPtr argumentsMemoryLocation,
+            [In] uint numberOfEventsInWaitList,
+            [In] CLEvent[] eventWaitList,
+            [Out] out CLEvent @event);
+
+        /// <summary>
+        /// Introduced in OpenCL 1.0
+        /// </summary>
+        public static CLResultCode EnqueueNativeKernel(
+            this CLCommandQueue commandQueue,
+            IntPtr userFunction,
+            IntPtr[] arguments,
+            nuint argumentSize,
+            IntPtr[] memoryObjects,
+            IntPtr argumentsMemoryLocation,
+            CLEvent[] eventWaitList,
+            out CLEvent @event)
+        {
+            return EnqueueNativeKernel(commandQueue, userFunction, arguments, argumentSize, (uint)(memoryObjects?.Length ?? 0), memoryObjects, argumentsMemoryLocation,
+                (uint)(eventWaitList?.Length ?? 0), eventWaitList, out @event);
+        }
+
         #endregion
 
         #region Event Object API
@@ -1974,894 +2881,6 @@ namespace OpenTK.Compute.OpenCL
         #endregion
 
         #region Flush and Finish API
-
-        /// <summary>
-        /// Introduced in OpenCL 1.0
-        /// </summary>
-        [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clFlush")]
-        public static extern CLResultCode Flush([In] this CLCommandQueue commandQueue);
-
-        /// <summary>
-        /// Introduced in OpenCL 1.0
-        /// </summary>
-        [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clFinish")]
-        public static extern CLResultCode Finish([In] this CLCommandQueue commandQueue);
-
-        #endregion
-
-        #region Enqueued Commands API
-
-        /// <summary>
-        /// Introduced in OpenCL 1.0
-        /// </summary>
-        [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clEnqueueReadBuffer")]
-        public static extern CLResultCode EnqueueReadBuffer(
-            [In] this CLCommandQueue commandQueue,
-            [In] CLBuffer buffer,
-            [In] bool blockingRead,
-            [In] nuint offset,
-            [In] nuint size,
-            [In] IntPtr pointer,
-            [In] uint numberOfEventsInWaitList,
-            [In] CLEvent[] eventWaitList,
-            [Out] out CLEvent @event);
-
-        /// <summary>
-        /// Introduced in OpenCL1.0
-        /// </summary>
-        public static unsafe CLResultCode EnqueueReadBuffer<T>(
-            this CLCommandQueue commandQueue,
-            CLBuffer buffer,
-            bool blockingRead,
-            nuint offset,
-            T[] array,
-            CLEvent[] eventWaitList,
-            out CLEvent eventHandle)
-            where T : unmanaged
-        {
-            fixed (T* b = array)
-            {
-                return EnqueueReadBuffer(commandQueue, buffer, blockingRead, offset,
-                    (nuint)(array.Length * sizeof(float)), (IntPtr)b, (uint)(eventWaitList?.Length ?? 0),
-                    eventWaitList,
-                    out eventHandle);
-            }
-        }
-
-        /// <summary>
-        /// Introduced in OpenCL 1.0
-        /// </summary>
-        public static unsafe CLResultCode EnqueueReadBuffer<T>(
-           this CLCommandQueue commandQueue,
-            CLBuffer buffer,
-            bool blockingRead,
-            nuint offset,
-            Span<T> span,
-            CLEvent[] eventWaitList,
-            out CLEvent eventHandle)
-            where T : unmanaged
-        {
-            fixed (T* b = span)
-            {
-                CLResultCode resultCode = EnqueueReadBuffer(commandQueue, buffer, blockingRead, offset,
-                    (nuint)(span.Length * sizeof(T)), (IntPtr)b, (uint)(eventWaitList?.Length ?? 0),
-                    eventWaitList, out eventHandle);
-                return resultCode;
-            }
-        }
-
-        /// <summary>
-        /// Introduced in OpenCL 1.1
-        /// </summary>
-        [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clEnqueueReadBufferRect")]
-        public static extern CLResultCode EnqueueReadBufferRect(
-            [In] this CLCommandQueue commandQueue,
-            [In] CLBuffer buffer,
-            [In] bool blockingRead,
-            [In] nuint[] bufferOffset,
-            [In] nuint[] hostOffset,
-            [In] nuint[] region,
-            [In] nuint bufferRowPitch,
-            [In] nuint bufferSlicePitch,
-            [In] nuint hostRowPitch,
-            [In] nuint hostSlicePitch,
-            [In] IntPtr pointer,
-            [In] uint numberOfEventsInWaitList,
-            [In] CLEvent[] eventWaitList,
-            [Out] out CLEvent @event);
-
-        /// <summary>
-        /// Introduced in OpenCL 1.1
-        /// </summary>
-        public static unsafe CLResultCode EnqueueReadBufferRect<T>(
-            this CLCommandQueue commandQueue,
-            CLBuffer buffer,
-            bool blockingRead,
-            nuint[] bufferOffset,
-            nuint[] hostOffset,
-            nuint[] region,
-            nuint bufferRowPitch,
-            nuint bufferSlicePitch,
-            nuint hostRowPitch,
-            nuint hostSlicePitch,
-            T[] array,
-            CLEvent[] eventWaitList,
-            out CLEvent @event)
-            where T : unmanaged
-        {
-            fixed (T* a = array)
-            {
-                return EnqueueReadBufferRect(commandQueue, buffer, blockingRead, bufferOffset,
-                    hostOffset, region,
-                    bufferRowPitch, bufferSlicePitch, hostRowPitch, hostSlicePitch, (IntPtr)a,
-                    (uint)(eventWaitList?.Length ?? 0),
-                    eventWaitList, out @event);
-            }
-        }
-
-        /// <summary>
-        /// Introduced in OpenCL 1.1
-        /// </summary>
-        public static unsafe CLResultCode EnqueueReadBufferRect<T>(
-            this CLCommandQueue commandQueue,
-            CLBuffer buffer,
-            bool blockingRead,
-            nuint[] bufferOffset,
-            nuint[] hostOffset,
-            nuint[] region,
-            nuint bufferRowPitch,
-            nuint bufferSlicePitch,
-            nuint hostRowPitch,
-            nuint hostSlicePitch,
-            Span<T> span,
-            CLEvent[] eventWaitList,
-            out CLEvent @event)
-            where T : unmanaged
-        {
-            fixed (T* a = span)
-            {
-                return EnqueueReadBufferRect(commandQueue, buffer, blockingRead, bufferOffset,
-                    hostOffset, region,
-                    bufferRowPitch, bufferSlicePitch, hostRowPitch, hostSlicePitch, (IntPtr)a,
-                    (uint)(eventWaitList?.Length ?? 0),
-                    eventWaitList, out @event);
-            }
-        }
-
-        /// <summary>
-        /// Introduced in OpenCL 1.0
-        /// </summary>
-        [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clEnqueueWriteBuffer")]
-        public static extern CLResultCode EnqueueWriteBuffer(
-            [In] this CLCommandQueue commandQueue,
-            [In] CLBuffer buffer,
-            [In] bool blockingWrite,
-            [In] nuint offset,
-            [In] nuint size,
-            [In] IntPtr pointer,
-            [In] uint numberOfEventsInWaitList,
-            [In] CLEvent[] eventWaitList,
-            [Out] out CLEvent @event);
-
-        /// <summary>
-        /// Introduced in OpenCL 1.0
-        /// </summary>
-        public static unsafe CLResultCode EnqueueWriteBuffer<T>(
-            this CLCommandQueue commandQueue,
-            CLBuffer buffer,
-            bool blockingWrite,
-            nuint offset,
-            T[] array,
-            CLEvent[] eventWaitList,
-            out CLEvent @event) where T : unmanaged
-        {
-            fixed (T* a = array)
-            {
-                CLResultCode resultCode = EnqueueWriteBuffer(commandQueue, buffer, blockingWrite, offset,
-                    (uint)(array.Length * sizeof(T)), (IntPtr)a, (uint)(eventWaitList?.Length ?? 0),
-                    eventWaitList, out @event);
-
-                return resultCode;
-            }
-        }
-
-        /// <summary>
-        /// Introduced in OpenCL 1.0
-        /// </summary>
-        public static unsafe CLResultCode EnqueueWriteBuffer<T>(
-            this CLCommandQueue commandQueue,
-            CLBuffer buffer,
-            bool blockingWrite,
-            nuint offset,
-            Span<T> span,
-            CLEvent[] eventWaitList,
-            out CLEvent @event)
-            where T : unmanaged
-        {
-            fixed (T* a = span)
-            {
-                CLResultCode resultCode = EnqueueWriteBuffer(commandQueue, buffer, blockingWrite, offset,
-                    (uint)(span.Length * sizeof(T)), (IntPtr)a, (uint)(eventWaitList?.Length ?? 0),
-                    eventWaitList, out @event);
-
-                return resultCode;
-            }
-        }
-
-        /// <summary>
-        /// Introduced in OpenCL 1.1
-        /// </summary>
-        [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clEnqueueWriteBufferRect")]
-        public static extern CLResultCode EnqueueWriteBufferRect(
-            [In] this CLCommandQueue commandQueue,
-            [In] CLBuffer buffer,
-            [In] bool blockingWrite,
-            [In] nuint[] bufferOffset,
-            [In] nuint[] hostOffset,
-            [In] nuint[] region,
-            [In] nuint bufferRowPitch,
-            [In] nuint bufferSlicePitch,
-            [In] nuint hostRowPitch,
-            [In] nuint hostSlicePitch,
-            [In] IntPtr pointer,
-            [In] uint numberOfEventsInWaitList,
-            [In] CLEvent[] eventWaitList,
-            [Out] out CLEvent @event);
-
-        /// <summary>
-        /// Introduced in OpenCL 1.1
-        /// </summary>
-        public static unsafe CLResultCode EnqueueWriteBufferRect<T>(
-            this CLCommandQueue commandQueue, CLBuffer buffer,
-            bool blockingWrite,
-            nuint[] bufferOffset,
-            nuint[] hostOffset,
-            nuint[] region,
-            nuint bufferRowPitch,
-            nuint bufferSlicePitch,
-            nuint hostRowPitch,
-            nuint hostSlicePitch,
-            T[] array,
-            CLEvent[] eventWaitList,
-            out CLEvent @event)
-            where T : unmanaged
-        {
-            fixed (T* a = array)
-            {
-                return EnqueueWriteBufferRect(commandQueue, buffer, blockingWrite, bufferOffset,
-                    hostOffset, region,
-                    bufferRowPitch, bufferSlicePitch, hostRowPitch, hostSlicePitch, (IntPtr)a,
-                    (uint)(eventWaitList?.Length ?? 0),
-                    eventWaitList, out @event);
-            }
-        }
-
-        /// <summary>
-        /// Introduced in OpenCL 1.1
-        /// </summary>
-        public static unsafe CLResultCode EnqueueWriteBufferRect<T>(
-            this CLCommandQueue commandQueue,
-            CLBuffer buffer,
-            bool blockingWrite,
-            nuint[] bufferOffset,
-            nuint[] hostOffset,
-            nuint[] region,
-            nuint bufferRowPitch,
-            nuint bufferSlicePitch,
-            nuint hostRowPitch,
-            nuint hostSlicePitch,
-            Span<T> span,
-            CLEvent[] eventWaitList,
-            out CLEvent @event)
-            where T : unmanaged
-        {
-            fixed (T* a = span)
-            {
-                return EnqueueWriteBufferRect(commandQueue, buffer, blockingWrite, bufferOffset,
-                    hostOffset, region,
-                    bufferRowPitch, bufferSlicePitch, hostRowPitch, hostSlicePitch, (IntPtr)a,
-                    (uint)(eventWaitList?.Length ?? 0),
-                    eventWaitList, out @event);
-            }
-        }
-
-        /// <summary>
-        /// Introduced in OpenCL 1.2
-        /// </summary>
-        [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clEnqueueFillBuffer")]
-        public static extern CLResultCode EnqueueFillBuffer(
-            [In] this CLCommandQueue commandQueue,
-            [In] CLBuffer buffer,
-            [In] IntPtr pattern,
-            [In] nuint patternSize,
-            [In] nuint offset,
-            [In] nuint size,
-            [In] uint numberOfEventsInWaitList,
-            [In] CLEvent[] eventWaitList,
-            [Out] out CLEvent @event);
-
-
-        /// <summary>
-        /// Introduced in OpenCL 1.2
-        /// </summary>
-        public static unsafe CLResultCode EnqueueFillBuffer<T>(
-            this CLCommandQueue commandQueue,
-            CLBuffer buffer,
-            T[] pattern,
-            nuint offset,
-            nuint size,
-            CLEvent[] eventWaitList,
-            out CLEvent @event)
-            where T : unmanaged
-        {
-            fixed (T* p = pattern)
-            {
-                return EnqueueFillBuffer(commandQueue, buffer, (IntPtr)p, (nuint)(pattern.Length * sizeof(T)), offset,
-                    size, (uint)(eventWaitList?.Length ?? 0), eventWaitList, out @event);
-            }
-        }
-
-        /// <summary>
-        /// Introduced in OpenCL 1.0
-        /// </summary>
-        [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clEnqueueCopyBuffer")]
-        public static extern CLResultCode EnqueueCopyBuffer(
-            [In] this CLCommandQueue commandQueue,
-            [In] CLBuffer srcBuffer,
-            [In] CLBuffer dstBuffer,
-            [In] nuint srcOffset,
-            [In] nuint dstOffset,
-            [In] nuint size,
-            [In] uint numberOfEventsInWaitList,
-            [In] CLEvent[] eventWaitList,
-            [Out] out CLEvent @event);
-
-        /// <summary>
-        /// Introduced in OpenCL 1.0
-        /// </summary>
-        public static CLResultCode EnqueueCopyBuffer(
-           this CLCommandQueue commandQueue,
-            CLBuffer srcBuffer,
-            CLBuffer dstBuffer,
-            nuint srcOffset,
-            nuint dstOffset,
-            nuint sizeReturned,
-            CLEvent[] eventWaitList,
-            out CLEvent @event)
-        {
-            return EnqueueCopyBuffer(commandQueue, srcBuffer, dstBuffer, srcOffset, dstOffset,
-                sizeReturned, (uint)(eventWaitList?.Length ?? 0), eventWaitList, out @event);
-        }
-
-        /// <summary>
-        /// Introduced in OpenCL 1.1
-        /// </summary>
-        [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clEnqueueCopyBufferRect")]
-        public static extern CLResultCode EnqueueCopyBufferRect(
-            [In] this CLCommandQueue commandQueue,
-            [In] CLBuffer srcBuffer,
-            [In] CLBuffer dstBuffer,
-            [In] nuint[] srcOrigin,
-            [In] nuint[] dstOrigin,
-            [In] nuint[] region,
-            [In] nuint srcRowPitch,
-            [In] nuint srcSlicePitch,
-            [In] nuint dstRowPitch,
-            [In] nuint dstSlicePitch,
-            [In] uint numberOfEventsInWaitList,
-            [In] CLEvent[] eventWaitList,
-            [Out] out CLEvent @event);
-
-        /// <summary>
-        /// Introduced in OpenCL 1.1
-        /// </summary>
-        public static CLResultCode EnqueueCopyBufferRect(
-            this CLCommandQueue commandQueue,
-            CLBuffer srcBuffer,
-            CLBuffer dstBuffer,
-            nuint[] srcOrigin,
-            nuint[] dstOrigin,
-            nuint[] region,
-            nuint srcRowPitch,
-            nuint srcSlicePitch,
-            nuint dstRowPitch,
-            nuint dstSlicePitch,
-            CLEvent[] eventWaitList,
-            out CLEvent @event)
-        {
-            return EnqueueCopyBufferRect(commandQueue, srcBuffer, dstBuffer, srcOrigin, dstOrigin, region, srcRowPitch,
-                srcSlicePitch, dstRowPitch, dstSlicePitch, (uint)(eventWaitList?.Length ?? 0), eventWaitList, out @event);
-        }
-
-        /// <summary>
-        /// Introduced in OpenCL 1.0
-        /// </summary>
-        [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clEnqueueMapBuffer")]
-        public static extern IntPtr EnqueueMapBuffer(
-            [In] this CLCommandQueue commandQueue,
-            [In] CLBuffer buffer,
-            [In] bool blockingMap,
-            [In] MapFlags flags,
-            [In] nuint offset,
-            [In] nuint size,
-            [In] uint numberOfEventsInWaitList,
-            [In] CLEvent[] eventWaitList,
-            [Out] out CLEvent @event,
-            [Out] out CLResultCode resultCode);
-
-        /// <summary>
-        /// Introduced in OpenCL 1.0
-        /// </summary>
-        public static IntPtr EnqueueMapBuffer(
-            this CLCommandQueue commandQueue,
-            CLBuffer buffer,
-            bool blockingMap,
-            MapFlags flags,
-            nuint offset,
-            nuint size,
-            CLEvent[] eventWaitList,
-            out CLEvent @event,
-            out CLResultCode resultCode)
-        {
-            return EnqueueMapBuffer(commandQueue, buffer, blockingMap, flags, offset, size,
-                (uint)(eventWaitList?.Length ?? 0), eventWaitList, out @event, out resultCode);
-        }
-
-        /// <summary>
-        /// Introduced in OpenCL 1.0
-        /// </summary>
-        [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clEnqueueMapImage")]
-        public static extern IntPtr EnqueueMapImage(
-            [In] this CLCommandQueue commandQueue,
-            [In] CLImage image,
-            [In] bool blockingMap,
-            [In] MapFlags flags,
-            [In] nuint[] origin,
-            [In] nuint[] region,
-            [In] nuint rowPitch,
-            [In] nuint slicePitch,
-            [In] nuint numberOfEventsInWaitList,
-            [In] CLEvent[] eventWaitList,
-            [Out] out CLEvent @event,
-            [Out] out CLResultCode resultCode);
-
-        /// <summary>
-        /// Introduced in OpenCL 1.0
-        /// </summary>
-        public static IntPtr EnqueueMapImage(
-           this CLCommandQueue commandQueue,
-            CLImage image,
-            bool blockingMap,
-            MapFlags flags,
-            nuint[] origin,
-            nuint[] region,
-            nuint rowPitch,
-            nuint slicePitch,
-            CLEvent[] eventWaitList,
-            out CLEvent @event,
-            out CLResultCode resultCode)
-        {
-            return EnqueueMapImage(commandQueue, image, blockingMap, flags, origin, region, rowPitch, slicePitch,
-                (uint)(eventWaitList?.Length ?? 0), eventWaitList, out @event, out resultCode);
-        }
-
-        /// <summary>
-        /// Introduced in OpenCL 1.0
-        /// </summary>
-        [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clEnqueueUnmapMemObject")]
-        public static extern CLResultCode EnqueueUnmapMemoryObject(
-            [In] this CLCommandQueue commandQueue,
-            [In] IntPtr memoryObject,
-            [In] IntPtr mapperPtr,
-            [In] uint numberOfEventsInWaitList,
-            [In] CLEvent[] eventWaitList,
-            [Out] out CLEvent @event);
-
-        /// <summary>
-        /// Introduced in OpenCL 1.0
-        /// </summary>
-        public static CLResultCode EnqueueUnmapMemoryObject(
-            this CLCommandQueue commandQueue,
-            IntPtr memoryObject,
-            IntPtr mapperPtr,
-            CLEvent[] eventWaitList,
-            out CLEvent @event)
-        {
-            return EnqueueUnmapMemoryObject(commandQueue, memoryObject, mapperPtr,
-                (uint)(eventWaitList?.Length ?? 0), eventWaitList, out @event);
-        }
-
-        /// <summary>
-        /// Introduced in OpenCL 1.0
-        /// </summary>
-        [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clEnqueueUnmapMemObject")]
-        public static extern CLResultCode EnqueueUnmapMemoryObject(
-            [In] this CLCommandQueue commandQueue,
-            [In] CLBuffer memoryObject,
-            [In] IntPtr mapperPtr,
-            [In] uint numberOfEventsInWaitList,
-            [In] CLEvent[] eventWaitList,
-            [Out] out CLEvent @event);
-
-        /// <summary>
-        /// Introduced in OpenCL 1.0
-        /// </summary>
-        public static CLResultCode EnqueueUnmapMemoryObject(
-            this CLCommandQueue commandQueue,
-            CLBuffer memoryObject,
-            IntPtr mapperPtr,
-            CLEvent[] eventWaitList,
-            out CLEvent @event)
-        {
-            return EnqueueUnmapMemoryObject(commandQueue, memoryObject, mapperPtr,
-                (uint)(eventWaitList?.Length ?? 0), eventWaitList, out @event);
-        }
-
-        /// <summary>
-        /// Introduced in OpenCL 1.0
-        /// </summary>
-        [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clEnqueueUnmapMemObject")]
-        public static extern CLResultCode EnqueueUnmapMemoryObject(
-            [In] this CLCommandQueue commandQueue,
-            [In] CLImage memoryObject,
-            [In] IntPtr mapperPtr,
-            [In] uint numberOfEventsInWaitList,
-            [In] CLEvent[] eventWaitList,
-            [Out] out CLEvent @event);
-
-        /// <summary>
-        /// Introduced in OpenCL 1.0
-        /// </summary>
-        public static CLResultCode EnqueueUnmapMemoryObject(
-            this CLCommandQueue commandQueue,
-            CLImage memoryObject,
-            IntPtr mapperPtr,
-            CLEvent[] eventWaitList,
-            out CLEvent @event)
-        {
-            return EnqueueUnmapMemoryObject(commandQueue, memoryObject, mapperPtr,
-                (uint)(eventWaitList?.Length ?? 0), eventWaitList, out @event);
-        }
-
-        /// <summary>
-        /// Introduced in OpenCL 1.2
-        /// </summary>
-        [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clEnqueueMigrateMemObjects")]
-        public static extern CLResultCode EnqueueMigrateMemoryObjects(
-            [In] this CLCommandQueue commandQueue,
-            [In] uint numberOfMemoryObjects,
-            [In] IntPtr[] memoryObjects,
-            [In] MemoryMigrationFlags flags,
-            [In] uint numberOfEventsInWaitList,
-            [In] CLEvent[] eventWaitList,
-            [Out] out CLEvent @event);
-
-        /// <summary>
-        /// Introduced in OpenCL 1.2
-        /// </summary>
-        public static CLResultCode EnqueueMigrateMemoryObjects(
-            this CLCommandQueue commandQueue,
-            IntPtr[] memoryObjects,
-            MemoryMigrationFlags flags,
-            CLEvent[] eventWaitList,
-            out CLEvent @event)
-        {
-            return EnqueueMigrateMemoryObjects(commandQueue, (uint)(memoryObjects?.Length ?? 0), memoryObjects, flags,
-                (uint)(eventWaitList?.Length ?? 0), eventWaitList, out @event);
-        }
-
-        /// <summary>
-        /// Introduced in OpenCL 1.0
-        /// </summary>
-        [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clEnqueueNDRangeKernel")]
-        public static extern CLResultCode EnqueueNDRangeKernel(
-            [In] this CLCommandQueue commandQueue,
-            [In] CLKernel kernel,
-            [In] uint workDimension,
-            [In] nuint[] globalWorkOffset,
-            [In] nuint[] globalWorkSize,
-            [In] nuint[] localWorkSize,
-            [In] uint numberOfEventsInWaitList,
-            [In] CLEvent[] eventWaitList,
-            [Out] out CLEvent @event);
-
-        /// <summary>
-        /// Introduced in OpenCL 1.0
-        /// </summary>
-        public static CLResultCode EnqueueNDRangeKernel(
-            this CLCommandQueue commandQueue,
-            CLKernel kernel,
-            uint workDimension,
-            nuint[] globalWorkOffset,
-            nuint[] globalWorkSize,
-            nuint[] localWorkSize,
-            CLEvent[] eventWaitList,
-            out CLEvent @event)
-        {
-            return EnqueueNDRangeKernel(commandQueue, kernel, workDimension, globalWorkOffset, globalWorkSize, localWorkSize,
-                (uint)(eventWaitList?.Length ?? 0), eventWaitList, out @event);
-        }
-
-        /// <summary>
-        /// Introduced in OpenCL 1.0
-        /// </summary>
-        [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clEnqueueNativeKernel")]
-        public static extern CLResultCode EnqueueNativeKernel(
-            [In] this CLCommandQueue commandQueue,
-            [In] IntPtr userFunction,
-            [In] IntPtr[] arguments,
-            [In] nuint argumentSize,
-            [In] uint numberOfMemoryObjects,
-            [In] IntPtr[] memoryObjects,
-            [In] IntPtr argumentsMemoryLocation,
-            [In] uint numberOfEventsInWaitList,
-            [In] CLEvent[] eventWaitList,
-            [Out] out CLEvent @event);
-
-        /// <summary>
-        /// Introduced in OpenCL 1.0
-        /// </summary>
-        public static CLResultCode EnqueueNativeKernel(
-            this CLCommandQueue commandQueue,
-            IntPtr userFunction,
-            IntPtr[] arguments,
-            nuint argumentSize,
-            IntPtr[] memoryObjects,
-            IntPtr argumentsMemoryLocation,
-            CLEvent[] eventWaitList,
-            out CLEvent @event)
-        {
-            return EnqueueNativeKernel(commandQueue, userFunction, arguments, argumentSize, (uint)(memoryObjects?.Length ?? 0), memoryObjects, argumentsMemoryLocation,
-                (uint)(eventWaitList?.Length ?? 0), eventWaitList, out @event);
-        }
-
-        /// <summary>
-        /// Introduced in OpenCL 1.2
-        /// </summary>
-        [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clEnqueueMarkerWithWaitList")]
-        public static extern CLResultCode EnqueueMarkerWithWaitList(
-            [In] this CLCommandQueue commandQueue,
-            [In] uint numberOfMemoryObjects,
-            [In] IntPtr[] memoryObjects,
-            [In] IntPtr argumentsMemoryLocation,
-            [In] uint numberOfEventsInWaitList,
-            [In] CLEvent[] eventWaitList,
-            [Out] out CLEvent @event);
-
-        /// <summary>
-        /// Introduced in OpenCL 1.2
-        /// </summary>
-        public static CLResultCode EnqueueMarkerWithWaitList(
-           this CLCommandQueue commandQueue,
-            IntPtr[] memoryObjects,
-            IntPtr argumentsMemoryLocation,
-            CLEvent[] eventWaitList,
-            out CLEvent @event)
-        {
-            return EnqueueMarkerWithWaitList(commandQueue, (uint)(memoryObjects?.Length ?? 0), memoryObjects, argumentsMemoryLocation,
-                (uint)(eventWaitList?.Length ?? 0), eventWaitList, out @event);
-        }
-
-        /// <summary>
-        /// Introduced in OpenCL 1.2
-        /// </summary>
-        [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clEnqueueBarrierWithWaitList")]
-        public static extern CLResultCode EnqueueBarrierWithWaitList(
-            [In] this CLCommandQueue commandQueue,
-            [In] uint numberOfMemoryObjects,
-            [In] IntPtr[] memoryObjects,
-            [In] IntPtr argumentsMemoryLocation,
-            [In] uint numberOfEventsInWaitList,
-            [In] CLEvent[] eventWaitList,
-            [Out] out CLEvent @event);
-
-        /// <summary>
-        /// Introduced in OpenCL 1.2
-        /// </summary>
-        public static CLResultCode EnqueueBarrierWithWaitList(
-            this CLCommandQueue commandQueue,
-            IntPtr[] memoryObjects,
-            IntPtr argumentsMemoryLocation,
-            CLEvent[] eventWaitList,
-            out CLEvent @event)
-        {
-            return EnqueueBarrierWithWaitList(commandQueue, (uint)(memoryObjects?.Length ?? 0), memoryObjects, argumentsMemoryLocation,
-                (uint)(eventWaitList?.Length ?? 0), eventWaitList, out @event);
-        }
-
-        /// <summary>
-        /// Introduced in OpenCL 2.0
-        /// </summary>
-        [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clEnqueueSVMFree")]
-        public static extern CLResultCode EnqueueSVMFree(
-            [In] this CLCommandQueue commandQueue,
-            [In] uint numberOfSvmPointers,
-            [In] IntPtr[] svmPointers,
-            [In] IntPtr svmFreePointersCallback,
-            [In] IntPtr userData,
-            [In] uint numberOfEventsInWaitList,
-            [In] CLEvent[] eventWaitList,
-            [Out] out CLEvent @event);
-
-        /// <summary>
-        /// Introduced in OpenCL 2.0
-        /// </summary>
-        public static CLResultCode EnqueueSVMFree(
-            this CLCommandQueue commandQueue,
-            IntPtr[] svmPointers,
-            ClEventCallback svmFreePointersCallback,
-            IntPtr userData,
-            CLEvent[] eventWaitList,
-            out CLEvent @event)
-        {
-            return EnqueueSVMFree(commandQueue, (uint)(svmPointers?.Length ?? 0), svmPointers, Marshal.GetFunctionPointerForDelegate(svmFreePointersCallback), userData,
-                (uint)(eventWaitList?.Length ?? 0), eventWaitList, out @event);
-        }
-
-        /// <summary>
-        /// Introduced in OpenCL 2.0
-        /// </summary>
-        [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clEnqueueSVMMemcpy")]
-        public static extern CLResultCode EnqueueSvmMemoryCopy(
-            [In] this CLCommandQueue commandQueue,
-            [In] bool blockingCopy,
-            [In] IntPtr dstPointer,
-            [In] IntPtr srcPointer,
-            [In] nuint size,
-            [In] uint numberOfEventsInWaitList,
-            [In] CLEvent[] eventWaitList,
-            [Out] out CLEvent @event);
-
-        /// <summary>
-        /// Introduced in OpenCL 2.0
-        /// </summary>
-        public static CLResultCode EnqueueSvmMemoryCopy(
-           this CLCommandQueue commandQueue,
-            bool blockingCopy,
-            IntPtr dstPointer,
-            IntPtr srcPointer,
-            nuint size,
-            CLEvent[] eventWaitList,
-            out CLEvent @event)
-        {
-            return EnqueueSvmMemoryCopy(commandQueue, blockingCopy, dstPointer, srcPointer, size,
-                (uint)(eventWaitList?.Length ?? 0), eventWaitList, out @event);
-        }
-
-        /// <summary>
-        /// Introduced in OpenCL 2.0
-        /// </summary>
-        [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clEnqueueSVMMemFill")]
-        public static extern CLResultCode EnqueueSvmMemoryFill(
-            [In] this CLCommandQueue commandQueue,
-            [In] IntPtr svmPointer,
-            [In] IntPtr pattern,
-            [In] nuint patternSize,
-            [In] nuint size,
-            [In] uint numberOfEventsInWaitList,
-            [In] CLEvent[] eventWaitList,
-            [Out] out CLEvent @event);
-
-        /// <summary>
-        /// Introduced in OpenCL 2.0
-        /// </summary>
-        public static unsafe CLResultCode EnqueueSvmMemoryFill<T>(
-            this CLCommandQueue commandQueue,
-            IntPtr svmPointer,
-            T[] pattern,
-            nuint size,
-            CLEvent[] eventWaitList,
-            out CLEvent @event)
-            where T : unmanaged
-        {
-            fixed (T* p = pattern)
-            {
-                return EnqueueSvmMemoryFill(commandQueue, svmPointer, (IntPtr)p, (nuint)(pattern.Length * sizeof(T)),
-                    size, (uint)(eventWaitList?.Length ?? 0), eventWaitList, out @event);
-            }
-        }
-
-        /// <summary>
-        /// Introduced in OpenCL 2.0
-        /// </summary>
-        public static unsafe CLResultCode EnqueueSvmMemoryFill<T>(
-            this CLCommandQueue commandQueue,
-            IntPtr svmPointer,
-            Span<T> pattern,
-            nuint size,
-            CLEvent[] eventWaitList,
-            out CLEvent @event)
-            where T : unmanaged
-        {
-            fixed (T* p = pattern)
-            {
-                return EnqueueSvmMemoryFill(commandQueue, svmPointer, (IntPtr)p, (uint)(pattern.Length * sizeof(T)),
-                    size, (uint)(eventWaitList?.Length ?? 0), eventWaitList, out @event);
-            }
-        }
-
-        /// <summary>
-        /// Introduced in OpenCL 2.0
-        /// </summary>
-        [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clEnqueueSVMMap")]
-        public static extern CLResultCode EnqueueSvmMap(
-            [In] this CLCommandQueue commandQueue,
-            [In] bool blockingMap,
-            [In] MapFlags mapFlag,
-            [In] IntPtr svmPointer,
-            [In] nuint size,
-            [In] uint numberOfEventsInWaitList,
-            [In] CLEvent[] eventWaitList,
-            [Out] out CLEvent @event);
-
-        /// <summary>
-        /// Introduced in OpenCL 2.0
-        /// </summary>
-        public static CLResultCode EnqueueSvmMap(
-            this CLCommandQueue commandQueue,
-            bool blockingMap,
-            MapFlags mapFlag,
-            IntPtr svmPointer,
-            nuint size,
-            CLEvent[] eventWaitList,
-            out CLEvent @event)
-        {
-            return EnqueueSvmMap(commandQueue, blockingMap, mapFlag, svmPointer, size,
-                (uint)(eventWaitList?.Length ?? 0), eventWaitList, out @event);
-        }
-
-        /// <summary>
-        /// Introduced in OpenCL 2.0
-        /// </summary>
-        [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clEnqueueSVMUnmap")]
-        public static extern CLResultCode EnqueueSVMUnmap(
-            [In] this CLCommandQueue commandQueue,
-            [In] IntPtr svmPointer,
-            [In] uint numberOfEventsInWaitList,
-            [In] CLEvent[] eventWaitList,
-            [Out] out CLEvent @event);
-
-        /// <summary>
-        /// Introduced in OpenCL 2.0
-        /// </summary>
-        public static CLResultCode EnqueueSVMUnmap(
-            this CLCommandQueue commandQueue,
-            IntPtr svmPointer,
-            CLEvent[] eventWaitList,
-            out CLEvent @event)
-        {
-            return EnqueueSVMUnmap(commandQueue, svmPointer,
-                (uint)(eventWaitList?.Length ?? 0), eventWaitList, out @event);
-        }
-
-        /// <summary>
-        /// Introduced in OpenCL 2.1
-        /// </summary>
-        [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clEnqueueSVMMigrateMem")]
-        public static extern CLResultCode EnqueueSvmMigrateMemory(
-            [In] this CLCommandQueue commandQueue,
-            [In] uint numberOfSvmPointers,
-            [In] IntPtr[] svmPointers,
-            [In] nuint[] sizes,
-            [In] MemoryMigrationFlags memoryMigrationFlags,
-            [In] uint numberOfEventsInWaitList,
-            [In] CLEvent[] eventWaitList,
-            [Out] out CLEvent @event);
-
-        /// <summary>
-        /// Introduced in OpenCL 2.1
-        /// </summary>
-        public static CLResultCode EnqueueSvmMigrateMemory(
-            [In] this CLCommandQueue commandQueue,
-            IntPtr[] svmPointers,
-            nuint[] sizes,
-            MemoryMigrationFlags memoryMigrationFlags,
-            CLEvent[] eventWaitList,
-            out CLEvent @event)
-        {
-            return EnqueueSvmMigrateMemory(commandQueue, (uint)(svmPointers?.Length ?? 0), svmPointers, sizes, memoryMigrationFlags,
-                (uint)(eventWaitList?.Length ?? 0), eventWaitList, out @event);
-        }
 
         #endregion
 

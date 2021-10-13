@@ -123,5 +123,11 @@ namespace OpenTK.Compute.Tests
             buffer.ReleaseMemoryObject();
             Assert.IsTrue(callBackMade);
         }
+
+        [TestMethod]
+        public void EnqueueMapBuffer()
+        {
+            Assert.Inconclusive();
+        }
     }
 }

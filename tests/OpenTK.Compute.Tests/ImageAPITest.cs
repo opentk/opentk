@@ -2,6 +2,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenTK.Compute.OpenCL;
 using System;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 
 namespace OpenTK.Compute.Tests
@@ -206,18 +207,6 @@ namespace OpenTK.Compute.Tests
         }
 
         [TestMethod]
-        public void EnqueueWriteImage()
-        {
-            CLImageFormat imageFormat = new CLImageFormat(ChannelOrder.R, ChannelType.UnsignedInteger32);
-            CLImageDescription imageDesc = CLImageDescription.Create1D(3);
-            var data = new uint[] { 1, 2, 3 };
-            var image = context.CreateImage(MemoryFlags.ReadWrite | MemoryFlags.CopyHostPtr, ref imageFormat, ref imageDesc, data, out CLResultCode result);
-            Assert.AreEqual(CLResultCode.Success, result);
-            var resultCode = commandQueue.EnqueueWriteImage(image, true, new nuint[] { 0, 0, 0 }, new nuint[] { 3, 1, 1 }, 0, 0, data, null, out _);
-            Assert.AreEqual(CLResultCode.Success, resultCode);
-        }
-
-        [TestMethod]
         public void EnqueueReadImage()
         {
             CLImageFormat imageFormat = new CLImageFormat(ChannelOrder.R, ChannelType.UnsignedInteger32);
@@ -227,43 +216,137 @@ namespace OpenTK.Compute.Tests
             var output = new uint[3];
             var resultCode = commandQueue.EnqueueReadImage(image, true, new nuint[] { 0, 0, 0 }, new nuint[] { 3, 1, 1 }, 0, 0, output, null, out _);
             Assert.AreEqual(CLResultCode.Success, resultCode);
-            Console.WriteLine(data[0]);
+            Assert.AreEqual((uint)2, output[1]);
+            image.ReleaseMemoryObject();
+        }
+
+        [TestMethod]
+        public void EnqueueWriteImage()
+        {
+            CLImageFormat imageFormat = new CLImageFormat(ChannelOrder.R, ChannelType.UnsignedInteger32);
+            CLImageDescription imageDesc = CLImageDescription.Create1D(3);
+            var data = new uint[] { 1, 2, 3 };
+            var image = context.CreateImage(MemoryFlags.ReadWrite | MemoryFlags.CopyHostPtr, ref imageFormat, ref imageDesc, new uint[3], out CLResultCode result);
+            Assert.AreEqual(CLResultCode.Success, result);
+            var resultCode = commandQueue.EnqueueWriteImage(image, true, new nuint[] { 0, 0, 0 }, new nuint[] { 3, 1, 1 }, 0, 0, data, null, out _);
+            Assert.AreEqual(CLResultCode.Success, resultCode);
+            image.ReleaseMemoryObject();
         }
 
         [TestMethod]
         public void EnqueueFillImage()
         {
-            Assert.Inconclusive();
+            CLImageFormat imageFormat = new CLImageFormat(ChannelOrder.Depth, ChannelType.Float);
+            CLImageDescription imageDesc = CLImageDescription.Create1D(3);
+            var image = context.CreateImage(MemoryFlags.ReadWrite | MemoryFlags.CopyHostPtr, ref imageFormat, ref imageDesc, new float[3], out _);
+            var output = new float[3];
+            commandQueue.EnqueueReadImage(image, true, new nuint[] { 0, 0, 0 }, new nuint[] { 3, 1, 1 }, 0, 0, output, null, out _);
+            Assert.AreNotEqual((float)1, output[1]);
+            var resultCode = commandQueue.EnqueueFillImage(image, new float[] { 1 }, new nuint[] { 0, 0, 0 }, new nuint[] { 3, 1, 1 }, null, out _);
+            Assert.AreEqual(CLResultCode.Success, resultCode);
+            commandQueue.EnqueueReadImage(image, true, new nuint[] { 0, 0, 0 }, new nuint[] { 3, 1, 1 }, 0, 0, output, null, out _);
+            Assert.AreEqual((float)1, output[1]);
+            image.ReleaseMemoryObject();
         }
 
         [TestMethod]
         public void EnqueueCopyImage()
         {
-            Assert.Inconclusive();
+            CLImageFormat imageFormat = new CLImageFormat(ChannelOrder.R, ChannelType.UnsignedInteger32);
+            CLImageDescription imageDesc = CLImageDescription.Create1D(3);
+            var data = new uint[] { 1, 2, 3 };
+            var imageSource = context.CreateImage(MemoryFlags.ReadWrite | MemoryFlags.CopyHostPtr, ref imageFormat, ref imageDesc, data, out _);
+            var imageDest = context.CreateImage(MemoryFlags.ReadWrite | MemoryFlags.CopyHostPtr, ref imageFormat, ref imageDesc, new uint[3], out _);
+            var resultCode = commandQueue.EnqueueCopyImage(imageSource, imageDest, new nuint[] { 0, 0, 0 }, new nuint[] { 0, 0, 0 }, new nuint[] { 3, 1, 1 }, null, out _);
+            Assert.AreEqual(CLResultCode.Success, resultCode);
+            var output = new uint[3];
+            commandQueue.EnqueueReadImage(imageDest, true, new nuint[] { 0, 0, 0 }, new nuint[] { 3, 1, 1 }, 0, 0, output, null, out _);
+            Assert.AreEqual((uint)2, output[1]);
+            imageSource.ReleaseMemoryObject();
+            imageDest.ReleaseMemoryObject();
         }
 
         [TestMethod]
         public void EnqueueCopyImageToBuffer()
         {
-            Assert.Inconclusive();
+            CLImageFormat imageFormat = new CLImageFormat(ChannelOrder.R, ChannelType.UnsignedInteger32);
+            CLImageDescription imageDesc = CLImageDescription.Create1D(3);
+            var data = new uint[] { 1, 2, 3 };
+            var image = context.CreateImage(MemoryFlags.ReadWrite | MemoryFlags.CopyHostPtr, ref imageFormat, ref imageDesc, data, out _);
+            var buffer = context.CreateBuffer(MemoryFlags.ReadWrite | MemoryFlags.CopyHostPtr, new uint[3], out _);
+            var resultCode = commandQueue.EnqueueCopyImageToBuffer(image, buffer, new nuint[] { 0, 0, 0 }, new nuint[] { 3, 1, 1 }, 0, null, out _);
+            Assert.AreEqual(CLResultCode.Success, resultCode);
+
+            var output = new uint[3];
+            commandQueue.EnqueueReadBuffer(buffer, true, 0, output, null, out _);
+            Assert.AreEqual((uint)2, output[1]);
+            buffer.ReleaseMemoryObject();
+            image.ReleaseMemoryObject();
         }
 
         [TestMethod]
         public void EnqueueCopyBufferToImage()
         {
-            Assert.Inconclusive();
-        }
+            CLImageFormat imageFormat = new CLImageFormat(ChannelOrder.R, ChannelType.UnsignedInteger32);
+            CLImageDescription imageDesc = CLImageDescription.Create1D(3);
+            var data = new uint[] { 1, 2, 3 };
+            var buffer = context.CreateBuffer(MemoryFlags.ReadWrite | MemoryFlags.CopyHostPtr, data, out _);
+            var image = context.CreateImage(MemoryFlags.ReadWrite | MemoryFlags.CopyHostPtr, ref imageFormat, ref imageDesc, new uint[3], out _);
+            var resultCode = commandQueue.EnqueueCopyBufferToImage(buffer, image, 0, new nuint[] { 0, 0, 0 }, new nuint[] { 3, 1, 1 }, null, out _);
+            Assert.AreEqual(CLResultCode.Success, resultCode);
 
-        [TestMethod]
-        public void EnqueueMapBuffer()
-        {
-            Assert.Inconclusive();
+            var output = new uint[3];
+            commandQueue.EnqueueReadImage(image, true, new nuint[] { 0, 0, 0 }, new nuint[] { 3, 1, 1 }, 0, 0, output, null, out _);
+            Assert.AreEqual((uint)2, output[1]);
+            buffer.ReleaseMemoryObject();
+            image.ReleaseMemoryObject();
         }
 
         [TestMethod]
         public void EnqueueMapImage()
         {
-            Assert.Inconclusive();
+            // Create image with data values
+            CLImageFormat imageFormat = new CLImageFormat(ChannelOrder.R, ChannelType.UnsignedInteger32);
+            CLImageDescription imageDesc = CLImageDescription.Create1D(3);
+            var data = new uint[] { 1, 2, 3 };
+            var image = context.CreateImage(MemoryFlags.ReadWrite | MemoryFlags.CopyHostPtr, ref imageFormat, ref imageDesc, data, out _);
+
+            // Map an area of the image to host memory
+            var map = commandQueue.EnqueueMapImage(image, true, MapFlags.Read, new nuint[] { 0, 0, 0 }, new nuint[] { 3, 1, 1 }, 0, 0, null, out _, out CLResultCode resultCode);
+            Assert.AreEqual(CLResultCode.Success, resultCode);
+
+            // Read map to confirm values have been set
+            var output = new int[3];
+            Marshal.Copy(map, output, 0, 3);
+            Assert.AreEqual(2, output[1]);
+            image.ReleaseMemoryObject();
+        }
+
+        [TestMethod]
+        public void EnqueueUnmapMemoryObject()
+        {
+            // Create image with data values
+            CLImageFormat imageFormat = new CLImageFormat(ChannelOrder.R, ChannelType.UnsignedInteger32);
+            CLImageDescription imageDesc = CLImageDescription.Create1D(3);
+            var data = new uint[] { 1, 2, 3 };
+            var image = context.CreateImage(MemoryFlags.ReadWrite | MemoryFlags.CopyHostPtr, ref imageFormat, ref imageDesc, data, out _);
+
+            // Map an area of the image to host memory
+            var map = commandQueue.EnqueueMapImage(image, true, MapFlags.Write, new nuint[] { 0, 0, 0 }, new nuint[] { 3, 1, 1 }, 0, 0, null, out _, out _);
+
+            // Write data to the mapped host memory
+            var input = new int[3] { 4, 4, 4 };
+            Marshal.Copy(input, 0, map, 3);
+
+            // Unmap host memory back into image
+            var resultCode = commandQueue.EnqueueUnmapMemoryObject(image, map, null, out _);
+            Assert.AreEqual(CLResultCode.Success, resultCode);
+
+            // Read image to confirm values have been set
+            var output = new uint[3];
+            commandQueue.EnqueueReadImage(image, true, new nuint[] { 0, 0, 0 }, new nuint[] { 3, 1, 1 }, 0, 0, output, null, out _);
+            Assert.AreEqual((uint)4, output[1]);
+            image.ReleaseMemoryObject();
         }
     }
 }
