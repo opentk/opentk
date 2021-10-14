@@ -40,6 +40,23 @@ namespace OpenTK.Compute.Tests
         }
 
         [TestMethod]
+        public void SupportsPlatformExtension()
+        {
+            CL.GetPlatformIds(out CLPlatform[] platformIds);
+            foreach (var platform in platformIds)
+            {
+                CL.GetPlatformInfo(platform, PlatformInfo.Extensions, out byte[] bytes);
+                var extensions = Encoding.ASCII.GetString(bytes).Split(" ");
+                for (int i = 0; i < extensions.Length - 1; i++)
+                {
+                    var resultCode = platform.SupportsPlatformExtension(extensions[i], out _);
+                    Assert.AreEqual(CLResultCode.Success, resultCode);
+                }
+
+            }
+        }
+
+        [TestMethod]
         public void GetExtensionFunctionAddressForPlatform()
         {
             CL.GetPlatformIds(out CLPlatform[] platformIds);
@@ -48,16 +65,18 @@ namespace OpenTK.Compute.Tests
                 CL.GetPlatformInfo(platform, PlatformInfo.Extensions, out byte[] bytes);
                 var extensions = Encoding.ASCII.GetString(bytes).Split(" ");
                 int extensionsFound = 0;
-                for (int i = 0; i< extensions.Length -1; i++)
+                for (int i = 0; i < extensions.Length - 1; i++)
                 {
                     platform.SupportsPlatformExtension(extensions[i], out bool success);
+                    if (!success) continue;
+
                     var address = platform.GetExtensionFunctionAddressForPlatform(extensions[i]);
                     // Only returns a valid address for non-core extensions
                     if (address != IntPtr.Zero) extensionsFound++;
                 }
 
                 if (extensionsFound == 0)
-                    Assert.Inconclusive("No non-core extension addresses found amongst: "+ Encoding.ASCII.GetString(bytes));
+                    Assert.Inconclusive("No non-core extension addresses found amongst: " + Encoding.ASCII.GetString(bytes));
             }
         }
     }

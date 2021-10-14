@@ -2,6 +2,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenTK.Compute.OpenCL;
 using System;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 
 namespace OpenTK.Compute.Tests
@@ -11,6 +12,7 @@ namespace OpenTK.Compute.Tests
     {
         CLContext context;
         CLDevice device;
+        CLCommandQueue commandQueue;
 
         [TestInitialize()]
         public void Starup()
@@ -19,14 +21,15 @@ namespace OpenTK.Compute.Tests
             var platform = platformIds[0];
             platform.GetDeviceIds(DeviceType.Default, out CLDevice[] devices);
             device = devices[0];
-            var properties = new CLContextProperties(platform, false);
-            context = properties.CreateContext(new[] { device }, null, IntPtr.Zero, out _);
+            context = new CLContextProperties(platform, false).CreateContext(new[] { device }, null, IntPtr.Zero, out _);
+            commandQueue = context.CreateCommandQueueWithProperties(device, new CLCommandQueueProperties(), out _);
         }
 
         [TestCleanup()]
         public void Cleanup()
         {
             context.ReleaseContext();
+            commandQueue.ReleaseCommandQueue();
         }
 
         [TestMethod]
@@ -52,13 +55,18 @@ namespace OpenTK.Compute.Tests
         [TestMethod]
         public void CreateSubBuffer()
         {
+            // create buffer
             var buffer = context.CreateBuffer(MemoryFlags.UseHostPtr, new uint[] { 1, 2, 3, 4 }, out _);
+
+            // create sub
             var bufferRegion = new CLBufferRegion(0, 4);
             var subBuffer = buffer.CreateSubBuffer(MemoryFlags.ReadWrite, BufferCreateType.Region, ref bufferRegion, out CLResultCode resultCode);
-
             Assert.AreEqual(CLResultCode.Success, resultCode);
+
+            // check size to ensure it has been created properly
             subBuffer.GetMemObjectInfo(MemoryObjectInfo.Size, out byte[] bytes);
             Assert.AreEqual(4, BitConverter.ToInt32(bytes));
+
             subBuffer.ReleaseMemoryObject();
             buffer.ReleaseMemoryObject();
         }
@@ -127,7 +135,164 @@ namespace OpenTK.Compute.Tests
         [TestMethod]
         public void EnqueueMapBuffer()
         {
-            Assert.Inconclusive();
+            var buffer = context.CreateBuffer(MemoryFlags.UseHostPtr, new uint[] { 1, 2, 3, 4 }, out _);
+            var map = commandQueue.EnqueueMapBuffer(buffer, true, MapFlags.Read, 0, 3, null, out _, out CLResultCode resultCode);
+            Assert.AreEqual(CLResultCode.Success, resultCode);
+
+            var output = new int[3];
+            Marshal.Copy(map, output, 0, 3);
+            Assert.AreEqual(2, output[1]);
+            buffer.ReleaseMemoryObject();
+
+        }
+
+        [TestMethod]
+        public void EnqueueUnmapMemoryObject()
+        {
+            // Create buffer with data values
+            var buffer = context.CreateBuffer(MemoryFlags.ReadWrite | MemoryFlags.CopyHostPtr, new uint[] { 1, 2, 3 }, out _);
+
+            // Map an area of the image to host memory
+            var map = commandQueue.EnqueueMapBuffer(buffer, true, MapFlags.Write, 0, 3, null, out _, out _);
+
+            // Write data to the mapped host memory
+            var input = new int[3] { 4, 4, 4 };
+            Marshal.Copy(input, 0, map, 3);
+
+            // Unmap host memory back into buffer
+            var resultCode = commandQueue.EnqueueUnmapMemoryObject(buffer, map, null, out _);
+            Assert.AreEqual(CLResultCode.Success, resultCode);
+
+            // Read buffer to confirm values have been set
+            var output = new uint[3];
+            commandQueue.EnqueueReadBuffer(buffer, true, 0, output, null, out _);
+            Assert.AreEqual((uint)4, output[1]);
+            buffer.ReleaseMemoryObject();
+        }
+
+        [TestMethod]
+        public void EnqueueReadBuffer()
+        {
+            // Create buffer with data values
+            var buffer = context.CreateBuffer(MemoryFlags.ReadWrite | MemoryFlags.CopyHostPtr, new uint[] { 1, 2, 3 }, out _);
+
+            // Read buffer
+            var output = new uint[3];
+            var resultCode = commandQueue.EnqueueReadBuffer(buffer, true, 0, output, null, out _);
+            Assert.AreEqual(CLResultCode.Success, resultCode);
+            Assert.AreEqual((uint)2, output[1]);
+            buffer.ReleaseMemoryObject();
+        }
+
+        [TestMethod]
+        public void EnqueueReadBufferRect()
+        {
+            // Create buffer with data values
+            var buffer = context.CreateBuffer(MemoryFlags.ReadWrite | MemoryFlags.CopyHostPtr, new uint[] { 1, 2, 3 }, out _);
+
+            // Read buffer - region width is in bytes, height in rows, depth in slices
+            var output = new uint[3];
+            var resultCode = commandQueue.EnqueueReadBufferRect(buffer, true, new nuint[] { 0, 0, 0 }, new nuint[] { 0, 0, 0 },
+                new nuint[] { 3 * sizeof(uint), 1, 1 }, 0, 0, 0, 0, output, null, out _);
+            Assert.AreEqual(CLResultCode.Success, resultCode);
+            Assert.AreEqual((uint)2, output[1]);
+            buffer.ReleaseMemoryObject();
+        }
+
+        [TestMethod]
+        public void EnqueueWriteBuffer()
+        {
+            // Create buffer with data values
+            var buffer = context.CreateBuffer(MemoryFlags.ReadWrite | MemoryFlags.CopyHostPtr, new uint[3], out _);
+
+            // Write to buffer
+            var data = new uint[] { 1, 2, 3 };
+            var resultCode = commandQueue.EnqueueWriteBuffer(buffer, true, 0, data, null, out _);
+            Assert.AreEqual(CLResultCode.Success, resultCode);
+
+            // Read buffer
+            var output = new uint[3];
+            commandQueue.EnqueueReadBuffer(buffer, true, 0, output, null, out _);
+            Assert.AreEqual((uint)2, output[1]);
+            buffer.ReleaseMemoryObject();
+        }
+
+        [TestMethod]
+        public void EnqueueWriteBufferRect()
+        {
+            // Create buffer with data values
+            var buffer = context.CreateBuffer(MemoryFlags.ReadWrite | MemoryFlags.CopyHostPtr, new uint[3], out _);
+
+            // Write to buffer
+            var data = new uint[] { 1, 2, 3 };
+            var resultCode = commandQueue.EnqueueWriteBufferRect(buffer, true, new nuint[] { 0, 0, 0 }, new nuint[] { 0, 0, 0 },
+                new nuint[] { 3 * sizeof(uint), 1, 1 }, 0, 0, 0, 0, data, null, out _);
+            Assert.AreEqual(CLResultCode.Success, resultCode);
+
+            // Read buffer
+            var output = new uint[3];
+            commandQueue.EnqueueReadBuffer(buffer, true, 0, output, null, out _);
+            Assert.AreEqual((uint)2, output[1]);
+            buffer.ReleaseMemoryObject();
+        }
+
+        [TestMethod]
+        public void EnqueueFillBuffer()
+        {
+            // Create buffer with data values
+            var buffer = context.CreateBuffer(MemoryFlags.ReadWrite | MemoryFlags.CopyHostPtr, new uint[3], out _);
+
+            // Read initial buffer state
+            var output = new uint[3];
+            commandQueue.EnqueueReadBuffer(buffer, true, 0, output, null, out _);
+            Assert.AreEqual((uint)0, output[1]);
+
+            // Fill to buffer
+            var data = new uint[] { 1 };
+            var resultCode = commandQueue.EnqueueFillBuffer(buffer, data, 0, 3 * sizeof(uint), null, out _);
+            Assert.AreEqual(CLResultCode.Success, resultCode);
+
+            // Read buffer
+            commandQueue.EnqueueReadBuffer(buffer, true, 0, output, null, out _);
+            Assert.AreEqual((uint)1, output[1]);
+            buffer.ReleaseMemoryObject();
+        }
+
+        [TestMethod]
+        public void EnqueueCopyBuffer()
+        {
+            // Create buffer with data values
+            var bufferSrc = context.CreateBuffer(MemoryFlags.ReadWrite | MemoryFlags.CopyHostPtr, new uint[] { 1, 2, 3 }, out _);
+            var bufferDest = context.CreateBuffer(MemoryFlags.ReadWrite | MemoryFlags.CopyHostPtr, new uint[3], out _);
+
+            var resultCode = commandQueue.EnqueueCopyBuffer(bufferSrc, bufferDest, 0, 0, 3 * sizeof(uint), null, out _);
+            Assert.AreEqual(CLResultCode.Success, resultCode);
+
+            // Read buffer
+            var output = new uint[3];
+            commandQueue.EnqueueReadBuffer(bufferDest, true, 0, output, null, out _);
+            Assert.AreEqual((uint)2, output[1]);
+            bufferSrc.ReleaseMemoryObject();
+            bufferDest.ReleaseMemoryObject();
+        }
+
+        [TestMethod]
+        public void EnqueueCopyBufferRect()
+        {
+            // Create buffer with data values
+            var bufferSrc = context.CreateBuffer(MemoryFlags.ReadWrite | MemoryFlags.CopyHostPtr, new uint[] { 1, 2, 3 }, out _);
+            var bufferDest = context.CreateBuffer(MemoryFlags.ReadWrite | MemoryFlags.CopyHostPtr, new uint[3], out _);
+
+            var resultCode = commandQueue.EnqueueCopyBufferRect(bufferSrc, bufferDest, new nuint[] { 0, 0, 0 }, new nuint[] { 0, 0, 0 },
+                new nuint[] { 3 * sizeof(uint), 1, 1 }, 0, 0, 0, 0, null, out _);
+            Assert.AreEqual(CLResultCode.Success, resultCode);
+
+            // Read buffer
+            var output = new uint[3];
+            commandQueue.EnqueueReadBuffer(bufferDest, true, 0, output, null, out _);
+            Assert.AreEqual((uint)2, output[1]);
+            bufferSrc.ReleaseMemoryObject();
+            bufferDest.ReleaseMemoryObject();
         }
     }
 }

@@ -18,7 +18,7 @@ namespace OpenTK.Compute.Tests
         }
 
         [TestMethod]
-        public void GetDeviceIDs()
+        public void GetDeviceIds()
         {
             var resultCode = platform.GetDeviceIds(DeviceType.All, out CLDevice[] deviceIds);
 

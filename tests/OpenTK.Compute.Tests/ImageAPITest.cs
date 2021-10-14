@@ -21,8 +21,7 @@ namespace OpenTK.Compute.Tests
             var platform = platformIds[0];
             platform.GetDeviceIds(DeviceType.Default, out CLDevice[] devices);
             device = devices[0];
-            var properties = new CLContextProperties(platform, false);
-            context = properties.CreateContext(new[] { device }, null, IntPtr.Zero, out _);
+            context = new CLContextProperties(platform, false).CreateContext(new[] { device }, null, IntPtr.Zero, out _);
             commandQueue = context.CreateCommandQueueWithProperties(device, new CLCommandQueueProperties(), out _);
         }
 
@@ -236,14 +235,21 @@ namespace OpenTK.Compute.Tests
         [TestMethod]
         public void EnqueueFillImage()
         {
+            // Create Image
             CLImageFormat imageFormat = new CLImageFormat(ChannelOrder.Depth, ChannelType.Float);
             CLImageDescription imageDesc = CLImageDescription.Create1D(3);
             var image = context.CreateImage(MemoryFlags.ReadWrite | MemoryFlags.CopyHostPtr, ref imageFormat, ref imageDesc, new float[3], out _);
+
+            // Read initial image state
             var output = new float[3];
             commandQueue.EnqueueReadImage(image, true, new nuint[] { 0, 0, 0 }, new nuint[] { 3, 1, 1 }, 0, 0, output, null, out _);
             Assert.AreNotEqual((float)1, output[1]);
+
+            // Fill Image
             var resultCode = commandQueue.EnqueueFillImage(image, new float[] { 1 }, new nuint[] { 0, 0, 0 }, new nuint[] { 3, 1, 1 }, null, out _);
             Assert.AreEqual(CLResultCode.Success, resultCode);
+
+            // Read resultant image state
             commandQueue.EnqueueReadImage(image, true, new nuint[] { 0, 0, 0 }, new nuint[] { 3, 1, 1 }, 0, 0, output, null, out _);
             Assert.AreEqual((float)1, output[1]);
             image.ReleaseMemoryObject();
@@ -328,8 +334,7 @@ namespace OpenTK.Compute.Tests
             // Create image with data values
             CLImageFormat imageFormat = new CLImageFormat(ChannelOrder.R, ChannelType.UnsignedInteger32);
             CLImageDescription imageDesc = CLImageDescription.Create1D(3);
-            var data = new uint[] { 1, 2, 3 };
-            var image = context.CreateImage(MemoryFlags.ReadWrite | MemoryFlags.CopyHostPtr, ref imageFormat, ref imageDesc, data, out _);
+            var image = context.CreateImage(MemoryFlags.ReadWrite | MemoryFlags.CopyHostPtr, ref imageFormat, ref imageDesc, new uint[] { 1, 2, 3 }, out _);
 
             // Map an area of the image to host memory
             var map = commandQueue.EnqueueMapImage(image, true, MapFlags.Write, new nuint[] { 0, 0, 0 }, new nuint[] { 3, 1, 1 }, 0, 0, null, out _, out _);

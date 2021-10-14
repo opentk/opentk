@@ -94,6 +94,14 @@ namespace OpenTK.Compute.OpenCL
             return resultCode;
         }
 
+        /// <summary>
+        /// Introduced in OpenCL 1.2
+        /// </summary>
+        [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clGetExtensionFunctionAddressForPlatform")]
+        public static extern IntPtr GetExtensionFunctionAddressForPlatform(
+            [In] this CLPlatform platform,
+            [In] string functionName);
+
         #endregion
 
         #region Device API
@@ -187,15 +195,6 @@ namespace OpenTK.Compute.OpenCL
         /// </summary>
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clReleaseDevice")]
         public static extern CLResultCode ReleaseDevice([In] this CLDevice device);
-
-        /// <summary>
-        /// Introduced in OpenCL 2.1
-        /// </summary>
-        [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clSetDefaultDeviceCommandQueue")]
-        public static extern CLResultCode SetDefaultDeviceCommandQueue(
-            [In] this CLContext context,
-            [In] CLDevice device,
-            [In] CLCommandQueue commandQueue);
 
         /// <summary>
         /// Introduced in OpenCL 2.1
@@ -394,6 +393,15 @@ namespace OpenTK.Compute.OpenCL
         }
 
         /// <summary>
+        /// Introduced in OpenCL 2.1
+        /// </summary>
+        [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clSetDefaultDeviceCommandQueue")]
+        public static extern CLResultCode SetDefaultDeviceCommandQueue(
+            [In] this CLContext context,
+            [In] CLDevice device,
+            [In] CLCommandQueue commandQueue);
+
+        /// <summary>
         /// Introduced in OpenCL 1.0
         /// </summary>
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clFlush")]
@@ -431,7 +439,7 @@ namespace OpenTK.Compute.OpenCL
         {
             fixed (T* b = array)
             {
-                return CreateBuffer(context, flags, (nuint)(sizeof(T) * array.Length), (IntPtr)b, out resultCode);
+                return CreateBuffer(context, flags, (nuint)(array.Length * sizeof(T)), (IntPtr)b, out resultCode);
             }
         }
 
@@ -446,7 +454,7 @@ namespace OpenTK.Compute.OpenCL
         {
             fixed (T* b = span)
             {
-                return CreateBuffer(context, flags, (nuint)(sizeof(T) * span.Length), (IntPtr)b, out resultCode);
+                return CreateBuffer(context, flags, (nuint)(span.Length * sizeof(T)), (IntPtr)b, out resultCode);
             }
         }
 
@@ -486,7 +494,7 @@ namespace OpenTK.Compute.OpenCL
         {
             fixed (T* b = array)
             {
-                return CreateBufferWithProperties(context, properties.CreatePropertyArray(), flags, (nuint)(sizeof(T) * array.Length), (IntPtr)b,
+                return CreateBufferWithProperties(context, properties.CreatePropertyArray(), flags, (nuint)(array.Length * sizeof(T)), (IntPtr)b,
                     out errorCode);
             }
         }
@@ -504,7 +512,7 @@ namespace OpenTK.Compute.OpenCL
         {
             fixed (T* b = span)
             {
-                return CreateBufferWithProperties(context, properties.CreatePropertyArray(), flags, (nuint)(sizeof(T) * span.Length), (IntPtr)b,
+                return CreateBufferWithProperties(context, properties.CreatePropertyArray(), flags, (nuint)(span.Length * sizeof(T)), (IntPtr)b,
                     out errorCode);
             }
         }
@@ -570,6 +578,40 @@ namespace OpenTK.Compute.OpenCL
         /// <summary>
         /// Introduced in OpenCL 1.0
         /// </summary>
+        [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clEnqueueMapBuffer")]
+        public static extern IntPtr EnqueueMapBuffer(
+            [In] this CLCommandQueue commandQueue,
+            [In] CLBuffer buffer,
+            [In] bool blockingMap,
+            [In] MapFlags flags,
+            [In] nuint offset,
+            [In] nuint size,
+            [In] uint numberOfEventsInWaitList,
+            [In] CLEvent[] eventWaitList,
+            [Out] out CLEvent @event,
+            [Out] out CLResultCode resultCode);
+
+        /// <summary>
+        /// Introduced in OpenCL 1.0
+        /// </summary>
+        public static IntPtr EnqueueMapBuffer(
+            this CLCommandQueue commandQueue,
+            CLBuffer buffer,
+            bool blockingMap,
+            MapFlags flags,
+            nuint offset,
+            nuint size,
+            CLEvent[] eventWaitList,
+            out CLEvent @event,
+            out CLResultCode resultCode)
+        {
+            return EnqueueMapBuffer(commandQueue, buffer, blockingMap, flags, offset, size,
+                (uint)(eventWaitList?.Length ?? 0), eventWaitList, out @event, out resultCode);
+        }
+
+        /// <summary>
+        /// Introduced in OpenCL 1.0
+        /// </summary>
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clEnqueueUnmapMemObject")]
         public static extern CLResultCode EnqueueUnmapMemoryObject(
             [In] this CLCommandQueue commandQueue,
@@ -624,9 +666,8 @@ namespace OpenTK.Compute.OpenCL
             fixed (T* b = array)
             {
                 return EnqueueReadBuffer(commandQueue, buffer, blockingRead, offset,
-                    (nuint)(array.Length * sizeof(float)), (IntPtr)b, (uint)(eventWaitList?.Length ?? 0),
-                    eventWaitList,
-                    out eventHandle);
+                                         (nuint)(array.Length * sizeof(T)), (IntPtr)b,
+                                         (uint)(eventWaitList?.Length ?? 0), eventWaitList, out eventHandle);
             }
         }
 
@@ -645,10 +686,9 @@ namespace OpenTK.Compute.OpenCL
         {
             fixed (T* b = span)
             {
-                CLResultCode resultCode = EnqueueReadBuffer(commandQueue, buffer, blockingRead, offset,
+                return EnqueueReadBuffer(commandQueue, buffer, blockingRead, offset,
                     (nuint)(span.Length * sizeof(T)), (IntPtr)b, (uint)(eventWaitList?.Length ?? 0),
                     eventWaitList, out eventHandle);
-                return resultCode;
             }
         }
 
@@ -693,11 +733,9 @@ namespace OpenTK.Compute.OpenCL
         {
             fixed (T* a = array)
             {
-                return EnqueueReadBufferRect(commandQueue, buffer, blockingRead, bufferOffset,
-                    hostOffset, region,
-                    bufferRowPitch, bufferSlicePitch, hostRowPitch, hostSlicePitch, (IntPtr)a,
-                    (uint)(eventWaitList?.Length ?? 0),
-                    eventWaitList, out @event);
+                return EnqueueReadBufferRect(commandQueue, buffer, blockingRead, bufferOffset, hostOffset, region,
+                                             bufferRowPitch, bufferSlicePitch, hostRowPitch, hostSlicePitch, (IntPtr)a,
+                                             (uint)(eventWaitList?.Length ?? 0), eventWaitList, out @event);
             }
         }
 
@@ -759,11 +797,9 @@ namespace OpenTK.Compute.OpenCL
         {
             fixed (T* a = array)
             {
-                CLResultCode resultCode = EnqueueWriteBuffer(commandQueue, buffer, blockingWrite, offset,
-                    (uint)(array.Length * sizeof(T)), (IntPtr)a, (uint)(eventWaitList?.Length ?? 0),
+                return EnqueueWriteBuffer(commandQueue, buffer, blockingWrite, offset,
+                    (nuint)(array.Length * sizeof(T)), (IntPtr)a, (uint)(eventWaitList?.Length ?? 0),
                     eventWaitList, out @event);
-
-                return resultCode;
             }
         }
 
@@ -782,11 +818,9 @@ namespace OpenTK.Compute.OpenCL
         {
             fixed (T* a = span)
             {
-                CLResultCode resultCode = EnqueueWriteBuffer(commandQueue, buffer, blockingWrite, offset,
-                    (uint)(span.Length * sizeof(T)), (IntPtr)a, (uint)(eventWaitList?.Length ?? 0),
+                return EnqueueWriteBuffer(commandQueue, buffer, blockingWrite, offset,
+                    (nuint)(span.Length * sizeof(T)), (IntPtr)a, (uint)(eventWaitList?.Length ?? 0),
                     eventWaitList, out @event);
-
-                return resultCode;
             }
         }
 
@@ -903,6 +937,27 @@ namespace OpenTK.Compute.OpenCL
             }
         }
 
+
+        /// <summary>
+        /// Introduced in OpenCL 1.2
+        /// </summary>
+        public static unsafe CLResultCode EnqueueFillBuffer<T>(
+            this CLCommandQueue commandQueue,
+            CLBuffer buffer,
+            Span<T> pattern,
+            nuint offset,
+            nuint size,
+            CLEvent[] eventWaitList,
+            out CLEvent @event)
+            where T : unmanaged
+        {
+            fixed (T* p = pattern)
+            {
+                return EnqueueFillBuffer(commandQueue, buffer, (IntPtr)p, (nuint)(pattern.Length * sizeof(T)), offset,
+                    size, (uint)(eventWaitList?.Length ?? 0), eventWaitList, out @event);
+            }
+        }
+
         /// <summary>
         /// Introduced in OpenCL 1.0
         /// </summary>
@@ -927,12 +982,12 @@ namespace OpenTK.Compute.OpenCL
             CLBuffer dstBuffer,
             nuint srcOffset,
             nuint dstOffset,
-            nuint sizeReturned,
+            nuint size,
             CLEvent[] eventWaitList,
             out CLEvent @event)
         {
             return EnqueueCopyBuffer(commandQueue, srcBuffer, dstBuffer, srcOffset, dstOffset,
-                sizeReturned, (uint)(eventWaitList?.Length ?? 0), eventWaitList, out @event);
+                size, (uint)(eventWaitList?.Length ?? 0), eventWaitList, out @event);
         }
 
         /// <summary>
@@ -973,40 +1028,6 @@ namespace OpenTK.Compute.OpenCL
         {
             return EnqueueCopyBufferRect(commandQueue, srcBuffer, dstBuffer, srcOrigin, dstOrigin, region, srcRowPitch,
                 srcSlicePitch, dstRowPitch, dstSlicePitch, (uint)(eventWaitList?.Length ?? 0), eventWaitList, out @event);
-        }
-
-        /// <summary>
-        /// Introduced in OpenCL 1.0
-        /// </summary>
-        [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clEnqueueMapBuffer")]
-        public static extern IntPtr EnqueueMapBuffer(
-            [In] this CLCommandQueue commandQueue,
-            [In] CLBuffer buffer,
-            [In] bool blockingMap,
-            [In] MapFlags flags,
-            [In] nuint offset,
-            [In] nuint size,
-            [In] uint numberOfEventsInWaitList,
-            [In] CLEvent[] eventWaitList,
-            [Out] out CLEvent @event,
-            [Out] out CLResultCode resultCode);
-
-        /// <summary>
-        /// Introduced in OpenCL 1.0
-        /// </summary>
-        public static IntPtr EnqueueMapBuffer(
-            this CLCommandQueue commandQueue,
-            CLBuffer buffer,
-            bool blockingMap,
-            MapFlags flags,
-            nuint offset,
-            nuint size,
-            CLEvent[] eventWaitList,
-            out CLEvent @event,
-            out CLResultCode resultCode)
-        {
-            return EnqueueMapBuffer(commandQueue, buffer, blockingMap, flags, offset, size,
-                (uint)(eventWaitList?.Length ?? 0), eventWaitList, out @event, out resultCode);
         }
 
         #endregion
@@ -2032,7 +2053,7 @@ namespace OpenTK.Compute.OpenCL
         {
             fixed (T* p = pattern)
             {
-                return EnqueueSvmMemoryFill(commandQueue, svmPointer, (IntPtr)p, (uint)(pattern.Length * sizeof(T)),
+                return EnqueueSvmMemoryFill(commandQueue, svmPointer, (IntPtr)p, (nuint)(pattern.Length * sizeof(T)),
                     size, (uint)(eventWaitList?.Length ?? 0), eventWaitList, out @event);
             }
         }
@@ -2646,7 +2667,7 @@ namespace OpenTK.Compute.OpenCL
 
         /// <summary>
         /// Introduced in OpenCL 2.1
-        /// </summary>
+        /// </summary>s
         public static unsafe CLResultCode GetKernelSubGroupInfo<T>(
             this CLKernel kernel,
             CLDevice device,
@@ -2657,11 +2678,11 @@ namespace OpenTK.Compute.OpenCL
         {
             fixed (T* b = array)
             {
-                var resultCode = GetKernelSubGroupInfo(kernel, device, paramName, (uint)(array.Length * sizeof(float)), (IntPtr)b, 0, null, out nuint sizeReturned);
+                var resultCode = GetKernelSubGroupInfo(kernel, device, paramName, (uint)(array.Length * sizeof(T)), (IntPtr)b, 0, null, out nuint sizeReturned);
                 paramValue = new byte[sizeReturned];
                 if (sizeReturned == 0)
                     return resultCode;
-                return GetKernelSubGroupInfo(kernel, device, paramName, (uint)(array.Length * sizeof(float)), (IntPtr)b, sizeReturned, paramValue, out _);
+                return GetKernelSubGroupInfo(kernel, device, paramName, (uint)(array.Length * sizeof(T)), (IntPtr)b, sizeReturned, paramValue, out _);
             }
         }
 
@@ -2678,11 +2699,11 @@ namespace OpenTK.Compute.OpenCL
         {
             fixed (T* b = span)
             {
-                var resultCode = GetKernelSubGroupInfo(kernel, device, paramName, (uint)(span.Length * sizeof(float)), (IntPtr)b, 0, null, out nuint sizeReturned);
+                var resultCode = GetKernelSubGroupInfo(kernel, device, paramName, (uint)(span.Length * sizeof(T)), (IntPtr)b, 0, null, out nuint sizeReturned);
                 paramValue = new byte[sizeReturned];
                 if (sizeReturned == 0)
                     return resultCode;
-                return GetKernelSubGroupInfo(kernel, device, paramName, (uint)(span.Length * sizeof(float)), (IntPtr)b, sizeReturned, paramValue, out _);
+                return GetKernelSubGroupInfo(kernel, device, paramName, (uint)(span.Length * sizeof(T)), (IntPtr)b, sizeReturned, paramValue, out _);
             }
         }
 
@@ -2877,22 +2898,6 @@ namespace OpenTK.Compute.OpenCL
                 return resultCode;
             return GetEventProfilingInfo(@event, paramName, sizeReturned, paramValue, out _);
         }
-
-        #endregion
-
-        #region Flush and Finish API
-
-        #endregion
-
-        #region Extension function access
-
-        /// <summary>
-        /// Introduced in OpenCL 1.2
-        /// </summary>
-        [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clGetExtensionFunctionAddressForPlatform")]
-        public static extern IntPtr GetExtensionFunctionAddressForPlatform(
-            [In] this CLPlatform platform,
-            [In] string functionName);
 
         #endregion
 
