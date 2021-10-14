@@ -64,6 +64,20 @@ namespace OpenTK.Platform.X11
         [DllImport("libX11", EntryPoint = "XSynchronize")]
         public extern static IntPtr XSynchronize(IntPtr display, bool onoff);
 
+        /// <summary>Creates an unmapped sub-window for the specified parent window, and causes the XServer to generate a CreateNotify event</summary>
+        /// <param name="display">The display connection to the XServer</param>
+        /// <param name="parent">The parent window</param>
+        /// <param name="x">X co-ordinate of the top-left of the window, relative to the parent window</param>
+        /// <param name="y">Y co-ordinate of the top-left of the window, relative to the parent window</param>
+        /// <param name="width">Width of the window</param>
+        /// <param name="height">Height of the window</param>
+        /// <param name="border_width">Width of the window's border</param>
+        /// <param name="depth">The window's depth</param>
+        /// <param name="xclass">The window's class</param>
+        /// <param name="visual">The visual type</param>
+        /// <param name="valuemask">Specifies which window attributs are defined in the attributes argument</param>
+        /// <param name="attributes">The window's attributes</param>
+        /// <returns></returns>
         [DllImport("libX11", EntryPoint = "XCreateWindow")]
         public unsafe extern static IntPtr XCreateWindow(IntPtr display, IntPtr parent, int x, int y, int width, int height, int border_width, int depth, int xclass, IntPtr visual, IntPtr valuemask, XSetWindowAttributes* attributes);
 
@@ -72,14 +86,25 @@ namespace OpenTK.Platform.X11
         [DllImport("libX11", EntryPoint = "XCreateSimpleWindow")]
         public extern static IntPtr XCreateSimpleWindow(IntPtr display, IntPtr parent, int x, int y, int width, int height, int border_width, IntPtr border, IntPtr background);
 
+        /// <summary>Maps the specified window and all sub-windows which have map requests</summary>
+        /// <param name="display">The display connection to the XServer</param>
+        /// <param name="window">The window to map</param>
         [DllImport("libX11", EntryPoint = "XMapWindow")]
         public extern static int XMapWindow(IntPtr display, IntPtr window);
+        
+        /// <summary>Unmaps the specified window, and causes the XServer to generate an UnmapNotify event</summary>
+        /// <param name="display">The display connection to the XServer</param>
+        /// <param name="window">The window to unmap</param>
         [DllImport("libX11", EntryPoint = "XUnmapWindow")]
         public extern static int XUnmapWindow(IntPtr display, IntPtr window);
         [DllImport("libX11", EntryPoint = "XMapSubwindows")]
         public extern static int XMapSubindows(IntPtr display, IntPtr window);
         [DllImport("libX11", EntryPoint = "XUnmapSubwindows")]
         public extern static int XUnmapSubwindows(IntPtr display, IntPtr window);
+
+        /// <summary>Returns the root window for the specified screen</summary>
+        /// <param name="display">The display connection to the XServer</param>
+        /// <param name="screen_number">The screen number</param>
         [DllImport("libX11", EntryPoint = "XRootWindow")]
         public extern static IntPtr XRootWindow(IntPtr display, int screen_number);
 
@@ -110,6 +135,9 @@ namespace OpenTK.Platform.X11
         [DllImport("libX11", EntryPoint = "XSelectInput")]
         public extern static int XSelectInput(IntPtr display, IntPtr window, IntPtr mask);
 
+        /// <summary>Destroys the specified window and all sub-windows, and causes the XServer to generate a DestroyNotify event</summary>
+        /// <param name="display">The display connection to the XServer</param>
+        /// <param name="window">The window to destroy</param>
         [DllImport("libX11", EntryPoint = "XDestroyWindow")]
         public extern static int XDestroyWindow(IntPtr display, IntPtr window);
 
@@ -128,21 +156,45 @@ namespace OpenTK.Platform.X11
         [DllImport("libX11", EntryPoint = "XGetWindowAttributes")]
         public extern static int XGetWindowAttributes(IntPtr display, IntPtr window, ref XWindowAttributes attributes);
 
+        /// <summary>Flushes the output buffer</summary>
+        /// <param name="display">The display connection to the XServer</param>
         [DllImport("libX11", EntryPoint = "XFlush")]
         public extern static int XFlush(IntPtr display);
 
         [DllImport("libX11", EntryPoint = "XSetWMName")]
         public extern static int XSetWMName(IntPtr display, IntPtr window, ref XTextProperty text_prop);
 
+        /// <summary>Sets the window name for the specified window</summary>
+        /// <param name="display">The display connection to the XServer</param>
+        /// <param name="window">The window</param>
+        /// <param name="window_name">The window name</param>
+        ///<remarks>This function does not support Unicode window names</remarks>
         [DllImport("libX11", EntryPoint = "XStoreName")]
         public extern static int XStoreName(IntPtr display, IntPtr window, string window_name);
 
+        /// <summary>Gets the window name for the specified window</summary>
+        /// <param name="display">The display connection to the XServer</param>
+        /// <param name="window">The window</param>
+        /// <param name="window_name">The window name</param>
+        ///<remarks>This function does not support Unicode window names</remarks>
         [DllImport("libX11", EntryPoint = "XFetchName")]
         public extern static int XFetchName(IntPtr display, IntPtr window, ref IntPtr window_name);
 
+        /// <summary>Sends an XEvent to a window</summary>
+        /// <param name="display">The display connection to the XServer</param>
+        /// <param name="window">The window to recieve the event</param>
+        /// <param name="propagate">Whether the event should propagate to clients</param>
+        /// <param name="event_mask">Event mask, used for propagation on clients</param>
+        /// <param name="send_event">The event to be sent</param>
         [DllImport("libX11", EntryPoint = "XSendEvent")]
         public extern static int XSendEvent(IntPtr display, IntPtr window, bool propagate, IntPtr event_mask, ref XEvent send_event);
 
+        /// <summary>Sends an XEvent to a window</summary>
+        /// <param name="display">The display connection to the XServer</param>
+        /// <param name="window">The window to recieve the event</param>
+        /// <param name="propagate">Whether the event should propagate to clients</param>
+        /// <param name="event_mask">Event mask, used for propagation on clients</param>
+        /// <param name="send_event">The event to be sent</param>
         public static int XSendEvent(IntPtr display, IntPtr window, bool propagate, EventMask event_mask, ref XEvent send_event)
         {
             return XSendEvent(display, window, propagate, new IntPtr((int)event_mask), ref send_event);
@@ -177,12 +229,20 @@ namespace OpenTK.Platform.X11
         [DllImport("libX11", EntryPoint = "XConfigureWindow")]
         public extern static uint XConfigureWindow(IntPtr display, IntPtr window, ChangeWindowAttributes value_mask, ref XWindowChanges values);
 
+        /// <summary>Gets an X atom</summary>
+        /// <param name="display">The display connection to the XServer</param>
+        /// <param name="atom_name">The atom name</param>
+        /// <param name="only_if_exists">If FALSE, the atom will be created if it does not exist</param>
         [DllImport("libX11", EntryPoint = "XInternAtom")]
         public extern static IntPtr XInternAtom(IntPtr display, string atom_name, bool only_if_exists);
 
         [DllImport("libX11", EntryPoint = "XInternAtoms")]
         public extern static int XInternAtoms(IntPtr display, string[] atom_names, int atom_count, bool only_if_exists, IntPtr[] atoms);
 
+        /// <summary>Gets the name associated with the specified atom</summary>
+        /// <param name="display">The display connection to the XServer</param>
+        /// <param name="atom">The atom</param>
+        /// <returns>A pointer to the string containing the atom name</returns>
         [DllImport("libX11", EntryPoint = "XGetAtomName")]
         public extern static IntPtr XGetAtomName(IntPtr display, IntPtr atom);
 
@@ -209,8 +269,20 @@ namespace OpenTK.Platform.X11
         [DllImport("libX11", EntryPoint = "XQueryPointer")]
         public extern static bool XQueryPointer(IntPtr display, IntPtr window, out IntPtr root, out IntPtr child, out int root_x, out int root_y, out int win_x, out int win_y, out int keys_buttons);
 
+        /// <summary>If TRUE, it takes the src_x and src_y coordinates relative to the source window's origin and returns these coordinates to dest_x_return and dest_y_return relative to the destination window's origin.
+        /// If FALSE, src_w and dest_w are on different screens, and dest_x_return and dest_y_return are zero.
+        /// If the coordinates are contained in a mapped child of dest_w, that child is returned to child_return.
+        /// Otherwise, child_return is set to None.</summary>
+        /// <param name="display">The display connection to the XServer</param>
+        /// <param name="src_w">The source window</param>
+        /// <param name="dest_w">The destination window</param>
+        /// <param name="src_x">X-coordinate within the source window</param>
+        /// <param name="src_y">Y-coordinate within the source window</param>
+        /// <param name="dest_x_return">X-coordinate within the destination window</param>
+        /// <param name="dest_y_return">Y-coordinate within the destination window</param>
+        /// <param name="child_return">The child window, if coordinates are within a mapped child of the destination window</param>
         [DllImport("libX11", EntryPoint = "XTranslateCoordinates")]
-        public extern static bool XTranslateCoordinates(IntPtr display, IntPtr src_w, IntPtr dest_w, int src_x, int src_y, out int intdest_x_return, out int dest_y_return, out IntPtr child_return);
+        public extern static bool XTranslateCoordinates(IntPtr display, IntPtr src_w, IntPtr dest_w, int src_x, int src_y, out int dest_x_return, out int dest_y_return, out IntPtr child_return);
 
 
         [DllImport("libX11")]
@@ -368,6 +440,9 @@ namespace OpenTK.Platform.X11
         [DllImport("libX11", EntryPoint = "XUndefineCursor")]
         public extern static int XUndefineCursor(IntPtr display, IntPtr window);
 
+        /// <summary>Deletes the specified cursor</summary>
+        /// <param name="display">The display connection to the XServer</param>
+        /// <param name="cursor">Pointer to the cursor to delete</param>
         [DllImport("libX11", EntryPoint = "XFreeCursor")]
         public extern static int XFreeCursor(IntPtr display, IntPtr cursor);
 
