@@ -17,9 +17,9 @@ namespace OpenTK.Compute.Tests
         [TestInitialize()]
         public void Starup()
         {
-            CL.GetPlatformIds(out CLPlatform[] platformIds);
+            CL.GetPlatformIDs(out CLPlatform[] platformIds);
             var platform = platformIds[0];
-            platform.GetDeviceIds(DeviceType.Default, out CLDevice[] devices);
+            platform.GetDeviceIDs(DeviceType.Default, out CLDevice[] devices);
             device = devices[0];
             context = new CLContextProperties(platform, false).CreateContext(new[] { device }, null, IntPtr.Zero, out _);
             commandQueue = context.CreateCommandQueueWithProperties(device, new CLCommandQueueProperties(), out _);

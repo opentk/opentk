@@ -11,7 +11,7 @@ namespace OpenTK.Compute.Tests
         [TestMethod]
         public void GetPlatformIds()
         {
-            var resultCode = CL.GetPlatformIds(out CLPlatform[] platformIds);
+            var resultCode = CL.GetPlatformIDs(out CLPlatform[] platformIds);
 
             Assert.AreEqual(CLResultCode.Success, resultCode);
             Assert.IsTrue(platformIds.Length > 0);
@@ -29,7 +29,7 @@ namespace OpenTK.Compute.Tests
         [DataRow(PlatformInfo.PlatformIcdSuffix)]
         public void GetPlatformInfo(PlatformInfo paramName)
         {
-            CL.GetPlatformIds(out CLPlatform[] platformIds);
+            CL.GetPlatformIDs(out CLPlatform[] platformIds);
 
             foreach(var platform in platformIds){
                 var resultCode = CL.GetPlatformInfo(platform, paramName, out byte[] paramValue);
@@ -42,7 +42,7 @@ namespace OpenTK.Compute.Tests
         [TestMethod]
         public void SupportsPlatformExtension()
         {
-            CL.GetPlatformIds(out CLPlatform[] platformIds);
+            CL.GetPlatformIDs(out CLPlatform[] platformIds);
             foreach (var platform in platformIds)
             {
                 CL.GetPlatformInfo(platform, PlatformInfo.Extensions, out byte[] bytes);
@@ -59,7 +59,7 @@ namespace OpenTK.Compute.Tests
         [TestMethod]
         public void GetExtensionFunctionAddressForPlatform()
         {
-            CL.GetPlatformIds(out CLPlatform[] platformIds);
+            CL.GetPlatformIDs(out CLPlatform[] platformIds);
             foreach (var platform in platformIds)
             {
                 CL.GetPlatformInfo(platform, PlatformInfo.Extensions, out byte[] bytes);

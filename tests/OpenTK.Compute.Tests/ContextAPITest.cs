@@ -12,7 +12,7 @@ namespace OpenTK.Compute.Tests
 
         [TestInitialize()]
         public void Starup(){
-            CL.GetPlatformIds(out CLPlatform[] platformIds);
+            CL.GetPlatformIDs(out CLPlatform[] platformIds);
             platform = platformIds[0];
         }
 
@@ -20,7 +20,7 @@ namespace OpenTK.Compute.Tests
         public void CreateContext()
         {
             var properties = new CLContextProperties(platform, false);
-            platform.GetDeviceIds(DeviceType.All, out CLDevice[] devices);
+            platform.GetDeviceIDs(DeviceType.All, out CLDevice[] devices);
             var context = properties.CreateContext(devices, null, IntPtr.Zero, out CLResultCode resultCode);
             context.ReleaseContext();
             Assert.AreEqual(CLResultCode.Success, resultCode);

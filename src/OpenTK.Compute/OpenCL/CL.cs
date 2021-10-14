@@ -30,7 +30,7 @@ namespace OpenTK.Compute.OpenCL
         /// -InvalidValue if numberOfEntries is equal to zero and platforms is not NULL or if both numberOfPlatforms and platforms are NULL.
         /// -OutOfHostMemory if there is a failure to allocate resources required by the OpenCL implementation on the host.</returns>
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clGetPlatformIDs")]
-        public static extern CLResultCode GetPlatformIds(
+        public static extern CLResultCode GetPlatformIDs(
             [In] uint numberOfEntries,
             [Out] CLPlatform[] platforms,
             [Out] out uint numberOfPlatforms);
@@ -42,13 +42,13 @@ namespace OpenTK.Compute.OpenCL
         /// <returns>returns Success if the function is executed successfully. Otherwise, it returns one of the following errors:
         /// -InvalidValue if numberOfEntries is equal to zero and platforms is not NULL or if both numberOfPlatforms and platforms are NULL.
         /// -OutOfHostMemory if there is a failure to allocate resources required by the OpenCL implementation on the host.</returns>
-        public static CLResultCode GetPlatformIds(out CLPlatform[] platformIds)
+        public static CLResultCode GetPlatformIDs(out CLPlatform[] platformIds)
         {
-            var resultCode = GetPlatformIds(0, null, out uint sizeReturned);
+            var resultCode = GetPlatformIDs(0, null, out uint sizeReturned);
             platformIds = new CLPlatform[sizeReturned];
             if (sizeReturned == 0)
                 return resultCode;
-            return GetPlatformIds(sizeReturned, platformIds, out _);
+            return GetPlatformIDs(sizeReturned, platformIds, out _);
         }
 
         /// <summary>
@@ -110,7 +110,7 @@ namespace OpenTK.Compute.OpenCL
         /// Introduced in OpenCL 1.0
         /// </summary>
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clGetDeviceIDs")]
-        public static extern CLResultCode GetDeviceIds(
+        public static extern CLResultCode GetDeviceIDs(
             [In] this CLPlatform platform,
             [In] DeviceType deviceType,
             [In] uint numberOfEntries,
@@ -120,16 +120,16 @@ namespace OpenTK.Compute.OpenCL
         /// <summary>
         /// Introduced in OpenCL 1.0
         /// </summary>
-        public static CLResultCode GetDeviceIds(
+        public static CLResultCode GetDeviceIDs(
             this CLPlatform platform,
             DeviceType deviceType,
             out CLDevice[] deviceIds)
         {
-            var resultCode = GetDeviceIds(platform, deviceType, 0, null, out uint sizeReturned);
+            var resultCode = GetDeviceIDs(platform, deviceType, 0, null, out uint sizeReturned);
             deviceIds = new CLDevice[sizeReturned];
             if (sizeReturned == 0)
                 return resultCode;
-            return GetDeviceIds(platform, deviceType, sizeReturned, deviceIds, out _);
+            return GetDeviceIDs(platform, deviceType, sizeReturned, deviceIds, out _);
         }
 
         /// <summary>

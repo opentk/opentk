@@ -13,14 +13,14 @@ namespace OpenTK.Compute.Tests
 
         [TestInitialize()]
         public void Starup(){
-            CL.GetPlatformIds(out CLPlatform[] platformIds);
+            CL.GetPlatformIDs(out CLPlatform[] platformIds);
             platform = platformIds[0];
         }
 
         [TestMethod]
         public void GetDeviceIds()
         {
-            var resultCode = platform.GetDeviceIds(DeviceType.All, out CLDevice[] deviceIds);
+            var resultCode = platform.GetDeviceIDs(DeviceType.All, out CLDevice[] deviceIds);
 
             Assert.AreEqual(CLResultCode.Success, resultCode);
             Assert.IsTrue(deviceIds.Length > 0);
@@ -33,7 +33,7 @@ namespace OpenTK.Compute.Tests
         [DataRow(DeviceType.Gpu)]
         public void GetDeviceIds_DistinctType(DeviceType paramName)
         {
-            var resultCode = platform.GetDeviceIds(paramName, out _);
+            var resultCode = platform.GetDeviceIDs(paramName, out _);
 
             Assert.IsTrue(new []{CLResultCode.Success, CLResultCode.DeviceNotFound}.Contains(resultCode));
         }
@@ -150,7 +150,7 @@ namespace OpenTK.Compute.Tests
         [DataRow(DeviceInfo.SpirVersion)]
         public void GetDeviceInfo(DeviceInfo paramName)
         {
-            platform.GetDeviceIds(DeviceType.All, out CLDevice[] deviceIds);
+            platform.GetDeviceIDs(DeviceType.All, out CLDevice[] deviceIds);
 
             foreach (var device in deviceIds)
             {
@@ -163,7 +163,7 @@ namespace OpenTK.Compute.Tests
         [TestMethod]
         public void CreateSubDevices()
         {
-            platform.GetDeviceIds(DeviceType.Cpu, out CLDevice[] deviceIds);
+            platform.GetDeviceIDs(DeviceType.Cpu, out CLDevice[] deviceIds);
             if (deviceIds.Length == 0)
             {
                 Assert.Inconclusive("Sub devices can only be created on CPUs");
@@ -180,7 +180,7 @@ namespace OpenTK.Compute.Tests
         [TestMethod]
         public void RetainDevice()
         {
-            platform.GetDeviceIds(DeviceType.Cpu, out CLDevice[] deviceIds);
+            platform.GetDeviceIDs(DeviceType.Cpu, out CLDevice[] deviceIds);
             if (deviceIds.Length == 0)
             {
                 Assert.Inconclusive("Sub devices can only be created on CPUs. Only Sub devices can be retained");
@@ -202,7 +202,7 @@ namespace OpenTK.Compute.Tests
         [TestMethod]
         public void ReleaseDevice()
         {
-            platform.GetDeviceIds(DeviceType.Cpu, out CLDevice[] deviceIds);
+            platform.GetDeviceIDs(DeviceType.Cpu, out CLDevice[] deviceIds);
             if (deviceIds.Length == 0)
             {
                 Assert.Inconclusive("Sub devices can only be created on CPUs. Only Sub devices can be released");
@@ -221,7 +221,7 @@ namespace OpenTK.Compute.Tests
         [TestMethod]
         public void GetDeviceAndHostTimer()
         {
-            platform.GetDeviceIds(DeviceType.All, out CLDevice[] deviceIds);
+            platform.GetDeviceIDs(DeviceType.All, out CLDevice[] deviceIds);
             var resultCode = deviceIds[0].GetDeviceAndHostTimer(out nuint deviceTimestamp, out nuint hostTimestamp);
             Assert.AreEqual(CLResultCode.Success, resultCode);
             Assert.IsTrue(deviceTimestamp > 0);
@@ -231,7 +231,7 @@ namespace OpenTK.Compute.Tests
         [TestMethod]
         public void GetHostTimer()
         {
-            platform.GetDeviceIds(DeviceType.All, out CLDevice[] deviceIds);
+            platform.GetDeviceIDs(DeviceType.All, out CLDevice[] deviceIds);
             var resultCode = deviceIds[0].GetHostTimer(out nuint hostTimestamp);
             Assert.AreEqual(CLResultCode.Success, resultCode);
             Assert.IsTrue(hostTimestamp > 0);
