@@ -45,7 +45,7 @@ namespace OpenTK.Compute.OpenCL
 
         public CLContextProperties(
             CLPlatform contextPlatform,
-            bool? contextInteropUserSync)
+            bool? contextInteropUserSync = null)
         {
             ContextPlatform = contextPlatform;
             ContextInteropUserSync = contextInteropUserSync;
@@ -100,7 +100,7 @@ namespace OpenTK.Compute.OpenCL
                 propertyList.Add(value);                
             }
 
-            if (ContextPlatform != null) AddProperty(ContextPlatform, ContextProperty.ContextPlatform);
+            if (ContextPlatform.Handle != IntPtr.Zero) AddProperty(ContextPlatform, ContextProperty.ContextPlatform);
             if (ContextInteropUserSync.HasValue) AddProperty((IntPtr)(ContextInteropUserSync.Value?1:0), ContextProperty.ContextInteropUserSync);
             if (GlContextKHR.HasValue) AddProperty(GlContextKHR.Value, ContextProperty.GlContextKHR);
             if (EglDisplayKHR.HasValue) AddProperty(EglDisplayKHR.Value, ContextProperty.EglDisplayKHR);

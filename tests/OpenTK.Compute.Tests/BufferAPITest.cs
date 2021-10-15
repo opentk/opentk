@@ -44,26 +44,29 @@ namespace OpenTK.Compute.Tests
         [TestMethod]
         public void CreateBufferWithProperties()
         {
+            // Create buffer with starting data
             var buffer = context.CreateBufferWithProperties(new CLBufferProperties(), MemoryFlags.UseHostPtr, new uint[] { 1, 2, 3, 4 }, out CLResultCode resultCode);
-
             Assert.AreEqual(CLResultCode.Success, resultCode);
+
+            // Check that buffer size matches starting data
             buffer.GetMemObjectInfo(MemoryObjectInfo.Size, out byte[] bytes);
             Assert.AreEqual(16, BitConverter.ToInt32(bytes));
+
             buffer.ReleaseMemoryObject();
         }
 
         [TestMethod]
         public void CreateSubBuffer()
         {
-            // create buffer
+            // Create buffer
             var buffer = context.CreateBuffer(MemoryFlags.UseHostPtr, new uint[] { 1, 2, 3, 4 }, out _);
 
-            // create sub
+            // Create sub
             var bufferRegion = new CLBufferRegion(0, 4);
             var subBuffer = buffer.CreateSubBuffer(MemoryFlags.ReadWrite, BufferCreateType.Region, ref bufferRegion, out CLResultCode resultCode);
             Assert.AreEqual(CLResultCode.Success, resultCode);
 
-            // check size to ensure it has been created properly
+            // Check size to ensure it has been created properly
             subBuffer.GetMemObjectInfo(MemoryObjectInfo.Size, out byte[] bytes);
             Assert.AreEqual(4, BitConverter.ToInt32(bytes));
 
@@ -74,13 +77,19 @@ namespace OpenTK.Compute.Tests
         [TestMethod]
         public void RetainMemoryObject()
         {
+            // Create buffer
             var buffer = context.CreateBuffer(MemoryFlags.UseHostPtr, new uint[] { 1, 2, 3, 4 }, out _);
 
+            // Increment memobj reference count
             CLResultCode resultCode = buffer.RetainMemoryObject();
             Assert.AreEqual(CLResultCode.Success, resultCode);
+
+            // Verify that memobj ref count can be decremented twice
             buffer.ReleaseMemoryObject();
             resultCode = buffer.ReleaseMemoryObject();
             Assert.AreEqual(CLResultCode.Success, resultCode);
+
+            // Verify that memobj ref count can't be decremented a third time
             resultCode = buffer.ReleaseMemoryObject();
             Assert.AreNotEqual(CLResultCode.Success, resultCode);
         }
@@ -88,10 +97,14 @@ namespace OpenTK.Compute.Tests
         [TestMethod]
         public void ReleaseMemoryObject()
         {
+            // Create buffer
             var buffer = context.CreateBuffer(MemoryFlags.UseHostPtr, new uint[] { 1, 2, 3, 4 }, out _);
 
+            // Decrement memobj ref count 
             CLResultCode resultCode = buffer.ReleaseMemoryObject();
             Assert.AreEqual(CLResultCode.Success, resultCode);
+
+            // Verify memobj ref count can't be decremented a second time
             resultCode = buffer.ReleaseMemoryObject();
             Assert.AreNotEqual(CLResultCode.Success, resultCode);
         }
@@ -110,24 +123,34 @@ namespace OpenTK.Compute.Tests
         [DataRow(MemoryObjectInfo.Properties)]
         public void GetMemObjectInfo(MemoryObjectInfo paramName)
         {
+            // Create buffer
             var buffer = context.CreateBuffer(MemoryFlags.UseHostPtr, new uint[] { 1, 2, 3, 4 }, out _);
 
+            // Check that paramName is valid
             CLResultCode resultCode = buffer.GetMemObjectInfo(paramName, out byte[] bytes);
             Assert.AreEqual(CLResultCode.Success, resultCode);
             if (paramName != MemoryObjectInfo.Properties)
+                // No valid properties for buffers in OpenCL 3.0
                 Assert.IsTrue(bytes.Length > 0);
+
             buffer.ReleaseMemoryObject();
         }
 
         [TestMethod]
         public void SetMemoryObjectDestructorCallback()
         {
-            var buffer = context.CreateBuffer(MemoryFlags.UseHostPtr, new uint[] { 1, 2, 3, 4 }, out _);
-
+            // Setup callback
             bool callBackMade = false;
             void callBack(IntPtr waitEvent, IntPtr userData) { callBackMade = true; }
+
+            // Create buffer
+            var buffer = context.CreateBuffer(MemoryFlags.UseHostPtr, new uint[] { 1, 2, 3, 4 }, out _);
+
+            // Set destructor
             var resultCode = buffer.SetMemoryObjectDestructorCallback(callBack, IntPtr.Zero);
             Assert.AreEqual(CLResultCode.Success, resultCode);
+
+            // Verify destructor is called
             buffer.ReleaseMemoryObject();
             Assert.IsTrue(callBackMade);
         }
@@ -135,13 +158,18 @@ namespace OpenTK.Compute.Tests
         [TestMethod]
         public void EnqueueMapBuffer()
         {
+            // Create buffer
             var buffer = context.CreateBuffer(MemoryFlags.UseHostPtr, new uint[] { 1, 2, 3, 4 }, out _);
+
+            // Map buffer to local pointer
             var map = commandQueue.EnqueueMapBuffer(buffer, true, MapFlags.Read, 0, 3, null, out _, out CLResultCode resultCode);
             Assert.AreEqual(CLResultCode.Success, resultCode);
 
+            // Verify map contents
             var output = new int[3];
             Marshal.Copy(map, output, 0, 3);
             Assert.AreEqual(2, output[1]);
+
             buffer.ReleaseMemoryObject();
 
         }
@@ -181,6 +209,7 @@ namespace OpenTK.Compute.Tests
             var resultCode = commandQueue.EnqueueReadBuffer(buffer, true, 0, output, null, out _);
             Assert.AreEqual(CLResultCode.Success, resultCode);
             Assert.AreEqual((uint)2, output[1]);
+
             buffer.ReleaseMemoryObject();
         }
 
@@ -196,6 +225,7 @@ namespace OpenTK.Compute.Tests
                 new nuint[] { 3 * sizeof(uint), 1, 1 }, 0, 0, 0, 0, output, null, out _);
             Assert.AreEqual(CLResultCode.Success, resultCode);
             Assert.AreEqual((uint)2, output[1]);
+
             buffer.ReleaseMemoryObject();
         }
 
@@ -214,6 +244,7 @@ namespace OpenTK.Compute.Tests
             var output = new uint[3];
             commandQueue.EnqueueReadBuffer(buffer, true, 0, output, null, out _);
             Assert.AreEqual((uint)2, output[1]);
+
             buffer.ReleaseMemoryObject();
         }
 
@@ -233,6 +264,7 @@ namespace OpenTK.Compute.Tests
             var output = new uint[3];
             commandQueue.EnqueueReadBuffer(buffer, true, 0, output, null, out _);
             Assert.AreEqual((uint)2, output[1]);
+
             buffer.ReleaseMemoryObject();
         }
 
@@ -255,6 +287,7 @@ namespace OpenTK.Compute.Tests
             // Read buffer
             commandQueue.EnqueueReadBuffer(buffer, true, 0, output, null, out _);
             Assert.AreEqual((uint)1, output[1]);
+
             buffer.ReleaseMemoryObject();
         }
 
@@ -272,6 +305,7 @@ namespace OpenTK.Compute.Tests
             var output = new uint[3];
             commandQueue.EnqueueReadBuffer(bufferDest, true, 0, output, null, out _);
             Assert.AreEqual((uint)2, output[1]);
+
             bufferSrc.ReleaseMemoryObject();
             bufferDest.ReleaseMemoryObject();
         }
@@ -291,6 +325,7 @@ namespace OpenTK.Compute.Tests
             var output = new uint[3];
             commandQueue.EnqueueReadBuffer(bufferDest, true, 0, output, null, out _);
             Assert.AreEqual((uint)2, output[1]);
+
             bufferSrc.ReleaseMemoryObject();
             bufferDest.ReleaseMemoryObject();
         }

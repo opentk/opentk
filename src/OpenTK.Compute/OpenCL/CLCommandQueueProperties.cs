@@ -20,7 +20,7 @@ namespace OpenTK.Compute.OpenCL
     {
 
         public CommandQueueProperties? Properties { get; set; }
-        public uint? Size { get; set; }
+        public uint? QueueSize { get; set; }
         public bool? KernelBatchingARM { get; set; }
         public bool? DeferredFlushARM { get; set; }
         public uint? FamilyIntel { get; set; }
@@ -35,10 +35,10 @@ namespace OpenTK.Compute.OpenCL
         {
 
         }
-        public CLCommandQueueProperties(CommandQueueProperties? properties, uint? size)
+        public CLCommandQueueProperties(CommandQueueProperties? properties, uint? queueSize)
         {
             Properties = properties;
-            Size = size;
+            QueueSize = queueSize;
         }
 
         /// <summary>
@@ -57,7 +57,7 @@ namespace OpenTK.Compute.OpenCL
             }
 
             if (Properties.HasValue) AddProperty((IntPtr)Properties.Value, CommandQueueProperty.Properties);
-            if (Size.HasValue) AddProperty((IntPtr)Size.Value, CommandQueueProperty.Size);
+            if (QueueSize.HasValue) AddProperty((IntPtr)QueueSize.Value, CommandQueueProperty.Size);
             if (KernelBatchingARM.HasValue) AddProperty((IntPtr)(KernelBatchingARM.Value ? 1 : 0), CommandQueueProperty.KernelBatchingARM);
             if (DeferredFlushARM.HasValue) AddProperty((IntPtr)(DeferredFlushARM.Value ? 1 : 0), CommandQueueProperty.DeferredFlushARM);
             if (FamilyIntel.HasValue) AddProperty((IntPtr)FamilyIntel.Value, CommandQueueProperty.FamilyIntel);
@@ -100,7 +100,7 @@ namespace OpenTK.Compute.OpenCL
                         properties.Properties = (CommandQueueProperties)value.ToInt64();
                         break;
                     case (int)CommandQueueProperty.Size:
-                        properties.Size = (uint)value.ToInt32();
+                        properties.QueueSize = (uint)value.ToInt32();
                         break;
                     case (int)CommandQueueProperty.KernelBatchingARM:
                         properties.KernelBatchingARM = value.ToInt32() == 1;

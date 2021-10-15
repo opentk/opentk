@@ -30,31 +30,47 @@ namespace OpenTK.Compute.Tests
         [TestMethod]
         public void CreateCommandQueueWithProperties()
         {
-            var properties = new CLCommandQueueProperties(CommandQueueProperties.OnDevice & CommandQueueProperties.OutOfOrderExecModeEnable, 1);
+            // Create command queue with properties
+            var properties = new CLCommandQueueProperties(CommandQueueProperties.OnDevice | CommandQueueProperties.OutOfOrderExecModeEnable, 1 * sizeof(uint));
             var commandQueue = context.CreateCommandQueueWithProperties(device, properties, out CLResultCode resultCode);
             Assert.AreEqual(CLResultCode.Success, resultCode);
+
             commandQueue.ReleaseCommandQueue();
         }
 
         [TestMethod]
         public void RetainCommandQueue()
         {
-            var properties = new CLCommandQueueProperties();
-            var commandQueue = context.CreateCommandQueueWithProperties(device, properties, out _);
+            // Create command queue
+            var commandQueue = context.CreateCommandQueueWithProperties(device, new CLCommandQueueProperties(), out _);
+
+            // Increment memobj ref count
             CLResultCode resultCode = commandQueue.RetainCommandQueue();
             Assert.AreEqual(CLResultCode.Success, resultCode);
+
+            // Verify that memobj ref count can be decremented twice
             commandQueue.ReleaseCommandQueue();
             resultCode = commandQueue.ReleaseCommandQueue();
             Assert.AreEqual(CLResultCode.Success, resultCode);
+
+            // Verify that memobj ref count can't be decremented a third time
+            resultCode = commandQueue.ReleaseCommandQueue();
+            Assert.AreNotEqual(CLResultCode.Success, resultCode);
         }
 
         [TestMethod]
         public void ReleaseCommandQueue()
         {
-            var properties = new CLCommandQueueProperties();
-            var commandQueue = context.CreateCommandQueueWithProperties(device, properties, out _);
+            // Create command queue
+            var commandQueue = context.CreateCommandQueueWithProperties(device, new CLCommandQueueProperties(), out _);
+
+            // Decrement memobj ref count 
             CLResultCode resultCode = commandQueue.ReleaseCommandQueue();
             Assert.AreEqual(CLResultCode.Success, resultCode);
+
+            // Verify memobj ref count can't be decremented a second time
+            resultCode = commandQueue.ReleaseCommandQueue();
+            Assert.AreNotEqual(CLResultCode.Success, resultCode);
         }
 
         [TestMethod]
@@ -65,46 +81,57 @@ namespace OpenTK.Compute.Tests
         [DataRow(CommandQueueInfo.Properties)]
         [DataRow(CommandQueueInfo.Size)]
         [DataRow(CommandQueueInfo.ReferenceCount)]
-        public void GetCommandQueueInfo(CommandQueueInfo param)
+        public void GetCommandQueueInfo(CommandQueueInfo paramName)
         {
-            // Size is only valid if command queue is OnDevice
-            var properties = new CLCommandQueueProperties(CommandQueueProperties.OutOfOrderExecModeEnable | CommandQueueProperties.OnDevice, null);
-            var commandQueue = context.CreateCommandQueueWithProperties(device, properties, out _);
-            CLResultCode resultCode = commandQueue.GetCommandQueueInfo(param, out byte[] paramValue);
+            // Create command queue
+            var commandQueue = context.CreateCommandQueueWithProperties(device, new CLCommandQueueProperties(CommandQueueProperties.OutOfOrderExecModeEnable | CommandQueueProperties.OnDevice, 1), out _);
+
+            // Check that paramName is valid
+            CLResultCode resultCode = commandQueue.GetCommandQueueInfo(paramName, out byte[] paramValue);
             Assert.AreEqual(CLResultCode.Success, resultCode);
             Assert.IsTrue(paramValue.Length > 0);
+
             commandQueue.ReleaseCommandQueue();
         }
 
         [TestMethod]
         public void SetDefaultDeviceCommandQueue()
         {
-            var properties = new CLCommandQueueProperties();
-            var commandQueue = context.CreateCommandQueueWithProperties(device, properties, out _);
+            // Create two command queues
+            var commandQueue1 = context.CreateCommandQueueWithProperties(device, new CLCommandQueueProperties(), out _);
             var commandQueue2 = context.CreateCommandQueueWithProperties(device, new CLCommandQueueProperties(CommandQueueProperties.OutOfOrderExecModeEnable | CommandQueueProperties.OnDevice | CommandQueueProperties.OnDeviceDefault, null), out _);
+
+            // Set command queue 2 as default
             var resultCode = context.SetDefaultDeviceCommandQueue(device, commandQueue2);
             Assert.AreEqual(CLResultCode.Success, resultCode);
-            commandQueue.ReleaseCommandQueue();
+
+            commandQueue1.ReleaseCommandQueue();
             commandQueue2.ReleaseCommandQueue();
         }
 
         [TestMethod]
         public void Flush()
         {
-            var properties = new CLCommandQueueProperties();
-            var commandQueue = context.CreateCommandQueueWithProperties(device, properties, out _);
+            // Create command queue
+            var commandQueue = context.CreateCommandQueueWithProperties(device, new CLCommandQueueProperties(), out _);
+
+            // Flush queue
             CLResultCode resultCode = commandQueue.Flush();
             Assert.AreEqual(CLResultCode.Success, resultCode);
+
             commandQueue.ReleaseCommandQueue();
         }
 
         [TestMethod]
         public void Finish()
         {
-            var properties = new CLCommandQueueProperties();
-            var commandQueue = context.CreateCommandQueueWithProperties(device, properties, out _);
+            // Create command queue
+            var commandQueue = context.CreateCommandQueueWithProperties(device, new CLCommandQueueProperties(), out _);
+
+            // Finish queue
             CLResultCode resultCode = commandQueue.Finish();
             Assert.AreEqual(CLResultCode.Success, resultCode);
+
             commandQueue.ReleaseCommandQueue();
         }
     }
