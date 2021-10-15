@@ -208,14 +208,18 @@ namespace OpenTK.Compute.Tests
         [TestMethod]
         public void EnqueueReadImage()
         {
+            // Create an pre populated image
             CLImageFormat imageFormat = new CLImageFormat(ChannelOrder.R, ChannelType.UnsignedInteger32);
             CLImageDescription imageDesc = CLImageDescription.Create1D(3);
             var data = new uint[] { 1, 2, 3 };
             var image = context.CreateImage(MemoryFlags.ReadWrite | MemoryFlags.CopyHostPtr, ref imageFormat, ref imageDesc, data, out _);
+
+            // Read image
             var output = new uint[3];
             var resultCode = commandQueue.EnqueueReadImage(image, true, new nuint[] { 0, 0, 0 }, new nuint[] { 3, 1, 1 }, 0, 0, output, null, out _);
             Assert.AreEqual(CLResultCode.Success, resultCode);
             Assert.AreEqual((uint)2, output[1]);
+
             image.ReleaseMemoryObject();
         }
 
@@ -322,9 +326,9 @@ namespace OpenTK.Compute.Tests
             Assert.AreEqual(CLResultCode.Success, resultCode);
 
             // Read map to confirm values have been set
-            var output = new int[3];
-            Marshal.Copy(map, output, 0, 3);
-            Assert.AreEqual(2, output[1]);
+            var output = new uint[3];
+            commandQueue.EnqueueReadImage(new CLImage(map), true, new nuint[] { 0, 0, 0 }, new nuint[] { 3, 1, 1 }, 0, 0, output, null, out _);
+            Assert.AreEqual((uint)2, output[1]);
             image.ReleaseMemoryObject();
         }
 

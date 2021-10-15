@@ -159,11 +159,17 @@ namespace OpenTK.Compute.Tests
         public void EnqueueMapBuffer()
         {
             // Create buffer
-            var buffer = context.CreateBuffer(MemoryFlags.UseHostPtr, new uint[] { 1, 2, 3, 4 }, out _);
+            var buffer = context.CreateBuffer(MemoryFlags.ReadWrite | MemoryFlags.CopyHostPtr, new uint[] { 1, 2, 3 }, out _);
 
             // Map buffer to local pointer
-            var map = commandQueue.EnqueueMapBuffer(buffer, true, MapFlags.Read, 0, 3, null, out _, out CLResultCode resultCode);
+            var map = commandQueue.EnqueueMapBuffer(buffer, true, MapFlags.Read, 0, 3 * sizeof(uint), null, out _, out CLResultCode resultCode);
             Assert.AreEqual(CLResultCode.Success, resultCode);
+
+            // According to documentation this should work, but doesn't
+            //var output1 = new uint[3];
+            //resultCode = commandQueue.EnqueueReadBuffer(new CLBuffer(map), true, 0, output1, null, out _);
+            //Assert.AreEqual(CLResultCode.Success, resultCode);
+            //Assert.AreEqual((uint)2, output1[1]);
 
             // Verify map contents
             var output = new int[3];
@@ -181,7 +187,7 @@ namespace OpenTK.Compute.Tests
             var buffer = context.CreateBuffer(MemoryFlags.ReadWrite | MemoryFlags.CopyHostPtr, new uint[] { 1, 2, 3 }, out _);
 
             // Map an area of the image to host memory
-            var map = commandQueue.EnqueueMapBuffer(buffer, true, MapFlags.Write, 0, 3, null, out _, out _);
+            var map = commandQueue.EnqueueMapBuffer(buffer, true, MapFlags.Write, 0, 3 * sizeof(uint), null, out _, out _);
 
             // Write data to the mapped host memory
             var input = new int[3] { 4, 4, 4 };
