@@ -51,6 +51,9 @@ namespace OpenTK.Platform.X11
 
         [DllImport("libX11", EntryPoint = "XOpenDisplay")]
         private extern static IntPtr sys_XOpenDisplay(IntPtr display);
+
+        /// <summary>Opens an X11 display</summary>
+        /// <param name="display">The display to open</param>
         public static IntPtr XOpenDisplay(IntPtr display)
         {
             lock (Lock)
@@ -61,6 +64,7 @@ namespace OpenTK.Platform.X11
 
         [DllImport("libX11", EntryPoint = "XCloseDisplay")]
         public extern static int XCloseDisplay(IntPtr display);
+        
         [DllImport("libX11", EntryPoint = "XSynchronize")]
         public extern static IntPtr XSynchronize(IntPtr display, bool onoff);
 
@@ -77,7 +81,6 @@ namespace OpenTK.Platform.X11
         /// <param name="visual">The visual type</param>
         /// <param name="valuemask">Specifies which window attributs are defined in the attributes argument</param>
         /// <param name="attributes">The window's attributes</param>
-        /// <returns></returns>
         [DllImport("libX11", EntryPoint = "XCreateWindow")]
         public unsafe extern static IntPtr XCreateWindow(IntPtr display, IntPtr parent, int x, int y, int width, int height, int border_width, int depth, int xclass, IntPtr visual, IntPtr valuemask, XSetWindowAttributes* attributes);
 
@@ -112,8 +115,22 @@ namespace OpenTK.Platform.X11
         public extern static IntPtr XNextEvent(IntPtr display, ref XEvent xevent);
         [DllImport("libX11")]
         public extern static Bool XWindowEvent(Display display, Window w, EventMask event_mask, ref XEvent event_return);
+        
+        /// <summary>Searches the event queue for an event matching the specified window and event mask</summary>
+        /// <param name="display">The display connection to the XServer</param>
+        /// <param name="w">The window to match</param>
+        /// <param name="event_mask">The event mask</param>
+        /// <param name="event_return">The returned event</param>
+        /// <returns>TRUE if a matching event is found, FALSE otherwise</returns>
         [DllImport("libX11")]
         public extern static Bool XCheckWindowEvent(Display display, Window w, EventMask event_mask, ref XEvent event_return);
+        
+        /// <summary>Searches the event queue for an event matching the specified window and event name</summary>
+        /// <param name="display">The display connection to the XServer</param>
+        /// <param name="w">The window to match</param>
+        /// <param name="event_type">The event name</param>
+        /// <param name="event_return">The returned event</param>
+        /// <returns>TRUE if a matching event is found, FALSE otherwise</returns>
         [DllImport("libX11")]
         public extern static Bool XCheckTypedWindowEvent(Display display, Window w, XEventName event_type, ref XEvent event_return);
         [DllImport("libX11")]
@@ -144,12 +161,30 @@ namespace OpenTK.Platform.X11
         [DllImport("libX11", EntryPoint = "XReparentWindow")]
         public extern static int XReparentWindow(IntPtr display, IntPtr window, IntPtr parent, int x, int y);
 
+        /// <summary>Changes the size and location of the specified window without raising it</summary>
+        /// <param name="display">The display connection to the XServer</param>
+        /// <param name="window">The window to modify</param>
+        /// <param name="x">The new X co-ordinate relative to the window's parent</param>
+        /// <param name="y">The new Y co-ordinate relative to the window's parent</param>
+        /// <param name="width">The new width</param>
+        /// <param name="height">The new height</param>
         [DllImport("libX11", EntryPoint = "XMoveResizeWindow")]
         public extern static int XMoveResizeWindow(IntPtr display, IntPtr window, int x, int y, int width, int height);
 
+        /// <summary>Changes the location of the specified window without raising it</summary>
+        /// <param name="display">The display connection to the XServer</param>
+        /// <param name="window">The window to modify</param>
+        /// <param name="x">The new X co-ordinate relative to the window's parent</param>
+        /// <param name="y">The new Y co-ordinate relative to the window's parent</param>
         [DllImport("libX11", EntryPoint = "XMoveWindow")]
-        public extern static int XMoveWindow(IntPtr display, IntPtr w, int x, int y);
+        public extern static int XMoveWindow(IntPtr display, IntPtr window, int x, int y);
 
+        
+        /// <summary>Changes the size of the specified window without raising it</summary>
+        /// <param name="display">The display connection to the XServer</param>
+        /// <param name="window">The window to modify</param>
+        /// <param name="width">The new width</param>
+        /// <param name="height">The new height</param>
         [DllImport("libX11", EntryPoint = "XResizeWindow")]
         public extern static int XResizeWindow(IntPtr display, IntPtr window, int width, int height);
 
@@ -246,6 +281,12 @@ namespace OpenTK.Platform.X11
         [DllImport("libX11", EntryPoint = "XGetAtomName")]
         public extern static IntPtr XGetAtomName(IntPtr display, IntPtr atom);
 
+        /// <summary>Replaces a window's WM_PROTOCOLS property with the list of specified atoms</summary>
+        /// <param name="display">The display connection to the XServer</param>
+        /// <param name="window">The window to modify</param>
+        /// <param name="protocols">The new WM_PROTOCOLS atom list</param>
+        /// <param name="count">The number of elements in the protocols array</param>
+        /// <returns></returns>
         [DllImport("libX11", EntryPoint = "XSetWMProtocols")]
         public extern static int XSetWMProtocols(IntPtr display, IntPtr window, IntPtr[] protocols, int count);
 
@@ -673,6 +714,12 @@ namespace OpenTK.Platform.X11
                        ref xev);
         }
 
+        /// <summary>Sends an X11 client message to the specified window</summary>
+        /// <param name="window">The window recieving the event</param>
+        /// <param name="message_type">The X11 message type</param>
+        /// <param name="l0"></param>
+        /// <param name="l1"></param>
+        /// <param name="l2"></param>
         public static void SendNetClientMessage(X11WindowInfo window, IntPtr message_type,
                                                 IntPtr l0, IntPtr l1, IntPtr l2)
         {

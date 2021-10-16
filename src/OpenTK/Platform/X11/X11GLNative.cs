@@ -108,10 +108,8 @@ namespace OpenTK.Platform.X11
         private static readonly IntPtr _atom_add = (IntPtr)1;
         private static readonly IntPtr _atom_toggle = (IntPtr)2;
 
-        #pragma warning disable 649 // never assigned, compiler bug in Mono 3.4.0
         private Rectangle bounds;
         private Size client_size;
-        #pragma warning restore 649
         private int border_left, border_right, border_top, border_bottom;
         private Icon icon;
         private bool has_focus;
@@ -148,7 +146,6 @@ namespace OpenTK.Platform.X11
         private readonly IntPtr EmptyCursor;
 
         #pragma warning disable 414 // Field assigned but never used, we do that on purpose
-        private readonly bool xi2_supported;
         private readonly int xi2_opcode;
         private readonly int xi2_version;
         #pragma warning restore 414
@@ -258,7 +255,7 @@ namespace OpenTK.Platform.X11
                 Functions.XSetWMNormalHints(window.Display, window.Handle, ref hints);
 
                 // Register for window destroy notification
-                Functions.XSetWMProtocols(window.Display, window.Handle, new IntPtr[] { _atom_wm_destroy }, 1);
+                Functions.XSetWMProtocols(window.Display, window.Handle, new[] { _atom_wm_destroy }, 1);
 
                 // Set the window class hints
                 Functions.XSetClassHint(window.Display, window.Handle, ref class_hint);
@@ -295,7 +292,7 @@ namespace OpenTK.Platform.X11
 
             // The XInput2 extension makes keyboard and mouse handling much easier.
             // Check whether it is available.
-            xi2_supported = XI2MouseKeyboard.IsSupported(window.Display);
+            bool xi2_supported = XI2MouseKeyboard.IsSupported(window.Display);
             if (xi2_supported)
             {
                 xi2_opcode = XI2MouseKeyboard.XIOpCode;
@@ -348,16 +345,17 @@ namespace OpenTK.Platform.X11
             }
         }
 
-        private void ReadProperty(IntPtr window, IntPtr property, IntPtr type, ref IntPtr data, ref IntPtr itemsCount)
+        private void ReadProperty(IntPtr targetWindow, IntPtr property, IntPtr type, ref IntPtr data, out int itemsCount)
         {
             int format;
             IntPtr length = new IntPtr(int.MaxValue);
             IntPtr actualType;
             IntPtr bytesLeft;
-
-            Functions.XGetWindowProperty(this.window.Display, window, property, IntPtr.Zero,
+            IntPtr itemCount;
+            Functions.XGetWindowProperty(this.window.Display, targetWindow, property, IntPtr.Zero,
                 length, false, type,
-                out actualType, out format, out itemsCount, out bytesLeft, ref data);
+                out actualType, out format, out itemCount, out bytesLeft, ref data);
+            itemsCount = itemCount.ToInt32();
         }
 
         private string[] parseUriList(string rawString)
@@ -854,9 +852,7 @@ namespace OpenTK.Platform.X11
                             int formatCount;
                             if (useList)
                             {
-                                IntPtr count = IntPtr.Zero;
-                                ReadProperty(sourceHandler, _atom_xdnd_type_list, (IntPtr)AtomName.XA_ATOM, ref formats, ref count);
-                                formatCount = count.ToInt32();
+                                ReadProperty(sourceHandler, _atom_xdnd_type_list, (IntPtr)AtomName.XA_ATOM, ref formats, out formatCount);
                             }
                             else
                             {
@@ -946,10 +942,6 @@ namespace OpenTK.Platform.X11
                                 }
                             }
                         }
-                        else if (e.ClientMessageEvent.message_type == _atom_xdnd_leave)
-                        {
-                            break;
-                        }
                         break;
 
                     case XEventName.DestroyNotify:
@@ -983,8 +975,7 @@ namespace OpenTK.Platform.X11
                             {
                                 // Translate XKeyPress to characters and
                                 // raise KeyPress events
-                                int status = 0;
-                                status = Functions.XLookupString(
+                                int status = Functions.XLookupString(
                                     ref e.KeyEvent, ascii, ascii.Length, null, IntPtr.Zero);
                                 Encoding.Default.GetChars(ascii, 0, status, chars, 0);
 
@@ -1109,23 +1100,18 @@ namespace OpenTK.Platform.X11
                         break;
 
                    case XEventName.PropertyNotify:
-                        if (e.PropertyEvent.atom == _atom_net_wm_state)
-                        {
-                            OnWindowStateChanged(EventArgs.Empty);
-                        }
-
-                        //if (e.PropertyEvent.atom == _atom_net_frame_extents)
-                        //{
-                        //    RefreshWindowBorders();
-                        //}
-                        break;
+                       if (e.PropertyEvent.atom == _atom_net_wm_state)
+                       {
+                           OnWindowStateChanged(EventArgs.Empty);
+                       }
+                       break;
 
                     case XEventName.SelectionNotify:
                         if (e.SelectionEvent.property == _atom_xdnd_primary)
                         {
                             IntPtr data = IntPtr.Zero;
-                            IntPtr count = IntPtr.Zero;
-                            ReadProperty(e.SelectionEvent.requestor, e.SelectionEvent.property, e.SelectionEvent.target, ref data, ref count);
+                            int count;
+                            ReadProperty(e.SelectionEvent.requestor, e.SelectionEvent.property, e.SelectionEvent.target, ref data, out count);
 
                             string rawString = Marshal.PtrToStringAnsi(data);
                             Functions.XFree(data);
@@ -1345,7 +1331,7 @@ namespace OpenTK.Platform.X11
                 {
                     for (int i = 0; i < (long)nitems; i++)
                     {
-                        atom = (IntPtr)Marshal.ReadIntPtr(prop, i * IntPtr.Size);
+                        atom = Marshal.ReadIntPtr(prop, i * IntPtr.Size);
 
                         if (atom == _atom_net_wm_state_maximized_horizontal ||
                             atom == _atom_net_wm_state_maximized_vertical)
@@ -1699,7 +1685,6 @@ namespace OpenTK.Platform.X11
         }
 
         /// <summary>
-        /// TODO: Use atoms for this property.
         /// Gets or sets the GameWindow title.
         /// </summary>
         public override string Title
