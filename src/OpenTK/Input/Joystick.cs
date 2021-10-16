@@ -88,6 +88,7 @@ namespace OpenTK.Input
             return implementation.GetGuid(index);
         }
 
+        /// <summary>
         /// Returns the name of the device connected at the specified index.
         /// </summary>
         /// <returns>
