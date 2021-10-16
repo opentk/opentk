@@ -206,7 +206,7 @@ namespace OpenTK.Windowing.Desktop
         public virtual unsafe void Run()
         {
             // Make sure that the gl contexts is current for OnLoad and the initial OnResize
-            Context.MakeCurrent();
+            Context?.MakeCurrent();
 
             // Send the OnLoad event, to load all user code.
             OnLoad();
@@ -218,7 +218,7 @@ namespace OpenTK.Windowing.Desktop
             if (IsMultiThreaded)
             {
                 // We want to move the context to the render thread so make sure it's no longer current
-                Context.MakeNoneCurrent();
+                Context?.MakeNoneCurrent();
 
                 _renderThread = new Thread(StartRenderThread);
                 _renderThread.Start();
@@ -242,7 +242,7 @@ namespace OpenTK.Windowing.Desktop
         {
             // If we are starting a render thread we want the context to be current there.
             // So when creating the render thread the graphics context needs to be made not current on the thread creating the render thread.
-            Context.MakeCurrent();
+            Context?.MakeCurrent();
 
             OnRenderThreadStarted();
             _watchRender.Start();
@@ -314,7 +314,7 @@ namespace OpenTK.Windowing.Desktop
         /// </summary>
         public virtual void SwapBuffers()
         {
-            Context.SwapBuffers();
+            Context?.SwapBuffers();
         }
 
         /// <inheritdoc />
