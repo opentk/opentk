@@ -165,19 +165,12 @@ namespace OpenTK.Compute.Tests
             var map = commandQueue.EnqueueMapBuffer(buffer, true, MapFlags.Read, 0, 3 * sizeof(uint), null, out _, out CLResultCode resultCode);
             Assert.AreEqual(CLResultCode.Success, resultCode);
 
-            // According to documentation this should work, but doesn't
-            //var output1 = new uint[3];
-            //resultCode = commandQueue.EnqueueReadBuffer(new CLBuffer(map), true, 0, output1, null, out _);
-            //Assert.AreEqual(CLResultCode.Success, resultCode);
-            //Assert.AreEqual((uint)2, output1[1]);
-
             // Verify map contents
             var output = new int[3];
             Marshal.Copy(map, output, 0, 3);
             Assert.AreEqual(2, output[1]);
 
             buffer.ReleaseMemoryObject();
-
         }
 
         [TestMethod]
@@ -286,8 +279,8 @@ namespace OpenTK.Compute.Tests
             Assert.AreEqual((uint)0, output[1]);
 
             // Fill to buffer
-            var data = new uint[] { 1 };
-            var resultCode = commandQueue.EnqueueFillBuffer(buffer, data, 0, 3 * sizeof(uint), null, out _);
+            var pattern = new uint[] { 1 };
+            var resultCode = commandQueue.EnqueueFillBuffer(buffer, pattern, 0, 3 * sizeof(uint), null, out _);
             Assert.AreEqual(CLResultCode.Success, resultCode);
 
             // Read buffer
