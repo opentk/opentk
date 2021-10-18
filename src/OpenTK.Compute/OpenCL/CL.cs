@@ -1933,7 +1933,7 @@ namespace OpenTK.Compute.OpenCL
         /// Introduced in OpenCL 2.0
         /// </summary>
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clSVMAlloc")]
-        public static extern CLBuffer SvmAlloc(
+        public static extern SvmBuffer SvmAlloc(
             [In] this CLContext context,
             [In] SvmMemoryFlags flags,
             [In] nuint size,
@@ -1945,7 +1945,7 @@ namespace OpenTK.Compute.OpenCL
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clSVMFree")]
         public static extern void SvmFree(
             [In] this CLContext context,
-            [In] CLBuffer svmPointer);
+            [In] SvmBuffer svmPointer);
 
         /// <summary>
         /// Introduced in OpenCL 2.0
@@ -1954,7 +1954,7 @@ namespace OpenTK.Compute.OpenCL
         public static extern CLResultCode EnqueueSvmFree(
             [In] this CLCommandQueue commandQueue,
             [In] uint numberOfSvmPointers,
-            [In] CLBuffer[] svmPointers,
+            [In] SvmBuffer[] svmPointers,
             [In] IntPtr svmFreePointersCallback,
             [In] IntPtr userData,
             [In] uint numberOfEventsInWaitList,
@@ -1966,7 +1966,7 @@ namespace OpenTK.Compute.OpenCL
         /// </summary>
         public static CLResultCode EnqueueSvmFree(
             this CLCommandQueue commandQueue,
-            CLBuffer[] svmPointers,
+            SvmBuffer[] svmPointers,
             ClEventCallback callback,
             IntPtr userData,
             CLEvent[] eventWaitList,
@@ -1983,8 +1983,8 @@ namespace OpenTK.Compute.OpenCL
         public static extern CLResultCode EnqueueSvmMemoryCopy(
             [In] this CLCommandQueue commandQueue,
             [In] bool blockingCopy,
-            [In] CLBuffer dstPointer,
-            [In] CLBuffer srcPointer,
+            [In] SvmBuffer dstPointer,
+            [In] SvmBuffer srcPointer,
             [In] nuint size,
             [In] uint numberOfEventsInWaitList,
             [In] CLEvent[] eventWaitList,
@@ -1996,8 +1996,8 @@ namespace OpenTK.Compute.OpenCL
         public static CLResultCode EnqueueSvmMemoryCopy(
            this CLCommandQueue commandQueue,
             bool blockingCopy,
-            CLBuffer dstPointer,
-            CLBuffer srcPointer,
+            SvmBuffer dstPointer,
+            SvmBuffer srcPointer,
             nuint size,
             CLEvent[] eventWaitList,
             out CLEvent @event)
@@ -2012,7 +2012,7 @@ namespace OpenTK.Compute.OpenCL
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clEnqueueSVMMemFill")]
         public static extern CLResultCode EnqueueSvmMemoryFill(
             [In] this CLCommandQueue commandQueue,
-            [In] CLBuffer svmPointer,
+            [In] SvmBuffer svmPointer,
             [In] IntPtr pattern,
             [In] nuint patternSize,
             [In] nuint size,
@@ -2025,7 +2025,7 @@ namespace OpenTK.Compute.OpenCL
         /// </summary>
         public static unsafe CLResultCode EnqueueSvmMemoryFill<T>(
             this CLCommandQueue commandQueue,
-            CLBuffer svmPointer,
+            SvmBuffer svmPointer,
             T[] pattern,
             nuint size,
             CLEvent[] eventWaitList,
@@ -2044,7 +2044,7 @@ namespace OpenTK.Compute.OpenCL
         /// </summary>
         public static unsafe CLResultCode EnqueueSvmMemoryFill<T>(
             this CLCommandQueue commandQueue,
-            CLBuffer svmPointer,
+            SvmBuffer svmPointer,
             Span<T> pattern,
             nuint size,
             CLEvent[] eventWaitList,
@@ -2066,7 +2066,7 @@ namespace OpenTK.Compute.OpenCL
             [In] this CLCommandQueue commandQueue,
             [In] bool blockingMap,
             [In] MapFlags mapFlag,
-            [In] CLBuffer svmPointer,
+            [In] SvmBuffer svmPointer,
             [In] nuint size,
             [In] uint numberOfEventsInWaitList,
             [In] CLEvent[] eventWaitList,
@@ -2079,7 +2079,7 @@ namespace OpenTK.Compute.OpenCL
             this CLCommandQueue commandQueue,
             bool blockingMap,
             MapFlags mapFlag,
-            CLBuffer svmPointer,
+            SvmBuffer svmPointer,
             nuint size,
             CLEvent[] eventWaitList,
             out CLEvent @event)
@@ -2094,7 +2094,7 @@ namespace OpenTK.Compute.OpenCL
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clEnqueueSVMUnmap")]
         public static extern CLResultCode EnqueueSvmUnmap(
             [In] this CLCommandQueue commandQueue,
-            [In] CLBuffer svmPointer,
+            [In] SvmBuffer svmPointer,
             [In] uint numberOfEventsInWaitList,
             [In] CLEvent[] eventWaitList,
             [Out] out CLEvent @event);
@@ -2104,7 +2104,7 @@ namespace OpenTK.Compute.OpenCL
         /// </summary>
         public static CLResultCode EnqueueSvmUnmap(
             this CLCommandQueue commandQueue,
-            CLBuffer svmPointer,
+            SvmBuffer svmPointer,
             CLEvent[] eventWaitList,
             out CLEvent @event)
         {
@@ -2119,7 +2119,7 @@ namespace OpenTK.Compute.OpenCL
         public static extern CLResultCode EnqueueSvmMigrateMemory(
             [In] this CLCommandQueue commandQueue,
             [In] uint numberOfSvmPointers,
-            [In] CLBuffer[] svmPointers,
+            [In] SvmBuffer[] svmPointers,
             [In] nuint[] sizes,
             [In] MemoryMigrationFlags memoryMigrationFlags,
             [In] uint numberOfEventsInWaitList,
@@ -2130,8 +2130,8 @@ namespace OpenTK.Compute.OpenCL
         /// Introduced in OpenCL 2.1
         /// </summary>
         public static CLResultCode EnqueueSvmMigrateMemory(
-            [In] this CLCommandQueue commandQueue,
-            CLBuffer[] svmPointers,
+            this CLCommandQueue commandQueue,
+            SvmBuffer[] svmPointers,
             nuint[] sizes,
             MemoryMigrationFlags memoryMigrationFlags,
             CLEvent[] eventWaitList,

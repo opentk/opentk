@@ -316,19 +316,18 @@ namespace OpenTK.Compute.Tests
         public void EnqueueMapImage()
         {
             // Create image with data values
-            CLImageFormat imageFormat = new CLImageFormat(ChannelOrder.R, ChannelType.UnsignedInteger32);
+            CLImageFormat imageFormat = new CLImageFormat(ChannelOrder.R, ChannelType.SignedInteger32);
             CLImageDescription imageDesc = CLImageDescription.Create1D(3);
-            var data = new uint[] { 1, 2, 3 };
-            var image = context.CreateImage(MemoryFlags.ReadWrite | MemoryFlags.CopyHostPtr, ref imageFormat, ref imageDesc, data, out _);
+            var image = context.CreateImage(MemoryFlags.ReadWrite | MemoryFlags.CopyHostPtr, ref imageFormat, ref imageDesc, new int[] { 1, 2, 3 }, out _);
 
             // Map an area of the image to host memory
             var map = commandQueue.EnqueueMapImage(image, true, MapFlags.Read, new nuint[] { 0, 0, 0 }, new nuint[] { 3, 1, 1 }, 0, 0, null, out _, out CLResultCode resultCode);
             Assert.AreEqual(CLResultCode.Success, resultCode);
 
             // Read map to confirm values have been set
-            var output = new uint[3];
-            commandQueue.EnqueueReadImage(new CLImage(map), true, new nuint[] { 0, 0, 0 }, new nuint[] { 3, 1, 1 }, 0, 0, output, null, out _);
-            Assert.AreEqual((uint)2, output[1]);
+            var output = new int[3];
+            Marshal.Copy(map, output, 0, 3);
+            Assert.AreEqual(2, output[1]);
             image.ReleaseMemoryObject();
         }
 

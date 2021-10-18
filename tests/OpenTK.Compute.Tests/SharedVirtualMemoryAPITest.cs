@@ -69,8 +69,9 @@ namespace OpenTK.Compute.Tests
             var destination = context.SvmAlloc(SvmMemoryFlags.ReadWrite, 4, 4);
 
             // Copy from source to destination
-            var resultCode = commandQueue.EnqueueSvmMemoryCopy(true, destination, source, 4, null, out _);
+            var resultCode = commandQueue.EnqueueSvmMemoryCopy(true, destination, source, 4, null, out CLEvent ev);
             Assert.AreEqual(CLResultCode.Success, resultCode);
+            CL.WaitForEvents(new[] { ev });
 
             // Read destination buffer
             var output = new int[1];
@@ -105,19 +106,54 @@ namespace OpenTK.Compute.Tests
         [TestMethod]
         public void EnqueueSvmMap()
         {
-            Assert.Inconclusive();
+            // Create a SVM buffer
+            var buffer = context.SvmAlloc(SvmMemoryFlags.ReadWrite, 1 * sizeof(int), 0);
+            Marshal.Copy(new int[] { 1 }, 0, buffer, 1);
+
+            // Map buffer to local pointer
+            var resultCode = commandQueue.EnqueueSvmMap(true, MapFlags.Read, buffer, 1 * sizeof(int), null, out _);
+            Assert.AreEqual(CLResultCode.Success, resultCode);
+
+            // Verify map contents
+            var output = new int[1];
+            Marshal.Copy(buffer, output, 0, 1);
+            Assert.AreEqual(1, output[0]);
+
+            context.SvmFree(buffer);
         }
 
         [TestMethod]
         public void EnqueueSVMUnmap()
         {
-            Assert.Inconclusive();
+            // Create a SVM buffer
+            var buffer = context.SvmAlloc(SvmMemoryFlags.ReadOnly, 1 * sizeof(int), 0);
+
+            // Map buffer to local pointer
+            commandQueue.EnqueueSvmMap(true, MapFlags.Write, buffer, 1 * sizeof(int), null, out _);
+            Marshal.Copy(new int[] { 1 }, 0, buffer, 1);
+            var resultCode = commandQueue.EnqueueSvmUnmap(buffer, null, out _);
+            Assert.AreEqual(CLResultCode.Success, resultCode);
+
+            // Verify map contents
+            var output = new int[1];
+            Marshal.Copy(buffer, output, 0, 1);
+            Assert.AreEqual(1, output[0]);
+
+            context.SvmFree(buffer);
         }
 
         [TestMethod]
         public void EnqueueSvmMigrateMemory()
         {
-            Assert.Inconclusive();
+            // Create a SVM buffer
+            var buffer = context.SvmAlloc(SvmMemoryFlags.ReadOnly, 1 * sizeof(int), 0);
+
+            // Migrate memory object
+            var resultCode = commandQueue.EnqueueSvmMigrateMemory(new[] { buffer }, null, MemoryMigrationFlags.Host, null, out _);
+            Assert.AreEqual(CLResultCode.Success, resultCode);
+
+            // Difficult to test if this has succeeded
+            context.SvmFree(buffer);
         }
     }
 }
