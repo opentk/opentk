@@ -34,19 +34,58 @@ namespace OpenTK.Compute.Tests
         [TestMethod]
         public void RetainSampler()
         {
-            Assert.Inconclusive();
+            // Create sampler
+            var sampler = context.CreateSamplerWithProperties(new CLSamplerProperties(), out _);
+
+            // Increment memobj reference count
+            CLResultCode resultCode = sampler.RetainSampler();
+            Assert.AreEqual(CLResultCode.Success, resultCode);
+
+            // Verify that memobj ref count can be decremented twice
+            sampler.ReleaseSampler();
+            resultCode = sampler.ReleaseSampler();
+            Assert.AreEqual(CLResultCode.Success, resultCode);
+
+            // Verify that memobj ref count can't be decremented a third time
+            resultCode = sampler.ReleaseSampler();
+            Assert.AreNotEqual(CLResultCode.Success, resultCode);
         }
 
         [TestMethod]
         public void ReleaseSampler()
         {
-            Assert.Inconclusive();
+            // Create sampler
+            var sampler = context.CreateSamplerWithProperties(new CLSamplerProperties(), out _);
+
+            // Verify that memobj ref count can be decremented twice
+            CLResultCode resultCode = sampler.ReleaseSampler();
+            Assert.AreEqual(CLResultCode.Success, resultCode);
+
+            // Verify that memobj ref count can't be decremented a third time
+            resultCode = sampler.ReleaseSampler();
+            Assert.AreNotEqual(CLResultCode.Success, resultCode);
         }
 
         [TestMethod]
-        public void GetSamplerInfo()
+        [DataRow(SamplerInfo.ReferenceCount)]
+        [DataRow(SamplerInfo.Context)]
+        [DataRow(SamplerInfo.NormalizedCoords)]
+        [DataRow(SamplerInfo.AddressingMode)]
+        [DataRow(SamplerInfo.FilterMode)]
+        [DataRow(SamplerInfo.MipFilterModeKHR)]
+        [DataRow(SamplerInfo.LodMinKHR)]
+        [DataRow(SamplerInfo.LodMaxKHR)]
+        [DataRow(SamplerInfo.Properties)]
+        public void GetSamplerInfo(SamplerInfo paramName)
         {
-            Assert.Inconclusive();
+            // Create sampler
+            var sampler = context.CreateSamplerWithProperties(new CLSamplerProperties(true, null, null), out _);
+
+            CLResultCode resultCode = sampler.GetSamplerInfo(paramName, out byte[] bytes);
+            Assert.AreEqual(CLResultCode.Success, resultCode);
+            Assert.IsTrue(bytes.Length > 0);
+
+            sampler.ReleaseSampler();
         }
     }
 }
