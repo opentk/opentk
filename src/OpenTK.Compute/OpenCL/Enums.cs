@@ -293,6 +293,7 @@ namespace OpenTK.Compute.OpenCL
         NativeVectorWidthFloat = 0x103A,
         NativeVectorWidthDouble = 0x103B,
         NativeVectorWidthHalf = 0x103C,
+        [Obsolete("OpenClCVersion is a deprecated OpenCL 3.0 property.")]
         OpenClCVersion = 0x103D,
         LinkerAvailable = 0x103E,
         BuiltInKernels = 0x103F,

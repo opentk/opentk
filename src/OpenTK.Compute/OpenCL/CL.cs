@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using OpenTK.Compute.Native;
@@ -2234,6 +2235,19 @@ namespace OpenTK.Compute.OpenCL
         /// <summary>
         /// Introduced in OpenCL 1.0
         /// </summary>
+        public static CLProgram CreateProgramWithSource(
+            this CLContext context,
+            string[] source,
+            out CLResultCode resultCode)
+        {
+            IntPtr[] sourceList = source.Select(s => Marshal.StringToHGlobalAnsi(s)).ToArray();
+            nuint[] sourceLengths = source.Select(s => (nuint)s.Length).ToArray();
+            return CreateProgramWithSource(context, 1, sourceList, sourceLengths, out resultCode);
+        }
+
+        /// <summary>
+        /// Introduced in OpenCL 1.0
+        /// </summary>
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clCreateProgramWithBinary")]
         public static extern CLProgram CreateProgramWithBinary(
             [In] this CLContext context,
@@ -2243,6 +2257,60 @@ namespace OpenTK.Compute.OpenCL
             [In] IntPtr[] binaries,
             [Out] out CLResultCode[] binaryStatus,
             [Out] out CLResultCode resultCode);
+
+        /// <summary>
+        /// Introduced in OpenCL 1.0
+        /// </summary>
+        public static CLProgram CreateProgramWithBinary(
+            this CLContext context,
+            CLDevice[] deviceList,
+            nuint[] lengths,
+            IntPtr[] binaries,
+            out CLResultCode[] binaryStatus,
+            out CLResultCode resultCode)
+        {
+            return CreateProgramWithBinary(context, (uint)deviceList.Length, deviceList, lengths, binaries, out binaryStatus, out resultCode);
+        }
+
+        /// <summary>
+        /// Introduced in OpenCL 1.0
+        /// </summary>
+        public static unsafe CLProgram CreateProgramWithBinary(
+            this CLContext context,
+            CLDevice[] deviceList,
+            byte[] binaries,
+            out CLResultCode[] binaryStatus,
+            out CLResultCode resultCode)
+        {
+            fixed (byte* p = binaries)
+            {
+                return CreateProgramWithBinary(context, (uint)deviceList.Length, deviceList, new[] { (nuint)binaries.Length }, new[] { (IntPtr)p }, out binaryStatus, out resultCode);
+            }
+        }
+
+        /// <summary>
+        /// Introduced in OpenCL 1.0
+        /// </summary>
+        public static unsafe CLProgram CreateProgramWithBinary(
+            this CLContext context,
+            CLDevice[] deviceList,
+            byte[][] binaries,
+            out CLResultCode[] binaryStatus,
+            out CLResultCode resultCode)
+        {
+            var lengths = new nuint[binaries.Length];
+            var binaryPointers = new IntPtr[binaries.Length];
+            for (int i = 0; i < binaries.Length; i++)
+            {
+                fixed (byte* p = binaries[i])
+                {
+                    lengths[i] = (nuint)binaries[i].Length;
+                    binaryPointers[i] = (IntPtr)p;
+                }
+            }
+
+            return CreateProgramWithBinary(context, (uint)deviceList.Length, deviceList, lengths, binaryPointers, out binaryStatus, out resultCode);
+        }
 
         /// <summary>
         /// Introduced in OpenCL 1.2
@@ -2266,6 +2334,19 @@ namespace OpenTK.Compute.OpenCL
             out CLResultCode resultCode)
         {
             return CreateProgramWithBuiltInKernels(context, (uint)deviceList.Length, deviceList, kernelNames, out resultCode);
+        }
+
+
+        /// <summary>
+        /// Introduced in OpenCL 1.2
+        /// </summary>
+        public static CLProgram CreateProgramWithBuiltInKernels(
+            this CLContext context,
+            CLDevice[] deviceList,
+            string[] kernelNames,
+            out CLResultCode resultCode)
+        {
+            return CreateProgramWithBuiltInKernels(context, (uint)deviceList.Length, deviceList, string.Join(";", kernelNames), out resultCode);
         }
 
         /// <summary>
@@ -2312,7 +2393,7 @@ namespace OpenTK.Compute.OpenCL
             ClEventCallback callback,
             IntPtr userData)
         {
-            return BuildProgram(program, (uint)deviceList.Length, deviceList, options,
+            return BuildProgram(program, (uint)(deviceList?.Length ?? 0), deviceList, options,
                 callback == null ? IntPtr.Zero : Marshal.GetFunctionPointerForDelegate(callback), userData);
         }
 
@@ -2326,8 +2407,8 @@ namespace OpenTK.Compute.OpenCL
             [In] CLDevice[] deviceList,
             [In] string options,
             [In] uint numberOfInputDevices,
-            [In] IntPtr[] inputHeaders,
-            [Out] out IntPtr headerIncludeNames,
+            [In] CLProgram[] inputHeaders,
+            [In] string[] headerIncludeNames,
             [In] IntPtr notificationCallback,
             [In] IntPtr userData);
 
@@ -2338,13 +2419,13 @@ namespace OpenTK.Compute.OpenCL
            this CLProgram program,
             CLDevice[] deviceList,
             string options,
-            IntPtr[] inputHeaders,
-            out IntPtr headerIncludeNames,
+            CLProgram[] inputHeaders,
+            string[] headerIncludeNames,
             ClEventCallback callback,
             IntPtr userData)
         {
-            return CompileProgram(program, (uint)deviceList.Length, deviceList, options, (uint)inputHeaders.Length, inputHeaders,
-               out headerIncludeNames, callback == null ? IntPtr.Zero : Marshal.GetFunctionPointerForDelegate(callback), userData);
+            return CompileProgram(program, (uint)(deviceList?.Length ?? 0), deviceList, options, (uint)(inputHeaders?.Length ?? 0), inputHeaders,
+               headerIncludeNames, callback == null ? IntPtr.Zero : Marshal.GetFunctionPointerForDelegate(callback), userData);
         }
 
         /// <summary>
@@ -2374,28 +2455,8 @@ namespace OpenTK.Compute.OpenCL
             IntPtr userData,
             out CLResultCode resultCode)
         {
-            return LinkProgram(context, (uint)deviceList.Length, deviceList, options, (uint)inputPrograms.Length, inputPrograms,
+            return LinkProgram(context, (uint)(deviceList?.Length ?? 0), deviceList, options, (uint)(inputPrograms?.Length ?? 0), inputPrograms,
                callback == null ? IntPtr.Zero : Marshal.GetFunctionPointerForDelegate(callback), userData, out resultCode);
-        }
-
-        /// <summary>
-        /// Introduced in OpenCL 2.2
-        /// </summary>
-        [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clSetProgramReleaseCallback")]
-        public static extern CLResultCode SetProgramReleaseCallback(
-            [In] this CLProgram program,
-            [In] IntPtr notificationCallback,
-            [In] IntPtr userData);
-
-        /// <summary>
-        /// Introduced in OpenCL 2.2
-        /// </summary>
-        public static CLResultCode SetProgramReleaseCallback(
-           this CLProgram program,
-            ClEventCallback callback,
-            IntPtr userData)
-        {
-            return SetProgramReleaseCallback(program, callback == null ? IntPtr.Zero : Marshal.GetFunctionPointerForDelegate(callback), userData);
         }
 
         /// <summary>
@@ -2407,6 +2468,25 @@ namespace OpenTK.Compute.OpenCL
             [In] uint specId,
             [In] nuint specSize,
             [In] IntPtr specValue);
+
+        /// <summary>
+        /// Introduced in OpenCL 2.2
+        /// </summary>
+        public static unsafe CLResultCode SetProgramSpecializationConstant<T>(
+            this CLProgram program,
+            uint specId,
+            T specValue)
+            where T : unmanaged
+        {
+            if (specValue is bool)
+            {
+                ushort shortVal = (bool)Convert.ChangeType(specValue, typeof(bool)) ? (ushort)1 : (ushort)0;
+                ushort* shortArg = &shortVal;
+                return SetProgramSpecializationConstant(program, specId, (nuint)sizeof(ushort), (IntPtr)shortArg);
+            }
+            T* arg = &specValue;
+            return SetProgramSpecializationConstant(program, specId, (nuint)sizeof(T), (IntPtr)arg);
+        }
 
         /// <summary>
         /// Introduced in OpenCL 1.2
@@ -3032,6 +3112,28 @@ namespace OpenTK.Compute.OpenCL
             out CLEvent @event)
         {
             return EnqueueTask(commandQueue, kernel, (uint)(eventWaitList?.Length ?? 0), eventWaitList, out @event);
+        }
+
+        /// <summary>
+        /// Introduced in OpenCL 2.2
+        /// </summary>
+        [Obsolete("Deprecated in OpenCL 3.0")]
+        [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clSetProgramReleaseCallback")]
+        public static extern CLResultCode SetProgramReleaseCallback(
+            [In] this CLProgram program,
+            [In] IntPtr notificationCallback,
+            [In] IntPtr userData);
+
+        /// <summary>
+        /// Introduced in OpenCL 2.2
+        /// </summary>
+        [Obsolete("Deprecated in OpenCL 3.0")]
+        public static CLResultCode SetProgramReleaseCallback(
+           this CLProgram program,
+            ClEventCallback callback,
+            IntPtr userData)
+        {
+            return SetProgramReleaseCallback(program, callback == null ? IntPtr.Zero : Marshal.GetFunctionPointerForDelegate(callback), userData);
         }
 
         #endregion
