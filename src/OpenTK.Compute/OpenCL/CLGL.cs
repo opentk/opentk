@@ -44,6 +44,12 @@ namespace OpenTK.Compute.OpenCL
             /// </summary>
             NumSamples = 0x2012,
         }
+        
+        public enum ContextInfo : uint
+        {
+            CurrentDeviceForGlContextKHR = 0x2006,
+            DevicesForGlContextKHR = 0x2007
+        }
 
         static CLGL()
         {
@@ -113,9 +119,9 @@ namespace OpenTK.Compute.OpenCL
         public static extern CLResultCode GetGLTextureInfo(
             [In] this CLBuffer memObject,
             [In] TextureInfo paramName,
-            [In] UIntPtr paramValueSize,
+            [In] nuint paramValueSize,
             [Out] byte[] paramValue,
-            [Out] out UIntPtr paramValueSizeReturned
+            [Out] out nuint paramValueSizeReturned
         );
 
         public static CLResultCode GetGLTextureInfo(
@@ -123,7 +129,7 @@ namespace OpenTK.Compute.OpenCL
             TextureInfo paramName,
             out byte[] paramValue)
         {
-            GetGLTextureInfo(memObject, paramName, UIntPtr.Zero, null, out UIntPtr sizeReturned);
+            GetGLTextureInfo(memObject, paramName, nuint.Zero, null, out nuint sizeReturned);
             paramValue = new byte[sizeReturned.ToUInt64()];
             return GetGLTextureInfo(memObject, paramName, sizeReturned, paramValue, out _);
         }
@@ -204,12 +210,6 @@ namespace OpenTK.Compute.OpenCL
 
         #endregion
 
-        public enum ContextInfo : uint
-        {
-            CurrentDeviceForGlContextKHR = 0x2006,
-            DevicesForGlContextKHR = 0x2007
-        }
-
         /// <summary>
         /// Introduced in Opencl 1.0
         /// </summary>
@@ -217,9 +217,9 @@ namespace OpenTK.Compute.OpenCL
         public static extern CLResultCode GetGLContextInfoKHR(
             [In] IntPtr[] properties,
             [In] ContextInfo paramName,
-            [In] UIntPtr paramValueSize,
+            [In] nuint paramValueSize,
             [Out] byte[] paramValue,
-            [Out] out UIntPtr paramValueSizeReturned
+            [Out] out nuint paramValueSizeReturned
         );
 
         public static CLResultCode GetGLContextInfoKHR(
@@ -227,8 +227,8 @@ namespace OpenTK.Compute.OpenCL
             ContextInfo paramName,
             out byte[] paramValue)
         {
-            GetGLContextInfoKHR(properties, paramName, UIntPtr.Zero, null, out UIntPtr sizeReturned);
-            paramValue = new byte[sizeReturned.ToUInt64()];
+            GetGLContextInfoKHR(properties, paramName, 0, null, out nuint sizeReturned);
+            paramValue = new byte[sizeReturned];
             return GetGLContextInfoKHR(properties, paramName, sizeReturned, paramValue, out _);
         }
 
