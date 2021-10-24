@@ -2,15 +2,15 @@ using System;
 
 namespace OpenTK.Compute.OpenCL
 {
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-    public readonly struct CLContext : IEquatable<CLContext>
-    {
-        public readonly IntPtr Handle;
+	public readonly struct CLContext : IEquatable<CLContext>
+	{
+		public readonly IntPtr Handle;
+        public static CLBuffer Zero { get { return new CLBuffer(IntPtr.Zero); } }
 
         public CLContext(IntPtr handle)
-        {
-            Handle = handle;
-        }
+		{
+			Handle = handle;
+		}
 
         public bool Equals(CLContext other)
         {
@@ -37,7 +37,7 @@ namespace OpenTK.Compute.OpenCL
             return !(left == right);
         }
 
-        public static implicit operator IntPtr(CLContext context) => context.Handle;
+		public static implicit operator IntPtr(CLContext context) => context.Handle;
+
     }
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
 }

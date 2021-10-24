@@ -1,73 +1,123 @@
 using System;
+using System.Runtime.InteropServices;
 
 namespace OpenTK.Compute.OpenCL
 {
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-    public struct ImageFormat
+    [StructLayout(LayoutKind.Sequential)]
+    public readonly struct CLBufferRegion
     {
-        public ChannelOrder ChannelOrder;
-        public ChannelType ChannelType;
+        public readonly ulong Origin;
+        public readonly ulong Size;
+
+        public CLBufferRegion(ulong origin, ulong size)
+        {
+            this.Origin = origin;
+            this.Size = size;
+        }
     }
 
-    public struct ImageDescription
-    {
-        public MemoryObjectType ImageType;
-        public UIntPtr Width;
-        public UIntPtr Height;
-        public UIntPtr Depth;
-        public UIntPtr ArraySize;
-        public UIntPtr RowPitch;
-        public UIntPtr SlicePitch;
-        public uint MipLevels;
-        public uint Samples;
-        public IntPtr Buffer;
+    [StructLayout(LayoutKind.Sequential)]
+    public struct CLImageFormat
+	{
+		public ChannelOrder ChannelOrder;
+		public ChannelType ChannelType;
 
-        public static ImageDescription Create2D(uint width, uint height)
+        public CLImageFormat(ChannelOrder channelOrder, ChannelType channelType)
         {
-            return new ImageDescription()
+            ChannelOrder = channelOrder;
+            ChannelType = channelType;
+        }
+	}
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct CLImageDescription
+	{
+		public MemoryObjectType ImageType;
+		public ulong Width;
+		public ulong Height;
+		public ulong Depth;
+		public ulong ArraySize;
+		public ulong RowPitch;
+		public ulong SlicePitch;
+		public uint MipLevels;
+		public uint Samples;
+		public CLBuffer Buffer;
+
+        public static CLImageDescription Create1D(ulong width, ulong rowPitch = 0)
+        {
+            return new CLImageDescription()
+            {
+                ImageType = MemoryObjectType.Image1D,
+                Width = width,
+                Height = 1,
+                Depth = 1,
+                RowPitch = rowPitch
+            };
+        }
+
+        public static CLImageDescription Create1DBuffer(ulong width, ulong rowPitch = 0)
+        {
+            return new CLImageDescription()
+            {
+                ImageType = MemoryObjectType.Image1DBuffer,
+                Width = width,
+                Height = 1,
+                Depth = 1,
+                RowPitch = rowPitch
+            };
+        }
+
+        public static CLImageDescription Create1DArray(ulong width, ulong arraySize, ulong rowPitch = 0)
+        {
+            return new CLImageDescription()
+            {
+                ImageType = MemoryObjectType.Image1DArray,
+                Width = width,
+                Height = 1,
+                Depth = 1,
+                ArraySize = arraySize,
+                RowPitch = rowPitch
+            };
+        }
+
+        public static CLImageDescription Create2D(ulong width, ulong height, ulong rowPitch = 0, ulong slicePitch = 0)
+        {
+            return new CLImageDescription()
             {
                 ImageType = MemoryObjectType.Image2D,
-                Width = (UIntPtr)width,
-                Height = (UIntPtr)height,
-                Depth = (UIntPtr)1,
+                Width = width,
+                Height = height,
+                Depth = 1,
+                RowPitch = rowPitch,
+                SlicePitch = slicePitch
             };
         }
 
-        public static ImageDescription Create2D(uint width, uint height, uint rowPitch)
+        public static CLImageDescription Create2DArray(ulong width, ulong height, ulong arraySize, ulong rowPitch = 0, ulong slicePitch = 0)
         {
-            return new ImageDescription()
+            return new CLImageDescription()
             {
-                ImageType = MemoryObjectType.Image2D,
-                Width = (UIntPtr)width,
-                Height = (UIntPtr)height,
-                Depth = (UIntPtr)1,
-                RowPitch = (UIntPtr)rowPitch
+                ImageType = MemoryObjectType.Image2DArray,
+                Width = width,
+                Height = height,
+                Depth = 1,
+                ArraySize = arraySize,
+                RowPitch = rowPitch,
+                SlicePitch = slicePitch
             };
         }
 
-        public static ImageDescription Create3D(uint width, uint height, uint depth)
-        {
-            return new ImageDescription()
-            {
-                ImageType = MemoryObjectType.Image3D,
-                Width = (UIntPtr)width,
-                Height = (UIntPtr)height,
-                Depth = (UIntPtr)depth,
-            };
-        }
-
-        public static ImageDescription Create3D(uint width, uint height, uint depth, uint rowPitch, uint slicePitch)
-        {
-            return new ImageDescription()
-            {
-                ImageType = MemoryObjectType.Image3D,
-                Width = (UIntPtr)width,
-                Height = (UIntPtr)height,
-                Depth = (UIntPtr)depth,
-                RowPitch = (UIntPtr)rowPitch,
-                SlicePitch = (UIntPtr)slicePitch
-            };
-        }
-    }
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+        public static CLImageDescription Create3D(ulong width, ulong height, ulong depth, ulong rowPitch = 0, ulong slicePitch = 0)
+		{
+			return new CLImageDescription()
+			{
+				ImageType = MemoryObjectType.Image3D,
+				Width = width,
+				Height = height,
+				Depth = depth,
+				RowPitch = rowPitch,
+				SlicePitch = slicePitch
+			};
+		}
+	}
 }
