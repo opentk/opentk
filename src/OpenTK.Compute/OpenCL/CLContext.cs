@@ -5,8 +5,9 @@ namespace OpenTK.Compute.OpenCL
 	public readonly struct CLContext : IEquatable<CLContext>
 	{
 		public readonly IntPtr Handle;
+        public static CLBuffer Zero { get { return new CLBuffer(IntPtr.Zero); } }
 
-		public CLContext(IntPtr handle)
+        public CLContext(IntPtr handle)
 		{
 			Handle = handle;
 		}
@@ -37,5 +38,6 @@ namespace OpenTK.Compute.OpenCL
 		}
 
 		public static implicit operator IntPtr(CLContext context) => context.Handle;
-	}
+
+    }
 }
