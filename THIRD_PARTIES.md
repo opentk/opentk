@@ -1,5 +1,10 @@
 # Third parties
 
+## AdvancedDLSupport
+> OpenTK uses AdvancedDLSupport for native interoperability. To enable compatibility with the LGPLv3 License, Firwood has given us a licensing exception.
+* Read the [license grant](AdvancedDLSupport-LICENSE.pdf).
+* Read the [license summary](Short-LICENSE.md) for an easy-to-understand version.
+
 ## OpenEXR
 
 > OpenTK.Half offers Half-to-Single and Single-to-Half conversions based on OpenEXR source code, which is covered by the following license:

@@ -1,59 +1,53 @@
-## 4.6.7
+## 5.0-pre.6
+* New manual overload for ClearColor
+* New manual overload for GetProgramInfoLog
+* Move to System.Half from OpenTK.Mathemathics.Half (@friendlychicken)
+* Fix native call '_' postfix
+* *Added typesafe opengl handles!*
 
-* FIX: Fixed closing window causing AccessViolations on windows and other crashes on other platforms. (@NogginBops)
+## 5.0-pre.5
+* Math type overloads (includes Vector overloads and matrix overloads).
 
-## 4.6.6
+## 5.0-pre.4
+* Fixed debug callbacks (GL.DebugMessageCallback)
+* Created an offset overloader to deal with glDrawElements* and glVertexAttribXPointer
+* Created a bool overloader to properly manage 8 bit booleans in the spec
+* Manual overload for GL.CreateShaderProgramv (@deccer)
+* Added the old 4.0 name trimmer
+* Opentk.compute changed UIntPtr to nuint
+* OpenCL OpenGL interop added
+* Fixed singular delete overloads
+* General overloader code cleanup
 
-* FIX: Fixed arithmetic overflow issue in `Box2i.Center` and `Box3i.Center` introduced when making them return correct values.
+## 5.0-pre.3
+* Fix an issue when overloading a void* to an IntPtr.
 
-## 4.6.5
+## 5.0-pre.2
+* bools will now be booleans instead of bytes
+* ref parameters can now be generic
+* Delete* will now recieve similar overloads as Gen* and Create*
+* Delete, Gen and Create* will have names with removed s for the singular versions
+* Overloads now use nint for arguments of type GLsizeiptr and GLsizeiptrARB in c
+* Proper parameter naming
+* Created new overload for void* parameters making them IntPtr
 
-* API: Added settings in `NativeWindowSettings` for controlling backbuffer parameters such as `DepthBits` and `StencilBits`. (@deccer)
+## 5.0-pre.1
+* Rewritten generator for OpenGL bindings, this will enable some nice features that are in the works.
+* Updated projects to .net 5
+* New colors using phantom types for color spaces.
 
-* API: Added `SwapInterval` to `IGraphicsContext` and moved `VSync` property from `GameWindow` to `NativeWindow` to allow for more control over vsync. (@softwareantics)
+**Note**: The new OpenGL bindings will receive updates and breaking changes in the coming previews.
 
-* Updated GLFW to 3.3.4. (@NogginBops)
-
-
-* FIX: Fixed `Box2i.Center` and `Box3i.Center` returning wrong values. (@NogginBops, thanks @g7ChoGXh for the bug report)
-* FIX: Implemented proper disposing of `NativeWindow`. (@NogginBops, thanks @xiejiang2014 for the bug report)
-* FIX: Fixed calling conventions on glfw callbacks in 32-bit builds. (@NogginBops)
-
-## 4.6.4
-
-* FIX: Made it so that the singular check in `Matrix4.Invert` is the same between platforms.
-In particular this fixes an issue where the singular check was too aggressive in the SSE3 path. (@NogginBops)
-* FIX: Made checking for OpenAL extensions not crash if the extension wasn't present. (@NogginBops)
-* FIX: Fix to the rewriter to not generate invalid IL on some GLES functions. (@NogginBops)
-
-* Updated CONTRIBUTING.md to not contain broken links. (@asears)
-
-## 4.6.3
-
-* FIX: Fixed an issue where `Matrix4.Invert` threw an exception if the matrix determinant was negative. (@NogginBops, thanks for reporting @ghidosoft)
-
-## 4.6.2
-
-* FIX: The package should now be built corretly and work on .net core 3.1 and up. (@PJB)
-
-## 4.6.1
-
-* FIX: Made `OpenTK.Mathematics` work on .net standard 2.1 and .net core 3.1 which broke with 4.6.0. (@PJB)
-
-## 4.6.0
-
-* API: Added `cl_khr_gl_sharing` extension for OpenCL which allows OpenCL x OpenGL interop. (@NepNet)
-
-* FIX: Removed allocations from `Matrix4.Invert` and `Matrix3.Invert` and made them about 90% faster. (@NogginBops)
+**Note**: The generated functions currently do not have xml documentation attached to them, this will be available in the final release.
 
 ## 4.5.0
-* API: Introduced `GameWindow.UpdateTime` to match `GameWindow.RenderTime`. (@NogginBops)
-* API: Added GLFW functions for getting platform dependent opengl context pointers. (@NogginBops)
+API: Introduced `GameWindow.UpdateTime` to match `GameWindow.RenderTime`. (@NogginBops)
+API: Added GLFW functions for getting platform dependent opengl context pointers. (@NogginBops)
 
-* FIX: `GameWindow.RenderTime` now gets updated correctly. (@NogginBops)
-* FIX: Actually assign `APIVersion` property in `NativeWindow`. (@BroMandarin)
-* FIX: The `MouseWheelEventArgs` in `OnMouseWheel` now correctly returns a delta instead of an accumulated offset. (@GeorchW)
-* FIX: Some overloads for `AL.DeleteSources` where calling `alDeleteBuffers` instead of `alDeleteSources`. (@NogginBops)
+FIX: `GameWindow.RenderTime` now gets updated correctly. (@NogginBops)
+FIX: Actually assign `APIVersion` property in `NativeWindow`. (@BroMandarin)
+FIX: The `MouseWheelEventArgs` in `OnMouseWheel` now correctly returns a delta instead of an accumulated offset. (@GeorchW)
+FIX: Some overloads for `AL.DeleteSources` where calling `alDeleteBuffers` instead of `alDeleteSources`. (@NogginBops)
 
 ## 4.4.0
 * API: Added properties ButtonCount, AxisCount, and HatCount to JoystickState (@Ferpsalerp)
@@ -601,3 +595,4 @@ Full Log:
 	* Moved to new FAKE/Paket based build system
 	* Removed superfluous release configurations
 	* Numerous other fixes and enhancements
+	
