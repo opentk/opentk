@@ -4,7 +4,7 @@ using OpenTK.Compute.Native;
 
 namespace OpenTK.Compute.OpenCL
 {
-    public static class CLGL 
+    public static class CLGL
     {
         public enum ObjectType : uint
         {
@@ -44,7 +44,7 @@ namespace OpenTK.Compute.OpenCL
             /// </summary>
             NumSamples = 0x2012,
         }
-        
+
         public enum ContextInfo : uint
         {
             CurrentDeviceForGlContextKHR = 0x2006,
@@ -129,8 +129,8 @@ namespace OpenTK.Compute.OpenCL
             TextureInfo paramName,
             out byte[] paramValue)
         {
-            GetGLTextureInfo(memObject, paramName, nuint.Zero, null, out nuint sizeReturned);
-            paramValue = new byte[sizeReturned.ToUInt64()];
+            GetGLTextureInfo(memObject, paramName, 0, null, out nuint sizeReturned);
+            paramValue = new byte[sizeReturned];
             return GetGLTextureInfo(memObject, paramName, sizeReturned, paramValue, out _);
         }
 
@@ -153,7 +153,7 @@ namespace OpenTK.Compute.OpenCL
             CLEvent[] eventWaitList,
             out CLEvent @event)
         {
-            return EnqueueAcquireGLObjects(commandQueue, (uint)memoryObjects.Length, memoryObjects, (uint)eventWaitList.Length, eventWaitList, out @event);
+            return EnqueueAcquireGLObjects(commandQueue, (uint)(memoryObjects?.Length ?? 0), memoryObjects, (uint)(eventWaitList?.Length ?? 0), eventWaitList, out @event);
         }
 
         /// <summary>
@@ -175,7 +175,7 @@ namespace OpenTK.Compute.OpenCL
             CLEvent[] eventWaitList,
             out CLEvent @event)
         {
-            return EnqueueReleaseGLObjects(commandQueue, (uint)memoryObjects.Length, memoryObjects, (uint)eventWaitList.Length, eventWaitList, out @event);
+            return EnqueueReleaseGLObjects(commandQueue, (uint)(memoryObjects?.Length ?? 0), memoryObjects, (uint)(eventWaitList?.Length ?? 0), eventWaitList, out @event);
         }
 
         #region Deprecated OpenCL 1.1 APIs
