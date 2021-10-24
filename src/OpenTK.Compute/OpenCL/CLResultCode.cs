@@ -78,7 +78,7 @@ namespace OpenTK.Compute.OpenCL
 
         #region Errors thrown by extensions
 
-        InvalidGlShaderGroupReferenceKhr = -1000,
+        InvalidGlShareGroupReferenceKhr = -1000,
 		PlatformNotFoundKhr = -1001,
 		InvalidD3D10DeviceKhr = -1002,
 		InvalidD3D10ResourceKhr = -1003,
