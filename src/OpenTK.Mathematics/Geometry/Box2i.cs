@@ -20,9 +20,6 @@ namespace OpenTK.Mathematics
     [StructLayout(LayoutKind.Sequential)]
     public struct Box2i : IEquatable<Box2i>
     {
-        /// <summary>
-        /// An empty box with Min (0, 0) and Max (0, 0).
-        /// </summary>
         public static readonly Box2i Empty = new Box2i(0, 0, 0, 0);
 
         private Vector2i _min;
@@ -35,7 +32,15 @@ namespace OpenTK.Mathematics
             get => _min;
             set
             {
-                _max = Vector2i.ComponentMax(_max, value);
+                if (value.X > _max.X)
+                {
+                    _max.X = value.X;
+                }
+                if (value.Y > _max.Y)
+                {
+                    _max.Y = value.Y;
+                }
+
                 _min = value;
             }
         }
@@ -50,7 +55,15 @@ namespace OpenTK.Mathematics
             get => _max;
             set
             {
-                _min = Vector2i.ComponentMin(_min, value);
+                if (value.X < _min.X)
+                {
+                    _min.X = value.X;
+                }
+                if (value.Y < _min.Y)
+                {
+                    _min.Y = value.Y;
+                }
+
                 _max = value;
             }
         }
@@ -106,7 +119,7 @@ namespace OpenTK.Mathematics
         /// to avoid annoying off-by-one errors in box placement, no setter is provided for this property
         public Vector2 Center
         {
-            get => _min + ((_max - _min).ToVector2() * 0.5f);
+            get => ((_min + _max).ToVector2() * 0.5f) + _min.ToVector2();
         }
 
         /// <summary>
@@ -137,11 +150,7 @@ namespace OpenTK.Mathematics
                 return _min.X <= point.X && point.X <= _max.X &&
                        _min.Y <= point.Y && point.Y <= _max.Y;
             }
-            else
-            {
-                return _min.X < point.X && point.X < _max.X &&
-                   _min.Y < point.Y && point.Y < _max.Y;
-            }
+            return _min.X < point.X && point.X < _max.X &&
         }
 
         /// <summary>
@@ -186,10 +195,10 @@ namespace OpenTK.Mathematics
         [Pure]
         public float DistanceToNearestEdge(Vector2i point)
         {
-            var dist = new Vector2(
+            var distX = new Vector2(
                 Math.Max(0f, Math.Max(_min.X - point.X, point.X - _max.X)),
                 Math.Max(0f, Math.Max(_min.Y - point.Y, point.Y - _max.Y)));
-            return dist.Length;
+            return distX.Length;
         }
 
         /// <summary>

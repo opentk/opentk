@@ -896,15 +896,7 @@ namespace OpenTK.Rewrite
                     param => param.Name == countParameter.Substring(1));
 
                 il.Emit(OpCodes.Ldarg, pointerParam.Index);
-                if (pointerParam.ParameterType.IsArray)
-                {
-                    il.Emit(OpCodes.Ldc_I4_0);
-                    il.Emit(OpCodes.Ldelem_I4);
-                }
-                else
-                {
-                    il.Emit(OpCodes.Ldind_I4);
-                }
+                il.Emit(OpCodes.Ldind_I4);
             }
             else
             {
