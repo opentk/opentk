@@ -551,7 +551,7 @@ namespace OpenTK.Mathematics
         /// <exception cref="InvalidOperationException">Thrown if the Matrix2d is singular.</exception>
         public static void Invert(in Matrix2d mat, out Matrix2d result)
         {
-            var det = (mat.Row0.X * mat.Row1.Y) - (mat.Row0.Y * mat.Row1.X);
+            var det = mat.Determinant;
 
             if (det == 0)
             {
@@ -560,15 +560,10 @@ namespace OpenTK.Mathematics
 
             var invDet = 1f / det;
 
-            // Because the c# jit assumes alias for byref types we need to
-            // save this value as the write to result.Row0.X could change the
-            // value of mat.Row0.X.
-            var row0x = mat.Row0.X;
-
             result.Row0.X = mat.Row1.Y * invDet;
             result.Row0.Y = -mat.Row0.Y * invDet;
             result.Row1.X = -mat.Row1.X * invDet;
-            result.Row1.Y = row0x * invDet;
+            result.Row1.Y = mat.Row0.X * invDet;
         }
 
         /// <summary>

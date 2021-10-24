@@ -24,7 +24,7 @@ namespace OpenTK.Windowing.Desktop
         /// <summary>
         /// Gets the native <see cref="Window"/> pointer for use with <see cref="GLFW"/> API.
         /// </summary>
-        public unsafe Window* WindowPtr { get; protected set; }
+        public unsafe Window* WindowPtr { get; }
 
         // Both of these are used to cache the size and location of the window before going into full screen mode.
         // When getting out of full screen mode, the location and size will be set to these value in all states other then minimized.
@@ -116,36 +116,6 @@ namespace OpenTK.Windowing.Desktop
         /// </summary>
         /// <value><c>true</c> if any button is pressed; otherwise, <c>false</c>.</value>
         public bool IsAnyMouseButtonDown => MouseState.IsAnyButtonDown;
-
-        private VSyncMode _vSync;
-
-        /// <summary>
-        /// Gets or sets the VSync state of this <see cref="NativeWindow"/>.
-        /// </summary>
-        /// <value>
-        /// The VSync state.
-        /// </value>
-        public VSyncMode VSync
-        {
-            get => _vSync;
-
-            set
-            {
-                // We don't do anything here for adaptive because that's handled in GameWindow.
-                switch (value)
-                {
-                    case VSyncMode.On:
-                        Context.SwapInterval = 1;
-                        break;
-
-                    case VSyncMode.Off:
-                        Context.SwapInterval = 0;
-                        break;
-                }
-
-                _vSync = value;
-            }
-        }
 
         private WindowIcon _icon;
 
@@ -598,7 +568,8 @@ namespace OpenTK.Windowing.Desktop
             GLFWProvider.EnsureInitialized();
             if (!GLFWProvider.IsOnMainThread)
             {
-                throw new GLFWException("Can only create windows on the Glfw main thread (the thread that calls Main).");
+                throw new
+                    GLFWException("Can only create windows on the Glfw main thread. (Thread from which Glfw was first created).");
             }
 
             _title = settings.Title;
@@ -690,14 +661,9 @@ namespace OpenTK.Windowing.Desktop
             {
                 var monitor = settings.CurrentMonitor.ToUnsafePtr<GraphicsLibraryFramework.Monitor>();
                 var modePtr = GLFW.GetVideoMode(monitor);
-                GLFW.WindowHint(WindowHintInt.RedBits, settings.RedBits ?? modePtr->RedBits);
-                GLFW.WindowHint(WindowHintInt.GreenBits, settings.GreenBits ?? modePtr->GreenBits);
-                GLFW.WindowHint(WindowHintInt.BlueBits, settings.BlueBits ?? modePtr->BlueBits);
-                if (settings.AlphaBits.HasValue)
-                {
-                    GLFW.WindowHint(WindowHintInt.AlphaBits, settings.AlphaBits.Value);
-                }
-
+                GLFW.WindowHint(WindowHintInt.RedBits, modePtr->RedBits);
+                GLFW.WindowHint(WindowHintInt.GreenBits, modePtr->GreenBits);
+                GLFW.WindowHint(WindowHintInt.BlueBits, modePtr->BlueBits);
                 GLFW.WindowHint(WindowHintInt.RefreshRate, modePtr->RefreshRate);
 
                 if (settings.WindowState == WindowState.Fullscreen && _isVisible)
@@ -711,16 +677,6 @@ namespace OpenTK.Windowing.Desktop
                 {
                     WindowPtr = GLFW.CreateWindow(settings.Size.X, settings.Size.Y, _title, null, (Window*)(settings.SharedContext?.WindowPtr ?? IntPtr.Zero));
                 }
-            }
-
-            if (settings.DepthBits.HasValue)
-            {
-                GLFW.WindowHint(WindowHintInt.DepthBits, settings.DepthBits.Value);
-            }
-
-            if (settings.StencilBits.HasValue)
-            {
-                GLFW.WindowHint(WindowHintInt.StencilBits, settings.StencilBits.Value);
             }
 
             Context = new GLFWGraphicsContext(WindowPtr);
@@ -1103,14 +1059,25 @@ namespace OpenTK.Windowing.Desktop
             {
                 GLFW.SetWindowShouldClose(WindowPtr, false);
             }
+            else
+            {
+                IsExiting = true;
+            }
+
+            Dispose(true);
         }
 
         /// <summary>
         /// Closes this window.
         /// </summary>
-        public virtual unsafe void Close()
+        public virtual void Close()
         {
-            GLFW.SetWindowShouldClose(WindowPtr, true);
+            unsafe
+            {
+                OnCloseCallback(WindowPtr);
+            }
+
+            Dispose(true);
         }
 
         /// <summary>
@@ -1121,6 +1088,28 @@ namespace OpenTK.Windowing.Desktop
             Context.MakeCurrent();
         }
 
+        protected unsafe void DestroyWindow()
+        {
+            if (Exists)
+            {
+                Exists = false;
+                GLFW.DestroyWindow(WindowPtr);
+
+                OnClosed();
+            }
+        }
+
+        private bool PreProcessEvents()
+        {
+            if (IsExiting)
+            {
+                DestroyWindow();
+                return false;
+            }
+
+            return true;
+        }
+
         /// <summary>
         /// Processes pending window events and waits <paramref name="timeout"/> seconds for events.
         /// </summary>
@@ -1129,11 +1118,14 @@ namespace OpenTK.Windowing.Desktop
         /// (Event processing not possible anymore, window is about to be destroyed).</returns>
         public bool ProcessEvents(double timeout)
         {
-            GLFW.WaitEventsTimeout(timeout);
+            if (!PreProcessEvents())
+            {
+                return false;
+            }
 
+            GLFW.WaitEventsTimeout(timeout);
             ProcessInputEvents();
 
-            // FIXME: Remove this return and the documentation comment about it
             return true;
         }
 
@@ -1142,6 +1134,11 @@ namespace OpenTK.Windowing.Desktop
         /// </summary>
         public virtual void ProcessEvents()
         {
+            if (!PreProcessEvents())
+            {
+                return;
+            }
+
             ProcessInputEvents();
 
             if (IsEventDriven)
@@ -1668,7 +1665,7 @@ namespace OpenTK.Windowing.Desktop
         private bool _disposedValue; // To detect redundant calls
 
         /// <inheritdoc cref="IDisposable.Dispose" />
-        protected virtual unsafe void Dispose(bool disposing)
+        protected virtual void Dispose(bool disposing)
         {
             if (_disposedValue)
             {
@@ -1677,15 +1674,6 @@ namespace OpenTK.Windowing.Desktop
 
             if (disposing)
             {
-            }
-
-            if (GLFWProvider.IsOnMainThread)
-            {
-                GLFW.DestroyWindow(WindowPtr);
-            }
-            else
-            {
-                throw new GLFWException("You can only dispose windows on the main thread. The window needs to be disposed as it cannot safely be disposed in the finalizer.");
             }
 
             _disposedValue = true;

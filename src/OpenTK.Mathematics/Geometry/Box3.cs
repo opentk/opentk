@@ -22,6 +22,9 @@ namespace OpenTK.Mathematics
     {
         private Vector3 _min;
 
+        /// <summary>
+        /// Gets or sets the minimum boundary of the structure.
+        /// </summary>
         public Vector3 Min
         {
             get => _min;

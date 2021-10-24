@@ -396,12 +396,11 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector4i ComponentMin(Vector4i a, Vector4i b)
         {
-            Vector4i result;
-            result.X = Math.Min(a.X, b.X);
-            result.Y = Math.Min(a.Y, b.Y);
-            result.Z = Math.Min(a.Z, b.Z);
-            result.W = Math.Min(a.W, b.W);
-            return result;
+            a.X = a.X < b.X ? a.X : b.X;
+            a.Y = a.Y < b.Y ? a.Y : b.Y;
+            a.Z = a.Z < b.Z ? a.Z : b.Z;
+            a.W = a.W < b.W ? a.W : b.W;
+            return a;
         }
 
         /// <summary>
@@ -412,10 +411,10 @@ namespace OpenTK.Mathematics
         /// <param name="result">The component-wise minimum.</param>
         public static void ComponentMin(in Vector4i a, in Vector4i b, out Vector4i result)
         {
-            result.X = Math.Min(a.X, b.X);
-            result.Y = Math.Min(a.Y, b.Y);
-            result.Z = Math.Min(a.Z, b.Z);
-            result.W = Math.Min(a.W, b.W);
+            result.X = a.X < b.X ? a.X : b.X;
+            result.Y = a.Y < b.Y ? a.Y : b.Y;
+            result.Z = a.Z < b.Z ? a.Z : b.Z;
+            result.W = a.W < b.W ? a.W : b.W;
         }
 
         /// <summary>
@@ -427,12 +426,11 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector4i ComponentMax(Vector4i a, Vector4i b)
         {
-            Vector4i result;
-            result.X = Math.Max(a.X, b.X);
-            result.Y = Math.Max(a.Y, b.Y);
-            result.Z = Math.Max(a.Z, b.Z);
-            result.W = Math.Max(a.W, b.W);
-            return result;
+            a.X = a.X > b.X ? a.X : b.X;
+            a.Y = a.Y > b.Y ? a.Y : b.Y;
+            a.Z = a.Z > b.Z ? a.Z : b.Z;
+            a.W = a.W > b.W ? a.W : b.W;
+            return a;
         }
 
         /// <summary>
@@ -443,10 +441,10 @@ namespace OpenTK.Mathematics
         /// <param name="result">The component-wise maximum.</param>
         public static void ComponentMax(in Vector4i a, in Vector4i b, out Vector4i result)
         {
-            result.X = Math.Max(a.X, b.X);
-            result.Y = Math.Max(a.Y, b.Y);
-            result.Z = Math.Max(a.Z, b.Z);
-            result.W = Math.Max(a.W, b.W);
+            result.X = a.X > b.X ? a.X : b.X;
+            result.Y = a.Y > b.Y ? a.Y : b.Y;
+            result.Z = a.Z > b.Z ? a.Z : b.Z;
+            result.W = a.W > b.W ? a.W : b.W;
         }
 
         /// <summary>
@@ -459,12 +457,11 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector4i Clamp(Vector4i vec, Vector4i min, Vector4i max)
         {
-            Vector4i result;
-            result.X = MathHelper.Clamp(vec.X, min.X, max.X);
-            result.Y = MathHelper.Clamp(vec.Y, min.Y, max.Y);
-            result.Z = MathHelper.Clamp(vec.Z, min.Z, max.Z);
-            result.W = MathHelper.Clamp(vec.W, min.W, max.W);
-            return result;
+            vec.X = MathHelper.Clamp(vec.X, min.X, max.X);
+            vec.Y = MathHelper.Clamp(vec.Y, min.Y, max.Y);
+            vec.Z = MathHelper.Clamp(vec.Z, min.Z, max.Z);
+            vec.W = MathHelper.Clamp(vec.W, min.W, max.W);
+            return vec;
         }
 
         /// <summary>
