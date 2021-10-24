@@ -35,7 +35,7 @@ namespace OpenTK.Compute.OpenCL
         {
 
         }
-        public CLCommandQueueProperties(CommandQueueProperties? properties, uint? queueSize)
+        public CLCommandQueueProperties(CommandQueueProperties? properties, uint? queueSize = null)
         {
             Properties = properties;
             QueueSize = queueSize;

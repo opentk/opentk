@@ -2,58 +2,6 @@
 
 namespace OpenTK.Compute.OpenCL
 {
-
-    [Flags]
-    public enum MemoryFlags : ulong
-    {
-        None = 0,
-        ReadWrite = 1 << 0,
-        WriteOnly = 1 << 1,
-        ReadOnly = 1 << 2,
-        UseHostPtr = 1 << 3,
-        AllocHostPtr = 1 << 4,
-        CopyHostPtr = 1 << 5,
-
-        //Reserved = 1 << 6,
-        HostWriteOnly = 1 << 7,
-        HostReadOnly = 1 << 8,
-        HostNoAccess = 1 << 9,
-        SvmFineGrainBuffer = 1 << 10,
-        SvmAtomics = 1 << 11,
-        KernelReadAndWrite = 1 << 12,
-
-
-        NoAccessIntel = 1 << 24,
-        AccessFlagsUnrestrictedIntel = 1 << 25,
-        UseUncachedCpuMemoryImg = 1 << 26,
-        UseCachedCpuMemoryImg = 1 << 27,
-        UseGrallocPtrImg = 1 << 28,
-        ExtHostPtrQcom = 1 << 29,
-
-        //Unused
-        //	BusAddressableAmd = 1 << 30,
-        //Unused
-        //	ExternalMemoryAmd = 1 << 31,
-
-        Reserved0ARM = 1 << 32,
-        Reserved1ARM = 1 << 33,
-        Reserved2ARM = 1 << 34,
-        Reserved3ARM = 1 << 35,
-        Reserved4ARM = 1 << 36,
-    }
-
-    public enum MemoryObjectType : uint
-    {
-        Buffer = 0x10F0,
-        Image2D = 0x10F1,
-        Image3D = 0x10F2,
-        Image2DArray = 0x10F3,
-        Image1D = 0x10F4,
-        Image1DArray = 0x10F5,
-        Image1DBuffer = 0x10F6,
-        Pipe = 0x10F7
-    }
-
     public enum ChannelOrder : uint
     {
         R = 0x10B0,
@@ -99,57 +47,6 @@ namespace OpenTK.Compute.OpenCL
         NormalizedUnsignedInteger101010Version2 = 0x10E0
     }
 
-    public enum MemoryObjectInfo : uint
-    {
-        Type = 0x1100,
-        Flags = 0x1101,
-        Size = 0x1102,
-        HostPointer = 0x1103,
-        MapCount = 0x1104,
-        ReferenceCount = 0x1105,
-        Context = 0x1106,
-        AssociatedMemoryObject = 0x1107,
-        Offset = 0x1108,
-        UsesSvmPointer = 0x1109,
-        Properties = 0x110A
-    }
-
-    [Flags]
-    public enum SvmMemoryFlags : ulong
-    {
-        None = 0,
-        ReadWrite = 1 << 0,
-        WriteOnly = 1 << 1,
-        ReadOnly = 1 << 2,
-        UseHostPointer = 1 << 3,
-        AllocateHostPointer = 1 << 4,
-        CopyHostPointer = 1 << 5,
-        HostWriteOnly = 1 << 7,
-        HostReadOnly = 1 << 8,
-        HostNoAccess = 1 << 9,
-        SvmFineGrainBuffer = 1 << 10,
-        SvmAtomics = 1 << 11,
-        KernelReadAndWrite = 1 << 12
-    }
-
-    public enum CommandExecutionStatus : int
-    {
-        Error = -0x1,
-        Complete = 0x0,
-        Running = 0x1,
-        Submitted = 0x2,
-        Queued = 0x3
-    }
-
-    public enum ProfilingInfo : uint
-    {
-        CommandQueued = 0x1280,
-        CommandSubmit = 0x1281,
-        CommandStart = 0x1282,
-        CommandEnd = 0x1283,
-        CommandComplete = 0x1284
-    }
-
     [Flags]
     public enum MapFlags : ulong
     {
@@ -157,14 +54,6 @@ namespace OpenTK.Compute.OpenCL
         Read = 1 << 0,
         Write = 1 << 1,
         WriteInvalidateRegion = 1 << 2
-    }
-
-    [Flags]
-    public enum MemoryMigrationFlags : ulong
-    {
-        None = 0,
-        Host = 1 << 0,
-        ContentUndefined = 1 << 1
     }
 
     #region Platform
@@ -187,7 +76,7 @@ namespace OpenTK.Compute.OpenCL
     #region Context
     public enum ContextProperty : int
     {
-        ContextPlatform = 0x1084, //cl_platform_id
+        ContextPlatform = 0x1084,
         ContextInteropUserSync = 0x1085,
         GlContextKHR = 0x2008,
         EglDisplayKHR = 0x2009,
@@ -358,12 +247,45 @@ namespace OpenTK.Compute.OpenCL
         All = 0xFFFFFFFF
     }
 
+    [Flags]
+    public enum DeviceFloatingPointConfig : ulong
+    {
+        Denorm = 1 << 0,
+        Inf_NAN = 1 << 1,
+        RoundToNearest = 1 << 2,
+        RoundToZero = 1 << 3,
+        RoundToInf = 1 << 4,
+        FMA = 1 << 5,
+        SoftFloat = 1 << 6,
+        CorrectlyRoundedDivideSqrt = 1 << 7,
+    }
+
+    public enum DeviceMemoryCacheType : uint
+    {
+        None = 0,
+        ReadOnlyCache = 0x1,
+        ReadWriteCache = 0x2
+    }
+
+    public enum DeviceLocalMemoryType : uint
+    {
+        Local = 0x1,
+        Global = 0x2
+    }
+
     public enum DevicePartitionProperty : uint
     {
-        ByCountsListEnd = 0,
         Equally = 0X1086,
         ByCounts = 0X1087,
+        ByCountsListEnd = 0,
         ByAffinityDomain = 0x1088
+    }
+
+    [Flags]
+    public enum DeviceExecCapabilities : ulong
+    {
+        Kernel = 1 << 0,
+        NativeKernel = 1 << 1
     }
 
     [Flags]
@@ -375,6 +297,25 @@ namespace OpenTK.Compute.OpenCL
         L2Cache = 1 << 3,
         L1Cache = 1 << 4,
         NextPartitionable = 1 << 5,
+    }
+
+    [Flags]
+    public enum DeviceAtomicCapabilities : ulong
+    {
+        OrderRelaxed = 1 << 0,
+        OrderAcqRel = 1 << 1,
+        OrerSeqCst = 1 << 2,
+        WorkItem = 1 << 3,
+        WorkGroup = 1 << 4,
+        Device = 1 << 5,
+        AllDevices = 1 << 6,
+    }
+
+    [Flags]
+    public enum DeviceEnqueueCapabilities : ulong
+    {
+        Supported = 1 << 0,
+        ReplaceableDefault = 1 << 1,
     }
 
     #endregion
@@ -471,6 +412,116 @@ namespace OpenTK.Compute.OpenCL
     }
     #endregion
 
+    #region SharedVirtualMemory
+
+    [Flags]
+    public enum SvmCapabilities : ulong
+    {
+        CoarseGrainBuffer = 1 << 0,
+        FineGrainBuffer = 1 << 1,
+        FineGrainSystem = 1 << 2,
+        Atomics = 1 << 3,
+
+    }
+
+    [Flags]
+    public enum SvmMemoryFlags : ulong
+    {
+        None = 0,
+        ReadWrite = 1 << 0,
+        WriteOnly = 1 << 1,
+        ReadOnly = 1 << 2,
+        UseHostPointer = 1 << 3,
+        AllocateHostPointer = 1 << 4,
+        CopyHostPointer = 1 << 5,
+        HostWriteOnly = 1 << 7,
+        HostReadOnly = 1 << 8,
+        HostNoAccess = 1 << 9,
+        SvmFineGrainBuffer = 1 << 10,
+        SvmAtomics = 1 << 11,
+        KernelReadAndWrite = 1 << 12
+    }
+
+    #endregion
+
+    #region MemoryObject
+
+    public enum MemoryObjectInfo : uint
+    {
+        Type = 0x1100,
+        Flags = 0x1101,
+        Size = 0x1102,
+        HostPointer = 0x1103,
+        MapCount = 0x1104,
+        ReferenceCount = 0x1105,
+        Context = 0x1106,
+        AssociatedMemoryObject = 0x1107,
+        Offset = 0x1108,
+        UsesSvmPointer = 0x1109,
+        Properties = 0x110A
+    }
+
+    [Flags]
+    public enum MemoryFlags : ulong
+    {
+        None = 0,
+        ReadWrite = 1 << 0,
+        WriteOnly = 1 << 1,
+        ReadOnly = 1 << 2,
+        UseHostPtr = 1 << 3,
+        AllocHostPtr = 1 << 4,
+        CopyHostPtr = 1 << 5,
+
+        //Reserved = 1 << 6,
+        HostWriteOnly = 1 << 7,
+        HostReadOnly = 1 << 8,
+        HostNoAccess = 1 << 9,
+        SvmFineGrainBuffer = 1 << 10,
+        SvmAtomics = 1 << 11,
+        KernelReadAndWrite = 1 << 12,
+
+
+        NoAccessIntel = 1 << 24,
+        AccessFlagsUnrestrictedIntel = 1 << 25,
+        UseUncachedCpuMemoryImg = 1 << 26,
+        UseCachedCpuMemoryImg = 1 << 27,
+        UseGrallocPtrImg = 1 << 28,
+        ExtHostPtrQcom = 1 << 29,
+
+        //Unused
+        //	BusAddressableAmd = 1 << 30,
+        //Unused
+        //	ExternalMemoryAmd = 1 << 31,
+
+        Reserved0ARM = 1 << 32,
+        Reserved1ARM = 1 << 33,
+        Reserved2ARM = 1 << 34,
+        Reserved3ARM = 1 << 35,
+        Reserved4ARM = 1 << 36,
+    }
+
+    public enum MemoryObjectType : uint
+    {
+        Buffer = 0x10F0,
+        Image2D = 0x10F1,
+        Image3D = 0x10F2,
+        Image2DArray = 0x10F3,
+        Image1D = 0x10F4,
+        Image1DArray = 0x10F5,
+        Image1DBuffer = 0x10F6,
+        Pipe = 0x10F7
+    }
+
+    [Flags]
+    public enum MemoryMigrationFlags : ulong
+    {
+        None = 0,
+        Host = 1 << 0,
+        ContentUndefined = 1 << 1
+    }
+
+    #endregion
+
     #region Program
 
     public enum ProgramInfo : uint
@@ -484,7 +535,9 @@ namespace OpenTK.Compute.OpenCL
         Binaries = 0x1166,
         NumberOfKernels = 0x1167,
         KernelNames = 0x1168,
-        Il = 0x1169
+        Il = 0x1169,
+        ScopeGlobalConstructorsPresent = 0x116A,
+        ScopeGlobalDestructorsPresent = 0x116B
     }
 
     public enum ProgramBuildInfo : uint
@@ -494,6 +547,22 @@ namespace OpenTK.Compute.OpenCL
         Log = 0x1183,
         BinaryType = 0x1184,
         GlobalVariableTotalSize = 0x1185
+    }
+
+    public enum ProgramBuildStatus : int
+    {
+        Success = 0,
+        None = -1,
+        Error = -2,
+        InProgress = -3
+    }
+
+    public enum ProgramBinaryType : uint
+    {
+        None = 0x0,
+        CompiledObject = 0x1,
+        Library = 0x2,
+        Executable = 0x4
     }
 
     #endregion
@@ -513,9 +582,7 @@ namespace OpenTK.Compute.OpenCL
         ReferenceCount = 0x1192,
         Context = 0x1193,
         Program = 0x1194,
-        Attributes = 0x1195,
-        MaxNumberOfSubGroups = 0x11B9,
-        CompileNumberOfSubGroups = 0x11BA
+        Attributes = 0x1195
     }
 
     public enum KernelArgInfo : uint
@@ -525,6 +592,32 @@ namespace OpenTK.Compute.OpenCL
         TypeName = 0x1198,
         TypeQualifier = 0x1199,
         Name = 0x119A
+    }
+
+    public enum KernalArgAddressQualifier : uint
+    {
+        Global = 0x119B,
+        Local = 0x119C,
+        Constant = 0x119D,
+        Private = 0x119E,
+    }
+
+    public enum KernalArgAccessQualifier : uint
+    {
+        ReadOnly = 0x11A0,
+        WriteOnly = 0x11A1,
+        ReadWrite = 0x11A2,
+        None = 0x11A3,
+    }
+
+    [Flags]
+    public enum KernalArgTypeQualifier : ulong
+    {
+        None = 0,
+        Const = 1 << 0,
+        Restrict = 1 << 1,
+        Volatile = 1 << 2,
+        Pipe = 1 << 3,
     }
 
     public enum KernelWorkGroupInfo : uint
@@ -541,7 +634,9 @@ namespace OpenTK.Compute.OpenCL
     {
         MaximumSubGroupSizeForNdRange = 0x2033,
         SubGroupCountForNdRange = 0x2034,
-        LocalSizeForSubGroupCount = 0x11B8
+        LocalSizeForSubGroupCount = 0x11B8,
+        MaxNumberOfSubGroups = 0x11B9,
+        CompileNumberOfSubGroups = 0x11BA
     }
 
     #endregion
@@ -588,6 +683,19 @@ namespace OpenTK.Compute.OpenCL
 
     #endregion
 
+    #region Profiling
+
+    public enum ProfilingInfo : uint
+    {
+        CommandQueued = 0x1280,
+        CommandSubmit = 0x1281,
+        CommandStart = 0x1282,
+        CommandEnd = 0x1283,
+        CommandComplete = 0x1284
+    }
+
+    #endregion
+
     #region Event
 
     public enum EventInfo : uint
@@ -597,6 +705,50 @@ namespace OpenTK.Compute.OpenCL
         ReferenceCount = 0x11D2,
         CommandExecutionStatus = 0x11D3,
         Context = 0x11D4
+    }
+
+    public enum CommandType : uint
+    {
+        NDRangeKernel = 0x11F0,
+        Task = 0x11F1,
+        NativeKernel = 0x11F2,
+        ReadBuffer = 0x11F3,
+        WriteBuffer = 0x11F4,
+        CopyBuffer = 0x11F5,
+        ReadImage = 0x11F6,
+        WriteImage = 0x11F7,
+        CopyImage = 0x11F8,
+        CopyImageToBuffer = 0x11F9,
+        CopyBufferToImage = 0x11FA,
+        MapBuffer = 0x11FB,
+        MapImage = 0x11FC,
+        UnmapMemoryObject = 0x11FD,
+        Marker = 0x11FE,
+        AcquierGLObjects = 0x11FF,
+        ReleaseGLObjects = 0x1200,
+        ReadBufferRect = 0x1201,
+        WriteBufferRect = 0x1202,
+        CopyBufferRect = 0x1203,
+        User = 0x1204,
+        Barrier = 0x1205,
+        MigrateMemoryObjects = 0x1206,
+        FillBuffer = 0x1207,
+        FillImage = 0x1208,
+        SVMFree = 0x1209,
+        SVMMemoryCopy = 0x120A,
+        SVMMemoryFill = 0x120B,
+        SVMMap = 0x120C,
+        SVMUnmap = 0x120D,
+        SVMMigrateMemory = 0x120E
+    }
+
+    public enum CommandExecutionStatus : int
+    {
+        Error = -0x1,
+        Complete = 0x0,
+        Running = 0x1,
+        Submitted = 0x2,
+        Queued = 0x3
     }
 
     #endregion

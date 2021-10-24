@@ -2398,6 +2398,14 @@ namespace OpenTK.Compute.OpenCL
         }
 
         /// <summary>
+        /// Introduced in OpenCL 1.0
+        /// </summary>
+        public static CLResultCode BuildProgram(this CLProgram program)
+        {
+            return BuildProgram(program, null, null, null, IntPtr.Zero);
+        }
+
+        /// <summary>
         /// Introduced in OpenCL 1.2
         /// </summary>
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clCompileProgram")]
@@ -2735,55 +2743,70 @@ namespace OpenTK.Compute.OpenCL
         /// Introduced in OpenCL 2.1
         /// </summary>
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clGetKernelSubGroupInfo")]
-        public static extern CLResultCode GetKernelSubGroupInfo(
+        public static unsafe extern CLResultCode GetKernelSubGroupInfo(
             [In] this CLKernel kernel,
             [In] CLDevice device,
             [In] KernelSubGroupInfo paramName,
-            [In] uint inputValueSize,
-            [In] IntPtr inputValue,
+            [In] nuint inputValueSize,
+            [In] void* inputValue,
             [In] nuint paramValueSize,
-            [Out] byte[] paramValue,
+            [Out] nuint[] paramValue,
             [Out] out nuint paramSizeReturned);
 
         /// <summary>
         /// Introduced in OpenCL 2.1
         /// </summary>s
-        public static unsafe CLResultCode GetKernelSubGroupInfo<T>(
+        public static unsafe CLResultCode GetKernelSubGroupInfo(
             this CLKernel kernel,
             CLDevice device,
             KernelSubGroupInfo paramName,
-            T[] array,
-            out byte[] paramValue)
-            where T : unmanaged
+            nuint val,
+            out nuint[] paramValue)
         {
-            fixed (T* b = array)
+            var resultCode = GetKernelSubGroupInfo(kernel, device, paramName, (nuint)sizeof(nuint), &val, 0, null, out nuint sizeReturned);
+            paramValue = new nuint[sizeReturned / (nuint)sizeof(nuint)];
+            if (sizeReturned == 0)
+                return resultCode;
+            return GetKernelSubGroupInfo(kernel, device, paramName, (nuint)(sizeof(nuint)), &val, sizeReturned, paramValue, out _);
+        }
+
+        /// <summary>
+        /// Introduced in OpenCL 2.1
+        /// </summary>s
+        public static unsafe CLResultCode GetKernelSubGroupInfo(
+            this CLKernel kernel,
+            CLDevice device,
+            KernelSubGroupInfo paramName,
+            nuint[] array,
+            out nuint[] paramValue)
+        {
+            fixed (void* b = array)
             {
-                var resultCode = GetKernelSubGroupInfo(kernel, device, paramName, (uint)(array.Length * sizeof(T)), (IntPtr)b, 0, null, out nuint sizeReturned);
-                paramValue = new byte[sizeReturned];
+                var resultCode = GetKernelSubGroupInfo(kernel, device, paramName, (nuint)(array.Length * sizeof(nuint)), (void*)b, 0, null, out nuint sizeReturned);
+                paramValue = new nuint[sizeReturned / (nuint)sizeof(nuint)];
                 if (sizeReturned == 0)
                     return resultCode;
-                return GetKernelSubGroupInfo(kernel, device, paramName, (uint)(array.Length * sizeof(T)), (IntPtr)b, sizeReturned, paramValue, out _);
+                return GetKernelSubGroupInfo(kernel, device, paramName, (nuint)(array.Length * sizeof(nuint)), (void*)b, sizeReturned, paramValue, out _);
             }
         }
 
         /// <summary>
         /// Introduced in OpenCL 2.1
         /// </summary>
-        public static unsafe CLResultCode GetKernelSubGroupInfo<T>(
+        public static unsafe CLResultCode GetKernelSubGroupInfo(
             this CLKernel kernel,
             CLDevice device,
             KernelSubGroupInfo paramName,
-            Span<T> span,
-            out byte[] paramValue)
-            where T : unmanaged
+            Span<nuint> span,
+            out nuint[] paramValue)
         {
-            fixed (T* b = span)
+            fixed (UIntPtr* b = span)
             {
-                var resultCode = GetKernelSubGroupInfo(kernel, device, paramName, (uint)(span.Length * sizeof(T)), (IntPtr)b, 0, null, out nuint sizeReturned);
-                paramValue = new byte[sizeReturned];
+                var resultCode = GetKernelSubGroupInfo(kernel, device, paramName, (uint)(span.Length * sizeof(UIntPtr)), (void*)b, 0, null, out nuint sizeReturned);
+                paramValue = new UIntPtr[sizeReturned / (nuint)sizeof(UIntPtr)];
                 if (sizeReturned == 0)
                     return resultCode;
-                return GetKernelSubGroupInfo(kernel, device, paramName, (uint)(span.Length * sizeof(T)), (IntPtr)b, sizeReturned, paramValue, out _);
+                return GetKernelSubGroupInfo(kernel, device, paramName, (uint)(span.Length * sizeof(UIntPtr)), (void*)b, sizeReturned, paramValue, out _);
             }
         }
 
@@ -2924,7 +2947,7 @@ namespace OpenTK.Compute.OpenCL
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clSetUserEventStatus")]
         public static extern CLResultCode SetUserEventStatus(
             [In] this CLEvent @event,
-            [In] int executionStatus);
+            [In] CommandExecutionStatus executionStatus);
 
         /// <summary>
         /// Introduced in OpenCL 1.1
@@ -2932,7 +2955,7 @@ namespace OpenTK.Compute.OpenCL
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clSetEventCallback")]
         public static extern CLResultCode SetEventCallback(
             [In] this CLEvent eventHandle,
-            [In] int commandExecCallbackType,
+            [In] CommandExecutionStatus commandExecCallbackType,
             [In] IntPtr notifyCallback,
             [In] IntPtr userData);
 
@@ -2941,7 +2964,7 @@ namespace OpenTK.Compute.OpenCL
         /// </summary>
         public static CLResultCode SetEventCallback(
             this CLEvent eventHandle,
-            int callbackType,
+            CommandExecutionStatus callbackType,
             ClEventCallback callback,
             IntPtr userData)
         {

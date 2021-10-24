@@ -2,6 +2,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenTK.Compute.OpenCL;
 using System;
 using System.Linq;
+using System.Text;
 
 namespace OpenTK.Compute.Tests
 {
@@ -29,6 +30,12 @@ namespace OpenTK.Compute.Tests
             context = properties.CreateContext(new[] { device }, null, IntPtr.Zero, out _);
         }
 
+        [TestCleanup()]
+        public void Cleanup()
+        {
+            context.ReleaseContext();
+        }
+
         [TestMethod]
         public void CreateProgramWithSource()
         {
@@ -48,7 +55,9 @@ namespace OpenTK.Compute.Tests
         [TestMethod]
         public void CreateProgramWithBuiltInKernels()
         {
-            var program = context.CreateProgramWithBuiltInKernels(new[] { device }, code, out CLResultCode resultCode);
+            device.GetDeviceInfo(DeviceInfo.BuiltInKernels, out byte[] bytes);
+            var kernelName = Encoding.ASCII.GetString(bytes).Split(";")[0];
+            var program = context.CreateProgramWithBuiltInKernels(new[] { device }, kernelName, out CLResultCode resultCode);
             Assert.AreEqual(CLResultCode.Success, resultCode);
 
             program.ReleaseProgram();
