@@ -979,10 +979,10 @@ namespace OpenTK
         /// <summary>Transform a Vector by the given Matrix using right-handed notation</summary>
         /// <param name="mat">The desired transformation</param>
         /// <param name="vec">The vector to transform</param>
+        [Obsolete("This function does a vector * matrix multiplication instead of the intended matrix * vector multiplication. Use TransformColumn() if proper right-handed multiplication is wanted.")]
         public static Vector3 Transform(Matrix3 mat, Vector3 vec)
         {
-            Vector3 result;
-            Transform(ref mat, ref vec, out result);
+            Transform(ref vec, ref mat, out Vector3 result);
             return result;
         }
 
@@ -990,7 +990,29 @@ namespace OpenTK
         /// <param name="mat">The desired transformation</param>
         /// <param name="vec">The vector to transform</param>
         /// <param name="result">The transformed vector</param>
+        [Obsolete("Use TransformColumn() instead.")]
         public static void Transform(ref Matrix3 mat, ref Vector3 vec, out Vector3 result)
+        {
+            TransformColumn(ref mat, ref vec, out result);
+        }
+
+        /// <summary>
+        /// Transform a Vector by the given Matrix using right-handed notation.
+        /// </summary>
+        /// <param name="mat">The desired transformation.</param>
+        /// <param name="vec">The vector to transform.</param>
+        /// <returns>The transformed vector.</returns>
+        public static Vector3 TransformColumn(Matrix3 mat, Vector3 vec)
+        {
+            TransformColumn(ref mat, ref vec, out Vector3 result);
+            return result;
+        }
+
+        /// <summary>Transform a Vector by the given Matrix using right-handed notation</summary>
+        /// <param name="mat">The desired transformation</param>
+        /// <param name="vec">The vector to transform</param>
+        /// <param name="result">The transformed vector</param>
+        public static void TransformColumn(ref Matrix3 mat, ref Vector3 vec, out Vector3 result)
         {
             result.X = mat.Row0.X * vec.X + mat.Row0.Y * vec.Y + mat.Row0.Z * vec.Z;
             result.Y = mat.Row1.X * vec.X + mat.Row1.Y * vec.Y + mat.Row1.Z * vec.Z;
