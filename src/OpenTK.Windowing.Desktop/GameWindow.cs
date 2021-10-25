@@ -314,7 +314,12 @@ namespace OpenTK.Windowing.Desktop
         /// </summary>
         public virtual void SwapBuffers()
         {
-            Context?.SwapBuffers();
+            if (Context == null)
+            {
+                throw new InvalidOperationException("Cannot use SwapBuffers when running with ContextAPI.NoAPI.");
+            }
+
+            Context.SwapBuffers();
         }
 
         /// <inheritdoc />

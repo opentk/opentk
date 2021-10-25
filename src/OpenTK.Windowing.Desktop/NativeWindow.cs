@@ -127,26 +127,34 @@ namespace OpenTK.Windowing.Desktop
         /// </value>
         public VSyncMode VSync
         {
-            get => _vSync;
+            get
+            {
+                if (Context == null)
+                {
+                    throw new InvalidOperationException("Cannot control vsync when running with ContextAPI.NoAPI.");
+                }
+
+                return _vSync;
+            }
 
             set
             {
-                // We don't do anything here for adaptive because that's handled in GameWindow.
-
-                if (Context != null)
+                if (Context == null)
                 {
-                    switch (value)
-                    {
-                        case VSyncMode.On:
-                            Context.SwapInterval = 1;
-                            break;
-
-                        case VSyncMode.Off:
-                            Context.SwapInterval = 0;
-                            break;
-                    }
+                    throw new InvalidOperationException("Cannot control vsync when running with ContextAPI.NoAPI.");
                 }
 
+                // We don't do anything here for adaptive because that's handled in GameWindow.
+                switch (value)
+                {
+                    case VSyncMode.On:
+                        Context.SwapInterval = 1;
+                        break;
+
+                    case VSyncMode.Off:
+                        Context.SwapInterval = 0;
+                        break;
+                }
                 _vSync = value;
             }
         }
@@ -1131,6 +1139,11 @@ namespace OpenTK.Windowing.Desktop
         /// </summary>
         public void MakeCurrent()
         {
+            if (Context == null)
+            {
+                throw new InvalidOperationException("Cannot make a context current when running with ContextAPI.NoAPI.");
+            }
+
             Context?.MakeCurrent();
         }
 
