@@ -21,7 +21,7 @@ Please provide a description of the actual behavior you observe.
 ### Related information 
 
 * Operating system
-* SDL or Native backend
+* SDL or Native backend (if using OpenTK 3.x)
 * What version of OpenTK (Installer, NuGet, Source Code)
 * What runtime (.NET Framework, CoreCLR, Mono)
 * Workarounds (if any)
