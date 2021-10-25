@@ -105,6 +105,7 @@ namespace OpenTK.Windowing.Desktop
         ///     Do not enable this unless your code is thread safe.
         ///   </para>
         /// </remarks>
+        [Obsolete("There is not one size fits all multithreading solution, especially for OpenGL. This option will be removed in future versions, and you will have to implement what you need instead.")]
         public bool IsMultiThreaded { get; }
 
         /// <summary>
