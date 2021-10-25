@@ -337,11 +337,9 @@ namespace OpenTK.Windowing.Desktop
 
         /// <summary>
         /// Gets a value indicating whether the shutdown sequence has been initiated
-        /// for this window, by calling GameWindow.Close() or hitting the 'close' button.
-        /// If this property is true, it is no longer safe to use any OpenTK.Input or
-        /// OpenTK.Graphics.OpenGL functions or properties.
+        /// for this window, by calling NativeWindow.Close() or hitting the 'close' button.
         /// </summary>
-        public bool IsExiting { get; private set; }
+        public unsafe bool IsExiting => GLFW.WindowShouldClose(WindowPtr);
 
         private WindowState _windowState = WindowState.Normal;
 
@@ -1652,6 +1650,7 @@ namespace OpenTK.Windowing.Desktop
             if (GLFWProvider.IsOnMainThread)
             {
                 GLFW.DestroyWindow(WindowPtr);
+                Exists = false;
             }
             else
             {
