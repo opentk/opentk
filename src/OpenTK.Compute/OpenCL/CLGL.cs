@@ -84,7 +84,7 @@ namespace OpenTK.Compute.OpenCL
         public static extern CLBuffer CreateFromGLBuffer(
             [In] this CLContext context,
             [In] MemoryFlags flags,
-            [In] nuint glBuffer,
+            [In] uint glBuffer,
             [Out] out CLResultCode error
         );
 
@@ -115,7 +115,7 @@ namespace OpenTK.Compute.OpenCL
         public static extern CLImage CreateFromGLRenderbuffer(
             [In] this CLContext context,
             [In] MemoryFlags flags,
-            [In] nuint renderBuffer,
+            [In] uint renderBuffer,
             [Out] out CLResultCode error
         );
 
