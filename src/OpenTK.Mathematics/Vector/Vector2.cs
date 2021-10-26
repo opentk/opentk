@@ -373,9 +373,10 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector2 ComponentMin(Vector2 a, Vector2 b)
         {
-            a.X = a.X < b.X ? a.X : b.X;
-            a.Y = a.Y < b.Y ? a.Y : b.Y;
-            return a;
+            Vector2 result;
+            result.X = MathHelper.MinFast(a.X, b.X);
+            result.Y = MathHelper.MinFast(a.Y, b.Y);
+            return result;
         }
 
         /// <summary>
@@ -386,8 +387,8 @@ namespace OpenTK.Mathematics
         /// <param name="result">The component-wise minimum.</param>
         public static void ComponentMin(in Vector2 a, in Vector2 b, out Vector2 result)
         {
-            result.X = a.X < b.X ? a.X : b.X;
-            result.Y = a.Y < b.Y ? a.Y : b.Y;
+            result.X = MathHelper.MinFast(a.X, b.X);
+            result.Y = MathHelper.MinFast(a.Y, b.Y);
         }
 
         /// <summary>
@@ -399,9 +400,10 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector2 ComponentMax(Vector2 a, Vector2 b)
         {
-            a.X = a.X > b.X ? a.X : b.X;
-            a.Y = a.Y > b.Y ? a.Y : b.Y;
-            return a;
+            Vector2 result;
+            result.X = MathHelper.MaxFast(a.X, b.X);
+            result.Y = MathHelper.MaxFast(a.Y, b.Y);
+            return result;
         }
 
         /// <summary>
@@ -412,8 +414,8 @@ namespace OpenTK.Mathematics
         /// <param name="result">The component-wise maximum.</param>
         public static void ComponentMax(in Vector2 a, in Vector2 b, out Vector2 result)
         {
-            result.X = a.X > b.X ? a.X : b.X;
-            result.Y = a.Y > b.Y ? a.Y : b.Y;
+            result.X = MathHelper.MaxFast(a.X, b.X);
+            result.Y = MathHelper.MaxFast(a.Y, b.Y);
         }
 
         /// <summary>
@@ -794,6 +796,72 @@ namespace OpenTK.Mathematics
         {
             result.X = (mat.Row0.X * vec.X) + (mat.Row0.Y * vec.Y);
             result.Y = (mat.Row1.X * vec.X) + (mat.Row1.Y * vec.Y);
+        }
+
+        /// <summary>
+        /// Rounds a Vector2 to the closest Vector2i.
+        /// </summary>
+        /// <param name="vec">The vector to round.</param>
+        /// <returns>The rounded vector.</returns>
+        public static Vector2i Round(Vector2 vec)
+        {
+            Round(vec, out Vector2i result);
+            return result;
+        }
+
+        /// <summary>
+        /// Rounds a Vector2 to the closest Vector2i.
+        /// </summary>
+        /// <param name="vec">The vector to round.</param>
+        /// <param name="result">The rounded vector.</param>
+        public static void Round(Vector2 vec, out Vector2i result)
+        {
+            result.X = (int)MathHelper.Round(vec.X);
+            result.Y = (int)MathHelper.Round(vec.Y);
+        }
+
+        /// <summary>
+        /// Rounds a Vector2 up to a Vector2i.
+        /// </summary>
+        /// <param name="vec">The vector to ceil.</param>
+        /// <returns>The ceiled vector.</returns>
+        public static Vector2i Ceiling(Vector2 vec)
+        {
+            Ceiling(vec, out Vector2i result);
+            return result;
+        }
+
+        /// <summary>
+        /// Rounds a Vector2 up to a Vector2i.
+        /// </summary>
+        /// <param name="vec">The vector to ceil.</param>
+        /// <param name="result">The ceiled vector.</param>
+        public static void Ceiling(Vector2 vec, out Vector2i result)
+        {
+            result.X = (int)MathHelper.Ceiling(vec.X);
+            result.Y = (int)MathHelper.Ceiling(vec.Y);
+        }
+
+        /// <summary>
+        /// Rounds a Vector2 down to a Vector2i.
+        /// </summary>
+        /// <param name="vec">The vector to floor.</param>
+        /// <returns>The floored vector.</returns>
+        public static Vector2i Floor(Vector2 vec)
+        {
+            Floor(vec, out Vector2i result);
+            return result;
+        }
+
+        /// <summary>
+        /// Rounds a Vector2 down to a Vector2i.
+        /// </summary>
+        /// <param name="vec">The vector to floor.</param>
+        /// <param name="result">The floored vector.</param>
+        public static void Floor(Vector2 vec, out Vector2i result)
+        {
+            result.X = (int)MathHelper.Floor(vec.X);
+            result.Y = (int)MathHelper.Floor(vec.Y);
         }
 
         /// <summary>

@@ -158,109 +158,54 @@ namespace OpenTK.Mathematics
         // --
 
         /// <summary>
-        /// Gets or sets the width of the box.
-        /// </summary>
-        public float Width
-        {
-            get => _max.X - _min.X;
-            set => _max.X = _min.X + value;
-        }
-
-        /// <summary>
-        /// Gets or sets the height of the box.
-        /// </summary>
-        public float Height
-        {
-            get => _max.Y - _min.Y;
-            set => _max.Y = _min.Y + value;
-        }
-
-        /// <summary>
         /// Gets or sets the left location of the box.
+        /// This is equivalent to <c>Min.X</c>.
         /// </summary>
         public float Left
         {
-            get => _min.X;
-            set => _min.X = value;
+            get => Min.X;
+            set => Min.X = value;
         }
 
         /// <summary>
         /// Gets or sets the top location of the box.
+        /// This is equivalent to <c>Min.Y</c>.
         /// </summary>
         public float Top
         {
-            get => _min.Y;
-            set => _min.Y = value;
+            get => Min.Y;
+            set => Min.Y = value;
         }
 
         /// <summary>
         /// Gets or sets the right location of the box.
+        /// This is equivalent to <c>Max.X</c>.
         /// </summary>
         public float Right
         {
-            get => _max.X;
-            set => _max.X = value;
+            get => Max.X;
+            set => Max.X = value;
         }
 
         /// <summary>
         /// Gets or sets the bottom location of the box.
+        /// This is equivalent to <c>Max.Y</c>.
         /// </summary>
         public float Bottom
         {
-            get => _max.Y;
-            set => _max.Y = value;
-        }
-
-        /// <summary>
-        /// Gets or sets the X location of the box.
-        /// </summary>
-        public float X
-        {
-            get => _min.X;
-            set => _min.X = value;
-        }
-
-        /// <summary>
-        /// Gets or sets the Y location of the box.
-        /// </summary>
-        public float Y
-        {
-            get => _min.Y;
-            set => _min.Y = value;
-        }
-
-        /// <summary>
-        /// Gets or sets the horizontal size.
-        /// </summary>
-        public float SizeX
-        {
-            get => _max.X - _min.X;
-            set => _max.X = _min.X + value;
-        }
-
-        /// <summary>
-        /// Gets or sets the vertical size.
-        /// </summary>
-        public float SizeY
-        {
-            get => _max.Y - _min.Y;
-            set => _max.Y = _min.Y + value;
+            get => Max.Y;
+            set => Max.Y = value;
         }
 
         /// <summary>
         /// Gets the location of the box.
         /// </summary>
-        public Vector2 Location => _min;
+        public Vector2 Location => Min;
 
         /// <summary>
         /// Gets a value indicating whether all values are zero.
         /// </summary>
-        public bool IsZero => _min.X == 0 && _min.Y == 0 && _max.X == 0 && _max.Y == 0;
-
-        /// <summary>
-        /// Gets a box with all components zero.
-        /// </summary>
-        public static readonly Box2 Empty = new Box2(0, 0, 0, 0);
+        public bool IsZero => Min == Vector2.Zero && Max == Vector2.Zero;
 
         /// <summary>
         /// Gets a box with a location 0,0 with the a size of 1.
@@ -268,7 +213,7 @@ namespace OpenTK.Mathematics
         public static readonly Box2 UnitSquare = new Box2(0, 0, 1, 1);
 
         /// <summary>
-        /// Creates a box.
+        /// Creates a box from a location and size.
         /// </summary>
         /// <param name="location">The location of the box.</param>
         /// <param name="size">The size of the box.</param>
@@ -281,8 +226,8 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Initializes a new instance of the <see cref="Box2"/> struct.
         /// </summary>
-        /// <param name="min">The minimum point on the XY plane this box encloses.</param>
-        /// <param name="max">The maximum point on the XY plane this box encloses.</param>
+        /// <param name="min">The minimum point this box encloses.</param>
+        /// <param name="max">The maximum point this box encloses.</param>
         /// <returns>A box.</returns>
         public static Box2 FromPositions(Vector2 min, Vector2 max)
         {
@@ -303,47 +248,44 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Replaces this Box with the intersection of itself and the specified Box.
+        /// Replaces this Box with the intersection of itself and the specified Box or <see cref="Empty"/> if the boxes do not intersect.
         /// </summary>
         /// <param name="other">The Box with which to intersect.</param>
         public void Intersect(Box2 other)
         {
-            Box2 result = Intersect(other, this);
-
-            X = result.X;
-            Y = result.Y;
-            Width = result.Width;
-            Height = result.Height;
+            this = Intersect(this, other);
         }
 
         /// <summary>
-        /// Returns the intersection of two Boxes.
+        /// Returns the intersection of two Boxes or <see cref="Empty"/> if the boxes do not intersect.
         /// </summary>
         /// <param name="a">The first box.</param>
         /// <param name="b">The second box.</param>
         /// <returns>The intersection of two Boxes.</returns>
         public static Box2 Intersect(Box2 a, Box2 b)
         {
-            float minX = a._min.X > b._min.X ? a._min.X : b._min.X;
-            float minY = a._min.Y > b._min.Y ? a._min.Y : b._min.Y;
-            float maxX = a._max.X < b._max.X ? a._max.X : b._max.X;
-            float maxY = a._max.Y < b._max.Y ? a._max.Y : b._max.Y;
+            Box2 result;
+            result.Min = Vector2.ComponentMax(a.Min, b.Min);
+            result.Max = Vector2.ComponentMin(a.Max, b.Max);
 
-            if (maxX >= minX && maxY >= minY)
+            if (result.Max.X >= result.Min.X && result.Max.Y >= result.Min.Y)
             {
-                return new Box2(minX, minY, maxX, maxY);
+                return result;
             }
-            return Box2.Empty;
+            else
+            {
+                return Box2.Empty;
+            }
         }
 
         /// <summary>
-        /// Returns the intersection of itself and the specified Box.
+        /// Returns the intersection of itself and the specified Box or <see cref="Empty"/> if the boxes do not intersect.
         /// </summary>
         /// <param name="other">The Box with which to intersect.</param>
         /// <returns>The intersection of itself and the specified Box.</returns>
         public Box2 Intersected(Box2 other)
         {
-            return Intersect(other, this);
+            return Intersect(this, other);
         }
 
         /// <summary>
@@ -353,10 +295,10 @@ namespace OpenTK.Mathematics
         /// <returns>This method returns true if there is any intersection, otherwise false.</returns>
         public bool IntersectsWith(Box2 other)
         {
-            return other._min.X < _max.X
-                && _min.X < other._max.X
-                && other._min.Y < _max.Y
-                && _min.Y < other._max.Y;
+            return other.Min.X < Max.X
+                && Min.X < other.Max.X
+                && other.Min.Y < Max.Y
+                && Min.Y < other.Max.Y;
         }
 
         /// <summary>
@@ -366,10 +308,10 @@ namespace OpenTK.Mathematics
         /// <returns>This method returns true if there is any intersection or touches, otherwise false.</returns>
         public bool TouchWith(Box2 other)
         {
-            return other._min.X <= _max.X
-                && _min.X <= other._max.X
-                && other._min.Y <= _max.Y
-                && _min.Y <= other._max.Y;
+            return other.Min.X <= Max.X
+                && Min.X <= other.Max.X
+                && other.Min.Y <= Max.Y
+                && Min.Y <= other.Max.Y;
         }
 
         /// <summary>
@@ -380,10 +322,8 @@ namespace OpenTK.Mathematics
         public static Box2i Round(Box2 value)
         {
             return new Box2i(
-                (int)MathHelper.Round(value.Min.X),
-                (int)MathHelper.Round(value.Min.Y),
-                (int)MathHelper.Round(value.Max.X),
-                (int)MathHelper.Round(value.Max.Y));
+                Vector2.Round(value.Min),
+                Vector2.Round(value.Max));
         }
 
         /// <summary>
@@ -393,12 +333,9 @@ namespace OpenTK.Mathematics
         /// <returns>A Box structure that contains rounded up integers.</returns>
         public static Box2i Ceiling(Box2 value)
         {
-            int x = (int)MathHelper.Ceiling(value._min.X);
-            int y = (int)MathHelper.Ceiling(value._min.Y);
-            int sizeX = (int)MathHelper.Ceiling(value.Width);
-            int sizeY = (int)MathHelper.Ceiling(value.Height);
-
-            return new Box2i(x, y, x + sizeX, y + sizeY);
+            return new Box2i(
+                Vector2.Ceiling(value.Min),
+                Vector2.Ceiling(value.Max));
         }
 
         /// <summary>
@@ -408,12 +345,9 @@ namespace OpenTK.Mathematics
         /// <returns>A Box structure that contains rounded down integers.</returns>
         public static Box2i Floor(Box2 value)
         {
-            int x = (int)MathHelper.Floor(value._min.X);
-            int y = (int)MathHelper.Floor(value._min.Y);
-            int sizeX = (int)MathHelper.Floor(value.Width);
-            int sizeY = (int)MathHelper.Floor(value.Height);
-
-            return new Box2i(x, y, x + sizeX, y + sizeY);
+            return new Box2i(
+                Vector2.Floor(value.Min),
+                Vector2.Floor(value.Max));
         }
 
         // --
@@ -446,8 +380,11 @@ namespace OpenTK.Mathematics
                 return Min.X <= point.X && point.X <= Max.X &&
                        Min.Y <= point.Y && point.Y <= Max.Y;
             }
-            return Min.X < point.X && point.X < Max.X &&
+            else
+            {
+                return Min.X < point.X && point.X < Max.X &&
                    Min.Y < point.Y && point.Y < Max.Y;
+            }
         }
 
         /// <summary>
@@ -532,10 +469,10 @@ namespace OpenTK.Mathematics
         [Pure]
         public float DistanceToNearestEdge(Vector2 point)
         {
-            var distX = new Vector2(
-                Math.Max(0f, Math.Max(Min.X - point.X, point.X - Max.X)),
-                Math.Max(0f, Math.Max(Min.Y - point.Y, point.Y - Max.Y)));
-            return distX.Length;
+            Vector2 dist = Vector2.ComponentMax(
+                Vector2.Zero,
+                Vector2.ComponentMax(Min - point, point - Max));
+            return dist.Length;
         }
 
         /// <summary>
@@ -546,10 +483,35 @@ namespace OpenTK.Mathematics
         /// <returns>The distance between the specified point and the nearest edge.</returns>
         public static float DistanceToNearestEdge(in Box2 box, Vector2 point)
         {
-            var distX = new Vector2(
-                   Math.Max(0f, Math.Max(box.Min.X - point.X, point.X - box.Max.X)),
-                   Math.Max(0f, Math.Max(box.Min.Y - point.Y, point.Y - box.Max.Y)));
-            return distX.Length;
+            Vector2 dist = Vector2.ComponentMax(
+               Vector2.Zero,
+               Vector2.ComponentMax(box.Min - point, point - box.Max));
+            return dist.Length;
+        }
+
+        /// <summary>
+        /// Finds the closest point on the box to a point.
+        /// If the point is inside the box the same point is returned.
+        /// </summary>
+        /// <param name="point">The point to find the closest point for.</param>
+        /// <returns>The distance between the specified point and the nearest edge.</returns>
+        [Pure]
+        public Vector2 ClosestPoint(Vector2 point)
+        {
+            return Vector2.Clamp(point, Min, Max);
+        }
+
+        /// <summary>
+        /// Finds the closest point on the box to a point.
+        /// If the point is inside the box the same point is returned.
+        /// </summary>
+        /// <param name="box">The box to find the closest point on.</param>
+        /// <param name="point">The point to find the closest point for.</param>
+        /// <returns>The distance between the specified point and the nearest edge.</returns>
+        [Pure]
+        public static Vector2 ClosestPoint(in Box2 box, Vector2 point)
+        {
+            return Vector2.Clamp(point, box.Min, box.Max);
         }
 
         /// <summary>
@@ -689,7 +651,6 @@ namespace OpenTK.Mathematics
         /// <param name="result">The unioned box.</param>
         public static void Union(in Box2 a, in Box2 b, out Box2 result)
         {
-            Vector2.ComponentMin(a.Min, b.Min, out result.Min);
             result.Min = Vector2.ComponentMin(a.Min, b.Min);
             result.Max = Vector2.ComponentMax(a.Max, b.Max);
         }
@@ -702,12 +663,10 @@ namespace OpenTK.Mathematics
         /// <returns>A Box structure that bounds the union of the two Box structures.</returns>
         public static Box2 Union(Box2 a, Box2 b)
         {
-            float minX = a._min.X < b._min.X ? a._min.X : b._min.X;
-            float minY = a._min.Y < b._min.Y ? a._min.Y : b._min.Y;
-            float maxX = a._max.X > b._max.X ? a._max.X : b._max.X;
-            float maxY = a._max.Y > b._max.Y ? a._max.Y : b._max.Y;
-
-            return new Box2(minX, minY, maxX, maxY);
+            Box2 result;
+            result.Min = Vector2.ComponentMin(a.Min, b.Min);
+            result.Max = Vector2.ComponentMax(a.Max, b.Max);
+            return result;
         }
 
         /// <summary>
