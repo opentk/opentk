@@ -5,7 +5,7 @@ namespace OpenTK.Compute.OpenCL
 	public readonly struct CLDevice : IEquatable<CLDevice>
 	{
 		public readonly IntPtr Handle;
-        public static CLBuffer Zero { get { return new CLBuffer(IntPtr.Zero); } }
+        public static CLDevice Zero { get { return new CLDevice(IntPtr.Zero); } }
 
         public CLDevice(IntPtr handle)
 		{
