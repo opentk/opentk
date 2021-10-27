@@ -5,7 +5,7 @@ namespace OpenTK.Compute.OpenCL
 	public readonly struct CLCommandQueue : IEquatable<CLCommandQueue>
 	{
 		public readonly IntPtr Handle;
-        public static CLBuffer Zero { get { return new CLBuffer(IntPtr.Zero); } }
+        public static CLCommandQueue Zero { get { return new CLCommandQueue(IntPtr.Zero); } }
 
         public CLCommandQueue(IntPtr handle)
 		{

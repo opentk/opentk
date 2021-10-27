@@ -5,7 +5,7 @@ namespace OpenTK.Compute.OpenCL
 	public readonly struct CLImage : IEquatable<CLImage>
 	{
 		public readonly IntPtr Handle;
-        public static CLBuffer Zero { get { return new CLBuffer(IntPtr.Zero); } }
+        public static CLImage Zero { get { return new CLImage(IntPtr.Zero); } }
 
         public CLImage(IntPtr handle)
 		{

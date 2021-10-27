@@ -5,7 +5,7 @@ namespace OpenTK.Compute.OpenCL
 	public readonly struct CLContext : IEquatable<CLContext>
 	{
 		public readonly IntPtr Handle;
-        public static CLBuffer Zero { get { return new CLBuffer(IntPtr.Zero); } }
+        public static CLContext Zero { get { return new CLContext(IntPtr.Zero); } }
 
         public CLContext(IntPtr handle)
 		{

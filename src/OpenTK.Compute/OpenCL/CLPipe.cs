@@ -5,7 +5,7 @@ namespace OpenTK.Compute.OpenCL
 	public readonly struct CLPipe : IEquatable<CLPipe>
 	{
 		public readonly IntPtr Handle;
-        public static CLBuffer Zero { get { return new CLBuffer(IntPtr.Zero); } }
+        public static CLPipe Zero { get { return new CLPipe(IntPtr.Zero); } }
 
         public CLPipe(IntPtr handle)
 		{

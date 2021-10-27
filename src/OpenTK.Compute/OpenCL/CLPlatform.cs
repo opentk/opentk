@@ -5,7 +5,7 @@ namespace OpenTK.Compute.OpenCL
 	public readonly struct CLPlatform : IEquatable<CLPlatform>
 	{
 		public readonly IntPtr Handle;
-        public static CLBuffer Zero { get { return new CLBuffer(IntPtr.Zero); } }
+        public static CLPlatform Zero { get { return new CLPlatform(IntPtr.Zero); } }
 
         public CLPlatform(IntPtr handle)
 		{

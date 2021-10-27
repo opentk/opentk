@@ -5,7 +5,7 @@ namespace OpenTK.Compute.OpenCL
 	public readonly struct CLKernel : IEquatable<CLKernel>
 	{
 		public readonly IntPtr Handle;
-        public static CLBuffer Zero { get { return new CLBuffer(IntPtr.Zero); } }
+        public static CLKernel Zero { get { return new CLKernel(IntPtr.Zero); } }
 
         public CLKernel(IntPtr handle)
 		{

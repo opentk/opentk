@@ -5,7 +5,7 @@ namespace OpenTK.Compute.OpenCL
 	public readonly struct CLEvent : IEquatable<CLEvent>
 	{
 		public readonly IntPtr Handle;
-        public static CLBuffer Zero { get { return new CLBuffer(IntPtr.Zero); } }
+        public static CLEvent Zero { get { return new CLEvent(IntPtr.Zero); } }
 
         public CLEvent(IntPtr handle)
 		{
