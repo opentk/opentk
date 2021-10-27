@@ -5,7 +5,7 @@ namespace OpenTK.Compute.OpenCL
 	public readonly struct CLSampler : IEquatable<CLSampler>
 	{
 		public readonly IntPtr Handle;
-        public static CLBuffer Zero { get { return new CLBuffer(IntPtr.Zero); } }
+        public static CLSampler Zero { get { return new CLSampler(IntPtr.Zero); } }
 
         public CLSampler(IntPtr handle)
 		{

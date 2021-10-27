@@ -5,7 +5,7 @@ namespace OpenTK.Compute.OpenCL
 	public readonly struct CLProgram : IEquatable<CLProgram>
 	{
 		public readonly IntPtr Handle;
-        public static CLBuffer Zero { get { return new CLBuffer(IntPtr.Zero); } }
+        public static CLProgram Zero { get { return new CLProgram(IntPtr.Zero); } }
 
         public CLProgram(IntPtr handle)
 		{
