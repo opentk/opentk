@@ -2639,6 +2639,34 @@ namespace OpenTK.Compute.OpenCL
         }
 
         /// <summary>
+        /// Introduced in OpenCL 1.0
+        /// </summary>
+        public static unsafe CLResultCode SetKernelArg<T>(
+            this CLKernel kernel,
+            uint argumentIndex,
+            T[] array) where T : unmanaged
+        {
+            fixed (T* b = array)
+            {
+                return SetKernelArg(kernel, argumentIndex, (nuint)(sizeof(T) * array.Length), (IntPtr)b);
+            }
+        }
+
+        /// <summary>
+        /// Introduced in OpenCL 1.0
+        /// </summary>
+        public static unsafe CLResultCode SetKernelArg<T>(
+            this CLKernel kernel,
+            uint argumentIndex,
+            Span<T> array) where T : unmanaged
+        {
+            fixed (T* b = array)
+            {
+                return SetKernelArg(kernel, argumentIndex, (nuint)(sizeof(T) * array.Length), (IntPtr)b);
+            }
+        }
+
+        /// <summary>
         /// Introduced in OpenCL 2.0
         /// </summary>
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clSetKernelArgSVMPointer")]
