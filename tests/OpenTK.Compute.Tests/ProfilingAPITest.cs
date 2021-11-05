@@ -17,17 +17,17 @@ namespace OpenTK.Compute.Tests
         {
             CL.GetPlatformIDs(out CLPlatform[] platformIds);
             var platform = platformIds[0];
-            platform.GetDeviceIDs(DeviceType.Default, out CLDevice[] devices);
+            CL.GetDeviceIDs(platform, DeviceType.Default, out CLDevice[] devices);
             device = devices[0];
-            context = new CLContextProperties(platform, false).CreateContext(new[] { device }, null, IntPtr.Zero, out _);
-            commandQueue = context.CreateCommandQueueWithProperties(device, new CLCommandQueueProperties(CommandQueueProperties.ProfilingEnable), out _);
+            context = CL.CreateContext(new CLContextProperties(platform, false), new[] { device }, null, IntPtr.Zero, out _);
+            commandQueue = CL.CreateCommandQueueWithProperties(context, device, new CLCommandQueueProperties(CommandQueueProperties.ProfilingEnable), out _);
         }
 
         [TestCleanup()]
         public void Cleanup()
         {
-            context.ReleaseContext();
-            commandQueue.ReleaseCommandQueue();
+            CL.ReleaseContext(context);
+            CL.ReleaseCommandQueue(commandQueue);
         }
 
         [TestMethod]
@@ -39,15 +39,15 @@ namespace OpenTK.Compute.Tests
         public void GetEventProfilingInfo(ProfilingInfo paramName)
         {
             // Create buffer with data values
-            var buffer = context.CreateBuffer(MemoryFlags.ReadWrite | MemoryFlags.CopyHostPtr, new uint[3], out _);
+            var buffer = CL.CreateBuffer(context, MemoryFlags.ReadWrite | MemoryFlags.CopyHostPtr, new uint[3], out _);
 
             // Read initial buffer state
-            commandQueue.EnqueueReadBuffer(buffer, true, 0, new uint[3], null, out CLEvent eventObj);
-            var resultCode = eventObj.GetEventProfilingInfo(paramName, out byte[] bytes);
+            CL.EnqueueReadBuffer(commandQueue, buffer, true, 0, new uint[3], null, out CLEvent eventObj);
+            var resultCode = CL.GetEventProfilingInfo(eventObj, paramName, out byte[] bytes);
             Assert.AreEqual(CLResultCode.Success, resultCode);
             Assert.IsTrue(bytes.Length > 0);
 
-            buffer.ReleaseMemoryObject();
+            CL.ReleaseMemoryObject(buffer);
         }
     }
 }

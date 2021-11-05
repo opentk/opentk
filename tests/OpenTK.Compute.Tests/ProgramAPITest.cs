@@ -24,26 +24,26 @@ namespace OpenTK.Compute.Tests
         {
             CL.GetPlatformIDs(out CLPlatform[] platformIds);
             platform = platformIds[0];
-            platform.GetDeviceIDs(DeviceType.Default, out CLDevice[] devices);
+            CL.GetDeviceIDs(platform, DeviceType.Default, out CLDevice[] devices);
             device = devices[0];
             var properties = new CLContextProperties(platform, false);
-            context = properties.CreateContext(new[] { device }, null, IntPtr.Zero, out _);
+            context = CL.CreateContext(properties, new[] { device }, null, IntPtr.Zero, out _);
         }
 
         [TestCleanup()]
         public void Cleanup()
         {
-            context.ReleaseContext();
+            CL.ReleaseContext(context);
         }
 
         [TestMethod]
         public void CreateProgramWithSource()
         {
             // Create program
-            var program = context.CreateProgramWithSource(code, out CLResultCode resultCode);
+            var program = CL.CreateProgramWithSource(context, code, out CLResultCode resultCode);
             Assert.AreEqual(CLResultCode.Success, resultCode);
 
-            program.ReleaseProgram();
+            CL.ReleaseProgram(program);
         }
 
         [TestMethod]
@@ -55,12 +55,12 @@ namespace OpenTK.Compute.Tests
         [TestMethod]
         public void CreateProgramWithBuiltInKernels()
         {
-            device.GetDeviceInfo(DeviceInfo.BuiltInKernels, out byte[] bytes);
+            CL.GetDeviceInfo(device, DeviceInfo.BuiltInKernels, out byte[] bytes);
             var kernelName = Encoding.ASCII.GetString(bytes).Split(";")[0];
-            var program = context.CreateProgramWithBuiltInKernels(new[] { device }, kernelName, out CLResultCode resultCode);
+            var program = CL.CreateProgramWithBuiltInKernels(context, new[] { device }, kernelName, out CLResultCode resultCode);
             Assert.AreEqual(CLResultCode.Success, resultCode);
 
-            program.ReleaseProgram();
+            CL.ReleaseProgram(program);
         }
 
         [TestMethod]
@@ -73,19 +73,19 @@ namespace OpenTK.Compute.Tests
         public void RetainProgram()
         {
             // Create program
-            var program = context.CreateProgramWithSource(code, out _);
+            var program = CL.CreateProgramWithSource(context, code, out _);
 
             // Increment memobj reference count
-            CLResultCode resultCode = program.RetainProgram();
+            CLResultCode resultCode = CL.RetainProgram(program);
             Assert.AreEqual(CLResultCode.Success, resultCode);
 
             // Verify that memobj ref count can be decremented twice
-            program.ReleaseProgram();
-            resultCode = program.ReleaseProgram();
+            CL.ReleaseProgram(program);
+            resultCode = CL.ReleaseProgram(program);
             Assert.AreEqual(CLResultCode.Success, resultCode);
 
             // Verify that memobj ref count can't be decremented a third time
-            resultCode = program.ReleaseProgram();
+            resultCode = CL.ReleaseProgram(program);
             Assert.AreNotEqual(CLResultCode.Success, resultCode);
         }
 
@@ -93,47 +93,47 @@ namespace OpenTK.Compute.Tests
         public void ReleaseProgram()
         {
             // Create program
-            var program = context.CreateProgramWithSource(code, out _);
+            var program = CL.CreateProgramWithSource(context, code, out _);
 
             // Decrement memobj ref count 
-            CLResultCode resultCode = program.ReleaseProgram();
+            CLResultCode resultCode = CL.ReleaseProgram(program);
             Assert.AreEqual(CLResultCode.Success, resultCode);
 
             // Verify memobj ref count can't be decremented a second time
-            resultCode = program.ReleaseProgram();
+            resultCode = CL.ReleaseProgram(program);
             Assert.AreNotEqual(CLResultCode.Success, resultCode);
         }
 
         [TestMethod]
         public void BuildProgram()
         {
-            var program = context.CreateProgramWithSource(code, out _);
-            var resultCode = program.BuildProgram(null, null, null, IntPtr.Zero);
+            var program = CL.CreateProgramWithSource(context, code, out _);
+            var resultCode = CL.BuildProgram(program, null, null, null, IntPtr.Zero);
 
             Assert.AreEqual(CLResultCode.Success, resultCode);
-            program.ReleaseProgram();
+            CL.ReleaseProgram(program);
         }
 
         [TestMethod]
         public void CompileProgram()
         {
-            var program = context.CreateProgramWithSource(code, out _);
-            var resultCode = program.CompileProgram(null, null, null, null, null, IntPtr.Zero);
+            var program = CL.CreateProgramWithSource(context, code, out _);
+            var resultCode = CL.CompileProgram(program, null, null, null, null, null, IntPtr.Zero);
 
             Assert.AreEqual(CLResultCode.Success, resultCode);
-            program.ReleaseProgram();
+            CL.ReleaseProgram(program);
         }
 
         [TestMethod]
         public void LinkProgram()
         {
-            var program = context.CreateProgramWithSource(code, out _);
-            program.CompileProgram(null, null, null, null, null, IntPtr.Zero);
-            var linkedProgram = context.LinkProgram(null, null, new[] { program }, null, IntPtr.Zero, out CLResultCode resultCode);
+            var program = CL.CreateProgramWithSource(context, code, out _);
+            CL.CompileProgram(program, null, null, null, null, null, IntPtr.Zero);
+            var linkedProgram = CL.LinkProgram(context, null, null, new[] { program }, null, IntPtr.Zero, out CLResultCode resultCode);
             Assert.AreEqual(CLResultCode.Success, resultCode);
 
-            program.ReleaseProgram();
-            linkedProgram.ReleaseProgram();
+            CL.ReleaseProgram(program);
+            CL.ReleaseProgram(linkedProgram);
         }
 
         [TestMethod]
@@ -146,16 +146,16 @@ namespace OpenTK.Compute.Tests
         public void UnloadPlatformCompiler()
         {
             // Compile and build a program on platform
-            var program = context.CreateProgramWithSource(code, out _);
-            program.CompileProgram(null, null, null, null, null, IntPtr.Zero);
-            var linkedProgram = context.LinkProgram(null, null, new[] { program }, null, IntPtr.Zero, out _);
+            var program = CL.CreateProgramWithSource(context, code, out _);
+            CL.CompileProgram(program, null, null, null, null, null, IntPtr.Zero);
+            var linkedProgram = CL.LinkProgram(context, null, null, new[] { program }, null, IntPtr.Zero, out _);
 
             // Unload platform
-            var resultCode = platform.UnloadPlatformCompiler();
+            var resultCode = CL.UnloadPlatformCompiler(platform);
             Assert.AreEqual(CLResultCode.Success, resultCode);
 
-            program.ReleaseProgram();
-            linkedProgram.ReleaseProgram();
+            CL.ReleaseProgram(program);
+            CL.ReleaseProgram(linkedProgram);
         }
 
         [TestMethod]
@@ -172,16 +172,16 @@ namespace OpenTK.Compute.Tests
         public void GetProgramInfo(ProgramInfo paramName)
         {
             // Create program
-            var program = context.CreateProgramWithSource(code, out _);
-            program.BuildProgram(null, null, null, IntPtr.Zero);
+            var program = CL.CreateProgramWithSource(context, code, out _);
+            CL.BuildProgram(program, null, null, null, IntPtr.Zero);
 
             // Check that paramName is valid
-            var resultCode = program.GetProgramInfo(paramName, out byte[] bytes);
+            var resultCode = CL.GetProgramInfo(program, paramName, out byte[] bytes);
             Assert.AreEqual(CLResultCode.Success, resultCode);
             if (paramName != ProgramInfo.Il)
                 Assert.IsTrue(bytes.Length > 0);
 
-            program.ReleaseProgram();
+            CL.ReleaseProgram(program);
         }
 
         [TestMethod]
@@ -193,13 +193,13 @@ namespace OpenTK.Compute.Tests
         public void GetProgramBuildInfo(ProgramBuildInfo paramName)
         {
             // Create program
-            var program = context.CreateProgramWithSource(code, out _);
+            var program = CL.CreateProgramWithSource(context, code, out _);
 
-            var resultCode = program.GetProgramBuildInfo(device, paramName, out byte[] bytes);
+            var resultCode = CL.GetProgramBuildInfo(program, device, paramName, out byte[] bytes);
             Assert.AreEqual(CLResultCode.Success, resultCode);
             Assert.IsTrue(bytes.Length > 0);
 
-            program.ReleaseProgram();
+            CL.ReleaseProgram(program);
         }
     }
 }

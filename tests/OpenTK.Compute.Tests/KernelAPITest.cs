@@ -24,72 +24,72 @@ namespace OpenTK.Compute.Tests
         {
             CL.GetPlatformIDs(out CLPlatform[] platformIds);
             platform = platformIds[0];
-            platform.GetDeviceIDs(DeviceType.Default, out CLDevice[] devices);
+            CL.GetDeviceIDs(platform, DeviceType.Default, out CLDevice[] devices);
             device = devices[0];
             var properties = new CLContextProperties(platform, false);
-            context = properties.CreateContext(new[] { device }, null, IntPtr.Zero, out _);
-            program = context.CreateProgramWithSource(code, out _);
-            program.BuildProgram();
+            context = CL.CreateContext(properties, new[] { device }, null, IntPtr.Zero, out _);
+            program = CL.CreateProgramWithSource(context, code, out _);
+            CL.BuildProgram(program);
         }
 
         [TestCleanup()]
         public void Cleanup()
         {
-            program.ReleaseProgram();
-            context.ReleaseContext();
+            CL.ReleaseProgram(program);
+            CL.ReleaseContext(context);
         }
 
         [TestMethod]
         public void CreateKernel()
         {
-            var kernel = program.CreateKernel("add", out CLResultCode resultCode);
+            var kernel = CL.CreateKernel(program, "add", out CLResultCode resultCode);
             Assert.AreEqual(CLResultCode.Success, resultCode);
 
-            kernel.ReleaseKernel();
+            CL.ReleaseKernel(kernel);
         }
 
         [TestMethod]
         public void CreateKernelsInProgram()
         {
             // Create all kernels for program
-            var resultCode = program.CreateKernelsInProgram(out CLKernel[] kernels);
+            var resultCode = CL.CreateKernelsInProgram(program, out CLKernel[] kernels);
             Assert.AreEqual(CLResultCode.Success, resultCode);
 
             // Ensure number of kernels matches source
             Assert.AreEqual(1, kernels.Length);
 
             foreach (var kernel in kernels)
-                kernel.ReleaseKernel();
+                CL.ReleaseKernel(kernel);
         }
 
         [TestMethod]
         public void CloneKernel()
         {
             // Create kernel
-            var kernel = program.CreateKernel("add", out _);
-            var clone = kernel.CloneKernel(out CLResultCode resultCode);
+            var kernel = CL.CreateKernel(program, "add", out _);
+            var clone = CL.CloneKernel(kernel, out CLResultCode resultCode);
             Assert.AreEqual(CLResultCode.Success, resultCode);
-            clone.ReleaseKernel();
-            kernel.ReleaseKernel();
+            CL.ReleaseKernel(clone);
+            CL.ReleaseKernel(kernel);
         }
 
         [TestMethod]
         public void RetainKernel()
         {
             // Create kernel
-            var kernel = program.CreateKernel("add", out _);
+            var kernel = CL.CreateKernel(program, "add", out _);
 
             // Increment memobj reference count
-            CLResultCode resultCode = kernel.RetainKernel();
+            CLResultCode resultCode = CL.RetainKernel(kernel);
             Assert.AreEqual(CLResultCode.Success, resultCode);
 
             // Verify that memobj ref count can be decremented twice
-            kernel.ReleaseKernel();
-            resultCode = kernel.ReleaseKernel();
+            CL.ReleaseKernel(kernel);
+            resultCode = CL.ReleaseKernel(kernel);
             Assert.AreEqual(CLResultCode.Success, resultCode);
 
             // Verify that memobj ref count can't be decremented a third time
-            resultCode = kernel.ReleaseKernel();
+            resultCode = CL.ReleaseKernel(kernel);
             Assert.AreNotEqual(CLResultCode.Success, resultCode);
         }
 
@@ -97,22 +97,22 @@ namespace OpenTK.Compute.Tests
         public void ReleaseKernel()
         {
             // Create kernel
-            var kernel = program.CreateKernel("add", out _);
+            var kernel = CL.CreateKernel(program, "add", out _);
 
             // Decrement memobj ref count 
-            CLResultCode resultCode = kernel.ReleaseKernel();
+            CLResultCode resultCode = CL.ReleaseKernel(kernel);
             Assert.AreEqual(CLResultCode.Success, resultCode);
 
             // Verify memobj ref count can't be decremented a second time
-            resultCode = kernel.ReleaseKernel();
+            resultCode = CL.ReleaseKernel(kernel);
             Assert.AreNotEqual(CLResultCode.Success, resultCode);
         }
 
         [TestMethod]
         public void SetKernelArg()
         {
-            var kernel = program.CreateKernel("add", out _);
-            kernel.SetKernelArg((uint)3, 1.0f);
+            var kernel = CL.CreateKernel(program, "add", out _);
+            CL.SetKernelArg(kernel, (uint)3, 1.0f);
         }
 
         [TestMethod]
@@ -137,14 +137,14 @@ namespace OpenTK.Compute.Tests
         public void GetKernelInfo(KernelInfo paramName)
         {
             // Create kernel
-            var kernel = program.CreateKernel("add", out _);
+            var kernel = CL.CreateKernel(program, "add", out _);
 
             // Check that paramName is valid
-            CLResultCode resultCode = kernel.GetKernelInfo(paramName, out byte[] bytes);
+            CLResultCode resultCode = CL.GetKernelInfo(kernel, paramName, out byte[] bytes);
             Assert.AreEqual(CLResultCode.Success, resultCode);
             Assert.IsTrue(bytes.Length > 0);
 
-            kernel.ReleaseKernel();
+            CL.ReleaseKernel(kernel);
         }
 
         [TestMethod]
@@ -156,14 +156,14 @@ namespace OpenTK.Compute.Tests
         public void GetKernelArgInfo(KernelArgInfo paramName)
         {
             // Create kernel
-            var kernel = program.CreateKernel("add", out _);
+            var kernel = CL.CreateKernel(program, "add", out _);
 
             // Check that paramName is valid
-            CLResultCode resultCode = kernel.GetKernelArgInfo(0, paramName, out byte[] bytes);
+            CLResultCode resultCode = CL.GetKernelArgInfo(kernel, 0, paramName, out byte[] bytes);
             Assert.AreEqual(CLResultCode.Success, resultCode);
             Assert.IsTrue(bytes.Length > 0);
 
-            kernel.ReleaseKernel();
+            CL.ReleaseKernel(kernel);
         }
 
         [TestMethod]
@@ -176,12 +176,12 @@ namespace OpenTK.Compute.Tests
         //[DataRow(KernelWorkGroupInfo.GlobalWorkSize)] // Only applicable to built in kernels on custom devices 
         public void GetKernelWorkGroupInfo(KernelWorkGroupInfo paramName)
         {
-            var kernel = program.CreateKernel("add", out _);
-            var resultCode = kernel.GetKernelWorkGroupInfo(device, paramName, out byte[] data);
+            var kernel = CL.CreateKernel(program, "add", out _);
+            var resultCode = CL.GetKernelWorkGroupInfo(kernel, device, paramName, out byte[] data);
 
             Assert.AreEqual(CLResultCode.Success, resultCode);
             Assert.IsTrue(data.Length > 0);
-            kernel.ReleaseKernel();
+            CL.ReleaseKernel(kernel);
         }
 
         [TestMethod]
@@ -193,15 +193,15 @@ namespace OpenTK.Compute.Tests
         public void GetKernelSubGroupInfo(KernelSubGroupInfo paramName)
         {
             // Create kernel
-            var kernel = program.CreateKernel("add", out _);
+            var kernel = CL.CreateKernel(program, "add", out _);
 
             // Check that paramName is valid
             var resultCode = paramName == KernelSubGroupInfo.LocalSizeForSubGroupCount ?
-                kernel.GetKernelSubGroupInfo(device, paramName, 4, out nuint[] data) :
-                kernel.GetKernelSubGroupInfo(device, paramName, new nuint[] { 0 }, out data);
+                CL.GetKernelSubGroupInfo(kernel, device, paramName, 4, out nuint[] data) :
+                CL.GetKernelSubGroupInfo(kernel, device, paramName, new nuint[] { 0 }, out data);
             Assert.AreEqual(CLResultCode.Success, resultCode);
             Assert.IsTrue(data.Length > 0);
-            kernel.ReleaseKernel();
+            CL.ReleaseKernel(kernel);
         }
     }
 }

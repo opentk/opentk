@@ -16,38 +16,38 @@ namespace OpenTK.Compute.Tests
         {
             CL.GetPlatformIDs(out CLPlatform[] platformIds);
             var platform = platformIds[0];
-            platform.GetDeviceIDs(DeviceType.Default, out CLDevice[] devices);
+            CL.GetDeviceIDs(platform, DeviceType.Default, out CLDevice[] devices);
             device = devices[0];
             var properties = new CLContextProperties(platform, false);
-            context = properties.CreateContext(new[] { device }, null, IntPtr.Zero, out _);
+            context = CL.CreateContext(properties, new[] { device }, null, IntPtr.Zero, out _);
         }
 
         [TestMethod]
         public void CreateSamplerWithProperties()
         {
-            var sampler = context.CreateSamplerWithProperties(new CLSamplerProperties(), out CLResultCode resultCode);
+            var sampler = CL.CreateSamplerWithProperties(context, new CLSamplerProperties(), out CLResultCode resultCode);
             Assert.AreEqual(CLResultCode.Success, resultCode);
 
-            sampler.ReleaseSampler();
+            CL.ReleaseSampler(sampler);
         }
 
         [TestMethod]
         public void RetainSampler()
         {
             // Create sampler
-            var sampler = context.CreateSamplerWithProperties(new CLSamplerProperties(), out _);
+            var sampler = CL.CreateSamplerWithProperties(context, new CLSamplerProperties(), out _);
 
             // Increment memobj reference count
-            CLResultCode resultCode = sampler.RetainSampler();
+            CLResultCode resultCode = CL.RetainSampler(sampler);
             Assert.AreEqual(CLResultCode.Success, resultCode);
 
             // Verify that memobj ref count can be decremented twice
-            sampler.ReleaseSampler();
-            resultCode = sampler.ReleaseSampler();
+            CL.ReleaseSampler(sampler);
+            resultCode = CL.ReleaseSampler(sampler);
             Assert.AreEqual(CLResultCode.Success, resultCode);
 
             // Verify that memobj ref count can't be decremented a third time
-            resultCode = sampler.ReleaseSampler();
+            resultCode = CL.ReleaseSampler(sampler);
             Assert.AreNotEqual(CLResultCode.Success, resultCode);
         }
 
@@ -55,14 +55,14 @@ namespace OpenTK.Compute.Tests
         public void ReleaseSampler()
         {
             // Create sampler
-            var sampler = context.CreateSamplerWithProperties(new CLSamplerProperties(), out _);
+            var sampler = CL.CreateSamplerWithProperties(context, new CLSamplerProperties(), out _);
 
             // Verify that memobj ref count can be decremented twice
-            CLResultCode resultCode = sampler.ReleaseSampler();
+            CLResultCode resultCode = CL.ReleaseSampler(sampler);
             Assert.AreEqual(CLResultCode.Success, resultCode);
 
             // Verify that memobj ref count can't be decremented a third time
-            resultCode = sampler.ReleaseSampler();
+            resultCode = CL.ReleaseSampler(sampler);
             Assert.AreNotEqual(CLResultCode.Success, resultCode);
         }
 
@@ -79,13 +79,13 @@ namespace OpenTK.Compute.Tests
         public void GetSamplerInfo(SamplerInfo paramName)
         {
             // Create sampler
-            var sampler = context.CreateSamplerWithProperties(new CLSamplerProperties(true, null, null), out _);
+            var sampler = CL.CreateSamplerWithProperties(context, new CLSamplerProperties(true, null, null), out _);
 
-            CLResultCode resultCode = sampler.GetSamplerInfo(paramName, out byte[] bytes);
+            CLResultCode resultCode = CL.GetSamplerInfo(sampler, paramName, out byte[] bytes);
             Assert.AreEqual(CLResultCode.Success, resultCode);
             Assert.IsTrue(bytes.Length > 0);
 
-            sampler.ReleaseSampler();
+            CL.ReleaseSampler(sampler);
         }
     }
 }

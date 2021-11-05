@@ -40,23 +40,6 @@ namespace OpenTK.Compute.Tests
         }
 
         [TestMethod]
-        public void SupportsPlatformExtension()
-        {
-            CL.GetPlatformIDs(out CLPlatform[] platformIds);
-            foreach (var platform in platformIds)
-            {
-                CL.GetPlatformInfo(platform, PlatformInfo.Extensions, out byte[] bytes);
-                var extensions = Encoding.ASCII.GetString(bytes).Split(" ");
-                for (int i = 0; i < extensions.Length - 1; i++)
-                {
-                    var resultCode = platform.SupportsPlatformExtension(extensions[i], out _);
-                    Assert.AreEqual(CLResultCode.Success, resultCode);
-                }
-
-            }
-        }
-
-        [TestMethod]
         public void GetExtensionFunctionAddressForPlatform()
         {
             CL.GetPlatformIDs(out CLPlatform[] platformIds);
@@ -67,10 +50,7 @@ namespace OpenTK.Compute.Tests
                 int extensionsFound = 0;
                 for (int i = 0; i < extensions.Length - 1; i++)
                 {
-                    platform.SupportsPlatformExtension(extensions[i], out bool success);
-                    if (!success) continue;
-
-                    var address = platform.GetExtensionFunctionAddressForPlatform(extensions[i]);
+                    var address = CL.GetExtensionFunctionAddressForPlatform(platform, extensions[i]);
                     // Only returns a valid address for non-core extensions
                     if (address != IntPtr.Zero) extensionsFound++;
                 }

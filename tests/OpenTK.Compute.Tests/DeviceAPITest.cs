@@ -20,7 +20,7 @@ namespace OpenTK.Compute.Tests
         [TestMethod]
         public void GetDeviceIds()
         {
-            var resultCode = platform.GetDeviceIDs(DeviceType.All, out CLDevice[] deviceIds);
+            var resultCode = CL.GetDeviceIDs(platform, DeviceType.All, out CLDevice[] deviceIds);
 
             Assert.AreEqual(CLResultCode.Success, resultCode);
             Assert.IsTrue(deviceIds.Length > 0);
@@ -33,7 +33,7 @@ namespace OpenTK.Compute.Tests
         [DataRow(DeviceType.Gpu)]
         public void GetDeviceIds_DistinctType(DeviceType paramName)
         {
-            var resultCode = platform.GetDeviceIDs(paramName, out _);
+            var resultCode = CL.GetDeviceIDs(platform, paramName, out _);
 
             Assert.IsTrue(new []{CLResultCode.Success, CLResultCode.DeviceNotFound}.Contains(resultCode));
         }
@@ -150,11 +150,11 @@ namespace OpenTK.Compute.Tests
         [DataRow(DeviceInfo.SpirVersion)]
         public void GetDeviceInfo(DeviceInfo paramName)
         {
-            platform.GetDeviceIDs(DeviceType.All, out CLDevice[] deviceIds);
+            CL.GetDeviceIDs(platform, DeviceType.All, out CLDevice[] deviceIds);
 
             foreach (var device in deviceIds)
             {
-                var resultCode = device.GetDeviceInfo(paramName, out byte[] paramValue);
+                var resultCode = CL.GetDeviceInfo(device, paramName, out byte[] paramValue);
                 Assert.AreEqual(CLResultCode.Success, resultCode);
                 Assert.IsTrue(paramValue.Length > 0);
             }
@@ -163,7 +163,7 @@ namespace OpenTK.Compute.Tests
         [TestMethod]
         public void CreateSubDevices()
         {
-            platform.GetDeviceIDs(DeviceType.Cpu, out CLDevice[] deviceIds);
+            CL.GetDeviceIDs(platform, DeviceType.Cpu, out CLDevice[] deviceIds);
             if (deviceIds.Length == 0)
             {
                 Assert.Inconclusive("Sub devices can only be created on CPUs");
@@ -171,7 +171,7 @@ namespace OpenTK.Compute.Tests
             }
             var properties = new CLDevicePartitionProperties(1, new uint[0], null);
 
-            var resultCode = deviceIds[0].CreateSubDevices(properties, out CLDevice[] subDevices);
+            var resultCode = CL.CreateSubDevices(deviceIds[0], properties, out CLDevice[] subDevices);
 
             Assert.AreEqual(CLResultCode.Success, resultCode);
             Assert.IsTrue(subDevices.Length > 0);
@@ -180,7 +180,7 @@ namespace OpenTK.Compute.Tests
         [TestMethod]
         public void RetainDevice()
         {
-            platform.GetDeviceIDs(DeviceType.Cpu, out CLDevice[] deviceIds);
+            CL.GetDeviceIDs(platform, DeviceType.Cpu, out CLDevice[] deviceIds);
             if (deviceIds.Length == 0)
             {
                 Assert.Inconclusive("Sub devices can only be created on CPUs. Only Sub devices can be retained");
@@ -188,21 +188,21 @@ namespace OpenTK.Compute.Tests
             }
             var properties = new CLDevicePartitionProperties(1, new uint[0], null);
 
-            deviceIds[0].CreateSubDevices(properties, out CLDevice[] subDevices);
+            CL.CreateSubDevices(deviceIds[0], properties, out CLDevice[] subDevices);
             var device = subDevices[0];
-            var resultCode = device.RetainDevice();
+            var resultCode = CL.RetainDevice(device);
             Assert.AreEqual(CLResultCode.Success, resultCode);
-            device.ReleaseDevice();
-            resultCode = device.ReleaseDevice();
+            CL.ReleaseDevice(device);
+            resultCode = CL.ReleaseDevice(device);
             Assert.AreEqual(CLResultCode.Success, resultCode);
-            resultCode = device.ReleaseDevice();
+            resultCode = CL.ReleaseDevice(device);
             Assert.AreNotEqual(CLResultCode.Success, resultCode);
         }
 
         [TestMethod]
         public void ReleaseDevice()
         {
-            platform.GetDeviceIDs(DeviceType.Cpu, out CLDevice[] deviceIds);
+            CL.GetDeviceIDs(platform, DeviceType.Cpu, out CLDevice[] deviceIds);
             if (deviceIds.Length == 0)
             {
                 Assert.Inconclusive("Sub devices can only be created on CPUs. Only Sub devices can be released");
@@ -210,19 +210,19 @@ namespace OpenTK.Compute.Tests
             }
             var properties = new CLDevicePartitionProperties(1, new uint[0], null);
 
-            deviceIds[0].CreateSubDevices(properties, out CLDevice[] subDevices);
+            CL.CreateSubDevices(deviceIds[0], properties, out CLDevice[] subDevices);
             var device = subDevices[0];
-            var resultCode = device.ReleaseDevice();
+            var resultCode = CL.ReleaseDevice(device);
             Assert.AreEqual(CLResultCode.Success, resultCode);
-            resultCode = device.ReleaseDevice();
+            resultCode = CL.ReleaseDevice(device);
             Assert.AreNotEqual(CLResultCode.Success, resultCode);
         }
 
         [TestMethod]
         public void GetDeviceAndHostTimer()
         {
-            platform.GetDeviceIDs(DeviceType.All, out CLDevice[] deviceIds);
-            var resultCode = deviceIds[0].GetDeviceAndHostTimer(out nuint deviceTimestamp, out nuint hostTimestamp);
+            CL.GetDeviceIDs(platform, DeviceType.All, out CLDevice[] deviceIds);
+            var resultCode = CL.GetDeviceAndHostTimer(deviceIds[0], out nuint deviceTimestamp, out nuint hostTimestamp);
             Assert.AreEqual(CLResultCode.Success, resultCode);
             Assert.IsTrue(deviceTimestamp > 0);
             Assert.IsTrue(hostTimestamp > 0);
@@ -231,8 +231,8 @@ namespace OpenTK.Compute.Tests
         [TestMethod]
         public void GetHostTimer()
         {
-            platform.GetDeviceIDs(DeviceType.All, out CLDevice[] deviceIds);
-            var resultCode = deviceIds[0].GetHostTimer(out nuint hostTimestamp);
+            CL.GetDeviceIDs(platform, DeviceType.All, out CLDevice[] deviceIds);
+            var resultCode = CL.GetHostTimer(deviceIds[0], out nuint hostTimestamp);
             Assert.AreEqual(CLResultCode.Success, resultCode);
             Assert.IsTrue(hostTimestamp > 0);
         }
