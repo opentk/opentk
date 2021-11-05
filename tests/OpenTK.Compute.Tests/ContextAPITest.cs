@@ -5,13 +5,14 @@ using System.Linq;
 
 namespace OpenTK.Compute.Tests
 {
-	[TestClass]
-	public class ContextAPITest
+    [TestClass]
+    public class ContextAPITest
     {
         CLPlatform platform;
 
         [TestInitialize()]
-        public void Starup(){
+        public void Starup()
+        {
             CL.GetPlatformIDs(out CLPlatform[] platformIds);
             platform = platformIds[0];
         }
@@ -20,42 +21,42 @@ namespace OpenTK.Compute.Tests
         public void CreateContext()
         {
             // Create context from all devices
-            platform.GetDeviceIDs(DeviceType.All, out CLDevice[] devices);
-            var context = new CLContextProperties(platform).CreateContext(devices, null, IntPtr.Zero, out CLResultCode resultCode);
+            CL.GetDeviceIDs(platform, DeviceType.All, out CLDevice[] devices);
+            var context = CL.CreateContext(new CLContextProperties(platform), devices, null, IntPtr.Zero, out CLResultCode resultCode);
             Assert.AreEqual(CLResultCode.Success, resultCode);
 
-            context.ReleaseContext();
+            CL.ReleaseContext(context);
         }
 
         [TestMethod]
         public void CreateContextFromType()
         {
             // Create context from default device
-            var context = new CLContextProperties(platform).CreateContextFromType(DeviceType.Default, null, IntPtr.Zero, out CLResultCode resultCode);
+            var context = CL.CreateContextFromType(new CLContextProperties(platform), DeviceType.Default, null, IntPtr.Zero, out CLResultCode resultCode);
             Assert.AreEqual(CLResultCode.Success, resultCode);
 
-            context.ReleaseContext();
+            CL.ReleaseContext(context);
         }
 
         [TestMethod]
         public void RetainContext()
         {
             // Create context
-            var context = new CLContextProperties(platform).CreateContextFromType(DeviceType.Default, null, IntPtr.Zero, out _);
+            var context = CL.CreateContextFromType(new CLContextProperties(platform), DeviceType.Default, null, IntPtr.Zero, out _);
 
 
             // Increment memobj reference count
-            var resultCode = context.RetainContext();
+            var resultCode = CL.RetainContext(context);
             Assert.AreEqual(CLResultCode.Success, resultCode);
 
 
             // Verify that memobj ref count can be decremented twice
-            context.ReleaseContext();
-            resultCode = context.ReleaseContext();
+            CL.ReleaseContext(context);
+            resultCode = CL.ReleaseContext(context);
             Assert.AreEqual(CLResultCode.Success, resultCode);
 
             // Verify that memobj ref count can't be decremented a third time
-            resultCode = context.ReleaseContext();
+            resultCode = CL.ReleaseContext(context);
             Assert.AreNotEqual(CLResultCode.Success, resultCode);
         }
 
@@ -63,14 +64,14 @@ namespace OpenTK.Compute.Tests
         public void ReleaseContext()
         {
             // Create context
-            var context = new CLContextProperties(platform).CreateContextFromType(DeviceType.Default, null, IntPtr.Zero, out _);
+            var context = CL.CreateContextFromType(new CLContextProperties(platform), DeviceType.Default, null, IntPtr.Zero, out _);
 
             // Decrement memobj ref count 
-            var resultCode = context.ReleaseContext();
+            var resultCode = CL.ReleaseContext(context);
             Assert.AreEqual(CLResultCode.Success, resultCode);
 
             // Verify memobj ref count can't be decremented a second time
-            resultCode = context.ReleaseContext();
+            resultCode = CL.ReleaseContext(context);
             Assert.AreNotEqual(CLResultCode.Success, resultCode);
         }
 
@@ -82,14 +83,14 @@ namespace OpenTK.Compute.Tests
         public void GetContextInfo(ContextInfo paramName)
         {
             // Create context
-            var context = new CLContextProperties(platform).CreateContextFromType(DeviceType.Default, null, IntPtr.Zero, out _);
+            var context = CL.CreateContextFromType(new CLContextProperties(platform), DeviceType.Default, null, IntPtr.Zero, out _);
 
             // Check that paramName is valid
-            var resultCode = context.GetContextInfo(paramName, out byte[] paramValue);
+            var resultCode = CL.GetContextInfo(context, paramName, out byte[] paramValue);
             Assert.AreEqual(CLResultCode.Success, resultCode);
             Assert.IsTrue(paramValue.Length > 0);
 
-            context.ReleaseContext();
+            CL.ReleaseContext(context);
         }
 
         [TestMethod]
@@ -100,14 +101,14 @@ namespace OpenTK.Compute.Tests
             void callBack(IntPtr waitEvent, IntPtr userData) { callBackMade = true; }
 
             // Create context
-            var context = new CLContextProperties(platform).CreateContextFromType(DeviceType.Default, null, IntPtr.Zero, out _);
+            var context = CL.CreateContextFromType(new CLContextProperties(platform), DeviceType.Default, null, IntPtr.Zero, out _);
 
             // Set destructor
-            var resultCode = context.SetContextDestructorCallback(callBack, IntPtr.Zero);
+            var resultCode = CL.SetContextDestructorCallback(context, callBack, IntPtr.Zero);
             Assert.AreEqual(CLResultCode.Success, resultCode);
 
             // Verify destructor is called
-            context.ReleaseContext();
+            CL.ReleaseContext(context);
             Assert.IsTrue(callBackMade);
         }
     }

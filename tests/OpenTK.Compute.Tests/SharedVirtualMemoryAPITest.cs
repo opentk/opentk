@@ -18,43 +18,43 @@ namespace OpenTK.Compute.Tests
         {
             CL.GetPlatformIDs(out CLPlatform[] platformIds);
             var platform = platformIds[0];
-            platform.GetDeviceIDs(DeviceType.Default, out CLDevice[] devices);
+            CL.GetDeviceIDs(platform, DeviceType.Default, out CLDevice[] devices);
             device = devices[0];
-            context = new CLContextProperties(platform).CreateContext(new[] { device }, null, IntPtr.Zero, out _);
-            commandQueue = context.CreateCommandQueueWithProperties(device, new CLCommandQueueProperties(), out _);
+            context = CL.CreateContext(new CLContextProperties(platform), new[] { device }, null, IntPtr.Zero, out _);
+            commandQueue = CL.CreateCommandQueueWithProperties(context, device, new CLCommandQueueProperties(), out _);
         }
 
         [TestCleanup()]
         public void Cleanup()
         {
-            context.ReleaseContext();
-            commandQueue.ReleaseCommandQueue();
+            CL.ReleaseContext(context);
+            CL.ReleaseCommandQueue(commandQueue);
         }
 
         [TestMethod]
         public void SVMAlloc()
         {
             // Create a SVM buffer
-            var buffer = context.SvmAlloc(SvmMemoryFlags.ReadWrite, 1, 1);
+            var buffer = CL.SvmAlloc(context, SvmMemoryFlags.ReadWrite, 1, 1);
             Assert.AreNotEqual(CLBuffer.Zero, buffer);
 
-            context.SvmFree(buffer);
+            CL.SvmFree(context, buffer);
         }
 
         [TestMethod]
         public void SVMFree()
         {
             // Create and free a SVM buffer, there's no easy way to test that this is successful
-            var buffer = context.SvmAlloc(SvmMemoryFlags.ReadWrite, 1, 1);
-            context.SvmFree(buffer);
+            var buffer = CL.SvmAlloc(context, SvmMemoryFlags.ReadWrite, 1, 1);
+            CL.SvmFree(context, buffer);
         }
 
         [TestMethod]
         public void EnqueueSVMFree()
         {
             // Create a SVM buffer
-            var buffer = context.SvmAlloc(SvmMemoryFlags.ReadWrite, 1, 1);
-            var resultCode = commandQueue.EnqueueSvmFree(new[] { buffer }, null, IntPtr.Zero, null, out _);
+            var buffer = CL.SvmAlloc(context, SvmMemoryFlags.ReadWrite, 1, 1);
+            var resultCode = CL.EnqueueSvmFree(commandQueue, new[] { buffer }, null, IntPtr.Zero, null, out _);
             Assert.AreEqual(CLResultCode.Success, resultCode);
         }
 
@@ -62,14 +62,14 @@ namespace OpenTK.Compute.Tests
         public void EnqueueSvmMemoryCopy()
         {
             // Create a source SVM buffer with data
-            var source = context.SvmAlloc(SvmMemoryFlags.ReadWrite, 4, sizeof(int));
+            var source = CL.SvmAlloc(context, SvmMemoryFlags.ReadWrite, 4, sizeof(int));
             Marshal.Copy(new int[] { 1 }, 0, source, 1);
 
             // Create a destination SVM buffer
-            var destination = context.SvmAlloc(SvmMemoryFlags.ReadWrite, 4, 4);
+            var destination = CL.SvmAlloc(context, SvmMemoryFlags.ReadWrite, 4, 4);
 
             // Copy from source to destination
-            var resultCode = commandQueue.EnqueueSvmMemoryCopy(true, destination, source, 4, null, out CLEvent ev);
+            var resultCode = CL.EnqueueSvmMemoryCopy(commandQueue, true, destination, source, 4, null, out CLEvent ev);
             Assert.AreEqual(CLResultCode.Success, resultCode);
             CL.WaitForEvents(new[] { ev });
 
@@ -78,19 +78,19 @@ namespace OpenTK.Compute.Tests
             Marshal.Copy(destination.Handle, output, 0, 1);
             Assert.AreEqual((int)1, output[0]);
 
-            context.SvmFree(destination);
-            context.SvmFree(source);
+            CL.SvmFree(context, destination);
+            CL.SvmFree(context, source);
         }
 
         [TestMethod]
         public void EnqueueSvmMemoryFill()
         {
             // Create a SVM buffer
-            var buffer = context.SvmAlloc(SvmMemoryFlags.ReadWrite, 2 * sizeof(int), 0);
+            var buffer = CL.SvmAlloc(context, SvmMemoryFlags.ReadWrite, 2 * sizeof(int), 0);
 
             // Fill buffer with data
             var pattern = new int[] { 1 };
-            var resultCode = commandQueue.EnqueueSvmMemoryFill(buffer, pattern, 2 * sizeof(int), null, out CLEvent ev);
+            var resultCode = CL.EnqueueSvmMemoryFill(commandQueue, buffer, pattern, 2 * sizeof(int), null, out CLEvent ev);
             Assert.AreEqual(CLResultCode.Success, resultCode);
 
             CL.WaitForEvents(new[] { ev });
@@ -100,18 +100,18 @@ namespace OpenTK.Compute.Tests
             Marshal.Copy(buffer.Handle, output, 0, 2);
             Assert.AreEqual((int)1, output[1]);
 
-            context.SvmFree(buffer);
+            CL.SvmFree(context, buffer);
         }
 
         [TestMethod]
         public void EnqueueSvmMap()
         {
             // Create a SVM buffer
-            var buffer = context.SvmAlloc(SvmMemoryFlags.ReadWrite, 1 * sizeof(int), 0);
+            var buffer = CL.SvmAlloc(context, SvmMemoryFlags.ReadWrite, 1 * sizeof(int), 0);
             Marshal.Copy(new int[] { 1 }, 0, buffer, 1);
 
             // Map buffer to local pointer
-            var resultCode = commandQueue.EnqueueSvmMap(true, MapFlags.Read, buffer, 1 * sizeof(int), null, out _);
+            var resultCode = CL.EnqueueSvmMap(commandQueue, true, MapFlags.Read, buffer, 1 * sizeof(int), null, out _);
             Assert.AreEqual(CLResultCode.Success, resultCode);
 
             // Verify map contents
@@ -119,19 +119,19 @@ namespace OpenTK.Compute.Tests
             Marshal.Copy(buffer, output, 0, 1);
             Assert.AreEqual(1, output[0]);
 
-            context.SvmFree(buffer);
+            CL.SvmFree(context, buffer);
         }
 
         [TestMethod]
         public void EnqueueSVMUnmap()
         {
             // Create a SVM buffer
-            var buffer = context.SvmAlloc(SvmMemoryFlags.ReadOnly, 1 * sizeof(int), 0);
+            var buffer = CL.SvmAlloc(context, SvmMemoryFlags.ReadOnly, 1 * sizeof(int), 0);
 
             // Map buffer to local pointer
-            commandQueue.EnqueueSvmMap(true, MapFlags.Write, buffer, 1 * sizeof(int), null, out _);
+            CL.EnqueueSvmMap(commandQueue, true, MapFlags.Write, buffer, 1 * sizeof(int), null, out _);
             Marshal.Copy(new int[] { 1 }, 0, buffer, 1);
-            var resultCode = commandQueue.EnqueueSvmUnmap(buffer, null, out _);
+            var resultCode = CL.EnqueueSvmUnmap(commandQueue, buffer, null, out _);
             Assert.AreEqual(CLResultCode.Success, resultCode);
 
             // Verify map contents
@@ -139,21 +139,21 @@ namespace OpenTK.Compute.Tests
             Marshal.Copy(buffer, output, 0, 1);
             Assert.AreEqual(1, output[0]);
 
-            context.SvmFree(buffer);
+            CL.SvmFree(context, buffer);
         }
 
         [TestMethod]
         public void EnqueueSvmMigrateMemory()
         {
             // Create a SVM buffer
-            var buffer = context.SvmAlloc(SvmMemoryFlags.ReadOnly, 1 * sizeof(int), 0);
+            var buffer = CL.SvmAlloc(context, SvmMemoryFlags.ReadOnly, 1 * sizeof(int), 0);
 
             // Migrate memory object
-            var resultCode = commandQueue.EnqueueSvmMigrateMemory(new[] { buffer }, null, MemoryMigrationFlags.Host, null, out _);
+            var resultCode = CL.EnqueueSvmMigrateMemory(commandQueue, new[] { buffer }, null, MemoryMigrationFlags.Host, null, out _);
             Assert.AreEqual(CLResultCode.Success, resultCode);
 
             // Difficult to test if this has succeeded
-            context.SvmFree(buffer);
+            CL.SvmFree(context, buffer);
         }
     }
 }

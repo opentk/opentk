@@ -17,49 +17,49 @@ namespace OpenTK.Compute.Tests
         {
             CL.GetPlatformIDs(out CLPlatform[] platformIds);
             var platform = platformIds[0];
-            platform.GetDeviceIDs(DeviceType.Default, out CLDevice[] devices);
+            CL.GetDeviceIDs(platform, DeviceType.Default, out CLDevice[] devices);
             device = devices[0];
             var properties = new CLContextProperties(platform, false);
-            context = properties.CreateContext(new[] { device }, null, IntPtr.Zero, out _);
+            context = CL.CreateContext(properties, new[] { device }, null, IntPtr.Zero, out _);
         }
 
         [TestCleanup()]
         public void Cleanup()
         {
-            context.ReleaseContext();
+            CL.ReleaseContext(context);
         }
 
         [TestMethod]
         public void CreatePipe()
         {
-            var pipe = context.CreatePipe(MemoryFlags.ReadWrite, 8, 64, new CLPipeProperties(), out CLResultCode resultCode);
+            var pipe = CL.CreatePipe(context, MemoryFlags.ReadWrite, 8, 64, new CLPipeProperties(), out CLResultCode resultCode);
 
             Assert.AreEqual(CLResultCode.Success, resultCode);
-            pipe.ReleaseMemoryObject();
+            CL.ReleaseMemoryObject(pipe);
         }
 
         [TestMethod]
         public void RetainMemoryObject()
         {
-            var pipe = context.CreatePipe(MemoryFlags.ReadWrite, 1, 1, new CLPipeProperties(), out _);
+            var pipe = CL.CreatePipe(context, MemoryFlags.ReadWrite, 1, 1, new CLPipeProperties(), out _);
 
-            CLResultCode resultCode = pipe.RetainMemoryObject();
+            CLResultCode resultCode = CL.RetainMemoryObject(pipe);
             Assert.AreEqual(CLResultCode.Success, resultCode);
-            pipe.ReleaseMemoryObject();
-            resultCode = pipe.ReleaseMemoryObject();
+            CL.ReleaseMemoryObject(pipe);
+            resultCode = CL.ReleaseMemoryObject(pipe);
             Assert.AreEqual(CLResultCode.Success, resultCode);
-            resultCode = pipe.ReleaseMemoryObject();
+            resultCode = CL.ReleaseMemoryObject(pipe);
             Assert.AreNotEqual(CLResultCode.Success, resultCode);
         }
 
         [TestMethod]
         public void ReleaseMemoryObject()
         {
-            var pipe = context.CreatePipe(MemoryFlags.ReadWrite, 1, 1, new CLPipeProperties(), out _);
+            var pipe = CL.CreatePipe(context, MemoryFlags.ReadWrite, 1, 1, new CLPipeProperties(), out _);
 
-            CLResultCode resultCode = pipe.ReleaseMemoryObject();
+            CLResultCode resultCode = CL.ReleaseMemoryObject(pipe);
             Assert.AreEqual(CLResultCode.Success, resultCode);
-            resultCode = pipe.ReleaseMemoryObject();
+            resultCode = CL.ReleaseMemoryObject(pipe);
             Assert.AreNotEqual(CLResultCode.Success, resultCode);
         }
 
@@ -77,13 +77,13 @@ namespace OpenTK.Compute.Tests
         [DataRow(MemoryObjectInfo.Properties)]
         public void GetMemObjectInfo(MemoryObjectInfo paramName)
         {
-            var pipe = context.CreatePipe(MemoryFlags.ReadWrite, 1, 1, new CLPipeProperties(), out _);
+            var pipe = CL.CreatePipe(context, MemoryFlags.ReadWrite, 1, 1, new CLPipeProperties(), out _);
 
-            CLResultCode resultCode = pipe.GetMemObjectInfo(paramName, out byte[] bytes);
+            CLResultCode resultCode = CL.GetMemObjectInfo(pipe, paramName, out byte[] bytes);
             Assert.AreEqual(CLResultCode.Success, resultCode);
             if (paramName != MemoryObjectInfo.Properties)
                 Assert.IsTrue(bytes.Length > 0);
-            pipe.ReleaseMemoryObject();
+            CL.ReleaseMemoryObject(pipe);
         }
 
         [TestMethod]
@@ -92,25 +92,25 @@ namespace OpenTK.Compute.Tests
         [DataRow(PipeInfo.Properties)]
         public void GetPipeInfo(PipeInfo paramName)
         {
-            var pipe = context.CreatePipe(MemoryFlags.ReadWrite, 1, 1, new CLPipeProperties(), out _);
+            var pipe = CL.CreatePipe(context, MemoryFlags.ReadWrite, 1, 1, new CLPipeProperties(), out _);
 
-            CLResultCode resultCode = pipe.GetPipeInfo(paramName, out byte[] bytes);
+            CLResultCode resultCode = CL.GetPipeInfo(pipe, paramName, out byte[] bytes);
             Assert.AreEqual(CLResultCode.Success, resultCode);
             if (paramName != PipeInfo.Properties)
                 Assert.IsTrue(bytes.Length > 0);
-            pipe.ReleaseMemoryObject();
+            CL.ReleaseMemoryObject(pipe);
         }
 
         [TestMethod]
         public void SetMemoryObjectDestructorCallback()
         {
-            var pipe = context.CreatePipe(MemoryFlags.ReadWrite, 1, 1, new CLPipeProperties(), out _);
+            var pipe = CL.CreatePipe(context, MemoryFlags.ReadWrite, 1, 1, new CLPipeProperties(), out _);
 
             bool callBackMade = false;
             void callBack(IntPtr waitEvent, IntPtr userData) { callBackMade = true; }
-            var resultCode = pipe.SetMemoryObjectDestructorCallback(callBack, IntPtr.Zero);
+            var resultCode = CL.SetMemoryObjectDestructorCallback(pipe, callBack, IntPtr.Zero);
             Assert.AreEqual(CLResultCode.Success, resultCode);
-            pipe.ReleaseMemoryObject();
+            CL.ReleaseMemoryObject(pipe);
             Assert.IsTrue(callBackMade);
         }
     }
