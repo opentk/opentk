@@ -1,13 +1,4 @@
-﻿//
-// GameWindow.cs
-//
-// Copyright (C) 2018 OpenTK
-//
-// This software may be modified and distributed under the terms
-// of the MIT license. See the LICENSE file for details.
-//
-
-using System;
+﻿using System;
 using System.Reflection;
 using OpenTK.Windowing.Common;
 using OpenTK.Windowing.GraphicsLibraryFramework;
