@@ -2,7 +2,7 @@ using System.Text;
 
 namespace Generator.Utility
 {
-    public class NameMangler
+    public static class NameMangler
     {
         public static string RemoveStart(string str, string start)
         {
@@ -69,6 +69,71 @@ namespace Generator.Utility
                 }
             }
             return stringBuilder.ToString();
+        }
+
+        // Documentation functions
+
+        private static readonly char[] NewlineAndTabCharacters = new[] { '\r', '\n', '\t' };
+
+        public static string MangleCommandPurpose(string purpose)
+        {
+            purpose = TrimAndRemoveChars(purpose, NewlineAndTabCharacters);
+            return CapitalizeFirst(purpose) + ".";
+        }
+
+        public static string MangleParameterDescription(string description)
+        {
+            description = TrimAndRemoveChars(description, NewlineAndTabCharacters);
+            return RemoveRepeatedSpaces(description);
+        }
+
+        private static string RemoveRepeatedSpaces(string str)
+        {
+            if (string.IsNullOrEmpty(str))
+            {
+                return str;
+            }
+
+            StringBuilder builder = new StringBuilder();
+            for (int i = 0; i < str.Length - 1; i++)
+            {
+                if (str[i] != ' ' || str[i + 1] != ' ')
+                {
+                    builder.Append(str[i]);
+                }
+            }
+            builder.Append(str[^1]);
+            return builder.ToString();
+        }
+
+        private static string CapitalizeFirst(string str)
+        {
+            if (string.IsNullOrEmpty(str)) return str;
+
+            return char.ToUpper(str[0]).ToString() + str[1..];
+        }
+
+        private static string TrimAndRemoveChars(string str, params char[] characters)
+        {
+            StringBuilder builder = new StringBuilder();
+            foreach (char strChar in str)
+            {
+                bool match = false;
+                for (int i = 0; i < characters.Length; i++)
+                {
+                    if (characters[i] == strChar)
+                    {
+                        match = true;
+                        break;
+                    }
+                }
+
+                if (match == false)
+                {
+                    builder.Append(strChar);
+                }
+            }
+            return builder.ToString();
         }
     }
 }

@@ -52,7 +52,7 @@ namespace Generator.Process
             foreach (Command command in spec.Commands)
             {
                 NativeFunction nativeFunction = MakeNativeFunction(command);
-                Dictionary<OutputApi, CommandDocumentation> functionDocumentation = MakeDocumentation(nativeFunction, docs);
+                Dictionary<OutputApi, CommandDocumentation> functionDocumentation = MakeDocumentationForNativeFunction(nativeFunction, docs);
                 OverloadedFunction overloadedFunction = GenerateOverloads(nativeFunction, functionDocumentation);
 
                 allFunctions.Add(nativeFunction.EntryPoint, overloadedFunction);
@@ -443,7 +443,7 @@ namespace Generator.Process
             }
         }
 
-        public static Dictionary<OutputApi, CommandDocumentation> MakeDocumentation(NativeFunction function, Documentation documentation)
+        public static Dictionary<OutputApi, CommandDocumentation> MakeDocumentationForNativeFunction(NativeFunction function, Documentation documentation)
         {
             Dictionary<OutputApi, CommandDocumentation> commandDocs = new Dictionary<OutputApi, CommandDocumentation>();
 
@@ -451,6 +451,20 @@ namespace Generator.Process
             {
                 if (versionDocumentation.Commands.TryGetValue(function.EntryPoint, out CommandDocumentation? commandDoc))
                 {
+                    if (function.Parameters.Count != commandDoc.Parameters.Length)
+                    {
+                        Logger.Warning($"Function {function.EntryPoint} has differnet number of parameters than the parsed documentation. (gl.xml:{function.Parameters.Count}, documentation:{commandDoc.Parameters.Length})");
+                    }
+
+                    for (int i = 0; i < Math.Min(function.Parameters.Count, commandDoc.Parameters.Length); i++)
+                    {
+                        if (function.Parameters[i].Name != commandDoc.Parameters[i].Name)
+                        {
+                            Logger.Warning($"[{version}][{function.EntryPoint}] Function parameter '{function.Parameters[i].Name}' doesn't have the same name in the documentation. ('{commandDoc.Parameters[i].Name}')");
+                        }
+                    }
+
+
                     commandDocs.Add(version, commandDoc);
                 }
             }

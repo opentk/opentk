@@ -70,39 +70,62 @@ namespace Generator.Parsing
 
         private static CommandDocumentation[] ParseFile(XElement root)
         {
-            List<ParameterDocumentation> parameters = new List<ParameterDocumentation>();
+            // FIXME:
 
-            XElement? refparameters = root.ElementIgnoreNamespace(e => e.AttributeIgnoreNamespace("id")?.Value == "parameters");
+            List<CommandDocumentation> documentation = new List<CommandDocumentation>();
+
+            XElement namediv = root.ElementIgnoreNamespace("refnamediv");
+            string purpose = namediv.ElementIgnoreNamespace("refpurpose").Value;
+            purpose = NameMangler.MangleCommandPurpose(purpose);
+
+            Dictionary<string, string> parametersDescriptions = new Dictionary<string, string>();
+            
+            XElement ? refparameters = root.ElementIgnoreNamespace(e => e.AttributeIgnoreNamespace("id")?.Value == "parameters");
             if (refparameters != null)
             {
                 XElement variableList = refparameters.ElementIgnoreNamespace("variablelist");
                 foreach (var entry in variableList.ElementsIgnoreNamespace("varlistentry"))
                 {
-                    string parameter = entry.ElementIgnoreNamespace("parameter").Value;
-                    // FIXME: Remove tab indentation.
                     string desc = entry.ElementIgnoreNamespace("para").Value;
+                    desc = NameMangler.MangleParameterDescription(desc);
 
-                    desc = desc.Replace("\r", "");
-                    desc = desc.Replace("\n", "");
-                    desc = desc.Replace("\t", "");
-
-                    parameters.Add(new ParameterDocumentation(parameter, desc));
-                    //Logger.Info($"  {parameter}: {desc}");
+                    foreach (var term in entry.ElementsIgnoreNamespace("term"))
+                    {
+                        foreach (var parameter in term.ElementsIgnoreNamespace("parameter"))
+                        {
+                            if (parametersDescriptions.ContainsKey(parameter.Value) == false)
+                            {
+                                parametersDescriptions.Add(parameter.Value, desc);
+                            }
+                        }
+                    }
                 }
             }
 
-            List<CommandDocumentation> documentation = new List<CommandDocumentation>();
-            XElement namediv = root.ElementIgnoreNamespace("refnamediv");
-            string purpose = namediv.ElementIgnoreNamespace("refpurpose").Value;
-            purpose = purpose.Replace("\r", "");
-            purpose = purpose.Replace("\n", "");
-            purpose = purpose.Replace("\t", "");
             XElement synopsis = root.ElementIgnoreNamespace("refsynopsisdiv");
-            foreach (XElement name in synopsis.ElementsIgnoreNamespace("function"))
+            foreach (XElement prototype in synopsis.ElementsIgnoreNamespace("funcprototype"))
             {
-                documentation.Add(new CommandDocumentation(name.Value, purpose, parameters.ToArray()));
+                var function = prototype.ElementIgnoreNamespace("function");
 
-                //Logger.Info($"{name.Value}");
+                List<ParameterDocumentation> parameters = new List<ParameterDocumentation>();
+                foreach (var parameter in prototype.ElementsIgnoreNamespace("parameter"))
+                {
+                    string parameterName = parameter.Value;
+                    if (parameterName == "void")
+                    {
+                        Logger.Warning("void!!!!!!!!!");
+                        continue;
+                    }
+
+                    parametersDescriptions.TryGetValue(parameterName, out string? desc);
+                    if (desc != null)
+                        desc = NameMangler.MangleParameterDescription(desc);
+
+                    parameters.Add(new ParameterDocumentation(parameterName, desc ?? "!!missing documentation!!"));
+                    //Logger.Info($"  {parameter}: {desc}");
+                }
+
+                documentation.Add(new CommandDocumentation(function.Value, purpose, parameters.ToArray()));
             }
 
             return documentation.ToArray();

@@ -298,9 +298,19 @@ namespace Generator.Writing
             return overload.MarshalLayerToNested?.WriteEpilogue(writer, nameTable, returnName) ?? returnName;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="writer"></param>
+        /// <param name="documentation"></param>
         private static void WriteDocumentation(IndentedTextWriter writer, CommandDocumentation documentation)
         {
             writer.WriteLine($"/// <summary> {documentation.Purpose} </summary>");
+
+            foreach (ParameterDocumentation parameter in documentation.Parameters)
+            {
+                writer.WriteLine($"/// <param name=\"{parameter.Name}\">{parameter.Description}</param>");
+            }
         }
 
         private static void WriteEnums(string directoryPath, string apiNamespace, List<EnumGroup> enumGroups)
