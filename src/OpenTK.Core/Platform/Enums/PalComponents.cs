@@ -79,13 +79,8 @@ namespace OpenTK.Core.Platform
         KeyboardInput = 1 << 8,
 
         /// <summary>
-        /// Abstraction layer provides the input method editor component.
-        /// </summary>
-        IME = 1 << 9,
-
-        /// <summary>
         /// Abstraction layer provides the controller input component.
         /// </summary>
-        ControllerInput = 1 << 10,
+        ControllerInput = 1 << 9,
     }
 }
