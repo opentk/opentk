@@ -18,6 +18,13 @@ namespace OpenTK.Core.Platform
         void Destroy(SurfaceHandle handle);
 
         /// <summary>
+        /// Get surface type.
+        /// </summary>
+        /// <param name="handle">Handle to a surface object.</param>
+        /// <returns>The surface type.</returns>
+        SurfaceType GetType(SurfaceHandle handle);
+
+        /// <summary>
         /// Get the display the surface is in.
         /// </summary>
         /// <param name="handle">Handle to a surface.</param>
@@ -30,5 +37,20 @@ namespace OpenTK.Core.Platform
         /// <param name="handle">Handle to a surface.</param>
         /// <param name="display">Handle to the display to set the surface to.</param>
         void SetDisplay(SurfaceHandle handle, DisplayHandle display);
+
+        /// <summary>
+        /// Get the client size of the surface.
+        /// </summary>
+        /// <param name="handle">Handle to a surface.</param>
+        /// <param name="width">Width of the surface.</param>
+        /// <param name="height">Height of the surface.</param>
+        void GetClientSize(SurfaceHandle handle, out int width, out int height);
+
+        /// <summary>
+        /// Get the event queue for the surface.
+        /// </summary>
+        /// <param name="handle">Handle to a surface.</param>
+        /// <returns>The surface event queue.</returns>
+        IEventQueue<WindowEventType, WindowEventArgs> GetEventQueue(SurfaceHandle handle);
     }
 }
