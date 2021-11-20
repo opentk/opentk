@@ -228,25 +228,10 @@ namespace OpenTK.Core.Platform
         void SetCursor(WindowHandle handle, CursorHandle cursor);
 
         /// <summary>
-        /// Process window events.
+        /// Get the event queue object for a window.
         /// </summary>
         /// <param name="handle">Handle to a window.</param>
-        /// <param name="handler">Event handler to process window events.</param>
-        /// <exception cref="ArgumentNullException">
-        ///     <paramref name="handle"/> or <paramref name="handler"/> is null.
-        /// </exception>
-        void ProcessEvents(WindowHandle handle, WindowEventHandler handler);
-
-        /// <summary>
-        /// A default handler for window event processing.
-        /// </summary>
-        /// <param name="window">Window receiving event.</param>
-        /// <param name="type">Type of the event received.</param>
-        /// <param name="eventArgs">Extra arguments associated with the event.</param>
-        /// <remarks>
-        ///     This method should only be used within your own event handler, or be passed into
-        ///     <see cref="ProcessEvents"/> directly. It is only meant for being used in event handling scenarios.
-        /// </remarks>
-        void DefaultEventHandler(WindowHandle window, WindowEventType type, WindowEventArgs eventArgs);
+        /// <returns>Event queue for the window.</returns>
+        IEventQueue<WindowEventType, WindowEventArgs> GetEventQueue(WindowHandle handle);
     }
 }
