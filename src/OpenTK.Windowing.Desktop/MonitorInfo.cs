@@ -32,6 +32,11 @@ namespace OpenTK.Windowing.Desktop
         public MonitorHandle Handle => _handle;
 
         /// <summary>
+        /// Human-readable name for this monitor. Not guaranteed to be unique among the connected monitors.
+        /// </summary>
+        public string Name { get; private set; }
+
+        /// <summary>
         /// Gets the client area of the monitor (in the virtual screen-space).
         /// </summary>
         public Box2i ClientArea { get; private set; }
@@ -113,6 +118,8 @@ namespace OpenTK.Windowing.Desktop
 
             _handle = handle;
 
+            Name = GLFW.GetMonitorName(HandleAsPtr);
+
             GLFW.GetMonitorPos(HandleAsPtr, out int x, out int y);
             var videoMode = GLFW.GetVideoMode(HandleAsPtr);
             ClientArea = new Box2i(x, y, x + videoMode->Width, y + videoMode->Height);
@@ -133,6 +140,26 @@ namespace OpenTK.Windowing.Desktop
             HorizontalRawDpi = CalculateDpi(HorizontalResolution, PhysicalWidth);
             VerticalRawDpi = CalculateDpi(VerticalResolution, PhysicalHeight);
         }
+
+        /// <summary>
+        /// Returns an array of supported video modes for this monitor.
+        /// </summary>
+        /// <returns>An array of supported video modes.</returns>
+        public VideoMode[] GetSupportedVideoModes()
+        {
+            return GLFW.GetVideoModes(HandleAsPtr);
+        }
+
+        /// <summary>
+        /// Returns the current VideoMode used by this monitor.
+        /// </summary>
+        /// <returns>The current video mode.</returns>
+        public unsafe VideoMode GetCurrentVideoMode()
+        {
+            return *GLFW.GetVideoMode(HandleAsPtr);
+        }
+
+
 
         /// <summary>
         /// Calculates dpi from a pixel count and a length in mm.
