@@ -979,7 +979,7 @@ namespace OpenTK
         /// <summary>Transform a Vector by the given Matrix using right-handed notation</summary>
         /// <param name="mat">The desired transformation</param>
         /// <param name="vec">The vector to transform</param>
-        [Obsolete("This function does a vector * matrix multiplication instead of the intended matrix * vector multiplication. Use TransformColumn() if proper right-handed multiplication is wanted.")]
+        [Obsolete("This function erroneously does a vector * matrix multiplication instead of the intended matrix * vector multiplication. Use TransformColumn() if proper right-handed multiplication is wanted, or TransformRow() for the existing behavior.")]
         public static Vector3 Transform(Matrix3 mat, Vector3 vec)
         {
             Transform(ref vec, ref mat, out Vector3 result);
