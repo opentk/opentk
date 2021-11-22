@@ -159,8 +159,6 @@ namespace OpenTK.Windowing.Desktop
             return *GLFW.GetVideoMode(HandleAsPtr);
         }
 
-
-
         /// <summary>
         /// Calculates dpi from a pixel count and a length in mm.
         /// </summary>
