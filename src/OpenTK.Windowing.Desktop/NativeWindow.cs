@@ -35,6 +35,9 @@ namespace OpenTK.Windowing.Desktop
         // Used for delta calculation in the mouse position changed event.
         private Vector2 _lastReportedMousePos;
 
+        // Stores exceptions thrown in callbacks so that we can rethrow them after ProcessEvents().
+        private List<Exception> _callbackExceptions = new List<Exception>();
+
         // GLFW cursor we assigned to the window.
         // Null if the cursor is default.
         private unsafe Cursor* _glfwCursor;
@@ -934,39 +937,48 @@ namespace OpenTK.Windowing.Desktop
 
         private unsafe void RegisterWindowCallbacks()
         {
-            // These lambdas must be assigned to fields to prevent them from being garbage collected
-            _windowPosCallback = (w, posX, posY) => OnMove(new WindowPositionEventArgs(posX, posY));
-            _windowSizeCallback = (w, argsWidth, argsHeight) => OnResize(new ResizeEventArgs(argsWidth, argsHeight));
-            _windowIconifyCallback = (w, iconified) => OnMinimized(new MinimizedEventArgs(iconified));
-            _windowMaximizeCallback = (w, maximized) => OnMaximized(new MaximizedEventArgs(maximized));
-            _windowFocusCallback = (w, focused) => OnFocusedChanged(new FocusedChangedEventArgs(focused));
-            _charCallback = (w, codepoint) => OnTextInput(new TextInputEventArgs((int)codepoint));
-            _scrollCallback = ScrollCallback;
-            _windowRefreshCallback = w => OnRefresh();
-
             // These must be assigned to fields even when they're methods
-            _windowCloseCallback = OnCloseCallback;
-            _keyCallback = KeyCallback;
-            _cursorEnterCallback = CursorEnterCallback;
+
+            _windowPosCallback = WindowPosCallback;
+            _windowSizeCallback = WindowSizeCallback;
+            _windowCloseCallback = WindowCloseCallback;
+            _windowRefreshCallback = WindowRefreshCallback;
+            _windowFocusCallback = WindowFocusCallback;
+            _windowIconifyCallback = WindowIconifyCallback;
+            _windowMaximizeCallback = WindowMaximizeCallback;
+            // FIXME: Add FramebufferSizeCallback and WindowContentsScaleCallback
+
             _mouseButtonCallback = MouseButtonCallback;
             _cursorPosCallback = CursorPosCallback;
+            _cursorEnterCallback = CursorEnterCallback;
+            _scrollCallback = ScrollCallback;
+
+            _keyCallback = KeyCallback;
+            _charCallback = CharCallback;
+            // FIXME: CharModsCallback
+
             _dropCallback = DropCallback;
+
             _joystickCallback = JoystickCallback;
 
             GLFW.SetWindowPosCallback(WindowPtr, _windowPosCallback);
             GLFW.SetWindowSizeCallback(WindowPtr, _windowSizeCallback);
+            GLFW.SetWindowCloseCallback(WindowPtr, _windowCloseCallback);
+            GLFW.SetWindowRefreshCallback(WindowPtr, _windowRefreshCallback);
+            GLFW.SetWindowFocusCallback(WindowPtr, _windowFocusCallback);
             GLFW.SetWindowIconifyCallback(WindowPtr, _windowIconifyCallback);
             GLFW.SetWindowMaximizeCallback(WindowPtr, _windowMaximizeCallback);
-            GLFW.SetWindowFocusCallback(WindowPtr, _windowFocusCallback);
-            GLFW.SetCharCallback(WindowPtr, _charCallback);
-            GLFW.SetScrollCallback(WindowPtr, _scrollCallback);
-            GLFW.SetWindowRefreshCallback(WindowPtr, _windowRefreshCallback);
-            GLFW.SetWindowCloseCallback(WindowPtr, _windowCloseCallback);
-            GLFW.SetKeyCallback(WindowPtr, _keyCallback);
-            GLFW.SetCursorEnterCallback(WindowPtr, _cursorEnterCallback);
+
             GLFW.SetMouseButtonCallback(WindowPtr, _mouseButtonCallback);
             GLFW.SetCursorPosCallback(WindowPtr, _cursorPosCallback);
+            GLFW.SetCursorEnterCallback(WindowPtr, _cursorEnterCallback);
+            GLFW.SetScrollCallback(WindowPtr, _scrollCallback);
+
+            GLFW.SetKeyCallback(WindowPtr, _keyCallback);
+            GLFW.SetCharCallback(WindowPtr, _charCallback);
+
             GLFW.SetDropCallback(WindowPtr, _dropCallback);
+
             GLFW.SetJoystickCallback(_joystickCallback);
         }
 
@@ -987,120 +999,260 @@ namespace OpenTK.Windowing.Desktop
             }
         }
 
-        private unsafe void KeyCallback(Window* window, Keys key, int scancode, InputAction action, KeyModifiers mods)
+        private unsafe void WindowPosCallback(Window* window, int x, int y)
         {
-            var args = new KeyboardKeyEventArgs(key, scancode, mods, action == InputAction.Repeat);
-
-            if (action == InputAction.Release)
+            try
             {
-                if (key != Keys.Unknown)
-                {
-                    KeyboardState.SetKeyState(key, false);
-                }
-
-                OnKeyUp(args);
+                OnMove(new WindowPositionEventArgs(x, y));
             }
-            else
+            catch (Exception e)
             {
-                if (key != Keys.Unknown)
-                {
-                    KeyboardState.SetKeyState(key, true);
-                }
-
-                OnKeyDown(args);
+                _callbackExceptions.Add(e);
             }
         }
 
-        private unsafe void CursorEnterCallback(Window* window, bool entered)
+        private unsafe void WindowSizeCallback(Window* window, int width, int height)
         {
-            if (entered)
+            try
             {
-                OnMouseEnter();
+                OnResize(new ResizeEventArgs(width, height));
             }
-            else
+            catch (Exception e)
             {
-                OnMouseLeave();
+                _callbackExceptions.Add(e);
+            }
+        }
+
+        private unsafe void WindowCloseCallback(Window* window)
+        {
+            try
+            {
+                var c = new CancelEventArgs();
+                OnClosing(c);
+                if (c.Cancel)
+                {
+                    GLFW.SetWindowShouldClose(WindowPtr, false);
+                }
+            }
+            catch (Exception e)
+            {
+                _callbackExceptions.Add(e);
+            }
+        }
+
+        private unsafe void WindowRefreshCallback(Window* window)
+        {
+            try
+            {
+                OnRefresh();
+            }
+            catch (Exception e)
+            {
+                _callbackExceptions.Add(e);
+            }
+        }
+
+        private unsafe void WindowFocusCallback(Window* window, bool focused)
+        {
+            try
+            {
+                OnFocusedChanged(new FocusedChangedEventArgs(focused));
+            }
+            catch (Exception e)
+            {
+                _callbackExceptions.Add(e);
+            }
+        }
+
+        private unsafe void WindowIconifyCallback(Window* window, bool iconified)
+        {
+            try
+            {
+                OnMinimized(new MinimizedEventArgs(iconified));
+            }
+            catch (Exception e)
+            {
+                _callbackExceptions.Add(e);
+            }
+        }
+
+        private unsafe void WindowMaximizeCallback(Window* window, bool maximized)
+        {
+            try
+            {
+                OnMaximized(new MaximizedEventArgs(maximized));
+            }
+            catch (Exception e)
+            {
+                _callbackExceptions.Add(e);
             }
         }
 
         private unsafe void MouseButtonCallback(Window* window, MouseButton button, InputAction action, KeyModifiers mods)
         {
-            var args = new MouseButtonEventArgs(button, action, mods);
+            try
+            {
+                var args = new MouseButtonEventArgs(button, action, mods);
 
-            if (action == InputAction.Release)
-            {
-                MouseState[button] = false;
-                OnMouseUp(args);
+                if (action == InputAction.Release)
+                {
+                    MouseState[button] = false;
+                    OnMouseUp(args);
+                }
+                else
+                {
+                    MouseState[button] = true;
+                    OnMouseDown(args);
+                }
             }
-            else
+            catch (Exception e)
             {
-                MouseState[button] = true;
-                OnMouseDown(args);
+                _callbackExceptions.Add(e);
             }
         }
 
         private unsafe void CursorPosCallback(Window* window, double posX, double posY)
         {
-            var newPos = new Vector2((float)posX, (float)posY);
-            var delta = newPos - _lastReportedMousePos;
+            try
+            {
+                var newPos = new Vector2((float)posX, (float)posY);
+                var delta = newPos - _lastReportedMousePos;
 
-            _lastReportedMousePos = newPos;
+                _lastReportedMousePos = newPos;
 
-            OnMouseMove(new MouseMoveEventArgs(newPos, delta));
+                OnMouseMove(new MouseMoveEventArgs(newPos, delta));
+            }
+            catch (Exception e)
+            {
+                _callbackExceptions.Add(e);
+            }
+        }
+
+        private unsafe void CursorEnterCallback(Window* window, bool entered)
+        {
+            try
+            {
+                if (entered)
+                {
+                    OnMouseEnter();
+                }
+                else
+                {
+                    OnMouseLeave();
+                }
+            }
+            catch (Exception e)
+            {
+                _callbackExceptions.Add(e);
+            }
         }
 
         private unsafe void ScrollCallback(Window* window, double offsetX, double offsetY)
         {
-            // GLFW says this function can be called not only in response to functions like glfwPollEvents();
-            // There might be a function like glfwSetWindowSize what will trigger a sroll event to trigger inside that function.
-            // We ignore this case for now and just accept that the scroll value will change after such a function call.
-            var offset = new Vector2((float)offsetX, (float)offsetY);
+            try
+            {
+                // GLFW says this function can be called not only in response to functions like glfwPollEvents();
+                // There might be a function like glfwSetWindowSize what will trigger a sroll event to trigger inside that function.
+                // We ignore this case for now and just accept that the scroll value will change after such a function call.
+                var offset = new Vector2((float)offsetX, (float)offsetY);
 
-            MouseState.Scroll += offset;
+                MouseState.Scroll += offset;
 
-            OnMouseWheel(new MouseWheelEventArgs(offset));
+                OnMouseWheel(new MouseWheelEventArgs(offset));
+            }
+            catch (Exception e)
+            {
+                _callbackExceptions.Add(e);
+            }
         }
 
-        private unsafe void JoystickCallback(int joy, ConnectedState eventCode)
+        private unsafe void KeyCallback(Window* window, Keys key, int scancode, InputAction action, KeyModifiers mods)
         {
-            if (eventCode == ConnectedState.Connected)
+            try
             {
-                // Initialize the first joystick state.
-                GLFW.GetJoystickHatsRaw(joy, out var hatCount);
-                GLFW.GetJoystickAxesRaw(joy, out var axisCount);
-                GLFW.GetJoystickButtonsRaw(joy, out var buttonCount);
-                var name = GLFW.GetJoystickName(joy);
+                var args = new KeyboardKeyEventArgs(key, scancode, mods, action == InputAction.Repeat);
 
-                _joystickStates[joy] = new JoystickState(hatCount, axisCount, buttonCount, joy, name);
+                if (action == InputAction.Release)
+                {
+                    if (key != Keys.Unknown)
+                    {
+                        KeyboardState.SetKeyState(key, false);
+                    }
+
+                    OnKeyUp(args);
+                }
+                else
+                {
+                    if (key != Keys.Unknown)
+                    {
+                        KeyboardState.SetKeyState(key, true);
+                    }
+
+                    OnKeyDown(args);
+                }
             }
-            else
+            catch (Exception e)
             {
-                // Remove the joystick state from the array of joysticks.
-                _joystickStates[joy] = null;
+                _callbackExceptions.Add(e);
             }
+        }
 
-            OnJoystickConnected(new JoystickEventArgs(joy, eventCode == ConnectedState.Connected));
+        private unsafe void CharCallback(Window* window, uint codepoint)
+        {
+            try
+            {
+                OnTextInput(new TextInputEventArgs((int)codepoint));
+            }
+            catch (Exception e)
+            {
+                _callbackExceptions.Add(e);
+            }
         }
 
         private unsafe void DropCallback(Window* window, int count, byte** paths)
         {
-            var arrayOfPaths = new string[count];
-
-            for (var i = 0; i < count; i++)
+            try
             {
-                arrayOfPaths[i] = MarshalUtility.PtrToStringUTF8(paths[i]);
-            }
+                var arrayOfPaths = new string[count];
 
-            OnFileDrop(new FileDropEventArgs(arrayOfPaths));
+                for (var i = 0; i < count; i++)
+                {
+                    arrayOfPaths[i] = MarshalUtility.PtrToStringUTF8(paths[i]);
+                }
+
+                OnFileDrop(new FileDropEventArgs(arrayOfPaths));
+            }
+            catch (Exception e)
+            {
+                _callbackExceptions.Add(e);
+            }
         }
 
-        private unsafe void OnCloseCallback(Window* window)
+        private unsafe void JoystickCallback(int joy, ConnectedState eventCode)
         {
-            var c = new CancelEventArgs();
-            OnClosing(c);
-            if (c.Cancel)
+            try
             {
-                GLFW.SetWindowShouldClose(WindowPtr, false);
+                if (eventCode == ConnectedState.Connected)
+                {
+                    // Initialize the first joystick state.
+                    GLFW.GetJoystickHatsRaw(joy, out var hatCount);
+                    GLFW.GetJoystickAxesRaw(joy, out var axisCount);
+                    GLFW.GetJoystickButtonsRaw(joy, out var buttonCount);
+                    var name = GLFW.GetJoystickName(joy);
+
+                    _joystickStates[joy] = new JoystickState(hatCount, axisCount, buttonCount, joy, name);
+                }
+                else
+                {
+                    // Remove the joystick state from the array of joysticks.
+                    _joystickStates[joy] = null;
+                }
+
+                OnJoystickConnected(new JoystickEventArgs(joy, eventCode == ConnectedState.Connected));
+            }
+            catch (Exception e)
+            {
+                _callbackExceptions.Add(e);
             }
         }
 
@@ -1124,13 +1276,14 @@ namespace OpenTK.Windowing.Desktop
         /// Processes pending window events and waits <paramref name="timeout"/> seconds for events.
         /// </summary>
         /// <param name="timeout">The timeout in seconds.</param>
-        /// <returns><c>true</c> if events where processed; otherwise <c>false</c>
-        /// (Event processing not possible anymore, window is about to be destroyed).</returns>
+        /// <returns>This function will always return true.</returns>
         public bool ProcessEvents(double timeout)
         {
             GLFW.WaitEventsTimeout(timeout);
 
             ProcessInputEvents();
+
+            RethrowCallbackExceptionsIfNeeded();
 
             // FIXME: Remove this return and the documentation comment about it
             return true;
@@ -1150,6 +1303,24 @@ namespace OpenTK.Windowing.Desktop
             else
             {
                 GLFW.PollEvents();
+            }
+
+            RethrowCallbackExceptionsIfNeeded();
+        }
+
+        private void RethrowCallbackExceptionsIfNeeded()
+        {
+            if (_callbackExceptions.Count == 1)
+            {
+                Exception exception = _callbackExceptions[0];
+                _callbackExceptions.Clear();
+                throw exception;
+            }
+            else if (_callbackExceptions.Count > 1)
+            {
+                Exception exception = new AggregateException("Multiple exceptions in callback handlers while processing events.", _callbackExceptions);
+                _callbackExceptions.Clear();
+                throw exception;
             }
         }
 
