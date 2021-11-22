@@ -908,8 +908,6 @@ namespace OpenTK.Rewrite
                     il.Emit(OpCodes.Ldind_I4);
                 }
 
-                Console.WriteLine(method);
-
                 il.Emit(OpCodes.Stloc, countVariable.Index);
             }
             else
