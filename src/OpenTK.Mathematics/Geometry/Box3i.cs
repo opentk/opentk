@@ -15,7 +15,7 @@ using System.Runtime.InteropServices;
 namespace OpenTK.Mathematics
 {
     /// <summary>
-    /// Defines an axis-aligned 2d box (rectangle).
+    /// Defines an axis-aligned 3d box (rectangular prism).
     /// </summary>
     [StructLayout(LayoutKind.Sequential)]
     public struct Box3i : IEquatable<Box3i>
@@ -53,8 +53,8 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Initializes a new instance of the <see cref="Box3i"/> struct.
         /// </summary>
-        /// <param name="min">The minimum point on the XY plane this box encloses.</param>
-        /// <param name="max">The maximum point on the XY plane this box encloses.</param>
+        /// <param name="min">The minimum point in 3D space this box encloses.</param>
+        /// <param name="max">The maximum point in 3D space this box encloses.</param>
         public Box3i(Vector3i min, Vector3i max)
         {
             _min = Vector3i.ComponentMin(min, max);
@@ -274,7 +274,7 @@ namespace OpenTK.Mathematics
         public static readonly Box3i Empty = new Box3i(0, 0, 0, 0, 0, 0);
 
         /// <summary>
-        /// Gets a box with a location 0,0,9 with the a size of 1.
+        /// Gets a box with a location 0,0,0 with size 1 on each axis.
         /// </summary>
         public static readonly Box3i UnitSquare = new Box3i(0, 0, 0, 1, 1, 1);
 
@@ -292,8 +292,8 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Initializes a new instance of the <see cref="Box3"/> struct.
         /// </summary>
-        /// <param name="min">The minimum point on the XY plane this box encloses.</param>
-        /// <param name="max">The maximum point on the XY plane this box encloses.</param>
+        /// <param name="min">The minimum point in 3D space this box encloses.</param>
+        /// <param name="max">The maximum point in 3D space this box encloses.</param>
         /// <returns>A box.</returns>
         public static Box3i FromPositions(Vector3i min, Vector3i max)
         {
