@@ -22,7 +22,7 @@ namespace OpenTK.Compute.Tests
         {
             // Create context from all devices
             CL.GetDeviceIDs(platform, DeviceType.All, out CLDevice[] devices);
-            var context = CL.CreateContext(new CLContextProperties(platform), devices, null, IntPtr.Zero, out CLResultCode resultCode);
+            var context = CL.CreateContext(new CLContextProperties() { ContextPlatform = platform }, devices, null, IntPtr.Zero, out CLResultCode resultCode);
             Assert.AreEqual(CLResultCode.Success, resultCode);
 
             CL.ReleaseContext(context);
@@ -32,7 +32,7 @@ namespace OpenTK.Compute.Tests
         public void CreateContextFromType()
         {
             // Create context from default device
-            var context = CL.CreateContextFromType(new CLContextProperties(platform), DeviceType.Default, null, IntPtr.Zero, out CLResultCode resultCode);
+            var context = CL.CreateContextFromType(new CLContextProperties() { ContextPlatform = platform }, DeviceType.Default, null, IntPtr.Zero, out CLResultCode resultCode);
             Assert.AreEqual(CLResultCode.Success, resultCode);
 
             CL.ReleaseContext(context);
@@ -42,7 +42,7 @@ namespace OpenTK.Compute.Tests
         public void RetainContext()
         {
             // Create context
-            var context = CL.CreateContextFromType(new CLContextProperties(platform), DeviceType.Default, null, IntPtr.Zero, out _);
+            var context = CL.CreateContextFromType(new CLContextProperties() { ContextPlatform = platform }, DeviceType.Default, null, IntPtr.Zero, out _);
 
 
             // Increment memobj reference count
@@ -64,7 +64,7 @@ namespace OpenTK.Compute.Tests
         public void ReleaseContext()
         {
             // Create context
-            var context = CL.CreateContextFromType(new CLContextProperties(platform), DeviceType.Default, null, IntPtr.Zero, out _);
+            var context = CL.CreateContextFromType(new CLContextProperties() { ContextPlatform = platform }, DeviceType.Default, null, IntPtr.Zero, out _);
 
             // Decrement memobj ref count 
             var resultCode = CL.ReleaseContext(context);
@@ -83,7 +83,7 @@ namespace OpenTK.Compute.Tests
         public void GetContextInfo(ContextInfo paramName)
         {
             // Create context
-            var context = CL.CreateContextFromType(new CLContextProperties(platform), DeviceType.Default, null, IntPtr.Zero, out _);
+            var context = CL.CreateContextFromType(new CLContextProperties() { ContextPlatform = platform }, DeviceType.Default, null, IntPtr.Zero, out _);
 
             // Check that paramName is valid
             var resultCode = CL.GetContextInfo(context, paramName, out byte[] paramValue);
@@ -101,7 +101,7 @@ namespace OpenTK.Compute.Tests
             void callBack(IntPtr waitEvent, IntPtr userData) { callBackMade = true; }
 
             // Create context
-            var context = CL.CreateContextFromType(new CLContextProperties(platform), DeviceType.Default, null, IntPtr.Zero, out _);
+            var context = CL.CreateContextFromType(new CLContextProperties() { ContextPlatform = platform }, DeviceType.Default, null, IntPtr.Zero, out _);
 
             // Set destructor
             var resultCode = CL.SetContextDestructorCallback(context, callBack, IntPtr.Zero);

@@ -6,13 +6,14 @@ using System.Text;
 
 namespace OpenTK.Compute.Tests
 {
-	[TestClass]
-	public class DeviceAPITest
+    [TestClass]
+    public class DeviceAPITest
     {
         CLPlatform platform;
 
         [TestInitialize()]
-        public void Starup(){
+        public void Starup()
+        {
             CL.GetPlatformIDs(out CLPlatform[] platformIds);
             platform = platformIds[0];
         }
@@ -35,7 +36,7 @@ namespace OpenTK.Compute.Tests
         {
             var resultCode = CL.GetDeviceIDs(platform, paramName, out _);
 
-            Assert.IsTrue(new []{CLResultCode.Success, CLResultCode.DeviceNotFound}.Contains(resultCode));
+            Assert.IsTrue(new[] { CLResultCode.Success, CLResultCode.DeviceNotFound }.Contains(resultCode));
         }
 
 
@@ -99,7 +100,6 @@ namespace OpenTK.Compute.Tests
         [DataRow(DeviceInfo.NativeVectorWidthFloat)]
         [DataRow(DeviceInfo.NativeVectorWidthDouble)]
         [DataRow(DeviceInfo.NativeVectorWidthHalf)]
-        [DataRow(DeviceInfo.OpenClCVersion)]
         [DataRow(DeviceInfo.LinkerAvailable)]
         [DataRow(DeviceInfo.BuiltInKernels)]
         [DataRow(DeviceInfo.ImageMaximumBufferSize)]
@@ -169,7 +169,7 @@ namespace OpenTK.Compute.Tests
                 Assert.Inconclusive("Sub devices can only be created on CPUs");
                 return;
             }
-            var properties = new CLDevicePartitionProperties(1, new uint[0], null);
+            var properties = new CLDevicePartitionProperties() { Equally = 1, ByCounts = new uint[0] };
 
             var resultCode = CL.CreateSubDevices(deviceIds[0], properties, out CLDevice[] subDevices);
 
@@ -186,7 +186,7 @@ namespace OpenTK.Compute.Tests
                 Assert.Inconclusive("Sub devices can only be created on CPUs. Only Sub devices can be retained");
                 return;
             }
-            var properties = new CLDevicePartitionProperties(1, new uint[0], null);
+            var properties = new CLDevicePartitionProperties() { Equally = 1, ByCounts = new uint[0] };
 
             CL.CreateSubDevices(deviceIds[0], properties, out CLDevice[] subDevices);
             var device = subDevices[0];
@@ -208,7 +208,7 @@ namespace OpenTK.Compute.Tests
                 Assert.Inconclusive("Sub devices can only be created on CPUs. Only Sub devices can be released");
                 return;
             }
-            var properties = new CLDevicePartitionProperties(1, new uint[0], null);
+            var properties = new CLDevicePartitionProperties() { Equally = 1, ByCounts = new uint[0] };
 
             CL.CreateSubDevices(deviceIds[0], properties, out CLDevice[] subDevices);
             var device = subDevices[0];
