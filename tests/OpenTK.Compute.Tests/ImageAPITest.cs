@@ -21,7 +21,7 @@ namespace OpenTK.Compute.Tests
             var platform = platformIds[0];
             CL.GetDeviceIDs(platform, DeviceType.Default, out CLDevice[] devices);
             device = devices[0];
-            context = CL.CreateContext(new CLContextProperties(platform, false), new[] { device }, null, IntPtr.Zero, out _);
+            context = CL.CreateContext(new CLContextProperties() { ContextPlatform = platform }, new[] { device }, null, IntPtr.Zero, out _);
             commandQueue = CL.CreateCommandQueueWithProperties(context, device, new CLCommandQueueProperties(), out _);
         }
 

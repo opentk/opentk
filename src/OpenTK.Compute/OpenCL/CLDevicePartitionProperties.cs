@@ -17,7 +17,7 @@ namespace OpenTK.Compute.OpenCL
     /// <summary>
     /// Convenience class for handling CLDevice Partition Properties
     /// </summary>
-    public class CLDevicePartitionProperties
+    public struct CLDevicePartitionProperties
     {
         public uint? Equally { get; set; }
         public uint[] ByCounts { get; set; }
@@ -27,18 +27,6 @@ namespace OpenTK.Compute.OpenCL
         /// Gets or sets additional properties for forward compatibility
         /// </summary>
         public IntPtr[] AdditionalProperties { get; set; }
-
-        public CLDevicePartitionProperties()
-        {
-
-        }
-
-        public CLDevicePartitionProperties(uint? equally, uint[] byCounts, DeviceAffinityDomain? byAffinityDomain)
-        {
-            Equally = equally;
-            ByCounts = byCounts;
-            ByAffinityDomain = byAffinityDomain;
-        }
 
         /// <summary>
         /// Converts these context properties to a <see cref="CL.CreateSubDevice(CLContext, MemoryFlags, uint, uint, IntPtr[], out CLResultCode)"/> compatible list.
@@ -78,50 +66,8 @@ namespace OpenTK.Compute.OpenCL
             return propertyList.ToArray();
         }
 
-        /// <summary>
-        /// Parses a CL sampler property list.
-        /// </summary>
-        /// <param name="propertyArray">The CL sampler attribute list.</param>
-        /// <returns>The parsed <see cref="CLDevicePartitionProperties"/> object.</returns>
-        internal static CLDevicePartitionProperties FromArray(IntPtr[] propertyArray)
-        {
-            List<IntPtr> extra = new List<IntPtr>();
-            CLDevicePartitionProperties properties = new CLDevicePartitionProperties();
-
-            for (int i = 0; i < propertyArray.Length - 1; i += 2)
-            {
-                switch (propertyArray[i].ToInt32())
-                {
-                    case (int)DevicePartitionProperty.Equally:
-                        properties.Equally = (uint)propertyArray[i + 1].ToInt32();
-                        break;
-                    case (int)DevicePartitionProperty.ByAffinityDomain:
-                        properties.ByAffinityDomain = (DeviceAffinityDomain)propertyArray[i + 1].ToInt64();
-                        break;
-                    case (int)DevicePartitionProperty.ByCounts:
-                        var value = (uint)propertyArray[i + 1];
-                        var list = new List<uint>();
-                        while (value != (uint)DevicePartitionProperty.ByCountsListEnd){
-                            list.Add(value);
-                            i++;
-                            if (i >= propertyArray.Length - 1) break;
-                            value = (uint)propertyArray[i + 1];
-                        }
-                        properties.ByCounts = list.ToArray();
-                        break;
-                    default:
-                        extra.Add(propertyArray[i]); extra.Add(propertyArray[i + 1]);
-                        break;
-                }
-            }
-
-            properties.AdditionalProperties = extra.ToArray();
-
-            return properties;
-        }
-
         // Used for ToString.
-        private string GetOptionalString<IntPtr>(string title, IntPtr value)
+        private string GetOptionalString<T>(string title, T value)
         {
             if (value == null)
             {
@@ -139,7 +85,12 @@ namespace OpenTK.Compute.OpenCL
         /// <returns>The string representation of the attributes.</returns>
         public override string ToString()
         {
-            return $"{((AdditionalProperties != null) ? ", " + string.Join(", ", AdditionalProperties) : string.Empty)}";
+            return string.Join(", ", new[]{
+                GetOptionalString(nameof(Equally), Equally) ,
+                (ByCounts.Length > 0 ? $"{nameof(ByCounts)}: [ {string.Join(", ", ByCounts)} ]" : null) ,
+                GetOptionalString(nameof(ByAffinityDomain), ByAffinityDomain) ,
+                (AdditionalProperties != null ? string.Join(", ", AdditionalProperties) : string.Empty)
+                });
         }
     }
 }

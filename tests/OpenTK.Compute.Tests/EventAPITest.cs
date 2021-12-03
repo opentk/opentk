@@ -5,10 +5,9 @@ using System.Linq;
 
 namespace OpenTK.Compute.Tests
 {
-	[TestClass]
-	public class EventAPITest
+    [TestClass]
+    public class EventAPITest
     {
-        CLPlatform platform;
         CLDevice device;
         CLContext context;
         CLCommandQueue commandQueue;
@@ -20,9 +19,9 @@ namespace OpenTK.Compute.Tests
             var platform = platformIds[0];
             CL.GetDeviceIDs(platform, DeviceType.Default, out CLDevice[] devices);
             device = devices[0];
-            var properties = new CLContextProperties(platform, false);
+            var properties = new CLContextProperties() { ContextPlatform = platform };
             context = CL.CreateContext(properties, new[] { device }, null, IntPtr.Zero, out _);
-            commandQueue = CL.CreateCommandQueueWithProperties(context, device, new CLCommandQueueProperties(CommandQueueProperties.ProfilingEnable), out _);
+            commandQueue = CL.CreateCommandQueueWithProperties(context, device, new CLCommandQueueProperties() { Properties = CommandQueueProperties.ProfilingEnable }, out _);
         }
 
         [TestCleanup()]
@@ -94,7 +93,7 @@ namespace OpenTK.Compute.Tests
             var eventObj = CL.CreateUserEvent(context, out _);
             var resultCode = CL.ReleaseEvent(eventObj);
             Assert.AreEqual(CLResultCode.Success, resultCode);
-            
+
             resultCode = CL.ReleaseEvent(eventObj);
             Assert.AreNotEqual(CLResultCode.Success, resultCode);
         }

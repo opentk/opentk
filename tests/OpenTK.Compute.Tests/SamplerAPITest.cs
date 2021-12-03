@@ -18,7 +18,7 @@ namespace OpenTK.Compute.Tests
             var platform = platformIds[0];
             CL.GetDeviceIDs(platform, DeviceType.Default, out CLDevice[] devices);
             device = devices[0];
-            var properties = new CLContextProperties(platform, false);
+            var properties = new CLContextProperties() { ContextPlatform = platform };
             context = CL.CreateContext(properties, new[] { device }, null, IntPtr.Zero, out _);
         }
 
@@ -79,7 +79,7 @@ namespace OpenTK.Compute.Tests
         public void GetSamplerInfo(SamplerInfo paramName)
         {
             // Create sampler
-            var sampler = CL.CreateSamplerWithProperties(context, new CLSamplerProperties(true, null, null), out _);
+            var sampler = CL.CreateSamplerWithProperties(context, new CLSamplerProperties() { NormalizedCoords = true }, out _);
 
             CLResultCode resultCode = CL.GetSamplerInfo(sampler, paramName, out byte[] bytes);
             Assert.AreEqual(CLResultCode.Success, resultCode);

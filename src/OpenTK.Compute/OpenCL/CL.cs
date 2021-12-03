@@ -330,7 +330,7 @@ namespace OpenTK.Compute.OpenCL
         public static extern CLCommandQueue CreateCommandQueueWithProperties(
             [In] CLContext context,
             [In] CLDevice device,
-            [In] IntPtr[] properties,
+            [In] ulong[] properties,
             [Out] out CLResultCode resultCode);
 
         /// <summary>
@@ -467,7 +467,7 @@ namespace OpenTK.Compute.OpenCL
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clCreateBufferWithProperties")]
         public static extern CLBuffer CreateBufferWithProperties(
             [In] CLContext context,
-            [In] IntPtr[] properties,
+            [In] ulong[] properties,
             [In] MemoryFlags flags,
             [In] nuint size,
             [In] IntPtr hostPtr,
@@ -1107,7 +1107,7 @@ namespace OpenTK.Compute.OpenCL
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clCreateImageWithProperties")]
         public static extern CLImage CreateImageWithProperties(
             [In] CLContext context,
-            [In] IntPtr[] properties,
+            [In] ulong[] properties,
             [In] MemoryFlags flags,
             [In] ref CLImageFormat imageFormat,
             [In] ref CLImageDescription imageDesc,
@@ -2146,7 +2146,7 @@ namespace OpenTK.Compute.OpenCL
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clCreateSamplerWithProperties")]
         public static extern CLSampler CreateSamplerWithProperties(
             [In] CLContext context,
-            [In] IntPtr[] samplerProperties,
+            [In] ulong[] samplerProperties,
             [Out] out CLResultCode resultCode);
 
         /// <summary>
