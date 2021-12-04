@@ -12,6 +12,8 @@ namespace OpenTK.Compute.Tests
         CLDevice device;
         CLContext context;
         CLPlatform platform;
+        string header = @"#pragma OPENCL EXTENSION cl_khr_fp64 : enable
+                ";
         string code = @"
                 __kernel void add(__global float* A, __global float* B,__global float* result, const float mul)
                 {
@@ -43,6 +45,21 @@ namespace OpenTK.Compute.Tests
             var program = CL.CreateProgramWithSource(context, code, out CLResultCode resultCode);
             Assert.AreEqual(CLResultCode.Success, resultCode);
 
+            CL.ReleaseProgram(program);
+        }
+
+        [TestMethod]
+        public void CreateProgramWithMultipleSource()
+        {
+            // Create program
+            var program = CL.CreateProgramWithSource(context, new[] { header, code }, out CLResultCode resultCode);
+            Assert.AreEqual(CLResultCode.Success, resultCode);
+            CL.BuildProgram(program);
+
+            var kernel = CL.CreateKernel(program, "add", out resultCode);
+            Assert.AreEqual(CLResultCode.Success, resultCode);
+
+            CL.ReleaseKernel(kernel);
             CL.ReleaseProgram(program);
         }
 
