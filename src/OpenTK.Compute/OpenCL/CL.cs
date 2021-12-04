@@ -2208,7 +2208,7 @@ namespace OpenTK.Compute.OpenCL
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clCreateProgramWithSource")]
         public static extern CLProgram CreateProgramWithSource(
             [In] CLContext context,
-            [In] nuint size,
+            [In] uint count,
             [In] string[] strings,
             [In] nuint[] lengths,
             [Out] out CLResultCode resultCode);
@@ -2235,7 +2235,7 @@ namespace OpenTK.Compute.OpenCL
             var sourceLengths = new nuint[strings.Length];
             for (int i = 0; i < strings.Length; i++)
                 sourceLengths[i] = (nuint)strings[i].Length;
-            return CreateProgramWithSource(context, 1, strings, sourceLengths, out resultCode);
+            return CreateProgramWithSource(context, (uint)strings.Length, strings, sourceLengths, out resultCode);
         }
 
         /// <summary>
