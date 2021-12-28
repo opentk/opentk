@@ -132,22 +132,7 @@ namespace OpenTK.Platform.Windows
 
                         opentk_dev_available_res.Add(res);
                     }
-
-                    float scaleFactor;
-                    //Pull the DPI out of the registry
-                    if (Environment.OSVersion.Version.Major == 10)
-                    {
-                        //Win10
-                        scaleFactor = (float)Registry.GetValue("HKEY_CURRENT_USER\\Control Panel\\Desktop", "LogPixels", 96);
-                    }
-                    else
-                    {
-                        //Lower
-                        scaleFactor = float.Parse((string)Registry.GetValue( @"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\ThemeManager",    "LastLoadedDPI", "96"));
-                    }
-                    //Divide by default 96DPI to get scale factor
-                    scaleFactor /= 96.0f;
-
+                    
                     // Construct the OpenTK DisplayDevice through the accumulated parameters.
                     // The constructor will automatically add the DisplayDevice to the list
                     // of available devices.
@@ -211,15 +196,26 @@ namespace OpenTK.Platform.Windows
 
         public override Vector2 GetDisplayScaling (DisplayIndex displayIndex)
         {
-            float scaleFactor;
+            float scaleFactor = 96.0f;
             //Pull the DPI out of the registry
-            if (Environment.OSVersion.Version.Major == 10) {
-                //Win10
-                scaleFactor = (float)Registry.GetValue ("HKEY_CURRENT_USER\\Control Panel\\Desktop", "LogPixels", 96);
-            } else {
-                //Lower
-                scaleFactor = float.Parse ((string)Registry.GetValue (@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\ThemeManager", "LastLoadedDPI", "96"));
+            try
+            {
+                if (Environment.OSVersion.Version.Major == 10) {
+                    //Win10
+                    scaleFactor = (float)Registry.GetValue ("HKEY_CURRENT_USER\\Control Panel\\Desktop", "LogPixels", 96);
+                } else {
+                    //Lower
+                    scaleFactor = float.Parse ((string)Registry.GetValue (@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\ThemeManager", "LastLoadedDPI", "96"));
+                }
             }
+            catch
+            {
+                /*
+                 * WINE doesn't like this (No idea why, it's a simple registry call, but there we go...)
+                 * We can safely ignore anyway, as it's only the scale factor
+                 */
+            }
+            
             //Divide by default 96DPI to get scale factor
             scaleFactor /= 96.0f;
 
