@@ -104,6 +104,21 @@ namespace OpenTK.Windowing.Desktop
         /// </remarks>
         public float VerticalRawDpi { get; private set; }
 
+        private VideoMode[] _supportedVideoModes;
+
+        /// <summary>
+        /// A list of supported video modes for this monitor.
+        /// </summary>
+        public System.Collections.Generic.IReadOnlyList<VideoMode> SupportedVideoModes
+        {
+            get => _supportedVideoModes;
+        }
+
+        /// <summary>
+        /// The current VideoMode used by this monitor.
+        /// </summary>
+        public VideoMode CurrentVideoMode { get; private set; }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="MonitorInfo"/> class.
         /// </summary>
@@ -149,24 +164,9 @@ namespace OpenTK.Windowing.Desktop
 
             HorizontalRawDpi = CalculateDpi(HorizontalResolution, PhysicalWidth);
             VerticalRawDpi = CalculateDpi(VerticalResolution, PhysicalHeight);
-        }
 
-        /// <summary>
-        /// Returns an array of supported video modes for this monitor.
-        /// </summary>
-        /// <returns>An array of supported video modes.</returns>
-        public VideoMode[] GetSupportedVideoModes()
-        {
-            return GLFW.GetVideoModes(HandleAsPtr);
-        }
-
-        /// <summary>
-        /// Returns the current VideoMode used by this monitor.
-        /// </summary>
-        /// <returns>The current video mode.</returns>
-        public unsafe VideoMode GetCurrentVideoMode()
-        {
-            return *GLFW.GetVideoMode(HandleAsPtr);
+            _supportedVideoModes = GLFW.GetVideoModes(HandleAsPtr);
+            CurrentVideoMode = *GLFW.GetVideoMode(HandleAsPtr);
         }
 
         /// <summary>
