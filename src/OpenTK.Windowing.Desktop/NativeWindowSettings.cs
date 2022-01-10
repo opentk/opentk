@@ -135,12 +135,12 @@ namespace OpenTK.Windowing.Desktop
         public bool StartVisible { get; set; } = true;
 
         /// <summary>
-        ///     Gets or sets the initial value for <see cref="INativeWindow.WindowState"/> on the new window.
+        ///     Gets or sets the initial value for <see cref="NativeWindow.WindowState"/> on the new window.
         /// </summary>
         public WindowState WindowState { get; set; } = WindowState.Normal;
 
         /// <summary>
-        ///     Gets or sets the initial value for <see cref="INativeWindow.WindowBorder"/> on the new window.
+        ///     Gets or sets the initial value for <see cref="NativeWindow.WindowBorder"/> on the new window.
         /// </summary>
         public WindowBorder WindowBorder { get; set; } = WindowBorder.Resizable;
 
@@ -160,6 +160,7 @@ namespace OpenTK.Windowing.Desktop
         /// <summary>
         /// Gets or sets a value indicating whether the window should start fullscreen.
         /// </summary>
+        [Obsolete("Use WindowState instead.", true)]
         public bool IsFullscreen { get; set; } = false;
 
         /// <summary>
