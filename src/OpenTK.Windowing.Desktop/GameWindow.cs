@@ -237,6 +237,8 @@ namespace OpenTK.Windowing.Desktop
                     DispatchRenderFrame();
                 }
             }
+
+            OnUnload();
         }
 
         private unsafe void StartRenderThread()
@@ -321,7 +323,6 @@ namespace OpenTK.Windowing.Desktop
         /// <inheritdoc />
         public override void Close()
         {
-            OnUnload();
             base.Close();
         }
 
