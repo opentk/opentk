@@ -471,6 +471,75 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
 
         /// <summary>
         /// <para>
+        /// This function returns the position, in screen coordinates, of the upper-left corner of the work area of the specified monitor along with the work area size in screen coordinates.
+        /// The work area is defined as the area of the monitor not occluded by the operating system task bar where present.
+        /// If no task bar exists then the work area is the monitor resolution in screen coordinates.
+        /// </para>
+        /// <para>
+        /// Any or all of the position and size arguments may be NULL.If an error occurs, all non-NULL position and size arguments will be set to zero.
+        /// </para>
+        /// </summary>
+        /// <param name="monitor">The monitor to query.</param>
+        /// <param name="x">Where to store the monitor x-coordinate.</param>
+        /// <param name="y">Where to store the monitor y-coordinate.</param>
+        /// <param name="width">Where to store the monitor width.</param>
+        /// <param name="height">Where to store the monitor height.</param>
+        /// <remarks>
+        /// <para>
+        /// This function must only be called from the main thread.
+        /// </para>
+        /// <para>
+        /// Possible errors include GLFW_NOT_INITIALIZED and GLFW_PLATFORM_ERROR.
+        /// </para>
+        /// <para>
+        /// Added in version GLFW 3.3.
+        /// </para>
+        /// </remarks>
+        public static unsafe void GetMonitorWorkarea(Monitor* monitor, out int x, out int y, out int width, out int height)
+        {
+            int localX, localY, localWidth, localHeight;
+
+            glfwGetMonitorWorkarea(monitor, &localX, &localY, &localWidth, &localHeight);
+
+            x = localX;
+            y = localY;
+            width = localWidth;
+            height = localHeight;
+        }
+
+        /// <summary>
+        /// <para>
+        /// This function returns the position, in screen coordinates, of the upper-left corner of the work area of the specified monitor along with the work area size in screen coordinates.
+        /// The work area is defined as the area of the monitor not occluded by the operating system task bar where present.
+        /// If no task bar exists then the work area is the monitor resolution in screen coordinates.
+        /// </para>
+        /// <para>
+        /// Any or all of the position and size arguments may be NULL.If an error occurs, all non-NULL position and size arguments will be set to zero.
+        /// </para>
+        /// </summary>
+        /// <param name="monitor">The monitor to query.</param>
+        /// <param name="x">Where to store the monitor x-coordinate, or NULL.</param>
+        /// <param name="y">Where to store the monitor y-coordinate, or NULL.</param>
+        /// <param name="width">Where to store the monitor width, or NULL.</param>
+        /// <param name="height">Where to store the monitor height, or NULL.</param>
+        /// <remarks>
+        /// <para>
+        /// This function must only be called from the main thread.
+        /// </para>
+        /// <para>
+        /// Possible errors include GLFW_NOT_INITIALIZED and GLFW_PLATFORM_ERROR.
+        /// </para>
+        /// <para>
+        /// Added in version GLFW 3.3.
+        /// </para>
+        /// </remarks>
+        public static unsafe void GetMonitorWorkarea(Monitor* monitor, int* x, int* y, int* width, int* height)
+        {
+            glfwGetMonitorWorkarea(monitor, x, y, width, height);
+        }
+
+        /// <summary>
+        /// <para>
         /// This function returns the size, in millimetres, of the display area of the specified monitor.
         /// </para>
         /// <para>

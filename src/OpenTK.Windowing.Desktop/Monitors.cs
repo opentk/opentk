@@ -75,6 +75,34 @@ namespace OpenTK.Windowing.Desktop
         }
 
         /// <summary>
+        /// Get the primary monitor. This is usually the monitor where elements like the task bar or global menu bar are located.
+        /// </summary>
+        /// <returns>The primary monitor.</returns>
+        public static unsafe MonitorInfo GetPrimaryMonitor()
+        {
+            MonitorHandle monitor = new MonitorHandle((IntPtr)GLFW.GetPrimaryMonitor());
+            return new MonitorInfo(monitor);
+        }
+
+        /// <summary>
+        /// Retrives a list of connected monitors.
+        /// </summary>
+        /// <returns>A list of connected monitors.</returns>
+        public static unsafe List<MonitorInfo> GetMonitors()
+        {
+            Monitor** monitorsRaw = GLFW.GetMonitorsRaw(out int count);
+
+            List<MonitorInfo> monitors = new List<MonitorInfo>(count);
+
+            for (int i = 0; i < count; i++)
+            {
+                monitors.Add(new MonitorInfo(new MonitorHandle((IntPtr)monitorsRaw[i])));
+            }
+
+            return monitors;
+        }
+
+        /// <summary>
         /// Find the monitor a window is in.
         /// </summary>
         /// <param name="window">The window to find.</param>
@@ -141,24 +169,6 @@ namespace OpenTK.Windowing.Desktop
         /// intersection area with the given monitor.
         /// </remarks>
         public static unsafe MonitorInfo GetMonitorFromWindow(NativeWindow window) => GetMonitorFromWindow(window.WindowPtr);
-
-        /// <summary>
-        /// Retrives a list of connected monitors.
-        /// </summary>
-        /// <returns>A list of connected monitors.</returns>
-        public static unsafe List<MonitorInfo> GetMonitors()
-        {
-            Monitor** monitorsRaw = GLFW.GetMonitorsRaw(out int count);
-
-            List<MonitorInfo> monitors = new List<MonitorInfo>(count);
-
-            for (int i = 0; i < count; i++)
-            {
-                monitors.Add(new MonitorInfo(new MonitorHandle((IntPtr)monitorsRaw[i])));
-            }
-
-            return monitors;
-        }
 
         private static unsafe void MonitorCallback(Monitor* monitor, ConnectedState state)
         {

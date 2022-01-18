@@ -32,9 +32,21 @@ namespace OpenTK.Windowing.Desktop
         public MonitorHandle Handle => _handle;
 
         /// <summary>
+        /// Human-readable name for this monitor. Not guaranteed to be unique among the connected monitors.
+        /// </summary>
+        public string Name { get; private set; }
+
+        /// <summary>
         /// Gets the client area of the monitor (in the virtual screen-space).
         /// </summary>
         public Box2i ClientArea { get; private set; }
+
+        /// <summary>
+        /// Get the work area of the monitor.
+        /// The work area is defined as the area of the monitor not occluded by the operating system task bar where present.
+        /// If no task bar exists then the work area is the monitor resolution in screen coordinates.
+        /// </summary>
+        public Box2i WorkArea { get; private set; }
 
         /// <summary>
         /// Gets the horizontal resolution of the monitor.
@@ -92,6 +104,21 @@ namespace OpenTK.Windowing.Desktop
         /// </remarks>
         public float VerticalRawDpi { get; private set; }
 
+        private VideoMode[] _supportedVideoModes;
+
+        /// <summary>
+        /// A list of supported video modes for this monitor.
+        /// </summary>
+        public System.Collections.Generic.IReadOnlyList<VideoMode> SupportedVideoModes
+        {
+            get => _supportedVideoModes;
+        }
+
+        /// <summary>
+        /// The current VideoMode used by this monitor.
+        /// </summary>
+        public VideoMode CurrentVideoMode { get; private set; }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="MonitorInfo"/> class.
         /// </summary>
@@ -113,9 +140,14 @@ namespace OpenTK.Windowing.Desktop
 
             _handle = handle;
 
+            Name = GLFW.GetMonitorName(HandleAsPtr);
+
             GLFW.GetMonitorPos(HandleAsPtr, out int x, out int y);
             var videoMode = GLFW.GetVideoMode(HandleAsPtr);
             ClientArea = new Box2i(x, y, x + videoMode->Width, y + videoMode->Height);
+
+            GLFW.GetMonitorWorkarea(HandleAsPtr, out int workAreaX, out int workAreaY, out int workAreaWidth, out int workAreaHeight);
+            WorkArea = new Box2i(workAreaX, workAreaY, workAreaWidth, workAreaHeight);
 
             GLFW.GetMonitorPhysicalSize(HandleAsPtr, out int width, out int height);
             PhysicalWidth = width;
@@ -132,6 +164,9 @@ namespace OpenTK.Windowing.Desktop
 
             HorizontalRawDpi = CalculateDpi(HorizontalResolution, PhysicalWidth);
             VerticalRawDpi = CalculateDpi(VerticalResolution, PhysicalHeight);
+
+            _supportedVideoModes = GLFW.GetVideoModes(HandleAsPtr);
+            CurrentVideoMode = *GLFW.GetVideoMode(HandleAsPtr);
         }
 
         /// <summary>

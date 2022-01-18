@@ -96,6 +96,9 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         public static extern void glfwGetMonitorPos(Monitor* monitor, int* x, int* y);
 
         [DllImport(LibraryName)]
+        public static extern void glfwGetMonitorWorkarea(Monitor* monitor, int* xpos, int* ypos, int* width, int* height);
+
+        [DllImport(LibraryName)]
         public static extern void glfwGetMonitorPhysicalSize(Monitor* monitor, int* width, int* height);
 
         [DllImport(LibraryName)]
