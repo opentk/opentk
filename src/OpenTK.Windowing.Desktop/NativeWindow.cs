@@ -131,10 +131,23 @@ namespace OpenTK.Windowing.Desktop
         /// </value>
         public VSyncMode VSync
         {
-            get => _vSync;
+            get
+            {
+                if (Context == null)
+                {
+                    throw new InvalidOperationException("Cannot control vsync when running with ContextAPI.NoAPI.");
+                }
+
+                return _vSync;
+            }
 
             set
             {
+                if (Context == null)
+                {
+                    throw new InvalidOperationException("Cannot control vsync when running with ContextAPI.NoAPI.");
+                }
+
                 // We don't do anything here for adaptive because that's handled in GameWindow.
                 switch (value)
                 {
@@ -146,7 +159,6 @@ namespace OpenTK.Windowing.Desktop
                         Context.SwapInterval = 0;
                         break;
                 }
-
                 _vSync = value;
             }
         }
@@ -725,13 +737,22 @@ namespace OpenTK.Windowing.Desktop
                 GLFW.WindowHint(WindowHintInt.StencilBits, settings.StencilBits.Value);
             }
 
-            Context = new GLFWGraphicsContext(WindowPtr);
+            // For Vulkan, we need to pass ContextAPI.NoAPI, otherweise we will get an exception.
+            // See https://github.com/glfw/glfw/blob/56a4cb0a3a2c7a44a2fd8ab3335adf915e19d30c/src/vulkan.c#L320
+            //
+            // But Calling MakeCurrent while using NoApi, we will get an exception from GLFW,
+            // because Vulkan does not have that concept.
+            // See https://github.com/glfw/glfw/blob/fd79b02840a36b74e4289cc53dc332de6403b8fd/src/context.c#L618
+            if (settings.API != ContextAPI.NoAPI)
+            {
+                Context = new GLFWGraphicsContext(WindowPtr);
+            }
 
             Exists = true;
 
             if (isOpenGl)
             {
-                Context.MakeCurrent();
+                Context?.MakeCurrent();
 
                 if (settings.AutoLoadBindings)
                 {
@@ -1270,7 +1291,12 @@ namespace OpenTK.Windowing.Desktop
         /// </summary>
         public void MakeCurrent()
         {
-            Context.MakeCurrent();
+            if (Context == null)
+            {
+                throw new InvalidOperationException("Cannot make a context current when running with ContextAPI.NoAPI.");
+            }
+
+            Context?.MakeCurrent();
         }
 
         /// <summary>
