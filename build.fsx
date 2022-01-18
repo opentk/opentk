@@ -128,8 +128,8 @@ let nugetCommandRunnerPath =
 // Lazily install DotNet SDK in the correct version if not available
 let install =
     lazy
-        (if (DotNet.getVersion id).StartsWith "3" then id
-         else DotNet.install (fun options -> { options with Version = DotNet.Version "3.1.100" }))
+        (if (DotNet.getVersion id).StartsWith "5" then id
+         else DotNet.install (fun options -> { options with Version = DotNet.Version "5.0.100" }))
 
 // Define general properties across various commands (with arguments)
 let inline withWorkDir wd = DotNet.Options.lift install.Value >> DotNet.Options.withWorkingDirectory wd
@@ -162,7 +162,7 @@ Target.create "UpdateSpec" (fun _ ->
 
 Target.create "UpdateBindings" (fun _ ->
     Trace.log " --- Updating bindings --- "
-    let framework = "netcoreapp31"
+    let framework = "netcoreapp3.1"
     let projFile = "src/Generator/Generator.fsproj"
 
     let args =
@@ -173,7 +173,7 @@ Target.create "UpdateBindings" (fun _ ->
 
 Target.create "UpdateBindingsRewrite" (fun _ ->
     Trace.log " --- Updating bindings (rewrite) --- "
-    let framework = "netcoreapp31"
+    let framework = "netcoreapp3.1"
     let projFile = "src/Generator.Bind/Generator.Bind.csproj"
 
     let args = [  ] |> asArgs
@@ -181,7 +181,7 @@ Target.create "UpdateBindingsRewrite" (fun _ ->
 
 let rewriteBindsForTfm tfm =
     Trace.log (sprintf " --- Rewriting bindings for %s (calli) --- " tfm)
-    let framework = "netcoreapp31"
+    let framework = "netcoreapp3.1"
     let projFile = "src/Generator.Rewrite/Generator.Rewrite.csproj"
     let bindingsFile = "OpenTK.Graphics.dll"
     let bindingsOutput = sprintf "src/OpenTK.Graphics/bin/Release/%s" tfm
