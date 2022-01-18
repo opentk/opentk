@@ -1008,7 +1008,7 @@ namespace OpenTK.Windowing.Desktop
             }
             catch (Exception e)
             {
-                _callbackExceptions.Add(e);
+                _callbackExceptions.Add(ExceptionDispatchInfo.Capture(e));
             }
         }
 
@@ -1020,7 +1020,7 @@ namespace OpenTK.Windowing.Desktop
             }
             catch (Exception e)
             {
-                _callbackExceptions.Add(e);
+                _callbackExceptions.Add(ExceptionDispatchInfo.Capture(e));
             }
         }
 
@@ -1037,7 +1037,7 @@ namespace OpenTK.Windowing.Desktop
             }
             catch (Exception e)
             {
-                _callbackExceptions.Add(e);
+                _callbackExceptions.Add(ExceptionDispatchInfo.Capture(e));
             }
         }
 
@@ -1049,7 +1049,7 @@ namespace OpenTK.Windowing.Desktop
             }
             catch (Exception e)
             {
-                _callbackExceptions.Add(e);
+                _callbackExceptions.Add(ExceptionDispatchInfo.Capture(e));
             }
         }
 
@@ -1061,7 +1061,7 @@ namespace OpenTK.Windowing.Desktop
             }
             catch (Exception e)
             {
-                _callbackExceptions.Add(e);
+                _callbackExceptions.Add(ExceptionDispatchInfo.Capture(e));
             }
         }
 
@@ -1073,7 +1073,7 @@ namespace OpenTK.Windowing.Desktop
             }
             catch (Exception e)
             {
-                _callbackExceptions.Add(e);
+                _callbackExceptions.Add(ExceptionDispatchInfo.Capture(e));
             }
         }
 
@@ -1085,7 +1085,7 @@ namespace OpenTK.Windowing.Desktop
             }
             catch (Exception e)
             {
-                _callbackExceptions.Add(e);
+                _callbackExceptions.Add(ExceptionDispatchInfo.Capture(e));
             }
         }
 
@@ -1108,7 +1108,7 @@ namespace OpenTK.Windowing.Desktop
             }
             catch (Exception e)
             {
-                _callbackExceptions.Add(e);
+                _callbackExceptions.Add(ExceptionDispatchInfo.Capture(e));
             }
         }
 
@@ -1125,7 +1125,7 @@ namespace OpenTK.Windowing.Desktop
             }
             catch (Exception e)
             {
-                _callbackExceptions.Add(e);
+                _callbackExceptions.Add(ExceptionDispatchInfo.Capture(e));
             }
         }
 
@@ -1144,7 +1144,7 @@ namespace OpenTK.Windowing.Desktop
             }
             catch (Exception e)
             {
-                _callbackExceptions.Add(e);
+                _callbackExceptions.Add(ExceptionDispatchInfo.Capture(e));
             }
         }
 
@@ -1163,7 +1163,7 @@ namespace OpenTK.Windowing.Desktop
             }
             catch (Exception e)
             {
-                _callbackExceptions.Add(e);
+                _callbackExceptions.Add(ExceptionDispatchInfo.Capture(e));
             }
         }
 
@@ -1194,7 +1194,7 @@ namespace OpenTK.Windowing.Desktop
             }
             catch (Exception e)
             {
-                _callbackExceptions.Add(e);
+                _callbackExceptions.Add(ExceptionDispatchInfo.Capture(e));
             }
         }
 
@@ -1206,7 +1206,7 @@ namespace OpenTK.Windowing.Desktop
             }
             catch (Exception e)
             {
-                _callbackExceptions.Add(e);
+                _callbackExceptions.Add(ExceptionDispatchInfo.Capture(e));
             }
         }
 
@@ -1225,7 +1225,7 @@ namespace OpenTK.Windowing.Desktop
             }
             catch (Exception e)
             {
-                _callbackExceptions.Add(e);
+                _callbackExceptions.Add(ExceptionDispatchInfo.Capture(e));
             }
         }
 
@@ -1253,7 +1253,7 @@ namespace OpenTK.Windowing.Desktop
             }
             catch (Exception e)
             {
-                _callbackExceptions.Add(e);
+                _callbackExceptions.Add(ExceptionDispatchInfo.Capture(e));
             }
         }
 
