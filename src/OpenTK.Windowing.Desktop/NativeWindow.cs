@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Reflection;
+using System.Runtime.ExceptionServices;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
@@ -36,7 +37,7 @@ namespace OpenTK.Windowing.Desktop
         private Vector2 _lastReportedMousePos;
 
         // Stores exceptions thrown in callbacks so that we can rethrow them after ProcessEvents().
-        private List<Exception> _callbackExceptions = new List<Exception>();
+        private List<ExceptionDispatchInfo> _callbackExceptions = new List<ExceptionDispatchInfo>();
 
         // GLFW cursor we assigned to the window.
         // Null if the cursor is default.
@@ -1312,13 +1313,19 @@ namespace OpenTK.Windowing.Desktop
         {
             if (_callbackExceptions.Count == 1)
             {
-                Exception exception = _callbackExceptions[0];
+                ExceptionDispatchInfo exception = _callbackExceptions[0];
                 _callbackExceptions.Clear();
-                throw exception;
+                exception.Throw();
             }
             else if (_callbackExceptions.Count > 1)
             {
-                Exception exception = new AggregateException("Multiple exceptions in callback handlers while processing events.", _callbackExceptions);
+                // FIXME: This doesn't seem to produce great exception messages... is there something we can do about this?
+                Exception[] exceptions = new Exception[_callbackExceptions.Count];
+                for (int i = 0; i < _callbackExceptions.Count; i++)
+                {
+                    exceptions[i] = _callbackExceptions[i].SourceException;
+                }
+                Exception exception = new AggregateException("Multiple exceptions in callback handlers while processing events.", exceptions);
                 _callbackExceptions.Clear();
                 throw exception;
             }
