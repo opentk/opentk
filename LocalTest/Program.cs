@@ -1,10 +1,13 @@
-﻿using OpenTK.Windowing.Common;
+﻿using OpenTK.Graphics.OpenGL4;
+using OpenTK.Mathematics;
+using OpenTK.Windowing.Common;
 using OpenTK.Windowing.Desktop;
 using System;
+using System.Diagnostics;
 
 namespace LocalTest
 {
-    class Program
+    class Window : GameWindow
     {
         static void Main(string[] args)
         {
@@ -28,10 +31,31 @@ namespace LocalTest
                 WindowState = WindowState.Normal,
             };
 
-            using (GameWindow window = new GameWindow(gwSettings, nwSettings))
+            using (Window window = new Window(gwSettings, nwSettings))
             {
                 window.Run();
             }
+        }
+
+        public Window(GameWindowSettings gwSettings, NativeWindowSettings nwSettings) : base(gwSettings, nwSettings)
+        {
+        }
+
+        protected override void OnLoad()
+        {
+            base.OnLoad();
+
+
+        }
+
+        protected override void OnRenderFrame(FrameEventArgs args)
+        {
+            base.OnRenderFrame(args);
+
+            GL.ClearColor(Color4.Black);
+            GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
+
+            SwapBuffers();
         }
     }
 }
