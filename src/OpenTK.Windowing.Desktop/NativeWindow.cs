@@ -952,7 +952,6 @@ namespace OpenTK.Windowing.Desktop
         private GLFWCallbacks.MouseButtonCallback _mouseButtonCallback;
         private GLFWCallbacks.CursorPosCallback _cursorPosCallback;
         private GLFWCallbacks.DropCallback _dropCallback;
-        private GLFWCallbacks.JoystickCallback _joystickCallback;
 
         [Obsolete("Use the Monitors.OnMonitorConnected event instead.", true)]
         private GLFWCallbacks.MonitorCallback _monitorCallback;
@@ -981,8 +980,6 @@ namespace OpenTK.Windowing.Desktop
 
             _dropCallback = DropCallback;
 
-            _joystickCallback = JoystickCallback;
-
             GLFW.SetWindowPosCallback(WindowPtr, _windowPosCallback);
             GLFW.SetWindowSizeCallback(WindowPtr, _windowSizeCallback);
             GLFW.SetWindowCloseCallback(WindowPtr, _windowCloseCallback);
@@ -1001,7 +998,12 @@ namespace OpenTK.Windowing.Desktop
 
             GLFW.SetDropCallback(WindowPtr, _dropCallback);
 
-            GLFW.SetJoystickCallback(_joystickCallback);
+            Joysticks.JoystickCallback += JoystickCallback;
+        }
+
+        private void UnregisterWindowCallbacks()
+        {
+            Joysticks.JoystickCallback -= JoystickCallback;
         }
 
         private unsafe void InitialiseJoystickStates()
@@ -1690,6 +1692,8 @@ namespace OpenTK.Windowing.Desktop
         /// </summary>
         protected virtual void OnClosed()
         {
+            UnregisterWindowCallbacks();
+
             Closed?.Invoke();
         }
 
