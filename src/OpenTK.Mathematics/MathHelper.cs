@@ -947,7 +947,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static int MapRange(int value, int valueMin, int valueMax, int resultMin, int resultMax)
         {
-            int inRange = valueMax - valueMax;
+            int inRange = valueMax - valueMin;
             int resultRange = resultMax - resultMin;
             return resultMin + (resultRange * ((value - valueMin) / inRange));
         }
@@ -965,7 +965,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static float MapRange(float value, float valueMin, float valueMax, float resultMin, float resultMax)
         {
-            float inRange = valueMax - valueMax;
+            float inRange = valueMax - valueMin;
             float resultRange = resultMax - resultMin;
             return resultMin + (resultRange * ((value - valueMin) / inRange));
         }
@@ -983,7 +983,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static double MapRange(double value, double valueMin, double valueMax, double resultMin, double resultMax)
         {
-            double inRange = valueMax - valueMax;
+            double inRange = valueMax - valueMin;
             double resultRange = resultMax - resultMin;
             return resultMin + (resultRange * ((value - valueMin) / inRange));
         }
