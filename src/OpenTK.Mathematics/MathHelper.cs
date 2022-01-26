@@ -11,6 +11,11 @@ using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
 using System.Globalization;
 
+#if NETCOREAPP3_1_OR_GREATER
+using System.Runtime.Intrinsics;
+using System.Runtime.Intrinsics.X86;
+#endif
+
 namespace OpenTK.Mathematics
 {
     /// <summary>
@@ -122,7 +127,7 @@ namespace OpenTK.Mathematics
         /// <param name="n">A number that is greater than or equal to MinValue, but less than or equal to MaxValue.</param>
         /// <returns>A float number, x, such that 0 ≤ x ≤ MaxValue.</returns>
         [Pure]
-        public static float Abs(float n) => Math.Abs(n);
+        public static float Abs(float n) => MathF.Abs(n);
 
         /// <summary>
         /// Returns the sine of the specified angle.
@@ -409,7 +414,30 @@ namespace OpenTK.Mathematics
         /// <param name="b">The second of two floats to compare.</param>
         /// <returns>Parameter a or b, whichever is larger.</returns>
         [Pure]
-        public static float Max(float a, float b) => Math.Max(a, b);
+        public static float Max(float a, float b) => MathF.Max(a, b);
+
+        /// <summary>
+        /// Returns the larger of two float. This function tries to use hardware instrinsics to improve performance.
+        /// The guarantees for that happens with +0 and -0 might not be correct. ??
+        /// </summary>
+        /// <param name="a">The first of two floats to compare.</param>
+        /// <param name="b">The second of two floats to compare.</param>
+        /// <returns>Parameter a or b, whichever is larger.</returns>
+        public static float MaxFast(float a, float b)
+        {
+#if NETCOREAPP3_1_OR_GREATER
+
+            Vector128<float> va = Vector128.CreateScalarUnsafe(a);
+            Vector128<float> vb = Vector128.CreateScalarUnsafe(b);
+
+            var tmp1 = Sse.MaxScalar(va, vb);
+            var tmp2 = Sse.MaxScalar(vb, va);
+            var result = Sse.Or(tmp1, tmp2);
+            return result.ToScalar();
+#else
+            return MathF.Max(a, b);
+#endif
+        }
 
         /// <summary>
         /// Returns the larger of two longs.
@@ -499,7 +527,30 @@ namespace OpenTK.Mathematics
         /// <param name="b">The second of two floats to compare.</param>
         /// <returns>Parameter a or b, whichever is smaller.</returns>
         [Pure]
-        public static float Min(float a, float b) => Math.Min(a, b);
+        public static float Min(float a, float b) => MathF.Min(a, b);
+
+        /// <summary>
+        /// Returns the smaller of two floats.
+        /// </summary>
+        /// <param name="a">The first of two floats to compare.</param>
+        /// <param name="b">The second of two floats to compare.</param>
+        /// <returns>Parameter a or b, whichever is smaller.</returns>
+        [Pure]
+        public static float MinFast(float a, float b)
+        {
+#if NETCOREAPP3_1_OR_GREATER
+
+            Vector128<float> va = Vector128.CreateScalarUnsafe(a);
+            Vector128<float> vb = Vector128.CreateScalarUnsafe(b);
+
+            var tmp1 = Sse.MinScalar(va, vb);
+            var tmp2 = Sse.MinScalar(vb, va);
+            var result = Sse.Or(tmp1, tmp2);
+            return result.ToScalar();
+#else
+            return MathF.Min(a, b);
+#endif
+        }
 
         /// <summary>
         /// Returns the smaller of two floats.
@@ -662,7 +713,7 @@ namespace OpenTK.Mathematics
         /// <param name="d">A signed number.</param>
         /// <returns>If d ≤ -1 returns -1, if 1 ≤ d returns 1 and if d = 0 returns 0.</returns>
         [Pure]
-        public static int Sign(float d) => Math.Sign(d);
+        public static int Sign(float d) => MathF.Sign(d);
 
         /// <summary>
         /// Returns an integer that indicates the sign of a decimal.
@@ -918,7 +969,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static float Clamp(float n, float min, float max)
         {
-            return Math.Max(Math.Min(n, max), min);
+            return MathF.Max(MathF.Min(n, max), min);
         }
 
         /// <summary>

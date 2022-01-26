@@ -859,6 +859,78 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
+        /// Rounds a Vector4 to the closest Vector4i.
+        /// </summary>
+        /// <param name="vec">The vector to round.</param>
+        /// <returns>The rounded vector.</returns>
+        public static Vector4i Round(Vector4 vec)
+        {
+            Round(vec, out Vector4i result);
+            return result;
+        }
+
+        /// <summary>
+        /// Rounds a Vector4 to the closest Vector4i.
+        /// </summary>
+        /// <param name="vec">The vector to round.</param>
+        /// <param name="result">The rounded vector.</param>
+        public static void Round(in Vector4 vec, out Vector4i result)
+        {
+            result.X = (int)MathHelper.Round(vec.X);
+            result.Y = (int)MathHelper.Round(vec.Y);
+            result.Z = (int)MathHelper.Round(vec.Z);
+            result.W = (int)MathHelper.Round(vec.W);
+        }
+
+        /// <summary>
+        /// Rounds a Vector4 up to a Vector4i.
+        /// </summary>
+        /// <param name="vec">The vector to ceil.</param>
+        /// <returns>The ceiled vector.</returns>
+        public static Vector4i Ceiling(Vector4 vec)
+        {
+            Ceiling(vec, out Vector4i result);
+            return result;
+        }
+
+        /// <summary>
+        /// Rounds a Vector4 up to a Vector4i.
+        /// </summary>
+        /// <param name="vec">The vector to ceil.</param>
+        /// <param name="result">The ceiled vector.</param>
+        public static void Ceiling(in Vector4 vec, out Vector4i result)
+        {
+            result.X = (int)MathHelper.Ceiling(vec.X);
+            result.Y = (int)MathHelper.Ceiling(vec.Y);
+            result.Z = (int)MathHelper.Ceiling(vec.Z);
+            result.W = (int)MathHelper.Ceiling(vec.W);
+        }
+
+        /// <summary>
+        /// Rounds a Vector4 down to a Vector4i.
+        /// </summary>
+        /// <param name="vec">The vector to floor.</param>
+        /// <returns>The floored vector.</returns>
+        public static Vector4i Floor(Vector4 vec)
+        {
+            Floor(vec, out Vector4i result);
+            return result;
+        }
+
+        /// <summary>
+        /// Rounds a Vector4 down to a Vector4i.
+        /// </summary>
+        /// <param name="vec">The vector to floor.</param>
+        /// <param name="result">The floored vector.</param>
+        public static void Floor(Vector4 vec, out Vector4i result)
+        {
+            result.X = (int)MathHelper.Floor(vec.X);
+            result.Y = (int)MathHelper.Floor(vec.Y);
+            result.Z = (int)MathHelper.Floor(vec.Z);
+            result.W = (int)MathHelper.Floor(vec.W);
+        }
+
+        /// <summary>
         /// Gets or sets an OpenTK.Vector2 with the X and Y components of this instance.
         /// </summary>
         [XmlIgnore]
