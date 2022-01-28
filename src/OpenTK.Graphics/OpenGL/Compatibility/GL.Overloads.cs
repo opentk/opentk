@@ -5960,84 +5960,84 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 Uniform4iv(location, count, value_ptr);
             }
         }
-        public static unsafe void UniformMatrix2f(int location, bool transpose, in float value)
+        public static unsafe void UniformMatrix2f(int location, bool transpose, in Matrix2 value)
         {
             int count = 1;
-            fixed (float* tmp_vecPtr = &value)
+            fixed (Matrix2* tmp_vecPtr = &value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
                 byte transpose_byte = (byte)(transpose ? 1 : 0);
                 UniformMatrix2fv(location, count, transpose_byte, value_ptr);
             }
         }
-        public static unsafe void UniformMatrix2f(int location, int count, bool transpose, ReadOnlySpan<float> value)
+        public static unsafe void UniformMatrix2f(int location, int count, bool transpose, ReadOnlySpan<Matrix2> value)
         {
-            fixed (float* tmp_vecPtr = value)
+            fixed (Matrix2* tmp_vecPtr = value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
                 byte transpose_byte = (byte)(transpose ? 1 : 0);
                 UniformMatrix2fv(location, count, transpose_byte, value_ptr);
             }
         }
-        public static unsafe void UniformMatrix2f(int location, int count, bool transpose, float[] value)
+        public static unsafe void UniformMatrix2f(int location, int count, bool transpose, Matrix2[] value)
         {
-            fixed (float* tmp_vecPtr = value)
+            fixed (Matrix2* tmp_vecPtr = value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
                 byte transpose_byte = (byte)(transpose ? 1 : 0);
                 UniformMatrix2fv(location, count, transpose_byte, value_ptr);
             }
         }
-        public static unsafe void UniformMatrix3f(int location, bool transpose, in float value)
+        public static unsafe void UniformMatrix3f(int location, bool transpose, in Matrix3 value)
         {
             int count = 1;
-            fixed (float* tmp_vecPtr = &value)
+            fixed (Matrix3* tmp_vecPtr = &value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
                 byte transpose_byte = (byte)(transpose ? 1 : 0);
                 UniformMatrix3fv(location, count, transpose_byte, value_ptr);
             }
         }
-        public static unsafe void UniformMatrix3f(int location, int count, bool transpose, ReadOnlySpan<float> value)
+        public static unsafe void UniformMatrix3f(int location, int count, bool transpose, ReadOnlySpan<Matrix3> value)
         {
-            fixed (float* tmp_vecPtr = value)
+            fixed (Matrix3* tmp_vecPtr = value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
                 byte transpose_byte = (byte)(transpose ? 1 : 0);
                 UniformMatrix3fv(location, count, transpose_byte, value_ptr);
             }
         }
-        public static unsafe void UniformMatrix3f(int location, int count, bool transpose, float[] value)
+        public static unsafe void UniformMatrix3f(int location, int count, bool transpose, Matrix3[] value)
         {
-            fixed (float* tmp_vecPtr = value)
+            fixed (Matrix3* tmp_vecPtr = value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
                 byte transpose_byte = (byte)(transpose ? 1 : 0);
                 UniformMatrix3fv(location, count, transpose_byte, value_ptr);
             }
         }
-        public static unsafe void UniformMatrix4f(int location, bool transpose, in float value)
+        public static unsafe void UniformMatrix4f(int location, bool transpose, in Matrix4 value)
         {
             int count = 1;
-            fixed (float* tmp_vecPtr = &value)
+            fixed (Matrix4* tmp_vecPtr = &value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
                 byte transpose_byte = (byte)(transpose ? 1 : 0);
                 UniformMatrix4fv(location, count, transpose_byte, value_ptr);
             }
         }
-        public static unsafe void UniformMatrix4f(int location, int count, bool transpose, ReadOnlySpan<float> value)
+        public static unsafe void UniformMatrix4f(int location, int count, bool transpose, ReadOnlySpan<Matrix4> value)
         {
-            fixed (float* tmp_vecPtr = value)
+            fixed (Matrix4* tmp_vecPtr = value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
                 byte transpose_byte = (byte)(transpose ? 1 : 0);
                 UniformMatrix4fv(location, count, transpose_byte, value_ptr);
             }
         }
-        public static unsafe void UniformMatrix4f(int location, int count, bool transpose, float[] value)
+        public static unsafe void UniformMatrix4f(int location, int count, bool transpose, Matrix4[] value)
         {
-            fixed (float* tmp_vecPtr = value)
+            fixed (Matrix4* tmp_vecPtr = value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
                 byte transpose_byte = (byte)(transpose ? 1 : 0);
@@ -6553,168 +6553,168 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             byte normalized_byte = (byte)(normalized ? 1 : 0);
             VertexAttribPointer(index, size, type, normalized_byte, stride, pointer);
         }
-        public static unsafe void UniformMatrix2x3f(int location, bool transpose, in float value)
+        public static unsafe void UniformMatrix2x3f(int location, bool transpose, in Matrix2x3 value)
         {
             int count = 1;
-            fixed (float* tmp_vecPtr = &value)
+            fixed (Matrix2x3* tmp_vecPtr = &value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
                 byte transpose_byte = (byte)(transpose ? 1 : 0);
                 UniformMatrix2x3fv(location, count, transpose_byte, value_ptr);
             }
         }
-        public static unsafe void UniformMatrix2x3f(int location, int count, bool transpose, ReadOnlySpan<float> value)
+        public static unsafe void UniformMatrix2x3f(int location, int count, bool transpose, ReadOnlySpan<Matrix2x3> value)
         {
-            fixed (float* tmp_vecPtr = value)
+            fixed (Matrix2x3* tmp_vecPtr = value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
                 byte transpose_byte = (byte)(transpose ? 1 : 0);
                 UniformMatrix2x3fv(location, count, transpose_byte, value_ptr);
             }
         }
-        public static unsafe void UniformMatrix2x3f(int location, int count, bool transpose, float[] value)
+        public static unsafe void UniformMatrix2x3f(int location, int count, bool transpose, Matrix2x3[] value)
         {
-            fixed (float* tmp_vecPtr = value)
+            fixed (Matrix2x3* tmp_vecPtr = value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
                 byte transpose_byte = (byte)(transpose ? 1 : 0);
                 UniformMatrix2x3fv(location, count, transpose_byte, value_ptr);
             }
         }
-        public static unsafe void UniformMatrix3x2f(int location, bool transpose, in float value)
+        public static unsafe void UniformMatrix3x2f(int location, bool transpose, in Matrix3x2 value)
         {
             int count = 1;
-            fixed (float* tmp_vecPtr = &value)
+            fixed (Matrix3x2* tmp_vecPtr = &value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
                 byte transpose_byte = (byte)(transpose ? 1 : 0);
                 UniformMatrix3x2fv(location, count, transpose_byte, value_ptr);
             }
         }
-        public static unsafe void UniformMatrix3x2f(int location, int count, bool transpose, ReadOnlySpan<float> value)
+        public static unsafe void UniformMatrix3x2f(int location, int count, bool transpose, ReadOnlySpan<Matrix3x2> value)
         {
-            fixed (float* tmp_vecPtr = value)
+            fixed (Matrix3x2* tmp_vecPtr = value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
                 byte transpose_byte = (byte)(transpose ? 1 : 0);
                 UniformMatrix3x2fv(location, count, transpose_byte, value_ptr);
             }
         }
-        public static unsafe void UniformMatrix3x2f(int location, int count, bool transpose, float[] value)
+        public static unsafe void UniformMatrix3x2f(int location, int count, bool transpose, Matrix3x2[] value)
         {
-            fixed (float* tmp_vecPtr = value)
+            fixed (Matrix3x2* tmp_vecPtr = value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
                 byte transpose_byte = (byte)(transpose ? 1 : 0);
                 UniformMatrix3x2fv(location, count, transpose_byte, value_ptr);
             }
         }
-        public static unsafe void UniformMatrix2x4f(int location, bool transpose, in float value)
+        public static unsafe void UniformMatrix2x4f(int location, bool transpose, in Matrix2x4 value)
         {
             int count = 1;
-            fixed (float* tmp_vecPtr = &value)
+            fixed (Matrix2x4* tmp_vecPtr = &value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
                 byte transpose_byte = (byte)(transpose ? 1 : 0);
                 UniformMatrix2x4fv(location, count, transpose_byte, value_ptr);
             }
         }
-        public static unsafe void UniformMatrix2x4f(int location, int count, bool transpose, ReadOnlySpan<float> value)
+        public static unsafe void UniformMatrix2x4f(int location, int count, bool transpose, ReadOnlySpan<Matrix2x4> value)
         {
-            fixed (float* tmp_vecPtr = value)
+            fixed (Matrix2x4* tmp_vecPtr = value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
                 byte transpose_byte = (byte)(transpose ? 1 : 0);
                 UniformMatrix2x4fv(location, count, transpose_byte, value_ptr);
             }
         }
-        public static unsafe void UniformMatrix2x4f(int location, int count, bool transpose, float[] value)
+        public static unsafe void UniformMatrix2x4f(int location, int count, bool transpose, Matrix2x4[] value)
         {
-            fixed (float* tmp_vecPtr = value)
+            fixed (Matrix2x4* tmp_vecPtr = value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
                 byte transpose_byte = (byte)(transpose ? 1 : 0);
                 UniformMatrix2x4fv(location, count, transpose_byte, value_ptr);
             }
         }
-        public static unsafe void UniformMatrix4x2f(int location, bool transpose, in float value)
+        public static unsafe void UniformMatrix4x2f(int location, bool transpose, in Matrix4x2 value)
         {
             int count = 1;
-            fixed (float* tmp_vecPtr = &value)
+            fixed (Matrix4x2* tmp_vecPtr = &value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
                 byte transpose_byte = (byte)(transpose ? 1 : 0);
                 UniformMatrix4x2fv(location, count, transpose_byte, value_ptr);
             }
         }
-        public static unsafe void UniformMatrix4x2f(int location, int count, bool transpose, ReadOnlySpan<float> value)
+        public static unsafe void UniformMatrix4x2f(int location, int count, bool transpose, ReadOnlySpan<Matrix4x2> value)
         {
-            fixed (float* tmp_vecPtr = value)
+            fixed (Matrix4x2* tmp_vecPtr = value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
                 byte transpose_byte = (byte)(transpose ? 1 : 0);
                 UniformMatrix4x2fv(location, count, transpose_byte, value_ptr);
             }
         }
-        public static unsafe void UniformMatrix4x2f(int location, int count, bool transpose, float[] value)
+        public static unsafe void UniformMatrix4x2f(int location, int count, bool transpose, Matrix4x2[] value)
         {
-            fixed (float* tmp_vecPtr = value)
+            fixed (Matrix4x2* tmp_vecPtr = value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
                 byte transpose_byte = (byte)(transpose ? 1 : 0);
                 UniformMatrix4x2fv(location, count, transpose_byte, value_ptr);
             }
         }
-        public static unsafe void UniformMatrix3x4f(int location, bool transpose, in float value)
+        public static unsafe void UniformMatrix3x4f(int location, bool transpose, in Matrix3x4 value)
         {
             int count = 1;
-            fixed (float* tmp_vecPtr = &value)
+            fixed (Matrix3x4* tmp_vecPtr = &value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
                 byte transpose_byte = (byte)(transpose ? 1 : 0);
                 UniformMatrix3x4fv(location, count, transpose_byte, value_ptr);
             }
         }
-        public static unsafe void UniformMatrix3x4f(int location, int count, bool transpose, ReadOnlySpan<float> value)
+        public static unsafe void UniformMatrix3x4f(int location, int count, bool transpose, ReadOnlySpan<Matrix3x4> value)
         {
-            fixed (float* tmp_vecPtr = value)
+            fixed (Matrix3x4* tmp_vecPtr = value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
                 byte transpose_byte = (byte)(transpose ? 1 : 0);
                 UniformMatrix3x4fv(location, count, transpose_byte, value_ptr);
             }
         }
-        public static unsafe void UniformMatrix3x4f(int location, int count, bool transpose, float[] value)
+        public static unsafe void UniformMatrix3x4f(int location, int count, bool transpose, Matrix3x4[] value)
         {
-            fixed (float* tmp_vecPtr = value)
+            fixed (Matrix3x4* tmp_vecPtr = value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
                 byte transpose_byte = (byte)(transpose ? 1 : 0);
                 UniformMatrix3x4fv(location, count, transpose_byte, value_ptr);
             }
         }
-        public static unsafe void UniformMatrix4x3f(int location, bool transpose, in float value)
+        public static unsafe void UniformMatrix4x3f(int location, bool transpose, in Matrix4x3 value)
         {
             int count = 1;
-            fixed (float* tmp_vecPtr = &value)
+            fixed (Matrix4x3* tmp_vecPtr = &value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
                 byte transpose_byte = (byte)(transpose ? 1 : 0);
                 UniformMatrix4x3fv(location, count, transpose_byte, value_ptr);
             }
         }
-        public static unsafe void UniformMatrix4x3f(int location, int count, bool transpose, ReadOnlySpan<float> value)
+        public static unsafe void UniformMatrix4x3f(int location, int count, bool transpose, ReadOnlySpan<Matrix4x3> value)
         {
-            fixed (float* tmp_vecPtr = value)
+            fixed (Matrix4x3* tmp_vecPtr = value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
                 byte transpose_byte = (byte)(transpose ? 1 : 0);
                 UniformMatrix4x3fv(location, count, transpose_byte, value_ptr);
             }
         }
-        public static unsafe void UniformMatrix4x3f(int location, int count, bool transpose, float[] value)
+        public static unsafe void UniformMatrix4x3f(int location, int count, bool transpose, Matrix4x3[] value)
         {
-            fixed (float* tmp_vecPtr = value)
+            fixed (Matrix4x3* tmp_vecPtr = value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
                 byte transpose_byte = (byte)(transpose ? 1 : 0);
@@ -10326,84 +10326,84 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 ProgramUniform4uiv(program, location, count, value_ptr);
             }
         }
-        public static unsafe void ProgramUniformMatrix2f(ProgramHandle program, int location, bool transpose, in float value)
+        public static unsafe void ProgramUniformMatrix2f(ProgramHandle program, int location, bool transpose, in Matrix2 value)
         {
             int count = 1;
-            fixed (float* tmp_vecPtr = &value)
+            fixed (Matrix2* tmp_vecPtr = &value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
                 byte transpose_byte = (byte)(transpose ? 1 : 0);
                 ProgramUniformMatrix2fv(program, location, count, transpose_byte, value_ptr);
             }
         }
-        public static unsafe void ProgramUniformMatrix2f(ProgramHandle program, int location, int count, bool transpose, ReadOnlySpan<float> value)
+        public static unsafe void ProgramUniformMatrix2f(ProgramHandle program, int location, int count, bool transpose, ReadOnlySpan<Matrix2> value)
         {
-            fixed (float* tmp_vecPtr = value)
+            fixed (Matrix2* tmp_vecPtr = value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
                 byte transpose_byte = (byte)(transpose ? 1 : 0);
                 ProgramUniformMatrix2fv(program, location, count, transpose_byte, value_ptr);
             }
         }
-        public static unsafe void ProgramUniformMatrix2f(ProgramHandle program, int location, int count, bool transpose, float[] value)
+        public static unsafe void ProgramUniformMatrix2f(ProgramHandle program, int location, int count, bool transpose, Matrix2[] value)
         {
-            fixed (float* tmp_vecPtr = value)
+            fixed (Matrix2* tmp_vecPtr = value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
                 byte transpose_byte = (byte)(transpose ? 1 : 0);
                 ProgramUniformMatrix2fv(program, location, count, transpose_byte, value_ptr);
             }
         }
-        public static unsafe void ProgramUniformMatrix3f(ProgramHandle program, int location, bool transpose, in float value)
+        public static unsafe void ProgramUniformMatrix3f(ProgramHandle program, int location, bool transpose, in Matrix3 value)
         {
             int count = 1;
-            fixed (float* tmp_vecPtr = &value)
+            fixed (Matrix3* tmp_vecPtr = &value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
                 byte transpose_byte = (byte)(transpose ? 1 : 0);
                 ProgramUniformMatrix3fv(program, location, count, transpose_byte, value_ptr);
             }
         }
-        public static unsafe void ProgramUniformMatrix3f(ProgramHandle program, int location, int count, bool transpose, ReadOnlySpan<float> value)
+        public static unsafe void ProgramUniformMatrix3f(ProgramHandle program, int location, int count, bool transpose, ReadOnlySpan<Matrix3> value)
         {
-            fixed (float* tmp_vecPtr = value)
+            fixed (Matrix3* tmp_vecPtr = value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
                 byte transpose_byte = (byte)(transpose ? 1 : 0);
                 ProgramUniformMatrix3fv(program, location, count, transpose_byte, value_ptr);
             }
         }
-        public static unsafe void ProgramUniformMatrix3f(ProgramHandle program, int location, int count, bool transpose, float[] value)
+        public static unsafe void ProgramUniformMatrix3f(ProgramHandle program, int location, int count, bool transpose, Matrix3[] value)
         {
-            fixed (float* tmp_vecPtr = value)
+            fixed (Matrix3* tmp_vecPtr = value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
                 byte transpose_byte = (byte)(transpose ? 1 : 0);
                 ProgramUniformMatrix3fv(program, location, count, transpose_byte, value_ptr);
             }
         }
-        public static unsafe void ProgramUniformMatrix4f(ProgramHandle program, int location, bool transpose, in float value)
+        public static unsafe void ProgramUniformMatrix4f(ProgramHandle program, int location, bool transpose, in Matrix4 value)
         {
             int count = 1;
-            fixed (float* tmp_vecPtr = &value)
+            fixed (Matrix4* tmp_vecPtr = &value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
                 byte transpose_byte = (byte)(transpose ? 1 : 0);
                 ProgramUniformMatrix4fv(program, location, count, transpose_byte, value_ptr);
             }
         }
-        public static unsafe void ProgramUniformMatrix4f(ProgramHandle program, int location, int count, bool transpose, ReadOnlySpan<float> value)
+        public static unsafe void ProgramUniformMatrix4f(ProgramHandle program, int location, int count, bool transpose, ReadOnlySpan<Matrix4> value)
         {
-            fixed (float* tmp_vecPtr = value)
+            fixed (Matrix4* tmp_vecPtr = value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
                 byte transpose_byte = (byte)(transpose ? 1 : 0);
                 ProgramUniformMatrix4fv(program, location, count, transpose_byte, value_ptr);
             }
         }
-        public static unsafe void ProgramUniformMatrix4f(ProgramHandle program, int location, int count, bool transpose, float[] value)
+        public static unsafe void ProgramUniformMatrix4f(ProgramHandle program, int location, int count, bool transpose, Matrix4[] value)
         {
-            fixed (float* tmp_vecPtr = value)
+            fixed (Matrix4* tmp_vecPtr = value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
                 byte transpose_byte = (byte)(transpose ? 1 : 0);
@@ -10494,168 +10494,168 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 ProgramUniformMatrix4dv(program, location, count, transpose_byte, value_ptr);
             }
         }
-        public static unsafe void ProgramUniformMatrix2x3f(ProgramHandle program, int location, bool transpose, in float value)
+        public static unsafe void ProgramUniformMatrix2x3f(ProgramHandle program, int location, bool transpose, in Matrix2x3 value)
         {
             int count = 1;
-            fixed (float* tmp_vecPtr = &value)
+            fixed (Matrix2x3* tmp_vecPtr = &value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
                 byte transpose_byte = (byte)(transpose ? 1 : 0);
                 ProgramUniformMatrix2x3fv(program, location, count, transpose_byte, value_ptr);
             }
         }
-        public static unsafe void ProgramUniformMatrix2x3f(ProgramHandle program, int location, int count, bool transpose, ReadOnlySpan<float> value)
+        public static unsafe void ProgramUniformMatrix2x3f(ProgramHandle program, int location, int count, bool transpose, ReadOnlySpan<Matrix2x3> value)
         {
-            fixed (float* tmp_vecPtr = value)
+            fixed (Matrix2x3* tmp_vecPtr = value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
                 byte transpose_byte = (byte)(transpose ? 1 : 0);
                 ProgramUniformMatrix2x3fv(program, location, count, transpose_byte, value_ptr);
             }
         }
-        public static unsafe void ProgramUniformMatrix2x3f(ProgramHandle program, int location, int count, bool transpose, float[] value)
+        public static unsafe void ProgramUniformMatrix2x3f(ProgramHandle program, int location, int count, bool transpose, Matrix2x3[] value)
         {
-            fixed (float* tmp_vecPtr = value)
+            fixed (Matrix2x3* tmp_vecPtr = value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
                 byte transpose_byte = (byte)(transpose ? 1 : 0);
                 ProgramUniformMatrix2x3fv(program, location, count, transpose_byte, value_ptr);
             }
         }
-        public static unsafe void ProgramUniformMatrix3x2f(ProgramHandle program, int location, bool transpose, in float value)
+        public static unsafe void ProgramUniformMatrix3x2f(ProgramHandle program, int location, bool transpose, in Matrix3x2 value)
         {
             int count = 1;
-            fixed (float* tmp_vecPtr = &value)
+            fixed (Matrix3x2* tmp_vecPtr = &value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
                 byte transpose_byte = (byte)(transpose ? 1 : 0);
                 ProgramUniformMatrix3x2fv(program, location, count, transpose_byte, value_ptr);
             }
         }
-        public static unsafe void ProgramUniformMatrix3x2f(ProgramHandle program, int location, int count, bool transpose, ReadOnlySpan<float> value)
+        public static unsafe void ProgramUniformMatrix3x2f(ProgramHandle program, int location, int count, bool transpose, ReadOnlySpan<Matrix3x2> value)
         {
-            fixed (float* tmp_vecPtr = value)
+            fixed (Matrix3x2* tmp_vecPtr = value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
                 byte transpose_byte = (byte)(transpose ? 1 : 0);
                 ProgramUniformMatrix3x2fv(program, location, count, transpose_byte, value_ptr);
             }
         }
-        public static unsafe void ProgramUniformMatrix3x2f(ProgramHandle program, int location, int count, bool transpose, float[] value)
+        public static unsafe void ProgramUniformMatrix3x2f(ProgramHandle program, int location, int count, bool transpose, Matrix3x2[] value)
         {
-            fixed (float* tmp_vecPtr = value)
+            fixed (Matrix3x2* tmp_vecPtr = value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
                 byte transpose_byte = (byte)(transpose ? 1 : 0);
                 ProgramUniformMatrix3x2fv(program, location, count, transpose_byte, value_ptr);
             }
         }
-        public static unsafe void ProgramUniformMatrix2x4f(ProgramHandle program, int location, bool transpose, in float value)
+        public static unsafe void ProgramUniformMatrix2x4f(ProgramHandle program, int location, bool transpose, in Matrix2x4 value)
         {
             int count = 1;
-            fixed (float* tmp_vecPtr = &value)
+            fixed (Matrix2x4* tmp_vecPtr = &value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
                 byte transpose_byte = (byte)(transpose ? 1 : 0);
                 ProgramUniformMatrix2x4fv(program, location, count, transpose_byte, value_ptr);
             }
         }
-        public static unsafe void ProgramUniformMatrix2x4f(ProgramHandle program, int location, int count, bool transpose, ReadOnlySpan<float> value)
+        public static unsafe void ProgramUniformMatrix2x4f(ProgramHandle program, int location, int count, bool transpose, ReadOnlySpan<Matrix2x4> value)
         {
-            fixed (float* tmp_vecPtr = value)
+            fixed (Matrix2x4* tmp_vecPtr = value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
                 byte transpose_byte = (byte)(transpose ? 1 : 0);
                 ProgramUniformMatrix2x4fv(program, location, count, transpose_byte, value_ptr);
             }
         }
-        public static unsafe void ProgramUniformMatrix2x4f(ProgramHandle program, int location, int count, bool transpose, float[] value)
+        public static unsafe void ProgramUniformMatrix2x4f(ProgramHandle program, int location, int count, bool transpose, Matrix2x4[] value)
         {
-            fixed (float* tmp_vecPtr = value)
+            fixed (Matrix2x4* tmp_vecPtr = value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
                 byte transpose_byte = (byte)(transpose ? 1 : 0);
                 ProgramUniformMatrix2x4fv(program, location, count, transpose_byte, value_ptr);
             }
         }
-        public static unsafe void ProgramUniformMatrix4x2f(ProgramHandle program, int location, bool transpose, in float value)
+        public static unsafe void ProgramUniformMatrix4x2f(ProgramHandle program, int location, bool transpose, in Matrix4x2 value)
         {
             int count = 1;
-            fixed (float* tmp_vecPtr = &value)
+            fixed (Matrix4x2* tmp_vecPtr = &value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
                 byte transpose_byte = (byte)(transpose ? 1 : 0);
                 ProgramUniformMatrix4x2fv(program, location, count, transpose_byte, value_ptr);
             }
         }
-        public static unsafe void ProgramUniformMatrix4x2f(ProgramHandle program, int location, int count, bool transpose, ReadOnlySpan<float> value)
+        public static unsafe void ProgramUniformMatrix4x2f(ProgramHandle program, int location, int count, bool transpose, ReadOnlySpan<Matrix4x2> value)
         {
-            fixed (float* tmp_vecPtr = value)
+            fixed (Matrix4x2* tmp_vecPtr = value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
                 byte transpose_byte = (byte)(transpose ? 1 : 0);
                 ProgramUniformMatrix4x2fv(program, location, count, transpose_byte, value_ptr);
             }
         }
-        public static unsafe void ProgramUniformMatrix4x2f(ProgramHandle program, int location, int count, bool transpose, float[] value)
+        public static unsafe void ProgramUniformMatrix4x2f(ProgramHandle program, int location, int count, bool transpose, Matrix4x2[] value)
         {
-            fixed (float* tmp_vecPtr = value)
+            fixed (Matrix4x2* tmp_vecPtr = value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
                 byte transpose_byte = (byte)(transpose ? 1 : 0);
                 ProgramUniformMatrix4x2fv(program, location, count, transpose_byte, value_ptr);
             }
         }
-        public static unsafe void ProgramUniformMatrix3x4f(ProgramHandle program, int location, bool transpose, in float value)
+        public static unsafe void ProgramUniformMatrix3x4f(ProgramHandle program, int location, bool transpose, in Matrix3x4 value)
         {
             int count = 1;
-            fixed (float* tmp_vecPtr = &value)
+            fixed (Matrix3x4* tmp_vecPtr = &value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
                 byte transpose_byte = (byte)(transpose ? 1 : 0);
                 ProgramUniformMatrix3x4fv(program, location, count, transpose_byte, value_ptr);
             }
         }
-        public static unsafe void ProgramUniformMatrix3x4f(ProgramHandle program, int location, int count, bool transpose, ReadOnlySpan<float> value)
+        public static unsafe void ProgramUniformMatrix3x4f(ProgramHandle program, int location, int count, bool transpose, ReadOnlySpan<Matrix3x4> value)
         {
-            fixed (float* tmp_vecPtr = value)
+            fixed (Matrix3x4* tmp_vecPtr = value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
                 byte transpose_byte = (byte)(transpose ? 1 : 0);
                 ProgramUniformMatrix3x4fv(program, location, count, transpose_byte, value_ptr);
             }
         }
-        public static unsafe void ProgramUniformMatrix3x4f(ProgramHandle program, int location, int count, bool transpose, float[] value)
+        public static unsafe void ProgramUniformMatrix3x4f(ProgramHandle program, int location, int count, bool transpose, Matrix3x4[] value)
         {
-            fixed (float* tmp_vecPtr = value)
+            fixed (Matrix3x4* tmp_vecPtr = value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
                 byte transpose_byte = (byte)(transpose ? 1 : 0);
                 ProgramUniformMatrix3x4fv(program, location, count, transpose_byte, value_ptr);
             }
         }
-        public static unsafe void ProgramUniformMatrix4x3f(ProgramHandle program, int location, bool transpose, in float value)
+        public static unsafe void ProgramUniformMatrix4x3f(ProgramHandle program, int location, bool transpose, in Matrix4x3 value)
         {
             int count = 1;
-            fixed (float* tmp_vecPtr = &value)
+            fixed (Matrix4x3* tmp_vecPtr = &value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
                 byte transpose_byte = (byte)(transpose ? 1 : 0);
                 ProgramUniformMatrix4x3fv(program, location, count, transpose_byte, value_ptr);
             }
         }
-        public static unsafe void ProgramUniformMatrix4x3f(ProgramHandle program, int location, int count, bool transpose, ReadOnlySpan<float> value)
+        public static unsafe void ProgramUniformMatrix4x3f(ProgramHandle program, int location, int count, bool transpose, ReadOnlySpan<Matrix4x3> value)
         {
-            fixed (float* tmp_vecPtr = value)
+            fixed (Matrix4x3* tmp_vecPtr = value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
                 byte transpose_byte = (byte)(transpose ? 1 : 0);
                 ProgramUniformMatrix4x3fv(program, location, count, transpose_byte, value_ptr);
             }
         }
-        public static unsafe void ProgramUniformMatrix4x3f(ProgramHandle program, int location, int count, bool transpose, float[] value)
+        public static unsafe void ProgramUniformMatrix4x3f(ProgramHandle program, int location, int count, bool transpose, Matrix4x3[] value)
         {
-            fixed (float* tmp_vecPtr = value)
+            fixed (Matrix4x3* tmp_vecPtr = value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
                 byte transpose_byte = (byte)(transpose ? 1 : 0);
@@ -21062,84 +21062,84 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                     ProgramUniform4uiv(program, location, count, value_ptr);
                 }
             }
-            public static unsafe void ProgramUniformMatrix2f(ProgramHandle program, int location, bool transpose, in float value)
+            public static unsafe void ProgramUniformMatrix2f(ProgramHandle program, int location, bool transpose, in Matrix2 value)
             {
                 int count = 1;
-                fixed (float* tmp_vecPtr = &value)
+                fixed (Matrix2* tmp_vecPtr = &value)
                 {
                     float* value_ptr = (float*)tmp_vecPtr;
                     byte transpose_byte = (byte)(transpose ? 1 : 0);
                     ProgramUniformMatrix2fv(program, location, count, transpose_byte, value_ptr);
                 }
             }
-            public static unsafe void ProgramUniformMatrix2f(ProgramHandle program, int location, int count, bool transpose, ReadOnlySpan<float> value)
+            public static unsafe void ProgramUniformMatrix2f(ProgramHandle program, int location, int count, bool transpose, ReadOnlySpan<Matrix2> value)
             {
-                fixed (float* tmp_vecPtr = value)
+                fixed (Matrix2* tmp_vecPtr = value)
                 {
                     float* value_ptr = (float*)tmp_vecPtr;
                     byte transpose_byte = (byte)(transpose ? 1 : 0);
                     ProgramUniformMatrix2fv(program, location, count, transpose_byte, value_ptr);
                 }
             }
-            public static unsafe void ProgramUniformMatrix2f(ProgramHandle program, int location, int count, bool transpose, float[] value)
+            public static unsafe void ProgramUniformMatrix2f(ProgramHandle program, int location, int count, bool transpose, Matrix2[] value)
             {
-                fixed (float* tmp_vecPtr = value)
+                fixed (Matrix2* tmp_vecPtr = value)
                 {
                     float* value_ptr = (float*)tmp_vecPtr;
                     byte transpose_byte = (byte)(transpose ? 1 : 0);
                     ProgramUniformMatrix2fv(program, location, count, transpose_byte, value_ptr);
                 }
             }
-            public static unsafe void ProgramUniformMatrix3f(ProgramHandle program, int location, bool transpose, in float value)
+            public static unsafe void ProgramUniformMatrix3f(ProgramHandle program, int location, bool transpose, in Matrix3 value)
             {
                 int count = 1;
-                fixed (float* tmp_vecPtr = &value)
+                fixed (Matrix3* tmp_vecPtr = &value)
                 {
                     float* value_ptr = (float*)tmp_vecPtr;
                     byte transpose_byte = (byte)(transpose ? 1 : 0);
                     ProgramUniformMatrix3fv(program, location, count, transpose_byte, value_ptr);
                 }
             }
-            public static unsafe void ProgramUniformMatrix3f(ProgramHandle program, int location, int count, bool transpose, ReadOnlySpan<float> value)
+            public static unsafe void ProgramUniformMatrix3f(ProgramHandle program, int location, int count, bool transpose, ReadOnlySpan<Matrix3> value)
             {
-                fixed (float* tmp_vecPtr = value)
+                fixed (Matrix3* tmp_vecPtr = value)
                 {
                     float* value_ptr = (float*)tmp_vecPtr;
                     byte transpose_byte = (byte)(transpose ? 1 : 0);
                     ProgramUniformMatrix3fv(program, location, count, transpose_byte, value_ptr);
                 }
             }
-            public static unsafe void ProgramUniformMatrix3f(ProgramHandle program, int location, int count, bool transpose, float[] value)
+            public static unsafe void ProgramUniformMatrix3f(ProgramHandle program, int location, int count, bool transpose, Matrix3[] value)
             {
-                fixed (float* tmp_vecPtr = value)
+                fixed (Matrix3* tmp_vecPtr = value)
                 {
                     float* value_ptr = (float*)tmp_vecPtr;
                     byte transpose_byte = (byte)(transpose ? 1 : 0);
                     ProgramUniformMatrix3fv(program, location, count, transpose_byte, value_ptr);
                 }
             }
-            public static unsafe void ProgramUniformMatrix4f(ProgramHandle program, int location, bool transpose, in float value)
+            public static unsafe void ProgramUniformMatrix4f(ProgramHandle program, int location, bool transpose, in Matrix4 value)
             {
                 int count = 1;
-                fixed (float* tmp_vecPtr = &value)
+                fixed (Matrix4* tmp_vecPtr = &value)
                 {
                     float* value_ptr = (float*)tmp_vecPtr;
                     byte transpose_byte = (byte)(transpose ? 1 : 0);
                     ProgramUniformMatrix4fv(program, location, count, transpose_byte, value_ptr);
                 }
             }
-            public static unsafe void ProgramUniformMatrix4f(ProgramHandle program, int location, int count, bool transpose, ReadOnlySpan<float> value)
+            public static unsafe void ProgramUniformMatrix4f(ProgramHandle program, int location, int count, bool transpose, ReadOnlySpan<Matrix4> value)
             {
-                fixed (float* tmp_vecPtr = value)
+                fixed (Matrix4* tmp_vecPtr = value)
                 {
                     float* value_ptr = (float*)tmp_vecPtr;
                     byte transpose_byte = (byte)(transpose ? 1 : 0);
                     ProgramUniformMatrix4fv(program, location, count, transpose_byte, value_ptr);
                 }
             }
-            public static unsafe void ProgramUniformMatrix4f(ProgramHandle program, int location, int count, bool transpose, float[] value)
+            public static unsafe void ProgramUniformMatrix4f(ProgramHandle program, int location, int count, bool transpose, Matrix4[] value)
             {
-                fixed (float* tmp_vecPtr = value)
+                fixed (Matrix4* tmp_vecPtr = value)
                 {
                     float* value_ptr = (float*)tmp_vecPtr;
                     byte transpose_byte = (byte)(transpose ? 1 : 0);
@@ -21230,168 +21230,168 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                     ProgramUniformMatrix4dv(program, location, count, transpose_byte, value_ptr);
                 }
             }
-            public static unsafe void ProgramUniformMatrix2x3f(ProgramHandle program, int location, bool transpose, in float value)
+            public static unsafe void ProgramUniformMatrix2x3f(ProgramHandle program, int location, bool transpose, in Matrix2x3 value)
             {
                 int count = 1;
-                fixed (float* tmp_vecPtr = &value)
+                fixed (Matrix2x3* tmp_vecPtr = &value)
                 {
                     float* value_ptr = (float*)tmp_vecPtr;
                     byte transpose_byte = (byte)(transpose ? 1 : 0);
                     ProgramUniformMatrix2x3fv(program, location, count, transpose_byte, value_ptr);
                 }
             }
-            public static unsafe void ProgramUniformMatrix2x3f(ProgramHandle program, int location, int count, bool transpose, ReadOnlySpan<float> value)
+            public static unsafe void ProgramUniformMatrix2x3f(ProgramHandle program, int location, int count, bool transpose, ReadOnlySpan<Matrix2x3> value)
             {
-                fixed (float* tmp_vecPtr = value)
+                fixed (Matrix2x3* tmp_vecPtr = value)
                 {
                     float* value_ptr = (float*)tmp_vecPtr;
                     byte transpose_byte = (byte)(transpose ? 1 : 0);
                     ProgramUniformMatrix2x3fv(program, location, count, transpose_byte, value_ptr);
                 }
             }
-            public static unsafe void ProgramUniformMatrix2x3f(ProgramHandle program, int location, int count, bool transpose, float[] value)
+            public static unsafe void ProgramUniformMatrix2x3f(ProgramHandle program, int location, int count, bool transpose, Matrix2x3[] value)
             {
-                fixed (float* tmp_vecPtr = value)
+                fixed (Matrix2x3* tmp_vecPtr = value)
                 {
                     float* value_ptr = (float*)tmp_vecPtr;
                     byte transpose_byte = (byte)(transpose ? 1 : 0);
                     ProgramUniformMatrix2x3fv(program, location, count, transpose_byte, value_ptr);
                 }
             }
-            public static unsafe void ProgramUniformMatrix3x2f(ProgramHandle program, int location, bool transpose, in float value)
+            public static unsafe void ProgramUniformMatrix3x2f(ProgramHandle program, int location, bool transpose, in Matrix3x2 value)
             {
                 int count = 1;
-                fixed (float* tmp_vecPtr = &value)
+                fixed (Matrix3x2* tmp_vecPtr = &value)
                 {
                     float* value_ptr = (float*)tmp_vecPtr;
                     byte transpose_byte = (byte)(transpose ? 1 : 0);
                     ProgramUniformMatrix3x2fv(program, location, count, transpose_byte, value_ptr);
                 }
             }
-            public static unsafe void ProgramUniformMatrix3x2f(ProgramHandle program, int location, int count, bool transpose, ReadOnlySpan<float> value)
+            public static unsafe void ProgramUniformMatrix3x2f(ProgramHandle program, int location, int count, bool transpose, ReadOnlySpan<Matrix3x2> value)
             {
-                fixed (float* tmp_vecPtr = value)
+                fixed (Matrix3x2* tmp_vecPtr = value)
                 {
                     float* value_ptr = (float*)tmp_vecPtr;
                     byte transpose_byte = (byte)(transpose ? 1 : 0);
                     ProgramUniformMatrix3x2fv(program, location, count, transpose_byte, value_ptr);
                 }
             }
-            public static unsafe void ProgramUniformMatrix3x2f(ProgramHandle program, int location, int count, bool transpose, float[] value)
+            public static unsafe void ProgramUniformMatrix3x2f(ProgramHandle program, int location, int count, bool transpose, Matrix3x2[] value)
             {
-                fixed (float* tmp_vecPtr = value)
+                fixed (Matrix3x2* tmp_vecPtr = value)
                 {
                     float* value_ptr = (float*)tmp_vecPtr;
                     byte transpose_byte = (byte)(transpose ? 1 : 0);
                     ProgramUniformMatrix3x2fv(program, location, count, transpose_byte, value_ptr);
                 }
             }
-            public static unsafe void ProgramUniformMatrix2x4f(ProgramHandle program, int location, bool transpose, in float value)
+            public static unsafe void ProgramUniformMatrix2x4f(ProgramHandle program, int location, bool transpose, in Matrix2x4 value)
             {
                 int count = 1;
-                fixed (float* tmp_vecPtr = &value)
+                fixed (Matrix2x4* tmp_vecPtr = &value)
                 {
                     float* value_ptr = (float*)tmp_vecPtr;
                     byte transpose_byte = (byte)(transpose ? 1 : 0);
                     ProgramUniformMatrix2x4fv(program, location, count, transpose_byte, value_ptr);
                 }
             }
-            public static unsafe void ProgramUniformMatrix2x4f(ProgramHandle program, int location, int count, bool transpose, ReadOnlySpan<float> value)
+            public static unsafe void ProgramUniformMatrix2x4f(ProgramHandle program, int location, int count, bool transpose, ReadOnlySpan<Matrix2x4> value)
             {
-                fixed (float* tmp_vecPtr = value)
+                fixed (Matrix2x4* tmp_vecPtr = value)
                 {
                     float* value_ptr = (float*)tmp_vecPtr;
                     byte transpose_byte = (byte)(transpose ? 1 : 0);
                     ProgramUniformMatrix2x4fv(program, location, count, transpose_byte, value_ptr);
                 }
             }
-            public static unsafe void ProgramUniformMatrix2x4f(ProgramHandle program, int location, int count, bool transpose, float[] value)
+            public static unsafe void ProgramUniformMatrix2x4f(ProgramHandle program, int location, int count, bool transpose, Matrix2x4[] value)
             {
-                fixed (float* tmp_vecPtr = value)
+                fixed (Matrix2x4* tmp_vecPtr = value)
                 {
                     float* value_ptr = (float*)tmp_vecPtr;
                     byte transpose_byte = (byte)(transpose ? 1 : 0);
                     ProgramUniformMatrix2x4fv(program, location, count, transpose_byte, value_ptr);
                 }
             }
-            public static unsafe void ProgramUniformMatrix4x2f(ProgramHandle program, int location, bool transpose, in float value)
+            public static unsafe void ProgramUniformMatrix4x2f(ProgramHandle program, int location, bool transpose, in Matrix4x2 value)
             {
                 int count = 1;
-                fixed (float* tmp_vecPtr = &value)
+                fixed (Matrix4x2* tmp_vecPtr = &value)
                 {
                     float* value_ptr = (float*)tmp_vecPtr;
                     byte transpose_byte = (byte)(transpose ? 1 : 0);
                     ProgramUniformMatrix4x2fv(program, location, count, transpose_byte, value_ptr);
                 }
             }
-            public static unsafe void ProgramUniformMatrix4x2f(ProgramHandle program, int location, int count, bool transpose, ReadOnlySpan<float> value)
+            public static unsafe void ProgramUniformMatrix4x2f(ProgramHandle program, int location, int count, bool transpose, ReadOnlySpan<Matrix4x2> value)
             {
-                fixed (float* tmp_vecPtr = value)
+                fixed (Matrix4x2* tmp_vecPtr = value)
                 {
                     float* value_ptr = (float*)tmp_vecPtr;
                     byte transpose_byte = (byte)(transpose ? 1 : 0);
                     ProgramUniformMatrix4x2fv(program, location, count, transpose_byte, value_ptr);
                 }
             }
-            public static unsafe void ProgramUniformMatrix4x2f(ProgramHandle program, int location, int count, bool transpose, float[] value)
+            public static unsafe void ProgramUniformMatrix4x2f(ProgramHandle program, int location, int count, bool transpose, Matrix4x2[] value)
             {
-                fixed (float* tmp_vecPtr = value)
+                fixed (Matrix4x2* tmp_vecPtr = value)
                 {
                     float* value_ptr = (float*)tmp_vecPtr;
                     byte transpose_byte = (byte)(transpose ? 1 : 0);
                     ProgramUniformMatrix4x2fv(program, location, count, transpose_byte, value_ptr);
                 }
             }
-            public static unsafe void ProgramUniformMatrix3x4f(ProgramHandle program, int location, bool transpose, in float value)
+            public static unsafe void ProgramUniformMatrix3x4f(ProgramHandle program, int location, bool transpose, in Matrix3x4 value)
             {
                 int count = 1;
-                fixed (float* tmp_vecPtr = &value)
+                fixed (Matrix3x4* tmp_vecPtr = &value)
                 {
                     float* value_ptr = (float*)tmp_vecPtr;
                     byte transpose_byte = (byte)(transpose ? 1 : 0);
                     ProgramUniformMatrix3x4fv(program, location, count, transpose_byte, value_ptr);
                 }
             }
-            public static unsafe void ProgramUniformMatrix3x4f(ProgramHandle program, int location, int count, bool transpose, ReadOnlySpan<float> value)
+            public static unsafe void ProgramUniformMatrix3x4f(ProgramHandle program, int location, int count, bool transpose, ReadOnlySpan<Matrix3x4> value)
             {
-                fixed (float* tmp_vecPtr = value)
+                fixed (Matrix3x4* tmp_vecPtr = value)
                 {
                     float* value_ptr = (float*)tmp_vecPtr;
                     byte transpose_byte = (byte)(transpose ? 1 : 0);
                     ProgramUniformMatrix3x4fv(program, location, count, transpose_byte, value_ptr);
                 }
             }
-            public static unsafe void ProgramUniformMatrix3x4f(ProgramHandle program, int location, int count, bool transpose, float[] value)
+            public static unsafe void ProgramUniformMatrix3x4f(ProgramHandle program, int location, int count, bool transpose, Matrix3x4[] value)
             {
-                fixed (float* tmp_vecPtr = value)
+                fixed (Matrix3x4* tmp_vecPtr = value)
                 {
                     float* value_ptr = (float*)tmp_vecPtr;
                     byte transpose_byte = (byte)(transpose ? 1 : 0);
                     ProgramUniformMatrix3x4fv(program, location, count, transpose_byte, value_ptr);
                 }
             }
-            public static unsafe void ProgramUniformMatrix4x3f(ProgramHandle program, int location, bool transpose, in float value)
+            public static unsafe void ProgramUniformMatrix4x3f(ProgramHandle program, int location, bool transpose, in Matrix4x3 value)
             {
                 int count = 1;
-                fixed (float* tmp_vecPtr = &value)
+                fixed (Matrix4x3* tmp_vecPtr = &value)
                 {
                     float* value_ptr = (float*)tmp_vecPtr;
                     byte transpose_byte = (byte)(transpose ? 1 : 0);
                     ProgramUniformMatrix4x3fv(program, location, count, transpose_byte, value_ptr);
                 }
             }
-            public static unsafe void ProgramUniformMatrix4x3f(ProgramHandle program, int location, int count, bool transpose, ReadOnlySpan<float> value)
+            public static unsafe void ProgramUniformMatrix4x3f(ProgramHandle program, int location, int count, bool transpose, ReadOnlySpan<Matrix4x3> value)
             {
-                fixed (float* tmp_vecPtr = value)
+                fixed (Matrix4x3* tmp_vecPtr = value)
                 {
                     float* value_ptr = (float*)tmp_vecPtr;
                     byte transpose_byte = (byte)(transpose ? 1 : 0);
                     ProgramUniformMatrix4x3fv(program, location, count, transpose_byte, value_ptr);
                 }
             }
-            public static unsafe void ProgramUniformMatrix4x3f(ProgramHandle program, int location, int count, bool transpose, float[] value)
+            public static unsafe void ProgramUniformMatrix4x3f(ProgramHandle program, int location, int count, bool transpose, Matrix4x3[] value)
             {
-                fixed (float* tmp_vecPtr = value)
+                fixed (Matrix4x3* tmp_vecPtr = value)
                 {
                     float* value_ptr = (float*)tmp_vecPtr;
                     byte transpose_byte = (byte)(transpose ? 1 : 0);
