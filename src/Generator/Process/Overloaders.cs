@@ -267,6 +267,8 @@ namespace Generator.Process
             if (matrixMatch.Success)
             {
                 typeName = matrixMatch.Groups[1].Value;
+                // Remove the postfix 'f' if it is there
+                //if (typeName[^1] == 'f') typeName = typeName[0..^1];
                 int columns = int.Parse(matrixMatch.Groups[2].Value);
                 int rows = matrixMatch.Groups[3].Success ?
                     int.Parse(matrixMatch.Groups[3].Value) : columns;
