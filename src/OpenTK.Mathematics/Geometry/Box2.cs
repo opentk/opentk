@@ -92,7 +92,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Gets or sets a vector describing the size of the Box2 structure.
         /// </summary>
-        public Vector2 CenteredSize
+        public Vector2 Size
         {
             get => Max - Min;
             set
@@ -108,8 +108,8 @@ namespace OpenTK.Mathematics
         /// </summary>
         public Vector2 HalfSize
         {
-            get => CenteredSize / 2;
-            set => CenteredSize = value * 2;
+            get => Size / 2;
+            set => Size = value * 2;
         }
 
         /// <summary>
@@ -123,159 +123,82 @@ namespace OpenTK.Mathematics
 
         // --
 
-        /// <summary>
-        /// Gets or sets the width of the box.
-        /// </summary>
         public float Width
         {
             get => _max.X - _min.X;
             set => _max.X = _min.X + value;
         }
 
-        /// <summary>
-        /// Gets or sets the height of the box.
-        /// </summary>
         public float Height
         {
             get => _max.Y - _min.Y;
             set => _max.Y = _min.Y + value;
         }
 
-        /// <summary>
-        /// Gets or sets the left location of the box.
-        /// </summary>
         public float Left
         {
             get => _min.X;
             set => _min.X = value;
         }
 
-        /// <summary>
-        /// Gets or sets the top location of the box.
-        /// </summary>
         public float Top
         {
             get => _min.Y;
             set => _min.Y = value;
         }
 
-        /// <summary>
-        /// Gets or sets the right location of the box.
-        /// </summary>
         public float Right
         {
             get => _max.X;
             set => _max.X = value;
         }
 
-        /// <summary>
-        /// Gets or sets the bottom location of the box.
-        /// </summary>
         public float Bottom
         {
             get => _max.Y;
             set => _max.Y = value;
         }
 
-        /// <summary>
-        /// Gets or sets the X location of the box.
-        /// </summary>
         public float X
         {
             get => _min.X;
             set => _min.X = value;
         }
 
-        /// <summary>
-        /// Gets or sets the Y location of the box.
-        /// </summary>
         public float Y
         {
             get => _min.Y;
             set => _min.Y = value;
         }
 
-        /// <summary>
-        /// Gets or sets the horizontal size.
-        /// </summary>
         public float SizeX
         {
             get => _max.X - _min.X;
-            set => _max.X = _min.X + value;
         }
 
-        /// <summary>
-        /// Gets or sets the vertical size.
-        /// </summary>
         public float SizeY
         {
             get => _max.Y - _min.Y;
-            set => _max.Y = _min.Y + value;
         }
 
-        /// <summary>
-        /// Gets or sets the size of the box.
-        /// </summary>
-        public Vector2 Size
-        {
-            get => new Vector2(_max.X - _min.X, _max.Y - _min.Y);
-            set
-            {
-                _max.X = _min.X + value.X;
-                _max.Y = _min.Y + value.Y;
-            }
-        }
-
-        /// <summary>
-        /// Gets the location of the box.
-        /// </summary>
         public Vector2 Location => _min;
 
-        /// <summary>
-        /// Gets a value indicating whether all values are zero.
-        /// </summary>
-        public bool IsZero => _min.X == 0 && _min.Y == 0 && _max.X == 0 && _max.Y == 0;
+        public bool IsEmpty => _min.X == 0 && _min.Y == 0 && _max.X == 0 && _max.Y == 0;
 
-        /// <summary>
-        /// Gets a box with all components zero.
-        /// </summary>
         public static readonly Box2 Zero = new Box2(0, 0, 0, 0);
 
-        /// <summary>
-        /// Gets a box with a location 0,0 with the a size of 1.
-        /// </summary>
-        public static readonly Box2 UnitSquare = new Box2(0, 0, 1, 1);
+        public static readonly Box2 Identity = new Box2(0, 0, 1, 1);
 
-        /// <summary>
-        /// Creates a box.
-        /// </summary>
-        /// <param name="location">The location of the box.</param>
-        /// <param name="size">The size of the box.</param>
-        /// <returns>A box.</returns>
         public static Box2 FromSize(Vector2 location, Vector2 size)
         {
             return new Box2(location, location + size);
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Box2"/> struct.
-        /// </summary>
-        /// <param name="min">The minimum point on the XY plane this box encloses.</param>
-        /// <param name="max">The maximum point on the XY plane this box encloses.</param>
-        /// <returns>A box.</returns>
         public static Box2 FromPositions(Vector2 min, Vector2 max)
         {
             return new Box2(min, max);
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Box2"/> struct.
-        /// </summary>
-        /// <param name="minX">The minimum X value to be enclosed.</param>
-        /// <param name="minY">The minimum Y value to be enclosed.</param>
-        /// <param name="maxX">The maximum X value to be enclosed.</param>
-        /// <param name="maxY">The maximum Y value to be enclosed.</param>
-        /// <returns>A box.</returns>
         public static Box2 FromPositions(float minX, float minY, float maxX, float maxY)
         {
             return new Box2(minX, minY, maxX, maxY);
@@ -283,7 +206,7 @@ namespace OpenTK.Mathematics
 
         public void Intersect(Box2 other)
         {
-            Box2 result = Intersect(other, this);
+            Box2 result = Box2.Intersect(other, this);
 
             X = result.X;
             Y = result.Y;
@@ -303,11 +226,6 @@ namespace OpenTK.Mathematics
                 return new Box2(minX, minY, maxX, maxY);
             }
             return Box2.Zero;
-        }
-
-        public Box2 Intersected(Box2 other)
-        {
-            return Intersect(other, this);
         }
 
         public bool IntersectsWith(Box2 other)
