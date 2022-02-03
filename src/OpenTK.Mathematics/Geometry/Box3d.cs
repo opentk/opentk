@@ -290,13 +290,13 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Gets a value indicating whether all values are zero.
         /// </summary>
-        public bool IsEmpty => _min.X == 0 && _min.Y == 0 && _min.Z == 0
+        public bool IsZero => _min.X == 0 && _min.Y == 0 && _min.Z == 0
                            && _max.X == 0 && _max.Y == 0 && _max.Z == 0;
 
         /// <summary>
         /// Gets a box with all components zero.
         /// </summary>
-        public static readonly Box3d Empty = new Box3d(0, 0, 0, 0, 0, 0);
+        public static readonly Box3d Zero = new Box3d(0, 0, 0, 0, 0, 0);
 
         /// <summary>
         /// Gets a box with a location 0,0,0 with size 1 on each axis.
@@ -376,7 +376,7 @@ namespace OpenTK.Mathematics
                 return new Box3d(minX, minY, minZ, maxX, maxY, maxZ);
             }
 
-            return Empty;
+            return Zero;
         }
 
         /// <summary>

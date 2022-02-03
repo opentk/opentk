@@ -20,6 +20,11 @@ namespace OpenTK.Mathematics
     [StructLayout(LayoutKind.Sequential)]
     public struct Box3i : IEquatable<Box3i>
     {
+        /// <summary>
+        /// An empty box with Min (0, 0, 0) and Max (0, 0, 0).
+        /// </summary>
+        public static readonly Box3i Empty = new Box3i(0, 0, 0, 0, 0, 0);
+
         private Vector3i _min;
 
         /// <summary>
@@ -265,13 +270,13 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Gets a value indicating whether all values are zero.
         /// </summary>
-        public bool IsEmpty => _min.X == 0 && _min.Y == 0 && _min.Z == 0
+        public bool IsZero => _min.X == 0 && _min.Y == 0 && _min.Z == 0
                            && _max.X == 0 && _max.Y == 0 && _max.Z == 0;
 
         /// <summary>
         /// Gets a box with all components zero.
         /// </summary>
-        public static readonly Box3i Empty = new Box3i(0, 0, 0, 0, 0, 0);
+        public static readonly Box3i Zero = new Box3i(0, 0, 0, 0, 0, 0);
 
         /// <summary>
         /// Gets a box with a location 0,0,0 with size 1 on each axis.
@@ -351,7 +356,7 @@ namespace OpenTK.Mathematics
                 return new Box3i(minX, minY, minZ, maxX, maxY, maxZ);
             }
 
-            return Empty;
+            return Zero;
         }
 
         /// <summary>
