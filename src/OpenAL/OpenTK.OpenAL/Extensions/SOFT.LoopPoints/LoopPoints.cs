@@ -32,10 +32,10 @@ namespace OpenTK.Audio.OpenAL.Extensions.SOFT.LoopPoints
         public static unsafe extern void Buffer(int buffer, BufferLoopPoint param, int* values);
 
         [DllImport(AL.Lib, EntryPoint = "alBufferiv", ExactSpelling = true, CallingConvention = AL.ALCallingConvention)]
-        public static unsafe extern void Buffer(int buffer, BufferLoopPoint param, ref int values);
+        public static extern void Buffer(int buffer, BufferLoopPoint param, ref int values);
 
         [DllImport(AL.Lib, EntryPoint = "alBufferiv", ExactSpelling = true, CallingConvention = AL.ALCallingConvention)]
-        public static unsafe extern void Buffer(int buffer, BufferLoopPoint param, ReadOnlySpan<int> values);
+        public static extern void Buffer(int buffer, BufferLoopPoint param, ReadOnlySpan<int> values);
 
         public static void Buffer(int buffer, BufferLoopPoint param, int start, int end)
         {
