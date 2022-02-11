@@ -1431,11 +1431,13 @@ namespace OpenTK.Windowing.Desktop
 
         /// <summary>
         /// Occurs when the window is minimized.
+        /// <para> WARNING: During this callback <see cref="ClientSize"/> will not be guaranteed to contain the new size of the window.</para>
         /// </summary>
         public event Action<MinimizedEventArgs> Minimized;
 
         /// <summary>
         /// Occurs when the window is maximized.
+        /// <para> WARNING: During this callback <see cref="ClientSize"/> will not be guaranteed to contain the new size of the window.</para>
         /// </summary>
         public event Action<MaximizedEventArgs> Maximized;
 
@@ -1803,7 +1805,8 @@ namespace OpenTK.Windowing.Desktop
         }
 
         /// <summary>
-        /// Raises the <see cref="OnMinimized"/> event.
+        /// <para>Raises the <see cref="OnMinimized"/> event.</para>
+        /// <para> WARNING: During this callback <see cref="ClientSize"/> will not be guaranteed to contain the new size of the window.</para>
         /// </summary>
         /// <param name="e">A <see cref="MinimizedEventArgs"/> that contains the event data.</param>
         protected virtual void OnMinimized(MinimizedEventArgs e)
@@ -1814,7 +1817,8 @@ namespace OpenTK.Windowing.Desktop
         }
 
         /// <summary>
-        /// Raises the <see cref="OnMaximized"/> event.
+        /// <para>Raises the <see cref="OnMaximized"/> event.</para>
+        /// <para>WARNING: During this callback <see cref="ClientSize"/> will not be guaranteed to contain the new size of the window.</para>
         /// </summary>
         /// <param name="e">A <see cref="MaximizedEventArgs"/> that contains the event data.</param>
         protected virtual void OnMaximized(MaximizedEventArgs e)
