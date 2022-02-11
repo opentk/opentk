@@ -503,6 +503,20 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
+        /// Component-wise division between the specified instance by a scale vector.
+        /// </summary>
+        /// <param name="vec">Left operand.</param>
+        /// <param name="scale">Right operand.</param>
+        /// <returns>Result of the division.</returns>
+        [Pure]
+        public static Vector2i operator /(Vector2i vec, Vector2i scale)
+        {
+            vec.X /= scale.X;
+            vec.Y /= scale.Y;
+            return vec;
+        }
+
+        /// <summary>
         /// Compares the specified instances for equality.
         /// </summary>
         /// <param name="left">Left operand.</param>

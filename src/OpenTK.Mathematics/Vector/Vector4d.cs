@@ -1964,6 +1964,22 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
+        /// Component-wise division between the specified instance by a scale vector.
+        /// </summary>
+        /// <param name="vec">Left operand.</param>
+        /// <param name="scale">Right operand.</param>
+        /// <returns>Result of the division.</returns>
+        [Pure]
+        public static Vector4d operator /(Vector4d vec, Vector4d scale)
+        {
+            vec.X /= scale.X;
+            vec.Y /= scale.Y;
+            vec.Z /= scale.Z;
+            vec.W /= scale.W;
+            return vec;
+        }
+
+        /// <summary>
         /// Compares two instances for equality.
         /// </summary>
         /// <param name="left">The first instance.</param>
