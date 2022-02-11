@@ -1369,6 +1369,21 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
+        /// Component-wise division between the specified instance by a scale vector.
+        /// </summary>
+        /// <param name="vec">Left operand.</param>
+        /// <param name="scale">Right operand.</param>
+        /// <returns>Result of the division.</returns>
+        [Pure]
+        public static Vector3d operator /(Vector3d vec, Vector3d scale)
+        {
+            vec.X /= scale.X;
+            vec.Y /= scale.Y;
+            vec.Z /= scale.Z;
+            return vec;
+        }
+
+        /// <summary>
         /// Compares two instances for equality.
         /// </summary>
         /// <param name="left">The first instance.</param>
