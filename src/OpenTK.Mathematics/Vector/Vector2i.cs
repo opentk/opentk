@@ -127,7 +127,7 @@ namespace OpenTK.Mathematics
         public static readonly Vector2i UnitY = new Vector2i(0, 1);
 
         /// <summary>
-        /// Defines a zero-length <see cref="Vector2i"/>.
+        /// Defines an instance with all components set to 0.
         /// </summary>
         public static readonly Vector2i Zero = new Vector2i(0, 0);
 

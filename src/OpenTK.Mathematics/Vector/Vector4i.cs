@@ -211,7 +211,7 @@ namespace OpenTK.Mathematics
         public static readonly Vector4i UnitW = new Vector4i(0, 0, 0, 1);
 
         /// <summary>
-        /// Defines a zero-length <see cref="Vector4i"/>.
+        /// Defines an instance with all components set to 0.
         /// </summary>
         public static readonly Vector4i Zero = new Vector4i(0, 0, 0, 0);
 

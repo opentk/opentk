@@ -57,7 +57,7 @@ namespace OpenTK.Mathematics
         public static readonly Vector2d UnitY = new Vector2d(0, 1);
 
         /// <summary>
-        /// Defines a zero-length Vector2d.
+        /// Defines an instance with all components set to 0.
         /// </summary>
         public static readonly Vector2d Zero = new Vector2d(0, 0);
 

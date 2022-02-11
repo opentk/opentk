@@ -234,7 +234,7 @@ namespace OpenTK.Mathematics
         public static readonly Vector3d UnitZ = new Vector3d(0, 0, 1);
 
         /// <summary>
-        /// Defines a zero-length Vector3.
+        /// Defines an instance with all components set to 0.
         /// </summary>
         public static readonly Vector3d Zero = new Vector3d(0, 0, 0);
 
