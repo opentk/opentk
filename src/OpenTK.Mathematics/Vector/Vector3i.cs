@@ -162,6 +162,16 @@ namespace OpenTK.Mathematics
         public static readonly Vector3i UnitZ = new Vector3i(0, 0, 1);
 
         /// <summary>
+        /// Defines an instance with all components set to 0.
+        /// </summary>
+        public static readonly Vector3i Zero = new Vector3i(0, 0, 0);
+
+        /// <summary>
+        /// Defines an instance with all components set to 1.
+        /// </summary>
+        public static readonly Vector3i One = new Vector3i(1, 1, 1);
+
+        /// <summary>
         /// Defines the size of the Vector3i struct in bytes.
         /// </summary>
         public static readonly int SizeInBytes = Unsafe.SizeOf<Vector3i>();

@@ -80,7 +80,7 @@ namespace OpenTK.Mathematics
         public static readonly Vector4d UnitW = new Vector4d(0, 0, 0, 1);
 
         /// <summary>
-        /// Defines a zero-length Vector4d.
+        /// Defines an instance with all components set to 0.
         /// </summary>
         public static readonly Vector4d Zero = new Vector4d(0, 0, 0, 0);
 

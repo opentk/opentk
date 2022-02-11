@@ -190,7 +190,7 @@ namespace OpenTK.Mathematics
         public static readonly Vector2 UnitY = new Vector2(0, 1);
 
         /// <summary>
-        /// Defines a zero-length Vector2.
+        /// Defines an instance with all components set to 0.
         /// </summary>
         public static readonly Vector2 Zero = new Vector2(0, 0);
 
