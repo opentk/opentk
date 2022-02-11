@@ -952,6 +952,7 @@ namespace OpenTK.Windowing.Desktop
         private GLFWCallbacks.MouseButtonCallback _mouseButtonCallback;
         private GLFWCallbacks.CursorPosCallback _cursorPosCallback;
         private GLFWCallbacks.DropCallback _dropCallback;
+        private GLFWCallbacks.JoystickCallback _joystickCallback;
 
         [Obsolete("Use the Monitors.OnMonitorConnected event instead.", true)]
         private GLFWCallbacks.MonitorCallback _monitorCallback;
@@ -980,6 +981,8 @@ namespace OpenTK.Windowing.Desktop
 
             _dropCallback = DropCallback;
 
+            _joystickCallback = JoystickCallback;
+
             GLFW.SetWindowPosCallback(WindowPtr, _windowPosCallback);
             GLFW.SetWindowSizeCallback(WindowPtr, _windowSizeCallback);
             GLFW.SetWindowCloseCallback(WindowPtr, _windowCloseCallback);
@@ -998,12 +1001,12 @@ namespace OpenTK.Windowing.Desktop
 
             GLFW.SetDropCallback(WindowPtr, _dropCallback);
 
-            Joysticks.JoystickCallback += JoystickCallback;
+            Joysticks.JoystickCallback += _joystickCallback;
         }
 
         private void UnregisterWindowCallbacks()
         {
-            Joysticks.JoystickCallback -= JoystickCallback;
+            Joysticks.JoystickCallback -= _joystickCallback;
         }
 
         private unsafe void InitialiseJoystickStates()
@@ -1429,6 +1432,7 @@ namespace OpenTK.Windowing.Desktop
         /// <summary>
         /// Occurs after the window has closed.
         /// </summary>
+        [Obsolete("This event will never be invoked.")]
         public event Action Closed;
 
         /// <summary>
@@ -1690,10 +1694,9 @@ namespace OpenTK.Windowing.Desktop
         /// <summary>
         /// Raises the <see cref="Closed"/> event.
         /// </summary>
+        [Obsolete("This method will never be called.")]
         protected virtual void OnClosed()
         {
-            UnregisterWindowCallbacks();
-
             Closed?.Invoke();
         }
 
@@ -1857,6 +1860,7 @@ namespace OpenTK.Windowing.Desktop
 
             if (GLFWProvider.IsOnMainThread)
             {
+                UnregisterWindowCallbacks();
                 GLFW.DestroyWindow(WindowPtr);
                 Exists = false;
             }
