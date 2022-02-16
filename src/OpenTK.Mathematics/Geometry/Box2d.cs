@@ -185,8 +185,8 @@ namespace OpenTK.Mathematics
         /// <param name="distance">The distance to translate the box.</param>
         public void Translate(Vector2d distance)
         {
-            Min += distance;
-            Max += distance;
+            _min += distance;
+            _max += distance;
         }
 
         /// <summary>
