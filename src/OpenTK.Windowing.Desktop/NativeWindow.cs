@@ -1001,7 +1001,12 @@ namespace OpenTK.Windowing.Desktop
 
             GLFW.SetDropCallback(WindowPtr, _dropCallback);
 
-            GLFW.SetJoystickCallback(_joystickCallback);
+            Joysticks.JoystickCallback += _joystickCallback;
+        }
+
+        private void UnregisterWindowCallbacks()
+        {
+            Joysticks.JoystickCallback -= _joystickCallback;
         }
 
         private unsafe void InitialiseJoystickStates()
@@ -1427,6 +1432,7 @@ namespace OpenTK.Windowing.Desktop
         /// <summary>
         /// Occurs after the window has closed.
         /// </summary>
+        [Obsolete("This event will never be invoked.")]
         public event Action Closed;
 
         /// <summary>
@@ -1690,6 +1696,7 @@ namespace OpenTK.Windowing.Desktop
         /// <summary>
         /// Raises the <see cref="Closed"/> event.
         /// </summary>
+        [Obsolete("This method will never be called.")]
         protected virtual void OnClosed()
         {
             Closed?.Invoke();
@@ -1857,6 +1864,7 @@ namespace OpenTK.Windowing.Desktop
 
             if (GLFWProvider.IsOnMainThread)
             {
+                UnregisterWindowCallbacks();
                 GLFW.DestroyWindow(WindowPtr);
                 Exists = false;
             }
