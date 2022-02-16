@@ -1,3 +1,43 @@
+## 4.7.0
+
+* BREAKING: Simplifications to the `Monitors` api, hopefully it's easier to work with now. Old functions are marked `[Obsolete]` with directions for equivalent operations with the new API. (@NogginBops)
+
+* BREAKING: Changed `Span<T>` to `ReadOnlySpan<T>` in OpenAL bindings where appropriate. (@NogginBops)
+
+* API: Add more information to `MonitorInfo` such as human-readable names and supported video modes. (@NogginBops, @utkumaden)
+* API: Added component-wise division operators for vector types (@NogginBops, @wildniklin)
+* API: Added missing `One` and `Zero` static readonly fields to `Vector3i` (@NogginBops, @wildniklin)
+
+* API: Implemented `AL_SOFT_loop_points` OpenAL extension. (@NogginBops)
+
+* Passing `ContextAPI.NoAPI` in `NativeWindowSettings.ContextAPI` will not create an OpenGL context. This allows you to use `NativeWindow` to create a vulkan context, see #1334. (@arakis, @NogginBops)
+
+* Added warning to documentation that `ClientSize` will not be guaranteed to have updated values in the `OnMaximized` and `OnMinimized` callbacks. (@NogginBops, @wo80)
+
+* Updated to GLFW 3.3.5. (@NogginBops)
+
+* FIX: Fix invalid IL generation for some edge case GL ES functions, AOT compiling OpenTK now works correctly!! (@NogginBops, thanks @jkotas for helping me understand the issue)
+
+* FIX: Fix `Box3` documentation referencing 2D concepts. (@CaiB)
+
+* FIX: Fixed `MathHelper.MapRange` so that it no longer always throws division by zero exceptions. (@jdmisek)
+
+* FIX: Fixed `OnUnload` so that it's acutally called in all cases when closing the window. (@NogginBops, @adfcf)
+
+* FIX: Wrap all callbacks in exception handlers that will then rethrow these exceptions at the end of `NativeWindow.ProcessEvents()` so that exceptions don't unwind into native calls which is a problem on non-windows platforms. (@NogginBops, @PJB3005)
+
+* FIX: Fix `NativeWindow.IsExiting` and `NativeWindow.Exists` so that they actually contain correct values. (@NogginBops)
+
+* FIX: Fix `Box2d.Translate` and `Box2i.Translate`, this fix also fixes setting the `Box2d.Center` and `Box2i.Center` properties. (@NogginBops, @yts233)
+* FIX: Made JoystickCallback still work when multiple windows are used. (@TheBlubb14)
+* FIX: The MonitorCallback no longer gets garbage collected and crashes the program when called. (@NogginBops, @)
+
+* Deprecated the `Closed` event and then `OnClosed` virtual method, they where never called and now we explicitly say so. (@NogginBops)
+
+* Deprecated `NativeWindowSettings.IsFullscreen`, use `NativeWindowSettings.WindowState` instead. (@NogginBops)
+
+* Deprecated `NativeWindowSettings.IsMultiThreaded`, Render/Update split isn't a great idea then multithreading and users can easily spin up an "update" thread themselves. (@NogginBops)
+
 ## 4.6.7
 
 * FIX: Fixed closing window causing AccessViolations on windows and other crashes on other platforms. (@NogginBops)
