@@ -1,4 +1,4 @@
-## 4.7.0
+## 4.7.1
 
 * BREAKING: Simplifications to the `Monitors` api, hopefully it's easier to work with now. Old functions are marked `[Obsolete]` with directions for equivalent operations with the new API. (@NogginBops)
 
@@ -37,6 +37,11 @@
 * Deprecated `NativeWindowSettings.IsFullscreen`, use `NativeWindowSettings.WindowState` instead. (@NogginBops)
 
 * Deprecated `NativeWindowSettings.IsMultiThreaded`, Render/Update split isn't a great idea then multithreading and users can easily spin up an "update" thread themselves. (@NogginBops)
+
+## 4.7.0
+
+This released was built using a broken build script.
+4.7.1 is released with a fixed build script and the change log for 4.7.1 is identical to this version except the fix to the build script.
 
 ## 4.6.7
 
