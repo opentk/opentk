@@ -30,7 +30,7 @@
 
 * FIX: Fix `Box2d.Translate` and `Box2i.Translate`, this fix also fixes setting the `Box2d.Center` and `Box2i.Center` properties. (@NogginBops, @yts233)
 * FIX: Made JoystickCallback still work when multiple windows are used. (@TheBlubb14)
-* FIX: The MonitorCallback no longer gets garbage collected and crashes the program when called. (@NogginBops, @)
+* FIX: The MonitorCallback no longer gets garbage collected and crashes the program when called. (@NogginBops)
 
 * Deprecated the `Closed` event and then `OnClosed` virtual method, they where never called and now we explicitly say so. (@NogginBops)
 
