@@ -1,10 +1,6 @@
 
 # Created by https://www.gitignore.io/api/vim,osx,linux,macos,emacs,fsharp,csharp,windows,android,monodevelop,intellij+all,visualstudio,xamarinstudio,visualstudiocode
 
-src/OpenTK.Graphics/**/GL.Overloads.cs
-src/OpenTK.Graphics/**/GL.Native.cs
-src/OpenTK.Graphics/**/Enums.cs
-
 ### Android ###
 # Built application files
 *.apk

@@ -32,7 +32,7 @@ namespace Generator
 
                 st.Stop();
 
-                Logger.Info($"{st.ElapsedMilliseconds}");
+                Logger.Info($"Generated bidnigns in {st.ElapsedMilliseconds}ms");
             }
         }
     }
