@@ -267,6 +267,8 @@ namespace Generator.Process
             if (matrixMatch.Success)
             {
                 typeName = matrixMatch.Groups[1].Value;
+                // Remove the postfix 'f' if it is there
+                if (typeName[^1] == 'f') typeName = typeName[0..^1];
                 int columns = int.Parse(matrixMatch.Groups[2].Value);
                 int rows = matrixMatch.Groups[3].Success ?
                     int.Parse(matrixMatch.Groups[3].Value) : columns;
@@ -1208,6 +1210,7 @@ namespace Generator.Process
             Parameter[] newParameters = new Parameter[oldParameters.Length - 1];
             Parameter? outParameter = null;
             CSRef? outType = null;
+            int newIndex = 0; // The destination index of parameters
             for (int i = 0; i < oldParameters.Length; i++)
             {
                 var parameter = oldParameters[i];
@@ -1222,9 +1225,10 @@ namespace Generator.Process
                     outType = pRef;
                     outParameter = parameter;
                 }
-                else if (i != oldParameters.Length - 1)
+                else if (newIndex != oldParameters.Length - 1)
                 {
-                    newParameters[outParameter != null ? i + 1 : i] = parameter;
+                    newParameters[newIndex] = parameter;
+                    newIndex++;
                 }
             }
 
