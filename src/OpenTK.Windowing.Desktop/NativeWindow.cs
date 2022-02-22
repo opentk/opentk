@@ -471,6 +471,8 @@ namespace OpenTK.Windowing.Desktop
         }
 
         private Vector2i _size;
+        private Vector2i _minimumSize;
+        private Vector2i _maximumSize;
 
         /// <summary>
         /// Gets or sets a <see cref="OpenTK.Mathematics.Vector2i" /> structure that contains the external size of this window.
@@ -482,6 +484,32 @@ namespace OpenTK.Windowing.Desktop
             {
                 _size = value;
                 GLFW.SetWindowSize(WindowPtr, value.X, value.Y);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a <see cref="OpenTK.Mathematics.Vector2i" /> structure that contains the minimum external size of this window.
+        /// </summary>
+        public unsafe Vector2i MinimumSize
+        {
+            get => _minimumSize;
+            set
+            {
+                _minimumSize = value;
+                GLFW.SetWindowSizeLimits(WindowPtr, value.X, value.Y, _maximumSize.X, _maximumSize.Y);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a <see cref="OpenTK.Mathematics.Vector2i" /> structure that contains the maximum external size of this window.
+        /// </summary>
+        public unsafe Vector2i MaximumSize
+        {
+            get => _maximumSize;
+            set
+            {
+                _maximumSize = value;
+                GLFW.SetWindowSizeLimits(WindowPtr, _minimumSize.X, _minimumSize.Y, value.X, value.Y);
             }
         }
 
@@ -790,6 +818,11 @@ namespace OpenTK.Windowing.Desktop
             GLFW.GetWindowSize(WindowPtr, out var width, out var height);
 
             HandleResize(width, height);
+
+            _minimumSize = settings.MinimumSize;
+            _maximumSize = settings.MaximumSize;
+
+            GLFW.SetWindowSizeLimits(WindowPtr, _minimumSize.X, _minimumSize.Y, _maximumSize.X, _maximumSize.Y);
 
             GLFW.GetWindowPos(WindowPtr, out var x, out var y);
             _location = new Vector2i(x, y);

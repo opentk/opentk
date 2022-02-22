@@ -158,6 +158,16 @@ namespace OpenTK.Windowing.Desktop
         public Vector2i Size { get; set; } = new Vector2i(640, 360);
 
         /// <summary>
+        ///     Gets or sets the minimum size of the contents of the window.
+        /// </summary>
+        public Vector2i MinimumSize { get; set; } = new Vector2i(GLFW.DontCare, GLFW.DontCare);
+
+        /// <summary>
+        ///     Gets or sets the maximum size of the contents of the window.
+        /// </summary>
+        public Vector2i MaximumSize { get; set; } = new Vector2i(GLFW.DontCare, GLFW.DontCare);
+
+        /// <summary>
         /// Gets or sets a value indicating whether the window should start fullscreen.
         /// </summary>
         [Obsolete("Use WindowState instead.", true)]
