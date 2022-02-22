@@ -524,11 +524,11 @@ namespace OpenTK.Windowing.Desktop
         private (int numerator, int denominator) _aspectRatio;
 
         /// <summary>
-        /// Gets or sets the aspect ratio of this window specified as a numerator and denominator.
+        /// Gets or sets the aspect ratio this window is locked to.
         /// </summary>
         /// <remarks>
         /// Set both the values to <c>-1</c> to disable aspect ratio locking.
-        /// If you set size limits and an aspect ratio that conflict, the results are undefined.
+        /// If you set size limits and an aspect ratio lock that conflict, the results are undefined.
         /// </remarks>
         public unsafe (int numerator, int denominator) AspectRatio
         {

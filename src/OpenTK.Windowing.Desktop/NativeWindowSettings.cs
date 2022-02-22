@@ -176,7 +176,7 @@ namespace OpenTK.Windowing.Desktop
         public Vector2i MaximumSize { get; set; } = new Vector2i(GLFW.DontCare, GLFW.DontCare);
 
         /// <summary>
-        /// Gets or sets the initial aspect ratio of the window as a numerator and denominator.
+        /// Gets or sets the aspect ratio the window is locked to until changed.
         /// </summary>
         /// <remarks>
         /// Set both the values to <c>-1</c> to disable aspect ratio locking.
