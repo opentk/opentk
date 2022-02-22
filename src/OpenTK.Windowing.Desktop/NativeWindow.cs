@@ -851,7 +851,6 @@ namespace OpenTK.Windowing.Desktop
             _maximumSize = settings.MaximumSize;
 
             GLFW.SetWindowSizeLimits(WindowPtr, _minimumSize.X, _minimumSize.Y, _maximumSize.X, _maximumSize.Y);
-            GLFW.SetWindowAspectRatio(WindowPtr, AspectRatio.numerator, AspectRatio.denominator);
 
             GLFW.GetWindowPos(WindowPtr, out var x, out var y);
             _location = new Vector2i(x, y);
