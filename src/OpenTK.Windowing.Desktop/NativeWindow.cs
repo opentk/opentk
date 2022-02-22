@@ -492,6 +492,7 @@ namespace OpenTK.Windowing.Desktop
         /// </summary>
         /// <remarks>
         /// Pass <c>-1</c> as the width or height to ignore the respective dimension.
+        /// If you set size limits and an aspect ratio that conflict, the results are undefined.
         /// </remarks>
         public unsafe Vector2i MinimumSize
         {
@@ -508,6 +509,7 @@ namespace OpenTK.Windowing.Desktop
         /// </summary>
         /// <remarks>
         /// Pass <c>-1</c> as the width or height to ignore the respective dimension.
+        /// If you set size limits and an aspect ratio that conflict, the results are undefined.
         /// </remarks>
         public unsafe Vector2i MaximumSize
         {
@@ -516,6 +518,25 @@ namespace OpenTK.Windowing.Desktop
             {
                 _maximumSize = value;
                 GLFW.SetWindowSizeLimits(WindowPtr, _minimumSize.X, _minimumSize.Y, value.X, value.Y);
+            }
+        }
+
+        private (int numerator, int denominator) _aspectRatio;
+
+        /// <summary>
+        /// Gets or sets the aspect ratio of this window specified as a numerator and denominator.
+        /// </summary>
+        /// <remarks>
+        /// Set both the values to <c>-1</c> to disable aspect ratio locking.
+        /// If you set size limits and an aspect ratio that conflict, the results are undefined.
+        /// </remarks>
+        public unsafe (int numerator, int denominator) AspectRatio
+        {
+            get => _aspectRatio;
+            set
+            {
+                _aspectRatio = value;
+                GLFW.SetWindowAspectRatio(WindowPtr, value.numerator, value.denominator);
             }
         }
 
@@ -825,10 +846,12 @@ namespace OpenTK.Windowing.Desktop
 
             HandleResize(width, height);
 
+            AspectRatio = settings.AspectRatio;
             _minimumSize = settings.MinimumSize;
             _maximumSize = settings.MaximumSize;
 
             GLFW.SetWindowSizeLimits(WindowPtr, _minimumSize.X, _minimumSize.Y, _maximumSize.X, _maximumSize.Y);
+            GLFW.SetWindowAspectRatio(WindowPtr, AspectRatio.numerator, AspectRatio.denominator);
 
             GLFW.GetWindowPos(WindowPtr, out var x, out var y);
             _location = new Vector2i(x, y);

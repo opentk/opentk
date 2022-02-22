@@ -162,6 +162,7 @@ namespace OpenTK.Windowing.Desktop
         /// </summary>
         /// <remarks>
         /// Pass <c>-1</c> as the width or height to ignore the respective dimension.
+        /// If you set size limits and an aspect ratio that conflict, the results are undefined.
         /// </remarks>
         public Vector2i MinimumSize { get; set; } = new Vector2i(GLFW.DontCare, GLFW.DontCare);
 
@@ -170,8 +171,18 @@ namespace OpenTK.Windowing.Desktop
         /// </summary>
         /// <remarks>
         /// Pass <c>-1</c> as the width or height to ignore the respective dimension.
+        /// If you set size limits and an aspect ratio that conflict, the results are undefined.
         /// </remarks>
         public Vector2i MaximumSize { get; set; } = new Vector2i(GLFW.DontCare, GLFW.DontCare);
+
+        /// <summary>
+        /// Gets or sets the initial aspect ratio of the window as a numerator and denominator.
+        /// </summary>
+        /// <remarks>
+        /// Set both the values to <c>-1</c> to disable aspect ratio locking.
+        /// If you set size limits and an aspect ratio that conflict, the results are undefined.
+        /// </remarks>
+        public (int numerator, int denominator) AspectRatio { get; set; } = (GLFW.DontCare, GLFW.DontCare);
 
         /// <summary>
         /// Gets or sets a value indicating whether the window should start fullscreen.
