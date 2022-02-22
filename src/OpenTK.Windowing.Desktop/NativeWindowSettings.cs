@@ -160,11 +160,17 @@ namespace OpenTK.Windowing.Desktop
         /// <summary>
         ///     Gets or sets the minimum size of the contents of the window.
         /// </summary>
+        /// <remarks>
+        /// Pass <c>-1</c> as the width or height to ignore the respective dimension.
+        /// </remarks>
         public Vector2i MinimumSize { get; set; } = new Vector2i(GLFW.DontCare, GLFW.DontCare);
 
         /// <summary>
         ///     Gets or sets the maximum size of the contents of the window.
         /// </summary>
+        /// <remarks>
+        /// Pass <c>-1</c> as the width or height to ignore the respective dimension.
+        /// </remarks>
         public Vector2i MaximumSize { get; set; } = new Vector2i(GLFW.DontCare, GLFW.DontCare);
 
         /// <summary>

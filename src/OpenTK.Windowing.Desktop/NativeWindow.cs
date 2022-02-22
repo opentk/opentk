@@ -490,6 +490,9 @@ namespace OpenTK.Windowing.Desktop
         /// <summary>
         /// Gets or sets a <see cref="OpenTK.Mathematics.Vector2i" /> structure that contains the minimum external size of this window.
         /// </summary>
+        /// <remarks>
+        /// Pass <c>-1</c> as the width or height to ignore the respective dimension.
+        /// </remarks>
         public unsafe Vector2i MinimumSize
         {
             get => _minimumSize;
@@ -503,6 +506,9 @@ namespace OpenTK.Windowing.Desktop
         /// <summary>
         /// Gets or sets a <see cref="OpenTK.Mathematics.Vector2i" /> structure that contains the maximum external size of this window.
         /// </summary>
+        /// <remarks>
+        /// Pass <c>-1</c> as the width or height to ignore the respective dimension.
+        /// </remarks>
         public unsafe Vector2i MaximumSize
         {
             get => _maximumSize;
