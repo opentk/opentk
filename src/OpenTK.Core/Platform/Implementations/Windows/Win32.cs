@@ -54,6 +54,12 @@ namespace OpenTK.Core.Platform.Implementations.Windows
         [DllImport("kernel32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         internal static extern IntPtr GetModuleHandle(string? lpModuleName);
 
+        [DllImport("kernel32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        internal static extern IntPtr LoadLibrary([MarshalAs(UnmanagedType.LPTStr)] string lpLibFileName);
+
+        [DllImport("kernel32.dll", SetLastError = true)]
+        internal static extern IntPtr GetProcAddress(IntPtr hModule, [MarshalAs(UnmanagedType.LPStr)] string lpProcName);
+
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         internal static extern short RegisterClassEx(in WNDCLASSEX wndClass);
 
@@ -104,6 +110,9 @@ namespace OpenTK.Core.Platform.Implementations.Windows
 
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         internal static extern int GetMessage(out MSG lpMsg, IntPtr hWnd, uint wMsgFilterMin, uint wMsgFilterMax);
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        internal static extern int PeekMessage(out MSG lpMsg, IntPtr hWnd, uint wMsgFilterMin, uint wMsgFilterMax, PM wRemoveMsg);
 
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         internal static extern bool TranslateMessage(in MSG lpMsg);
@@ -215,5 +224,67 @@ namespace OpenTK.Core.Platform.Implementations.Windows
             public bool fIncUpdate;
             public fixed byte rgbReserved[32];
         }
+
+        internal struct PIXELFORMATDESCRIPTOR
+        {
+            public ushort nSize;
+            public ushort nVersion;
+            public PFD dwFlags;
+            public PFDType iPixelType;
+            public byte cColorBits;
+            public byte cRedBits;
+            public byte cRedShift;
+            public byte cGreenBits;
+            public byte cGreenShift;
+            public byte cBlueBits;
+            public byte cBlueShift;
+            public byte cAlphaBits;
+            public byte cAlphaShift;
+            public byte cAccumBits;
+            public byte cAccumRedBits;
+            public byte cAccumGreenBits;
+            public byte cAccumBlueBits;
+            public byte cAccumAlphaBits;
+            public byte cDepthBits;
+            public byte cStencilBits;
+            public byte cAuxBuffers;
+            public PFDPlane iLayerType;
+            public byte bReserved;
+            public uint dwLayerMask;
+            public uint dwVisibleMask;
+            public uint dwDamageMask;
+
+            public static PIXELFORMATDESCRIPTOR Create()
+            {
+                PIXELFORMATDESCRIPTOR desc = default;
+                unchecked
+                {
+                    desc.nSize = (ushort)Marshal.SizeOf<PIXELFORMATDESCRIPTOR>();
+                }
+                return desc;
+            }
+        }
+
+        [DllImport("user32.dll", SetLastError = true)]
+        internal static extern IntPtr GetDC(IntPtr hWnd);
+
+        [DllImport("gdi32.dll", SetLastError = true)]
+        internal static extern int ChoosePixelFormat(
+            IntPtr hDC, // HDC
+            in PIXELFORMATDESCRIPTOR ppfd);
+
+        [DllImport("gdi32.dll", SetLastError = true)]
+        internal static extern int DescribePixelFormat(
+            IntPtr hDC, // HDC
+            int iPixelFormat,
+            uint nBytes,
+            ref PIXELFORMATDESCRIPTOR ppfd
+            );
+
+        [DllImport("gdi32.dll", SetLastError = true)]
+        internal static extern bool SetPixelFormat(IntPtr hdc, int format, in PIXELFORMATDESCRIPTOR ppfd);
+
+        [DllImport("gdi32.dll", SetLastError = true)]
+        internal static extern bool SwapBuffers(IntPtr hDC);
     }
 }

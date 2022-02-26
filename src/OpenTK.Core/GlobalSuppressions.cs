@@ -23,3 +23,9 @@ using System.Diagnostics.CodeAnalysis;
     Justification = "This is a stupid rule?",
     Scope = "namespaceanddescendants",
     Target = "OpenTK.Core.Platform.Implementations.Windows")]
+[assembly: SuppressMessage(
+    "StyleCop.CSharp.SpacingRules",
+    "SA1023:Dereference and access of symbols should be spaced correctly",
+    Justification = "This rule doesn't work with pointer types inside of function pointers.",
+    Scope = "namespaceanddescendants",
+    Target = "OpenTK.Core.Platform.Implementations.Windows")]

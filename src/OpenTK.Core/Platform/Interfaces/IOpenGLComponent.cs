@@ -43,12 +43,6 @@ namespace OpenTK.Core.Platform
         void DestroyContext(OpenGLContextHandle handle);
 
         /// <summary>
-        /// Get the current OpenGL context for this thread.
-        /// </summary>
-        /// <returns>Handle to the current OpenGL context, null if none are current.</returns>
-        OpenGLContextHandle GetCurrentContext();
-
-        /// <summary>
         /// Get the procedure address for an OpenGL command.
         /// </summary>
         /// <param name="handle">Handle to an OpenGL context.</param>
@@ -58,35 +52,10 @@ namespace OpenTK.Core.Platform
         IntPtr GetProcedureAddress(OpenGLContextHandle handle, string procedureName);
 
         /// <summary>
-        /// Get the context which newly created contexts will share display lists with.
+        /// Get the current OpenGL context for this thread.
         /// </summary>
-        /// <returns>The OpenGL context handle, or null if unset.</returns>
-        /// <remarks>The return value of this method is thread static.</remarks>
-        OpenGLContextHandle GetSharedContext();
-
-        /// <summary>
-        /// Retrieves a list of supported OpenGL extensions.
-        /// </summary>
-        /// <param name="handle">Handle to an OpenGL context.</param>
-        /// <returns>A list of supported OpenGL extensions.</returns>
-        /// <exception cref="ArgumentNullException">OpenGL context handle is null.</exception>
-        string[] GetSupportedExtensions(OpenGLContextHandle handle);
-
-        /// <summary>
-        /// Gets the context which the given context shares display lists with.
-        /// </summary>
-        /// <param name="handle">Handle to the OpenGL context.</param>
-        /// <returns>Handle to the OpenGL context the given context shares display lists with.</returns>
-        OpenGLContextHandle GetSharedContext(OpenGLContextHandle handle);
-
-        /// <summary>
-        /// Query if an OpenGL extension is supported.
-        /// </summary>
-        /// <param name="handle">Handle to an OpenGL context.</param>
-        /// <param name="name">Name of the extension to query.</param>
-        /// <returns>True if the extension is supported.</returns>
-        /// <exception cref="ArgumentNullException">OpenGL context handle or extension name is null.</exception>
-        bool IsExtensionSupported(OpenGLContextHandle handle, string name);
+        /// <returns>Handle to the current OpenGL context, null if none are current.</returns>
+        OpenGLContextHandle GetCurrentContext();
 
         /// <summary>
         /// Set the current OpenGL context for this thread.
@@ -94,6 +63,20 @@ namespace OpenTK.Core.Platform
         /// <param name="handle">Handle to the OpenGL context to make current, or null to make none current.</param>
         /// <returns>True when the OpenGL context is successfully made current.</returns>
         bool SetCurrentContext(OpenGLContextHandle handle);
+
+        /// <summary>
+        /// Get the context which newly created contexts will share display lists with.
+        /// </summary>
+        /// <returns>The OpenGL context handle, or null if unset.</returns>
+        /// <remarks>The return value of this method is thread static.</remarks>
+        OpenGLContextHandle GetSharedContext();
+
+        /// <summary>
+        /// Gets the context which the given context shares display lists with.
+        /// </summary>
+        /// <param name="handle">Handle to the OpenGL context.</param>
+        /// <returns>Handle to the OpenGL context the given context shares display lists with.</returns>
+        OpenGLContextHandle GetSharedContext(OpenGLContextHandle handle);
 
         /// <summary>
         /// Set a context to share display lists with newly created OpenGL contexts.

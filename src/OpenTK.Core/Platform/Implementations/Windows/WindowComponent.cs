@@ -16,6 +16,38 @@ namespace OpenTK.Core.Platform.Implementations.Windows
 
         internal static readonly Dictionary<IntPtr, HWND> HWndDict = new Dictionary<IntPtr, HWND>();
 
+        static WindowComponent()
+        {
+            // Get the hInstance of the current exe
+            HInstance = Win32.GetModuleHandle(null);
+        }
+
+        public string Name => "Win32Window";
+
+        public PalComponents Provides => PalComponents.Window;
+
+        public void Initialize(PalComponents which)
+        {
+            if (which != PalComponents.Window)
+            {
+                throw new Exception("WindowComponent can only initialize the Window component.");
+            }
+
+            // Here we register the window class that we will use for all created windows.
+            Win32.WNDCLASSEX wndClass = Win32.WNDCLASSEX.Create();
+            wndClass.lpfnWndProc = Win32WindowProc;
+            wndClass.hInstance = HInstance;
+            wndClass.lpszClassName = CLASS_NAME;
+            wndClass.style = ClassStyles.OwnDC;
+
+            short wndClassAtom = Win32.RegisterClassEx(in wndClass);
+
+            if (wndClassAtom == 0)
+            {
+                throw new Win32Exception("RegisterClassEx failed!", Marshal.GetLastWin32Error());
+            }
+        }
+
         public bool CanSetIcon => throw new NotImplementedException();
 
         public bool CanGetDisplay => throw new NotImplementedException();
@@ -28,46 +60,52 @@ namespace OpenTK.Core.Platform.Implementations.Windows
 
         public IReadOnlyList<WindowMode> SupportedModes => _SupportedModes;
 
-        public string Name => "Win32Window";
+        // FIXME: HACK!!!!!!
+        private static bool quit = false;
 
-        public PalComponents Provides => PalComponents.Window;
-
-        // FIXME: Should this really be a static ctor?
-        static WindowComponent()
-        {
-            // Get the hInstance of the current exe
-            HInstance = Win32.GetModuleHandle(null);
-
-            // Here we register the window class that we will use for all created windows.
-            Win32.WNDCLASSEX wndClass = Win32.WNDCLASSEX.Create();
-            wndClass.lpfnWndProc = Win32WindowProc;
-            wndClass.hInstance = HInstance;
-            wndClass.lpszClassName = CLASS_NAME;
-
-            short wndClassAtom = Win32.RegisterClassEx(in wndClass);
-
-            if (wndClassAtom == 0)
-            {
-                throw new Win32Exception("RegisterClassEx failed!", Marshal.GetLastWin32Error());
-            }
-        }
-
-        public void Loop(WindowHandle handle)
+        public void Loop(WindowHandle handle, Func<bool> callback)
         {
             HWND hwnd = handle.As<HWND>(this);
 
-            int bRet;
-            while ((bRet = Win32.GetMessage(out Win32.MSG lpMsg, IntPtr.Zero, 0, 0)) != 0)
+            while (true)
             {
-                if (bRet == -1)
+                int bRet;
+                while ((bRet = Win32.PeekMessage(out Win32.MSG lpMsg, IntPtr.Zero, 0, 0, PM.REMOVE)) != 0)
                 {
-                    throw new Win32Exception("GetMessage failed ", Marshal.GetLastWin32Error());
+                    if (bRet == -1)
+                    {
+                        throw new Win32Exception("GetMessage failed ", Marshal.GetLastWin32Error());
+                    }
+                    else
+                    {
+                        Win32.TranslateMessage(in lpMsg);
+                        Win32.DispatchMessage(in lpMsg);
+                    }
                 }
-                else
+
+                if (quit == true)
                 {
-                    Win32.TranslateMessage(in lpMsg);
-                    Win32.DispatchMessage(in lpMsg);
+                    break;
                 }
+
+                if (callback() == false)
+                {
+                    break;
+                }
+            }
+        }
+
+        public void SwapBuffers(WindowHandle handle)
+        {
+            HWND hwnd = handle.As<HWND>(this);
+
+            IntPtr hDC = Win32.GetDC(hwnd.HWnd);
+
+            bool success = Win32.SwapBuffers(hDC);
+
+            if (success == false)
+            {
+                throw new Win32Exception("SwapBuffers failed", Marshal.GetLastWin32Error());
             }
         }
 
@@ -115,20 +153,13 @@ namespace OpenTK.Core.Platform.Implementations.Windows
                 case WM.DESTROY:
                     {
                         Win32.PostQuitMessage(0);
+                        quit = true;
                         return IntPtr.Zero;
                     }
                 default:
                     {
                         return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
                     }
-            }
-        }
-
-        public void Initialize(PalComponents which)
-        {
-            if (which != PalComponents.Window)
-            {
-                throw new Exception("WindowComponent can only initialize the Window component.");
             }
         }
 
@@ -164,9 +195,15 @@ namespace OpenTK.Core.Platform.Implementations.Windows
         {
             HWND hwnd = handle.As<HWND>(this);
 
-            Win32.DestroyWindow(hwnd.HWnd);
-
             HWndDict.Remove(hwnd.HWnd);
+
+            bool success = Win32.DestroyWindow(hwnd.HWnd);
+
+            // FIXME: Do we add back the hglrc to HGLRCDict?
+            if (success == false)
+            {
+                throw new Win32Exception("DestroyWindow failed!", Marshal.GetLastWin32Error());
+            }
         }
 
         public string GetTitle(WindowHandle handle)

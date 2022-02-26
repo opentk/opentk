@@ -569,6 +569,184 @@ namespace OpenTK.Core.Platform.Implementations.Windows
         WndProc = -4,
     }
 
+    [Flags]
+    internal enum PFD : uint
+    {
+        /// <summary>
+        /// The buffer is double-buffered. This flag and SUPPORT_GDI are mutually exclusive in the current generic implementation.
+        /// </summary>
+        DOUBLEBUFFER = 0x00000001,
+
+        /// <summary>
+        /// The buffer is stereoscopic. This flag is not supported in the current generic implementation.
+        /// </summary>
+        STEREO = 0x00000002,
+
+        /// <summary>
+        /// The buffer can draw to a window or device surface.
+        /// </summary>
+        DRAW_TO_WINDOW = 0x00000004,
+
+        /// <summary>
+        /// The buffer can draw to a memory bitmap.
+        /// </summary>
+        DRAW_TO_BITMAP = 0x00000008,
+
+        /// <summary>
+        /// The buffer supports GDI drawing.
+        /// This flag and DOUBLEBUFFER are mutually exclusive in the current generic implementation.
+        /// </summary>
+        SUPPORT_GDI = 0x00000010,
+
+        /// <summary>
+        /// The buffer supports OpenGL drawing.
+        /// </summary>
+        SUPPORT_OPENGL = 0x00000020,
+
+        /// <summary>
+        /// The pixel format is supported by the GDI software implementation,
+        /// which is also known as the generic implementation.
+        /// If this bit is clear, the pixel format is supported by a device driver or hardware.
+        /// </summary>
+        GENERIC_FORMAT = 0x00000040,
+
+        /// <summary>
+        /// The buffer uses RGBA pixels on a palette-managed device.
+        /// A logical palette is required to achieve the best results for this pixel type.
+        /// Colors in the palette should be specified according to the values of the
+        /// cRedBits, cRedShift, cGreenBits, cGreenShift, cBluebits, and cBlueShift members.
+        /// The palette should be created and realized in the device context before calling wglMakeCurrent.
+        /// </summary>
+        NEED_PALETTE = 0x00000080,
+
+        /// <summary>
+        /// Defined in the pixel format descriptors of hardware that supports one hardware palette in 256-color mode only.
+        /// For such systems to use hardware acceleration, the hardware palette must be in a
+        /// fixed order (for example, 3-3-2) when in RGBA mode or must match the logical palette
+        /// when in color-index mode.When this flag is set, you must call SetSystemPaletteUse in your program
+        /// to force a one-to-one mapping of the logical palette and the system palette.
+        /// If your OpenGL hardware supports multiple hardware palettes and the device driver can
+        /// allocate spare hardware palettes for OpenGL, this flag is typically clear.
+        /// This flag is not set in the generic pixel formats.
+        /// </summary>
+        NEED_SYSTEM_PALETTE = 0x00000100,
+
+        /// <summary>
+        /// Specifies the content of the back buffer in the double-buffered main color plane following a buffer swap.
+        /// Swapping the color buffers causes the exchange of the back buffer's content with the front buffer's content.
+        /// Following the swap, the back buffer's content contains the front buffer's content before the swap.
+        /// SWAP_EXCHANGE is a hint only and might not be provided by a driver.
+        /// </summary>
+        /// <remarks>Can be used when calling glAddSwapHintRectWIN.</remarks>
+        SWAP_EXCHANGE = 0x00000200,
+
+        /// <summary>
+        /// Specifies the content of the back buffer in the double-buffered main color plane following a buffer swap.
+        /// Swapping the color buffers causes the content of the back buffer to be copied to the front buffer.
+        /// The content of the back buffer is not affected by the swap.
+        /// SWAP_COPY is a hint only and might not be provided by a driver.
+        /// <remarks>Can be used when calling glAddSwapHintRectWIN.</remarks>
+        /// </summary>
+        SWAP_COPY = 0x00000400,
+
+        /// <summary>
+        /// Indicates whether a device can swap individual layer planes with pixel formats
+        /// that include double-buffered overlay or underlay planes.
+        /// Otherwise all layer planes are swapped together as a group.
+        /// When this flag is set, wglSwapLayerBuffers is supported.
+        /// </summary>
+        SWAP_LAYER_BUFFERS = 0x00000800,
+
+        /// <summary>
+        /// The pixel format is supported by a device driver that accelerates the generic implementation. If this flag is clear and the GENERIC_FORMAT flag is set, the pixel format is supported by the generic implementation only.
+        /// </summary>
+        GENERIC_ACCELERATED = 0x00001000,
+
+        /// <summary>
+        /// The pixel buffer supports DirectDraw drawing,
+        /// which allows applications to have low-level control of the output drawing surface.
+        /// </summary>
+        SUPPORT_DIRECTDRAW = 0x00002000,
+
+        /// <summary>
+        /// The pixel buffer supports Direct3D drawing, which accellerated rendering in three dimensions.
+        /// </summary>
+        DIRECT3D_ACCELERATED = 0x00004000,
+
+        /// <summary>
+        /// The pixel buffer supports compositing,
+        /// which indicates that source pixels MAY overwrite or be combined with background pixels.
+        /// </summary>
+        /// <remarks>
+        /// Windows uses this with OpenGL drawing only.
+        /// Windows NT 3.1, Windows NT 3.51, Windows NT 4.0, Windows 98,
+        /// Windows 2000, Windows Millennium Edition, Windows XP,
+        /// and Windows Server 2003 do not support this flag.
+        /// </remarks>
+        SUPPORT_COMPOSITION = 0x00008000,
+
+        /// <summary>
+        /// The requested pixel format can either have or not have a depth buffer.
+        /// To select a pixel format without a depth buffer, you must specify this flag.
+        /// The requested pixel format can be with or without a depth buffer.
+        /// Otherwise, only pixel formats with a depth buffer are considered.
+        /// </summary>
+        /// <remarks>Can be used when calling ChoosePixelFormat.</remarks>
+        DEPTH_DONTCARE = 0x20000000,
+
+        /// <summary>
+        /// The requested pixel format can be either single- or double-buffered.
+        /// </summary>
+        /// <remarks>Can be used when calling ChoosePixelFormat.</remarks>
+        DOUBLEBUFFER_DONTCARE = 0x40000000,
+
+        /// <summary>
+        /// The requested pixel format can be either monoscopic or stereoscopic.
+        /// </summary>
+        /// <remarks>Can be used when calling ChoosePixelFormat.</remarks>
+        STEREO_DONTCARE = 0x80000000,
+    }
+
+    internal enum PFDType : byte
+    {
+        /// <summary>
+        /// RGBA pixels. Each pixel has four components in this order: red, green, blue, and alpha.
+        /// </summary>
+        TYPE_RGBA = 0,
+
+        /// <summary>
+        /// Color-index pixels. Each pixel uses a color-index value.
+        /// </summary>
+        TYPE_COLORINDEX = 1,
+    }
+
+    internal enum PFDPlane : byte
+    {
+        MAIN = 0,
+        OVERLAY = 1,
+        UNDERLAY = 0xFF, // -1
+    }
+
+    [Flags]
+    internal enum PM : uint
+    {
+        /// <summary>
+        /// Messages are not removed from the queue after processing by PeekMessage.
+        /// </summary>
+        NOREMOVE = 0,
+
+        /// <summary>
+        /// Messages are removed from the queue after processing by PeekMessage.
+        /// </summary>
+        REMOVE = 1,
+
+        /// <summary>
+        /// Prevents the system from releasing any thread that is waiting for the caller to go idle (see WaitForInputIdle).
+        /// Combine this value with either PM_NOREMOVE or PM_REMOVE.
+        /// </summary>
+        NOYIELD = 2,
+    }
+
     /// <summary>
     /// Windows Messages
     /// Defined in winuser.h from Windows SDK v6.1

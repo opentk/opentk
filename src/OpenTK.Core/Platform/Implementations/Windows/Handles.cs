@@ -24,6 +24,24 @@ namespace OpenTK.Core.Platform.Implementations.Windows
         }
     }
 
+    internal class HGLRC : OpenGLContextHandle
+    {
+        public IntPtr HGlrc { get; private set; }
+
+        // FIXME: How do we want to handle this??
+        public IntPtr HDC { get; private set; }
+
+        // FIXME: Is this needed?
+        public OpenGLComponent OpenGLComponent { get; private set; }
+
+        public HGLRC(IntPtr hGlrc, IntPtr hdc, OpenGLComponent openglComponent)
+        {
+            HGlrc = hGlrc;
+            HDC = hdc;
+            OpenGLComponent = openglComponent;
+        }
+    }
+
     internal class Win32EventQueue : IEventQueue<WindowEventType, WindowEventArgs>
     {
         public event QueueEventHandler<WindowEventType, WindowEventArgs> EventRaised;
