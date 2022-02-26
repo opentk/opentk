@@ -172,7 +172,7 @@ namespace OpenTK.Core.Platform
         /// <exception cref="PalNotImplementedException">
         ///     Driver does not support finding the window display. <see cref="CanGetDisplay"/>.
         /// </exception>
-        object GetDisplay(WindowHandle handle);
+        DisplayHandle GetDisplay(WindowHandle handle);
 
         /// <summary>
         /// Get the mode of a window.

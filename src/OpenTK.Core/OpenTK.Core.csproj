@@ -17,6 +17,7 @@
 
   <PropertyGroup>
     <Description>Core shared functionality for the OpenTK library.</Description>
+    <OutputType>Library</OutputType>
   </PropertyGroup>
 
   <Import Project="..\..\props\common.props" />

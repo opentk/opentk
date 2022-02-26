@@ -8,6 +8,9 @@ namespace OpenTK.Core.Platform
         /// <summary>
         /// A no operation event, for testing purposes.
         /// </summary>
-        NoOperation = 0
+        NoOperation = 0,
+
+        KeyDown,
+        KeyUp,
     }
 }
