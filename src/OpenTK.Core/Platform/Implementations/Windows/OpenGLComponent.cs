@@ -195,9 +195,7 @@ namespace OpenTK.Core.Platform.Implementations.Windows
             {
                 // We have the pixel format extension!
 
-
-                Wgl.GetPixelFormatAttribivARB()
-
+                // Wgl.GetPixelFormatAttribivARB()
             }
 
             Win32.PIXELFORMATDESCRIPTOR pfd = Win32.PIXELFORMATDESCRIPTOR.Create();
