@@ -1951,7 +1951,6 @@ namespace OpenTK.Core.Platform.Implementations.Windows
         HSHELL_WINDOWREPLACED = 13
     }
 
-
     public enum WGLPixelFormat : int
     {
         /// <summary>
